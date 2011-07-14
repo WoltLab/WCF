@@ -145,10 +145,16 @@ abstract class DatabaseObject implements StorableObject {
 	 * @param	string			$sortOrder
 	 * @return	boolean
 	 */
-	public static function sort(&$objects, $sortBy, $sortOrder = 'ASC') {
+	public static function sort(&$objects, $sortBy, $sortOrder = 'ASC', $maintainIndexAssociation = true) {
 		static::$sortBy = (!is_array($sortBy) ? array($sortBy) : $sortBy);
 		static::$sortOrder = (!is_array($sortOrder) ? array($sortOrder) : $sortOrder);
-		return uasort($objects, array('static', 'compareObjects'));
+
+		if ($maintainIndexAssociation) {
+			return uasort($objects, array('static', 'compareObjects'));
+		}
+		else {
+			return usort($objects, array('static', 'compareObjects'));
+		}
 	}
 	
 	/**
