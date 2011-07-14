@@ -368,7 +368,7 @@ class FileUtil {
 			$port = 80;
 			$parsedUrl = parse_url($httpUrl);
 			$host = $parsedUrl['host'];
-			$path = $parsedUrl['path'];
+			$path = (isset($parsedUrl['path']) ? $parsedUrl['path'] : '/');
 			
 			$remoteFile = new RemoteFile($host, $port, 30, $options); // the file to read.
 			if (!isset($remoteFile)) {
