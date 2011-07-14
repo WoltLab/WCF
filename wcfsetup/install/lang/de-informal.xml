@@ -255,6 +255,7 @@
 		<item name="wcf.acp.option.cache_source_memcache_use_pconnect"><![CDATA[Persistente Verbindungen aktivieren]]></item>
 		<item name="wcf.acp.option.cache_source_memcache_use_pconnect.description"><![CDATA[Sollen beim Verbinden mit dem Memcache-Server persistente Verbindungen genutzt werden?]]></item>
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Cache-Methode]]></item>
+		<item name="wcf.acp.option.cache_source_type.apc"><![CDATA[Alternative PHP Cache]]></item>
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Bitte wähle die gewünschte Cache-Methode aus! Beachte, dass einige Methoden spezielle Anforderungen an das Server-System stellen und nicht auf jedem Server zur Verfügung stehen.]]></item>
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Dateisystem (Standard)]]></item>
 		<item name="wcf.acp.option.cache_source_type.memcache"><![CDATA[Memcache (Experimentell)]]></item>
