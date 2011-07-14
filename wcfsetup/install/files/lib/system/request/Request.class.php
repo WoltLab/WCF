@@ -95,3 +95,4 @@ class Request {
 		return $this->pageType;
 	}
 }
+?>

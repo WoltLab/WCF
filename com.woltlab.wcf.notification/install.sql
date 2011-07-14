@@ -69,7 +69,8 @@ CREATE TABLE wcf1_user_notification_type (
 	notificationType VARCHAR(255) NOT NULL,
 	className VARCHAR(255) NOT NULL,
 	permissions TEXT,
-	options TEXT  
+	options TEXT,
+	UNIQUE KEY packageID (packageID, notificationType) 
 );
 
 ALTER TABLE wcf1_user_notification ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;

@@ -3,7 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\system\WCF;
 
 /**
- * This PIP installs, updates or deletes user notification events.
+ * This PIP installs, updates or deletes user notification object types.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -12,21 +12,21 @@ use wcf\system\WCF;
  * @subpackage	system.package.plugin
  * @category 	Community Framework
  */
-class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class UserNotificationObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
 	 * @see AbstractXMLPackageInstallationPlugin::$className
 	 */
-	public $className = 'wcf\data\user\notification\event\UserNotificationEventEditor';
+	public $className = 'wcf\data\user\notification\object\type\UserNotificationObjectTypeEditor';
 	
 	/**
 	 * @see AbstractXMLPackageInstallationPlugin::$tableName
 	 */
-	public $tableName = 'user_notification_event';
+	public $tableName = 'user_notification_object_type';
 	
 	/**
 	 * @see	AbstractXMLPackageInstallationPlugin::$tagName
 	 */	
-	public $tagName = 'event';
+	public $tagName = 'objecttype';
 	
 	/**
 	 * @see	AbstractXMLPackageInstallationPlugin::handleDelete()
@@ -34,7 +34,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE		packageID = ?
-					AND eventName = ?";
+					AND objectType = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
 			$statement->execute(array(
@@ -48,18 +48,9 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @see	AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
-		$objectTypeID = 0;
-		$defaultNotificationTypeID = 0;
-		
 		return array(
-			'eventName' => $data['elements']['name'],
+			'objectType' => $data['elements']['name'],
 			'className' => $data['elements']['classname'],
-			'objectTypeID' => $objectTypeID,
-			'defaultNotificationTypeID' => $defaultNotificationTypeID,
-			'languageCategory' => (isset($data['elements']['languagecategory']) ? $data['elements']['languagecategory'] : ''),
-			'requiresConfirmation' => (isset($data['elements']['requiresconfirmation']) ? intval($data['elements']['requiresconfirmation']) : 0),
-			'acceptURL' => (isset($data['elements']['accepturl']) ? $data['elements']['accepturl'] : ''),
-			'declineURL' => (isset($data['elements']['declineurl']) ? $data['elements']['declineurl'] : ''),
 			'permissions' => (isset($data['elements']['permissions']) ? $data['elements']['permissions'] : ''),
 			'options' => (isset($data['elements']['options']) ? $data['elements']['options'] : '')
 		);
@@ -72,10 +63,10 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	packageID = ?
-				AND eventName = ?";
+				AND objectType = ?";
 		$parameters = array(
 			$this->installation->getPackageID(),
-			$data['eventName']
+			$data['objectType']
 		);
 		
 		return array(
