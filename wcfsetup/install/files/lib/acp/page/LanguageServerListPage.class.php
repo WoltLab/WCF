@@ -1,7 +1,7 @@
 <?php
 namespace wcf\acp\page;
-use wcf\acp\page\util\menu\ACPMenu;
 use wcf\page\SortablePage;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 
 /**
@@ -41,7 +41,7 @@ class LanguageServerListPage extends SortablePage {
 	 */
 	public function show() {
 		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.language.server.view');
+		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.language.server.list');
 		
 		parent::show();
 	}
