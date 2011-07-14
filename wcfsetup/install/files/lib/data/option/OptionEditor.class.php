@@ -139,4 +139,3 @@ class OptionEditor extends DatabaseObjectEditor implements EditableCachedObject 
 		@$file->chmod(0777);
 	}
 }
-?>

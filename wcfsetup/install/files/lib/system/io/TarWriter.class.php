@@ -269,4 +269,3 @@ class TarWriter extends Tar {
 		return true;
 	}
 }
-?>

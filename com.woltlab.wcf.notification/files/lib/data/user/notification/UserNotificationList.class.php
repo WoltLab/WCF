@@ -18,4 +18,3 @@ class UserNotificationList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\user\notification\UserNotification';
 }
-?>

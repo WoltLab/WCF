@@ -17,4 +17,3 @@ class ACPSessionList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\acp\session\ACPSession';
 }
-?>

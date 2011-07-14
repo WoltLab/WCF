@@ -878,4 +878,3 @@ class PackageArchive {
 		return $this->phpRequirements;
 	}
 }
-?>

@@ -67,4 +67,3 @@ class StringStack {
 		return array();
 	}
 }
-?>

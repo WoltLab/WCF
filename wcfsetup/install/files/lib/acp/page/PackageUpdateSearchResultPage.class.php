@@ -190,4 +190,3 @@ class PackageUpdateSearchResultPage extends SortablePage {
 		parent::show();
 	}
 }
-?>

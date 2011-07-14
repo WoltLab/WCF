@@ -17,4 +17,3 @@ interface EditableCachedObject extends EditableObject {
 	 */
 	public static function resetCache();
 }
-?>

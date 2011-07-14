@@ -39,4 +39,3 @@ class TemplatePluginCompilerAssign implements TemplatePluginCompiler {
 		throw new SystemException($compiler->formatSyntaxError("unknown tag {/assign}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()), 12003);
 	}
 }
-?>

@@ -61,4 +61,3 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 		}
 	}
 }
-?>

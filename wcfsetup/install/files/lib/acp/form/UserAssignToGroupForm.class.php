@@ -136,4 +136,3 @@ class UserAssignToGroupForm extends ACPForm {
 		$this->groups = UserGroup::getAccessibleGroups(array(), array(UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS));
 	}
 }
-?>

@@ -562,4 +562,3 @@ class WCF {
 		return null;
 	}
 }
-?>

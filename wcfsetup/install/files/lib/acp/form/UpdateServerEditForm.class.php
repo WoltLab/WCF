@@ -92,4 +92,3 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 		));
 	}
 }
-?>

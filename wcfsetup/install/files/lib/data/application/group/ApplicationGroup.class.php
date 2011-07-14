@@ -23,4 +23,3 @@ class ApplicationGroup extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'groupID';
 }
-?>

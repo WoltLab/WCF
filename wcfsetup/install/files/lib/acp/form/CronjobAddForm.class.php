@@ -176,4 +176,3 @@ class CronjobAddForm extends ACPForm {
 		));
 	}
 }
-?>

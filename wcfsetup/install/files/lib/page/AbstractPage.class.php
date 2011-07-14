@@ -141,4 +141,3 @@ abstract class AbstractPage implements Page {
 		}
 	}
 }
-?>

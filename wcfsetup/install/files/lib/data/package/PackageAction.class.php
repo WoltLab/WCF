@@ -33,4 +33,3 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $permissionsUpdate = array('admin.system.package.canUpdatePackage');
 }
-?>

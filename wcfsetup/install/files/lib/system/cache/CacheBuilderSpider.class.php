@@ -25,4 +25,3 @@ class CacheBuilderSpider implements CacheBuilder {
 		return $spiderList->getObjects();
 	}
 }
-?>

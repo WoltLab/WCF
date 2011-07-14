@@ -42,4 +42,3 @@ class TemplateCompiler extends TemplateScriptingCompiler {
 		return $this->getCurrentIdentifier();
 	}
 }
-?>

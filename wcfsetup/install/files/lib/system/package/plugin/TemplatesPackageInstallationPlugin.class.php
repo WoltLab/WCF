@@ -68,4 +68,3 @@ class TemplatesPackageInstallationPlugin extends AbstractPackageInstallationPlug
 		}
 	}
 }
-?>

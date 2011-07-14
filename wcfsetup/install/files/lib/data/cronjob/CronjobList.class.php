@@ -18,4 +18,3 @@ class CronjobList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\cronjob\Cronjob';
 }
-?>

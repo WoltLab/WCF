@@ -158,4 +158,3 @@ class Option extends DatabaseObject {
 		return $result;
 	}
 }
-?>

@@ -37,4 +37,3 @@ class CacheBuilderCronjob implements CacheBuilder {
 		);
 	}
 }
-?>

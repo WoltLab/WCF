@@ -75,4 +75,3 @@ class TemplatePluginFunctionCounter implements TemplatePluginFunction {
 		return $result;
 	}
 }
-?>

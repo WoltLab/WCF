@@ -56,4 +56,3 @@ class SetupTemplateEngine extends TemplateEngine {
 	 */
 	protected function loadTemplateListeners() {}
 }
-?>

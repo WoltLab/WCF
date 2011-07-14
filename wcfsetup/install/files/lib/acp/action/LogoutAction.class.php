@@ -38,4 +38,3 @@ class LogoutAction extends AbstractSecureAction {
 		exit;
 	}
 }
-?>

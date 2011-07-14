@@ -22,4 +22,3 @@ interface TemplatePluginModifier {
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj);
 }
-?>

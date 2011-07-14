@@ -355,4 +355,3 @@ abstract class LanguageFactory {
 		return $languages;
 	}
 }
-?>

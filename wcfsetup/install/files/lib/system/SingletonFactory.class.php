@@ -50,4 +50,3 @@ abstract class SingletonFactory {
 		return self::$__singletonObjects[$className];
 	}
 }
-?>

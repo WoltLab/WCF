@@ -212,4 +212,3 @@ class SMTPMailSender extends MailSender {
 		$this->connection->puts($data.Mail::$crlf);
 	}
 }
-?>

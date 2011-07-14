@@ -376,4 +376,3 @@ abstract class AbstractOptionListForm extends AbstractForm {
 		return $children;
 	}
 }
-?>

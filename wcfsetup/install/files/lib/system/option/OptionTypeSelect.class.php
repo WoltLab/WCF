@@ -72,4 +72,3 @@ class OptionTypeSelect extends OptionTypeRadiobuttons {
 		);
 	}
 }
-?>

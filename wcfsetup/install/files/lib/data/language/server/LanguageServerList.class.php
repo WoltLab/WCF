@@ -18,4 +18,3 @@ class LanguageServerList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\language\server\LanguageServer';
 }
-?>

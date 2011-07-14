@@ -158,4 +158,3 @@ class Template extends DatabaseObject {
 		return $results;
 	}
 }
-?>

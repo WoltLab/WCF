@@ -18,4 +18,3 @@ class UserNotificationEventList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\user\notification\event\UserNotificationEvent';
 }
-?>

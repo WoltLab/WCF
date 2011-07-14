@@ -18,4 +18,3 @@ class SessionAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\session\SessionEditor';
 }
-?>

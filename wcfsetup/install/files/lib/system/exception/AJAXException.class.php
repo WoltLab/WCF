@@ -28,4 +28,3 @@ class AJAXException extends \Exception {
 		exit;
 	}
 }
-?>

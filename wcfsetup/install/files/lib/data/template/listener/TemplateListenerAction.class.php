@@ -18,4 +18,3 @@ class TemplateListenerAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\template\listener\TemplateListenerEditor';
 }
-?>

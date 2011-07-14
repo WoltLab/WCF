@@ -65,4 +65,3 @@ class OptionAction extends AbstractDatabaseObjectAction {
 		call_user_func(array($this->className, 'updateAll'), $this->parameters['data']);
 	}
 }
-?>

@@ -18,4 +18,3 @@ class TemplateList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\template\Template';
 }
-?>

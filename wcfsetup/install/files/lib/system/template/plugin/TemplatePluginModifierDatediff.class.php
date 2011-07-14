@@ -31,4 +31,3 @@ class TemplatePluginModifierDatediff implements TemplatePluginModifier {
 		return DateUtil::diff($start, $end, 'string');
 	}
 }
-?>

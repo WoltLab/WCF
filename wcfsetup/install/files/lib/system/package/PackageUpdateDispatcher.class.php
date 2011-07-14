@@ -768,4 +768,3 @@ abstract class PackageUpdateDispatcher {
 		WCF::getSession()->register('cachedPackageUpdateDownloads', $cachedDownloads);
 	}
 }
-?>

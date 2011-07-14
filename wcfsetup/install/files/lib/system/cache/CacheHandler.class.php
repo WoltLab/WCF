@@ -167,4 +167,3 @@ class CacheHandler extends SingletonFactory {
 		return $this->cacheSource;
 	}
 }
-?>

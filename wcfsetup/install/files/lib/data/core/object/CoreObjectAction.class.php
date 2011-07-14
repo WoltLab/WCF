@@ -18,4 +18,3 @@ class CoreObjectAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\core\object\CoreObjectEditor';
 }
-?>

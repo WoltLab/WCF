@@ -23,4 +23,3 @@ class LanguageServer extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'languageServerID';
 }
-?>

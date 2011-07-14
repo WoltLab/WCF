@@ -87,4 +87,3 @@ class CacheBuilderLanguage implements CacheBuilder {
 		return $data;
 	}
 }
-?>

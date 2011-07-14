@@ -50,4 +50,3 @@ class OptionTypeTimezone implements OptionType {
 		return $newValue;		
 	}
 }
-?>

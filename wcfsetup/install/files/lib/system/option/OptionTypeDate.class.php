@@ -142,4 +142,3 @@ class OptionTypeDate implements OptionType, SearchableUserOption {
 		return true;
 	}
 }
-?>

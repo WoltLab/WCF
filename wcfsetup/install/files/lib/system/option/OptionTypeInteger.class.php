@@ -21,4 +21,3 @@ class OptionTypeInteger extends OptionTypeText {
 		return intval($newValue);
 	}
 }
-?>

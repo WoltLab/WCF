@@ -108,4 +108,3 @@ class TemplateGroupEditor extends DatabaseObjectEditor {
 		}
 	}
 }
-?>

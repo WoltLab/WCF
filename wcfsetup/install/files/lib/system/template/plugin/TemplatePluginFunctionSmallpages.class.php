@@ -103,4 +103,3 @@ class TemplatePluginFunctionSmallpages implements TemplatePluginFunction {
 		return $html;
 	}
 }
-?>

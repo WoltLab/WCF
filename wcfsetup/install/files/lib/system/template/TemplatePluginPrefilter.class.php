@@ -22,4 +22,3 @@ interface TemplatePluginPrefilter {
 	 */
 	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler);
 }
-?>

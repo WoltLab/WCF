@@ -270,4 +270,3 @@ class User extends DatabaseObject {
 		return $userList->getObjects();
 	}
 }
-?>

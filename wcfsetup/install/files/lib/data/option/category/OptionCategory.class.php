@@ -23,4 +23,3 @@ class OptionCategory extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'categoryID';
 }
-?>

@@ -99,4 +99,3 @@ abstract class SortablePage extends MultipleLinkPage {
 		));
 	}
 }
-?>

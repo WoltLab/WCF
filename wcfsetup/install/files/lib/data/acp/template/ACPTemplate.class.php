@@ -23,4 +23,3 @@ class ACPTemplate extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'templateID';
 }
-?>

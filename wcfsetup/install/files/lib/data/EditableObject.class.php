@@ -40,4 +40,3 @@ interface EditableObject extends StorableObject {
 	 */
 	public static function deleteAll(array $objectIDs = array());
 }
-?>

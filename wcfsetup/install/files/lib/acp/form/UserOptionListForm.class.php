@@ -86,4 +86,3 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 		}
 	}
 }
-?>

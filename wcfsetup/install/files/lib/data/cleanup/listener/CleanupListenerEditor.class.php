@@ -18,4 +18,3 @@ class CleanupListenerEditor extends DatabaseObjectEditor {
 	 */
 	public $baseClass = 'wcf\data\cleanup\listener\CleanupListener';
 }
-?>

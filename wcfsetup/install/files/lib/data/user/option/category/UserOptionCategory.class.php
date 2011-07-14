@@ -71,4 +71,3 @@ class UserOptionCategory extends DatabaseObject {
 		return new UserOptionCategory(null, $row);
 	}
 }
-?>

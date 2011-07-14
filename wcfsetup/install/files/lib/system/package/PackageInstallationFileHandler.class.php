@@ -24,4 +24,3 @@ abstract class PackageInstallationFileHandler implements FileHandler {
 		$this->packageInstallation = $packageInstallation;
 	}
 }
-?>

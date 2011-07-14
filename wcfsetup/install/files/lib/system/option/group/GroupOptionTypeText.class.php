@@ -28,4 +28,3 @@ class GroupOptionTypeText extends OptionTypeText implements GroupOptionType {
 		return $result;
 	}
 }
-?>

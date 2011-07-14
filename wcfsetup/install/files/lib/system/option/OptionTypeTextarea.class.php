@@ -26,4 +26,3 @@ class OptionTypeTextarea extends OptionTypeText {
 		return WCF::getTPL()->fetch('optionTypeTextarea');
 	}
 }
-?>

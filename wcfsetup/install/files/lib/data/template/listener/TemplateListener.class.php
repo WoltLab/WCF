@@ -23,4 +23,3 @@ class TemplateListener extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'listenerID';
 }
-?>

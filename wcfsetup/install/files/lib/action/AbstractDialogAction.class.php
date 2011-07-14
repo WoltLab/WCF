@@ -70,4 +70,3 @@ abstract class AbstractDialogAction extends AbstractSecureAction {
 	 */
 	abstract protected function validateStep();
 }
-?>

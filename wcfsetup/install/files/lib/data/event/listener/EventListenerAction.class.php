@@ -18,4 +18,3 @@ class EventListenerAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\event\listener\EventListenerEditor';
 }
-?>

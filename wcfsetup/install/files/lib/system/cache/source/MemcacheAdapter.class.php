@@ -64,4 +64,3 @@ class MemcacheAdapter extends SingletonFactory {
 		return $this->memcache;
 	}
 }
-?>

@@ -53,4 +53,3 @@ class Style extends DatabaseObject {
 		return $variables;
 	}
 }
-?>

@@ -78,4 +78,3 @@ class RemoteFile extends File {
 		return $this->errorDesc;
 	}
 }
-?>

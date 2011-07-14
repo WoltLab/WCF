@@ -23,4 +23,3 @@ class Search extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'searchID';	
 }
-?>

@@ -64,4 +64,3 @@ class SessionFactory extends ACPSessionFactory {
 		parent::init();
 	}
 }
-?>

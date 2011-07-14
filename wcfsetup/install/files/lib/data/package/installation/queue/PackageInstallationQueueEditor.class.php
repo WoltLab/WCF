@@ -18,4 +18,3 @@ class PackageInstallationQueueEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\package\installation\queue\PackageInstallationQueue';
 }
-?>

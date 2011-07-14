@@ -21,4 +21,3 @@ class GetUpdateInfoCronjob implements Cronjob {
 		PackageUpdate::refreshPackageDatabaseAutomatically();
 	}
 }
-?>

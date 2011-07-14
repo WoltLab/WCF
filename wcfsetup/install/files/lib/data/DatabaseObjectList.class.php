@@ -210,4 +210,3 @@ abstract class DatabaseObjectList {
 		return call_user_func(array($this->className, 'getDatabaseTableAlias'));
 	}
 }
-?>

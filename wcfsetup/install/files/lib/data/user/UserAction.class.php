@@ -116,4 +116,3 @@ class UserAction extends AbstractDatabaseObjectAction {
 		return $user;
 	}
 }
-?>

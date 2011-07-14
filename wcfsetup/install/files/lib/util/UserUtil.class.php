@@ -163,4 +163,3 @@ class UserUtil {
 		return substr(FileUtil::unifyDirSeperator($REQUEST_URI), 0, 255);
 	}
 }
-?>

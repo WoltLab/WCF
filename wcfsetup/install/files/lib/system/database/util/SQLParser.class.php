@@ -299,4 +299,3 @@ class SQLParser {
 		$statement->execute();
 	}
 }
-?>

@@ -18,4 +18,3 @@ class ApplicationList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\application\Application';
 }
-?>

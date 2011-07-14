@@ -18,4 +18,3 @@ class SessionList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\session\Session';
 }
-?>

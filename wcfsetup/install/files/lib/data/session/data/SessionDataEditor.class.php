@@ -18,4 +18,3 @@ class SessionDataEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\session\data\SessionData';
 }
-?>

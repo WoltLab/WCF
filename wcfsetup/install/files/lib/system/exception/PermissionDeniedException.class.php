@@ -28,4 +28,3 @@ class PermissionDeniedException extends UserException {
 		WCF::getTPL()->display('permissionDenied');
 	}
 }
-?>

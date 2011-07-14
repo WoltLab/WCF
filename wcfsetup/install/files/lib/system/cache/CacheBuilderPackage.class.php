@@ -25,4 +25,3 @@ class CacheBuilderPackage implements CacheBuilder {
 		return $packageList->getObjects();
 	}
 }
-?>

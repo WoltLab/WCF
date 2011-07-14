@@ -211,4 +211,3 @@ class UserGroupEditor extends DatabaseObjectEditor implements EditableCachedObje
 		SessionHandler::resetSessions();
 	}
 }
-?>

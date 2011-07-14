@@ -299,4 +299,3 @@ class UserGroup extends DatabaseObject {
 		return null;
 	}
 }
-?>

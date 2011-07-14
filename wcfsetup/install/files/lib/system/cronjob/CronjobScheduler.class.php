@@ -201,4 +201,3 @@ abstract class CronjobScheduler {
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.cronjobs-'.PACKAGE_ID.'php');
 	}
 }
-?>

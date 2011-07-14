@@ -75,4 +75,3 @@ class UserNotificationTypePackageInstallationPlugin extends AbstractXMLPackageIn
 		);
 	}
 }
-?>

@@ -63,4 +63,3 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		return null;
 	}
 }
-?>

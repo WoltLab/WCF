@@ -18,4 +18,3 @@ class CleanupListenerAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\cleanup\listener\CleanupListenerEditor';
 }
-?>

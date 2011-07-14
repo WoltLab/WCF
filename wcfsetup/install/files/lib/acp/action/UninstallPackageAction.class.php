@@ -147,4 +147,3 @@ class UninstallPackageAction extends InstallPackageAction {
 		}
 	}
 }
-?>

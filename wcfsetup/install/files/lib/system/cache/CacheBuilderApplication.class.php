@@ -77,4 +77,3 @@ class CacheBuilderApplication implements CacheBuilder {
 		return $data;
 	}
 }
-?>

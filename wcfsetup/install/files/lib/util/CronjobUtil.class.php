@@ -582,4 +582,3 @@ abstract class CronjobUtil {
 		}
 	}
 }
-?>

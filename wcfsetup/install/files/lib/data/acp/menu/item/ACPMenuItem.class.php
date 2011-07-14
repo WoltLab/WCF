@@ -32,4 +32,3 @@ class ACPMenuItem extends DatabaseObject implements TreeMenuItem {
 		return LinkHandler::getInstance()->getLink($this->menuItemLink);
 	}
 }
-?>

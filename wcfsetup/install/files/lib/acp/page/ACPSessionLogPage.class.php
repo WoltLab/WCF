@@ -124,4 +124,3 @@ class ACPSessionLogPage extends SortablePage {
 		parent::show();
 	}
 }
-?>

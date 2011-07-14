@@ -36,4 +36,3 @@ class PageMenu extends TreeMenu {
 		return $item->getProvider()->isVisible();
 	}
 }
-?>

@@ -18,4 +18,3 @@ class TemplateListenerList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\template\listener\TemplateListener';
 }
-?>

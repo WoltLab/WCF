@@ -90,4 +90,3 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements E
 		return count($objectIDs);
 	}
 }
-?>

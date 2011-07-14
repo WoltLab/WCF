@@ -63,4 +63,3 @@ interface FormElement {
 	 */
 	public function getHTML($formName);
 }
-?>

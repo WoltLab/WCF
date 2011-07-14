@@ -117,4 +117,3 @@ class FilesPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		}
 	}
 }
-?>

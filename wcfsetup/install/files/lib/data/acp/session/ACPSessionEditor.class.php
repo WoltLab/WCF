@@ -47,4 +47,3 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 		return parent::update($parameters);
 	}
 }
-?>

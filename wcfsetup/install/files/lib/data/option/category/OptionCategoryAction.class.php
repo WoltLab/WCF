@@ -35,4 +35,3 @@ class OptionCategoryAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $permissionsUpdate = array('admin.system.canEditOption');
 }
-?>

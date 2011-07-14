@@ -68,4 +68,3 @@ class TemplatePluginPrefilterHascontent implements TemplatePluginPrefilter {
 		return $newContent;
 	}
 }
-?>

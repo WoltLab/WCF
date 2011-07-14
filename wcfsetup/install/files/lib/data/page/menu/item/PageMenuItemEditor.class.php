@@ -186,4 +186,3 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements EditableCachedO
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.pageMenu-*.php');
 	}
 }
-?>

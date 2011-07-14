@@ -598,4 +598,3 @@ class LanguageEditor extends DatabaseObjectEditor {
 		}
 	}
 }
-?>

@@ -93,4 +93,3 @@ class UserGroupListPage extends SortablePage {
 		parent::show();
 	}
 }
-?>

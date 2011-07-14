@@ -32,4 +32,3 @@ class GroupFormElementContainer extends AbstractFormElementContainer {
 HTML;
 	}
 }
-?>

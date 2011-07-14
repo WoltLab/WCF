@@ -105,4 +105,3 @@ class LanguageServerAddForm extends ACPForm {
 		parent::show();
 	}
 }
-?>

@@ -151,4 +151,3 @@ class OptionForm extends AbstractOptionListForm {
 		return ($option->hidden != 1);
 	}
 }
-?>

@@ -28,4 +28,3 @@ class TemplatePluginPrefilterEvent implements TemplatePluginPrefilter {
 		return $sourceContent;
 	}
 }
-?>

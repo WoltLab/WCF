@@ -197,4 +197,3 @@ class StorageHandler extends SingletonFactory {
 		}
 	}
 }
-?>

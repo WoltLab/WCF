@@ -307,4 +307,3 @@ class UserSearchForm extends UserOptionListForm {
 		return ($option->searchable == 1 && !$option->disabled && ($option->visible == 3 || $option->visible < 2));
 	}
 }
-?>

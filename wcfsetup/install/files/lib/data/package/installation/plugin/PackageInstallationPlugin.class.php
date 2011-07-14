@@ -29,4 +29,3 @@ class PackageInstallationPlugin extends DatabaseObject {
 	 */	
 	protected static $databaseTableIndexIsIdentity = false;
 }
-?>

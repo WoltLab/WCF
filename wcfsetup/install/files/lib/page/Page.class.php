@@ -42,4 +42,3 @@ interface Page {
 	 */
 	public function show();
 }
-?>

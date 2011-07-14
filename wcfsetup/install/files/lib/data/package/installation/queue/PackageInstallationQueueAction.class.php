@@ -54,4 +54,3 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 		);
 	}
 }
-?>

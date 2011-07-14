@@ -23,4 +23,3 @@ class CoreObject extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'objectID';
 }
-?>

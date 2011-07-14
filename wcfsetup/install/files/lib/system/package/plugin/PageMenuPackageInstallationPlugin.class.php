@@ -53,4 +53,3 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 		return $result;
 	}
 }
-?>

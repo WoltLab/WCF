@@ -114,4 +114,3 @@ class MasterPasswordForm extends ACPForm {
 		));
 	}
 }
-?>

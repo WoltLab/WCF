@@ -18,4 +18,3 @@ class CronjobLogAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\cronjob\log\CronjobLogEditor';
 }
-?>

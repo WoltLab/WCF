@@ -35,4 +35,3 @@ class TemplateAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $permissionsUpdate = array('admin.template.canEditTemplate');
 }
-?>

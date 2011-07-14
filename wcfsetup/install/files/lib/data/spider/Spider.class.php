@@ -23,4 +23,3 @@ class Spider extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'spiderID';
 }
-?>

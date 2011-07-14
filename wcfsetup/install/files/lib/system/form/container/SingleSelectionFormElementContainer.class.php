@@ -67,4 +67,3 @@ class SingleSelectionFormElementContainer extends SelectionFormElementContainer 
 HTML;
 	}
 }
-?>

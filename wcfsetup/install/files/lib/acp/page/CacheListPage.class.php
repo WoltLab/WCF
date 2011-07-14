@@ -139,4 +139,3 @@ class CacheListPage extends AbstractPage {
 		parent::show();
 	}
 }
-?>

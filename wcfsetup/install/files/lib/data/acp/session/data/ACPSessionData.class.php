@@ -29,4 +29,3 @@ class ACPSessionData extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'sessionID';
 }
-?>

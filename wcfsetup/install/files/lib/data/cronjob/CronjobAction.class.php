@@ -100,4 +100,3 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 		}
 	}
 }
-?>

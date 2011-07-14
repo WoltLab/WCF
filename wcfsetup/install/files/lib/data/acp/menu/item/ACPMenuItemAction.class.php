@@ -18,4 +18,3 @@ class ACPMenuItemAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\acp\menu\item\ACPMenuItemEditor';
 }
-?>

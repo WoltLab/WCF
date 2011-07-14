@@ -79,4 +79,3 @@ class ACPTemplatesPackageInstallationPlugin extends AbstractPackageInstallationP
 		}
 	}
 }
-?>

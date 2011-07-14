@@ -48,4 +48,3 @@ class FTP {
 		return call_user_func_array('ftp_' . $function, $arguments);
 	}
 }
-?>

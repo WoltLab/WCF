@@ -80,4 +80,3 @@ abstract class UserAuth {
 	 */
 	public abstract function loginAutomatically($persistent = false, $userClassname = 'wcf\data\user\User');
 }
-?>

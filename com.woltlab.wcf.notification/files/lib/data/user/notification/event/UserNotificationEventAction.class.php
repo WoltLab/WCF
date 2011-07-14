@@ -18,4 +18,3 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\user\notification\event\UserNotificationEventEditor';
 }
-?>

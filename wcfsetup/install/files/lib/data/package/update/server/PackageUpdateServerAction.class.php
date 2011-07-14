@@ -51,4 +51,3 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction {
 		}
 	}
 }
-?>

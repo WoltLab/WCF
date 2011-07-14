@@ -338,4 +338,3 @@ class UserAddForm extends UserOptionListForm {
 		return ($option->editable != 1 && $option->editable != 4 && !$option->disabled);
 	}
 }
-?>

@@ -74,4 +74,3 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 		return $this->parameters;
 	}
 }
-?>

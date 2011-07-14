@@ -29,4 +29,3 @@ class TemplatePluginModifierPlainTime implements TemplatePluginModifier {
 		return str_replace('%time%', DateUtil::format($dateTime, DateUtil::TIME_FORMAT), str_replace('%date%', DateUtil::format($dateTime, DateUtil::DATE_FORMAT), WCF::getLanguage()->get('wcf.global.date.dateTimeFormat')));
 	}
 }
-?>

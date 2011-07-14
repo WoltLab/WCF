@@ -28,4 +28,3 @@ class ACPMenu extends TreeMenu {
 		$this->menuItems = CacheHandler::getInstance()->get('menu-'.PACKAGE_ID);
 	}
 }
-?>

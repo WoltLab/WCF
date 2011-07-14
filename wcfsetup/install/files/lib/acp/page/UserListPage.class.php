@@ -313,4 +313,3 @@ class UserListPage extends SortablePage {
 	 */	
 	protected function readObjects() { }
 }
-?>

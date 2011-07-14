@@ -297,4 +297,3 @@ class LanguagesPackageInstallationPlugin extends AbstractXMLPackageInstallationP
 	 */
 	protected function findExistingItem(array $data) { }
 }
-?>

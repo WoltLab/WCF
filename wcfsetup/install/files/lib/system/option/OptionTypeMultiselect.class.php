@@ -80,4 +80,3 @@ class OptionTypeMultiselect extends OptionTypeSelect {
 		return true;
 	}
 }
-?>

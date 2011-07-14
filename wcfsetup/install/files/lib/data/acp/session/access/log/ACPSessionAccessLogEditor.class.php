@@ -18,4 +18,3 @@ class ACPSessionAccessLogEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\acp\session\access\log\ACPSessionAccessLog';
 }
-?>

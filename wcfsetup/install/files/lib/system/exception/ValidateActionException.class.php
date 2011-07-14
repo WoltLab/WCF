@@ -11,4 +11,3 @@ class ValidateActionException extends \Exception {
 		die($message);
 	}
 }
-?>

@@ -21,4 +21,3 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement {
 HTML;
 	}
 }
-?>

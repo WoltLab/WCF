@@ -218,4 +218,3 @@ class TemplatePluginFunctionPages implements TemplatePluginFunction {
 		}
 	}
 }
-?>

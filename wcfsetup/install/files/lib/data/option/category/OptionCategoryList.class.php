@@ -18,4 +18,3 @@ class OptionCategoryList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\option\category\OptionCategory';
 }
-?>

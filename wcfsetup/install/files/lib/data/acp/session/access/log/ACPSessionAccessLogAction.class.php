@@ -18,4 +18,3 @@ class ACPSessionAccessLogAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\acp\session\access\log\ACPSessionAccessLogEditor';
 }
-?>

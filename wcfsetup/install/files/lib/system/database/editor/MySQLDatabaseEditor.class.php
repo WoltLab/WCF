@@ -220,4 +220,3 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		return $definition;
 	}
 }
-?>

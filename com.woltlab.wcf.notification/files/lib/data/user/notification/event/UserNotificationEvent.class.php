@@ -23,4 +23,3 @@ class UserNotificationEvent extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'eventID';
 }
-?>

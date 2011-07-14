@@ -35,4 +35,3 @@ class TemplatePluginCompilerIcon implements TemplatePluginCompiler {
 		return "<?php \$_icon".$hash." = ob_get_contents(); ob_end_clean(); echo wcf\system\style\StyleHandler::getInstance()->getStyle()->getIconPath(\$_icon".$hash."); ?>";
 	}
 }
-?>

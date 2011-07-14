@@ -23,4 +23,3 @@ class Application extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'packageID';
 }
-?>

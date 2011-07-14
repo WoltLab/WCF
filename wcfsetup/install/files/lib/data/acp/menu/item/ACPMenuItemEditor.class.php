@@ -18,4 +18,3 @@ class ACPMenuItemEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\acp\menu\item\ACPMenuItem';
 }
-?>

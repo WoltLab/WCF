@@ -101,4 +101,3 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.eventListener-*.php');
 	}
 }
-?>

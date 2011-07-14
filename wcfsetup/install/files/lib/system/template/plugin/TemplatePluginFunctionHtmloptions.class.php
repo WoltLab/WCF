@@ -126,4 +126,3 @@ class TemplatePluginFunctionHtmloptions extends TemplatePluginFunctionHtmlcheckb
 		return '<option label="'.$value.'" value="'.$this->encodeHTML($key).'"'.(in_array($key, $this->selected) ? ' selected="selected"' : '').'>'.$value."</option>\n";
 	}
 }
-?>

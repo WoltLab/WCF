@@ -21,4 +21,3 @@ interface EventListener {
 	 */
 	public function execute($eventObj, $className, $eventName);
 }
-?>

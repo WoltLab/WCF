@@ -188,4 +188,3 @@ class EventHandler extends SingletonFactory {
 		return $eventName.'@'.$className;
 	}
 }
-?>

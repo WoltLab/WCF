@@ -93,4 +93,3 @@ class HeaderUtil {
 		header('Location: '.$location);
 	}
 }
-?>

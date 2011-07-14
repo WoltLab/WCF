@@ -18,4 +18,3 @@ class PackageUpdateVersionList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\package\update\version\PackageUpdateVersion';
 }
-?>

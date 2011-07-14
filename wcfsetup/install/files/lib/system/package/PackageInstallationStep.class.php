@@ -95,4 +95,3 @@ class PackageInstallationStep {
 		return $this->splitNode;
 	}
 }
-?>

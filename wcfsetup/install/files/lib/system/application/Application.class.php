@@ -21,4 +21,3 @@ interface Application {
 	 */
 	public static function __callStatic($method, array $arguments);
 }
-?>

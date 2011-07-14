@@ -73,4 +73,3 @@ class ACPSessionLog extends DatabaseObject {
 		return 0;
 	}
 }
-?>

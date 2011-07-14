@@ -26,4 +26,3 @@ interface PageMenuItemProvider {
 	 */
 	public function getNotifications();
 }
-?>

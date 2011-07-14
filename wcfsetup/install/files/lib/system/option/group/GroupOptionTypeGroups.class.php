@@ -79,4 +79,3 @@ class GroupOptionTypeGroups implements GroupOptionType {
 		return implode(',', $result);
 	}
 }
-?>

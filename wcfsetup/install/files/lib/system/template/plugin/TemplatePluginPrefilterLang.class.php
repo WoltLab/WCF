@@ -32,4 +32,3 @@ class TemplatePluginPrefilterLang implements TemplatePluginPrefilter {
 		return $sourceContent;
 	}
 }
-?>

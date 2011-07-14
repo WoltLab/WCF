@@ -146,4 +146,3 @@ class SystemException extends \Exception implements PrintableException {
 <?php
 	}
 }
-?>

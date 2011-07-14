@@ -63,4 +63,3 @@ abstract class AbstractNamedFormElement extends AbstractFormElement {
 		return $this->value;
 	}
 }
-?>

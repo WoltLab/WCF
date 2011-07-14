@@ -21,4 +21,3 @@ class SingleSelectionFormElement extends AbstractNamedFormElement {
 HTML;
 	}
 }
-?>

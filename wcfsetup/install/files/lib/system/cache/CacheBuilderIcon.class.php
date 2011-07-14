@@ -88,4 +88,3 @@ class CacheBuilderIcon implements CacheBuilder {
 		return $files;
 	}
 }
-?>

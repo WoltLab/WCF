@@ -59,4 +59,3 @@ class TemplatePluginCompilerImplode implements TemplatePluginCompiler {
 		return $phpCode;
 	}
 }
-?>

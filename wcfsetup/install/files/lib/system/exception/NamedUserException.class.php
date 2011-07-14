@@ -36,4 +36,3 @@ class NamedUserException extends UserException {
 		WCF::getTPL()->display('userException');
 	}
 }
-?>

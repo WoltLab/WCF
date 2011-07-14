@@ -27,4 +27,3 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	 */	
 	public $tagName = 'acpmenuitem';
 }
-?>

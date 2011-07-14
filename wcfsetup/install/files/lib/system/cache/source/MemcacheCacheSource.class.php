@@ -189,4 +189,3 @@ class MemcacheCacheSource implements CacheSource {
 		// if ($this->getAdapter() !== null && $this->getAdapter()->getMemcache() !== null) $this->getAdapter()->getMemcache()->close();
 	}
 }
-?>

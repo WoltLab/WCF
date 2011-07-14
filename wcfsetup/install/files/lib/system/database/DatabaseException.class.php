@@ -138,4 +138,3 @@ class DatabaseException extends SystemException {
 		parent::show();
 	}
 }
-?>

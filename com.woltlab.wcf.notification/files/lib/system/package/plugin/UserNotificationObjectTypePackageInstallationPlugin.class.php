@@ -75,4 +75,3 @@ class UserNotificationObjectTypePackageInstallationPlugin extends AbstractXMLPac
 		);
 	}
 }
-?>

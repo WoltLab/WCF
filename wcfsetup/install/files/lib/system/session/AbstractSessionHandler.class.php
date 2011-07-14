@@ -45,4 +45,3 @@ abstract class AbstractSessionHandler extends SingletonFactory {
 	 */
 	abstract protected function initSession();
 }
-?>

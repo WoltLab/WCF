@@ -29,4 +29,3 @@ class ACPSessionAccessLogList extends DatabaseObjectList {
 		parent::readObjects();
 	}
 }
-?>

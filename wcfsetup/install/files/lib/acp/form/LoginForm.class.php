@@ -154,4 +154,3 @@ class LoginForm extends AbstractForm {
 		));
 	}
 }
-?>

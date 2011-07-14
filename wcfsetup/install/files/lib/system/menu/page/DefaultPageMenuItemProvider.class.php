@@ -26,4 +26,3 @@ class DefaultPageMenuItemProvider implements PageMenuItemProvider {
 		return 0;
 	}
 }
-?>

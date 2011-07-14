@@ -18,4 +18,3 @@ class PageMenuItemList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\page\menu\item\PageMenuItem';
 }
-?>

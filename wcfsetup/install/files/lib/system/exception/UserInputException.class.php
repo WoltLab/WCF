@@ -57,4 +57,3 @@ class UserInputException extends UserException {
 		return $this->type;
 	}
 }
-?>

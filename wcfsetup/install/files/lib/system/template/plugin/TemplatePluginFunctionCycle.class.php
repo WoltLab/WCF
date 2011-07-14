@@ -90,4 +90,3 @@ class TemplatePluginFunctionCycle implements TemplatePluginFunction {
 		}
 	}
 }
-?>

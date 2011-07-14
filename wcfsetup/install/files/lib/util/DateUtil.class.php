@@ -251,4 +251,3 @@ class DateUtil {
 		return self::$availableTimezones;
 	}
 }
-?>

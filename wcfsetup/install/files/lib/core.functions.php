@@ -22,4 +22,3 @@ spl_autoload_register(array('wcf\system\WCF', 'autoload'));
 function escapeString($string) {
 	return wcf\system\WCF::getDB()->escapeString($string);
 }
-?>

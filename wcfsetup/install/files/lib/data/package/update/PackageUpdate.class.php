@@ -23,4 +23,3 @@ class PackageUpdate extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'packageUpdateID';
 }
-?>

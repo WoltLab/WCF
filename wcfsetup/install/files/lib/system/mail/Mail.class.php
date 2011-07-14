@@ -457,4 +457,3 @@ class Mail {
 		return $string;
 	}
 }
-?>

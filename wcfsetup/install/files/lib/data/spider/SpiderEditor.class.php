@@ -18,4 +18,3 @@ class SpiderEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\spider\Spider';
 }
-?>

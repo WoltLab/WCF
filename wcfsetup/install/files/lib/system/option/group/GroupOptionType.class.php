@@ -21,4 +21,3 @@ interface GroupOptionType extends OptionType {
 	 */
 	public function merge(array $values);
 }
-?>

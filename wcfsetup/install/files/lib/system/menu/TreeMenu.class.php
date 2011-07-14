@@ -208,4 +208,3 @@ abstract class TreeMenu extends SingletonFactory {
 		return array();
 	}
 }
-?>

@@ -18,4 +18,3 @@ class UserNotificationEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\user\notification\UserNotification';
 }
-?>

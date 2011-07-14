@@ -18,4 +18,3 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\package\update\PackageUpdateEditor';
 }
-?>

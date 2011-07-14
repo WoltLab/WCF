@@ -147,4 +147,3 @@ abstract class PackageInstallationFormManager {
 		return null;
 	}
 }
-?>

@@ -55,4 +55,3 @@ class SetupTemplate extends Template {
 		return new TemplateCompiler($this);
 	}
 }
-?>

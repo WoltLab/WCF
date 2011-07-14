@@ -28,4 +28,3 @@ class IllegalLinkException extends NamedUserException {
 		parent::show();
 	}
 }
-?>

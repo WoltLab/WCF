@@ -18,4 +18,3 @@ class PageLocationAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\page\location\PageLocationEditor';
 }
-?>

@@ -55,4 +55,3 @@ interface CacheSource {
 	 */
 	public function flush();
 }
-?>

@@ -21,4 +21,3 @@ interface TemplatePluginFunction {
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj);
 }
-?>

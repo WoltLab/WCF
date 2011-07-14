@@ -66,4 +66,3 @@ class OptionTypeText implements OptionType, SearchableUserOption {
 		return true;
 	}
 }
-?>

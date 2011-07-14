@@ -18,4 +18,3 @@ class EventListenerList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\event\listener\EventListener';
 }
-?>

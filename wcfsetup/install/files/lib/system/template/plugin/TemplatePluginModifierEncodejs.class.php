@@ -39,4 +39,3 @@ class TemplatePluginModifierEncodejs implements TemplatePluginModifier {
 		return $tagArgs[0];
 	}
 }
-?>

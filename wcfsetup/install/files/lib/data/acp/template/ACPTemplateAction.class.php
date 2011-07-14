@@ -35,4 +35,3 @@ class ACPTemplateAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $permissionsUpdate = array('admin.template.canUpdateTemplate');
 }
-?>

@@ -43,4 +43,3 @@ class TemplatePluginCompilerLang implements TemplatePluginCompiler {
 		return "<?php \$_lang".$hash." = ob_get_contents(); ob_end_clean(); echo wcf\system\WCF::getLanguage()->getDynamicVariable(\$_lang".$hash.", \$this->tagStack[count(\$this->tagStack) - 1][1]); array_pop(\$this->tagStack); ?>";
 	}
 }
-?>

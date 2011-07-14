@@ -34,4 +34,3 @@ class OptionTypeFloat extends OptionTypeText {
 		return floatval($newValue);
 	}
 }
-?>

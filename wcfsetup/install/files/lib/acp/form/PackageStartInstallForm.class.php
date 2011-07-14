@@ -224,4 +224,3 @@ class PackageStartInstallForm extends ACPForm {
 		parent::show();
 	}
 }
-?>

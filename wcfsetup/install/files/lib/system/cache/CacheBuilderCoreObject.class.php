@@ -40,4 +40,3 @@ class CacheBuilderCoreObject implements CacheBuilder {
 		return $data;
 	}
 }
-?>

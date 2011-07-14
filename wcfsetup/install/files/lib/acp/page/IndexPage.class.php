@@ -56,4 +56,3 @@ class IndexPage extends AbstractPage {
 		parent::show();
 	}
 }
-?>

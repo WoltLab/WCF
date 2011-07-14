@@ -39,4 +39,3 @@ class TemplatePluginCompilerAppend implements TemplatePluginCompiler {
 		throw new SystemException($compiler->formatSyntaxError("unknown tag {/append}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()), 12003);
 	}
 }
-?>

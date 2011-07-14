@@ -19,4 +19,3 @@ abstract class UserException extends \Exception implements PrintableException {
 		echo '<pre>' . $this->getTraceAsString() . '</pre>';
 	}
 }
-?>

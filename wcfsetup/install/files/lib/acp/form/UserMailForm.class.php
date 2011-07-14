@@ -163,4 +163,3 @@ class UserMailForm extends ACPForm {
 		));
 	}
 }
-?>

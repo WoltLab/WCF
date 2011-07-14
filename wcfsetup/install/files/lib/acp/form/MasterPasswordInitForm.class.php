@@ -140,4 +140,3 @@ define('MASTER_PASSWORD_SALT', '".$salt."');
 		));
 	}
 }
-?>

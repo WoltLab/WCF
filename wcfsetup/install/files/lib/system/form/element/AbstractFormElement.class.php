@@ -78,4 +78,3 @@ abstract class AbstractFormElement implements FormElement {
 		return $this->parent;
 	}
 }
-?>

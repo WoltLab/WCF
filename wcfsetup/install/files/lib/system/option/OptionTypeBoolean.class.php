@@ -62,4 +62,3 @@ class OptionTypeBoolean implements OptionType, SearchableUserOption {
 		return true;
 	}
 }
-?>

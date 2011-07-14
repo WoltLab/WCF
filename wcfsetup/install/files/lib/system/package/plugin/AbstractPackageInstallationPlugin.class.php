@@ -97,4 +97,3 @@ abstract class AbstractPackageInstallationPlugin implements PackageInstallationP
 		$statement->execute(array($this->installation->getPackageID()));
 	}
 }
-?>

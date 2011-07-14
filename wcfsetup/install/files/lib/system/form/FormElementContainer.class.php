@@ -85,4 +85,3 @@ interface FormElementContainer {
 	 */
 	public function getHTML($formName);
 }
-?>

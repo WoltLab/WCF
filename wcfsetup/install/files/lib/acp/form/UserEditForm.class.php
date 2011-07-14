@@ -198,4 +198,3 @@ class UserEditForm extends UserAddForm {
 		}
 	}
 }
-?>

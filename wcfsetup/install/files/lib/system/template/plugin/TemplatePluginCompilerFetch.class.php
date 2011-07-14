@@ -42,4 +42,3 @@ class TemplatePluginCompilerFetch implements TemplatePluginCompiler {
 		throw new SystemException($compiler->formatSyntaxError("unknown tag {/fetch}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()), 12003);
 	}
 }
-?>

@@ -319,4 +319,3 @@ class Tar {
 		return $this->isZipped;
 	}
 }
-?>

@@ -12,4 +12,3 @@ namespace wcf\acp\action;
  * @category 	Community Framework
  */
 class AJAXProxyAction extends \wcf\action\AJAXProxyAction { }
-?>

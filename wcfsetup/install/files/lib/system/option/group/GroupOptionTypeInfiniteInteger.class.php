@@ -21,4 +21,3 @@ class GroupOptionTypeInfiniteInteger extends GroupOptionTypeInteger {
 		return parent::merge($values);
 	}
 }
-?>

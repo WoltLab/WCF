@@ -18,4 +18,3 @@ class SessionEditor extends ACPSessionEditor {
 	 */
 	protected static $baseClass = 'wcf\data\session\Session';
 }
-?>

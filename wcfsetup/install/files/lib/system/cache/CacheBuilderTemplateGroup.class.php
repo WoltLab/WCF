@@ -24,4 +24,3 @@ class CacheBuilderTemplateGroup implements CacheBuilder {
 		return $templateGroupList->getObjects();
 	}
 }
-?>

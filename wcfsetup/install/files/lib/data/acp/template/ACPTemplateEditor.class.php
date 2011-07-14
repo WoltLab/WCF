@@ -18,4 +18,3 @@ class ACPTemplateEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\acp\template\ACPTemplate';
 }
-?>

@@ -25,4 +25,3 @@ class CleanUpCronjobLogCronjob implements Cronjob {
 		));
 	}
 }
-?>

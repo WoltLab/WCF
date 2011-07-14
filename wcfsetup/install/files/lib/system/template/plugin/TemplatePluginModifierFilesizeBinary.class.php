@@ -26,4 +26,3 @@ class TemplatePluginModifierFilesizeBinary implements TemplatePluginModifier {
 		return FileUtil::formatFilesizeBinary($tagArgs[0]);
 	}
 }
-?>

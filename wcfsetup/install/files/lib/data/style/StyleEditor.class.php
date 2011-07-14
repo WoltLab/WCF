@@ -903,4 +903,3 @@ class StyleEditor extends DatabaseObjectEditor implements EditableCachedObject {
 		}
 	}
 }
-?>

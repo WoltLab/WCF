@@ -29,4 +29,3 @@ interface TemplatePluginCompiler {
 	 */
 	public function executeEnd(TemplateScriptingCompiler $tplObj);
 }
-?>

@@ -18,4 +18,3 @@ class TemplateListenerEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\template\listener\TemplateListener';
 }
-?>

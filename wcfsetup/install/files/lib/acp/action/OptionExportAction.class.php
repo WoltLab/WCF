@@ -52,4 +52,3 @@ class OptionExportAction extends AbstractAction {
 		exit;
 	}
 }
-?>

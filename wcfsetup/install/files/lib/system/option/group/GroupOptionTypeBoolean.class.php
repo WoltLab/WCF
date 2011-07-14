@@ -25,4 +25,3 @@ class GroupOptionTypeBoolean extends OptionTypeBoolean implements GroupOptionTyp
 		return false;
 	}
 }
-?>

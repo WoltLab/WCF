@@ -226,4 +226,3 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		return $this->typeObjects[$type];
 	}
 }
-?>

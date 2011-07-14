@@ -74,4 +74,3 @@ class PageLocationPackageInstallationPlugin extends AbstractXMLPackageInstallati
 		);
 	}
 }
-?>

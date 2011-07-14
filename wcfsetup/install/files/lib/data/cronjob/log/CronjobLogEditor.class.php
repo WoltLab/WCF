@@ -35,4 +35,3 @@ class CronjobLogEditor extends DatabaseObjectEditor {
 		$statement->execute($packageID);
 	}
 }
-?>

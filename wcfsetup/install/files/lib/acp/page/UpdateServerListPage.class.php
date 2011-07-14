@@ -83,4 +83,3 @@ class UpdateServerListPage extends SortablePage {
 		}
 	}
 }
-?>

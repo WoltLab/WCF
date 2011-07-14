@@ -87,4 +87,3 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		}
 	}
 }
-?>

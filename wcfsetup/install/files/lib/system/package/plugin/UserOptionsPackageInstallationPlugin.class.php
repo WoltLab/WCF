@@ -166,4 +166,3 @@ class UserOptionsPackageInstallationPlugin extends AbstractOptionPackageInstalla
 		parent::uninstall();
 	}
 }
-?>

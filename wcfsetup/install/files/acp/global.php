@@ -17,4 +17,3 @@ define('WCF_DIR', dirname(dirname(__FILE__)).'/');
 require_once(WCF_DIR.'lib/system/WCF.class.php');
 require_once(WCF_DIR.'lib/system/WCFACP.class.php');
 new wcf\system\WCFACP();
-?>

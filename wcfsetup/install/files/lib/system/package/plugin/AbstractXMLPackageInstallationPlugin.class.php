@@ -307,4 +307,3 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
        		}
 	}
 }
-?>

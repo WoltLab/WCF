@@ -67,4 +67,3 @@ class MultipleSelectionFormElementContainer extends SelectionFormElementContaine
 HTML;
 	}
 }
-?>

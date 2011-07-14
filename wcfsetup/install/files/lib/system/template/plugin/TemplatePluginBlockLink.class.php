@@ -55,4 +55,3 @@ class TemplatePluginBlockLink implements TemplatePluginBlock {
 		return false;
 	}
 }
-?>

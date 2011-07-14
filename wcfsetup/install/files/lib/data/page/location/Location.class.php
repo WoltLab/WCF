@@ -31,4 +31,3 @@ interface Location {
 	 */
 	public function get($location, $requestURI, $requestMethod, $match);
 }
-?>

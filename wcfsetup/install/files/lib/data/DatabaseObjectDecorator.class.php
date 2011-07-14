@@ -102,4 +102,3 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 		return static::$baseClass;
 	}
 }
-?>

@@ -18,4 +18,3 @@ class SearchList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\search\Search';
 }
-?>

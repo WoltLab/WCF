@@ -77,4 +77,3 @@ class TemplateGroup extends DatabaseObject {
 		}
 	}
 }
-?>

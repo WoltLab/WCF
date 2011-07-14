@@ -27,4 +27,3 @@ class OptionTypePassword extends OptionTypeText {
 		return false;
 	}
 }
-?>

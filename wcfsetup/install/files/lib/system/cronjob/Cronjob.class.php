@@ -23,4 +23,3 @@ interface Cronjob {
 	 */
 	public function execute(array $data);
 }
-?>

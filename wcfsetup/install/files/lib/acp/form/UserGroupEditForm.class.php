@@ -141,4 +141,3 @@ class UserGroupEditForm extends UserGroupAddForm {
 		WCF::getTPL()->assign('success', true);
 	}
 }
-?>

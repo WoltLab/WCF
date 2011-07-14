@@ -75,4 +75,3 @@ class GZipFile extends File {
 		return $eof - $correction;
 	}
 }
-?>

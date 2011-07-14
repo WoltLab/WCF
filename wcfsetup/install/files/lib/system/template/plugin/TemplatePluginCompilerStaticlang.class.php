@@ -36,4 +36,3 @@ class TemplatePluginCompilerStaticlang implements TemplatePluginCompiler {
 		return "<?php \$_lang".$hash." = ob_get_contents(); ob_end_clean(); echo WCF::getLanguage()->get(\$_lang".$hash."); ?>";
 	}
 }
-?>

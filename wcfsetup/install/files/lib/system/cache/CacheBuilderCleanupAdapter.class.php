@@ -48,4 +48,3 @@ class CacheBuilderCleanupAdapter implements CacheBuilder {
 		return $data;
 	}
 }
-?>

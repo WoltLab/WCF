@@ -18,4 +18,3 @@ class CoreObjectEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\core\object\CoreObject';
 }
-?>

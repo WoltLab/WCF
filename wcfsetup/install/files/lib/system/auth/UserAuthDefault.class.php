@@ -97,4 +97,3 @@ class UserAuthDefault extends UserAuth {
 		return $user->checkCookiePassword($password);
 	}
 }
-?>

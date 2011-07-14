@@ -62,4 +62,3 @@ class LanguageAction extends AbstractDatabaseObjectAction {
 		$language->setAsDefault();
 	}
 }
-?>

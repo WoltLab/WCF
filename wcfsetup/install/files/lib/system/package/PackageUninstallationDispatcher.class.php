@@ -228,4 +228,3 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 		exit;
 	}
 }
-?>

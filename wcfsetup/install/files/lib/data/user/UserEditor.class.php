@@ -207,4 +207,3 @@ class UserEditor extends DatabaseObjectEditor {
 		}
 	}
 }
-?>

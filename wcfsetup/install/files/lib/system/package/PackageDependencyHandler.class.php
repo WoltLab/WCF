@@ -78,4 +78,3 @@ abstract class PackageDependencyHandler {
 		self::$packageDependencyCache = CacheHandler::getInstance()->get('packageDependencies-'.PACKAGE_ID);
 	}
 }
-?>

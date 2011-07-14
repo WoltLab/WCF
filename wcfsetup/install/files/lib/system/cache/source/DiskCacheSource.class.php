@@ -219,4 +219,3 @@ class DiskCacheSource implements CacheSource {
 		}
 	}
 }
-?>

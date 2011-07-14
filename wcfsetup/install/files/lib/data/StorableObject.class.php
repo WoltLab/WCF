@@ -56,4 +56,3 @@ interface StorableObject {
 	 */
 	public static function getDatabaseTableIndexName();
 }
-?>

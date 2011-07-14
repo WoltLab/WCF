@@ -38,4 +38,3 @@ class PackageInstallationQueue extends DatabaseObject {
 		return intval($row['processNo']) + 1;
 	}
 }
-?>

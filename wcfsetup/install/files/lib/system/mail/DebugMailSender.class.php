@@ -44,4 +44,3 @@ class DebugMailSender extends MailSender {
 			$mail->getMessage()."\n\n";
 	}
 }
-?>

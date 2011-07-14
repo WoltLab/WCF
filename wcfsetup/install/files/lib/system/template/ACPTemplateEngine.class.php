@@ -52,4 +52,3 @@ class ACPTemplateEngine extends TemplateEngine {
 		$this->templateGroupID = 0;
 	}
 }
-?>

@@ -131,4 +131,3 @@ class AJAXProxyAction extends AbstractSecureAction {
 		exit;
 	}
 }
-?>

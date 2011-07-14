@@ -267,4 +267,3 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 */
 	protected function findExistingItem(array $data) { }
 }
-?>

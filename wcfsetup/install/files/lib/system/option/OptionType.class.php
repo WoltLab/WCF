@@ -40,4 +40,3 @@ interface OptionType {
 	 */
 	public function getData(Option $option, $newValue);
 }
-?>

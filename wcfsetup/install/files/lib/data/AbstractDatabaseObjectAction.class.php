@@ -308,4 +308,3 @@ abstract class AbstractDatabaseObjectAction implements DatabaseObjectAction {
 		}
 	}
 }
-?>

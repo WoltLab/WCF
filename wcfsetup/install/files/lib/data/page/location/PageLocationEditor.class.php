@@ -18,4 +18,3 @@ class PageLocationEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\page\location\PageLocation';
 }
-?>

@@ -38,4 +38,3 @@ class CacheBuilderUserGroup implements CacheBuilder {
 		return $data;
 	}
 }
-?>

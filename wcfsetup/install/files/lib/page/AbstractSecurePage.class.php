@@ -32,4 +32,3 @@ abstract class AbstractSecurePage extends AbstractPage {
 		}
 	}
 }
-?>

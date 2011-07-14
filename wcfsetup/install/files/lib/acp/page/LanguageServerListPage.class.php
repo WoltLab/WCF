@@ -59,4 +59,3 @@ class LanguageServerListPage extends SortablePage {
 		}
 	}
 }
-?>

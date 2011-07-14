@@ -89,4 +89,3 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 		);
 	}
 }
-?>

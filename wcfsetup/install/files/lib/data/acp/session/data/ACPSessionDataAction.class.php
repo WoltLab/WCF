@@ -18,4 +18,3 @@ class ACPSessionDataAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\acp\session\data\ACPSessionDataEditor';
 }
-?>

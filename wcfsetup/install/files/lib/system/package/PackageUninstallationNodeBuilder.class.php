@@ -99,4 +99,3 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 		));
 	}
 }
-?>

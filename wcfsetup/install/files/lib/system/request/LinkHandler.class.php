@@ -43,4 +43,3 @@ class LinkHandler extends SingletonFactory {
 		return $application->domainName . $application->domainPath . $url . (strstr($url, '?') === false ? SID_ARG_1ST : SID_ARG_2ND_NOT_ENCODED);
 	}
 }
-?>

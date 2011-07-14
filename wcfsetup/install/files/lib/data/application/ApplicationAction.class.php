@@ -18,4 +18,3 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\application\ApplicationEditor';
 }
-?>

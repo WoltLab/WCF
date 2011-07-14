@@ -57,4 +57,3 @@ class LabelFormElement extends AbstractFormElement {
 HTML;
 	}
 }
-?>

@@ -88,4 +88,3 @@ class OptionTypeRadiobuttons implements OptionType, SearchableUserOption {
 		return true;
 	}
 }
-?>

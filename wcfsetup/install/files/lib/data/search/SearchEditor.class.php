@@ -18,4 +18,3 @@ class SearchEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\search\Search';
 }
-?>

@@ -36,4 +36,3 @@ class CacheBuilderTemplateListenerCode implements CacheBuilder {
 		return $data;
 	}
 }
-?>

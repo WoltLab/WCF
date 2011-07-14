@@ -28,4 +28,3 @@ class UserOptionCategoryEditor extends DatabaseObjectEditor {
 		return parent::create($parameters);
 	}
 }
-?>

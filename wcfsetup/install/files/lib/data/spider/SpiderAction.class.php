@@ -18,4 +18,3 @@ class SpiderAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\spider\SpiderEditor';
 }
-?>

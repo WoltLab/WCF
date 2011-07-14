@@ -18,4 +18,3 @@ class UserList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\user\User';
 }
-?>

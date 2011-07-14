@@ -94,4 +94,3 @@ class OptionsPackageInstallationPlugin extends AbstractOptionPackageInstallation
 		}
 	}
 }
-?>

@@ -18,4 +18,3 @@ class UserGroupOptionEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\user\group\option\UserGroupOption';
 }
-?>

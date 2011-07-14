@@ -18,4 +18,3 @@ class TemplateGroupList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\template\group\TemplateGroup';
 }
-?>

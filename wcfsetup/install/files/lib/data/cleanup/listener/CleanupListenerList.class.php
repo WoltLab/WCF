@@ -18,4 +18,3 @@ class CleanupListenerList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\cleanup\listener\CleanupListener';
 }
-?>

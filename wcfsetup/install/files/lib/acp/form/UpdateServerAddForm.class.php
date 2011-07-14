@@ -123,4 +123,3 @@ class UpdateServerAddForm extends ACPForm {
 		parent::show();
 	}
 }
-?>

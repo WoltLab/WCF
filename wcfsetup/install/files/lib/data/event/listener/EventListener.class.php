@@ -23,4 +23,3 @@ class EventListener extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'listenerID';
 }
-?>

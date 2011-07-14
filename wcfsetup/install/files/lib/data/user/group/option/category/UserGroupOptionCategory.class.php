@@ -23,4 +23,3 @@ class UserGroupOptionCategory extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'categoryID';
 }
-?>

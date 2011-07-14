@@ -67,4 +67,3 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 	 */
 	public function uninstall() {}
 }
-?>

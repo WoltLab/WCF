@@ -18,4 +18,3 @@ class StyleList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\style\Style';
 }
-?>

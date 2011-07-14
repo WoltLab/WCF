@@ -20,4 +20,3 @@ class PHPMailSender extends MailSender {
 		else return @mb_send_mail($mail->getToString(), $mail->getSubject(), $mail->getBody(), $mail->getHeader());
 	}
 }
-?>

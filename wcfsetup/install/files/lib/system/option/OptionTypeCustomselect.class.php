@@ -44,4 +44,3 @@ class OptionTypeCustomselect extends OptionTypeSelect {
 		return $newValue;
 	}
 }
-?>

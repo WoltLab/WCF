@@ -31,4 +31,3 @@ class TemplatePluginModifierArrayfromlist implements TemplatePluginModifier {
 		return Option::parseSelectOptions($tagArgs[0]);
 	}
 }
-?>

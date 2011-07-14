@@ -104,4 +104,3 @@ class SetupLanguage extends Language {
 		setlocale(LC_CTYPE, $this->get('wcf.global.locale.unix').'.UTF-8', $this->get('wcf.global.locale.unix'), $this->get('wcf.global.locale.win'));
 	}
 }
-?>

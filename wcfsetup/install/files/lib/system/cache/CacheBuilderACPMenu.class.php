@@ -149,4 +149,3 @@ class CacheBuilderACPMenu implements CacheBuilder {
 		return $count;
 	}
 }
-?>

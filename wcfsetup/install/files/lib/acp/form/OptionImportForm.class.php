@@ -120,4 +120,3 @@ class OptionImportForm extends ACPForm {
 		parent::show();
 	}
 }
-?>

@@ -753,4 +753,3 @@ if (!class_exists('wcf\system\WCFSetup')) {
 
 // start setup
 new \wcf\system\WCFSetup();
-?>

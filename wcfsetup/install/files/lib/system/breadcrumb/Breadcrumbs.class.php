@@ -71,4 +71,3 @@ class Breadcrumbs extends SingletonFactory {
 		return false;
 	}
 }
-?>

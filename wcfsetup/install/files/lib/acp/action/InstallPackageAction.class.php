@@ -155,4 +155,3 @@ class InstallPackageAction extends AbstractDialogAction {
 		}
 	}
 }
-?>

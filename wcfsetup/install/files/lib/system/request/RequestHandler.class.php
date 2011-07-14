@@ -90,4 +90,3 @@ class RequestHandler extends SingletonFactory {
 		return $this->activeRequest;
 	}
 }
-?>

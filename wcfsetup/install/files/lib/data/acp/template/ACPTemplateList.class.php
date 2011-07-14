@@ -18,4 +18,3 @@ class ACPTemplateList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\acp\template\ACPTemplate';
 }
-?>

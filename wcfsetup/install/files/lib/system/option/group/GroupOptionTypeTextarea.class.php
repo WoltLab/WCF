@@ -28,4 +28,3 @@ class GroupOptionTypeTextarea extends OptionTypeTextarea implements GroupOptionT
 		return $result;
 	}
 }
-?>

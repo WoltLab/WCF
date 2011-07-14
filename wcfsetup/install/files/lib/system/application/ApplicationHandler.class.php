@@ -125,4 +125,3 @@ class ApplicationHandler extends SingletonFactory {
 		return null;
 	}
 }
-?>

@@ -33,4 +33,3 @@ class LanguageServerAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $permissionsUpdate = array('admin.language.canEditServer');
 }
-?>

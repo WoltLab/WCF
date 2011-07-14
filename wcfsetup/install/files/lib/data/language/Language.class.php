@@ -143,4 +143,3 @@ class Language extends DatabaseObject {
 		return false;
 	}
 }
-?>

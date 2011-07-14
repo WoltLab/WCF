@@ -18,4 +18,3 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\style\StyleEditor';
 }
-?>

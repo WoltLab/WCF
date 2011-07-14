@@ -35,4 +35,3 @@ class LanguageCategoryAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $permissionsUpdate = array('admin.language.canEditLanguage');
 }
-?>

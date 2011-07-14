@@ -18,4 +18,3 @@ class ApplicationEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\application\Application';
 }
-?>

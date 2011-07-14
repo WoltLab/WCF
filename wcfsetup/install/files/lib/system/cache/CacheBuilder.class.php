@@ -20,4 +20,3 @@ interface CacheBuilder {
 	 */
 	public function getData($cacheResource);
 }
-?>

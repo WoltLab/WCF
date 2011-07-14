@@ -107,4 +107,3 @@ abstract class AbstractForm extends AbstractPage implements Form {
 		));
 	}
 }
-?>

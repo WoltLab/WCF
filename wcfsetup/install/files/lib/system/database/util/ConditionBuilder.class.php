@@ -58,4 +58,3 @@ class ConditionBuilder {
 		return $this->conditions;
 	}
 }
-?>

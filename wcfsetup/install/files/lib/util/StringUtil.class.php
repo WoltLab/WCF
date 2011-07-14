@@ -562,4 +562,3 @@ class StringUtil {
 		return str_shuffle($password);
 	}
 }
-?>

@@ -18,4 +18,3 @@ class SpiderList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\spider\Spider';
 }
-?>

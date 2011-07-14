@@ -19,4 +19,3 @@ class PackageUpdateServerEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\package\update\server\PackageUpdateServer';
 }
-?>

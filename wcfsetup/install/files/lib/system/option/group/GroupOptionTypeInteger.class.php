@@ -21,4 +21,3 @@ class GroupOptionTypeInteger extends OptionTypeInteger implements GroupOptionTyp
 		return max($values);
 	}
 }
-?>

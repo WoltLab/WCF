@@ -18,4 +18,3 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\package\installation\plugin\PackageInstallationPluginEditor';
 }
-?>

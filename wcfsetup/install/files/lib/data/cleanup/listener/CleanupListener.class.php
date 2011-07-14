@@ -23,4 +23,3 @@ class CleanupListener extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'listenerID';
 }
-?>

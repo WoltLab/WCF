@@ -565,4 +565,3 @@ class FileUtil {
 		return function_exists('apache_get_version');
 	}
 }
-?>

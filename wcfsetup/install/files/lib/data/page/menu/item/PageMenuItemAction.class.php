@@ -18,4 +18,3 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\page\menu\item\PageMenuItemEditor';
 }
-?>

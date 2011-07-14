@@ -23,4 +23,3 @@ class CronjobLog extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'cronjobLogID';
 }
-?>

@@ -113,4 +113,3 @@ class PackageUpdateForm extends ACPForm {
 		parent::show();
 	}
 }
-?>

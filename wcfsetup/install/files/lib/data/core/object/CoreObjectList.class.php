@@ -18,4 +18,3 @@ class CoreObjectList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\core\object\CoreObject';
 }
-?>

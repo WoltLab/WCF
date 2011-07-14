@@ -18,4 +18,3 @@ interface PrintableException {
 	 */
 	public function show();
 }
-?>

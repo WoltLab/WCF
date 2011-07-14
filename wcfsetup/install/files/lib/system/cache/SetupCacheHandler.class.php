@@ -54,4 +54,3 @@ class SetupCacheHandler extends CacheHandler {
 		return false;
 	}
 }
-?>

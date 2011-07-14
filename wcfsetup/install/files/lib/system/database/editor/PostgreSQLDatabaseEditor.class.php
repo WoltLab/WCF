@@ -373,4 +373,3 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 		throw new DatabaseException("Unknown / unsupported data type '".$mySQLType."'", $this->dbObj);
 	}
 }
-?>

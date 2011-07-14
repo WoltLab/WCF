@@ -28,4 +28,3 @@ class PackageUpdateServerList extends DatabaseObjectList {
 		parent::readObjects();
 	}
 }
-?>

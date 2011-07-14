@@ -86,4 +86,3 @@ class CronjobsPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		$data['nextExec'] = TIME_NOW;
 	}
 }
-?>

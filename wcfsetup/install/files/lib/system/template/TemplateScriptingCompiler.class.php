@@ -1419,4 +1419,3 @@ class TemplateScriptingCompiler {
 		return $string;
 	}
 }
-?>

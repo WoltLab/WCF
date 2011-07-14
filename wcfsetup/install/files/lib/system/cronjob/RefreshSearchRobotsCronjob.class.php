@@ -76,4 +76,3 @@ class RefreshSearchRobotsCronjob implements Cronjob {
 		@unlink($filename);
 	}
 }
-?>

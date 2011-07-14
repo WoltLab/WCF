@@ -43,4 +43,3 @@ interface UserOptionOutput {
 	 */
 	public function getOutput(User $user, $optionData, $value);
 }
-?>

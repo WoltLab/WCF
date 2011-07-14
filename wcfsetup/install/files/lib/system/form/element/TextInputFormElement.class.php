@@ -32,4 +32,3 @@ class TextInputFormElement extends AbstractNamedFormElement {
 HTML;
 	}
 }
-?>

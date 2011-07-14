@@ -142,4 +142,3 @@ class StyleAttributesPackageInstallationPlugin extends AbstractXMLPackageInstall
 		}
 	}
 }
-?>

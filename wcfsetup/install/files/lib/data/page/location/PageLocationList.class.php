@@ -18,4 +18,3 @@ class PageLocationList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\page\location\PageLocation';
 }
-?>

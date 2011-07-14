@@ -18,4 +18,3 @@ class ACPMenuItemList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\acp\menu\item\ACPMenuItem';
 }
-?>

@@ -26,4 +26,3 @@ class AbstractAjaxAction extends AbstractAction {
 		exit;
 	}
 }
-?>

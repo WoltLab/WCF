@@ -76,4 +76,3 @@ abstract class AbstractAction implements Action {
 		EventHandler::getInstance()->fireAction($this, 'executed');
 	}
 }
-?>

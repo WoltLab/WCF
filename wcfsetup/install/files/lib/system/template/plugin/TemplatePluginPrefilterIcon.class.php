@@ -28,4 +28,3 @@ class TemplatePluginPrefilterIcon implements TemplatePluginPrefilter {
 		return $sourceContent;
 	}
 }
-?>

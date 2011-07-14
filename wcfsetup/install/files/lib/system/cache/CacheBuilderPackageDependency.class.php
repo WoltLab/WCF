@@ -58,4 +58,3 @@ class CacheBuilderPackageDependency implements CacheBuilder {
 		return $data;
 	}
 }
-?>

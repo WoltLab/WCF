@@ -18,4 +18,3 @@ class PackageList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\package\Package';
 }
-?>

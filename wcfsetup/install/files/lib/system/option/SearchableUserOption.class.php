@@ -33,4 +33,3 @@ interface SearchableUserOption {
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value);
 }
-?>

@@ -32,4 +32,3 @@ class PasswordInputFormElement extends AbstractNamedFormElement {
 HTML;
 	}
 }
-?>

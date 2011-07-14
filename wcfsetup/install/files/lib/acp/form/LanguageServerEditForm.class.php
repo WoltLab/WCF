@@ -88,4 +88,3 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 		));
 	}
 }
-?>

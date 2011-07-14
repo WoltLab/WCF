@@ -107,4 +107,3 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache/templateListener', '*.php');
 	}
 }
-?>

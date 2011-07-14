@@ -52,4 +52,3 @@ class TemplatePluginModifierTruncate implements TemplatePluginModifier {
 		}
 	}
 }
-?>

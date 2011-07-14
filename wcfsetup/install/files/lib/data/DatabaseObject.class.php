@@ -192,4 +192,3 @@ abstract class DatabaseObject implements StorableObject {
 		return 0;
 	}
 }
-?>

@@ -18,4 +18,3 @@ class SearchAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\search\SearchEditor';
 }
-?>

@@ -18,4 +18,3 @@ class ACPSessionDataEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\acp\session\data\ACPSessionData';
 }
-?>

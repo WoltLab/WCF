@@ -12,4 +12,3 @@ define('WCF_DIR', dirname(__FILE__).'/');
 // initiate wcf core
 require_once(WCF_DIR.'lib/system/WCF.class.php');
 new wcf\system\WCF();
-?>

@@ -87,4 +87,3 @@ abstract class AbstractSecureObjectAction extends AbstractAction {
 	 */
 	abstract protected function handleResult();
 }
-?>

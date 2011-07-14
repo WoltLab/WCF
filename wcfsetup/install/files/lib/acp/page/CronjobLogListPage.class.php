@@ -103,4 +103,3 @@ class CronjobLogListPage extends SortablePage {
 		parent::show();
 	}
 }
-?>

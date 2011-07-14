@@ -21,4 +21,3 @@ abstract class AbstractApplication implements Application {
 		return call_user_func_array(array('wcf\system\WCF', $method), $arguments);
 	}
 }
-?>

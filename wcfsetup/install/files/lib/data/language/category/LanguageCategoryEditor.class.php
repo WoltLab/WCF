@@ -18,4 +18,3 @@ class LanguageCategoryEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\language\category\LanguageCategory';
 }
-?>

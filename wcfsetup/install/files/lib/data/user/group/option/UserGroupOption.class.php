@@ -23,4 +23,3 @@ class UserGroupOption extends Option {
 	 */
 	protected static $databaseTableIndexName = 'optionID';
 }
-?>

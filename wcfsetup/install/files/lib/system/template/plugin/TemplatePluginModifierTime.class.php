@@ -34,4 +34,3 @@ class TemplatePluginModifierTime implements TemplatePluginModifier {
 		return '<time datetime="'.DateUtil::format($dateTimeObject, 'c').'" class="datetime" data-timestamp="'.$timestamp.'" data-date="'.$date.'" data-time="'.$time.'" data-offset="'.$dateTimeObject->getOffset().'">'.$dateTime.'</time>';
 	}
 }
-?>

@@ -104,4 +104,3 @@ class StyleHandler extends SingletonFactory {
 		}
 	}
 }
-?>

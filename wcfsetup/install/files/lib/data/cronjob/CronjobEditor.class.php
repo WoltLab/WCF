@@ -28,4 +28,3 @@ class CronjobEditor extends DatabaseObjectEditor implements EditableCachedObject
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.cronjobs-*');
 	}
 }
-?>

@@ -25,4 +25,3 @@ class GroupOptionTypeInfiniteInverseInteger extends GroupOptionTypeInverseintege
 		return min($values);
 	}
 }
-?>

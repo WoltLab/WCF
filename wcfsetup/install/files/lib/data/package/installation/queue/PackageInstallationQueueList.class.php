@@ -18,4 +18,3 @@ class PackageInstallationQueueList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\package\installation\queue\PackageInstallationQueue';
 }
-?>

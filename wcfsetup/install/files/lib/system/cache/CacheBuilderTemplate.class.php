@@ -55,4 +55,3 @@ class CacheBuilderTemplate implements CacheBuilder {
 		return $data;
 	}
 }
-?>

@@ -18,4 +18,3 @@ class UserOptionAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\user\option\UserOptionEditor';
 }
-?>

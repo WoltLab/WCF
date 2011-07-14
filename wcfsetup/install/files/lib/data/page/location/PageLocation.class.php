@@ -23,4 +23,3 @@ class PageLocation extends DatabaseObject {
 	 */
 	protected static $databaseIndexName = 'locationID';
 }
-?>

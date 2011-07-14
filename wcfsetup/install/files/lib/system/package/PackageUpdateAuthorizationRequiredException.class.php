@@ -74,4 +74,3 @@ class PackageUpdateAuthorizationRequiredException extends UserException {
 		return $this->response['content'];
 	}
 }
-?>

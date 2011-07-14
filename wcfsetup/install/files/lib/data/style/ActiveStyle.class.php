@@ -67,4 +67,3 @@ class ActiveStyle extends DatabaseObjectDecorator {
 		return RELATIVE_WCF_DIR.'icon/'.$iconName;
 	}
 }
-?>

@@ -114,4 +114,3 @@ class CacheBuilderOption implements CacheBuilder {
 		return $data;
 	}
 }
-?>

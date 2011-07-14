@@ -20,4 +20,3 @@ class CleanupListenerCronjob implements Cronjob {
 		CleanupHandler::getInstance()->execute();
 	}
 }
-?>

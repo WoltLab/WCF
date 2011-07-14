@@ -210,4 +210,3 @@ class ZipWriter {
 		return pack("H*H*H*H*", $timeLeft, $timeRight, $dateLeft, $dateRight);
 	}
 }
-?>

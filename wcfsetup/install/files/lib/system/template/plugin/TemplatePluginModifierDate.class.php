@@ -27,4 +27,3 @@ class TemplatePluginModifierDate implements TemplatePluginModifier {
 		return DateUtil::format(DateUtil::getDateTimeByTimestamp($tagArgs[0]), (!empty($tagArgs[2]) ? $tagArgs[2] : DateUtil::DATE_FORMAT));
 	}
 }
-?>

@@ -18,4 +18,3 @@ class PackageEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\package\Package';
 }
-?>

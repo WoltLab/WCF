@@ -38,4 +38,3 @@ interface TemplatePluginBlock {
 	 */
 	public function next(TemplateEngine $tplObj);
 }
-?>

@@ -37,4 +37,3 @@ abstract class SelectionFormElementContainer extends AbstractFormElementContaine
 		return $this->name;
 	}
 }
-?>

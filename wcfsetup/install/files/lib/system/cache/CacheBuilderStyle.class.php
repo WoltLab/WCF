@@ -65,4 +65,3 @@ class CacheBuilderStyle implements CacheBuilder {
 		return $data;
 	}
 }
-?>

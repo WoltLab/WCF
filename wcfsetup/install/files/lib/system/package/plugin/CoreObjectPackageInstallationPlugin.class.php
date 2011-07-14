@@ -90,4 +90,3 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.coreObjects.php');
 	}
 }
-?>

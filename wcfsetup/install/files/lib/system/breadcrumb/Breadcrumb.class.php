@@ -75,4 +75,3 @@ class Breadcrumb {
 		return $this->url;
 	}
 }
-?>

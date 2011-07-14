@@ -117,4 +117,3 @@ class TemplateEditor extends DatabaseObjectEditor {
 		}
 	}
 }
-?>

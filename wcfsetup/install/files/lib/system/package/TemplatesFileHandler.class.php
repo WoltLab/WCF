@@ -14,4 +14,3 @@ namespace wcf\system\package;
 class TemplatesFileHandler extends ACPTemplatesFileHandler {
 	protected $tableName = '_template';
 }
-?>

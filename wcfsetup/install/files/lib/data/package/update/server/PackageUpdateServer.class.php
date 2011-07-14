@@ -96,4 +96,3 @@ class PackageUpdateServer extends DatabaseObject {
 		return $authData;
 	}
 }
-?>

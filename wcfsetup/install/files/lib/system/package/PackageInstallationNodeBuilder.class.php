@@ -487,4 +487,3 @@ class PackageInstallationNodeBuilder {
 		return StringUtil::substring(StringUtil::getRandomID(), 0, 8);
 	}
 }
-?>

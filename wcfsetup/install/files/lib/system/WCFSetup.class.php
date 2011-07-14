@@ -1096,4 +1096,3 @@ class WCFSetup extends WCF {
 		WCF::getTPL()->assign(array('setupPackageName' => self::$setupPackageName));
 	}
 }
-?>

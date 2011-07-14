@@ -137,4 +137,3 @@ class SqlPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		return $this->installation->getArchive()->getTar()->extractToString($fileindex);
  	}
 }
-?>

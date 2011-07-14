@@ -158,4 +158,3 @@ class StyleUtil {
 		@chmod(WCF_DIR . 'acp/style/style-rtl.css', 0777);
 	}
 }
-?>

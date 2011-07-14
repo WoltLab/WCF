@@ -23,4 +23,3 @@ class SessionData extends ACPSessionData {
 	 */
 	protected static $databaseTableIndexName = 'sessionID';
 }
-?>

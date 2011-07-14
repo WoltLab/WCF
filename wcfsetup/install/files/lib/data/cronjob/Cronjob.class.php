@@ -96,4 +96,3 @@ class Cronjob extends DatabaseObject {
 		return (WCF::getSession()->getPermission('admin.system.cronjobs.canEnableDisableCronjob') && $this->canBeDisabled);
 	}
 }
-?>

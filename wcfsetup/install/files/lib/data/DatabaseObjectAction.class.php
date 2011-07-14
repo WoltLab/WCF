@@ -50,4 +50,3 @@ interface DatabaseObjectAction {
 	 */
 	public function getReturnValues();
 }
-?>

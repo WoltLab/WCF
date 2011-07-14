@@ -88,4 +88,3 @@ class ACPSessionLogListPage extends SortablePage {
 		parent::show();
 	}
 }
-?>

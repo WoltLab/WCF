@@ -35,4 +35,3 @@ class TemplatePluginModifierConcat implements TemplatePluginModifier {
 		return $result;	
 	}
 }
-?>

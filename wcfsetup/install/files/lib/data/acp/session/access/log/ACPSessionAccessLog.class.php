@@ -36,4 +36,3 @@ class ACPSessionAccessLog extends DatabaseObject {
 		return false;
 	}
 }
-?>

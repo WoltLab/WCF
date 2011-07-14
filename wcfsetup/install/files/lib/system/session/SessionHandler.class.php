@@ -611,4 +611,3 @@ class SessionHandler extends SingletonFactory {
 		}
 	}
 }
-?>

@@ -26,4 +26,3 @@ class TemplatePluginModifierFilesize implements TemplatePluginModifier {
 		return FileUtil::formatFilesize($tagArgs[0]);
 	}
 }
-?>

@@ -18,4 +18,3 @@ class LanguageCategoryList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\language\category\LanguageCategory';
 }
-?>

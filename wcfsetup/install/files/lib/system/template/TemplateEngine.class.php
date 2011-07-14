@@ -699,4 +699,3 @@ class TemplateEngine extends SingletonFactory {
 		return '';
 	}
 }
-?>

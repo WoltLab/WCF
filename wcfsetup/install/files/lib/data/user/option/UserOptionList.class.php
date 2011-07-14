@@ -18,4 +18,3 @@ class UserOptionList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\user\option\UserOption';
 }
-?>

@@ -120,4 +120,3 @@ class CacheBuilderUserGroupPermission implements CacheBuilder {
 		return $this->typeObjects[$type];
 	}
 }
-?>

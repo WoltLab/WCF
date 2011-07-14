@@ -34,4 +34,3 @@ interface PackageInstallationPlugin {
 	 */
 	public function uninstall();
 }
-?>

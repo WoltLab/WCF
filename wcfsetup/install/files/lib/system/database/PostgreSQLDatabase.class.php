@@ -116,4 +116,3 @@ class PostgreSQLDatabase extends Database {
 		return StringStack::pushToStringStack($matches[0], 'postgresQuotes');
 	}
 }
-?>

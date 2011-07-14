@@ -98,4 +98,3 @@ class FilesFileHandler extends PackageInstallationFileHandler {
 		}
 	}
 }
-?>

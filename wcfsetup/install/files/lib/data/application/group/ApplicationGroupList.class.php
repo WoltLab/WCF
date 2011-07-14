@@ -18,4 +18,3 @@ class ApplicationGroupList extends DatabaseObjectList {
 	 */
 	public $className = 'wcf\data\application\group\ApplicationGroup';
 }
-?>

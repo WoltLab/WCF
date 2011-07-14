@@ -26,4 +26,3 @@ interface FileHandler {
 	 */
 	public function logFiles(array $files);
 }
-?>

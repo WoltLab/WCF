@@ -19,4 +19,3 @@ class PackageInstallationPluginEditor extends DatabaseObjectEditor {
 	 */
 	protected static $baseClass = 'wcf\data\package\installation\plugin\PackageInstallationPlugin';
 }
-?>

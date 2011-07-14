@@ -50,4 +50,3 @@ abstract class MailSender {
 	 */
 	public abstract function sendMail(Mail $mail); 
 }
-?>

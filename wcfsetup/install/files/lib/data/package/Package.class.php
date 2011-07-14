@@ -534,4 +534,3 @@ class Package extends DatabaseObject {
 		}
 	}
 }
-?>

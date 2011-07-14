@@ -60,4 +60,3 @@ class CacheBuilderPageMenu implements CacheBuilder {
 		return $data;
 	}
 }
-?>

@@ -121,4 +121,3 @@ abstract class DatabaseEditor {
 	 */
 	public abstract function dropIndex($tableName, $indexName);
 }
-?>

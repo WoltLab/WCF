@@ -445,4 +445,3 @@ class Thumbnail {
 		return substr($name, 0, $maxChars - 3) . '...' . $extension;
 	}
 }
-?>

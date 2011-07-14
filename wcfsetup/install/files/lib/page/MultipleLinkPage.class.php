@@ -206,4 +206,3 @@ abstract class MultipleLinkPage extends AbstractPage {
 		));
 	}
 }
-?>

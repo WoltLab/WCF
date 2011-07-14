@@ -21,4 +21,3 @@ class GroupOptionTypeInverseInteger extends OptionTypeInteger implements GroupOp
 		return min($values);
 	}
 }
-?>

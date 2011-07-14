@@ -23,4 +23,3 @@ class LanguageItem extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'languageItemID';
 }
-?>

@@ -32,4 +32,3 @@ class ACPSessionLogList extends DatabaseObjectList {
 		parent::readObjects();
 	}
 }
-?>

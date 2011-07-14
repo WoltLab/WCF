@@ -31,4 +31,3 @@ class ACPForm extends AbstractForm {
 		parent::show();
 	}
 }
-?>

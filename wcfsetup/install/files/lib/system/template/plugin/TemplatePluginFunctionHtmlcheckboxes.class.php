@@ -86,4 +86,3 @@ class TemplatePluginFunctionHtmlcheckboxes implements TemplatePluginFunction {
 		return $text;
 	}
 }
-?>

@@ -110,4 +110,3 @@ LanguageEditor::deleteLanguageFiles();
 
 // delete all compiled templates
 ACPTemplateEngine::deleteCompiledTemplates(WCF_DIR.'acp/templates/compiled/');
-?>
