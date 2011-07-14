@@ -2,7 +2,11 @@
 *~ # backup files
 
 # Windows
-Thumbs.db
+Thumbs.db # thumbnails
+
+# OS-X
+.DS_Store
+._* #thumbnails
 
 # Visual Studio PHP
 *.sln
@@ -15,5 +19,9 @@ Thumbs.db
 .project
 .buildpath
 
+# Netbeans
+nbproject/
+nbactions.xml
+
 # SVN
-.svn/
+.svn/ # svn folders
