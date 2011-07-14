@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com/XSD/cronjobs.xsd">
+	<import>
+		<cronjob>
+			<classPath>lib/system/cronjob/CleanUpNotificationsCronjob.class.php</classPath>
+			<description>Cleans up notifications regularly</description>
+			<startMinute>*/30</startMinute>
+			<startHour>*</startHour>
+			<startDom>*</startDom>
+			<startMonth>*</startMonth>
+			<startDow>*</startDow>
+			<execMultiple>0</execMultiple>
+			<canbeedited>0</canbeedited>
+			<canbedisabled>0</canbedisabled>
+			<active>1</active>
+		</cronjob>
+	</import>
+</data>

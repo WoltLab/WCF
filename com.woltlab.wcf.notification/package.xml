@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="com.woltlab.wcf.user.notification" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com/XSD/package.xsd">
+	<packageinformation>
+		<packagename>User Notification System</packagename>		
+		<version>1.0.0 Alpha 1</version>
+		<date>2010-08-22</date>
+		<isunique>1</isunique>
+	</packageinformation>
+
+	<authorinformation>
+		<author>WoltLab GmbH, Oliver Kliebisch and Tim Düsterhus</author>
+		<authorurl>http://www.woltlab.com</authorurl>
+	</authorinformation>
+	
+	<requiredpackages>
+		<requiredpackage minversion="2.0.0 Alpha 1">com.woltlab.wcf</requiredpackage>
+	</requiredpackages>
+
+	<instructions type="install">
+		<instruction type="packageinstallationplugins">pip.xml</instruction>
+		<instruction type="files">files.tar</instruction>
+		<instruction type="sql">install.sql</instruction>
+	</instructions>
+</package>

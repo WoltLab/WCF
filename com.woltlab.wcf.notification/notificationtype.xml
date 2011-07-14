@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com/XSD/notification-type.xsd">
+	<import>
+		<type>
+			<name>mail</name>
+			<classfile>lib/data/user/notification/type/MailUserNotificationReceivableType.class.php</classfile>
+		</type>
+	</import>
+</data>

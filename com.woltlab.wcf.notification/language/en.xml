@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com/XSD/language.xsd" languagecode="en">
+	<category name="wcf.user.notification">
+		<item name="wcf.user.notification.title"><![CDATA[Notifications]]></item>
+		<item name="wcf.user.notification.stats"><![CDATA[Overall {#$items} notification{if $items != 1}s{/if}]]></item>
+		<item name="wcf.user.notification.noNotifications"><![CDATA[There are no notifications at the moment.]]></item>
+		<item name="wcf.user.notification.icon"><![CDATA[Icon]]></item>
+		<item name="wcf.user.notification.text"><![CDATA[Message]]></item>
+		<item name="wcf.user.notification.time"><![CDATA[Time]]></item>
+		<item name="wcf.user.notification.confirmAll"><![CDATA[Confirm all]]></item>
+		<item name="wcf.user.notification.settings"><![CDATA[Notification settings]]></item>
+		<item name="wcf.user.notification.settings.saved"><![CDATA[The settings were successfully saved.]]></item>
+		<item name="wcf.user.notification.location.settings"><![CDATA[Notification settings]]></item>
+		<item name="wcf.user.notification.location.overview"><![CDATA[Notification overview]]></item>
+		<item name="wcf.user.notification.type.userMessages"><![CDATA[Infobox]]></item>
+		<item name="wcf.user.notification.type.userMessages.title"><![CDATA[You have the following new notifications:]]></item>
+		<item name="wcf.user.notification.type.mail"><![CDATA[E-Mail]]></item>
+		<item name="wcf.user.notification.type.mail.subject"><![CDATA[{@$title}]]></item>
+		<item name="wcf.user.notification.type.mail.footer"><![CDATA[
+
+
+You can change your personal notification settings on {lang}{@PAGE_TITLE}{/lang} under the following URL:
+{@$pageURL}index.php?form=UserNotificationSettings
+If you do not want to recevive this mail notification in future just follow this link: {@$pageURL}index.php?action=NotificationDisable&notificationID={@$notification->notificationID}&userID={@$user->userID}&token={@$token}
+
+]]></item>
+		<item name="wcf.user.notification.type.mail.disabled"><![CDATA[You have disabled the mail notification successfully. You can reactive this notification in your profile settings at any time.]]></item>
+		<item name="wcf.user.notification.feed"><![CDATA[Newest notifications]]></item>
+		<item name="wcf.user.notification.feed.title"><![CDATA[Subcribe to notifications]]></item>
+		<item name="wcf.user.notification.feed.description"><![CDATA[Your newest notifications on "{lang}{PAGE_TITLE}{/lang}"]]></item>
+		<item name="wcf.user.notification.error.alreadyAccepted"><![CDATA[You have already confirmed this notification.]]></item>
+		<item name="wcf.user.notification.object.type.void"><![CDATA[General]]></item>
+	</category>
+	<category name="wcf.user.usercp">
+		<item name="wcf.user.usercp.menu.link.settings.notification"><![CDATA[Notifications]]></item>
+		<item name="wcf.user.usercp.menu.link.management.notification"><![CDATA[Notifications]]></item>
+	</category>
+	<category name="wcf.header.userMenu">
+		<item name="wcf.header.userMenu.userNotifications"><![CDATA[Notifications]]></item>
+	</category>
+	<category name="wcf.acp.option">
+		<item name="wcf.acp.option.module_user_notification"><![CDATA[Notifications]]></item>
+		<item name="wcf.acp.option.module_user_notification.description"><![CDATA[Activates the user notification system.]]></item>
+		<item name="wcf.acp.option.category.user.notification"><![CDATA[Notifications]]></item>
+		<item name="wcf.acp.option.category.user.notification.description"><![CDATA[]]></item>
+		<item name="wcf.acp.option.category.user.notification.general"><![CDATA[General]]></item>
+		<item name="wcf.acp.option.category.user.notification.general.description"><![CDATA[]]></item>
+		<item name="wcf.acp.option.user_notification_user_menu_link_active"><![CDATA[Show user menu link]]></item>
+		<item name="wcf.acp.option.user_notification_user_menu_link_active.description"><![CDATA[If this option is activated, a link to the user notification overview will be displayed in each user's user panel.]]></item>
+		<item name="wcf.acp.option.user_notification_user_menu_link_autorefresh"><![CDATA[Automatic user menu link refresh]]></item>
+		<item name="wcf.acp.option.user_notification_user_menu_link_autorefresh.description"><![CDATA[If this option is activated, the user menu link will refresh itself automatically using AJAX. This feature increases the server load.]]></item>
+		<item name="wcf.acp.option.user_notification_user_menu_link_autorefresh_intervall"><![CDATA[Refresh intervall [Seconds]]]></item>
+		<item name="wcf.acp.option.user_notification_user_menu_link_autorefresh_intervall.description"><![CDATA[How often shall the link refresh itself?]]></item>
+		<item name="wcf.acp.option.user_notification_lifetime"><![CDATA[Lifetime of confirmed notifications [Hours]]]></item>
+		<item name="wcf.acp.option.user_notification_lifetime.description"><![CDATA[Enter for how many hours confirmed notifications should be kept before deletion. -1 deactivates the automatic deletion of old confirmed notifications.]]></item>
+		<item name="wcf.acp.option.user_notification_lifetime_unconfirmed"><![CDATA[Lifetime of unconfirmed notifications [Hours]]]></item>
+		<item name="wcf.acp.option.user_notification_lifetime_unconfirmed.description"><![CDATA[Enter for how many hours unconfirmed notifications should be kept before deletion. 0 deactivates the automatic deletion of notifications.]]></item>
+	</category>
+	<category name="wcf.acp.package">
+		<item name="wcf.acp.package.step.install.NotificationObjectTypePackageInstallationPlugin"><![CDATA[Installing notification objects ...]]></item>
+		<item name="wcf.acp.package.step.uninstall.NotificationObjectTypePackageInstallationPlugin"><![CDATA[Uninstalling notification objects ...]]></item>
+		<item name="wcf.acp.package.step.update.NotificationObjectTypePackageInstallationPlugin"><![CDATA[Updating notification objects ...]]></item>
+		<item name="wcf.acp.package.step.install.NotificationTypePackageInstallationPlugin"><![CDATA[Installing notification types ...]]></item>
+		<item name="wcf.acp.package.step.uninstall.NotificationTypePackageInstallationPlugin"><![CDATA[Uninstalling notification types ...]]></item>
+		<item name="wcf.acp.package.step.update.NotificationTypePackageInstallationPlugin"><![CDATA[Updating notification types ...]]></item>
+		<item name="wcf.acp.package.step.install.NotificationEventPackageInstallationPlugin"><![CDATA[Installing notification events ...]]></item>
+		<item name="wcf.acp.package.step.uninstall.NotificationEventPackageInstallationPlugin"><![CDATA[Uninstalling notification events ...]]></item>
+		<item name="wcf.acp.package.step.update.NotificationEventPackageInstallationPlugin"><![CDATA[Updating notification events ...]]></item>
+	</category>
+</language>
