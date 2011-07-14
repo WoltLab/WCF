@@ -248,11 +248,11 @@ class BasicFileUtil {
 			}
 		}
 		
-		$dir = INSTALL_SCRIPT_DIR . 'tmp/' . $tmpDir;
+		$dir = INSTALL_SCRIPT_DIR . 'tmp/' . $tmpDirName;
 		@mkdir($dir, 0777);
 		@chmod($dir, 0777);
 		
-		if (@file_exists($dir) && @is_writable($dir)) {
+		if (!@file_exists($dir) || !@is_writable($dir)) {
 			$tmpDir = explode('/', $dir);
 			array_pop($tmpDir);
 			$dir = implode('/', $tmpDir);
