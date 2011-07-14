@@ -365,12 +365,12 @@ class FileUtil {
 		}
 		// if allow_url_fopen isn't active, we attempt to use our own http download functionality.
 		else {
-			$port = 80;
 			$parsedUrl = parse_url($httpUrl);
+			$port = ($parsedUrl['scheme'] == 'https' ? 443 : 80);
 			$host = $parsedUrl['host'];
 			$path = (isset($parsedUrl['path']) ? $parsedUrl['path'] : '/');
 			
-			$remoteFile = new RemoteFile($host, $port, 30, $options); // the file to read.
+			$remoteFile = new RemoteFile(($parsedUrl['scheme'] == 'https' ? 'ssl://' : '').$host, $port, 30, $options); // the file to read.
 			if (!isset($remoteFile)) {
 				$localFile->close();
 				unlink($newFileName);
@@ -565,4 +565,3 @@ class FileUtil {
 		return function_exists('apache_get_version');
 	}
 }
-?>
