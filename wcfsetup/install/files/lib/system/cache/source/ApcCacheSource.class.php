@@ -18,7 +18,7 @@ class ApcCacheSource implements CacheSource {
 	 * Creates a new ApcCacheSource object.
 	 */
 	public function __construct() {
-		if (!function_exists('apc_exists')) {
+		if (!function_exists('apc_store')) {
 			throw new SystemException('APC support is not enabled.');
 		}
 	}
@@ -27,11 +27,11 @@ class ApcCacheSource implements CacheSource {
 	 * @see CacheSource::get()
 	 */
 	public function get($cacheResource) {
-		if (!apc_exists($cacheResource['file'])) {
+		if (false === $data = apc_fetch($cacheResource['file'])) {
 			return null;
 		}
 		
-		return apc_fetch($cacheResource['file']);
+		return $data;
 	}
 	
 	/**
