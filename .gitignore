@@ -1,6 +1,19 @@
+# Linux
+*~ # backup files
 
+# Windows
+Thumbs.db
+
+# Visual Studio PHP
 *.sln
 *.phpproj
 *.puo
 *.suo
-*.project
+
+# Eclipse
+.settings/
+.project
+.buildpath
+
+# SVN
+.svn/
