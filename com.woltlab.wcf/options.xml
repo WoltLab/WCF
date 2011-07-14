@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/options.xsd">
+	<import>
+		<categories>
+			<!-- modules -->
+			<category name="module">
+				<showorder>1</showorder>
+			</category>
+				<category name="module.system">
+					<parent>module</parent>
+				</category>
+				<category name="module.user">
+					<parent>module</parent>
+				</category>
+				<category name="module.display">
+					<parent>module</parent>
+				</category>
+				<category name="module.content">
+					<parent>module</parent>
+				</category>
+				
+				<category name="message"></category>
+				
+				<category name="message.general">
+					<parent>message</parent>
+				</category>
+			<!-- /modules -->
+			
+			<!-- general -->
+			<category name="general">
+				<showorder>2</showorder>
+			</category>
+				<category name="general.page">
+					<parent>general</parent>
+				</category>
+				<category name="general.offline">
+					<parent>general</parent>
+				</category>
+				<category name="general.http">
+					<parent>general</parent>
+				</category>
+					<category name="general.http.cookie">
+						<parent>general.http</parent>
+					</category>
+					<category name="general.http.http">
+						<parent>general.http</parent>
+					</category>
+					<category name="general.http.proxy">
+						<parent>general.http</parent>
+					</category>
+				<category name="general.date">
+					<parent>general</parent>
+				</category>
+				<category name="general.mail">
+					<parent>general</parent>
+				</category>
+					<category name="general.mail.general">
+						<parent>general.mail</parent>
+					</category>
+					<category name="general.mail.send">
+						<parent>general.mail</parent>
+					</category>
+				<category name="general.cache">
+					<parent>general</parent>
+				</category>
+					<category name="general.cache.general">
+						<parent>general.cache</parent>
+					</category>
+					<category name="general.cache.memcache">
+						<parent>general.cache</parent>
+					</category>
+			<!-- /general -->
+			
+			<!-- user -->
+			<category name="user">
+				<showorder>3</showorder>
+			</category>
+			<!-- /user -->
+			
+			<!-- security -->
+			<category name="security">
+				<showorder>4</showorder>
+			</category>
+				<category name="security.general">
+					<parent>security</parent>
+				</category>
+					<category name="security.general.session">
+						<parent>security.general</parent>
+					</category>
+				<category name="security.blacklist">
+					<parent>security</parent>
+				</category>
+				<category name="security.antispam">
+					<parent>security</parent>
+				</category>
+				<category name="security.censorship">
+					<parent>security</parent>
+				</category>
+			<!-- /security -->
+		</categories>
+		
+		<options>
+			<option name="module_master_password">
+				<categoryname>module.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			
+			<!-- general.page -->
+			<option name="page_title">
+				<categoryname>general.page</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<option name="page_description">
+				<categoryname>general.page</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<option name="page_url">
+				<categoryname>general.page</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<option name="page_urls">
+				<categoryname>general.page</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
+			<option name="meta_keywords">
+				<categoryname>general.page</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<option name="meta_description">
+				<categoryname>general.page</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<!-- /general.page -->
+			
+			<!-- general.http.cookie -->
+			<option name="cookie_prefix">
+				<categoryname>general.http.cookie</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue>wcf_</defaultvalue>
+				<validationpattern>.+</validationpattern>
+			</option>
+			<option name="cookie_path">
+				<categoryname>general.http.cookie</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="cookie_domain">
+				<categoryname>general.http.cookie</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<!-- /general.http.cookie-->
+			
+			<!-- general.http.http -->
+			<option name="http_enable_no_cache_headers">
+				<categoryname>general.http.http</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="http_enable_gzip">
+				<categoryname>general.http.http</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<enableoptions><![CDATA[http_gzip_level]]></enableoptions>
+			</option>
+			<option name="http_gzip_level">
+				<categoryname>general.http.http</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<!-- /general.http.http -->
+			
+			<!-- general.http.proxy -->
+			<option name="proxy_server_http">
+				<categoryname>general.http.proxy</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<!-- /general.http.proxy -->
+			
+			<!-- general.session -->
+			<option name="session_timeout">
+				<categoryname>security.general.session</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>1800</defaultvalue>
+				<validationpattern>^[^0]</validationpattern>
+			</option>
+			<option name="user_online_timeout">
+				<categoryname>security.general.session</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>900</defaultvalue>
+			</option>
+			<option name="session_validate_ip_address">
+				<categoryname>security.general.session</categoryname>
+				<optiontype>select</optiontype>
+				<selectoptions>0
+1
+2
+3
+4</selectoptions>
+				<defaultvalue>2</defaultvalue>
+			</option>
+			<option name="session_validate_user_agent">
+				<categoryname>security.general.session</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<!-- /general.session -->
+			
+			<!-- security.blacklist -->
+			<option name="blacklist_ip_addresses">
+				<categoryname>security.blacklist</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
+			<option name="blacklist_user_agents">
+				<categoryname>security.blacklist</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
+			<option name="blacklist_hostnames">
+				<categoryname>security.blacklist</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
+			<!-- /security.blacklist -->
+			
+			<!-- general.date -->
+			<option name="timezone">
+				<categoryname>general.date</categoryname>
+				<optiontype>timezone</optiontype>
+				<defaultvalue>Europe/London</defaultvalue>
+			</option>
+			<!-- /general.date -->
+			
+			<!-- mail.general -->
+			<option name="mail_from_name">
+				<categoryname>general.mail.general</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue><![CDATA[]]></defaultvalue>
+			</option>
+			<option name="mail_from_address">
+				<categoryname>general.mail.general</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue><![CDATA[]]></defaultvalue>
+			</option>
+			<option name="mail_admin_address">
+				<categoryname>general.mail.general</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue><![CDATA[]]></defaultvalue>
+			</option>
+			<option name="mail_signature">
+				<categoryname>general.mail.general</categoryname>
+				<optiontype>textarea</optiontype>
+				<defaultvalue><![CDATA[]]></defaultvalue>
+			</option>
+			<!-- /mail.general -->
+			
+			<!-- mail.send -->
+			<option name="mail_send_method">
+				<categoryname>general.mail.send</categoryname>
+				<optiontype>radiobuttons</optiontype>
+				<defaultvalue><![CDATA[php]]></defaultvalue>
+				<selectoptions><![CDATA[php:wcf.acp.option.mail_send_method.php
+smtp:wcf.acp.option.mail_send_method.smtp
+debug:wcf.acp.option.mail_send_method.debug]]></selectoptions>
+				<enableoptions><![CDATA[php:mail_use_f_param,!mail_debug_logfile_path,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password
+smtp:!mail_debug_logfile_path,!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_user,mail_smtp_password
+debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_user,!mail_smtp_password]]></enableoptions>
+			</option>
+			<option name="mail_debug_logfile_path">
+				<categoryname>general.mail.send</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<option name="mail_smtp_host">
+				<categoryname>general.mail.send</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<option name="mail_smtp_port">
+				<categoryname>general.mail.send</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue><![CDATA[25]]></defaultvalue>
+			</option>
+			<option name="mail_smtp_user">
+				<categoryname>general.mail.send</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<option name="mail_smtp_password">
+				<categoryname>general.mail.send</categoryname>
+				<optiontype>password</optiontype>
+			</option>
+			<option name="mail_use_f_param">
+				<categoryname>general.mail.send</categoryname>
+				<optiontype>boolean</optiontype>
+			</option>
+			<option name="mail_use_formatted_address">
+				<categoryname>general.mail.send</categoryname>
+				<optiontype>boolean</optiontype>
+			</option>
+			<!-- /mail.send -->
+			
+			<!-- general.cache -->
+			<option name="cache_source_type">
+				<categoryname>general.cache.general</categoryname>
+				<optiontype>radiobuttons</optiontype>
+				<defaultvalue><![CDATA[disk]]></defaultvalue>
+				<selectoptions><![CDATA[disk:wcf.acp.option.cache_source_type.disk
+memcache:wcf.acp.option.cache_source_type.memcache]]></selectoptions>
+				<enableoptions><![CDATA[disk:!cache_source_memcache_host,!cache_source_memcache_use_pconnect,!enable_session_data_cache
+memcache:cache_source_memcache_host,cache_source_memcache_use_pconnect,enable_session_data_cache]]></enableoptions>
+			</option>
+			
+			<option name="enable_session_data_cache">
+				<categoryname>general.cache.general</categoryname>
+				<optiontype>boolean</optiontype>
+			</option>
+			
+			<option name="cache_source_memcache_host">
+				<categoryname>general.cache.memcache</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
+			
+			<option name="cache_source_memcache_use_pconnect">
+				<categoryname>general.cache.memcache</categoryname>
+				<optiontype>boolean</optiontype>
+			</option>
+			<!-- /general.cache -->
+		</options>
+	</import>
+</data>

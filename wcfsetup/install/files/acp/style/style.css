@@ -1,0 +1,224 @@
+
+/* dynamic style attributes */
+
+.largeButtons li a,.pmEditFolders a{background-image:url("../images/WoltLab Blue Sunrise/largeButtons-ltr.png")}
+.largeButtons li a:hover,.pmEditFolders a:hover{background-image:url("../images/WoltLab Blue Sunrise/largeButtons-ltr.png")}
+.largeButtons li a,.pmEditFolders a{border-style:solid}
+.largeButtons li a{border-width:0px}
+.largeButtons li{border-style:solid}
+.largeButtons li{border-width:0px}
+.largeButtons li a,.pmEditFolders a{color:#fff}
+.largeButtons li a:hover,.pmEditFolders a:hover{color:#fff}
+.memberList li .memberName,.messageNumber,.optionButtons a,.smallButtons a,li.extraButton a{background-color:#d9e5ef}
+.memberList li .memberName{border-color:#d9e5ef}
+.memberList li .memberName:hover,.messageNumber:hover,.optionButtons a:hover,.pageNavigation li ul,.smallButtons a:hover,li.extraButton a:hover{background-color:#ffe0b8}
+.memberList li .memberName,.messageNumber,.optionButtons a,.smallButtons a,li.extraButton a{background-image:url("../images/WoltLab Blue Sunrise/smallButtons.png")}
+.memberList li .memberName:hover,.messageNumber:hover,.optionButtons a:hover,.smallButtons a:hover,li.extraButton a:hover{background-image:url("../images/WoltLab Blue Sunrise/smallButtonsHover.png")}
+.memberList li,.memberList li .memberRemove{background-color:#fff}
+.optionButtons a,.pageNavigation a,.pageNavigation li span,.smallButtons a,li.extraButton a{border-color:#fff}
+.memberList li .memberRemove:hover,.memberList li:hover{background-color:#fff}
+.optionButtons a:hover,.pageNavigation a:hover,.smallButtons a:hover,li.extraButton a:hover{border-color:#fff}
+.pageNavigation li.children:hover > span{border-color:#fff}
+.optionButtons a,.pageNavigation a,.pageNavigation li span,.smallButtons a,li.extraButton a{border-style:solid}
+.optionButtons a,.pageNavigation a,.pageNavigation li span,.smallButtons a,li.extraButton a{border-width:1px}
+.footerOptions li.extraButton,.memberList li,.messageNumber,.optionButtons li,.pageNavigation li,.smallButtons li,li.extraButton{border-color:#8da4b7}
+.memberList li:hover,.messageNumber:hover,.optionButtons li:hover,.pageNavigation li:hover,.smallButtons li:hover,li.extraButton:hover{border-color:#fa2}
+.memberList li,.messageNumber,.optionButtons li,.smallButtons li,li.extraButton{border-style:solid}
+.li.extraButton,.memberList li,.messageNumber,.optionButtons li,.smallButtons li{border-width:1px}
+.container-1 .smallButtons a,.container-2 .smallButtons a,.container-3 .smallButtons a,.memberList li .memberName,.messageInner .color-1 .smallButtons a,.messageInner .color-2 .smallButtons a,.messageNumber,.optionButtons a,.smallButtons a,li.extraButton a{color:#666}
+.container-1 .smallButtons a:hover,.container-2 .smallButtons a:hover,.container-3 .smallButtons a:hover,.memberList li .memberName:hover,.messageInner .color-1 .smallButtons a:hover,.messageInner .color-2 .smallButtons a:hover,.messageNumber:hover,.optionButtons a:hover,.smallButtons a:hover,li.extraButton a:hover{color:#333}
+.border,.mceResizeBox,.pmEditFolders,.pmUsageBar,.popupMenu,.quoteBox,.subTabMenu{background-color:#fff}
+#logo,#search,.attachmentPreview ul li a,.border .tableList td,.border .tableList th,.columnContainer,.dividers .messageAuthor,.dividers .tocHeadline,.dividers .userAvatar,.dividers .userCredits,.dividers .userMessenger,.dividers .userSymbols,.inlineCalendarFooter td a,.inlineCalendarFooter td span,.inlineCalendarHeader td a,.inlineCalendarHeader td span,.mainMenu .mainMenuInner,.mainMenu a,.mceEditor .mceColors li,.messageContent,.messageInner,.subTabMenu div.containerHead,.tabMenu li a,.userAvatar,.userAvatarFramed{border-color:#fff}
+#footer,#header,.attachmentFile ul li,.attachmentPreview ul li:hover,.avatarDisplay div,.avatarSelect li label,.border,.footerMenu li,.footerOptions li,.galleryIndex li.floatedElement:hover,.inlineCalendarFooter,.inlineCalendarHeader,.inlineCalendarTable,.mainMenu,.marked,.mceResizeBox,.message,.messageContentInner,.messageNumber,.pageNavigation li ul,.pmEditFolders,.pmUsageBar,.popupMenu,.quoteBox,.searchContainer,.subTabMenu,.tabMenu li,.userAvatar a,.userAvatarFramed a,fieldset{border-color:#8da4b7}
+.border,.error,.info,.inlineCalendarFooter,.inlineCalendarHeader,.inlineCalendarTable,.message,.pageNavigation li ul,.pmEditFolders,.pmUsageBar,.popupMenu,.quoteBox,.searchContainer,.subTabMenu,.success,.tabMenu li,.warning,fieldset{border-style:solid}
+.border,.error,.info,.inlineCalendarFooter,.inlineCalendarHeader,.inlineCalendarTable,.message,.quoteBox,.searchContainer,.success,.warning,fieldset{border-width:1px}
+.containerHead,.inlineCalendarFooter td,.inlineCalendarHeader td,.tabMenu li.activeTabMenu a,.tabMenu li.activeTabMenu a:hover{background-color:#164369}
+.containerHead,.inlineCalendarFooter td,.inlineCalendarHeader td{background-image:url("../images/WoltLab Blue Sunrise/containerHead.png")}
+.containerHead .light,.containerHead .light a{color:#fff}
+.containerHead,.inlineCalendarFooter td a,.inlineCalendarFooter td span,.inlineCalendarHeader td a,.inlineCalendarHeader td span{color:#fff}
+.containerHead a,.tabMenu li.activeTabMenu a,.tabMenu li.activeTabMenu a:hover{color:#fff}
+.containerHead a:hover{color:#fff}
+.container-1,.container-1 fieldset fieldset,.container-2 fieldset,.dynBoxInner,.inlineCalendarTable,.messageInner .color-1,.pageNavigation li ul,div.pageMenu li.container-1 a,fieldset{background-color:#f8fafb}
+.inlineCalendarTable a{border-color:#f8fafb}
+.container-1 fieldset,.container-1 fieldset fieldset.noJavaScript fieldset,.container-2,.container-2 fieldset fieldset,.container-3 fieldset,.messageInner .color-2,.weekDays,div.pageMenu li.container-2 a,fieldset fieldset{background-color:#f2f6fa}
+.container-3,.container-3 fieldset fieldset,.itemList .itemListCategory,.tableList tbody tr:hover,.threadStarterPost .poll .container-3{background-color:#d8e7f5}
+.messageContainer,.messageContainerFooter{border-color:#d8e7f5}
+.container-4,.galleryAlbumCover img,.userAvatarFramed{background-color:#fff}
+#userCardCredits,.attachmentPreview ul li,.buttonBar,.deleteNote,.editNote,.friendsConnection,.friendsNetwork,.friendsNone,.galleryIndex li.floatedElement,.guestAdvice,.itemList .itemListTitle,.mainMenu div.pageMenu .bottomSeparator a,.mainMenu div.pageMenu .topSeparator a,.messageFooter,.messageFooterLeft,.messageFooterRight,.messageHeader,.signature,.subHeadline,div.pageMenu .bottomSeparator a,div.pageMenu .topSeparator a{border-color:#c5d0da}
+.buttonBar,.deleteNote,.editNote,.itemList .itemListTitle,.mainMenu div.pageMenu .bottomSeparator a,.mainMenu div.pageMenu .topSeparator a,.messageFooter,.messageFooterLeft,.messageFooterRight,.messageHeader,.signature,.subHeadline,div.pageMenu .bottomSeparator a,div.pageMenu .topSeparator a{border-style:solid}
+.mainMenu div.pageMenu .bottomSeparator a,div.pageMenu .bottomSeparator a{border-bottom-width:1px}
+.mainMenu div.pageMenu .topSeparator a,div.pageMenu .topSeparator a{border-top-width:1px}
+.deleteNote,.editNote,.itemList .itemListTitle,.messageFooter,.messageFooterLeft,.messageFooterRight,.messageHeader,.signature,.subHeadline{border-width:1px}
+#logo h1{position: absolute; top: -9000px; left: -9000px;}
+.inputText,select,textarea{background-color:#fff}
+.inputText:focus,select:focus,textarea:focus{background-color:#fff9f4}
+.inputText,select,textarea{border-color:#8da4b7}
+.inputText:focus,select:focus,textarea:focus{border-color:#fa2}
+.inputText,select,textarea{border-style:solid}
+.inputText,.inputText:focus,select,select:focus,textarea,textarea:focus{border-width:1px}
+.editor textarea,.inputText,select,textarea{font-family:'Trebuchet MS', Arial, sans-serif}
+.editor textarea,.inputText,select,textarea{color:#333}
+.editor textarea:focus,.inputText:focus,select:focus,textarea:focus{color:#000}
+.editor textarea,.inputText,select,textarea{font-size:.85em}
+.mainMenu div.pageMenu a,.optionButtons li,.pageNavigation a,.pageNavigation li.children span,div.messageInner div.pageMenu a,div.messageInner div.smallButtons div.pageMenu a,div.pageMenu a,div.smallButtons div.pageMenu a{background-color:#f8fafb}
+.mainMenu div.pageMenu a:hover,.pageNavigation a:hover,.pageNavigation li.children:hover span,div.messageInner div.pageMenu a:hover,div.messageInner div.smallButtons div.pageMenu a:hover,div.pageMenu .twoRows a:hover,div.pageMenu a:hover,div.smallButtons div.pageMenu a:hover{background-color:#ffe0b8}
+.mainMenu div.pageMenu a:hover,.pageNavigation a:hover,.pageNavigation li span:hover,div.messageInner div.pageMenu a:hover,div.messageInner div.smallButtons div.pageMenu a:hover,div.pageMenu a:hover,div.smallButtons div.pageMenu a:hover{background-image:url("../images/WoltLab Blue Sunrise/tableHeadHover.png")}
+.pageNavigation li.children:hover > span{background-image:url("../images/WoltLab Blue Sunrise/tableHeadHover.png")}
+.mainMenu div.pageMenu a,.pageNavigation a,.pageNavigation li.children span,.tableList div.pageMenu a,div.messageInner div.pageMenu a,div.messageInner div.smallButtons div.pageMenu a,div.pageMenu a,div.smallButtons div.pageMenu a{color:#333}
+.mainMenu div.pageMenu a:hover,.pageNavigation a:hover,.pageNavigation li.children:hover span,.tableList div.pageMenu a:hover,div.messageInner div.pageMenu a:hover,div.messageInner div.smallButtons div.pageMenu a:hover,div.pageMenu a:hover,div.smallButtons div.pageMenu a:hover{color:#333}
+.mainMenu .active a,.mainMenu .firstActive a,.mainMenu .lastActive a{background-color:#154268}
+.mainMenu .active a:hover,.mainMenu .firstActive a:hover,.mainMenu .lastActive a:hover{background-color:#154268}
+.mainMenu .active a,.mainMenu .firstActive a,.mainMenu .lastActive a{color:#d9e5ef}
+.mainMenu .active a:hover,.mainMenu .firstActive a:hover,.mainMenu .lastActive a:hover{color:#fff}
+.mainMenu a:hover{background-color:#ffe0b8}
+.mainMenu .active a,.mainMenu .firstActive a,.mainMenu .lastActive a,.mainMenu a:hover{background-image:url("../images/WoltLab Blue Sunrise/menuActive.png")}
+.mainMenu{background-color:transparent}
+.mainMenu a{color:#154268}
+.mainMenu a:hover{color:#333}
+.mainMenu div{text-align:left;margin:0 auto 0 0}
+.tabMenu ul li.activeTabMenu a{background-color:#164369}
+.tabMenu ul li.activeTabMenu a:hover{background-color:#164369}
+.tabMenu ul li.activeTabMenu a{color:#fff}
+.tabMenu li a,.tabMenu li.disabled a:hover{background-color:#e8e8e8}
+.tabMenu li a:hover{background-color:#8da4b7}
+.tabMenu li a,.tabMenu li.disabled a:hover{background-image:url("../images/WoltLab Blue Sunrise/tab.png")}
+.tabMenu li a:hover,.tabMenu li.activeTabMenu a,.tabMenu ul li.activeTabMenu a:hover{background-image:url("../images/WoltLab Blue Sunrise/tabActive.png")}
+.subTabMenu ul .activeSubTabMenu a{background-color:#17354e}
+.subTabMenu ul .activeSubTabMenu a:hover{background-color:#487397}
+.subTabMenu ul .activeSubTabMenu a{color:#fff}
+.subTabMenu ul .activeSubTabMenu a:hover{color:#fff}
+.subTabMenu ul li a:hover{background-color:#487397}
+.subTabMenu ul .activeSubTabMenu a,.subTabMenu ul li a{border-color:#487397}
+.subTabMenu ul .activeSubTabMenu a:hover,.subTabMenu ul li a:hover{border-color:#8da4b7}
+.subTabMenu ul .activeSubTabMenu a,.subTabMenu ul li a:hover{border-style:solid}
+#search .searchContainer p a,.subTabMenu ul li a{color:#ddd}
+#search .searchContainer p a:hover,.subTabMenu ul li a:hover{color:#fff}
+.tabMenu li a,.tabMenu li.disabled a:hover{color:#666}
+.tabMenu li a:hover{color:#fff}
+.message .messageSidebar{text-align:center}
+#footer,#header,#main,#mainMenu,#userPanel{margin-left:auto;margin-right:auto;}
+body,html{background-color:#fff}
+.iframeBody,body,textarea{font-family:'Trebuchet MS', Arial, sans-serif}
+.formFieldDesc,.light{color:#858789}
+#footer,#search .searchContainer p a,.boardlistCounter,.boardlistDescription,.boardlistLastPost,.boardlistSubboards,.boardlistUsersOnline,.deleteNote,.editNote,.firstPost,.formField label,.formFieldDesc,.loginPopup,.messageNumber,.moderators,.pageNavigation,.pageNavigation input,.pmMove p,.pmUsage,.popupMenu,.smallButtons li span,.smallFont,.statusDisplay,.subTabMenu ul li,.tableList th,.userCredits,.userExtras,.userPanel,div.inlineCalendar,td.columnLastActivity,td.columnLocation,td.columnRegistrationDate,td.columnUserAgent{font-size:.85em}
+.userPanel a,body,legend{color:#57595a}
+.breadCrumbs,.error,.info,.message h3,.message h4,.messageBody,.success,.warning{line-height:1.5}
+.iframeBody,body{font-size:.8em}
+#logo{height:90px}
+a,div.pageMenu .twoRows a span{color:#154268}
+a:hover,div.pageMenu .twoRows a:hover span{color:#000}
+* a.externalURL{color:#154268}
+* a.externalURL:hover{color:#08f}
+#logo .pageLogo{text-align:left}
+#logo .pageLogo img{margin-left:0px}
+#logo .pageLogo img{margin-right:0px}
+#logo .pageLogo img{margin-top:5px}
+h2{font-family:'Trebuchet MS', Arial, sans-serif}
+h2,h2 a,h2 a:hover{color:#173f61}
+h2{font-size:1.5em}
+h2{font-style:normal}
+h2{font-weight:normal}
+#footer,#header,#main,#mainMenu,#userPanel{max-width:80%}
+#footer,#header,#main,#mainMenu,#userPanel{min-width:760px}
+.activeContainer,.activeMessage,.mainMenu div.pageMenu .active a,.markedDayField a,.pageNavigation .active span,div.pageMenu li.active a{background-color:#d8e7f5}
+.activeContainer,.avatarSelect li label:hover,.inlineCalendarTable a:hover,.markedDayField a,.pageNavigation .active{border-color:#487397}
+.activeContainer,.avatarDisplay div,.avatarSelect li label,.avatarSelect li label:hover,.inlineCalendarTable a:hover,.markedDayField a,.pageNavigation .active{border-style:solid}
+.activeContainer,.avatarDisplay div,.avatarSelect li label,.avatarSelect li label:hover,.inlineCalendarTable a:hover,.markedDayField a,.pageNavigation .active{border-width:1px}
+.activeContainer .light,.activeContainer .light a,.activeContainer a:hover{color:#333}
+.activeContainer,.mainMenu div.pageMenu .active a,.markedDayField a,.pageNavigation .active span,div.pageMenu li.active a{color:#333}
+.activeContainer a{color:#333}
+.tableHead .active .emptyHead,.tableHead .active a{background-color:#ffe0b8}
+.tableHead .active a:hover{background-color:#ffe0b8}
+.tableHead .active .emptyHead,.tableHead .active a{border-color:#fa2}
+.tableHead .active a:hover{border-color:#f60}
+.tableHead .active .emptyHead,.tableHead .active a{color:#000}
+.tableHead .active a:hover{color:#000}
+.tableHead .emptyHead,.tableHead a{background-color:#eee}
+.tableHead a:hover{background-color:#ffe0b8}
+.tableHead .emptyHead,.tableHead a{background-image:url("../images/WoltLab Blue Sunrise/tableHead.png")}
+.tableHead .active .emptyHead,.tableHead .active a,.tableHead .active a:hover,.tableHead a:hover{background-image:url("../images/WoltLab Blue Sunrise/tableHeadHover.png")}
+.tableHead .emptyHead,.tableHead a{border-color:#8da4b7}
+.tableHead a:hover{border-color:#154268}
+.tableHead .emptyHead,.tableHead a{color:#154268}
+.tableHead a:hover{color:#000}
+
+/* user.additional.style.input1.use */
+
+html {background-color: #eee;}
+#main {padding-top: 0;}
+h1 {text-shadow: 0 -1px 1px #000;}
+h2, h2 a {text-shadow: 0 2px 3px #bbb;}
+legend {color: #487397;}
+#headerContainer {background-color: #164369;background-image: url("../images/WoltLab Blue Sunrise/header.jpg");background-repeat: repeat-x;background-position: left top;}
+#header {border-width: 0 !important;}
+#logo {margin: 0;border-width: 0 !important;}
+#userPanel {background-image: url("../images/WoltLab Blue Sunrise/userPanel.png");background-repeat: repeat-x;background-position: left bottom;max-width: 100%;min-width: 100%;width: 100%;}
+.userPanelInner {max-width: 80%;min-width: 770px;margin: 0 auto;}
+.userPanel, .userPanel a {color: #ebf1f6;}
+.userPanel a:hover {color: #fff;}
+.userPanel .border, .userPanel .popupMenu a {color: #57595a;}
+#search {right: 0;top: 23px;}
+#search .searchContainer {text-align: center;background-color: transparent;background-image: url("../images/WoltLab Blue Sunrise/searchContainer.png");background-repeat: no-repeat;background-position: right top;padding-left: 40px;min-height: 24px;}
+#mainMenu {max-width: 100%;min-width: 100%;width: 100%;}
+.mainMenu {min-height: 31px;background-color: transparent;background-image: url("../images/WoltLab Blue Sunrise/menuBar.png");background-repeat: repeat-x;background-position: left bottom;padding-bottom: 6px;border-width: 0 !important;}
+.mainMenu .mainMenuInner {max-width: 80%;min-width: 770px;margin: 0 auto;border-width: 0 !important;}
+.mainMenu a {text-shadow: 0 1px 0 #fff;border: 1px solid #c2c2c2;border-width: 0 1px 1px 1px;padding: 3px 5px 4px 5px;line-height: 1;}
+.mainMenu a:hover {background-image: url("../images/WoltLab Blue Sunrise/menuHover.png");}
+.mainMenu .active a, .mainMenu .firstActive a, .mainMenu .lastActive a {text-shadow: 0 -1px 0 #036;background-image: url("../images/WoltLab Blue Sunrise/menuActive.png") !important;}
+#mainMenu span {position: relative;top: 5px;}
+.mainMenu img {float: left;padding-right: 4px;}
+#footerContainer {background-color: #eee;border-top: 1px solid #8da4b7;}
+#footer {border: 0 !important;}
+.pageNavigation a:hover {background-image: url("../images/WoltLab Blue Sunrise/smallButtonsHover.png");}
+.messageLeft, .messageRight, .messageFramedLeft, .messageFramedRight, .messageTop, .messageFramedTop {background-image: url("../images/WoltLab Blue Sunrise/messageSidebar.jpg");background-repeat: repeat-x;}
+.userName a span, .quickReply h3 a {text-shadow: 0 1px 0 #fff;}
+.poll .pollQuestion {background-image: url("../images/WoltLab Blue Sunrise/poll.jpg");background-repeat: repeat-x;}
+.threadStarterPost .messageLeft, .threadStarterPost .messageRight, .threadStarterPost .messageFramedLeft, .threadStarterPost .messageFramedRight, .threadStarterPost .messageTop, .threadStarterPost .messageFramedTop  {background-image: url("../images/WoltLab Blue Sunrise/messageSidebarThreadStarter.jpg");background-repeat: repeat-x;}
+.threadStarterPost .container-3 {background-color: #ffddb7;}
+.threadStarterPost .codeBox .container-3 {background-color: #d8e7f5;}
+.firstPost a {color: #858789;}
+.smallButtons span {text-shadow: 0 1px 0 #fff;}
+.largeButtons a {line-height: 1;background-image: url("../images/WoltLab Blue Sunrise/largeButtons-ltr.png");background-position: right 0;background-repeat: no-repeat;padding: 0 7px 0 0;}
+.largeButtons a img {margin-top: 5px;margin-left: 7px;position: absolute;}
+.largeButtons a span {color: #fff;text-shadow: 0 -1px 0 #036;background-image: url("../images/WoltLab Blue Sunrise/largeButtons-ltr.png");background-position: left 0;background-repeat: no-repeat;padding: 9px 3px 0 36px;display: block;height: 25px;cursor: pointer;}
+.largeButtons a:hover {background-position: right -86px;}
+.largeButtons a:hover span {color: #000;text-shadow: 0 1px 0 #fff;background-position: left -86px;}
+.tabMenu a span, .tabMenu li.disabled a span {text-shadow: 0 1px 0 #fff;}
+.tabMenu .activeTabMenu a span, .tabMenu a:hover span, .subTabMenu a span {text-shadow: 0 -1px 0 #036;}
+.containerHead, .containerHead a {text-shadow: 0 -1px 0 #036;}
+.subHeadline {text-shadow: 0 1px 0 #fff;}
+.memberList li span {text-shadow: 0 1px 0 #fff;}
+.galleryIndex li span {text-shadow: 0 1px 0 #fff;}
+select, textarea, input[type="text"], input[type="password"] {border-width: 1px;border-style: solid;border-color: #666 #999 #ccc #999;background-image: url("../images/WoltLab Blue Sunrise/inputBackground.png");background-position: left top;background-repeat: repeat-x;min-height: 13px;}
+select, textarea:focus, input[type="text"]:focus, input[type="password"]:focus {background-image: url("../images/WoltLab Blue Sunrise/inputBackground.png");background-repeat: repeat-x;outline: 0;}
+
+/* user.additional.style.input2.use */
+
+* {-o-text-overflow: ellipsis;}
+.message, .messageInner, .quoteBox, fieldset, .info, .success, .warning, .error, .help, #userCard, .userCardInner, .second .border, .second .border .content, .avatarSelect li.container-4, .avatarSelect li label, .floatedElement, .popupMenu, .loginPopup, .loginPopup .container-1 {-webkit-border-radius: 5px; -moz-border-radius: 5px;}
+.messageLeft .messageContent, .messageLeft .messageContentInner {-webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px;}
+.messageRight .messageContent, .messageRight .messageContentInner {-webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px;}
+.messageFramedLeft .messageContent, .messageFramedLeft .messageContentInner, .messageFramedRight .messageContent, .messageFramedRight .messageContentInner {-webkit-border-radius: 5px; -moz-border-radius: 5px;}
+.messageTop .messageContent, .messageTop .messageContentInner {-webkit-border-radius: 0; -moz-border-radius: 0;}
+.messageFramedTop .messageContent, .messageFramedTop .messageContentInner {-webkit-border-radius: 5px; -moz-border-radius: 5px;}
+textarea, select, input[type="text"], input[type="password"], .memberList li, .smallButtons > ul > li, .smallButtons > ul > li > a, .extraButton, .extraButton a, .optionButtons > ul > li, .optionButtons > ul > li > a, .subTabMenu .containerHead li a, .pmUsageBar, .statBar, .userAvatarFramed, .userAvatarFramed a, .userAvatarFramed img {-webkit-border-radius: 3px; -moz-border-radius: 3px;}
+.pmUsageBar > div, .statBar > div {-webkit-border-radius: 1px; -moz-border-radius: 1px;}
+.popupMenu li:first-child a, #boardlist .border, .titleBarPanel, .titleBarPanel .containerHead, .messagePreview, .subTabMenu, .subTabMenu .containerHead, .containerHead, .messageTop .messageSidebar, .messageFramedTop .messageSidebar, .thumbnailButtons {-webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;}
+.codeBox {-webkit-border-top-left-radius: 3px; -webkit-border-top-right-radius: 3px; -moz-border-radius-topleft: 3px; -moz-border-radius-topright: 3px;}
+.tabMenu li:first-child, .tabMenu li:first-child a {-webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px;}
+.tabMenu li:last-child, .tabMenu li:last-child a {-webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px;}
+.searchInputMenu .pageMenu, .popupMenu li:last-child a, .twoRows li:last-child {-webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px;}
+#boardlist .border .boardlistInner, .twoRows li:last-child a, .datalist li:last-child {-webkit-border-bottom-left-radius: 3px; -webkit-border-bottom-right-radius: 3px; -moz-border-radius-bottomleft: 3px; -moz-border-radius-bottomright: 3px;}
+.popupMenu li a, #boardlist .border .boardlistInner:first-child {-webkit-border-bottom-left-radius: 0; -moz-border-radius-bottomleft: 0; -webkit-border-bottom-right-radius: 0; -moz-border-radius-bottomright: 0;}
+.mceToolbar .popupMenu, .mceToolbar .popupMenu li, .mceToolbar .popupMenu li a, .second fieldset .editor, .second fieldset .border, .attachmentPreview, .attachmentPreview li, .tableList td.containerHead {-webkit-border-top-left-radius: 0 !important; -webkit-border-top-right-radius: 0 !important; -webkit-border-bottom-right-radius: 0 !important; -moz-border-radius-topleft: 0 !important; -webkit-border-bottom-left-radius: 0 !important; -moz-border-radius-topright: 0 !important; -moz-border-radius-bottomleft: 0 !important; -moz-border-radius-bottomright: 0 !important;}
+.loginPopup input#quickLoginUsername {-webkit-border-top-right-radius: 0; -webkit-border-bottom-right-radius: 0; -moz-border-radius-topright: 0; -moz-border-radius-bottomright: 0;}
+.loginPopup input#quickLoginPassword {-webkit-border-top-left-radius: 0; -webkit-border-bottom-left-radius: 0; -moz-border-radius-topleft: 0; -moz-border-radius-bottomleft: 0;}
+input#searchInput {-webkit-border-radius: 12px; -moz-border-radius: 12px;}
+#searchInput {background-image: url("../images/WoltLab Blue Sunrise/searchBack-ltr.png"); background-position: -2px top; padding-left: 33px; width: 154px; height: 16px;}
+.searchOptions {background-image: url("../images/WoltLab Blue Sunrise/searchBackOptions-ltr.png") !important;}
+.searchOptions:focus {background-image: url("../images/WoltLab Blue Sunrise/searchBackOptionsActive-ltr.png") !important;}
+.galleryPhotoEdit img, .galleryAlbumCover img {-webkit-box-shadow: 0 3px 7px #666; -moz-box-shadow: 0 3px 7px #666;}
+.galleryIndex li.floatedElement .thumbnail img, .squared .thumbnail img {-webkit-box-shadow: 0 1px 3px #666; -moz-box-shadow: 0 1px 3px #666;}
+.galleryIndex li.floatedElement:hover, .avatarSelect li label:hover {-webkit-box-shadow: 0 1px 3px #999; -moz-box-shadow: 0 1px 3px #999;}
+.galleryPhoto img {-webkit-box-shadow: 0 3px 7px #666; -moz-box-shadow: 0 3px 7px #666; margin: 10px;}
+.imageViewerCurrentImage {-webkit-box-shadow: 0 3px 23px #000; -moz-box-shadow: 0 3px 23px #000;}

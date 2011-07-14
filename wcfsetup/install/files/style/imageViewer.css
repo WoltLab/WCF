@@ -1,0 +1,65 @@
+
+/* ### -- -- -- -- -- ImageViewer Styles -- -- -- -- -- ### */
+
+/* 
+
+File: imageViewer.css 
+Copyright 2009-2010 by WoltLab GmbH. 
+
+*/
+
+/* #### -- -- -- -- -- ImageViewer -- -- -- -- -- #### */
+
+.imageViewerBackground, .overlayBackground { /* compatibility mode */
+	color: #fff;
+	background-color: #000;
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	z-index: 100;
+}
+
+.imageViewerCaption {
+	color: #fff;
+	font-size: 1em;
+	font-weight: bold;
+	text-align: center;
+	position: fixed; 
+	top: 5px;
+	right: 0;
+	left: 0;
+	z-index: 110;
+}
+
+.imageViewerCurrentImage {
+	background-color: #fff;
+	border: 10px solid #fff;
+	position: fixed; 
+	width: 400px;
+	height: 300px;
+	z-index: 110;
+}
+
+.imageViewerNavigation {
+	border-width: 5px;
+}
+
+.imageViewerLoading {
+	background-image: url("../images/spinner.gif");
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+}
+
+.imageViewerMenu {
+	background-image: url("../images/imageViewer/menu.png");
+	padding: 13px 10px;
+	position: fixed;
+	bottom: 10px;
+	height: 24px;
+	width: 224px;
+	z-index: 120;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

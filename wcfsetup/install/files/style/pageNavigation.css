@@ -1,0 +1,129 @@
+
+/* ### -- -- -- -- -- Page Navigation Styles -- -- -- -- -- ### */
+
+/* 
+
+File: pageNavigation.css 
+Copyright 2006-2009 by WoltLab GmbH. 
+
+*/
+
+/* ### -- -- -- -- -- Page Navigation -- -- -- -- -- ### */
+
+.pageNavigation {
+	margin-top: .5em;
+	margin-right: 20px;
+	margin-bottom: 5px;
+	float: left;
+	clear: left;
+}
+
+.pageNavigation ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.pageNavigation li {
+	border-width: 1px;
+	border-style: solid;
+	margin-right: 3px;
+	float: left;
+	position: relative;
+}
+
+.pageNavigation li.active, .pageNavigation li:active {
+	border-width: 1px;
+	border-style: solid;
+}
+
+.pageNavigation a, .pageNavigation li span {
+	text-align: center;
+	text-decoration: none;
+	border-width: 1px;
+	border-style: solid;
+	padding: 0 4px;
+	display: block;
+}
+
+.pageNavigation li div {
+	text-align: center;
+	margin-left: -1px;
+	padding: 0 0 .4em 0;
+	position: absolute;
+	bottom: 1.6em;
+	width: 12em; /* opera fix */
+	z-index: 200;
+	display: none;
+	opacity: .9; /* css3 */
+}
+
+.pageNavigation li:hover div {
+	display: block;
+}
+
+.pageNavigation li ul {
+	border: 1px;
+	padding: 0 0 2px 2px;
+	float: left;
+	clear: left;
+}
+
+.pageNavigation li ul li {
+	text-align: right !important;
+	margin-top: 2px;
+}
+
+.pageNavigation .skip, .pageNavigation .skip:hover, .pageNavigation .skip:active {
+	border: none;
+}
+
+.pageNavigation .skip a, .pageNavigation .skip a:hover, .pageNavigation .skip a:active, .pageNavigation .skip span {
+	background-color: transparent;
+	background-image: none !important;
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+.pageNavigation .skip {
+	padding: 1px 1px !important;
+	width: 16px;
+}
+
+.pageNavigation .skip img {
+	vertical-align: middle;
+}
+
+.pageNavigation input {
+	text-align: center;
+	background-color: transparent;
+	border: none;
+	margin: 0;
+	padding: 2px 0;
+	width: 2.5em;
+	min-height: 1.84em;
+	display: none;
+}
+
+.pageNavigation .children {
+	padding: 0;
+}
+
+/* Drop Down Menus (see also pageMenu.css) */
+.pageNavigation a, .pageNavigation li ul, .pageNavigation li {
+	border-width: 1px;
+}
+
+/* Drop Down Menus (see also pageMenu.css) */
+.pageNavigation a, .pageNavigation li.children span {
+	border-color: #fff;
+	border-style: solid;
+}
+
+.statusDisplay .pageNavigation {
+	margin: 0;
+	padding: 0 0 2px 0;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

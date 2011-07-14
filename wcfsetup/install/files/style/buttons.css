@@ -1,0 +1,160 @@
+
+/* ### -- -- -- -- -- Button Styles -- -- -- -- -- ### */
+
+/* 
+
+File: buttons.css 
+Copyright 2006-2009 by WoltLab GmbH. 
+
+*/
+
+/* ### -- -- -- -- -- Large Buttons -- -- -- -- -- ### */
+
+.largeButtons:after {
+	content: "";
+	display: block;
+	clear: both;
+	height: 0;
+}
+
+.largeButtons ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.largeButtons li {
+	border: 1px;
+	margin: 0 0 0 5px;
+	float: right;
+}
+
+.largeButtons a {
+	text-decoration: none;
+	white-space: nowrap;
+	border-width: 1px;
+	border-style: solid;
+	padding: 1px 4px;
+	display: block;
+}
+
+.largeButtons span {
+	font-weight: normal;
+}
+
+/* ### -- -- -- -- -- Small Buttons -- -- -- -- -- ### */
+
+.smallButtons:after {
+	content: "";
+	display: block;
+	clear: both;
+	height: 0;
+}
+
+.smallButtons ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.smallButtons li {
+	border: 1px;
+	margin: 10px 0 0 4px;
+	float: right;
+}
+
+.smallButtons .pageMenu li {
+	border: 0; 
+	margin: 0;
+	padding: 0;
+	float: none;
+}
+
+.smallButtons a {
+	text-decoration: none;
+	line-height: 1.3;
+	border-width: 1px;
+	border-style: solid;
+	padding: 0 2px;
+	display: block;
+	white-space: nowrap;
+}
+
+.smallButtons .pageMenu a {
+	border: 0;
+}
+
+.smallButtons span {
+	font-weight: normal;
+	padding-left: 1px;
+}
+
+.smallButtons img {
+	margin-top: -1px;
+}
+
+.smallButtons > ul > li > a {
+	min-height: 18px !important;
+}
+
+/* ### -- -- -- -- -- Option Buttons -- -- -- -- -- ### */
+
+.optionButtons ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.optionButtons li {
+	margin-top: .3em;
+	margin-right: 2px;
+	float: left;
+}
+
+.optionButtons .pageMenu li {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	float: none;
+}
+
+.optionButtons a {
+	text-decoration: none;
+	line-height: 1.3;
+	padding: 0 4px 0 4px;
+	display: block;
+}
+
+.optionButtons .pageMenu a {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	float: none;
+}
+
+ .optionButtons > ul > li > a {
+	min-height: 18px !important;
+}
+
+/* ### -- -- -- -- -- Button Bar -- -- -- -- -- ### */
+
+.buttonBar {
+	border-width: 1px 0 0 0;
+	margin-top: 5px;
+	display: block;
+	clear: both;
+}
+
+.buttonBar p {
+	margin-top: 7px;
+}
+
+.buttonBar .extraButton {
+	margin-left: 10px;
+}
+
+.buttonBar .buttonBarCaption {
+	float: left;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

@@ -1,0 +1,639 @@
+
+/* ### -- -- -- -- -- Global Burning Board 3 Styles -- -- -- -- -- ### */
+
+/* 
+
+File: global.css 
+Copyright 2006-2011 by WoltLab GmbH. 
+
+*/
+
+/* ### -- -- -- -- -- Miscellaneous -- -- -- -- -- ### */
+
+* {
+	/* remove the following comment marks for RTL-text support - note: this line leads to incorrect forum display in Internet Explorer browsers! */
+	/*unicode-bidi: embed;*/
+	text-overflow: ellipsis;
+}
+
+body, html {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+#main {
+	padding: 10px 0 20px 0;	
+}
+
+#main:after {
+	clear: both;
+	display: block;
+	height: 0;
+	content: "";
+}
+
+p {
+	margin: 0;
+	padding: 0;
+}
+
+pre {
+	font-family: "Courier New", Courier, monospace !important;
+}
+
+img {
+	vertical-align: middle;
+	border: 0;
+}
+
+hr {
+	display: none;
+}
+
+.hidden { /* Moves elements out of the viewport in an accessible way and preserves no space for them. Use this class rather than "display: none"! */
+	height: 0;
+	overflow: hidden;
+	position: absolute;
+	left: -9000px;
+	max-width: 8000px;
+}
+
+.new {
+	font-weight: bold;
+}
+
+.buddy {
+	font-size: 1.2em;
+}
+
+.dragable * {
+	cursor: move;
+}
+
+.loading {
+	background-color: #fff;
+	background-image: url("../images/spinner.gif");
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	min-height: 80px;
+	opacity: .5;	
+}
+
+.rating {
+	float: right;
+}
+
+/* ### -- -- -- -- -- Headings -- -- -- -- -- ### */
+
+h1 {
+	margin: 0;
+	padding: 0 0 15px 0;
+}
+
+h1 a {
+	text-decoration: none;
+}
+
+h2, h2 a {
+	text-decoration: none;
+}
+
+h2, h3, h4, h5, h6 {
+	font-size: 1em;
+	font-weight: normal;
+	text-align: left;
+	margin: 0;
+	padding: 0;
+}
+
+#main > h2 {
+	padding-bottom: 7px;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+/* ### -- -- -- -- -- Links -- -- -- -- -- ### */
+
+a {
+	cursor: pointer;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+/* ### -- -- -- -- -- External Links -- -- -- -- -- ### */
+
+.externalURL {
+	background-image: url("../icon/externalURL.png");
+	background-position: right center;
+	background-repeat: no-repeat;
+	padding-right: 15px;
+}
+
+.externalURL:hover {
+	background-image: url("../icon/externalURLHover.png");
+	background-position: right center;
+	background-repeat: no-repeat;
+}
+
+/* ### -- -- -- -- -- Quick Jump -- -- -- -- -- ### */
+
+.quickJump {
+	white-space: nowrap;
+	width: auto;
+}
+
+.quickJump select {
+	width: auto;
+	max-width: 50%;
+}
+
+/* ### -- -- -- -- -- Page Options -- -- -- -- -- ### */
+
+.pageOptions {
+	float: right;
+}
+
+.pageOptions form, .pageOptions div {
+	display: inline;
+}
+
+.pageOptions a, .pageOptions form {
+	text-decoration: none;
+	margin-left: 10px;
+}
+
+.pageOptions a span {
+	text-decoration: underline;
+}
+
+.pageOptions a:hover span {
+	text-decoration: none;
+}
+
+/* ### -- -- -- -- -- Breadcrumbs -- -- -- -- -- ### */
+
+.breadCrumbs {
+	font-size: .95em;
+	list-style: none;
+	margin: 5px 0;
+	padding: 0;
+}
+
+.breadCrumbs li {
+	font-style: italic;
+	margin-right: 1px;
+	display: inline;
+}
+
+.breadCrumbs li a, .messageFooter .breadCrumbs li a {
+	text-decoration: none;
+}
+
+.breadCrumbs li a span, .messageFooter .breadCrumbs li a {
+	text-decoration: underline;
+}
+
+.breadCrumbs li a:hover span, .messageFooter .breadCrumbs li a:hover {
+	text-decoration: none;
+}
+
+.containerHead .breadCrumbs {
+	margin: 0;	
+}
+
+/* ### -- -- -- -- -- Content Header & Content Footer -- -- -- -- -- ### */
+
+.contentHeader, .contentFooter {
+	padding-bottom: 7px;
+	width: 100%;
+}
+
+.contentFooter:after, .contentHeader:after {
+	content: "";
+	height: 0;
+	display: block;
+	clear: both;
+}
+
+/* ### -- -- -- -- -- Floated Elements -- -- -- -- -- ### */
+
+.floatContainer:after {
+	content: "";
+	height: 0;
+	display: block;
+	clear: both;
+}
+
+.floatedElement {
+	margin: 0 7px 0 0;
+	padding: 0;
+	display: block;
+	float: left;
+	position: relative;
+}
+
+.floatedElement:after {
+	content: "";
+	height: 0;
+	display: block;
+	clear: both;
+}
+
+.floatedElement label {
+	font-size: .85em;
+	white-space: nowrap;
+	display: block;
+	position: absolute;
+	top: -2px;
+}
+
+.floatedElement input, .floatedElement select, .floatedElement p {
+	margin: 1.5em 0 0 0; /* First value was "1.25em" before - this is a test! */
+	width: auto;
+}
+
+.floatedElement a img {
+	margin-top: 12px;
+	display: block;
+}
+
+.floatedElementLabel {
+	min-width: 50px;
+	text-align: right;	
+}
+
+.followsFloatedElement {
+	clear: both;	
+}
+
+.floatedElementContainer {
+	padding: 3px 0;
+}
+
+.floatedElementButtons {
+	float: right;	
+}
+
+.floatedElementButtons input, .floatedElementButtons img {
+	margin: 1.25em 0 0 5px;
+}
+
+.floatTwoColumns {
+	float: left;
+	width: 49%;
+}
+
+/* ### -- -- -- -- -- ItemList -- -- -- -- -- ### */
+
+.itemList, .itemList ol, .itemList ul {
+	margin: 0 0 0 20px;
+	padding: 2px 0;
+}
+
+.itemList, .itemList ul {
+	padding-left: 23px;
+}
+
+.itemList {
+	margin: 5px 0;
+}
+
+.itemList .itemListTitle {
+	border-width: 0 0 1px 0 !important;
+	margin: 0;
+	padding: 5px;
+	min-height: 21px;
+}
+
+.itemList h3.itemListTitle, .itemList h4.itemListTitle, .itemList h5.itemListTitle {
+	font-weight: bold;	
+}
+
+.itemList > li:last-child > .itemListTitle {
+	border: 0;
+}
+
+.itemList .buttons {
+	padding: 7px 0 4px 4px;
+	float: right;
+}
+
+.itemList .buttons a {
+	margin-left: 3px !important;
+	padding: 0 !important;
+}
+
+.itemList .buttons input {
+	margin: 0 0 -4px 5px !important;
+	padding: 0 !important;
+}
+
+.itemList .buttons a.extraButton {
+	margin: 0 0 -4px 10px !important;
+	padding: 0 !important;
+}
+
+.itemList .inputText {
+	width: auto;	
+}
+
+.first .itemList {
+	list-style-type: none;
+	padding-left: 0;
+}
+
+#invitationContainer .itemList {
+	margin: 5px 0 0 0;
+}
+
+#invitationContainer .itemList li {
+	list-style-type: square;
+	list-style-image: url("../icon/userS.png");
+}
+
+/* ### -- -- -- -- -- Social Bookmarks -- -- -- -- -- ### */
+
+.socialBookmarks {
+	margin: 7px 0 0 0;
+	padding-bottom: 0;
+	padding-left: 0;
+	float: left;
+}
+
+.socialBookmarks:after {
+	content: "";
+	height: 0;
+	display: block;
+	clear: both;
+}
+
+.socialBookmarks li {
+	float: left;
+	margin-bottom: 5px;
+	margin-right: 5px;
+	list-style: none;
+}
+
+/* ### -- -- -- -- -- Simple Bar -- -- -- -- -- ### */
+
+.simpleBar ul {
+	text-align: center;
+	list-style-type: none;
+	margin: 7px 0 13px 0;
+	padding: .5em 0;
+}
+
+.simpleBar li {
+	display: inline;
+}
+
+.simpleBar li a {
+	text-decoration: none;
+	padding: .3em 7px;
+}
+
+.simpleBar li.selected a {
+	text-decoration: none;
+	padding: .3em 7px;
+}
+
+.simpleBar li a img {
+	margin: -5px 0;
+}
+
+/* ### -- -- -- -- -- Slider -- -- -- -- -- ### */
+
+.slider {
+	margin: 3px 0 10px 0;
+	padding: 1px 2px 0 2px !important;
+	position: relative;
+	width: 250px;
+}
+
+.slider .handle {
+	height: 9px;
+	width: 9px;
+	cursor: move;
+}
+
+/* ### -- -- -- -- -- Overlays -- -- -- -- -- ### */
+
+/* Note: This declaration will replace ".imageviewerBackground" in an upcoming version! */
+
+.overlayBackground { 
+	color: #fff;
+	background-color: #000;
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	z-index: 100;
+}
+
+.overlay {
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 120;
+}
+
+.overlay .buttonBar {
+	padding-bottom: 7px;
+}
+
+.overlay .subHeadline .buttons {
+	float: right;
+}
+
+.overlay .subHeadline .buttons img {
+	display: inline;
+}
+
+/* ### -- -- -- -- -- System Messages (Success, Warning, Error, Info) -- -- -- -- -- ### */
+
+/* Note: Change the colors of system messages with care! Consider that people are used to specific colors for special events (e.g. Red stands for warning). Random colors may not work as intended! */
+
+.success, .warning, .error, .info {
+	background-position: 10px center;
+	background-repeat: no-repeat;
+	margin-bottom: 20px;
+	padding: 7px 10px 7px 45px;
+}
+
+.success {
+	color: #090;
+	background-color: #efe;
+	background-image: url("../icon/successM.png");
+	border-color: #090;
+}
+
+.success a, .success a:hover {
+	color: #333;
+}
+
+.warning {
+	color: #660;
+	background-color: #ffd;
+	background-image: url("../icon/warningM.png");
+	border-color: #660;
+}
+
+.warning a, .warning a:hover {
+	color: #333;
+}
+
+.error {
+	color: #c00;
+	background-color: #fee;
+	background-image: url("../icon/errorM.png");
+	border-color: #c00;
+}
+
+.error a, .error a:hover {
+	color: #333;
+}
+
+.info {
+	color: #06f;
+	background-color: #def;
+	background-image: url("../icon/infoM.png");
+	border-color: #06f;
+}
+
+.info a, .info a:hover {
+	color: #333;
+}
+
+.info .close {
+	float: right;	
+}
+
+/* ### -- -- -- -- -- Inner Errors -- -- -- -- -- ### */
+
+.innerError {
+	background-image: url("../icon/errorS.png");
+	background-position: 1px center;
+	background-repeat: no-repeat;
+	margin-bottom: 5px;
+	padding: 5px 5px 5px 25px;
+}
+
+/* ### -- -- -- -- Disabled -- -- -- -- ### */
+
+.tableList tr.disabled,
+.tableList tr.disabled:hover,
+.disabled div.messageInner {
+	background-color: #efe; 
+}
+
+.disabled td, .disabled div.messageInner {
+	background-image: none;
+}
+
+.tabMenuContent .disabled .messageInner *,
+.disabled .messageSidebar *,
+.tableList tr.disabled td,
+.tableList tr.disabled td a,
+.tableList tr.disabled td a:hover,
+.tableList tr.disabled td .light,
+.tableList tr.disabled td .light a,
+.tableList tr.disabled:hover .columnTopic .topic a,
+.tableList tr.disabled:hover .columnTitle a,
+.tableList tr.disabled:hover .columnUsername a {
+	color: #090;
+}
+
+.disabled div.messageInner {
+	border-color: #090 !important;
+	border-style: dashed !important;
+}
+
+form .disabled, .tabMenu .disabled { /* CSS 3 */
+	opacity: .5;	
+}
+
+/* ### -- -- -- -- Deleted -- -- -- -- ### */
+
+.tableList tr.deleted,
+.tableList tr.deleted:hover,
+.deleted div.messageInner {
+	background-color: #fee;
+}
+
+.deleted td, .deleted div.messageInner {
+	background-image: none;
+}
+
+.tabMenuContent .deleted .messageInner *,
+.deleted .messageSidebar *, 
+.tableList tr.deleted td,
+.tableList tr.deleted td a,
+.tableList tr.deleted td a:hover,
+.tableList tr.deleted td .light,
+.tableList tr.deleted td .light a,
+.tableList tr.deleted:hover .columnTopic .topic a,
+.tableList tr.deleted:hover .columnTitle a,
+.tableList tr.deleted:hover .columnUsername a {
+	color: #c00;
+}
+
+.deleted {
+	border-color: #c00 !important;
+	border-style: dashed !important;
+}
+
+.deleted img {
+	opacity: .5 !important;
+}
+
+/* ### -- -- -- -- -- Marked -- -- -- -- -- ### */
+
+.tableList tr.marked,
+.tableList tr.marked:hover,
+.marked div.messageInner,
+li.floatedElement.marked {
+	background-color: #ffd;
+}
+
+.marked td,
+.marked div.messageInner,
+li.floatedElement.marked {
+	background-image: none;
+}
+
+.tabMenuContent .marked .messageInner *,
+.marked .messageSidebar *,
+li.floatedElement.marked *,
+.tableList tr.marked td,
+.tableList tr.marked td a,
+.tableList tr.marked td a:hover,
+.tableList tr.marked td .light,
+.tableList tr.marked td .light a,
+.tableList tr.marked:hover .columnTopic .topic a,
+.tableList tr.marked:hover .columnTitle a,
+.tableList tr.marked:hover .columnUsername a {
+	color: #333;
+}
+
+.marked {
+	border-style: dashed !important;
+}
+
+.tableList .marked, .tableList .deleted, .tableList .activeContainer {
+	border: none !important;
+}
+
+/* ### -- -- -- -- -- Highlight -- -- -- -- -- ### */
+
+.highlight {
+	color: #00f;
+	background-color: #ff0;
+	padding: 0 2px;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

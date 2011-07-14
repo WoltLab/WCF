@@ -1,0 +1,35 @@
+<?php
+namespace wcf\system\form\container;
+
+/**
+ * Provides a group form element container.
+ *
+ * @author	Alexander Ebert
+ * @copyright	2001-2011 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	system.form
+ * @category 	Community Framework
+ */
+class GroupFormElementContainer extends AbstractFormElementContainer {
+	/**
+	 * @see	FormElementContainer::getHTML()
+	 */
+	public function getHTML($formName) {
+		$content = '';
+		foreach ($this->children as $element) {
+			$content .= $element->getHTML($formName);
+		}
+		
+		return <<<HTML
+<fieldset>
+	<legend>{$this->getLabel()}</legend>
+	
+	<p class="description">{$this->getDescription()}</p>
+	
+	{$content}
+</fieldset>
+HTML;
+	}
+}
+?>

@@ -1,0 +1,26 @@
+<?php
+namespace wcf\data\spider;
+use wcf\data\DatabaseObject;
+
+/**
+ * Represents a spider.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2010 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	data.spider
+ * @category 	Community Framework
+ */
+class Spider extends DatabaseObject {
+	/**
+	 * @see	DatabaseObject::$databaseTableName
+	 */
+	protected static $databaseTableName = 'spider';
+	
+	/**
+	 * @see	DatabaseObject::$databaseTableIndexName
+	 */
+	protected static $databaseTableIndexName = 'spiderID';
+}
+?>

@@ -1,0 +1,151 @@
+
+/* ### -- -- -- -- -- Footer Styles -- -- -- -- -- ### */
+
+/* 
+
+File: footer.css 
+Copyright 2008-2009 by WoltLab GmbH. 
+
+*/
+
+/* ### -- -- -- -- -- Footer -- -- -- -- -- ### */
+
+#footer {
+	border-width: 1px 0 0 0;
+	border-style: solid;
+	padding: 10px 0;
+}
+
+#footerContainer {
+	border-top-width: 0;
+}
+
+/* ### -- -- -- -- -- Footer Menu -- -- -- -- -- ### */
+
+.footerMenu {
+	margin-bottom: 10px;
+	float: left;
+}
+
+.footerMenu ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.footerMenu li {
+	white-space: nowrap;
+	border-width: 0 0 0 1px;
+	border-style: solid;
+	margin-top: 5px;
+	padding: 0 10px;
+	display: inline-block;
+}
+
+.footerMenu li.first, .footerMenu li.firstActive {
+	border-width: 0;
+	padding-left: 0;
+}
+
+.footerMenu a {
+	text-decoration: none;
+	display: block;
+}
+
+.footerMenu span {
+	padding: 3px 0 2px 0;	
+}
+
+.footerMenu a span {
+	text-decoration: underline;
+}
+
+.footerMenu a:hover span {
+	text-decoration: none;
+}
+
+.footerMenu div.popupMenu {
+	font-size: 1em;
+}
+
+/* ### -- -- -- -- -- Footer Options -- -- -- -- -- ### */
+
+.footerOptions {
+	margin-bottom: 10px;
+	float: right;
+}
+
+.footerOptions ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.footerOptionsInner > ul > li {
+	display: inline-block;
+}
+	
+.footerOptions li {
+	border-width: 0 1px 0 0;
+	border-style: solid;
+	margin-top: 5px;
+	padding: 0 10px 0 7px;
+}
+
+.footerOptions li.last {
+	border-width: 0;
+}
+
+.footerOptions a, .footerOptions em {
+	font-style: normal;
+	text-decoration: none;
+	display: block;
+}
+
+.footerOptionsInner > ul > li > a {
+	min-height: 16px;
+}
+
+.footerOptions span {
+	padding: 3px 0 2px 0;	
+}
+
+.footerOptions a span {
+	text-decoration: underline;
+}
+
+.footerOptions a:hover span {
+	text-decoration: none;
+}
+
+.footerOptions div.popupMenu {
+	font-size: 1em;
+}
+
+/* ### -- -- -- -- -- Extra Button -- -- -- -- -- ### */
+
+.footerOptions li.extraButton {
+	border-width: 1px;
+	margin-top: 0 !important;
+	padding: 0;
+}
+
+.footerOptions li.extraButton a {
+	margin: 0;
+	padding: 1px 2px 0 2px;
+}
+
+/* ### -- -- -- -- -- Copyright -- -- -- -- -- ### */
+
+.copyright {
+	text-align: center;
+	white-space: nowrap;
+	padding: 10px 0 7px 0;
+	clear: both;
+}
+
+.copyright a {
+	text-decoration: none;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

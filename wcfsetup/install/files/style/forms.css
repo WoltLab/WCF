@@ -1,0 +1,271 @@
+
+/* ### -- -- -- -- -- Form Styles -- -- -- -- -- ### */
+
+/* 
+
+File: forms.css 
+Copyright 2006-2010 by WoltLab GmbH. 
+
+*/
+
+/* ### -- -- -- -- -- Miscellaneous -- -- -- -- -- ### */
+
+form {
+	margin: 0;
+	padding: 0;
+}
+
+textarea, input, select {
+	font-size: .95em;
+}
+
+input[type="submit"], input[type="reset"], input[type="button"], input[type="file"] {
+	font-size: 1em;
+}
+
+.formSubmit { /* holds submit-buttons "preview, draft, submit" */
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 15px;
+}
+
+textarea, .inputText {
+	border-width: 1px;
+	width: 99.5%;
+}
+
+select {
+	border-width: 1px;
+	padding: 2px;
+}
+
+input[type="text"], input[type="password"] {
+	padding: 3px 0 3px 2px;
+}
+
+input[type="file"] {
+	padding: 2px 3px;
+}
+
+select[multiple="multiple"] {
+	padding: 0 !important;
+}
+
+textarea {
+	padding-left: 3px;
+}
+
+input[type="radio"] {
+	margin-left: 0;
+}
+
+select[multiple="multiple"] {
+	width: 100%;
+}
+
+input[type="image"] {
+	margin: 0 3px -3px 0;
+}
+
+.searchInput > input[type="image"] {
+	margin: 0;
+}
+
+.fourDigitInput {
+	width: 40px !important;
+}
+
+.textareaSmall {
+	height: 1.9em; 
+	line-height: 2;
+}
+
+/* ### -- -- -- -- -- Form Element -- -- -- -- -- ### */
+
+.formElement {
+	margin: 5px 0 3px 0;
+	min-height: 0;
+}
+
+.formElement:after {
+	content: "";
+	height: 0;
+	display: block;
+	clear: both;
+}
+
+/* ### -- -- -- -- -- Form Field -- -- -- -- -- ### */
+
+.formField {
+	padding: 0;
+}
+
+.formElement .formField {
+	margin-left: 216px;
+}
+
+fieldset .formElement .formField {
+	margin-left: 202px;
+}
+
+.formField input, .formField select, .formField textarea {
+	margin: 2px 0;
+}
+
+.formField label {
+	font-size: 1em !important;
+	display: block;
+}
+
+.containerContent .formField {
+	margin-top: -5px;
+}
+
+/* ### -- -- -- -- -- Form Field Label -- -- -- -- -- ### */
+
+.formFieldLabel {
+	text-align: right;
+	float: left;
+	width: 200px;
+}
+
+fieldset .formFieldLabel {
+	width: 187px;
+}
+
+/* ### -- -- -- -- -- Form Field Description -- -- -- -- -- ### */
+
+.formFieldDesc {
+	padding: 0 0 2px 0;
+}
+
+.formElement .formFieldDesc {
+	margin-left: 216px;
+}
+
+fieldset .formElement .formFieldDesc {
+	margin-left: 202px;
+}
+
+.formCheckBox .formFieldDesc {
+	padding: 0 0 2px 18px;
+}
+
+.formFieldDesc code {
+	font-size: 1.3em;
+}
+
+.formFieldDesc > p {
+	clear: both;
+}
+
+/* ### -- -- -- -- -- Form Group -- -- -- -- -- ### */
+
+/* A form group is an element containing serveral sub form elements within a fieldset */
+
+.formGroup {
+	min-height: 0;
+	margin: 5px 0 3px 0;
+}
+
+.formGroup .formGroupLabel {
+	text-align: right;
+	float: left;
+	width: 200px;
+}
+
+fieldset .formGroup .formGroupLabel {
+	width: 187px;
+}
+
+.formGroup .formGroupField {
+	margin-left: 216px;
+}
+
+fieldset .formGroup .formGroupField {
+	margin-left: 203px;
+}
+
+.formGroup .formGroupField legend {
+	display: none;
+}
+
+/* ToDo: Find a better solution for that! Impossible to build long inputs as long as this is active! */
+.formGroup .formGroupField .formElement input {
+	width: auto !important;
+}
+
+/* ### -- -- -- -- -- Form Prefix -- -- -- -- -- ### */
+
+.formPrefix select {
+	float: left;
+	width: 150px;
+}
+
+.formPrefix div {
+	margin-left: 155px;
+}
+
+.formPrefix {
+	min-height: 0;
+}
+
+/* ### -- -- -- -- -- Form Options -- -- -- -- -- ### */
+
+.formOptions {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.formOptions li {
+	margin-top: 3px;
+	padding-right: 2%;
+	width: 23%;
+	float: left;
+}
+
+.formOptions li span {
+	float: none;
+	padding-left: 12px;
+}
+
+/* ### -- -- -- -- -- Form Options Long -- -- -- -- -- ### */
+
+.formOptionsLong {
+	list-style: none;
+	margin: 0 0 7px 0;
+	padding: 0;
+}
+
+.formOptionsLong li {
+	margin: 3px 0 0 0;
+	padding: 0;
+}
+
+.formOptionsLong span, .formOptionsLong label {
+	display: inline;
+}
+
+/* ### -- -- -- -- -- Form Error -- -- -- -- -- ### */
+
+.formError, .formError a {
+	color: #c00;
+}
+
+.formError .inputText, .formError textarea, .formError select {
+	border-color: #c00;
+	background-color: #fee;
+}
+
+.formError .mceToolbar select { /* prevents error with dropdown borders within the editor toolbar */
+	border-color: transparent !important;
+}
+
+/* ### -- -- -- -- Long Select -- -- -- -- ### */
+
+.longSelect select {
+	width: 100%;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

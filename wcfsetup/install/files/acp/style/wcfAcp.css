@@ -1,0 +1,455 @@
+
+/* ### -- -- -- -- -- ACP Special Styles -- -- -- -- -- ### */
+
+/* 
+
+File: acp.css 
+Copyright 2006-2010 by WoltLab GmbH. 
+
+*/
+/* ### -- -- -- -- -- Miscellaneous -- -- -- -- -- ### */
+
+body, html {
+	background-color: #fff;
+	background-image: url("../images/WoltLab Blue Sunrise/body-ltr.png");
+	background-position: left;
+	background-repeat: repeat-y;
+	background-attachment: scroll;
+	margin: 0;
+	padding: 0;
+}
+
+#content {
+	padding: 30px 0 20px 180px;
+	min-width: 800px;
+	max-width: 75%;
+}
+
+.userPanelInner, #header, #menuBar .mainMenuInner {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	min-width: 100%;
+	max-width: 100%;
+}
+
+#userNote {
+	padding-left: 23px;	
+}
+
+.logoInner {
+	padding-left: 5px;	
+}
+
+#date {
+	padding: 10px 23px 3px 5px;
+	position: absolute;
+	right: 0;
+}
+
+#header {
+	background-color: transparent !important;
+}
+
+#logo .pageLogo img {
+	margin-left: 20px;
+}
+
+h1 {
+	text-shadow: 0 -1px 1px #000;
+}
+
+#logo h1{
+	font-family: 'Trebuchet MS', Arial, sans-serif;
+	text-align: right;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#logo h1, #logo h1 a{
+	color: #fff;
+}
+
+#logo h1 a{
+	padding-top: 35px;
+	padding-right: 23px;
+}
+
+#logo h1{
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+h2, h2 a {
+	text-shadow: 0 2px 3px #bbb;
+}
+
+#tplStyleList .styleList .subHeadline {
+	text-shadow: 0 1px 0 #fff;
+}
+
+#tplStyleList .styleList .messageBody {
+	padding-top: 0;
+}
+
+#footer {
+	margin: 0;
+	width: 100%;
+	min-width: 100%;
+	max-width: 100%;
+}
+
+#footer:after {
+	display: block;
+	clear: both;
+	content: "";
+	height: 0;
+}
+
+#footerContainer {
+	background-color: transparent;
+	margin: 0 0 0 180px;
+	min-width: 800px;
+	max-width: 75%;
+}
+
+.contentHeader form.quickJump div {
+	margin-top: 5px;
+	float: left;
+	display: inline;
+}
+
+.copyright {
+	padding-top: 5px;
+	float: left;
+	clear: none;
+}
+
+/* ### -- -- -- -- -- Sidebar -- -- -- -- -- ### */
+
+#sidebar {
+	background-color: transparent;
+	background-image: url("../images/WoltLab Blue Sunrise/sidebar.png");
+	background-repeat: repeat-x;
+	background-position: left top;
+	border-right: 1px solid #8da4b7;
+	position: absolute;
+	left: 0;
+	width: 129px;
+	min-height: 400px;
+}
+
+#sidebar ul {
+	list-style: none;
+	margin: 0 0 0 8px;
+	padding: 0;
+}
+
+#sidebar li {
+	text-align: center;
+	margin: 10px 0 0 0;
+	float: left;
+	width: 114px;
+}
+
+#sidebar a {
+	text-align: center;
+	text-decoration: none;
+	float: left;
+	clear: left;
+	width: 100%;
+}
+
+#sidebar img {
+	margin: 14px auto 3px auto;
+	height: 48px;
+	width: 48px;
+	display: block;
+}
+
+#sidebar span {
+	font-weight: bold;
+	text-shadow: 0 1px 0 #fff;
+	padding: 0 0 10px 0;
+	display: block;
+}
+
+#sidebar li:hover {
+	background-image: url("../images/WoltLab Blue Sunrise/sidebarHoverTop.png");
+	background-position: left top;
+	background-repeat: no-repeat;
+}
+
+#sidebar li:hover span {
+	background-image: url("../images/WoltLab Blue Sunrise/sidebarHoverBottom.png");
+	background-position: left bottom;
+}
+
+#sidebar li:active, #sidebar li.active {
+	background-image: url("../images/WoltLab Blue Sunrise/sidebarActiveTop.png");
+	background-repeat: no-repeat;
+}
+
+#sidebar li:active span, #sidebar li.active span {
+	color: #fff;
+	text-shadow: 0 -1px 0 #000;
+	background-image: url("../images/WoltLab Blue Sunrise/sidebarActiveBottom.png");
+	background-position: left bottom;
+}
+
+/* ### -- -- -- -- -- Menu -- -- -- -- -- ### */
+
+/* ToDo: Clean up this mess */
+
+#menuBar {
+	min-height: 31px;
+}
+
+#menuBar .mainMenuInner > ul {
+	padding-left: 129px;	
+}
+
+.mainMenu {
+	border: 0;	
+}
+
+.mainMenu a {
+	padding: 2px 5px 4px 5px;
+}
+
+.mainMenu ul {
+	margin: 0;
+}
+
+.mainMenu .mainMenuInner > ul > li > a {
+	min-height: 24px;
+}
+
+.mainMenu .mainMenuInner > ul > li > a > span {
+	padding: 2px 5px;
+	display: block;
+}
+
+.mainMenu .popupMenu {
+	border-top-width: 0;	
+}
+
+.mainMenu .popupMenu a {
+	color: #164369;
+	text-shadow: none !important;
+	background-color: #154268;
+	background-image: none !important;
+	min-height: 20px;
+}
+
+.mainMenu .popupMenu a:hover {
+	background-color: #ffe0b8;
+}
+
+#menuBar span {
+	position: relative;
+	top: 4px;
+}
+
+#menuBar li div span {
+	position: relative;
+	top: 0;
+}
+
+/* #### -- -- -- -- -- Sitemap -- -- -- -- -- #### */
+
+.sitemap {
+	padding: 20px 0 20px 180px;
+	width: 800px;
+}
+
+.sitemap ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	min-height: 0;
+}
+
+.sitemap h2 img {
+	margin-right: 7px;
+}
+
+.sitemap h2 {
+	padding: 20px 0 10px 0;
+}
+
+.sitemap h3 {
+	margin-bottom: 5px;
+}
+
+.sitemap h4, .sitemap h5  {
+	padding: 5px 0;
+}
+
+.sitemap h4 img, .sitemap h5 img  {
+	position: absolute;
+}
+
+.sitemap h4 a, .sitemap h4 span, .sitemap h5 a, .sitemap h5 span {
+	margin-left: 30px;
+	display: block;
+}
+
+.sitemap .border {
+	padding-bottom: 1px;
+}
+
+.sitemap .container-1 {
+	margin-right: 1px;
+	padding: 4px;
+}
+
+.sitemap .sitemapDepth-1 li {
+	margin-right: 2%;
+	float: left;
+	width: 30%;
+}
+
+.sitemap .sitemapDepth-1:after {
+	content: "";
+	display: block;
+	clear: both;
+	height: 0;
+}
+
+.sitemap .sitemapDepth-2 li {
+	float: none;
+	width: auto;
+}
+
+.sitemap .clear {
+	clear: both;
+}
+
+/* ### -- -- -- -- Access Rights -- -- -- -- ### */
+
+.allow, .deny {
+	font-size: .85em;
+	font-weight: normal;
+	text-align: center;
+	float: right;
+	width: 80px;
+	height: 10px;
+}
+
+.accessRightsHeader {
+	margin-right: 20px;
+	min-height: 20px;
+}
+
+.accessRights {
+	border: 1px solid #999;
+	margin: 0;
+	padding: 0;
+	height: auto;
+	min-height: 100px;
+	overflow: auto;
+}
+
+.accessRights ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.accessRights ul li {
+	min-height: 0;
+}
+
+.formField .accessRights li span {
+	margin-left: 0;
+	float: none;
+}
+
+.accessRights ul li span {
+	padding: 2px 4px;
+	display: block;
+	vertical-align: middle;
+}
+
+.accessRights ul li a {
+	text-decoration: none;
+	padding: 2px 4px;
+	display: block;
+}
+
+.accessRights ul li a:hover {
+	background-color: #d8e7f5;
+}
+
+.accessRights ul li.selected a {
+	background-color: #8da4b7;
+}
+
+.accessRights ul li a img {
+	padding-right: 4px;
+	vertical-align: middle;
+}
+
+.accessRights ul li a.remove {
+	float: right;
+	display: inline;
+}
+
+.accessRights ul li a.remove:hover {
+	background-color: #c00;
+}
+
+.accessRights ul li a.remove img {
+	padding-right: 0;
+}
+
+.formField .accessRights label {
+	clear: none;
+}
+
+.accessRightsInput {
+	width: 300px !important;
+}
+
+.accessRightsTitle {
+	margin-top: 20px;
+}
+
+#permissions-content div.popupMenu a, #permissions-content div.popupMenu a:hover, #moderators-content div.popupMenu a, #moderators-content div.popupMenu a:hover, #tplGroupAdd div.popupMenu a, #tplGroupAdd div.popupMenu a:hover {
+	padding: 5px 7px 5px 35px !important;
+}
+
+/* ### -- -- -- -- Special Styles -- -- -- -- ### */
+
+* {-o-text-overflow: ellipsis;}
+
+.sitemap .container-1 {
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.mainMenu .popupMenu, .mainMenu .popupMenu li a {
+	-webkit-border-top-left-radius: 0;
+	-webkit-border-top-right-radius: 0;
+	-moz-border-radius-topleft: 0;
+	-moz-border-radius-topright: 0;
+	
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.sitemap .border {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	
+	border-radius: 5px;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

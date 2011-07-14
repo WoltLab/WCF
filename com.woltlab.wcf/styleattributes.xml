@@ -1,0 +1,4185 @@
+<?xml version="1.0"?>
+<!DOCTYPE data SYSTEM "http://www.woltlab.com/DTDs/styleattributes.dtd">
+<data>
+	<import>
+		<attribute>
+			<selector><![CDATA[]]></selector>
+			<name><![CDATA[]]></name>
+			<value><![CDATA[user.additional.style.input1.use]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[]]></selector>
+			<name><![CDATA[]]></name>
+			<value><![CDATA[user.additional.style.input2.use]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#header]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#header]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[page.header.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#header]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[page.header.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#header]]></selector>
+			<name><![CDATA[background-position]]></name>
+			<value><![CDATA[page.header.background.image.alignment]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#header]]></selector>
+			<name><![CDATA[background-repeat]]></name>
+			<value><![CDATA[page.header.background.image.repeat]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo]]></selector>
+			<name><![CDATA[border-bottom-width]]></name>
+			<value><![CDATA[menu.main.bar.divider.show]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo]]></selector>
+			<name><![CDATA[height]]></name>
+			<value><![CDATA[page.header.height]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo .pageLogo]]></selector>
+			<name><![CDATA[text-align]]></name>
+			<value><![CDATA[page.logo.image.alignment]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo .pageLogo img]]></selector>
+			<name><![CDATA[margin-left]]></name>
+			<value><![CDATA[page.logo.image.padding.left]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo .pageLogo img]]></selector>
+			<name><![CDATA[margin-right]]></name>
+			<value><![CDATA[page.logo.image.padding.right]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo .pageLogo img]]></selector>
+			<name><![CDATA[margin-top]]></name>
+			<value><![CDATA[page.logo.image.padding.top]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo h1]]></selector>
+			<name><![CDATA[font-family]]></name>
+			<value><![CDATA[global.title.font]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo h1]]></selector>
+			<name><![CDATA[text-align]]></name>
+			<value><![CDATA[global.title.font.alignment]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo h1]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[global.title.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo h1]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[global.title.font.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo h1]]></selector>
+			<name><![CDATA[font-style]]></name>
+			<value><![CDATA[global.title.font.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo h1]]></selector>
+			<name><![CDATA[font-weight]]></name>
+			<value><![CDATA[global.title.font.weight]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo h1]]></selector>
+			<name><![CDATA[]]></name>
+			<value><![CDATA[global.title.hide]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo h1 a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[global.title.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo h1 a]]></selector>
+			<name><![CDATA[padding-left]]></name>
+			<value><![CDATA[global.title.font.padding.left]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo h1 a]]></selector>
+			<name><![CDATA[padding-right]]></name>
+			<value><![CDATA[global.title.font.padding.right]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#logo h1 a]]></selector>
+			<name><![CDATA[padding-top]]></name>
+			<value><![CDATA[global.title.font.padding.top]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#userPanel]]></selector>
+			<name><![CDATA[]]></name>
+			<value><![CDATA[page.alignment.margin]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#header]]></selector>
+			<name><![CDATA[]]></name>
+			<value><![CDATA[page.alignment.margin]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footer]]></selector>
+			<name><![CDATA[]]></name>
+			<value><![CDATA[page.alignment.margin]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#main]]></selector>
+			<name><![CDATA[]]></name>
+			<value><![CDATA[page.alignment.margin]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#userPanel]]></selector>
+			<name><![CDATA[width]]></name>
+			<value><![CDATA[page.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#header]]></selector>
+			<name><![CDATA[width]]></name>
+			<value><![CDATA[page.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footer]]></selector>
+			<name><![CDATA[width]]></name>
+			<value><![CDATA[page.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.footerOptions li]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.footerOptions li.extraButton]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.footerMenu li]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#main]]></selector>
+			<name><![CDATA[width]]></name>
+			<value><![CDATA[page.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#userPanel]]></selector>
+			<name><![CDATA[max-width]]></name>
+			<value><![CDATA[page.width.max]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#header]]></selector>
+			<name><![CDATA[max-width]]></name>
+			<value><![CDATA[page.width.max]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footer]]></selector>
+			<name><![CDATA[max-width]]></name>
+			<value><![CDATA[page.width.max]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#main]]></selector>
+			<name><![CDATA[max-width]]></name>
+			<value><![CDATA[page.width.max]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#userPanel]]></selector>
+			<name><![CDATA[min-width]]></name>
+			<value><![CDATA[page.width.min]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#header]]></selector>
+			<name><![CDATA[min-width]]></name>
+			<value><![CDATA[page.width.min]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footer]]></selector>
+			<name><![CDATA[min-width]]></name>
+			<value><![CDATA[page.width.min]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#main]]></selector>
+			<name><![CDATA[min-width]]></name>
+			<value><![CDATA[page.width.min]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footer]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[body]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.columnContainer]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[* a.externalURL]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.external.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[* a.externalURL:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.external.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.activeContainer]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[selection.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.activeContainer]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[selection.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.activeContainer]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[selection.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.activeContainer]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[selection.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.activeContainer]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[selection.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.activeContainer]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[selection.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.activeContainer .light]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[selection.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.activeContainer .light a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[selection.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.activeContainer a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[selection.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.activeContainer a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[selection.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.activeMessage]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[selection.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.activeMessage]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[selection.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.attachmentFile ul li]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.attachmentPreview ul li a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.attachmentPreview ul li]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.attachmentPreview ul li:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarDisplay div]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarDisplay div]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[selection.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarDisplay div]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[selection.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarSelect li label]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarSelect li label]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[selection.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarSelect li label]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[selection.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarSelect li label:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[selection.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarSelect li label:hover]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[selection.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarSelect li label:hover]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[selection.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.boardlistCounter]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.boardlistDescription]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.boardlistLastPost]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.boardlistSubboards]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.boardlistUsersOnline]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.border]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.border]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.border]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.border]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[container.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.border .container-1 a:active]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color.active]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.border .container-2 a:active]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color.active]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.border .container-3 a:active]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color.active]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.border .containerHead a:active]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color.active]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.border .tableList td]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.border .tableList th]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.breadCrumbs]]></selector>
+			<name><![CDATA[line-height]]></name>
+			<value><![CDATA[page.font.line.height]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.dynBoxInner]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container1.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container1.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 .light]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 .light a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 .signature]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-1:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-1:hover a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-1:hover .light]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-1:hover .light a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-1:hover .columnTitle a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-1:hover .columnTopic .topic a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-1:hover .columnUsername a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 fieldset]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container2.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 fieldset fieldset]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container1.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 fieldset fieldset.noJavaScript fieldset]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container2.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 legend]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 .formFieldDesc]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.color-1 legend]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-2]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container2.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-2]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-2 .formFieldDesc]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-2 .light]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-2 .light a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-2 .signature]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-2 a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-2 a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-2:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-2:hover a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-2:hover .light]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-2:hover .light a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-2:hover .columnTitle a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-2:hover .columnTopic .topic a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-2:hover .columnUsername a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-2 fieldset]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container1.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-2 fieldset fieldset]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container2.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-2 legend]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.color-2 legend]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-3]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container3.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-3]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-3 .light]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-3 .light a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-3 a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-3 a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-3 fieldset]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container2.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-3 fieldset fieldset]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container3.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-4]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container4.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-4]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container4.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-4 .light]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container4.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-4 .light a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container4.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-4 a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container4.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-4 a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container4.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.itemList .itemListCategory]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container3.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.itemList .itemListTitle]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.itemList .itemListTitle]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.itemList .itemListTitle]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.blogBoxArchive > .border > .itemList > li:last-child > .itemListTitle]]></selector>
+			<name><![CDATA[border-top-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.blogBoxArchive > .border > .itemList > li:last-child > .itemListTitle]]></selector>
+			<name><![CDATA[border-top-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.blogBoxArchive > .border > .itemList > li:last-child > .itemListTitle]]></selector>
+			<name><![CDATA[border-top-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.blogBoxArchive .itemList > li > .itemList > li > .itemListTitle]]></selector>
+			<name><![CDATA[border-top-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.blogBoxArchive .itemList > li > .itemList > li > .itemListTitle]]></selector>
+			<name><![CDATA[border-top-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.blogBoxArchive .itemList > li > .itemList > li > .itemListTitle]]></selector>
+			<name><![CDATA[border-top-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.blogBoxArchive .itemList > li > .itemList > li > .itemList]]></selector>
+			<name><![CDATA[border-top-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.blogBoxArchive .itemList > li > .itemList > li > .itemList]]></selector>
+			<name><![CDATA[border-top-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.blogBoxArchive .itemList > li > .itemList > li > .itemList]]></selector>
+			<name><![CDATA[border-top-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.simpleBar ul]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container3.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.simpleBar ul li]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.simpleBar ul li a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.simpleBar ul li a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.simpleBar ul li a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container4.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.simpleBar ul li.selected a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container4.background.color]]></value>
+		</attribute>		
+		<attribute>
+			<selector><![CDATA[.containerHead]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.head.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.containerHead]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[container.head.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.containerHead]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container.head.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.containerHead .light]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container.head.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.containerHead .light a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container.head.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.containerHead a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container.head.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.containerHead a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container.head.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-3 .containerHead a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container.head.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-3 .containerHead a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container.head.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footer]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.dividers .messageAuthor]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.dividers .userAvatar]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.dividers .userCredits]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.dividers .userMessenger]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.dividers .userSymbols]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.editNote]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.editNote]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.editNote]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.editNote]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.deleteNote]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.deleteNote]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.deleteNote]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.deleteNote]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.editor textarea]]></selector>
+			<name><![CDATA[font-family]]></name>
+			<value><![CDATA[input.font]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.editor textarea]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[input.font.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.editor textarea]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[input.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.editor textarea:focus]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[input.font.color.focus]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.error]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.error]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[container.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.error]]></selector>
+			<name><![CDATA[line-height]]></name>
+			<value><![CDATA[page.font.line.height]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.firstPost]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.formField label]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.formFieldDesc]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.formFieldDesc]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.iframeBody]]></selector>
+			<name><![CDATA[font-family]]></name>
+			<value><![CDATA[page.font]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.iframeBody]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.iframeBody]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.info]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.info]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[container.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.info]]></selector>
+			<name><![CDATA[line-height]]></name>
+			<value><![CDATA[page.font.line.height]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarFooter]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarFooter]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarFooter]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[container.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarFooter td]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.head.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarFooter td]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[container.head.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarFooter td a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarFooter td a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container.head.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarFooter td span]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarFooter td span]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container.head.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarHeader]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarHeader]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarHeader]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[container.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarHeader td]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.head.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarHeader td]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[container.head.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarHeader td a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarHeader td a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container.head.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarHeader td span]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarHeader td span]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container.head.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarTable]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarTable]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarTable]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[container.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarTable]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container1.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarTable]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarTable a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container1.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarTable a:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[selection.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarTable a:hover]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[selection.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inlineCalendarTable a:hover]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[selection.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inputText]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[input.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inputText]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[input.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inputText]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[input.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inputText]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[input.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inputText]]></selector>
+			<name><![CDATA[font-family]]></name>
+			<value><![CDATA[input.font]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inputText]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[input.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inputText]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[input.font.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inputText:focus]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[input.background.color.focus]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inputText:focus]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[input.border.color.focus]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inputText:focus]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[input.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.inputText:focus]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[input.font.color.focus]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.large.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[buttons.large.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[buttons.large.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.large.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[buttons.large.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.large.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li a]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[buttons.large.border.inner.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li a]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[buttons.large.border.inner.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.large.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li a span]]></selector>
+			<name><![CDATA[]]></name>
+			<value><![CDATA[buttons.large.caption.hide]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.large.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[buttons.large.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li a:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.large.border.inner.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.large.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.large.border.outer.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.light]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#mainMenu]]></selector>
+			<name><![CDATA[]]></name>
+			<value><![CDATA[page.alignment.margin]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#mainMenu]]></selector>
+			<name><![CDATA[width]]></name>
+			<value><![CDATA[page.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#mainMenu]]></selector>
+			<name><![CDATA[max-width]]></name>
+			<value><![CDATA[page.width.max]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#mainMenu]]></selector>
+			<name><![CDATA[min-width]]></name>
+			<value><![CDATA[page.width.min]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.main.bar.hide]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .active a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.main.active.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .active a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.main.active.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .active a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.main.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .active a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.main.active.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .active a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.main.active.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .firstActive a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.main.active.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .firstActive a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.main.active.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .firstActive a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.main.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .firstActive a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.main.active.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .firstActive a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.main.active.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .lastActive a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.main.active.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .lastActive a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.main.active.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .lastActive a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.main.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .lastActive a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.main.active.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .lastActive a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.main.active.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.main.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.main.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.main.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.main.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.main.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.main.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu .mainMenuInner]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div]]></selector>
+			<name><![CDATA[]]></name>
+			<value><![CDATA[menu.main.position]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div.pageMenu .active a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[selection.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div.pageMenu .active a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[selection.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div.pageMenu .active a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[selection.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div.pageMenu .bottomSeparator a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div.pageMenu .bottomSeparator a]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div.pageMenu .bottomSeparator a]]></selector>
+			<name><![CDATA[border-bottom-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div.pageMenu .topSeparator a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div.pageMenu .topSeparator a]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div.pageMenu .topSeparator a]]></selector>
+			<name><![CDATA[border-top-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div.pageMenu a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div.pageMenu a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div.pageMenu a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div.pageMenu a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div.pageMenu a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu div.pageMenu a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mainMenu span]]></selector>
+			<name><![CDATA[]]></name>
+			<value><![CDATA[menu.main.caption.hide]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.marked]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.markedDayField a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[selection.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.markedDayField a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[selection.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.markedDayField a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[selection.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.markedDayField a]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[selection.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.markedDayField a]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[selection.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.markedDayField a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[selection.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mceEditor .mceColors li]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mceResizeBox]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.mceResizeBox]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.memberList li]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.memberList li]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.memberList li]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[buttons.small.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.memberList li]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[buttons.small.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.memberList li .memberName]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.memberList li .memberName]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.memberList li .memberName]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[buttons.small.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.memberList li .memberName]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.memberList li .memberName:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.memberList li .memberName:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[buttons.small.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.memberList li .memberName:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.memberList li .memberRemove]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.memberList li .memberRemove:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.border.inner.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.memberList li:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.border.inner.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.memberList li:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.outer.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.message]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.message]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.message]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[container.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.message .messageSidebar]]></selector>
+			<name><![CDATA[text-align]]></name>
+			<value><![CDATA[messages.sidebar.text.alignment]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.message h3]]></selector>
+			<name><![CDATA[line-height]]></name>
+			<value><![CDATA[page.font.line.height]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.message h4]]></selector>
+			<name><![CDATA[line-height]]></name>
+			<value><![CDATA[page.font.line.height]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageBody]]></selector>
+			<name><![CDATA[line-height]]></name>
+			<value><![CDATA[page.font.line.height]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageContainer]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container3.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageContainerFooter]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container3.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageContent]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageContentInner]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageFooter]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageFooter]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageFooter]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageFooterLeft]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageFooterLeft]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageFooterLeft]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageFooterRight]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageFooterRight]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageFooterRight]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageHeader]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageHeader]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageHeader]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-1]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container1.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-1]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-1 .light]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-1 .light a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-1 .signature]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-1 .smallButtons a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-1 .smallButtons a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-1 .memberName]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-1 .memberName:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-2 .memberName]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-2 .memberName:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-1 a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-1 a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-2]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container2.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-2]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-2 .light]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-2 .light a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-2 .signature]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-2 .smallButtons a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-2 .smallButtons a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-2 a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageInner .color-2 a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageNumber]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageNumber]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageNumber:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.moderators]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons li span]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[buttons.small.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons a]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[buttons.small.border.inner.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons a]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[buttons.small.border.inner.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[buttons.small.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons a:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.inner.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons li]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons li]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[buttons.small.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons li]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[buttons.small.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons li div.pageMenu a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons li div.pageMenu a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons li:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.outer.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 .optionButtons a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 .optionButtons a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation .active]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[selection.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation .active]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[selection.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation .active]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[selection.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation .active span]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[selection.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation .active span]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[selection.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation .active span]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[selection.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation a]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[buttons.small.border.inner.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation a]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[buttons.small.border.inner.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation a:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.inner.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation input]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li span]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li span]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[buttons.small.border.inner.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li span]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[buttons.small.border.inner.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li span]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li span:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li ul]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li ul]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li ul]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li ul]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container1.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li.children span]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li.children span]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li.children span]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li.children:hover > span]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.inner.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li.children:hover > span]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li.children:hover span]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li.children:hover span]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pageNavigation li:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.outer.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmEditFolders]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmEditFolders]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmEditFolders]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmEditFolders a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.large.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmEditFolders a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[buttons.large.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmEditFolders a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.large.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmEditFolders a]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[buttons.large.border.inner.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmEditFolders a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.large.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmEditFolders a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.large.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmEditFolders a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[buttons.large.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmEditFolders a:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.large.border.inner.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmEditFolders a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.large.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmMove p]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmUsage]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmUsageBar]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmUsageBar]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.pmUsageBar]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.popupMenu]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.popupMenu]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.popupMenu]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.popupMenu]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#userCardCredits]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.friendsConnection]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.friendsNetwork]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.friendsNone]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.guestAdvice]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.buttonBar]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.buttonBar]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu li.container-1 a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container1.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu li.container-2 a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container2.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu .twoRows a span]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu .twoRows a:hover span]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu .twoRows a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.quoteBox]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.quoteBox]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.quoteBox]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[container.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.quoteBox]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.signature]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.signature]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.signature]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons span]]></selector>
+			<name><![CDATA[]]></name>
+			<value><![CDATA[buttons.small.caption.hide]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[buttons.small.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[buttons.small.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons a:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.inner.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons a]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[buttons.small.border.inner.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons a]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[buttons.small.border.inner.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 .smallButtons a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 .smallButtons a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-2 .smallButtons a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-2 .smallButtons a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-3 .smallButtons a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-3 .smallButtons a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons li]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons li:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.outer.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons li]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[buttons.small.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons li]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[buttons.small.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons li span]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.extraButton span]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[li.extraButton a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[li.extraButton a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[li.extraButton a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[buttons.small.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[li.extraButton a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[buttons.small.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[li.extraButton a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[li.extraButton a:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.inner.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[li.extraButton a]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[buttons.small.border.inner.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[li.extraButton a]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[buttons.small.border.inner.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[li.extraButton a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[li.extraButton a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[li.extraButton]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[li.extraButton:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.outer.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[li.extraButton]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[buttons.small.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[li.extraButton]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[buttons.small.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallFont]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.loginPopup]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.statusDisplay]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subHeadline]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subHeadline]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subHeadline]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu div.containerHead]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu ul .activeSubTabMenu a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.tab.button.active.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu ul .activeSubTabMenu a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.tab.button.active.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu ul .activeSubTabMenu a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[menu.tab.button.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu ul .activeSubTabMenu a]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[menu.tab.button.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu ul .activeSubTabMenu a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.tab.button.active.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu ul .activeSubTabMenu a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.tab.button.active.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu ul .activeSubTabMenu a:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[menu.tab.button.border.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu ul li]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu ul li a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.tab.button.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu ul li a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[menu.tab.button.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu ul li a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.tab.button.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu ul li a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.tab.button.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu ul li a:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[menu.tab.button.border.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu ul li a:hover]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[menu.tab.button.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.subTabMenu ul li a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.tab.button.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.success]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.success]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[container.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.success]]></selector>
+			<name><![CDATA[line-height]]></name>
+			<value><![CDATA[page.font.line.height]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .active .emptyHead]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[table.head.active.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .active .emptyHead]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[table.head.active.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .active .emptyHead]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[table.head.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .active .emptyHead]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[table.head.active.border.bottom.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .active a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[table.head.active.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .active a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[table.head.active.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .active a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[table.head.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .active a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[table.head.active.border.bottom.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .active a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[table.head.active.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .active a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[table.head.active.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .active a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[table.head.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .active a:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[table.head.active.border.bottom.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .emptyHead]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[table.head.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .emptyHead]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[table.head.border.bottom.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .emptyHead]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[table.head.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .emptyHead]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[table.head.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[table.head.border.bottom.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[table.head.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[table.head.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[table.head.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[table.head.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[table.head.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[table.head.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead a:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[table.head.border.bottom.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableList th]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.tab.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.tab.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.tab.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li.disabled a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.tab.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li.disabled a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.tab.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li.disabled a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.tab.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.tab.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.tab.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.tab.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li.activeTabMenu a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.head.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li.activeTabMenu a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container.head.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li.activeTabMenu a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.tab.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li.activeTabMenu a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.head.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu li.activeTabMenu a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container.head.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu ul li.activeTabMenu a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.tab.active.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu ul li.activeTabMenu a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.tab.active.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu ul li.activeTabMenu a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.tab.active.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu ul li.activeTabMenu a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.tab.active.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tabMenu ul li.activeTabMenu a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.tab.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.threadStarterPost .poll .container-3]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container3.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableList tbody tr:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container3.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.userAvatar]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.userAvatar a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.userAvatarFramed]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.userAvatarFramed]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container4.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.userAvatarFramed a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.userCredits]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.userExtras]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.userPanel]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.userPanel a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.userPanel a:active]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color.active]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.warning]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.warning]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[container.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.warning]]></selector>
+			<name><![CDATA[line-height]]></name>
+			<value><![CDATA[page.font.line.height]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.weekDays]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container2.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.weekDays]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[a:active]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color.active]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[blockquote.wysiwygQuote]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[blockquote.wysiwygQuote]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[blockquote.wysiwygQuote]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[container.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[blockquote.wysiwygQuote]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container4.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[body]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[page.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[body]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[page.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[body]]></selector>
+			<name><![CDATA[background-position]]></name>
+			<value><![CDATA[page.background.image.alignment]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[body]]></selector>
+			<name><![CDATA[background-attachment]]></name>
+			<value><![CDATA[page.background.image.attachment]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[body]]></selector>
+			<name><![CDATA[background-repeat]]></name>
+			<value><![CDATA[page.background.image.repeat]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[body]]></selector>
+			<name><![CDATA[font-family]]></name>
+			<value><![CDATA[page.font]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[body]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.inlineCalendar]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.messageInner div.pageMenu a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.messageInner div.pageMenu a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.messageInner div.pageMenu a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.messageInner div.pageMenu a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.messageInner div.pageMenu a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.messageInner div.pageMenu a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.messageInner div.smallButtons div.pageMenu a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.messageInner div.smallButtons div.pageMenu a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.messageInner div.smallButtons div.pageMenu a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.messageInner div.smallButtons div.pageMenu a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.messageInner div.smallButtons div.pageMenu a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.messageInner div.smallButtons div.pageMenu a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu li.active a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[selection.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu li.active a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[selection.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu li.active a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[selection.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu .bottomSeparator a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu .bottomSeparator a]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu .bottomSeparator a]]></selector>
+			<name><![CDATA[border-bottom-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu .topSeparator a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu .topSeparator a]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu .topSeparator a]]></selector>
+			<name><![CDATA[border-top-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.blog .userBlogCategoryAdd]]></selector>
+			<name><![CDATA[border-top-color]]></name>
+			<value><![CDATA[divider.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.blog .userBlogCategoryAdd]]></selector>
+			<name><![CDATA[border-top-style]]></name>
+			<value><![CDATA[divider.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.blog .userBlogCategoryAdd]]></selector>
+			<name><![CDATA[border-top-width]]></name>
+			<value><![CDATA[divider.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableList tr div.pageMenu a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableList tr div.pageMenu a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.smallButtons div.pageMenu a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.smallButtons div.pageMenu a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.smallButtons div.pageMenu a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.smallButtons div.pageMenu a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.smallButtons div.pageMenu a:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[menu.dropdown.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.smallButtons div.pageMenu a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[fieldset]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[fieldset]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[fieldset]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[container.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[fieldset]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container1.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[fieldset fieldset]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container2.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[h2]]></selector>
+			<name><![CDATA[font-family]]></name>
+			<value><![CDATA[page.title.font]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[h2]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.title.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[h2]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.title.font.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[h2]]></selector>
+			<name><![CDATA[font-style]]></name>
+			<value><![CDATA[page.title.font.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[h2]]></selector>
+			<name><![CDATA[font-weight]]></name>
+			<value><![CDATA[page.title.font.weight]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[h2 a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.title.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[h2 a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.title.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[html]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[page.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[html]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[page.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[html]]></selector>
+			<name><![CDATA[background-position]]></name>
+			<value><![CDATA[page.background.image.alignment]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[html]]></selector>
+			<name><![CDATA[background-attachment]]></name>
+			<value><![CDATA[page.background.image.attachment]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[html]]></selector>
+			<name><![CDATA[background-repeat]]></name>
+			<value><![CDATA[page.background.image.repeat]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[legend]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[select]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[input.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[select]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[input.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[select]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[input.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[select]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[input.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[select]]></selector>
+			<name><![CDATA[font-family]]></name>
+			<value><![CDATA[input.font]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[select]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[input.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[select]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[input.font.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[select:focus]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[input.background.color.focus]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[select:focus]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[input.border.color.focus]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[select:focus]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[input.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[select:focus]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[input.font.color.focus]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[td.columnLastActivity]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[td.columnLocation]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[td.columnRegistrationDate]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[td.columnUserAgent]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[textarea]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[input.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[textarea]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[input.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[textarea]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[input.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[textarea]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[input.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[textarea]]></selector>
+			<name><![CDATA[font-family]]></name>
+			<value><![CDATA[input.font]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[textarea]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[input.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[textarea]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[input.font.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[textarea]]></selector>
+			<name><![CDATA[font-family]]></name>
+			<value><![CDATA[page.font]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[textarea:focus]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[input.background.color.focus]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[textarea:focus]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[input.border.color.focus]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[textarea:focus]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[input.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[textarea:focus]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[input.font.color.focus]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageNumber]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageNumber]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageNumber:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[buttons.small.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageNumber]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageNumber]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[buttons.small.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageNumber:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageNumber:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[buttons.small.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageNumber]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageNumber]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[buttons.small.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageNumber]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[buttons.small.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.messageNumber:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[buttons.small.border.outer.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#search]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#search .searchContainer p a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.tab.button.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#search .searchContainer p a]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#search .searchContainer p a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.tab.button.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.searchContainer]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.searchContainer]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.searchContainer]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[container.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[]]></selector>
+			<name><![CDATA[]]></name>
+			<value><![CDATA[page.frame.general]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#headerContainer]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[page.frame.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#headerContainer]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[page.frame.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#headerContainer]]></selector>
+			<name><![CDATA[border-top-width]]></name>
+			<value><![CDATA[page.frame.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#headerContainer]]></selector>
+			<name><![CDATA[border-right-width]]></name>
+			<value><![CDATA[page.frame.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#headerContainer]]></selector>
+			<name><![CDATA[border-left-width]]></name>
+			<value><![CDATA[page.frame.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#headerContainer]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[page.frame.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#headerContainer]]></selector>
+			<name><![CDATA[margin-top]]></name>
+			<value><![CDATA[page.frame.margin]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#headerContainer]]></selector>
+			<name><![CDATA[padding-top]]></name>
+			<value><![CDATA[page.frame.padding.vertical]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#headerContainer]]></selector>
+			<name><![CDATA[padding-right]]></name>
+			<value><![CDATA[page.frame.padding.horizontal]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#headerContainer]]></selector>
+			<name><![CDATA[padding-left]]></name>
+			<value><![CDATA[page.frame.padding.horizontal]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#mainContainer]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[page.frame.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#mainContainer]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[page.frame.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#mainContainer]]></selector>
+			<name><![CDATA[border-right-width]]></name>
+			<value><![CDATA[page.frame.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#mainContainer]]></selector>
+			<name><![CDATA[border-left-width]]></name>
+			<value><![CDATA[page.frame.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#mainContainer]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[page.frame.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#mainContainer]]></selector>
+			<name><![CDATA[padding-right]]></name>
+			<value><![CDATA[page.frame.padding.horizontal]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#mainContainer]]></selector>
+			<name><![CDATA[padding-left]]></name>
+			<value><![CDATA[page.frame.padding.horizontal]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footerContainer]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[page.frame.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footerContainer]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[page.frame.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footerContainer]]></selector>
+			<name><![CDATA[border-right-width]]></name>
+			<value><![CDATA[page.frame.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footerContainer]]></selector>
+			<name><![CDATA[border-bottom-width]]></name>
+			<value><![CDATA[page.frame.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footerContainer]]></selector>
+			<name><![CDATA[border-left-width]]></name>
+			<value><![CDATA[page.frame.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footerContainer]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[page.frame.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footerContainer]]></selector>
+			<name><![CDATA[margin-bottom]]></name>
+			<value><![CDATA[page.frame.margin]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footerContainer]]></selector>
+			<name><![CDATA[padding-right]]></name>
+			<value><![CDATA[page.frame.padding.horizontal]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footerContainer]]></selector>
+			<name><![CDATA[padding-bottom]]></name>
+			<value><![CDATA[page.frame.padding.vertical]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#footerContainer]]></selector>
+			<name><![CDATA[padding-left]]></name>
+			<value><![CDATA[page.frame.padding.horizontal]]></value>
+		</attribute>
+	</import>
+	
+	<!-- these obsolete declarations will be deleted -->
+	<delete>
+		<attribute>
+			<selector><![CDATA[.tableHead .active]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[table.head.active.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .active]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[table.head.active.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead .active]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[table.head.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[table.head.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[table.head.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[table.head.caption.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead label:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[table.head.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead label:hover]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[table.head.background.image.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead label:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[table.head.caption.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead div]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[table.head.border.bottom.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead div]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[table.head.border.bottom.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableHead div:hover]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[table.head.border.bottom.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableList tbody tr:hover .columnUsername a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableList tbody tr:hover .columnTopic .topic a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableList tbody tr:hover .columnTitle a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-1:hover .columnUsername a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-1:hover .columnTopic .topic a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-2:hover .columnUsername a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-2:hover .columnTopic .topic a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-3:hover .columnUsername a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr.container-3:hover .columnTopic .topic a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr:hover .columnTopic .topic a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr:hover .columnUsername a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr:hover a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr:hover .light]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr:hover .light a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[tr:hover .columnTitle a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[page.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu .active a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[selection.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu .active a]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[selection.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[div.pageMenu .active a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[selection.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.copyright]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#header]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#header]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[container.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#page]]></selector>
+			<name><![CDATA[]]></name>
+			<value><![CDATA[page.alignment.margin]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#page]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#page]]></selector>
+			<name><![CDATA[width]]></name>
+			<value><![CDATA[page.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#page]]></selector>
+			<name><![CDATA[max-width]]></name>
+			<value><![CDATA[page.width.max]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[#page]]></selector>
+			<name><![CDATA[min-width]]></name>
+			<value><![CDATA[page.width.min]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallPages]]></selector>
+			<name><![CDATA[font-size]]></name>
+			<value><![CDATA[page.font.2nd.size]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[body]]></selector>
+			<name><![CDATA[text-align]]></name>
+			<value><![CDATA[page.alignment]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons li a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[buttons.small.background.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.profileDisplay fieldset]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.userProfileBox #userProfileAvatar fieldset div]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 .disabled]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-1 .disabled a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container1.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-2 .disabled]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.container-2 .disabled a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container2.font.2nd.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.codeBox]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[input.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.codeBox]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[input.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.codeBox]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[messages.boxes.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.codeBox]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[messages.boxes.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.quoteBox]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[input.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.quoteBox]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[input.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.quoteBox]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[messages.boxes.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.attachmentPreview ul li a:hover]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarDisplay div]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.userAvatarFramed]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[input.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.userAvatarFramed]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[messages.boxes.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.codeLineNumbers]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container3.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.codeLineNumbers]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[container3.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.codeBox]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.codeBox]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[container.border.outer.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.codeBox]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[container.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.userProfileContent .fieldTitle]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.userProfileContent .fieldValue]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarSelect li label]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container.border.inner.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarSelect .selected label]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[selection.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarSelect .selected label]]></selector>
+			<name><![CDATA[background-image]]></name>
+			<value><![CDATA[selection.background.image]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarSelect .selected label]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[selection.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarSelect .selected label]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[selection.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.avatarSelect .selected label]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[selection.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li.selected]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[selection.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li.selected]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[selection.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li.selected]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[selection.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li.selected > a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[selection.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.largeButtons li.selected > a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[selection.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons li.selected]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[selection.border.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons li.selected]]></selector>
+			<name><![CDATA[border-style]]></name>
+			<value><![CDATA[selection.border.style]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons li.selected]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[selection.border.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons li.selected > a]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[selection.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.smallButtons li.selected > a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[selection.link.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.optionButtons li]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[menu.dropdown.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.li.extraButton]]></selector>
+			<name><![CDATA[border-width]]></name>
+			<value><![CDATA[buttons.small.border.outer.width]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.attachmentPreview ul li a]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container.border.outer.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.galleryAlbumCover img]]></selector>
+			<name><![CDATA[background-color]]></name>
+			<value><![CDATA[container4.background.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[blockquote.wysiwygQuote]]></selector>
+			<name><![CDATA[border-color]]></name>
+			<value><![CDATA[container1.font.color]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableList div.pageMenu a:hover]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color.hover]]></value>
+		</attribute>
+		<attribute>
+			<selector><![CDATA[.tableList div.pageMenu a]]></selector>
+			<name><![CDATA[color]]></name>
+			<value><![CDATA[menu.dropdown.link.color]]></value>
+		</attribute>
+	</delete>
+</data>

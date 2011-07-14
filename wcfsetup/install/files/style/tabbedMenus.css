@@ -1,0 +1,190 @@
+
+/* ### -- -- -- -- -- Tabbed Menu Styles -- -- -- -- -- ### */
+
+/* 
+
+File: tabbedMenus.css 
+Copyright 2006-2009 by WoltLab GmbH. 
+
+*/
+
+/* ### -- -- -- -- -- Tabs -- -- -- -- -- ### */
+
+.tabMenu {
+	margin-top: 5px;
+	clear: both;
+	width: 100%;
+}
+
+.tabMenu:after {
+	content: "";
+	clear: both;
+	display: block;
+	height: 0;
+}
+
+.tabMenu ul {
+	margin: 0; 
+	padding: 0 0 0 10px;  
+}
+
+.tabMenu li {
+	list-style: none;
+	border-width: 1px 1px 0 1px;
+	margin-right: 3px;
+	float: left;
+}
+
+.tabMenu li a {
+	text-decoration: none;
+	white-space: nowrap;
+	border-width: 1px;
+	border-style: solid;
+	padding: 2px 5px 0 5px;
+	display: block;
+	position: relative;
+	z-index: 10;
+}
+
+.tabMenu li.activeTabMenu a {
+	border-bottom: none;
+	padding-bottom: 3px;
+	position: relative;
+	z-index: 20;
+}
+
+.tabMenu li a, .tabMenu li.activeTabMenu a {
+	min-height: 24px;
+}
+
+/* ### -- -- -- -- -- Sub Tab Menu (Elements inside the Tab-Bar) -- -- -- -- -- ### */
+
+.subTabMenu {
+	border: 1px;
+	margin-bottom: -1px;
+	margin-top: -2px;
+	padding: 1px;
+	position: relative;
+	z-index: 0;
+}
+
+.subTabMenu:after {
+	content: "";
+	clear: both;
+	display: block;
+	height: 0;
+}
+
+.subTabMenu .containerHead {
+	margin: 0;
+	padding: 2px;
+	min-height: 5px;
+}
+
+.subTabMenu .containerHead h2, .subTabMenu .containerHead h3 {
+	padding: 2px 5px;
+}
+
+.subTabMenu .containerHead:after {
+	content: "";
+	clear: both;
+	display: block;
+	height: 0;
+}
+
+.subTabMenu ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.subTabMenu li {
+	float: left;
+}
+
+.subTabMenu li a {
+	text-decoration: none;
+	white-space: nowrap;
+	margin: 1px 2px;
+	padding: 2px 7px;
+	display: block;
+}
+
+.subTabMenu li.activeSubTabMenu a, .subTabMenu li a:hover {
+	border-width: 1px;
+	padding: 1px 6px;
+}
+
+.subTabMenu .containerHead div {
+	font-size: 5px;
+	height: 5px;
+}
+
+/* ### -- -- -- -- -- Sub Container Menu -- -- -- -- -- ### */
+
+/* ToDo: Find a more flexible solution */
+
+.contentBox .border .subTabMenu {
+	border: none;
+	margin: 0 0 1px 0;
+	padding: 0;
+}
+
+.contentBox .border .subTabMenu .containerHead {
+	border: none;
+	margin: 0 1px 0 0;
+}
+
+/* ### -- -- -- -- -- Tab Menu Content (Content below the Sub Tab Menu) -- -- -- -- -- ### */
+
+.tabMenuContent {
+	clear: both;
+}
+
+.tabMenuContent > div {
+	padding: 15px 25px;
+}
+
+.tabMenuContent .subHeadline {
+	margin-bottom: 2px;
+}
+
+.tabMenuContent h3.containerContent {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.tabMenuContent fieldset.noJavaScript {
+	background: transparent;
+	border: 0;
+	margin: 0;
+	padding-top: 13px;
+}
+
+.tabMenuContent legend.noJavaScript {
+	display: none;
+}
+
+.tabMenuContentContainer {
+	clear: both;
+}
+
+.tabMenuContent .message {
+	margin-bottom: 7px;
+}
+
+.tabMenuContent .messageInner .smallButtons:after {
+	clear: none;
+}
+
+.tabMenuContent .message .messageHeading {
+	margin-top: 0 !important;
+}
+
+/* ### -- -- -- -- -- Specials -- -- -- -- -- ### */
+
+.tabNavigation {
+	float: right;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

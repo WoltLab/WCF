@@ -1,0 +1,128 @@
+
+/* ### -- -- -- -- -- Page Menu Styles -- -- -- -- -- ### */
+
+/* 
+
+File: pageMenu.css 
+Copyright 2006-2010 by WoltLab GmbH. 
+
+*/
+
+/* ### -- -- -- -- -- Page Menu -- -- -- -- -- ### */
+
+div.pageMenu { 
+	margin: 0;
+	margin-right: 0 !important;
+	text-align: left;
+}
+
+div.pageMenu ul {
+	display: block !important;
+	float: none !important;
+	font-weight: normal !important;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+div.pageMenu li {
+	border: 0;
+	display: block !important;
+	float: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+div.pageMenu a, div.pageMenu a:hover {
+	display: block !important;
+	background-color: transparent;
+	background-image: none;
+	border-width: 0;
+	float: none !important;
+	height: auto !important;
+	margin: 0 !important;
+	padding: 5px 7px 5px 35px !important;
+	text-align: left !important;
+	text-decoration: none !important;
+}
+
+div.popupMenu a, div.popupMenu a:hover {
+	padding: 5px 7px !important;
+}
+
+.mainMenu div.popupMenu a, .mainMenu div.popupMenu a:hover {
+	padding: 5px 7px 5px 35px !important;
+}
+
+div.pageMenu img {
+	margin-left: -30px;
+	margin-top: -2px;
+	position: absolute;
+}
+
+div.pageMenu span {
+	display: block;
+	margin: 0 !important;
+	padding: 3px 13px 2px 0 !important;
+	text-decoration: none !important;
+}
+
+div.pageMenu li.container-1, div.pageMenu li.container-2 {
+	margin: 0 1px 1px 0 !important;
+}
+
+/* ### -- -- -- -- -- Page Menu (2 rows) -- -- -- -- -- ### */
+/*
+	 - to be used with label and span
+	 - label contains the key
+	 - span the value
+	 - e.g. <div class="pageMenu"><ul class="twoRows"><li><a href="url2icq"><img .../> <label>ICQ</label> <span>123456789</span></a></li></ul></div>
+*/
+
+div.pageMenu .twoRows li {
+	line-height: 1.3;
+}
+
+div.pageMenu .twoRows a {
+	margin: 0 !important;
+	padding-bottom: 4px !important;
+	padding-top: 2px !important;
+	min-height: 24px;
+}
+
+div.pageMenu .twoRows img {
+	margin-left: -27px;
+	margin-top: 3px;
+}
+
+div.pageMenu .twoRows label {
+	cursor: pointer;
+	display: block;
+	margin: 0 !important;
+	padding: 0 0 0 5px !important;	
+}
+
+div.pageMenu .twoRows a span {
+	display: block;
+	margin: 0 !important;
+	padding: 0 0 0 5px !important;
+	text-decoration: underline !important;
+}
+
+div.pageMenu .twoRows a:hover span {
+	text-decoration: none !important;
+}
+
+/* ### -- -- -- -- -- Pop Up Menu -- -- -- -- -- ### */
+
+.popupMenu {
+	border-width: 1px;
+	margin: 0 0 10px 0;
+	opacity: .9 !important;
+	padding: 1px;
+	position: absolute;
+	white-space: nowrap;
+	z-index: 30;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

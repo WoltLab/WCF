@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/language.xsd" languagecode="tr">
+	<category name="wcf.global">
+		<item name="wcf.global.pageTitle"><![CDATA[{$setupPackageName} Yükleme]]></item>
+		<item name="wcf.global.title"><![CDATA[<b>{$setupPackageName}</b><br />Yükleme]]></item>
+		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item>
+		<item name="wcf.global.locale.unix"><![CDATA[en_US]]></item>
+		<item name="wcf.global.locale.win"><![CDATA[english]]></item>
+		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
+		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
+		<item name="wcf.global.button.next"><![CDATA[İleri &raquo;]]></item>
+		<item name="wcf.global.progressBar"><![CDATA[{@$progress}% tamamlandı]]></item>
+		<item name="wcf.global.dateMethod"><![CDATA[date]]></item>
+		<item name="wcf.global.dateFormat"><![CDATA[M jS Y]]></item>
+		<item name="wcf.global.timeFormat"><![CDATA[l, F jS Y, g:ia]]></item>
+		<item name="wcf.global.dateFormatToday"><![CDATA[<b>\B\u\g\ü\n</b>, g:ia]]></item>
+		<item name="wcf.global.dateFormatYesterday"><![CDATA[\D\ü\n, g:ia]]></item>
+		<item name="wcf.global.welcome"><![CDATA[{$setupPackageName}’u seçtiğiniz için teşekkür ederiz.]]></item>
+		<item name="wcf.global.welcome.description"><![CDATA[Bu yükleme yardımcısı <br /><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} ve <b>{$setupPackageName}</b>{/if} yükleme işlemlerinde size yardımcı olacaktır.]]></item>
+		<item name="wcf.global.welcome.language"><![CDATA[Dil]]></item>
+		<item name="wcf.global.language.en"><![CDATA[İngilizce]]></item>
+		<item name="wcf.global.language.de"><![CDATA[Almanca]]></item>
+		<item name="wcf.global.language.de-informal"><![CDATA[Almanca (Gayri resmi)]]></item>
+		<item name="wcf.global.language.fr"><![CDATA[Fransızca]]></item>
+		<item name="wcf.global.language.ja"><![CDATA[Japonca]]></item>
+		<item name="wcf.global.language.es"><![CDATA[İspanyolca]]></item>
+		<item name="wcf.global.language.zh-TW"><![CDATA[Çince (Geleneksel)]]></item>
+		<item name="wcf.global.language.zh-CN"><![CDATA[Çince (Basitleştirilmiş)]]></item>
+		<item name="wcf.global.language.it"><![CDATA[İtalyanca]]></item>
+		<item name="wcf.global.language.nl"><![CDATA[Felemenkçe]]></item>
+		<item name="wcf.global.language.ru"><![CDATA[Rusça]]></item>
+		<item name="wcf.global.language.ko"><![CDATA[Korece]]></item>
+		<item name="wcf.global.language.pt"><![CDATA[Portekizce]]></item>
+		<item name="wcf.global.language.pt-BR"><![CDATA[Portekizce (Brezilya)]]></item>
+		<item name="wcf.global.language.sv"><![CDATA[İsveççe]]></item>
+		<item name="wcf.global.language.pl"><![CDATA[Lehçe]]></item>
+		<item name="wcf.global.language.da"><![CDATA[Danimarkaca]]></item>
+		<item name="wcf.global.language.cs"><![CDATA[Çekçe]]></item>
+		<item name="wcf.global.language.tr"><![CDATA[Türkçe]]></item>
+		<item name="wcf.global.language.hu"><![CDATA[Macarca]]></item>
+		<item name="wcf.global.language.ar"><![CDATA[Arapça]]></item>
+		<item name="wcf.global.language.he"><![CDATA[İbranice]]></item>
+		<item name="wcf.global.language.fa"><![CDATA[Farça]]></item>
+		<item name="wcf.global.language.no"><![CDATA[Norveççe]]></item>
+		<item name="wcf.global.language.fi"><![CDATA[Fince]]></item>
+		<item name="wcf.global.language.ro"><![CDATA[Romence]]></item>
+		<item name="wcf.global.language.bs"><![CDATA[Bosnaca]]></item>
+		<item name="wcf.global.language.hr"><![CDATA[Hırvatça]]></item>
+		<item name="wcf.global.language.sr"><![CDATA[Sırpça]]></item>
+		<item name="wcf.global.language.sk"><![CDATA[Slovakça]]></item>
+		<item name="wcf.global.language.el"><![CDATA[Yunanca]]></item>
+		<item name="wcf.global.welcome.language.description"><![CDATA[Yardımcı dil şu anda Türkçe olarak ayarlanmış durumdadır.]]></item>
+		<item name="wcf.global.welcome.language.change"><![CDATA[Dili değiştir]]></item>
+		<item name="wcf.global.license"><![CDATA[Lisans Sözleşmesi]]></item>
+		<item name="wcf.global.license.description"><![CDATA[Lütfen belirtilen Lisans Sözleşmesini okuyunuz. Tüm belgeyi görüntüleyebilmek için kaydırma çubuğunu kullanınız.]]></item>
+		<item name="wcf.global.license.accept.description"><![CDATA[Lisans Sözleşmesinin şartlarını ve kurallarını kabul ediyor musunuz? Bu yazılımı yanlızca Lisans Sözleşmesinin kabul edilmesiyle yükleyebilirsiniz.]]></item>
+		<item name="wcf.global.license.missingAcception"><![CDATA[Yüklemeye devam etmek için Lisans Sözleşmesini kabul etmeniz gerekmektedir.]]></item>
+		<item name="wcf.global.systemRequirements"><![CDATA[Sistem Gereksinimleri Kontrol Ediliyor]]></item>
+		<item name="wcf.global.systemRequirements.description"><![CDATA[Sistem Gereksinimleri:]]></item>
+		<item name="wcf.global.systemRequirements.required"><![CDATA[Gerekli sistem bileşeni]]></item>
+		<item name="wcf.global.systemRequirements.recommended"><![CDATA[Önerilen sistem bileşeni]]></item>
+		<item name="wcf.global.systemRequirements.element.required"><![CDATA[Gereken:]]></item>
+		<item name="wcf.global.systemRequirements.element.yours"><![CDATA[Bulunan:]]></item>
+		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[Önerilen:]]></item>
+		<item name="wcf.global.systemRequirements.php"><![CDATA[Yüklenmiş betik dili &quot;PHP&quot; sürümü]]></item>
+		<item name="wcf.global.systemRequirements.php.description"><![CDATA[Yüklenmiş betik dili &quot;PHP&quot; sürümü bu yazılımın kararlı bir şekilde çalışabilmesi için çok eski. Yükleme işleminin devamı için sürüm güncellemesi gerekmektedir.]]></item>
+		<item name="wcf.global.systemRequirements.php.description2"><![CDATA[PHP Sürümünüz eski. Bu yazılımın kararlı bir şekilde çalışması için, 5.0.5 ya da daha yukarı bir PHP sürümü kullanmanızı öneririz.]]></item>
+		<item name="wcf.global.systemRequirements.mysql"><![CDATA[&quot;MySQL&quot; Veritabanı desteği]]></item>
+		<item name="wcf.global.systemRequirements.mysql.description"><![CDATA[Bu yazılımın yüklenmesi için &quot;MySQL&quot; Veritabanı desteği gerekmektedir.]]></item>
+		<item name="wcf.global.systemRequirements.uploadMaxFilesize"><![CDATA[Dosya yüklemeleri için en büyük boyut]]></item>
+		<item name="wcf.global.systemRequirements.uploadMaxFilesize.description"><![CDATA[ Yüklenmiş &quot;PHP&quot; sürümünün şu anki yapılandırması herhangi bir dosyanın yüklenmesine imkan vermemektedir. Bu yapılandırmadan dolayı bu yazılımın bazı özellikleri sınırlandırılacaktır.]]></item>
+		<item name="wcf.global.systemRequirements.gdLib"><![CDATA[Yüklenmiş grafik kütüphanesi &quot;GDLib&quot; sürümü]]></item>
+		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[Grafik kütüphanesi &quot;GDLib&quot; resimlerin dinamik olarak oluşturulmasında gereklidir. Onsuz yazılımın bazı özelliklerine erişilemiyecektir.]]></item>
+		<item name="wcf.global.systemRequirements.mbString"><![CDATA[Çoklu karakter kütüphanesi &quot;MBString&quot;]]></item>
+		<item name="wcf.global.systemRequirements.mbString.description"><![CDATA[Bu kütüphane olmadan yazılım sadece batı avrupa dilleri ile kullanılabilir.]]></item>
+		<item name="wcf.global.systemRequirements.safeMode"><![CDATA[&quot;PHP&quot; Betik dilindeki &quot;güvenli modun&quot; güvenlik seçeneği]]></item>
+		<item name="wcf.global.systemRequirements.safeMode.description"><![CDATA[Bu yazılımın işlevseliğini garantiye almak için güvenli mod ayarlarını etkisizleştirmenizi öneririz.]]></item>
+		<item name="wcf.global.systemRequirements.ftp"><![CDATA[FTP için veri aktarım kütüphanesi]]></item>
+		<item name="wcf.global.systemRequirements.ftp.description"><![CDATA[&quot;Güvenli mod&quot; güvenlik seçeneklerinin etkinleştirilmesi nedeniyle bu yazılımın kullanacağı çoğu dosya işleminde veri aktarım kütüphanesi gerekli olacaktır. Bu kütüphanesi etkinleştirmenizi öneririz.]]></item>
+		<item name="wcf.global.systemRequirements.active"><![CDATA[Etkin]]></item>
+		<item name="wcf.global.systemRequirements.notActive"><![CDATA[Etkisiz]]></item>
+		<item name="wcf.global.wcfDir"><![CDATA[Yükleme klasörünü seçiniz]]></item>
+		<item name="wcf.global.wcfDir.description"><![CDATA[<b>WoltLab Community Framework</b>’ün tüm dosyaları yükleme klasörüne çıkartılacaktır.]]></item>
+		<item name="wcf.global.wcfDir.foundDirectory"><![CDATA[Yükleme yardımcıları "{$foundDirectory}" klasöründe <b>WoltLab Community Framework</b> yüklemesi buldu.<br />Eğer <b>WoltLab Community Framework</b>’ün yeni bir kopyasını yüklemek istiyorsanız, lütfen farklı bir yükleme klasörü seçiniz.]]></item>
+		<item name="wcf.global.wcfDir.dir"><![CDATA[Yükleme klasörü]]></item>
+		<item name="wcf.global.wcfDir.dir.description"><![CDATA[Lütfen <b>WoltLab Community Framework</b> için yükleme klasörünü giriniz.]]></item>
+				<item name="wcf.global.wcfDir.url.description"><![CDATA[Belirtilen klasöre yükleme yapıldıktan sonra <b>WoltLab Community Framework</b>'e bu URL'yi kullanarak ulaşabilirsiniz:]]></item>
+		<item name="wcf.global.wcfDir.error.invalid"><![CDATA[Verilen klasör geçerli değil.]]></item>
+		<item name="wcf.global.ftp"><![CDATA[FTP erişim bilgileri]]></item>
+		<item name="wcf.global.ftp.description"><![CDATA[PHP güvenli mod güvenlik seçeneğinin etkinleştirilmesiyle WoltLab Community Framework sadece FTP işlevleri kullanılarak yüklenebilir. Lütfen buraya bu sunucu için FTP Kullanıcı adı ve Şifre bilgilerini giriniz. Verilen bilgi kaydedilmeyecek ve sadece bu paketin yükleme işlemi için kullanılacaktır. Sadece bu nedenden için, ilerde FTP Kullanıcı adı ve Şifre bilgileri gerekebilecektir.]]></item>
+		<item name="wcf.global.ftp.accessData"><![CDATA[FTP erişim bilgisi]]></item>
+		<item name="wcf.global.ftp.host"><![CDATA[Sunucu adı]]></item>
+		<item name="wcf.global.ftp.user"><![CDATA[Kullanıcı adı]]></item>
+		<item name="wcf.global.ftp.password"><![CDATA[Şifre]]></item>
+		<item name="wcf.global.ftp.error"><![CDATA[Verilen FTP sunucusu ile bir bağlantı sağlanamadı.]]></item>
+		<item name="wcf.global.next"><![CDATA[Sonraki aşama yükleniyor ...]]></item>
+		<item name="wcf.global.next.description"><![CDATA[Yükleme işlemi şu anda sonraki aşamayı yüklüyor, lütfen bekleyiniz.]]></item>
+		<item name="wcf.global.languages"><![CDATA[Yükleme için dil seçiniz]]></item>
+		<item name="wcf.global.languages.description"><![CDATA[Bu yazılım çoklu dilleri desteklemektedir. Lütfen yüklemek istediğiniz dilleri seçiniz.]]></item>
+		<item name="wcf.global.languages.charset"><![CDATA[Karakter Kodlaması]]></item>
+		<item name="wcf.global.languages.charset.description"><![CDATA[Karakter Kodlaması bilinen diğer adlarıyla Karakter Seti ya da Kod Sayfası depolama türünü ve bu sistemdeki yüklenmiş dillerin sunumunu belirler. Lütfen dikkatli olunuz, Karakter Kodlamasını seçtiğinizde daha sonra bu seçimi değiştiremezsiniz.]]></item>
+		
+		<!--<item name="wcf.global.languages.charset.ISO-8859-1"><![CDATA[Eğer sadece Batı Avrupa dillerini yüklemek isterseniz ISO-8859-1 gereklidir.]]></item>
+		<item name="wcf.global.languages.charset.UTF-8"><![CDATA[Batı Avrupa ya da Batı Avrupa kaynaklı olmayan dilleri şimdi ya da daha sonraki bir tarihte yüklemek isterseniz UTF-8 gereklidir.]]></item>-->
+		
+		<item name="wcf.global.languages.charset.UTF-8"><![CDATA[Unicode]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-1"><![CDATA[Batı Avrupa]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-2"><![CDATA[Orta Avrupa]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-7"><![CDATA[Yunanca]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-8"><![CDATA[İbranice]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-9"><![CDATA[Türkçe]]></item>
+		<item name="wcf.global.languages.charset.EUC-JP"><![CDATA[Japonca]]></item>
+		<item name="wcf.global.languages.charset.SJIS"><![CDATA[Japonca]]></item>
+		<item name="wcf.global.languages.charset.BIG-5"><![CDATA[Çince (Geleneksel)]]></item>
+		<item name="wcf.global.languages.charset.CP936"><![CDATA[Çince (Basitleştirilmiş)]]></item>
+		<item name="wcf.global.languages.charset.EUC-CN"><![CDATA[Çince (Basitleştirilmiş)]]></item>
+		<item name="wcf.global.languages.charset.KOI8-R"><![CDATA[Kiril]]></item>
+		<item name="wcf.global.languages.charset.Windows-1251"><![CDATA[Kiril]]></item>
+		<item name="wcf.global.languages.charset.EUC-KR"><![CDATA[Korece]]></item>
+		
+		<item name="wcf.global.languages.languages"><![CDATA[Diller]]></item>
+		<item name="wcf.global.languages.error.empty"><![CDATA[Lütfen en az bir dil seçiniz!]]></item>
+		<item name="wcf.global.languages.error.notAvailable"><![CDATA[Seçtiğiniz dil önceden verdiğiniz Karekter Kodlamasına uymamaktadır. Lütfen dil seçiminizi değiştiriniz.]]></item>
+		<item name="wcf.global.configureDB"><![CDATA[Veritabanı erişim yapılandırması]]></item>
+		<item name="wcf.global.configureDB.description"><![CDATA[Bu yazılımda veriler bir MySQL Veritabanında tutulmaktadır. Lütfen veritabanı erişim bilgilerini giriniz!]]></item>
+		<item name="wcf.global.configureDB.accessData"><![CDATA[Veritabanı erişim bilgisi]]></item>
+		<item name="wcf.global.configureDB.host"><![CDATA[Sunucu adı]]></item>
+		<item name="wcf.global.configureDB.user"><![CDATA[Kullanıcı adı]]></item>
+		<item name="wcf.global.configureDB.password"><![CDATA[Şifre]]></item>
+		<item name="wcf.global.configureDB.database"><![CDATA[Veritabanı adı]]></item>
+		<item name="wcf.global.configureDB.number"><![CDATA[Yükleme sayısı]]></item>
+		<item name="wcf.global.configureDB.error"><![CDATA[Veritabanınızla bağlantı kurulmaya çalışılırken bir hata oluştu:
+		<br /><b>{$exception->getMessage()}{if $exception|get_class == 'DatabaseException'}<br />{$exception->getErrorDesc()}{/if}</b>
+		<br />Daha fazla bilgi WoltLab Hata kaynağında bulunabilir:
+		<br /><a href="http://www.woltlab.com/help/?code={@$exception->getCode()}">http://www.woltlab.com/help/?code={@$exception->getCode()}</a>]]></item>
+		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[Belirtilen tablo{if $conflictedTables|count > 1}lar{/if} zaten bulunmakta{if $conflictedTables|count == 1}lar{/if} &quot;{$dbName}&quot; Veritabanı:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />Bu sorunu çözmek için lüften belirtilenlerden birini yapınız:<br />1. &quot;Üzerine yaz&quot; seçeneği ile {if $conflictedTables|count > 1}bu tabloların{else}bu tablonun{/if} üzerine yazınız ve &quot;İleri&quot; düğmesi ile yüklemeye devam ediniz ya da<br />2. Veritabanı erişim bilgilerini farklı bir veritabanı kullanarak tekrar girebilirsiniz ve daha sonra &quot;İleri&quot; düğmesi ile yüklemeye devam edebilirsiniz ya da<br />3. Yeni bir yükleme sayısı girebilirsiniz, bu durumda &quot;İleri&quot; düğmesine basarak yüklemeye devam etmeyi unutmayınız.]]></item>
+		<item name="wcf.global.configureDB.conflictedTables.overwrite"><![CDATA[Yukarda listelenen tablonun{if $conflictedTables|count > 1}{/if} üzerine yazılsın mı?]]></item>
+		<item name="wcf.global.createUser"><![CDATA[Bir Yönetici oluştur]]></item>
+		<item name="wcf.global.createUser.description"><![CDATA[Yükleme işlemi şimdi sizin için bir yönetici erişimi oluşturacak. Lütfen bu erişim için kullanılacak Yönetici kullanıcı adını, e-posta adresini ve şifreyi giriniz.]]></item>
+		<item name="wcf.global.createUser.data"><![CDATA[Kullanıcı bilgisi]]></item>
+		<item name="wcf.global.createUser.username"><![CDATA[Kullanıcı adı]]></item>
+		<item name="wcf.global.createUser.email"><![CDATA[E-posta adresi]]></item>
+		<item name="wcf.global.createUser.confirmEmail"><![CDATA[E-posta adresi doğrulama]]></item>
+		<item name="wcf.global.createUser.password"><![CDATA[Şifre]]></item>
+		<item name="wcf.global.createUser.confirmPassword"><![CDATA[Şifre doğrulama]]></item>
+		<item name="wcf.global.createUser.error"><![CDATA[Kullanıcı hesabı kaydedilirken hatalar oluştu, hatalar için lütfen işaretlenmiş alanları kontrol ediniz.]]></item>
+		<item name="wcf.global.createUser.error.empty"><![CDATA[Bu alan boş bırakılamaz.]]></item>
+		<item name="wcf.global.createUser.error.username.notValid"><![CDATA[Girdiğiniz kullanıcı adı geçersiz. Geçerli bir kullanıcı adı en az 3 en fazla 20 karakter uzunluğunda olmalıdır.]]></item>
+		<item name="wcf.global.createUser.error.email.notValid"><![CDATA[Girdiğiniz e-posta adresi geçersiz. Geçersiz e-posta adresi biçimi name@domain.tld gibi olmalıdır.]]></item>
+		<item name="wcf.global.createUser.error.confirmEmail.notEqual"><![CDATA[Girdiğiniz e-posta adresleri birbirini tutmamaktadır. Güvenlik nedenlerinden dolayı, lütfen iki e-posta adresi alanının da birbiri ile aynı verilerle doldurulduğundan emin olunuz.]]></item>
+		<item name="wcf.global.createUser.error.confirmPassword.notEqual"><![CDATA[Girdiğiniz şifreler birbirini tutmamaktadır. Güvenlik nedenlerinden dolayı, lütfen iki şifre alanının da birbiri ile aynı verilerle doldurulduğundan emin olunuz.]]></item>
+		<item name="wcf.global.wcfDir.error"><![CDATA[Gerekli dosyalar çıkartılırken bir hata oluştu:
+		<br /><b>{$exception->getMessage()}</b><br />
+		Lütfen hedef klasörün bulunduğundan ve yazılabilir olduğundan emin olunuz.
+		<br /><br />Daha fazla bilgi WoltLab Hata kaynağında bulunabilir:<br /><a href="http://www.woltlab.com/help/?code={@$exception->getCode()}">http://www.woltlab.com/help/?code={@$exception->getCode()}</a>]]></item>
+	</category>
+</language>

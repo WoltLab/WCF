@@ -1,0 +1,127 @@
+<?php
+namespace wcf\system\form;
+use wcf\util\StringUtil;
+
+/**
+ * FormDocument holds the page structure based upon form element containers.
+ *
+ * @author	Alexander Ebert
+ * @copyright	2001-2011 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	system.form
+ * @category 	Community Framework
+ */
+class FormDocument {
+	/**
+	 * list of FormElementContainer objects
+	 *
+	 * @var	FormElementContainer
+	 */
+	protected $containers = array();
+	
+	/**
+	 * form document name
+	 *
+	 * @var	string
+	 */
+	protected $name = '';
+	
+	/**
+	 * Creates a new instance of FormDocument.
+	 *
+	 * @param	string		$name
+	 */
+	public function __construct($name) {
+		$this->name = StringUtil::trim($name);
+	}
+	
+	/**
+	 * Returns form document name.
+	 *
+	 * @return	string
+	 */
+	public function getName() {
+		return $this->name;
+	}
+	
+	/**
+	 * Appends a FormElementContainer object.
+	 *
+	 * @param	FormElementContainer		$container
+	 */
+	public function appendContainer(FormElementContainer $container) {
+		$this->containers[] = $container;
+	}
+	
+	/**
+	 * Prepends a FormElementContainer object.
+	 *
+	 * @param	FormElementContainer		$container
+	 */
+	public function prependContainer(FormElementContainer $container) {
+		array_unshift($this->containers, $container);
+	}
+	
+	/**
+	 * Returns assigned FormElementContainer objects.
+	 *
+	 * @return	array<FormElementContainer>
+	 */
+	public function getContainers() {
+		return $this->containers;
+	}
+	
+	/**
+	 * Returns the value of container's child element with given name.
+	 *
+	 * @param	string		$key
+	 * @return	mixed
+	 */
+	public function getValue($key) {
+		foreach ($this->containers as $container) {
+			$value = $container->getValue($key);
+			if ($value !== null) {
+				return $value;
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Returns HTML-representation of current document.
+	 *
+	 * @return	string
+	 */
+	public function getHTML() {
+		$content = '';
+		
+		foreach ($this->containers as $container) {
+			$content .= $container->getHTML($this->getName().'_');
+		}
+		
+		return $content;
+	}
+	
+	/**
+	 * Handles request input variables.
+	 */
+	public function handleRequest() {
+		$variables = array();
+		
+		foreach ($_REQUEST as $key => $value) {
+			if (StringUtil::indexOf($key, $this->getName().'_') !== false) {
+				$key = StringUtil::replace($this->getName().'_', '', $key);
+				$variables[$key] = $value;
+			}
+		}
+		
+		if (!empty($variables)) {
+			foreach ($this->containers as $container) {
+				$container->handleRequest($variables);
+			}
+		}
+	}
+}
+?>

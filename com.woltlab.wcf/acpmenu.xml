@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/acpmenu.xsd">
+	<import>
+		<acpmenuitem name="wcf.acp.menu.link.system">
+			<icon>icon/systemL.png</icon>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<!-- options -->
+		<acpmenuitem name="wcf.acp.menu.link.option">
+			<parent>wcf.acp.menu.link.system</parent>
+			<showorder>1</showorder>
+			<permissions>admin.system.canEditOption</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.option.category">
+			<parent>wcf.acp.menu.link.option</parent>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.option.management">
+			<parent>wcf.acp.menu.link.option</parent>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.option.importAndExport">
+			<parent>wcf.acp.menu.link.option.management</parent>
+			<showorder>1</showorder>
+			<link>index.php?form=OptionImport</link>
+		</acpmenuitem>
+		<!-- /options -->
+		
+		<!-- packages -->
+		<acpmenuitem name="wcf.acp.menu.link.package">
+			<parent>wcf.acp.menu.link.system</parent>
+			<showorder>2</showorder>
+			<permissions>admin.system.package.canInstallPackage,admin.system.package.canUpdatePackage,admin.system.package.canUninstallPackage,admin.system.package.canEditServer</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.package.management">
+			<parent>wcf.acp.menu.link.package</parent>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.package.view">
+			<icon>icon/packageM.png</icon>
+			<link>index.php?page=PackageList</link>
+			<parent>wcf.acp.menu.link.package.management</parent>
+			<permissions>admin.system.package.canUpdatePackage,admin.system.package.canUninstallPackage</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.package.install">
+			<link>index.php?form=PackageStartInstall&amp;action=install</link>
+			<parent>wcf.acp.menu.link.package.management</parent>
+			<permissions>admin.system.package.canInstallPackage</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.package.update">
+			<parent>wcf.acp.menu.link.package</parent>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.autoupdate">
+			<icon>icon/updateM.png</icon>
+			<link>index.php?page=PackageAutoUpdateList</link>
+			<parent>wcf.acp.menu.link.package.update</parent>
+			<permissions>admin.system.package.canUpdatePackage</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.package.database">
+			<link>index.php?form=PackageUpdateSearch</link>
+			<parent>wcf.acp.menu.link.package.update</parent>
+			<permissions>admin.system.package.canInstallPackage,admin.system.package.canUpdatePackage</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.package.server">
+			<parent>wcf.acp.menu.link.package</parent>
+			<showorder>3</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.package.server.view">
+			<icon>icon/updateServerM.png</icon>
+			<link>index.php?page=UpdateServerList</link>
+			<parent>wcf.acp.menu.link.package.server</parent>
+			<permissions>admin.system.package.canEditServer</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.package.server.add">
+			<link>index.php?form=UpdateServerAdd</link>
+			<parent>wcf.acp.menu.link.package.server</parent>
+			<permissions>admin.system.package.canEditServer</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		<!-- /packages -->	
+		
+		<!-- maintenance -->
+		<acpmenuitem name="wcf.acp.menu.link.maintenance">
+			<parent>wcf.acp.menu.link.system</parent>
+			<showorder>3</showorder>
+		</acpmenuitem>
+		<!-- /maintenance -->
+		
+		<!-- log -->
+		<acpmenuitem name="wcf.acp.menu.link.log">
+			<parent>wcf.acp.menu.link.system</parent>
+			<showorder>4</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.log.system">
+			<parent>wcf.acp.menu.link.log</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.log.additional">
+			<parent>wcf.acp.menu.link.log</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.log.session">
+			<icon>icon/sessionLogM.png</icon>
+			<link>index.php?page=ACPSessionLogList</link>
+			<parent>wcf.acp.menu.link.log.system</parent>
+			<permissions>admin.system.canViewLog</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.log.cache">
+			<link>index.php?page=CacheList</link>
+			<parent>wcf.acp.menu.link.log.system</parent>
+			<permissions>admin.system.canViewLog</permissions>
+		</acpmenuitem>
+		<!-- /log -->
+		
+		<!-- cronjobs -->
+		<acpmenuitem name="wcf.acp.menu.link.cronjobs">
+			<parent>wcf.acp.menu.link.maintenance</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.cronjobs.view">
+			<icon>icon/cronjobsM.png</icon>
+			<link>index.php?page=CronjobList</link>
+			<parent>wcf.acp.menu.link.cronjobs</parent>
+			<permissions>admin.system.cronjobs.canEditCronjob,admin.system.cronjobs.canDeleteCronjob,admin.system.cronjobs.canEnableDisableCronjob</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.cronjobs.add">
+			<link>index.php?form=CronjobAdd</link>
+			<parent>wcf.acp.menu.link.cronjobs</parent>
+			<permissions>admin.system.cronjobs.canAddCronjob</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.cronjobs.showLog">
+			<link>index.php?page=CronjobLogList</link>
+			<parent>wcf.acp.menu.link.log.system</parent>
+			<permissions>admin.system.cronjobs.canEditCronjob,admin.system.cronjobs.canDeleteCronjob</permissions>
+		</acpmenuitem>
+		<!-- /cronjobs -->
+		
+		<acpmenuitem name="wcf.acp.menu.link.user">
+			<icon>icon/usersL.png</icon>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<!-- users -->
+		<acpmenuitem name="wcf.acp.menu.link.user.management">
+			<parent>wcf.acp.menu.link.user</parent>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.management.general">
+			<parent>wcf.acp.menu.link.user.management</parent>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.list">
+			<icon>icon/usersM.png</icon>
+			<link>index.php?page=UserList</link>
+			<parent>wcf.acp.menu.link.user.management.general</parent>
+			<permissions>admin.user.canSearchUser</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.search">
+			<icon>icon/searchM.png</icon>
+			<link>index.php?form=UserSearch</link>
+			<parent>wcf.acp.menu.link.user.management.general</parent>
+			<permissions>admin.user.canSearchUser</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.add">
+			<link>index.php?form=UserAdd</link>
+			<parent>wcf.acp.menu.link.user.management.general</parent>
+			<permissions>admin.user.canAddUser</permissions>
+			<showorder>3</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.management.additional">
+			<parent>wcf.acp.menu.link.user.management</parent>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.massProcessing">
+			<link>index.php?form=UsersMassProcessing</link>
+			<parent>wcf.acp.menu.link.user.management.additional</parent>
+			<permissions>admin.user.canEditUser,admin.user.canDeleteUser,admin.user.canMailUser</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.mail">
+			<link>index.php?form=UserMail&amp;action=all</link>
+			<parent>wcf.acp.menu.link.user.management.additional</parent>
+			<permissions>admin.user.canMailUser</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		<!-- /users -->
+		
+		<!-- user groups -->
+		<acpmenuitem name="wcf.acp.menu.link.group">
+			<parent>wcf.acp.menu.link.user</parent>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.group.general">
+			<parent>wcf.acp.menu.link.group</parent>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.group.view">
+			<icon>icon/userGroupM.png</icon>
+			<link>index.php?page=UserGroupList</link>
+			<parent>wcf.acp.menu.link.group.general</parent>
+			<permissions>admin.user.canEditGroup,admin.user.canDeleteGroup</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>	
+		
+		<acpmenuitem name="wcf.acp.menu.link.group.add">
+			<link>index.php?form=UserGroupAdd</link>
+			<parent>wcf.acp.menu.link.group.general</parent>
+			<permissions>admin.user.canAddGroup</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.group.additional">
+			<parent>wcf.acp.menu.link.group</parent>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.group.mail">
+			<icon>icon/emailM.png</icon>
+			<link>index.php?form=UserMail&amp;action=group</link>
+			<parent>wcf.acp.menu.link.group.additional</parent>
+			<permissions>admin.user.canMailUser</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		<!-- user groups -->
+		
+		<acpmenuitem name="wcf.acp.menu.link.display">
+			<icon>icon/displayL.png</icon>
+			<showorder>3</showorder>
+		</acpmenuitem>
+		
+		<!-- language -->
+		<acpmenuitem name="wcf.acp.menu.link.language">
+			<parent>wcf.acp.menu.link.display</parent>
+		</acpmenuitem>
+
+		<acpmenuitem name="wcf.acp.menu.link.language.server">
+			<parent>wcf.acp.menu.link.language</parent>
+		</acpmenuitem>
+
+		<acpmenuitem name="wcf.acp.menu.link.language.server.list">
+			<icon>icon/languageServerM.png</icon>
+			<link>index.php?page=LanguageServerList</link>
+			<parent>wcf.acp.menu.link.language.server</parent>
+			<permissions>admin.language.canEditServer</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+
+		<acpmenuitem name="wcf.acp.menu.link.language.server.add">
+			<link>index.php?form=LanguageServerAdd</link>
+			<parent>wcf.acp.menu.link.language.server</parent>
+			<permissions>admin.language.canEditServer</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		<!-- /language -->
+		
+		<acpmenuitem name="wcf.acp.menu.link.content">
+			<icon>icon/contentL.png</icon>
+			<showorder>4</showorder>
+		</acpmenuitem>
+	</import>
+</data>

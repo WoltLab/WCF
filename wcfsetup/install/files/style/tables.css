@@ -1,0 +1,128 @@
+
+/* ### -- -- -- -- -- Table Styles -- -- -- -- -- ### */
+
+/* 
+
+File: tables.css 
+Copyright 2006-2009 by WoltLab GmbH. 
+
+*/
+
+/* ### -- -- -- -- -- Table List -- -- -- -- -- ### */
+
+.tableList {
+	border-spacing: 0;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+.tableList tbody tr:hover .columnTopic .topic p a, .tableList tbody tr:hover .columnUsername p a, .tableList tbody tr:hover .columnTitle p a {
+	text-decoration: none;
+}
+
+.tableList th {
+	border-width: 0 1px 1px 0;
+	border-style: solid;
+	font-weight: normal;
+}
+
+.tableList td {
+	border-width: 0 1px 1px 0;
+	border-style: solid;
+	padding: 4px;
+}
+
+.tableList td a {
+	text-align: left;
+}
+
+/* ### -- -- -- -- -- Table Head -- -- -- -- -- ### */
+
+.tableHead a, .tableHead .emptyHead {
+	border-style: solid;
+	border-width: 0 0 1px 0;
+	display: block;
+	line-height: 1.8;
+	margin: -1px;
+	min-height: 22px;
+	padding: 0 5px;
+	text-align: center;
+	text-decoration: none;
+}
+
+/* do we really need this declaration? 
+.tableHead .emptyHead {
+	white-space: normal;
+}
+*/
+
+.tableHead .emptyHead input {
+	margin-top: 0;
+}
+
+.tableHead {
+	white-space: nowrap;
+}
+
+.tableHead a img {
+	margin-top: -3px;
+	padding: 0;
+}
+
+.tableHead .active a {
+	border-width: 0 0 1px 0;
+}
+
+/* ### -- -- -- -- -- Column Globals -- -- -- -- -- ### */
+
+.tableList td.columnText {
+	text-align: left;
+}
+
+.tableList td.columnNumbers, .tableList td.columnDate {
+	text-align: right;
+	white-space: nowrap;
+}
+
+.tableList td.columnID {
+	width: 1%;
+	text-align: right;
+}
+
+.tableList td.columnMark {
+	width: 1%;
+}
+
+/* ### -- -- -- -- -- Table row -- -- -- -- -- ### */
+
+.tableList .statusDisplay {
+	float: right;
+	padding: 1px 0;
+}
+
+.tableList .statusDisplayIcons {
+	display: inline-block;
+	margin-left: 5px;
+}
+
+/* ### -- -- -- -- -- Column icon -- -- -- -- -- ### */
+
+.tableList td.columnIcon {
+	width: 1%;
+	white-space: nowrap;
+}
+
+.tableList td.actionIcons img {
+	display: inline !important;
+}
+
+/* ### -- -- -- -- -- Special -- -- -- -- -- ### */
+
+.tableList .deleteNote {
+	border-width: 0 !important;
+	margin-top: 3px;
+	padding-top: 3px;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

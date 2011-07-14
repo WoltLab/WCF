@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/language.xsd" languagecode="zh-CN">
+	<category name="wcf.global">
+		<item name="wcf.global.pageTitle"><![CDATA[{$setupPackageName} 安装程序]]></item>
+		<item name="wcf.global.title"><![CDATA[<b>{$setupPackageName}</b><br />安装程序]]></item>
+		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item>
+		<item name="wcf.global.locale.unix"><![CDATA[zh_CN]]></item>
+		<item name="wcf.global.locale.win"><![CDATA[chinese-simplified]]></item>
+		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
+		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
+		<item name="wcf.global.button.next"><![CDATA[下一步 &raquo;]]></item>
+		<item name="wcf.global.progressBar"><![CDATA[{@$progress}% 完成]]></item>
+		<item name="wcf.global.dateMethod"><![CDATA[date]]></item>
+		<item name="wcf.global.dateFormat"><![CDATA[M jS Y]]></item>
+		<item name="wcf.global.timeFormat"><![CDATA[l, F jS Y, g:ia]]></item>
+		<item name="wcf.global.dateFormatToday"><![CDATA[<b>今天</b>, g:ia]]></item>
+		<item name="wcf.global.dateFormatYesterday"><![CDATA[昨天, g:ia]]></item>
+		<item name="wcf.global.welcome"><![CDATA[感谢您选择 {$setupPackageName}]]></item>
+		<item name="wcf.global.welcome.description"><![CDATA[安装程序将帮您安装<br /><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} 和 <b>{$setupPackageName}</b>{/if}.]]></item>
+		<item name="wcf.global.welcome.language"><![CDATA[安装程序语言]]></item>
+		<item name="wcf.global.language.en"><![CDATA[英语]]></item>
+		<item name="wcf.global.language.de"><![CDATA[德语]]></item>
+		<item name="wcf.global.language.de-informal"><![CDATA[德语 (非正式的)]]></item>
+		<item name="wcf.global.language.fr"><![CDATA[法语]]></item>
+		<item name="wcf.global.language.ja"><![CDATA[日语]]></item>
+		<item name="wcf.global.language.es"><![CDATA[西班牙语]]></item>
+		<item name="wcf.global.language.zh-TW"><![CDATA[繁体中文]]></item>
+		<item name="wcf.global.language.zh-CN"><![CDATA[简体中文]]></item>
+		<item name="wcf.global.language.it"><![CDATA[意大利语]]></item>
+		<item name="wcf.global.language.nl"><![CDATA[荷兰语]]></item>
+		<item name="wcf.global.language.ru"><![CDATA[俄语]]></item>
+		<item name="wcf.global.language.ko"><![CDATA[韩语]]></item>
+		<item name="wcf.global.language.pt"><![CDATA[葡萄牙语]]></item>
+		<item name="wcf.global.language.pt-BR"><![CDATA[葡萄牙语]]></item>
+		<item name="wcf.global.language.sv"><![CDATA[瑞典语]]></item>
+		<item name="wcf.global.language.pl"><![CDATA[波兰语]]></item>
+		<item name="wcf.global.language.da"><![CDATA[丹麦语]]></item>
+		<item name="wcf.global.language.cs"><![CDATA[捷克语]]></item>
+		<item name="wcf.global.language.tr"><![CDATA[土耳其语]]></item>
+		<item name="wcf.global.language.hu"><![CDATA[匈牙利语]]></item>
+		<item name="wcf.global.language.ar"><![CDATA[阿拉伯语]]></item>
+		<item name="wcf.global.language.he"><![CDATA[希伯来语]]></item>
+		<item name="wcf.global.language.fa"><![CDATA[波斯语]]></item>
+		<item name="wcf.global.language.no"><![CDATA[挪威语]]></item>
+		<item name="wcf.global.language.fi"><![CDATA[芬兰语]]></item>
+		<item name="wcf.global.language.ro"><![CDATA[罗马尼亚语]]></item>
+		<item name="wcf.global.language.bs"><![CDATA[波斯尼亚语]]></item>
+		<item name="wcf.global.language.hr"><![CDATA[克罗地亚语]]></item>
+		<item name="wcf.global.language.sr"><![CDATA[塞尔维亚语]]></item>
+		<item name="wcf.global.language.sk"><![CDATA[斯洛伐克语]]></item>
+		<item name="wcf.global.language.el"><![CDATA[希腊语]]></item>
+		<item name="wcf.global.welcome.language.description"><![CDATA[当前安装程序语言为简体中文.]]></item>
+		<item name="wcf.global.welcome.language.change"><![CDATA[更改安装程序语言]]></item>
+		<item name="wcf.global.license"><![CDATA[许可协议]]></item>
+		<item name="wcf.global.license.description"><![CDATA[请认真阅读论坛系统的许可协议.]]></item>
+		<item name="wcf.global.license.accept.description"><![CDATA[您必须接受许可协议才能安装论坛软件.]]></item>
+		<item name="wcf.global.license.missingAcception"><![CDATA[您必须接受许可协议才能继续安装.]]></item>
+		<item name="wcf.global.systemRequirements"><![CDATA[检测系统需求]]></item>
+		<item name="wcf.global.systemRequirements.description"><![CDATA[系统需求:]]></item>
+		<item name="wcf.global.systemRequirements.required"><![CDATA[基本系统组件]]></item>
+		<item name="wcf.global.systemRequirements.recommended"><![CDATA[推荐系统组件]]></item>
+		<item name="wcf.global.systemRequirements.element.required"><![CDATA[需求:]]></item>
+		<item name="wcf.global.systemRequirements.element.yours"><![CDATA[当前:]]></item>
+		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[推荐:]]></item>
+		<item name="wcf.global.systemRequirements.php"><![CDATA[PHP 版本]]></item>
+		<item name="wcf.global.systemRequirements.php.description"><![CDATA[您服务器的PHP版本过低, 请升级您的PHP版本.]]></item>
+		<item name="wcf.global.systemRequirements.php.description2"><![CDATA[您的PHP版本过低, 系统推荐使用PHP5.0.5以上版本.]]></item>
+		<item name="wcf.global.systemRequirements.mysql"><![CDATA[&quot;MySQL&quot; 数据库]]></item>
+		<item name="wcf.global.systemRequirements.mysql.description"><![CDATA[&quot;MySQL&quot; 数据库支持是必须的.]]></item>
+		<item name="wcf.global.systemRequirements.uploadMaxFilesize"><![CDATA[上传文件最大尺寸]]></item>
+		<item name="wcf.global.systemRequirements.uploadMaxFilesize.description"><![CDATA[当前的PHP配置不允许上传任何文件, 这将导致该软件的一些功能受限.]]></item>
+		<item name="wcf.global.systemRequirements.gdLib"><![CDATA[GDLib图形库]]></item>
+		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[如果没有GDLib图形库支持, 论坛的一些功能将受限.]]></item>
+		<item name="wcf.global.systemRequirements.mbString"><![CDATA[MBString宽字符库]]></item>
+		<item name="wcf.global.systemRequirements.mbString.description"><![CDATA[如果没有该组件, 论坛则只能使用西欧语言.]]></item>
+		<item name="wcf.global.systemRequirements.safeMode"><![CDATA[PHP安全模式]]></item>
+		<item name="wcf.global.systemRequirements.safeMode.description"><![CDATA[为了确保系统的正常运行, 我们希望您禁用安全模式.]]></item>
+		<item name="wcf.global.systemRequirements.ftp"><![CDATA[FTP 数据传输库]]></item>
+		<item name="wcf.global.systemRequirements.ftp.description"><![CDATA[当前您的PHP设置启用了安全模式, 所以很多文件数据传输需要FTP的支持, 我们强烈建议您启用该库.]]></item>
+		<item name="wcf.global.systemRequirements.active"><![CDATA[启用]]></item>
+		<item name="wcf.global.systemRequirements.notActive"><![CDATA[未启用]]></item>
+		<item name="wcf.global.wcfDir"><![CDATA[选择安装目录]]></item>
+		<item name="wcf.global.wcfDir.description"><![CDATA[<b>WoltLab Community Framework</b> 模块的所有文件将被安装在以下目录.]]></item>
+		<item name="wcf.global.wcfDir.foundDirectory"><![CDATA[安装程序检测到 "{$foundDirectory}" 中已安装有 <b>WoltLab Community Framework</b>.<br />如果您想要再安装一个新的 <b>WoltLab Community Framework</b>, 请再选择一个别的目录.]]></item>
+		<item name="wcf.global.wcfDir.dir"><![CDATA[安装目录]]></item>
+		<item name="wcf.global.wcfDir.dir.description"><![CDATA[请设定 <b>WoltLab Community Framework</b> 的安装目录.]]></item>
+		<item name="wcf.global.wcfDir.url.description"><![CDATA[安装完成后 <b>WoltLab Community Framework</b> 的访问 URL:]]></item>
+		<item name="wcf.global.ftp"><![CDATA[FTP 登录信息]]></item>
+		<item name="wcf.global.ftp.description"><![CDATA[如果您的服务器开启了PHP安全模式, 则论坛模块的安装需要FTP功能的支持. 请输入该服务器的FTP用户名和密码, 此次您输入的FTP用户名和密码仅用于此次论坛模块安装而不被记录, 因此, 您安装另外的论坛模块的时候还需要再次输入该信息.]]></item>
+		<item name="wcf.global.ftp.accessData"><![CDATA[FTP 登录信息]]></item>
+		<item name="wcf.global.ftp.host"><![CDATA[主机]]></item>
+		<item name="wcf.global.ftp.user"><![CDATA[用户名]]></item>
+		<item name="wcf.global.ftp.password"><![CDATA[密码]]></item>
+		<item name="wcf.global.ftp.error"><![CDATA[无法创建FTP连接.]]></item>
+		<item name="wcf.global.next"><![CDATA[加载下一步骤 ...]]></item>
+		<item name="wcf.global.next.description"><![CDATA[安装程序正在加载下一步骤, 请稍候.]]></item>
+		<item name="wcf.global.languages"><![CDATA[选择系统语言]]></item>
+		<item name="wcf.global.languages.description"><![CDATA[本论坛系统支持多语言, 请选择你想要安装的语言.]]></item>
+		<item name="wcf.global.languages.charset"><![CDATA[字符编码]]></item>
+		<item name="wcf.global.languages.charset.description"><![CDATA[论坛的字符编码, 注意, 一旦选定将无法更改.]]></item>
+		
+		<!--<item name="wcf.global.languages.charset.ISO-8859-1"><![CDATA[ISO-8859-1 is required if you wish to install Western European languages only.]]></item>
+		<item name="wcf.global.languages.charset.UTF-8"><![CDATA[UTF-8 is required if you wish to install Western European or any Non-Western European langauges, now or at a later date.]]></item>-->
+		
+		<item name="wcf.global.languages.charset.UTF-8"><![CDATA[Unicode编码]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-1"><![CDATA[西欧]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-2"><![CDATA[中欧]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-7"><![CDATA[希腊]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-8"><![CDATA[希伯来]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-9"><![CDATA[土耳其]]></item>
+		<item name="wcf.global.languages.charset.EUC-JP"><![CDATA[日语]]></item>
+		<item name="wcf.global.languages.charset.SJIS"><![CDATA[日语]]></item>
+		<item name="wcf.global.languages.charset.BIG-5"><![CDATA[繁体中文]]></item>
+		<item name="wcf.global.languages.charset.CP936"><![CDATA[简体中文]]></item>
+		<item name="wcf.global.languages.charset.EUC-CN"><![CDATA[简体中文]]></item>
+		<item name="wcf.global.languages.charset.KOI8-R"><![CDATA[西里尔]]></item>
+		<item name="wcf.global.languages.charset.Windows-1251"><![CDATA[西里尔]]></item>
+		<item name="wcf.global.languages.charset.EUC-KR"><![CDATA[韩语]]></item>
+		
+		<item name="wcf.global.languages.languages"><![CDATA[论坛语言]]></item>
+		<item name="wcf.global.languages.error.empty"><![CDATA[请至少选择一种语言!]]></item>
+		<item name="wcf.global.languages.error.notAvailable"><![CDATA[您选择的语言与您的字符编码设置不符, 请更改您的语言选择.]]></item>
+		<item name="wcf.global.configureDB"><![CDATA[设置数据库]]></item>
+		<item name="wcf.global.configureDB.description"><![CDATA[该论坛软件数据需放置在Mysql数据库中, 请输入您的数据库信息!]]></item>
+		<item name="wcf.global.configureDB.accessData"><![CDATA[数据库信息]]></item>
+		<item name="wcf.global.configureDB.host"><![CDATA[主机]]></item>
+		<item name="wcf.global.configureDB.user"><![CDATA[用户名]]></item>
+		<item name="wcf.global.configureDB.password"><![CDATA[密码]]></item>
+		<item name="wcf.global.configureDB.database"><![CDATA[数据库]]></item>
+		<item name="wcf.global.configureDB.number"><![CDATA[安装编号]]></item>
+		<item name="wcf.global.configureDB.error"><![CDATA[试图连接数据库的时候发生如下错误:
+		<br /><b>{$exception->getMessage()}{if $exception|get_class == 'DatabaseException'}<br />{$exception->getErrorDesc()}{/if}</b>
+		<br />有关该错误的更多信息:
+		<br /><a href="http://www.woltlab.com/help/?code={@$exception->getCode()}">http://www.woltlab.com/help/?code={@$exception->getCode()}</a>]]></item>
+		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[下列数据表在您的数据库 &quot;{$dbName}&quot; 中已存在:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />您可以采取下列办法之一来解决这个问题:<br />1. 启用 &quot;覆盖&quot; 选项来覆盖数据表, 然后点击 &quot;下一步&quot;.<br />2. 返回上一步, 重新填写数据库信息, 设置另外一个数据库, 然后点击 &quot;下一步&quot;.<br />3. 返回上一步, 输入一个新的安装编号, 安装一个不同安装编号的WBB, 然后点击 &quot;下一步&quot;.]]></item>
+		<item name="wcf.global.configureDB.conflictedTables.overwrite"><![CDATA[覆盖上面数据表?]]></item>
+		<item name="wcf.global.createUser"><![CDATA[创建管理员账户]]></item>
+		<item name="wcf.global.createUser.description"><![CDATA[安装程序将创建一个管理员账户, 请输入管理员用户名, 邮件地址以及密码.]]></item>
+		<item name="wcf.global.createUser.data"><![CDATA[账户信息]]></item>
+		<item name="wcf.global.createUser.username"><![CDATA[用户名]]></item>
+		<item name="wcf.global.createUser.email"><![CDATA[E-Mail]]></item>
+		<item name="wcf.global.createUser.confirmEmail"><![CDATA[确认E-Mail]]></item>
+		<item name="wcf.global.createUser.password"><![CDATA[密码]]></item>
+		<item name="wcf.global.createUser.confirmPassword"><![CDATA[确认密码]]></item>
+		<item name="wcf.global.createUser.error"><![CDATA[创建账户时发生错误, 请检查被标记的表单项.]]></item>
+		<item name="wcf.global.createUser.error.empty"><![CDATA[该项不能为空.]]></item>
+		<item name="wcf.global.createUser.error.username.notValid"><![CDATA[用户名无效, 用户名长度应该在3-20个字符之间.]]></item>
+		<item name="wcf.global.createUser.error.email.notValid"><![CDATA[您输入了无效的 E-Mail.]]></item>
+		<item name="wcf.global.createUser.error.confirmEmail.notEqual"><![CDATA[两次输入的E-Mail地址不一致.]]></item>
+		<item name="wcf.global.createUser.error.confirmPassword.notEqual"><![CDATA[两次输入的密码不一致.]]></item>
+		<item name="wcf.global.wcfDir.error"><![CDATA[解压所需文件的时候发生如下错误:
+		<br /><b>{$exception->getMessage()}</b><br />
+		请确保目标文件夹可写.
+		<br /><br />有关该错误的更多信息:<br /><a href="http://www.woltlab.com/help/?code={@$exception->getCode()}">http://www.woltlab.com/help/?code={@$exception->getCode()}</a>]]></item>
+	</category>
+</language>

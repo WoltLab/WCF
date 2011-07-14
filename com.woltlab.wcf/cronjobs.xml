@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/cronjobs.xsd">
+	<import>
+		<cronjob>
+			<classpath>lib/system/cronjob/GetUpdateInfoCronjob.class.php</classpath>
+			<description>Gets update package information</description>
+			<startminute>0</startminute>
+			<starthour>2</starthour>
+			<startdom>*/2</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob>
+			<classpath>lib/system/cronjob/RefreshSearchRobotsCronjob.class.php</classpath>
+			<description>Refreshes list of search robots</description>
+			<startminute>0</startminute>
+			<starthour>3</starthour>
+			<startdom>1</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob>
+			<classpath>lib/system/cronjob/CleanUpCronjobLogCronjob.class.php</classpath>
+			<description>Deletes old entries from cronjob log.</description>
+			<startminute>0</startminute>
+			<starthour>12</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob>
+			<classpath>lib/system/cronjob/CleanUpSessionLogCronjob.class.php</classpath>
+			<description>Deletes old entries from session log.</description>
+			<startminute>0</startminute>
+			<starthour>10</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>0</canbeedited>
+			<canbedisabled>0</canbedisabled>
+		</cronjob>
+		
+		<cronjob>
+			<classpath>lib/system/cronjob/CleanupListenerCronjob.class.php</classpath>
+			<description>Executes cleanup system.</description>
+			<startminute>5,20,35,50</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>0</canbeedited>
+			<canbedisabled>0</canbedisabled>
+		</cronjob>
+	</import>
+</data>

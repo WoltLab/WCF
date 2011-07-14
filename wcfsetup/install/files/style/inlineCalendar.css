@@ -1,0 +1,87 @@
+
+/* ### -- -- -- -- -- Inline Calendar Styles -- -- -- -- -- ### */
+
+/* 
+
+File: inlineCalendar.css 
+Copyright 2006-2009 by WoltLab GmbH. 
+
+*/
+
+/* #### -- -- -- -- -- Inline Calendar -- -- -- -- -- #### */
+
+.inlineCalendar {
+	position: absolute; 
+	display: none; 
+	z-index: 100;
+	width: 170px;
+}
+
+.inlineCalendarHeader, .inlineCalendarFooter {
+	color: #fff;
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	table-layout: fixed;
+	border-width: 1px;
+}
+
+.inlineCalendarHeader td, .inlineCalendarFooter td {
+	text-align: center;
+	font-weight: bold;
+	padding: 0;
+}
+
+.inlineCalendarHeader td a, .inlineCalendarFooter td a {
+	text-decoration: none;
+	border-width: 1px;
+	border-style: solid;
+	padding: 1px;
+	display: block;
+}
+
+.inlineCalendarHeader td span, .inlineCalendarFooter td span {
+	border-width: 1px 0;
+	border-style: solid;
+	padding: 1px;
+	display: block;
+}
+
+.inlineCalendarHeader td a:hover, .inlineCalendarFooter td a:hover {
+	text-decoration: none;
+}
+
+.changeElement {
+	width: 1.5em;
+}
+
+.inlineCalendarTable {
+	border-width: 0 1px !important;
+	border-collapse: collapse;
+	border-spacing: 0;
+	border-top: 0;
+	border-bottom: 0;
+	table-layout: fixed;
+	width: 100%; 
+}
+
+.inlineCalendarTable td {
+	padding: 0;
+	margin: 0;
+}
+
+.inlineCalendarTable a {
+	text-align: center;
+	text-decoration: none;
+	border-width: 1px;
+	border-style: solid;
+	margin: 1px;
+	padding: 1px;
+	display: block;
+}
+
+.weekDays {
+	text-align: center;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

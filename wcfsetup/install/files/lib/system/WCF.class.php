@@ -1,0 +1,565 @@
+<?php
+namespace wcf\system;
+use wcf\data\application\Application;
+use wcf\data\package\Package;
+use wcf\system\application\ApplicationHandler;
+use wcf\system\cache\CacheHandler;
+use wcf\system\database\statement\PreparedStatement;
+use wcf\system\language\LanguageFactory;
+use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\session\SessionFactory;
+use wcf\system\session\SessionHandler;
+use wcf\system\storage\StorageHandler;
+use wcf\system\template\TemplateEngine;
+use wcf\system\exception;
+use wcf\util;
+
+// try to disable execution time limit
+@set_time_limit(0);
+
+// define current wcf version
+define('WCF_VERSION', '2.0.0 Alpha 1 (Maelstrom)');
+
+// define current unix timestamp
+define('TIME_NOW', time());
+
+// wcf imports
+if (!defined('NO_IMPORTS')) {
+	require_once(WCF_DIR.'lib/core.functions.php');
+}
+
+/**
+ * WCF is the central class for the community framework.
+ * It holds the database connection, access to template and language engine.
+ *
+ * @author 	Marcel Werk
+ * @copyright	2001-2011 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	system
+ * @category 	Community Framework
+ */
+class WCF {
+	/**
+	 * list of autoload directories
+	 *
+	 * @var array
+	 */
+	protected static $autoloadDirectories = array();
+	
+	/**
+	 * list of unique instances of each core object
+	 *
+	 * @var	array<wcf\system\SingletonFactory>
+	 */
+	protected static $coreObject = array();
+	
+	/**
+	 * list of cached core objects
+	 *
+	 * @var	array<array>
+	 */
+	protected static $coreObjectCache = array();
+	
+	/**
+	 * list of package dependencies
+	 *
+	 * @var	array
+	 */	
+	protected static $packageDependencies = array();
+	
+	/**
+	 * database object
+	 *
+	 * @var wcf\system\database\Database
+	 */
+	protected static $dbObj = null;
+	
+	/**
+	 * language object
+	 *
+	 * @var wcf\system\language\Language
+	 */
+	protected static $languageObj = null;
+	
+	/**
+	 * session object
+	 *
+	 * @var wcf\system\session\SessionHandler
+	 */
+	protected static $sessionObj = null;
+	
+	/**
+	 * template object
+	 *
+	 * @var wcf\system\template\TemplateEngine
+	 */
+	protected static $tplObj = null;
+	
+	/**
+	 * current user object
+	 *
+	 * @var wcf\data\user\User
+	 */
+	protected static $userObj = null;
+	
+	/**
+	 * Calls all init functions of the WCF class.
+	 */
+	public function __construct() {
+		// add autoload directory
+		self::$autoloadDirectories['wcf'] = WCF_DIR . 'lib/';
+		
+		// define tmp directory
+		if (!defined('TMP_DIR')) define('TMP_DIR', util\BasicFileUtil::getTempFolder());
+		
+		// start initialization
+		$this->initMagicQuotes();
+		$this->initDB();
+		$this->initOptions();
+		$this->initCache();
+		$this->initSession();
+		$this->initLanguage();
+		$this->initTPL();
+		$this->initBlacklist();
+		$this->initApplications();
+		$this->initCoreObjects();
+	}
+	
+	/**
+	 * Replacement of the "__destruct()" method.
+	 * Seems that under specific conditions (windows) the destructor is not called automatically.
+	 * So we use the php register_shutdown_function to register an own destructor method.
+	 * Flushs the output, updates the session and executes the shutdown queries.
+	 */
+	public static function destruct() {
+		// flush ouput
+		if (ob_get_level() && ini_get('output_handler')) {
+			ob_flush();
+		}
+		else {
+			flush();
+		}
+		
+		// update session
+		if (is_object(self::getSession())) {
+			self::getSession()->update();
+		}
+		
+		// close cache source
+		if (is_object(CacheHandler::getInstance()) && is_object(CacheHandler::getInstance()->getCacheSource())) {
+			CacheHandler::getInstance()->getCacheSource()->close();
+		}
+		
+		// execute shutdown actions
+		StorageHandler::getInstance()->shutdown();
+	}
+	
+	/**
+	 * Removes slashes in superglobal gpc data arrays if 'magic quotes gpc' is enabled.
+	 */
+	protected function initMagicQuotes() {
+		if (function_exists('get_magic_quotes_gpc')) {
+			if (@get_magic_quotes_gpc()) {
+				if (count($_REQUEST)) {
+					$_REQUEST = util\ArrayUtil::stripslashes($_REQUEST);
+				}
+				if (count($_POST)) {
+					$_POST = util\ArrayUtil::stripslashes($_POST);
+				}
+				if (count($_GET)) {
+					$_GET = util\ArrayUtil::stripslashes($_GET);
+				}
+				if (count($_COOKIE)) {
+					$_COOKIE = util\ArrayUtil::stripslashes($_COOKIE);
+				}
+				if (count($_FILES)) {
+					foreach ($_FILES as $name => $attributes) {
+						foreach ($attributes as $key => $value) {
+							if ($key != 'tmp_name') {
+								$_FILES[$name][$key] = util\ArrayUtil::stripslashes($value);
+							}
+						}
+					}
+				}
+			}
+		}
+	
+		if (function_exists('set_magic_quotes_runtime')) {
+			@set_magic_quotes_runtime(0);
+		}
+	}
+	
+	/**
+	 * Returns the database object.
+	 *
+	 * @return	wcf\system\database\Database
+	 */
+	public static final function getDB() {
+		return self::$dbObj;
+	}
+	
+	/**
+	 * Returns the session object.
+	 *
+	 * @return	wcf\system\session\SessionHandler
+	 */
+	public static final function getSession() {
+		return self::$sessionObj;
+	}
+	
+	/**
+	 * Returns the user object.
+	 *
+	 * @return	wcf\data\user\User
+	 */
+	public static final function getUser() {
+		return self::$userObj;
+	}
+	
+	/**
+	 * Returns the language object.
+	 *
+	 * @return 	wcf\data\language\Language
+	 */
+	public static final function getLanguage() {
+		return self::$languageObj;
+	}
+	
+	/**
+	 * Returns the template object.
+	 *
+	 * @return	wcf\system\template\TemplateEngine
+	 */
+	public static final function getTPL() {
+		return self::$tplObj;
+	}
+	
+	/**
+	 * Calls the show method on the given exception.
+	 *
+	 * @param	\Exception	$e
+	 */
+	public static final function handleException(\Exception $e) {
+		if ($e instanceof exception\PrintableException) {
+			$e->show();
+			exit;
+		}
+		
+		print $e;
+		exit;
+	}
+	
+	/**
+	 * Catches php errors and throws instead a system exception.
+	 *
+	 * @param	integer		$errorNo
+	 * @param	string		$message
+	 * @param	string		$filename
+	 * @param	integer		$lineNo
+	 */
+	public static final function handleError($errorNo, $message, $filename, $lineNo) {
+		if (error_reporting() != 0) {
+			$type = 'error';
+			switch ($errorNo) {
+				case 2: $type = 'warning';
+					break;
+				case 8: $type = 'notice';
+					break;
+			}
+			
+			throw new exception\SystemException('PHP '.$type.' in file '.$filename.' ('.$lineNo.'): '.$message, 0);
+		}
+	}
+	
+	/**
+	 * Loads the database configuration and creates a new connection to the database.
+	 */
+	protected function initDB() {
+		// get configuration
+		$dbHost = $dbUser = $dbPassword = $dbName = '';
+		$dbPort = 0;
+		$dbClass = 'wcf\system\database\MySQLDatabase';
+		require_once(WCF_DIR.'config.inc.php');
+		
+		// create database connection
+		self::$dbObj = new $dbClass($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
+	}
+	
+	/**
+	 * Initialises the cache handler and loads the default cache resources.
+	 */
+	protected function initCache() {
+		$this->loadDefaultCacheResources();
+	}
+	
+	/**
+	 * Loads the default cache resources.
+	 */
+	protected function loadDefaultCacheResources() {
+		CacheHandler::getInstance()->addResource('languages', WCF_DIR.'cache/cache.languages.php', 'wcf\system\cache\CacheBuilderLanguage');
+		CacheHandler::getInstance()->addResource('spiders', WCF_DIR.'cache/cache.spiders.php', 'wcf\system\cache\CacheBuilderSpider');
+		if (defined('PACKAGE_ID')) {
+			CacheHandler::getInstance()->addResource('coreObjects-'.PACKAGE_ID, WCF_DIR.'cache/cache.coreObjects-'.PACKAGE_ID.'.php', 'wcf\system\cache\CacheBuilderCoreObject');
+		}
+	}
+	
+	/**
+	 * Includes the options file.
+	 * If the option file doesn't exist, the rebuild of it is started.
+	 */
+	protected function initOptions() {
+		// get options file name
+		$optionsFile = $this->getOptionsFilename();
+		
+		// create options file if doesn't exist
+		if (!file_exists($optionsFile) || filemtime($optionsFile) <= 1) {
+			\wcf\data\option\OptionEditor::rebuildFile($optionsFile);
+		}
+		require_once($optionsFile);
+	}
+	
+	/**
+	 * Returns the name of the options file.
+	 *
+	 * @return	string		name of the options file
+	 */
+	protected function getOptionsFilename() {
+		return WCF_DIR.'options.inc.php';
+	}
+	
+	/**
+	 * Starts the session system.
+	 */
+	protected function initSession() {
+		$factory = new SessionFactory();
+		$factory->load();
+		
+		self::$sessionObj = SessionHandler::getInstance();
+		self::$userObj = self::getSession()->getUser();
+	}
+	
+	/**
+	 * Initialises the language engine.
+	 */
+	protected function initLanguage() {
+		if (isset($_GET['l']) && !self::getUser()->userID) {
+			self::getSession()->setLanguageID(intval($_GET['l']));
+		}
+		
+		self::$languageObj = LanguageFactory::getLanguage(self::getSession()->getLanguageID());
+	}
+	
+	/**
+	 * Initialises the template engine.
+	 */
+	protected function initTPL() {
+		self::$tplObj = TemplateEngine::getInstance();
+		self::getTPL()->setLanguageID(self::getLanguage()->languageID);
+		$this->assignDefaultTemplateVariables();
+	}
+	
+	/**
+	 * Executes the blacklist.
+	 */
+	protected function initBlacklist() {
+		if (defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
+			if (!util\StringUtil::executeWordFilter(WCF::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
+				throw new exception\PermissionDeniedException();
+			}
+		}
+		if (defined('BLACKLIST_USER_AGENTS') && BLACKLIST_USER_AGENTS != '') {
+			if (!util\StringUtil::executeWordFilter(WCF::getSession()->userAgent, BLACKLIST_USER_AGENTS)) {
+				throw new exception\PermissionDeniedException();
+			}
+		}
+		if (defined('BLACKLIST_HOSTNAMES') && BLACKLIST_HOSTNAMES != '') {
+			if (!util\StringUtil::executeWordFilter(@gethostbyaddr(WCF::getSession()->ipAddress), BLACKLIST_HOSTNAMES)) {
+				throw new exception\PermissionDeniedException();
+			}
+		}
+	}
+	
+	/**
+	 * Initialises applications.
+	 *
+	 * @todo	Determine all required applications as such connected
+	 * 		with each other. Ensure all applications implement the
+	 * 		'Application' interface.
+	 */
+	protected function initApplications() {
+		if (PACKAGE_ID == 1) return;
+		
+		// prepare statement
+		$sql = "SELECT	package, packageDir
+			FROM	wcf".WCF_N."_package
+			WHERE	packageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		// start main application
+		$application = ApplicationHandler::getInstance()->getActiveApplication();
+		$this->loadApplication($statement, $application);
+		
+		// start dependent applications
+		$applications = ApplicationHandler::getInstance()->getDependentApplications();
+		foreach ($applications as $application) {
+			$this->loadApplication($statement, $application, true);
+		}
+	}
+	
+	/**
+	 * Loads an application.
+	 *
+	 * @param	wcf\system\database\statement\PreparedStatement	$statement
+	 * @param	wcf\data\application\Application	$application
+	 * @param	boolean	$isDependentApplication
+	 */	
+	protected function loadApplication(PreparedStatement $statement, Application $application, $isDepedentApplication = false) {
+		$statement->execute(array($application->packageID));
+		$row = $statement->fetchArray();
+		
+		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
+		$packageDir = util\FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
+		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
+		
+		$className = $abbreviation.'\system\\'.strtoupper($abbreviation).'Core';
+		if (class_exists($className) && util\ClassUtil::isInstanceOf($className, 'wcf\system\application\Application')) {
+			// include config file
+			$configPath = $packageDir . PackageInstallationDispatcher::CONFIG_FILE;
+			if (file_exists($configPath)) {
+				require_once($configPath);
+			}
+			else {
+				throw new exception\SystemException('Unable to load configuration for '.$row['package']);
+			}
+			
+			// start application
+			new $className();
+		}
+		else {
+			unset(self::$autoloadDirectories[$abbreviation]);
+			throw new exception\SystemException('Unable to run '.$row['package'].', '.$className.' missing.');
+		}
+	}
+	
+	/**
+	 * Initializes core object cache.
+	 */
+	protected function initCoreObjects() {
+		// ignore core objects if installing WCF
+		if (PACKAGE_ID == 0) {
+			return;
+		}
+		
+		self::$coreObjectCache = CacheHandler::getInstance()->get('coreObjects-'.PACKAGE_ID);
+		self::$packageDependencies = \wcf\system\package\PackageDependencyHandler::getDependencies();
+	}
+	
+	/**
+	 * Assigns some default variables to the template engine.
+	 */
+	protected function assignDefaultTemplateVariables() {
+		self::getTPL()->registerPrefilter(array('event', 'hascontent', 'lang'));
+		self::getTPL()->assign(array('__wcf' => $this));
+	}
+	
+	/**
+	 * Wrapper for the getter methods of this class.
+	 *
+	 * @param	string		$name
+	 * @return	mixed		value
+	 */
+	public function __get($name) {
+		$method = 'get'.ucfirst($name);
+		if (method_exists($this, $method)) {
+			return $this->$method();
+		}
+		
+		throw new exception\SystemException("method '".$method."' does not exist in class WCF");
+	}
+	
+	/**
+	 * Changes the active language.
+	 *
+	 * @param	integer		$languageID
+	 */
+	public static final function setLanguage($languageID) {
+		self::$languageObj = new Language($languageID);
+	}
+	
+	/**
+	 * Includes the required util or exception classes automatically.
+	 *
+	 * @param 	string		$className
+	 * @see		spl_autoload_register()
+	 */
+	public static final function autoload($className) {
+		$namespaces = explode('\\', $className);
+		if (count($namespaces) > 1) {
+			$applicationPrefix = array_shift($namespaces);
+			if (isset(self::$autoloadDirectories[$applicationPrefix])) {
+				$classPath = self::$autoloadDirectories[$applicationPrefix] . implode('/', $namespaces) . '.class.php';
+				if (file_exists($classPath)) {
+					require_once($classPath);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * @see	WCF::__callStatic()
+	 */
+	public final function __call($name, array $arguments) {
+		// bug fix to avoid php crash, see http://bugs.php.net/bug.php?id=55020
+		if (!method_exists($this, $name)) {
+			return self::__callStatic($name, $arguments);
+		}
+		
+		return $this->$name($arguments);
+	}
+	
+	/**
+	 * Returns dynamically loaded core objects.
+	 *
+	 * @param	string		$name
+	 * @param	array		$arguments
+	 */
+	public static final function __callStatic($name, array $arguments) {
+		$className = preg_replace('~^get~', '', $name);
+		
+		if (isset(self::$coreObject[$className])) {
+			return self::$coreObject[$className];
+		}
+		
+		$objectName = self::getCoreObject($className);
+		if ($objectName === null) {
+			throw new exception\SystemException("Core object '".$className."' is unknown.");
+		}
+		
+		if (class_exists($objectName)) {
+			if (!(util\ClassUtil::isInstanceOf($objectName, 'wcf\system\SingletonFactory'))) {
+				throw new exception\SystemException("class '".$objectName."' does not implement the interface 'SingletonFactory'", 11010);
+			}
+			
+			self::$coreObject[$className] = call_user_func(array($objectName, 'getInstance'));
+			return self::$coreObject[$className];
+		}
+	}
+	
+	/**
+	 * Searches for cached core object definition.
+	 *
+	 * @param	string		$className
+	 * @return	string
+	 */
+	protected static final function getCoreObject($className) {
+		foreach (self::$packageDependencies as $packageID) {
+			if (isset(self::$coreObjectCache[$packageID][$className])) {
+				return self::$coreObjectCache[$packageID][$className];
+			}
+		}
+		
+		return null;
+	}
+}
+?>

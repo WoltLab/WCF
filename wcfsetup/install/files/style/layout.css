@@ -1,0 +1,131 @@
+
+/* ### -- -- -- -- -- Layout Styles -- -- -- -- -- ### */
+
+/* 
+
+File: layout.css 
+Copyright 2009-2010 by WoltLab GmbH. 
+
+*/
+
+/* ### -- -- -- -- -- Layout -- -- -- -- -- ### */
+
+.layout-1, .layout-2, .layout-3, .layout-4 {
+	border-collapse: collapse;
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+}
+
+.columnContainer {
+	display: table-row;
+	border-style: solid;
+	border-width: 0 1px 1px 0;
+}
+
+.column {
+	display: table-cell;
+	margin: 0;
+	padding: 0;
+}
+
+/* ### -- -- -- -- -- Layout 1 -- -- -- -- -- ### */
+
+/* 1 column */
+
+.layout-1 .columnInner {
+	padding: 15px 25px;	
+}
+
+/* ### -- -- -- -- -- Layout 2 -- -- -- -- -- ### */
+
+/* 1 columns flexible - 65% | 35% */
+
+.layout-2 .first {
+	width: 65%;
+}
+
+.layout-2 .second {
+	width: 35%;	
+}
+
+.layout-2 .columnInner {
+	padding: 15px 25px;	
+}
+
+/* ### -- -- -- -- -- Layout 3 -- -- -- -- -- ### */
+
+/* 2 columns fixed - 310px | auto */
+
+.layout-3 .first {
+	width: 310px;
+}
+
+.layout-3 .columnInner {
+	padding: 15px 25px;	
+}
+
+/* ### -- -- -- -- -- Layout 4 -- -- -- -- -- ### */
+ 
+/* 2 columns fixed - 20% | 60% | 20% */
+
+.layout-4 .first, .layout-4 .third {
+	width: 20%;
+}
+
+.layout-4 .second {
+	width: 60%;
+}
+
+.layout-4 .first .columnInner, .layout-4 .third .columnInner {
+	padding: 0;
+}
+
+.layout-4 .second .columnInner {
+	padding: 0 10px;
+}
+
+/* ### -- -- -- -- -- Data List -- -- -- -- -- ### */
+
+.dataList {
+	font-size: 100%;
+	line-height: 1.3;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.dataList li {
+	padding: 5px;
+	margin: 0 1px 1px 0;
+}
+
+.dataList li:after {
+	content: "";
+	display: block;
+	clear: both;
+	height: 0;
+}
+
+.dataList .buttons {
+	padding: 7px 4px 4px 10px;
+	float: right;
+}
+
+.dataList .buttons * {
+	margin-right: 3px;	
+}
+
+/* ### -- -- -- -- -- Content Box -- -- -- -- -- ### */
+
+.contentBox {
+	padding-bottom: 10px;
+	min-width: 215px;
+}
+
+.contentBox .pageOptions {
+	margin-top: 7px;
+	margin-bottom: 7px;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

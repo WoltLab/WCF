@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/language.xsd" languagecode="sv">
+	<category name="wcf.global">
+		<item name="wcf.global.pageTitle"><![CDATA[{$setupPackageName} Installation]]></item>
+		<item name="wcf.global.title"><![CDATA[<b>{$setupPackageName}</b><br />Installation]]></item>
+		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
+		<item name="wcf.global.locale.unix"><![CDATA[sv_SE]]></item> <!-- system variable; do not translate -->
+		<item name="wcf.global.locale.win"><![CDATA[swedish]]></item> <!-- system variable; do not translate -->
+		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
+		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
+		<item name="wcf.global.button.next"><![CDATA[Nästa &raquo;]]></item>
+		<item name="wcf.global.progressBar"><![CDATA[{@$progress}% komplett]]></item>
+		<item name="wcf.global.dateMethod"><![CDATA[strftime]]></item> <!-- system variable; do not translate -->
+		<item name="wcf.global.dateFormat"><![CDATA[%d.%m.%Y]]></item>
+		<item name="wcf.global.timeFormat"><![CDATA[%d.%m.%Y, %H:%M]]></item>
+		<item name="wcf.global.dateFormatLocalized"><![CDATA[%e. %B %Y]]></item>
+		<item name="wcf.global.timeFormatLocalized"><![CDATA[%A, %e. %B %Y, %H:%M]]></item>
+		<item name="wcf.global.dateFormatToday"><![CDATA[<b>Idag</b>, %H:%M]]></item>
+		<item name="wcf.global.dateFormatYesterday"><![CDATA[Igår, %H:%M]]></item>
+		<item name="wcf.global.welcome"><![CDATA[Tack för att du väljer {$setupPackageName}]]></item>
+		<item name="wcf.global.welcome.description"><![CDATA[Denna installations-assistent hjälper dig att installera <br /><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} och <b>{$setupPackageName}</b>{/if}.]]></item>
+		<item name="wcf.global.welcome.language"><![CDATA[Språk]]></item>
+		<item name="wcf.global.language.en"><![CDATA[Engelska]]></item>
+		<item name="wcf.global.language.de"><![CDATA[Tyska]]></item>
+		<item name="wcf.global.language.de-informal"><![CDATA[Tyska (informella)]]></item>
+		<item name="wcf.global.language.fr"><![CDATA[Franska]]></item>
+		<item name="wcf.global.language.ja"><![CDATA[Japanska]]></item>
+		<item name="wcf.global.language.es"><![CDATA[Spanska]]></item>
+		<item name="wcf.global.language.zh-TW"><![CDATA[Kinesiska (traditionell)]]></item>
+		<item name="wcf.global.language.zh-CN"><![CDATA[Kinesiska (förenklad)]]></item>
+		<item name="wcf.global.language.it"><![CDATA[Italienska]]></item>
+		<item name="wcf.global.language.nl"><![CDATA[Holländska]]></item>
+		<item name="wcf.global.language.ru"><![CDATA[Ryska]]></item>
+		<item name="wcf.global.language.ko"><![CDATA[Koreanska]]></item>
+		<item name="wcf.global.language.pt"><![CDATA[Portugisiska]]></item>
+		<item name="wcf.global.language.pt-BR"><![CDATA[Portugisiska (Brasilien)]]></item>
+		<item name="wcf.global.language.sv"><![CDATA[Svenska]]></item>
+		<item name="wcf.global.language.pl"><![CDATA[Polska]]></item>
+		<item name="wcf.global.language.da"><![CDATA[Danska]]></item>
+		<item name="wcf.global.language.cs"><![CDATA[Tjeckiska]]></item>
+		<item name="wcf.global.language.tr"><![CDATA[Turkiska]]></item>
+		<item name="wcf.global.language.hu"><![CDATA[Ungerska]]></item>
+		<item name="wcf.global.language.ar"><![CDATA[Arabiska]]></item>
+		<item name="wcf.global.language.he"><![CDATA[Hebreiska]]></item>
+		<item name="wcf.global.language.fa"><![CDATA[Persiska]]></item>
+		<item name="wcf.global.language.no"><![CDATA[Norska]]></item>
+		<item name="wcf.global.language.fi"><![CDATA[Finska]]></item>
+		<item name="wcf.global.language.ro"><![CDATA[Rumänska]]></item>
+		<item name="wcf.global.language.bs"><![CDATA[Bosniska]]></item>
+		<item name="wcf.global.language.hr"><![CDATA[Kroatiska]]></item>
+		<item name="wcf.global.language.sr"><![CDATA[Serbiska]]></item>
+		<item name="wcf.global.language.sk"><![CDATA[Slovakiska]]></item>
+		<item name="wcf.global.language.el"><![CDATA[Grekiska]]></item>
+		<item name="wcf.global.welcome.language.description"><![CDATA[Assisterande språket är inställt på Engelska.]]></item>
+		<item name="wcf.global.welcome.language.change"><![CDATA[Ändra språk]]></item>
+		<item name="wcf.global.license"><![CDATA[Licensavtal]]></item>
+		<item name="wcf.global.license.description"><![CDATA[Vänligen läs följande Licensavtal. Använd rullningslisten för att visa hela dokumentet.]]></item>
+		<item name="wcf.global.license.accept.description"><![CDATA[Accepterar du villkoren i Licensavtalet? Du kan bara installera det här programmet efter godkännande av Licensavtalet.]]></item>
+		<item name="wcf.global.license.missingAcception"><![CDATA[Du måste acceptera Licensavtalet för att fortsätta denna installation.]]></item>
+		<item name="wcf.global.systemRequirements"><![CDATA[Kontrollerar Systemkraven]]></item>
+		<item name="wcf.global.systemRequirements.description"><![CDATA[Dessa är Systemkraven:]]></item>
+		<item name="wcf.global.systemRequirements.required"><![CDATA[Obligatoriska System komponenter]]></item>
+		<item name="wcf.global.systemRequirements.recommended"><![CDATA[Rekommenderade System komponenter]]></item>
+		<item name="wcf.global.systemRequirements.element.required"><![CDATA[Nödvändig:]]></item>
+		<item name="wcf.global.systemRequirements.element.yours"><![CDATA[Hittade:]]></item>
+		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[Rekommenderad:]]></item>
+		<item name="wcf.global.systemRequirements.php"><![CDATA[Installerad version av Script språket &quot;PHP&quot;]]></item>
+		<item name="wcf.global.systemRequirements.php.description"><![CDATA[Den installerade versionen av Script språket &quot;PHP&quot; är för gammal för en stabil drift av denna Mjukvara. För att fortsätta med installationen, är en version uppdatering nödvändig.]]></item>
+		<item name="wcf.global.systemRequirements.php.description2"><![CDATA[Din PHP-version är föråldrad. För en stabil drift av denna Mjukvara rekommenderar vi en PHP version 5.0.5 eller högre.]]></item>
+		<item name="wcf.global.systemRequirements.mysql"><![CDATA[&quot;MySQL&quot; Databas support]]></item>
+		<item name="wcf.global.systemRequirements.mysql.description"><![CDATA[&quot;MySQL&quot; Databas support krävs för att installera det här Mjukvaran.]]></item>
+		<item name="wcf.global.systemRequirements.uploadMaxFilesize"><![CDATA[Maximala storleken för fil uppladdning]]></item>
+		<item name="wcf.global.systemRequirements.uploadMaxFilesize.description"><![CDATA[Den nuvarande konfigurationen för det installerade &quot;PHP&quot; gör det omöjligt att ladda upp några filer. På grund av den här konfigurationen, kommer vissa funktioner i Mjukvaran att begränsas.]]></item>
+		<item name="wcf.global.systemRequirements.gdLib"><![CDATA[Installerad version av det grafiska biblioteket &quot;GDLib&quot;]]></item>
+		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[Det grafiska biblioteket &quot;GDLib&quot; behövs för Dynamisk Generation av Bilder. Utan detta, kommer vissa funktioner i Mjukvaran inte att vara tillgängliga.]]></item>
+		<item name="wcf.global.systemRequirements.mbString"><![CDATA[Det multibyte tecken biblioteket &quot;MBString&quot;]]></item>
+		<item name="wcf.global.systemRequirements.mbString.description"><![CDATA[Utan detta bibliotek, kan Mjukvaran endast användas med Väst Europeiska språk.]]></item>
+		<item name="wcf.global.systemRequirements.safeMode"><![CDATA[Säkerhets möjlighet i &quot;felsäkert läge&quot; i &quot;PHP&quot; Script språk]]></item>
+		<item name="wcf.global.systemRequirements.safeMode.description"><![CDATA[För att garantera driften av denna Mjukvara, rekommenderar vi att inaktivera felsäkert läge inställningen.]]></item>
+		<item name="wcf.global.systemRequirements.ftp"><![CDATA[Dataöverförings bibliotek för FTP]]></item>
+		<item name="wcf.global.systemRequirements.ftp.description"><![CDATA[Med säkerhets möjlighet i &quot;felsäkert läge&quot; möjliggör överföring av data bibliotek som behövs för de flesta av filernas verksamhet inom denna Mjukvara. Vi rekommenderar starkt att aktivera detta bibliotek.]]></item>
+		<item name="wcf.global.systemRequirements.active"><![CDATA[Aktiverad]]></item>
+		<item name="wcf.global.systemRequirements.notActive"><![CDATA[Inte aktiverad]]></item>
+		<item name="wcf.global.wcfDir"><![CDATA[Välj installationsmappen]]></item>
+		<item name="wcf.global.wcfDir.description"><![CDATA[Alla filer i <b>WoltLab Community Framework</b> kommer att extraheras in i installationsmappen.]]></item>
+		<item name="wcf.global.wcfDir.foundDirectory"><![CDATA[Installations assistenten har funnit tidigare installation av <b>WoltLab Community Framework</b> i "{$foundDirectory}" mappen.<br />Om du vill installera en ny kopia av <b>WoltLab Community Framework</b>, i så fall ange en alternativ installationsmapp.]]></item>
+		<item name="wcf.global.wcfDir.dir"><![CDATA[Installations mapp]]></item>
+		<item name="wcf.global.wcfDir.dir.description"><![CDATA[Vänligen ange installationsmappen för <b>WoltLab Community Framework</b>.]]></item>
+		<item name="wcf.global.ftp"><![CDATA[FTP access information]]></item>
+		<item name="wcf.global.ftp.description"><![CDATA[Med PHP-safemode säkerhets alternativet aktiverat, kan WoltLab Community Framework endast installeras med FTP-funktionalitet. Ange här FTP-användarnamn och lösenord på den här servern. De uppgifter som lämnas kommer inte att sparas och krävs endast för installation av detta paketet. På grund av detta skäl, kommer ytterligare FTP-användarnamn och lösenord att behövas.]]></item>
+		<item name="wcf.global.ftp.accessData"><![CDATA[FTP access information]]></item>
+		<item name="wcf.global.ftp.host"><![CDATA[Värdnamn]]></item>
+		<item name="wcf.global.ftp.user"><![CDATA[Användarnamn]]></item>
+		<item name="wcf.global.ftp.password"><![CDATA[Lösenord]]></item>
+		<item name="wcf.global.ftp.error"><![CDATA[En anslutning till den angivna FTP-servern kan inte göras.]]></item>
+		<item name="wcf.global.next"><![CDATA[Laddar nästa steg ...]]></item>
+		<item name="wcf.global.next.description"><![CDATA[Installationen laddar förnärvarande nästa steg, var god vänta.]]></item>
+		<item name="wcf.global.languages"><![CDATA[Välj språk att installera]]></item>
+		<item name="wcf.global.languages.description"><![CDATA[Denna Mjukvara kan stödja flera språk. Vänligen välj det språk du vill installera.]]></item>
+		<item name="wcf.global.languages.charset"><![CDATA[Teckenkodning]]></item>
+		<item name="wcf.global.languages.charset.description"><![CDATA[Teckenkodning, även känd som teckenuppsättning eller kod sida bestämmer lagrings typ och representation av de installerade språken i detta system. Tänk på att när du har ställt in din valda Teckenkodning, kan detta inte ändras i efterhand.]]></item>
+		
+		<!--<item name="wcf.global.languages.charset.ISO-8859-1"><![CDATA[ISO-8859-1 is required if you wish to install Western European languages only.]]></item>
+		<item name="wcf.global.languages.charset.UTF-8"><![CDATA[UTF-8 is required if you wish to install Western European or any Non-Western European langauges, now or at a later date.]]></item>-->
+		
+		<item name="wcf.global.languages.charset.UTF-8"><![CDATA[Unicode]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-1"><![CDATA[VästEuropeiska]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-2"><![CDATA[CentralEuropa]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-7"><![CDATA[Grekiska]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-8"><![CDATA[Hebreiska]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-9"><![CDATA[Turkiska]]></item>
+		<item name="wcf.global.languages.charset.EUC-JP"><![CDATA[Japanska]]></item>
+		<item name="wcf.global.languages.charset.SJIS"><![CDATA[Japanska]]></item>
+		<item name="wcf.global.languages.charset.BIG-5"><![CDATA[Kinesiska (traditionell)]]></item>
+		<item name="wcf.global.languages.charset.CP936"><![CDATA[Kinesiska (förenklad)]]></item>
+		<item name="wcf.global.languages.charset.EUC-CN"><![CDATA[Kinesiska (förenklad)]]></item>
+		<item name="wcf.global.languages.charset.KOI8-R"><![CDATA[Kyrilliska]]></item>
+		<item name="wcf.global.languages.charset.Windows-1251"><![CDATA[Kyrilliska]]></item>
+		<item name="wcf.global.languages.charset.EUC-KR"><![CDATA[Koreanska]]></item>
+		
+		<item name="wcf.global.languages.languages"><![CDATA[Språk]]></item>
+		<item name="wcf.global.languages.error.empty"><![CDATA[Vänligen välj minst ett språk!]]></item>
+		<item name="wcf.global.languages.error.notAvailable"><![CDATA[Det språk du har valt motsvarar inte dn givna Teckenkodning du gjorde tidigare. Vänligen ändra ditt val av språk.]]></item>
+		<item name="wcf.global.configureDB"><![CDATA[Konfigurera Database tillgång]]></item>
+		<item name="wcf.global.configureDB.description"><![CDATA[Uppgifterna för denna Mjukvara måste lagras i en MySQL-databas. Ange din databas tillgångs information!]]></item>
+		<item name="wcf.global.configureDB.accessData"><![CDATA[Databas access information]]></item>
+		<item name="wcf.global.configureDB.host"><![CDATA[Värdnamn]]></item>
+		<item name="wcf.global.configureDB.user"><![CDATA[Användarnamn]]></item>
+		<item name="wcf.global.configureDB.password"><![CDATA[Lösenord]]></item>
+		<item name="wcf.global.configureDB.database"><![CDATA[Databas namn]]></item>
+		<item name="wcf.global.configureDB.number"><![CDATA[Installations nummer]]></item>
+		<item name="wcf.global.configureDB.error"><![CDATA[Ett fel har uppstått vid försök att ansluta till din databas:
+		<br /><b>{$exception->getMessage()}{if $exception|get_class == 'DatabaseException'}<br />{$exception->getErrorDesc()}{/if}</b>
+		<br />Ytterligare information kan hittas i WoltLab Error Reference:
+		<br /><a href="http://www.woltlab.com/help/?code={@$exception->getCode()}">http://www.woltlab.com/help/?code={@$exception->getCode()}</a>]]></item>
+		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[De följande tabell{if $conflictedTables|count > 1}er{/if} finns redan{if $conflictedTables|count == 1}s{/if} inom din &quot;{$dbName}&quot; Databas:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />För att lösa detta problem kan du göra något av följande:<br />1. Aktivera &quot;Överskriv&quot; alternativ nedan för att skriva över {if $conflictedTables|count > 1}dessa tabeller{else}denna tabell{/if} och fortsätt installationen med &quot;Nästa&quot; Knappen eller<br />2. Du åter-anger Databasens access information, men till en annan Databas och fortsätter installationen med &quot;Nästa&quot; Knappen eller<br />3. Du anger ett nytt Installations nummer, och inte att förglömma att fortsätta installationen med &quot;Nästa&quot; Knappen.]]></item>
+		<item name="wcf.global.configureDB.conflictedTables.overwrite"><![CDATA[Skriv över den ovan angivna tabellen{if $conflictedTables|count > 1}s{/if}?]]></item>
+		<item name="wcf.global.createUser"><![CDATA[Skapa en Administratör]]></item>
+		<item name="wcf.global.createUser.description"><![CDATA[Installationen kommer nu att skapa ett administratörskonto för dig. Var god ange ett användarnamn, e-postadress och lösenord.]]></item>
+		<item name="wcf.global.createUser.data"><![CDATA[Användar information]]></item>
+		<item name="wcf.global.createUser.username"><![CDATA[Användarnamn]]></item>
+		<item name="wcf.global.createUser.email"><![CDATA[E-postadress]]></item>
+		<item name="wcf.global.createUser.confirmEmail"><![CDATA[Bekräfta E-postadress]]></item>
+		<item name="wcf.global.createUser.password"><![CDATA[Lösenord]]></item>
+		<item name="wcf.global.createUser.confirmPassword"><![CDATA[Bekräfta Lösenord]]></item>
+		<item name="wcf.global.createUser.error"><![CDATA[Fel har uppstått samtidigt som du registrerade Användarkontot, vänligen kontrollera markerade områden efter fel.]]></item>
+		<item name="wcf.global.createUser.error.empty"><![CDATA[Detta fält får inte lämnas tomt.]]></item>
+		<item name="wcf.global.createUser.error.username.notValid"><![CDATA[Användarnamnet som du har angett är ogiltigt. Ett giltigt Användarnamn måste vara mellan 3 och 20 tecken långt.]]></item>
+		<item name="wcf.global.createUser.error.email.notValid"><![CDATA[E-postadressen som du har angett är ogiltig. En giltig E-Postadress måste vara i formatet name@domain.tld]]></item>
+		<item name="wcf.global.createUser.error.confirmEmail.notEqual"><![CDATA[De E-Postadresser du har angett är inte identiska. Av säkerhetsskäl bör du se till att båda E-Postadressernas fält har fyllts i och är identiska.]]></item>
+		<item name="wcf.global.createUser.error.confirmPassword.notEqual"><![CDATA[De lösenord du har angett är inte identiska. Av säkerhetsskäl bör du se till att samma lösenord har fyllts i båda fälten och är identiska.]]></item>
+		<item name="wcf.global.wcfDir.error"><![CDATA[Ett fel har uppstått samtidigt som du extraherade de nödvändiga filerna:
+		<br /><b>{$exception->getMessage()}</b><br />
+		Vänligen se till att målmappen existerar och kan skrivas till.
+		<br /><br />Ytterligare information kan hittas i WoltLab Error Reference:<br /><a href="http://www.woltlab.com/help/?code={@$exception->getCode()}">http://www.woltlab.com/help/?code={@$exception->getCode()}</a>]]></item>
+	</category>
+</language>

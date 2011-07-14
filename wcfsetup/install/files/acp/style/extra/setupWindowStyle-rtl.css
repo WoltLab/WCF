@@ -1,0 +1,213 @@
+
+/* ### -- -- -- -- -- Setup Window Styles -- -- -- -- -- ### */
+
+/* 
+
+File: setupWindowStyle.css 
+Copyright 2006-2009 by WoltLab GmbH. 
+
+*/
+
+/* -- -- -- -- -- -- -- Miscellaneous -- -- -- -- -- -- -- */
+
+body {
+	color: #333;
+	font-family: "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; 
+	font-size: .82em;
+	background-color: #fff;
+	margin: 0;
+	padding: 0;
+}
+
+.inner {
+	padding: 0 20px 10px 20px;
+}
+
+fieldset {
+	font-size: .82em;
+	border: 1px solid #8da4b7;
+	margin-bottom: 10px;
+	padding: 0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+legend {
+	color: #164369;
+	font-size: 1em;
+	margin: 0 10px;
+	padding: 0 4px;
+}
+
+fieldset p, fieldset div {
+	margin: 8px 0 0 0;
+	padding: 0;
+}
+
+/* -- -- -- -- -- -- -- Forms -- -- -- -- -- -- -- */
+
+form {
+	margin: 0;
+	padding: 0;
+}
+
+label {
+	margin-bottom: 2px;
+	display: block;
+}
+
+textarea, .inputText {
+	width: 99%;
+}
+
+textarea, select, input[type="text"], input[type="password"] {
+	border-width: 1px;
+	border-style: solid;
+	border-color: #666 #999 #ccc #999;
+	background-color: #fafafa;
+	background-image: url("../../images/setupInputBackground.png");
+	background-position: right top;
+	background-repeat: repeat-x;
+	padding: 2px;
+	min-height: 13px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+
+textarea:focus, select:focus, .inputText:focus {
+	border: 1px solid #fa2;
+	background-color: #fff9f4;
+	background-image: url("../../images/setupInputBackground.png");
+	background-repeat: repeat-x;
+	outline: 0;
+}
+
+textarea, select, .inputText {
+	border: 1px solid #8da4b7;
+	background-color: #fafafa;
+}
+
+textarea:focus, select:focus, .inputText:focus {
+	border: 1px solid #fa2;
+	background-color: #fff9f4;
+}
+
+input[type="file"] {
+	width: 100%;
+}
+
+textarea, select, input[type="text"], input[type="password"] {
+	padding: 2px;
+}
+
+.select label {
+	margin-bottom: 5px;
+	padding-right: 25px;
+}
+
+.select input {
+	float: right;
+}
+
+.nextButton {
+	text-align: left;
+}
+
+.disabled {
+	color: #b2b2b2;
+}
+
+/* ### -- -- -- -- -- System Messages (Success, Warning, Error) -- -- -- -- -- ### */
+
+.success, .warning, .error {
+	border-width: 1px;
+	border-style: solid;
+	background-position: 10px center;
+	background-repeat: no-repeat;
+	padding: 7px 45px 7px 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+.success {
+	color: #090;
+	border-color: #090;
+	background-color: #efe;
+	background-image: url("../../../icon/successM.png");
+}
+
+.success a, .success a:hover {
+	color: #333;
+}
+
+.warning {
+	color: #660;
+	border-color: #660;
+	background-color: #ffd;
+	background-image: url("../../../icon/warningM.png");
+}
+
+.warning a, .warning a:hover {
+	color: #333;
+}
+
+.error {
+	color: #c00;
+	border-color: #c00;
+	background-color: #fee;
+	background-image: url("../../../icon/errorM.png");
+}
+
+.error a, .error a:hover {
+	color: #333;
+}
+
+.errorField {
+	color: #c00;
+}
+
+.errorField img {
+	vertical-align: middle;
+}
+
+/* ### -- -- -- -- -- System Exception -- -- -- -- -- ### */
+
+#systemException {
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 1em;
+	border: 1px outset lightgrey;
+	background-color: lightgrey;
+	padding: 3px;
+}
+
+#systemException div {
+	border: 1px inset lightgrey;
+	padding: 4px;
+}
+
+#systemException h1 {
+	color: #fff;
+	font-size: 1.2em;
+	background-color: #154268;
+	margin: 0 0 3px 0;
+	padding: 4px;
+}
+
+#systemException h2 {
+	font-size: 1.1em;
+	margin-bottom: 0;
+}
+
+#systemException pre, #systemException p {
+	font-size: 1em;
+	margin: 0;
+}
+
+#packageUrl {
+	text-decoration: underline;
+	border: none;
+	background: transparent;
+	padding: 0;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

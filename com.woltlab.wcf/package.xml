@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="com.woltlab.wcf" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/package.xsd">
+	<packageinformation>
+		<packagename>WoltLab Community Framework</packagename>
+		<packagedescription>Free web-framework, designed and developed for complex community applications.</packagedescription>
+		<standalone>1</standalone>
+		<isunique>1</isunique>
+		<version>2.0.0 Alpha 1</version> <!-- codename: maelstrom -->
+		<date>2011-05-19</date>
+	</packageinformation>
+	
+	<authorinformation>
+		<author>WoltLab GmbH</author>
+		<authorurl>http://www.woltlab.com</authorurl>
+	</authorinformation>
+	
+	<instructions type="install">
+		<instruction type="packageinstallationplugins">pip.xml</instruction>
+		<instruction type="acpmenu">acpmenu.xml</instruction>
+		<instruction type="groupoptions">groupoptions.xml</instruction>
+		<instruction type="options">options.xml</instruction>
+		<instruction type="useroptions">useroptions.xml</instruction>
+		<instruction type="templates">templates.tar</instruction>
+		<instruction type="eventlistener">eventlistener.xml</instruction>
+		<instruction type="script">acp/install.php</instruction>
+		<instruction type="cronjobs">cronjobs.xml</instruction>
+		<instruction type="coreobject">coreobject.xml</instruction>
+	</instructions>
+</package>

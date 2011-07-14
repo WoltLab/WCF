@@ -1,0 +1,428 @@
+
+/* ### -- -- -- -- -- Bugfix-Styles for Microsoft Internet Explorer 7 -- -- -- -- -- ### */
+
+/* 
+
+File: ie7-fix.css 
+Copyright 2006-2011 by WoltLab GmbH. 
+
+For full XHTML- & CSS-Compatibility be sure to include this File only within the so called "Internet Explorer Comment Hack". 
+
+*/
+
+/* ### -- -- -- -- -- Miscellaneous -- -- -- -- -- ### */
+
+#main {
+	min-height: 0;	
+}
+
+fieldset {
+	margin-top: 25px;
+}
+
+fieldset legend {
+	margin-top: -18px;
+}
+
+.container-1, .container-2, .container-3 {
+	min-height: 0;
+}
+
+.pageNavigation input {
+	margin-top: 2px !important;
+	margin-bottom: -2px !important;
+	padding: 0 !important;
+	width: 2em !important;
+	height: 10px !important;
+}
+
+.subTabMenu {
+	zoom: 1;	
+}
+
+.subTabMenu .containerHead {
+	min-height: auto;	
+}
+
+.subTabMenu .containerHead > ul {
+	min-height: 0;	
+}
+
+/* ### -- -- -- -- -- tables.css -- -- -- -- -- ### */
+
+table {
+	border-collapse: collapse;
+}
+
+.tableList .statusDisplayIcons {
+	display: inline;
+}
+
+.tableList .statusDisplay .pageNavigation {
+	display: inline;	
+}
+
+/* ### -- -- -- -- -- forms.css -- -- -- -- -- ### */
+
+.formElement {
+	min-height: 0;
+}
+
+.formGroup fieldset {
+	margin: 0;
+}
+
+form .formPrefix div {
+	margin-right: 5px;
+	min-height: 0;
+}
+
+form input[type="file"] {
+	padding: 3px;
+}
+
+textarea, .inputText {
+	width: 98%;
+}
+
+/* ### -- -- -- -- -- wysiwyg.css -- -- -- -- -- ### */
+
+.mceToolbar {
+	min-height: 0;	
+}
+
+.mceButtonDisabled a img {
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=30);
+}
+
+div.mceColors {
+	min-height: 0 !important;
+	padding-bottom: 1px;
+}
+
+div.mceColors ul {
+	min-height: 0 !important;
+}
+
+#editor .border {
+	margin-top: -1px;
+	padding-bottom: 1px;	
+}
+
+.editor .popupMenu {
+	min-height: 0 !important;
+	right: 0 !important;
+	bottom: 24px !important;
+}
+
+/* ### -- -- -- -- -- header.css -- -- -- -- -- ### **/
+
+#userNote, #userMenu, #userMenu li, #userMenu ul {
+ 	display: inline;
+}
+
+#userMenu li {
+	float: none;
+}
+
+#userPanel .userPanelInner {
+	padding-top: 10px;
+	padding-bottom: 3px;
+}
+
+/* ### -- -- -- -- -- footer.css -- -- -- -- -- ### */
+
+#footer, #footerContainer {
+	position: relative;
+}
+
+.footerOptions {
+	white-space: nowrap;
+}
+
+.footerMenu li, .footerOptions li {
+	position: relative;
+}
+
+.footerOptions li.stylePicker {
+	position: relative;
+	top: -7px !important;
+}
+
+.footerOptions li.stylePicker div {
+	top: 25px;
+	right: 5px;
+}
+
+.footerOptions li.date  {
+	margin-bottom: 0 !important;
+}
+
+.footerOptions li.extraButton {
+	position: relative;
+	top: -5px !important;
+}
+
+.footerOptions li.extraButton a {
+	display: block;
+}
+
+.footerOptions li.extraButton a img {
+	margin: 0 !important;
+}
+
+/* ### -- -- -- -- -- Main Menu -- -- -- -- -- ### */
+
+.mainMenu a {
+	min-height: auto;	
+}
+
+.mainMenu > div > ul > li, .mainMenu a, .footerMenu li, .footerMenu a, .footerOptionsInner > ul > li, .footerOptions a {
+	display: inline;
+}
+
+.mainMenu img, .footerMenu img, .footerOptions img {
+	margin: 3px 0;
+}
+
+.mainMenu span, .footerMenu span, .footerOptions span, .pageMenu span {
+	padding: 0 2px 0 0;
+	display: inline !important;
+}
+
+/* ### -- -- -- -- -- messages.css -- -- -- -- -- ### */
+
+.message, .messageInner, .messageHeader, .messageBody, .messageFooter, .userMessenger {
+	min-height: 0 !important;
+}
+
+.messageLeft .messageSidebar, .messageRight .messageSidebar, .messageFramedLeft .messageSidebar, .messageFramedRight .messageSidebar {
+	min-width: 0 !important;
+}
+
+.message .messageTop.guestPost .messageAuthor, .message .messageFramedTop.guestPost .messageAuthor {
+	padding-bottom: 7px;
+}
+
+.messageNumber, .messageMarkCheckBox {
+	float: right;
+}
+
+.message .messageHeader {
+	position: relative;
+}
+
+.messageHeader .popupMenu {
+	top: 29px;
+	right: 0;
+}
+
+.message h3 .inputText, .message h4 .inputText {
+	margin-right: -180px;
+}
+
+.messageTop .userMessenger, .messageFramedTop .userMessenger {
+	float: right;
+}
+
+.messageFooter input {
+	margin: 0 -10px 0 0;
+	padding: 0;
+}
+
+.codeBox div {
+	overflow-y: hidden;
+}
+
+.codeBox pre {
+	padding-bottom: 2em;
+}
+
+.infoBox {
+	clear: both !important;
+}
+
+.infoBox ul {
+	margin: 7px 0;
+}
+
+/* ### -- -- -- -- -- layout.css -- -- -- -- -- ### */
+
+.columnContainer {
+	overflow: hidden;
+}
+
+.column {
+	float: right;
+	margin-bottom: -9999px;
+	padding-bottom: 9999px;
+}
+
+.columnContainerJS {
+	overflow: visible;
+}
+
+.columnJS {
+	float: right;
+	margin: 0 0 1px !important;
+	padding: 0 !important;
+}
+
+.columnInner #editor {
+	width: 99%;	
+}
+
+.layout-2 .container-3, .layout-3 .container-3 {
+	min-height: auto;	
+}
+
+/* we need a better fix here! when the editor is embedded in a floating environment, it will not be displayed. the iframe width needs to be calculated manually (instead of "width: 100%;")! */
+#tplUserMemoEdit .second {
+	float: none;	
+}
+
+.sidebar, .sidebar *, .layout-3 .second {
+	min-height: 0;
+}
+
+/* ### -- -- -- -- -- global.css -- -- -- -- -- ### */
+
+.floatContainer {
+	min-height: 0;
+}
+
+.itemList li {
+	min-height: 0; /* triggers hasLayout */
+	list-style-type: none; /* list bullets look wrong with lists that trigger hasLayout */
+}
+
+form .disabled, .tabMenu .disabled {
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=50);	
+}
+
+/* ### -- -- -- -- -- pageMenu.css -- -- -- -- -- ### */
+
+div.pageMenu .twoRows li a {
+	min-height: 28px !important;
+}
+
+/* ### -- -- -- -- -- profile.css -- -- -- -- -- ### */
+
+.avatarSelect img {
+	wcf: expression(
+		this.onclick = new Function("$(this).previous().checked = 'checked';")
+	);
+}
+
+#userCard {
+	min-height: 0;
+}
+
+#userCardInner {
+	padding: 1px !important;
+	min-height: 0;
+}
+
+#userCard .userAvatar img {
+	margin-bottom: 15px;
+}
+
+#userCardCredits .smallButtons img {
+	margin: 0;
+}
+
+.friendsConnection, .friendsNetwork, .friendsNone, .guestAdvice {
+	min-height: 0;
+	padding: 7px 0 !important;
+	zoom: 1;
+}
+
+/* ### -- -- -- -- -- gallery.css -- -- -- -- -- ### */
+
+a .thumbnail img {
+	wcf: expression(
+		this.onclick = new Function("window.location.href= $(this).up('a').href;")
+	);
+}
+
+.galleryIndex .thumbnailButtons {
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70);
+	bottom: 60px;
+}
+
+.galleryIndex .thumbnailButtons input {
+	margin: 0 2px;
+}
+
+.galleryIndex .thumbnailButtons .container-4 {
+	display: inline !important;
+}
+
+.gallery .dataList .buttons * {
+	float: none !important;
+}
+
+.gallery .tagCloud {
+	overflow: hidden;
+}
+
+.thumbnailView .last {
+	width: auto !important;
+}
+
+.gallery .layout-2 .first {
+	width: 65% !important;
+}
+
+.gallery .layout-2 .second {
+	width: 35% !important;
+}
+
+/* ### -- -- -- -- -- buttons.css -- -- -- -- -- ### */
+
+.smallButtons {
+	min-height: 0 !important;
+}
+
+.smallButtons img {
+	margin-top: 1px;
+}
+
+/* ### -- -- -- -- -- privateMessages.css -- -- -- -- -- ### */
+
+.pmFolders {
+	margin-bottom: 7px;
+	min-height: 0;
+}
+
+.pmFolders .pageMenu a,.pmFolders .pageMenu a:hover {
+	padding-top: 10px !important;
+}
+
+/* ### -- -- -- -- -- rules.css -- -- -- -- -- -- ### */
+
+.rules ol {
+	margin-right: 20px;	
+}
+
+/* ### -- -- -- -- -- burningBoard.css -- -- -- -- -- ### */
+
+#boardlist span {
+	 display: inline-block;
+}
+
+/* ### -- -- -- -- -- calendar.css -- -- -- -- -- ### */
+
+.otherMonth {
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+}
+
+.monthView table, .weekView table {
+	border-collapse: separate;
+}
+
+#participantsYes, #participantsNo, #participantsMaybe {
+	zoom: 1;	
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

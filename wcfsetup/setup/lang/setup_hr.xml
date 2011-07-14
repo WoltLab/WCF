@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/language.xsd" languagecode="hr">
+	<category name="wcf.global">
+		<item name="wcf.global.pageTitle"><![CDATA[{$setupPackageName} Instalacija]]></item>
+		<item name="wcf.global.title"><![CDATA[<b>{$setupPackageName}</b><br />Instalacije]]></item>
+		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item>
+		<item name="wcf.global.locale.unix"><![CDATA[hr_HR]]></item>
+		<item name="wcf.global.locale.win"><![CDATA[hrvatski]]></item>
+		<item name="wcf.global.decimalPoint"><![CDATA[,]]></item>
+		<item name="wcf.global.thousandsSeparator"><![CDATA[&nbsp;]]></item>
+		<item name="wcf.global.button.next"><![CDATA[Dalje &raquo;]]></item>
+		<item name="wcf.global.progressBar"><![CDATA[{@$progress}% završen]]></item>
+		<item name="wcf.global.dateMethod"><![CDATA[strftime]]></item>
+		<item name="wcf.global.dateFormat"><![CDATA[%d.%m.%Y]]></item>
+		<item name="wcf.global.timeFormat"><![CDATA[%d.%m.%Y, %H:%M]]></item>
+		<item name="wcf.global.dateFormatLocalized"><![CDATA[%e. %B %Y]]></item>
+		<item name="wcf.global.timeFormatLocalized"><![CDATA[%A, %e. %B %Y, %H:%M]]></item>
+		<item name="wcf.global.dateFormatToday"><![CDATA[<b>Danas</b>, %H:%M]]></item>
+		<item name="wcf.global.dateFormatYesterday"><![CDATA[Jučer, %H:%M]]></item>
+		<item name="wcf.global.welcome"><![CDATA[Hvala, što ste se odlučili za {$setupPackageName}]]></item>
+		<item name="wcf.global.welcome.description"><![CDATA[Ovaj instalacijski asistent Vam pomaže kod instalacije <br /><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} i kod <b>{$setupPackageName}</b>{/if}.]]></item>
+		<item name="wcf.global.welcome.language"><![CDATA[Jezik]]></item>
+		<item name="wcf.global.language.en"><![CDATA[Engleski]]></item>
+		<item name="wcf.global.language.de"><![CDATA[Njemački]]></item>
+		<item name="wcf.global.language.de-informal"><![CDATA[Njemački (neformalno)]]></item>
+		<item name="wcf.global.language.fr"><![CDATA[Francuski]]></item>
+		<item name="wcf.global.language.ja"><![CDATA[Japanski]]></item>
+		<item name="wcf.global.language.es"><![CDATA[Španjolski]]></item>
+		<item name="wcf.global.language.zh-TW"><![CDATA[Kineski (tradicionalni)]]></item>
+		<item name="wcf.global.language.zh-CN"><![CDATA[Kineski (pojednostavljeni)]]></item>
+		<item name="wcf.global.language.it"><![CDATA[Talijanski]]></item>
+		<item name="wcf.global.language.nl"><![CDATA[Nizozemski]]></item>
+		<item name="wcf.global.language.ru"><![CDATA[Ruski]]></item>
+		<item name="wcf.global.language.ko"><![CDATA[Korejski]]></item>
+		<item name="wcf.global.language.pt"><![CDATA[Portugalski]]></item>
+		<item name="wcf.global.language.pt-BR"><![CDATA[Portugalski (Brazilski)]]></item>
+		<item name="wcf.global.language.sv"><![CDATA[Švedski]]></item>
+		<item name="wcf.global.language.pl"><![CDATA[Poljski]]></item>
+		<item name="wcf.global.language.da"><![CDATA[Danski]]></item>
+		<item name="wcf.global.language.cs"><![CDATA[Češki]]></item>
+		<item name="wcf.global.language.tr"><![CDATA[Turski]]></item>
+		<item name="wcf.global.language.hu"><![CDATA[Mađarski]]></item>
+		<item name="wcf.global.language.ar"><![CDATA[Arapski]]></item>
+		<item name="wcf.global.language.he"><![CDATA[Hebrejski]]></item>
+		<item name="wcf.global.language.fa"><![CDATA[Perzijski]]></item>
+		<item name="wcf.global.language.no"><![CDATA[Norveški]]></item>
+		<item name="wcf.global.language.fi"><![CDATA[Finski]]></item>
+		<item name="wcf.global.language.ro"><![CDATA[Rumunjski]]></item>
+		<item name="wcf.global.language.bs"><![CDATA[Bosanski]]></item>
+		<item name="wcf.global.language.hr"><![CDATA[Hrvatski]]></item>
+		<item name="wcf.global.language.sr"><![CDATA[Srpski]]></item>
+		<item name="wcf.global.language.sk"><![CDATA[Slovački]]></item>
+		<item name="wcf.global.language.el"><![CDATA[Grčki]]></item>
+		<item name="wcf.global.welcome.language.description"><![CDATA[Jezik ovog asistenta je trenutno postavljen na Hrvatski jezik.]]></item>
+		<item name="wcf.global.welcome.language.change"><![CDATA[Promijeni jezik]]></item>
+		<item name="wcf.global.license"><![CDATA[Licenca]]></item>
+		<item name="wcf.global.license.description"><![CDATA[Molimo Vas pročitajte slijedeću licencu. Koristite scrollbar kako bi vidjeli cijeli dokument.]]></item>
+		<item name="wcf.global.license.accept.description"><![CDATA[Prihvaćate li cijelu licencu? Možete iinstalirati software, tek onda kada prihvatite licencu.]]></item>
+		<item name="wcf.global.license.missingAcception"><![CDATA[Kako bi nastavili sa instalacijom software-a, morate prihvatiti licencu.]]></item>
+		<item name="wcf.global.systemRequirements"><![CDATA[Provjera sistemskih zahtjeva]]></item>
+		<item name="wcf.global.systemRequirements.description"><![CDATA[Ovo su sistemski zahtjevi:]]></item>
+		<item name="wcf.global.systemRequirements.required"><![CDATA[Potrebni sistemski zahtjevi]]></item>
+		<item name="wcf.global.systemRequirements.recommended"><![CDATA[Preporučeni sistemski zahtjevi]]></item>
+		<item name="wcf.global.systemRequirements.element.required"><![CDATA[Potebno:]]></item>
+		<item name="wcf.global.systemRequirements.element.yours"><![CDATA[Pronađeno:]]></item>
+		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[Preporučeno:]]></item>
+		<item name="wcf.global.systemRequirements.php"><![CDATA[Instalirana verzija jezika skripte &raquo;PHP&laquo;]]></item>
+		<item name="wcf.global.systemRequirements.php.description"><![CDATA[Instalirana verzija skripte &raquo;PHP&laquo; je za stabilnu uporabu software-a prestara. Molimo Vas aktualizirajte instaliranu verziju prije nego što nastavite sa instalacijom.]]></item>
+		<item name="wcf.global.systemRequirements.php.description2"><![CDATA[Vaša PHP verzija je jako stara. Za besprijekornu uporabu preporučamo PHP verziju 5.0.5 ili više.]]></item>
+		<item name="wcf.global.systemRequirements.mysql"><![CDATA[Podržava &raquo;MySQL&laquo; bazu podataka]]></item>
+		<item name="wcf.global.systemRequirements.mysql.description"><![CDATA[Bez podržane &raquo;MySQL&laquo; baze podataka ne možete instalirati ovaj software.]]></item>
+		<item name="wcf.global.systemRequirements.uploadMaxFilesize"><![CDATA[Maksimalna veličina za upload fajlova]]></item>
+		<item name="wcf.global.systemRequirements.uploadMaxFilesize.description"><![CDATA[Trenutnom konfiguracijom jezika skripte &raquo;PHP&laquo; je nemoguće uploadati fajlove. Nekoličina funkcija će pomoću tih postavki krivo funkcionirati ili biti sograničene.]]></item>
+		<item name="wcf.global.systemRequirements.gdLib"><![CDATA[Instalirana verzija &raquo;gdlib&laquo;]]></item>
+		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[Biblioteka grafičkog uređivaća &raquo;gdlib&laquo; je za dinamički generirane slike odgovorna. Bez nje nekoličina funkcija će krivo funkcionirati ili biti ograničene.]]></item>
+		<item name="wcf.global.systemRequirements.mbString"><![CDATA[Biblioteka za znakove sa više bajt-a (&raquo;multibyte string&laquo;)]]></item>
+		<item name="wcf.global.systemRequirements.mbString.description"><![CDATA[Bez ove biblioteke je samo moguće koristiti zapadno-europske jezike.]]></item>
+		<item name="wcf.global.systemRequirements.safeMode"><![CDATA[Sigurnosne postavke &raquo;safe mode&laquo; u jezičnoj skripti &raquo;PHP&laquo;]]></item>
+		<item name="wcf.global.systemRequirements.safeMode.description"><![CDATA[Preporuča se deaktivacija ove postavke, zbog besprijekornog funkcioniranja software-a.]]></item>
+		<item name="wcf.global.systemRequirements.ftp"><![CDATA[Biblioteka za prijenos podatak preko FTP-a]]></item>
+		<item name="wcf.global.systemRequirements.ftp.description"><![CDATA[Kod aktivirane sigurnosne postavke &raquo;safe mode&laquo; će se ova biblioteka za većinu podatkovnih operacija software-a koristiti. Preporuča se aktivacija ove biblioteke.]]></item>
+		<item name="wcf.global.systemRequirements.active"><![CDATA[aktivirano]]></item>
+		<item name="wcf.global.systemRequirements.notActive"><![CDATA[nije aktivirano]]></item>
+		<item name="wcf.global.wcfDir"><![CDATA[Odaberite mjesto instalacije]]></item>
+		<item name="wcf.global.wcfDir.description"><![CDATA[U instalacijski folder će se sve datoteke od <b>WoltLab Community Framework</b> otpakirati.]]></item>
+		<item name="wcf.global.wcfDir.foundDirectory"><![CDATA[Instalacija sumnja na već postojeću instalaciju  <b>WoltLab Community Frameworks</b> u folderu "{$foundDirectory}".<br />Molim Vas provjerite, tj. odredite drugo mjesto za instalaciju, ako želite kopiju <b>WoltLab Community Frameworks</b> instalirati.]]></item>
+		<item name="wcf.global.wcfDir.dir"><![CDATA[Instalacijski folder]]></item>
+		<item name="wcf.global.wcfDir.dir.description"><![CDATA[Molim Vas odredite instalacijsko mjesto kamo želite instalirati <b>WoltLab Community Framework</b>.]]></item>
+		<item name="wcf.global.ftp"><![CDATA[Upis pristupnih podataka za FTP]]></item>
+		<item name="wcf.global.ftp.description"><![CDATA[Pošto je na vašem serveru PHP-SafeMode aktiviran, morate WoltLab Community Framework preko FTP-Funkcije instalirati. Molim Vas upišite korisničko ime i šifru za pristup FTP-u na ovom serveru. Podaci se neće snimiti niti dalje prosljediti, nego će se samo za ovu instalaciju koristiti. Zbog tog razloga morat ćete više puta upisati pristupne podatke tijekom instalacije.]]></item>
+		<item name="wcf.global.ftp.accessData"><![CDATA[Pristupni podaci za FTP]]></item>
+		<item name="wcf.global.ftp.host"><![CDATA[Naziv hosta]]></item>
+		<item name="wcf.global.ftp.user"><![CDATA[Korisničko ime]]></item>
+		<item name="wcf.global.ftp.password"><![CDATA[Šifra]]></item>
+		<item name="wcf.global.ftp.error"><![CDATA[Sa upisanim pristupnim podacima se nije mogla uspostaviti veza prema FTP serveru.]]></item>
+		<item name="wcf.global.next"><![CDATA[Učitavam idući korak ...]]></item>
+		<item name="wcf.global.next.description"><![CDATA[Instalacija trenutno učitava sljedeći korak. Molim Vas za strpljenje.]]></item>
+		<item name="wcf.global.languages"><![CDATA[Jezike odabrati]]></item>
+		<item name="wcf.global.languages.description"><![CDATA[Možete ovaj software više jezično koristiti. Molim Vas, odaberite koje jezike želite instalirati.]]></item>
+		<item name="wcf.global.languages.charset"><![CDATA[Znakovno kodiranje]]></item>
+		<item name="wcf.global.languages.charset.description"><![CDATA[Preko znakovnog kodiranja će se tehničko snimanje i prikazivanje koristiti. Molim Vas, obratite pažnju da se znakovno kodiranje naknadno više ne može promijeniti.]]></item>
+		
+		<!-- <item name="wcf.global.languages.charset.ISO-8859-1"><![CDATA[Korištenje ISO-8859-1 se preporuča, samo kada želite instalirati zapadno europske jezike.]]></item>
+		<item name="wcf.global.languages.charset.UTF-8"><![CDATA[UTF-8 se koristi za ne-zapadno europske jezike. Kada sad ili možda kasnije želite instalirati ne-zapadno europski jezik, morato ovdje UTG-8 odabrati.]]></item>-->
+		
+		<item name="wcf.global.languages.charset.UTF-8"><![CDATA[Unicode]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-1"><![CDATA[Zapadno europski]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-2"><![CDATA[Srednjo europski]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-7"><![CDATA[Grčki]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-8"><![CDATA[Hebrejski]]></item>
+		<item name="wcf.global.languages.charset.ISO-8859-9"><![CDATA[Turski]]></item>
+		<item name="wcf.global.languages.charset.EUC-JP"><![CDATA[Japanski]]></item>
+		<item name="wcf.global.languages.charset.SJIS"><![CDATA[Japanski]]></item>
+		<item name="wcf.global.languages.charset.BIG-5"><![CDATA[Kineski (tradicionalni)]]></item>
+		<item name="wcf.global.languages.charset.CP936"><![CDATA[Kineski (pojednostavljeni)]]></item>
+		<item name="wcf.global.languages.charset.EUC-CN"><![CDATA[Chinesisch (pojednostavljeni)]]></item>
+		<item name="wcf.global.languages.charset.KOI8-R"><![CDATA[Kirilski]]></item>
+		<item name="wcf.global.languages.charset.Windows-1251"><![CDATA[Kirilski]]></item>
+		<item name="wcf.global.languages.charset.EUC-KR"><![CDATA[Korejski]]></item>
+		
+		<item name="wcf.global.languages.languages"><![CDATA[Jezici]]></item>
+		<item name="wcf.global.languages.error.empty"><![CDATA[Odaberite najmanje jedan jezik !]]></item>
+		<item name="wcf.global.languages.error.notAvailable"><![CDATA[Odabrali ste jezike, koji ne odgovaraju prijašnje odabranom znakovnom kodiranju. Molim Vas ispravite Vaš odabir.]]></item>
+		<item name="wcf.global.configureDB"><![CDATA[Konfiguracija pristupa bazu]]></item>
+		<item name="wcf.global.configureDB.description"><![CDATA[Podaci software-a se snimaju u jednoj MySQL bazi podataka. Molim Vas upišite pristupne podatke baze!]]></item>
+		<item name="wcf.global.configureDB.accessData"><![CDATA[Pristupni podaci baze]]></item>
+		<item name="wcf.global.configureDB.host"><![CDATA[Naziv hosta]]></item>
+		<item name="wcf.global.configureDB.user"><![CDATA[Korisničko ime]]></item>
+		<item name="wcf.global.configureDB.password"><![CDATA[Šifra]]></item>
+		<item name="wcf.global.configureDB.database"><![CDATA[Naziv baze podataka]]></item>
+		<item name="wcf.global.configureDB.number"><![CDATA[Instalacijski broj]]></item>
+		<item name="wcf.global.configureDB.error"><![CDATA[Kod pokušaja pristupa bazi podataka se sljedeća greška pojavila:
+		<br /><b>{$exception->getMessage()}{if $exception|get_class == 'DatabaseException'}<br />{$exception->getErrorDesc()}{/if}</b>
+		<br />Više informacija ovog problema možete dobiti kod proizvođaća software-a WoltLab:
+		<br /><a href="http://www.woltlab.com/help/?code={@$exception->getCode()}">http://www.woltlab.com/help/?code={@$exception->getCode()}</a>]]></item>
+		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[Sljedeća tablica{if $conflictedTables|count > 1}n{/if} postiji{if $conflictedTables|count > 1}e{else}t{/if} već u bazi podataka &raquo;{$dbName}&laquo;:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />Kako bi riješili ovaj problem, možete:<br />1. ovu tablicu{if $conflictedTables|count > 1}n{/if} prepisati, tako što &raquo;Prepisati&laquo; opciju aktivirate i &raquo;Dalje&laquo; kliknete, ili<br />2. Upišete podatke druge baze podataka i potvrdite sa &raquo;Dalje&laquo;, ili<br />3. Upišete jedan od &raquo;{$dbNumber}&laquo; različitih instalacijskih brojeva i potvrdite sa &raquo;Dalje&laquo;.]]></item>
+		<item name="wcf.global.configureDB.conflictedTables.overwrite"><![CDATA[Gore napomenutu tablica{if $conflictedTables|count > 1}e{/if} prepisati]]></item>
+		<item name="wcf.global.createUser"><![CDATA[Administratorski račun napraviti]]></item>
+		<item name="wcf.global.createUser.description"><![CDATA[Instalacijski asistent će kreirati administracijski račun za Vas. Molim Vas, upišite korisničko ime, jednu E-Mail adresu i šifru.]]></item>
+		<item name="wcf.global.createUser.data"><![CDATA[Korisnički podaci]]></item>
+		<item name="wcf.global.createUser.username"><![CDATA[Benutzername]]></item>
+		<item name="wcf.global.createUser.email"><![CDATA[E-Mail Adresa]]></item>
+		<item name="wcf.global.createUser.confirmEmail"><![CDATA[E-Mail Adresu ponoviti]]></item>
+		<item name="wcf.global.createUser.password"><![CDATA[Šifra]]></item>
+		<item name="wcf.global.createUser.confirmPassword"><![CDATA[Šifru ponoviti]]></item>
+		<item name="wcf.global.createUser.error"><![CDATA[Nastale su greško sa Vašom registracijom. Molim Vas provjerite označena polja.]]></item>
+		<item name="wcf.global.createUser.error.empty"><![CDATA[Molim Vas ispunite ovo polje.]]></item>
+		<item name="wcf.global.createUser.error.username.notValid"><![CDATA[Upisano korisničko ime je nevaljano. Jedno valjano korisničko ime mora sadržavati najmanje 3 i najviše 20 znakova.]]></item>
+		<item name="wcf.global.createUser.error.email.notValid"><![CDATA[Upisana E-Mail adresa je nevaljana. Jedna valjana E-Mail adresa mora biti oblika: ime@domena.tld.]]></item>
+		<item name="wcf.global.createUser.error.confirmEmail.notEqual"><![CDATA[Upisane E-Mail adrese nisu jednake. Molim Vas, radi sigurnosti upišite u oba polja istu E-Mail adresu.]]></item>
+		<item name="wcf.global.createUser.error.confirmPassword.notEqual"><![CDATA[Upisane šifre nisu jednake. Molim Vas, radi sigurnosti upišite u oba polja istu šifru.]]></item>
+		<item name="wcf.global.wcfDir.error"><![CDATA[Kod pokušaja otpakiravanja datoteka, je sljedeća greška nastala:
+		<br /><b>{$exception->getMessage()}</b><br />
+		Molim Vas, provjerite dali postoji instalacijski folder i dali se može upisivati u njega.
+		<br /><br />Više informacija o ovom problemu možete dobiti kod proizvođaća software-a WoltLab:<br /><a href="http://www.woltlab.com/help/?code={@$exception->getCode()}">http://www.woltlab.com/help/?code={@$exception->getCode()}</a>]]></item>
+	</category>
+</language>

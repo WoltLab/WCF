@@ -1,0 +1,272 @@
+
+/* ### -- -- -- -- -- Print Styles -- -- -- -- -- ### */
+
+/* 
+
+File: print.css 
+Copyright 2006-2009 by WoltLab GmbH. 
+
+*/
+
+/* ### -- -- -- -- -- General -- -- -- -- -- ### */
+
+a {
+	color: black;
+}
+
+.copyright {
+	font-size: .7em;
+	text-align: center;
+	padding-top: 20px;
+	clear: both;
+	display: block;
+}
+
+#page {
+	width: auto !important;
+}
+
+/* ### -- -- -- -- -- Hidden Elements -- -- -- -- -- ### */
+
+.hidden, #header, #userPanel, .tabMenu, .subTabMenu, .signature, .pmView, th img, .messageNumber, .editNote, .pmFolders, .infoBox, .largeButtons, .smallButtons, .optionButtons, .pageNavigation, .pageOptions, .quickJump,  .userExtras, .scrollUp, .userMessenger, .mainHeadline img, .userAvatar, .userAvatarFramed, .columnUsername img, .userProfileBox, .containerIcon, .userPosts, .userName img, .boardlistLastPost, .boardlistCounter,.boardlistStats, .boardlistUsersOnline, .moderators, .smallPages, .columnIcon img, .columnMarkTopics, .columnMark, .columnReplies, .columnAvatar, .columnViews, .columnLastPost, .breadCrumbs img, legend img, .columnHomepage a img, .columnEmail a img, .columnPosts, .columnRegistrationDate, .userRank, .userTitle, .messageCount, .footerMenu, .footerOptions, .mainMenu, .quickReply, .userSymbols, .userCredits, .statusDisplay, .info, #userCard, #tplUserGalleryPhoto form, .thumbnailButtons, .quoteHeader img, #tplCalendarEvent form, #tplCalendarEvent #participation img, .monthJump {
+	display: none;
+}
+
+/* ### -- -- -- -- -- Tables -- -- -- -- -- ### */
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid black;
+}
+
+th, th a {
+	color: #fff;
+	text-align: left;
+	white-space: nowrap;
+	background-color: #000;
+}
+
+td {
+	vertical-align: top;	
+}
+
+.mainHeadline .headlineContainer h1 {
+	font-size: 1.5em;
+}
+
+.columnIcon {
+	width: 0;
+}
+
+td p, th p {
+	margin: 0;
+	padding: 0;
+}
+
+.columnRating {
+	text-align: center;
+	width: 0;
+}
+
+.columnTopic {
+	width: 80%;
+}
+
+.columnTitle p {
+	overflow: hidden;
+}
+
+.columnDate {
+	white-space: nowrap;
+}
+
+td.columnHomepage a:after {
+	content: ""attr(href)"";
+}
+
+td.columnEmail a[href^="mailto:"]:after {
+	content: ""attr(href)"";
+}
+
+/* ### -- -- -- -- -- Breadcrumb Style Navigation -- -- -- -- -- ### */
+
+.breadCrumbs {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.breadCrumbs li {
+	font-style: italic;
+	margin-right: 5px;
+	display: inline;
+}
+
+/* ### -- -- -- -- -- Message Layout -- -- -- -- -- ### */
+
+.message {
+	border: 1px solid black;
+	margin: 7px 3px;
+	padding: 13px;
+}
+
+.message hr {
+	display: none;
+}
+
+.messageHeader {
+	font-style: italic;
+	margin: -1em 0 0 0;
+	padding: 0;
+	text-align: right;
+}
+
+.messageHeader p {
+	margin: 0;
+}
+
+.messageContent h3 {
+	font-size: 1em;
+	margin: 0;
+	padding: 7px;
+	clear: both;
+}
+
+.messageBody {
+	border-top: 1px solid black;
+	padding-top: 7px;
+	clear: both;
+}
+
+.messageInner {
+	margin: -10px 0;
+	padding: 0;
+}
+
+.messageText {
+	margin: 7px 0;
+}
+
+.messageAuthor, .messageAuthor .userName {
+	margin: 0;
+	padding: 0;
+}
+
+.messageAuthor .userName {
+	font-style: italic;
+	font-weight: bold;
+	display: inline;
+}
+
+.messageAuthor .userCredits .userTitle {
+	font-size: .8em;
+	margin: 0 0 -10px 0;
+	padding: 0;
+}
+
+blockquote {
+	margin: 5px;
+}
+
+.quoteBox {
+	border: 1px solid black;
+	margin-bottom: 5px;
+	padding: 10px;
+}
+
+.quoteBox h3 {
+	font-style: italic;
+	margin: 0;
+	padding: 0;
+}
+
+.codeBox h3 {
+	font-style: italic;
+	margin: 0;
+	padding: 0;
+}
+
+.poll .containerContent h3 {
+	font-style: italic;
+	margin: 0;
+	padding: 0;
+}
+
+.attachmentPreview fieldset {
+	margin-top: 13px;
+}
+
+.attachmentPreview ul {
+	margin: 0;
+	list-style: none;
+	padding: 0;
+}
+
+.attachmentPreview li {
+	margin-right: 10px;
+	float: left;
+}
+
+.attachmentPreview li img {
+	margin: 0 !important;
+}
+
+.attachmentFile img {
+	display: none;
+}
+
+/* ### -- -- -- -- -- calendar.css -- -- -- -- -- ### */
+
+#tplCalendarEvent #participation .messageHeader {
+	text-align: left;	
+}
+
+/* ### -- -- -- -- -- Form Element -- -- -- -- -- ### */
+		
+.formElement {
+	margin: 5px 0 3px 0;
+	min-height: 0;
+}
+
+.formElement:after {
+	content: "";
+	height: 0;
+	display: block;
+	clear: both;
+}
+
+/* ### -- -- -- -- -- Form Field -- -- -- -- -- ### */
+
+.formField {
+	padding: 0;
+	min-height: 1em;
+	border-bottom: 1px solid black;
+}
+
+.formElement .formField {
+	margin-left: 216px;
+}
+
+
+/* ### -- -- -- -- -- Form Field Label -- -- -- -- -- ### */
+
+.formFieldLabel {
+	text-align: right;
+	float: left;
+	width: 200px;
+	margin: 0;
+}
+
+fieldset {
+	margin: 20px 1px 0 1px !important;
+}
+
+.formSubmit {
+	display: none;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

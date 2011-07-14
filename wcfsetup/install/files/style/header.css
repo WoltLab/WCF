@@ -1,0 +1,255 @@
+
+/* ### -- -- -- -- -- Header Styles -- -- -- -- -- ### */
+
+/* 
+
+File: header.css 
+Copyright 2006-2009 by WoltLab GmbH. 
+
+*/
+
+/* ### -- -- -- -- -- User Note -- -- -- -- -- ### */
+
+#userNote {
+	white-space: nowrap;
+	padding: 10px 5px 3px 0;
+	display: table-cell;
+	vertical-align: top;
+}
+
+/* ### -- -- -- -- -- Login Popup -- -- -- -- -- ### */
+
+.loginPopup {
+	white-space: nowrap;
+	position: absolute;
+	z-index: 100;
+}
+
+.loginPopup .container-1 {
+	padding: 7px 4px 3px 7px;
+}
+
+.loginPopup input[type="text"], .loginPopup input[type="password"] {
+	font-size: 1em;
+	width: auto !important;
+}
+
+.loginPopup input[type="checkbox"] {
+	margin-top: 5px !important;
+	margin-left: 0;
+}
+
+/* ### -- -- -- -- -- User Menu -- -- -- -- -- ### */
+
+#userMenu {
+	padding: 10px 5px 3px 5px;
+	display: table-cell;
+	width: 100%;
+	vertical-align: top;
+}
+
+#userMenu ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#userMenu li {
+	margin: 0 7px 0 0;
+	float: left;
+}
+
+#userMenu a {
+	text-decoration: none;
+}
+
+#userMenu span {
+	text-decoration: underline;
+	white-space: nowrap;
+}
+
+#userMenu a:hover span {
+	text-decoration: none;
+}
+
+#userMenu .pageMenu {
+	font-size: 1em;
+}
+
+/* ### -- -- -- -- -- Language Picker -- -- -- -- -- ### */
+
+#changeLanguageMenu img {
+	margin-left: 0;
+}
+
+#changeLanguageMenu span {
+	margin: 0 0 0 22px !important;
+}
+
+/* ### -- -- -- -- -- Header Container -- -- -- -- -- ### */
+
+#header {
+	border-width: 1px 1px 0 1px;
+	border-style: solid;
+	padding: 0;
+	clear: both;
+	position: relative;
+	min-height: 0;
+}
+
+#header:after {
+	content: "";
+	display: block;
+	clear: both;
+	height: 0;
+}
+
+#headerContainer {
+	border-bottom-width: 0;
+}
+
+#mainContainer {
+	border-top-width: 0;
+	border-bottom-width: 0;
+}
+
+/* ### -- -- -- -- -- Search -- -- -- -- -- ### */
+
+#search {
+	/* Toggle View: Set to "0" for Standard View */
+	/* Toggle View: Set to "1px" for Framed View */
+	border-width: 0; 
+	border-style: solid;
+	/* Toggle View: Set to "transparent" for Standard View */
+	/* Toggle View: Set to any Colour Value for Framed View */
+	background-color: transparent;
+	position: absolute;
+	/* Move Search: Set to any positive Value */
+	top: 13px;
+	right: 13px;
+	z-index: 100;
+}
+
+#search .searchContainer {
+	/* Toggle View: Set to "0" for Standard View */
+	/* Toggle View: Set to "1px" for Framed View */
+	border-width: 0;
+	margin: 0;
+	padding: 10px;
+}
+
+#search ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#search noscript p {
+	margin: 3px 0 0 0;
+	padding: 0;
+}
+
+#search input.searchSubmit {
+	margin: -1px 0 0 0;
+	padding-left: 1px;
+	vertical-align: middle;
+}
+
+#searchInput {
+	background-image: url("../icon/searchHeadS.png");
+	background-repeat: no-repeat;
+	background-position: 2px center;
+	padding-left: 23px;
+	width: 13em;
+}
+
+.searchOptions {
+	background-image: url("../icon/searchHeadOptionsS.png") !important;
+}
+
+.searchInputMenu {
+	font-size: 1.2em;
+	position: relative;
+}
+
+/* ### -- -- -- -- -- Page-Logo & -Title -- -- -- -- -- ### */
+
+#logo {
+	border-width: 1px 1px 0 1px;
+	border-style: solid;
+	margin: 0 0 -1px 0;
+	padding: 0;
+	position: relative;
+	overflow: hidden;
+	z-index: 10;
+}
+
+#logo h1 a, #logo a img {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+#logo a.pageLogo, #logo h1.pageTitle {
+	margin: 0;
+	padding: 0;
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+#logo h1.pageTitle a {
+	display: block;
+	position: relative;
+	height: 100%;
+	z-index: 20;
+}
+
+/* ### -- -- -- -- -- Main Menu -- -- -- -- -- ### */
+
+.mainMenu {
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+}
+
+.mainMenu .mainMenuInner {
+	margin: 0;
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+}
+
+.mainMenu ul {
+	list-style: none;
+	margin: 0 0 -1px 0;
+	padding: 0;
+}
+
+.mainMenu > div > ul > li {
+	display: inline-block;
+}
+
+.mainMenu a {
+	text-decoration: none;
+	border-width: 1px;
+	border-style: solid;
+	margin: 0 -1px 0 0;
+	padding: 3px 5px 2px 5px;
+	display: block;
+	min-height: 23px;
+	white-space: nowrap !important;
+}
+
+.mainMenu li.first a, .mainMenu li.firstActive a {
+	margin-left: -1px;
+}
+
+.mainMenu span {
+	padding: 0 2px 0 0;
+}
+
+.mainMenu div.popupMenu {
+	font-size: 1em;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

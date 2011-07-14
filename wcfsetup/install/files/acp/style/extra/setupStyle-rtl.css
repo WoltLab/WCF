@@ -1,0 +1,261 @@
+
+/* ### -- -- -- -- -- Setup Styles -- -- -- -- -- ### */
+
+/* 
+
+File: setupStyle.css 
+Copyright 2006-2009 by WoltLab GmbH. 
+
+*/
+
+/* ### -- -- -- -- -- Miscellaneous -- -- -- -- -- ### */
+
+html, body {
+	background-color: #eee;
+	background-image: url("../../images/setupBackground-rtl.png");
+	background-position: right;
+	background-repeat: repeat-y;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	color: #333;
+	font-family: "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; 
+	font-size: .85em;
+}
+
+.page {
+	background-color: #fff;
+	background-image: url("../../images/setupHeader-rtl.jpg");
+	background-repeat: no-repeat;
+	padding: 153px 40px 20px 40px;
+	width: 720px;
+}
+
+.inner {
+	padding: 0 20px 10px 20px;
+}
+
+h1 {
+	color: #164369;
+	font-size: 1.9em;
+	font-weight: normal;
+	text-shadow: -0 2px 3px #bbb;
+	margin: 5px 0;
+	padding: 5px 0;
+}
+
+h2 {
+	color: #164369;
+	font-size: 1.4em;
+	font-weight: bold;
+	margin: 0;
+	padding-top: 5px;
+}
+
+.icon {
+	margin-left: 30px;
+	float: right;
+}
+
+fieldset {
+	font-size: .82em;
+	border: 1px solid #8da4b7;
+	margin-bottom: 10px;
+	padding: 0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+legend {
+	color: #164369;
+	font-size: 1em;
+	margin: 0 10px;
+	padding: 0 4px;
+}
+
+fieldset p, fieldset div {
+	margin: 0;
+	padding: 8px 0 0 0;
+}
+
+hr {
+	color: #8da4b7;
+	border: 0;
+	background-color: #8da4b7;
+	margin: 10px 0;
+	padding: 0;
+	clear: right;
+	height: 1px;
+	width: 100%;
+	position: relative;
+}
+
+/* ### -- -- -- -- -- Links -- -- -- -- -- ### */
+
+a {
+	color: #164369;
+}
+
+a:hover, a:active, a:visited {
+	color: #000;
+}
+
+/* ### -- -- -- -- -- Progress Bar -- -- -- -- -- ### */
+
+.progress {
+	border: 1px solid #b2b2b2;
+	margin: 0 128px 25px 0;
+	padding: 1px;
+	width: 300px;
+	height: 16px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+
+.progressBar {
+	font-size: 7px;
+	border-bottom: 8px solid #ddd;
+	background-color: #f1f1f1;
+	height: 8px;
+	-webkit-border-radius: 1px;
+	-moz-border-radius: 1px;
+}
+
+.progressText {
+	color: #333;
+	font-size: .75em;
+	text-shadow: -0 1px 1px #fff;
+	text-align: center;
+	margin-top: -15px;
+}
+
+.shortInfo {
+	color: #666;
+	font-size: .85em;
+	margin: 0;
+}
+
+fieldset #content .inner {
+	background-color: #f60;
+	margin-top: 0 !important;
+}
+
+/* -- -- -- -- -- -- -- Forms -- -- -- -- -- -- -- */
+
+form {
+	margin: 0;
+	padding: 0;
+}
+
+label {
+	padding-bottom: 2px;
+	display: block;
+}
+
+textarea, .inputText {
+	width: 100%;
+}
+
+textarea, select, input[type="text"], input[type="password"] {
+	border-width: 1px;
+	border-style: solid;
+	border-color: #666 #999 #ccc #999;
+	background-color: #fafafa;
+	background-image: url("../../images/setupInputBackground.png");
+	background-position: right top;
+	background-repeat: repeat-x;
+	padding: 2px;
+	min-height: 13px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+
+textarea:focus, select:focus, .inputText:focus {
+	border: 1px solid #fa2;
+	background-color: #fff9f4;
+	background-image: url("../../images/setupInputBackground.png");
+	background-repeat: repeat-x;
+	outline: 0;
+}
+
+iframe {
+	border: 0;
+	background-color: #fff;
+	margin: 10px 0 0 0;
+	padding: 0;
+	width: 100%;
+	height: 300px;
+}
+
+.nextButton {
+	float: left;
+}
+
+/* ### -- -- -- -- -- System Messages (Success, Warning, Error) -- -- -- -- -- ### */
+
+.success, .warning, .error {
+	border-width: 1px;
+	border-style: solid;
+	background-position: 10px center;
+	background-repeat: no-repeat;
+	padding: 7px 45px 7px 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+.success {
+	color: #090;
+	border-color: #090;
+	background-color: #efe;
+	background-image: url("../../../icon/successM.png");
+}
+
+.success a, .success a:hover {
+	color: #333;
+}
+
+.warning {
+	color: #660;
+	border-color: #660;
+	background-color: #ffd;
+	background-image: url("../../../icon/warningM.png");
+}
+
+.warning a, .warning a:hover {
+	color: #333;
+}
+
+.error {
+	color: #c00;
+	border-color: #c00;
+	background-color: #fee;
+	background-image: url("../../../icon/errorM.png");
+}
+
+.error a, .error a:hover {
+	color: #333;
+}
+
+.errorField {
+	color: #c00;
+}
+
+.errorField .inputText, .errorField select, .errorField textarea {
+	border: 1px solid #c00;
+	background-color: #fee;
+}
+
+.errorField img {
+	vertical-align: middle;
+}
+
+#packageUrl {
+	text-decoration: underline;
+	border: none;
+	background: transparent;
+	padding: 0;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */

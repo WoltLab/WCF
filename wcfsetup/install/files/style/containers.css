@@ -1,0 +1,182 @@
+
+/* ### -- -- -- -- -- Container Styles -- -- -- -- -- ### */
+
+/* 
+
+File: containers.css 
+Copyright 2006-2010 by WoltLab GmbH. 
+
+*/
+
+/* ### -- -- -- -- -- Border -- -- -- -- -- ### */
+
+.border {
+	border-width: 1px;
+	margin-bottom: 7px;
+	padding: 1px 0 0 1px;
+}
+
+/* Special */
+
+.borderMarginRemove {
+	margin-top: -8px;
+}
+
+/* ### -- -- -- -- -- Container Globals -- -- -- -- -- ### */
+
+.container-1, .container-2, .container-3, .containerHead {
+	margin: 0 1px 1px 0;
+}
+
+.containerHead {
+	padding: 2px 5px;
+}
+
+.content > div {
+	padding: 7px 25px;
+}
+
+.contentStyler p {
+	margin: 5px 0;	
+}
+
+/* ### -- -- -- -- -- Info Box -- -- -- -- -- ### */
+
+.infoBox .container-1, .infoBox .container-2 {
+	padding: 4px;
+	clear: both;
+}
+
+.infoBox h3 {
+	margin: 0 !important;
+	font-weight: bold;
+}
+
+/* ### -- -- -- -- -- Containers with Icons -- -- -- -- -- ### */
+
+/* Small (16px Icon) */
+
+.containerIconSmall {
+	text-align: center;
+	float: left;
+	width: 30px;
+}
+
+.containerContentSmall {
+	margin-left: 30px;
+}
+
+/* Standard (24px Icon) */
+
+.containerIcon {
+	text-align: center;
+	float: left;
+	width: 30px;
+}
+
+.containerContent {
+	margin-left: 35px;
+}
+
+/* Large (48px Icon) */
+
+.containerIconLarge {
+	text-align: center;
+	float: left;
+	width: 50px;
+}
+
+.containerContentLarge {
+	margin-left: 60px;
+}
+
+/* ### -- -- -- -- -- Main Headline -- -- -- -- -- ### */
+
+.mainHeadline {
+	margin: 3px 0 7px 0;
+	padding: 0;
+	clear: both;
+	display: block;
+	min-height: 50px;
+	width: 100%;
+}
+
+.mainHeadline img {
+	float: left;
+}
+
+.mainHeadline .headlineContainer img {
+	float: none;
+}
+
+.mainHeadline .headlineContainer {
+	margin: 7px 0 7px 60px;
+	min-height: 48px;
+}
+
+.mainHeadline .headlineContainer h2 {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+.mainHeadline .headlineContainer h2 a {
+	text-decoration: none;
+}
+
+.mainHeadline .headlineContainer p {
+	margin: 0;
+	padding: 0;
+}
+
+/* ### -- -- -- -- -- Sub Headline -- -- -- -- -- ### */
+
+.subHeadline {
+	font-size: 1.5em;
+	font-weight: normal;
+	border-left-width: 0 !important;
+	border-right-width: 0 !important;
+	border-top-width: 0 !important;
+	margin-top: 7px;
+	margin-bottom: 10px !important;
+	padding-bottom: 7px;
+}
+
+.subHeadline a {
+	text-decoration: none;
+}
+
+.subHeadline span {
+	font-size: 75%;
+}
+
+.subHeadline .inputText {
+	width: 95%;
+}
+
+/* ### -- -- -- -- -- Fieldset -- -- -- -- -- ### */
+
+fieldset {
+	border-width: 1px;
+	margin: 10px 0;
+	padding: 5px 13px 10px 13px;
+	display: block;
+}
+
+fieldset:after {
+	content: "";
+	display: block;
+	clear: both;
+	height: 0;
+}
+
+fieldset legend {
+	margin: 0 0 0 -5px;
+	padding: 0 5px;
+}
+
+fieldset fieldset {
+	margin-bottom: 5px;
+}
+
+/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
