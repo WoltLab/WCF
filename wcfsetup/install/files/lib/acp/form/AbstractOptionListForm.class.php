@@ -19,12 +19,12 @@ use wcf\util\ClassUtil;
  */
 abstract class AbstractOptionListForm extends AbstractForm {
 	/**
-	 * @see AbstractForm::$errorField
+	 * @see wcf\form\AbstractForm::$errorField
 	 */
 	public $errorField = array();
 	
 	/**
-	 * @see AbstractForm::$errorType
+	 * @see wcf\form\AbstractForm::$errorType
 	 */
 	public $errorType = array();
 
@@ -95,7 +95,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	public $typeObjects = array();
 		
 	/**
-	 * @see Form::readFormParameters()
+	 * @see wcf\form\Form::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -128,7 +128,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see Form::validate()
+	 * @see wcf\form\Form::validate()
 	 */
 	public function validate() {
 		parent::validate();
