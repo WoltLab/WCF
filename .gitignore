@@ -25,3 +25,7 @@ nbactions.xml
 
 # SVN
 .svn/ # svn folders
+
+# Community Framework
+*.tar 
+*.tar.gz # Ignore packages build directly in the workspace. They can however, if wanted, added manually via git add
