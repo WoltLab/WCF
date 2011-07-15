@@ -264,31 +264,6 @@
 			<showorder>3</showorder>
 		</acpmenuitem>
 		
-		<!-- language -->
-		<acpmenuitem name="wcf.acp.menu.link.language">
-			<parent>wcf.acp.menu.link.display</parent>
-		</acpmenuitem>
-
-		<acpmenuitem name="wcf.acp.menu.link.language.server">
-			<parent>wcf.acp.menu.link.language</parent>
-		</acpmenuitem>
-
-		<acpmenuitem name="wcf.acp.menu.link.language.server.list">
-			<icon>icon/languageServerM.png</icon>
-			<link>index.php?page=LanguageServerList</link>
-			<parent>wcf.acp.menu.link.language.server</parent>
-			<permissions>admin.language.canEditServer</permissions>
-			<showorder>1</showorder>
-		</acpmenuitem>
-
-		<acpmenuitem name="wcf.acp.menu.link.language.server.add">
-			<link>index.php?form=LanguageServerAdd</link>
-			<parent>wcf.acp.menu.link.language.server</parent>
-			<permissions>admin.language.canEditServer</permissions>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		<!-- /language -->
-		
 		<acpmenuitem name="wcf.acp.menu.link.content">
 			<icon>icon/contentL.png</icon>
 			<showorder>4</showorder>
