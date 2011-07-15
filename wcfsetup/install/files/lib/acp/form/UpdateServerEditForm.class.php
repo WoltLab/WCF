@@ -18,7 +18,7 @@ use wcf\system\exception\IllegalLinkException;
  */
 class UpdateServerEditForm extends UpdateServerAddForm {
 	/**
-	 * @see ACPForm::$activeMenuItem
+	 * @see wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.server';
 	
@@ -35,7 +35,7 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 	public $updateServer = null;
 	
 	/**
-	 * @see Page::readParameters()
+	 * @see wcf\page\Page::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -48,7 +48,7 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 	}
 	
 	/**
-	 * @see Form::save()
+	 * @see wcf\form\Form::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -67,7 +67,7 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -80,7 +80,7 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

@@ -25,12 +25,12 @@ use wcf\util\UserUtil;
  */
 class UserAddForm extends UserOptionListForm {
 	/**
-	 * @see AbstractPage::$templateName
+	 * @see wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'userAdd';
 	
 	/**
-	 * @see AbstractPage::$neededPermissions
+	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canAddUser');
 	
@@ -95,7 +95,7 @@ class UserAddForm extends UserOptionListForm {
 	public $additionalFields = array();
 	
 	/**
-	 * @see Form::readFormParameters()
+	 * @see wcf\form\Form::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -111,7 +111,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see Form::validate()
+	 * @see wcf\form\Form::validate()
 	 */
 	public function validate() {
 		// validate static user options 
@@ -178,7 +178,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see Form::save()
+	 * @see wcf\form\Form::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -281,7 +281,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -290,7 +290,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -313,7 +313,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see Page::show()
+	 * @see wcf\page\Page::show()
 	 */
 	public function show() {
 		// set active menu item

@@ -20,7 +20,7 @@ use wcf\system\WCFACP;
  */
 class OptionForm extends AbstractOptionListForm {
 	/**
-	 * @see AbstractPage::$templateName;
+	 * @see wcf\page\AbstractPage::$templateName;
 	 */
 	public $templateName = 'option';
 	
@@ -49,7 +49,7 @@ class OptionForm extends AbstractOptionListForm {
 	public $optionTree = array();
 	
 	/**
-	 * @see Page::readParameters()
+	 * @see wcf\page\Page::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -63,7 +63,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see Form::readFormParameters()
+	 * @see wcf\form\Form::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -72,7 +72,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see Form::save()
+	 * @see wcf\form\Form::save()
 	 */
 	public function save() {
 		parent::save();
@@ -91,7 +91,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -109,7 +109,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -122,7 +122,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see Form::show()
+	 * @see wcf\form\Form::show()
 	 */
 	public function show() {
 		// set active menu item

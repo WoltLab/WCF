@@ -33,7 +33,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	public $packages = array();
 	
 	/**
-	 * @see Page::readParameters()
+	 * @see wcf\page\Page::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -59,7 +59,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -69,7 +69,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	}
 	
 	/**
-	 * @see MultipleLinkPage::countItems()
+	 * @see wcf\page\MultipleLinkPage::countItems()
 	 */
 	public function countItems() {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -86,7 +86,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	}
 	
 	/**
-	 * @see SortablePage::validateSortField()
+	 * @see wcf\page\SortablePage::validateSortField()
 	 */
 	public function validateSortField() {
 		parent::validateSortField();
@@ -168,7 +168,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

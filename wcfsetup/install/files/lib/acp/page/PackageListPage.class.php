@@ -47,7 +47,7 @@ class PackageListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -56,7 +56,7 @@ class PackageListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see Page::show()
+	 * @see wcf\page\Page::show()
 	 */
 	public function show() {
 		// enable menu item
@@ -66,7 +66,7 @@ class PackageListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see SortablePage::validateSortField()
+	 * @see wcf\page\SortablePage::validateSortField()
 	 */
 	public function validateSortField() {
 		parent::validateSortField();

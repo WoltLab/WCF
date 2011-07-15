@@ -17,12 +17,12 @@ use wcf\system\WCF;
  */
 class CronjobEditForm extends CronjobAddForm {
 	/**
-	 * @see ACPForm::$activeMenuItem
+	 * @see wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.cronjobs';
 	
 	/**
-	 * @see AbstractPage::$neededPermissions
+	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.cronjobs.canEditCronjob');
 	
@@ -41,7 +41,7 @@ class CronjobEditForm extends CronjobAddForm {
 	public $cronjob = null;
 	
 	/**
-	 * @see Page::readParameters()
+	 * @see wcf\page\Page::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -56,7 +56,7 @@ class CronjobEditForm extends CronjobAddForm {
 	}
 	
 	/**
-	 * @see Form::save()
+	 * @see wcf\form\Form::save()
 	 */
 	public function save() {
 		ACPForm::save();
@@ -84,7 +84,7 @@ class CronjobEditForm extends CronjobAddForm {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -101,7 +101,7 @@ class CronjobEditForm extends CronjobAddForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

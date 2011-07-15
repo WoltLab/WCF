@@ -22,12 +22,12 @@ use wcf\util\StringUtil;
  */
 class UserGroupAddForm extends AbstractOptionListForm {
 	/**
-	 * @see AbstractPage::$neededPermissions
+	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canAddGroup');
 	
 	/**
-	 * @see AbstractPage::$templateName
+	 * @see wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'userGroupAdd';
 	
@@ -73,7 +73,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public $additionalFields = array();
 	
 	/**
-	 * @see Form::readFormParameters()
+	 * @see wcf\form\Form::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -84,7 +84,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see Form::validate()
+	 * @see wcf\form\Form::validate()
 	 */
 	public function validate() {
 		// validate dynamic options
@@ -106,7 +106,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see Form::save()
+	 * @see wcf\form\Form::save()
 	 */
 	public function save() {
 		parent::save();
@@ -139,7 +139,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		AbstractOptionListForm::readData();
@@ -175,7 +175,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

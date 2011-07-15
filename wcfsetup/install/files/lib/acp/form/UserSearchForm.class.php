@@ -35,7 +35,7 @@ class UserSearchForm extends UserOptionListForm {
 	public $menuItemName = 'wcf.acp.menu.link.user.search';
 	
 	/**
-	 * @see AbstractPage::$neededPermissions
+	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canSearchUser');
 	
