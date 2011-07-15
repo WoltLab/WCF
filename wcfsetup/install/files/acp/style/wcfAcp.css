@@ -10,11 +10,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 /* ### -- -- -- -- -- Miscellaneous -- -- -- -- -- ### */
 
 body, html {
-	background-color: #fff;
-	background-image: url("../images/WoltLab Blue Sunrise/body-ltr.png");
-	background-position: left;
-	background-repeat: repeat-y;
-	background-attachment: scroll;
+	background: #fff url("../images/WoltLab Blue Sunrise/body-ltr.png") repeat-y left top scroll;
 	margin: 0;
 	padding: 0;
 }
@@ -129,10 +125,7 @@ h2, h2 a {
 /* ### -- -- -- -- -- Sidebar -- -- -- -- -- ### */
 
 #sidebar {
-	background-color: transparent;
-	background-image: url("../images/WoltLab Blue Sunrise/sidebar.png");
-	background-repeat: repeat-x;
-	background-position: left top;
+	background: transparent url("../images/WoltLab Blue Sunrise/sidebar.png") repeat-x left top;
 	border-right: 1px solid #8da4b7;
 	position: absolute;
 	left: 0;
@@ -148,7 +141,7 @@ h2, h2 a {
 
 #sidebar li {
 	text-align: center;
-	margin: 10px 0 0 0;
+	margin: 10px 0 0;
 	float: left;
 	width: 114px;
 }
@@ -162,7 +155,7 @@ h2, h2 a {
 }
 
 #sidebar img {
-	margin: 14px auto 3px auto;
+	margin: 14px auto 3px;
 	height: 48px;
 	width: 48px;
 	display: block;
@@ -171,31 +164,26 @@ h2, h2 a {
 #sidebar span {
 	font-weight: bold;
 	text-shadow: 0 1px 0 #fff;
-	padding: 0 0 10px 0;
+	padding: 0 0 10px;
 	display: block;
 }
 
 #sidebar li:hover {
-	background-image: url("../images/WoltLab Blue Sunrise/sidebarHoverTop.png");
-	background-position: left top;
-	background-repeat: no-repeat;
+	background: transparent url("../images/WoltLab Blue Sunrise/sidebarHoverTop.png") no-repeat;
 }
 
 #sidebar li:hover span {
-	background-image: url("../images/WoltLab Blue Sunrise/sidebarHoverBottom.png");
-	background-position: left bottom;
+	background: url("../images/WoltLab Blue Sunrise/sidebarHoverBottom.png") left bottom;
 }
 
 #sidebar li:active, #sidebar li.active {
-	background-image: url("../images/WoltLab Blue Sunrise/sidebarActiveTop.png");
-	background-repeat: no-repeat;
+	background: transparent url("../images/WoltLab Blue Sunrise/sidebarActiveTop.png") no-repeat;
 }
 
 #sidebar li:active span, #sidebar li.active span {
 	color: #fff;
 	text-shadow: 0 -1px 0 #000;
-	background-image: url("../images/WoltLab Blue Sunrise/sidebarActiveBottom.png");
-	background-position: left bottom;
+	background: transparent url("../images/WoltLab Blue Sunrise/sidebarActiveBottom.png") left bottom;
 }
 
 /* ### -- -- -- -- -- Menu -- -- -- -- -- ### */
@@ -215,7 +203,7 @@ h2, h2 a {
 }
 
 .mainMenu a {
-	padding: 2px 5px 4px 5px;
+	padding: 2px 5px 4px;
 }
 
 .mainMenu ul {
@@ -276,7 +264,7 @@ h2, h2 a {
 }
 
 .sitemap h2 {
-	padding: 20px 0 10px 0;
+	padding: 20px 0 10px;
 }
 
 .sitemap h3 {
@@ -426,13 +414,9 @@ h2, h2 a {
 * {-o-text-overflow: ellipsis;}
 
 .sitemap .container-1 {
-	-webkit-border-bottom-left-radius: 5px;
-	-webkit-border-bottom-right-radius: 5px;
-	-moz-border-radius-bottomleft: 5px;
-	-moz-border-radius-bottomright: 5px;
-	
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
+	-webkit-border-radius: 0 0 5px 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
 }
 
 .mainMenu .popupMenu, .mainMenu .popupMenu li a {

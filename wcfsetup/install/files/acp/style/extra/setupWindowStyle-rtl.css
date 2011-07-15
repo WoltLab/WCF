@@ -20,7 +20,7 @@ body {
 }
 
 .inner {
-	padding: 0 20px 10px 20px;
+	padding: 0 20px 10px;
 }
 
 fieldset {
@@ -28,6 +28,7 @@ fieldset {
 	border: 1px solid #8da4b7;
 	margin-bottom: 10px;
 	padding: 0;
+	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 }
@@ -40,7 +41,7 @@ legend {
 }
 
 fieldset p, fieldset div {
-	margin: 8px 0 0 0;
+	margin: 8px 0 0;
 	padding: 0;
 }
 
@@ -64,21 +65,17 @@ textarea, select, input[type="text"], input[type="password"] {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #666 #999 #ccc #999;
-	background-color: #fafafa;
-	background-image: url("../../images/setupInputBackground.png");
-	background-position: right top;
-	background-repeat: repeat-x;
+	background: #fafafa url("../../images/setupInputBackground.png") repeat-x right top;
 	padding: 2px;
 	min-height: 13px;
+	border-radius: 3px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 }
 
 textarea:focus, select:focus, .inputText:focus {
 	border: 1px solid #fa2;
-	background-color: #fff9f4;
-	background-image: url("../../images/setupInputBackground.png");
-	background-repeat: repeat-x;
+	background: #fff9f4 url("../../images/setupInputBackground.png") repeat-x;
 	outline: 0;
 }
 
@@ -125,6 +122,7 @@ textarea, select, input[type="text"], input[type="password"] {
 	background-position: 10px center;
 	background-repeat: no-repeat;
 	padding: 7px 45px 7px 10px;
+	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 }
@@ -132,8 +130,7 @@ textarea, select, input[type="text"], input[type="password"] {
 .success {
 	color: #090;
 	border-color: #090;
-	background-color: #efe;
-	background-image: url("../../../icon/successM.png");
+	background: #efe url("../../../icon/successM.png");
 }
 
 .success a, .success a:hover {
@@ -143,8 +140,7 @@ textarea, select, input[type="text"], input[type="password"] {
 .warning {
 	color: #660;
 	border-color: #660;
-	background-color: #ffd;
-	background-image: url("../../../icon/warningM.png");
+	background: #ffd url("../../../icon/warningM.png");
 }
 
 .warning a, .warning a:hover {
@@ -154,8 +150,7 @@ textarea, select, input[type="text"], input[type="password"] {
 .error {
 	color: #c00;
 	border-color: #c00;
-	background-color: #fee;
-	background-image: url("../../../icon/errorM.png");
+	background: #fee url("../../../icon/errorM.png");
 }
 
 .error a, .error a:hover {
@@ -189,7 +184,7 @@ textarea, select, input[type="text"], input[type="password"] {
 	color: #fff;
 	font-size: 1.2em;
 	background-color: #154268;
-	margin: 0 0 3px 0;
+	margin: 0 0 3px;
 	padding: 4px;
 }
 
