@@ -24,12 +24,6 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	public $className = '';
 	
 	/**
-	 * sql database table name
-	 * @var string
-	 */
-	public $tableName = '';
-	
-	/**
 	 * xml tag name, e.g. 'acpmenuitem'
 	 * @var	string
 	 */

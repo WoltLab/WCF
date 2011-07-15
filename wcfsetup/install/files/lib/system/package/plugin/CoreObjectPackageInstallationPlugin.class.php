@@ -20,7 +20,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	public $className = 'wcf\data\core\object\CoreObjectEditor';
 	
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$tableName
+	 * @see AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'core_object';
 	

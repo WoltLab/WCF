@@ -18,6 +18,9 @@ use wcf\util\XML;
  * @category 	Community Framework
  */
 class LanguagesPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+	/**
+	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'language_item';
 	
 	/**

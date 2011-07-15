@@ -15,6 +15,9 @@ use wcf\util\StringUtil;
  * @category 	Community Framework
  */
 class SqlPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
+	/**
+	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'package_installation_sql_log';
 	
 	/**

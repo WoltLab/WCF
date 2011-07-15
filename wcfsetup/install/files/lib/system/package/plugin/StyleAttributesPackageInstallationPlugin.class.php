@@ -22,8 +22,8 @@ class StyleAttributesPackageInstallationPlugin extends AbstractXMLPackageInstall
 	protected $styleVariables = array();
 	
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$tableName
-	 */
+	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'style_variable_to_attribute';
 	
 	/**

@@ -21,6 +21,9 @@ use wcf\util\StyleUtil;
  * @category 	Community Framework
  */
 class FilesPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
+	/**
+	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'package_installation_file_log';
 	
 	/**

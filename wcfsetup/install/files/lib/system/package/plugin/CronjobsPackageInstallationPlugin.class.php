@@ -20,7 +20,7 @@ class CronjobsPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	public $className = 'wcf\data\cronjob\CronjobEditor';
 	
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$tableName
+	 * @see AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'cronjob';
 	

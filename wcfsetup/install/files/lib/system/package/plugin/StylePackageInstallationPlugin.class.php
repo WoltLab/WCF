@@ -21,8 +21,8 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	public $className = 'wcf\data\style\StyleEditor';
 	
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$tableName
-	 */
+	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'style';
 	
 	/**

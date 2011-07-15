@@ -16,7 +16,11 @@ use wcf\system\WCF;
  * @category 	Community Framework
  */
 class GroupOptionsPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
+	/**
+	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'user_group_option';
+
 	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata');
 	
 	/**

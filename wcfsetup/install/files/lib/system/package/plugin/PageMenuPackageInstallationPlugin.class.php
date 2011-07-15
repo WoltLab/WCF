@@ -20,8 +20,8 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	public $className = 'wcf\data\page\menu\item\PageMenuItemEditor';
 	
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$tableName
-	 */
+	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'page_menu_item';
 	
 	/**

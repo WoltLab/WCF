@@ -19,8 +19,8 @@ class PageLocationPackageInstallationPlugin extends AbstractXMLPackageInstallati
 	public $className = 'wcf\data\page\location\PageLocationEditor';
 	
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$tableName
-	 */
+	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'page_location';
 	
 	/**

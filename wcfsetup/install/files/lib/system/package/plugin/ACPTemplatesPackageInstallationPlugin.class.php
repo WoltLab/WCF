@@ -17,9 +17,16 @@ use wcf\util\FileUtil;
  * @category 	Community Framework
  */
 class ACPTemplatesPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
-	public $tagName = 'acptemplates';
+	/**
+	 * @see AbstractPackageInstallationPlugin::$tableName
+	 */
 	public $tableName = 'acp_template';
 	
+	/**
+	 * @see	AbstractXMLPackageInstallationPlugin::$tagName
+	 */	
+	public $tagName = 'acptemplates';
+
 	/**
 	 * @see PackageInstallationPlugin::install()
 	 */

@@ -20,8 +20,8 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	public $className = 'wcf\data\template\listener\TemplateListenerEditor';
 	
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$tableName
-	 */
+	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'template_listener';
 	
 	/**

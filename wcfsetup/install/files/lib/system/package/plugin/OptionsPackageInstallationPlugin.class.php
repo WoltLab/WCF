@@ -15,7 +15,11 @@ use wcf\system\WCF;
  * @category 	Community Framework
  */
 class OptionsPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
+	/**
+	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'option';
+
 	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'validationpattern', 'enableoptions', 'showorder', 'hidden', 'selectoptions', 'categoryname', 'permissions', 'options', 'attrs', 'cdata');
 	
 	/**

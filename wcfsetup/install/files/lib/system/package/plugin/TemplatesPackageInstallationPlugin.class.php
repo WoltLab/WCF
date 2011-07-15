@@ -17,6 +17,9 @@ use wcf\util\FileUtil;
  * @category 	Community Framework
  */
 class TemplatesPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
+	/**
+	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'template';
 	
 	/**

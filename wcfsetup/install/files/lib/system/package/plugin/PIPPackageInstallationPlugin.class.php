@@ -20,8 +20,8 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	public $className = 'wcf\data\package\installation\plugin\PackageInstallationPluginEditor';
 	
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$tableName
-	 */
+	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'package_installation_plugin';
 	
 	/**
