@@ -31,7 +31,7 @@ class DiskCacheSource implements CacheSource {
 	protected $loaded = array();
 	
 	/**
-	* @see	wcf\system\cache\source\CacheSource::get()
+	 * @see	wcf\system\cache\source\CacheSource::get()
 	 */
 	public function get(array $cacheResource) {
 		if (!isset($this->cache[$cacheResource['cache']])) {
