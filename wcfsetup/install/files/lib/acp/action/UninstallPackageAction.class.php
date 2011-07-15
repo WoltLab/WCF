@@ -32,7 +32,7 @@ class UninstallPackageAction extends InstallPackageAction {
 	public $templateName = 'packageUninstallationStep';
 	
 	/**
-	 * @see	Action::readParameters()
+	 * @see	wcf\action\Action::readParameters()
 	 */
 	public function readParameters() {
 		AbstractDialogAction::readParameters();

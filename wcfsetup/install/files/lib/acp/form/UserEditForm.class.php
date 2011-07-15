@@ -27,7 +27,7 @@ class UserEditForm extends UserAddForm {
 	public $menuItemName = 'wcf.acp.menu.link.user.management';
 	
 	/**
-	 * @see AbstractPage::$neededPermissions
+	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditUser');
 	
@@ -44,7 +44,7 @@ class UserEditForm extends UserAddForm {
 	public $user = null;
 	
 	/**
-	 * @see Page::readParameters()
+	 * @see wcf\page\Page::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -64,7 +64,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see Page::readFormParameters()
+	 * @see wcf\page\Page::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -74,7 +74,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		if (!count($_POST)) {
@@ -113,7 +113,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -128,7 +128,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see Form::save()
+	 * @see wcf\form\Form::save()
 	 */
 	public function save() {
 		AbstractForm::save();

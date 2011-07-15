@@ -40,7 +40,7 @@ class CacheListPage extends AbstractPage {
 	public $cacheData = array();
 	
 	/**
-	 * @see Page::readParameters()
+	 * @see wcf\page\Page::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -49,7 +49,7 @@ class CacheListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -117,7 +117,7 @@ class CacheListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -130,7 +130,7 @@ class CacheListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see Page::show()
+	 * @see wcf\page\Page::show()
 	 */
 	public function show() {
 		// enable menu item

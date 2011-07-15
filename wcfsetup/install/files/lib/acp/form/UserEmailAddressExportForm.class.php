@@ -29,7 +29,7 @@ class UserEmailAddressExportForm extends ACPForm {
 	public $users = array();
 	
 	/**
-	 * @see Form::readFormParameters()
+	 * @see wcf\form\Form::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -41,7 +41,7 @@ class UserEmailAddressExportForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Form::validate()
+	 * @see wcf\form\Form::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -50,7 +50,7 @@ class UserEmailAddressExportForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Form::save()
+	 * @see wcf\form\Form::save()
 	 */
 	public function save() {
 		parent::save();
@@ -100,7 +100,7 @@ class UserEmailAddressExportForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -116,7 +116,7 @@ class UserEmailAddressExportForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

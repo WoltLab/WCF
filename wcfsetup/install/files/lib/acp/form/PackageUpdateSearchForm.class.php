@@ -38,7 +38,7 @@ class PackageUpdateSearchForm extends ACPForm {
 	public $packageUpdateIDs = '';
 	
 	/**
-	 * @see Form::readFormParameters()
+	 * @see wcf\form\Form::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -55,7 +55,7 @@ class PackageUpdateSearchForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Form::validate()
+	 * @see wcf\form\Form::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -165,7 +165,7 @@ class PackageUpdateSearchForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Form::save()
+	 * @see wcf\form\Form::save()
 	 */
 	public function save() {
 		parent::save();
@@ -186,7 +186,7 @@ class PackageUpdateSearchForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -195,7 +195,7 @@ class PackageUpdateSearchForm extends ACPForm {
 	}
 
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -214,7 +214,7 @@ class PackageUpdateSearchForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function show() {
 		// check master password

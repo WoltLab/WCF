@@ -25,7 +25,7 @@ class PackageViewPage extends AbstractPage {
 	public $dependencies = array();
 	
 	/**
-	 * @see Page::readParameters()
+	 * @see wcf\page\Page::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -34,7 +34,7 @@ class PackageViewPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -52,7 +52,7 @@ class PackageViewPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -66,7 +66,7 @@ class PackageViewPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see Page::show()
+	 * @see wcf\page\Page::show()
 	 */
 	public function show() {
 		// enable menu item
