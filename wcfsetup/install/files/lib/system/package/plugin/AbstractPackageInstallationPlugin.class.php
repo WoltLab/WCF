@@ -16,22 +16,19 @@ use wcf\system\WCF;
  */
 abstract class AbstractPackageInstallationPlugin implements PackageInstallationPlugin {
 	/**
-	 * Database table name.
-	 *
+	 * database table name
 	 * @var string
 	 */
 	public $tableName = '';
 	
 	/**
-	 * Active instance of PackageInstallationQueue
-	 *
+	 * active instance of PackageInstallationQueue
 	 * @var PackageInstallationQueue
 	 */
 	public $installation = null;
 	
 	/**
 	 * install/update instructions
-	 *
 	 * @var array
 	 */
 	public $instruction = array();
