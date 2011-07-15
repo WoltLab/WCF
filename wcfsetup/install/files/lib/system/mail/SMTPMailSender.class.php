@@ -142,7 +142,7 @@ class SMTPMailSender extends MailSender {
 		// data
 		$this->write("DATA");
 		$this->getSMTPStatus();
-		if ($this->statusCode != 354) {
+		if ($this->statusCode != 354 && $this->statusCode != 250) {
 			throw new SystemException($this->formatError("smtp error"), 17005);
 		}
 						
