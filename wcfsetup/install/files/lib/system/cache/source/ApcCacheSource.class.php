@@ -24,10 +24,10 @@ class ApcCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see CacheSource::get()
+	 * @see	wcf\system\cache\source\CacheSource::get()
 	 */
 	public function get($cacheResource) {
-		if (false === $data = apc_fetch($cacheResource['file'])) {
+		if (($data = apc_fetch($cacheResource['file'])) === false) {
 			return null;
 		}
 		
@@ -35,14 +35,14 @@ class ApcCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see CacheSource::set()
+	 * @see	wcf\system\cache\source\CacheSource::set()
 	 */
 	public function set($cacheResource, $value) {
 		apc_store($cacheResource['file'], $value, $cacheResource['maxLifetime']);
 	}
 	
 	/**
-	 * @see CacheSource::delete()
+	 * @see	wcf\system\cache\source\CacheSource::delete()
 	 */
 	public function delete($cacheResource, $ignoreLifetime = false) {
 		if ($ignoreLifetime || ($cacheResource['minLifetime'] == 0 || $this->checkMinLifetime($cacheResource))) {
@@ -55,7 +55,7 @@ class ApcCacheSource implements CacheSource {
 	 * 
 	 * @param	array		$cacheResource
 	 */
-	public function checkMinLifetime($cacheResource) {
+	public function checkMinLifetime(array $cacheResource) {
 		$apcinfo = apc_cache_info('user');
 		$cacheList = $apcinfo['cache_list'];
 		
@@ -69,7 +69,7 @@ class ApcCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see CacheSource::clear()
+	 * @see	wcf\system\cache\source\CacheSource::clear()
 	 */
 	public function clear($directory, $filepattern, $forceDelete = false) {
 		$pattern = preg_quote(FileUtil::addTrailingSlash($directory), '%').str_replace('*', '.*', str_replace('.', '\.', $filepattern));
@@ -84,14 +84,14 @@ class ApcCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see CacheSource::close()
+	 * @see	wcf\system\cache\source\CacheSource::close()
 	 */
 	public function close() {
 		// does nothing
 	}
 	
 	/**
-	 * @see CacheSource::flush()
+	 * @see	wcf\system\cache\source\CacheSource::flush()
 	 */
 	public function flush() {
 		apc_clear_cache('user');
