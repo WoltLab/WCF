@@ -1038,8 +1038,7 @@ class WCFSetup extends WCF {
 		WCF::getTPL()->display('stepInstallPackages');
 		
 		// delete tmp files
-		$directory = TMP_DIR.TMP_FILE_PREFIX.'/';
-		$it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory));
+		$it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(TMP_DIR));
 		while ($it->valid()) {
 			// delete all files except directories and packages (required for post-wcfsetup installation)
 			if (!$it->isDot() && !$it->isDir() && !preg_match('~\.tar(\.gz)?$~', $it->getSubPathName())) {
