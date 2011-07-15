@@ -27,7 +27,7 @@ abstract class AbstractDialogAction extends AbstractSecureAction {
 	public $data = array();
 	
 	/**
-	 * @see	Action::readParameters()
+	 * @see	wcf\action\Action::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -46,6 +46,9 @@ abstract class AbstractDialogAction extends AbstractSecureAction {
 		$this->validateStep();
 	}
 	
+	/**
+	* @see wcf\action\Action::execute()
+	*/
 	public final function execute() {
 		parent::execute();
 		

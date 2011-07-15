@@ -18,17 +18,17 @@ use wcf\util\XML;
  */
 class OptionImportForm extends ACPForm {
 	/**
-	 * @see AbstractPage::$templateName
+	 * @see wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'optionImport';
 	
 	/**
-	 * @see ACPForm::$activeMenuItem
+	 * @see wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.option.importAndExport';
 	
 	/**
-	 * @see AbstractPage::$neededPermissions
+	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canEditOption');
 	
@@ -45,7 +45,7 @@ class OptionImportForm extends ACPForm {
 	public $options = array();
 	
 	/**
-	 * @see Form::readFormParameters()
+	 * @see wcf\form\Form::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -54,7 +54,7 @@ class OptionImportForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Form::validate()
+	 * @see wcf\form\Form::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -96,7 +96,7 @@ class OptionImportForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Form::save()
+	 * @see wcf\form\Form::save()
 	 */
 	public function save() {
 		parent::save();
@@ -111,7 +111,7 @@ class OptionImportForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Page::show()
+	 * @see wcf\page\Page::show()
 	 */
 	public function show() {
 		// check master password

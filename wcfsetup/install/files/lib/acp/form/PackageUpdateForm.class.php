@@ -28,7 +28,7 @@ class PackageUpdateForm extends ACPForm {
 	public $packageUpdate = null;
 	
 	/**
-	 * @see Page::readParameters()
+	 * @see wcf\page\Page::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -37,7 +37,7 @@ class PackageUpdateForm extends ACPForm {
 	}
 	
 	/**
-	 * @see	Form::validate()
+	 * @see	wcf\form\Form::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -62,7 +62,7 @@ class PackageUpdateForm extends ACPForm {
 	}
 	
 	/**
-	 * @see	Form::save()
+	 * @see	wcf\form\Form::save()
 	 */
 	public function save() {
 		if (isset($_POST['send'])) {
@@ -79,7 +79,7 @@ class PackageUpdateForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -91,7 +91,7 @@ class PackageUpdateForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -104,7 +104,7 @@ class PackageUpdateForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function show() {
 		// check master password

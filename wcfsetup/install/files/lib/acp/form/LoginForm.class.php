@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  */
 class LoginForm extends AbstractForm {
 	/**
-	 * @see AbstractPage::$templateName
+	 * @see wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'login';
 	
@@ -61,7 +61,7 @@ class LoginForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see Page::readParameters()
+	 * @see wcf\page\Page::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -70,7 +70,7 @@ class LoginForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see Form::readFormParameters()
+	 * @see wcf\form\Form::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -87,7 +87,7 @@ class LoginForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see Form::validate()
+	 * @see wcf\form\Form::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -105,7 +105,7 @@ class LoginForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see Form::save()
+	 * @see wcf\form\Form::save()
 	 */
 	public function save() {
 		parent::save();
@@ -127,7 +127,7 @@ class LoginForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -142,7 +142,7 @@ class LoginForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

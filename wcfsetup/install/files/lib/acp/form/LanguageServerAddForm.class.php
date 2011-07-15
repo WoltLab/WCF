@@ -64,7 +64,7 @@ class LanguageServerAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Form::save()
+	 * @see wcf\page\Form::save()
 	 */
 	public function save() {
 		parent::save();
@@ -84,7 +84,7 @@ class LanguageServerAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -96,7 +96,7 @@ class LanguageServerAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function show() {
 		// check master password

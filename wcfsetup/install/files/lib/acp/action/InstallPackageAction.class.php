@@ -50,7 +50,7 @@ class InstallPackageAction extends AbstractDialogAction {
 	public $templateName = 'packageInstallationStep';
 	
 	/**
-	 * @see	Action::readParameters()
+	 * @see	wcf\action\Action::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -140,7 +140,7 @@ class InstallPackageAction extends AbstractDialogAction {
 	}
 	
 	/**
-	 * @see	AbstractDialogAction::validateStep()
+	 * @see	wcf\action\AbstractDialogAction\AbstractDialogAction::validateStep()
 	 */
 	protected function validateStep() {
 		switch ($this->step) {

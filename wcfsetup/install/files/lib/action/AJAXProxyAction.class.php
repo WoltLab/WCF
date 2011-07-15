@@ -55,7 +55,7 @@ class AJAXProxyAction extends AbstractSecureAction {
 	protected $response = null;
 	
 	/**
-	 * @see	AbstractAction::_construct()
+	 * @see	wcf\action\AbstractAction::_construct()
 	 */
 	public function __construct() {
 		try {
@@ -72,7 +72,7 @@ class AJAXProxyAction extends AbstractSecureAction {
 	}
 	
 	/**
-	 * @see	Action::readParameters()
+	 * @see	wcf\action\Action::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -92,7 +92,7 @@ class AJAXProxyAction extends AbstractSecureAction {
 	}
 	
 	/**
-	 * @see	Action::execute()
+	 * @see	wcf\action\Action::execute()
 	 */
 	public function execute() {
 		parent::execute();

@@ -54,7 +54,7 @@ abstract class AbstractPage implements Page {
 	}
 	
 	/**
-	 * @see Page::readParameters()
+	 * @see wcf\page\Page::readParameters()
 	 */
 	public function readParameters() {
 		// call readParameters event
@@ -65,7 +65,7 @@ abstract class AbstractPage implements Page {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		// call readData event
@@ -73,7 +73,7 @@ abstract class AbstractPage implements Page {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		// call assignVariables event
@@ -87,7 +87,7 @@ abstract class AbstractPage implements Page {
 	}
 	
 	/**
-	 * @see Page::checkModules()
+	 * @see wcf\page\Page::checkModules()
 	 */
 	public function checkModules() {
 		// call checkModules event
@@ -104,7 +104,7 @@ abstract class AbstractPage implements Page {
 	}
 	
 	/**
-	 * @see Page::checkPermissions()
+	 * @see wcf\page\Page::checkPermissions()
 	 */
 	public function checkPermissions() {
 		// call checkPermissions event
@@ -117,7 +117,7 @@ abstract class AbstractPage implements Page {
 	}
 	
 	/**
-	 * @see Page::show()
+	 * @see wcf\page\Page::show()
 	 */
 	public function show() {
 		// check modules

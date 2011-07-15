@@ -19,17 +19,17 @@ use wcf\util\StringUtil;
  */
 class UpdateServerAddForm extends ACPForm {
 	/**
-	 * @see AbstractPage::$templateName
+	 * @see wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'updateServerAdd';
 	
 	/**
-	 * @see ACPForm::$activeMenuItem
+	 * @see wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.server.add';
 	
 	/**
-	 * @see AbstractPage::$neededPermissions
+	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canEditServer');
 	
@@ -52,7 +52,7 @@ class UpdateServerAddForm extends ACPForm {
 	public $loginPassword = '';
 	
 	/**
-	 * @see Form::readFormParameters()
+	 * @see wcf\form\Form::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -63,7 +63,7 @@ class UpdateServerAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Form::validate()
+	 * @see wcf\form\Form::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -78,7 +78,7 @@ class UpdateServerAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Form::save()
+	 * @see wcf\form\Form::save()
 	 */
 	public function save() {
 		parent::save();
@@ -100,7 +100,7 @@ class UpdateServerAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -114,7 +114,7 @@ class UpdateServerAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function show() {
 		// check master password

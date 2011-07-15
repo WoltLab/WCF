@@ -65,7 +65,7 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -76,7 +76,7 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

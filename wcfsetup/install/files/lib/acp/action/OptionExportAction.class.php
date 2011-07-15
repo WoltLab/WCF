@@ -16,12 +16,12 @@ use wcf\util\StringUtil;
  */
 class OptionExportAction extends AbstractAction {
 	/**
-	 * @see AbstractAction::$neededPermissions
+	 * @see wcf\action\AbstractAction\AbstractAction::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canEditOption');
 	
 	/**
-	 * @see Action::execute();
+	 * @see wcf\action\Action::execute();
 	 */
 	public function execute() {
 		parent::execute();
