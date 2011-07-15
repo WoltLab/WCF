@@ -145,13 +145,13 @@ class MemcacheCacheSource implements CacheSource {
 	/**
 	 * @see	wcf\system\cache\source\CacheSource::delete()
 	 */
-	public function delete(arra $cacheResource, $ignoreLifetime = false) {
+	public function delete(array $cacheResource, $ignoreLifetime = false) {
 		$this->getAdapter()->getMemcache()->delete($cacheResource['file']);
 		$this->removeFromLog($cacheResource['file']);
 	}
 	
 	/**
-	 * @see CacheSource::clear()
+	 * @see wcf\system\cache\source\CacheSource::clear()
 	 */
 	public function clear($directory, $filepattern, $forceDelete = false) {
 		$this->loadLog();
@@ -165,7 +165,7 @@ class MemcacheCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see CacheSource::flush()
+	 * @see wcf\system\cache\source\CacheSource::flush()
 	 */
 	public function flush() {
 		// clear cache
@@ -180,7 +180,7 @@ class MemcacheCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see CacheSource::close()
+	 * @see wcf\system\cache\source\CacheSource::close()
 	 */
 	public function close() {
 		// update log
