@@ -225,6 +225,24 @@ class User extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns User-object by email.
+	 *
+	 * @param	string		$email
+	 * @return	User
+	 */
+	public static function getUserByEmail($email) {
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_user
+			WHERE	email = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($email));
+		$row = $statement->fetchArray();
+		if (!$row) $row = array();
+		
+		return new User(null, $row);
+	}
+	
+	/**
 	 * Returns true, if this user is marked.
 	 *
 	 * @return 	boolean
