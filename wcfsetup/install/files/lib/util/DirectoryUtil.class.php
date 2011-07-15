@@ -63,7 +63,7 @@ class DirectoryUtil {
 	/**
 	 * All recursive and non-recursive instances
 	 *
-	 * @var array<array<mixed>
+	 * @var array<array>
 	 */
 	protected static $instances = array(
 		true => array(),	// recursive instances
