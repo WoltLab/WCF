@@ -352,4 +352,3 @@ class DirectoryUtil {
 		return $this->size;
 	}
 }
-?>
