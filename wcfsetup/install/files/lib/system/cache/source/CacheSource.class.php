@@ -18,7 +18,7 @@ interface CacheSource {
 	 * @param	array		$cacheResource
 	 * @return	mixed
 	 */
-	public function get($cacheResource);
+	public function get(array $cacheResource);
 	
 	/**
 	 * Stores a variable in the cache.
@@ -26,7 +26,7 @@ interface CacheSource {
 	 * @param	array		$cacheResource
 	 * @param 	mixed		$value
 	 */
-	public function set($cacheResource, $value);
+	public function set(array $cacheResource, $value);
 	
 	/**
 	 * Deletes a variable in the cache.
@@ -34,7 +34,7 @@ interface CacheSource {
 	 * @param	array		$cacheResource
 	 * @param 	boolean		$ignoreLifetime
 	 */
-	public function delete($cacheResource, $ignoreLifetime = false);
+	public function delete(array $cacheResource, $ignoreLifetime = false);
 	
 	/**
 	 * Marks cached files as obsolete.

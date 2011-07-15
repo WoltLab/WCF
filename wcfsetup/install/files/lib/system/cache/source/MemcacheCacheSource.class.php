@@ -126,26 +126,26 @@ class MemcacheCacheSource implements CacheSource {
 	
 	// CacheSource implementations
 	/**
-	 * @see CacheSource::get()
+	 * @see	wcf\system\cache\source\CacheSource::get()
 	 */
-	public function get($cacheResource) {
+	public function get(array $cacheResource) {
 		$value = $this->getAdapter()->getMemcache()->get($cacheResource['file']);
 		if ($value === false) return null;
 		return $value;
 	}
 	
 	/**
-	 * @see CacheSource::set()
+	 * @see	wcf\system\cache\source\CacheSource::set()
 	 */
-	public function set($cacheResource, $value) {
+	public function set(array $cacheResource, $value) {
 		$this->getAdapter()->getMemcache()->set($cacheResource['file'], $value, MEMCACHE_COMPRESSED, $cacheResource['maxLifetime']);
 		$this->addToLog($cacheResource['file']);
 	}
 	
 	/**
-	 * @see CacheSource::delete()
+	 * @see	wcf\system\cache\source\CacheSource::delete()
 	 */
-	public function delete($cacheResource, $ignoreLifetime = false) {
+	public function delete(arra $cacheResource, $ignoreLifetime = false) {
 		$this->getAdapter()->getMemcache()->delete($cacheResource['file']);
 		$this->removeFromLog($cacheResource['file']);
 	}
