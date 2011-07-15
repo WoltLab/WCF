@@ -26,7 +26,7 @@ class ApcCacheSource implements CacheSource {
 	/**
 	 * @see	wcf\system\cache\source\CacheSource::get()
 	 */
-	public function get($cacheResource) {
+	public function get(array $cacheResource) {
 		if (($data = apc_fetch($cacheResource['file'])) === false) {
 			return null;
 		}
@@ -37,14 +37,14 @@ class ApcCacheSource implements CacheSource {
 	/**
 	 * @see	wcf\system\cache\source\CacheSource::set()
 	 */
-	public function set($cacheResource, $value) {
+	public function set(array $cacheResource, $value) {
 		apc_store($cacheResource['file'], $value, $cacheResource['maxLifetime']);
 	}
 	
 	/**
 	 * @see	wcf\system\cache\source\CacheSource::delete()
 	 */
-	public function delete($cacheResource, $ignoreLifetime = false) {
+	public function delete(array $cacheResource, $ignoreLifetime = false) {
 		if ($ignoreLifetime || ($cacheResource['minLifetime'] == 0 || $this->checkMinLifetime($cacheResource))) {
 			apc_delete($cacheResource['file']);
 		}
