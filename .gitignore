@@ -1,12 +1,15 @@
 # Linux
-*~ # backup files
+# backup files
+*~
 
 # Windows
-Thumbs.db # thumbnails
+# thumbnails
+Thumbs.db
 
 # OS-X
 .DS_Store
-._* #thumbnails
+# thumbnails
+._*
 
 # Visual Studio PHP
 *.sln
@@ -25,8 +28,10 @@ nbproject/
 nbactions.xml
 
 # SVN
-.svn/ # svn folders
+# svn folders
+.svn/
 
 # Community Framework
-*.tar 
-*.tar.gz # Ignore packages build directly in the workspace. They can however, if wanted, added manually via git add
+# Ignore packages build directly in the workspace. They can however, if wanted, added manually via git add
+*.tar
+*.tar.gz
