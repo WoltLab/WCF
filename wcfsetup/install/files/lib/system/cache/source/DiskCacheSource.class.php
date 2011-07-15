@@ -83,7 +83,7 @@ class DiskCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see CacheSource::clear()
+	 * @see wcf\system\cache\source\CacheSource::clear()
 	 */
 	public function clear($directory, $filepattern, $forceDelete = false) {
 		$filepattern = str_replace('*', '.*', str_replace('.', '\.', $filepattern));
@@ -183,14 +183,14 @@ class DiskCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see CacheSource::close()
+	 * @see wcf\system\cache\source\CacheSource::close()
 	 */
 	public function close() {
 		// does nothing
 	}
 	
 	/**
-	 * @see CacheSource::flush()
+	 * @see wcf\system\cache\source\CacheSource::flush()
 	 */
 	public function flush() {
 		$sql = "SELECT		package.packageDir
