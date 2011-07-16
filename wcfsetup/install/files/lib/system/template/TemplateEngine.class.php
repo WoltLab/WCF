@@ -82,14 +82,21 @@ class TemplateEngine extends SingletonFactory {
 	protected $templateGroupID = 0;
 	
 	/**
-	 * Contains all available template variables and those assigned during runtime
+	 * Contains all available template variables and those assigned during runtime.
 	 * 
 	 * @var	array<array>
 	 */
 	protected $v = array();
 	
 	/**
-	 * Contains all templates with assigned template listeners
+	 * Contains all cached vars for usage after execution in sandbox.
+	 * 
+	 * @var	array
+	 */
+	protected $sandboxVars = null;
+	
+	/**
+	 * Contains all templates with assigned template listeners.
 	 * 
 	 * @var	array<array>
 	 */
@@ -491,17 +498,60 @@ class TemplateEngine extends SingletonFactory {
 	}
 	
 	/**
+	 * Enables execution in sandbox.
+	 */
+	public function enableSandbox() {
+		if ($this->sandboxVars === null) {
+			$this->sandboxVars = $this->v;
+		}
+		else {
+			throw new SystemException('TemplateEngine is already in sandbox mode. Disable the current sandbox mode before you enable a new one.');
+		}
+	}
+
+	/**
+	 * Disables execution in sandbox.
+	 */
+	public function disableSandbox() {
+		if ($this->sandboxVars !== null) {
+			$this->v = $this->sandboxVars;
+			$this->sandboxVars = null;
+		}
+		else {
+			throw new SystemException('TemplateEngine is not in sandbox mode at the moment.');
+		}
+	}
+	
+	/**
 	 * Returns the output of a template.
 	 *
 	 * @param 	string 		$templateName
+	 * @param 	array 		$variables
+	 * @param 	boolean		$sandbox	enables execution in sandbox
 	 * @param	integer		$packageID
 	 * @return 	string 		output
 	 */
-	public function fetch($templateName, $packageID = PACKAGE_ID) {
+	public function fetch($templateName, array $variables = array(), $sandbox = true, $packageID = PACKAGE_ID) {
+		// enable sandbox
+		if ($sandbox) {
+			$this->enableSandbox();
+		}
+		
+		// add new template variables
+		if (count($variables)) {
+			$this->v = array_merge($this->v, $variables);
+		}
+		
+		// get output
 		ob_start();
 		$this->display($templateName, $packageID, false);
 		$output = ob_get_contents();
 		ob_end_clean();
+		
+		// disable sandbox
+		if ($sandbox) {
+			$this->disableSandbox();
+		}
 
 		return $output;
 	}
@@ -510,13 +560,31 @@ class TemplateEngine extends SingletonFactory {
 	 * Executes a compiled template scripting source and returns the result.
 	 *
 	 * @param 	string 		$compiledSource
+	 * @param 	array 		$variables
+	 * @param 	boolean		$sandbox	enables execution in sandbox
 	 * @return 	string 		result
 	 */
-	public function fetchString($compiledSource) {
+	public function fetchString($compiledSource, array $variables = array(), $sandbox = true) {
+		// enable sandbox
+		if ($sandbox) {
+			$this->enableSandbox();
+		}
+		
+		// add new template variables
+		if (count($variables)) {
+			$this->v = array_merge($this->v, $variables);
+		}
+		
+		// get output
 		ob_start();
 		eval('?>'.$compiledSource);
 		$output = ob_get_contents();
 		ob_end_clean();
+		
+		// disable sandbox
+		if ($sandbox) {
+			$this->disableSandbox();
+		}
 
 		return $output;
 	}
@@ -607,19 +675,22 @@ class TemplateEngine extends SingletonFactory {
 	 * @param 	boolean		$sandbox	enables execution in sandbox
 	 */
 	protected function includeTemplate($templateName, array $variables = array(), $sandbox = true, $packageID = PACKAGE_ID) {
-		// add new template variables
+		// enable sandbox
 		if ($sandbox) {
-			$templateVars = $this->v;
+			$this->enableSandbox();
 		}
-
+		
+		// add new template variables
 		if (count($variables)) {
 			$this->v = array_merge($this->v, $variables);
 		}
 		
+		// display template
 		$this->display($templateName, $packageID, false);
 		
+		// disable sandbox
 		if ($sandbox) {
-			$this->v = $templateVars;
+			$this->disableSandbox();
 		}
 	}
 	

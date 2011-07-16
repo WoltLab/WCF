@@ -112,8 +112,7 @@ class Language extends DatabaseObject {
 		$staticItem = $this->get($item);
 		
 		if (isset($this->dynamicItems[$this->languageID][$item])) {
-			if (count($variables)) WCF::getTPL()->assign($variables);
-			return WCF::getTPL()->fetchString($this->dynamicItems[$this->languageID][$item]);
+			return WCF::getTPL()->fetchString($this->dynamicItems[$this->languageID][$item], $variables);
 		}
 		
 		return $staticItem;
