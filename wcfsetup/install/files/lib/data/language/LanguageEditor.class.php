@@ -12,6 +12,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
 use wcf\util\XML;
+use wcf\util\DirectoryUtil;
 
 /**
  * Provides functions to edit languages.
@@ -284,13 +285,12 @@ class LanguageEditor extends DatabaseObjectEditor {
 	 * @param 	string		$category
 	 * @param 	string		$packageID
 	 */
-	public static function deleteLanguageFiles($languageID = '*', $category = '*', $packageID = '*') {
-		$files = @glob(WCF_DIR."language/".$packageID."_".$languageID."_".$category.".php");
-		if (is_array($files)) {
-			foreach ($files as $filename) {
-				@unlink($filename);
-			}
-		}
+	public static function deleteLanguageFiles($languageID = '.*', $category = '.*', $packageID = '.*') {
+		if ($category != '.*') $category = preg_quote($category, '~');
+		if ($languageID != '.*') $languageID = intval($languageID);
+		if ($packageID != '.*') $packageID = intval($packageID);
+		
+		DirectoryUtil::getInstance(WCF_DIR.'language/')->deletePattern('~'.$packageID.'_'.$languageID.'_'.$category.'\.php$~');
 	}
 	
 	/**
@@ -298,12 +298,9 @@ class LanguageEditor extends DatabaseObjectEditor {
 	 */
 	public function deleteCompiledTemplates() {
 		// templates
-		$filenames = glob(WCF_DIR.'templates/compiled/*_'.$this->languageID.'_*.php');
-		if ($filenames) foreach ($filenames as $filename) @unlink($filename);
-		
+		DirectoryUtil::getInstance(WCF_DIR.'templates/compiled/')->deletePattern('~.*_'.$this->languageID.'_.*\.php$~');
 		// acp templates
-		$filenames = glob(WCF_DIR.'acp/templates/compiled/*_'.$this->languageID.'_*.php');
-		if ($filenames) foreach ($filenames as $filename) @unlink($filename);
+		DirectoryUtil::getInstance(WCF_DIR.'acp/templates/compiled/')->deletePattern('~.*_'.$this->languageID.'_.*\.php$~');
 	}
 	
 	/**
