@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="{lang}wcf.global.pageDirection{/lang}" lang="{@LANGUAGE_CODE}">
+<html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{@$__wcf->getLanguage()->getFixedLanguageCode()}">
 <head>
 	<meta charset="utf-8" />
 	<title>{if $pageTitle|isset}{@$pageTitle}{else}{lang}wcf.global.pageTitle{/lang}{/if} - {lang}wcf.acp{/lang}</title>

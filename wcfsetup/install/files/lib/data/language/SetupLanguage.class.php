@@ -25,8 +25,6 @@ class SetupLanguage extends Language {
 		}
 		
 		parent::__construct(null, $row, null);
-		
-		$this->defineConstants();
 	}
 	
 	/**
@@ -80,18 +78,6 @@ class SetupLanguage extends Language {
 	}
 	
 	/**
-	 * Defines all global constants.
-	 */
-	private function defineConstants() {
-		if (!defined('LANGUAGE_CODE')) {
-			define('LANGUAGE_CODE', LanguageFactory::fixLanguageCode($this->languageCode));
-			mb_internal_encoding('UTF-8');
-			if (function_exists('mb_regex_encoding')) mb_regex_encoding('UTF-8');
-			mb_language('uni');
-		}
-	}
-	
-	/**
 	 * Sets the local language.
 	 */
 	private function setLocale() {
@@ -99,7 +85,6 @@ class SetupLanguage extends Language {
 		// string comparison
 		// character classification and conversion
 		// date and time formatting
-		if (!defined('PAGE_DIRECTION')) define('PAGE_DIRECTION', $this->get('wcf.global.pageDirection'));
 		setlocale(LC_COLLATE, $this->get('wcf.global.locale.unix').'.UTF-8', $this->get('wcf.global.locale.unix'), $this->get('wcf.global.locale.win'));
 		setlocale(LC_CTYPE, $this->get('wcf.global.locale.unix').'.UTF-8', $this->get('wcf.global.locale.unix'), $this->get('wcf.global.locale.win'));
 	}

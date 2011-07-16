@@ -347,6 +347,12 @@ class WCF {
 			self::getSession()->setLanguageID(intval($_GET['l']));
 		}
 		
+		// set mb settings
+		mb_internal_encoding('UTF-8');
+		if (function_exists('mb_regex_encoding')) mb_regex_encoding('UTF-8');
+		mb_language('uni');
+		
+		// get language
 		self::$languageObj = LanguageFactory::getLanguage(self::getSession()->getLanguageID());
 	}
 	
@@ -484,7 +490,8 @@ class WCF {
 	 * @param	integer		$languageID
 	 */
 	public static final function setLanguage($languageID) {
-		self::$languageObj = new Language($languageID);
+		self::$languageObj = LanguageFactory::getLanguage($languageID);
+		self::getTPL()->setLanguageID(self::getLanguage()->languageID);
 	}
 	
 	/**

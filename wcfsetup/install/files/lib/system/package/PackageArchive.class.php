@@ -410,8 +410,8 @@ class PackageArchive {
 	 * @param 	string		$key
 	 */
 	protected function getLocalizedInformation($key) {
-		if (isset($this->packageInfo[$key][LANGUAGE_CODE])) {
-			$this->packageInfo[$key] = $this->packageInfo[$key][LANGUAGE_CODE];
+		if (isset($this->packageInfo[$key][WCF::getLanguage()->getFixedLanguageCode()])) {
+			$this->packageInfo[$key] = $this->packageInfo[$key][WCF::getLanguage()->getFixedLanguageCode()];
 		}
 		else if (isset($this->packageInfo[$key]['default'])) {
 			$this->packageInfo[$key] = $this->packageInfo[$key]['default'];

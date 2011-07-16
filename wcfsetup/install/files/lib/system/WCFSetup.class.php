@@ -7,7 +7,6 @@ use wcf\data\user\UserAction;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\SQLParser;
 use wcf\system\exception\SystemException;
-use wcf\system\exception\UserInputException;
 use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\language\LanguageFactory;
@@ -132,6 +131,12 @@ class WCFSetup extends WCF {
 	 * Initialises the language engine.
 	 */
 	protected function initLanguage() {
+		// set mb settings
+		mb_internal_encoding('UTF-8');
+		if (function_exists('mb_regex_encoding')) mb_regex_encoding('UTF-8');
+		mb_language('uni');
+		
+		// init setup language
 		self::$languageObj = new SetupLanguage(null, array(
 			'languageCode' => self::$selectedLanguageCode
 		));
@@ -147,6 +152,7 @@ class WCFSetup extends WCF {
 		self::getTPL()->addTemplatePath(PACKAGE_ID, TMP_DIR);
 		self::getTPL()->registerPrefilter(array('lang'));
 		self::getTPL()->assign(array(
+			'__wcf' => $this,
 			'tmpFilePrefix' => TMP_FILE_PREFIX,
 			'languageCode' => self::$selectedLanguageCode,
 			'selectedLanguages' => self::$selectedLanguages,
@@ -1039,7 +1045,8 @@ class WCFSetup extends WCF {
 		WCF::getTPL()->display('stepInstallPackages');
 		
 		// delete tmp files
-		$it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(TMP_DIR));
+		$directory = TMP_DIR.TMP_FILE_PREFIX.'/';
+		$it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory));
 		while ($it->valid()) {
 			// delete all files except directories and packages (required for post-wcfsetup installation)
 			if (!$it->isDot() && !$it->isDir() && !preg_match('~\.tar(\.gz)?$~', $it->getSubPathName())) {

@@ -54,6 +54,24 @@ class Language extends DatabaseObject {
 	public $packageID = PACKAGE_ID;
 	
 	/**
+	 * Returns the fixed language code of this language.
+	 * 
+	 * @return	string
+	 */
+	public function getFixedLanguageCode() {
+		return LanguageFactory::fixLanguageCode($this->languageCode);
+	}
+		
+	/**
+	 * Returns the page direction of this language.
+	 * 
+	 * @return	string
+	 */
+	public function getPageDirection() {
+		return $this->get('wcf.global.pageDirection');
+	}
+	
+	/**
 	 * Returns a single language variable.
 	 * 
 	 * @param	string		$item
