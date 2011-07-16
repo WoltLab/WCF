@@ -125,6 +125,9 @@ class DirectoryUtil {
 		if ($directory === false) {
 			throw new SystemException("Unknown directory '".$tmpDirectory."'");
 		}
+		if (!is_dir($directory)) {
+			throw new SystemException("'".$tmpDirectory."' is no directory");
+		}
 		
 		if (!isset(static::$instances[$recursive][$directory])) {
 			static::$instances[$recursive][$directory] = new static($directory, $recursive);
