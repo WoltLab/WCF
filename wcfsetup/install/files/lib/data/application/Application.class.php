@@ -14,12 +14,17 @@ use wcf\data\DatabaseObject;
  */
 class Application extends DatabaseObject {
 	/**
-	 * @see	DatabaseObject::$databaseTableName
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'application';
 	
 	/**
-	 * @see	DatabaseObject::$databaseTableIndexName
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'packageID';
+	
+	/**
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexIsIdentity
+	 */
+	protected static $databaseTableIndexIsIdentity = false;
 }
