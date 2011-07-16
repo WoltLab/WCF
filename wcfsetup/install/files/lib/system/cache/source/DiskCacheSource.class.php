@@ -87,9 +87,7 @@ class DiskCacheSource implements CacheSource {
 	 */
 	public function clear($directory, $filepattern, $forceDelete = false) {
 		$filepattern = str_replace('*', '.*', str_replace('.', '\.', $filepattern));
-		if (substr($directory, -1) != '/') {
-			$directory .= '/';	
-		}
+		$directory = FileUtil::addTrailingSlash($directory);
 		
 		if (@file_exists($directory)) {
 			$dirh = opendir($directory);
