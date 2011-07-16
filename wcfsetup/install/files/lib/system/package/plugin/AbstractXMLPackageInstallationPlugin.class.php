@@ -54,7 +54,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	/**
 	 * Deletes items.
 	 * 
-	 * @param	DOMXPath $xpath
+	 * @param	\DOMXPath	$xpath
 	 */
 	protected function deleteItems(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:delete/ns:'.$this->tagName);
@@ -83,7 +83,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	/**
 	 * Imports or updates items.
 	 * 
-	 * @param	DOMXPath	$xpath
+	 * @param	\DOMXPath	$xpath
 	 */	
 	protected function importItems(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:'.$this->tagName);

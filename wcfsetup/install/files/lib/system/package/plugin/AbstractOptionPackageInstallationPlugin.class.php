@@ -144,7 +144,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	/**
 	 * Imports options.
 	 * 
-	 * @param	DOMXPath	$xpath 
+	 * @param	\DOMXPath	$xpath 
 	 */
 	protected function importOptions(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:options/ns:option');
