@@ -136,10 +136,12 @@ class DirectoryUtil {
 	/**
 	 * Returns a sorted list of files
 	 *
-	 * @param	integer		$order	sort-order
+	 * @param	integer		$order			sort-order
+	 * @param	string		$pattern			pattern to match
+	 * @param	boolean		$negativeMatch	should the pattern be inversed
 	 * @return	array<string>
 	 */
-	public function getFiles($order = SORT_ASC, $pattern = '') {
+	public function getFiles($order = SORT_ASC, $pattern = '', $negativeMatch = false) {
 		// scan the folder
 		$this->scanFiles();
 		$files = $this->files;
@@ -147,7 +149,7 @@ class DirectoryUtil {
 		// sort out non matching files
 		if (!empty($pattern)) {
 			foreach ($files as $filename => $value) {
-				if (!preg_match($pattern, $filename)) unset($files[$filename]);
+				if (!preg_match($pattern, $filename) == $negativeMatch) unset($files[$filename]);
 			}
 		}
 
@@ -170,10 +172,12 @@ class DirectoryUtil {
 	/**
 	 * Returns a sorted list of files, with DirectoryIterator object as value
 	 *
-	 * @param	integer				$order	sort-order
+	 * @param	integer				$order			sort-order
+	 * @param	string				$pattern			pattern to match
+	 * @param	boolean				$negativeMatch	should the pattern be inversed
 	 * @return	array<DirectoryIterator>
 	 */
-	public function getFilesObj($order = SORT_ASC, $pattern = '') {
+	public function getFilesObj($order = SORT_ASC, $pattern = '', $negativeMatch = false) {
 		// scan the folder
 		$this->scanFilesObj();
 		$objects = $this->filesObj;
@@ -181,7 +185,7 @@ class DirectoryUtil {
 		// sort out non matching files
 		if (!empty($pattern)) {
 			foreach ($objects as $filename => $value) {
-				if (!preg_match($pattern, $filename)) unset($objects[$filename]);
+				if (!preg_match($pattern, $filename) == $negativeMatch) unset($objects[$filename]);
 			}
 		}
 
