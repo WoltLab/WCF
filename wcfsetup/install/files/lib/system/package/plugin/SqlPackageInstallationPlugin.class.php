@@ -16,12 +16,12 @@ use wcf\util\StringUtil;
  */
 class SqlPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */	
 	public $tableName = 'package_installation_sql_log';
 	
 	/**
-	 * @see PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();

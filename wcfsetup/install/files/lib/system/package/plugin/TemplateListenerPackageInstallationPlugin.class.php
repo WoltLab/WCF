@@ -15,22 +15,22 @@ use wcf\system\WCF;
  */
 class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$className
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\template\listener\TemplateListenerEditor';
 	
 	/**
-	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */	
 	public $tableName = 'template_listener';
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::$tagName
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
 	 */	
 	public $tagName = 'templatelistener';
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -52,7 +52,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
 		return array(
@@ -65,7 +65,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
@@ -90,7 +90,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	}
 	
 	/**
-	 * @see	 PackageInstallationPlugin::uninstall()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		parent::uninstall();
@@ -99,7 +99,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::cleanup()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
 	 */	
 	protected function cleanup() {
 		// clear cache immediately

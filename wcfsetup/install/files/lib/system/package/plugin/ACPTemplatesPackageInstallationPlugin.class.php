@@ -18,17 +18,17 @@ use wcf\util\FileUtil;
  */
 class ACPTemplatesPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see AbstractPackageInstallationPlugin::$tableName
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'acp_template';
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::$tagName
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
 	 */	
 	public $tagName = 'acptemplates';
 
 	/**
-	 * @see PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();
@@ -58,7 +58,7 @@ class ACPTemplatesPackageInstallationPlugin extends AbstractPackageInstallationP
 	}
 	
 	/**
-	 * @see PackageInstallationPlugin::uninstall()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// create ACP-templates list

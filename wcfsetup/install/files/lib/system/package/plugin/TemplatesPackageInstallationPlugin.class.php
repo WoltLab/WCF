@@ -18,12 +18,12 @@ use wcf\util\FileUtil;
  */
 class TemplatesPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */	
 	public $tableName = 'template';
 	
 	/**
-	 * @see PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();

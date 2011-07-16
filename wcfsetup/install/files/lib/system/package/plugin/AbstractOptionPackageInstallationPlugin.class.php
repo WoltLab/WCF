@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		AbstractPackageInstallationPlugin::install();
@@ -37,7 +37,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::deleteItems()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::deleteItems()
 	 */	
 	protected function deleteItems(\DOMXPath $xpath) {
 		// delete options
@@ -92,6 +92,11 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		}
 	}
 	
+	/**
+	 * Imports option categories.
+	 * 
+	 * @param	DOMXPath	$xpath 
+	 */
 	protected function importCategories(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:categories/ns:category');
 		foreach ($elements as $element) {
@@ -136,6 +141,11 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		}
 	}
 	
+	/**
+	 * Imports options.
+	 * 
+	 * @param	DOMXPath	$xpath 
+	 */
 	protected function importOptions(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:options/ns:option');
 		foreach ($elements as $element) {
@@ -158,7 +168,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	}
 	
 	/**
-	 * @see	PackageInstallationPlugin::hasUninstall()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::hasUninstall()
 	 */
 	public function hasUninstall() {
 		$hasUninstallOptions = parent::hasUninstall();
@@ -253,17 +263,17 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	protected abstract function saveOption($option, $categoryName, $existingOptionID = 0);
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) { }
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) { }
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
 	protected function findExistingItem(array $data) { }
 }

@@ -19,12 +19,12 @@ use wcf\util\XML;
  */
 class LanguagesPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */	
 	public $tableName = 'language_item';
 	
 	/**
-	 * @see PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		AbstractPackageInstallationPlugin::install();

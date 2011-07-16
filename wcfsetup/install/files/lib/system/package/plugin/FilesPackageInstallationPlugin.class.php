@@ -22,12 +22,12 @@ use wcf\util\StyleUtil;
  */
 class FilesPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */	
 	public $tableName = 'package_installation_file_log';
 	
 	/**
-	 * @see PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();

@@ -19,7 +19,7 @@ use wcf\system\WCF;
  */
 class UserOptionsPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
-	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */	
 	public $tableName = 'user_option';
 
@@ -62,7 +62,7 @@ class UserOptionsPackageInstallationPlugin extends AbstractOptionPackageInstalla
 	}
 	
 	/**
-	 * @see	 AbstractOptionPackageInstallationPlugin::saveOption()
+	 * @see	wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		// default values

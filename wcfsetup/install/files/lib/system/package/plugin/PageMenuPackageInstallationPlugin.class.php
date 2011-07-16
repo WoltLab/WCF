@@ -15,22 +15,22 @@ use wcf\util\ClassUtil;
  */
 class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPlugin {
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$className
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\page\menu\item\PageMenuItemEditor';
 	
 	/**
-	 * @see	AbstractPackageInstallationPlugin::$tableName
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */	
 	public $tableName = 'page_menu_item';
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::$tagName
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
 	 */	
 	public $tagName = 'pagemenuitem';
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
 		$result = parent::prepareImport($data);

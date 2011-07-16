@@ -17,27 +17,27 @@ use wcf\system\WCF;
 abstract class AbstractPackageInstallationPlugin implements PackageInstallationPlugin {
 	/**
 	 * database table name
-	 * @var string
+	 * @var	string
 	 */
 	public $tableName = '';
 	
 	/**
-	 * active instance of PackageInstallationQueue
-	 * @var PackageInstallationQueue
+	 * active instance of PackageInstallationDispatcher
+	 * @var	wcf\system\package\PackageInstallationDispatcher
 	 */
 	public $installation = null;
 	
 	/**
 	 * install/update instructions
-	 * @var array
+	 * @var	array
 	 */
 	public $instruction = array();
 	
 	/**
 	 * Creates a new AbstractPackageInstallationPlugin object.
 	 * 
-	 * @param 	PackageInstallationDispatcher	$installation
-	 * @param	array				$instruction
+	 * @param	wcf\system\package\PackageInstallationDispatcher	$installation
+	 * @param	array		$instruction
 	 */
 	public function __construct(PackageInstallationDispatcher $installation, $instruction = array()) {
 		$this->installation = $installation;
@@ -48,7 +48,7 @@ abstract class AbstractPackageInstallationPlugin implements PackageInstallationP
 	}
 	
 	/**
-	 * @see	 PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		// call install event
@@ -56,7 +56,7 @@ abstract class AbstractPackageInstallationPlugin implements PackageInstallationP
 	}
 	
 	/**
-	 * @see	 PackageInstallationPlugin::update()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::update()
 	 */
 	public function update() {
        		// call update event
@@ -66,7 +66,7 @@ abstract class AbstractPackageInstallationPlugin implements PackageInstallationP
 	}
 	
 	/**
-	 * @see	 PackageInstallationPlugin::hasUninstall()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::hasUninstall()
 	 */
 	public function hasUninstall() {
 		// call hasUninstall event
@@ -82,7 +82,7 @@ abstract class AbstractPackageInstallationPlugin implements PackageInstallationP
 	}
 	
 	/**
-	 * @see	 PackageInstallationPlugin::uninstall()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// call uninstall event

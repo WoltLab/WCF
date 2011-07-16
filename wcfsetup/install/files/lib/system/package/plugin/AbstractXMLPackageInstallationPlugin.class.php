@@ -19,7 +19,7 @@ use wcf\util\XML;
 abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
 	 * object editor class name
-	 * @var string
+	 * @var	string
 	 */
 	public $className = '';
 	
@@ -30,7 +30,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	public $tagName = '';
 	
 	/**
-	 * @see	 PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();

@@ -15,7 +15,7 @@ use wcf\util\FileUtil;
  */
 class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();
