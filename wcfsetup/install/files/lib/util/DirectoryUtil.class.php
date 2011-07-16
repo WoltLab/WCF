@@ -167,10 +167,17 @@ class DirectoryUtil {
 	 * @param	integer		$order	sort-order
 	 * @return	array<string>
 	 */
-	public function getFiles($order = SORT_ASC) {
+	public function getFiles($order = SORT_ASC, $pattern = '') {
 		// scan the folder
 		$this->scanFiles();
 		$files = $this->files;
+
+		// sort out non matching files
+		if (!empty($pattern)) {
+			foreach ($files as $filename => $value) {
+				if (!preg_match($pattern, $filename)) unset($files[$filename]);
+			}
+		}
 
 		if ($order == SORT_DESC) {
 			krsort($files, $order);
@@ -194,10 +201,17 @@ class DirectoryUtil {
 	 * @param	integer				$order	sort-order
 	 * @return	array<DirectoryIterator>
 	 */
-	public function getFilesObj($order = SORT_ASC) {
+	public function getFilesObj($order = SORT_ASC, $pattern = '') {
 		// scan the folder
 		$this->scanFilesObj();
 		$objects = $this->filesObj;
+
+		// sort out non matching files
+		if (!empty($pattern)) {
+			foreach ($objects as $filename => $value) {
+				if (!preg_match($pattern, $filename)) unset($objects[$filename]);
+			}
+		}
 
 		if ($order == SORT_DESC) {
 			krsort($objects, $order);
