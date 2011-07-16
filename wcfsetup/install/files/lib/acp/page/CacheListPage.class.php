@@ -114,6 +114,50 @@ class CacheListPage extends AbstractPage {
 			$this->cacheData['files'] = $stats['curr_items'];
 			$this->cacheData['size'] = $stats['bytes'];
 		}
+		// apc
+		else if ($this->cacheData['source'] == 'wcf\system\cache\source\ApcCacheSource') {
+			// set version
+			$this->cacheData['version'] = phpversion('apc');
+			
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+			$conditions->add("standalone = ?", array(1));
+			
+			// get package dirs
+			$sql = "SELECT	packageDir, packageName, instanceNo
+				FROM	wcf".WCF_N."_package
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			$pattern = array();
+			$packageNames = array();
+			while ($row = $statement->fetchArray()) {
+				$packagePath = FileUtil::getRealPath(WCF_DIR.$row['packageDir']).'cache/';
+				$packageNames[$packagePath] = $row['packageName'].' #'.$row['instanceNo'];
+			}
+			
+			$apcinfo = apc_cache_info('user');
+			$cacheList = $apcinfo['cache_list'];
+			foreach ($cacheList as $cache) {
+				$cachePath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(dirname($cache['info'])));
+				if (isset($packageNames[$cachePath])) {
+					// Use the pacakgeName + the instance number, because pathes could confuse the administrator.
+					// He could think this is a file cache. If instanceName would be unique, we could use it instead.
+					$packageName = $packageNames[$cachePath];
+					if (!isset($this->caches[$packageName])) $this->caches[$packageName] = array();
+					
+					// get additional cache information
+					$this->caches[$packageName][] = array(
+						'filename' => basename($cache['info'], '.php'),
+						'filesize' => $cache['mem_size'],
+						'mtime' => $cache['mtime'],
+					);
+					
+					$this->cacheData['files']++;
+					$this->cacheData['size'] += $cache['mem_size'];
+				}
+			}
+		}
 	}
 	
 	/**
