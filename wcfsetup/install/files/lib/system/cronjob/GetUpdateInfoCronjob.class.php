@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\cronjob;
-use wcf\acp\package\update\PackageUpdate;
+use wcf\data\package\update\PackageUpdate;
 
 /**
  * Gets update package information.
@@ -14,7 +14,7 @@ use wcf\acp\package\update\PackageUpdate;
  */
 class GetUpdateInfoCronjob implements Cronjob {
 	/**
-	 * @see	Cronjob::execute()
+	 * @see	wcf\system\cronjob\Cronjob::execute()
 	 * @TODO Change path and move method to lib/system/package
 	 */
 	public function execute(array $data) {

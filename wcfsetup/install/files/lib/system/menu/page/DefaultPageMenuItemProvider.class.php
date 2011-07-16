@@ -13,14 +13,14 @@ namespace wcf\system\menu\page;
  */
 class DefaultPageMenuItemProvider implements PageMenuItemProvider {
 	/**
-	 * @see PageMenuItemProvider::isVisible()
+	 * @see wcf\system\menu\page\PageMenuItemProvider::isVisible()
 	 */
 	public function isVisible() {
 		return true;
 	}
 	
 	/**
-	 * @see PageMenuItemProvider::getNotifications()
+	 * @see wcf\system\menu\page\PageMenuItemProvider::getNotifications()
 	 */
 	public function getNotifications() {
 		return 0;

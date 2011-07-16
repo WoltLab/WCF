@@ -14,7 +14,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  */
 class ACPSessionAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see AbstractDatabaseObjectAction::$className
+	 * @see wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\acp\session\ACPSessionEditor';
 }

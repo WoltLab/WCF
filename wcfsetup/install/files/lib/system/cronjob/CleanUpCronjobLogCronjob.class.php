@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 class CleanUpCronjobLogCronjob implements Cronjob {
 	/**
-	 * @see Cronjob::execute()
+	 * @see wcf\system\cronjob\Cronjob::execute()
 	 */
 	public function execute(array $data) {
 		$sql = "DELETE FROM	wcf".WCF_N."_cronjobs_log

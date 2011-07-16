@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 class CacheBuilderPackage implements CacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\CacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		$packageList = new PackageList();

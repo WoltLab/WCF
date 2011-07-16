@@ -15,7 +15,7 @@ use wcf\system\option\OptionTypeText;
  */
 class GroupOptionTypeText extends OptionTypeText implements GroupOptionType {
 	/**
-	 * @see GroupOptionType::merge()
+	 * @see wcf\system\option\group\GroupOptionType::merge()
 	 */
 	public function merge(array $values) {
 		$result = '';

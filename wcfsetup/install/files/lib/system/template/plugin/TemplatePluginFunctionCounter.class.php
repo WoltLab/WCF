@@ -21,7 +21,7 @@ class TemplatePluginFunctionCounter implements TemplatePluginFunction {
 	protected $counters = array();
 	
 	/**
-	 * @see TemplatePluginFunction::execute()
+	 * @see wcf\system\template\TemplatePluginFunction::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (!isset($tagArgs['name'])) {

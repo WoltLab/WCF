@@ -38,7 +38,7 @@ class PackageListPage extends SortablePage {
 	public $objectListClassName = 'wcf\data\package\PackageList';
 	
 	/**
-	 * @see	wcf\page\MuletipleLinkPage::readObjects()
+	 * @see	wcf\page\MultipleLinkPage::readObjects()
 	 */	
 	protected function readObjects() {
 		$this->sqlOrderBy = 'package.'.($this->sortField == 'packageType' ? 'standalone '.$this->sortOrder.', package.parentPackageID '.$this->sortOrder : $this->sortField.' '.$this->sortOrder).($this->sortField != 'packageName' ? ', package.packageName ASC' : '');

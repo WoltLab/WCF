@@ -38,7 +38,7 @@ class GroupOptionsPackageInstallationPlugin extends AbstractOptionPackageInstall
 	}
 	
 	/**
-	 * @see	 AbstractOptionPackageInstallationPlugin::saveOption()
+	 * @see	 wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		// default values

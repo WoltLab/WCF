@@ -13,7 +13,7 @@ namespace wcf\system\mail;
  */
 class PHPMailSender extends MailSender {
 	/**
-	 * @see MailSender::sendMail()
+	 * @see wcf\system\mail\MailSender::sendMail()
 	 */
 	public function sendMail(Mail $mail) {
 		if (MAIL_USE_F_PARAM) return @mb_send_mail($mail->getToString(), $mail->getSubject(), $mail->getBody(), $mail->getHeader(), '-f'.MAIL_FROM_ADDRESS);

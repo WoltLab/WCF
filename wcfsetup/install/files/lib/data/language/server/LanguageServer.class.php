@@ -14,12 +14,12 @@ use wcf\data\DatabaseObject;
  */
 class LanguageServer extends DatabaseObject {
 	/**
-	 * @see	DatabaseObject::$databaseTableName
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'language_server';
 	
 	/**
-	 * @see	DatabaseObject::$databaseTableIndexName
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'languageServerID';
 }

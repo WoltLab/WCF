@@ -14,7 +14,7 @@ use wcf\data\spider\SpiderList;
  */
 class CacheBuilderSpider implements CacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\CacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		$spiderList = new SpiderList();

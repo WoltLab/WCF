@@ -25,7 +25,7 @@ class TemplatePluginBlockLink implements TemplatePluginBlock {
 	protected $counter = 0;
 	
 	/**
-	 * @see TemplatePluginBlock::execute()
+	 * @see wcf\system\template\TemplatePluginBlock::execute()
 	 */
 	public function execute($tagArgs, $blockContent, TemplateEngine $tplObj) {
 		$application = 'wcf';
@@ -37,14 +37,14 @@ class TemplatePluginBlockLink implements TemplatePluginBlock {
 	}
 	
 	/**
-	 * @see TemplatePluginBlock::init()
+	 * @see wcf\system\template\TemplatePluginBlock::init()
 	 */
 	public function init($tagArgs, TemplateEngine $tplObj) {
 		$this->counter = 0;
 	}
 	
 	/**
-	 * @see TemplatePluginBlock::next()
+	 * @see wcf\system\template\TemplatePluginBlock::next()
 	 */
 	public function next(TemplateEngine $tplObj) {
 		if ($this->counter == 0) {

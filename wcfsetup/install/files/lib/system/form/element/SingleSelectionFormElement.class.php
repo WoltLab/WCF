@@ -13,7 +13,7 @@ namespace wcf\system\form\element;
  */
 class SingleSelectionFormElement extends AbstractNamedFormElement {
 	/**
-	 * @see	FormElement::getHTML()
+	 * @see	wcf\system\form\FormElement::getHTML()
 	 */
 	public function getHTML($formName) {
 		return <<<HTML

@@ -44,14 +44,14 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	}
 	
 	/**
-	 * @see DatabaseObject::__get()
+	 * @see wcf\data\DatabaseObject::__get()
 	 */
 	public function __get($name) {
 		return $this->object->__get($name);
 	}
 	
 	/**
-	 * @see DatabaseObject::__isset()
+	 * @see wcf\data\DatabaseObject::__isset()
 	 */
 	public function __isset($name) {
 		return $this->object->__isset($name);
@@ -73,21 +73,21 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	}
 	
 	/**
-	 * @see StorableObject::getDatabaseTableName()
+	 * @see wcf\data\StorableObject::getDatabaseTableName()
 	 */
 	public static function getDatabaseTableName() {
 		return call_user_func(array(static::$baseClass, 'getDatabaseTableName'));
 	}
 	
 	/**
-	 * @see	StorableObject::getDatabaseTableIndexIsIdentity()
+	 * @see	wcf\data\StorableObject::getDatabaseTableIndexIsIdentity()
 	 */
 	public static function getDatabaseTableIndexIsIdentity() {
 		return call_user_func(array(static::$baseClass, 'getDatabaseTableIndexIsIdentity'));
 	}
 	
 	/**
-	 * @see StorableObject::getDatabaseTableIndexName()
+	 * @see wcf\data\StorableObject::getDatabaseTableIndexName()
 	 */
 	public static function getDatabaseTableIndexName() {
 		return call_user_func(array(static::$baseClass, 'getDatabaseTableIndexName'));

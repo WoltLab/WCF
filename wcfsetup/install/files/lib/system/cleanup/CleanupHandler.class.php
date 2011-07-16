@@ -22,7 +22,7 @@ class CleanupHandler {
 	/**
 	 * unique instance of CleanupHandler
 	 * 
-	 * @var	CleanupHandler
+	 * @var	wcf\system\cleanup\CleanupHandler
 	 */
 	protected static $instance = null;
 	

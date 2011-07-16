@@ -53,7 +53,7 @@ class TemplatePluginFunctionSmallpages implements TemplatePluginFunction {
 	}
 	
 	/**
-	 * @see TemplatePluginFunction::execute()
+	 * @see wcf\system\template\TemplatePluginFunction::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// needed params: link, pages

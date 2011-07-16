@@ -16,12 +16,12 @@ use wcf\util\FileUtil;
  */
 class TemplateGroupEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	wcf\data\DatabaseObjectEditor::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\template\group\TemplateGroup';
 	
 	/**
-	 * @see	DatabaseObjectEditor::update()
+	 * @see	wcf\data\DatabaseObjectEditor::update()
 	 */
 	public function update(array $parameters = array()) {
 		parent::update($parameters);

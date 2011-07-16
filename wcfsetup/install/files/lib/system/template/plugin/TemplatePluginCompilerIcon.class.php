@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  */
 class TemplatePluginCompilerIcon implements TemplatePluginCompiler {
 	/**
-	 * @see TemplatePluginCompiler::executeStart()
+	 * @see wcf\system\template\TemplatePluginCompiler::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		$compiler->pushTag('icon');
@@ -27,7 +27,7 @@ class TemplatePluginCompilerIcon implements TemplatePluginCompiler {
 	}
 	
 	/**
-	 * @see TemplatePluginCompiler::executeEnd()
+	 * @see wcf\system\template\TemplatePluginCompiler::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		$compiler->popTag('icon');

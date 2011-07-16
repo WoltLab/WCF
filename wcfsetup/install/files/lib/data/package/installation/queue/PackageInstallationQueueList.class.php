@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectList;
  */
 class PackageInstallationQueueList extends DatabaseObjectList {
 	/**
-	 * @see	DatabaseObjectList::$className
+	 * @see	wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\package\installation\queue\PackageInstallationQueue';
 }

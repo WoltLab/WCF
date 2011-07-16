@@ -12,6 +12,7 @@ use wcf\system\io\TarWriter;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
+use wcf\util\StyleUtil;
 use wcf\util\XML;
 
 /**
@@ -32,12 +33,12 @@ class StyleEditor extends DatabaseObjectEditor implements EditableCachedObject {
 	const STYLE_PREVIEW_IMAGE_MAX_HEIGHT = 140;
 	
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	wcf\data\DatabaseObjectEditor::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\style\Style';
 	
 	/**
-	 * @see EditableObject::update()
+	 * @see wcf\data\EditableObject::update()
 	 */
 	public function update(array $parameters = array()) {
 		$variables = null;
@@ -61,7 +62,7 @@ class StyleEditor extends DatabaseObjectEditor implements EditableCachedObject {
 	}
 	
 	/**
-	 * @see EditableObject::delete()
+	 * @see wcf\data\EditableObject::delete()
 	 */
 	public function delete() {
 		parent::delete();

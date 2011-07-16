@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class LanguageCategoryEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	wcf\data\DatabaseObjectEditor::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\language\category\LanguageCategory';
 }

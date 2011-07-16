@@ -21,7 +21,7 @@ class ACPTemplatesPackageInstallationPlugin extends AbstractPackageInstallationP
 	public $tableName = 'acp_template';
 	
 	/**
-	 * @see PackageInstallationPlugin::install()
+	 * @see wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();
@@ -51,7 +51,7 @@ class ACPTemplatesPackageInstallationPlugin extends AbstractPackageInstallationP
 	}
 	
 	/**
-	 * @see PackageInstallationPlugin::uninstall()
+	 * @see wcf\system\package\plugin\PackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// create ACP-templates list

@@ -20,12 +20,12 @@ use wcf\util\StringUtil;
  */
 class User extends DatabaseObject {
 	/**
-	 * @see	DatabaseObject::$databaseTableName
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'user';
 	
 	/**
-	 * @see	DatabaseObject::$databaseTableIndexName
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'userID';
 	

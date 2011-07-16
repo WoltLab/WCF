@@ -41,7 +41,7 @@ abstract class AbstractAction implements Action {
 	}
 	
 	/**
-	 * @see Action::readParameters()
+	 * @see wcf\action\Action::readParameters()
 	 */
 	public function readParameters() {
 		// call readParameters event
@@ -49,7 +49,7 @@ abstract class AbstractAction implements Action {
 	}
 	
 	/**
-	 * @see Action::execute()
+	 * @see wcf\action\Action::execute()
 	 */
 	public function execute() {
 		// check modules

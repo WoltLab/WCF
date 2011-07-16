@@ -27,7 +27,7 @@ use wcf\util\StringUtil;
  */
 class TemplatePluginPrefilterHascontent implements TemplatePluginPrefilter {
 	/**
-	 * @see TemplatePluginPrefilter::execute()
+	 * @see wcf\system\template\plugin\TemplatePluginPrefilter::execute()
 	 */
 	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');

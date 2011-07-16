@@ -13,7 +13,7 @@ namespace wcf\system\exception;
  */
 abstract class UserException extends \Exception implements PrintableException {
 	/**
-	 * @see PrintableException::show()
+	 * @see wcf\system\exception\PrintableException::show()
 	 */
 	public function show() {
 		echo '<pre>' . $this->getTraceAsString() . '</pre>';

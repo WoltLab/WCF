@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 abstract class AbstractApplication implements Application {
 	/**
-	 * @see	Application::__callStatic()
+	 * @see	wcf\system\application\Application::__callStatic()
 	 */
 	public static function __callStatic($method, array $arguments) {
 		return call_user_func_array(array('wcf\system\WCF', $method), $arguments);

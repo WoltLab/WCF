@@ -22,7 +22,7 @@ class OptionTypeDate implements OptionType, SearchableUserOption {
 	protected $yearRequired = true;
 	
 	/**
-	 * @see OptionType::getFormElement()
+	 * @see wcf\system\option\OptionType::getFormElement()
 	 */
 	public function getFormElement(array &$optionData) {
 		if (!isset($optionData['optionValue'])) {
@@ -84,7 +84,7 @@ class OptionTypeDate implements OptionType, SearchableUserOption {
 	}
 	
 	/**
-	 * @see OptionType::validate()
+	 * @see wcf\system\option\OptionType::validate()
 	 */
 	public function validate(array $optionData, $newValue) {
 		$this->getValue($newValue);
@@ -104,7 +104,7 @@ class OptionTypeDate implements OptionType, SearchableUserOption {
 	}
 	
 	/**
-	 * @see OptionType::getData()
+	 * @see wcf\system\option\OptionType::getData()
 	 */
 	public function getData(array $optionData, $newValue) {
 		$this->getValue($newValue);
@@ -125,14 +125,14 @@ class OptionTypeDate implements OptionType, SearchableUserOption {
 	}
 	
 	/**
-	 * @see SearchableUserOption::getSearchFormElement()
+	 * @see wcf\system\option\SearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(array &$optionData) {
 		return $this->getFormElement($optionData);
 	}
 	
 	/**
-	 * @see SearchableUserOption::getCondition()
+	 * @see wcf\system\option\SearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		$value = $this->getData($optionData, $value);

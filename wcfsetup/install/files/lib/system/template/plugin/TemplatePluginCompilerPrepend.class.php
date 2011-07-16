@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  */
 class TemplatePluginCompilerPrepend implements TemplatePluginCompiler {
 	/**
-	 * @see TemplatePluginCompiler::executeStart()
+	 * @see wcf\system\template\TemplatePluginCompiler::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		if (!isset($tagArgs['var'])) {
@@ -33,7 +33,7 @@ class TemplatePluginCompilerPrepend implements TemplatePluginCompiler {
 	}
 	
 	/**
-	 * @see TemplatePluginCompiler::executeEnd()
+	 * @see wcf\system\template\TemplatePluginCompiler::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		throw new SystemException($compiler->formatSyntaxError("unknown tag {/prepend}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()), 12003);

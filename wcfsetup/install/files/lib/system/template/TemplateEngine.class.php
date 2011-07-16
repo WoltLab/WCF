@@ -105,7 +105,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Creates a new instance of TemplateEngine.
 	 * 
-	 * @see	TemplateEngine::getInstance()
+	 * @see	wcf\system\template\TemplateEngine::getInstance()
 	 */
 	protected function init() {
 		$this->templatePaths = array(1 => WCF_DIR.'templates/');

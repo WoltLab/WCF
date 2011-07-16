@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  */
 class TemplatePluginModifierEncodejs implements TemplatePluginModifier {
 	/**
-	 * @see TemplatePluginModifier::execute()
+	 * @see wcf\system\template\TemplatePluginModifier::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// escape backslash

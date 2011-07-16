@@ -14,7 +14,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  */
 class StyleAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see AbstractDatabaseObjectAction::$className
+	 * @see wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\style\StyleEditor';
 }

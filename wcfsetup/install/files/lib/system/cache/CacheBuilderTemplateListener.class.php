@@ -15,7 +15,7 @@ use wcf\system\package\PackageDependencyHandler;
  */
 class CacheBuilderTemplateListener implements CacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\CacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		list($cache, $packageID, $environment) = explode('-', $cacheResource['cache']); 

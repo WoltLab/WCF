@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\image;
+use wcf\system\io\File;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 

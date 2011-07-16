@@ -18,7 +18,7 @@ use wcf\util\DateUtil;
  */
 class OptionTypeTimezone implements OptionType {
 	/**
-	 * @see OptionType::getFormElement()
+	 * @see wcf\system\option\OptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		$timezoneOptions = array();
@@ -35,7 +35,7 @@ class OptionTypeTimezone implements OptionType {
 	}
 	
 	/**
-	 * @see OptionType::validate()
+	 * @see wcf\system\option\OptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!in_array($newValue, DateUtil::getAvailableTimezones())) {
@@ -44,7 +44,7 @@ class OptionTypeTimezone implements OptionType {
 	}
 	
 	/**
-	 * @see OptionType::getData()
+	 * @see wcf\system\option\OptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		return $newValue;		

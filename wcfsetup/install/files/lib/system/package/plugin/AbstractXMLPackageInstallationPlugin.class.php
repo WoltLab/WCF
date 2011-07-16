@@ -36,7 +36,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	public $tagName = '';
 	
 	/**
-	 * @see	 PackageInstallationPlugin::install()
+	 * @see	 wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();

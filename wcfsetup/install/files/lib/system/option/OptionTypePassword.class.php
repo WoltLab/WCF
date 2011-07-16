@@ -16,12 +16,12 @@ use wcf\system\option\OptionTypeText;
  */
 class OptionTypePassword extends OptionTypeText {
 	/**
-	 * @see OptionTypeText::$inputType
+	 * @see wcf\system\option\OptionTypeText::$inputType
 	 */
 	protected $inputType = 'password';
 	
 	/**
-	 * @see SearchableUserOption::getCondition()
+	 * @see wcf\system\option\SearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		return false;

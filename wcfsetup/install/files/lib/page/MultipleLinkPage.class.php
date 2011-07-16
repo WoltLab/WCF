@@ -96,7 +96,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	public $sqlOrderBy = '';
 	
 	/**
-	 * @see Page::readParameters()
+	 * @see wcf\page\Page::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -106,7 +106,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -189,7 +189,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

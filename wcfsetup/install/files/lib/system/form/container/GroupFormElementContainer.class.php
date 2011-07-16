@@ -13,7 +13,7 @@ namespace wcf\system\form\container;
  */
 class GroupFormElementContainer extends AbstractFormElementContainer {
 	/**
-	 * @see	FormElementContainer::getHTML()
+	 * @see	wcf\system\form\FormElementContainer::getHTML()
 	 */
 	public function getHTML($formName) {
 		$content = '';

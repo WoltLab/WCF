@@ -19,7 +19,7 @@ class CacheBuilderUserGroupPermission implements CacheBuilder {
 	protected $typeObjects = array();
 	
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\CacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		list($cache, $packageID, $groupIDs) = explode('-', $cacheResource['cache']);

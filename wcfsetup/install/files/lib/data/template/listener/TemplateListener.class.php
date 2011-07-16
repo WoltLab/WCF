@@ -14,12 +14,12 @@ use wcf\data\DatabaseObject;
  */
 class TemplateListener extends DatabaseObject {
 	/**
-	 * @see	DatabaseObject::$databaseTableName
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'template_listener';
 	
 	/**
-	 * @see	DatabaseObject::$databaseTableIndexName
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'listenerID';
 }

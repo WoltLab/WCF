@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class Style extends DatabaseObject {
 	/**
-	 * @see	DatabaseObject::$databaseTableName
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'style';
 	
 	/**
-	 * @see	DatabaseObject::$databaseTableIndexName
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'styleID';
 	

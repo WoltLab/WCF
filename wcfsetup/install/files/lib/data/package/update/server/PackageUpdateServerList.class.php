@@ -14,12 +14,12 @@ use wcf\data\DatabaseObjectList;
  */
 class PackageUpdateServerList extends DatabaseObjectList {
 	/**
-	 * @see	DatabaseObjectList::$className
+	 * @see	wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\package\update\server\PackageUpdateServer';
 	
 	/**
-	 * @see	DatabaseObjectList::readObjects()
+	 * @see	wcf\data\DatabaseObjectList::readObjects()
 	 */
 	public function readObjects() {
 		if (!empty($this->sqlSelects)) $this->sqlSelects .= ',';

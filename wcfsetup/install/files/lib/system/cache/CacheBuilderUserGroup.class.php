@@ -14,7 +14,7 @@ use wcf\data\user\group\UserGroupList;
  */
 class CacheBuilderUserGroup implements CacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\CacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		$data = array('types' => array(), 'groups' => array());

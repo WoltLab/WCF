@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\acp\session;
+use wcf\data\DatabaseObjectList;
 
 /**
  * Represents a list of ACP sessions.
@@ -13,7 +14,7 @@ namespace wcf\data\acp\session;
  */
 class ACPSessionList extends DatabaseObjectList {
 	/**
-	 * @see	DatabaseObjectList::$className
+	 * @see	wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\acp\session\ACPSession';
 }

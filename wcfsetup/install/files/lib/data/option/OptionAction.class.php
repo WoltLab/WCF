@@ -16,22 +16,22 @@ use wcf\system\WCF;
  */
 class OptionAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see AbstractDatabaseObjectAction::$className
+	 * @see wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\option\OptionEditor';
 	
 	/**
-	 * @see	AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
 	protected $permissionsCreate = array('admin.system.canEditOption');
 	
 	/**
-	 * @see	AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
 	protected $permissionsDelete = array('admin.system.canEditOption');
 	
 	/**
-	 * @see	AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.system.canEditOption');
 	

@@ -19,7 +19,7 @@ class OptionsPackageInstallationPlugin extends AbstractOptionPackageInstallation
 	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'validationpattern', 'enableoptions', 'showorder', 'hidden', 'selectoptions', 'categoryname', 'permissions', 'options', 'attrs', 'cdata');
 	
 	/**
-	 * @see	 AbstractOptionPackageInstallationPlugin::saveOption()
+	 * @see	 wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		// default values

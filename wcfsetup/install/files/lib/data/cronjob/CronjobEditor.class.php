@@ -17,12 +17,12 @@ use wcf\system\WCF;
  */
 class CronjobEditor extends DatabaseObjectEditor implements EditableCachedObject {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	wcf\data\DatabaseObjectEditor::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\cronjob\Cronjob';
 	
 	/**
-	 * @see EditableCachedObject::resetCache()
+	 * @see wcf\data\EditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.cronjobs-*');

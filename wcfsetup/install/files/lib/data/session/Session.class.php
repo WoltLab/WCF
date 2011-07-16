@@ -14,12 +14,12 @@ use wcf\data\acp\session\ACPSession;
  */
 class Session extends ACPSession {
 	/**
-	 * @see	DatabaseObject::$databaseTableName
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'session';
 	
 	/**
-	 * @see	DatabaseObject::$databaseTableIndexName
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'sessionID';
 }

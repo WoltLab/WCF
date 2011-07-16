@@ -25,7 +25,7 @@ class TemplatePluginFunctionHtmlcheckboxes implements TemplatePluginFunction {
 	protected $disableEncoding = false;
 	
 	/**
-	 * @see TemplatePluginFunction::execute()
+	 * @see wcf\system\template\TemplatePluginFunction::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// get options

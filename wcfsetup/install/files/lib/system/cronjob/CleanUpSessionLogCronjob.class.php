@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 class CleanUpSessionLogCronjob implements Cronjob {
 	/**
-	 * @see Cronjob::execute()
+	 * @see wcf\system\cronjob\Cronjob::execute()
 	 */
 	public function execute(array $data) {
 		// delete access log

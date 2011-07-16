@@ -14,22 +14,22 @@ use wcf\data\AbstractDatabaseObjectAction;
  */
 class PackageAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see AbstractDatabaseObjectAction::$className
+	 * @see wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\package\PackageEditor';
 	
 	/**
-	 * @see	AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
 	protected $permissionsCreate = array('admin.system.package.canInstallPackage');
 	
 	/**
-	 * @see	AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
 	protected $permissionsDelete = array('admin.system.package.canUninstallPackage');
 	
 	/**
-	 * @see	AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.system.package.canUpdatePackage');
 }
