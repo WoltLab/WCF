@@ -23,9 +23,9 @@ class MemcacheAdapter extends SingletonFactory {
 	private $memcache = null;
 	
 	/**
-	 * Creates a new MemcacheAdapter object.
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
-	protected function __construct() {
+	protected function init() {
 		if (!class_exists('Memcache')) {
 			throw new SystemException('memcache support is not enabled.');
 		}
