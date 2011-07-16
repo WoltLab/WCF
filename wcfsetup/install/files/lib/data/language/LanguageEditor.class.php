@@ -289,7 +289,7 @@ class LanguageEditor extends DatabaseObjectEditor {
 		if ($category != '.*') $category = preg_quote($category, '~');
 		if ($languageID != '.*') $languageID = intval($languageID);
 		if ($packageID != '.*') $packageID = intval($packageID);
-		
+
 		DirectoryUtil::getInstance(WCF_DIR.'language/')->deletePattern('~'.$packageID.'_'.$languageID.'_'.$category.'\.php$~');
 	}
 	
