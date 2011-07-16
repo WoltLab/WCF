@@ -30,12 +30,12 @@
 	
 	{*
 	<style type="text/css">
-		@import url("{@RELATIVE_WCF_DIR}acp/style/style-{@PAGE_DIRECTION}.css");
+		@import url("{@RELATIVE_WCF_DIR}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css");
 	</style>
 	
 	<!--[if IE 8]>
 		<style type="text/css">
-			@import url("{@RELATIVE_WCF_DIR}style/extra/ie8-fix{if PAGE_DIRECTION == 'rtl'}-rtl{/if}.css");
+			@import url("{@RELATIVE_WCF_DIR}style/extra/ie8-fix{if $__wcf->getLanguage()->getPageDirection() == 'rtl'}-rtl{/if}.css");
 		</style>
 	<![endif]-->
 	*}
