@@ -14,12 +14,12 @@ use wcf\data\DatabaseObjectEditor;
  */
 class UserOptionCategoryEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	UserOptionCategory::$baseClass
+	 * @see	wcf\data\user\option\category\UserOptionCategory::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\option\category\UserOptionCategory';
 	
 	/**
-	 * @see	EditableObject::create()
+	 * @see	wcf\data\EditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		// obtain default values

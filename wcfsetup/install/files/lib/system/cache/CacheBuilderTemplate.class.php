@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 class CacheBuilderTemplate implements CacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\CacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		$information = explode('-', $cacheResource['cache']);

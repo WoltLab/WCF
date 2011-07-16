@@ -20,7 +20,7 @@ use wcf\system\template\TemplatePluginModifier;
  */
 class TemplatePluginModifierConcat implements TemplatePluginModifier {
 	/**
-	 * @see TemplatePluginModifier::execute()
+	 * @see wcf\system\template\TemplatePluginModifier::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (count($tagArgs) < 2) {

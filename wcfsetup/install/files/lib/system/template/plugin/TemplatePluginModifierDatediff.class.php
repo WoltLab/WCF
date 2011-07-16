@@ -20,7 +20,7 @@ use wcf\util\DateUtil;
  */
 class TemplatePluginModifierDatediff implements TemplatePluginModifier {
 	/**
-	 * @see TemplatePluginModifier::execute()
+	 * @see wcf\system\template\TemplatePluginModifier::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// get timestamps

@@ -1,5 +1,8 @@
 <?php
 namespace wcf\action;
+use wcf\util\ArrayUtil;
+use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Abstract handler for object-actions using the AJAX-API.
@@ -20,7 +23,7 @@ abstract class AbstractSecureObjectAction extends AbstractAction {
 	protected $objectIDs = array();
 		
 	/**
-	 * @see	Action::readParameters()
+	 * @see	wcf\action\Action::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -39,7 +42,7 @@ abstract class AbstractSecureObjectAction extends AbstractAction {
 	}
 	
 	/**
-	 * @see		Action::execute()
+	 * @see		wcf\action\Action::execute()
 	 * @todo	Add validation for $actionClass, $data and $objectIDs,
 	 * 		possibly with some kind of derived exception maintaining
 	 * 		a js-readable output (do not use printable exception!)

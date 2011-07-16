@@ -21,7 +21,7 @@ class LanguagesPackageInstallationPlugin extends AbstractXMLPackageInstallationP
 	public $tableName = 'language_item';
 	
 	/**
-	 * @see PackageInstallationPlugin::install()
+	 * @see wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		AbstractPackageInstallationPlugin::install();

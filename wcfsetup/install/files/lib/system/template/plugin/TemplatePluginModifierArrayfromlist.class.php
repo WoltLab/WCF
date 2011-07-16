@@ -25,7 +25,7 @@ use wcf\system\template\TemplatePluginModifier;
  */
 class TemplatePluginModifierArrayfromlist implements TemplatePluginModifier {
 	/**
-	 * @see TemplatePluginModifier::execute()
+	 * @see wcf\system\template\TemplatePluginModifier::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		return Option::parseSelectOptions($tagArgs[0]);

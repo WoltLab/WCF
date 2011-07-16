@@ -15,7 +15,7 @@ use wcf\system\cache\CacheHandler;
  */
 class ACPMenu extends TreeMenu {
 	/**
-	 * @see TreeMenu::loadCache()
+	 * @see wcf\system\menu\TreeMenu::loadCache()
 	 */
 	protected function loadCache() {
 		parent::loadCache();

@@ -4,7 +4,7 @@ use wcf\data\cronjob\log\CronjobLogEditor;
 use wcf\data\cronjob\Cronjob AS CronjobObj;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\system\cache\CacheHandler;
-use wcf\system\database\condition\PreparedStatementConditionBuilder;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;

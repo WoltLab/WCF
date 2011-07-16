@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\cache;
-use wcf\system\event\listener\EventHandler;
+use wcf\system\event\EventHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  */
 class CacheBuilderEventListener implements CacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\CacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		list($cache, $packageID) = explode('-', $cacheResource['cache']); 

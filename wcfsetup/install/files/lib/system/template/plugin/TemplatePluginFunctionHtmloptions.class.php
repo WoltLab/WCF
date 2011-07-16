@@ -25,7 +25,7 @@ class TemplatePluginFunctionHtmloptions extends TemplatePluginFunctionHtmlcheckb
 	protected $selected = array();
 	
 	/**
-	 * @see TemplatePluginFunction::execute()
+	 * @see wcf\system\template\TemplatePluginFunction::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (isset($tagArgs['output']) && is_array($tagArgs['output'])) {

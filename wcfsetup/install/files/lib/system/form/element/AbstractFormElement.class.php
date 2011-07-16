@@ -37,42 +37,42 @@ abstract class AbstractFormElement implements FormElement {
 	protected $parent = null;
 	
 	/**
-	 * @see	FormElement::__construct()
+	 * @see	wcf\system\form\FormElement::__construct()
 	 */
 	public function __construct(FormElementContainer $parent) {
 		$this->parent = $parent;
 	}
 	
 	/**
-	 * @see	FormElement::setDescription()
+	 * @see	wcf\system\form\FormElement::setDescription()
 	 */
 	public function setDescription($description) {
 		$this->description = StringUtil::trim($description);
 	}
 	
 	/**
-	 * @see	FormElement::getDescription()
+	 * @see	wcf\system\form\FormElement::getDescription()
 	 */
 	public function getDescription() {
 		return $this->description;
 	}
 	
 	/**
-	 * @see	FormElement::setLabel()
+	 * @see	wcf\system\form\FormElement::setLabel()
 	 */
 	public function setLabel($label) {
 		$this->label = StringUtil::trim($label);
 	}
 	
 	/**
-	 * @see	FormElement::getLabel()
+	 * @see	wcf\system\form\FormElement::getLabel()
 	 */
 	public function getLabel() {
 		return $this->label;
 	}
 	
 	/**
-	 * @see	FormElement::getParent()
+	 * @see	wcf\system\form\FormElement::getParent()
 	 */
 	public function getParent() {
 		return $this->parent;

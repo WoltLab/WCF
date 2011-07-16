@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class CacheBuilderCronjob implements CacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\CacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		// get next execution time

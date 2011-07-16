@@ -18,7 +18,7 @@ use wcf\system\template\TemplateScriptingCompiler;
  */
 class TemplatePluginPrefilterIcon implements TemplatePluginPrefilter {
 	/**
-	 * @see TemplatePluginPrefilter::execute()
+	 * @see wcf\system\template\plugin\TemplatePluginPrefilter::execute()
 	 */
 	public function execute($sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');

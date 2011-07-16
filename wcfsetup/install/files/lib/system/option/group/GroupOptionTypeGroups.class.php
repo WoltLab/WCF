@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  */
 class GroupOptionTypeGroups implements GroupOptionType {
 	/**
-	 * @see OptionType::getFormElement()
+	 * @see wcf\system\option\group\OptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		// get selected group

@@ -21,7 +21,7 @@ use wcf\util\DateUtil;
  */
 class TemplatePluginModifierDate implements TemplatePluginModifier {
 	/**
-	 * @see TemplatePluginModifier::execute()
+	 * @see wcf\system\template\TemplatePluginModifier::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		return DateUtil::format(DateUtil::getDateTimeByTimestamp($tagArgs[0]), (!empty($tagArgs[2]) ? $tagArgs[2] : DateUtil::DATE_FORMAT));

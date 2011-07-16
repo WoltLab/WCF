@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  */
 class TemplatePluginModifierTruncate implements TemplatePluginModifier {
 	/**
-	 * @see TemplatePluginModifier::execute()
+	 * @see wcf\system\template\TemplatePluginModifier::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// default values

@@ -17,14 +17,14 @@ use wcf\util\StringUtil;
  */
 class UserAuthDefault extends UserAuth {
 	/**
-	 * @see UserAuth::supportsPersistentLogins()
+	 * @see wcf\system\auth\UserAuth::supportsPersistentLogins()
 	 */
 	public function supportsPersistentLogins() {
 		return true;
 	}
 	
 	/**
-	 * @see UserAuth::loginManually()
+	 * @see wcf\system\auth\UserAuth::loginManually()
 	 */
 	public function loginManually($username, $password, $userClassname = 'wcf\data\user\User') {
 		$user = User::getUserByUsername($username);
@@ -43,7 +43,7 @@ class UserAuthDefault extends UserAuth {
 	}
 	
 	/**
-	 * @see UserAuth::storeAccessData()
+	 * @see wcf\system\auth\UserAuth::storeAccessData()
 	 */
 	public function storeAccessData(User $user, $username, $password) {
 		HeaderUtil::setCookie('userID', $user->userID, TIME_NOW + 365 * 24 * 3600);
@@ -51,7 +51,7 @@ class UserAuthDefault extends UserAuth {
 	}
 
 	/**
-	 * @see UserAuth::loginAutomatically()
+	 * @see wcf\system\auth\UserAuth::loginAutomatically()
 	 */
 	public function loginAutomatically($persistent = false, $userClassname = 'wcf\data\user\User') {
 		if (!$persistent) return null;

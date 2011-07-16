@@ -20,7 +20,7 @@ use wcf\system\exception\SystemException;
  */
 class TemplatePluginCompilerFetch implements TemplatePluginCompiler {
 	/**
-	 * @see TemplatePluginCompiler::executeStart()
+	 * @see wcf\system\template\TemplatePluginCompiler::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		if (!isset($tagArgs['file'])) {
@@ -36,7 +36,7 @@ class TemplatePluginCompilerFetch implements TemplatePluginCompiler {
 	}
 	
 	/**
-	 * @see TemplatePluginCompiler::executeEnd()
+	 * @see wcf\system\template\TemplatePluginCompiler::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		throw new SystemException($compiler->formatSyntaxError("unknown tag {/fetch}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()), 12003);

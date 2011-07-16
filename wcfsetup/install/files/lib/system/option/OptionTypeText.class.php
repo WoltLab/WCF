@@ -25,7 +25,7 @@ class OptionTypeText implements OptionType, SearchableUserOption {
 	protected $inputType = 'text';
 	
 	/**
-	 * @see OptionType::getFormElement()
+	 * @see wcf\system\option\OptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		WCF::getTPL()->assign(array(
@@ -37,26 +37,26 @@ class OptionTypeText implements OptionType, SearchableUserOption {
 	}
 	
 	/**
-	 * @see OptionType::validate()
+	 * @see wcf\system\option\OptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {}
 	
 	/**
-	 * @see OptionType::getData()
+	 * @see wcf\system\option\OptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		return $newValue;
 	}
 	
 	/**
-	 * @see SearchableUserOption::getSearchFormElement()
+	 * @see wcf\system\option\SearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		return $this->getFormElement($optionData, $value);
 	}
 	
 	/**
-	 * @see SearchableUserOption::getCondition()
+	 * @see wcf\system\option\SearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		$value = StringUtil::trim($value);

@@ -19,7 +19,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 	protected $tableName = '_acp_template';
 	
 	/**
-	 * @see FileHandler::checkFiles()
+	 * @see wcf\system\setup\FileHandler::checkFiles()
 	 */
 	public function checkFiles(array $files) {
 		if ($this->packageInstallation->getPackage()->package != 'com.woltlab.wcf') {
@@ -65,7 +65,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 	}
 	
 	/**
-	 * @see FileHandler::logFiles()
+	 * @see wcf\system\setup\FileHandler::logFiles()
 	 */
 	public function logFiles(array $files) {
 		$packageID = $this->packageInstallation->getPackageID();

@@ -15,7 +15,7 @@ use wcf\util\ArrayUtil;
  */
 class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	/**
-	 * @see DatabaseEditor::getTableNames()
+	 * @see wcf\system\database\editorDatabaseEditor::getTableNames()
 	 */
 	public function getTableNames() {
 		$existingTables = array();
@@ -32,7 +32,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::getColumns()
+	 * @see wcf\system\database\editorDatabaseEditor::getColumns()
 	 */
 	public function getColumns($tableName) {
 		$columns = array();
@@ -52,7 +52,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::getIndices()
+	 * @see wcf\system\database\editorDatabaseEditor::getIndices()
 	 */
 	public function getIndices($tableName) {
 		$indices = array();
@@ -103,7 +103,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::createTable()
+	 * @see wcf\system\database\editorDatabaseEditor::createTable()
 	 */
 	public function createTable($tableName, $columns, $indices = array()) {
 		$columnDefinition = $indexDefinition = '';
@@ -140,7 +140,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::dropTable()
+	 * @see wcf\system\database\editorDatabaseEditor::dropTable()
 	 */
 	public function dropTable($tableName) {
 		$sql = "DROP TABLE IF EXISTS ".$tableName." CASCADE";
@@ -149,7 +149,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::addColumn()
+	 * @see wcf\system\database\editorDatabaseEditor::addColumn()
 	 */
 	public function addColumn($tableName, $columnName, $columnData) {
 		$sql = "ALTER TABLE ".$tableName." ADD COLUMN ".$this->buildColumnDefinition($columnName, $columnData);
@@ -158,7 +158,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::alterColumn()
+	 * @see wcf\system\database\editorDatabaseEditor::alterColumn()
 	 */
 	public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData) {
 		// change column name if necessary
@@ -208,7 +208,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::dropColumn()
+	 * @see wcf\system\database\editorDatabaseEditor::dropColumn()
 	 */
 	public function dropColumn($tableName, $columnName) {
 		$sql = "ALTER TABLE ".$tableName." DROP COLUMN ".$columnName." CASCADE";
@@ -217,7 +217,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::addIndex()
+	 * @see wcf\system\database\editorDatabaseEditor::addIndex()
 	 */
 	public function addIndex($tableName, $indexName, $indexData) {
 		if ($indexData['type'] == 'FULLTEXT') {
@@ -241,7 +241,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::addIndex()
+	 * @see wcf\system\database\editorDatabaseEditor::addIndex()
 	 */
 	public function addForeignKey($tableName, $indexName, $indexData) {
 		$sql = "ALTER TABLE ".$tableName." ADD";
@@ -266,7 +266,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::dropIndex()
+	 * @see wcf\system\database\editorDatabaseEditor::dropIndex()
 	 */
 	public function dropIndex($tableName, $indexName) {
 		$sql = "DROP INDEX IF EXISTS ".$tableName."_".$indexName."_key CASCADE";

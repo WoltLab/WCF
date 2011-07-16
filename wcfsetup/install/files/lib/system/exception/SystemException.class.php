@@ -63,7 +63,7 @@ class SystemException extends \Exception implements PrintableException {
 	}
 	
 	/**
-	 * @see PrintableException::show()
+	 * @see wcf\system\exception\PrintableException::show()
 	 */
 	public function show() {
 		// send status code

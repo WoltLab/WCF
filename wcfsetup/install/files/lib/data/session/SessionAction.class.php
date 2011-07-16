@@ -14,7 +14,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  */
 class SessionAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see AbstractDatabaseObjectAction::$className
+	 * @see wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\session\SessionEditor';
 }

@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class OptionTypeSelect extends OptionTypeRadiobuttons {
 	/**
-	 * @see OptionType::getFormElement()
+	 * @see wcf\system\option\OptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		// get options
@@ -33,7 +33,7 @@ class OptionTypeSelect extends OptionTypeRadiobuttons {
 	}
 	
 	/**
-	 * @see SearchableUserOption::getSearchFormElement()
+	 * @see wcf\system\option\SearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		return $this->getFormElement($optionData, $value);

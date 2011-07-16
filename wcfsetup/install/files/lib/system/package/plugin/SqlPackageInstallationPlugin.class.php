@@ -18,7 +18,7 @@ class SqlPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	public $tableName = 'package_installation_sql_log';
 	
 	/**
-	 * @see PackageInstallationPlugin::install()
+	 * @see wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();

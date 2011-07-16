@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 class CacheBuilderCleanupAdapter implements CacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\CacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		list($cache, $packageID) = explode('-', $cacheResource['cache']);

@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 class CacheBuilderLanguage implements CacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\CacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		$languageToPackages = array();

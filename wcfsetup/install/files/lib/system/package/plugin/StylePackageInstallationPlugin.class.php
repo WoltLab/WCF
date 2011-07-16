@@ -16,22 +16,22 @@ use wcf\system\WCF;
  */
 class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$className
+	 * @see wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\style\StyleEditor';
 	
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$tableName
+	 * @see wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'style';
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::$tagName
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
 	 */	
 	public $tagName = 'style';
 	
 	/** 
-	 * @see PackageInstallationPlugin::install()
+	 * @see wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();
@@ -52,7 +52,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	}
 	
 	/** 
-	 * @see PackageInstallationPlugin::uninstall()
+	 * @see wcf\system\package\plugin\PackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// call uninstall event

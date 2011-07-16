@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 class CacheBuilderStyle implements CacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\CacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		$data = array('default' => 0, 'styles' => array(), 'packages' => array());

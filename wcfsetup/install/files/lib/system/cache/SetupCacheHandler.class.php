@@ -13,42 +13,42 @@ namespace wcf\system\cache;
  */
 class SetupCacheHandler extends CacheHandler {
 	/**
-	 * @see CacheHandler::addResource()
+	 * @see wcf\system\cache\CacheHandler::addResource()
 	 */
 	public function addResource($cache, $file, $classFile, $minLifetime = 0, $maxLifetime = 0) {
 		return false;
 	}
 	
 	/**
-	 * @see CacheHandler::clearResource()
+	 * @see wcf\system\cache\CacheHandler::clearResource()
 	 */
 	public function clearResource($cache, $ignoreLifetime = false) {
 		return false;
 	}
 	
 	/**
-	 * @see CacheHandler::clear()
+	 * @see wcf\system\cache\CacheHandler::clear()
 	 */
 	public function clear($directory, $filepattern, $forceDelete = false) {
 		return false;
 	}
 	
 	/**
-	 * @see CacheHandler::get()
+	 * @see wcf\system\cache\CacheHandler::get()
 	 */
 	public function get($cache, $variable = '') {
 		return false;
 	}
 	
 	/**
-	 * @see CacheHandler::load()
+	 * @see wcf\system\cache\CacheHandler::load()
 	 */
 	public function load($cacheResource, $reload = false) {
 		return false;
 	}
 	
 	/**
-	 * @see CacheHandler::rebuild()
+	 * @see wcf\system\cache\CacheHandler::rebuild()
 	 */
 	public function rebuild($cacheResource, $forceRebuilt = false) {
 		return false;

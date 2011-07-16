@@ -91,7 +91,7 @@ abstract class DatabaseObject implements StorableObject {
 	}
 
 	/**
-	 * @see StorableObject::__get()
+	 * @see wcf\data\StorableObject::__get()
 	 */
 	public function __get($name) {
 		if (isset($this->data[$name])) {
@@ -103,35 +103,35 @@ abstract class DatabaseObject implements StorableObject {
 	}
 	
 	/**
-	 * @see StorableObject::__isset()
+	 * @see wcf\data\StorableObject::__isset()
 	 */
 	public function __isset($name) {
 		return isset($this->data[$name]);
 	}
 	
 	/**
-	 * @see StorableObject::getDatabaseTableName()
+	 * @see wcf\data\StorableObject::getDatabaseTableName()
 	 */
 	public static function getDatabaseTableName() {
 		return 'wcf'.WCF_N.'_'.static::$databaseTableName;
 	}
 	
 	/**
-	 * @see	StorableObject::getDatabaseTableAlias()
+	 * @see	wcf\data\StorableObject::getDatabaseTableAlias()
 	 */
 	public static function getDatabaseTableAlias() {
 		return static::$databaseTableName;
 	}
 	
 	/**
-	 * @see	StorableObject::getDatabaseTableIndexIsIdentity()
+	 * @see	wcf\data\StorableObject::getDatabaseTableIndexIsIdentity()
 	 */	
 	public static function getDatabaseTableIndexIsIdentity() {
 		return static::$databaseTableIndexIsIdentity;
 	}
 	
 	/**
-	 * @see StorableObject::getDatabaseTableIndexName()
+	 * @see wcf\data\StorableObject::getDatabaseTableIndexName()
 	 */
 	public static function getDatabaseTableIndexName() {
 		return static::$databaseTableIndexName;

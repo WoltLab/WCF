@@ -22,7 +22,7 @@ use wcf\util\DateUtil;
  */
 class TemplatePluginModifierTime implements TemplatePluginModifier {
 	/**
-	 * @see TemplatePluginModifier::execute()
+	 * @see wcf\system\template\TemplatePluginModifier::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		$timestamp = intval($tagArgs[0]);

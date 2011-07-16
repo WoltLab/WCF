@@ -18,7 +18,7 @@ use wcf\util\FileUtil;
  */
 class CacheBuilderIcon implements CacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\CacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		list($cache, $packageID, $styleID) = explode('-', $cacheResource['cache']); 

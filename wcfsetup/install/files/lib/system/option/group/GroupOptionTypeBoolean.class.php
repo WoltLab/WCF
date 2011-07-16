@@ -15,7 +15,7 @@ use wcf\system\option\OptionTypeBoolean;
  */
 class GroupOptionTypeBoolean extends OptionTypeBoolean implements GroupOptionType {
 	/**
-	 * @see GroupOptionType::merge()
+	 * @see wcf\system\option\group\GroupOptionType::merge()
 	 */
 	public function merge(array $values) {
 		foreach ($values as $value) {

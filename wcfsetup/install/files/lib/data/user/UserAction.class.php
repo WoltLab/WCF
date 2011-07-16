@@ -18,22 +18,22 @@ use wcf\system\WCF;
  */
 class UserAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	AbstractDatabaseObjectAction::$className
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	public $className = 'wcf\data\user\UserEditor';
 	
 	/**
-	 * @see	AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
 	protected $permissionsCreate = array('admin.user.canAddUser');
 	
 	/**
-	 * @see	AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
 	protected $permissionsDelete = array('admin.user.canDeleteUser');
 	
 	/**
-	 * @see	AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.user.canEditUser');
 	

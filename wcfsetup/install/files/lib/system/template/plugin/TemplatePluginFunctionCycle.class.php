@@ -21,7 +21,7 @@ class TemplatePluginFunctionCycle implements TemplatePluginFunction {
 	protected $cycles = array();
 	
 	/**
-	 * @see TemplatePluginFunction::execute()
+	 * @see wcf\system\template\TemplatePluginFunction::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// get params

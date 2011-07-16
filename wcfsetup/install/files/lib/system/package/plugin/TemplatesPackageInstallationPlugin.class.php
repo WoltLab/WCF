@@ -20,7 +20,7 @@ class TemplatesPackageInstallationPlugin extends AbstractPackageInstallationPlug
 	public $tableName = 'template';
 	
 	/**
-	 * @see PackageInstallationPlugin::install()
+	 * @see wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();

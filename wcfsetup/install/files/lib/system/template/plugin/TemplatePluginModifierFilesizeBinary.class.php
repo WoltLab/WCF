@@ -20,7 +20,7 @@ use wcf\util\FileUtil;
  */
 class TemplatePluginModifierFilesizeBinary implements TemplatePluginModifier {
 	/**
-	 * @see TemplatePluginModifier::execute()
+	 * @see wcf\system\template\TemplatePluginModifier::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		return FileUtil::formatFilesizeBinary($tagArgs[0]);
