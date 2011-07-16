@@ -137,43 +137,24 @@ class DirectoryUtil {
 	}
 
 	/**
-	 * Executes a callback on each file
-	 *
-	 * @param	callback	$callback	Valid callback
-	 * @param	string		$pattern	Apply callback only to files matching the given pattern
-	 * @return	boolean				Returns false if callback is missing or no files available
-	 */
-	public function executeCallback($callback, $pattern = '') {
-		if (!is_callable($callback) || empty($this->files)) return false;
-
-		$files = $this->getFiles();
-		// check for pattern only once -> faster
-		if (empty($pattern)) {
-			foreach ($files as $filename) {
-				call_user_func($callback, $filename);
-			}
-		}
-		else {
-			foreach ($files as $filename) {
-				if (!preg_match($pattern, $filename)) continue;
-
-				call_user_func($callback, $filename);
-			}
-		}
-
-		return true;
-	}
-
-	/**
 	 * Returns a sorted list of files
 	 *
-	 * @param	integer		$order	sort-order
+	 * @param	integer		$order			sort-order
+	 * @param	string		$pattern			pattern to match
+	 * @param	boolean		$negativeMatch	should the pattern be inversed
 	 * @return	array<string>
 	 */
-	public function getFiles($order = SORT_ASC) {
+	public function getFiles($order = SORT_ASC, $pattern = '', $negativeMatch = false) {
 		// scan the folder
 		$this->scanFiles();
 		$files = $this->files;
+
+		// sort out non matching files
+		if (!empty($pattern)) {
+			foreach ($files as $filename => $value) {
+				if (preg_match($pattern, $filename) != $negativeMatch) unset($files[$filename]);
+			}
+		}
 
 		if ($order == SORT_DESC) {
 			krsort($files, $order);
@@ -194,13 +175,22 @@ class DirectoryUtil {
 	/**
 	 * Returns a sorted list of files, with DirectoryIterator object as value
 	 *
-	 * @param	integer				$order	sort-order
+	 * @param	integer				$order			sort-order
+	 * @param	string				$pattern			pattern to match
+	 * @param	boolean				$negativeMatch	should the pattern be inversed
 	 * @return	array<DirectoryIterator>
 	 */
-	public function getFilesObj($order = SORT_ASC) {
+	public function getFilesObj($order = SORT_ASC, $pattern = '', $negativeMatch = false) {
 		// scan the folder
 		$this->scanFilesObj();
 		$objects = $this->filesObj;
+
+		// sort out non matching files
+		if (!empty($pattern)) {
+			foreach ($objects as $filename => $value) {
+				if (preg_match($pattern, $filename) != $negativeMatch) unset($objects[$filename]);
+			}
+		}
 
 		if ($order == SORT_DESC) {
 			krsort($objects, $order);
@@ -243,6 +233,9 @@ class DirectoryUtil {
 				$this->files[$obj->getFilename()] = $obj->getFilename();
 			}
 		}
+
+		// add the directory itself
+		$this->filesObj[$this->directory] = $this->directory;
 	}
 
 	/**
@@ -270,35 +263,34 @@ class DirectoryUtil {
 				$this->filesObj[$obj->getFilename()] = $obj;
 			}
 		}
-	}
 
+		// add the directory itself
+		$this->filesObj[$this->directory] = new \SPLFileInfo($this->directory);
+	}
+	
+	/**
+	 * Executes a callback on each file
+	 *
+	 * @param	callback	$callback	Valid callback
+	 * @param	string		$pattern	Apply callback only to files matching the given pattern
+	 * @return	boolean				Returns false if callback is invalid
+	 */
+	public function executeCallback($callback, $pattern = '') {
+		if (!is_callable($callback)) return false;
+
+		$files = $this->getFilesObj(self::SORT_NONE, $pattern);
+		foreach ($files as $filename => $obj) {
+			call_user_func($callback, $filename, $obj);
+		}
+
+		return true;
+	}
+	
 	/**
 	 * Recursive remove of directory
 	 */
 	public function removeAll() {
-		if (!$this->recursive) throw new SystemException('Removing of directory only works in recursive mode');
-
-		$files = $this->getFilesObj(self::SORT_NONE);
-		foreach ($files as $filename => $obj) {
-			if (!is_writable($obj->getPath())) {
-				throw new SystemException("Could not remove directory: '".$obj->getPath()."' is not writable");
-			}
-
-			if ($obj->isDir()) {
-				rmdir($filename);
-			}
-			else if ($obj->isFile()) {
-				unlink($filename);
-			}
-		}
-
-		rmdir($this->directory);
-		// clear cache
-		$this->filesObj = array();
-		$this->scanFilesObj();
-
-		$this->files = array();
-		$this->scanFiles();
+		$this->removePattern('');
 		
 		// destroy cached instance
 		unset(static::$instances[$this->recursive][$this->directory]);
@@ -312,10 +304,9 @@ class DirectoryUtil {
 	public function removePattern($pattern) {
 		if (!$this->recursive) throw new SystemException('Removing of files only works in recursive mode');
 
-		$files = $this->getFilesObj(self::SORT_NONE);
-		foreach ($files as $filename => $obj) {
-			if (!preg_match($pattern, $filename)) continue;
+		$files = $this->getFilesObj(self::SORT_NONE, $pattern);
 
+		foreach ($files as $filename => $obj) {
 			if (!is_writable($obj->getPath())) {
 				throw new SystemException("Could not remove directory: '".$obj->getPath()."' is not writable");
 			}
