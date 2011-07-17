@@ -1,10 +1,8 @@
-
-/* ### -- -- -- -- -- Color Picker Styles -- -- -- -- -- ### */
-
 /* 
 
+Color Picker Styles 
 File: colorPicker.css 
-Copyright 2006-2009 by WoltLab GmbH. 
+Copyright 2006-2011 by WoltLab GmbH. 
 
 */
 
@@ -54,7 +52,6 @@ img.colorPicker:hover {
 }
 
 #colorPickerFull li {
-	font-size: 0; /* ie6 */
 	border-width: 1px 1px 0 0;
 	border-style: solid:
 	border-color: #000;
