@@ -1,11 +1,10 @@
-/* 
-
-Color Picker Styles 
-File: colorPicker.css 
-Copyright 2006-2011 by WoltLab GmbH. 
-
-*/
-
+/**
+ * Color Picker Styles
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2006-2011 WoltLab GmbH
+ */
+ 
 /* ### -- -- -- -- -- Color Picker -- -- -- -- -- ### */
 
 input.colorPicker {
