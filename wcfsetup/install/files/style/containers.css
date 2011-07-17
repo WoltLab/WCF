@@ -1,14 +1,11 @@
-
-/* ### -- -- -- -- -- Container Styles -- -- -- -- -- ### */
-
-/* 
-
-File: containers.css 
-Copyright 2006-2010 by WoltLab GmbH. 
-
-*/
-
-/* ### -- -- -- -- -- Border -- -- -- -- -- ### */
+/**
+ * Container Styles
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2006-2011 WoltLab GmbH
+ */
+ 
+/* -- -- -- -- -- Border -- -- -- -- -- */
 
 .border {
 	border-width: 1px;
@@ -22,7 +19,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	margin-top: -8px;
 }
 
-/* ### -- -- -- -- -- Container Globals -- -- -- -- -- ### */
+/* -- -- -- -- -- Container Globals -- -- -- -- -- */
 
 .container-1, .container-2, .container-3, .containerHead {
 	margin: 0 1px 1px 0;
@@ -40,7 +37,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	margin: 5px 0;	
 }
 
-/* ### -- -- -- -- -- Info Box -- -- -- -- -- ### */
+/* -- -- -- -- -- Info Box -- -- -- -- -- */
 
 .infoBox .container-1, .infoBox .container-2 {
 	padding: 4px;
@@ -52,7 +49,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	font-weight: bold;
 }
 
-/* ### -- -- -- -- -- Containers with Icons -- -- -- -- -- ### */
+/* -- -- -- -- -- Containers with Icons -- -- -- -- -- */
 
 /* Small (16px Icon) */
 
@@ -90,7 +87,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	margin-left: 60px;
 }
 
-/* ### -- -- -- -- -- Main Headline -- -- -- -- -- ### */
+/* -- -- -- -- -- Main Headline -- -- -- -- -- */
 
 .mainHeadline {
 	margin: 3px 0 7px 0;
@@ -129,7 +126,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	padding: 0;
 }
 
-/* ### -- -- -- -- -- Sub Headline -- -- -- -- -- ### */
+/* -- -- -- -- -- Sub Headline -- -- -- -- -- */
 
 .subHeadline {
 	font-size: 1.5em;
@@ -154,7 +151,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	width: 95%;
 }
 
-/* ### -- -- -- -- -- Fieldset -- -- -- -- -- ### */
+/* -- -- -- -- -- Fieldset -- -- -- -- -- */
 
 fieldset {
 	border-width: 1px;
@@ -179,4 +176,4 @@ fieldset fieldset {
 	margin-bottom: 5px;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

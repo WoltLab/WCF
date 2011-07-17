@@ -1,14 +1,11 @@
+/**
+ * Page Menu Styles
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2006-2011 WoltLab GmbH
+ */
 
-/* ### -- -- -- -- -- Page Menu Styles -- -- -- -- -- ### */
-
-/* 
-
-File: pageMenu.css 
-Copyright 2006-2010 by WoltLab GmbH. 
-
-*/
-
-/* ### -- -- -- -- -- Page Menu -- -- -- -- -- ### */
+/* -- -- -- -- -- Page Menu -- -- -- -- -- */
 
 div.pageMenu { 
 	margin: 0;
@@ -71,8 +68,8 @@ div.pageMenu li.container-1, div.pageMenu li.container-2 {
 	margin: 0 1px 1px 0 !important;
 }
 
-/* ### -- -- -- -- -- Page Menu (2 rows) -- -- -- -- -- ### */
-/*
+/* -- -- -- -- -- Page Menu (2 rows) -- -- -- -- -- */
+/* Note: 
 	 - to be used with label and span
 	 - label contains the key
 	 - span the value
@@ -113,7 +110,7 @@ div.pageMenu .twoRows a:hover span {
 	text-decoration: none !important;
 }
 
-/* ### -- -- -- -- -- Pop Up Menu -- -- -- -- -- ### */
+/* -- -- -- -- -- Pop Up Menu -- -- -- -- -- */
 
 .popupMenu {
 	border-width: 1px;
@@ -125,4 +122,4 @@ div.pageMenu .twoRows a:hover span {
 	z-index: 30;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

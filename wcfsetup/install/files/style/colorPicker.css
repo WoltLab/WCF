@@ -5,7 +5,7 @@
  * @copyright	2006-2011 WoltLab GmbH
  */
  
-/* ### -- -- -- -- -- Color Picker -- -- -- -- -- ### */
+/* -- -- -- -- -- Color Picker -- -- -- -- -- */
 
 input.colorPicker {
 	font-family: "Courier New", Courier, monospace;
@@ -21,7 +21,7 @@ img.colorPicker:hover {
 	cursor: pointer;
 }
 
-/* ### -- -- -- -- -- Color Picker Full -- -- -- -- -- ### */
+/* -- -- -- -- -- Color Picker Full -- -- -- -- -- */
 
 #colorPickerFull {
 	border-width: 0 0 1px 1px;
@@ -79,7 +79,7 @@ img.colorPicker:hover {
 	width: 16px;
 }
 
-/* ### -- -- -- -- -- Color Picker Simple -- -- -- -- -- ### */
+/* -- -- -- -- -- Color Picker Simple -- -- -- -- -- */
 
 #colorPickerSimple {
 	background-color: #000;
@@ -125,4 +125,4 @@ img.colorPicker:hover {
 	height: 13px !important;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

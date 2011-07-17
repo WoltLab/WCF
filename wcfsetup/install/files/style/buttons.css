@@ -1,14 +1,11 @@
-
-/* ### -- -- -- -- -- Button Styles -- -- -- -- -- ### */
-
-/* 
-
-File: buttons.css 
-Copyright 2006-2009 by WoltLab GmbH. 
-
-*/
-
-/* ### -- -- -- -- -- Large Buttons -- -- -- -- -- ### */
+/**
+ * Button Styles
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2006-2011 WoltLab GmbH
+ */
+ 
+/* -- -- -- -- -- Large Buttons -- -- -- -- -- */
 
 .largeButtons:after {
 	content: "";
@@ -42,7 +39,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	font-weight: normal;
 }
 
-/* ### -- -- -- -- -- Small Buttons -- -- -- -- -- ### */
+/* -- -- -- -- -- Small Buttons -- -- -- -- -- */
 
 .smallButtons:after {
 	content: "";
@@ -97,7 +94,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	min-height: 18px !important;
 }
 
-/* ### -- -- -- -- -- Option Buttons -- -- -- -- -- ### */
+/* -- -- -- -- -- Option Buttons -- -- -- -- -- */
 
 .optionButtons ul {
 	list-style: none;
@@ -136,7 +133,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	min-height: 18px !important;
 }
 
-/* ### -- -- -- -- -- Button Bar -- -- -- -- -- ### */
+/* -- -- -- -- -- Button Bar -- -- -- -- -- */
 
 .buttonBar {
 	border-width: 1px 0 0 0;
@@ -157,4 +154,4 @@ Copyright 2006-2009 by WoltLab GmbH.
 	float: left;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

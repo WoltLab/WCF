@@ -1,14 +1,11 @@
+/**
+ * Tabbed Menu Styles
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2006-2011 WoltLab GmbH
+ */
 
-/* ### -- -- -- -- -- Tabbed Menu Styles -- -- -- -- -- ### */
-
-/* 
-
-File: tabbedMenus.css 
-Copyright 2006-2009 by WoltLab GmbH. 
-
-*/
-
-/* ### -- -- -- -- -- Tabs -- -- -- -- -- ### */
+/* -- -- -- -- -- Tabs -- -- -- -- -- */
 
 .tabMenu {
 	margin-top: 5px;
@@ -57,8 +54,10 @@ Copyright 2006-2009 by WoltLab GmbH.
 	min-height: 24px;
 }
 
-/* ### -- -- -- -- -- Sub Tab Menu (Elements inside the Tab-Bar) -- -- -- -- -- ### */
-
+/* -- -- -- -- -- Sub Tab Menu -- -- -- -- -- */
+ 
+/* Elements inside the bar below the tabs */
+ 
 .subTabMenu {
 	border: 1px;
 	margin-bottom: -1px;
@@ -120,7 +119,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	height: 5px;
 }
 
-/* ### -- -- -- -- -- Sub Container Menu -- -- -- -- -- ### */
+/* -- -- -- -- -- Sub Container Menu -- -- -- -- -- */
 
 /* ToDo: Find a more flexible solution */
 
@@ -135,7 +134,9 @@ Copyright 2006-2009 by WoltLab GmbH.
 	margin: 0 1px 0 0;
 }
 
-/* ### -- -- -- -- -- Tab Menu Content (Content below the Sub Tab Menu) -- -- -- -- -- ### */
+/* -- -- -- -- -- Tab Menu Content -- -- -- -- -- */
+
+/* Content below the Sub Tab Menu */
 
 .tabMenuContent {
 	clear: both;
@@ -181,10 +182,10 @@ Copyright 2006-2009 by WoltLab GmbH.
 	margin-top: 0 !important;
 }
 
-/* ### -- -- -- -- -- Specials -- -- -- -- -- ### */
+/* -- -- -- -- -- Specials -- -- -- -- -- */
 
-.tabNavigation {
+.tabNavigation { /* still necessary? */
 	float: right;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

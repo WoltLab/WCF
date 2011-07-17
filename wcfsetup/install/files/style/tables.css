@@ -1,14 +1,11 @@
+/**
+ * Table Styles
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2006-2011 WoltLab GmbH
+ */
 
-/* ### -- -- -- -- -- Table Styles -- -- -- -- -- ### */
-
-/* 
-
-File: tables.css 
-Copyright 2006-2009 by WoltLab GmbH. 
-
-*/
-
-/* ### -- -- -- -- -- Table List -- -- -- -- -- ### */
+/* -- -- -- -- -- Table List -- -- -- -- -- */
 
 .tableList {
 	border-spacing: 0;
@@ -37,7 +34,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	text-align: left;
 }
 
-/* ### -- -- -- -- -- Table Head -- -- -- -- -- ### */
+/* -- -- -- -- -- Table Head -- -- -- -- -- */
 
 .tableHead a, .tableHead .emptyHead {
 	border-style: solid;
@@ -74,7 +71,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	border-width: 0 0 1px 0;
 }
 
-/* ### -- -- -- -- -- Column Globals -- -- -- -- -- ### */
+/* -- -- -- -- -- Column Globals -- -- -- -- -- */
 
 .tableList td.columnText {
 	text-align: left;
@@ -94,7 +91,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	width: 1%;
 }
 
-/* ### -- -- -- -- -- Table row -- -- -- -- -- ### */
+/* -- -- -- -- -- Table Row -- -- -- -- -- */
 
 .tableList .statusDisplay {
 	float: right;
@@ -106,7 +103,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	margin-left: 5px;
 }
 
-/* ### -- -- -- -- -- Column icon -- -- -- -- -- ### */
+/* -- -- -- -- -- Column Icon -- -- -- -- -- */
 
 .tableList td.columnIcon {
 	width: 1%;
@@ -117,7 +114,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	display: inline !important;
 }
 
-/* ### -- -- -- -- -- Special -- -- -- -- -- ### */
+/* -- -- -- -- -- Special -- -- -- -- -- */
 
 .tableList .deleteNote {
 	border-width: 0 !important;
@@ -125,4 +122,4 @@ Copyright 2006-2009 by WoltLab GmbH.
 	padding-top: 3px;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

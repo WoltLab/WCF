@@ -1,14 +1,11 @@
+/**
+ * Print Styles (LTR)
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2006-2011 WoltLab GmbH
+ */
 
-/* ### -- -- -- -- -- Print Styles -- -- -- -- -- ### */
-
-/* 
-
-File: print.css 
-Copyright 2006-2009 by WoltLab GmbH. 
-
-*/
-
-/* ### -- -- -- -- -- General -- -- -- -- -- ### */
+/* -- -- -- -- -- General -- -- -- -- -- */
 
 a {
 	color: black;
@@ -26,13 +23,13 @@ a {
 	width: auto !important;
 }
 
-/* ### -- -- -- -- -- Hidden Elements -- -- -- -- -- ### */
+/* -- -- -- -- -- Hidden Elements -- -- -- -- -- */
 
 .hidden, #header, #userPanel, .tabMenu, .subTabMenu, .signature, .pmView, th img, .messageNumber, .editNote, .pmFolders, .infoBox, .largeButtons, .smallButtons, .optionButtons, .pageNavigation, .pageOptions, .quickJump,  .userExtras, .scrollUp, .userMessenger, .mainHeadline img, .userAvatar, .userAvatarFramed, .columnUsername img, .userProfileBox, .containerIcon, .userPosts, .userName img, .boardlistLastPost, .boardlistCounter,.boardlistStats, .boardlistUsersOnline, .moderators, .smallPages, .columnIcon img, .columnMarkTopics, .columnMark, .columnReplies, .columnAvatar, .columnViews, .columnLastPost, .breadCrumbs img, legend img, .columnHomepage a img, .columnEmail a img, .columnPosts, .columnRegistrationDate, .userRank, .userTitle, .messageCount, .footerMenu, .footerOptions, .mainMenu, .quickReply, .userSymbols, .userCredits, .statusDisplay, .info, #userCard, #tplUserGalleryPhoto form, .thumbnailButtons, .quoteHeader img, #tplCalendarEvent form, #tplCalendarEvent #participation img, .monthJump {
 	display: none;
 }
 
-/* ### -- -- -- -- -- Tables -- -- -- -- -- ### */
+/* -- -- -- -- -- Tables -- -- -- -- -- */
 
 table {
 	border-collapse: collapse;
@@ -92,7 +89,7 @@ td.columnEmail a[href^="mailto:"]:after {
 	content: ""attr(href)"";
 }
 
-/* ### -- -- -- -- -- Breadcrumb Style Navigation -- -- -- -- -- ### */
+/* -- -- -- -- -- Breadcrumb Style Navigation -- -- -- -- -- */
 
 .breadCrumbs {
 	list-style: none;
@@ -106,7 +103,7 @@ td.columnEmail a[href^="mailto:"]:after {
 	display: inline;
 }
 
-/* ### -- -- -- -- -- Message Layout -- -- -- -- -- ### */
+/* -- -- -- -- -- Message Layout -- -- -- -- -- */
 
 .message {
 	border: 1px solid black;
@@ -219,14 +216,15 @@ blockquote {
 	display: none;
 }
 
-/* ### -- -- -- -- -- calendar.css -- -- -- -- -- ### */
+
+/* -- -- -- -- -- calendar.css -- -- -- -- -- */
 
 #tplCalendarEvent #participation .messageHeader {
-	text-align: left;	
+	text-align: left;
 }
 
-/* ### -- -- -- -- -- Form Element -- -- -- -- -- ### */
-		
+/* -- -- -- -- -- Form Element -- -- -- -- -- */
+
 .formElement {
 	margin: 5px 0 3px 0;
 	min-height: 0;
@@ -239,7 +237,7 @@ blockquote {
 	clear: both;
 }
 
-/* ### -- -- -- -- -- Form Field -- -- -- -- -- ### */
+/* -- -- -- -- -- Form Field -- -- -- -- -- */
 
 .formField {
 	padding: 0;
@@ -251,8 +249,7 @@ blockquote {
 	margin-left: 216px;
 }
 
-
-/* ### -- -- -- -- -- Form Field Label -- -- -- -- -- ### */
+/* -- -- -- -- -- Form Field Label -- -- -- -- -- */
 
 .formFieldLabel {
 	text-align: right;
@@ -269,4 +266,4 @@ fieldset {
 	display: none;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

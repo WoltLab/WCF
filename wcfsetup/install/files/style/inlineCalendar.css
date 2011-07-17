@@ -1,14 +1,11 @@
+/**
+ * Inline Calendar Styles
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2006-2011 WoltLab GmbH
+ */
 
-/* ### -- -- -- -- -- Inline Calendar Styles -- -- -- -- -- ### */
-
-/* 
-
-File: inlineCalendar.css 
-Copyright 2006-2009 by WoltLab GmbH. 
-
-*/
-
-/* #### -- -- -- -- -- Inline Calendar -- -- -- -- -- #### */
+/* -- -- -- -- -- Inline Calendar -- -- -- -- -- */
 
 .inlineCalendar {
 	position: absolute; 
@@ -84,4 +81,4 @@ Copyright 2006-2009 by WoltLab GmbH.
 	text-align: center;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

@@ -1,14 +1,11 @@
+/**
+ * Layout Styles
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2009-2011 WoltLab GmbH
+ */
 
-/* ### -- -- -- -- -- Layout Styles -- -- -- -- -- ### */
-
-/* 
-
-File: layout.css 
-Copyright 2009-2010 by WoltLab GmbH. 
-
-*/
-
-/* ### -- -- -- -- -- Layout -- -- -- -- -- ### */
+/* -- -- -- -- -- Layout -- -- -- -- -- */
 
 .layout-1, .layout-2, .layout-3, .layout-4 {
 	border-collapse: collapse;
@@ -29,7 +26,7 @@ Copyright 2009-2010 by WoltLab GmbH.
 	padding: 0;
 }
 
-/* ### -- -- -- -- -- Layout 1 -- -- -- -- -- ### */
+/* -- -- -- -- -- Layout 1 -- -- -- -- -- */
 
 /* 1 column */
 
@@ -37,7 +34,7 @@ Copyright 2009-2010 by WoltLab GmbH.
 	padding: 15px 25px;	
 }
 
-/* ### -- -- -- -- -- Layout 2 -- -- -- -- -- ### */
+/* -- -- -- -- -- Layout 2 -- -- -- -- -- */
 
 /* 1 columns flexible - 65% | 35% */
 
@@ -53,7 +50,7 @@ Copyright 2009-2010 by WoltLab GmbH.
 	padding: 15px 25px;	
 }
 
-/* ### -- -- -- -- -- Layout 3 -- -- -- -- -- ### */
+/* -- -- -- -- -- Layout 3 -- -- -- -- -- */
 
 /* 2 columns fixed - 310px | auto */
 
@@ -65,7 +62,7 @@ Copyright 2009-2010 by WoltLab GmbH.
 	padding: 15px 25px;	
 }
 
-/* ### -- -- -- -- -- Layout 4 -- -- -- -- -- ### */
+/* -- -- -- -- -- Layout 4 -- -- -- -- -- */
  
 /* 2 columns fixed - 20% | 60% | 20% */
 
@@ -85,7 +82,7 @@ Copyright 2009-2010 by WoltLab GmbH.
 	padding: 0 10px;
 }
 
-/* ### -- -- -- -- -- Data List -- -- -- -- -- ### */
+/* -- -- -- -- -- Data List -- -- -- -- -- */
 
 .dataList {
 	font-size: 100%;
@@ -116,7 +113,7 @@ Copyright 2009-2010 by WoltLab GmbH.
 	margin-right: 3px;	
 }
 
-/* ### -- -- -- -- -- Content Box -- -- -- -- -- ### */
+/* -- -- -- -- -- Content Box -- -- -- -- -- */
 
 .contentBox {
 	padding-bottom: 10px;
@@ -128,4 +125,4 @@ Copyright 2009-2010 by WoltLab GmbH.
 	margin-bottom: 7px;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

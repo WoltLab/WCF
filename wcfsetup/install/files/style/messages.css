@@ -1,14 +1,11 @@
+/**
+ * Message Layout Styles
+ *
+ * @author		Harald Szekely
+ * @copyright	2006-2011 WoltLab GmbH
+ */
 
-/* ### -- -- -- -- -- Message Layout Styles -- -- -- -- -- ### */
-
-/* 
-
-File: messages.css 
-Copyright 2006-2010 by WoltLab GmbH. 
-
-*/
-
-/* ### -- -- -- -- -- Message -- -- -- -- -- ### */
+/* -- -- -- -- -- Message -- -- -- -- -- */
 
 .message {
 	margin-bottom: 7px;
@@ -37,7 +34,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	clear: both;
 }
 
-/* ### -- -- -- -- -- Message Inner -- -- -- -- -- ### */
+/* -- -- -- -- -- Message Inner -- -- -- -- -- */
 
 .messageInner {
 	border-width: 1px;
@@ -79,7 +76,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	min-height: 25px !important;
 }
 
-/* ### -- -- -- -- -- Message Sidebar -- -- -- -- -- ### */
+/* -- -- -- -- -- Message Sidebar -- -- -- -- -- */
 
 /* Both Views: Left & Right */
 .message .messageLeft .messageSidebar, .message .messageFramedLeft .messageSidebar, .message .messageRight .messageSidebar, .message .messageFramedRight .messageSidebar {
@@ -125,7 +122,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	clear: both;
 }
 
-/* + + + Message Sidebar: Message Author + + + */
+/* -- Message Sidebar: Message Author -- */
 
 /* Both Views: Top */
 .message .messageTop .messageAuthor, .message .messageFramedTop .messageAuthor {
@@ -155,7 +152,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	margin-left: 0 !important;
 }
 
-/* + + + Message Sidebar: User Name + + + */
+/* -- Message Sidebar: User Name -- */
 
 .message .messageSidebar .userName {
 	margin: 0;
@@ -170,7 +167,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	font-weight: bold;
 }
 
-/* + + + Message Sidebar: User Avatar + + + */
+/* -- Message Sidebar: User Avatar -- */
 
 /* All Views: Standard Avatar */
 .message .userAvatar {
@@ -262,7 +259,8 @@ Copyright 2006-2010 by WoltLab GmbH.
 	height: 76px;
 }
 
-/* + + + Message Sidebar: User Symbols + + + */
+/* -- Message Sidebar: User Symbols -- */
+
 /* ToDo: The whole declaration block is not yet ready! */
 
 /* Both Views: Top */
@@ -308,7 +306,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	display: inline;
 }
 
-/* + + + Message Sidebar: User Credits + + + */
+/* -- Message Sidebar: User Credits -- */
 
 /* Both Views: Top */
 .message .messageTop .userCredits, .message .messageFramedTop .userCredits {
@@ -343,7 +341,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	padding: 0 15px;
 }
 
-/* + + + Message Sidebar: User Messenger + + + */
+/* -- Message Sidebar: User Messenger -- */
 
 /* Both Views: Top */
 .message .messageTop .userMessenger, .message .messageFramedTop .userMessenger {
@@ -399,7 +397,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	display: inline;
 }
 
-/* ### -- -- -- -- -- Message Content -- -- -- -- -- ### */
+/* -- -- -- -- -- Message Content -- -- -- -- -- */
 
 /* All Views */
 .message .messageContent {
@@ -451,7 +449,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	clear: both;
 }
 
-/* ### -- -- -- -- -- Message Content Inner -- -- -- -- -- ### */
+/* -- -- -- -- -- Message Content Inner -- -- -- -- -- */
 
 .message .messageContentInner {
 	border-width: 0;
@@ -478,7 +476,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	clear: both;
 }
 
-/* ### -- -- -- -- -- Message Header -- -- -- -- -- ### */
+/* -- -- -- -- -- Message Header -- -- -- -- -- */
 
 .message .messageHeader {
 	border-style: solid;
@@ -520,7 +518,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	padding: 0 4px;
 }
 
-/* ### -- -- -- -- -- Message Body -- -- -- -- -- ### */
+/* -- -- -- -- -- Message Body -- -- -- -- -- */
 
 .message .messageBody {
 	margin: 0;
@@ -535,7 +533,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	margin-right: 6px;
 }
 
-/* ### -- -- -- -- -- Poll -- -- -- -- -- ### */
+/* -- -- -- -- -- Poll -- -- -- -- -- */
 
 .message .poll {
 	margin: 0 15px 7px 0;
@@ -619,7 +617,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	border-bottom: 6px solid #967e7e;
 }
 
-/* ### -- -- -- -- -- Signature -- -- -- -- -- ### */
+/* -- -- -- -- -- Signature -- -- -- -- -- */
 
 .message .signature {
 	border-left-width: 0;
@@ -631,7 +629,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	position: relative;
 }
 
-/* ### -- -- -- -- -- Edit Note -- -- -- -- -- ### */
+/* -- -- -- -- -- Edit Note -- -- -- -- -- */
 
 .message .editNote, .message .deleteNote {
 	border-left-width: 0;
@@ -642,7 +640,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	position: relative;
 }
 
-/* ### -- -- -- -- -- Message Footer -- -- -- -- -- ### */
+/* -- -- -- -- -- Message Footer -- -- -- -- -- */
 
 /* All Views */
 .message .messageFooter, .message .messageFooterLeft, .message .messageFooterRight {
@@ -709,7 +707,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	margin-right: 0;
 }
 
-/* ### -- -- -- -- -- Attachment Preview -- -- -- -- -- ### */
+/* -- -- -- -- -- Attachment Preview -- -- -- -- -- */
 
 /* Holds attachments with thumbnail-previews */
 
@@ -759,7 +757,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	visibility: visible;
 }
 
-/* ### -- -- -- -- -- Attachment File -- -- -- -- -- ### */
+/* -- -- -- -- -- Attachment File -- -- -- -- -- */
 
 /* holds attachment file-type-icons and descriptions (no previews) */
 
@@ -797,7 +795,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	float: left;
 }
 
-/* ### -- -- -- -- -- Attachment Inputs -- -- -- -- -- ### */
+/* -- -- -- -- -- Attachment Inputs -- -- -- -- -- */
 
 .attachmentsInput {
 	padding: 1px 0 3px 0;
@@ -812,7 +810,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	float: right;
 }
 
-/* ### -- -- -- -- -- Quote Box -- -- -- -- -- ### */
+/* -- -- -- -- -- Quote Box -- -- -- -- -- */
 
 .quoteBox {
 	border-width: 1px;
@@ -846,7 +844,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	vertical-align: middle;
 }
 
-/* ### -- -- -- -- -- Code Box -- -- -- -- -- ### */
+/* -- -- -- -- -- Code Box -- -- -- -- -- */
 
 .codeBox {
 	border-width: 1px;
@@ -899,7 +897,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	overflow: auto;
 }
 
-/* ### -- -- -- -- -- Smileys -- -- -- -- -- ### */
+/* -- -- -- -- -- Smileys -- -- -- -- -- */
 
 .smileys {
 	margin: 0;
@@ -912,7 +910,7 @@ Copyright 2006-2010 by WoltLab GmbH.
 	display: inline;
 }
 
-/* ### -- -- -- -- -- Extra -- -- -- -- -- ### */
+/* -- -- -- -- -- Extra -- -- -- -- -- */
 
 /* Post- & PM-Preview need this to get rid of the standard container-x settings */
 .messagePreview .message {
@@ -926,4 +924,4 @@ Copyright 2006-2010 by WoltLab GmbH.
 	float: left;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

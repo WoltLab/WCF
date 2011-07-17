@@ -1,14 +1,11 @@
+/**
+ * Header Styles
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2006-2011 WoltLab GmbH
+ */
 
-/* ### -- -- -- -- -- Header Styles -- -- -- -- -- ### */
-
-/* 
-
-File: header.css 
-Copyright 2006-2009 by WoltLab GmbH. 
-
-*/
-
-/* ### -- -- -- -- -- User Note -- -- -- -- -- ### */
+/* -- -- -- -- -- User Note -- -- -- -- -- */
 
 #userNote {
 	white-space: nowrap;
@@ -17,7 +14,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	vertical-align: top;
 }
 
-/* ### -- -- -- -- -- Login Popup -- -- -- -- -- ### */
+/* -- -- -- -- -- Login Popup -- -- -- -- -- */
 
 .loginPopup {
 	white-space: nowrap;
@@ -39,7 +36,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	margin-left: 0;
 }
 
-/* ### -- -- -- -- -- User Menu -- -- -- -- -- ### */
+/* -- -- -- -- -- User Menu -- -- -- -- -- */
 
 #userMenu {
 	padding: 10px 5px 3px 5px;
@@ -76,7 +73,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	font-size: 1em;
 }
 
-/* ### -- -- -- -- -- Language Picker -- -- -- -- -- ### */
+/* -- -- -- -- -- Language Picker -- -- -- -- -- */
 
 #changeLanguageMenu img {
 	margin-left: 0;
@@ -86,7 +83,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	margin: 0 0 0 22px !important;
 }
 
-/* ### -- -- -- -- -- Header Container -- -- -- -- -- ### */
+/* -- -- -- -- -- Header Container -- -- -- -- -- */
 
 #header {
 	border-width: 1px 1px 0 1px;
@@ -113,26 +110,26 @@ Copyright 2006-2009 by WoltLab GmbH.
 	border-bottom-width: 0;
 }
 
-/* ### -- -- -- -- -- Search -- -- -- -- -- ### */
+/* -- -- -- -- -- Search -- -- -- -- -- */
 
 #search {
-	/* Toggle View: Set to "0" for Standard View */
-	/* Toggle View: Set to "1px" for Framed View */
+	/* Toggle view: set to "0" for standard view */
+	/* Toggle view: set to "1px" for framed view */
 	border-width: 0; 
 	border-style: solid;
-	/* Toggle View: Set to "transparent" for Standard View */
-	/* Toggle View: Set to any Colour Value for Framed View */
+	/* Toggle view: set to "transparent" for standard view */
+	/* Toggle view: set to any colour value for framed view */
 	background-color: transparent;
 	position: absolute;
-	/* Move Search: Set to any positive Value */
+	/* Move search: set to any positive value */
 	top: 13px;
 	right: 13px;
 	z-index: 100;
 }
 
 #search .searchContainer {
-	/* Toggle View: Set to "0" for Standard View */
-	/* Toggle View: Set to "1px" for Framed View */
+	/* Toggle view: set to "0" for standard view */
+	/* Toggle view: set to "1px" for framed view */
 	border-width: 0;
 	margin: 0;
 	padding: 10px;
@@ -172,7 +169,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	position: relative;
 }
 
-/* ### -- -- -- -- -- Page-Logo & -Title -- -- -- -- -- ### */
+/* -- -- -- -- -- Page-Logo & -Title -- -- -- -- -- */
 
 #logo {
 	border-width: 1px 1px 0 1px;
@@ -206,7 +203,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	z-index: 20;
 }
 
-/* ### -- -- -- -- -- Main Menu -- -- -- -- -- ### */
+/* -- -- -- -- -- Main Menu -- -- -- -- -- */
 
 .mainMenu {
 	border-width: 0 1px 1px 1px;
@@ -252,4 +249,4 @@ Copyright 2006-2009 by WoltLab GmbH.
 	font-size: 1em;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

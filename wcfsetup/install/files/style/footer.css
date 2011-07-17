@@ -1,14 +1,11 @@
-
-/* ### -- -- -- -- -- Footer Styles -- -- -- -- -- ### */
-
-/* 
-
-File: footer.css 
-Copyright 2008-2009 by WoltLab GmbH. 
-
-*/
-
-/* ### -- -- -- -- -- Footer -- -- -- -- -- ### */
+/**
+ * Footer Styles
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2008-2011 WoltLab GmbH
+ */
+ 
+/* -- -- -- -- -- Footer -- -- -- -- -- */
 
 #footer {
 	border-width: 1px 0 0 0;
@@ -20,7 +17,7 @@ Copyright 2008-2009 by WoltLab GmbH.
 	border-top-width: 0;
 }
 
-/* ### -- -- -- -- -- Footer Menu -- -- -- -- -- ### */
+/* -- -- -- -- -- Footer Menu -- -- -- -- -- */
 
 .footerMenu {
 	margin-bottom: 10px;
@@ -68,7 +65,7 @@ Copyright 2008-2009 by WoltLab GmbH.
 	font-size: 1em;
 }
 
-/* ### -- -- -- -- -- Footer Options -- -- -- -- -- ### */
+/* -- -- -- -- -- Footer Options -- -- -- -- -- */
 
 .footerOptions {
 	margin-bottom: 10px;
@@ -122,7 +119,7 @@ Copyright 2008-2009 by WoltLab GmbH.
 	font-size: 1em;
 }
 
-/* ### -- -- -- -- -- Extra Button -- -- -- -- -- ### */
+/* -- -- -- -- -- Extra Button -- -- -- -- -- */
 
 .footerOptions li.extraButton {
 	border-width: 1px;
@@ -135,7 +132,7 @@ Copyright 2008-2009 by WoltLab GmbH.
 	padding: 1px 2px 0 2px;
 }
 
-/* ### -- -- -- -- -- Copyright -- -- -- -- -- ### */
+/* -- -- -- -- -- Copyright -- -- -- -- -- */
 
 .copyright {
 	text-align: center;
@@ -148,4 +145,4 @@ Copyright 2008-2009 by WoltLab GmbH.
 	text-decoration: none;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

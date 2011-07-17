@@ -1,17 +1,16 @@
-
-/* ### -- -- -- -- -- Global Burning Board 3 Styles -- -- -- -- -- ### */
-
-/* 
-
-File: global.css 
-Copyright 2006-2011 by WoltLab GmbH. 
-
-*/
-
-/* ### -- -- -- -- -- Miscellaneous -- -- -- -- -- ### */
+/**
+ * Global Styles
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2006-2011 WoltLab GmbH
+ */
+ 
+/* -- -- -- -- -- Miscellaneous -- -- -- -- -- */
 
 * {
-	/* remove the following comment marks for RTL-text support - note: this line leads to incorrect forum display in Internet Explorer browsers! */
+	/* remove the following comment marks for RTL-text support - 
+	note: this line leads to incorrect forum display in 
+	Internet Explorer browsers! */
 	/*unicode-bidi: embed;*/
 	text-overflow: ellipsis;
 }
@@ -50,7 +49,10 @@ hr {
 	display: none;
 }
 
-.hidden { /* Moves elements out of the viewport in an accessible way and preserves no space for them. Use this class rather than "display: none"! */
+.hidden {
+	/* Moves elements out of the viewport in an accessible way 
+	and preserves no space for them. Use this class rather than 
+	"display: none"! */
 	height: 0;
 	overflow: hidden;
 	position: absolute;
@@ -83,7 +85,7 @@ hr {
 	float: right;
 }
 
-/* ### -- -- -- -- -- Headings -- -- -- -- -- ### */
+/* -- -- -- -- -- Headings -- -- -- -- -- */
 
 h1 {
 	margin: 0;
@@ -114,7 +116,7 @@ h2, h3, h4, h5, h6 {
 	cursor: pointer;
 }
 
-/* ### -- -- -- -- -- Links -- -- -- -- -- ### */
+/* -- -- -- -- -- Links -- -- -- -- -- */
 
 a {
 	cursor: pointer;
@@ -124,7 +126,7 @@ a:hover {
 	text-decoration: none;
 }
 
-/* ### -- -- -- -- -- External Links -- -- -- -- -- ### */
+/* -- -- -- -- -- External Links -- -- -- -- -- */
 
 .externalURL {
 	background-image: url("../icon/externalURL.png");
@@ -139,7 +141,7 @@ a:hover {
 	background-repeat: no-repeat;
 }
 
-/* ### -- -- -- -- -- Quick Jump -- -- -- -- -- ### */
+/* -- -- -- -- -- Quick Jump -- -- -- -- -- */
 
 .quickJump {
 	white-space: nowrap;
@@ -151,7 +153,7 @@ a:hover {
 	max-width: 50%;
 }
 
-/* ### -- -- -- -- -- Page Options -- -- -- -- -- ### */
+/* -- -- -- -- -- Page Options -- -- -- -- -- */
 
 .pageOptions {
 	float: right;
@@ -174,7 +176,7 @@ a:hover {
 	text-decoration: none;
 }
 
-/* ### -- -- -- -- -- Breadcrumbs -- -- -- -- -- ### */
+/* -- -- -- -- -- Breadcrumbs -- -- -- -- -- */
 
 .breadCrumbs {
 	font-size: .95em;
@@ -205,7 +207,7 @@ a:hover {
 	margin: 0;	
 }
 
-/* ### -- -- -- -- -- Content Header & Content Footer -- -- -- -- -- ### */
+/* -- -- -- -- -- Content Header & Content Footer -- -- -- -- -- */
 
 .contentHeader, .contentFooter {
 	padding-bottom: 7px;
@@ -219,7 +221,7 @@ a:hover {
 	clear: both;
 }
 
-/* ### -- -- -- -- -- Floated Elements -- -- -- -- -- ### */
+/* -- -- -- -- -- Floated Elements -- -- -- -- -- */
 
 .floatContainer:after {
 	content: "";
@@ -287,7 +289,7 @@ a:hover {
 	width: 49%;
 }
 
-/* ### -- -- -- -- -- ItemList -- -- -- -- -- ### */
+/* -- -- -- -- -- ItemList -- -- -- -- -- */
 
 .itemList, .itemList ol, .itemList ul {
 	margin: 0 0 0 20px;
@@ -355,7 +357,7 @@ a:hover {
 	list-style-image: url("../icon/userS.png");
 }
 
-/* ### -- -- -- -- -- Social Bookmarks -- -- -- -- -- ### */
+/* -- -- -- -- -- Social Bookmarks -- -- -- -- -- */
 
 .socialBookmarks {
 	margin: 7px 0 0 0;
@@ -378,7 +380,7 @@ a:hover {
 	list-style: none;
 }
 
-/* ### -- -- -- -- -- Simple Bar -- -- -- -- -- ### */
+/* -- -- -- -- -- Simple Bar -- -- -- -- -- */
 
 .simpleBar ul {
 	text-align: center;
@@ -405,7 +407,7 @@ a:hover {
 	margin: -5px 0;
 }
 
-/* ### -- -- -- -- -- Slider -- -- -- -- -- ### */
+/* -- -- -- -- -- Slider -- -- -- -- -- */
 
 .slider {
 	margin: 3px 0 10px 0;
@@ -420,7 +422,7 @@ a:hover {
 	cursor: move;
 }
 
-/* ### -- -- -- -- -- Overlays -- -- -- -- -- ### */
+/* -- -- -- -- -- Overlays -- -- -- -- -- */
 
 /* Note: This declaration will replace ".imageviewerBackground" in an upcoming version! */
 
@@ -454,9 +456,14 @@ a:hover {
 	display: inline;
 }
 
-/* ### -- -- -- -- -- System Messages (Success, Warning, Error, Info) -- -- -- -- -- ### */
+/* -- -- -- -- -- System Messages (Success, Warning, Error, Info) -- -- -- -- -- */
 
-/* Note: Change the colors of system messages with care! Consider that people are used to specific colors for special events (e.g. Red stands for warning). Random colors may not work as intended! */
+/* Note:
+	Change the colors of system messages with care! 
+	Consider that people are used to specific colors 
+	for special events (e.g. Red stands for warning). 
+	Random colors may not work as intended! 
+*/
 
 .success, .warning, .error, .info {
 	background-position: 10px center;
@@ -513,7 +520,7 @@ a:hover {
 	float: right;	
 }
 
-/* ### -- -- -- -- -- Inner Errors -- -- -- -- -- ### */
+/* -- -- -- -- -- Inner Errors -- -- -- -- -- */
 
 .innerError {
 	background-image: url("../icon/errorS.png");
@@ -523,7 +530,7 @@ a:hover {
 	padding: 5px 5px 5px 25px;
 }
 
-/* ### -- -- -- -- Disabled -- -- -- -- ### */
+/* -- -- -- -- Disabled -- -- -- -- */
 
 .tableList tr.disabled,
 .tableList tr.disabled:hover,
@@ -553,11 +560,11 @@ a:hover {
 	border-style: dashed !important;
 }
 
-form .disabled, .tabMenu .disabled { /* CSS 3 */
+form .disabled, .tabMenu .disabled {
 	opacity: .5;	
 }
 
-/* ### -- -- -- -- Deleted -- -- -- -- ### */
+/* -- -- -- -- Deleted -- -- -- -- */
 
 .tableList tr.deleted,
 .tableList tr.deleted:hover,
@@ -591,7 +598,7 @@ form .disabled, .tabMenu .disabled { /* CSS 3 */
 	opacity: .5 !important;
 }
 
-/* ### -- -- -- -- -- Marked -- -- -- -- -- ### */
+/* -- -- -- -- -- Marked -- -- -- -- -- */
 
 .tableList tr.marked,
 .tableList tr.marked:hover,
@@ -628,7 +635,7 @@ li.floatedElement.marked *,
 	border: none !important;
 }
 
-/* ### -- -- -- -- -- Highlight -- -- -- -- -- ### */
+/* -- -- -- -- -- Highlight -- -- -- -- -- */
 
 .highlight {
 	color: #00f;
@@ -636,4 +643,4 @@ li.floatedElement.marked *,
 	padding: 0 2px;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

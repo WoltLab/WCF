@@ -1,14 +1,11 @@
+/**
+ * ImageViewer Styles
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2009-2011 WoltLab GmbH
+ */
 
-/* ### -- -- -- -- -- ImageViewer Styles -- -- -- -- -- ### */
-
-/* 
-
-File: imageViewer.css 
-Copyright 2009-2010 by WoltLab GmbH. 
-
-*/
-
-/* #### -- -- -- -- -- ImageViewer -- -- -- -- -- #### */
+/* -- -- -- -- -- ImageViewer -- -- -- -- -- */
 
 .imageViewerBackground, .overlayBackground { /* compatibility mode */
 	color: #fff;
@@ -62,4 +59,4 @@ Copyright 2009-2010 by WoltLab GmbH.
 	z-index: 120;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

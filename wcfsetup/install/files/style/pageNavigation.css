@@ -1,14 +1,11 @@
+/**
+ * Page Navigation Styles
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2006-2011 WoltLab GmbH
+ */
 
-/* ### -- -- -- -- -- Page Navigation Styles -- -- -- -- -- ### */
-
-/* 
-
-File: pageNavigation.css 
-Copyright 2006-2009 by WoltLab GmbH. 
-
-*/
-
-/* ### -- -- -- -- -- Page Navigation -- -- -- -- -- ### */
+/* -- -- -- -- -- Page Navigation -- -- -- -- -- */
 
 .pageNavigation {
 	margin-top: .5em;
@@ -55,7 +52,7 @@ Copyright 2006-2009 by WoltLab GmbH.
 	width: 12em; /* opera fix */
 	z-index: 200;
 	display: none;
-	opacity: .9; /* css3 */
+	opacity: .9;
 }
 
 .pageNavigation li:hover div {
@@ -110,12 +107,12 @@ Copyright 2006-2009 by WoltLab GmbH.
 	padding: 0;
 }
 
-/* Drop Down Menus (see also pageMenu.css) */
+/* Drop Down Menus (also see pageMenu.css) */
 .pageNavigation a, .pageNavigation li ul, .pageNavigation li {
 	border-width: 1px;
 }
 
-/* Drop Down Menus (see also pageMenu.css) */
+/* Drop Down Menus (also see pageMenu.css) */
 .pageNavigation a, .pageNavigation li.children span {
 	border-color: #fff;
 	border-style: solid;
@@ -126,4 +123,4 @@ Copyright 2006-2009 by WoltLab GmbH.
 	padding: 0 0 2px 0;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */
