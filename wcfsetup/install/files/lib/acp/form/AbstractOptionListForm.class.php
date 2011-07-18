@@ -250,7 +250,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see OptionType::getFormElement()
+	 * @see wcf\system\option\OptionType::getFormElement()
 	 */
 	protected function getFormElement($type, Option $option) {
 		return $this->getTypeObject($type)->getFormElement($option, (isset($this->optionValues[$option->optionName]) ? $this->optionValues[$option->optionName] : null));

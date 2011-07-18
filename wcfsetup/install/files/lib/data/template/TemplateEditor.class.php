@@ -16,12 +16,12 @@ use wcf\system\WCF;
  */
 class TemplateEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	wcf\data\DatabaseObjectEditor::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\template\Template';
 	
 	/**
-	 * @see	EditableObject::create()
+	 * @see	wcf\data\EditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		// obtain default values

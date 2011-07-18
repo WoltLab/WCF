@@ -19,7 +19,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	protected $packageID = 0;
 	
 	/**
-	 * @see AbstractDatabaseObjectAction::$className
+	 * @see wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\package\installation\queue\PackageInstallationQueueEditor';
 	

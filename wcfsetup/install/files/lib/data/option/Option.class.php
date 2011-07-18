@@ -17,17 +17,17 @@ use wcf\util\StringUtil;
  */
 class Option extends DatabaseObject {
 	/**
-	 * @see	DatabaseObject::$databaseTableName
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'option';
 	
 	/**
-	 * @see	DatabaseObject::$databaseTableIndexName
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'optionID';
 	
 	/**
-	 * @see DatabaseObject::handleData()
+	 * @see wcf\data\DatabaseObject::handleData()
 	 */
 	protected function handleData($data) {
 		parent::handleData($data);

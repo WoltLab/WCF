@@ -18,17 +18,17 @@ use wcf\util\StringUtil;
  */
 class Template extends DatabaseObject {
 	/**
-	 * @see	DatabaseObject::$databaseTableName
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'template';
 	
 	/**
-	 * @see	DatabaseObject::$databaseTableIndexName
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'templateID';
 	
 	/**
-	 * @see	DatabaseObject::__construct()
+	 * @see	wcf\data\DatabaseObject::__construct()
 	 */
 	public function __construct($id, $row = null, DatabaseObject $object = null) {
 		if ($id !== null) {

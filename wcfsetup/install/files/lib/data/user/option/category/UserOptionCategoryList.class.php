@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class UserOptionCategoryList extends DatabaseObjectList {
 	/**
-	 * @see	DatabaseObjectList::$className
+	 * @see	wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\user\option\category\UserOptionCategory';
 }

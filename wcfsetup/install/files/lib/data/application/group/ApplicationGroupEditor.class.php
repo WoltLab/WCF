@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class ApplicationGroupEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	wcf\data\DatabaseObjectEditor::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\application\group\ApplicationGroup';
 }

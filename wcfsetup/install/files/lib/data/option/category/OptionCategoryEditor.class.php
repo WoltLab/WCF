@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class OptionCategoryEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	wcf\data\DatabaseObjectEditor::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\option\category\OptionCategory';
 }

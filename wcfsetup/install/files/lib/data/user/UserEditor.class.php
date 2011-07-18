@@ -17,12 +17,12 @@ use wcf\util\StringUtil;
  */
 class UserEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	wcf\data\DatabaseObjectEditor::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\User';
 	
 	/**
-	 * @see	EditableObject::create()
+	 * @see	wcf\data\EditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		// create salt and password hash
@@ -38,7 +38,7 @@ class UserEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
-	 * @see	DatabaseObjectEditor::update()
+	 * @see	wcf\data\DatabaseObjectEditor::update()
 	 */
 	public function update(array $parameters = array()) {
 		// update salt and create new password hash

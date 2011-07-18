@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectList;
  */
 class SearchList extends DatabaseObjectList {
 	/**
-	 * @see	DatabaseObjectList::$className
+	 * @see	wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\search\Search';
 }

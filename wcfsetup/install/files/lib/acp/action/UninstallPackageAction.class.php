@@ -131,7 +131,7 @@ class UninstallPackageAction extends InstallPackageAction {
 	}
 	
 	/**
-	 * @see	AbstractDialogAction::validateStep()
+	 * @see	wcf\action\AbstractDialogAction::validateStep()
 	 */
 	protected function validateStep() {
 		switch ($this->step) {

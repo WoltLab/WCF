@@ -14,7 +14,7 @@ namespace wcf\form;
  */
 abstract class AbstractSecureForm extends AbstractForm {
 	/**
-	 * @see Form::readFormParameters()
+	 * @see wcf\form\Form::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();

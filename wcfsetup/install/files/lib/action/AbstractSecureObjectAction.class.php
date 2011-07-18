@@ -20,7 +20,7 @@ abstract class AbstractSecureObjectAction extends AbstractAction {
 	protected $objectIDs = array();
 		
 	/**
-	 * @see	Action::readParameters()
+	 * @see	wcf\action\Action::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
