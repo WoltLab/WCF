@@ -25,7 +25,7 @@ WCF.ACP.Menu.prototype = {
 	 */
 	init: function(activeMenuItems) {
 		this._headerNavigation = $('nav#navigationTop');
-		this._sidebarNavigation = $('nav#navigationSide');
+		this._sidebarNavigation = $('nav#navigationSidebar');
 		
 		this._prepareElements(activeMenuItems);
 	},
@@ -36,7 +36,7 @@ WCF.ACP.Menu.prototype = {
 	_prepareElements: function(activeMenuItems) {
 		this._headerNavigation.find('li').removeClass('activeMenuItem');
 		
-		this._sidebarNavigation.find('div.menuContainer h3').each($.proxy(function(index, menuHeader) {
+		this._sidebarNavigation.find('div.menuContainer h1').each($.proxy(function(index, menuHeader) {
 			$(menuHeader).click($.proxy(this._toggleItem, this));
 		}, this));
 		
