@@ -344,6 +344,7 @@ th {
 }
 
 th.active {
+	background-color: #faebd7;
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#faebd7), to(#fa0));
 	background-image: -moz-linear-gradient(0% 0% 270deg, #faebd7, #fa0);
 	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#faebd7), to(#fa0));
