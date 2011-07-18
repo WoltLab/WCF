@@ -25,11 +25,6 @@ fieldset {
 	border: 1px solid #8da4b7;
 	margin-bottom: 10px;
 	padding: 0;
-	
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	-ms-border-radius: 5px;
-	-o-border-radius: 5px;
 	border-radius: 5px;
 }
 
@@ -71,11 +66,6 @@ textarea, select, input[type="text"], input[type="password"] {
 	background-repeat: repeat-x;
 	padding: 2px;
 	min-height: 13px;
-	
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	-ms-border-radius: 3px;
-	-o-border-radius: 3px;
 	border-radius: 3px;
 }
 
@@ -132,11 +122,6 @@ textarea, select, input[type="text"], input[type="password"] {
 	background-position: 10px center;
 	background-repeat: no-repeat;
 	padding: 7px 10px 7px 45px;
-	
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	-ms-border-radius: 5px;
-	-o-border-radius: 5px;
 	border-radius: 5px;
 }
 

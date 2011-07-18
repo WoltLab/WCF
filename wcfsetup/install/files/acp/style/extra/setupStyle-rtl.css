@@ -61,11 +61,6 @@ fieldset {
 	border: 1px solid #8da4b7;
 	margin-bottom: 10px;
 	padding: 0;
-	
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	-ms-border-radius: 5px;
-	-o-border-radius: 5px;
 	border-radius: 5px;
 }
 
@@ -111,11 +106,6 @@ a:hover, a:active, a:visited {
 	padding: 1px;
 	width: 300px;
 	height: 16px;
-	
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	-ms-border-radius: 3px;
-	-o-border-radius: 3px;
 	border-radius: 3px;
 }
 
@@ -124,11 +114,6 @@ a:hover, a:active, a:visited {
 	border-bottom: 8px solid #ddd;
 	background-color: #f1f1f1;
 	height: 8px;
-	
-	-webkit-border-radius: 1px;
-	-moz-border-radius: 1px;
-	-ms-border-radius: 1px;
-	-o-border-radius: 1px;
 	border-radius: 1px;
 }
 
@@ -177,11 +162,6 @@ textarea, select, input[type="text"], input[type="password"] {
 	background-repeat: repeat-x;
 	padding: 2px;
 	min-height: 13px;
-	
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	-ms-border-radius: 3px;
-	-o-border-radius: 3px;
 	border-radius: 3px;
 }
 
@@ -216,11 +196,6 @@ iframe {
 	background-position: 10px center;
 	background-repeat: no-repeat;
 	padding: 7px 45px 7px 10px;
-	
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	-ms-border-radius: 5px;
-	-o-border-radius: 5px;
 	border-radius: 5px;
 }
 
