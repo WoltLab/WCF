@@ -22,17 +22,17 @@ class StyleAttributesPackageInstallationPlugin extends AbstractXMLPackageInstall
 	protected $styleVariables = array();
 	
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$tableName
-	 */
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'style_variable_to_attribute';
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::$tagName
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
 	 */
 	public $tagName = 'styleattribute';
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -53,7 +53,7 @@ class StyleAttributesPackageInstallationPlugin extends AbstractXMLPackageInstall
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
 		return array(
@@ -64,14 +64,14 @@ class StyleAttributesPackageInstallationPlugin extends AbstractXMLPackageInstall
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
 	protected function findExistingItem(array $data) {
 		return null;
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::import()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
 	 */	
 	protected function import(array $row, array $data) {
 		$this->styleVariables[] = $data;
@@ -82,7 +82,7 @@ class StyleAttributesPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * spamming loads of queries for each import, thus delete all
 	 * matching variables first and insert them afterwards.
 	 * 
-	 * @see	AbstractXMLPackageInstallationPlugin::postImport()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::postImport()
 	 */
 	protected function postImport() {
 		if (!count($this->styleVariables)) return;
@@ -119,7 +119,7 @@ class StyleAttributesPackageInstallationPlugin extends AbstractXMLPackageInstall
 	}
 	
 	/**
-	 * @see	 PackageInstallationPlugin::uninstall()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		parent::uninstall();

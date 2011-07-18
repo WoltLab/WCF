@@ -15,22 +15,22 @@ use wcf\system\WCF;
  */
 class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$className
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\core\object\CoreObjectEditor';
 	
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$tableName
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'core_object';
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::$tagName
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
 	 */	
 	public $tagName = 'coreobject';
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -46,7 +46,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
 		return array(
@@ -55,7 +55,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
@@ -74,14 +74,14 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::cleanup()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
 	 */	
 	protected function cleanup() {
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.coreObjects.php');
 	}
 	
 	/**
-	 * @see	 PackageInstallationPlugin::uninstall()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		parent::uninstall();

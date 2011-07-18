@@ -17,10 +17,13 @@ use wcf\util\FileUtil;
  * @category 	Community Framework
  */
 class TemplatesPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
+	/**
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'template';
 	
 	/**
-	 * @see PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();
