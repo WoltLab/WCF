@@ -18,7 +18,11 @@ use wcf\system\WCF;
  * @category 	Community Framework
  */
 class UserOptionsPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
+	/**
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'user_option';
+
 	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'validationpattern', 'required', 'editable', 'visible', 'searchable', 'showorder', 'outputclass', 'selectoptions', 'enableoptions', 'disabled', 'categoryname', 'permissions', 'options', 'attrs', 'cdata');
 	
 	/**
@@ -58,7 +62,7 @@ class UserOptionsPackageInstallationPlugin extends AbstractOptionPackageInstalla
 	}
 	
 	/**
-	 * @see	 AbstractOptionPackageInstallationPlugin::saveOption()
+	 * @see	wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		// default values

@@ -21,10 +21,13 @@ use wcf\util\StyleUtil;
  * @category 	Community Framework
  */
 class FilesPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
+	/**
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'package_installation_file_log';
 	
 	/**
-	 * @see PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();

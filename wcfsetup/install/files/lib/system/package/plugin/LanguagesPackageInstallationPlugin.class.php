@@ -18,10 +18,13 @@ use wcf\util\XML;
  * @category 	Community Framework
  */
 class LanguagesPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+	/**
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 */	
 	public $tableName = 'language_item';
 	
 	/**
-	 * @see PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		AbstractPackageInstallationPlugin::install();

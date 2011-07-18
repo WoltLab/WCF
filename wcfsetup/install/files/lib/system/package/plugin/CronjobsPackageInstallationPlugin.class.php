@@ -15,22 +15,22 @@ use wcf\util\CronjobUtil;
  */
 class CronjobsPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$className
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\cronjob\CronjobEditor';
 	
 	/**
-	 * @see AbstractXMLPackageInstallationPlugin::$tableName
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'cronjob';
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::$tagName
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
 	 */	
 	public $tagName = 'cronjobs';
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -46,7 +46,7 @@ class CronjobsPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
 		return array(
@@ -64,21 +64,21 @@ class CronjobsPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::validateImport()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::validateImport()
 	 */
 	protected function validateImport(array $data) {
 		CronjobUtil::validate($startMinute, $startHour, $startDom, $startMonth, $startDow);
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
 	protected function findExistingItem(array $data) {
 		return null;
 	}
 	
 	/**
-	 * @see	AbstractXMLPackageInstallationPlugin::prepareCreate()
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareCreate()
 	 */
 	protected function prepareCreate(array &$data) {
 		parent::prepareCreate($data);

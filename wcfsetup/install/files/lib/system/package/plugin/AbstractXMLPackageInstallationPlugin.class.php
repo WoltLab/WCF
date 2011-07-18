@@ -19,15 +19,9 @@ use wcf\util\XML;
 abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
 	 * object editor class name
-	 * @var string
+	 * @var	string
 	 */
 	public $className = '';
-	
-	/**
-	 * sql database table name
-	 * @var string
-	 */
-	public $tableName = '';
 	
 	/**
 	 * xml tag name, e.g. 'acpmenuitem'
@@ -36,7 +30,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	public $tagName = '';
 	
 	/**
-	 * @see	 PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();
@@ -60,7 +54,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	/**
 	 * Deletes items.
 	 * 
-	 * @param	DOMXPath $xpath
+	 * @param	\DOMXPath	$xpath
 	 */
 	protected function deleteItems(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:delete/ns:'.$this->tagName);
@@ -89,7 +83,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	/**
 	 * Imports or updates items.
 	 * 
-	 * @param	DOMXPath	$xpath
+	 * @param	\DOMXPath	$xpath
 	 */	
 	protected function importItems(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:'.$this->tagName);
