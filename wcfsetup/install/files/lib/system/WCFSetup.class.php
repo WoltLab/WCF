@@ -382,6 +382,11 @@ class WCFSetup extends WCF {
 		else {
 			if ($foundDirectory = FileUtil::scanFolder(INSTALL_SCRIPT_DIR, "WCF.class.php", true)) {
 				$foundDirectory = $wcfDir = FileUtil::unifyDirSeperator(dirname(dirname(dirname($foundDirectory))).'/');
+				
+				if (dirname(dirname($wcfDir)).'/' == TMP_DIR) {
+					$foundDirectory = false;
+					$wcfDir = FileUtil::unifyDirSeperator(INSTALL_SCRIPT_DIR).'wcf/';
+				}
 			}
 			else {
 				$wcfDir = FileUtil::unifyDirSeperator(INSTALL_SCRIPT_DIR).'wcf/';
