@@ -2,7 +2,7 @@
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/language.xsd" languagecode="de-informal">
 	<category name="wcf.global">
 		<item name="wcf.global.pageTitle"><![CDATA[{$setupPackageName} Installation]]></item>
-		<item name="wcf.global.title"><![CDATA[<b>{$setupPackageName}</b><br />Installation]]></item>
+		<item name="wcf.global.title"><![CDATA[<strong>{$setupPackageName}</strong><br />Installation]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item>
 		<item name="wcf.global.locale.unix"><![CDATA[de_DE]]></item>
 		<item name="wcf.global.locale.win"><![CDATA[deu_deu]]></item>
@@ -15,10 +15,10 @@
 		<item name="wcf.global.timeFormat"><![CDATA[%d.%m.%Y, %H:%M]]></item>
 		<item name="wcf.global.dateFormatLocalized"><![CDATA[%e. %B %Y]]></item>
 		<item name="wcf.global.timeFormatLocalized"><![CDATA[%A, %e. %B %Y, %H:%M]]></item>
-		<item name="wcf.global.dateFormatToday"><![CDATA[<b>Heute</b>, %H:%M]]></item>
+		<item name="wcf.global.dateFormatToday"><![CDATA[<strong>Heute</strong>, %H:%M]]></item>
 		<item name="wcf.global.dateFormatYesterday"><![CDATA[Gestern, %H:%M]]></item>
 		<item name="wcf.global.welcome"><![CDATA[Vielen Dank, dass du dich für {$setupPackageName} entschieden hast]]></item>
-		<item name="wcf.global.welcome.description"><![CDATA[Dieser Installationsassistent hilft dir bei der Einrichtung von <br /><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} und von <b>{$setupPackageName}</b>{/if}.]]></item>
+		<item name="wcf.global.welcome.description"><![CDATA[Dieser Installationsassistent hilft dir bei der Einrichtung von <br /><strong>WoltLab Community Framework</strong>{if $setupPackageName != 'WoltLab Community Framework'} und von <strong>{$setupPackageName}</strong>{/if}.]]></item>
 		<item name="wcf.global.welcome.language"><![CDATA[Sprache]]></item>
 		<item name="wcf.global.language.en"><![CDATA[Englisch]]></item>
 		<item name="wcf.global.language.de"><![CDATA[Deutsch]]></item>
@@ -82,11 +82,11 @@
 		<item name="wcf.global.systemRequirements.active"><![CDATA[aktiviert]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[nicht aktiviert]]></item>
 		<item name="wcf.global.wcfDir"><![CDATA[Installationsverzeichnis wählen]]></item>
-		<item name="wcf.global.wcfDir.description"><![CDATA[In das Installationsverzeichnis werden alle Dateien von <b>WoltLab Community Framework</b> entpackt.]]></item>
-		<item name="wcf.global.wcfDir.foundDirectory"><![CDATA[Die Installation vermutet eine bereits vorhandene Installation von <b>WoltLab Community Framework</b> im Ordner "{$foundDirectory}".<br />Überprüfe diese Angabe bzw. definiere ein anderes Installationsverzeichnis, wenn du eine neue Kopie von <b>WoltLab Community Framework</b> installieren möchtest.]]></item>
+		<item name="wcf.global.wcfDir.description"><![CDATA[In das Installationsverzeichnis werden alle Dateien von <strong>WoltLab Community Framework</strong> entpackt.]]></item>
+		<item name="wcf.global.wcfDir.foundDirectory"><![CDATA[Die Installation vermutet eine bereits vorhandene Installation von <strong>WoltLab Community Framework</strong> im Ordner "{$foundDirectory}".<br />Überprüfe diese Angabe bzw. definiere ein anderes Installationsverzeichnis, wenn du eine neue Kopie von <strong>WoltLab Community Framework</strong> installieren möchtest.]]></item>
 		<item name="wcf.global.wcfDir.dir"><![CDATA[Installationsverzeichnis]]></item>
-		<item name="wcf.global.wcfDir.dir.description"><![CDATA[Gib hier das Installationsverzeichnis für <b>WoltLab Community Framework</b> an.]]></item>
-		<item name="wcf.global.wcfDir.url.description"><![CDATA[Nach einer Installation in das angegebene Installationsverzeichnis ist <b>WoltLab Community Framework</b> über folgende Adresse (URL) erreichbar:]]></item>
+		<item name="wcf.global.wcfDir.dir.description"><![CDATA[Gib hier das Installationsverzeichnis für <strong>WoltLab Community Framework</strong> an.]]></item>
+		<item name="wcf.global.wcfDir.url.description"><![CDATA[Nach einer Installation in das angegebene Installationsverzeichnis ist <strong>WoltLab Community Framework</strong> über folgende Adresse (URL) erreichbar:]]></item>
 		<item name="wcf.global.wcfDir.error.invalid"><![CDATA[Das eingegebene Verzeichnis ist ungültig.]]></item>
 		<item name="wcf.global.ftp"><![CDATA[Eingabe der Zugangsdaten für FTP]]></item>
 		<item name="wcf.global.ftp.description"><![CDATA[Da auf deinem Server der PHP-SafeMode aktiviert ist, muss WoltLab Community Framework über die FTP-Funktionen installiert werden. Gib Benutzernamen und Kennwort für den FTP-Zugang zu diesem Server an. Die Daten werden nicht gespeichert oder weitergeleitet, sondern lediglich zur Installation dieses Paketes verwendet. Aus diesem Grunde musst du die FTP-Zugangsdaten evtl. auch mehrfach während dieser Installation angeben.]]></item>
@@ -132,7 +132,7 @@
 		<item name="wcf.global.configureDB.database"><![CDATA[Datenbankname]]></item>
 		<item name="wcf.global.configureDB.number"><![CDATA[Installationsnummer]]></item>
 		<item name="wcf.global.configureDB.error"><![CDATA[Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
-		<br /><b>{$exception->getMessage()}{if $exception|get_class == 'DatabaseException'}<br />{$exception->getErrorDesc()}{/if}</b>
+		<br /><strong>{$exception->getMessage()}{if $exception|get_class == 'DatabaseException'}<br />{$exception->getErrorDesc()}{/if}</strong>
 		<br />Weitere Informationen zu diesem Problem erhältst du im Nachschlagewerk von WoltLab:
 		<br /><a href="http://www.woltlab.com/help/?code={@$exception->getCode()}">http://www.woltlab.com/help/?code={@$exception->getCode()}</a>]]></item>
 		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[Folgende Tabelle{if $conflictedTables|count > 1}n{/if} existier{if $conflictedTables|count > 1}en{else}t{/if} schon in der Datenbank &raquo;{$dbName}&laquo;:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />Um dieses Problem zu beheben, kannst du:<br />1. diese Tabelle{if $conflictedTables|count > 1}n{/if} überschreiben, indem du die &raquo;Überschreiben&laquo; Option aktivierst und die &raquo;Weiter&laquo; Schaltfläche betätigst, oder<br />2. Du gibst die Daten einer anderen Datenbank ein und betätigst die &raquo;Weiter&laquo; Schaltfläche, oder<br />3. Du gibst eine von &raquo;{$dbNumber}&laquo; unterschiedliche Installationsnummer an und betätigst die &raquo;Weiter&laquo; Schaltfläche.]]></item>
@@ -152,7 +152,7 @@
 		<item name="wcf.global.createUser.error.confirmEmail.notEqual"><![CDATA[Die eingegebenen E-Mail-Adressen sind nicht identisch. Trage zur Sicherheit in beide Eingabefelder die selbe E-Mail-Adresse ein.]]></item>
 		<item name="wcf.global.createUser.error.confirmPassword.notEqual"><![CDATA[Die eingegebenen Kennwörter sind nicht identisch. Trage zur Sicherheit in beide Eingabefelder das selbe Kennwort ein.]]></item>
 		<item name="wcf.global.wcfDir.error"><![CDATA[Beim Versuch die Dateien zu entpacken, ist folgender Fehler aufgetreten:
-		<br /><b>{$exception->getMessage()}</b><br />
+		<br /><strong>{$exception->getMessage()}</strong><br />
 		Kontrolliere bitte, ob das Zielverzeichnis existiert und beschreibbar ist.
 		<br /><br />Weitere Informationen zu diesem Problem erhältst du im Nachschlagewerk von WoltLab:<br /><a href="http://www.woltlab.com/help/?code={@$exception->getCode()}">http://www.woltlab.com/help/?code={@$exception->getCode()}</a>]]></item>
 	</category>
