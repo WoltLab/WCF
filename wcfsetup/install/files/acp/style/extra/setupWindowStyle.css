@@ -1,14 +1,11 @@
+/**
+ * Setup Window Styles (LTR)
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2006-2011 WoltLab GmbH
+ */
 
-/* ### -- -- -- -- -- Setup Window Styles -- -- -- -- -- ### */
-
-/* 
-
-File: setupWindowStyle.css 
-Copyright 2006-2009 by WoltLab GmbH. 
-
-*/
-
-/* -- -- -- -- -- -- -- Miscellaneous -- -- -- -- -- -- -- */
+/* -- -- -- -- -- Miscellaneous -- -- -- -- -- */
 
 body {
 	color: #333;
@@ -28,8 +25,12 @@ fieldset {
 	border: 1px solid #8da4b7;
 	margin-bottom: 10px;
 	padding: 0;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
 }
 
 legend {
@@ -44,7 +45,7 @@ fieldset p, fieldset div {
 	padding: 0;
 }
 
-/* -- -- -- -- -- -- -- Forms -- -- -- -- -- -- -- */
+/* -- -- -- -- -- Forms -- -- -- -- -- */
 
 form {
 	margin: 0;
@@ -70,8 +71,12 @@ textarea, select, input[type="text"], input[type="password"] {
 	background-repeat: repeat-x;
 	padding: 2px;
 	min-height: 13px;
+	
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
 }
 
 textarea:focus, select:focus, .inputText:focus {
@@ -117,7 +122,9 @@ textarea, select, input[type="text"], input[type="password"] {
 	color: #b2b2b2;
 }
 
-/* ### -- -- -- -- -- System Messages (Success, Warning, Error) -- -- -- -- -- ### */
+/* -- -- -- -- -- System Messages -- -- -- -- -- */
+
+/* Success, Warning, Error */
 
 .success, .warning, .error {
 	border-width: 1px;
@@ -125,8 +132,12 @@ textarea, select, input[type="text"], input[type="password"] {
 	background-position: 10px center;
 	background-repeat: no-repeat;
 	padding: 7px 10px 7px 45px;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .success {
@@ -170,7 +181,7 @@ textarea, select, input[type="text"], input[type="password"] {
 	vertical-align: middle;
 }
 
-/* ### -- -- -- -- -- System Exception -- -- -- -- -- ### */
+/* -- -- -- -- -- System Exception -- -- -- -- -- */
 
 #systemException {
 	font-family: Verdana, Helvetica, sans-serif;
@@ -210,4 +221,4 @@ textarea, select, input[type="text"], input[type="password"] {
 	padding: 0;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

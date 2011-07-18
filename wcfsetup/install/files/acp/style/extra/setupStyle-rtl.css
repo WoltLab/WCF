@@ -1,14 +1,11 @@
+/**
+ * Setup Styles (RTL)
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2006-2011 WoltLab GmbH
+ */
 
-/* ### -- -- -- -- -- Setup Styles -- -- -- -- -- ### */
-
-/* 
-
-File: setupStyle.css 
-Copyright 2006-2009 by WoltLab GmbH. 
-
-*/
-
-/* ### -- -- -- -- -- Miscellaneous -- -- -- -- -- ### */
+/* -- -- -- -- -- Miscellaneous -- -- -- -- -- */
 
 html, body {
 	background-color: #eee;
@@ -41,7 +38,7 @@ h1 {
 	color: #164369;
 	font-size: 1.9em;
 	font-weight: normal;
-	text-shadow: -0 2px 3px #bbb;
+	text-shadow: 0 2px 3px #bbb;
 	margin: 5px 0;
 	padding: 5px 0;
 }
@@ -64,8 +61,12 @@ fieldset {
 	border: 1px solid #8da4b7;
 	margin-bottom: 10px;
 	padding: 0;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
 }
 
 legend {
@@ -92,7 +93,7 @@ hr {
 	position: relative;
 }
 
-/* ### -- -- -- -- -- Links -- -- -- -- -- ### */
+/* -- -- -- -- -- Links -- -- -- -- -- */
 
 a {
 	color: #164369;
@@ -102,7 +103,7 @@ a:hover, a:active, a:visited {
 	color: #000;
 }
 
-/* ### -- -- -- -- -- Progress Bar -- -- -- -- -- ### */
+/* -- -- -- -- -- Progress Bar -- -- -- -- -- */
 
 .progress {
 	border: 1px solid #b2b2b2;
@@ -110,8 +111,12 @@ a:hover, a:active, a:visited {
 	padding: 1px;
 	width: 300px;
 	height: 16px;
+	
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
 }
 
 .progressBar {
@@ -119,14 +124,18 @@ a:hover, a:active, a:visited {
 	border-bottom: 8px solid #ddd;
 	background-color: #f1f1f1;
 	height: 8px;
+	
 	-webkit-border-radius: 1px;
 	-moz-border-radius: 1px;
+	-ms-border-radius: 1px;
+	-o-border-radius: 1px;
+	border-radius: 1px;
 }
 
 .progressText {
 	color: #333;
 	font-size: .75em;
-	text-shadow: -0 1px 1px #fff;
+	text-shadow: 0 1px 1px #fff;
 	text-align: center;
 	margin-top: -15px;
 }
@@ -142,7 +151,7 @@ fieldset #content .inner {
 	margin-top: 0 !important;
 }
 
-/* -- -- -- -- -- -- -- Forms -- -- -- -- -- -- -- */
+/* -- -- -- -- -- Forms -- -- -- -- -- */
 
 form {
 	margin: 0;
@@ -168,8 +177,12 @@ textarea, select, input[type="text"], input[type="password"] {
 	background-repeat: repeat-x;
 	padding: 2px;
 	min-height: 13px;
+	
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
 }
 
 textarea:focus, select:focus, .inputText:focus {
@@ -193,7 +206,9 @@ iframe {
 	float: left;
 }
 
-/* ### -- -- -- -- -- System Messages (Success, Warning, Error) -- -- -- -- -- ### */
+/* -- -- -- -- -- System Messages -- -- -- -- -- */
+
+/* Success, Warning, Error */
 
 .success, .warning, .error {
 	border-width: 1px;
@@ -201,8 +216,12 @@ iframe {
 	background-position: 10px center;
 	background-repeat: no-repeat;
 	padding: 7px 45px 7px 10px;
+	
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .success {
@@ -258,4 +277,4 @@ iframe {
 	padding: 0;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */

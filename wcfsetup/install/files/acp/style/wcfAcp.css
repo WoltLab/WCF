@@ -1,13 +1,11 @@
+/**
+ * ACP Special Styles
+ *
+ * @author		Arian Glander, Harald Szekely
+ * @copyright	2006-2011 WoltLab GmbH
+ */
 
-/* ### -- -- -- -- -- ACP Special Styles -- -- -- -- -- ### */
-
-/* 
-
-File: acp.css 
-Copyright 2006-2010 by WoltLab GmbH. 
-
-*/
-/* ### -- -- -- -- -- Miscellaneous -- -- -- -- -- ### */
+/* -- -- -- -- -- Miscellaneous -- -- -- -- -- */
 
 body, html {
 	background-color: #fff;
@@ -126,7 +124,7 @@ h2, h2 a {
 	clear: none;
 }
 
-/* ### -- -- -- -- -- Sidebar -- -- -- -- -- ### */
+/* -- -- -- -- -- Sidebar -- -- -- -- -- */
 
 #sidebar {
 	background-color: transparent;
@@ -198,7 +196,7 @@ h2, h2 a {
 	background-position: left bottom;
 }
 
-/* ### -- -- -- -- -- Menu -- -- -- -- -- ### */
+/* -- -- -- -- -- Menu -- -- -- -- -- */
 
 /* ToDo: Clean up this mess */
 
@@ -257,7 +255,7 @@ h2, h2 a {
 	top: 0;
 }
 
-/* #### -- -- -- -- -- Sitemap -- -- -- -- -- #### */
+/* -- -- -- -- -- Sitemap -- -- -- -- -- */
 
 .sitemap {
 	padding: 20px 0 20px 180px;
@@ -327,7 +325,7 @@ h2, h2 a {
 	clear: both;
 }
 
-/* ### -- -- -- -- Access Rights -- -- -- -- ### */
+/* -- -- -- -- Access Rights -- -- -- -- */
 
 .allow, .deny {
 	font-size: .85em;
@@ -421,16 +419,18 @@ h2, h2 a {
 	padding: 5px 7px 5px 35px !important;
 }
 
-/* ### -- -- -- -- Special Styles -- -- -- -- ### */
+/* -- -- -- -- Special Styles -- -- -- -- */
 
-* {-o-text-overflow: ellipsis;}
+* {
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+}
 
 .sitemap .container-1 {
 	-webkit-border-bottom-left-radius: 5px;
 	-webkit-border-bottom-right-radius: 5px;
 	-moz-border-radius-bottomleft: 5px;
 	-moz-border-radius-bottomright: 5px;
-	
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 }
@@ -440,7 +440,6 @@ h2, h2 a {
 	-webkit-border-top-right-radius: 0;
 	-moz-border-radius-topleft: 0;
 	-moz-border-radius-topright: 0;
-	
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
@@ -452,4 +451,4 @@ h2, h2 a {
 	border-radius: 5px;
 }
 
-/* ### -- -- -- -- -- EOF -- -- -- -- -- ### */
+/* -- -- -- -- -- EOF -- -- -- -- -- */
