@@ -64,7 +64,9 @@
 						<th><div><span class="emptyHead">{lang}wcf.acp.cache.list.name{/lang}</span></div></th>
 						<th><div><span class="emptyHead">{lang}wcf.acp.cache.list.size{/lang}</span></div></th>
 						<th><div><span class="emptyHead">{lang}wcf.acp.cache.list.mtime{/lang}</span></div></th>
-						<th><div><span class="emptyHead">{lang}wcf.acp.cache.list.perm{/lang}</span></div></th>
+						{if $files.0.perm|isset}
+							<th><div><span class="emptyHead">{lang}wcf.acp.cache.list.perm{/lang}</span></div></th>
+						{/if}
 					</tr>
 				</thead>
 				<tbody>
@@ -73,7 +75,9 @@
 						<td class="columnText">{$file.filename}</td>
 						<td class="columnNumbers">{@$file.filesize|filesize}</td>
 						<td class="columnDate">{if $file.mtime > 1}{@$file.mtime|time}{/if}</td>
-						<td class="columnNumbers"{if !$file.writable} style="color: #c00"{/if}>{@$file.perm}</td>
+						{if $file.perm|isset}
+							<td class="columnNumbers"{if !$file.writable} style="color: #c00"{/if}>{@$file.perm}</td>
+						{/if}
 					</tr>
 				{/foreach}
 				</tbody>
