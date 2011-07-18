@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="{lang}wcf.global.pageDirection{/lang}" xml:lang="{@LANGUAGE_CODE}">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{@$__wcf->getLanguage()->getPageDirection()}" xml:lang="{@$__wcf->getLanguage()->getFixedLanguageCode()}">
 	<head>
 		<title>{@$pageTitle} - {lang}wcf.global.pageTitle{/lang}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -16,7 +16,7 @@
 		<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/AjaxRequest.class.js"></script>
 		<script type="text/javascript" src="{@RELATIVE_WCF_DIR}acp/js/default.js"></script>
 		<style type="text/css">
-			@import url("{@RELATIVE_WCF_DIR}acp/style/extra/setupStyle{if PAGE_DIRECTION == 'rtl'}-rtl{/if}.css");
+			@import url("{@RELATIVE_WCF_DIR}acp/style/extra/setupStyle{if $__wcf->getLanguage()->getPageDirection() == 'rtl'}-rtl{/if}.css");
 		</style>
 		
 		<!--[if lt IE 7]>

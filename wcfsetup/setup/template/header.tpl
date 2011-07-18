@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="{lang}wcf.global.pageDirection{/lang}" xml:lang="{@LANGUAGE_CODE}">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{@$__wcf->getLanguage()->getPageDirection()}" xml:lang="{@$__wcf->getLanguage()->getFixedLanguageCode()}">
 	<head>
 		<title>{lang}wcf.global.progressBar{/lang} - {lang}wcf.global.pageTitle{/lang}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -13,13 +13,13 @@
 				margin: 0;
 				padding: 0;
 				background-color: #eee;
-				background-image: url({if 'RELATIVE_WCF_DIR'|defined}{@' '|str_replace:'%20':RELATIVE_WCF_DIR}acp/images/setupBackground-{@PAGE_DIRECTION}.png{else}install.php?showImage=setupBackground-{@PAGE_DIRECTION}.png&tmpFilePrefix={@$tmpFilePrefix}{/if});
+				background-image: url({if 'RELATIVE_WCF_DIR'|defined}{@' '|str_replace:'%20':RELATIVE_WCF_DIR}acp/images/setupBackground-{@$__wcf->getLanguage()->getPageDirection()}.png{else}install.php?showImage=setupBackground-{@$__wcf->getLanguage()->getPageDirection()}.png&tmpFilePrefix={@$tmpFilePrefix}{/if});
 				background-repeat: repeat-y;
-				background-position: {if PAGE_DIRECTION == 'ltr'}left{else}right{/if};
+				background-position: {if $__wcf->getLanguage()->getPageDirection() == 'ltr'}left{else}right{/if};
 			}
 			
 			.page {
-				background-image: url({if 'RELATIVE_WCF_DIR'|defined}{@' '|str_replace:'%20':RELATIVE_WCF_DIR}acp/images/setupHeader-{@PAGE_DIRECTION}.jpg{else}install.php?showImage=setupHeader-{@PAGE_DIRECTION}.jpg&tmpFilePrefix={@$tmpFilePrefix}{/if});
+				background-image: url({if 'RELATIVE_WCF_DIR'|defined}{@' '|str_replace:'%20':RELATIVE_WCF_DIR}acp/images/setupHeader-{@$__wcf->getLanguage()->getPageDirection()}.jpg{else}install.php?showImage=setupHeader-{@$__wcf->getLanguage()->getPageDirection()}.jpg&tmpFilePrefix={@$tmpFilePrefix}{/if});
 				background-repeat: no-repeat;
 				background-color: #fff;
 				padding: 153px 40px 20px 40px;
@@ -88,8 +88,8 @@
 			}
 				
 			fieldset ul li {
-				padding-{if PAGE_DIRECTION == 'ltr'}right{else}left{/if}: 3%;
-				float: {if PAGE_DIRECTION == 'ltr'}left{else}right{/if};
+				padding-{if $__wcf->getLanguage()->getPageDirection() == 'ltr'}right{else}left{/if}: 3%;
+				float: {if $__wcf->getLanguage()->getPageDirection() == 'ltr'}left{else}right{/if};
 				width: 30%;
 			}
 			
@@ -102,7 +102,7 @@
 				height: 1px;
 				width: 100%;
 				position: relative;
-				clear: {if PAGE_DIRECTION == 'ltr'}left{else}right{/if};
+				clear: {if $__wcf->getLanguage()->getPageDirection() == 'ltr'}left{else}right{/if};
 			}
 			
 			form {
@@ -145,12 +145,12 @@
 			}
 			
 			.setupIcon {
-				margin-{if PAGE_DIRECTION == 'ltr'}right{else}left{/if}: 30px;
-				float: {if PAGE_DIRECTION == 'ltr'}left{else}right{/if};
+				margin-{if $__wcf->getLanguage()->getPageDirection() == 'ltr'}right{else}left{/if}: 30px;
+				float: {if $__wcf->getLanguage()->getPageDirection() == 'ltr'}left{else}right{/if};
 			}
 			
 			.nextButton {
-				float: {if PAGE_DIRECTION == 'ltr'}right{else}left{/if};
+				float: {if $__wcf->getLanguage()->getPageDirection() == 'ltr'}right{else}left{/if};
 			}
 			
 			.copyright {
@@ -158,7 +158,7 @@
 			}
 			
 			.left {
-				float: {if PAGE_DIRECTION == 'ltr'}left{else}right{/if};
+				float: {if $__wcf->getLanguage()->getPageDirection() == 'ltr'}left{else}right{/if};
 			}
 			
 			.left, .right {
@@ -167,7 +167,7 @@
 			}
 			
 			.right {
-				margin-{if PAGE_DIRECTION == 'ltr'}left{else}right{/if}: 48%;
+				margin-{if $__wcf->getLanguage()->getPageDirection() == 'ltr'}left{else}right{/if}: 48%;
 				width: 48%;
 			}
 			
@@ -193,7 +193,7 @@
 			
 			.progress {
 				border: 1px solid #b2b2b2;
-				margin: {if PAGE_DIRECTION == 'ltr'}0 0 25px 128px{else}0 128px 25px 0{/if};
+				margin: {if $__wcf->getLanguage()->getPageDirection() == 'ltr'}0 0 25px 128px{else}0 128px 25px 0{/if};
 				padding: 1px;
 				width: 300px;
 				height: 16px;
