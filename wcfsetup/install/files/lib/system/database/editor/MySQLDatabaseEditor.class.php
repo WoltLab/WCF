@@ -166,6 +166,15 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
+	 * @see DatabaseEditor::dropForeignKey()
+	 */
+	public function dropForeignKey($tableName, $indexName) {
+		$sql = "ALTER TABLE ".$tableName." DROP FOREIGN KEY ".$indexName;
+		$statement = $this->dbObj->prepareStatement($sql);
+		$statement->execute();
+	}
+	
+	/**
 	 * Builds a column definition for execution in a create table or alter table statement.
 	 * 
 	 * @param	string		$columnName

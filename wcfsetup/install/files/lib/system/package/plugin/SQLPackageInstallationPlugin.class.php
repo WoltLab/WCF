@@ -82,9 +82,10 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	 */
 	public function uninstall() {
 		// get logged sql tables/columns
-		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_package_installation_sql_log
-			WHERE	packageID = ?";
+		$sql = "SELECT		*
+			FROM		wcf".WCF_N."_package_installation_sql_log
+			WHERE		packageID = ?
+			ORDER BY 	sqlIndex DESC, sqlColumn DESC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
 		$entries = array();
@@ -98,7 +99,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		// delete or alter tables
 		foreach ($entries as $entry) {
 			// don't alter table if it should be dropped
-			if (!empty($entry['sqlColumn']) || !empty($entry['sqlIndex'])) {
+			if (!empty($entry['sqlColumn'])/* || !empty($entry['sqlIndex'])*/) {
 				$isDropped = false;
 				foreach ($entries as $entry2) {
 					if ($entry['sqlTable'] == $entry2['sqlTable'] && empty($entry2['sqlColumn']) && empty($entry2['sqlIndex'])) {
@@ -117,7 +118,12 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			}
 			// drop index
 			else if (in_array($entry['sqlTable'], $existingTableNames) && !empty($entry['sqlIndex'])) {
-				WCF::getDB()->getEditor()->dropIndex($entry['sqlTable'], $entry['sqlIndex']);
+				if (substr($entry['sqlIndex'], -3) == '_fk') {
+					WCF::getDB()->getEditor()->dropForeignKey($entry['sqlTable'], $entry['sqlIndex']);
+				}
+				else {
+					WCF::getDB()->getEditor()->dropIndex($entry['sqlTable'], $entry['sqlIndex']);
+				}
 			}
 		}
 		// delete from log table

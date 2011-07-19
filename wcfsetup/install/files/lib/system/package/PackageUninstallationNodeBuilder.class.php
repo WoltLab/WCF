@@ -38,15 +38,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 		$sql = "SELECT		pluginName, className,
 					CASE pluginName WHEN 'packageinstallationplugins' THEN 1 WHEN 'files' THEN 2 ELSE 0 END 'pluginOrder'
 			FROM		wcf".WCF_N."_package_installation_plugin
-			WHERE		packageID IN (
-						1 /* TESTING ONLY */
-						/*
-						SELECT	dependency
-						FROM	wcf".WCF_N."_package_dependency
-						WHERE	packageID = ".$this->installation->queue->packageID."
-						*/
-					)
-			ORDER BY	pluginOrder ASC, priority DESC";
+			ORDER BY	pluginOrder, priority";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {

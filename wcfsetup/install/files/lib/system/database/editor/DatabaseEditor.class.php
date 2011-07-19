@@ -120,4 +120,12 @@ abstract class DatabaseEditor {
 	 * @param	string		$indexName
 	 */
 	public abstract function dropIndex($tableName, $indexName);
+	
+	/**
+	 * Drops an existing foreign key.
+	 * 
+	 * @param	string		$tableName
+	 * @param	string		$indexName
+	 */
+	public abstract function dropForeignKey($tableName, $indexName);
 }

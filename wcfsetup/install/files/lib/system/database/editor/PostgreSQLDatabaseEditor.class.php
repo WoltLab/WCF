@@ -275,6 +275,13 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
+	 * @see DatabaseEditor::dropForeignKey()
+	 */
+	public function dropForeignKey($tableName, $indexName) {
+		// TODO: implement this function
+	}
+	
+	/**
 	 * Builds a column definition for execution in a create table or alter table statement.
 	 * 
 	 * @param	string		$columnName
