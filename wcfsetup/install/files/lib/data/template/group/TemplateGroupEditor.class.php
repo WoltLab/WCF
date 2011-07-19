@@ -16,7 +16,7 @@ use wcf\util\FileUtil;
  */
 class TemplateGroupEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\template\group\TemplateGroup';
 	

@@ -20,7 +20,7 @@ use wcf\system\WCF;
  */
 class UserGroupEditor extends DatabaseObjectEditor implements EditableCachedObject {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\group\UserGroup';
 	

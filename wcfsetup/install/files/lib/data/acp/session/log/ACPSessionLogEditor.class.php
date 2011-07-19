@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class ACPSessionLogEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\acp\session\log\ACPSessionLog';
 }

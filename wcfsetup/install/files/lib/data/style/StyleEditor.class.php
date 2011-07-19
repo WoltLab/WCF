@@ -32,7 +32,7 @@ class StyleEditor extends DatabaseObjectEditor implements EditableCachedObject {
 	const STYLE_PREVIEW_IMAGE_MAX_HEIGHT = 140;
 	
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\style\Style';
 	

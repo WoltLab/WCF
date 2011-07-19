@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 class PackageInstallationPluginEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\package\installation\plugin\PackageInstallationPlugin';
 }

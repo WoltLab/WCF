@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class TemplateListenerEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\template\listener\TemplateListener';
 }

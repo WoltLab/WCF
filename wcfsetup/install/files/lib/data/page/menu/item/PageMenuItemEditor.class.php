@@ -17,7 +17,7 @@ use wcf\system\WCF;
  */
 class PageMenuItemEditor extends DatabaseObjectEditor implements EditableCachedObject {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\page\menu\item\PageMenuItem';
 	

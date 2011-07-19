@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class PackageUpdateVersionEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\package\update\version\PackageUpdateVersion';
 }

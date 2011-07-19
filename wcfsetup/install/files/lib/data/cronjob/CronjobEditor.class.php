@@ -17,7 +17,7 @@ use wcf\system\WCF;
  */
 class CronjobEditor extends DatabaseObjectEditor implements EditableCachedObject {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\cronjob\Cronjob';
 	

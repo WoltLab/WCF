@@ -25,7 +25,7 @@ use wcf\util\XML;
  */
 class LanguageEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	wcf\data\DatabaseObjectEditor::$baseClass
+	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\language\Language';
 	

@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class SessionDataEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\session\data\SessionData';
 }

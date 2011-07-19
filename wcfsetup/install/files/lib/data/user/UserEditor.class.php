@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  */
 class UserEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\User';
 	
