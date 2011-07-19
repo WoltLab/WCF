@@ -1,4 +1,5 @@
 <?php
+
 namespace wcf\system\exception;
 use wcf\util\StringUtil;
 
@@ -13,6 +14,7 @@ use wcf\util\StringUtil;
  * @category 	Community Framework
  */
 class SystemException extends \Exception implements PrintableException {
+
 	/**
 	 * error description
 	 * @var string
@@ -144,7 +146,7 @@ class SystemException extends \Exception implements PrintableException {
 						<pre><?php echo StringUtil::encodeHTML($this->__getTraceAsString()); ?></pre>
 					</div>
 
-					<?php echo $this->functions; ?>
+				<?php echo $this->functions; ?>
 				</div>
 			</body>
 		</html>
