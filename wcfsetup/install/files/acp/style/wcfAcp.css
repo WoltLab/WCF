@@ -8,11 +8,6 @@
 /* -- -- -- -- -- Miscellaneous -- -- -- -- -- */
 
 body, html {
-	background-color: #fff;
-	background-image: url("../images/WoltLab Blue Sunrise/body-ltr.png");
-	background-position: left;
-	background-repeat: repeat-y;
-	background-attachment: scroll;
 	margin: 0;
 	padding: 0;
 }
@@ -27,8 +22,6 @@ body, html {
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	min-width: 100%;
-	max-width: 100%;
 }
 
 #userNote {
@@ -53,11 +46,7 @@ body, html {
 	margin-left: 20px;
 }
 
-h1 {
-	text-shadow: 0 -1px 1px #000;
-}
-
-#logo h1{
+#logo h1 {
 	font-family: 'Trebuchet MS', Arial, sans-serif;
 	text-align: right;
 	position: absolute;
@@ -65,22 +54,18 @@ h1 {
 	left: 0;
 }
 
-#logo h1, #logo h1 a{
+#logo h1, #logo h1 a {
 	color: #fff;
 }
 
-#logo h1 a{
+#logo h1 a {
 	padding-top: 35px;
 	padding-right: 23px;
 }
 
-#logo h1{
+#logo h1 {
 	font-size: 1.5em;
 	font-weight: bold;
-}
-
-h2, h2 a {
-	text-shadow: 0 2px 3px #bbb;
 }
 
 #tplStyleList .styleList .subHeadline {
@@ -122,137 +107,6 @@ h2, h2 a {
 	padding-top: 5px;
 	float: left;
 	clear: none;
-}
-
-/* -- -- -- -- -- Sidebar -- -- -- -- -- */
-
-#sidebar {
-	background-color: transparent;
-	background-image: url("../images/WoltLab Blue Sunrise/sidebar.png");
-	background-repeat: repeat-x;
-	background-position: left top;
-	border-right: 1px solid #8da4b7;
-	position: absolute;
-	left: 0;
-	width: 129px;
-	min-height: 400px;
-}
-
-#sidebar ul {
-	list-style: none;
-	margin: 0 0 0 8px;
-	padding: 0;
-}
-
-#sidebar li {
-	text-align: center;
-	margin: 10px 0 0 0;
-	float: left;
-	width: 114px;
-}
-
-#sidebar a {
-	text-align: center;
-	text-decoration: none;
-	float: left;
-	clear: left;
-	width: 100%;
-}
-
-#sidebar img {
-	margin: 14px auto 3px auto;
-	height: 48px;
-	width: 48px;
-	display: block;
-}
-
-#sidebar span {
-	font-weight: bold;
-	text-shadow: 0 1px 0 #fff;
-	padding: 0 0 10px 0;
-	display: block;
-}
-
-#sidebar li:hover {
-	background-image: url("../images/WoltLab Blue Sunrise/sidebarHoverTop.png");
-	background-position: left top;
-	background-repeat: no-repeat;
-}
-
-#sidebar li:hover span {
-	background-image: url("../images/WoltLab Blue Sunrise/sidebarHoverBottom.png");
-	background-position: left bottom;
-}
-
-#sidebar li:active, #sidebar li.active {
-	background-image: url("../images/WoltLab Blue Sunrise/sidebarActiveTop.png");
-	background-repeat: no-repeat;
-}
-
-#sidebar li:active span, #sidebar li.active span {
-	color: #fff;
-	text-shadow: 0 -1px 0 #000;
-	background-image: url("../images/WoltLab Blue Sunrise/sidebarActiveBottom.png");
-	background-position: left bottom;
-}
-
-/* -- -- -- -- -- Menu -- -- -- -- -- */
-
-/* ToDo: Clean up this mess */
-
-#menuBar {
-	min-height: 31px;
-}
-
-#menuBar .mainMenuInner > ul {
-	padding-left: 129px;	
-}
-
-.mainMenu {
-	border: 0;	
-}
-
-.mainMenu a {
-	padding: 2px 5px 4px 5px;
-}
-
-.mainMenu ul {
-	margin: 0;
-}
-
-.mainMenu .mainMenuInner > ul > li > a {
-	min-height: 24px;
-}
-
-.mainMenu .mainMenuInner > ul > li > a > span {
-	padding: 2px 5px;
-	display: block;
-}
-
-.mainMenu .popupMenu {
-	border-top-width: 0;	
-}
-
-.mainMenu .popupMenu a {
-	color: #164369;
-	text-shadow: none !important;
-	background-color: #154268;
-	background-image: none !important;
-	min-height: 20px;
-}
-
-.mainMenu .popupMenu a:hover {
-	background-color: #ffe0b8;
-}
-
-#menuBar span {
-	position: relative;
-	top: 4px;
-}
-
-#menuBar li div span {
-	position: relative;
-	top: 0;
 }
 
 /* -- -- -- -- -- Sitemap -- -- -- -- -- */
@@ -433,15 +287,6 @@ h2, h2 a {
 	-moz-border-radius-bottomright: 5px;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
-}
-
-.mainMenu .popupMenu, .mainMenu .popupMenu li a {
-	-webkit-border-top-left-radius: 0;
-	-webkit-border-top-right-radius: 0;
-	-moz-border-radius-topleft: 0;
-	-moz-border-radius-topright: 0;
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
 }
 
 .sitemap .border {
