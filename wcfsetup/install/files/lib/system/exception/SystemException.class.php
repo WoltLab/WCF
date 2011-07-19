@@ -1,5 +1,4 @@
 <?php
-
 namespace wcf\system\exception;
 use wcf\util\StringUtil;
 
@@ -14,7 +13,6 @@ use wcf\util\StringUtil;
  * @category 	Community Framework
  */
 class SystemException extends \Exception implements PrintableException {
-
 	/**
 	 * error description
 	 * @var string
