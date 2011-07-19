@@ -1,5 +1,5 @@
 <?php
-namespace wcf\acp\package;
+namespace wcf\system\package;
 use wcf\data\package\Package;
 use wcf\system\database\util\SQLParser;
 use wcf\system\exception\SystemException;
@@ -17,71 +17,61 @@ use wcf\system\WCF;
  */
 class PackageInstallationSQLParser extends SQLParser {
 	/**
-	 * Package object
-	 *
-	 * @var Package
+	 * package object
+	 * @var wcf\data\package\Package
 	 */
-	protected $package;
+	protected $package = null;
 	
 	/**
 	 * activates the testing mode
-	 * 
 	 * @var	boolean
 	 */
 	protected $test = false;
 	
 	/**
 	 * installation type
-	 * 
 	 * @var	string
 	 */
 	protected $action = 'install';
 	
 	/**
 	 * list of existing database tables
-	 * 
 	 * @var	array
 	 */
 	protected $existingTables = array();
 	
 	/**
 	 * list of logged tables
-	 * 
 	 * @var	array
 	 */
 	protected $knownTables = array();
 	
 	/**
 	 * list of package ids
-	 * 
 	 * @var	array
 	 */
-	protected $dependentPackageIDArray = array();
+	protected $dependentPackageIDs = array();
 	
 	/**
 	 * list of conflicted database tables
-	 * 
 	 * @var	array
 	 */
 	protected $conflicts = array();
 	
 	/**
 	 * list of created/deleted tables
-	 * 
 	 * @var	array
 	 */
 	protected $tableLog = array();
 	
 	/**
 	 * list of created/deleted columns
-	 * 
 	 * @var	array
 	 */
 	protected $columnLog = array();
 	
 	/**
 	 * list of created/deleted indices
-	 * 
 	 * @var	array
 	 */
 	protected $indexLog = array();
@@ -89,9 +79,9 @@ class PackageInstallationSQLParser extends SQLParser {
 	/**
 	 * Creates a new PackageInstallationSQLParser object.
 	 * 
-	 * @param	string		$queries
-	 * @param	Package		$package
-	 * @param	string		$action
+	 * @param	string				$queries
+	 * @param	wcf\data\package\Package	$package
+	 * @param	string				$action
 	 */
 	public function __construct($queries, Package $package, $action = 'install') {
 		$this->package = $package;
@@ -114,7 +104,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		$this->getKnownTables();
 				
 		// get package ids of dependencies
-		$this->getDependentPackageIDArray();
+		$this->getDependentPackageIDs();
 		
 		// enable testing mode
 		$this->test = true;
@@ -196,14 +186,14 @@ class PackageInstallationSQLParser extends SQLParser {
 				$deleteStatement->execute(array(
 					$logEntry['tableName'],
 					$logEntry['indexName']
-					));
+				));
 				
 				if ($logEntry['action'] == 'insert') {
 					$insertStatement->execute(array(
 						$logEntry['packageID'],
 						$logEntry['tableName'],
 						$logEntry['indexName']
-						));
+					));
 				}
 			}
 		}
@@ -227,7 +217,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	/**
 	 * Gets a list of dependent packages.
 	 */
-	protected function getDependentPackageIDArray() {
+	protected function getDependentPackageIDs() {
 		$sql = "SELECT		dependency
 			FROM		wcf".WCF_N."_package_dependency
 			WHERE		packageID = ?";
@@ -235,7 +225,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		$statement->execute(array($this->package->packageID));
 		$packages = array();
 		while ($row = $statement->fetchArray()) {
-			$this->dependentPackageIDArray[] = $row['dependency'];
+			$this->dependentPackageIDs[] = $row['dependency'];
 		}
 	}
 	
@@ -286,7 +276,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see SQLParser::executeCreateTableStatement()
+	 * @see wcf\system\database\util\SQLParser::executeCreateTableStatement()
 	 */
 	protected function executeCreateTableStatement($tableName, $columns, $indices = array()) {
 		if ($this->test) {
@@ -312,12 +302,12 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see SQLParser::executeAddColumnStatement()
+	 * @see wcf\system\database\util\SQLParser::executeAddColumnStatement()
 	 */
 	protected function executeAddColumnStatement($tableName, $columnName, $columnData) {
 		if ($this->test) {
 			if (isset($this->knownTables[$tableName])) {
-				if ($this->knownTables[$tableName] != $this->package->packageID && !in_array($this->knownTables[$tableName], $this->dependentPackageIDArray)) {
+				if ($this->knownTables[$tableName] != $this->package->packageID && !in_array($this->knownTables[$tableName], $this->dependentPackageIDs)) {
 					throw new SystemException("Can not add column '".$columnName."' to table '.$tableName.'. An installion can only 'ADD' things to tables from the same package environment.", 13019);
 				}
 			}
@@ -332,7 +322,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see SQLParser::executeAddColumnStatement()
+	 * @see wcf\system\database\util\SQLParser::executeAddColumnStatement()
 	 */
 	protected function executeAlterColumnStatement($tableName, $oldColumnName, $newColumnName, $newColumnData) {
 		if ($this->test) {
@@ -355,12 +345,12 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see SQLParser::executeAddIndexStatement()
+	 * @see wcf\system\database\util\SQLParser::executeAddIndexStatement()
 	 */
 	protected function executeAddIndexStatement($tableName, $indexName, $indexData) {
 		if ($this->test) {
 			if (isset($this->knownTables[$tableName])) {
-				if ($this->knownTables[$tableName] != $this->package->packageID && !in_array($this->knownTables[$tableName], $this->dependentPackageIDArray)) {
+				if ($this->knownTables[$tableName] != $this->package->packageID && !in_array($this->knownTables[$tableName], $this->dependentPackageIDs)) {
 					throw new SystemException("Can not add index '".$indexName."' to table '.$tableName.'. An installion can only 'ADD' things to tables from the same package environment.", 13019);
 				}
 			}
@@ -375,7 +365,27 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see SQLParser::executeDropColumnStatement()
+	 * @see wcf\system\database\util\SQLParser::executeAddForeignKeyStatement()
+	 */
+	protected function executeAddForeignKeyStatement($tableName, $indexName, $indexData) {
+		if ($this->test) {
+			if (isset($this->knownTables[$tableName])) {
+				if ($this->knownTables[$tableName] != $this->package->packageID && !in_array($this->knownTables[$tableName], $this->dependentPackageIDs)) {
+					throw new SystemException("Can not add foreign key '".$indexName."' to table '.$tableName.'. An installion can only 'ADD' things to tables from the same package environment.", 13019);
+				}
+			}
+		}
+		else {
+			// log
+			$this->indexLog[] = array('tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'insert');
+			
+			// execute
+			parent::executeAddForeignKeyStatement($tableName, $indexName, $indexData);
+		}
+	}
+	
+	/**
+	 * @see wcf\system\database\util\SQLParser::executeDropColumnStatement()
 	 */
 	protected function executeDropColumnStatement($tableName, $columnName) {
 		if ($this->test) {
@@ -395,7 +405,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see SQLParser::executeDropIndexStatement()
+	 * @see wcf\system\database\util\SQLParser::executeDropIndexStatement()
 	 */
 	protected function executeDropIndexStatement($tableName, $indexName) {
 		if ($this->test) {
@@ -415,7 +425,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see SQLParser::executeDropTableStatement()
+	 * @see wcf\system\database\util\SQLParser::executeDropTableStatement()
 	 */
 	protected function executeDropTableStatement($tableName) {
 		if ($this->test) {
@@ -441,7 +451,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see SQLParser::executeStandardStatement()
+	 * @see wcf\system\database\util\SQLParser::executeStandardStatement()
 	 */
 	protected function executeStandardStatement($query) {
 		if (!$this->test) {
@@ -449,4 +459,3 @@ class PackageInstallationSQLParser extends SQLParser {
 		}
 	}
 }
-?>

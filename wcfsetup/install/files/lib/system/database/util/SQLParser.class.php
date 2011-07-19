@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Given queries will be parsed, converted and executed in the active database.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2008 WoltLab GmbH
+ * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.database.util
