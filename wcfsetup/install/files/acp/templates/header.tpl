@@ -96,7 +96,7 @@
 	<div id="main" class="main">
 		<aside>
 			<!-- sub nav -->
-			<nav id="navigationSidebar" class="sideBar">
+			<nav id="navigationSide" class="sideBar">
 				{* work-around for unknown core-object during WCFSetup *}
 				{if PACKAGE_ID}
 					{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=parentMenuItem}
