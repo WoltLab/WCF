@@ -20,12 +20,12 @@ use wcf\system\WCF;
  */
 class UserGroupEditor extends DatabaseObjectEditor implements EditableCachedObject {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	wcf\data\DatabaseObjectEditor::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\group\UserGroup';
 	
 	/**
-	 * @see	EditableObject::create()
+	 * @see	wcf\data\EditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		$group = parent::create($parameters);
@@ -37,7 +37,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements EditableCachedObje
 	}
 	
 	/**
-	 * @see	DatabaseObjectEditor::__deleteAll()
+	 * @see	wcf\data\DatabaseObjectEditor::__deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
 		parent::deleteAll($objectIDs);
@@ -201,7 +201,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements EditableCachedObje
 	}
 	
 	/**
-	 * @see EditableCachedObject::resetCache()
+	 * @see wcf\data\EditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		// clear cache

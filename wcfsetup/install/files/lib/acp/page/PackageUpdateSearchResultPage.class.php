@@ -41,7 +41,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 		if (isset($_REQUEST['searchID'])) $this->searchID = intval($_REQUEST['searchID']);
 		
 		// get search data
-		$conditions = new PrepareStatementConditionBuilder();
+		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("searchID = ?", array($this->searchID));
 		$conditions->add("userID = ?", array(WCF::getUser()->userID));
 		$conditions->add("searchType = ?", array('packages'));
@@ -181,7 +181,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	}
 	
 	/**
-	 * @see Page::show()
+	 * @see wcf\page\Page::show()
 	 */
 	public function show() {
 		// set active menu item

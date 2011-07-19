@@ -99,7 +99,7 @@ abstract class AbstractDatabaseObjectAction implements DatabaseObjectAction {
 	}
 	
 	/**
-	 * @see DatabaseObjectAction::validateAction()
+	 * @see wcf\data\DatabaseObjectAction::validateAction()
 	 */
 	public function validateAction() {
 		// validate action name
@@ -117,7 +117,7 @@ abstract class AbstractDatabaseObjectAction implements DatabaseObjectAction {
 	}
 	
 	/**
-	 * @see DatabaseObjectAction::executeAction()
+	 * @see wcf\data\DatabaseObjectAction::executeAction()
 	 */
 	public function executeAction() {
 		// execute action
@@ -137,28 +137,28 @@ abstract class AbstractDatabaseObjectAction implements DatabaseObjectAction {
 	}
 	
 	/**
-	 * @see	DatabaseObjectAction::getActionName()
+	 * @see	wcf\data\DatabaseObjectAction::getActionName()
 	 */
 	public function getActionName() {
 		return $this->action;
 	}
 	
 	/**
-	 * @see	DatabaseObjectAction::getObjectIDs()
+	 * @see	wcf\data\DatabaseObjectAction::getObjectIDs()
 	 */
 	public function getObjectIDs() {
 		return $this->objectIDs;
 	}
 	
 	/**
-	 * @see	DatabaseObjectAction::getParameters()
+	 * @see	wcf\data\DatabaseObjectAction::getParameters()
 	 */
 	public function getParameters() {
 		return $this->parameters;
 	}
 	
 	/**
-	 * @see	DatabaseObjectAction::getReturnValues()
+	 * @see	wcf\data\DatabaseObjectAction::getReturnValues()
 	 */
 	public function getReturnValues() {
 		return array(

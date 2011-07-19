@@ -19,12 +19,12 @@ use wcf\util\ClassUtil;
  */
 class PageMenuItem extends DatabaseObject implements TreeMenuItem {
 	/**
-	 * @see	DatabaseObject::$databaseTableName
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'page_menu_item';
 	
 	/**
-	 * @see	DatabaseObject::$databaseTableIndexName
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'menuItemID';
 	
@@ -60,7 +60,7 @@ class PageMenuItem extends DatabaseObject implements TreeMenuItem {
 	}
 	
 	/**
-	 * @see TreeMenuItem::getLink()
+	 * @see wcf\system\menu\TreeMenuItem::getLink()
 	 */
 	public function getLink() {
 		return LinkHandler::getInstance()->getLink($this->menuItemLink);

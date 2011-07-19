@@ -330,7 +330,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see AbstractOptionListForm::checkOption()
+	 * @see wcf\acp\form\AbstractOptionListForm::checkOption()
 	 */
 	protected static function checkOption(Option $option) {
 		if (!parent::checkOption($option)) return false;

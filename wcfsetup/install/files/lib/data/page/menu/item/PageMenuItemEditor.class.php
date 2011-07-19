@@ -17,12 +17,12 @@ use wcf\system\WCF;
  */
 class PageMenuItemEditor extends DatabaseObjectEditor implements EditableCachedObject {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	wcf\data\DatabaseObjectEditor::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\page\menu\item\PageMenuItem';
 	
 	/**
-	 * @see	EditableObject::create()
+	 * @see	wcf\data\EditableObject::create()
 	 * 
 	 * @todo	Handle language id and create related language item
 	 */
@@ -34,7 +34,7 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements EditableCachedO
 	}
 	
 	/**
-	 * @see	EditableObject::update()
+	 * @see	wcf\data\EditableObject::update()
 	 * 
 	 * @todo	Handle language id and update related language item
 	 */
@@ -47,7 +47,7 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements EditableCachedO
 	}
 	
 	/**
-	 * @see	EditableObject::delete()
+	 * @see	wcf\data\EditableObject::delete()
 	 */
 	public function delete() {
 		// update show order
