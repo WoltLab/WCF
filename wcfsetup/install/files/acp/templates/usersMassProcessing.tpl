@@ -105,7 +105,7 @@
 					</div>
 				</div>
 				
-				{if $__wcf->user->getPermission('admin.user.canEditMailAddress')}
+				{if $__wcf->session->getPermission('admin.user.canEditMailAddress')}
 					<div class="formElement">
 						<div class="formFieldLabel">
 							<label for="email">{lang}wcf.user.email{/lang}</label>
@@ -190,14 +190,14 @@
 						<legend>{lang}wcf.acp.user.massProcessing.action{/lang}</legend>
 						<div class="formField">
 							<ul class="formOptionsLong">
-								{if $__wcf->user->getPermission('admin.user.canMailUser')}
+								{if $__wcf->session->getPermission('admin.user.canMailUser')}
 									<li><label><input onclick="if (IS_SAFARI) enableSendMail()" onfocus="enableSendMail()" type="radio" name="action" value="sendMail" {if $action == 'sendMail'}checked="checked" {/if}/> {lang}wcf.acp.user.sendMail{/lang}</label></li>
 									<li><label><input onclick="if (IS_SAFARI) enableExportMailAddress()" onfocus="enableExportMailAddress()" type="radio" name="action" value="exportMailAddress" {if $action == 'exportMailAddress'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress{/lang}</label></li>
 								{/if}
-								{if $__wcf->user->getPermission('admin.user.canEditUser')}
+								{if $__wcf->session->getPermission('admin.user.canEditUser')}
 									<li><label><input onclick="if (IS_SAFARI) enableAssignToGroup()" onfocus="enableAssignToGroup()" type="radio" name="action" value="assignToGroup" {if $action == 'assignToGroup'}checked="checked" {/if}/> {lang}wcf.acp.user.assignToGroup{/lang}</label></li>
 								{/if}
-								{if $__wcf->user->getPermission('admin.user.canDeleteUser')}
+								{if $__wcf->session->getPermission('admin.user.canDeleteUser')}
 									<li><label><input onclick="if (IS_SAFARI) enableDelete()" onfocus="enableDelete()" type="radio" name="action" value="delete" {if $action == 'delete'}checked="checked" {/if}/> {lang}wcf.acp.user.delete{/lang}</label></li>
 								{/if}
 								{if $additionalActions|isset}{@$additionalActions}{/if}
