@@ -72,7 +72,7 @@ abstract class PackageDependencyHandler {
 		CacheHandler::getInstance()->addResource(
 			'packageDependencies-'.PACKAGE_ID,
 			WCF_DIR.'cache/cache.packageDependencies-'.PACKAGE_ID.'.php',
-			'wcf\system\cache\CacheBuilderPackageDependency'
+			'wcf\system\cache\builder\CacheBuilderPackageDependency'
 		);
 		
 		self::$packageDependencyCache = CacheHandler::getInstance()->get('packageDependencies-'.PACKAGE_ID);
