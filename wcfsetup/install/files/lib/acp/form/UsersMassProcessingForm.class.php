@@ -393,10 +393,9 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\acp\form\DynamicOptionListForm::checkOption()
+	 * @see wcf\acp\form\AbstractOptionListForm::checkOption()
 	 */
-	protected function checkOption($optionName) {
-		$option = $this->cachedOptions[$optionName];
-		return ($option['searchable'] == 1 && !$option['disabled'] && ($option['visible'] == 3 || $option['visible'] < 2));
+	protected static function checkOption(Option $option) {
+		return ($option->searchable == 1 && !$option->disabled && ($option->visible == 3 || $option->visible < 2));
 	}
 }

@@ -135,6 +135,10 @@
 		<br /><a href="http://www.woltlab.com/help/?code={@$exception->getCode()}">http://www.woltlab.com/help/?code={@$exception->getCode()}</a>]]></item>
 		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[The following table{if $conflictedTables|count > 1}s{/if} already exist{if $conflictedTables|count == 1}s{/if} within your &quot;{$dbName}&quot; Database:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />To solve this problem, please do one of the following:<br />1. Enable the &quot;Overwrite&quot; option below to overwrite {if $conflictedTables|count > 1}these tables{else}this table{/if} and continue the installation with the &quot;Next&quot; Button or<br />2. You re-enter the Database access information, but to a different Database and continue the installation with the &quot;Next&quot; Button or<br />3. You enter a new Installations number, not forgetting to continue the installation with the &quot;Next&quot; Button.]]></item>
 		<item name="wcf.global.configureDB.conflictedTables.overwrite"><![CDATA[Overwrite the above listed table{if $conflictedTables|count > 1}s{/if}?]]></item>
+		<item name="wcf.global.configureDB.class"><![CDATA[Database type]]></item>
+		<item name="wcf.global.configureDB.class.MSSQLDatabase"><![CDATA[Microsoft SQL Server 2008+]]></item>
+		<item name="wcf.global.configureDB.class.MySQLDatabase"><![CDATA[MySQL 5.1+]]></item>
+		<item name="wcf.global.configureDB.class.PostgreSQLDatabase"><![CDATA[PostgreSQL 8.2+]]></item>
 		<item name="wcf.global.createUser"><![CDATA[Create an Administrator]]></item>
 		<item name="wcf.global.createUser.description"><![CDATA[The Installation will now generate an Administrator account for you. Please give a username, email address and password.]]></item>
 		<item name="wcf.global.createUser.data"><![CDATA[User information]]></item>
