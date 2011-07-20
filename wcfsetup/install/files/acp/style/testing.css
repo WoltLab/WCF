@@ -204,7 +204,7 @@ nav.sidebarMenu div.menuContainer a:hover {
 }
 
 nav.sidebarMenu div.menuContainer h1 {
-	background-image: url("../../icon/testing/arrowRightS.png");
+	background-image: url("../../icon/arrowRightS.png");
 	background-position: 7px center;
 	background-repeat: no-repeat;
 	color: #369;
@@ -218,7 +218,7 @@ nav.sidebarMenu div.menuContainer h1 {
 }
 
 nav.sidebarMenu div.menuContainer h1.activeMenuItem {
-	background-image: url("../../icon/testing/arrowDownS.png");
+	background-image: url("../../icon/arrowDownS.png");
 }
 
 nav.sidebarMenu div.menuContainer ul li {
