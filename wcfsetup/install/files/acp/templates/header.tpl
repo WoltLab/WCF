@@ -63,8 +63,8 @@
 	</script>
 </head>
 <body id="tpl{$templateName|ucfirst}">
+	<a id="top"></a>
 	<header>
-		<a id="top"></a>
 		
 		<!-- top nav -->
 		<!-- /top nav -->
@@ -79,7 +79,7 @@
 		<!-- /logo -->
 		
 		<!-- top nav -->
-		<nav id="navigationTop">
+		<nav id="mainMenu">
 			{* work-around for unknown core-object during WCFSetup *}
 			{if PACKAGE_ID}
 				<ul>
@@ -90,38 +90,49 @@
 			{/if}
 		</nav>
 		<!-- /top nav -->
+		
+		<!-- sub bar -->
+		
+		<menu class="subbar">
+			<ul>
+				<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/downS.png" alt="{lang}wcf.global.scrollDown{/lang}" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+			</ul>
+		</menu>
+		
+		<!-- /sub bar -->
 	</header>
 	
 	<!-- CONTENT -->
 	<div id="main" class="main">
-		<aside>
-			<!-- sub nav -->
-			<nav id="navigationSidebar" class="sideBar">
-				{* work-around for unknown core-object during WCFSetup *}
-				{if PACKAGE_ID}
-					{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=parentMenuItem}
-						<div class="menuContainer" data-parentMenuItem="{$parentMenuItem->menuItem}" id="{$parentMenuItem->menuItem}-container" style="display: none;">
-							{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
-								<h1 data-menuItem="{$menuItem->menuItem}" class="menuHeader">{lang}{@$menuItem->menuItem}{/lang}</h1>
-								<div>
-									<ul id="{$menuItem->menuItem}">
-										{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItem->menuItem) item=menuItemCategory}
-											{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
-												{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem) item=subMenuItem}
-													<li data-menuItem="{$subMenuItem->menuItem}" id="{$subMenuItem->menuItem}"><a href="{$subMenuItem->getLink()}">{lang}{$subMenuItem->menuItem}{/lang}</a></li>
-												{/foreach}
-											{else}
-												<li data-menuItem="{$menuItemCategory->menuItem}" id="{$menuItemCategory->menuItem}"><a href="{$menuItemCategory->getLink()}">{lang}{$menuItemCategory->menuItem}{/lang}</a></li>
-											{/if}
-										{/foreach}
-									</ul>
-								</div>
-							{/foreach}
-						</div>
-					{/foreach}
-				{/if}
-			</nav>
-			<!-- /sub nav -->
-		</aside>
-		
-		<div id="content">
+		<div class="mainInner">
+			<aside class="sidebar">
+				<!-- sub nav -->
+				<nav id="sidebarMenu" class="sidebarMenu">
+					{* work-around for unknown core-object during WCFSetup *}
+					{if PACKAGE_ID}
+						{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=parentMenuItem}
+							<div class="menuContainer" data-parentMenuItem="{$parentMenuItem->menuItem}" id="{$parentMenuItem->menuItem}-container" style="display: none;">
+								{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
+									<h1 data-menuItem="{$menuItem->menuItem}" class="menuHeader">{lang}{@$menuItem->menuItem}{/lang}</h1>
+									<div>
+										<ul id="{$menuItem->menuItem}">
+											{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItem->menuItem) item=menuItemCategory}
+												{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
+													{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem) item=subMenuItem}
+														<li data-menuItem="{$subMenuItem->menuItem}" id="{$subMenuItem->menuItem}"><a href="{$subMenuItem->getLink()}">{lang}{$subMenuItem->menuItem}{/lang}</a></li>
+													{/foreach}
+												{else}
+													<li data-menuItem="{$menuItemCategory->menuItem}" id="{$menuItemCategory->menuItem}"><a href="{$menuItemCategory->getLink()}">{lang}{$menuItemCategory->menuItem}{/lang}</a></li>
+												{/if}
+											{/foreach}
+										</ul>
+									</div>
+								{/foreach}
+							</div>
+						{/foreach}
+					{/if}
+				</nav>
+				<!-- /sub nav -->
+			</aside>
+			
+			<div id="content">
