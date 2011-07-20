@@ -59,7 +59,7 @@ class HeaderUtil {
 			else {
 				@header('Content-Encoding: gzip');
 			}
-			ob_start(array('HeaderUtil', 'getCompressedOutput'));
+			ob_start(array('wcf\util\HeaderUtil', 'getCompressedOutput'));
 		}
 	}
 	
