@@ -137,7 +137,7 @@ abstract class DatabaseObjectList {
 					".$this->getDatabaseTableAlias().".*
 				FROM	".$this->getDatabaseTableName()." ".$this->getDatabaseTableAlias()."
 					".$this->sqlJoins."
-				WHERE	".$this->getDatabaseTableAlias().".".$this->getDatabaseTableIndexName()." IN (?".str_repeat(',?', count($this->objectIDs)).")
+				WHERE	".$this->getDatabaseTableAlias().".".$this->getDatabaseTableIndexName()." IN (?".str_repeat(',?', count($this->objectIDs) - 1).")
 					".(!empty($this->sqlOrderBy) ? "ORDER BY ".$this->sqlOrderBy : '');
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($this->objectIDs);
