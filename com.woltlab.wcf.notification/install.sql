@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS wcf1_user_notification_to_user;
 CREATE TABLE wcf1_user_notification_to_user (
 	notificationID INT(10) NOT NULL,
 	userID INT(10) NOT NULL,
-	confirmed TINYINT(1) NOT NULL,
+	confirmed TINYINT(1) NOT NULL DEFAULT 0,
 	confirmationTime INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY notificationID (notificationID, userID)
 );
@@ -36,7 +36,7 @@ CREATE TABLE wcf1_user_notification_event (
 	acceptURL VARCHAR(255) NOT NULL DEFAULT '',
 	declineURL VARCHAR(255) NOT NULL DEFAULT '',
 	permissions TEXT,
-	options TEXT,  
+	options TEXT,
 	UNIQUE KEY packageID (packageID, eventName)
 );
 

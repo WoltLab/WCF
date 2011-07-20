@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class UserNotificationObjectTypeEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectEditor::$baseClass
+	 * @see	DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\notification\object\type\UserNotificationObjectType';
 }

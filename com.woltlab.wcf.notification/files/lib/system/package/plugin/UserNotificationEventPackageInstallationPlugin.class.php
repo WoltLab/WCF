@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
@@ -48,8 +49,36 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @see	AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
-		$objectTypeID = 0;
+		// get object type id
+		$sql = "SELECT		notification_object_type.objectTypeID
+			FROM		wcf".WCF_N."_package_dependency package_dependency,
+					wcf".WCF_N."_user_notification_object_type notification_object_type
+			WHERE		notification_object_type.packageID = package_dependency.dependency
+					AND package_dependency.packageID = ?
+					AND notification_object_type.objectType = ?
+			ORDER BY	package_dependency.priority DESC";
+		$statement = WCF::getDB()->prepareStatement($sql, 1);
+		$statement->execute(array($this->installation->getPackageID(), $data['elements']['objecttype']));
+		$row = $statement->fetchArray();
+		if (empty($row['objectTypeID'])) throw new SystemException("unknown notification object type '".$data['elements']['objecttype']."' given");
+		$objectTypeID = $row['objectTypeID'];
+		
+		// get notification type id
 		$defaultNotificationTypeID = 0;
+		if (!empty($data['elements']['defaultnotificationtype'])) {
+			$sql = "SELECT		notification_type.notificationTypeID
+				FROM		wcf".WCF_N."_package_dependency package_dependency,
+						wcf".WCF_N."_user_notification_type notification_type
+				WHERE		notification_type.packageID = package_dependency.dependency
+						AND package_dependency.packageID = ?
+						AND notification_type.notificationType = ?
+				ORDER BY	package_dependency.priority DESC";
+			$statement = WCF::getDB()->prepareStatement($sql, 1);
+			$statement->execute(array($this->installation->getPackageID(), $data['elements']['defaultnotificationtype']));
+			$row = $statement->fetchArray();
+			if (empty($row['objectTypeID'])) throw new SystemException("unknown notification type '".$data['elements']['defaultnotificationtype']."' given");
+			$defaultNotificationTypeID = $row['notificationTypeID'];
+		}
 		
 		return array(
 			'eventName' => $data['elements']['name'],
