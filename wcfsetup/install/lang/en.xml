@@ -811,7 +811,8 @@
 		<item name="wcf.global.pageTitle"><![CDATA[WoltLab&reg; Community Framework&trade;]]></item>
 		<item name="wcf.global.redirect.title"><![CDATA[Redirection]]></item>
 		<item name="wcf.global.redirect.url"><![CDATA[Please click here if the automatic redirection does not work!]]></item>
-		<item name="wcf.global.scrollUp"><![CDATA[Go to the top of the page]]></item>
+		<item name="wcf.global.scrollDown"><![CDATA[Go to page bottom]]></item>
+		<item name="wcf.global.scrollUp"><![CDATA[Go to page end]]></item>
 		<item name="wcf.global.search.matchesExactly"><![CDATA[Exact match]]></item>
 		<item name="wcf.global.shortTimeFormat"><![CDATA[M jS Y, g:ia]]></item>
 		<item name="wcf.global.skipToContent"><![CDATA[Skip navigation]]></item>
