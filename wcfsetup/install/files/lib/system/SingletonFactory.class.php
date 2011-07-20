@@ -37,6 +37,11 @@ abstract class SingletonFactory {
 	protected final function __clone() { }
 	
 	/**
+	 * Object serialization is disallowed.
+	 */
+	protected final function __sleep() { }
+	
+	/**
 	 * Returns an unique instance of current child class.
 	 * 
 	 * @return	SingletonFactory
