@@ -3,3 +3,4 @@
 <meta name="description" content="{META_DESCRIPTION}" />
 <meta name="keywords" content="{META_KEYWORDS}" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+{if !$allowSpidersToIndexThisPage}<meta name="robots" content="noindex,nofollow" />{/if}
