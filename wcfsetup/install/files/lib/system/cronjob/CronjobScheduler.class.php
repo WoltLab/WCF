@@ -188,7 +188,7 @@ abstract class CronjobScheduler {
 	 */
 	protected static function getCache() {
 		$cacheName = 'cronjobs-'.PACKAGE_ID;
-		CacheHandler::getInstance()->addResource($cacheName, WCF_DIR.'cache/cache.'.$cacheName.'.php', 'wcf\system\cache\CacheBuilderCronjob');
+		CacheHandler::getInstance()->addResource($cacheName, WCF_DIR.'cache/cache.'.$cacheName.'.php', 'wcf\system\cache\builder\CacheBuilderCronjob');
 		
 		return CacheHandler::getInstance()->get($cacheName);
 	}

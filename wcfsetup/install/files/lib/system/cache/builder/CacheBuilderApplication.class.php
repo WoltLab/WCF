@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\cache;
+namespace wcf\system\cache\builder;
 use wcf\data\application\group\ApplicationGroup;
 use wcf\data\application;
 use wcf\data\package\Package;

@@ -54,7 +54,7 @@ class EventHandler extends SingletonFactory {
 	 * Loads all registered actions of the active package.
 	 */
 	protected function loadActions() {
-		CacheHandler::getInstance()->addResource('eventListener-'.PACKAGE_ID, WCF_DIR.'cache/cache.eventListener-'.PACKAGE_ID.'.php', 'wcf\system\cache\CacheBuilderEventListener');
+		CacheHandler::getInstance()->addResource('eventListener-'.PACKAGE_ID, WCF_DIR.'cache/cache.eventListener-'.PACKAGE_ID.'.php', 'wcf\system\cache\builder\CacheBuilderEventListener');
 		$cache = CacheHandler::getInstance()->get('eventListener-'.PACKAGE_ID);
 		if (isset($cache['actions'])) $this->actions = $cache['actions'];
 		if (isset($cache['inheritedActions'])) $this->inheritedActions = $cache['inheritedActions'];

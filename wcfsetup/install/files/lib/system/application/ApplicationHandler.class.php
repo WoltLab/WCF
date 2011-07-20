@@ -28,7 +28,7 @@ class ApplicationHandler extends SingletonFactory {
 		CacheHandler::getInstance()->addResource(
 			'application-'.PACKAGE_ID,
 			WCF_DIR.'cache/cache.application-'.PACKAGE_ID.'.php',
-			'wcf\system\cache\CacheBuilderApplication'
+			'wcf\system\cache\builder\CacheBuilderApplication'
 		);
 		$this->cache = CacheHandler::getInstance()->get('application-'.PACKAGE_ID);
 	}

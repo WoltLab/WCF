@@ -34,7 +34,7 @@ class StyleHandler extends SingletonFactory {
 	 */
 	protected function init() {
 		// load cache
-		CacheHandler::getInstance()->addResource('styles', WCF_DIR.'cache/cache.styles.php', 'wcf\system\cache\CacheBuilderStyle');
+		CacheHandler::getInstance()->addResource('styles', WCF_DIR.'cache/cache.styles.php', 'wcf\system\cache\builder\CacheBuilderStyle');
 		$this->cache = CacheHandler::getInstance()->get('styles');
 	}
 	
