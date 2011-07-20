@@ -38,7 +38,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	 * cache class name
 	 * @var string
 	 */
-	public $cacheClass = 'wcf\system\cache\CacheBuilderOption';
+	public $cacheClass = 'wcf\system\cache\builder\CacheBuilderOption';
 
 	/**
 	 * list of all option categories

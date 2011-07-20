@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\cache;
+namespace wcf\system\cache\builder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;

@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\cache;
+namespace wcf\system\cache\builder;
 use wcf\data\style\Style;
 use wcf\system\WCF;
 
