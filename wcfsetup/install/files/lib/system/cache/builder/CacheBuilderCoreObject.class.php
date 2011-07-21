@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\system\cache\CacheBuilder;
 use wcf\data\core\object\CoreObjectList;
 use wcf\system\package\PackageDependencyHandler;
 
@@ -10,7 +11,7 @@ use wcf\system\package\PackageDependencyHandler;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.cache
+ * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
 class CacheBuilderCoreObject implements CacheBuilder {
