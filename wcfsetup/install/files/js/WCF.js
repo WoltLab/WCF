@@ -1100,7 +1100,7 @@ WCF.String = {
 				$negative = true;
 				$numberString = $numberString.substring(1);
 			}
-			var $separator = this.options.thousandsSeparator;
+			var $separator = WCF.Language.get('wcf.global.thousandsSeparator');
 			
 			if ($separator != null && $separator != '') {
 				var $numElements = new Array();
