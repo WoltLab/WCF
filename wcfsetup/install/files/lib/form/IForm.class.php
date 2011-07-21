@@ -1,6 +1,6 @@
 <?php
 namespace wcf\form;
-use wcf\page\Page;
+use wcf\page\IPage;
 
 /**
  * All form classes should implement this interface. 
@@ -12,7 +12,7 @@ use wcf\page\Page;
  * @subpackage	form
  * @category 	Community Framework
  */
-interface IForm extends Page {
+interface IForm extends IPage {
 	/**
 	 * Is called when the form was submitted.
 	 */
