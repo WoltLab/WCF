@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\package\PackageList;
+use wcf\system\cache\CacheBuilder;
 use wcf\system\WCF;
 
 /**

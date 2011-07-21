@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\template\group\TemplateGroupList;
+use wcf\system\cache\CacheBuilder;
 
 /**
  * Caches template groups.

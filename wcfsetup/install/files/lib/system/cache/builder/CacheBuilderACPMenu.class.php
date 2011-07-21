@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\acp\menu\item\ACPMenuItem;
+use wcf\system\cache\CacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
