@@ -45,7 +45,10 @@ class CacheListPage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['cleared'])) $this->cleared = intval($_REQUEST['cleared']);
+		if (WCF::getSession()->getVar('cacheCleared')) {
+			$this->cleared = 1;
+			WCF::getSession()->unregister('cacheCleared');
+		}
 	}
 	
 	/**
