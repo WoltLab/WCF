@@ -1,6 +1,7 @@
 <?php
-namespace wcf\system\cache;
+namespace wcf\system\cache\builder;
 use wcf\data\user\group\UserGroupList;
+use wcf\system\cache\CacheBuilder;
 
 /**
  * Caches all user groups.
@@ -9,7 +10,7 @@ use wcf\data\user\group\UserGroupList;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.cache
+ * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
 class CacheBuilderUserGroup implements CacheBuilder {

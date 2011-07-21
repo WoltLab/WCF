@@ -797,6 +797,7 @@
 		<item name="wcf.global.pageTitle"><![CDATA[WoltLab&reg; Community Framework&trade;]]></item>
 		<item name="wcf.global.redirect.title"><![CDATA[Weiterleitung]]></item>
 		<item name="wcf.global.redirect.url"><![CDATA[Falls die automatische Weiterleitung nicht funktioniert, klicken Sie bitte hier!]]></item>
+		<item name="wcf.global.scrollDown"><![CDATA[Zum Seitenende]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Zum Seitenanfang]]></item>
 		<item name="wcf.global.search.matchesExactly"><![CDATA[Exakter Treffer]]></item>
 		

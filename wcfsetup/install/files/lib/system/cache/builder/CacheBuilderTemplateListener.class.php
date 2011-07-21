@@ -1,36 +1,37 @@
 <?php
-namespace wcf\system\cache;
+namespace wcf\system\cache\builder;
 use wcf\data\template\listener\TemplateListenerList;
+use wcf\system\cache\CacheBuilder;
 use wcf\system\package\PackageDependencyHandler;
 
 /**
- * Caches template listener code.
+ * Caches template listener information.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.cache
+ * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderTemplateListenerCode implements CacheBuilder {
+class CacheBuilderTemplateListener implements CacheBuilder {
 	/**
 	 * @see CacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
-		list($packageID, $environment, $templateName) = explode('-', $cacheResource['cache']); 
+		list($cache, $packageID, $environment) = explode('-', $cacheResource['cache']); 
 		
-		// get template codes for specified template
+		// get templates for current package id
 		$templateListenerList = new TemplateListenerList();
 		$templateListenerList->getConditionBuilder()->add("template_listener.environment = ?", array($environment));
-		$templateListenerList->getConditionBuilder()->add("template_listener.templateName = ?", array($templateName));
-		$templateListenerList->getConditionBuilder()->add("template_listener.packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+		// work-around during setup
+		if (PACKAGE_ID) $templateListenerList->getConditionBuilder()->add("template_listener.packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
 		$templateListenerList->sqlLimit = 0;
 		$templateListenerList->readObjects();
 		
 		$data = array();
 		foreach ($templateListenerList->getObjects() as $templateListener) {
-			$data[$templateListener->eventName][] = $templateListener->templateCode;
+			$data[$templateListener->templateName] = array();
 		}
 		
 		return $data;

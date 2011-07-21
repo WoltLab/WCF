@@ -52,7 +52,7 @@ class CleanupHandler {
 		CacheHandler::getInstance()->addResource(
 			'cleanupAdapter-'.PACKAGE_ID,
 			WCF_DIR.'cache/cache.cleanupAdapter.php',
-			'wcf\system\cache\CacheBuilderCleanupAdapter'
+			'wcf\system\cache\builder\CacheBuilderCleanupAdapter'
 		);
 		
 		$this->cache = CacheHandler::getInstance()->get('cleanupAdapter');

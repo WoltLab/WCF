@@ -258,7 +258,7 @@ class UserListPage extends SortablePage {
 	protected function readUserOptions() {
 		// add cache resource
 		$cacheName = 'user-option-'.PACKAGE_ID;
-		CacheHandler::getInstance()->addResource($cacheName, WCF_DIR.'cache/cache.'.$cacheName.'.php', 'wcf\system\cache\CacheBuilderOption');
+		CacheHandler::getInstance()->addResource($cacheName, WCF_DIR.'cache/cache.'.$cacheName.'.php', 'wcf\system\cache\builder\CacheBuilderOption');
 		
 		// get options
 		$this->options = CacheHandler::getInstance()->get($cacheName, 'options');

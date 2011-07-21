@@ -10,6 +10,8 @@
 body {
 	font-family: 'Trebuchet MS', Arial, sans-serif;
 	font-size: .8em;
+	
+	background-color: #29374a;
 }
 
 img {
@@ -17,23 +19,38 @@ img {
 }
 
 a {
-	color: #00c;
+	color: #369;
 	text-decoration: none;
 }
 
 a:hover {
-	color: #f80;
+	color: #036;
 	text-decoration: underline;
 }
 
+.invisible {
+	position: absolute;
+	left: -9000px;
+	top: -9000px;
+}
+
+/* -- -- -- -- -- Header -- -- -- -- -- */
+
 header {
-	margin: 0 23px 23px 23px;
+	margin: 0 23px 0;
 }
 
 header div#logo h1 {
+	color: #d8e7f5;
+	text-shadow: 0 -1px 0 #000;
 	font-size: 160%;
 	position: relative;
 	top: 45px;
+}
+
+header div#logo a:hover {
+	color: #d8e7f5;
+	text-decoration: none !important;
 }
 
 header div#logo img {
@@ -47,107 +64,104 @@ header div#logo a {
 	text-align: right;
 }
 
-aside {
-	float: left;
-	margin: 0 0 21px 21px;
-	width: 300px;
-}
-
 /* -- -- -- -- -- Tabs -- -- -- -- --  */
 
-nav#navigationTop {
-	margin: 0 10px;
+nav#mainMenu {
+	margin: 0 10px -7px;
+	background-color: rgba(0, 0, 0, .5);
+	border-radius: 7px 7px 0 0;
+	display: inline-block;
 }
 
-nav#navigationTop:after {
+nav#mainMenu:after {
 	content: "";
 	display: block;
 	clear: both;
 }
 
-nav#navigationTop li {
+nav#mainMenu li {
 	font-size: 110%;
 	font-weight: normal;
 	color: #ccc;
-	background-color: #000;
-	border-bottom: 0;
+	
 	cursor: pointer;
 	display: inline-block;
-	margin: 5px 0 0 0;
-	padding: 10px 20px;
+	margin: 5px -5px 0;
+	padding: 5px 20px;
 	float: left;
+	position: relative;
+	z-index: 1;
 }
 
-nav#navigationTop li:after {
+nav#mainMenu li:after {
 	content: "";
 	display: block;
 	clear: both;
 }
 
-nav#navigationTop li:hover {
+nav#mainMenu li:hover {
 	color: #fff;
 }
 
-nav#navigationTop li.activeMenuItem {
+nav#mainMenu li.activeMenuItem {
 	font-weight: bold;
 	color: #369;
+	text-shadow: 0 1px 0 #fff;
 	background-color: #e7f2fd;
-	border-color: #ff8800;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#e7f2fd));
+	background-image: -moz-linear-gradient(0% 0% 270deg, #fff, #e7f2fd);
+	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#e7f2fd));
+	background-image: -o-linear-gradient(#fff, #e7f2fd);
+	background-image: linear-gradient(#fff, #e7f2fd);
+	
 	border-radius: 7px 7px 0 0;
 	margin: 0;
+	padding: 15px 20px 10px;
 	padding-top: 15px;
+	position: relative;
+	top: -5px;
+	z-index: 10;
 }
 
-nav#navigationSidebar div.menuContainer h1 {
-	background-color: #eee;
-	background-image: url("../../icon/testing/arrowRightS.png");
-	background-position: 7px center;
-	background-repeat: no-repeat;
-	border: 1px solid #ccc;
-	border-top-width: 0;
-	color: #369;
-	cursor: pointer;
-	font-size: 120%;
-	font-weight: bold;
-	padding: 7px;
-	padding-left: 28px;
+/* -- -- -- -- -- Sub Bar -- -- -- -- --  */
+
+menu.subbar {
+	display: block;
+	background-color: #e7f2fd;
+	border-bottom: 1px solid #bcd;
+	border-radius: 5px 5px 0 0;
+	padding: 3px 7px;
 	position: relative;
 }
 
-nav#navigationSidebar div.menuContainer h1.activeMenuItem {
-	background-image: url("../../icon/testing/arrowDownS.png");
+menu.subbar:after {
+	content: "";
+	display: block;
+	clear: both;
 }
 
-nav#navigationSidebar div.menuContainer h1:first-child {
-	border-top: 1px solid #ccc;
+menu.subbar ul {
+	display: block;
 }
 
-nav#navigationSidebar div.menuContainer div {
-	background-color: #fefefe;
-	border: 1px solid #ccc;
-	border-top-width: 0;
+menu.subbar ul li {
+	float: right;
 }
 
-nav#navigationSidebar div.menuContainer ul li {
-	padding: 7px 7px 7px 21px;
+/* -- -- -- -- -- Main -- -- -- -- -- */
+
+div.main {
+	margin: 0 23px 0;
+	border-collapse: collapse;
+	display: table;
+	table-layout: fixed;
 }
 
-nav#navigationSidebar div.menuContainer ul li.activeMenuItem {
-	background-color: #faebd7;
+div.mainInner {
+	display: table-row;
 }
 
-nav#navigationSidebar div.menuContainer ul li.activeMenuItem a {
-	color: #ff8800;
-	font-weight: bold;
-}
-
-nav#navigationSidebar div.menuContainer ul li a {
-	text-decoration: none !important;
-}
-
-nav#navigationSidebar div.menuContainer ul li a:hover {
-	text-decoration: underline !important;
-}
+/* -- -- -- -- -- Content -- -- -- -- -- */
 
 div#content {
 	background-color: #fefefe;
@@ -157,19 +171,76 @@ div#content {
 	background-image: -o-linear-gradient(#eee, #fefefe);
 	background-image: linear-gradient(#eee, #fefefe);
 	
-	border: 1px solid #ccc;
-	margin: 0 21px 21px 340px;
+	display: table-cell;
 	padding: 21px;
+	width: auto;
+}
+
+/* -- -- -- -- -- Sidebar -- -- -- -- -- */
+
+aside.sidebar {
+	width: 275px;
+	display: table-cell;
+	background-color: #d8e7f5;
+}
+
+/* -- -- -- -- -- Sidebar Menu -- -- -- -- -- */
+
+nav.sidebarMenu div.menuContainer {
+	background-color: #d8e7f5;
+	position: relative;
+	color: #69c;
+	text-shadow: 0 1px 0 #fff;
+}
+
+nav.sidebarMenu div.menuContainer a {
+	color: #69c;
+	text-shadow: 0 1px 0 #fff;
+}
+
+nav.sidebarMenu div.menuContainer a:hover {
+	color: #369;
+	text-decoration: none !important;
+}
+
+nav.sidebarMenu div.menuContainer h1 {
+	background-image: url("../../icon/arrowRightS.png");
+	background-position: 7px center;
+	background-repeat: no-repeat;
+	color: #369;
+	cursor: pointer;
+	font-size: 130%;
+	font-weight: bold;
+	margin-top: 7px;
+	padding: 7px;
+	padding-left: 30px;
+	position: relative;
+}
+
+nav.sidebarMenu div.menuContainer h1.activeMenuItem {
+	background-image: url("../../icon/arrowDownS.png");
+}
+
+nav.sidebarMenu div.menuContainer ul li {
+	padding: 7px 7px 7px 31px;
+}
+
+nav.sidebarMenu div.menuContainer ul li.activeMenuItem {
+	background-color: #fff;
+}
+
+nav.sidebarMenu div.menuContainer ul li.activeMenuItem a {
+	color: #036;
+	font-weight: bold;
 }
 
 /* -- -- -- -- -- Footer -- -- -- -- --  */
 
 footer {
-	background-color: #eee;
-	border: 1px solid #ccc;
 	clear: both;
-	margin: 0 21px 0;
-	padding: 7px;
+	padding: 0 23px;
+	position: relative;
+	text-align: center;
 }
 
 footer:after {
@@ -178,10 +249,34 @@ footer:after {
 	clear: both;
 }
 
-footer p.copyright {
-	display: inline-block;
-	float: left;
+footer > div {
+	background-color: #e7f2fd;
+	border-top: 1px solid #bcd;
+	border-radius: 0 0 5px 5px;
+	clear: both;
+	padding: 3px 7px;
 }
+
+footer > div:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+footer p.copyright {
+	padding-top: 20px;
+	min-height: 40px;
+}
+
+footer p.copyright a:hover {
+	color: #69c;
+	text-decoration: none;
+}
+
+
+
+
+
 
 footer nav#navigationFooter {
 	float: right;

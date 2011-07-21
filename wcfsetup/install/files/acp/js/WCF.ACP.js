@@ -24,8 +24,8 @@ WCF.ACP.Menu.prototype = {
 	 * @param	array		activeMenuItems
 	 */
 	init: function(activeMenuItems) {
-		this._headerNavigation = $('nav#navigationTop');
-		this._sidebarNavigation = $('nav#navigationSidebar');
+		this._headerNavigation = $('nav#mainMenu');
+		this._sidebarNavigation = $('nav#sidebarMenu');
 		
 		this._prepareElements(activeMenuItems);
 	},
@@ -65,7 +65,7 @@ WCF.ACP.Menu.prototype = {
 	},
 	
 	/**
-	 * Handles clicks on top navigation.
+	 * Handles clicks on main menu.
 	 *
 	 * @param	object		event
 	 */
