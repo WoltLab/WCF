@@ -1,6 +1,5 @@
 <?php
 namespace wcf\data;
-
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\ValidateActionException;

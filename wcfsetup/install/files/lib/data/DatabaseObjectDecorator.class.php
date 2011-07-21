@@ -101,4 +101,13 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	public static function getBaseClass() {
 		return static::$baseClass;
 	}
+	
+	/**
+	 * Returns the decorated object
+	 * 
+	 * @return wcf\data\DatabaseObject
+	 */
+	public function getDecoratedObject() {
+		return $this->object;
+	}
 }
