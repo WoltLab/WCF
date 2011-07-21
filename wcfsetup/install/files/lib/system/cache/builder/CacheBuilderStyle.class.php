@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\style\Style;
+use wcf\system\cache\CacheBuilder;
 use wcf\system\WCF;
 
 /**
@@ -10,7 +11,7 @@ use wcf\system\WCF;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.cache
+ * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
 class CacheBuilderStyle implements CacheBuilder {
