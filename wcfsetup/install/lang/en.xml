@@ -97,7 +97,7 @@
 		<item name="wcf.acp.group.administrators"><![CDATA[Administrators]]></item>
 		<item name="wcf.acp.group.data"><![CDATA[General group information]]></item>
 		<item name="wcf.acp.group.delete"><![CDATA[Delete this user group]]></item>
-		<item name="wcf.acp.group.delete.success"><![CDATA[{if $deletedGroups == 1}This usergroup has{else}{#$deletedGroups} These user groups have{/if} been successfully deleted.]]></item>
+		<item name="wcf.acp.group.delete.success"><![CDATA[{if $deletedGroups == 1}This user group has{else}{#$deletedGroups} These user groups have{/if} been successfully deleted.]]></item>
 		<item name="wcf.acp.group.delete.sure"><![CDATA[Are you sure you would like to remove this user group?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Edit this user group]]></item>
 		<item name="wcf.acp.group.edit.success"><![CDATA[Your user group changes have been successfully saved.]]></item>
@@ -107,7 +107,7 @@
 		<item name="wcf.acp.group.groupName"><![CDATA[Name of this user group]]></item>
 		<item name="wcf.acp.group.groupName.description"><![CDATA[Enter here a name for this group.]]></item>
 		<item name="wcf.acp.group.guests"><![CDATA[Guests]]></item>
-		<item name="wcf.acp.group.list"><![CDATA[Usergroups]]></item>
+		<item name="wcf.acp.group.list"><![CDATA[User groups]]></item>
 		<item name="wcf.acp.group.list.data"><![CDATA[A total of {#$items} user groups]]></item>
 		<item name="wcf.acp.group.members"><![CDATA[Number of members]]></item>
 		<item name="wcf.acp.group.moderators"><![CDATA[Moderators]]></item>
@@ -118,17 +118,17 @@
 		<item name="wcf.acp.group.option.admin.system.canEditOption"><![CDATA[Can change the system options?]]></item>
 		<item name="wcf.acp.group.option.admin.system.canEditOption.description"><![CDATA[Activating this option will allow members of this user group to view and change the system options - e.g. Forum on/offline.]]></item>
 		<item name="wcf.acp.group.option.admin.system.canViewLog"><![CDATA[Can view logs]]></item>
-		<item name="wcf.acp.group.option.admin.system.canViewLog.description"><![CDATA[Members of this usergroup can view the system logs.]]></item>
+		<item name="wcf.acp.group.option.admin.system.canViewLog.description"><![CDATA[Members of this user group can view the system logs.]]></item>
 		<item name="wcf.acp.group.option.admin.system.cronjobs.canAddCronjob"><![CDATA[Can add new cronjobs]]></item>
-		<item name="wcf.acp.group.option.admin.system.cronjobs.canAddCronjob.description"><![CDATA[Members of this usergroup can add new cronjobs.]]></item>
+		<item name="wcf.acp.group.option.admin.system.cronjobs.canAddCronjob.description"><![CDATA[Members of this user group can add new cronjobs.]]></item>
 		<item name="wcf.acp.group.option.admin.system.cronjobs.canDeleteCronjob"><![CDATA[Can delete existing cronjobs]]></item>
-		<item name="wcf.acp.group.option.admin.system.cronjobs.canDeleteCronjob.description"><![CDATA[Members of this usergroup can delete existing cronjobs.]]></item>
+		<item name="wcf.acp.group.option.admin.system.cronjobs.canDeleteCronjob.description"><![CDATA[Members of this user group can delete existing cronjobs.]]></item>
 		<item name="wcf.acp.group.option.admin.system.cronjobs.canDeleteCronjobsLog"><![CDATA[Can delete log files of running cronjobs]]></item>
-		<item name="wcf.acp.group.option.admin.system.cronjobs.canDeleteCronjobsLog.description"><![CDATA[Members of this usergroup can delete log files of running cronjobs. The log files are also checked by the associated cronjob if the log file was successfully written.]]></item>
+		<item name="wcf.acp.group.option.admin.system.cronjobs.canDeleteCronjobsLog.description"><![CDATA[Members of this user group can delete log files of running cronjobs. The log files are also checked by the associated cronjob if the log file was successfully written.]]></item>
 		<item name="wcf.acp.group.option.admin.system.cronjobs.canEditCronjob"><![CDATA[Can edit existing cronjobs]]></item>
-		<item name="wcf.acp.group.option.admin.system.cronjobs.canEditCronjob.description"><![CDATA[Members of this usergroup can edit existing cronjobs.]]></item>
+		<item name="wcf.acp.group.option.admin.system.cronjobs.canEditCronjob.description"><![CDATA[Members of this user group can edit existing cronjobs.]]></item>
 		<item name="wcf.acp.group.option.admin.system.cronjobs.canEnableDisableCronjob"><![CDATA[Can disable existing cronjobs]]></item>
-		<item name="wcf.acp.group.option.admin.system.cronjobs.canEnableDisableCronjob.description"><![CDATA[Members of this usergroup can disable existing cronjobs. Disabling a cronjob only stops the actual cronjob from running, but does not remove it.]]></item>
+		<item name="wcf.acp.group.option.admin.system.cronjobs.canEnableDisableCronjob.description"><![CDATA[Members of this user group can disable existing cronjobs. Disabling a cronjob only stops the actual cronjob from running, but does not remove it.]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canEditServer"><![CDATA[Can edit existing update servers]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canEditServer.description"><![CDATA[Members of this user group can edit existing update servers and add new update servers.]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canInstallPackage"><![CDATA[Can install new packages]]></item>
@@ -137,17 +137,17 @@
 		<item name="wcf.acp.group.option.admin.system.package.canUninstallPackage.description"><![CDATA[Members of this user group can remove existing packages.]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canUpdatePackage"><![CDATA[Can update existing packages]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canUpdatePackage.description"><![CDATA[Members of this user group can update existing packages.]]></item>
-		<item name="wcf.acp.group.option.admin.user.accessibleGroups"><![CDATA[Accessible usergroups]]></item>
+		<item name="wcf.acp.group.option.admin.user.accessibleGroups"><![CDATA[Accessible user groups]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups.description"><![CDATA[Members of this user group have access to the following groups. For example, here you can set if the user group has permission to edit themselves.]]></item>
-		<item name="wcf.acp.group.option.admin.user.canAddGroup"><![CDATA[Can add new usergroups]]></item>
+		<item name="wcf.acp.group.option.admin.user.canAddGroup"><![CDATA[Can add new user groups]]></item>
 		<item name="wcf.acp.group.option.admin.user.canAddGroup.description"><![CDATA[Members of this user group can add new user groups.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canAddUser"><![CDATA[Can add new users]]></item>
-		<item name="wcf.acp.group.option.admin.user.canAddUser.description"><![CDATA[Members of this user group can add new users. If the option for &quot;Accessible Usergroups&quot; has been enabled, then on creation of the user, the appropriate accessible user groups can also be assigned.]]></item>
+		<item name="wcf.acp.group.option.admin.user.canAddUser.description"><![CDATA[Members of this user group can add new users. If the option for &quot;Accessible User groups&quot; has been enabled, then on creation of the user, the appropriate accessible user groups can also be assigned.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDeleteGroup"><![CDATA[Can delete existing user groups]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDeleteGroup.description"><![CDATA[Members of this user group can remove existing user groups.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDeleteUser"><![CDATA[Can delete existing users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDeleteUser.description"><![CDATA[Members of this user group can delete existing users.]]></item>
-		<item name="wcf.acp.group.option.admin.user.canEditGroup"><![CDATA[Can edit existing usergroups]]></item>
+		<item name="wcf.acp.group.option.admin.user.canEditGroup"><![CDATA[Can edit existing user groups]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditGroup.description"><![CDATA[Members of this user group can edit existing user groups.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditMailAddress"><![CDATA[Can edit user e-mail addresses]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditMailAddress.description"><![CDATA[Members of this user group can edit user e-mail addresses.]]></item>
@@ -187,10 +187,10 @@
 		<item name="wcf.acp.group.option.category.user.description"><![CDATA[]]></item>
 		<item name="wcf.acp.group.option.error.validationFailed"><![CDATA[The information you have entered is not valid.]]></item>
 		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Can view disabled styles]]></item>
-		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle.description"><![CDATA[Members of this usergroup can choose to view disabled styles.]]></item>
+		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle.description"><![CDATA[Members of this user group can choose to view disabled styles.]]></item>
 		<item name="wcf.acp.group.option.category.admin.style"><![CDATA[Style management]]></item>
 		<item name="wcf.acp.group.option.category.admin.style.description"><![CDATA[]]></item>
-		<item name="wcf.acp.group.showMembers"><![CDATA[Show the members of this usergroup]]></item>
+		<item name="wcf.acp.group.showMembers"><![CDATA[Show the members of this user group]]></item>
 		<item name="wcf.acp.group.superModerators"><![CDATA[Super moderators]]></item>
 		<item name="wcf.acp.group.users"><![CDATA[Registered users]]></item>
 	</category>
@@ -468,7 +468,7 @@
 		<item name="wcf.acp.package.step.install.CronjobsPackageInstallationPlugin"><![CDATA[Installing cronjobs ...]]></item>
 		<item name="wcf.acp.package.step.install.EventListenerPackageInstallationPlugin"><![CDATA[Installing event listener ...]]></item>
 		<item name="wcf.acp.package.step.install.FilesPackageInstallationPlugin"><![CDATA[Unpacking package files ...]]></item>
-		<item name="wcf.acp.package.step.install.GroupOptionsPackageInstallationPlugin"><![CDATA[Installing usergroup options ...]]></item>
+		<item name="wcf.acp.package.step.install.GroupOptionsPackageInstallationPlugin"><![CDATA[Installing user group options ...]]></item>
 		<item name="wcf.acp.package.step.install.LanguagesPackageInstallationPlugin"><![CDATA[Installing package languages ...]]></item>
 		<item name="wcf.acp.package.step.install.OptionsPackageInstallationPlugin"><![CDATA[Installing package options ...]]></item>
 		<item name="wcf.acp.package.step.install.ScriptPackageInstallationPlugin"><![CDATA[Executing special scripts ...]]></item>
@@ -491,7 +491,7 @@
 		<item name="wcf.acp.package.step.uninstall.CronjobsPackageInstallationPlugin"><![CDATA[Uninstalling cronjobs ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.EventListenerPackageInstallationPlugin"><![CDATA[Removing event listener ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.FilesPackageInstallationPlugin"><![CDATA[Removing package files ...]]></item>
-		<item name="wcf.acp.package.step.uninstall.GroupOptionsPackageInstallationPlugin"><![CDATA[Removing usergroup options ...]]></item>
+		<item name="wcf.acp.package.step.uninstall.GroupOptionsPackageInstallationPlugin"><![CDATA[Removing user group options ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.LanguagesPackageInstallationPlugin"><![CDATA[Removing package languages ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.OptionsPackageInstallationPlugin"><![CDATA[Removing package options ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.SqlPackageInstallationPlugin"><![CDATA[Removing database entries...]]></item>
@@ -509,7 +509,7 @@
 		<item name="wcf.acp.package.step.update.CronjobsPackageInstallationPlugin"><![CDATA[Updating cronjobs ...]]></item>
 		<item name="wcf.acp.package.step.update.EventListenerPackageInstallationPlugin"><![CDATA[Updating event listener ...]]></item>
 		<item name="wcf.acp.package.step.update.FilesPackageInstallationPlugin"><![CDATA[Unpacking package files ...]]></item>
-		<item name="wcf.acp.package.step.update.GroupOptionsPackageInstallationPlugin"><![CDATA[Updating usergroup options ...]]></item>
+		<item name="wcf.acp.package.step.update.GroupOptionsPackageInstallationPlugin"><![CDATA[Updating user group options ...]]></item>
 		<item name="wcf.acp.package.step.update.LanguagesPackageInstallationPlugin"><![CDATA[Updating package languages ...]]></item>
 		<item name="wcf.acp.package.step.update.OptionsPackageInstallationPlugin"><![CDATA[Updating package options ...]]></item>
 		<item name="wcf.acp.package.step.update.ScriptPackageInstallationPlugin"><![CDATA[Executing special scripts ...]]></item>
