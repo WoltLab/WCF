@@ -1428,7 +1428,7 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 /**
  * jQuery widget implementation of the wcf pagination.
  */
-$.widget( "ui.wcfPages", {
+$.widget('ui.wcfPages', {
 	SHOW_LINKS: 11,
 	SHOW_SUB_LINKS: 20,
 	
