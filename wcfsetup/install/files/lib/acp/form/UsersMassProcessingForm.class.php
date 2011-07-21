@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\data\user\UserEditor;
 use wcf\data\user\group\UserGroup;
+use wcf\data\option\Option;
 use wcf\form\AbstractForm;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
@@ -62,6 +63,13 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	 * @var	wcf\system\database\condition\PreparedStatementConditionBuilder
 	 */
 	public $conditions = null;
+
+        /**
+	 * Options of the active category.
+	 * 
+	 * @var array
+	 */
+	public $activeOptions = array();
 	
 	/**
 	 * @see wcf\form\IForm::readFormParameters()
