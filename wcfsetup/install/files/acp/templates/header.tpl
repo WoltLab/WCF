@@ -62,12 +62,14 @@
 		//]]>
 	</script>
 </head>
+
 <body id="tpl{$templateName|ucfirst}">
+	<!-- HEADER -->
 	<a id="top"></a>
 	<header>
 		
-		<!-- top nav -->
-		<!-- /top nav -->
+		<!-- top panel -->
+		<!-- /top panel -->
 		
 		<!-- logo -->
 		<div id="logo">
@@ -79,7 +81,7 @@
 		<!-- /logo -->
 		
 		<!-- top nav -->
-		<nav id="mainMenu">
+		<menu id="mainMenu" class="mainMenu">
 			{* work-around for unknown core-object during WCFSetup *}
 			{if PACKAGE_ID}
 				<ul>
@@ -88,23 +90,22 @@
 					{/foreach}
 				</ul>
 			{/if}
-		</nav>
+		</menu>
 		<!-- /top nav -->
 		
 		<!-- sub bar -->
-		
-		<menu class="subbar">
+		<nav class="headerNavigation">
 			<ul>
 				<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/downS.png" alt="{lang}wcf.global.scrollDown{/lang}" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 			</ul>
-		</menu>
-		
+		</nav>
 		<!-- /sub bar -->
 	</header>
+	<!-- /HEADER -->
 	
 	<!-- CONTENT -->
 	<div id="main" class="main">
-		<div class="mainInner">
+		<div>
 			<aside class="sidebar">
 				<!-- sub nav -->
 				<nav id="sidebarMenu" class="sidebarMenu">
@@ -114,7 +115,7 @@
 							<div class="menuContainer" data-parentMenuItem="{$parentMenuItem->menuItem}" id="{$parentMenuItem->menuItem}-container" style="display: none;">
 								{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
 									<h1 data-menuItem="{$menuItem->menuItem}" class="menuHeader">{lang}{@$menuItem->menuItem}{/lang}</h1>
-									<div>
+									<div class="sidebarMenuGroup">
 										<ul id="{$menuItem->menuItem}">
 											{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItem->menuItem) item=menuItemCategory}
 												{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
