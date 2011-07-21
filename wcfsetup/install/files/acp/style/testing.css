@@ -7,6 +7,10 @@
 
 /* -- -- -- -- -- Miscellaneous -- -- -- -- -- */
 
+* {
+	text-overflow: ellipsis;
+}
+
 body {
 	font-family: 'Trebuchet MS', Arial, sans-serif;
 	font-size: .8em;
@@ -64,46 +68,47 @@ header div#logo a {
 	text-align: right;
 }
 
-/* -- -- -- -- -- Tabs -- -- -- -- --  */
+/* -- -- -- -- -- Main Menu -- -- -- -- --  */
 
-nav#mainMenu {
-	margin: 0 10px -7px;
+menu.mainMenu {
+	margin: 0 7px -7px;
 	background-color: rgba(0, 0, 0, .5);
-	border-radius: 7px 7px 0 0;
+	border-radius: 5px 5px 0 0;
 	display: inline-block;
 }
 
-nav#mainMenu:after {
+menu.mainMenu:after {
 	content: "";
 	display: block;
 	clear: both;
 }
 
-nav#mainMenu li {
-	font-size: 110%;
+menu.mainMenu li {
+	font-size: 105%;
 	font-weight: normal;
 	color: #ccc;
-	
+	text-shadow: 0 -1px 0 #000;
 	cursor: pointer;
 	display: inline-block;
 	margin: 5px -5px 0;
-	padding: 5px 20px;
+	padding: 3px 20px 11px;
 	float: left;
 	position: relative;
 	z-index: 1;
 }
 
-nav#mainMenu li:after {
+menu.mainMenu li:after {
 	content: "";
 	display: block;
 	clear: both;
 }
 
-nav#mainMenu li:hover {
+menu.mainMenu li:hover {
 	color: #fff;
 }
 
-nav#mainMenu li.activeMenuItem {
+menu.mainMenu li.activeMenuItem {
+	font-size: 110%;
 	font-weight: bold;
 	color: #369;
 	text-shadow: 0 1px 0 #fff;
@@ -114,37 +119,36 @@ nav#mainMenu li.activeMenuItem {
 	background-image: -o-linear-gradient(#fff, #e7f2fd);
 	background-image: linear-gradient(#fff, #e7f2fd);
 	
-	border-radius: 7px 7px 0 0;
+	border-radius: 5px 5px 0 0;
 	margin: 0;
-	padding: 15px 20px 10px;
-	padding-top: 15px;
+	padding: 10px 20px 13px;
 	position: relative;
-	top: -5px;
+	top: -3px;
 	z-index: 10;
 }
 
-/* -- -- -- -- -- Sub Bar -- -- -- -- --  */
+/* -- -- -- -- -- Header Navigation -- -- -- -- --  */
 
-menu.subbar {
+nav.headerNavigation {
 	display: block;
 	background-color: #e7f2fd;
 	border-bottom: 1px solid #bcd;
-	border-radius: 5px 5px 0 0;
+	border-radius: 3px 3px 0 0;
 	padding: 3px 7px;
 	position: relative;
 }
 
-menu.subbar:after {
+nav.headerNavigation:after {
 	content: "";
 	display: block;
 	clear: both;
 }
 
-menu.subbar ul {
+nav.headerNavigation ul {
 	display: block;
 }
 
-menu.subbar ul li {
+nav.headerNavigation ul li {
 	float: right;
 }
 
@@ -157,7 +161,7 @@ div.main {
 	table-layout: fixed;
 }
 
-div.mainInner {
+div.main > div {
 	display: table-row;
 }
 
@@ -173,7 +177,7 @@ div#content {
 	
 	display: table-cell;
 	padding: 21px;
-	width: auto;
+	width: 100%;
 }
 
 /* -- -- -- -- -- Sidebar -- -- -- -- -- */
@@ -185,6 +189,10 @@ aside.sidebar {
 }
 
 /* -- -- -- -- -- Sidebar Menu -- -- -- -- -- */
+
+nav.sidebarMenu {
+	white-space: nowrap;
+}
 
 nav.sidebarMenu div.menuContainer {
 	background-color: #d8e7f5;
@@ -205,15 +213,14 @@ nav.sidebarMenu div.menuContainer a:hover {
 
 nav.sidebarMenu div.menuContainer h1 {
 	background-image: url("../../icon/arrowRightS.png");
-	background-position: 7px center;
+	background-position: 15px center;
 	background-repeat: no-repeat;
 	color: #369;
 	cursor: pointer;
 	font-size: 130%;
 	font-weight: bold;
-	margin-top: 7px;
-	padding: 7px;
-	padding-left: 30px;
+	margin-top: 5px;
+	padding: 7px 7px 7px 35px;
 	position: relative;
 }
 
@@ -222,7 +229,8 @@ nav.sidebarMenu div.menuContainer h1.activeMenuItem {
 }
 
 nav.sidebarMenu div.menuContainer ul li {
-	padding: 7px 7px 7px 31px;
+	font-size: 110%;
+	padding: 7px 15px 7px 35px;
 }
 
 nav.sidebarMenu div.menuContainer ul li.activeMenuItem {
@@ -252,7 +260,7 @@ footer:after {
 footer > div {
 	background-color: #e7f2fd;
 	border-top: 1px solid #bcd;
-	border-radius: 0 0 5px 5px;
+	border-radius: 0 0 3px 3px;
 	clear: both;
 	padding: 3px 7px;
 }
@@ -356,6 +364,8 @@ div.ui-widget-overlay {
 	top: 0;
 }
 
+/* -- -- -- -- -- Headlines -- -- -- -- -- */
+
 div.mainHeadline {
 	height: 48px;
 	margin-bottom: 7px;
@@ -391,6 +401,8 @@ h3.subHeadline {
 	padding: 7px;
 }
 
+/* -- -- -- -- -- Fieldsets -- -- -- -- -- */
+
 fieldset {
 	border: 1px solid #ccc;
 	border-radius: 10px;
@@ -414,6 +426,8 @@ fieldset > ul {
 fieldset > ul li {
 	list-style-type: circle;
 }
+
+/* -- -- -- -- -- Forms -- -- -- -- -- */
 
 div.formElement {
 	clear: both;
@@ -444,6 +458,9 @@ div.formGroupField div.formField label {
 	display: block;
 }
 
+
+
+
 .border {
 	border: 1px solid #ccc;
 	border-radius: 5px;
@@ -467,6 +484,8 @@ div.formGroupField div.formField label {
 .content {
 	border-width: 0 !important;
 }
+
+/* -- -- -- -- -- Tables -- -- -- -- -- */
 
 table {
 	border-radius: 0 0 5px 5px;
@@ -557,6 +576,8 @@ tr.container-2 td {
 	background-color: #eee;
 }
 
+/* -- -- -- -- -- Page Navigation -- -- -- -- -- */
+
 .pageNavigation ul li {
 	display: inline-block;
 }
@@ -585,6 +606,8 @@ tr.container-2 td {
 .pageNavigation ul li.skip {
 	vertical-align: middle;
 }
+
+/* -- -- -- -- -- Large Buttons -- -- -- -- -- */
 
 div.largeButtons {
 	text-align: right;
@@ -635,6 +658,10 @@ input[type='reset'],
 input[type='submit'] {
 	cursor: pointer;
 }
+
+
+
+
 
 div#packageInstallationDialogContainer {
 	background-color: #fefefe;
@@ -705,12 +732,14 @@ fieldset legend ~ p {
 	margin-bottom: 14px;
 }
 
+/* -- -- -- -- -- Tabbed Content -- -- -- -- -- */
+
 dl {
 	clear: both;
 	margin-bottom: 7px;
 }
 
-dt /* is op */ {
+dt { /* is op */
 	float: left;
 	text-align: right;
 	width: 230px;
@@ -730,7 +759,11 @@ dl.disabled dt {
 	color: #777;
 }
 
-/* Taken from jQuery UI @ themes/base/jquery.ui.tabs.css */
+
+
+
+/* -- -- -- -- -- Taken from jQuery UI @ themes/base/jquery.ui.tabs.css -- -- -- -- -- */
+
 .ui-tabs {
 	position: relative; /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
 	padding: 3px;

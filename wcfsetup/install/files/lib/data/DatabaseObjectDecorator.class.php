@@ -65,7 +65,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	 * @return	mixed
 	 */
 	public function __call($name, $arguments) {
-		if (!method_exists($this->object, $name)) {
+		if (!method_exists($this->object, $name) && !($this->object instanceof DatabaseObjectDecorator)) {
 			throw new SystemException("unknown method '".$name."'");
 		}
 		
