@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.cache
+ * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
 class CacheBuilderOption implements CacheBuilder {
