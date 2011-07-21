@@ -25,6 +25,12 @@ img {
 a {
 	color: #369;
 	text-decoration: none;
+	
+	-webkit-transition: all .1s linear;
+	-moz-transition: all .1s linear;
+	-ms-transition: all .1s linear;
+	-o-transition: all .1s linear;
+	transition: all .1s linear;
 }
 
 a:hover {
@@ -42,6 +48,22 @@ a:hover {
 
 header {
 	margin: 0 23px 0;
+}
+
+header div#logo {
+	/* This is experimental. Looks like only 
+	Safari/Chrome support SVG-images as background-
+	images properly! */
+	
+	background-image: url("../images/wcfLogoWhite.svg");
+	background-position: 0 35px;
+	background-repeat: no-repeat;
+	
+	-webkit-background-size: 300px auto;
+	-moz-background-size: 300px auto;
+	-ms-background-size: 300px auto;
+	-o-background-size: 300px auto;
+	background-size: 300px auto;
 }
 
 header div#logo h1 {
@@ -63,8 +85,7 @@ header div#logo img {
 
 header div#logo a {
 	display: block;
-	height: 100px;
-	margin-bottom: 21px;
+	height: 115px;
 	text-align: right;
 }
 
@@ -88,6 +109,7 @@ menu.mainMenu li {
 	font-weight: normal;
 	color: #ccc;
 	text-shadow: 0 -1px 0 #000;
+	border-radius: 5px 5px 0 0;
 	cursor: pointer;
 	display: inline-block;
 	margin: 5px -5px 0;
@@ -95,6 +117,12 @@ menu.mainMenu li {
 	float: left;
 	position: relative;
 	z-index: 1;
+	
+	-webkit-transition: all .1s linear;
+	-moz-transition: all .1s linear;
+	-ms-transition: all .1s linear;
+	-o-transition: all .1s linear;
+	transition: all .1s linear;
 }
 
 menu.mainMenu li:after {
@@ -183,19 +211,20 @@ div#content {
 /* -- -- -- -- -- Sidebar -- -- -- -- -- */
 
 aside.sidebar {
-	width: 275px;
 	display: table-cell;
 	background-color: #d8e7f5;
+	margin: 0 !important;
+	padding: 0 !important;
 }
 
 /* -- -- -- -- -- Sidebar Menu -- -- -- -- -- */
 
 nav.sidebarMenu {
 	white-space: nowrap;
+	padding-bottom: 20px;
 }
 
 nav.sidebarMenu div.menuContainer {
-	background-color: #d8e7f5;
 	position: relative;
 	color: #69c;
 	text-shadow: 0 1px 0 #fff;
@@ -230,7 +259,7 @@ nav.sidebarMenu div.menuContainer h1.activeMenuItem {
 
 nav.sidebarMenu div.menuContainer ul li {
 	font-size: 110%;
-	padding: 7px 15px 7px 35px;
+	padding: 5px 15px 7px 35px;
 }
 
 nav.sidebarMenu div.menuContainer ul li.activeMenuItem {
@@ -238,7 +267,7 @@ nav.sidebarMenu div.menuContainer ul li.activeMenuItem {
 }
 
 nav.sidebarMenu div.menuContainer ul li.activeMenuItem a {
-	color: #036;
+	color: #369;
 	font-weight: bold;
 }
 
