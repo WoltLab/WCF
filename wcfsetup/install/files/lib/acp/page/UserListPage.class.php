@@ -44,7 +44,7 @@ class UserListPage extends SortablePage {
 	public $sqlConditions = '';
 	
 	/**
-	 * @see wcf\page\Page::readParameters()
+	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -83,7 +83,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\Page::readData()
+	 * @see wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -103,7 +103,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -119,7 +119,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\Page::show()
+	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
 		// set active menu item

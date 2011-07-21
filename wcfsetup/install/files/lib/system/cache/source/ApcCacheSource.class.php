@@ -13,7 +13,7 @@ use wcf\util\FileUtil;
  * @subpackage	system.cache.source
  * @category 	Community Framework
  */
-class ApcCacheSource implements CacheSource {
+class ApcCacheSource implements ICacheSource {
 	/**
 	 * Creates a new ApcCacheSource object.
 	 */
@@ -24,7 +24,7 @@ class ApcCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\CacheSource::get()
+	 * @see	wcf\system\cache\source\ICacheSource::get()
 	 */
 	public function get(array $cacheResource) {
 		if (($data = apc_fetch($cacheResource['file'])) === false) {
@@ -35,14 +35,14 @@ class ApcCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\CacheSource::set()
+	 * @see	wcf\system\cache\source\ICacheSource::set()
 	 */
 	public function set(array $cacheResource, $value) {
 		apc_store($cacheResource['file'], $value, $cacheResource['maxLifetime']);
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\CacheSource::delete()
+	 * @see	wcf\system\cache\source\ICacheSource::delete()
 	 */
 	public function delete(array $cacheResource, $ignoreLifetime = false) {
 		if ($ignoreLifetime || ($cacheResource['minLifetime'] == 0 || $this->checkMinLifetime($cacheResource))) {
@@ -69,7 +69,7 @@ class ApcCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\CacheSource::clear()
+	 * @see	wcf\system\cache\source\ICacheSource::clear()
 	 */
 	public function clear($directory, $filepattern, $forceDelete = false) {
 		$pattern = preg_quote(FileUtil::addTrailingSlash($directory), '%').str_replace('*', '.*', str_replace('.', '\.', $filepattern));
@@ -84,17 +84,16 @@ class ApcCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\CacheSource::close()
+	 * @see	wcf\system\cache\source\ICacheSource::close()
 	 */
 	public function close() {
 		// does nothing
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\CacheSource::flush()
+	 * @see	wcf\system\cache\source\ICacheSource::flush()
 	 */
 	public function flush() {
 		apc_clear_cache('user');
 	}
 }
-?>

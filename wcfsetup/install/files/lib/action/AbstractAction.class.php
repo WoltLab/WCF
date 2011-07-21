@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @subpackage	action
  * @category 	Community Framework
  */
-abstract class AbstractAction implements Action {
+abstract class AbstractAction implements IAction {
 	/**
 	 * Needed modules to execute this action.
 	 * 
@@ -41,7 +41,7 @@ abstract class AbstractAction implements Action {
 	}
 	
 	/**
-	 * @see Action::readParameters()
+	 * @see wcf\action\IAction::readParameters()
 	 */
 	public function readParameters() {
 		// call readParameters event
@@ -49,7 +49,7 @@ abstract class AbstractAction implements Action {
 	}
 	
 	/**
-	 * @see Action::execute()
+	 * @see wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		// check modules

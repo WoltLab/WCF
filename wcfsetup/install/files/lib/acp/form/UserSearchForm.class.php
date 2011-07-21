@@ -124,7 +124,7 @@ class UserSearchForm extends UserOptionListForm {
 	public $maxResults = 0;
 	
 	/**
-	 * @see wcf\form\Form::readFormParameters()
+	 * @see wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -143,7 +143,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::readData()
+	 * @see wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -152,7 +152,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -175,7 +175,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::show()
+	 * @see wcf\form\IForm::show()
 	 */
 	public function show() {
 		// set active menu item
@@ -189,7 +189,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::save()
+	 * @see wcf\form\IForm::save()
 	 */	
 	public function save() {
 		parent::save();
@@ -218,7 +218,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::validate()
+	 * @see wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		AbstractForm::validate();

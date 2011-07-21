@@ -4,7 +4,7 @@ use wcf\data\application\group\ApplicationGroup;
 use wcf\data\application;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
-use wcf\system\cache\CacheBuilder;
+use wcf\system\cache\ICacheBuilder;
 use wcf\system\WCF;
 
 /**
@@ -17,9 +17,9 @@ use wcf\system\WCF;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderApplication implements CacheBuilder {
+class CacheBuilderApplication implements ICacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		list($cache, $packageID) = explode('-', $cacheResource['cache']);

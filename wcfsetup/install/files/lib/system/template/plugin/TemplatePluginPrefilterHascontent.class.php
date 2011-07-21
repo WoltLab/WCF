@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\TemplatePluginPrefilter;
+use wcf\system\template\ITemplatePluginPrefilter;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\util\StringUtil;
 
@@ -25,9 +25,9 @@ use wcf\util\StringUtil;
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginPrefilterHascontent implements TemplatePluginPrefilter {
+class TemplatePluginPrefilterHascontent implements ITemplatePluginPrefilter {
 	/**
-	 * @see TemplatePluginPrefilter::execute()
+	 * @see wcf\system\template\ITemplatePluginPrefilter::execute()
 	 */
 	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');

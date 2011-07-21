@@ -14,16 +14,16 @@ use wcf\system\WCF;
  * @subpackage	system.cache
  * @category 	Community Framework
  */
-class CacheBuilderUserNotificationObjectType implements CacheBuilder {
+class CacheBuilderUserNotificationObjectType implements ICacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		$data = array();
 		
 		// get package id
 		$tmp = explode('-', $cacheResource['cache']);
-		$packageID = array_pop($packageID);
+		$packageID = array_pop($tmp);
 		
 		// get object types
 		$typeIDArray = array();
@@ -37,8 +37,9 @@ class CacheBuilderUserNotificationObjectType implements CacheBuilder {
 		$statement->execute(array($packageID));
 		while ($row = $statement->fetchArray()) {
 			if (!isset($data[$row['objectType']])) {
+				$databaseObject = new UserNotificationObjectType(null, $row);
 				$data[$row['objectType']] = array(
-					'object' => new UserNotificationObjectType(null, $row),
+					'object' => $databaseObject->getProcessor(),
 					'events' => array()
 				);
 			}
@@ -57,7 +58,8 @@ class CacheBuilderUserNotificationObjectType implements CacheBuilder {
 		$statement->execute(array($packageID));
 		while ($row = $statement->fetchArray()) {
 			if (isset($data[$row['objectType']]) && !isset($data[$row['objectType']]['events'][$row['eventName']])) {
-				$data[$row['objectType']]['events'][$row['eventName']] = new UserNotificationEvent(null, $row);
+				$databaseObject = new UserNotificationEvent(null, $row);
+				$data[$row['objectType']]['events'][$row['eventName']] = $databaseObject->getProcessor();
 			}
 		}
 		

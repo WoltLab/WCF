@@ -16,7 +16,7 @@ use wcf\system\exception\UserInputException;
  * @subpackage	form
  * @category 	Community Framework
  */
-abstract class AbstractForm extends AbstractPage implements Form {
+abstract class AbstractForm extends AbstractPage implements IForm {
 	/**
 	 * Name of error field.
 	 *
@@ -32,7 +32,7 @@ abstract class AbstractForm extends AbstractPage implements Form {
 	public $errorType = '';
 	
 	/**
-	 * @see Form::submit()
+	 * @see wcf\form\IForm::submit()
 	 */
 	public function submit() {
 		// call submit event
@@ -52,7 +52,7 @@ abstract class AbstractForm extends AbstractPage implements Form {
 	}
 	
 	/**
-	 * @see Form::readFormParameters()
+	 * @see wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		// call readFormParameters event
@@ -60,7 +60,7 @@ abstract class AbstractForm extends AbstractPage implements Form {
 	}
 	
 	/**
-	 * @see Form::validate()
+	 * @see wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		// call validate event
@@ -68,7 +68,7 @@ abstract class AbstractForm extends AbstractPage implements Form {
 	}
 	
 	/**
-	 * @see Form::save()
+	 * @see wcf\form\IForm::save()
 	 */
 	public function save() {
 		// call save event
@@ -84,7 +84,7 @@ abstract class AbstractForm extends AbstractPage implements Form {
 	}
 	
 	/**
-	 * @see Page::readData()
+	 * @see wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		if (count($_POST) || count($_FILES)) {
@@ -95,7 +95,7 @@ abstract class AbstractForm extends AbstractPage implements Form {
 	}
 	
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

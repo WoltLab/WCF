@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\page\menu\item\PageMenuItem;
-use wcf\system\cache\CacheBuilder;
+use wcf\system\cache\ICacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
@@ -15,9 +15,9 @@ use wcf\system\WCF;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderPageMenu implements CacheBuilder {
+class CacheBuilderPageMenu implements ICacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		list($cache, $packageID) = explode('-', $cacheResource['cache']); 

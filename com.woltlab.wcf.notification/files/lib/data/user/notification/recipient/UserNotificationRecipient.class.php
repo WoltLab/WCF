@@ -41,7 +41,8 @@ class UserNotificationRecipient extends DatabaseObjectDecorator {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($this->userID, 1));
 			while ($row = $statement->fetchArray()) {
-				$this->object->data['notificationTypes'][$row['eventID']] = new UserNotificationType(null, $row);
+				$databaseObject = new UserNotificationType(null, $row);
+				$this->object->data['notificationTypes'][$row['eventID']][] = $databaseObject->getProcessor();
 			}
 		}
 	}
@@ -50,7 +51,7 @@ class UserNotificationRecipient extends DatabaseObjectDecorator {
 	 * Returns the enabled notification types for the given event.
 	 * 
 	 * @param	integer		$eventID
-	 * @return	array<wcf\data\user\notification\type\UserNotificationType>
+	 * @return	array<wcf\system\user\notification\type\IUserNotificationType>
 	 */
 	public function getNotificationTypes($eventID) {
 		if (isset($this->notificationTypes[$eventID])) {

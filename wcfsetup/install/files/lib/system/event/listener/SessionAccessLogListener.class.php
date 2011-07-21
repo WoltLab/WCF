@@ -3,7 +3,7 @@ namespace wcf\system\event\listener;
 use wcf\data\acp\session\access\log\ACPSessionAccessLogEditor;
 use wcf\data\acp\session\log\ACPSessionLog;
 use wcf\data\acp\session\log\ACPSessionLogEditor;
-use wcf\system\event\EventListener;
+use wcf\system\event\IEventListener;
 use wcf\system\WCF;
 
 /**
@@ -16,9 +16,9 @@ use wcf\system\WCF;
  * @subpackage	system.event.listener
  * @category 	Community Framework
  */
-class SessionAccessLogListener implements EventListener {
+class SessionAccessLogListener implements IEventListener {
 	/**
-	 * @see EventListener::execute()
+	 * @see wcf\system\event\IEventListener::execute()
 	 */
 	public function execute($eventObj, $className, $eventName) {
 		if (WCF::getUser()->userID && WCF::getSession()->getPermission('admin.general.canUseAcp') && !defined(get_class($eventObj).'::DO_NOT_LOG')) {

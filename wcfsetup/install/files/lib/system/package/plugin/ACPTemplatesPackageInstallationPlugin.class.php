@@ -28,7 +28,7 @@ class ACPTemplatesPackageInstallationPlugin extends AbstractPackageInstallationP
 	public $tagName = 'acptemplates';
 
 	/**
-	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();
@@ -58,7 +58,7 @@ class ACPTemplatesPackageInstallationPlugin extends AbstractPackageInstallationP
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::uninstall()
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// create ACP-templates list

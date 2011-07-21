@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\template\group\TemplateGroupList;
-use wcf\system\cache\CacheBuilder;
+use wcf\system\cache\ICacheBuilder;
 
 /**
  * Caches template groups.
@@ -13,9 +13,9 @@ use wcf\system\cache\CacheBuilder;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderTemplateGroup implements CacheBuilder {
+class CacheBuilderTemplateGroup implements ICacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		$templateGroupList = new TemplateGroupList();

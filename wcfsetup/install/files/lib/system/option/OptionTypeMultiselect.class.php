@@ -21,7 +21,7 @@ use wcf\util\OptionUtil;
  */
 class OptionTypeMultiselect extends OptionTypeSelect {
 	/**
-	 * @see OptionType::getFormElement()
+	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(array &$optionData) {
 		if (!isset($optionData['optionValue'])) {
@@ -43,7 +43,7 @@ class OptionTypeMultiselect extends OptionTypeSelect {
 	}
 	
 	/**
-	 * @see OptionType::validate()
+	 * @see wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(array $optionData, $newValue) {
 		if (!is_array($newValue)) $newValue = array();
@@ -54,7 +54,7 @@ class OptionTypeMultiselect extends OptionTypeSelect {
 	}
 	
 	/**
-	 * @see OptionType::getData()
+	 * @see wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(array $optionData, $newValue) {
 		if (!is_array($newValue)) $newValue = array();
@@ -62,14 +62,14 @@ class OptionTypeMultiselect extends OptionTypeSelect {
 	}
 	
 	/**
-	 * @see SearchableUserOption::getSearchFormElement()
+	 * @see wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(array &$optionData) {
 		return $this->getFormElement($optionData);
 	}
 	
 	/**
-	 * @see SearchableUserOption::getCondition()
+	 * @see wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $options, $value) {
 		if (!is_array($value) || !count($value)) return false;

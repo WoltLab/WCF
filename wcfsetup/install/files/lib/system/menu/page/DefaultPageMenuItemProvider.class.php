@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\menu\page;
+use wcf\data\DatabaseObjectDecorator;
 
 /**
  * Provides default implementations for page menu item providers.
@@ -11,16 +12,16 @@ namespace wcf\system\menu\page;
  * @subpackage	system.menu.page
  * @category 	Community Framework
  */
-class DefaultPageMenuItemProvider implements PageMenuItemProvider {
+class DefaultPageMenuItemProvider extends DatabaseObjectDecorator implements IPageMenuItemProvider {
 	/**
-	 * @see PageMenuItemProvider::isVisible()
+	 * @see wcf\system\menu\page\IPageMenuItemProvider::isVisible()
 	 */
 	public function isVisible() {
 		return true;
 	}
 	
 	/**
-	 * @see PageMenuItemProvider::getNotifications()
+	 * @see wcf\system\menu\page\IPageMenuItemProvider::getNotifications()
 	 */
 	public function getNotifications() {
 		return 0;

@@ -21,7 +21,7 @@ class OptionTypePassword extends OptionTypeText {
 	protected $inputType = 'password';
 	
 	/**
-	 * @see SearchableUserOption::getCondition()
+	 * @see wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		return false;

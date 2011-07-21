@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
 		AbstractPackageInstallationPlugin::install();
@@ -168,7 +168,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::hasUninstall()
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::hasUninstall()
 	 */
 	public function hasUninstall() {
 		$hasUninstallOptions = parent::hasUninstall();

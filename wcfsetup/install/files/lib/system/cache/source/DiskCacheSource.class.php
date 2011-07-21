@@ -15,7 +15,7 @@ use wcf\util\FileUtil;
  * @subpackage	system.cache.source
  * @category 	Community Framework
  */
-class DiskCacheSource implements CacheSource {
+class DiskCacheSource implements ICacheSource {
 	/**
 	 * Loaded cache
 	 * 
@@ -31,7 +31,7 @@ class DiskCacheSource implements CacheSource {
 	protected $loaded = array();
 	
 	/**
-	 * @see	wcf\system\cache\source\CacheSource::get()
+	 * @see	wcf\system\cache\source\ICacheSource::get()
 	 */
 	public function get(array $cacheResource) {
 		if (!isset($this->cache[$cacheResource['cache']])) {
@@ -52,7 +52,7 @@ class DiskCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\CacheSource::set()
+	 * @see	wcf\system\cache\source\ICacheSource::set()
 	 */
 	public function set(array $cacheResource, $value) {
 		// write cache
@@ -67,7 +67,7 @@ class DiskCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\CacheSource::delete()
+	 * @see	wcf\system\cache\source\ICacheSource::delete()
 	 */
 	public function delete(array$cacheResource, $ignoreLifetime = false) {
 		if (file_exists($cacheResource['file'])) {
@@ -83,7 +83,7 @@ class DiskCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\CacheSource::clear()
+	 * @see wcf\system\cache\source\ICacheSource::clear()
 	 */
 	public function clear($directory, $filepattern, $forceDelete = false) {
 		$filepattern = str_replace('*', '.*', str_replace('.', '\.', $filepattern));
@@ -181,14 +181,14 @@ class DiskCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\CacheSource::close()
+	 * @see wcf\system\cache\source\ICacheSource::close()
 	 */
 	public function close() {
 		// does nothing
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\CacheSource::flush()
+	 * @see wcf\system\cache\source\ICacheSource::flush()
 	 */
 	public function flush() {
 		$sql = "SELECT		package.packageDir

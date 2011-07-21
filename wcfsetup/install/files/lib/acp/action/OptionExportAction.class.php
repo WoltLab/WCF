@@ -21,7 +21,7 @@ class OptionExportAction extends AbstractAction {
 	public $neededPermissions = array('admin.system.canEditOption');
 	
 	/**
-	 * @see wcf\action\Action::execute();
+	 * @see wcf\action\IAction::execute();
 	 */
 	public function execute() {
 		parent::execute();

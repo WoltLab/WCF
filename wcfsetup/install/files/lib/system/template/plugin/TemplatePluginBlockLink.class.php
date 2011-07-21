@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\request\LinkHandler;
-use wcf\system\template\TemplatePluginBlock;
+use wcf\system\template\ITemplatePluginBlock;
 use wcf\system\template\TemplateEngine;
 
 /**
@@ -17,7 +17,7 @@ use wcf\system\template\TemplateEngine;
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginBlockLink implements TemplatePluginBlock {
+class TemplatePluginBlockLink implements ITemplatePluginBlock {
 	/**
 	 * internal loop counter
 	 * @var integer
@@ -25,7 +25,7 @@ class TemplatePluginBlockLink implements TemplatePluginBlock {
 	protected $counter = 0;
 	
 	/**
-	 * @see TemplatePluginBlock::execute()
+	 * @see wcf\system\template\ITemplatePluginBlock::execute()
 	 */
 	public function execute($tagArgs, $blockContent, TemplateEngine $tplObj) {
 		$application = 'wcf';
@@ -37,14 +37,14 @@ class TemplatePluginBlockLink implements TemplatePluginBlock {
 	}
 	
 	/**
-	 * @see TemplatePluginBlock::init()
+	 * @see wcf\system\template\ITemplatePluginBlock::init()
 	 */
 	public function init($tagArgs, TemplateEngine $tplObj) {
 		$this->counter = 0;
 	}
 	
 	/**
-	 * @see TemplatePluginBlock::next()
+	 * @see wcf\system\template\ITemplatePluginBlock::next()
 	 */
 	public function next(TemplateEngine $tplObj) {
 		if ($this->counter == 0) {

@@ -95,7 +95,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	public $typeObjects = array();
 		
 	/**
-	 * @see wcf\form\Form::readFormParameters()
+	 * @see wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -107,7 +107,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	 * Returns an object of the requested option type.
 	 * 
 	 * @param	string			$type
-	 * @return	OptionType
+	 * @return	wcf\system\option\IOptionType
 	 */
 	protected function getTypeObject($type) {
 		if (!isset($this->typeObjects[$type])) {
@@ -117,8 +117,8 @@ abstract class AbstractOptionListForm extends AbstractForm {
 			if (!class_exists($className)) {
 				throw new SystemException("unable to find class '".$className."'", 11001);
 			}
-			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\OptionType')) {
-				throw new SystemException("'".$className."' should implement OptionType");
+			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\IOptionType')) {
+				throw new SystemException("'".$className."' should implement wcf\system\option\IOptionType");
 			}
 			// create instance
 			$this->typeObjects[$type] = new $className();
@@ -128,7 +128,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::validate()
+	 * @see wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -250,7 +250,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see OptionType::getFormElement()
+	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
 	protected function getFormElement($type, Option $option) {
 		return $this->getTypeObject($type)->getFormElement($option, (isset($this->optionValues[$option->optionName]) ? $this->optionValues[$option->optionName] : null));

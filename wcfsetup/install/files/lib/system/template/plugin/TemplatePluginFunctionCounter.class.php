@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\TemplatePluginFunction;
+use wcf\system\template\ITemplatePluginFunction;
 use wcf\system\template\TemplateEngine;
 
 /**
@@ -17,11 +17,11 @@ use wcf\system\template\TemplateEngine;
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginFunctionCounter implements TemplatePluginFunction {
+class TemplatePluginFunctionCounter implements ITemplatePluginFunction {
 	protected $counters = array();
 	
 	/**
-	 * @see TemplatePluginFunction::execute()
+	 * @see wcf\system\template\ITemplatePluginFunction::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (!isset($tagArgs['name'])) {

@@ -15,9 +15,9 @@ use wcf\util\StringUtil;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypeBoolean implements OptionType, SearchableUserOption {
+class OptionTypeBoolean implements IOptionType, ISearchableUserOption {
 	/**
-	 * @see OptionType::getFormElement()
+	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		$options = Option::parseEnableOptions($option->enableOptions);
@@ -32,12 +32,12 @@ class OptionTypeBoolean implements OptionType, SearchableUserOption {
 	}
 	
 	/**
-	 * @see OptionType::validate()
+	 * @see wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {}
 	
 	/**
-	 * @see OptionType::getData()
+	 * @see wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		if ($newValue !== null) return 1;
@@ -45,14 +45,14 @@ class OptionTypeBoolean implements OptionType, SearchableUserOption {
 	}
 	
 	/**
-	 * @see SearchableUserOption::getSearchFormElement()
+	 * @see wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		return $this->getFormElement($option, $value);
 	}
 	
 	/**
-	 * @see SearchableUserOption::getCondition()
+	 * @see wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		$value = intval($value);

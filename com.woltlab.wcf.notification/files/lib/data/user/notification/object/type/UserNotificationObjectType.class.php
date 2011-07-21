@@ -1,6 +1,6 @@
 <?php
 namespace wcf\data\user\notification\object\type;
-use wcf\data\DatabaseObject;
+use wcf\data\ProcessibleDatabaseObject;
 
 /**
  * Represents a user notification object type.
@@ -12,7 +12,7 @@ use wcf\data\DatabaseObject;
  * @subpackage	data.user.notification.object.type
  * @category 	Community Framework
  */
-class UserNotificationObjectType extends DatabaseObject {
+class UserNotificationObjectType extends ProcessibleDatabaseObject {
 	/**
 	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
@@ -22,4 +22,9 @@ class UserNotificationObjectType extends DatabaseObject {
 	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'objectTypeID';
+	
+	/**
+	 * @see	wcf\data\ProcessibleDatabaseObject::$processorInterface
+	 */
+	protected static $processorInterface = 'wcf\system\user\notification\object\type\IUserNotificationObjectType';
 }

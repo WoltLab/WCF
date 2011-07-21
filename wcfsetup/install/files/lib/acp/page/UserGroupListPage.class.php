@@ -27,7 +27,7 @@ class UserGroupListPage extends SortablePage {
 	public $objectListClassName = 'wcf\data\user\group\UserGroupList';
 	
 	/**
-	 * @see wcf\page\Page::readParameters()
+	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -72,7 +72,7 @@ class UserGroupListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -84,7 +84,7 @@ class UserGroupListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\Page::show()
+	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
 		// enable menu item

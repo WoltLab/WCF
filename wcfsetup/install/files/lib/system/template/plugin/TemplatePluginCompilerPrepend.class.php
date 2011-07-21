@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\TemplatePluginCompiler;
+use wcf\system\template\ITemplatePluginCompiler;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\util\StringUtil;
 
@@ -17,9 +17,9 @@ use wcf\util\StringUtil;
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginCompilerPrepend implements TemplatePluginCompiler {
+class TemplatePluginCompilerPrepend implements ITemplatePluginCompiler {
 	/**
-	 * @see TemplatePluginCompiler::executeStart()
+	 * @see wcf\system\template\ITemplatePluginCompiler::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		if (!isset($tagArgs['var'])) {
@@ -33,7 +33,7 @@ class TemplatePluginCompilerPrepend implements TemplatePluginCompiler {
 	}
 	
 	/**
-	 * @see TemplatePluginCompiler::executeEnd()
+	 * @see wcf\system\template\ITemplatePluginCompiler::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		throw new SystemException($compiler->formatSyntaxError("unknown tag {/prepend}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()), 12003);

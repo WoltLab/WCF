@@ -27,7 +27,7 @@ class PackagePage extends AbstractPage {
 	public $queueID = 0;
 	
 	/**
-	 * @see wcf\page\Page::readParameters()
+	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -38,7 +38,7 @@ class PackagePage extends AbstractPage {
 	}
 	
 	/**
-	 * @see wcf\page\Page::show()
+	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
 		parent::show();

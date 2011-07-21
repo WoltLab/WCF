@@ -67,7 +67,7 @@ class CronjobLogListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -94,7 +94,7 @@ class CronjobLogListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\Page::show()
+	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
 		// set active menu item.

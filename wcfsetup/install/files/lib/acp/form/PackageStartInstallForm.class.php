@@ -36,7 +36,7 @@ class PackageStartInstallForm extends ACPForm {
 	public $queue = null;
 	
 	/**
-	 * @see wcf\form\Form::readParameters()
+	 * @see wcf\form\IForm::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -55,7 +55,7 @@ class PackageStartInstallForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::readFormParameters()
+	 * @see wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -65,7 +65,7 @@ class PackageStartInstallForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::validate()
+	 * @see wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -168,7 +168,7 @@ class PackageStartInstallForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::save()
+	 * @see wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -200,7 +200,7 @@ class PackageStartInstallForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -212,7 +212,7 @@ class PackageStartInstallForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::show()
+	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
 		if ($this->action == 'install') WCF::getSession()->checkPermission(array('admin.system.package.canInstallPackage'));

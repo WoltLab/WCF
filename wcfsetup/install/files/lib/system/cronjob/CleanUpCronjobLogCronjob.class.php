@@ -12,9 +12,9 @@ use wcf\system\WCF;
  * @subpackage	system.cronjob
  * @category 	Community Framework
  */
-class CleanUpCronjobLogCronjob implements Cronjob {
+class CleanUpCronjobLogCronjob implements ICronjob {
 	/**
-	 * @see Cronjob::execute()
+	 * @see wcf\system\ICronjob::execute()
 	 */
 	public function execute(array $data) {
 		$sql = "DELETE FROM	wcf".WCF_N."_cronjobs_log

@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.exception
  * @category 	Community Framework
  */
-class SystemException extends \Exception implements PrintableException {
+class SystemException extends \Exception implements IPrintableException {
 	/**
 	 * error description
 	 * @var string
@@ -63,7 +63,7 @@ class SystemException extends \Exception implements PrintableException {
 	}
 	
 	/**
-	 * @see PrintableException::show()
+	 * @see wcf\system\exception\IPrintableException::show()
 	 */
 	public function show() {
 		// send status code

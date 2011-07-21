@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateEngine;
-use wcf\system\template\TemplatePluginModifier;
+use wcf\system\template\ITemplatePluginModifier;
 use wcf\util\FileUtil;
 
 /**
@@ -18,9 +18,9 @@ use wcf\util\FileUtil;
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginModifierFilesizeBinary implements TemplatePluginModifier {
+class TemplatePluginModifierFilesizeBinary implements ITemplatePluginModifier {
 	/**
-	 * @see TemplatePluginModifier::execute()
+	 * @see wcf\system\template\ITemplatePluginModifier::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		return FileUtil::formatFilesizeBinary($tagArgs[0]);

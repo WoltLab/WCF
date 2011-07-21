@@ -14,7 +14,7 @@ namespace wcf\system\option\group;
  */
 class GroupOptionTypeInfiniteInteger extends GroupOptionTypeInteger {
 	/**
-	 * @see GroupOptionType::merge()
+	 * @see wcf\system\option\group\IGroupOptionType::merge()
 	 */
 	public function merge(array $values) {
 		if (in_array(-1, $values)) return -1;

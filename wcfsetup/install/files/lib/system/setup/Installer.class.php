@@ -158,7 +158,7 @@ class Installer {
 	 * @param	array		$files		list of files
 	 */
 	protected function checkFiles(&$files) {
-		if ($this->fileHandler != null && $this->fileHandler instanceof FileHandler) {
+		if ($this->fileHandler != null && $this->fileHandler instanceof IFileHandler) {
 			$this->fileHandler->checkFiles($files);
 		}
 	}
@@ -169,7 +169,7 @@ class Installer {
 	 * @param	array		$files		list of files
 	 */
 	protected function logFiles(&$files) {
-		if ($this->fileHandler != null && $this->fileHandler instanceof FileHandler) {
+		if ($this->fileHandler != null && $this->fileHandler instanceof IFileHandler) {
 			$this->fileHandler->logFiles($files);
 		}
 	}

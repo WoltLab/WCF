@@ -73,21 +73,21 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	}
 	
 	/**
-	 * @see StorableObject::getDatabaseTableName()
+	 * @see wcf\data\IStorableObject::getDatabaseTableName()
 	 */
 	public static function getDatabaseTableName() {
 		return call_user_func(array(static::$baseClass, 'getDatabaseTableName'));
 	}
 	
 	/**
-	 * @see	StorableObject::getDatabaseTableIndexIsIdentity()
+	 * @see	wcf\data\IStorableObject::getDatabaseTableIndexIsIdentity()
 	 */
 	public static function getDatabaseTableIndexIsIdentity() {
 		return call_user_func(array(static::$baseClass, 'getDatabaseTableIndexIsIdentity'));
 	}
 	
 	/**
-	 * @see StorableObject::getDatabaseTableIndexName()
+	 * @see wcf\data\IStorableObject::getDatabaseTableIndexName()
 	 */
 	public static function getDatabaseTableIndexName() {
 		return call_user_func(array(static::$baseClass, 'getDatabaseTableIndexName'));

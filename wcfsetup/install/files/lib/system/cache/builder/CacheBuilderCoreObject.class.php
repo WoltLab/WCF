@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\system\cache\CacheBuilder;
+use wcf\system\cache\ICacheBuilder;
 use wcf\data\core\object\CoreObjectList;
 use wcf\system\package\PackageDependencyHandler;
 
@@ -14,9 +14,9 @@ use wcf\system\package\PackageDependencyHandler;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderCoreObject implements CacheBuilder {
+class CacheBuilderCoreObject implements ICacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		list($cache, $packageID) = explode('-', $cacheResource['cache']);

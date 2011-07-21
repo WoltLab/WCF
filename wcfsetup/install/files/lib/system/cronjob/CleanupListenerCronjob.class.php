@@ -12,9 +12,9 @@ use wcf\system\cleanup\CleanupHandler;
  * @subpackage	system.cronjob
  * @category 	Community Framework
  */
-class CleanupListenerCronjob implements Cronjob {
+class CleanupListenerCronjob implements ICronjob {
 	/**
-	 * @see Cronjob::execute()
+	 * @see wcf\system\ICronjob::execute()
 	 */
 	public function execute(array $data) {
 		CleanupHandler::getInstance()->execute();

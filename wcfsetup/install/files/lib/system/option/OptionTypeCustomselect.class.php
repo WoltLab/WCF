@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class OptionTypeCustomselect extends OptionTypeSelect {
 	/**
-	 * @see OptionType::getFormElement()
+	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		WCF::getTPL()->assign(array(
@@ -30,12 +30,12 @@ class OptionTypeCustomselect extends OptionTypeSelect {
 	}
 	
 	/**
-	 * @see OptionType::validate()
+	 * @see wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {}
 	
 	/**
-	 * @see OptionType::getData()
+	 * @see wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		if (empty($newValue) && isset($_POST['values'][$option->optionName.'_custom'])) {

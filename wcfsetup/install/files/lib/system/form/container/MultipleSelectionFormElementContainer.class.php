@@ -38,7 +38,7 @@ class MultipleSelectionFormElementContainer extends SelectionFormElementContaine
 	}
 	
 	/**
-	 * @see	FormElementContainer::getHTML()
+	 * @see	wcf\system\form\IFormElementContainer::getHTML()
 	 */
 	public function getHTML($formName) {
 		$content = '';

@@ -2,7 +2,7 @@
 namespace wcf\system\menu\page;
 use wcf\data\page\menu\item\PageMenuItem;
 use wcf\system\menu\TreeMenu;
-use wcf\system\menu\TreeMenuItem;
+use wcf\system\menu\ITreeMenuItem;
 use wcf\system\cache\CacheHandler;
 
 /**
@@ -17,7 +17,7 @@ use wcf\system\cache\CacheHandler;
  */
 class PageMenu extends TreeMenu {
 	/**
-	 * @see TreeMenu::loadCache()
+	 * @see wcf\system\menu\TreeMenu::loadCache()
 	 */
 	protected function loadCache() {
 		parent::loadCache();
@@ -28,11 +28,11 @@ class PageMenu extends TreeMenu {
 	}
 	
 	/**
-	 * @see TreeMenu::checkMenuItem()
+	 * @see wcf\system\menu\TreeMenu::checkMenuItem()
 	 */
-	protected function checkMenuItem(TreeMenuItem $item) {
+	protected function checkMenuItem(ITreeMenuItem $item) {
 		if (!parent::checkMenuItem($item)) return false;
 		
-		return $item->getProvider()->isVisible();
+		return $item->getProcessor()->isVisible();
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\user\group\UserGroupList;
-use wcf\system\cache\CacheBuilder;
+use wcf\system\cache\ICacheBuilder;
 
 /**
  * Caches all user groups.
@@ -13,9 +13,9 @@ use wcf\system\cache\CacheBuilder;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderUserGroup implements CacheBuilder {
+class CacheBuilderUserGroup implements ICacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		$data = array('types' => array(), 'groups' => array());

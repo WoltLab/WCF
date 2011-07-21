@@ -33,7 +33,7 @@ $neededFilesPattern = array(
  * @package	com.woltlab.wcf.system.exception
  * @author	Marcel Werk
  */
-interface PrintableException {
+interface IPrintableException {
 	public function show();
 }
 
@@ -46,7 +46,7 @@ interface PrintableException {
  * @package	com.woltlab.wcf.system.exception
  * @author	Marcel Werk
  */
-class SystemException extends \Exception implements PrintableException {
+class SystemException extends \Exception implements IPrintableException {
 	protected $description;
 	protected $information = '';
 	protected $functions = '';
@@ -179,7 +179,7 @@ function escapeString($string) {
  * @param	Exception	$e
  */
 function handleException(\Exception $e) {
-	if ($e instanceof PrintableException || $e instanceof \wcf\system\exception\PrintableException) {
+	if ($e instanceof IPrintableException || $e instanceof \wcf\system\exception\IPrintableException) {
 		$e->show();
 		exit;
 	}

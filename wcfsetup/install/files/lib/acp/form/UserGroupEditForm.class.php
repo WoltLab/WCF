@@ -43,7 +43,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	public $group = null;
 	
 	/**
-	 * @see wcf\page\Page::readParameters()
+	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -62,7 +62,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::readData()
+	 * @see wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		if (!count($_POST)) {
@@ -91,7 +91,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -108,7 +108,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::save()
+	 * @see wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();

@@ -44,7 +44,7 @@ class AJAXProxyAction extends AbstractSecureAction {
 	
 	/**
 	 * object action
-	 * @var DatabaseObjectAction
+	 * @var wcf\data\IDatabaseObjectAction
 	 */
 	protected $objectAction = null;
 	
@@ -101,8 +101,8 @@ class AJAXProxyAction extends AbstractSecureAction {
 		if (!class_exists($this->className)) {
 			throw new AJAXException("unknown class '".$this->className."'");
 		}
-		if (!ClassUtil::isInstanceOf($this->className, 'wcf\data\DatabaseObjectAction')) {
-			throw new AJAXException("'".$this->className."' should implement DatabaseObjectAction");
+		if (!ClassUtil::isInstanceOf($this->className, 'wcf\data\IDatabaseObjectAction')) {
+			throw new AJAXException("'".$this->className."' should implement wcf\system\IDatabaseObjectAction");
 		}
 		
 		// create object action instance

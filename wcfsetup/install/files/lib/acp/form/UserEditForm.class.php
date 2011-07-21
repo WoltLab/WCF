@@ -44,7 +44,7 @@ class UserEditForm extends UserAddForm {
 	public $user = null;
 	
 	/**
-	 * @see wcf\page\Page::readParameters()
+	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -64,7 +64,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::readFormParameters()
+	 * @see wcf\page\IPage::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -74,7 +74,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::readData()
+	 * @see wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		if (!count($_POST)) {
@@ -113,7 +113,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -128,7 +128,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::save()
+	 * @see wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();

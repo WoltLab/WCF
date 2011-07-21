@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @subpackage	data
  * @category 	Community Framework
  */
-abstract class DatabaseObject implements StorableObject {
+abstract class DatabaseObject implements IStorableObject {
 	/**
 	 * database table for this object
 	 * @var string
@@ -91,7 +91,7 @@ abstract class DatabaseObject implements StorableObject {
 	}
 
 	/**
-	 * @see StorableObject::__get()
+	 * @see wcf\data\IStorableObject::__get()
 	 */
 	public function __get($name) {
 		if (isset($this->data[$name])) {
@@ -103,35 +103,35 @@ abstract class DatabaseObject implements StorableObject {
 	}
 	
 	/**
-	 * @see StorableObject::__isset()
+	 * @see wcf\data\IStorableObject::__isset()
 	 */
 	public function __isset($name) {
 		return isset($this->data[$name]);
 	}
 	
 	/**
-	 * @see StorableObject::getDatabaseTableName()
+	 * @see wcf\data\IStorableObject::getDatabaseTableName()
 	 */
 	public static function getDatabaseTableName() {
 		return 'wcf'.WCF_N.'_'.static::$databaseTableName;
 	}
 	
 	/**
-	 * @see	StorableObject::getDatabaseTableAlias()
+	 * @see	wcf\data\IStorableObject::getDatabaseTableAlias()
 	 */
 	public static function getDatabaseTableAlias() {
 		return static::$databaseTableName;
 	}
 	
 	/**
-	 * @see	StorableObject::getDatabaseTableIndexIsIdentity()
+	 * @see	wcf\data\IStorableObject::getDatabaseTableIndexIsIdentity()
 	 */	
 	public static function getDatabaseTableIndexIsIdentity() {
 		return static::$databaseTableIndexIsIdentity;
 	}
 	
 	/**
-	 * @see StorableObject::getDatabaseTableIndexName()
+	 * @see wcf\data\IStorableObject::getDatabaseTableIndexName()
 	 */
 	public static function getDatabaseTableIndexName() {
 		return static::$databaseTableIndexName;

@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\spider\SpiderList;
-use wcf\system\cache\CacheBuilder;
+use wcf\system\cache\ICacheBuilder;
 
 /**
  * Caches the list of search engine spiders.
@@ -13,9 +13,9 @@ use wcf\system\cache\CacheBuilder;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderSpider implements CacheBuilder {
+class CacheBuilderSpider implements ICacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		$spiderList = new SpiderList();

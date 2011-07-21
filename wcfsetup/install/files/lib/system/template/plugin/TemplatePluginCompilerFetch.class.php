@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\TemplatePluginCompiler;
+use wcf\system\template\ITemplatePluginCompiler;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\exception\SystemException;
 
@@ -12,15 +12,15 @@ use wcf\system\exception\SystemException;
  * {fetch file='x.html' assign=var}
  * 
  * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginCompilerFetch implements TemplatePluginCompiler {
+class TemplatePluginCompilerFetch implements ITemplatePluginCompiler {
 	/**
-	 * @see TemplatePluginCompiler::executeStart()
+	 * @see wcf\system\template\ITemplatePluginCompiler::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		if (!isset($tagArgs['file'])) {
@@ -36,7 +36,7 @@ class TemplatePluginCompilerFetch implements TemplatePluginCompiler {
 	}
 	
 	/**
-	 * @see TemplatePluginCompiler::executeEnd()
+	 * @see wcf\system\template\ITemplatePluginCompiler::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		throw new SystemException($compiler->formatSyntaxError("unknown tag {/fetch}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()), 12003);

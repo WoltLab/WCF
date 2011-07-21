@@ -15,7 +15,7 @@ use wcf\system\option\OptionTypeText;
  */
 class OptionTypeInteger extends OptionTypeText {
 	/**
-	 * @see OptionType::getData()
+	 * @see wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		return intval($newValue);

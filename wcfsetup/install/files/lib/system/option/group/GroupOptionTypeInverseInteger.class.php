@@ -13,9 +13,9 @@ use wcf\system\option\OptionTypeInteger;
  * @subpackage	system.option.group
  * @category 	Community Framework
  */
-class GroupOptionTypeInverseInteger extends OptionTypeInteger implements GroupOptionType {
+class GroupOptionTypeInverseInteger extends OptionTypeInteger implements IGroupOptionType {
 	/**
-	 * @see GroupOptionType::merge()
+	 * @see wcf\system\option\group\IGroupOptionType::merge()
 	 */
 	public function merge(array $values) {
 		return min($values);

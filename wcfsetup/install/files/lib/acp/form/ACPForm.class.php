@@ -22,7 +22,7 @@ class ACPForm extends AbstractForm {
 	public $activeMenuItem = '';
 	
 	/**
-	 * @see wcf\page\Page::show()
+	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
 		// enable menu item

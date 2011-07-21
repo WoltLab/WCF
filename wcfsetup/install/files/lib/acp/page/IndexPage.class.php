@@ -21,7 +21,7 @@ class IndexPage extends AbstractPage {
 	public $templateName = 'index';
 	
 	/**
-	 * @see wcf\page\Page::show()
+	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
 		$wcfPackageID = WCFACP::getWcfPackageID();

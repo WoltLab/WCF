@@ -31,7 +31,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	public $tagName = 'style';
 	
 	/** 
-	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();
@@ -52,7 +52,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	}
 	
 	/** 
-	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::uninstall()
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// call uninstall event

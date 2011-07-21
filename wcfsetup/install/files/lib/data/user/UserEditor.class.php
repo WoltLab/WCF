@@ -22,7 +22,7 @@ class UserEditor extends DatabaseObjectEditor {
 	protected static $baseClass = 'wcf\data\user\User';
 	
 	/**
-	 * @see	EditableObject::create()
+	 * @see	wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		// create salt and password hash

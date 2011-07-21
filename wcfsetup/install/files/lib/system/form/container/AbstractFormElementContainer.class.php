@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\form\container;
-use wcf\system\form\FormElement;
-use wcf\system\form\FormElementContainer;
+use wcf\system\form\IFormElement;
+use wcf\system\form\IFormElementContainer;
 use wcf\system\form\element\AbstractNamedFormElement;
 use wcf\util\StringUtil;
 
@@ -15,11 +15,11 @@ use wcf\util\StringUtil;
  * @subpackage	system.form
  * @category 	Community Framework
  */
-abstract class AbstractFormElementContainer implements FormElementContainer {
+abstract class AbstractFormElementContainer implements IFormElementContainer {
 	/**
 	 * list of FormElement objects
 	 *
-	 * @var	array<FormElement>
+	 * @var	array<wcf\system\form\IFormElement>
 	 */
 	protected $children = array();
 	
@@ -38,56 +38,56 @@ abstract class AbstractFormElementContainer implements FormElementContainer {
 	protected $label = '';
 	
 	/**
-	 * @see	FormElementContainer::setDescription()
+	 * @see	wcf\system\form\IFormElementContainer::setDescription()
 	 */
 	public function setDescription($description) {
 		$this->description = StringUtil::trim($description);
 	}
 	
 	/**
-	 * @see	FormElementContainer::getDescription()
+	 * @see	wcf\system\form\IFormElementContainer::getDescription()
 	 */
 	public function getDescription() {
 		return $this->description;
 	}
 	
 	/**
-	 * @see	FormElementContainer::setLabel()
+	 * @see	wcf\system\form\IFormElementContainer::setLabel()
 	 */
 	public function setLabel($label) {
 		$this->label = StringUtil::trim($label);
 	}
 	
 	/**
-	 * @see	FormElementContainer::getLabel()
+	 * @see	wcf\system\form\IFormElementContainer::getLabel()
 	 */
 	public function getLabel() {
 		return $this->label;
 	}
 	
 	/**
-	 * @see	FormElementContainer::appendChild()
+	 * @see	wcf\system\form\IFormElementContainer::appendChild()
 	 */
-	public function appendChild(FormElement $element) {
+	public function appendChild(IFormElement $element) {
 		$this->children[] = $element;
 	}
 	
 	/**
-	 * @see	FormElementContainer::prependChild()
+	 * @see	wcf\system\form\IFormElementContainer::prependChild()
 	 */
-	public function prependChild(FormElement $element) {
+	public function prependChild(IFormElement $element) {
 		array_unshift($this->children, $element);
 	}
 	
 	/**
-	 * @see	FormElementContainer::getChildren()
+	 * @see	wcf\system\form\IFormElementContainer::getChildren()
 	 */
 	public function getChildren() {
 		return $this->children;
 	}
 	
 	/**
-	 * @see	FormElementContainer::getValue()
+	 * @see	wcf\system\form\IFormElementContainer::getValue()
 	 */
 	public function getValue($key) {
 		foreach ($this->children as $element) {
@@ -102,7 +102,7 @@ abstract class AbstractFormElementContainer implements FormElementContainer {
 	}
 	
 	/**
-	 * @see	FormElementContainer::handleRequest()
+	 * @see	wcf\system\form\IFormElementContainer::handleRequest()
 	 */
 	public function handleRequest(array $variables) {
 		foreach ($this->children as $element) {

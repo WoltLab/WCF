@@ -13,7 +13,7 @@ namespace wcf\page\util;
  */
 class InlineCalendar {
 	/**
-	 * @see Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public static function assignVariables() {
 		// create calendar data

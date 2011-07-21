@@ -12,9 +12,9 @@ use wcf\system\WCF;
  * @subpackage	system.cronjob
  * @category 	Community Framework
  */
-class CleanUpSessionLogCronjob implements Cronjob {
+class CleanUpSessionLogCronjob implements ICronjob {
 	/**
-	 * @see Cronjob::execute()
+	 * @see wcf\system\ICronjob::execute()
 	 */
 	public function execute(array $data) {
 		// delete access log

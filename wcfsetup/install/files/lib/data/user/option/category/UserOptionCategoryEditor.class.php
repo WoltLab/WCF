@@ -19,7 +19,7 @@ class UserOptionCategoryEditor extends DatabaseObjectEditor {
 	protected static $baseClass = 'wcf\data\user\option\category\UserOptionCategory';
 	
 	/**
-	 * @see	EditableObject::create()
+	 * @see	wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		// obtain default values

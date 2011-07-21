@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class OptionTypeFloat extends OptionTypeText {
 	/**
-	 * @see OptionType::getFormElement()
+	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		$value = str_replace('.', WCF::getLanguage()->get('wcf.global.decimalPoint'), $value);
@@ -25,7 +25,7 @@ class OptionTypeFloat extends OptionTypeText {
 	}
 	
 	/**
-	 * @see OptionType::getData()
+	 * @see wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		$newValue = str_replace(' ', '', $newValue);

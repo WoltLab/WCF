@@ -2,7 +2,7 @@
 namespace wcf\system\cache\builder;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
-use wcf\system\cache\CacheBuilder;
+use wcf\system\cache\ICacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
@@ -16,9 +16,9 @@ use wcf\system\WCF;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderOption implements CacheBuilder {
+class CacheBuilderOption implements ICacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		$information = explode('-', $cacheResource['cache']);

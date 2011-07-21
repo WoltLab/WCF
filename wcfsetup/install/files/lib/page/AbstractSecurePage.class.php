@@ -14,7 +14,7 @@ namespace wcf\page;
  */
 abstract class AbstractSecurePage extends AbstractPage {
 	/**
-	 * @see Page::readParameters()
+	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();

@@ -70,10 +70,10 @@ abstract class TreeMenu extends SingletonFactory {
 	/**
 	 * Checks the options and permissions of given menu item.
 	 * 
-	 * @param	mixed		$item
+	 * @param	wcf\system\menu\ITreeMenuItem		$item
 	 * @return	boolean
 	 */
-	protected function checkMenuItem(TreeMenuItem $item) {
+	protected function checkMenuItem(ITreeMenuItem $item) {
 		// check the options of this item
 		$hasEnabledOption = true;
 		if (!empty($item->options)) {

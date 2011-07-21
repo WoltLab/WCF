@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\option;
 use wcf\data\DatabaseObjectEditor;
-use wcf\data\EditableCachedObject;
+use wcf\data\IEditableCachedObject;
 use wcf\system\cache\CacheHandler;
 use wcf\system\io\File;
 use wcf\system\WCF;
@@ -17,7 +17,7 @@ use wcf\util\FileUtil;
  * @subpackage	data.option
  * @category 	Community Framework
  */
-class OptionEditor extends DatabaseObjectEditor implements EditableCachedObject {
+class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * options cache file name
 	 * @var string
@@ -25,7 +25,7 @@ class OptionEditor extends DatabaseObjectEditor implements EditableCachedObject 
 	const FILENAME = 'options.inc.php';
 	
 	/**
-	 * @see	DatabaseObjectDecorator::$baseClass
+	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\option\Option';
 	
@@ -79,7 +79,7 @@ class OptionEditor extends DatabaseObjectEditor implements EditableCachedObject 
 	}
 	
 	/**
-	 * @see EditableCachedObject::resetCache()
+	 * @see wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		// reset cache

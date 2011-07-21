@@ -1,11 +1,9 @@
 <?php
 namespace wcf\data\page\menu\item;
-use wcf\data\DatabaseObject;
-use wcf\system\exception\SystemException;
+use wcf\data\ProcessibleDatabaseObject;
 use wcf\system\menu\page\DefaultPageMenuItemProvider;
-use wcf\system\menu\TreeMenuItem;
+use wcf\system\menu\ITreeMenuItem;
 use wcf\system\request\LinkHandler;
-use wcf\util\ClassUtil;
 
 /**
  * Represents an page menu item.
@@ -17,7 +15,7 @@ use wcf\util\ClassUtil;
  * @subpackage	data.page.menu.item
  * @category 	Community Framework
  */
-class PageMenuItem extends DatabaseObject implements TreeMenuItem {
+class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	/**
 	 * @see	DatabaseObject::$databaseTableName
 	 */
@@ -29,38 +27,23 @@ class PageMenuItem extends DatabaseObject implements TreeMenuItem {
 	protected static $databaseTableIndexName = 'menuItemID';
 	
 	/**
-	 * item provider for this page menu item
-	 * @var wcf\system\menu\page\PageMenuItemProvider
+	 * @see	wcf\data\ProcessibleDatabaseObject::$processorInterface
 	 */
-	protected $provider = null;
+	protected static $processorInterface = 'wcf\system\menu\page\IPageMenuItemProvider';
 	
 	/**
-	 * Returns the item provider for this page menu item.
-	 * 
-	 * @return wcf\system\menu\page\PageMenuItemProvider
+	 * @see wcf\data\ProcessibleDatabaseObject::getProcessor()
 	 */
-	public function getProvider() {
-		if ($this->provider === null) {
-			if ($this->className) {
-				if (!class_exists($this->className)) {
-					throw new SystemException("Unable to find class '".$this->className."'");
-				}
-				if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\menu\page\PageMenuItemProvider')) {
-					throw new SystemException($this->className." should implement wcf\system\menu\page\PageMenuItemProvider");
-				}
-				
-				$this->provider = new $this->className();
-			}
-			else {
-				$this->provider = new DefaultPageMenuItemProvider();
-			}
+	public function getProcessor() {
+		if (parent::getProcessor() === null) {
+			$this->processor = new DefaultPageMenuItemProvider($this);
 		}
 		
-		return $this->provider;
+		return $this->processor;
 	}
 	
 	/**
-	 * @see TreeMenuItem::getLink()
+	 * @see wcf\system\menu\ITreeMenuItem::getLink()
 	 */
 	public function getLink() {
 		return LinkHandler::getInstance()->getLink($this->menuItemLink);

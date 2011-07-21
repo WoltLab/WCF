@@ -1,0 +1,44 @@
+<?php
+namespace wcf\page;
+
+/**
+ * All page classes should implement this interface. 
+ * 
+ * @author	Marcel Werk
+ * @copyright	2001-2009 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	page
+ * @category 	Community Framework
+ */
+interface IPage {
+	/**
+	 * Reads the given parameters.
+	 */
+	public function readParameters();
+	
+	/**
+	 * Checks the modules of this page.
+	 */
+	public function checkModules();
+	
+	/**
+	 * Checks the permissions of this page.
+	 */
+	public function checkPermissions();
+	
+	/**
+	 * Reads/Gets the data to be displayed on this page.
+	 */
+	public function readData();
+	
+	/**
+	 * Assigns variables to the template engine.
+	 */
+	public function assignVariables();
+	
+	/**
+	 * Shows the requested page.
+	 */
+	public function show();
+}

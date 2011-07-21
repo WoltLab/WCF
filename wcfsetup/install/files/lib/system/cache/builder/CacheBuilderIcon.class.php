@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\package\Package;
-use wcf\system\cache\CacheBuilder;
+use wcf\system\cache\ICacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
@@ -17,9 +17,9 @@ use wcf\util\FileUtil;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderIcon implements CacheBuilder {
+class CacheBuilderIcon implements ICacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		list($cache, $packageID, $styleID) = explode('-', $cacheResource['cache']); 

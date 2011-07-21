@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\TemplatePluginCompiler;
+use wcf\system\template\ITemplatePluginCompiler;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\exception\SystemException;
 
@@ -17,9 +17,9 @@ use wcf\system\exception\SystemException;
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginCompilerAppend implements TemplatePluginCompiler {
+class TemplatePluginCompilerAppend implements ITemplatePluginCompiler {
 	/**
-	 * @see TemplatePluginCompiler::executeStart()
+	 * @see wcf\system\template\ITemplatePluginCompiler::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		if (!isset($tagArgs['var'])) {
@@ -33,7 +33,7 @@ class TemplatePluginCompilerAppend implements TemplatePluginCompiler {
 	}
 	
 	/**
-	 * @see TemplatePluginCompiler::executeEnd()
+	 * @see wcf\system\template\ITemplatePluginCompiler::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		throw new SystemException($compiler->formatSyntaxError("unknown tag {/append}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()), 12003);

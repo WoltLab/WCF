@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\package;
-use wcf\system\setup\FileHandler;
+use wcf\system\setup\IFileHandler;
 
 /**
  * PackageInstallationFileHandler is the abstract FileHandler implementation for all file installations during the package installation.
@@ -12,7 +12,7 @@ use wcf\system\setup\FileHandler;
  * @subpackage	system.package
  * @category 	Community Framework
  */
-abstract class PackageInstallationFileHandler implements FileHandler {
+abstract class PackageInstallationFileHandler implements IFileHandler {
 	protected $packageInstallation;
 	
 	/**

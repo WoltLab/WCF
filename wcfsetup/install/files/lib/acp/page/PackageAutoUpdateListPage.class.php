@@ -23,7 +23,7 @@ class PackageAutoUpdateListPage extends AbstractPage {
 	public $availableUpdates = array();
 	
 	/**
-	 * @see	wcf\page\Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -38,7 +38,7 @@ class PackageAutoUpdateListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -49,7 +49,7 @@ class PackageAutoUpdateListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see wcf\page\Page::show()
+	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
 		// set active menu item

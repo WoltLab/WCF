@@ -73,7 +73,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public $additionalFields = array();
 	
 	/**
-	 * @see wcf\form\Form::readFormParameters()
+	 * @see wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -84,7 +84,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::validate()
+	 * @see wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		// validate dynamic options
@@ -106,7 +106,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::save()
+	 * @see wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -139,7 +139,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::readData()
+	 * @see wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		AbstractOptionListForm::readData();
@@ -175,7 +175,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -190,7 +190,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 
 	/**
-	 * @see Form::show()
+	 * @see wcf\form\IForm::show()
 	 */
 	public function show() {
 		// set active menu item
@@ -217,8 +217,8 @@ class UserGroupAddForm extends AbstractOptionListForm {
 			if (!class_exists($className)) {
 				throw new SystemException("unable to find class '".$className."'", 11001);
 			}
-			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\group\GroupOptionType')) {
-				throw new SystemException("'".$className."' should implement GroupOptionType", 11001);
+			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\group\IGroupOptionType')) {
+				throw new SystemException("'".$className."' should implement wcf\system\option\group\IGroupOptionType", 11001);
 			}
 			$this->typeObjects[$type] = new $className();
 		}

@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\user\group;
 use wcf\data\DatabaseObjectEditor;
-use wcf\data\EditableCachedObject;
+use wcf\data\IEditableCachedObject;
 use wcf\data\acp\session\ACPSession;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -18,14 +18,14 @@ use wcf\system\WCF;
  * @subpackage	data.user.group
  * @category 	Community Framework
  */
-class UserGroupEditor extends DatabaseObjectEditor implements EditableCachedObject {
+class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * @see	DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\group\UserGroup';
 	
 	/**
-	 * @see	EditableObject::create()
+	 * @see	wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		$group = parent::create($parameters);
@@ -201,7 +201,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements EditableCachedObje
 	}
 	
 	/**
-	 * @see EditableCachedObject::resetCache()
+	 * @see wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		// clear cache

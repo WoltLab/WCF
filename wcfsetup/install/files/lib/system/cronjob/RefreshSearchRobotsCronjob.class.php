@@ -18,9 +18,9 @@ use wcf\util\XML;
  * @subpackage	system.cronjob
  * @category 	Community Framework
  */
-class RefreshSearchRobotsCronjob implements Cronjob {
+class RefreshSearchRobotsCronjob implements ICronjob {
 	/**
-	 * @see Cronjob::execute()
+	 * @see wcf\system\ICronjob::execute()
 	 */
 	public function execute(array $data) {
 		$filename = FileUtil::downloadFileFromHttp('http://www.woltlab.com/spiderlist/spiderlist.xml', 'spiders');

@@ -27,7 +27,7 @@ class FilesPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	public $tableName = 'package_installation_file_log';
 	
 	/**
-	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();

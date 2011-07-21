@@ -13,9 +13,9 @@ use wcf\system\option\OptionTypeBoolean;
  * @subpackage	system.option.group
  * @category 	Community Framework
  */
-class GroupOptionTypeBoolean extends OptionTypeBoolean implements GroupOptionType {
+class GroupOptionTypeBoolean extends OptionTypeBoolean implements IGroupOptionType {
 	/**
-	 * @see GroupOptionType::merge()
+	 * @see wcf\system\option\group\IGroupOptionType::merge()
 	 */
 	public function merge(array $values) {
 		foreach ($values as $value) {

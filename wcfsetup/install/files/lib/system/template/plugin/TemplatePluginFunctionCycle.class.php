@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
-use wcf\system\template\TemplatePluginFunction;
+use wcf\system\template\ITemplatePluginFunction;
 use wcf\system\template\TemplateEngine;
 
 /**
@@ -11,17 +11,17 @@ use wcf\system\template\TemplateEngine;
  * {cycle values="#eee,#fff"}
  *
  * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginFunctionCycle implements TemplatePluginFunction {
+class TemplatePluginFunctionCycle implements ITemplatePluginFunction {
 	protected $cycles = array();
 	
 	/**
-	 * @see TemplatePluginFunction::execute()
+	 * @see wcf\system\template\ITemplatePluginFunction::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// get params

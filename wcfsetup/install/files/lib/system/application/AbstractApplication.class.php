@@ -13,9 +13,9 @@ use wcf\system\WCF;
  * @subpackage	system
  * @category 	Community Framework
  */
-abstract class AbstractApplication implements Application {
+abstract class AbstractApplication implements IApplication {
 	/**
-	 * @see	Application::__callStatic()
+	 * @see	wcf\system\application\IApplication::__callStatic()
 	 */
 	public static function __callStatic($method, array $arguments) {
 		return call_user_func_array(array('wcf\system\WCF', $method), $arguments);

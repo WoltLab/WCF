@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @subpackage	system.package.plugin
  * @category 	Community Framework
  */
-abstract class AbstractPackageInstallationPlugin implements PackageInstallationPlugin {
+abstract class AbstractPackageInstallationPlugin implements IPackageInstallationPlugin {
 	/**
 	 * database table name
 	 * @var	string
@@ -48,7 +48,7 @@ abstract class AbstractPackageInstallationPlugin implements PackageInstallationP
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::install()
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
 		// call install event
@@ -56,7 +56,7 @@ abstract class AbstractPackageInstallationPlugin implements PackageInstallationP
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::update()
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::update()
 	 */
 	public function update() {
        		// call update event
@@ -66,7 +66,7 @@ abstract class AbstractPackageInstallationPlugin implements PackageInstallationP
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::hasUninstall()
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::hasUninstall()
 	 */
 	public function hasUninstall() {
 		// call hasUninstall event
@@ -82,7 +82,7 @@ abstract class AbstractPackageInstallationPlugin implements PackageInstallationP
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::uninstall()
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// call uninstall event

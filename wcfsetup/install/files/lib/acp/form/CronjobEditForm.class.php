@@ -41,7 +41,7 @@ class CronjobEditForm extends CronjobAddForm {
 	public $cronjob = null;
 	
 	/**
-	 * @see wcf\page\Page::readParameters()
+	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -56,7 +56,7 @@ class CronjobEditForm extends CronjobAddForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::save()
+	 * @see wcf\form\IForm::save()
 	 */
 	public function save() {
 		ACPForm::save();
@@ -84,7 +84,7 @@ class CronjobEditForm extends CronjobAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::readData()
+	 * @see wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -101,7 +101,7 @@ class CronjobEditForm extends CronjobAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

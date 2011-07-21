@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * @subpackage	data
  * @category 	Community Framework
  */
-abstract class AbstractDatabaseObjectAction implements DatabaseObjectAction {
+abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	/**
 	 * pending action
 	 *
@@ -98,7 +98,7 @@ abstract class AbstractDatabaseObjectAction implements DatabaseObjectAction {
 	}
 	
 	/**
-	 * @see DatabaseObjectAction::validateAction()
+	 * @see wcf\data\IDatabaseObjectAction::validateAction()
 	 */
 	public function validateAction() {
 		// validate action name
@@ -116,7 +116,7 @@ abstract class AbstractDatabaseObjectAction implements DatabaseObjectAction {
 	}
 	
 	/**
-	 * @see DatabaseObjectAction::executeAction()
+	 * @see wcf\data\IDatabaseObjectAction::executeAction()
 	 */
 	public function executeAction() {
 		// execute action
@@ -125,7 +125,7 @@ abstract class AbstractDatabaseObjectAction implements DatabaseObjectAction {
 		}
 		
 		// reset cache
-		if (ClassUtil::isInstanceOf($this->className, 'wcf\data\EditableCachedObject')) {
+		if (ClassUtil::isInstanceOf($this->className, 'wcf\data\IEditableCachedObject')) {
 			call_user_func(array($this->className, 'resetCache'));
 		}
 		
@@ -136,28 +136,28 @@ abstract class AbstractDatabaseObjectAction implements DatabaseObjectAction {
 	}
 	
 	/**
-	 * @see	DatabaseObjectAction::getActionName()
+	 * @see	wcf\data\IDatabaseObjectAction::getActionName()
 	 */
 	public function getActionName() {
 		return $this->action;
 	}
 	
 	/**
-	 * @see	DatabaseObjectAction::getObjectIDs()
+	 * @see	wcf\data\IDatabaseObjectAction::getObjectIDs()
 	 */
 	public function getObjectIDs() {
 		return $this->objectIDs;
 	}
 	
 	/**
-	 * @see	DatabaseObjectAction::getParameters()
+	 * @see	wcf\data\IDatabaseObjectAction::getParameters()
 	 */
 	public function getParameters() {
 		return $this->parameters;
 	}
 	
 	/**
-	 * @see	DatabaseObjectAction::getReturnValues()
+	 * @see	wcf\data\IDatabaseObjectAction::getReturnValues()
 	 */
 	public function getReturnValues() {
 		return array(

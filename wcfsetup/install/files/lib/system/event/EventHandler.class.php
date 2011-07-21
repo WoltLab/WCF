@@ -3,6 +3,7 @@ namespace wcf\system\event;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
+use wcf\util\ClassUtil;
 
 /**
  * EventHandler executes all registered actions for a specific event.
@@ -101,6 +102,9 @@ class EventHandler extends SingletonFactory {
 								if (!class_exists($action['listenerClassName'])) {
 									throw new SystemException("Unable to find class '".$action['listenerClassName']."'", 11001);
 								}
+								if (!ClassUtil::isInstanceOf($action['listenerClassName'], 'wcf\system\event\IEventListener')) {
+									throw new SystemException("'".$action['listenerClassName']."' should implement interface wcf\system\event\IEventListener");
+								}
 	
 								$object = new $action['listenerClassName'];
 								$this->listenerObjects[] = $object;
@@ -162,6 +166,9 @@ class EventHandler extends SingletonFactory {
 					// instance action object
 					if (!class_exists($action['listenerClassName'])) {
 						throw new SystemException("Unable to find class '".$action['listenerClassName']."'", 11001);
+					}
+					if (!ClassUtil::isInstanceOf($action['listenerClassName'], 'wcf\system\event\IEventListener')) {
+						throw new SystemException("'".$action['listenerClassName']."' should implement interface wcf\system\event\IEventListener");
 					}
 				
 					$object = new $action['listenerClassName'];

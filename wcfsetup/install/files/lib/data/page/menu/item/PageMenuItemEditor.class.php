@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\page\menu\item;
 use wcf\data\DatabaseObjectEditor;
-use wcf\data\EditableCachedObject;
+use wcf\data\IEditableCachedObject;
 use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
 
@@ -15,16 +15,16 @@ use wcf\system\WCF;
  * @subpackage	data.page.menu.item
  * @category 	Community Framework
  */
-class PageMenuItemEditor extends DatabaseObjectEditor implements EditableCachedObject {
+class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	DatabaseObjectDecorator::$baseClass
+	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\page\menu\item\PageMenuItem';
 	
 	/**
-	 * @see	EditableObject::create()
+	 * @see	wcf\data\IEditableObject::create()
 	 * 
-	 * @todo	Handle language id and create related language item
+	 * @todo Handle language id and create related language item
 	 */
 	public static function create(array $parameters = array()) {
 		// calculate show order
@@ -34,9 +34,9 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements EditableCachedO
 	}
 	
 	/**
-	 * @see	EditableObject::update()
+	 * @see	wcf\data\IEditableObject::update()
 	 * 
-	 * @todo	Handle language id and update related language item
+	 * @todo Handle language id and update related language item
 	 */
 	public function update(array $parameters = array()) {
 		if (isset($parameters['menuPosition']) && isset($parameters['showOrder'])) {
@@ -47,7 +47,7 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements EditableCachedO
 	}
 	
 	/**
-	 * @see	EditableObject::delete()
+	 * @see	wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
 		// update show order
@@ -180,7 +180,7 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements EditableCachedO
 	}
 	
 	/**
-	 * Clears the page menu cache.
+	 * @see wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.pageMenu-*.php');

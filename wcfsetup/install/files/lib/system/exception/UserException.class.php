@@ -11,9 +11,9 @@ namespace wcf\system\exception;
  * @subpackage	system.exception
  * @category 	Community Framework
  */
-abstract class UserException extends \Exception implements PrintableException {
+abstract class UserException extends \Exception implements IPrintableException {
 	/**
-	 * @see PrintableException::show()
+	 * @see wcf\system\exception\IPrintableException::show()
 	 */
 	public function show() {
 		echo '<pre>' . $this->getTraceAsString() . '</pre>';

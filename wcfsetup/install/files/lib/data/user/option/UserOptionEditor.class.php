@@ -20,7 +20,7 @@ class UserOptionEditor extends DatabaseObjectEditor {
 	protected static $baseClass = 'wcf\data\user\option\UserOption';
 	
 	/**
-	 * @see	EditableObject::create()
+	 * @see	wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		$userOption = parent::create($parameters);
@@ -40,7 +40,7 @@ class UserOptionEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
-	 * @see	EditableObject::update()
+	 * @see	wcf\data\IEditableObject::update()
 	 */
 	public function update(array $parameters = array()) {
 		parent::update($parameters);
@@ -55,7 +55,7 @@ class UserOptionEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
-	 * @see	EditableObject::delete()
+	 * @see	wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
 		$sql = "DELETE FROM	wcf".WCF_N."_user_option

@@ -1,6 +1,6 @@
 <?php
 namespace wcf\data\user\notification\event;
-use wcf\data\DatabaseObject;
+use wcf\data\ProcessibleDatabaseObject;
 
 /**
  * Represents a user notification event.
@@ -12,7 +12,7 @@ use wcf\data\DatabaseObject;
  * @subpackage	data.user.notification.event
  * @category 	Community Framework
  */
-class UserNotificationEvent extends DatabaseObject {
+class UserNotificationEvent extends ProcessibleDatabaseObject {
 	/**
 	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
@@ -22,4 +22,9 @@ class UserNotificationEvent extends DatabaseObject {
 	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'eventID';
+	
+	/**
+	 * @see	wcf\data\ProcessibleDatabaseObject::$processorInterface
+	 */
+	protected static $processorInterface = 'wcf\system\user\notification\event\IUserNotificationEvent';
 }

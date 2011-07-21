@@ -2,7 +2,7 @@
 namespace wcf\system\template\plugin;
 use wcf\data\option\Option;
 use wcf\system\template\TemplateEngine;
-use wcf\system\template\TemplatePluginModifier;
+use wcf\system\template\ITemplatePluginModifier;
 
 /**
  * The 'arrayfromlist' modifier generates an associative array out of a key-value list.
@@ -23,9 +23,9 @@ use wcf\system\template\TemplatePluginModifier;
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginModifierArrayfromlist implements TemplatePluginModifier {
+class TemplatePluginModifierArrayfromlist implements ITemplatePluginModifier {
 	/**
-	 * @see TemplatePluginModifier::execute()
+	 * @see wcf\system\template\ITemplatePluginModifier::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		return Option::parseSelectOptions($tagArgs[0]);

@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\template\listener\TemplateListenerList;
-use wcf\system\cache\CacheBuilder;
+use wcf\system\cache\ICacheBuilder;
 use wcf\system\package\PackageDependencyHandler;
 
 /**
@@ -14,9 +14,9 @@ use wcf\system\package\PackageDependencyHandler;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderTemplateListenerCode implements CacheBuilder {
+class CacheBuilderTemplateListenerCode implements ICacheBuilder {
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		list($packageID, $environment, $templateName) = explode('-', $cacheResource['cache']); 

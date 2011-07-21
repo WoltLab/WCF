@@ -43,7 +43,7 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 		foreach ($this->objects as $cronjob) {
 			if (!$cronjob->isDeletable()) {
 				throw new ValidateActionException('Insufficient permissions');
-			} 
+			}
 		}
 	}
 	

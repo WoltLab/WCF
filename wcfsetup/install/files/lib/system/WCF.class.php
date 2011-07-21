@@ -241,7 +241,7 @@ class WCF {
 	 * @param	\Exception	$e
 	 */
 	public static final function handleException(\Exception $e) {
-		if ($e instanceof exception\PrintableException) {
+		if ($e instanceof exception\IPrintableException) {
 			$e->show();
 			exit;
 		}
@@ -298,7 +298,7 @@ class WCF {
 	 */
 	protected function loadDefaultCacheResources() {
 		CacheHandler::getInstance()->addResource('languages', WCF_DIR.'cache/cache.languages.php', 'wcf\system\cache\builder\CacheBuilderLanguage');
-		CacheHandler::getInstance()->addResource('spiders', WCF_DIR.'cache/cache.spiders.php', 'wcf\system\builder\cache\CacheBuilderSpider');
+		CacheHandler::getInstance()->addResource('spiders', WCF_DIR.'cache/cache.spiders.php', 'wcf\system\cache\builder\CacheBuilderSpider');
 		if (defined('PACKAGE_ID')) {
 			CacheHandler::getInstance()->addResource('coreObjects-'.PACKAGE_ID, WCF_DIR.'cache/cache.coreObjects-'.PACKAGE_ID.'.php', 'wcf\system\cache\builder\CacheBuilderCoreObject');
 		}
@@ -423,7 +423,7 @@ class WCF {
 		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
 		
 		$className = $abbreviation.'\system\\'.strtoupper($abbreviation).'Core';
-		if (class_exists($className) && util\ClassUtil::isInstanceOf($className, 'wcf\system\application\Application')) {
+		if (class_exists($className) && util\ClassUtil::isInstanceOf($className, 'wcf\system\application\IApplication')) {
 			// include config file
 			$configPath = $packageDir . PackageInstallationDispatcher::CONFIG_FILE;
 			if (file_exists($configPath)) {

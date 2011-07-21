@@ -1,10 +1,12 @@
 <?php
 namespace wcf\system\user\notification\type;
-use wcf\data\user\notification\event\UserNotificationEvent;
+use wcf\data\user\notification\recipient\UserNotificationRecipient;
 use wcf\data\user\notification\UserNotification;
 use wcf\data\user\UserEditor;
-use wcf\data\user\User;
 use wcf\system\mail\Mail;
+use wcf\system\user\notification\event\IUserNotificationEvent;
+use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * A notification type for sending mail notifications.
@@ -16,11 +18,11 @@ use wcf\system\mail\Mail;
  * @subpackage	system.user.notification.type
  * @category 	Community Framework
  */
-class MailUserNotificationType implements UserNotificationType {        
+class MailUserNotificationType extends AbstractUserNotificationType {        
 	/**
-	 * @see wcf\system\user\notification\type\UserNotificationType::send()
+	 * @see wcf\system\user\notification\type\IUserNotificationType::send()
 	 */
-        public function send(UserNotification $notification, User $user, UserNotificationEvent $event) {
+        public function send(UserNotification $notification, UserNotificationRecipient $user, IUserNotificationEvent $event) {
                 // get message
 		$message = $event->getMessage($this, array(
 			'user' => $user,
@@ -32,10 +34,10 @@ class MailUserNotificationType implements UserNotificationType {
 		if (!$token) {
 			// generate token if not present
 			$token = StringUtil::substring($token = StringUtil::getHash(serialize(array($user->userID, StringUtil::getRandomID()))), 0, 20);
-			$editor = new UserEditor($user);
+			$editor = new UserEditor($user->getDecoratedObject());
 			$editor->updateUserOptions(array('notificationMailToken' => $token));
 		}
-                $message .= "\n".$event->getLanguage()->getDynamicVariable('wcf.user.notification.type.mail.footer', array(
+                $message .= "\n".$user->getLanguage()->getDynamicVariable('wcf.user.notification.type.mail.footer', array(
 			'user' => $user,
 			'pageURL' => FileUtil::addTrailingSlash(PAGE_URL),
 			'token' => $token,
@@ -46,14 +48,14 @@ class MailUserNotificationType implements UserNotificationType {
 		$shortMessage = StringUtil::stripHTML($notification->shortOutput);
 
 		// build mail
-		$mail = new Mail(array($user->username => $user->email), $event->getLanguageVariable('wcf.user.notification.type.mail.subject', array('title' => $shortMessage)), $message);
+		$mail = new Mail(array($user->username => $user->email), $user->getLanguage()->getDynamicVariable('wcf.user.notification.type.mail.subject', array('title' => $shortMessage)), $message);
                 $mail->send();
         }
 
 	/**
-	 * @see wcf\system\user\notification\type\UserNotificationType::revoke()
+	 * @see wcf\system\user\notification\type\IUserNotificationType::revoke()
 	 */
-        public function revoke(UserNotification $notification, User $user, UserNotificationEvent $event) {
+        public function revoke(UserNotification $notification, UserNotificationRecipient $user, IUserNotificationEvent $event) {
         	// unsupported
         	return;
         }

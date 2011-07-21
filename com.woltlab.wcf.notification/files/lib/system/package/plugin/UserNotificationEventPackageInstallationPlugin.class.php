@@ -76,7 +76,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 			$statement = WCF::getDB()->prepareStatement($sql, 1);
 			$statement->execute(array($this->installation->getPackageID(), $data['elements']['defaultnotificationtype']));
 			$row = $statement->fetchArray();
-			if (empty($row['objectTypeID'])) throw new SystemException("unknown notification type '".$data['elements']['defaultnotificationtype']."' given");
+			if (empty($row['notificationTypeID'])) throw new SystemException("unknown notification type '".$data['elements']['defaultnotificationtype']."' given");
 			$defaultNotificationTypeID = $row['notificationTypeID'];
 		}
 		

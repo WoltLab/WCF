@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\form\element;
-use wcf\system\form\FormElement;
-use wcf\system\form\FormElementContainer;
+use wcf\system\form\IFormElement;
+use wcf\system\form\IFormElementContainer;
 use wcf\util\StringUtil;
 
 /**
@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.form
  * @category 	Community Framework
  */
-abstract class AbstractFormElement implements FormElement {
+abstract class AbstractFormElement implements IFormElement {
 	/**
 	 * element description or help text
 	 *
@@ -32,47 +32,47 @@ abstract class AbstractFormElement implements FormElement {
 	/**
 	 * FormElementContainer object
 	 *
-	 * @var	FormElementContainer
+	 * @var	wcf\system\form\IFormElementContainer
 	 */
 	protected $parent = null;
 	
 	/**
-	 * @see	FormElement::__construct()
+	 * @see	wcf\system\form\IFormElement::__construct()
 	 */
-	public function __construct(FormElementContainer $parent) {
+	public function __construct(IFormElementContainer $parent) {
 		$this->parent = $parent;
 	}
 	
 	/**
-	 * @see	FormElement::setDescription()
+	 * @see	wcf\system\form\IFormElement::setDescription()
 	 */
 	public function setDescription($description) {
 		$this->description = StringUtil::trim($description);
 	}
 	
 	/**
-	 * @see	FormElement::getDescription()
+	 * @see	wcf\system\form\IFormElement::getDescription()
 	 */
 	public function getDescription() {
 		return $this->description;
 	}
 	
 	/**
-	 * @see	FormElement::setLabel()
+	 * @see	wcf\system\form\IFormElement::setLabel()
 	 */
 	public function setLabel($label) {
 		$this->label = StringUtil::trim($label);
 	}
 	
 	/**
-	 * @see	FormElement::getLabel()
+	 * @see	wcf\system\form\IFormElement::getLabel()
 	 */
 	public function getLabel() {
 		return $this->label;
 	}
 	
 	/**
-	 * @see	FormElement::getParent()
+	 * @see	wcf\system\form\IFormElement::getParent()
 	 */
 	public function getParent() {
 		return $this->parent;

@@ -142,8 +142,8 @@ abstract class CronjobScheduler {
 		}
 		
 		// verify class signature
-		if (!(ClassUtil::isInstanceOf($className, 'wcf\system\cronjob\Cronjob'))) {
-			throw new SystemException("class '".$className."' does not implement the interface 'Cronjob'", 11010);
+		if (!(ClassUtil::isInstanceOf($className, 'wcf\system\cronjob\ICronjob'))) {
+			throw new SystemException("class '".$className."' does not implement the interface 'wcf\system\cronjob\ICronjob'", 11010);
 		}
 		
 		// execute cronjob

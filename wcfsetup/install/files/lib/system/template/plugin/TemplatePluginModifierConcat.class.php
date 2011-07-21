@@ -2,7 +2,7 @@
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateEngine;
-use wcf\system\template\TemplatePluginModifier;
+use wcf\system\template\ITemplatePluginModifier;
 
 /**
  * The 'concat' modifier returns the string that results from concatenating the arguments.
@@ -18,9 +18,9 @@ use wcf\system\template\TemplatePluginModifier;
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginModifierConcat implements TemplatePluginModifier {
+class TemplatePluginModifierConcat implements ITemplatePluginModifier {
 	/**
-	 * @see TemplatePluginModifier::execute()
+	 * @see wcf\system\template\ITemplatePluginModifier::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (count($tagArgs) < 2) {

@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\TemplatePluginCompiler;
+use wcf\system\template\ITemplatePluginCompiler;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\util\StringUtil;
 
@@ -18,9 +18,9 @@ use wcf\util\StringUtil;
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginCompilerLang implements TemplatePluginCompiler {
+class TemplatePluginCompilerLang implements ITemplatePluginCompiler {
 	/**
-	 * @see TemplatePluginCompiler::executeStart()
+	 * @see wcf\system\template\ITemplatePluginCompiler::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		$compiler->pushTag('lang');
@@ -35,7 +35,7 @@ class TemplatePluginCompilerLang implements TemplatePluginCompiler {
 	}
 	
 	/**
-	 * @see TemplatePluginCompiler::executeEnd()
+	 * @see wcf\system\template\ITemplatePluginCompiler::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		$compiler->popTag('lang');

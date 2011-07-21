@@ -16,7 +16,7 @@ class FormDocument {
 	/**
 	 * list of FormElementContainer objects
 	 *
-	 * @var	FormElementContainer
+	 * @var	array<wcf\system\form\IFormElementContainer>
 	 */
 	protected $containers = array();
 	
@@ -48,25 +48,25 @@ class FormDocument {
 	/**
 	 * Appends a FormElementContainer object.
 	 *
-	 * @param	FormElementContainer		$container
+	 * @param	wcf\system\form\IFormElementContainer		$container
 	 */
-	public function appendContainer(FormElementContainer $container) {
+	public function appendContainer(IFormElementContainer $container) {
 		$this->containers[] = $container;
 	}
 	
 	/**
 	 * Prepends a FormElementContainer object.
 	 *
-	 * @param	FormElementContainer		$container
+	 * @param	wcf\system\form\IFormElementContainer		$container
 	 */
-	public function prependContainer(FormElementContainer $container) {
+	public function prependContainer(IFormElementContainer $container) {
 		array_unshift($this->containers, $container);
 	}
 	
 	/**
 	 * Returns assigned FormElementContainer objects.
 	 *
-	 * @return	array<FormElementContainer>
+	 * @return	array<wcf\system\form\IFormElementContainer>
 	 */
 	public function getContainers() {
 		return $this->containers;

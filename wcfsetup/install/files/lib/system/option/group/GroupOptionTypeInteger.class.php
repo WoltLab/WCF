@@ -13,9 +13,9 @@ use wcf\system\option\OptionTypeInteger;
  * @subpackage	system.option.group
  * @category 	Community Framework
  */
-class GroupOptionTypeInteger extends OptionTypeInteger implements GroupOptionType {
+class GroupOptionTypeInteger extends OptionTypeInteger implements IGroupOptionType {
 	/**
-	 * @see GroupOptionType::merge()
+	 * @see wcf\system\option\group\IGroupOptionType::merge()
 	 */
 	public function merge(array $values) {
 		return max($values);

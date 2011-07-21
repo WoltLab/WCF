@@ -31,7 +31,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 	public $confirmMasterPassword = '';
 	
 	/**
-	 * @see wcf\page\Page::readParameters()
+	 * @see wcf\page\IPage::readParameters()
 	 */	
 	public function readParameters() {
 		parent::readParameters();
@@ -42,7 +42,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::readFormParameters()
+	 * @see wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -51,7 +51,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::validate()
+	 * @see wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		ACPForm::validate();
@@ -108,7 +108,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::save()
+	 * @see wcf\form\IForm::save()
 	 */
 	public function save() {
 		// generate salt
@@ -129,7 +129,7 @@ define('MASTER_PASSWORD_SALT', '".$salt."');
 	}
 	
 	/**
-	 * @see wcf\page\Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

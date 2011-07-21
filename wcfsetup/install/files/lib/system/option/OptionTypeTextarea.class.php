@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class OptionTypeTextarea extends OptionTypeText {
 	/**
-	 * @see OptionType::getFormElement()
+	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		WCF::getTPL()->assign(array(

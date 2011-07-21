@@ -15,9 +15,9 @@ use wcf\util\StringUtil;
  * @subpackage	system.option.group
  * @category 	Community Framework
  */
-class GroupOptionTypeGroups implements GroupOptionType {
+class GroupOptionTypeGroups implements IGroupOptionType {
 	/**
-	 * @see OptionType::getFormElement()
+	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		// get selected group
@@ -36,7 +36,7 @@ class GroupOptionTypeGroups implements GroupOptionType {
 	}
 	
 	/**
-	 * @see OptionType::validate()
+	 * @see wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
 		// get all groups
@@ -55,7 +55,7 @@ class GroupOptionTypeGroups implements GroupOptionType {
 	}
 	
 	/**
-	 * @see OptionType::getData()
+	 * @see wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		if (!is_array($newValue)) $newValue = array();
@@ -65,7 +65,7 @@ class GroupOptionTypeGroups implements GroupOptionType {
 	}
 	
 	/**
-	 * @see GroupOptionType::merge()
+	 * @see wcf\system\option\group\IGroupOptionType::merge()
 	 */
 	public function merge(array $values) {
 		$result = array();

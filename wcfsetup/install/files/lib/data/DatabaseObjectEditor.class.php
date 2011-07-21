@@ -12,9 +12,9 @@ use wcf\system\WCF;
  * @subpackage	data
  * @category 	Community Framework
  */
-abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements EditableObject {
+abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements IEditableObject {
 	/**
-	 * @see EditableObject::create()
+	 * @see wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		$keys = $values = '';
@@ -48,7 +48,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements E
 	}
 	
 	/**
-	 * @see EditableObject::update()
+	 * @see wcf\data\IEditableObject::update()
 	 */
 	public function update(array $parameters = array()) {
 		if (!count($parameters)) return;
@@ -70,14 +70,14 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements E
 	}
 	
 	/**
-	 * @see EditableObject::delete()
+	 * @see wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
 		static::deleteAll(array($this->__get(static::getDatabaseTableIndexName())));
 	}
 	
 	/**
-	 * @see EditableObject::deleteAll()
+	 * @see wcf\data\IEditableObject::deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
 		$sql = "DELETE FROM	".static::getDatabaseTableName()."

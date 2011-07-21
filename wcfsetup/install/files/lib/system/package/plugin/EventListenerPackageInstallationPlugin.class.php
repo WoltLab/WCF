@@ -92,7 +92,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\PackageInstallationPlugin::uninstall()
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		parent::uninstall();

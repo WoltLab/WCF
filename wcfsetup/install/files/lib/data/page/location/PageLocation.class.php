@@ -1,6 +1,6 @@
 <?php
 namespace wcf\data\page\location;
-use wcf\data\DatabaseObject;
+use wcf\data\ProcessibleDatabaseObject;
 
 /**
  * Represents a page location.
@@ -12,7 +12,7 @@ use wcf\data\DatabaseObject;
  * @subpackage	data.page.location
  * @category 	Community Framework
  */
-class PageLocation extends DatabaseObject {
+class PageLocation extends ProcessibleDatabaseObject {
 	/**
 	 * @see	DatabaseObject::$databaseTableName
 	 */
@@ -22,4 +22,9 @@ class PageLocation extends DatabaseObject {
 	 * @see	DatabaseObject::$databaseIndexName
 	 */
 	protected static $databaseIndexName = 'locationID';
+	
+	/**
+	 * @see	wcf\data\ProcessibleDatabaseObject::$processorInterface
+	 */
+	protected static $processorInterface = 'wcf\data\page\location\ILocation';
 }

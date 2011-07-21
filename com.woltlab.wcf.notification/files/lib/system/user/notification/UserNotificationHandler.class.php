@@ -1,12 +1,11 @@
 <?php
 namespace wcf\system\user\notification;
 use wcf\data\user\notification\event\UserNotificationEvent;
-use wcf\data\user\notification\object\type\UserNotificationObjectType;
 use wcf\data\user\notification\recipient\UserNotificationRecipientList;
 use wcf\data\user\notification\UserNotificationAction;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\user\notification\object\UserNotificationObject;
+use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\SingletonFactory;
 
 /**
@@ -40,44 +39,45 @@ class UserNotificationHandler extends SingletonFactory {
 	 *
 	 * @param	string								$eventName
 	 * @param	string								$objectType
-	 * @param	wcf\system\user\notification\object\UserNotificationObject	$notificationObject
+	 * @param	wcf\system\user\notification\object\IUserNotificationObject	$notificationObject
 	 * @param	array<integer>							$recipientIDs
 	 * @param	array<mixed>							$additionalData
 	 */
-	public function fireEvent($eventName, $objectType, UserNotificationObject $notificationObject, array $recipientIDs, array $additionalData = array()) {
+	public function fireEvent($eventName, $objectType, IUserNotificationObject $notificationObject, array $recipientIDs, array $additionalData = array()) {
 		// check given object type and event name
 		if (!isset($this->availableObjectTypes[$objectType]['events'][$eventName])) {
 			throw new SystemException("Unknown event '.$objectType.'-.$eventName.' given");
 		}
 		
 		// get objects
-		$objectTypeData = $this->availableObjectTypes[$objectType]['object'];
-		$eventData = $this->availableObjectTypes[$objectType]['events'][$eventName];
+		$objectType = $this->availableObjectTypes[$objectType]['object'];
+		$event = $this->availableObjectTypes[$objectType]['events'][$eventName];
 		
 		// save notification
-		$action = new UserNotificationAction(array(), 'create', array(
+		$action = new UserNotificationAction(array(), 'create', array('data' => array(
 			'packageID' => PACKAGE_ID,
-			'eventID' => $eventData->eventID,
+			'eventID' => $event->eventID,
 			'objectID' => $notificationObject->getObjectID(),
 			'time' => TIME_NOW,
-			'shortOutput' => $eventData->getObject()->getShortOutput($eventName),
-			'mediumOutput' => $eventData->getObject()->getMediumOutput($eventName),
-			'longOutput' => $eventData->getObject()->getOutput($eventName),
+			'shortOutput' => $event->getShortOutput($eventName),
+			'mediumOutput' => $event->getMediumOutput($eventName),
+			'longOutput' => $event->getOutput($eventName),
 			'additionalData' => serialize($additionalData),
 			'recipientIDs' => $recipientIDs
-		));
-		$notification = $action->executeAction();
+		)));
+		$result = $action->executeAction();
+		$notification = $result['returnValues'];
 		
 		// get recipients
 		$recipientList = new UserNotificationRecipientList();
-		$recipientList->getConditionBuilder()->add('user_table.userID = ?', array($recipientIDs));
+		$recipientList->getConditionBuilder()->add('user.userID = ?', array($recipientIDs));
 		$recipientList->readObjects();
 		
 		// sends notifications
 		foreach ($recipientList->getObjects() as $recipient) {
-			foreach ($recipient->getNotificationTypes($eventData->eventID) as $notificationType) {
-				if ($eventData->getObject()->supportsNotificationType($notificationType)) {
-					$notificationType->getObject()->send($notification, $recipient, $eventData);
+			foreach ($recipient->getNotificationTypes($event->eventID) as $notificationType) {
+				if ($event->supportsNotificationType($notificationType)) {
+					$notificationType->send($notification, $recipient, $event);
 				}
 			}
 		}

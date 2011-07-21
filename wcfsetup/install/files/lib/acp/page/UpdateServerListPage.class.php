@@ -27,7 +27,7 @@ class UpdateServerListPage extends SortablePage {
 	public $objectListClassName = 'wcf\data\package\update\server\PackageUpdateServerList';
 	
 	/**
-	 * @see wcf\page\Page::readParameters()
+	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -45,7 +45,7 @@ class UpdateServerListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -57,7 +57,7 @@ class UpdateServerListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\Page::show()
+	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
 		// enable menu item

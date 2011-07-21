@@ -13,7 +13,7 @@ use wcf\util\FileUtil;
  * @subpackage	system.cache.source
  * @category 	Community Framework
  */
-class MemcacheCacheSource implements CacheSource {
+class MemcacheCacheSource implements ICacheSource {
 	/**
 	 * MemcacheAdapter object
 	 *
@@ -126,7 +126,7 @@ class MemcacheCacheSource implements CacheSource {
 	
 	// CacheSource implementations
 	/**
-	 * @see	wcf\system\cache\source\CacheSource::get()
+	 * @see	wcf\system\cache\source\ICacheSource::get()
 	 */
 	public function get(array $cacheResource) {
 		$value = $this->getAdapter()->getMemcache()->get($cacheResource['file']);
@@ -135,7 +135,7 @@ class MemcacheCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\CacheSource::set()
+	 * @see	wcf\system\cache\source\ICacheSource::set()
 	 */
 	public function set(array $cacheResource, $value) {
 		$this->getAdapter()->getMemcache()->set($cacheResource['file'], $value, MEMCACHE_COMPRESSED, $cacheResource['maxLifetime']);
@@ -143,7 +143,7 @@ class MemcacheCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\CacheSource::delete()
+	 * @see	wcf\system\cache\source\ICacheSource::delete()
 	 */
 	public function delete(array $cacheResource, $ignoreLifetime = false) {
 		$this->getAdapter()->getMemcache()->delete($cacheResource['file']);
@@ -151,7 +151,7 @@ class MemcacheCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\CacheSource::clear()
+	 * @see wcf\system\cache\source\ICacheSource::clear()
 	 */
 	public function clear($directory, $filepattern, $forceDelete = false) {
 		$this->loadLog();
@@ -165,7 +165,7 @@ class MemcacheCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\CacheSource::flush()
+	 * @see wcf\system\cache\source\ICacheSource::flush()
 	 */
 	public function flush() {
 		// clear cache
@@ -180,7 +180,7 @@ class MemcacheCacheSource implements CacheSource {
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\CacheSource::close()
+	 * @see wcf\system\cache\source\ICacheSource::close()
 	 */
 	public function close() {
 		// update log

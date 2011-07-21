@@ -68,7 +68,7 @@ class ACPSessionLogListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -79,7 +79,7 @@ class ACPSessionLogListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\Page::show()
+	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
 		// enable menu item

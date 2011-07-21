@@ -50,7 +50,7 @@ class InstallPackageAction extends AbstractDialogAction {
 	public $templateName = 'packageInstallationStep';
 	
 	/**
-	 * @see	wcf\action\Action::readParameters()
+	 * @see wcf\action\IAction::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();

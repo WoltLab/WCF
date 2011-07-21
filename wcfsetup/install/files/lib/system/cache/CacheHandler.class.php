@@ -25,7 +25,7 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * cache source object
 	 * 
-	 * @var	CacheSource
+	 * @var	wcf\system\cache\source\ICacheSource
 	 */
 	protected $cacheSource = null;
 	

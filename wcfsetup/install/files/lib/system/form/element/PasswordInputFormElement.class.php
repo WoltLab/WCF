@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  */
 class PasswordInputFormElement extends AbstractNamedFormElement {
 	/**
-	 * @see	FormElement::getHTML()
+	 * @see	wcf\system\form\IFormElement::getHTML()
 	 */
 	public function getHTML($formName) {
 		return <<<HTML

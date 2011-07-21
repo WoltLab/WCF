@@ -39,14 +39,6 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 		$result['menuPosition'] = (!empty($data['elements']['position']) && $data['elements']['position'] == 'footer') ? 'footer' : 'header';
 		// class name
 		if (!empty($data['elements']['classname'])) {
-			/*if (!class_exists($data['elements']['classname'])) {
-				throw new SystemException("Unable to find class '".$data['elements']['classname']."'");
-			}
-			
-			if (!ClassUtil::isInstanceOf($data['elements']['classname'], 'wcf\system\menu\page\PageMenuItemProvider')) {
-				throw new SystemException($data['elements']['classname']." should implement wcf\system\menu\page\PageMenuItemProvider");
-			}*/
-			
 			$result['className'] = $data['elements']['classname'];
 		}
 		

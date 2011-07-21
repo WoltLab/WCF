@@ -38,7 +38,7 @@ class SingleSelectionFormElementContainer extends SelectionFormElementContainer 
 	}
 	
 	/**
-	 * @see	FormElementContainer::getHTML()
+	 * @see	wcf\system\form\IFormElementContainer::getHTML()
 	 */
 	public function getHTML($formName) {
 		$content = '';

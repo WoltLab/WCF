@@ -12,9 +12,9 @@ use wcf\acp\package\update\PackageUpdate;
  * @subpackage	system.cronjob
  * @category 	Community Framework
  */
-class GetUpdateInfoCronjob implements Cronjob {
+class GetUpdateInfoCronjob implements ICronjob {
 	/**
-	 * @see	Cronjob::execute()
+	 * @see	wcf\system\ICronjob::execute()
 	 * @TODO Change path and move method to lib/system/package
 	 */
 	public function execute(array $data) {

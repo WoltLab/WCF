@@ -33,7 +33,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	public $packages = array();
 	
 	/**
-	 * @see wcf\page\Page::readParameters()
+	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -59,7 +59,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\Page::readData()
+	 * @see wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -168,7 +168,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\Page::assignVariables()
+	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -181,7 +181,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	}
 	
 	/**
-	 * @see Page::show()
+	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
 		// set active menu item

@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\system\cache\CacheBuilder;
+use wcf\system\cache\ICacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
@@ -16,11 +16,11 @@ use wcf\util\ClassUtil;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderUserGroupPermission implements CacheBuilder {
+class CacheBuilderUserGroupPermission implements ICacheBuilder {
 	protected $typeObjects = array();
 	
 	/**
-	 * @see CacheBuilder::getData()
+	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
 		list($cache, $packageID, $groupIDs) = explode('-', $cacheResource['cache']);
@@ -100,7 +100,7 @@ class CacheBuilderUserGroupPermission implements CacheBuilder {
 	 * Returns an object of the requested group option type.
 	 * 
 	 * @param	string			$type
-	 * @return	GroupOptionType
+	 * @return	wcf\system\option\group\IGroupOptionType
 	 */
 	protected function getTypeObject($type) {
 		if (!isset($this->typeObjects[$type])) {
@@ -110,8 +110,8 @@ class CacheBuilderUserGroupPermission implements CacheBuilder {
 			if (!class_exists($className)) {
 				throw new SystemException("unable to find class '".$className."'", 11001);
 			}
-			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\group\GroupOptionType')) {
-				throw new SystemException("'".$className."' should implement GroupOptionType");
+			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\group\IGroupOptionType')) {
+				throw new SystemException("'".$className."' should implement wcf\system\option\group\IGroupOptionType");
 			}
 			
 			// create instance

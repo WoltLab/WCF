@@ -3,7 +3,7 @@ namespace wcf\data\style;
 use wcf\data\template\group\TemplateGroupEditor;
 use wcf\data\template\TemplateEditor;
 use wcf\data\DatabaseObjectEditor;
-use wcf\data\EditableCachedObject;
+use wcf\data\IEditableCachedObject;
 use wcf\system\exception\SystemException;
 use wcf\system\image\Thumbnail;
 use wcf\system\io\File;
@@ -26,7 +26,7 @@ use wcf\util\XML;
  * @subpackage	data.style
  * @category 	Community Framework
  */
-class StyleEditor extends DatabaseObjectEditor implements EditableCachedObject {
+class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	const INFO_FILE = 'style.xml';
 	const STYLE_PREVIEW_IMAGE_MAX_WIDTH = 185;
 	const STYLE_PREVIEW_IMAGE_MAX_HEIGHT = 140;
@@ -37,7 +37,7 @@ class StyleEditor extends DatabaseObjectEditor implements EditableCachedObject {
 	protected static $baseClass = 'wcf\data\style\Style';
 	
 	/**
-	 * @see EditableObject::update()
+	 * @see wcf\data\IEditableObject::update()
 	 */
 	public function update(array $parameters = array()) {
 		$variables = null;
@@ -61,7 +61,7 @@ class StyleEditor extends DatabaseObjectEditor implements EditableCachedObject {
 	}
 	
 	/**
-	 * @see EditableObject::delete()
+	 * @see wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
 		parent::delete();
@@ -817,7 +817,7 @@ class StyleEditor extends DatabaseObjectEditor implements EditableCachedObject {
 	}
 	
 	/**
-	 * @see EditableObject::create()
+	 * @see wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		$variables = null;
@@ -848,7 +848,7 @@ class StyleEditor extends DatabaseObjectEditor implements EditableCachedObject {
 	}
 	
 	/**
-	 * @see EditableCachedObject::resetCache()
+	 * @see IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		WCF::getCache()->clear(WCF_DIR.'cache', 'cache.icon-*-'.$this->styleID.'.php');

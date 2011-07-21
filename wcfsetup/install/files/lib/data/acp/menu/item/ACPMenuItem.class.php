@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\acp\menu\item;
 use wcf\data\DatabaseObject;
-use wcf\system\menu\TreeMenuItem;
+use wcf\system\menu\ITreeMenuItem;
 use wcf\system\request\LinkHandler;
 
 /**
@@ -14,7 +14,7 @@ use wcf\system\request\LinkHandler;
  * @subpackage	data.acp.menu.item
  * @category 	Community Framework
  */
-class ACPMenuItem extends DatabaseObject implements TreeMenuItem {
+class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	/**
 	 * @see	DatabaseObject::$databaseTableName
 	 */
@@ -26,7 +26,7 @@ class ACPMenuItem extends DatabaseObject implements TreeMenuItem {
 	protected static $databaseTableIndexName = 'menuItemID';
 	
 	/**
-	 * @see TreeMenuItem::getLink()
+	 * @see wcf\system\menu\ITreeMenuItem::getLink()
 	 */
 	public function getLink() {
 		return LinkHandler::getInstance()->getLink($this->menuItemLink);
