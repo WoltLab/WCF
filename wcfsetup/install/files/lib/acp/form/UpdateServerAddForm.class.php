@@ -32,6 +32,11 @@ class UpdateServerAddForm extends ACPForm {
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canEditServer');
+
+	/**
+	 * @see wcf\page\AbstractPage::$action
+	 */
+	public $action = 'add';
 	
 	/**
 	 * server url
@@ -108,8 +113,7 @@ class UpdateServerAddForm extends ACPForm {
 		WCF::getTPL()->assign(array(
 			'server' => $this->server,
 			'loginUsername' => $this->loginUsername,
-			'loginPassword' => $this->loginPassword,
-			'action' => 'add'
+			'loginPassword' => $this->loginPassword
 		));
 	}
 	

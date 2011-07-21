@@ -30,6 +30,11 @@ class UserEditForm extends UserAddForm {
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditUser');
+
+	/**
+	 * @see wcf\page\AbstractPage::$action
+	 */
+	public $action = 'edit';
 	
 	/**
 	 * user id
@@ -120,7 +125,6 @@ class UserEditForm extends UserAddForm {
 		
 		WCF::getTPL()->assign(array(
 			'userID' => $this->user->userID,
-			'action' => 'edit',
 			'url' => '',
 			'markedUsers' => 0,
 			'user' => $this->user

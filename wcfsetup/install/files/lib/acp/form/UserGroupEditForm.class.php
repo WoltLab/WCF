@@ -29,6 +29,11 @@ class UserGroupEditForm extends UserGroupAddForm {
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditGroup');
+
+	/**
+	 * @see wcf\page\AbstractPage::$action
+	 */
+	public $action = 'edit';
 	
 	/**
 	 * group id
@@ -96,10 +101,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
-			'groupID' => $this->group->groupID,
-			'action' => 'edit'
-		));
+		WCF::getTPL()->assign('groupID', $this->group->groupID);
 		
 		// add warning when the initiator is in the group
 		if ($this->group->isMember($this->groupID)) {

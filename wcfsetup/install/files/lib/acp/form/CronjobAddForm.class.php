@@ -33,6 +33,11 @@ class CronjobAddForm extends ACPForm {
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.cronjobs.canAddCronjob');
+
+	/**
+	 * @see wcf\page\AbstractPage::$action
+	 */
+	public $action = 'add';
 	
 	/**
 	 * cronjob class name
@@ -171,8 +176,7 @@ class CronjobAddForm extends ACPForm {
 			'startHour' => $this->startHour,
 			'startDom' => $this->startDom,
 			'startMonth' => $this->startMonth,
-			'startDow' => $this->startDow,
-			'action' => 'add'
+			'startDow' => $this->startDow
 		));
 	}
 }

@@ -21,6 +21,11 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 	 * @see wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.server';
+
+	/**
+	 * @see wcf\page\AbstractPage::$action
+	 */
+	public $action = 'edit';
 	
 	/**
 	 * update server id
@@ -87,8 +92,7 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 			
 		WCF::getTPL()->assign(array(
 			'packageUpdateServerID' => $this->packageUpdateServerID,
-			'packageUpdateServer' => $this->updateServer,
-			'action' => 'edit'
+			'packageUpdateServer' => $this->updateServer
 		));
 	}
 }

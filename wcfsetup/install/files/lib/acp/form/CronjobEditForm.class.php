@@ -25,6 +25,11 @@ class CronjobEditForm extends CronjobAddForm {
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.cronjobs.canEditCronjob');
+
+	/**
+	 * @see wcf\page\AbstractPage::$action
+	 */
+	public $action = 'edit';
 	
 	/**
 	 * cronjob id
@@ -106,9 +111,6 @@ class CronjobEditForm extends CronjobAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
-			'cronjobID' => $this->cronjobID,
-			'action' => 'edit'
-		));
+		WCF::getTPL()->assign('cronjobID', $this->cronjobID);
 	}
 }

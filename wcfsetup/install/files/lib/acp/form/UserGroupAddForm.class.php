@@ -30,6 +30,11 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	 * @see wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'userGroupAdd';
+
+	/**
+	 * @see wcf\page\AbstractPage::$action
+	 */
+	public $action = 'add';
 	
 	/**
 	 * name of the active acp menu item
@@ -183,7 +188,6 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		WCF::getTPL()->assign(array(
 			'groupName' => $this->groupName,
 			'optionTree' => $this->optionTree,
-			'action' => 'add',
 			'activeTabMenuItem' => $this->activeTabMenuItem,
 			'activeSubTabMenuItem' => $this->activeSubTabMenuItem
 		));

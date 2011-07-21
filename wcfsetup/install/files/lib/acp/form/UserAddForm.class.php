@@ -33,6 +33,11 @@ class UserAddForm extends UserOptionListForm {
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canAddUser');
+
+	/**
+	 * @see wcf\page\AbstractPage::$action
+	 */
+	public $action = 'add';
 	
 	/**
 	 * name of the active menu item
@@ -307,8 +312,7 @@ class UserAddForm extends UserOptionListForm {
 			'availableLanguages' => $this->getAvailableLanguages(),
 			'languageID' => $this->languageID,
 			'visibleLanguages' => $this->visibleLanguages,
-			'availableContentLanguages' => $this->getAvailableContentLanguages(),
-			'action' => 'add'
+			'availableContentLanguages' => $this->getAvailableContentLanguages()
 		));
 	}
 	
