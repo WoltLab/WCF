@@ -75,7 +75,7 @@
 		<div id="logo">
 			<a href="index.php{@SID_ARG_1ST}">
 				<h1>WoltLab Community Framework 2.0 Pre-Alpha 1</h1>
-				<img src="{@RELATIVE_WCF_DIR}acp/images/acpLogo.png" alt="WoltLab Community Framework 2.0 Pre-Alpha 1" />
+				<!--<img src="{@RELATIVE_WCF_DIR}acp/images/wcfLogo.svg" alt="Product-logo" title="WoltLab Community Framework 2.0 Pre-Alpha 1" />-->
 			</a>
 		</div>
 		<!-- /logo -->
