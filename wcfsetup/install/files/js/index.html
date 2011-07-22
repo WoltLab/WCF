@@ -1,0 +1,12 @@
+<script type="text/javascript" src="3rdParty/jquery.min.js"></script>
+<script type="text/javascript" src="3rdParty/jquery-ui.min.js"></script>
+<script type="text/javascript" src="WCF.js"></script>
+<script type="text/javascript">
+var muh = (new WCF.Template('{$maeh}{@$muh}')).compile();
+console.log(muh);
+console.log(muh.fetch({ muh: '<b>Test</b>', masduh: 'asd' }));
+var maeh = new WCF.Template('{literal}{$m$uh}:DDD{/literal}PENIS{$m$uh}');
+console.log(maeh.compile());
+my2ndTemplate = new WCF.Template('{@$html}{$html}');
+console.log(my2ndTemplate.fetch({ html: '<b>Test</b>' }));
+</script>
