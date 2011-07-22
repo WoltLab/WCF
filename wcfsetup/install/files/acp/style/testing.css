@@ -1,8 +1,8 @@
 /**
- * Footer Styles
+ * ACP Testing Styles  
  *
- * @author		Alexander Ebert, Harald Szekely
- * @copyright	2011 WoltLab GmbH
+ * @author		Harald Szekely, Alexander Ebert, Marcel Werk 
+ * @copyright	2011 WoltLab GmbH 
  */
 
 
@@ -132,11 +132,12 @@ header.pageHeader div#logo a {
 /* Main Menu  */
 
 menu.mainMenu {
-	margin: 0 30px -7px;
+	margin: 0 30px;
 	background-color: rgba(0, 0, 0, .4);
 	border-radius: 5px 5px 0 0;
-	display: inline-block;
+	display: table;
 	position: relative;
+	bottom: -5px;
 }
 
 menu.mainMenu:after {
@@ -145,31 +146,31 @@ menu.mainMenu:after {
 	clear: both;
 }
 
+menu.mainMenu ul {
+	display: table-row;
+}
+
 menu.mainMenu li {
-	font-size: 105%;
+	font-size: 123%;
 	font-weight: normal;
 	color: #69c;
 	text-shadow: 0 -1px 0 #000;
-	border-radius: 5px 5px 0 0;
 	cursor: pointer;
-	display: inline-block;
+	display: table-cell;
 	margin: 5px -5px 0;
-	padding: 3px 20px 11px;
-	float: left;
+	padding: 13px 20px;
 	position: relative;
+	top: -3px;
 	z-index: 1;
 	
-	-webkit-transition: all .1s linear;
-	-moz-transition: all .1s linear;
-	-ms-transition: all .1s linear;
-	-o-transition: all .1s linear;
-	transition: all .1s linear;
-}
-
-menu.mainMenu li:after {
-	content: "";
-	display: block;
-	clear: both;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	
+	-webkit-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	-ms-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	transition: all .2s linear;
 }
 
 menu.mainMenu li:hover {
@@ -177,10 +178,11 @@ menu.mainMenu li:hover {
 }
 
 menu.mainMenu li.activeMenuItem {
-	font-size: 110%;
 	font-weight: bold;
 	color: #369;
 	text-shadow: 0 1px 0 #fff;
+	z-index: 10;
+	
 	background-color: #e7f2fd;
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#e7f2fd));
 	background-image: -moz-linear-gradient(0% 0% 270deg, #fff, #e7f2fd);
@@ -188,12 +190,6 @@ menu.mainMenu li.activeMenuItem {
 	background-image: -o-linear-gradient(#fff, #e7f2fd);
 	background-image: linear-gradient(#fff, #e7f2fd);
 	
-	border-radius: 5px 5px 0 0;
-	margin: 0;
-	padding: 10px 20px 13px;
-	position: relative;
-	top: -3px;
-	z-index: 10;
 }
 
 /* Header Navigation  */
@@ -202,7 +198,10 @@ nav.headerNavigation {
 	display: block;
 	background-color: #e7f2fd;
 	border-bottom: 1px solid #bcd;
-	border-radius: 3px 3px 0 0;
+	
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	
 	margin: 0 23px;
 	padding: 3px 7px;
 	position: relative;
@@ -339,7 +338,10 @@ footer:after {
 footer > div {
 	background-color: #e7f2fd;
 	border-top: 1px solid #bcd;
-	border-radius: 0 0 3px 3px;
+	
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	
 	clear: both;
 	padding: 3px 7px;
 }
