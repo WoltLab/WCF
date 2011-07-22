@@ -6,7 +6,7 @@
 	<!-- FOOTER -->
 	<footer>
 		<div>
-			<nav id="footerNavigation">
+			<nav id="footerNavigation" class="footerNavigation">
 				<ul>
 					<li id="toTopLink" class="toTopLink"><a href="#top" title="{lang}wcf.global.scrollUp{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/upS.png" alt="{lang}wcf.global.scrollUp{/lang}" /> <span class="invisible">{lang}wcf.global.scrollUp{/lang}</span></a></li>
 				</ul>

@@ -72,7 +72,7 @@
 		<menu id="topMenu" class="topMenu">
 			<div>
 				<ul>
-					<li>Hello Luzifer!</li>
+					<li><a href="#" title="Hello World">Hello World!</a></li>
 				</ul>
 			</div>
 		</menu>
