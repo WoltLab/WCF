@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\option\group;
-use wcf\system\option\OptionType;
+use wcf\system\option\IOptionType;
 
 /**
  * Any group permission type should implement this interface.
@@ -12,7 +12,7 @@ use wcf\system\option\OptionType;
  * @subpackage	system.option.group
  * @category 	Community Framework
  */
-interface IGroupOptionType extends OptionType {
+interface IGroupOptionType extends IOptionType {
 	/**
 	 * Merges the different values of an option to a single value.
 	 * 
