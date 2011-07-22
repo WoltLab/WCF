@@ -74,6 +74,12 @@ class RequestHandler extends SingletonFactory {
 				throw new SystemException("unable to find class '".$className."'", 11000);
 			}
 			
+			// check whether the class is abstract
+			$reflectionClass = new \ReflectionClass($className);
+			if ($reflectionClass->isAbstract()) {
+				throw new SystemException("class '".$className."' is abstract");
+			}
+			
 			$this->activeRequest = new Request($className, $pageName, $pageType);
 		}
 		catch (SystemException $e) {
