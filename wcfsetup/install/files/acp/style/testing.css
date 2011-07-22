@@ -5,6 +5,8 @@
  * @copyright	2011 WoltLab GmbH
  */
 
+
+
 /* -- -- -- -- -- Miscellaneous -- -- -- -- -- */
 
 * {
@@ -26,11 +28,11 @@ a {
 	color: #369;
 	text-decoration: none;
 	
-	-webkit-transition: all .1s linear;
-	-moz-transition: all .1s linear;
-	-ms-transition: all .1s linear;
-	-o-transition: all .1s linear;
-	transition: all .1s linear;
+	-webkit-transition: color .1s linear;
+	-moz-transition: color .1s linear;
+	-ms-transition: color .1s linear;
+	-o-transition: color .1s linear;
+	transition: color .1s linear;
 }
 
 a:hover {
@@ -44,58 +46,97 @@ a:hover {
 	top: -9000px;
 }
 
+
+
 /* -- -- -- -- -- Header -- -- -- -- -- */
 
-header {
+header.pageHeader {
+	/*
+	background-image: url("../images/header.png");
+	background-position: left top;
+	background-repeat: repeat-x;
+	*/
+	min-width: 800px;
+	width: 100%;
+}
+
+/* Top Menu */
+
+header.pageHeader menu.topMenu {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	min-height: 25px;
+	z-index: 10;
+	background-color: rgba(0, 0, 0, .4);
+	
+	-webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+	-moz-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+	-ms-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+	-o-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+	box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+}
+
+header.pageHeader menu.topMenu > div {
+	padding: 5px 23px 3px;
+	
+}
+
+header.pageHeader menu.topMenu ul {
+	
+}
+
+header.pageHeader menu.topMenu ul li, header.pageHeader menu.topMenu ul li a {
+	color: #69c;
+	text-shadow: 0 -1px 0 #000;
+}
+
+header.pageHeader menu.topMenu ul li a:hover {
+	color: #fff;
+}
+
+/* Logo */
+
+header.pageHeader div#logo {
+	position: relative;
+	z-index: 1;
 	margin: 0 23px 0;
 }
 
-header div#logo {
-	/* This is experimental. Looks like only 
-	Safari/Chrome support SVG-images as background-
-	images properly! */
-	
-	background-image: url("../images/wcfLogoWhite.svg");
-	background-position: 0 35px;
-	background-repeat: no-repeat;
-	
-	-webkit-background-size: 300px auto;
-	-moz-background-size: 300px auto;
-	-ms-background-size: 300px auto;
-	-o-background-size: 300px auto;
-	background-size: 300px auto;
-}
-
-header div#logo h1 {
+header.pageHeader div#logo h1 {
 	color: #d8e7f5;
 	text-shadow: 0 -1px 0 #000;
-	font-size: 160%;
+	font-size: 150%;
 	position: relative;
-	top: 45px;
+	top: 70px;
 }
 
-header div#logo a:hover {
+header.pageHeader div#logo a:hover {
 	color: #d8e7f5;
 	text-decoration: none !important;
 }
 
-header div#logo img {
-	float: left;
+header.pageHeader div#logo img {
+	position: absolute;
+	left: 0;
+	bottom: 20px;
 }
 
-header div#logo a {
+header.pageHeader div#logo a {
 	display: block;
-	height: 115px;
+	height: 120px;
 	text-align: right;
 }
 
-/* -- -- -- -- -- Main Menu -- -- -- -- --  */
+/* Main Menu  */
 
 menu.mainMenu {
-	margin: 0 7px -7px;
-	background-color: rgba(0, 0, 0, .5);
+	margin: 0 30px -7px;
+	background-color: rgba(0, 0, 0, .4);
 	border-radius: 5px 5px 0 0;
 	display: inline-block;
+	position: relative;
 }
 
 menu.mainMenu:after {
@@ -107,7 +148,7 @@ menu.mainMenu:after {
 menu.mainMenu li {
 	font-size: 105%;
 	font-weight: normal;
-	color: #ccc;
+	color: #69c;
 	text-shadow: 0 -1px 0 #000;
 	border-radius: 5px 5px 0 0;
 	cursor: pointer;
@@ -155,13 +196,14 @@ menu.mainMenu li.activeMenuItem {
 	z-index: 10;
 }
 
-/* -- -- -- -- -- Header Navigation -- -- -- -- --  */
+/* Header Navigation  */
 
 nav.headerNavigation {
 	display: block;
 	background-color: #e7f2fd;
 	border-bottom: 1px solid #bcd;
 	border-radius: 3px 3px 0 0;
+	margin: 0 23px;
 	padding: 3px 7px;
 	position: relative;
 }
@@ -180,6 +222,8 @@ nav.headerNavigation ul li {
 	float: right;
 }
 
+
+
 /* -- -- -- -- -- Main -- -- -- -- -- */
 
 div.main {
@@ -192,6 +236,8 @@ div.main {
 div.main > div {
 	display: table-row;
 }
+
+
 
 /* -- -- -- -- -- Content -- -- -- -- -- */
 
@@ -208,6 +254,8 @@ div#content {
 	width: 100%;
 }
 
+
+
 /* -- -- -- -- -- Sidebar -- -- -- -- -- */
 
 aside.sidebar {
@@ -217,7 +265,7 @@ aside.sidebar {
 	padding: 0 !important;
 }
 
-/* -- -- -- -- -- Sidebar Menu -- -- -- -- -- */
+/* Sidebar Menu */
 
 nav.sidebarMenu {
 	white-space: nowrap;
@@ -249,7 +297,7 @@ nav.sidebarMenu div.menuContainer h1 {
 	font-size: 130%;
 	font-weight: bold;
 	margin-top: 5px;
-	padding: 7px 7px 7px 35px;
+	padding: 7px 15px 7px 35px;
 	position: relative;
 }
 
@@ -270,6 +318,8 @@ nav.sidebarMenu div.menuContainer ul li.activeMenuItem a {
 	color: #369;
 	font-weight: bold;
 }
+
+
 
 /* -- -- -- -- -- Footer -- -- -- -- --  */
 
@@ -305,29 +355,23 @@ footer p.copyright {
 	min-height: 40px;
 }
 
+footer p.copyright a {
+	text-shadow: 0 -1px 0 #000;
+}
+
 footer p.copyright a:hover {
 	color: #69c;
 	text-decoration: none;
 }
 
+/* Footer Navigation */
 
-
-
-
-
-footer nav#navigationFooter {
-	float: right;
+footer nav.footerNavigation {
+	
 }
 
-footer nav#navigationFooter a span {
-	display: none;
-}
-
-footer nav#navigationFooter ul li {
+footer nav.footerNavigation ul li {
 	display: inline-block;
-}
-
-footer .toTopLink {
 	float: right;
 }
 
@@ -393,7 +437,9 @@ div.ui-widget-overlay {
 	top: 0;
 }
 
-/* -- -- -- -- -- Headlines -- -- -- -- -- */
+
+
+/* -- -- -- -- -- Headings -- -- -- -- -- */
 
 div.mainHeadline {
 	height: 48px;
@@ -430,6 +476,8 @@ h3.subHeadline {
 	padding: 7px;
 }
 
+
+
 /* -- -- -- -- -- Fieldsets -- -- -- -- -- */
 
 fieldset {
@@ -455,6 +503,8 @@ fieldset > ul {
 fieldset > ul li {
 	list-style-type: circle;
 }
+
+
 
 /* -- -- -- -- -- Forms -- -- -- -- -- */
 
@@ -513,6 +563,8 @@ div.formGroupField div.formField label {
 .content {
 	border-width: 0 !important;
 }
+
+
 
 /* -- -- -- -- -- Tables -- -- -- -- -- */
 
@@ -605,6 +657,8 @@ tr.container-2 td {
 	background-color: #eee;
 }
 
+
+
 /* -- -- -- -- -- Page Navigation -- -- -- -- -- */
 
 .pageNavigation ul li {
@@ -635,6 +689,8 @@ tr.container-2 td {
 .pageNavigation ul li.skip {
 	vertical-align: middle;
 }
+
+
 
 /* -- -- -- -- -- Large Buttons -- -- -- -- -- */
 
@@ -761,6 +817,8 @@ fieldset legend ~ p {
 	margin-bottom: 14px;
 }
 
+
+
 /* -- -- -- -- -- Tabbed Content -- -- -- -- -- */
 
 dl {
@@ -787,7 +845,6 @@ dl dd ~ p {
 dl.disabled dt {
 	color: #777;
 }
-
 
 
 

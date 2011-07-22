@@ -66,17 +66,30 @@
 <body id="tpl{$templateName|ucfirst}">
 	<!-- HEADER -->
 	<a id="top"></a>
-	<header>
+	<header class="pageHeader"
 		
-		<!-- top panel -->
-		<!-- /top panel -->
+		<!-- top menu -->
+		<menu id="topMenu" class="topMenu">
+			<div>
+				<ul>
+					<li>Hello Luzifer!</li>
+				</ul>
+			</div>
+		</menu>
+		<!-- /top menu -->
 		
 		<!-- logo -->
-		<div id="logo">
+		<div id="logo" class="logo">
+			<!-- clickable area -->
 			<a href="index.php{@SID_ARG_1ST}">
 				<h1>WoltLab Community Framework 2.0 Pre-Alpha 1</h1>
-				<!--<img src="{@RELATIVE_WCF_DIR}acp/images/wcfLogo.svg" alt="Product-logo" title="WoltLab Community Framework 2.0 Pre-Alpha 1" />-->
+				<img src="{@RELATIVE_WCF_DIR}acp/images/wcfLogoWhite.svg" width="300" height="58" alt="Product-logo" title="WoltLab Community Framework 2.0 Pre-Alpha 1" />
 			</a>
+			<!-- /clickable area -->
+			
+			<!-- search area -->
+			
+			<!-- /search area -->
 		</div>
 		<!-- /logo -->
 		
