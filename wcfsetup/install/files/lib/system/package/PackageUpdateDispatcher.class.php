@@ -583,8 +583,7 @@ abstract class PackageUpdateDispatcher {
 		while ($row = $statement->fetchArray()) {
 			$existingPackages[$row['package']][] = $row;
 		}
-		$existingPackageIdentifiers = implode("','", array_keys($existingPackages));
-		if (empty($existingPackageIdentifiers)) return $updates;
+		if (empty($existingPackages)) return $updates;
 		
 		// get all update versions
 		$conditions = new PreparedStatementConditionBuilder();
