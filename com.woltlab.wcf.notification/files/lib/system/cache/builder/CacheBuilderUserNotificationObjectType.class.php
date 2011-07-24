@@ -1,7 +1,8 @@
 <?php
-namespace wcf\system\cache;
+namespace wcf\system\cache\builder;
 use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\object\type\UserNotificationObjectType;
+use wcf\system\cache\ICacheBuilder;
 use wcf\system\WCF;
 
 /**
