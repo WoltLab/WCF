@@ -18,7 +18,7 @@ $.extend(true, {
 	/**
 	 * Escapes an ID to work with jQuery selectors.
 	 *
- 	 * @see		http://docs.jquery.com/Frequently_Asked_Questions#How_do_I_select_an_element_by_an_ID_that_has_characters_used_in_CSS_notation.3F
+	 * @see		http://docs.jquery.com/Frequently_Asked_Questions#How_do_I_select_an_element_by_an_ID_that_has_characters_used_in_CSS_notation.3F
 	 * @param	string		id
 	 * @return	string
 	 */
@@ -1077,6 +1077,27 @@ WCF.Language = {
  */
 WCF.String = {
 	/**
+	 * Escapes special HTML-characters within a string
+	 * 
+	 * @param	string	string
+	 * @return	string
+	 */
+	escapeHTML: function (string) {
+		return string.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+	},
+	
+	/**
+	 * Escapes a String to work with RegExp.
+	 *
+	 * @see		https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/regexp.js#L25
+	 * @param	string	string
+	 * @return	string
+	 */
+	escapeRegExp: function(string) {
+		return string.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
+	},
+	
+	/**
 	 * Makes a string's first character uppercase
 	 * 
 	 * @param	string		string
@@ -1127,6 +1148,159 @@ WCF.TabMenu = {
 				});
 			}
 		});
+	}
+};
+
+/**
+ * Templates that may be fetched more than once with different variables. Based upon ideas from Prototype's template
+ * 
+ * Usage:
+ * 	var myTemplate = new WCF.Template('{$hello} World');
+ * 	myTemplate.fetch({ hello: 'Hi' }); // Hi World
+ * 	myTemplate.fetch({ hello: 'Hello' }); // Hello World
+ * 	
+ * 	my2ndTemplate = new WCF.Template('{@$html}{$html}');
+ * 	my2ndTemplate.fetch({ html: '<b>Test</b>' }); // <b>Test</b>&lt;b&gt;Test&lt;/b&gt;
+ * 
+ * 	var my3rdTemplate = new WCF.Template('You can use {literal}{$variable}{/literal}-Tags here');
+ * 	my3rdTemplate.fetch({ variable: 'Not shown' }); // You can use {$variable}-Tags here
+ * 
+ * 
+ * @param	template		template-content
+ * @see		https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/template.js
+ */
+WCF.Template = function(template) { this.init(template); };
+WCF.Template.prototype = {
+	/**
+	 * Template-content
+	 * 
+	 * @var	string
+	 */
+	_template: '',
+	
+	/**
+	 * Saved literal-tags
+	 * 
+	 * @var	WCF.Dictionary
+	 */
+	_literals: new WCF.Dictionary(),
+	
+	/**
+	 * Prepares template
+	 * 
+	 * @param	$template		template-content
+	 */
+	init: function($template) {
+		this._template = $template;
+		
+		// save literal-tags
+		this._template = this._template.replace(/\{literal\}(.*?)\{\/literal\}/g, $.proxy(function ($match) {
+			// hopefully no one uses this string in one of his templates
+			var id = '@@@@@@@@@@@'+Math.random()+'@@@@@@@@@@@';
+			this._literals.add(id, $match.replace(/\{\/?literal\}/g, ''));
+			
+			return id;
+		}, this));
+	},
+	
+	/**
+	 * Fetches the template with the given variables
+	 *
+	 * @param	$variables	variables to insert
+	 * @return			parsed template
+	 */
+	fetch: function($variables) {
+		var $result = this._template;
+		
+		// insert them :)
+		for (var $key in $variables) {
+			$result = $result.replace(new RegExp(WCF.String.escapeRegExp('{$'+$key+'}'), 'g'), WCF.String.escapeHTML($variables[$key]));
+			$result = $result.replace(new RegExp(WCF.String.escapeRegExp('{@$'+$key+'}'), 'g'), $variables[$key]);
+		}
+		
+		// insert delimiter tags
+		$result = $result.replace('{ldelim}', '{').replace('{rdelim}', '}');
+		
+		// and re-insert saved literals
+		return this.insertLiterals($result);
+	},
+	
+	/**
+	 * Inserts literals into given string
+	 * 
+	 * @param	$template	string to insert into
+	 * @return			string with inserted literals
+	 */
+	insertLiterals: function ($template) {
+		this._literals.each(function ($pair) {
+			$template = $template.replace($pair.key, $pair.value);
+		});
+		
+		return $template;
+	},
+	
+	/**
+	 * Compiles this template into javascript-code
+	 * 
+	 * @return	WCF.Template.Compiled
+	 */
+	compile: function () {
+		var $compiled = this._template;
+		
+		// escape \ and '
+		$compiled = $compiled.replace('\\', '\\\\').replace("'", "\\'");
+		
+		// parse our variable-tags
+		$compiled = $compiled.replace(/\{\$(.*?)\}/g, function ($match) {
+			var $name = '$v.' + $match.substring(2, $match.length - 1);
+			// trinary operator to maintain compatibility with uncompiled template
+			// ($name) ? $name : '$match'
+			// -> $v.muh ? $v.muh : '{$muh}'
+			return "' + WCF.String.escapeHTML("+ $name + " ? " + $name + " : '" + $match + "') + '";
+		}).replace(/\{@\$(.*?)\}/g, function ($match) {
+			var $name = '$v.' + $match.substring(3, $match.length - 1);
+			// trinary operator to maintain compatibility with uncompiled template
+			// ($name) ? $name : '$match'
+			// -> $v.muh ? $v.muh : '{$muh}'
+			return "' + ("+ $name + " ? " + $name + " : '" + $match + "') + '";
+		});
+		
+		// insert delimiter tags
+		$compiled = $compiled.replace('{ldelim}', '{').replace('{rdelim}', '}');
+		
+		// and re-insert saved literals
+		return new WCF.Template.Compiled("'" + this.insertLiterals($compiled) + "';");
+	}
+};
+
+/**
+ * Represents a compiled template
+ * 
+ * @param	compiled		compiled template
+ */
+WCF.Template.Compiled = function(compiled) { this.init(compiled); };
+WCF.Template.Compiled.prototype = {
+	/**
+	 * Compiled template
+	 * 
+	 * @var	string
+	 */
+	_compiled: '',
+	
+	/**
+	 * Initializes our compiled template
+	 * 
+	 * @param	$compiled	compiled template
+	 */
+	init: function($compiled) {
+		this._compiled = $compiled;
+	},
+	
+	/**
+	 * @see	WCF.Template.fetch
+	 */
+	fetch: function($v) {
+		return eval(this._compiled);
 	}
 };
 
