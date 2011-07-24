@@ -87,7 +87,7 @@ $.fn.extend({
 			case 'outer':
 				dimensions = {
 					height: this.outerHeight(),
-					width: this.innerWidth()
+					width: this.outerWidth()
 				};
 			break;
 			
@@ -371,7 +371,7 @@ $.extend(WCF, {
 		var $elementID = '';
 		
 		do {
-			$elementID = 'wcf' + this._idCounter++;	 
+			$elementID = 'wcf' + this._idCounter++;
 		}
 		while ($.wcfIsset($elementID));
 		
@@ -1197,7 +1197,7 @@ WCF.ToggleOptions.prototype = {
 			$('#' + $item).hide();
 		}
 	}
-}
+};
 
 /**
  * Basic implementation for WCF dialogs.
