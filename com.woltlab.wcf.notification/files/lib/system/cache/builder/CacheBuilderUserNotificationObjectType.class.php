@@ -1,7 +1,8 @@
 <?php
-namespace wcf\system\cache;
+namespace wcf\system\cache\builder;
 use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\object\type\UserNotificationObjectType;
+use wcf\system\cache\ICacheBuilder;
 use wcf\system\WCF;
 
 /**
@@ -11,7 +12,7 @@ use wcf\system\WCF;
  * @copyright	2001-2011 WoltLab GmbH, Oliver Kliebisch
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.notification
- * @subpackage	system.cache
+ * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
 class CacheBuilderUserNotificationObjectType implements ICacheBuilder {
