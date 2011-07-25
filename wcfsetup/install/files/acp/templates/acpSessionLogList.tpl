@@ -1,12 +1,12 @@
 {include file='header'}
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/sessionLogL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.sessionLog.view{/lang}</h2>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.sessionLog.view{/lang}</h1>
+	</hgroup>
+</header>
 
 <div class="contentHeader">
 	{pages print=true assign=pagesLinks link="index.php?page=ACPSessionLogList&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&packageID="|concat:SID_ARG_2ND_NOT_ENCODED}

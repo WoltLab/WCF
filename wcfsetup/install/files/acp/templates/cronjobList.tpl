@@ -1,12 +1,12 @@
 {include file='header'}
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/cronjobsL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.cronjob.list{/lang}</h2>
-		<p>{lang}wcf.acp.cronjob.subtitle{/lang}</p>
-	</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.cronjob.list{/lang}</h1>
+		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>
+	</hgroup>
 	
 	<script type="text/javascript">
 		//<![CDATA[
@@ -33,15 +33,15 @@
 		});
 		//]]>
 	</script>
-</div>
+</header>
 
 <div class="contentHeader">
 	{pages print=true assign=pagesLinks link="index.php?page=CronjobList&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&packageID="|concat:SID_ARG_2ND_NOT_ENCODED}
 	
 	{if $__wcf->session->getPermission('admin.system.cronjobs.canAddCronjob')}
-		<div class="largeButtons">
+		<nav class="largeButtons">
 			<ul><li><a href="index.php?form=CronjobAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/cronjobsAddM.png" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
-		</div>
+		</nav>
 	{/if}
 </div>
 
@@ -131,9 +131,9 @@
 		{@$pagesLinks}
 		
 		{if $__wcf->session->getPermission('admin.system.cronjobs.canAddCronjob')}
-			<div class="largeButtons">
+			<nav class="largeButtons">
 				<ul><li><a href="index.php?form=CronjobAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/cronjobsAddM.png" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
-			</div>
+			</nav>
 		{/if}
 	</div>
 {/if}

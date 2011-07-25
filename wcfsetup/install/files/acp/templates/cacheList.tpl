@@ -1,11 +1,11 @@
 {include file='header'}
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/cacheL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.cache.list{/lang}</h2>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.cache.list{/lang}</h1>
+	</hgroup>
+</header>
 
 {if $cleared}
 	<p class="success">{lang}wcf.acp.cache.clear.success{/lang}</p>	
@@ -37,12 +37,12 @@
 </fieldset>
 
 <div class="contentHeader">
-	<div class="largeButtons">
+	<nav class="largeButtons">
 		<ul>
 			<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="index.php?action=CacheClear{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteM.png" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
-	</div>
+	</nav>
 </div>
 
 {foreach from=$caches key=cache item=files}

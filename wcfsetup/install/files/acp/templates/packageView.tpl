@@ -1,12 +1,12 @@
 {include file='header'}
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/packageL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{$package->getName()}</h2>
-		<p>{$package->packageDescription}</p>
-	</div>
-</div>
+	<hgroup>
+		<h1>{$package->getName()}</h1>
+		<h2>{$package->packageDescription}</h2>
+	</hgroup>
+</header>
 
 <fieldset>
 	<legend>{lang}wcf.acp.package.view.properties{/lang}</legend>
@@ -81,7 +81,7 @@
 {/foreach}
 
 <div class="contentHeader">
-	<div class="largeButtons">
+	<nav class="largeButtons">
 		<ul>
 			{if PACKAGE_ID != $package->packageID}
 				{if $package->standalone && $package->package != 'com.woltlab.wcf'}<li><a href="{@RELATIVE_WCF_DIR}{$package->packageDir}acp/index.php?packageID={@$package->packageID}{@SID_ARG_2ND}" title="{lang}wcf.acp.package.view.button.makeActive{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageMakeActiveM.png" alt="" /> <span>{lang}wcf.acp.package.view.button.makeActive{/lang}</span></a></li>{/if}
@@ -90,7 +90,7 @@
 			{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}<li><a href="index.php?form=PackageStartInstall&amp;action=update&amp;activePackageID={@$package->packageID}{@SID_ARG_2ND}" title="{lang}wcf.acp.package.view.button.update{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateM.png" alt="" /> <span>{lang}wcf.acp.package.view.button.update{/lang}</span></a></li>{/if}
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
-	</div>
+	</nav>
 </div>
 
 {if $requiredPackages|count > 0}

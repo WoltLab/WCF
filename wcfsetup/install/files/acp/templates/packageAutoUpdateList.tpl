@@ -22,30 +22,30 @@
 </script>
 
 <form method="post" action="index.php?form=PackageUpdate" id="updateForm">
-	<div class="mainHeadline">
+	<header class="mainHeading">
 		<img src="{@RELATIVE_WCF_DIR}icon/packageUpdateL.png" alt="" />
-		<div class="headlineContainer">
-			<h2>{lang}wcf.acp.packageUpdate{/lang}</h2>
-			{if $availableUpdates|count}<p><label><input type="checkbox" onclick="checkUncheckAllPackages(document.getElementById('updateForm'))" /> {lang}wcf.acp.packageUpdate.selectAll{/lang}</label></p>{/if}
-		</div>
-	</div>
-
+		<hgroup>
+			<h1>{lang}wcf.acp.packageUpdate{/lang}</h1>
+			{if $availableUpdates|count}<h2><label><input type="checkbox" onclick="checkUncheckAllPackages(document.getElementById('updateForm'))" /> {lang}wcf.acp.packageUpdate.selectAll{/lang}</label></h2>{/if}
+		</hgroup>
+	</header>
+	
 	{if !$availableUpdates|count}
 		<div class="border content">
 			<div class="container-1">
-				<p>{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
+				<p class="info">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
 			</div>
 		</div>
 	{else}
 		{foreach from=$availableUpdates item=availableUpdate}
-			<div class="message content"{if $availableUpdate.version.updateType == 'security'} style="border-color: #c00"{/if}>
+			<article class="message content"{if $availableUpdate.version.updateType == 'security'} style="border-color: #c00"{/if}>
 				<div class="messageInner container-{cycle name='styles' values='1,2'}">
-					<h3 class="subHeadline">
+					<h1 class="subHeading">
 						<label>
 							<input onclick="enableFormElements(document.getElementById('version-{@$availableUpdate.packageID}Div'), this.checked)" type="checkbox" name="updates[{@$availableUpdate.packageID}]" value="{$availableUpdate.version.packageVersion}" />
 							{$availableUpdate.packageName}{if $availableUpdate.instanceNo > 1} (#{#$availableUpdate.instanceNo}){/if}
 						</label>
-					</h3>
+					</h1>
 
 					<div class="messageBody">
 						<div class="formElement">
@@ -92,12 +92,12 @@
 
 					<hr />
 				</div>
-			</div>			
+			</article>			
 		{/foreach}
 		
 		<div class="formSubmit">
-			<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 			<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
+			<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 			{@SID_INPUT_TAG}
 	 	</div>
 	{/if}

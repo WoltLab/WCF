@@ -54,6 +54,10 @@ section#content a:hover {
 	top: -9000px;
 }
 
+hr {
+	display: none;
+}
+
 
 
 /* -- -- -- -- -- Header -- -- -- -- -- */
@@ -252,7 +256,7 @@ section#content {
 	background-color: #fff;
 	
 	display: table-cell;
-	padding: 21px;
+	padding: 25px;
 	width: 100%;
 }
 
@@ -299,7 +303,7 @@ nav.sidebarMenu > div h1 {
 	font-size: 130%;
 	font-weight: bold;
 	margin-top: 5px;
-	padding: 7px 15px 7px 35px;
+	padding: 7px 25px 7px 35px;
 	position: relative;
 }
 
@@ -309,7 +313,7 @@ nav.sidebarMenu > div h1.activeMenuItem {
 
 nav.sidebarMenu > div ul li {
 	font-size: 110%;
-	padding: 5px 15px 7px 35px;
+	padding: 5px 25px 7px 35px;
 }
 
 nav.sidebarMenu > div ul li.activeMenuItem {
@@ -449,7 +453,6 @@ div.ui-widget-overlay {
 /* Main Heading */
 
 .mainHeading {
-	height: 48px;
 	margin-bottom: 15px;
 	position: relative;
 }
@@ -458,6 +461,7 @@ div.ui-widget-overlay {
 	position: absolute;
 	top: 0;
 	left: 0;
+	width: 48px;
 	height: 48px;
 }
 
@@ -470,6 +474,7 @@ div.ui-widget-overlay {
 .mainHeading > hgroup h1 {
 	border-bottom: 1px solid #999;
 	color: #999;
+	text-shadow: 0 1px 0 #fff;
 	font-size: 140%;
 	font-weight: bold;
 	padding-bottom: 10px;
@@ -484,6 +489,7 @@ div.ui-widget-overlay {
 .subHeading {
 	border-bottom: 1px solid #999;
 	font-size: 120%;
+	text-shadow: 0 1px 0 #fff;
 	margin: 14px 0 14px;
 	padding: 15px;
 }
@@ -500,6 +506,7 @@ fieldset {
 }
 
 fieldset legend {
+	color: #999;
 	padding: 0 7px 0;
 }
 
@@ -641,13 +648,19 @@ th:last-child {
 	border-right-width: 0;
 }
 
+th {
+	font-size: 85%;
+}
+
 th a {
+	color: #999;
 	display: block;
 	text-decoration: none;
 }
 
 th a:hover {
-	color: #00c !important;
+	color: #333 !important;
+	text-shadow: 0 1px 0 #fff;
 	text-decoration: none !important;
 }
 
@@ -718,17 +731,17 @@ tr.container-2 td {
 
 /* -- -- -- -- -- Large Buttons -- -- -- -- -- */
 
-div.largeButtons {
+nav.largeButtons {
 	text-align: right;
 }
 
-div.largeButtons ul li {
+nav.largeButtons ul li {
 	display: inline;
 }
 
 input[type='reset'],
 input[type='submit'],
-div.largeButtons ul li a {
+nav.largeButtons ul li a {
 	background-color: #fefefe;
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fefefe), to(#eee));
 	background-image: -moz-linear-gradient(0% 0% 270deg, #fefefe, #eee);
@@ -744,7 +757,7 @@ div.largeButtons ul li a {
 
 input[type='reset']:hover,
 input[type='submit']:hover,
-div.largeButtons ul li a:hover {
+nav.largeButtons ul li a:hover {
 	background-color: #fefefe;
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#fefefe));
 	background-image: -moz-linear-gradient(0% 0% 270deg, #eee, #fefefe);
@@ -755,11 +768,11 @@ div.largeButtons ul li a:hover {
 	text-decoration: none;
 }
 
-div.largeButtons ul li a img {
+nav.largeButtons ul li a img {
 	vertical-align: middle;
 }
 
-div.formSubmit {
+.formSubmit {
 	text-align: center;
 }
 
@@ -814,17 +827,41 @@ div#ajaxExceptionStacktrace {
 	padding: 3px;
 }
 
-p.success {
-	background-color: #b5e61d;
-	border: 1px solid #22b14c;
-	border-radius: 5px;
+
+
+/* -- -- -- -- -- System Notifications -- -- -- -- -- */
+
+p.info,
+p.error,
+p.success,
+p.warning {
+	border-radius: 7px;
 	margin-bottom: 14px;
-	padding: 7px;
+	padding: 7px 14px;
 }
 
-hr {
-	display: none;
+p.info {
+	background-color: #def;
+	border: 1px solid #06f;
 }
+
+p.success {
+	background-color: #efe;
+	border: 1px solid #090;
+}
+
+p.error {
+	background-color: #fee;
+	border: 1px solid #c00;
+}
+
+p.warning {
+	background-color: #ffd;
+	border: 1px solid #660;
+}
+
+
+
 
 #actionProxyLoading {
 	background-color: #faebd7;

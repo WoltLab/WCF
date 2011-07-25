@@ -1,33 +1,33 @@
 {include file='header'}
 
-{if $packageID == 0}
-	<div class="mainHeadline">
+
+<header class="mainHeading">
+	{if $packageID == 0}
 		<img src="{@RELATIVE_WCF_DIR}icon/packageInstallL.png" alt="" />
-		<div class="headlineContainer">
-			<h2>{lang}wcf.acp.package.startInstall{/lang}</h2>
-		</div>
-	</div>
-{else}
-	<div class="mainHeadline">
+		<hgroup class="headlineContainer">
+			<h1>{lang}wcf.acp.package.startInstall{/lang}</h1>
+		</hgroup>
+	{else}
 		<img src="{@RELATIVE_WCF_DIR}icon/packageUpdateL.png" alt="" />
-		<div class="headlineContainer">
-			<h2>{lang}wcf.acp.package.startUpdate{/lang}</h2>
-		</div>
-	</div>
-{/if}
+		<hgroup class="headlineContainer">
+			<h1>{lang}wcf.acp.package.startUpdate{/lang}</h1>
+		</hgroup>
+	{/if}
+</header>
 
 {if $errorField != ''}
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 <div class="contentHeader">
-	<div class="largeButtons">
+	<nav class="largeButtons">
 		<ul>
 			<li><a href="index.php?page=PackageList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.package.view{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageM.png" alt="" /> <span>{lang}wcf.acp.menu.link.package.view{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
-	</div>
+	</nav>
 </div>
+
 <form method="post" action="index.php?form=PackageStartInstall" enctype="multipart/form-data">
 	<div class="border content">
 		<div class="container-1">
@@ -91,8 +91,9 @@
 	</div>
 
 	<div class="formSubmit">
-		<input type="submit" accesskey="s" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
+		<input type="submit" accesskey="s" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" />
+		
 		{@SID_INPUT_TAG}
  		<input type="hidden" name="action" value="{$action}" />
  		{if $packageID != 0}<input type="hidden" name="activePackageID" value="{@$packageID}" />{/if}
