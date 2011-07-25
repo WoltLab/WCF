@@ -144,30 +144,6 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public function readData() {
 		AbstractOptionListForm::readData();
 		
-		if (!count($_POST)) {
-			$this->groupName = $this->group->groupName;
-			
-			// get default values
-			if ($this->group->groupType != UserGroup::EVERYONE) {
-				$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
-				foreach ($this->options as $option) {
-					$value = $defaultGroup->getGroupOption($option->optionName);
-					if ($value !== null) {
-						$this->optionValues[$option->optionName] = $value;
-					}
-				}
-			}
-			
-			
-			
-			foreach ($this->options as $option) {
-				$value = $this->group->getGroupOption($option->optionName);
-				if ($value !== null) {
-					$this->optionValues[$option->optionName] = $value;
-				}
-			}
-		}
-		
 		$this->optionTree = $this->getOptionTree();
 		if (!count($_POST)) {
 			$this->activeTabMenuItem = $this->optionTree[0]['object']->categoryName;
