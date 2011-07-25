@@ -63,6 +63,13 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	 * @var	wcf\system\database\condition\PreparedStatementConditionBuilder
 	 */
 	public $conditions = null;
+
+        /**
+	 * Options of the active category.
+	 * 
+	 * @var array
+	 */
+	public $activeOptions = array();
 	
 	/**
 	 * Options of the active category.
