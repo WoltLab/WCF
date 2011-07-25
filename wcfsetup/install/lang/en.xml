@@ -267,7 +267,7 @@
 		<item name="wcf.acp.option.category.general.cache.memcache"><![CDATA[Memcache]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcache.description"><![CDATA[Memcache stores data in the memory that is often accessed. This may reduce the database load dramatically. Read more about the memcache on the following site:
 <ul>
-	<li><a href="http://www.danga.com/memcached/">www.danga.com/memcached/</a></li>
+	<li><a href="http://memcached.org/">memcached.org</a></li>
 </ul>]]></item>
 		<item name="wcf.acp.option.category.general.date"><![CDATA[Date and time]]></item>
 		<item name="wcf.acp.option.category.general.date.description"><![CDATA[]]></item>
