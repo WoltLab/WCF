@@ -202,7 +202,7 @@ class DiskCacheSource implements ICacheSource {
 		while ($row = $statement->fetchArray()) {
 			$packageDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
 			$cacheDir = $packageDir.'cache';
-			DirectoryUtil::getInstance($cacheDir)->deletePattern('~.*\.php$');
+			DirectoryUtil::getInstance($cacheDir)->removePattern('~.*\.php$');
 		}
 	}
 }

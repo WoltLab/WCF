@@ -290,7 +290,7 @@ class LanguageEditor extends DatabaseObjectEditor {
 		if ($languageID != '.*') $languageID = intval($languageID);
 		if ($packageID != '.*') $packageID = intval($packageID);
 
-		DirectoryUtil::getInstance(WCF_DIR.'language/')->deletePattern('~'.$packageID.'_'.$languageID.'_'.$category.'\.php$~');
+		DirectoryUtil::getInstance(WCF_DIR.'language/')->removePattern('~'.$packageID.'_'.$languageID.'_'.$category.'\.php$~');
 	}
 	
 	/**
@@ -298,9 +298,9 @@ class LanguageEditor extends DatabaseObjectEditor {
 	 */
 	public function deleteCompiledTemplates() {
 		// templates
-		DirectoryUtil::getInstance(WCF_DIR.'templates/compiled/')->deletePattern('~.*_'.$this->languageID.'_.*\.php$~');
+		DirectoryUtil::getInstance(WCF_DIR.'templates/compiled/')->removePattern('~.*_'.$this->languageID.'_.*\.php$~');
 		// acp templates
-		DirectoryUtil::getInstance(WCF_DIR.'acp/templates/compiled/')->deletePattern('~.*_'.$this->languageID.'_.*\.php$~');
+		DirectoryUtil::getInstance(WCF_DIR.'acp/templates/compiled/')->removePattern('~.*_'.$this->languageID.'_.*\.php$~');
 	}
 	
 	/**
