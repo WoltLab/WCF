@@ -18,17 +18,15 @@ use wcf\util\ClassUtil;
  * @subpackage	system.cleanup
  * @category 	Community Framework
  */
-class ICleanupHandler {
+class CleanupHandler {
 	/**
 	 * unique instance of CleanupHandler
-	 * 
-	 * @var	CleanupHandler
+	 * @var	wcf\system\cleanup\CleanupHandler
 	 */
 	protected static $instance = null;
 	
 	/**
 	 * cleanup adapter cache
-	 * 
 	 * @var	array<array>
 	 */
 	protected $cache = null;
@@ -128,7 +126,7 @@ class ICleanupHandler {
 	/**
 	 * Returns an unique instance of CleanupHandler.
 	 * 
-	 * @return	CleanupHandler
+	 * @return	wcf\system\cleanup\CleanupHandler
 	 */
 	public static function getInstance() {
 		if (self::$instance === null) {

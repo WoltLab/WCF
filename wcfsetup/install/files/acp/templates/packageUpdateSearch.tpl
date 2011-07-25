@@ -37,12 +37,12 @@
 	//]]>
 </script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/packageSearchL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.packageUpdate.search{/lang}</h2>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.packageUpdate.search{/lang}</h1>
+	</hgroup>
+</header>
 
 {if $errorField != ''}
 	<p class="error">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
@@ -126,8 +126,8 @@
 		</div>
 		
 		<div class="formSubmit">
-			<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 			<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
+			<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 			{@SID_INPUT_TAG}
 	 	</div>
 	</form>

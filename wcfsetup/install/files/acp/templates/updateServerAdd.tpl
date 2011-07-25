@@ -1,11 +1,11 @@
 {include file='header'}
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/updateServer{@$action|ucfirst}L.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.updateServer.{$action}{/lang}</h2>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.updateServer.{$action}{/lang}</h1>
+	</hgroup>
+</header>
 
 {if $errorField}
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
@@ -20,9 +20,9 @@
 {/if}
 
 <div class="contentHeader">
-	<div class="largeButtons">
+	<nav class="largeButtons">
 		<ul><li><a href="index.php?page=UpdateServerList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.package.server.view{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/updateServerM.png" alt="" /> <span>{lang}wcf.acp.menu.link.package.server.view{/lang}</span></a></li></ul>
-	</div>
+	</nav>
 </div>
 <form method="post" action="index.php?form=UpdateServer{@$action|ucfirst}{if $packageUpdateServerID|isset}&amp;packageUpdateServerID={@$packageUpdateServerID}{/if}">
 	<div class="border content">
@@ -88,8 +88,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
+		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		{@SID_INPUT_TAG}
 	</div>
 </form>

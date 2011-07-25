@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
+	
+        <!-- Defines a string with a minimum length of 1 and a maximum length of 255 signs. -->
+	<xs:simpleType name="woltlab_varchar">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+        <!-- Defines a string with a minimum length of 0 and a maximum length of 255 signs. -->
+	<xs:simpleType name="woltlab_varchar_nullable">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0" />
+			<xs:maxLength value="255" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Defines a boolean type which only accepts a '0' or a '1'. -->
+	<xs:simpleType name="woltlab_boolean">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0" />
+			<xs:maxInclusive value="1" />
+		</xs:restriction>
+	</xs:simpleType> 
+</xs:schema>

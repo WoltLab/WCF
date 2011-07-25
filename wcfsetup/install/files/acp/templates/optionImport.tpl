@@ -49,8 +49,8 @@
 	</div>
 
 	<div class="formSubmit">
-		<input type="submit" accesskey="s" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
+		<input type="submit" accesskey="s" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" />
 		{@SID_INPUT_TAG}
 	</div>
 </form>

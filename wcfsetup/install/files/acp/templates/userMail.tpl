@@ -1,9 +1,9 @@
 {include file='header'}
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/emailL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>
+	<hgroup>
+		<h1>
 			{if $action == 'all'}
 				{lang}wcf.acp.user.sendMail.all{/lang}
 			{elseif $action == 'group'}
@@ -11,27 +11,27 @@
 			{else}
 				{lang}wcf.acp.user.sendMail{/lang}
 			{/if}
-		</h2>
-	</div>
-</div>
+		</h1>
+	</hgroup>
+</header>
 
 {if $errorField}
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 <div class="contentHeader">
-	<div class="largeButtons">
+	<nav class="largeButtons">
 		<ul>
 			<li><a href="index.php?page=UserList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.user.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/usersM.png" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
 			<li><a href="index.php?form=UserSearch{@SID_ARG_2ND}" title="{lang}wcf.acp.user.search{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/searchM.png" alt="" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
-	</div>
+	</nav>
 </div>
+
 <form method="post" action="index.php?form=UserMail">
 	<div class="border content">
 		<div class="container-1">
-	
 			{if $action == ''}
 				<fieldset>
 					<legend>{lang}wcf.acp.user.sendMail.markedUsers{/lang}</legend>
@@ -143,8 +143,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
+		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="hidden" name="action" value="{@$action}" />
  		{@SID_INPUT_TAG}
  		<input type="hidden" name="userIDs" value="{@$userIDs}" />

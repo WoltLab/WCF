@@ -38,20 +38,20 @@
 	//]]>
 </script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/{if $searchID}userSearch{else}users{/if}L.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.user.{if $searchID}search{else}list{/if}{/lang}</h2>
-		<p>{if $searchID}{lang}wcf.acp.user.search.matches{/lang}{else}{lang}wcf.acp.user.list.count{/lang}{/if}</p>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.user.{if $searchID}search{else}list{/if}{/lang}</h1>
+		<h2>{if $searchID}{lang}wcf.acp.user.search.matches{/lang}{else}{lang}wcf.acp.user.list.count{/lang}{/if}</h2>
+	</hgroup>
+</header>
 
 {assign var=encodedURL value=$url|rawurlencode}
 {assign var=encodedAction value=$action|rawurlencode}
 <div class="contentHeader">
 	{pages print=true assign=pagesLinks link="index.php?page=UserList&pageNo=%d&searchID=$searchID&action=$encodedAction&sortField=$sortField&sortOrder=$sortOrder&packageID="|concat:SID_ARG_2ND_NOT_ENCODED}
 	
-	<div class="largeButtons">
+	<nav class="largeButtons">
 		<ul>
 			{if $__wcf->session->getPermission('admin.user.canAddUser')}
 				<li><a href="index.php?form=UserAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.user.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/userAddM.png" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
@@ -59,7 +59,7 @@
 			<li><a href="index.php?form=UserSearch{@SID_ARG_2ND}" title="{lang}wcf.acp.user.search{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/searchM.png" alt="" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
-	</div>
+	</nav>
 </div>
 
 <div class="subTabMenu">
@@ -126,10 +126,11 @@
 			</tbody>
 		</table>
 	</div>
+	
 	<div class="contentFooter">
 		{@$pagesLinks} <div id="userEditMarked" class="optionButtons"></div>
 		
-		<div class="largeButtons">
+		<nav class="largeButtons">
 			<ul>
 				{if $__wcf->session->getPermission('admin.user.canAddUser')}
 					<li><a href="index.php?form=UserAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.user.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/userAddM.png" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
@@ -137,11 +138,13 @@
 				<li><a href="index.php?form=UserSearch{@SID_ARG_2ND}" title="{lang}wcf.acp.user.search{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/searchM.png" alt="" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 				{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 			</ul>
-		</div>
+		</nav>
 	</div>
 {else}
 	<div class="border content">
-		<div class="container-1">{lang}wcf.acp.user.search.error.noMatches{/lang}</div>
+		<div class="container-1">
+			<p class="info">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
+		</div>
 	</div>
 {/if}
 

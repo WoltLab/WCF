@@ -1,12 +1,12 @@
 {include file='header'}
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/cronjobs{$action|ucfirst}L.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.cronjob.{$action}{/lang}</h2>
-		<p>{lang}wcf.acp.cronjob.subtitle{/lang}</p>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.cronjob.{$action}{/lang}</h1>
+		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>
+	</hgroup>
+</header>
 
 {if $errorField}
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
@@ -19,13 +19,14 @@
 <p class="info">{lang}wcf.acp.cronjob.intro{/lang}</p>
 
 <div class="contentHeader">
-	<div class="largeButtons">
+	<nav class="largeButtons">
 		<ul>
 			<li><a href="index.php?page=CronjobList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.cronjobs.view{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/cronjobsM.png" alt="" /> <span>{lang}wcf.acp.menu.link.cronjobs.view{/lang}</span></a></li>
 			{if $action == 'edit'}<li><a href="index.php?action=CronjobExecute&amp;cronjobID={@$cronjobID}{@SID_ARG_2ND}" title="{lang}wcf.acp.cronjob.execute{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/cronjobExecuteM.png" alt="" /> <span>{lang}wcf.acp.cronjob.execute{/lang}</span></a></li>{/if}
 		</ul>
-	</div>
+	</nav>
 </div>
+
 <form method="post" action="index.php?form=Cronjob{$action|ucfirst}">
 	<div class="border content">
 		<div class="container-1">
@@ -175,9 +176,10 @@
 			{if $additionalFields|isset}{@$additionalFields}{/if}
 		</div>
 	</div>
+	
 	<div class="formSubmit">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
+		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		{@SID_INPUT_TAG}
  		{if $cronjobID|isset}<input type="hidden" name="cronjobID" value="{@$cronjobID}" />{/if}
 	</div>

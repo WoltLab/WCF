@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The file "pagemenu.xsd" is used for xml-files which installs, updates or deletes header menu items.  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
+        
+        <!-- include types -->
+        <xs:include schemaLocation="types.xsd" />
+        
+        <!-- Represents the data-node. -->
+        <xs:element name="data">
+                <xs:complexType>
+                        <xs:all>
+                                <xs:element name="import" type="import" minOccurs="0" />
+                                <xs:element name="delete" type="delete" minOccurs="0" />
+                        </xs:all>
+                </xs:complexType>
+        </xs:element>
+        
+         <!-- Represents the import-node. -->
+        <xs:complexType name="import">
+                <xs:sequence>
+                        <xs:element name="pagemenuitem" type="pagemenuitem_import" maxOccurs="unbounded" />
+                </xs:sequence>
+        </xs:complexType>
+        
+         <!-- Represents the delete-node. -->
+        <xs:complexType name="delete">
+                <xs:sequence>
+                        <xs:element name="pagemenuitem" type="pagemenuitem_delete" maxOccurs="unbounded" />
+                </xs:sequence>
+        </xs:complexType>
+        
+        <!-- Represents a pagemenuitem which will be deleted. The node needs the attribute "name". -->
+	<xs:complexType name="pagemenuitem_delete">
+		  <xs:attribute name="name" type="woltlab_varchar" use="required" />
+	</xs:complexType>        
+        
+         <!-- Represents a pagemenuitem which will be installed or updated. Extends the type "pagemenu_delete". -->
+	<xs:complexType name="pagemenuitem_import">
+                <xs:complexContent>
+                        <xs:extension base="pagemenuitem_delete">
+                                <xs:all>
+                                        <xs:element name="link" type="woltlab_varchar_nullable" minOccurs="0" />
+                                        <xs:element name="options" type="xs:string" minOccurs="0" />
+                                        <xs:element name="permissions" type="xs:string" minOccurs="0" />
+                                        <xs:element name="showorder" type="xs:unsignedInt" minOccurs="0" />
+                                        <xs:element name="position" minOccurs="0">
+                                        	<xs:simpleType>
+	                                        	<xs:restriction base="xs:string">
+	                                        		<xs:enumeration value="header" />
+	                                        		<xs:enumeration value="footer" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+                                </xs:all>
+                        </xs:extension>
+                </xs:complexContent>
+	</xs:complexType>
+</xs:schema>

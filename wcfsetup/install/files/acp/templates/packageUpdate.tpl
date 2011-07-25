@@ -1,11 +1,11 @@
 {include file='header'}
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/packageUpdateL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.packageUpdate{/lang}</h2>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.packageUpdate{/lang}</h1>
+	</hgroup>
+</header>
 
 {if $errorField == 'updates'}
 	{if $errorType === 'empty'}
@@ -49,8 +49,8 @@
 		</div>
 		
 		<div class="formSubmit">
-			{if !$errorField}<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />{/if}
 			{*<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />*}
+			{if !$errorField}<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />{/if}
 			{@SID_INPUT_TAG}
 	 		<input type="hidden" name="send" value="1" />
 	 		
@@ -60,6 +60,5 @@
 		</div>
 	</form>
 {/if}
-
 
 {include file='footer'}

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
+	<!-- include WoltLab data types -->
+	<xs:include schemaLocation="types.xsd" />
+	
+	<!-- data node -->
+	<xs:element name="package">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="instructions" type="instructions" minOccurs="1" maxOccurs="unbounded" />
+				<xs:element name="packageinformation" type="packageInformation" minOccurs="1" maxOccurs="1" />
+				<xs:element name="authorinformation" type="authorInformation" minOccurs="1" maxOccurs="1" />
+				<xs:element name="requiredpackages" type="requiredPackages" minOccurs="0" maxOccurs="1" />
+				<xs:element name="optionalpackages" type="optionalPackages" minOccurs="0" maxOccurs="1" />
+				<xs:element name="excludedpackages" type="excludedPackages" minOccurs="0" maxOccurs="1" />
+			</xs:choice>
+			<xs:attribute name="name" type="woltlab_varchar" use="required" />
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- simplePackage element -->
+	<xs:complexType name="simplePackage">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="minversion" type="xs:string" />
+				<xs:attribute name="file" type="xs:string" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	
+	<!-- optionalPackage element -->
+	<xs:complexType name="optionalPackage">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="minVersion" type="xs:string" />
+				<xs:attribute name="file" type="xs:string" use="required" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<!-- excludedPackage element -->
+	<xs:complexType name="excludedPackage">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="version" type="xs:string" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<!-- instructions node -->
+	<xs:complexType name="instructions">
+		<xs:sequence>
+			<xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip" />
+		</xs:sequence>
+		<xs:attribute name="type" type="instructionsType" use="required" />
+		<xs:attribute name="fromversion" type="woltlab_varchar" />
+	</xs:complexType>
+	
+	<!-- instructionsType attribute -->
+	<xs:simpleType name="instructionsType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="install" />
+			<xs:enumeration value="update" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- packageInformation node -->
+	<xs:complexType name="packageInformation">
+		<xs:sequence>
+			<xs:element name="packagename" minOccurs="1" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="woltlab_varchar">
+							<xs:attribute name="language" type="xs:string" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="packagedescription" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="language" type="xs:string" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="standalone" type="woltlab_boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="isunique" type="woltlab_boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="version" type="woltlab_varchar" minOccurs="1" maxOccurs="1" />
+			<xs:element name="date" type="xs:date" minOccurs="1" maxOccurs="1" />
+			<xs:element name="plugin" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- authorInformation node -->
+	<xs:complexType name="authorInformation">
+		<xs:all>
+			<xs:element name="author" type="woltlab_varchar" minOccurs="1" />
+			<xs:element name="authorurl" type="xs:anyURI" minOccurs="0" />
+		</xs:all>
+	</xs:complexType>
+	
+	<!-- requiredPackages node -->
+	<xs:complexType name="requiredPackages">
+		<xs:sequence>
+			<xs:element name="requiredpackage" type="simplePackage" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- optionalPackages node -->
+	<xs:complexType name="optionalPackages">
+		<xs:sequence>
+			<xs:element name="optionalpackage" type="optionalPackage" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- excludedPackages node -->
+	<xs:complexType name="excludedPackages">
+		<xs:sequence>
+			<xs:element name="excludedpackage" type="excludedPackage" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

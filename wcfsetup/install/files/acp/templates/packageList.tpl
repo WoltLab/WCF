@@ -10,23 +10,23 @@
 	//]]>
 </script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/packageL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.package.list{/lang}</h2>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.package.list{/lang}</h1>
+	</hgroup>
+</header>
 
 <div class="contentHeader">
 	{pages print=true assign=pagesLinks link="index.php?page=PackageList&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&packageID="|concat:SID_ARG_2ND_NOT_ENCODED}
 
 	{if $__wcf->session->getPermission('admin.system.package.canInstallPackage') || $additionalLargeButtons|isset}
-		<div class="largeButtons">
+		<nav class="largeButtons">
 			<ul>
 				{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}<li><a href="index.php?form=PackageStartInstall&amp;action=install{@SID_ARG_2ND}" title="{lang}wcf.acp.package.startInstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageInstallM.png" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>{/if}
 				{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 			</ul>
-		</div>
+		</nav>
 	{/if}
 </div>
 
@@ -93,12 +93,12 @@
 	{@$pagesLinks}
 	
 	{if $__wcf->session->getPermission('admin.system.package.canInstallPackage') || $additionalLargeButtons|isset}
-		<div class="largeButtons">
+		<nav class="largeButtons">
 			<ul>
 				{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}<li><a href="index.php?form=PackageStartInstall&amp;action=install{@SID_ARG_2ND}" title="{lang}wcf.acp.package.startInstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageInstallM.png" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>{/if}
 				{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 			</ul>
-		</div>
+		</nav>
 	{/if}
 </div>
 

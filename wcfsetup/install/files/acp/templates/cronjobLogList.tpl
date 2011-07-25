@@ -1,13 +1,13 @@
 {include file='header'}
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/cronjobsLogL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.cronjob.log{/lang}</h2>
-		<p>{lang}wcf.acp.cronjob.subtitle{/lang}</p>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.cronjob.log{/lang}</h1>
+		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>
+	</hgroup>
+</header>
 
 <div class="contentHeader">
 	{pages print=true assign=pagesLinks link="index.php?page=CronjobLogList&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&packageID="|concat:SID_ARG_2ND_NOT_ENCODED}
@@ -68,7 +68,7 @@
 {hascontentelse}
 	<div class="border content">
 		<div class="container-1">
-			<p>{lang}wcf.acp.cronjob.log.noEntries{/lang}</p>
+			<p class="info">{lang}wcf.acp.cronjob.log.noEntries{/lang}</p>
 		</div>
 	</div>
 {/hascontent}

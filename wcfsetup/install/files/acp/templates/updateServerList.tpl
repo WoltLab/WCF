@@ -9,21 +9,21 @@
 	//]]>
 </script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/updateServerL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.updateServer.view{/lang}</h2>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.updateServer.view{/lang}</h1>
+	</hgroup>
+</header>
 
 {if $deletedPackageUpdateServerID}
 	<p class="success">{lang}wcf.acp.updateServer.delete.success{/lang}</p>
 {/if}
 
 <div class="contentHeader">
-	<div class="largeButtons">
+	<nav class="largeButtons">
 		<ul><li><a href="index.php?form=UpdateServerAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.updateServer.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/updateServerAddM.png" alt="" /> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li></ul>
-	</div>
+	</nav>
 </div>
 
 {if !$updateServers|count}
@@ -88,9 +88,9 @@
 		</table>
 	</div>
 	<div class="contentHeader">
-		<div class="largeButtons">
+		<nav class="largeButtons">
 			<ul><li><a href="index.php?form=UpdateServerAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.updateServer.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/updateServerAddM.png" alt="" /> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li></ul>
-		</div>
+		</nav>
 	</div>
 {/if}
 

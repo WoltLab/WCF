@@ -13,12 +13,12 @@
 	//]]>
 </script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/userSearchL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.user.search{/lang}</h2>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.user.search{/lang}</h1>
+	</hgroup>
+</header>
 
 {if $errorField == 'search'}
 <p class="error">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
@@ -31,7 +31,7 @@
 {/if*}
 
 <div class="contentHeader">
-	<div class="largeButtons">
+	<nav class="largeButtons">
 		<ul>
 			{if $__wcf->session->getPermission('admin.user.canAddUser')}
 				<li><a href="index.php?form=UserAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.user.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/userAddM.png" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
@@ -39,7 +39,7 @@
 			<li><a href="index.php?page=UserList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.user.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/usersM.png" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a>
 			</li>
 		</ul>
-	</div>
+	</nav>
 </div>
 
 <form method="post" action="index.php?form=UserSearch">
@@ -121,13 +121,15 @@
 			
 			{if $additionalFields|isset}{@$additionalFields}{/if}
 			
-			<div class="tabMenu">
-				<ul>
-					{if $optionTree|count}<li id="profile"><a onclick="tabMenu.showSubTabMenu('profile');"><span>{lang}wcf.acp.user.search.conditions.profile{/lang}</span></a></li>{/if}
-					{if $additionalTabs|isset}{@$additionalTabs}{/if}
-					<li id="resultOptions"><a onclick="tabMenu.showSubTabMenu('resultOptions');"><span>{lang}wcf.acp.user.search.display{/lang}</span></a></li>
-				</ul>
-			</div>
+			<nav>
+				<div class="tabMenu">
+					<ul>
+						{if $optionTree|count}<li id="profile"><a onclick="tabMenu.showSubTabMenu('profile');"><span>{lang}wcf.acp.user.search.conditions.profile{/lang}</span></a></li>{/if}
+						{if $additionalTabs|isset}{@$additionalTabs}{/if}
+						<li id="resultOptions"><a onclick="tabMenu.showSubTabMenu('resultOptions');"><span>{lang}wcf.acp.user.search.display{/lang}</span></a></li>
+					</ul>
+				</div>
+			</nav>
 			<div class="subTabMenu">
 				<div class="containerHead"><div> </div></div>
 			</div>
@@ -135,7 +137,7 @@
 			{if $optionTree|count}
 				<div class="border tabMenuContent hidden" id="profile-content">
 					<div class="container-1">
-						<h3 class="subHeadline">{lang}wcf.acp.user.search.conditions.profile{/lang}</h3>
+						<h3 class="subHeading">{lang}wcf.acp.user.search.conditions.profile{/lang}</h3>
 						{include file='optionFieldList' langPrefix='wcf.user.option.' options=$optionTree}
 					</div>
 				</div>
@@ -145,7 +147,7 @@
 			
 			<div class="border tabMenuContent hidden" id="resultOptions-content">
 				<div class="container-1">
-					<h3 class="subHeadline">{lang}wcf.acp.user.search.display{/lang}</h3>
+					<h3 class="subHeading">{lang}wcf.acp.user.search.display{/lang}</h3>
 					
 					<fieldset>
 						<legend>{lang}wcf.acp.user.search.display.general{/lang}</legend>
@@ -229,8 +231,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
+		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		{@SID_INPUT_TAG}
  	</div>
 </form>

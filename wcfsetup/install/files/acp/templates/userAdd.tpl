@@ -49,12 +49,12 @@
 	//]]>
 </script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img {if $userID|isset}id="userEdit{@$userID}" {/if}src="{@RELATIVE_WCF_DIR}icon/user{@$action|ucfirst}L.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.user.{@$action}{/lang}</h2>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.user.{@$action}{/lang}</h1>
+	</hgroup>
+</header>
 
 {if $errorField}
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
@@ -69,14 +69,15 @@
 {/if}
 
 <div class="contentHeader">
-	<div class="largeButtons">
+	<nav class="largeButtons">
 		<ul>
 			<li><a href="index.php?page=UserList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.user.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/usersM.png" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
 			<li><a href="index.php?form=UserSearch{@SID_ARG_2ND}" title="{lang}wcf.acp.user.search{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/searchM.png" alt="" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
-	</div>
+	</nav>
 </div>
+
 <form method="post" action="index.php?form=User{@$action|ucfirst}">
 	<div class="border content">
 		<div class="container-1">
@@ -184,15 +185,17 @@
 			{if $additionalFields|isset}{@$additionalFields}{/if}
 			
 			{if $optionTree|count || $additionalTabs|isset}
-				<div class="tabMenu">
-					<ul>
-						{foreach from=$optionTree item=categoryLevel1}
-							<li id="{@$categoryLevel1[object]->categoryName}"><a onclick="tabMenu.showSubTabMenu('{@$categoryLevel1[object]->categoryName}');"><span>{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</span></a></li>
-						{/foreach}
-						
-						{if $additionalTabs|isset}{@$additionalTabs}{/if}
-					</ul>
-				</div>
+				<nav>
+					<div class="tabMenu">
+						<ul>
+							{foreach from=$optionTree item=categoryLevel1}
+								<li id="{@$categoryLevel1[object]->categoryName}"><a onclick="tabMenu.showSubTabMenu('{@$categoryLevel1[object]->categoryName}');"><span>{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</span></a></li>
+							{/foreach}
+							
+							{if $additionalTabs|isset}{@$additionalTabs}{/if}
+						</ul>
+					</div>
+				<nav>
 				<div class="subTabMenu">
 					<div class="containerHead"><div> </div></div>
 				</div>
@@ -200,7 +203,7 @@
 				{foreach from=$optionTree item=categoryLevel1}
 					<div class="border tabMenuContent hidden" id="{@$categoryLevel1[object]->categoryName}-content">
 						<div class="container-1">
-							<h3 class="subHeadline">{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h3>
+							<h3 class="subHeading">{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h3>
 							
 							{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 								<fieldset>
@@ -250,8 +253,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
+		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		{@SID_INPUT_TAG}
  		<input type="hidden" name="action" value="{@$action}" />
  		{if $userID|isset}<input type="hidden" name="userID" value="{@$userID}" />{/if}
