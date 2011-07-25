@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="{lang}wcf.global.pageDirection{/lang}" xml:lang="{@LANGUAGE_CODE}">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{@$__wcf->getLanguage()->getPageDirection()}" xml:lang="{@$__wcf->getLanguage()->getFixedLanguageCode()}">
 	<head>
 		<title></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<link href="{@RELATIVE_WCF_DIR}acp/style/extra/setupWindowStyle{if PAGE_DIRECTION == 'rtl'}-rtl{/if}.css" rel="stylesheet" type="text/css" />
+		<link href="{@RELATIVE_WCF_DIR}acp/style/extra/setupWindowStyle{if $__wcf->getLanguage()->getPageDirection() == 'rtl'}-rtl{/if}.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript">
 			//<![CDATA[
 			function changeHeight() {

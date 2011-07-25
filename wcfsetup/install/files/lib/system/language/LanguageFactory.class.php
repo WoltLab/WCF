@@ -56,7 +56,7 @@ abstract class LanguageFactory {
 			}
 			
 			self::$languages[$language->languageID] = $language;
-			self::defineConstants($languageID);
+			self::setLocale($languageID);
 		}
 		
 		return self::$languages[$languageID];
@@ -231,22 +231,6 @@ abstract class LanguageFactory {
 	}
 	
 	/**
-	 * Defines all global constants once first language is being initialized.
-	 *
-	 * @param	integer		$languageID
-	 */
-	private static function defineConstants($languageID) {
-		if (!defined('LANGUAGE_CODE')) {
-			define('LANGUAGE_CODE', self::fixLanguageCode(self::$languages[$languageID]->languageCode));
-			mb_internal_encoding('UTF-8');
-			if (function_exists('mb_regex_encoding')) mb_regex_encoding('UTF-8');
-			mb_language('uni');
-		}
-		
-		self::setLocale($languageID);
-	}
-	
-	/**
 	 * Sets the local language.
 	 * Recall this function after language changed.
 	 *
@@ -257,7 +241,6 @@ abstract class LanguageFactory {
 		// string comparison
 		// character classification and conversion
 		// date and time formatting
-		if (!defined('PAGE_DIRECTION')) define('PAGE_DIRECTION', self::$languages[$languageID]->get('wcf.global.pageDirection'));
 		setlocale(LC_COLLATE, self::$languages[$languageID]->get('wcf.global.locale.unix').'.UTF-8', self::$languages[$languageID]->get('wcf.global.locale.unix'), self::$languages[$languageID]->get('wcf.global.locale.win'));
 		setlocale(LC_CTYPE, self::$languages[$languageID]->get('wcf.global.locale.unix').'.UTF-8', self::$languages[$languageID]->get('wcf.global.locale.unix'), self::$languages[$languageID]->get('wcf.global.locale.win'));
 	}

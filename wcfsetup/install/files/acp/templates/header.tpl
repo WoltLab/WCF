@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="{lang}wcf.global.pageDirection{/lang}" lang="{@LANGUAGE_CODE}">
+<html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{@$__wcf->getLanguage()->getFixedLanguageCode()}">
 <head>
 	<meta charset="utf-8" />
 	<title>{if $pageTitle|isset}{@$pageTitle}{else}{lang}wcf.global.pageTitle{/lang}{/if} - {lang}wcf.acp{/lang}</title>
@@ -30,12 +30,12 @@
 	
 	{*
 	<style type="text/css">
-		@import url("{@RELATIVE_WCF_DIR}acp/style/style-{@PAGE_DIRECTION}.css");
+		@import url("{@RELATIVE_WCF_DIR}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css");
 	</style>
 	
 	<!--[if IE 8]>
 		<style type="text/css">
-			@import url("{@RELATIVE_WCF_DIR}style/extra/ie8-fix{if PAGE_DIRECTION == 'rtl'}-rtl{/if}.css");
+			@import url("{@RELATIVE_WCF_DIR}style/extra/ie8-fix{if $__wcf->getLanguage()->getPageDirection() == 'rtl'}-rtl{/if}.css");
 		</style>
 	<![endif]-->
 	*}
