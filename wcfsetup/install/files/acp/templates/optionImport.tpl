@@ -1,8 +1,8 @@
 {include file='header'}
 
-<header class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/optionImportAndExportL.png" alt="" />
-	<hgroup class="headlineContainer">
+	<hgroup>
 		<h1>{lang}wcf.acp.option.importAndExport{/lang}</h1>
 	</hgroup>
 </header>

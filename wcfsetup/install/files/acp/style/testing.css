@@ -472,7 +472,7 @@ div.ui-widget-overlay {
 	color: #999;
 	font-size: 140%;
 	font-weight: bold;
-	padding-bottom: 15px;
+	padding-bottom: 10px;
 }
 
 .mainHeading > hgroup p {
@@ -698,8 +698,8 @@ tr.container-2 td {
 .pageNavigation ul li.active,
 .pageNavigation ul li:not(.skip):hover {
 	background-color: #faebd7;
-	border-color: #ff8800;
-	color: #ff8800;
+	border-color: #f80;
+	color: #f80;
 }
 
 .pageNavigation ul li a {
@@ -707,7 +707,7 @@ tr.container-2 td {
 }
 
 .pageNavigation ul li:not(.skip):hover a {
-	color: #ff8800;
+	color: #f80;
 }
 
 .pageNavigation ul li.skip {
