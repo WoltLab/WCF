@@ -6,6 +6,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
+use wcf\util\DirectoryUtil;
 
 /**
  * TemplateEngine loads and displays template.
@@ -528,12 +529,9 @@ class TemplateEngine extends SingletonFactory {
 	 */
 	public static function deleteCompiledTemplates($compileDir = '') {
 		if (empty($compileDir)) $compileDir = WCF_DIR.'templates/compiled/';
-		
+
 		// delete compiled templates
-		$matches = glob($compileDir . '*_*_*.php');
-		if (is_array($matches)) {
-			foreach ($matches as $match) @unlink($match);
-		}
+		DirectoryUtil::getInstance($compileDir)->deletePattern('~.*_.*_.*\.php$');
 	}
 	
 	/**

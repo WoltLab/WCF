@@ -4,6 +4,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\DirectoryUtil;
 
 /**
  * DiskCacheSource is an implementation of CacheSource that stores the cache as simple files in the file system.
@@ -87,19 +88,15 @@ class DiskCacheSource implements ICacheSource {
 	 */
 	public function clear($directory, $filepattern, $forceDelete = false) {
 		$filepattern = str_replace('*', '.*', str_replace('.', '\.', $filepattern));
-		$directory = FileUtil::addTrailingSlash($directory);
-		
-		if (@file_exists($directory)) {
-			$dirh = opendir($directory);
-			while ($filename = readdir($dirh)) {
-				if ($filename != '.' && $filename != '..' && preg_match('%^'.$filepattern.'$%i', $filename)) {
-					if ($forceDelete || !@touch($directory.$filename, 1)) {
-						@unlink($directory.$filename);
-					}
-				}
-			}
-			closedir($dirh);
+		if (substr($directory, -1) != '/') {
+			$directory .= '/';	
 		}
+
+		DirectoryUtil::getInstance($directory)->executeCallback(function ($filename) use ($forceDelete) {
+			if ($forceDelete || !@touch($filename, 1)) {
+				@unlink($filename);
+			}
+		}, '%^'.$directory.$filepattern.'$%i');
 	}
 	
 	/**
@@ -205,15 +202,7 @@ class DiskCacheSource implements ICacheSource {
 		while ($row = $statement->fetchArray()) {
 			$packageDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
 			$cacheDir = $packageDir.'cache';
-			if (file_exists($cacheDir)) {
-				// get files in cache directory
-				$files = glob($cacheDir.'/*.php');
-				if (is_array($files)) {
-					foreach ($files as $file) {
-						@unlink($file);
-					}
-				}
-			}
+			DirectoryUtil::getInstance($cacheDir)->deletePattern('~.*\.php$');
 		}
 	}
 }
