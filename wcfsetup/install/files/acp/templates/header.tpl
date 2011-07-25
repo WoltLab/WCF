@@ -66,16 +66,16 @@
 <body id="tpl{$templateName|ucfirst}">
 	<!-- HEADER -->
 	<a id="top"></a>
-	<header class="pageHeader"
+	<header class="pageHeader">
 		
 		<!-- top menu -->
-		<menu id="topMenu" class="topMenu">
+		<nav id="topMenu" class="topMenu">
 			<div>
 				<ul>
 					<li><a href="#" title="Hello World">Hello World!</a></li>
 				</ul>
 			</div>
-		</menu>
+		</nav>
 		<!-- /top menu -->
 		
 		<!-- logo -->
@@ -94,7 +94,7 @@
 		<!-- /logo -->
 		
 		<!-- top nav -->
-		<menu id="mainMenu" class="mainMenu">
+		<nav id="mainMenu" class="mainMenu">
 			{* work-around for unknown core-object during WCFSetup *}
 			{if PACKAGE_ID}
 				<ul>
@@ -103,7 +103,7 @@
 					{/foreach}
 				</ul>
 			{/if}
-		</menu>
+		</nav>
 		<!-- /top nav -->
 		
 		<!-- sub bar -->
@@ -125,7 +125,7 @@
 					{* work-around for unknown core-object during WCFSetup *}
 					{if PACKAGE_ID}
 						{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=parentMenuItem}
-							<div class="menuContainer" data-parentMenuItem="{$parentMenuItem->menuItem}" id="{$parentMenuItem->menuItem}-container" style="display: none;">
+							<div data-parentMenuItem="{$parentMenuItem->menuItem}" id="{$parentMenuItem->menuItem}-container" style="display: none;">
 								{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
 									<h1 data-menuItem="{$menuItem->menuItem}" class="menuHeader">{lang}{@$menuItem->menuItem}{/lang}</h1>
 									<div class="sidebarMenuGroup">
@@ -149,4 +149,4 @@
 				<!-- /sub nav -->
 			</aside>
 			
-			<div id="content">
+			<section id="content">
