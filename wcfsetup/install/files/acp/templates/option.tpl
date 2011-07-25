@@ -8,13 +8,13 @@
 	//]]>
 </script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/optionL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.option.category.{$category->categoryName}{/lang}</h2>
-		<p>{lang}wcf.acp.option.category.{$category->categoryName}.description{/lang}</p>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.option.category.{$category->categoryName}{/lang}</h1>
+		<h2>{lang}wcf.acp.option.category.{$category->categoryName}.description{/lang}</h2>
+	</hgroup>
+</header>
 
 {if $success|isset}
 	<p class="success">{lang}wcf.acp.option.success{/lang}</p>
@@ -26,17 +26,21 @@
 
 <form method="post" action="index.php?form=Option&amp;categoryID={@$category->categoryID}">
 	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
-		<ul class="tabMenu">
-			{foreach from=$optionTree item=categoryLevel1}
-				<li><a href="#{@$categoryLevel1[object]->categoryName}">{*<span>*}{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}{*</span>*}</a></li>
-			{/foreach}
-		</ul>
+		<nav>
+			<ul class="tabMenu">
+				{foreach from=$optionTree item=categoryLevel1}
+					<li><a href="#{@$categoryLevel1[object]->categoryName}">{*<span>*}{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}{*</span>*}</a></li>
+				{/foreach}
+			</ul>
+		</nav>
 		
 		{foreach from=$optionTree item=categoryLevel1}
 			<div class="border tabMenuContent hidden" id="{@$categoryLevel1[object]->categoryName}">
 				<div class="container-1">
-					<h3 class="subHeadline">{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h3>
-					<p class="description">{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}.description{/lang}</p>
+					<hgroup>
+						<h1 class="subHeading">{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
+						<h2 class="description">{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}.description{/lang}</h2>
+					</hgroup>
 					
 					{if $categoryLevel1[options]|count}
 						<fieldset>

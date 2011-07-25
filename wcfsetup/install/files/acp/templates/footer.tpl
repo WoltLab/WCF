@@ -1,6 +1,6 @@
 			</div>
 		</div>
-	</div>
+	</section>
 	<!-- /CONTENT -->
 	
 	<!-- FOOTER -->
@@ -12,7 +12,7 @@
 				</ul>
 			</nav>
 		</div>
-		<p class="copyright"><a href="http://www.woltlab.com" title="www.woltlab.com">Copyright &copy; 2001-2011 WoltLab&reg; GmbH</a></p>
+		<p class="copyright"><a href="http://www.woltlab.com" title="Go to the WoltLab website">Copyright &copy; 2001-2011 WoltLab&reg; GmbH</a></p>
 	</footer>
 	<!-- /FOOTER -->
 	<a id="bottom"></a>

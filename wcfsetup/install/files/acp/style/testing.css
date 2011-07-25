@@ -40,6 +40,14 @@ a:hover {
 	text-decoration: underline;
 }
 
+section#content a {
+	color: #999;
+}
+
+section#content a:hover {
+	color: #333;
+}
+
 .invisible {
 	position: absolute;
 	left: -9000px;
@@ -62,7 +70,7 @@ header.pageHeader {
 
 /* Top Menu */
 
-header.pageHeader menu.topMenu {
+header.pageHeader nav.topMenu {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -78,21 +86,21 @@ header.pageHeader menu.topMenu {
 	box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
 }
 
-header.pageHeader menu.topMenu > div {
+header.pageHeader nav.topMenu > div {
 	padding: 5px 23px 3px;
 	
 }
 
-header.pageHeader menu.topMenu ul {
+header.pageHeader nav.topMenu ul {
 	
 }
 
-header.pageHeader menu.topMenu ul li, header.pageHeader menu.topMenu ul li a {
+header.pageHeader nav.topMenu ul li, header.pageHeader nav.topMenu ul li a {
 	color: #69c;
 	text-shadow: 0 -1px 0 #000;
 }
 
-header.pageHeader menu.topMenu ul li a:hover {
+header.pageHeader nav.topMenu ul li a:hover {
 	color: #fff;
 }
 
@@ -120,18 +128,18 @@ header.pageHeader div#logo a:hover {
 header.pageHeader div#logo img {
 	position: absolute;
 	left: 0;
-	bottom: 20px;
+	bottom: 10px;
 }
 
 header.pageHeader div#logo a {
 	display: block;
-	height: 120px;
+	height: 110px;
 	text-align: right;
 }
 
 /* Main Menu  */
 
-menu.mainMenu {
+nav.mainMenu {
 	margin: 0 30px;
 	background-color: rgba(0, 0, 0, .4);
 	border-radius: 5px 5px 0 0;
@@ -140,17 +148,17 @@ menu.mainMenu {
 	bottom: -5px;
 }
 
-menu.mainMenu:after {
+nav.mainMenu:after {
 	content: "";
 	display: block;
 	clear: both;
 }
 
-menu.mainMenu ul {
+nav.mainMenu ul {
 	display: table-row;
 }
 
-menu.mainMenu li {
+nav.mainMenu li {
 	font-size: 123%;
 	font-weight: normal;
 	color: #69c;
@@ -173,11 +181,11 @@ menu.mainMenu li {
 	transition: all .2s linear;
 }
 
-menu.mainMenu li:hover {
+nav.mainMenu li:hover {
 	color: #fff;
 }
 
-menu.mainMenu li.activeMenuItem {
+nav.mainMenu li.activeMenuItem {
 	font-weight: bold;
 	color: #369;
 	text-shadow: 0 1px 0 #fff;
@@ -240,13 +248,8 @@ div.main > div {
 
 /* -- -- -- -- -- Content -- -- -- -- -- */
 
-div#content {
-	background-color: #fefefe;
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#fefefe));
-	background-image: -moz-linear-gradient(0% 0% 270deg, #eee, #fefefe);
-	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#fefefe));
-	background-image: -o-linear-gradient(#eee, #fefefe);
-	background-image: linear-gradient(#eee, #fefefe);
+section#content {
+	background-color: #fff;
 	
 	display: table-cell;
 	padding: 21px;
@@ -271,23 +274,23 @@ nav.sidebarMenu {
 	padding-bottom: 20px;
 }
 
-nav.sidebarMenu div.menuContainer {
+nav.sidebarMenu > div {
 	position: relative;
 	color: #69c;
 	text-shadow: 0 1px 0 #fff;
 }
 
-nav.sidebarMenu div.menuContainer a {
+nav.sidebarMenu > div a {
 	color: #69c;
 	text-shadow: 0 1px 0 #fff;
 }
 
-nav.sidebarMenu div.menuContainer a:hover {
+nav.sidebarMenu > div a:hover {
 	color: #369;
 	text-decoration: none !important;
 }
 
-nav.sidebarMenu div.menuContainer h1 {
+nav.sidebarMenu > div h1 {
 	background-image: url("../../icon/arrowRightS.png");
 	background-position: 15px center;
 	background-repeat: no-repeat;
@@ -300,20 +303,20 @@ nav.sidebarMenu div.menuContainer h1 {
 	position: relative;
 }
 
-nav.sidebarMenu div.menuContainer h1.activeMenuItem {
+nav.sidebarMenu > div h1.activeMenuItem {
 	background-image: url("../../icon/arrowDownS.png");
 }
 
-nav.sidebarMenu div.menuContainer ul li {
+nav.sidebarMenu > div ul li {
 	font-size: 110%;
 	padding: 5px 15px 7px 35px;
 }
 
-nav.sidebarMenu div.menuContainer ul li.activeMenuItem {
+nav.sidebarMenu > div ul li.activeMenuItem {
 	background-color: #fff;
 }
 
-nav.sidebarMenu div.menuContainer ul li.activeMenuItem a {
+nav.sidebarMenu > div ul li.activeMenuItem a {
 	color: #369;
 	font-weight: bold;
 }
@@ -443,39 +446,46 @@ div.ui-widget-overlay {
 
 /* -- -- -- -- -- Headings -- -- -- -- -- */
 
-div.mainHeadline {
+/* Main Heading */
+
+.mainHeading {
 	height: 48px;
-	margin-bottom: 7px;
+	margin-bottom: 15px;
 	position: relative;
 }
 
-div.mainHeadline img {
+.mainHeading img {
 	position: absolute;
-	top: -4px;
+	top: 0;
 	left: 0;
+	height: 48px;
 }
 
-div.mainHeadline div.headlineContainer {
+.mainHeading > hgroup {
 	height: 48px;
 	padding-left: 60px;
 	vertical-align: middle;
 }
 
-div.mainHeadline div.headlineContainer h2 {
-	border-bottom: 1px solid #ccc;
+.mainHeading > hgroup h1 {
+	border-bottom: 1px solid #999;
+	color: #999;
 	font-size: 140%;
-	padding-bottom: 3px;
+	font-weight: bold;
+	padding-bottom: 15px;
 }
 
-div.mainHeadline div.headlineContainer p {
+.mainHeading > hgroup p {
 	padding-top: 3px;
 } 
 
-h3.subHeadline {
-	border-bottom: 2px solid #000;
+/* Sub Heading */
+
+.subHeading {
+	border-bottom: 1px solid #999;
 	font-size: 120%;
 	margin: 14px 0 14px;
-	padding: 7px;
+	padding: 15px;
 }
 
 
@@ -494,7 +504,7 @@ fieldset legend {
 }
 
 fieldset p.description {
-	color: #777;
+	color: #369;
 	font-size: 90%;
 }
 
@@ -509,6 +519,8 @@ fieldset > ul li {
 
 
 /* -- -- -- -- -- Forms -- -- -- -- -- */
+
+/* Structure */
 
 div.formElement {
 	clear: both;
@@ -537,6 +549,16 @@ div.formGroupLabel label {
 
 div.formGroupField div.formField label {
 	display: block;
+}
+
+/* Form Elements */
+
+input {
+	border: 1px solid #ccc;
+}
+
+input:hover {
+	border: 1px solid #369;
 }
 
 
@@ -715,9 +737,9 @@ div.largeButtons ul li a {
 	background-image: linear-gradient(#fefefe, #eee);
 	
 	border: 1px solid #ccc;
-	border-radius: 10px;
+	border-radius: 30px;
 	display: inline-block;
-	padding: 7px;
+	padding: 5px 13px;
 }
 
 input[type='reset']:hover,
@@ -860,7 +882,7 @@ dl.disabled dt {
 
 .ui-tabs .ui-tabs-nav {
 	height: 18px !important; /* Fixes a clearing problem */
-	margin: 0 0 0 14px;
+	margin: 0 3px;
 	background-color: none;
 	padding: 3px 3px 0;
 }
@@ -887,7 +909,10 @@ dl.disabled dt {
 	
 	border: 1px solid #ccc;
 	border-bottom-width: 0;
-	border-radius: 10px 10px 0 0;
+
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	
 	float: left;
 	padding: 7px 14px;
 	text-decoration: none;

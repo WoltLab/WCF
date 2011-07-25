@@ -1,11 +1,11 @@
 {include file='header'}
 
-<div class="mainHeadline">
+<header class="mainHeadline">
 	<img src="{@RELATIVE_WCF_DIR}icon/optionImportAndExportL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.option.importAndExport{/lang}</h2>
-	</div>
-</div>
+	<hgroup class="headlineContainer">
+		<h1>{lang}wcf.acp.option.importAndExport{/lang}</h1>
+	</hgroup>
+</header>
 
 {if $success|isset}
 	<p class="success">{lang}wcf.acp.option.import.success{/lang}</p>	
