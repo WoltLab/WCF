@@ -672,7 +672,7 @@
 		<item name="wcf.acp.user.exportEmailAddress.separator"><![CDATA[Trennzeichen]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.textSeparator"><![CDATA[Texttrenner]]></item>
 		<item name="wcf.acp.user.groups"><![CDATA[Benutzergruppe(n)]]></item>
-		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Finde Benutzer, die in den ausgewählten Benutzergruppen nicht Mitglied sind.]]></item>
+		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Finde Benutzer, die keine Mitglieder der ausgewählten Benutzergruppen sind.]]></item>
 		<item name="wcf.acp.user.list"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[Alle Benutzer]]></item>
 		<item name="wcf.acp.user.list.count"><![CDATA[Insgesamt {#$items} Benutzer]]></item>
@@ -698,7 +698,7 @@
 		<item name="wcf.acp.user.search.withinResults"><![CDATA[In den Ergebnissen suchen]]></item>
 		<item name="wcf.acp.user.sendMail"><![CDATA[E-Mail an Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[E-Mail an alle Benutzer]]></item>
-		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[E-Mail als HTML verschicken]]></item>
+		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[E-Mail als HTML versenden]]></item>
 		<item name="wcf.acp.user.sendMail.from"><![CDATA[Absender]]></item>
 		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[<p>Hier kannst du die E-Mail-Adresse des Absenders definieren.{if MAIL_USE_FORMATTED_ADDRESS} Es ist auch folgendes Format möglich:{/if}</p>
 {if MAIL_USE_FORMATTED_ADDRESS}<p style="text-align: center; line-height: 2em;"><code>Absender Name &lt;email@absender.tld&gt;</code></p>{/if}

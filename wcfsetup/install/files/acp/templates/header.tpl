@@ -129,7 +129,7 @@
 					{* work-around for unknown core-object during WCFSetup *}
 					{if PACKAGE_ID}
 						{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=parentMenuItem}
-							<div data-parentMenuItem="{$parentMenuItem->menuItem}" id="{$parentMenuItem->menuItem}-container" style="display: none;">
+							<div class="menuContainer" data-parentMenuItem="{$parentMenuItem->menuItem}" id="{$parentMenuItem->menuItem}-container" style="display: none;">
 								{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
 									<h1 data-menuItem="{$menuItem->menuItem}" class="menuHeader">{lang}{@$menuItem->menuItem}{/lang}</h1>
 									<div class="sidebarMenuGroup">

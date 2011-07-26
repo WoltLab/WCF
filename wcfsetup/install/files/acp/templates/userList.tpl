@@ -63,12 +63,12 @@
 </div>
 
 <div class="subTabMenu">
-	<div class="containerHead">
+	<header class="containerHead">
 		<ul>
 			<li{if $action == ''} class="activeSubTabMenu"{/if}><a href="index.php?page=UserList{@SID_ARG_2ND}"><span>{lang}wcf.acp.user.list.all{/lang}</span></a></li>
 			{if $additionalUserListOptions|isset}{@$additionalUserListOptions}{/if}
 		</ul>
-	</div>
+	</header>
 </div>
 {if $users|count}
 	<div class="border">
@@ -88,7 +88,7 @@
 			</thead>
 			<tbody>
 			{foreach from=$users item=user}
-				<tr class="{cycle values="container-1,container-2" advance=false}" id="userRow{@$user->userID}">
+				<tr id="userRow{@$user->userID}">
 					<td class="columnMark"><input name="userMark" id="userMark{@$user->userID}" type="checkbox" value="{@$user->userID}" /></td>
 					<td class="columnIcon">
 						<script type="text/javascript">
