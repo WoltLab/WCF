@@ -45,7 +45,7 @@ class Breadcrumbs extends SingletonFactory {
 	 * @param	integer			$index
 	 * @return	boolean
 	 */
-	public function replace(Breadcrumbs $item, $index) {
+	public function replace(Breadcrumb $item, $index) {
 		if (isset($this->items[$index])) {
 			$this->items[$index] = $item;
 			
