@@ -172,7 +172,7 @@ class EventHandler extends SingletonFactory {
 					}
 				
 					$object = new $action['listenerClassName'];
-					$this->listenerObjects[$path] = $object;
+					$this->listenerObjects[$action['listenerClassName']] = $object;
 				}
 				
 				$this->actionsObjects[$name][$action['listenerClassName']] = $object;
