@@ -27,15 +27,15 @@ abstract class MailSender {
 		if (self::$instance == null) {
 			switch (MAIL_SEND_METHOD) {
 				case 'php':
-					self::$defaultMailSender = new PHPMailSender();
+					self::$instance = new PHPMailSender();
 					break;
 				
 				case 'smtp':
-					self::$defaultMailSender = new SMTPMailSender();
+					self::$instance = new SMTPMailSender();
 					break;
 				
 				case 'debug':
-					self::$defaultMailSender = new DebugMailSender();
+					self::$instance = new DebugMailSender();
 					break;
 			}
 		}
