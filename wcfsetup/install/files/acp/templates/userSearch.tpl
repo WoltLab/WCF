@@ -121,15 +121,16 @@
 			
 			{if $additionalFields|isset}{@$additionalFields}{/if}
 			
-			<nav>
-				<div class="tabMenu">
-					<ul>
-						{if $optionTree|count}<li id="profile"><a onclick="tabMenu.showSubTabMenu('profile');"><span>{lang}wcf.acp.user.search.conditions.profile{/lang}</span></a></li>{/if}
+			<div class="tabMenuContainer" {*data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem"*}>
+				<nav>
+					<ul class="tabMenu">
+						{if $optionTree|count}<li id="profile"><a onclick="tabMenu.showSubTabMenu('profile');">{*<span>*}{lang}wcf.acp.user.search.conditions.profile{/lang}{*</span>*}</a></li>{/if}
 						{if $additionalTabs|isset}{@$additionalTabs}{/if}
-						<li id="resultOptions"><a onclick="tabMenu.showSubTabMenu('resultOptions');"><span>{lang}wcf.acp.user.search.display{/lang}</span></a></li>
+						<li id="resultOptions"><a onclick="tabMenu.showSubTabMenu('resultOptions');">{*<span>*}{lang}wcf.acp.user.search.display{/lang}{*</span>*}</a></li>
 					</ul>
-				</div>
-			</nav>
+				</nav>
+			</div>
+			
 			<div class="subTabMenu">
 				<div class="containerHead"><div> </div></div>
 			</div>
