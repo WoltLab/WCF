@@ -49,7 +49,9 @@
 					<div class="formField">
 						<input type="text" class="inputText" id="groupName" name="groupName" value="{$groupName}" />
 						{if $errorType.groupName|isset}
-							<p class="innerError">{if $errorType.groupName == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</p>
+							<p class="innerError">
+								{if $errorType.groupName == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							</p>
 						{/if}
 					</div>
 					<div class="formFieldDesc hidden" id="groupNameHelpMessage">

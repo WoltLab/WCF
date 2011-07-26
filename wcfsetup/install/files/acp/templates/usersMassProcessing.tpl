@@ -177,9 +177,10 @@
 			{if $additionalTabContents|isset}{@$additionalTabContents}{/if}
 		</div>
 	</div>
+	
 	<div class="border content">
 		<div class="container-1">
-			<h3 class="subHeadline">{lang}wcf.acp.user.massProcessing.action{/lang}</h3>
+			<h3 class="subHeading">{lang}wcf.acp.user.massProcessing.action{/lang}</h3>
 				
 			<div class="formGroup{if $errorField == 'action'} formError{/if}">
 				<div class="formGroupLabel">

@@ -30,7 +30,9 @@
 					<div class="formField{if $errorField == 'groupIDs'} formError{/if}">
 						{htmlCheckboxes options=$groups name=groupIDs selected=$groupIDs}
 						{if $errorField == 'groupIDs'}
-							<p class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</p>
+							<p class="innerError">
+								{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							</p>
 						{/if}
 					</div>
 				</div>
