@@ -131,7 +131,6 @@
 			{@SID_INPUT_TAG}
 	 	</div>
 	</form>
-
 {/if}
 
 {include file='footer'}

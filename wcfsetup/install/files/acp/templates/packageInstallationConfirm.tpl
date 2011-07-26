@@ -8,13 +8,13 @@
 	//]]>
 </script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/package{@$action|ucfirst}L.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{$archive->getPackageInfo('packageName')}</h2>
-		<p>{$archive->getPackageInfo('packageDescription')}</p>
-	</div>
-</div>
+	<hgroup>
+		<h1>{$archive->getPackageInfo('packageName')}</h1>
+		<h2>{$archive->getPackageInfo('packageDescription')}</h2>
+	</hgroup>
+</header>
 
 {if $missingPackages > 0}
 	<p class="error">{lang}wcf.acp.package.install.error{/lang}</p>
@@ -74,7 +74,7 @@
 </fieldset>
 
 {if $updatableInstances|count > 0}
-	<p class="warning" style="margin: 20px 0 10px 0">{lang}wcf.acp.package.install.updatableInstances.warning{/lang}</p>
+	<p class="warning">{lang}wcf.acp.package.install.updatableInstances.warning{/lang}</p>
 	
 	<div class="border titleBarPanel">
 		<div class="containerHead">
@@ -131,7 +131,6 @@
 
 <div class="formSubmit">
 	<input type="button" accesskey="c" value="{lang}wcf.global.button.back{/lang}" onclick="document.location.href=fixURL('index.php?page=Package&amp;action={@$action}&amp;queueID={@$queueID}&amp;step=cancel{@SID_ARG_2ND}')" />
-	
 	{if $missingPackages == 0 && $excludingPackages|count == 0 && $excludedPackages|count == 0}
 		<input type="button" accesskey="s" id="submitButton" value="{lang}wcf.global.button.next{/lang}" />
 	{/if}

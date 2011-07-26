@@ -1,4 +1,5 @@
 {include file='header'}
+
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/TabMenu.class.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
@@ -7,12 +8,12 @@
 	//]]>
 </script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/userGroup{@$action|ucfirst}L.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.group.{@$action}{/lang}</h2>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.group.{@$action}{/lang}</h1>
+	</hgroup>
+</header>
 
 {if $errorField}
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
@@ -27,13 +28,14 @@
 {/if}
 
 <div class="contentHeader">
-	<div class="largeButtons">
+	<nav class="largeButtons">
 		<ul>
 			<li><a href="index.php?page=UserGroupList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.group.view{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/userGroupM.png" alt="" /> <span>{lang}wcf.acp.menu.link.group.view{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
-	</div>
+	</nav>
 </div>
+
 <form method="post" action="index.php?form=UserGroup{@$action|ucfirst}">
 	<div class="border content">
 		<div class="container-1">
@@ -47,9 +49,7 @@
 					<div class="formField">
 						<input type="text" class="inputText" id="groupName" name="groupName" value="{$groupName}" />
 						{if $errorType.groupName|isset}
-							<p class="innerError">
-								{if $errorType.groupName == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-							</p>
+							<p class="innerError">{if $errorType.groupName == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</p>
 						{/if}
 					</div>
 					<div class="formFieldDesc hidden" id="groupNameHelpMessage">
@@ -88,7 +88,7 @@
 				{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 					<div class="border tabMenuContent hidden" id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}-content">
 						<div class="container-1">
-							<h3 class="subHeadline">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h3>
+							<h3 class="subHeading">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h3>
 							<p class="description">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}</p>
 							
 							{if $categoryLevel2[options]|count}
@@ -115,12 +115,11 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
+		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		{@SID_INPUT_TAG}
  		<input type="hidden" name="action" value="{@$action}" />
  		{if $groupID|isset}<input type="hidden" name="groupID" value="{@$groupID}" />{/if}
- 		
  		<input type="hidden" id="activeTabMenuItem" name="activeTabMenuItem" value="{$activeTabMenuItem}" />
  		<input type="hidden" id="activeSubTabMenuItem" name="activeSubTabMenuItem" value="{$activeSubTabMenuItem}" />
  	</div>

@@ -1,4 +1,5 @@
 {include file='header'}
+
 <script type="text/javascript">
 	//<![CDATA[
 	function setFileType(newType) {
@@ -15,12 +16,12 @@
 	//]]>
 </script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/usersL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.user.exportEmailAddress{/lang}</h2>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.user.exportEmailAddress{/lang}</h1>
+	</hgroup>
+</header>
 
 <form method="post" action="index.php?form=UserEmailAddressExport">
 
@@ -80,8 +81,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
+		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		{@SID_INPUT_TAG}
  		<input type="hidden" name="userIDs" value="{@$userIDs}" />
  	</div>

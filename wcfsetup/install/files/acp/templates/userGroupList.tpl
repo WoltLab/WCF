@@ -1,4 +1,5 @@
 {include file='header'}
+
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/RemoveObjectAction.class.js"></script>
 
@@ -15,12 +16,12 @@
 	//]]>
 </script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/userGroupL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.group.list{/lang}</h2>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.group.list{/lang}</h1>
+	</hgroup>
+</header>
 
 {if $deletedGroups}
 	<p class="success">{lang}wcf.acp.group.delete.success{/lang}</p>
@@ -28,12 +29,12 @@
 
 <div class="contentHeader">
 	{pages print=true assign=pagesLinks link="index.php?page=UserGroupList&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&packageID="|concat:SID_ARG_2ND_NOT_ENCODED}
-	<div class="largeButtons">
+	<nav class="largeButtons">
 		<ul>
 			<li><a href="index.php?form=UserGroupAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.group.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/userGroupAddM.png" alt="" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}			
 		</ul>
-	</div>
+	</nav>
 </div>
 
 {if $groups|count}
@@ -75,9 +76,9 @@
 							
 							{if $additionalButtons[$group->groupID]|isset}{@$additionalButtons[$group->groupID]}{/if}
 						</td>
-						<td class="columnGroupID columnID">{@$group->groupID}</td>
-						<td class="columnGroupName columnText">{if $group->isEditable()}<a title="{lang}wcf.acp.group.edit{/lang}" href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{$group->groupName}</a>{else}{$group->groupName}{/if}</td>
-						<td class="columnMembers columnNumbers"><a title="{lang}wcf.acp.group.showMembers{/lang}" href="index.php?form=UserSearch&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{#$group->members}</a></td>
+						<td class="columnGroupID columnID"><p>{@$group->groupID}</p></td>
+						<td class="columnGroupName columnText">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{$group->groupName}</a>{else}{$group->groupName}</p>{/if}</td>
+						<td class="columnMembers columnNumbers"><p><a title="{lang}wcf.acp.group.showMembers{/lang}" href="index.php?form=UserSearch&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{#$group->members}</p></a></td>
 						
 						{if $additionalColumns[$group->groupID]|isset}{@$additionalColumns[$group->groupID]}{/if}
 					</tr>
@@ -89,12 +90,12 @@
 
 <div class="contentFooter">
 	{@$pagesLinks}
-	<div class="largeButtons">
+	<nav class="largeButtons">
 		<ul>
 			<li><a href="index.php?form=UserGroupAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.group.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/userGroupAddM.png" alt="" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
-	</div>
+	</nav>
 </div>
 
 {include file='footer'}

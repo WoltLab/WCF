@@ -9,7 +9,7 @@
 
 <img class="icon" src="{@RELATIVE_WCF_DIR}icon/loginXL.png" alt="" />
 
-<h1><b>{@$pageTitle}</b></h1>
+<h1>{@$pageTitle}</h1>
 
 <hr />
 
@@ -33,7 +33,6 @@
 					</p>
 				{/if}
 			</div>
-
 			
 			<div{if $errorField == 'password'} class="errorField"{/if}>
 				<label for="password">{lang}wcf.user.password{/lang}</label>

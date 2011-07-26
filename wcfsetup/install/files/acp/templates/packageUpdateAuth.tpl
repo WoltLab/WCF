@@ -1,11 +1,11 @@
 {include file='header'}
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/packageUpdateL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.packageUpdate.auth{/lang}</h2>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.packageUpdate.auth{/lang}</h1>
+	</hgroup>
+</header>
 
 {if $errorField != ''}
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
@@ -92,11 +92,9 @@
 	<div class="formSubmit">
 		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
-		
 		<input type="hidden" name="form" value="PackageUpdateAuth" />
 		{@SID_INPUT_TAG}
 		<input type="hidden" name="packageUpdateServerID" value="{@$packageUpdateServerID}" />
-		
 		{@$postParameters}
 	</div>
 </form>

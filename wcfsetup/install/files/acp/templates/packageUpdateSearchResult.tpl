@@ -1,12 +1,12 @@
 {include file='header'}
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/packageSearchL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.packageUpdate.search{/lang}</h2>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.packageUpdate.search{/lang}</h1>
+	</hgroup>
+</header>
 
 <div class="contentHeader">
 	{pages print=true assign=pagesLinks link="index.php?page=PackageUpdateSearchResult&searchID=$searchID&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&packageID="|concat:SID_ARG_2ND_NOT_ENCODED}
@@ -104,8 +104,8 @@
 	{/foreach}
 	
 	<div class="formSubmit">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
+		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="hidden" name="packageID" value="{@PACKAGE_ID}" />
 		{@SID_INPUT_TAG}
 		<input type="hidden" name="searchID" value="{@$searchID}" />

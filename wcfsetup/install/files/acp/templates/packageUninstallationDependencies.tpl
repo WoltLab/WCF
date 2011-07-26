@@ -8,13 +8,13 @@
 //	]]>
 </script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/packageUninstallL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.package.uninstall{/lang}: {$packageObj->getName()}</h2>
-		<p>{$packageObj->packageDescription}</p>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.package.uninstall{/lang}: {$packageObj->getName()}</h1>
+		<h2>{$packageObj->packageDescription}</h2>
+	</hgroup>
+</header>
 
 <fieldset>
 	<legend>{lang}wcf.acp.package.view.properties{/lang}</legend>
@@ -102,7 +102,7 @@
 						
 						{if $package.additionalButtons|isset}{@$package.additionalButtons}{/if}
 					</td>
-					<td class="columnID">{@$package.packageID}</td>
+					<td class="columnID"><p>{@$package.packageID}</p></td>
 					<td class="columnIcon">
 						{if $package.standalone}
 							<img src="{@RELATIVE_WCF_DIR}icon/packageTypeStandaloneS.png" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" />
@@ -112,10 +112,10 @@
 							<img src="{@RELATIVE_WCF_DIR}icon/packageS.png" alt="" title="{lang}wcf.acp.package.list.other{/lang}" />
 						{/if}
 					</td>
-					<td class="columnText" title="{$package.packageDescription}"><a href="index.php?page=PackageView&amp;activePackageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></td>
-					<td class="columnText">{if $package.authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package.authorURL|rawurlencode}" class="externalURL">{$package.author}</a>{else}{$package.author}{/if}</td>
-					<td class="columnText">{$package.packageVersion}</td>
-					<td class="columnDate">{@$package.packageDate|date}</td>
+					<td class="columnText" title="{$package.packageDescription}"><p><a href="index.php?page=PackageView&amp;activePackageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
+					<td class="columnText"><p>{if $package.authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package.authorURL|rawurlencode}" class="externalURL">{$package.author}</a>{else}{$package.author}{/if}</p></td>
+					<td class="columnText"><p>{$package.packageVersion}</p></td>
+					<td class="columnDate"><p>{@$package.packageDate|date}</p></td>
 					
 					{if $package.additionalColumns|isset}{@$package.additionalColumns}{/if}
 				</tr>

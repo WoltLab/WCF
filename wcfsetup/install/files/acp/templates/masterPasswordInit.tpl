@@ -12,13 +12,12 @@
 	//]]>
 </script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/loginL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.masterPassword.init{/lang}</h2>
-	</div>
-</div>
-
+	<hgroup>
+		<h1>{lang}wcf.acp.masterPassword.init{/lang}</h1>
+	</hgroup>
+</header>
 
 {if $errorField != ''}
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
@@ -82,8 +81,8 @@
 	</div>
 
 	<div class="formSubmit">
-		<input type="submit" accesskey="s" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
+		<input type="submit" accesskey="s" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" />
 		{@SID_INPUT_TAG}
  		<input type="hidden" name="url" value="{$url}" />
  	</div>

@@ -8,7 +8,7 @@
 
 <img class="icon" src="{@RELATIVE_WCF_DIR}icon/loginXL.png" alt="" />
 
-<h1><b>{@$pageTitle}</b></h1>
+<h1>{@$pageTitle}</h1>
 
 <hr />
 
