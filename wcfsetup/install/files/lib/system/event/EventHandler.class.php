@@ -107,7 +107,7 @@ class EventHandler extends SingletonFactory {
 								}
 	
 								$object = new $action['listenerClassName'];
-								$this->listenerObjects[] = $object;
+								$this->listenerObjects[$action['listenerClassName']] = $object;
 							}
 							
 							if ($object !== null) $this->inheritedActionsObjects[$name][$action['listenerClassName']] = $object;
@@ -172,7 +172,7 @@ class EventHandler extends SingletonFactory {
 					}
 				
 					$object = new $action['listenerClassName'];
-					$this->listenerObjects[$path] = $object;
+					$this->listenerObjects[$action['listenerClassName']] = $object;
 				}
 				
 				$this->actionsObjects[$name][$action['listenerClassName']] = $object;
