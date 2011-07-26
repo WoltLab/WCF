@@ -4,6 +4,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
@@ -18,30 +19,29 @@ use wcf\util\ClassUtil;
  * @subpackage	system.cleanup
  * @category 	Community Framework
  */
-class CleanupHandler {
-	/**
-	 * unique instance of CleanupHandler
-	 * @var	wcf\system\cleanup\CleanupHandler
-	 */
-	protected static $instance = null;
-	
+class CleanupHandler extends SingletonFactory {
 	/**
 	 * cleanup adapter cache
 	 * @var	array<array>
 	 */
 	protected $cache = null;
-	
+
 	/**
-	 * Initializes cleanup handler.
+	 * @see	wcf\system\SingletonFactory::prepareInitialization()
 	 */
-	protected function __construct() {
-		$this->loadCache();
+	protected static function prepareInitialization($className) {
+		// call loadInstance event
+		EventHandler::getInstance()->fireAction(__CLASS__, 'loadInstance');
+
+		return $className;
 	}
 	
 	/**
-	 * Prevents creating an additional instance.
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
-	protected function __clone() {}
+	protected function init() {
+		$this->loadCache();
+	}
 	
 	/**
 	 * Loads cleanup adapter cache.
@@ -121,24 +121,6 @@ class CleanupHandler {
 			// update last time of execution
 			$statement->execute(array(TIME_NOW, $adapterData['listenerID']));
 		}
-	}
-	
-	/**
-	 * Returns an unique instance of CleanupHandler.
-	 * 
-	 * @return	wcf\system\cleanup\CleanupHandler
-	 */
-	public static function getInstance() {
-		if (self::$instance === null) {
-			// call loadInstance event
-			EventHandler::getInstance()->fireAction(__CLASS__, 'loadInstance');
-			
-			if (self::$instance === null) {
-				self::$instance = new CleanupHandler();
-			}
-		}
-		
-		return self::$instance;
 	}
 	
 	/**

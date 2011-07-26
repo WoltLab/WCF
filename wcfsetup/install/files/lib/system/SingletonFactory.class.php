@@ -44,9 +44,22 @@ abstract class SingletonFactory {
 	public static final function getInstance() {
 		$className = get_called_class();
 		if (!isset(self::$__singletonObjects[$className])) {
+			$className = static::prepareInitialization($className);
+
 			self::$__singletonObjects[$className] = new $className();
 		}
 		
 		return self::$__singletonObjects[$className];
+	}
+	
+	/**
+	 * Is called right before the object of the requested class is initialized,
+	 * override if neccessary.
+	 * 
+	 * @param	string		$className	original class name
+	 * @return	string				possibly modified class name
+	 */
+	protected static function prepareInitialization($className) {
+		return $className;
 	}
 }
