@@ -2,6 +2,7 @@
 namespace wcf\system\auth;
 use wcf\data\user\User;
 use wcf\system\event\EventHandler;
+use wcf\system\SingletonFactory;
 
 /**
  * All user authentication types should implement the abstract functions of this class.
@@ -13,37 +14,16 @@ use wcf\system\event\EventHandler;
  * @subpackage	system.auth
  * @category 	Community Framework
  */
-abstract class UserAuth {
+abstract class UserAuth extends SingletonFactory {
 	/**
-	 * active instance
-	 *
-	 * @var	UserAuth
+	 * @see	wcf\system\SingletonFactory::prepareInitialization()
 	 */
-	protected static $instance = null;
-	
-	/**
-	 * Returns an instance of the enabled user auth class.
-	 * 
-	 * @return	UserAuth
-	 */
-	public static function getInstance() {
-		if (self::$instance === null) {
-			// call loadInstance event
-			EventHandler::getInstance()->fireAction(__CLASS__, 'loadInstance');
-		
-			// use default implementation
-			if (self::$instance === null) {
-				self::$instance = new UserAuthDefault();
-			}
-		}
-		
-		return self::$instance;
+	protected static function prepareInitialization($className) {
+		// call loadInstance event
+		EventHandler::getInstance()->fireAction(__CLASS__, 'loadInstance');
+
+		return 'wcf\system\auth\UserAuthDefault';
 	}
-	
-	/**
-	 * Prevents creating an additional instance.
-	 */
-	protected function __clone() {}
 	
 	/**
 	 * Returns true, if this auth type supports persistent logins.

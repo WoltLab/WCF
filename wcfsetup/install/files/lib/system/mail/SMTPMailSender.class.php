@@ -20,19 +20,19 @@ class SMTPMailSender extends MailSender {
 	protected $recipients;
 	
 	/**
-	 * Creates a new SMTPMailSender object.
-	 */
-	public function __construct() {
-		Mail::$crlf = "\r\n";
-	}
-	
-	/**
 	 * Destroys the SMTPMailSender object.
 	 */
 	public function __destruct() {
 		$this->disconnect();
 	}
 
+	/**
+	 * @see	wcf\system\SingletonFactory::init()
+	 */
+	protected function init() {
+		Mail::$crlf = "\r\n";
+	}
+	
 	/**
 	 * Connects to the smtp-server
 	 */

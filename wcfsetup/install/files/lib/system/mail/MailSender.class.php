@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\mail;
+use wcf\system\SingletonFactory;
 
 /**
  * Mailsender sends e-mails.
@@ -11,36 +12,22 @@ namespace wcf\system\mail;
  * @subpackage	data.mail
  * @category 	Community Framework
  */
-abstract class MailSender {
+abstract class MailSender extends SingletonFactory {
 	/**
-	 * unique mail server instance
-	 * @var MailSender
+	 * @see	wcf\system\SingletonFactory::prepareInitialization()
 	 */
-	protected static $instance = null;
-	
-	/**
-	 * Returns the default mail sender.
-	 * 
-	 * @return	MailSender
-	 */
-	public static function getInstance() {
-		if (self::$instance == null) {
-			switch (MAIL_SEND_METHOD) {
-				case 'php':
-					self::$defaultMailSender = new PHPMailSender();
-					break;
-				
-				case 'smtp':
-					self::$defaultMailSender = new SMTPMailSender();
-					break;
-				
-				case 'debug':
-					self::$defaultMailSender = new DebugMailSender();
-					break;
-			}
+	protected static function prepareInitialization($className) {
+		switch(MAIL_SEND_METHOD) {
+			case 'php':
+				return 'wcf\system\mail\PHPMailSender';
+				break;
+			case 'smtp':
+				return 'wcf\system\mail\SMTPMailSender';
+				break;
+			case 'debug':
+				return 'wcf\system\mail\DebugMailSender';
+				break;
 		}
-		
-		return self::$instance;
 	}
 	
 	/**
