@@ -1,4 +1,5 @@
 {include file='header'}
+
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
@@ -38,18 +39,18 @@
 		<table class="tableList">
 			<thead>
 				<tr class="tableHead">
-					<th colspan="2"{if $sortField == 'packageID'} class="active"{/if}><div><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=packageID&amp;sortOrder={if $sortField == 'packageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.list.id{/lang}{if $sortField == 'packageID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></div></th>
-					<th colspan="2"{if $sortField == 'packageName'} class="active"{/if}><div><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=packageName&amp;sortOrder={if $sortField == 'packageName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.list.name{/lang}{if $sortField == 'packageName'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></div></th>
-					<th{if $sortField == 'author'} class="active"{/if}><div><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=author&amp;sortOrder={if $sortField == 'author' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.list.author{/lang}{if $sortField == 'author'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></div></th>
-					<th{if $sortField == 'packageVersion'} class="active"{/if}><div><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=packageVersion&amp;sortOrder={if $sortField == 'packageVersion' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.list.version{/lang}{if $sortField == 'packageVersion'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></div></th>
-					<th{if $sortField == 'updateDate'} class="active"{/if}><div><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=updateDate&amp;sortOrder={if $sortField == 'updateDate' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.updateDate{/lang}{if $sortField == 'updateDate'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></div></th>
+					<th colspan="2"{if $sortField == 'packageID'} class="active"{/if}><p><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=packageID&amp;sortOrder={if $sortField == 'packageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.list.id{/lang}{if $sortField == 'packageID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
+					<th colspan="2"{if $sortField == 'packageName'} class="active"{/if}><p><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=packageName&amp;sortOrder={if $sortField == 'packageName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.list.name{/lang}{if $sortField == 'packageName'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
+					<th{if $sortField == 'author'} class="active"{/if}><p><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=author&amp;sortOrder={if $sortField == 'author' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.list.author{/lang}{if $sortField == 'author'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
+					<th{if $sortField == 'packageVersion'} class="active"{/if}><p><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=packageVersion&amp;sortOrder={if $sortField == 'packageVersion' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.list.version{/lang}{if $sortField == 'packageVersion'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
+					<th{if $sortField == 'updateDate'} class="active"{/if}><p><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=updateDate&amp;sortOrder={if $sortField == 'updateDate' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.updateDate{/lang}{if $sortField == 'updateDate'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					
 					{if $additionalHeadColumns|isset}{@$additionalHeadColumns}{/if}
 				</tr>
 			</thead>
 			<tbody>
 				{foreach from=$packages item=$package}
-					<tr class="packageRow {cycle values="container-1,container-2"}">
+					<tr class="packageRow">
 						<td class="columnIcon">
 							{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
 								<a href="index.php?form=PackageStartInstall&amp;action=update&amp;activePackageID={@$package->packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" /></a>
@@ -64,7 +65,7 @@
 							
 							{if $additionalButtons[$package->packageID]|isset}{@$additionalButtons[$package->packageID]}{/if}
 						</td>
-						<td class="columnID">{@$package->packageID}</td>
+						<td class="columnID"><p>{@$package->packageID}</p></td>
 						<td class="columnIcon">
 							{if $package->standalone}
 								<img src="{@RELATIVE_WCF_DIR}icon/packageTypeStandaloneS.png" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" />
@@ -74,12 +75,12 @@
 								<img src="{@RELATIVE_WCF_DIR}icon/packageS.png" alt="" title="{lang}wcf.acp.package.list.other{/lang}" />
 							{/if}
 						</td>
-						<td class="columnText" title="{$package->packageDescription}" id="packageName{@$package->packageID}">
+						<td id="packageName{@$package->packageID}" class="columnText" title="{$package->packageDescription}">
 							<a href="index.php?page=PackageView&amp;activePackageID={@$package->packageID}{@SID_ARG_2ND}"><span>{$package->getName()}{if $package->instanceNo > 1 && $package->instanceName == ''} (#{#$package->instanceNo}){/if}</span></a>
 						</td>
-						<td class="columnText">{if $package->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</td>
-						<td class="columnText">{$package->packageVersion}</td>
-						<td class="columnDate">{@$package->updateDate|time}</td>
+						<td class="columnText"><p>{if $package->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</p></td>
+						<td class="columnText"><p>{$package->packageVersion}</p></td>
+						<td class="columnDate"><p>{@$package->updateDate|time}</p></td>
 						
 						{if $additionalColumns[$package->packageID]|isset}{@$additionalColumns[$package->packageID]}{/if}
 					</tr>

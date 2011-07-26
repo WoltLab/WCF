@@ -103,22 +103,22 @@
 			</div>
 		</div>
 	</div>
-	<div class="border borderMarginRemove" id="requiredPackages">
+	<div id="requiredPackages" class="border borderMarginRemove">
 		<table class="tableList">
 			<thead>
 				<tr class="tableHead">
-					<th colspan="2"><div><span class="emptyHead">{lang}wcf.acp.package.list.id{/lang}</span></div></th>
-					<th colspan="2"><div><span class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</span></div></th>
-					<th><div><span class="emptyHead">{lang}wcf.acp.package.list.author{/lang}</span></div></th>
-					<th><div><span class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</span></div></th>
-					<th><div><span class="emptyHead">{lang}wcf.acp.package.list.date{/lang}</span></div></th>
+					<th colspan="2"><p><span class="emptyHead">{lang}wcf.acp.package.list.id{/lang}</span></p></th>
+					<th colspan="2"><p><span class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</span></p></th>
+					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.author{/lang}</span></p></th>
+					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</span></p></th>
+					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.date{/lang}</span></p></th>
 					
 					{if $additionalColumns|isset}{@$additionalColumns}{/if}
 				</tr>
 			</thead>
 			<tbody>
 			{foreach from=$requiredPackages item=$package}
-				<tr class="{cycle values="container-1,container-2"}">
+				<tr>
 					<td class="columnIcon">
 						{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
 							<a href="index.php?form=PackageStartInstall&amp;action=update&amp;activePackageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" /></a>
@@ -176,18 +176,18 @@
 		<table class="tableList">
 			<thead>
 				<tr class="tableHead">
-					<th colspan="2"><div><span class="emptyHead">{lang}wcf.acp.package.list.id{/lang}</span></div></th>
-					<th colspan="2"><div><span class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</span></div></th>
-					<th><div><span class="emptyHead">{lang}wcf.acp.package.list.author{/lang}</span></div></th>
-					<th><div><span class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</span></div></th>
-					<th><div><span class="emptyHead">{lang}wcf.acp.package.list.date{/lang}</span></div></th>
+					<th colspan="2"><p><span class="emptyHead">{lang}wcf.acp.package.list.id{/lang}</span></p></th>
+					<th colspan="2"><p><span class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</span></p></th>
+					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.author{/lang}</span></p></th>
+					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</span></p></th>
+					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.date{/lang}</span></p></th>
 					
 					{if $additionalColumns|isset}{@$additionalColumns}{/if}
 				</tr>
 			</thead>
 			<tbody>
 			{foreach from=$dependentPackages item=$package}
-				<tr class="{cycle values="container-1,container-2"}">
+				<tr>
 					<td class="columnIcon">
 						{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
 							<a href="index.php?form=PackageStartInstall&amp;action=update&amp;activePackageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" /></a>

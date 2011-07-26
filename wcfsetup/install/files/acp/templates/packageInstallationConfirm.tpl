@@ -86,15 +86,15 @@
 		<table class="tableList">
 			<thead>
 				<tr class="tableHead">
-					<th><div><span class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</span></div></th>
-					<th><div><span class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</span></div></th>
+					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</span></p></th>
+					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</span></p></th>
 				</tr>
 			</thead>
 			<tbody>
 			{foreach from=$updatableInstances item=$package}
-				<tr class="{cycle values="container-1,container-2"}">
-					<td class="columnText"><a href="index.php?page=Package&amp;action=install&amp;queueID={@$queueID}&amp;step=changeToUpdate&amp;updatePackageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></td>
-					<td class="columnText">{$package.packageVersion}</td>
+				<tr>
+					<td class="columnText"><p><a href="index.php?page=Package&amp;action=install&amp;queueID={@$queueID}&amp;step=changeToUpdate&amp;updatePackageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
+					<td class="columnText"><p>{$package.packageVersion}</p></td>
 				</tr>
 			{/foreach}
 			</tbody>
@@ -113,15 +113,15 @@
 		<table class="tableList">
 			<thead>
 				<tr class="tableHead">
-					<th><div><span class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</span></div></th>
-					<th><div><span class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</span></div></th>
+					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</span></p></th>
+					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</span></p></th>
 				</tr>
 			</thead>
 			<tbody>
 			{foreach from=$requiredPackages item=$package}
 				<tr class="{cycle values="container-1,container-2"}">
-					<td class="columnText">{lang}wcf.acp.package.install.packageName{/lang}</td>
-					<td class="columnText">{if $package.minversion|isset}{$package.minversion}{/if}</td>
+					<td class="columnText"><p>{lang}wcf.acp.package.install.packageName{/lang}</p></td>
+					<td class="columnText"><p>{if $package.minversion|isset}{$package.minversion}{/if}</p></td>
 				</tr>
 			{/foreach}
 			</tbody>

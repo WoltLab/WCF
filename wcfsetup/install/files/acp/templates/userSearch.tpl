@@ -31,8 +31,7 @@
 			{if $__wcf->session->getPermission('admin.user.canAddUser')}
 				<li><a href="index.php?form=UserAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.user.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/userAddM.png" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 			{/if}
-			<li><a href="index.php?page=UserList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.user.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/usersM.png" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a>
-			</li>
+			<li><a href="index.php?page=UserList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.user.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/usersM.png" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>
@@ -47,7 +46,7 @@
 						<label for="username">{lang}wcf.user.username{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="text" class="inputText" id="username" name="username" value="{$username}" />
+						<input type="text" id="username" name="username" value="{$username}" class="inputText" />
 						<script type="text/javascript">
 							//<![CDATA[
 							var suggestion = new Suggestion('username');
@@ -62,7 +61,7 @@
 						<label for="userID">{lang}wcf.user.userID{/lang}</label>
 					</div>
 					<div class="formField">	
-						<input type="text" class="inputText" id="userID" name="userID" value="{$userID}" />
+						<input type="text" id="userID" name="userID" value="{$userID}" class="inputText" />
 					</div>
 				</div>
 				
@@ -72,7 +71,7 @@
 							<label for="email">{lang}wcf.user.email{/lang}</label>
 						</div>
 						<div class="formField">	
-							<input type="text" class="inputText" id="email" name="email" value="{$email}" />
+							<input type="email" id="email" name="email" value="{$email}" class="inputText" />
 						</div>
 					</div>
 				{/if}
@@ -124,10 +123,9 @@
 						<li><a href="#resultOptions">{*<span>*}{lang}wcf.acp.user.search.display{/lang}{*</span>*}</a></li>
 					</ul>
 				</nav>
-			
-			
+				
 				{if $optionTree|count}
-					<div class="border tabMenuContent hidden" id="profile">
+					<div id="profile" class="border tabMenuContent hidden">
 						<div class="container-1">
 							<h3 class="subHeading">{lang}wcf.acp.user.search.conditions.profile{/lang}</h3>
 							{include file='optionFieldList' langPrefix='wcf.user.option.' options=$optionTree}
@@ -137,7 +135,7 @@
 			
 				{if $additionalTabContents|isset}{@$additionalTabContents}{/if}
 			
-				<div class="border tabMenuContent hidden" id="resultOptions">
+				<div id="resultOptions" class="border tabMenuContent hidden">
 					<div class="container-1">
 						<h3 class="subHeading">{lang}wcf.acp.user.search.display{/lang}</h3>
 					
@@ -149,7 +147,7 @@
 									<label for="sortField">{lang}wcf.acp.user.search.display.sort{/lang}</label>
 								</div>
 								<div class="formField">
-									<select name="sortField" id="sortField">
+									<select id="sortField" name="sortField">
 										<option value="userID"{if $sortField == 'userID'} selected="selected"{/if}>{lang}wcf.user.userID{/lang}</option>
 										<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.user.username{/lang}</option>
 										<option value="email"{if $sortField == 'email'} selected="selected"{/if}>{lang}wcf.user.email{/lang}</option>
@@ -157,7 +155,7 @@
 									
 										{if $additionalSortFields|isset}{@$additionalSortFields}{/if}
 									</select>
-									<select name="sortOrder" id="sortOrder">
+									<select id="sortOrder" name="sortOrder">
 										<option value="ASC"{if $sortOrder == 'ASC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
 										<option value="DESC"{if $sortOrder == 'DESC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
 									</select>
@@ -169,7 +167,7 @@
 									<label for="itemsPerPage">{lang}wcf.acp.user.search.display.itemsPerPage{/lang}</label>
 								</div>
 								<div class="formField">
-									<input type="text" class="inputText" id="itemsPerPage" name="itemsPerPage" value="{@$itemsPerPage}" />
+									<input type="text" id="itemsPerPage" name="itemsPerPage" value="{@$itemsPerPage}" class="inputText" />
 								</div>
 							</div>
 						</fieldset>

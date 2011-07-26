@@ -49,15 +49,15 @@
 								
 								<div class="formField">
 									<ul class="formOptionsLong">
-										<li><label><input onclick="if (IS_SAFARI) setFileType('csv')" onfocus="setFileType('csv')" type="radio" name="fileType" value="csv" {if $fileType == 'csv'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.csv{/lang}</label></li>
-										<li><label><input onclick="if (IS_SAFARI) setFileType('xml')" onfocus="setFileType('xml')" type="radio" name="fileType" value="xml" {if $fileType == 'xml'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label></li>
+										<li><label><inpu type="radio"t onclick="if (IS_SAFARI) setFileType('csv')" onfocus="setFileType('csv')" name="fileType" value="csv" {if $fileType == 'csv'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.csv{/lang}</label></li>
+										<li><label><input type="radio" onclick="if (IS_SAFARI) setFileType('xml')" onfocus="setFileType('xml')" name="fileType" value="xml" {if $fileType == 'xml'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label></li>
 									</ul>
 								</div>
 							</fieldset>
 						</div>
 					</div>
 				
-					<div class="formElement" id="separatorDiv">
+					<div id="separatorDiv" class="formElement">
 						<div class="formFieldLabel">
 							<label for="separator">{lang}wcf.acp.user.exportEmailAddress.separator{/lang}</label>
 						</div>
@@ -66,12 +66,12 @@
 						</div>
 					</div>
 					
-					<div class="formElement" id="textSeparatorDiv">
+					<div id="textSeparatorDiv" class="formElement">
 						<div class="formFieldLabel">
 							<label for="textSeparator">{lang}wcf.acp.user.exportEmailAddress.textSeparator{/lang}</label>
 						</div>
 						<div class="formField">
-							<input type="text" class="inputText" id="textSeparator" name="textSeparator" value="{$textSeparator}" />
+							<input type="text" id="textSeparator" name="textSeparator" value="{$textSeparator}" class="inputText" />
 						</div>
 					</div>
 				</div>

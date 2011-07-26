@@ -22,7 +22,7 @@
 						<label for="masterPassword">{lang}wcf.acp.masterPassword{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="password" class="inputText" id="masterPassword" name="masterPassword" value="{$masterPassword}" />
+						<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="inputText" />
 						{if $errorField == 'masterPassword'}
 							<p class="innerError">
 								{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}

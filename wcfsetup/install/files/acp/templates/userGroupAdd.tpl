@@ -42,19 +42,19 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.group.data{/lang}</legend>
 				
-				<div class="formElement{if $errorType.groupName|isset} formError{/if}" id="groupNameDiv">
+				<div id="groupNameDiv" class="formElement{if $errorType.groupName|isset} formError{/if}">
 					<div class="formFieldLabel">
 						<label for="groupName">{lang}wcf.acp.group.groupName{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="text" class="inputText" id="groupName" name="groupName" value="{$groupName}" />
+						<input type="text" id="groupName" name="groupName" value="{$groupName}" class="inputText" />
 						{if $errorType.groupName|isset}
 							<p class="innerError">
 								{if $errorType.groupName == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
 							</p>
 						{/if}
 					</div>
-					<div class="formFieldDesc hidden" id="groupNameHelpMessage">
+					<div id="groupNameHelpMessage" class="formFieldDesc hidden">
 						<p>{lang}wcf.acp.group.groupName.description{/lang}</p>
 					</div>
 				</div>
@@ -77,7 +77,7 @@
 			<div class="subTabMenu">
 				<div class="containerHead">
 					{foreach from=$optionTree item=categoryLevel1}
-						<ul class="hidden" id="{@$categoryLevel1[object]->categoryName}-categories">
+						<ul id="{@$categoryLevel1[object]->categoryName}-categories" class="hidden">
 							{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 								<li id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}"><a onclick="tabMenu.showTabMenuContent('{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}');"><span>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</span></a></li>
 							{/foreach}
@@ -88,7 +88,7 @@
 			
 			{foreach from=$optionTree item=categoryLevel1}
 				{foreach from=$categoryLevel1[categories] item=categoryLevel2}
-					<div class="border tabMenuContent hidden" id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}-content">
+					<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}-content" class="border tabMenuContent hidden">
 						<div class="container-1">
 							<h3 class="subHeading">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h3>
 							<p class="description">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}</p>

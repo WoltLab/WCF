@@ -1,4 +1,5 @@
 {include file='header'}
+
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/AjaxRequest.class.js"></script>
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/InlineListEdit.class.js"></script>
@@ -75,12 +76,12 @@
 		<table class="tableList">
 			<thead>
 				<tr class="tableHead">
-					<th class="columnMark"><div><label class="emptyHead"><input name="userMarkAll" type="checkbox" /></label></div></th>
-					<th class="columnUserID{if $sortField == 'userID'} active{/if}" colspan="2"><div><a href="index.php?page=UserList&amp;searchID={@$searchID}&amp;action={@$encodedAction}&amp;pageNo={@$pageNo}&amp;sortField=userID&amp;sortOrder={if $sortField == 'userID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.user.userID{/lang}{if $sortField == 'userID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></div></th>
-					<th class="columnUsername{if $sortField == 'username'} active{/if}"><div><a href="index.php?page=UserList&amp;searchID={@$searchID}&amp;action={@$encodedAction}&amp;pageNo={@$pageNo}&amp;sortField=username&amp;sortOrder={if $sortField == 'username' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.user.username{/lang}{if $sortField == 'username'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></div></th>
+					<th class="columnMark"><p><label class="emptyHead"><input type="checkbox" name="userMarkAll" /></label></p></th>
+					<th class="columnUserID{if $sortField == 'userID'} active{/if}" colspan="2"><p><a href="index.php?page=UserList&amp;searchID={@$searchID}&amp;action={@$encodedAction}&amp;pageNo={@$pageNo}&amp;sortField=userID&amp;sortOrder={if $sortField == 'userID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.user.userID{/lang}{if $sortField == 'userID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
+					<th class="columnUsername{if $sortField == 'username'} active{/if}"><p><a href="index.php?page=UserList&amp;searchID={@$searchID}&amp;action={@$encodedAction}&amp;pageNo={@$pageNo}&amp;sortField=username&amp;sortOrder={if $sortField == 'username' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.user.username{/lang}{if $sortField == 'username'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></dipv></th>
 					
 					{foreach from=$columnHeads key=column item=columnLanguageVariable}
-						<th class="column{$column|ucfirst}{if $sortField == $column} active{/if}"><div><a href="index.php?page=UserList&amp;searchID={@$searchID}&amp;action={@$encodedAction}&amp;pageNo={@$pageNo}&amp;sortField={$column}&amp;sortOrder={if $sortField == $column && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}{$columnLanguageVariable}{/lang}{if $sortField == $column} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></div></th>
+						<th class="column{$column|ucfirst}{if $sortField == $column} active{/if}"><p><a href="index.php?page=UserList&amp;searchID={@$searchID}&amp;action={@$encodedAction}&amp;pageNo={@$pageNo}&amp;sortField={$column}&amp;sortOrder={if $sortField == $column && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}{$columnLanguageVariable}{/lang}{if $sortField == $column} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					{/foreach}
 					
 					{if $additionalColumnHeads|isset}{@$additionalColumnHeads}{/if}
@@ -89,7 +90,7 @@
 			<tbody>
 			{foreach from=$users item=user}
 				<tr id="userRow{@$user->userID}">
-					<td class="columnMark"><input name="userMark" id="userMark{@$user->userID}" type="checkbox" value="{@$user->userID}" /></td>
+					<td class="columnMark"><input type="checkbox" id="userMark{@$user->userID}" name="userMark" value="{@$user->userID}" /></td>
 					<td class="columnIcon">
 						<script type="text/javascript">
 							//<![CDATA[
@@ -113,11 +114,11 @@
 						
 						{if $additionalButtons[$user->userID]|isset}{@$additionalButtons[$user->userID]}{/if}
 					</td>
-					<td class="columnUserID columnID">{@$user->userID}</td>
-					<td class="columnUsername columnText">{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user->username}</a>{else}{$user->username}{/if}</td>
+					<td class="columnUserID columnID"><p>{@$user->userID}</p></td>
+					<td class="columnUsername columnText"><p>{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user->username}</a>{else}{$user->username}{/if}</p></td>
 					
 					{foreach from=$columnHeads key=column item=columnLanguageVariable}
-						<td class="column{$column|ucfirst}">{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</td>
+						<td class="column{$column|ucfirst}"><p>{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</p></td>
 					{/foreach}
 					
 					{if $additionalColumns[$user->userID]|isset}{@$additionalColumns[$user->userID]}{/if}

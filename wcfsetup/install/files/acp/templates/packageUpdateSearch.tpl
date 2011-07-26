@@ -86,7 +86,7 @@
 								<label for="packageName">{lang}wcf.acp.packageUpdate.search.packageName{/lang}</label>
 							</div>
 							<div class="formField">
-								<input type="text" class="inputText" id="packageName" name="packageName" value="{$packageName}" />
+								<input type="text" id="packageName" name="packageName" value="{$packageName}" class="inputText" />
 								<label><input type="checkbox" name="searchDescription" value="1" {if $searchDescription == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.searchDescription{/lang}</label>
 							</div>
 						</div>
@@ -96,7 +96,7 @@
 								<label for="author">{lang}wcf.acp.packageUpdate.search.author{/lang}</label>
 							</div>
 							<div class="formField">
-								<input type="text" class="inputText" id="author" name="author" value="{$author}" />
+								<input type="text" id="author" name="author" value="{$author}" class="inputText" />
 							</div>
 						</div>
 						

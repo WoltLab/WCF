@@ -34,7 +34,7 @@
 						<label for="masterPassword">{lang}wcf.acp.masterPassword{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="password" class="inputText" id="masterPassword" name="masterPassword" value="{$masterPassword}" />
+						<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="inputText" />
 						{if $errorField == 'masterPassword'}
 							<p class="innerError">
 								{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
@@ -42,7 +42,7 @@
 							</p>
 						{/if}
 					</div>
-					<div class="formFieldDesc hidden" id="masterPasswordHelpMessage">
+					<div id="masterPasswordHelpMessage" class="formFieldDesc hidden">
 						<p>{lang}wcf.acp.masterPassword.init.description{/lang}</p>
 					</div>
 				</div>
@@ -55,7 +55,7 @@
 						<label for="confirmMasterPassword">{lang}wcf.acp.masterPassword.confirm{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="password" class="inputText" id="confirmMasterPassword" name="confirmMasterPassword" value="{$confirmMasterPassword}" />
+						<input type="password" id="confirmMasterPassword" name="confirmMasterPassword" value="{$confirmMasterPassword}" class="inputText" />
 						{if $errorField == 'confirmMasterPassword'}
 							<p class="innerError">
 								{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}

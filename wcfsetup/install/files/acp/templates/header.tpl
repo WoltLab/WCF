@@ -68,8 +68,8 @@
 </head>
 
 <body id="tpl{$templateName|ucfirst}">
-	<!-- HEADER -->
 	<a id="top"></a>
+	<!-- HEADER -->
 	<header class="pageHeader">
 		
 		<!-- top menu -->

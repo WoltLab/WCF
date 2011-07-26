@@ -24,7 +24,7 @@
 		<div class="inner">
 			<div{if $errorField == 'username'} class="errorField"{/if}>
 				<label for="username">{lang}wcf.user.username{/lang}</label>
-				<input type="text" class="inputText" id="username" name="username" value="{$username}" />
+				<input type="text" id="username" name="username" value="{$username}" class="inputText" />
 				{if $errorField == 'username'}
 					<p>
 						<img src="{@RELATIVE_WCF_DIR}icon/errorS.png" alt="" />
@@ -36,7 +36,7 @@
 			
 			<div{if $errorField == 'password'} class="errorField"{/if}>
 				<label for="password">{lang}wcf.user.password{/lang}</label>
-				<input type="password" class="inputText" id="password" name="password" value="" />
+				<input type="password" id="password" name="password" value="" class="inputText" />
 				{if $errorField == 'password'}
 					<p>
 						<img src="{@RELATIVE_WCF_DIR}icon/errorS.png" alt="" />

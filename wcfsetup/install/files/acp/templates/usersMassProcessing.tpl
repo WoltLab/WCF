@@ -95,7 +95,7 @@
 						<label for="username">{lang}wcf.user.username{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="text" class="inputText" id="username" name="username" value="{$username}" />
+						<input type="text" id="username" name="username" value="{$username}" class="inputText" />
 						<script type="text/javascript">
 							//<![CDATA[
 							suggestion.enableMultiple(false);
@@ -111,7 +111,7 @@
 							<label for="email">{lang}wcf.user.email{/lang}</label>
 						</div>
 						<div class="formField">	
-							<input type="text" class="inputText" id="email" name="email" value="{$email}" />
+							<input type="email" id="email" name="email" value="{$email}" class="inputText" />
 						</div>
 					</div>
 				{/if}
@@ -166,7 +166,7 @@
 			</div>
 			
 			{if $options|count}
-				<div class="border tabMenuContent hidden" id="profile-content">
+				<div id="profile-content" class="border tabMenuContent hidden">
 					<div class="container-1">
 						<h3 class="subHeadline">{lang}wcf.acp.user.search.conditions.profile{/lang}</h3>
 						{include file='optionFieldList' langPrefix='wcf.user.option.'}
@@ -192,14 +192,14 @@
 						<div class="formField">
 							<ul class="formOptionsLong">
 								{if $__wcf->session->getPermission('admin.user.canMailUser')}
-									<li><label><input onclick="if (IS_SAFARI) enableSendMail()" onfocus="enableSendMail()" type="radio" name="action" value="sendMail" {if $action == 'sendMail'}checked="checked" {/if}/> {lang}wcf.acp.user.sendMail{/lang}</label></li>
-									<li><label><input onclick="if (IS_SAFARI) enableExportMailAddress()" onfocus="enableExportMailAddress()" type="radio" name="action" value="exportMailAddress" {if $action == 'exportMailAddress'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress{/lang}</label></li>
+									<li><label><input type="radio" onclick="if (IS_SAFARI) enableSendMail()" onfocus="enableSendMail()" name="action" value="sendMail" {if $action == 'sendMail'}checked="checked" {/if}/> {lang}wcf.acp.user.sendMail{/lang}</label></li>
+									<li><label><input type="radio" onclick="if (IS_SAFARI) enableExportMailAddress()" onfocus="enableExportMailAddress()" name="action" value="exportMailAddress" {if $action == 'exportMailAddress'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress{/lang}</label></li>
 								{/if}
 								{if $__wcf->session->getPermission('admin.user.canEditUser')}
-									<li><label><input onclick="if (IS_SAFARI) enableAssignToGroup()" onfocus="enableAssignToGroup()" type="radio" name="action" value="assignToGroup" {if $action == 'assignToGroup'}checked="checked" {/if}/> {lang}wcf.acp.user.assignToGroup{/lang}</label></li>
+									<li><label><input type="radio" onclick="if (IS_SAFARI) enableAssignToGroup()" onfocus="enableAssignToGroup()" name="action" value="assignToGroup" {if $action == 'assignToGroup'}checked="checked" {/if}/> {lang}wcf.acp.user.assignToGroup{/lang}</label></li>
 								{/if}
 								{if $__wcf->session->getPermission('admin.user.canDeleteUser')}
-									<li><label><input onclick="if (IS_SAFARI) enableDelete()" onfocus="enableDelete()" type="radio" name="action" value="delete" {if $action == 'delete'}checked="checked" {/if}/> {lang}wcf.acp.user.delete{/lang}</label></li>
+									<li><label><input type="radio" onclick="if (IS_SAFARI) enableDelete()" onfocus="enableDelete()" name="action" value="delete" {if $action == 'delete'}checked="checked" {/if}/> {lang}wcf.acp.user.delete{/lang}</label></li>
 								{/if}
 								{if $additionalActions|isset}{@$additionalActions}{/if}
 							</ul>
@@ -218,19 +218,19 @@
 					<legend>{lang}wcf.acp.user.sendMail.mail{/lang}</legend>
 					
 					<div>
-						<div class="formElement{if $errorField == 'subject'} formError{/if}" id="subjectDiv">
+						<div id="subjectDiv" class="formElement{if $errorField == 'subject'} formError{/if}">
 							<div class="formFieldLabel">
 								<label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label>
 							</div>
 							<div class="formField">
-								<input type="text" class="inputText" id="subject" name="subject" value="{$subject}" />
+								<input type="text" id="subject" name="subject" value="{$subject}" class="inputText" />
 								{if $errorField == 'subject'}
 									<p class="innerError">
 										{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
 									</p>
 								{/if}
 							</div>
-							<div class="formFieldDesc hidden" id="subjectHelpMessage">
+							<div id="subjectHelpMessage" class="formFieldDesc hidden">
 								<p>{lang}wcf.acp.user.sendMail.subject.description{/lang}</p>
 							</div>
 						</div>
@@ -238,19 +238,19 @@
 							inlineHelp.register('subject');
 						//]]></script>
 						
-						<div class="formElement{if $errorField == 'from'} formError{/if}" id="fromDiv">
+						<div id="fromDiv" class="formElement{if $errorField == 'from'} formError{/if}">
 							<div class="formFieldLabel">
 								<label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label>
 							</div>
 							<div class="formField">
-								<input type="text" class="inputText" id="from" name="from" value="{$from}" />
+								<input type="email" id="from" name="from" value="{$from}" class="inputText" />
 								{if $errorField == 'from'}
 									<p class="innerError">
 										{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
 									</p>
 								{/if}
 							</div>
-							<div class="formFieldDesc hidden" id="fromHelpMessage">
+							<div id="fromHelpMessage" class="formFieldDesc hidden">
 								{lang}wcf.acp.user.sendMail.from.description{/lang}
 							</div>
 						</div>
@@ -258,7 +258,7 @@
 							inlineHelp.register('from');
 						//]]></script>
 					
-						<div class="formElement{if $errorField == 'text'} formError{/if}" id="textDiv">
+						<div id="textDiv" class="formElement{if $errorField == 'text'} formError{/if}">
 							<div class="formFieldLabel">
 								<label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label>
 							</div>
@@ -270,7 +270,7 @@
 									</p>
 								{/if}
 							</div>
-							<div class="formFieldDesc hidden" id="textHelpMessage">
+							<div id="textHelpMessage" class="formFieldDesc hidden">
 								<p>{lang}wcf.acp.user.sendMail.text.description{/lang}</p>
 							</div>
 						</div>
@@ -280,7 +280,7 @@
 						
 						<div class="formElement">
 							<div class="formField">
-								<label><input type="checkbox" name="enableHTML" id="enableHTML" value="1" {if $enableHTML == 1}checked="checked" {/if}/> {lang}wcf.acp.user.sendMail.enableHTML{/lang}</label>
+								<label><input type="checkbox" id="enableHTML" name="enableHTML" value="1" {if $enableHTML == 1}checked="checked" {/if}/> {lang}wcf.acp.user.sendMail.enableHTML{/lang}</label>
 							</div>
 						</div>
 					</div>
@@ -302,15 +302,15 @@
 									
 									<div class="formField">
 										<ul class="formOptionsLong">
-											<li><label><input onclick="if (IS_SAFARI) setFileType('csv')" onfocus="setFileType('csv')" type="radio" name="fileType" value="csv" {if $fileType == 'csv'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.csv{/lang}</label></li>
-											<li><label><input onclick="if (IS_SAFARI) setFileType('xml')" onfocus="setFileType('xml')" type="radio" name="fileType" value="xml" {if $fileType == 'xml'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label></li>
+											<li><label><input type="radio" onclick="if (IS_SAFARI) setFileType('csv')" onfocus="setFileType('csv')" name="fileType" value="csv" {if $fileType == 'csv'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.csv{/lang}</label></li>
+											<li><label><input type="radio" onclick="if (IS_SAFARI) setFileType('xml')" onfocus="setFileType('xml')" name="fileType" value="xml" {if $fileType == 'xml'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label></li>
 										</ul>
 									</div>
 								</fieldset>
 							</div>
 						</div>
 					
-						<div class="formElement" id="separatorDiv">
+						<div id="separatorDiv" class="formElement">
 							<div class="formFieldLabel">
 								<label for="separator">{lang}wcf.acp.user.exportEmailAddress.separator{/lang}</label>
 							</div>
@@ -319,12 +319,12 @@
 							</div>
 						</div>
 						
-						<div class="formElement" id="textSeparatorDiv">
+						<div id="textSeparatorDiv" class="formElement">
 							<div class="formFieldLabel">
 								<label for="textSeparator">{lang}wcf.acp.user.exportEmailAddress.textSeparator{/lang}</label>
 							</div>
 							<div class="formField">
-								<input type="text" class="inputText" id="textSeparator" name="textSeparator" value="{$textSeparator}" />
+								<input type="text" id="textSeparator" name="textSeparator" value="{$textSeparator}" class="inputText" />
 							</div>
 						</div>
 					</div>
