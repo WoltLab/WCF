@@ -53,7 +53,7 @@ class CleanupHandler {
 			'wcf\system\cache\builder\CacheBuilderCleanupAdapter'
 		);
 		
-		$this->cache = CacheHandler::getInstance()->get('cleanupAdapter');
+		$this->cache = CacheHandler::getInstance()->get('cleanupAdapter-'.PACKAGE_ID);
 	}
 	
 	/**
