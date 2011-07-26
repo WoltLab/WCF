@@ -1,14 +1,9 @@
 {include file='header'}
 
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/Suggestion.class.js"></script>
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/TabMenu.class.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
-	var tabMenu = new TabMenu();
-	onloadEvents.push(function() {
-		//tabMenu.showSubTabMenu('profile');
-		tabMenu.showSubTabMenu('resultOptions');
-		$('username').focus();
+	$(function() {
+		WCF.TabMenu.init();
 	});
 	//]]>
 </script>
@@ -121,109 +116,106 @@
 			
 			{if $additionalFields|isset}{@$additionalFields}{/if}
 			
-			<div class="tabMenuContainer" {*data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem"*}>
+			<div class="tabMenuContainer">
 				<nav>
 					<ul class="tabMenu">
-						{if $optionTree|count}<li id="profile"><a onclick="tabMenu.showSubTabMenu('profile');">{*<span>*}{lang}wcf.acp.user.search.conditions.profile{/lang}{*</span>*}</a></li>{/if}
+						{if $optionTree|count}<li><a href="#profile">{*<span>*}{lang}wcf.acp.user.search.conditions.profile{/lang}{*</span>*}</a></li>{/if}
 						{if $additionalTabs|isset}{@$additionalTabs}{/if}
-						<li id="resultOptions"><a onclick="tabMenu.showSubTabMenu('resultOptions');">{*<span>*}{lang}wcf.acp.user.search.display{/lang}{*</span>*}</a></li>
+						<li><a href="#resultOptions">{*<span>*}{lang}wcf.acp.user.search.display{/lang}{*</span>*}</a></li>
 					</ul>
 				</nav>
-			</div>
 			
-			<div class="subTabMenu">
-				<div class="containerHead"><div> </div></div>
-			</div>
 			
-			{if $optionTree|count}
-				<div class="border tabMenuContent hidden" id="profile-content">
-					<div class="container-1">
-						<h3 class="subHeading">{lang}wcf.acp.user.search.conditions.profile{/lang}</h3>
-						{include file='optionFieldList' langPrefix='wcf.user.option.' options=$optionTree}
+				{if $optionTree|count}
+					<div class="border tabMenuContent hidden" id="profile">
+						<div class="container-1">
+							<h3 class="subHeading">{lang}wcf.acp.user.search.conditions.profile{/lang}</h3>
+							{include file='optionFieldList' langPrefix='wcf.user.option.' options=$optionTree}
+						</div>
 					</div>
-				</div>
-			{/if}
+				{/if}
 			
-			{if $additionalTabContents|isset}{@$additionalTabContents}{/if}
+				{if $additionalTabContents|isset}{@$additionalTabContents}{/if}
 			
-			<div class="border tabMenuContent hidden" id="resultOptions-content">
-				<div class="container-1">
-					<h3 class="subHeading">{lang}wcf.acp.user.search.display{/lang}</h3>
+				<div class="border tabMenuContent hidden" id="resultOptions">
+					<div class="container-1">
+						<h3 class="subHeading">{lang}wcf.acp.user.search.display{/lang}</h3>
 					
-					<fieldset>
-						<legend>{lang}wcf.acp.user.search.display.general{/lang}</legend>
+						<fieldset>
+							<legend>{lang}wcf.acp.user.search.display.general{/lang}</legend>
 						
-						<div class="formElement">
-							<div class="formFieldLabel">
-								<label for="sortField">{lang}wcf.acp.user.search.display.sort{/lang}</label>
-							</div>
-							<div class="formField">
-								<select name="sortField" id="sortField">
-									<option value="userID"{if $sortField == 'userID'} selected="selected"{/if}>{lang}wcf.user.userID{/lang}</option>
-									<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.user.username{/lang}</option>
-									<option value="email"{if $sortField == 'email'} selected="selected"{/if}>{lang}wcf.user.email{/lang}</option>
-									<option value="registrationDate"{if $sortField == 'registrationDate'} selected="selected"{/if}>{lang}wcf.user.registrationDate{/lang}</option>
+							<div class="formElement">
+								<div class="formFieldLabel">
+									<label for="sortField">{lang}wcf.acp.user.search.display.sort{/lang}</label>
+								</div>
+								<div class="formField">
+									<select name="sortField" id="sortField">
+										<option value="userID"{if $sortField == 'userID'} selected="selected"{/if}>{lang}wcf.user.userID{/lang}</option>
+										<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.user.username{/lang}</option>
+										<option value="email"{if $sortField == 'email'} selected="selected"{/if}>{lang}wcf.user.email{/lang}</option>
+										<option value="registrationDate"{if $sortField == 'registrationDate'} selected="selected"{/if}>{lang}wcf.user.registrationDate{/lang}</option>
 									
-									{if $additionalSortFields|isset}{@$additionalSortFields}{/if}
-								</select>
-								<select name="sortOrder" id="sortOrder">
-									<option value="ASC"{if $sortOrder == 'ASC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
-									<option value="DESC"{if $sortOrder == 'DESC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
-								</select>
+										{if $additionalSortFields|isset}{@$additionalSortFields}{/if}
+									</select>
+									<select name="sortOrder" id="sortOrder">
+										<option value="ASC"{if $sortOrder == 'ASC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
+										<option value="DESC"{if $sortOrder == 'DESC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
+									</select>
+								</div>
 							</div>
-						</div>
 						
-						<div class="formElement">
-							<div class="formFieldLabel">
-								<label for="itemsPerPage">{lang}wcf.acp.user.search.display.itemsPerPage{/lang}</label>
+							<div class="formElement">
+								<div class="formFieldLabel">
+									<label for="itemsPerPage">{lang}wcf.acp.user.search.display.itemsPerPage{/lang}</label>
+								</div>
+								<div class="formField">
+									<input type="text" class="inputText" id="itemsPerPage" name="itemsPerPage" value="{@$itemsPerPage}" />
+								</div>
 							</div>
-							<div class="formField">
-								<input type="text" class="inputText" id="itemsPerPage" name="itemsPerPage" value="{@$itemsPerPage}" />
-							</div>
-						</div>
-					</fieldset>
+						</fieldset>
 					
-					<fieldset>
-						<legend>{lang}wcf.acp.user.search.display.columns{/lang}</legend>
+						<fieldset>
+							<legend>{lang}wcf.acp.user.search.display.columns{/lang}</legend>
 						
-						{if $optionTree|count}
+							{if $optionTree|count}
+								<div class="formGroup">
+									<div class="formGroupLabel">
+										<label>{lang}wcf.acp.user.search.display.columns.profile{/lang}</label>
+									</div>
+									<div class="formGroupField">
+										<fieldset>
+											<legend>{lang}wcf.acp.user.search.display.columns.profile{/lang}</legend>
+										
+											<div class="formField">
+												{foreach from=$optionTree item=option}
+													<label><input type="checkbox" name="columns[]" value="{$option->optionName}" {if $option->optionName|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
+												{/foreach}
+											</div>
+										</fieldset>
+									</div>
+								</div>
+							{/if}
+						
 							<div class="formGroup">
 								<div class="formGroupLabel">
-									<label>{lang}wcf.acp.user.search.display.columns.profile{/lang}</label>
+									<label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label>
 								</div>
 								<div class="formGroupField">
 									<fieldset>
-										<legend>{lang}wcf.acp.user.search.display.columns.profile{/lang}</legend>
-										
+										<legend>{lang}wcf.acp.user.search.display.columns.other{/lang}</legend>
+									
 										<div class="formField">
-											{foreach from=$optionTree item=option}
-												<label><input type="checkbox" name="columns[]" value="{$option->optionName}" {if $option->optionName|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
-											{/foreach}
+											<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label>
+											<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.registrationDate{/lang}</label>
+										
+											{if $additionalColumns|isset}{@$additionalColumns}{/if}
 										</div>
 									</fieldset>
 								</div>
 							</div>
-						{/if}
 						
-						<div class="formGroup">
-							<div class="formGroupLabel">
-								<label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label>
-							</div>
-							<div class="formGroupField">
-								<fieldset>
-									<legend>{lang}wcf.acp.user.search.display.columns.other{/lang}</legend>
-									
-									<div class="formField">
-										<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label>
-										<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.registrationDate{/lang}</label>
-										
-										{if $additionalColumns|isset}{@$additionalColumns}{/if}
-									</div>
-								</fieldset>
-							</div>
-						</div>
-						
-					</fieldset>
+						</fieldset>
+					</div>
 				</div>
 			</div>
 			
