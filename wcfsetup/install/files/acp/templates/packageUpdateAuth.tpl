@@ -90,8 +90,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
+		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="hidden" name="form" value="PackageUpdateAuth" />
 		{@SID_INPUT_TAG}
 		<input type="hidden" name="packageUpdateServerID" value="{@$packageUpdateServerID}" />
