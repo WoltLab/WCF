@@ -2,7 +2,7 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/cronjobs.xsd">
 	<import>
 		<cronjob>
-			<classpath>lib/system/cronjob/GetUpdateInfoCronjob.class.php</classpath>
+			<classname>wcf\system\cronjob\GetUpdateInfoCronjob</classname>
 			<description>Gets update package information</description>
 			<startminute>0</startminute>
 			<starthour>2</starthour>
@@ -15,7 +15,7 @@
 		</cronjob>
 		
 		<cronjob>
-			<classpath>lib/system/cronjob/RefreshSearchRobotsCronjob.class.php</classpath>
+			<classname>wcf\system\cronjob\RefreshSearchRobotsCronjob</classname>
 			<description>Refreshes list of search robots</description>
 			<startminute>0</startminute>
 			<starthour>3</starthour>
@@ -28,7 +28,7 @@
 		</cronjob>
 		
 		<cronjob>
-			<classpath>lib/system/cronjob/CleanUpCronjobLogCronjob.class.php</classpath>
+			<classname>wcf\system\cronjob\CleanUpCronjobLogCronjob</classname>
 			<description>Deletes old entries from cronjob log.</description>
 			<startminute>0</startminute>
 			<starthour>12</starthour>
@@ -41,7 +41,7 @@
 		</cronjob>
 		
 		<cronjob>
-			<classpath>lib/system/cronjob/CleanUpSessionLogCronjob.class.php</classpath>
+			<classname>wcf\system\cronjob\CleanUpSessionLogCronjob</classname>
 			<description>Deletes old entries from session log.</description>
 			<startminute>0</startminute>
 			<starthour>10</starthour>
@@ -54,7 +54,7 @@
 		</cronjob>
 		
 		<cronjob>
-			<classpath>lib/system/cronjob/CleanupListenerCronjob.class.php</classpath>
+			<classname>wcf\system\cronjob\CleanupListenerCronjob</classname>
 			<description>Executes cleanup system.</description>
 			<startminute>5,20,35,50</startminute>
 			<starthour>*</starthour>

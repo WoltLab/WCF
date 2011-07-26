@@ -37,13 +37,13 @@ class CronjobListPage extends SortablePage {
 	public $objectListClassName = 'wcf\data\cronjob\CronjobList';
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::readObjects()
+	 * @see	wcf\page\MultipleLinkPage::initObjectList()
 	 */	
-	public function readObjects() {
+	public function initObjectList() {
+		parent::initObjectList();
+		
 		$this->objectList->getConditionBuilder()->add("cronjob.packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
 		$this->sqlOrderBy = "cronjob.".$this->sortField." ".$this->sortOrder;
-		
-		parent::readObjects();
 	}
 	
 	/**
