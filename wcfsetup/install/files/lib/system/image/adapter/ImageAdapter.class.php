@@ -152,4 +152,11 @@ class ImageAdapter implements IImageAdapter {
 	public function getHeight() {
 		return $this->adapter->getHeight();
 	}
+	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::isSupported()
+	 */
+	public static function isSupported() {
+		return false;
+	}
 }

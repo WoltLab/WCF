@@ -130,4 +130,11 @@ interface IImageAdapter {
 	 * @return	integer
 	 */
 	public function getHeight();
+	
+	/**
+	 * Determines if an image adapter is supported.
+	 * 
+	 * @return	boolean
+	 */
+	public static function isSupported();
 }

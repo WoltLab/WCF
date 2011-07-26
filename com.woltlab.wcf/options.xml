@@ -33,6 +33,9 @@
 				<category name="general.page">
 					<parent>general</parent>
 				</category>
+					<category name="general.image">
+						<parent>general</parent>
+					</category>
 				<category name="general.offline">
 					<parent>general</parent>
 				</category>
@@ -132,6 +135,18 @@
 				<optiontype>text</optiontype>
 			</option>
 			<!-- /general.page -->
+			
+			<!-- general.image -->
+			<option name="image_adapter_type">
+				<categoryname>general.image</categoryname>
+				<optiontype>radiobuttons</optiontype>
+				<defaultvalue><![CDATA[gd]]></defaultvalue>
+				<selectoptions>
+					<![CDATA[gd:wcf.acp.option.image_adapter_type.gd
+imagick:wcf.acp.option.image_adapter_type.imagick]]>
+				</selectoptions>
+			</option>
+			<!-- /general.image -->
 			
 			<!-- general.http.cookie -->
 			<option name="cookie_prefix">

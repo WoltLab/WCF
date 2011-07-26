@@ -206,4 +206,11 @@ class GDImageAdapter implements IImageAdapter {
 	public function getImage() {
 		return $this->image;
 	}
+	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::isSupported()
+	 */	
+	public static function isSupported() {
+		return true;
+	}
 }

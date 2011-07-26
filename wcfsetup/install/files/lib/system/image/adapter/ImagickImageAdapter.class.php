@@ -163,4 +163,11 @@ class ImagickImageAdapter implements IImageAdapter {
 	public function getWidth() {
 		return $this->width;
 	}
+	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::isSupported()
+	 */
+	public static function isSupported() {
+		return class_exists('\Imagick', false);
+	}
 }
