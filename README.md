@@ -14,9 +14,11 @@ Contribution
 Developers are always welcome to fork WCF and provide features or bug fixes using pull requests. If you make changes or add classes it is mandatory to follow the requirements below:
 
 * Testing is key, you MUST try out your changes before submitting pull requests
-* You SHOULD save your files with Unix-style line endings (\n)
+* You MUST save your files with Unix-style line endings (\n)
 * You MUST NOT include the closing tag of a PHP block at the end of file, provide an empty newline instead
-* You MUST use tabs for indentation, we highly recommend a tab size of 8
+* You MUST use tabs for indentation
+    * Tab size of 8 is required
+    * Empty lines MUST be indented equal to previous line
 * All comments within source code MUST be written in English language
 
 Follow the above conventions if you want your pull requests accepted.
