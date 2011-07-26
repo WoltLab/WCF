@@ -1,5 +1,22 @@
 <?php
-class GDImageAdapter {
+namespace wcf\system\image\adapter;
+
+/**
+ * Image adapter for bundled GD imaging library.
+ * 
+ * @author 	Alexander Ebert
+ * @copyright	2001-2011 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	system.image.adapter
+ * @category 	Community Framework
+ */
+class GDImageAdapter implements IImageAdapter {
+	/**
+	 * active color
+	 */	
+	protected $color = null;
+	
 	/**
 	 * image height
 	 * @var	integer
@@ -25,10 +42,7 @@ class GDImageAdapter {
 	protected $width = 0;
 	
 	/**
-	 * Loads an image from a resource.
-	 * 
-	 * @param	resource	$image
-	 * @param	integer		$type
+	 * @see	wcf\system\image\adapter\IImageAdapter::load()
 	 */
 	public function load($image, $type = '') {
 		if (!is_resource($image)) {
@@ -47,9 +61,7 @@ class GDImageAdapter {
 	}
 	
 	/**
-	 * Loads an image from file.
-	 * 
-	 * @param	string		$file
+	 * @see	wcf\system\image\adapter\IImageAdapter::loadFile()
 	 */	
 	public function loadFile($file) {
 		list($this->width, $this->height, $this->type) = getImageSize($file);
@@ -74,18 +86,9 @@ class GDImageAdapter {
 	}
 	
 	/**
-	 * Creates a thumbnail from previously loaded image.
-	 * 
-	 * @param	integer		$maxWidth
-	 * @param	integer		$maxHeight
-	 * @param	boolean		$obtainDimensions
-	 * @return	resource
+	 * @see	wcf\system\image\adapter\IImageAdapter::createThumbnail()
 	 */	
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
-		if ($maxWidth > $this->width || $maxHeight > $this->height) {
-			throw new SystemException("Dimensions for thumbnail can not exceed image dimensions.");
-		}
-		
 		$width = $height = $x = $y = 0;
 		
 		if ($obtainDimensions) {
@@ -122,26 +125,9 @@ class GDImageAdapter {
 	}
 	
 	/**
-	 * Clips a part of currently loaded image, overwrites image resource within instance.
-	 * 
-	 * @param	integer		$originX
-	 * @param	integer		$originY
-	 * @param	integer		$width
-	 * @param	integer		$height
-	 * @see	wcf\system\image\adapter\GDImageAdapter::getImage()
+	 * @see	wcf\system\image\adapter\IImageAdapter::clip()
 	 */
 	public function clip($originX, $originY, $width, $height) {
-		// validate if coordinates and size are within bounds
-		if ($originX < 0 || $originY < 0) {
-			throw new SystemException("Clipping an image requires valid offsets, an offset below zero is invalid.");
-		}
-		if ($width <= 0 || $height <= 0) {
-			throw new SystemException("Clipping an image requires valid dimensions, width or height below or equal zero are invalid.");
-		}
-		if ((($originX + $width) > $this->width) || (($originY + $height) > $this->height)) {
-			throw new SystemException("Offset and dimension can not exceed image dimensions.");
-		}
-		
 		$image = imageCreateTrueColor($width, $height);
 		imageAlphaBlending($image, false);
 		
@@ -152,25 +138,9 @@ class GDImageAdapter {
 	}
 	
 	/**
-	 * Resizes an image with optional scaling, overwrites image resource within instance.
-	 * 
-	 * @param	integer		$originX
-	 * @param	integer		$originY
-	 * @param	integer		$originWidth
-	 * @param	integer		$originHeight
-	 * @param	integer		$targetX
-	 * @param	integer		$targetY
-	 * @param	integer		$targetWidth
-	 * @param	integer		$targetHeight
-	 * @see	wcf\system\image\adapter\GDImageAdapter::getImage()
+	 * @see	wcf\system\image\adapter\IImageAdapter::resize()
 	 */
 	public function resize($originX, $originY, $originWidth, $originHeight, $targetX = 0, $targetY = 0, $targetWidth = 0, $targetHeight = 0) {
-		// use origin dimensions if target dimensions are both zero
-		if ($targetWidth == 0 && $targetHeight == 0) {
-			$targetWidth = $originWidth;
-			$targetHeight = $originHeight;
-		}
-		
 		$image = imageCreateTrueColor($targetWidth, $targetHeight);
 		imageAlphaBlending($image, false);
 		
@@ -181,60 +151,43 @@ class GDImageAdapter {
 	}
 	
 	/**
-	 * Draws a rectangle, overwrites image resource within instance.
-	 * 
-	 * @param	integer		$startX
-	 * @param	integer		$startY
-	 * @param	integer		$endX
-	 * @param	integer		$endY
-	 * @param	integer		$color
-	 * @see	wcf\system\image\adapter\GDImageAdapter::getColor()
-	 * @see	wcf\system\image\adapter\GDImageAdapter::getImage()
+	 * @see	wcf\system\image\adapter\IImageAdapter::drawRectangle()
 	 */
-	public function drawRectangle($startX, $startY, $endX, $endY, $color) {
-		imageFilledRectangle($this->image, $startX, $startY, $endX, $endY, $color);
+	public function drawRectangle($startX, $startY, $endX, $endY) {
+		imageFilledRectangle($this->image, $startX, $startY, $endX, $endY, $this->color);
 	}
 	
 	/**
-	 * Draws a line of text, overwrites image resource within instance.
-	 * 
-	 * @param	string		$string
-	 * @param	integer		$x
-	 * @param	integer		$y
-	 * @param	integer		$color
-	 * @param	integer		$font
-	 * @see	wcf\system\image\adapter\GDImageAdapter::getColor()
-	 * @see	wcf\system\image\adapter\GDImageAdapter::getImage()
+	 * @see	wcf\system\image\adapter\IImageAdapter::drawText()
 	 */
-	public function drawText($string, $x, $y, $color, $font = 3) {
-		imageString($this->image, $font, $x, $y, $string, $color);
+	public function drawText($string, $x, $y) {
+		imageString($this->image, 3, $x, $y, $string, $this->color);
 	}
 	
 	/**
-	 * Creates a color value based upon RGB.
-	 * 
-	 * @param	integer		$red
-	 * @param	integer		$green
-	 * @param	integer		$blue
-	 * @return	integer
+	 * @see	wcf\system\image\adapter\IImageAdapter::setColor()
 	 */	
-	public function getColor($red, $green, $blue) {
-		return imageColorAllocate($this->image, $red, $green, $blue);
+	public function setColor($red, $green, $blue) {
+		$this->color = imageColorAllocate($this->image, $red, $green, $blue);
 	}
 	
 	/**
-	 * Writes an image to disk.
-	 * 
-	 * @param	resource	$image
-	 * @param	string		$filename
-	 */	
+	 * @see	wcf\system\image\adapter\IImageAdapter::hasColor()
+	 */
+	public function hasColor() {
+		return ($this->color !== null);
+	}
+	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::writeImage()
+	 */
 	public function writeImage($image, $filename) {
 		ob_start();
 		
-		if ($this->type == IMAGETYPE_GIF && function_exists('imageGIF')) {
+		if ($this->type == IMAGETYPE_GIF) {
 			imageGIF($image);
 		}
-		else if (($this->type == IMAGETYPE_GIF || $this->type == IMAGETYPE_PNG) && function_exists('imagePNG')) {
+		else if ($this->type == IMAGETYPE_PNG) {
 			imagePNG($image);
 		}
 		else if (function_exists('imageJPEG')) {
@@ -248,9 +201,7 @@ class GDImageAdapter {
 	}
 	
 	/**
-	 * Returns image resource.
-	 * 
-	 * @return	resource
+	 * @see	wcf\system\image\adapter\IImageAdapter::getImage()
 	 */
 	public function getImage() {
 		return $this->image;

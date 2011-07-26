@@ -1,15 +1,53 @@
 <?php
-require_once('GD.php');
+namespace wcf\system\image\adapter;
 
-class ImagickImageAdapter extends GDImageAdapter {
-	protected $imagick = null;
+/**
+ * Image adapter for ImageMagick imaging library.
+ * 
+ * @author 	Alexander Ebert
+ * @copyright	2001-2011 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	system.image.adapter
+ * @category 	Community Framework
+ */
+class ImagickImageAdapter implements IImageAdapter {
+	/**
+	 * active color
+	 * 
+	 * @var	\ImagickPixel
+	 */
 	protected $color = null;
 	
+	/**
+	 * Imagick object
+	 * 
+	 * @var	\Imagick
+	 */
+	protected $imagick = null;
 	
+	/**
+	 * image height
+	 * @var	integer
+	 */	
+	protected $height = 0;
+	
+	/**
+	 * image width
+	 * @var	integer
+	 */	
+	protected $width = 0;
+	
+	/**
+	 * Creates a new ImagickImageAdapter.
+	 */
 	public function __construct() {
 		$this->imagick = new \Imagick();
 	}
 	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::load()
+	 */
 	public function load($image, $type = '') {
 		if (!($image instanceof \Imagick)) {
 			throw new SystemException("Object must be an instance of Imagick");
@@ -20,6 +58,9 @@ class ImagickImageAdapter extends GDImageAdapter {
 		$this->width = $this->imagick->getImageWidth();
 	}
 	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::loadFile()
+	 */
 	public function loadFile($file) {
 		try {
 			$this->imagick->readImage($file);
@@ -31,6 +72,9 @@ class ImagickImageAdapter extends GDImageAdapter {
 		$this->width = $this->imagick->getImageWidth();
 	}
 	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::createThumbnail()
+	 */
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
 		$thumbnail = $this->imagick;
 		
@@ -40,21 +84,16 @@ class ImagickImageAdapter extends GDImageAdapter {
 		return $thumbnail;
 	}
 	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::clip()
+	 */
 	public function clip($originX, $originY, $width, $height) {
-		// validate if coordinates and size are within bounds
-		if ($originX < 0 || $originY < 0) {
-			throw new SystemException("Clipping an image requires valid offsets, an offset below zero is invalid.");
-		}
-		if ($width <= 0 || $height <= 0) {
-			throw new SystemException("Clipping an image requires valid dimensions, width or height below or equal zero are invalid.");
-		}
-		if ((($originX + $width) > $this->width) || (($originY + $height) > $this->height)) {
-			throw new SystemException("Offset and dimension can not exceed image dimensions.");
-		}
-		
 		$this->imagick->cropImage($width, $height, $originX, $originY);
 	}
 	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::drawRectangle()
+	 */
 	public function drawRectangle($startX, $startY, $endX, $endY, $color) {
 		$draw = new \ImagickDraw();
 		$draw->setFillColor($this->color);
@@ -64,6 +103,9 @@ class ImagickImageAdapter extends GDImageAdapter {
 		$this->imagick->drawImage($draw);
 	}
 	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::drawText()
+	 */
 	public function drawText($string, $x, $y, $color, $font = 4) {
 		$draw = new \ImagickDraw();
 		$draw->setFillColor($this->color);
@@ -74,12 +116,18 @@ class ImagickImageAdapter extends GDImageAdapter {
 		$this->imagick->drawImage($draw);
 	}
 	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::setColor()
+	 */
 	public function setColor($red, $green, $blue) {
 		$this->color = new \ImagickPixel();
 		$this->color->setColor('rgb('.$red.','.$green.','.$blue.')');
 		
 	}
 	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::hasColor()
+	 */
 	public function hasColor() {
 		if ($this->color instanceof \ImagickPixel) {
 			return true;
@@ -88,11 +136,31 @@ class ImagickImageAdapter extends GDImageAdapter {
 		return false;
 	}
 	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::getImage()
+	 */
 	public function getImage() {
 		return $this->imagick;
 	}
 	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::writeImage()
+	 */
 	public function writeImage($image, $filename) {
 		$image->writeImage($filename);
+	}
+	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::getHeight()
+	 */
+	public function getHeight() {
+		return $this->height;
+	}
+	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::getWidth()
+	 */
+	public function getWidth() {
+		return $this->width;
 	}
 }
