@@ -1,7 +1,7 @@
 /**
  * Class and function collection for WCF
  * 
- * @author	Tim Düsterhus, Alexander Ebert
+ * @author	Markus Bartz, Tim Düsterhus, Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
@@ -1073,9 +1073,69 @@ WCF.Language = {
 };
 
 /**
+ * Number utilities.
+ */
+WCF.Number = {
+	/**
+	 * Rounds a number to a given number of floating points digits. Defaults to 0.
+	 * 
+	 * @param	number		number
+	 * @param	floatingPoint	number of digits
+	 * @return	number
+	 */
+	round: function (number, floatingPoint) {
+		floatingPoint = Math.pow(10, (floatingPoint || 0));
+		
+		return Math.round(number * floatingPoint) / floatingPoint;
+	}
+}
+
+/**
  * String utilities.
  */
 WCF.String = {
+	/**
+	 * Adds thousands separators to a given number.
+	 * 
+	 * @param	mixed		number
+	 * @return	string
+	 */
+	addThousandsSeparator: function(number) {
+		var $numberString = String(number);
+		var parts = $numberString.split(/[^0-9]/);
+
+		var $decimalPoint = $numberString.match(/[^0-9]/g);
+		
+		$numberString = parts[0];
+		delete parts[0];
+		var $decimalPart = $decimalPoint.join('')+parts.join('');
+		
+		if (parseInt(number) >= 1000 || parseInt(number) <= -1000) {
+			var $negative = false;
+			if (parseInt(number) <= -1000) {
+				$negative = true;
+				$numberString = $numberString.substring(1);
+			}
+			var $separator = WCF.Language.get('wcf.global.thousandsSeparator');
+			
+			if ($separator != null && $separator != '') {
+				var $numElements = new Array();
+				var $firstPart = $numberString.length % 3
+				if ($firstPart == 0) $firstPart = 3;
+				for (var $i = 0; $i < Math.ceil($numberString.length / 3); $i++) {
+					if ($i == 0) $numElements.push($numberString.substring(0, $firstPart));
+					else {
+						var $start = (($i - 1) * 3) + $firstPart
+						$numElements.push($numberString.substring($start, $start + 3));
+					}
+				}
+				$numberString = (($negative) ? ('-') : ('')) + $numElements.join($separator);
+			}
+		}
+		
+		return $numberString + $decimalPart;
+	},
+	
 	/**
 	 * Escapes special HTML-characters within a string
 	 * 
@@ -1098,6 +1158,19 @@ WCF.String = {
 	},
 	
 	/**
+	 * Rounds number to given count of floating point digits, localizes decimal-point and inserts thousands-separators
+	 * 
+	 * @param	mixed	number
+	 * @return	string
+	 */
+	formatNumeric: function(number, floatingPoint) {
+		number = String(WCF.Number.round(number, floatingPoint || 2));
+		number = number.replace('.', WCF.Language.get('wcf.global.decimalPoint'));
+		
+		return this.addThousandsSeparator(number);
+	},
+	
+	/**
 	 * Makes a string's first character uppercase
 	 * 
 	 * @param	string		string
@@ -1105,40 +1178,6 @@ WCF.String = {
 	 */
 	ucfirst: function(string) {
 		return string.substring(0, 1).toUpperCase() + string.substring(1);
-	},
-	
-	/**
-	 * Adds thousands separators to a given number.
-	 * 
-	 * @param	mixed		number
-	 * @return	string
-	 */
-	addThousandsSeparator: function(number) {
-		var $numberString = String(number);
-		if (number >= 1000 || number <= -1000) {
-			var $negative = false;
-			if (number <= -1000) {
-				$negative = true;
-				$numberString = $numberString.substring(1);
-			}
-			var $separator = WCF.Language.get('wcf.global.thousandsSeparator');
-			
-			if ($separator != null && $separator != '') {
-				var $numElements = new Array();
-				var $firstPart = $numberString.length % 3
-				if ($firstPart == 0) $firstPart = 3;
-				for (var $i = 0; $i < Math.ceil($numberString.length / 3); $i++) {
-					if ($i == 0) $numElements.push($numberString.substring(0, $firstPart));
-					else {
-						var $start = (($i - 1) * 3) + $firstPart
-						$numElements.push($numberString.substring($start, $start + 3));
-					}
-				}
-				$numberString = (($negative) ? ('-') : ('')) + $numElements.join($separator);
-			}
-		}
-		
-		return $numberString;
 	}
 };
 
@@ -1249,6 +1288,7 @@ WCF.Template.prototype = {
 		// insert them :)
 		for (var $key in $variables) {
 			$result = $result.replace(new RegExp(WCF.String.escapeRegExp('{$'+$key+'}'), 'g'), WCF.String.escapeHTML($variables[$key]));
+			$result = $result.replace(new RegExp(WCF.String.escapeRegExp('{#$'+$key+'}'), 'g'), WCF.String.formatNumeric($variables[$key]));
 			$result = $result.replace(new RegExp(WCF.String.escapeRegExp('{@$'+$key+'}'), 'g'), $variables[$key]);
 		}
 		
@@ -1291,6 +1331,12 @@ WCF.Template.prototype = {
 			// ($name) ? $name : '$match'
 			// -> $v.muh ? $v.muh : '{$muh}'
 			return "' + WCF.String.escapeHTML("+ $name + " ? " + $name + " : '" + $match + "') + '";
+		}).replace(/\{#\$(.*?)\}/g, function ($match) {
+			var $name = '$v.' + $match.substring(3, $match.length - 1);
+			// trinary operator to maintain compatibility with uncompiled template
+			// ($name) ? $name : '$match'
+			// -> $v.muh ? $v.muh : '{$muh}'
+			return "' + WCF.String.formatNumeric("+ $name + " ? " + $name + " : '" + $match + "') + '";
 		}).replace(/\{@\$(.*?)\}/g, function ($match) {
 			var $name = '$v.' + $match.substring(3, $match.length - 1);
 			// trinary operator to maintain compatibility with uncompiled template
