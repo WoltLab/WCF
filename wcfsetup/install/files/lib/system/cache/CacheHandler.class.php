@@ -41,7 +41,7 @@ class CacheHandler extends SingletonFactory {
 		catch (SystemException $e) {
 			if (CACHE_SOURCE_TYPE != 'disk') {
 				// fallback to disk cache
-				$this->cacheSource = new wcf\system\cache\source\DiskCacheSource();
+				$this->cacheSource = new \wcf\system\cache\source\DiskCacheSource();
 			}
 			else {
 				throw $e;
