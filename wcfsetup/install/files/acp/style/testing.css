@@ -468,7 +468,6 @@ div.ui-widget-overlay {
 .mainHeading > hgroup {
 	height: 48px;
 	padding-left: 60px;
-	vertical-align: middle;
 }
 
 .mainHeading > hgroup h1 {
@@ -478,6 +477,13 @@ div.ui-widget-overlay {
 	font-size: 140%;
 	font-weight: bold;
 	padding-bottom: 10px;
+}
+
+.mainHeading > hgroup h2 {
+	color: #ccc;
+	font-size: 100%;
+	font-weight: normal;
+	padding-top: 5px;
 }
 
 .mainHeading > hgroup p {
@@ -770,6 +776,7 @@ nav.largeButtons ul li a:hover {
 
 nav.largeButtons ul li a img {
 	vertical-align: middle;
+	margin: 0;
 }
 
 .formSubmit {
