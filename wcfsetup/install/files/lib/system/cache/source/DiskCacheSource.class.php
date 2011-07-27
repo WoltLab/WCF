@@ -42,7 +42,9 @@ class DiskCacheSource implements ICacheSource {
 			}
 			
 			// load resource
-			$this->load($cacheResource);
+			if (!$this->load($cacheResource)) {
+				return null;
+			}
 			
 			if (!isset($this->cache[$cacheResource['cache']])) {
 				return null;
@@ -70,15 +72,18 @@ class DiskCacheSource implements ICacheSource {
 	/**
 	 * @see	wcf\system\cache\source\ICacheSource::delete()
 	 */
-	public function delete(array$cacheResource, $ignoreLifetime = false) {
+	public function delete(array $cacheResource) {
 		if (file_exists($cacheResource['file'])) {
-			if ($ignoreLifetime || ($cacheResource['minLifetime'] == 0 || (TIME_NOW - filemtime($cacheResource['file'])) >= $cacheResource['minLifetime'])) {
-				// delete cache file
+			if (!@touch($cacheResource['file'], 1)) {
 				@unlink($cacheResource['file']);
+			}
 				
-				// reset open cache
-				if (isset($this->cache[$cacheResource['cache']])) unset($this->cache[$cacheResource['cache']]);
-				if (isset($this->loaded[$cacheResource['file']])) unset($this->loaded[$cacheResource['file']]);
+			// reset open cache
+			if (isset($this->cache[$cacheResource['cache']])) {
+				unset($this->cache[$cacheResource['cache']]);
+			}
+			if (isset($this->loaded[$cacheResource['file']])) {
+				unset($this->loaded[$cacheResource['file']]);	
 			}
 		}
 	}
@@ -86,14 +91,18 @@ class DiskCacheSource implements ICacheSource {
 	/**
 	 * @see wcf\system\cache\source\ICacheSource::clear()
 	 */
-	public function clear($directory, $filepattern, $forceDelete = false) {
+	public function clear($directory, $filepattern) {
+		// unify parameters
+		$directory = FileUtil::unifyDirSeperator($directory);
+		$filepattern = FileUtil::unifyDirSeperator($filepattern);
+		
 		$filepattern = str_replace('*', '.*', str_replace('.', '\.', $filepattern));
 		if (substr($directory, -1) != '/') {
 			$directory .= '/';	
 		}
 
-		DirectoryUtil::getInstance($directory)->executeCallback(function ($filename) use ($forceDelete) {
-			if ($forceDelete || !@touch($filename, 1)) {
+		DirectoryUtil::getInstance($directory)->executeCallback(function ($filename) {
+			if (!@touch($filename, 1)) {
 				@unlink($filename);
 			}
 		}, '%^'.$directory.$filepattern.'$%i');
@@ -119,11 +128,6 @@ class DiskCacheSource implements ICacheSource {
 		// cache resource was marked as obsolete
 		if (($mtime = filemtime($cacheResource['file'])) <= 1) {
 			return true;	
-		}
-		
-		// cache resource has a delay marking
-		if ($cacheResource['minLifetime'] > 0 && (TIME_NOW - $mtime) < $cacheResource['minLifetime']) {
-			return false;
 		}
 		
 		// maxlifetime expired

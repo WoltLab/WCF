@@ -205,7 +205,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	 */
 	public static function resetCache() {
 		// clear cache
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.groups*.php', true);
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.groups*.php');
 		
 		// clear sessions
 		SessionHandler::resetSessions();

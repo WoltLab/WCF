@@ -83,7 +83,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 	 */
 	public static function resetCache() {
 		// reset cache
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.option-*.php', true);
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.option-*.php');
 		
 		// reset options.inc.php files
 		$sql = "SELECT	package, packageID, packageDir

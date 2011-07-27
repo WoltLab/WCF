@@ -297,12 +297,9 @@ class WCF {
 	 * Loads the default cache resources.
 	 */
 	protected function loadDefaultCacheResources() {
-		CacheHandler::getInstance()->addResource('languages', WCF_DIR.'cache/cache.languages.php', 'wcf\system\cache\CacheBuilderLanguage');
-		CacheHandler::getInstance()->addResource('spiders', WCF_DIR.'cache/cache.spiders.php', 'wcf\system\cache\CacheBuilderSpider');
 		CacheHandler::getInstance()->addResource('languages', WCF_DIR.'cache/cache.languages.php', 'wcf\system\cache\builder\CacheBuilderLanguage');
 		CacheHandler::getInstance()->addResource('spiders', WCF_DIR.'cache/cache.spiders.php', 'wcf\system\cache\builder\CacheBuilderSpider');
 		if (defined('PACKAGE_ID')) {
-			CacheHandler::getInstance()->addResource('coreObjects-'.PACKAGE_ID, WCF_DIR.'cache/cache.coreObjects-'.PACKAGE_ID.'.php', 'wcf\system\cache\CacheBuilderCoreObject');
 			CacheHandler::getInstance()->addResource('coreObjects-'.PACKAGE_ID, WCF_DIR.'cache/cache.coreObjects-'.PACKAGE_ID.'.php', 'wcf\system\cache\builder\CacheBuilderCoreObject');
 		}
 	}
