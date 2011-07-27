@@ -582,6 +582,27 @@ WCF.Action.Proxy.prototype = {
 	 */
 	setOption: function(optionName, optionData) {
 		this.options[optionName] = optionData;
+	},
+
+	/**
+	 * Displays a spinner image for given element.
+	 *
+	 * @param	jQuery		element
+	 */
+	showSpinner: function(element) {
+		element = $(element);
+
+		if (element.getTagName() !== 'img') {
+			console.debug('Given element is not an image, aborting.');
+			return;
+		}
+
+		// force element dimensions
+		element.attr('width', element.attr('width'));
+		element.attr('height', element.attr('height'));
+
+		// replace image
+		element.attr('src', WCF.Icon.get('wcf.global.spinner'));
 	}
 };
 
@@ -688,10 +709,12 @@ WCF.Action.Delete.prototype = {
 		
 		if ($target.data('confirmMessage')) {
 			if (confirm($target.data('confirmMessage'))) {
+				this.proxy.showSpinner($target);
 				this._sendRequest($target);
 			}
 		}
 		else {
+			this.proxy.showSpinner($target);
 			this._sendRequest($target);
 		}
 		
@@ -1048,7 +1071,7 @@ WCF.Language = {
 	_variables: new WCF.Dictionary(),
 	
 	/**
-	 * @see	WCF.Dictionary.addObject()
+	 * @see	WCF.Dictionary.add()
 	 */
 	add: function(key, value) {
 		this._variables.add(key, value);
@@ -1069,6 +1092,40 @@ WCF.Language = {
 	 */
 	get: function(key) {
 		return this._variables.get(key);
+	}
+};
+
+/**
+ * Icon collection used across all JavaScript classes.
+ * 
+ * @see	WCF.Dictionary
+ */
+WCF.Icon = {
+	/**
+	 * list of icons
+	 * @var	WCF.Dictionary
+	 */
+	_icons: new WCF.Dictionary(),
+
+	/**
+	 * @see	WCF.Dictionary.add()
+	 */
+	add: function(name, path) {
+		this._icons.add(name, path);
+	},
+
+	/**
+	 * @see	WCF.Dictionary.addObject()
+	 */
+	addObject: function(object) {
+		this._icons.addObject(object);
+	},
+
+	/**
+	 * @see	WCF.Dictionary.get()
+	 */
+	get: function(name) {
+		return this._icons.get(name);
 	}
 };
 
