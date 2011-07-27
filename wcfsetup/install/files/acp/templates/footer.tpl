@@ -1,6 +1,6 @@
-			</div>
+			</section>
 		</div>
-	</section>
+	</div>
 	<!-- /CONTENT -->
 	
 	<!-- FOOTER -->
