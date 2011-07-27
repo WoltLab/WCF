@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\image\adapter;
+use wcf\system\exception\SystemException;
 
 /**
  * Image adapter for bundled GD imaging library.
@@ -92,26 +93,26 @@ class GDImageAdapter implements IImageAdapter {
 		$width = $height = $x = $y = 0;
 		
 		if ($obtainDimensions) {
-			$widthScale = $maxWidth / $this->width;
-			$heightScale = $maxHeight / $this->height;
-			
-			if ($widthScale > $heightScale) {
-				$width = round($this->width * $heightScale, 0);
-				$height = $maxHeight;
+			if ($maxWidth / $this->width < $maxHeight / $this->height) {
+				$width = $maxWidth;
+				$height = round($this->height * ($width / $this->width));
 			}
 			else {
-				$width = $maxWidth;
-				$height = round($this->height * $widthScale, 0);
+				$height = $maxHeight;
+				$width = round($this->width * ($height / $this->height));
 			}
+			
 		}
 		else {
-			if ($this->width > $this->height) {
-				$x = ceil(($this->width - $this->height) / 2);
-				$width = $height = $this->height;
+			$width = $height = $maxWidth;
+			
+			if ($width > $height) {
+				$x = ceil(($width - $height) / 2);
+				$width = $height;
 			}
 			else {
-				$y = ceil(($this->height - $this->width) / 2);
-				$height = $width = $this->width;
+				$y = ceil(($height - $width) / 2);
+				$height = $width;
 			}
 		}
 		
@@ -182,6 +183,10 @@ class GDImageAdapter implements IImageAdapter {
 	 * @see	wcf\system\image\adapter\IImageAdapter::writeImage()
 	 */
 	public function writeImage($image, $filename) {
+		if (!is_resource($image)) {
+			throw new SystemException("Given image is not a valid image resource.");
+		}
+		
 		ob_start();
 		
 		if ($this->type == IMAGETYPE_GIF) {
@@ -198,6 +203,20 @@ class GDImageAdapter implements IImageAdapter {
 		ob_end_clean();
 		
 		file_put_contents($filename, $thumbnail);
+	}
+	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::getWidth()
+	 */	
+	public function getWidth() {
+		return $this->width;
+	}
+	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::getHeight()
+	 */
+	public function getHeight() {
+		return $this->height;
 	}
 	
 	/**
