@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\image\adapter;
+use wcf\system\exception\SystemException;
 
 /**
  * Image adapter for ImageMagick imaging library.
@@ -147,6 +148,10 @@ class ImagickImageAdapter implements IImageAdapter {
 	 * @see	wcf\system\image\adapter\IImageAdapter::writeImage()
 	 */
 	public function writeImage($image, $filename) {
+		if (!($image instanceof \Imagick)) {
+			throw new SystemException("Given image is not a valid Imagick-object.");
+		}
+		
 		$image->writeImage($filename);
 	}
 	
