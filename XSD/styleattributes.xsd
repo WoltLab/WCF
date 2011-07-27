@@ -29,8 +29,8 @@
                 </xs:sequence>
         </xs:complexType>
         
-         <!-- Represents a styleattributes which will be installed, updated or deleted. -->
-	<xs:complexType name="styleattribute">
+         <!-- Represents a styleattribute, which will be installed, updated or deleted. -->
+         <xs:complexType name="styleattribute">
                 <xs:all>
                         <xs:element name="selector" minOccurs="0">
                                 <xs:simpleType>

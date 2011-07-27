@@ -44,34 +44,14 @@ class ApcCacheSource implements ICacheSource {
 	/**
 	 * @see	wcf\system\cache\source\ICacheSource::delete()
 	 */
-	public function delete(array $cacheResource, $ignoreLifetime = false) {
-		if ($ignoreLifetime || ($cacheResource['minLifetime'] == 0 || $this->checkMinLifetime($cacheResource))) {
-			apc_delete($cacheResource['file']);
-		}
-	}
-	
-	/**
-	 * Checks if the minimum lifetime is expired.
-	 * 
-	 * @param	array		$cacheResource
-	 */
-	public function checkMinLifetime(array $cacheResource) {
-		$apcinfo = apc_cache_info('user');
-		$cacheList = $apcinfo['cache_list'];
-		
-		foreach ($cacheList as $cache) {
-			if ($cache['info'] == $cacheResource['file']) {
-				return ((TIME_NOW - $cache['mtime']) >= $cacheResource['minLifetime']);
-			}
-		}
-		
-		return true;
+	public function delete(array $cacheResource) {
+		apc_delete($cacheResource['file']);
 	}
 	
 	/**
 	 * @see	wcf\system\cache\source\ICacheSource::clear()
 	 */
-	public function clear($directory, $filepattern, $forceDelete = false) {
+	public function clear($directory, $filepattern) {
 		$pattern = preg_quote(FileUtil::addTrailingSlash($directory), '%').str_replace('*', '.*', str_replace('.', '\.', $filepattern));
 		
 		$apcinfo = apc_cache_info('user');

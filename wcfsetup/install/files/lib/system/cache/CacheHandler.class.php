@@ -55,15 +55,13 @@ class CacheHandler extends SingletonFactory {
 	 * @param	string		$cache		name of this resource
 	 * @param	string		$file		data file for this resource
 	 * @param	string		$className
-	 * @param	integer		$minLifetime
 	 * @param	integer		$maxLifetime
 	 */
-	public function addResource($cache, $file, $className, $minLifetime = 0, $maxLifetime = 0) {
+	public function addResource($cache, $file, $className, $maxLifetime = 0) {
 		$this->cacheResources[$cache] = array(
 			'cache' => $cache,
 			'file' => $file, 
 			'className' => $className, 
-			'minLifetime' => $minLifetime,
 			'maxLifetime' => $maxLifetime
 		);
 	}
@@ -72,14 +70,13 @@ class CacheHandler extends SingletonFactory {
 	 * Deletes a registered cache resource.
 	 * 
 	 * @param 	string		$cache
-	 * @param 	boolean		$ignoreLifetime
 	 */
-	public function clearResource($cache, $ignoreLifetime = false) {
+	public function clearResource($cache) {
 		if (!isset($this->cacheResources[$cache])) {
 			throw new SystemException("cache resource '".$cache."' does not exist", 11005);
 		}
 		
-		$this->getCacheSource()->delete($this->cacheResources[$cache], $ignoreLifetime);
+		$this->getCacheSource()->delete($this->cacheResources[$cache]);
 	}
 	
 	/**
@@ -87,10 +84,9 @@ class CacheHandler extends SingletonFactory {
 	 *
 	 * @param 	string 		$directory
 	 * @param 	string 		$filepattern
-	 * @param 	boolean		$forceDelete
 	 */
-	public function clear($directory, $filepattern, $forceDelete = false) {
-		$this->getCacheSource()->clear($directory, $filepattern, $forceDelete);
+	public function clear($directory, $filepattern) {
+		$this->getCacheSource()->clear($directory, $filepattern);
 	}
 	
 	/**

@@ -32,18 +32,16 @@ interface ICacheSource {
 	 * Deletes a variable in the cache.
 	 *
 	 * @param	array		$cacheResource
-	 * @param 	boolean		$ignoreLifetime
 	 */
-	public function delete(array $cacheResource, $ignoreLifetime = false);
+	public function delete(array $cacheResource);
 	
 	/**
 	 * Marks cached files as obsolete.
 	 *
 	 * @param 	string 		$directory
 	 * @param 	string 		$filepattern
-	 * @param 	boolean		$forceDelete
 	 */
-	public function clear($directory, $filepattern, $forceDelete = false);
+	public function clear($directory, $filepattern);
 	
 	/**
 	 * Closes this cache source.

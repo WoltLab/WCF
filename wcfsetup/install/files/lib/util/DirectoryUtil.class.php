@@ -152,7 +152,7 @@ class DirectoryUtil {
 		// sort out non matching files
 		if (!empty($pattern)) {
 			foreach ($files as $filename => $value) {
-				if (((bool) preg_match($pattern, $filename)) == $negativeMatch) unset($files[$filename]);
+				if (((bool) preg_match($pattern, FileUtil::unifyDirSeperator($filename))) == $negativeMatch) unset($files[$filename]);
 			}
 		}
 
@@ -188,7 +188,7 @@ class DirectoryUtil {
 		// sort out non matching files
 		if (!empty($pattern)) {
 			foreach ($objects as $filename => $value) {
-				if (((bool) preg_match($pattern, $filename)) == $negativeMatch) unset($objects[$filename]);
+				if (((bool) preg_match($pattern, FileUtil::unifyDirSeperator($filename))) == $negativeMatch) unset($objects[$filename]);
 			}
 		}
 

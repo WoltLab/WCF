@@ -145,7 +145,7 @@ class MemcacheCacheSource implements ICacheSource {
 	/**
 	 * @see	wcf\system\cache\source\ICacheSource::delete()
 	 */
-	public function delete(array $cacheResource, $ignoreLifetime = false) {
+	public function delete(array $cacheResource) {
 		$this->getAdapter()->getMemcache()->delete($cacheResource['file']);
 		$this->removeFromLog($cacheResource['file']);
 	}
@@ -153,7 +153,7 @@ class MemcacheCacheSource implements ICacheSource {
 	/**
 	 * @see wcf\system\cache\source\ICacheSource::clear()
 	 */
-	public function clear($directory, $filepattern, $forceDelete = false) {
+	public function clear($directory, $filepattern) {
 		$this->loadLog();
 		$pattern = preg_quote(FileUtil::addTrailingSlash($directory), '%').str_replace('*', '.*', str_replace('.', '\.', $filepattern));
 		foreach ($this->cacheResources as $cacheResource) {
