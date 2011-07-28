@@ -123,7 +123,7 @@
 							<label for="email">{lang}wcf.user.email{/lang}</label>
 						</div>
 						<div class="formField">	
-							<input type="text" id="email" name="email" value="{$email}" class="inputText" />
+							<input type="email" id="email" name="email" value="{$email}" class="inputText" />
 							{if $errorType.email|isset}
 								<p class="innerError">
 									{if $errorType.email == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
@@ -139,7 +139,7 @@
 							<label for="confirmEmail">{lang}wcf.user.confirmEmail{/lang}</label>
 						</div>
 						<div class="formField">
-							<input type="text" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="inputText" />
+							<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="inputText" />
 							{if $errorType.confirmEmail|isset}
 								<p class="innerError">
 									{if $errorType.confirmEmail == 'notEqual'}{lang}wcf.user.error.confirmEmail.notEqual{/lang}{/if}
