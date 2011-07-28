@@ -20,7 +20,7 @@ use wcf\system\WCF;
  */
 class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	DatabaseObjectDecorator::$baseClass
+	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\group\UserGroup';
 	
@@ -37,7 +37,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	}
 	
 	/**
-	 * @see	DatabaseObjectEditor::__deleteAll()
+	 * @see	wcf\data\DatabaseObjectEditor::__deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
 		parent::deleteAll($objectIDs);

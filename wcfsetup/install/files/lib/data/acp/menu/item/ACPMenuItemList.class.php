@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectList;
  */
 class ACPMenuItemList extends DatabaseObjectList {
 	/**
-	 * @see	DatabaseObjectList::$className
+	 * @see	wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\acp\menu\item\ACPMenuItem';
 }

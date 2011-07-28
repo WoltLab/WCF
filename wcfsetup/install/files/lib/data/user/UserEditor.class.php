@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  */
 class UserEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectDecorator::$baseClass
+	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\User';
 	
@@ -38,7 +38,7 @@ class UserEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
-	 * @see	DatabaseObjectEditor::update()
+	 * @see	wcf\data\DatabaseObjectEditor::update()
 	 */
 	public function update(array $parameters = array()) {
 		// update salt and create new password hash
