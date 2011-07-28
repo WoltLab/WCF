@@ -31,7 +31,7 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.updateServer.data{/lang}</legend>
 				
-				<div id="serverDiv" class="formElement{if $errorField == 'serverURL'} formError{/if}">
+				<div id="serverURLDiv" class="formElement{if $errorField == 'serverURL'} formError{/if}">
 					<div class="formFieldLabel">
 						<label for="serverURL">{lang}wcf.acp.updateServer.serverURL{/lang}</label>
 					</div>
