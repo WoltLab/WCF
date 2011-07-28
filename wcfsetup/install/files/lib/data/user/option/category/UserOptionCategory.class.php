@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class UserOptionCategory extends DatabaseObject {
 	/**
-	 * @see	DatabaseObject::$databaseTableName
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'user_option_category';
 	
 	/**
-	 * @see	DatabaseObject::$databaseTableIndexName
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'categoryID';
 	
@@ -56,7 +56,7 @@ class UserOptionCategory extends DatabaseObject {
 	 * 
 	 * @param	string		$categoryName
 	 * @param	integer		$packageID
-	 * @return	UserOptionCategory
+	 * @return	wcf\data\user\option\category\UserOptionCategory
 	 */
 	public static function getCategoryByName($categoryName, $packageID) {
 		$sql = "SELECT	*

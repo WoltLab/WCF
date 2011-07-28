@@ -20,12 +20,12 @@ use wcf\util\StringUtil;
  */
 class User extends DatabaseObject {
 	/**
-	 * @see	DatabaseObject::$databaseTableName
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'user';
 	
 	/**
-	 * @see	DatabaseObject::$databaseTableIndexName
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'userID';
 	
@@ -198,7 +198,7 @@ class User extends DatabaseObject {
 	}
 	
 	/**
-	 * @see DatabaseObject::__get()
+	 * @see wcf\data\DatabaseObject::__get()
 	 */
 	public function __get($name) {
 		$value = parent::__get($name);

@@ -16,12 +16,12 @@ use wcf\system\request\LinkHandler;
  */
 class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	/**
-	 * @see	DatabaseObject::$databaseTableName
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'acp_menu_item';
 	
 	/**
-	 * @see	DatabaseObject::$databaseTableIndexName
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'menuItemID';
 	

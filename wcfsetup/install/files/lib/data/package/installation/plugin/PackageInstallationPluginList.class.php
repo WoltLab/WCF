@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectList;
  */
 class PackageInstallationPluginList extends DatabaseObjectList {
 	/**
-	 * @see	DatabaseObjectList::$className
+	 * @see	wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\package\installation\plugin\PackageInstallationPluginObj';
 }

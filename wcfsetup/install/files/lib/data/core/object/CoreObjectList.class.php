@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectList;
  */
 class CoreObjectList extends DatabaseObjectList {
 	/**
-	 * @see	DatabaseObjectList::$className
+	 * @see	wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\core\object\CoreObject';
 }
