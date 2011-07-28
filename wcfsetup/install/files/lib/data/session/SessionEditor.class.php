@@ -14,7 +14,7 @@ use wcf\data\acp\session\ACPSessionEditor;
  */
 class SessionEditor extends ACPSessionEditor {
 	/**
-	 * @see	DatabaseObjectDecorator::$baseClass
+	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\session\Session';
 }

@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class CleanupListenerEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectDecorator::$baseClass
+	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	public $baseClass = 'wcf\data\cleanup\listener\CleanupListener';
 }

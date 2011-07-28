@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class ACPSessionEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectDecorator::$baseClass
+	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\acp\session\ACPSession';
 	
 	/**
-	 * @see	DatabaseObjectEditor::create()
+	 * @see	wcf\data\DatabaseObjectEditor::create()
 	 */
 	public static function create(array $parameters = array()) {
 		if (isset($parameters['userID']) && !$parameters['userID']) {
@@ -34,7 +34,7 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
-	 * @see	DatabaseObjectEditor::create()
+	 * @see	wcf\data\DatabaseObjectEditor::create()
 	 */
 	public function update(array $parameters = array()) {
 		if (isset($parameters['userID']) && !$parameters['userID']) {

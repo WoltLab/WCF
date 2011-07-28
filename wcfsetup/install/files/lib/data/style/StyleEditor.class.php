@@ -32,7 +32,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	const STYLE_PREVIEW_IMAGE_MAX_HEIGHT = 140;
 	
 	/**
-	 * @see	DatabaseObjectDecorator::$baseClass
+	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\style\Style';
 	
@@ -109,8 +109,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	/**
 	 * Reads the data of a style exchange format file.
 	 * 
-	 * @param	Tar		$tar
-	 * @return	array		data
+	 * @param	wcf\system\io\Tar	$tar
+	 * @return	array				data
 	 */
 	public static function readStyleData(Tar $tar) {
 		// search style.xml
@@ -848,7 +848,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * @see IEditableCachedObject::resetCache()
+	 * @see wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		WCF::getCache()->clear(WCF_DIR.'cache', 'cache.icon-*-'.$this->styleID.'.php');
