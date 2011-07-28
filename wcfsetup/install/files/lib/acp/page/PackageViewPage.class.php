@@ -40,7 +40,7 @@ class PackageViewPage extends AbstractPage {
 	public $dependentPackages = array();
 	
 	/**
-	 * list with data of  required packages
+	 * list with data of required packages
 	 * @var	array<string>
 	 */
 	public $dependencies = array();

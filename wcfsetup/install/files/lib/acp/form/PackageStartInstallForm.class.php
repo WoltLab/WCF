@@ -60,7 +60,7 @@ class PackageStartInstallForm extends ACPForm {
 	public $uploadPackage = '';
 	
 	/**
-	 * archive of the instalation/update package
+	 * archive of the installation/update package
 	 * @var	wcf\system\package\PackageArchive
 	 */
 	public $archive = null;

@@ -38,7 +38,7 @@ class PackageUpdateSearchForm extends ACPForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.package.database';
 	
 	/**
-	 * list of package server ids which are searched
+	 * list of package update server ids which are searched
 	 * @var	array<integer>
 	 */
 	public $packageUpdateServerIDs = array();
@@ -50,7 +50,7 @@ class PackageUpdateSearchForm extends ACPForm {
 	public $packageName = '';
 	
 	/**
-	 * searched author
+	 * searched package author
 	 * @var	string
 	 */
 	public $author = '';

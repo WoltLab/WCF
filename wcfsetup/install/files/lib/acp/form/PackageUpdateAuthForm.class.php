@@ -33,7 +33,8 @@ class PackageUpdateAuthForm extends ACPForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.package';
 	
 	/**
-	 * exception thrown if an authorization for the package update server is needed
+	 * exception that has been thrown if an authorization for the package update
+	 * server is needed
 	 * @var	wcf\system\package\PackageUpdateAuthorizationRequiredException
 	 */
 	public $exception = null;
@@ -57,19 +58,19 @@ class PackageUpdateAuthForm extends ACPForm {
 	public $saveAuthData = 0;
 	
 	/**
-	 * id of the relevant package update server
+	 * id of the package update server
 	 * @var	integer
 	 */
 	public $packageUpdateServerID = 0;
 	
 	/**
-	 * url of the relevant package update server
+	 * url of the package update server
 	 * @var	integer
 	 */
 	public $url = '';
 	
 	/**
-	 * response header of the relavent package update server
+	 * response header of the package update server
 	 * @var	string
 	 */
 	public $header = '';
@@ -81,7 +82,7 @@ class PackageUpdateAuthForm extends ACPForm {
 	public $realm = '';
 	
 	/**
-	 * response of the relevant package update server
+	 * response of the package update server
 	 * @var	integer
 	 */
 	public $message = '';
