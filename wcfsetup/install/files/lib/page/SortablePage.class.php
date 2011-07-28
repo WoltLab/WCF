@@ -16,29 +16,25 @@ use wcf\system\event\EventHandler;
  */
 abstract class SortablePage extends MultipleLinkPage {
 	/**
-	 * The selected sort field.
-	 * 
+	 * selected sort field
 	 * @var string
 	 */
 	public $sortField = '';
 	
 	/**
-	 * The selected sort order.
-	 * 
+	 * selected sort order
 	 * @var string
 	 */
 	public $sortOrder = '';
 	
 	/**
-	 * The default sort field.
-	 * 
+	 * default sort field
 	 * @var string
 	 */
 	public $defaultSortField = '';
 	
 	/**
-	 * The default sort order.
-	 * 
+	 * default sort order
 	 * @var string
 	 */
 	public $defaultSortOrder = 'ASC';

@@ -15,16 +15,31 @@ use wcf\system\WCF;
  * @category 	Community Framework
  */
 class UserGroupListPage extends SortablePage {
-	// system
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'userGroupList';
-	public $deletedGroups = 0;
-	public $defaultSortField = 'groupName';
+	
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.user.canEditGroup', 'admin.user.canDeleteGroup');
+	
+	/**
+	 * @see wcf\page\SortablePage::$defaultSortField
+	 */
+	public $defaultSortField = 'groupName';
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
 	 */	
 	public $objectListClassName = 'wcf\data\user\group\UserGroupList';
+	
+	/**
+	 * indicates if a group has just been deleted
+	 * @var	integer
+	 */
+	public $deletedGroups = 0;
 	
 	/**
 	 * @see wcf\page\IPage::readParameters()

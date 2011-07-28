@@ -16,29 +16,25 @@ use wcf\system\event\EventHandler;
  */
 abstract class AbstractPage implements IPage {
 	/**
-	 * Name of the template for the called page.
-	 * 
+	 * name of the template for the called page
 	 * @var string
 	 */
 	public $templateName = '';
 	
 	/**
-	 * Value of the given action parameter.
-	 * 
+	 * value of the given action parameter
 	 * @var string
 	 */
 	public $action = '';
 	
 	/**
-	 * Needed modules to view this page.
-	 * 
+	 * needed modules to view this page
 	 * @var	array<string>
 	 */
 	public $neededModules = array();
 	
 	/**
-	 * Needed permissions to view this page.
-	 * 
+	 * needed permissions to view this page
 	 * @var array<string>
 	 */
 	public $neededPermissions = array();

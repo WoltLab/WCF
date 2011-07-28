@@ -18,64 +18,55 @@ use wcf\util\ClassUtil;
  */
 abstract class MultipleLinkPage extends AbstractPage {
 	/**
-	 * The current page number.
-	 * 
+	 * current page number
 	 * @var integer
 	 */
 	public $pageNo = 0;
 	
 	/**
-	 * The number of all pages.
-	 * 
+	 * number of all pages
 	 * @var integer
 	 */
 	public $pages = 0;
 	
 	/**
-	 * The number of items shown per page.
-	 * 
+	 * number of items shown per page
 	 * @var integer
 	 */
 	public $itemsPerPage = 20;
 	
 	/**
-	 * The number of all items.
-	 * 
+	 * number of all items
 	 * @var integer
 	 */
 	public $items = 0;
 	
 	/**
-	 * Indicates the range of the listed items.
-	 * 
+	 * indicates the range of the listed items
 	 * @var integer
 	 */
 	public $startIndex = 0;
 	
 	/**
-	 * Indicates the range of the listed items.
-	 * 
+	 * indicates the range of the listed items.
 	 * @var integer
 	 */
 	public $endIndex = 0;
 	
 	/**
 	 * DatabaseObjectList object
-	 * 
 	 * @var	wcf\data\DatabaseObjectList
 	 */	
 	public $objectList = null;
 	
 	/**
 	 * class name for DatabaseObjectList
-	 * 
 	 * @var	string
 	 */	
 	public $objectListClassName = '';
 	
 	/**
 	 * list of DatabaseObject objects
-	 * 
 	 * @var	array<wcf\data\DatabaseObject>
 	 */	
 	public $objects = array();

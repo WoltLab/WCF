@@ -42,13 +42,13 @@ abstract class AbstractOptionListForm extends AbstractForm {
 
 	/**
 	 * list of all option categories
-	 * @var array<OptionCategory>
+	 * @var array<wcf\data\option\category\OptionCategory>
 	 */
 	public $cachedCategories = array();
 	
 	/**
 	 * list of all options
-	 * @var array<Option>
+	 * @var array<wcf\data\option\Option>
 	 */
 	public $cachedOptions = array();
 	
