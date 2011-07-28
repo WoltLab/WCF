@@ -52,17 +52,6 @@ class CronjobListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
-	 */
-	public function assignVariables() {
-		parent::assignVariables();
-		
-		WCF::getTPL()->assign(array(
-			'cronjobs' => $this->objectList->getObjects()
-		));
-	}
-	
-	/**
 	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {

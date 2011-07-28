@@ -33,7 +33,7 @@
 				</thead>
 				<tbody>
 				{content}
-					{foreach from=$cronjobLogs item=cronjobLog}
+					{foreach from=$objects item=cronjobLog}
 						<tr>
 							<td class="columnCronjobID columnID"><p>{@$cronjobLog->cronjobID}</p></td>
 							<td class="columnClassPath columnText"><p>{$cronjobLog->classPath}</p></td>

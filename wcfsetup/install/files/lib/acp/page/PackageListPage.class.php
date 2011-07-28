@@ -61,15 +61,6 @@ class PackageListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
-	 */
-	public function assignVariables() {
-		parent::assignVariables();
-		
-		WCF::getTPL()->assign('packages', $this->objectList->getObjects());
-	}
-	
-	/**
 	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {

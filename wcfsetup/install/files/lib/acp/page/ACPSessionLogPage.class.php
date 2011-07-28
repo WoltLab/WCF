@@ -93,7 +93,6 @@ class ACPSessionLogPage extends SortablePage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'sessionAccessLogs' => $this->objectList->getObjects(),
 			'sessionLogID' => $this->sessionLogID,
 			'sessionLog' => $this->sessionLog
 		));

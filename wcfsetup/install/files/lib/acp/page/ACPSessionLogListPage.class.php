@@ -55,17 +55,6 @@ class ACPSessionLogListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
-	 */
-	public function assignVariables() {
-		parent::assignVariables();
-		
-		WCF::getTPL()->assign(array(
-			'sessionLogs' => $this->objectList->getObjects()
-		));
-	}
-	
-	/**
 	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
