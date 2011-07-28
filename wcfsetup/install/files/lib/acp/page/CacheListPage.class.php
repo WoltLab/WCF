@@ -20,21 +20,30 @@ use wcf\util\FileUtil;
  * @category 	Community Framework
  */
 class CacheListPage extends AbstractPage {
-	// system
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'cacheList';
+	
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.system.canViewLog');
+	
+	/**
+	 * indicates if cache was cleared
+	 * @var	integer
+	 */
 	public $cleared = 0;
 	
 	/**
 	 * contains a list of cache resources
-	 *
 	 * @var	array
 	 */
 	public $caches = array();
 	
 	/**
 	 * contains general cache information
-	 *
 	 * @var array
 	 */
 	public $cacheData = array();

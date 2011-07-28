@@ -22,20 +22,80 @@ use wcf\util\StringUtil;
  * @category 	Community Framework
  */
 class PackageUpdateSearchForm extends ACPForm {
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'packageUpdateSearch';
+	
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canInstallPackage');
+	
+	/**
+	 * @see wcf\acp\form\ACPForm::$activeMenuItem
+	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.database';
 	
+	/**
+	 * list of package update server ids which are searched
+	 * @var	array<integer>
+	 */
 	public $packageUpdateServerIDs = array();
+	
+	/**
+	 * searched package name
+	 * @var	string
+	 */
 	public $packageName = '';
+	
+	/**
+	 * searched package author
+	 * @var	string
+	 */
 	public $author = '';
+	
+	/**
+	 * indicates if package description is searched
+	 * @var	integer
+	 */
 	public $searchDescription = 0;
+	
+	/**
+	 * indicates if plugins for already installed packages are searched
+	 * @var	integer
+	 */
 	public $plugin = 1;
+	
+	/**
+	 * indicates if standalone applications are searched
+	 * @var	integer
+	 */
 	public $standalone = 1;
+	
+	/**
+	 * indicates if packages that aren't plugins or standalone applications
+	 * are searched
+	 * @var	integer
+	 */
 	public $other = 0;
+	
+	/**
+	 * indicates if unique packages are ignored that are already installed
+	 * @var	integer
+	 */
 	public $ignoreUniques = 1;
 	
+	/**
+	 * list of available update servers
+	 * @var	array<wcf\data\package\update\server\PackageUpdateServer>
+	 */
 	public $updateServers = array();
+	
+	/**
+	 * ids of package updates
+	 * @var	string
+	 */
 	public $packageUpdateIDs = '';
 	
 	/**

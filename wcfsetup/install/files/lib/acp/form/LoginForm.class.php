@@ -39,7 +39,7 @@ class LoginForm extends AbstractForm {
 	
 	/**
 	 * user object
-	 * @var User
+	 * @var wcf\data\user\User
 	 */
 	public $user;
 	

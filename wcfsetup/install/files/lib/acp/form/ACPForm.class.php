@@ -15,8 +15,7 @@ use wcf\form\AbstractForm;
  */
 class ACPForm extends AbstractForm {
 	/**
-	 * Active acp menu item.
-	 * 
+	 * active acp menu item
 	 * @var string
 	 */
 	public $activeMenuItem = '';

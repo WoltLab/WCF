@@ -19,10 +19,25 @@ use wcf\system\WCF;
  * @category 	Community Framework
  */
 class PackageUpdateSearchResultPage extends SortablePage {
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'packageUpdateSearchResult';
-	public $defaultSortField = 'packageName';
+	
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canInstallPackage');
 	
+	/**
+	 * @see wcf\page\SortablePage::$defaultSortField
+	 */
+	public $defaultSortField = 'packageName';
+	
+	/**
+	 * id of the package update search
+	 * @var	integer
+	 */
 	public $searchID = 0;
 	
 	/**
@@ -30,6 +45,11 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	 * @var	wcf\data\search\Search
 	 */
 	public $search = null;
+
+	/**
+	 * list with data of package updates
+	 * @var	array
+	 */
 	public $packages = array();
 	
 	/**
