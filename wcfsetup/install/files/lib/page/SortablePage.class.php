@@ -40,6 +40,12 @@ abstract class SortablePage extends MultipleLinkPage {
 	public $defaultSortOrder = 'ASC';
 	
 	/**
+	 * list of valid sort fields
+	 * @var	array<string>
+	 */
+	public $validSortFields = array();
+	
+	/**
 	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -66,6 +72,10 @@ abstract class SortablePage extends MultipleLinkPage {
 	public function validateSortField() {
 		// call validateSortField event
 		EventHandler::getInstance()->fireAction($this, 'validateSortField');
+		
+		if (!in_array($this->sortField, $this->validSortFields)) {
+			$this->sortField = $this->defaultSortField;
+		}
 	}
 	
 	/**

@@ -35,6 +35,11 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	public $defaultSortField = 'packageName';
 	
 	/**
+	 * @see wcf\page\SortablePage::$validSortFields
+	 */
+	public $validSortFields = array('package', 'packageName', 'author');
+	
+	/**
 	 * id of the package update search
 	 * @var	integer
 	 */
@@ -103,20 +108,6 @@ class PackageUpdateSearchResultPage extends SortablePage {
 		$row = $statement->fetchArray();
 		
 		return $row['count'];
-	}
-	
-	/**
-	 * @see wcf\page\SortablePage::validateSortField()
-	 */
-	public function validateSortField() {
-		parent::validateSortField();
-		
-		switch ($this->sortField) {
-			case 'package':
-			case 'packageName':
-			case 'author': break;
-			default: $this->sortField = $this->defaultSortField;
-		}
 	}
 	
 	/**

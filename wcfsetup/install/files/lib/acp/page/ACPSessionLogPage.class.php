@@ -33,6 +33,11 @@ class ACPSessionLogPage extends SortablePage {
 	public $defaultSortField = 'time';
 	
 	/**
+	 * @see	wcf\page\SortablePage::$validSortFields
+	 */
+	public $validSortFields = array('sessionAccessLogID', 'ipAddress', 'time', 'requestURI', 'requestMethod', 'className', 'packageName');
+	
+	/**
 	 * session log id
 	 * @var integer
 	 */
@@ -79,24 +84,6 @@ class ACPSessionLogPage extends SortablePage {
 		$this->sqlOrderBy = ($this->sortField != 'packageName' ? 'acp_session_access_log.' : '').$this->sortField." ".$this->sortOrder;
 		
 		parent::readObjects();
-	}
-	
-	/**
-	 * @see wcf\page\SortablePage::validateSortField()
-	 */
-	public function validateSortField() {
-		parent::validateSortField();
-		
-		switch ($this->sortField) {
-			case 'sessionAccessLogID':
-			case 'ipAddress':
-			case 'time':
-			case 'requestURI':
-			case 'requestMethod':
-			case 'className':
-			case 'packageName': break;
-			default: $this->sortField = $this->defaultSortField;
-		}
 	}
 	
 	/**
