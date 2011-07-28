@@ -31,6 +31,11 @@ class UpdateServerListPage extends SortablePage {
 	public $defaultSortField = 'serverURL';
 	
 	/**
+	 * @see wcf\page\SortablePage::$validSortFields
+	 */
+	public $validSortFields = array('packageUpdateServerID', 'serverURL', 'status', 'errorMessage', 'lastUpdateTime', 'packages');
+	
+	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
 	 */	
 	public $objectListClassName = 'wcf\data\package\update\server\PackageUpdateServerList';
@@ -79,22 +84,5 @@ class UpdateServerListPage extends SortablePage {
 		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.server.view');
 		
 		parent::show();
-	}
-	
-	/**
-	 * @see wcf\page\SortablePage::validateSortField()
-	 */
-	public function validateSortField() {
-		parent::validateSortField();
-		
-		switch ($this->sortField) {
-			case 'packageUpdateServerID':
-			case 'serverURL':
-			case 'status':
-			case 'errorMessage':
-			case 'lastUpdateTime':
-			case 'packages': break;
-			default: $this->sortField = $this->defaultSortField;
-		}
 	}
 }

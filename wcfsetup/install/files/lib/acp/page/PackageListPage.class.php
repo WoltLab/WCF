@@ -42,6 +42,11 @@ class PackageListPage extends SortablePage {
 	public $defaultSortOrder = 'DESC';
 	
 	/**
+	 * @see wcf\page\SortablePage::$validSortFields
+	 */
+	public $validSortFields = array('packageID', 'package', 'packageDir', 'packageName', 'instanceNo', 'packageDescription', 'packageVersion', 'packageDate', 'packageURL', 'parentPackageID', 'isUnique', 'standalone', 'author', 'authorURL', 'installDate', 'updateDate');
+	
+	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
 	 */	
 	public $objectListClassName = 'wcf\data\package\PackageList';
@@ -72,32 +77,5 @@ class PackageListPage extends SortablePage {
 		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.view');
 		
 		parent::show();
-	}
-	
-	/**
-	 * @see wcf\page\SortablePage::validateSortField()
-	 */
-	public function validateSortField() {
-		parent::validateSortField();
-		
-		switch ($this->sortField) {
-			case 'packageID':
-			case 'package':
-			case 'packageDir':
-			case 'packageName':
-			case 'instanceNo':
-			case 'packageDescription':
-			case 'packageVersion':
-			case 'packageDate':
-			case 'packageURL':
-			case 'parentPackageID':
-			case 'isUnique':
-			case 'standalone':
-			case 'author':
-			case 'authorURL':
-			case 'installDate':
-			case 'updateDate': break;
-			default: $this->sortField = $this->defaultSortField;
-		}
 	}
 }

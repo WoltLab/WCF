@@ -31,6 +31,11 @@ class UserGroupListPage extends SortablePage {
 	public $defaultSortField = 'groupName';
 	
 	/**
+	 * @see wcf\page\SortablePage::$validSortFields
+	 */
+	public $validSortFields = array('groupID', 'groupName', 'groupType', 'members');
+	
+	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
 	 */	
 	public $objectListClassName = 'wcf\data\user\group\UserGroupList';
@@ -50,21 +55,6 @@ class UserGroupListPage extends SortablePage {
 		// detect group deletion
 		if (isset($_REQUEST['deletedGroups'])) {
 			$this->deletedGroups = intval($_REQUEST['deletedGroups']);
-		}
-	}
-	
-	/**
-	 * @see wcf\page\SortablePage::validateSortField()
-	 */
-	public function validateSortField() {
-		parent::validateSortField();
-		
-		switch ($this->sortField) {
-			case 'groupID':
-			case 'groupName':
-			case 'groupType':
-			case 'members': break;
-			default: $this->sortField = $this->defaultSortField;
 		}
 	}
 	
