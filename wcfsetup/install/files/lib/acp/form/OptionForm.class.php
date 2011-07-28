@@ -144,7 +144,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see AbstractOptionListForm::checkOption()
+	 * @see wcf\acp\form\AbstractOptionListForm::checkOption()
 	 */
 	protected static function checkOption(Option $option) {
 		if (!parent::checkOption($option)) return false;

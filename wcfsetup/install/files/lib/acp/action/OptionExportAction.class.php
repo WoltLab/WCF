@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  */
 class OptionExportAction extends AbstractAction {
 	/**
-	 * @see wcf\action\AbstractAction\AbstractAction::$neededPermissions
+	 * @see wcf\action\AbstractAction::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canEditOption');
 	

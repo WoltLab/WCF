@@ -20,7 +20,7 @@ abstract class AbstractSecureObjectAction extends AbstractAction {
 	protected $objectIDs = array();
 		
 	/**
-	 * @see	Action::readParameters()
+	 * @see	wcf\action\IAction::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -39,7 +39,7 @@ abstract class AbstractSecureObjectAction extends AbstractAction {
 	}
 	
 	/**
-	 * @see		Action::execute()
+	 * @see		wcf\action\IAction::execute()
 	 * @todo	Add validation for $actionClass, $data and $objectIDs,
 	 * 		possibly with some kind of derived exception maintaining
 	 * 		a js-readable output (do not use printable exception!)
