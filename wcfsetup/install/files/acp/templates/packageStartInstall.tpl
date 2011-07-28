@@ -1,6 +1,5 @@
 {include file='header'}
 
-
 <header class="mainHeading">
 	{if $packageID == 0}
 		<img src="{@RELATIVE_WCF_DIR}icon/packageInstallL.png" alt="" />
@@ -34,7 +33,7 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.package.startInstall.source{/lang}</legend>
 			
-				<div class="formElement{if $errorField == 'uploadPackage'} formError{/if}" id="uploadPackageDiv">
+				<div id="uploadPackageDiv" class="formElement{if $errorField == 'uploadPackage'} formError{/if}">
 					<div class="formFieldLabel">
 						<label for="uploadPackage">{lang}wcf.acp.package.startInstall.source.upload{/lang}</label>
 					</div>
@@ -52,7 +51,7 @@
 							</p>
 						{/if}
 					</div>
-					<div class="formFieldDesc hidden" id="uploadPackageHelpMessage">
+					<div id="uploadPackageHelpMessage" class="formFieldDesc hidden">
 						<p>{lang}wcf.acp.package.startInstall.source.upload.description{/lang}</p>
 					</div>
 				</div>
@@ -60,12 +59,12 @@
 					inlineHelp.register('uploadPackage');
 				//]]></script>
 				
-				<div class="formElement{if $errorField == 'downloadPackage'} formError{/if}" id="downloadPackageDiv">
+				<div id="downloadPackageDiv" class="formElement{if $errorField == 'downloadPackage'} formError{/if}">
 					<div class="formFieldLabel">
 						<label for="downloadPackage">{lang}wcf.acp.package.startInstall.source.download{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="text" class="inputText" id="downloadPackage" name="downloadPackage" value="" />
+						<input type="text" id="downloadPackage" name="downloadPackage" value="" class="inputText" />
 						{if $errorField == 'downloadPackage'}
 							<p class="innerError">
 								{if $errorType == 'notFound'}{lang}wcf.acp.package.startInstall.error.notFound{/lang}{/if}
@@ -76,7 +75,7 @@
 							</p>
 						{/if}
 					</div>
-					<div class="formFieldDesc hidden" id="downloadPackageHelpMessage">
+					<div id="downloadPackageHelpMessage" class="formFieldDesc hidden">
 						<p>{lang}wcf.acp.package.startInstall.source.download.description{/lang}</p>
 					</div>
 				</div>
@@ -91,8 +90,8 @@
 	</div>
 
 	<div class="formSubmit">
-		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
-		<input type="submit" accesskey="s" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" />
+		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		
 		{@SID_INPUT_TAG}
  		<input type="hidden" name="action" value="{$action}" />

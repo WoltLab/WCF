@@ -31,12 +31,12 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.updateServer.data{/lang}</legend>
 				
-				<div class="formElement{if $errorField == 'server'} formError{/if}" id="serverDiv">
+				<div id="serverDiv" class="formElement{if $errorField == 'server'} formError{/if}">
 					<div class="formFieldLabel">
 						<label for="server">{lang}wcf.acp.updateServer.server{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="text" class="inputText" name="server" value="{$server}" id="server" />
+						<input type="text" id="server" name="server" value="{$server}" class="inputText" />
 						{if $errorField == 'server'}
 							<p class="innerError">
 								{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
@@ -44,7 +44,7 @@
 							</p>
 						{/if}
 					</div>
-					<div class="formFieldDesc hidden" id="serverHelpMessage">
+					<div id="serverHelpMessage" class="formFieldDesc hidden">
 						<p>{lang}wcf.acp.updateServer.server.description{/lang}</p>
 					</div>
 				</div>
@@ -52,14 +52,14 @@
 					inlineHelp.register('server');
 				//]]></script>
 				
-				<div class="formElement" id="loginUsernameDiv">
+				<div id="loginUsernameDiv" class="formElement">
 					<div class="formFieldLabel">
 						<label for="loginUsername">{lang}wcf.acp.updateServer.loginUsername{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="text" class="inputText" name="loginUsername" value="{$loginUsername}" id="loginUsername" />
+						<input type="text" id="loginUsername" name="loginUsername" value="{$loginUsername}" class="inputText" />
 					</div>
-					<div class="formFieldDesc hidden" id="loginUsernameHelpMessage">
+					<div id="loginUsernameHelpMessage" class="formFieldDesc hidden">
 						<p>{lang}wcf.acp.updateServer.loginUsername.description{/lang}</p>
 					</div>
 				</div>
@@ -67,14 +67,14 @@
 					inlineHelp.register('loginUsername');
 				//]]></script>
 				
-				<div class="formElement" id="loginPasswordDiv">
+				<div id="loginPasswordDiv" class="formElement">
 					<div class="formFieldLabel">
 						<label for="loginPassword">{lang}wcf.acp.updateServer.loginPassword{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="password" class="inputText" name="loginPassword" value="{$loginPassword}" id="loginPassword" />
+						<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="inputText" />
 					</div>
-					<div class="formFieldDesc hidden" id="loginPasswordHelpMessage">
+					<div id="loginPasswordHelpMessage" class="formFieldDesc hidden">
 						<p>{lang}wcf.acp.updateServer.loginPassword.description{/lang}</p>
 					</div>
 				</div>
@@ -88,8 +88,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
+		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}
 	</div>
 </form>

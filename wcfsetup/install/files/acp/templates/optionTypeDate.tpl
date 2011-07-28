@@ -16,7 +16,7 @@
 			{/if}
 			
 			{if $element == 'year'}
-				<input id="{$optionData.optionName}Year" class="inputText fourDigitInput" type="text" name="values[{$optionData.optionName}][year]" value="{$year}" maxlength="4" />
+				<input type="text" id="{$optionData.optionName}Year" name="values[{$optionData.optionName}][year]" maxlength="4" value="{$year}" class="inputText fourDigitInput" />
 			{/if}
 		</div>
 	{/foreach}
