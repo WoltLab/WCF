@@ -1,4 +1,5 @@
 {include file='header'}
+
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
 
 <header class="mainHeading">
