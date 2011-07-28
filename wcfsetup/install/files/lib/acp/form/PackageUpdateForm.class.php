@@ -18,13 +18,43 @@ use wcf\util\HeaderUtil;
  * @category 	Community Framework
  */
 class PackageUpdateForm extends ACPForm {
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'packageUpdate';
+	
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canInstallPackage');
+	
+	/**
+	 * @see wcf\acp\form\ACPForm::$activeMenuItem
+	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package';
 	
+	/**
+	 * list of packages to update
+	 * @var	array<string>
+	 */
 	public $updates = array();
+	
+	/**
+	 * list with data of excluded packages
+	 * @var	array<array>
+	 */
 	public $excludedPackages = array();
+	
+	/**
+	 * list with data of packages which will be installed
+	 * @var	array<array>
+	 */
 	public $packageInstallationStack = array();
+	
+	/**
+	 * scheduler for package update
+	 * @var	wcf\system\package\PackageInstallationScheduler
+	 */
 	public $packageUpdate = null;
 	
 	/**

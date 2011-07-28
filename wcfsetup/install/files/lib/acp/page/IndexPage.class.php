@@ -17,7 +17,9 @@ use wcf\system\WCFACP;
  * @category 	Community Framework
  */
 class IndexPage extends AbstractPage {
-	// system
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'index';
 	
 	/**

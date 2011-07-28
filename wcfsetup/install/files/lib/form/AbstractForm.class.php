@@ -18,15 +18,13 @@ use wcf\system\exception\UserInputException;
  */
 abstract class AbstractForm extends AbstractPage implements IForm {
 	/**
-	 * Name of error field.
-	 *
+	 * name of error field
 	 * @var string
 	 */
 	public $errorField = '';
 	
 	/**
-	 * Name of error type.
-	 *
+	 * error type
 	 * @var string
 	 */
 	public $errorType = '';

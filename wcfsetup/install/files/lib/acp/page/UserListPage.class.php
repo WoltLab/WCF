@@ -22,13 +22,30 @@ use wcf\util\StringUtil;
  * @category 	Community Framework
  */
 class UserListPage extends SortablePage {
-	// system
-	public $itemsPerPage = 50;
-	public $defaultSortField = 'username';
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'userList';
+	
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.user.canSearchUser');
 	
-	// parameters
+	/**
+	 * @see wcf\page\MultipleLinkPage::$itemsPerPage
+	 */
+	public $itemsPerPage = 50;
+	
+	/**
+	 * @see wcf\page\SortablePage::$defaultSortField
+	 */
+	public $defaultSortField = 'username';
+	
+	/**
+	 * id of a user search
+	 * @var	integer
+	 */
 	public $searchID = 0;
 	
 	// data

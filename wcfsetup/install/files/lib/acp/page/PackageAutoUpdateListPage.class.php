@@ -17,9 +17,20 @@ use wcf\system\package\PackageUpdateDispatcher;
  * @category 	Community Framework
  */
 class PackageAutoUpdateListPage extends AbstractPage {
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'packageAutoUpdateList';
+
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage');
 	
+	/**
+	 * list with data of available updates
+	 * @var	array
+	 */
 	public $availableUpdates = array();
 	
 	/**

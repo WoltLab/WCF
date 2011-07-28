@@ -25,7 +25,6 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 
 	/**
 	 * master password confirm
-	 * 
 	 * @var	string
 	 */
 	public $confirmMasterPassword = '';
