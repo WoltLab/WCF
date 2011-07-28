@@ -787,6 +787,7 @@
 		<item name="wcf.global.language.tr"><![CDATA[Türkisch]]></item>
 		<item name="wcf.global.language.zh-CN"><![CDATA[Chinesisch (vereinfacht)]]></item>
 		<item name="wcf.global.language.zh-TW"><![CDATA[Chinesisch (traditionell)]]></item>
+		<item name="wcf.global.loading"><![CDATA[Lädt …]]></item>
 		<item name="wcf.global.locale.unix"><![CDATA[de_DE]]></item>
 		<item name="wcf.global.locale.win"><![CDATA[deu_deu]]></item>
 		<item name="wcf.global.multiSelect"><![CDATA[Mehrfache Markierungen sind durch zusätzliches Drücken der Taste &raquo;Strg/Ctrl&laquo; (Windows) oder &raquo;Befehl/Command&laquo; (Mac OS) möglich.]]></item>
