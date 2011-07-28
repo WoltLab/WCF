@@ -14,6 +14,11 @@ use wcf\data\DatabaseObjectDecorator;
  */
 class DefaultPageMenuItemProvider extends DatabaseObjectDecorator implements IPageMenuItemProvider {
 	/**
+	 * @see wcf\data\DatabaseObjectDecorator::$baseClass
+	 */
+	protected static $baseClass = 'wcf\data\page\menu\item\PageMenuItem';
+	
+	/**
 	 * @see wcf\system\menu\page\IPageMenuItemProvider::isVisible()
 	 */
 	public function isVisible() {
