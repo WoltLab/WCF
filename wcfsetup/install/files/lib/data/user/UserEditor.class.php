@@ -29,6 +29,9 @@ class UserEditor extends DatabaseObjectEditor {
 		$parameters['salt'] = StringUtil::getRandomID();
 		$parameters['password'] = StringUtil::getDoubleSaltedHash($parameters['password'], $parameters['salt']);
 		
+		// handle registration date
+		if (!isset($parameters['registrationDate']))  $parameters['registrationDate'] = TIME_NOW;
+		
 		$user = parent::create($parameters);
 		
 		// create default values for user options
