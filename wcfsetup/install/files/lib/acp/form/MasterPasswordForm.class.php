@@ -23,14 +23,12 @@ class MasterPasswordForm extends ACPForm {
 	
 	/**
 	 * master password
-	 *
 	 * @var string
 	 */
 	public $masterPassword = '';
 	
 	/**
 	 * forward url
-	 *
 	 * @var string
 	 */
 	public $url = '';

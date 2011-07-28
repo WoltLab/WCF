@@ -1,11 +1,11 @@
 <ul class="formOptionsLong smallFont">
 	{foreach from=$selectOptions key=key item=selectOption}
 		<li>
-			<label><input type="radio" name="values[{$option->optionName}]" value="{$key}"{if $value == $key} checked="checked"{/if} /> {lang}{@$selectOption}{/lang}</label>
+			<label><input type="radio" name="values[{$option->optionName}]"{if $value == $key} checked="checked"{/if} value="{$key}" /> {lang}{@$selectOption}{/lang}</label>
 		</li>
 	{/foreach}
 	<li>
-		<label><input type="radio" name="values[{$option->optionName}]" value=""{if $value == $customValue} checked="checked"{/if} /></label>
-		<input style="width: 400px" id="{$option->optionName}_custom" type="text" class="inputText" name="values[{$option->optionName}_custom]" value="{$customValue}" />
+		<label><input type="radio" name="values[{$option->optionName}]"{if $value == $customValue} checked="checked"{/if} value="" /></label>
+		<input type="text" id="{$option->optionName}_custom" name="values[{$option->optionName}_custom]" value="{$customValue}" class="inputText" />
 	</li>
 </ul>

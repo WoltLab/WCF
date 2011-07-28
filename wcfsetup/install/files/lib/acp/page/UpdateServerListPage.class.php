@@ -15,16 +15,31 @@ use wcf\system\WCF;
  * @category 	Community Framework
  */
 class UpdateServerListPage extends SortablePage {
-	// system
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'updateServerList';
+	
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.system.package.canEditServer');
+	
+	/**
+	 * @see wcf\page\SortablePage::$defaultSortField
+	 */
 	public $defaultSortField = 'serverURL';
-	public $deletedPackageUpdateServerID = 0;
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
 	 */	
 	public $objectListClassName = 'wcf\data\package\update\server\PackageUpdateServerList';
+	
+	/**
+	 * id of a package update server that has just been deleted
+	 * @var	integer
+	 */
+	public $deletedPackageUpdateServerID = 0;
 	
 	/**
 	 * @see wcf\page\IPage::readParameters()

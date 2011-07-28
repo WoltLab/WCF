@@ -34,14 +34,12 @@ class ACPSessionLogPage extends SortablePage {
 	
 	/**
 	 * session log id
-	 *
 	 * @var integer
 	 */
 	public $sessionLogID = 0;
 	
 	/**
 	 * session log object
-	 *
 	 * @var wcf\data\acp\session\log\ACPSessionLog
 	 */
 	public $sessionLog = null;

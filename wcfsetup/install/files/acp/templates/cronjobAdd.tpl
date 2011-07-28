@@ -1,7 +1,7 @@
 {include file='header'}
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/cronjobs{$action|ucfirst}L.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/cronjob{$action|ucfirst}L.png" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.cronjob.{$action}{/lang}</h1>
 		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>
@@ -33,12 +33,12 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.cronjob.edit.data{/lang}</legend>
 				
-				<div class="formElement{if $errorField == 'className'} formError{/if}" id="classNameDiv">
+				<div id="classNameDiv" class="formElement{if $errorField == 'className'} formError{/if}">
 					<div class="formFieldLabel">
 						<label for="className">{lang}wcf.acp.cronjob.className{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="text" class="inputText" id="className" name="className" value="{$className}" />
+						<input type="text" id="className" name="className" value="{$className}" class="inputText" />
 						{if $errorField == 'className'}
 							<p class="innerError">
 								{if $errorType == 'empty'}{lang}wcf.acp.cronjob.error.empty{/lang}{/if}
@@ -46,7 +46,7 @@
 							</p>
 						{/if}
 					</div>
-					<div class="formFieldDesc hidden" id="classNameHelpMessage">
+					<div id="classNameHelpMessage" class="formFieldDesc hidden">
 						<p>{lang}wcf.acp.cronjob.className.description{/lang}</p>
 					</div>
 				</div>
@@ -54,14 +54,14 @@
 					inlineHelp.register('className');
 				//]]></script>
 				
-				<div class="formElement" id="descriptionDiv">
+				<div id="descriptionDiv" class="formElement">
 					<div class="formFieldLabel">
 						<label for="description">{lang}wcf.acp.cronjob.description{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="text" class="inputText" id="description" name="description" value="{$description}" />
+						<input type="text" id="description" name="description" value="{$description}" class="inputText" />
 					</div>
-					<div class="formFieldDesc hidden" id="descriptionHelpMessage">
+					<div id="descriptionHelpMessage" class="formFieldDesc hidden">
 						<p>{lang}wcf.acp.cronjob.description.description{/lang}</p>
 					</div>
 				</div>
@@ -72,19 +72,19 @@
 			
 			<fieldset>
 				<legend>{lang}wcf.acp.cronjob.edit.timing{/lang}</legend>
-				<div class="formElement{if $errorField == 'startMinute'} formError{/if}" id="startMinuteDiv">
+				<div id="startMinuteDiv" class="formElement{if $errorField == 'startMinute'} formError{/if}">
 					<div class="formFieldLabel">
 						<label for="startMinute">{lang}wcf.acp.cronjob.startMinute{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="text" class="inputText" id="startMinute" name="startMinute" value="{$startMinute}" />
+						<input type="text" id="startMinute" name="startMinute" value="{$startMinute}" class="inputText" />
 						{if $errorField == 'startMinute'}
 							<p class="innerError">
 								{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.notValid{/lang}{/if}
 							</p>
 						{/if}
 					</div>
-					<div class="formFieldDesc hidden" id="startMinuteHelpMessage">
+					<div id="startMinuteHelpMessage" class="formFieldDesc hidden">
 						<p>{lang}wcf.acp.cronjob.startMinute.description{/lang}</p>
 					</div>
 				</div>
@@ -92,19 +92,19 @@
 					inlineHelp.register('startMinute');
 				//]]></script>
 				
-				<div class="formElement{if $errorField == 'startHour'} formError{/if}" id="startHourDiv">
+				<div id="startHourDiv" class="formElement{if $errorField == 'startHour'} formError{/if}">
 					<div class="formFieldLabel">
 						<label for="startHour">{lang}wcf.acp.cronjob.startHour{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="text" class="inputText" id="startHour" name="startHour" value="{$startHour}" />
+						<input type="text" id="startHour" name="startHour" value="{$startHour}" class="inputText" />
 						{if $errorField == 'startHour'}
 							<p class="innerError">
 								{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.notValid{/lang}{/if}
 							</p>
 						{/if}
 					</div>
-					<div class="formFieldDesc hidden" id="startHourHelpMessage">
+					<div id="startHourHelpMessage" class="formFieldDesc hidden">
 						<p>{lang}wcf.acp.cronjob.startHour.description{/lang}</p>
 					</div>
 				</div>
@@ -112,19 +112,19 @@
 					inlineHelp.register('startHour');
 				//]]></script>
 				
-				<div class="formElement{if $errorField == 'startDom'} formError{/if}" id="startDomDiv">
+				<div id="startDomDiv" class="formElement{if $errorField == 'startDom'} formError{/if}">
 					<div class="formFieldLabel">
 						<label for="startDom">{lang}wcf.acp.cronjob.startDom{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="text" class="inputText" id="startDom" name="startDom" value="{$startDom}" />
+						<input type="text" id="startDom" name="startDom" value="{$startDom}" class="inputText" />
 						{if $errorField == 'startDom'}
 							<p class="innerError">
 								{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.notValid{/lang}{/if}
 							</p>
 						{/if}
 					</div>
-					<div class="formFieldDesc hidden" id="startDomHelpMessage">
+					<div id="startDomHelpMessage" class="formFieldDesc hidden">
 						<p>{lang}wcf.acp.cronjob.startDom.description{/lang}</p>
 					</div>
 				</div>
@@ -132,19 +132,19 @@
 					inlineHelp.register('startDom');
 				//]]></script>
 				
-				<div class="formElement{if $errorField == 'startMonth'} formError{/if}" id="startMonthDiv">
+				<div id="startMonthDiv" class="formElement{if $errorField == 'startMonth'} formError{/if}">
 					<div class="formFieldLabel">
 						<label for="startMonth">{lang}wcf.acp.cronjob.startMonth{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="text" class="inputText" id="startMonth" name="startMonth" value="{$startMonth}" />
+						<input type="text" id="startMonth" name="startMonth" value="{$startMonth}" class="inputText" />
 						{if $errorField == 'startMonth'}
 							<p class="innerError">
 								{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.notValid{/lang}{/if}
 							</p>
 						{/if}
 					</div>
-					<div class="formFieldDesc hidden" id="startMonthHelpMessage">
+					<div id="startMonthHelpMessage" class="formFieldDesc hidden">
 						<p>{lang}wcf.acp.cronjob.startMonth.description{/lang}</p>
 					</div>
 				</div>
@@ -152,19 +152,19 @@
 					inlineHelp.register('startMonth');
 				//]]></script>
 				
-				<div class="formElement{if $errorField == 'startDow'} formError{/if}" id="startDowDiv">
+				<div id="startDowDiv" class="formElement{if $errorField == 'startDow'} formError{/if}">
 					<div class="formFieldLabel">
 						<label for="startDow">{lang}wcf.acp.cronjob.startDow{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="text" class="inputText" id="startDow" name="startDow" value="{$startDow}" />
+						<input type="text" id="startDow" name="startDow" value="{$startDow}" class="inputText" />
 						{if $errorField == 'startDow'}
 							<p class="innerError">
 								{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.notValid{/lang}{/if}
 							</p>
 						{/if}
 					</div>
-					<div class="formFieldDesc hidden" id="startDowHelpMessage">
+					<div id="startDowHelpMessage" class="formFieldDesc hidden">
 						<p>{lang}wcf.acp.cronjob.startDow.description{/lang}</p>
 					</div>
 				</div>
@@ -178,8 +178,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
+		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}
  		{if $cronjobID|isset}<input type="hidden" name="cronjobID" value="{@$cronjobID}" />{/if}
 	</div>

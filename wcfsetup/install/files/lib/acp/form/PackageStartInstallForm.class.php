@@ -25,14 +25,50 @@ use wcf\util\StringUtil;
  * @category 	Community Framework
  */
 class PackageStartInstallForm extends ACPForm {
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'packageStartInstall';
+	
+	/**
+	 * @see wcf\acp\form\ACPForm::$activeMenuItem
+	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.install';
-		
+	
+	/**
+	 * id of the updated package
+	 * @var	integer
+	 */
 	public $packageID = 0;
+	
+	/**
+	 * updated package object
+	 * @var	wcf\system\package\Package
+	 */
 	public $package = null;
+	
+	/**
+	 * url to the package to download
+	 * @var	string
+	 */
 	public $downloadPackage = '';
+	
+	/**
+	 * data of the uploaded package
+	 * @var	array<string>
+	 */
 	public $uploadPackage = '';
+	
+	/**
+	 * archive of the installation/update package
+	 * @var	wcf\system\package\PackageArchive
+	 */
 	public $archive = null;
+	
+	/**
+	 * package installation/update queue
+	 * @var	wcf\data\package\installation\queue\PackageInstallationQueue
+	 */
 	public $queue = null;
 	
 	/**

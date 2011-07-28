@@ -431,7 +431,7 @@ footer nav.footerNavigation ul li {
 /* Sub Heading */
 
 .subHeading {
-	border-bottom: 1px solid #999;
+	border-bottom: 1px solid #ccc;
 	font-size: 120%;
 	text-shadow: 0 1px 0 #fff;
 	margin: 14px 0 14px;
@@ -737,6 +737,15 @@ input[type='submit']:hover,
 .titleBarPanel a {
 	color: #fff;
 	text-decoration: none;
+}
+
+.tabMenu li a {
+	text-shadow: 0 1px 0 #fff;
+}
+
+.tabMenu li.ui-state-active a {
+	color: #333 !important;
+	font-weight: bold;
 }
 
 .subTabMenu {
@@ -1252,6 +1261,7 @@ div.ui-widget-overlay {
 	left: 0;
 	position: absolute;
 	opacity: 0;
-	filter: Alpha(opacity=0);}
+	filter: Alpha(opacity=0);
+}
 
 /* -- -- -- -- -- EOF -- -- -- -- -- */

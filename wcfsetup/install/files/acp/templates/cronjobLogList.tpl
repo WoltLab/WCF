@@ -2,7 +2,7 @@
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/cronjobsLogL.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/cronjobLogL.png" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.cronjob.log{/lang}</h1>
 		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>
@@ -33,16 +33,16 @@
 				<tbody>
 				{content}
 					{foreach from=$cronjobLogs item=cronjobLog}
-						<tr class="{cycle values="container-1,container-2"}">
-							<td class="columnCronjobID columnID">{@$cronjobLog->cronjobID}</td>
-							<td class="columnClassPath columnText">{$cronjobLog->classPath}</td>
-							<td class="columnDescription columnText">{$cronjobLog->description}</td>
+						<tr>
+							<td class="columnCronjobID columnID"><p>{@$cronjobLog->cronjobID}</p></td>
+							<td class="columnClassPath columnText"><p>{$cronjobLog->classPath}</p></td>
+							<td class="columnDescription columnText"><p>{$cronjobLog->description}</p></td>
 							{if $cronjobLog->success}
-								<td class="columnExecTime columnDate">{@$cronjobLog->execTime|time} {lang}wcf.acp.cronjob.log.success{/lang}</td>
+								<td class="columnExecTime columnDate"><p>{@$cronjobLog->execTime|time} {lang}wcf.acp.cronjob.log.success{/lang}</p></td>
 							{elseif $cronjobLog->error}
 								<td class="columnExecTime columnText">
-									{@$cronjobLog->execTime|time} {lang}wcf.acp.cronjob.log.error{/lang}<br />
-									{@$cronjobLog->error}
+									/p>{@$cronjobLog->execTime|time} {lang}wcf.acp.cronjob.log.error{/lang}<br />
+									{@$cronjobLog->error}</p>
 								</td>
 							{else}
 								<td class="columnExecTime columnText"></td>
@@ -58,7 +58,7 @@
 		
 		<div class="formSubmit">
 			{@SID_INPUT_TAG}
-			<input type="submit" accesskey="c" value="{lang}wcf.acp.cronjob.log.clear{/lang}" onclick="return confirm('{lang}wcf.acp.cronjob.log.clear.confirm{/lang}')" />
+			<input type="submit" onclick="return confirm('{lang}wcf.acp.cronjob.log.clear.confirm{/lang}')" value="{lang}wcf.acp.cronjob.log.clear{/lang}" accesskey="c" />
 		</div>
 	</form>
 	

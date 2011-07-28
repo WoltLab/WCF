@@ -1,4 +1,5 @@
 {include file='header'}
+
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/TabMenu.class.js"></script>
 {if $userID|isset}
 	<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/AjaxRequest.class.js"></script>
@@ -86,7 +87,7 @@
 					<label for="username">{lang}wcf.user.username{/lang}</label>
 				</div>
 				<div class="formField">
-					<input type="text" class="inputText" id="username" name="username" value="{$username}" />
+					<input type="text" id="username" name="username" value="{$username}" class="inputText" />
 					{if $errorType.username|isset}
 						<p class="innerError">
 							{if $errorType.username == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
@@ -122,7 +123,7 @@
 							<label for="email">{lang}wcf.user.email{/lang}</label>
 						</div>
 						<div class="formField">	
-							<input type="text" class="inputText" id="email" name="email" value="{$email}" />
+							<input type="text" id="email" name="email" value="{$email}" class="inputText" />
 							{if $errorType.email|isset}
 								<p class="innerError">
 									{if $errorType.email == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
@@ -138,7 +139,7 @@
 							<label for="confirmEmail">{lang}wcf.user.confirmEmail{/lang}</label>
 						</div>
 						<div class="formField">
-							<input type="text" class="inputText" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" />
+							<input type="text" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="inputText" />
 							{if $errorType.confirmEmail|isset}
 								<p class="innerError">
 									{if $errorType.confirmEmail == 'notEqual'}{lang}wcf.user.error.confirmEmail.notEqual{/lang}{/if}
@@ -157,7 +158,7 @@
 							<label for="password">{lang}wcf.user.password{/lang}</label>
 						</div>
 						<div class="formField">
-							<input type="password" class="inputText" id="password" name="password" value="{$password}" />
+							<input type="password" id="password" name="password" value="{$password}" class="inputText" />
 							{if $errorType.password|isset}
 								<p class="innerError">
 									{if $errorType.password == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
@@ -171,7 +172,7 @@
 							<label for="confirmPassword">{lang}wcf.user.confirmPassword{/lang}</label>
 						</div>
 						<div class="formField">
-							<input type="password" class="inputText" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" />
+							<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="inputText" />
 							{if $errorType.confirmPassword|isset}
 								<p class="innerError">
 									{if $errorType.confirmPassword == 'notEqual'}{lang}wcf.user.error.confirmPassword.notEqual{/lang}{/if}
@@ -201,7 +202,7 @@
 				</div>
 				
 				{foreach from=$optionTree item=categoryLevel1}
-					<div class="border tabMenuContent hidden" id="{@$categoryLevel1[object]->categoryName}-content">
+					<div id="{@$categoryLevel1[object]->categoryName}-content" class="border tabMenuContent hidden">
 						<div class="container-1">
 							<h3 class="subHeading">{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h3>
 							
@@ -253,8 +254,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
+		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}
  		<input type="hidden" name="action" value="{@$action}" />
  		{if $userID|isset}<input type="hidden" name="userID" value="{@$userID}" />{/if}

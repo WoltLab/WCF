@@ -17,24 +17,93 @@ use wcf\util\StringUtil;
  * @category 	Community Framework
  */
 class PackageUpdateAuthForm extends ACPForm {
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'packageUpdateAuth';
+	
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canInstallPackage');
+	
+	/**
+	 * @see wcf\acp\form\ACPForm::$activeMenuItem
+	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package';
 	
-	public $exception;
+	/**
+	 * exception that has been thrown if an authorization for the package update
+	 * server is needed
+	 * @var	wcf\system\package\PackageUpdateAuthorizationRequiredException
+	 */
+	public $exception = null;
+	
+	/**
+	 * login username for package update server
+	 * @var	string
+	 */
 	public $loginUsername = '';
+	
+	/**
+	 * login password for package update server
+	 * @var	string
+	 */
 	public $loginPassword = '';
+	
+	/**
+	 * indicates if login data is saved
+	 * @var	integer
+	 */
 	public $saveAuthData = 0;
 	
+	/**
+	 * id of the package update server
+	 * @var	integer
+	 */
 	public $packageUpdateServerID = 0;
+	
+	/**
+	 * url of the package update server
+	 * @var	integer
+	 */
 	public $url = '';
-	public $eader = '';
+	
+	/**
+	 * response header of the package update server
+	 * @var	string
+	 */
+	public $header = '';
+	
+	/**
+	 * realm part of the response header
+	 * @var	string
+	 */
 	public $realm = '';
+	
+	/**
+	 * response of the package update server
+	 * @var	integer
+	 */
 	public $message = '';
 	
+	/**
+	 * post parameters of the form
+	 * @var	string
+	 */
 	public $postParameters = '';
+	
+	/**
+	 * get parameters of the form
+	 * @var	string
+	 */
 	public $getParameters = '';
 	
+	/**
+	 * list of reserved parameters that may not be part of the post and get
+	 * parameters
+	 * @var	array<string>
+	 */
 	protected static $reservedParameters = array('s', 'packageID', 'page', 'form', 'action', 'packageUpdateServerID', 'loginUsername', 'loginPassword', 'saveAuthData', 'requestedPage', 'requestedForm', 'requestedAction');
 	
 	/**

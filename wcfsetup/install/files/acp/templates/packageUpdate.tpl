@@ -49,8 +49,8 @@
 		</div>
 		
 		<div class="formSubmit">
-			{*<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />*}
-			{if !$errorField}<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />{/if}
+			{*<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />*}
+			{if !$errorField}<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />{/if}
 			{@SID_INPUT_TAG}
 	 		<input type="hidden" name="send" value="1" />
 	 		

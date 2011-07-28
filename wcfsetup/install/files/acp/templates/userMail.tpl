@@ -70,19 +70,19 @@
 				<legend>{lang}wcf.acp.user.sendMail.mail{/lang}</legend>
 				
 				<div>
-					<div class="formElement{if $errorField == 'subject'} formError{/if}" id="subjectDiv">
+					<div id="subjectDiv" class="formElement{if $errorField == 'subject'} formError{/if}">
 						<div class="formFieldLabel">
 							<label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label>
 						</div>
 						<div class="formField">
-							<input type="text" class="inputText" id="subject" name="subject" value="{$subject}" />
+							<input type="text" id="subject" name="subject" value="{$subject}" class="inputText" />
 							{if $errorField == 'subject'}
 								<p class="innerError">
 									{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
 								</p>
 							{/if}
 						</div>
-						<div class="formFieldDesc hidden" id="subjectHelpMessage">
+						<div id="subjectHelpMessage" class="formFieldDesc hidden">
 							<p>{lang}wcf.acp.user.sendMail.subject.description{/lang}</p>
 						</div>
 					</div>
@@ -90,19 +90,19 @@
 						inlineHelp.register('subject');
 					//]]></script>
 					
-					<div class="formElement{if $errorField == 'from'} formError{/if}" id="fromDiv">
+					<div id="fromDiv" class="formElement{if $errorField == 'from'} formError{/if}">
 						<div class="formFieldLabel">
 							<label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label>
 						</div>
 						<div class="formField">
-							<input type="text" class="inputText" id="from" name="from" value="{$from}" />
+							<input type="text" id="from" name="from" value="{$from}" class="inputText" />
 							{if $errorField == 'from'}
 								<p class="innerError">
 									{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
 								</p>
 							{/if}
 						</div>
-						<div class="formFieldDesc hidden" id="fromHelpMessage">
+						<div id="fromHelpMessage" class="formFieldDesc hidden">
 							<p>{lang}wcf.acp.user.sendMail.from.description{/lang}</p>
 						</div>
 					</div>
@@ -110,7 +110,7 @@
 						inlineHelp.register('from');
 					//]]></script>
 				
-					<div class="formElement{if $errorField == 'text'} formError{/if}" id="textDiv">
+					<div id="textDiv" class="formElement{if $errorField == 'text'} formError{/if}">
 						<div class="formFieldLabel">
 							<label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label>
 						</div>
@@ -122,7 +122,7 @@
 								</p>
 							{/if}
 						</div>
-						<div class="formFieldDesc hidden" id="textHelpMessage">
+						<div id="textHelpMessage" class="formFieldDesc hidden">
 							<p>{lang}wcf.acp.user.sendMail.text.description{/lang}</p>
 						</div>
 					</div>
@@ -132,7 +132,7 @@
 					
 					<div class="formElement">
 						<div class="formField">
-							<label><input type="checkbox" name="enableHTML" id="enableHTML" value="1" {if $enableHTML == 1}checked="checked" {/if}/> {lang}wcf.acp.user.sendMail.enableHTML{/lang}</label>
+							<label><input type="checkbox" id="enableHTML" name="enableHTML" {if $enableHTML == 1}checked="checked" {/if}value="1" /> {lang}wcf.acp.user.sendMail.enableHTML{/lang}</label>
 						</div>
 					</div>
 				</div>
@@ -143,8 +143,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
+		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="action" value="{@$action}" />
  		{@SID_INPUT_TAG}
  		<input type="hidden" name="userIDs" value="{@$userIDs}" />

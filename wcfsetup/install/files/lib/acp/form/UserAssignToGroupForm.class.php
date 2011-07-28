@@ -21,9 +21,20 @@ use wcf\util\ArrayUtil;
  * @category 	Community Framework
  */
 class UserAssignToGroupForm extends ACPForm {
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'userAssignToGroup';
-	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
+	
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.user.canEditUser');
+	
+	/**
+	 * @see wcf\acp\form\ACPForm::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
 	
 	public $userIDs = array();
 	public $groupIDs = array();
