@@ -801,7 +801,7 @@
 		<item name="wcf.global.language.tr"><![CDATA[Turkish]]></item>
 		<item name="wcf.global.language.zh-CN"><![CDATA[Chinese (Simplified)]]></item>
 		<item name="wcf.global.language.zh-TW"><![CDATA[Chinese (Traditional)]]></item>
-		<item name="wcf.global.loading"><![CDATA[Loading …]]></item>
+		<item name="wcf.global.loading"><![CDATA[Loading â€¦]]></item>
 		<item name="wcf.global.locale.unix"><![CDATA[en_US]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.locale.win"><![CDATA[english]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.multiSelect"><![CDATA[Multiple items can be selected by holding the &quot;Ctrl/Shift&quot; key (Windows) or &quot;Command&quot; (Mac OS) key and clicking the items required.]]></item>
