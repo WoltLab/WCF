@@ -31,25 +31,25 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.updateServer.data{/lang}</legend>
 				
-				<div id="serverDiv" class="formElement{if $errorField == 'server'} formError{/if}">
+				<div id="serverDiv" class="formElement{if $errorField == 'serverURL'} formError{/if}">
 					<div class="formFieldLabel">
-						<label for="server">{lang}wcf.acp.updateServer.server{/lang}</label>
+						<label for="serverURL">{lang}wcf.acp.updateServer.serverURL{/lang}</label>
 					</div>
 					<div class="formField">
-						<input type="text" id="server" name="server" value="{$server}" class="inputText" />
-						{if $errorField == 'server'}
+						<input type="text" id="serverURL" name="serverURL" value="{$serverURL}" class="inputText" />
+						{if $errorField == 'serverURL'}
 							<p class="innerError">
 								{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-								{if $errorType == 'notValid'}{lang}wcf.acp.updateServer.server.error.notValid{/lang}{/if}
+								{if $errorType == 'notValid'}{lang}wcf.acp.updateServer.serverURL.error.notValid{/lang}{/if}
 							</p>
 						{/if}
 					</div>
-					<div id="serverHelpMessage" class="formFieldDesc hidden">
-						<p>{lang}wcf.acp.updateServer.server.description{/lang}</p>
+					<div id="serverURLHelpMessage" class="formFieldDesc hidden">
+						<p>{lang}wcf.acp.updateServer.serverURL.description{/lang}</p>
 					</div>
 				</div>
 				<script type="text/javascript">//<![CDATA[
-					inlineHelp.register('server');
+					inlineHelp.register('serverURL');
 				//]]></script>
 				
 				<div id="loginUsernameDiv" class="formElement">

@@ -638,9 +638,9 @@
 		<item name="wcf.acp.updateServer.list.available"><![CDATA[{#$items} server available]]></item>
 		<item name="wcf.acp.updateServer.packageUpdateServerID"><![CDATA[Server id]]></item>
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Packages]]></item>
-		<item name="wcf.acp.updateServer.server"><![CDATA[Address]]></item>
-		<item name="wcf.acp.updateServer.server.description"><![CDATA[Please enter the URL to a package server.]]></item>
-		<item name="wcf.acp.updateServer.server.error.notValid"><![CDATA[The entered address is invalid.]]></item>
+		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Address]]></item>
+		<item name="wcf.acp.updateServer.serverURL.description"><![CDATA[Please enter the URL to a package server.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.notValid"><![CDATA[The entered address is invalid.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.updateServer.timestamp"><![CDATA[Last access]]></item>
 		<item name="wcf.acp.updateServer.view"><![CDATA[Available update server]]></item>
