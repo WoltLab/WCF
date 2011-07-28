@@ -30,7 +30,7 @@ class UserEditor extends DatabaseObjectEditor {
 		$parameters['password'] = StringUtil::getDoubleSaltedHash($parameters['password'], $parameters['salt']);
 		
 		// handle registration date
-		if (!isset($parameters['registrationDate']))  $parameters['registrationDate'] = TIME_NOW;
+		if (!isset($parameters['registrationDate'])) $parameters['registrationDate'] = TIME_NOW;
 		
 		$user = parent::create($parameters);
 		
