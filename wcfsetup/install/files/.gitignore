@@ -1,0 +1,4 @@
+# This file ensures that config.inc.php and options.inc.php won't be commited
+# automatically. You can anyway commit these files manually if you want to
+config.inc.php
+options.inc.php
