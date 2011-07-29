@@ -17,7 +17,7 @@
 	{foreach from=$packages item=package}
 		<div class="message content">
 			<div class="messageInner container-{cycle name='styles' values='1,2'}">
-				<h3 class="subHeadline">
+				<h3 class="subHeading">
 					{if $package.standalone == 1}
 						<img src="{@RELATIVE_WCF_DIR}icon/packageTypeStandaloneS.png" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" />
 					{elseif $package.plugin != ''}

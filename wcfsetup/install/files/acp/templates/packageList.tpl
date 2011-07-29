@@ -32,10 +32,9 @@
 </div>
 
 {if $packages|count > 0}
-	<div class="border titleBarPanel">
-		<div class="containerHead"><h3>{lang}wcf.acp.package.list.count{/lang}</h3></div>
-	</div>
-	<div class="border borderMarginRemove">
+	<div class="border"><!-- The following table construct is experimental! -->
+		<div class="boxTitle"><h1>{lang}wcf.acp.package.list.count{/lang}</h1></div>
+	
 		<table class="tableList">
 			<thead>
 				<tr class="tableHead">
