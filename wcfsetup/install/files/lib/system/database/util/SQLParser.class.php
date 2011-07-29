@@ -311,6 +311,6 @@ class SQLParser {
 		// get first column
 		$columns = ArrayUtil::trim(explode(',', $columns));
 		
-		return $tableName . '_' . reset($columns) . ($suffix ? '_' . $suffix : '');
+		return md5($tableName . '_' . reset($columns)) . ($suffix ? '_' . $suffix : '');
 	}
 }
