@@ -29,7 +29,7 @@
 {if !$updateServers|count}
 	<div class="border content">
 		<div class="container-1">
-			<p>{lang}wcf.acp.updateServer.view.noneAvailable{/lang}</p>
+			<p class="warning">{lang}wcf.acp.updateServer.view.noneAvailable{/lang}</p>
 		</div>
 	</div>
 {else}

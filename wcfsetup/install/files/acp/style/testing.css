@@ -704,6 +704,8 @@ input[type='submit']:hover,
 .largeButtons ul li a img {
 	vertical-align: middle;
 	margin: 0;
+	height: 24px;
+	width: 24px;
 }
 
 
@@ -729,7 +731,7 @@ input[type='submit']:hover,
 	border-bottom-right-radius: 0;
 	border-bottom-width: 0;
 	color: #fff;
-	/* margin-bottom: -10px; without "bordermarginremove"! */
+	/* margin-bottom: -10px; without "borderMarginRemove"! */
 	margin-bottom: 0;
 	padding: 7px;
 }
@@ -789,14 +791,15 @@ thead th:last-child {
 
 th {
 	background-color: rgba(51, 51, 51, .7);
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666), to(#000));
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666), to(#000));/* ToDo: Transparency missing */
 	background-image: -moz-linear-gradient(0% 0% 270deg, #333, #000);
 	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#333), to(#000));
 	background-image: -o-linear-gradient(#333, #000);
 	background-image: linear-gradient(#666, #000);
 	
-	border-right: 1px solid #fff;
-	border-bottom: 1px solid #fff;
+	border-top: 1px solid #000;
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
 	
 	font-size: 87%;
 }
@@ -870,7 +873,12 @@ tr:hover td {
 	background-color: #d8e7f5;
 }
 
-/* Special */
+tr .columnIcon img {
+	height: 16px;
+	width: 16px;
+}
+
+/* Table Specials */
 
 .subTabMenu ~ .border {
 	border-top-left-radius: 0 !important;

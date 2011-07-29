@@ -2567,17 +2567,17 @@
 			<value><![CDATA[page.font.2nd.size]]></value>
 		</attribute>
 		<attribute>
-			<selector><![CDATA[.subHeadline]]></selector>
+			<selector><![CDATA[.subHeading]]></selector>
 			<name><![CDATA[border-width]]></name>
 			<value><![CDATA[divider.width]]></value>
 		</attribute>
 		<attribute>
-			<selector><![CDATA[.subHeadline]]></selector>
+			<selector><![CDATA[.subHeading]]></selector>
 			<name><![CDATA[border-style]]></name>
 			<value><![CDATA[divider.style]]></value>
 		</attribute>
 		<attribute>
-			<selector><![CDATA[.subHeadline]]></selector>
+			<selector><![CDATA[.subHeading]]></selector>
 			<name><![CDATA[border-color]]></name>
 			<value><![CDATA[divider.color]]></value>
 		</attribute>
