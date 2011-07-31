@@ -16,7 +16,7 @@ use wcf\system\option\OptionTypeText;
  */
 class OptionTypePassword extends OptionTypeText {
 	/**
-	 * @see OptionTypeText::$inputType
+	 * @see wcf\system\option\OptionTypeText::$inputType
 	 */
 	protected $inputType = 'password';
 	

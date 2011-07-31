@@ -75,7 +75,7 @@ class DirectoryUtil {
 	 *
 	 * @param	string				$directory	directory path
 	 * @param	boolean				$recursive	created a recursive directory iterator
-	 * @see		DirectoryUtil::getInstance()
+	 * @see		wcf\util\DirectoryUtil::getInstance()
 	 */
 	protected function __construct($directory, $recursive = true) {
 		$this->directory = $directory;
@@ -91,7 +91,7 @@ class DirectoryUtil {
 	}
 
 	/**
-	 * @see		DirectoryUtil::getInstance()
+	 * @see		wcf\util\DirectoryUtil::getInstance()
 	 */
 	private final function __clone() {}
 

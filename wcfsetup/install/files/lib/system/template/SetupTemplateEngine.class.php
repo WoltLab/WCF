@@ -14,26 +14,26 @@ use wcf\system\exception\SystemException;
  */
 class SetupTemplateEngine extends TemplateEngine {
 	/**
-	 * @see TemplateEngine::loadTemplateGroupCache()
+	 * @see wcf\system\template\TemplateEngine::loadTemplateGroupCache()
 	 */
 	protected function loadTemplateGroupCache() {}
 	
 	/**
-	 * @see TemplateEngine::getSourceFilename()
+	 * @see wcf\system\template\TemplateEngine::getSourceFilename()
 	 */
 	public function getSourceFilename($templateName, $packageID) {
 		return $this->templatePaths[PACKAGE_ID].'setup/template/'.$templateName.'.tpl';
 	}
 	
 	/**
-	 * @see TemplateEngine::getCompiledFilename()
+	 * @see wcf\system\template\TemplateEngine::getCompiledFilename()
 	 */
 	public function getCompiledFilename($templateName, $packageID) {
 		return $this->compileDir.'setup/template/compiled/'.$this->languageID.'_'.$templateName.'.php';
 	}
 	
 	/**
-	 * @see	TemplateEngine::getPackageID()
+	 * @see	wcf\system\template\TemplateEngine::getPackageID()
 	 */
 	public function getPackageID($templateName, $packageID) {
 		$path = $this->templatePaths[PACKAGE_ID].'setup/template/'.$templateName.'.tpl';
@@ -45,7 +45,7 @@ class SetupTemplateEngine extends TemplateEngine {
 	}
 	
 	/**
-	 * @see TemplateEngine::getCompiler()
+	 * @see wcf\system\template\TemplateEngine::getCompiler()
 	 */
 	protected function getCompiler() {
 		return new TemplateCompiler($this);
