@@ -44,14 +44,14 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	}
 	
 	/**
-	 * @see DatabaseObject::__get()
+	 * @see wcf\data\DatabaseObject::__get()
 	 */
 	public function __get($name) {
 		return $this->object->__get($name);
 	}
 	
 	/**
-	 * @see DatabaseObject::__isset()
+	 * @see wcf\data\DatabaseObject::__isset()
 	 */
 	public function __isset($name) {
 		return $this->object->__isset($name);

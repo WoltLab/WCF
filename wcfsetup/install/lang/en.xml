@@ -638,9 +638,9 @@
 		<item name="wcf.acp.updateServer.list.available"><![CDATA[{#$items} server available]]></item>
 		<item name="wcf.acp.updateServer.packageUpdateServerID"><![CDATA[Server id]]></item>
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Packages]]></item>
-		<item name="wcf.acp.updateServer.server"><![CDATA[Address]]></item>
-		<item name="wcf.acp.updateServer.server.description"><![CDATA[Please enter the URL to a package server.]]></item>
-		<item name="wcf.acp.updateServer.server.error.notValid"><![CDATA[The entered address is invalid.]]></item>
+		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Address]]></item>
+		<item name="wcf.acp.updateServer.serverURL.description"><![CDATA[Please enter the URL to a package server.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.notValid"><![CDATA[The entered address is invalid.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.updateServer.timestamp"><![CDATA[Last access]]></item>
 		<item name="wcf.acp.updateServer.view"><![CDATA[Available update server]]></item>
@@ -801,6 +801,7 @@
 		<item name="wcf.global.language.tr"><![CDATA[Turkish]]></item>
 		<item name="wcf.global.language.zh-CN"><![CDATA[Chinese (Simplified)]]></item>
 		<item name="wcf.global.language.zh-TW"><![CDATA[Chinese (Traditional)]]></item>
+		<item name="wcf.global.loading"><![CDATA[Loading …]]></item>
 		<item name="wcf.global.locale.unix"><![CDATA[en_US]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.locale.win"><![CDATA[english]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.multiSelect"><![CDATA[Multiple items can be selected by holding the &quot;Ctrl/Shift&quot; key (Windows) or &quot;Command&quot; (Mac OS) key and clicking the items required.]]></item>

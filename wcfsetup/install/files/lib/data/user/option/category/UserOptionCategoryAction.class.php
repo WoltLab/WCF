@@ -14,7 +14,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  */
 class UserOptionCategoryAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	AbstractDatabaseObjectAction::$className
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\user\option\category\UserOptionCategoryEditor';
 }

@@ -57,26 +57,26 @@
 				</div>
 			</div>
 		</div>
-		<div class="border borderMarginRemove" id="{$cache}">
+		<div id="{$cache}" class="border borderMarginRemove">
 			<table class="tableList">
 				<thead>
 					<tr class="tableHead">
-						<th><div><span class="emptyHead">{lang}wcf.acp.cache.list.name{/lang}</span></div></th>
-						<th><div><span class="emptyHead">{lang}wcf.acp.cache.list.size{/lang}</span></div></th>
-						<th><div><span class="emptyHead">{lang}wcf.acp.cache.list.mtime{/lang}</span></div></th>
+						<th><p><span class="emptyHead">{lang}wcf.acp.cache.list.name{/lang}</span></p></th>
+						<th><p><span class="emptyHead">{lang}wcf.acp.cache.list.size{/lang}</span></p></th>
+						<th><p><span class="emptyHead">{lang}wcf.acp.cache.list.mtime{/lang}</span></p></th>
 						{if $files.0.perm|isset}
-							<th><div><span class="emptyHead">{lang}wcf.acp.cache.list.perm{/lang}</span></div></th>
+							<th><p><span class="emptyHead">{lang}wcf.acp.cache.list.perm{/lang}</span></p></th>
 						{/if}
 					</tr>
 				</thead>
 				<tbody>
 				{foreach from=$files item=file}
-					<tr class="{cycle values="container-1,container-2"}">
-						<td class="columnText">{$file.filename}</td>
-						<td class="columnNumbers">{@$file.filesize|filesize}</td>
-						<td class="columnDate">{if $file.mtime > 1}{@$file.mtime|time}{/if}</td>
+					<tr>
+						<td class="columnText"><p>{$file.filename}</td>
+						<td class="columnNumbers"><p>{@$file.filesize|filesize}</td>
+						<td class="columnDate">{if $file.mtime > 1}<p>{@$file.mtime|time}</p>{/if}</td>
 						{if $file.perm|isset}
-							<td class="columnNumbers"{if !$file.writable} style="color: #c00"{/if}>{@$file.perm}</td>
+							<td class="columnNumbers"{if !$file.writable} style="color: #c00"{/if}><p>{@$file.perm}</p></td>
 						{/if}
 					</tr>
 				{/foreach}

@@ -67,7 +67,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	}
 	
 	/**
-	 * @see	PackageInstallationDispatcher::executePIP()
+	 * @see	wcf\system\package\PackageInstallationDispatcher::executePIP()
 	 */
 	protected function executePIP(array $nodeData) {
 		$pip = new $nodeData['className']($this);

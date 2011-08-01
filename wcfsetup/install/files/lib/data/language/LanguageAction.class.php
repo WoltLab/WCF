@@ -16,22 +16,22 @@ use wcf\system\WCF;
  */
 class LanguageAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see AbstractDatabaseObjectAction::$className
+	 * @see wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\language\LanguageEditor';
 	
 	/**
-	 * @see	AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
 	protected $permissionsCreate = array('admin.language.canAddLanguage');
 	
 	/**
-	 * @see	AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
 	protected $permissionsDelete = array('admin.language.canDeleteLanguage');
 	
 	/**
-	 * @see	AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.language.canEditLanguage');
 	

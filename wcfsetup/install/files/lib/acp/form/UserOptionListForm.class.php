@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  */
 abstract class UserOptionListForm extends AbstractOptionListForm {
 	/**
-	 * @see AbstractOptionListForm::$cacheName
+	 * @see wcf\acp\form\AbstractOptionListForm::$cacheName
 	 */
 	public $cacheName = 'user-option-';
 	
@@ -76,7 +76,7 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see AbstractOptionListForm::validateOption()
+	 * @see wcf\acp\form\AbstractOptionListForm::validateOption()
 	 */
 	protected function validateOption(Option $option) {
 		parent::validateOption($option);

@@ -15,7 +15,7 @@ class SetupTemplate extends Template {
 	protected $templatePath = '';
 	
 	/**
-	 * @see Template::setTemplatePaths()
+	 * @see wcf\system\template\Template::setTemplatePaths()
 	 */
 	public function setTemplatePaths($templatePaths) {
 		if (is_array($templatePaths)) $this->templatePath = array_shift($templatePaths);
@@ -23,33 +23,33 @@ class SetupTemplate extends Template {
 	}
 	
 	/**
-	 * @see Template::loadTemplateStructure()
+	 * @see wcf\system\template\Template::loadTemplateStructure()
 	 */
 	protected function loadTemplateStructure() {}
 	
 	/**
-	 * @see Template::getSourceFilename()
+	 * @see wcf\system\template\Template::getSourceFilename()
 	 */
 	public function getSourceFilename($templateName, $packageID = 0) {
 		return $this->templatePath.TMP_FILE_PREFIX.$templateName.'.tpl';
 	}
 	
 	/**
-	 * @see Template::getCompiledFilename()
+	 * @see wcf\system\template\Template::getCompiledFilename()
 	 */
 	public function getCompiledFilename($templateName, $packageID = 0) {
 		return $this->compileDir.TMP_FILE_PREFIX.$this->languageID.'_'.$templateName.'.php';
 	}
 	
 	/**
-	 * @see Template::getPluginFilename()
+	 * @see wcf\system\template\Template::getPluginFilename()
 	 */
 	public function getPluginFilename($type, $tag) {
 		return $this->pluginDir.TMP_FILE_PREFIX.'TemplatePlugin'.StringUtil::firstCharToUpperCase(StringUtil::toLowerCase($type)).StringUtil::firstCharToUpperCase(StringUtil::toLowerCase($tag)).'.class.php';
 	}
 	
 	/**
-	 * @see Template::getCompiler()
+	 * @see wcf\system\template\Template::getCompiler()
 	 */
 	protected function getCompiler() {
 		return new TemplateCompiler($this);

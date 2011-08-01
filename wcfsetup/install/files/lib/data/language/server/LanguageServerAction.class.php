@@ -14,22 +14,22 @@ use wcf\data\AbstractDatabaseObjectAction;
  */
 class LanguageServerAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see AbstractDatabaseObjectAction::$className
+	 * @see wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\language\server\LanguageServerEditor';
 	
 	/**
-	 * @see	AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
 	protected $permissionsCreate = array('admin.language.canAddServer');
 	
 	/**
-	 * @see	AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
 	protected $permissionsDelete = array('admin.language.canDeleteServer');
 	
 	/**
-	 * @see	AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.language.canEditServer');
 }

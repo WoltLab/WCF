@@ -63,7 +63,7 @@
 	<div class="inner">
 		<div><span id="currentStep"></span></div>
 		
-		<iframe id="iframe" frameborder="0" src="{$url}"></iframe>
+		<iframe src="{$url}" id="iframe" frameborder="0"></iframe>
 	</div>
 </fieldset>
 

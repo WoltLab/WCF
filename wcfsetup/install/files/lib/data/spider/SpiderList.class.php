@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectList;
  */
 class SpiderList extends DatabaseObjectList {
 	/**
-	 * @see	DatabaseObjectList::$className
+	 * @see	wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\spider\Spider';
 }

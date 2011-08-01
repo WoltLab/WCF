@@ -22,13 +22,35 @@ use wcf\util\StringUtil;
  * @category 	Community Framework
  */
 class UserListPage extends SortablePage {
-	// system
-	public $itemsPerPage = 50;
-	public $defaultSortField = 'username';
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'userList';
+	
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.user.canSearchUser');
 	
-	// parameters
+	/**
+	 * @see wcf\page\MultipleLinkPage::$itemsPerPage
+	 */
+	public $itemsPerPage = 50;
+	
+	/**
+	 * @see wcf\page\SortablePage::$defaultSortField
+	 */
+	public $defaultSortField = 'username';
+	
+	/**
+	 * @see wcf\page\SortablePage::$validSortFields
+	 */
+	public $validSortFields = array('email', 'userID', 'registrationDate', 'username');
+	
+	/**
+	 * id of a user search
+	 * @var	integer
+	 */
 	public $searchID = 0;
 	
 	// data
@@ -68,18 +90,10 @@ class UserListPage extends SortablePage {
 	 * @see wcf\page\SortablePage::validateSortField()
 	 */
 	public function validateSortField() {
-		parent::validateSortField();
+		// add options to valid sort fields
+		$this->validSortFields = array_merge($this->validSortFields, array_keys($this->options));
 		
-		switch ($this->sortField) {
-			case 'email':
-			case 'userID':
-			case 'registrationDate':
-			case 'username': break;
-			default: 
-				if (!isset($this->options[$this->sortField])) {
-					$this->sortField = $this->defaultSortField;
-				}
-		}
+		parent::validateSortField();
 	}
 	
 	/**

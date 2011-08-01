@@ -23,14 +23,14 @@ class OptionImportForm extends ACPForm {
 	public $templateName = 'optionImport';
 	
 	/**
-	 * @see wcf\acp\form\ACPForm::$activeMenuItem
-	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.option.importAndExport';
-	
-	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canEditOption');
+	
+	/**
+	 * @see wcf\acp\form\ACPForm::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.option.importAndExport';
 	
 	/**
 	 * upload file data

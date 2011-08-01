@@ -6,7 +6,8 @@
 # thumbnails
 Thumbs.db
 
-# OS-X
+# Mac OS X
+# metadata
 .DS_Store
 # thumbnails
 ._*
@@ -32,6 +33,6 @@ nbactions.xml
 .svn/
 
 # Community Framework
-# Ignore packages build directly in the workspace. They can however, if wanted, added manually via git add
+# Ignore packages build directly in the workspace. They can however be added manually via git add, if wanted.
 *.tar
 *.tar.gz

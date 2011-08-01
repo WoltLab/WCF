@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectList;
  */
 class LanguageList extends DatabaseObjectList {
 	/**
-	 * @see	DatabaseObjectList::$className
+	 * @see	wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\language\Language';
 }

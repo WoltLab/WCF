@@ -361,7 +361,7 @@ class LanguageEditor extends DatabaseObjectEditor {
 	 * Copies all language variables from current language to language specified as $destination.
 	 * Caution: This method expects that target language does not have any items!
 	 * 
-	 * @param	wcf\data\language\Language	$destination
+	 * @param	Language	$destination
 	 */	
 	public function copy(Language $destination) {
 		$sql = "INSERT INTO	wcf".WCF_N."_language_item

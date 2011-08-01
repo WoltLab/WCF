@@ -16,13 +16,46 @@ use wcf\system\WCF;
  * @category 	Community Framework
  */
 class PackageViewPage extends AbstractPage {
-	public $package;
-	public $packageID = 0;
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'packageView';
+	
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canUninstallPackage');
+	
+	/**
+	 * list with data of required packages explicitly given in the requiredPackages
+	 * tag during installation
+	 * @var	array<string>
+	 */
 	public $requiredPackages = array();
+	
+	/**
+	 * list with data of dependent packages
+	 * @var	array<string>
+	 */
 	public $dependentPackages = array();
+	
+	/**
+	 * list with data of required packages
+	 * @var	array<string>
+	 */
 	public $dependencies = array();
+	
+	/**
+	 * id of the package
+	 * @var	integer
+	 */
+	public $packageID = 0;
+	
+	/**
+	 * package object
+	 * @var	Package
+	 */
+	public $package = null;
 	
 	/**
 	 * @see wcf\page\IPage::readParameters()

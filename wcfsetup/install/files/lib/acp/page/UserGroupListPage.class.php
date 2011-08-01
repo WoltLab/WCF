@@ -15,16 +15,36 @@ use wcf\system\WCF;
  * @category 	Community Framework
  */
 class UserGroupListPage extends SortablePage {
-	// system
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'userGroupList';
-	public $deletedGroups = 0;
-	public $defaultSortField = 'groupName';
+	
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.user.canEditGroup', 'admin.user.canDeleteGroup');
+	
+	/**
+	 * @see wcf\page\SortablePage::$defaultSortField
+	 */
+	public $defaultSortField = 'groupName';
+	
+	/**
+	 * @see wcf\page\SortablePage::$validSortFields
+	 */
+	public $validSortFields = array('groupID', 'groupName', 'groupType', 'members');
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
 	 */	
 	public $objectListClassName = 'wcf\data\user\group\UserGroupList';
+	
+	/**
+	 * indicates if a group has just been deleted
+	 * @var	integer
+	 */
+	public $deletedGroups = 0;
 	
 	/**
 	 * @see wcf\page\IPage::readParameters()
@@ -35,21 +55,6 @@ class UserGroupListPage extends SortablePage {
 		// detect group deletion
 		if (isset($_REQUEST['deletedGroups'])) {
 			$this->deletedGroups = intval($_REQUEST['deletedGroups']);
-		}
-	}
-	
-	/**
-	 * @see wcf\page\SortablePage::validateSortField()
-	 */
-	public function validateSortField() {
-		parent::validateSortField();
-		
-		switch ($this->sortField) {
-			case 'groupID':
-			case 'groupName':
-			case 'groupType':
-			case 'members': break;
-			default: $this->sortField = $this->defaultSortField;
 		}
 	}
 	

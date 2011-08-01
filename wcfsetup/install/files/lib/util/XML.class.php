@@ -151,7 +151,7 @@ class XML {
 	/**
 	 * Reads errors from libxml since be bypassed built-in error handler.
 	 * 
-	 * @see		XML::__construct()
+	 * @see		wcf\util\XML::__construct()
 	 * @return	array<array>
 	 */
 	protected function pollErrors() {

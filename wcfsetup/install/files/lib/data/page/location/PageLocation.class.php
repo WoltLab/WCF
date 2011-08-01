@@ -14,12 +14,12 @@ use wcf\data\ProcessibleDatabaseObject;
  */
 class PageLocation extends ProcessibleDatabaseObject {
 	/**
-	 * @see	DatabaseObject::$databaseTableName
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'page_location';
 	
 	/**
-	 * @see	DatabaseObject::$databaseIndexName
+	 * @see	wcf\data\DatabaseObject::$databaseIndexName
 	 */
 	protected static $databaseIndexName = 'locationID';
 	

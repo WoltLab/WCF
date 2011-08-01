@@ -32,6 +32,11 @@ class CronjobListPage extends SortablePage {
 	public $defaultSortField = 'description';
 	
 	/**
+	 * @see wcf\page\SortablePage::$validSortFields
+	 */
+	public $validSortFields = array('description', 'cronjobID', 'nextExec', 'startMinute', 'startHour', 'startDom', 'startMonth', 'startDow');
+	
+	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
 	 */	
 	public $objectListClassName = 'wcf\data\cronjob\CronjobList';
@@ -55,25 +60,6 @@ class CronjobListPage extends SortablePage {
 		WCF::getTPL()->assign(array(
 			'cronjobs' => $this->objectList->getObjects()
 		));
-	}
-	
-	/**
-	 * @see wcf\page\SortablePage::validateSortField()
-	 */
-	public function validateSortField() {
-		parent::validateSortField();
-		
-		switch ($this->sortField) {
-			case 'description':
-			case 'cronjobID':
-			case 'nextExec':
-			case 'startMinute':
-			case 'startHour':
-			case 'startDom':
-			case 'startMonth':
-			case 'startDow': break;
-			default: $this->sortField = $this->defaultSortField;
-		}
 	}
 	
 	/**

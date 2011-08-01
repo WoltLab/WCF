@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class TemplateEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectDecorator::$baseClass
+	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\template\Template';
 	

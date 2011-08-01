@@ -16,29 +16,43 @@ use wcf\system\WCF;
  * @category 	Community Framework
  */
 class PackageListPage extends SortablePage {
-	// system
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'packageList';
+	
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canUninstallPackage');
+	
+	/**
+	 * @see wcf\page\MultipleLinkPage::$itemsPerPage
+	 */
 	public $itemsPerPage = 50;
+	
+	/**
+	 * @see wcf\page\SortablePage::$defaultSortField
+	 */
 	public $defaultSortField = 'packageType';
+	
+	/**
+	 * @see wcf\page\SortablePage::$defaultSortOrder
+	 */
 	public $defaultSortOrder = 'DESC';
 	
 	/**
-	 * list of packages
-	 * 
-	 * @var	PackageList
+	 * @see wcf\page\SortablePage::$validSortFields
 	 */
-	public $packageList = null;
+	public $validSortFields = array('packageID', 'package', 'packageDir', 'packageName', 'instanceNo', 'packageDescription', 'packageVersion', 'packageDate', 'packageURL', 'parentPackageID', 'isUnique', 'standalone', 'author', 'authorURL', 'installDate', 'updateDate');
 	
 	/**
-	 * class name for DatabaseObjectList
-	 * 
-	 * @var	string
+	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
 	 */	
 	public $objectListClassName = 'wcf\data\package\PackageList';
 	
 	/**
-	 * @see	wcf\page\MuletipleLinkPage::readObjects()
+	 * @see	wcf\page\MultipleLinkPage::readObjects()
 	 */	
 	protected function readObjects() {
 		$this->sqlOrderBy = 'package.'.($this->sortField == 'packageType' ? 'standalone '.$this->sortOrder.', package.parentPackageID '.$this->sortOrder : $this->sortField.' '.$this->sortOrder).($this->sortField != 'packageName' ? ', package.packageName ASC' : '');
@@ -63,32 +77,5 @@ class PackageListPage extends SortablePage {
 		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.view');
 		
 		parent::show();
-	}
-	
-	/**
-	 * @see wcf\page\SortablePage::validateSortField()
-	 */
-	public function validateSortField() {
-		parent::validateSortField();
-		
-		switch ($this->sortField) {
-			case 'packageID':
-			case 'package':
-			case 'packageDir':
-			case 'packageName':
-			case 'instanceNo':
-			case 'packageDescription':
-			case 'packageVersion':
-			case 'packageDate':
-			case 'packageURL':
-			case 'parentPackageID':
-			case 'isUnique':
-			case 'standalone':
-			case 'author':
-			case 'authorURL':
-			case 'installDate':
-			case 'updateDate': break;
-			default: $this->sortField = $this->defaultSortField;
-		}
 	}
 }

@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class EventListenerEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	DatabaseObjectDecorator::$baseClass
+	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	public static $baseClass = 'wcf\data\event\listener\EventListener';
 }

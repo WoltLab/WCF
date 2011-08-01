@@ -21,7 +21,7 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.option.import{/lang}</legend>
 			
-				<div class="formElement{if $errorField == 'optionImport'} formError{/if}" id="optionImportDiv">
+				<div id="optionImportDiv" class="formElement{if $errorField == 'optionImport'} formError{/if}">
 					<div class="formFieldLabel">
 						<label for="optionImport">{lang}wcf.acp.option.import.upload{/lang}</label>
 					</div>
@@ -35,7 +35,7 @@
 							</p>
 						{/if}
 					</div>
-					<div class="formFieldDesc hidden" id="optionImportHelpMessage">
+					<div id="optionImportHelpMessage" class="formFieldDesc hidden">
 						<p>{lang}wcf.acp.option.import.upload.description{/lang}</p>
 					</div>
 				</div>
@@ -49,8 +49,8 @@
 	</div>
 
 	<div class="formSubmit">
-		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
-		<input type="submit" accesskey="s" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" />
+		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}
 	</div>
 </form>
@@ -60,11 +60,11 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.option.export{/lang}</legend>
 		
-			<div class="formElement" id="optionExportDiv">
+			<div id="optionExportDiv" class="formElement">
 				<div class="formField">
 					<a href="index.php?action=OptionExport{@SID_ARG_2ND}" id="optionExport">{lang}wcf.acp.option.export.download{/lang}</a>
 				</div>
-				<div class="formFieldDesc hidden" id="optionExportHelpMessage">
+				<div id="optionExportHelpMessage" class="formFieldDesc hidden">
 					<p>{lang}wcf.acp.option.export.download.description{/lang}</p>
 				</div>
 			</div>

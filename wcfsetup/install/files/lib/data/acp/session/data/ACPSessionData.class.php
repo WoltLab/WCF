@@ -15,17 +15,17 @@ use wcf\system\WCF;
  */
 class ACPSessionData extends DatabaseObject {
 	/**
-	 * @see	DatabaseObject::$databaseTableName
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'acp_session_data';
 	
 	/**
-	 * @see	DatabaseObject::$databaseTableIndexIsIdentity
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexIsIdentity
 	 */
 	protected static $databaseTableIndexIsIdentity = false;
 	
 	/**
-	 * @see	DatabaseObject::$databaseTableIndexName
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'sessionID';
 }

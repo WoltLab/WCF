@@ -85,7 +85,7 @@
 <form method="post" action="index.php?form=UsersMassProcessing">
 	<div class="border content">
 		<div class="container-1">
-			<h3 class="subHeadline">{lang}wcf.acp.user.massProcessing.conditions{/lang}</h3>
+			<h3 class="subHeading">{lang}wcf.acp.user.massProcessing.conditions{/lang}</h3>
 			
 			<fieldset>
 				<legend>{lang}wcf.acp.user.search.conditions.general{/lang}</legend>
@@ -168,7 +168,7 @@
 			{if $options|count}
 				<div id="profile-content" class="border tabMenuContent hidden">
 					<div class="container-1">
-						<h3 class="subHeadline">{lang}wcf.acp.user.search.conditions.profile{/lang}</h3>
+						<h3 class="subHeading">{lang}wcf.acp.user.search.conditions.profile{/lang}</h3>
 						{include file='optionFieldList' langPrefix='wcf.user.option.'}
 					</div>
 				</div>

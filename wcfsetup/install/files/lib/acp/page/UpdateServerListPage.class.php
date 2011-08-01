@@ -15,16 +15,36 @@ use wcf\system\WCF;
  * @category 	Community Framework
  */
 class UpdateServerListPage extends SortablePage {
-	// system
+	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = 'updateServerList';
+	
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.system.package.canEditServer');
+	
+	/**
+	 * @see wcf\page\SortablePage::$defaultSortField
+	 */
 	public $defaultSortField = 'serverURL';
-	public $deletedPackageUpdateServerID = 0;
+	
+	/**
+	 * @see wcf\page\SortablePage::$validSortFields
+	 */
+	public $validSortFields = array('packageUpdateServerID', 'serverURL', 'status', 'errorMessage', 'lastUpdateTime', 'packages');
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
 	 */	
 	public $objectListClassName = 'wcf\data\package\update\server\PackageUpdateServerList';
+	
+	/**
+	 * id of a package update server that has just been deleted
+	 * @var	integer
+	 */
+	public $deletedPackageUpdateServerID = 0;
 	
 	/**
 	 * @see wcf\page\IPage::readParameters()
@@ -64,22 +84,5 @@ class UpdateServerListPage extends SortablePage {
 		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.server.view');
 		
 		parent::show();
-	}
-	
-	/**
-	 * @see wcf\page\SortablePage::validateSortField()
-	 */
-	public function validateSortField() {
-		parent::validateSortField();
-		
-		switch ($this->sortField) {
-			case 'packageUpdateServerID':
-			case 'serverURL':
-			case 'status':
-			case 'errorMessage':
-			case 'lastUpdateTime':
-			case 'packages': break;
-			default: $this->sortField = $this->defaultSortField;
-		}
 	}
 }

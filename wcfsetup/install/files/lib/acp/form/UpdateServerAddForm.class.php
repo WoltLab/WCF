@@ -37,7 +37,7 @@ class UpdateServerAddForm extends ACPForm {
 	 * server url
 	 * @var string
 	 */
-	public $server = '';
+	public $serverURL = '';
 	
 	/**
 	 * server login username
@@ -57,7 +57,7 @@ class UpdateServerAddForm extends ACPForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_POST['server'])) $this->server = StringUtil::trim($_POST['server']);
+		if (isset($_POST['serverURL'])) $this->serverURL = StringUtil::trim($_POST['serverURL']);
 		if (isset($_POST['loginUsername'])) $this->loginUsername = $_POST['loginUsername'];
 		if (isset($_POST['loginPassword'])) $this->loginPassword = $_POST['loginPassword'];
 	}
@@ -68,12 +68,12 @@ class UpdateServerAddForm extends ACPForm {
 	public function validate() {
 		parent::validate();
 		
-		if (empty($this->server)) {
-			throw new UserInputException('server');
+		if (empty($this->serverURL)) {
+			throw new UserInputException('serverURL');
 		}
 		
-		if (!PackageUpdateServer::isValidServerURL($this->server)) {
-			throw new UserInputException('server', 'notValid');
+		if (!PackageUpdateServer::isValidServerURL($this->serverURL)) {
+			throw new UserInputException('serverURL', 'notValid');
 		}
 	}
 	
@@ -85,7 +85,7 @@ class UpdateServerAddForm extends ACPForm {
 		
 		// save server
 		$updateServerAction = new PackageUpdateServerAction(array(), 'create', array('data' => array(
-			'server' => $this->server,
+			'serverURL' => $this->serverURL,
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword
 		)));
@@ -93,7 +93,7 @@ class UpdateServerAddForm extends ACPForm {
 		$this->saved();
 		
 		// reset values
-		$this->server = $this->loginUsername = $this->loginPassword = '';
+		$this->serverURL = $this->loginUsername = $this->loginPassword = '';
 		
 		// show success message
 		WCF::getTPL()->assign('success', true);
@@ -106,7 +106,7 @@ class UpdateServerAddForm extends ACPForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'server' => $this->server,
+			'serverURL' => $this->serverURL,
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword,
 			'action' => 'add'

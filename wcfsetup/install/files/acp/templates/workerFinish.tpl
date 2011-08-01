@@ -20,4 +20,3 @@
 {/if}
 
 {include file='setupWindowFooter'}
-
