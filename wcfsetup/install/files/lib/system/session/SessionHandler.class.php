@@ -400,7 +400,7 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * Checks the requested permission, throws a PermissionDeniedException
 	 * if the permission is false.
-	 * @see	SessionHandler::getPermission()
+	 * @see	wcf\system\session\SessionHandler::getPermission()
 	 */
 	public function checkPermission(array $permissions) {
 		foreach ($permissions as $permission) {

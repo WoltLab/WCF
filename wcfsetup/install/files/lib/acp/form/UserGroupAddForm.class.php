@@ -38,7 +38,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public $menuItemName = 'wcf.acp.menu.link.group.add';
 	
 	/**
-	 * @see AbstractOptionListForm::$cacheName
+	 * @see wcf\acp\form\AbstractOptionListForm::$cacheName
 	 */
 	public $cacheName = 'user_group-option-';
 	
@@ -183,7 +183,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see AbstractOptionListForm::getTypeObject()
+	 * @see wcf\acp\form\AbstractOptionListForm::getTypeObject()
 	 */
 	protected function getTypeObject($type) {
 		if (!isset($this->typeObjects[$type])) {

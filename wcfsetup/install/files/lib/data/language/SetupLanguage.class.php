@@ -28,7 +28,7 @@ class SetupLanguage extends Language {
 	}
 	
 	/**
-	 * @see	Language::loadCategory()
+	 * @see	wcf\data\language\Language::loadCategory()
 	 */
 	protected function loadCategory($category) {
 		return false;

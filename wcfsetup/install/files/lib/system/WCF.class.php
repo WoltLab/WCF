@@ -514,7 +514,7 @@ class WCF {
 	}
 	
 	/**
-	 * @see	WCF::__callStatic()
+	 * @see	wcf\system\WCF::__callStatic()
 	 */
 	public final function __call($name, array $arguments) {
 		// bug fix to avoid php crash, see http://bugs.php.net/bug.php?id=55020

@@ -21,7 +21,7 @@ use wcf\system\WCF;
  */
 class UserGroupEditForm extends UserGroupAddForm {
 	/**
-	 * @see UserGroupAddForm::$menuItemName
+	 * @see wcf\acp\form\UserGroupAddForm::$menuItemName
 	 */
 	public $menuItemName = 'wcf.acp.menu.link.group';
 	
