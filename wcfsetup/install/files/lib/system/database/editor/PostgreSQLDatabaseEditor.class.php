@@ -2,7 +2,6 @@
 namespace wcf\system\database\editor;
 use wcf\system\database\DatabaseException;
 use wcf\util\ArrayUtil;
-use wcf\util\StringUtil;
 
 /**
  * This is the database editor implementation for PostgreSQL 8.0 or higher.
