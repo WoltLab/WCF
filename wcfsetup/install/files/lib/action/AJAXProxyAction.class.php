@@ -87,7 +87,7 @@ class AJAXProxyAction extends AbstractSecureAction {
 			if (is_array($_POST['objectIDs'])) $this->objectIDs = ArrayUtil::toIntegerArray($_POST['objectIDs']);
 		}
 		if (isset($_POST['parameters'])) {
-			if (is_array($_POST['parameters'])) $this->parameters = $parameters;
+			if (is_array($_POST['parameters'])) $this->parameters = $_POST['parameters'];
 		}
 	}
 	
