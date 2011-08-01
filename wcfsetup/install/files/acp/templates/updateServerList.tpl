@@ -33,13 +33,13 @@
 		</div>
 	</div>
 {else}
-	<div class="border titleBarPanel">
-		<div class="containerHead"><h3>{lang}wcf.acp.updateServer.list.available{/lang}</h3></div>
-	</div>
-	<div class="border borderMarginRemove">
-		<table class="tableList">
+	<div class="border boxTitle">
+		<hgroup>
+			<h1>{lang}wcf.acp.updateServer.list.available{/lang}</h1>
+		</hgroup>
+		<table>
 			<thead>
-				<tr class="tableHead">
+				<tr>
 					<th class="columnPackageUpdateServerID{if $sortField == 'packageUpdateServerID'} active{/if}" colspan="2"><p><a href="index.php?page=UpdateServerList&amp;pageNo={@$pageNo}&amp;sortField=packageUpdateServerID&amp;sortOrder={if $sortField == 'packageUpdateServerID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.updateServer.packageUpdateServerID{/lang}{if $sortField == 'packageUpdateServerID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th class="columnServer{if $sortField == 'serverURL'} active{/if}"><p><a href="index.php?page=UpdateServerList&amp;pageNo={@$pageNo}&amp;sortField=serverURL&amp;sortOrder={if $sortField == 'serverURL' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.updateServer.serverURL{/lang}{if $sortField == 'serverURL'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th class="columnPackages{if $sortField == 'packages'} active{/if}"><p><a href="index.php?page=UpdateServerList&amp;pageNo={@$pageNo}&amp;sortField=packages&amp;sortOrder={if $sortField == 'packages' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.updateServer.packages{/lang}{if $sortField == 'packages'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>

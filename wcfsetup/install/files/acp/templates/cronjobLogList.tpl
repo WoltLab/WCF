@@ -16,11 +16,11 @@
 
 {hascontent}
 	<form method="post" action="index.php?action=CronjobsLogDelete">
-		<div class="border titleBarPanel">
-			<div class="containerHead"><h3>{lang}wcf.acp.cronjob.log.data{/lang}</h3></div>
-		</div>
-		<div class="border borderMarginRemove">
-			<table class="tableList">
+		<div class="border boxTitle">
+			<hgroup>
+				<h1>{lang}wcf.acp.cronjob.log.data{/lang}</h1>
+			</hgroup>
+			<table>
 				<thead>
 					<tr class="tableHead">
 						<th class="columnCronjobID{if $sortField == 'cronjobID'} active{/if}"><div><a href="index.php?page=CronjobLogList&amp;pageNo={@$pageNo}&amp;sortField=cronjobID&amp;sortOrder={if $sortField == 'cronjobID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.cronjob.cronjobID{/lang}{if $sortField == 'cronjobID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></div></th>
@@ -42,7 +42,7 @@
 								<td class="columnExecTime columnDate"><p>{@$cronjobLog->execTime|time} {lang}wcf.acp.cronjob.log.success{/lang}</p></td>
 							{elseif $cronjobLog->error}
 								<td class="columnExecTime columnText">
-									/p>{@$cronjobLog->execTime|time} {lang}wcf.acp.cronjob.log.error{/lang}<br />
+									<p>{@$cronjobLog->execTime|time} {lang}wcf.acp.cronjob.log.error{/lang}<br />
 									{@$cronjobLog->error}</p>
 								</td>
 							{else}

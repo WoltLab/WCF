@@ -65,12 +65,12 @@
 	//]]>
 </script>
 
-<div class="mainHeadline">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/usersMassProcessingL.png" alt="" />
-	<div class="headlineContainer">
-		<h2>{lang}wcf.acp.user.massProcessing{/lang}</h2>
-	</div>
-</div>
+	<hgroup>
+		<h1>{lang}wcf.acp.user.massProcessing{/lang}</h1>
+	</hgroup>
+</header>
 
 {if $errorField}
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>

@@ -38,11 +38,11 @@
 </div>
 
 {if $groups|count}
-	<div class="border titleBarPanel">
-		<div class="containerHead"><h3>{lang}wcf.acp.group.list.data{/lang}</h3></div>
-	</div>
-	<div class="border borderMarginRemove">
-		<table class="tableList">
+	<div class="border boxTitle">
+		<hgroup>
+			<h1>{lang}wcf.acp.group.list.data{/lang}</h1>
+		</hgroup>
+		<table>
 			<thead>
 				<tr class="tableHead">
 					<th class="columnGroupID{if $sortField == 'groupID'} active{/if}" colspan="2"><p><a href="index.php?page=UserGroupList&amp;pageNo={@$pageNo}&amp;sortField=groupID&amp;sortOrder={if $sortField == 'groupID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.group.groupID{/lang}{if $sortField == 'groupID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>

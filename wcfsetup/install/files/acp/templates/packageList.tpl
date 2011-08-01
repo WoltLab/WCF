@@ -15,6 +15,7 @@
 	<img src="{@RELATIVE_WCF_DIR}icon/packageL.png" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.package.list{/lang}</h1>
+		<h2>{lang}wcf.acp.package.list.count{/lang}</h2>
 	</hgroup>
 </header>
 
@@ -32,10 +33,11 @@
 </div>
 
 {if $packages|count > 0}
-	<div class="border"><!-- The following table construct is experimental! -->
-		<div class="boxTitle"><h1>{lang}wcf.acp.package.list.count{/lang}</h1></div>
-	
-		<table class="tableList">
+	<div class="border boxTitle">
+		<hgroup>
+			<h1><a href="#">{lang}wcf.acp.package.list{/lang}</a></h1>
+		</hgroup>
+		<table>
 			<thead>
 				<tr class="tableHead">
 					<th colspan="2"{if $sortField == 'packageID'} class="active"{/if}><p><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=packageID&amp;sortOrder={if $sortField == 'packageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.list.id{/lang}{if $sortField == 'packageID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>

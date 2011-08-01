@@ -47,18 +47,12 @@
 
 {foreach from=$caches key=cache item=files}
 	{if $files|count}
-		<div class="border titleBarPanel">
-			<div class="containerHead">
-				<div class="containerIcon">
-					<a onclick="openList('{$cache}')"><img src="{@RELATIVE_WCF_DIR}icon/minusS.png" id="{$cache}Image" alt="" /></a>
-				</div>
-				<div class="containerContent">
-					<h3>{$cache} ({#$files|count})</h3>
-				</div>
-			</div>
-		</div>
-		<div id="{$cache}" class="border borderMarginRemove">
-			<table class="tableList">
+		<div class="border boxTitle">
+			<a onclick="openList('{$cache}')"><img src="{@RELATIVE_WCF_DIR}icon/minusS.png" id="{$cache}Image" alt="" /></a>
+			<hgroup>
+				<h1>{$cache} ({#$files|count})</h1>
+			</hgroup>
+			<table id="{$cache}">
 				<thead>
 					<tr class="tableHead">
 						<th><p><span class="emptyHead">{lang}wcf.acp.cache.list.name{/lang}</span></p></th>

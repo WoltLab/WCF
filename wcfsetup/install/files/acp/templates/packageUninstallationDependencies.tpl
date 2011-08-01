@@ -69,11 +69,11 @@
 		<p class="error">{lang}wcf.acp.package.uninstall.dependentPackages.error{/lang}</p>
 	{/if}
 
-	<div class="border titleBarPanel">
-		<div class="containerHead"><h3>{lang}wcf.acp.package.view.dependentPackages{/lang}</h3></div>
-	</div>
-	<div class="border borderMarginRemove">
-		<table class="tableList">
+	<div class="border boxTitle">
+		<hgroup>
+			<h1>{lang}wcf.acp.package.view.dependentPackages{/lang}</h1>
+		</hgroup>
+		<table>
 			<thead>
 				<tr class="tableHead">
 					<th colspan="2"><p><span class="emptyHead">{lang}wcf.acp.package.list.id{/lang}</span></p></th>

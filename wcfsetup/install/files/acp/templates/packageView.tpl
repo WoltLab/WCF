@@ -94,17 +94,13 @@
 </div>
 
 {if $requiredPackages|count > 0}
-	<div class="border titleBarPanel">
-		<div class="containerHead">
-			<div class="containerIcon"><a onclick="openList('requiredPackages')"><img id="requiredPackagesImage" src="{@RELATIVE_WCF_DIR}icon/minusS.png" alt="" /></a></div>
-			<div class="containerContent">
-				<h3><a onclick="openList('requiredPackages')">{lang}wcf.acp.package.view.requiredPackages{/lang}</a></h3>
-				<p class="smallFont light">{lang}wcf.acp.package.view.requiredPackages.description{/lang}</p>
-			</div>
-		</div>
-	</div>
-	<div id="requiredPackages" class="border borderMarginRemove">
-		<table class="tableList">
+	<div class="border boxTitle">
+		<a onclick="openList('requiredPackages')"><img id="requiredPackagesImage" src="{@RELATIVE_WCF_DIR}icon/minusS.png" alt="" /></a>
+		<hgroup>
+			<h1><a onclick="openList('requiredPackages')">{lang}wcf.acp.package.view.requiredPackages{/lang}</a></h1>
+			<h2>{lang}wcf.acp.package.view.requiredPackages.description{/lang}</h2>
+		</hgroup>
+		<table id="requiredPackages">
 			<thead>
 				<tr class="tableHead">
 					<th colspan="2"><p><span class="emptyHead">{lang}wcf.acp.package.list.id{/lang}</span></p></th>
@@ -163,17 +159,13 @@
 {/if}
 
 {if $dependentPackages|count > 0}
-	<div class="border titleBarPanel">
-		<div class="containerHead">
-			<div class="containerIcon"><a onclick="openList('dependentPackages')"><img id="dependentPackagesImage" src="{@RELATIVE_WCF_DIR}icon/minusS.png" alt="" /></a></div>
-			<div class="containerContent">
-				<h3><a onclick="openList('dependentPackages')">{lang}wcf.acp.package.view.dependentPackages{/lang}</a></h3>
-				<p class="smallFont light">{lang}wcf.acp.package.view.dependentPackages.description{/lang}</p>
-			</div>
-		</div>
-	</div>
-	<div class="border borderMarginRemove" id="dependentPackages">
-		<table class="tableList">
+	<div class="border boxTitle">
+		<a onclick="openList('dependentPackages')"><img id="dependentPackagesImage" src="{@RELATIVE_WCF_DIR}icon/minusS.png" alt="" /></a>
+		<hgroup>
+			<h1><a onclick="openList('dependentPackages')">{lang}wcf.acp.package.view.dependentPackages{/lang}</a></h1>
+			<h2>{lang}wcf.acp.package.view.dependentPackages.description{/lang}</h2>
+		</hgroup>
+		<table id="dependentPackages">
 			<thead>
 				<tr class="tableHead">
 					<th colspan="2"><p><span class="emptyHead">{lang}wcf.acp.package.list.id{/lang}</span></p></th>
