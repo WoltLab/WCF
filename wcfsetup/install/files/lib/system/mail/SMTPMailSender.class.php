@@ -101,7 +101,7 @@ class SMTPMailSender extends MailSender {
 	}
 	
 	/**
-	 * @see MailSender::sendMail()
+	 * @see wcf\system\mail\MailSender::sendMail()
 	 */
 	public function sendMail(Mail $mail) {
 		$this->recipients = array();

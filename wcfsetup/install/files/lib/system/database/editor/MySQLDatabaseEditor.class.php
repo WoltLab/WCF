@@ -14,7 +14,7 @@ use wcf\system\database\Database;
  */
 class MySQLDatabaseEditor extends DatabaseEditor {
 	/**
-	 * @see DatabaseEditor::getTableNames()
+	 * @see wcf\system\database\editor\DatabaseEditor::getTableNames()
 	 */
 	public function getTableNames() {
 		$existingTables = array();
@@ -28,7 +28,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::getColumns()
+	 * @see wcf\system\database\editor\DatabaseEditor::getColumns()
 	 */
 	public function getColumns($tableName) {
 		$columns = array();
@@ -42,7 +42,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::getIndices()
+	 * @see wcf\system\database\editor\DatabaseEditor::getIndices()
 	 */
 	public function getIndices($tableName) {
 		$indices = array();
@@ -57,7 +57,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::createTable()
+	 * @see wcf\system\database\editor\DatabaseEditor::createTable()
 	 */
 	public function createTable($tableName, $columns, $indices = array()) {
 		$columnDefinition = $indexDefinition = '';
@@ -87,7 +87,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::dropTable()
+	 * @see wcf\system\database\editor\DatabaseEditor::dropTable()
 	 */
 	public function dropTable($tableName) {
 		$sql = "DROP TABLE IF EXISTS ".$tableName;
@@ -96,7 +96,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::addColumn()
+	 * @see wcf\system\database\editor\DatabaseEditor::addColumn()
 	 */
 	public function addColumn($tableName, $columnName, $columnData) {
 		$sql = "ALTER TABLE ".$tableName." ADD COLUMN ".$this->buildColumnDefinition($columnName, $columnData);
@@ -105,7 +105,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::alterColumn()
+	 * @see wcf\system\database\editor\DatabaseEditor::alterColumn()
 	 */
 	public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData) {
 		$sql = "ALTER TABLE ".$tableName." CHANGE COLUMN ".$oldColumnName." ".$this->buildColumnDefinition($newColumnName, $newColumnData);
@@ -114,7 +114,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::dropColumn()
+	 * @see wcf\system\database\editor\DatabaseEditor::dropColumn()
 	 */
 	public function dropColumn($tableName, $columnName) {
 		$sql = "ALTER TABLE ".$tableName." DROP COLUMN ".$columnName;
@@ -123,7 +123,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::addIndex()
+	 * @see wcf\system\database\editor\DatabaseEditor::addIndex()
 	 */
 	public function addIndex($tableName, $indexName, $indexData) {
 		$sql = "ALTER TABLE ".$tableName." ADD ".$this->buildIndexDefinition($indexName, $indexData);
@@ -132,7 +132,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::addIndex()
+	 * @see wcf\system\database\editor\DatabaseEditor::addIndex()
 	 */
 	public function addForeignKey($tableName, $indexName, $indexData) {
 		$sql = "ALTER TABLE ".$tableName." ADD";
@@ -157,7 +157,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::dropIndex()
+	 * @see wcf\system\database\editor\DatabaseEditor::dropIndex()
 	 */
 	public function dropIndex($tableName, $indexName) {
 		$sql = "ALTER TABLE ".$tableName." DROP INDEX ".$indexName;
@@ -166,7 +166,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see DatabaseEditor::dropForeignKey()
+	 * @see wcf\system\database\editor\DatabaseEditor::dropForeignKey()
 	 */
 	public function dropForeignKey($tableName, $indexName) {
 		$sql = "ALTER TABLE ".$tableName." DROP FOREIGN KEY ".$indexName;

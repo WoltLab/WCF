@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
  */
 class UserEditForm extends UserAddForm {
 	/**
-	 * @see UserAddForm::$menuItemName
+	 * @see wcf\acp\form\UserAddForm::$menuItemName
 	 */
 	public $menuItemName = 'wcf.acp.menu.link.user.management';
 	
@@ -172,7 +172,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see UserAddForm::validateUsername()
+	 * @see wcf\acp\form\UserAddForm::validateUsername()
 	 */
 	protected function validateUsername($username) {
 		if (StringUtil::toLowerCase($this->user->username) != StringUtil::toLowerCase($username)) {
@@ -181,7 +181,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see UserAddForm::validateEmail()
+	 * @see wcf\acp\form\UserAddForm::validateEmail()
 	 */
 	protected function validateEmail($email, $confirmEmail) {
 		if (StringUtil::toLowerCase($this->user->email) != StringUtil::toLowerCase($email)) {
@@ -190,7 +190,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see UserAddForm::validatePassword()
+	 * @see wcf\acp\form\UserAddForm::validatePassword()
 	 */
 	protected function validatePassword($password, $confirmPassword) {
 		if (!empty($password) || !empty($confirmPassword)) {

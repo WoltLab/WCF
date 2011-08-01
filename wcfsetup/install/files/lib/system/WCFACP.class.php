@@ -77,7 +77,7 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * @see WCF::assignDefaultTemplateVariables()
+	 * @see wcf\system\WCF::assignDefaultTemplateVariables()
 	 */
 	protected function assignDefaultTemplateVariables() {
 		parent::assignDefaultTemplateVariables();
