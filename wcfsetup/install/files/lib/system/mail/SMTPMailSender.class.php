@@ -187,7 +187,7 @@ class SMTPMailSender extends MailSender {
 		$result = '';
 		while ($read = $this->connection->gets()) {
 			$result .= $read;
-			if (substr($read, 3, 1) == " ") break;
+			if (StringUtil::substring($read, 3, 1) == " ") break;
 		}
 		return $result; 
 	}
@@ -200,7 +200,7 @@ class SMTPMailSender extends MailSender {
 	protected function getSMTPStatus($data = null) {
 		if ($data === null) $data = $this->read();
 		$this->statusCode = intval(substr($data, 0, 3));
-		$this->statusMsg  = substr($data, 4);
+		$this->statusMsg  = StringUtil::substring($data, 4);
 	}
 	
 	/**

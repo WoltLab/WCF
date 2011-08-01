@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\acp\session;
+use wcf\data\DatabaseObjectList;
 
 /**
  * Represents a list of ACP sessions.

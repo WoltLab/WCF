@@ -428,7 +428,7 @@ class WCF {
 		$packageDir = util\FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
 		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
 		
-		$className = $abbreviation.'\system\\'.strtoupper($abbreviation).'Core';
+		$className = $abbreviation.'\system\\'.StringUtil::toUpperCase($abbreviation).'Core';
 		if (class_exists($className) && util\ClassUtil::isInstanceOf($className, 'wcf\system\application\IApplication')) {
 			// include config file
 			$configPath = $packageDir . PackageInstallationDispatcher::CONFIG_FILE;
@@ -476,7 +476,7 @@ class WCF {
 	 * @return	mixed		value
 	 */
 	public function __get($name) {
-		$method = 'get'.ucfirst($name);
+		$method = 'get'.StringUtil::firstCharToUpperCase($name);
 		if (method_exists($this, $method)) {
 			return $this->$method();
 		}

@@ -2,6 +2,7 @@
 namespace wcf\system\database\editor;
 use wcf\system\database\DatabaseException;
 use wcf\util\ArrayUtil;
+use wcf\util\StringUtil;
 
 /**
  * This is the database editor implementation for PostgreSQL 8.0 or higher.
@@ -250,13 +251,13 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 		if (!empty($indexName)) $sql .= " CONSTRAINT ".$indexName;
 		
 		// add columns
-		$sql .= " FOREIGN KEY (".str_replace(',', ',', preg_replace('/\s+/', '', $indexData['columns'])).")";
+		$sql .= " FOREIGN KEY (".StringUtil::replace(',', ',', preg_replace('/\s+/', '', $indexData['columns'])).")";
 		
 		// add referenced table name
 		$sql .= " REFERENCES ".$indexData['referencedTable'];
 		
 		// add referenced columns
-		$sql .= " (".str_replace(',', ',', preg_replace('/\s+/', '', $indexData['referencedColumns'])).")";
+		$sql .= " (".StringUtil::replace(',', ',', preg_replace('/\s+/', '', $indexData['referencedColumns'])).")";
 		
 		// add operation and action
 		if (!empty($indexData['operation'])) $sql .= " ON ".$indexData['operation']." ".$indexData['action'];
@@ -323,7 +324,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	 * @param	string
 	 */
 	protected function buildColumnType($columnData) {
-		$definition = strtoupper($columnData['type']);
+		$definition = StringUtil::toUpperCase($columnData['type']);
 		
 		// column length and decimals
 		if (!empty($columnData['length'])) {
