@@ -15,6 +15,11 @@
 	<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/3rdParty/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/WCF.js"></script>
 	<script type="text/javascript" src="{@RELATIVE_WCF_DIR}acp/js/WCF.ACP.js"></script>
+	<script type="text/javascript">
+		//<![CDATA[
+		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodejs}');
+		//]]>
+	</script>
 	
 	{*
 	{if $specialStyles|isset}
