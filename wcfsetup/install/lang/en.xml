@@ -425,7 +425,7 @@
 		<item name="wcf.acp.package.installation.tables.warning"><![CDATA[Existing database tables conflict with the tables required to be installed by this package. Please choose whether to overwrite these tables.]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Installed packages]]></item>
 		<item name="wcf.acp.package.list.author"><![CDATA[Author]]></item>
-		<item name="wcf.acp.package.list.count"><![CDATA[A total of {#$items} packages installed]]></item>
+		<item name="wcf.acp.package.list.count"><![CDATA[{#$items} package{if $items != 1}s{/if} installed]]></item>
 		<item name="wcf.acp.package.list.date"><![CDATA[Date]]></item>
 		<item name="wcf.acp.package.list.id"><![CDATA[ID]]></item>
 		<item name="wcf.acp.package.list.name"><![CDATA[Name]]></item>
@@ -635,8 +635,8 @@
 		<item name="wcf.acp.updateServer.htUsername"><![CDATA[Username]]></item>
 		<item name="wcf.acp.updateServer.htUsername.description"><![CDATA[Please enter a valid user name (optional).]]></item>
 		<item name="wcf.acp.updateServer.lastErrorText"><![CDATA[The following error occured while trying to connect:]]></item>
-		<item name="wcf.acp.updateServer.list.available"><![CDATA[{#$items} server available]]></item>
-		<item name="wcf.acp.updateServer.packageUpdateServerID"><![CDATA[Server id]]></item>
+		<item name="wcf.acp.updateServer.list.count"><![CDATA[{#$items} update server{if $items != 1}s{/if} available]]></item>
+		<item name="wcf.acp.updateServer.packageUpdateServerID"><![CDATA[Server ID]]></item>
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Address]]></item>
 		<item name="wcf.acp.updateServer.serverURL.description"><![CDATA[Please enter the URL to a package server.]]></item>

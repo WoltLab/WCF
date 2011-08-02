@@ -15,7 +15,6 @@
 	<img src="{@RELATIVE_WCF_DIR}icon/packageL.png" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.package.list{/lang}</h1>
-		<h2>{lang}wcf.acp.package.list.count{/lang}</h2>
 	</hgroup>
 </header>
 
@@ -35,7 +34,7 @@
 {if $packages|count > 0}
 	<div class="border boxTitle">
 		<hgroup>
-			<h1><a href="#">{lang}wcf.acp.package.list{/lang}</a></h1>
+			<h1><a href="#">{lang}wcf.acp.package.list{/lang} <span class="badge" title="{lang}wcf.acp.package.list.count{/lang}">{#$items}</span></a></h1>
 		</hgroup>
 		<table>
 			<thead>

@@ -35,7 +35,7 @@
 {else}
 	<div class="border boxTitle">
 		<hgroup>
-			<h1>{lang}wcf.acp.updateServer.list.available{/lang}</h1>
+			<h1>{lang}wcf.acp.updateServer.list.available{/lang} <span class="badge" title="{lang}wcf.acp.updateServer.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
 		<table>
 			<thead>
