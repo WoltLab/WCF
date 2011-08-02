@@ -28,9 +28,9 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 	public function add($condition, array $parameters = array()) {
 		if (count($parameters)) {
 			$count = 0;
-			$callback = function ($matches) use (&$count, $parameters) {
-				if (!isset($parameters[$count])) {
-					throw new SystemException();
+			$callback = function ($matches) use (&$count, $parameters, $condition) {
+				if (!array_key_exists($count, $parameters)) {
+					throw new SystemException("missing parameter for token number " . ($count + 1) . " in condition '".$condition."'");
 				}
 
 				$result = '?';
