@@ -40,7 +40,7 @@
 {if $groups|count}
 	<div class="border boxTitle">
 		<hgroup>
-			<h1>{lang}wcf.acp.group.list.data{/lang}</h1>
+			<h1>{lang}wcf.acp.group.list.count{/lang} <span class="badge" title="{lang}wcf.acp.group.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
 		<table>
 			<thead>

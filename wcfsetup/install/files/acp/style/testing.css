@@ -356,16 +356,16 @@ footer > div:after {
 	clear: both;
 }
 
-footer p.copyright {
+footer .copyright {
 	padding-top: 20px;
 	min-height: 40px;
 }
 
-footer p.copyright a {
+footer .copyright a {
 	text-shadow: 0 -1px 0 #000;
 }
 
-footer p.copyright a:hover {
+footer .copyright a:hover {
 	color: #69c;
 	text-decoration: none;
 }
@@ -428,11 +428,12 @@ footer nav.footerNavigation ul li {
 /* Sub Heading */
 
 .subHeading {
+	color: #999;
 	border-bottom: 1px solid #ccc;
 	font-size: 120%;
 	text-shadow: 0 1px 0 #fff;
-	margin: 14px 0 14px;
-	padding: 15px;
+	margin: 10px 0;
+	padding: 10px 0;
 }
 
 
@@ -493,9 +494,12 @@ div.formField {
 }
 
 div.formFieldDesc {
-	color: #777;
-	font-size: 90%;
 	margin: 3px 0 7px 250px;
+}
+
+div.formFieldDesc p {
+	color: #999 !important;
+	font-size: 85%;
 }
 
 div.formGroupLabel label {
@@ -725,13 +729,10 @@ input[type='submit']:hover,
 	margin: 15px 0 15px;
 }
 
-.tabMenuContent, .content {
-	border-width: 0 !important;
-}
-
 /* -- -- -- -- -- Box Title -- -- -- -- -- */
 
 .boxTitle {
+	background-color: #29374a;
 	/* Disabled, because the WoltLab header image is not LGPL 
 	Activate it if you want to test your header image */
 	/* background-image: url("../images/header.png"); */
@@ -771,12 +772,21 @@ input[type='submit']:hover,
 }
 
 .tabMenu li a {
+	color: #999;
 	text-shadow: 0 1px 0 #fff;
+}
+
+.tabMenu li a:hover {
+	color: #666;
 }
 
 .tabMenu li.ui-state-active a {
 	color: #333 !important;
 	font-weight: bold;
+}
+
+.tabMenuContent, .content {
+	border-width: 0 !important;
 }
 
 
@@ -793,10 +803,16 @@ input[type='submit']:hover,
 	font-size: 85%;
 	text-decoration: none;
 	text-shadow: 0 -1px 0 #000;
-	border: 1px solid transparent;
+	border: 1px solid rgba(0, 0, 0, .3);
 	background-color: transparent;
 	padding: 2px 10px;
 	border-radius: 13px;
+	
+	-webkit-transition: color .1s linear;
+	-moz-transition: color .1s linear;
+	-ms-transition: color .1s linear;
+	-o-transition: color .1s linear;
+	transition: color .1s linear;
 }
 
 .menu a:hover {
@@ -891,7 +907,7 @@ thead th.active a {
 /* Table Body */
 
 tbody tr {
-	border-bottom: 1px solid #fff;
+	border-bottom: 1px solid rgba(255, 255, 255, .3);
 }
 
 tbody tr:last-child {
@@ -911,7 +927,7 @@ tbody tr:last-child td:last-child {
 
 tbody td {
 	background-color: #fcfdfe;
-	border-right-width: 0;
+	border-right: 1px solid rgba(255, 255, 255, .3);
 	padding: 5px;
 }
 
@@ -1042,6 +1058,10 @@ p.warning {
 	top: 0;
 }
 
+fieldset {
+	background-color: rgba(230, 230, 230, .1);
+}
+
 fieldset legend ~ p {
 	margin-bottom: 14px;
 }
@@ -1055,7 +1075,7 @@ dl {
 	margin-bottom: 7px;
 }
 
-dt { /* is op */
+dt {
 	float: left;
 	text-align: right;
 	width: 230px;
@@ -1065,10 +1085,11 @@ dd {
 	margin-left: 250px;
 }
 
-dl dd ~ p {
-	color: #777;
-	font-size: 90%;
+dl small {
+	color: #999;
+	font-size: 85%;
 	margin: 3px 0 7px 250px;
+	display: inline-block;
 }
 
 dl.disabled dt {
@@ -1269,7 +1290,7 @@ div.ui-widget-overlay {
 	border: 1px solid #ccc !important;
 	z-index: 89; /* Prevents border overlay during transition */
 	display: block;
-	padding: 14px 21px;
+	padding: 15px 23px;
 }
 
 .ui-tabs .ui-tabs-hide {
@@ -1327,5 +1348,39 @@ div.ui-widget-overlay {
 	opacity: 0;
 	filter: Alpha(opacity=0);
 }
+
+
+
+/* Badges */
+
+.badge {
+	color: #369;
+	font-size: 85%;
+	text-shadow: none;
+	border-radius: 10px;
+	background-color: #fff;
+	margin-right: -3px;
+	margin-left: 3px;
+	padding: 1px 5px 2px;
+	display: inline-block;
+	position: relative;
+	top: -1px;
+}
+
+
+
+/* Collapsible */
+
+.collapsible {
+	float: left;
+	margin: 5px 5px 0 5px;
+}
+
+.collapsible img {
+	width: 16px;
+	height: 16px;
+}
+
+
 
 /* -- -- -- -- -- EOF -- -- -- -- -- */

@@ -48,9 +48,9 @@
 {foreach from=$caches key=cache item=files}
 	{if $files|count}
 		<div class="border boxTitle">
-			<a onclick="openList('{$cache}')"><img src="{@RELATIVE_WCF_DIR}icon/minusS.png" id="{$cache}Image" alt="" /></a>
+			<a onclick="openList('{$cache}')" class="collapsible"><img src="{@RELATIVE_WCF_DIR}icon/minusS.png" id="{$cache}Image" alt="" /></a>
 			<hgroup>
-				<h1>{$cache} ({#$files|count})</h1>
+				<h1>{$cache} <span class="badge" title="{$cache}">{#$files|count}</span></h1>
 			</hgroup>
 			<table id="{$cache}">
 				<thead>
@@ -70,7 +70,7 @@
 						<td class="columnNumbers"><p>{@$file.filesize|filesize}</td>
 						<td class="columnDate">{if $file.mtime > 1}<p>{@$file.mtime|time}</p>{/if}</td>
 						{if $file.perm|isset}
-							<td class="columnNumbers"{if !$file.writable} style="color: #c00"{/if}><p>{@$file.perm}</p></td>
+							<td class="columnNumbers"><p{if !$file.writable} style="color: #c00"{/if}>{@$file.perm}</p></td>
 						{/if}
 					</tr>
 				{/foreach}

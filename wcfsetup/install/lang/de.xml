@@ -59,7 +59,7 @@
 		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von zeitgesteuerten Aufgaben erfordert eine genaue Kenntnis der Crontab-Syntax auf unixähnlichen Systemen. Weiterführende Informationen dazu erhalten Sie auf dieser Website: <a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>]]></item>
 		<item name="wcf.acp.cronjob.lastExec"><![CDATA[Letzte Ausführung]]></item>
 		<item name="wcf.acp.cronjob.list"><![CDATA[Zeitgesteuerte Aufgaben]]></item>
-		<item name="wcf.acp.cronjob.list.count"><![CDATA[Insgesamt {#$items} zeitgesteuerte Aufgabe{if $items != 1}n{/if}]]></item>
+		<item name="wcf.acp.cronjob.list.count"><![CDATA[{#$items} zeitgesteuerte Aufgabe{if $items != 1}n{/if}]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten zeitgesteuerten Aufgaben]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Alle löschen]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Sind Sie sicher, dass Sie alle Protokoll-Einträge löschen möchten?]]></item>
@@ -108,7 +108,7 @@
 		<item name="wcf.acp.group.groupName.description"><![CDATA[Geben Sie einen Namen für die Gruppe an.]]></item>
 		<item name="wcf.acp.group.guests"><![CDATA[Gäste]]></item>
 		<item name="wcf.acp.group.list"><![CDATA[Benutzergruppen]]></item>
-		<item name="wcf.acp.group.list.data"><![CDATA[Insgesamt {#$items} Benutzergruppen]]></item>
+		<item name="wcf.acp.group.list.count"><![CDATA[{#$items} Benutzergruppe{if $items != 1}n{/if}]]></item>
 		<item name="wcf.acp.group.members"><![CDATA[Anzahl Mitglieder]]></item>
 		<item name="wcf.acp.group.moderators"><![CDATA[Moderatoren]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Kann Administrationsoberfläche betreten]]></item>
@@ -666,7 +666,7 @@
 		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Finde Benutzer, die keine Mitglieder der ausgewählten Benutzergruppen sind.]]></item>
 		<item name="wcf.acp.user.list"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[Alle Benutzer]]></item>
-		<item name="wcf.acp.user.list.count"><![CDATA[Insgesamt {#$items} Benutzer]]></item>
+		<item name="wcf.acp.user.list.count"><![CDATA[{#$items} Benutzer]]></item>
 		<item name="wcf.acp.user.markedUsers"><![CDATA[this.count == 1 ? "Einen Benutzer markiert" : this.count+" Benutzer markiert"]]></item>
 		<item name="wcf.acp.user.massProcessing"><![CDATA[Massenverarbeitung von Benutzern]]></item>
 		<item name="wcf.acp.user.massProcessing.action"><![CDATA[Aktion]]></item>
