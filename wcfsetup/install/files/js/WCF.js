@@ -1511,6 +1511,36 @@ WCF.ToggleOptions.prototype = {
 };
 
 /**
+ * Holds userdata of the current user
+ */
+WCF.User = {
+	/**
+	 * UserID of the user
+	 * 
+	 * @var	integer
+	 */
+	userID: 0,
+	
+	/**
+	 * Username of the user
+	 * 
+	 * @var	string
+	 */
+	username: '',
+	
+	/**
+	 * Initializes userdata
+	 * 
+	 * @param	integer	userID
+	 * @param	string	username
+	 */
+	init: function(userID, username) {
+		this.userID = userID;
+		this.username = username;
+	}
+};
+
+/**
  * Basic implementation for WCF dialogs.
  */
 $.widget('ui.wcfDialog', $.ui.dialog, {
