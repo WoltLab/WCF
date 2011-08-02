@@ -75,7 +75,7 @@
 		</hgroup>
 		<table>
 			<thead>
-				<tr class="tableHead">
+				<tr>
 					<th colspan="2"><p><span class="emptyHead">{lang}wcf.acp.package.list.id{/lang}</span></p></th>
 					<th colspan="2"><p><span class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</span></p></th>
 					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.author{/lang}</span></p></th>
