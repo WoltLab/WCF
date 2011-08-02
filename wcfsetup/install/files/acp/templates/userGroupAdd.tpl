@@ -74,17 +74,15 @@
 					{/foreach}
 				</ul>
 			</div>
-			<div class="subTabMenu">
-				<div class="containerHead">
-					{foreach from=$optionTree item=categoryLevel1}
-						<ul id="{@$categoryLevel1[object]->categoryName}-categories" class="hidden">
-							{foreach from=$categoryLevel1[categories] item=categoryLevel2}
-								<li id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}"><a onclick="tabMenu.showTabMenuContent('{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}');"><span>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</span></a></li>
-							{/foreach}
-						</ul>
-					{/foreach}
-				</div>
-			</div>
+			<nav class="menu"><!-- ToDo: Border missing -->
+				{foreach from=$optionTree item=categoryLevel1}
+					<ul id="{@$categoryLevel1[object]->categoryName}-categories" class="hidden">
+						{foreach from=$categoryLevel1[categories] item=categoryLevel2}
+							<li id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}"><a onclick="tabMenu.showTabMenuContent('{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}');"><span>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</span></a></li>
+						{/foreach}
+					</ul>
+				{/foreach}
+			</nav>
 			
 			{foreach from=$optionTree item=categoryLevel1}
 				{foreach from=$categoryLevel1[categories] item=categoryLevel2}
@@ -117,8 +115,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
+		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}
  		<input type="hidden" name="action" value="{@$action}" />
  		{if $groupID|isset}<input type="hidden" name="groupID" value="{@$groupID}" />{/if}

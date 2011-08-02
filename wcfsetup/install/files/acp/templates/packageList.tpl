@@ -32,12 +32,13 @@
 </div>
 
 {if $packages|count > 0}
-	<div class="border"><!-- The following table construct is experimental! -->
-		<div class="boxTitle"><h1>{lang}wcf.acp.package.list.count{/lang}</h1></div>
-	
-		<table class="tableList">
+	<div class="border boxTitle">
+		<hgroup>
+			<h1><a href="#">{lang}wcf.acp.package.list{/lang} <span class="badge" title="{lang}wcf.acp.package.list.count{/lang}">{#$items}</span></a></h1>
+		</hgroup>
+		<table>
 			<thead>
-				<tr class="tableHead">
+				<tr>
 					<th colspan="2"{if $sortField == 'packageID'} class="active"{/if}><p><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=packageID&amp;sortOrder={if $sortField == 'packageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.list.id{/lang}{if $sortField == 'packageID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th colspan="2"{if $sortField == 'packageName'} class="active"{/if}><p><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=packageName&amp;sortOrder={if $sortField == 'packageName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.list.name{/lang}{if $sortField == 'packageName'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th{if $sortField == 'author'} class="active"{/if}><p><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=author&amp;sortOrder={if $sortField == 'author' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.list.author{/lang}{if $sortField == 'author'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>

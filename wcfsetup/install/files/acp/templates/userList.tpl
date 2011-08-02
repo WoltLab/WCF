@@ -63,17 +63,15 @@
 	</nav>
 </div>
 
-<div class="subTabMenu">
-	<header class="containerHead">
+<div class="border boxTitle">
+	<nav class="menu">
 		<ul>
-			<li{if $action == ''} class="activeSubTabMenu"{/if}><a href="index.php?page=UserList{@SID_ARG_2ND}"><span>{lang}wcf.acp.user.list.all{/lang}</span></a></li>
+			<li{if $action == ''} class="active"{/if}><a href="index.php?page=UserList{@SID_ARG_2ND}"><span>{lang}wcf.acp.user.list.all{/lang}</span> <span class="badge" title="{lang}wcf.acp.user.list.count{/lang}">{#$items}</span></a></li>
 			{if $additionalUserListOptions|isset}{@$additionalUserListOptions}{/if}
 		</ul>
-	</header>
-</div>
-{if $users|count}
-	<div class="border">
-		<table class="tableList">
+	</nav>
+	{if $users|count}
+		<table>
 			<thead>
 				<tr class="tableHead">
 					<th class="columnMark"><p><label class="emptyHead"><input type="checkbox" name="userMarkAll" /></label></p></th>

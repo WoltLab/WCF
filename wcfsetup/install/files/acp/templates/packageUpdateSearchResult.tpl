@@ -15,7 +15,7 @@
 
 <form method="post" action="index.php?form=PackageUpdate">
 	{foreach from=$packages item=package}
-		<div class="message content">
+		<article class="message content">
 			<div class="messageInner container-{cycle name='styles' values='1,2'}">
 				<h3 class="subHeading">
 					{if $package.standalone == 1}
@@ -101,12 +101,12 @@
 
 				<hr />
 			</div>
-		</div>			
+		</article>			
 	{/foreach}
 	
 	<div class="formSubmit">
-		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
+		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="packageID" value="{@PACKAGE_ID}" />
 		{@SID_INPUT_TAG}
 		<input type="hidden" name="searchID" value="{@$searchID}" />

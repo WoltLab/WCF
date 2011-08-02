@@ -59,7 +59,7 @@
 		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von zeitgesteuerten Aufgaben erfordert eine genaue Kenntnis der Crontab-Syntax auf unixähnlichen Systemen. Weiterführende Informationen dazu erhältst du auf dieser Website: <a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>]]></item>
 		<item name="wcf.acp.cronjob.lastExec"><![CDATA[Letzte Ausführung]]></item>
 		<item name="wcf.acp.cronjob.list"><![CDATA[Zeitgesteuerte Aufgaben]]></item>
-		<item name="wcf.acp.cronjob.list.count"><![CDATA[Insgesamt {#$items} zeitgesteuerte Aufgabe{if $items != 1}n{/if}]]></item>
+		<item name="wcf.acp.cronjob.list.count"><![CDATA[{#$items} zeitgesteuerte Aufgabe{if $items != 1}n{/if}]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten zeitgesteuerten Aufgaben]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Alle löschen]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Bist du sicher, dass du alle Protokoll-Einträge löschen möchtest?]]></item>
@@ -105,10 +105,10 @@
 		<item name="wcf.acp.group.everyone"><![CDATA[Jeder]]></item>
 		<item name="wcf.acp.group.groupID"><![CDATA[Gruppen-ID]]></item>
 		<item name="wcf.acp.group.groupName"><![CDATA[Name der Benutzergruppe]]></item>
-		<item name="wcf.acp.group.groupName.description"><![CDATA[Gib einen Namen der Gruppe an.]]></item>
+		<item name="wcf.acp.group.groupName.description"><![CDATA[Gib den Namen der Gruppe an.]]></item>
 		<item name="wcf.acp.group.guests"><![CDATA[Gäste]]></item>
 		<item name="wcf.acp.group.list"><![CDATA[Benutzergruppen]]></item>
-		<item name="wcf.acp.group.list.data"><![CDATA[Insgesamt {#$items} Benutzergruppen]]></item>
+		<item name="wcf.acp.group.list.count"><![CDATA[{#$items} Benutzergruppe{if $items != 1}n{/if}]]></item>
 		<item name="wcf.acp.group.members"><![CDATA[Anzahl Mitglieder]]></item>
 		<item name="wcf.acp.group.moderators"><![CDATA[Moderatoren]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Kann Administrationsoberfläche betreten]]></item>
@@ -209,7 +209,7 @@
 		<item name="wcf.acp.masterPassword.example"><![CDATA[Vorschlag]]></item>
 		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Vorschlag übernehmen]]></item>
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Hauptkennwort festlegen]]></item>
-		<item name="wcf.acp.masterPassword.init.description"><![CDATA[Das Hauptkennwort ist ein zusätzlicher Schutz für sicherheitskritische Funktionen. Du solltest hier ein möglichst sicheres Kennwort verwenden, dass sich von deinem normalen Administrator-Kennwort unterscheidet, Dritten nicht bekannt ist und auch nicht auf anderen Internetseiten verwendet wird.]]></item>
+		<item name="wcf.acp.masterPassword.init.description"><![CDATA[Das Hauptkennwort ist ein zusätzlicher Schutz für sicherheitskritische Funktionen. Du solltest ein möglichst sicheres Kennwort verwenden, dass sich von deinem normalen Administrator-Kennwort unterscheidet, Dritten nicht bekannt ist und auch nicht auf anderen Internetseiten verwendet wird.]]></item>
 	</category>
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.autoupdate"><![CDATA[Automatisches Update]]></item>
@@ -424,7 +424,7 @@
 		<item name="wcf.acp.package.installation.tables.warning"><![CDATA[Vorhandene Tabellen deiner Datenbank stehen im Konflikt mit Tabellen, die für dieses Paket installiert werden müssen. Wähle aus, ob diese Tabellen überschrieben werden sollen.]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Installierte Pakete]]></item>
 		<item name="wcf.acp.package.list.author"><![CDATA[Hersteller]]></item>
-		<item name="wcf.acp.package.list.count"><![CDATA[Insgesamt sind {#$items} Pakete installiert.]]></item>
+		<item name="wcf.acp.package.list.count"><![CDATA[{#$items} Paket{if $items != 1}e{/if} installiert]]></item>
 		<item name="wcf.acp.package.list.date"><![CDATA[Herstellungsdatum]]></item>
 		<item name="wcf.acp.package.list.id"><![CDATA[ID]]></item>
 		<item name="wcf.acp.package.list.name"><![CDATA[Name]]></item>
@@ -433,7 +433,7 @@
 		<item name="wcf.acp.package.list.standalone"><![CDATA[Endanwendung]]></item>
 		<item name="wcf.acp.package.list.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.optionals"><![CDATA[Optionale Zusatzpakete installieren]]></item>
-		<item name="wcf.acp.package.optionals.description"><![CDATA[Das aktuelle Paket bringt folgende optionale Zusatzpakete mit. Wähle aus, welche Zusatzpakete du installieren möchtest.]]></item>
+		<item name="wcf.acp.package.optionals.description"><![CDATA[Das aktuelle Paket bringt folgende optionale Zusatzpakete mit. Bitte wähle aus, welche Zusatzpakete du installieren möchtest.]]></item>
 		<item name="wcf.acp.package.optionals.installed"><![CDATA[ (Dieses Paket ist bereits installiert.)]]></item>
 		<item name="wcf.acp.package.optionals.openRequirements"><![CDATA[ (Die Voraussetzungen für dieses Paket werden nicht erfüllt.)]]></item>
 		<item name="wcf.acp.package.packageDir"><![CDATA[Installationsverzeichnis]]></item>
@@ -441,8 +441,8 @@
 		<item name="wcf.acp.package.packageDir.error.alreadyInstalled"><![CDATA[Es ist bereits eine andere Anwendung in dem angegebenen Verzeichnis installiert.]]></item>
 		<item name="wcf.acp.package.packageDir.error.invalid"><![CDATA[Das eingegebene Verzeichnis ist ungültig.]]></item>
 		<item name="wcf.acp.package.packageDir.error.notWritable"><![CDATA[Das angegebene Verzeichnis ist nicht beschreibbar.]]></item>
-		<item name="wcf.acp.package.packageDir.error.wcfDirLocked"><![CDATA[Das angegebene Verzeichnis wird bereits von WoltLab Community Framework beansprucht. Wähle ein anderes Verzeichnis.]]></item>
-		<item name="wcf.acp.package.packageDir.input"><![CDATA[Gib hier das Installationsverzeichnis an.]]></item>
+		<item name="wcf.acp.package.packageDir.error.wcfDirLocked"><![CDATA[Das angegebene Verzeichnis wird bereits von WoltLab Community Framework beansprucht. Bitte wähle ein anderes Verzeichnis.]]></item>
+		<item name="wcf.acp.package.packageDir.input"><![CDATA[Bitte gib hier das Installationsverzeichnis an.]]></item>
 		<item name="wcf.acp.package.packageDir.url"><![CDATA[Nach der Installation in das angegebene Installationsverzeichnis ist die Anwendung über folgende Adresse (URL) erreichbar:]]></item>
 		<item name="wcf.acp.package.requirements"><![CDATA[Abhängigkeiten auswählen]]></item>
 		<item name="wcf.acp.package.requirements.description"><![CDATA[Das aktuelle Paket benötigt Pakete, von denen mehrere Instanzen installiert sind. Bitte wähle aus, zu welcher Instanz jeweils eine Abhängigkeit hergestellt werden soll.]]></item>
@@ -597,8 +597,8 @@
 		<item name="wcf.acp.packageUpdate.search.type.standalone"><![CDATA[Endanwendung]]></item>
 		<item name="wcf.acp.packageUpdate.selectAll"><![CDATA[Alle Pakete auswählen]]></item>
 		<item name="wcf.acp.packageUpdate.update"><![CDATA[{$package.packageName}{if $package.instanceNo > 1} (#{#$package.instanceNo}){/if} {$package.fromversion} wird aktualisiert auf {$package.toVersion}]]></item>
-		<item name="wcf.acp.packageUpdate.updateVersion"><![CDATA[Neue Version]]></item>
 		<item name="wcf.acp.packageUpdate.updates"><![CDATA[Folgende Paket-Aktualisierungen/-Installationen werden durchgeführt:]]></item>
+		<item name="wcf.acp.packageUpdate.updateVersion"><![CDATA[Neue Version]]></item>
 	</category>
 	<category name="wcf.acp.sessionLog">
 		<item name="wcf.acp.sessionLog.access.view"><![CDATA[Aktionen der protokollierten Sitzung von &raquo;{$sessionLog->username}&laquo;]]></item>
@@ -634,7 +634,7 @@
 		<item name="wcf.acp.updateServer.htUsername"><![CDATA[Benutzername]]></item>
 		<item name="wcf.acp.updateServer.htUsername.description"><![CDATA[Gib einen Benutzernamen an, der zur Authentifizierung benötigt wird (optional).]]></item>
 		<item name="wcf.acp.updateServer.lastErrorText"><![CDATA[Beim letzten Verbindungsversuch trat folgende Fehlermeldungen auf:]]></item>
-		<item name="wcf.acp.updateServer.list.available"><![CDATA[Insgesamt {#$items} Server eingetragen]]></item>
+		<item name="wcf.acp.updateServer.list.count"><![CDATA[{#$items} Updateserver eingetragen]]></item>
 		<item name="wcf.acp.updateServer.packageUpdateServerID"><![CDATA[Server-ID]]></item>
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Adresse]]></item>
@@ -675,7 +675,7 @@
 		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Finde Benutzer, die keine Mitglieder der ausgewählten Benutzergruppen sind.]]></item>
 		<item name="wcf.acp.user.list"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[Alle Benutzer]]></item>
-		<item name="wcf.acp.user.list.count"><![CDATA[Insgesamt {#$items} Benutzer]]></item>
+		<item name="wcf.acp.user.list.count"><![CDATA[{#$items} Benutzer]]></item>
 		<item name="wcf.acp.user.markedUsers"><![CDATA[this.count == 1 ? "Einen Benutzer markiert" : this.count+" Benutzer markiert"]]></item>
 		<item name="wcf.acp.user.massProcessing"><![CDATA[Massenverarbeitung von Benutzern]]></item>
 		<item name="wcf.acp.user.massProcessing.action"><![CDATA[Aktion]]></item>

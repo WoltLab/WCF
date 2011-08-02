@@ -24,6 +24,10 @@ img {
 	vertical-align: middle !important;
 }
 
+p {
+	color: #666;
+}
+
 a {
 	color: #369;
 	text-decoration: none;
@@ -38,14 +42,6 @@ a {
 a:hover {
 	color: #036;
 	text-decoration: underline;
-}
-
-#content a {
-	color: #999;
-}
-
-#content a:hover {
-	color: #333;
 }
 
 .invisible {
@@ -63,11 +59,12 @@ hr {
 /* -- -- -- -- -- Header -- -- -- -- -- */
 
 header.pageHeader {
-	/*
-	background-image: url("../images/header.png");
+	/* Disabled, because the WoltLab header image is not LGPL 
+	Activate it if you want to test your header image */
+	/* background-image: url("../images/header.png"); */
 	background-position: left top;
 	background-repeat: repeat-x;
-	*/
+	
 	min-width: 800px;
 	width: 100%;
 }
@@ -359,16 +356,17 @@ footer > div:after {
 	clear: both;
 }
 
-footer p.copyright {
+footer .copyright {
 	padding-top: 20px;
 	min-height: 40px;
+	display: inline-block;
 }
 
-footer p.copyright a {
+footer .copyright a {
 	text-shadow: 0 -1px 0 #000;
 }
 
-footer p.copyright a:hover {
+footer .copyright a:hover {
 	color: #69c;
 	text-decoration: none;
 }
@@ -431,11 +429,12 @@ footer nav.footerNavigation ul li {
 /* Sub Heading */
 
 .subHeading {
+	color: #999;
 	border-bottom: 1px solid #ccc;
 	font-size: 120%;
 	text-shadow: 0 1px 0 #fff;
-	margin: 14px 0 14px;
-	padding: 15px;
+	margin: 10px 0;
+	padding: 10px 0;
 }
 
 
@@ -471,6 +470,12 @@ fieldset > ul li {
 
 /* -- -- -- -- -- Forms -- -- -- -- -- */
 
+/* Globals */
+
+label {
+	color: #69c;
+}
+
 /* Structure */
 
 div.formElement {
@@ -490,9 +495,12 @@ div.formField {
 }
 
 div.formFieldDesc {
-	color: #777;
-	font-size: 90%;
 	margin: 3px 0 7px 250px;
+}
+
+div.formFieldDesc p {
+	color: #999 !important;
+	font-size: 85%;
 }
 
 div.formGroupLabel label {
@@ -529,15 +537,18 @@ input[type="search"],
 input[type="email"],
 input[type='password'],
 textarea {
-	border: 1px solid #ccc;
-	
+	border-width: 1px;
+	border-style: solid;
+	border-color: #999 #ccc #eee;
 	border-radius: 3px;
 	
-	-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
-	-moz-box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
-	-ms-box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
-	-o-box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
-	box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
+	background-color: #fafafa;
+	
+	-webkit-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
+	-moz-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
+	-ms-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
+	-o-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
+	box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
 }
 
 input[type='text']:hover,
@@ -711,38 +722,63 @@ input[type='submit']:hover,
 
 
 
-/* ToDo */
+/* -- -- -- -- -- Border -- -- -- -- -- */
 
 .border {
 	border: 1px solid #ccc;
 	border-radius: 5px;
-	margin: 14px 0 14px;
+	margin: 15px 0 15px;
 }
 
-.borderMarginRemove {
-	margin-top: 0;
+/* -- -- -- -- -- Box Title -- -- -- -- -- */
+
+.boxTitle {
+	background-color: #29374a;
+	/* Disabled, because the WoltLab header image is not LGPL 
+	Activate it if you want to test your header image */
+	/* background-image: url("../images/header.png"); */
+	background-position: left top;
+	background-repeat: repeat-x;
+
+	border-radius: 7px;
 }
 
-.titleBarPanel {
-	background-color: #369;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	border-bottom-left-radius: 0;
-	border-bottom-right-radius: 0;
-	border-bottom-width: 0;
+.boxTitle > hgroup {
 	color: #fff;
-	/* margin-bottom: -10px; without "borderMarginRemove"! */
-	margin-bottom: 0;
+	text-shadow: 0 -1px 0 #000;
 	padding: 7px;
 }
 
-.titleBarPanel a {
+.boxTitle > hgroup a, .boxTitle > a {
 	color: #fff;
 	text-decoration: none;
 }
 
+.boxTitle > hgroup h1 {
+	display: inline-block;
+}
+
+.boxTitle img.handle {
+	float: right !important;
+	height: 16px;
+	width: 16px;
+	cursor: pointer;
+	margin-top: -1px;
+}
+
+/* -- -- -- -- -- Tab Menu -- -- -- -- -- */
+
+.tabMenu {
+	margin: 0 3px -1px !important;
+}
+
 .tabMenu li a {
+	color: #999;
 	text-shadow: 0 1px 0 #fff;
+}
+
+.tabMenu li a:hover {
+	color: #666;
 }
 
 .tabMenu li.ui-state-active a {
@@ -750,30 +786,57 @@ input[type='submit']:hover,
 	font-weight: bold;
 }
 
-.subTabMenu {
-	background-color: #369;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	border-bottom-width: 0;
-	color: #fff;
-	margin-top: 15px !important;
-	margin-bottom: -14px !important;
-	padding: 7px;
-}
-
-.subTabMenu a {
-	color: #fff !important;
-	text-decoration: none;
-}
-
-.tabMenuContent,
-.content {
+.tabMenuContent, .content {
 	border-width: 0 !important;
 }
 
 
 
+/* -- -- -- -- -- Menu -- -- -- -- -- */
+
+.menu {
+	color: #fff;
+	padding: 6px 7px;
+}
+
+.menu a {
+	color: #eee !important;
+	font-size: 85%;
+	text-decoration: none;
+	text-shadow: 0 -1px 0 #000;
+	border: 1px solid rgba(0, 0, 0, .3);
+	background-color: transparent;
+	padding: 2px 10px;
+	border-radius: 13px;
+	
+	-webkit-transition: color .1s linear;
+	-moz-transition: color .1s linear;
+	-ms-transition: color .1s linear;
+	-o-transition: color .1s linear;
+	transition: color .1s linear;
+}
+
+.menu a:hover {
+	color: #fff !important;
+	border: 1px solid rgba(0, 0, 0, .3);
+	background-color: rgba(0, 0, 0, .1);
+}
+
+.menu a:active, .menu a:focus, .menu a.active {
+	border: 1px solid rgba(0, 0, 0, .5);
+	
+	-webkit-box-shadow: inset 0 2px 15px rgba(0, 0, 0, .5);
+	-moz-box-shadow: inset 0 2px 15px rgba(0, 0, 0, .5);
+	-ms-box-shadow: inset 0 2px 15px rgba(0, 0, 0, .5);
+	-o-box-shadow: inset 0 2px 15px rgba(0, 0, 0, .5);
+	box-shadow: inset 0 2px 15px rgba(0, 0, 0, .5);
+}
+
+
+
 /* -- -- -- -- -- ToDo: Tables -- -- -- -- -- */
+
+/* Table */
 
 table {
 	width: 100% !important;
@@ -789,38 +852,43 @@ thead th:last-child {
 	border-top-right-radius: 5px;	
 }
 
-th {
-	background-color: rgba(51, 51, 51, .7);
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666), to(#000));/* ToDo: Transparency missing */
-	background-image: -moz-linear-gradient(0% 0% 270deg, #333, #000);
-	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#333), to(#000));
-	background-image: -o-linear-gradient(#333, #000);
-	background-image: linear-gradient(#666, #000);
-	
-	border-top: 1px solid #000;
+thead th {
+	background-color: rgba(0, 0, 0, .4);
+	/*
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#444), to(#000));/* ToDo: Transparency missing *//*
+	background-image: -moz-linear-gradient(0% 0% 270deg, #444, #000);
+	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#444), to(#000));
+	background-image: -o-linear-gradient(#444, #000);
+	background-image: linear-gradient(#444, #000);
+	*/
 	border-right: 1px solid #000;
-	border-bottom: 1px solid #000;
-	
 	font-size: 87%;
+	white-space: nowrap;
 }
 
-th:last-child {
+thead th:last-child {
 	border-right-width: 0;
 }
 
-th:hover {
-	background-color: rgba(51, 51, 51, 1);
+thead th:hover {
+	background-color: rgba(0, 0, 0, .5);
 }
 
-th.active {
-	background-color: rgba(51, 51, 51, 1);
+thead th.active {
+	background-color: rgba(0, 0, 0, .5);
+	
+	-webkit-box-shadow: inset 0 5px 15px rgba(0, 0, 0, .5);
+	-moz-box-shadow: inset 0 5px 15px rgba(0, 0, 0, .5);
+	-ms-box-shadow: inset 0 5px 15px rgba(0, 0, 0, .5);
+	-o-box-shadow: inset 0 5px 15px rgba(0, 0, 0, .5);
+	box-shadow: inset 0 5px 15px rgba(0, 0, 0, .5);
 }
 
-th.active:hover {
-	background-color: rgba(51, 51, 51, 1);
+thead th.active:hover {
+	background-color: rgba(0, 0, 0, .5);
 }
 
-th a, th .emptyHead {
+thead th a, thead th .emptyHead {
 	color: #69c !important;
 	text-shadow: 0 -1px 0 #000;
 	display: block;
@@ -828,11 +896,11 @@ th a, th .emptyHead {
 	padding: 5px 7px;
 }
 
-th a:hover {
+thead th a:hover {
 	color: #fff !important;
 }
 
-th.active a {
+thead th.active a {
 	font-weight: bold;
 	color: #fff !important;
 }
@@ -840,66 +908,72 @@ th.active a {
 /* Table Body */
 
 tbody tr {
-	border-bottom: 1px solid #fff;
+	border-bottom: 1px solid rgba(255, 255, 255, .3);
 }
 
 tbody tr:last-child {
+	/* no border for the last tables row */
 	border-bottom-width: 0;
 }
 
 tbody tr:last-child td:first-child {
+	/* rounded corners for the last table cell to the left */
 	border-bottom-left-radius: 5px;	
 }
 
 tbody tr:last-child td:last-child {
+	/* rounded corners for the last table cell to the right */
 	border-bottom-right-radius: 5px;	
 }
 
-td {
+tbody td {
 	background-color: #fcfdfe;
-	border-right: 1px solid #fff;
+	border-right: 1px solid rgba(255, 255, 255, .3);
 	padding: 5px;
 }
 
-td:last-child {
+tbody td:last-child {
 	border-right-width: 0;
 }
 
-tr:nth-child(2n+1) td {
+tbody tr:nth-child(2n+1) td {
+	/* auto-colorer for every 2nd row */
 	background-color: #f2f6fa;
 }
 
-tr:hover td {
+tbody tr:hover td {
 	background-color: #d8e7f5;
 }
 
-tr .columnIcon img {
+tbody tr .columnIcon img {
 	height: 16px;
 	width: 16px;
 }
 
 /* Table Specials */
 
-.subTabMenu ~ .border {
+/*
+.menu ~ .border {
 	border-top-left-radius: 0 !important;
 	border-top-right-radius: 0 !important;
 }
+*/
 
-.subTabMenu ~ .border thead th:first-child {
+.menu ~ .border thead th:first-child {
 	border-top-left-radius: 0 !important;
 }
 
-.subTabMenu ~ .border thead th:last-child {
+.menu ~ .border thead th:last-child {
 	border-top-right-radius: 0 !important;	
 }
 
-.subTabMenu ~ .border thead th:first-child,
-.titleBarPanel ~ .border thead th:first-child {
+.menu ~ .border thead th:first-child,
+.boxTitle > table thead th:first-child {
 	border-top-left-radius: 0 !important;
 }
 
-.subTabMenu ~ .border thead th:last-child,
-.titleBarPanel ~ .border thead th:last-child {
+.menu ~ .border thead th:last-child,
+.boxTitle > table thead th:last-child {
 	border-top-right-radius: 0 !important;	
 }
 
@@ -985,6 +1059,10 @@ p.warning {
 	top: 0;
 }
 
+fieldset {
+	background-color: rgba(230, 230, 230, .1);
+}
+
 fieldset legend ~ p {
 	margin-bottom: 14px;
 }
@@ -998,7 +1076,7 @@ dl {
 	margin-bottom: 7px;
 }
 
-dt { /* is op */
+dt {
 	float: left;
 	text-align: right;
 	width: 230px;
@@ -1008,10 +1086,11 @@ dd {
 	margin-left: 250px;
 }
 
-dl dd ~ p {
-	color: #777;
-	font-size: 90%;
+dl small {
+	color: #999;
+	font-size: 85%;
 	margin: 3px 0 7px 250px;
+	display: inline-block;
 }
 
 dl.disabled dt {
@@ -1145,7 +1224,6 @@ div.ui-widget-overlay {
 
 .ui-tabs .ui-tabs-nav {
 	height: 18px !important; /* Fixes a clearing problem */
-	margin: 0 3px;
 	background-color: none;
 	padding: 3px 3px 0;
 }
@@ -1213,7 +1291,7 @@ div.ui-widget-overlay {
 	border: 1px solid #ccc !important;
 	z-index: 89; /* Prevents border overlay during transition */
 	display: block;
-	padding: 14px 21px;
+	padding: 15px 23px;
 }
 
 .ui-tabs .ui-tabs-hide {
@@ -1271,5 +1349,39 @@ div.ui-widget-overlay {
 	opacity: 0;
 	filter: Alpha(opacity=0);
 }
+
+
+
+/* Badges */
+
+.badge {
+	color: #369;
+	font-size: 85%;
+	text-shadow: none;
+	border-radius: 10px;
+	background-color: #fff;
+	margin-right: -3px;
+	margin-left: 3px;
+	padding: 1px 5px 2px;
+	display: inline-block;
+	position: relative;
+	top: -1px;
+}
+
+
+
+/* Collapsible */
+
+.collapsible {
+	float: left;
+	margin: 5px 5px 0 5px;
+}
+
+.collapsible img {
+	width: 16px;
+	height: 16px;
+}
+
+
 
 /* -- -- -- -- -- EOF -- -- -- -- -- */

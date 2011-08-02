@@ -15,12 +15,12 @@
 
 {if $sessionAccessLogs|count}
 	<div class="border titleBarPanel">
-		<div class="containerHead"><h3>{lang}wcf.acp.sessionLog.access.view.count{/lang}</h3></div>
-	</div>
-	<div class="border borderMarginRemove">
-		<table class="tableList">
+		<hgroup>
+			<h1>{lang}wcf.acp.sessionLog.access.view.count{/lang}</h1>
+		</hgroup>
+		<table>
 			<thead>
-				<tr class="tableHead">
+				<tr>
 					<th class="columnSessionAccessLogID{if $sortField == 'sessionAccessLogID'} active{/if}"><p><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLogID}&amp;pageNo={@$pageNo}&amp;sortField=sessionAccessLogID&amp;sortOrder={if $sortField == 'sessionAccessLogID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.sessionAccessLogID{/lang}{if $sortField == 'sessionAccessLogID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th class="columnIpAddress{if $sortField == 'ipAddress'} active{/if}"><p><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLogID}&amp;pageNo={@$pageNo}&amp;sortField=ipAddress&amp;sortOrder={if $sortField == 'ipAddress' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.ipAddress{/lang}{if $sortField == 'ipAddress'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th class="columnTime{if $sortField == 'time'} active{/if}"><p><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLogID}&amp;pageNo={@$pageNo}&amp;sortField=time&amp;sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.time{/lang}{if $sortField == 'time'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>

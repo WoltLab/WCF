@@ -47,20 +47,14 @@
 
 {foreach from=$caches key=cache item=files}
 	{if $files|count}
-		<div class="border titleBarPanel">
-			<div class="containerHead">
-				<div class="containerIcon">
-					<a onclick="openList('{$cache}')"><img src="{@RELATIVE_WCF_DIR}icon/minusS.png" id="{$cache}Image" alt="" /></a>
-				</div>
-				<div class="containerContent">
-					<h3>{$cache} ({#$files|count})</h3>
-				</div>
-			</div>
-		</div>
-		<div id="{$cache}" class="border borderMarginRemove">
-			<table class="tableList">
+		<div class="border boxTitle">
+			<a onclick="openList('{$cache}')" class="collapsible"><img src="{@RELATIVE_WCF_DIR}icon/minusS.png" id="{$cache}Image" alt="" /></a>
+			<hgroup>
+				<h1>{$cache} <span class="badge" title="{$cache}">{#$files|count}</span></h1>
+			</hgroup>
+			<table id="{$cache}">
 				<thead>
-					<tr class="tableHead">
+					<tr>
 						<th><p><span class="emptyHead">{lang}wcf.acp.cache.list.name{/lang}</span></p></th>
 						<th><p><span class="emptyHead">{lang}wcf.acp.cache.list.size{/lang}</span></p></th>
 						<th><p><span class="emptyHead">{lang}wcf.acp.cache.list.mtime{/lang}</span></p></th>
@@ -76,7 +70,7 @@
 						<td class="columnNumbers"><p>{@$file.filesize|filesize}</td>
 						<td class="columnDate">{if $file.mtime > 1}<p>{@$file.mtime|time}</p>{/if}</td>
 						{if $file.perm|isset}
-							<td class="columnNumbers"{if !$file.writable} style="color: #c00"{/if}><p>{@$file.perm}</p></td>
+							<td class="columnNumbers"><p{if !$file.writable} style="color: #c00"{/if}>{@$file.perm}</p></td>
 						{/if}
 					</tr>
 				{/foreach}
