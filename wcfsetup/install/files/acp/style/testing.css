@@ -359,6 +359,7 @@ footer > div:after {
 footer .copyright {
 	padding-top: 20px;
 	min-height: 40px;
+	display: inline-block;
 }
 
 footer .copyright a {
