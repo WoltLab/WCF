@@ -20,7 +20,7 @@
 		</hgroup>
 		<table>
 			<thead>
-				<tr class="tableHead">
+				<tr>
 					<th class="columnSessionLogID{if $sortField == 'sessionLogID'} active{/if}"><p><a href="index.php?page=ACPSessionLogList&amp;pageNo={@$pageNo}&amp;sortField=sessionLogID&amp;sortOrder={if $sortField == 'sessionLogID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.sessionLogID{/lang}{if $sortField == 'sessionLogID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th class="columnUsername{if $sortField == 'username'} active{/if}"><p><a href="index.php?page=ACPSessionLogList&amp;pageNo={@$pageNo}&amp;sortField=username&amp;sortOrder={if $sortField == 'username' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.user.username{/lang}{if $sortField == 'username'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th class="columnIpAddress{if $sortField == 'ipAddress'} active{/if}"><p><a href="index.php?page=ACPSessionLogList&amp;pageNo={@$pageNo}&amp;sortField=ipAddress&amp;sortOrder={if $sortField == 'ipAddress' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.ipAddress{/lang}{if $sortField == 'ipAddress'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>

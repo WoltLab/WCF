@@ -73,7 +73,8 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="contentHeader">
+	
+	<div class="contentFooter">
 		<nav class="largeButtons">
 			<ul><li><a href="index.php?form=UpdateServerAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.updateServer.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/updateServerAddM.png" alt="" /> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li></ul>
 		</nav>

@@ -54,7 +54,7 @@
 			</hgroup>
 			<table id="{$cache}">
 				<thead>
-					<tr class="tableHead">
+					<tr>
 						<th><p><span class="emptyHead">{lang}wcf.acp.cache.list.name{/lang}</span></p></th>
 						<th><p><span class="emptyHead">{lang}wcf.acp.cache.list.size{/lang}</span></p></th>
 						<th><p><span class="emptyHead">{lang}wcf.acp.cache.list.mtime{/lang}</span></p></th>

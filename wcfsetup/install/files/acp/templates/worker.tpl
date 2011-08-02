@@ -61,7 +61,7 @@
 	<legend>{lang}wcf.acp.worker.currentStep{/lang}</legend>
 	
 	<div class="inner">
-		<div><span id="currentStep"></span></div>
+		<p><span id="currentStep"></span></p>
 		
 		<iframe src="{$url}" id="iframe" frameborder="0"></iframe>
 	</div>
