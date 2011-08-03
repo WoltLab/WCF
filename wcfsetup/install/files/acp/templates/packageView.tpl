@@ -103,11 +103,11 @@
 		<table id="requiredPackages">
 			<thead>
 				<tr class="tableHead">
-					<th colspan="2"><p><span class="emptyHead">{lang}wcf.acp.package.list.id{/lang}</span></p></th>
-					<th colspan="2"><p><span class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</span></p></th>
-					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.author{/lang}</span></p></th>
-					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</span></p></th>
-					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.date{/lang}</span></p></th>
+					<th colspan="2"><p class="emptyHead">{lang}wcf.acp.package.list.id{/lang}</p></th>
+					<th colspan="2"><p class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</p></th>
+					<th><p class="emptyHead">{lang}wcf.acp.package.list.author{/lang}</p></th>
+					<th><p class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</p></th>
+					<th><p class="emptyHead">{lang}wcf.acp.package.list.date{/lang}</p></th>
 					
 					{if $additionalColumns|isset}{@$additionalColumns}{/if}
 				</tr>
@@ -168,11 +168,11 @@
 		<table id="dependentPackages">
 			<thead>
 				<tr class="tableHead">
-					<th colspan="2"><p><span class="emptyHead">{lang}wcf.acp.package.list.id{/lang}</span></p></th>
-					<th colspan="2"><p><span class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</span></p></th>
-					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.author{/lang}</span></p></th>
-					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</span></p></th>
-					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.date{/lang}</span></p></th>
+					<th colspan="2"><p class="emptyHead">{lang}wcf.acp.package.list.id{/lang}</p></th>
+					<th colspan="2"><p class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</p></th>
+					<th><p class="emptyHead">{lang}wcf.acp.package.list.author{/lang}</p></th>
+					<th><p class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</p></th>
+					<th><p class="emptyHead">{lang}wcf.acp.package.list.date{/lang}</p></th>
 					
 					{if $additionalColumns|isset}{@$additionalColumns}{/if}
 				</tr>

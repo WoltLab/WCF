@@ -84,8 +84,8 @@
 		<table>
 			<thead>
 				<tr class="tableHead">
-					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</span></p></th>
-					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</span></p></th>
+					<th><p class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</p></th>
+					<th><p class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</p></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -111,13 +111,13 @@
 		<table class="tableList">
 			<thead>
 				<tr class="tableHead">
-					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</span></p></th>
-					<th><p><span class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</span></p></th>
+					<th><p class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</p></th>
+					<th><p class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</p></th>
 				</tr>
 			</thead>
 			<tbody>
 			{foreach from=$requiredPackages item=$package}
-				<tr class="{cycle values="container-1,container-2"}">
+				<tr>
 					<td class="columnText"><p>{lang}wcf.acp.package.install.packageName{/lang}</p></td>
 					<td class="columnText"><p>{if $package.minversion|isset}{$package.minversion}{/if}</p></td>
 				</tr>

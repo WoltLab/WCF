@@ -14,24 +14,24 @@
 <fieldset>
 	<legend>{lang}wcf.acp.cache.data{/lang}</legend>
 	
-	<div class="formElement">
-		<p class="formFieldLabel">{lang}wcf.acp.cache.data.source{/lang}</p>
-		<p class="formField">{$cacheData.source}</p>
-	</div>
+	<dl>
+		<dt><label>{lang}wcf.acp.cache.data.source{/lang}</label></dt>
+		<dd>{$cacheData.source}</dd>
+	</dl>
 	{if $cacheData.version}
-		<div class="formElement">
-			<p class="formFieldLabel">{lang}wcf.acp.cache.data.version{/lang}</p>
-			<p class="formField">{$cacheData.version}</p>
-		</div>
+		<dl>
+			<dt><label>{lang}wcf.acp.cache.data.version{/lang}</label></dt>
+			<dd>{$cacheData.version}</dd>
+		</dl>
 	{/if}
-	<div class="formElement">
-		<p class="formFieldLabel">{lang}wcf.acp.cache.data.size{/lang}</p>
-		<p class="formField">{@$cacheData.size|filesize}</p>
-	</div>
-	<div class="formElement">
-		<p class="formFieldLabel">{lang}wcf.acp.cache.data.files{/lang}</p>
-		<p class="formField">{#$cacheData.files}</p>
-	</div>
+	<dl>
+		<dt><label>{lang}wcf.acp.cache.data.size{/lang}</label></dt>
+		<dd>{@$cacheData.size|filesize}</dd>
+	</dl>
+	<dl>
+		<dt><label>{lang}wcf.acp.cache.data.files{/lang}</label></dt>
+		<dd>{#$cacheData.files}</dd>
+	</dl>
 	
 	{if $additionalFields|isset}{@$additionalFields}{/if}
 </fieldset>
@@ -55,11 +55,11 @@
 			<table id="{$cache}">
 				<thead>
 					<tr>
-						<th><p><span class="emptyHead">{lang}wcf.acp.cache.list.name{/lang}</span></p></th>
-						<th><p><span class="emptyHead">{lang}wcf.acp.cache.list.size{/lang}</span></p></th>
-						<th><p><span class="emptyHead">{lang}wcf.acp.cache.list.mtime{/lang}</span></p></th>
+						<th><p class="emptyHead">{lang}wcf.acp.cache.list.name{/lang}</p></th>
+						<th><p class="emptyHead">{lang}wcf.acp.cache.list.size{/lang}</p></th>
+						<th><p class="emptyHead">{lang}wcf.acp.cache.list.mtime{/lang}</p></th>
 						{if $files.0.perm|isset}
-							<th><p><span class="emptyHead">{lang}wcf.acp.cache.list.perm{/lang}</span></p></th>
+							<th><p class="emptyHead">{lang}wcf.acp.cache.list.perm{/lang}</p></th>
 						{/if}
 					</tr>
 				</thead>
@@ -84,5 +84,14 @@
 		</script>
 	{/if}
 {/foreach}
+
+<div class="contentFooter">
+	<nav class="largeButtons">
+		<ul>
+			<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="index.php?action=CacheClear{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteM.png" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
+			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
+		</ul>
+	</nav>
+</div>
 
 {include file='footer'}
