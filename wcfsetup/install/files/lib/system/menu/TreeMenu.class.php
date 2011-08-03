@@ -17,23 +17,20 @@ use wcf\util\FileUtil;
  */
 abstract class TreeMenu extends SingletonFactory {
 	/**
-	 * List of visible menu items.
-	 * 
-	 * @var array
+	 * list of visible menu items
+	 * @var array<wcf\system\menu\ITreeMenuItem>
 	 */
 	public $menuItemList = array();
 	
 	/**
-	 * List of active menu items.
-	 * 
-	 * @var array
+	 * list of the names of the active menu items
+	 * @var array<string>
 	 */
 	public $activeMenuItems = array();
 	
 	/**
-	 * List of all menu items.
-	 * 
-	 * @var array
+	 * list of all menu items
+	 * @var array<wcf\system\menu\ITreeMenuItem>
 	 */
 	public $menuItems = null;
 

@@ -18,19 +18,19 @@ use wcf\util\StringUtil;
  */
 abstract class LanguageFactory {
 	/**
-	 * Language cache
+	 * language cache
 	 * @var	array<array>
 	 */
 	private static $cache = null;
 	
 	/**
-	 * Initialized languages
+	 * initialized languages
 	 * @var	array<wcf\data\language\Language>
 	 */
 	private static $languages = array();
 	
 	/**
-	 * Active template scripting compiler
+	 * active template scripting compiler
 	 * @var	wcf\system\template\TemplateScriptingCompiler
 	 */
 	private static $scriptingCompiler = null;
