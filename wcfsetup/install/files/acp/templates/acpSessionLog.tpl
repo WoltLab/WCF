@@ -14,7 +14,7 @@
 </div>
 
 {if $sessionAccessLogs|count}
-	<div class="border titleBarPanel">
+	<div class="border boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.sessionLog.access.view.count{/lang}</h1>
 		</hgroup>
@@ -34,7 +34,7 @@
 			</thead>
 			<tbody>
 			{foreach from=$sessionAccessLogs item=sessionAccessLog}
-				<tr class="smallFont">
+				<tr>
 					<td class="columnSessionAccessLogID columnID"><p>{@$sessionAccessLog->sessionAccessLogID}</p></td>
 					<td class="columnIpAddress columnText"{if $sessionAccessLog->ipAddress != $sessionLog->ipAddress} style="color: red"{/if}><p>{$sessionAccessLog->ipAddress}</p></td>
 					<td class="columnTime columnText"><p>{@$sessionAccessLog->time|time}</p></td>

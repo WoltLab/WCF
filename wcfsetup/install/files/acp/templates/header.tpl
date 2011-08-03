@@ -77,52 +77,53 @@
 	<a id="top"></a>
 	<!-- HEADER -->
 	<header class="pageHeader">
-		
-		<!-- top menu -->
-		<nav id="topMenu" class="topMenu">
-			<div>
-				<ul>
-					<li><a href="#" title="Hello World">Hello World!</a></li>
-				</ul>
+		<div>
+			<!-- top menu -->
+			<nav id="topMenu" class="topMenu">
+				<div>
+					<ul>
+						<li><a href="#" title="Hello World">Hello World!</a></li>
+					</ul>
+				</div>
+			</nav>
+			<!-- /top menu -->
+			
+			<!-- logo -->
+			<div id="logo" class="logo">
+				<!-- clickable area -->
+				<a href="index.php{@SID_ARG_1ST}">
+					<h1>WoltLab Community Framework 2.0 Pre-Alpha 1</h1>
+					<img src="{@RELATIVE_WCF_DIR}acp/images/wcfLogoWhite.svg" width="300" height="58" alt="Product-logo" title="WoltLab Community Framework 2.0 Pre-Alpha 1" />
+				</a>
+				<!-- /clickable area -->
+				
+				<!-- search area -->
+				
+				<!-- /search area -->
 			</div>
-		</nav>
-		<!-- /top menu -->
-		
-		<!-- logo -->
-		<div id="logo" class="logo">
-			<!-- clickable area -->
-			<a href="index.php{@SID_ARG_1ST}">
-				<h1>WoltLab Community Framework 2.0 Pre-Alpha 1</h1>
-				<img src="{@RELATIVE_WCF_DIR}acp/images/wcfLogoWhite.svg" width="300" height="58" alt="Product-logo" title="WoltLab Community Framework 2.0 Pre-Alpha 1" />
-			</a>
-			<!-- /clickable area -->
+			<!-- /logo -->
 			
-			<!-- search area -->
+			<!-- main menu -->
+			<nav id="mainMenu" class="mainMenu">
+				{* work-around for unknown core-object during WCFSetup *}
+				{if PACKAGE_ID}
+					<ul>
+						{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=menuItem}
+							<li data-menuItem="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</li>
+						{/foreach}
+					</ul>
+				{/if}
+			</nav>
+			<!-- /main menu -->
 			
-			<!-- /search area -->
-		</div>
-		<!-- /logo -->
-		
-		<!-- top nav -->
-		<nav id="mainMenu" class="mainMenu">
-			{* work-around for unknown core-object during WCFSetup *}
-			{if PACKAGE_ID}
+			<!-- header navigation -->
+			<nav class="headerNavigation">
 				<ul>
-					{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=menuItem}
-						<li data-menuItem="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</li>
-					{/foreach}
+					<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/downS.png" alt="{lang}wcf.global.scrollDown{/lang}" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 				</ul>
-			{/if}
-		</nav>
-		<!-- /top nav -->
-		
-		<!-- sub bar -->
-		<nav class="headerNavigation">
-			<ul>
-				<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/downS.png" alt="{lang}wcf.global.scrollDown{/lang}" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
-			</ul>
-		</nav>
-		<!-- /sub bar -->
+			</nav>
+			<!-- /header navigation -->
+		</div>
 	</header>
 	<!-- /HEADER -->
 	
@@ -130,7 +131,7 @@
 	<div id="main" class="main">
 		<div>
 			<aside class="sidebar">
-				<!-- sub nav -->
+				<!-- sidebar menu -->
 				<nav id="sidebarMenu" class="sidebarMenu">
 					{* work-around for unknown core-object during WCFSetup *}
 					{if PACKAGE_ID}
@@ -156,7 +157,7 @@
 						{/foreach}
 					{/if}
 				</nav>
-				<!-- /sub nav -->
+				<!-- /sidebar menu -->
 			</aside>
 			
 			<section id="content">
