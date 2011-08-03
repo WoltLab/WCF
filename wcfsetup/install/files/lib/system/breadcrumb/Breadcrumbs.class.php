@@ -15,15 +15,14 @@ use wcf\system\SingletonFactory;
 class Breadcrumbs extends SingletonFactory {
 	/**
 	 * list of breadcrumbs
-	 * 
-	 * @var	array<Breadcrumb>
+	 * @var	array<wcf\system\breadcrumb\Breadcrumb>
 	 */	
 	protected $items = array();
 	
 	/**
-	 * Adds a breadcrumb (insert order is crucial!)
+	 * Adds a breadcrumb (insertion order is crucial!).
 	 * 
-	 * @param	Breadcrumb		$item
+	 * @param	wcf\system\breadcrumb\Breadcrumb	$item
 	 */	
 	public function add(Breadcrumb $item) {
 		$this->items[] = $item;
@@ -32,7 +31,7 @@ class Breadcrumbs extends SingletonFactory {
 	/**
 	 * Returns the list of breadcrumbs.
 	 * 
-	 * @return	array<Breadcrumb>
+	 * @return	array<wcf\system\breadcrumb\Breadcrumb>
 	 */	 
 	public function get() {
 		return $this->items;
@@ -41,8 +40,8 @@ class Breadcrumbs extends SingletonFactory {
 	/**
 	 * Replaces a breadcrumb, returns true if replacement was successful.
 	 * 
-	 * @param	Breadcrumb		$item
-	 * @param	integer			$index
+	 * @param	wcf\system\breadcrumb\Breadcrumb	$item
+	 * @param	integer		$index
 	 * @return	boolean
 	 */
 	public function replace(Breadcrumb $item, $index) {
@@ -58,7 +57,7 @@ class Breadcrumbs extends SingletonFactory {
 	/**
 	 * Removes a breadcrumb, returns true if deletion was successful.
 	 * 
-	 * @param	integer			$index
+	 * @param	integer		$index
 	 * @return	boolean
 	 */
 	public function remove($index) {

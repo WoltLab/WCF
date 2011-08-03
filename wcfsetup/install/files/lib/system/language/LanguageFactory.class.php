@@ -18,31 +18,28 @@ use wcf\util\StringUtil;
  */
 abstract class LanguageFactory {
 	/**
-	 * Language cache.
-	 *
+	 * Language cache
 	 * @var	array<array>
 	 */
 	private static $cache = null;
 	
 	/**
-	 * Initialized languages.
-	 *
-	 * @var	array<Language>
+	 * Initialized languages
+	 * @var	array<wcf\data\language\Language>
 	 */
 	private static $languages = array();
 	
 	/**
 	 * Active template scripting compiler
-	 *
-	 * @var	TemplateScriptingCompiler
+	 * @var	wcf\system\template\TemplateScriptingCompiler
 	 */
 	private static $scriptingCompiler = null;
 	
 	/**
-	 * Returns a Language-object for each requested language id.
+	 * Returns a Language-object for the requested language id.
 	 *
 	 * @param	integer		$languageID
-	 * @return	Language
+	 * @return	wcf\data\language\Language
 	 */
 	public static function getLanguage($languageID) {
 		if (self::$cache === null) self::loadCache();
@@ -91,7 +88,7 @@ abstract class LanguageFactory {
 	/**
 	 * Returns a list of available language categories.
 	 * 
-	 * @return	array
+	 * @return	array<string>
 	 */	
 	public static function getCategories() {
 		$categories = array();
@@ -171,7 +168,7 @@ abstract class LanguageFactory {
 	 * Returns an instance of Language or NULL for a given language code.
 	 *
 	 * @param	string		$languageCode
-	 * @return	Language
+	 * @return	wcf\data\language\Language
 	 */
 	public static function getLanguageByCode($languageCode) {
 		if (self::$cache === null) self::loadCache();
@@ -196,7 +193,7 @@ abstract class LanguageFactory {
 	/**
 	 * Returns the active scripting compiler object.
 	 *
-	 * @return	TemplateScriptingCompiler
+	 * @return	wcf\system\template\TemplateScriptingCompiler
 	 */
 	public static function getScriptingCompiler() {
 		if (self::$scriptingCompiler === null) {
@@ -237,10 +234,8 @@ abstract class LanguageFactory {
 	 * @param	integer		$languageID
 	 */
 	private static function setLocale($languageID) {
-		// set locale for
-		// string comparison
-		// character classification and conversion
-		// date and time formatting
+		// set locale for string comparison, character classification and
+		// conversion and date and time formatting
 		setlocale(LC_COLLATE, self::$languages[$languageID]->get('wcf.global.locale.unix').'.UTF-8', self::$languages[$languageID]->get('wcf.global.locale.unix'), self::$languages[$languageID]->get('wcf.global.locale.win'));
 		setlocale(LC_CTYPE, self::$languages[$languageID]->get('wcf.global.locale.unix').'.UTF-8', self::$languages[$languageID]->get('wcf.global.locale.unix'), self::$languages[$languageID]->get('wcf.global.locale.win'));
 	}
@@ -280,6 +275,7 @@ abstract class LanguageFactory {
 				}
 			}
 		}
+		
 		return $availableLanguages;
 	}
 	
@@ -308,9 +304,10 @@ abstract class LanguageFactory {
 	}
 	
 	/**
-	 * Returns an ordered list of all installed languages.
+	 * Returns an ordered list with the names all installed languages in the
+	 * active language.
 	 * 
-	 * @return	array
+	 * @return	array<string>
 	 */	
 	public static function getLanguages() {
 		$languages = array();
@@ -319,22 +316,21 @@ abstract class LanguageFactory {
 		}
 		
 		StringUtil::sort($languages);
-		
 		return $languages;
 	}
 	
 	/**
-	 * Returns a sorted list of all installed language codes.
+	 * Returns an ordered list of all installed language codes.
 	 * 
-	 * @return	array
+	 * @return	array<string>
 	 */
 	public static function getLanguageCodes() {
-		$languages = array();
+		$languageCodes = array();
 		foreach (self::$cache['codes'] as $languageCode => $languageID) {
-			$languages[$languageID] = $languageCode;
+			$languageCodes[$languageID] = $languageCode;
 		}
 		
-		StringUtil::sort($languages);
-		return $languages;
+		StringUtil::sort($languageCodes);
+		return $languageCodes;
 	}
 }
