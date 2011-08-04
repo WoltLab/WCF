@@ -280,7 +280,7 @@ class WCF {
 		$dbHost = $dbUser = $dbPassword = $dbName = '';
 		$dbPort = 0;
 		$dbClass = 'wcf\system\database\MySQLDatabase';
-		require_once(WCF_DIR.'config.inc.php');
+		require(WCF_DIR.'config.inc.php');
 		
 		// create database connection
 		self::$dbObj = new $dbClass($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
