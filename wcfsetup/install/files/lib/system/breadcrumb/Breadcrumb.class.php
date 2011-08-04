@@ -15,14 +15,12 @@ use wcf\util\StringUtil;
 class Breadcrumb {
 	/**
 	 * displayed label
-	 * 
 	 * @var	string
 	 */
 	protected $label = '';
 	
 	/**
 	 * target url
-	 * 
 	 * @var	string
 	 */
 	protected $url = '';

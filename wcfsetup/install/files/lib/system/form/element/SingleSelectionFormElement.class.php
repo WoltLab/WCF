@@ -8,7 +8,7 @@ namespace wcf\system\form\element;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.form
+ * @subpackage	system.form.element
  * @category 	Community Framework
  */
 class SingleSelectionFormElement extends AbstractNamedFormElement {
