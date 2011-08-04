@@ -15,14 +15,12 @@ use wcf\system\exception\SystemException;
 class ImagickImageAdapter implements IImageAdapter {
 	/**
 	 * active color
-	 * 
 	 * @var	\ImagickPixel
 	 */
 	protected $color = null;
 	
 	/**
 	 * Imagick object
-	 * 
 	 * @var	\Imagick
 	 */
 	protected $imagick = null;

@@ -8,7 +8,7 @@ namespace wcf\system\application;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system
+ * @subpackage	system.application
  * @category 	Community Framework
  */
 interface IApplication {

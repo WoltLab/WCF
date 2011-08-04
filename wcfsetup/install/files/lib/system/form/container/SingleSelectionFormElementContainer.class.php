@@ -8,13 +8,12 @@ namespace wcf\system\form\container;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.form
+ * @subpackage	system.form.container
  * @category 	Community Framework
  */
 class SingleSelectionFormElementContainer extends SelectionFormElementContainer {
 	/**
 	 * container value
-	 *
 	 * @var	string
 	 */
 	protected $value = '';

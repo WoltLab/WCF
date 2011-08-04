@@ -16,15 +16,13 @@ use wcf\util\StringUtil;
  */
 class CacheHandler extends SingletonFactory {
 	/**
-	 * Registered cache resources.
-	 * 
+	 * registered cache resources
 	 * @var array
 	 */
 	protected $cacheResources = array();
 	
 	/**
 	 * cache source object
-	 * 
 	 * @var	wcf\system\cache\source\ICacheSource
 	 */
 	protected $cacheSource = null;
@@ -157,7 +155,7 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * Returns the cache source object.
 	 *
-	 * @return	CacheSource
+	 * @return	wcf\system\cache\source\ICacheSource
 	 */
 	public function getCacheSource() {
 		return $this->cacheSource;
