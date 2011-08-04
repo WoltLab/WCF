@@ -740,7 +740,7 @@ input[type='submit'],
 input[type='submit']:hover,
 .largeButtons ul li.default a:hover {
 	border: 1px solid #69c;
-	color: #036;
+	color: #369;
 }
 
 /* default buttons active */
@@ -748,7 +748,7 @@ input[type='submit']:focus,
 .largeButtons ul li.default a:focus,
 input[type='submit']:active,
 .largeButtons ul li.default a:active{
-	color: #369;
+	color: #036;
 	text-decoration: none;
 	
 	background-color: #69c;
@@ -1041,7 +1041,6 @@ tbody tr .columnIcon img {
 
 
 
-
 /* -- -- -- -- -- ToDo: Page Navigation -- -- -- -- -- */
 
 .pageNavigation ul li {
@@ -1127,16 +1126,6 @@ dl {
 	margin-bottom: 7px;
 }
 
-dt {
-	float: left;
-	text-align: right;
-	width: 230px;
-}
-
-dd {
-	margin-left: 250px;
-}
-
 dl small {
 	color: #999;
 	font-size: 85%;
@@ -1146,6 +1135,16 @@ dl small {
 
 dl.disabled dt {
 	color: #777;
+}
+
+dl dt {
+	float: left;
+	text-align: right;
+	width: 230px;
+}
+
+dl dd {
+	margin-left: 250px;
 }
 
 

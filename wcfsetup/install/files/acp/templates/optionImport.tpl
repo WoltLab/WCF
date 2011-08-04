@@ -21,24 +21,18 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.option.import{/lang}</legend>
 			
-				<div id="optionImportDiv" class="formElement{if $errorField == 'optionImport'} formError{/if}">
-					<div class="formFieldLabel">
-						<label for="optionImport">{lang}wcf.acp.option.import.upload{/lang}</label>
-					</div>
-					<div class="formField">
-						<input type="file" id="optionImport" name="optionImport" value="" />
-						{if $errorField == 'optionImport'}
-							<p class="innerError">
-								{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-								{if $errorType == 'importFailed'}{lang}wcf.acp.option.import.error.importFailed{/lang}{/if}
-								{if $errorType == 'uploadFailed'}{lang}wcf.acp.option.import.error.uploadFailed{/lang}{/if}
-							</p>
-						{/if}
-					</div>
-					<div id="optionImportHelpMessage" class="formFieldDesc hidden">
-						<p>{lang}wcf.acp.option.import.upload.description{/lang}</p>
-					</div>
-				</div>
+				<dl id="optionImportDiv"{if $errorField == 'optionImport'}  class="formError"{/if}>
+					<dt><label for="optionImport">{lang}wcf.acp.option.import.upload{/lang}</label></dt>
+					<dd><input type="file" id="optionImport" name="optionImport" value="" /></dd>
+					{if $errorField == 'optionImport'}
+						<small class="innerError">
+							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType == 'importFailed'}{lang}wcf.acp.option.import.error.importFailed{/lang}{/if}
+							{if $errorType == 'uploadFailed'}{lang}wcf.acp.option.import.error.uploadFailed{/lang}{/if}
+						</small>
+					{/if}
+					<small id="optionImportHelpMessage">{lang}wcf.acp.option.import.upload.description{/lang}</small>
+				</dl>
 				<script type="text/javascript">//<![CDATA[
 					inlineHelp.register('optionImport');
 				//]]></script>
@@ -60,14 +54,11 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.option.export{/lang}</legend>
 		
-			<div id="optionExportDiv" class="formElement">
-				<div class="formField">
-					<a href="index.php?action=OptionExport{@SID_ARG_2ND}" id="optionExport">{lang}wcf.acp.option.export.download{/lang}</a>
-				</div>
-				<div id="optionExportHelpMessage" class="formFieldDesc hidden">
-					<p>{lang}wcf.acp.option.export.download.description{/lang}</p>
-				</div>
-			</div>
+			<dl id="optionExportDiv">
+				<dt><label><!-- ToDo: Download label --></label></dt>
+				<dd><p><a href="index.php?action=OptionExport{@SID_ARG_2ND}" id="optionExport" class="largeButton">{lang}wcf.acp.option.export.download{/lang}</a></p></dd>
+				<small>{lang}wcf.acp.option.export.download.description{/lang}</small>
+			</dl>
 			<script type="text/javascript">//<![CDATA[
 				inlineHelp.register('optionExport');
 			//]]></script>
