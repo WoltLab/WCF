@@ -103,6 +103,19 @@ class ArrayUtil {
 	}
 	
 	/**
+	 * Alias to php array_intersect_key() function.
+	 *
+	 * @param 	array 	$array1 	The array with master keys to check. 
+	 * @param 	array 	$array2		An array to compare keys against.
+	 * @return 				Returns an associative array containing all the values of array1  which have matching keys that are present in all arguments. 
+	 * @deprecated
+	 */
+	public static function intersectKeys($array1, $array2) {
+		$parameters = func_get_args();
+		return call_user_func_array('array_intersect_key', $parameters);
+	}
+	
+	/**
 	 * Converts dos to unix newlines.
 	 *
 	 * @param 	array 		$array
