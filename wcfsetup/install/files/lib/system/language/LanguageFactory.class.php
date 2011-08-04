@@ -304,7 +304,7 @@ abstract class LanguageFactory {
 	}
 	
 	/**
-	 * Returns an ordered list with the names all installed languages in the
+	 * Returns an ordered list of the names of all installed languages in the
 	 * active language.
 	 * 
 	 * @return	array<string>
