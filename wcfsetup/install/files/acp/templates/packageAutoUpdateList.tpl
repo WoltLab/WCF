@@ -50,48 +50,35 @@
 					</h1>
 
 					<div class="messageBody">
-						<div class="formElement">
-							<div class="formFieldLabel">
-								<label>{lang}wcf.acp.packageUpdate.currentVersion{/lang}</label>
-							</div>
-							<div class="formField">
-								<span>{$availableUpdate.packageVersion}</span>
-							</div>
-						</div>
+						<dl>
+							<dt><label>{lang}wcf.acp.packageUpdate.currentVersion{/lang}</label></dt>
+							<dd>{$availableUpdate.packageVersion}</dd>
+						</dl>
 						
-						<div id="version-{@$availableUpdate.packageID}Div" class="formElement">
-							<div class="formFieldLabel">
-								<label for="version-{@$availableUpdate.packageID}">{lang}wcf.acp.packageUpdate.updateVersion{/lang}</label>
-							</div>
-							<div class="formField">
-								<select id="version-{@$availableUpdate.packageID}" name="updates[{@$availableUpdate.packageID}]" disabled="disabled">
+						<dl id="version-{@$availableUpdate.packageID}Div">
+							<dt><label for="version-{@$availableUpdate.packageID}">{lang}wcf.acp.packageUpdate.updateVersion{/lang}</label></dt>
+							<dd><select id="version-{@$availableUpdate.packageID}" name="updates[{@$availableUpdate.packageID}]" disabled="disabled">
 									{foreach from=$availableUpdate.versions item=$version}
 										<option value="{$version.packageVersion}"{if $version.packageVersion == $availableUpdate.version.packageVersion} selected="selected"{/if}>{$version.packageVersion}</option>
 									{/foreach}
 								</select>
-							</div>
-						</div>
+							</dd>
+						</dl>
 						
 						{if $availableUpdate.author}
-							<div class="formElement">
-								<div class="formFieldLabel">
-									<label>{lang}wcf.acp.package.list.author{/lang}</label>
-								</div>
-								<div class="formField">
-									<span>{if $availableUpdate.authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$availableUpdate.authorURL|rawurlencode}" class="externalURL">{$availableUpdate.author}</a>{else}{$availableUpdate.author}{/if}</span>
-								</div>
-							</div>
+							<dl>
+								<dt><label>{lang}wcf.acp.package.list.author{/lang}</label></dt>
+								<dd>{if $availableUpdate.authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$availableUpdate.authorURL|rawurlencode}" class="externalURL">{$availableUpdate.author}</a>{else}{$availableUpdate.author}{/if}</dd>
+							</dl>
 						{/if}
 						
 						{if $availableUpdate.packageDescription}
-							<div class="formElement">
-								<p class="formFieldLabel">{lang}wcf.acp.package.description{/lang}</p>
-								<p class="formField">{$availableUpdate.packageDescription}</p>
-							</div>
+							<dl>
+								<dt>{lang}wcf.acp.package.description{/lang}</dt>
+								<dd>{$availableUpdate.packageDescription}</dd>
+							</dl>
 						{/if}
-							
 					</div>
-
 					<hr />
 				</div>
 			</article>			

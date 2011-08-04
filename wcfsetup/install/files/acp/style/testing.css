@@ -206,12 +206,6 @@ nav.headerNavigation {
 	margin: 0 23px;
 	padding: 3px 7px;
 	position: relative;
-	
-	-webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
-	-moz-box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
-	-ms-box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
-	-o-box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
-	box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
 }
 
 nav.headerNavigation:after {
@@ -360,12 +354,6 @@ footer > div {
 	border-bottom-right-radius: 3px;
 	clear: both;
 	padding: 3px 7px;
-	
-	-webkit-box-shadow: 0 -1px 5px rgba(0, 0, 0, .1);
-	-moz-box-shadow: 0 -1px 5px rgba(0, 0, 0, .1);
-	-ms-box-shadow: 0 -1px 5px rgba(0, 0, 0, .1);
-	-o-box-shadow: 0 -1px 5px rgba(0, 0, 0, .1);
-	box-shadow: 0 -1px 5px rgba(0, 0, 0, .1);
 }
 
 footer > div:after {
@@ -418,6 +406,7 @@ footer nav.footerNavigation ul li {
 .mainHeading > hgroup {
 	height: 48px;
 	padding-left: 60px;
+	margin-bottom: 30px;
 }
 
 .mainHeading > hgroup h1 {
@@ -457,9 +446,9 @@ footer nav.footerNavigation ul li {
 
 fieldset {
 	border: 1px solid #ccc;
-	border-radius: 10px;
+	border-radius: 7px;
 	margin: 7px 0 7px;
-	padding: 14px;
+	padding: 15px;
 }
 
 fieldset legend {
@@ -527,6 +516,7 @@ div.formGroupField div.formField label {
 
 .formSubmit {
 	text-align: center;
+	margin-top: 15px;
 }
 
 /* Form Elements */
@@ -594,6 +584,10 @@ textarea:focus {
 	-ms-box-shadow: 0 0 5px rgba(102, 153, 204, 1), inset 0 0 5px rgba(102, 153, 204, .7);
 	-o-box-shadow: 0 0 5px rgba(102, 153, 204, 1), inset 0 0 5px rgba(102, 153, 204, .7);
 	box-shadow: 0 0 5px rgba(102, 153, 204, 1), inset 0 0 5px rgba(102, 153, 204, .7);
+}
+
+select {
+	width: 100%;
 }
 
 
@@ -816,30 +810,6 @@ input[type='submit']:active,
 	width: 16px;
 	cursor: pointer;
 	margin-top: -1px;
-}
-
-/* -- -- -- -- -- Tab Menu -- -- -- -- -- */
-
-.tabMenu {
-	margin: 0 3px -1px !important;
-}
-
-.tabMenu li a {
-	color: #999;
-	text-shadow: 0 1px 0 #fff;
-}
-
-.tabMenu li a:hover {
-	color: #666;
-}
-
-.tabMenu li.ui-state-active a {
-	color: #333 !important;
-	font-weight: bold;
-}
-
-.tabMenuContent, .content {
-	border-width: 0 !important;
 }
 
 
@@ -1140,6 +1110,7 @@ dl dt {
 	float: left;
 	text-align: right;
 	width: 230px;
+	margin-top: 5px; /* not so nice */
 }
 
 dl dd {
@@ -1274,41 +1245,42 @@ div.ui-widget-overlay {
 
 
 
-/* -- -- -- -- -- Taken from jQuery UI @ themes/base/jquery.ui.tabs.css -- -- -- -- -- */
+/* -- -- -- -- -- Tab Menu -- -- -- -- -- */
+/* -- -- -- -- -- Parts taken from jQuery UI @ themes/base/jquery.ui.tabs.css -- -- -- -- -- */
 
-.ui-tabs {
-	position: relative; /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
-	padding: 3px;
-	zoom: 1;
-}
+/* Tab Menu */
 
-.ui-tabs .ui-tabs-nav {
-	height: 18px !important; /* Fixes a clearing problem */
+.tabMenu {
+	color: #999;
+	text-shadow: 0 1px 0 #fff;
 	background-color: none;
-	padding: 3px 3px 0;
+	white-space: nowrap;
+	position: relative;
+	display: block;
+	text-align: center;
 }
 
-.ui-tabs .ui-tabs-nav li {
+.tabMenu:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.tabMenu li {
 	list-style: none;
-	float: left;
-	position: relative;
-	top: 1px;
-	margin: 0 3px 1px 0;
-	border-bottom: 0 !important;
-	padding: 0;
+	display: inline-block;
 	white-space: nowrap;
 	z-index: 90; /* Prevents border overlay during transition */
 }
 
-.ui-tabs .ui-tabs-nav li a {
-	float: left;
-	padding: 7px 14px;
+.tabMenu li a {
+	padding: 7px 15px;
 	text-decoration: none;
 	border: 1px solid #ccc;
-	border-bottom-width: 0;
-	
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
+	display: inline-block;
+	
 	
 	background-color: #fefefe;
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fefefe), to(#eee));
@@ -1318,12 +1290,21 @@ div.ui-widget-overlay {
 	background-image: linear-gradient(#fefefe, #eee);
 }
 
-.ui-tabs .ui-tabs-nav li.ui-tabs-selected {
+.tabMenu li a:hover {
+	color: #666;
+}
+
+.tabMenu li.ui-tabs-selected {
 	margin-bottom: 0;
 	padding-bottom: 1px;
 }
 
-.ui-tabs .ui-tabs-nav li.ui-tabs-selected a {
+.tabMenu li.ui-state-active a {
+	color: #333 !important;
+	font-weight: bold;
+}
+
+.tabMenu li.ui-tabs-selected a {
 	background-color: #fefefe;	
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#fefefe));
 	background-image: -moz-linear-gradient(0% 0% 270deg, #fff, #fefefe);
@@ -1334,24 +1315,33 @@ div.ui-widget-overlay {
 	border-bottom: 1px solid #fefefe;
 }
 
-.ui-tabs .ui-tabs-nav li.ui-tabs-selected a,
-.ui-tabs .ui-tabs-nav li.ui-state-disabled a,
-.ui-tabs .ui-tabs-nav li.ui-state-processing a {
+.tabMenu li.ui-tabs-selected a,
+.tabMenu li.ui-state-disabled a,
+.tabMenu li.ui-state-processing a {
 	cursor: default;
 }
 
-.ui-tabs .ui-tabs-nav li a,
+.tabMenu li a,
 .ui-tabs .ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
 	cursor: pointer;
 }
 
-.ui-tabs .ui-tabs-panel {
+/* Tab Menu Content */
+
+.tabMenuContent {
 	background-color: #fefefe);
 	border: 1px solid #ccc !important;
 	z-index: 89; /* Prevents border overlay during transition */
 	display: block;
+	margin: -2px 0 0;
 	padding: 15px 23px;
 }
+
+.content {
+	border-width: 0 !important;
+}
+
+/* ToDo: 2x hidden? */
 
 .ui-tabs .ui-tabs-hide {
 	display: none !important;
@@ -1385,6 +1375,10 @@ div.ui-widget-overlay {
 	clear: both;
 }
 
+
+
+/* ToDo: Is all that really necessary? We wanted to support good browser only */
+
 .ui-helper-clearfix {
 	display: inline-block;
 }
@@ -1406,7 +1400,6 @@ div.ui-widget-overlay {
 	left: 0;
 	position: absolute;
 	opacity: 0;
-	filter: Alpha(opacity=0);
 }
 
 
