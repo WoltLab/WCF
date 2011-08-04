@@ -608,6 +608,11 @@ textarea:focus {
 	display: inline;
 }
 
+.largeButtons ul li img {
+	/* Button Icons disabled for now, maybe we get rid oft them */
+	display: none;
+}
+
 /* buttons normal */
 input[type='reset'],
 input[type='submit'],
@@ -627,12 +632,6 @@ input[type='submit'],
 	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#fefefe), to(#eee));
 	background-image: -o-linear-gradient(#fefefe, #eee);
 	background-image: linear-gradient(#fefefe, #eee);
-	
-	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
-	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
-	-ms-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
-	-o-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
-	box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 	
 	-webkit-transition: all .3s linear;
 	-moz-transition: all .3s linear;
