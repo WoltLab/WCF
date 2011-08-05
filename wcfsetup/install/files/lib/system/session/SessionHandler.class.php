@@ -598,7 +598,7 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * Resets session-specific storage data.
 	 *
-	 * @param	array		$userIDs
+	 * @param	array<integer>	$userIDs
 	 */	
 	public static function resetSessions(array $userIDs = array()) {
 		if (count($userIDs)) {

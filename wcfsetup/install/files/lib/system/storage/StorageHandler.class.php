@@ -125,7 +125,7 @@ class StorageHandler extends SingletonFactory {
 	/**
 	 * Removes a data record from database.
 	 * 
-	 * @param	array		$userID
+	 * @param	array<integer>	$userID
 	 * @param	string		$field
 	 * @param	integer		$packageID
 	 */
