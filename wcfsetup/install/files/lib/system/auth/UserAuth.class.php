@@ -16,8 +16,7 @@ use wcf\system\event\EventHandler;
 abstract class UserAuth {
 	/**
 	 * active instance
-	 *
-	 * @var	UserAuth
+	 * @var	wcf\system\auth\UserAuth
 	 */
 	protected static $instance = null;
 	

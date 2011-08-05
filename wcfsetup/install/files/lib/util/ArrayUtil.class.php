@@ -103,31 +103,17 @@ class ArrayUtil {
 	}
 	
 	/**
-	 * Computes the intersection of arrays using keys for comparison
-	 * Alias to php array_intersect_key() function
+	 * Alias to php array_intersect_key() function.
+	 * 
+	 * @deprecated	as of WCF 2.0, use PHP's array_intersect_key() function directly
 	 *
 	 * @param 	array 	$array1 	The array with master keys to check. 
 	 * @param 	array 	$array2		An array to compare keys against.
 	 * @return 				Returns an associative array containing all the values of array1  which have matching keys that are present in all arguments. 
-	 * @see					array_intersect_key
 	 */
 	public static function intersectKeys($array1, $array2) {
-		if (!function_exists('array_intersect_key')) {
-			$numberOfArguments = func_num_args();
-			for ($i = 1; !empty($array1) && $i < $numberOfArguments; $i++) {
-	        		$currentArray = func_get_arg($i);
-				foreach (array_keys($array1) as $key) {
-					if (!isset($currentArray[$key])) {
-						unset($array1[$key]);
-					}
-				}
-			}
-			return $array1;
-		} 
-		else {
-			$parameters = func_get_args();
-			return call_user_func_array('array_intersect_key', $parameters);
-		}
+		$parameters = func_get_args();
+		return call_user_func_array('array_intersect_key', $parameters);
 	}
 	
 	/**

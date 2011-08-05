@@ -22,12 +22,46 @@ use wcf\util\FileUtil;
  * @category 	Community Framework
  */
 class Tar {
+	/**
+	 * name of the archive
+	 * @var	string
+	 */
 	protected $archiveName = '';
+	
+	/**
+	 * content of the tar file
+	 * @var	array
+	 */
 	protected $contentList = array();
+	
+	/**
+	 * indicates if tar file is opened
+	 * @var	boolean
+	 */
 	protected $opened = false;
+	
+	/**
+	 * indicates if file content has been read
+	 * @var	boolean
+	 */
 	protected $read = false;
+	
+	/**
+	 * file object
+	 * @var	wcf\system\io\File
+	 */
 	protected $file = null;
+	
+	/**
+	 * indicates if the tar file is (g)zipped
+	 * @var	boolean
+	 */
 	protected $isZipped = false;
+	
+	/**
+	 * file access mode
+	 * @var	string
+	 */
 	protected $mode = 'rb';
 	
 	/**

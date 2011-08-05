@@ -38,9 +38,9 @@
 		{foreach from=$optionTree item=categoryLevel1}
 			<div class="border tabMenuContent hidden" id="{@$categoryLevel1[object]->categoryName}">
 				<div class="container-1">
-					<hgroup>
-						<h1 class="subHeading">{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
-						<h2 class="description">{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}.description{/lang}</h2>
+					<hgroup class="subHeading">
+						<h1>{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
+						<h2>{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}.description{/lang}</h2>
 					</hgroup>
 					
 					{if $categoryLevel1[options]|count}

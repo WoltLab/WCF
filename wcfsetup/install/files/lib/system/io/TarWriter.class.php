@@ -20,6 +20,9 @@ use wcf\util\FileUtil;
  * @category 	Community Framework
  */
 class TarWriter extends Tar {
+	/**
+	 * @see	wcf\system\io\Tar::$mode
+	 */
 	protected $mode = 'wb+';
 	
 	/**
