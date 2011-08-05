@@ -391,7 +391,7 @@ footer nav.footerNavigation ul li {
 /* Main Heading */
 
 .mainHeading {
-	margin-bottom: 15px;
+	margin: 15px 0;
 	position: relative;
 }
 
@@ -413,7 +413,7 @@ footer nav.footerNavigation ul li {
 	border-bottom: 1px solid #ccc;
 	color: #999;
 	text-shadow: 0 1px 0 #fff;
-	font-size: 140%;
+	font-size: 175%;
 	font-weight: bold;
 	padding-bottom: 10px;
 }
@@ -431,10 +431,10 @@ footer nav.footerNavigation ul li {
 
 /* Sub Heading */
 
-.subHeading {
+.subHeading h1 {
 	color: #999;
 	border-bottom: 1px solid #ccc;
-	font-size: 120%;
+	font-size: 150%;
 	text-shadow: 0 1px 0 #fff;
 	margin: 10px 0;
 	padding: 10px 0;
@@ -546,7 +546,7 @@ textarea {
 	border-style: solid;
 	border-color: #999 #ccc #eee;
 	border-radius: 3px;
-	background-color: #fafafa;
+	background-color: #fff;
 	
 	-webkit-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
 	-moz-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
@@ -1251,13 +1251,13 @@ div.ui-widget-overlay {
 /* Tab Menu */
 
 .tabMenu {
-	color: #999;
 	text-shadow: 0 1px 0 #fff;
 	background-color: none;
 	white-space: nowrap;
 	position: relative;
 	display: block;
 	text-align: center;
+	padding: 0 5px;
 }
 
 .tabMenu:after {
@@ -1274,20 +1274,22 @@ div.ui-widget-overlay {
 }
 
 .tabMenu li a {
-	padding: 7px 15px;
+	color: #999;
+	font-size: 110%;
+	padding: 10px 15px 7px;
 	text-decoration: none;
 	border: 1px solid #ccc;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	display: inline-block;
-	
-	
+	/*
 	background-color: #fefefe;
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fefefe), to(#eee));
 	background-image: -moz-linear-gradient(0% 0% 270deg, #fefefe, #eee);
 	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#fefefe), to(#eee));
 	background-image: -o-linear-gradient(#fefefe, #eee);
 	background-image: linear-gradient(#fefefe, #eee);
+	*/
 }
 
 .tabMenu li a:hover {
@@ -1302,17 +1304,18 @@ div.ui-widget-overlay {
 .tabMenu li.ui-state-active a {
 	color: #333 !important;
 	font-weight: bold;
+	background-color: rgba(230, 230, 230, .15);
 }
 
 .tabMenu li.ui-tabs-selected a {
 	background-color: #fefefe;	
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#fefefe));
-	background-image: -moz-linear-gradient(0% 0% 270deg, #fff, #fefefe);
-	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#fefefe));
-	background-image: -o-linear-gradient(#fff, #fefefe);
-	background-image: linear-gradient(#fff, #fefefe);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255, 255, 255, 1)), to(rgba(230, 230, 230, .15)));
+	background-image: -moz-linear-gradient(0% 0% 270deg, rgba(255, 255, 255, 1), rgba(230, 230, 230, .15));
+	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(rgba(255, 255, 255, 1)), to(rgba(230, 230, 230, .15)));
+	background-image: -o-linear-gradient(rgba(255, 255, 255, 1), rgba(230, 230, 230, .15));
+	background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(230, 230, 230, .15));
 	
-	border-bottom: 1px solid #fefefe;
+	border-bottom: 1px solid rgba(230, 230, 230, .15);
 }
 
 .tabMenu li.ui-tabs-selected a,
@@ -1329,7 +1332,7 @@ div.ui-widget-overlay {
 /* Tab Menu Content */
 
 .tabMenuContent {
-	background-color: #fefefe);
+	background-color: rgba(230, 230, 230, .15);
 	border: 1px solid #ccc !important;
 	z-index: 89; /* Prevents border overlay during transition */
 	display: block;
@@ -1355,17 +1358,6 @@ div.ui-widget-overlay {
 	position: absolute !important;
 	clip: rect(1px 1px 1px 1px);
 	clip: rect(1px,1px,1px,1px);
-}
-
-.ui-helper-reset {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	outline: 0;
-	line-height: 1.3;
-	text-decoration: none;
-	font-size: 100%;
-	list-style: none;
 }
 
 .ui-helper-clearfix:after {
