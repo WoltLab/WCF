@@ -31,7 +31,7 @@ class WCFACP extends WCF {
 		$this->initMagicQuotes();
 		$this->initDB();
 		$this->initPackage();
-		$this->initOptions();
+		$this->loadOptions();
 		$this->initCache();
 		$this->initSession();
 		$this->initLanguage();

@@ -116,7 +116,7 @@ class WCF {
 		// start initialization
 		$this->initMagicQuotes();
 		$this->initDB();
-		$this->initOptions();
+		$this->loadOptions();
 		$this->initCache();
 		$this->initSession();
 		$this->initLanguage();
@@ -307,25 +307,17 @@ class WCF {
 	/**
 	 * Includes the options file.
 	 * If the option file doesn't exist, the rebuild of it is started.
+	 * 
+	 * @param	string		$filename
 	 */
-	protected function initOptions() {
-		// get options file name
-		$optionsFile = $this->getOptionsFilename();
+	protected function loadOptions($filename = null) {
+		if ($filename === null) $filename = WCF_DIR.'options.inc.php';
 		
 		// create options file if doesn't exist
-		if (!file_exists($optionsFile) || filemtime($optionsFile) <= 1) {
-			\wcf\data\option\OptionEditor::rebuildFile($optionsFile);
+		if (!file_exists($filename) || filemtime($filename) <= 1) {
+			\wcf\data\option\OptionEditor::rebuildFile($filename);
 		}
-		require_once($optionsFile);
-	}
-	
-	/**
-	 * Returns the name of the options file.
-	 *
-	 * @return	string		name of the options file
-	 */
-	protected function getOptionsFilename() {
-		return WCF_DIR.'options.inc.php';
+		require_once($filename);
 	}
 	
 	/**
@@ -417,8 +409,8 @@ class WCF {
 	 * Loads an application.
 	 *
 	 * @param	wcf\system\database\statement\PreparedStatement	$statement
-	 * @param	wcf\data\application\Application	$application
-	 * @param	boolean	$isDependentApplication
+	 * @param	wcf\data\application\Application		$application
+	 * @param	boolean						$isDependentApplication
 	 */	
 	protected function loadApplication(PreparedStatement $statement, Application $application, $isDepedentApplication = false) {
 		$statement->execute(array($application->packageID));
@@ -445,6 +437,11 @@ class WCF {
 		else {
 			unset(self::$autoloadDirectories[$abbreviation]);
 			throw new exception\SystemException('Unable to run '.$row['package'].', '.$className.' missing.');
+		}
+		
+		// load options
+		if (!$isDepedentApplication) {
+			$this->loadOptions($packageDir.'options.inc.php');
 		}
 	}
 	
