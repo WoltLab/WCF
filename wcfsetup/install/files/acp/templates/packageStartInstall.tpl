@@ -95,7 +95,7 @@
 		
 		{@SID_INPUT_TAG}
  		<input type="hidden" name="action" value="{$action}" />
- 		{if $packageID != 0}<input type="hidden" name="activePackageID" value="{@$packageID}" />{/if}
+ 		{if $packageID != 0}<input type="hidden" name="packageID" value="{@$packageID}" />{/if}
 	</div>
 </form>
 

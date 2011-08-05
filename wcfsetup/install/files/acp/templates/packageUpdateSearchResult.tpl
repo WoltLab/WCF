@@ -10,7 +10,7 @@
 </header>
 
 <div class="contentHeader">
-	{pages print=true assign=pagesLinks link="index.php?page=PackageUpdateSearchResult&searchID=$searchID&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&packageID="|concat:SID_ARG_2ND_NOT_ENCODED}
+	{pages print=true assign=pagesLinks link="index.php?page=PackageUpdateSearchResult&searchID=$searchID&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"|concat:SID_ARG_2ND_NOT_ENCODED}
 </div>
 
 <form method="post" action="index.php?form=PackageUpdate">

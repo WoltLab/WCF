@@ -61,7 +61,7 @@
 	{if $package->parentPackageID}
 		<div class="formElement">
 			<p class="formFieldLabel">{lang}wcf.acp.package.view.parent{/lang}</p>
-			<p class="formField"><a href="index.php?page=PackageView&amp;activePackageID={@$package->parentPackageID}{@SID_ARG_2ND}">{$package->parentPackage()->getName()}</a></p>
+			<p class="formField"><a href="index.php?page=PackageView&amp;packageID={@$package->parentPackageID}{@SID_ARG_2ND}">{$package->parentPackage()->getName()}</a></p>
 		</div>
 	{/if}
 	<div class="formElement">
@@ -84,10 +84,10 @@
 	<nav class="largeButtons">
 		<ul>
 			{if PACKAGE_ID != $package->packageID}
-				{if $package->standalone && $package->package != 'com.woltlab.wcf'}<li><a href="{@RELATIVE_WCF_DIR}{$package->packageDir}acp/index.php?packageID={@$package->packageID}{@SID_ARG_2ND}" title="{lang}wcf.acp.package.view.button.makeActive{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageMakeActiveM.png" alt="" /> <span>{lang}wcf.acp.package.view.button.makeActive{/lang}</span></a></li>{/if}
-				{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $noDependentIsActive}<li><a href="index.php?page=Package&amp;action=startUninstall&amp;activePackageID={@$package->packageID}{@SID_ARG_2ND}" onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" title="{lang}wcf.acp.package.view.button.uninstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageUninstallM.png" alt="" /> <span>{lang}wcf.acp.package.view.button.uninstall{/lang}</span></a></li>{/if}
+				{if $package->standalone && $package->package != 'com.woltlab.wcf'}<li><a href="{@RELATIVE_WCF_DIR}{$package->packageDir}acp/index.php{@SID_ARG_1ST}" title="{lang}wcf.acp.package.view.button.makeActive{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageMakeActiveM.png" alt="" /> <span>{lang}wcf.acp.package.view.button.makeActive{/lang}</span></a></li>{/if}
+				{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $noDependentIsActive}<li><a href="index.php?page=Package&amp;action=startUninstall&amp;packageID={@$package->packageID}{@SID_ARG_2ND}" onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" title="{lang}wcf.acp.package.view.button.uninstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageUninstallM.png" alt="" /> <span>{lang}wcf.acp.package.view.button.uninstall{/lang}</span></a></li>{/if}
 			{/if}
-			{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}<li><a href="index.php?form=PackageStartInstall&amp;action=update&amp;activePackageID={@$package->packageID}{@SID_ARG_2ND}" title="{lang}wcf.acp.package.view.button.update{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateM.png" alt="" /> <span>{lang}wcf.acp.package.view.button.update{/lang}</span></a></li>{/if}
+			{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}<li><a href="index.php?form=PackageStartInstall&amp;action=update&amp;packageID={@$package->packageID}{@SID_ARG_2ND}" title="{lang}wcf.acp.package.view.button.update{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateM.png" alt="" /> <span>{lang}wcf.acp.package.view.button.update{/lang}</span></a></li>{/if}
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
 	</nav>
@@ -117,12 +117,12 @@
 				<tr>
 					<td class="columnIcon">
 						{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-							<a href="index.php?form=PackageStartInstall&amp;action=update&amp;activePackageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" /></a>
+							<a href="index.php?form=PackageStartInstall&amp;action=update&amp;packageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" /></a>
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/packageUpdateDisabledS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
 						{/if}
 						{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $package.package != 'com.woltlab.wcf' && $package.packageID != PACKAGE_ID}
-							<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="index.php?page=Package&amp;action=startUninstall&amp;activePackageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" /></a>
+							<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="index.php?page=Package&amp;action=startUninstall&amp;packageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" /></a>
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/deleteDisabledS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" />
 						{/if}
@@ -139,7 +139,7 @@
 							<img src="{@RELATIVE_WCF_DIR}icon/packageS.png" alt="" title="{lang}wcf.acp.package.list.other{/lang}" />
 						{/if}
 					</td>
-					<td class="columnText" title="{$package.packageDescription}"><p><a href="index.php?page=PackageView&amp;activePackageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
+					<td class="columnText" title="{$package.packageDescription}"><p><a href="index.php?page=PackageView&amp;packageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
 					<td class="columnText">{if $package.authorURL}<p><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package.authorURL|rawurlencode}" class="externalURL">{$package.author}</a>{else}{$package.author}</p>{/if}</td>
 					<td class="columnText"><p>{$package.packageVersion}</p></td>
 					<td class="columnDate"><p>{@$package.packageDate|date}</p></td>
@@ -182,12 +182,12 @@
 				<tr>
 					<td class="columnIcon">
 						{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-							<a href="index.php?form=PackageStartInstall&amp;action=update&amp;activePackageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" /></a>
+							<a href="index.php?form=PackageStartInstall&amp;action=update&amp;packageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" /></a>
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/packageUpdateDisabledS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
 						{/if}
 						{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $package.package != 'com.woltlab.wcf' && $package.packageID != PACKAGE_ID}
-							<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="index.php?page=Package&amp;action=startUninstall&amp;activePackageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" /></a>
+							<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="index.php?page=Package&amp;action=startUninstall&amp;packageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" /></a>
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/deleteDisabledS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" />
 						{/if}
@@ -204,7 +204,7 @@
 							<img src="{@RELATIVE_WCF_DIR}icon/packageS.png" alt="" title="{lang}wcf.acp.package.list.other{/lang}" />
 						{/if}
 					</td>
-					<td class="columnText" title="{$package.packageDescription}"><p><a href="index.php?page=PackageView&amp;activePackageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
+					<td class="columnText" title="{$package.packageDescription}"><p><a href="index.php?page=PackageView&amp;packageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
 					<td class="columnText">{if $package.authorURL}<p><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package.authorURL|rawurlencode}" class="externalURL">{$package.author}</a>{else}{$package.author}</p>{/if}</td>
 					<td class="columnText"><p>{$package.packageVersion}</p></td>
 					<td class="columnDate"><p>{@$package.packageDate|date}</p></td>

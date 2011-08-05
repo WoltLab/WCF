@@ -108,8 +108,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	 */
 	public static function checkDependencies() {
 		$packageID = 0;
-		if (isset($_REQUEST['activePackageID'])) {
-			$packageID = intval($_REQUEST['activePackageID']);
+		if (isset($_REQUEST['packageID'])) {
+			$packageID = intval($_REQUEST['packageID']);
 		}
 		
 		// get packages info

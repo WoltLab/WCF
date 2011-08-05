@@ -63,7 +63,7 @@ class PackageViewPage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['activePackageID'])) $this->packageID = intval($_REQUEST['activePackageID']);
+		if (isset($_REQUEST['packageID'])) $this->packageID = intval($_REQUEST['packageID']);
 	}
 	
 	/**

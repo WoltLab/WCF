@@ -91,7 +91,7 @@
 			<tbody>
 			{foreach from=$updatableInstances item=$package}
 				<tr>
-					<td class="columnText"><p><a href="index.php?page=Package&amp;action=install&amp;queueID={@$queueID}&amp;step=changeToUpdate&amp;updatePackageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
+					<td class="columnText"><p><a href="index.php?page=Package&amp;action=install&amp;queueID={@$queueID}&amp;step=changeToUpdate&amp;packageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
 					<td class="columnText"><p>{$package.packageVersion}</p></td>
 				</tr>
 			{/foreach}
