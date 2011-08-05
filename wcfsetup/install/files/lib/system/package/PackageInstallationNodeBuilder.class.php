@@ -319,13 +319,13 @@ class PackageInstallationNodeBuilder {
 				'package' => $this->installation->getArchive()->getPackageInfo('name'),
 				'packageName' => $this->installation->getArchive()->getPackageInfo('packageName'),
 				'instanceNo' => $instanceNo,
-				'packageDescription' => $this->installation->getArchive()->getPackageInfo('packageDescription'),
+				'packageDescription' => $this->installation->getArchive()->getPackageInfo('packageDescription') !== null ? $this->installation->getArchive()->getPackageInfo('packageDescription') : '',
 				'packageVersion' => $this->installation->getArchive()->getPackageInfo('version'),
 				'packageDate' => $this->installation->getArchive()->getPackageInfo('date'),
 				'packageURL' => $this->installation->getArchive()->getPackageInfo('packageURL'),
 				'standalone' => $this->installation->getArchive()->getPackageInfo('standalone'),
 				'author' => $this->installation->getArchive()->getAuthorInfo('author'),
-				'authorURL' => $this->installation->getArchive()->getAuthorInfo('authorURL'),
+				'authorURL' => $this->installation->getArchive()->getAuthorInfo('authorURL') !== null ? $this->installation->getArchive()->getAuthorInfo('authorURL') : '',
 				'installDate' => TIME_NOW,
 				'updateDate' => TIME_NOW
 			))
