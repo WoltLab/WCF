@@ -125,12 +125,14 @@ class StorageHandler extends SingletonFactory {
 	/**
 	 * Removes a data record from database.
 	 * 
-	 * @param	integer		$userID
+	 * @param	array		$userID
 	 * @param	string		$field
 	 * @param	integer		$packageID
 	 */
-	public function reset($userID, $field, $packageID = PACKAGE_ID) {
-		$this->resetFields[$userID][$packageID][] = $field;
+	public function reset(array $userIDs, $field, $packageID = PACKAGE_ID) {
+		foreach ($userIDs as $userID) {
+			$this->resetFields[$userID][$packageID][] = $field;
+		}
 	}
 	
 	/**
