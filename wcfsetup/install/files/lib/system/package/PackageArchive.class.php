@@ -361,7 +361,7 @@ class PackageArchive {
 		
 		if ($this->package != null) {
 			$validFromVersion = null;
-			foreach ($this->update as $fromVersion => $update) {
+			foreach ($this->instructions['update'] as $fromVersion => $update) {
 				if (Package::checkFromversion($this->package->packageVersion, $fromVersion)) {
 					$validFromVersion = $fromVersion;
 					break;
