@@ -138,7 +138,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		$sql = "ALTER TABLE ".$tableName." ADD";
 		
 		// add index name
-		if (!empty($indexName)) $sql .= " CONSTRAINT ".$indexName;
+		if (!empty($indexName)) $sql .= " CONSTRAINT `".$indexName."`";
 		
 		// add columns
 		$sql .= " FOREIGN KEY (".str_replace(',', ',', preg_replace('/\s+/', '', $indexData['columns'])).")";
@@ -169,7 +169,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @see wcf\system\database\editor\DatabaseEditor::dropForeignKey()
 	 */
 	public function dropForeignKey($tableName, $indexName) {
-		$sql = "ALTER TABLE ".$tableName." DROP FOREIGN KEY ".$indexName;
+		$sql = "ALTER TABLE ".$tableName." DROP FOREIGN KEY `".$indexName."`";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 	}
