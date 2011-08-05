@@ -73,10 +73,10 @@
 						{/if}
 						
 						{if $availableUpdate.packageDescription}
-							<dl>
-								<dt>{lang}wcf.acp.package.description{/lang}</dt>
-								<dd>{$availableUpdate.packageDescription}</dd>
-							</dl>
+							<div class="formElement">
+								<p class="formFieldLabel">{lang}wcf.acp.package.description{/lang}</p>
+								<p class="formField">{$availableUpdate.packageDescription}</p>
+							</div>
 						{/if}
 					</div>
 					<hr />

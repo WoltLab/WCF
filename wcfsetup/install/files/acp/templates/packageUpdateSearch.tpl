@@ -91,14 +91,12 @@
 							</div>
 						</div>
 						
-						<div class="formElement">
-							<div class="formFieldLabel">
-								<label for="author">{lang}wcf.acp.packageUpdate.search.author{/lang}</label>
-							</div>
-							<div class="formField">
-								<input type="text" id="author" name="author" value="{$author}" class="inputText" />
-							</div>
-						</div>
+						<dl>
+							<dt><label for="author">{lang}wcf.acp.packageUpdate.search.author{/lang}</label></dt>
+							<dd>
+								<input type="text" id="author" name="author" value="{$author}" class="medium" />
+							</dd>
+						</dl>
 						
 						<div class="formElement">
 							<div class="formFieldLabel">

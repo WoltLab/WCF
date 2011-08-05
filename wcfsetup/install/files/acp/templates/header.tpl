@@ -160,4 +160,4 @@
 				<!-- /sidebar menu -->
 			</aside>
 			
-			<section id="content">
+			<section id="content" class="content">

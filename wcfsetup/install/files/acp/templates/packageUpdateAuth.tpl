@@ -38,52 +38,33 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.packageUpdate.auth.input{/lang}</legend>
 				
-				<div id="loginUsernameDiv" class="formElement{if $errorField == 'loginPassword'} formError{/if}">
-					<div class="formFieldLabel">
-						<label for="loginUsername">{lang}wcf.acp.packageUpdate.auth.loginUsername{/lang}</label>
-					</div>
-					<div class="formField">
-						<input type="text" id="loginUsername" name="loginUsername" value="{$loginUsername}" class="inputText" />
-					</div>
-					<div id="loginUsernameHelpMessage" class="formFieldDesc hidden">
-						<p>{lang}wcf.acp.packageUpdate.auth.loginUsername.description{/lang}</p>
-					</div>
-				</div>
-				<script type="text/javascript">//<![CDATA[
-					inlineHelp.register('loginUsername');
-				//]]></script>
+				<dl id="loginUsernameDiv" class="formElement{if $errorField == 'loginPassword'} formError{/if}">
+					<dt><label for="loginUsername">{lang}wcf.acp.packageUpdate.auth.loginUsername{/lang}</label></dt>
+					<dd>
+						<input type="text" id="loginUsername" name="loginUsername" value="{$loginUsername}" class="long" />
+						<small id="loginUsernameHelpMessage"><p>{lang}wcf.acp.packageUpdate.auth.loginUsername.description{/lang}</p></small>
+					</dd>
+				</dl>
 				
-				<div id="loginPasswordDiv" class="formElement{if $errorField == 'loginPassword'} formError{/if}">
-					<div class="formFieldLabel">
-						<label for="loginPassword">{lang}wcf.acp.packageUpdate.auth.loginPassword{/lang}</label>
-					</div>
-					<div class="formField">
-						<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="inputText" />
+				<dl id="loginPasswordDiv"{if $errorField == 'loginPassword'} class="formError"{/if}>
+					<dt><label for="loginPassword">{lang}wcf.acp.packageUpdate.auth.loginPassword{/lang}</label></dt>
+					<dd>
+						<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="medium" />
 						{if $errorField == 'loginPassword'}
-							<p class="innerError">
+							<small class="innerError">
 								{if $errorType == 'invalid'}{lang}wcf.acp.packageUpdate.auth.error{/lang}{/if}
-							</p>
+							</small>
 						{/if}
-					</div>
-					<div id="loginPasswordHelpMessage" class="formFieldDesc hidden">
-						<p>{lang}wcf.acp.packageUpdate.auth.loginPassword.description{/lang}</p>
-					</div>
-				</div>
-				<script type="text/javascript">//<![CDATA[
-					inlineHelp.register('loginPassword');
-				//]]></script>
+						<small id="loginPasswordHelpMessage">{lang}wcf.acp.packageUpdate.auth.loginPassword.description{/lang}</small>
+					</dd>
+				</dl>
 				
-				<div id="saveAuthDataDiv" class="formElement">
-					<div class="formField">
+				<dl id="saveAuthDataDiv">
+					<dt>
 						<label><input type="checkbox" id="saveAuthData" name="saveAuthData" value="1" {if $saveAuthData == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.auth.save{/lang}</label>
-					</div>
-					<div id="saveAuthDataHelpMessage" class="formFieldDesc hidden">
-						<p>{lang}wcf.acp.packageUpdate.auth.save.description{/lang}</p>
-					</div>
-				</div>
-				<script type="text/javascript">//<![CDATA[
-					inlineHelp.register('saveAuthData');
-				//]]></script>
+					</dt>
+					<dd id="saveAuthDataHelpMessage"><small>{lang}wcf.acp.packageUpdate.auth.save.description{/lang}</small></dd>
+				</dl>
 			</fieldset>
 			
 		</div>

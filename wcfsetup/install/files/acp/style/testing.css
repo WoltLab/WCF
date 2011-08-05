@@ -15,8 +15,7 @@
 
 body {
 	font-family: 'Trebuchet MS', Arial, sans-serif;
-	font-size: .8em;
-	
+	font-size: 80%;
 	background-color: #29374a;
 }
 
@@ -177,6 +176,10 @@ nav.mainMenu ul li {
 	transition: all .2s linear;
 }
 
+nav.mainMenu ul li:only-child {
+	cursor: resize !important;
+}
+
 nav.mainMenu ul li:hover {
 	color: #fff;
 }
@@ -241,7 +244,7 @@ div.main > div {
 
 /* -- -- -- -- -- Content -- -- -- -- -- */
 
-section#content {
+section.content {
 	background-color: #fff;
 	display: table-cell;
 	padding: 25px;
@@ -250,7 +253,9 @@ section#content {
 	z-index: 100;
 }
 
-
+div.main > div section:only-child {
+	display: block !important;
+}
 
 /* -- -- -- -- -- Sidebar -- -- -- -- -- */
 
