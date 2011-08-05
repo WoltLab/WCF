@@ -154,7 +154,7 @@ nav.mainMenu ul {
 	display: table-row;
 }
 
-nav.mainMenu li {
+nav.mainMenu ul li {
 	font-size: 123%;
 	font-weight: normal;
 	color: #69c;
@@ -177,11 +177,11 @@ nav.mainMenu li {
 	transition: all .2s linear;
 }
 
-nav.mainMenu li:hover {
+nav.mainMenu ul li:hover {
 	color: #fff;
 }
 
-nav.mainMenu li.activeMenuItem {
+nav.mainMenu ul li.activeMenuItem {
 	font-weight: bold;
 	color: #369;
 	text-shadow: 0 1px 0 #fff;
@@ -391,7 +391,7 @@ footer nav.footerNavigation ul li {
 /* Main Heading */
 
 .mainHeading {
-	margin: 15px 0;
+	margin: 0 0 15px;
 	position: relative;
 }
 
@@ -447,13 +447,18 @@ footer nav.footerNavigation ul li {
 fieldset {
 	border: 1px solid #ccc;
 	border-radius: 7px;
-	margin: 7px 0 7px;
+	background-color: rgba(230, 230, 230, .1);
+	margin: 15px 0;
 	padding: 15px;
 }
 
 fieldset legend {
 	color: #999;
 	padding: 0 7px 0;
+}
+
+fieldset legend ~ p {
+	margin-bottom: 14px;
 }
 
 fieldset p.description {
@@ -471,6 +476,37 @@ fieldset > ul li {
 
 
 
+/* -- -- -- -- -- Tabbed Content -- -- -- -- -- */
+
+dl {
+	clear: both;
+	margin-bottom: 7px;
+}
+
+dl small {
+	color: #999;
+	font-size: 85%;
+	margin: 3px 0 7px;
+	display: inline-block;
+}
+
+dl.disabled dt {
+	color: #777;
+}
+
+dl dt {
+	float: left;
+	text-align: right;
+	width: 230px;
+	margin-top: 5px; /* not so nice */
+}
+
+dl dd {
+	margin-left: 250px;
+}
+
+
+
 /* -- -- -- -- -- Forms -- -- -- -- -- */
 
 /* Globals */
@@ -484,26 +520,6 @@ label {
 div.formElement {
 	clear: both;
 	margin-bottom: 14px;
-}
-
-div.formFieldLabel {
-	float: left;
-	padding-top: 5px;
-	text-align: right;
-	width: 230px;
-}
-
-div.formField {
-	margin-left: 250px;
-}
-
-div.formFieldDesc {
-	margin: 3px 0 7px 250px;
-}
-
-div.formFieldDesc p {
-	color: #999 !important;
-	font-size: 85%;
 }
 
 div.formGroupLabel label {
@@ -588,6 +604,22 @@ textarea:focus {
 
 select {
 	width: 100%;
+}
+
+input.tiny {
+	width: 100px;
+}
+
+input.small {
+	width: 10%;
+}
+
+input.medium {
+	width: 50%;
+}
+
+input.long {
+	width: 95%;
 }
 
 
@@ -1075,47 +1107,6 @@ p.warning {
 	border: 1px solid #660;
 }
 
-
-/* -- -- -- -- -- ToDo: Fieldset -- -- -- -- -- */
-
-fieldset {
-	background-color: rgba(230, 230, 230, .1);
-}
-
-fieldset legend ~ p {
-	margin-bottom: 14px;
-}
-
-
-
-/* -- -- -- -- -- Tabbed Content -- -- -- -- -- */
-
-dl {
-	clear: both;
-	margin-bottom: 7px;
-}
-
-dl small {
-	color: #999;
-	font-size: 85%;
-	margin: 3px 0 7px 250px;
-	display: inline-block;
-}
-
-dl.disabled dt {
-	color: #777;
-}
-
-dl dt {
-	float: left;
-	text-align: right;
-	width: 230px;
-	margin-top: 5px; /* not so nice */
-}
-
-dl dd {
-	margin-left: 250px;
-}
 
 
 
