@@ -510,7 +510,7 @@ WCF.Action.Proxy.prototype = {
 	 */
 	_init: function() {
 		if ($.isFunction(this.options.init)) {
-			this.options.init();
+			this.options.init(this);
 		}
 		
 		$('<div id="actionProxyLoading" style="display: none;">'+WCF.Language.get('wcf.global.loading')+'</div>').appendTo($('body'));
