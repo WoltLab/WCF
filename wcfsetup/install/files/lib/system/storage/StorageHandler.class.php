@@ -119,7 +119,7 @@ class StorageHandler extends SingletonFactory {
 		$this->cache[$userID][$packageID][$field] = $fieldValue;
 		
 		// flag key as outdated
-		self::reset($userID, $field, $packageID);
+		self::reset(array($userID), $field, $packageID);
 	}
 	
 	/**
