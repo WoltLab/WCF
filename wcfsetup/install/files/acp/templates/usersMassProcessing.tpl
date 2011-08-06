@@ -90,30 +90,26 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.user.search.conditions.general{/lang}</legend>
 				
-				<div class="formElement">
-					<div class="formFieldLabel">
-						<label for="username">{lang}wcf.user.username{/lang}</label>
-					</div>
-					<div class="formField">
-						<input type="text" id="username" name="username" value="{$username}" class="inputText" />
+				<dl>
+					<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
+					<dd>
+						<input type="text" id="username" name="username" value="{$username}" class="medium" />
 						<script type="text/javascript">
 							//<![CDATA[
 							suggestion.enableMultiple(false);
 							suggestion.init('username');
 							//]]>
 						</script>
-					</div>
-				</div>
+					</dd>
+				</dl>
 				
 				{if $__wcf->session->getPermission('admin.user.canEditMailAddress')}
-					<div class="formElement">
-						<div class="formFieldLabel">
-							<label for="email">{lang}wcf.user.email{/lang}</label>
-						</div>
-						<div class="formField">	
-							<input type="email" id="email" name="email" value="{$email}" class="inputText" />
-						</div>
-					</div>
+					<dl>
+						<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
+						<dd>	
+							<input type="email" id="email" name="email" value="{$email}" class="medium" />
+						</dd>
+					</dl>
 				{/if}
 				
 				{if $availableGroups|count}
@@ -218,65 +214,46 @@
 					<legend>{lang}wcf.acp.user.sendMail.mail{/lang}</legend>
 					
 					<div>
-						<div id="subjectDiv" class="formElement{if $errorField == 'subject'} formError{/if}">
-							<div class="formFieldLabel">
+						<dl id="subjectDiv"{if $errorField == 'subject'} class="formError"{/if}>
+							<dt>
 								<label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label>
-							</div>
-							<div class="formField">
-								<input type="text" id="subject" name="subject" value="{$subject}" class="inputText" />
+							</dt>
+							<dd>
+								<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
 								{if $errorField == 'subject'}
-									<p class="innerError">
+									<small class="innerError">
 										{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-									</p>
+									</small>
 								{/if}
-							</div>
-							<div id="subjectHelpMessage" class="formFieldDesc hidden">
-								<p>{lang}wcf.acp.user.sendMail.subject.description{/lang}</p>
-							</div>
-						</div>
-						<script type="text/javascript">//<![CDATA[
-							inlineHelp.register('subject');
-						//]]></script>
+								<small id="subjectHelpMessage">{lang}wcf.acp.user.sendMail.subject.description{/lang}</small>
+							</dd>
+						</dl>
 						
-						<div id="fromDiv" class="formElement{if $errorField == 'from'} formError{/if}">
-							<div class="formFieldLabel">
-								<label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label>
-							</div>
-							<div class="formField">
-								<input type="email" id="from" name="from" value="{$from}" class="inputText" />
+						<dl id="fromDiv"{if $errorField == 'from'} class="formError"{/if}>
+							<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
+							<dd>
+								<input type="email" id="from" name="from" value="{$from}" class="medium" />
 								{if $errorField == 'from'}
-									<p class="innerError">
+									<small class="innerError">
 										{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-									</p>
+									</small>
 								{/if}
-							</div>
-							<div id="fromHelpMessage" class="formFieldDesc hidden">
-								{lang}wcf.acp.user.sendMail.from.description{/lang}
-							</div>
-						</div>
-						<script type="text/javascript">//<![CDATA[
-							inlineHelp.register('from');
-						//]]></script>
-					
-						<div id="textDiv" class="formElement{if $errorField == 'text'} formError{/if}">
-							<div class="formFieldLabel">
-								<label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label>
-							</div>
-							<div class="formField">
+								<small id="fromHelpMessage">{lang}wcf.acp.user.sendMail.from.description{/lang}</small>
+							</dd>
+						</dl>
+						
+						<dl id="textDiv"{if $errorField == 'text'} class="formError"{/if}>
+							<dt><label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label></dt>
+							<dd>
 								<textarea id="text" name="text" rows="15" cols="40">{$text}</textarea>
 								{if $errorField == 'text'}
-									<p class="innerError">
+									<small class="innerError" class="long">
 										{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-									</p>
+									</small>
 								{/if}
-							</div>
-							<div id="textHelpMessage" class="formFieldDesc hidden">
-								<p>{lang}wcf.acp.user.sendMail.text.description{/lang}</p>
-							</div>
-						</div>
-						<script type="text/javascript">//<![CDATA[
-							inlineHelp.register('text');
-						//]]></script>
+								<small id="textHelpMessage">{lang}wcf.acp.user.sendMail.text.description{/lang}</small>
+							</dd>
+						</dl>
 						
 						<div class="formElement">
 							<div class="formField">
@@ -310,23 +287,19 @@
 							</div>
 						</div>
 					
-						<div id="separatorDiv" class="formElement">
-							<div class="formFieldLabel">
-								<label for="separator">{lang}wcf.acp.user.exportEmailAddress.separator{/lang}</label>
-							</div>
-							<div class="formField">
+						<dl id="separatorDiv">
+							<dt><label for="separator">{lang}wcf.acp.user.exportEmailAddress.separator{/lang}</label></dt>
+							<dd>
 								<textarea id="separator" name="separator" rows="2" cols="40">{$separator}</textarea>
-							</div>
-						</div>
+							</dd>
+						</dl>
 						
-						<div id="textSeparatorDiv" class="formElement">
-							<div class="formFieldLabel">
-								<label for="textSeparator">{lang}wcf.acp.user.exportEmailAddress.textSeparator{/lang}</label>
-							</div>
-							<div class="formField">
-								<input type="text" id="textSeparator" name="textSeparator" value="{$textSeparator}" class="inputText" />
-							</div>
-						</div>
+						<dl id="textSeparatorDiv">
+							<dt><label for="textSeparator">{lang}wcf.acp.user.exportEmailAddress.textSeparator{/lang}</label></dt>
+							<dd>
+								<input type="text" id="textSeparator" name="textSeparator" value="{$textSeparator}" class="medium" />
+							</dd>
+						</dl>
 					</div>
 				</fieldset>
 			</div>
@@ -339,9 +312,9 @@
 						<div class="formField{if $errorField == 'assignToGroupIDArray'} formError{/if}">
 							{htmlCheckboxes options=$availableGroups name=assignToGroupIDArray selected=$assignToGroupIDArray}
 							{if $errorField == 'assignToGroupIDArray'}
-								<p class="innerError">
+								<small class="innerError">
 									{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-								</p>
+								</small>
 							{/if}
 						</div>
 					</div>
@@ -353,8 +326,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
-		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		{@SID_INPUT_TAG}
  	</div>
 </form>

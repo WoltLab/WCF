@@ -165,6 +165,7 @@
 			<h1><a onclick="openList('dependentPackages')">{lang}wcf.acp.package.view.dependentPackages{/lang}</a></h1>
 			<h2>{lang}wcf.acp.package.view.dependentPackages.description{/lang}</h2>
 		</hgroup>
+		
 		<table id="dependentPackages">
 			<thead>
 				<tr class="tableHead">

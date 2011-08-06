@@ -492,7 +492,7 @@ dl small {
 	color: #999;
 	font-size: 85%;
 	margin: 3px 0 7px;
-	display: inline-block;
+	display: block;
 }
 
 dl.disabled dt {
@@ -611,22 +611,25 @@ select {
 	width: 100%;
 }
 
-input.tiny {
+.tiny {
 	width: 100px;
 }
 
-input.small {
+.small {
 	width: 10%;
 }
 
-input.medium {
+.medium {
 	width: 50%;
 }
 
-input.long {
+.long {
 	width: 95%;
 }
 
+.auto {
+	width: auto;
+}
 
 
 /* -- -- -- -- -- Large Buttons -- -- -- -- -- */
@@ -858,7 +861,15 @@ input[type='submit']:active,
 	padding: 6px 7px;
 }
 
-.menu a {
+.menu ul {
+	text-align: center;
+}
+
+.menu ul li {
+	display: inline;
+}
+
+.menu ul li a {
 	color: #eee !important;
 	font-size: 85%;
 	text-decoration: none;
@@ -875,13 +886,13 @@ input[type='submit']:active,
 	transition: color .1s linear;
 }
 
-.menu a:hover {
+.menu ul li a:hover {
 	color: #fff !important;
 	border: 1px solid rgba(0, 0, 0, .3);
 	background-color: rgba(0, 0, 0, .2);
 }
 
-.menu a:active, .menu a:focus, .menu a.active {
+.menu ul li a:active, .menu ul li a:focus, .menu ul li a.active {
 	border: 1px solid rgba(0, 0, 0, .5);
 	
 	-webkit-box-shadow: inset 0 2px 15px rgba(0, 0, 0, .5);

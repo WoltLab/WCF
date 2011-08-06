@@ -41,7 +41,6 @@
 						{/if}
 						<small id="masterPasswordHelpMessage">{lang}wcf.acp.masterPassword.init.description{/lang}</small>
 					</dd>
-					
 				</dl>
 				
 				<dl{if $errorField == 'confirmMasterPassword'} class="formError"{/if}>

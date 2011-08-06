@@ -42,25 +42,18 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.group.data{/lang}</legend>
 				
-				<div id="groupNameDiv" class="formElement{if $errorType.groupName|isset} formError{/if}">
-					<div class="formFieldLabel">
-						<label for="groupName">{lang}wcf.acp.group.groupName{/lang}</label>
-					</div>
-					<div class="formField">
-						<input type="text" id="groupName" name="groupName" value="{$groupName}" class="inputText" />
+				<dl id="groupNameDiv"{if $errorType.groupName|isset} class="formError"{/if}>
+					<dt><label for="groupName">{lang}wcf.acp.group.groupName{/lang}</label></dt>
+					<dd>
+						<input type="text" id="groupName" name="groupName" value="{$groupName}" class="medium" />
 						{if $errorType.groupName|isset}
-							<p class="innerError">
+							<small class="innerError">
 								{if $errorType.groupName == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-							</p>
+							</small>
 						{/if}
-					</div>
-					<div id="groupNameHelpMessage" class="formFieldDesc hidden">
-						<p>{lang}wcf.acp.group.groupName.description{/lang}</p>
-					</div>
-				</div>
-				<script type="text/javascript">//<![CDATA[
-					inlineHelp.register('groupName');
-				//]]></script>
+						<small id="groupNameHelpMessage">{lang}wcf.acp.group.groupName.description{/lang}</small>
+					</dd>
+				</dl>
 				
 				{if $additionalFields|isset}{@$additionalFields}{/if}
 			</fieldset>

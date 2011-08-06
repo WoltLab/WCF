@@ -45,6 +45,7 @@
 						<small id="serverURLHelpMessage">{lang}wcf.acp.updateServer.serverURL.description{/lang}</small>
 					</dd>
 				</dl>
+				
 				<dl id="loginUsernameDiv">
 					<dt><label for="loginUsername">{lang}wcf.acp.updateServer.loginUsername{/lang}</label></dt>
 					<dd>
@@ -52,6 +53,7 @@
 						<small id="loginUsernameHelpMessage">{lang}wcf.acp.updateServer.loginUsername.description{/lang}</small>
 					</dd>
 				</dl>
+				
 				<dl id="loginPasswordDiv">
 					<dt><label for="loginPassword">{lang}wcf.acp.updateServer.loginPassword{/lang}</label></dt>
 					<dd>
