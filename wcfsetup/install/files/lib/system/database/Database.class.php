@@ -256,6 +256,16 @@ abstract class Database {
 	}
 	
 	/**
+	 * Returns the given identifier quoted.
+	 * 
+	 * @param	string		$identifier
+	 * @return	string
+	 */
+	public function quoteIdentifier($identifier) {
+		return $identifier;
+	}
+	
+	/**
 	 * Gets the sql version.
 	 *
 	 * @return 	string

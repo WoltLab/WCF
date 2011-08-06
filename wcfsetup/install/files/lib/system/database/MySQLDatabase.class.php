@@ -91,4 +91,11 @@ class MySQLDatabase extends Database {
 		parent::setAttributes();
 		$this->pdo->setAttribute(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
 	}
+	
+	/**
+	 * @see	wcf\system\database\Database::quoteIdentifier()
+	 */
+	public function quoteIdentifier($identifier) {
+		return '`'.$identifier.'`';
+	}
 }

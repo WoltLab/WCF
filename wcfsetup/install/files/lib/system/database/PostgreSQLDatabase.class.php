@@ -15,12 +15,12 @@ use wcf\util\StringStack;
  */
 class PostgreSQLDatabase extends Database {
 	/**
-	 * @see wcf\system\database\Database::$editorClassName
+	 * @see Database::$editorClassName
 	 */
 	protected $editorClassName = 'wcf\system\database\editor\PostgreSQLDatabaseEditor';
 	
 	/**
-	 * @see wcf\system\database\Database::connect()
+	 * @see Database::connect()
 	 */
 	public function connect() {
 		if (!$this->port) $this->port = 5432; // postgresql default port
@@ -51,14 +51,14 @@ class PostgreSQLDatabase extends Database {
 	}
 	
 	/**
-	 * @see wcf\system\database\Database::isSupported()
+	 * @see Database::isSupported()
 	 */
 	public static function isSupported() {
 		return (extension_loaded('PDO') && extension_loaded('pdo_pgsql'));
 	}
 	
 	/**
-	 * @see	wcf\system\database\Database::prepareStatement()
+	 * @see	Database::prepareStatement()
 	 */
 	public function prepareStatement($statement, $limit = 0, $offset = 0) {
 		$statement = self::fixQuery($statement);
@@ -66,7 +66,7 @@ class PostgreSQLDatabase extends Database {
 	}
 
 	/**
-	 * @see wcf\system\database\Database::getInsertID()
+	 * @see Database::getInsertID()
 	 */
 	public function getInsertID($table, $field) {
 		try {
@@ -102,11 +102,18 @@ class PostgreSQLDatabase extends Database {
 	}
 	
 	/**
-	 * @see wcf\system\database\Database::escapeString()
+	 * @see Database::escapeString()
 	 */
 	public function escapeString($string) {
 		$string = str_replace("\x00", "\\x00", $string); // escape nul bytes
 		return parent::escapeString($string);
+	}
+	
+	/**
+	 * @see	wcf\system\database\Database::quoteIdentifier()
+	 */
+	public function quoteIdentifier($identifier) {
+		return '"'.$identifier.'"';
 	}
 	
 	/**
