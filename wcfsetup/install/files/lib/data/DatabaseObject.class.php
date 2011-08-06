@@ -120,7 +120,7 @@ abstract class DatabaseObject implements IStorableObject {
 	 * @see	wcf\data\IStorableObject::getDatabaseTableAlias()
 	 */
 	public static function getDatabaseTableAlias() {
-		return static::$databaseTableName;
+		return WCF::getDB()->quoteIdentifier(static::$databaseTableName);
 	}
 	
 	/**
