@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\package\Package;
 use wcf\system\package\PackageInstallationSQLParser;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
@@ -37,7 +38,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			
 			if ($package->standalone == 1) {
 				// package is standalone
-				$packageAbbr = $package->getAbbreviation();
+				$packageAbbr = Package::getAbbreviation($package->package);
 				$tablePrefix = WCF_N.'_'.$package->instanceNo.'_';
 				
 				// Replace the variable xyz1_1 with $tablePrefix in the table names.
