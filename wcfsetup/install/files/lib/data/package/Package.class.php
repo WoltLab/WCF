@@ -5,6 +5,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
