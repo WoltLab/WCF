@@ -32,8 +32,8 @@
 								{if $errorType == 'uploadFailed'}{lang}wcf.acp.option.import.error.uploadFailed{/lang}{/if}
 							</small>
 						{/if}
+						<small id="optionImportHelpMessage">{lang}wcf.acp.option.import.upload.description{/lang}</small>
 					</dd>
-					<small id="optionImportHelpMessage">{lang}wcf.acp.option.import.upload.description{/lang}</small>
 				</dl>
 			</fieldset>
 			
@@ -53,14 +53,14 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.option.export{/lang}</legend>
 		
-			<div id="optionExportDiv" class="formElement">
-				<div class="formField">
-					<a href="index.php?action=OptionExport{@SID_ARG_2ND}" id="optionExport">{lang}wcf.acp.option.export.download{/lang}</a>
-				</div>
-				<div id="optionExportHelpMessage">
-					<p>{lang}wcf.acp.option.export.download.description{/lang}</p>
-				</div>
-			</div>
+			<dl id="optionExportDiv">
+				<dt><label><!-- ToDo: Download label --></label></dt>
+				<dd><p><a href="index.php?action=OptionExport{@SID_ARG_2ND}" id="optionExport" class="largeButton">{lang}wcf.acp.option.export.download{/lang}</a></p></dd>
+				<small>{lang}wcf.acp.option.export.download.description{/lang}</small>
+			</dl>
+			<script type="text/javascript">//<![CDATA[
+				inlineHelp.register('optionExport');
+			//]]></script>
 		</fieldset>
 		
 		{if $additionalFields|isset}{@$additionalFields}{/if}

@@ -130,8 +130,8 @@
  	<input type="hidden" name="action" value="startUninstall" />
  	<input type="hidden" name="packageID" value="{@$packageObj->packageID}" />
  	<input type="hidden" name="send" value="1" />
-	<input type="button" accesskey="c" value="{lang}wcf.global.button.back{/lang}" onclick="document.location.href=fixURL('index.php?page=PackageView&amp;packageID={@$packageID}{@SID_ARG_2ND}')" />
-	<input type="button" accesskey="s" id="uninstallPackage" value="{lang}wcf.global.button.next{/lang}" />
+	<input type="button" value="{lang}wcf.global.button.back{/lang}" onclick="document.location.href=fixURL('index.php?page=PackageView&amp;packageID={@$packageID}{@SID_ARG_2ND}')" accesskey="c" />
+	<input type="button" id="uninstallPackage" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
 </div>
 
 {include file='footer'}

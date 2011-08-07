@@ -81,15 +81,15 @@
 					<legend>{lang}wcf.acp.packageUpdate.search.conditions{/lang}</legend>
 					
 					<div>
-						<div class="formElement">
-							<div class="formFieldLabel">
+						<dl>
+							<dt>
 								<label for="packageName">{lang}wcf.acp.packageUpdate.search.packageName{/lang}</label>
-							</div>
-							<div class="formField">
-								<input type="text" id="packageName" name="packageName" value="{$packageName}" class="inputText" />
+							</dt>
+							<dd>
+								<input type="text" id="packageName" name="packageName" value="{$packageName}" class="large" />
 								<label><input type="checkbox" name="searchDescription" value="1" {if $searchDescription == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.searchDescription{/lang}</label>
-							</div>
-						</div>
+							</dd>
+						</dl>
 						
 						<dl>
 							<dt><label for="author">{lang}wcf.acp.packageUpdate.search.author{/lang}</label></dt>

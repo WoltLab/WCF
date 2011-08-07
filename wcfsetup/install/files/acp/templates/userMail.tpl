@@ -72,39 +72,36 @@
 				<div>
 					<dl id="subjectDiv"{if $errorField == 'subject'} class="formError"{/if}>
 						<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
-						<dd><input type="text" id="subject" name="subject" value="{$subject}" class="inputText" /></dd>
-						{if $errorField == 'subject'}
-							<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</small>
-						{/if}
-						<small id="subjectHelpMessage">{lang}wcf.acp.user.sendMail.subject.description{/lang}</small>
+						<dd>
+							<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
+							{if $errorField == 'subject'}
+								<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</small>
+							{/if}
+							<small id="subjectHelpMessage">{lang}wcf.acp.user.sendMail.subject.description{/lang}</small>
+						</dd>
 					</dl>
-					<script type="text/javascript">//<![CDATA[
-						inlineHelp.register('subject');
-					//]]></script>
 					
 					<dl id="fromDiv"{if $errorField == 'from'} class="formError"{/if}>
 						<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
-						<dd><input type="text" id="from" name="from" value="{$from}" class="inputText" /></dd>
-						{if $errorField == 'from'}
-							<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</small>
-						{/if}
-						<small id="fromHelpMessage">{lang}wcf.acp.user.sendMail.from.description{/lang}</small><!-- ToDo: Language variable contains paragraphs! -->
+						<dd>
+							<input type="text" id="from" name="from" value="{$from}" class="medium" />
+							{if $errorField == 'from'}
+								<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</small>
+							{/if}
+							<small id="fromHelpMessage">{lang}wcf.acp.user.sendMail.from.description{/lang}</small><!-- ToDo: Language variable contains paragraphs! -->
+						</dd>
 					</dl>
-					<script type="text/javascript">//<![CDATA[
-						inlineHelp.register('from');
-					//]]></script>
-				
+					
 					<dl id="textDiv"{if $errorField == 'text'} class="formError"{/if}>
-						<dt class="formFieldLabel"><label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label></dt>
-						<dd class="formField"><textarea id="text" name="text" rows="15" cols="40">{$text}</textarea></dd>
-						{if $errorField == 'text'}
-							<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</small>
-						{/if}
-						<small id="textHelpMessage" class="formFieldDesc hidden">{lang}wcf.acp.user.sendMail.text.description{/lang}</small>
+						<dt><label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label></dt>
+						<dd>
+							<textarea id="text" name="text" rows="15" cols="40" class="long">{$text}</textarea>
+							{if $errorField == 'text'}
+								<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</small>
+							{/if}
+							<small id="textHelpMessage">{lang}wcf.acp.user.sendMail.text.description{/lang}</small>
+						</dd>
 					</dl>
-					<script type="text/javascript">//<![CDATA[
-						inlineHelp.register('text');
-					//]]></script>
 					
 					<dl>
 						<dt></dt>

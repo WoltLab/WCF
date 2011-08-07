@@ -68,7 +68,7 @@
 								{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.notValid{/lang}{/if}
 							</small>
 						{/if}
-						<small id="startMinuteHelpMessage"><p>{lang}wcf.acp.cronjob.startMinute.description{/lang}</small></small>
+						<small id="startMinuteHelpMessage">{lang}wcf.acp.cronjob.startMinute.description{/lang}</small>
 					</dd>
 				</dl>
 				
@@ -81,7 +81,7 @@
 								{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.notValid{/lang}{/if}
 							</small>
 						{/if}
-						<small id="startHourHelpMessage"><p>{lang}wcf.acp.cronjob.startHour.description{/lang}</small></small>
+						<small id="startHourHelpMessage">{lang}wcf.acp.cronjob.startHour.description{/lang}</small>
 					</dd>
 				</dl>
 				

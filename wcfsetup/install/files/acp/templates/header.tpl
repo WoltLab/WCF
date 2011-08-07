@@ -76,7 +76,7 @@
 <body id="tpl{$templateName|ucfirst}">
 	<a id="top"></a>
 	<!-- HEADER -->
-	<header class="pageHeader">
+	<header id="pageHeader" class="pageHeader">
 		<div>
 			<!-- top menu -->
 			<nav id="topMenu" class="topMenu">
