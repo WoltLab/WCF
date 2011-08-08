@@ -57,7 +57,8 @@
 						
 						<dl id="version-{@$availableUpdate.packageID}Div">
 							<dt><label for="version-{@$availableUpdate.packageID}">{lang}wcf.acp.packageUpdate.updateVersion{/lang}</label></dt>
-							<dd><select id="version-{@$availableUpdate.packageID}" name="updates[{@$availableUpdate.packageID}]" disabled="disabled">
+							<dd>
+								<select id="version-{@$availableUpdate.packageID}" name="updates[{@$availableUpdate.packageID}]" disabled="disabled">
 									{foreach from=$availableUpdate.versions item=$version}
 										<option value="{$version.packageVersion}"{if $version.packageVersion == $availableUpdate.version.packageVersion} selected="selected"{/if}>{$version.packageVersion}</option>
 									{/foreach}
@@ -73,10 +74,10 @@
 						{/if}
 						
 						{if $availableUpdate.packageDescription}
-							<div class="formElement">
-								<p class="formFieldLabel">{lang}wcf.acp.package.description{/lang}</p>
-								<p class="formField">{$availableUpdate.packageDescription}</p>
-							</div>
+							<dl>
+								<dt>{lang}wcf.acp.package.description{/lang}</dt>
+								<dd>{$availableUpdate.packageDescription}</dd>
+							</dl>
 						{/if}
 					</div>
 					<hr />

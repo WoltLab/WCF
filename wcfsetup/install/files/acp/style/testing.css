@@ -231,36 +231,30 @@ nav.headerNavigation ul li {
 
 div.main {
 	margin: 0 23px 0;
-	border-collapse: collapse;
-	display: table;
-	table-layout: fixed;
 }
-
-div.main > div {
-	display: table-row;
-}
-
-
 
 /* -- -- -- -- -- Content -- -- -- -- -- */
 
 section.content {
 	background-color: #fff;
 	display: table-cell;
+	vertical-align: top;
 	padding: 25px;
-	width: 100%;
 	position: relative;
+	width: 100%;
 	z-index: 100;
 }
 
 div.main > div section:only-child {
 	display: block !important;
+	width: auto;
 }
 
 /* -- -- -- -- -- Sidebar -- -- -- -- -- */
 
 aside.sidebar {
 	display: table-cell;
+	vertical-align: top;
 	background-color: #d8e7f5;
 	margin: 0 !important;
 	padding: 0 !important;
@@ -500,6 +494,7 @@ dl.disabled dt {
 }
 
 dl dt {
+	color: #69c;
 	float: left;
 	text-align: right;
 	width: 230px;
@@ -725,7 +720,7 @@ input[type='submit'],
 	border: 1px solid #bcd;
 	color: #69c;
 	
-	background-color: #69c;
+	background-color: #e7f2fd;
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#d8e7f5));
 	background-image: -moz-linear-gradient(0% 0% 270deg, #fff, #d8e7f5);
 	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#d8e7f5));
@@ -784,7 +779,7 @@ input[type='submit']:active,
 	color: #036;
 	text-decoration: none;
 	
-	background-color: #69c;
+	background-color: #d8e7f5;
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#d8e7f5), to(#fff));
 	background-image: -moz-linear-gradient(0% 0% 270deg, #d8e7f5, #fff);
 	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#d8e7f5), to(#fff));
@@ -920,10 +915,14 @@ thead th {
 }
 
 thead th:first-child {
-	border-top-left-radius: 5px;	
+	/* rounded corners for the first table header cell to the left */
+	border-top-left-radius: 5px;
+	/* keeps the first column of tables narrow */
+	width: 1%;
 }
 
 thead th:last-child {
+	/* rounded corners for the last table header cell to the left */
 	border-top-right-radius: 5px;	
 }
 
@@ -988,6 +987,11 @@ thead th p a img {
 
 tbody tr {
 	border-bottom: 1px solid rgba(255, 255, 255, .3);
+}
+
+tbody tr:first-child {
+	/* prevents icon-column from wrapping */
+	white-space: nowrap;
 }
 
 tbody tr:last-child {

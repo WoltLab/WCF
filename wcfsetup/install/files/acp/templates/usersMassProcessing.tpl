@@ -185,6 +185,7 @@
 				<div class="formGroupField">
 					<fieldset>
 						<legend>{lang}wcf.acp.user.massProcessing.action{/lang}</legend>
+						
 						<div class="formField">
 							<ul class="formOptionsLong">
 								{if $__wcf->session->getPermission('admin.user.canMailUser')}

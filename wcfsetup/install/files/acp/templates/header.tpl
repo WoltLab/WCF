@@ -127,9 +127,10 @@
 	</header>
 	<!-- /HEADER -->
 	
-	<!-- CONTENT -->
+	<!-- MAIN -->
 	<div id="main" class="main">
 		<div>
+			<!-- SIDEBAR -->
 			<aside class="sidebar">
 				<!-- sidebar menu -->
 				<nav id="sidebarMenu" class="sidebarMenu">
@@ -159,5 +160,7 @@
 				</nav>
 				<!-- /sidebar menu -->
 			</aside>
+			<!-- /SIDEBAR -->
 			
+			<!-- CONTENT -->
 			<section id="content" class="content">

@@ -17,21 +17,21 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.packageUpdate.auth.data{/lang}</legend>
 				
-				<div class="formElement">
-					<p class="formFieldLabel">{lang}wcf.acp.packageUpdate.auth.url{/lang}</p>
-					<p class="formField">{$url}</p>
-				</div>
+				<dl>
+					<dt>{lang}wcf.acp.packageUpdate.auth.url{/lang}</dt>
+					<dd>{$url}</dd>
+				</dl>
 				{if $realm}
-					<div class="formElement">
-						<p class="formFieldLabel">{lang}wcf.acp.packageUpdate.auth.realm{/lang}</p>
-						<p class="formField">{$realm}</p>
-					</div>
+					<dl>
+						<dt>{lang}wcf.acp.packageUpdate.auth.realm{/lang}</dt>
+						<dd>{$realm}</dd>
+					</dl>
 				{/if}
 				{if $message}
-					<div class="formElement">
-						<p class="formFieldLabel">{lang}wcf.acp.packageUpdate.auth.message{/lang}</p>
-						<p class="formField">{@$message}</p>
-					</div>
+					<dl>
+						<dt>{lang}wcf.acp.packageUpdate.auth.message{/lang}</dt>
+						<dd>{@$message}</dd>
+					</dl>
 				{/if}
 			</fieldset>
 			
@@ -71,8 +71,8 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
+		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="form" value="PackageUpdateAuth" />
 		{@SID_INPUT_TAG}
 		<input type="hidden" name="packageUpdateServerID" value="{@$packageUpdateServerID}" />
