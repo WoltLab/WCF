@@ -138,12 +138,12 @@ abstract class CronjobScheduler {
 	protected static function executeCronjob(CronjobEditor $cronjobEditor, CronjobLogEditor $logEditor) {
 		$className = $cronjobEditor->className;
 		if (!class_exists($className)) {
-			throw new SystemException("unable to find class '".$className."'", 11001);
+			throw new SystemException("unable to find class '".$className."'");
 		}
 		
 		// verify class signature
 		if (!(ClassUtil::isInstanceOf($className, 'wcf\system\cronjob\ICronjob'))) {
-			throw new SystemException("class '".$className."' does not implement the interface 'wcf\system\cronjob\ICronjob'", 11010);
+			throw new SystemException("class '".$className."' does not implement the interface 'wcf\system\cronjob\ICronjob'");
 		}
 		
 		// execute cronjob

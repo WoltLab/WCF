@@ -39,11 +39,11 @@ class TemplatePluginFunctionHtmlcheckboxes implements ITemplatePluginFunction {
 		}
 
 		if (!isset($tagArgs['options']) || !is_array($tagArgs['options'])) {
-			throw new SystemException("missing 'options' argument in htmlCheckboxes tag", 12001);
+			throw new SystemException("missing 'options' argument in htmlCheckboxes tag");
 		}
 		
 		if (!isset($tagArgs['name'])) {
-			throw new SystemException("missing 'name' argument in htmlCheckboxes tag", 12001);
+			throw new SystemException("missing 'name' argument in htmlCheckboxes tag");
 		}
 		
 		if (isset($tagArgs['disableEncoding']) && $tagArgs['disableEncoding']) {

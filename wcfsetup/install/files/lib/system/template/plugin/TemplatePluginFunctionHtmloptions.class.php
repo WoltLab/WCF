@@ -48,7 +48,7 @@ class TemplatePluginFunctionHtmloptions extends TemplatePluginFunctionHtmlcheckb
 		}
 
 		if (!isset($tagArgs['options']) || !is_array($tagArgs['options'])) {
-			throw new SystemException("missing 'options' argument in htmloptions tag", 12001);
+			throw new SystemException("missing 'options' argument in htmloptions tag");
 		}
 		
 		if (isset($tagArgs['disableEncoding']) && $tagArgs['disableEncoding']) {

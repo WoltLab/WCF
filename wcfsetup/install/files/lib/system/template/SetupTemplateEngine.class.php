@@ -41,7 +41,7 @@ class SetupTemplateEngine extends TemplateEngine {
 			return PACKAGE_ID;
 		}
 		
-		throw new SystemException("Unable to find template '$templateName'", 12005);
+		throw new SystemException("Unable to find template '$templateName'");
 	}
 	
 	/**

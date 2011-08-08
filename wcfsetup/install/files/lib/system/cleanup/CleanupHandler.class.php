@@ -107,12 +107,12 @@ class CleanupHandler {
 		foreach ($adapters as $adapterData) {
 			// validate class
 			if (!class_exists($adapterData['className'])) {
-				throw new SystemException("unable to find class '".$adapterData['className']."'", 11001);
+				throw new SystemException("unable to find class '".$adapterData['className']."'");
 			}
 			
 			// validate interface
 			if (!(ClassUtil::isInstanceOf($adapterData['className'], 'wcf\system\cleanup\ICleanupAdapter'))) {
-				throw new SystemException("class '".$adapterData['className']."' does not implement the interface 'wcf\system\cleanup\ICleanupAdapter'", 11010);
+				throw new SystemException("class '".$adapterData['className']."' does not implement the interface 'wcf\system\cleanup\ICleanupAdapter'");
 			}
 			
 			$adapter = new $adapterData['className']();

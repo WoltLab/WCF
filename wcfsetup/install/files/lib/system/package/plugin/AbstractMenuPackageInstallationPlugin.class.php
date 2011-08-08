@@ -66,7 +66,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 		$row = $statement->fetchArray();
 		
 		if (!$row['count']) {
-			throw new SystemException("Unable to find parent 'menu item' with name '".$data['parentMenuItem']."' for 'menu item' with name '".$data['menuItem']."'.", 13011);
+			throw new SystemException("Unable to find parent 'menu item' with name '".$data['parentMenuItem']."' for 'menu item' with name '".$data['menuItem']."'.");
 		}
 	}
 	

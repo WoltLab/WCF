@@ -85,7 +85,7 @@ class LanguageServerProcessor extends SingletonFactory {
 		
 		$remoteFile = new RemoteFile(($parsedURL['scheme'] == 'https' ? 'ssl://' : '').$host, $port, 30, $options); // the file to read.
 		if (!isset($remoteFile)) {
-			throw new SystemException("cannot connect to http host '".$host."'", 14000);
+			throw new SystemException("cannot connect to http host '".$host."'");
 		}
 		
 		// build and send the http request

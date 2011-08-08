@@ -71,7 +71,7 @@ class CacheHandler extends SingletonFactory {
 	 */
 	public function clearResource($cache) {
 		if (!isset($this->cacheResources[$cache])) {
-			throw new SystemException("cache resource '".$cache."' does not exist", 11005);
+			throw new SystemException("cache resource '".$cache."' does not exist");
 		}
 		
 		$this->getCacheSource()->delete($this->cacheResources[$cache]);
@@ -96,7 +96,7 @@ class CacheHandler extends SingletonFactory {
 	 */
 	public function get($cache, $variable = '') {
 		if (!isset($this->cacheResources[$cache])) {
-			throw new SystemException("unknown cache resource '".$cache."'", 11005);
+			throw new SystemException("unknown cache resource '".$cache."'");
 		}
 		
 		// try to get value
@@ -108,14 +108,14 @@ class CacheHandler extends SingletonFactory {
 			// try to get value again
 			$value = $this->getCacheSource()->get($this->cacheResources[$cache]);
 			if ($value === null) {
-				throw new SystemException("cache resource '".$cache."' does not exist", 11005);
+				throw new SystemException("cache resource '".$cache."' does not exist");
 			}
 		}
 		
 		// return value
 		if (!empty($variable)) {
 			if (!isset($value[$variable])) {
-				throw new SystemException("variable '".$variable."' does not exist in cache resource '".$cache."'", 11008);
+				throw new SystemException("variable '".$variable."' does not exist in cache resource '".$cache."'");
 			}
 			
 			return $value[$variable];
@@ -134,7 +134,7 @@ class CacheHandler extends SingletonFactory {
 	public function rebuild($cacheResource) {
 		// instance cache class
 		if (!class_exists($cacheResource['className'])) {
-			throw new SystemException("Unable to find class '".$cacheResource['className']."'", 11001);
+			throw new SystemException("Unable to find class '".$cacheResource['className']."'");
 		}
 		
 		// update file last modified time to avoid multiple users rebuilding cache at the same time

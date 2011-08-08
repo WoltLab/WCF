@@ -352,7 +352,7 @@ class TemplateEngine extends SingletonFactory {
 		}
 		
 		
-		throw new SystemException("Unable to find template '$templateName'", 12005);
+		throw new SystemException("Unable to find template '$templateName'");
 	}
 	
 	/**
@@ -480,7 +480,7 @@ class TemplateEngine extends SingletonFactory {
 	public function getSourceContent($sourceFilename) {
 		$sourceContent = '';
 		if (!file_exists($sourceFilename) || (($sourceContent = @file_get_contents($sourceFilename)) === false)) {
-			throw new SystemException("Could not open template '$sourceFilename' for reading", 12005);
+			throw new SystemException("Could not open template '$sourceFilename' for reading");
 		}
 		else {
 			return $sourceContent;
@@ -659,7 +659,7 @@ class TemplateEngine extends SingletonFactory {
 	 */
 	public function setCompileDir($compileDir) {
 		if (!is_dir($compileDir)) {
-			throw new SystemException("'".$compileDir."' is not a valid dir", 11014);
+			throw new SystemException("'".$compileDir."' is not a valid dir");
 		}
 		
 		$this->compileDir = $compileDir;

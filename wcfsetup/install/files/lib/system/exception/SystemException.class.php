@@ -125,8 +125,7 @@ class SystemException extends \Exception implements IPrintableException {
 
 					<div>
 						<p><?php echo $this->getDescription(); ?></p>
-						<?php if ($this->getCode()) { ?><p>You get more information about the problem in the official WoltLab knowledge base: <a href="http://www.woltlab.com/help/?code=<?php echo intval($this->getCode()); ?>">http://www.woltlab.com/help/?code=<?php echo intval($this->getCode()); ?></a></p><?php } ?>
-
+						
 						<h2>Information:</h2>
 						<p>
 							<b>error message:</b> <?php echo StringUtil::encodeHTML($this->getMessage()); ?><br>

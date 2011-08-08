@@ -325,7 +325,7 @@ class LanguageEditor extends DatabaseObjectEditor {
 			}
 		}
 		
-		throw new SystemException("missing attribute 'languagecode' in language file", 13023);
+		throw new SystemException("missing attribute 'languagecode' in language file");
 	}
 	
 	/**

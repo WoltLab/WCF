@@ -24,7 +24,7 @@ class TemplatePluginModifierConcat implements ITemplatePluginModifier {
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (count($tagArgs) < 2) {
-			throw new SystemException("concat modifier needs two or more arguments", 12001);
+			throw new SystemException("concat modifier needs two or more arguments");
 		}
 		
 		$result = '';

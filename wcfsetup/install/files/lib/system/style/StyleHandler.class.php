@@ -91,7 +91,7 @@ class StyleHandler extends SingletonFactory {
 			}
 			
 			if (!isset($this->cache['styles'][$styleID])) {
-				throw new SystemException('no default style defined', 100000);
+				throw new SystemException('no default style defined');
 			}
 		}
 

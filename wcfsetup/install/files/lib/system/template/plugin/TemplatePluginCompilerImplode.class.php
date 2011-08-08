@@ -28,10 +28,10 @@ class TemplatePluginCompilerImplode implements ITemplatePluginCompiler {
 		$compiler->pushTag('implode');
 		
 		if (!isset($tagArgs['from'])) {
-			throw new SystemException($compiler->formatSyntaxError("missing 'from' argument in implode tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()), 12001);
+			throw new SystemException($compiler->formatSyntaxError("missing 'from' argument in implode tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
 		}
 		if (!isset($tagArgs['item'])) {
-			throw new SystemException($compiler->formatSyntaxError("missing 'item' argument in implode tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()), 12001);
+			throw new SystemException($compiler->formatSyntaxError("missing 'item' argument in implode tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
 		}
 		
 		$hash = StringUtil::getRandomID();

@@ -136,7 +136,7 @@ class PackageArchive {
 	public function openArchive() {
 		// check whether archive exists and is a TAR archive
 		if (!file_exists($this->archive)) {
-			throw new SystemException("unable to find package file '".$this->archive."'", 11002);
+			throw new SystemException("unable to find package file '".$this->archive."'");
 		}
 
 		// open archive and read package information
@@ -151,7 +151,7 @@ class PackageArchive {
 		// search package.xml in package archive
 		// throw error message if not found
 		if ($this->tar->getIndexByFilename(self::INFO_FILE) === false) {
-			throw new SystemException("package information file '".(self::INFO_FILE)."' not found in '".$this->archive."'", 13000);
+			throw new SystemException("package information file '".(self::INFO_FILE)."' not found in '".$this->archive."'");
 		}
 		
 		// extract package.xml, parse with SimpleXML
@@ -172,7 +172,7 @@ class PackageArchive {
 		$packageName = $package->getAttribute('name');
 		if (!Package::isValidPackageName($packageName)) {
 			// package name is not a valid package identifier
-			throw new SystemException("'".$packageName."' is not a valid package name.", 13002);
+			throw new SystemException("'".$packageName."' is not a valid package name.");
 		}
 		
 		$this->packageInfo['name'] = $packageName;
@@ -207,7 +207,7 @@ class PackageArchive {
 				
 				case 'plugin':
 					if ($element->nodeValue && !Package::isValidPackageName($element->nodeValue)) {
-						throw new SystemException("'".$element->nodeValue."' is not a valid package name.", 13002);
+						throw new SystemException("'".$element->nodeValue."' is not a valid package name.");
 					}
 					
 					$this->packageInfo['plugin'] = $element->nodeValue;
@@ -248,7 +248,7 @@ class PackageArchive {
 		$elements = $xpath->query('child::ns:requiredpackages/ns:requiredpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
-				throw new SystemException("'".$element->nodeValue."' is not a valid package name.", 13002);
+				throw new SystemException("'".$element->nodeValue."' is not a valid package name.");
 			}
 			
 			// read attributes
@@ -265,7 +265,7 @@ class PackageArchive {
 		$elements = $xpath->query('child::ns:optionalpackages/ns:optionalpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
-				throw new SystemException("'".$element->nodeValue."' is not a valid package name.", 13002);
+				throw new SystemException("'".$element->nodeValue."' is not a valid package name.");
 			}
 			
 			// read attributes
@@ -282,7 +282,7 @@ class PackageArchive {
 		$elements = $xpath->query('child::ns:excludedpackages/ns:excludedpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
-				throw new SystemException("'".$element->nodeValue."' is not a valid package name.", 13002);
+				throw new SystemException("'".$element->nodeValue."' is not a valid package name.");
 			}
 			
 			// read attributes
@@ -766,7 +766,7 @@ class PackageArchive {
 		// search the requested tar archive in our package archive.
 		// throw error message if not found.
 		if (($fileIndex = $this->tar->getIndexByFilename($filename)) === false) {
-			throw new SystemException("tar archive '".$filename."' not found in '".$this->archive."'.", 13007);
+			throw new SystemException("tar archive '".$filename."' not found in '".$this->archive."'.");
 		}
 		
 		// requested tar archive was found

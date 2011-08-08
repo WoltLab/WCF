@@ -140,7 +140,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	protected function getSQL($filename) {
 		// search sql files in package archive
 		if (($fileindex = $this->installation->getArchive()->getTar()->getIndexByFilename($filename)) === false) {
-			throw new SystemException("SQL file '".$filename."' not found.", 13016);
+			throw new SystemException("SQL file '".$filename."' not found.");
 		}
 
 		// extract sql file to string

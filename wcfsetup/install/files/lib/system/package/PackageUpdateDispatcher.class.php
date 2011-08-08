@@ -68,7 +68,7 @@ abstract class PackageUpdateDispatcher {
 		}
 		
 		if ($response['httpStatusCode'] != 200) {
-			throw new SystemException(WCF::getLanguage()->get('wcf.acp.packageUpdate.error.listNotFound') . ' ('.$response['httpStatusLine'].')', 18009);
+			throw new SystemException(WCF::getLanguage()->get('wcf.acp.packageUpdate.error.listNotFound') . ' ('.$response['httpStatusLine'].')');
 		}
 		
 		// parse given package update xml
@@ -220,7 +220,7 @@ abstract class PackageUpdateDispatcher {
 		$packages = $xpath->query('/ns:section[@name=\'packages\']/ns:package');
 		foreach ($packages as $package) {
 			if (!Package::isValidPackageName($package->getAttribute('name'))) {
-				throw new SystemException("'".$package->getAttribute('name')."' is not a valid package name.", 18004);
+				throw new SystemException("'".$package->getAttribute('name')."' is not a valid package name.");
 			}
 			
 			$allNewPackages[$package->getAttribute('name')] = self::parsePackageUpdateXMLBlock($xpath, $package);
@@ -714,7 +714,7 @@ abstract class PackageUpdateDispatcher {
 		}
 		
 		if (!count($versions)) {
-			throw new SystemException("Can not find package '".$package."' in version '".$version."'", 18101);
+			throw new SystemException("Can not find package '".$package."' in version '".$version."'");
 		}
 		
 		return $versions;

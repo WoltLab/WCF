@@ -40,7 +40,7 @@ class Installer {
 	protected function createTargetDir() {
 		if (!@is_dir($this->targetDir)) {
 			if (!FileUtil::makePath($this->targetDir, (FileUtil::isApacheModule() ? 0777 : 0755))) {
-				throw new SystemException("Could not create dir '".$this->targetDir."'", 11011);
+				throw new SystemException("Could not create dir '".$this->targetDir."'");
 			}
 		}
 		if (FileUtil::isApacheModule() || !is_writeable($this->targetDir)) {
@@ -57,7 +57,7 @@ class Installer {
 		if (!@is_dir($this->targetDir.$dir)) {
 			$oldumask = umask(0);
 			if (!@mkdir($this->targetDir.$dir, 0755, true)) {
-				throw new SystemException("Could not create dir '".$this->targetDir.$dir."'", 11011);
+				throw new SystemException("Could not create dir '".$this->targetDir.$dir."'");
 			}
 			umask($oldumask);
 		}
@@ -143,7 +143,7 @@ class Installer {
 			}
 		}
 		if (count($errors) > 0) {
-			throw new SystemException('error(s) during the installation of the files.', 11111, $errors);
+			throw new SystemException('error(s) during the installation of the files.', $errors);
 		}
 		
 		$this->logFiles($files);
@@ -182,7 +182,7 @@ class Installer {
 	protected function makeWriteable($target) {
 		if (!preg_match('/^WIN/i', PHP_OS)) {
 			if (!@chmod($target, 0777)) {
-				//throw new SystemException("Could not chmod file '".$target."'", 11005);
+				//throw new SystemException("Could not chmod file '".$target."'");
 			}
 		}
 	}

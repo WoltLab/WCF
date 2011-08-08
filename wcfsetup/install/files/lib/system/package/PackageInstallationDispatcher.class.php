@@ -264,7 +264,7 @@ class PackageInstallationDispatcher {
 		));
 		$row = $statement->fetchArray();
 		if (!$row || empty($row['requirement'])) {
-			throw new SystemException("can not find any available installations of required parent package '".$this->getArchive()->getPackageInfo('plugin')."'", 13012);
+			throw new SystemException("can not find any available installations of required parent package '".$this->getArchive()->getPackageInfo('plugin')."'");
 		}
 		
 		// save parent package
@@ -311,13 +311,13 @@ class PackageInstallationDispatcher {
 		// valdidate class definition
 		$className = $row['className'];
 		if (!class_exists($className)) {
-			throw new SystemException("unable to find class '".$className."'", 11001);
+			throw new SystemException("unable to find class '".$className."'");
 		}
 		
 		$plugin = new $className($this, $nodeData);
 		
 		if (!($plugin instanceof \wcf\system\package\plugin\IPackageInstallationPlugin)) {
-			throw new SystemException("class '".$className."' does not implement the interface 'wcf\system\package\plugin\IPackageInstallationPlugin'", 11010);
+			throw new SystemException("class '".$className."' does not implement the interface 'wcf\system\package\plugin\IPackageInstallationPlugin'");
 		}
 		
 		// execute PIP

@@ -542,7 +542,7 @@ class WCF {
 		
 		if (class_exists($objectName)) {
 			if (!(util\ClassUtil::isInstanceOf($objectName, 'wcf\system\SingletonFactory'))) {
-				throw new exception\SystemException("class '".$objectName."' does not implement the interface 'SingletonFactory'", 11010);
+				throw new exception\SystemException("class '".$objectName."' does not implement the interface 'SingletonFactory'");
 			}
 			
 			self::$coreObject[$className] = call_user_func(array($objectName, 'getInstance'));

@@ -303,13 +303,13 @@ class UserListPage extends SortablePage {
 			// include class file
 			$classPath = WCF_DIR.'lib/data/user/option/'.$className.'.class.php';
 			if (!file_exists($classPath)) {
-				throw new SystemException("unable to find class file '".$classPath."'", 11000);
+				throw new SystemException("unable to find class file '".$classPath."'");
 			}
 			require_once($classPath);
 			
 			// create instance
 			if (!class_exists($className)) {
-				throw new SystemException("unable to find class '".$className."'", 11001);
+				throw new SystemException("unable to find class '".$className."'");
 			}
 			$this->outputObjects[$className] = new $className();
 		}

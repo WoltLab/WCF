@@ -235,7 +235,7 @@ class LanguagesPackageInstallationPlugin extends AbstractXMLPackageInstallationP
 		// search language files in package archive
 		// throw error message if not found
 		if (($fileIndex = $this->installation->getArchive()->getTar()->getIndexByFilename($filename)) === false) {
-			throw new SystemException("language file '".$filename."' not found.", 13025);
+			throw new SystemException("language file '".$filename."' not found.");
 		}
 		
 		// extract language file and parse with DOMDocument

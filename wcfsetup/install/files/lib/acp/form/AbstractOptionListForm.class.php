@@ -115,7 +115,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 			
 			// validate class
 			if (!class_exists($className)) {
-				throw new SystemException("unable to find class '".$className."'", 11001);
+				throw new SystemException("unable to find class '".$className."'");
 			}
 			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\IOptionType')) {
 				throw new SystemException("'".$className."' should implement wcf\system\option\IOptionType");
