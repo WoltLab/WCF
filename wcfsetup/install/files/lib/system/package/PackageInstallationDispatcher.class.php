@@ -557,6 +557,7 @@ class PackageInstallationDispatcher {
 		if ($this->action == 'update') {
 			$packageEditor = new PackageEditor($this->getPackage());
 			$packageEditor->update(array(
+				'updateDate' => TIME_NOW,
 				'packageVersion' => $this->archive->getPackageInfo('version')
 			));
 		}
