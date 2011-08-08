@@ -12,6 +12,7 @@
 </script>
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/3rdParty/jquery.min.js"></script>
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/3rdParty/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/3rdParty/jquery.tools.min.js"></script>
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/WCF.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
