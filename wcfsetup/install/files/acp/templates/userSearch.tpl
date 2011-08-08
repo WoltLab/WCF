@@ -169,22 +169,24 @@
 							<legend>{lang}wcf.acp.user.search.display.columns{/lang}</legend>
 						
 							{if $optionTree|count}
-								<div class="formGroup">
-									<div class="formGroupLabel">
+								<dl>
+									<dt>
 										<label>{lang}wcf.acp.user.search.display.columns.profile{/lang}</label>
-									</div>
-									<div class="formGroupField">
+									</dt>
+									<dd>
 										<fieldset>
 											<legend>{lang}wcf.acp.user.search.display.columns.profile{/lang}</legend>
-										
-											<div class="formField">
-												{foreach from=$optionTree item=option}
-													<label><input type="checkbox" name="columns[]" value="{$option->optionName}" {if $option->optionName|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
-												{/foreach}
-											</div>
+											
+											<dl>
+												<dd>
+													{foreach from=$optionTree item=option}
+														<label><input type="checkbox" name="columns[]" value="{$option->optionName}" {if $option->optionName|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
+													{/foreach}
+												<dd>
+											</dl>
 										</fieldset>
-									</div>
-								</div>
+									</dd>
+								</dl>
 							{/if}
 						
 							<dl>
