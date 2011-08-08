@@ -43,14 +43,18 @@ a:hover {
 	text-decoration: underline;
 }
 
+hr {
+	display: none;
+}
+
 .invisible {
 	position: absolute;
 	left: -9000px;
 	top: -9000px;
 }
 
-hr {
-	display: none;
+.separated {
+	margin-top: 13px;
 }
 
 
@@ -553,8 +557,7 @@ dl > dd > fieldset > dl > dd > small {
 }
 
 .reversed dd input {
-	margin-left: -10px !important;
-	padding: 0;
+	/*margin-left: -10px !important;*/
 }
 
 
