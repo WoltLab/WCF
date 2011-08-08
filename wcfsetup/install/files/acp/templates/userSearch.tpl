@@ -41,39 +41,34 @@
 		<div class="container-1">
 			<fieldset>
 				<legend>{lang}wcf.acp.user.search.conditions.general{/lang}</legend>
-				<div class="formElement">
-					<div class="formFieldLabel">
-						<label for="username">{lang}wcf.user.username{/lang}</label>
-					</div>
-					<div class="formField">
-						<input type="text" id="username" name="username" value="{$username}" class="inputText" />
+				
+				<dl>
+					<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
+					<dd>
+						<input type="text" id="username" name="username" value="{$username}" class="medium" />
 						<script type="text/javascript">
 							//<![CDATA[
 							var suggestion = new Suggestion('username');
 							suggestion.enableMultiple(false);
 							//]]>
 						</script>
-					</div>
-				</div>
+					</dd>
+				</dl>
 				
-				<div class="formElement">
-					<div class="formFieldLabel">
-						<label for="userID">{lang}wcf.user.userID{/lang}</label>
-					</div>
-					<div class="formField">	
-						<input type="text" id="userID" name="userID" value="{$userID}" class="inputText" />
-					</div>
-				</div>
+				<dl>
+					<dt><label for="userID">{lang}wcf.user.userID{/lang}</label></dt>
+					<dd>	
+						<input type="text" id="userID" name="userID" value="{$userID}" class="short" />
+					</dd>
+				</dl>
 				
 				{if $__wcf->session->getPermission('admin.user.canEditMailAddress')}
-					<div class="formElement">
-						<div class="formFieldLabel">
-							<label for="email">{lang}wcf.user.email{/lang}</label>
-						</div>
-						<div class="formField">	
-							<input type="email" id="email" name="email" value="{$email}" class="inputText" />
-						</div>
-					</div>
+					<dl>
+						<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
+						<dd>
+							<input type="email" id="email" name="email" value="{$email}" class="medium" />
+						</dd>
+					</dl>
 				{/if}
 				
 				{if $availableGroups|count}
@@ -142,11 +137,9 @@
 						<fieldset>
 							<legend>{lang}wcf.acp.user.search.display.general{/lang}</legend>
 						
-							<div class="formElement">
-								<div class="formFieldLabel">
-									<label for="sortField">{lang}wcf.acp.user.search.display.sort{/lang}</label>
-								</div>
-								<div class="formField">
+							<dl>
+								<dt><label for="sortField">{lang}wcf.acp.user.search.display.sort{/lang}</label></dt>
+								<dd>
 									<select id="sortField" name="sortField">
 										<option value="userID"{if $sortField == 'userID'} selected="selected"{/if}>{lang}wcf.user.userID{/lang}</option>
 										<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.user.username{/lang}</option>
@@ -155,21 +148,21 @@
 									
 										{if $additionalSortFields|isset}{@$additionalSortFields}{/if}
 									</select>
+								</dd>
+								<dd>
 									<select id="sortOrder" name="sortOrder">
 										<option value="ASC"{if $sortOrder == 'ASC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
 										<option value="DESC"{if $sortOrder == 'DESC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
 									</select>
-								</div>
-							</div>
+								</dd>
+							</dl>
 						
-							<div class="formElement">
-								<div class="formFieldLabel">
-									<label for="itemsPerPage">{lang}wcf.acp.user.search.display.itemsPerPage{/lang}</label>
-								</div>
-								<div class="formField">
-									<input type="text" id="itemsPerPage" name="itemsPerPage" value="{@$itemsPerPage}" class="inputText" />
-								</div>
-							</div>
+							<dl>
+								<dt><label for="itemsPerPage">{lang}wcf.acp.user.search.display.itemsPerPage{/lang}</label></dt>
+								<dd>
+									<input type="text" id="itemsPerPage" name="itemsPerPage" value="{@$itemsPerPage}" class="short" />
+								</dd>
+							</dl>
 						</fieldset>
 					
 						<fieldset>
