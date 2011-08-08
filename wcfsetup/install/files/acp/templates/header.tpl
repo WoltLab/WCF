@@ -76,7 +76,7 @@
 <body id="tpl{$templateName|ucfirst}">
 	<a id="top"></a>
 	<!-- HEADER -->
-	<header class="pageHeader">
+	<header id="pageHeader" class="pageHeader">
 		<div>
 			<!-- top menu -->
 			<nav id="topMenu" class="topMenu">
@@ -127,9 +127,10 @@
 	</header>
 	<!-- /HEADER -->
 	
-	<!-- CONTENT -->
+	<!-- MAIN -->
 	<div id="main" class="main">
 		<div>
+			<!-- SIDEBAR -->
 			<aside class="sidebar">
 				<!-- sidebar menu -->
 				<nav id="sidebarMenu" class="sidebarMenu">
@@ -159,5 +160,7 @@
 				</nav>
 				<!-- /sidebar menu -->
 			</aside>
+			<!-- /SIDEBAR -->
 			
-			<section id="content">
+			<!-- CONTENT -->
+			<section id="content" class="content">

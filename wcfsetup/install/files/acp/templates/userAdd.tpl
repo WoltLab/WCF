@@ -82,21 +82,19 @@
 <form method="post" action="index.php?form=User{@$action|ucfirst}">
 	<div class="border content">
 		<div class="container-1">
-			<div class="formElement{if $errorType.username|isset} formError{/if}">
-				<div class="formFieldLabel">
-					<label for="username">{lang}wcf.user.username{/lang}</label>
-				</div>
-				<div class="formField">
-					<input type="text" id="username" name="username" value="{$username}" class="inputText" />
+			<dl{if $errorType.username|isset} class="formError"{/if}>
+				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
+				<dd>
+					<input type="text" id="username" name="username" value="{$username}" class="medium" />
 					{if $errorType.username|isset}
-						<p class="innerError">
+						<small class="innerError">
 							{if $errorType.username == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
 							{if $errorType.username == 'notValid'}{lang}wcf.user.error.username.notValid{/lang}{/if}
 							{if $errorType.username == 'notUnique'}{lang}wcf.user.error.username.notUnique{/lang}{/if}
-						</p>
+						</small>
 					{/if}
-				</div>
-			</div>
+				</dd>
+			</dl>
 			
 			{if $availableGroups|count}
 				<div class="formGroup">
@@ -118,68 +116,60 @@
 			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
 				<fieldset>
 					<legend>{lang}wcf.user.email{/lang}</legend>
-					<div class="formElement{if $errorType.email|isset} formError{/if}">
-						<div class="formFieldLabel">
-							<label for="email">{lang}wcf.user.email{/lang}</label>
-						</div>
-						<div class="formField">	
-							<input type="email" id="email" name="email" value="{$email}" class="inputText" />
+					<dl{if $errorType.email|isset} class="formError"{/if}>
+						<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
+						<dd>	
+							<input type="email" id="email" name="email" value="{$email}" class="medium" />
 							{if $errorType.email|isset}
-								<p class="innerError">
+								<small class="innerError">
 									{if $errorType.email == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
 									{if $errorType.email == 'notValid'}{lang}wcf.user.error.email.notValid{/lang}{/if}
 									{if $errorType.email == 'notUnique'}{lang}wcf.user.error.email.notUnique{/lang}{/if}
-								</p>
+								</small>
 							{/if}
-						</div>
-					</div>
+						</dd>
+					</dl>
 					
-					<div class="formElement{if $errorType.confirmEmail|isset} formError{/if}">
-						<div class="formFieldLabel">
-							<label for="confirmEmail">{lang}wcf.user.confirmEmail{/lang}</label>
-						</div>
-						<div class="formField">
-							<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="inputText" />
+					<dl{if $errorType.confirmEmail|isset} class="formError"{/if}>
+						<dt><label for="confirmEmail">{lang}wcf.user.confirmEmail{/lang}</label></dt>
+						<dd>
+							<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium" />
 							{if $errorType.confirmEmail|isset}
-								<p class="innerError">
+								<small class="innerError">
 									{if $errorType.confirmEmail == 'notEqual'}{lang}wcf.user.error.confirmEmail.notEqual{/lang}{/if}
-								</p>
+								</small>
 							{/if}
-						</div>
-					</div>
+						</dd>
+					</dl>
 				</fieldset>
 			{/if}
 			
 			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditPassword')}
 				<fieldset>
 					<legend>{lang}wcf.user.password{/lang}</legend>
-					<div class="formElement{if $errorType.password|isset} formError{/if}">
-						<div class="formFieldLabel">
-							<label for="password">{lang}wcf.user.password{/lang}</label>
-						</div>
-						<div class="formField">
-							<input type="password" id="password" name="password" value="{$password}" class="inputText" />
+					<dl{if $errorType.password|isset} class="formError"{/if}>
+						<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
+						<dd>
+							<input type="password" id="password" name="password" value="{$password}" class="medium" />
 							{if $errorType.password|isset}
-								<p class="innerError">
+								<small class="innerError">
 									{if $errorType.password == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-								</p>
+								</small>
 							{/if}
-						</div>
-					</div>
+						</dd>
+					</dl>
 					
-					<div class="formElement{if $errorType.confirmPassword|isset} formError{/if}">
-						<div class="formFieldLabel">
-							<label for="confirmPassword">{lang}wcf.user.confirmPassword{/lang}</label>
-						</div>
-						<div class="formField">
-							<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="inputText" />
+					<dl{if $errorType.confirmPassword|isset} class="formError"{/if}>
+						<dt><label for="confirmPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
+						<dd>
+							<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" />
 							{if $errorType.confirmPassword|isset}
-								<p class="innerError">
+								<small class="innerError">
 									{if $errorType.confirmPassword == 'notEqual'}{lang}wcf.user.error.confirmPassword.notEqual{/lang}{/if}
-								</p>
+								</small>
 							{/if}
-						</div>
-					</div>
+						</dd>
+					</dl>
 				</fieldset>
 			{/if}
 		

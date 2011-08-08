@@ -21,21 +21,20 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.option.import{/lang}</legend>
 			
-				<dl id="optionImportDiv"{if $errorField == 'optionImport'}  class="formError"{/if}>
+				<dl id="optionImportDiv"{if $errorField == 'optionImport'} class="formError"{/if}>
 					<dt><label for="optionImport">{lang}wcf.acp.option.import.upload{/lang}</label></dt>
-					<dd><input type="file" id="optionImport" name="optionImport" value="" /></dd>
-					{if $errorField == 'optionImport'}
-						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-							{if $errorType == 'importFailed'}{lang}wcf.acp.option.import.error.importFailed{/lang}{/if}
-							{if $errorType == 'uploadFailed'}{lang}wcf.acp.option.import.error.uploadFailed{/lang}{/if}
-						</small>
-					{/if}
-					<small id="optionImportHelpMessage">{lang}wcf.acp.option.import.upload.description{/lang}</small>
+					<dd>
+						<input type="file" id="optionImport" name="optionImport" value="" />
+						{if $errorField == 'optionImport'}
+							<small class="innerError">
+								{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+								{if $errorType == 'importFailed'}{lang}wcf.acp.option.import.error.importFailed{/lang}{/if}
+								{if $errorType == 'uploadFailed'}{lang}wcf.acp.option.import.error.uploadFailed{/lang}{/if}
+							</small>
+						{/if}
+						<small id="optionImportHelpMessage">{lang}wcf.acp.option.import.upload.description{/lang}</small>
+					</dd>
 				</dl>
-				<script type="text/javascript">//<![CDATA[
-					inlineHelp.register('optionImport');
-				//]]></script>
 			</fieldset>
 			
 			{if $additionalFields|isset}{@$additionalFields}{/if}

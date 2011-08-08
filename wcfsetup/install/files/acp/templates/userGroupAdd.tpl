@@ -42,38 +42,32 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.group.data{/lang}</legend>
 				
-				<div id="groupNameDiv" class="formElement{if $errorType.groupName|isset} formError{/if}">
-					<div class="formFieldLabel">
-						<label for="groupName">{lang}wcf.acp.group.groupName{/lang}</label>
-					</div>
-					<div class="formField">
-						<input type="text" id="groupName" name="groupName" value="{$groupName}" class="inputText" />
+				<dl id="groupNameDiv"{if $errorType.groupName|isset} class="formError"{/if}>
+					<dt><label for="groupName">{lang}wcf.acp.group.groupName{/lang}</label></dt>
+					<dd>
+						<input type="text" id="groupName" name="groupName" value="{$groupName}" class="medium" />
 						{if $errorType.groupName|isset}
-							<p class="innerError">
+							<small class="innerError">
 								{if $errorType.groupName == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-							</p>
+							</small>
 						{/if}
-					</div>
-					<div id="groupNameHelpMessage" class="formFieldDesc hidden">
-						<p>{lang}wcf.acp.group.groupName.description{/lang}</p>
-					</div>
-				</div>
-				<script type="text/javascript">//<![CDATA[
-					inlineHelp.register('groupName');
-				//]]></script>
+						<small id="groupNameHelpMessage">{lang}wcf.acp.group.groupName.description{/lang}</small>
+					</dd>
+				</dl>
 				
 				{if $additionalFields|isset}{@$additionalFields}{/if}
 			</fieldset>
 		
 			{if $additionalFieldSets|isset}{@$additionalFieldSets}{/if}
-		
-			<div class="tabMenu">
-				<ul>
+			
+			<nav>
+				<ul class="tabMenu">
 					{foreach from=$optionTree item=categoryLevel1}
 						<li id="{@$categoryLevel1[object]->categoryName}"><a onclick="tabMenu.showSubTabMenu('{@$categoryLevel1[object]->categoryName}');"><span>{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</span></a></li>
 					{/foreach}
 				</ul>
-			</div>
+			</nav>
+			
 			<nav class="menu"><!-- ToDo: Border missing -->
 				{foreach from=$optionTree item=categoryLevel1}
 					<ul id="{@$categoryLevel1[object]->categoryName}-categories" class="hidden">
@@ -88,8 +82,10 @@
 				{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 					<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}-content" class="border tabMenuContent hidden">
 						<div class="container-1">
-							<h3 class="subHeading">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h3>
-							<p class="description">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}</p>
+							<hgroup class="subHeading">
+								<h1>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h1>
+								<h2>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}</h2>
+							</hgroup>
 							
 							{if $categoryLevel2[options]|count}
 								{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.group.option.'}

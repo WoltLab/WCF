@@ -321,7 +321,7 @@ class PackageArchive {
 				$this->instructions['install'] = $instructionData;
 			}
 			else {
-				$this->instructions['update'][$fromVersion][] = $instructionData;
+				$this->instructions['update'][$fromVersion] = $instructionData;
 			}
 		}
 		

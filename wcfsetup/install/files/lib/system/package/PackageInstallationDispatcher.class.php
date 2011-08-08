@@ -128,7 +128,7 @@ class PackageInstallationDispatcher {
 	 */
 	public function getArchive() {
 		if ($this->archive === null) {
-			$this->archive = new PackageArchive($this->queue->archive);
+			$this->archive = new PackageArchive($this->queue->archive, $this->getPackage());
 			
 			if (FileUtil::isURL($this->archive->getArchive())) {
 				// get return value and update entry in
@@ -552,6 +552,15 @@ class PackageInstallationDispatcher {
 		
 		// remove node data
 		$this->nodeBuilder->purgeNodes();
+		
+		// update package version
+		if ($this->action == 'update') {
+			$packageEditor = new PackageEditor($this->getPackage());
+			$packageEditor->update(array(
+				'updateDate' => TIME_NOW,
+				'packageVersion' => $this->archive->getPackageInfo('version')
+			));
+		}
 		
 		// return next queue within the same process no
 		$queueID = $this->getNextQueue();

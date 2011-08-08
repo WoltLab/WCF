@@ -1,10 +1,11 @@
 			</section>
+			<!-- CONTENT -->
 		</div>
 	</div>
-	<!-- /CONTENT -->
+	<!-- /MAIN -->
 	
 	<!-- FOOTER -->
-	<footer>
+	<footer id="footer" class="pageFooter">
 		<div>
 			<nav id="footerNavigation" class="footerNavigation">
 				<ul>
