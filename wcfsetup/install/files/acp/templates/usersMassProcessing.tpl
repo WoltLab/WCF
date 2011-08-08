@@ -176,7 +176,7 @@
 	
 	<div class="border content">
 		<div class="container-1">
-			<h3 class="subHeading">{lang}wcf.acp.user.massProcessing.action{/lang}</h3>
+			<h1 class="subHeading">{lang}wcf.acp.user.massProcessing.action{/lang}</h1>
 				
 			<div class="formGroup{if $errorField == 'action'} formError{/if}">
 				<div class="formGroupLabel">
@@ -269,7 +269,7 @@
 				<fieldset>
 					<legend>{lang}wcf.acp.user.exportEmailAddress.format{/lang}</legend>
 					
-					<div>
+					
 						<div class="formGroup">
 							<div class="formGroupLabel">
 								<label>{lang}wcf.acp.user.exportEmailAddress.fileType{/lang}</label>
@@ -301,7 +301,7 @@
 								<input type="text" id="textSeparator" name="textSeparator" value="{$textSeparator}" class="medium" />
 							</dd>
 						</dl>
-					</div>
+					
 				</fieldset>
 			</div>
 			

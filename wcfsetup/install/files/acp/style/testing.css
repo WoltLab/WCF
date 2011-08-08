@@ -515,20 +515,41 @@ label {
 	color: #69c;
 }
 
-/* Structure (deprecated?) */
+/* Structure */
 
-div.formElement {
+/* Form Element (deprecated) */
+
+.formElement {
 	clear: both;
 	margin-bottom: 14px;
 }
 
-div.formGroupLabel label {
+/* Form Group (deprecated) */
+
+.formGroup {
+	margin-top: 10px;
+}
+
+.formGroup .formGroupLabel {
+	text-align: right;
+	float: left;
+	width: 233px;
+}
+
+.formGroup .formGroupField {
+	display: block;
+	margin-left: 250px;
+}
+
+.formGroup .formGroupField div.formField label {
+	display: block;
+}
+
+.formGroup .formGroupField fieldset legend {
 	display: none;
 }
 
-div.formGroupField div.formField label {
-	display: block;
-}
+/* Form Group (deprecated) */
 
 .formSubmit {
 	text-align: center;

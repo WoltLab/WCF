@@ -147,6 +147,7 @@
 			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditPassword')}
 				<fieldset>
 					<legend>{lang}wcf.user.password{/lang}</legend>
+					
 					<dl{if $errorType.password|isset} class="formError"{/if}>
 						<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 						<dd>
@@ -201,14 +202,12 @@
 									<legend>{lang}wcf.user.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>
 									
 									{if $categoryLevel2[object]->categoryName == 'settings.general' && $availableLanguages|count > 1}
-										<div class="formElement">
-											<div class="formFieldLabel">
-												<label for="languageID">{lang}wcf.user.language{/lang}</label>
-											</div>
-											<div class="formField">
+										<dl>
+											<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>
+											<dd>
 												{htmlOptions options=$availableLanguages selected=$languageID name=languageID id=languageID disableEncoding=true}
-											</div>
-										</div>
+											</dd>
+										</dl>
 											
 										{if $availableContentLanguages|count > 1}
 											<div class="formGroup">
