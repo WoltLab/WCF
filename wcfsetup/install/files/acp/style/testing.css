@@ -461,7 +461,7 @@ fieldset legend ~ p {
 }
 
 fieldset p.description {
-	color: #369;
+	color: #999;
 	font-size: 90%;
 }
 
@@ -477,23 +477,18 @@ fieldset > ul li {
 
 /* -- -- -- -- -- Tabbed Content -- -- -- -- -- */
 
+/* Simple */
+
 dl {
 	clear: both;
 	margin-bottom: 7px;
 }
 
-dl small {
-	color: #999;
-	font-size: 85%;
-	margin: 3px 0 7px;
-	display: block;
-}
-
-dl.disabled dt {
+dl.disabled > dt {
 	color: #777;
 }
 
-dl dt {
+dl > dt {
 	color: #69c;
 	float: left;
 	text-align: right;
@@ -501,8 +496,65 @@ dl dt {
 	margin-top: 5px; /* not so nice */
 }
 
-dl dd {
+dl > dd {
 	margin-left: 250px;
+}
+
+dl > dd > small {
+	color: #999;
+	font-size: 85%;
+	margin: 3px 0 7px;
+	display: block;
+}
+
+/* Nested */
+
+dl > dd > fieldset {
+	
+}
+
+dl > dd > fieldset > legend {
+	display: none;
+}
+
+dl > dd > fieldset > dl {
+	
+}
+
+dl > dd > fieldset > dl > dt {
+	width: 150px;
+	margin-right: 20px;
+}
+
+dl > dd > fieldset > dl > dd {
+	margin-left: 0;
+}
+
+dl > dd > fieldset > dl > dd > label {
+	display: block;
+}
+
+dl > dd > fieldset > dl > dd > small {
+	
+}
+
+/* Reversed */
+
+.reversed dt {
+	margin-top: 0;
+	text-align: left;
+	position: relative;
+	left: 270px;
+	width: auto;
+}
+
+.reversed dd {
+	
+}
+
+.reversed dd input {
+	margin-left: -10px !important;
+	padding: 0;
 }
 
 
@@ -532,6 +584,7 @@ label {
 
 .formGroup .formGroupLabel {
 	text-align: right;
+	margin-top: 7px;
 	float: left;
 	width: 233px;
 }

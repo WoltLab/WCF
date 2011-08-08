@@ -72,39 +72,39 @@
 				{/if}
 				
 				{if $availableGroups|count}
-					<div class="formGroup">
-						<div class="formGroupLabel">
+					<dl>
+						<dt>
 							<label>{lang}wcf.acp.user.groups{/lang}</label>
-						</div>
-						<div class="formGroupField">
+						</dt>
+						<dd>
 							<fieldset>
 								<legend>{lang}wcf.acp.user.groups{/lang}</legend>
 								
-								<div class="formField">
-									{htmlCheckboxes options=$availableGroups name='groupIDs' selected=$groupIDs}
-									
-									<label style="margin-top: 10px"><input type="checkbox" name="invertGroupIDs" value="1" {if $invertGroupIDs == 1}checked="checked" {/if}/> {lang}wcf.acp.user.groups.invertSearch{/lang}</label>
-								</div>
+								<dl>
+									<dd>{htmlCheckboxes options=$availableGroups name='groupIDs' selected=$groupIDs}</dd>
+								</dl>
+								
+								<label style="margin-top: 10px"><input type="checkbox" name="invertGroupIDs" value="1" {if $invertGroupIDs == 1}checked="checked" {/if}/> {lang}wcf.acp.user.groups.invertSearch{/lang}</label>
 							</fieldset>
-						</div>
-					</div>
+						</dd>
+					</dl>
 				{/if}
 				
 				{if $availableLanguages|count > 1}
-					<div class="formGroup">
-						<div class="formGroupLabel">
+					<dl>
+						<dt>
 							<label>{lang}wcf.user.language{/lang}</label>
-						</div>
-						<div class="formGroupField">
+						</dt>
+						<dd>
 							<fieldset>
 								<legend>{lang}wcf.acp.user.language{/lang}</legend>
 								
-								<div class="formField">
-									{htmlCheckboxes options=$availableLanguages name='languageIDs' selected=$languageIDs disableEncoding=true}
-								</div>
+								<dl>
+									<dd>{htmlCheckboxes options=$availableLanguages name='languageIDs' selected=$languageIDs disableEncoding=true}</dd>
+								</dl>
 							</fieldset>
-						</div>
-					</div>
+						</dd>
+					</dl>
 				{/if}
 			</fieldset>
 			
@@ -132,7 +132,7 @@
 			
 				<div id="resultOptions" class="border tabMenuContent hidden">
 					<div class="container-1">
-						<h3 class="subHeading">{lang}wcf.acp.user.search.display{/lang}</h3>
+						<h1 class="subHeading">{lang}wcf.acp.user.search.display{/lang}</h1>
 					
 						<fieldset>
 							<legend>{lang}wcf.acp.user.search.display.general{/lang}</legend>
@@ -187,23 +187,23 @@
 								</div>
 							{/if}
 						
-							<div class="formGroup">
-								<div class="formGroupLabel">
-									<label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label>
-								</div>
-								<div class="formGroupField">
+							<dl>
+								<dt><label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label></dt>
+								<dd>
 									<fieldset>
 										<legend>{lang}wcf.acp.user.search.display.columns.other{/lang}</legend>
 									
-										<div class="formField">
-											<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label>
-											<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.registrationDate{/lang}</label>
-										
+										<dl>
+											<dd>
+												<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label></dd>
+												<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.registrationDate{/lang}</label>
+											</dd>
+											
 											{if $additionalColumns|isset}{@$additionalColumns}{/if}
-										</div>
+										</dl>
 									</fieldset>
-								</div>
-							</div>
+								</dd>
+							</dl>
 						
 						</fieldset>
 					</div>
