@@ -46,7 +46,7 @@
 						<legend>{lang}wcf.acp.user.exportEmailAddress.fileType{/lang}</legend>
 						
 						<dl>
-							<dd>
+							<dd><!-- ToDo: Definition List -->
 								<li><label><input type="radio" onclick="if (IS_SAFARI) setFileType('csv')" onfocus="setFileType('csv')" name="fileType" value="csv" {if $fileType == 'csv'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.csv{/lang}</label></li>
 								<li><label><input type="radio" onclick="if (IS_SAFARI) setFileType('xml')" onfocus="setFileType('xml')" name="fileType" value="xml" {if $fileType == 'xml'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label></li>
 							</dd>
@@ -62,9 +62,9 @@
 				</dd>
 			</dl>
 			
-			<dl id="textSeparatorDiv">
+			<dl id="textSeparatorDiv"><!-- ToDo: Checkbox -->
 				<dt><label for="textSeparator">{lang}wcf.acp.user.exportEmailAddress.textSeparator{/lang}</label></dt>
-				<dd class="formField">
+				<dd>
 					<input type="text" id="textSeparator" name="textSeparator" value="{$textSeparator}" class="medium" />
 				</dd>
 			</dl>

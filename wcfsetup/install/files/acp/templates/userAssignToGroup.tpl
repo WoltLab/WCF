@@ -26,13 +26,13 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.user.groups{/lang}</legend>
 			
-			<div>
-				<div class="formField{if $errorField == 'groupIDs'} formError{/if}">
+			<div><!-- ToDo: Definition List -->
+				<div{if $errorField == 'groupIDs'} class="formError"{/if}>
 					{htmlCheckboxes options=$groups name=groupIDs selected=$groupIDs}
 					{if $errorField == 'groupIDs'}
-						<p class="innerError">
+						<small class="innerError">
 							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-						</p>
+						</small>
 					{/if}
 				</div>
 			</div>

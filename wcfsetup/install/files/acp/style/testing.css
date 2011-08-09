@@ -559,20 +559,12 @@ dl > dd > fieldset > dl > dd > small {
 
 /* Reversed */
 
-.reversed dt {
-	margin-top: 0;
+ dt.reversed {
+	margin-top: 2px;
 	text-align: left;
 	position: relative;
 	left: 270px;
 	width: auto;
-}
-
-.reversed dd {
-	
-}
-
-.reversed dd input {
-	/*margin-left: -10px !important;*/
 }
 
 
@@ -694,9 +686,17 @@ textarea:focus {
 	box-shadow: 0 0 5px rgba(102, 153, 204, 1), inset 0 0 5px rgba(102, 153, 204, .7);
 }
 
+/* Widths */
+
+textarea {
+	width: 100%;
+}
+
+/*
 select {
 	width: 100%;
 }
+*/
 
 .tiny {
 	width: 100px;
@@ -1105,6 +1105,8 @@ tbody td {
 	background-color: #fcfdfe;
 	border-right: 1px solid rgba(255, 255, 255, .3);
 	padding: 5px;
+	/* this is experimental */
+	word-wrap: break-word;
 }
 
 tbody td:last-child {

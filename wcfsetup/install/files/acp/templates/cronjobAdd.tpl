@@ -35,7 +35,7 @@
 			
 			<dl id="classNameDiv"{if $errorField == 'className'} class="formError"{/if}>
 				<dt><label for="className">{lang}wcf.acp.cronjob.className{/lang}</label></dt>
-				<dd class="formField">
+				<dd>
 					<input type="text" id="className" name="className" value="{$className}" class="long" />
 					{if $errorField == 'className'}
 						<small class="innerError">
