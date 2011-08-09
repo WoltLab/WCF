@@ -68,6 +68,7 @@
 				'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}'
 			});
 			new WCF.Date.Time();
+			new WCF.Effect.SmoothScroll();
 		});
 		//]]>
 	</script>

@@ -1541,6 +1541,39 @@ WCF.User = {
 };
 
 /**
+ * Namespace for effect-related functions.
+ */
+WCF.Effect = {};
+
+/**
+ * Creates a smooth scroll effect.
+ */
+WCF.Effect.SmoothScroll = function() { this.init(); };
+WCF.Effect.SmoothScroll.prototype = {
+	/**
+	 * Initializes effect.
+	 */
+	init: function() {
+		$('a[href=#top],a[href=#bottom]').click(function() {
+			var $target = $(this.hash);
+			if ($target.length) {
+				var $targetOffset = $target.getOffsets().top;
+				if ($targetOffset > $(document).height() - $(window).height()) {
+					$targetOffset = $(document).height() - $(window).height();
+					if ($targetOffset < 0) $targetOffset = 0;
+				}
+				
+				$('html,body').animate({ scrollTop: $targetOffset }, 1200, function (x, t, b, c, d) {
+					return -c * ((t=t/d-1)*t*t*t - 1) + b;
+				});
+				
+				return false;
+			}
+		});
+	}
+};
+
+/**
  * Basic implementation for WCF dialogs.
  */
 $.widget('ui.wcfDialog', $.ui.dialog, {
