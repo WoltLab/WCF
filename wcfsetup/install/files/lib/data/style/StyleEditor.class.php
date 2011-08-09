@@ -4,6 +4,7 @@ use wcf\data\template\group\TemplateGroupEditor;
 use wcf\data\template\TemplateEditor;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
+use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\image\Thumbnail;
 use wcf\system\io\File;
@@ -849,7 +850,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * @see wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
-		WCF::getCache()->clear(WCF_DIR.'cache', 'cache.icon-*-'.$this->styleID.'.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.icon-*-*.php');
 	}
 	
 	/**
