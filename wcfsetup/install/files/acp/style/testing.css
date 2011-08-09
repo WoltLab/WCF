@@ -501,6 +501,7 @@ fieldset > ul li {
 dl {
 	clear: both;
 	margin-bottom: 7px;
+	position: relative;
 }
 
 dl.disabled > dt {
@@ -562,11 +563,14 @@ dl > dd > fieldset > dl > dd > small {
  dt.reversed {
 	margin-top: 2px;
 	text-align: left;
-	position: relative;
+	position: absolute;
 	left: 270px;
-	width: auto;
+	width: 100%;
 }
 
+ dt.reversed ~ dd > input[type='checkbox'] {
+	margin-left: 0;
+}
 
 
 /* -- -- -- -- -- Forms -- -- -- -- -- */
@@ -689,12 +693,12 @@ textarea:focus {
 /* Widths */
 
 textarea {
-	width: 100%;
+	width: 95%;
 }
 
 /*
 select {
-	width: 100%;
+	width: 95%;
 }
 */
 
