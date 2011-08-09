@@ -81,6 +81,7 @@
 			<h1>{lang}wcf.acp.package.install.updatableInstances{/lang}</h1>
 			<h2>{lang}wcf.acp.package.install.updatableInstances.description{/lang}</h2>
 		</hgroup>
+		
 		<table>
 			<thead>
 				<tr class="tableHead">
@@ -88,6 +89,7 @@
 					<th><p class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</p></th>
 				</tr>
 			</thead>
+			
 			<tbody>
 			{foreach from=$updatableInstances item=$package}
 				<tr>
@@ -101,34 +103,34 @@
 {/if}
 
 {if $requiredPackages|count > 0}
-	<div class="border titleBarPanel">
-		<div class="containerHead">
-			<h3>{lang}wcf.acp.package.view.requiredPackages{/lang}</h3>
-			<p class="smallFont light">{lang}wcf.acp.package.view.requiredPackages.description{/lang}</p>
-		</div>
+	<div class="border boxTitle">
+		<hgroup>
+			<h1>{lang}wcf.acp.package.view.requiredPackages{/lang}</h1>
+			<h2>{lang}wcf.acp.package.view.requiredPackages.description{/lang}</h2>
+		</hgroup>
 	</div>
-	<div class="border borderMarginRemove">
-		<table class="tableList">
-			<thead>
-				<tr class="tableHead">
-					<th><p class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</p></th>
-					<th><p class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</p></th>
-				</tr>
-			</thead>
-			<tbody>
-			{foreach from=$requiredPackages item=$package}
-				<tr>
-					<td class="columnText"><p>{lang}wcf.acp.package.install.packageName{/lang}</p></td>
-					<td class="columnText"><p>{if $package.minversion|isset}{$package.minversion}{/if}</p></td>
-				</tr>
-			{/foreach}
-			</tbody>
-		</table>
-	</div>
+	
+	<table>
+		<thead>
+			<tr>
+				<th><p class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</p></th>
+				<th><p class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</p></th>
+			</tr>
+		</thead>
+		
+		<tbody>
+		{foreach from=$requiredPackages item=$package}
+			<tr>
+				<td class="columnText"><p>{lang}wcf.acp.package.install.packageName{/lang}</p></td>
+				<td class="columnText"><p>{if $package.minversion|isset}{$package.minversion}{/if}</p></td>
+			</tr>
+		{/foreach}
+		</tbody>
+	</table>
 {/if}
 
 <div class="formSubmit">
-	<input type="button" onclick="document.location.href=fixURL('index.php?page=Package&amp;action={@$action}&amp;queueID={@$queueID}&amp;step=cancel{@SID_ARG_2ND}')" accesskey="c" value="{lang}wcf.global.button.back{/lang}" />
+	<input type="button" onclick="document.location.href=fixURL('index.php?page=Package&amp;action={@$action}&amp;queueID={@$queueID}&amp;step=cancel{@SID_ARG_2ND}')" value="{lang}wcf.global.button.back{/lang}" accesskey="c" />
 	{if $missingPackages == 0 && $excludingPackages|count == 0 && $excludedPackages|count == 0}
 		<input type="button" id="submitButton" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
 	{/if}

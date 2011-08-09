@@ -141,10 +141,12 @@ header.pageHeader div#logo a {
 nav.mainMenu {
 	margin: 0 30px;
 	background-color: rgba(0, 0, 0, .4);
-	border-radius: 5px 5px 0 0;
 	display: table;
 	position: relative;
 	bottom: -5px;
+	
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
 
 nav.mainMenu:after {
@@ -247,6 +249,11 @@ section.content {
 	position: relative;
 	width: 100%;
 	z-index: 100;
+}
+
+section.content .content {
+	border: 1px solid #ccc;
+	padding: 13px 23px;
 }
 
 div.main > div section:only-child {
@@ -407,7 +414,7 @@ footer nav.footerNavigation ul li {
 }
 
 .mainHeading > hgroup {
-	height: 48px;
+	min-height: 48px;
 	padding-left: 60px;
 	margin-bottom: 30px;
 }
@@ -450,11 +457,19 @@ footer nav.footerNavigation ul li {
 fieldset {
 	border: 1px solid #ccc;
 	border-radius: 7px;
-	background-color: rgba(230, 230, 230, .1);
+	background-color: rgba(0, 0, 0, .015);
 	margin: 15px 0;
 	padding: 15px;
 }
+/*
+fieldset:first-child {
+	margin-top: 0;
+}
 
+fieldset:last-child {
+	margin-bottom: 0;
+}
+*/
 fieldset legend {
 	color: #999;
 	padding: 0 7px 0;
@@ -1181,27 +1196,61 @@ p.success,
 p.warning {
 	border-radius: 7px;
 	margin-bottom: 14px;
-	padding: 7px 14px;
+	padding: 7px 14px 7px 50px;
+	line-height: 1.5;
+	text-shadow: 0 1px 0 #fff;
+	
+	-webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
+	-ms-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
+	-o-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
+	box-shadow: 0 0 7px rgba(0, 0, 0, .1);
+	
+	-webkit-transition: all .1s linear;
+	-moz-transition: all .1s linear;
+	-ms-transition: all .1s linear;
+	-o-transition: all .1s linear;
+	transition: all .1s linear;
 }
 
 p.info {
+	color: #68b;
+	border: 1px solid #9be;
 	background-color: #def;
-	border: 1px solid #06f;
+	background-image: url("../../icon/systemInfo.svg");
+	background-size: 24px;
+	background-position: 13px center;
+	background-repeat: no-repeat;
 }
 
 p.success {
+	color: #090;
+	border: 1px solid #0c0;
 	background-color: #efe;
-	border: 1px solid #090;
-}
-
-p.error {
-	background-color: #fee;
-	border: 1px solid #c00;
+	background-image: url("../../icon/systemSuccess.svg");
+	background-size: 24px;
+	background-position: 13px center;
+	background-repeat: no-repeat;
 }
 
 p.warning {
+	color: #990;
+	border: 1px solid #cc0;
 	background-color: #ffd;
-	border: 1px solid #660;
+	background-image: url("../../icon/systemWarning.svg");
+	background-size: 24px;
+	background-position: 13px center;
+	background-repeat: no-repeat;
+}
+
+p.error {
+	color: #c00;
+	border: 1px solid #f99;
+	background-color: #fee;
+	background-image: url("../../icon/systemError.svg");
+	background-size: 24px;
+	background-position: 13px center;
+	background-repeat: no-repeat;
 }
 
 
@@ -1334,7 +1383,7 @@ div.ui-widget-overlay {
 
 
 /* -- -- -- -- -- Tab Menu -- -- -- -- -- */
-/* -- -- -- -- -- Parts taken from jQuery UI @ themes/base/jquery.ui.tabs.css -- -- -- -- -- */
+/* Parts taken from jQuery UI @ themes/base/jquery.ui.tabs.css */
 
 /* Tab Menu */
 
@@ -1392,18 +1441,18 @@ div.ui-widget-overlay {
 .tabMenu li.ui-state-active a {
 	color: #333 !important;
 	font-weight: bold;
-	background-color: rgba(230, 230, 230, .15);
+	background-color: rgba(255, 255, 255, .015);
 }
 
 .tabMenu li.ui-tabs-selected a {
 	background-color: #fefefe;	
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255, 255, 255, 1)), to(rgba(230, 230, 230, .15)));
-	background-image: -moz-linear-gradient(0% 0% 270deg, rgba(255, 255, 255, 1), rgba(230, 230, 230, .15));
-	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(rgba(255, 255, 255, 1)), to(rgba(230, 230, 230, .15)));
-	background-image: -o-linear-gradient(rgba(255, 255, 255, 1), rgba(230, 230, 230, .15));
-	background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(230, 230, 230, .15));
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255, 255, 255, 1)), to(rgba(253, 253, 253, 1)));
+	background-image: -moz-linear-gradient(0% 0% 270deg, rgba(255, 255, 255, 1), rgba(253, 253, 253, 1));
+	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(rgba(255, 255, 255, 1)), to(rgba(253, 253, 253, 1)));
+	background-image: -o-linear-gradient(rgba(255, 255, 255, 1), rgba(253, 253, 253, 1));
+	background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(253, 253, 253, 1));
 	
-	border-bottom: 1px solid rgba(230, 230, 230, .15);
+	border-bottom: 1px solid rgba(253, 253, 253, 1);
 }
 
 .tabMenu li.ui-tabs-selected a,
@@ -1420,16 +1469,12 @@ div.ui-widget-overlay {
 /* Tab Menu Content */
 
 .tabMenuContent {
-	background-color: rgba(230, 230, 230, .15);
 	border: 1px solid #ccc !important;
+	background-color: rgba(253, 253, 253, 1);
 	z-index: 89; /* Prevents border overlay during transition */
 	display: block;
 	margin: -2px 0 0;
 	padding: 15px 23px;
-}
-
-.content {
-	border-width: 0 !important;
 }
 
 /* ToDo: 2x hidden? */

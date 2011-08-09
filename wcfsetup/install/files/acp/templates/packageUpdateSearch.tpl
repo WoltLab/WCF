@@ -53,69 +53,68 @@
 {else}
 	<form method="post" action="index.php?form=PackageUpdateSearch">
 		<div class="border content">
-			<div class="container-1">
 			
-				<fieldset>
-					<legend>{lang}wcf.acp.packageUpdate.search.server{/lang}</legend>
-					
-					<dl>
-						<dt></dt>
-						<dd>
-							<label><input type="checkbox" name="checkUncheck" value="" /> {lang}wcf.acp.packageUpdate.search.server.all{/lang}</label> 
-						</dd>
-					</dl>
-					
-					<dl id="updateServerList">
-						<dt></dt>
-						{foreach from=$updateServers item=updateServer}
-							<dd>
-								<label><input type="checkbox" name="packageUpdateServerIDs[]" value="{@$updateServer->packageUpdateServerID}" {if $updateServer->packageUpdateServerID|in_array:$packageUpdateServerIDs}checked="checked" {/if}/> {$updateServer->serverURL}</label>
-							</dd>
-						{/foreach}
-					</dl>
-				</fieldset>
+			<fieldset>
+				<legend>{lang}wcf.acp.packageUpdate.search.server{/lang}</legend>
 				
-				<fieldset>
-					<legend>{lang}wcf.acp.packageUpdate.search.conditions{/lang}</legend>
-					
-					<dl>
-						<dt><label for="packageName">{lang}wcf.acp.packageUpdate.search.packageName{/lang}</label></dt>
+				<dl>
+					<dt></dt>
+					<dd>
+						<label><input type="checkbox" name="checkUncheck" value="" /> {lang}wcf.acp.packageUpdate.search.server.all{/lang}</label> 
+					</dd>
+				</dl>
+				
+				<dl id="updateServerList">
+					<dt></dt>
+					{foreach from=$updateServers item=updateServer}
 						<dd>
-							<input type="text" id="packageName" name="packageName" value="{$packageName}" class="long" />
+							<label><input type="checkbox" name="packageUpdateServerIDs[]" value="{@$updateServer->packageUpdateServerID}" {if $updateServer->packageUpdateServerID|in_array:$packageUpdateServerIDs}checked="checked" {/if}/> {$updateServer->serverURL}</label>
 						</dd>
-						<dd>
-							<label><input type="checkbox" name="searchDescription" value="1" {if $searchDescription == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.searchDescription{/lang}</label>
-						</dd>
-					</dl>
-					
-					<dl>
-						<dt><label for="author">{lang}wcf.acp.packageUpdate.search.author{/lang}</label></dt>
-						<dd>
-							<input type="text" id="author" name="author" value="{$author}" class="medium" />
-						</dd>
-					</dl>
-					
-					<dl>
-						<dt>{lang}wcf.acp.packageUpdate.search.type{/lang}</dt>
-						<dd>
-							<label><input type="checkbox" name="standalone" value="1" {if $standalone == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.type.standalone{/lang}</label> 
-						</dd>
-						<dd>
-							<label><input type="checkbox" name="plugin" value="1" {if $plugin == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.type.plugin{/lang}</label> 
-						</dd>
-						<dd>
-							<label><input type="checkbox" name="other" value="1" {if $other == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.type.other{/lang}</label> 
-						</dd>
-					</dl>
-					
-					<dl>
-						<dt></dt>
-						<dd>
-							<label><input type="checkbox" name="ignoreUniques" value="1" {if $ignoreUniques == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.ignoreUniques{/lang}</label>
-						</dd>
-					</dl>
-				</fieldset>
-			</div>
+					{/foreach}
+				</dl>
+			</fieldset>
+			
+			<fieldset>
+				<legend>{lang}wcf.acp.packageUpdate.search.conditions{/lang}</legend>
+				
+				<dl>
+					<dt><label for="packageName">{lang}wcf.acp.packageUpdate.search.packageName{/lang}</label></dt>
+					<dd>
+						<input type="text" id="packageName" name="packageName" value="{$packageName}" class="long" />
+					</dd>
+					<dd>
+						<label><input type="checkbox" name="searchDescription" value="1" {if $searchDescription == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.searchDescription{/lang}</label>
+					</dd>
+				</dl>
+				
+				<dl>
+					<dt><label for="author">{lang}wcf.acp.packageUpdate.search.author{/lang}</label></dt>
+					<dd>
+						<input type="text" id="author" name="author" value="{$author}" class="medium" />
+					</dd>
+				</dl>
+				
+				<dl>
+					<dt>{lang}wcf.acp.packageUpdate.search.type{/lang}</dt>
+					<dd>
+						<label><input type="checkbox" name="standalone" value="1" {if $standalone == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.type.standalone{/lang}</label> 
+					</dd>
+					<dd>
+						<label><input type="checkbox" name="plugin" value="1" {if $plugin == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.type.plugin{/lang}</label> 
+					</dd>
+					<dd>
+						<label><input type="checkbox" name="other" value="1" {if $other == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.type.other{/lang}</label> 
+					</dd>
+				</dl>
+				
+				<dl>
+					<dt></dt>
+					<dd>
+						<label><input type="checkbox" name="ignoreUniques" value="1" {if $ignoreUniques == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.ignoreUniques{/lang}</label>
+					</dd>
+				</dl>
+			</fieldset>
+			
 		</div>
 		
 		<div class="formSubmit">

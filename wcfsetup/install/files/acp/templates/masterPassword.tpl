@@ -13,27 +13,26 @@
 
 <form method="post" action="index.php?form=MasterPassword">
 	<div class="border content">
-		<div class="container-1">
-			<fieldset>
-				<legend>{lang}wcf.acp.masterPassword.enter{/lang}</legend>
-			
-				<dl id="masterPasswordDiv"{if $errorField == 'masterPassword'} class="formError"{/if}>
-					<dt><label for="masterPassword">{lang}wcf.acp.masterPassword{/lang}</label></dt>
-					<dd class="formField">
-						<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium" />
-						{if $errorField == 'masterPassword'}
-							<small class="innerError">
-								{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-								{if $errorType == 'invalid'}{lang}wcf.acp.masterPassword.error.invalid{/lang}{/if}
-							</small>
-						{/if}
-						<small id="masterPasswordHelpMessage">{lang}wcf.acp.masterPassword.enter.description{/lang}</small>
-					</dd>
-				</dl>
-			</fieldset>
-			
-			{if $additionalFields|isset}{@$additionalFields}{/if}
-		</div>
+		
+		<fieldset>
+			<legend>{lang}wcf.acp.masterPassword.enter{/lang}</legend>
+		
+			<dl id="masterPasswordDiv"{if $errorField == 'masterPassword'} class="formError"{/if}>
+				<dt><label for="masterPassword">{lang}wcf.acp.masterPassword{/lang}</label></dt>
+				<dd class="formField">
+					<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium" />
+					{if $errorField == 'masterPassword'}
+						<small class="innerError">
+							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType == 'invalid'}{lang}wcf.acp.masterPassword.error.invalid{/lang}{/if}
+						</small>
+					{/if}
+					<small id="masterPasswordHelpMessage">{lang}wcf.acp.masterPassword.enter.description{/lang}</small>
+				</dd>
+			</dl>
+		</fieldset>
+		
+		{if $additionalFields|isset}{@$additionalFields}{/if}
 	</div>
 
 	<div class="formSubmit">

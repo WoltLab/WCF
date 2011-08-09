@@ -17,21 +17,22 @@
 	{foreach from=$packages item=package}
 		<article class="message content">
 			<div class="messageInner container-{cycle name='styles' values='1,2'}">
-				<h3 class="subHeading">
-					{if $package.standalone == 1}
-						<img src="{@RELATIVE_WCF_DIR}icon/packageTypeStandaloneS.png" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" />
-					{elseif $package.plugin != ''}
-						<img src="{@RELATIVE_WCF_DIR}icon/packageTypePluginS.png" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" />
-					{else}
-						<img src="{@RELATIVE_WCF_DIR}icon/packageS.png" alt="" title="{lang}wcf.acp.package.list.other{/lang}" />
-					{/if}
-					{$package.packageName}
-				</h3>
+				<hgroup class="subHeading">
+					<h1>
+						{if $package.standalone == 1}
+							<img src="{@RELATIVE_WCF_DIR}icon/packageTypeStandaloneS.png" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" />
+						{elseif $package.plugin != ''}
+							<img src="{@RELATIVE_WCF_DIR}icon/packageTypePluginS.png" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" />
+						{else}
+							<img src="{@RELATIVE_WCF_DIR}icon/packageS.png" alt="" title="{lang}wcf.acp.package.list.other{/lang}" />
+						{/if}
+						{$package.packageName}
+					</h1>
+				<hgroup>
 
 				<div class="messageBody">
 					<dl>
-						<dt><label for="packageVersion-{$package.package}">{lang}wcf.acp.package.list.version{/lang}</label>
-						</dt>
+						<dt><label for="packageVersion-{$package.package}">{lang}wcf.acp.package.list.version{/lang}</label></dt>
 						<dd>
 							<select id="packageVersion-{$package.package}">
 								{foreach from=$package.packageVersions item=$packageVersion}
@@ -96,8 +97,8 @@
 							</<ul>
   						</div>
 					</fieldset>
+					
 				</div>
-
 				<hr />
 			</div>
 		</article>			

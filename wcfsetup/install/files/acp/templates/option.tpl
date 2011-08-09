@@ -37,30 +37,28 @@
 		
 		{foreach from=$optionTree item=categoryLevel1}
 			<div class="border tabMenuContent hidden" id="{@$categoryLevel1[object]->categoryName}">
-				<div class="container-1">
-					<hgroup class="subHeading">
-						<h1>{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
-						<h2>{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}.description{/lang}</h2>
-					</hgroup>
-					
-					{if $categoryLevel1[options]|count}
+				<hgroup class="subHeading">
+					<h1>{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
+					<h2>{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}.description{/lang}</h2>
+				</hgroup>
+				
+				{if $categoryLevel1[options]|count}
+					<fieldset>
+						<legend>{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}{/lang}</legend>
+						{include file='optionFieldList' options=$categoryLevel1[options] langPrefix='wcf.acp.option.'}
+					</fieldset>
+				{/if}
+				
+				{if $categoryLevel1[categories]|count}
+					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 						<fieldset>
-							<legend>{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}{/lang}</legend>
-							{include file='optionFieldList' options=$categoryLevel1[options] langPrefix='wcf.acp.option.'}
+							<legend>{lang}wcf.acp.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>
+							<p class="description">{lang}wcf.acp.option.category.{$categoryLevel2[object]->categoryName}.description{/lang}</p>
+							
+							{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.option.'}
 						</fieldset>
-					{/if}
-					
-					{if $categoryLevel1[categories]|count}
-						{foreach from=$categoryLevel1[categories] item=categoryLevel2}
-							<fieldset>
-								<legend>{lang}wcf.acp.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>
-								<p class="description">{lang}wcf.acp.option.category.{$categoryLevel2[object]->categoryName}.description{/lang}</p>
-								
-								{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.option.'}
-							</fieldset>
-						{/foreach}
-					{/if}
-				</div>
+					{/foreach}
+				{/if}
 			</div>
 		{/foreach}
 	</div>

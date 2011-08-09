@@ -36,6 +36,7 @@
 		<hgroup>
 			<h1><a href="#">{lang}wcf.acp.package.list{/lang} <span class="badge" title="{lang}wcf.acp.package.list.count{/lang}">{#$items}</span></a></h1>
 		</hgroup>
+		
 		<table>
 			<thead>
 				<tr>
@@ -48,6 +49,7 @@
 					{if $additionalHeadColumns|isset}{@$additionalHeadColumns}{/if}
 				</tr>
 			</thead>
+			
 			<tbody>
 				{foreach from=$packages item=$package}
 					<tr class="packageRow">
@@ -87,6 +89,7 @@
 				{/foreach}
 			</tbody>
 		</table>
+		
 	</div>
 {/if}
 

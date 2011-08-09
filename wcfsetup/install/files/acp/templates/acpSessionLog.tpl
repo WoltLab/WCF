@@ -18,6 +18,7 @@
 		<hgroup>
 			<h1>{lang}wcf.acp.sessionLog.access.view.count{/lang} <span class="badge" title="{lang}wcf.acp.sessionLog.access.view.count{/lang}">{#$items}</span></h1>
 		</hgroup>
+		
 		<table>
 			<thead>
 				<tr>
@@ -32,6 +33,7 @@
 					{if $additionalColumnHeads|isset}{@$additionalColumnHeads}{/if}
 				</tr>
 			</thead>
+			
 			<tbody>
 			{foreach from=$sessionAccessLogs item=sessionAccessLog}
 				<tr>
@@ -48,6 +50,7 @@
 			{/foreach}
 			</tbody>
 		</table>
+		
 	</div>
 
 	<div class="contentFooter">

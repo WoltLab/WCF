@@ -57,6 +57,7 @@
 		<hgroup>
 			<h1>{lang}wcf.acp.cronjob.list.count{/lang} <span class="badge" title="{lang}wcf.acp.cronjob.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
+		
 		<table>
 			<thead>
 				<tr>
@@ -72,6 +73,7 @@
 					{if $additionalHeadColumns|isset}{@$additionalHeadColumns}{/if}
 				</tr>
 			</thead>
+			
 			<tbody>
 			{foreach from=$cronjobs item=cronjob}
 				<tr class="cronjobRow">
@@ -126,6 +128,7 @@
 			{/foreach}
 			</tbody>
 		</table>
+		
 	</div>
 	
 	<div class="contentFooter">

@@ -34,20 +34,20 @@
 	
 	{if !$availableUpdates|count}
 		<div class="border content">
-			<div class="container-1">
-				<p class="info">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
-			</div>
+			<p class="info">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
 		</div>
 	{else}
 		{foreach from=$availableUpdates item=availableUpdate}
 			<article class="message content"{if $availableUpdate.version.updateType == 'security'} style="border-color: #c00"{/if}>
 				<div class="messageInner container-{cycle name='styles' values='1,2'}">
-					<h1 class="subHeading">
-						<label>
-							<input type="checkbox" name="updates[{@$availableUpdate.packageID}]" onclick="enableFormElements(document.getElementById('version-{@$availableUpdate.packageID}Div'), this.checked)" value="{$availableUpdate.version.packageVersion}" />
-							{$availableUpdate.packageName}{if $availableUpdate.instanceNo > 1} (#{#$availableUpdate.instanceNo}){/if}
-						</label>
-					</h1>
+					<hgroup class="subHeading">
+						<h1>
+							<label>
+								<input type="checkbox" name="updates[{@$availableUpdate.packageID}]" onclick="enableFormElements(document.getElementById('version-{@$availableUpdate.packageID}Div'), this.checked)" value="{$availableUpdate.version.packageVersion}" />
+								{$availableUpdate.packageName}{if $availableUpdate.instanceNo > 1} (#{#$availableUpdate.instanceNo}){/if}
+							</label>
+						</h1>
+					<hgroup>
 
 					<div class="messageBody">
 						<dl>

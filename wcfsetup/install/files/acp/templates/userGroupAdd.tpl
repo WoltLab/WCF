@@ -38,76 +38,74 @@
 
 <form method="post" action="index.php?form=UserGroup{@$action|ucfirst}">
 	<div class="border content">
-		<div class="container-1">
-			<fieldset>
-				<legend>{lang}wcf.acp.group.data{/lang}</legend>
-				
-				<dl id="groupNameDiv"{if $errorType.groupName|isset} class="formError"{/if}>
-					<dt><label for="groupName">{lang}wcf.acp.group.groupName{/lang}</label></dt>
-					<dd>
-						<input type="text" id="groupName" name="groupName" value="{$groupName}" class="medium" />
-						{if $errorType.groupName|isset}
-							<small class="innerError">
-								{if $errorType.groupName == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-							</small>
-						{/if}
-						<small id="groupNameHelpMessage">{lang}wcf.acp.group.groupName.description{/lang}</small>
-					</dd>
-				</dl>
-				
-				{if $additionalFields|isset}{@$additionalFields}{/if}
-			</fieldset>
 		
-			{if $additionalFieldSets|isset}{@$additionalFieldSets}{/if}
+		<fieldset>
+			<legend>{lang}wcf.acp.group.data{/lang}</legend>
 			
-			<nav>
-				<ul class="tabMenu">
-					{foreach from=$optionTree item=categoryLevel1}
-						<li id="{@$categoryLevel1[object]->categoryName}"><a onclick="tabMenu.showSubTabMenu('{@$categoryLevel1[object]->categoryName}');"><span>{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</span></a></li>
+			<dl id="groupNameDiv"{if $errorType.groupName|isset} class="formError"{/if}>
+				<dt><label for="groupName">{lang}wcf.acp.group.groupName{/lang}</label></dt>
+				<dd>
+					<input type="text" id="groupName" name="groupName" value="{$groupName}" class="medium" />
+					{if $errorType.groupName|isset}
+						<small class="innerError">
+							{if $errorType.groupName == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+						</small>
+					{/if}
+					<small id="groupNameHelpMessage">{lang}wcf.acp.group.groupName.description{/lang}</small>
+				</dd>
+			</dl>
+			
+			{if $additionalFields|isset}{@$additionalFields}{/if}
+		</fieldset>
+	
+		{if $additionalFieldSets|isset}{@$additionalFieldSets}{/if}
+		
+		<nav>
+			<ul class="tabMenu">
+				{foreach from=$optionTree item=categoryLevel1}
+					<li id="{@$categoryLevel1[object]->categoryName}"><a onclick="tabMenu.showSubTabMenu('{@$categoryLevel1[object]->categoryName}');"><span>{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</span></a></li>
+				{/foreach}
+			</ul>
+		</nav>
+		
+		<nav class="menu"><!-- ToDo -->
+			{foreach from=$optionTree item=categoryLevel1}
+				<ul id="{@$categoryLevel1[object]->categoryName}-categories" class="hidden">
+					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
+						<li id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}"><a onclick="tabMenu.showTabMenuContent('{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}');"><span>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</span></a></li>
 					{/foreach}
 				</ul>
-			</nav>
-			
-			<nav class="menu"><!-- ToDo: Border missing -->
-				{foreach from=$optionTree item=categoryLevel1}
-					<ul id="{@$categoryLevel1[object]->categoryName}-categories" class="hidden">
-						{foreach from=$categoryLevel1[categories] item=categoryLevel2}
-							<li id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}"><a onclick="tabMenu.showTabMenuContent('{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}');"><span>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</span></a></li>
-						{/foreach}
-					</ul>
-				{/foreach}
-			</nav>
-			
-			{foreach from=$optionTree item=categoryLevel1}
-				{foreach from=$categoryLevel1[categories] item=categoryLevel2}
-					<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}-content" class="border tabMenuContent hidden">
-						<div class="container-1">
-							<hgroup class="subHeading">
-								<h1>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h1>
-								<h2>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}</h2>
-							</hgroup>
-							
-							{if $categoryLevel2[options]|count}
-								{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.group.option.'}
-							{/if}
-							
-							{if $categoryLevel2[categories]|count}
-								{foreach from=$categoryLevel2[categories] item=categoryLevel3}
-									<fieldset>
-										<legend>{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}{/lang}</legend>
-										<p class="description">{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}.description{/lang}</p>
-									
-										<div>
-											{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.acp.group.option.'}
-										</div>
-									</fieldset>
-								{/foreach}
-							{/if}
-						</div>
-					</div>
-				{/foreach}
 			{/foreach}
-		</div>
+		</nav>
+		
+		{foreach from=$optionTree item=categoryLevel1}
+			{foreach from=$categoryLevel1[categories] item=categoryLevel2}
+				<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}-content" class="border tabMenuContent hidden">
+					<hgroup class="subHeading">
+						<h1>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h1>
+						<h2>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}</h2>
+					</hgroup>
+					
+					{if $categoryLevel2[options]|count}
+						{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.group.option.'}
+					{/if}
+					
+					{if $categoryLevel2[categories]|count}
+						{foreach from=$categoryLevel2[categories] item=categoryLevel3}
+							<fieldset>
+								<legend>{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}{/lang}</legend>
+								<p class="description">{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}.description{/lang}</p>
+							
+								<div>
+									{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.acp.group.option.'}
+								</div>
+							</fieldset>
+						{/foreach}
+					{/if}
+					
+				</div>
+			{/foreach}
+		{/foreach}
 	</div>
 	
 	<div class="formSubmit">

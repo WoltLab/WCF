@@ -28,15 +28,14 @@
 
 {if !$updateServers|count}
 	<div class="border content">
-		<div class="container-1">
-			<p class="warning">{lang}wcf.acp.updateServer.view.noneAvailable{/lang}</p>
-		</div>
+		<p class="warning">{lang}wcf.acp.updateServer.view.noneAvailable{/lang}</p>
 	</div>
 {else}
 	<div class="border boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.updateServer.list.available{/lang} <span class="badge" title="{lang}wcf.acp.updateServer.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
+		
 		<table>
 			<thead>
 				<tr>
@@ -50,6 +49,7 @@
 					{if $additionalHeadColumns|isset}{@$additionalHeadColumns}{/if}
 				</tr>
 			</thead>
+			
 			<tbody>
 				{foreach from=$updateServers item=updateServer}
 					<tr class="updateServerRow">
@@ -72,6 +72,7 @@
 				{/foreach}
 			</tbody>
 		</table>
+		
 	</div>
 	
 	<div class="contentFooter">
