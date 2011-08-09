@@ -32,7 +32,7 @@
 		<item name="wcf.acp.cronjob.add.success"><![CDATA[Die zeitgesteuerte Aufgabe wurde hinzugefügt.]]></item>
 		<item name="wcf.acp.cronjob.add.timing"><![CDATA[Zeitsteuerung]]></item>
 		<item name="wcf.acp.cronjob.className"><![CDATA[Klassenname]]></item>
-		<item name="wcf.acp.cronjob.className.description"><![CDATA[Gib den Klassenname der zeitgesteuerten Aufgabe an.]]></item>
+		<item name="wcf.acp.cronjob.className.description"><![CDATA[Gib den Klassennamen der zeitgesteuerten Aufgabe an.]]></item>
 		<item name="wcf.acp.cronjob.cronjobID"><![CDATA[ID]]></item>
 		<item name="wcf.acp.cronjob.delete"><![CDATA[Zeitgesteuerte Aufgabe löschen]]></item>
 		<item name="wcf.acp.cronjob.delete.disabled"><![CDATA[Die zeitgesteuerte Aufgabe kann nicht gelöscht werden.]]></item>

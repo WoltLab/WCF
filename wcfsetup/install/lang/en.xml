@@ -33,7 +33,7 @@
 		<item name="wcf.acp.cronjob.add.timing"><![CDATA[Schedule]]></item>
 		<item name="wcf.acp.cronjob.className"><![CDATA[Class name]]></item>
 		<item name="wcf.acp.cronjob.className.description"><![CDATA[Please enter here the class name of the cron job.]]></item>
-		<item name="wcf.acp.cronjob.cronjobID"><![CDATA[Job ID]]></item>
+		<item name="wcf.acp.cronjob.cronjobID"><![CDATA[Cron job ID]]></item>
 		<item name="wcf.acp.cronjob.delete"><![CDATA[Delete]]></item>
 		<item name="wcf.acp.cronjob.delete.disabled"><![CDATA[This cron job cannot be deleted.]]></item>
 		<item name="wcf.acp.cronjob.delete.success"><![CDATA[The cron job has been deleted successfully.]]></item>
