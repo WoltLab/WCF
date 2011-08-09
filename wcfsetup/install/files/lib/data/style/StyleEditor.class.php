@@ -116,7 +116,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		// search style.xml
 		$i = $tar->getIndexByFilename(self::INFO_FILE);
 		if ($i === false) {
-			throw new SystemException("unable to find required file '".self::INFO_FILE."' in style archive"1);
+			throw new SystemException("unable to find required file '".self::INFO_FILE."' in style archive");
 		}
 		
 		// open style.xml
@@ -161,16 +161,16 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		}
 		
 		if (empty($data['name'])) {
-			throw new SystemException("required tag 'stylename' is missing in '".self::INFO_FILE."'"2);
+			throw new SystemException("required tag 'stylename' is missing in '".self::INFO_FILE."'");
 		}
 		if (empty($data['variables'])) {
-			throw new SystemException("required tag 'variables' is missing in '".self::INFO_FILE."'"2);
+			throw new SystemException("required tag 'variables' is missing in '".self::INFO_FILE."'");
 		}
 		
 		// search variables.xml
 		$i = $tar->getIndexByFilename($data['variables']);
 		if ($i === false) {
-			throw new SystemException("unable to find required file '".$data['variables']."' in style archive"1);
+			throw new SystemException("unable to find required file '".$data['variables']."' in style archive");
 		}
 		
 		// open variables.xml
@@ -370,7 +370,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				$iconsTar = new Tar($destination);
 				$contentList = $iconsTar->getContentList();
 				$packageToIcons = array();
-				foreach ($contentList as $key => $val) {
+				foreach ($contentList as $val) {
 					if ($val['type'] == 'file') {
 						$folders = explode('/', $val['filename']);
 						$packageName = array_shift($folders);
@@ -428,7 +428,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				$templatesTar = new Tar($destination);
 				$contentList = $templatesTar->getContentList();
 				$packageToTemplates = array();
-				foreach ($contentList as $key => $val) {
+				foreach ($contentList as $val) {
 					if ($val['type'] == 'file') {
 						$folders = explode('/', $val['filename']);
 						$packageName = array_shift($folders);
@@ -743,8 +743,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		foreach ($sortedAttributes as $variableName => $attributes) {
 			foreach ($attributes as $attributeName => $cssSelectors) {
-				$count = 0;
-				
 				// write selectors
 				$css1Selectors = $css2Selectors = array();
 				foreach ($cssSelectors as $cssSelector) {
