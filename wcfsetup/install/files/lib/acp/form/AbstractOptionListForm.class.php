@@ -367,7 +367,8 @@ abstract class AbstractOptionListForm extends AbstractForm {
 				// add option to list
 				$children[] = array(
 					'object' => $option,
-					'html' => $html
+					'html' => $html,
+					'cssClassName' => $this->getTypeObject($option->optionType)->getCSSClassName()
 				);
 				
 				$i++;

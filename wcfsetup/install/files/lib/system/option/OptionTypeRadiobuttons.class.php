@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypeRadiobuttons implements IOptionType, ISearchableUserOption {
+class OptionTypeRadiobuttons extends AbstractOptionType implements ISearchableUserOption {
 	public $templateName = 'optionTypeRadiobuttons';
 
 	/**
@@ -61,13 +61,6 @@ class OptionTypeRadiobuttons implements IOptionType, ISearchableUserOption {
 				throw new UserInputException($option->optionName, 'validationFailed');
 			}
 		}
-	}
-	
-	/**
-	 * @see wcf\system\option\IOptionType::getData()
-	 */
-	public function getData(Option $option, $newValue) {
-		return $newValue;
 	}
 	
 	/**
