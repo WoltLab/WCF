@@ -168,9 +168,9 @@ class DirectoryUtil {
 	/**
 	 * Returns a sorted list of files, with DirectoryIterator object as value
 	 *
-	 * @param	integer				$order			sort-order
-	 * @param	string				$pattern			pattern to match
-	 * @param	boolean				$negativeMatch	should the pattern be inversed
+	 * @param	integer			$order			sort order
+	 * @param	string			$pattern		pattern to match
+	 * @param	boolean			$negativeMatch		should the pattern be inversed
 	 * @return	array<DirectoryIterator>
 	 */
 	public function getFilesObj($order = SORT_ASC, $pattern = '', $negativeMatch = false) {
@@ -292,7 +292,7 @@ class DirectoryUtil {
 	/**
 	 * Removes all files that match the given pattern.
 	 *
-	 * @param	string		$pattern	regex pattern
+	 * @param	string		$pattern	pattern to match
 	 */
 	public function removePattern($pattern) {
 		if (!$this->recursive) throw new SystemException('Removing of files only works in recursive mode');
