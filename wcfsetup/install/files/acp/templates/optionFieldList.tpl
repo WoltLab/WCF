@@ -19,5 +19,5 @@
 			{/if}
 			<small>{lang}{@$langPrefix}{$option->optionName}.description{/lang}</small>
 		</dd>
-	</dl>	
+	</dl>
 {/foreach}

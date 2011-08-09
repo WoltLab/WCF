@@ -2,6 +2,7 @@
 namespace wcf\system\option\group;
 use wcf\data\option\Option;
 use wcf\data\user\group\UserGroup;
+use wcf\system\option\AbstractOptionType;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
@@ -15,7 +16,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.option.group
  * @category 	Community Framework
  */
-class GroupOptionTypeGroups implements IGroupOptionType {
+class GroupOptionTypeGroups extends AbstractOptionType implements IGroupOptionType {
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
