@@ -13,7 +13,7 @@
 	
 	<dl>
 		<dt>{lang}wcf.acp.package.view.identifier{/lang}</dt>
-		<p>{$package->package}</dd>
+		<dd>{$package->package}</dd>
 	</dl>
 	<dl>
 		<dt>{lang}wcf.acp.package.view.version{/lang}</dt>
