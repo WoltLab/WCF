@@ -565,12 +565,13 @@ dl > dd > fieldset > dl > dd > small {
 	text-align: left;
 	position: absolute;
 	left: 270px;
-	width: 100%;
+	width: auto;
 }
 
  dt.reversed ~ dd > input[type='checkbox'] {
 	margin-left: 0;
 }
+
 
 
 /* -- -- -- -- -- Forms -- -- -- -- -- */
