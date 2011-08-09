@@ -97,25 +97,28 @@
 			</dl>
 			
 			{if $availableGroups|count}
-				<div class="formGroup">
-					<div class="formGroupLabel">
+				<dl>
+					<dt>
 						<label>{lang}wcf.acp.user.groups{/lang}</label>
-					</div>
-					<div class="formGroupField">
+					</dt>
+					<dd>
 						<fieldset>
 							<legend>{lang}wcf.acp.user.groups{/lang}</legend>
 							
-							<div class="formField">
-								{htmlCheckboxes options=$availableGroups name=groupIDs selected=$groupIDs}
-							</div>
+							<dl>
+								<dd>
+									{htmlCheckboxes options=$availableGroups name=groupIDs selected=$groupIDs}
+								</dd>
+							</dl>
 						</fieldset>
-					</div>
-				</div>
+					</dd>
+				</dl>
 			{/if}
 			
 			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
 				<fieldset>
 					<legend>{lang}wcf.user.email{/lang}</legend>
+					
 					<dl{if $errorType.email|isset} class="formError"{/if}>
 						<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
 						<dd>	
@@ -147,6 +150,7 @@
 			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditPassword')}
 				<fieldset>
 					<legend>{lang}wcf.user.password{/lang}</legend>
+					
 					<dl{if $errorType.password|isset} class="formError"{/if}>
 						<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 						<dd>
@@ -201,33 +205,31 @@
 									<legend>{lang}wcf.user.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>
 									
 									{if $categoryLevel2[object]->categoryName == 'settings.general' && $availableLanguages|count > 1}
-										<div class="formElement">
-											<div class="formFieldLabel">
-												<label for="languageID">{lang}wcf.user.language{/lang}</label>
-											</div>
-											<div class="formField">
+										<dl>
+											<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>
+											<dd>
 												{htmlOptions options=$availableLanguages selected=$languageID name=languageID id=languageID disableEncoding=true}
-											</div>
-										</div>
+											</dd>
+										</dl>
 											
 										{if $availableContentLanguages|count > 1}
-											<div class="formGroup">
-												<div class="formGroupLabel">
+											<dl>
+												<dt>
 													{lang}wcf.user.visibleLanguages{/lang}
-												</div>
-												<div class="formGroupField">
+												</dt>
+												<dd>
 													<fieldset>
 														<legend>{lang}wcf.user.visibleLanguages{/lang}</legend>
-														<div class="formField">
-															<ul class="formOptions">
-															{foreach from=$availableContentLanguages key=availableLanguageID item=availableLanguage}
-																<li><label><input type="checkbox" name="visibleLanguages[]" value="{@$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked="checked"{/if} /> {@$availableLanguage}</label></li>
-															{/foreach}
-															</ul>
-														</div>
+														<dl>
+															<dd>
+																{foreach from=$availableContentLanguages key=availableLanguageID item=availableLanguage}
+																	<label><input type="checkbox" name="visibleLanguages[]" value="{@$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked="checked"{/if} /> {@$availableLanguage}</label>
+																{/foreach}
+															</dd>
+														</dl>
 													</fieldset>
-												</div>
-											</div>
+												</dd>
+											</dl>
 										{/if}
 									{/if}
 									

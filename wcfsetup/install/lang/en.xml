@@ -31,9 +31,9 @@
 		<item name="wcf.acp.cronjob.add.data"><![CDATA[General Information]]></item>
 		<item name="wcf.acp.cronjob.add.success"><![CDATA[The cron job has been added successfully.]]></item>
 		<item name="wcf.acp.cronjob.add.timing"><![CDATA[Schedule]]></item>
-		<item name="wcf.acp.cronjob.className"><![CDATA[Class path]]></item>
-		<item name="wcf.acp.cronjob.className.description"><![CDATA[Please enter here the path to the PHP file in which the associated cron job class is contained. This path must be relative to the installation folder of the WCF.]]></item>
-		<item name="wcf.acp.cronjob.cronjobID"><![CDATA[Job ID]]></item>
+		<item name="wcf.acp.cronjob.className"><![CDATA[Class name]]></item>
+		<item name="wcf.acp.cronjob.className.description"><![CDATA[Please enter here the class name of the cron job.]]></item>
+		<item name="wcf.acp.cronjob.cronjobID"><![CDATA[Cron job ID]]></item>
 		<item name="wcf.acp.cronjob.delete"><![CDATA[Delete]]></item>
 		<item name="wcf.acp.cronjob.delete.disabled"><![CDATA[This cron job cannot be deleted.]]></item>
 		<item name="wcf.acp.cronjob.delete.success"><![CDATA[The cron job has been deleted successfully.]]></item>
@@ -47,7 +47,7 @@
 		<item name="wcf.acp.cronjob.edit.success"><![CDATA[The cron job has been modified successfully.]]></item>
 		<item name="wcf.acp.cronjob.edit.timing"><![CDATA[Schedule]]></item>
 		<item name="wcf.acp.cronjob.enable"><![CDATA[Enable]]></item>
-		<item name="wcf.acp.cronjob.error.doesNotExist"><![CDATA[The path you have entered is invalid.]]></item>
+		<item name="wcf.acp.cronjob.error.doesNotExist"><![CDATA[There is no class with the given name.]]></item>
 		<item name="wcf.acp.cronjob.error.empty"><![CDATA[Please enter a valid entry here.]]></item>
 		<item name="wcf.acp.cronjob.error.notValid"><![CDATA[The timings you have set are invalid.]]></item>
 		<item name="wcf.acp.cronjob.execMultiple"><![CDATA[Schedule multiple executions?]]></item>

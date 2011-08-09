@@ -38,7 +38,7 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.packageUpdate.auth.input{/lang}</legend>
 				
-				<dl id="loginUsernameDiv" class="formElement{if $errorField == 'loginPassword'} formError{/if}">
+				<dl id="loginUsernameDiv"{if $errorField == 'loginPassword'} class="formError"{/if}>
 					<dt><label for="loginUsername">{lang}wcf.acp.packageUpdate.auth.loginUsername{/lang}</label></dt>
 					<dd>
 						<input type="text" id="loginUsername" name="loginUsername" value="{$loginUsername}" class="long" />

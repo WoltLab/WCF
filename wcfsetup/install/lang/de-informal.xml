@@ -31,8 +31,8 @@
 		<item name="wcf.acp.cronjob.add.data"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.acp.cronjob.add.success"><![CDATA[Die zeitgesteuerte Aufgabe wurde hinzugefügt.]]></item>
 		<item name="wcf.acp.cronjob.add.timing"><![CDATA[Zeitsteuerung]]></item>
-		<item name="wcf.acp.cronjob.className"><![CDATA[Pfad zur Klasse]]></item>
-		<item name="wcf.acp.cronjob.className.description"><![CDATA[Gib den Pfad zu der PHP-Datei an, die die entsprechende auszuführende Klasse enthält. Die Pfadangabe muss relativ zum Installationsverzeichnis der ausgewählten Endanwendung sein.]]></item>
+		<item name="wcf.acp.cronjob.className"><![CDATA[Klassenname]]></item>
+		<item name="wcf.acp.cronjob.className.description"><![CDATA[Gib den Klassennamen der zeitgesteuerten Aufgabe an.]]></item>
 		<item name="wcf.acp.cronjob.cronjobID"><![CDATA[ID]]></item>
 		<item name="wcf.acp.cronjob.delete"><![CDATA[Zeitgesteuerte Aufgabe löschen]]></item>
 		<item name="wcf.acp.cronjob.delete.disabled"><![CDATA[Die zeitgesteuerte Aufgabe kann nicht gelöscht werden.]]></item>
@@ -47,7 +47,7 @@
 		<item name="wcf.acp.cronjob.edit.success"><![CDATA[Die zeitgesteuerte Aufgabe wurde erfolgreich geändert.]]></item>
 		<item name="wcf.acp.cronjob.edit.timing"><![CDATA[Zeitsteuerung]]></item>
 		<item name="wcf.acp.cronjob.enable"><![CDATA[Aktivieren]]></item>
-		<item name="wcf.acp.cronjob.error.doesNotExist"><![CDATA[Der angegebene Pfad ist ungültig.]]></item>
+		<item name="wcf.acp.cronjob.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
 		<item name="wcf.acp.cronjob.error.empty"><![CDATA[Bitte füll dieses Eingabefeld aus.]]></item>
 		<item name="wcf.acp.cronjob.error.notValid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
 		<item name="wcf.acp.cronjob.execMultiple"><![CDATA[Zeitgesteuerte Aufgabe mehrfach ausführen]]></item>

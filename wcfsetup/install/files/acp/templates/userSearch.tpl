@@ -41,75 +41,70 @@
 		<div class="container-1">
 			<fieldset>
 				<legend>{lang}wcf.acp.user.search.conditions.general{/lang}</legend>
-				<div class="formElement">
-					<div class="formFieldLabel">
-						<label for="username">{lang}wcf.user.username{/lang}</label>
-					</div>
-					<div class="formField">
-						<input type="text" id="username" name="username" value="{$username}" class="inputText" />
+				
+				<dl>
+					<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
+					<dd>
+						<input type="text" id="username" name="username" value="{$username}" class="medium" />
 						<script type="text/javascript">
 							//<![CDATA[
 							var suggestion = new Suggestion('username');
 							suggestion.enableMultiple(false);
 							//]]>
 						</script>
-					</div>
-				</div>
+					</dd>
+				</dl>
 				
-				<div class="formElement">
-					<div class="formFieldLabel">
-						<label for="userID">{lang}wcf.user.userID{/lang}</label>
-					</div>
-					<div class="formField">	
-						<input type="text" id="userID" name="userID" value="{$userID}" class="inputText" />
-					</div>
-				</div>
+				<dl>
+					<dt><label for="userID">{lang}wcf.user.userID{/lang}</label></dt>
+					<dd>	
+						<input type="text" id="userID" name="userID" value="{$userID}" class="short" />
+					</dd>
+				</dl>
 				
 				{if $__wcf->session->getPermission('admin.user.canEditMailAddress')}
-					<div class="formElement">
-						<div class="formFieldLabel">
-							<label for="email">{lang}wcf.user.email{/lang}</label>
-						</div>
-						<div class="formField">	
-							<input type="email" id="email" name="email" value="{$email}" class="inputText" />
-						</div>
-					</div>
+					<dl>
+						<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
+						<dd>
+							<input type="email" id="email" name="email" value="{$email}" class="medium" />
+						</dd>
+					</dl>
 				{/if}
 				
 				{if $availableGroups|count}
-					<div class="formGroup">
-						<div class="formGroupLabel">
+					<dl>
+						<dt>
 							<label>{lang}wcf.acp.user.groups{/lang}</label>
-						</div>
-						<div class="formGroupField">
+						</dt>
+						<dd>
 							<fieldset>
 								<legend>{lang}wcf.acp.user.groups{/lang}</legend>
 								
-								<div class="formField">
-									{htmlCheckboxes options=$availableGroups name='groupIDs' selected=$groupIDs}
-									
-									<label style="margin-top: 10px"><input type="checkbox" name="invertGroupIDs" value="1" {if $invertGroupIDs == 1}checked="checked" {/if}/> {lang}wcf.acp.user.groups.invertSearch{/lang}</label>
-								</div>
+								<dl>
+									<dd>{htmlCheckboxes options=$availableGroups name='groupIDs' selected=$groupIDs}</dd>
+								</dl>
+								
+								<label style="margin-top: 10px"><input type="checkbox" name="invertGroupIDs" value="1" {if $invertGroupIDs == 1}checked="checked" {/if}/> {lang}wcf.acp.user.groups.invertSearch{/lang}</label>
 							</fieldset>
-						</div>
-					</div>
+						</dd>
+					</dl>
 				{/if}
 				
 				{if $availableLanguages|count > 1}
-					<div class="formGroup">
-						<div class="formGroupLabel">
+					<dl>
+						<dt>
 							<label>{lang}wcf.user.language{/lang}</label>
-						</div>
-						<div class="formGroupField">
+						</dt>
+						<dd>
 							<fieldset>
 								<legend>{lang}wcf.acp.user.language{/lang}</legend>
 								
-								<div class="formField">
-									{htmlCheckboxes options=$availableLanguages name='languageIDs' selected=$languageIDs disableEncoding=true}
-								</div>
+								<dl>
+									<dd>{htmlCheckboxes options=$availableLanguages name='languageIDs' selected=$languageIDs disableEncoding=true}</dd>
+								</dl>
 							</fieldset>
-						</div>
-					</div>
+						</dd>
+					</dl>
 				{/if}
 			</fieldset>
 			
@@ -137,16 +132,14 @@
 			
 				<div id="resultOptions" class="border tabMenuContent hidden">
 					<div class="container-1">
-						<h3 class="subHeading">{lang}wcf.acp.user.search.display{/lang}</h3>
+						<h1 class="subHeading">{lang}wcf.acp.user.search.display{/lang}</h1>
 					
 						<fieldset>
 							<legend>{lang}wcf.acp.user.search.display.general{/lang}</legend>
 						
-							<div class="formElement">
-								<div class="formFieldLabel">
-									<label for="sortField">{lang}wcf.acp.user.search.display.sort{/lang}</label>
-								</div>
-								<div class="formField">
+							<dl>
+								<dt><label for="sortField">{lang}wcf.acp.user.search.display.sort{/lang}</label></dt>
+								<dd>
 									<select id="sortField" name="sortField">
 										<option value="userID"{if $sortField == 'userID'} selected="selected"{/if}>{lang}wcf.user.userID{/lang}</option>
 										<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.user.username{/lang}</option>
@@ -155,62 +148,64 @@
 									
 										{if $additionalSortFields|isset}{@$additionalSortFields}{/if}
 									</select>
+								</dd>
+								<dd>
 									<select id="sortOrder" name="sortOrder">
 										<option value="ASC"{if $sortOrder == 'ASC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
 										<option value="DESC"{if $sortOrder == 'DESC'} selected="selected"{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
 									</select>
-								</div>
-							</div>
+								</dd>
+							</dl>
 						
-							<div class="formElement">
-								<div class="formFieldLabel">
-									<label for="itemsPerPage">{lang}wcf.acp.user.search.display.itemsPerPage{/lang}</label>
-								</div>
-								<div class="formField">
-									<input type="text" id="itemsPerPage" name="itemsPerPage" value="{@$itemsPerPage}" class="inputText" />
-								</div>
-							</div>
+							<dl>
+								<dt><label for="itemsPerPage">{lang}wcf.acp.user.search.display.itemsPerPage{/lang}</label></dt>
+								<dd>
+									<input type="text" id="itemsPerPage" name="itemsPerPage" value="{@$itemsPerPage}" class="short" />
+								</dd>
+							</dl>
 						</fieldset>
 					
 						<fieldset>
 							<legend>{lang}wcf.acp.user.search.display.columns{/lang}</legend>
 						
 							{if $optionTree|count}
-								<div class="formGroup">
-									<div class="formGroupLabel">
+								<dl>
+									<dt>
 										<label>{lang}wcf.acp.user.search.display.columns.profile{/lang}</label>
-									</div>
-									<div class="formGroupField">
+									</dt>
+									<dd>
 										<fieldset>
 											<legend>{lang}wcf.acp.user.search.display.columns.profile{/lang}</legend>
-										
-											<div class="formField">
-												{foreach from=$optionTree item=option}
-													<label><input type="checkbox" name="columns[]" value="{$option->optionName}" {if $option->optionName|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
-												{/foreach}
-											</div>
+											
+											<dl>
+												<dd>
+													{foreach from=$optionTree item=option}
+														<label><input type="checkbox" name="columns[]" value="{$option->optionName}" {if $option->optionName|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
+													{/foreach}
+												<dd>
+											</dl>
 										</fieldset>
-									</div>
-								</div>
+									</dd>
+								</dl>
 							{/if}
 						
-							<div class="formGroup">
-								<div class="formGroupLabel">
-									<label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label>
-								</div>
-								<div class="formGroupField">
+							<dl>
+								<dt><label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label></dt>
+								<dd>
 									<fieldset>
 										<legend>{lang}wcf.acp.user.search.display.columns.other{/lang}</legend>
 									
-										<div class="formField">
-											<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label>
-											<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.registrationDate{/lang}</label>
-										
+										<dl>
+											<dd>
+												<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label></dd>
+												<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.registrationDate{/lang}</label>
+											</dd>
+											
 											{if $additionalColumns|isset}{@$additionalColumns}{/if}
-										</div>
+										</dl>
 									</fieldset>
-								</div>
-							</div>
+								</dd>
+							</dl>
 						
 						</fieldset>
 					</div>

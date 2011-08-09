@@ -46,7 +46,7 @@ class CronjobEditForm extends CronjobAddForm {
 		
 		if (isset($_REQUEST['cronjobID'])) $this->cronjobID = intval($_REQUEST['cronjobID']);
 		$this->cronjob = new Cronjob($this->cronjobID);
-		if (!$cronjob->cronjobID) {
+		if (!$this->cronjob->cronjobID) {
 			throw new IllegalLinkException();
 		}
 		

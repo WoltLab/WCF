@@ -29,11 +29,10 @@
 				</h3>
 
 				<div class="messageBody">
-					<div class="formElement">
-						<div class="formFieldLabel">
-							<label for="packageVersion-{$package.package}">{lang}wcf.acp.package.list.version{/lang}</label>
-						</div>
-						<div class="formField">
+					<dl>
+						<dt><label for="packageVersion-{$package.package}">{lang}wcf.acp.package.list.version{/lang}</label>
+						</dt>
+						<dd>
 							<select id="packageVersion-{$package.package}">
 								{foreach from=$package.packageVersions item=$packageVersion}
 									<option value="{$packageVersion}"{if $packageVersion == $package.packageVersion} selected="selected"{/if}>{$packageVersion}</option>
@@ -56,8 +55,8 @@
 								});
 								//]]>
 							</script>
-						</div>
-					</div>
+						</dd>
+					</dl>
 					
 					{if $package.author != ''}
 						<div class="formElement">

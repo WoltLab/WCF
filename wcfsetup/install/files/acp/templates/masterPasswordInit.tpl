@@ -56,15 +56,13 @@
 					</dd>
 				</dl>
 				
-				<div class="formElement">
-					<div class="formFieldLabel">
-						<label for="exampleMasterPassword">{lang}wcf.acp.masterPassword.example{/lang}</label>
-					</div>
-					<div class="formField">
+				<dl>
+					<dt><label for="exampleMasterPassword">{lang}wcf.acp.masterPassword.example{/lang}</label></dt>
+					<dd>
 						<p><a href="#" id="setPassword" title="{lang}wcf.acp.masterPassword.example.set{/lang}">{@$exampleMasterPassword}</a></p>
 						<input type="hidden" id="exampleMasterPassword" name="exampleMasterPassword" value="{@$exampleMasterPassword}" />
-					</div>
-				</div>
+					</dd>
+				</dl>
 			</fieldset>
 			
 			{if $additionalFields|isset}{@$additionalFields}{/if}
