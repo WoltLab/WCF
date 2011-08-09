@@ -3,7 +3,7 @@ namespace wcf\system\option;
 use wcf\data\option\Option;
 
 /**
- * Provides adefault implementation for object types.
+ * Provides a default implementation for object types.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
