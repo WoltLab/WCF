@@ -31,91 +31,91 @@
 
 <form method="post" action="index.php?form=UserMail">
 	<div class="border content">
-		<div class="container-1">
-			{if $action == ''}
-				<fieldset>
-					<legend>{lang}wcf.acp.user.sendMail.markedUsers{/lang}</legend>
-					
-					<div>
-						{implode from=$users item=$user}<a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user}</a>{/implode}
-					</div>
-				</fieldset>	
-			{/if}
-			{if $action == 'group'}
-				<fieldset>
-					<legend>{lang}wcf.acp.user.sendMail.groups{/lang}</legend>
-					
-					<dl{if $errorField == 'groupIDs'} class="formError"{/if}>
-						<dt>
-							<label>{lang}wcf.acp.user.groups{/lang}</label>
-						</dt>
-						<dd>
-							<fieldset>
-								<legend>{lang}wcf.acp.user.groups{/lang}</legend>
-								
-								<dl>
-									<dd>
-										{htmlCheckboxes options=$groups name=groupIDs selected=$groupIDs}
-									</dd>
-								</dl>
-							</fieldset>
-							{if $errorField == 'groupIDs'}
-								<small class="innerError">
-									{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-								</small>
-							{/if}
-						</dd>
-					</dl>
-				</fieldset>	
-			{/if}
+		
+		{if $action == ''}
 			<fieldset>
-				<legend>{lang}wcf.acp.user.sendMail.mail{/lang}</legend>
+				<legend>{lang}wcf.acp.user.sendMail.markedUsers{/lang}</legend>
 				
 				<div>
-					<dl id="subjectDiv"{if $errorField == 'subject'} class="formError"{/if}>
-						<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
-						<dd>
-							<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
-							{if $errorField == 'subject'}
-								<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</small>
-							{/if}
-							<small id="subjectHelpMessage">{lang}wcf.acp.user.sendMail.subject.description{/lang}</small>
-						</dd>
-					</dl>
-					
-					<dl id="fromDiv"{if $errorField == 'from'} class="formError"{/if}>
-						<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
-						<dd>
-							<input type="text" id="from" name="from" value="{$from}" class="medium" />
-							{if $errorField == 'from'}
-								<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</small>
-							{/if}
-							<small id="fromHelpMessage">{lang}wcf.acp.user.sendMail.from.description{/lang}</small><!-- ToDo: Language variable contains paragraphs! -->
-						</dd>
-					</dl>
-					
-					<dl id="textDiv"{if $errorField == 'text'} class="formError"{/if}>
-						<dt><label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label></dt>
-						<dd>
-							<textarea id="text" name="text" rows="15" cols="40" class="long">{$text}</textarea>
-							{if $errorField == 'text'}
-								<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</small>
-							{/if}
-							<small id="textHelpMessage">{lang}wcf.acp.user.sendMail.text.description{/lang}</small>
-						</dd>
-					</dl>
-					
-					<dl>
-						<dt></dt>
-						<dd>
-							<label><input type="checkbox" id="enableHTML" name="enableHTML" {if $enableHTML == 1}checked="checked" {/if}value="1" /> {lang}wcf.acp.user.sendMail.enableHTML{/lang}</label>
-						</dd>
-					</dl>
+					{implode from=$users item=$user}<a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user}</a>{/implode}
 				</div>
+			</fieldset>	
+		{/if}
+		
+		{if $action == 'group'}
+			<fieldset>
+				<legend>{lang}wcf.acp.user.sendMail.groups{/lang}</legend>
 				
-				{if $additionalFields|isset}{@$additionalFields}{/if}
-			</fieldset>
-		</div>
+				<dl{if $errorField == 'groupIDs'} class="formError"{/if}>
+					<dt>
+						<label>{lang}wcf.acp.user.groups{/lang}</label>
+					</dt>
+					<dd>
+						<fieldset>
+							<legend>{lang}wcf.acp.user.groups{/lang}</legend>
+							
+							<dl>
+								<dd>
+									{htmlCheckboxes options=$groups name=groupIDs selected=$groupIDs}
+								</dd>
+							</dl>
+						</fieldset>
+						{if $errorField == 'groupIDs'}
+							<small class="innerError">
+								{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							</small>
+						{/if}
+					</dd>
+				</dl>
+			</fieldset>	
+		{/if}
+		
+		<fieldset>
+			<legend>{lang}wcf.acp.user.sendMail.mail{/lang}</legend>
+			
+			<dl id="subjectDiv"{if $errorField == 'subject'} class="formError"{/if}>
+				<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
+				<dd>
+					<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
+					{if $errorField == 'subject'}
+						<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</small>
+					{/if}
+					<small id="subjectHelpMessage">{lang}wcf.acp.user.sendMail.subject.description{/lang}</small>
+				</dd>
+			</dl>
+			
+			<dl id="fromDiv"{if $errorField == 'from'} class="formError"{/if}>
+				<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
+				<dd>
+					<input type="text" id="from" name="from" value="{$from}" class="medium" />
+					{if $errorField == 'from'}
+						<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</small>
+					{/if}
+					<small id="fromHelpMessage">{lang}wcf.acp.user.sendMail.from.description{/lang}</small><!-- ToDo: Language variable contains paragraphs! -->
+				</dd>
+			</dl>
+			
+			<dl id="textDiv"{if $errorField == 'text'} class="formError"{/if}>
+				<dt><label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label></dt>
+				<dd>
+					<textarea id="text" name="text" rows="15" cols="40" class="long">{$text}</textarea>
+					{if $errorField == 'text'}
+						<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</small>
+					{/if}
+					<small id="textHelpMessage">{lang}wcf.acp.user.sendMail.text.description{/lang}</small>
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" id="enableHTML" name="enableHTML" {if $enableHTML == 1}checked="checked" {/if}value="1" /> {lang}wcf.acp.user.sendMail.enableHTML{/lang}</label>
+				</dd>
+			</dl>
+			
+			{if $additionalFields|isset}{@$additionalFields}{/if}
+		</fieldset>
+		
 	</div>
 	
 	<div class="formSubmit">

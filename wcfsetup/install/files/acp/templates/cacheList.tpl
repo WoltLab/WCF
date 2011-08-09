@@ -52,6 +52,7 @@
 			<hgroup>
 				<h1>{$cache} <span class="badge" title="{$cache}">{#$files|count}</span></h1>
 			</hgroup>
+			
 			<table id="{$cache}">
 				<thead>
 					<tr>
@@ -63,6 +64,7 @@
 						{/if}
 					</tr>
 				</thead>
+				
 				<tbody>
 				{foreach from=$files item=file}
 					<tr>
@@ -76,6 +78,7 @@
 				{/foreach}
 				</tbody>
 			</table>
+			
 		</div>
 		<script type="text/javascript">
 			//<![CDATA[

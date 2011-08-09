@@ -27,44 +27,43 @@
 
 <form method="post" action="index.php?form=UpdateServer{@$action|ucfirst}{if $packageUpdateServerID|isset}&amp;packageUpdateServerID={@$packageUpdateServerID}{/if}">
 	<div class="border content">
-		<div class="container-1">
-	
-			<fieldset>
-				<legend>{lang}wcf.acp.updateServer.data{/lang}</legend>
-				
-				<dl id="serverURLDiv"{if $errorField == 'serverURL'} class="formError"{/if}>
-					<dt><label for="serverURL">{lang}wcf.acp.updateServer.serverURL{/lang}</label></dt>
-					<dd>
-						<input type="text" id="serverURL" name="serverURL" value="{$serverURL}" class="long" />
-						{if $errorField == 'serverURL'}
-							<small class="innerError">
-								{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-								{if $errorType == 'notValid'}{lang}wcf.acp.updateServer.serverURL.error.notValid{/lang}{/if}
-							</small>
-						{/if}
-						<small id="serverURLHelpMessage">{lang}wcf.acp.updateServer.serverURL.description{/lang}</small>
-					</dd>
-				</dl>
-				
-				<dl id="loginUsernameDiv">
-					<dt><label for="loginUsername">{lang}wcf.acp.updateServer.loginUsername{/lang}</label></dt>
-					<dd>
-						<input type="text" id="loginUsername" name="loginUsername" value="{$loginUsername}" class="long" />
-						<small id="loginUsernameHelpMessage">{lang}wcf.acp.updateServer.loginUsername.description{/lang}</small>
-					</dd>
-				</dl>
-				
-				<dl id="loginPasswordDiv">
-					<dt><label for="loginPassword">{lang}wcf.acp.updateServer.loginPassword{/lang}</label></dt>
-					<dd>
-						<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="long" />
-						<small id="loginPasswordHelpMessage" class="formFieldDesc hidden"><p>{lang}wcf.acp.updateServer.loginPassword.description{/lang}</p></small>
-					</dd>
-				</dl>
-				
-				{if $additionalFields|isset}{@$additionalFields}{/if}
-			</fieldset>
-		</div>
+		
+		<fieldset>
+			<legend>{lang}wcf.acp.updateServer.data{/lang}</legend>
+			
+			<dl id="serverURLDiv"{if $errorField == 'serverURL'} class="formError"{/if}>
+				<dt><label for="serverURL">{lang}wcf.acp.updateServer.serverURL{/lang}</label></dt>
+				<dd>
+					<input type="text" id="serverURL" name="serverURL" value="{$serverURL}" class="long" />
+					{if $errorField == 'serverURL'}
+						<small class="innerError">
+							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType == 'notValid'}{lang}wcf.acp.updateServer.serverURL.error.notValid{/lang}{/if}
+						</small>
+					{/if}
+					<small id="serverURLHelpMessage">{lang}wcf.acp.updateServer.serverURL.description{/lang}</small>
+				</dd>
+			</dl>
+			
+			<dl id="loginUsernameDiv">
+				<dt><label for="loginUsername">{lang}wcf.acp.updateServer.loginUsername{/lang}</label></dt>
+				<dd>
+					<input type="text" id="loginUsername" name="loginUsername" value="{$loginUsername}" class="long" />
+					<small id="loginUsernameHelpMessage">{lang}wcf.acp.updateServer.loginUsername.description{/lang}</small>
+				</dd>
+			</dl>
+			
+			<dl id="loginPasswordDiv">
+				<dt><label for="loginPassword">{lang}wcf.acp.updateServer.loginPassword{/lang}</label></dt>
+				<dd>
+					<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="long" />
+					<small id="loginPasswordHelpMessage" class="formFieldDesc hidden"><p>{lang}wcf.acp.updateServer.loginPassword.description{/lang}</p></small>
+				</dd>
+			</dl>
+			
+			{if $additionalFields|isset}{@$additionalFields}{/if}
+		</fieldset>
+		
 	</div>
 	
 	<div class="formSubmit">

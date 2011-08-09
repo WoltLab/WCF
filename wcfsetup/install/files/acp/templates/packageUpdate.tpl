@@ -29,23 +29,23 @@
 {if $packageInstallationStack|count}
 	<form method="post" action="index.php?form=PackageUpdate">
 		<div class="border content">
-			<div class="container-1">
-				<fieldset>
-					<legend>{lang}wcf.acp.packageUpdate.updates{/lang}</legend>
-					
-					<ul>
-						{foreach from=$packageInstallationStack item=package}
-							<li>
-								{if $package.action == 'install'}
-									{lang}wcf.acp.packageUpdate.install{/lang}
-								{else}
-									{lang}wcf.acp.packageUpdate.update{/lang}
-								{/if}
-							</li>
-						{/foreach}
-					</ul>
-				</fieldset>
-			</div>
+			
+			<fieldset>
+				<legend>{lang}wcf.acp.packageUpdate.updates{/lang}</legend>
+				
+				<ul>
+					{foreach from=$packageInstallationStack item=package}
+						<li>
+							{if $package.action == 'install'}
+								{lang}wcf.acp.packageUpdate.install{/lang}
+							{else}
+								{lang}wcf.acp.packageUpdate.update{/lang}
+							{/if}
+						</li>
+					{/foreach}
+				</ul>
+			</fieldset>
+			
 		</div>
 		
 		<div class="formSubmit">

@@ -73,6 +73,7 @@
 		<hgroup>
 			<h1>{lang}wcf.acp.package.view.dependentPackages{/lang}</h1>
 		</hgroup>
+		
 		<table>
 			<thead>
 				<tr>
@@ -85,6 +86,7 @@
 					{if $additionalColumns|isset}{@$additionalColumns}{/if}
 				</tr>
 			</thead>
+			
 			<tbody>
 			{foreach from=$dependentPackages item=package}
 				<tr>
@@ -122,6 +124,7 @@
 			{/foreach}
 			</tbody>
 		</table>
+		
 	</div>
 {/if}
 

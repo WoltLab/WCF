@@ -18,6 +18,7 @@
 		<hgroup>
 			<h1>{lang}wcf.acp.sessionLog.view.count{/lang} <span class="badge" title="{lang}wcf.acp.sessionLog.view.count{/lang}">{#$items}</span></h1>
 		</hgroup>
+		
 		<table>
 			<thead>
 				<tr>
@@ -32,6 +33,7 @@
 					{if $additionalColumnHeads|isset}{@$additionalColumnHeads}{/if}
 				</tr>
 			</thead>
+			
 			<tbody>
 			{foreach from=$sessionLogs item=sessionLog}
 				<tr class="{if $sessionLog->active} activeContainer{/if}">
@@ -48,6 +50,7 @@
 			{/foreach}
 			</tbody>
 		</table>
+		
 	</div>
 
 	<div class="contentFooter">

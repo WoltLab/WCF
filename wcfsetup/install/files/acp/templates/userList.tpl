@@ -70,6 +70,7 @@
 			{if $additionalUserListOptions|isset}{@$additionalUserListOptions}{/if}
 		</ul>
 	</nav>
+	
 	{if $users|count}
 		<table>
 			<thead>
@@ -85,6 +86,7 @@
 					{if $additionalColumnHeads|isset}{@$additionalColumnHeads}{/if}
 				</tr>
 			</thead>
+			
 			<tbody>
 			{foreach from=$users item=user}
 				<tr id="userRow{@$user->userID}">
@@ -124,6 +126,7 @@
 			{/foreach}
 			</tbody>
 		</table>
+		
 	</div>
 	
 	<div class="contentFooter">
@@ -141,9 +144,7 @@
 	</div>
 {else}
 	<div class="border content">
-		<div class="container-1">
-			<p class="info">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
-		</div>
+		<p class="info">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
 	</div>
 {/if}
 

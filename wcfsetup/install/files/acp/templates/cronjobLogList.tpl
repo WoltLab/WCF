@@ -20,6 +20,7 @@
 			<hgroup>
 				<h1>{lang}wcf.acp.cronjob.log.data{/lang}</h1>
 			</hgroup>
+			
 			<table>
 				<thead>
 					<tr>
@@ -31,6 +32,7 @@
 						{if $additionalColumns|isset}{@$additionalColumns}{/if}
 					</tr>
 				</thead>
+				
 				<tbody>
 				{content}
 					{foreach from=$cronjobLogs item=cronjobLog}
@@ -55,6 +57,7 @@
 				{/content}
 				</tbody>
 			</table>
+			
 		</div>
 		
 		<div class="formSubmit">
@@ -68,9 +71,7 @@
 	</div>
 {hascontentelse}
 	<div class="border content">
-		<div class="container-1">
-			<p class="info">{lang}wcf.acp.cronjob.log.noEntries{/lang}</p>
-		</div>
+		<p class="info">{lang}wcf.acp.cronjob.log.noEntries{/lang}</p>
 	</div>
 {/hascontent}
 

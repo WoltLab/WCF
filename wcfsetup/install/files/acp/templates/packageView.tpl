@@ -101,6 +101,7 @@
 			<h1><a onclick="openList('requiredPackages')">{lang}wcf.acp.package.view.requiredPackages{/lang}</a></h1>
 			<h2>{lang}wcf.acp.package.view.requiredPackages.description{/lang}</h2>
 		</hgroup>
+		
 		<table id="requiredPackages">
 			<thead>
 				<tr class="tableHead">
@@ -113,6 +114,7 @@
 					{if $additionalColumns|isset}{@$additionalColumns}{/if}
 				</tr>
 			</thead>
+			
 			<tbody>
 			{foreach from=$requiredPackages item=$package}
 				<tr>
@@ -179,6 +181,7 @@
 					{if $additionalColumns|isset}{@$additionalColumns}{/if}
 				</tr>
 			</thead>
+			
 			<tbody>
 			{foreach from=$dependentPackages item=$package}
 				<tr>
@@ -216,6 +219,7 @@
 			{/foreach}
 			</tbody>
 		</table>
+		
 	</div>
 	
 	<script type="text/javascript">
