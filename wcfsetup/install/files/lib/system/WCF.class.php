@@ -310,12 +310,12 @@ class WCF {
 	 * 
 	 * @param	string		$filename
 	 */
-	protected function loadOptions($filename = null) {
+	protected function loadOptions($filename = null, $packageID = 1) {
 		if ($filename === null) $filename = WCF_DIR.'options.inc.php';
 		
 		// create options file if doesn't exist
 		if (!file_exists($filename) || filemtime($filename) <= 1) {
-			\wcf\data\option\OptionEditor::rebuildFile($filename);
+			\wcf\data\option\OptionEditor::rebuildFile($filename, $packageID);
 		}
 		require_once($filename);
 	}
@@ -441,7 +441,7 @@ class WCF {
 		
 		// load options
 		if (!$isDepedentApplication) {
-			$this->loadOptions($packageDir.'options.inc.php');
+			$this->loadOptions($packageDir.'options.inc.php', $application->packageID);
 		}
 	}
 	
