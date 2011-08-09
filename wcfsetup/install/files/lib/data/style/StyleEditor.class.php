@@ -19,6 +19,7 @@ use wcf\util\XML;
  * Provides functions to edit, import, export and delete a style.
  * 
  * @todo	Fix usage of XML-class (API-changes)!
+ * @todo	Thumbnail class has been removed
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
