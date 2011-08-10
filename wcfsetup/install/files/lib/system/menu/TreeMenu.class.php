@@ -147,7 +147,7 @@ abstract class TreeMenu extends SingletonFactory {
 	protected function buildMenuItemList($parentMenuItem = '') {
 		if (!isset($this->menuItems[$parentMenuItem])) return;
 		
-		foreach ($this->menuItems[$parentMenuItem] as $key => $item) {
+		foreach ($this->menuItems[$parentMenuItem] as $item) {
 			$this->menuItemList[$item->menuItem] = $item;
 			$this->buildMenuItemList($item->menuItem);
 		}
