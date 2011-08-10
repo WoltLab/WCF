@@ -57,7 +57,7 @@
 				<dt><label for="loginPassword">{lang}wcf.acp.updateServer.loginPassword{/lang}</label></dt>
 				<dd>
 					<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="long" />
-					<small id="loginPasswordHelpMessage" class="formFieldDesc hidden"><p>{lang}wcf.acp.updateServer.loginPassword.description{/lang}</p></small>
+					<small id="loginPasswordHelpMessage"><p>{lang}wcf.acp.updateServer.loginPassword.description{/lang}</p></small>
 				</dd>
 			</dl>
 			

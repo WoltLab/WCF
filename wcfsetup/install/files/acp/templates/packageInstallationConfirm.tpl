@@ -43,32 +43,32 @@
 <fieldset>
 	<legend>{lang}wcf.acp.package.view.properties{/lang}</legend>
 
-	<div class="formElement">
-		<p class="formFieldLabel">{lang}wcf.acp.package.view.identifier{/lang}</p>
-		<p class="formField">{$archive->getPackageInfo('name')}</p>
-	</div>
+	<dl>
+		<dt>{lang}wcf.acp.package.view.identifier{/lang}</dt>
+		<dd>{$archive->getPackageInfo('name')}</dd>
+	</dl>
 	
-	<div class="formElement">
-		<p class="formFieldLabel">{lang}wcf.acp.package.install.version{/lang}</p>
-		<p class="formField">{$archive->getPackageInfo('version')}</p>
-	</div>
+	<dl>
+		<dt>{lang}wcf.acp.package.install.version{/lang}</dt>
+		<dd>{$archive->getPackageInfo('version')}</dd>
+	</dl>
 
-	<div class="formElement">
-		<p class="formFieldLabel">{lang}wcf.acp.package.view.date{/lang}</p>
-		<p class="formField">{@$archive->getPackageInfo('date')|date}</p>
-	</div>
+	<dl>
+		<dt>{lang}wcf.acp.package.view.date{/lang}</dt>
+		<dd>{@$archive->getPackageInfo('date')|date}</dd>
+	</dl>
 
 	{if $archive->getPackageInfo('packageURL') != ''}
-		<div class="formElement">
-			<p class="formFieldLabel">{lang}wcf.acp.package.view.url{/lang}</p>
-			<p class="formField"><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('packageURL')}</a></p>
-		</div>
+		<dl>
+			<dt>{lang}wcf.acp.package.view.url{/lang}</dt>
+			<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
+		</dl>
 	{/if}
 	
-	<div class="formElement">
-		<p class="formFieldLabel">{lang}wcf.acp.package.view.author{/lang}</p>
-		<p class="formField">{if $archive->getPackageInfo('authorURL')}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('authorURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('author')}</a>{else}{$archive->getPackageInfo('author')}{/if}</p>
-	</div>
+	<dl>
+		<dt>{lang}wcf.acp.package.view.author{/lang}</dt>
+		<dd>{if $archive->getPackageInfo('authorURL')}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('authorURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('author')}</a>{else}{$archive->getPackageInfo('author')}{/if}</dd>
+	</dl>
 	
 	{if $additionalFields|isset}{@$additionalFields}{/if}
 </fieldset>

@@ -19,7 +19,7 @@
 		
 			<dl id="masterPasswordDiv"{if $errorField == 'masterPassword'} class="formError"{/if}>
 				<dt><label for="masterPassword">{lang}wcf.acp.masterPassword{/lang}</label></dt>
-				<dd class="formField">
+				<dd>
 					<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium" />
 					{if $errorField == 'masterPassword'}
 						<small class="innerError">

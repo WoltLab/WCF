@@ -18,46 +18,47 @@
 
 <fieldset>
 	<legend>{lang}wcf.acp.package.view.properties{/lang}</legend>
-	<div class="formElement">
-		<p class="formFieldLabel">{lang}wcf.acp.package.view.identifier{/lang}</p>
-		<p class="formField">{$packageObj->package}</p>
-	</div>
-	<div class="formElement">
-		<p class="formFieldLabel">{lang}wcf.acp.package.view.version{/lang}</p>
-		<p class="formField">{$packageObj->packageVersion}</p>
-	</div>
+	
+	<dl>
+		<dt>{lang}wcf.acp.package.view.identifier{/lang}</dt>
+		<dd>{$packageObj->package}</dd>
+	</dl>
+	<dl>
+		<dt>{lang}wcf.acp.package.view.version{/lang}</dt>
+		<dd>{$packageObj->packageVersion}</dd>
+	</dl>
 	{if $packageObj->instanceNo > 0}
-		<div class="formElement">
-			<p class="formFieldLabel">{lang}wcf.acp.package.view.instanceNo{/lang}</p>
-			<p class="formField">{$packageObj->instanceNo}</p>
-		</div>
+		<dl>
+			<dt>{lang}wcf.acp.package.view.instanceNo{/lang}</dt>
+			<dd>{$packageObj->instanceNo}</dd>
+		</dl>
 	{/if}
 	{if $packageObj->packageDir != ''}
-		<div class="formElement">
-			<p class="formFieldLabel">{lang}wcf.acp.package.view.dir{/lang}</p>
-			<p class="formField"><a href="{@RELATIVE_WCF_DIR}{$packageObj->packageDir}">{$packageObj->packageDir}</a></p>
-		</div>
+		<dl>
+			<dt>{lang}wcf.acp.package.view.dir{/lang}</dt>
+			<dd><a href="{@RELATIVE_WCF_DIR}{$packageObj->packageDir}">{$packageObj->packageDir}</a></dd>
+		</dl>
 	{/if}
-	<div class="formElement">
-		<p class="formFieldLabel">{lang}wcf.acp.package.view.date{/lang}</p>
-		<p class="formField">{@$packageObj->packageDate|date}</p>
-	</div>
+	<dl>
+		<dt>{lang}wcf.acp.package.view.date{/lang}</dt>
+		<dd>{@$packageObj->packageDate|date}</dd>
+	</dl>
 	{if $packageObj->packageURL != ''}
-		<div class="formElement">
-			<p class="formFieldLabel">{lang}wcf.acp.package.view.url{/lang}</p>
-			<p class="formField"><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$packageObj->packageURL|rawurlencode}" class="externalURL">{$packageObj->packageURL}</a></p>
-		</div>
+		<dl>
+			<dt>{lang}wcf.acp.package.view.url{/lang}</dt>
+			<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$packageObj->packageURL|rawurlencode}" class="externalURL">{$packageObj->packageURL}</a></dd>
+		</dl>
 	{/if}
 	{if $packageObj->parentPackageID}
-		<div class="formElement">
-			<p class="formFieldLabel">{lang}wcf.acp.package.view.parent{/lang}</p>
-			<p class="formField"><a href="index.php?page=PackageView&amp;packageID={@$packageObj->parentPackageID}{@SID_ARG_2ND}">{$packageObj->getParentPackage()->getName()}</a></p>
-		</div>
+		<dl>
+			<dt>{lang}wcf.acp.package.view.parent{/lang}</dt>
+			<dd><a href="index.php?page=PackageView&amp;packageID={@$packageObj->parentPackageID}{@SID_ARG_2ND}">{$packageObj->getParentPackage()->getName()}</a></dd>
+		</dl>
 	{/if}
-	<div class="formElement">
-		<p class="formFieldLabel">{lang}wcf.acp.package.view.author{/lang}</p>
-		<p class="formField">{if $packageObj->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$packageObj->authorURL|rawurlencode}" class="externalURL">{$packageObj->author}</a>{else}{$packageObj->author}{/if}</p>
-	</div>
+	<dl>
+		<dt>{lang}wcf.acp.package.view.author{/lang}</dt>
+		<dd>{if $packageObj->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$packageObj->authorURL|rawurlencode}" class="externalURL">{$packageObj->author}</a>{else}{$packageObj->author}{/if}</dd>
+	</dl>
 	
 	{if $additionalFields|isset}{@$additionalFields}{/if}
 </fieldset>

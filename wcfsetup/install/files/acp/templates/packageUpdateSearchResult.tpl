@@ -60,28 +60,26 @@
 					</dl>
 					
 					{if $package.author != ''}
-						<div class="formElement">
-							<div class="formFieldLabel">
-								<label>{lang}wcf.acp.package.list.author{/lang}</label>
-							</div>
-							<div class="formField">
+						<dl>
+							<dt><label>{lang}wcf.acp.package.list.author{/lang}</label></dt>
+							<dd>
 								<span>{if $package.authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package.authorURL|rawurlencode}" class="externalURL">{$package.author}</a>{else}{$package.author}{/if}</span>
-							</div>
-						</div>
+							</dd>
+						</dl>
 					{/if}
 					
 					{if $package.packageDescription}
-						<div class="formElement">
-							<p class="formFieldLabel">{lang}wcf.acp.package.description{/lang}</p>
-							<p class="formField">{$package.packageDescription}</p>
-						</div>
+						<dl>
+							<dt>{lang}wcf.acp.package.description{/lang}</dt>
+							<dd>{$package.packageDescription}</dd>
+						</dl>
 					{/if}
 					
 					<fieldset>
 						<legend>{lang}wcf.acp.packageUpdate.options{/lang}</legend>
 					
-						<div class="formField">
-							<ul class="formOptionsLong">
+						<div><!-- ToDo: Definition List -->
+							<ul>
 								{* new installation *}
 								{if $package.isUnique && !$package.updatableInstances|count}
 									<li>{lang}wcf.acp.packageUpdate.options.alreadyInstalledUnique{/lang}</li>
