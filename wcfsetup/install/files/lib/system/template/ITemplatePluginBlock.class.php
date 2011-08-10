@@ -17,7 +17,7 @@ interface ITemplatePluginBlock {
 	 * 
 	 * @param	array			$tagArgs
 	 * @param	string			$blockContent
-	 * @param	TemplateEngine 		$tplObj
+	 * @param	wcf\system\template\TemplateEngine 	$tplObj
 	 * @return	string			output
 	 */
 	public function execute($tagArgs, $blockContent, TemplateEngine $tplObj);
@@ -26,14 +26,14 @@ interface ITemplatePluginBlock {
 	 * Initialises this template block.
 	 * 
 	 * @param	array			$tagArgs
-	 * @param	TemplateEngine		$tplObj
+	 * @param	wcf\system\template\TemplateEngine 	$tplObj
 	 */
 	public function init($tagArgs, TemplateEngine $tplObj);
 	
 	/**
 	 * This function is called before every execution of this block function.
 	 * 
-	 * @param	TemplateEngine		$tplObj
+	 * @param	wcf\system\template\TemplateEngine 	$tplObj
 	 * @return	boolean
 	 */
 	public function next(TemplateEngine $tplObj);
