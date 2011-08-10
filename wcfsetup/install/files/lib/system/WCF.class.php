@@ -42,63 +42,54 @@ if (!defined('NO_IMPORTS')) {
 class WCF {
 	/**
 	 * list of autoload directories
-	 *
 	 * @var array
 	 */
 	protected static $autoloadDirectories = array();
 	
 	/**
 	 * list of unique instances of each core object
-	 *
 	 * @var	array<wcf\system\SingletonFactory>
 	 */
 	protected static $coreObject = array();
 	
 	/**
 	 * list of cached core objects
-	 *
 	 * @var	array<array>
 	 */
 	protected static $coreObjectCache = array();
 	
 	/**
-	 * list of package dependencies
-	 *
-	 * @var	array
+	 * list of ids of dependent packages
+	 * @var	array<integer>
 	 */	
 	protected static $packageDependencies = array();
 	
 	/**
 	 * database object
-	 *
 	 * @var wcf\system\database\Database
 	 */
 	protected static $dbObj = null;
 	
 	/**
 	 * language object
-	 *
 	 * @var wcf\system\language\Language
 	 */
 	protected static $languageObj = null;
 	
 	/**
 	 * session object
-	 *
 	 * @var wcf\system\session\SessionHandler
 	 */
 	protected static $sessionObj = null;
 	
 	/**
 	 * template object
-	 *
 	 * @var wcf\system\template\TemplateEngine
 	 */
 	protected static $tplObj = null;
 	
 	/**
 	 * current user object
-	 *
 	 * @var wcf\data\user\User
 	 */
 	protected static $userObj = null;
