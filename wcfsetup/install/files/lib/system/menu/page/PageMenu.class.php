@@ -17,7 +17,7 @@ use wcf\system\cache\CacheHandler;
  */
 class PageMenu extends TreeMenu {
 	/**
-	 * @see wcf\system\menu\TreeMenu::loadCache()
+	 * @see	wcf\system\menu\TreeMenu::loadCache()
 	 */
 	protected function loadCache() {
 		parent::loadCache();
@@ -28,7 +28,7 @@ class PageMenu extends TreeMenu {
 	}
 	
 	/**
-	 * @see wcf\system\menu\TreeMenu::checkMenuItem()
+	 * @see	wcf\system\menu\TreeMenu::checkMenuItem()
 	 */
 	protected function checkMenuItem(ITreeMenuItem $item) {
 		if (!parent::checkMenuItem($item)) return false;
