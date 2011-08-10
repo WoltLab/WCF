@@ -15,10 +15,10 @@ interface ITemplatePluginPrefilter {
 	/**
 	 * Executes this prefilter.
 	 * 
-	 * @param	string				$templateName
-	 * @param	string				$sourceContent	
-	 * @param	TemplateScriptingCompiler 	$compiler	
-	 * @return 	string				$sourceContent
+	 * @param	string		$templateName
+	 * @param	string		$sourceContent	
+	 * @param	wcf\system\template\TemplateScriptingCompiler	$compiler
+	 * @return 	string
 	 */
 	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler);
 }

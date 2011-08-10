@@ -16,14 +16,14 @@ interface IPageMenuItemProvider extends IDatabaseObjectProcessor {
 	/**
 	 * Returns true if the associated menu item should be visible for the active user.
 	 * 
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public function isVisible();
 	
 	/**
 	 * Returns the number of notifications for the associated menu item.
 	 * 
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public function getNotifications();
 }
