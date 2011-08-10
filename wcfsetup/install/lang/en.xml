@@ -3,9 +3,6 @@
 	<category name="wcf.acp">
 		<item name="wcf.acp"><![CDATA[Administration Control Panel]]></item>
 		<item name="wcf.acp.help"><![CDATA[Help]]></item>
-		<item name="wcf.acp.help.complete"><![CDATA[Complete Help]]></item>
-		<item name="wcf.acp.help.disable"><![CDATA[Disable online Help]]></item>
-		<item name="wcf.acp.help.interactive"><![CDATA[Interactive Help]]></item>
 		<item name="wcf.acp.packageQuickAccess"><![CDATA[Change Package]]></item>
 		<item name="wcf.acp.search.extended"><![CDATA[Extended search ...]]></item>
 		<item name="wcf.acp.sitemap"><![CDATA[Site-Map]]></item>
