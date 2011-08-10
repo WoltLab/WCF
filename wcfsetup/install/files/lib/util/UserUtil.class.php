@@ -102,29 +102,45 @@ class UserUtil {
 	}
 	
 	/**
-	 * Returns the ip address of the client.
+	 * Returns the ipv6 address of the client.
 	 *
-	 * @return 	string		ip address
+	 * @return 	string		ipv6 address
 	 */
 	public static function getIpAddress() {
 		$REMOTE_ADDR = '';
 		if (isset($_SERVER['REMOTE_ADDR'])) $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
-		if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) $HTTP_X_FORWARDED_FOR = $_SERVER['HTTP_X_FORWARDED_FOR'];
-		else $HTTP_X_FORWARDED_FOR = '';
-	
-		if (!empty($HTTP_X_FORWARDED_FOR)) {
-			$match = array();
-			if (preg_match("/^([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/", $HTTP_X_FORWARDED_FOR, $match)) {
-				$REMOTE_ADDR = preg_replace(self::$privateIpList, $REMOTE_ADDR, $match[1]);	
-			}
-		}
-	
+		
 		// darwin fix
 		if ($REMOTE_ADDR == '::1' || $REMOTE_ADDR == 'fe80::1') {
 			$REMOTE_ADDR = '127.0.0.1'; 
 		}
 		
+		$REMOTE_ADDR = self::convertIPv4To6($REMOTE_ADDR);
+		
 		return $REMOTE_ADDR;
+	}
+	
+	/**
+	 * Converts given ipv4 to ipv6.
+	 * 
+	 * @param	string		$ip
+	 * @return	string
+	 */
+	public static function convertIPv4To6($ip) {
+		if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false) {
+			// given ip is already ipv6
+			return $ip;
+		}
+		
+		if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false) {
+			// invalid ip given
+			return '';
+		}
+		
+		$ipArray = array_pad(explode('.', $ip), 4, 0);
+		$part7 = base_convert(($ipArray[0] * 256) + $ipArray[1], 10, 16);
+		$part8 = base_convert(($ipArray[2] * 256) + $ipArray[3], 10, 16);
+		return '::ffff:'.$part7.':'.$part8;
 	}
 	
 	/**
