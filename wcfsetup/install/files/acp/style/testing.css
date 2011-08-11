@@ -183,7 +183,7 @@ nav.mainMenu ul li {
 }
 
 nav.mainMenu ul li:only-child {
-	cursor: resize !important;
+	cursor: default !important;
 }
 
 nav.mainMenu ul li:hover {
