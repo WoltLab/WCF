@@ -1574,6 +1574,61 @@ WCF.Effect.SmoothScroll.prototype = {
 };
 
 /**
+ * Creates a smooth scroll effect.
+ */
+WCF.Effect.BalloonTooltip = function() { this.init(); };
+WCF.Effect.BalloonTooltip.prototype = {
+	init: function() {
+		// create empty div
+		this.tooltip = $('<div style="position:absolute" id="balloonTooltip"></div>').appendTo(document.body).hide();
+	
+		// init elements
+		$('.balloonTooltip').each($.proxy(this._initTooltip, this));
+	},
+	
+	_initTooltip: function(index, element) {
+		$(element).hover(
+			$.proxy(this._mouseEnterHandler, this),	
+			$.proxy(this._mouseLeaveHandler, this)
+		);
+		
+		$(element).mousemove(
+			$.proxy(this._mouseMoveHandler, this)	
+		);
+	},
+	
+	_mouseEnterHandler: function(event) {
+		var $element = $(event.currentTarget);
+		if ($element.attr('title')) {
+			$element.data('tooltip', $element.attr('title'));
+			$element.attr('title', '');
+		
+			this.tooltip.text($element.data('tooltip')).fadeIn('fast');
+		}
+	},
+	
+	_mouseLeaveHandler: function(event) {
+		var $element = $(event.currentTarget);
+		if ($element.data('tooltip')) {
+			$element.attr('title', $element.data('tooltip'));
+			$element.data('tooltip', '');
+			
+			this.tooltip.hide();
+		}
+	},
+	
+	/**
+	 * Moves tooltip to cursor position.
+	 */
+	_mouseMoveHandler: function(event) {
+		this.tooltip.css({
+			top: (event.pageY - 0) + "px",
+			left: (event.pageX + 15) + "px"
+		});
+	}
+};
+
+/**
  * Basic implementation for WCF dialogs.
  */
 $.widget('ui.wcfDialog', $.ui.dialog, {
