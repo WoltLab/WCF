@@ -1,11 +1,10 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
-use wcf\system\option\OptionTypeText;
 use wcf\system\WCF;
 
 /**
- * OptionTypeFloat is an implementation of OptionType for float fields.
+ * FloatOptionType is an implementation of IOptionType for float fields.
  *
  * @author	Tobias Friebel
  * @copyright	2001-2011 Tobias Friebel
@@ -14,7 +13,7 @@ use wcf\system\WCF;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypeFloat extends OptionTypeText {
+class FloatOptionType extends TextOptionType {
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */

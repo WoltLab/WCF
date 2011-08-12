@@ -8,7 +8,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * OptionTypeText is an implementation of OptionType for 'input type="text"' tags.
+ * TextOptionType is an implementation of IOptionType for 'input type="text"' tags.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypeText extends AbstractOptionType implements ISearchableUserOption {
+class TextOptionType extends AbstractOptionType implements ISearchableUserOption {
 	/**
 	 * input type
 	 * @var string
@@ -40,7 +40,7 @@ class OptionTypeText extends AbstractOptionType implements ISearchableUserOption
 	 * @see wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
-		return $this->getFormElement($optionData, $value);
+		return $this->getFormElement($option, $value);
 	}
 	
 	/**
