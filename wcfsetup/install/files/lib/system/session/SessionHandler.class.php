@@ -2,9 +2,9 @@
 namespace wcf\system\session;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
-use wcf\system\auth\UserAuth;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -354,7 +354,7 @@ class SessionHandler extends SingletonFactory {
 		$sessionID = StringUtil::getRandomID();
 		
 		// get user automatically
-		$this->user = UserAuth::getInstance()->loginAutomatically();
+		$this->user = UserAuthenticationFactory::getUserAuthentication()->loginAutomatically();
 		
 		// create user
 		if ($this->user === null) {
