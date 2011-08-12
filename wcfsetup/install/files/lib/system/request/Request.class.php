@@ -31,7 +31,7 @@ class Request {
 	protected $pageType = '';
 	
 	/**
-	 * true, if this request was executed already.
+	 * true, if this request has already been executed
 	 * @var boolean
 	 */
 	protected $executed = false;
@@ -60,9 +60,9 @@ class Request {
 	}
 	
 	/**
-	 * Returns true, if this request was executed already.
+	 * Returns true, if this request has already been executed.
 	 * 
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public function isExecuted() {
 		return $this->executed;
@@ -71,7 +71,7 @@ class Request {
 	/**
 	 * Returns the page class name of this request.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getClassName() {
 		return $this->className; 
@@ -80,7 +80,7 @@ class Request {
 	/**
 	 * Returns the page name of this request.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getPageName() {
 		return $this->pageName;
@@ -89,7 +89,7 @@ class Request {
 	/**
 	 * Returns the page type of this request.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getPageType() {
 		return $this->pageType;

@@ -7,7 +7,7 @@ use wcf\form\AbstractForm;
  * Provides a default implementation for the show method in acp forms.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -24,8 +24,10 @@ class ACPForm extends AbstractForm {
 	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
-		// enable menu item
-		if (!empty($this->activeMenuItem)) ACPMenu::getInstance()->setActiveMenuItem($this->activeMenuItem);
+		// set active acp menu item
+		if (!empty($this->activeMenuItem)) {
+			ACPMenu::getInstance()->setActiveMenuItem($this->activeMenuItem);
+		}
 		
 		parent::show();
 	}

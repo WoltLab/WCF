@@ -17,7 +17,7 @@ use wcf\system\SingletonFactory;
 class RequestHandler extends SingletonFactory {
 	/**
 	 * active request object
-	 * @var Request
+	 * @var wcf\system\request\Request
 	 */
 	protected $activeRequest = null;
 	
@@ -90,7 +90,7 @@ class RequestHandler extends SingletonFactory {
 	/**
 	 * Returns the active request object.
 	 *
-	 * @return Request
+	 * @return	wcf\system\request\Request
 	 */
 	public function getActiveRequest() {
 		return $this->activeRequest;
