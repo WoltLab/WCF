@@ -1,12 +1,14 @@
 <?php
 namespace wcf\form;
+use wcf\system\exception\IllegalLinkException;
+use wcf\system\WCF;
 
 /**
  * Extends AbstractForm by a function to validate a given security token.
  * A missing or invalid token will be result in a throw of a IllegalLinkException.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	form

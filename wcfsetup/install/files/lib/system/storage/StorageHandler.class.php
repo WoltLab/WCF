@@ -16,22 +16,19 @@ use wcf\system\WCF;
  */
 class StorageHandler extends SingletonFactory {
 	/**
-	 * Data cache
-	 * 
+	 * data cache
 	 * @var	array<array>
 	 */
 	protected $cache = array();
 	
 	/**
-	 * List of outdated data records
-	 * 
+	 * list of outdated data records
 	 * @var	array<array>
 	 */
 	protected $resetFields = array();
 	
 	/**
-	 * List of updated or new data records
-	 * 
+	 * list of updated or new data records
 	 * @var	array<array>
 	 */
 	protected $updateFields = array();
@@ -39,7 +36,7 @@ class StorageHandler extends SingletonFactory {
 	/**
 	 * Loads storage for a given set of users.
 	 * 
-	 * @param	array		$userIDs
+	 * @param	array<integer>	$userIDs
 	 * @param	integer		$packageID
 	 */
 	public function loadStorage(array $userIDs, $packageID = PACKAGE_ID) {
@@ -76,7 +73,7 @@ class StorageHandler extends SingletonFactory {
 	/**
 	 * Returns stored data for given users.
 	 * 
-	 * @param	array		$userIDs
+	 * @param	array<integer>	$userIDs
 	 * @param	string		$field
 	 * @param	integer		$packageID
 	 * @return	array<array>
@@ -125,7 +122,7 @@ class StorageHandler extends SingletonFactory {
 	/**
 	 * Removes a data record from database.
 	 * 
-	 * @param	array<integer>	$userID
+	 * @param	array<integer>	$userIDs
 	 * @param	string		$field
 	 * @param	integer		$packageID
 	 */
