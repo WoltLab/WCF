@@ -1,11 +1,11 @@
 <?php
-namespace wcf\system\storage;
+namespace wcf\system\user\storage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
 /**
- * Handles the persistent data storage.
+ * Handles the persistent user data storage.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @subpackage	system.storage
  * @category 	Community Framework
  */
-class StorageHandler extends SingletonFactory {
+class UserStorageHandler extends SingletonFactory {
 	/**
 	 * data cache
 	 * @var	array<array>
