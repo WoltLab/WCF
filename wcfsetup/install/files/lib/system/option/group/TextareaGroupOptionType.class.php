@@ -1,9 +1,10 @@
 <?php
 namespace wcf\system\option\group;
+use wcf\system\option\TextareaOptionType;
 
 /**
- * GroupOptionTypeInfiniteinteger is an implementation of GroupOptionType for integer values with the infinite option.
- * The merge of option values returns true, if at least one value is -1. Otherwise it returns the highest value.
+ * TextareaGroupOptionType is an implementation of IGroupOptionType for text values.
+ * The merge of option values returns merge of all text values.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -12,12 +13,18 @@ namespace wcf\system\option\group;
  * @subpackage	system.option.group
  * @category 	Community Framework
  */
-class GroupOptionTypeInfiniteInteger extends GroupOptionTypeInteger {
+class TextareaGroupOptionType extends TextareaOptionType implements IGroupOptionType {
 	/**
 	 * @see wcf\system\option\group\IGroupOptionType::merge()
 	 */
 	public function merge(array $values) {
-		if (in_array(-1, $values)) return -1;
-		return parent::merge($values);
+		$result = '';
+		
+		foreach ($values as $value) {
+			if (!empty($result)) $result .= "\n";
+			$result .= $value;
+		}
+
+		return $result;
 	}
 }

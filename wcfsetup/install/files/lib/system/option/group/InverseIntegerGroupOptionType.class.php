@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\option\group;
-use wcf\system\option\OptionTypeInteger;
+use wcf\system\option\IntegerOptionType;
 
 /**
- * GroupOptionTypeInverseInteger is an implementation of GroupOptionType for integer values.
+ * InverseIntegerGroupOptionType is an implementation of IGroupOptionType for integer values.
  * The merge of option values returns the lowest value.
  *
  * @author	Marcel Werk
@@ -13,7 +13,7 @@ use wcf\system\option\OptionTypeInteger;
  * @subpackage	system.option.group
  * @category 	Community Framework
  */
-class GroupOptionTypeInverseInteger extends OptionTypeInteger implements IGroupOptionType {
+class InverseIntegerGroupOptionType extends IntegerOptionType implements IGroupOptionType {
 	/**
 	 * @see wcf\system\option\group\IGroupOptionType::merge()
 	 */

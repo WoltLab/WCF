@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\option\group;
-use wcf\system\option\OptionTypeText;
+use wcf\system\option\TextOptionType;
 
 /**
- * GroupOptionTypeText is an implementation of GroupOptionType for text values.
+ * TextGroupOptionType is an implementation of IGroupOptionType for text values.
  * The merge of option values returns merge of all text values.
  * 
  * @author	Marcel Werk
@@ -13,7 +13,7 @@ use wcf\system\option\OptionTypeText;
  * @subpackage	system.option.group
  * @category 	Community Framework
  */
-class GroupOptionTypeText extends OptionTypeText implements IGroupOptionType {
+class TextGroupOptionType extends TextOptionType implements IGroupOptionType {
 	/**
 	 * @see wcf\system\option\group\IGroupOptionType::merge()
 	 */
