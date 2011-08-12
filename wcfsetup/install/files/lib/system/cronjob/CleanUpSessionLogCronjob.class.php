@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cronjob;
+use wcf\data\cronjob\Cronjob;
 use wcf\system\WCF;
 
 /**
@@ -16,7 +17,7 @@ class CleanUpSessionLogCronjob implements ICronjob {
 	/**
 	 * @see wcf\system\ICronjob::execute()
 	 */
-	public function execute(array $data) {
+	public function execute(Cronjob $cronjob) {
 		// delete access log
 		$sql = "DELETE FROM	wcf".WCF_N."_acp_session_access_log
 			WHERE		sessionLogID IN (
