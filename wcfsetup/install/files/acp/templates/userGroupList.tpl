@@ -59,12 +59,12 @@
 					<tr id="groupContainer{@$group->groupID}">
 						<td class="columnIcon">
 							{if $group->isEditable()}
-								<a href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/editS.png" alt="" title="{lang}wcf.acp.group.edit{/lang}" /></a>
+								<a href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/editS.png" alt="" title="{lang}wcf.acp.group.edit{/lang}" class="balloonTooltip" /></a>
 							{else}
 								<img src="{@RELATIVE_WCF_DIR}icon/editDisabledS.png" alt="" title="{lang}wcf.acp.group.edit{/lang}" />
 							{/if}
 							{if $group->isDeletable()}
-								<img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.group.delete{/lang}" id="groupDeleteIcon{@$group->groupID}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" id="groupDeleteIcon{@$group->groupID}" alt="" title="{lang}wcf.acp.group.delete{/lang}" class="balloonTooltip" />
 								<script type="text/javascript">
 									//<![CDATA[
 									removeGroup.registerObject({@$group->groupID}, {

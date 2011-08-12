@@ -48,7 +48,7 @@
 {foreach from=$caches key=cache item=files}
 	{if $files|count}
 		<div class="border boxTitle">
-			<a onclick="openList('{$cache}')" class="collapsible"><img src="{@RELATIVE_WCF_DIR}icon/minusS.png" id="{$cache}Image" alt="" /></a>
+			<a onclick="openList('{$cache}')" class="collapsible"><img src="{@RELATIVE_WCF_DIR}icon/minusS.png" id="{$cache}Image" alt="" title="ToDo: Collapsible" class="balloonTooltip" /></a>
 			<hgroup>
 				<h1>{$cache} <span class="badge" title="{$cache}">{#$files|count}</span></h1>
 			</hgroup>

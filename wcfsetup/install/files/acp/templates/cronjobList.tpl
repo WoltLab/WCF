@@ -79,11 +79,11 @@
 				<tr class="cronjobRow">
 					<td class="columnIcon">
 						{if $__wcf->session->getPermission('admin.system.cronjobs.canEditCronjob')}
-							<img src="{@RELATIVE_WCF_DIR}icon/cronjobExecuteS.png" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" data-objectID="{@$cronjob->cronjobID}" class="executeButton" />
+							<img src="{@RELATIVE_WCF_DIR}icon/cronjobExecuteS.png" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" data-objectID="{@$cronjob->cronjobID}" class="executeButton balloonTooltip" />
 						{/if}
 						
 						{if $cronjob->canBeDisabled()}
-							<img src="{@RELATIVE_WCF_DIR}icon/{if $cronjob->active}enabled{else}disabled{/if}S.png" alt="" title="{lang}wcf.acp.cronjobs.{if $cronjob->active}disable{else}enable{/if}{/lang}" data-objectID="{@$cronjob->cronjobID}" data-disableMessage="{lang}wcf.acp.cronjob.disable{/lang}" data-enableMessage="{lang}wcf.acp.cronjob.enable{/lang}" class="toggleButton" />
+							<img src="{@RELATIVE_WCF_DIR}icon/{if $cronjob->active}enabled{else}disabled{/if}S.png" alt="" data-objectID="{@$cronjob->cronjobID}" data-disableMessage="{lang}wcf.acp.cronjob.disable{/lang}" data-enableMessage="{lang}wcf.acp.cronjob.enable{/lang}" title="{lang}wcf.acp.cronjobs.{if $cronjob->active}disable{else}enable{/if}{/lang}" class="toggleButton balloonTooltip" />
 						{else}
 							{if $cronjob->active}
 								<img src="{@RELATIVE_WCF_DIR}icon/enabledDisabledS.png" alt="" title="{lang}wcf.acp.cronjob.disable{/lang}" />
@@ -93,12 +93,12 @@
 						{/if}
 						
 						{if $cronjob->isEditable()}
-							<a href="index.php?form=CronjobEdit&amp;cronjobID={@$cronjob->cronjobID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/editS.png" alt="" title="{lang}wcf.acp.cronjob.edit{/lang}" /></a>
+							<a href="index.php?form=CronjobEdit&amp;cronjobID={@$cronjob->cronjobID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/editS.png" alt="" title="{lang}wcf.acp.cronjob.edit{/lang}" class="balloonTooltip" /></a>
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/editDisabledS.png" alt="" title="{lang}wcf.acp.cronjob.edit.disabled{/lang}" />
 						{/if}
 						{if $cronjob->isDeletable()}
-							<img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.cronjob.delete{/lang}" data-objectID="{@$cronjob->cronjobID}" data-confirmMessage="{lang}wcf.acp.cronjob.delete.sure{/lang}" class="deleteButton" />
+							<img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" data-objectID="{@$cronjob->cronjobID}" data-confirmMessage="{lang}wcf.acp.cronjob.delete.sure{/lang}" title="{lang}wcf.acp.cronjob.delete{/lang}" class="deleteButton balloonTooltip" />
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/deleteDisabledS.png" alt="" title="{lang}wcf.acp.cronjob.delete.disabled{/lang}" />
 						{/if}
