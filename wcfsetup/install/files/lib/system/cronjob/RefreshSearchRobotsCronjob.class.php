@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cronjob;
+use wcf\data\cronjob\Cronjob;
 use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -22,8 +23,8 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 	/**
 	 * @see wcf\system\ICronjob::execute()
 	 */
-	public function execute(array $data) {
-		$filename = FileUtil::downloadFileFromHttp('http://www.woltlab.com/spiderlist/spiderlist.xml', 'spiders');
+	public function execute(Cronjob $cronjob) {
+		/* $filename = FileUtil::downloadFileFromHttp('http://www.woltlab.com/spiderlist/spiderlist.xml', 'spiders');
 		$xml = new XML($filename);
 		$spiders = $xml->getElementTree('spiderlist');
 		
@@ -73,6 +74,6 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 		}
 		
 		// delete tmp file
-		@unlink($filename);
+		@unlink($filename);*/
 	}
 }

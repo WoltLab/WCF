@@ -127,10 +127,10 @@ CREATE TABLE wcf1_cronjob (
 	lastExec INT(10) NOT NULL DEFAULT 0,
 	nextExec INT(10) NOT NULL DEFAULT 0,
 	afterNextExec INT(10) NOT NULL DEFAULT 0,
-	active TINYINT NOT NULL DEFAULT 1,
-	canBeEdited TINYINT NOT NULL DEFAULT 1,
-	canBeDisabled TINYINT NOT NULL DEFAULT 1,
-	state TINYINT(1) NOT NULL DEFAULT 1,
+	active TINYINT(1) NOT NULL DEFAULT 1,
+	canBeEdited TINYINT(1) NOT NULL DEFAULT 1,
+	canBeDisabled TINYINT(1) NOT NULL DEFAULT 1,
+	state TINYINT(1) NOT NULL DEFAULT 0,
 	failCount TINYINT(1) NOT NULL DEFAULT 0
 );
 
@@ -139,7 +139,7 @@ CREATE TABLE wcf1_cronjob_log (
 	cronjobLogID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	cronjobID INT(10) NOT NULL,
 	execTime INT(10) NOT NULL DEFAULT 0,
-	success TINYINT NOT NULL DEFAULT 0,
+	success TINYINT(1) NOT NULL DEFAULT 0,
 	error TEXT
 );
 
@@ -667,13 +667,13 @@ CREATE TABLE wcf1_template_listener (
 	KEY templateName (environment, templateName)
 );
 
-DROP TABLE IF EXISTS wcf1_storage;
-CREATE TABLE wcf1_storage (
+DROP TABLE IF EXISTS wcf1_user_storage;
+CREATE TABLE wcf1_user_storage (
 	userID INT(10) NOT NULL,
 	field VARCHAR(80) NOT NULL DEFAULT '',
 	fieldValue TEXT,
 	packageID INT(10),
-	UNIQUE KEY storageData (userID, field, packageID)
+	UNIQUE KEY userStorageData (userID, field, packageID)
 );
 
 /**** foreign keys ****/
@@ -762,8 +762,8 @@ ALTER TABLE wcf1_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) 
 
 ALTER TABLE wcf1_session_data ADD FOREIGN KEY (sessionID) REFERENCES wcf1_session (sessionID) ON DELETE CASCADE;
 
-ALTER TABLE wcf1_storage ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
-ALTER TABLE wcf1_storage ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_storage ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_storage ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_style ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
