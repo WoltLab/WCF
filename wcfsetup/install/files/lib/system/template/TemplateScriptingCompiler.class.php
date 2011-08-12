@@ -16,46 +16,160 @@ use wcf\util\StringUtil;
  */
 class TemplateScriptingCompiler {
 	/**
-	 * template object
-	 * 
-	 * @var		TemplateEngine
+	 * template engine object
+	 * @var	wcf\system\templateTemplateEngine
 	 */
-	protected	$template;
+	protected $template;
 	
 	/**
-	 * PHP functions that can be used in the modifier syntax and are unknown to the function_exists PHP method.
-	 * 
+	 * PHP functions that can be used in the modifier syntax and are unknown
+	 * to the function_exists PHP method
+	 * @var	array<string>
+	 */
+	protected $unknownPHPFunctions = array('isset', 'unset', 'empty');
+	
+	/**
+	 * PHP functions that can not be used in the modifier syntax
+	 * @var	array<string>
+	 */
+	protected $disabledPHPFunctions = array(
+		'system', 'exec', 'passthru', 'shell_exec', // command line execution
+		'include', 'require', 'include_once', 'require_once', // includes
+		'eval', 'virtual', 'call_user_func_array', 'call_user_func', 'assert' // code execution
+	);
+	
+	/**
+	 * pattern to match variable operators like -> or .
+	 * @var	string
+	 */
+	protected $variableOperatorPattern;
+	
+	/**
+	 * pattern to match condition operators like == or <
+	 * @var	string
+	 */
+	protected $conditionOperatorPattern;
+	
+	/**
+	 * negative lookbehind for a backslash
+	 * @var	string
+	 */
+	protected $escapedPattern;
+	
+	/**
+	 * pattern to match valid variable names
+	 * @var	string
+	 */
+	protected $validVarnamePattern;
+	
+	/**
+	 * pattern to match constants like CONSTANT or __CONSTANT
+	 * @var	string
+	 */
+	protected $constantPattern;
+	
+	/**
+	 * pattern to match double quoted strings like "blah" or "quote: \"blah\""
+	 * @var	string
+	 */
+	protected $doubleQuotePattern;
+	
+	/**
+	 * pattern to match single quoted strings like 'blah' or 'don\'t'
+	 * @var	string
+	 */
+	protected $singleQuotePattern;
+	
+	/**
+	 * pattern to match single or double quoted strings
+	 * @var	string
+	 */
+	protected $quotePattern;
+	
+	/**
+	 * pattern to match numbers, true, false and null
+	 * @var	string
+	 */
+	protected $numericPattern;
+	
+	/**
+	 * pattern to match simple variables like $foo
+	 * @var	string
+	 */
+	protected $simpleVarPattern;
+	
+	/**
+	 * pattern to match outputs like @$foo or #CONST
+	 * @var	string
+	 */
+	protected $outputPattern;
+	
+	/**
+	 * identifier of currently compiled template
+	 * @var	string
+	 */
+	protected $currentIdentifier;
+	
+	/**
+	 * current line number during template compilation
+	 * @var	string
+	 */
+	protected $currentLineNo;
+	
+	protected $modifiers = array();
+	
+	/**
+	 * list of automatically loaded tenplate plugins
+	 * @var	array<string>
+	 */
+	protected $autoloadPlugins = array();
+	
+	/**
+	 * stack with template tags data
 	 * @var	array
 	 */
-	protected	$unknownPHPFunctions = array('isset', 'unset', 'empty');
+	protected $tagStack = array();
 	
 	/**
-	 * PHP functions that can not be used in the modifier syntax.
-	 * 
+	 * list of loaded compiler plugin objects
+	 * @var	array<wcf\system\template\ITemplatePluginCompiler>
+	 */
+	protected $compilerPlugins = array();
+	
+	/**
+	 * stack used to compile the capture tag
 	 * @var	array
 	 */
-	protected	$disabledPHPFunctions = array(
-				'system', 'exec', 'passthru', 'shell_exec', // command line execution
-				'include', 'require', 'include_once', 'require_once', // includes
-				'eval', 'virtual', 'call_user_func_array', 'call_user_func', 'assert' // code execution
-			);
-	
-	protected 	$variableOperatorPattern, $conditionOperatorPattern, $escapedPattern, $validVarnamePattern,
-			$constantPattern, $doubleQuotePattern, $singleQuotePattern, $quotePattern, $numericPattern,
-			$simpleVarPattern, $outputPattern;
-	
-	protected	$currentIdentifier, $currentLineNo;
-	
-	protected 	$modifiers = array(), $autoloadPlugins = array(), $tagStack = array(),
-			$compilerPlugins = array(), $captureStack = array();
-	
-	protected 	$leftDelimiter = '{', $rightDelimiter = '}';
-	protected 	$ldq, $rdq;
+	protected $captureStack = array();
 	
 	/**
-	 * Creates a new TemplateScriptingCompiler.
+	 * left delimiter of template syntax
+	 * @var	string
+	 */
+	protected $leftDelimiter = '{';
+	
+	/**
+	 * right delimiter of template syntax
+	 * @var	string
+	 */
+	protected $rightDelimiter = '}';
+	
+	/**
+	 * left delimiter of template syntax used in regular expressions
+	 * @var	string
+	 */
+	protected $ldq;
+	
+	/**
+	 * right delimiter of template syntax used in regular expressions
+	 * @var	string
+	 */
+	protected $rdq;
+	
+	/**
+	 * Creates a new TemplateScriptingCompiler object.
 	 * 
-	 * @param	TemplateEngine		$template
+	 * @param	wcf\system\templateTemplateEngine	$template
 	 */
 	public function __construct(TemplateEngine $template) {
 		$this->template = $template;
@@ -1173,57 +1287,25 @@ class TemplateScriptingCompiler {
 	 * Generates the regexp pattern.
 	 */
 	protected function buildPattern() {
-		// operator pattern
 		$this->variableOperatorPattern = '\-\>|\.|\(|\)|\[|\]|\||\:|\+|\-|\*|\/|\%|\^|\,';
 		$this->conditionOperatorPattern = '===|!==|==|!=|<=|<|>=|(?<!-)>|\|\||&&|!|=';
-
-		// negative lookbehind for a backslash
 		$this->escapedPattern = '(?<!\\\\)';
-		
-		// valid variable name pattern
 		$this->validVarnamePattern = '(?:[a-zA-Z_][a-zA-Z_0-9]*)';
-		
-		// matches constants
-		// CONSTANT
-		// __CONSTANT2
 		$this->constantPattern = '(?:[A-Z_][A-Z_0-9]*)';
-		
-		// matches double quoted strings
-		// "blah"
-		// "quote: \"blah\""
 		//$this->doubleQuotePattern = '"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"';
 		$this->doubleQuotePattern = '"(?:[^"\\\\]+|\\\\.)*"';
-		
-		// matches single quoted strings
-		// 'blah'
-		// 'don\'t'
 		//$this->singleQuotePattern = '\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'';
 		$this->singleQuotePattern = '\'(?:[^\'\\\\]+|\\\\.)*\'';
-		
-		// matches single or double quoted strings
 		$this->quotePattern = '(?:' . $this->doubleQuotePattern . '|' . $this->singleQuotePattern . ')';
-		
-		// matches numericals and boolean constants
-		// 234
-		// -12
-		// 23.92
-		// true
-		// false
 		$this->numericPattern = '(?i)(?:(?:\-?\d+(?:\.\d+)?)|true|false|null)';
-		
-		// matches simple variables
-		// $foo
 		$this->simpleVarPattern = '(?:\$('.$this->validVarnamePattern.'))';
-		
-		// matches variable outputs
-		// @$oo
 		$this->outputPattern = '(?:(?:@|#)?(?:'.$this->constantPattern.'|'.$this->quotePattern.'|'.$this->numericPattern.'|'.$this->simpleVarPattern.'|\())';
 	}
 	
 	/**
 	 * Returns the instance of the template engine class.
 	 * 
-	 * @return 	 TemplateEngine
+	 * @return	wcf\system\templateTemplateEngine
 	 */
 	public function getTemplate() {
 		return $this->template;
@@ -1232,7 +1314,7 @@ class TemplateScriptingCompiler {
 	/**
 	 * Returns the left delimiter for template tags.
 	 * 
-	 * @return 	string
+	 * @return	string
 	 */
 	public function getLeftDelimiter() {
 		return $this->leftDelimiter;
@@ -1250,7 +1332,7 @@ class TemplateScriptingCompiler {
 	/**
 	 * Returns the name of the current template.
 	 * 
-	 * @return 	string
+	 * @return	string
 	 */
 	public function getCurrentIdentifier() {
 		return $this->currentIdentifier;
@@ -1259,7 +1341,7 @@ class TemplateScriptingCompiler {
 	/**
 	 * Returns the current line number.
 	 * 
-	 * @return 	integer
+	 * @return	integer
 	 */
 	public function getCurrentLineNo() {
 		return $this->currentLineNo;
