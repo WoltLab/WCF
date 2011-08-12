@@ -9,8 +9,8 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\session\SessionFactory;
 use wcf\system\session\SessionHandler;
-use wcf\system\storage\StorageHandler;
 use wcf\system\template\TemplateEngine;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\exception;
 use wcf\util;
 
@@ -142,8 +142,8 @@ class WCF {
 			CacheHandler::getInstance()->getCacheSource()->close();
 		}
 		
-		// execute shutdown actions
-		StorageHandler::getInstance()->shutdown();
+		// execute shutdown actions of user storage handler
+		UserStorageHandler::getInstance()->shutdown();
 	}
 	
 	/**

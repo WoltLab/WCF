@@ -5,7 +5,7 @@ use wcf\data\user\User;
 use wcf\system\auth\UserAuth;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\storage\StorageHandler;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -602,12 +602,12 @@ class SessionHandler extends SingletonFactory {
 	 */	
 	public static function resetSessions(array $userIDs = array()) {
 		if (count($userIDs)) {
-			StorageHandler::getInstance()->reset($userIDs, 'groupIDs', 1);
-			StorageHandler::getInstance()->reset($userIDs, 'languageIDs', 1);
+			UserStorageHandler::getInstance()->reset($userIDs, 'groupIDs', 1);
+			UserStorageHandler::getInstance()->reset($userIDs, 'languageIDs', 1);
 		}
 		else {
-			StorageHandler::getInstance()->resetAll('groupIDs', 1);
-			StorageHandler::getInstance()->resetAll('languageIDs', 1);
+			UserStorageHandler::getInstance()->resetAll('groupIDs', 1);
+			UserStorageHandler::getInstance()->resetAll('languageIDs', 1);
 		}
 	}
 }
