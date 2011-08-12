@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\ITemplatePluginCompiler;
+use wcf\system\template\ICompilerTemplatePlugin;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\exception\SystemException;
 
@@ -18,9 +18,9 @@ use wcf\system\exception\SystemException;
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginCompilerFetch implements ITemplatePluginCompiler {
+class FetchCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	/**
-	 * @see wcf\system\template\ITemplatePluginCompiler::executeStart()
+	 * @see wcf\system\template\ICompilerTemplatePlugin::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		if (!isset($tagArgs['file'])) {
@@ -36,7 +36,7 @@ class TemplatePluginCompilerFetch implements ITemplatePluginCompiler {
 	}
 	
 	/**
-	 * @see wcf\system\template\ITemplatePluginCompiler::executeEnd()
+	 * @see wcf\system\template\ICompilerTemplatePlugin::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		throw new SystemException($compiler->formatSyntaxError("unknown tag {/fetch}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));

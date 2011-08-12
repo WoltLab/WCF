@@ -12,7 +12,7 @@ namespace wcf\system\template;
  * @subpackage	system.template
  * @category 	Community Framework
  */
-interface ITemplatePluginModifier {
+interface IModifierTemplatePlugin {
 	/**
 	 * Executes this modifier.
 	 * 

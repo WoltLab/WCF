@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
-use wcf\system\template\ITemplatePluginFunction;
+use wcf\system\template\IFunctionTemplatePlugin;
 use wcf\system\template\TemplateEngine;
 
 /**
@@ -17,11 +17,11 @@ use wcf\system\template\TemplateEngine;
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginFunctionCycle implements ITemplatePluginFunction {
+class CycleFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	protected $cycles = array();
 	
 	/**
-	 * @see wcf\system\template\ITemplatePluginFunction::execute()
+	 * @see wcf\system\template\IFunctionTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// get params

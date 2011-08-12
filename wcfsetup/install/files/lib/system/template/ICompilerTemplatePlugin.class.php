@@ -11,7 +11,7 @@ namespace wcf\system\template;
  * @subpackage	system.template
  * @category 	Community Framework
  */
-interface ITemplatePluginCompiler {
+interface ICompilerTemplatePlugin {
 	/**
 	 * Executes the start tag of this compiler function.
 	 * 

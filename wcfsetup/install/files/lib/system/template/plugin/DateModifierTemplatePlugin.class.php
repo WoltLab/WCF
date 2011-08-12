@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateEngine;
-use wcf\system\template\ITemplatePluginModifier;
+use wcf\system\template\IModifierTemplatePlugin;
 use wcf\util\DateUtil;
 
 /**
@@ -19,9 +19,9 @@ use wcf\util\DateUtil;
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginModifierDate implements ITemplatePluginModifier {
+class DateModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see wcf\system\template\ITemplatePluginModifier::execute()
+	 * @see wcf\system\template\IModifierTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		return DateUtil::format(DateUtil::getDateTimeByTimestamp($tagArgs[0]), (!empty($tagArgs[2]) ? $tagArgs[2] : DateUtil::DATE_FORMAT));

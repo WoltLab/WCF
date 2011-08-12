@@ -1,37 +1,38 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\ITemplatePluginCompiler;
+use wcf\system\template\ICompilerTemplatePlugin;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\util\StringUtil;
 
 /**
- * The 'icon' compiler function compiles dynamic icon paths.
- *
+ * The 'staticlang' compiler function gets the source of a language variables.
+ * 
  * Usage:
- * {icon}{$foo}{/icon}
+ * {staticlang}$blah{/staticlang}
  *
- * @author	Marcel Werk
+ * @author 	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginCompilerIcon implements ITemplatePluginCompiler {
+class StaticlangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	/**
-	 * @see wcf\system\template\ITemplatePluginCompiler::executeStart()
+	 * @see wcf\system\template\ICompilerTemplatePlugin::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
-		$compiler->pushTag('icon');
+		$compiler->pushTag('staticlang');
+		
 		return "<?php ob_start(); ?>";
 	}
 	
 	/**
-	 * @see wcf\system\template\ITemplatePluginCompiler::executeEnd()
+	 * @see wcf\system\template\ICompilerTemplatePlugin::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
-		$compiler->popTag('icon');
+		$compiler->popTag('staticlang');
 		$hash = StringUtil::getRandomID();
-		return "<?php \$_icon".$hash." = ob_get_contents(); ob_end_clean(); echo wcf\system\style\StyleHandler::getInstance()->getStyle()->getIconPath(\$_icon".$hash."); ?>";
+		return "<?php \$_lang".$hash." = ob_get_contents(); ob_end_clean(); echo \wcf\system\WCF::getLanguage()->get(\$_lang".$hash."); ?>";
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\ITemplatePluginFunction;
+use wcf\system\template\IFunctionTemplatePlugin;
 use wcf\system\template\TemplateEngine;
 
 /**
@@ -11,17 +11,17 @@ use wcf\system\template\TemplateEngine;
  * {counter start=10 skip=2}
  *
  * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginFunctionCounter implements ITemplatePluginFunction {
+class CounterFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	protected $counters = array();
 	
 	/**
-	 * @see wcf\system\template\ITemplatePluginFunction::execute()
+	 * @see wcf\system\template\IFunctionTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (!isset($tagArgs['name'])) {

@@ -3,7 +3,7 @@ namespace wcf\system\template\plugin;
 use wcf\system\WCF;
 use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateEngine;
-use wcf\system\template\ITemplatePluginFunction;
+use wcf\system\template\IFunctionTemplatePlugin;
 use wcf\util\StringUtil;
 
 /**
@@ -19,13 +19,13 @@ use wcf\util\StringUtil;
  * {smallpages pages=10 link='page-%d.html' assign='output' print=true}
  * 
  * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginFunctionSmallpages implements ITemplatePluginFunction {
+class SmallpagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	const SHOW_LINKS = 5;
 	
 	/**
@@ -53,7 +53,7 @@ class TemplatePluginFunctionSmallpages implements ITemplatePluginFunction {
 	}
 	
 	/**
-	 * @see wcf\system\template\ITemplatePluginFunction::execute()
+	 * @see wcf\system\template\IFunctionTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// needed params: link, pages

@@ -15,17 +15,17 @@ use wcf\util\StringUtil;
  * {htmloptions output=$outputArray values=$valueArray}
  *
  * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginFunctionHtmloptions extends TemplatePluginFunctionHtmlcheckboxes {
+class HtmloptionsFunctionTemplatePlugin extends HtmlcheckboxesFunctionTemplatePlugin {
 	protected $selected = array();
 	
 	/**
-	 * @see wcf\system\template\ITemplatePluginFunction::execute()
+	 * @see wcf\system\template\IFunctionTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (isset($tagArgs['output']) && is_array($tagArgs['output'])) {

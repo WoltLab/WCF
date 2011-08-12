@@ -11,7 +11,7 @@ namespace wcf\system\template;
  * @subpackage	system.template
  * @category 	Community Framework
  */
-interface ITemplatePluginFunction {
+interface IFunctionTemplatePlugin {
 	/**
 	 * Executes this template function.
 	 * 

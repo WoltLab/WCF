@@ -2,7 +2,7 @@
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateEngine;
-use wcf\system\template\ITemplatePluginModifier;
+use wcf\system\template\IModifierTemplatePlugin;
 
 /**
  * The 'concat' modifier returns the string that results from concatenating the arguments.
@@ -12,13 +12,13 @@ use wcf\system\template\ITemplatePluginModifier;
  * {"left"|concat:$right}
  *
  * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginModifierConcat implements ITemplatePluginModifier {
+class ConcatModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
 	 * @see wcf\system\template\ITemplatePluginModifier::execute()
 	 */

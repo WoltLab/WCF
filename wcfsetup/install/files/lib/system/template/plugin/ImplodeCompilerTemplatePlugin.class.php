@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\ITemplatePluginCompiler;
+use wcf\system\template\ICompilerTemplatePlugin;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\exception\SystemException;
 use wcf\util\StringUtil;
@@ -12,17 +12,17 @@ use wcf\util\StringUtil;
  * {implode from=$array key=bar item=foo glue=";"}{$foo}{/implode}
  *
  * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class TemplatePluginCompilerImplode implements ITemplatePluginCompiler {
+class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	protected $tagStack = array();
 	
 	/**
-	 * @see wcf\system\template\ITemplatePluginCompiler::executeStart()
+	 * @see wcf\system\template\ICompilerTemplatePlugin::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		$compiler->pushTag('implode');
@@ -46,7 +46,7 @@ class TemplatePluginCompilerImplode implements ITemplatePluginCompiler {
 	}
 	
 	/**
-	 * @see wcf\system\template\ITemplatePluginCompiler::executeEnd()
+	 * @see wcf\system\template\ICompilerTemplatePlugin::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		$compiler->popTag('implode');
