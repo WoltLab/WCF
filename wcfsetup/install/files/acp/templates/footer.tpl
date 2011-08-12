@@ -9,7 +9,7 @@
 		<div>
 			<nav id="footerNavigation" class="footerNavigation">
 				<ul>
-					<li id="toTopLink" class="toTopLink"><a href="#top" title="{lang}wcf.global.scrollUp{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/upS.png" alt="{lang}wcf.global.scrollUp{/lang}" /> <span class="invisible">{lang}wcf.global.scrollUp{/lang}</span></a></li>
+					<li id="toTopLink" class="toTopLink"><a href="#top" title="{lang}wcf.global.scrollUp{/lang}" class="balloonTooltip"><img src="{@RELATIVE_WCF_DIR}icon/upS.png" alt="" /> <span class="invisible">{lang}wcf.global.scrollUp{/lang}</span></a></li>
 				</ul>
 			</nav>
 		</div>
