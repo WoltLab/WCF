@@ -54,9 +54,9 @@
 				{foreach from=$updateServers item=updateServer}
 					<tr class="updateServerRow">
 						<td class="columnIcon">
-							<img src="{@RELATIVE_WCF_DIR}icon/{if !$updateServer->disabled}enabled{else}disabled{/if}S.png" alt="" title="{lang}wcf.acp.updateServer.{if !$updateServer->disabled}disable{else}enable{/if}{/lang}" data-objectID="{@$updateServer->packageUpdateServerID}" data-disableMessage="{lang}wcf.acp.updateServer.disable{/lang}" data-enableMessage="{lang}wcf.acp.updateServer.enable{/lang}" class="toggleButton" />
-							<a href="index.php?form=UpdateServerEdit&amp;packageUpdateServerID={@$updateServer->packageUpdateServerID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/editS.png" alt="" title="{lang}wcf.acp.updateServer.edit{/lang}" /></a>
-							<img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.updateServer.delete{/lang}" data-objectID="{@$updateServer->packageUpdateServerID}" data-confirmMessage="{lang}wcf.acp.updateServer.delete.sure{/lang}" class="deleteButton" />
+							<img src="{@RELATIVE_WCF_DIR}icon/{if !$updateServer->disabled}enabled{else}disabled{/if}S.png" alt="" title="{lang}wcf.acp.updateServer.{if !$updateServer->disabled}disable{else}enable{/if}{/lang}" data-objectID="{@$updateServer->packageUpdateServerID}" data-disableMessage="{lang}wcf.acp.updateServer.disable{/lang}" data-enableMessage="{lang}wcf.acp.updateServer.enable{/lang}" class="toggleButton balloonTooltip" />
+							<a href="index.php?form=UpdateServerEdit&amp;packageUpdateServerID={@$updateServer->packageUpdateServerID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/editS.png" alt="" title="{lang}wcf.acp.updateServer.edit{/lang}" class="balloonTooltip" /></a>
+							<img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.updateServer.delete{/lang}" data-objectID="{@$updateServer->packageUpdateServerID}" data-confirmMessage="{lang}wcf.acp.updateServer.delete.sure{/lang}" class="deleteButton balloonTooltip" />
 							
 							{if $additionalButtons[$updateServer->packageUpdateServerID]|isset}{@$additionalButtons[$updateServer->packageUpdateServerID]}{/if}
 						</td>

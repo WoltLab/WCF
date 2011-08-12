@@ -55,12 +55,12 @@
 					<tr class="packageRow">
 						<td class="columnIcon">
 							{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-								<a href="index.php?form=PackageStartInstall&amp;action=update&amp;packageID={@$package->packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" /></a>
+								<a href="index.php?form=PackageStartInstall&amp;action=update&amp;packageID={@$package->packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a>
 							{else}
 								<img src="{@RELATIVE_WCF_DIR}icon/packageUpdateDisabledS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
 							{/if}
 							{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $package->package != 'com.woltlab.wcf' && $package->packageID != PACKAGE_ID}
-								<img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="uninstallButton" data-objectID="{@$package->packageID}" data-confirmMessage="Are you sure?" />
+								<img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="uninstallButton balloonTooltip" data-objectID="{@$package->packageID}" data-confirmMessage="Are you sure?" />
 							{else}
 								<img src="{@RELATIVE_WCF_DIR}icon/deleteDisabledS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" />
 							{/if}
