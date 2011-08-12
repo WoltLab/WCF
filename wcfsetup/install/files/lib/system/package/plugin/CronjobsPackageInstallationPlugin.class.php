@@ -76,13 +76,4 @@ class CronjobsPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	protected function findExistingItem(array $data) {
 		return null;
 	}
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareCreate()
-	 */
-	protected function prepareCreate(array &$data) {
-		parent::prepareCreate($data);
-		
-		$data['nextExec'] = TIME_NOW;
-	}
 }
