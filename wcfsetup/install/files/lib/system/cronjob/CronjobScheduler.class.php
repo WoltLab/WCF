@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\log\CronjobLogEditor;
-use wcf\data\cronjob\Cronjob AS CronjobObj;
+use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -59,7 +59,7 @@ class CronjobScheduler extends SingletonFactory {
 		foreach ($this->cronjobEditors as $cronjobEditor) {
 			// mark cronjob as being executed
 			$cronjobEditor->update(array(
-				'state' => CronjobObj::EXECUTING
+				'state' => Cronjob::EXECUTING
 			));
 			
 			// create log entry
@@ -86,7 +86,7 @@ class CronjobScheduler extends SingletonFactory {
 				'afterNextExec' => $afterNextExec,
 				'failCount' => 0,
 				'nextExec' => $nextExec,
-				'state' => CronjobObj::READY
+				'state' => Cronjob::READY
 			));
 		}
 	}
@@ -100,7 +100,7 @@ class CronjobScheduler extends SingletonFactory {
 		$conditions->add("(cronjob.nextExec <= ? OR cronjob.afterNextExec <= ?)", array(TIME_NOW, TIME_NOW));
 		$conditions->add("cronjob.active = ?", array(1));
 		$conditions->add("cronjob.failCount < ?", array(3));
-		$conditions->add("cronjob.state = ?", array(CronjobObj::READY));
+		$conditions->add("cronjob.state = ?", array(Cronjob::READY));
 		
 		$sql = "SELECT		cronjob.*
 			FROM		wcf".WCF_N."_cronjob cronjob
@@ -108,16 +108,16 @@ class CronjobScheduler extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
-			$cronjob = new CronjobObj(null, $row);
+			$cronjob = new Cronjob(null, $row);
 			$cronjobEditor = new CronjobEditor($cronjob);
 			$executeCronjob = true;
 			
 			$data = array(
-				'state' => CronjobObj::PENDING
+				'state' => Cronjob::PENDING
 			);
 			
 			// reset cronjob if it got stuck before and afterNextExec is in the past
-			if ($cronjobEditor->afterNextExec <= TIME_NOW && $cronjobEditor->state == CronjobObj::EXECUTING) {
+			if ($cronjobEditor->afterNextExec <= TIME_NOW && $cronjobEditor->state == Cronjob::EXECUTING) {
 				$failCount = $cronjobEditor->failCount + 1;
 				$data['failCount'] = $failCount;
 				
@@ -128,7 +128,7 @@ class CronjobScheduler extends SingletonFactory {
 				}
 			}
 			// ignore cronjobs which seem to be running
-			else if ($cronjobEditor->nextExec <= TIME_NOW && $cronjobEditor->state != CronjobObj::READY) {
+			else if ($cronjobEditor->nextExec <= TIME_NOW && $cronjobEditor->state != Cronjob::READY) {
 				$executeCronjob = false;
 			}
 			
