@@ -69,6 +69,7 @@
 			});
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
+			new WCF.Effect.BalloonTooltip();
 		});
 		//]]>
 	</script>
@@ -83,7 +84,7 @@
 			<nav id="topMenu" class="topMenu">
 				<div>
 					<ul>
-						<li><a href="#" title="Hello World">Hello World!</a></li>
+						<li><a href="#" title="Hello World" class="balloonTooltip">Hello World!</a></li>
 					</ul>
 				</div>
 			</nav>
