@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cronjob;
+use wcf\data\cronjob\Cronjob;
 use wcf\system\WCF;
 
 /**
@@ -16,8 +17,8 @@ class CleanUpCronjobLogCronjob implements ICronjob {
 	/**
 	 * @see wcf\system\ICronjob::execute()
 	 */
-	public function execute(array $data) {
-		$sql = "DELETE FROM	wcf".WCF_N."_cronjobs_log
+	public function execute(Cronjob $cronjob) {
+		$sql = "DELETE FROM	wcf".WCF_N."_cronjob_log
 			WHERE		execTime < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
