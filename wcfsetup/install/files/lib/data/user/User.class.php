@@ -4,7 +4,7 @@ use wcf\data\DatabaseObject;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
 use wcf\system\cache\CacheHandler;
-use wcf\system\storage\StorageHandler;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -89,10 +89,10 @@ class User extends DatabaseObject {
 			}
 			else {
 				// load storage data
-				StorageHandler::getInstance()->loadStorage(array($this->userID), 1);
+				UserStorageHandler::getInstance()->loadStorage(array($this->userID), 1);
 				
 				// get group ids
-				$data = StorageHandler::getInstance()->getStorage(array($this->userID), 'groupIDs', 1);
+				$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'groupIDs', 1);
 				
 				// cache does not exist or is outdated
 				if ($data[$this->userID] === null) {
@@ -107,7 +107,7 @@ class User extends DatabaseObject {
 					}
 					
 					// update storage data
-					StorageHandler::getInstance()->update($this->userID, 'groupIDs', serialize($this->groupIDs), 1);
+					UserStorageHandler::getInstance()->update($this->userID, 'groupIDs', serialize($this->groupIDs), 1);
 				}
 				else {
 					$this->groupIDs = unserialize($data[$this->userID]);
@@ -128,8 +128,8 @@ class User extends DatabaseObject {
 			// load storage data
 			StorageHandler::getInstance()->loadStorage(array($this->userID), 1);
 			
-			// get group ids
-			$data = StorageHandler::getInstance()->getStorage(array($this->userID), 'languageIDs', 1);
+			// get language ids
+			$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'languageIDs', 1);
 			
 			// cache does not exist or is outdated
 			if ($data[$this->userID] === null) {
@@ -143,7 +143,7 @@ class User extends DatabaseObject {
 				}
 				
 				// update storage data
-				StorageHandler::getInstance()->update($this->userID, 'languageIDs', serialize($this->languageIDs), 1);
+				UserStorageHandler::getInstance()->update($this->userID, 'languageIDs', serialize($this->languageIDs), 1);
 			}
 			else {
 				$this->languageIDs = unserialize($data[$this->userID]);

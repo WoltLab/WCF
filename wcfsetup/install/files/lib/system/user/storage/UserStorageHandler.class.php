@@ -1,11 +1,11 @@
 <?php
-namespace wcf\system\storage;
+namespace wcf\system\user\storage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
 /**
- * Handles the persistent data storage.
+ * Handles the persistent user data storage.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @subpackage	system.storage
  * @category 	Community Framework
  */
-class StorageHandler extends SingletonFactory {
+class UserStorageHandler extends SingletonFactory {
 	/**
 	 * data cache
 	 * @var	array<array>
@@ -53,7 +53,7 @@ class StorageHandler extends SingletonFactory {
 		$conditions->add("packageID = ?", array(PACKAGE_ID));
 		
 		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_storage
+			FROM	wcf".WCF_N."_user_storage
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
@@ -139,7 +139,7 @@ class StorageHandler extends SingletonFactory {
 	 * @param	integer		$packageID
 	 */	
 	public function resetAll($field, $packageID = PACKAGE_ID) {
-		$sql = "DELETE FROM	wcf".WCF_N."_storage
+		$sql = "DELETE FROM	wcf".WCF_N."_user_storage
 			WHERE		field = ?
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -155,7 +155,7 @@ class StorageHandler extends SingletonFactory {
 	public function shutdown() {
 		// remove outdated entries
 		if (count($this->resetFields)) {
-			$sql = "DELETE FROM	wcf".WCF_N."_storage
+			$sql = "DELETE FROM	wcf".WCF_N."_user_storage
 				WHERE		userID = ?
 						AND field = ?
 						AND packageID = ?";
@@ -176,7 +176,7 @@ class StorageHandler extends SingletonFactory {
 		
 		// insert data
 		if (count($this->updateFields)) {
-			$sql = "INSERT INTO	wcf".WCF_N."_storage
+			$sql = "INSERT INTO	wcf".WCF_N."_user_storage
 						(userID, field, fieldValue, packageID)
 				VALUES		(?, ?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
