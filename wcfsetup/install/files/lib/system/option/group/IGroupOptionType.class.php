@@ -17,7 +17,7 @@ interface IGroupOptionType extends IOptionType {
 	 * Merges the different values of an option to a single value.
 	 * 
 	 * @param	array		$values
-	 * @return	mixed		$value
+	 * @return	mixed
 	 */
 	public function merge(array $values);
 }

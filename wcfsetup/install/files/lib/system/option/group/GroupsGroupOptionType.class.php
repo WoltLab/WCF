@@ -7,7 +7,7 @@ use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
- * GroupOptionTypeGroups generates a select-list of all available user groups.
+ * GroupsGroupOptionType generates a select-list of all available user groups.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.option.group
  * @category 	Community Framework
  */
-class GroupOptionTypeGroups extends AbstractOptionType implements IGroupOptionType {
+class GroupsGroupOptionType extends AbstractOptionType implements IGroupOptionType {
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
