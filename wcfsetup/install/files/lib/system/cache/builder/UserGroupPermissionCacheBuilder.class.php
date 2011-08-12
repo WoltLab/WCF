@@ -103,7 +103,7 @@ class UserGroupPermissionCacheBuilder implements ICacheBuilder {
 	 */
 	protected function getTypeObject($type) {
 		if (!isset($this->typeObjects[$type])) {
-			$className = 'wcf\system\option\group\GroupOptionType'.ucfirst($type);
+			$className = 'wcf\system\option\group\\'.StringUtil::toUpperCase($type).'GroupOptionType';
 			
 			// validate class
 			if (!class_exists($className)) {

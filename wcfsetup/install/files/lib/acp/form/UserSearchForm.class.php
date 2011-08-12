@@ -294,7 +294,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\system\option\SearchableOptionType::getSearchFormElement()
+	 * @see wcf\system\option\ISearchableOptionType::getSearchFormElement()
 	 */
 	protected function getFormElement($type, Option $option) {
 		return $this->getTypeObject($type)->getSearchFormElement($option);
