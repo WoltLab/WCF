@@ -4,24 +4,32 @@ use wcf\system\exception\AJAXException;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
+/**
+ * Abstract implementation of an action that displays a dialog and that is executed
+ * in multiple steps.
+ * 
+ * @author	
+ * @copyright	2001-2011 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	action
+ * @category 	Community Framework
+ */
 abstract class AbstractDialogAction extends AbstractSecureAction {
 	/**
 	 * current step
-	 *
 	 * @var	string
 	 */
 	public $step = '';
 	
 	/**
 	 * template name
-	 *
 	 * @var	string
 	 */
 	public $templateName = '';
 	
 	/**
 	 * response data
-	 *
 	 * @var	array
 	 */
 	public $data = array();
@@ -46,6 +54,9 @@ abstract class AbstractDialogAction extends AbstractSecureAction {
 		$this->validateStep();
 	}
 	
+	/**
+	 * @see	wcf\action\IAction::execute()
+	 */
 	public final function execute() {
 		parent::execute();
 		
@@ -68,5 +79,5 @@ abstract class AbstractDialogAction extends AbstractSecureAction {
 	/**
 	 * Validates current dialog step.
 	 */
-	abstract protected function validateStep();
+	protected abstract function validateStep();
 }
