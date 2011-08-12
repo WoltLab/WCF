@@ -53,7 +53,7 @@ class UserStorageHandler extends SingletonFactory {
 		$conditions->add("packageID = ?", array(PACKAGE_ID));
 		
 		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_storage
+			FROM	wcf".WCF_N."_user_storage
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
@@ -139,7 +139,7 @@ class UserStorageHandler extends SingletonFactory {
 	 * @param	integer		$packageID
 	 */	
 	public function resetAll($field, $packageID = PACKAGE_ID) {
-		$sql = "DELETE FROM	wcf".WCF_N."_storage
+		$sql = "DELETE FROM	wcf".WCF_N."_user_storage
 			WHERE		field = ?
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -155,7 +155,7 @@ class UserStorageHandler extends SingletonFactory {
 	public function shutdown() {
 		// remove outdated entries
 		if (count($this->resetFields)) {
-			$sql = "DELETE FROM	wcf".WCF_N."_storage
+			$sql = "DELETE FROM	wcf".WCF_N."_user_storage
 				WHERE		userID = ?
 						AND field = ?
 						AND packageID = ?";
@@ -176,7 +176,7 @@ class UserStorageHandler extends SingletonFactory {
 		
 		// insert data
 		if (count($this->updateFields)) {
-			$sql = "INSERT INTO	wcf".WCF_N."_storage
+			$sql = "INSERT INTO	wcf".WCF_N."_user_storage
 						(userID, field, fieldValue, packageID)
 				VALUES		(?, ?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
