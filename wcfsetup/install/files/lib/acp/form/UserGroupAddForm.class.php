@@ -187,7 +187,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	 */
 	protected function getTypeObject($type) {
 		if (!isset($this->typeObjects[$type])) {
-			$className = 'wcf\system\option\group\GroupOptionType'.ucfirst($type);
+			$className = 'wcf\system\option\group\\'.StringUtil::toUpperCase($type).'GroupOptionType';
 			
 			// create instance
 			if (!class_exists($className)) {

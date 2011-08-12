@@ -62,7 +62,7 @@ class GroupOptionsPackageInstallationPlugin extends AbstractOptionPackageInstall
 		if (isset($option['options'])) $options = $option['options'];
 		
 		// check if optionType exists
-		$className = 'wcf\system\option\group\GroupOptionType'.ucfirst($optionType);
+		$className = 'wcf\system\option\group\\'.StringUtil::toUpperCase($type).'GroupOptionType';
 		if (!class_exists($className)) {
 			throw new SystemException("unable to find class '".$className."'");
 		}
