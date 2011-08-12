@@ -2,15 +2,13 @@
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\option\OptionTypeSelect;
-use wcf\system\option\SearchableUserOption;
-use wcf\system\WCF;
 use wcf\system\exception\UserInputException;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\OptionUtil;
 
 /**
- * OptionTypeSelect is an implementation of OptionType for multiple 'select' tags.
+ * MultiselectOptionType is an implementation of IOptionType for multiple 'select' tags.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -19,7 +17,7 @@ use wcf\util\OptionUtil;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypeMultiselect extends OptionTypeSelect {
+class MultiselectOptionType extends SelectOptionType {
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */

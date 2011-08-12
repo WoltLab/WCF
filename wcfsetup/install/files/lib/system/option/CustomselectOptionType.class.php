@@ -1,11 +1,11 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
-use wcf\system\option\OptionTypeSelect;
 use wcf\system\WCF;
 
 /**
- * OptionTypeSelect is an implementation of OptionType for 'select' tags with a text field for custom inputs.
+ * OptionTypeSelect is an implementation of IOptionType for 'select' tags with a
+ * text field for custom inputs.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypeCustomselect extends OptionTypeSelect {
+class CustomselectOptionType extends SelectOptionType {
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
