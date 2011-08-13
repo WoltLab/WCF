@@ -1,9 +1,9 @@
 <?php
-namespace wcf\system\option\group;
+namespace wcf\system\option\userGroup;
 
 /**
- * InfiniteIntegerGroupOptionType is an implementation of IGroupOptionType for
- * integer values with the infinite option.
+ * InfiniteIntegerUserGroupOptionType is an implementation of IUserGroupOptionType
+ * for integer values with the infinite option.
  * The merge of option values returns true, if at least one value is -1. Otherwise
  * it returns the highest value.
  * 
@@ -11,12 +11,12 @@ namespace wcf\system\option\group;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.option.group
+ * @subpackage	system.option.userGroup
  * @category 	Community Framework
  */
-class InfiniteIntegerGroupOptionType extends IntegerGroupOptionType {
+class InfiniteIntegerUserGroupOptionType extends IntegerUserGroupOptionType {
 	/**
-	 * @see wcf\system\option\group\IGroupOptionType::merge()
+	 * @see wcf\system\option\userGroup\IUserGroupOptionType::merge()
 	 */
 	public function merge(array $values) {
 		if (in_array(-1, $values)) return -1;
