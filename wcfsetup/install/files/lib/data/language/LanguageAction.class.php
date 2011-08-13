@@ -40,7 +40,7 @@ class LanguageAction extends AbstractDatabaseObjectAction {
 	 */
 	public function validateSetAsDefault() {
 		try {
-			WCF::getSession()->checkPermission($this->permissionsUpdate);
+			WCF::getSession()->checkPermissions($this->permissionsUpdate);
 		}
 		catch (PermissionDeniedException $e) {
 			throw new ValidateActionException('Insufficient permissions');
