@@ -7,6 +7,7 @@ use wcf\data\user\group\UserGroupEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
 /**
@@ -65,9 +66,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	 * @see wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		if (!count($_POST)) {
-			$this->groupIdentifier = $this->group->groupIdentifier;
-			
+		if (!count($_POST)) {			
 			// get default values
 			if ($this->group->groupType != UserGroup::EVERYONE) {
 				$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
@@ -85,7 +84,15 @@ class UserGroupEditForm extends UserGroupAddForm {
 					$this->optionValues[$option->optionName] = $value;
 				}
 			}
+			
+			// get group name in the available languages
+			foreach ($this->languageCodes as $languageID => $languageCode) {
+				$this->groupName[$languageID] = LanguageFactory::getLanguage($languageID)->get($this->group->groupIdentifier);
+			}
 		}
+		
+		// set group identifier
+		$this->groupIdentifier = $this->group->groupIdentifier;
 		
 		parent::readData();
 	}
@@ -102,7 +109,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 		));
 		
 		// add warning when the initiator is in the group
-		if ($this->group->isMember($this->groupID)) {
+		if ($this->group->isMember($this->groupIdentifier)) {
 			WCF::getTPL()->assign('warningSelfEdit', true);
 		}
 	}
@@ -130,7 +137,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 			}
 		}
 		$data = array(
-			'data' => array_merge(array('groupIdentifier' => $this->groupIdentifier), $this->additionalFields),
+			'data' => array_merge($this->additionalFields, array('groupName' => $this->groupName)),
 			'options' => $saveOptions
 		);
 		$groupAction = new UserGroupAction(array($this->groupID), 'update', $data);
@@ -139,5 +146,12 @@ class UserGroupEditForm extends UserGroupAddForm {
 		
 		// show success message
 		WCF::getTPL()->assign('success', true);
+	}
+	
+	/**
+	 * @see	wcf\acp\form\UserGroupEditForm::validateGroupIdentifier()
+	 */
+	protected function validateGroupIdentifier() {
+		// does nothing
 	}
 }

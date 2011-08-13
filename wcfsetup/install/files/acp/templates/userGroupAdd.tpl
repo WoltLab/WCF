@@ -45,17 +45,40 @@
 			<dl id="groupIdentifierDiv"{if $errorType.groupIdentifier|isset} class="formError"{/if}>
 				<dt><label for="groupIdentifier">{lang}wcf.acp.group.groupIdentifier{/lang}</label></dt>
 				<dd>
-					<input type="text" id="groupIdentifier" name="groupIdentifier" value="{$groupIdentifier}" class="medium" />
+					<input{if $action == 'edit'} disabled="disabled"{/if} type="text" id="groupIdentifier" name="groupIdentifier" value="{$groupIdentifier}" class="medium" />
 					{if $errorType.groupIdentifier|isset}
 						<small class="innerError">
 							{if $errorType.groupIdentifier == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType.groupIdentifier == 'notValid'}{lang}wcf.acp.group.groupIdentifier.error.notValid{/lang}{/if}
+							{if $errorType.groupIdentifier == 'notUnique'}{lang}wcf.acp.group.groupIdentifier.error.notUnique{/lang}{/if}
 						</small>
 					{/if}
-					<small id="groupIdentifierHelpMessage">{lang}wcf.acp.group.groupIdentifier.description{/lang}</small>
+					{if $action == 'add'}
+						<small id="groupIdentifierHelpMessage">{lang}wcf.acp.group.groupIdentifier.description{/lang}</small>
+					{/if}
 				</dd>
 			</dl>
 			
 			{if $additionalFields|isset}{@$additionalFields}{/if}
+		</fieldset>
+
+		<fieldset>
+			<legend>{lang}wcf.acp.group.name{/lang}</legend>
+
+			{* TODO: add some javascript magic maybe *}
+			{foreach from=$languages key=key item=language}
+				<dl{if $errorType.groupName.$key|isset} class="formError"{/if}>
+					<dt><label for="groupName{@$language|ucfirst}">{lang}wcf.global.language.{@$language}{/lang}</label></dt>
+					<dd>
+						<input type="text" id="groupName{@$language|ucfirst}" name="groupName[{$key}]" value="{if $groupName.$key|isset}{$groupName.$key}{/if}" class="medium" />
+						{if $errorType.groupName.$key|isset}
+							<small class="innerError">
+								{if $errorType.groupName.$key == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							</small>
+						{/if}
+					</dd>
+				</dl>
+			{/foreach}	
 		</fieldset>
 	
 		{if $additionalFieldSets|isset}{@$additionalFieldSets}{/if}

@@ -226,7 +226,7 @@ class UserGroup extends DatabaseObject {
 	 * @return 	boolean
 	 */
 	public function isAccessible() {
-		return self::isAccessibleGroup(array($this->groupID));
+		return self::isAccessibleGroup(array($this->groupIdentifier));
 	}
 	
 	/**
@@ -269,7 +269,7 @@ class UserGroup extends DatabaseObject {
 		if (!WCF::getSession()->getPermission('admin.user.canEditGroup')) return false;
 		
 		// user cannot edit this group
-		if (!UserGroup::isAccessibleGroup(array($this->groupID))) return false;
+		if (!UserGroup::isAccessibleGroup(array($this->groupIdentifier))) return false;
 		
 		return true;
 	}

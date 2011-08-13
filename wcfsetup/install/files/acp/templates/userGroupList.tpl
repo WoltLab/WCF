@@ -79,7 +79,7 @@
 							{if $additionalButtons[$group->groupID]|isset}{@$additionalButtons[$group->groupID]}{/if}
 						</td>
 						<td class="columnGroupID columnID"><p>{@$group->groupID}</p></td>
-						<td class="columnGroupIdentifier columnText">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{$group->groupIdentifier}</a>{else}{$group->groupIdentifier}</p>{/if}</td>
+						<td class="columnGroupIdentifier columnText">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{lang}{$group->groupIdentifier}{/lang}</a>{else}{lang}{$group->groupIdentifier}{/lang}</p>{/if}</td>
 						<td class="columnMembers columnNumbers"><p><a title="{lang}wcf.acp.group.showMembers{/lang}" href="index.php?form=UserSearch&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{#$group->members}</p></a></td>
 						
 						{if $additionalColumns[$group->groupID]|isset}{@$additionalColumns[$group->groupID]}{/if}

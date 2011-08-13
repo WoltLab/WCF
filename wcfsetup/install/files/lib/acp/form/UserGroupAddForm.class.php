@@ -3,10 +3,13 @@ namespace wcf\acp\form;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupAction;
+use wcf\data\user\group\UserGroupEditor;
 use wcf\system\exception\UserInputException;
 use wcf\system\exception\SystemException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
+use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
@@ -61,10 +64,22 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public $optionTree = array();
 	
 	/**
-	 * group name
+	 * group identifier
 	 * @var string
 	 */
 	public $groupIdentifier = '';
+	
+	/**
+	 * group name if different languages
+	 * @var	array<string>
+	 */
+	public $groupName = array();
+	
+	/**
+	 * array with available language codes (language ids as key)
+	 * @var	array<string>
+	 */
+	public $languageCodes = array();
 	
 	/**
 	 * additional fields
@@ -78,9 +93,18 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_POST['groupIdentifier'])) $this->groupIdentifier = StringUtil::trim($_POST['groupIdentifier']);
-		if (isset($_POST['activeTabMenuItem'])) $this->activeTabMenuItem = $_POST['activeTabMenuItem'];
-		if (isset($_POST['activeSubTabMenuItem'])) $this->activeSubTabMenuItem = $_POST['activeSubTabMenuItem'];
+		if (isset($_POST['groupIdentifier'])) {
+			$this->groupIdentifier = StringUtil::trim($_POST['groupIdentifier']);
+		}
+		if (isset($_POST['groupName']) && is_array($_POST['groupName'])) {
+			$this->groupName = ArrayUtil::trim($_POST['groupName']);
+		}
+		if (isset($_POST['activeTabMenuItem'])) {
+			$this->activeTabMenuItem = $_POST['activeTabMenuItem'];
+		}
+		if (isset($_POST['activeSubTabMenuItem'])) {
+			$this->activeSubTabMenuItem = $_POST['activeSubTabMenuItem'];
+		}
 	}
 	
 	/**
@@ -90,19 +114,39 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		// validate dynamic options
 		parent::validate();
 		
-		// validate group name
+		// validate group identifier
 		try {
-			if (empty($this->groupIdentifier)) {
-				throw new UserInputException('groupIdentifier');
-			}
+			$this->validateGroupIdentifier();
 		}
 		catch (UserInputException $e) {
 			$this->errorType[$e->getField()] = $e->getType();
+		}
+		
+		// validate group names
+		foreach ($this->languageCodes as $languageID => $languageCode) {
+			if (!isset($this->groupName[$languageID]) || empty($this->groupName[$languageID])) {
+				$this->errorType['groupName'][$languageID] = 'empty';
+			}
 		}
 	
 		if (count($this->errorType) > 0) {
 			throw new UserInputException('groupIdentifier', $this->errorType);
 		}		
+	}
+	
+	/**
+	 * Validates the group identifier.
+	 */
+	protected function validateGroupIdentifier() {
+		if (empty($this->groupIdentifier)) {
+			throw new UserInputException('groupIdentifier');
+		}
+		else if (!preg_match('~wcf\.userGroup\.identifier\.(\w+)~', $this->groupIdentifier)) {
+			throw new UserInputException('groupIdentifier', 'notValid');
+		}
+		else if (!UserGroupEditor::isAvailableGroupIdentifier($this->groupIdentifier)) {
+			throw new UserInputException('groupIdentifier', 'notUnique');
+		}
 	}
 	
 	/**
@@ -121,7 +165,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		}
 		
 		$data = array(
-			'data' => array_merge($this->additionalFields, array('groupIdentifier' => $this->groupIdentifier)),
+			'data' => array_merge($this->additionalFields, array('groupIdentifier' => $this->groupIdentifier, 'groupName' => $this->groupName)),
 			'options' => $saveOptions
 		);
 		$groupAction = new UserGroupAction(array(), 'create', $data);
@@ -135,13 +179,24 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		
 		// reset values
 		$this->groupIdentifier = '';
+		$this->groupName = array();
 		$this->optionValues = array();
+	}
+	
+	/**
+	 * @see wcf\page\IPage::readParameters()
+	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		// get language codes
+		$this->languageCodes = LanguageFactory::getLanguageCodes();
 	}
 	
 	/**
 	 * @see wcf\page\IPage::readData()
 	 */
-	public function readData() {
+	public function readData() {	
 		AbstractOptionListForm::readData();
 		
 		$this->optionTree = $this->getOptionTree();
@@ -161,7 +216,9 @@ class UserGroupAddForm extends AbstractOptionListForm {
 			'optionTree' => $this->optionTree,
 			'action' => 'add',
 			'activeTabMenuItem' => $this->activeTabMenuItem,
-			'activeSubTabMenuItem' => $this->activeSubTabMenuItem
+			'activeSubTabMenuItem' => $this->activeSubTabMenuItem,
+			'languageCodes' => $this->languageCodes,
+			'groupName' => $this->groupName
 		));
 	}
 

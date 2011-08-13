@@ -1,8 +1,12 @@
 <?php
 namespace wcf\data\user\group;
+use wcf\data\language\category\LanguageCategory;
+use wcf\data\language\Language;
+use wcf\data\language\LanguageEditor;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\data\acp\session\ACPSession;
+use wcf\system\language\LanguageFactory;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\session\SessionHandler;
@@ -28,7 +32,12 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	 * @see	wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
+		$groupName = $parameters['groupName'];
+		unset($parameters['groupName']);
+		
 		$group = parent::create($parameters);
+		
+		self::updateGroupName($group->groupIdentifier, $groupName);
 		
 		// update accessible groups
 		self::updateAccessibleGroups($group->groupID);
@@ -37,10 +46,54 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	}
 	
 	/**
+	 * Updates the group name of the user group with the given identifier.
+	 * 
+	 * $update indicates if the group name is really updated or created.
+	 * 
+	 * @param	string		$groupIdentifier
+	 * @param	array<string>	$groupName
+	 * @param	boolean		$update
+	 */
+	protected static function updateGroupName($groupIdentifier, array $groupName, $update = false) {
+		// list ($part1, $part2, $part3, ) = explode('.', $groupIdentifier);
+		// $languageCategoryName = $part1.'.'.$part2.'.'.$part3;
+		$languageCategoryName = 'wcf.userGroup.identifier';
+		$languageCategoryData = LanguageFactory::getCategory($languageCategoryName);
+		$languageCategory = new LanguageCategory(null, $languageCategoryData);
+		
+		$useCustom = array();
+		if ($update) {
+			$useCustom = array($groupIdentifier => 1);
+		}
+		
+		foreach ($groupName as $languageID => $name) {
+			$languageEditor = new LanguageEditor(new Language(null, array('languageID' => $languageID)));
+			$languageEditor->updateItems(array($groupIdentifier => $name), $languageCategory, PACKAGE_ID, $useCustom);
+		}
+		
+		LanguageFactory::clearCache();
+	}
+	
+	/**
+	 * @see	wcf\data\IEditableObject::update()
+	 */
+	public function update(array $parameters = array()) {
+		$groupName = $parameters['groupName'];
+		unset($parameters['groupName']);
+		
+		parent::update($parameters);
+		
+		self::updateGroupName($this->groupIdentifier, $groupName, true);
+		
+		// update accessible groups
+		self::updateAccessibleGroups($this->groupID);
+	}
+	
+	/**
 	 * @see	wcf\data\DatabaseObjectEditor::__deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
-		parent::deleteAll($objectIDs);
+		$returnValue = parent::deleteAll($objectIDs);
 		
 		// remove user to group assignments
 		self::removeGroupAssignments($objectIDs);
@@ -198,6 +251,26 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array(implode(',', $groupIDs), $optionID));
 		}
+	}
+	
+	/**
+	 * Returns true if the given group identifier is available for the package
+	 * with the given id.
+	 * 
+	 * @param	string		$groupIdentifier
+	 * @param	integer		$packageID
+	 * @return	boolean
+	 */
+	public static function isAvailableGroupIdentifier($groupIdentifier, $packageID = 1) {
+		// todo handle package id
+		$sql = "SELECT	COUNT(*) AS count
+			FROM	".static::getDatabaseTableName()."
+			WHERE	groupIdentifier = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($groupIdentifier));
+		$row = $statement->fetchArray();
+		
+		return $row['count'] == 0;
 	}
 	
 	/**
