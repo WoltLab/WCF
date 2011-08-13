@@ -193,7 +193,11 @@ class UserGroup extends DatabaseObject {
 	 */
 	protected static function getCache() {
 		if (self::$cache === null) {
-			CacheHandler::getInstance()->addResource('usergroups', WCF_DIR.'cache/cache.usergroups.php', 'wcf\system\cache\builder\CacheBuilderUserGroup');
+			CacheHandler::getInstance()->addResource(
+				'usergroups',
+				WCF_DIR.'cache/cache.usergroups.php',
+				'wcf\system\cache\builder\UserGroupCacheBuilder'
+			);
 			self::$cache = CacheHandler::getInstance()->get('usergroups');
 		}
 	}
