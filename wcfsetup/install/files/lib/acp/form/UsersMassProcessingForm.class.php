@@ -145,7 +145,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 			$this->conditions->add("user.email LIKE ?", array('%'.addcslashes($this->email, '_%').'%'));
 		}
 		if (count($this->groupIDArray) > 0) {
-			$this->conditions->add("user.userID ".($this->invertGroupIDs == 1 ? 'NOT ' : '')."IN (SELECT userID FROM wcf".WCF_N."_user_to_group WHERE groupID IN (?))", array($this->groupIDArray));
+			$this->conditions->add("user.userID ".($this->invertGroupIDs == 1 ? 'NOT ' : '')."IN (SELECT userID FROM wcf".WCF_N."_user_to_user_group WHERE groupID IN (?))", array($this->groupIDArray));
 		}
 		if (count($this->languageIDArray) > 0) {
 			$this->conditions->add("user.languageID IN (?)", array($this->languageIDArray));
@@ -292,7 +292,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 		$conditions->add("userID = ?", array(array_keys($users)));
 		
 		$sql = "SELECT	userID, groupID
-			FROM	wcf".WCF_N."_user_to_group
+			FROM	wcf".WCF_N."_user_to_user_group
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());

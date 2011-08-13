@@ -115,7 +115,7 @@
 				<categoryname>admin.user.group</categoryname>
 				<optiontype>groups</optiontype>
 				<defaultvalue></defaultvalue>
-				<admindefaultvalue>1,2,3,4,5,6</admindefaultvalue>
+				<admindefaultvalue>wcf.userGroup.identifier.everyone,wcf.userGroup.identifier.guests,wcf.userGroup.identifier.users,wcf.userGroup.identifier.administrators,wcf.userGroup.identifier.moderators,wcf.userGroup.identifier.superModerators</admindefaultvalue>
 			</option>
 			<option name="admin.user.canAddUser">
 				<categoryname>admin.user.user</categoryname>

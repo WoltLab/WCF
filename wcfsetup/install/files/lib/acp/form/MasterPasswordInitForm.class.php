@@ -85,7 +85,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 			FROM	wcf".WCF_N."_user
 			WHERE	userID IN (
 					SELECT	userID
-					FROM	wcf".WCF_N."_user_to_group
+					FROM	wcf".WCF_N."_user_to_user_group
 					WHERE	groupID = 4
 				)";
 		$statement = WCF::getDB()->prepareStatement($sql);

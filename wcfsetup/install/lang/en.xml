@@ -898,4 +898,12 @@
 	<category name="wcf.user.option">
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[The information you have entered is not valid.]]></item>
 	</category>
+	<category name="wcf.userGroup.identifier">
+		<item name="wcf.userGroup.identifier.administrators"><![CDATA[Administrators]]></item>
+		<item name="wcf.userGroup.identifier.everyone"><![CDATA[Everyone]]></item>
+		<item name="wcf.userGroup.identifier.guests"><![CDATA[Guests]]></item>
+		<item name="wcf.userGroup.identifier.moderators"><![CDATA[Moderators]]></item>
+		<item name="wcf.userGroup.identifier.superModerators"><![CDATA[Super moderators]]></item>
+		<item name="wcf.userGroup.identifier.users"><![CDATA[Users]]></item>
+	</category>
 </language>

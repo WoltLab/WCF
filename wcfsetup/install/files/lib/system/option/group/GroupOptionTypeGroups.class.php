@@ -30,7 +30,7 @@ class GroupOptionTypeGroups extends AbstractOptionType implements IGroupOptionTy
 		// generate html
 		$html = '';
 		foreach ($groups as $group) {
-			$html .= '<label><input type="checkbox" name="values['.StringUtil::encodeHTML($option->optionName).'][]" value="'.$group->groupID.'" '.(in_array($group->groupID, $selectedGroups) ? 'checked="checked" ' : '').'/> '.StringUtil::encodeHTML($group->groupName).'</label>';
+			$html .= '<label><input type="checkbox" name="values['.StringUtil::encodeHTML($option->optionName).'][]" value="'.$group->groupIdentifier.'" '.(in_array($group->groupIdentifier, $selectedGroups) ? 'checked="checked" ' : '').'/> '.StringUtil::encodeHTML($group->__toString()).'</label>';
 		}
 		
 		return $html;
@@ -45,11 +45,18 @@ class GroupOptionTypeGroups extends AbstractOptionType implements IGroupOptionTy
 		
 		// get new value
 		if (!is_array($newValue)) $newValue = array();
-		$selectedGroups = ArrayUtil::toIntegerArray($newValue);
 		
 		// check groups
-		foreach ($selectedGroups as $groupID) {
-			if (!isset($groups[$groupID])) {
+		foreach ($newValue as $groupIdentifier) {
+			$found = false;
+			foreach ($groups as $group) {
+				if ($group->groupIdentifier == $groupIdentifier) {
+					$found = true;
+					break;
+				}
+			}
+			
+			if (!$found) {
 				throw new UserInputException($option->optionName, 'validationFailed');
 			}
 		}
@@ -60,8 +67,7 @@ class GroupOptionTypeGroups extends AbstractOptionType implements IGroupOptionTy
 	 */
 	public function getData(Option $option, $newValue) {
 		if (!is_array($newValue)) $newValue = array();
-		$newValue = ArrayUtil::toIntegerArray($newValue);
-		sort($newValue, SORT_NUMERIC);
+		sort($newValue);
 		return implode(',', $newValue);
 	}
 	

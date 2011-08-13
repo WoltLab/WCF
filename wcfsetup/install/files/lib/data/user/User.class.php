@@ -30,15 +30,19 @@ class User extends DatabaseObject {
 	protected static $databaseTableIndexName = 'userID';
 	
 	/**
-	 * list of group ids
-	 *
+	 * list of ids of groups this user is a member of
 	 * @var	array<integer>
 	 */
-	protected $groupIDs = null;
+	protected $userGroupIDs = null;
+	
+	/**
+	 * list of identifiers of groups this user is a member of
+	 * @var	array<string>
+	 */
+	protected $userGroupIdentifiers = null;
 	
 	/**
 	 * list of language ids
-	 * 
 	 * @var	array<integer>
 	 */
 	protected $languageIDs = null;
@@ -67,7 +71,8 @@ class User extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if the given password hash from a cookie is the correct password for this user.
+	 * Returns true, if the given password hash from a cookie is the correct
+	 * password for this user.
 	 *
 	 * @param 	string		$passwordHash
 	 * @return 	boolean 	password correct
@@ -77,45 +82,73 @@ class User extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns an array with the all the groups in which the actual user is a member.
+	 * Returns an array with the ids of all user groups in which the actual user
+	 * is a member.
 	 *
-	 * @return 	array 		$groupIDs
+	 * @return 	array<integer>
 	 */
-	public function getGroupIDs() {
-		if ($this->groupIDs === null) {
-			if (!$this->userID) {
-				// user is a guest, use default guest group
-				$this->groupIDs = UserGroup::getGroupIDsByType(array(UserGroup::GUESTS));
-			}
-			else {
-				// load storage data
-				UserStorageHandler::getInstance()->loadStorage(array($this->userID), 1);
-				
-				// get group ids
-				$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'groupIDs', 1);
-				
-				// cache does not exist or is outdated
-				if ($data[$this->userID] === null) {
-					$this->groupIDs = array();
-					$sql = "SELECT	groupID
-						FROM	wcf".WCF_N."_user_to_group
-						WHERE	userID = ?";
-					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array($this->userID));
-					while ($row = $statement->fetchArray()) {
-						$this->groupIDs[] = $row['groupID'];
-					}
-					
-					// update storage data
-					UserStorageHandler::getInstance()->update($this->userID, 'groupIDs', serialize($this->groupIDs), 1);
-				}
-				else {
-					$this->groupIDs = unserialize($data[$this->userID]);
-				}
-			}
+	public function getUserGroupIDs() {
+		if ($this->userGroupIDs === null) {
+			$this->loadUserGroupData();
 		}
 		
-		return $this->groupIDs;
+		return $this->userGroupIDs;
+	}
+	
+	/**
+	 * Returns an array with the identifiers of all user groups in which the
+	 * actual user is a member.
+	 *
+	 * @return 	array<string>
+	 */
+	public function getUserGroupIdentifiers() {
+		if ($this->userGroupIdentifiers === null) {
+			$this->loadUserGroupData();
+		}
+		
+		return $this->userGroupIdentifiers;
+	}
+	
+	/**
+	 * Loads the user group data.
+	 */
+	protected function loadUserGroupData() {
+		if (!$this->userID) {
+			// user is a guest, use default guest group
+			$this->userGroupIDs = UserGroup::getGroupIDsByType(array(UserGroup::GUESTS));
+			$this->userGroupIdentifiers = UserGroup::getGroupIdentifiersByType(array(UserGroup::GUESTS));
+		}
+		else {
+			// load storage data
+			UserStorageHandler::getInstance()->loadStorage(array($this->userID), 1);
+
+			// get group ids
+			$userGoupData = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'userGroupData', 1);
+
+			// cache does not exist or is outdated
+			if ($userGoupData[$this->userID] === null) {
+				$this->userGroupIDs = array();
+				$sql = "SELECT		user_to_user_group.groupID, groupIdentifier
+					FROM		wcf".WCF_N."_user_to_user_group user_to_user_group
+					LEFT JOIN	wcf".WCF_N."_user_group user_group
+					ON		(user_to_user_group.groupID = user_group.groupID)
+					WHERE		userID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array($this->userID));
+				while ($row = $statement->fetchArray()) {
+					$this->userGroupIDs[] = $row['groupID'];
+					$this->userGroupIdentifiers[] = $row['groupID'];
+				}
+
+				// update storage data
+				UserStorageHandler::getInstance()->update($this->userID, 'userGroupData', serialize(array('groupIDs' => $this->userGroupIDs, 'groupIdentifiers' => $this->userGroupIdentifiers)), 1);
+			}
+			else {
+				$userGoupData = unserialize($userGoupData[$this->userID]);
+				$this->userGroupIDs = $userGoupData['groupIDs'];
+				$this->userGroupIdentifiers = $userGoupData['groupIdentifiers'];
+			}
+		}
 	}
 	
 	/**

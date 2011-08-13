@@ -84,12 +84,32 @@ class UserGroup extends DatabaseObject {
 		$groupIDs = array();
 		foreach ($types as $type) {
 			if (isset(self::$cache['types'][$type])) {
-				$groupIDs = array_merge($groupIDs, self::$cache['types'][$type]);
+				$groupIDs = array_merge($groupIDs, self::$cache['types'][$type]['groupIDs']);
 			}
 		}
 		$groupIDs = array_unique($groupIDs);
 		
 		return $groupIDs;
+	}
+	
+	/**
+	 * Returns group identifiers by given type.
+	 * 
+	 * @param	array<integer>		$types
+	 * @return	array<string>
+	 */
+	public static function getGroupIdentifiersByType(array $types) {
+		self::getCache();
+		
+		$groupIdentifiers = array();
+		foreach ($types as $type) {
+			if (isset(self::$cache['types'][$type])) {
+				$groupIdentifiers = array_merge($groupIdentifiers, self::$cache['types'][$type]['groupIdentifiers']);
+			}
+		}
+		$groupIdentifiers = array_unique($groupIdentifiers);
+		
+		return $groupIdentifiers;
 	}
 	
 	/**
@@ -130,31 +150,33 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if the active user is member of the given group.
+	 * Returns true, if the active user is member of the group with the given identifier.
 	 * 
-	 * @param 	integer		$groupID
+	 * @param 	integer		$groupIdentifier
 	 * @return	boolean		    
 	 */
-	public static function isMember($groupID) {
-		if (in_array($groupID, WCF::getUser()->getGroupIDs())) return true;
+	public static function isMember($groupIdentifier) {
+		if (in_array($groupIdentifier, WCF::getUser()->getUserGroupIdentifiers())) {
+			return true;
+		}
 		return false;
 	}
 	
 	/**
 	 * Returns true, if the given groups are accessible for the active user.
 	 * 
-	 * @param	array		$groupIDs
+	 * @param	array		$groupIdentifiers
 	 * @return 	boolean
 	 */
-	public static function isAccessibleGroup(array $groupIDs = array()) {
+	public static function isAccessibleGroup(array $groupIdentifiers = array()) {
 		if (self::$accessibleGroups === null) {
 			self::$accessibleGroups = explode(',', WCF::getSession()->getPermission('admin.user.accessibleGroups'));
 		}
 		
-		if (count($groupIDs) == 0) return false;
+		if (count($groupIdentifiers) == 0) return false;
 		
-		foreach ($groupIDs as $groupID) {
-			if (!in_array($groupID, self::$accessibleGroups)) {
+		foreach ($groupIdentifiers as $groupIdentifier) {
+			if (!in_array($groupIdentifier, self::$accessibleGroups)) {
 				return false;
 			} 
 		}
@@ -212,8 +234,8 @@ class UserGroup extends DatabaseObject {
 	 * 
 	 * @return	string
 	 */
-	public function __tostring() {
-		return $this->groupName;
+	public function __toString() {
+		return WCF::getLanguage()->get($this->groupIdentifier);
 	}
 	
 	/**
@@ -226,10 +248,10 @@ class UserGroup extends DatabaseObject {
 		if (!WCF::getSession()->getPermission('admin.user.canDeleteGroup')) return false;
 		
 		// cannot delete own groups
-		if (UserGroup::isMember($this->groupID)) return false;
+		if (UserGroup::isMember($this->groupIdentifier)) return false;
 		
 		// user cannot delete this group
-		if (!UserGroup::isAccessibleGroup(array($this->groupID))) return false;
+		if (!UserGroup::isAccessibleGroup(array($this->groupIdentifier))) return false;
 		
 		// cannot delete static groups
 		if ($this->groupType == UserGroup::EVERYONE || $this->groupType == UserGroup::GUESTS || $this->groupType == UserGroup::USERS) return false;

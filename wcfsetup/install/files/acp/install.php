@@ -13,24 +13,6 @@ use wcf\system\WCF;
  * @package	com.woltlab.wcf
  * @category 	Community Framework
  */
-// make group names to language variables
-$groupNames = array(
-	'Everyone' => WCF::getLanguage()->get('wcf.acp.group.everyone'),
-	'Guests' => WCF::getLanguage()->get('wcf.acp.group.guests'),
-	'Users' => WCF::getLanguage()->get('wcf.acp.group.users'),
-	'Administrators' => WCF::getLanguage()->get('wcf.acp.group.administrators'),
-	'Moderators' => WCF::getLanguage()->get('wcf.acp.group.moderators'),
-	'Super Moderators' => WCF::getLanguage()->get('wcf.acp.group.superModerators')
-);
-
-$sql = "UPDATE	wcf".WCF_N."_user_group
-	SET	groupName = ?
-	WHERE	groupName = ?";
-$statement = WCF::getDB()->prepareStatement($sql);
-foreach ($groupNames as $oldValue => $newValue) {
-	$statement->execute(array($newValue, $oldValue));
-}
-
 // change the priority of the PIP's to "1"
 $sql = "UPDATE	wcf".WCF_N."_package_installation_plugin
 	SET	priority = ?";

@@ -1026,4 +1026,12 @@
 	<category name="wcf.user.option">
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[Sie haben einen ungültigen Inhalt eingegeben.]]></item>
 	</category>
+	<category name="wcf.userGroup.identifier">
+		<item name="wcf.userGroup.identifier.administrators"><![CDATA[Administratoren]]></item>
+		<item name="wcf.userGroup.identifier.everyone"><![CDATA[Jeder]]></item>
+		<item name="wcf.userGroup.identifier.guests"><![CDATA[Gäste]]></item>
+		<item name="wcf.userGroup.identifier.moderators"><![CDATA[Moderatoren]]></item>
+		<item name="wcf.userGroup.identifier.superModerators"><![CDATA[Super Moderatoren]]></item>
+		<item name="wcf.userGroup.identifier.users"><![CDATA[Benutzer]]></item>
+	</category>
 </language>

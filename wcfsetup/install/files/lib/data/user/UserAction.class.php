@@ -61,7 +61,7 @@ class UserAction extends AbstractDatabaseObjectAction {
 		$conditions->add("userID IN (?)", array($userIDs));
 		
 		$sql = "SELECT	DISTINCT groupID
-			FROM	wcf".WCF_N."_user_to_group
+			FROM	wcf".WCF_N."_user_to_user_group
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());

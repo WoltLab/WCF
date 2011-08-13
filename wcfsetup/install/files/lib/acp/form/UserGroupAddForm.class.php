@@ -64,7 +64,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	 * group name
 	 * @var string
 	 */
-	public $groupName = '';
+	public $groupIdentifier = '';
 	
 	/**
 	 * additional fields
@@ -78,7 +78,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_POST['groupName'])) $this->groupName = StringUtil::trim($_POST['groupName']);
+		if (isset($_POST['groupIdentifier'])) $this->groupIdentifier = StringUtil::trim($_POST['groupIdentifier']);
 		if (isset($_POST['activeTabMenuItem'])) $this->activeTabMenuItem = $_POST['activeTabMenuItem'];
 		if (isset($_POST['activeSubTabMenuItem'])) $this->activeSubTabMenuItem = $_POST['activeSubTabMenuItem'];
 	}
@@ -92,8 +92,8 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		
 		// validate group name
 		try {
-			if (empty($this->groupName)) {
-				throw new UserInputException('groupName');
+			if (empty($this->groupIdentifier)) {
+				throw new UserInputException('groupIdentifier');
 			}
 		}
 		catch (UserInputException $e) {
@@ -101,7 +101,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		}
 	
 		if (count($this->errorType) > 0) {
-			throw new UserInputException('groupName', $this->errorType);
+			throw new UserInputException('groupIdentifier', $this->errorType);
 		}		
 	}
 	
@@ -121,7 +121,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		}
 		
 		$data = array(
-			'data' => array_merge($this->additionalFields, array('groupName' => $this->groupName)),
+			'data' => array_merge($this->additionalFields, array('groupIdentifier' => $this->groupIdentifier)),
 			'options' => $saveOptions
 		);
 		$groupAction = new UserGroupAction(array(), 'create', $data);
@@ -134,7 +134,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		));
 		
 		// reset values
-		$this->groupName = '';
+		$this->groupIdentifier = '';
 		$this->optionValues = array();
 	}
 	
@@ -157,7 +157,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'groupName' => $this->groupName,
+			'groupIdentifier' => $this->groupIdentifier,
 			'optionTree' => $this->optionTree,
 			'action' => 'add',
 			'activeTabMenuItem' => $this->activeTabMenuItem,

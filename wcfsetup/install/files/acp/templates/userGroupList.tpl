@@ -47,7 +47,7 @@
 			<thead>
 				<tr class="tableHead">
 					<th class="columnGroupID{if $sortField == 'groupID'} active{/if}" colspan="2"><p><a href="index.php?page=UserGroupList&amp;pageNo={@$pageNo}&amp;sortField=groupID&amp;sortOrder={if $sortField == 'groupID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.group.groupID{/lang}{if $sortField == 'groupID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
-					<th class="columnGroupName{if $sortField == 'groupName'} active{/if}"><p><a href="index.php?page=UserGroupList&amp;pageNo={@$pageNo}&amp;sortField=groupName&amp;sortOrder={if $sortField == 'groupName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.group.groupName{/lang}{if $sortField == 'groupName'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
+					<th class="columnGroupIdentifier{if $sortField == 'groupIdentifier'} active{/if}"><p><a href="index.php?page=UserGroupList&amp;pageNo={@$pageNo}&amp;sortField=groupIdentifier&amp;sortOrder={if $sortField == 'groupIdentifier' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.group.groupIdentifier{/lang}{if $sortField == 'groupIdentifier'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th class="columnMembers{if $sortField == 'members'} active{/if}"><p><a href="index.php?page=UserGroupList&amp;pageNo={@$pageNo}&amp;sortField=members&amp;sortOrder={if $sortField == 'members' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.group.members{/lang}{if $sortField == 'members'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					
 					{if $additionalHeadColumns|isset}{@$additionalHeadColumns}{/if}
@@ -79,7 +79,7 @@
 							{if $additionalButtons[$group->groupID]|isset}{@$additionalButtons[$group->groupID]}{/if}
 						</td>
 						<td class="columnGroupID columnID"><p>{@$group->groupID}</p></td>
-						<td class="columnGroupName columnText">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{$group->groupName}</a>{else}{$group->groupName}</p>{/if}</td>
+						<td class="columnGroupIdentifier columnText">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{$group->groupIdentifier}</a>{else}{$group->groupIdentifier}</p>{/if}</td>
 						<td class="columnMembers columnNumbers"><p><a title="{lang}wcf.acp.group.showMembers{/lang}" href="index.php?form=UserSearch&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{#$group->members}</p></a></td>
 						
 						{if $additionalColumns[$group->groupID]|isset}{@$additionalColumns[$group->groupID]}{/if}

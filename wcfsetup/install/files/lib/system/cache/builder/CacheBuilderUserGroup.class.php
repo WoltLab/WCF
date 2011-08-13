@@ -29,10 +29,14 @@ class CacheBuilderUserGroup implements ICacheBuilder {
 		
 		foreach ($groups as $group) {
 			if (!isset($data['types'][$group->groupType])) {
-				$data['types'][$group->groupType] = array();
+				$data['types'][$group->groupType] = array(
+					'groupIDs' => array(),
+					'groupIdentifiers' => array()
+				);
 			}
 			
-			$data['types'][$group->groupType][] = $group->groupID;
+			$data['types'][$group->groupType]['groupIDs'][] = $group->groupID;
+			$data['types'][$group->groupType]['groupIdentifiers'][] = $group->groupIdentifier;
 			$data['groups'][$group->groupID] = $group;
 		}
 		

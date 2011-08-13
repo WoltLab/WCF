@@ -129,7 +129,7 @@ class UserEditor extends DatabaseObjectEditor {
 		
 		// remove old groups
 		if ($deleteOldGroups) {
-			$sql = "DELETE FROM	wcf".WCF_N."_user_to_group
+			$sql = "DELETE FROM	wcf".WCF_N."_user_to_user_group
 				WHERE		userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($this->userID));
@@ -137,7 +137,7 @@ class UserEditor extends DatabaseObjectEditor {
 		
 		// insert new groups
 		if (count($groupIDs) > 0) {
-			$sql = "INSERT INTO	wcf".WCF_N."_user_to_group
+			$sql = "INSERT INTO	wcf".WCF_N."_user_to_user_group
 						(userID, groupID)
 				VALUES		(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -154,7 +154,7 @@ class UserEditor extends DatabaseObjectEditor {
 	 */
 	public function addToGroup($groupID) {
 		$sql = "SELECT	COUNT(*) AS count
-			FROM	wcf".WCF_N."_user_to_group
+			FROM	wcf".WCF_N."_user_to_user_group
 			WHERE	userID = ?".$this->userID."
 				AND groupID = ?".$groupID;
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -165,7 +165,7 @@ class UserEditor extends DatabaseObjectEditor {
 		$row = $statement->fetchArray();
 		
 		if (!$row['count']) {
-			$sql = "INSERT INTO	wcf".WCF_N."_user_to_group
+			$sql = "INSERT INTO	wcf".WCF_N."_user_to_user_group
 						(userID, groupID)
 				VALUES		(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -179,7 +179,7 @@ class UserEditor extends DatabaseObjectEditor {
 	 * @param 	integer 	$groupID
 	 */
 	public function removeFromGroup($groupID) {
-		$sql = "DELETE FROM	wcf".WCF_N."_user_to_group
+		$sql = "DELETE FROM	wcf".WCF_N."_user_to_user_group
 			WHERE		userID = ?
 					AND groupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);

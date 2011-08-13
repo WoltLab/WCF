@@ -28,12 +28,12 @@ class UserGroupListPage extends SortablePage {
 	/**
 	 * @see wcf\page\SortablePage::$defaultSortField
 	 */
-	public $defaultSortField = 'groupName';
+	public $defaultSortField = 'groupIdentifier';
 	
 	/**
 	 * @see wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('groupID', 'groupName', 'groupType', 'members');
+	public $validSortFields = array('groupID', 'groupIdentifier', 'groupType', 'members');
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
@@ -64,7 +64,7 @@ class UserGroupListPage extends SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->sqlSelects .= "(SELECT COUNT(*) FROM wcf".WCF_N."_user_to_group WHERE groupID = user_group.groupID) AS members";
+		$this->objectList->sqlSelects .= "(SELECT COUNT(*) FROM wcf".WCF_N."_user_to_user_group WHERE groupID = user_group.groupID) AS members";
 	}
 	
 	/**

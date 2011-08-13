@@ -554,7 +554,7 @@ CREATE TABLE wcf1_user (
 DROP TABLE IF EXISTS wcf1_user_group;
 CREATE TABLE wcf1_user_group (
 	groupID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	groupName VARCHAR(255) NOT NULL DEFAULT '',
+	groupIdentifier VARCHAR(255) NOT NULL DEFAULT '',
 	groupType TINYINT(1) NOT NULL DEFAULT 0
 );
 
@@ -641,8 +641,8 @@ CREATE TABLE wcf1_user_option_value (
 	userID INT(10) NOT NULL PRIMARY KEY
 );
 
-DROP TABLE IF EXISTS wcf1_user_to_group;
-CREATE TABLE wcf1_user_to_group (
+DROP TABLE IF EXISTS wcf1_user_to_user_group;
+CREATE TABLE wcf1_user_to_user_group (
 	userID INT(10) NOT NULL,
 	groupID INT(10) NOT NULL,
 	UNIQUE KEY userID (userID, groupID)
@@ -792,20 +792,20 @@ ALTER TABLE wcf1_user_option_category ADD FOREIGN KEY (packageID) REFERENCES wcf
 
 ALTER TABLE wcf1_user_option_value ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
-ALTER TABLE wcf1_user_to_group ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
-ALTER TABLE wcf1_user_to_group ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_group (groupID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_to_user_group ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_to_user_group ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_group (groupID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_to_language ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_to_language ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 
 /**** default inserts ****/
 -- default user groups
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Everyone', 1);
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Guests', 2);
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Users', 3);
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Administrators', 4);
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Moderators', 4);
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Super Moderators', 4);
+INSERT INTO wcf1_user_group (groupIdentifier, groupType) VALUES ('wcf.userGroup.identifier.everyone', 1);
+INSERT INTO wcf1_user_group (groupIdentifier, groupType) VALUES ('wcf.userGroup.identifier.guests', 2);
+INSERT INTO wcf1_user_group (groupIdentifier, groupType) VALUES ('wcf.userGroup.identifier.users', 3);
+INSERT INTO wcf1_user_group (groupIdentifier, groupType) VALUES ('wcf.userGroup.identifier.administrators', 4);
+INSERT INTO wcf1_user_group (groupIdentifier, groupType) VALUES ('wcf.userGroup.identifier.moderators', 4);
+INSERT INTO wcf1_user_group (groupIdentifier, groupType) VALUES ('wcf.userGroup.identifier.superModerators', 4);
 		
 -- default user group options
 INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, adminDefaultValue, showOrder) VALUES ('admin.general.canUseAcp', 'admin.general', 'boolean', '0', '1', 1);

@@ -420,7 +420,7 @@ class SessionHandler extends SingletonFactory {
 		if (!PACKAGE_ID) {
 			$groupIDs = array();
 			$sql = "SELECT	groupID
-				FROM	wcf".WCF_N."_user_to_group
+				FROM	wcf".WCF_N."_user_to_user_group
 				WHERE	userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($this->user->userID));
@@ -429,7 +429,7 @@ class SessionHandler extends SingletonFactory {
 			}
 		}
 		else {
-			$groupIDs = $this->user->getGroupIDs();
+			$groupIDs = $this->user->getUserGroupIDs();
 		}
 		
 		$groups = implode(',', $groupIDs);
@@ -602,11 +602,11 @@ class SessionHandler extends SingletonFactory {
 	 */	
 	public static function resetSessions(array $userIDs = array()) {
 		if (count($userIDs)) {
-			UserStorageHandler::getInstance()->reset($userIDs, 'groupIDs', 1);
+			UserStorageHandler::getInstance()->reset($userIDs, 'userGroupData', 1);
 			UserStorageHandler::getInstance()->reset($userIDs, 'languageIDs', 1);
 		}
 		else {
-			UserStorageHandler::getInstance()->resetAll('groupIDs', 1);
+			UserStorageHandler::getInstance()->resetAll('userGroupData', 1);
 			UserStorageHandler::getInstance()->resetAll('languageIDs', 1);
 		}
 	}

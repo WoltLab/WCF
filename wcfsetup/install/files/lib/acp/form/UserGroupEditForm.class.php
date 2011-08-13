@@ -66,7 +66,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	 */
 	public function readData() {
 		if (!count($_POST)) {
-			$this->groupName = $this->group->groupName;
+			$this->groupIdentifier = $this->group->groupIdentifier;
 			
 			// get default values
 			if ($this->group->groupType != UserGroup::EVERYONE) {
@@ -130,7 +130,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 			}
 		}
 		$data = array(
-			'data' => array_merge(array('groupName' => $this->groupName), $this->additionalFields),
+			'data' => array_merge(array('groupIdentifier' => $this->groupIdentifier), $this->additionalFields),
 			'options' => $saveOptions
 		);
 		$groupAction = new UserGroupAction(array($this->groupID), 'update', $data);

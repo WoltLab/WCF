@@ -79,7 +79,7 @@ class UserAssignToGroupForm extends ACPForm {
 		$conditions->add("userID IN (?)", array($this->userIDs));
 		
 		$sql = "SELECT	userID, groupID
-			FROM	wcf".WCF_N."_user_to_group
+			FROM	wcf".WCF_N."_user_to_user_group
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());

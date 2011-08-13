@@ -42,16 +42,16 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.group.data{/lang}</legend>
 			
-			<dl id="groupNameDiv"{if $errorType.groupName|isset} class="formError"{/if}>
-				<dt><label for="groupName">{lang}wcf.acp.group.groupName{/lang}</label></dt>
+			<dl id="groupIdentifierDiv"{if $errorType.groupIdentifier|isset} class="formError"{/if}>
+				<dt><label for="groupIdentifier">{lang}wcf.acp.group.groupIdentifier{/lang}</label></dt>
 				<dd>
-					<input type="text" id="groupName" name="groupName" value="{$groupName}" class="medium" />
-					{if $errorType.groupName|isset}
+					<input type="text" id="groupIdentifier" name="groupIdentifier" value="{$groupIdentifier}" class="medium" />
+					{if $errorType.groupIdentifier|isset}
 						<small class="innerError">
-							{if $errorType.groupName == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType.groupIdentifier == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
 						</small>
 					{/if}
-					<small id="groupNameHelpMessage">{lang}wcf.acp.group.groupName.description{/lang}</small>
+					<small id="groupIdentifierHelpMessage">{lang}wcf.acp.group.groupIdentifier.description{/lang}</small>
 				</dd>
 			</dl>
 			

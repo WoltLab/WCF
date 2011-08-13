@@ -275,7 +275,7 @@ class UserSearchForm extends UserOptionListForm {
 			$this->conditions->add("user_table.email LIKE ?", array('%'.addcslashes($this->email, '_%').'%'));
 		}
 		if (count($this->groupIDs)) {
-			$this->conditions->add("user_table.userID ".($this->invertGroupIDs == 1 ? 'NOT ' : '')."IN (SELECT userID FROM wcf".WCF_N."_user_to_group WHERE groupID IN (?))", array($this->groupIDs));
+			$this->conditions->add("user_table.userID ".($this->invertGroupIDs == 1 ? 'NOT ' : '')."IN (SELECT userID FROM wcf".WCF_N."_user_to_user_group WHERE groupID IN (?))", array($this->groupIDs));
 		}
 		if (count($this->languageIDs)) {
 			$this->conditions->add("user_table.languageID IN (?)", array($this->languageIDs));

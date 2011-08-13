@@ -63,7 +63,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	protected static function removeGroupAssignments(array $groupIDs) {
 		if (!count($groupIDs)) return;
 		
-		$sql = "DELETE FROM	wcf".WCF_N."_user_to_group
+		$sql = "DELETE FROM	wcf".WCF_N."_user_to_user_group
 			WHERE		groupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($groupIDs as $groupID) {
