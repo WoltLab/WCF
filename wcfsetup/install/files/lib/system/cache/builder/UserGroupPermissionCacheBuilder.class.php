@@ -16,7 +16,7 @@ use wcf\util\ClassUtil;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderUserGroupPermission implements ICacheBuilder {
+class UserGroupPermissionCacheBuilder implements ICacheBuilder {
 	protected $typeObjects = array();
 	
 	/**

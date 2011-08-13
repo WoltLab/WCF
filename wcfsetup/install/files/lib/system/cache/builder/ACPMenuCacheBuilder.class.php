@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderACPMenu implements ICacheBuilder {
+class ACPMenuCacheBuilder implements ICacheBuilder {
 	protected $optionCategoryStructure = array();
 
 	/**

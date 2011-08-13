@@ -17,7 +17,7 @@ use wcf\util\FileUtil;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderIcon implements ICacheBuilder {
+class IconCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */

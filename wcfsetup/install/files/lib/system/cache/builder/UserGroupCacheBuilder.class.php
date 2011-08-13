@@ -13,7 +13,7 @@ use wcf\system\cache\ICacheBuilder;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderUserGroup implements ICacheBuilder {
+class UserGroupCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */

@@ -14,7 +14,7 @@ use wcf\system\package\PackageDependencyHandler;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderCoreObject implements ICacheBuilder {
+class CoreObjectCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */

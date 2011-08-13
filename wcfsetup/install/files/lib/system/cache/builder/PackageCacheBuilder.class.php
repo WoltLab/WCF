@@ -1,10 +1,11 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\data\spider\SpiderList;
+use wcf\data\package\PackageList;
 use wcf\system\cache\ICacheBuilder;
+use wcf\system\WCF;
 
 /**
- * Caches the list of search engine spiders.
+ * Caches all registered packages.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -13,16 +14,15 @@ use wcf\system\cache\ICacheBuilder;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderSpider implements ICacheBuilder {
+class PackageCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
-		$spiderList = new SpiderList();
-		$spiderList->sqlOrderBy = "spider.spiderID ASC";
-		$spiderList->sqlLimit = 0;
-		$spiderList->readObjects();
+		$packageList = new PackageList();
+		$packageList->sqlLimit = 0;
+		$packageList->readObjects();
 		
-		return $spiderList->getObjects();
+		return $packageList->getObjects();
 	}
 }

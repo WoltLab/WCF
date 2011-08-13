@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderEventListener implements ICacheBuilder {
+class EventListenerCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
