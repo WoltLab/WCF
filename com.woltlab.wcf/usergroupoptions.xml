@@ -113,7 +113,7 @@
 			</option>
 			<option name="admin.user.accessibleGroups">
 				<categoryname>admin.user.group</categoryname>
-				<optiontype>groups</optiontype>
+				<optiontype>userGroups</optiontype>
 				<defaultvalue></defaultvalue>
 				<admindefaultvalue>1,2,3,4,5,6</admindefaultvalue>
 			</option>
