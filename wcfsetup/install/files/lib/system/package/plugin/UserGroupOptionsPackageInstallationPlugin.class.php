@@ -62,7 +62,7 @@ class UserGroupOptionsPackageInstallationPlugin extends AbstractOptionPackageIns
 		if (isset($option['options'])) $options = $option['options'];
 		
 		// check if optionType exists
-		$className = 'wcf\system\option\userGroup\\'.StringUtil::toUpperCase($optionType).'UserGroupOptionType';
+		$className = 'wcf\system\option\userGroup\\'.StringUtil::firstCharToUpperCase($optionType).'UserGroupOptionType';
 		if (!class_exists($className)) {
 			throw new SystemException("unable to find class '".$className."'");
 		}

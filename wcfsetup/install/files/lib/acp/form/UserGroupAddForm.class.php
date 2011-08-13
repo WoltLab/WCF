@@ -187,14 +187,14 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	 */
 	protected function getTypeObject($type) {
 		if (!isset($this->typeObjects[$type])) {
-			$className = 'wcf\system\option\group\\'.StringUtil::toUpperCase($type).'GroupOptionType';
+			$className = 'wcf\system\option\userGroup\\'.StringUtil::firstCharToUpperCase($type).'UserGroupOptionType';
 			
 			// create instance
 			if (!class_exists($className)) {
 				throw new SystemException("unable to find class '".$className."'");
 			}
-			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\group\IGroupOptionType')) {
-				throw new SystemException("'".$className."' should implement wcf\system\option\group\IGroupOptionType");
+			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\userGroup\IUserGroupOptionType')) {
+				throw new SystemException("'".$className."' should implement wcf\system\option\userGroup\IUserGroupOptionType");
 			}
 			$this->typeObjects[$type] = new $className();
 		}
