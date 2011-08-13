@@ -63,7 +63,7 @@
 		</fieldset>
 
 		<fieldset>
-			<legend>{lang}wcf.acp.group.name{/lang}</legend>
+			<legend>{lang}wcf.acp.group.groupName{/lang}</legend>
 
 			{* TODO: add some javascript magic maybe *}
 			{foreach from=$languageCodes key=key item=language}
