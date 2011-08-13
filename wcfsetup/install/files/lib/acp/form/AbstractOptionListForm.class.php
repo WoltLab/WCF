@@ -7,6 +7,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\util\ClassUtil;
+use wcf\util\StringUtil;
 
 /**
  * This class provides default implementations for a list of options.
