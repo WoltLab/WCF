@@ -24,12 +24,13 @@ class ApplicationHandler extends SingletonFactory {
 	 * Initializes cache.
 	 */
 	protected function init() {
+		$cacheName = 'application-'.PACKAGE_ID;
 		CacheHandler::getInstance()->addResource(
-			'application-'.PACKAGE_ID,
-			WCF_DIR.'cache/cache.application-'.PACKAGE_ID.'.php',
-			'wcf\system\cache\builder\CacheBuilderApplication'
+			$cacheName,
+			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'wcf\system\cache\builder\ApplicationCacheBuilder'
 		);
-		$this->cache = CacheHandler::getInstance()->get('application-'.PACKAGE_ID);
+		$this->cache = CacheHandler::getInstance()->get($cacheName);
 	}
 	
 	/**

@@ -23,8 +23,13 @@ class PageMenu extends TreeMenu {
 		parent::loadCache();
 		
 		// get cache
-		CacheHandler::getInstance()->addResource('pageMenu-'.PACKAGE_ID, WCF_DIR.'cache/cache.pageMenu-'.PACKAGE_ID.'.php', 'wcf\system\cache\builder\CacheBuilderPageMenu');
-		$this->menuItems = CacheHandler::getInstance()->get('pageMenu-'.PACKAGE_ID);
+		$cacheName = 'pageMenu-'.PACKAGE_ID;
+		CacheHandler::getInstance()->addResource(
+			$cacheName,
+			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'wcf\system\cache\builder\CacheBuilderPageMenu'
+		);
+		$this->menuItems = CacheHandler::getInstance()->get($cacheName);
 	}
 	
 	/**

@@ -211,7 +211,7 @@ abstract class LanguageFactory {
 			CacheHandler::getInstance()->addResource(
 				'languages',
 				WCF_DIR.'cache/cache.languages.php',
-				'wcf\system\cache\builder\CacheBuilderLanguage'
+				'wcf\system\cache\builder\LanguageCacheBuilder'
 			);
 			
 			self::$cache = CacheHandler::getInstance()->get('languages');

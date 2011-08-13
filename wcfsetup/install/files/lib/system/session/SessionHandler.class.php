@@ -436,14 +436,15 @@ class SessionHandler extends SingletonFactory {
 		$groupsFileName = StringUtil::getHash($groups);
 		
 		// register cache resource
+		$cacheName = 'groups-'.PACKAGE_ID.'-'.$groups;
 		CacheHandler::getInstance()->addResource(
-			'groups-'.PACKAGE_ID.'-'.$groups,
-			WCF_DIR.'cache/cache.groups-'.PACKAGE_ID.'-'.$groupsFileName.'.php',
-			'wcf\system\cache\builder\CacheBuilderUserGroupPermission'
+			$cacheName,
+			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'wcf\system\cache\builder\UserGroupPermissionCacheBuilder'
 		);
 		
 		// get group data from cache
-		$this->groupData = CacheHandler::getInstance()->get('groups-'.PACKAGE_ID.'-'.$groups);
+		$this->groupData = CacheHandler::getInstance()->get($cacheName);
 		if (isset($this->groupData['groupIDs']) && $this->groupData['groupIDs'] != $groups) {
 			$this->groupData = array();
 		}

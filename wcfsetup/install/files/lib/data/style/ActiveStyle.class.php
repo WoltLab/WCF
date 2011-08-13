@@ -41,8 +41,13 @@ class ActiveStyle extends DatabaseObjectDecorator {
 		}
 		
 		// load icon cache
-		WCF::getCache()->addResource('icon-'.PACKAGE_ID.'-'.$this->styleID, WCF_DIR.'cache/cache.icon-'.PACKAGE_ID.'-'.$this->styleID.'.php', 'wcf\system\cache\builder\CacheBuilderIcon');
-		$this->iconCache = WCF::getCache()->get('icon-'.PACKAGE_ID.'-'.$this->styleID);
+		$cacheName = 'icon-'.PACKAGE_ID.'-'.$this->styleID;
+		WCF::getCache()->addResource(
+			$cacheName,
+			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'wcf\system\cache\builder\IconCacheBuilder'
+		);
+		$this->iconCache = WCF::getCache()->get($cacheName);
 	}
 	
 	/**

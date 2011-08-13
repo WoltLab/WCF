@@ -174,7 +174,11 @@ class User extends DatabaseObject {
 	 */
 	protected static function getUserOptionCache() {
 		$cacheName = 'user-option-'.PACKAGE_ID;
-		CacheHandler::getInstance()->addResource($cacheName, WCF_DIR.'cache/cache.'.$cacheName.'.php', 'wcf\system\cache\builder\CacheBuilderOption');
+		CacheHandler::getInstance()->addResource(
+			$cacheName,
+			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'wcf\system\cache\builder\OptionCacheBuilder'
+		);
 		self::$userOptions = CacheHandler::getInstance()->get($cacheName, 'options');
 	}
 	
