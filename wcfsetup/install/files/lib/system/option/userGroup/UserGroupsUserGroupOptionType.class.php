@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\option\group;
+namespace wcf\system\option\userGroup;
 use wcf\data\option\Option;
 use wcf\data\user\group\UserGroup;
 use wcf\system\option\AbstractOptionType;
@@ -7,16 +7,16 @@ use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
- * GroupsGroupOptionType generates a select-list of all available user groups.
+ * UserGroupsUserGroupOptionType generates a select-list of all available user groups.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.option.group
+ * @subpackage	system.option.userGroup
  * @category 	Community Framework
  */
-class GroupsGroupOptionType extends AbstractOptionType implements IGroupOptionType {
+class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserGroupOptionType {
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
@@ -66,7 +66,7 @@ class GroupsGroupOptionType extends AbstractOptionType implements IGroupOptionTy
 	}
 	
 	/**
-	 * @see wcf\system\option\group\IGroupOptionType::merge()
+	 * @see wcf\system\option\userGroup\IUserGroupOptionType::merge()
 	 */
 	public function merge(array $values) {
 		$result = array();

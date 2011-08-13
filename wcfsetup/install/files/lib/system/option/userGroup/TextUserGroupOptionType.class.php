@@ -1,21 +1,21 @@
 <?php
-namespace wcf\system\option\group;
-use wcf\system\option\TextareaOptionType;
+namespace wcf\system\option\userGroup;
+use wcf\system\option\TextOptionType;
 
 /**
- * TextareaGroupOptionType is an implementation of IGroupOptionType for text values.
+ * TextUserGroupOptionType is an implementation of IUserGroupOptionType for text values.
  * The merge of option values returns merge of all text values.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.option.group
+ * @subpackage	system.option.userGroup
  * @category 	Community Framework
  */
-class TextareaGroupOptionType extends TextareaOptionType implements IGroupOptionType {
+class TextUserGroupOptionType extends TextOptionType implements IUserGroupOptionType {
 	/**
-	 * @see wcf\system\option\group\IGroupOptionType::merge()
+	 * @see wcf\system\option\userGroup\IUserGroupOptionType::merge()
 	 */
 	public function merge(array $values) {
 		$result = '';
