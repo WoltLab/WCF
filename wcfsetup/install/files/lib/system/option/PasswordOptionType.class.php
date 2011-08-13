@@ -4,7 +4,7 @@ use wcf\data\option\Option;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 
 /**
- * OptionTypeText is an implementation of IOptionType for 'input type="password"' tags.
+ * PasswordOptionType is an implementation of IOptionType for 'input type="password"' tags.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH

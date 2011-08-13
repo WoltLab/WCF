@@ -4,8 +4,8 @@ use wcf\data\option\Option;
 use wcf\system\WCF;
 
 /**
- * OptionTypeSelect is an implementation of IOptionType for 'select' tags with a
- * text field for custom inputs.
+ * CustomselectOptionType is an implementation of IOptionType for 'select' tags with
+ * a text field for custom inputs.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
