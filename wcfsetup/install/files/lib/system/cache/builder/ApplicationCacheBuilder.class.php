@@ -4,7 +4,6 @@ use wcf\data\application\group\ApplicationGroup;
 use wcf\data\application;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
-use wcf\system\cache\ICacheBuilder;
 use wcf\system\WCF;
 
 /**

@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\system\cache\ICacheBuilder;
 use wcf\system\WCF;
 
 /**

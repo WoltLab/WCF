@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\spider\SpiderList;
-use wcf\system\cache\ICacheBuilder;
 
 /**
  * Caches the list of search engine spiders.

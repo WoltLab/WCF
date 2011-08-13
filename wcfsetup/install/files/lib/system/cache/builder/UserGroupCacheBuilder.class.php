@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\user\group\UserGroupList;
-use wcf\system\cache\ICacheBuilder;
 
 /**
  * Caches all user groups.

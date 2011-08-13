@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\template\listener\TemplateListenerList;
-use wcf\system\cache\ICacheBuilder;
 use wcf\system\package\PackageDependencyHandler;
 
 /**
