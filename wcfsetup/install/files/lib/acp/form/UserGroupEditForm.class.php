@@ -144,6 +144,8 @@ class UserGroupEditForm extends UserGroupAddForm {
 		$groupAction->executeAction();
 		$this->saved();
 		
+		UserGroupEditor::resetCache();
+		
 		// show success message
 		WCF::getTPL()->assign('success', true);
 	}

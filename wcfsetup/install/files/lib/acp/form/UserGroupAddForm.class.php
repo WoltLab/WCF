@@ -172,6 +172,8 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		$groupAction->executeAction();
 		$this->saved();
 		
+		UserGroupEditor::resetCache();
+		
 		// show success message
 		WCF::getTPL()->assign(array(
 			'success' => true

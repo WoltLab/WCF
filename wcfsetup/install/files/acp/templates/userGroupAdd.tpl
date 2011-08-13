@@ -66,7 +66,7 @@
 			<legend>{lang}wcf.acp.group.name{/lang}</legend>
 
 			{* TODO: add some javascript magic maybe *}
-			{foreach from=$languages key=key item=language}
+			{foreach from=$languageCodes key=key item=language}
 				<dl{if $errorType.groupName.$key|isset} class="formError"{/if}>
 					<dt><label for="groupName{@$language|ucfirst}">{lang}wcf.global.language.{@$language}{/lang}</label></dt>
 					<dd>
