@@ -17,28 +17,25 @@ use wcf\util\FileUtil;
  */
 abstract class TreeMenu extends SingletonFactory {
 	/**
-	 * List of visible menu items.
-	 * 
-	 * @var array
+	 * list of visible menu items
+	 * @var array<wcf\system\menu\ITreeMenuItem>
 	 */
 	public $menuItemList = array();
 	
 	/**
-	 * List of active menu items.
-	 * 
-	 * @var array
+	 * list of the names of the active menu items
+	 * @var array<string>
 	 */
 	public $activeMenuItems = array();
 	
 	/**
-	 * List of all menu items.
-	 * 
-	 * @var array
+	 * list of all menu items
+	 * @var array<wcf\system\menu\ITreeMenuItem>
 	 */
 	public $menuItems = null;
 
 	/**
-	 * @see SingletonFactory::init()
+	 * @see wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get menu items from cache
@@ -150,7 +147,7 @@ abstract class TreeMenu extends SingletonFactory {
 	protected function buildMenuItemList($parentMenuItem = '') {
 		if (!isset($this->menuItems[$parentMenuItem])) return;
 		
-		foreach ($this->menuItems[$parentMenuItem] as $key => $item) {
+		foreach ($this->menuItems[$parentMenuItem] as $item) {
 			$this->menuItemList[$item->menuItem] = $item;
 			$this->buildMenuItemList($item->menuItem);
 		}

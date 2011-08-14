@@ -43,14 +43,14 @@
 	<img src="{@RELATIVE_WCF_DIR}icon/{if $searchID}userSearch{else}users{/if}L.png" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.user.{if $searchID}search{else}list{/if}{/lang}</h1>
-		<h2>{if $searchID}{lang}wcf.acp.user.search.matches{/lang}{else}{lang}wcf.acp.user.list.count{/lang}{/if}</h2>
+		<h2>{if $searchID}{lang}wcf.acp.user.search.matches{/lang}{else}{lang}wcf.acp.user.list.count{/lang}{/if}</h2><!-- deprecated display -->
 	</hgroup>
 </header>
 
 {assign var=encodedURL value=$url|rawurlencode}
 {assign var=encodedAction value=$action|rawurlencode}
 <div class="contentHeader">
-	{pages print=true assign=pagesLinks link="index.php?page=UserList&pageNo=%d&searchID=$searchID&action=$encodedAction&sortField=$sortField&sortOrder=$sortOrder&packageID="|concat:SID_ARG_2ND_NOT_ENCODED}
+	{pages print=true assign=pagesLinks link="index.php?page=UserList&pageNo=%d&searchID=$searchID&action=$encodedAction&sortField=$sortField&sortOrder=$sortOrder"|concat:SID_ARG_2ND_NOT_ENCODED}
 	
 	<nav class="largeButtons">
 		<ul>
@@ -63,20 +63,19 @@
 	</nav>
 </div>
 
-<div class="subTabMenu">
-	<header class="containerHead">
+<div class="border boxTitle">
+	<nav class="menu">
 		<ul>
-			<li{if $action == ''} class="activeSubTabMenu"{/if}><a href="index.php?page=UserList{@SID_ARG_2ND}"><span>{lang}wcf.acp.user.list.all{/lang}</span></a></li>
+			<li{if $action == ''} class="active"{/if}><a href="index.php?page=UserList{@SID_ARG_2ND}"><span>{lang}wcf.acp.user.list.all{/lang}</span> <span class="badge" title="{lang}wcf.acp.user.list.count{/lang}">{#$items}</span></a></li>
 			{if $additionalUserListOptions|isset}{@$additionalUserListOptions}{/if}
 		</ul>
-	</header>
-</div>
-{if $users|count}
-	<div class="border">
-		<table class="tableList">
+	</nav>
+	
+	{if $users|count}
+		<table>
 			<thead>
 				<tr class="tableHead">
-					<th class="columnMark"><p><label class="emptyHead"><input type="checkbox" name="userMarkAll" /></label></p></th>
+					<th class="columnMark"><p class="emptyHead"><label><input type="checkbox" name="userMarkAll" /></label></p></th>
 					<th class="columnUserID{if $sortField == 'userID'} active{/if}" colspan="2"><p><a href="index.php?page=UserList&amp;searchID={@$searchID}&amp;action={@$encodedAction}&amp;pageNo={@$pageNo}&amp;sortField=userID&amp;sortOrder={if $sortField == 'userID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.user.userID{/lang}{if $sortField == 'userID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th class="columnUsername{if $sortField == 'username'} active{/if}"><p><a href="index.php?page=UserList&amp;searchID={@$searchID}&amp;action={@$encodedAction}&amp;pageNo={@$pageNo}&amp;sortField=username&amp;sortOrder={if $sortField == 'username' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.user.username{/lang}{if $sortField == 'username'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></dipv></th>
 					
@@ -87,6 +86,7 @@
 					{if $additionalColumnHeads|isset}{@$additionalColumnHeads}{/if}
 				</tr>
 			</thead>
+			
 			<tbody>
 			{foreach from=$users item=user}
 				<tr id="userRow{@$user->userID}">
@@ -102,12 +102,12 @@
 						</script>
 						
 						{if $user->editable}
-							<a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/editS.png" alt="" title="{lang}wcf.acp.user.edit{/lang}" /></a>
+							<a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/editS.png" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="balloonTooltip" /></a>
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/editDisabledS.png" alt="" title="{lang}wcf.acp.user.edit{/lang}" />
 						{/if}
 						{if $user->deletable}
-							<a onclick="return confirm('{lang}wcf.acp.user.delete.sure{/lang}')" href="index.php?action=UserDelete&amp;userID={@$user->userID}&amp;url={@$encodedURL}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.user.delete{/lang}" /></a>
+							<a onclick="return confirm('{lang}wcf.acp.user.delete.sure{/lang}')" href="index.php?action=UserDelete&amp;userID={@$user->userID}&amp;url={@$encodedURL}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="balloonTooltip" /></a>
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/deleteDisabledS.png" alt="" title="{lang}wcf.acp.user.delete{/lang}" />
 						{/if}
@@ -126,6 +126,7 @@
 			{/foreach}
 			</tbody>
 		</table>
+		
 	</div>
 	
 	<div class="contentFooter">
@@ -143,9 +144,7 @@
 	</div>
 {else}
 	<div class="border content">
-		<div class="container-1">
-			<p class="info">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
-		</div>
+		<p class="info">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
 	</div>
 {/if}
 

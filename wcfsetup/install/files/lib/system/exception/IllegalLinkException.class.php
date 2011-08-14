@@ -21,7 +21,7 @@ class IllegalLinkException extends NamedUserException {
 	}
 	
 	/**
-	 * @see NamedUserException::show();
+	 * @see wcf\system\exception\NamedUserException::show();
 	 */
 	public function show() {
 		@header('HTTP/1.0 404 Not Found');

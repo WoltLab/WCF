@@ -22,12 +22,46 @@ use wcf\util\FileUtil;
  * @category 	Community Framework
  */
 class Tar {
+	/**
+	 * name of the archive
+	 * @var	string
+	 */
 	protected $archiveName = '';
+	
+	/**
+	 * content of the tar file
+	 * @var	array
+	 */
 	protected $contentList = array();
+	
+	/**
+	 * indicates if tar file is opened
+	 * @var	boolean
+	 */
 	protected $opened = false;
+	
+	/**
+	 * indicates if file content has been read
+	 * @var	boolean
+	 */
 	protected $read = false;
+	
+	/**
+	 * file object
+	 * @var	wcf\system\io\File
+	 */
 	protected $file = null;
+	
+	/**
+	 * indicates if the tar file is (g)zipped
+	 * @var	boolean
+	 */
 	protected $isZipped = false;
+	
+	/**
+	 * file access mode
+	 * @var	string
+	 */
 	protected $mode = 'rb';
 	
 	/**
@@ -39,7 +73,7 @@ class Tar {
 	public function __construct($archiveName) {
 		$match = array();
 		if (!is_file($archiveName)) {
-			throw new SystemException("unable to find tar archive '".$archiveName."'", 11002);
+			throw new SystemException("unable to find tar archive '".$archiveName."'");
 		}
 		
 		$this->archiveName = $archiveName;
@@ -112,7 +146,7 @@ class Tar {
 		}
 		
 		if (!isset($this->contentList[$fileIndex])) {
-			throw new SystemException("Tar: could find file '".$fileIndex."' in archive", 11013);
+			throw new SystemException("Tar: could find file '".$fileIndex."' in archive");
 		}
 		return $this->contentList[$fileIndex];
 	}
@@ -220,7 +254,7 @@ class Tar {
 		
 		// check filesize
 		if (filesize($destination) != $header['size']) {
-			throw new SystemException("Could not untar file '".$header['filename']."' to '".$destination."'. Maybe disk quota exceeded in folder '".dirname($destination)."'.", 11015);
+			throw new SystemException("Could not untar file '".$header['filename']."' to '".$destination."'. Maybe disk quota exceeded in folder '".dirname($destination)."'.");
 		}
 		
 		return true;

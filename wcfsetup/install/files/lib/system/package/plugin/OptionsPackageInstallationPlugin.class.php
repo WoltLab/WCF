@@ -47,7 +47,7 @@ class OptionsPackageInstallationPlugin extends AbstractOptionPackageInstallation
 		// check if optionType exists
 		$className = 'wcf\system\option\OptionType'.ucfirst($optionType);
 		if (!class_exists($className)) {
-			throw new SystemException("unable to find class '".$className."'", 11001);
+			throw new SystemException("unable to find class '".$className."'");
 		}
 		
 		// collect additional tags and their values

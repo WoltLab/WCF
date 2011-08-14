@@ -57,10 +57,10 @@ class TemplatePluginFunctionSmallpages implements ITemplatePluginFunction {
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// needed params: link, pages
-		if (!isset($tagArgs['link'])) throw new SystemException("missing 'link' argument in pages tag", 12001);
+		if (!isset($tagArgs['link'])) throw new SystemException("missing 'link' argument in pages tag");
 		if (!isset($tagArgs['pages'])) {
 			if (($tagArgs['pages'] = $tplObj->get('pages')) === null) {
-				throw new SystemException("missing 'pages' argument in pages tag", 12001);
+				throw new SystemException("missing 'pages' argument in pages tag");
 			}
 		}
 		

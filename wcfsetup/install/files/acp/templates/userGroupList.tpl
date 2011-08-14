@@ -28,7 +28,7 @@
 {/if}
 
 <div class="contentHeader">
-	{pages print=true assign=pagesLinks link="index.php?page=UserGroupList&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&packageID="|concat:SID_ARG_2ND_NOT_ENCODED}
+	{pages print=true assign=pagesLinks link="index.php?page=UserGroupList&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"|concat:SID_ARG_2ND_NOT_ENCODED}
 	<nav class="largeButtons">
 		<ul>
 			<li><a href="index.php?form=UserGroupAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.group.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/userGroupAddM.png" alt="" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
@@ -38,11 +38,12 @@
 </div>
 
 {if $groups|count}
-	<div class="border titleBarPanel">
-		<div class="containerHead"><h3>{lang}wcf.acp.group.list.data{/lang}</h3></div>
-	</div>
-	<div class="border borderMarginRemove">
-		<table class="tableList">
+	<div class="border boxTitle">
+		<hgroup>
+			<h1>{lang}wcf.acp.group.list.count{/lang} <span class="badge" title="{lang}wcf.acp.group.list.count{/lang}">{#$items}</span></h1>
+		</hgroup>
+		
+		<table>
 			<thead>
 				<tr class="tableHead">
 					<th class="columnGroupID{if $sortField == 'groupID'} active{/if}" colspan="2"><p><a href="index.php?page=UserGroupList&amp;pageNo={@$pageNo}&amp;sortField=groupID&amp;sortOrder={if $sortField == 'groupID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.group.groupID{/lang}{if $sortField == 'groupID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
@@ -52,17 +53,18 @@
 					{if $additionalHeadColumns|isset}{@$additionalHeadColumns}{/if}
 				</tr>
 			</thead>
+			
 			<tbody>
 				{foreach from=$groups item=group}
 					<tr id="groupContainer{@$group->groupID}">
 						<td class="columnIcon">
 							{if $group->isEditable()}
-								<a href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/editS.png" alt="" title="{lang}wcf.acp.group.edit{/lang}" /></a>
+								<a href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/editS.png" alt="" title="{lang}wcf.acp.group.edit{/lang}" class="balloonTooltip" /></a>
 							{else}
 								<img src="{@RELATIVE_WCF_DIR}icon/editDisabledS.png" alt="" title="{lang}wcf.acp.group.edit{/lang}" />
 							{/if}
 							{if $group->isDeletable()}
-								<img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.group.delete{/lang}" id="groupDeleteIcon{@$group->groupID}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" id="groupDeleteIcon{@$group->groupID}" alt="" title="{lang}wcf.acp.group.delete{/lang}" class="balloonTooltip" />
 								<script type="text/javascript">
 									//<![CDATA[
 									removeGroup.registerObject({@$group->groupID}, {
@@ -85,6 +87,7 @@
 				{/foreach}
 			</tbody>
 		</table>
+		
 	</div>
 {/if}
 

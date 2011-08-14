@@ -5,6 +5,7 @@ use wcf\data\option\Option;
 use wcf\form\AbstractForm;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
 use wcf\util\ClassUtil;
 
 /**
@@ -115,7 +116,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 			
 			// validate class
 			if (!class_exists($className)) {
-				throw new SystemException("unable to find class '".$className."'", 11001);
+				throw new SystemException("unable to find class '".$className."'");
 			}
 			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\IOptionType')) {
 				throw new SystemException("'".$className."' should implement wcf\system\option\IOptionType");
@@ -366,7 +367,8 @@ abstract class AbstractOptionListForm extends AbstractForm {
 				// add option to list
 				$children[] = array(
 					'object' => $option,
-					'html' => $html
+					'html' => $html,
+					'cssClassName' => $this->getTypeObject($option->optionType)->getCSSClassName()
 				);
 				
 				$i++;

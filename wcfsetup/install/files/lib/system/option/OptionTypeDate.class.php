@@ -18,7 +18,7 @@ use wcf\util\DateUtil;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypeDate implements IOptionType, ISearchableUserOption {
+class OptionTypeDate extends AbstractOptionType implements ISearchableUserOption {
 	protected $yearRequired = true;
 	
 	/**

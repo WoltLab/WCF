@@ -241,7 +241,7 @@ class PackageInstallationScheduler {
 				}
 				
 				if ($response['httpStatusCode'] != 200) {
-					throw new SystemException(WCF::getLanguage()->get('wcf.acp.packageUpdate.error.downloadFailed', array('$package' => $package)) . ' ('.$response['httpStatusLine'].')', 18009);
+					throw new SystemException(WCF::getLanguage()->get('wcf.acp.packageUpdate.error.downloadFailed', array('$package' => $package)) . ' ('.$response['httpStatusLine'].')');
 				}
 				
 				// write content to tmp file

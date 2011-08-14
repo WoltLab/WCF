@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cronjob;
+use wcf\data\cronjob\Cronjob;
 use wcf\system\cleanup\CleanupHandler;
 
 /**
@@ -16,7 +17,7 @@ class CleanupListenerCronjob implements ICronjob {
 	/**
 	 * @see wcf\system\ICronjob::execute()
 	 */
-	public function execute(array $data) {
+	public function execute(Cronjob $cronjob) {
 		CleanupHandler::getInstance()->execute();
 	}
 }

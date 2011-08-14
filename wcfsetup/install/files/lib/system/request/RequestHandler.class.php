@@ -17,7 +17,7 @@ use wcf\system\SingletonFactory;
 class RequestHandler extends SingletonFactory {
 	/**
 	 * active request object
-	 * @var Request
+	 * @var wcf\system\request\Request
 	 */
 	protected $activeRequest = null;
 	
@@ -62,7 +62,7 @@ class RequestHandler extends SingletonFactory {
 		try {
 			// validate class name
 			if (!preg_match('~^[a-z0-9_]+$~i', $pageName)) {
-				throw new SystemException("Illegal class name '".$pageName."'", 11009);
+				throw new SystemException("Illegal class name '".$pageName."'");
 			}
 			
 			// find class
@@ -71,7 +71,7 @@ class RequestHandler extends SingletonFactory {
 				$className = 'wcf\\'.($isACP ? 'acp\\' : '').$pageType.'\\'.ucfirst($pageName).ucfirst($pageType);
 			}
 			if (!class_exists($className)) {
-				throw new SystemException("unable to find class '".$className."'", 11000);
+				throw new SystemException("unable to find class '".$className."'");
 			}
 			
 			// check whether the class is abstract
@@ -90,7 +90,7 @@ class RequestHandler extends SingletonFactory {
 	/**
 	 * Returns the active request object.
 	 *
-	 * @return Request
+	 * @return	wcf\system\request\Request
 	 */
 	public function getActiveRequest() {
 		return $this->activeRequest;

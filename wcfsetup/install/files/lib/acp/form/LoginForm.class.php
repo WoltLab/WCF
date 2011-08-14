@@ -2,7 +2,8 @@
 namespace wcf\acp\form;
 use wcf\data\user\User;
 use wcf\form\AbstractForm;
-use wcf\system\auth\UserAuth;
+use wcf\system\user\authentication\UserAuthenticationFactory;
+use wcf\system\user\authentication\EmailUserAuthentication;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -83,7 +84,26 @@ class LoginForm extends AbstractForm {
 	 * Validates the user access data.
 	 */
 	protected function validateUser() {
-		$this->user = UserAuth::getInstance()->loginManually($this->username, $this->password);
+		try {
+			$this->user = UserAuthenticationFactory::getUserAuthentication()->loginManually($this->username, $this->password);
+		}
+		catch (UserInputException $e) {
+			// TODO: create an option for the authentication with email address
+			if (true) {
+				if ($e->getField() == 'username') {
+					try {
+						$this->user = EmailUserAuthentication::getInstance()->loginManually($this->username, $this->password);
+					}
+					catch (UserInputException $e2) {
+						if ($e->getField() == 'username') throw $e;
+						throw $e2;
+					}
+				}
+			}
+			else {
+				throw $e;
+			}
+		}
 	}
 	
 	/**

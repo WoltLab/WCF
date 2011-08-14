@@ -100,7 +100,7 @@ class EventHandler extends SingletonFactory {
 								$object = null;
 								// instance action object
 								if (!class_exists($action['listenerClassName'])) {
-									throw new SystemException("Unable to find class '".$action['listenerClassName']."'", 11001);
+									throw new SystemException("Unable to find class '".$action['listenerClassName']."'");
 								}
 								if (!ClassUtil::isInstanceOf($action['listenerClassName'], 'wcf\system\event\IEventListener')) {
 									throw new SystemException("'".$action['listenerClassName']."' should implement interface wcf\system\event\IEventListener");
@@ -165,7 +165,7 @@ class EventHandler extends SingletonFactory {
 				else {
 					// instance action object
 					if (!class_exists($action['listenerClassName'])) {
-						throw new SystemException("Unable to find class '".$action['listenerClassName']."'", 11001);
+						throw new SystemException("Unable to find class '".$action['listenerClassName']."'");
 					}
 					if (!ClassUtil::isInstanceOf($action['listenerClassName'], 'wcf\system\event\IEventListener')) {
 						throw new SystemException("'".$action['listenerClassName']."' should implement interface wcf\system\event\IEventListener");

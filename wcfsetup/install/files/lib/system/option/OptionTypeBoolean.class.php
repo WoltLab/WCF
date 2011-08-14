@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypeBoolean implements IOptionType, ISearchableUserOption {
+class OptionTypeBoolean extends AbstractOptionType implements ISearchableUserOption {
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
@@ -32,16 +32,18 @@ class OptionTypeBoolean implements IOptionType, ISearchableUserOption {
 	}
 	
 	/**
-	 * @see wcf\system\option\IOptionType::validate()
-	 */
-	public function validate(Option $option, $newValue) {}
-	
-	/**
 	 * @see wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		if ($newValue !== null) return 1;
 		return 0;
+	}
+	
+	/**
+	 * @see wcf\system\option\IOptionType::getCSSClassName()
+	 */
+	public function getCSSClassName() {
+		return 'reversed';
 	}
 	
 	/**

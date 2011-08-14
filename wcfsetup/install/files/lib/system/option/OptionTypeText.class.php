@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypeText implements IOptionType, ISearchableUserOption {
+class OptionTypeText extends AbstractOptionType implements ISearchableUserOption {
 	/**
 	 * input type
 	 * @var string
@@ -34,18 +34,6 @@ class OptionTypeText implements IOptionType, ISearchableUserOption {
 			'value' => $value
 		));
 		return WCF::getTPL()->fetch('optionTypeText');
-	}
-	
-	/**
-	 * @see wcf\system\option\IOptionType::validate()
-	 */
-	public function validate(Option $option, $newValue) {}
-	
-	/**
-	 * @see wcf\system\option\IOptionType::getData()
-	 */
-	public function getData(Option $option, $newValue) {
-		return $newValue;
 	}
 	
 	/**

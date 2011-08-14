@@ -1,6 +1,6 @@
 {include file='header' templateName='userException'}
 
-<p class="error" id="errorMessage">
+<p id="errorMessage" class="error">
 	{@$message}
 </p>
 

@@ -510,7 +510,7 @@ WCF.Action.Proxy.prototype = {
 	 */
 	_init: function() {
 		if ($.isFunction(this.options.init)) {
-			this.options.init();
+			this.options.init(this);
 		}
 		
 		$('<div id="actionProxyLoading" style="display: none;">'+WCF.Language.get('wcf.global.loading')+'</div>').appendTo($('body'));
@@ -1506,6 +1506,134 @@ WCF.ToggleOptions.prototype = {
 			var $item = this._hideItems[$i];
 			
 			$('#' + $item).hide();
+		}
+	}
+};
+
+/**
+ * Holds userdata of the current user
+ */
+WCF.User = {
+	/**
+	 * UserID of the user
+	 * 
+	 * @var	integer
+	 */
+	userID: 0,
+	
+	/**
+	 * Username of the user
+	 * 
+	 * @var	string
+	 */
+	username: '',
+	
+	/**
+	 * Initializes userdata
+	 * 
+	 * @param	integer	userID
+	 * @param	string	username
+	 */
+	init: function(userID, username) {
+		this.userID = userID;
+		this.username = username;
+	}
+};
+
+/**
+ * Namespace for effect-related functions.
+ */
+WCF.Effect = {};
+
+/**
+ * Creates a smooth scroll effect.
+ */
+WCF.Effect.SmoothScroll = function() { this.init(); };
+WCF.Effect.SmoothScroll.prototype = {
+	/**
+	 * Initializes effect.
+	 */
+	init: function() {
+		$('a[href=#top],a[href=#bottom]').click(function() {
+			var $target = $(this.hash);
+			if ($target.length) {
+				var $targetOffset = $target.getOffsets().top;
+				if ($targetOffset > $(document).height() - $(window).height()) {
+					$targetOffset = $(document).height() - $(window).height();
+					if ($targetOffset < 0) $targetOffset = 0;
+				}
+				
+				$('html,body').animate({ scrollTop: $targetOffset }, 1200, function (x, t, b, c, d) {
+					return -c * ((t=t/d-1)*t*t*t - 1) + b;
+				});
+				
+				return false;
+			}
+		});
+	}
+};
+
+/**
+ * Creates a smooth scroll effect.
+ */
+WCF.Effect.BalloonTooltip = function() { this.init(); };
+WCF.Effect.BalloonTooltip.prototype = {
+	init: function() {
+		// create empty div
+		this.tooltip = $('<div style="position:absolute" id="balloonTooltip"></div>').appendTo(document.body).hide();
+	
+		// init elements
+		$('.balloonTooltip').each($.proxy(this._initTooltip, this));
+	},
+	
+	_initTooltip: function(index, element) {
+		$(element).hover(
+			$.proxy(this._mouseEnterHandler, this),	
+			$.proxy(this._mouseLeaveHandler, this)
+		);
+		
+		$(element).mousemove(
+			$.proxy(this._mouseMoveHandler, this)	
+		);
+	},
+	
+	_mouseEnterHandler: function(event) {
+		var $element = $(event.currentTarget);
+		if ($element.attr('title')) {
+			$element.data('tooltip', $element.attr('title'));
+			$element.attr('title', '');
+		
+			this.tooltip.text($element.data('tooltip')).fadeIn('fast');
+		}
+	},
+	
+	_mouseLeaveHandler: function(event) {
+		var $element = $(event.currentTarget);
+		if ($element.data('tooltip')) {
+			$element.attr('title', $element.data('tooltip'));
+			$element.data('tooltip', '');
+			
+			this.tooltip.hide();
+		}
+	},
+	
+	/**
+	 * Moves tooltip to cursor position.
+	 */
+	_mouseMoveHandler: function(event) {
+		if ($(document).width() - event.pageX < this.tooltip.getDimensions().width) {
+			this.tooltip.css({
+				top: (event.pageY) + "px",
+				right: ($(document).width() - event.pageX) + "px",
+				left: "auto"
+			});
+		}
+		else {
+			this.tooltip.css({
+				top: (event.pageY) + "px",
+				left: (event.pageX + 15) + "px",
+				right: "auto"
+			});
 		}
 	}
 };

@@ -20,37 +20,37 @@ use wcf\util\StringUtil;
 class AJAXProxyAction extends AbstractSecureAction {
 	/**
 	 * class name
-	 * @var string
+	 * @var	string
 	 */
 	protected $className = '';
 	
 	/**
 	 * action name
-	 * @var string
+	 * @var	string
 	 */
 	protected $actionName = '';
 	
 	/**
 	 * list of object ids
-	 * @var array<integer>
+	 * @var	array<integer>
 	 */
 	protected $objectIDs = array();
 	
 	/**
 	 * additional parameters
-	 * @var array<mixed>
+	 * @var	array<mixed>
 	 */
 	protected $parameters = array();
 	
 	/**
 	 * object action
-	 * @var wcf\data\IDatabaseObjectAction
+	 * @var	wcf\data\IDatabaseObjectAction
 	 */
 	protected $objectAction = null;
 	
 	/**
 	 * results of the executed action
-	 * @var mixed
+	 * @var	mixed
 	 */
 	protected $response = null;
 	
@@ -87,7 +87,7 @@ class AJAXProxyAction extends AbstractSecureAction {
 			if (is_array($_POST['objectIDs'])) $this->objectIDs = ArrayUtil::toIntegerArray($_POST['objectIDs']);
 		}
 		if (isset($_POST['parameters'])) {
-			if (is_array($_POST['parameters'])) $this->parameters = $parameters;
+			if (is_array($_POST['parameters'])) $this->parameters = $_POST['parameters'];
 		}
 	}
 	

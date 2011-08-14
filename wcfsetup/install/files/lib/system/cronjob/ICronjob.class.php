@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cronjob;
+use wcf\data\cronjob\Cronjob;
 
 /**
  * Any Cronjob should implement this interface.
@@ -13,13 +14,9 @@ namespace wcf\system\cronjob;
  */
 interface ICronjob {
 	/**
-	 * To be called when executing the cronjob; the $data array e.g. might be used for passing
-	 * meaningful values to the cronjob in order to reasonably avail multipleExecs.
+	 * Executes the cronjob.
 	 * 
-	 * @param	array		$data		This array should basically contain the dataset 
-	 * 						associated to the executed cronjob, particularly 
-	 * 						the date of the planned execution (the nextExec 
-	 * 						field).
+	 * @param	wcf\data\cronjob\Cronjob	$cronjob	Cronjob object with cronjob data
 	 */
-	public function execute(array $data);
+	public function execute(Cronjob $cronjob);
 }

@@ -23,10 +23,10 @@ class TemplatePluginCompilerAssign implements ITemplatePluginCompiler {
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		if (!isset($tagArgs['var'])) {
-			throw new SystemException($compiler->formatSyntaxError("missing 'var' argument in assign tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()), 12001);
+			throw new SystemException($compiler->formatSyntaxError("missing 'var' argument in assign tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
 		}
 		if (!isset($tagArgs['value'])) {
-			throw new SystemException($compiler->formatSyntaxError("missing 'value' argument in assign tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()), 12001);
+			throw new SystemException($compiler->formatSyntaxError("missing 'value' argument in assign tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
 		}
 				
 		return "<?php \$this->assign(".$tagArgs['var'].", ".$tagArgs['value']."); ?>";
@@ -36,6 +36,6 @@ class TemplatePluginCompilerAssign implements ITemplatePluginCompiler {
 	 * @see wcf\system\template\ITemplatePluginCompiler::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
-		throw new SystemException($compiler->formatSyntaxError("unknown tag {/assign}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()), 12003);
+		throw new SystemException($compiler->formatSyntaxError("unknown tag {/assign}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
 	}
 }

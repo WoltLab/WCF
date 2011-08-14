@@ -41,7 +41,7 @@ class SMTPMailSender extends MailSender {
 		$this->connection = new RemoteFile(MAIL_SMTP_HOST, MAIL_SMTP_PORT);
 		$this->getSMTPStatus();
 		if ($this->statusCode != 220) {
-			throw new SystemException($this->formatError("can not connect to '".MAIL_SMTP_HOST.":".MAIL_SMTP_PORT."'"), 17000);
+			throw new SystemException($this->formatError("can not connect to '".MAIL_SMTP_HOST.":".MAIL_SMTP_PORT."'"));
 		}
 		
 		// send ehlo
@@ -58,7 +58,7 @@ class SMTPMailSender extends MailSender {
 			$this->write('HELO '.$_SERVER['HTTP_HOST']);
 			$this->getSMTPStatus();
 			if ($this->statusCode != 250) {
-				throw new SystemException($this->formatError("can not connect to '".MAIL_SMTP_HOST.":".MAIL_SMTP_PORT."'"), 17000);
+				throw new SystemException($this->formatError("can not connect to '".MAIL_SMTP_HOST.":".MAIL_SMTP_PORT."'"));
 			}
 		}
 	}
@@ -83,25 +83,25 @@ class SMTPMailSender extends MailSender {
 		
 		// checks if auth is supported
 		if ($this->statusCode != 334) {
-			throw new SystemException($this->formatError("smtp mail server '".MAIL_SMTP_HOST.":".MAIL_SMTP_PORT."' does not support user authentication"), 17001);
+			throw new SystemException($this->formatError("smtp mail server '".MAIL_SMTP_HOST.":".MAIL_SMTP_PORT."' does not support user authentication"));
 		}
 		
 		// sending user information to smtp-server
 		$this->write(base64_encode(MAIL_SMTP_USER));
 		$this->getSMTPStatus();
 		if ($this->statusCode != 334) {
-			throw new SystemException($this->formatError("unknown smtp user '".MAIL_SMTP_USER."'"), 17002);
+			throw new SystemException($this->formatError("unknown smtp user '".MAIL_SMTP_USER."'"));
 		}
 			
 		$this->write(base64_encode(MAIL_SMTP_PASSWORD));
 		$this->getSMTPStatus();
 		if ($this->statusCode != 235) {
-			throw new SystemException($this->formatError("invalid password for smtp user '".MAIL_SMTP_USER."'"), 17003);
+			throw new SystemException($this->formatError("invalid password for smtp user '".MAIL_SMTP_USER."'"));
 		}
 	}
 	
 	/**
-	 * @see MailSender::sendMail()
+	 * @see wcf\system\mail\MailSender::sendMail()
 	 */
 	public function sendMail(Mail $mail) {
 		$this->recipients = array();
@@ -118,7 +118,7 @@ class SMTPMailSender extends MailSender {
 		$this->write('MAIL FROM:<'.$mail->getFrom().'>');
 		$this->getSMTPStatus();
 		if ($this->statusCode != 250) {
-			throw new SystemException($this->formatError("wrong from format '".$mail->getFrom()."'"), 17004);
+			throw new SystemException($this->formatError("wrong from format '".$mail->getFrom()."'"));
 		}
 		
 		// recipients
@@ -128,7 +128,7 @@ class SMTPMailSender extends MailSender {
 			$this->getSMTPStatus();
 			if ($this->statusCode != 250 && $this->statusCode != 251) {
 				if ($this->statusCode < 550) {
-					throw new SystemException($this->formatError("wrong recipient format '".$recipient."'"), 17004);
+					throw new SystemException($this->formatError("wrong recipient format '".$recipient."'"));
 				}
 				continue;
 			}
@@ -143,7 +143,7 @@ class SMTPMailSender extends MailSender {
 		$this->write("DATA");
 		$this->getSMTPStatus();
 		if ($this->statusCode != 354 && $this->statusCode != 250) {
-			throw new SystemException($this->formatError("smtp error"), 17005);
+			throw new SystemException($this->formatError("smtp error"));
 		}
 						
 		$header =
@@ -160,7 +160,7 @@ class SMTPMailSender extends MailSender {
 			
 		$this->getSMTPStatus();
 		if ($this->statusCode != 250) {
-			throw new SystemException($this->formatError("message sending failed"), 17005);
+			throw new SystemException($this->formatError("message sending failed"));
 		}
 	}
 	

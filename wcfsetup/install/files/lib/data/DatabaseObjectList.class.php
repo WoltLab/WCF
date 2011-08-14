@@ -154,6 +154,13 @@ abstract class DatabaseObjectList {
 			$statement->execute($this->getConditionBuilder()->getParameters());
 			$this->objects = $statement->fetchObjects($this->className);
 		}
+		
+		// use table index as array index
+		$objects = array();
+		foreach($this->objects as $object) {
+			$objects[$object->{$this->getDatabaseTableIndexName()}] = $object;
+		}
+		$this->objects = $objects;
 	}
 	
 	/**

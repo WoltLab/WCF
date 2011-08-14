@@ -257,7 +257,7 @@ class BasicFileUtil {
 			array_pop($tmpDir);
 			$dir = implode('/', $tmpDir);
 			
-			throw new SystemException('There is no access to the system temporary folder due to an unknown reason and no user specific temporary folder exists in '.INSTALL_SCRIPT_DIR.'! This is a misconfiguration of your webserver software! Please create a folder called '.$dir.' using your favorite ftp program, make it writable and then retry this installation.', 10000);
+			throw new SystemException('There is no access to the system temporary folder due to an unknown reason and no user specific temporary folder exists in '.INSTALL_SCRIPT_DIR.'! This is a misconfiguration of your webserver software! Please create a folder called '.$dir.' using your favorite ftp program, make it writable and then retry this installation.');
 		}
 		
 		return $dir;
@@ -293,7 +293,7 @@ class Tar {
 	public function __construct($archiveName) {
 		$match = array();
 		if (!is_file($archiveName)) {
-			throw new SystemException("unable to find tar archive '".$archiveName."'", 11002);
+			throw new SystemException("unable to find tar archive '".$archiveName."'");
 		}
 		
 		$this->archiveName = $archiveName;
@@ -366,7 +366,7 @@ class Tar {
 		}
 		
 		if (!isset($this->contentList[$fileIndex])) {
-			throw new SystemException("Tar: could find file '$index' in archive", 11013);
+			throw new SystemException("Tar: could find file '$index' in archive");
 		}
 		return $this->contentList[$fileIndex];
 	}
@@ -474,7 +474,7 @@ class Tar {
 		
 		// check filesize
 		if (filesize($destination) != $header['size']) {
-			throw new SystemException("Could not untar file '".$header['filename']."' to '".$destination."'. Maybe disk quota exceeded in folder '".dirname($destination)."'.", 11015);
+			throw new SystemException("Could not untar file '".$header['filename']."' to '".$destination."'. Maybe disk quota exceeded in folder '".dirname($destination)."'.");
 		}
 		
 		return true;
@@ -595,7 +595,7 @@ class File {
 		$this->filename = $filename;
 		$this->resource = fopen($filename, $mode);
 		if ($this->resource === false) {
-			throw new SystemException('Can not open file ' . $filename, 11012);
+			throw new SystemException('Can not open file ' . $filename);
 		}
 	}
 	
@@ -616,7 +616,7 @@ class File {
 	       		return call_user_func_array($function, $arguments);
 		}
 		else {
-			throw new SystemException('Can not call file method ' . $function, 11003);
+			throw new SystemException('Can not call file method ' . $function);
 		}
 	}
 }
@@ -636,11 +636,11 @@ class ZipFile extends File {
 	public function __construct($filename, $mode = 'wb') {
 		$this->filename = $filename;
 		if (!function_exists('gzopen')) {
-			throw new SystemException('Can not find functions of the zlib extension', 11004);
+			throw new SystemException('Can not find functions of the zlib extension');
 		}
 		$this->resource = @gzopen($filename, $mode);
 		if ($this->resource === false) {
-			throw new SystemException('Can not open file ' . $filename, 11012);
+			throw new SystemException('Can not open file ' . $filename);
 		}
 	}
 	
@@ -660,7 +660,7 @@ class ZipFile extends File {
 	       		return call_user_func_array($function, $arguments);
 		}
 		else {
-			throw new SystemException('Can not call method ' . $function, 11003);
+			throw new SystemException('Can not call method ' . $function);
 		}
 	}
 	
@@ -720,7 +720,7 @@ if (!file_exists(TMP_DIR . 'install/files/lib/system/WCFSetup.class.php')) {
 	$tar = new Tar(SETUP_FILE);
 	$contentList = $tar->getContentList();
 	if (!count($contentList)) {
-		throw new SystemException("Can not unpack 'WCFSetup.tar.gz'. File is probably broken.", 11016);
+		throw new SystemException("Can not unpack 'WCFSetup.tar.gz'. File is probably broken.");
 	}
 	
 	foreach ($contentList as $file) {
@@ -748,7 +748,7 @@ if (!file_exists(TMP_DIR . 'install/files/lib/system/WCFSetup.class.php')) {
 }
 
 if (!class_exists('wcf\system\WCFSetup')) {
-	throw new SystemException("Can not find class 'WCFSetup'", 11006);
+	throw new SystemException("Can not find class 'WCFSetup'");
 }
 
 // start setup

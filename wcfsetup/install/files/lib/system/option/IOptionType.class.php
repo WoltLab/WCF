@@ -39,4 +39,11 @@ interface IOptionType {
 	 * @return	string
 	 */
 	public function getData(Option $option, $newValue);
+	
+	/**
+	 * Returns css class name for this form element. 
+	 * 
+	 * @return	string
+	 */
+	public function getCSSClassName();
 }

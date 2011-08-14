@@ -33,7 +33,7 @@ class TemplatePluginFunctionCycle implements ITemplatePluginFunction {
 		// get values
 		if (!isset($tagArgs['values']) ) {
 			if (!isset($this->cycles[$name]['values'])) {
-				throw new SystemException("missing 'values' argument in cycle tag", 12001);
+				throw new SystemException("missing 'values' argument in cycle tag");
 			}
 		}
 		else {

@@ -132,7 +132,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 				$row = $statement->fetchArray();
 				
 				if (!$row['count']) {
-					throw new SystemException("Unable to find parent 'option category' with name '".$data['parentCategoryName']."' for category with name '".$data['categoryName']."'.", 13011);
+					throw new SystemException("Unable to find parent 'option category' with name '".$data['parentCategoryName']."' for category with name '".$data['categoryName']."'.");
 				}
 			}
 			
@@ -160,7 +160,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			if (!preg_match("/^[\w-\.]+$/", $data['name'])) {
 				$matches = array();
 				preg_match_all("/(\W)/", $data['name'], $matches);
-				throw new SystemException("The user option '".$data['name']."' has at least one non-alphanumeric character (underscore is permitted): (".implode("), ( ", $matches[1]).").", 13024); 
+				throw new SystemException("The user option '".$data['name']."' has at least one non-alphanumeric character (underscore is permitted): (".implode("), ( ", $matches[1]).")."); 
 			}
 			
 			$this->saveOption($data, $data['categoryname']);

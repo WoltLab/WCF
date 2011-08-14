@@ -163,7 +163,7 @@ abstract class CronjobUtil {
 	 * command will be run when either field matches the current time. -- crontab(5)
 	 * 
 	 * @param	array		$values
-	 * @see		CronjobUtil::getDom()
+	 * @see		wcf\util\CronjobUtil::getDom()
 	 */
 	protected static function calculateDay(array &$values) {
 		$addAnDay = self::calculateHour($values, self::$timeBase);

@@ -30,7 +30,7 @@ class LanguageServerProcessor extends SingletonFactory {
 	 * Imports language variables for a language from given language servers.
 	 * 
 	 * @param	wcf\data\language\Language	$language
-	 * @param	array	$languageServers
+	 * @param	array<wcf\data\language\server\LanguageServer>	$languageServers
 	 */
 	public function import(Language $language, array $languageServers) {
 		if (!count($languageServers)) return;
@@ -47,7 +47,7 @@ class LanguageServerProcessor extends SingletonFactory {
 	/**
 	 * Returns list of installed packages and their associated version.
 	 * 
-	 * @return	array
+	 * @return	array<string>
 	 */
 	protected function getPackageList() {
 		$sql = "SELECT	package, packageVersion
@@ -66,8 +66,8 @@ class LanguageServerProcessor extends SingletonFactory {
 	/**
 	 * Downloads and imports a language file from a language server.
 	 * 
-	 * @param	string	$location
-	 * @param	array	$packageList
+	 * @param	string		$location
+	 * @param	array<string>	$packageList
 	 */	
 	protected function importLanguageFile($location, array $packageList) {
 		// get proxy
@@ -85,7 +85,7 @@ class LanguageServerProcessor extends SingletonFactory {
 		
 		$remoteFile = new RemoteFile(($parsedURL['scheme'] == 'https' ? 'ssl://' : '').$host, $port, 30, $options); // the file to read.
 		if (!isset($remoteFile)) {
-			throw new SystemException("cannot connect to http host '".$host."'", 14000);
+			throw new SystemException("cannot connect to http host '".$host."'");
 		}
 		
 		// build and send the http request
@@ -161,7 +161,7 @@ class LanguageServerProcessor extends SingletonFactory {
 	/**
 	 * Parses XML response from language server.
 	 * 
-	 * @param	string	$xmlResponse
+	 * @param	string		$xmlResponse
 	 */
 	protected function parseResponse($xmlResponse) {
 		// parse xml
@@ -211,8 +211,8 @@ class LanguageServerProcessor extends SingletonFactory {
 	/**
 	 * Imports language variables and categories.
 	 * 
-	 * @param	array	$variables
-	 * @param	array	$packages
+	 * @param	array		$variables
+	 * @param	array<integer>	$packages
 	 */
 	protected function importVariables(array $variables, array $packages) {
 		$categories = $this->importCategories($variables);
@@ -291,7 +291,7 @@ class LanguageServerProcessor extends SingletonFactory {
 	/**
 	 * Imports new langage categories.
 	 * 
-	 * @param	array	$variables
+	 * @param	array		$variables
 	 * @return	array
 	 */	
 	protected function importCategories(array $variables) {

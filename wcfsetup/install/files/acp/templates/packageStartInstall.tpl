@@ -29,73 +29,56 @@
 
 <form method="post" action="index.php?form=PackageStartInstall" enctype="multipart/form-data">
 	<div class="border content">
-		<div class="container-1">
-			<fieldset>
-				<legend>{lang}wcf.acp.package.startInstall.source{/lang}</legend>
+		
+		<fieldset>
+			<legend>{lang}wcf.acp.package.startInstall.source{/lang}</legend>
+		
+			<dl id="uploadPackageDiv"{if $errorField == 'uploadPackage'} class="formError"{/if}>
+				<dt><label for="uploadPackage">{lang}wcf.acp.package.startInstall.source.upload{/lang}</label></dt>
+				<dd>
+					<input type="file" id="uploadPackage" name="uploadPackage" value="" />
+					{if $errorField == 'uploadPackage'}
+						<small class="innerError">
+							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType == 'noValidPackage'}{lang}wcf.acp.package.startInstall.error.noValidPackage{/lang}{/if}
+							{if $errorType == 'noValidUpdate'}{lang}wcf.acp.package.startInstall.error.noValidUpdate{/lang}{/if}
+							{if $errorType == 'noValidInstall'}{lang}wcf.acp.package.startInstall.error.noValidInstall{/lang}{/if}
+							{if $errorType == 'uploadFailed'}{lang}wcf.acp.package.startInstall.error.uploadFailed{/lang}{/if}
+							{if $errorType == 'uniqueAlreadyInstalled'}{lang}wcf.acp.package.startInstall.error.uniqueAlreadyInstalled{/lang}{/if}
+							{if $errorType == 'phpRequirements'}<pre>{$phpRequirements|print_r}</pre>{/if}
+						</small>
+					{/if}
+					<small id="uploadPackageHelpMessage">{lang}wcf.acp.package.startInstall.source.upload.description{/lang}</small>
+				</dd>
+			</dl>
 			
-				<div id="uploadPackageDiv" class="formElement{if $errorField == 'uploadPackage'} formError{/if}">
-					<div class="formFieldLabel">
-						<label for="uploadPackage">{lang}wcf.acp.package.startInstall.source.upload{/lang}</label>
-					</div>
-					<div class="formField">
-						<input type="file" id="uploadPackage" name="uploadPackage" value="" />
-						{if $errorField == 'uploadPackage'}
-							<p class="innerError">
-								{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-								{if $errorType == 'noValidPackage'}{lang}wcf.acp.package.startInstall.error.noValidPackage{/lang}{/if}
-								{if $errorType == 'noValidUpdate'}{lang}wcf.acp.package.startInstall.error.noValidUpdate{/lang}{/if}
-								{if $errorType == 'noValidInstall'}{lang}wcf.acp.package.startInstall.error.noValidInstall{/lang}{/if}
-								{if $errorType == 'uploadFailed'}{lang}wcf.acp.package.startInstall.error.uploadFailed{/lang}{/if}
-								{if $errorType == 'uniqueAlreadyInstalled'}{lang}wcf.acp.package.startInstall.error.uniqueAlreadyInstalled{/lang}{/if}
-								{if $errorType == 'phpRequirements'}<pre>{$phpRequirements|print_r}</pre>{/if}
-							</p>
-						{/if}
-					</div>
-					<div id="uploadPackageHelpMessage" class="formFieldDesc hidden">
-						<p>{lang}wcf.acp.package.startInstall.source.upload.description{/lang}</p>
-					</div>
-				</div>
-				<script type="text/javascript">//<![CDATA[
-					inlineHelp.register('uploadPackage');
-				//]]></script>
-				
-				<div id="downloadPackageDiv" class="formElement{if $errorField == 'downloadPackage'} formError{/if}">
-					<div class="formFieldLabel">
-						<label for="downloadPackage">{lang}wcf.acp.package.startInstall.source.download{/lang}</label>
-					</div>
-					<div class="formField">
-						<input type="text" id="downloadPackage" name="downloadPackage" value="" class="inputText" />
-						{if $errorField == 'downloadPackage'}
-							<p class="innerError">
-								{if $errorType == 'notFound'}{lang}wcf.acp.package.startInstall.error.notFound{/lang}{/if}
-								{if $errorType == 'noValidPackage'}{lang}wcf.acp.package.startInstall.error.noValidPackage{/lang}{/if}
-								{if $errorType == 'noValidUpdate'}{lang}wcf.acp.package.startInstall.error.noValidUpdate{/lang}{/if}
-								{if $errorType == 'noValidInstall'}{lang}wcf.acp.package.startInstall.error.noValidInstall{/lang}{/if}
-								{if $errorType == 'uniqueAlreadyInstalled'}{lang}wcf.acp.package.startInstall.error.uniqueAlreadyInstalled{/lang}{/if}
-							</p>
-						{/if}
-					</div>
-					<div id="downloadPackageHelpMessage" class="formFieldDesc hidden">
-						<p>{lang}wcf.acp.package.startInstall.source.download.description{/lang}</p>
-					</div>
-				</div>
-				<script type="text/javascript">//<![CDATA[
-					inlineHelp.register('downloadPackage');
-				//]]></script>
-				
-			</fieldset>
-			
-			{if $additionalFields|isset}{@$additionalFields}{/if}
-		</div>
+			<dl id="downloadPackageDiv"{if $errorField == 'downloadPackage'} class="formError"{/if}>
+				<dt><label for="downloadPackage">{lang}wcf.acp.package.startInstall.source.download{/lang}</label></dt>
+				<dd>
+					<input type="text" id="downloadPackage" name="downloadPackage" value="" class="long" />
+					{if $errorField == 'downloadPackage'}
+						<small class="innerError">
+							{if $errorType == 'notFound'}{lang}wcf.acp.package.startInstall.error.notFound{/lang}{/if}
+							{if $errorType == 'noValidPackage'}{lang}wcf.acp.package.startInstall.error.noValidPackage{/lang}{/if}
+							{if $errorType == 'noValidUpdate'}{lang}wcf.acp.package.startInstall.error.noValidUpdate{/lang}{/if}
+							{if $errorType == 'noValidInstall'}{lang}wcf.acp.package.startInstall.error.noValidInstall{/lang}{/if}
+							{if $errorType == 'uniqueAlreadyInstalled'}{lang}wcf.acp.package.startInstall.error.uniqueAlreadyInstalled{/lang}{/if}
+						</small>
+					{/if}
+					<small id="downloadPackageHelpMessage">{lang}wcf.acp.package.startInstall.source.download.description{/lang}</small>
+				</dd>
+			</dl>
+		</fieldset>
+		
+		{if $additionalFields|isset}{@$additionalFields}{/if}
 	</div>
 
 	<div class="formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		
 		{@SID_INPUT_TAG}
  		<input type="hidden" name="action" value="{$action}" />
- 		{if $packageID != 0}<input type="hidden" name="activePackageID" value="{@$packageID}" />{/if}
+ 		{if $packageID != 0}<input type="hidden" name="packageID" value="{@$packageID}" />{/if}
 	</div>
 </form>
 

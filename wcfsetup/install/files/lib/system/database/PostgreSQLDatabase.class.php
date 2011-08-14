@@ -15,12 +15,12 @@ use wcf\util\StringStack;
  */
 class PostgreSQLDatabase extends Database {
 	/**
-	 * @see Database::$editorClassName
+	 * @see wcf\system\database\Database::$editorClassName
 	 */
 	protected $editorClassName = 'wcf\system\database\editor\PostgreSQLDatabaseEditor';
 	
 	/**
-	 * @see Database::connect()
+	 * @see wcf\system\database\Database::connect()
 	 */
 	public function connect() {
 		if (!$this->port) $this->port = 5432; // postgresql default port
@@ -51,14 +51,14 @@ class PostgreSQLDatabase extends Database {
 	}
 	
 	/**
-	 * @see Database::isSupported()
+	 * @see wcf\system\database\Database::isSupported()
 	 */
 	public static function isSupported() {
 		return (extension_loaded('PDO') && extension_loaded('pdo_pgsql'));
 	}
 	
 	/**
-	 * @see	Database::prepareStatement()
+	 * @see	wcf\system\database\Database::prepareStatement()
 	 */
 	public function prepareStatement($statement, $limit = 0, $offset = 0) {
 		$statement = self::fixQuery($statement);
@@ -66,7 +66,7 @@ class PostgreSQLDatabase extends Database {
 	}
 
 	/**
-	 * @see Database::getInsertID()
+	 * @see wcf\system\database\Database::getInsertID()
 	 */
 	public function getInsertID($table, $field) {
 		try {
@@ -102,7 +102,7 @@ class PostgreSQLDatabase extends Database {
 	}
 	
 	/**
-	 * @see Database::escapeString()
+	 * @see wcf\system\database\Database::escapeString()
 	 */
 	public function escapeString($string) {
 		$string = str_replace("\x00", "\\x00", $string); // escape nul bytes

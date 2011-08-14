@@ -1,12 +1,13 @@
 <?php
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\log\CronjobLogEditor;
-use wcf\data\cronjob\Cronjob AS CronjobObj;
+use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\system\cache\CacheHandler;
-use wcf\system\database\condition\PreparedStatementConditionBuilder;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\package\PackageDependencyHandler;
+use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
 
@@ -20,33 +21,45 @@ use wcf\util\ClassUtil;
  * @subpackage	system.cronjob
  * @category 	Community Framework
  */
-abstract class CronjobScheduler {
+class CronjobScheduler extends SingletonFactory {
 	/**
-	 * list of outstanding cronjobs
-	 * 
-	 * @var	array<CronjobEditor>
+	 * cached times of the next and after next cronjob execution
+	 * @var	array<integer>
 	 */
-	protected static $cronjobs = array();
+	protected $cache = array();
+	
+	/**
+	 * list of editors for outstanding cronjobs
+	 * @var	array<wcf\data\cronjob\CronjobEditor>
+	 */
+	protected $cronjobEditors = array();
+	
+	/**
+	 * @see	wcf\system\SingletonFactory::init()
+	 */
+	protected function init() {
+		$this->loadCache();
+	}
 	
 	/**
 	 * Executes outstanding cronjobs.
 	 */
-	public static function execute() {
-		$cache = self::getCache();
-		
+	public function executeCronjobs() {
 		// break if there are no outstanding cronjobs
-		if ($cache['nextExec'] > TIME_NOW && $cache['afterNextExec'] > TIME_NOW) return;
+		if ($this->cache['nextExec'] > TIME_NOW && $this->cache['afterNextExec'] > TIME_NOW) {
+			return;
+		}
 		
 		// get outstanding cronjobs
-		self::loadCronjobs();
+		$this->loadCronjobs();
 		
 		// clear cache
 		self::clearCache();
 		
-		foreach (self::$cronjobs as $cronjob) {
+		foreach ($this->cronjobEditors as $cronjobEditor) {
 			// mark cronjob as being executed
 			$cronjobEditor->update(array(
-				'state' => CronjobObj::EXECUTING
+				'state' => Cronjob::EXECUTING
 			));
 			
 			// create log entry
@@ -57,10 +70,10 @@ abstract class CronjobScheduler {
 			$logEditor = new CronjobLogEditor($log);
 			
 			try {
-				self::executeCronjob($cronjob, $logEditor);
+				$this->executeCronjob($cronjobEditor, $logEditor);
 			}
 			catch (SystemException $e) {
-				self::logResult($logEditor, $e);
+				$this->logResult($logEditor, $e);
 			}
 			
 			// get time of next execution
@@ -69,43 +82,42 @@ abstract class CronjobScheduler {
 			
 			// mark cronjob as done
 			$cronjobEditor->update(array(
+				'lastExec' => TIME_NOW,
 				'afterNextExec' => $afterNextExec,
 				'failCount' => 0,
 				'nextExec' => $nextExec,
-				'state' => CronjobObj::READY
+				'state' => Cronjob::READY
 			));
 		}
 	}
 	
 	/**
-	 * Loads and executes outstanding cronjobs.
+	 * Loads outstanding cronjobs.
 	 */
-	protected static function loadCronjobs() {
+	protected function loadCronjobs() {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("cronjob.packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
 		$conditions->add("(cronjob.nextExec <= ? OR cronjob.afterNextExec <= ?)", array(TIME_NOW, TIME_NOW));
 		$conditions->add("cronjob.active = ?", array(1));
 		$conditions->add("cronjob.failCount < ?", array(3));
-		$conditions->add("cronjob.state = ?", array(CronjobObj::READY));
+		$conditions->add("cronjob.state = ?", array(Cronjob::READY));
 		
-		$sql = "SELECT		cronjob.*, package.packageDir
+		$sql = "SELECT		cronjob.*
 			FROM		wcf".WCF_N."_cronjob cronjob
-			LEFT JOIN	wcf".WCF_N."_package package
-			ON		(package.packageID = cronjob.packageID)
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
-			$cronjob = new CronjobObj(null, $row);
+			$cronjob = new Cronjob(null, $row);
 			$cronjobEditor = new CronjobEditor($cronjob);
 			$executeCronjob = true;
 			
 			$data = array(
-				'state' => CronjobObj::PENDING
+				'state' => Cronjob::PENDING
 			);
 			
 			// reset cronjob if it got stuck before and afterNextExec is in the past
-			if ($cronjobEditor->afterNextExec <= TIME_NOW && $cronjobEditor->state == CronjobObj::EXECUTING) {
+			if ($cronjobEditor->afterNextExec <= TIME_NOW && $cronjobEditor->state == Cronjob::EXECUTING) {
 				$failCount = $cronjobEditor->failCount + 1;
 				$data['failCount'] = $failCount;
 				
@@ -116,7 +128,7 @@ abstract class CronjobScheduler {
 				}
 			}
 			// ignore cronjobs which seem to be running
-			else if ($cronjobEditor->nextExec <= TIME_NOW && $cronjobEditor->state != CronjobObj::READY) {
+			else if ($cronjobEditor->nextExec <= TIME_NOW && $cronjobEditor->state != Cronjob::READY) {
 				$executeCronjob = false;
 			}
 			
@@ -124,7 +136,7 @@ abstract class CronjobScheduler {
 			$cronjobEditor->update($data);
 			
 			if ($executeCronjob) {
-				self::$cronjobs[] = $cronjobEditor;
+				$this->cronjobEditors[] = $cronjobEditor;
 			}
 		}
 	}
@@ -132,41 +144,41 @@ abstract class CronjobScheduler {
 	/**
 	 * Executes a cronjob.
 	 * 
-	 * @param	CronjobEditor		$cronjobEditor
-	 * @param	CronjobLogEditor	$logEditor
+	 * @param	wcf\data\cronjob\CronjobEditor		$cronjobEditor
+	 * @param	wcf\data\cronjob\log\CronjobLogEditor	$logEditor
 	 */
-	protected static function executeCronjob(CronjobEditor $cronjobEditor, CronjobLogEditor $logEditor) {
+	protected function executeCronjob(CronjobEditor $cronjobEditor, CronjobLogEditor $logEditor) {
 		$className = $cronjobEditor->className;
 		if (!class_exists($className)) {
-			throw new SystemException("unable to find class '".$className."'", 11001);
+			throw new SystemException("unable to find class '".$className."'");
 		}
 		
 		// verify class signature
 		if (!(ClassUtil::isInstanceOf($className, 'wcf\system\cronjob\ICronjob'))) {
-			throw new SystemException("class '".$className."' does not implement the interface 'wcf\system\cronjob\ICronjob'", 11010);
+			throw new SystemException("class '".$className."' does not implement the interface 'wcf\system\cronjob\ICronjob'");
 		}
 		
 		// execute cronjob
 		$cronjob = new $className();
-		$cronjob->execute();
+		$cronjob->execute($cronjobEditor->getDecoratedObject());
 		
-		self::logResult($logEditor);
+		$this->logResult($logEditor);
 	}
 	
 	/**
 	 * Logs cronjob exec success or failure.
 	 * 
-	 * @param	CronjobLogEditor	$log
-	 * @param	SystemException		$e
+	 * @param	wcf\data\cronjob\CronjobEditor		$logEditor
+	 * @param	wcf\system\exception\SystemException	$exception
 	 */
-	protected static function logResult(CronjobLogEditor $log, SystemException $e = null) {
+	protected function logResult(CronjobLogEditor $logEditor, SystemException $exception = null) {
 		if ($exception !== null) {
 			$errString = implode("\n", array(
-				$e->getMessage(),
-				$e->getCode(),
-				$e->getFile(),
-				$e->getLine(),
-				$e->getTraceAsString()
+				$exception->getMessage(),
+				$exception->getCode(),
+				$exception->getFile(),
+				$exception->getLine(),
+				$exception->getTraceAsString()
 			));
 			
 			$logEditor->update(array(
@@ -182,22 +194,18 @@ abstract class CronjobScheduler {
 	}
 	
 	/**
-	 * Returns cached cronjob data.
-	 * 
-	 * @return	array
+	 * Loads the cached data for cronjob execution.
 	 */
-	protected static function getCache() {
+	protected function loadCache() {
 		$cacheName = 'cronjobs-'.PACKAGE_ID;
 		CacheHandler::getInstance()->addResource($cacheName, WCF_DIR.'cache/cache.'.$cacheName.'.php', 'wcf\system\cache\builder\CacheBuilderCronjob');
-		
-		return CacheHandler::getInstance()->get($cacheName);
+		$this->cache = CacheHandler::getInstance()->get($cacheName);
 	}
 	
 	/**
-	 * Clears cronjob cache.
+	 * Clears the cronjob data cache.
 	 */
 	public static function clearCache() {
-		// clear cache
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.cronjobs-'.PACKAGE_ID.'php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.cronjobs-'.PACKAGE_ID.'.php');
 	}
 }

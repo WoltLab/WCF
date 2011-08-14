@@ -16,15 +16,13 @@ use wcf\util\StringUtil;
  */
 class CacheHandler extends SingletonFactory {
 	/**
-	 * Registered cache resources.
-	 * 
+	 * registered cache resources
 	 * @var array
 	 */
 	protected $cacheResources = array();
 	
 	/**
 	 * cache source object
-	 * 
 	 * @var	wcf\system\cache\source\ICacheSource
 	 */
 	protected $cacheSource = null;
@@ -73,7 +71,7 @@ class CacheHandler extends SingletonFactory {
 	 */
 	public function clearResource($cache) {
 		if (!isset($this->cacheResources[$cache])) {
-			throw new SystemException("cache resource '".$cache."' does not exist", 11005);
+			throw new SystemException("cache resource '".$cache."' does not exist");
 		}
 		
 		$this->getCacheSource()->delete($this->cacheResources[$cache]);
@@ -98,7 +96,7 @@ class CacheHandler extends SingletonFactory {
 	 */
 	public function get($cache, $variable = '') {
 		if (!isset($this->cacheResources[$cache])) {
-			throw new SystemException("unknown cache resource '".$cache."'", 11005);
+			throw new SystemException("unknown cache resource '".$cache."'");
 		}
 		
 		// try to get value
@@ -110,14 +108,14 @@ class CacheHandler extends SingletonFactory {
 			// try to get value again
 			$value = $this->getCacheSource()->get($this->cacheResources[$cache]);
 			if ($value === null) {
-				throw new SystemException("cache resource '".$cache."' does not exist", 11005);
+				throw new SystemException("cache resource '".$cache."' does not exist");
 			}
 		}
 		
 		// return value
 		if (!empty($variable)) {
 			if (!isset($value[$variable])) {
-				throw new SystemException("variable '".$variable."' does not exist in cache resource '".$cache."'", 11008);
+				throw new SystemException("variable '".$variable."' does not exist in cache resource '".$cache."'");
 			}
 			
 			return $value[$variable];
@@ -136,7 +134,7 @@ class CacheHandler extends SingletonFactory {
 	public function rebuild($cacheResource) {
 		// instance cache class
 		if (!class_exists($cacheResource['className'])) {
-			throw new SystemException("Unable to find class '".$cacheResource['className']."'", 11001);
+			throw new SystemException("Unable to find class '".$cacheResource['className']."'");
 		}
 		
 		// update file last modified time to avoid multiple users rebuilding cache at the same time
@@ -157,7 +155,7 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * Returns the cache source object.
 	 *
-	 * @return	CacheSource
+	 * @return	wcf\system\cache\source\ICacheSource
 	 */
 	public function getCacheSource() {
 		return $this->cacheSource;

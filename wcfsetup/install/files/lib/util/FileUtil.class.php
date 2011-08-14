@@ -374,7 +374,7 @@ class FileUtil {
 			if (!isset($remoteFile)) {
 				$localFile->close();
 				unlink($newFileName);
-				throw new SystemException("cannot connect to http host '".$host."'", 14000);
+				throw new SystemException("cannot connect to http host '".$host."'");
 			}
 			// build and send the http request.
 			$request = "GET ".$path.(!empty($parsedUrl['query']) ? '?'.$parsedUrl['query'] : '')." HTTP/1.0\r\n";
@@ -405,7 +405,7 @@ class FileUtil {
 					if ($error !== false) {
 						$localFile->close();
 						unlink($newFileName);						
-						throw new SystemException("file ".$path." not found at host '".$host."'", 14001);
+						throw new SystemException("file ".$path." not found at host '".$host."'");
 					}
 					// write to the target system.
 					$localFile->write($readResponse[count($readResponse) - 1]);

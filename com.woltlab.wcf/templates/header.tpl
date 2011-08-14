@@ -1,5 +1,10 @@
-<a id="top" name="top"></a>
-<div id="page">
-	<div id="header" class="border">
-		{include file=headerMenu}
-	</div>
+<a id="top"></a>
+<header class="pageHeader">
+	{include file=headerMenu}
+	
+	{include file='breadcrumbs' sandbox=false}
+</header>
+
+<div id="main" class="main">
+	<div>
+		<section id="content">

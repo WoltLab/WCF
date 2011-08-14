@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>Log-In</title> 
+	<desc>Log-In Icon</desc> 
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2011 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		
+	</defs>
+	
+	<g id="IconLogin">
+		<path id="Lower" class="Lower" style="fill-rule: evenodd; clip-rule: evenodd; fill: #fff;" d="M13,2H2C1.4477539,2,1,2.4477539,1,3v11
+			c0,0.5527344,0.4477539,1,1,1h11c0.5527344,0,1-0.4472656,1-1V3C14,2.4477539,13.5527344,2,13,2z M5,12H3v-1.5h2V12z M13,10
+			c0,0.6875-0.3515625,1-1,1h-2c-0.6494141,0-1-0.3125-1-1V9H5v1H3V9H2.2998047C2.078125,9,2,8.8129883,2,8.5834961V7.4165039
+			C2,7.1870117,2.1811523,7,2.402832,7H9V6c0-0.6879883,0.3505859-1,1-1h2c0.6484375,0,1,0.3120117,1,1V10z M12,6.3754883V9.625
+			C12,9.8310547,11.8222656,10,11.6054688,10h-1.2109375C10.1777344,10,10,9.8310547,10,9.625V6.3754883
+			C10,6.1689453,10.1777344,6,10.3945312,6h1.2109375C11.8222656,6,12,6.1689453,12,6.3754883z"/>
+		<path id="Upper" class="Upper" style="fill-rule: evenodd; clip-rule: evenodd; fill: #666;" d="M13,1H2C1.4477539,1,1,1.4477539,1,2v11
+			c0,0.5527344,0.4477539,1,1,1h11c0.5527344,0,1-0.4472656,1-1V2C14,1.4477539,13.5527344,1,13,1z M5,11H3V9.5h2V11z M13,9
+			c0,0.6875-0.3515625,1-1,1h-2c-0.6494141,0-1-0.3125-1-1V8H5v1H3V8H2.2998047C2.078125,8,2,7.8129883,2,7.5834961V6.4165039
+			C2,6.1870117,2.1811523,6,2.402832,6H9V5c0-0.6879883,0.3505859-1,1-1h2c0.6484375,0,1,0.3120117,1,1V9z M12,5.3754883v3.2490234
+			C12,8.8310547,11.8222656,9,11.6054688,9h-1.2109375C10.1777344,9,10,8.8310547,10,8.6245117V5.3754883
+			C10,5.1689453,10.1777344,5,10.3945312,5h1.2109375C11.8222656,5,12,5.1689453,12,5.3754883z"/>
+	</g>
+</svg>

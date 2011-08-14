@@ -12,27 +12,24 @@ use wcf\util\StringUtil;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.form
+ * @subpackage	system.form.container
  * @category 	Community Framework
  */
 abstract class AbstractFormElementContainer implements IFormElementContainer {
 	/**
-	 * list of FormElement objects
-	 *
+	 * list of IFormElement objects
 	 * @var	array<wcf\system\form\IFormElement>
 	 */
 	protected $children = array();
 	
 	/**
 	 * element description or help text
-	 *
 	 * @var	string
 	 */
 	protected $description = '';
 	
 	/**
 	 * element label
-	 *
 	 * @var	string
 	 */
 	protected $label = '';

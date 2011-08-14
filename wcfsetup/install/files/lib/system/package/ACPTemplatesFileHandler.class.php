@@ -56,7 +56,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 					foreach ($fileNames as $key => $file) {
 						if (isset($lockedFiles[$file]) && $packageID != $lockedFiles[$file]) {
 							$owningPackage = new Package($lockedFiles[$file]);
-							throw new SystemException("A non-standalone package can't overwrite template files. Only an update from the package which owns the template can do that. (Package '".$this->packageInstallation->getPackage()->getPackage()."' tries to overwrite template '".$file."', which is owned by package '".$owningPackage->package."')", 13026);
+							throw new SystemException("A non-standalone package can't overwrite template files. Only an update from the package which owns the template can do that. (Package '".$this->packageInstallation->getPackage()->getPackage()."' tries to overwrite template '".$file."', which is owned by package '".$owningPackage->package."')");
 						}
 					}
 				}

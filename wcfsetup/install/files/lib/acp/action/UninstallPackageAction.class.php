@@ -23,12 +23,13 @@ use wcf\util\StringUtil;
 class UninstallPackageAction extends InstallPackageAction {
 	/**
 	 * active package id
-	 *
 	 * @var	integer
 	 */
 	protected $packageID = 0;
 	
-	// system
+	/**
+	 * @see	wcf\action\AbstractDialogAction::$templateName
+	 */
 	public $templateName = 'packageUninstallationStep';
 	
 	/**

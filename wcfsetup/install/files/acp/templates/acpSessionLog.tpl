@@ -10,17 +10,18 @@
 </header>
 
 <div class="contentHeader">
-	{pages print=true assign=pagesLinks link="index.php?page=ACPSessionLog&sessionLogID=$sessionLogID&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&packageID="|concat:SID_ARG_2ND_NOT_ENCODED}
+	{pages print=true assign=pagesLinks link="index.php?page=ACPSessionLog&sessionLogID=$sessionLogID&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"|concat:SID_ARG_2ND_NOT_ENCODED}
 </div>
 
 {if $sessionAccessLogs|count}
-	<div class="border titleBarPanel">
-		<div class="containerHead"><h3>{lang}wcf.acp.sessionLog.access.view.count{/lang}</h3></div>
-	</div>
-	<div class="border borderMarginRemove">
-		<table class="tableList">
+	<div class="border boxTitle">
+		<hgroup>
+			<h1>{lang}wcf.acp.sessionLog.access.view.count{/lang} <span class="badge" title="{lang}wcf.acp.sessionLog.access.view.count{/lang}">{#$items}</span></h1>
+		</hgroup>
+		
+		<table>
 			<thead>
-				<tr class="tableHead">
+				<tr>
 					<th class="columnSessionAccessLogID{if $sortField == 'sessionAccessLogID'} active{/if}"><p><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLogID}&amp;pageNo={@$pageNo}&amp;sortField=sessionAccessLogID&amp;sortOrder={if $sortField == 'sessionAccessLogID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.sessionAccessLogID{/lang}{if $sortField == 'sessionAccessLogID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th class="columnIpAddress{if $sortField == 'ipAddress'} active{/if}"><p><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLogID}&amp;pageNo={@$pageNo}&amp;sortField=ipAddress&amp;sortOrder={if $sortField == 'ipAddress' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.ipAddress{/lang}{if $sortField == 'ipAddress'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th class="columnTime{if $sortField == 'time'} active{/if}"><p><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLogID}&amp;pageNo={@$pageNo}&amp;sortField=time&amp;sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.time{/lang}{if $sortField == 'time'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
@@ -32,9 +33,10 @@
 					{if $additionalColumnHeads|isset}{@$additionalColumnHeads}{/if}
 				</tr>
 			</thead>
+			
 			<tbody>
 			{foreach from=$sessionAccessLogs item=sessionAccessLog}
-				<tr class="smallFont">
+				<tr>
 					<td class="columnSessionAccessLogID columnID"><p>{@$sessionAccessLog->sessionAccessLogID}</p></td>
 					<td class="columnIpAddress columnText"{if $sessionAccessLog->ipAddress != $sessionLog->ipAddress} style="color: red"{/if}><p>{$sessionAccessLog->ipAddress}</p></td>
 					<td class="columnTime columnText"><p>{@$sessionAccessLog->time|time}</p></td>
@@ -48,6 +50,7 @@
 			{/foreach}
 			</tbody>
 		</table>
+		
 	</div>
 
 	<div class="contentFooter">

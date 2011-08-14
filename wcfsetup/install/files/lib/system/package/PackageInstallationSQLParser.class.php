@@ -283,7 +283,7 @@ class PackageInstallationSQLParser extends SQLParser {
 			if (in_array($tableName, $this->existingTables)) {
 				if (isset($this->knownTables[$tableName])) {
 					if ($this->knownTables[$tableName] != $this->package->packageID) {
-						throw new SystemException("Can not recreate table '.$tableName.'. A package can only overwrite own tables.", 13019);
+						throw new SystemException("Can not recreate table '.$tableName.'. A package can only overwrite own tables.");
 					}
 				}
 				else {
@@ -308,7 +308,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		if ($this->test) {
 			if (isset($this->knownTables[$tableName])) {
 				if ($this->knownTables[$tableName] != $this->package->packageID && !in_array($this->knownTables[$tableName], $this->dependentPackageIDs)) {
-					throw new SystemException("Can not add column '".$columnName."' to table '.$tableName.'. An installion can only 'ADD' things to tables from the same package environment.", 13019);
+					throw new SystemException("Can not add column '".$columnName."' to table '.$tableName.'. An installion can only 'ADD' things to tables from the same package environment.");
 				}
 			}
 		}
@@ -328,7 +328,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		if ($this->test) {
 			if ($ownerPackageID = $this->getColumnOwnerID($tableName, $oldColumnName)) {
 				if ($ownerPackageID != $this->package->packageID) {
-					throw new SystemException("Can not alter column '.$oldColumnName.'. A package can only change own columns.", 13019);
+					throw new SystemException("Can not alter column '.$oldColumnName.'. A package can only change own columns.");
 				}
 			}
 		}
@@ -351,7 +351,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		if ($this->test) {
 			if (isset($this->knownTables[$tableName])) {
 				if ($this->knownTables[$tableName] != $this->package->packageID && !in_array($this->knownTables[$tableName], $this->dependentPackageIDs)) {
-					throw new SystemException("Can not add index '".$indexName."' to table '.$tableName.'. An installion can only 'ADD' things to tables from the same package environment.", 13019);
+					throw new SystemException("Can not add index '".$indexName."' to table '.$tableName.'. An installion can only 'ADD' things to tables from the same package environment.");
 				}
 			}
 		}
@@ -371,7 +371,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		if ($this->test) {
 			if (isset($this->knownTables[$tableName])) {
 				if ($this->knownTables[$tableName] != $this->package->packageID && !in_array($this->knownTables[$tableName], $this->dependentPackageIDs)) {
-					throw new SystemException("Can not add foreign key '".$indexName."' to table '.$tableName.'. An installion can only 'ADD' things to tables from the same package environment.", 13019);
+					throw new SystemException("Can not add foreign key '".$indexName."' to table '.$tableName.'. An installion can only 'ADD' things to tables from the same package environment.");
 				}
 			}
 		}
@@ -391,7 +391,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		if ($this->test) {
 			if ($ownerPackageID = $this->getColumnOwnerID($tableName, $columnName)) {
 				if ($ownerPackageID != $this->package->packageID) {
-					throw new SystemException("Can not drop column '.$columnName.'. A package can only drop own columns.", 13019);
+					throw new SystemException("Can not drop column '.$columnName.'. A package can only drop own columns.");
 				}
 			}
 		}
@@ -411,7 +411,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		if ($this->test) {
 			if ($ownerPackageID = $this->getIndexOwnerID($tableName, $columnName)) {
 				if ($ownerPackageID != $this->package->packageID) {
-					throw new SystemException("Can not drop index '.$indexName.'. A package can only drop own indices.", 13019);
+					throw new SystemException("Can not drop index '.$indexName.'. A package can only drop own indices.");
 				}
 			}
 		}
@@ -432,7 +432,7 @@ class PackageInstallationSQLParser extends SQLParser {
 			if (in_array($tableName, $this->existingTables)) {
 				if (isset($this->knownTables[$tableName])) {
 					if ($this->knownTables[$tableName] != $this->package->packageID) {
-						throw new SystemException("Can not drop table '.$tableName.'. A package can only drop own tables.", 13019);
+						throw new SystemException("Can not drop table '.$tableName.'. A package can only drop own tables.");
 					}
 				}
 				else {

@@ -24,7 +24,7 @@ class TemplatePluginCompilerFetch implements ITemplatePluginCompiler {
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		if (!isset($tagArgs['file'])) {
-			throw new SystemException($compiler->formatSyntaxError("missing 'file' argument in fetch tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()), 12001);
+			throw new SystemException($compiler->formatSyntaxError("missing 'file' argument in fetch tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
 		}
 		
 		if (isset($tagArgs['assign'])) {
@@ -39,6 +39,6 @@ class TemplatePluginCompilerFetch implements ITemplatePluginCompiler {
 	 * @see wcf\system\template\ITemplatePluginCompiler::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
-		throw new SystemException($compiler->formatSyntaxError("unknown tag {/fetch}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()), 12003);
+		throw new SystemException($compiler->formatSyntaxError("unknown tag {/fetch}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
 	}
 }

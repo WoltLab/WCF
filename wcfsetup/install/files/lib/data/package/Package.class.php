@@ -6,6 +6,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Represents a package.
@@ -196,9 +197,42 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
+	 * Check version number of the installed package against the "fromversion" number of the update.
+	 * The "fromversion" number may contain wildcards (asterisks) which means that the update covers 
+	 * the whole range of release numbers where the asterisk wildcards digits from 0 to 9. For example,
+	 * if "fromversion" is "1.1.*" and this package updates to version 1.2.0, all releases from 1.1.0 to 
+	 * 1.1.9 may be updated using this package.
+	 * 
+	 * @param	string		$currentVersion
+	 * @param	string		$fromVersion
+	 * @return	boolean
+	 */
+	public static function checkFromversion($currentVersion, $fromversion) {
+		if (StringUtil::indexOf($fromversion, '*') !== false) {
+			// from version with wildcard
+			// use regular expression
+			$fromversion = StringUtil::replace('\*', '.*', preg_quote($fromversion, '!'));
+			if (preg_match('!^'.$fromversion.'$!i', $currentVersion)) {
+				return true;
+			}
+		}
+		else {
+			if (self::compareVersion($currentVersion, $fromversion, '=')) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Compares two version number strings.
 	 *
-	 * @see version_compare()
+	 * @param	string		$version1
+	 * @param	string		$version2
+	 * @param	string		$operator
+	 * @return	boolean		result
+	 * @see http://www.php.net/manual/en/function.version-compare.php
 	 */
 	public static function compareVersion($version1, $version2, $operator = null) {
 		$version1 = self::formatVersionForCompare($version1);

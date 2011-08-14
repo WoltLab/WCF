@@ -15,7 +15,6 @@ use wcf\system\session\SystemException;
 class ImageAdapter implements IImageAdapter {
 	/**
 	 * IImageAdapter object
-	 * 
 	 * @var	IImageAdapter
 	 */
 	protected $adapter = null;

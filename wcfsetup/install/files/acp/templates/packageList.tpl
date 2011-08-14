@@ -19,7 +19,7 @@
 </header>
 
 <div class="contentHeader">
-	{pages print=true assign=pagesLinks link="index.php?page=PackageList&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&packageID="|concat:SID_ARG_2ND_NOT_ENCODED}
+	{pages print=true assign=pagesLinks link="index.php?page=PackageList&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"|concat:SID_ARG_2ND_NOT_ENCODED}
 
 	{if $__wcf->session->getPermission('admin.system.package.canInstallPackage') || $additionalLargeButtons|isset}
 		<nav class="largeButtons">
@@ -32,12 +32,14 @@
 </div>
 
 {if $packages|count > 0}
-	<div class="border"><!-- The following table construct is experimental! -->
-		<div class="boxTitle"><h1>{lang}wcf.acp.package.list.count{/lang}</h1></div>
-	
-		<table class="tableList">
+	<div class="border boxTitle">
+		<hgroup>
+			<h1><a href="#">{lang}wcf.acp.package.list{/lang} <span class="badge" title="{lang}wcf.acp.package.list.count{/lang}">{#$items}</span></a></h1>
+		</hgroup>
+		
+		<table>
 			<thead>
-				<tr class="tableHead">
+				<tr>
 					<th colspan="2"{if $sortField == 'packageID'} class="active"{/if}><p><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=packageID&amp;sortOrder={if $sortField == 'packageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.list.id{/lang}{if $sortField == 'packageID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th colspan="2"{if $sortField == 'packageName'} class="active"{/if}><p><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=packageName&amp;sortOrder={if $sortField == 'packageName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.list.name{/lang}{if $sortField == 'packageName'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th{if $sortField == 'author'} class="active"{/if}><p><a href="index.php?page=PackageList&amp;pageNo={@$pageNo}&amp;sortField=author&amp;sortOrder={if $sortField == 'author' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.package.list.author{/lang}{if $sortField == 'author'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
@@ -47,17 +49,18 @@
 					{if $additionalHeadColumns|isset}{@$additionalHeadColumns}{/if}
 				</tr>
 			</thead>
+			
 			<tbody>
 				{foreach from=$packages item=$package}
 					<tr class="packageRow">
 						<td class="columnIcon">
 							{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-								<a href="index.php?form=PackageStartInstall&amp;action=update&amp;activePackageID={@$package->packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" /></a>
+								<a href="index.php?form=PackageStartInstall&amp;action=update&amp;packageID={@$package->packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a>
 							{else}
 								<img src="{@RELATIVE_WCF_DIR}icon/packageUpdateDisabledS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
 							{/if}
 							{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $package->package != 'com.woltlab.wcf' && $package->packageID != PACKAGE_ID}
-								<img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="uninstallButton" data-objectID="{@$package->packageID}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="uninstallButton balloonTooltip" data-objectID="{@$package->packageID}" data-confirmMessage="Are you sure?" />
 							{else}
 								<img src="{@RELATIVE_WCF_DIR}icon/deleteDisabledS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" />
 							{/if}
@@ -67,7 +70,7 @@
 						<td class="columnID"><p>{@$package->packageID}</p></td>
 						<td class="columnIcon">
 							{if $package->standalone}
-								<img src="{@RELATIVE_WCF_DIR}icon/packageTypeStandaloneS.png" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/packageTypeStandaloneS.png" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" class="balloonTooltip" />
 							{elseif $package->isPlugin()}
 								<img src="{@RELATIVE_WCF_DIR}icon/packageTypePluginS.png" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" />
 							{else}
@@ -75,7 +78,7 @@
 							{/if}
 						</td>
 						<td id="packageName{@$package->packageID}" class="columnText" title="{$package->packageDescription}">
-							<a href="index.php?page=PackageView&amp;activePackageID={@$package->packageID}{@SID_ARG_2ND}"><span>{$package->getName()}{if $package->instanceNo > 1 && $package->instanceName == ''} (#{#$package->instanceNo}){/if}</span></a>
+							<a href="index.php?page=PackageView&amp;packageID={@$package->packageID}{@SID_ARG_2ND}"><span>{$package->getName()}{if $package->instanceNo > 1 && $package->instanceName == ''} (#{#$package->instanceNo}){/if}</span></a>
 						</td>
 						<td class="columnText"><p>{if $package->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</p></td>
 						<td class="columnText"><p>{$package->packageVersion}</p></td>
@@ -86,6 +89,7 @@
 				{/foreach}
 			</tbody>
 		</table>
+		
 	</div>
 {/if}
 

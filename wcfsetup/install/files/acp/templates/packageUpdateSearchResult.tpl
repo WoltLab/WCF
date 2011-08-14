@@ -10,30 +10,30 @@
 </header>
 
 <div class="contentHeader">
-	{pages print=true assign=pagesLinks link="index.php?page=PackageUpdateSearchResult&searchID=$searchID&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&packageID="|concat:SID_ARG_2ND_NOT_ENCODED}
+	{pages print=true assign=pagesLinks link="index.php?page=PackageUpdateSearchResult&searchID=$searchID&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"|concat:SID_ARG_2ND_NOT_ENCODED}
 </div>
 
 <form method="post" action="index.php?form=PackageUpdate">
 	{foreach from=$packages item=package}
-		<div class="message content">
+		<article class="message content">
 			<div class="messageInner container-{cycle name='styles' values='1,2'}">
-				<h3 class="subHeading">
-					{if $package.standalone == 1}
-						<img src="{@RELATIVE_WCF_DIR}icon/packageTypeStandaloneS.png" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" />
-					{elseif $package.plugin != ''}
-						<img src="{@RELATIVE_WCF_DIR}icon/packageTypePluginS.png" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" />
-					{else}
-						<img src="{@RELATIVE_WCF_DIR}icon/packageS.png" alt="" title="{lang}wcf.acp.package.list.other{/lang}" />
-					{/if}
-					{$package.packageName}
-				</h3>
+				<hgroup class="subHeading">
+					<h1>
+						{if $package.standalone == 1}
+							<img src="{@RELATIVE_WCF_DIR}icon/packageTypeStandaloneS.png" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" class="balloonTooltip" />
+						{elseif $package.plugin != ''}
+							<img src="{@RELATIVE_WCF_DIR}icon/packageTypePluginS.png" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="balloonTooltip" />
+						{else}
+							<img src="{@RELATIVE_WCF_DIR}icon/packageS.png" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="balloonTooltip" />
+						{/if}
+						{$package.packageName}
+					</h1>
+				<hgroup>
 
 				<div class="messageBody">
-					<div class="formElement">
-						<div class="formFieldLabel">
-							<label for="packageVersion-{$package.package}">{lang}wcf.acp.package.list.version{/lang}</label>
-						</div>
-						<div class="formField">
+					<dl>
+						<dt><label for="packageVersion-{$package.package}">{lang}wcf.acp.package.list.version{/lang}</label></dt>
+						<dd>
 							<select id="packageVersion-{$package.package}">
 								{foreach from=$package.packageVersions item=$packageVersion}
 									<option value="{$packageVersion}"{if $packageVersion == $package.packageVersion} selected="selected"{/if}>{$packageVersion}</option>
@@ -56,32 +56,30 @@
 								});
 								//]]>
 							</script>
-						</div>
-					</div>
+						</dd>
+					</dl>
 					
 					{if $package.author != ''}
-						<div class="formElement">
-							<div class="formFieldLabel">
-								<label>{lang}wcf.acp.package.list.author{/lang}</label>
-							</div>
-							<div class="formField">
+						<dl>
+							<dt><label>{lang}wcf.acp.package.list.author{/lang}</label></dt>
+							<dd>
 								<span>{if $package.authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package.authorURL|rawurlencode}" class="externalURL">{$package.author}</a>{else}{$package.author}{/if}</span>
-							</div>
-						</div>
+							</dd>
+						</dl>
 					{/if}
 					
 					{if $package.packageDescription}
-						<div class="formElement">
-							<p class="formFieldLabel">{lang}wcf.acp.package.description{/lang}</p>
-							<p class="formField">{$package.packageDescription}</p>
-						</div>
+						<dl>
+							<dt>{lang}wcf.acp.package.description{/lang}</dt>
+							<dd>{$package.packageDescription}</dd>
+						</dl>
 					{/if}
 					
 					<fieldset>
 						<legend>{lang}wcf.acp.packageUpdate.options{/lang}</legend>
 					
-						<div class="formField">
-							<ul class="formOptionsLong">
+						<div><!-- ToDo: Definition List -->
+							<ul>
 								{* new installation *}
 								{if $package.isUnique && !$package.updatableInstances|count}
 									<li>{lang}wcf.acp.packageUpdate.options.alreadyInstalledUnique{/lang}</li>
@@ -97,16 +95,16 @@
 							</<ul>
   						</div>
 					</fieldset>
+					
 				</div>
-
 				<hr />
 			</div>
-		</div>			
+		</article>			
 	{/foreach}
 	
 	<div class="formSubmit">
-		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
+		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="packageID" value="{@PACKAGE_ID}" />
 		{@SID_INPUT_TAG}
 		<input type="hidden" name="searchID" value="{@$searchID}" />

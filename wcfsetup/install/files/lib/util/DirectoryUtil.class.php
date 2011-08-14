@@ -5,12 +5,12 @@ use wcf\system\exception\SystemException;
 /**
 * Contains directory-related functions
 *
-* @author Tim Düsterhus
-* @copyright 2011 Tim Düsterhus
-* @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
-* @package com.woltlab.wcf
-* @subpackage util
-* @category Community Framework
+* @author	Tim Düsterhus
+* @copyright	2011 Tim Düsterhus
+* @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+* @package	com.woltlab.wcf
+* @subpackage	util
+* @category	Community Framework
 */
 class DirectoryUtil {
 	/**
@@ -19,50 +19,43 @@ class DirectoryUtil {
 	protected $obj = null;
 
 	/**
-	 * Stores all files with full path
-	 *
+	 * all files with full path
 	 * @var array<string>
 	 */
 	protected $files = array();
 
 	/**
-	 * Stores all files with filename as key and DirectoryIterator object as value
-	 *
+	 * all files with filename as key and DirectoryIterator object as value
 	 * @var array<DirectoryIterator>
 	 */
 	protected $filesObj = array();
 
 	/**
-	 * Directory-size in bytes
-	 *
+	 * directory size in bytes
 	 * @var	integer
 	 */
 	protected $size = 0;
 
 	/**
-	 * Directory path
-	 *
+	 * directory path
 	 * @var	string
 	 */
 	protected $directory = '';
 
 	/**
-	 * Determines wether scan should be recursive
-	 *
+	 * determines whether scan should be recursive
 	 * @var	boolean
 	 */
 	protected $recursive = true;
 	
 	/**
-	 * No sorting
-	 *
+	 * indicates that files won't be sorted
 	 * @var	integer
 	 */
 	const SORT_NONE = -1;
 
 	/**
-	 * All recursive and non-recursive instances
-	 *
+	 * all recursive and non-recursive instances of DirectoryUtil
 	 * @var array<array>
 	 */
 	protected static $instances = array(
@@ -71,11 +64,11 @@ class DirectoryUtil {
 	);
 
 	/**
-	 * Creates a new instance of DirectoryUtil
+	 * Creates a new instance of DirectoryUtil.
 	 *
-	 * @param	string				$directory	directory path
-	 * @param	boolean				$recursive	created a recursive directory iterator
-	 * @see		DirectoryUtil::getInstance()
+	 * @param	string		$directory	directory path
+	 * @param	boolean		$recursive	created a recursive directory iterator
+	 * @see		wcf\util\DirectoryUtil::getInstance()
 	 */
 	protected function __construct($directory, $recursive = true) {
 		$this->directory = $directory;
@@ -91,12 +84,12 @@ class DirectoryUtil {
 	}
 
 	/**
-	 * @see		DirectoryUtil::getInstance()
+	 * @see	wcf\util\DirectoryUtil::getInstance()
 	 */
 	private final function __clone() {}
 
 	/**
-	 * Clears an instance
+	 * Clears an instance of DirectoryUtil.
 	 *
 	 * @param	string		$directory	directory path
 	 * @param	boolean		$recursive	destroy a recursive instance
@@ -113,10 +106,10 @@ class DirectoryUtil {
 	}
 
 	/**
-	 * Returns an instance of DirectoryUtil (or child)
+	 * Returns an instance of DirectoryUtil (or child).
 	 *
-	 * @param	string		$directory	Path
-	 * @param	boolean		$recursive	Walk through sub-directories too
+	 * @param	string		$directory	path
+	 * @param	boolean		$recursive	walk through sub-directories too
 	 * @return	static
 	 */
 	public static function getInstance($tmpDirectory, $recursive = true) {
@@ -137,11 +130,11 @@ class DirectoryUtil {
 	}
 
 	/**
-	 * Returns a sorted list of files
+	 * Returns a sorted list of files.
 	 *
 	 * @param	integer		$order			sort-order
-	 * @param	string		$pattern			pattern to match
-	 * @param	boolean		$negativeMatch	should the pattern be inversed
+	 * @param	string		$pattern		pattern to match
+	 * @param	boolean		$negativeMatch		true if the pattern should be inversed
 	 * @return	array<string>
 	 */
 	public function getFiles($order = SORT_ASC, $pattern = '', $negativeMatch = false) {
@@ -175,9 +168,9 @@ class DirectoryUtil {
 	/**
 	 * Returns a sorted list of files, with DirectoryIterator object as value
 	 *
-	 * @param	integer				$order			sort-order
-	 * @param	string				$pattern			pattern to match
-	 * @param	boolean				$negativeMatch	should the pattern be inversed
+	 * @param	integer			$order			sort order
+	 * @param	string			$pattern		pattern to match
+	 * @param	boolean			$negativeMatch		should the pattern be inversed
 	 * @return	array<DirectoryIterator>
 	 */
 	public function getFilesObj($order = SORT_ASC, $pattern = '', $negativeMatch = false) {
@@ -226,7 +219,7 @@ class DirectoryUtil {
 			}
 		}
 		else {
-			foreach ($this->obj as $filename => $obj) {
+			foreach ($this->obj as $obj) {
 				// ignore . and ..
 				if ($this->obj->isDot()) continue;
 
@@ -256,7 +249,7 @@ class DirectoryUtil {
 			}
 		}
 		else {
-			foreach ($this->obj as $filename => $obj) {
+			foreach ($this->obj as $obj) {
 				// ignore . and ..
 				if ($this->obj->isDot()) continue;
 
@@ -269,11 +262,11 @@ class DirectoryUtil {
 	}
 	
 	/**
-	 * Executes a callback on each file
+	 * Executes a callback on each file and returns false if callback is invalid.
 	 *
-	 * @param	callback	$callback	Valid callback
-	 * @param	string		$pattern	Apply callback only to files matching the given pattern
-	 * @return	boolean				Returns false if callback is invalid
+	 * @param	callback	$callback	valid callback
+	 * @param	string		$pattern	callback is only applied to files matching the given pattern
+	 * @return	boolean
 	 */
 	public function executeCallback($callback, $pattern = '') {
 		if (!is_callable($callback)) return false;
@@ -287,7 +280,7 @@ class DirectoryUtil {
 	}
 	
 	/**
-	 * Recursive remove of directory
+	 * Recursive remove of directory.
 	 */
 	public function removeAll() {
 		$this->removePattern('');
@@ -297,9 +290,9 @@ class DirectoryUtil {
 	}
 
 	/**
-	 * Removes all files that match the pattern
+	 * Removes all files that match the given pattern.
 	 *
-	 * @param	string	$pattern	regex pattern
+	 * @param	string		$pattern	pattern to match
 	 */
 	public function removePattern($pattern) {
 		if (!$this->recursive) throw new SystemException('Removing of files only works in recursive mode');
@@ -330,16 +323,18 @@ class DirectoryUtil {
 	/**
 	 * Calculates the size of the directory.
 	 *
-	 * @return	integer		Directorysize in bytes
+	 * @return	integer		directory size in bytes
 	 */
 	public function getSize() {
-		if (!$this->recursive) throw new SystemException('Calculating of size only works in recursive mode');
+		if (!$this->recursive) {
+			throw new SystemException('Calculating of size only works in recursive mode');
+		}
 		
 		// read cached value first
 		if ($this->size) return $this->size;
 
 		$files = $this->getFilesObj(self::SORT_NONE);
-		foreach ($files as $filename => $obj) {
+		foreach ($files as $obj) {
 			$this->size += $obj->getSize();
 		}
 

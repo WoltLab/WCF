@@ -13,40 +13,31 @@
 
 <form method="post" action="index.php?form=MasterPassword">
 	<div class="border content">
-		<div class="container-1">
-			<fieldset>
-				<legend>{lang}wcf.acp.masterPassword.enter{/lang}</legend>
-			
-				<div class="formElement{if $errorField == 'masterPassword'} formError{/if}" id="masterPasswordDiv">
-					<div class="formFieldLabel">
-						<label for="masterPassword">{lang}wcf.acp.masterPassword{/lang}</label>
-					</div>
-					<div class="formField">
-						<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="inputText" />
-						{if $errorField == 'masterPassword'}
-							<p class="innerError">
-								{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-								{if $errorType == 'invalid'}{lang}wcf.acp.masterPassword.error.invalid{/lang}{/if}
-							</p>
-						{/if}
-					</div>
-					<div class="formFieldDesc hidden" id="masterPasswordHelpMessage">
-						<p>{lang}wcf.acp.masterPassword.enter.description{/lang}</p>
-					</div>
-				</div>
-				<script type="text/javascript">//<![CDATA[
-					inlineHelp.register('masterPassword');
-				//]]></script>
-				
-			</fieldset>
-			
-			{if $additionalFields|isset}{@$additionalFields}{/if}
-		</div>
+		
+		<fieldset>
+			<legend>{lang}wcf.acp.masterPassword.enter{/lang}</legend>
+		
+			<dl id="masterPasswordDiv"{if $errorField == 'masterPassword'} class="formError"{/if}>
+				<dt><label for="masterPassword">{lang}wcf.acp.masterPassword{/lang}</label></dt>
+				<dd>
+					<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium" />
+					{if $errorField == 'masterPassword'}
+						<small class="innerError">
+							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType == 'invalid'}{lang}wcf.acp.masterPassword.error.invalid{/lang}{/if}
+						</small>
+					{/if}
+					<small id="masterPasswordHelpMessage">{lang}wcf.acp.masterPassword.enter.description{/lang}</small>
+				</dd>
+			</dl>
+		</fieldset>
+		
+		{if $additionalFields|isset}{@$additionalFields}{/if}
 	</div>
 
 	<div class="formSubmit">
-		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
-		<input type="submit" accesskey="s" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" />
+		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}
  		<input type="hidden" name="url" value="{$url}" />
  	</div>

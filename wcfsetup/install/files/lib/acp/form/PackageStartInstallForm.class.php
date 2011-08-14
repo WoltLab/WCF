@@ -77,8 +77,8 @@ class PackageStartInstallForm extends ACPForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['activePackageID'])) {
-			$this->packageID = intval($_REQUEST['activePackageID']);
+		if (isset($_REQUEST['packageID'])) {
+			$this->packageID = intval($_REQUEST['packageID']);
 			if ($this->packageID != 0) {
 				try {
 					$this->package = new Package($this->packageID);

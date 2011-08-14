@@ -2,10 +2,10 @@
 namespace wcf\system\session;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
-use wcf\system\auth\UserAuth;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\storage\StorageHandler;
+use wcf\system\user\authentication\UserAuthenticationFactory;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -354,7 +354,7 @@ class SessionHandler extends SingletonFactory {
 		$sessionID = StringUtil::getRandomID();
 		
 		// get user automatically
-		$this->user = UserAuth::getInstance()->loginAutomatically();
+		$this->user = UserAuthenticationFactory::getUserAuthentication()->loginAutomatically();
 		
 		// create user
 		if ($this->user === null) {
@@ -400,7 +400,7 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * Checks the requested permission, throws a PermissionDeniedException
 	 * if the permission is false.
-	 * @see	SessionHandler::getPermission()
+	 * @see	wcf\system\session\SessionHandler::getPermission()
 	 */
 	public function checkPermission(array $permissions) {
 		foreach ($permissions as $permission) {
@@ -598,16 +598,16 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * Resets session-specific storage data.
 	 *
-	 * @param	array		$userIDs
+	 * @param	array<integer>	$userIDs
 	 */	
 	public static function resetSessions(array $userIDs = array()) {
 		if (count($userIDs)) {
-			StorageHandler::getInstance()->reset($userIDs, 'groupIDs', 1);
-			StorageHandler::getInstance()->reset($userIDs, 'languageIDs', 1);
+			UserStorageHandler::getInstance()->reset($userIDs, 'groupIDs', 1);
+			UserStorageHandler::getInstance()->reset($userIDs, 'languageIDs', 1);
 		}
 		else {
-			StorageHandler::getInstance()->resetAll('groupIDs', 1);
-			StorageHandler::getInstance()->resetAll('languageIDs', 1);
+			UserStorageHandler::getInstance()->resetAll('groupIDs', 1);
+			UserStorageHandler::getInstance()->resetAll('languageIDs', 1);
 		}
 	}
 }

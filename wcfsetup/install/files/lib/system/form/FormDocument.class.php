@@ -15,14 +15,12 @@ use wcf\util\StringUtil;
 class FormDocument {
 	/**
 	 * list of FormElementContainer objects
-	 *
 	 * @var	array<wcf\system\form\IFormElementContainer>
 	 */
 	protected $containers = array();
 	
 	/**
 	 * form document name
-	 *
 	 * @var	string
 	 */
 	protected $name = '';

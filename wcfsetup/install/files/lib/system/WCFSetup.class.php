@@ -778,7 +778,7 @@ class WCFSetup extends WCF {
 			
 			// check the file
 			if (!file_exists($filename)) {
-				throw new SystemException("unable to find language file '".$filename."'", 11002);
+				throw new SystemException("unable to find language file '".$filename."'");
 			}
 			
 			// open the file
@@ -994,7 +994,7 @@ class WCFSetup extends WCF {
 		$row = $statement->fetchArray();
 		if (!$row['count']) {
 			if (empty($wcfPackageFile)) {
-				throw new SystemException('the essential package com.woltlab.wcf is missing.', 11007);
+				throw new SystemException('the essential package com.woltlab.wcf is missing.');
 			}
 			
 			// register essential wcf package

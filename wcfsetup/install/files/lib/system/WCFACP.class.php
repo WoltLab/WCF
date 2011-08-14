@@ -31,7 +31,7 @@ class WCFACP extends WCF {
 		$this->initMagicQuotes();
 		$this->initDB();
 		$this->initPackage();
-		$this->initOptions();
+		$this->loadOptions();
 		$this->initCache();
 		$this->initSession();
 		$this->initLanguage();
@@ -57,7 +57,7 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * Starts the session system.
+	 * @see	wcf\system\WCF::initSession()
 	 */
 	protected function initSession() {
 		$factory = new ACPSessionFactory();
@@ -68,7 +68,7 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * Initialises the template engine.
+	 * @see	wcf\system\WCF::initTPL()
 	 */
 	protected function initTPL() {
 		self::$tplObj = ACPTemplateEngine::getInstance();
@@ -77,7 +77,7 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * @see WCF::assignDefaultTemplateVariables()
+	 * @see wcf\system\WCF::assignDefaultTemplateVariables()
 	 */
 	protected function assignDefaultTemplateVariables() {
 		parent::assignDefaultTemplateVariables();

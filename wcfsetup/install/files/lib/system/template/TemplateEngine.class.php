@@ -20,92 +20,79 @@ use wcf\util\DirectoryUtil;
  */
 class TemplateEngine extends SingletonFactory {
 	/**
-	 * Directory used to cache previously compiled templates
-	 * 
+	 * directory used to cache previously compiled templates
 	 * @var	string
 	 */
 	public $compileDir = '';
 	
 	/**
-	 * Active language id used to identify specific language versions of compiled templates
-	 * 
+	 * active language id used to identify specific language versions of compiled templates
 	 * @var	integer
 	 */
 	public $languageID = 0;
 	
 	/**
-	 * Directories used as template source
-	 * 
-	 * @var	array
+	 * directories used as template source
+	 * @var	array<string>
 	 */
 	public $templatePaths = array();
 	
 	/**
-	 * Namespace containing template modifiers and plugins
-	 * 
+	 * namespace containing template modifiers and plugins
 	 * @var	string
 	 */
 	public $pluginNamespace = '';
 	
 	/**
-	 * Active template compiler.
-	 * 
-	 * @var	TemplateCompiler
+	 * active template compiler
+	 * @var	wcf\system\template\TemplateCompiler
 	 */
 	protected $compilerObj = null;
 	
 	/**
 	 * forces the template engine to recompile all included templates
-	 * 
 	 * @var boolean
 	 */
 	protected $forceCompile = false;
 	
 	/**
 	 * list of registered prefilters
-	 * 
-	 * @var	array
+	 * @var	array<string>
 	 */
 	protected $prefilters = array();
 	
 	/**
-	 * Cached list of known template groups.
-	 * 
+	 * cached list of known template groups
 	 * @var	array
 	 */
 	protected $templateGroupCache = array();
 	
 	/**
-	 * Active template group id.
-	 * 
+	 * active template group id
 	 * @var	integer
 	 */
 	protected $templateGroupID = 0;
 	
 	/**
-	 * Contains all available template variables and those assigned during runtime.
-	 * 
+	 * all available template variables and those assigned during runtime
 	 * @var	array<array>
 	 */
 	protected $v = array();
 	
 	/**
-	 * Contains all cached vars for usage after execution in sandbox.
-	 * 
+	 * all cached variables for usage after execution in sandbox
 	 * @var	array
 	 */
 	protected $sandboxVars = null;
 	
 	/**
-	 * Contains all templates with assigned template listeners.
-	 * 
+	 * contains all templates with assigned template listeners.
 	 * @var	array<array>
 	 */
 	protected $templateListeners = array();
 	
 	/**
-	 * Current environment
-	 * 
+	 * current environment
 	 * @var	string
 	 */
 	protected $environment = 'user';
@@ -113,7 +100,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Creates a new instance of TemplateEngine.
 	 * 
-	 * @see	TemplateEngine::getInstance()
+	 * @see	wcf\system\template\TemplateEngine::getInstance()
 	 */
 	protected function init() {
 		$this->templatePaths = array(1 => WCF_DIR.'templates/');
@@ -169,8 +156,8 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Assigns a template variable.
 	 *
-	 * @param	mixed	$variable
-	 * @param	mixed	$value
+	 * @param	mixed		$variable
+	 * @param	mixed		$value
 	 */
 	public function assign($variable, $value = '') {
 		if (is_array($variable)) {
@@ -352,7 +339,7 @@ class TemplateEngine extends SingletonFactory {
 		}
 		
 		
-		throw new SystemException("Unable to find template '$templateName'", 12005);
+		throw new SystemException("Unable to find template '$templateName'");
 	}
 	
 	/**
@@ -465,7 +452,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Returns a new template compiler object.
 	 * 
-	 * @return	TemplateCompiler
+	 * @return	wcf\system\template\TemplateCompiler
 	 */
 	protected function getCompiler() {
 		return new TemplateCompiler($this);
@@ -480,7 +467,7 @@ class TemplateEngine extends SingletonFactory {
 	public function getSourceContent($sourceFilename) {
 		$sourceContent = '';
 		if (!file_exists($sourceFilename) || (($sourceContent = @file_get_contents($sourceFilename)) === false)) {
-			throw new SystemException("Could not open template '$sourceFilename' for reading", 12005);
+			throw new SystemException("Could not open template '$sourceFilename' for reading");
 		}
 		else {
 			return $sourceContent;
@@ -605,7 +592,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Returns an array with all prefilters.
 	 *
-	 * @return 	array
+	 * @return 	array<string>
 	 */
 	public function getPrefilters() {
 		return $this->prefilters;
@@ -644,7 +631,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Registers prefilters.
 	 *
-	 * @param 	array 		$prefilters
+	 * @param 	array<string> 		$prefilters
 	 */
 	public function registerPrefilter(array $prefilters) {
 		foreach ($prefilters as $name) {
@@ -659,7 +646,7 @@ class TemplateEngine extends SingletonFactory {
 	 */
 	public function setCompileDir($compileDir) {
 		if (!is_dir($compileDir)) {
-			throw new SystemException("'".$compileDir."' is not a valid dir", 11014);
+			throw new SystemException("'".$compileDir."' is not a valid dir");
 		}
 		
 		$this->compileDir = $compileDir;

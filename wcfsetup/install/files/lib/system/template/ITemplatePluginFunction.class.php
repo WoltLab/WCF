@@ -15,9 +15,9 @@ interface ITemplatePluginFunction {
 	/**
 	 * Executes this template function.
 	 * 
-	 * @param	array			$tagArgs
-	 * @param	TemplateEngine		$tplObj
-	 * @return	string				output
+	 * @param	array		$tagArgs
+	 * @param	wcf\system\template\TemplateEngine 	$tplObj
+	 * @return	string		output
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj);
 }

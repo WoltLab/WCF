@@ -17,15 +17,13 @@ use wcf\system\WCF;
  */
 abstract class AbstractAction implements IAction {
 	/**
-	 * Needed modules to execute this action.
-	 * 
+	 * needed modules to execute this action
 	 * @var	array<string>
 	 */
 	public $neededModules = array();
 	
 	/**
-	 * Needed permissions to execute this action.
-	 * 
+	 * needed permissions to execute this action
 	 * @var array<string>
 	 */
 	public $neededPermissions = array();

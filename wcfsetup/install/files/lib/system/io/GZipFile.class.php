@@ -23,7 +23,7 @@ class GZipFile extends File {
 		$this->filename = $filename;
 		$this->resource = gzopen($filename, $mode);
 		if ($this->resource === false) {
-			throw new SystemException('Can not open file ' . $filename, 11012);
+			throw new SystemException('Can not open file ' . $filename);
 		}
 	}
 	
@@ -43,7 +43,7 @@ class GZipFile extends File {
 	       		return call_user_func_array($function, $arguments);
 		}
 		else {
-			throw new SystemException('Can not call method ' . $function, 11003);
+			throw new SystemException('Can not call method ' . $function);
 		}
 	}
 	

@@ -20,33 +20,31 @@ use wcf\util\StringUtil;
 class InstallPackageAction extends AbstractDialogAction {
 	/**
 	 * current node
-	 *
 	 * @var	string
 	 */
 	public $node = '';
 	
 	/**
 	 * PackageInstallationDispatcher object
-	 *
-	 * @var	PackageInstallationDispatcher
+	 * @var	wcf\system\package\PackageInstallationDispatcher
 	 */
 	public $installation = null;
 	
 	/**
 	 * PackageInstallationQueue object
-	 *
-	 * @var	PackageInstallationQueue
+	 * @var	wcf\data\package\installation\queue\PackageInstallationQueue
 	 */
 	public $queue = null;
 	
 	/**
 	 * current queue id
-	 *
 	 * @var	integer
 	 */
 	public $queueID = 0;
 	
-	// system
+	/**
+	 * @see	wcf\action\AbstractDialogAction::$templateName
+	 */
 	public $templateName = 'packageInstallationStep';
 	
 	/**

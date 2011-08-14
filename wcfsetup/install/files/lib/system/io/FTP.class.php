@@ -29,7 +29,7 @@ class FTP {
 	public function __construct($host = 'localhost', $port = 21, $timeout = 30) {
 		$this->resource = ftp_connect($host, $port, $timeout);
 		if ($this->resource === false) {
-			throw new SystemException('Can not connect to ' . $host, 11008);
+			throw new SystemException('Can not connect to ' . $host);
 		}
 	}
 
@@ -42,7 +42,7 @@ class FTP {
 	public function __call($function, $arguments) {
 		array_unshift($arguments, $this->resource);
 		if (!function_exists('ftp_'.$function)) {
-			throw new SystemException('Can not call method ' . $function, 11003);
+			throw new SystemException('Can not call method ' . $function);
 		}
 		
 		return call_user_func_array('ftp_' . $function, $arguments);

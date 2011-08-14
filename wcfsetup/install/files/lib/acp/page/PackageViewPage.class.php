@@ -1,8 +1,9 @@
 <?php
 namespace wcf\acp\page;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\data\package\Package;
 use wcf\page\AbstractPage;
+use wcf\system\menu\acp\ACPMenu;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 
 /**
@@ -63,7 +64,11 @@ class PackageViewPage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['activePackageID'])) $this->packageID = intval($_REQUEST['activePackageID']);
+		if (isset($_REQUEST['packageID'])) $this->packageID = intval($_REQUEST['packageID']);
+		$this->package = new Package($this->packageID);
+		if (!$this->package->packageID) {
+			throw new IllegalLinkException();
+		}
 	}
 	
 	/**
@@ -73,15 +78,9 @@ class PackageViewPage extends AbstractPage {
 		parent::readData();
 		
 		// get package data
-		try {
-			$this->package = new Package($this->packageID);
-			$this->requiredPackages = $this->package->getRequiredPackages();
-			$this->dependentPackages = $this->package->getDependentPackages();
-			$this->dependencies = $this->package->getDependencies();
-		}
-		catch (SystemException $e) {
-			throw new IllegalLinkException();
-		}
+		$this->requiredPackages = $this->package->getRequiredPackages();
+		$this->dependentPackages = $this->package->getDependentPackages();
+		$this->dependencies = $this->package->getDependencies();
 	}
 	
 	/**

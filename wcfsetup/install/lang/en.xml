@@ -3,9 +3,6 @@
 	<category name="wcf.acp">
 		<item name="wcf.acp"><![CDATA[Administration Control Panel]]></item>
 		<item name="wcf.acp.help"><![CDATA[Help]]></item>
-		<item name="wcf.acp.help.complete"><![CDATA[Complete Help]]></item>
-		<item name="wcf.acp.help.disable"><![CDATA[Disable online Help]]></item>
-		<item name="wcf.acp.help.interactive"><![CDATA[Interactive Help]]></item>
 		<item name="wcf.acp.packageQuickAccess"><![CDATA[Change Package]]></item>
 		<item name="wcf.acp.search.extended"><![CDATA[Extended search ...]]></item>
 		<item name="wcf.acp.sitemap"><![CDATA[Site-Map]]></item>
@@ -31,9 +28,9 @@
 		<item name="wcf.acp.cronjob.add.data"><![CDATA[General Information]]></item>
 		<item name="wcf.acp.cronjob.add.success"><![CDATA[The cron job has been added successfully.]]></item>
 		<item name="wcf.acp.cronjob.add.timing"><![CDATA[Schedule]]></item>
-		<item name="wcf.acp.cronjob.className"><![CDATA[Class path]]></item>
-		<item name="wcf.acp.cronjob.className.description"><![CDATA[Please enter here the path to the PHP file in which the associated cron job class is contained. This path must be relative to the installation folder of the WCF.]]></item>
-		<item name="wcf.acp.cronjob.cronjobID"><![CDATA[Job ID]]></item>
+		<item name="wcf.acp.cronjob.className"><![CDATA[Class name]]></item>
+		<item name="wcf.acp.cronjob.className.description"><![CDATA[Please enter here the class name of the cron job.]]></item>
+		<item name="wcf.acp.cronjob.cronjobID"><![CDATA[Cron job ID]]></item>
 		<item name="wcf.acp.cronjob.delete"><![CDATA[Delete]]></item>
 		<item name="wcf.acp.cronjob.delete.disabled"><![CDATA[This cron job cannot be deleted.]]></item>
 		<item name="wcf.acp.cronjob.delete.success"><![CDATA[The cron job has been deleted successfully.]]></item>
@@ -47,7 +44,7 @@
 		<item name="wcf.acp.cronjob.edit.success"><![CDATA[The cron job has been modified successfully.]]></item>
 		<item name="wcf.acp.cronjob.edit.timing"><![CDATA[Schedule]]></item>
 		<item name="wcf.acp.cronjob.enable"><![CDATA[Enable]]></item>
-		<item name="wcf.acp.cronjob.error.doesNotExist"><![CDATA[The path you have entered is invalid.]]></item>
+		<item name="wcf.acp.cronjob.error.doesNotExist"><![CDATA[There is no class with the given name.]]></item>
 		<item name="wcf.acp.cronjob.error.empty"><![CDATA[Please enter a valid entry here.]]></item>
 		<item name="wcf.acp.cronjob.error.notValid"><![CDATA[The timings you have set are invalid.]]></item>
 		<item name="wcf.acp.cronjob.execMultiple"><![CDATA[Schedule multiple executions?]]></item>
@@ -59,7 +56,7 @@
 		<item name="wcf.acp.cronjob.intro"><![CDATA[Configuring cronjobs (automatized scheduled tasks) requires distinct knowledge of the crontab syntax on Unix based systems. More information about this topic can be obtained on the following Webpage: <a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>.]]></item>
 		<item name="wcf.acp.cronjob.lastExec"><![CDATA[Last scheduled execution]]></item>
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cron jobs]]></item>
-		<item name="wcf.acp.cronjob.list.count"><![CDATA[There is a total of {#$items} cronjob{if $items != 1}s{/if}]]></item>
+		<item name="wcf.acp.cronjob.list.count"><![CDATA[{#$items} cronjob{if $items != 1}s{/if}]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Log of executed cronjobs]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Delete all]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Are you sure that you want to remove all log entries?]]></item>
@@ -108,7 +105,7 @@
 		<item name="wcf.acp.group.groupName.description"><![CDATA[Enter here a name for this group.]]></item>
 		<item name="wcf.acp.group.guests"><![CDATA[Guests]]></item>
 		<item name="wcf.acp.group.list"><![CDATA[User groups]]></item>
-		<item name="wcf.acp.group.list.data"><![CDATA[A total of {#$items} user groups]]></item>
+		<item name="wcf.acp.group.list.count"><![CDATA[{#$items} user group{if $items != 1}s{/if}]]></item>
 		<item name="wcf.acp.group.members"><![CDATA[Number of members]]></item>
 		<item name="wcf.acp.group.moderators"><![CDATA[Moderators]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Can enter Administration Control Panel?]]></item>
@@ -425,7 +422,7 @@
 		<item name="wcf.acp.package.installation.tables.warning"><![CDATA[Existing database tables conflict with the tables required to be installed by this package. Please choose whether to overwrite these tables.]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Installed packages]]></item>
 		<item name="wcf.acp.package.list.author"><![CDATA[Author]]></item>
-		<item name="wcf.acp.package.list.count"><![CDATA[A total of {#$items} packages installed]]></item>
+		<item name="wcf.acp.package.list.count"><![CDATA[{#$items} package{if $items != 1}s{/if} installed]]></item>
 		<item name="wcf.acp.package.list.date"><![CDATA[Date]]></item>
 		<item name="wcf.acp.package.list.id"><![CDATA[ID]]></item>
 		<item name="wcf.acp.package.list.name"><![CDATA[Name]]></item>
@@ -635,8 +632,8 @@
 		<item name="wcf.acp.updateServer.htUsername"><![CDATA[Username]]></item>
 		<item name="wcf.acp.updateServer.htUsername.description"><![CDATA[Please enter a valid user name (optional).]]></item>
 		<item name="wcf.acp.updateServer.lastErrorText"><![CDATA[The following error occured while trying to connect:]]></item>
-		<item name="wcf.acp.updateServer.list.available"><![CDATA[{#$items} server available]]></item>
-		<item name="wcf.acp.updateServer.packageUpdateServerID"><![CDATA[Server id]]></item>
+		<item name="wcf.acp.updateServer.list.count"><![CDATA[{#$items} update server{if $items != 1}s{/if} available]]></item>
+		<item name="wcf.acp.updateServer.packageUpdateServerID"><![CDATA[Server ID]]></item>
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Address]]></item>
 		<item name="wcf.acp.updateServer.serverURL.description"><![CDATA[Please enter the URL to a package server.]]></item>
@@ -676,7 +673,7 @@
 		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Find users that are not members of the chosen user groups.]]></item>
 		<item name="wcf.acp.user.list"><![CDATA[Users]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[All users]]></item>
-		<item name="wcf.acp.user.list.count"><![CDATA[A total of {#$items} user{if $items > 1}s{/if}]]></item>
+		<item name="wcf.acp.user.list.count"><![CDATA[{#$items} user{if $items != 1}s{/if}]]></item>
 		<item name="wcf.acp.user.markedUsers"><![CDATA[this.count == 1 ? "1 user selected" : this.count+" users selected"]]></item>
 		<item name="wcf.acp.user.massProcessing"><![CDATA[Bulk processing of users]]></item>
 		<item name="wcf.acp.user.massProcessing.action"><![CDATA[Action]]></item>

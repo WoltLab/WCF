@@ -106,8 +106,9 @@ class UserAction extends AbstractDatabaseObjectAction {
 		}
 		
 		// insert user groups
+		$addDefaultGroups = (isset($this->parameters['addDefaultGroups'])) ? $this->parameters['addDefaultGroups'] : true;
 		$groupIDs = (isset($this->parameters['groups'])) ? $this->parameters['groups'] : array();
-		$userEditor->addToGroups($groupIDs, false);
+		$userEditor->addToGroups($groupIDs, false, $addDefaultGroups);
 		
 		// insert visible languages
 		$languageIDs = (isset($this->parameters['languages'])) ? $this->parameters['languages'] : array();

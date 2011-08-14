@@ -25,7 +25,7 @@ class StyleHandler extends SingletonFactory {
 	
 	/**
 	 * active style object
-	 * @var	ActiveStyle
+	 * @var	wcf\data\style\ActiveStyle
 	 */
 	protected $style = null;
 	
@@ -41,7 +41,7 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Returns a list of all for the current user available styles.
 	 * 
-	 * @return	array<Style>
+	 * @return	array<wcf\data\style\Style>
 	 */
 	public function getAvailableStyles() {
 		$styles = array();
@@ -58,7 +58,7 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Returns the active style.
 	 * 
-	 * @return	ActiveStyle
+	 * @return	wcf\data\style\ActiveStyle
 	 */
 	public function getStyle() {
 		return $this->style;
@@ -91,7 +91,7 @@ class StyleHandler extends SingletonFactory {
 			}
 			
 			if (!isset($this->cache['styles'][$styleID])) {
-				throw new SystemException('no default style defined', 100000);
+				throw new SystemException('no default style defined');
 			}
 		}
 

@@ -15,17 +15,17 @@ interface ITemplatePluginCompiler {
 	/**
 	 * Executes the start tag of this compiler function.
 	 * 
-	 * @param	array				$tagArgs		
-	 * @param	TemplateScriptingCompiler	$compiler
-	 * @return	string						php code	
+	 * @param	array		$tagArgs		
+	 * @param	wcf\system\template\TemplateScriptingCompiler	$compiler
+	 * @return	string		php code	
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler);
 	
 	/**
 	 * Executes the end tag of this compiler function.
 	 * 
-	 * @param	TemplateScriptingCompiler	$compiler	
-	 * @return	string						php code	
+	 * @param	wcf\system\template\TemplateScriptingCompiler	$compiler
+	 * @return	string		php code	
 	 */
-	public function executeEnd(TemplateScriptingCompiler $tplObj);
+	public function executeEnd(TemplateScriptingCompiler $compiler);
 }

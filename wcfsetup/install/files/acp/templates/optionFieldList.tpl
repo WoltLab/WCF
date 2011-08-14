@@ -6,17 +6,18 @@
 		{assign var=error value=''}
 	{/if}
 	<dl class="{$option->optionName}Input">
-		<dt><label for="{$option->optionName}">{lang}{@$langPrefix}{$option->optionName}{/lang}</label></dt>
-		<dd>{@$optionData[html]}</dd>
-		{if $error}
-			<p class="innerError">
-				{if $error == 'empty'}
-					{lang}wcf.global.error.empty{/lang}
-				{else}	
-					{lang}wcf.user.option.error.{$error}{/lang}
-				{/if}
-			</p>
-		{/if}
-		<p>{lang}{@$langPrefix}{$option->optionName}.description{/lang}</p>
-	</dl>	
+		<dt{if $optionData[cssClassName]} class="{$optionData[cssClassName]}"{/if}><label for="{$option->optionName}">{lang}{@$langPrefix}{$option->optionName}{/lang}</label></dt>
+		<dd>{@$optionData[html]}
+			{if $error}
+				<small class="innerError">
+					{if $error == 'empty'}
+						{lang}wcf.global.error.empty{/lang}
+					{else}	
+						{lang}wcf.user.option.error.{$error}{/lang}
+					{/if}
+				</small>
+			{/if}
+			<small>{lang}{@$langPrefix}{$option->optionName}.description{/lang}</small>
+		</dd>
+	</dl>
 {/foreach}

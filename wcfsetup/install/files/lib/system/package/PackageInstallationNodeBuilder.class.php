@@ -325,7 +325,7 @@ class PackageInstallationNodeBuilder {
 				'packageURL' => $this->installation->getArchive()->getPackageInfo('packageURL'),
 				'standalone' => $this->installation->getArchive()->getPackageInfo('standalone'),
 				'author' => $this->installation->getArchive()->getAuthorInfo('author'),
-				'authorURL' => $this->installation->getArchive()->getAuthorInfo('authorURL'),
+				'authorURL' => $this->installation->getArchive()->getAuthorInfo('authorURL') !== null ? $this->installation->getArchive()->getAuthorInfo('authorURL') : '',
 				'installDate' => TIME_NOW,
 				'updateDate' => TIME_NOW
 			))

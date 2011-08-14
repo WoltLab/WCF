@@ -9,8 +9,8 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\session\SessionFactory;
 use wcf\system\session\SessionHandler;
-use wcf\system\storage\StorageHandler;
 use wcf\system\template\TemplateEngine;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\exception;
 use wcf\util;
 
@@ -42,63 +42,54 @@ if (!defined('NO_IMPORTS')) {
 class WCF {
 	/**
 	 * list of autoload directories
-	 *
 	 * @var array
 	 */
 	protected static $autoloadDirectories = array();
 	
 	/**
 	 * list of unique instances of each core object
-	 *
 	 * @var	array<wcf\system\SingletonFactory>
 	 */
 	protected static $coreObject = array();
 	
 	/**
 	 * list of cached core objects
-	 *
 	 * @var	array<array>
 	 */
 	protected static $coreObjectCache = array();
 	
 	/**
-	 * list of package dependencies
-	 *
-	 * @var	array
+	 * list of ids of dependent packages
+	 * @var	array<integer>
 	 */	
 	protected static $packageDependencies = array();
 	
 	/**
 	 * database object
-	 *
 	 * @var wcf\system\database\Database
 	 */
 	protected static $dbObj = null;
 	
 	/**
 	 * language object
-	 *
 	 * @var wcf\system\language\Language
 	 */
 	protected static $languageObj = null;
 	
 	/**
 	 * session object
-	 *
 	 * @var wcf\system\session\SessionHandler
 	 */
 	protected static $sessionObj = null;
 	
 	/**
 	 * template object
-	 *
 	 * @var wcf\system\template\TemplateEngine
 	 */
 	protected static $tplObj = null;
 	
 	/**
 	 * current user object
-	 *
 	 * @var wcf\data\user\User
 	 */
 	protected static $userObj = null;
@@ -116,7 +107,7 @@ class WCF {
 		// start initialization
 		$this->initMagicQuotes();
 		$this->initDB();
-		$this->initOptions();
+		$this->loadOptions();
 		$this->initCache();
 		$this->initSession();
 		$this->initLanguage();
@@ -151,8 +142,8 @@ class WCF {
 			CacheHandler::getInstance()->getCacheSource()->close();
 		}
 		
-		// execute shutdown actions
-		StorageHandler::getInstance()->shutdown();
+		// execute shutdown actions of user storage handler
+		UserStorageHandler::getInstance()->shutdown();
 	}
 	
 	/**
@@ -280,7 +271,7 @@ class WCF {
 		$dbHost = $dbUser = $dbPassword = $dbName = '';
 		$dbPort = 0;
 		$dbClass = 'wcf\system\database\MySQLDatabase';
-		require_once(WCF_DIR.'config.inc.php');
+		require(WCF_DIR.'config.inc.php');
 		
 		// create database connection
 		self::$dbObj = new $dbClass($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
@@ -307,25 +298,17 @@ class WCF {
 	/**
 	 * Includes the options file.
 	 * If the option file doesn't exist, the rebuild of it is started.
+	 * 
+	 * @param	string		$filename
 	 */
-	protected function initOptions() {
-		// get options file name
-		$optionsFile = $this->getOptionsFilename();
+	protected function loadOptions($filename = null, $packageID = 1) {
+		if ($filename === null) $filename = WCF_DIR.'options.inc.php';
 		
 		// create options file if doesn't exist
-		if (!file_exists($optionsFile) || filemtime($optionsFile) <= 1) {
-			\wcf\data\option\OptionEditor::rebuildFile($optionsFile);
+		if (!file_exists($filename) || filemtime($filename) <= 1) {
+			\wcf\data\option\OptionEditor::rebuildFile($filename, $packageID);
 		}
-		require_once($optionsFile);
-	}
-	
-	/**
-	 * Returns the name of the options file.
-	 *
-	 * @return	string		name of the options file
-	 */
-	protected function getOptionsFilename() {
-		return WCF_DIR.'options.inc.php';
+		require_once($filename);
 	}
 	
 	/**
@@ -417,8 +400,8 @@ class WCF {
 	 * Loads an application.
 	 *
 	 * @param	wcf\system\database\statement\PreparedStatement	$statement
-	 * @param	wcf\data\application\Application	$application
-	 * @param	boolean	$isDependentApplication
+	 * @param	wcf\data\application\Application		$application
+	 * @param	boolean						$isDependentApplication
 	 */	
 	protected function loadApplication(PreparedStatement $statement, Application $application, $isDepedentApplication = false) {
 		$statement->execute(array($application->packageID));
@@ -445,6 +428,11 @@ class WCF {
 		else {
 			unset(self::$autoloadDirectories[$abbreviation]);
 			throw new exception\SystemException('Unable to run '.$row['package'].', '.$className.' missing.');
+		}
+		
+		// load options
+		if (!$isDepedentApplication) {
+			$this->loadOptions($packageDir.'options.inc.php', $application->packageID);
 		}
 	}
 	
@@ -514,7 +502,7 @@ class WCF {
 	}
 	
 	/**
-	 * @see	WCF::__callStatic()
+	 * @see	wcf\system\WCF::__callStatic()
 	 */
 	public final function __call($name, array $arguments) {
 		// bug fix to avoid php crash, see http://bugs.php.net/bug.php?id=55020
@@ -545,7 +533,7 @@ class WCF {
 		
 		if (class_exists($objectName)) {
 			if (!(util\ClassUtil::isInstanceOf($objectName, 'wcf\system\SingletonFactory'))) {
-				throw new exception\SystemException("class '".$objectName."' does not implement the interface 'SingletonFactory'", 11010);
+				throw new exception\SystemException("class '".$objectName."' does not implement the interface 'SingletonFactory'");
 			}
 			
 			self::$coreObject[$className] = call_user_func(array($objectName, 'getInstance'));

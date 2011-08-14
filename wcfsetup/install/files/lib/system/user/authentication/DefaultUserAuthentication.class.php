@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\auth;
+namespace wcf\system\user\authentication;
 use wcf\data\user\User;
 use wcf\system\exception\UserInputException;
 use wcf\util\HeaderUtil;
@@ -12,23 +12,31 @@ use wcf\util\StringUtil;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.auth
+ * @subpackage	system.user.authentication
  * @category 	Community Framework
  */
-class UserAuthDefault extends UserAuth {
+class DefaultUserAuthentication extends AbstractUserAuthentication {
 	/**
-	 * @see UserAuth::supportsPersistentLogins()
+	 * @see wcf\system\user\authentication\IUserAuthentication::supportsPersistentLogins()
 	 */
 	public function supportsPersistentLogins() {
 		return true;
 	}
 	
 	/**
-	 * @see UserAuth::loginManually()
+	 * @see wcf\system\user\authentication\IUserAuthentication::storeAccessData()
+	 */
+	public function storeAccessData(User $user, $username, $password) {
+		HeaderUtil::setCookie('userID', $user->userID, TIME_NOW + 365 * 24 * 3600);
+		HeaderUtil::setCookie('password', StringUtil::getSaltedHash($password, $user->salt), TIME_NOW + 365 * 24 * 3600);
+	}
+	
+	/**
+	 * @see wcf\system\user\authentication\IUserAuthentication::loginManually()
 	 */
 	public function loginManually($username, $password, $userClassname = 'wcf\data\user\User') {
-		$user = User::getUserByUsername($username);
-		$userSession = new $userClassname(null, null, $user);
+		$user = $this->getUserByLogin($username);
+		$userSession = (get_class($user) == $userClassname ? $user : new $userClassname(null, null, $user));
 		
 		if ($userSession->userID == 0) {
 			throw new UserInputException('username', 'notFound');
@@ -43,15 +51,7 @@ class UserAuthDefault extends UserAuth {
 	}
 	
 	/**
-	 * @see UserAuth::storeAccessData()
-	 */
-	public function storeAccessData(User $user, $username, $password) {
-		HeaderUtil::setCookie('userID', $user->userID, TIME_NOW + 365 * 24 * 3600);
-		HeaderUtil::setCookie('password', StringUtil::getSaltedHash($password, $user->salt), TIME_NOW + 365 * 24 * 3600);
-	}
-
-	/**
-	 * @see UserAuth::loginAutomatically()
+	 * @see wcf\system\user\authentication\IUserAuthentication::loginAutomatically()
 	 */
 	public function loginAutomatically($persistent = false, $userClassname = 'wcf\data\user\User') {
 		if (!$persistent) return null;
@@ -70,12 +70,22 @@ class UserAuthDefault extends UserAuth {
 	}
 	
 	/**
+	 * Returns a user object by given login name.
+	 * 
+	 * @param	string			$login
+	 * @return	wcf\data\user\User	
+	 */
+	protected function getUserByLogin($login) {
+		return User::getUserByUsername($login);
+	}
+	
+	/**
 	 * Returns a user object or null on failure.
 	 * 
 	 * @param	integer		$userID
 	 * @param	string		$password
 	 * @param	string		$userClassname
-	 * @return	User	
+	 * @return	wcf\data\user\User	
 	 */
 	protected function getUserAutomatically($userID, $password, $userClassname = 'wcf\data\user\User') {
 		$user = new $userClassname($userID);
@@ -89,8 +99,8 @@ class UserAuthDefault extends UserAuth {
 	/**
 	 * Validates the cookie password.
 	 * 
-	 * @param	User		$user
-	 * @param	string		$password
+	 * @param	wcf\data\user\User	$user
+	 * @param	string			$password
 	 * @return	boolean
 	 */
 	protected function checkCookiePassword($user, $password) {

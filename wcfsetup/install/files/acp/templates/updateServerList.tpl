@@ -28,18 +28,17 @@
 
 {if !$updateServers|count}
 	<div class="border content">
-		<div class="container-1">
-			<p class="warning">{lang}wcf.acp.updateServer.view.noneAvailable{/lang}</p>
-		</div>
+		<p class="warning">{lang}wcf.acp.updateServer.view.noneAvailable{/lang}</p>
 	</div>
 {else}
-	<div class="border titleBarPanel">
-		<div class="containerHead"><h3>{lang}wcf.acp.updateServer.list.available{/lang}</h3></div>
-	</div>
-	<div class="border borderMarginRemove">
-		<table class="tableList">
+	<div class="border boxTitle">
+		<hgroup>
+			<h1>{lang}wcf.acp.updateServer.list.available{/lang} <span class="badge" title="{lang}wcf.acp.updateServer.list.count{/lang}">{#$items}</span></h1>
+		</hgroup>
+		
+		<table>
 			<thead>
-				<tr class="tableHead">
+				<tr>
 					<th class="columnPackageUpdateServerID{if $sortField == 'packageUpdateServerID'} active{/if}" colspan="2"><p><a href="index.php?page=UpdateServerList&amp;pageNo={@$pageNo}&amp;sortField=packageUpdateServerID&amp;sortOrder={if $sortField == 'packageUpdateServerID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.updateServer.packageUpdateServerID{/lang}{if $sortField == 'packageUpdateServerID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th class="columnServer{if $sortField == 'serverURL'} active{/if}"><p><a href="index.php?page=UpdateServerList&amp;pageNo={@$pageNo}&amp;sortField=serverURL&amp;sortOrder={if $sortField == 'serverURL' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.updateServer.serverURL{/lang}{if $sortField == 'serverURL'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 					<th class="columnPackages{if $sortField == 'packages'} active{/if}"><p><a href="index.php?page=UpdateServerList&amp;pageNo={@$pageNo}&amp;sortField=packages&amp;sortOrder={if $sortField == 'packages' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.updateServer.packages{/lang}{if $sortField == 'packages'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
@@ -50,13 +49,14 @@
 					{if $additionalHeadColumns|isset}{@$additionalHeadColumns}{/if}
 				</tr>
 			</thead>
+			
 			<tbody>
 				{foreach from=$updateServers item=updateServer}
 					<tr class="updateServerRow">
 						<td class="columnIcon">
-							<img src="{@RELATIVE_WCF_DIR}icon/{if !$updateServer->disabled}enabled{else}disabled{/if}S.png" alt="" title="{lang}wcf.acp.updateServer.{if !$updateServer->disabled}disable{else}enable{/if}{/lang}" data-objectID="{@$updateServer->packageUpdateServerID}" data-disableMessage="{lang}wcf.acp.updateServer.disable{/lang}" data-enableMessage="{lang}wcf.acp.updateServer.enable{/lang}" class="toggleButton" />
-							<a href="index.php?form=UpdateServerEdit&amp;packageUpdateServerID={@$updateServer->packageUpdateServerID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/editS.png" alt="" title="{lang}wcf.acp.updateServer.edit{/lang}" /></a>
-							<img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.updateServer.delete{/lang}" data-objectID="{@$updateServer->packageUpdateServerID}" data-confirmMessage="{lang}wcf.acp.updateServer.delete.sure{/lang}" class="deleteButton" />
+							<img src="{@RELATIVE_WCF_DIR}icon/{if !$updateServer->disabled}enabled{else}disabled{/if}S.png" alt="" title="{lang}wcf.acp.updateServer.{if !$updateServer->disabled}disable{else}enable{/if}{/lang}" data-objectID="{@$updateServer->packageUpdateServerID}" data-disableMessage="{lang}wcf.acp.updateServer.disable{/lang}" data-enableMessage="{lang}wcf.acp.updateServer.enable{/lang}" class="toggleButton balloonTooltip" />
+							<a href="index.php?form=UpdateServerEdit&amp;packageUpdateServerID={@$updateServer->packageUpdateServerID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/editS.png" alt="" title="{lang}wcf.acp.updateServer.edit{/lang}" class="balloonTooltip" /></a>
+							<img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.updateServer.delete{/lang}" data-objectID="{@$updateServer->packageUpdateServerID}" data-confirmMessage="{lang}wcf.acp.updateServer.delete.sure{/lang}" class="deleteButton balloonTooltip" />
 							
 							{if $additionalButtons[$updateServer->packageUpdateServerID]|isset}{@$additionalButtons[$updateServer->packageUpdateServerID]}{/if}
 						</td>
@@ -72,8 +72,10 @@
 				{/foreach}
 			</tbody>
 		</table>
+		
 	</div>
-	<div class="contentHeader">
+	
+	<div class="contentFooter">
 		<nav class="largeButtons">
 			<ul><li><a href="index.php?form=UpdateServerAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.updateServer.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/updateServerAddM.png" alt="" /> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li></ul>
 		</nav>

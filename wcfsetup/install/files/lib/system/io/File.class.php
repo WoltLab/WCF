@@ -53,7 +53,7 @@ class File {
 			$this->resource = fopen($filename, $mode);
 		}
 		if ($this->resource === false) {
-			throw new SystemException('Can not open file ' . $filename, 11012);
+			throw new SystemException('Can not open file ' . $filename);
 		}
 	}
 	
@@ -74,7 +74,7 @@ class File {
 	       		return call_user_func_array($function, $arguments);
 		}
 		else {
-			throw new SystemException('Can not call file method ' . $function, 11003);
+			throw new SystemException('Can not call file method ' . $function);
 		}
 	}
 }

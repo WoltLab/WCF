@@ -15,7 +15,7 @@ interface ITreeMenuItem {
 	/**
 	 * Returns the link of this item.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getLink();
 }

@@ -16,7 +16,7 @@ use wcf\util\DateUtil;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypeTimezone implements IOptionType {
+class OptionTypeTimezone extends AbstractOptionType {
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
@@ -41,12 +41,5 @@ class OptionTypeTimezone implements IOptionType {
 		if (!in_array($newValue, DateUtil::getAvailableTimezones())) {
 			throw new UserInputException($option->optionName, 'validationFailed');
 		}
-	}
-	
-	/**
-	 * @see wcf\system\option\IOptionType::getData()
-	 */
-	public function getData(Option $option, $newValue) {
-		return $newValue;		
 	}
 }
