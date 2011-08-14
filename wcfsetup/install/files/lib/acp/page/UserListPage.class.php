@@ -183,13 +183,15 @@ class UserListPage extends SortablePage {
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("user_table.userID IN (?)", array($userIDs));
 			
-			$sql = "SELECT	userID, groupID
-				FROM	wcf".WCF_N."_user_to_user_group user_table
+			$sql = "SELECT		userID, groupIdentifier
+				FROM		wcf".WCF_N."_user_to_user_group user_table
+				LEFT JOIN	wcf".WCF_N."_user_group user_group
+				ON		(user_group.groupID = user_table.groupID)
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
-				$userToGroups[$row['userID']][] = $row['groupID'];
+				$userToGroups[$row['userID']][] = $row['groupIdentifier'];
 			}
 			
 			$sql = "SELECT		option_value.*, user_table.*

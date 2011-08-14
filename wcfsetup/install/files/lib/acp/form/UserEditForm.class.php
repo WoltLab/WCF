@@ -57,7 +57,7 @@ class UserEditForm extends UserAddForm {
 			}
 			
 			$this->user = new UserEditor($user);
-			if (!UserGroup::isAccessibleGroup($this->user->getGroupIDs())) {
+			if (!UserGroup::isAccessibleGroup($this->user->getUserGroupIdentifiers())) {
 				throw new PermissionDeniedException();
 			}
 		}
@@ -101,7 +101,7 @@ class UserEditForm extends UserAddForm {
 	protected function readDefaultValues() {
 		$this->username = $this->user->username;
 		$this->email = $this->confirmEmail = $this->user->email;
-		$this->groupIDs = $this->user->getGroupIDs();
+		$this->groupIDs = $this->user->getUserGroupIDs();
 		$this->languageID = $this->user->languageID;
 		
 		foreach ($this->options as $option) {
@@ -135,7 +135,7 @@ class UserEditForm extends UserAddForm {
 		
 		// add default groups
 		$defaultGroups = UserGroup::getAccessibleGroups(array(UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS));
-		$oldGroupIDs = $this->user->getGroupIDs();
+		$oldGroupIDs = $this->user->getUserGroupIDs();
 		foreach ($oldGroupIDs as $oldGroupID) {
 			if (isset($defaultGroups[$oldGroupID])) {
 				$this->groupIDs[] = $oldGroupID;

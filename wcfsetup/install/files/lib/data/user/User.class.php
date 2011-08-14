@@ -137,7 +137,7 @@ class User extends DatabaseObject {
 				$statement->execute(array($this->userID));
 				while ($row = $statement->fetchArray()) {
 					$this->userGroupIDs[] = $row['groupID'];
-					$this->userGroupIdentifiers[] = $row['groupID'];
+					$this->userGroupIdentifiers[] = $row['groupIdentifier'];
 				}
 
 				// update storage data
@@ -159,7 +159,7 @@ class User extends DatabaseObject {
 	public function getLanguageIDs() {
 		if ($this->languageIDs === null) {
 			// load storage data
-			StorageHandler::getInstance()->loadStorage(array($this->userID), 1);
+			UserStorageHandler::getInstance()->loadStorage(array($this->userID), 1);
 			
 			// get language ids
 			$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'languageIDs', 1);
