@@ -103,6 +103,10 @@
 		<item name="wcf.acp.group.groupID"><![CDATA[Gruppen-ID]]></item>
 		<item name="wcf.acp.group.groupName"><![CDATA[Name der Benutzergruppe]]></item>
 		<item name="wcf.acp.group.groupName.description"><![CDATA[Gib den Namen der Gruppe an.]]></item>
+		<item name="wcf.acp.group.groupIdentifier"><![CDATA[Bezeichner der Benutzergruppe]]></item>
+		<item name="wcf.acp.group.groupIdentifier.description"><![CDATA[Gib einen eindeutigen Bezeichner für die Gruppe an. Dieser kann der Erstellung der Gruppe nicht mehr verändert werden und muss das Form "wcf.userGroup.identifier.XY" besitzen, wobei Du XY frei als Kombination aus Buchstaben und Zahlen wählen darfst.]]></item>
+		<item name="wcf.acp.group.groupIdentifier.error.notUnique"><![CDATA[Dieser Bezeichner wird bereits von einer anderen Gruppe verwendet.]]></item>
+		<item name="wcf.acp.group.groupIdentifier.error.notValid"><![CDATA[Das Format des Bezeichners entspricht nicht den Anforderungen.]]></item>
 		<item name="wcf.acp.group.guests"><![CDATA[Gäste]]></item>
 		<item name="wcf.acp.group.list"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.group.list.count"><![CDATA[{#$items} Benutzergruppe{if $items != 1}n{/if}]]></item>

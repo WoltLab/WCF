@@ -141,7 +141,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		if (empty($this->groupIdentifier)) {
 			throw new UserInputException('groupIdentifier');
 		}
-		else if (!preg_match('~wcf\.userGroup\.identifier\.(\w+)~', $this->groupIdentifier)) {
+		else if (!preg_match('~^wcf.userGroup.identifier.(\w+)$~', $this->groupIdentifier)) {
 			throw new UserInputException('groupIdentifier', 'notValid');
 		}
 		else if (!UserGroupEditor::isAvailableGroupIdentifier($this->groupIdentifier)) {
