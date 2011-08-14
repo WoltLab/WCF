@@ -33,13 +33,13 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * user id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $userID = 0;
 	
 	/**
 	 * user editor object
-	 * @var UserEditor
+	 * @var	wcf\data\user\UserEditor
 	 */
 	public $user = null;
 	
@@ -69,8 +69,12 @@ class UserEditForm extends UserAddForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (!WCF::getSession()->getPermission('admin.user.canEditPassword')) $this->password = $this->confirmPassword = '';
-		if (!WCF::getSession()->getPermission('admin.user.canEditMailAddress')) $this->email = $this->confirmEmail = $this->user->email;
+		if (!WCF::getSession()->getPermission('admin.user.canEditPassword')) {
+			$this->password = $this->confirmPassword = '';
+		}
+		if (!WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+			$this->email = $this->confirmEmail = $this->user->email;
+		}
 	}
 	
 	/**
