@@ -76,7 +76,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public $groupName = array();
 	
 	/**
-	 * array with available language codes (language ids as key)
+	 * array with available language codes (language ids as keys)
 	 * @var	array<string>
 	 */
 	public $languageCodes = array();
@@ -198,7 +198,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	/**
 	 * @see wcf\page\IPage::readData()
 	 */
-	public function readData() {	
+	public function readData() {
 		AbstractOptionListForm::readData();
 		
 		$this->optionTree = $this->getOptionTree();
