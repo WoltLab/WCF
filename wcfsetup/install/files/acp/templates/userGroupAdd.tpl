@@ -38,29 +38,32 @@
 
 <form method="post" action="index.php?form=UserGroup{@$action|ucfirst}">
 	<div class="border content">
-		
-		<fieldset>
-			<legend>{lang}wcf.acp.group.data{/lang}</legend>
-			
-			<dl id="groupIdentifierDiv"{if $errorType.groupIdentifier|isset} class="formError"{/if}>
-				<dt><label for="groupIdentifier">{lang}wcf.acp.group.groupIdentifier{/lang}</label></dt>
-				<dd>
-					<input{if $action == 'edit'} disabled="disabled"{/if} type="text" id="groupIdentifier" name="groupIdentifier" value="{$groupIdentifier}" class="medium" />
-					{if $errorType.groupIdentifier|isset}
-						<small class="innerError">
-							{if $errorType.groupIdentifier == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-							{if $errorType.groupIdentifier == 'notValid'}{lang}wcf.acp.group.groupIdentifier.error.notValid{/lang}{/if}
-							{if $errorType.groupIdentifier == 'notUnique'}{lang}wcf.acp.group.groupIdentifier.error.notUnique{/lang}{/if}
-						</small>
-					{/if}
-					{if $action == 'add'}
-						<small id="groupIdentifierHelpMessage">{lang}wcf.acp.group.groupIdentifier.description{/lang}</small>
-					{/if}
-				</dd>
-			</dl>
-			
-			{if $additionalFields|isset}{@$additionalFields}{/if}
-		</fieldset>
+		{if $action == 'add' || $additionalFields|isset}
+			<fieldset>
+				<legend>{lang}wcf.acp.group.data{/lang}</legend>
+
+				{if $action == 'add'}
+					<dl id="groupIdentifierDiv"{if $errorType.groupIdentifier|isset} class="formError"{/if}>
+						<dt><label for="groupIdentifier">{lang}wcf.acp.group.groupIdentifier{/lang}</label></dt>
+						<dd>
+							<input type="text" id="groupIdentifier" name="groupIdentifier" value="{$groupIdentifier}" class="medium" />
+							{if $errorType.groupIdentifier|isset}
+								<small class="innerError">
+									{if $errorType.groupIdentifier == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+									{if $errorType.groupIdentifier == 'notValid'}{lang}wcf.acp.group.groupIdentifier.error.notValid{/lang}{/if}
+									{if $errorType.groupIdentifier == 'notUnique'}{lang}wcf.acp.group.groupIdentifier.error.notUnique{/lang}{/if}
+								</small>
+							{/if}
+							{if $action == 'add'}
+								<small id="groupIdentifierHelpMessage">{lang}wcf.acp.group.groupIdentifier.description{/lang}</small>
+							{/if}
+						</dd>
+					</dl>
+				{/if}
+
+				{if $additionalFields|isset}{@$additionalFields}{/if}
+			</fieldset>
+		{/if}
 
 		<fieldset>
 			<legend>{lang}wcf.acp.group.groupName{/lang}</legend>

@@ -183,7 +183,7 @@ class UserListPage extends SortablePage {
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("user_table.userID IN (?)", array($userIDs));
 			
-			$sql = "SELECT		userID, groupIdentifier
+			$sql = "SELECT		userID, groupIdentifier, user_group.groupID
 				FROM		wcf".WCF_N."_user_to_user_group user_table
 				LEFT JOIN	wcf".WCF_N."_user_group user_group
 				ON		(user_group.groupID = user_table.groupID)
@@ -191,7 +191,8 @@ class UserListPage extends SortablePage {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
-				$userToGroups[$row['userID']][] = $row['groupIdentifier'];
+				$userToGroupIDs[$row['userID']][] = $row['groupID'];
+				$userToGroupIdentifiers[$row['userID']][] = $row['groupIdentifier'];
 			}
 			
 			$sql = "SELECT		option_value.*, user_table.*
@@ -203,8 +204,8 @@ class UserListPage extends SortablePage {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
-				$row['groupIDs'] = implode(',', $userToGroups[$row['userID']]);
-				$accessible = UserGroup::isAccessibleGroup($userToGroups[$row['userID']]);
+				$row['groupIDs'] = implode(',', $userToGroupIDs[$row['userID']]);
+				$accessible = UserGroup::isAccessibleGroup($userToGroupIdentifiers[$row['userID']]);
 				$row['accessible'] = $accessible;
 				$row['deletable'] = ($accessible && WCF::getSession()->getPermission('admin.user.canDeleteUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
 				$row['editable'] = ($accessible && WCF::getSession()->getPermission('admin.user.canEditUser')) ? 1 : 0;
