@@ -152,7 +152,7 @@ class UserGroup extends DatabaseObject {
 	/**
 	 * Returns true, if the active user is member of the group with the given identifier.
 	 * 
-	 * @param 	integer		$groupIdentifier
+	 * @param 	string		$groupIdentifier
 	 * @return	boolean		    
 	 */
 	public static function isMember($groupIdentifier) {
