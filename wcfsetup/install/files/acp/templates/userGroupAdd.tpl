@@ -54,9 +54,7 @@
 									{if $errorType.groupIdentifier == 'notUnique'}{lang}wcf.acp.group.groupIdentifier.error.notUnique{/lang}{/if}
 								</small>
 							{/if}
-							{if $action == 'add'}
-								<small id="groupIdentifierHelpMessage">{lang}wcf.acp.group.groupIdentifier.description{/lang}</small>
-							{/if}
+							<small id="groupIdentifierHelpMessage">{lang}wcf.acp.group.groupIdentifier.description{/lang}</small>
 						</dd>
 					</dl>
 				{/if}
