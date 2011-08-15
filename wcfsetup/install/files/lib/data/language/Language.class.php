@@ -138,7 +138,7 @@ class Language extends DatabaseObject {
 			
 			// rebuild language file
 			$languageCategory = LanguageFactory::getCategory($category);
-			$this->editor->updateCategory(array($languageCategory['languageCategoryID']), array($this->packageID));
+			$this->editor->updateCategory(array($languageCategory->languageCategoryID), array($this->packageID));
 		}
 		
 		// include language file

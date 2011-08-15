@@ -36,13 +36,13 @@ abstract class LanguageFactory {
 	private static $scriptingCompiler = null;
 	
 	/**
-	 * Returns a Language-object for the requested language id.
+	 * Returns a Language object for the language with the given id.
 	 *
 	 * @param	integer		$languageID
 	 * @return	wcf\data\language\Language
 	 */
 	public static function getLanguage($languageID) {
-		if (self::$cache === null) self::loadCache();
+		self::loadCache();
 		
 		if (!isset(self::$languages[$languageID])) {
 			$language = new Language($languageID);
@@ -60,43 +60,38 @@ abstract class LanguageFactory {
 	}
 	
 	/**
-	 * Validates if given category is known.
+	 * Returns true if the language category with the given name exists.
 	 *
-	 * @param	string		$category
+	 * @param	string		$categoryName
 	 * @return	boolean
 	 */
-	public static function isValidCategory($category) {
+	public static function isValidCategory($categoryName) {
 		self::loadCache();
 		
-		return (isset(self::$cache['categories'][$category])) ? true : false;
+		return isset(self::$cache['categories'][$categoryName]);
 	}
 	
 	/**
-	 * Returns data for a specific category.
+	 * Returns the language category with the given name.
 	 *
-	 * @param	string		$category
-	 * @return	array
+	 * @param	string		$categoryName
+	 * @return	wcf\data\language\category\LanguageCategory
 	 */
-	public static function getCategory($category) {
-		if (isset(self::$cache['categories'][$category])) {
-			return self::$cache['categories'][$category];
+	public static function getCategory($categoryName) {
+		if (isset(self::$cache['categories'][$categoryName])) {
+			return self::$cache['categories'][$categoryName];
 		}
 		
-		return array();
+		return null;
 	}
 	
 	/**
 	 * Returns a list of available language categories.
 	 * 
-	 * @return	array<string>
+	 * @return	array<wcf\data\language\category\LanguageCategory>
 	 */	
 	public static function getCategories() {
-		$categories = array();
-		foreach (self::$cache['categories'] as $categoryName => $category) {
-			$categories[$category['languageCategoryID']] = $categoryName;
-		}
-		
-		return $categories;
+		return self::$cache['categories'];
 	}
 	
 	/**
@@ -126,7 +121,7 @@ abstract class LanguageFactory {
 	/**
 	 * Determines the preferred language of the current user.
 	 *
-	 * @param	array		$availableLanguages
+	 * @param	array		$availableLanguageCodes
 	 * @param	string		$defaultLanguageCode
 	 * @return	string
 	 */
@@ -148,10 +143,11 @@ abstract class LanguageFactory {
 	}
 	
 	/**
-	 * Returns all available languages for given package
+	 * Returns infos (code, id, encoding, etc) about all available languages
+	 * for package with the given id.
 	 *
 	 * @param 	integer		$packageID
-	 * @return	array		$availableLanguages 	infos about each language (code, id, encoding, etc)
+	 * @return	array
 	 */
 	public static function getAvailableLanguages($packageID = PACKAGE_ID) {
 		// get list of all available languages
