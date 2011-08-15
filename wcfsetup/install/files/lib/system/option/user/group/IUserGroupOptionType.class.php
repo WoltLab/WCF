@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\option\userGroup;
+namespace wcf\system\option\user\group;
 use wcf\system\option\IOptionType;
 
 /**
@@ -9,7 +9,7 @@ use wcf\system\option\IOptionType;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.option.userGroup
+ * @subpackage	system.option.user.group
  * @category 	Community Framework
  */
 interface IUserGroupOptionType extends IOptionType {

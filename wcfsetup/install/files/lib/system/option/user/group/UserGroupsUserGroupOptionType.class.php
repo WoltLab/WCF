@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\option\userGroup;
+namespace wcf\system\option\user\Group;
 use wcf\data\option\Option;
 use wcf\data\user\group\UserGroup;
 use wcf\system\option\AbstractOptionType;
@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.option.userGroup
+ * @subpackage	system.option.user.group
  * @category 	Community Framework
  */
 class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserGroupOptionType {
@@ -66,7 +66,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	}
 	
 	/**
-	 * @see wcf\system\option\userGroup\IUserGroupOptionType::merge()
+	 * @see wcf\system\option\user\group\IUserGroupOptionType::merge()
 	 */
 	public function merge(array $values) {
 		$result = array();
