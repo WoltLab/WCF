@@ -43,7 +43,7 @@
 	<img src="{@RELATIVE_WCF_DIR}icon/{if $searchID}userSearch{else}users{/if}L.png" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.user.{if $searchID}search{else}list{/if}{/lang}</h1>
-		<h2>{if $searchID}{lang}wcf.acp.user.search.matches{/lang}{else}{lang}wcf.acp.user.list.count{/lang}{/if}</h2><!-- deprecated display -->
+		<h2>{if $searchID}{lang}wcf.acp.user.search.matches{/lang}{/if}</h2><!-- deprecated display -->
 	</hgroup>
 </header>
 
@@ -102,14 +102,14 @@
 						</script>
 						
 						{if $user->editable}
-							<a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/editS.png" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="balloonTooltip" /></a>
+							<a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="balloonTooltip" /></a>
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/editDisabledS.png" alt="" title="{lang}wcf.acp.user.edit{/lang}" />
+							<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" />
 						{/if}
 						{if $user->deletable}
-							<a onclick="return confirm('{lang}wcf.acp.user.delete.sure{/lang}')" href="index.php?action=UserDelete&amp;userID={@$user->userID}&amp;url={@$encodedURL}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="balloonTooltip" /></a>
+							<a onclick="return confirm('{lang}wcf.acp.user.delete.sure{/lang}')" href="index.php?action=UserDelete&amp;userID={@$user->userID}&amp;url={@$encodedURL}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="balloonTooltip" /></a>
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/deleteDisabledS.png" alt="" title="{lang}wcf.acp.user.delete{/lang}" />
+							<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" />
 						{/if}
 						
 						{if $additionalButtons[$user->userID]|isset}{@$additionalButtons[$user->userID]}{/if}

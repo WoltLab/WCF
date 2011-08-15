@@ -63,7 +63,7 @@ hr {
 
 header.pageHeader {
 	/* Disabled, because the WoltLab header image is not LGPL 
-	Activate it if you want to test your header image */
+	Activate it if you want to test your own header image */
 	/* background-image: url("../images/header.png"); */
 	background-position: left top;
 	background-repeat: repeat-x;
@@ -253,6 +253,7 @@ section.content {
 
 section.content .content {
 	border: 1px solid #ccc;
+	background-color: rgba(0, 0, 0, .01);
 	padding: 13px 23px;
 }
 
@@ -461,9 +462,17 @@ footer nav.footerNavigation ul li {
 fieldset {
 	border: 1px solid #ccc;
 	border-radius: 7px;
-	background-color: rgba(0, 0, 0, .015);
 	margin: 15px 0;
 	padding: 15px;
+	
+	background-color: rgba(0, 0, 0, .015);
+	/* experimental 
+	background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
+	background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
+	background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
+	background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
+	background-image: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
+	*/
 }
 /*
 fieldset:first-child {
@@ -911,7 +920,7 @@ input[type='submit']:active,
 .boxTitle {
 	background-color: #29374a;
 	/* Disabled, because the WoltLab header image is not LGPL 
-	Activate it if you want to test your header image */
+	Activate it if you want to test your own header image */
 	/* background-image: url("../images/header.png"); */
 	background-position: left top;
 	background-repeat: repeat-x;
@@ -1554,6 +1563,30 @@ div.ui-widget-overlay {
 	display: inline-block;
 	position: relative;
 	top: -1px;
+}
+
+.badgeInfo {
+	color: #68b;
+	border: 1px solid #9be;
+	background-color: #def;
+}
+
+.badgeSuccess {
+	color: #090;
+	border: 1px solid #0c0;
+	background-color: #efe;
+}
+
+.badgeWarning {
+	color: #990;
+	border: 1px solid #cc0;
+	background-color: #ffd;
+}
+
+.badgeError {
+	color: #c00;
+	border: 1px solid #f99;
+	background-color: #fee;
 }
 
 

@@ -2,7 +2,7 @@
 namespace wcf\system\form\element;
 
 /**
- * Provides a radio form element.
+ * Provides a checkbox form element.
  *
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
