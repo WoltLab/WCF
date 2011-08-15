@@ -25,7 +25,7 @@
 				<thead>
 					<tr>
 						<th class="columnCronjobID{if $sortField == 'cronjobID'} active{/if}"><p><a href="index.php?page=CronjobLogList&amp;pageNo={@$pageNo}&amp;sortField=cronjobID&amp;sortOrder={if $sortField == 'cronjobID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.cronjob.cronjobID{/lang}{if $sortField == 'cronjobID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
-						<th class="columnClassPath{if $sortField == 'classPath'} active{/if}"><p><a href="index.php?page=CronjobLogList&amp;pageNo={@$pageNo}&amp;sortField=classPath&amp;sortOrder={if $sortField == 'classPath' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.cronjob.classPath{/lang}{if $sortField == 'classPath'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
+						<th class="columnClassName{if $sortField == 'className'} active{/if}"><p><a href="index.php?page=CronjobLogList&amp;pageNo={@$pageNo}&amp;sortField=className&amp;sortOrder={if $sortField == 'className' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.cronjob.className{/lang}{if $sortField == 'className'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 						<th class="columnDescription{if $sortField == 'description'} active{/if}"><p><a href="index.php?page=CronjobLogList&amp;pageNo={@$pageNo}&amp;sortField=description&amp;sortOrder={if $sortField == 'description' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.cronjob.description{/lang}{if $sortField == 'description'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 						<th class="columnExecTime{if $sortField == 'execTime'} active{/if}"><p><a href="index.php?page=CronjobLogList&amp;pageNo={@$pageNo}&amp;sortField=execTime&amp;sortOrder={if $sortField == 'execTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.cronjob.log.execTime{/lang}{if $sortField == 'execTime'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}S.png" alt="" />{/if}</a></p></th>
 						
@@ -38,7 +38,7 @@
 					{foreach from=$cronjobLogs item=cronjobLog}
 						<tr>
 							<td class="columnCronjobID columnID"><p>{@$cronjobLog->cronjobID}</p></td>
-							<td class="columnClassPath columnText"><p>{$cronjobLog->classPath}</p></td>
+							<td class="columnClassName columnText"><p>{$cronjobLog->className}</p></td>
 							<td class="columnDescription columnText"><p>{$cronjobLog->description}</p></td>
 							{if $cronjobLog->success}
 								<td class="columnExecTime columnDate"><p>{@$cronjobLog->execTime|time} {lang}wcf.acp.cronjob.log.success{/lang}</p></td>
