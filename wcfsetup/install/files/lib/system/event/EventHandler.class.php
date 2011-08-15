@@ -55,13 +55,28 @@ class EventHandler extends SingletonFactory {
 	 * Loads all registered actions of the active package.
 	 */
 	protected function loadActions() {
-		CacheHandler::getInstance()->addResource('eventListener-'.PACKAGE_ID, WCF_DIR.'cache/cache.eventListener-'.PACKAGE_ID.'.php', 'wcf\system\cache\builder\CacheBuilderEventListener');
-		$cache = CacheHandler::getInstance()->get('eventListener-'.PACKAGE_ID);
-		if (isset($cache['actions'])) $this->actions = $cache['actions'];
-		if (isset($cache['inheritedActions'])) $this->inheritedActions = $cache['inheritedActions'];
+		$cacheName = 'eventListener-'.PACKAGE_ID;
+		CacheHandler::getInstance()->addResource(
+			$cacheName,
+			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'wcf\system\cache\builder\EventListenerCacheBuilder'
+		);
+		$cache = CacheHandler::getInstance()->get($cacheName);
+		
+		if (isset($cache['actions'])) {
+			$this->actions = $cache['actions'];
+		}
+		if (isset($cache['inheritedActions'])) {
+			$this->inheritedActions = $cache['inheritedActions'];
+		}
 		unset($cache);
-		if (!is_array($this->actions)) $this->actions = array();
-		if (!is_array($this->inheritedActions)) $this->inheritedActions = array();
+		
+		if (!is_array($this->actions)) {
+			$this->actions = array();
+		}
+		if (!is_array($this->inheritedActions)) {
+			$this->inheritedActions = array();
+		}
 	}
 	
 	/**

@@ -1,10 +1,9 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\data\template\group\TemplateGroupList;
-use wcf\system\cache\ICacheBuilder;
+use wcf\data\spider\SpiderList;
 
 /**
- * Caches template groups.
+ * Caches the list of search engine spiders.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -13,15 +12,16 @@ use wcf\system\cache\ICacheBuilder;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderTemplateGroup implements ICacheBuilder {
+class SpiderCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
-		$templateGroupList = new TemplateGroupList();
-		$templateGroupList->sqlLimit = 0;
-		$templateGroupList->readObjects();
+		$spiderList = new SpiderList();
+		$spiderList->sqlOrderBy = "spider.spiderID ASC";
+		$spiderList->sqlLimit = 0;
+		$spiderList->readObjects();
 		
-		return $templateGroupList->getObjects();
+		return $spiderList->getObjects();
 	}
 }

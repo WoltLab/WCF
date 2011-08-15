@@ -624,7 +624,11 @@ class TemplateEngine extends SingletonFactory {
 	 * Loads cached template group information.
 	 */
 	protected function loadTemplateGroupCache() {
-		CacheHandler::getInstance()->addResource('templateGroups', WCF_DIR.'cache/cache.templateGroups.php', 'wcf\system\cache\builder\CacheBuilderTemplateGroup');
+		CacheHandler::getInstance()->addResource(
+			'templateGroups',
+			WCF_DIR.'cache/cache.templateGroups.php',
+			'wcf\system\cache\builder\TemplateGroupCacheBuilder'
+		);
 		$this->templateGroupCache = CacheHandler::getInstance()->get('templateGroups');
 	}
 	
@@ -701,7 +705,7 @@ class TemplateEngine extends SingletonFactory {
 		CacheHandler::getInstance()->addResource(
 			$cacheName,
 			WCF_DIR.'cache/cache.'.$cacheName.'.php',
-			'wcf\system\cache\builder\CacheBuilderTemplateListener'
+			'wcf\system\cache\builder\TemplateListenerCacheBuilder'
 		);
 		
 		$this->templateListeners = CacheHandler::getInstance()->get($cacheName);
@@ -734,7 +738,7 @@ class TemplateEngine extends SingletonFactory {
 		CacheHandler::getInstance()->addResource(
 			$cacheName,
 			WCF_DIR.'cache/templateListener/'.$cacheName.'.php',
-			'wcf\system\cache\builder\CacheBuilderTemplateListenerCode'
+			'wcf\system\cache\builder\TemplateListenerCodeCacheBuilder'
 		);
 		
 		$this->templateListeners[$templateName] = CacheHandler::getInstance()->get($cacheName);

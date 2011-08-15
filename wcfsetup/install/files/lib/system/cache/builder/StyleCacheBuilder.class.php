@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\style\Style;
-use wcf\system\cache\ICacheBuilder;
 use wcf\system\WCF;
 
 /**
@@ -14,12 +13,16 @@ use wcf\system\WCF;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderStyle implements ICacheBuilder {
+class StyleCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData($cacheResource) {
-		$data = array('default' => 0, 'styles' => array(), 'packages' => array());
+		$data = array(
+			'default' => 0,
+			'styles' => array(),
+			'packages' => array()
+		);
 		
 		// get all styles
 		$sql = "SELECT		*
