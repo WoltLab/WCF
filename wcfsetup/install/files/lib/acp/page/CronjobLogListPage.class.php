@@ -44,7 +44,7 @@ class CronjobLogListPage extends SortablePage {
 	/**
 	 * @see wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('cronjobID', 'classPath', 'description', 'execTime', 'success');
+	public $validSortFields = array('cronjobID', 'className', 'description', 'execTime', 'success');
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
@@ -66,7 +66,7 @@ class CronjobLogListPage extends SortablePage {
 	 * @see	wcf\page\MultipleLinkPage::readObjects()
 	 */
 	protected function readObjects() {
-		$this->sqlOrderBy = (($this->sortField == 'classPath' || $this->sortField == 'description') ? 'cronjob.' : 'cronjob_log.').$this->sortField." ".$this->sortOrder;
+		$this->sqlOrderBy = (($this->sortField == 'className' || $this->sortField == 'description') ? 'cronjob.' : 'cronjob_log.').$this->sortField." ".$this->sortOrder;
 		
 		parent::readObjects();
 	}
