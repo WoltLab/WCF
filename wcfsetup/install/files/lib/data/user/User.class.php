@@ -126,7 +126,7 @@ class User extends DatabaseObject {
 	public function getLanguageIDs() {
 		if ($this->languageIDs === null) {
 			// load storage data
-			StorageHandler::getInstance()->loadStorage(array($this->userID), 1);
+			UserStorageHandler::getInstance()->loadStorage(array($this->userID), 1);
 			
 			// get language ids
 			$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'languageIDs', 1);
