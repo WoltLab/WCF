@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateEngine;
-use wcf\system\template\IModifierTemplatePlugin;
 use wcf\util\StringUtil;
 
 /**
@@ -11,7 +10,7 @@ use wcf\util\StringUtil;
  * {$foo|truncate:35:'...'}
  *
  * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin

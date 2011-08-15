@@ -2,7 +2,6 @@
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateEngine;
-use wcf\system\template\IModifierTemplatePlugin;
 
 /**
  * The 'concat' modifier returns the string that results from concatenating the arguments.

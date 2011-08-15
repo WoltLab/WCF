@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\IPrefilterTemplatePlugin;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\WCF;
 

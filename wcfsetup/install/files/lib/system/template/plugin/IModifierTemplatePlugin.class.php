@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\template;
+namespace wcf\system\template\plugin;
 
 /**
  * Modifiers are functions that are applied to a variable in the template 

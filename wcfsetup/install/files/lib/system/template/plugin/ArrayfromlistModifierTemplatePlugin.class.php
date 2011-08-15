@@ -2,7 +2,6 @@
 namespace wcf\system\template\plugin;
 use wcf\data\option\Option;
 use wcf\system\template\TemplateEngine;
-use wcf\system\template\IModifierTemplatePlugin;
 
 /**
  * The 'arrayfromlist' modifier generates an associative array out of a key-value list.
