@@ -132,7 +132,7 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * list of loaded compiler plugin objects
-	 * @var	array<wcf\system\template\ITemplatePluginCompiler>
+	 * @var	array<wcf\system\template\ICompilerTemplatePlugin>
 	 */
 	protected $compilerPlugins = array();
 	
@@ -494,8 +494,8 @@ class TemplateScriptingCompiler {
 			
 			$this->compilerPlugins[$className] = new $className();
 			
-			if (!($this->compilerPlugins[$className] instanceof ITemplatePluginCompiler)) {
-				throw new SystemException($this->formatSyntaxError("Compiler plugin '".$tagCommand."' does not implement the interface 'ITemplatePluginCompiler'", $this->currentIdentifier));
+			if (!($this->compilerPlugins[$className] instanceof ICompilerTemplatePlugin)) {
+				throw new SystemException($this->formatSyntaxError("Compiler plugin '".$tagCommand."' does not implement the interface 'ICompilerTemplatePlugin'", $this->currentIdentifier));
 			}
 		}
 		
@@ -1364,11 +1364,11 @@ class TemplateScriptingCompiler {
 				$prefilter = new $className();
 			}
 			
-			if ($prefilter instanceof ITemplatePluginPrefilter) {
+			if ($prefilter instanceof IPrefilterTemplatePlugin) {
 				$string = $prefilter->execute($templateName, $string, $this);
 			}
 			else {
-				throw new SystemException($this->formatSyntaxError("Prefilter '".$prefilter."' does not implement the interface 'ITemplatePluginPrefilter'", $this->currentIdentifier));
+				throw new SystemException($this->formatSyntaxError("Prefilter '".$prefilter."' does not implement the interface 'IPrefilterTemplatePlugin'", $this->currentIdentifier));
 			}
 		}
 		
