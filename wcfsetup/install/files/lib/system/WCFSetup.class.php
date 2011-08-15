@@ -346,7 +346,7 @@ class WCFSetup extends WCF {
 		
 		// sql
 		$system['sql']['value'] = array_keys(self::getAvailableDBClasses());
-		$system['sql']['result'] = count($system['sql']['value'] > 0);
+		$system['sql']['result'] = count($system['sql']['value']) > 0;
 		
 		// upload_max_filesize
 		$system['uploadMaxFilesize']['value'] = ini_get('upload_max_filesize');
