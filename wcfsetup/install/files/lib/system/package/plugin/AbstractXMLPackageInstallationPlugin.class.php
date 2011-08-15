@@ -16,7 +16,7 @@ use wcf\util\XML;
  * @subpackage	system.package.plugin
  * @category 	Community Framework
  */
-abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {	
+abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
 	 * object editor class name
 	 * @var	string
