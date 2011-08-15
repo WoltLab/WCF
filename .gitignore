@@ -32,6 +32,17 @@ nbactions.xml
 # svn folders
 .svn/
 
+# PHPStorm
+.idea/
+.name
+encodings.xml
+misc.xml
+modules.xml
+projectCodeStyle.xml
+vcs.xml
+*.iml
+workspace.xml
+
 # Community Framework
 # Ignore packages build directly in the workspace. They can however be added manually via git add, if wanted.
 *.tar
