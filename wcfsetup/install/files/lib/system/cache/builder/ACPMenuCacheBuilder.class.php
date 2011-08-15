@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\acp\menu\item\ACPMenuItem;
-use wcf\system\cache\ICacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
@@ -15,7 +14,7 @@ use wcf\system\WCF;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderACPMenu implements ICacheBuilder {
+class ACPMenuCacheBuilder implements ICacheBuilder {
 	protected $optionCategoryStructure = array();
 
 	/**

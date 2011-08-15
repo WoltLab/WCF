@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\system\cache\ICacheBuilder;
 use wcf\data\core\object\CoreObjectList;
 use wcf\system\package\PackageDependencyHandler;
 
@@ -14,7 +13,7 @@ use wcf\system\package\PackageDependencyHandler;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderCoreObject implements ICacheBuilder {
+class CoreObjectCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */

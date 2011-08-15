@@ -24,7 +24,12 @@ class ACPMenu extends TreeMenu {
 			return;
 		}
 		
-		CacheHandler::getInstance()->addResource('menu-'.PACKAGE_ID, WCF_DIR.'cache/cache.menu-'.PACKAGE_ID.'.php', 'wcf\system\cache\builder\CacheBuilderACPMenu');
-		$this->menuItems = CacheHandler::getInstance()->get('menu-'.PACKAGE_ID);
+		$cacheName = 'acpMenu-'.PACKAGE_ID;
+		CacheHandler::getInstance()->addResource(
+			$cacheName,
+			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'wcf\system\cache\builder\ACPMenuCacheBuilder'
+		);
+		$this->menuItems = CacheHandler::getInstance()->get($cacheName);
 	}
 }

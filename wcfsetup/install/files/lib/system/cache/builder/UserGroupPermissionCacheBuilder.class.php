@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\system\cache\ICacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
@@ -16,7 +15,7 @@ use wcf\util\ClassUtil;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderUserGroupPermission implements ICacheBuilder {
+class UserGroupPermissionCacheBuilder implements ICacheBuilder {
 	protected $typeObjects = array();
 	
 	/**

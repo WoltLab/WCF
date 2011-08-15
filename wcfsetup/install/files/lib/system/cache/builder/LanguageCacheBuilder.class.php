@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\system\cache\ICacheBuilder;
 use wcf\system\WCF;
 
 /**
@@ -14,7 +13,7 @@ use wcf\system\WCF;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderLanguage implements ICacheBuilder {
+class LanguageCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */

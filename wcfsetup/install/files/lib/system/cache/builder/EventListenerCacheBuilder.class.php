@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\system\cache\ICacheBuilder;
 use wcf\system\event\listener\EventHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -15,7 +14,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.cache.builder
  * @category 	Community Framework
  */
-class CacheBuilderEventListener implements ICacheBuilder {
+class EventListenerCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */

@@ -93,7 +93,12 @@ class WCFACP extends WCF {
 	 */
 	protected function loadDefaultCacheResources() {
 		parent::loadDefaultCacheResources();
-		CacheHandler::getInstance()->addResource('packages', WCF_DIR.'cache/cache.packages.php', 'wcf\system\cache\builder\CacheBuilderPackage');
+		
+		CacheHandler::getInstance()->addResource(
+			'packages',
+			WCF_DIR.'cache/cache.packages.php',
+			'wcf\system\cache\builder\PackageCacheBuilder'
+		);
 	}
 	
 	/**

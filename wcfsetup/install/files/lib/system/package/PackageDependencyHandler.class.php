@@ -69,12 +69,13 @@ abstract class PackageDependencyHandler {
 	 * Reads package dependency cache.
 	 */	
 	protected static function readCache() {
+		$cacheName = 'packageDependencies-'.PACKAGE_ID;
 		CacheHandler::getInstance()->addResource(
-			'packageDependencies-'.PACKAGE_ID,
-			WCF_DIR.'cache/cache.packageDependencies-'.PACKAGE_ID.'.php',
-			'wcf\system\cache\builder\CacheBuilderPackageDependency'
+			$cacheName,
+			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'wcf\system\cache\builder\PackageDependencyCacheBuilder'
 		);
 		
-		self::$packageDependencyCache = CacheHandler::getInstance()->get('packageDependencies-'.PACKAGE_ID);
+		self::$packageDependencyCache = CacheHandler::getInstance()->get($cacheName);
 	}
 }

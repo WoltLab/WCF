@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\cache;
+namespace wcf\system\cache\builder;
 
 /**
  * A CacheBuilder provides data to the CacheHandler that ought to be cached.
