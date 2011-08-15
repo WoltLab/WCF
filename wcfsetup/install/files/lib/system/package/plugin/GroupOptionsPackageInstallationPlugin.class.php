@@ -29,10 +29,10 @@ class GroupOptionsPackageInstallationPlugin extends AbstractOptionPackageInstall
 	public function uninstall() {
 		// Delete value-entries using categories or options
 		// which will be deleted.
-		$sql = "DELETE FROM	wcf".WCF_N."_user_group_option_value
+		$sql = "DELETE FROM	".$this->getDatabaseTableName()."_value
 			WHERE		optionID IN (
 						SELECT	optionID
-						FROM	wcf".WCF_N."_user_group_option
+						FROM	".$this->getDatabaseTableName()."
 						WHERE	packageID = ?
 					)";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -123,7 +123,7 @@ class GroupOptionsPackageInstallationPlugin extends AbstractOptionPackageInstall
 			$row = $statement->fetchArray();
 			
 			// save default value
-			$sql = "INSERT INTO	wcf".WCF_N."_user_group_option_value
+			$sql = "INSERT INTO	".$this->getDatabaseTableName()."_value
 						(groupID, optionID, optionValue)
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -131,10 +131,10 @@ class GroupOptionsPackageInstallationPlugin extends AbstractOptionPackageInstall
 			
 			if ($adminDefaultValue && $defaultValue != $adminDefaultValue) {
 				$sql = "SELECT	groupID
-					FROM	wcf".WCF_N."_user_group_option_value
+					FROM	".$this->getDatabaseTableName()."_value
 					WHERE	optionID = (
 							SELECT	optionID
-							FROM	wcf".WCF_N."_user_group_option
+							FROM	".$this->getDatabaseTableName()."
 							WHERE	optionName = ?
 						)
 						AND optionValue = '1'";

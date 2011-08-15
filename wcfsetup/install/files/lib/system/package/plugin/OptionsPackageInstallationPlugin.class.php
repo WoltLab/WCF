@@ -72,7 +72,7 @@ class OptionsPackageInstallationPlugin extends AbstractOptionPackageInstallation
 		
 		// try to find an existing option for updating
 		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_".$this->tableName."
+			FROM	".$this->getDatabaseTableName()."
 			WHERE	optionName = ?
 				AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);

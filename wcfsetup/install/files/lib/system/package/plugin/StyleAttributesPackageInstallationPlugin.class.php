@@ -35,7 +35,7 @@ class StyleAttributesPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
-		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
+		$sql = "DELETE FROM	".$this->getDatabaseTableName()."
 			WHERE		packageID = ?
 					AND cssSelector = ?
 					AND attributeName = ?
@@ -88,7 +88,7 @@ class StyleAttributesPackageInstallationPlugin extends AbstractXMLPackageInstall
 		if (!count($this->styleVariables)) return;
 		
 		// delete items first
-		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
+		$sql = "DELETE FROM	".$this->getDatabaseTableName()."
 			WHERE		packageID = ?
 					AND cssSelector = ?
 					AND attributeName = ?
@@ -104,7 +104,7 @@ class StyleAttributesPackageInstallationPlugin extends AbstractXMLPackageInstall
 		}
 		
 		// insert items
-		$sql = "INSERT INTO	wcf".WCF_N."_".$this->tableName."
+		$sql = "INSERT INTO	".$this->getDatabaseTableName()."
 					(packageID, cssSelector, attributeName, variableName)
 			VALUES		(?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -138,7 +138,7 @@ class StyleAttributesPackageInstallationPlugin extends AbstractXMLPackageInstall
 		
 		foreach ($styleList->getObjects() as $style) {
 			$styleEditor = new StyleEditor($style);
-			$style->writeStyleFile();
+			$styleEditor->writeStyleFile();
 		}
 	}
 }

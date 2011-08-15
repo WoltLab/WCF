@@ -32,7 +32,7 @@ class PageLocationPackageInstallationPlugin extends AbstractXMLPackageInstallati
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
-		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
+		$sql = "DELETE FROM	".$this->getDatabaseTableName()."
 			WHERE		locationName = ?
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -60,7 +60,7 @@ class PageLocationPackageInstallationPlugin extends AbstractXMLPackageInstallati
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_".$this->tableName."
+			FROM	".$this->getDatabaseTableName()."
 			WHERE	locationName = ?
 				AND packageID = ?";
 		$parameters = array(

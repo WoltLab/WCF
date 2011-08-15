@@ -84,7 +84,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	public function uninstall() {
 		// get logged sql tables/columns
 		$sql = "SELECT		*
-			FROM		wcf".WCF_N."_package_installation_sql_log
+			FROM		".$this->getDatabaseTableName()."
 			WHERE		packageID = ?
 			ORDER BY 	sqlIndex DESC, sqlColumn DESC";
 		$statement = WCF::getDB()->prepareStatement($sql);

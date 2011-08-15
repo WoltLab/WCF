@@ -16,7 +16,7 @@ use wcf\util\XML;
  * @subpackage	system.package.plugin
  * @category 	Community Framework
  */
-abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
+abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {	
 	/**
 	 * object editor class name
 	 * @var	string
@@ -271,7 +271,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			if ($columnName !== null) $conditions->add($columnName." = ?", array($parentName));
 			
 	          	$sql = "SELECT	MAX(showOrder) AS showOrder
-			  	FROM	wcf".WCF_N."_".$this->tableName.$tableNameExtension."
+			  	FROM	".$this->getDatabaseTableName().$tableNameExtension."
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
@@ -285,7 +285,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	       	}
 	       	else {
 			// increase all showOrder values which are >= $showOrder
-			$sql = "UPDATE	wcf".WCF_N."_".$this->tableName.$tableNameExtension."
+			$sql = "UPDATE	".$this->getDatabaseTableName().$tableNameExtension."
 				SET	showOrder = showOrder + 1
 				WHERE	showOrder >= ?
 				".($columnName !== null ? "AND ".$columnName." = ?" : "");
