@@ -8,7 +8,7 @@
 </script>
 
 <header class="mainHeading setup">
-	<img src="{@RELATIVE_WCF_DIR}icon/logIn.svg" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/logIn1.svg" alt="" />
 	<hgroup>
 		<h1>{@$pageTitle}</h1>
 	</hgroup>

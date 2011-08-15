@@ -2,7 +2,7 @@
 
 <header class="mainHeading">
 	{if $packageID == 0}
-		<img src="{@RELATIVE_WCF_DIR}icon/packageInstallL.png" alt="" />
+		<img src="{@RELATIVE_WCF_DIR}icon/packageStandaloneAdd1.svg" alt="" />
 		<hgroup class="headlineContainer">
 			<h1>{lang}wcf.acp.package.startInstall{/lang}</h1>
 		</hgroup>

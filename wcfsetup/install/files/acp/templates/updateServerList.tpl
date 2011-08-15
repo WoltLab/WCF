@@ -10,7 +10,7 @@
 </script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/updateServerL.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/server1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.updateServer.view{/lang}</h1>
 	</hgroup>

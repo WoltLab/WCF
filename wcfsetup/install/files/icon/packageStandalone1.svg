@@ -3,8 +3,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
 	
-	<title>Package</title> 
-	<desc>Package Icon (straight)</desc> 
+	<title>Package Standalone</title> 
+	<desc>Package Standalone Icon</desc> 
 	
 	<!--
 		@author		Harald Szekely 
@@ -16,13 +16,13 @@
 		
 	</defs>
 	
-	<g id="IconPackage">
-		<g id="Lower" class="Lower">
+	<g id="IconPackageStandalone">
+		<g class="Lower">
 			<path id="Front1" style="fill-rule: evenodd; clip-rule: evenodd; fill: #fff;" d="M14,5H1v10h13V5z M12.984375,14H2.015625L2,6
 				h11L12.984375,14z"/>
 			<polygon id="Upside1" style="fill-rule: evenodd; clip-rule: evenodd; fill: #fff;" points="12.5,2.5 2.5,2.5 1,4.75 14,4.75"/>
 		</g>
-		<g id="Upper" class="Upper">
+		<g class="Upper">
 			<path id="Front2" style="fill-rule: evenodd; clip-rule: evenodd; fill: #666;" d="M14,4H1v10h13V4z M12.984375,13H2.015625L2,5h11
 				L12.984375,13z"/>
 			<polygon id="Upside2" style="fill-rule: evenodd; clip-rule: evenodd; fill: #666;" points="12.5,1.5 2.5,1.5 1,3.75 14,3.75"/>

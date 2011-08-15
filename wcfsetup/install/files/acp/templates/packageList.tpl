@@ -12,7 +12,7 @@
 </script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/packageL.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/packageStandalone1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.package.list{/lang}</h1>
 	</hgroup>
