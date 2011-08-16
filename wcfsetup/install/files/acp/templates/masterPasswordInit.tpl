@@ -13,7 +13,7 @@
 </script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/loginL.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/login1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.masterPassword.init{/lang}</h1>
 	</hgroup>

@@ -1,7 +1,7 @@
 {include file='header'}
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/emailL.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/email1.svg" alt="" />
 	<hgroup>
 		<h1>
 			{if $action == 'all'}

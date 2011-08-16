@@ -51,7 +51,7 @@
 </script>
 
 <header class="mainHeading">
-	<img {if $userID|isset}id="userEdit{@$userID}" {/if}src="{@RELATIVE_WCF_DIR}icon/user{@$action|ucfirst}L.png" alt="" />
+	<img {if $userID|isset}id="userEdit{@$userID}" {/if}src="{@RELATIVE_WCF_DIR}icon/{@$action}1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.user.{@$action}{/lang}</h1>
 	</hgroup>

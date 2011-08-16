@@ -40,7 +40,7 @@
 </script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/{if $searchID}userSearch{else}users{/if}L.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/{if $searchID}search{else}user{/if}1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.user.{if $searchID}search{else}list{/if}{/lang}</h1>
 		<h2>{if $searchID}{lang}wcf.acp.user.search.matches{/lang}{/if}</h2><!-- deprecated display -->

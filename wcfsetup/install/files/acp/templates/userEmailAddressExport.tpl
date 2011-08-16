@@ -17,7 +17,7 @@
 </script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/usersL.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/eMail1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.user.exportEmailAddress{/lang}</h1>
 	</hgroup>

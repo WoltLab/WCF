@@ -10,7 +10,7 @@
 </script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/optionL.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/options1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.option.category.{$category->categoryName}{/lang}</h1>
 		<h2>{lang}wcf.acp.option.category.{$category->categoryName}.description{/lang}</h2>

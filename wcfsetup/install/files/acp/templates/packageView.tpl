@@ -1,7 +1,7 @@
 {include file='header'}
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/packageL.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/packageStandalone1.svg" alt="" />
 	<hgroup>
 		<h1>{$package->getName()}</h1>
 		<h2>{$package->packageDescription}</h2>

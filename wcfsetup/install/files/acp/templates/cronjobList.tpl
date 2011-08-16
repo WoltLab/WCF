@@ -3,7 +3,7 @@
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/cronjobL.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/time1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.cronjob.list{/lang}</h1>
 		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>

@@ -38,7 +38,7 @@
 			{foreach from=$sessionLogs item=sessionLog}
 				<tr class="{if $sessionLog->active} activeContainer{/if}">
 					<td class="columnSessionLogID columnID"><p>{@$sessionLog->sessionLogID}</p></td>
-					<td class="columnUsername columnText"><p>{if $__wcf->user->userID == $sessionLog->userID}<img src="{@RELATIVE_WCF_DIR}icon/userS.png" alt="" />{/if} <a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->username}</a></p></td>
+					<td class="columnUsername columnText"><p>{if $__wcf->user->userID == $sessionLog->userID}<img src="{@RELATIVE_WCF_DIR}icon/user1.svg" alt="" />{/if} <a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->username}</a></p></td>
 					<td class="columnIpAddress columnText"><p><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->ipAddress}</a><br /><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->hostname}</a></p></td>
 					<td class="columnUserAgent columnText smallFont"><p><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->userAgent}</a></p></td>
 					<td class="columnTime columnText"><p>{@$sessionLog->time|time}</p></td>
