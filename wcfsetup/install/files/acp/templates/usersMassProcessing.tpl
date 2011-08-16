@@ -66,7 +66,7 @@
 </script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/user1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.user.massProcessing{/lang}</h1>
 	</hgroup>
