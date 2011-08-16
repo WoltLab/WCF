@@ -16,12 +16,16 @@ use wcf\util\ClassUtil;
  * @category 	Community Framework
  */
 class UserGroupPermissionCacheBuilder implements ICacheBuilder {
+	/**
+	 * list of used group option type objects
+	 * @var	array<wcf\system\option\group\IGroupOptionType>
+	 */
 	protected $typeObjects = array();
 	
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
-	public function getData($cacheResource) {
+	public function getData(array $cacheResource) {
 		list($cache, $packageID, $groupIDs) = explode('-', $cacheResource['cache']);
 		$data = array();
 		

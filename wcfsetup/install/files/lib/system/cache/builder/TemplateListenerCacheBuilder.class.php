@@ -17,7 +17,7 @@ class TemplateListenerCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
-	public function getData($cacheResource) {
+	public function getData(array $cacheResource) {
 		list($cache, $packageID, $environment) = explode('-', $cacheResource['cache']); 
 		
 		// get templates for current package id

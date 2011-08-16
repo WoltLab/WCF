@@ -16,7 +16,7 @@ class SpiderCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
-	public function getData($cacheResource) {
+	public function getData(array $cacheResource) {
 		$spiderList = new SpiderList();
 		$spiderList->sqlOrderBy = "spider.spiderID ASC";
 		$spiderList->sqlLimit = 0;

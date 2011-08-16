@@ -17,7 +17,7 @@ class CoreObjectCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
-	public function getData($cacheResource) {
+	public function getData(array $cacheResource) {
 		list($cache, $packageID) = explode('-', $cacheResource['cache']);
 		$data = array();
 		
