@@ -1281,6 +1281,48 @@ WCF.TabMenu = {
 	}
 };
 
+WCF.Menu = function() { this.init(); };
+WCF.Menu.prototype = {
+	init: function() {
+		$('.scrollableMenuContainer').each(function(index, container) {
+			var $container = $(container);
+			var $categoryName = $container.data('categoryName');
+			
+			var $containerDimensions = $container.getDimensions('outer');
+			var $menuItems = $container.find('div.menuItems');
+			
+			if ($menuItems.length) {
+				var $items = $container.find('div.menuItems > div');
+				
+				if ($items.length) {
+					var $itemDimensions = $($items[0]).getDimensions();
+					$items.css({ width: $itemDimensions.width + 'px' });
+					
+					$menuItems.addClass('menuItemsJS');
+					$(container).css({ width: $containerDimensions.width + 'px' }).scrollable({
+						items: '#' + $categoryName + '-items',
+						onBeforeSeek: function(event, index) {
+							var $item = this.getItems()[index];
+							var $dimensions = $($item).getDimensions('outer');
+							
+							$($item).parent().animate({
+								height: $dimensions.height + 'px'
+							}, {
+								queue: false,
+								duration: 400
+							});
+						},
+						touch: false
+					}).navigator({
+						history: true,
+						navi: '#' + $categoryName + '-categories'
+					});
+				}
+			}
+		});
+	}
+};
+
 /**
  * Templates that may be fetched more than once with different variables. Based upon ideas from Prototype's template
  * 
