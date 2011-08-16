@@ -17,37 +17,32 @@ use wcf\util\ClassUtil;
  */
 class EventHandler extends SingletonFactory {
 	/**
-	 * Registerd actions.
-	 *
+	 * registered actions
 	 * @var array
 	 */
 	protected $actions = null;
 	
 	/**
-	 * Registerd inherit actions.
-	 *
+	 * registered inherit actions
 	 * @var array
 	 */
 	protected $inheritedActions = null;
 	
 	/**
-	 * Instances of registerd actions.
-	 *
+	 * instances of registerd actions
 	 * @var array
 	 */
 	protected $actionsObjects = array();
 	
 	/**
-	 * Instances of registerd inherit actions.
-	 *
+	 * instances of registered inherit actions
 	 * @var array
 	 */
 	protected $inheritedActionsObjects = array();
 	
 	/**
-	 * Instances of action objects.
-	 *
-	 * @var array
+	 * instances of listener objects
+	 * @var array<wcf\system\event\IEventListener>
 	 */
 	protected $listenerObjects = array();
 	

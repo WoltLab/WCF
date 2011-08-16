@@ -25,6 +25,7 @@ class RequestHandler extends SingletonFactory {
 	 * Handles a http request
 	 *
 	 * @param	string		$application
+	 * @param	boolean		$isACP
 	 */
 	public function handle($application = 'wcf', $isACP = false) {
 		// default values
