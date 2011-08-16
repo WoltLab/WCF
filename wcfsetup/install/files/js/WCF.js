@@ -187,7 +187,7 @@ $.fn.extend({
 	 * @return jQuery
 	 */
 	disable: function() {
-		return this.attr('disabled', 'disabled');
+		return this.attr('disabled', true);
 	},
 	
 	/**
