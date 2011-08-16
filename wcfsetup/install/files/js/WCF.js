@@ -1616,7 +1616,7 @@ WCF.Effect.SmoothScroll.prototype = {
 };
 
 /**
- * Creates a smooth scroll effect.
+ * Creates a balloon tooltip.
  */
 WCF.Effect.BalloonTooltip = function() { this.init(); };
 WCF.Effect.BalloonTooltip.prototype = {
