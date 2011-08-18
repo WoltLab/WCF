@@ -3,6 +3,7 @@ namespace wcf\data\template\group;
 use wcf\data\DatabaseObjectEditor;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\DirectoryUtil;
 
 /**
  * TemplateGroupEditor provides functions to create, edit or delete template group. 
@@ -90,21 +91,7 @@ class TemplateGroupEditor extends DatabaseObjectEditor {
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			$packageDir = FileUtil::getRealPath(WCF_DIR . $row['packageDir']);
-			$folders[] = $packageDir . 'templates/' . $this->templateGroupFolderName;
-		}
-		
-		// rename folders
-		foreach ($folders as $folder) {
-			if (file_exists($folder)) {
-				// empty folder
-				$files = glob(FileUtil::addTrailingSlash($folder).'*');
-				if (is_array($files)) {
-					foreach ($files as $file) @unlink($file);
-				}
-				
-				// delete foler
-				@rmdir($folder);
-			}
+			DirectoryUtil::getInstance($packageDir . 'templates/' . $this->templateGroupFolderName)->deleteAll();
 		}
 	}
 }
