@@ -45,9 +45,8 @@ class CompiledTemplateListPage extends AbstractPage {
 	
 	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
-	 * @todo	use own permission 'admin.system.canClearCache' for all cache types(?)
 	 */
-	public $neededPermissions = array('admin.system.canViewLog');
+	public $neededPermissions = array('admin.system.canClearCache');
 	
 	/**
 	 * @see wcf\page\AbstractPage::$templateName
