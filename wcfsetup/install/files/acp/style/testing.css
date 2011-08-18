@@ -533,10 +533,6 @@ dl {
 	position: relative;
 }
 
-dl.disabled > dt {
-	color: #777;
-}
-
 dl > dt {
 	color: #69c;
 	float: left;
@@ -545,8 +541,18 @@ dl > dt {
 	margin-top: 5px; /* not so nice */
 }
 
+dl > dt > label {
+	margin-top: 5px;
+	display: block;
+}
+
+dl.disabled > dt {
+	color: #777;
+}
+
 dl > dd {
 	margin-left: 250px;
+	padding-top: 5px;
 }
 
 dl > dd > small {
@@ -559,7 +565,8 @@ dl > dd > small {
 /* Nested */
 
 dl > dd > fieldset {
-	
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 dl > dd > fieldset > legend {
@@ -613,44 +620,15 @@ label {
 
 /* Structure */
 
-/* Form Element (deprecated) */
-
-.formElement {
-	clear: both;
-	margin-bottom: 14px;
-}
-
-/* Form Group (deprecated) */
-
-.formGroup {
-	margin-top: 10px;
-}
-
-.formGroup .formGroupLabel {
-	text-align: right;
-	margin-top: 7px;
-	float: left;
-	width: 233px;
-}
-
-.formGroup .formGroupField {
-	display: block;
-	margin-left: 250px;
-}
-
-.formGroup .formGroupField div.formField label {
-	display: block;
-}
-
-.formGroup .formGroupField fieldset legend {
-	display: none;
-}
-
-/* Form Group (deprecated) */
-
 .formSubmit {
 	text-align: center;
 	margin-top: 15px;
+}
+
+input[type='checkbox'] ~ small,
+input[type='radio'] ~ small {
+	margin-top: 0;
+	margin-left: 21px;
 }
 
 /* Form Elements */
@@ -1615,6 +1593,8 @@ div.ui-widget-overlay {
 	color: #666;
 	border: 1px solid #999;
 	background-color: #fff;
+	margin-right: 0;
+	margin-left: 0;
 	padding: 3px 10px 5px;
 	
 	background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
