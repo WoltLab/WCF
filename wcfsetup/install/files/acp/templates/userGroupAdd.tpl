@@ -3,13 +3,13 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		new WCF.Menu();
+		WCF.TabMenu.init();
 	});
 	//]]>
 </script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/{@$action}1.svg" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/userGroup{@$action|ucfirst}L.png" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.group.{@$action}{/lang}</h1>
 	</hgroup>
@@ -38,7 +38,6 @@
 
 <form method="post" action="index.php?form=UserGroup{@$action|ucfirst}">
 	<div class="border content">
-		
 		<fieldset>
 			<legend>{lang}wcf.acp.group.data{/lang}</legend>
 			
@@ -68,73 +67,42 @@
 			</ul>
 		</nav>
 		
-		{*
-			Note:
-			
-			 - Remove inline css (relocate to global WCF-CSS)
-			 - [.menuItems] is used by JS to determine container and additionally (!) applying [.menuItemsJS]
-			 - [.menuItemsJS] is applied with JavaScript, do NOT copy css instructions into the non-js class,
-			   as certain dimension calculations will be broken after applying them
-
-			 - JavaScript is provided within wcf/js/WCF.js, search for WCF.Menu
-
-		*}
-		<style type="text/css">
-			.scrollableMenuContainer {
-				overflow: hidden;
-				position: relative;
-			}
-
-			.menuItemsJS {
-				overflow: hidden;
-				position: relative;
-				width: 20000em;
-			}
-
-			.menuItemsJS > div {
-				float: left;
-				margin-top: 0 !important;
-			}
-		</style>
-
 		{foreach from=$optionTree item=categoryLevel1}
-			<div class="scrollableMenuContainer" data-categoryName="{$categoryLevel1[object]->categoryName}">
-				<nav class="menu">
-					<ul id="{@$categoryLevel1[object]->categoryName}-categories">
+			<div class="tabMenuContainer">
+				<nav>
+					<ul class="tabMenu">
 						{foreach from=$categoryLevel1[categories] item=$categoryLevel2}
-							<li id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}"><a href="#{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}-content"><span>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</span></a></li>
+							<li><a href="#{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</a></li>
 						{/foreach}
 					</ul>
 				</nav>
 
-				<div class="menuItems" id="{$categoryLevel1[object]->categoryName}-items">
-					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
-						<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}-content" class="border tabMenuContent hidden">
-							<hgroup class="subHeading">
-								<h1>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h1>
-								<h2>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}</h2>
-							</hgroup>
+				{foreach from=$categoryLevel1[categories] item=categoryLevel2}
+					<div class="border tabMenuContent hidden" id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}">
+						<hgroup class="subHeading">
+							<h1>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h1>
+							<h2>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}</h2>
+						</hgroup>
 					
-							{if $categoryLevel2[options]|count}
-								{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.group.option.'}
-							{/if}
+						{if $categoryLevel2[options]|count}
+							{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.group.option.'}
+						{/if}
 					
-							{if $categoryLevel2[categories]|count}
-								{foreach from=$categoryLevel2[categories] item=categoryLevel3}
-									<fieldset>
-										<legend>{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}{/lang}</legend>
-										<p class="description">{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}.description{/lang}</p>
+						{if $categoryLevel2[categories]|count}
+							{foreach from=$categoryLevel2[categories] item=categoryLevel3}
+								<fieldset>
+									<legend>{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}{/lang}</legend>
+									<p class="description">{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}.description{/lang}</p>
 							
-										<div>
-											{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.acp.group.option.'}
-										</div>
-									</fieldset>
-								{/foreach}
-							{/if}
+									<div>
+										{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.acp.group.option.'}
+									</div>
+								</fieldset>
+							{/foreach}
+						{/if}
 					
-						</div>
-					{/foreach}
-				</div>
+					</div>
+				{/foreach}
 			</div>
 		{/foreach}
 	</div>
