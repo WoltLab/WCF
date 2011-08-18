@@ -2,14 +2,12 @@
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\option\OptionType;
-use wcf\system\option\SearchableUserOption;
 use wcf\system\WCF;
 use wcf\system\UserInputException;
 use wcf\util\StringUtil;
 
 /**
- * OptionTypeRadiobuttons is an implementation of OptionType for 'input type="radio"' tags.
+ * RadiobuttonsOptionType is an implementation of IOptionType for 'input type="radio"' tags.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -18,7 +16,11 @@ use wcf\util\StringUtil;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypeRadiobuttons extends AbstractOptionType implements ISearchableUserOption {
+class RadiobuttonsOptionType extends AbstractOptionType implements ISearchableUserOption {
+	/**
+	 * name of the template that contains the form element of this option type
+	 * @var	string
+	 */
 	public $templateName = 'optionTypeRadiobuttons';
 
 	/**

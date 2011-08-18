@@ -4,6 +4,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
+use wcf\util\StringUtil;
 
 /**
  * Caches the merged group options of a group combination.
@@ -103,18 +104,18 @@ class UserGroupPermissionCacheBuilder implements ICacheBuilder {
 	 * Returns an object of the requested group option type.
 	 * 
 	 * @param	string			$type
-	 * @return	wcf\system\option\group\IGroupOptionType
+	 * @return	wcf\system\option\user\group\IUserGroupOptionType
 	 */
 	protected function getTypeObject($type) {
 		if (!isset($this->typeObjects[$type])) {
-			$className = 'wcf\system\option\group\GroupOptionType'.ucfirst($type);
+			$className = 'wcf\system\option\user\group\\'.StringUtil::firstCharToUpperCase($type).'UserGroupOptionType';
 			
 			// validate class
 			if (!class_exists($className)) {
 				throw new SystemException("unable to find class '".$className."'");
 			}
-			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\group\IGroupOptionType')) {
-				throw new SystemException("'".$className."' should implement wcf\system\option\group\IGroupOptionType");
+			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\user\group\IUserGroupOptionType')) {
+				throw new SystemException("'".$className."' should implement wcf\system\option\user\group\IUserGroupOptionType");
 			}
 			
 			// create instance

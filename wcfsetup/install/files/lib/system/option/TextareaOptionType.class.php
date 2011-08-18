@@ -1,11 +1,10 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
-use wcf\system\option\OptionTypeText;
 use wcf\system\WCF;
 
 /**
- * OptionTypeTextarea is an implementation of OptionType for 'textarea' tags.
+ * TextareaOptionType is an implementation of IOptionType for 'textarea' tags.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -14,7 +13,7 @@ use wcf\system\WCF;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypeTextarea extends OptionTypeText {
+class TextareaOptionType extends TextOptionType {
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */

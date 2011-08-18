@@ -1,21 +1,21 @@
 <?php
-namespace wcf\system\option\group;
-use wcf\system\option\OptionTypeBoolean;
+namespace wcf\system\option\user\group;
+use wcf\system\option\BooleanOptionType;
 
 /**
- * GroupOptionTypeBoolean is an implementation of GroupOptionType for boolean values.
+ * BooleanUserGroupOptionType is an implementation of IUserGroupOptionType for boolean values.
  * The merge of option values returns true, if at least one value is true. Otherwise false.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.option.group
+ * @subpackage	system.option.user.group
  * @category 	Community Framework
  */
-class GroupOptionTypeBoolean extends OptionTypeBoolean implements IGroupOptionType {
+class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroupOptionType {
 	/**
-	 * @see wcf\system\option\group\IGroupOptionType::merge()
+	 * @see wcf\system\option\user\group\IUserGroupOptionType::merge()
 	 */
 	public function merge(array $values) {
 		foreach ($values as $value) {

@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\option\group;
+namespace wcf\system\option\user\group;
 use wcf\system\option\IOptionType;
 
 /**
@@ -9,15 +9,15 @@ use wcf\system\option\IOptionType;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.option.group
+ * @subpackage	system.option.user.group
  * @category 	Community Framework
  */
-interface IGroupOptionType extends IOptionType {
+interface IUserGroupOptionType extends IOptionType {
 	/**
 	 * Merges the different values of an option to a single value.
 	 * 
 	 * @param	array		$values
-	 * @return	mixed		$value
+	 * @return	mixed
 	 */
 	public function merge(array $values);
 }

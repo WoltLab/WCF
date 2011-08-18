@@ -1,13 +1,13 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
-use wcf\system\option\OptionType;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 
 /**
- * OptionTypeTimezone is an implementation of OptionType for a select box, which list the available time zones.
+ * TimezoneOptionType is an implementation of IOptionType for a select box, which
+ * list the available time zones.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -16,7 +16,7 @@ use wcf\util\DateUtil;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypeTimezone extends AbstractOptionType {
+class TimezoneOptionType extends AbstractOptionType {
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */

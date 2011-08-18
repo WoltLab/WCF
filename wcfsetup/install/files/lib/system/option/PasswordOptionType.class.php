@@ -2,10 +2,9 @@
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\option\OptionTypeText;
 
 /**
- * OptionTypeText is an implementation of OptionType for 'input type="password"' tags.
+ * PasswordOptionType is an implementation of IOptionType for 'input type="password"' tags.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -14,9 +13,9 @@ use wcf\system\option\OptionTypeText;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypePassword extends OptionTypeText {
+class PasswordOptionType extends TextOptionType {
 	/**
-	 * @see wcf\system\option\OptionTypeText::$inputType
+	 * @see wcf\system\option\TextOptionType::$inputType
 	 */
 	protected $inputType = 'password';
 	

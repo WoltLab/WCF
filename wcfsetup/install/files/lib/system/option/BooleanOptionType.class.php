@@ -6,7 +6,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * OptionTypeBoolean is an implementation of OptionType for boolean values.
+ * BooleanOptionType is an implementation of IOptionType for boolean values.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypeBoolean extends AbstractOptionType implements ISearchableUserOption {
+class BooleanOptionType extends AbstractOptionType implements ISearchableUserOption {
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
