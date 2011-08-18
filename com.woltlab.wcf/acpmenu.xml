@@ -137,16 +137,19 @@
 		<acpmenuitem name="wcf.acp.menu.link.cache.data">
 			<link>index.php?page=DataCacheList</link>
 			<parent>wcf.acp.menu.link.cache</parent>
+			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.cache.language">
 			<link>index.php?page=LanguageCacheList</link>
 			<parent>wcf.acp.menu.link.cache</parent>
+			<showorder>2</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.cache.template">
 			<link>index.php?page=CompiledTemplateList</link>
 			<parent>wcf.acp.menu.link.cache</parent>
+			<showorder>3</showorder>
 		</acpmenuitem>
 		<!-- /cache -->
 		

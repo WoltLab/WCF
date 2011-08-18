@@ -28,7 +28,7 @@ class DataCacheListPage extends AbstractPage {
 	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.canViewLog');
+	public $neededPermissions = array('admin.system.canClearCache');
 	
 	/**
 	 * indicates if cache was cleared
