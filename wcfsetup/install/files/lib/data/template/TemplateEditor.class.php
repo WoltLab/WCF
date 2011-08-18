@@ -3,6 +3,7 @@ namespace wcf\data\template;
 use wcf\data\DatabaseObjectEditor;
 use wcf\system\io\File;
 use wcf\system\WCF;
+use wcf\util\DirectoryUtil;
 
 /**
  * TemplateEditor provides functions to create, edit or delete templates. 
@@ -111,9 +112,6 @@ class TemplateEditor extends DatabaseObjectEditor {
 	 * Deletes the compiled files of this template.
 	 */
 	public function deleteCompiledFiles() {
-		$matches = glob(WCF_DIR . 'templates/compiled/' . $this->packageID . '_*_' . $this->templateName . '.php');
-		if (is_array($matches)) {
-			foreach ($matches as $match) @unlink($match);
-		}
+		DirectoryUtil::getInstance(WCF_DIR . 'templates/compiled/')->removePattern('~' . intval($this->packageID) . '_.*_' . preg_quote($this->templateName, '~') . '.php~');
 	}
 }
