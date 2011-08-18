@@ -39,7 +39,7 @@
 <div class="contentHeader">
 	<nav class="largeButtons">
 		<ul>
-			<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="index.php?action=CacheClear{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteM.png" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
+			<li><a onclick="return confirm('{lang}wcf.acp.cache.data.clear.sure{/lang}')" href="index.php?action=CacheClear{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteM.png" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
 	</nav>
@@ -56,11 +56,11 @@
 			<table id="{$cache}">
 				<thead>
 					<tr>
-						<th><p class="emptyHead">{lang}wcf.acp.cache.list.name{/lang}</p></th>
-						<th><p class="emptyHead">{lang}wcf.acp.cache.list.size{/lang}</p></th>
-						<th><p class="emptyHead">{lang}wcf.acp.cache.list.mtime{/lang}</p></th>
+						<th><p class="emptyHead">{lang}wcf.acp.cache.data.list.name{/lang}</p></th>
+						<th><p class="emptyHead">{lang}wcf.acp.cache.data.list.size{/lang}</p></th>
+						<th><p class="emptyHead">{lang}wcf.acp.cache.data.list.mtime{/lang}</p></th>
 						{if $files.0.perm|isset}
-							<th><p class="emptyHead">{lang}wcf.acp.cache.list.perm{/lang}</p></th>
+							<th><p class="emptyHead">{lang}wcf.acp.cache.data.list.perm{/lang}</p></th>
 						{/if}
 					</tr>
 				</thead>
@@ -91,7 +91,7 @@
 <div class="contentFooter">
 	<nav class="largeButtons">
 		<ul>
-			<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="index.php?action=CacheClear{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteM.png" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
+			<li><a onclick="return confirm('{lang}wcf.acp.cache.data.clear.sure{/lang}')" href="index.php?action=CacheClear{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteM.png" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
 	</nav>

@@ -38,7 +38,7 @@
 {if $fileInfos|count}
 	<div class="border boxTitle">
 		<hgroup>
-			<h1> <span class="badge" title="">{#$fileInfos|count}</span></h1>
+			<h1>{WCF_DIR}language <span class="badge" title="">{#$fileInfos|count}</span></h1>
 		</hgroup>
 
 		<table>
