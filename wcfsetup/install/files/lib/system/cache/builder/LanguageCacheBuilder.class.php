@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\data\language\category\LanguageCategoryList;
 use wcf\system\WCF;
 
 /**
@@ -75,13 +76,11 @@ class LanguageCacheBuilder implements ICacheBuilder {
 		}
 		
 		// get language categories
-		$sql = "SELECT 	*
-			FROM	wcf".WCF_N."_language_category";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			// package to languages
-			$data['categories'][$row['languageCategory']] = $row;
+		$languageCategoryList = new LanguageCategoryList();
+		$languageCategoryList->sqlLimit = 0;
+		$languageCategoryList->readObjects();
+		foreach ($languageCategoryList->getObjects() as $languageCategory) {
+			$data['categories'][$languageCategory->languageCategory] = $languageCategory;
 		}
 
 		return $data;
