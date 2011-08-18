@@ -71,7 +71,7 @@ class LanguageCacheListPage extends AbstractPage {
 	public function readData() {
 		parent::readData();
 		
-		$this->fileInfos = DirectoryUtil::getInstance(WCF_DIR.'language/')->getFilesObj(SORT_ASC, '~\/(\d{1})_(\d{1})_(.+).php$~');
+		$this->fileInfos = DirectoryUtil::getInstance(WCF_DIR.'language/')->getFilesObj(SORT_ASC, '~/(\d+)_(\d+)_([^/]+).php$~');
 		foreach ($this->fileInfos as $fileInfo) {
 			$this->cacheData['size'] += $fileInfo->getSize();
 		}
