@@ -26,7 +26,9 @@ class StyleUtil {
 		$contents = preg_replace('/background-position:\s*left/', 'wcf-background-position:left', $contents);
 		$contents = preg_replace('/background-position:\s*right/', 'background-position:left', $contents);
 		$contents = str_replace('wcf-background-position:left', 'background-position:right', $contents);
-		$contents = preg_replace_callback('/background-position:\s*([\d\.]+)%/', create_function('$matches', 'return "background-position:".(100.0-$matches[1])."%";'), $contents);
+		$contents = preg_replace_callback('/background-position:\s*([\d\.]+)%/', function ($matches) {
+			return 'background-position:'.(100.0-$matches[1]).'%';
+		}, $contents);
 		
 		// background-image
 		$contents = str_replace('-ltr', '-rtl', $contents);
