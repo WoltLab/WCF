@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\template;
 use wcf\data\DatabaseObjectEditor;
-use wcf\util\DirectoryUtil;
 use wcf\system\io\File;
 use wcf\system\WCF;
+use wcf\util\DirectoryUtil;
 
 /**
  * TemplateEditor provides functions to create, edit or delete templates. 
