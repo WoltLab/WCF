@@ -24,105 +24,90 @@ use wcf\util\UserUtil;
 class SessionHandler extends SingletonFactory {
 	/**
 	 * prevents update on shutdown
-	 *
 	 * @var	boolean
 	 */	
 	protected $doNotUpdate = false;
 	
 	/**
 	 * various environment variables
-	 *
 	 * @var	array
 	 */	
 	protected $environment = array();
 	
 	/**
 	 * group data and permissions
-	 *
 	 * @var array<array>
 	 */	
 	protected $groupData = null;
 	
 	/**
-	 * language if for active user
-	 *
+	 * language id for active user
 	 * @var	integer
 	 */	
 	protected $languageID = 0;
 	
 	/**
 	 * language ids for active user
-	 *
 	 * @var	array<integer>
 	 */	
 	protected $languageIDs = null;
 	
 	/**
 	 * session object
-	 *
-	 * @var	ACPSession
+	 * @var	wcf\data\acp\session\ACPSession
 	 */	
 	protected $session = null;
 	
 	/**
 	 * session data object
-	 * 
-	 * @var	ACPSessionData
+	 * @var	wcf\data\acp\session\data\ACPSessionData
 	 */
 	protected $sessionData = null;
 	
 	/**
 	 * session data class name
-	 * 
 	 * @var	string
 	 */
 	protected $sessionDataClassName = '';
 	
 	/**
 	 * session data editor class name
-	 * 
 	 * @var	string
 	 */
 	protected $sessionDataEditorClassName = '';
 	
 	/**
 	 * session class name
-	 *
 	 * @var	string
 	 */	
 	protected $sessionClassName = '';
 	
 	/**
 	 * session editor class name
-	 * 
 	 * @var	string
 	 */
 	protected $sessionEditorClassName = '';
 	
 	/**
 	 * enable cookie support
-	 * 
 	 * @var	boolean
 	 */
 	protected $useCookies = false;
 	
 	/**
 	 * user object
-	 *
-	 * @var	User
+	 * @var	wcf\data\user\User
 	 */	
 	protected $user = null;
 	
 	/**
 	 * session variables
-	 * 
 	 * @var	array
 	 */	
 	protected $variables = null;
 	
 	/**
 	 * indicates if session variables changed and must be saved upon shutdown
-	 * 
 	 * @var	boolean
 	 */	
 	protected $variablesChanged = false;
