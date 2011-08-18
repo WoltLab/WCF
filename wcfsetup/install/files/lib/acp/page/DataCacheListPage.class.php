@@ -10,7 +10,7 @@ use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**
- * Shows a list of all cache resources.
+ * Shows a list of all data cache resources.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -19,11 +19,11 @@ use wcf\util\FileUtil;
  * @subpackage	acp.page
  * @category 	Community Framework
  */
-class CacheListPage extends AbstractPage {
+class DataCacheListPage extends AbstractPage {
 	/**
 	 * @see wcf\page\AbstractPage::$templateName
 	 */
-	public $templateName = 'cacheList';
+	public $templateName = 'dataCacheList';
 	
 	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
