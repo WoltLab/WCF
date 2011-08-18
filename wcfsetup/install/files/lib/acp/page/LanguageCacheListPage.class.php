@@ -32,7 +32,10 @@ class LanguageCacheListPage extends AbstractPage {
 	 * contains general cache data
 	 * @var array<integer>
 	 */
-	public $cacheData = array();
+	public $cacheData =  array(
+		'size' => 0,
+		'files' => 0
+	);
 	
 	/**
 	 * file information objects for the langage cache files
@@ -68,23 +71,12 @@ class LanguageCacheListPage extends AbstractPage {
 	public function readData() {
 		parent::readData();
 		
-		// init cache data
-		$this->cacheData = array(
-			'size' => 0,
-			'files' => 0
-		);
-		
-		$this->fileInfos = DirectoryUtil::getInstance(WCF_DIR.'language/')->getFilesObj();
-		foreach ($this->fileInfos as $key => $fileInfo) {
-			// filter files
-			if (!$fileInfo->isFile() || !preg_match('~^(\d{1})_(\d{1})_(.+).php$~', $fileInfo->getFilename())) {
-				unset($this->fileInfos[$key]);
-				continue;
-			}
-			
-			$this->cacheData['files']++;
+		$this->fileInfos = DirectoryUtil::getInstance(WCF_DIR.'language/')->getFilesObj(SORT_ASC, '~\/(\d{1})_(\d{1})_(.+).php$~');
+		foreach ($this->fileInfos as $fileInfo) {
 			$this->cacheData['size'] += $fileInfo->getSize();
 		}
+		
+		$this->cacheData['files'] = count($this->fileInfos);
 	}
 	
 	/**
