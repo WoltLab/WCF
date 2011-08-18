@@ -49,8 +49,12 @@ class PackagePage extends AbstractPage {
 		switch ($this->action) {
 			case 'install':
 			case 'update':
-				if ($this->action == 'install') WCF::getSession()->checkPermission(array('admin.system.package.canInstallPackage'));
-				else WCF::getSession()->checkPermission(array('admin.system.package.canUpdatePackage'));
+				if ($this->action == 'install') {
+					WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+				}
+				else {
+					WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
+				}
 				
 				$queue = new PackageInstallationQueue($this->queueID);
 				$dispatcher = new PackageInstallationDispatcher($queue);
@@ -58,8 +62,9 @@ class PackagePage extends AbstractPage {
 			break;
 				
 			case 'rollback':
+				// TODO
 				die('ROLLBACK');
-				WCF::getSession()->checkPermission(array('admin.system.package.canInstallPackage'));
+				WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
 				require_once(WCF_DIR.'lib/acp/package/PackageInstallationRollback.class.php');
 				new PackageInstallationRollback($this->queueID);
 			break;
@@ -69,7 +74,7 @@ class PackagePage extends AbstractPage {
 			break;
 				
 			case 'startUninstall':
-				WCF::getSession()->checkPermission(array('admin.system.package.canUninstallPackage'));
+				WCF::getSession()->checkPermissions(array('admin.system.package.canUninstallPackage'));
 				PackageUninstallationDispatcher::checkDependencies();
 			break;
 		}

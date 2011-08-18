@@ -163,7 +163,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 		// execute action
 		switch ($this->action) {
 			case 'sendMail':
-				WCF::getSession()->checkPermission(array('admin.user.canMailUser'));
+				WCF::getSession()->checkPermissions(array('admin.user.canMailUser'));
 				// get user ids
 				$userIDArray = array();
 				$sql = "SELECT		user.userID
@@ -204,7 +204,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 				break;
 				
 			case 'exportMailAddress':
-				WCF::getSession()->checkPermission(array('admin.user.canMailUser'));
+				WCF::getSession()->checkPermissions(array('admin.user.canMailUser'));
 				// send content type
 				header('Content-Type: text/'.$this->fileType.'; charset=UTF-8');
 				header('Content-Disposition: attachment; filename="export.'.$this->fileType.'"');
@@ -249,7 +249,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 				break;
 				
 			case 'assignToGroup':
-				WCF::getSession()->checkPermission(array('admin.user.canEditUser'));
+				WCF::getSession()->checkPermissions(array('admin.user.canEditUser'));
 				
 				$userIDArray = $this->fetchUsers(function($userID, array $userData) {
 					$user = new UserEditor(new User(null, $row));
@@ -260,7 +260,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 				break;
 				
 			case 'delete':
-				WCF::getSession()->checkPermission(array('admin.user.canDeleteUser'));
+				WCF::getSession()->checkPermissions(array('admin.user.canDeleteUser'));
 				
 				$userIDArray = $this->fetchUsers();
 				

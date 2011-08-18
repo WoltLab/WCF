@@ -173,7 +173,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 		// validate permissions
 		if (is_array($this->permissionsCreate) && count($this->permissionsCreate)) {
 			try {
-				WCF::getSession()->checkPermission($this->permissionsCreate);
+				WCF::getSession()->checkPermissions($this->permissionsCreate);
 			}
 			catch (PermissionDeniedException $e) {
 				throw new ValidateActionException('Insufficient permissions');
@@ -191,7 +191,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 		// validate permissions
 		if (is_array($this->permissionsDelete) && count($this->permissionsDelete)) {
 			try {
-				WCF::getSession()->checkPermission($this->permissionsDelete);
+				WCF::getSession()->checkPermissions($this->permissionsDelete);
 			}
 			catch (PermissionDeniedException $e) {
 				throw new ValidateActionException('Insufficient permissions');
@@ -216,7 +216,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 		// validate permissions
 		if (is_array($this->permissionsUpdate) && count($this->permissionsUpdate)) {
 			try {
-				WCF::getSession()->checkPermission($this->permissionsUpdate);
+				WCF::getSession()->checkPermissions($this->permissionsUpdate);
 			}
 			catch (PermissionDeniedException $e) {
 				throw new ValidateActionException('Insufficient permissions');
