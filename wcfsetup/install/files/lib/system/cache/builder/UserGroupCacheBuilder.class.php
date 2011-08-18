@@ -16,7 +16,7 @@ class UserGroupCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
-	public function getData($cacheResource) {
+	public function getData(array $cacheResource) {
 		$data = array('types' => array(), 'groups' => array());
 
 		// get all user groups

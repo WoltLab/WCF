@@ -17,7 +17,7 @@ class PackageCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
-	public function getData($cacheResource) {
+	public function getData(array $cacheResource) {
 		$packageList = new PackageList();
 		$packageList->sqlLimit = 0;
 		$packageList->readObjects();

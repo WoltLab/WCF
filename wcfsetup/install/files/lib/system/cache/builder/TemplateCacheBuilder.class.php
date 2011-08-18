@@ -16,7 +16,7 @@ class TemplateCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
-	public function getData($cacheResource) {
+	public function getData(array $cacheResource) {
 		$information = explode('-', $cacheResource['cache']);
 		if (count($information) == 3) {
 			$prefix = $information[0].'_';

@@ -18,7 +18,7 @@ class CronjobCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
-	public function getData($cacheResource) {
+	public function getData(array $cacheResource) {
 		// get next execution time
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		$conditionBuilder->add("packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
