@@ -13,6 +13,7 @@
 		<item name="wcf.acp.cache.clear.sure"><![CDATA[Möchtest du den Cache wirklich komplett leeren?]]></item>
 		<item name="wcf.acp.cache.data"><![CDATA[Eigenschaften]]></item>
 		<item name="wcf.acp.cache.data.files"><![CDATA[Dateien]]></item>
+		<item name="wcf.acp.cache.data.files.count"><![CDATA[{#$files|count} Dateien]]></item>
 		<item name="wcf.acp.cache.data.size"><![CDATA[Größe]]></item>
 		<item name="wcf.acp.cache.data.source"><![CDATA[Quelle]]></item>
 		<item name="wcf.acp.cache.data.version"><![CDATA[Version]]></item>
@@ -56,11 +57,11 @@
 		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von zeitgesteuerten Aufgaben erfordert eine genaue Kenntnis der Crontab-Syntax auf unixähnlichen Systemen. Weiterführende Informationen dazu erhältst du auf dieser Website: <a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>]]></item>
 		<item name="wcf.acp.cronjob.lastExec"><![CDATA[Letzte Ausführung]]></item>
 		<item name="wcf.acp.cronjob.list"><![CDATA[Zeitgesteuerte Aufgaben]]></item>
-		<item name="wcf.acp.cronjob.list.count"><![CDATA[{#$items} zeitgesteuerte Aufgabe{if $items != 1}n{/if}]]></item>
-		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten zeitgesteuerten Aufgaben]]></item>
+		<item name="wcf.acp.cronjob.list.count"><![CDATA[{#$items} Zeitgesteuerte Aufgabe{if $items != 1}n{/if}]]></item>
+		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten Zeitgesteuerten Aufgaben]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Alle löschen]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Bist du sicher, dass du alle Protokoll-Einträge löschen möchtest?]]></item>
-		<item name="wcf.acp.cronjob.log.data"><![CDATA[Insgesamt {#$items} {if $items == 1}Eintrag{else}Einträge{/if}]]></item>
+		<item name="wcf.acp.cronjob.log.count"><![CDATA[{#$items} {if $items == 1}Eintrag{else}Einträge{/if}]]></item>
 		<item name="wcf.acp.cronjob.log.error"><![CDATA[Fehler:]]></item>
 		<item name="wcf.acp.cronjob.log.execTime"><![CDATA[Ausgeführt]]></item>
 		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[Derzeit sind keine Einträge vorhanden.]]></item>
@@ -213,12 +214,12 @@
 		<item name="wcf.acp.menu.link.content"><![CDATA[Inhalte]]></item>
 		<item name="wcf.acp.menu.link.cronjobs.add"><![CDATA[Zeitgesteuerte Aufgabe hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.cronjobs.showLog"><![CDATA[Protokoll anzeigen]]></item>
-		<item name="wcf.acp.menu.link.cronjobs.view"><![CDATA[Zeitgesteuerte Aufgaben auflisten]]></item>
+		<item name="wcf.acp.menu.link.cronjobs.list"><![CDATA[Zeitgesteuerte Aufgaben auflisten]]></item><!-- ToDo: change action name from "view" to "list" -->
 		<item name="wcf.acp.menu.link.display"><![CDATA[Darstellung]]></item>
 		<item name="wcf.acp.menu.link.group"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.menu.link.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.group.mail"><![CDATA[E-Mail an Gruppenmitglieder]]></item>
-		<item name="wcf.acp.menu.link.group.view"><![CDATA[Benutzergruppen auflisten]]></item>
+		<item name="wcf.acp.menu.link.group.list"><![CDATA[Benutzergruppen auflisten]]></item><!-- ToDo: change action name from "view" to "list" -->
 		<item name="wcf.acp.menu.link.log"><![CDATA[Protokoll]]></item>
 		<item name="wcf.acp.menu.link.log.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Sitzungen]]></item>
@@ -229,8 +230,8 @@
 		<item name="wcf.acp.menu.link.package.database"><![CDATA[Pakete suchen]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.menu.link.package.server.add"><![CDATA[Server hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.package.server.view"><![CDATA[Server auflisten]]></item>
-		<item name="wcf.acp.menu.link.package.view"><![CDATA[Pakete auflisten]]></item>
+		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Server auflisten]]></item><!-- ToDo: change action name from "view" to "list" -->
+		<item name="wcf.acp.menu.link.package.list"><![CDATA[Pakete auflisten]]></item><!-- ToDo: change action name from "view" to "list" -->
 		<item name="wcf.acp.menu.link.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.menu.link.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.add"><![CDATA[Benutzer hinzufügen]]></item>
@@ -253,7 +254,7 @@
 		<item name="wcf.acp.option.cache_source_memcache_use_pconnect.description"><![CDATA[Sollen beim Verbinden mit dem Memcache-Server persistente Verbindungen genutzt werden?]]></item>
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Cache-Methode]]></item>
 		<item name="wcf.acp.option.cache_source_type.apc"><![CDATA[Alternative PHP Cache]]></item>
-		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Bitte wähle die gewünschte Cache-Methode aus! Beachte, dass einige Methoden spezielle Anforderungen an das Server-System stellen und nicht auf jedem Server zur Verfügung stehen.]]></item>
+		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Bitte wähle die gewünschte Cache-Methode aus. Beachte, dass einige Methoden spezielle Anforderungen an das Server-System stellen und nicht auf jedem Server zur Verfügung stehen.]]></item>
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Dateisystem (Standard)]]></item>
 		<item name="wcf.acp.option.cache_source_type.memcache"><![CDATA[Memcache (Experimentell)]]></item>
 		<item name="wcf.acp.option.category.general"><![CDATA[Allgemein]]></item>
@@ -459,7 +460,6 @@
 		<item name="wcf.acp.package.startInstall.source.upload.description"><![CDATA[Gib eine Paketdatei von deinem lokalen Rechner an.]]></item>
 		<item name="wcf.acp.package.startUpdate"><![CDATA[Paket &raquo;{$package->getName()}&laquo; aktualisieren]]></item>
 		<item name="wcf.acp.package.step.install.ACPMenuPackageInstallationPlugin"><![CDATA[Menüpunkte der Administrationsoberfläche werden installiert ...]]></item>
-		<item name="wcf.acp.package.step.install.ACPTemplatePatchPackageInstallationPlugin"><![CDATA[Template-Patches der Administrationsoberfläche werden installiert ...]]></item>
 		<item name="wcf.acp.package.step.install.ACPTemplatesPackageInstallationPlugin"><![CDATA[Templates der Administrationsoberfläche werden installiert ...]]></item>
 		<item name="wcf.acp.package.step.install.CronjobsPackageInstallationPlugin"><![CDATA[Zeitgesteuerte Aufgaben werden installiert ...]]></item>
 		<item name="wcf.acp.package.step.install.EventListenerPackageInstallationPlugin"><![CDATA[Event-Listener werden installiert ...]]></item>
@@ -469,7 +469,6 @@
 		<item name="wcf.acp.package.step.install.OptionsPackageInstallationPlugin"><![CDATA[Optionen werden installiert ...]]></item>
 		<item name="wcf.acp.package.step.install.ScriptPackageInstallationPlugin"><![CDATA[Spezielles Skript wird ausgeführt ...]]></item>
 		<item name="wcf.acp.package.step.install.SqlPackageInstallationPlugin"><![CDATA[Datenbank wird installiert ...]]></item>
-		<item name="wcf.acp.package.step.install.TemplatePatchPackageInstallationPlugin"><![CDATA[Template-Patches werden installiert ...]]></item>
 		<item name="wcf.acp.package.step.install.TemplatesPackageInstallationPlugin"><![CDATA[Templates werden installiert ...]]></item>
 		<item name="wcf.acp.package.step.install.UserOptionsPackageInstallationPlugin"><![CDATA[Benutzerprofilfelder werden installiert ...]]></item>
 		<item name="wcf.acp.package.step.install.exclusions"><![CDATA[Mögliche Konflikte werden überprüft ...]]></item>
@@ -482,7 +481,6 @@
 		<item name="wcf.acp.package.step.install.requirements"><![CDATA[Abhängigkeiten werden aufgelöst ...]]></item>
 		<item name="wcf.acp.package.step.title"><![CDATA[Paket <b>{$packageName|encodeJS}</b>: ]]></item>
 		<item name="wcf.acp.package.step.uninstall.ACPMenuPackageInstallationPlugin"><![CDATA[Menüpunkte der Administrationsoberfläche werden deinstalliert ...]]></item>
-		<item name="wcf.acp.package.step.uninstall.ACPTemplatePatchPackageInstallationPlugin"><![CDATA[Template-Patches der Administrationsoberfläche werden deinstalliert ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.ACPTemplatesPackageInstallationPlugin"><![CDATA[Templates der Administrationsoberfläche werden deinstalliert ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.CronjobsPackageInstallationPlugin"><![CDATA[Zeitgesteuerte Aufgaben werden deinstalliert ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.EventListenerPackageInstallationPlugin"><![CDATA[Event-Listener werden deinstalliert ...]]></item>
@@ -491,7 +489,6 @@
 		<item name="wcf.acp.package.step.uninstall.LanguagesPackageInstallationPlugin"><![CDATA[Sprache wird deinstalliert ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.OptionsPackageInstallationPlugin"><![CDATA[Optionen werden deinstalliert ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.SqlPackageInstallationPlugin"><![CDATA[Datenbank wird deinstalliert ...]]></item>
-		<item name="wcf.acp.package.step.uninstall.TemplatePatchPackageInstallationPlugin"><![CDATA[Template-Patches werden deinstalliert ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.TemplatesPackageInstallationPlugin"><![CDATA[Templates werden deinstalliert ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.UserOptionsPackageInstallationPlugin"><![CDATA[Benutzerprofilfelder werden deinstalliert ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.execPackageInstallationPlugins"><![CDATA[Paket-Installations-Zusatzmodule werden ausgeführt ...]]></item>
@@ -500,7 +497,6 @@
 		<item name="wcf.acp.package.step.uninstall.packageInstallationPlugins"><![CDATA[Paket-Installations-Zusatzmodule werden deinstalliert ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.requirements"><![CDATA[Abhängigkeiten werden aufgelöst ...]]></item>
 		<item name="wcf.acp.package.step.update.ACPMenuPackageInstallationPlugin"><![CDATA[Menüpunkte der Administrationsoberfläche werden aktualisiert ...]]></item>
-		<item name="wcf.acp.package.step.update.ACPTemplatePatchPackageInstallationPlugin"><![CDATA[Template-Patches der Administrationsoberfläche werden aktualisiert ...]]></item>
 		<item name="wcf.acp.package.step.update.ACPTemplatesPackageInstallationPlugin"><![CDATA[Templates der Administrationsoberfläche werden aktualisiert ...]]></item>
 		<item name="wcf.acp.package.step.update.CronjobsPackageInstallationPlugin"><![CDATA[Zeitgesteuerte Aufgaben werden aktualisiert ...]]></item>
 		<item name="wcf.acp.package.step.update.EventListenerPackageInstallationPlugin"><![CDATA[Event-Listener werden aktualisiert ...]]></item>
@@ -510,7 +506,6 @@
 		<item name="wcf.acp.package.step.update.OptionsPackageInstallationPlugin"><![CDATA[Optionen werden aktualisiert ...]]></item>
 		<item name="wcf.acp.package.step.update.ScriptPackageInstallationPlugin"><![CDATA[Spezielles Skript wird ausgeführt ...]]></item>
 		<item name="wcf.acp.package.step.update.SqlPackageInstallationPlugin"><![CDATA[Datenbank wird aktualisiert ...]]></item>
-		<item name="wcf.acp.package.step.update.TemplatePatchPackageInstallationPlugin"><![CDATA[Template-Patches werden aktualisiert ...]]></item>
 		<item name="wcf.acp.package.step.update.TemplatesPackageInstallationPlugin"><![CDATA[Templates werden aktualisiert ...]]></item>
 		<item name="wcf.acp.package.step.update.UserOptionsPackageInstallationPlugin"><![CDATA[Benutzerprofilfelder werden aktualisiert ...]]></item>
 		<item name="wcf.acp.package.step.update.execPackageInstallationPlugins"><![CDATA[Paket-Installations-Zusatzmodule werden ausgeführt ...]]></item>
@@ -521,9 +516,6 @@
 		<item name="wcf.acp.package.step.update.packageInstallationPlugins"><![CDATA[Paket-Installations-Zusatzmodule werden aktualisiert ...]]></item>
 		<item name="wcf.acp.package.step.update.parent"><![CDATA[Zuordnung zum übergeordneten Paket wird vorgenommen ...]]></item>
 		<item name="wcf.acp.package.step.update.requirements"><![CDATA[Abhängigkeiten werden aufgelöst ...]]></item>
-		<item name="wcf.acp.package.templatePatch.install.failed"><![CDATA[Das Anwenden eines Patches, der zu diesem Paket gehört, ist fehlgeschlagen, da dieser Patch nicht kompatibel zu seiner Zieldatei ist. Das Paket kann deshalb nicht installiert werden. Klick auf &raquo;Installation abbrechen&laquo;.]]></item>
-		<item name="wcf.acp.package.templatePatch.repatch.failed"><![CDATA[Das erneute Patchen folgender Templates scheiterte:<br />{foreach from=$failures item=$failure}{$failure.templateName} (ursprünglich gepatcht von: {$failure.packageName})<br />{/foreach}Wahrscheinlich wird deshalb das Paket, das den jeweiligen Patch ursprünglich angewendet hatte, nicht mehr funktionieren. Du solltest dieses Update dennoch fortsetzen. Klick dazu auf &raquo;Weiter&laquo;.]]></item>
-		<item name="wcf.acp.package.templatePatch.uninstall.failed"><![CDATA[Das Entfernen eines Patches, der zu diesem Paket gehört, ist fehlgeschlagen, da seine Zieldatei anderweitig verändert worden ist. Das Paket kann deshalb nicht entfernt werden. Klick auf &raquo;Abbruch der Paketdeinstallation&laquo;.]]></item>
 		<item name="wcf.acp.package.uninstall"><![CDATA[Paketdeinstallation]]></item>
 		<item name="wcf.acp.package.uninstall.cancel"><![CDATA[Abbruch der Paketdeinstallation]]></item>
 		<item name="wcf.acp.package.uninstall.dependentPackages.error"><![CDATA[Die Deinstallation des Paketes ist nicht möglich, da mindestens ein abhängiges Paket nicht deinstalliert werden kann.]]></item>
@@ -598,12 +590,14 @@
 		<item name="wcf.acp.packageUpdate.updateVersion"><![CDATA[Neue Version]]></item>
 	</category>
 	<category name="wcf.acp.sessionLog">
-		<item name="wcf.acp.sessionLog.access.view"><![CDATA[Aktionen der protokollierten Sitzung von &raquo;{$sessionLog->username}&laquo;]]></item>
-		<item name="wcf.acp.sessionLog.access.view.count"><![CDATA[Insgesamt {#$items} protokollierte Aktion{if $items != 1}en{/if}]]></item>
+		<item name="wcf.acp.sessionLog.access.list"><![CDATA[Aktionen der protokollierten Sitzung von &raquo;{$sessionLog->username}&laquo;]]></item>
+		<item name="wcf.acp.sessionLog.access.list.count"><![CDATA[{#$items} protokollierte Aktion{if $items != 1}en{/if}]]></item>
 		<item name="wcf.acp.sessionLog.accesses"><![CDATA[Aktionen]]></item>
 		<item name="wcf.acp.sessionLog.className"><![CDATA[Klasse]]></item>
 		<item name="wcf.acp.sessionLog.ipAddress"><![CDATA[IP-Adresse]]></item>
 		<item name="wcf.acp.sessionLog.lastActivityTime"><![CDATA[Letzte Aktion]]></item>
+		<item name="wcf.acp.sessionLog.list"><![CDATA[Protokollierte Sitzungen]]></item>
+		<item name="wcf.acp.sessionLog.list.count"><![CDATA[{#$items} protokollierte Sitzung{if $items != 1}en{/if}]]></item>
 		<item name="wcf.acp.sessionLog.packageName"><![CDATA[Paket]]></item>
 		<item name="wcf.acp.sessionLog.requestMethod"><![CDATA[Methode]]></item>
 		<item name="wcf.acp.sessionLog.requestURI"><![CDATA[URI]]></item>
@@ -611,8 +605,6 @@
 		<item name="wcf.acp.sessionLog.sessionLogID"><![CDATA[ID]]></item>
 		<item name="wcf.acp.sessionLog.time"><![CDATA[Datum]]></item>
 		<item name="wcf.acp.sessionLog.userAgent"><![CDATA[Browser-Kennung]]></item>
-		<item name="wcf.acp.sessionLog.view"><![CDATA[Protokollierte Sitzungen]]></item>
-		<item name="wcf.acp.sessionLog.view.count"><![CDATA[Insgesamt {#$items} protokollierte Sitzung{if $items != 1}en{/if}]]></item>
 	</category>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Server hinzufügen]]></item>
@@ -630,8 +622,10 @@
 		<item name="wcf.acp.updateServer.htPassword.description"><![CDATA[Gib ein Kennwort an, das zur Authentifizierung benötigt wird (optional).]]></item>
 		<item name="wcf.acp.updateServer.htUsername"><![CDATA[Benutzername]]></item>
 		<item name="wcf.acp.updateServer.htUsername.description"><![CDATA[Gib einen Benutzernamen an, der zur Authentifizierung benötigt wird (optional).]]></item>
-		<item name="wcf.acp.updateServer.lastErrorText"><![CDATA[Beim letzten Verbindungsversuch trat folgende Fehlermeldungen auf:]]></item>
+		<item name="wcf.acp.updateServer.lastErrorText"><![CDATA[Beim letzten Verbindungsversuch trat folgender Fehler auf:]]></item>
+		<item name="wcf.acp.updateServer.list"><![CDATA[Verfügbare Update-Server]]></item>
 		<item name="wcf.acp.updateServer.list.count"><![CDATA[{#$items} Updateserver eingetragen]]></item>
+		<item name="wcf.acp.updateServer.list.noneAvailable"><![CDATA[Es sind keine Update-Server eingetragen.]]></item>
 		<item name="wcf.acp.updateServer.packageUpdateServerID"><![CDATA[Server-ID]]></item>
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Adresse]]></item>
@@ -639,8 +633,6 @@
 		<item name="wcf.acp.updateServer.serverURL.error.notValid"><![CDATA[Die eingetragene Adresse ist ungültig.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.updateServer.timestamp"><![CDATA[Letzter Zugriff]]></item>
-		<item name="wcf.acp.updateServer.view"><![CDATA[Verfügbare Update-Server]]></item>
-		<item name="wcf.acp.updateServer.view.noneAvailable"><![CDATA[Es sind keine Update-Server eingetragen.]]></item>
 	</category>
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Benutzer hinzufügen]]></item>
@@ -750,12 +742,7 @@
 		<item name="wcf.global.date.year"><![CDATA[Jahr]]></item>
 		<item name="wcf.global.date.year.notRequired"><![CDATA[Die Angabe des Jahres ist optional.]]></item>
 		<item name="wcf.global.date.years"><![CDATA[Jahre]]></item>
-		<item name="wcf.global.dateFormat"><![CDATA[%d.%m.%Y]]></item>
-		<item name="wcf.global.dateFormatLocalized"><![CDATA[%e. %B %Y]]></item>
-		<item name="wcf.global.dateFormatToday"><![CDATA[<b>Heute</b>, %H:%M]]></item>
-		<item name="wcf.global.dateFormatYesterday"><![CDATA[Gestern, %H:%M]]></item>
 		<item name="wcf.global.dateInputOrder"><![CDATA[day-month-year]]></item>
-		<item name="wcf.global.dateMethod"><![CDATA[strftime]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[,]]></item>
 		<item name="wcf.global.defaultValue"><![CDATA[Standard]]></item>
 		<item name="wcf.global.error.backward"><![CDATA[Zurück zur vorherigen Seite]]></item>
@@ -812,8 +799,6 @@
 		<item name="wcf.global.scrollDown"><![CDATA[Zum Seitenende]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Zum Seitenanfang]]></item>
 		<item name="wcf.global.search.matchesExactly"><![CDATA[Exakter Treffer]]></item>
-		<item name="wcf.global.shortTimeFormat"><![CDATA[%d.%m.%Y, %H:%M]]></item>
-		<item name="wcf.global.shortTimeFormatLocalized"><![CDATA[%e. %B %Y, %H:%M]]></item>
 		<item name="wcf.global.skipToContent"><![CDATA[Zum Seiteninhalt springen]]></item>
 		<item name="wcf.global.sortOrder.ascending"><![CDATA[in aufsteigender Reihenfolge]]></item>
 		<item name="wcf.global.sortOrder.descending"><![CDATA[in absteigender Reihenfolge]]></item>

@@ -59,7 +59,7 @@ hr {
 
 
 
-/* -- -- -- -- -- Header -- -- -- -- -- */
+/* -- -- -- -- -- Page Header -- -- -- -- -- */
 
 header.pageHeader {
 	/* Disabled, because the WoltLab header image is not LGPL 
@@ -231,6 +231,14 @@ nav.headerNavigation ul li {
 	float: right;
 }
 
+#tplLogin header.pageHeader nav.headerNavigation ul li.toBottomLink {
+	/* removes the to-bottom-link on the log-in page */
+	position: absolute;
+	left: -9000px;
+	top: -9000px;
+	width: 0;
+}
+
 
 
 /* -- -- -- -- -- Main -- -- -- -- -- */
@@ -346,9 +354,9 @@ nav.sidebarMenu > div ul li.activeMenuItem a {
 
 
 
-/* -- -- -- -- -- Footer -- -- -- -- --  */
+/* -- -- -- -- -- Page Footer -- -- -- -- --  */
 
-footer {
+footer.pageFooter {
 	clear: both;
 	padding: 0 23px;
 	position: relative;
@@ -356,13 +364,13 @@ footer {
 	position: relative;
 }
 
-footer:after {
+footer.pageFooter:after {
 	content: "";
 	display: block;
 	clear: both;
 }
 
-footer > div {
+footer.pageFooter > div {
 	background-color: #e7f2fd;
 	border-top: 1px solid #bcd;
 	border-bottom-left-radius: 3px;
@@ -371,32 +379,40 @@ footer > div {
 	padding: 3px 7px;
 }
 
-footer > div:after {
+footer.pageFooter > div:after {
 	content: "";
 	display: block;
 	clear: both;
 }
 
-footer .copyright {
+footer.pageFooter .copyright {
 	padding-top: 20px;
 	min-height: 40px;
 	display: inline-block;
 }
 
-footer .copyright a {
+footer.pageFooter .copyright a {
 	text-shadow: 0 -1px 0 #000;
 }
 
-footer .copyright a:hover {
+footer.pageFooter .copyright a:hover {
 	color: #69c;
 	text-decoration: none;
 }
 
 /* Footer Navigation */
 
-footer nav.footerNavigation ul li {
+footer.pageFooter nav.footerNavigation ul li {
 	display: inline-block;
 	float: right;
+}
+
+#tplLogin footer.pageFooter nav.footerNavigation ul li.toTopLink {
+	/* removes the to-top-link on the log-in page */
+	position: absolute;
+	left: -9000px;
+	top: -9000px;
+	width: 0;
 }
 
 
@@ -1042,18 +1058,17 @@ thead th p a, thead th p.emptyHead {
 	display: block;
 	text-decoration: none !important;
 	padding: 7px;
-	background-color: rgba(0, 0, 0, .4);
-	/*
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#444), to(#000));/* ToDo: Transparency missing *//*
-	background-image: -moz-linear-gradient(0% 0% 270deg, #444, #000);
-	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#444), to(#000));
-	background-image: -o-linear-gradient(#444, #000);
-	background-image: linear-gradient(#444, #000);
-	*/
+	background-color: rgba(0, 0, 0, .3);
+	
+	background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
+	background-image: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
+	background-image: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
+	background-image: -ms-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
+	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
 }
 
 thead th p a {
-	border-right: 1px solid rgba(0, 0, 0, .4);
+	border-right: 1px solid rgba(0, 0, 0, .3);
 }
 
 thead th:last-child p a {
@@ -1062,11 +1077,11 @@ thead th:last-child p a {
 
 thead th:hover p a {
 	color: #fff !important;
-	background-color: rgba(0, 0, 0, .5);
+	background-color: rgba(0, 0, 0, .4);
 }
 
 thead th.active p a {
-	background-color: rgba(0, 0, 0, .5);
+	background-color: rgba(0, 0, 0, .4);
 	font-weight: bold;
 	color: #fff !important;
 	
@@ -1083,6 +1098,7 @@ thead th.active:hover p a {
 
 thead th.columnMark p.emptyHead {
 	background-color: transparent;
+	background-image: none;
 	padding: 0 !important;
 	display: block;
 	width: 30px;
@@ -1105,7 +1121,7 @@ tbody tr:first-child {
 }
 
 tbody tr:last-child {
-	/* no border for the last tables row */
+	/* no border for the last table row */
 	border-bottom-width: 0;
 }
 
@@ -1549,7 +1565,9 @@ div.ui-widget-overlay {
 
 
 
-/* Badges */
+/* -- -- -- -- -- Badges -- -- -- -- -- */
+
+/* Globals */
 
 .badge {
 	color: #369;
@@ -1564,6 +1582,8 @@ div.ui-widget-overlay {
 	position: relative;
 	top: -1px;
 }
+
+/* Types */
 
 .badgeInfo {
 	color: #68b;
@@ -1589,18 +1609,36 @@ div.ui-widget-overlay {
 	background-color: #fee;
 }
 
+/* Buttons */
 
-
-/* Collapsible */
-
-.collapsible {
-	float: left;
-	margin: 5px 5px 0 5px;
+.badgeButton {
+	color: #666;
+	border: 1px solid #999;
+	background-color: #fff;
+	padding: 3px 10px 5px;
+	
+	background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
+	background-image: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
+	background-image: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
+	background-image: -ms-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
+	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
+	text-decoration: none !important;
 }
 
-.collapsible img {
-	width: 16px;
-	height: 16px;
+a.badgeButton:hover {
+	color: #333;
+	border: 1px solid #666;
+	background-color: #fefefe;
+}
+
+a.badgeButton:active, a.badgeButton:focus {
+	color: #333;
+	
+	background-image: -webkit-linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, 0));
+	background-image: -moz-linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, 0));
+	background-image: -o-linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, 0));
+	background-image: -ms-linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, 0));
+	background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, 0));
 }
 
 
@@ -1618,5 +1656,25 @@ div.ui-widget-overlay {
 	max-width: 300px;
 	z-index: 900;
 }
+
+
+
+/* CSS Experiments (active) */
+
+
+
+/* Collapsible */
+
+.collapsible {
+	float: left;
+	margin: 5px 5px 0 5px;
+}
+
+.collapsible img {
+	width: 16px;
+	height: 16px;
+}
+
+
 
 /* -- -- -- -- -- EOF -- -- -- -- -- */
