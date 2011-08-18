@@ -81,7 +81,7 @@ class CompiledTemplateListPage extends AbstractPage {
 	 * @param	string		$directory
 	 */
 	protected function readCompiledTemplates($directory) {
-		$this->fileInfos[$directory] = DirectoryUtil::getInstance($directory)->getFilesObj(SORT_ASC, '~/(\d+)_(\d+)_(\d+)_([^/]+).php');
+		$this->fileInfos[$directory] = DirectoryUtil::getInstance($directory)->getFileObjects(SORT_ASC, '~/(\d+)_(\d+)_(\d+)_([^/]+).php');
 		foreach ($this->fileInfos[$directory] as $fileInfo) {
 			$this->cacheData['size'] += $fileInfo->getSize();
 		}
