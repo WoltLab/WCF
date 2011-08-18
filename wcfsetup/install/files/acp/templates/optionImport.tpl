@@ -1,9 +1,9 @@
 {include file='header'}
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/switch1.svg" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/upload1.svg" alt="" />
 	<hgroup>
-		<h1>{lang}wcf.acp.option.importAndExport{/lang}</h1>
+		<h1>{lang}wcf.acp.option.import{/lang}</h1>
 	</hgroup>
 </header>
 
@@ -16,7 +16,7 @@
 {/if}
 
 <form method="post" action="index.php?form=OptionImport" enctype="multipart/form-data">
-	<div class="border content">
+	<div>
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.option.import{/lang}</legend>
@@ -47,15 +47,24 @@
 	</div>
 </form>
 
-<div class="border content">
+<header class="mainHeading" style="margin-top: 50px;">
+	<img src="{@RELATIVE_WCF_DIR}icon/download1.svg" alt="" />
+	<hgroup>
+		<h1>{lang}wcf.acp.option.export{/lang}</h1>
+	</hgroup>
+</header>
+
+<div>
 	
 	<fieldset>
 		<legend>{lang}wcf.acp.option.export{/lang}</legend>
 	
 		<dl id="optionExportDiv">
-			<dt><label><!-- ToDo: Download label --></label></dt>
-			<dd><p><a href="index.php?action=OptionExport{@SID_ARG_2ND}" id="optionExport" class="largeButton">{lang}wcf.acp.option.export.download{/lang}</a></p></dd>
-			<small>{lang}wcf.acp.option.export.download.description{/lang}</small>
+			<dt><label>{lang}wcf.acp.option.export.download{/lang}</label></dt>
+			<dd>
+				<p><a href="index.php?action=OptionExport{@SID_ARG_2ND}" id="optionExport" class="badge badgeButton">{lang}wcf.acp.option.export{/lang}</a></p>
+				<small>{lang}wcf.acp.option.export.download.description{/lang}</small>
+			</dd>
 		</dl>
 	</fieldset>
 	

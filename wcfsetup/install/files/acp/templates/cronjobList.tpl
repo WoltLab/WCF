@@ -55,7 +55,7 @@
 {else}
 	<div class="border boxTitle">
 		<hgroup>
-			<h1>{lang}wcf.acp.cronjob.list.count{/lang} <span class="badge" title="{lang}wcf.acp.cronjob.list.count{/lang}">{#$items}</span></h1>
+			<h1>{lang}wcf.acp.cronjob.list{/lang} <span class="badge" title="{lang}wcf.acp.cronjob.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
 		
 		<table>

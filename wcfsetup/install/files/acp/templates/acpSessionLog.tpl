@@ -16,7 +16,7 @@
 {if $sessionAccessLogs|count}
 	<div class="border boxTitle">
 		<hgroup>
-			<h1>{lang}wcf.acp.sessionLog.access.view.count{/lang} <span class="badge" title="{lang}wcf.acp.sessionLog.access.view.count{/lang}">{#$items}</span></h1>
+			<h1>{lang}wcf.acp.sessionLog.access.list{/lang} <span class="badge" title="{lang}wcf.acp.sessionLog.access.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
 		
 		<table>

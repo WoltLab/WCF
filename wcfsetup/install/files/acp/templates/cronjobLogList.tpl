@@ -18,7 +18,7 @@
 	<form method="post" action="index.php?action=CronjobsLogDelete">
 		<div class="border boxTitle">
 			<hgroup>
-				<h1>{lang}wcf.acp.cronjob.log.data{/lang}</h1>
+				<h1>{lang}wcf.acp.cronjob.log{/lang} <span class="badge" title="{lang}wcf.acp.cronjob.log.count{/lang}">{#$items}</span></h1>
 			</hgroup>
 			
 			<table>

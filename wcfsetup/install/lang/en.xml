@@ -13,6 +13,7 @@
 		<item name="wcf.acp.cache.clear.sure"><![CDATA[Are you sure that you want to completely empty the cache?]]></item>
 		<item name="wcf.acp.cache.data"><![CDATA[Settings]]></item>
 		<item name="wcf.acp.cache.data.files"><![CDATA[Files]]></item>
+		<item name="wcf.acp.cache.data.files.count"><![CDATA[{#$files|count} files]]></item>
 		<item name="wcf.acp.cache.data.size"><![CDATA[Size]]></item>
 		<item name="wcf.acp.cache.data.source"><![CDATA[Source]]></item>
 		<item name="wcf.acp.cache.data.version"><![CDATA[Version]]></item>
@@ -213,12 +214,12 @@
 		<item name="wcf.acp.menu.link.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.menu.link.cronjobs.add"><![CDATA[Add new cronjob]]></item>
 		<item name="wcf.acp.menu.link.cronjobs.showLog"><![CDATA[View cronjob logs]]></item>
-		<item name="wcf.acp.menu.link.cronjobs.view"><![CDATA[List cronjobs]]></item>
+		<item name="wcf.acp.menu.link.cronjobs.list"><![CDATA[List cronjobs]]></item><!-- ToDo: change action name from "view" to "list" -->
 		<item name="wcf.acp.menu.link.display"><![CDATA[Design]]></item>
 		<item name="wcf.acp.menu.link.group"><![CDATA[User groups]]></item>
 		<item name="wcf.acp.menu.link.group.add"><![CDATA[Add new group]]></item>
 		<item name="wcf.acp.menu.link.group.mail"><![CDATA[E-mail all group members]]></item>
-		<item name="wcf.acp.menu.link.group.view"><![CDATA[Group overview]]></item>
+		<item name="wcf.acp.menu.link.group.list"><![CDATA[Group overview]]></item><!-- ToDo: change action name from "view" to "list" -->
 		<item name="wcf.acp.menu.link.log"><![CDATA[Log]]></item>
 		<item name="wcf.acp.menu.link.log.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Session]]></item>
@@ -229,8 +230,8 @@
 		<item name="wcf.acp.menu.link.package.database"><![CDATA[Search packages]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Install new package]]></item>
 		<item name="wcf.acp.menu.link.package.server.add"><![CDATA[Add new server]]></item>
-		<item name="wcf.acp.menu.link.package.server.view"><![CDATA[Server overview]]></item>
-		<item name="wcf.acp.menu.link.package.view"><![CDATA[List installed packages]]></item>
+		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Server overview]]></item><!-- ToDo: change action name from "view" to "list" -->
+		<item name="wcf.acp.menu.link.package.list"><![CDATA[List installed packages]]></item><!-- ToDo: change action name from "view" to "list" -->
 		<item name="wcf.acp.menu.link.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.menu.link.user"><![CDATA[User]]></item>
 		<item name="wcf.acp.menu.link.user.add"><![CDATA[Add user]]></item>
@@ -599,12 +600,14 @@
 		<item name="wcf.acp.packageUpdate.updateVersion"><![CDATA[New version]]></item>
 	</category>
 	<category name="wcf.acp.sessionLog">
-		<item name="wcf.acp.sessionLog.access.view"><![CDATA[Actions of the logged session of &quot;{$sessionLog->username}&quot;]]></item>
-		<item name="wcf.acp.sessionLog.access.view.count"><![CDATA[There is a total of {#$items} logged action{if $items != 1}s{/if}]]></item>
+		<item name="wcf.acp.sessionLog.access.list"><![CDATA[Actions of the logged session of &quot;{$sessionLog->username}&quot;]]></item>
+		<item name="wcf.acp.sessionLog.access.list.count"><![CDATA[{#$items} logged action{if $items != 1}s{/if}]]></item>
 		<item name="wcf.acp.sessionLog.accesses"><![CDATA[Actions]]></item>
 		<item name="wcf.acp.sessionLog.className"><![CDATA[Class name]]></item>
 		<item name="wcf.acp.sessionLog.ipAddress"><![CDATA[IP address]]></item>
 		<item name="wcf.acp.sessionLog.lastActivityTime"><![CDATA[Last action]]></item>
+		<item name="wcf.acp.sessionLog.list"><![CDATA[Logged sessions]]></item>
+		<item name="wcf.acp.sessionLog.list.count"><![CDATA[{#$items} logged sessions{if $items != 1}s{/if}]]></item>
 		<item name="wcf.acp.sessionLog.packageName"><![CDATA[Package]]></item>
 		<item name="wcf.acp.sessionLog.requestMethod"><![CDATA[Method]]></item>
 		<item name="wcf.acp.sessionLog.requestURI"><![CDATA[URI]]></item>
@@ -612,8 +615,6 @@
 		<item name="wcf.acp.sessionLog.sessionLogID"><![CDATA[ID]]></item>
 		<item name="wcf.acp.sessionLog.time"><![CDATA[Date]]></item>
 		<item name="wcf.acp.sessionLog.userAgent"><![CDATA[User agent]]></item>
-		<item name="wcf.acp.sessionLog.view"><![CDATA[Logged sessions]]></item>
-		<item name="wcf.acp.sessionLog.view.count"><![CDATA[There is a total of {#$items} logged session{if $items != 1}s{/if}]]></item>
 	</category>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add server]]></item>
@@ -632,7 +633,9 @@
 		<item name="wcf.acp.updateServer.htUsername"><![CDATA[Username]]></item>
 		<item name="wcf.acp.updateServer.htUsername.description"><![CDATA[Please enter a valid user name (optional).]]></item>
 		<item name="wcf.acp.updateServer.lastErrorText"><![CDATA[The following error occured while trying to connect:]]></item>
+		<item name="wcf.acp.updateServer."><![CDATA[Available update-servers]]></item>
 		<item name="wcf.acp.updateServer.list.count"><![CDATA[{#$items} update server{if $items != 1}s{/if} available]]></item>
+		<item name="wcf.acp.updateServer.list.noneAvailable"><![CDATA[There are no update-servers available.]]></item>
 		<item name="wcf.acp.updateServer.packageUpdateServerID"><![CDATA[Server ID]]></item>
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Address]]></item>
@@ -640,8 +643,6 @@
 		<item name="wcf.acp.updateServer.serverURL.error.notValid"><![CDATA[The entered address is invalid.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.updateServer.timestamp"><![CDATA[Last access]]></item>
-		<item name="wcf.acp.updateServer.view"><![CDATA[Available update server]]></item>
-		<item name="wcf.acp.updateServer.view.noneAvailable"><![CDATA[There are no update server available.]]></item>
 	</category>
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Add new user]]></item>

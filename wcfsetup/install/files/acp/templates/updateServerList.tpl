@@ -12,7 +12,7 @@
 <header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/server1.svg" alt="" />
 	<hgroup>
-		<h1>{lang}wcf.acp.updateServer.view{/lang}</h1>
+		<h1>{lang}wcf.acp.updateServer.list{/lang}</h1>
 	</hgroup>
 </header>
 
@@ -28,12 +28,12 @@
 
 {if !$updateServers|count}
 	<div class="border content">
-		<p class="warning">{lang}wcf.acp.updateServer.view.noneAvailable{/lang}</p>
+		<p class="warning">{lang}wcf.acp.updateServer.list.noneAvailable{/lang}</p>
 	</div>
 {else}
 	<div class="border boxTitle">
 		<hgroup>
-			<h1>{lang}wcf.acp.updateServer.list.available{/lang} <span class="badge" title="{lang}wcf.acp.updateServer.list.count{/lang}">{#$items}</span></h1>
+			<h1>{lang}wcf.acp.updateServer.list{/lang} <span class="badge" title="{lang}wcf.acp.updateServer.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
 		
 		<table>
