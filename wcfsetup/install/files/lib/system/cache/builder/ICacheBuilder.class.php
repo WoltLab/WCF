@@ -16,7 +16,7 @@ interface ICacheBuilder {
 	 * Returns the data that ought to be cached.
 	 *
 	 * @param 	array 		$cacheResource
-	 * @return 	array 		$data
+	 * @return 	array
 	 */
-	public function getData($cacheResource);
+	public function getData(array $cacheResource);
 }
