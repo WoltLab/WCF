@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\ICompilerTemplatePlugin;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\util\StringUtil;
 

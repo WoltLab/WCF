@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\request\LinkHandler;
-use wcf\system\template\IBlockTemplatePlugin;
 use wcf\system\template\TemplateEngine;
 
 /**
