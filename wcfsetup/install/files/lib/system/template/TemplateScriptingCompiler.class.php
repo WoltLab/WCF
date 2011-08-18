@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\template;
 use wcf\system\exception\SystemException;
+use wcf\system\template\plugin\ICompilerTemplatePlugin;
+use wcf\system\template\plugin\IPrefilterTemplatePlugin;
 use wcf\util\StringStack;
 use wcf\util\StringUtil;
 
@@ -1368,7 +1370,7 @@ class TemplateScriptingCompiler {
 				$string = $prefilter->execute($templateName, $string, $this);
 			}
 			else {
-				throw new SystemException($this->formatSyntaxError("Prefilter '".$prefilter."' does not implement the interface 'IPrefilterTemplatePlugin'", $this->currentIdentifier));
+				throw new SystemException($this->formatSyntaxError("Prefilter '".(is_object($prefilter) ? get_class($prefilter) : $prefilter)."' does not implement the interface 'IPrefilterTemplatePlugin'", $this->currentIdentifier));
 			}
 		}
 		

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
+use wcf\system\template\TemplateEngine;
 
 /**
  * Block functions encloses a template block and operate on the contents of this block.

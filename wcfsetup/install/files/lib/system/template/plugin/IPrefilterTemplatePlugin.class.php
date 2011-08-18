@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
+use wcf\system\template\TemplateScriptingCompiler;
 
 /**
  * Prefilters are used to process the source of the template immediately before compilation.
