@@ -40,7 +40,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	 * @see	wcf\data\DatabaseObjectEditor::__deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
-		parent::deleteAll($objectIDs);
+		$returnValue = parent::deleteAll($objectIDs);
 		
 		// remove user to group assignments
 		self::removeGroupAssignments($objectIDs);
@@ -130,12 +130,11 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 				WHERE		groupOption.optionname = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array('admin.user.accessibleGroups'));
-			while ($row = $statement->fetchArray($result)) {
+			while ($row = $statement->fetchArray()) {
 				$valueIDs = explode(',', $row['optionValue']);
 				if (in_array($groupID, $valueIDs)) {
 					$key = array_keys($valueIDs, $groupID);
 					if (!empty($key)) unset($valueIDs[$key[0]]);
-					$updateIDs = implode(",", $valueIDs); 
 					
 					$updateStatement->execute(array(implode(',', $valueIDs), $row['groupID'], $row['optionID']));
 				}
@@ -155,9 +154,6 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 			if ($row['groupID'] == $groupID) continue;
 			$groupIDs[] = $row['groupID'];
 		}
-		
-		$optionID = 0;
-		$targetGroupIDs = array();
 		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("groupOption.optionName = ?", array('admin.user.accessibleGroups'));
