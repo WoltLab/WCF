@@ -57,7 +57,7 @@
 					<td class="columnText"><p>{$fileInfo->getFileName()}</td>
 					<td class="columnNumbers"><p>{@$fileInfo->getSize()|filesize}</td>
 					<td class="columnDate">{if $fileInfo->getMTime() > 1}<p>{@$fileInfo->getMTime()|time}</p>{/if}</td>
-					{assign var=tempPermissions value=@'%o'|sprintf:$fileInfo->getPerms()}
+					{assign var=tempPermissions value='%o'|sprintf:$fileInfo->getPerms()}
 					<td class="columnNumbers"><p{if !$fileInfo->isWritable()} style="color: #c00"{/if}>{@$tempPermissions|substr:-3}</p></td>
 				</tr>
 			{/foreach}
