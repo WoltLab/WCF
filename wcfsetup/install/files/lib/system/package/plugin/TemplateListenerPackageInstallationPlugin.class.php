@@ -33,7 +33,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
-		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
+		$sql = "DELETE FROM	".$this->getDatabaseTableName()."
 			WHERE		packageID = ?
 					AND environment = ?
 					AND eventName = ?
@@ -69,7 +69,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_".$this->tableName."
+			FROM	".$this->getDatabaseTableName()."
 			WHERE	packageID = ?
 				AND name = ?
 				AND templateName = ?

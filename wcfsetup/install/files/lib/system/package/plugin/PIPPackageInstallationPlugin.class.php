@@ -33,7 +33,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
-		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
+		$sql = "DELETE FROM	".$this->getDatabaseTableName()."
 			WHERE		pluginName = ?
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);

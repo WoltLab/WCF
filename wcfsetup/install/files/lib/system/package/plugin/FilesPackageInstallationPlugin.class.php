@@ -77,7 +77,7 @@ class FilesPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			Package::writeConfigFile($this->installation->getPackageID());
 			
 			// log file
-			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_file_log
+			$sql = "INSERT INTO	".$this->getDatabaseTableName()."
 						(packageID, filename)
 				VALUES		(?, 'config.inc.php')";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -103,7 +103,7 @@ class FilesPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		
 		// get files from log
 		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_package_installation_file_log
+			FROM	".$this->getDatabaseTableName()."
 			WHERE 	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
