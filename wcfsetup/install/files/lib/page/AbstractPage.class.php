@@ -108,7 +108,7 @@ abstract class AbstractPage implements IPage {
 		
 		// check permission
 		if (count($this->neededPermissions)) {
-			WCF::getSession()->checkPermission($this->neededPermissions);
+			WCF::getSession()->checkPermissions($this->neededPermissions);
 		}
 	}
 	

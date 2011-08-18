@@ -129,7 +129,7 @@ class OptionForm extends AbstractOptionListForm {
 		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.option.category.'.$this->category->categoryName);
 		
 		// check permission
-		WCF::getSession()->checkPermission(array('admin.system.canEditOption'));
+		WCF::getSession()->checkPermissions(array('admin.system.canEditOption'));
 
 		if ($this->category->categoryName == 'module') {
 			// check master password

@@ -59,7 +59,7 @@ abstract class AbstractAction implements IAction {
 		
 		// check permission
 		if (count($this->neededPermissions)) {
-			WCF::getSession()->checkPermission($this->neededPermissions);
+			WCF::getSession()->checkPermissions($this->neededPermissions);
 		}
 		
 		// call execute event

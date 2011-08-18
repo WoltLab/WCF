@@ -51,7 +51,7 @@ class WCFACP extends WCF {
 				exit;
 			}
 			else {
-				WCF::getSession()->checkPermission(array('admin.general.canUseAcp'));
+				WCF::getSession()->checkPermissions(array('admin.general.canUseAcp'));
 			}
 		}
 	}
