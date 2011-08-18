@@ -187,7 +187,7 @@ $.fn.extend({
 	 * @return jQuery
 	 */
 	disable: function() {
-		return this.attr('disabled', 'disabled');
+		return this.attr('disabled', true);
 	},
 	
 	/**
@@ -1616,7 +1616,7 @@ WCF.Effect.SmoothScroll.prototype = {
 };
 
 /**
- * Creates a smooth scroll effect.
+ * Creates a balloon tooltip.
  */
 WCF.Effect.BalloonTooltip = function() { this.init(); };
 WCF.Effect.BalloonTooltip.prototype = {
