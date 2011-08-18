@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
+use wcf\system\template\TemplateEngine;
 
 /**
  * Template functions are identical to template blocks, but they have no closing tag.

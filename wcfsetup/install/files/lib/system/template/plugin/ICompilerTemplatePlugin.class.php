@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
+use wcf\system\template\TemplateScriptingCompiler;
 
 /**
  * Compiler functions are called during the compilation of a template.
