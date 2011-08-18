@@ -14,7 +14,7 @@ use wcf\system\exception\SystemException;
 */
 class DirectoryUtil {
 	/**
-	 * @var \DirectoryIterator | \RecursiveDirectoryIterator
+	 * @var \DirectoryIterator
 	 */
 	protected $obj = null;
 	
