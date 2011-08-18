@@ -3,13 +3,11 @@ namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
-use wcf\system\option\OptionType;
-use wcf\system\option\SearchableUserOption;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 
 /**
- * OptionTypeDate is an implementation of OptionType for date inputs.
+ * DateOptionType is an implementation of IOptionType for date inputs.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -18,7 +16,7 @@ use wcf\util\DateUtil;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class OptionTypeDate extends AbstractOptionType implements ISearchableUserOption {
+class DateOptionType extends AbstractOptionType implements ISearchableUserOption {
 	protected $yearRequired = true;
 	
 	/**

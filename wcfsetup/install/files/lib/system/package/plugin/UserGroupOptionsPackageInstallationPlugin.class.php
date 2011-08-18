@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @subpackage	system.package.plugin
  * @category 	Community Framework
  */
-class GroupOptionsPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
+class UserGroupOptionsPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */	
@@ -62,7 +62,7 @@ class GroupOptionsPackageInstallationPlugin extends AbstractOptionPackageInstall
 		if (isset($option['options'])) $options = $option['options'];
 		
 		// check if optionType exists
-		$className = 'wcf\system\option\group\GroupOptionType'.ucfirst($optionType);
+		$className = 'wcf\system\option\user\group\\'.StringUtil::firstCharToUpperCase($optionType).'UserGroupOptionType';
 		if (!class_exists($className)) {
 			throw new SystemException("unable to find class '".$className."'");
 		}

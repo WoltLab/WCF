@@ -1,20 +1,21 @@
 <?php
-namespace wcf\system\option\group;
+namespace wcf\system\option\user\group;
 
 /**
- * GroupOptionTypeInfiniteinverseinteger is an implementation of GroupOptionType for integer values.
+ * InfiniteInverseIntegerUserGroupOptionType is an implementation of IUserGroupOptionType
+ * for integer values.
  * The merge of option values returns -1 if all values are -1 otherwise the lowest value.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.option.group
+ * @subpackage	system.option.user.group
  * @category 	Community Framework
  */
-class GroupOptionTypeInfiniteInverseInteger extends GroupOptionTypeInverseinteger {
+class InfiniteInverseIntegerUserGroupOptionType extends InverseIntegerUserGroupOptionType {
 	/**
-	 * @see wcf\system\option\group\IGroupOptionType::merge()
+	 * @see wcf\system\option\user\group\IUserGroupOptionType::merge()
 	 */
 	public function merge(array $values) {
 		foreach ($values as $key => $value) {
