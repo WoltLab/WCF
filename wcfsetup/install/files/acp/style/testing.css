@@ -276,10 +276,10 @@ aside.sidebar {
 	display: table-cell;
 	vertical-align: top;
 	border-right: 1px solid #bcd;
-	background-color: #d8e7f5;
 	margin: 0 !important;
 	padding: 0 !important;
 	position: relative;
+	background-color: #d8e7f5;
 	
 	-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
 	-moz-box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
@@ -934,7 +934,7 @@ input[type='submit']:active,
 /* -- -- -- -- -- Box Title -- -- -- -- -- */
 
 .boxTitle {
-	background-color: #29374a;
+	background-color: #369;
 	/* Disabled, because the WoltLab header image is not LGPL 
 	Activate it if you want to test your own header image */
 	/* background-image: url("../images/header.png"); */
