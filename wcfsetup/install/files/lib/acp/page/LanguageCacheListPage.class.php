@@ -18,10 +18,9 @@ use wcf\util\DirectoryUtil;
 class LanguageCacheListPage extends AbstractPage {
 	/**
 	 * active acp menu item
-	 * @todo	set value
 	 * @var	string
 	 */
-	public $activeMenuItem = '';
+	public $activeMenuItem = 'wcf.acp.menu.link.cache.language';
 	
 	/**
 	 * indicates if language cache has just been cleared

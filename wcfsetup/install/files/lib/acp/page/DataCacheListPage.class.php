@@ -187,7 +187,7 @@ class DataCacheListPage extends AbstractPage {
 	 */
 	public function show() {
 		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.log.cache');
+		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.cache.data');
 		
 		parent::show();
 	}
