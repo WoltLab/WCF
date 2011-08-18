@@ -30,7 +30,7 @@ class DirectoryUtil {
 	 * 
 	 * @var array<\DirectoryIterator>
 	 */
-	protected $filesObj = array();
+	protected $fileObjects = array();
 	
 	/**
 	 * directory size in bytes
@@ -163,10 +163,10 @@ class DirectoryUtil {
 	 * @param	boolean			$negativeMatch		should the pattern be inversed
 	 * @return	array<\DirectoryIterator>
 	 */
-	public function getFilesObj($order = SORT_ASC, $pattern = '', $negativeMatch = false) {
+	public function getFileObjects($order = SORT_ASC, $pattern = '', $negativeMatch = false) {
 		// scan the folder
-		$this->scanFilesObj();
-		$objects = $this->filesObj;
+		$this->scanFileObjects();
+		$objects = $this->fileObjects;
 		
 		// sort out non matching files
 		if (!empty($pattern)) {
@@ -218,15 +218,15 @@ class DirectoryUtil {
 		}
 		
 		// add the directory itself
-		$this->filesObj[$this->directory] = $this->directory;
+		$this->files[$this->directory] = $this->directory;
 	}
 	
 	/**
 	 * Fills the list of available files, with DirectoryIterator object as value
 	 */
-	protected function scanFilesObj() {
+	protected function scanFileObjects() {
 		// value is cached
-		if (!empty($this->filesObj)) return;
+		if (!empty($this->fileObjects)) return;
 		
 		if ($this->recursive) {
 			$it = new \RecursiveIteratorIterator($this->obj, \RecursiveIteratorIterator::CHILD_FIRST);
@@ -235,7 +235,7 @@ class DirectoryUtil {
 				// ignore . and ..
 				if ($it->isDot()) continue;
 				
-				$this->filesObj[FileUtil::unifyDirSeperator($filename)] = $obj;
+				$this->fileObjects[FileUtil::unifyDirSeperator($filename)] = $obj;
 			}
 		}
 		else {
@@ -243,12 +243,12 @@ class DirectoryUtil {
 				// ignore . and ..
 				if ($this->obj->isDot()) continue;
 				
-				$this->filesObj[FileUtil::unifyDirSeperator($obj->getFilename())] = $obj;
+				$this->fileObjects[FileUtil::unifyDirSeperator($obj->getFilename())] = $obj;
 			}
 		}
 		
 		// add the directory itself
-		$this->filesObj[$this->directory] = new \SPLFileInfo($this->directory);
+		$this->fileObjects[$this->directory] = new \SPLFileInfo($this->directory);
 	}
 	
 	/**
@@ -261,7 +261,7 @@ class DirectoryUtil {
 	public function executeCallback($callback, $pattern = '') {
 		if (!is_callable($callback)) return false;
 		
-		$files = $this->getFilesObj(self::SORT_NONE, $pattern);
+		$files = $this->getFileObjects(self::SORT_NONE, $pattern);
 		foreach ($files as $filename => $obj) {
 			call_user_func($callback, $filename, $obj);
 		}
@@ -287,7 +287,7 @@ class DirectoryUtil {
 	public function removePattern($pattern) {
 		if (!$this->recursive) throw new SystemException('Removing of files only works in recursive mode');
 		
-		$files = $this->getFilesObj(self::SORT_NONE, $pattern);
+		$files = $this->getFileObjects(self::SORT_NONE, $pattern);
 		
 		foreach ($files as $filename => $obj) {
 			if (!is_writable($obj->getPath())) {
@@ -316,7 +316,7 @@ class DirectoryUtil {
 		// read cached value first
 		if ($this->size) return $this->size;
 		
-		$files = $this->getFilesObj(self::SORT_NONE);
+		$files = $this->getFileObjects(self::SORT_NONE);
 		foreach ($files as $obj) {
 			$this->size += $obj->getSize();
 		}
@@ -330,7 +330,7 @@ class DirectoryUtil {
 	public function clearCaches() {
 		// clear cached list of files
 		$this->files = array();
-		$this->filesObj = array();
+		$this->fileObjects = array();
 		
 		// clear cached size
 		$this->size = 0;
