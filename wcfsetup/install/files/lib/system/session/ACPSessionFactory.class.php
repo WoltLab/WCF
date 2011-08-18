@@ -15,20 +15,18 @@ use wcf\system\event\EventHandler;
 class ACPSessionFactory {
 	/**
 	 * session editor class name
-	 *
 	 * @var	string
 	 */	
 	protected $sessionEditor = 'wcf\data\acp\session\ACPSessionEditor';
 	
 	/**
 	 * session data editor class name
-	 * 
 	 * @var	string
 	 */
 	protected $sessionDataEditor = 'wcf\data\acp\session\data\ACPSessionDataEditor';
 	
 	/**
-	 * Returns the object of the active session.
+	 * Loads the object of the active session.
 	 */	
 	public function load() {
 		// get session
@@ -36,12 +34,16 @@ class ACPSessionFactory {
 		SessionHandler::getInstance()->load($this->sessionEditor, $this->sessionDataEditor, $sessionID);
 		
 		// call shouldInit event
-		if (!defined('NO_IMPORTS')) EventHandler::getInstance()->fireAction($this, 'shouldInit');
+		if (!defined('NO_IMPORTS')) {
+			EventHandler::getInstance()->fireAction($this, 'shouldInit');
+		}
 		
 		$this->init();
 		
 		// call didInit event
-		if (!defined('NO_IMPORTS')) EventHandler::getInstance()->fireAction($this, 'didInit');
+		if (!defined('NO_IMPORTS')) {
+			EventHandler::getInstance()->fireAction($this, 'didInit');
+		}
 	}
 	
 	/**
@@ -59,8 +61,12 @@ class ACPSessionFactory {
 	 *
 	 */	
 	protected function readSessionID() {
-		if (isset($_GET['s'])) return $_GET['s'];
-		else if (isset($_POST['s'])) return $_POST['s'];
+		if (isset($_GET['s'])) {
+			return $_GET['s'];
+		}
+		else if (isset($_POST['s'])) {
+			return $_POST['s'];
+		}
 		
 		return '';
 	}
