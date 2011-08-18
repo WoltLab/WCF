@@ -18,10 +18,9 @@ use wcf\util\DirectoryUtil;
 class CompiledTemplateListPage extends AbstractPage {
 	/**
 	 * active acp menu item
-	 * @todo	set value
 	 * @var	string
 	 */
-	public $activeMenuItem = '';
+	public $activeMenuItem = 'wcf.acp.menu.link.cache.template';
 	
 	/**
 	 * indicates if compiled templates have been deleted
