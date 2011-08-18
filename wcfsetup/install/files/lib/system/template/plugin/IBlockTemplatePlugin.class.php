@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\template;
+namespace wcf\system\template\plugin;
 
 /**
  * Block functions encloses a template block and operate on the contents of this block.
@@ -8,7 +8,7 @@ namespace wcf\system\template;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.template
+ * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
 interface IBlockTemplatePlugin {

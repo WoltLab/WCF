@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
-use wcf\system\template\IFunctionTemplatePlugin;
 use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
 

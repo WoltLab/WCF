@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\IFunctionTemplatePlugin;
 use wcf\system\template\TemplateEngine;
 
 /**

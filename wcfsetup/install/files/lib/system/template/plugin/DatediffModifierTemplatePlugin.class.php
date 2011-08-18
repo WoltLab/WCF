@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateEngine;
-use wcf\system\template\IModifierTemplatePlugin;
 use wcf\util\DateUtil;
 
 /**

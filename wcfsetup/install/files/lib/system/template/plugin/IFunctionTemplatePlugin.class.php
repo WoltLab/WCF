@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\template;
+namespace wcf\system\template\plugin;
 
 /**
  * Template functions are identical to template blocks, but they have no closing tag.
@@ -8,7 +8,7 @@ namespace wcf\system\template;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.template
+ * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
 interface IFunctionTemplatePlugin {
