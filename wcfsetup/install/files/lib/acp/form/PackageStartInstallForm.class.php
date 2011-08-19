@@ -251,8 +251,8 @@ class PackageStartInstallForm extends ACPForm {
 	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
-		if ($this->action == 'install') WCF::getSession()->checkPermission(array('admin.system.package.canInstallPackage'));
-		else WCF::getSession()->checkPermission(array('admin.system.package.canUpdatePackage'));
+		if ($this->action == 'install') WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+		else WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
 		
 		// check master password
 		WCFACP::checkMasterPassword();

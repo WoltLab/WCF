@@ -339,21 +339,24 @@ WCF.ACP.PackageUninstallation.prototype = {
 	 * @param	object		event
 	 */
 	_createQueue: function(event) {
-		var packageID = $(event.target).data('objectID');
+		var $element = $(event.target);
+		var packageID = $element.data('objectID');
 		
-		this._installation = new WCF.ACP.PackageInstallation('uninstall', 0, false);
-		
-		// initialize dialog
-		WCF.showAJAXDialog('packageInstallationDialog', true, {
-			ajax: {
-				url: 'index.php?action=UninstallPackage&t=' + SECURITY_TOKEN + SID_ARG_2ND,
-				type: 'POST',
-				data: { packageID: packageID, step: 'prepare' },
-				success: $.proxy(this._installation._handleResponse, this._installation)
-			},
-			preventClose: true,
-			hideTitle: true
-		});
+		if (confirm(WCF.Language.get('wcf.acp.package.view.button.uninstall.sure'))) {
+			this._installation = new WCF.ACP.PackageInstallation('uninstall', 0, false);
+			
+			// initialize dialog
+			WCF.showAJAXDialog('packageInstallationDialog', true, {
+				ajax: {
+					url: 'index.php?action=UninstallPackage&t=' + SECURITY_TOKEN + SID_ARG_2ND,
+					type: 'POST',
+					data: { packageID: packageID, step: 'prepare' },
+					success: $.proxy(this._installation._handleResponse, this._installation)
+				},
+				preventClose: true,
+				hideTitle: true
+			});
+		}
 	}
 };
 
