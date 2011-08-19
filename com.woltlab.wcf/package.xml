@@ -17,7 +17,7 @@
 	<instructions type="install">
 		<instruction type="packageinstallationplugins">pip.xml</instruction>
 		<instruction type="acpmenu">acpmenu.xml</instruction>
-		<instruction type="groupoptions">groupoptions.xml</instruction>
+		<instruction type="usergroupoptions">usergroupoptions.xml</instruction>
 		<instruction type="options">options.xml</instruction>
 		<instruction type="useroptions">useroptions.xml</instruction>
 		<instruction type="templates">templates.tar</instruction>

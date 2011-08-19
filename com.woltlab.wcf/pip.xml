@@ -7,7 +7,7 @@
 		<pip name="cronjobs">wcf\system\package\plugin\CronjobsPackageInstallationPlugin</pip>
 		<pip name="eventlistener">wcf\system\package\plugin\EventListenerPackageInstallationPlugin</pip>
 		<pip name="files">wcf\system\package\plugin\FilesPackageInstallationPlugin</pip>
-		<pip name="groupoptions">wcf\system\package\plugin\GroupOptionsPackageInstallationPlugin</pip>
+		<pip name="usergroupoptions">wcf\system\package\plugin\UserGroupOptionsPackageInstallationPlugin</pip>
 		<pip name="languages">wcf\system\package\plugin\LanguagesPackageInstallationPlugin</pip>
 		<pip name="options">wcf\system\package\plugin\OptionsPackageInstallationPlugin</pip>
 		<pip name="pagemenu">wcf\system\package\plugin\PageMenuPackageInstallationPlugin</pip>
