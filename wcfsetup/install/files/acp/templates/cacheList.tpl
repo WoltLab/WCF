@@ -15,21 +15,21 @@
 	<legend>{lang}wcf.acp.cache.data{/lang}</legend>
 	
 	<dl>
-		<dt><label>{lang}wcf.acp.cache.data.source{/lang}</label></dt>
+		<dt>{lang}wcf.acp.cache.data.source{/lang}</dt>
 		<dd>{$cacheData.source}</dd>
 	</dl>
 	{if $cacheData.version}
 		<dl>
-			<dt><label>{lang}wcf.acp.cache.data.version{/lang}</label></dt>
+			<dt>{lang}wcf.acp.cache.data.version{/lang}</dt>
 			<dd>{$cacheData.version}</dd>
 		</dl>
 	{/if}
 	<dl>
-		<dt><label>{lang}wcf.acp.cache.data.size{/lang}</label></dt>
+		<dt>{lang}wcf.acp.cache.data.size{/lang}</dt>
 		<dd>{@$cacheData.size|filesize}</dd>
 	</dl>
 	<dl>
-		<dt><label>{lang}wcf.acp.cache.data.files{/lang}</label></dt>
+		<dt>{lang}wcf.acp.cache.data.files{/lang}</dt>
 		<dd>{#$cacheData.files}</dd>
 	</dl>
 	

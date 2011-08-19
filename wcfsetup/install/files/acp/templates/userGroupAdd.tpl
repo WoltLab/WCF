@@ -9,7 +9,7 @@
 </script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/userGroup{@$action|ucfirst}L.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/{@$action}1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.group.{@$action}{/lang}</h1>
 	</hgroup>
@@ -30,7 +30,7 @@
 <div class="contentHeader">
 	<nav class="largeButtons">
 		<ul>
-			<li><a href="index.php?page=UserGroupList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.group.view{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/userGroupM.png" alt="" /> <span>{lang}wcf.acp.menu.link.group.view{/lang}</span></a></li>
+			<li><a href="index.php?page=UserGroupList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.group.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/userGroupM.png" alt="" /> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
 	</nav>
@@ -38,6 +38,7 @@
 
 <form method="post" action="index.php?form=UserGroup{@$action|ucfirst}">
 	<div class="border content">
+		
 		<fieldset>
 			<legend>{lang}wcf.acp.group.data{/lang}</legend>
 			

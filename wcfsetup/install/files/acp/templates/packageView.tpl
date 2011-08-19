@@ -67,7 +67,7 @@
 	{/if}
 	<dl>
 		<dt>{lang}wcf.acp.package.view.author{/lang}</dt>
-		<dd>{if $package->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</dd>
+		<dd>{if $package->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="badge badgeButton externalURL">{$package->author}</a>{else}{$package->author}{/if}</dd>
 	</dl>
 	
 	{if $additionalFields|isset}{@$additionalFields}{/if}
@@ -96,7 +96,7 @@
 
 {if $requiredPackages|count > 0}
 	<div class="border boxTitle">
-		<a onclick="openList('requiredPackages')"><img id="requiredPackagesImage" src="{@RELATIVE_WCF_DIR}icon/minusS.png" alt="" /></a>
+		<a onclick="openList('requiredPackages')"><img id="requiredPackagesImage" src="{@RELATIVE_WCF_DIR}icon/close.svg" alt="" /></a>
 		<hgroup>
 			<h1><a onclick="openList('requiredPackages')">{lang}wcf.acp.package.view.requiredPackages{/lang}</a></h1>
 			<h2>{lang}wcf.acp.package.view.requiredPackages.description{/lang}</h2>
@@ -120,14 +120,14 @@
 				<tr>
 					<td class="columnIcon">
 						{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-							<a href="index.php?form=PackageStartInstall&amp;action=update&amp;packageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" /></a>
+							<a href="index.php?form=PackageStartInstall&amp;action=update&amp;packageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a>
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageUpdateDisabledS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
+							<img src="{@RELATIVE_WCF_DIR}icon/update1D.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
 						{/if}
 						{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $package.package != 'com.woltlab.wcf' && $package.packageID != PACKAGE_ID}
-							<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="index.php?page=Package&amp;action=startUninstall&amp;packageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" /></a>
+							<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="index.php?page=Package&amp;action=startUninstall&amp;packageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="balloonTooltip" /></a>
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/deleteDisabledS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" />
+							<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" />
 						{/if}
 						
 						{if $package.additionalButtons|isset}{@$package.additionalButtons}{/if}
@@ -135,11 +135,11 @@
 					<td class="columnID"><p>{@$package.packageID}</p></td>
 					<td class="columnIcon">
 						{if $package.standalone}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageTypeStandaloneS.png" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" />
+							<img src="{@RELATIVE_WCF_DIR}icon/packageStandalone1.svg" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" class="balloonTooltip" />
 						{elseif $package.parentPackageID}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageTypePluginS.png" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" />
+							<img src="{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="balloonTooltip" />
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageS.png" alt="" title="{lang}wcf.acp.package.list.other{/lang}" />
+							<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="balloonTooltip" />
 						{/if}
 					</td>
 					<td class="columnText" title="{$package.packageDescription}"><p><a href="index.php?page=PackageView&amp;packageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
@@ -163,7 +163,7 @@
 
 {if $dependentPackages|count > 0}
 	<div class="border boxTitle">
-		<a onclick="openList('dependentPackages')"><img id="dependentPackagesImage" src="{@RELATIVE_WCF_DIR}icon/minusS.png" alt="" /></a>
+		<a onclick="openList('dependentPackages')"><img id="dependentPackagesImage" src="{@RELATIVE_WCF_DIR}icon/close.svg" alt="" /></a>
 		<hgroup>
 			<h1><a onclick="openList('dependentPackages')">{lang}wcf.acp.package.view.dependentPackages{/lang}</a></h1>
 			<h2>{lang}wcf.acp.package.view.dependentPackages.description{/lang}</h2>
@@ -187,14 +187,14 @@
 				<tr>
 					<td class="columnIcon">
 						{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-							<a href="index.php?form=PackageStartInstall&amp;action=update&amp;packageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a>
+							<a href="index.php?form=PackageStartInstall&amp;action=update&amp;packageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a>
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageUpdateDisabledS.png" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
+							<img src="{@RELATIVE_WCF_DIR}icon/update1D.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
 						{/if}
 						{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $package.package != 'com.woltlab.wcf' && $package.packageID != PACKAGE_ID}
-							<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="index.php?page=Package&amp;action=startUninstall&amp;packageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="balloonTooltip" /></a>
+							<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="index.php?page=Package&amp;action=startUninstall&amp;packageID={@$package.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="balloonTooltip" /></a>
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/deleteDisabledS.png" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" />
+							<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" />
 						{/if}
 						
 						{if $package.additionalButtons|isset}{@$package.additionalButtons}{/if}
@@ -202,11 +202,11 @@
 					<td class="columnID"><p>{@$package.packageID}</p></td>
 					<td class="columnIcon">
 						{if $package.standalone}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageTypeStandaloneS.png" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" class="balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/packageStandalone1.svg" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" class="balloonTooltip" />
 						{elseif $package.parentPackageID}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageTypePluginS.png" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="balloonTooltip" />
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageS.png" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="balloonTooltip" />
 						{/if}
 					</td>
 					<td class="columnText" title="{$package.packageDescription}"><p><a href="index.php?page=PackageView&amp;packageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
