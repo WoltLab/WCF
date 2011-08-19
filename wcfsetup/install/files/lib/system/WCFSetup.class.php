@@ -1033,7 +1033,7 @@ class WCFSetup extends WCF {
 		if (!empty($statementParameters)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_queue
 						(processNo, userID, package, packageName, archive)
-				VALUES		(?, ?, ?, ?)";
+				VALUES		(?, ?, ?, ?, ?)";
 			$statement = self::getDB()->prepareStatement($sql);
 			
 			foreach ($statementParameters as $parameter) {
