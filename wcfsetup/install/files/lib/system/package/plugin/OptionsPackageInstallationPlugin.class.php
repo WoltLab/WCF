@@ -3,6 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\data\option\Option;
 use wcf\data\option\OptionEditor;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * This PIP installs, updates or deletes options.

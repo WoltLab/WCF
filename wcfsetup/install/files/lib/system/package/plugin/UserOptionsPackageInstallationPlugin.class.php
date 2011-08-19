@@ -6,6 +6,7 @@ use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionEditor;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * This PIP installs, updates or deletes user fields.
