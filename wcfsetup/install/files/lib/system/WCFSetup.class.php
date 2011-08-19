@@ -954,22 +954,26 @@ class WCFSetup extends WCF {
 		foreach ($tar->getContentList() as $file) {
 			if ($file['type'] != 'folder' && StringUtil::indexOf($file['filename'], 'install/packages/') === 0) {
 				$packageFile = basename($file['filename']);
-				$packageName = preg_replace('!\.(tar\.gz|tgz|tar)$!', '', $packageFile);
 				
-				if ($packageName == 'com.woltlab.wcf') {
-					$wcfPackageFile = $packageFile;
-				}
-				else {
-					$isStrato = (!empty($_SERVER['DOCUMENT_ROOT']) && (strpos($_SERVER['DOCUMENT_ROOT'], 'strato') !== false));
-					if (!$isStrato && preg_match('!\.(tar\.gz|tgz)$!', $packageFile)) {
-						// try to unzip zipped package files
-						if (FileUtil::uncompressFile(TMP_DIR.'install/packages/'.$packageFile, TMP_DIR.'install/packages/'.$packageName.'.tar')) {
-							@unlink(TMP_DIR.'install/packages/'.$packageFile);
-							$packageFile = $packageName.'.tar';
-						}
-					}
+				// ignore any files which aren't an archive
+				if (preg_match('~\.(tar\.gz|tgz|tar)$~', $packageFile)) {
+					$packageName = preg_replace('!\.(tar\.gz|tgz|tar)$!', '', $packageFile);
 					
-					$otherPackages[$packageName] = $packageFile;
+					if ($packageName == 'com.woltlab.wcf') {
+						$wcfPackageFile = $packageFile;
+					}
+					else {
+						$isStrato = (!empty($_SERVER['DOCUMENT_ROOT']) && (strpos($_SERVER['DOCUMENT_ROOT'], 'strato') !== false));
+						if (!$isStrato && preg_match('!\.(tar\.gz|tgz)$!', $packageFile)) {
+							// try to unzip zipped package files
+							if (FileUtil::uncompressFile(TMP_DIR.'install/packages/'.$packageFile, TMP_DIR.'install/packages/'.$packageName.'.tar')) {
+								@unlink(TMP_DIR.'install/packages/'.$packageFile);
+								$packageFile = $packageName.'.tar';
+							}
+						}
+						
+						$otherPackages[$packageName] = $packageFile;
+					}
 				}
 			}
 		}
