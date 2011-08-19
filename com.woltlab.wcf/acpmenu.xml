@@ -42,7 +42,7 @@
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.package.view">
+		<acpmenuitem name="wcf.acp.menu.link.package.list">
 			<icon>icon/packageM.png</icon>
 			<link>index.php?page=PackageList</link>
 			<parent>wcf.acp.menu.link.package.management</parent>
@@ -82,7 +82,7 @@
 			<showorder>3</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.package.server.view">
+		<acpmenuitem name="wcf.acp.menu.link.package.server.list">
 			<icon>icon/updateServerM.png</icon>
 			<link>index.php?page=UpdateServerList</link>
 			<parent>wcf.acp.menu.link.package.server</parent>
@@ -138,7 +138,7 @@
 			<parent>wcf.acp.menu.link.maintenance</parent>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.cronjobs.view">
+		<acpmenuitem name="wcf.acp.menu.link.cronjobs.list">
 			<icon>icon/cronjobsM.png</icon>
 			<link>index.php?page=CronjobList</link>
 			<parent>wcf.acp.menu.link.cronjobs</parent>
@@ -230,7 +230,7 @@
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.group.view">
+		<acpmenuitem name="wcf.acp.menu.link.group.list">
 			<icon>icon/userGroupM.png</icon>
 			<link>index.php?page=UserGroupList</link>
 			<parent>wcf.acp.menu.link.group.general</parent>
