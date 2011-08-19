@@ -999,7 +999,8 @@ class WCFSetup extends WCF {
 			
 			// register essential wcf package
 			$statementParameters[] = array(
-				'packageName' => 'com.woltlab.wcf',
+				'package' => 'com.woltlab.wcf',
+				'packageName' => 'WoltLab Community Framework',
 				'archive' => TMP_DIR.'install/packages/'.$wcfPackageFile
 			);
 		}
@@ -1007,15 +1008,27 @@ class WCFSetup extends WCF {
 		// register all other delivered packages
 		asort($otherPackages);
 		foreach ($otherPackages as $packageName => $packageFile) {
+			// extract packageName from archive's package.xml
+			$archive = new PackageArchive(TMP_DIR.'install/packages/'.$packageFile);
+			try {
+				$archive->openArchive();
+			}
+			catch (\Exception $e) {
+				// TODO: Maybe break the installation if archive is broken?
+				// this is a broken archive, skip it
+				continue;
+			}
+			
 			$statementParameters[] = array(
-				'packageName' => $packageName,
+				'package' => $packageName,
+				'packageName' => $archive->getPackageInfo('packageName'),
 				'archive' => TMP_DIR.'install/packages/'.$packageFile
 			);
 		}
 		
 		if (!empty($statementParameters)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_queue
-						(processNo, userID, package, archive)
+						(processNo, userID, package, packageName, archive)
 				VALUES		(?, ?, ?, ?)";
 			$statement = self::getDB()->prepareStatement($sql);
 			
@@ -1023,6 +1036,7 @@ class WCFSetup extends WCF {
 				$statement->execute(array(
 					$processNo,
 					$admin->userID,
+					$parameter['package'],
 					$parameter['packageName'],
 					$parameter['archive']
 				));
