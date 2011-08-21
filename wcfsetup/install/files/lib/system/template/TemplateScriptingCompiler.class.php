@@ -1093,7 +1093,7 @@ class TemplateScriptingCompiler {
 						}
 						
 						// handle modifier name
-						$modifierData['name'] = StringUtil::toLowerCase($values[$i]);
+						$modifierData['name'] = $values[$i];
 						$className = $this->template->getPluginClassName('modifier', $modifierData['name']);
 						if (class_exists($className)) {
 							$modifierData['className'] = $className;
