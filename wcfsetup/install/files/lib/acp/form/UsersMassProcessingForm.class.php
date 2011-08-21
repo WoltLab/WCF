@@ -394,13 +394,6 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\system\option\ISearchableOptionType::getSearchFormElement()
-	 */
-	protected function getFormElement($type, &$optionData) {
-		return $this->getTypeObject($type)->getSearchFormElement($optionData);
-	}
-	
-	/**
 	 * @see wcf\acp\form\AbstractOptionListForm::checkOption()
 	 */
 	protected static function checkOption(Option $option) {
