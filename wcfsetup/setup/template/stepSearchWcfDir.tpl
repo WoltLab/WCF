@@ -42,9 +42,9 @@
 <script type="text/javascript">
 	//<![CDATA[
 	// data
-	var domainName = '{@$domainName|encodeJS}';
-	var installScriptDir = '{@$installScriptDir|encodeJS}';
-	var installScriptUrl = '{@$installScriptUrl|encodeJS}';
+	var domainName = '{@$domainName|encodejs}';
+	var installScriptDir = '{@$installScriptDir|encodejs}';
+	var installScriptUrl = '{@$installScriptUrl|encodejs}';
 	var invalidErrorMessage = '{lang}wcf.global.wcfDir.error.invalid{/lang}';
 	
 	// function

@@ -8,7 +8,7 @@
 	//<![CDATA[
 	// data array
 	var userData = new Hash();
-	var url = '{@$url|encodeJS}';
+	var url = '{@$url|encodejs}';
 	
 	// language
 	var language = new Object();

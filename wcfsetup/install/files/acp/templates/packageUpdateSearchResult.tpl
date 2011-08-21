@@ -42,9 +42,9 @@
 							<script type="text/javascript">
 								//<![CDATA[
 								onloadEvents.push(function() {
-									document.getElementById('packageVersion-{$package.package|encodeJS}').onchange = function() {
+									document.getElementById('packageVersion-{$package.package|encodejs}').onchange = function() {
 										// get value
-										var select = document.getElementById('packageVersion-{$package.package|encodeJS}');
+										var select = document.getElementById('packageVersion-{$package.package|encodejs}');
 										var packageVersion = select.options[select.selectedIndex].value;
 										
 										// set value
