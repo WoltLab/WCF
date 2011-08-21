@@ -2,6 +2,7 @@
 namespace wcf\data\cronjob;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\WCF;
+use wcf\util\DateUtil;
 
 /**
  * Executes cronjob-related actions.
@@ -94,9 +95,19 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 	 * Executes cronjobs.
 	 */
 	public function execute() {
-		// TODO: implement me
+		$return = array();
 		foreach ($this->objects as $cronjob) {
-			
+			$className = $cronjob->className;
+			$executable = new $className();
+			$executable->execute(new Cronjob($cronjob->cronjobID));
+			$nextExec = $cronjob->getNextExec();
+			$cronjob->update(array('nextExec' => $nextExec));
+			$dateTime = DateUtil::getDateTimeByTimestamp($nextExec);
+			$return[$cronjob->cronjobID] = array(
+				'time' => $nextExec,
+				'formatted' => str_replace('%time%', DateUtil::format($dateTime, DateUtil::TIME_FORMAT), str_replace('%date%', DateUtil::format($dateTime, DateUtil::DATE_FORMAT), WCF::getLanguage()->get('wcf.global.date.dateTimeFormat')))
+			);
 		}
+		return $return;
 	}
 }

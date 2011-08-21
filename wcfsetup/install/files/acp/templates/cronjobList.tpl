@@ -25,7 +25,7 @@
 						
 						if (WCF.inArray($($button).data('objectID'), data.objectIDs)) {
 							// insert feedback here
-							$(row).find('td.columnNextExec').html('...');
+							$(row).find('td.columnNextExec').html(data.returnValues[$($button).data('objectID')].formatted);
 							$(row).wcfHighlight();
 						}
 					});
