@@ -113,7 +113,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	 */
 	protected function getTypeObject($type) {
 		if (!isset($this->typeObjects[$type])) {
-			$className = 'wcf\system\option\\'.StringUtil::firstCharToLowerCase($type).'OptionType';
+			$className = 'wcf\system\option\\'.StringUtil::firstCharToUpperCase($type).'OptionType';
 			
 			// validate class
 			if (!class_exists($className)) {
