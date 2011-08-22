@@ -70,9 +70,7 @@
 		{@$pagesLinks}
 	</div>
 {hascontentelse}
-	<div class="border content">
-		<p class="info">{lang}wcf.acp.cronjob.log.noEntries{/lang}</p>
-	</div>
+	<p class="info">{lang}wcf.acp.cronjob.log.noEntries{/lang}</p>
 {/hascontent}
 
 {include file='footer'}
