@@ -1511,6 +1511,112 @@ WCF.ToggleOptions.prototype = {
 };
 
 /**
+ * Namespace for all kind of collapsible containers.
+ */
+WCF.Collapsible = {};
+
+/**
+ * Simple implementation for collapsible content, neither does it
+ * store its state nor does it allow AJAX callbacks to fetch content.
+ */
+WCF.Collapsible.Simple = {
+	/**
+	 * Initializes collapsibles.
+	 */
+	init: function() {
+		$('.collapsible').each($.proxy(function(index, button) {
+			this._initButton(button);
+		}, this));
+	},
+	
+	/**
+	 * Binds an event listener on all buttons triggering the collapsible.
+	 * 
+	 * @param	object		button
+	 */
+	_initButton: function(button) {
+		var $button = $(button);
+		var $isOpen = $button.data('isOpen');
+		
+		if (!$isOpen) {
+			// hide container on init
+			$($button.data('collapsibleContainer')).hide();
+		}
+		
+		$button.click($.proxy(this._toggle, this));
+	},
+	
+	/**
+	 * Toggles collapsible containers on click.
+	 * 
+	 * @param	object		event
+	 */
+	_toggle: function(event) {
+		var $button = this._findElement($(event.target));
+		if ($button === false) {
+			return false;
+		}
+		
+		var $isOpen = $button.data('isOpen');
+		var $target = $('#' + $.wcfEscapeID($button.data('collapsibleContainer')));
+		
+		if ($isOpen) {
+			$target.stop().wcfBlindOut('vertical', $.proxy(function() {
+				this._toggleImage($button, 'wcf.global.plus');
+			}, this));
+			$isOpen = false;
+		}
+		else {
+			$target.stop().wcfBlindIn('vertical', $.proxy(function() {
+				this._toggleImage($button, 'wcf.global.minus');
+			}, this));
+			$isOpen = true;
+		}
+		
+		$button.data('isOpen', $isOpen);
+		
+		// suppress event
+		event.stopPropagation();
+		return false;
+	},
+	
+	/**
+	 * Toggles image of target button.
+	 * 
+	 * @param	jQuery		button
+	 * @param	string		image
+	 */
+	_toggleImage: function(button, image) {
+		var $icon = WCF.Icon.get(image);
+		var $image = button.find('img');
+		
+		if ($image.length) {
+			$image.attr('src', $icon);
+		}
+	},
+	
+	/**
+	 * Finds the anchor element (sometimes the image will show up as target).
+	 * 
+	 * @param	jQuery		element
+	 * @return	jQuery
+	 */
+	_findElement: function(element) {
+		if (element.getTagName() == 'a') {
+			return element;
+		}
+		
+		element = $(element.parent('a'));
+		if (element.length == 1) {
+			return element;
+		}
+		
+		console.debug('[WCF.Collapsible.Simple] Could not find valid parent, aborting.')
+		return false;
+	}
+};
+
+/**
  * Holds userdata of the current user
  */
 WCF.User = {

@@ -1,5 +1,19 @@
 {include file='header'}
 
+<script type="text/javascript">
+	//<![CDATA[
+	$(function() {
+		{* TODO: Fix icon path *}
+		WCF.Icon.addObject({
+			'wcf.global.minus': '{@RELATIVE_WCF_DIR}icon/minusS.png',
+			'wcf.global.plus': '{@RELATIVE_WCF_DIR}icon/plusS.png'
+		});
+
+		WCF.Collapsible.Simple.init();
+	});
+	//]]>
+</script>
+
 <header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/cacheL.png" alt="" />
 	<hgroup>
@@ -46,14 +60,15 @@
 </div>
 
 {foreach from=$caches key=cache item=files}
+	{counter name=cacheIndex assign=cacheIndex print=false start=0}
 	{if $files|count}
 		<div class="border boxTitle">
-			<a onclick="openList('{$cache}')" class="collapsible"><img src="{@RELATIVE_WCF_DIR}icon/minusS.png" id="{$cache}Image" alt="" title="ToDo: Collapsible" class="balloonTooltip" /></a>
+			<a class="collapsible" data-isOpen="1" data-collapsibleContainer="cache{@$cacheIndex}"><img src="{@RELATIVE_WCF_DIR}icon/minusS.png" alt="" title="ToDo: Collapsible" class="balloonTooltip" /></a>
 			<hgroup>
 				<h1>{$cache} <span class="badge" title="{lang}wcf.acp.cache.data.files.count{/lang}">{#$files|count}</span></h1>
 			</hgroup>
 			
-			<table id="{$cache}">
+			<table id="cache{@$cacheIndex}">
 				<thead>
 					<tr>
 						<th><p class="emptyHead">{lang}wcf.acp.cache.list.name{/lang}</p></th>
@@ -80,11 +95,6 @@
 			</table>
 			
 		</div>
-		<script type="text/javascript">
-			//<![CDATA[
-			initList('{$cache}', 0);
-			//]]>
-		</script>
 	{/if}
 {/foreach}
 
