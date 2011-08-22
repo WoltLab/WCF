@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\cronjob;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\cronjob\log\CronjobLogEditor;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 
@@ -115,20 +116,18 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 			$executable = new $className();
 			
 			// execute cronjob
-			$success = true;
 			$error = '';
 			try {
 				$executable->execute(new Cronjob($cronjob->cronjobID));
 			}
 			catch (\Exception $e) {
-				$success = false;
-				$error = (string) $e;
+				$error = $e->getMessage();
 			}
 			
-			log\CronjobLogEditor::create(array(
+			CronjobLogEditor::create(array(
 				'cronjobID' => $cronjob->cronjobID,
 				'execTime' => TIME_NOW,
-				'success' => (int) $success,
+				'success' => (int) ($error != ''),
 				'error' => $error
 			));
 				
