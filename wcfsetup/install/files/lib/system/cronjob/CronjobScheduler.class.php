@@ -78,7 +78,7 @@ class CronjobScheduler extends SingletonFactory {
 			
 			// get time of next execution
 			$nextExec = $cronjobEditor->getNextExec();
-			$afterNextExec = $cronjobEditor->getNextExec(($nextExec + 1));
+			$afterNextExec = $cronjobEditor->getNextExec(($nextExec + 120));
 			
 			// mark cronjob as done
 			$cronjobEditor->update(array(

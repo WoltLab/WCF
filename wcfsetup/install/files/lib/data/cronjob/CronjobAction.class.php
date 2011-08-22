@@ -135,7 +135,7 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 			$nextExec = $cronjob->getNextExec();
 			$cronjob->update(array(
 				'nextExec' => $nextExec, 
-				'afterNextExec' => $cronjob->getNextExec(($nextExec + 1))
+				'afterNextExec' => $cronjob->getNextExec(($nextExec + 120))
 			));
 			
 			// build the return value
