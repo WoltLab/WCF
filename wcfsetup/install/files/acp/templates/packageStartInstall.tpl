@@ -21,7 +21,7 @@
 <div class="contentHeader">
 	<nav class="largeButtons">
 		<ul>
-			<li><a href="index.php?page=PackageList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.package.view{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageM.png" alt="" /> <span>{lang}wcf.acp.menu.link.package.view{/lang}</span></a></li>
+			<li><a href="index.php?page=PackageList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.package.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageM.png" alt="" /> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
 	</nav>
