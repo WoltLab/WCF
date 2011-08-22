@@ -81,7 +81,7 @@ class UpdateServerListPage extends SortablePage {
 	 */
 	public function show() {
 		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.server.view');
+		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.server.list');
 		
 		parent::show();
 	}

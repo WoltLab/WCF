@@ -74,7 +74,7 @@ class PackageListPage extends SortablePage {
 	 */
 	public function show() {
 		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.view');
+		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.list');
 		
 		parent::show();
 	}

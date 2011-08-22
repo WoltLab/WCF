@@ -67,7 +67,7 @@ class CronjobListPage extends SortablePage {
 	 */
 	public function show() {
 		// set active menu item.
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.cronjobs.view');
+		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.cronjobs.list');
 		
 		parent::show();
 	}
