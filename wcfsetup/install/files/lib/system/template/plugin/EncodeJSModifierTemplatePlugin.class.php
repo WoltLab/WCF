@@ -4,12 +4,12 @@ use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
 
 /**
- * The 'encodejs' modifier formats a string for usage in a single quoted javascript string. 
+ * The 'encodeJS' modifier formats a string for usage in a single quoted javascript string. 
  * Escapes single quotes and new lines.
  * 
  * Usage:
- * {$string|encodejs}
- * {"bl''ah"|encodejs}
+ * {$string|encodeJS}
+ * {"bl''ah"|encodeJS}
  *
  * @author 	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class EncodejsModifierTemplatePlugin implements IModifierTemplatePlugin {
+class EncodeJSModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
 	 * @see wcf\system\template\IModifierTemplatePlugin::execute()
 	 */
