@@ -16,6 +16,6 @@
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/WCF.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
-	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodejs}');
+	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 	//]]>
 </script>
