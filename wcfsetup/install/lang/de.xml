@@ -479,7 +479,7 @@
 		<item name="wcf.acp.package.step.install.packageInstallationPlugins"><![CDATA[Paket-Installations-Zusatzmodule werden installiert ...]]></item>
 		<item name="wcf.acp.package.step.install.parent"><![CDATA[Zuordnung zum übergeordneten Paket wird vorgenommen ...]]></item>
 		<item name="wcf.acp.package.step.install.requirements"><![CDATA[Abhängigkeiten werden aufgelöst ...]]></item>
-		<item name="wcf.acp.package.step.title"><![CDATA[Paket <b>{$packageName|encodeJS}</b>: ]]></item>
+		<item name="wcf.acp.package.step.title"><![CDATA[Paket <b>{$packageName|encodejs}</b>: ]]></item>
 		<item name="wcf.acp.package.step.uninstall.ACPMenuPackageInstallationPlugin"><![CDATA[Menüpunkte der Administrationsoberfläche werden deinstalliert ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.ACPTemplatesPackageInstallationPlugin"><![CDATA[Templates der Administrationsoberfläche werden deinstalliert ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.CronjobsPackageInstallationPlugin"><![CDATA[Zeitgesteuerte Aufgaben werden deinstalliert ...]]></item>

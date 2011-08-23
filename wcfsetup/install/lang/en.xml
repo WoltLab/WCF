@@ -482,7 +482,7 @@
 		<item name="wcf.acp.package.step.install.packageInstallationPlugins"><![CDATA[Installing package plugins ...]]></item>
 		<item name="wcf.acp.package.step.install.parent"><![CDATA[Parent package allocation is being done ...]]></item>
 		<item name="wcf.acp.package.step.install.requirements"><![CDATA[Checking dependencies ...]]></item>
-		<item name="wcf.acp.package.step.title"><![CDATA[Package <b>{$packageName|encodeJS}</b>: ]]></item>
+		<item name="wcf.acp.package.step.title"><![CDATA[Package <b>{$packageName|encodejs}</b>: ]]></item>
 		<item name="wcf.acp.package.step.uninstall.ACPMenuPackageInstallationPlugin"><![CDATA[Removing menu items from the Administration Control Panel ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.ACPTemplatePatchPackageInstallationPlugin"><![CDATA[Removing template patches of the Administration Control Panel ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.ACPTemplatesPackageInstallationPlugin"><![CDATA[Removing templates from the Administration Control Panel ...]]></item>

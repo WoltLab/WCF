@@ -3,7 +3,7 @@
 
 <script type="text/javascript">
 	//<![CDATA[
-	onloadEvents.push(function() { if (!'{$username|encodeJS}' || '{$errorField}' == 'username') document.getElementById('username').focus(); else document.getElementById('password').focus(); });
+	onloadEvents.push(function() { if (!'{$username|encodejs}' || '{$errorField}' == 'username') document.getElementById('username').focus(); else document.getElementById('password').focus(); });
 	//]]>
 </script>
 

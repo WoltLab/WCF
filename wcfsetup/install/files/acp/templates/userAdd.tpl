@@ -17,7 +17,7 @@
 			'isMarked': {@$user->isMarked()}
 		});
 		
-		var url = '{@$url|encodeJS}';
+		var url = '{@$url|encodejs}';
 		
 		// language
 		var language = new Object();
