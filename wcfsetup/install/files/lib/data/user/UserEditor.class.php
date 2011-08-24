@@ -187,6 +187,24 @@ class UserEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
+	 * Removes a user from multiple user groups.
+	 * 
+	 * @param	array		$groupIDs
+	 */
+	public function removeFromGroups(array $groupIDs) {
+		$sql = "DELETE FROM	wcf".WCF_N."_user_to_group
+			WHERE		userID = ?
+					AND groupID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		foreach ($groupIDs as $groupID) {
+			$statement->execute(array(
+				$this->userID,
+				$groupID
+			));
+		}
+	}
+	
+	/**
 	 * Saves the visible languages of a user.
 	 *
 	 * @param 	array 		$languageIDs

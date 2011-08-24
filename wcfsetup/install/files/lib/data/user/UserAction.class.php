@@ -116,4 +116,24 @@ class UserAction extends AbstractDatabaseObjectAction {
 		
 		return $user;
 	}
+	
+	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::update()
+	 */
+	public function update() {
+		parent::update();
+		
+		$groupIDs = (isset($this->parameters['groups'])) ? $this->parameters['groups'] : array();
+		$removeGroups = (isset($this->parameters['removeGroups'])) ? $this->parameters['removeGroups'] : array();
+		
+		foreach ($this->objects as $userEditor) {
+			if (count($groupIDs)) {
+				$userEditor->addToGroups($groupIDs, false, false);
+			}
+			
+			if (count($removeGroups)) {
+				$userEditor->removeFromGroups($removeGroups);
+			}
+		}
+	}
 }
