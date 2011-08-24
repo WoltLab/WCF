@@ -693,7 +693,7 @@ class WCFSetup extends WCF {
 			VALUES		(?, ?, ?)";
 		$statement = self::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-			'packageinstallationplugins',
+			'packageinstallationplugin',
 			1,
 			'wcf\system\package\plugin\PIPPackageInstallationPlugin'
 		));
