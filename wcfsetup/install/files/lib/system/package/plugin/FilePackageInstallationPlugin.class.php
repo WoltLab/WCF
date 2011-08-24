@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\system\package\PackageInstallationDispatcher;
-
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
 use wcf\system\exception\SystemException;
@@ -11,7 +10,7 @@ use wcf\util\FileUtil;
 use wcf\util\StyleUtil;
 
 /**
- * This PIP installs, updates or deletes by a package delivered files.
+ * This PIP installs, updates or deletes files delivered by a package.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -20,7 +19,7 @@ use wcf\util\StyleUtil;
  * @subpackage	system.package.plugin
  * @category 	Community Framework
  */
-class FilesPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
+class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */	
