@@ -4,9 +4,10 @@
 	//<![CDATA[
 	$(function() {
 		{* TODO: Fix icon path *}
+		{* TODO: Please do not call these icons "plus" / "minus"! They may not look like that! Therefor i changed the names to "opener" / "closer". There should be a way to add a Suffix to the file name also, such as the deprecated size-suffix (s, m, l). We now use the number suffix "1, 2, …". Strict names are not very useful here. *}
 		WCF.Icon.addObject({
-			'wcf.global.minus': '{@RELATIVE_WCF_DIR}icon/minusS.png',
-			'wcf.global.plus': '{@RELATIVE_WCF_DIR}icon/plusS.png'
+			'wcf.global.closer': '{@RELATIVE_WCF_DIR}icon/closer.svg',
+			'wcf.global.opener': '{@RELATIVE_WCF_DIR}icon/opener.svg'
 		});
 
 		WCF.Collapsible.Simple.init();
@@ -15,7 +16,7 @@
 </script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/cacheL.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/cache1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.cache.list{/lang}</h1>
 	</hgroup>
@@ -63,7 +64,7 @@
 	{counter name=cacheIndex assign=cacheIndex print=false start=0}
 	{if $files|count}
 		<div class="border boxTitle">
-			<a class="collapsible" data-isOpen="1" data-collapsibleContainer="cache{@$cacheIndex}"><img src="{@RELATIVE_WCF_DIR}icon/minusS.png" alt="" title="ToDo: Collapsible" class="balloonTooltip" /></a>
+			<a class="collapsible" data-isOpen="1" data-collapsibleContainer="cache{@$cacheIndex}"><img src="{@RELATIVE_WCF_DIR}icon/boxOpener2.svg" alt="" title="ToDo: Collapsible" class="balloonTooltip" /></a>
 			<hgroup>
 				<h1>{$cache} <span class="badge" title="{lang}wcf.acp.cache.data.files.count{/lang}">{#$files|count}</span></h1>
 			</hgroup>

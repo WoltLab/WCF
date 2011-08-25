@@ -60,52 +60,55 @@
 	
 		{if $additionalFieldSets|isset}{@$additionalFieldSets}{/if}
 		
-		<nav>
-			<ul class="tabMenu">
-				{foreach from=$optionTree item=categoryLevel1}
-					<li id="{@$categoryLevel1[object]->categoryName}"><a onclick="tabMenu.showSubTabMenu('{@$categoryLevel1[object]->categoryName}');"><span>{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</span></a></li>
-				{/foreach}
-			</ul>
-		</nav>
-		
-		{foreach from=$optionTree item=categoryLevel1}
-			<div class="tabMenuContainer">
-				<nav>
-					<ul class="tabMenu">
-						{foreach from=$categoryLevel1[categories] item=$categoryLevel2}
-							<li><a href="#{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</a></li>
-						{/foreach}
-					</ul>
-				</nav>
-
-				{foreach from=$categoryLevel1[categories] item=categoryLevel2}
-					<div class="border tabMenuContent hidden" id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}">
-						<hgroup class="subHeading">
-							<h1>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h1>
-							<h2>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}</h2>
-						</hgroup>
-					
-						{if $categoryLevel2[options]|count}
-							{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.group.option.'}
-						{/if}
-					
-						{if $categoryLevel2[categories]|count}
-							{foreach from=$categoryLevel2[categories] item=categoryLevel3}
-								<fieldset>
-									<legend>{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}{/lang}</legend>
-									<p class="description">{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}.description{/lang}</p>
-							
-									<div>
-										{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.acp.group.option.'}
-									</div>
-								</fieldset>
+		<!-- ToDo: Something's wrong with the structure of the tab-menu and the enclosed sub-menu! Tab-menus should have the same mark-up as on other pages and allow for an active state -->
+		<div class="tabMenuContainer">
+			<nav>
+				<ul class="tabMenu">
+					{foreach from=$optionTree item=categoryLevel1}
+						<li id="{@$categoryLevel1[object]->categoryName}"><a onclick="tabMenu.showSubTabMenu('{@$categoryLevel1[object]->categoryName}');"><span>{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</span></a></li>
+					{/foreach}
+				</ul>
+			</nav>
+			
+			{foreach from=$optionTree item=categoryLevel1}
+				<div class="tabMenuContainer">
+					<nav>
+						<ul class="menu">
+							{foreach from=$categoryLevel1[categories] item=$categoryLevel2}
+								<li><a href="#{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</a></li>
 							{/foreach}
-						{/if}
-					
-					</div>
-				{/foreach}
-			</div>
-		{/foreach}
+						</ul>
+					</nav>
+	
+					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
+						<div class="border tabMenuContent hidden" id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}">
+							<hgroup class="subHeading">
+								<h1>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h1>
+								<h2>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}</h2>
+							</hgroup>
+						
+							{if $categoryLevel2[options]|count}
+								{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.group.option.'}
+							{/if}
+						
+							{if $categoryLevel2[categories]|count}
+								{foreach from=$categoryLevel2[categories] item=categoryLevel3}
+									<fieldset>
+										<legend>{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}{/lang}</legend>
+										<p class="description">{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}.description{/lang}</p>
+								
+										<div>
+											{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.acp.group.option.'}
+										</div>
+									</fieldset>
+								{/foreach}
+							{/if}
+						
+						</div>
+					{/foreach}
+				</div>
+			{/foreach}
+		</div>
 	</div>
 	
 	<div class="formSubmit">

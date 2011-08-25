@@ -7,7 +7,7 @@
 			<h1>{lang}wcf.acp.package.startInstall{/lang}</h1>
 		</hgroup>
 	{else}
-		<img src="{@RELATIVE_WCF_DIR}icon/packageUpdateL.png" alt="" />
+		<img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" />
 		<hgroup class="headlineContainer">
 			<h1>{lang}wcf.acp.package.startUpdate{/lang}</h1>
 		</hgroup>

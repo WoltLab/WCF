@@ -3,9 +3,9 @@
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/sessionLogL.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/session1.svg" alt="" />
 	<hgroup>
-		<h1>{lang}wcf.acp.sessionLog.view{/lang}</h1>
+		<h1>{lang}wcf.acp.sessionLog.list{/lang}</h1>
 	</hgroup>
 </header>
 

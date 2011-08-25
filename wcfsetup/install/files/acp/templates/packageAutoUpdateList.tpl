@@ -33,9 +33,7 @@
 	</header>
 	
 	{if !$availableUpdates|count}
-		<div class="border content">
-			<p class="info">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
-		</div>
+		<p class="info">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
 	{else}
 		{foreach from=$availableUpdates item=availableUpdate}
 			<article class="message content"{if $availableUpdate.version.updateType == 'security'} style="border-color: #c00"{/if}>
