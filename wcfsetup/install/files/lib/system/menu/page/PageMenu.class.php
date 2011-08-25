@@ -27,7 +27,7 @@ class PageMenu extends TreeMenu {
 		CacheHandler::getInstance()->addResource(
 			$cacheName,
 			WCF_DIR.'cache/cache.'.$cacheName.'.php',
-			'wcf\system\cache\builder\CacheBuilderPageMenu'
+			'wcf\system\cache\builder\PageMenuCacheBuilder'
 		);
 		$this->menuItems = CacheHandler::getInstance()->get($cacheName);
 	}
