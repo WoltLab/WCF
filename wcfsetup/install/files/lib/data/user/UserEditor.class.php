@@ -48,6 +48,9 @@ class UserEditor extends DatabaseObjectEditor {
 		if (isset($parameters['password'])) {
 			$parameters['salt'] = StringUtil::getRandomID();
 			$parameters['password'] = StringUtil::getDoubleSaltedHash($parameters['password'], $parameters['salt']);
+			
+			// update salt
+			$this->salt = $parameters['salt'];
 		}
 		
 		parent::update($parameters);
