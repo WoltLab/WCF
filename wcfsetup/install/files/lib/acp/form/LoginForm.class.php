@@ -99,6 +99,8 @@ class LoginForm extends AbstractForm {
 						throw $e2;
 					}
 				}
+				
+				throw $e;
 			}
 			else {
 				throw $e;
