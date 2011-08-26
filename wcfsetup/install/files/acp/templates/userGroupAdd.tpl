@@ -61,17 +61,17 @@
 		{if $additionalFieldSets|isset}{@$additionalFieldSets}{/if}
 		
 		<!-- ToDo: Something's wrong with the structure of the tab-menu and the enclosed sub-menu! Tab-menus should have the same mark-up as on other pages and allow for an active state -->
-		<div class="tabMenuContainer">
+		<div class="tabMenuContainer" data-active="{$activeSubTabMenuItem}" data-store="activeTabMenuItem">
 			<nav>
 				<ul class="tabMenu">
 					{foreach from=$optionTree item=categoryLevel1}
-						<li id="{@$categoryLevel1[object]->categoryName}"><a onclick="tabMenu.showSubTabMenu('{@$categoryLevel1[object]->categoryName}');"><span>{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</span></a></li>
+						<li id="{@$categoryLevel1[object]->categoryName}"><a href="#{@$categoryLevel1[object]->categoryName}">{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
 					{/foreach}
 				</ul>
 			</nav>
 			
 			{foreach from=$optionTree item=categoryLevel1}
-				<div class="tabMenuContainer">
+				<div class="tabMenuContainer" id="{@$categoryLevel1[object]->categoryName}" data-active="{$activeTabMenuItem}" data-store="activeSubTabMenuItem">
 					<nav>
 						<ul class="menu">
 							{foreach from=$categoryLevel1[categories] item=$categoryLevel2}
