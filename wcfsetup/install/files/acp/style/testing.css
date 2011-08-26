@@ -87,6 +87,7 @@ header.pageHeader nav.topMenu {
 	left: 0;
 	min-height: 25px;
 	z-index: 10;
+	min-width: 800px;
 	background-color: rgba(0, 0, 0, .4);
 	
 	-webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
