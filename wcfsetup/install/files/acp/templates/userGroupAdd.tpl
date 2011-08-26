@@ -62,8 +62,8 @@
 		
 		<!-- ToDo: Something's wrong with the structure of the tab-menu and the enclosed sub-menu! Tab-menus should have the same mark-up as on other pages and allow for an active state -->
 		<div class="tabMenuContainer" data-active="{$activeSubTabMenuItem}" data-store="activeTabMenuItem">
-			<nav>
-				<ul class="tabMenu">
+			<nav class="tabMenu">
+				<ul>
 					{foreach from=$optionTree item=categoryLevel1}
 						<li id="{@$categoryLevel1[object]->categoryName}"><a href="#{@$categoryLevel1[object]->categoryName}">{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
 					{/foreach}
@@ -71,9 +71,9 @@
 			</nav>
 			
 			{foreach from=$optionTree item=categoryLevel1}
-				<div class="tabMenuContainer" id="{@$categoryLevel1[object]->categoryName}" data-active="{$activeTabMenuItem}" data-store="activeSubTabMenuItem">
-					<nav>
-						<ul class="menu">
+				<div id="{@$categoryLevel1[object]->categoryName}" data-active="{$activeTabMenuItem}" data-store="activeSubTabMenuItem" class="tabMenuContainer border tabMenuContent ">
+					<nav class="menu">
+						<ul>
 							{foreach from=$categoryLevel1[categories] item=$categoryLevel2}
 								<li><a href="#{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</a></li>
 							{/foreach}
@@ -81,7 +81,7 @@
 					</nav>
 	
 					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
-						<div class="border tabMenuContent hidden" id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}">
+						<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}" class="hidden">
 							<hgroup class="subHeading">
 								<h1>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h1>
 								<h2>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}</h2>

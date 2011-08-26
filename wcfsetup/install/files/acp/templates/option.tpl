@@ -26,9 +26,9 @@
 {/if}
 
 <form method="post" action="index.php?form=Option&amp;categoryID={@$category->categoryID}">
-	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
-		<nav>
-			<ul class="tabMenu">
+	<div data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" class="tabMenuContainer">
+		<nav class="tabMenu">
+			<ul>
 				{foreach from=$optionTree item=categoryLevel1}
 					<li><a href="#{@$categoryLevel1[object]->categoryName}">{*<span>*}{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}{*</span>*}</a></li>
 				{/foreach}

@@ -43,8 +43,8 @@ a:hover {
 	text-decoration: underline;
 }
 
-a.externalLink {
-	background-image: url("../../icon/externalLink.svg");
+a.externalURL {
+	background-image: url("../../icon/externalURL.svg");
 	background-position: right center;
 	background-repeat: no-repeat;
 	padding-right: 17px;
@@ -220,11 +220,21 @@ nav.headerNavigation {
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	margin: 0 23px;
-	padding: 3px 7px;
 	position: relative;
+	min-width: 800px;
 }
 
 nav.headerNavigation:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+nav.headerNavigation > div {
+	padding: 3px 7px;
+}
+
+nav.headerNavigation > div:after {
 	content: "";
 	display: block;
 	clear: both;
@@ -252,6 +262,7 @@ nav.headerNavigation ul li {
 
 div.main {
 	margin: 0 23px;
+	min-width: 800px;
 }
 
 /* -- -- -- -- -- Content -- -- -- -- -- */
@@ -369,6 +380,7 @@ footer.pageFooter {
 	position: relative;
 	text-align: center;
 	position: relative;
+	min-width: 800px;
 }
 
 footer.pageFooter:after {
@@ -960,11 +972,117 @@ input[type='submit']:active,
 
 
 
+/* -- -- -- -- -- Tab Menu -- -- -- -- -- */
+/* Parts taken from jQuery UI @ themes/base/jquery.ui.tabs.css */
+
+/* Tab Menu */
+
+.tabMenu {
+	text-shadow: 0 1px 0 #fff;
+	background-color: none;
+	white-space: nowrap;
+	position: relative;
+	display: block;
+	text-align: center;
+	padding: 0 5px;
+}
+
+.tabMenu:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.tabMenu li {
+	list-style: none;
+	display: inline-block;
+	white-space: nowrap;
+	z-index: 90; /* Prevents border overlay during transition */
+}
+
+.tabMenu li a {
+	color: #999;
+	font-size: 110%;
+	padding: 10px 15px 7px;
+	text-decoration: none;
+	border: 1px solid #ccc;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	display: inline-block;
+	background-color: rgba(245, 245, 245, .5);
+}
+
+.tabMenu li a:hover {
+	color: #666;
+}
+
+.tabMenu li.ui-tabs-selected {
+	margin-bottom: 0;
+	padding-bottom: 1px;
+}
+
+.tabMenu li.ui-state-active a {
+	color: #333 !important;
+	font-weight: bold;
+	font-size: 130%;
+	border-bottom: 1px solid #fff;
+	background-color: rgba(255, 255, 255, 1);
+}
+
+.tabMenu li.ui-state-active a,
+.tabMenu li.ui-state-disabled a,
+.tabMenu li.ui-state-processing a {
+	cursor: default;
+}
+
+.tabMenu li a,
+.ui-tabs .ui-tabs-collapsible .ui-tabs-nav li.ui-state-active a {
+	cursor: pointer;
+}
+
+/* Tab Menu Content */
+
+.tabMenuContent {
+	border: 1px solid #ccc;
+	background-color: rgba(255, 255, 255, 1);
+	z-index: 89; /* Prevents border overlay during transition */
+	display: block;
+	margin: -2px 0 0;
+	padding: 15px 23px;
+}
+
+/* ToDo: 2x hidden? */
+
+.ui-tabs .ui-tabs-hide {
+	display: none !important;
+}
+
+.ui-helper-hidden {
+	display: none;
+}
+
+.ui-helper-hidden-accessible {
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px);
+	clip: rect(1px,1px,1px,1px);
+}
+
+.ui-helper-clearfix:after {
+	content: "";
+	display: block;
+	height: 0;
+	clear: both;
+}
+
+
+
 /* -- -- -- -- -- Menu -- -- -- -- -- */
 
 .menu {
-	color: #fff;
-	padding: 6px 7px;
+	color: #666;
+	margin: -15px -23px 0 -23px;
+	padding: 10px 7px;
+	border-bottom: 1px solid #ccc;
 }
 
 .menu ul {
@@ -973,9 +1091,53 @@ input[type='submit']:active,
 
 .menu ul li {
 	display: inline;
+	white-space: nowrap;
 }
 
 .menu ul li a {
+	color: #666 !important;
+	font-size: 85%;
+	text-decoration: none;
+	text-shadow: 0 1px 0 #fff;
+	border: 1px solid rgba(0, 0, 0, .3);
+	background-color: rgba(0, 0, 0, .05);
+	padding: 2px 10px;
+	border-radius: 13px;
+	
+	-webkit-transition: color .1s linear;
+	-moz-transition: color .1s linear;
+	-ms-transition: color .1s linear;
+	-o-transition: color .1s linear;
+	transition: color .1s linear;
+}
+
+.menu ul li a:hover {
+	color: #333;
+	background-color: rgba(255, 255, 255, 1);
+}
+
+.menu ul li a:active,
+.menu ul li a:focus {
+	border: 1px solid rgba(0, 0, 0, .3);
+	background-color: rgba(255, 255, 255, 1);
+}
+
+.menu ul li.ui-state-active a {
+	border: 1px solid rgba(0, 0, 0, .3);
+	background-color: rgba(255, 255, 255, 1);
+	cursor: default;
+}
+
+/* Special */
+
+.boxTitle > .menu {
+	color: #fff;
+	margin: 0 !important;
+	padding: 6px 7px;
+	border: none;
+}
+
+.boxTitle > .menu ul li a {
 	color: #eee !important;
 	font-size: 85%;
 	text-decoration: none;
@@ -992,13 +1154,15 @@ input[type='submit']:active,
 	transition: color .1s linear;
 }
 
-.menu ul li a:hover {
+.boxTitle > .menu ul li a:hover {
 	color: #fff !important;
 	border: 1px solid rgba(0, 0, 0, .3);
 	background-color: rgba(0, 0, 0, .2);
 }
 
-.menu ul li a:active, .menu ul li a:focus, .menu ul li a.active {
+.boxTitle > .menu ul li a:active,
+.boxTitle > .menu ul li a:focus,
+.boxTitle > .menu ul li.ui-state-active a {
 	border: 1px solid rgba(0, 0, 0, .5);
 	
 	-webkit-box-shadow: inset 0 2px 15px rgba(0, 0, 0, .5);
@@ -1399,126 +1563,6 @@ div.ui-widget-overlay {
 	opacity: .6;
 	position: fixed;
 	top: 0;
-}
-
-
-
-/* -- -- -- -- -- Tab Menu -- -- -- -- -- */
-/* Parts taken from jQuery UI @ themes/base/jquery.ui.tabs.css */
-
-/* Tab Menu */
-
-.tabMenu {
-	text-shadow: 0 1px 0 #fff;
-	background-color: none;
-	white-space: nowrap;
-	position: relative;
-	display: block;
-	text-align: center;
-	padding: 0 5px;
-}
-
-.tabMenu:after {
-	content: "";
-	display: block;
-	clear: both;
-}
-
-.tabMenu li {
-	list-style: none;
-	display: inline-block;
-	white-space: nowrap;
-	z-index: 90; /* Prevents border overlay during transition */
-}
-
-.tabMenu li a {
-	color: #999;
-	font-size: 110%;
-	padding: 10px 15px 7px;
-	text-decoration: none;
-	border: 1px solid #ccc;
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
-	display: inline-block;
-	/*
-	background-color: #fefefe;
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fefefe), to(#eee));
-	background-image: -moz-linear-gradient(0% 0% 270deg, #fefefe, #eee);
-	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#fefefe), to(#eee));
-	background-image: -o-linear-gradient(#fefefe, #eee);
-	background-image: linear-gradient(#fefefe, #eee);
-	*/
-}
-
-.tabMenu li a:hover {
-	color: #666;
-}
-
-.tabMenu li.ui-tabs-selected {
-	margin-bottom: 0;
-	padding-bottom: 1px;
-}
-
-.tabMenu li.ui-state-active a {
-	color: #333 !important;
-	font-weight: bold;
-	background-color: rgba(255, 255, 255, .015);
-}
-
-.tabMenu li.ui-tabs-selected a {
-	background-color: #fefefe;	
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255, 255, 255, 1)), to(rgba(253, 253, 253, 1)));
-	background-image: -moz-linear-gradient(0% 0% 270deg, rgba(255, 255, 255, 1), rgba(253, 253, 253, 1));
-	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(rgba(255, 255, 255, 1)), to(rgba(253, 253, 253, 1)));
-	background-image: -o-linear-gradient(rgba(255, 255, 255, 1), rgba(253, 253, 253, 1));
-	background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(253, 253, 253, 1));
-	
-	border-bottom: 1px solid rgba(253, 253, 253, 1);
-}
-
-.tabMenu li.ui-tabs-selected a,
-.tabMenu li.ui-state-disabled a,
-.tabMenu li.ui-state-processing a {
-	cursor: default;
-}
-
-.tabMenu li a,
-.ui-tabs .ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
-	cursor: pointer;
-}
-
-/* Tab Menu Content */
-
-.tabMenuContent {
-	border: 1px solid #ccc !important;
-	background-color: rgba(253, 253, 253, 1);
-	z-index: 89; /* Prevents border overlay during transition */
-	display: block;
-	margin: -2px 0 0;
-	padding: 15px 23px;
-}
-
-/* ToDo: 2x hidden? */
-
-.ui-tabs .ui-tabs-hide {
-	display: none !important;
-}
-
-.ui-helper-hidden {
-	display: none;
-}
-
-.ui-helper-hidden-accessible {
-	position: absolute !important;
-	clip: rect(1px 1px 1px 1px);
-	clip: rect(1px,1px,1px,1px);
-}
-
-.ui-helper-clearfix:after {
-	content: "";
-	display: block;
-	height: 0;
-	clear: both;
 }
 
 

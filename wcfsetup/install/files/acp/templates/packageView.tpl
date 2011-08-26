@@ -56,7 +56,7 @@
 	{if $package->packageURL != ''}
 		<dl>
 			<dt>{lang}wcf.acp.package.view.url{/lang}</dt>
-			<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package->packageURL|rawurlencode}" class="externalLink">{$package->packageURL}</a></dd>
+			<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package->packageURL|rawurlencode}" class="externalURL">{$package->packageURL}</a></dd>
 		</dl>
 	{/if}
 	{if $package->parentPackageID}
@@ -67,7 +67,7 @@
 	{/if}
 	<dl>
 		<dt>{lang}wcf.acp.package.view.author{/lang}</dt>
-		<dd>{if $package->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalLink">{$package->author}</a>{else}{$package->author}{/if}</dd>
+		<dd>{if $package->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</dd>
 	</dl>
 	
 	{if $additionalFields|isset}{@$additionalFields}{/if}
