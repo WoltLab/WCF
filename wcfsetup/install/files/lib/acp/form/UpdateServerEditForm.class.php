@@ -55,7 +55,7 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 		
 		// save server
 		$updateServerAction = new PackageUpdateServerAction(array($this->packageUpdateServerID), 'update', array('data' => array(
-			'server' => $this->server,
+			'server' => $this->serverURL,
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword
 		)));
