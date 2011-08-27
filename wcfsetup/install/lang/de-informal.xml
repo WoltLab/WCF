@@ -278,6 +278,8 @@
 		<item name="wcf.acp.option.category.general.http.http.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.category.general.http.proxy"><![CDATA[Proxy-Server]]></item>
 		<item name="wcf.acp.option.category.general.http.proxy.description"><![CDATA[Hier kannst du optional Proxy-Server für Verbindungen zu externen Servern konfigurieren.]]></item>
+		<item name="wcf.acp.option.category.general.image"><![CDATA[Grafik]]></item>
+		<item name="wcf.acp.option.category.general.image.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.category.general.mail"><![CDATA[E-Mails]]></item>
 		<item name="wcf.acp.option.category.general.mail.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[Allgemein]]></item>

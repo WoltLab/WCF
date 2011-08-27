@@ -60,7 +60,6 @@
 	
 		{if $additionalFieldSets|isset}{@$additionalFieldSets}{/if}
 		
-		<!-- ToDo: Something's wrong with the structure of the tab-menu and the enclosed sub-menu! Tab-menus should have the same mark-up as on other pages and allow for an active state -->
 		<div class="tabMenuContainer" data-active="{$activeSubTabMenuItem}" data-store="activeTabMenuItem">
 			<nav class="tabMenu">
 				<ul>
