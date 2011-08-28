@@ -273,7 +273,7 @@ section.content {
 	background-color: #fff;
 	display: table-cell;
 	vertical-align: top;
-	padding: 25px;
+	padding: 25px 35px;
 	position: relative;
 	width: 100%;
 	z-index: 100;
@@ -594,10 +594,6 @@ dl > dd > fieldset > legend {
 	display: none;
 }
 
-dl > dd > fieldset > dl {
-	
-}
-
 dl > dd > fieldset > dl > dt {
 	width: 150px;
 	margin-right: 20px;
@@ -611,13 +607,9 @@ dl > dd > fieldset > dl > dd > label {
 	display: block;
 }
 
-dl > dd > fieldset > dl > dd > small {
-	
-}
-
 /* Reversed */
 
- dt.reversed {
+dt.reversed {
 	margin-top: 2px;
 	text-align: left;
 	position: absolute;
@@ -625,9 +617,21 @@ dl > dd > fieldset > dl > dd > small {
 	width: auto;
 }
 
- dt.reversed ~ dd > input[type='checkbox'] {
+dt.reversed ~ dd > input[type='checkbox'] {
 	margin-left: 0;
 }
+
+/* Special (experimental) 
+
+fieldset dl > dd {
+	margin-left: 235px;
+	padding-top: 5px;
+}
+
+fieldset dt.reversed {
+	left: 255px;
+}
+*/
 
 
 
