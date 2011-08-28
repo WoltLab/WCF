@@ -5,14 +5,14 @@ use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
 
 /**
- * The 'htmloptions' template function generates the options of an html select list.
+ * The 'htmlOptions' template function generates the options of an html select list.
  * 
  * Usage:
- * {htmloptions options=$array}
- * {htmloptions options=$array selected=$foo}
- * {htmloptions options=$array name="x"}
- * {htmloptions output=$outputArray}
- * {htmloptions output=$outputArray values=$valueArray}
+ * {htmlOptions options=$array}
+ * {htmlOptions options=$array selected=$foo}
+ * {htmlOptions options=$array name="x"}
+ * {htmlOptions output=$outputArray}
+ * {htmlOptions output=$outputArray values=$valueArray}
  *
  * @author 	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class HtmloptionsFunctionTemplatePlugin extends HtmlcheckboxesFunctionTemplatePlugin {
+class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePlugin {
 	protected $selected = array();
 	
 	/**
@@ -48,7 +48,7 @@ class HtmloptionsFunctionTemplatePlugin extends HtmlcheckboxesFunctionTemplatePl
 		}
 
 		if (!isset($tagArgs['options']) || !is_array($tagArgs['options'])) {
-			throw new SystemException("missing 'options' argument in htmloptions tag");
+			throw new SystemException("missing 'options' argument in htmlOptions tag");
 		}
 		
 		if (isset($tagArgs['disableEncoding']) && $tagArgs['disableEncoding']) {
