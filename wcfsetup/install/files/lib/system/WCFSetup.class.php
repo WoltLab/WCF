@@ -17,6 +17,7 @@ use wcf\system\session\SessionHandler;
 use wcf\system\setup\Installer;
 use wcf\system\template\SetupTemplateEngine;
 use wcf\system\WCF;
+use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
@@ -1069,16 +1070,8 @@ class WCFSetup extends WCF {
 		WCF::getTPL()->display('stepInstallPackages');
 		
 		// delete tmp files
-		$directory = TMP_DIR.TMP_FILE_PREFIX.'/';
-		$it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory));
-		while ($it->valid()) {
-			// delete all files except directories and packages (required for post-wcfsetup installation)
-			if (!$it->isDot() && !$it->isDir() && !preg_match('~\.tar(\.gz)?$~', $it->getSubPathName())) {
-				@unlink($it->key());
-			}
-			
-			$it->next();
-		}
+		$directory = TMP_DIR.'/';
+		DirectoryUtil::getInstance($directory)->removePattern('~\.tar(\.gz)?$~', true);
 	}
 	
 	/**
