@@ -812,16 +812,16 @@ WCF.Action.Toggle.prototype = {
 				
 				// toggle icon source
 				$toggleButton.attr('src', function() {
-					if (this.src.match(/enabled(S|M|L)\.png$/)) {
-						return this.src.replace(/enabled(S|M|L)\.png$/, 'disabled$1\.png');
+					if (this.src.match(/disabled1\.svg$/)) {
+						return this.src.replace(/disabled1\.svg$/, 'enabled1.svg');
 					}
 					else {
-						return this.src.replace(/disabled(S|M|L)\.png$/, 'enabled$1\.png');
+						return this.src.replace(/enabled1\.svg$/, 'disabled1.svg');
 					}
 				});
 				// toogle icon title
 				$toggleButton.attr('title', function() {
-					if (this.src.match(/enabled(S|M|L)\.png$/)) {
+					if (this.src.match(/enabled1\.svg$/)) {
 						return $(this).data('disableMessage');
 					}
 					else {
