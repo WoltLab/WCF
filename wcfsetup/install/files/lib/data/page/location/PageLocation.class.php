@@ -26,5 +26,5 @@ class PageLocation extends ProcessibleDatabaseObject {
 	/**
 	 * @see	wcf\data\ProcessibleDatabaseObject::$processorInterface
 	 */
-	protected static $processorInterface = 'wcf\data\page\location\ILocation';
+	protected static $processorInterface = 'wcf\system\page\location\IPageLocation';
 }
