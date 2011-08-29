@@ -4,7 +4,7 @@ use wcf\system\exception\SystemException;
 use wcf\util\ClassUtil;
 
 /**
- * Abstract class for all data holder classes.
+ * Abstract class for all processible data holder classes.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
