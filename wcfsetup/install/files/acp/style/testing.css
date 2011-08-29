@@ -1361,35 +1361,107 @@ tbody tr .columnIcon img {
 
 /* -- -- -- -- -- ToDo: Page Navigation -- -- -- -- -- */
 
-.pageNavigation ul li {
-	display: inline-block;
+/* This is only experimental for the moment */
+
+.pageNavigation ul li:not(.children) {
+	background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
+	background-image: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
+	background-image: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
+	background-image: -ms-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
+	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
+	
+	border: 1px solid rgba(0, 0, 0, .2);
 	border-radius: 3px;
+	display: inline-block;
+	position: relative;
 }
 
-.pageNavigation ul li:not(.skip) {
-	background-color: #eee;
-	border: 1px solid #ccc;
-	padding: 3px;
+.pageNavigation ul li.disabled {
+	background-image: none;
+	border: 1px solid rgba(0, 0, 0, .1);
 }
 
-.pageNavigation ul li.active,
-.pageNavigation ul li:not(.skip):hover {
-	background-color: #faebd7;
-	border-color: #f80;
-	color: #f80;
+.pageNavigation ul li:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.pageNavigation ul li img {
+	width: 16px;
+	height: 16px;
+}
+
+.pageNavigation ul li:not(.disabled):hover {
+	color: #333;
+	border: 1px solid rgba(0, 0, 0, .3);
+	background-color: rgba(255, 255, 255, 1);
+	background-image: none;
+}
+
+.pageNavigation ul li.skip {	
+	top: -1px;
+	padding: 2px 2px 1px 3px;
 }
 
 .pageNavigation ul li a {
+	color: #999;
+	text-shadow: 0 1px 0 #fff;
 	text-decoration: none;
+	display: inline-block;
 }
 
-.pageNavigation ul li:not(.skip):hover a {
-	color: #f80;
+.pageNavigation ul li:not(.skip) a {
+	padding: 3px 5px;
 }
 
-.pageNavigation ul li.skip {
-	vertical-align: middle;
+.pageNavigation ul li:active,
+.pageNavigation ul li:focus {
+	border: 1px solid rgba(0, 0, 0, .3);
+	background-color: rgba(0, 0, 0, .5) !important;
 }
+
+.pageNavigation ul li.active,
+.pageNavigation ul li.active:hover {
+	color: #fff;
+	text-shadow: 0 1px 0 #000;
+	border: 1px solid rgba(0, 0, 0, .3);
+	background-color: rgba(0, 0, 0, .5);
+	
+	background-image: -webkit-linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0) 3px);
+	background-image: -moz-linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0) 3px);
+	background-image: -o-linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0) 3px);
+	background-image: -ms-linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0) 3px);
+	background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0) 3px);
+	
+	padding: 3px 5px;
+}
+
+.pageNavigation ul li:active a,
+.pageNavigation ul li:focus a {
+	color: #fff;
+	text-shadow: 0 1px 0 #000;
+}
+
+.pageNavigation ul li.children,
+.pageNavigation ul li.children:hover,
+.pageNavigation ul li.children:active,
+.pageNavigation ul li.children:focus {
+	display: inline-block;
+}
+
+.pageNavigation ul li.children img {
+	width: 7px;
+	height: 9px;
+}
+
+
+
+
+
+
+
+
 
 
 

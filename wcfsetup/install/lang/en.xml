@@ -10,7 +10,7 @@
 	<category name="wcf.acp.cache">
 		<item name="wcf.acp.cache.button.clear"><![CDATA[Empty cache]]></item>
 		<item name="wcf.acp.cache.clear.success"><![CDATA[The cache has been successfully emptied.]]></item>
-		<item name="wcf.acp.cache.clear.sure"><![CDATA[Are you sure that you want to completely empty the cache?]]></item>
+		<item name="wcf.acp.cache.clear.sure"><![CDATA[Are you sure that you want to empty the cache completely?]]></item>
 		<item name="wcf.acp.cache.data"><![CDATA[Settings]]></item>
 		<item name="wcf.acp.cache.data.files"><![CDATA[Files]]></item>
 		<item name="wcf.acp.cache.data.files.count"><![CDATA[{#$files|count} files]]></item>
@@ -214,12 +214,12 @@
 		<item name="wcf.acp.menu.link.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.menu.link.cronjobs.add"><![CDATA[Add new cronjob]]></item>
 		<item name="wcf.acp.menu.link.cronjobs.showLog"><![CDATA[View cronjob logs]]></item>
-		<item name="wcf.acp.menu.link.cronjobs.list"><![CDATA[List cronjobs]]></item><!-- ToDo: change action name from "view" to "list" -->
+		<item name="wcf.acp.menu.link.cronjobs.list"><![CDATA[List cronjobs]]></item>
 		<item name="wcf.acp.menu.link.display"><![CDATA[Design]]></item>
 		<item name="wcf.acp.menu.link.group"><![CDATA[User groups]]></item>
 		<item name="wcf.acp.menu.link.group.add"><![CDATA[Add new group]]></item>
 		<item name="wcf.acp.menu.link.group.mail"><![CDATA[E-mail all group members]]></item>
-		<item name="wcf.acp.menu.link.group.list"><![CDATA[Group overview]]></item><!-- ToDo: change action name from "view" to "list" -->
+		<item name="wcf.acp.menu.link.group.list"><![CDATA[Group overview]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Log]]></item>
 		<item name="wcf.acp.menu.link.log.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Session]]></item>
@@ -230,8 +230,8 @@
 		<item name="wcf.acp.menu.link.package.database"><![CDATA[Search packages]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Install new package]]></item>
 		<item name="wcf.acp.menu.link.package.server.add"><![CDATA[Add new server]]></item>
-		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Server overview]]></item><!-- ToDo: change action name from "view" to "list" -->
-		<item name="wcf.acp.menu.link.package.list"><![CDATA[List installed packages]]></item><!-- ToDo: change action name from "view" to "list" -->
+		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Server overview]]></item>
+		<item name="wcf.acp.menu.link.package.list"><![CDATA[List installed packages]]></item>
 		<item name="wcf.acp.menu.link.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.menu.link.user"><![CDATA[User]]></item>
 		<item name="wcf.acp.menu.link.user.add"><![CDATA[Add user]]></item>
@@ -484,7 +484,7 @@
 		<item name="wcf.acp.package.step.install.packageInstallationPlugins"><![CDATA[Installing package plugins ...]]></item>
 		<item name="wcf.acp.package.step.install.parent"><![CDATA[Parent package allocation is being done ...]]></item>
 		<item name="wcf.acp.package.step.install.requirements"><![CDATA[Checking dependencies ...]]></item>
-		<item name="wcf.acp.package.step.title"><![CDATA[Package <b>{$packageName|encodeJS}</b>: ]]></item>
+		<item name="wcf.acp.package.step.title"><![CDATA[Package <strong>{$packageName|encodeJS}</strong>: ]]></item>
 		<item name="wcf.acp.package.step.uninstall.ACPMenuPackageInstallationPlugin"><![CDATA[Removing menu items from the Administration Control Panel ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.ACPTemplatePatchPackageInstallationPlugin"><![CDATA[Removing template patches of the Administration Control Panel ...]]></item>
 		<item name="wcf.acp.package.step.uninstall.ACPTemplatePackageInstallationPlugin"><![CDATA[Removing templates from the Administration Control Panel ...]]></item>
@@ -534,25 +534,25 @@
 		<item name="wcf.acp.package.uninstall.dependentPackages.warning"><![CDATA[Upon final confirmation {if $dependentPackages|count == 1}this package{else}these packages{/if} will be removed without any further promting.]]></item>
 		<item name="wcf.acp.package.update"><![CDATA[Package update]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Date of update]]></item>
-		<item name="wcf.acp.package.view.author"><![CDATA[Author:]]></item>
+		<item name="wcf.acp.package.view.author"><![CDATA[Author]]></item>
 		<item name="wcf.acp.package.view.button.makeActive"><![CDATA[Go to the Administration Control Panel]]></item>
 		<item name="wcf.acp.package.view.button.uninstall"><![CDATA[Remove package]]></item>
 		<item name="wcf.acp.package.view.button.uninstall.all"><![CDATA[Remove all packages]]></item>
 		<item name="wcf.acp.package.view.button.uninstall.sure"><![CDATA[Are you sure that you would like to remove this package?]]></item>
 		<item name="wcf.acp.package.view.button.update"><![CDATA[Update package]]></item>
-		<item name="wcf.acp.package.view.date"><![CDATA[Date:]]></item>
+		<item name="wcf.acp.package.view.date"><![CDATA[Date]]></item>
 		<item name="wcf.acp.package.view.dependentPackages"><![CDATA[Dependent packages]]></item>
 		<item name="wcf.acp.package.view.dependentPackages.description"><![CDATA[This package has a requirement from {if $dependentPackages|count == 1}one other package.{else}{#$dependentPackages|count} other packages.{/if}]]></item>
 		<item name="wcf.acp.package.view.dependentPackages.uninstall.description"><![CDATA[{if $dependentPackages|count == 1}This package is required by one other Package{else}{#$dependentPackages|count} Packages are directly or indirectly dependent upon this package{/if}.]]></item>
-		<item name="wcf.acp.package.view.dir"><![CDATA[Installation folder:]]></item>
-		<item name="wcf.acp.package.view.identifier"><![CDATA[Identifier:]]></item>
-		<item name="wcf.acp.package.view.instanceNo"><![CDATA[Installed instance:]]></item>
-		<item name="wcf.acp.package.view.parent"><![CDATA[Parent package:]]></item>
+		<item name="wcf.acp.package.view.dir"><![CDATA[Installation folder]]></item>
+		<item name="wcf.acp.package.view.identifier"><![CDATA[Identifier]]></item>
+		<item name="wcf.acp.package.view.instanceNo"><![CDATA[Installed instance]]></item>
+		<item name="wcf.acp.package.view.parent"><![CDATA[Parent package]]></item>
 		<item name="wcf.acp.package.view.properties"><![CDATA[Properties]]></item>
 		<item name="wcf.acp.package.view.requiredPackages"><![CDATA[Required packages]]></item>
 		<item name="wcf.acp.package.view.requiredPackages.description"><![CDATA[This package has a requirement of {if $requiredPackages|count == 1}one other package.{else}{#$requiredPackages|count} other packages.{/if}]]></item>
-		<item name="wcf.acp.package.view.url"><![CDATA[Homepage:]]></item>
-		<item name="wcf.acp.package.view.version"><![CDATA[Installed version:]]></item>
+		<item name="wcf.acp.package.view.url"><![CDATA[Website (URL):]]></item>
+		<item name="wcf.acp.package.view.version"><![CDATA[Installed version]]></item>
 	</category>
 	<category name="wcf.acp.packageUpdate">
 		<item name="wcf.acp.packageUpdate"><![CDATA[Update packages]]></item>

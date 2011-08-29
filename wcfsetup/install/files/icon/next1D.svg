@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>To Right</title> 
+	<desc>To The Right Icon</desc> 
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2011 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		
+	</defs>
+	
+	<g id="IconToRight" style="opacity: .3;">
+		<path id="Lower" class="Lower" style="fill-rule: evenodd; clip-rule: evenodd; fill: #fff;" d="M14,8.5C14,4.909668,11.0898438,2,7.4995117,2
+			C4.4321289,2,1.862793,4.1411133,1.1801758,7h6.8203125L7.9995117,4.5L13,8.5l-5.0014648,4L7.9995117,10H1.1801758
+			c0.6787109,2.8652344,3.2470703,5,6.3193359,5C11.0898438,15,14,12.0898438,14,8.5z"/>
+		<path id="Upper" class="Upper" style="fill-rule: evenodd; clip-rule: evenodd; fill: #666;" d="M14,7.5C14,3.909668,11.0898438,1,7.4995117,1
+			C4.4321289,1,1.862793,3.1411133,1.1801758,6h6.8203125L7.9995117,3.5L13,7.5l-5.0014648,4L7.9995117,9H1.1801758
+			c0.6787109,2.8652344,3.2470703,5,6.3193359,5C11.0898438,14,14,11.0898438,14,7.5z"/>
+	</g>
+</svg>
