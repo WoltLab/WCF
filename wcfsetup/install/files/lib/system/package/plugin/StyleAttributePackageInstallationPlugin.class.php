@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @subpackage	system.package.plugin
  * @category 	Community Framework
  */
-class StyleAttributesPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class StyleAttributePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
 	 * list of updated or new style variables
 	 * @var	array

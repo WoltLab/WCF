@@ -17,7 +17,7 @@ use wcf\util\XML;
  * @subpackage	system.package.plugin
  * @category 	Community Framework
  */
-class LanguagesPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */	

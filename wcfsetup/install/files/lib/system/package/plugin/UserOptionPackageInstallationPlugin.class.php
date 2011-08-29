@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.package.plugin
  * @category 	Community Framework
  */
-class UserOptionsPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
+class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */	

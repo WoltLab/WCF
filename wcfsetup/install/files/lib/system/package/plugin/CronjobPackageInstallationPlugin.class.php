@@ -13,7 +13,7 @@ use wcf\util\CronjobUtil;
  * @subpackage	acp.package.plugin
  * @category 	Community Framework
  */
-class CronjobsPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
