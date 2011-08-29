@@ -282,12 +282,13 @@ class DirectoryUtil {
 	/**
 	 * Removes all files that match the given pattern.
 	 * 
-	 * @param	string		$pattern	pattern to match
+	 * @param	string			$pattern		pattern to match
+	 * @param	boolean			$negativeMatch		should the pattern be inversed
 	 */
-	public function removePattern($pattern) {
+	public function removePattern($pattern, $negativeMatch = false) {
 		if (!$this->recursive) throw new SystemException('Removing of files only works in recursive mode');
 		
-		$files = $this->getFileObjects(self::SORT_NONE, $pattern);
+		$files = $this->getFileObjects(self::SORT_NONE, $pattern, $negativeMatch);
 		
 		foreach ($files as $filename => $obj) {
 			if (!is_writable($obj->getPath())) {
@@ -295,7 +296,7 @@ class DirectoryUtil {
 			}
 			
 			if ($obj->isDir()) {
-				rmdir($filename);
+				@rmdir($filename);
 			}
 			else if ($obj->isFile()) {
 				unlink($filename);
