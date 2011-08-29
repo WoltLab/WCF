@@ -10,7 +10,7 @@ use wcf\util\XML;
 /**
  * Refreshes list of search robots.
  * 
- * @todo	Use new XML-API
+ * @todo	Add xsd to spiderlist on server
  * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -24,33 +24,31 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 	 * @see wcf\system\ICronjob::execute()
 	 */
 	public function execute(Cronjob $cronjob) {
-		/* $filename = FileUtil::downloadFileFromHttp('http://www.woltlab.com/spiderlist/spiderlist.xml', 'spiders');
-		$xml = new XML($filename);
-		$spiders = $xml->getElementTree('spiderlist');
+		$filename = FileUtil::downloadFileFromHttp('http://www.woltlab.com/spiderlist/spiderlist.xml', 'spiders');
+		$xml = new XML();
+		$xml->load($filename);
 		
-		if (count($spiders['children'])) {
+		$xpath = $xml->xpath();
+		
+		// fetch spiders
+		$spiders = $xpath->query('/spiderlist/spider');		
+		
+		if (count($spiders)) {
 			// delete old entries
 			$sql = "DELETE FROM wcf".WCF_N."_spider";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute();
 			
 			$statementParameters = array();
-			foreach ($spiders['children'] as $spider) {
-				$identifier = $spider['attrs']['ident'];
+			foreach ($spiders as $spider) {
+				$identifier = StringUtil::toLowerCase($spider->getAttribute('ident'));
+				$name = $xpath->query('name', $spider)->item(0);
+				$info = $xpath->query('info', $spider)->item(0);
 				
-				// get attributes
-				foreach ($spider['children'] as $values) {
-					$spider[$values['name']] = $values['cdata'];
-				}
-				
-				$name = $spider['name'];
-				$info = '';
-				if (isset($spider['info'])) $info = $spider['info'];
-				
-				$statementParameters[] = array(
-					'spiderIdentifier' => StringUtil::toLowerCase($identifier),
-					'spiderName' => $name,
-					'spiderURL' => $info
+				$statementParameters[$identifier] = array(
+					'spiderIdentifier' => $identifier,
+					'spiderName' => $name->nodeValue,
+					'spiderURL' => $info ? $info->nodeValue : ''
 				);
 			}
 			
@@ -74,6 +72,6 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 		}
 		
 		// delete tmp file
-		@unlink($filename);*/
+		@unlink($filename);
 	}
 }
