@@ -1,5 +1,6 @@
 <?php
-namespace wcf\data\page\location;
+namespace wcf\system\page\location;
+use wcf\data\page\location\PageLocation;
 use wcf\data\IDatabaseObjectProcessor;
 
 /**
@@ -9,28 +10,28 @@ use wcf\data\IDatabaseObjectProcessor;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	data.page.location
+ * @subpackage	system.page.location
  * @category 	Community Framework
  */
-interface ILocation extends IDatabaseObjectProcessor {
+interface IPageLocation extends IDatabaseObjectProcessor {
 	/**
 	 * Caches the information of a page location.
 	 * 
-	 * @param	array		$location
+	 * @param	wcf\data\page\location\PageLocation	$location
 	 * @param	string		$requestURI
 	 * @param	string		$requestMethod
 	 * @param	array		$match
 	 */
-	public function cache($location, $requestURI, $requestMethod, $match);
+	public function cache(PageLocation $location, $requestURI, $requestMethod, array $match);
 	
 	/**
 	 * Returns the information of a page location.
 	 * 
-	 * @param	array		$location
+	 * @param	wcf\data\page\location\PageLocation	$location
 	 * @param	string		$requestURI
 	 * @param	string		$requestMethod
 	 * @param	array		$match
 	 * @return	string
 	 */
-	public function get($location, $requestURI, $requestMethod, $match);
+	public function get(PageLocation $location, $requestURI, $requestMethod, array $match);
 }
