@@ -2,19 +2,19 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/pip.xsd">
 	<import>
 		<pip name="acpmenu">wcf\system\package\plugin\ACPMenuPackageInstallationPlugin</pip>
-		<pip name="acptemplates">wcf\system\package\plugin\ACPTemplatesPackageInstallationPlugin</pip>
+		<pip name="acptemplate">wcf\system\package\plugin\ACPTemplatePackageInstallationPlugin</pip>
 		<pip name="coreobject">wcf\system\package\plugin\CoreObjectPackageInstallationPlugin</pip>
-		<pip name="cronjobs">wcf\system\package\plugin\CronjobsPackageInstallationPlugin</pip>
+		<pip name="cronjob">wcf\system\package\plugin\CronjobPackageInstallationPlugin</pip>
 		<pip name="eventlistener">wcf\system\package\plugin\EventListenerPackageInstallationPlugin</pip>
-		<pip name="files">wcf\system\package\plugin\FilesPackageInstallationPlugin</pip>
-		<pip name="usergroupoptions">wcf\system\package\plugin\UserGroupOptionsPackageInstallationPlugin</pip>
-		<pip name="languages">wcf\system\package\plugin\LanguagesPackageInstallationPlugin</pip>
-		<pip name="options">wcf\system\package\plugin\OptionsPackageInstallationPlugin</pip>
+		<pip name="file">wcf\system\package\plugin\FilePackageInstallationPlugin</pip>
+		<pip name="usergroupoption">wcf\system\package\plugin\UserGroupOptionPackageInstallationPlugin</pip>
+		<pip name="language">wcf\system\package\plugin\LanguagePackageInstallationPlugin</pip>
+		<pip name="option">wcf\system\package\plugin\OptionPackageInstallationPlugin</pip>
 		<pip name="pagemenu">wcf\system\package\plugin\PageMenuPackageInstallationPlugin</pip>
 		<pip name="script">wcf\system\package\plugin\ScriptPackageInstallationPlugin</pip>
 		<pip name="sql">wcf\system\package\plugin\SQLPackageInstallationPlugin</pip>
 		<pip name="templatelistener">wcf\system\package\plugin\TemplateListenerPackageInstallationPlugin</pip>
-		<pip name="templates">wcf\system\package\plugin\TemplatesPackageInstallationPlugin</pip>
-		<pip name="useroptions">wcf\system\package\plugin\UserOptionsPackageInstallationPlugin</pip>
+		<pip name="template">wcf\system\package\plugin\TemplatePackageInstallationPlugin</pip>
+		<pip name="useroption">wcf\system\package\plugin\UserOptionPackageInstallationPlugin</pip>
 	</import>
 </data>
