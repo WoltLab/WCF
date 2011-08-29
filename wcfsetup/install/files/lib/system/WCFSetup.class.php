@@ -7,6 +7,7 @@ use wcf\data\user\UserAction;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\SQLParser;
 use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
 use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\language\LanguageFactory;
