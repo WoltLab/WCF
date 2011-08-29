@@ -5,13 +5,13 @@ use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
 
 /**
- * The 'htmlcheckboxes' template function generates a list of html checkboxes.
+ * The 'htmlCheckboxes' template function generates a list of html checkboxes.
  * 
  * Usage:
- * {htmlcheckboxes name="x" options=$array}
- * {htmlcheckboxes name="x" options=$array selected=$foo}
- * {htmlcheckboxes name="x" output=$outputArray}
- * {htmlcheckboxes name="x" output=$outputArray values=$valueArray}
+ * {htmlCheckboxes name="x" options=$array}
+ * {htmlCheckboxes name="x" options=$array selected=$foo}
+ * {htmlCheckboxes name="x" output=$outputArray}
+ * {htmlCheckboxes name="x" output=$outputArray values=$valueArray}
  *
  * @author 	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.template.plugin
  * @category 	Community Framework
  */
-class HtmlcheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
+class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	protected $disableEncoding = false;
 	
 	/**
