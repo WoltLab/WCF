@@ -327,7 +327,7 @@ nav.sidebarMenu > div a:hover {
 }
 
 nav.sidebarMenu > div h1 {
-	background-image: url("../../icon/boxOpener.svg");
+	background-image: url("../../icon/closed.svg");
 	background-position: 15px center;
 	background-size: 16px;
 	background-repeat: no-repeat;
@@ -341,7 +341,7 @@ nav.sidebarMenu > div h1 {
 }
 
 nav.sidebarMenu > div h1.activeMenuItem {
-	background-image: url("../../icon/boxCloser.svg");
+	background-image: url("../../icon/opened.svg");
 }
 
 nav.sidebarMenu > div ul li {

@@ -3,8 +3,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
 	
-	<title>Box Opener</title> 
-	<desc>Box Opener Icon</desc> 
+	<title>Collapsible Opened</title> 
+	<desc>Collapsible Opened Icon</desc> 
 	
 	<!--
 		@author		Harald Szekely 
@@ -16,8 +16,8 @@
 		
 	</defs>
 	
-	<g id="IconBoxOpener">
+	<g id="IconCollapsibleOpened">
+		<polygon class="Upper" style="fill-rule: evenodd; clip-rule: evenodd; fill: #000;" points="2,14 13,7.4990234 2,1"/>
 		<polygon class="Lower" style="fill-rule: evenodd; clip-rule: evenodd; fill: #fff;" points="2,15 13,8.4985352 2,1"/>
-		<polygon class="Upper" style="fill-rule: evenodd; clip-rule: evenodd; fill: #369;" points="2,14 13,7.4990234 2,1"/>
 	</g>
 </svg>
