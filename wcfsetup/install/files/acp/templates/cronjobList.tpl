@@ -121,7 +121,7 @@
 					</td>
 					<td class="columnNextExec columnDate">
 						{if $cronjob->active && $cronjob->nextExec != 1}
-							<p>{@$cronjob->nextExec|plaintime}</p>
+							<p>{@$cronjob->nextExec|plainTime}</p>
 						{/if}
 					</td>
 					
