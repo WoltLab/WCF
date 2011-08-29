@@ -23,3 +23,4 @@ define('SESSION_TIMEOUT', 3600);
 define('CACHE_SOURCE_TYPE', 'disk');
 define('ENABLE_SESSION_DATA_CACHE', 0);
 define('MODULE_MASTER_PASSWORD', 1);
+define('TIMEZONE', 'Europe/Berlin');
