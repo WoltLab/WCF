@@ -269,7 +269,7 @@ class UserGroup extends DatabaseObject {
 			$sql = "SELECT		optionName, optionID 
 				FROM		wcf".WCF_N."_user_group_option option_table
 				LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-				ON		(package_dependency.dependency = option_table.packageID)
+					ON 	(package_dependency.dependency = option_table.packageID)
 				WHERE 		package_dependency.packageID = ?
 				ORDER BY	package_dependency.priority ASC";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -286,7 +286,7 @@ class UserGroup extends DatabaseObject {
 				$sql = "SELECT		group_option.optionName, option_value.optionValue
 					FROM		wcf".WCF_N."_user_group_option_value option_value
 					LEFT JOIN	wcf".WCF_N."_user_group_option group_option
-					ON		(group_option.optionID = option_value.optionID)
+						ON 	(group_option.optionID = option_value.optionID)
 					".$conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditions->getParameters());

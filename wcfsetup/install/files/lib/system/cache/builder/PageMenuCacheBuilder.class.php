@@ -26,7 +26,7 @@ class PageMenuCacheBuilder implements ICacheBuilder {
 		$sql = "SELECT		menuItem, menuItemID 
 			FROM		wcf".WCF_N."_page_menu_item menu_item
 			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(package_dependency.dependency = menu_item.packageID)
+				ON 	(package_dependency.dependency = menu_item.packageID)
 			WHERE 		package_dependency.packageID = ?
 			ORDER BY	package_dependency.priority ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -47,7 +47,7 @@ class PageMenuCacheBuilder implements ICacheBuilder {
 						CASE WHEN parentPackageID <> 0 THEN parentPackageID ELSE menu_item.packageID END AS packageID
 				FROM		wcf".WCF_N."_page_menu_item menu_item
 				LEFT JOIN	wcf".WCF_N."_package package
-				ON		(package.packageID = menu_item.packageID)
+					ON 	(package.packageID = menu_item.packageID)
 				".$conditions."
 				ORDER BY	showOrder ASC";
 			$statement = WCF::getDB()->prepareStatement($sql);

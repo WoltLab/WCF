@@ -169,7 +169,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 				$sql = "SELECT		user.userID
 					FROM		wcf".WCF_N."_user
 					LEFT JOIN	wcf".WCF_N."_user_option_value option_value
-					ON		(option_value.userID = user.userID)".
+						ON 	(option_value.userID = user.userID)".
 					$this->conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($this->conditions->getParameters());
@@ -217,7 +217,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 				$sql = "SELECT		COUNT(*) AS count
 					FROM		wcf".WCF_N."_user user
 					LEFT JOIN	wcf".WCF_N."_user_option_value option_value
-					ON		(option_value.userID = user.userID)
+						ON 	(option_value.userID = user.userID)
 					".$this->conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($this->conditions->getParameters());
@@ -227,7 +227,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 				$sql = "SELECT		user.email
 					FROM		wcf".WCF_N."_user user
 					LEFT JOIN	wcf".WCF_N."_user_option_value option_value
-					ON		(option_value.userID = user.userID)
+						ON 	(option_value.userID = user.userID)
 					".$this->conditions."
 					ORDER BY	user.email";
 				$statement = WCF::getDB()->prepareStatement($sql);
@@ -277,7 +277,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 		$sql = "SELECT	user.*
 			FROM	wcf".WCF_N."_user user
 			LEFT JOIN	wcf".WCF_N."_user_option_value option_value
-			ON		(option_value.userID = user.userID)
+				ON 	(option_value.userID = user.userID)
 			".$this->conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->conditions->getParameters()));

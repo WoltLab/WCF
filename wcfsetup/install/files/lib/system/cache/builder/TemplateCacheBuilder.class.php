@@ -41,7 +41,7 @@ class TemplateCacheBuilder implements ICacheBuilder {
 		$sql = "SELECT		templateName, template.packageID 
 			FROM		wcf".WCF_N."_".$prefix."template template
 			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(package_dependency.dependency = template.packageID)
+				ON 	(package_dependency.dependency = template.packageID)
 			WHERE 		package_dependency.packageID = ?
 			ORDER BY	package_dependency.priority DESC";
 		$statement = WCF::getDB()->prepareStatement($sql);

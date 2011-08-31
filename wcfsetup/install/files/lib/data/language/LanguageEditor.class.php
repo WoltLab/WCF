@@ -102,7 +102,7 @@ class LanguageEditor extends DatabaseObjectEditor {
 					$sql = "SELECT		languageItem, languageItemValue, languageCustomItemValue, languageUseCustomValue
 						FROM		wcf".WCF_N."_language_item language_item
 						LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-						ON		(package_dependency.dependency = language_item.packageID)
+							ON 	(package_dependency.dependency = language_item.packageID)
 						".$conditions."
 						ORDER BY 	package_dependency.priority ASC";
 				}

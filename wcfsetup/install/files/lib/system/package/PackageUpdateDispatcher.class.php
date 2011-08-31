@@ -487,9 +487,9 @@ abstract class PackageUpdateDispatcher {
 			// clear records
 			$sql = "DELETE pur FROM	wcf".WCF_N."_package_update_requirement pur
 				LEFT JOIN	wcf".WCF_N."_package_update_version puv
-				ON		(puv.packageUpdateVersionID = pur.packageUpdateVersionID)
+					ON 	(puv.packageUpdateVersionID = pur.packageUpdateVersionID)
 				LEFT JOIN	wcf".WCF_N."_package_update pu
-				ON		(pu.packageUpdateID = puv.packageUpdateID)
+					ON 	(pu.packageUpdateID = puv.packageUpdateID)
 				WHERE		pu.packageUpdateServerID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($packageUpdateServerID));
@@ -512,9 +512,9 @@ abstract class PackageUpdateDispatcher {
 			// clear records
 			$sql = "DELETE pue FROM	wcf".WCF_N."_package_update_exclusion pue
 				LEFT JOIN	wcf".WCF_N."_package_update_version puv
-				ON		(puv.packageUpdateVersionID = pue.packageUpdateVersionID)
+					ON 	(puv.packageUpdateVersionID = pue.packageUpdateVersionID)
 				LEFT JOIN	wcf".WCF_N."_package_update pu
-				ON		(pu.packageUpdateID = puv.packageUpdateID)
+					ON 	(pu.packageUpdateID = puv.packageUpdateID)
 				WHERE		pu.packageUpdateServerID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($packageUpdateServerID));
@@ -537,9 +537,9 @@ abstract class PackageUpdateDispatcher {
 			// clear records
 			$sql = "DELETE puf FROM	wcf".WCF_N."_package_update_fromversion puf
 				LEFT JOIN	wcf".WCF_N."_package_update_version puv
-				ON		(puv.packageUpdateVersionID = puf.packageUpdateVersionID)
+					ON 	(puv.packageUpdateVersionID = puf.packageUpdateVersionID)
 				LEFT JOIN	wcf".WCF_N."_package_update pu
-				ON		(pu.packageUpdateID = puv.packageUpdateID)
+					ON 	(pu.packageUpdateID = puv.packageUpdateID)
 				WHERE		pu.packageUpdateServerID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($packageUpdateServerID));
@@ -594,7 +594,7 @@ abstract class PackageUpdateDispatcher {
 					puv.packageUpdateVersionID, puv.updateType, puv.packageDate, puv.filename, puv.packageVersion
 			FROM		wcf".WCF_N."_package_update pu
 			LEFT JOIN	wcf".WCF_N."_package_update_version puv
-			ON		(puv.packageUpdateID = pu.packageUpdateID)
+				ON 	(puv.packageUpdateID = pu.packageUpdateID)
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
@@ -661,7 +661,7 @@ abstract class PackageUpdateDispatcher {
 		$sql = "SELECT		pur.package, pur.minversion, p.packageID
 			FROM		wcf".WCF_N."_package_update_requirement pur
 			LEFT JOIN	wcf".WCF_N."_package p
-			ON		(p.package = pur.package)
+				ON 	(p.package = pur.package)
 			WHERE		pur.packageUpdateVersionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($packageUpdateVersionID));
@@ -699,9 +699,9 @@ abstract class PackageUpdateDispatcher {
 		$sql = "SELECT		puv.*, pu.*
 			FROM		wcf".WCF_N."_package_update_version puv
 			LEFT JOIN	wcf".WCF_N."_package_update pu
-			ON		(pu.packageUpdateID = puv.packageUpdateID)
+				ON 	(pu.packageUpdateID = puv.packageUpdateID)
 			LEFT JOIN	wcf".WCF_N."_package_update_server pus
-			ON		(pus.packageUpdateServerID = pu.packageUpdateServerID)
+				ON 	(pus.packageUpdateServerID = pu.packageUpdateServerID)
 			WHERE		pu.package = ?
 					AND puv.packageVersion = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);

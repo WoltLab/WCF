@@ -47,7 +47,7 @@ class Option extends DatabaseObject {
 		$sql = "SELECT		optionName, optionID
 			FROM		wcf".WCF_N."_option option_table
 			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(package_dependency.dependency = option_table.packageID)
+				ON 	(package_dependency.dependency = option_table.packageID)
 			WHERE		package_dependency.packageID = ?
 			ORDER BY	package_dependency.priority ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);

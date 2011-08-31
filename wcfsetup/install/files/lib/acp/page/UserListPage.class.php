@@ -195,7 +195,7 @@ class UserListPage extends SortablePage {
 			$sql = "SELECT		option_value.*, user_table.*
 				FROM		wcf".WCF_N."_user user_table
 				LEFT JOIN	wcf".WCF_N."_user_option_value option_value
-				ON		(option_value.userID = user_table.userID)
+					ON 	(option_value.userID = user_table.userID)
 				".$conditions."
 				ORDER BY	".(($this->sortField != 'email' && isset($this->options[$this->sortField])) ? 'option_value.userOption'.$this->options[$this->sortField]['optionID'] : 'user_table.'.$this->sortField)." ".$this->sortOrder;
 			$statement = WCF::getDB()->prepareStatement($sql);

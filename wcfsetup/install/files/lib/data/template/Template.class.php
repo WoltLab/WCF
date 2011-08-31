@@ -35,9 +35,9 @@ class Template extends DatabaseObject {
 			$sql = "SELECT		template.*, group.templateGroupFolderName, package.packageDir
 				FROM		wcf".WCF_N."_template template
 				LEFT JOIN	wcf".WCF_N."_template_group group
-				ON		(group.templateGroupID = template.templateGroupID)
+					ON 	(group.templateGroupID = template.templateGroupID)
 				LEFT JOIN	wcf".WCF_N."_package package
-				ON		(package.packageID = template.packageID)
+					ON 	(package.packageID = template.packageID)
 				WHERE		template.templateID = ?".$id;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($id));
@@ -92,7 +92,7 @@ class Template extends DatabaseObject {
 		$sql = "SELECT		template.templateName, template.templateID, template.templateGroupID, template.packageID
 			FROM		wcf".WCF_N."_template template
 			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(package_dependency.dependency = template.packageID)
+				ON 	(package_dependency.dependency = template.packageID)
 			WHERE 		package_dependency.packageID = ?
 					".($replace !== null ? "AND template.templateGroupID <> 0" : "")."
 			ORDER BY	package_dependency.priority ASC";
@@ -114,9 +114,9 @@ class Template extends DatabaseObject {
 		$sql = "SELECT		template.*, group.templateGroupFolderName, package.packageDir
 			FROM		wcf".WCF_N."_template template
 			LEFT JOIN	wcf".WCF_N."_template_group group
-			ON		(group.templateGroupID = template.templateGroupID)
+				ON 	(group.templateGroupID = template.templateGroupID)
 			LEFT JOIN	wcf".WCF_N."_package package
-			ON		(package.packageID = template.packageID)
+				ON 	(package.packageID = template.packageID)
 			".$conditions."
 			ORDER BY	templateName ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);

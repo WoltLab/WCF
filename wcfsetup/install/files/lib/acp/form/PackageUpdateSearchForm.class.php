@@ -201,7 +201,7 @@ class PackageUpdateSearchForm extends ACPForm {
 		$sql = "SELECT		puv.packageVersion, pu.package, pu.packageUpdateID
 			FROM		wcf".WCF_N."_package_update_version puv
 			LEFT JOIN	wcf".WCF_N."_package_update pu
-			ON		(pu.packageUpdateID = puv.packageUpdateID)
+				ON 	(pu.packageUpdateID = puv.packageUpdateID)
 			WHERE		puv.packageUpdateID IN (".$condition.")";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($statementParameters);

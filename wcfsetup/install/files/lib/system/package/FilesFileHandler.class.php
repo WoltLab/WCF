@@ -28,7 +28,7 @@ class FilesFileHandler extends PackageInstallationFileHandler {
 				$sql = "SELECT		file_log.filename, package.packageDir
 					FROM		wcf".WCF_N."_package_installation_file_log file_log
 					LEFT JOIN	wcf".WCF_N."_package package
-					ON		(package.packageID = file_log.packageID)
+						ON 	(package.packageID = file_log.packageID)
 					".$conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditions->getParameters());

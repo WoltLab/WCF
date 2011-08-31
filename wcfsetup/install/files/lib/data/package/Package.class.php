@@ -123,7 +123,8 @@ class Package extends DatabaseObject {
 	public function getDependencies() {
 		$sql = "SELECT		package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
 			FROM		wcf".WCF_N."_package_dependency package_dependency
-			LEFT JOIN	wcf".WCF_N."_package package ON (package.packageID = package_dependency.dependency)
+			LEFT JOIN	wcf".WCF_N."_package package
+				ON 	(package.packageID = package_dependency.dependency)
 			WHERE		package_dependency.packageID = ?
 			ORDER BY	packageName ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -145,7 +146,8 @@ class Package extends DatabaseObject {
 	public function getDependentPackages() {
 		$sql = "SELECT		package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
 			FROM		wcf".WCF_N."_package_requirement package_requirement
-			LEFT JOIN	wcf".WCF_N."_package package ON (package.packageID = package_requirement.packageID)
+			LEFT JOIN	wcf".WCF_N."_package package
+				ON 	(package.packageID = package_requirement.packageID)
 			WHERE		package_requirement.requirement = ?
 			ORDER BY	packageName ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -167,7 +169,8 @@ class Package extends DatabaseObject {
 	public function getRequiredPackages() {
 		$sql = "SELECT		package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
 			FROM		wcf".WCF_N."_package_requirement package_requirement
-			LEFT JOIN	wcf".WCF_N."_package package ON (package.packageID = package_requirement.requirement)
+			LEFT JOIN	wcf".WCF_N."_package package
+				ON 	(package.packageID = package_requirement.requirement)
 			WHERE		package_requirement.packageID = ?
 			ORDER BY	packageName ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -499,7 +502,7 @@ class Package extends DatabaseObject {
 		$sql = "SELECT		package.*, IF(package.packageID = ?, 1, 0) AS sortOrder
 			FROM		wcf".WCF_N."_package_dependency package_dependency
 			LEFT JOIN	wcf".WCF_N."_package package
-			ON		(package.packageID = package_dependency.dependency)
+				ON 	(package.packageID = package_dependency.dependency)
 			WHERE		package_dependency.packageID = ?
 					AND package.standalone = 1
 					AND package.packageDir <> ''
