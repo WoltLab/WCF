@@ -148,14 +148,12 @@ header.pageHeader div#logo a {
 /* Main Menu  */
 
 nav.mainMenu {
+	/* This is the general toggle switch for main menu orientation (options: left|center|right) */
+	text-align: left;
 	margin: 0 30px;
-	background-color: rgba(0, 0, 0, .4);
-	display: table;
+	display: block;
 	position: relative;
-	bottom: -5px;
-	
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+	bottom: -7px; /* closes the gap between tabs and menu bar */
 }
 
 nav.mainMenu:after {
@@ -165,7 +163,11 @@ nav.mainMenu:after {
 }
 
 nav.mainMenu ul {
-	display: table-row;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	background-color: rgba(0, 0, 0, .4);
+	display: inline-block;
+	
 }
 
 nav.mainMenu ul li {
@@ -174,11 +176,11 @@ nav.mainMenu ul li {
 	color: #69c;
 	text-shadow: 0 -1px 0 #000;
 	cursor: pointer;
-	display: table-cell;
+	display: inline-block;
 	margin: 5px -5px 0;
-	padding: 13px 20px;
+	padding: 13px 20px 7px;
 	position: relative;
-	top: -3px;
+	top: -7px;
 	z-index: 1;
 	
 	border-top-left-radius: 5px;
@@ -211,6 +213,14 @@ nav.mainMenu ul li.activeMenuItem {
 	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#e7f2fd));
 	background-image: -o-linear-gradient(#fff, #e7f2fd);
 	background-image: linear-gradient(#fff, #e7f2fd);
+}
+
+nav.mainMenu ul li.activeMenuItem:first-child {
+	margin: 5px -5px -5px 0;
+}
+
+nav.mainMenu ul li.activeMenuItem:last-child {
+	margin: 5px 0 -5px -5px;
 }
 
 /* Header Navigation  */
@@ -986,7 +996,7 @@ input[type='submit']:active,
 .tabMenu {
 	text-shadow: 0 1px 0 #fff;
 	background-color: none;
-	/* This is the general switch for tab menu orientation */
+	/* This is the general toggle switch for tab menu orientation (options: left|center|right) */
 	text-align: center;
 	padding: 0 5px;
 	display: block;
@@ -1095,7 +1105,7 @@ input[type='submit']:active,
 }
 
 .menu ul {
-	/* This is the general switch for menu orientation */
+	/* This is the general toggle switch for menu orientation (options: left|center|right) */
 	text-align: center;
 }
 
