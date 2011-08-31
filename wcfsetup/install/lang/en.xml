@@ -89,6 +89,12 @@
 		<item name="wcf.acp.cronjob.subtitle"><![CDATA[]]></item>
 	</category>
 	<category name="wcf.acp.group">
+		<item name="wcf.acp.group.administrators"><![CDATA[Administrators]]></item>
+		<item name="wcf.acp.group.everyone"><![CDATA[Everyone]]></item>
+		<item name="wcf.acp.group.guests"><![CDATA[Guests]]></item>
+		<item name="wcf.acp.group.moderators"><![CDATA[Moderators]]></item>
+		<item name="wcf.acp.group.superModerators"><![CDATA[Super Moderators]]></item>
+		<item name="wcf.acp.group.users"><![CDATA[Users]]></item>
 		<item name="wcf.acp.group.add"><![CDATA[Add new user group]]></item>
 		<item name="wcf.acp.group.add.permissions"><![CDATA[Permissions]]></item>
 		<item name="wcf.acp.group.add.success"><![CDATA[The user group has been successfully added.]]></item>
