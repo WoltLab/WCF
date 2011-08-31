@@ -140,7 +140,7 @@ class UserEditor extends DatabaseObjectEditor {
 		
 		// insert new groups
 		if (count($groupIDs) > 0) {
-			$sql = "REPLACE INTO	wcf".WCF_N."_user_to_group
+			$sql = "INSERT INTO	wcf".WCF_N."_user_to_group
 						(userID, groupID)
 				VALUES		(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
