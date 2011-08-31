@@ -128,7 +128,7 @@ class UserAction extends AbstractDatabaseObjectAction {
 		
 		foreach ($this->objects as $userEditor) {
 			if (count($groupIDs)) {
-				$userEditor->addToGroups($groupIDs, true, true);
+				$userEditor->addToGroups($groupIDs);
 			}
 			
 			if (count($removeGroups)) {
