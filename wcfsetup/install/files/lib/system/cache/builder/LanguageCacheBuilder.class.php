@@ -32,7 +32,7 @@ class LanguageCacheBuilder implements ICacheBuilder {
 		$sql = "SELECT 		package.languageID, package.packageID
 			FROM		wcf".WCF_N."_language_to_package package
 			LEFT JOIN	wcf".WCF_N."_language language
-			ON		(language.languageID = package.languageID)
+				ON 	(language.languageID = package.languageID)
 			ORDER BY	language.isDefault DESC,
 					language.languageCode ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);

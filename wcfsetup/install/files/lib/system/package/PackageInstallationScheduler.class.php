@@ -331,11 +331,11 @@ class PackageInstallationScheduler {
 						package_update.package
 				FROM		wcf".WCF_N."_package_update_exclusion package_update_exclusion
 				LEFT JOIN	wcf".WCF_N."_package_update_version package_update_version
-				ON		(package_update_version.packageUpdateVersionID = package_update_exclusion.packageUpdateVersionID)
+					ON 	(package_update_version.packageUpdateVersionID = package_update_exclusion.packageUpdateVersionID)
 				LEFT JOIN	wcf".WCF_N."_package_update package_update
-				ON		(package_update.packageUpdateID = package_update_version.packageUpdateID)
+					ON 	(package_update.packageUpdateID = package_update_version.packageUpdateID)
 				LEFT JOIN	wcf".WCF_N."_package package
-				ON		(package.package = package_update_exclusion.excludedPackage)
+					ON 	(package.package = package_update_exclusion.excludedPackage)
 				WHERE		package_update_exclusion.packageUpdateVersionID IN (
 							SELECT	packageUpdateVersionID
 							FROM	wcf".WCF_N."_package_update_version
@@ -380,7 +380,7 @@ class PackageInstallationScheduler {
 			$sql = "SELECT		package.*, package_exclusion.*
 				FROM		wcf".WCF_N."_package_exclusion package_exclusion
 				LEFT JOIN	wcf".WCF_N."_package package
-				ON		(package.packageID = package_exclusion.packageID)
+					ON 	(package.packageID = package_exclusion.packageID)
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());

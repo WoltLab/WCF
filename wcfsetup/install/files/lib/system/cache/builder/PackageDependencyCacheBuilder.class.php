@@ -38,7 +38,7 @@ class PackageDependencyCacheBuilder implements ICacheBuilder {
 			$sql = "SELECT		package.packageID, package.package
 				FROM		wcf".WCF_N."_package_dependency package_dependency
 				LEFT JOIN	wcf".WCF_N."_package package
-				ON		(package.packageID = package_dependency.dependency)
+					ON 	(package.packageID = package_dependency.dependency)
 				WHERE		package_dependency.packageID = ?
 				ORDER BY	package_dependency.priority ASC";
 			$statement = WCF::getDB()->prepareStatement($sql);

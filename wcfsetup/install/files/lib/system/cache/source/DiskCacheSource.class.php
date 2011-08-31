@@ -195,7 +195,7 @@ class DiskCacheSource implements ICacheSource {
 		$sql = "SELECT		package.packageDir
 			FROM		wcf".WCF_N."_package_dependency package_dependency
 			LEFT JOIN	wcf".WCF_N."_package package
-			ON		(package.packageID = package_dependency.dependency)
+				ON 	(package.packageID = package_dependency.dependency)
 			WHERE		package_dependency.packageID = ?
 					AND standalone = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);

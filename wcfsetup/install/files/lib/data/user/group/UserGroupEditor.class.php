@@ -126,7 +126,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 			$sql = "SELECT		groupID, optionValue, groupOption.optionID
 				FROM		wcf".WCF_N."_group_option groupOption
 				LEFT JOIN	wcf".WCF_N."_group_option_value optionValue
-				ON		(groupOption.optionID = optionValue.optionID)
+					ON 	(groupOption.optionID = optionValue.optionID)
 				WHERE		groupOption.optionname = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array('admin.user.accessibleGroups'));
@@ -162,7 +162,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 		$sql = "SELECT		groupID, optionValue, groupOption.optionID
 			FROM		wcf".WCF_N."_user_group_option groupOption
 			LEFT JOIN	wcf".WCF_N."_user_group_option_value optionValue
-			ON		(groupOption.optionID = optionValue.optionID)
+				ON 	(groupOption.optionID = optionValue.optionID)
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());

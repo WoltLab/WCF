@@ -27,9 +27,9 @@ class CleanupAdapterCacheBuilder implements ICacheBuilder {
 		$sql = "SELECT		listener.*, package.packageDir
 			FROM		wcf".WCF_N."_cleanup_listener listener
 			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(package_dependency.dependency = listener.packageID)
+				ON 	(package_dependency.dependency = listener.packageID)
 			LEFT JOIN	wcf".WCF_N."_package package
-			ON		(package.packageID = listener.packageID)
+				ON 	(package.packageID = listener.packageID)
 			WHERE 		package_dependency.packageID = ?
 			ORDER BY	package_dependency.priority ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);

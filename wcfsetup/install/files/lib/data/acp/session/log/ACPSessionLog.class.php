@@ -32,9 +32,9 @@ class ACPSessionLog extends DatabaseObject {
 			$sql = "SELECT		acp_session_log.*, user_table.username, acp_session.sessionID AS active
 				FROM		wcf".WCF_N."_acp_session_log acp_session_log
 				LEFT JOIN	wcf".WCF_N."_acp_session acp_session
-				ON		(acp_session.sessionID = acp_session_log.sessionID)
+					ON 	(acp_session.sessionID = acp_session_log.sessionID)
 				LEFT JOIN	wcf".WCF_N."_user user_table
-				ON		(user_table.userID = acp_session_log.userID)
+					ON 	(user_table.userID = acp_session_log.userID)
 				WHERE		acp_session_log.sessionLogID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($id));

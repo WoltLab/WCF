@@ -571,9 +571,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						parent_package.package AS parentPackage, parent_package.packageDir AS parentPackageDir
 				FROM		wcf".WCF_N."_template template
 				LEFT JOIN	wcf".WCF_N."_package package
-				ON		(package.packageID = template.packageID)
+					ON 	(package.packageID = template.packageID)
 				LEFT JOIN	wcf".WCF_N."_package parent_package
-				ON		(parent_package.packageID = package.parentPackageID)
+					ON 	(parent_package.packageID = package.parentPackageID)
 				WHERE		template.templateGroupID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($this->templateGroupID));

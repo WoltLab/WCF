@@ -260,7 +260,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 					language_category.languageCategory
 			FROM		wcf".WCF_N."_language_category language_category
 			LEFT JOIN	wcf".WCF_N."_language_item item
-			ON		(item.languageCategoryID = language_category.languageCategoryID)
+				ON 	(item.languageCategoryID = language_category.languageCategoryID)
 			".$conditions."
 			GROUP BY	language_category.languageCategoryID ASC,
 					language_category.languageCategory ASC";
