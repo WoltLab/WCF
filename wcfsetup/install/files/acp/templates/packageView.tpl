@@ -62,7 +62,7 @@
 	{if $package->parentPackageID}
 		<dl>
 			<dt>{lang}wcf.acp.package.view.parent{/lang}</dt>
-			<dd><a href="index.php?page=PackageView&amp;packageID={@$package->parentPackageID}{@SID_ARG_2ND}">{$package->parentPackage()->getName()}</a></dd>
+			<dd><a href="index.php?page=PackageView&amp;packageID={@$package->parentPackageID}{@SID_ARG_2ND}">{$package->getParentPackage()->getName()}</a></dd>
 		</dl>
 	{/if}
 	<dl>
