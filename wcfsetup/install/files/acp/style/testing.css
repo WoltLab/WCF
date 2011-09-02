@@ -177,8 +177,8 @@ nav.mainMenu ul li {
 	cursor: pointer;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
-	margin: 5px -5px 0;
-	padding: 10px 20px 7px;
+	margin: 5px 0 0;
+	padding: 10px 20px;
 	display: inline-block;
 	position: relative;
 	top: -7px;
@@ -296,7 +296,7 @@ div.main {
 section.content {
 	background-color: #fff;
 	display: table-cell;
-	padding: 25px 35px;
+	padding: 25px 40px;
 	position: relative;
 	width: 100%;
 	z-index: 100;
