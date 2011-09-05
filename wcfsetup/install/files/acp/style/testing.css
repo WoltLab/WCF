@@ -1624,7 +1624,7 @@ div.wcfDimensions {
 
 div.overlayLoading {
 	background-color: #fff;
-	background-image: url("../../images/spinner.svg");
+	background-image: url("../../icon/spinner.svg");
 	background-position: center center;
 	background-repeat: no-repeat;
 }
