@@ -716,8 +716,9 @@ input[type="search"]:hover,
 input[type="email"]:hover,
 input[type='password']:hover,
 textarea:hover {
-	border: 1px solid #69c;
-	background-color: #fffff6;
+	border: 1px solid #fa2;
+	background-color: #fff9f4;
+	
 }
 
 /* inputs active */
@@ -731,14 +732,21 @@ input[type="search"]:focus,
 input[type="email"]:focus,
 input[type='password']:focus,
 textarea:focus {
-	border: 1px solid #69c;
-	background-color: #fffff6;
+	border: 1px solid #fa2;
+	background-color: #fff9f4;
+	outline: none;
 	
-	-webkit-box-shadow: 0 0 5px rgba(102, 153, 204, 1), inset 0 0 5px rgba(102, 153, 204, .7);
-	-moz-box-shadow: 0 0 5px rgba(102, 153, 204, 1), inset 0 0 5px rgba(102, 153, 204, .7);
-	-ms-box-shadow: 0 0 5px rgba(102, 153, 204, 1), inset 0 0 5px rgba(102, 153, 204, .7);
-	-o-box-shadow: 0 0 5px rgba(102, 153, 204, 1), inset 0 0 5px rgba(102, 153, 204, .7);
-	box-shadow: 0 0 5px rgba(102, 153, 204, 1), inset 0 0 5px rgba(102, 153, 204, .7);
+	-webkit-box-shadow: 0 0 5px rgba(255, 170, 34, .5), inset 0 1px 5px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0 0 5px rgba(255, 170, 34, .5), inset 0 1px 5px rgba(0, 0, 0, .2);
+	-ms-box-shadow: 0 0 5px rgba(255, 170, 34, .5), inset 0 1px 5px rgba(0, 0, 0, .2);
+	-o-box-shadow: 0 0 5px rgba(255, 170, 34, .5), inset 0 1px 5px rgba(0, 0, 0, .2);
+	box-shadow: 0 0 5px rgba(255, 170, 34, .5), inset 0 1px 5px rgba(0, 0, 0, .2);
+	
+	-webkit-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	-ms-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	transition: all .2s linear;
 }
 
 /* Widths */
@@ -1040,9 +1048,12 @@ input[type='submit']:active,
 	display: inline-block;
 }
 
-.tabMenu li a:hover {
+.tabMenu li:not(.ui-state-active) a:hover {
 	color: #666;
-	border-color: #ccc;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #fa2 #fa2 #ccc #fa2;
+	background-color: #fff9f4;
 }
 
 .tabMenu li.ui-state-active a {
@@ -1136,10 +1147,12 @@ input[type='submit']:active,
 	transition: color .1s linear;
 }
 
-.menu ul li a:hover {
+.menu ul li:not(.ui-state-active) a:hover {
 	color: #333;
-	border: 1px solid rgba(0, 0, 0, .3);
-	background-color: rgba(255, 255, 255, 1);
+	border-width: 1px;
+	border-style: solid;
+	border-color: #fa2;
+	background-color: #fff9f4;
 }
 
 .menu ul li a:active,
@@ -1611,7 +1624,7 @@ div.wcfDimensions {
 
 div.overlayLoading {
 	background-color: #fff;
-	background-image: url("../../images/spinner.gif");
+	background-image: url("../../images/spinner.svg");
 	background-position: center center;
 	background-repeat: no-repeat;
 }
