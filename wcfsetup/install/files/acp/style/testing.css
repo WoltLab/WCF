@@ -803,20 +803,14 @@ input[type='submit'],
 	border-radius: 30px;
 	
 	background-color: #fefefe;
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fefefe), to(#eee));
-	background-image: -moz-linear-gradient(0% 0% 270deg, #fefefe, #eee);
-	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#fefefe), to(#eee));
+	background-image: -webkit-linear-gradient(#fefefe, #eee);
+	background-image: -moz-linear-gradient(#fefefe, #eee);
+	background-image: -ms-linear-gradient(#fefefe, #eee);
 	background-image: -o-linear-gradient(#fefefe, #eee);
 	background-image: linear-gradient(#fefefe, #eee);
 	
 	padding: 5px 13px;
 	display: inline-block;
-	
-	-webkit-transition: all .2s linear;
-	-moz-transition: all .2s linear;
-	-ms-transition: all .2s linear;
-	-o-transition: all .2s linear;
-	transition: all .2s linear;
 }
 
 /* buttons hover */
@@ -826,6 +820,12 @@ input[type='submit']:hover,
 	color: #666;
 	text-decoration: none;
 	border: 1px solid #666;
+	
+	-webkit-transition: all .1s linear;
+	-moz-transition: all .1s linear;
+	-ms-transition: all .1s linear;
+	-o-transition: all .1s linear;
+	transition: all .1s linear;
 }
 
 /* buttons active */
@@ -839,11 +839,17 @@ input[type='submit']:active,
 	text-decoration: none;
 	
 	background-color: #fefefe;
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#fefefe));
-	background-image: -moz-linear-gradient(0% 0% 270deg, #eee, #fefefe);
-	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#fefefe));
+	background-image: -webkit-linear-gradient(#eee, #fefefe);
+	background-image: -moz-linear-gradient(#eee, #fefefe);
+	background-image: -ms-linear-gradient(#eee, #fefefe);
 	background-image: -o-linear-gradient(#eee, #fefefe);
 	background-image: linear-gradient(#eee, #fefefe);
+	
+	-webkit-transition: all .1s linear;
+	-moz-transition: all .1s linear;
+	-ms-transition: all .1s linear;
+	-o-transition: all .1s linear;
+	transition: all .1s linear;
 }
 
 /* default buttons glow */
@@ -871,9 +877,9 @@ input[type='submit'],
 	border: 1px solid #69c;
 	
 	background-color: #e7f2fd;
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#d8e7f5));
-	background-image: -moz-linear-gradient(0% 0% 270deg, #fff, #d8e7f5);
-	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#d8e7f5));
+	background-image: -webkit-linear-gradient(#fff, #d8e7f5);
+	background-image: -moz-linear-gradient(#fff, #d8e7f5);
+	background-image: -ms-linear-gradient(#fff, #d8e7f5);
 	background-image: -o-linear-gradient(#fff, #d8e7f5);
 	background-image: linear-gradient(#fff, #d8e7f5);
 	
@@ -930,9 +936,9 @@ input[type='submit']:active,
 	text-decoration: none;
 	
 	background-color: #d8e7f5;
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#d8e7f5), to(#fff));
-	background-image: -moz-linear-gradient(0% 0% 270deg, #d8e7f5, #fff);
-	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#d8e7f5), to(#fff));
+	background-image: -webkit-linear-gradient(#d8e7f5, #fff);
+	background-image: -moz-linear-gradient(#d8e7f5, #fff);
+	background-image: -ms-linear-gradient(#d8e7f5, #fff);
 	background-image: -o-linear-gradient(#d8e7f5, #fff);
 	background-image: linear-gradient(#d8e7f5, #fff);
 }
@@ -1020,17 +1026,10 @@ input[type='submit']:active,
 	clear: both;
 }
 
-/*
-.tabMenu ul {
-	
-}
-*/
-
 .tabMenu li {
 	white-space: nowrap;
 	list-style: none;
 	display: inline-block;
-	z-index: 90; /* Prevents border overlay during transition */
 }
 
 .tabMenu li a {
@@ -1046,6 +1045,9 @@ input[type='submit']:active,
 	border-top-right-radius: 3px;
 	background-color: rgba(0, 0, 0, .05);
 	display: inline-block;
+	position: relative;
+	bottom: -1px;
+	z-index: 10;
 }
 
 .tabMenu li:not(.ui-state-active) a:hover {
@@ -1056,6 +1058,16 @@ input[type='submit']:active,
 	background-color: #fff9f4;
 }
 
+/*
+.tabMenu li:not(.ui-state-active) a:active,
+.tabMenu li:not(.ui-state-active) a:focus {
+	border-width: 1px;
+	border-style: solid;
+	border-color: #fa2 #fa2 #ccc #fa2;
+	background-color: #fff;
+}
+*/
+
 .tabMenu li.ui-state-active a {
 	color: #333 !important;
 	font-size: 130%;
@@ -1065,6 +1077,8 @@ input[type='submit']:active,
 	border-color: #ccc;
 	border-bottom-color: #fff;
 	background-color: rgba(255, 255, 255, 1);
+	bottom: 0;
+	z-index: 30;
 }
 
 .tabMenu li.ui-state-active a,
@@ -1081,7 +1095,8 @@ input[type='submit']:active,
 	margin-top: -1px;
 	padding: 15px 23px;
 	display: block;
-	z-index: 89; /* Prevents border overlay during transition */
+	position: relative;
+	z-index: 20; /* Prevents border overlay during transition */
 }
 
 /* ToDo: 2x hidden? */
@@ -1131,7 +1146,7 @@ input[type='submit']:active,
 }
 
 .menu ul li a {
-	color: #666;
+	color: #999;
 	font-size: 85%;
 	text-shadow: 0 1px 0 #fff;
 	text-decoration: none;
