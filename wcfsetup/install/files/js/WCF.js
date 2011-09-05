@@ -1562,13 +1562,13 @@ WCF.Collapsible.Simple = {
 		
 		if ($isOpen) {
 			$target.stop().wcfBlindOut('vertical', $.proxy(function() {
-				this._toggleImage($button, 'wcf.global.plus');
+				this._toggleImage($button, 'wcf.global.closed');
 			}, this));
 			$isOpen = false;
 		}
 		else {
 			$target.stop().wcfBlindIn('vertical', $.proxy(function() {
-				this._toggleImage($button, 'wcf.global.minus');
+				this._toggleImage($button, 'wcf.global.opened');
 			}, this));
 			$isOpen = true;
 		}

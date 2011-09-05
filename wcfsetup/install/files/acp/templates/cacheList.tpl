@@ -3,13 +3,10 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		{* TODO: Fix icon path *}
-		{* TODO: Please do not call these icons "plus" / "minus"! They may not look like that! Therefor i changed the names to "opened" / "closed". There should be a way to add a Suffix to the file name also, similar to the deprecated size-suffix (s, m, l). We now use the number suffix "1, 2, …". Strict names are not very useful here. *}
 		WCF.Icon.addObject({
 			'wcf.global.opened': '{@RELATIVE_WCF_DIR}icon/opened2.svg',
 			'wcf.global.closed': '{@RELATIVE_WCF_DIR}icon/closed2.svg'
 		});
-
 		WCF.Collapsible.Simple.init();
 	});
 	//]]>
