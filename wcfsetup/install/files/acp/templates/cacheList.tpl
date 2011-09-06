@@ -69,11 +69,11 @@
 			<table id="cache{@$cacheIndex}">
 				<thead>
 					<tr>
-						<th><p class="emptyHead">{lang}wcf.acp.cache.list.name{/lang}</p></th>
-						<th><p class="emptyHead">{lang}wcf.acp.cache.list.size{/lang}</p></th>
-						<th><p class="emptyHead">{lang}wcf.acp.cache.list.mtime{/lang}</p></th>
+						<th>{lang}wcf.acp.cache.list.name{/lang}</th>
+						<th>{lang}wcf.acp.cache.list.size{/lang}</th>
+						<th>{lang}wcf.acp.cache.list.mtime{/lang}</th>
 						{if $files.0.perm|isset}
-							<th><p class="emptyHead">{lang}wcf.acp.cache.list.perm{/lang}</p></th>
+							<th>{lang}wcf.acp.cache.list.perm{/lang}</th>
 						{/if}
 					</tr>
 				</thead>

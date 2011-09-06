@@ -1,7 +1,7 @@
 {include file='header'}
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/packageStandalone1.svg" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/packageStandalone1.svg" alt="" /><!-- ToDo: Add possibility to show a custom app icon if given! -->
 	<hgroup>
 		<h1>{$package->getName()}</h1>
 		<h2>{$package->packageDescription}</h2>
@@ -172,11 +172,11 @@
 		<table id="dependentPackages">
 			<thead>
 				<tr class="tableHead">
-					<th colspan="2"><p class="emptyHead">{lang}wcf.acp.package.list.id{/lang}</p></th>
-					<th colspan="2"><p class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</p></th>
-					<th><p class="emptyHead">{lang}wcf.acp.package.list.author{/lang}</p></th>
-					<th><p class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</p></th>
-					<th><p class="emptyHead">{lang}wcf.acp.package.list.date{/lang}</p></th>
+					<th colspan="2">{lang}wcf.acp.package.list.id{/lang}</th>
+					<th colspan="2">{lang}wcf.acp.package.list.name{/lang}</th>
+					<th>{lang}wcf.acp.package.list.author{/lang}</th>
+					<th>{lang}wcf.acp.package.list.version{/lang}</th>
+					<th>{lang}wcf.acp.package.list.date{/lang}</th>
 					
 					{if $additionalColumns|isset}{@$additionalColumns}{/if}
 				</tr>

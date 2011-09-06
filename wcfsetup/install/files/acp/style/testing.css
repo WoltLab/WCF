@@ -39,8 +39,8 @@ a {
 }
 
 a:hover {
-	color: #036;
 	text-decoration: underline;
+	color: #036;
 }
 
 a.externalURL {
@@ -104,8 +104,8 @@ header.pageHeader nav.topMenu > div {
 
 header.pageHeader nav.topMenu ul li,
 header.pageHeader nav.topMenu ul li a {
-	color: #69c;
 	text-shadow: 0 -1px 0 #000;
+	color: #69c;
 }
 
 header.pageHeader nav.topMenu ul li a:hover {
@@ -121,16 +121,16 @@ header.pageHeader div#logo {
 }
 
 header.pageHeader div#logo h1 {
-	color: #d8e7f5;
 	font-size: 150%;
 	text-shadow: 0 -1px 0 #000;
+	color: #d8e7f5;
 	position: relative;
 	top: 70px;
 }
 
 header.pageHeader div#logo a:hover {
-	color: #d8e7f5;
 	text-decoration: none !important;
+	color: #d8e7f5;
 }
 
 header.pageHeader div#logo img {
@@ -170,10 +170,10 @@ nav.mainMenu ul {
 }
 
 nav.mainMenu ul li {
-	color: #69c;
 	font-size: 123%;
 	font-weight: normal;
 	text-shadow: 0 -1px 0 #000;
+	color: #69c;
 	cursor: pointer;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
@@ -214,14 +214,14 @@ nav.mainMenu ul li:hover {
 }
 
 nav.mainMenu ul li.activeMenuItem {
-	color: #369;
 	text-shadow: 0 1px 0 #fff;
 	font-size: 150%;
 	font-weight: bold;
+	color: #369;
 	
 	background-color: #e7f2fd;
 	background-image: -webkit-linear-gradient(#fff, #e7f2fd);
-	background-image: -moz-linear-gradient(0% 0% 270deg, #fff, #e7f2fd);
+	background-image: -moz-linear-gradient(#fff, #e7f2fd);
 	background-image: -ms-linear-gradient(#fff, #e7f2fd);
 	background-image: -o-linear-gradient(#fff, #e7f2fd);
 	background-image: linear-gradient(#fff, #e7f2fd);
@@ -340,21 +340,21 @@ nav.sidebarMenu {
 }
 
 nav.sidebarMenu > div {
-	color: #69c;
 	text-shadow: 0 1px 0 #fff;
+	color: #69c;
 	position: relative;
 }
 
 nav.sidebarMenu > div a:hover {
-	color: #369;
 	text-decoration: none !important;
+	color: #369;
 }
 
 nav.sidebarMenu > div h1 {
-	color: #369;
 	cursor: pointer;
 	font-size: 130%;
 	font-weight: bold;
+	color: #369;
 	background-image: url("../../icon/closed.svg");
 	background-position: 15px center;
 	background-size: 16px;
@@ -373,8 +373,8 @@ nav.sidebarMenu > div ul li {
 }
 
 nav.sidebarMenu > div ul li a {
-	color: #69c;
 	text-shadow: 0 1px 0 #fff;
+	color: #69c;
 	padding: 5px 25px 7px 35px;
 	display: block;
 }
@@ -392,8 +392,8 @@ nav.sidebarMenu > div ul li.activeMenuItem {
 }
 
 nav.sidebarMenu > div ul li.activeMenuItem a {
-	color: #369;
 	font-weight: bold;
+	color: #369;
 }
 
 
@@ -440,8 +440,8 @@ footer.pageFooter .copyright a {
 }
 
 footer.pageFooter .copyright a:hover {
-	color: #69c;
 	text-decoration: none;
+	color: #69c;
 }
 
 /* Footer Navigation */
@@ -485,18 +485,18 @@ footer.pageFooter nav.footerNavigation ul li {
 }
 
 .mainHeading > hgroup h1 {
-	color: #666;
 	font-size: 175%;
 	font-weight: bold;
 	text-shadow: 0 1px 0 #fff;
+	color: #666;
 	border-bottom: 1px solid #999;
 	padding-bottom: 10px;
 }
 
 .mainHeading > hgroup h2 {
-	color: #999;
 	font-size: 100%;
 	font-weight: normal;
+	color: #999;
 	padding-top: 5px;
 }
 
@@ -507,9 +507,9 @@ footer.pageFooter nav.footerNavigation ul li {
 /* Sub Heading */
 
 .subHeading h1 {
-	color: #999;
 	font-size: 150%;
 	text-shadow: 0 1px 0 #fff;
+	color: #999;
 	border-bottom: 1px solid #ccc;
 	margin: 10px 0;
 	padding: 10px 0;
@@ -548,8 +548,8 @@ fieldset legend ~ p {
 }
 
 fieldset p.description {
-	color: #999;
 	font-size: 90%;
+	color: #999;
 }
 
 fieldset > ul {
@@ -573,8 +573,8 @@ dl {
 }
 
 dl > dt {
-	color: #69c;
 	text-align: right;
+	color: #69c;
 	margin-top: 5px; /* not so nice */
 	float: left;
 	width: 230px;
@@ -595,8 +595,8 @@ dl > dd {
 }
 
 dl > dd > small {
-	color: #999;
 	font-size: 85%;
+	color: #999;
 	margin: 3px 0 7px;
 	display: block;
 }
@@ -795,10 +795,10 @@ textarea {
 input[type='reset'],
 input[type='submit'],
 .largeButtons ul li a {
-	color: #999;
 	font-size: 100%;
 	font-weight: bold;
 	text-shadow: 0 1px 0 #fff;
+	color: #999;
 	border: 1px solid #999;
 	border-radius: 30px;
 	
@@ -817,8 +817,8 @@ input[type='submit'],
 input[type='reset']:hover,
 input[type='submit']:hover,
 .largeButtons ul li a:hover {
-	color: #666;
 	text-decoration: none;
+	color: #666;
 	border: 1px solid #666;
 	
 	-webkit-transition: all .1s linear;
@@ -835,8 +835,8 @@ input[type='submit']:focus,
 input[type='reset']:active,
 input[type='submit']:active,
 .largeButtons ul li a:active{
-	color: #333;
 	text-decoration: none;
+	color: #333;
 	
 	background-color: #fefefe;
 	background-image: -webkit-linear-gradient(#eee, #fefefe);
@@ -932,8 +932,8 @@ input[type='submit']:focus,
 .largeButtons ul li.default a:focus,
 input[type='submit']:active,
 .largeButtons ul li.default a:active{
-	color: #036;
 	text-decoration: none;
+	color: #036;
 	
 	background-color: #d8e7f5;
 	background-image: -webkit-linear-gradient(#d8e7f5, #fff);
@@ -980,14 +980,14 @@ input[type='submit']:active,
 }
 
 .boxTitle > hgroup {
-	color: #fff;
 	text-shadow: 0 -1px 0 #000;
+	color: #fff;
 	padding: 7px;
 }
 
 .boxTitle > hgroup a, .boxTitle > a {
-	color: #fff;
 	text-decoration: none;
+	color: #fff;
 }
 
 .boxTitle > hgroup h1 {
@@ -1033,9 +1033,9 @@ input[type='submit']:active,
 }
 
 .tabMenu li a {
-	color: #999;
 	font-size: 110%;
 	text-decoration: none;
+	color: #999;
 	cursor: pointer;
 	padding: 10px 15px 7px;
 	border-width: 1px 1px 0 1px;
@@ -1054,7 +1054,7 @@ input[type='submit']:active,
 	color: #666;
 	border-width: 1px;
 	border-style: solid;
-	border-color: #fa2 #fa2 #ccc #fa2;
+	border-color: #fa2 #fa2 #ccc;
 	background-color: #fff9f4;
 }
 
@@ -1063,15 +1063,15 @@ input[type='submit']:active,
 .tabMenu li:not(.ui-state-active) a:focus {
 	border-width: 1px;
 	border-style: solid;
-	border-color: #fa2 #fa2 #ccc #fa2;
+	border-color: #fa2 #fa2 #ccc;
 	background-color: #fff;
 }
 */
 
 .tabMenu li.ui-state-active a {
-	color: #333 !important;
 	font-size: 130%;
 	font-weight: bold;
+	color: #333 !important;
 	border-width: 1px;
 	border-style: solid;
 	border-color: #ccc;
@@ -1146,10 +1146,10 @@ input[type='submit']:active,
 }
 
 .menu ul li a {
-	color: #999;
 	font-size: 85%;
 	text-shadow: 0 1px 0 #fff;
 	text-decoration: none;
+	color: #999;
 	border: 1px solid rgba(0, 0, 0, .2);
 	border-radius: 13px;
 	background-color: rgba(255, 255, 255, .5);
@@ -1177,9 +1177,9 @@ input[type='submit']:active,
 }
 
 .menu ul li.ui-state-active a {
-	color: #fff;
 	font-weight: bold;
 	text-shadow: 0 1px 0 #000;
+	color: #fff;
 	cursor: default;
 	border: 1px solid rgba(0, 0, 0, .2);
 	background-color: rgba(0, 0, 0, .5);
@@ -1199,10 +1199,10 @@ input[type='submit']:active,
 }
 
 .boxTitle > .menu ul li a {
-	color: #eee !important;
 	font-size: 85%;
 	text-decoration: none;
 	text-shadow: 0 -1px 0 #000;
+	color: #eee !important;
 	border: 1px solid rgba(0, 0, 0, .3);
 	border-radius: 13px;
 	background-color: rgba(0, 0, 0, .1);
@@ -1262,11 +1262,10 @@ thead th:last-child {
 	border-top-right-radius: 5px;	
 }
 
-thead th p a,
-thead th p.emptyHead {
-	color: #69c !important;
+thead th {
 	text-shadow: 0 -1px 0 #000;
-	text-decoration: none !important;
+	color: #69c;
+	border-right: 1px solid rgba(0, 0, 0, .2);
 	
 	background-color: rgba(0, 0, 0, .3);
 	background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
@@ -1276,49 +1275,52 @@ thead th p.emptyHead {
 	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
 	
 	padding: 7px;
+}
+
+thead th a {
+	text-shadow: 0 -1px 0 #000;
+	text-decoration: none !important;
+	color: #69c;
+	margin: -7px;
+	padding: 7px;
 	display: block;
 }
 
-thead th p a {
-	border-right: 1px solid rgba(0, 0, 0, .3);
-}
-
-thead th:last-child p a {
+thead th:last-child a {
 	border-right-width: 0;
 }
 
-thead th:hover p a {
-	color: #fff !important;
-	background-color: rgba(0, 0, 0, .4);
+thead th:hover a {
+	color: #fff;
+	background-color: rgba(0, 0, 0, .2);
 }
 
-thead th.active p a {
-	color: #fff !important;
+thead th.active a {
 	font-weight: bold;
-	background-color: rgba(0, 0, 0, .4);
+	color: #fff;
+	background-color: rgba(0, 0, 0, .1);
 	
-	-webkit-box-shadow: inset 0 5px 15px rgba(0, 0, 0, .5);
-	-moz-box-shadow: inset 0 5px 15px rgba(0, 0, 0, .5);
-	-ms-box-shadow: inset 0 5px 15px rgba(0, 0, 0, .5);
-	-o-box-shadow: inset 0 5px 15px rgba(0, 0, 0, .5);
-	box-shadow: inset 0 5px 15px rgba(0, 0, 0, .5);
+	-webkit-box-shadow: inset 0 5px 15px rgba(0, 0, 0, .4);
+	-moz-box-shadow: inset 0 5px 15px rgba(0, 0, 0, .4);
+	-ms-box-shadow: inset 0 5px 15px rgba(0, 0, 0, .4);
+	-o-box-shadow: inset 0 5px 15px rgba(0, 0, 0, .4);
+	box-shadow: inset 0 5px 15px rgba(0, 0, 0, .4);
 }
 
-thead th.active:hover p a {
-	background-color: rgba(0, 0, 0, .5);
+thead th.active:hover a {
+	background-color: rgba(0, 0, 0, .3);
 }
 
-thead th.columnMark p.emptyHead {
+thead th.columnMark {
 	background-color: transparent;
 	background-image: none;
 	padding: 0 !important;
-	display: block;
 	width: 30px;
 }
 
-thead th p a img {
+thead th a img {
 	margin-top: -5px !important;
-	margin-bottom: -3px !important;
+	margin-bottom: -5px !important;
 }
 
 /* Table Body */
@@ -1449,9 +1451,9 @@ tbody tr .columnIcon img {
 }
 
 .pageNavigation ul li a {
-	color: #999;
 	text-shadow: 0 1px 0 #fff;
 	text-decoration: none;
+	color: #999;
 	display: inline-block;
 }
 
@@ -1467,8 +1469,8 @@ tbody tr .columnIcon img {
 
 .pageNavigation ul li.active,
 .pageNavigation ul li.active:hover {
-	color: #fff;
 	text-shadow: 0 1px 0 #000;
+	color: #fff;
 	border: 1px solid rgba(0, 0, 0, .3);
 	
 	background-color: rgba(0, 0, 0, .5);
@@ -1483,8 +1485,8 @@ tbody tr .columnIcon img {
 
 .pageNavigation ul li:active a,
 .pageNavigation ul li:focus a {
-	color: #fff;
 	text-shadow: 0 1px 0 #000;
+	color: #fff;
 }
 
 .pageNavigation ul li.children,
@@ -1665,8 +1667,8 @@ div.ui-dialog-titlebar {
 }
 
 span.ui-dialog-title {
-	color: #fff;
 	text-shadow: 5px 0 0 #000;
+	color: #fff;
 }
 
 a.ui-dialog-titlebar-close {
@@ -1727,9 +1729,9 @@ div.ui-widget-overlay {
 /* Globals */
 
 .badge {
-	color: #369;
 	font-size: 85%;
 	text-shadow: none;
+	color: #369;
 	border-radius: 13px;
 	background-color: #fff;
 	margin-right: -3px;
@@ -1769,9 +1771,9 @@ div.ui-widget-overlay {
 /* Buttons */
 
 .badgeButton {
-	color: #999;
-	text-shadow: 0 1px 0 #fff;
 	text-decoration: none !important;
+	text-shadow: 0 1px 0 #fff;
+	color: #999;
 	border: 1px solid #999;
 	
 	background-color: #fff;
@@ -1815,8 +1817,8 @@ div.ui-widget-overlay {
 /* Balloon Tooltips */
 
 #balloonTooltip {
-	color: #fff;
 	font-size: .85em;
+	color: #fff;
 	border: 1px solid rgba(255, 255, 255, .7) !important;
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, .7);
