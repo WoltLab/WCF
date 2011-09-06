@@ -220,9 +220,9 @@ nav.mainMenu ul li.activeMenuItem {
 	font-weight: bold;
 	
 	background-color: #e7f2fd;
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#e7f2fd));
+	background-image: -webkit-linear-gradient(#fff, #e7f2fd);
 	background-image: -moz-linear-gradient(0% 0% 270deg, #fff, #e7f2fd);
-	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#e7f2fd));
+	background-image: -ms-linear-gradient(#fff, #e7f2fd);
 	background-image: -o-linear-gradient(#fff, #e7f2fd);
 	background-image: linear-gradient(#fff, #e7f2fd);
 	
@@ -1576,9 +1576,9 @@ p.error {
 
 div#packageInstallationDialogContainer {
 	background-color: #fefefe;
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fefefe), to(#eee));
-	background-image: -moz-linear-gradient(0% 0% 270deg, #fefefe, #eee);
-	background-image: -ms-gradient(linear, 0% 0%, 0% 100%, from(#fefefe), to(#eee));
+	background-image: -webkit-linear-gradient(#fefefe, #eee);
+	background-image: -moz-linear-gradient(#fefefe, #eee);
+	background-image: -ms-linear-gradient(#fefefe, #eee);
 	background-image: -o-linear-gradient(#fefefe, #eee);
 	background-image: linear-gradient(#fefefe, #eee);
 	
@@ -1810,6 +1810,8 @@ div.ui-widget-overlay {
 
 
 
+/* -- -- -- -- -- GUI Widgets -- -- -- -- -- */
+
 /* Balloon Tooltips */
 
 #balloonTooltip {
@@ -1825,12 +1827,6 @@ div.ui-widget-overlay {
 	box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
 }
 
-
-
-/* CSS Experiments (active) */
-
-
-
 /* Collapsible */
 
 .collapsible {
@@ -1842,6 +1838,10 @@ div.ui-widget-overlay {
 	height: 16px;
 	width: 16px;
 }
+
+
+
+/* CSS Experiments (active) */
 
 
 

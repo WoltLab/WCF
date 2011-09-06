@@ -42,7 +42,7 @@
 	//]]>
 </script>
 
-<img id="workerIcon" class="icon" src="{@RELATIVE_WCF_DIR}icon/workerXL.png" alt="" />
+<img src="{@RELATIVE_WCF_DIR}icon/worker1.svg" id="workerIcon" alt="" />
 
 <h1><b>{lang}wcf.global.pageTitle{/lang}</b><br />{@$actionTitle}</h1>
 
@@ -67,4 +67,4 @@
 	</div>
 </fieldset>
 
-{include file='setupFooter'}
+{include file='footer'}
