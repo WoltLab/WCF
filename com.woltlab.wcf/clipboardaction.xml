@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/clipboardaction.xsd">
+	<import>
+		<action name="assignToGroup">
+			<actionclassname><![CDATA[wcf\system\clipboard\action\UserClipboardAction]]></actionclassname>
+			<showorder>1</showorder>
+			<pages>
+				<page><![CDATA[wcf\acp\page\UserListPage]]></page>
+			</pages>
+		</action>
+		
+		<action name="sendMail">
+			<actionclassname><![CDATA[wcf\system\clipboard\action\UserClipboardAction]]></actionclassname>
+			<showorder>2</showorder>
+			<pages>
+				<page><![CDATA[wcf\acp\page\UserListPage]]></page>
+			</pages>
+		</action>
+
+		<action name="delete">
+			<actionclassname><![CDATA[wcf\system\clipboard\action\UserClipboardAction]]></actionclassname>
+			<showorder>3</showorder>
+			<pages>
+				<page><![CDATA[wcf\acp\page\UserListPage]]></page>
+			</pages>
+		</action>
+
+		<action name="exportMailAdress">
+			<actionclassname><![CDATA[wcf\system\clipboard\action\UserClipboardAction]]></actionclassname>
+			<showorder>4</showorder>
+			<pages>
+				<page><![CDATA[wcf\acp\page\UserListPage]]></page>
+			</pages>
+		</action>
+	</import>
+</data>

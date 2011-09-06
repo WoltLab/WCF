@@ -408,6 +408,261 @@ $.extend(WCF, {
 });
 
 /**
+ * Clipboard API
+ */
+WCF.Clipboard = {
+	/**
+	 * action proxy object
+	 * @var	WCF.Action.Proxy
+	 */
+	_actionProxy: null,
+	
+	/**
+	 * current page
+	 * @var	string
+	 */
+	_page: '',
+	
+	/**
+	 * proxy object
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * Initializes the clipboard API.
+	 */
+	init: function(page) {
+		this._page = page;
+		
+		this._actionProxy = new WCF.Action.Proxy({
+			success: $.proxy(this._actionSuccess, this),
+			url: 'index.php?action=ClipboardProxy&t=' + SECURITY_TOKEN + SID_ARG_2ND
+		});
+		
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this),
+			url: 'index.php?action=Clipboard&t=' + SECURITY_TOKEN + SID_ARG_2ND
+		});
+		
+		// init containers first
+		$('.clipboardContainer').each($.proxy(function(index, container) {
+			this._initContainer(container);
+		}, this));
+	},
+	
+	/**
+	 * Initializes a clipboard container.
+	 * 
+	 * @param	object		container
+	 */
+	_initContainer: function(container) {
+		var $container = $(container);
+		
+		// fetch id or assign a random one if none found
+		var $id = $container.attr('id');
+		if (!$id) {
+			$id = WCF.getRandomID();
+			$container.attr('id', $id);
+		}
+		
+		// bind mark all checkboxes
+		$container.find('.clipboardMarkAll').each($.proxy(function(index, item) {
+			$(item).data('hasContainer', $id).click($.proxy(this._markAll, this));
+		}, this));
+		
+		// bind item checkboxes
+		$container.find('input.clipboardItem').each($.proxy(function(index, item) {
+			$(item).data('hasContainer', $id).click($.proxy(this._click, this));
+		}, this));
+	},
+	
+	/**
+	 * Processes change checkbox state.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		var $item = $(event.target);
+		var $objectID = $item.data('objectID');
+		var $isMarked = ($item.attr('checked')) ? true : false;
+		var $objectIDs = [ $objectID ];
+		
+		// item is part of a container
+		if ($item.data('hasContainer')) {
+			var $container = $('#' + $item.data('hasContainer'));
+			var $type = $container.data('type');
+			
+			// check if all items are marked
+			var $markedAll = true;
+			$container.find('input.clipboardItem').each(function(index, containerItem) {
+				var $containerItem = $(containerItem);
+				if (!$containerItem.attr('checked')) {
+					$markedAll = false;
+				}
+			});
+			
+			// simulate a ticked 'markAll' checkbox
+			$container.find('.clipboardMarkAll').each(function(index, markAll) {
+				if ($markedAll) {
+					$(markAll).attr('checked', 'checked');
+				}
+				else {
+					$(markAll).removeAttr('checked');
+				}
+			});
+		}
+		else {
+			// standalone item
+			var $type = $item.data('type');
+		}
+		
+		this._saveState($type, $objectIDs, $isMarked);
+	},
+	
+	/**
+	 * Marks all associated clipboard items as checked.
+	 * 
+	 * @param	object		event
+	 */
+	_markAll: function(event) {
+		var $item = $(event.target);
+		var $objectIDs = [ ];
+		var $isMarked = true;
+		
+		// if markAll object is a checkbox, allow toggling
+		if ($item.getTagName() == 'input') {
+			$isMarked = $item.attr('checked');
+		}
+		
+		// handle item containers
+		if ($item.data('hasContainer')) {
+			var $container = $('#' + $item.data('hasContainer'));
+			var $type = $container.data('type');
+			
+			// toggle state for all associated items
+			$container.find('input.clipboardItem').each(function(index, containerItem) {
+				var $containerItem = $(containerItem);
+				if ($isMarked) {
+					if (!$containerItem.attr('checked')) {
+						$containerItem.attr('checked', 'checked');
+						$objectIDs.push($containerItem.data('objectID'));
+					}
+				}
+				else {
+					if ($containerItem.attr('checked')) {
+						$containerItem.removeAttr('checked');
+						$objectIDs.push($containerItem.data('objectID'));
+					}
+				}
+			});
+		}
+		
+		// save new status
+		this._saveState($type, $objectIDs, $isMarked);
+	},
+	
+	/**
+	 * Saves clipboard item state.
+	 * 
+	 * @param	string		type
+	 * @param	array		objectIDs
+	 * @param	boolean		isMarked
+	 */
+	_saveState: function(type, objectIDs, isMarked) {
+		this._proxy.setOption('data', {
+			action: (isMarked) ? 'mark' : 'unmark',
+			objectIDs: objectIDs,
+			pageClassName: this._page,
+			type: type
+		})
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Updates editor options.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		// clear all editors first
+		var $containers = {};
+		$('.clipboardEditor').each(function(index, container) {
+			var $container = $(container);
+			var $typeName = $container.data('type');
+			if ($typeName) {
+				$containers[$typeName] = $container;
+			}
+			
+			$container.empty();
+		});
+		
+		// do not buid new editors
+		if (!data.items) return;
+		
+		// rebuild editors
+		for (var $typeName in data.items) {
+			if (!$containers[$typeName]) {
+				continue;
+			}
+			
+			// create container
+			var $container = $containers[$typeName];
+			var $editor = data.items[$typeName];
+			var $label = $('<span>' + $editor.label + '</span>').appendTo($container).click(function(event) {
+				var $span = $(event.target);
+				$span.next().toggle();
+			});
+			var $list = $('<ol></ol>').appendTo($container).hide();
+			
+			// create editor items
+			for (var $itemIndex in $editor.items) {
+				var $item = $editor.items[$itemIndex];
+				var $listItem = $('<li>' + $item.label + '</li>').appendTo($list);
+				$listItem.data('actionName', $item.actionName).data('parameters', $item.parameters);
+				$listItem.data('internalData', $item.internalData).data('url', $item.url).data('type', $typeName);
+				
+				// bind event
+				$listItem.click($.proxy(this._executeAction, this));
+			}
+		}
+	},
+	
+	/**
+	 * Executes a clipboard editor item action.
+	 * 
+	 * @param	object		event
+	 */
+	_executeAction: function(event) {
+		var $listItem = $(event.target);
+		var $url = $listItem.data('url');
+		if ($url) {
+			window.location.href = $url;
+		}
+		
+		// fire event
+		$listItem.trigger('clipboardAction', [ $listItem.data('type'), $listItem.data('actionName') ]);
+	},
+	
+	/**
+	 * Sends a clipboard proxy request.
+	 * 
+	 * @param	object		item
+	 */
+	sendRequest: function(item) {
+		var $item = $(item);
+		
+		this._actionProxy.setOption('data', {
+			parameters: $item.data('parameters'),
+			typeName: $item.data('type')
+		});
+		this._actionProxy.sendRequest();
+	}
+};
+
+/**
  * Provides a simple call for periodical executed functions. Based upon
  * ideas by Prototype's PeriodicalExecuter.
  * 
