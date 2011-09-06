@@ -488,3 +488,27 @@ WCF.ACP.Options.prototype = {
 		}
 	}
 };
+
+WCF.ACP.User = {};
+
+WCF.ACP.User.List = function() { this.init(); };
+WCF.ACP.User.List.prototype = {
+	init: function() {
+		$('body').bind('clipboardAction', $.proxy(this.handleClipboardEvent, this));
+	},
+	
+	handleClipboardEvent: function(event, type, actionName) {
+		// ignore unrelated events
+		if ((type != 'com.woltlab.wcf.user') || (actionName != 'user.delete')) return;
+		
+		var $item = $(event.target);
+		this._delete($item);
+	},
+	
+	_delete: function(item) {
+		var $confirmMessage = item.data('internalData')['confirmMessage'];
+		if (confirm($confirmMessage)) {
+			WCF.Clipboard.sendRequest(item);
+		}
+	}
+};
