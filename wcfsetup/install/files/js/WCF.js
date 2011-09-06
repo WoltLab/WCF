@@ -408,6 +408,7 @@ $.extend(WCF, {
 });
 
 /**
+
  * Clipboard API
  */
 WCF.Clipboard = {

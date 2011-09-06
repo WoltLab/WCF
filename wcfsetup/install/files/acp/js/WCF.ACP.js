@@ -487,6 +487,8 @@ WCF.ACP.Options.prototype = {
 			}
 		}
 	}
+
+
 };
 
 /**
