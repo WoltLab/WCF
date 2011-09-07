@@ -16,20 +16,20 @@ use wcf\system\WCF;
 abstract class DatabaseObjectDecorator extends DatabaseObject {
 	/**
 	 * name of the base class
-	 * @var string
+	 * @var	string
 	 */
 	protected static $baseClass = '';
 	
 	/**
-	 * the object being decorated
-	 * @var DatabaseObject
+	 * decorated object
+	 * @var	wcf\data\DatabaseObject
 	 */
 	protected $object = null;
 	
 	/**
 	 * Creates a new DatabaseObjectDecorator object.
 	 * 
-	 * @param	DatabaseObject		$object
+	 * @param	wcf\data\DatabaseObject		$object
 	 */
 	public function __construct(DatabaseObject $object) {
 		if (empty(static::$baseClass)) {
@@ -44,14 +44,14 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	}
 	
 	/**
-	 * @see wcf\data\DatabaseObject::__get()
+	 * @see	wcf\data\DatabaseObject::__get()
 	 */
 	public function __get($name) {
 		return $this->object->__get($name);
 	}
 	
 	/**
-	 * @see wcf\data\DatabaseObject::__isset()
+	 * @see	wcf\data\DatabaseObject::__isset()
 	 */
 	public function __isset($name) {
 		return $this->object->__isset($name);
@@ -73,7 +73,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	}
 	
 	/**
-	 * @see wcf\data\IStorableObject::getDatabaseTableName()
+	 * @see	wcf\data\IStorableObject::getDatabaseTableName()
 	 */
 	public static function getDatabaseTableName() {
 		return call_user_func(array(static::$baseClass, 'getDatabaseTableName'));
@@ -87,7 +87,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	}
 	
 	/**
-	 * @see wcf\data\IStorableObject::getDatabaseTableIndexName()
+	 * @see	wcf\data\IStorableObject::getDatabaseTableIndexName()
 	 */
 	public static function getDatabaseTableIndexName() {
 		return call_user_func(array(static::$baseClass, 'getDatabaseTableIndexName'));
@@ -96,7 +96,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	/**
 	 * Returns the name of the base class.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public static function getBaseClass() {
 		return static::$baseClass;
@@ -105,7 +105,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	/**
 	 * Returns the decorated object
 	 * 
-	 * @return wcf\data\DatabaseObject
+	 * @return	wcf\data\DatabaseObject
 	 */
 	public function getDecoratedObject() {
 		return $this->object;

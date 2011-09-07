@@ -16,71 +16,61 @@ use wcf\system\WCF;
 abstract class DatabaseObjectList {
 	/**
 	 * object class name
-	 * 
 	 * @var	string
 	 */
 	public $className = '';
 	
 	/**
 	 * result objects
-	 * 
 	 * @var	array<wcf\data\DatabaseObject>
 	 */
 	public $objects = array();
 	
 	/**
-	 * result object ids
-	 * 
+	 * ids of result objects
 	 * @var	array<integer>
 	 */
 	public $objectIDs = null; 
 	
 	/**
 	 * sql offset
-	 *
-	 * @var integer
+	 * @var	integer
 	 */
 	public $sqlOffset = 0;
 	
 	/**
 	 * sql limit
-	 *
-	 * @var integer
+	 * @var	integer
 	 */
 	public $sqlLimit = 20;
 	
 	/**
 	 * sql order by statement
-	 *
 	 * @var	string
 	 */
 	public $sqlOrderBy = '';
 	
 	/**
 	 * sql select parameters
-	 *
-	 * @var string
+	 * @var	string
 	 */
 	public $sqlSelects = '';
 	
 	/**
 	 * sql select joins which are necessary for where statements
-	 *
-	 * @var string
+	 * @var	string
 	 */
 	public $sqlConditionJoins = '';
 	
 	/**
 	 * sql select joins
-	 *
-	 * @var string
+	 * @var	string
 	 */
 	public $sqlJoins = '';
 	
 	/**
 	 * sql conditions
-	 *
-	 * @var wcf\system\database\util\PreparedStatementConditionBuilder
+	 * @var	wcf\system\database\util\PreparedStatementConditionBuilder
 	 */
 	protected $conditionBuilder = null;
 	
@@ -193,7 +183,7 @@ abstract class DatabaseObjectList {
 	/**
 	 * Returns the name of the database table.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getDatabaseTableName() {
 		return call_user_func(array($this->className, 'getDatabaseTableName'));
@@ -202,7 +192,7 @@ abstract class DatabaseObjectList {
 	/**
 	 * Returns the name of the database table.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getDatabaseTableIndexName() {
 		return call_user_func(array($this->className, 'getDatabaseTableIndexName'));
@@ -211,7 +201,7 @@ abstract class DatabaseObjectList {
 	/**
 	 * Returns the name of the database table alias.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getDatabaseTableAlias() {
 		return call_user_func(array($this->className, 'getDatabaseTableAlias'));
