@@ -20,8 +20,7 @@ interface IDatabaseObjectProcessor {
 	public function __construct(DatabaseObject $object);
 	
 	/**
-	 * Delegates property accesses to the processed object if the processor
-	 * object has no such property.
+	 * Delegates accesses to inaccessible object properties the processed object.
 	 *   
 	 * @param	string		$name
 	 * @return	mixed
@@ -29,8 +28,8 @@ interface IDatabaseObjectProcessor {
 	public function __get($name);
 	
 	/**
-	 * Delegates isset calls for object properties to the processed object if
-	 * the processor object has no such property.
+	 * Delegates isset calls for inaccessible object properties to the processed
+	 * object.
 	 * 
 	 * @param	string		$name
 	 * @return	boolean
