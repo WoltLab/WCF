@@ -38,7 +38,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	
 	/**
 	 * list of object editors
-	 * @var	array<DatabaseObjectEditor>
+	 * @var	array<wcf\data\DatabaseObjectEditor>
 	 */
 	protected $objects = array();
 	
@@ -89,7 +89,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see wcf\data\IDatabaseObjectAction::validateAction()
+	 * @see	wcf\data\IDatabaseObjectAction::validateAction()
 	 */
 	public function validateAction() {
 		// validate action name
@@ -107,7 +107,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see wcf\data\IDatabaseObjectAction::executeAction()
+	 * @see	wcf\data\IDatabaseObjectAction::executeAction()
 	 */
 	public function executeAction() {
 		// execute action
@@ -228,7 +228,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	/**
 	 * Creates new database object.
 	 *
-	 * @return	DatabaseObject
+	 * @return	wcf\data\DatabaseObject
 	 */
 	public function create() {
 		return call_user_func(array($this->className, 'create'), $this->parameters['data']);
