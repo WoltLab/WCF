@@ -13,7 +13,7 @@ namespace wcf\data;
  */
 interface IStorableObject {
 	/**
-	 * Returns the value of a variable in object data.
+	 * Returns the value of a object data variable.
 	 * 
 	 * @param	string		$name		variable name
 	 * @return	mixed		value
@@ -31,7 +31,7 @@ interface IStorableObject {
 	/**
 	 * Returns the name of the database table.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public static function getDatabaseTableName();
 	
@@ -52,7 +52,7 @@ interface IStorableObject {
 	/**
 	 * Returns the name of the database table index.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public static function getDatabaseTableIndexName();
 }
