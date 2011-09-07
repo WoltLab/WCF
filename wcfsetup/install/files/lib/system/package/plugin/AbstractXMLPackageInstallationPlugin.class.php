@@ -103,7 +103,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			// fetch child elements
 			$items = $xpath->query('child::*', $element);
 			foreach ($items as $item) {
-				$data['elements'][$item->tagName] = $item->nodeValue;
+				$this->getElement($xpath, $data['elements'], $item);
 			}
 			
 			// include node value if item does not contain any child elements (eg. pip)
@@ -140,17 +140,29 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	}
 	
 	/**
+	 * Sets element value from XPath.
+	 * 
+	 * @param	\DOMXPath	$xpath
+	 * @param	array		$elements
+	 * @param	\DOMElement	$element
+	 */
+	protected function getElement(\DOMXpath $xpath, array &$elements, \DOMElement $element) {
+		$elements[$element->tagName] = $element->nodeValue;
+	}
+	
+	/**
 	 * Inserts or updates new items.
 	 * 
 	 * @param	array		$row
 	 * @param	array		$data
+	 * @return	wcf\data\IStorableObject
 	 */	
 	protected function import(array $row, array $data) {
 		if (empty($row)) {
 			// create new item
 			$this->prepareCreate($data);
 			
-			call_user_func(array($this->className, 'create'), $data);
+			return call_user_func(array($this->className, 'create'), $data);
 		}
 		else {
 			// update existing item
@@ -158,6 +170,8 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			
 			$itemEditor = new $this->className(new $baseClass(null, $row));
 			$itemEditor->update($data);
+			
+			return $itemEditor;
 		}
 	}
 	
@@ -276,12 +290,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			$maxShowOrder = $statement->fetchArray();
-			if (is_array($maxShowOrder) && isset($maxShowOrder['showOrder'])) {
-				return $maxShowOrder['showOrder'] + 1;
-			}
-			else {
-				return 1;
-			}
+			return (!$maxShowOrder) ? 1 : ($maxShowOrder + 1);
 	       	}
 	       	else {
 			// increase all showOrder values which are >= $showOrder
