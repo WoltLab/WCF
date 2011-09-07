@@ -33,8 +33,8 @@ interface IEditableObject extends IStorableObject {
 	public function delete();
 	
 	/**
-	 * Deletes all the objects with the given ids and returns the number of
-	 * deleted objects.
+	 * Deletes all objects with the given ids and returns the number of deleted
+	 * objects.
 	 * 
 	 * @param	array		$objectIDs
 	 * @return	integer
