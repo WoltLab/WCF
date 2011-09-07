@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @subpackage	acp.package.plugin
  * @category 	Community Framework
  */
-class ClipboardActionInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
