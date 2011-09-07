@@ -78,11 +78,11 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="2"><p class="emptyHead">{lang}wcf.acp.package.list.id{/lang}</p></th>
-					<th colspan="2"><p class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</p></th>
-					<th><p class="emptyHead">{lang}wcf.acp.package.list.author{/lang}</p></th>
-					<th><p class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</p></th>
-					<th><p class="emptyHead">{lang}wcf.acp.package.list.date{/lang}</p></th>
+					<th colspan="2">{lang}wcf.acp.package.list.id{/lang}</th>
+					<th colspan="2">{lang}wcf.acp.package.list.name{/lang}</th>
+					<th>{lang}wcf.acp.package.list.author{/lang}</th>
+					<th>{lang}wcf.acp.package.list.version{/lang}</th>
+					<th>{lang}wcf.acp.package.list.date{/lang}</th>
 					
 					{if $additionalColumns|isset}{@$additionalColumns}{/if}
 				</tr>

@@ -30,7 +30,6 @@
 	*}
 	
 	<!-- Testing stylesheets -->
-	<link rel="stylesheet" type="text/css" href="{@RELATIVE_WCF_DIR}acp/style/testing-reset.css" />
 	<link rel="stylesheet" type="text/css" href="{@RELATIVE_WCF_DIR}acp/style/testing.css" />
 	<!-- /Testing stylesheets -->
 	

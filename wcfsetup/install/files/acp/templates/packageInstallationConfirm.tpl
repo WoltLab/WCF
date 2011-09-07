@@ -113,8 +113,8 @@
 	<table>
 		<thead>
 			<tr>
-				<th><p class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</p></th>
-				<th><p class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</p></th>
+				<th>{lang}wcf.acp.package.list.name{/lang}</th>
+				<th>{lang}wcf.acp.package.list.version{/lang}</th>
 			</tr>
 		</thead>
 		

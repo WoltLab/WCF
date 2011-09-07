@@ -1,7 +1,8 @@
 			</section>
+			<!-- CONTENT -->
 		</div>
 	</div>
-	<!-- /CONTENT -->
+	<!-- /MAIN -->
 	
 	<!-- FOOTER -->
 	<footer id="footer" class="pageFooter">

@@ -96,6 +96,37 @@ CREATE TABLE wcf1_cleanup_listener (
 	UNIQUE KEY (className, packageID)
 );
 
+DROP TABLE IF EXISTS wcf1_clipboard_action;
+CREATE TABLE wcf1_clipboard_action (
+	actionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10) NOT NULL DEFAULT 0,
+	actionName VARCHAR(50) NOT NULL DEFAULT '',
+	actionClassName VARCHAR(200) NOT NULL DEFAULT '',
+	sortOrder INT(10) NOT NULL DEFAULT 0
+);
+
+DROP TABLE IF EXISTS wcf1_clipboard_item;
+CREATE TABLE wcf1_clipboard_item (
+	typeID INT(10) NOT NULL DEFAULT 0,
+	userID INT(10) NOT NULL DEFAULT 0,
+	objectID INT(10) NOT NULL DEFAULT 0
+);
+
+DROP TABLE IF EXISTS wcf1_clipboard_item_type;
+CREATE TABLE wcf1_clipboard_item_type (
+	typeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10) NOT NULL DEFAULT 0,
+	typeName VARCHAR(80) NOT NULL DEFAULT '',
+	className VARCHAR(200) NOT NULL DEFAULT ''
+);
+
+DROP TABLE IF EXISTS wcf1_clipboard_page;
+CREATE TABLE wcf1_clipboard_page (
+	pageClassName VARCHAR(80) NOT NULL DEFAULT '',
+	packageID INT(10) NOT NULL DEFAULT 0,
+	actionID INT(10) NOT NULL DEFAULT 0
+);
+
 DROP TABLE IF EXISTS wcf1_cleanup_log;
 CREATE TABLE wcf1_cleanup_log (
 	packageID INT(10) NOT NULL DEFAULT 0,

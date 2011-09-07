@@ -58,4 +58,4 @@
 	</div>
 </form>
 
-{include file='setupFooter'}
+{include file='footer'}
