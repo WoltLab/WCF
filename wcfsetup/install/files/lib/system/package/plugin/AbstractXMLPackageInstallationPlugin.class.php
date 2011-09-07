@@ -290,7 +290,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			$maxShowOrder = $statement->fetchArray();
-			return (!$maxShowOrder) ? 1 : ($maxShowOrder + 1);
+			return (!$maxShowOrder) ? 1 : ($maxShowOrder['showOrder'] + 1);
 	       	}
 	       	else {
 			// increase all showOrder values which are >= $showOrder
