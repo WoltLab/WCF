@@ -20,63 +20,54 @@ use wcf\util\StringUtil;
 abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	/**
 	 * pending action
-	 *
 	 * @var	string
 	 */
 	protected $action = '';
 	
 	/**
 	 * object editor class name
-	 *
 	 * @var	string
 	 */
 	protected $className = '';
 	
 	/**
 	 * list of object ids
-	 *
 	 * @var	array<integer>
 	 */
 	protected $objectIDs = array();
 	
 	/**
-	 * list of objects
-	 *
-	 * @var	array<DatabaseObjectEditor>
+	 * list of object editors
+	 * @var	array<wcf\data\DatabaseObjectEditor>
 	 */
 	protected $objects = array();
 	
 	/**
 	 * multi-dimensional array of parameters required by an action
-	 *
 	 * @var	array<array>
 	 */
 	protected $parameters = array();
 	
 	/**
 	 * list of permissions required to create objects
-	 *
-	 * @var	array
+	 * @var	array<string>
 	 */
 	protected $permissionsCreate = array();
 	
 	/**
 	 * list of permissions required to delete objects
-	 *
-	 * @var	array
+	 * @var	array<string>
 	 */
 	protected $permissionsDelete = array();
 	
 	/**
 	 * list of permissions required to update objects
-	 *
-	 * @var	array
+	 * @var	array<string>
 	 */
 	protected $permissionsUpdate = array();
 	
 	/**
 	 * values returned by executed action
-	 *
 	 * @var	mixed
 	 */
 	protected $returnValues = null;
@@ -98,7 +89,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see wcf\data\IDatabaseObjectAction::validateAction()
+	 * @see	wcf\data\IDatabaseObjectAction::validateAction()
 	 */
 	public function validateAction() {
 		// validate action name
@@ -116,7 +107,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see wcf\data\IDatabaseObjectAction::executeAction()
+	 * @see	wcf\data\IDatabaseObjectAction::executeAction()
 	 */
 	public function executeAction() {
 		// execute action
@@ -235,18 +226,16 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	}
 	
 	/**
-	 * Creates a new data.
+	 * Creates new database object.
 	 *
-	 * @return	DatabaseObject
+	 * @return	wcf\data\DatabaseObject
 	 */
 	public function create() {
-		// create data
 		return call_user_func(array($this->className, 'create'), $this->parameters['data']);
 	}
 	
 	/**
-	 * Deletes data.
-	 * Returns the number of deleted data.
+	 * Deletes database object and returns the number of deleted objects.
 	 *
 	 * @return	integer
 	 */
