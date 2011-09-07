@@ -137,13 +137,13 @@ header.pageHeader {
 
 header.pageHeader nav.topMenu {
 	background-color: rgba(0, 0, 0, .4);
-	position: absolute;
+	position: fixed;
 	top: 0;
 	right: 0;
 	left: 0;
 	min-height: 25px;
 	min-width: 800px;
-	z-index: 10;
+	z-index: 500;
 	
 	-webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
 	-moz-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
@@ -159,7 +159,7 @@ header.pageHeader nav.topMenu > div {
 
 header.pageHeader nav.topMenu ul li,
 header.pageHeader nav.topMenu ul li a {
-	text-shadow: 0 -1px 0 #000;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
 	color: #69c;
 }
 
@@ -852,42 +852,48 @@ input[type='submit'],
 .largeButtons ul li a {
 	font-size: 100%;
 	font-weight: bold;
+	text-decoration: none;
 	text-shadow: 0 1px 0 #fff;
 	color: #999;
-	border: 1px solid #999;
+	
+	border-width: 1px;
+	border-style: solid;
+	border-color: #ccc #bbb #aaa;
 	border-radius: 30px;
 	
 	background-color: #fefefe;
-	background-image: -webkit-linear-gradient(#fefefe, #eee);
-	background-image: -moz-linear-gradient(#fefefe, #eee);
-	background-image: -ms-linear-gradient(#fefefe, #eee);
-	background-image: -o-linear-gradient(#fefefe, #eee);
-	background-image: linear-gradient(#fefefe, #eee);
+	background-image: -webkit-linear-gradient(rgba(255, 255, 255, 1), rgba(245, 245, 245, 1) 2px, rgba(235, 235, 235, 1));
+	background-image: -moz-linear-gradient(rgba(255, 255, 255, 1), rgba(245, 245, 245, 1) 2px, rgba(235, 235, 235, 1));
+	background-image: -ms-linear-gradient(rgba(255, 255, 255, 1), rgba(245, 245, 245, 1) 2px, rgba(235, 235, 235, 1));
+	background-image: -o-linear-gradient(rgba(255, 255, 255, 1), rgba(245, 245, 245, 1) 2px, rgba(235, 235, 235, 1));
+	background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(245, 245, 245, 1) 2px, rgba(235, 235, 235, 1));
 	
+	margin: 0 3px;
 	padding: 5px 13px;
 	display: inline-block;
-}
-
-/* buttons hover */
-input[type='reset']:hover,
-input[type='submit']:hover,
-.largeButtons ul li a:hover {
-	text-decoration: none;
-	color: #666;
-	border: 1px solid #fa2;
-	
-	background-color: #fff9f4;
-	background-image: -webkit-linear-gradient(rgba(255, 249, 244, 1), rgba(255, 204, 153, .5));
-	background-image: -moz-linear-gradient(rgba(255, 249, 244, 1), rgba(255, 204, 153, .5));
-	background-image: -ms-linear-gradient(rgba(255, 249, 244, 1), rgba(255, 204, 153, .5));
-	background-image: -o-linear-gradient(rgba(255, 249, 244, 1), rgba(255, 204, 153, .5));
-	background-image: linear-gradient(rgba(255, 249, 244, 1), rgba(255, 204, 153, .5));
 	
 	-webkit-transition: all .1s linear;
 	-moz-transition: all .1s linear;
 	-ms-transition: all .1s linear;
 	-o-transition: all .1s linear;
 	transition: all .1s linear;
+}
+
+/* buttons hover */
+input[type='reset']:hover,
+input[type='submit']:hover,
+.largeButtons ul li a:hover {
+	color: #666;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #ffc053 #fa2 #fc9e07;
+	
+	background-color: #fff9f4;
+	background-image: -webkit-linear-gradient(rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
+	background-image: -moz-linear-gradient(rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
+	background-image: -ms-linear-gradient(rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
+	background-image: -o-linear-gradient(rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
+	background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
 }
 
 /* buttons active */
@@ -897,22 +903,23 @@ input[type='submit']:focus,
 input[type='reset']:active,
 input[type='submit']:active,
 .largeButtons ul li a:active{
-	text-decoration: none;
 	color: #333;
-	border: 1px solid #fa2;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #fc9e07 #fa2 #ffc053;
 	
 	background-color: #fff9f4;
-	background-image: -webkit-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
-	background-image: -moz-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
-	background-image: -ms-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
-	background-image: -o-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
-	background-image: linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
+	background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
+	background-image: -moz-linear-gradient(bottom, rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
+	background-image: -ms-linear-gradient(bottom, rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
+	background-image: -o-linear-gradient(bottom, rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
+	background-image: linear-gradient(bottom, rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
 	
-	-webkit-transition: all .1s linear;
-	-moz-transition: all .1s linear;
-	-ms-transition: all .1s linear;
-	-o-transition: all .1s linear;
-	transition: all .1s linear;
+	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	-ms-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	-o-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 }
 
 /* default buttons glow */
@@ -961,14 +968,16 @@ input[type='submit']:active,
 input[type='submit'],
 .largeButtons ul li.default a {
 	color: #69c;
-	border: 1px solid #69c;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #7aade0 #69c #5285b8;
 	
 	background-color: #e7f2fd;
-	background-image: -webkit-linear-gradient(rgba(255, 255, 255, 1), rgba(216, 231, 245, 1));
-	background-image: -moz-linear-gradient(rgba(255, 255, 255, 1), rgba(216, 231, 245, 1));
-	background-image: -ms-linear-gradient(rgba(255, 255, 255, 1), rgba(216, 231, 245, 1));
-	background-image: -o-linear-gradient(rgba(255, 255, 255, 1), rgba(216, 231, 245, 1));
-	background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(216, 231, 245, 1));
+	background-image: -webkit-linear-gradient(rgba(255, 255, 255, 1), rgba(233, 244, 255, 1) 2px, rgba(216, 231, 245, 1));
+	background-image: -moz-linear-gradient(rgba(255, 255, 255, 1), rgba(233, 244, 255, 1) 2px, rgba(216, 231, 245, 1));
+	background-image: -ms-linear-gradient(rgba(255, 255, 255, 1), rgba(233, 244, 255, 1) 2px, rgba(216, 231, 245, 1));
+	background-image: -o-linear-gradient(rgba(255, 255, 255, 1), rgba(233, 244, 255, 1) 2px, rgba(216, 231, 245, 1));
+	background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(233, 244, 255, 1) 2px, rgba(216, 231, 245, 1));
 	
 	-webkit-box-shadow: 0 0 10px #369;
 	-moz-box-shadow: 0 0 10px #369;
@@ -1053,7 +1062,6 @@ input[type='submit'],
 input[type='submit']:hover,
 .largeButtons ul li.default a:hover {
 	color: #666;
-	border: 1px solid #fa2;
 	
 	-webkit-box-shadow: 0 0 10px #fa2;
 	-moz-box-shadow: 0 0 10px #fa2;
@@ -1090,12 +1098,48 @@ input[type='submit']:hover,
 	animation-iteration-count: infinite;
 	animation-direction: alternate;
 	animation-timing-function: ease-in-out;
-	
-	-webkit-transition: all .1s linear;
-	-moz-transition: all .1s linear;
-	-ms-transition: all .1s linear;
-	-o-transition: all .1s linear;
-	transition: all .1s linear;
+}
+
+/* default buttons active glow */
+@-webkit-keyframes glowDefaultLargeButtonsActive {
+    0% {
+        -webkit-box-shadow: 0 0 13px rgba(255, 153, 51, .3),  inset 0 1px 3px rgba(0, 0, 0, .1);
+    }
+    100% {
+        -webkit-box-shadow: 0 0 13px rgba(255, 153, 51, .1),  inset 0 1px 3px rgba(0, 0, 0, .1);
+    }
+}
+@-moz-keyframes glowDefaultLargeButtonsActive {
+    0% {
+        -moz-box-shadow: 0 0 13px rgba(255, 153, 51, .3),  inset 0 1px 3px rgba(0, 0, 0, .1);
+    }
+    100% {
+        -moz-box-shadow: 0 0 13px rgba(255, 153, 51, .1),  inset 0 1px 3px rgba(0, 0, 0, .1);
+    }
+}
+@-ms-keyframes glowDefaultLargeButtonsActive {
+    0% {
+        -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .3),  inset 0 1px 3px rgba(0, 0, 0, .1);
+    }
+    100% {
+        -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .1),  inset 0 1px 3px rgba(0, 0, 0, .1);
+    }
+}
+@-o-keyframes glowDefaultLargeButtonsActive {
+    0% {
+        -o-box-shadow: 0 0 13px rgba(255, 153, 51, .3),  inset 0 1px 3px rgba(0, 0, 0, .1);
+    }
+    100% {
+        -o-box-shadow: 0 0 13px rgba(255, 153, 51, .1),  inset 0 1px 3px rgba(0, 0, 0, .1);
+    }
+}
+@keyframes glowDefaultLargeButtonsActive {
+    0% {
+        box-shadow: 0 0 13px rgba(255, 153, 51, .3),  inset 0 1px 3px rgba(0, 0, 0, .1);
+    }
+    100% {
+        box-shadow: 0 0 13px rgba(255, 153, 51, .1),  inset 0 1px 3px rgba(0, 0, 0, .1);
+    }
 }
 
 /* default buttons active */
@@ -1103,16 +1147,43 @@ input[type='submit']:focus,
 .largeButtons ul li.default a:focus,
 input[type='submit']:active,
 .largeButtons ul li.default a:active {
-	text-decoration: none;
 	color: #333;
-	border: 1px solid #fa2;
 	
-	background-color: #fff9f4;
-	background-image: -webkit-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
-	background-image: -moz-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
-	background-image: -ms-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
-	background-image: -o-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
-	background-image: linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
+	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	-ms-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	-o-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	
+	-webkit-animation-name: glowDefaultLargeButtonsActive;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-direction: alternate;
+	-webkit-animation-timing-function: ease-in-out; 
+	
+	-moz-animation-name: glowDefaultLargeButtonsActive;
+	-moz-animation-duration: 1s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-direction: alternate;
+	-moz-animation-timing-function: ease-in-out;
+	
+	-ms-animation-name: glowDefaultLargeButtonsActive;
+	-ms-animation-duration: 1s;
+	-ms-animation-iteration-count: infinite;
+	-ms-animation-direction: alternate;
+	-ms-animation-timing-function: ease-in-out; 
+	
+	-o-animation-name: glowDefaultLargeButtonsActive;
+	-o-animation-duration: 1s;
+	-o-animation-iteration-count: infinite;
+	-o-animation-direction: alternate;
+	-o-animation-timing-function: ease-in-out;
+	
+	animation-name: glowDefaultLargeButtonsActive;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-timing-function: ease-in-out;
 }
 
 /* ToDo: Images deprecated? */
@@ -1231,15 +1302,18 @@ input[type='submit']:active,
 	background-color: #fff9f4;
 }
 
-/*
 .tabMenu li:not(.ui-state-active) a:active,
 .tabMenu li:not(.ui-state-active) a:focus {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #fa2 #fa2 #ccc;
-	background-color: #fff;
+	
+	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	-ms-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	-o-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 }
-*/
 
 .tabMenu li.ui-state-active a {
 	font-size: 130%;
@@ -1300,11 +1374,11 @@ input[type='submit']:active,
 }
 
 .tabMenuContent > .menu {
-	background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
-	background-image: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
-	background-image: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
-	background-image: -ms-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
-	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .1));
+	background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: -ms-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
 }
 
 .menu ul {
@@ -1340,13 +1414,16 @@ input[type='submit']:active,
 	border-width: 1px;
 	border-style: solid;
 	border-color: #fa2;
-	background-color: #fff9f4;
+	background-color: rgba(255, 249, 244, 1);
 }
 
-.menu ul li a:active,
-.menu ul li a:focus {
-	border: 1px solid rgba(0, 0, 0, .3);
-	background-color: rgba(255, 255, 255, 1);
+.menu ul li:not(.ui-state-active) a:active,
+.menu ul li:not(.ui-state-active) a:focus {
+	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	-ms-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	-o-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 }
 
 .menu ul li.ui-state-active a {
