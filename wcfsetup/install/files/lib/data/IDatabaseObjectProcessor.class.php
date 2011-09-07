@@ -37,7 +37,7 @@ interface IDatabaseObjectProcessor {
 	public function __isset($name);
 	
 	/**
-	 * Delegates inaccessible methods calls to the processed database object.
+	 * Delegates inaccessible method calls to the processed database object.
 	 *  
 	 * @param	string		$name
 	 * @param	array		$arguments
