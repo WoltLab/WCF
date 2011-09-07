@@ -874,7 +874,14 @@ input[type='submit']:hover,
 .largeButtons ul li a:hover {
 	text-decoration: none;
 	color: #666;
-	border: 1px solid #666;
+	border: 1px solid #fa2;
+	
+	background-color: #fff9f4;
+	background-image: -webkit-linear-gradient(rgba(255, 249, 244, 1), rgba(255, 204, 153, .5));
+	background-image: -moz-linear-gradient(rgba(255, 249, 244, 1), rgba(255, 204, 153, .5));
+	background-image: -ms-linear-gradient(rgba(255, 249, 244, 1), rgba(255, 204, 153, .5));
+	background-image: -o-linear-gradient(rgba(255, 249, 244, 1), rgba(255, 204, 153, .5));
+	background-image: linear-gradient(rgba(255, 249, 244, 1), rgba(255, 204, 153, .5));
 	
 	-webkit-transition: all .1s linear;
 	-moz-transition: all .1s linear;
@@ -892,13 +899,14 @@ input[type='submit']:active,
 .largeButtons ul li a:active{
 	text-decoration: none;
 	color: #333;
+	border: 1px solid #fa2;
 	
-	background-color: #fefefe;
-	background-image: -webkit-linear-gradient(#eee, #fefefe);
-	background-image: -moz-linear-gradient(#eee, #fefefe);
-	background-image: -ms-linear-gradient(#eee, #fefefe);
-	background-image: -o-linear-gradient(#eee, #fefefe);
-	background-image: linear-gradient(#eee, #fefefe);
+	background-color: #fff9f4;
+	background-image: -webkit-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
+	background-image: -moz-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
+	background-image: -ms-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
+	background-image: -o-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
+	background-image: linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
 	
 	-webkit-transition: all .1s linear;
 	-moz-transition: all .1s linear;
@@ -913,7 +921,7 @@ input[type='submit']:active,
         -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .3);
     }
     100% {
-        -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .05);
+        -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
     }
 }
 @-moz-keyframes glowLargeButtons {
@@ -921,7 +929,31 @@ input[type='submit']:active,
         -moz-box-shadow: 0 0 13px rgba(102, 153, 204, .3);
     }
     100% {
-        -moz-box-shadow: 0 0 13px rgba(102, 153, 204, .05);
+        -moz-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
+    }
+}
+@-ms-keyframes glowLargeButtons {
+    0% {
+        -ms-box-shadow: 0 0 13px rgba(102, 153, 204, .3);
+    }
+    100% {
+        -ms-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
+    }
+}
+@-o-keyframes glowLargeButtons {
+    0% {
+        -o-box-shadow: 0 0 13px rgba(102, 153, 204, .3);
+    }
+    100% {
+        -o-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
+    }
+}
+@keyframes glowLargeButtons {
+    0% {
+        box-shadow: 0 0 13px rgba(102, 153, 204, .3);
+    }
+    100% {
+        box-shadow: 0 0 13px rgba(102, 153, 204, .1);
     }
 }
 
@@ -932,11 +964,11 @@ input[type='submit'],
 	border: 1px solid #69c;
 	
 	background-color: #e7f2fd;
-	background-image: -webkit-linear-gradient(#fff, #d8e7f5);
-	background-image: -moz-linear-gradient(#fff, #d8e7f5);
-	background-image: -ms-linear-gradient(#fff, #d8e7f5);
-	background-image: -o-linear-gradient(#fff, #d8e7f5);
-	background-image: linear-gradient(#fff, #d8e7f5);
+	background-image: -webkit-linear-gradient(rgba(255, 255, 255, 1), rgba(216, 231, 245, 1));
+	background-image: -moz-linear-gradient(rgba(255, 255, 255, 1), rgba(216, 231, 245, 1));
+	background-image: -ms-linear-gradient(rgba(255, 255, 255, 1), rgba(216, 231, 245, 1));
+	background-image: -o-linear-gradient(rgba(255, 255, 255, 1), rgba(216, 231, 245, 1));
+	background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(216, 231, 245, 1));
 	
 	-webkit-box-shadow: 0 0 10px #369;
 	-moz-box-shadow: 0 0 10px #369;
@@ -975,30 +1007,115 @@ input[type='submit'],
 	animation-timing-function: ease-in-out;
 }
 
+/* default buttons hover glow */
+@-webkit-keyframes glowLargeButtonsHover {
+    0% {
+        -webkit-box-shadow: 0 0 13px rgba(255, 153, 51, .3);
+    }
+    100% {
+        -webkit-box-shadow: 0 0 13px rgba(255, 153, 51, .1);
+    }
+}
+@-moz-keyframes glowLargeButtonsHover {
+    0% {
+        -moz-box-shadow: 0 0 13px rgba(255, 153, 51, .3);
+    }
+    100% {
+        -moz-box-shadow: 0 0 13px rgba(255, 153, 51, .1);
+    }
+}
+@-ms-keyframes glowLargeButtonsHover {
+    0% {
+        -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .3);
+    }
+    100% {
+        -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .1);
+    }
+}
+@-o-keyframes glowLargeButtonsHover {
+    0% {
+        -o-box-shadow: 0 0 13px rgba(255, 153, 51, .3);
+    }
+    100% {
+        -o-box-shadow: 0 0 13px rgba(255, 153, 51, .1);
+    }
+}
+@keyframes glowLargeButtonsHover {
+    0% {
+        box-shadow: 0 0 13px rgba(255, 153, 51, .3);
+    }
+    100% {
+        box-shadow: 0 0 13px rgba(255, 153, 51, .1);
+    }
+}
+
 /* default buttons hover */
 input[type='submit']:hover,
 .largeButtons ul li.default a:hover {
-	color: #369;
-	border: 1px solid #369;
+	color: #666;
+	border: 1px solid #fa2;
+	
+	-webkit-box-shadow: 0 0 10px #fa2;
+	-moz-box-shadow: 0 0 10px #fa2;
+	-ms-box-shadow: 0 0 10px #fa2;
+	-o-box-shadow: 0 0 10px #fa2;
+	box-shadow: 0 0 10px #fa2;
+	
+	-webkit-animation-name: glowLargeButtonsHover;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-direction: alternate;
+	-webkit-animation-timing-function: ease-in-out; 
+	
+	-moz-animation-name: glowLargeButtonsHover;
+	-moz-animation-duration: 1s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-direction: alternate;
+	-moz-animation-timing-function: ease-in-out;
+	
+	-ms-animation-name: glowLargeButtonsHover;
+	-ms-animation-duration: 1s;
+	-ms-animation-iteration-count: infinite;
+	-ms-animation-direction: alternate;
+	-ms-animation-timing-function: ease-in-out; 
+	
+	-o-animation-name: glowLargeButtonsHover;
+	-o-animation-duration: 1s;
+	-o-animation-iteration-count: infinite;
+	-o-animation-direction: alternate;
+	-o-animation-timing-function: ease-in-out;
+	
+	animation-name: glowLargeButtonsHover;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-timing-function: ease-in-out;
+	
+	-webkit-transition: all .1s linear;
+	-moz-transition: all .1s linear;
+	-ms-transition: all .1s linear;
+	-o-transition: all .1s linear;
+	transition: all .1s linear;
 }
 
 /* default buttons active */
 input[type='submit']:focus,
 .largeButtons ul li.default a:focus,
 input[type='submit']:active,
-.largeButtons ul li.default a:active{
+.largeButtons ul li.default a:active {
 	text-decoration: none;
-	color: #036;
+	color: #333;
+	border: 1px solid #fa2;
 	
-	background-color: #d8e7f5;
-	background-image: -webkit-linear-gradient(#d8e7f5, #fff);
-	background-image: -moz-linear-gradient(#d8e7f5, #fff);
-	background-image: -ms-linear-gradient(#d8e7f5, #fff);
-	background-image: -o-linear-gradient(#d8e7f5, #fff);
-	background-image: linear-gradient(#d8e7f5, #fff);
+	background-color: #fff9f4;
+	background-image: -webkit-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
+	background-image: -moz-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
+	background-image: -ms-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
+	background-image: -o-linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
+	background-image: linear-gradient(rgba(255, 204, 153, .5), rgba(255, 249, 244, 1));
 }
 
-/* ToDo: depracated? */
+/* ToDo: Images deprecated? */
 .largeButtons ul li a img {
 	margin: 0;
 	height: 24px;
@@ -1060,6 +1177,7 @@ input[type='submit']:active,
 
 
 /* -- -- -- -- -- Tab Menu -- -- -- -- -- */
+
 /* Parts taken from jQuery UI @ themes/base/jquery.ui.tabs.css */
 
 /* Tab Menu */
