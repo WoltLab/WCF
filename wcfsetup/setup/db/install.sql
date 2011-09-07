@@ -102,7 +102,8 @@ CREATE TABLE wcf1_clipboard_action (
 	packageID INT(10) NOT NULL DEFAULT 0,
 	actionName VARCHAR(50) NOT NULL DEFAULT '',
 	actionClassName VARCHAR(200) NOT NULL DEFAULT '',
-	sortOrder INT(10) NOT NULL DEFAULT 0
+	sortOrder INT(10) NOT NULL DEFAULT 0,
+	UNIQUE KEY actionName (packageID, actionName)
 );
 
 DROP TABLE IF EXISTS wcf1_clipboard_item;
@@ -117,7 +118,8 @@ CREATE TABLE wcf1_clipboard_item_type (
 	typeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10) NOT NULL DEFAULT 0,
 	typeName VARCHAR(80) NOT NULL DEFAULT '',
-	className VARCHAR(200) NOT NULL DEFAULT ''
+	listClassName VARCHAR(200) NOT NULL DEFAULT '',
+	UNIQUE KEY typeName (typeName)
 );
 
 DROP TABLE IF EXISTS wcf1_clipboard_page;
@@ -728,6 +730,15 @@ ALTER TABLE wcf1_application ADD FOREIGN KEY (groupID) REFERENCES wcf1_applicati
 ALTER TABLE wcf1_cleanup_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_cleanup_log ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_clipboard_action ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_clipboard_item ADD FOREIGN KEY (typeID) REFERENCES wcf1_clipboard_item_type (typeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_clipboard_item_type ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_clipboard_page ADD FOREIGN KEY (actionID) REFERENCES wcf1_clipboard_action (actionID) ON DELETE CASCADE;
+ALTER TABLE wcf1_clipboard_page ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_core_object ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 

@@ -166,7 +166,7 @@ class ClipboardHandler extends SingletonFactory {
 			
 			if (!isset($data[$type->typeName])) {
 				$data[$type->typeName] = array(
-					'className' => $type->className,
+					'className' => $type->listClassName,
 					'objectIDs' => array()
 				);
 			}
@@ -196,8 +196,7 @@ class ClipboardHandler extends SingletonFactory {
 	 */
 	public function getEditorItems($page) {
 		// ignore unknown pages
-		if (!isset($this->pageCache[$page])) die('page '.$page.' is unknown');
-			#return null;
+		if (!isset($this->pageCache[$page])) return null;
 		
 		// get objects
 		$objects = $this->getMarkedItems();
