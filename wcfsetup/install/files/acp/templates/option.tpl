@@ -53,7 +53,7 @@
 					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 						<fieldset>
 							<legend>{lang}wcf.acp.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>
-							<p class="description">{lang}wcf.acp.option.category.{$categoryLevel2[object]->categoryName}.description{/lang}</p>
+							{hascontent}<p class="description">{content}{lang}wcf.acp.option.category.{$categoryLevel2[object]->categoryName}.description{/lang}{/content}</p>{/hascontent}
 							
 							{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.option.'}
 						</fieldset>
