@@ -291,4 +291,13 @@ class User extends DatabaseObject {
 		
 		return $userList->getObjects();
 	}
+	
+	/**
+	 * Returns username.
+	 * 
+	 * @return	string
+	 */	
+	public function __toString() {
+		return $this->username;
+	}
 }

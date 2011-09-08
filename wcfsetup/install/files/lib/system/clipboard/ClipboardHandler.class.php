@@ -256,4 +256,20 @@ class ClipboardHandler extends SingletonFactory {
 		
 		return $editorData;
 	}
+	
+	/**
+	 * Removes items from clipboard.
+	 * 
+	 * @param	integer		$typeID
+	 */
+	public function removeItems($typeID = null) {
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("userID = ?", array(WCF::getUser()->userID));
+		if ($typeID !== null) $conditions->add("typeID = ?", array($typeID));
+		
+		$sql = "DELETE FROM	wcf".WCF_N."_clipboard_item
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+	}
 }
