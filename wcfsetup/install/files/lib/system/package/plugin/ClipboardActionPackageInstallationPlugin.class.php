@@ -19,6 +19,12 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	public $className = 'wcf\data\clipboard\action\ClipboardActionEditor';
 	
 	/**
+	 * list of pages per action id
+	 * @var	array<array>
+	 */
+	protected $pages = array();
+	
+	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'clipboard_action';
@@ -73,6 +79,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 		return array(
 			'actionClassName' => $data['elements']['actionclassname'],
 			'actionName' => $data['attributes']['name'],
+			'pages' => $data['elements']['pages'],
 			'showOrder' => $showOrder
 		);
 	}
@@ -100,25 +107,42 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
 	 */
 	protected function import(array $row, array $data) {
+		// extract pages
+		$pages = $data['pages'];
+		unset($data['pages']);
+		
+		// import or update action
 		$object = parent::import($row, $data);
 		
+		// store pages for later import
+		$this->pages[$object->actionID] = $pages;
+	}
+	
+	/**
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::postImport()
+	 */
+	protected function postImport() {
 		// clear pages
 		$sql = "DELETE FROM	wcf".WCF_N."_clipboard_page
 			WHERE		packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
 		
-		// insert pages
-		$sql = "INSERT INTO	wcf".WCF_N."_clipboard_page
-					(pageClassName, packageID, actionID)
-			VALUES		(?, ?, ?)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		foreach ($data['pages'] as $pageClassName) {
-			$statement->execute(array(
-				$pageClassName,
-				$this->installation->getPackageID(),
-				$object->actionID
-			));
+		if (count($this->pages)) {
+			// insert pages
+			$sql = "INSERT INTO	wcf".WCF_N."_clipboard_page
+						(pageClassName, packageID, actionID)
+				VALUES		(?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			foreach ($this->pages as $actionID => $pages) {
+				foreach ($pages as $pageClassName) {
+					$statement->execute(array(
+						$pageClassName,
+						$this->installation->getPackageID(),
+						$actionID
+					));
+				}
+			}
 		}
 	}
 }
