@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- This file is used for package server xml files. -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
 	<!-- include types -->
 	<xs:include schemaLocation="types.xsd" />
 	
-	<!-- section tag -->
+	<!-- section node -->
 	<xs:element name="section">
 		<xs:complexType>
 			<xs:sequence>
@@ -13,7 +14,7 @@
 		</xs:complexType>
 	</xs:element>
 	
-	<!-- package element -->
+	<!-- package node -->
 	<xs:element name="package">
 		<xs:complexType>
 			<xs:sequence>
@@ -25,7 +26,7 @@
 		</xs:complexType>
 	</xs:element>
 	
-	<!-- package -->
+	<!-- package information node -->
 	<xs:element name="packageinformation">
 		<xs:complexType>
 			<xs:sequence>
@@ -43,7 +44,7 @@
 	<xs:element name="plugin" type="woltlab_varchar" />
 	<xs:element name="standalone" type="woltlab_boolean" />
 	
-	<!-- author -->
+	<!-- author information node -->
 	<xs:element name="authorinformation">
 		<xs:complexType>
 			<xs:sequence>
@@ -55,7 +56,7 @@
 	<xs:element name="author" type="xs:string" />
 	<xs:element name="authorurl" type="xs:anyURI" />
 	
-	<!-- versions -->
+	<!-- versions node -->
 	<xs:element name="versions">
 		<xs:complexType>
 			<xs:sequence>
@@ -63,6 +64,8 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+	<!-- version node -->
 	<xs:element name="version">
 		<xs:complexType>
 			<xs:sequence>
@@ -76,6 +79,8 @@
 			<xs:attribute name="name" use="required" />
 		</xs:complexType>
 	</xs:element>
+	
+	<!-- fromversions node -->
 	<xs:element name="fromversions">
 		<xs:complexType>
 			<xs:sequence>
@@ -83,7 +88,11 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+	<!-- fromversion node -->
 	<xs:element name="fromversion" type="xs:string" />
+	
+	<!-- requiredpackages node -->
 	<xs:element name="requiredpackages">
 		<xs:complexType>
 			<xs:sequence>
@@ -91,6 +100,8 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+	<!-- requiredpackage node -->
 	<xs:element name="requiredpackage">
 		<xs:complexType>
 			<xs:simpleContent>
@@ -100,8 +111,16 @@
 			</xs:simpleContent>
 		</xs:complexType>
 	</xs:element>
+	
+	<!-- updatetype node -->
 	<xs:element name="updatetype" type="xs:NCName" />
+	
+	<!-- timestamp node -->
 	<xs:element name="timestamp" type="xs:integer" />
+	
+	<!-- versiontype node -->
 	<xs:element name="versiontype" type="xs:NCName" />
+	
+	<!-- license node -->
 	<xs:element name="license" type="xs:NCName" />
 </xs:schema>

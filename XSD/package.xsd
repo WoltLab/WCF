@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- This file is used for package xml files -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
-	<!-- include WoltLab data types -->
+	<!-- include types -->
 	<xs:include schemaLocation="types.xsd" />
 	
 	<!-- data node -->
@@ -27,7 +28,6 @@
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
-	
 	
 	<!-- optionalPackage element -->
 	<xs:complexType name="optionalPackage">
