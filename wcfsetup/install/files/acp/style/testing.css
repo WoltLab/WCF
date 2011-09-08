@@ -1,7 +1,7 @@
 /**
  * ACP Testing Styles  
  *
- * @author		Harald Szekely, Alexander Ebert, Marcel Werk 
+ * @author	Harald Szekely, Alexander Ebert, Marcel Werk 
  * @copyright	2011 WoltLab GmbH 
  */
 
@@ -2093,6 +2093,44 @@ div.ui-widget-overlay {
 
 /* CSS Experiments (active) */
 
+/* Clipboard API - TESTING ONLY / TODO */
 
+.clipboardEditor {
+	position: relative;
+}
+
+.clipboardEditor span {
+	background-color: rgb(224, 224, 224);
+	border: 1px solid rgb(192, 192, 192);
+	border-radius: 3px;
+	cursor: pointer;
+	padding: 3px;
+}
+
+.clipboardEditor ol {
+	border: 1px solid rgba(192, 192, 192, 0.9);
+	border-radius: 3px;
+	display: inline-block;
+	left: 0px;
+	margin-top: 19px;
+	position: absolute;
+	top: 0px;
+}
+
+.clipboardEditor li {
+	background-color: rgba(224, 224, 224, 0.9);
+	border-top: 1px solid rgba(192, 192, 192, 0.9);
+	cursor: pointer;
+	padding: 3px;
+}
+
+.clipboardEditor li:hover {
+	background-color: rgb(207, 207, 207);
+	text-shadow: 0 0 3px #999;
+}
+
+.clipboardEditor li:first-child {
+	border-top-width: 0;
+}
 
 /* -- -- -- -- -- EOF -- -- -- -- -- */

@@ -71,7 +71,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 		$showOrder = $this->getShowOrder($showOrder);
 		
 		return array(
-			'actionClassName' => $data['elements']['actionClassName'],
+			'actionClassName' => $data['elements']['actionclassname'],
 			'actionName' => $data['attributes']['name'],
 			'showOrder' => $showOrder
 		);
