@@ -1,5 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="data" targetNamespace="http://www.woltlab.com" xmlns="http://www.woltlab.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified">
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is used for xml files which install, update or delete clipboard item types -->
+<xs:schema id="data" xmlns="http://www.woltlab.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.woltlab.com" attributeFormDefault="qualified" elementFormDefault="qualified">
+	<!-- clipboard item type which will be installed, updated or deleted -->
 	<xs:element name="type">
 		<xs:complexType>
 			<xs:sequence>
@@ -8,6 +10,8 @@
 			<xs:attribute name="name" form="unqualified" type="xs:string" />
 		</xs:complexType>
 	</xs:element>
+	
+	<!-- data node -->
 	<xs:element name="data">
 		<xs:complexType>
 			<xs:choice minOccurs="0" maxOccurs="unbounded">

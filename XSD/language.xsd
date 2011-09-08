@@ -1,30 +1,29 @@
 <?xml version="1.0"?>
-<!-- The file "language.xsd" is used for xml-files which installs or updates language items.  -->
+<!-- This file is used for xml files which install or update language items. -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
-        
-        <!-- include types -->
-        <xs:include schemaLocation="types.xsd" />
-        
-        <!-- Represents the data-node. -->
-        <xs:element name="language">
-                <xs:complexType>
-                         <xs:sequence>
-                                <xs:element name="category" type="category" maxOccurs="unbounded" />
-                        </xs:sequence>
-                        <xs:attribute name="languagecode" type="woltlab_varchar" use="required" />
-                </xs:complexType>
-        </xs:element>
-        
-         <!-- Represents a language-category-node. -->
-        <xs:complexType name="category">
-                <xs:sequence>
-                        <xs:element name="item" type="item" maxOccurs="unbounded" />
-                </xs:sequence>
-                <xs:attribute name="name" type="woltlab_varchar" use="required" />
-        </xs:complexType>
-        
-         <!-- Represents a language-item-node. -->
-        <xs:complexType name="item" mixed="true">
-                <xs:attribute name="name" type="woltlab_varchar" use="required" />
-        </xs:complexType>
+	<!-- include types -->
+	<xs:include schemaLocation="types.xsd" />
+	
+	<!-- data node -->
+	<xs:element name="language">
+		<xs:complexType>
+			 <xs:sequence>
+				<xs:element name="category" type="category" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="languagecode" type="woltlab_varchar" use="required" />
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- language category node -->
+	<xs:complexType name="category">
+		<xs:sequence>
+			<xs:element name="item" type="item" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="name" type="woltlab_varchar" use="required" />
+	</xs:complexType>
+	
+	<!-- language item node -->
+	<xs:complexType name="item" mixed="true">
+		<xs:attribute name="name" type="woltlab_varchar" use="required" />
+	</xs:complexType>
 </xs:schema>
