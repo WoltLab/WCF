@@ -102,7 +102,7 @@ CREATE TABLE wcf1_clipboard_action (
 	packageID INT(10) NOT NULL DEFAULT 0,
 	actionName VARCHAR(50) NOT NULL DEFAULT '',
 	actionClassName VARCHAR(200) NOT NULL DEFAULT '',
-	sortOrder INT(10) NOT NULL DEFAULT 0,
+	showOrder INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY actionName (packageID, actionName)
 );
 
