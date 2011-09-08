@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!-- This file is used for xml files which install, update or delete event listeners. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
+	<!-- include types -->
+	<xs:include schemaLocation="types.xsd" />
+	
+	<!-- data node -->
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="import" type="import" minOccurs="0" />
+				<xs:element name="delete" type="delete" minOccurs="0" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- import node -->
+	<xs:complexType name="import">
+		<xs:sequence>
+			<xs:element name="eventlistener" type="eventlistener" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- delete node -->
+	<xs:complexType name="delete">
+		<xs:sequence>
+			<xs:element name="eventlistener" type="eventlistener" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- event listener which will be installed, updated or deleted -->
+	<xs:complexType name="eventlistener">
+		<xs:all>
+			<xs:element name="eventclassname" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0" />
+						<xs:maxLength value="80" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="eventname" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0" />
+						<xs:maxLength value="50" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="listenerclassname" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0" />
+						<xs:maxLength value="200" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="inherit" type="woltlab_boolean" minOccurs="0" />
+		</xs:all>
+	</xs:complexType>
+</xs:schema>
