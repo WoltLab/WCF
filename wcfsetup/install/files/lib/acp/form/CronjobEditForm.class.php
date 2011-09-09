@@ -6,7 +6,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 
 /**
- * Shows the cronjobs edit form.
+ * Shows the cronjob edit form.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
@@ -19,12 +19,12 @@ class CronjobEditForm extends CronjobAddForm {
 	/**
 	 * @see wcf\acp\form\ACPForm::$activeMenuItem
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.cronjobs';
+	public $activeMenuItem = 'wcf.acp.menu.link.cronjob';
 	
 	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.cronjobs.canEditCronjob');
+	public $neededPermissions = array('admin.system.cronjob.canEditCronjob');
 	
 	/**
 	 * cronjob id

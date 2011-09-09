@@ -39,12 +39,14 @@
 		<item name="wcf.acp.cronjob.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.cronjob.description.description"><![CDATA[Hier können Sie eine kurze Beschreibung der Aufgabe eintragen.]]></item>
 		<item name="wcf.acp.cronjob.disable"><![CDATA[Deaktivieren]]></item>
+		<item name="wcf.acp.cronjob.disabled"><![CDATA[Deaktiviert]]></item>
 		<item name="wcf.acp.cronjob.edit"><![CDATA[Zeitgesteuerte Aufgabe bearbeiten]]></item>
 		<item name="wcf.acp.cronjob.edit.data"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.acp.cronjob.edit.disabled"><![CDATA[Die zeitgesteuerte Aufgabe kann nicht verändert werden.]]></item>
 		<item name="wcf.acp.cronjob.edit.success"><![CDATA[Die zeitgesteuerte Aufgabe wurde erfolgreich geändert.]]></item>
 		<item name="wcf.acp.cronjob.edit.timing"><![CDATA[Zeitsteuerung]]></item>
 		<item name="wcf.acp.cronjob.enable"><![CDATA[Aktivieren]]></item>
+		<item name="wcf.acp.cronjob.enabled"><![CDATA[Aktiviert]]></item>
 		<item name="wcf.acp.cronjob.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
 		<item name="wcf.acp.cronjob.error.empty"><![CDATA[Bitte füllen Sie dieses Eingabefeld aus.]]></item>
 		<item name="wcf.acp.cronjob.error.notValid"><![CDATA[Das Zeitformat ist ungültig.]]></item>

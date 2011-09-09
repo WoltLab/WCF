@@ -9,7 +9,7 @@ use wcf\util\CronjobUtil;
 use wcf\util\StringUtil;
 
 /**
- * Shows the cronjobs add form.
+ * Shows the cronjob add form.
  *
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
@@ -27,12 +27,12 @@ class CronjobAddForm extends ACPForm {
 	/**
 	 * @see wcf\acp\form\ACPForm::$activeMenuItem
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.cronjobs.add';
+	public $activeMenuItem = 'wcf.acp.menu.link.cronjob.add';
 	
 	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.cronjobs.canAddCronjob');
+	public $neededPermissions = array('admin.system.cronjob.canAddCronjob');
 	
 	/**
 	 * cronjob class name

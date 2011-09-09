@@ -25,6 +25,6 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 	 * @see wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.cronjobs-*');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.cronjob-*');
 	}
 }

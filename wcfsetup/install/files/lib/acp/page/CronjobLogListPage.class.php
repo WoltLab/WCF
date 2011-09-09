@@ -6,7 +6,7 @@ use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
 
 /**
- * Shows cron jobs log information.
+ * Shows cronjob log information.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -24,7 +24,7 @@ class CronjobLogListPage extends SortablePage {
 	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.cronjobs.canEditCronjob');
+	public $neededPermissions = array('admin.system.cronjob.canEditCronjob');
 	
 	/**
 	 * @see wcf\page\MultipleLinkPage::$itemsPerPage
@@ -87,7 +87,7 @@ class CronjobLogListPage extends SortablePage {
 	 */
 	public function show() {
 		// set active menu item.
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.cronjobs.showLog');
+		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.cronjob.showLog');
 		
 		parent::show();
 	}

@@ -24,17 +24,17 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.system.cronjobs.canAddCronjob');
+	protected $permissionsCreate = array('admin.system.cronjob.canAddCronjob');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.system.cronjobs.canDeleteCronjob');
+	protected $permissionsDelete = array('admin.system.cronjob.canDeleteCronjob');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.system.cronjobs.canEditCronjob');
+	protected $permissionsUpdate = array('admin.system.cronjob.canEditCronjob');
 	
 	/**
 	 * Validates permissions and parameters
@@ -96,7 +96,7 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 	 * Executes cronjobs.
 	 */
 	public function execute() {
-		$cronjobs = $return = array();
+		$cronjob = $return = array();
 		
 		foreach ($this->objects as $key => $cronjob) {
 			// skip jobs that are already being processed

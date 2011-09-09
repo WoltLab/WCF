@@ -75,7 +75,7 @@ class Cronjob extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function isEditable() {
-		return (WCF::getSession()->getPermission('admin.system.cronjobs.canEditCronjob') && $this->canBeEdited);
+		return (WCF::getSession()->getPermission('admin.system.cronjob.canEditCronjob') && $this->canBeEdited);
 	}
 	
 	/**
@@ -84,7 +84,7 @@ class Cronjob extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function isDeletable() {
-		return (WCF::getSession()->getPermission('admin.system.cronjobs.canDeleteCronjob') && $this->canBeEdited);
+		return (WCF::getSession()->getPermission('admin.system.cronjob.canDeleteCronjob') && $this->canBeEdited);
 	}
 	
 	/**
@@ -93,6 +93,6 @@ class Cronjob extends DatabaseObject {
 	 * @return	true
 	 */
 	public function canBeDisabled() {
-		return (WCF::getSession()->getPermission('admin.system.cronjobs.canEnableDisableCronjob') && $this->canBeDisabled);
+		return (WCF::getSession()->getPermission('admin.system.cronjob.canEnableDisableCronjob') && $this->canBeDisabled);
 	}
 }

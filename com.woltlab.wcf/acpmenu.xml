@@ -134,29 +134,29 @@
 		<!-- /log -->
 		
 		<!-- cronjobs -->
-		<acpmenuitem name="wcf.acp.menu.link.cronjobs">
+		<acpmenuitem name="wcf.acp.menu.link.cronjob">
 			<parent>wcf.acp.menu.link.maintenance</parent>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.cronjobs.list">
-			<icon>icon/cronjobsM.png</icon>
+		<acpmenuitem name="wcf.acp.menu.link.cronjob.list">
+			<icon>icon/cronjobM.png</icon>
 			<link>index.php?page=CronjobList</link>
-			<parent>wcf.acp.menu.link.cronjobs</parent>
-			<permissions>admin.system.cronjobs.canEditCronjob,admin.system.cronjobs.canDeleteCronjob,admin.system.cronjobs.canEnableDisableCronjob</permissions>
+			<parent>wcf.acp.menu.link.cronjob</parent>
+			<permissions>admin.system.cronjobs.canEditCronjob,admin.system.cronjob.canDeleteCronjob,admin.system.cronjobs.canEnableDisableCronjob</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.cronjobs.add">
+		<acpmenuitem name="wcf.acp.menu.link.cronjob.add">
 			<link>index.php?form=CronjobAdd</link>
-			<parent>wcf.acp.menu.link.cronjobs</parent>
-			<permissions>admin.system.cronjobs.canAddCronjob</permissions>
+			<parent>wcf.acp.menu.link.cronjob</parent>
+			<permissions>admin.system.cronjob.canAddCronjob</permissions>
 			<showorder>2</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.cronjobs.showLog">
+		<acpmenuitem name="wcf.acp.menu.link.cronjob.showLog">
 			<link>index.php?page=CronjobLogList</link>
 			<parent>wcf.acp.menu.link.log.system</parent>
-			<permissions>admin.system.cronjobs.canEditCronjob,admin.system.cronjobs.canDeleteCronjob</permissions>
+			<permissions>admin.system.cronjob.canEditCronjob,admin.system.cronjob.canDeleteCronjob</permissions>
 		</acpmenuitem>
 		<!-- /cronjobs -->
 		
