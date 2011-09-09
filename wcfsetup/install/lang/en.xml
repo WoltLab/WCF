@@ -641,7 +641,7 @@
 		<item name="wcf.acp.updateServer.htUsername"><![CDATA[Username]]></item>
 		<item name="wcf.acp.updateServer.htUsername.description"><![CDATA[Please enter a valid user name (optional).]]></item>
 		<item name="wcf.acp.updateServer.lastErrorText"><![CDATA[The following error occured while trying to connect:]]></item>
-		<item name="wcf.acp.updateServer."><![CDATA[Available update-servers]]></item>
+		<item name="wcf.acp.updateServer.list"><![CDATA[Available update-servers]]></item>
 		<item name="wcf.acp.updateServer.list.count"><![CDATA[{#$items} update server{if $items != 1}s{/if} available]]></item>
 		<item name="wcf.acp.updateServer.list.noneAvailable"><![CDATA[There are no update-servers available.]]></item>
 		<item name="wcf.acp.updateServer.packageUpdateServerID"><![CDATA[Server ID]]></item>
