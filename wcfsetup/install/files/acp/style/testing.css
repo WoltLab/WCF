@@ -40,10 +40,6 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 
-body {
-	line-height: 1;
-}
-
 ol, ul {
 	list-style: none;
 }
@@ -71,6 +67,7 @@ q:after {
 body {
 	font-family: 'Trebuchet MS', Arial, sans-serif;
 	font-size: 80%;
+	line-height: 1;
 	background-color: #29374a;
 }
 
@@ -346,6 +343,8 @@ div.main {
 	min-width: 800px;
 }
 
+
+
 /* -- -- -- -- -- Content -- -- -- -- -- */
 
 section.content {
@@ -368,6 +367,8 @@ div.main > div section:only-child {
 	display: block !important;
 	width: auto;
 }
+
+
 
 /* -- -- -- -- -- Sidebar -- -- -- -- -- */
 
@@ -1103,42 +1104,42 @@ input[type='submit']:hover,
 /* default buttons active glow */
 @-webkit-keyframes glowDefaultLargeButtonsActive {
     0% {
-        -webkit-box-shadow: 0 0 13px rgba(255, 153, 51, .3),  inset 0 1px 3px rgba(0, 0, 0, .1);
+        -webkit-box-shadow: 0 0 13px rgba(255, 153, 51, .3), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
     100% {
-        -webkit-box-shadow: 0 0 13px rgba(255, 153, 51, .1),  inset 0 1px 3px rgba(0, 0, 0, .1);
+        -webkit-box-shadow: 0 0 13px rgba(255, 153, 51, .1), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
 }
 @-moz-keyframes glowDefaultLargeButtonsActive {
     0% {
-        -moz-box-shadow: 0 0 13px rgba(255, 153, 51, .3),  inset 0 1px 3px rgba(0, 0, 0, .1);
+        -moz-box-shadow: 0 0 13px rgba(255, 153, 51, .3), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
     100% {
-        -moz-box-shadow: 0 0 13px rgba(255, 153, 51, .1),  inset 0 1px 3px rgba(0, 0, 0, .1);
+        -moz-box-shadow: 0 0 13px rgba(255, 153, 51, .1), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
 }
 @-ms-keyframes glowDefaultLargeButtonsActive {
     0% {
-        -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .3),  inset 0 1px 3px rgba(0, 0, 0, .1);
+        -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .3), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
     100% {
-        -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .1),  inset 0 1px 3px rgba(0, 0, 0, .1);
+        -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .1), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
 }
 @-o-keyframes glowDefaultLargeButtonsActive {
     0% {
-        -o-box-shadow: 0 0 13px rgba(255, 153, 51, .3),  inset 0 1px 3px rgba(0, 0, 0, .1);
+        -o-box-shadow: 0 0 13px rgba(255, 153, 51, .3), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
     100% {
-        -o-box-shadow: 0 0 13px rgba(255, 153, 51, .1),  inset 0 1px 3px rgba(0, 0, 0, .1);
+        -o-box-shadow: 0 0 13px rgba(255, 153, 51, .1), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
 }
 @keyframes glowDefaultLargeButtonsActive {
     0% {
-        box-shadow: 0 0 13px rgba(255, 153, 51, .3),  inset 0 1px 3px rgba(0, 0, 0, .1);
+        box-shadow: 0 0 13px rgba(255, 153, 51, .3), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
     100% {
-        box-shadow: 0 0 13px rgba(255, 153, 51, .1),  inset 0 1px 3px rgba(0, 0, 0, .1);
+        box-shadow: 0 0 13px rgba(255, 153, 51, .1), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
 }
 
@@ -2014,7 +2015,8 @@ div.ui-widget-overlay {
 .badge {
 	font-size: 85%;
 	text-shadow: none;
-	color: #369;
+	color: #666;
+	border: 1px solid #ccc;
 	border-radius: 13px;
 	background-color: #fff;
 	margin-right: -3px;

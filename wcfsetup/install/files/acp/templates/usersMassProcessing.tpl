@@ -229,9 +229,7 @@
 				</dl>
 				
 				<dl id="subjectDiv"{if $errorField == 'subject'} class="formError"{/if}>
-					<dt>
-						<label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label>
-					</dt>
+					<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
 					<dd>
 						<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
 						{if $errorField == 'subject'}

@@ -2,7 +2,8 @@
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de-informal">
 	<category name="wcf.global">
 		<item name="wcf.global.pageTitle"><![CDATA[{$setupPackageName} Installation]]></item>
-		<item name="wcf.global.title"><![CDATA[<strong>{$setupPackageName}</strong><br />Installation]]></item>
+		<item name="wcf.global.title"><![CDATA[{$setupPackageName}]]></item>
+		<item name="wcf.global.title.subtitle"><![CDATA[Installation]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item>
 		<item name="wcf.global.locale.unix"><![CDATA[de_DE]]></item>
 		<item name="wcf.global.locale.win"><![CDATA[deu_deu]]></item>

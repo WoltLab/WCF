@@ -1,37 +1,35 @@
 {include file='header'}
 
-<h2>{lang}wcf.global.wcfDir{/lang}</h2>
-
-<p>{lang}wcf.global.wcfDir.description{/lang}</p>
+<hgroup class="subHeading">
+	<h1>{lang}wcf.global.wcfDir{/lang}</h1>
+	<h2>{lang}wcf.global.wcfDir.description{/lang}</h2>
+</hgroup>
 
 {if $foundDirectory}
 	<p>{lang}wcf.global.wcfDir.foundDirectory{/lang}</p>
 {/if}
 
 {if $exception|isset}
-	<p class="error">
-		{lang}wcf.global.wcfDir.error{/lang}
-	</p>
+	<p class="error">{lang}wcf.global.wcfDir.error{/lang}</p>
 {/if}
 
 <form method="post" action="install.php">
 	<fieldset>
 		<legend>{lang}wcf.global.wcfDir.dir{/lang}</legend>
 		
-		<div class="inner">
-			<div>
-				<label for="wcfDir">{lang}wcf.global.wcfDir.dir.description{/lang}</label>
-				<input type="text" class="inputText" id="wcfDir" name="wcfDir" value="{$wcfDir}" style="width: 100%;" />
-			</div>
-			<div>
-				<label for="wcfUrl">{lang}wcf.global.wcfDir.url.description{/lang}</label>
-				<input type="text" class="inputText" id="wcfUrl" name="wcfUrl" value="" style="width: 100%;" readonly="readonly" />
-			</div>
-		</div>
+		<dl>
+			<dt><label for="wcfDir">{lang}wcf.global.wcfDir.dir.description{/lang}</label></dt>
+			<dd><input type="text" id="wcfDir" name="wcfDir" value="{$wcfDir}" class="long" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="wcfUrl">{lang}wcf.global.wcfDir.url.description{/lang}</label></dt>
+			<dd><input type="text" id="wcfUrl" name="wcfUrl" value="" readonly="readonly" class="long" /></dd>
+		</dl>
+		
 	</fieldset>
 	
-	<div class="nextButton">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.next{/lang}" />
+	<div class="formSubmit">
+		<input type="submit" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
 		<input type="hidden" name="step" value="{@$nextStep}" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
 		<input type="hidden" name="languageCode" value="{@$languageCode}" />
