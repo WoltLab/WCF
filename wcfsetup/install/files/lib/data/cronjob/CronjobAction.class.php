@@ -96,8 +96,6 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 	 * Executes cronjobs.
 	 */
 	public function execute() {
-		$cronjobs = $return = array();
-		
 		foreach ($this->objects as $key => $cronjob) {
 			// skip jobs that are already being processed
 			if ($cronjob->state == Cronjob::PENDING || $cronjob->state == Cronjob::EXECUTING) {
@@ -109,8 +107,8 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 			$cronjob->update(array('state' => Cronjob::PENDING));
 		}
 		
+		$return = array();
 		foreach ($this->objects as $cronjob) {
-			// it now time for executing
 			$cronjob->update(array('state' => Cronjob::EXECUTING));
 			$className = $cronjob->className;
 			$executable = new $className();
@@ -127,13 +125,14 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 			CronjobLogEditor::create(array(
 				'cronjobID' => $cronjob->cronjobID,
 				'execTime' => TIME_NOW,
-				'success' => (int) ($error != ''),
+				'success' => ($error == '' ? 1 : 0),
 				'error' => $error
 			));
 				
-			// calculate next exec-time
+			// calculate next exec time and update cronjob data
 			$nextExec = $cronjob->getNextExec();
 			$cronjob->update(array(
+				'state' => Cronjob::READY,
 				'nextExec' => $nextExec, 
 				'afterNextExec' => $cronjob->getNextExec(($nextExec + 120))
 			));
@@ -152,9 +151,6 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 					)
 				)
 			);
-			
-			// we are finished
-			$cronjob->update(array('state' => Cronjob::READY));
 		}
 		
 		return $return;
