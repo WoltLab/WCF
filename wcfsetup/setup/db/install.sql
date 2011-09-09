@@ -26,12 +26,6 @@ CREATE TABLE wcf1_acp_session (
 	KEY sessionID (sessionID, packageID)
 );
 
-DROP TABLE IF EXISTS wcf1_acp_session_data;
-CREATE TABLE wcf1_acp_session_data (
-	sessionID CHAR(40) NOT NULL PRIMARY KEY,
-	sessionVariables MEDIUMTEXT
-);
-
 DROP TABLE IF EXISTS wcf1_acp_session_access_log;
 CREATE TABLE wcf1_acp_session_access_log (
 	sessionAccessLogID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -43,6 +37,12 @@ CREATE TABLE wcf1_acp_session_access_log (
 	requestMethod VARCHAR(4) NOT NULL DEFAULT '',
 	className VARCHAR(255) NOT NULL DEFAULT '',
 	KEY sessionLogID (sessionLogID)
+);
+
+DROP TABLE IF EXISTS wcf1_acp_session_data;
+CREATE TABLE wcf1_acp_session_data (
+	sessionID CHAR(40) NOT NULL PRIMARY KEY,
+	sessionVariables MEDIUMTEXT
 );
 
 DROP TABLE IF EXISTS wcf1_acp_session_log;
@@ -96,6 +96,15 @@ CREATE TABLE wcf1_cleanup_listener (
 	UNIQUE KEY (className, packageID)
 );
 
+DROP TABLE IF EXISTS wcf1_cleanup_log;
+CREATE TABLE wcf1_cleanup_log (
+	packageID INT(10) NOT NULL DEFAULT 0,
+	objectType VARCHAR(255) NOT NULL DEFAULT '',
+	objectID INT(10) NOT NULL DEFAULT 0,
+	deleteTime INT(10) NOT NULL DEFAULT 0,
+	KEY objectType (objectType)
+);
+
 DROP TABLE IF EXISTS wcf1_clipboard_action;
 CREATE TABLE wcf1_clipboard_action (
 	actionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -127,15 +136,6 @@ CREATE TABLE wcf1_clipboard_page (
 	pageClassName VARCHAR(80) NOT NULL DEFAULT '',
 	packageID INT(10) NOT NULL DEFAULT 0,
 	actionID INT(10) NOT NULL DEFAULT 0
-);
-
-DROP TABLE IF EXISTS wcf1_cleanup_log;
-CREATE TABLE wcf1_cleanup_log (
-	packageID INT(10) NOT NULL DEFAULT 0,
-	objectType VARCHAR(255) NOT NULL DEFAULT '',
-	objectID INT(10) NOT NULL DEFAULT 0,
-	deleteTime INT(10) NOT NULL DEFAULT 0,
-	KEY objectType (objectType)
 );
 
 DROP TABLE IF EXISTS wcf1_core_object;
@@ -568,6 +568,18 @@ CREATE TABLE wcf1_template_group (
 	templateGroupFolderName VARCHAR(255) NOT NULL DEFAULT ''
 );
 
+DROP TABLE IF EXISTS wcf1_template_listener;
+CREATE TABLE wcf1_template_listener (
+	listenerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10) NOT NULL,
+	name VARCHAR(80) NOT NULL DEFAULT '',
+	environment ENUM('user','admin') NOT NULL DEFAULT 'user',
+	templateName VARCHAR(80) NOT NULL DEFAULT '',
+	eventName VARCHAR(50) NOT NULL DEFAULT '',
+	templateCode TEXT NOT NULL,
+	KEY templateName (environment, templateName)
+);
+
 DROP TABLE IF EXISTS wcf1_user;
 CREATE TABLE wcf1_user (
 	userID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -674,6 +686,15 @@ CREATE TABLE wcf1_user_option_value (
 	userID INT(10) NOT NULL PRIMARY KEY
 );
 
+DROP TABLE IF EXISTS wcf1_user_storage;
+CREATE TABLE wcf1_user_storage (
+	userID INT(10) NOT NULL,
+	field VARCHAR(80) NOT NULL DEFAULT '',
+	fieldValue TEXT,
+	packageID INT(10),
+	UNIQUE KEY userStorageData (userID, field, packageID)
+);
+
 DROP TABLE IF EXISTS wcf1_user_to_group;
 CREATE TABLE wcf1_user_to_group (
 	userID INT(10) NOT NULL,
@@ -686,27 +707,6 @@ CREATE TABLE wcf1_user_to_language (
 	userID INT(10) NOT NULL,
 	languageID INT(10) NOT NULL,
 	UNIQUE KEY userID (userID, languageID)
-);
-
-DROP TABLE IF EXISTS wcf1_template_listener;
-CREATE TABLE wcf1_template_listener (
-	listenerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	packageID INT(10) NOT NULL,
-	name VARCHAR(80) NOT NULL DEFAULT '',
-	environment ENUM('user','admin') NOT NULL DEFAULT 'user',
-	templateName VARCHAR(80) NOT NULL DEFAULT '',
-	eventName VARCHAR(50) NOT NULL DEFAULT '',
-	templateCode TEXT NOT NULL,
-	KEY templateName (environment, templateName)
-);
-
-DROP TABLE IF EXISTS wcf1_user_storage;
-CREATE TABLE wcf1_user_storage (
-	userID INT(10) NOT NULL,
-	field VARCHAR(80) NOT NULL DEFAULT '',
-	fieldValue TEXT,
-	packageID INT(10),
-	UNIQUE KEY userStorageData (userID, field, packageID)
 );
 
 /**** foreign keys ****/
