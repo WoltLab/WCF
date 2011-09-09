@@ -197,7 +197,7 @@ class CronjobScheduler extends SingletonFactory {
 	 * Loads the cached data for cronjob execution.
 	 */
 	protected function loadCache() {
-		$cacheName = 'cronjob-'.PACKAGE_ID;
+		$cacheName = 'cronjobs-'.PACKAGE_ID;
 		CacheHandler::getInstance()->addResource(
 			$cacheName,
 			WCF_DIR.'cache/cache.'.$cacheName.'.php',
@@ -210,6 +210,6 @@ class CronjobScheduler extends SingletonFactory {
 	 * Clears the cronjob data cache.
 	 */
 	public static function clearCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.cronjob-'.PACKAGE_ID.'.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.cronjobs-'.PACKAGE_ID.'.php');
 	}
 }

@@ -58,7 +58,7 @@ class CronjobListPage extends SortablePage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'cronjob' => $this->objectList->getObjects()
+			'cronjobs' => $this->objectList->getObjects()
 		));
 	}
 	

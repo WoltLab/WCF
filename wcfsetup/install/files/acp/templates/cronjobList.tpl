@@ -75,7 +75,7 @@
 			</thead>
 			
 			<tbody>
-			{foreach from=$cronjob item=cronjob}
+			{foreach from=$cronjobs item=cronjob}
 				<tr class="cronjobRow">
 					<td class="columnIcon">
 						{if $__wcf->session->getPermission('admin.system.cronjob.canEditCronjob')}
