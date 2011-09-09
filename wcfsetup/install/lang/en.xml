@@ -637,22 +637,22 @@
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Edit server]]></item>
 		<item name="wcf.acp.updateServer.edit.success"><![CDATA[Your changes have been successfully saved.]]></item>
 		<item name="wcf.acp.updateServer.enable"><![CDATA[Enable]]></item>
-		<item name="wcf.acp.updateServer.errorText"><![CDATA[Error messages]]></item>
-		<item name="wcf.acp.updateServer.htPassword"><![CDATA[Password]]></item>
-		<item name="wcf.acp.updateServer.htPassword.description"><![CDATA[Please enter a valid password (optional).]]></item>
-		<item name="wcf.acp.updateServer.htUsername"><![CDATA[Username]]></item>
-		<item name="wcf.acp.updateServer.htUsername.description"><![CDATA[Please enter a valid user name (optional).]]></item>
+		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Error messages]]></item>
 		<item name="wcf.acp.updateServer.lastErrorText"><![CDATA[The following error occured while trying to connect:]]></item>
 		<item name="wcf.acp.updateServer.list"><![CDATA[Available update-servers]]></item>
 		<item name="wcf.acp.updateServer.list.count"><![CDATA[{#$items} update server{if $items != 1}s{/if} available]]></item>
 		<item name="wcf.acp.updateServer.list.noneAvailable"><![CDATA[There are no update-servers available.]]></item>
+		<item name="wcf.acp.updateServer.loginPassword"><![CDATA[Password]]></item>
+		<item name="wcf.acp.updateServer.loginPassword.description"><![CDATA[Please enter a valid password (optional).]]></item>
+		<item name="wcf.acp.updateServer.loginUsername"><![CDATA[Username]]></item>
+		<item name="wcf.acp.updateServer.loginUsername.description"><![CDATA[Please enter a valid user name (optional).]]></item>
 		<item name="wcf.acp.updateServer.packageUpdateServerID"><![CDATA[Server ID]]></item>
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Address]]></item>
 		<item name="wcf.acp.updateServer.serverURL.description"><![CDATA[Please enter the URL to a package server.]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.notValid"><![CDATA[The entered address is invalid.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
-		<item name="wcf.acp.updateServer.timestamp"><![CDATA[Last access]]></item>
+		<item name="wcf.acp.updateServer.lastUpdateTime"><![CDATA[Last access]]></item>
 	</category>
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Add new user]]></item>
