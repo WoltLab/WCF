@@ -133,10 +133,10 @@ class DateUtil {
 	/**
 	 * Returns a formatted date.
 	 * 
-	 * @param	DateTime		$time
-	 * @param	string			$format
-	 * @param	Language		$language
-	 * @param	User			$user
+	 * @param	\DateTime			$time
+	 * @param	string				$format
+	 * @param	wcf\data\language\Language	$language
+	 * @param	wcf\data\user\User		$user
 	 */
 	public static function format(\DateTime $time = null, $format = null, Language $language = null, User $user = null) {
 		// get default values
@@ -160,9 +160,9 @@ class DateUtil {
 	/**
 	 * Returns a localized date output.
 	 * 
-	 * @param	string		$date
-	 * @param	string		$format
-	 * @param 	Language	$language
+	 * @param	string				$date
+	 * @param	string				$format
+	 * @param 	wcf\data\language\Language	$language
 	 */
 	public static function localizeDate($date, $format, Language $language) {
 		if ($language->languageCode != 'en') {
@@ -236,7 +236,7 @@ class DateUtil {
 	 * Creates a DateTime object with the given unix timestamp.
 	 * 
 	 * @param	integer		$timestamp
-	 * @return	DateTime
+	 * @return	\DateTime
 	 */
 	public static function getDateTimeByTimestamp($timestamp) {
 		return new \DateTime('@'.$timestamp);
