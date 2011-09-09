@@ -81,39 +81,41 @@ class SystemException extends \Exception implements IPrintableException {
 <html>
 <head>
 <title>Fatal error: <?php echo htmlspecialchars($this->getMessage()); ?></title>
+
 <style type="text/css">
-body {
-	font-family: Verdana, Helvetica, sans-serif;
-	font-size: 0.8em;
-}
-div {
-	border: 1px outset lightgrey;
-	padding: 3px;
-	background-color: lightgrey;
-}
-
-div div {
-	border: 1px inset lightgrey;
-	padding: 4px;
-}
-
-h1 {
-	background-color: #154268;
-	padding: 4px;
-	color: #fff;
-	margin: 0 0 3px 0;
-	font-size: 1.15em;
-}
-h2 {
-	font-size: 1.1em;
-	margin-bottom: 0;
-}
-
-pre, p {
-	margin: 0;
-}
+	body {
+		font-family: Verdana, Helvetica, sans-serif;
+		font-size: 0.8em;
+	}
+	div {
+		border: 1px outset lightgrey;
+		padding: 3px;
+		background-color: lightgrey;
+	}
+	
+	div div {
+		border: 1px inset lightgrey;
+		padding: 4px;
+	}
+	
+	h1 {
+		background-color: #154268;
+		padding: 4px;
+		color: #fff;
+		margin: 0 0 3px 0;
+		font-size: 1.15em;
+	}
+	h2 {
+		font-size: 1.1em;
+		margin-bottom: 0;
+	}
+	
+	pre, p {
+		margin: 0;
+	}
 </style>
 </head>
+
 <body>
 	<div>
 		<h1>Fatal error: <?php echo htmlspecialchars($this->getMessage()); ?></h1>
@@ -714,7 +716,7 @@ if (isset($_GET['showImage'])) {
 	exit;
 }
 
-// check whether setup files already unzipped
+// check whether setup files are already unzipped
 if (!file_exists(TMP_DIR . 'install/files/lib/system/WCFSetup.class.php')) {
 	// try to unzip all setup files into temp folder
 	$tar = new Tar(SETUP_FILE);
