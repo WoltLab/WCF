@@ -11,7 +11,7 @@
 
 <form method="post" action="install.php">
 	<div>
-		<textarea rows="20" cols="40" readonly="readonly">{$license}</textarea>
+		<textarea rows="20" cols="40" readonly="readonly" id="license">{$license}</textarea>
 		<p><label{if $missingAcception|isset} class="errorField"{/if}><input type="checkbox" name="accepted" value="1" /> {lang}wcf.global.license.accept.description{/lang}</label></p>
 	</div>
 	
@@ -24,5 +24,11 @@
 		<input type="hidden" name="dev" value="{@$developerMode}" />
 	</div>
 </form>
+
+<script type="text/javascript">
+	//<![CDATA[
+	document.getElementById('license').focus();
+	//]]>
+</script>
 
 {include file='footer'}
