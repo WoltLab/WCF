@@ -1049,7 +1049,7 @@
 			<!-- logo -->
 			<div id="logo" class="logo">
 				<h1>Installation</h1>
-				<!-- ToDo: include the correct header image <img src="{@RELATIVE_WCF_DIR}acp/images/wcfLogoWhite.svg" width="300" height="58" alt="Product-logo" title="Installation" />-->
+				{* ToDo: include the correct header image <img src="{@RELATIVE_WCF_DIR}acp/images/wcfLogoWhite.svg" width="300" height="58" alt="Product-logo" title="Installation" /> *}
 				
 				<!-- no search area -->
 			</div>
@@ -1061,7 +1061,7 @@
 			<nav class="headerNavigation">
 				<div>
 					<ul>
-						<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}" class="balloonTooltip"><img src="{@RELATIVE_WCF_DIR}icon/toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+						{* TODO: include the correct image <li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}" class="balloonTooltip"><img src="{@RELATIVE_WCF_DIR}icon/toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li> *}
 					</ul>
 				</div>
 			</nav>
@@ -1078,9 +1078,9 @@
 			<section id="content" class="content">
 				
 				<header class="mainHeading setup">
-					{* ToDo: Installation Icon *}
+					{* ToDo: Installation Icon
 					<img src="{@RELATIVE_WCF_DIR}icon/cache1.svg" alt="" />
-					{* /Installation Icon *}
+					/Installation Icon *}
 					<hgroup>
 						<h1>{lang}wcf.global.title{/lang}</h1>
 						<h2>{lang}wcf.global.title.subtitle{/lang}</h2>
