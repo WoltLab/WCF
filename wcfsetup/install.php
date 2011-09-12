@@ -19,10 +19,12 @@ set_error_handler('handleError', E_ALL);
 // define list of needed file
 $neededFilesPattern = array(
 	'!^setup/.*!',
+	'!^install/files/acp/images/wcfLogo.*!',
+	'!^install/files/acp/style/.*!',
 	'!^install/files/lib/data/.*!',
+	'!^install/files/icon/.*!',
 	'!^install/files/lib/system/.*!',
 	'!^install/files/lib/util/.*!',
-	'!^install/files/acp/images/setup.*!',
 	'!^install/lang/.*!',
 	'!^install/packages/.*!');
 	
@@ -706,14 +708,48 @@ define('TMP_FILE_PREFIX', $prefix);
 // try to find the temp folder
 define('TMP_DIR', BasicFileUtil::getTempFolder());
 
-// show image from temp folder
-if (isset($_GET['showImage'])) {
-	if (preg_match('~[\w\-]+\.(jpg|png)~', $_GET['showImage'], $match)) {
-		if ($match[1] == 'jpg') header('Content-Type: image/jpg');
-		else header('Content-Type: image/png');
-		readfile(TMP_DIR . 'install/files/acp/images/' . $_GET['showImage']);
+/**
+ * Reads a file resource from temp folder.
+ * 
+ * @param	string		$key
+ * @param	string		$directory
+ */
+function readFileResource($key, $directory) {
+	if (preg_match('~[\w\-]+\.(css|jpg|png|svg)~', $_GET[$key], $match)) {
+		switch ($match[1]) {
+			case 'css':
+				header('Content-Type: text/css');
+			break;
+			
+			case 'jpg':
+				header('Content-Type: image/jpg');
+			break;
+			
+			case 'png':
+				header('Content-Type: image/png');
+			break;
+			
+			case 'svg':
+				header('Content-Type: image/svg+xml');
+			break;
+		}
+		
+		readfile($directory . $_GET[$key]);
 	}
 	exit;
+}
+
+// show image from temp folder
+if (isset($_GET['showImage'])) {
+	readFileResource('showImage', TMP_DIR . 'install/files/acp/images/');
+}
+// show icon from temp folder
+if (isset($_GET['showIcon'])) {
+	readFileResource('showIcon', TMP_DIR . 'install/files/icon/');
+}
+// show css from temp folder
+if (isset($_GET['showCSS'])) {
+	readFileResource('showCSS', TMP_DIR . 'install/files/acp/style/');
 }
 
 // check whether setup files are already unzipped
