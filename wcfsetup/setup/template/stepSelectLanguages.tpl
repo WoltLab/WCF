@@ -22,7 +22,7 @@
 		
 	</fieldset>
 	
-	<div class="formSumbit">
+	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
 		<input type="hidden" name="send" value="1" />
 		<input type="hidden" name="step" value="{@$nextStep}" />

@@ -35,22 +35,22 @@
 		
 		<dl>
 			<dt><label for="dbUser">{lang}wcf.global.configureDB.user{/lang}</label></dt>
-			<dd><input type="text" id="dbUser" name="dbUser" value="{$dbUser}" class="long" /></dd>
+			<dd><input type="text" id="dbUser" name="dbUser" value="{$dbUser}" class="medium" /></dd>
 		</dl>
 		
 		<dl>
 			<dt><label for="dbPassword">{lang}wcf.global.configureDB.password{/lang}</label></dt>
-			<dd><input type="password" id="dbPassword" name="dbPassword" value="{$dbPassword}" class="long" /></dd>
+			<dd><input type="password" id="dbPassword" name="dbPassword" value="{$dbPassword}" class="medium" /></dd>
 		</dl>
 		
 		<dl>
 			<dt><label for="dbName">{lang}wcf.global.configureDB.database{/lang}</label></dt>
-			<dd><input type="text" id="dbName" name="dbName" value="{$dbName}" class="long"  /></dd>
+			<dd><input type="text" id="dbName" name="dbName" value="{$dbName}" class="medium"  /></dd>
 		</dl>
 		
 		<dl>
 			<dt><label for="dbNumber">{lang}wcf.global.configureDB.number{/lang}</label></dt>
-			<dd><input type="text" id="dbNumber" name="dbNumber" value="{$dbNumber}" class="long" /></dd>
+			<dd><input type="text" id="dbNumber" name="dbNumber" value="{$dbNumber}" class="short" /></dd>
 		</dl>
 		
 		{if $conflictedTables|isset}

@@ -13,7 +13,7 @@
 			<dl>
 				<dt>{lang}wcf.global.systemRequirements.element.required{/lang} 5.3.0</dt>
 				<dd>
-					<span class="{if !$system.phpVersion.result}badgeWarning{else}badgeSuccess{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} {$system.phpVersion.value}</span>
+					<span class="badge {if !$system.phpVersion.result}badgeWarning{else}badgeSuccess{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} {$system.phpVersion.value}</span>
 					{if !$system.phpVersion.result}<small>{lang}wcf.global.systemRequirements.php.description{/lang}</small>{/if}
 				</dd>
 			</dl>
@@ -24,7 +24,7 @@
 			<dl>
 				<dt>{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.active{/lang}</dt>
 				<dd>
-					<span class="{if !$system.sql.result}badgeWarning{else}badgeSuccess{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} 
+					<span class="badge {if !$system.sql.result}badgeWarning{else}badgeSuccess{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} 
 					{if !$system.sql.result}{lang}wcf.global.systemRequirements.sql.notFound{/lang}{else}
 						{implode from=$system.sql.value item=$sqlType glue=', '}{lang}wcf.global.configureDB.class.{@$sqlType}{/lang}{/implode}
 					{/if}</span>

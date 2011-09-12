@@ -14,7 +14,6 @@
 		<input type="submit" value="{lang}wcf.global.welcome.language.change{/lang}" />
 		<input type="hidden" name="step" value="selectSetupLanguage" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
-		
 	</fieldset>
 </form>
 
