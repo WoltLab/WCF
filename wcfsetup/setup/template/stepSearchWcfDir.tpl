@@ -18,11 +18,11 @@
 		<legend>{lang}wcf.global.wcfDir.dir{/lang}</legend>
 		
 		<dl>
-			<dt><label for="wcfDir">{lang}wcf.global.wcfDir.dir.description{/lang}</label></dt>
+			<dt><label for="wcfDir">{lang}wcf.global.wcfDir.dir{/lang}</label></dt>
 			<dd><input type="text" id="wcfDir" name="wcfDir" value="{$wcfDir}" class="long" /></dd>
 		</dl>
 		<dl>
-			<dt>{lang}wcf.global.wcfDir.url.description{/lang}</dt>
+			<dt>{lang}wcf.global.wcfDir.url{/lang}</dt>
 			<dd><input type="text" id="wcfUrl" name="wcfUrl" value="" readonly="readonly" class="long" /></dd>
 			<small>{lang}wcf.global.wcfDir.url.description{/lang}</small>
 		</dl>
