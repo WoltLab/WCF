@@ -17,8 +17,10 @@
 			
 			<!-- logo -->
 			<div id="logo" class="logo">
-				<h1>Installation</h1>
-				<img src="install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage=wcfLogoWhite.svg" width="300" height="58" alt="Product-logo" title="Installation" />
+				<div><!-- ToDo: This is just a little trick to compensate the missing link here, find a better solution -->
+					<h1>Installation</h1><!-- ToDo: Use a proper text and language variable -->
+					<img src="install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage=wcfLogoWhite.svg" width="300" height="58" alt="Product-logo" title="Installation" />
+				</div>
 				
 				<!-- no search area -->
 			</div>
@@ -47,9 +49,7 @@
 			<section id="content" class="content">
 				
 				<header class="mainHeading setup">
-					{* ToDo: Installation Icon *}
-					<img src="install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon=cache1.svg" alt="" />
-					{* /Installation Icon *}
+					<img src="install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon=installation1.svg" alt="" />
 					<hgroup>
 						<h1>{lang}wcf.global.title{/lang}</h1>
 						<h2>{lang}wcf.global.title.subtitle{/lang}</h2>
@@ -57,3 +57,4 @@
 						<p><progress id="packageInstallationProgress" value="0" max="100" style="width: 300px;">0%</progress></p>
 					</hgroup>
 				</header>
+				

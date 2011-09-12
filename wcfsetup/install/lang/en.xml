@@ -271,10 +271,7 @@
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.cache.general.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcache"><![CDATA[Memcache]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcache.description"><![CDATA[Memcache stores data in the memory that is often accessed. This may reduce the database load dramatically. Read more about the memcache on the following site:
-<ul>
-	<li><a href="http://memcached.org/">memcached.org</a></li>
-</ul>]]></item>
+		<item name="wcf.acp.option.category.general.cache.memcache.description"><![CDATA[Memcache stores data in the memory that is often accessed. This may reduce the database load dramatically. Read more about the memcache on the following site: <a href="http://memcached.org/" class="externalURL">memcached.org</a>.]]></item>
 		<item name="wcf.acp.option.category.general.date"><![CDATA[Date and time]]></item>
 		<item name="wcf.acp.option.category.general.date.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.category.general.description"><![CDATA[]]></item>
@@ -374,7 +371,7 @@
 		<item name="wcf.acp.option.mail_use_formatted_address"><![CDATA[Use formatted e-mail addresses]]></item>
 		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Sender's and receiver's addresses are formatted in &quot;Name &lt;email@domain.tld&gt;&quot;. This option is not supported by all mail servers and should be turned off in case of any problems.]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Enable master password]]></item>
-		<item name="wcf.acp.option.module_master_password.description"><![CDATA[Pages and forms within the admin panel that are relevant to security can be protected with an additional master password.]]></item>
+		<item name="wcf.acp.option.module_master_password.description"><![CDATA[Pages and forms in the admin control panel that are relevant to security can be protected with an additional master password.]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
 		<item name="wcf.acp.option.proxy_server_http.description"><![CDATA[Proxy-Server for HTTP connections]]></item>
 		<item name="wcf.acp.option.session_timeout"><![CDATA[Session timeout]]></item>
@@ -416,7 +413,7 @@
 		<item name="wcf.acp.package.install.error.excludingPackages.excludingPackage"><![CDATA[{$excludingPackage.packageName}{if $excludingPackage.instanceNo > 1} (#{@$excludingPackage.instanceNo}){/if} in version {$excludingPackage.packageVersion}]]></item>
 		<item name="wcf.acp.package.install.error.excludingPackages.warning"><![CDATA[{if $excludingPackages|count == 1}Following package is{else}Following packages are{/if} incompatible with package &quot;{$packageName}&quot; in version {$packageVersion}. If you proceed installation the {if $excludingPackages|count == 1}package{else}packages{/if} probably won't work anymore.]]></item>
 
-		<item name="wcf.acp.package.install.packageName"><![CDATA[<span{if $package.open == 0} style="color: green"{else}{if !$package.file|isset} style="color: red"{/if}{/if}>{$package.name} ({if $package.open == 0}Installed{else}{if $package.file|isset}is located within this Package{else}Not available{/if}{/if})</span>]]></item>
+		<item name="wcf.acp.package.install.packageName"><![CDATA[<span{if $package.open == 0} style="color: green"{else}{if !$package.file|isset} style="color: red"{/if}{/if}>{$package.name} ({if $package.open == 0}Installed{else}{if $package.file|isset}is located in this package{else}Not available{/if}{/if})</span>]]></item>
 		<item name="wcf.acp.package.install.rollback.sure"><![CDATA[Are you sure you would like to cancel the installation of this package?]]></item>
 		<item name="wcf.acp.package.install.updatableInstances"><![CDATA[The following packages can be updated with this package]]></item>
 		<item name="wcf.acp.package.install.updatableInstances.description"><![CDATA[Select one of the following packages, in order to update its version. If you would like to install the package again, please click on &quot;{lang}wcf.global.button.next{/lang}&quot;.]]></item>
@@ -426,8 +423,8 @@
 		<item name="wcf.acp.package.installation.file.error.unknown"><![CDATA[While unpacking the files of this package the following error occured:]]></item>
 		<item name="wcf.acp.package.installation.file.error.untarFailed"><![CDATA[The following files could not be unpacked successfully. Please check if the destination folder is writable.]]></item>
 		<item name="wcf.acp.package.installation.tables.conflict"><![CDATA[Conflicting Tables]]></item>
-		<item name="wcf.acp.package.installation.tables.dontAskAgainKeep"><![CDATA[Do not overwrite these tables and do not ask me again for this installation.]]></item>
-		<item name="wcf.acp.package.installation.tables.dontAskAgainOverride"><![CDATA[Overwrite the existing tables and do not ask me again for this installation.]]></item>
+		<item name="wcf.acp.package.installation.tables.dontAskAgainKeep"><![CDATA[Do not overwrite these tables and do not ask me again during this installation.]]></item>
+		<item name="wcf.acp.package.installation.tables.dontAskAgainOverride"><![CDATA[Overwrite the existing tables and do not ask me again during this installation.]]></item>
 		<item name="wcf.acp.package.installation.tables.solution"><![CDATA[Required changes]]></item>
 		<item name="wcf.acp.package.installation.tables.tableName"><![CDATA[Tables affected]]></item>
 		<item name="wcf.acp.package.installation.tables.warning"><![CDATA[Existing database tables conflict with the tables required to be installed by this package. Please choose whether to overwrite these tables.]]></item>
@@ -443,16 +440,17 @@
 		<item name="wcf.acp.package.list.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.optionals"><![CDATA[Install optional packages]]></item>
 		<item name="wcf.acp.package.optionals.description"><![CDATA[The selected package brings the following options. Please select those you would like to install.]]></item>
-		<item name="wcf.acp.package.optionals.installed"><![CDATA[ (This Package is already installed.)]]></item>
-		<item name="wcf.acp.package.optionals.openRequirements"><![CDATA[ (The requirements of this Package have not been fulfilled.)]]></item>
+		<item name="wcf.acp.package.optionals.installed"><![CDATA[ (This package is already installed.)]]></item>
+		<item name="wcf.acp.package.optionals.openRequirements"><![CDATA[ (The requirements of this package have not been fulfilled.)]]></item>
 		<item name="wcf.acp.package.packageDir"><![CDATA[Installation folder]]></item>
 		<item name="wcf.acp.package.packageDir.description"><![CDATA[]]></item>
 		<item name="wcf.acp.package.packageDir.error.alreadyInstalled"><![CDATA[Another application is already installed in this folder.]]></item>
 		<item name="wcf.acp.package.packageDir.error.invalid"><![CDATA[This folder is not valid.]]></item>
 		<item name="wcf.acp.package.packageDir.error.notWritable"><![CDATA[This folder is not writable.]]></item>
 		<item name="wcf.acp.package.packageDir.error.wcfDirLocked"><![CDATA[This folder is already in use by the WoltLab Community Framework. Please choose a different location.]]></item>
-		<item name="wcf.acp.package.packageDir.input"><![CDATA[Please enter the installation folder name here.]]></item>
-		<item name="wcf.acp.package.packageDir.url"><![CDATA[This application is accessible through the following URL after installation in this folder:]]></item>
+		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installation folder]]></item>
+		<item name="wcf.acp.package.packageDir.url"><![CDATA[Installation folder adress (URL)]]></item>
+		<item name="wcf.acp.package.packageDir.url"><![CDATA[After installation into the given installation folder, the application will be accessible through this adress (URL).]]></item>
 		<item name="wcf.acp.package.requirements"><![CDATA[Select dependencies]]></item>
 		<item name="wcf.acp.package.requirements.description"><![CDATA[The current package requires another package that is already installed several times. Please choose the instance that is required.]]></item>
 		<item name="wcf.acp.package.rollback"><![CDATA[Rollback package installation]]></item>
@@ -461,7 +459,7 @@
 		<item name="wcf.acp.package.startInstall.error.noValidInstall"><![CDATA[The chosen package has no valid installation routine.]]></item>
 		<item name="wcf.acp.package.startInstall.error.noValidPackage"><![CDATA[The archive you have given is not a valid package.]]></item>
 		<item name="wcf.acp.package.startInstall.error.noValidUpdate"><![CDATA[The package &quot;{$package->getName()}&quot; could not be updated with the supplied archive.]]></item>
-		<item name="wcf.acp.package.startInstall.error.notFound"><![CDATA[No files were found within the specified directory.]]></item>
+		<item name="wcf.acp.package.startInstall.error.notFound"><![CDATA[No files were found in the specified directory.]]></item>
 		<item name="wcf.acp.package.startInstall.error.uniqueAlreadyInstalled"><![CDATA[The chosen package is already installed. Packages can not be installed more than one time.]]></item>
 		<item name="wcf.acp.package.startInstall.error.uploadFailed"><![CDATA[The upload of the chosen archive has failed.]]></item>
 		<item name="wcf.acp.package.startInstall.source"><![CDATA[Select package source]]></item>
@@ -533,12 +531,12 @@
 		<item name="wcf.acp.package.step.update.packageInstallationPlugins"><![CDATA[Updating package plugins ...]]></item>
 		<item name="wcf.acp.package.step.update.parent"><![CDATA[Parent package allocation is being done ...]]></item>
 		<item name="wcf.acp.package.step.update.requirements"><![CDATA[Checking dependencies ...]]></item>
-		<item name="wcf.acp.package.templatePatch.install.failed"><![CDATA[The patch that this package is trying to apply has failed because this patch is not compliant to its target file. Therefore this package cannot be installed. Please click the &quot;{lang}wcf.acp.package.install.cancel{/lang}&quot; button.]]></item>
+		<item name="wcf.acp.package.templatePatch.install.failed"><![CDATA[The patch that this package is trying to apply has failed, because this patch is not compliant to its target file. Therefore this package cannot be installed. Please click the &quot;{lang}wcf.acp.package.install.cancel{/lang}&quot; button.]]></item>
 		<item name="wcf.acp.package.templatePatch.repatch.failed"><![CDATA[Re-patching of the following templates has failed:<br />{foreach from=$failures item=$failure}{$failure.templateName} (Originally patched by: {$failure.packageName})<br />{/foreach}The original patch package that was previously applied may no longer function. You should still continue with this update by clicking on the &quot;{lang}wcf.global.button.next{/lang}&quot; button.]]></item>
-		<item name="wcf.acp.package.templatePatch.uninstall.failed"><![CDATA[The patch that this package is trying to remove has failed because its target file has been externally amended. Therefore this package cannot be removed. Please click the &quot;{lang}wcf.acp.package.uninstall.cancel{/lang}&quot; button.]]></item>
-		<item name="wcf.acp.package.uninstall"><![CDATA[Package removal]]></item>
+		<item name="wcf.acp.package.templatePatch.uninstall.failed"><![CDATA[The patch that this package is trying to remove has failed, because its target file has been externally amended. Therefore this package cannot be removed. Please click the &quot;{lang}wcf.acp.package.uninstall.cancel{/lang}&quot; button.]]></item>
+		<item name="wcf.acp.package.uninstall"><![CDATA[Package-removal]]></item>
 		<item name="wcf.acp.package.uninstall.cancel"><![CDATA[Cancel package-removal]]></item>
-		<item name="wcf.acp.package.uninstall.dependentPackages.error"><![CDATA[It is not possible to uninstall these packages, because there is at least one dependent package, that cannot be uninstalled.]]></item>
+		<item name="wcf.acp.package.uninstall.dependentPackages.error"><![CDATA[It's not possible to uninstall these packages, because there is at least one dependent package, that cannot be uninstalled.]]></item>
 		<item name="wcf.acp.package.uninstall.dependentPackages.warning"><![CDATA[Upon final confirmation {if $dependentPackages|count == 1}this package{else}these packages{/if} will be removed without any further promting.]]></item>
 		<item name="wcf.acp.package.update"><![CDATA[Package update]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Date of update]]></item>
@@ -629,7 +627,7 @@
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add server]]></item>
 		<item name="wcf.acp.updateServer.add.success"><![CDATA[The server has been successfully added.]]></item>
-		<item name="wcf.acp.updateServer.data"><![CDATA[Server data]]></item>
+		<item name="wcf.acp.updateServer.data"><![CDATA[Server-data]]></item>
 		<item name="wcf.acp.updateServer.delete"><![CDATA[Delete server]]></item>
 		<item name="wcf.acp.updateServer.delete.success"><![CDATA[The server has been successfully deleted.]]></item>
 		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Do you really want to delete this server?]]></item>
@@ -648,8 +646,8 @@
 		<item name="wcf.acp.updateServer.loginUsername.description"><![CDATA[Please enter a valid user name (optional).]]></item>
 		<item name="wcf.acp.updateServer.packageUpdateServerID"><![CDATA[Server ID]]></item>
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Packages]]></item>
-		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Address]]></item>
-		<item name="wcf.acp.updateServer.serverURL.description"><![CDATA[Please enter the URL to a package server.]]></item>
+		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Address (URL)]]></item>
+		<item name="wcf.acp.updateServer.serverURL.description"><![CDATA[Please enter a package-server adress (URL).]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.notValid"><![CDATA[The entered address is invalid.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.updateServer.lastUpdateTime"><![CDATA[Last access]]></item>
@@ -690,7 +688,7 @@
 		<item name="wcf.acp.user.massProcessing.action"><![CDATA[Action]]></item>
 		<item name="wcf.acp.user.massProcessing.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.user.massProcessing.success"><![CDATA[The chosen action has been executed successfully on {#$affectedUsers} users.]]></item>
-		<item name="wcf.acp.user.massProcessing.warning"><![CDATA[The bulk processor will perform the following tasks <strong>without additional security notification</strong>, on all users matching the set conditions. Bulk processing can be very performance intensive, so it should only be executed when the forum is offline. To have a correct display of your content you should update the counters. The processing can not be reversed, so please be attentive when using this function.]]></item>
+		<item name="wcf.acp.user.massProcessing.warning"><![CDATA[The bulk processor will perform the following tasks <strong>without additional security notification</strong>, on all users matching the set conditions. Bulk processing can be very performance intensive, so it should only be executed while the forum is set offline. To have a correct display of your content you should update the counters. The processing can not be reversed, so please be attentive when using this function.]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Search for users]]></item>
 		<item name="wcf.acp.user.search.conditions"><![CDATA[Search criteria]]></item>
 		<item name="wcf.acp.user.search.conditions.general"><![CDATA[General search criteria]]></item>
@@ -885,9 +883,9 @@
 		<item name="wcf.page.pageNo"><![CDATA[Page {#$pageNo}]]></item>
 	</category>
 	<category name="wcf.user">
-		<item name="wcf.user.confirmEmail"><![CDATA[Confirm E-mail Address]]></item>
+		<item name="wcf.user.confirmEmail"><![CDATA[Confirm e-mail address]]></item>
 		<item name="wcf.user.confirmPassword"><![CDATA[Confirm password]]></item>
-		<item name="wcf.user.email"><![CDATA[E-mail Address]]></item>
+		<item name="wcf.user.email"><![CDATA[E-mail address]]></item>
 		<item name="wcf.user.error.confirmEmail.notEqual"><![CDATA[The given e-mail address and confirmation e-mail address are not identical.]]></item>
 		<item name="wcf.user.error.confirmPassword.notEqual"><![CDATA[The given password and confirmation password are not identical.]]></item>
 		<item name="wcf.user.error.email.notUnique"><![CDATA[The e-mail address you have entered has already been used by another user.]]></item>
@@ -897,14 +895,14 @@
 		<item name="wcf.user.error.username.notUnique"><![CDATA[The user name you have entered is already in use.]]></item>
 		<item name="wcf.user.error.username.notValid"><![CDATA[The username you have entered is not valid.]]></item>
 		<item name="wcf.user.language"><![CDATA[Language]]></item>
-		<item name="wcf.user.language.description"><![CDATA[Please select the user interface language to be shown in!]]></item>
+		<item name="wcf.user.language.description"><![CDATA[Please select the user interface-language to be used.]]></item>
 		<item name="wcf.user.logout"><![CDATA[Logout]]></item>
 		<item name="wcf.user.password"><![CDATA[Password]]></item>
 		<item name="wcf.user.registrationDate"><![CDATA[Date of registration]]></item>
 		<item name="wcf.user.userID"><![CDATA[User ID]]></item>
 		<item name="wcf.user.username"><![CDATA[Username]]></item>
 		<item name="wcf.user.visibleLanguages"><![CDATA[Show content in the following languages]]></item>
-		<item name="wcf.user.visibleLanguages.description"><![CDATA[Select the content languages that should be shown here.]]></item>
+		<item name="wcf.user.visibleLanguages.description"><![CDATA[Select the content-languages that should be used.]]></item>
 	</category>
 	<category name="wcf.user.option">
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[The information you have entered is not valid.]]></item>

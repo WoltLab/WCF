@@ -50,7 +50,7 @@
 		<item name="wcf.global.language.sr"><![CDATA[Serbian]]></item>
 		<item name="wcf.global.language.sk"><![CDATA[Slovak]]></item>
 		<item name="wcf.global.language.el"><![CDATA[Greek]]></item>
-		<item name="wcf.global.welcome.language.description"><![CDATA[The assistants language is currently set to English.]]></item>
+		<item name="wcf.global.welcome.language.description"><![CDATA[The assistants language is currently set to ]]></item>
 		<item name="wcf.global.welcome.language.change"><![CDATA[Change language]]></item>
 		<item name="wcf.global.license"><![CDATA[License Agreement]]></item>
 		<item name="wcf.global.license.description"><![CDATA[Please read the following License Agreement. Use the scrollbar to view the whole document.]]></item>
@@ -83,9 +83,9 @@
 		<item name="wcf.global.wcfDir"><![CDATA[Choose the installation folder]]></item>
 		<item name="wcf.global.wcfDir.description"><![CDATA[All files of <b>WoltLab Community Framework</b> will be extracted into the installation folder.]]></item>
 		<item name="wcf.global.wcfDir.foundDirectory"><![CDATA[The installation assistant has found a previous installation of <b>WoltLab Community Framework</b> in the "{$foundDirectory}" folder.<br />If you would like to install a new copy of the <b>WoltLab Community Framework</b>, then please enter an alternative installation folder.]]></item>
-		<item name="wcf.global.wcfDir.dir"><![CDATA[Installation folder]]></item>
-		<item name="wcf.global.wcfDir.dir.description"><![CDATA[Please enter the installation folder for <b>WoltLab Community Framework</b>.]]></item>
-		<item name="wcf.global.wcfDir.url.description"><![CDATA[After installation into the given folder you can access <b>WoltLab Community Framework</b> through the following URL:]]></item>
+		<item name="wcf.global.wcfDir.dir"><![CDATA[Installation-folder]]></item>
+		<item name="wcf.global.wcfDir.dir.description"><![CDATA[Installation-folder adress (URL)]]></item>
+		<item name="wcf.global.wcfDir.url.description"><![CDATA[After the installation into the given folder you will be able to access <b>WoltLab Community Framework</b> through this adress (URL).]]></item>
 		<item name="wcf.global.wcfDir.error.invalid"><![CDATA[The given folder is not valid.]]></item>
 		<item name="wcf.global.ftp"><![CDATA[FTP access information]]></item>
 		<item name="wcf.global.ftp.description"><![CDATA[With the PHP-SafeMode security option being enabled, WoltLab Community Framework can only be installed using FTP functionality. Please enter here the FTP Username and Password for this Server. The information given will not be saved and is only required for the installation of this Package. For this reason alone, further FTP Username and Password requests will be needed.]]></item>

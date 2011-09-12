@@ -52,7 +52,7 @@
 		<item name="wcf.global.language.sr"><![CDATA[Serbisch]]></item>
 		<item name="wcf.global.language.sk"><![CDATA[Slowakisch]]></item>
 		<item name="wcf.global.language.el"><![CDATA[Griechisch]]></item>
-		<item name="wcf.global.welcome.language.description"><![CDATA[Die Sprache dieses Assistenten ist zur Zeit Deutsch.]]></item>
+		<item name="wcf.global.welcome.language.description"><![CDATA[Die Sprache dieses Assistenten ist zur Zeit ]]></item>
 		<item name="wcf.global.welcome.language.change"><![CDATA[Sprache wechseln]]></item>
 		<item name="wcf.global.license"><![CDATA[Lizenzbestimmungen]]></item>
 		<item name="wcf.global.license.description"><![CDATA[Bitte lesen Sie die folgenden Lizenzbestimmungen. Verwenden Sie die Bildlaufleiste, um das gesamte Dokument anzuzeigen.]]></item>
@@ -88,7 +88,7 @@
 		<item name="wcf.global.wcfDir.foundDirectory"><![CDATA[Die Installation vermutet eine bereits vorhandene Installation von <b>WoltLab Community Framework</b> im Ordner "{$foundDirectory}".<br />Bitte überprüfen Sie diese Angabe bzw. definieren Sie ein anderes Installationsverzeichnis, wenn Sie eine neue Kopie von <b>WoltLab Community Framework</b> installieren möchten.]]></item>
 		<item name="wcf.global.wcfDir.dir"><![CDATA[Installationsverzeichnis]]></item>
 		<item name="wcf.global.wcfDir.dir.description"><![CDATA[Bitte geben Sie hier das Installationsverzeichnis für <b>WoltLab Community Framework</b> an.]]></item>
-		<item name="wcf.global.wcfDir.url.description"><![CDATA[Nach einer Installation in das angegebene Installationsverzeichnis ist <b>WoltLab Community Framework</b> über folgende Adresse (URL) erreichbar:]]></item>
+		<item name="wcf.global.wcfDir.url.description"><![CDATA[Nach der Installation in das angegebene Installationsverzeichnis ist <b>WoltLab Community Framework</b> über diese Adresse (URL) erreichbar.]]></item>
 		<item name="wcf.global.wcfDir.error.invalid"><![CDATA[Das eingegebene Verzeichnis ist ungültig.]]></item>
 		<item name="wcf.global.ftp"><![CDATA[Eingabe der Zugangsdaten für FTP]]></item>
 		<item name="wcf.global.ftp.description"><![CDATA[Da auf Ihrem Server der PHP-SafeMode aktiviert ist, muss WoltLab Community Framework über die FTP-Funktionen installiert werden. Bitte geben Sie Benutzernamen und Kennwort für den FTP-Zugang zu diesem Server an. Die Daten werden nicht gespeichert oder weitergeleitet, sondern lediglich zur Installation dieses Paketes verwendet. Möglicherweise müssen Sie diese FTP-Zugangsdaten während dieser Installation mehrfach angeben.]]></item>

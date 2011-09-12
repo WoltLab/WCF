@@ -11,7 +11,7 @@
 		
 		<label for="languageCode">{lang}wcf.global.welcome.language.description{/lang}</label>
 		{htmlOptions name="languageCode" id="languageCode" options=$availableLanguages selected=$languageCode disableEncoding=true}
-		<input type="submit" value="{lang}wcf.global.welcome.language.change{/lang}" />
+		<button type="submit" value="{lang}wcf.global.welcome.language.change{/lang}" class="badge badgeButton" />{lang}wcf.global.welcome.language.change{/lang}</button>
 		<input type="hidden" name="step" value="selectSetupLanguage" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
 	</fieldset>

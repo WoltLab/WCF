@@ -13,7 +13,7 @@
 			<dl>
 				<dt>{lang}wcf.global.systemRequirements.element.required{/lang} 5.3.0</dt>
 				<dd>
-					<span class="badge {if !$system.phpVersion.result}badgeWarning{else}badgeSuccess{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} {$system.phpVersion.value}</span>
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.phpVersion.result}badgeWarning{else}badgeSuccess{/if}">{$system.phpVersion.value}</span>
 					{if !$system.phpVersion.result}<small>{lang}wcf.global.systemRequirements.php.description{/lang}</small>{/if}
 				</dd>
 			</dl>
@@ -24,7 +24,7 @@
 			<dl>
 				<dt>{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.active{/lang}</dt>
 				<dd>
-					<span class="badge {if !$system.sql.result}badgeWarning{else}badgeSuccess{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} 
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.sql.result}badgeWarning{else}badgeSuccess{/if}">
 					{if !$system.sql.result}{lang}wcf.global.systemRequirements.sql.notFound{/lang}{else}
 						{implode from=$system.sql.value item=$sqlType glue=', '}{lang}wcf.global.configureDB.class.{@$sqlType}{/lang}{/implode}
 					{/if}</span>
@@ -38,7 +38,7 @@
 			<dl>
 				<dt>{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.active{/lang}</dt>
 				<dd>
-					<span class="badge {if !$system.mbString.result}badgeWarning{else}badgeSuccess{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} {if !$system.mbString.result}{lang}wcf.global.systemRequirements.notActive{/lang}{else}{lang}wcf.global.systemRequirements.active{/lang}{/if}</span>{if !$system.mbString.result}<small>{lang}wcf.global.systemRequirements.mbString.description{/lang}</small>{/if}
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.mbString.result}badgeWarning{else}badgeSuccess{/if}">{if !$system.mbString.result}{lang}wcf.global.systemRequirements.notActive{/lang}{else}{lang}wcf.global.systemRequirements.active{/lang}{/if}</span>{if !$system.mbString.result}<small>{lang}wcf.global.systemRequirements.mbString.description{/lang}</small>{/if}
 				</dd>
 			</dl>
 			
@@ -49,7 +49,7 @@
 			<dl>
 				<dt>{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.notActive{/lang}</dt>
 				<dd>
-					<span class="badge {if !$system.safeMode.result}badgeWarning{else}badgeSuccess{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} {if !$system.safeMode.result}{lang}wcf.global.systemRequirements.active{/lang}{else}{lang}wcf.global.systemRequirements.notActive{/lang}{/if}</span>
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.safeMode.result}badgeWarning{else}badgeSuccess{/if}">{if !$system.safeMode.result}{lang}wcf.global.systemRequirements.active{/lang}{else}{lang}wcf.global.systemRequirements.notActive{/lang}{/if}</span>
 					{if !$system.safeMode.result}<small>{lang}wcf.global.systemRequirements.safeMode.description{/lang}</small>{/if}
 				</dd>
 			</dl>
@@ -65,7 +65,7 @@
 			<dl>
 				<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang} > 0</dt>
 				<dd>
-					<span class="badge {if !$system.uploadMaxFilesize.result}badgeWarning{else}badgeSuccess{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} {$system.uploadMaxFilesize.value}</span>
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.uploadMaxFilesize.result}badgeWarning{else}badgeSuccess{/if}">{$system.uploadMaxFilesize.value}</span>
 					{if !$system.uploadMaxFilesize.result}<small>{lang}wcf.global.systemRequirements.uploadMaxFilesize.description{/lang}</small>{/if}
 				</dd>
 			</dl>
@@ -76,7 +76,7 @@
 			<dl>
 				<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang} 2.0.0</dt>
 				<dd>
-					<span class="badge {if !$system.gdLib.result}badgeWarning{else}badgeSuccess{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} {$system.gdLib.value}</span>
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.gdLib.result}badgeWarning{else}badgeSuccess{/if}">{$system.gdLib.value}</span>
 					{if !$system.gdLib.result}<small>{lang}wcf.global.systemRequirements.gdLib.description{/lang}</small>{/if}
 				</dd>
 			</dl>

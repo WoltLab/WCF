@@ -67,16 +67,13 @@ q:after {
 body {
 	font-family: 'Trebuchet MS', Arial, sans-serif;
 	font-size: 80%;
+	color: #666;
 	line-height: 1;
 	background-color: #29374a;
 }
 
 img {
 	vertical-align: middle !important;
-}
-
-p {
-	color: #666;
 }
 
 a {
@@ -191,7 +188,8 @@ header.pageHeader div#logo img {
 	left: 0;
 }
 
-header.pageHeader div#logo a {
+header.pageHeader div#logo > a,
+header.pageHeader div#logo > div {
 	text-align: right;
 	display: block;
 	height: 110px;
@@ -1540,7 +1538,7 @@ thead th:first-child {
 
 thead th:last-child {
 	/* rounded corners for the last table header cell to the left */
-	border-top-right-radius: 5px;	
+	border-top-right-radius: 5px;
 }
 
 thead th {
@@ -1619,12 +1617,12 @@ tbody tr:last-child {
 
 tbody tr:last-child td:first-child {
 	/* rounded corners for the last table cell to the left */
-	border-bottom-left-radius: 5px;	
+	border-bottom-left-radius: 5px;
 }
 
 tbody tr:last-child td:last-child {
 	/* rounded corners for the last table cell to the right */
-	border-bottom-right-radius: 5px;	
+	border-bottom-right-radius: 5px;
 }
 
 tbody td {
@@ -1671,7 +1669,7 @@ tbody tr .columnIcon img:not(.balloonTooltip):hover {
 }
 
 .menu ~ .border thead th:last-child {
-	border-top-right-radius: 0 !important;	
+	border-top-right-radius: 0 !important;
 }
 
 .menu ~ .border thead th:first-child,
@@ -1681,7 +1679,7 @@ tbody tr .columnIcon img:not(.balloonTooltip):hover {
 
 .menu ~ .border thead th:last-child,
 .boxTitle > table thead th:last-child {
-	border-top-right-radius: 0 !important;	
+	border-top-right-radius: 0 !important;
 }
 
 

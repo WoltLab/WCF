@@ -271,10 +271,7 @@
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.general.cache.general.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcache"><![CDATA[Memcache]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcache.description"><![CDATA[Memcache speichert häufig benötige Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. Lesen Sie mehr über dieses Thema auf der folgenden Seite:
-<ul>
-	<li><a href="http://memcached.org/">memcached.org</a></li>
-</ul>]]></item>
+		<item name="wcf.acp.option.category.general.cache.memcache.description"><![CDATA[Memcache speichert häufig benötige Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. Lesen Sie mehr über dieses Thema auf der folgenden Seite: <a href="http://memcached.org/" class="externalURL">memcached.org</a>.]]></item>
 		<item name="wcf.acp.option.category.general.date"><![CDATA[Datum &amp; Zeit]]></item>
 		<item name="wcf.acp.option.category.general.date.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.category.general.description"><![CDATA[]]></item>
@@ -450,8 +447,9 @@
 		<item name="wcf.acp.package.packageDir.error.invalid"><![CDATA[Das eingegebene Verzeichnis ist ungültig.]]></item>
 		<item name="wcf.acp.package.packageDir.error.notWritable"><![CDATA[Das angegebene Verzeichnis ist nicht beschreibbar.]]></item>
 		<item name="wcf.acp.package.packageDir.error.wcfDirLocked"><![CDATA[Das angegebene Verzeichnis wird bereits von WoltLab Community Framework beansprucht. Bitte wählen Sie ein anderes Verzeichnis.]]></item>
-		<item name="wcf.acp.package.packageDir.input"><![CDATA[Bitte geben Sie hier das Installationsverzeichnis an.]]></item>
-		<item name="wcf.acp.package.packageDir.url"><![CDATA[Nach der Installation in das angegebene Installationsverzeichnis ist die Anwendung über folgende Adresse (URL) erreichbar:]]></item>
+		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installationsverzeichnis]]></item>
+		<item name="wcf.acp.package.packageDir.url"><![CDATA[Installationsverzeichnis-Adresse (URL)]]></item>
+		<item name="wcf.acp.package.packageDir.url.description"><![CDATA[Nach der Installation in das angegebene Installationsverzeichnis ist die Anwendung über diese Adresse (URL) erreichbar:]]></item>
 		<item name="wcf.acp.package.requirements"><![CDATA[Abhängigkeiten auswählen]]></item>
 		<item name="wcf.acp.package.requirements.description"><![CDATA[Das aktuelle Paket benötigt Pakete, von denen mehrere Instanzen installiert sind. Bitte wählen Sie aus, zu welcher Instanz jeweils eine Abhängigkeit hergestellt werden soll.]]></item>
 		<item name="wcf.acp.package.rollback"><![CDATA[Paketinstallation zurücksetzen]]></item>
