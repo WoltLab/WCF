@@ -16,7 +16,7 @@
 		<dl{if $errorField == 'username'} class="errorField"{/if}>
 			<dt><label for="username">{lang}wcf.global.createUser.username{/lang}</label></dt>
 			<dd>
-				<input type="text" id="username" name="username" value="{$username}" class="long" />
+				<input type="text" id="username" name="username" value="{$username}" class="medium" />
 				{if $errorField == 'username'}
 					<small>
 						{if $errorType == 'empty'}{lang}wcf.global.createUser.error.empty{/lang}{/if}
@@ -29,7 +29,7 @@
 		<dl{if $errorField == 'email'} class="errorField"{/if}>
 			<dt><label for="email">{lang}wcf.global.createUser.email{/lang}</label></dt>
 			<dd>
-				<input type="text" id="email" name="email" value="{$email}" class="long" />
+				<input type="text" id="email" name="email" value="{$email}" class="medium" />
 				{if $errorField == 'email'}
 					<small>
 						{if $errorType == 'empty'}{lang}wcf.global.createUser.error.empty{/lang}{/if}
@@ -42,7 +42,7 @@
 		<dl{if $errorField == 'confirmEmail'} class="errorField"{/if}>
 			<dt><label for="confirmEmail">{lang}wcf.global.createUser.confirmEmail{/lang}</label></dt>
 			<dd>
-				<input type="text" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="long" />
+				<input type="text" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium" />
 				{if $errorField == 'confirmEmail'}
 					<small>
 						{if $errorType == 'notEqual'}{lang}wcf.global.createUser.error.confirmEmail.notEqual{/lang}{/if}
@@ -54,7 +54,7 @@
 		<dl{if $errorField == 'password'} class="errorField"{/if}>
 			<dt><label for="password">{lang}wcf.global.createUser.password{/lang}</label></dt>
 			<dd>
-				<input type="password" id="password" name="password" value="{$password}" class="long" />
+				<input type="password" id="password" name="password" value="{$password}" class="medium" />
 				{if $errorField == 'password'}
 					<small>
 						{if $errorType == 'empty'}{lang}wcf.global.createUser.error.empty{/lang}{/if}
@@ -66,7 +66,7 @@
 		<dl{if $errorField == 'confirmPassword'} class="errorField"{/if}>
 			<dt><label for="confirmPassword">{lang}wcf.global.createUser.confirmPassword{/lang}</label></dt>
 			<dd>
-				<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="long" />
+				<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" />
 				{if $errorField == 'confirmPassword'}
 					<small>
 						{if $errorType == 'notEqual'}{lang}wcf.global.createUser.error.confirmPassword.notEqual{/lang}{/if}
