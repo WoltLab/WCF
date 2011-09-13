@@ -93,7 +93,7 @@ a:hover {
 }
 
 a.externalURL {
-	background-image: url("../../icon/externalURL.svg");
+	background-image: url('../../icon/externalURL.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
 	padding-right: 17px;
@@ -120,7 +120,7 @@ hr {
 header.pageHeader {
 	/* Disabled, because the WoltLab header-image is not LGPL 
 	Activate it if you want to test your own header image */
-	/* background-image: url("../images/header.png"); */
+	/* background-image: url('../images/header.png'); */
 	background-position: left top;
 	background-repeat: repeat-x;
 	min-width: 800px;
@@ -130,6 +130,7 @@ header.pageHeader {
 /* Top Menu */
 
 header.pageHeader nav.topMenu {
+	border-bottom: 1px solid rgba(0, 0, 0, .1);
 	background-color: rgba(0, 0, 0, .4);
 	position: fixed;
 	top: 0;
@@ -207,7 +208,7 @@ nav.mainMenu {
 }
 
 nav.mainMenu:after {
-	content: "";
+	content: '';
 	display: block;
 	clear: both;
 }
@@ -301,7 +302,7 @@ nav.headerNavigation {
 }
 
 nav.headerNavigation:after {
-	content: "";
+	content: '';
 	display: block;
 	clear: both;
 }
@@ -311,7 +312,7 @@ nav.headerNavigation > div {
 }
 
 nav.headerNavigation > div:after {
-	content: "";
+	content: '';
 	display: block;
 	clear: both;
 }
@@ -409,7 +410,7 @@ nav.sidebarMenu > div h1 {
 	font-size: 130%;
 	font-weight: bold;
 	color: #369;
-	background-image: url("../../icon/closed.svg");
+	background-image: url('../../icon/closed.svg');
 	background-position: 15px center;
 	background-size: 16px;
 	background-repeat: no-repeat;
@@ -419,7 +420,7 @@ nav.sidebarMenu > div h1 {
 }
 
 nav.sidebarMenu > div h1.activeMenuItem {
-	background-image: url("../../icon/opened.svg");
+	background-image: url('../../icon/opened.svg');
 }
 
 nav.sidebarMenu > div ul li {
@@ -463,7 +464,7 @@ footer.pageFooter {
 }
 
 footer.pageFooter:after {
-	content: "";
+	content: '';
 	display: block;
 	clear: both;
 }
@@ -478,7 +479,7 @@ footer.pageFooter > div {
 }
 
 footer.pageFooter > div:after {
-	content: "";
+	content: '';
 	display: block;
 	clear: both;
 }
@@ -588,7 +589,6 @@ fieldset.topLink {
 	background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
 	background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
 	background-image: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
-	
 }
 */
 
@@ -1249,7 +1249,7 @@ input[disabled='disabled'],
 	background-color: #369;
 	/* Disabled, because the WoltLab header-image is not LGPL 
 	Activate it if you want to test your own header image */
-	/* background-image: url("../images/header.png"); */
+	/* background-image: url('../images/header.png'); */
 	background-position: left top;
 	background-repeat: repeat-x;	
 	
@@ -1303,7 +1303,7 @@ input[disabled='disabled'],
 }
 
 .tabMenu:after {
-	content: "";
+	content: '';
 	display: block;
 	clear: both;
 }
@@ -1600,7 +1600,7 @@ thead th.active:hover a {
 	background-color: rgba(0, 0, 0, .3);
 }
 
-thead th input[type="checkbox"] {
+thead th input[type='checkbox'] {
 	margin: -5px !important;
 }
 
@@ -1656,11 +1656,6 @@ tbody tr:hover td {
 	background-color: #d8e7f5;
 }
 
-tbody tr .columnIcon img {
-	height: 16px;
-	width: 16px;
-}
-
 tbody tr .columnIcon img:not(.balloonTooltip):hover {
 	cursor: not-allowed;
 }
@@ -1690,6 +1685,27 @@ tbody tr .columnIcon img:not(.balloonTooltip):hover {
 .menu ~ .border thead th:last-child,
 .boxTitle > table thead th:last-child {
 	border-top-right-radius: 0 !important;
+}
+
+/* ToDo: Table Column Formats */
+
+tbody tr .columnIcon img {
+	height: 16px;
+	width: 16px;
+}
+
+.bigList tbody tr .columnIcon img {
+	height: 24px;
+	width: 24px;
+}
+
+tbody tr .columnName {
+	font-weight: bold;
+}
+
+tbody tr .columnDate,
+tbody tr .columnRegistrationDate {
+	font-size: 85%;
 }
 
 
@@ -1724,7 +1740,7 @@ tbody tr .columnIcon img:not(.balloonTooltip):hover {
 }
 
 .pageNavigation ul li:after {
-	content: "";
+	content: '';
 	display: block;
 	clear: both;
 }
@@ -1853,7 +1869,7 @@ p.info {
 	color: #68b;
 	border: 1px solid #9be;
 	background-color: #def;
-	background-image: url("../../icon/systemInfo.svg");
+	background-image: url('../../icon/systemInfo.svg');
 	background-size: 24px;
 	background-position: 13px center;
 	background-repeat: no-repeat;
@@ -1863,7 +1879,7 @@ p.success {
 	color: #090;
 	border: 1px solid #0c0;
 	background-color: #efe;
-	background-image: url("../../icon/systemSuccess.svg");
+	background-image: url('../../icon/systemSuccess.svg');
 	background-size: 24px;
 	background-position: 13px center;
 	background-repeat: no-repeat;
@@ -1873,7 +1889,7 @@ p.warning {
 	color: #990;
 	border: 1px solid #cc0;
 	background-color: #ffd;
-	background-image: url("../../icon/systemWarning.svg");
+	background-image: url('../../icon/systemWarning.svg');
 	background-size: 24px;
 	background-position: 13px center;
 	background-repeat: no-repeat;
@@ -1883,7 +1899,7 @@ p.error {
 	color: #c00;
 	border: 1px solid #f99;
 	background-color: #fee;
-	background-image: url("../../icon/systemError.svg");
+	background-image: url('../../icon/systemError.svg');
 	background-size: 24px;
 	background-position: 13px center;
 	background-repeat: no-repeat;
@@ -1962,7 +1978,7 @@ div.wcfDimensions {
 
 div.overlayLoading {
 	background-color: #fff;
-	background-image: url("../../icon/spinner.svg");
+	background-image: url('../../icon/spinner.svg');
 	background-position: center center;
 	background-repeat: no-repeat;
 }
@@ -1993,7 +2009,7 @@ span.ui-dialog-title {
 }
 
 a.ui-dialog-titlebar-close {
-	background-image: url("../../icon/deleteM.png");
+	background-image: url('../../icon/deleteM.png');
 	background-position: top left;
 	background-repeat: no-repeat;
 	position: absolute !important;
@@ -2053,7 +2069,6 @@ div.ui-widget-overlay {
 	font-size: 85%;
 	text-shadow: none;
 	color: #666;
-	border: 1px solid #ccc;
 	border-radius: 13px;
 	background-color: #fff;
 	margin-right: -3px;
@@ -2065,6 +2080,10 @@ div.ui-widget-overlay {
 }
 
 /* Types */
+
+.badgeNote {
+	border: 1px solid #ccc;
+}
 
 .badgeInfo {
 	color: #68b;
@@ -2096,6 +2115,7 @@ div.ui-widget-overlay {
 	text-decoration: none !important;
 	text-shadow: 0 1px 0 #fff;
 	color: #999;
+	cursor: pointer;
 	
 	border-width: 1px;
 	border-style: solid;

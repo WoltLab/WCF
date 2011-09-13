@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showCSS=testing.css" />
 </head>
 
-<body>
+<body id="tplWCFInstaller">
 	<a id="top"></a>
 	<!-- HEADER -->
 	<header id="pageHeader" class="pageHeader">

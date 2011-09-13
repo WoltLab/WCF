@@ -77,7 +77,7 @@
 								<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" />
 							{/if}
 						</td>
-						<td id="packageName{@$package->packageID}" class="columnText" title="{$package->packageDescription}">
+						<td id="packageName{@$package->packageID}" class="columnName columnText" title="{$package->packageDescription}">
 							<a href="index.php?page=PackageView&amp;packageID={@$package->packageID}{@SID_ARG_2ND}"><span>{$package->getName()}{if $package->instanceNo > 1 && $package->instanceName == ''} (#{#$package->instanceNo}){/if}</span></a>
 						</td>
 						<td class="columnText"><p>{if $package->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</p></td>

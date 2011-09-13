@@ -1,4 +1,4 @@
-<ul class="formOptionsLong smallFont">
+<ul class="formOptionsLong">
 	{foreach from=$selectOptions key=key item=selectOption}
 		<li>
 			<label><input type="radio" name="values[{$option->optionName}]"{if $value == $key} checked="checked"{/if} value="{$key}" /> {lang}{@$selectOption}{/lang}</label>
