@@ -19,7 +19,10 @@
 		
 		<dl>
 			<dt><label for="wcfDir">{lang}wcf.global.wcfDir.dir{/lang}</label></dt>
-			<dd><input type="text" id="wcfDir" name="wcfDir" value="{$wcfDir}" class="long" /></dd>
+			<dd>
+				<input type="text" id="wcfDir" name="wcfDir" value="{$wcfDir}" class="long" />
+				<small>{lang}wcf.global.wcfDir.dir.description{/lang}</small>
+			</dd>
 		</dl>
 		<dl>
 			<dt><label for="wcfUrl">{lang}wcf.global.wcfDir.url{/lang}</label></dt>
