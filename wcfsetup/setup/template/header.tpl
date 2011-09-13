@@ -53,8 +53,7 @@
 					<hgroup>
 						<h1>{lang}wcf.global.title{/lang}</h1>
 						<h2>{lang}wcf.global.title.subtitle{/lang}</h2>
-						{* ToDo: Progress bar *}
-						<p><progress id="packageInstallationProgress" value="0" max="100" style="width: 300px;">0%</progress></p>
+						<p><progress id="packageInstallationProgress" value="{@$progress}" max="100" style="width: 300px;">{@$progress}%</progress></p>
 					</hgroup>
 				</header>
 				
