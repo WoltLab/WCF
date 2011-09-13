@@ -531,3 +531,88 @@ WCF.ACP.User.List.prototype = {
 		}
 	}
 };
+
+/**
+ * Worker support for ACP.
+ * 
+ * @param	string		dialogID
+ * @param	string		className
+ * @param	object		options
+ */
+WCF.ACP.Worker = function(dialogID, className, options) { this.init(dialogID, className, options); };
+WCF.ACP.Worker.prototype = {
+	/**
+	 * dialog id
+	 * @var	string
+	 */
+	_dialogID: null,
+	
+	/**
+	 * dialog object
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * Initializes a new worker instance.
+	 * 
+	 * @param	string		dialogID
+	 * @param	string		className
+	 * @param	object		options
+	 */
+	init: function(dialogID, className, options) {
+		this._dialogID = dialogID + 'Worker';
+		options = options || { };
+		
+		// initialize AJAX-based dialog
+		WCF.showAJAXDialog(this._dialogID, true, {
+			ajax: {
+				url: 'index.php?action=WorkerProxy&t=' + SECURITY_TOKEN + SID_ARG_2ND,
+				type: 'POST',
+				data: {
+					className: className,
+					parameters: options
+				},
+				success: $.proxy(this._handleResponse, this)
+			},
+			preventClose: true,
+			hideTitle: true
+		});
+	},
+	
+	/**
+	 * Handles response from server.
+	 */
+	_handleResponse: function() {
+		// init binding
+		if (this._dialog === null) {
+			this._dialog = $('#' + $.wcfEscapeID(this._dialogID));
+		}
+		
+		// fetch data returned by server response
+		var $data = this._dialog.data('responseData');
+		
+		// update progress
+		this._dialog.find('#workerProgress').attr('value', $data.progress).text($data.progress + '%');
+		
+		// worker is still busy with it's business, carry on
+		if ($data.progress < 100) {
+			// send request for next loop
+			$.ajax({
+				url: 'index.php?action=WorkerProxy&t=' + SECURITY_TOKEN + SID_ARG_2ND,
+				type: 'POST',
+				data: {
+					className: $data.className,
+					loopCount: $data.loopCount
+				},
+				success: $.proxy(function(data) {
+					this._dialog.data('responseData', data);
+					this._handleResponse();
+				}, this),
+				error: function(transport) {
+					alert(transport.responseText);
+				}
+			});
+		}
+	}
+};
