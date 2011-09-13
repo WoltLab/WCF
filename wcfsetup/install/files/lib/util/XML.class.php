@@ -15,29 +15,25 @@ use wcf\system\exception\SystemException;
 class XML {
 	/**
 	 * DOMDocument object
-	 * 
-	 * @var	DOMDocument
+	 * @var	\DOMDocument
 	 */
 	protected $document = null;
 	
 	/**
 	 * document path
-	 * 
 	 * @var	string
 	 */
 	protected $path = '';
 	
 	/**
 	 * schema file path
-	 * 
 	 * @var	string
 	 */
 	protected $schema = '';
 	
 	/**
 	 * DOMXPath object
-	 * 
-	 * @var	DOMXPath
+	 * @var	\DOMXPath
 	 */
 	protected $xpath = null;
 	
@@ -134,7 +130,7 @@ class XML {
 	 * Returns a DOMXPath object bound to current DOMDocument object. Default
 	 * namespace will be bound to prefix 'ns'.
 	 * 
-	 * @return	DOMXPath
+	 * @return	\DOMXPath
 	 */
 	public function xpath() {
 		if ($this->xpath === null) {

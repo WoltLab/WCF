@@ -15,38 +15,33 @@ namespace wcf\util;
  */
 abstract class CronjobUtil {
 	/**
-	 * Set to true if day of month is '*'
-	 * 
+	 * indicates if day of month is restricted (not '*')
 	 * @var	boolean
 	 */
 	protected static $domRestricted = false;
 	
 	/**
-	 * Set to true if day of week is '*'
-	 * 
+	 * indicates if day of week is restricted (not '*')
 	 * @var	boolean
 	 */
 	protected static $dowRestricted = false;
 	
 	/**
-	 * Result date
-	 * 
+	 * result date
 	 * @var	array<integer>
 	 */
 	protected static $result = array();
 	
 	/**
-	 * Time based used as reference for finding the next time of execution
-	 * 
+	 * time base used as reference for finding the next execution time
 	 * @var	integer
 	 */
 	protected static $timeBase = 0;
 	
 	/**
-	 * Valid ranges for each known field. Note that the range for
-	 * 'day of month' is missing, since it varies on each month.
-	 * 
-	 * @var	array<array>
+	 * valid ranges for each known field (range for 'day of month' is missing
+	 * since it varies from month to month)
+	 * @var	array<integer>
 	 */
 	public static $ranges = array(
 		'minute' => array(0, 59),
@@ -89,7 +84,11 @@ abstract class CronjobUtil {
 		self::$domRestricted = ($dom != '*') ? true : false;
 		self::$dowRestricted = ($dow != '*') ? true : false;
 		
+		$dayNames = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
+		$monthNames = array('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec');
+		
 		// calculate values based upon each expression
+		$values = array();
 		foreach ($fields as $fieldName => $fieldValue) {
 			$fieldValue = StringUtil::toLowerCase($fieldValue);
 			
@@ -100,10 +99,8 @@ abstract class CronjobUtil {
 			
 			switch ($fieldName) {
 				case 'dow':
-					$dayNames = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
-					
 					if (strlen($fieldValue) == 3 && in_array($fieldName, $dayNames)) {
-						$fieldValue = $monthNames[$fieldValue];
+						$fieldValue = $dayNames[$fieldValue];
 					}
 					// When specifying day of week, both day 0 and day 7
 					// will be considered Sunday. -- crontab(5) 
@@ -113,8 +110,6 @@ abstract class CronjobUtil {
 				break;
 				
 				case 'month':
-					$monthNames = array('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec');
-					
 					if (strlen($fieldValue) == 3 && in_array($fieldValue, $monthNames)) {
 						$fieldValue = $monthNames[$fieldValue] + 1;
 					}

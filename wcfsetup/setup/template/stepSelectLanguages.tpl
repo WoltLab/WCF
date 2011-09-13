@@ -1,8 +1,9 @@
 {include file='header'}
 
-<h2>{lang}wcf.global.languages{/lang}</h2>
-
-<p>{lang}wcf.global.languages.description{/lang}</p>
+<hgroup class="subHeading">
+	<h1>{lang}wcf.global.languages{/lang}</h1>
+	<h2>{lang}wcf.global.languages.description{/lang}</h2>
+</hgroup>
 
 {if $errorField}
 	<p class="error">{if $errorType == 'empty'}{lang}wcf.global.languages.error.empty{/lang}{/if}</p>
@@ -11,19 +12,18 @@
 <form method="post" action="install.php">
 	<fieldset>
 		<legend>{lang}wcf.global.languages.languages{/lang}</legend>
-		
-		<div class="inner">
-			<ul class="languages">
+			
+			<dl class="languages">
 				{foreach from=$languages key=language item=languageName}
-					<li><label><input type="checkbox" name="selectedLanguages[]" value="{@$language}" {if $language|in_array:$selectedLanguages}checked="checked" {/if}/> {@$languageName}</label></li>
+					<dt></dt>
+					<dd><label><input type="checkbox" name="selectedLanguages[]" value="{@$language}" {if $language|in_array:$selectedLanguages}checked="checked" {/if}/> {@$languageName}</label></dd>
 				{/foreach}
-			</ul>
-			<br style="clear: both" />
-		</div>
+			</dl>
+		
 	</fieldset>
 	
-	<div class="nextButton">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.next{/lang}" />
+	<div class="formSubmit">
+		<input type="submit" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
 		<input type="hidden" name="send" value="1" />
 		<input type="hidden" name="step" value="{@$nextStep}" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />

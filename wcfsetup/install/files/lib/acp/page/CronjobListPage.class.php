@@ -24,7 +24,7 @@ class CronjobListPage extends SortablePage {
 	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.cronjobs.canEditCronjob', 'admin.system.cronjobs.canDeleteCronjob', 'admin.system.cronjobs.canEnableDisableCronjob');
+	public $neededPermissions = array('admin.system.cronjob.canEditCronjob', 'admin.system.cronjob.canDeleteCronjob', 'admin.system.cronjob.canEnableDisableCronjob');
 	
 	/**
 	 * @see wcf\page\SortablePage::$defaultSortField
@@ -67,7 +67,7 @@ class CronjobListPage extends SortablePage {
 	 */
 	public function show() {
 		// set active menu item.
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.cronjobs.list');
+		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.cronjob.list');
 		
 		parent::show();
 	}

@@ -5,7 +5,7 @@
 	<!-- /MAIN -->
 	
 	<!-- FOOTER -->
-	<footer id="footer" class="pageFooter">
+	<footer id="pageFooter" class="pageFooter">
 		<div>
 			<nav id="footerNavigation" class="footerNavigation">
 				<ul>

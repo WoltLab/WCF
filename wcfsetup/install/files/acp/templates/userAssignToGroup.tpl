@@ -44,7 +44,6 @@
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}
- 		<input type="hidden" name="userIDs" value="{@$userIDs}" />
  	</div>
 </form>
 

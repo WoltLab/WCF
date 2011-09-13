@@ -3,6 +3,8 @@
 	<import>
 		<pip name="acpmenu">wcf\system\package\plugin\ACPMenuPackageInstallationPlugin</pip>
 		<pip name="acptemplate">wcf\system\package\plugin\ACPTemplatePackageInstallationPlugin</pip>
+		<pip name="clipboardaction">wcf\system\package\plugin\ClipboardActionPackageInstallationPlugin</pip>
+		<pip name="clipboarditemtype">wcf\system\package\plugin\ClipboardItemTypePackageInstallationPlugin</pip>
 		<pip name="coreobject">wcf\system\package\plugin\CoreObjectPackageInstallationPlugin</pip>
 		<pip name="cronjob">wcf\system\package\plugin\CronjobPackageInstallationPlugin</pip>
 		<pip name="eventlistener">wcf\system\package\plugin\EventListenerPackageInstallationPlugin</pip>

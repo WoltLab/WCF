@@ -1,7 +1,9 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\User;
 use wcf\data\user\UserEditor;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -42,12 +44,38 @@ class UserAssignToGroupForm extends ACPForm {
 	public $groups = array();
 	
 	/**
+	 * clipboard item type id
+	 * @var	integer
+	 */
+	protected $typeID = null;
+	
+	/**
+	 * @see	wcf\page\IPage::readParameters()
+	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		// get type id
+		$this->typeID = ClipboardHandler::getInstance()->getTypeID('com.woltlab.wcf.user');
+		if ($this->typeID === null) {
+			throw new SystemException("clipboard item type 'com.woltlab.wcf.user' is unknown.");
+		}
+		
+		// get user ids
+		$users = ClipboardHandler::getInstance()->getMarkedItems($this->typeID);
+		if (!isset($users['com.woltlab.wcf.user']) || empty($users['com.woltlab.wcf.user'])) throw new IllegalLinkException();
+		
+		// load users
+		$this->userIDs = array_keys($users['com.woltlab.wcf.user']);
+		$this->users = $users['com.woltlab.wcf.user'];
+	}
+	
+	/**
 	 * @see wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_POST['userIDs'])) $this->userIDs = ArrayUtil::toIntegerArray(explode(',', $_POST['userIDs']));
 		if (isset($_POST['groupIDs']) && is_array($_POST['groupIDs'])) $this->groupIDs = ArrayUtil::toIntegerArray($_POST['groupIDs']);
 	}
 	
@@ -94,14 +122,18 @@ class UserAssignToGroupForm extends ACPForm {
 				throw new PermissionDeniedException();
 			}
 			
+			$groupsIDs = array_merge($groups[$user->userID], $this->groupIDs);
+			$groupsIDs = array_unique($groupsIDs);
+			
 			$userEditor = new UserEditor($user);
-			$userEditor->addToGroups($groups[$user->userID], false, false);
+			$userEditor->addToGroups($groupsIDs, true, false);
 		}
 		
-		// TODO: Implement unmarkAll()
-		//UserEditor::unmarkAll();
+		ClipboardHandler::getInstance()->removeItems($this->typeID);
 		SessionHandler::resetSessions($this->userIDs);
+		
 		$this->saved();
+		
 		WCF::getTPL()->assign('message', 'wcf.acp.user.assignToGroup.success');
 		WCF::getTPL()->display('success');
 		exit;
@@ -113,16 +145,6 @@ class UserAssignToGroupForm extends ACPForm {
 	public function readData() {
 		parent::readData();
 		
-		if (!count($_POST)) {
-			// get marked user ids
-			$markedUsers = WCF::getSession()->getVar('markedUsers');
-			if (is_array($markedUsers)) {
-				$this->userIDs = $markedUsers;
-			}
-			if (empty($this->userIDs)) throw new IllegalLinkException();
-		}
-		
-		$this->users = User::getUsers($this->userIDs);
 		$this->readGroups();
 	}
 	

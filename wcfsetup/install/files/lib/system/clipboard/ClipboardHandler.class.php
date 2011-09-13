@@ -166,7 +166,7 @@ class ClipboardHandler extends SingletonFactory {
 			
 			if (!isset($data[$type->typeName])) {
 				$data[$type->typeName] = array(
-					'className' => $type->className,
+					'className' => $type->listClassName,
 					'objectIDs' => array()
 				);
 			}
@@ -196,8 +196,7 @@ class ClipboardHandler extends SingletonFactory {
 	 */
 	public function getEditorItems($page) {
 		// ignore unknown pages
-		if (!isset($this->pageCache[$page])) die('page '.$page.' is unknown');
-			#return null;
+		if (!isset($this->pageCache[$page])) return null;
 		
 		// get objects
 		$objects = $this->getMarkedItems();
@@ -256,5 +255,21 @@ class ClipboardHandler extends SingletonFactory {
 		}
 		
 		return $editorData;
+	}
+	
+	/**
+	 * Removes items from clipboard.
+	 * 
+	 * @param	integer		$typeID
+	 */
+	public function removeItems($typeID = null) {
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("userID = ?", array(WCF::getUser()->userID));
+		if ($typeID !== null) $conditions->add("typeID = ?", array($typeID));
+		
+		$sql = "DELETE FROM	wcf".WCF_N."_clipboard_item
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
 	}
 }

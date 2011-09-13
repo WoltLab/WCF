@@ -1,75 +1,84 @@
 {include file='header'}
 
-<h2>{lang}wcf.global.createUser{/lang}</h2>
-
-<p>{lang}wcf.global.createUser.description{/lang}</p>
+<hgroup class="subHeading">
+	<h1>{lang}wcf.global.createUser{/lang}</h1>
+	<h2>{lang}wcf.global.createUser.description{/lang}</h2>
+</hgroup>
 
 {if $errorField}
-<p class="error">{lang}wcf.global.createUser.error{/lang}</p>
+	<p class="error">{lang}wcf.global.createUser.error{/lang}</p>
 {/if}
 
 <form method="post" action="install.php">
 	<fieldset>
 		<legend>{lang}wcf.global.createUser.data{/lang}</legend>
 		
-		<div class="inner">
-			<div{if $errorField == 'username'} class="errorField"{/if}>
-				<label for="username">{lang}wcf.global.createUser.username{/lang}</label>
-				<input type="text" class="inputText" id="username" name="username" value="{$username}" style="width: 100%;" />
+		<dl{if $errorField == 'username'} class="errorField"{/if}>
+			<dt><label for="username">{lang}wcf.global.createUser.username{/lang}</label></dt>
+			<dd>
+				<input type="text" id="username" name="username" value="{$username}" class="medium" />
 				{if $errorField == 'username'}
-					<p>
+					<small>
 						{if $errorType == 'empty'}{lang}wcf.global.createUser.error.empty{/lang}{/if}
 						{if $errorType == 'notValid'}{lang}wcf.global.createUser.error.username.notValid{/lang}{/if}
-					</p>
+					</small>
 				{/if}
-			</div>
-			
-			<div{if $errorField == 'email'} class="errorField"{/if}>
-				<label for="email">{lang}wcf.global.createUser.email{/lang}</label>
-				<input type="text" class="inputText" id="email" name="email" value="{$email}" style="width: 100%;" />
+			</dd>
+		</dl>
+		
+		<dl{if $errorField == 'email'} class="errorField"{/if}>
+			<dt><label for="email">{lang}wcf.global.createUser.email{/lang}</label></dt>
+			<dd>
+				<input type="text" id="email" name="email" value="{$email}" class="medium" />
 				{if $errorField == 'email'}
-					<p>
+					<small>
 						{if $errorType == 'empty'}{lang}wcf.global.createUser.error.empty{/lang}{/if}
 						{if $errorType == 'notValid'}{lang}wcf.global.createUser.error.email.notValid{/lang}{/if}
-					</p>
+					</small>
 				{/if}
-			</div>
-			
-			<div{if $errorField == 'confirmEmail'} class="errorField"{/if}>
-				<label for="confirmEmail">{lang}wcf.global.createUser.confirmEmail{/lang}</label>
-				<input type="text" class="inputText" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" style="width: 100%;" />
+			</dd>
+		</dl>
+		
+		<dl{if $errorField == 'confirmEmail'} class="errorField"{/if}>
+			<dt><label for="confirmEmail">{lang}wcf.global.createUser.confirmEmail{/lang}</label></dt>
+			<dd>
+				<input type="text" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium" />
 				{if $errorField == 'confirmEmail'}
-					<p>
+					<small>
 						{if $errorType == 'notEqual'}{lang}wcf.global.createUser.error.confirmEmail.notEqual{/lang}{/if}
-					</p>
+					</small>
 				{/if}
-			</div>
-			
-			<div{if $errorField == 'password'} class="errorField"{/if}>
-				<label for="password">{lang}wcf.global.createUser.password{/lang}</label>
-				<input type="password" class="inputText" id="password" name="password" value="{$password}" style="width: 100%;" />
+			</dd>
+		</dl>
+		
+		<dl{if $errorField == 'password'} class="errorField"{/if}>
+			<dt><label for="password">{lang}wcf.global.createUser.password{/lang}</label></dt>
+			<dd>
+				<input type="password" id="password" name="password" value="{$password}" class="medium" />
 				{if $errorField == 'password'}
-					<p>
+					<small>
 						{if $errorType == 'empty'}{lang}wcf.global.createUser.error.empty{/lang}{/if}
-					</p>
+					</small>
 				{/if}
-			</div>
-			
-			<div{if $errorField == 'confirmPassword'} class="errorField"{/if}>
-				<label for="confirmPassword">{lang}wcf.global.createUser.confirmPassword{/lang}</label>
-				<input type="password" class="inputText" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" style="width: 100%;" />
+			</dd>
+		</dl>
+		
+		<dl{if $errorField == 'confirmPassword'} class="errorField"{/if}>
+			<dt><label for="confirmPassword">{lang}wcf.global.createUser.confirmPassword{/lang}</label></dt>
+			<dd>
+				<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" />
 				{if $errorField == 'confirmPassword'}
-					<p>
+					<small>
 						{if $errorType == 'notEqual'}{lang}wcf.global.createUser.error.confirmPassword.notEqual{/lang}{/if}
-					</p>
+					</small>
 				{/if}
-			</div>
-			
-		</div>
+			</dd>
+		</dl>
+		
 	</fieldset>
 	
-	<div class="nextButton">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.next{/lang}" />
+	<div class="formSubmit">
+		<input type="submit" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
 		<input type="hidden" name="send" value="1" />
 		<input type="hidden" name="step" value="{@$nextStep}" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />

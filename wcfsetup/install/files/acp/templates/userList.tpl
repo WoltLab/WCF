@@ -1,41 +1,11 @@
 {include file='header'}
 
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/AjaxRequest.class.js"></script>
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/InlineListEdit.class.js"></script>
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}acp/js/UserListEdit.class.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
-	// data array
-	var userData = new Hash();
-	var url = '{@$url|encodeJS}';
-	
-	// language
-	var language = new Object();
-	language['wcf.global.button.mark']		= '{lang}wcf.global.button.mark{/lang}';
-	language['wcf.global.button.unmark']		= '{lang}wcf.global.button.unmark{/lang}';
-	language['wcf.global.button.delete']		= '{lang}wcf.global.button.delete{/lang}';
-	language['wcf.acp.user.button.sendMail']	= '{lang}wcf.acp.user.button.sendMail{/lang}';
-	language['wcf.acp.user.button.exportMail']	= '{lang}wcf.acp.user.button.exportMail{/lang}';
-	language['wcf.acp.user.button.assignGroup']	= '{lang}wcf.acp.user.button.assignGroup{/lang}';
-	language['wcf.acp.user.deleteMarked.sure']	= '{lang}wcf.acp.user.deleteMarked.sure{/lang}';
-	language['wcf.acp.user.delete.sure']		= '{lang}wcf.acp.user.delete.sure{/lang}';
-	language['wcf.acp.user.markedUsers']		= '{lang}wcf.acp.user.markedUsers{/lang}';
-	
-	// additional options
-	var additionalOptions = new Array();
-	var additionalUserOptions = new Array();
-	{if $additionalMarkedOptions|isset}{@$additionalMarkedOptions}{/if}
-	
-	// permissions
-	var permissions = new Object();
-	permissions['canEditUser'] = {if $__wcf->session->getPermission('admin.user.canEditUser')}1{else}0{/if};
-	permissions['canDeleteUser'] = {if $__wcf->session->getPermission('admin.user.canDeleteUser')}1{else}0{/if};
-	permissions['canMailUser'] = {if $__wcf->session->getPermission('admin.user.canMailUser')}1{else}0{/if};
-	permissions['canEditMailAddress'] = {if $__wcf->session->getPermission('admin.user.canEditMailAddress')}1{else}0{/if};
-	permissions['canEditPassword'] = {if $__wcf->session->getPermission('admin.user.canEditPassword')}1{else}0{/if};
-	
-	onloadEvents.push(function() { userListEdit = new UserListEdit(userData, {@$markedUsers}, additionalUserOptions, additionalOptions); });
+	$(function() {
+		WCF.Clipboard.init('wcf\\acp\\page\\UserListPage');
+		new WCF.ACP.User.List();
+	});
 	//]]>
 </script>
 
@@ -71,11 +41,11 @@
 		</ul>
 	</nav>
 	
-	{if $users|count}
-		<table>
+	{hascontent}
+		<table class="clipboardContainer" data-type="com.woltlab.wcf.user">
 			<thead>
 				<tr class="tableHead">
-					<th class="columnMark"><label><input type="checkbox" name="userMarkAll" /></label></th>
+					<th class="columnMark"><label><input type="checkbox" class="clipboardMarkAll" /></label></th>
 					<th class="columnUserID{if $sortField == 'userID'} active{/if}" colspan="2"><a href="index.php?page=UserList&amp;searchID={@$searchID}&amp;action={@$encodedAction}&amp;pageNo={@$pageNo}&amp;sortField=userID&amp;sortOrder={if $sortField == 'userID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.user.userID{/lang}{if $sortField == 'userID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnUsername{if $sortField == 'username'} active{/if}"><a href="index.php?page=UserList&amp;searchID={@$searchID}&amp;action={@$encodedAction}&amp;pageNo={@$pageNo}&amp;sortField=username&amp;sortOrder={if $sortField == 'username' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.user.username{/lang}{if $sortField == 'username'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					
@@ -88,49 +58,44 @@
 			</thead>
 			
 			<tbody>
-			{foreach from=$users item=user}
-				<tr id="userRow{@$user->userID}">
-					<td class="columnMark"><input type="checkbox" id="userMark{@$user->userID}" name="userMark" value="{@$user->userID}" /></td>
-					<td class="columnIcon">
-						<script type="text/javascript">
-							//<![CDATA[
-							userData.set({@$user->userID}, {
-								'isMarked': {@$user->isMarked},
-								'className': '{cycle values="container-1,container-2"}'
-							});
-							//]]>
-						</script>
+				{content}
+					{foreach from=$users item=user}
+						<tr id="userRow{@$user->userID}">
+							<td class="columnMark"><input type="checkbox" class="clipboardItem" data-objectID="{@$user->userID}" /></td>
+							<td class="columnIcon">
+								{if $user->editable}
+									<a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="balloonTooltip" /></a>
+								{else}
+									<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" />
+								{/if}
+								{if $user->deletable}
+									<a onclick="return confirm('{lang}wcf.acp.user.delete.sure{/lang}')" href="index.php?action=UserDelete&amp;userID={@$user->userID}&amp;url={@$encodedURL}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="balloonTooltip" /></a>
+								{else}
+									<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" />
+								{/if}
 						
-						{if $user->editable}
-							<a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="balloonTooltip" /></a>
-						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" />
-						{/if}
-						{if $user->deletable}
-							<a onclick="return confirm('{lang}wcf.acp.user.delete.sure{/lang}')" href="index.php?action=UserDelete&amp;userID={@$user->userID}&amp;url={@$encodedURL}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="balloonTooltip" /></a>
-						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" />
-						{/if}
-						
-						{if $additionalButtons[$user->userID]|isset}{@$additionalButtons[$user->userID]}{/if}
-					</td>
-					<td class="columnUserID columnID"><p>{@$user->userID}</p></td>
-					<td class="columnUsername columnText"><p>{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user->username}</a>{else}{$user->username}{/if}</p></td>
+								{if $additionalButtons[$user->userID]|isset}{@$additionalButtons[$user->userID]}{/if}
+							</td>
+							<td class="columnUserID columnID"><p>{@$user->userID}</p></td>
+							<td class="columnUsername columnText"><p>{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user->username}</a>{else}{$user->username}{/if}</p></td>
 					
-					{foreach from=$columnHeads key=column item=columnLanguageVariable}
-						<td class="column{$column|ucfirst}"><p>{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</p></td>
+							{foreach from=$columnHeads key=column item=columnLanguageVariable}
+								<td class="column{$column|ucfirst}"><p>{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</p></td>
+							{/foreach}
+					
+							{if $additionalColumns[$user->userID]|isset}{@$additionalColumns[$user->userID]}{/if}
+						</tr>
 					{/foreach}
-					
-					{if $additionalColumns[$user->userID]|isset}{@$additionalColumns[$user->userID]}{/if}
-				</tr>
-			{/foreach}
+				{/content}
 			</tbody>
 		</table>
 		
 	</div>
 	
 	<div class="contentFooter">
-		{@$pagesLinks} <div id="userEditMarked" class="optionButtons"></div>
+		{@$pagesLinks}
+		
+		<div class="clipboardEditor" data-type="com.woltlab.wcf.user"></div>
 		
 		<nav class="largeButtons">
 			<ul>
@@ -142,10 +107,10 @@
 			</ul>
 		</nav>
 	</div>
-{else}
-	<div class="border content">
-		<p class="info">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
-	</div>
-{/if}
+{hascontentelse}
+</div>
+
+<p class="info">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
+{/hascontent}
 
 {include file='footer'}

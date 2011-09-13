@@ -297,7 +297,7 @@ class TemplateEngine extends SingletonFactory {
 		}
 		
 		$tplPackageID = $this->getPackageID($templateName, $packageID);
-		$compiledFilename = $this->getCompiledFilename($templateName, $tplPackageID);
+		$compiledFilename = $this->getCompiledFilename($templateName, $packageID);
 		$sourceFilename = $this->getSourceFilename($templateName, $tplPackageID);
 		
 		// check if compilation is necessary
@@ -752,6 +752,8 @@ class TemplateEngine extends SingletonFactory {
 	 * @return	string
 	 */
 	public function getTemplateListenerCode($templateName, $eventName) {
+		$this->loadTemplateListenerCode($templateName);
+		
 		if (isset($this->templateListeners[$templateName][$eventName])) {
 			return implode("\n", $this->templateListeners[$templateName][$eventName]);
 		}

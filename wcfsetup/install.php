@@ -19,10 +19,12 @@ set_error_handler('handleError', E_ALL);
 // define list of needed file
 $neededFilesPattern = array(
 	'!^setup/.*!',
+	'!^install/files/acp/images/wcfLogo.*!',
+	'!^install/files/acp/style/.*!',
 	'!^install/files/lib/data/.*!',
+	'!^install/files/icon/.*!',
 	'!^install/files/lib/system/.*!',
 	'!^install/files/lib/util/.*!',
-	'!^install/files/acp/images/setup.*!',
 	'!^install/lang/.*!',
 	'!^install/packages/.*!');
 	
@@ -81,39 +83,41 @@ class SystemException extends \Exception implements IPrintableException {
 <html>
 <head>
 <title>Fatal error: <?php echo htmlspecialchars($this->getMessage()); ?></title>
+
 <style type="text/css">
-body {
-	font-family: Verdana, Helvetica, sans-serif;
-	font-size: 0.8em;
-}
-div {
-	border: 1px outset lightgrey;
-	padding: 3px;
-	background-color: lightgrey;
-}
-
-div div {
-	border: 1px inset lightgrey;
-	padding: 4px;
-}
-
-h1 {
-	background-color: #154268;
-	padding: 4px;
-	color: #fff;
-	margin: 0 0 3px 0;
-	font-size: 1.15em;
-}
-h2 {
-	font-size: 1.1em;
-	margin-bottom: 0;
-}
-
-pre, p {
-	margin: 0;
-}
+	body {
+		font-family: Verdana, Helvetica, sans-serif;
+		font-size: 0.8em;
+	}
+	div {
+		border: 1px outset lightgrey;
+		padding: 3px;
+		background-color: lightgrey;
+	}
+	
+	div div {
+		border: 1px inset lightgrey;
+		padding: 4px;
+	}
+	
+	h1 {
+		background-color: #154268;
+		padding: 4px;
+		color: #fff;
+		margin: 0 0 3px 0;
+		font-size: 1.15em;
+	}
+	h2 {
+		font-size: 1.1em;
+		margin-bottom: 0;
+	}
+	
+	pre, p {
+		margin: 0;
+	}
 </style>
 </head>
+
 <body>
 	<div>
 		<h1>Fatal error: <?php echo htmlspecialchars($this->getMessage()); ?></h1>
@@ -704,17 +708,51 @@ define('TMP_FILE_PREFIX', $prefix);
 // try to find the temp folder
 define('TMP_DIR', BasicFileUtil::getTempFolder());
 
-// show image from temp folder
-if (isset($_GET['showImage'])) {
-	if (preg_match('~[\w\-]+\.(jpg|png)~', $_GET['showImage'], $match)) {
-		if ($match[1] == 'jpg') header('Content-Type: image/jpg');
-		else header('Content-Type: image/png');
-		readfile(TMP_DIR . 'install/files/acp/images/' . $_GET['showImage']);
+/**
+ * Reads a file resource from temp folder.
+ * 
+ * @param	string		$key
+ * @param	string		$directory
+ */
+function readFileResource($key, $directory) {
+	if (preg_match('~[\w\-]+\.(css|jpg|png|svg)~', $_GET[$key], $match)) {
+		switch ($match[1]) {
+			case 'css':
+				header('Content-Type: text/css');
+			break;
+			
+			case 'jpg':
+				header('Content-Type: image/jpg');
+			break;
+			
+			case 'png':
+				header('Content-Type: image/png');
+			break;
+			
+			case 'svg':
+				header('Content-Type: image/svg+xml');
+			break;
+		}
+		
+		readfile($directory . $_GET[$key]);
 	}
 	exit;
 }
 
-// check whether setup files already unzipped
+// show image from temp folder
+if (isset($_GET['showImage'])) {
+	readFileResource('showImage', TMP_DIR . 'install/files/acp/images/');
+}
+// show icon from temp folder
+if (isset($_GET['showIcon'])) {
+	readFileResource('showIcon', TMP_DIR . 'install/files/icon/');
+}
+// show css from temp folder
+if (isset($_GET['showCSS'])) {
+	readFileResource('showCSS', TMP_DIR . 'install/files/acp/style/');
+}
+
+// check whether setup files are already unzipped
 if (!file_exists(TMP_DIR . 'install/files/lib/system/WCFSetup.class.php')) {
 	// try to unzip all setup files into temp folder
 	$tar = new Tar(SETUP_FILE);

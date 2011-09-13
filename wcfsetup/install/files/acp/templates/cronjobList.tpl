@@ -39,9 +39,9 @@
 <div class="contentHeader">
 	{pages print=true assign=pagesLinks link="index.php?page=CronjobList&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"|concat:SID_ARG_2ND_NOT_ENCODED}
 	
-	{if $__wcf->session->getPermission('admin.system.cronjobs.canAddCronjob')}
+	{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
 		<nav class="largeButtons">
-			<ul><li><a href="index.php?form=CronjobAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/cronjobsAddM.png" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
+			<ul><li><a href="index.php?form=CronjobAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/cronjobAddM.png" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
 		</nav>
 	{/if}
 </div>
@@ -78,19 +78,19 @@
 			{foreach from=$cronjobs item=cronjob}
 				<tr class="cronjobRow">
 					<td class="columnIcon">
-						{if $__wcf->session->getPermission('admin.system.cronjobs.canEditCronjob')}
+						{if $__wcf->session->getPermission('admin.system.cronjob.canEditCronjob')}
 							<img src="{@RELATIVE_WCF_DIR}icon/play1.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" data-objectID="{@$cronjob->cronjobID}" class="executeButton balloonTooltip" />
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/play1D.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" />
 						{/if}
 						
 						{if $cronjob->canBeDisabled()}
-							<img src="{@RELATIVE_WCF_DIR}icon/{if $cronjob->active}enabled{else}disabled{/if}1.svg" alt="" data-objectID="{@$cronjob->cronjobID}" data-disableMessage="{lang}wcf.acp.cronjob.disable{/lang}" data-enableMessage="{lang}wcf.acp.cronjob.enable{/lang}" title="{lang}wcf.acp.cronjobs.{if $cronjob->active}disable{else}enable{/if}{/lang}" class="toggleButton balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/{if $cronjob->active}enabled{else}disabled{/if}1.svg" alt="" data-objectID="{@$cronjob->cronjobID}" data-disableMessage="{lang}wcf.acp.cronjob.disable{/lang}" data-enableMessage="{lang}wcf.acp.cronjob.enable{/lang}" title="{lang}wcf.acp.cronjob.{if $cronjob->active}disable{else}enable{/if}{/lang}" class="toggleButton balloonTooltip" />
 						{else}
 							{if $cronjob->active}
-								<img src="{@RELATIVE_WCF_DIR}icon/enabled1D.svg" alt="" title="{lang}wcf.acp.cronjob.disable{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/enabled1D.svg" alt="" title="{lang}wcf.acp.cronjob.disabled{/lang}" />
 							{else}
-								<img src="{@RELATIVE_WCF_DIR}icon/disabled1D.svg" alt="" title="{lang}wcf.acp.cronjob.enable{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/disabled1D.svg" alt="" title="{lang}wcf.acp.cronjob.enabled{/lang}" />
 							{/if}
 						{/if}
 						
@@ -136,9 +136,9 @@
 	<div class="contentFooter">
 		{@$pagesLinks}
 		
-		{if $__wcf->session->getPermission('admin.system.cronjobs.canAddCronjob')}
+		{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
 			<nav class="largeButtons">
-				<ul><li><a href="index.php?form=CronjobAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/cronjobsAddM.png" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
+				<ul><li><a href="index.php?form=CronjobAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/cronjobAddM.png" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
 			</nav>
 		{/if}
 	</div>

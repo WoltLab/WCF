@@ -1,75 +1,92 @@
 {include file='header'}
 
-<h2>{lang}wcf.global.systemRequirements{/lang}</h2>
-
-<p>{lang}wcf.global.systemRequirements.description{/lang}</p>
+<hgroup class="subHeading">
+	<h1>{lang}wcf.global.systemRequirements{/lang}</h1>
+	<h2>{lang}wcf.global.systemRequirements.description{/lang}</h2>
+</hgroup>
 
 <fieldset>
 	<legend>{lang}wcf.global.systemRequirements.required{/lang}</legend>
-	<div class="inner">
-	
-		<div>
-			<h3>{lang}wcf.global.systemRequirements.php{/lang}</h3>
-			<span class="left">{lang}wcf.global.systemRequirements.element.required{/lang} 5.3.0</span>
-			<span class="right" style="color: {if !$system.phpVersion.result}red{else}green{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} {$system.phpVersion.value}</span>
-			{if !$system.phpVersion.result}<div>{lang}wcf.global.systemRequirements.php.description{/lang}</div>{/if}
-		</div>
-		<hr />
 		
-		<div>
-			<h3>{lang}wcf.global.systemRequirements.sql{/lang}</h3>
-			<span class="left">{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.active{/lang}</span>
-			<span class="right" style="color: {if !$system.sql.result}red{else}green{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} 
-			{if !$system.sql.result}{lang}wcf.global.systemRequirements.sql.notFound{/lang}{else}
-				{implode from=$system.sql.value item=$sqlType glue=', '}{lang}wcf.global.configureDB.class.{@$sqlType}{/lang}{/implode}
-			{/if}</span>
-			{if !$system.sql.result}<div>{lang}wcf.global.systemRequirements.sql.description{/lang}</div>{/if}
-		</div>
-		<hr />
+		<fieldset>
+			<legend>{lang}wcf.global.systemRequirements.php{/lang}</legend>
+			<dl>
+				<dt>{lang}wcf.global.systemRequirements.element.required{/lang} 5.3.0</dt>
+				<dd>
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.phpVersion.result}badgeWarning{else}badgeSuccess{/if}">{$system.phpVersion.value}</span>
+					{if !$system.phpVersion.result}<small>{lang}wcf.global.systemRequirements.php.description{/lang}</small>{/if}
+				</dd>
+			</dl>
+		</fieldset>
 		
-		<div>
-			<h3>{lang}wcf.global.systemRequirements.mbString{/lang}</h3>
-			<span class="left">{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.active{/lang}</span>
-			<span class="right" style="color: {if !$system.mbString.result}red{else}green{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} {if !$system.mbString.result}{lang}wcf.global.systemRequirements.notActive{/lang}{else}{lang}wcf.global.systemRequirements.active{/lang}{/if}</span>
-			{if !$system.mbString.result}<div>{lang}wcf.global.systemRequirements.mbString.description{/lang}</div>{/if}
-		</div>
-		<hr />
+		<fieldset>
+			<legend>{lang}wcf.global.systemRequirements.sql{/lang}</legend>
+			<dl>
+				<dt>{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.active{/lang}</dt>
+				<dd>
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.sql.result}badgeWarning{else}badgeSuccess{/if}">
+					{if !$system.sql.result}{lang}wcf.global.systemRequirements.sql.notFound{/lang}{else}
+						{implode from=$system.sql.value item=$sqlType glue=', '}{lang}wcf.global.configureDB.class.{@$sqlType}{/lang}{/implode}
+					{/if}</span>
+					{if !$system.sql.result}<small>{lang}wcf.global.systemRequirements.sql.description{/lang}</small>{/if}
+				</dd>
+			</dl>
+		</fieldset>
 		
-		<div>
-			<h3>{lang}wcf.global.systemRequirements.safeMode{/lang}</h3>
-			<span class="left">{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.notActive{/lang}</span>
-			<span class="right" style="color: {if !$system.safeMode.result}red{else}green{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} {if !$system.safeMode.result}{lang}wcf.global.systemRequirements.active{/lang}{else}{lang}wcf.global.systemRequirements.notActive{/lang}{/if}</span>
-			{if !$system.safeMode.result}<div>{lang}wcf.global.systemRequirements.safeMode.description{/lang}</div>{/if}
-		</div>
+		<fieldset>
+			<legend>{lang}wcf.global.systemRequirements.mbString{/lang}</legend>
+			<dl>
+				<dt>{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.active{/lang}</dt>
+				<dd>
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.mbString.result}badgeWarning{else}badgeSuccess{/if}">{if !$system.mbString.result}{lang}wcf.global.systemRequirements.notActive{/lang}{else}{lang}wcf.global.systemRequirements.active{/lang}{/if}</span>{if !$system.mbString.result}<small>{lang}wcf.global.systemRequirements.mbString.description{/lang}</small>{/if}
+				</dd>
+			</dl>
+			
+		</fieldset>
 		
-	</div>
+		<fieldset>
+			<legend>{lang}wcf.global.systemRequirements.safeMode{/lang}</legend>
+			<dl>
+				<dt>{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.notActive{/lang}</dt>
+				<dd>
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.safeMode.result}badgeWarning{else}badgeSuccess{/if}">{if !$system.safeMode.result}{lang}wcf.global.systemRequirements.active{/lang}{else}{lang}wcf.global.systemRequirements.notActive{/lang}{/if}</span>
+					{if !$system.safeMode.result}<small>{lang}wcf.global.systemRequirements.safeMode.description{/lang}</small>{/if}
+				</dd>
+			</dl>
+		</fieldset>
+		
 </fieldset>
 
 <fieldset>
 	<legend>{lang}wcf.global.systemRequirements.recommended{/lang}</legend>
-	<div class="inner">
-	
-		<div>
-			<h3>{lang}wcf.global.systemRequirements.uploadMaxFilesize{/lang}</h3>
-			<span class="left">{lang}wcf.global.systemRequirements.element.recommended{/lang} > 0</span>
-			<span class="right" style="color: {if !$system.uploadMaxFilesize.result}orange{else}green{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} {$system.uploadMaxFilesize.value}</span>
-			{if !$system.uploadMaxFilesize.result}<div>{lang}wcf.global.systemRequirements.uploadMaxFilesize.description{/lang}</div>{/if}
-		</div>
-		<hr />
 		
-		<div>
-			<h3>{lang}wcf.global.systemRequirements.gdLib{/lang}</h3>
-			<span class="left">{lang}wcf.global.systemRequirements.element.recommended{/lang} 2.0.0</span>
-			<span class="right" style="color: {if !$system.gdLib.result}orange{else}green{/if}">{lang}wcf.global.systemRequirements.element.yours{/lang} {$system.gdLib.value}</span>
-			{if !$system.gdLib.result}<div>{lang}wcf.global.systemRequirements.gdLib.description{/lang}</div>{/if}
-		</div>
+		<fieldset>
+			<legend>{lang}wcf.global.systemRequirements.uploadMaxFilesize{/lang}</legend>
+			<dl>
+				<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang} > 0</dt>
+				<dd>
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.uploadMaxFilesize.result}badgeWarning{else}badgeSuccess{/if}">{$system.uploadMaxFilesize.value}</span>
+					{if !$system.uploadMaxFilesize.result}<small>{lang}wcf.global.systemRequirements.uploadMaxFilesize.description{/lang}</small>{/if}
+				</dd>
+			</dl>
+		</fieldset>
 		
-	</div>
+		<fieldset>
+			<legend>{lang}wcf.global.systemRequirements.gdLib{/lang}</legend>
+			<dl>
+				<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang} 2.0.0</dt>
+				<dd>
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.gdLib.result}badgeWarning{else}badgeSuccess{/if}">{$system.gdLib.value}</span>
+					{if !$system.gdLib.result}<small>{lang}wcf.global.systemRequirements.gdLib.description{/lang}</small>{/if}
+				</dd>
+			</dl>
+		</fieldset>
+		
 </fieldset>
 
 <form method="post" action="install.php">	
-	<div class="nextButton">
-		<input type="submit" accesskey="s" value="{lang}wcf.global.button.next{/lang}" {if !$system.phpVersion.result || !$system.sql.result || !$system.mbString.result || !$system.safeMode.result} disabled="disabled"{/if}/>
+	<div class="formSubmit">
+		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result || !$system.mbString.result || !$system.safeMode.result} disabled="disabled"{/if} accesskey="s"/>
 		<input type="hidden" name="step" value="{@$nextStep}" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
 		<input type="hidden" name="languageCode" value="{@$languageCode}" />
