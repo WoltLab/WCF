@@ -22,9 +22,11 @@
 			<dd><input type="text" id="wcfDir" name="wcfDir" value="{$wcfDir}" class="long" /></dd>
 		</dl>
 		<dl>
-			<dt>{lang}wcf.global.wcfDir.url{/lang}</dt>
-			<dd><input type="text" id="wcfUrl" name="wcfUrl" value="" readonly="readonly" class="long" /></dd>
-			<small>{lang}wcf.global.wcfDir.url.description{/lang}</small>
+			<dt><label for="wcfUrl">{lang}wcf.global.wcfDir.url{/lang}</label></dt>
+			<dd>
+				<input type="text" id="wcfUrl" name="wcfUrl" value="" readonly="readonly" class="long" />
+				<small>{lang}wcf.global.wcfDir.url.description{/lang}</small>
+			</dd>
 		</dl>
 		
 	</fieldset>
