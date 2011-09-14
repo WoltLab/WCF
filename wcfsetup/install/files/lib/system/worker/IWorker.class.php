@@ -50,4 +50,11 @@ interface IWorker {
 	 * Validates parameters.
 	 */
 	public function validate();
+	
+	/**
+	 * Returns URL for redirect after worker finished.
+	 * 
+	 * @return	string
+	 */
+	public function getProceedURL();
 }

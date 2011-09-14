@@ -614,5 +614,16 @@ WCF.ACP.Worker.prototype = {
 				}
 			});
 		}
+		else {
+			// display proceed button
+			var $proceedButton = $('<input type="submit" value="Proceed" />').appendTo('#workerInnerContent');
+			$proceedButton.click(function() {
+				window.location = $data.proceedURL;
+			});
+			
+			$('#workerInnerContentContainer').wcfBlindIn();
+			
+			this._dialog.wcfDialog('redraw');
+		}
 	}
 };

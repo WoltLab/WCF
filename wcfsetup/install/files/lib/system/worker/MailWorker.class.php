@@ -131,4 +131,11 @@ class MailWorker extends AbstractWorker {
 		}
 		catch (SystemException $e) {} // ignore errors
 	}
+	
+	/**
+	 * @see	wcf\system\worker\IWorker::getProceedURL()
+	 */
+	public function getProceedURL() {
+		return 'index.php?page=UserList' . SID_ARG_2ND_NOT_ENCODED;
+	}
 }

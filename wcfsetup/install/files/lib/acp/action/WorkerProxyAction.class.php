@@ -109,7 +109,7 @@ class WorkerProxyAction extends AbstractSecureAction {
 		$this->worker->execute();
 		
 		// send current state
-		$this->sendResponse($progress, $this->worker->getParameters());
+		$this->sendResponse($progress, $this->worker->getParameters(), $this->worker->getProceedURL());
 		
 	}
 	
@@ -118,8 +118,9 @@ class WorkerProxyAction extends AbstractSecureAction {
 	 * 
 	 * @param	integer		$progress
 	 * @param	array		$parameters
+	 * @param	string		$proceedURL
 	 */
-	protected function sendResponse($progress = 0, array $parameters = null) {
+	protected function sendResponse($progress = 0, array $parameters = null, $proceedURL = '') {
 		if ($parameters === null) $parameters = $this->parameters;
 		
 		// build return values
@@ -127,6 +128,7 @@ class WorkerProxyAction extends AbstractSecureAction {
 			'className' => $this->className,
 			'loopCount' => ($this->loopCount + 1),
 			'parameters' => $parameters,
+			'proceedURL' => $proceedURL,
 			'progress' => $progress
 		);
 		
