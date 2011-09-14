@@ -39,7 +39,7 @@ class MailWorker extends AbstractWorker {
 	 * @see	wcf\system\worker\IWorker::validate()
 	 */
 	public function validate() {
-		WCF::getSession()->checkPermission('admin.user.canMailUser');
+		WCF::getSession()->checkPermissions(array('admin.user.canMailUser'));
 		
 		if (!isset($this->parameters['mailID'])) {
 			throw new SystemException("mailID missing");

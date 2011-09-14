@@ -603,7 +603,8 @@ WCF.ACP.Worker.prototype = {
 				type: 'POST',
 				data: {
 					className: $data.className,
-					loopCount: $data.loopCount
+					loopCount: $data.loopCount,
+					parameters: $data.parameters
 				},
 				success: $.proxy(function(data) {
 					this._dialog.data('responseData', data);
