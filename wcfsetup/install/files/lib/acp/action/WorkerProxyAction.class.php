@@ -28,7 +28,7 @@ class WorkerProxyAction extends AbstractSecureAction {
 	 * loop counter
 	 * @var	integer
 	 */
-	protected $loopCount = 0;
+	protected $loopCount = -1;
 	
 	/**
 	 * parameters for worker action
@@ -91,21 +91,22 @@ class WorkerProxyAction extends AbstractSecureAction {
 	public function execute() {
 		parent::execute();
 		
-		// initialize worker
-		if ($this->loopCount == 0) {
+		if ($this->loopCount == -1) {
 			$this->sendResponse();
 		}
 		
+		// init worker
 		$this->worker = new $this->className($this->parameters);
 		$this->worker->setLoopCount($this->loopCount);
-		$this->worker->validate();
-		$returnValues = array();
 		
+		// validate worker parameters
+		$this->worker->validate();
+		
+		// calculate progress, triggers countObjects()
 		$progress = $this->worker->getProgress();
-		$returnValues['progress'] = $progress;
-		if ($progress < 100) {
-			$this->worker->execute();
-		}
+		
+		// execute worker
+		$this->worker->execute();
 		
 		// send current state
 		$this->sendResponse($progress, $this->worker->getParameters());
@@ -124,13 +125,13 @@ class WorkerProxyAction extends AbstractSecureAction {
 		// build return values
 		$returnValues = array(
 			'className' => $this->className,
-			'loopCount' => $this->loopCount,
+			'loopCount' => ($this->loopCount + 1),
 			'parameters' => $parameters,
 			'progress' => $progress
 		);
 		
 		// include template on startup
-		if ($progress == 0) {
+		if ($this->loopCount == -1) {
 			$returnValues['template'] = WCF::getTPL()->fetch('worker');
 		}
 		

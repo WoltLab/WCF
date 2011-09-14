@@ -65,7 +65,8 @@ abstract class AbstractWorker implements IWorker {
 			return 100;
 		}
 		
-		return ceil(($this->loopCount / ceil($this->count / $this->limit)) * 100);
+		$progress = (($this->limit * ($this->loopCount + 1)) / $this->count) * 100;
+		return round($progress, 0);
 	}
 	
 	/**
