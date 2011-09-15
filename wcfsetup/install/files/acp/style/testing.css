@@ -578,8 +578,12 @@ fieldset {
 	border: 1px solid #ccc;
 	border-radius: 7px;
 	background-color: rgba(0, 0, 0, .015);
-	margin: 15px 0 0;
+	margin: 7px 0 0;
 	padding: 15px;
+}
+
+fieldset:last-child, fieldset:only-child {
+	margin: 7px 0 7px !important;
 }
 
 /* experimental 
@@ -875,6 +879,7 @@ textarea {
 /* buttons normal */
 input[type='reset'],
 input[type='submit'],
+input[type='button'],
 .largeButtons ul li a {
 	font-size: 100%;
 	font-weight: bold;
@@ -908,6 +913,7 @@ input[type='submit'],
 /* buttons hover */
 input[type='reset']:hover,
 input[type='submit']:hover,
+input[type='button']:hover,
 .largeButtons ul li a:hover {
 	color: #666;
 	border-width: 1px;
@@ -925,9 +931,11 @@ input[type='submit']:hover,
 /* buttons active */
 input[type='reset']:focus,
 input[type='submit']:focus,
+input[type='button']:focus,
 .largeButtons ul li a:focus,
 input[type='reset']:active,
 input[type='submit']:active,
+input[type='button']:active,
 .largeButtons ul li a:active{
 	color: #333;
 	border-width: 1px;
@@ -992,6 +1000,7 @@ input[type='submit']:active,
 
 /* default buttons normal */
 input[type='submit'],
+input[type='button'].default,
 .largeButtons ul li.default a {
 	color: #69c;
 	border-width: 1px;
@@ -1086,6 +1095,7 @@ input[type='submit'],
 
 /* default buttons hover */
 input[type='submit']:hover,
+input[type='button'].default:hover,
 .largeButtons ul li.default a:hover {
 	color: #666;
 	
@@ -1170,8 +1180,10 @@ input[type='submit']:hover,
 
 /* default buttons active */
 input[type='submit']:focus,
+input[type='button'].default:hover,
 .largeButtons ul li.default a:focus,
 input[type='submit']:active,
+input[type='button'].default:hover,
 .largeButtons ul li.default a:active {
 	color: #333;
 	
@@ -1214,6 +1226,7 @@ input[type='submit']:active,
 
 /* disabled buttons */
 input[disabled='disabled'],
+input[type='button'][disabled='disabled'],
 .largeButtons ul li.disabled a {
 	color: #999;
 	cursor: default;
@@ -1978,11 +1991,6 @@ div.ui-dialog {
 	display: inline-block !important;
 	width: auto !important;
 	min-width: 80px;
-}
-
-div.ui-dialog-content p {
-	background-color: #fff;
-	padding: 7px;
 }
 
 div.ui-dialog-titlebar {
