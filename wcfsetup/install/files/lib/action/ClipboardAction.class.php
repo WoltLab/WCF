@@ -83,20 +83,26 @@ class ClipboardAction extends AbstractSecureAction {
 	public function execute() {
 		parent::execute();
 		
+		// execute clipboard action
+		$this->executeAction();
+		
+		// get editor items
+		$returnValues = $this->getEditorItems();
+		// send JSON response
+		header('Content-type: application/json');
+		echo JSON::encode($returnValues);
+		exit;
+	}
+	
+	/**
+	 * Executes clipboard action.
+	 */
+	protected function executeAction() {
 		// validate parameters
 		$this->validate();
 		
 		// execute action
 		ClipboardHandler::getInstance()->{$this->action}($this->objectIDs, $this->typeID);
-		
-		// get editor items
-		$editorItems = $this->getEditorItems();
-		// send JSON response
-		header('Content-type: application/json');
-		echo JSON::encode(array(
-			'items' => $editorItems
-		));
-		exit;
 	}
 	
 	/**
@@ -106,6 +112,7 @@ class ClipboardAction extends AbstractSecureAction {
 	 */
 	protected function getEditorItems() {
 		$data = ClipboardHandler::getInstance()->getEditorItems($this->pageClassName);
+		
 		if ($data === null) {
 			return array();
 		}
@@ -130,7 +137,9 @@ class ClipboardAction extends AbstractSecureAction {
 			$editorItems[$typeName] = $items;
 		}
 		
-		return $editorItems;
+		return array(
+			'items' => $editorItems
+		);
 	}
 	
 	/**
