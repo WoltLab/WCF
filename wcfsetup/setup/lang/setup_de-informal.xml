@@ -126,7 +126,7 @@
 		<item name="wcf.global.languages.error.empty"><![CDATA[Wähle mindestens eine Sprache aus!]]></item>
 		<item name="wcf.global.languages.error.notAvailable"><![CDATA[Du hast Sprachen ausgewählt, die in der gleichzeitig ausgewählten Zeichencodierung nicht zur Verfügung stehen. Korrigiere deine Auswahl.]]></item>
 		<item name="wcf.global.configureDB"><![CDATA[Datenbankzugang konfigurieren]]></item>
-		<item name="wcf.global.configureDB.description"><![CDATA[Die Daten der Software werden in einer MySQL Datenbank gespeichert. Gib die Zugangsdaten für diese Datenbank an!]]></item>
+		<item name="wcf.global.configureDB.description"><![CDATA[Die Daten der Software werden in einer SQL-Datenbank gespeichert. Gib die Zugangsdaten für diese Datenbank an!]]></item>
 		<item name="wcf.global.configureDB.accessData"><![CDATA[Datenbankzugangsdaten]]></item>
 		<item name="wcf.global.configureDB.host"><![CDATA[Hostname]]></item>
 		<item name="wcf.global.configureDB.user"><![CDATA[Benutzername]]></item>

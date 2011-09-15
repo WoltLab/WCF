@@ -578,7 +578,7 @@ fieldset {
 	border: 1px solid #ccc;
 	border-radius: 7px;
 	background-color: rgba(0, 0, 0, .015);
-	margin: 15px 0;
+	margin: 15px 0 0;
 	padding: 15px;
 }
 
@@ -1912,14 +1912,7 @@ p.error {
 /* ToDo: Installation */
 
 div#packageInstallationDialogContainer {
-	background-color: #fefefe;
-	background-image: -webkit-linear-gradient(#fefefe, #eee);
-	background-image: -moz-linear-gradient(#fefefe, #eee);
-	background-image: -ms-linear-gradient(#fefefe, #eee);
-	background-image: -o-linear-gradient(#fefefe, #eee);
-	background-image: linear-gradient(#fefefe, #eee);
-	
-	padding: 21px;
+	padding: 20px;
 	height: 100%;
 	max-width: 600px;
 }
@@ -1931,24 +1924,22 @@ div#ajaxExceptionStacktrace {
 }
 
 div#packageInstallationInnerContentContainer {
-	border-top: 2px solid #999 !important;
-	border-radius: 0 !important;
-	margin-top: 21px;
-	padding-top: 14px;
+	margin-top: 20px;
+	padding-top: 15px;
 }
 
 div#packageInstallationInnerContent p.error {
-	border: 3px solid #ed1c24;
+	border: 1px solid #ed1c24;
 	border-radius: 5px;
 	background-color: #fdd;
-	margin-bottom: 14px;
+	margin-bottom: 15px;
 	padding: 7px;
 }
 
 div#ajaxExceptionStacktrace {
 	font-family: monospace;
 	font-size: 90%;
-	line-height: 1.2em;
+	line-height: 1.2;
 	border: 1px solid #ccc;
 	padding: 3px;
 }
@@ -2078,10 +2069,6 @@ div.ui-widget-overlay {
 }
 
 /* Types */
-
-.badgeNote {
-	border: 1px solid #ccc;
-}
 
 .badgeInfo {
 	color: #68b;

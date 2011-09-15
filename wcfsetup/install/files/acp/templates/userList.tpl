@@ -77,7 +77,7 @@
 								{if $additionalButtons[$user->userID]|isset}{@$additionalButtons[$user->userID]}{/if}
 							</td>
 							<td class="columnUserID columnID"><p>{@$user->userID}</p></td>
-							<td class="columnUsername columnText"><p>{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user->username}</a>{else}{$user->username}{/if}</p></td>
+							<td class="columnUsername columnName columnText"><p>{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user->username}</a>{else}{$user->username}{/if}</p></td>
 					
 							{foreach from=$columnHeads key=column item=columnLanguageVariable}
 								<td class="column{$column|ucfirst}"><p>{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</p></td>
