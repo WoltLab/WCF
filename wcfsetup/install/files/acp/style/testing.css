@@ -369,6 +369,15 @@ div.main > div section:only-child {
 
 
 
+/* -- -- -- -- -- Content Header & Footer -- -- -- -- -- */
+
+.contentHeader,
+.contentFooter {
+	margin-top: 15px;
+}
+
+
+
 /* -- -- -- -- -- Sidebar -- -- -- -- -- */
 
 aside.sidebar {
@@ -521,7 +530,6 @@ footer.pageFooter nav.footerNavigation ul li {
 /* Main Heading */
 
 .mainHeading {
-	margin: 0 0 15px;
 	position: relative;
 }
 
@@ -534,9 +542,8 @@ footer.pageFooter nav.footerNavigation ul li {
 }
 
 .mainHeading > hgroup {
-	margin-bottom: 30px;
 	padding-left: 60px;
-	min-height: 48px;
+	min-height: 56px;
 }
 
 .mainHeading > hgroup h1 {
@@ -1250,7 +1257,7 @@ input[type='button'][disabled='disabled'],
 .border {
 	border: 1px solid #ccc;
 	border-radius: 5px;
-	margin: 15px 0 15px;
+	margin: 15px 0 0;
 }
 
 /* -- -- -- -- -- Box Title -- -- -- -- -- */
@@ -1553,8 +1560,6 @@ thead th {
 thead th:first-child {
 	/* rounded corners for the first table header cell to the left */
 	border-top-left-radius: 5px;
-	/* keeps the first column of tables narrow */
-	width: 1%;
 }
 
 thead th:last-child {
@@ -1611,11 +1616,10 @@ thead th.active:hover a {
 	background-color: rgba(0, 0, 0, .3);
 }
 
-thead th input[type='checkbox'] {
-	margin: -5px !important;
-}
-
 thead th a img {
+	/* sort-icon orientation does not work */
+	text-align: right;
+	/* negative margins to prevent table-cells from expanding when ths sort-icon shows up */
 	margin-top: -5px !important;
 	margin-bottom: -5px !important;
 }
@@ -1667,10 +1671,6 @@ tbody tr:hover td {
 	background-color: #d8e7f5;
 }
 
-tbody tr .columnIcon img:not(.balloonTooltip):hover {
-	cursor: not-allowed;
-}
-
 /* ToDo: Table Specials */
 
 /*
@@ -1698,25 +1698,72 @@ tbody tr .columnIcon img:not(.balloonTooltip):hover {
 	border-top-right-radius: 0 !important;
 }
 
-/* ToDo: Table Column Formats */
+/* Table Column Formats */
 
-tbody tr .columnIcon img {
+tr .columnMark,
+tr .columnStatus {
+	text-align: center;
+	width: 1% !important;
+}
+
+tr .columnStatus .badge {
+	margin-right: 1px !important;
+	margin-left: 1px !important;
+}
+
+tr .columnDigits,
+tr .columnID {
+	text-align: right;
+	width: 1% !important;
+}
+
+tr .columnIcon {
+	text-align: left;
+	width: 1% !important
+}
+
+tr .columnIcon img:not(.balloonTooltip):hover {
+	cursor: not-allowed;
+}
+
+tr .columnIcon img {
 	height: 16px;
 	width: 16px;
 }
 
-.bigList tbody tr .columnIcon img {
+.bigList tr .columnIcon img {
 	height: 24px;
 	width: 24px;
 }
 
-tbody tr .columnName {
+tr .columnTitle {
 	font-weight: bold;
+	text-align: left;
 }
 
-tbody tr .columnDate,
-tbody tr .columnRegistrationDate {
+tr .columnText {
+	font-weight: normal;
+	text-align: left;
+	max-width: 20%;
+}
+
+tr .columnDate,
+tr .columnRegistrationDate {
 	font-size: 85%;
+	text-align: right;
+	width: 1% !important;
+}
+
+tr .columnURL {
+	font-size: 85%;
+	text-align: left;
+}
+
+/* Table Checkboxes */
+
+table input[type='checkbox'] {
+	margin-top: -5px !important;
+	margin-bottom: -5px !important;
 }
 
 
@@ -1860,8 +1907,8 @@ p.warning {
 	text-shadow: 0 1px 0 #fff;
 	line-height: 1.5;
 	border-radius: 7px;
-	margin-bottom: 14px;
-	padding: 7px 14px 7px 50px;
+	margin-top: 15px;
+	padding: 7px 15px 7px 50px;
 	
 	-webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
 	-moz-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
@@ -2077,6 +2124,10 @@ div.ui-widget-overlay {
 }
 
 /* Types */
+
+.badgeNote {
+	border: 1px solid #ccc;
+}
 
 .badgeInfo {
 	color: #68b;

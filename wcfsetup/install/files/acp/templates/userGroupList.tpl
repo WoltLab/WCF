@@ -46,9 +46,9 @@
 		<table class="bigList">
 			<thead>
 				<tr class="tableHead">
-					<th class="columnGroupID{if $sortField == 'groupID'} active{/if}" colspan="2"><a href="index.php?page=UserGroupList&amp;pageNo={@$pageNo}&amp;sortField=groupID&amp;sortOrder={if $sortField == 'groupID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.group.groupID{/lang}{if $sortField == 'groupID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnGroupName{if $sortField == 'groupName'} active{/if}"><a href="index.php?page=UserGroupList&amp;pageNo={@$pageNo}&amp;sortField=groupName&amp;sortOrder={if $sortField == 'groupName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.group.groupName{/lang}{if $sortField == 'groupName'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnMembers{if $sortField == 'members'} active{/if}"><a href="index.php?page=UserGroupList&amp;pageNo={@$pageNo}&amp;sortField=members&amp;sortOrder={if $sortField == 'members' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.group.members{/lang}{if $sortField == 'members'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnID columnGroupID{if $sortField == 'groupID'} active{/if}" colspan="2"><a href="index.php?page=UserGroupList&amp;pageNo={@$pageNo}&amp;sortField=groupID&amp;sortOrder={if $sortField == 'groupID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.group.groupID{/lang}{if $sortField == 'groupID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnTitle columnGroupName{if $sortField == 'groupName'} active{/if}"><a href="index.php?page=UserGroupList&amp;pageNo={@$pageNo}&amp;sortField=groupName&amp;sortOrder={if $sortField == 'groupName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.group.groupName{/lang}{if $sortField == 'groupName'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnDigits columnMembers{if $sortField == 'members'} active{/if}"><a href="index.php?page=UserGroupList&amp;pageNo={@$pageNo}&amp;sortField=members&amp;sortOrder={if $sortField == 'members' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.group.members{/lang}{if $sortField == 'members'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					
 					{if $additionalHeadColumns|isset}{@$additionalHeadColumns}{/if}
 				</tr>
@@ -78,9 +78,9 @@
 							
 							{if $additionalButtons[$group->groupID]|isset}{@$additionalButtons[$group->groupID]}{/if}
 						</td>
-						<td class="columnGroupID columnID"><p>{@$group->groupID}</p></td>
-						<td class="columnGroupName columnName columnText">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{$group->groupName}</a>{else}{$group->groupName}</p>{/if}</td>
-						<td class="columnMembers columnNumbers"><p><a title="{lang}wcf.acp.group.showMembers{/lang}" href="index.php?form=UserSearch&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{#$group->members}</p></a></td>
+						<td class="columnID columnGroupID"><p>{@$group->groupID}</p></td>
+						<td class="columnTitle columnGroupName">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{$group->groupName}</a>{else}{$group->groupName}</p>{/if}</td>
+						<td class="columnDigits columnMembers"><p><a title="{lang}wcf.acp.group.showMembers{/lang}" href="index.php?form=UserSearch&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{#$group->members}</p></a></td>
 						
 						{if $additionalColumns[$group->groupID]|isset}{@$additionalColumns[$group->groupID]}{/if}
 					</tr>

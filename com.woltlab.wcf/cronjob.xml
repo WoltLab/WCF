@@ -29,7 +29,7 @@
 		
 		<cronjob>
 			<classname>wcf\system\cronjob\CleanUpCronjobLogCronjob</classname>
-			<description>Deletes old entries from cronjob log.</description>
+			<description>Deletes old entries from cronjob log</description>
 			<startminute>0</startminute>
 			<starthour>12</starthour>
 			<startdom>*</startdom>
@@ -42,7 +42,7 @@
 		
 		<cronjob>
 			<classname>wcf\system\cronjob\CleanUpSessionLogCronjob</classname>
-			<description>Deletes old entries from session log.</description>
+			<description>Deletes old entries from session log</description>
 			<startminute>0</startminute>
 			<starthour>10</starthour>
 			<startdom>*</startdom>
@@ -55,7 +55,7 @@
 		
 		<cronjob>
 			<classname>wcf\system\cronjob\CleanupListenerCronjob</classname>
-			<description>Executes cleanup system.</description>
+			<description>Executes the cleanup system</description>
 			<startminute>5,20,35,50</startminute>
 			<starthour>*</starthour>
 			<startdom>*</startdom>

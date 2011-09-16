@@ -69,11 +69,11 @@
 			<table id="cache{@$cacheIndex}">
 				<thead>
 					<tr>
-						<th>{lang}wcf.acp.cache.list.name{/lang}</th>
-						<th>{lang}wcf.acp.cache.list.size{/lang}</th>
-						<th>{lang}wcf.acp.cache.list.mtime{/lang}</th>
+						<th class="columnTitle">{lang}wcf.acp.cache.list.name{/lang}</th>
+						<th class="columnDigits">{lang}wcf.acp.cache.list.size{/lang}</th>
+						<th class="columnDate">{lang}wcf.acp.cache.list.mtime{/lang}</th>
 						{if $files.0.perm|isset}
-							<th>{lang}wcf.acp.cache.list.perm{/lang}</th>
+							<th class="columnDigits">{lang}wcf.acp.cache.list.perm{/lang}</th>
 						{/if}
 					</tr>
 				</thead>
@@ -81,11 +81,11 @@
 				<tbody>
 				{foreach from=$files item=file}
 					<tr>
-						<td class="columnText"><p>{$file.filename}</td>
-						<td class="columnNumbers"><p>{@$file.filesize|filesize}</td>
+						<td class="columnTitle"><p>{$file.filename}</td>
+						<td class="columnDigits"><p>{@$file.filesize|filesize}</td>
 						<td class="columnDate">{if $file.mtime > 1}<p>{@$file.mtime|time}</p>{/if}</td>
 						{if $file.perm|isset}
-							<td class="columnNumbers"><p{if !$file.writable} style="color: #c00"{/if}>{@$file.perm}</p></td>
+							<td class="columnDigits"><p{if !$file.writable} style="color: #c00"{/if}>{@$file.perm}</p></td>
 						{/if}
 					</tr>
 				{/foreach}

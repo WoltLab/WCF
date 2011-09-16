@@ -8,7 +8,7 @@
 		</hgroup>
 	</header>
 	
-	<div id="workerInnerContentContainer" class="border content" style="display: none;">
-		<div id="workerInnerContent" class="container-1"></div>
+	<div id="workerInnerContentContainer" class="" style="display: none;">
+		<div id="workerInnerContent" class=""></div>
 	</div>
 </div>
