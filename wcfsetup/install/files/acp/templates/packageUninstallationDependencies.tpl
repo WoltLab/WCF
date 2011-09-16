@@ -78,11 +78,11 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="2">{lang}wcf.acp.package.list.id{/lang}</th>
-					<th colspan="2">{lang}wcf.acp.package.list.name{/lang}</th>
-					<th>{lang}wcf.acp.package.list.author{/lang}</th>
-					<th>{lang}wcf.acp.package.list.version{/lang}</th>
-					<th>{lang}wcf.acp.package.list.date{/lang}</th>
+					<th colspan="2" class="columnID">{lang}wcf.acp.package.list.id{/lang}</th>
+					<th colspan="2" class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
+					<th class="columnText">{lang}wcf.acp.package.list.author{/lang}</th>
+					<th class="columnText">{lang}wcf.acp.package.list.version{/lang}</th>
+					<th class="columnDate">{lang}wcf.acp.package.list.date{/lang}</th>
 					
 					{if $additionalColumns|isset}{@$additionalColumns}{/if}
 				</tr>
@@ -115,7 +115,7 @@
 							<img src="{@RELATIVE_WCF_DIR}icon/packageS.png" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="balloonTooltip" />
 						{/if}
 					</td>
-					<td class="columnText" title="{$package.packageDescription}"><p><a href="index.php?page=PackageView&amp;packageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
+					<td class="columnTitle" title="{$package.packageDescription}"><p><a href="index.php?page=PackageView&amp;packageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
 					<td class="columnText"><p>{if $package.authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package.authorURL|rawurlencode}" class="externalURL">{$package.author}</a>{else}{$package.author}{/if}</p></td>
 					<td class="columnText"><p>{$package.packageVersion}</p></td>
 					<td class="columnDate"><p>{@$package.packageDate|date}</p></td>
@@ -135,7 +135,7 @@
  	<input type="hidden" name="packageID" value="{@$packageObj->packageID}" />
  	<input type="hidden" name="send" value="1" />
 	<input type="button" value="{lang}wcf.global.button.back{/lang}" onclick="document.location.href=fixURL('index.php?page=PackageView&amp;packageID={@$packageID}{@SID_ARG_2ND}')" accesskey="c" />
-	<input type="button" id="uninstallPackage" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
+	<input type="button" id="uninstallPackage" value="{lang}wcf.global.button.next{/lang}" class="default" accesskey="s" />
 </div>
 
 {include file='footer'}

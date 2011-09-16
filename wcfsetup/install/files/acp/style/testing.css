@@ -256,10 +256,6 @@ nav.mainMenu ul li {
 	transition-timing-function: ease;
 }
 
-nav.mainMenu ul li:only-child {
-	cursor: default !important;
-}
-
 nav.mainMenu ul li:hover {
 	color: #fff;
 }
@@ -286,6 +282,12 @@ nav.mainMenu ul li.activeMenuItem:first-child {
 
 nav.mainMenu ul li.activeMenuItem:last-child {
 	margin: 5px 0 -5px -5px;
+}
+
+nav.mainMenu ul li:only-child,
+nav.mainMenu ul li.activeMenuItem:only-child {
+	cursor: default !important;
+	margin: 5px 0 -5px;
 }
 
 /* Header Navigation  */
@@ -743,6 +745,7 @@ input[type='radio'] ~ small {
 
 input[type='reset'],
 input[type='submit'],
+input[type='button'],
 input[type='checkbox'],
 input[type='radio'],
 select {
@@ -921,6 +924,7 @@ input[type='button'],
 input[type='reset']:hover,
 input[type='submit']:hover,
 input[type='button']:hover,
+input[type='button'].default:hover,
 .largeButtons ul li a:hover {
 	color: #666;
 	border-width: 1px;
@@ -939,10 +943,12 @@ input[type='button']:hover,
 input[type='reset']:focus,
 input[type='submit']:focus,
 input[type='button']:focus,
+input[type='button'].default:focus,
 .largeButtons ul li a:focus,
 input[type='reset']:active,
 input[type='submit']:active,
 input[type='button']:active,
+input[type='button'].default:active,
 .largeButtons ul li a:active{
 	color: #333;
 	border-width: 1px;
@@ -1103,9 +1109,7 @@ input[type='button'].default,
 /* default buttons hover */
 input[type='submit']:hover,
 input[type='button'].default:hover,
-.largeButtons ul li.default a:hover {
-	color: #666;
-	
+.largeButtons ul li.default a:hover {	
 	-webkit-box-shadow: 0 0 10px #fa2;
 	-moz-box-shadow: 0 0 10px #fa2;
 	-ms-box-shadow: 0 0 10px #fa2;
@@ -1187,13 +1191,11 @@ input[type='button'].default:hover,
 
 /* default buttons active */
 input[type='submit']:focus,
-input[type='button'].default:hover,
+input[type='button'].default:focus,
 .largeButtons ul li.default a:focus,
 input[type='submit']:active,
-input[type='button'].default:hover,
+input[type='button'].default:active,
 .largeButtons ul li.default a:active {
-	color: #333;
-	
 	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-ms-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
@@ -1260,6 +1262,10 @@ input[type='button'][disabled='disabled'],
 	margin: 15px 0 0;
 }
 
+.border.overlay {
+	margin-top: 0 !important;
+}
+
 /* -- -- -- -- -- Box Title -- -- -- -- -- */
 
 .boxTitle {
@@ -1282,6 +1288,7 @@ input[type='button'][disabled='disabled'],
 	text-shadow: 0 -1px 0 #000;
 	color: #fff;
 	padding: 7px;
+	display: inline-block;
 }
 
 .boxTitle > hgroup a, .boxTitle > a {
@@ -1291,6 +1298,12 @@ input[type='button'][disabled='disabled'],
 
 .boxTitle > hgroup h1 {
 	display: inline-block;
+}
+
+.boxTitle > hgroup h2 {
+	font-size: 85%;
+	color: rgba(255, 255, 255, .9);
+	margin-top: 5px;
 }
 
 .boxTitle img.handle {
@@ -2103,6 +2116,9 @@ div.ui-widget-overlay {
 	left: 0;
 }
 
+.ui-dialog {
+	background-color: rgba(255, 255, 255, .9);
+}
 
 
 /* -- -- -- -- -- Badges -- -- -- -- -- */
@@ -2248,7 +2264,7 @@ div.ui-widget-overlay {
 /* Collapsible */
 
 .collapsible {
-	margin: 5px 5px 0 5px;
+	margin: 5px 0 0 10px;
 	float: left;
 }
 

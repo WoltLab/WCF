@@ -72,9 +72,9 @@
 							{if $package->standalone}
 								<img src="{@RELATIVE_WCF_DIR}icon/packageStandalone1.svg" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" class="balloonTooltip" />
 							{elseif $package->isPlugin()}
-								<img src="{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="balloonTooltip" />
 							{else}
-								<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="balloonTooltip" />
 							{/if}
 						</td>
 						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->packageDescription}">

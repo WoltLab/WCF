@@ -1,5 +1,17 @@
 {include file='header'}
 
+<script type="text/javascript">
+	//<![CDATA[
+	$(function() {
+		WCF.Icon.addObject({
+			'wcf.global.opened': '{@RELATIVE_WCF_DIR}icon/opened2.svg',
+			'wcf.global.closed': '{@RELATIVE_WCF_DIR}icon/closed2.svg'
+		});
+		WCF.Collapsible.Simple.init();
+	});
+	//]]>
+</script>
+
 <header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/packageStandalone1.svg" alt="" /><!-- ToDo: Add possibility to show a custom app icon if given! -->
 	<hgroup>
@@ -96,7 +108,7 @@
 
 {if $requiredPackages|count > 0}
 	<div class="border boxTitle">
-		<a onclick="openList('requiredPackages')"><img id="requiredPackagesImage" src="{@RELATIVE_WCF_DIR}icon/close.svg" alt="" /></a>
+		<a data-isOpen="1" data-collapsibleContainer="requiredPackages" class="collapsible"><img src="{@RELATIVE_WCF_DIR}icon/opened2.svg" alt="" title="{lang}wcf.global.button.collapsible{/lang}" class="balloonTooltip" /></a>
 		<hgroup>
 			<h1><a onclick="openList('requiredPackages')">{lang}wcf.acp.package.view.requiredPackages{/lang}</a></h1>
 			<h2>{lang}wcf.acp.package.view.requiredPackages.description{/lang}</h2>

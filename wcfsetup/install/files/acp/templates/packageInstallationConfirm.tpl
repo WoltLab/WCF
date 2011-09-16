@@ -9,7 +9,7 @@
 </script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/package{@$action|ucfirst}L.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/installation1.svg" alt="" />
 	<hgroup>
 		<h1>{$archive->getPackageInfo('packageName')}</h1>
 		<h2>{$archive->getPackageInfo('packageDescription')}</h2>
@@ -84,17 +84,17 @@
 		
 		<table>
 			<thead>
-				<tr class="tableHead">
-					<th><p class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</p></th>
-					<th><p class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</p></th>
+				<tr>
+					<th class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
+					<th class="columnDigits">{lang}wcf.acp.package.list.version{/lang}</th>
 				</tr>
 			</thead>
 			
 			<tbody>
 			{foreach from=$updatableInstances item=$package}
 				<tr>
-					<td class="columnText"><p><a href="index.php?page=Package&amp;action=install&amp;queueID={@$queueID}&amp;step=changeToUpdate&amp;packageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
-					<td class="columnText"><p>{$package.packageVersion}</p></td>
+					<td class="columnTitle"><p><a href="index.php?page=Package&amp;action=install&amp;queueID={@$queueID}&amp;step=changeToUpdate&amp;packageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
+					<td class="columnDigits"><p>{$package.packageVersion}</p></td>
 				</tr>
 			{/foreach}
 			</tbody>
@@ -105,34 +105,33 @@
 {if $requiredPackages|count > 0}
 	<div class="border boxTitle">
 		<hgroup>
-			<h1>{lang}wcf.acp.package.view.requiredPackages{/lang}</h1>
-			<h2>{lang}wcf.acp.package.view.requiredPackages.description{/lang}</h2>
+			<h1>{lang}wcf.acp.package.view.requiredPackages{/lang} <span class="badge" title="{lang}wcf.acp.package.view.requiredPackages.description{/lang}">{#$requiredPackages|count}</span></h1>
 		</hgroup>
-	</div>
-	
-	<table>
-		<thead>
-			<tr>
-				<th>{lang}wcf.acp.package.list.name{/lang}</th>
-				<th>{lang}wcf.acp.package.list.version{/lang}</th>
-			</tr>
-		</thead>
 		
-		<tbody>
-		{foreach from=$requiredPackages item=$package}
-			<tr>
-				<td class="columnText"><p>{lang}wcf.acp.package.install.packageName{/lang}</p></td>
-				<td class="columnText"><p>{if $package.minversion|isset}{$package.minversion}{/if}</p></td>
-			</tr>
-		{/foreach}
-		</tbody>
-	</table>
+		<table>
+			<thead>
+				<tr>
+					<th class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
+					<th class="columnDigits">{lang}wcf.acp.package.list.version{/lang}</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+			{foreach from=$requiredPackages item=$package}
+				<tr>
+					<td class="columnTitle"><p>{lang}wcf.acp.package.install.packageName{/lang}</p></td>
+					<td class="columnDigits"><p>{if $package.minversion|isset}{$package.minversion}{/if}</p></td>
+				</tr>
+			{/foreach}
+			</tbody>
+		</table>
+	</div>
 {/if}
 
 <div class="formSubmit">
 	<input type="button" onclick="document.location.href=fixURL('index.php?page=Package&amp;action={@$action}&amp;queueID={@$queueID}&amp;step=cancel{@SID_ARG_2ND}')" value="{lang}wcf.global.button.back{/lang}" accesskey="c" />
 	{if $missingPackages == 0 && $excludingPackages|count == 0 && $excludedPackages|count == 0}
-		<input type="button" id="submitButton" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
+		<input type="button" id="submitButton" value="{lang}wcf.global.button.next{/lang}" class="default" accesskey="s" />
 	{/if}
 </div>
 

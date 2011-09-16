@@ -30,7 +30,6 @@
 	*}
 	
 	<!-- Testing stylesheets -->
-	<link rel="stylesheet" type="text/css" href="{@RELATIVE_WCF_DIR}acp/style/testing-reset.css" />
 	<link rel="stylesheet" type="text/css" href="{@RELATIVE_WCF_DIR}acp/style/testing.css" />
 	<!-- /Testing stylesheets -->
 	
@@ -45,6 +44,28 @@
 		</style>
 	<![endif]-->
 	*}
+	
+	<script type="text/javascript">
+		//<![CDATA[
+		$(function() {
+			WCF.Language.addObject({
+				'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
+				'wcf.global.date.relative.minutes': '{capture assign=relativeMinutes}{lang}wcf.global.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
+				'wcf.global.date.relative.hours': '{capture assign=relativeHours}{lang}wcf.global.date.relative.hours{/lang}{/capture}{@$relativeHours|encodeJS}',
+				'wcf.global.date.relative.pastDays': '{capture assign=relativePastDays}{lang}wcf.global.date.relative.pastDays{/lang}{/capture}{@$relativePastDays|encodeJS}',
+				'wcf.global.date.dateTimeFormat': '{lang}wcf.global.date.dateTimeFormat{/lang}',
+				'__days': [ '{lang}wcf.global.date.day.sunday{/lang}', '{lang}wcf.global.date.day.monday{/lang}', '{lang}wcf.global.date.day.tuesday{/lang}', '{lang}wcf.global.date.day.wednesday{/lang}', '{lang}wcf.global.date.day.thursday{/lang}', '{lang}wcf.global.date.day.friday{/lang}', '{lang}wcf.global.date.day.saturday{/lang}' ],
+				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
+				'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
+				'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
+				'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}'
+			});
+			new WCF.Date.Time();
+			new WCF.Effect.SmoothScroll();
+			new WCF.Effect.BalloonTooltip();
+		});
+		//]]>
+	</script>
 </head>
 
 <body id="tpl{$templateName|ucfirst}">

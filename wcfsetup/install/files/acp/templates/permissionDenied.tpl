@@ -6,7 +6,7 @@
 {else}{capture assign='pageTitle'}{lang}wcf.global.error.permissionDenied.title{/lang}{/capture}
 {include file='setupHeader'}
 
-<img class="icon" src="{@RELATIVE_WCF_DIR}icon/loginXL.png" alt="" />
+<img class="icon" src="{@RELATIVE_WCF_DIR}icon/logIn1.svg" alt="" />
 
 <h1>{@$pageTitle}</h1>
 
