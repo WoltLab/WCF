@@ -206,7 +206,7 @@ WCF.ACP.PackageInstallation.prototype = {
 		// handle success
 		if ($data.step == 'success') {
 			var $id = WCF.getRandomID();
-			$('#packageInstallationInnerContent').append('<div class="formSubmit"><input type="button" id="' + $id + '" value="{lang}wcf.global.button.next{/lang}" /></div>');
+			$('#packageInstallationInnerContent').append('<div class="formSubmit"><input type="button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" /></div>');
 			
 			$('#' + $id).click($.proxy(function() {
 				window.location.href = "index.php?page=PackageList" + SID_ARG_2ND;
@@ -234,7 +234,7 @@ WCF.ACP.PackageInstallation.prototype = {
 			// create button to handle next step
 			if ($data.step && $data.node) {
 				var $id = WCF.getRandomID();
-				$('#packageInstallationInnerContent').append('<div class="formSubmit"><input type="button" id="' + $id + '" value="{lang}wcf.global.button.next{/lang}" /></div>');
+				$('#packageInstallationInnerContent').append('<div class="formSubmit"><input type="button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" /></div>');
 				
 				$('#' + $id).click($.proxy(function() {
 					// collect form values
