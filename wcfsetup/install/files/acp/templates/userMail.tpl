@@ -1,5 +1,17 @@
 {include file='header'}
 
+{if $mailID|isset}
+	<script type="text/javascript">
+		//<![CDATA[
+		$(function() {
+			new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\MailWorker', {
+				mailID: {@$mailID}
+			});
+		});
+		//]]>
+	</script>
+{/if}
+
 <header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/email1.svg" alt="" />
 	<hgroup>

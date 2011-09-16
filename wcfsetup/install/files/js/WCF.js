@@ -419,6 +419,18 @@ WCF.Clipboard = {
 	_actionProxy: null,
 	
 	/**
+	 * list of clipboard containers
+	 * @var	jQuery
+	 */
+	_container: null,
+	
+	/**
+	 * user has marked items
+	 * @var	boolean
+	 */
+	_hasMarkedItems: false,
+	
+	/**
 	 * current page
 	 * @var	string
 	 */
@@ -433,8 +445,9 @@ WCF.Clipboard = {
 	/**
 	 * Initializes the clipboard API.
 	 */
-	init: function(page) {
+	init: function(page, hasMarkedItems) {
 		this._page = page;
+		if (hasMarkedItems) this._hasMarkedItems = true;
 		
 		this._actionProxy = new WCF.Action.Proxy({
 			success: $.proxy(this._actionSuccess, this),
@@ -447,9 +460,82 @@ WCF.Clipboard = {
 		});
 		
 		// init containers first
-		$('.clipboardContainer').each($.proxy(function(index, container) {
+		this._containers = $('.clipboardContainer').each($.proxy(function(index, container) {
 			this._initContainer(container);
 		}, this));
+		
+		// loads marked items
+		if (this._hasMarkedItems) {
+			this._loadMarkedItems();
+		}
+	},
+	
+	/**
+	 * Loads marked items on init.
+	 */
+	_loadMarkedItems: function() {
+		new WCF.Action.Proxy({
+			autoSend: true,
+			data: {
+				pageClassName: this._page
+			},
+			success: $.proxy(this._loadMarkedItemsSuccess, this),
+			url: 'index.php?action=ClipboardLoadMarkedItems&t=' + SECURITY_TOKEN + SID_ARG_2ND
+		});
+	},
+	
+	/**
+	 * Marks all returned items as marked
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_loadMarkedItemsSuccess: function(data, textStatus, jqXHR) {
+		for (var $typeName in data.markedItems) {
+			var $objectData = data.markedItems[$typeName];
+			var $objectIDs = [];
+			for (var $i in $objectData) {
+				$objectIDs.push($objectData[$i]);
+			}
+			
+			// loop through all containers
+			this._containers.each(function(index, container) {
+				var $container = $(container);
+				
+				// typeName does not match, continue
+				if ($container.data('type') != $typeName) {
+					return true;
+				}
+				
+				// mark items as marked
+				$container.find('input.clipboardItem').each(function(innerIndex, item) {
+					var $item = $(item);
+					if (WCF.inArray($item.data('objectID'), $objectIDs)) {
+						$item.attr('checked', 'checked');
+					}
+				});
+				
+				// check if there is a markAll-checkbox
+				$container.find('input.clipboardMarkAll').each(function(innerIndex, markAll) {
+					var $allItemsMarked = true;
+					
+					$container.find('input.clipboardItem').each(function(itemIndex, item) {
+						var $item = $(item);
+						if (!$item.attr('checked')) {
+							$allItemsMarked = false;
+						}
+					});
+					
+					if ($allItemsMarked) {
+						$(markAll).attr('checked', 'checked');
+					}
+				});
+			});
+		}
+		
+		// call success method to build item list editors
+		this._success(data, textStatus, jqXHR);
 	},
 	
 	/**

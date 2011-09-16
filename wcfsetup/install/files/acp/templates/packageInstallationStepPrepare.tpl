@@ -1,6 +1,6 @@
-<div id="packageInstallationDialogContainer">
+<div id="packageInstallationDialogContainer" class="border overlay">
 	<header class="mainHeading">
-		<img src="{@RELATIVE_WCF_DIR}icon/packageInstallL.png" alt="" />
+		<img src="{@RELATIVE_WCF_DIR}icon/installation1.svg" alt="" />
 		<hgroup>
 			<h1>Paket &raquo;{$queue->packageName}&laquo; wird installiert &hellip;</h1>
 			<h2>Aktueller Schritt: <span id="packageInstallationAction">{lang}wcf.package.installation.step.prepare{/lang}</span></h2>
@@ -8,7 +8,7 @@
 		</hgroup>
 	</header>
 	
-	<div id="packageInstallationInnerContentContainer" class="border content" style="display: none;">
-		<div id="packageInstallationInnerContent" class="container-1"></div>
+	<div id="packageInstallationInnerContentContainer" class="" style="display: none;">
+		<div id="packageInstallationInnerContent" class=""></div>
 	</div>
 </div>

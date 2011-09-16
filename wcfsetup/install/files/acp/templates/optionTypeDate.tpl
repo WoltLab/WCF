@@ -16,11 +16,11 @@
 			{/if}
 			
 			{if $element == 'year'}
-				<input type="text" id="{$optionData.optionName}Year" name="values[{$optionData.optionName}][year]" maxlength="4" value="{$year}" class="inputText fourDigitInput" />
+				<input type="text" id="{$optionData.optionName}Year" name="values[{$optionData.optionName}][year]" maxlength="4" value="{$year}" class="short" />
 			{/if}
 		</div>
 	{/foreach}
 </div>
 {if !$yearRequired}
-	<p class="smallFont light">{lang}wcf.global.date.year.notRequired{/lang}</p>
+	<p class="light">{lang}wcf.global.date.year.notRequired{/lang}</p>
 {/if}

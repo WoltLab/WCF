@@ -2,17 +2,9 @@
 
 <script type="text/javascript">
 	//<![CDATA[
-	function setFileType(newType) {
-		switch (newType) {
-			case 'csv':
-				showOptions('separatorDiv', 'textSeparatorDiv');
-				break;
-			case 'xml':
-				hideOptions('separatorDiv', 'textSeparatorDiv');
-				break;
-		}
-	}
-	onloadEvents.push(function() { setFileType('{@$fileType}'); });
+	$(function() {
+		new WCF.ACP.Options();
+	});
 	//]]>
 </script>
 
@@ -24,7 +16,6 @@
 </header>
 
 <form method="post" action="index.php?form=UserEmailAddressExport">
-
 	<div class="border content">
 		<fieldset>
 			<legend>{lang}wcf.acp.user.exportEmailAddress.markedUsers{/lang}</legend>
@@ -47,8 +38,8 @@
 						
 						<dl>
 							<dd><!-- ToDo: Definition List -->
-								<li><label><input type="radio" onclick="if (IS_SAFARI) setFileType('csv')" onfocus="setFileType('csv')" name="fileType" value="csv" {if $fileType == 'csv'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.csv{/lang}</label></li>
-								<li><label><input type="radio" onclick="if (IS_SAFARI) setFileType('xml')" onfocus="setFileType('xml')" name="fileType" value="xml" {if $fileType == 'xml'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label></li>
+								<li><label><input type="radio" class="enablesOptions" data-disableOptions="[ ]" data-enableOptions="[ 'separatorDiv', 'textSeparatorDiv' ]" name="fileType" value="csv" {if $fileType == 'csv'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.csv{/lang}</label></li>
+								<li><label><input type="radio" class="enablesOptions" data-disableOptions="[ 'separatorDiv', 'textSeparatorDiv' ]" data-enableOptions="[ ]" name="fileType" value="xml" {if $fileType == 'xml'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label></li>
 							</dd>
 						</dl>
 					</fieldset>
@@ -76,7 +67,6 @@
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}
- 		<input type="hidden" name="userIDs" value="{@$userIDs}" />
  	</div>
 </form>
 

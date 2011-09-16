@@ -93,7 +93,7 @@ a:hover {
 }
 
 a.externalURL {
-	background-image: url("../../icon/externalURL.svg");
+	background-image: url('../../icon/externalURL.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
 	padding-right: 17px;
@@ -120,7 +120,7 @@ hr {
 header.pageHeader {
 	/* Disabled, because the WoltLab header-image is not LGPL 
 	Activate it if you want to test your own header image */
-	/* background-image: url("../images/header.png"); */
+	/* background-image: url('../images/header.png'); */
 	background-position: left top;
 	background-repeat: repeat-x;
 	min-width: 800px;
@@ -130,6 +130,7 @@ header.pageHeader {
 /* Top Menu */
 
 header.pageHeader nav.topMenu {
+	border-bottom: 1px solid rgba(0, 0, 0, .1);
 	background-color: rgba(0, 0, 0, .4);
 	position: fixed;
 	top: 0;
@@ -207,7 +208,7 @@ nav.mainMenu {
 }
 
 nav.mainMenu:after {
-	content: "";
+	content: '';
 	display: block;
 	clear: both;
 }
@@ -301,7 +302,7 @@ nav.headerNavigation {
 }
 
 nav.headerNavigation:after {
-	content: "";
+	content: '';
 	display: block;
 	clear: both;
 }
@@ -311,7 +312,7 @@ nav.headerNavigation > div {
 }
 
 nav.headerNavigation > div:after {
-	content: "";
+	content: '';
 	display: block;
 	clear: both;
 }
@@ -368,6 +369,15 @@ div.main > div section:only-child {
 
 
 
+/* -- -- -- -- -- Content Header & Footer -- -- -- -- -- */
+
+.contentHeader,
+.contentFooter {
+	margin-top: 15px;
+}
+
+
+
 /* -- -- -- -- -- Sidebar -- -- -- -- -- */
 
 aside.sidebar {
@@ -409,7 +419,7 @@ nav.sidebarMenu > div h1 {
 	font-size: 130%;
 	font-weight: bold;
 	color: #369;
-	background-image: url("../../icon/closed.svg");
+	background-image: url('../../icon/closed.svg');
 	background-position: 15px center;
 	background-size: 16px;
 	background-repeat: no-repeat;
@@ -419,7 +429,7 @@ nav.sidebarMenu > div h1 {
 }
 
 nav.sidebarMenu > div h1.activeMenuItem {
-	background-image: url("../../icon/opened.svg");
+	background-image: url('../../icon/opened.svg');
 }
 
 nav.sidebarMenu > div ul li {
@@ -463,7 +473,7 @@ footer.pageFooter {
 }
 
 footer.pageFooter:after {
-	content: "";
+	content: '';
 	display: block;
 	clear: both;
 }
@@ -478,7 +488,7 @@ footer.pageFooter > div {
 }
 
 footer.pageFooter > div:after {
-	content: "";
+	content: '';
 	display: block;
 	clear: both;
 }
@@ -520,7 +530,6 @@ footer.pageFooter nav.footerNavigation ul li {
 /* Main Heading */
 
 .mainHeading {
-	margin: 0 0 15px;
 	position: relative;
 }
 
@@ -533,9 +542,8 @@ footer.pageFooter nav.footerNavigation ul li {
 }
 
 .mainHeading > hgroup {
-	margin-bottom: 30px;
 	padding-left: 60px;
-	min-height: 48px;
+	min-height: 56px;
 }
 
 .mainHeading > hgroup h1 {
@@ -577,8 +585,12 @@ fieldset {
 	border: 1px solid #ccc;
 	border-radius: 7px;
 	background-color: rgba(0, 0, 0, .015);
-	margin: 15px 0;
+	margin: 7px 0 0;
 	padding: 15px;
+}
+
+fieldset:last-child, fieldset:only-child {
+	margin: 7px 0 7px !important;
 }
 
 /* experimental 
@@ -588,7 +600,6 @@ fieldset.topLink {
 	background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
 	background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
 	background-image: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
-	
 }
 */
 
@@ -762,6 +773,12 @@ textarea {
 	-ms-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
 	-o-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
 	box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
+	
+	-webkit-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	-ms-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	transition: all .2s linear;
 }
 
 /* inputs hover */
@@ -772,7 +789,6 @@ input[type='password']:hover,
 textarea:hover {
 	border: 1px solid #fa2;
 	background-color: #fff9f4;
-	
 }
 
 /* inputs active */
@@ -795,12 +811,6 @@ textarea:focus {
 	-ms-box-shadow: 0 0 5px rgba(255, 170, 34, .5), inset 0 1px 5px rgba(0, 0, 0, .2);
 	-o-box-shadow: 0 0 5px rgba(255, 170, 34, .5), inset 0 1px 5px rgba(0, 0, 0, .2);
 	box-shadow: 0 0 5px rgba(255, 170, 34, .5), inset 0 1px 5px rgba(0, 0, 0, .2);
-	
-	-webkit-transition: all .2s linear;
-	-moz-transition: all .2s linear;
-	-ms-transition: all .2s linear;
-	-o-transition: all .2s linear;
-	transition: all .2s linear;
 }
 
 /* inputs read only */
@@ -809,16 +819,15 @@ input[type='search'][readonly='readonly'],
 input[type='email'][readonly='readonly'],
 input[type='password'][readonly='readonly'],
 textarea[readonly='readonly'] {
-	border-style: dotted;
-	border-color: rgba(0, 0, 0, .1);
+	border-style: solid;
+	border-color: #ccc #ddd #eee;
 	background-color: transparent;
-	background-image: none;
 	
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	-ms-box-shadow: none;
-	-o-box-shadow: none;
-	box-shadow: none;
+	-webkit-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .05);
+	-moz-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .05);
+	-ms-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .05);
+	-o-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .05);
+	box-shadow: inset 0 1px 5px rgba(0, 0, 0, .05);
 }
 
 /* inputs read only */
@@ -877,6 +886,7 @@ textarea {
 /* buttons normal */
 input[type='reset'],
 input[type='submit'],
+input[type='button'],
 .largeButtons ul li a {
 	font-size: 100%;
 	font-weight: bold;
@@ -910,6 +920,7 @@ input[type='submit'],
 /* buttons hover */
 input[type='reset']:hover,
 input[type='submit']:hover,
+input[type='button']:hover,
 .largeButtons ul li a:hover {
 	color: #666;
 	border-width: 1px;
@@ -927,9 +938,11 @@ input[type='submit']:hover,
 /* buttons active */
 input[type='reset']:focus,
 input[type='submit']:focus,
+input[type='button']:focus,
 .largeButtons ul li a:focus,
 input[type='reset']:active,
 input[type='submit']:active,
+input[type='button']:active,
 .largeButtons ul li a:active{
 	color: #333;
 	border-width: 1px;
@@ -994,6 +1007,7 @@ input[type='submit']:active,
 
 /* default buttons normal */
 input[type='submit'],
+input[type='button'].default,
 .largeButtons ul li.default a {
 	color: #69c;
 	border-width: 1px;
@@ -1088,6 +1102,7 @@ input[type='submit'],
 
 /* default buttons hover */
 input[type='submit']:hover,
+input[type='button'].default:hover,
 .largeButtons ul li.default a:hover {
 	color: #666;
 	
@@ -1172,8 +1187,10 @@ input[type='submit']:hover,
 
 /* default buttons active */
 input[type='submit']:focus,
+input[type='button'].default:hover,
 .largeButtons ul li.default a:focus,
 input[type='submit']:active,
+input[type='button'].default:hover,
 .largeButtons ul li.default a:active {
 	color: #333;
 	
@@ -1216,6 +1233,7 @@ input[type='submit']:active,
 
 /* disabled buttons */
 input[disabled='disabled'],
+input[type='button'][disabled='disabled'],
 .largeButtons ul li.disabled a {
 	color: #999;
 	cursor: default;
@@ -1239,7 +1257,7 @@ input[disabled='disabled'],
 .border {
 	border: 1px solid #ccc;
 	border-radius: 5px;
-	margin: 15px 0 15px;
+	margin: 15px 0 0;
 }
 
 /* -- -- -- -- -- Box Title -- -- -- -- -- */
@@ -1249,7 +1267,7 @@ input[disabled='disabled'],
 	background-color: #369;
 	/* Disabled, because the WoltLab header-image is not LGPL 
 	Activate it if you want to test your own header image */
-	/* background-image: url("../images/header.png"); */
+	/* background-image: url('../images/header.png'); */
 	background-position: left top;
 	background-repeat: repeat-x;	
 	
@@ -1303,7 +1321,7 @@ input[disabled='disabled'],
 }
 
 .tabMenu:after {
-	content: "";
+	content: '';
 	display: block;
 	clear: both;
 }
@@ -1542,8 +1560,6 @@ thead th {
 thead th:first-child {
 	/* rounded corners for the first table header cell to the left */
 	border-top-left-radius: 5px;
-	/* keeps the first column of tables narrow */
-	width: 1%;
 }
 
 thead th:last-child {
@@ -1600,11 +1616,10 @@ thead th.active:hover a {
 	background-color: rgba(0, 0, 0, .3);
 }
 
-thead th input[type="checkbox"] {
-	margin: -5px !important;
-}
-
 thead th a img {
+	/* sort-icon orientation does not work */
+	text-align: right;
+	/* negative margins to prevent table-cells from expanding when ths sort-icon shows up */
 	margin-top: -5px !important;
 	margin-bottom: -5px !important;
 }
@@ -1656,15 +1671,6 @@ tbody tr:hover td {
 	background-color: #d8e7f5;
 }
 
-tbody tr .columnIcon img {
-	height: 16px;
-	width: 16px;
-}
-
-tbody tr .columnIcon img:not(.balloonTooltip):hover {
-	cursor: not-allowed;
-}
-
 /* ToDo: Table Specials */
 
 /*
@@ -1690,6 +1696,74 @@ tbody tr .columnIcon img:not(.balloonTooltip):hover {
 .menu ~ .border thead th:last-child,
 .boxTitle > table thead th:last-child {
 	border-top-right-radius: 0 !important;
+}
+
+/* Table Column Formats */
+
+tr .columnMark,
+tr .columnStatus {
+	text-align: center;
+	width: 1% !important;
+}
+
+tr .columnStatus .badge {
+	margin-right: 1px !important;
+	margin-left: 1px !important;
+}
+
+tr .columnDigits,
+tr .columnID {
+	text-align: right;
+	width: 1% !important;
+}
+
+tr .columnIcon {
+	text-align: left;
+	width: 1% !important
+}
+
+tr .columnIcon img:not(.balloonTooltip):hover {
+	cursor: not-allowed;
+}
+
+tr .columnIcon img {
+	height: 16px;
+	width: 16px;
+}
+
+.bigList tr .columnIcon img {
+	height: 24px;
+	width: 24px;
+}
+
+tr .columnTitle {
+	font-weight: bold;
+	text-align: left;
+}
+
+tr .columnText {
+	font-weight: normal;
+	text-align: left;
+	max-width: 20%;
+}
+
+tr .columnDate,
+tr .columnRegistrationDate {
+	font-size: 85%;
+	text-align: right;
+	width: 1% !important;
+}
+
+tr .columnURL {
+	font-size: 85%;
+	text-align: left;
+}
+
+/* Table Checkboxes */
+
+table input[type='checkbox'] {
+	margin-top: -5px !important;
+	margin-bottom: -5px !important;
 }
 
 
@@ -1724,7 +1798,7 @@ tbody tr .columnIcon img:not(.balloonTooltip):hover {
 }
 
 .pageNavigation ul li:after {
-	content: "";
+	content: '';
 	display: block;
 	clear: both;
 }
@@ -1833,8 +1907,8 @@ p.warning {
 	text-shadow: 0 1px 0 #fff;
 	line-height: 1.5;
 	border-radius: 7px;
-	margin-bottom: 14px;
-	padding: 7px 14px 7px 50px;
+	margin-top: 15px;
+	padding: 7px 15px 7px 50px;
 	
 	-webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
 	-moz-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
@@ -1853,7 +1927,7 @@ p.info {
 	color: #68b;
 	border: 1px solid #9be;
 	background-color: #def;
-	background-image: url("../../icon/systemInfo.svg");
+	background-image: url('../../icon/systemInfo.svg');
 	background-size: 24px;
 	background-position: 13px center;
 	background-repeat: no-repeat;
@@ -1863,7 +1937,7 @@ p.success {
 	color: #090;
 	border: 1px solid #0c0;
 	background-color: #efe;
-	background-image: url("../../icon/systemSuccess.svg");
+	background-image: url('../../icon/systemSuccess.svg');
 	background-size: 24px;
 	background-position: 13px center;
 	background-repeat: no-repeat;
@@ -1873,7 +1947,7 @@ p.warning {
 	color: #990;
 	border: 1px solid #cc0;
 	background-color: #ffd;
-	background-image: url("../../icon/systemWarning.svg");
+	background-image: url('../../icon/systemWarning.svg');
 	background-size: 24px;
 	background-position: 13px center;
 	background-repeat: no-repeat;
@@ -1883,7 +1957,7 @@ p.error {
 	color: #c00;
 	border: 1px solid #f99;
 	background-color: #fee;
-	background-image: url("../../icon/systemError.svg");
+	background-image: url('../../icon/systemError.svg');
 	background-size: 24px;
 	background-position: 13px center;
 	background-repeat: no-repeat;
@@ -1898,14 +1972,7 @@ p.error {
 /* ToDo: Installation */
 
 div#packageInstallationDialogContainer {
-	background-color: #fefefe;
-	background-image: -webkit-linear-gradient(#fefefe, #eee);
-	background-image: -moz-linear-gradient(#fefefe, #eee);
-	background-image: -ms-linear-gradient(#fefefe, #eee);
-	background-image: -o-linear-gradient(#fefefe, #eee);
-	background-image: linear-gradient(#fefefe, #eee);
-	
-	padding: 21px;
+	padding: 20px;
 	height: 100%;
 	max-width: 600px;
 }
@@ -1917,24 +1984,22 @@ div#ajaxExceptionStacktrace {
 }
 
 div#packageInstallationInnerContentContainer {
-	border-top: 2px solid #999 !important;
-	border-radius: 0 !important;
-	margin-top: 21px;
-	padding-top: 14px;
+	margin-top: 20px;
+	padding-top: 15px;
 }
 
 div#packageInstallationInnerContent p.error {
-	border: 3px solid #ed1c24;
+	border: 1px solid #ed1c24;
 	border-radius: 5px;
 	background-color: #fdd;
-	margin-bottom: 14px;
+	margin-bottom: 15px;
 	padding: 7px;
 }
 
 div#ajaxExceptionStacktrace {
 	font-family: monospace;
 	font-size: 90%;
-	line-height: 1.2em;
+	line-height: 1.2;
 	border: 1px solid #ccc;
 	padding: 3px;
 }
@@ -1962,7 +2027,7 @@ div.wcfDimensions {
 
 div.overlayLoading {
 	background-color: #fff;
-	background-image: url("../../icon/spinner.svg");
+	background-image: url('../../icon/spinner.svg');
 	background-position: center center;
 	background-repeat: no-repeat;
 }
@@ -1973,11 +2038,6 @@ div.ui-dialog {
 	display: inline-block !important;
 	width: auto !important;
 	min-width: 80px;
-}
-
-div.ui-dialog-content p {
-	background-color: #fff;
-	padding: 7px;
 }
 
 div.ui-dialog-titlebar {
@@ -1993,7 +2053,7 @@ span.ui-dialog-title {
 }
 
 a.ui-dialog-titlebar-close {
-	background-image: url("../../icon/deleteM.png");
+	background-image: url('../../icon/deleteM.png');
 	background-position: top left;
 	background-repeat: no-repeat;
 	position: absolute !important;
@@ -2053,7 +2113,6 @@ div.ui-widget-overlay {
 	font-size: 85%;
 	text-shadow: none;
 	color: #666;
-	border: 1px solid #ccc;
 	border-radius: 13px;
 	background-color: #fff;
 	margin-right: -3px;
@@ -2065,6 +2124,10 @@ div.ui-widget-overlay {
 }
 
 /* Types */
+
+.badgeNote {
+	border: 1px solid #ccc;
+}
 
 .badgeInfo {
 	color: #68b;
@@ -2096,6 +2159,7 @@ div.ui-widget-overlay {
 	text-decoration: none !important;
 	text-shadow: 0 1px 0 #fff;
 	color: #999;
+	cursor: pointer;
 	
 	border-width: 1px;
 	border-style: solid;

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\user\User;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
@@ -29,24 +30,41 @@ class UserEmailAddressExportForm extends ACPForm {
 	public $users = array();
 	
 	/**
+	 * clipboard item type id
+	 * @var	integer
+	 */
+	protected $typeID = null;
+	
+	/**
+	 * @see	wcf\page\IPage::readParameters()
+	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		// get type id
+		$this->typeID = ClipboardHandler::getInstance()->getTypeID('com.woltlab.wcf.user');
+		if ($this->typeID === null) {
+			throw new SystemException("clipboard item type 'com.woltlab.wcf.user' is unknown.");
+		}
+		
+		// get user ids
+		$users = ClipboardHandler::getInstance()->getMarkedItems($this->typeID);
+		if (!isset($users['com.woltlab.wcf.user']) || empty($users['com.woltlab.wcf.user'])) throw new IllegalLinkException();
+		
+		// load users
+		$this->userIDs = array_keys($users['com.woltlab.wcf.user']);
+		$this->users = $users['com.woltlab.wcf.user'];
+	}
+	
+	/**
 	 * @see wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
 		if (isset($_POST['fileType']) && $_POST['fileType'] == 'xml') $this->fileType = $_POST['fileType'];
-		if (isset($_POST['userIDs'])) $this->userIDs = ArrayUtil::toIntegerArray(explode(',', $_POST['userIDs']));
 		if (isset($_POST['separator'])) $this->separator = $_POST['separator'];
 		if (isset($_POST['textSeparator'])) $this->textSeparator = $_POST['textSeparator'];
-	}
-	
-	/**
-	 * @see wcf\form\IForm::validate()
-	 */
-	public function validate() {
-		parent::validate();
-		
-		if (empty($this->userIDs)) throw new IllegalLinkException();
 	}
 	
 	/**
@@ -83,7 +101,7 @@ class UserEmailAddressExportForm extends ACPForm {
 		$statement->execute($conditions->getParameters());
 		
 		$i = 0;
-		while ($row = WCF::getDB()->fetchArray($result)) {
+		while ($row = $statement->fetchArray()) {
 			if ($this->fileType == 'xml') echo "<address><![CDATA[".StringUtil::escapeCDATA($row['email'])."]]></address>\n";
 			else echo $this->textSeparator . $row['email'] . $this->textSeparator . ($i < $count['count'] ? $this->separator : '');
 			$i++;
@@ -93,26 +111,12 @@ class UserEmailAddressExportForm extends ACPForm {
 			echo "</addresses>";
 		}
 		
-		// TODO: Implement unmarkAll()
-		//UserEditor::unmarkAll();
 		$this->saved();
+		
+		// remove items
+		ClipboardHandler::getInstance()->removeItems($this->typeID);
+		
 		exit;
-	}
-	
-	/**
-	 * @see wcf\page\IPage::readData()
-	 */
-	public function readData() {
-		parent::readData();
-		
-		if (!count($_POST)) {
-			// get marked user ids
-			$markedUsers = WCF::getSession()->getVar('markedUsers');
-			if (is_array($markedUsers)) $this->userIDs = implode(',', $markedUsers);
-			if (empty($this->userIDs)) throw new IllegalLinkException();
-		}
-		
-		$this->users = User::getUsers($this->userIDs);
 	}
 	
 	/**
@@ -123,7 +127,6 @@ class UserEmailAddressExportForm extends ACPForm {
 		
 		WCF::getTPL()->assign(array(
 			'users' => $this->users,
-			'userIDs' => $this->userIDs,
 			'separator' => $this->separator,
 			'textSeparator' => $this->textSeparator,
 			'fileType' => $this->fileType

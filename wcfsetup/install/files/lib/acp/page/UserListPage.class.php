@@ -5,6 +5,7 @@ use wcf\data\user\User;
 use wcf\data\user\group\UserGroup;
 use wcf\page\SortablePage;
 use wcf\system\cache\CacheHandler;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\WCF;
@@ -125,7 +126,7 @@ class UserListPage extends SortablePage {
 		WCF::getTPL()->assign(array(
 			'users' => $this->users,
 			'searchID' => $this->searchID,
-			'markedUsers' => count($this->markedUsers),
+			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(),
 			'url' => $this->url,
 			'columnHeads' => $this->columnHeads,
 			'columnValues' => $this->columnValues

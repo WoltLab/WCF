@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="en">
 	<category name="wcf.global">
-		<item name="wcf.global.pageTitle"><![CDATA[{$setupPackageName} Installation]]></item>
+		<item name="wcf.global.pageTitle"><![CDATA[{$setupPackageName} installation]]></item>
 		<item name="wcf.global.title"><![CDATA[{$setupPackageName}]]></item>
 		<item name="wcf.global.title.subtitle"><![CDATA[Installation]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
@@ -17,7 +17,7 @@
 		<item name="wcf.global.dateFormatToday"><![CDATA[<b>\T\o\d\a\y</b>, g:ia]]></item>
 		<item name="wcf.global.dateFormatYesterday"><![CDATA[\Y\e\s\t\e\r\d\a\y, g:ia]]></item>
 		<item name="wcf.global.welcome"><![CDATA[Thank you for choosing {$setupPackageName}]]></item>
-		<item name="wcf.global.welcome.description"><![CDATA[This installations-assistant will help you to setup <br /><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} and <b>{$setupPackageName}</b>{/if}.]]></item>
+		<item name="wcf.global.welcome.description"><![CDATA[This installation-assistant will help you to install <br /><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} and <b>{$setupPackageName}</b>{/if}.]]></item>
 		<item name="wcf.global.welcome.language"><![CDATA[Language]]></item>
 		<item name="wcf.global.language.en"><![CDATA[English]]></item>
 		<item name="wcf.global.language.de"><![CDATA[German]]></item>
@@ -50,57 +50,57 @@
 		<item name="wcf.global.language.sr"><![CDATA[Serbian]]></item>
 		<item name="wcf.global.language.sk"><![CDATA[Slovak]]></item>
 		<item name="wcf.global.language.el"><![CDATA[Greek]]></item>
-		<item name="wcf.global.welcome.language.description"><![CDATA[The assistants language is currently set to ]]></item>
+		<item name="wcf.global.welcome.language.description"><![CDATA[The assistant-language is currently set to ]]></item>
 		<item name="wcf.global.welcome.language.change"><![CDATA[Change language]]></item>
-		<item name="wcf.global.license"><![CDATA[License Agreement]]></item>
-		<item name="wcf.global.license.description"><![CDATA[Please read the following License Agreement. Use the scrollbar to view the whole document.]]></item>
-		<item name="wcf.global.license.accept.description"><![CDATA[Do you accept the terms and conditions of the License Agreement? You may only install this software upon acceptance of the License Agreement.]]></item>
-		<item name="wcf.global.license.missingAcception"><![CDATA[You must accept the License Agreement to continue this installation.]]></item>
-		<item name="wcf.global.systemRequirements"><![CDATA[Checking System Requirements]]></item>
-		<item name="wcf.global.systemRequirements.description"><![CDATA[These are the System Requirements:]]></item>
-		<item name="wcf.global.systemRequirements.required"><![CDATA[Required System component]]></item>
-		<item name="wcf.global.systemRequirements.recommended"><![CDATA[Recommended System component]]></item>
+		<item name="wcf.global.license"><![CDATA[License agreement]]></item>
+		<item name="wcf.global.license.description"><![CDATA[Please read the following license agreement. Use the scroll bar to view the entire document.]]></item>
+		<item name="wcf.global.license.accept.description"><![CDATA[Do you accept the terms and conditions of the license agreement? You may only install this software upon acceptance of the license agreement.]]></item>
+		<item name="wcf.global.license.missingAcception"><![CDATA[You must accept the license agreement to continue this installation.]]></item>
+		<item name="wcf.global.systemRequirements"><![CDATA[Checking system-requirements]]></item>
+		<item name="wcf.global.systemRequirements.description"><![CDATA[These are the system-requirements:]]></item>
+		<item name="wcf.global.systemRequirements.required"><![CDATA[Required system-component]]></item>
+		<item name="wcf.global.systemRequirements.recommended"><![CDATA[Recommended system component]]></item>
 		<item name="wcf.global.systemRequirements.element.required"><![CDATA[Required:]]></item>
 		<item name="wcf.global.systemRequirements.element.yours"><![CDATA[Found:]]></item>
 		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[Recommended:]]></item>
-		<item name="wcf.global.systemRequirements.php"><![CDATA[Installed version of the Script language &quot;PHP&quot;]]></item>
-		<item name="wcf.global.systemRequirements.php.description"><![CDATA[The installed version of the Script language &quot;PHP&quot; is too old for a stable operation of this Software. To proceed with the installation, a version update is necessary.]]></item>
-		<item name="wcf.global.systemRequirements.php.description2"><![CDATA[Your PHP Version is obsolete. For a stable operation of this Software, we recommend a PHP version of 5.0.5 or greater.]]></item>
-		<item name="wcf.global.systemRequirements.mysql"><![CDATA[&quot;MySQL&quot; Database support]]></item>
-		<item name="wcf.global.systemRequirements.mysql.description"><![CDATA[&quot;MySQL&quot; Database support is required to install this Software.]]></item>
+		<item name="wcf.global.systemRequirements.php"><![CDATA[Installed version of the script-language &quot;PHP&quot;]]></item>
+		<item name="wcf.global.systemRequirements.php.description"><![CDATA[The installed version of the script-language &quot;PHP&quot; is too old for a stable operation of this software. To proceed with the installation, a version update is necessary.]]></item>
+		<item name="wcf.global.systemRequirements.php.description2"><![CDATA[Your PHP version is obsolete. For a stable operation of this software, we recommend a PHP version of 5.0.5 or greater.]]></item>
+		<item name="wcf.global.systemRequirements.mysql"><![CDATA[&quot;MySQL&quot; database support]]></item>
+		<item name="wcf.global.systemRequirements.mysql.description"><![CDATA[&quot;MySQL&quot; database support is required to install this software.]]></item>
 		<item name="wcf.global.systemRequirements.uploadMaxFilesize"><![CDATA[Maximum size for file uploads]]></item>
-		<item name="wcf.global.systemRequirements.uploadMaxFilesize.description"><![CDATA[The current configuration of the installed &quot;PHP&quot; makes it impossible to upload any files. Due to this configuration, some features of this Software will be restricted.]]></item>
+		<item name="wcf.global.systemRequirements.uploadMaxFilesize.description"><![CDATA[The current configuration of the installed &quot;PHP&quot; version oes not allow for file-uploads. Due to this configuration, some features of this software will not be available.]]></item>
 		<item name="wcf.global.systemRequirements.gdLib"><![CDATA[Installed version of the graphics library &quot;GDLib&quot;]]></item>
-		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[The graphics library &quot;GDLib&quot; is needed for the Dynamic Generation of Images. Without this, some features of this Software will not be available.]]></item>
-		<item name="wcf.global.systemRequirements.mbString"><![CDATA[The multibyte character library &quot;MBString&quot;]]></item>
-		<item name="wcf.global.systemRequirements.mbString.description"><![CDATA[Without this library, the Software can only be used with Western European languages.]]></item>
-		<item name="wcf.global.systemRequirements.safeMode"><![CDATA[Security option of &quot;safe mode&quot; in the &quot;PHP&quot; Script language]]></item>
-		<item name="wcf.global.systemRequirements.safeMode.description"><![CDATA[To quarantee the operation of this Software, we recommend to disable the safe mode setting.]]></item>
-		<item name="wcf.global.systemRequirements.ftp"><![CDATA[The data transfer library for FTP]]></item>
-		<item name="wcf.global.systemRequirements.ftp.description"><![CDATA[With the security option of &quot;safe mode&quot; being enabled, the data transfer library is needed for most of the file operations within this Software. We strongly recommend to enable this library.]]></item>
+		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[The graphics-library &quot;GDLib&quot; is needed for the dynamic image generation. Without this library, some features of this software will not be available.]]></item>
+		<item name="wcf.global.systemRequirements.mbString"><![CDATA[The multibyte-character library &quot;MBString&quot;]]></item>
+		<item name="wcf.global.systemRequirements.mbString.description"><![CDATA[Without this library, the software can only be used with Western European languages.]]></item>
+		<item name="wcf.global.systemRequirements.safeMode"><![CDATA[Security option of &quot;Safe Mode&quot; in the &quot;PHP&quot; Script language]]></item>
+		<item name="wcf.global.systemRequirements.safeMode.description"><![CDATA[To guarantee the operation of this software, we recommend to disable &quot;Safe Mode&quot; setting.]]></item>
+		<item name="wcf.global.systemRequirements.ftp"><![CDATA[Data-transfer library for FTP]]></item>
+		<item name="wcf.global.systemRequirements.ftp.description"><![CDATA[With the security option of &quot;Safe Mode&quot; being enabled, the data-transfer library is needed for most of the file-operations of this software. We strongly recommend to enable this library.]]></item>
 		<item name="wcf.global.systemRequirements.active"><![CDATA[Enabled]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[Not enabled]]></item>
-		<item name="wcf.global.wcfDir"><![CDATA[Choose the installation folder]]></item>
-		<item name="wcf.global.wcfDir.description"><![CDATA[All files of <b>WoltLab Community Framework</b> will be extracted into the installation folder.]]></item>
-		<item name="wcf.global.wcfDir.foundDirectory"><![CDATA[The installation assistant has found a previous installation of <b>WoltLab Community Framework</b> in the "{$foundDirectory}" folder.<br />If you would like to install a new copy of the <b>WoltLab Community Framework</b>, then please enter an alternative installation folder.]]></item>
+		<item name="wcf.global.wcfDir"><![CDATA[Choose the installation-folder]]></item>
+		<item name="wcf.global.wcfDir.description"><![CDATA[All files of <b>WoltLab Community Framework</b> will be extracted into the installation-folder.]]></item>
+		<item name="wcf.global.wcfDir.foundDirectory"><![CDATA[The installation-assistant has found a previous installation of <b>WoltLab Community Framework</b> in the "{$foundDirectory}" folder.<br />If you would like to install a new copy of the <b>WoltLab Community Framework</b>, then please enter an alternative installation folder.]]></item>
 		<item name="wcf.global.wcfDir.dir"><![CDATA[Installation-folder]]></item>
-		<item name="wcf.global.wcfDir.dir.description"><![CDATA[Enter here the name of the installation folder for <b>WoltLab Community Framework</b>. If you are unsure, keep the name which the system suggests and run a standard-installation.]]></item>
+		<item name="wcf.global.wcfDir.dir.description"><![CDATA[Enter here the name of the installation-folder for <b>WoltLab Community Framework</b>. If you are unsure, keep the name which the system suggests and run the standard-installation.]]></item>
 		<item name="wcf.global.wcfDir.error.invalid"><![CDATA[The given folder is not valid.]]></item>
 		<item name="wcf.global.wcfDir.url"><![CDATA[Installation-adress (URL)]]></item>
 		<item name="wcf.global.wcfDir.url.description"><![CDATA[After the installation into the given folder you will be able to access <b>WoltLab Community Framework</b> through this adress (URL).]]></item>
 		<item name="wcf.global.ftp"><![CDATA[FTP access information]]></item>
-		<item name="wcf.global.ftp.description"><![CDATA[With the PHP-SafeMode security option being enabled, WoltLab Community Framework can only be installed using FTP functionality. Please enter here the FTP Username and Password for this Server. The information given will not be saved and is only required for the installation of this Package. For this reason alone, further FTP Username and Password requests will be needed.]]></item>
+		<item name="wcf.global.ftp.description"><![CDATA[With the PHP Safe Mode security option being enabled, WoltLab Community Framework can only be installed using FTP functionality. Please enter here the FTP user-name and password for this server. The information given will not be saved and is only required for the installation of this package. For this reason alone, further FTP user-name and password requests will be needed.]]></item>
 		<item name="wcf.global.ftp.accessData"><![CDATA[FTP access information]]></item>
-		<item name="wcf.global.ftp.host"><![CDATA[Hostname]]></item>
-		<item name="wcf.global.ftp.user"><![CDATA[Username]]></item>
+		<item name="wcf.global.ftp.host"><![CDATA[Host-name]]></item>
+		<item name="wcf.global.ftp.user"><![CDATA[User-name]]></item>
 		<item name="wcf.global.ftp.password"><![CDATA[Password]]></item>
-		<item name="wcf.global.ftp.error"><![CDATA[A connection to the given FTP server could not be made.]]></item>
+		<item name="wcf.global.ftp.error"><![CDATA[A connection to the given FTP-server could not be established.]]></item>
 		<item name="wcf.global.next"><![CDATA[Loading next step ...]]></item>
 		<item name="wcf.global.next.description"><![CDATA[The installation is currently loading the next step, please wait.]]></item>
 		<item name="wcf.global.languages"><![CDATA[Choose languages to install]]></item>
-		<item name="wcf.global.languages.description"><![CDATA[This Software can support multiple languages. Please choose the languages you would like to install.]]></item>
-		<item name="wcf.global.languages.charset"><![CDATA[Character Encoding]]></item>
-		<item name="wcf.global.languages.charset.description"><![CDATA[The Character Encoding, also known as the Character Set or the Code page determines the storage type and the representation of the installed languages of this System. Please be aware that once you have set your chosen Character Encoding, this can not be changed afterwards.]]></item>
+		<item name="wcf.global.languages.description"><![CDATA[This software can support multiple languages. Please choose the languages you would like to install.]]></item>
+		<item name="wcf.global.languages.charset"><![CDATA[Character-encoding]]></item>
+		<item name="wcf.global.languages.charset.description"><![CDATA[The character-encoding, also known as the character-set or the code-page determines the storage-type and the representation of the installed languages of this system. Please be aware that once you have set your chosen character-encoding, this can not be changed afterwards.]]></item>
 		
 		<!--<item name="wcf.global.languages.charset.ISO-8859-1"><![CDATA[ISO-8859-1 is required if you wish to install Western European languages only.]]></item>
 		<item name="wcf.global.languages.charset.UTF-8"><![CDATA[UTF-8 is required if you wish to install Western European or any Non-Western European langauges, now or at a later date.]]></item>-->
@@ -122,39 +122,39 @@
 		
 		<item name="wcf.global.languages.languages"><![CDATA[Languages]]></item>
 		<item name="wcf.global.languages.error.empty"><![CDATA[Please choose at least one language!]]></item>
-		<item name="wcf.global.languages.error.notAvailable"><![CDATA[The languages you have chosen do not correspond to the given Character Encoding you made previously. Please amend your language choice.]]></item>
-		<item name="wcf.global.configureDB"><![CDATA[Configure Database access]]></item>
-		<item name="wcf.global.configureDB.description"><![CDATA[The Data for this Software needs to be stored in a MySQL Database. Please enter your Database access information!]]></item>
-		<item name="wcf.global.configureDB.accessData"><![CDATA[Database access information]]></item>
+		<item name="wcf.global.languages.error.notAvailable"><![CDATA[The languages you have chosen do not correspond to the given character-encoding you made previously. Please amend your language choice.]]></item>
+		<item name="wcf.global.configureDB"><![CDATA[Configure database access]]></item>
+		<item name="wcf.global.configureDB.description"><![CDATA[The data for this software needs to be stored in an SQL-database. Please enter your database-access information!]]></item>
+		<item name="wcf.global.configureDB.accessData"><![CDATA[Database-access information]]></item>
 		<item name="wcf.global.configureDB.host"><![CDATA[Hostname]]></item>
 		<item name="wcf.global.configureDB.user"><![CDATA[Username]]></item>
 		<item name="wcf.global.configureDB.password"><![CDATA[Password]]></item>
 		<item name="wcf.global.configureDB.database"><![CDATA[Database name]]></item>
-		<item name="wcf.global.configureDB.number"><![CDATA[Installations number]]></item>
-		<item name="wcf.global.configureDB.error"><![CDATA[An Error has accured while trying to connect to your Database:
+		<item name="wcf.global.configureDB.number"><![CDATA[Installation-number]]></item>
+		<item name="wcf.global.configureDB.error"><![CDATA[An error has accured while trying to connect to your database:
 		<br /><b>{$exception->getMessage()}{if $exception|get_class == 'DatabaseException'}<br />{$exception->getErrorDesc()}{/if}</b>
 		<br />Additional information can be found in the WoltLab Error Reference:
 		<br /><a href="http://www.woltlab.com/help/?code={@$exception->getCode()}">http://www.woltlab.com/help/?code={@$exception->getCode()}</a>]]></item>
-		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[The following table{if $conflictedTables|count > 1}s{/if} already exist{if $conflictedTables|count == 1}s{/if} within your &quot;{$dbName}&quot; Database:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />To solve this problem, please do one of the following:<br />1. Enable the &quot;Overwrite&quot; option below to overwrite {if $conflictedTables|count > 1}these tables{else}this table{/if} and continue the installation with the &quot;Next&quot; Button or<br />2. You re-enter the Database access information, but to a different Database and continue the installation with the &quot;Next&quot; Button or<br />3. You enter a new Installations number, not forgetting to continue the installation with the &quot;Next&quot; Button.]]></item>
+		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[The following table{if $conflictedTables|count > 1}s{/if} already exist{if $conflictedTables|count == 1}s{/if} within your &quot;{$dbName}&quot; Database:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />To solve this problem, please do one of the following:<br />1. Enable the &quot;Overwrite&quot; option below to overwrite {if $conflictedTables|count > 1}these tables{else}this table{/if} and continue the installation with the &quot;Next&quot; button or<br />2. You re-enter the database access information, but to a different database and continue the installation with the &quot;Next&quot; button or<br />3. Enter a new installation number, not forgetting to continue the installation with the &quot;Next&quot; Button.]]></item>
 		<item name="wcf.global.configureDB.conflictedTables.overwrite"><![CDATA[Overwrite the above listed table{if $conflictedTables|count > 1}s{/if}?]]></item>
 		<item name="wcf.global.configureDB.class"><![CDATA[Database type]]></item>
 		<item name="wcf.global.configureDB.class.MSSQLDatabase"><![CDATA[Microsoft SQL Server 2008+]]></item>
 		<item name="wcf.global.configureDB.class.MySQLDatabase"><![CDATA[MySQL 5.1+]]></item>
 		<item name="wcf.global.configureDB.class.PostgreSQLDatabase"><![CDATA[PostgreSQL 8.2+]]></item>
 		<item name="wcf.global.createUser"><![CDATA[Create an Administrator]]></item>
-		<item name="wcf.global.createUser.description"><![CDATA[The Installation will now generate an Administrator account for you. Please give a username, email address and password.]]></item>
-		<item name="wcf.global.createUser.data"><![CDATA[User information]]></item>
-		<item name="wcf.global.createUser.username"><![CDATA[Username]]></item>
-		<item name="wcf.global.createUser.email"><![CDATA[E-Mail Address]]></item>
-		<item name="wcf.global.createUser.confirmEmail"><![CDATA[Confirm E-Mail Address]]></item>
+		<item name="wcf.global.createUser.description"><![CDATA[The installation will now generate an administrator-account for you. Please give a user-name, e-mail address and password.]]></item>
+		<item name="wcf.global.createUser.data"><![CDATA[User-information]]></item>
+		<item name="wcf.global.createUser.username"><![CDATA[User-name]]></item>
+		<item name="wcf.global.createUser.email"><![CDATA[E-mail address]]></item>
+		<item name="wcf.global.createUser.confirmEmail"><![CDATA[Confirm e-mail address]]></item>
 		<item name="wcf.global.createUser.password"><![CDATA[Password]]></item>
-		<item name="wcf.global.createUser.confirmPassword"><![CDATA[Confirm Password]]></item>
-		<item name="wcf.global.createUser.error"><![CDATA[Errors have accured while registering the User account, please check the marked fields for errors.]]></item>
+		<item name="wcf.global.createUser.confirmPassword"><![CDATA[Confirm password]]></item>
+		<item name="wcf.global.createUser.error"><![CDATA[Errors have accured while registering the user-account, please check the marked fields for errors.]]></item>
 		<item name="wcf.global.createUser.error.empty"><![CDATA[This field can not be left empty.]]></item>
-		<item name="wcf.global.createUser.error.username.notValid"><![CDATA[The Username you have given is invalid. A valid Username must be between 3 and 20 characters long.]]></item>
-		<item name="wcf.global.createUser.error.email.notValid"><![CDATA[The E-Mail Address you have given is invalid. A valid E-Mail Address must be in the format of name@domain.tld]]></item>
-		<item name="wcf.global.createUser.error.confirmEmail.notEqual"><![CDATA[The E-Mail Addresses you have given are not identical. For security reasons, please make sure that both E-Mail Address fields have been filled in and are identical.]]></item>
-		<item name="wcf.global.createUser.error.confirmPassword.notEqual"><![CDATA[The Passwords you have given are not identical. For security reasons, please make sure that both Password fields have been filled in and are identical.]]></item>
+		<item name="wcf.global.createUser.error.username.notValid"><![CDATA[The user-name you have given is invalid. A valid user-name must be between 3 and 20 characters long.]]></item>
+		<item name="wcf.global.createUser.error.email.notValid"><![CDATA[The e-mail address you have given is invalid. A valid e-mail address must be in the format of name@domain.tld]]></item>
+		<item name="wcf.global.createUser.error.confirmEmail.notEqual"><![CDATA[The e-mail addresses you have given are not identical. For security reasons, please make sure that both e-mail address fields have been filled in and are identical.]]></item>
+		<item name="wcf.global.createUser.error.confirmPassword.notEqual"><![CDATA[The passwords you have given are not identical. For security reasons, please make sure that both password fields have been filled in and are identical.]]></item>
 		<item name="wcf.global.wcfDir.error"><![CDATA[An Error has accured while extracting the required files:
 		<br /><b>{$exception->getMessage()}</b><br />
 		Please make sure that the destination folder exists and can be written to.

@@ -25,6 +25,12 @@ class ClipboardHandler extends SingletonFactory {
 	protected $actionCache = null;
 	
 	/**
+	 * list of marked items
+	 * @var	array<array>
+	 */
+	protected $markedItems = null;
+	
+	/**
 	 * cached list of page actions
 	 * @var	array
 	 */
@@ -139,12 +145,11 @@ class ClipboardHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns a list of marked items grouped by type name.
+	 * Loads a list of marked items grouped by type name.
 	 * 
 	 * @param	integer		$typeID
-	 * @return	array<array>
 	 */
-	public function getMarkedItems($typeID = null) {
+	protected function loadMarkedItems($typeID = null) {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("userID = ?", array(WCF::getUser()->userID));
 		if ($typeID !== null) $conditions->add("typeID = ?", array($typeID));
@@ -175,17 +180,28 @@ class ClipboardHandler extends SingletonFactory {
 		}
 		
 		// read objects
-		$objects = array();
+		$this->markedItems = array();
 		foreach ($data as $typeName => $objectData) {
 			$objectList = new $objectData['className']();
 			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias() . "." . $objectList->getDatabaseTableIndexName() . " IN (?)", array($objectData['objectIDs']));
 			$objectList->sqlLimit = 0;
 			$objectList->readObjects();
 			
-			$objects[$typeName] = $objectList->getObjects();
+			$this->markedItems[$typeName] = $objectList->getObjects();
+		}
+	}
+	
+	/**
+	 * Loads a list of marked items grouped by type name.
+	 * 
+	 * @param	integer		$typeID
+	 */
+	public function getMarkedItems($typeID = null) {
+		if ($this->markedItems === null) {
+			$this->loadMarkedItems($typeID);
 		}
 		
-		return $objects;
+		return $this->markedItems;
 	}
 	
 	/**
@@ -199,8 +215,8 @@ class ClipboardHandler extends SingletonFactory {
 		if (!isset($this->pageCache[$page])) return null;
 		
 		// get objects
-		$objects = $this->getMarkedItems();
-		if (!count($objects)) return null;
+		$this->loadMarkedItems();
+		if (!count($this->markedItems)) return null;
 		
 		// fetch action ids
 		$this->loadActionCache();
@@ -237,15 +253,15 @@ class ClipboardHandler extends SingletonFactory {
 		foreach ($actions as $actionData) {
 			// get accepted objects
 			$typeName = $actionData['object']->getTypeName();
-			if (!isset($objects[$typeName])) continue;
+			if (!isset($this->markedItems[$typeName])) continue;
 			
 			$editorData[$typeName] = array(
-				'label' => $actionData['object']->getEditorLabel($objects[$typeName]),
+				'label' => $actionData['object']->getEditorLabel($this->markedItems[$typeName]),
 				'items' => array()
 			);
 			
 			foreach ($actionData['actions'] as $action) {
-				$data = $actionData['object']->execute($objects[$typeName], $action);
+				$data = $actionData['object']->execute($this->markedItems[$typeName], $action);
 				if ($data === null) {
 					continue;
 				}
@@ -271,5 +287,27 @@ class ClipboardHandler extends SingletonFactory {
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
+	}
+	
+	/**
+	 * Returns true (1) if at least one item is marked.
+	 * 
+	 * @return	integer
+	 */
+	public function hasMarkedItems() {
+		if (!WCF::getUser()->userID) return 0;
+		
+		$sql = "SELECT	COUNT(*) AS count
+			FROM	wcf".WCF_N."_clipboard_item
+			WHERE	userID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(WCF::getUser()->userID));
+		$count = $statement->fetchArray();
+		
+		if ($count['count']) {
+			return 1;
+		}
+		
+		return 0;
 	}
 }

@@ -5,6 +5,7 @@ use wcf\data\user\UserList;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 use wcf\system\WCF;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 
@@ -106,13 +107,7 @@ class UserMailForm extends ACPForm {
 		WCF::getSession()->register('userMailData', $userMailData);
 		$this->saved();
 		
-		// show worker template
-		WCF::getTPL()->assign(array(
-			'pageTitle' => WCF::getLanguage()->get(($this->action == 'all' ? 'wcf.acp.user.sendMail.all' : ($this->action == 'group' ? 'wcf.acp.user.sendMail.group' : 'wcf.acp.user.sendMail'))),
-			'url' => 'index.php?action=UserMail&mailID='.$mailID.''.SID_ARG_2ND_NOT_ENCODED
-		));
-		WCF::getTPL()->display('worker');
-		exit;
+		WCF::getTPL()->assign('mailID', $mailID);
 	}
 	
 	/**
@@ -124,16 +119,26 @@ class UserMailForm extends ACPForm {
 		if (!count($_POST)) {
 			// get marked user ids
 			if (empty($this->action)) {
-				$markedUsers = WCF::getSession()->getVar('markedUsers');
-				if (is_array($markedUsers)) $this->userIDs = implode(',', $markedUsers);
-				if (empty($this->userIDs)) throw new IllegalLinkException();
+				// get type id
+				$typeID = ClipboardHandler::getInstance()->getTypeID('com.woltlab.wcf.user');
+				if ($typeID === null) {
+					throw new SystemException("clipboard item type 'com.woltlab.wcf.user' is unknown.");
+				}
+				
+				// get user ids
+				$users = ClipboardHandler::getInstance()->getMarkedItems($typeID);
+				if (!isset($users['com.woltlab.wcf.user']) || empty($users['com.woltlab.wcf.user'])) throw new IllegalLinkException();
+				
+				// load users
+				$this->userIDs = array_keys($users['com.woltlab.wcf.user']);
+				$this->users = $users['com.woltlab.wcf.user'];
 			}
 			
 			if (MAIL_USE_FORMATTED_ADDRESS)	$this->from = MAIL_FROM_NAME . ' <' . MAIL_FROM_ADDRESS . '>';
 			else $this->from = MAIL_FROM_ADDRESS;
 		}
 		
-		if (!empty($this->userIDs)) {
+		if (!empty($this->userIDs) && empty($this->users)) {
 			$userList = new UserList();
 			$userList->getConditionBuilder()->add("user.userID IN (?)", array($this->userIDs));
 			$userList->sqlOrderBy = "user.username ASC";
