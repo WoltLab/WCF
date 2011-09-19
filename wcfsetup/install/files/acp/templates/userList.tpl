@@ -95,7 +95,7 @@
 	<div class="contentFooter">
 		{@$pagesLinks}
 		
-		<div class="clipboardEditor" data-type="com.woltlab.wcf.user"></div>
+		<div data-type="com.woltlab.wcf.user" class="clipboardEditor"></div>
 		
 		<nav class="largeButtons">
 			<ul>
