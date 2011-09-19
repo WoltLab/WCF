@@ -21,7 +21,7 @@
 
 <div class="contentHeader">
 	<nav class="largeButtons">
-		<ul><li><a href="index.php?page=UpdateServerList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/updateServerM.png" alt="" /> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li></ul>
+		<ul><li><a href="index.php?page=UpdateServerList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/server1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li></ul>
 	</nav>
 </div>
 

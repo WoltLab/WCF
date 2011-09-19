@@ -873,9 +873,13 @@ textarea {
 	display: inline;
 }
 
-.largeButtons ul li img {
-	/* Button Icons disabled for now, maybe we get rid oft them */
-	display: none;
+.largeButtons ul li a img {
+	/* ToDo: Button-icons disabled for now, maybe we get rid oft them
+	display: none; */
+	margin: -5px 1px -5px -5px;
+	height: 24px;
+	width: 24px;
+	vertical-align: middle;
 }
 
 /* buttons normal */
@@ -1234,14 +1238,6 @@ input[type='button'][disabled='disabled'],
 	border-width: 1px;
 	border-style: solid;
 	border-color: #ccc #bbb #aaa;
-}
-
-/* ToDo: Images deprecated? */
-.largeButtons ul li a img {
-	margin: 0;
-	height: 24px;
-	width: 24px;
-	vertical-align: middle;
 }
 
 
@@ -1636,11 +1632,6 @@ tbody tr {
 	border-bottom: 1px solid rgba(255, 255, 255, .3);
 }
 
-tbody tr:first-child {
-	/* prevents line-breaks in icon-column */
-	white-space: nowrap;
-}
-
 tbody tr:last-child {
 	/* no border for the last table row */
 	border-bottom-width: 0;
@@ -1710,6 +1701,7 @@ tr .columnMark,
 tr .columnStatus {
 	text-align: center;
 	width: 1% !important;
+	white-space: nowrap;
 }
 
 tr .columnStatus .badge {
@@ -1721,11 +1713,13 @@ tr .columnDigits,
 tr .columnID {
 	text-align: right;
 	width: 1% !important;
+	white-space: nowrap;
 }
 
 tr .columnIcon {
 	text-align: left;
-	width: 1% !important
+	width: 1% !important;
+	white-space: nowrap;
 }
 
 tr .columnIcon img:not(.balloonTooltip):hover {
@@ -2267,7 +2261,7 @@ li > .badgeButton {
 #balloonTooltip {
 	font-size: .85em;
 	color: #fff;
-	border: 1px solid rgba(255, 255, 255, .7) !important;
+	border: 1px solid rgba(255, 255, 255, .7);
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, .7);
 	padding: 5px 10px 7px;
@@ -2301,8 +2295,11 @@ li > .badgeButton {
 /* Clipboard API - TESTING ONLY / TODO */
 
 .clipboardEditor {
-	padding-top: 5px !important;
+	font-size: .85em;
+	margin: 7px 3px 0;
+	padding: 2px 5px 3px !important;
 	position: relative;
+	float: left;
 }
 
 .clipboardEditor p {
@@ -2314,10 +2311,10 @@ li > .badgeButton {
 }
 
 .clipboardEditor ol {
-	border: 1px solid rgba(0, 0, 0, .2);
+	border: 1px solid rgba(255, 255, 255, .7);
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, .7);
-	margin-top: 25px;
+	margin-top: 20px;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -2327,12 +2324,9 @@ li > .badgeButton {
 	-ms-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	
-	
 }
 
 .clipboardEditor li {
-	font-size: .85em;
 	text-shadow: none;
 	color: #ccc;
 	cursor: pointer; 
@@ -2357,7 +2351,7 @@ li > .badgeButton {
 
 .clipboardEditor li:hover {
 	color: #fff;
-	background-color: rgba(0, 0, 0, .1);
+	background-color: rgba(0, 0, 0, .5);
 }
 
 .clipboardEditor li:first-child {
@@ -2367,6 +2361,8 @@ li > .badgeButton {
 
 
 
+
+/* ToDo: Proxy Loading */
 
 .actionProxyLoading {
 	

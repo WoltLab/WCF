@@ -41,7 +41,7 @@
 	
 	{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
 		<nav class="largeButtons">
-			<ul><li><a href="index.php?form=CronjobAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/cronjobAddM.png" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
+			<ul><li><a href="index.php?form=CronjobAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
 		</nav>
 	{/if}
 </div>
@@ -79,9 +79,9 @@
 				<tr class="cronjobRow">
 					<td class="columnIcon">
 						{if $__wcf->session->getPermission('admin.system.cronjob.canEditCronjob')}
-							<img src="{@RELATIVE_WCF_DIR}icon/play1.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" data-objectID="{@$cronjob->cronjobID}" class="executeButton balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/run1.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" data-objectID="{@$cronjob->cronjobID}" class="executeButton balloonTooltip" />
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/play1D.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" />
+							<img src="{@RELATIVE_WCF_DIR}icon/run1D.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" />
 						{/if}
 						
 						{if $cronjob->canBeDisabled()}
@@ -138,7 +138,7 @@
 		
 		{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
 			<nav class="largeButtons">
-				<ul><li><a href="index.php?form=CronjobAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/cronjobAddM.png" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
+				<ul><li><a href="index.php?form=CronjobAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
 			</nav>
 		{/if}
 	</div>

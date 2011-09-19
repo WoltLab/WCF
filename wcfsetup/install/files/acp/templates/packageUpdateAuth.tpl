@@ -1,7 +1,7 @@
 {include file='header'}
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/packageUpdateL.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.packageUpdate.auth{/lang}</h1>
 	</hgroup>
