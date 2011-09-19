@@ -1625,7 +1625,7 @@ thead th.active:hover a {
 thead th a img {
 	/* sort-icon orientation does not work */
 	text-align: right;
-	/* negative margins to prevent table-cells from expanding when ths sort-icon shows up */
+	/* negative margins to prevent table-cells from expanding when the sort-icon shows up */
 	margin-top: -5px !important;
 	margin-bottom: -5px !important;
 }
