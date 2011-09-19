@@ -91,7 +91,7 @@ class WCFSetup extends WCF {
 			self::$selectedLanguageCode = $_REQUEST['languageCode'];
 		}
 		else {
-			self::$selectedLanguageCode = LanguageFactory::getPreferredLanguage(self::$availableLanguages, self::$selectedLanguageCode);
+			self::$selectedLanguageCode = LanguageFactory::getInstance()->getPreferredLanguage(self::$availableLanguages, self::$selectedLanguageCode);
 		}
 		
 		if (isset($_POST['selectedLanguages']) && is_array($_POST['selectedLanguages'])) {
@@ -792,8 +792,8 @@ class WCFSetup extends WCF {
 		}
 		
 		// set default language
-		$language = LanguageFactory::getLanguageByCode(in_array(self::$selectedLanguageCode, self::$selectedLanguages) ? self::$selectedLanguageCode : self::$selectedLanguages[0]);
-		LanguageFactory::makeDefault($language->languageID);
+		$language = LanguageFactory::getInstance()->getLanguageByCode(in_array(self::$selectedLanguageCode, self::$selectedLanguages) ? self::$selectedLanguageCode : self::$selectedLanguages[0]);
+		LanguageFactory::getInstance()->makeDefault($language->languageID);
 		
 		// assign all languages to package id 0
 		$sql = "SELECT	languageID

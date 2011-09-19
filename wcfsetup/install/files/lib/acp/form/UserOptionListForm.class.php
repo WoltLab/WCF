@@ -39,7 +39,7 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 	 */
 	protected function getAvailableLanguages() {
 		$availableLanguages = array();
-		foreach (LanguageFactory::getAvailableLanguages(PACKAGE_ID) as $language) {
+		foreach (LanguageFactory::getInstance()->getAvailableLanguages(PACKAGE_ID) as $language) {
 			$availableLanguages[$language['languageID']] = WCF::getLanguage()->get('wcf.global.language.'.$language['languageCode']);	
 		}
 		
@@ -56,7 +56,7 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 	 */
 	public static function getAvailableContentLanguages() {
 		$availableLanguages = array();
-		foreach (LanguageFactory::getAvailableContentLanguages(PACKAGE_ID) as $language) {
+		foreach (LanguageFactory::getInstance()->getAvailableContentLanguages(PACKAGE_ID) as $language) {
 			$availableLanguages[$language['languageID']] = WCF::getLanguage()->get('wcf.global.language.'.$language['languageCode']);	
 		}
 		
@@ -72,7 +72,7 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 	 * @return 	integer		$languageID
 	 */
 	protected function getDefaultFormLanguageID() {
-		return LanguageFactory::getDefaultLanguageID();
+		return LanguageFactory::getInstance()->getDefaultLanguageID();
 	}
 	
 	/**
