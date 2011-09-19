@@ -3,8 +3,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
 	
-	<title>Play</title> 
-	<desc>Play Icon (framed)</desc> 
+	<title>Run</title> 
+	<desc>Run Icon (disabled)</desc> 
 	
 	<!--
 		@author		Harald Szekely 
@@ -16,7 +16,7 @@
 		
 	</defs>
 	
-	<g id="IconPlayframed">
+	<g id="IconRun" style="opacity: .3;">
 		<path id="Lower" class="Lower" style="fill-rule: evenodd; clip-rule: evenodd; fill: #fff;" d="M13,2H2C1.4477539,2,1,2.4477539,1,3v11
 			c0,0.5527344,0.4477539,1,1,1h11c0.5527344,0,1-0.4472656,1-1V3C14,2.4477539,13.5527344,2,13,2z M4,13.0097656v-9l7,4.4990234
 			L4,13.0097656z"/>
