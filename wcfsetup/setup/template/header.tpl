@@ -5,7 +5,7 @@
 	<title>{lang}wcf.global.progressBar{/lang} - {lang}wcf.global.pageTitle{/lang}</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="stylesheet" type="text/css" href="install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showCSS=testing.css" />
+	<link rel="stylesheet" type="text/css" href="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/style/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showCSS={/if}testing.css" />
 </head>
 
 <body id="tplWCFInstaller">
@@ -19,7 +19,7 @@
 			<div id="logo" class="logo">
 				<div><!-- ToDo: This is just a little trick to compensate the missing link here, find a better solution -->
 					<h1>Installation</h1><!-- ToDo: Use a proper text and language variable -->
-					<img src="install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage=wcfLogoWhite.svg" width="300" height="58" alt="Product-logo" title="Installation" />
+					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/images/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage={/if}wcfLogoWhite.svg" width="300" height="58" alt="Product-logo" title="Installation" />
 				</div>
 				
 				<!-- no search area -->
@@ -32,7 +32,7 @@
 			<nav class="headerNavigation">
 				<div>
 					<ul>
-						<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}" class="balloonTooltip"><img src="install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon=toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+						<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}" class="balloonTooltip"><img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 					</ul>
 				</div>
 			</nav>
@@ -49,7 +49,7 @@
 			<section id="content" class="content">
 				
 				<header class="mainHeading setup">
-					<img src="install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon=installation1.svg" alt="" />
+					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}installation1.svg" alt="" />
 					<hgroup>
 						<h1>{lang}wcf.global.title{/lang}</h1>
 						<h2>{lang}wcf.global.title.subtitle{/lang}</h2>

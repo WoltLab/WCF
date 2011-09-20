@@ -9,7 +9,7 @@
 		<div>
 			<nav id="footerNavigation" class="footerNavigation">
 				<ul>
-					<li id="toTopLink" class="toTopLink"><a href="#top" title="{lang}wcf.global.scrollUp{/lang}" class="balloonTooltip"><img src="install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon=toTop.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollUp{/lang}</span></a></li>
+					<li id="toTopLink" class="toTopLink"><a href="#top" title="{lang}wcf.global.scrollUp{/lang}" class="balloonTooltip"><img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}toTop.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollUp{/lang}</span></a></li>
 				</ul>
 			</nav>
 		</div>
