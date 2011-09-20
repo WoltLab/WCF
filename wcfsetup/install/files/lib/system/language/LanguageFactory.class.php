@@ -112,7 +112,7 @@ class LanguageFactory extends SingletonFactory {
 		$defaultLanguageCode = $this->cache['languages'][$this->cache['default']]['languageCode'];
 		
 		// get preferred language
-		$languageCode = $this->getPreferredLanguage($availableLanguageCodes, $defaultLanguageCode);
+		$languageCode = self::getPreferredLanguage($availableLanguageCodes, $defaultLanguageCode);
 		
 		// get language id of preferred language
 		foreach ($this->cache['languages'] as $key => $language) {
@@ -129,12 +129,12 @@ class LanguageFactory extends SingletonFactory {
 	 * @param	string		$defaultLanguageCode
 	 * @return	string
 	 */
-	public function getPreferredLanguage($availableLanguageCodes, $defaultLanguageCode) {
+	public static function getPreferredLanguage($availableLanguageCodes, $defaultLanguageCode) {
 		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $_SERVER['HTTP_ACCEPT_LANGUAGE']) {
 			$acceptedLanguages = explode(',', str_replace('_', '-', strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE'])));
 			foreach ($acceptedLanguages as $acceptedLanguage) {
 				foreach ($availableLanguageCodes as $availableLanguageCode) {
-					$fixedCode = strtolower($this->fixLanguageCode($availableLanguageCode));
+					$fixedCode = strtolower(self::fixLanguageCode($availableLanguageCode));
 					
 					if ($fixedCode == $acceptedLanguage || $fixedCode == preg_replace('%^([a-z]{2}).*$%i', '$1', $acceptedLanguage)) {
 						return $availableLanguageCode;
@@ -205,13 +205,15 @@ class LanguageFactory extends SingletonFactory {
 	 * Loads the language cache.
 	 */
 	protected function loadCache() {
-		CacheHandler::getInstance()->addResource(
-			'languages',
-			WCF_DIR.'cache/cache.languages.php',
-			'wcf\system\cache\builder\LanguageCacheBuilder'
-		);
-		
-		$this->cache = CacheHandler::getInstance()->get('languages');
+		if (defined('WCF_N')) {
+			CacheHandler::getInstance()->addResource(
+				'languages',
+				WCF_DIR.'cache/cache.languages.php',
+				'wcf\system\cache\builder\LanguageCacheBuilder'
+			);
+			
+			$this->cache = CacheHandler::getInstance()->get('languages');
+		}
 	}
 	
 	/**
@@ -241,7 +243,7 @@ class LanguageFactory extends SingletonFactory {
 	 * @param	string		$languageCode
 	 * @return	string		$languageCode
 	 */
-	public function fixLanguageCode($languageCode) {
+	public static function fixLanguageCode($languageCode) {
 		return preg_replace('/-[a-z0-9]+/', '', $languageCode);
 	}
 	

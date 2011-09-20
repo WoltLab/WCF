@@ -59,7 +59,7 @@ class Language extends DatabaseObject {
 	 * @return	string
 	 */
 	public function getFixedLanguageCode() {
-		return LanguageFactory::getInstance()->fixLanguageCode($this->languageCode);
+		return LanguageFactory::fixLanguageCode($this->languageCode);
 	}
 		
 	/**

@@ -91,7 +91,7 @@ class WCFSetup extends WCF {
 			self::$selectedLanguageCode = $_REQUEST['languageCode'];
 		}
 		else {
-			self::$selectedLanguageCode = LanguageFactory::getInstance()->getPreferredLanguage(self::$availableLanguages, self::$selectedLanguageCode);
+			self::$selectedLanguageCode = LanguageFactory::getPreferredLanguage(self::$availableLanguages, self::$selectedLanguageCode);
 		}
 		
 		if (isset($_POST['selectedLanguages']) && is_array($_POST['selectedLanguages'])) {
