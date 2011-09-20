@@ -678,8 +678,9 @@ WCF.Clipboard = {
 		var $containers = {};
 		$('.clipboardEditor').each(function(index, container) {
 			var $container = $(container);
-			var $typeName = $container.data('type');
-			if ($typeName) {
+			var $types = eval($container.data('types'));
+			for (var $i = 0, $length = $types.length; $i < $length; $i++) {
+				var $typeName = $types[$i];
 				$containers[$typeName] = $container;
 			}
 			
@@ -697,17 +698,21 @@ WCF.Clipboard = {
 			
 			// create container
 			var $container = $containers[$typeName];
+			var $list = $container.children('ul');
+			if ($list.length == 0) {
+				$list = $('<ul></ul>').appendTo($container);
+			}
+			
 			var $editor = data.items[$typeName];
-			var $label = $('<span>' + $editor.label + '</span>').appendTo($container).click(function(event) {
-				var $span = $(event.target);
-				$span.next().toggle();
+			var $label = $('<li><span>' + $editor.label + '</span></li>').appendTo($list).click(function(event) {
+				$(event.target).next().toggle();
 			});
-			var $list = $('<ol></ol>').appendTo($container).hide();
+			var $itemList = $('<ol></ol>').appendTo($label).hide();
 			
 			// create editor items
 			for (var $itemIndex in $editor.items) {
 				var $item = $editor.items[$itemIndex];
-				var $listItem = $('<li>' + $item.label + '</li>').appendTo($list);
+				var $listItem = $('<li>' + $item.label + '</li>').appendTo($itemList);
 				$listItem.data('actionName', $item.actionName).data('parameters', $item.parameters);
 				$listItem.data('internalData', $item.internalData).data('url', $item.url).data('type', $typeName);
 				
