@@ -42,7 +42,7 @@
 	</nav>
 	
 	{hascontent}
-		<table class="clipboardContainer" data-type="com.woltlab.wcf.user">
+		<table data-type="com.woltlab.wcf.user" class="clipboardContainer">
 			<thead>
 				<tr class="tableHead">
 					<th class="columnMark"><label><input type="checkbox" class="clipboardMarkAll" /></label></th>
@@ -50,7 +50,7 @@
 					<th class="columnTitle columnUsername{if $sortField == 'username'} active{/if}"><a href="index.php?page=UserList&amp;searchID={@$searchID}&amp;action={@$encodedAction}&amp;pageNo={@$pageNo}&amp;sortField=username&amp;sortOrder={if $sortField == 'username' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.user.username{/lang}{if $sortField == 'username'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					
 					{foreach from=$columnHeads key=column item=columnLanguageVariable}
-						<th class="columnText column{$column|ucfirst}{if $sortField == $column} active{/if}"><a href="index.php?page=UserList&amp;searchID={@$searchID}&amp;action={@$encodedAction}&amp;pageNo={@$pageNo}&amp;sortField={$column}&amp;sortOrder={if $sortField == $column && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}{$columnLanguageVariable}{/lang}{if $sortField == $column} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+						<th class="column{$column|ucfirst}{if $sortField == $column} active{/if}"><a href="index.php?page=UserList&amp;searchID={@$searchID}&amp;action={@$encodedAction}&amp;pageNo={@$pageNo}&amp;sortField={$column}&amp;sortOrder={if $sortField == $column && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}{$columnLanguageVariable}{/lang}{if $sortField == $column} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					{/foreach}
 					
 					{if $additionalColumnHeads|isset}{@$additionalColumnHeads}{/if}
@@ -61,7 +61,7 @@
 				{content}
 					{foreach from=$users item=user}
 						<tr id="userRow{@$user->userID}">
-							<td class="columnMark"><label><input type="checkbox" data-objectID="{@$user->userID}" class="clipboardItem" /></label></td>
+							<td class="columnMark"><input type="checkbox" class="clipboardItem" data-objectID="{@$user->userID}" /></td>
 							<td class="columnIcon">
 								{if $user->editable}
 									<a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="balloonTooltip" /></a>
@@ -76,11 +76,11 @@
 						
 								{if $additionalButtons[$user->userID]|isset}{@$additionalButtons[$user->userID]}{/if}
 							</td>
-							<td class="columnID columnUserID"><p>{@$user->userID}</p></td>
-							<td class="columnTitle columnUsername"><p>{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user->username}</a>{else}{$user->username}{/if}</p></td>
+							<td class="columnUserID columnID"><p>{@$user->userID}</p></td>
+							<td class="columnUsername columnName columnText"><p>{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user->username}</a>{else}{$user->username}{/if}</p></td>
 					
 							{foreach from=$columnHeads key=column item=columnLanguageVariable}
-								<td class="columnText column{$column|ucfirst}"><p>{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</p></td>
+								<td class="column{$column|ucfirst}"><p>{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</p></td>
 							{/foreach}
 					
 							{if $additionalColumns[$user->userID]|isset}{@$additionalColumns[$user->userID]}{/if}
@@ -95,7 +95,7 @@
 	<div class="contentFooter">
 		{@$pagesLinks}
 		
-		<div data-type="com.woltlab.wcf.user" class="clipboardEditor"></div>
+		<div data-types="[ 'com.woltlab.wcf.user' ]" class="clipboardEditor"></div>
 		
 		<nav class="largeButtons">
 			<ul>

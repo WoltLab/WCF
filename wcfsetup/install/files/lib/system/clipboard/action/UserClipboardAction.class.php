@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\clipboard\action;
+use wcf\data\user\group\UserGroup;
 use wcf\system\clipboard\ClipboardEditorItem;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
