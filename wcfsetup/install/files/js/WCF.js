@@ -687,7 +687,7 @@ WCF.Clipboard = {
 			$container.empty();
 		});
 		
-		// do not buid new editors
+		// do not build new editors
 		if (!data.items) return;
 		
 		// rebuild editors
@@ -2016,7 +2016,7 @@ WCF.Effect.SmoothScroll.prototype = {
 					if ($targetOffset < 0) $targetOffset = 0;
 				}
 				
-				$('html,body').animate({ scrollTop: $targetOffset }, 1200, function (x, t, b, c, d) {
+				$('html,body').animate({ scrollTop: $targetOffset }, 400, function (x, t, b, c, d) {
 					return -c * ((t=t/d-1)*t*t*t - 1) + b;
 				});
 				
@@ -2027,7 +2027,7 @@ WCF.Effect.SmoothScroll.prototype = {
 };
 
 /**
- * Creates a smooth scroll effect.
+ * Creates the balloon tool-tip.
  */
 WCF.Effect.BalloonTooltip = function() { this.init(); };
 WCF.Effect.BalloonTooltip.prototype = {

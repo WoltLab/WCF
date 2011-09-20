@@ -358,15 +358,15 @@ section.content {
 	vertical-align: top;
 }
 
-section.content .content {
-	border: 1px solid #ccc;
-	background-color: rgba(0, 0, 0, .01);
-	padding: 13px 23px;
-}
-
 div.main > div section:only-child {
 	display: block !important;
 	width: auto;
+}
+
+section.content .content {
+	border: 1px solid #ccc;
+	background-color: rgba(0, 0, 0, .01);
+	padding: 13px 23px 23px;
 }
 
 
@@ -587,12 +587,12 @@ fieldset {
 	border: 1px solid #ccc;
 	border-radius: 7px;
 	background-color: rgba(0, 0, 0, .015);
-	margin: 7px 0 0;
+	margin: 15px 0 0;
 	padding: 15px;
 }
 
 fieldset:last-child, fieldset:only-child {
-	margin: 7px 0 7px !important;
+	margin-bottom: 7px !important;
 }
 
 /* experimental 
@@ -1350,6 +1350,8 @@ input[type='button'][disabled='disabled'],
 	position: relative;
 	bottom: -1px;
 	z-index: 10;
+	max-width: 200px;
+	overflow: hidden;
 }
 
 .tabMenu li:not(.ui-state-active) a:hover {
