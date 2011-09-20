@@ -1,7 +1,7 @@
 /**
  * ACP Testing Styles  
  *
- * @author		Harald Szekely, Alexander Ebert, Marcel Werk 
+ * @author		Harald Szekely 
  * @copyright	2011 WoltLab GmbH 
  */
 
@@ -2161,7 +2161,7 @@ div.ui-widget-overlay {
 /* Buttons */
 
 .badgeButton,
-.clipboardEditor {
+.clipboardEditor > ul > li {
 	cursor: pointer;
 	
 	border-width: 1px;
@@ -2197,7 +2197,7 @@ li > .badgeButton {
 }
 
 .badgeButton:hover,
-.clipboardEditor:hover {
+.clipboardEditor > ul > li:hover {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #ffc053 #fa2 #fc9e07;
@@ -2212,8 +2212,8 @@ li > .badgeButton {
 
 .badgeButton:active,
 .badgeButton:focus,
-.clipboardEditor:active,
-.clipboardEditor:focus {	
+.clipboardEditor > ul > li:active,
+.clipboardEditor > ul > li:focus {	
 	border-width: 1px;
 	border-style: solid;
 	border-color: #fc9e07 #fa2 #ffc053;
@@ -2234,7 +2234,7 @@ li > .badgeButton {
 
 .badgeButton,
 .badgeButton a,
-.clipboardEditor {
+.clipboardEditor > ul > li > span {
 	text-decoration: none !important;
 	text-shadow: 0 1px 0 #fff;
 	color: #999;
@@ -2242,7 +2242,7 @@ li > .badgeButton {
 
 .badgeButton:hover,
 .badgeButton a:hover,
-.clipboardEditor:hover {
+.clipboardEditor > ul > li:hover > span {
 	text-decoration: none !important;
 	color: #666;
 }
@@ -2250,7 +2250,9 @@ li > .badgeButton {
 .badgeButton:active,
 .badgeButton:focus,
 .badgeButton a:active,
-.badgeButton a:focus {
+.badgeButton a:focus,
+.clipboardEditor > ul > li:active > span,
+.clipboardEditor > ul > li:focus > span {
 	color: #333;
 }
 
@@ -2297,14 +2299,18 @@ li > .badgeButton {
 /* Clipboard API - TESTING ONLY / TODO */
 
 .clipboardEditor {
+	
+}
+
+.clipboardEditor > ul {
 	font-size: .85em;
-	margin: 7px 3px 0;
-	padding: 2px 5px 3px !important;
+	margin: 6px 3px 0;
+	display: block;
 	position: relative;
 	float: left;
 }
 
-.clipboardEditor p {
+.clipboardEditor > ul > li > span {
 	background-image: url('../../icon/dropdown1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
@@ -2312,11 +2318,11 @@ li > .badgeButton {
 	display: inline-block;
 }
 
-.clipboardEditor ol {
+.clipboardEditor ul > li > ol {
 	border: 1px solid rgba(255, 255, 255, .7);
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, .7);
-	margin-top: 20px;
+	margin-top: 23px;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -2328,7 +2334,7 @@ li > .badgeButton {
 	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 }
 
-.clipboardEditor li {
+.clipboardEditor ul > li > ol > li {
 	text-shadow: none;
 	color: #ccc;
 	cursor: pointer; 
@@ -2341,22 +2347,22 @@ li > .badgeButton {
 	transition: all .2s linear;
 }
 
-.clipboardEditor li:first-child {
+.clipboardEditor ul > li > ol > li:first-child {
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 }
 
-.clipboardEditor li:last-child {
+.clipboardEditor ul > li > ol > li:last-child {
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
 }
 
-.clipboardEditor li:hover {
+.clipboardEditor ul > li > ol > li:hover {
 	color: #fff;
 	background-color: rgba(0, 0, 0, .5);
 }
 
-.clipboardEditor li:first-child {
+.clipboardEditor ul > li > ol > li:first-child {
 	border-top-width: 0;
 }
 
