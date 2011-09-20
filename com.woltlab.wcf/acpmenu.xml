@@ -62,7 +62,7 @@
 			<showorder>2</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.autoupdate">
+		<acpmenuitem name="wcf.acp.menu.link.package.autoupdate">
 			<icon>icon/updateM.png</icon>
 			<link>index.php?page=PackageAutoUpdateList</link>
 			<parent>wcf.acp.menu.link.package.update</parent>
@@ -98,44 +98,10 @@
 		</acpmenuitem>
 		<!-- /packages -->	
 		
-		<!-- maintenance -->
-		<acpmenuitem name="wcf.acp.menu.link.maintenance">
-			<parent>wcf.acp.menu.link.system</parent>
-			<showorder>3</showorder>
-		</acpmenuitem>
-		<!-- /maintenance -->
-		
-		<!-- log -->
-		<acpmenuitem name="wcf.acp.menu.link.log">
-			<parent>wcf.acp.menu.link.system</parent>
-			<showorder>4</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.log.system">
-			<parent>wcf.acp.menu.link.log</parent>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.log.additional">
-			<parent>wcf.acp.menu.link.log</parent>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.log.session">
-			<icon>icon/sessionLogM.png</icon>
-			<link>index.php?page=ACPSessionLogList</link>
-			<parent>wcf.acp.menu.link.log.system</parent>
-			<permissions>admin.system.canViewLog</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.log.cache">
-			<link>index.php?page=CacheList</link>
-			<parent>wcf.acp.menu.link.log.system</parent>
-			<permissions>admin.system.canViewLog</permissions>
-		</acpmenuitem>
-		<!-- /log -->
-		
 		<!-- cronjobs -->
 		<acpmenuitem name="wcf.acp.menu.link.cronjob">
-			<parent>wcf.acp.menu.link.maintenance</parent>
+			<parent>wcf.acp.menu.link.system</parent>
+			<showorder>3</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.cronjob.list">
@@ -152,13 +118,33 @@
 			<permissions>admin.system.cronjob.canAddCronjob</permissions>
 			<showorder>2</showorder>
 		</acpmenuitem>
+		<!-- /cronjobs -->
 		
-		<acpmenuitem name="wcf.acp.menu.link.cronjob.showLog">
+		<!-- log -->
+		<acpmenuitem name="wcf.acp.menu.link.log">
+			<parent>wcf.acp.menu.link.system</parent>
+			<showorder>4</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.log.session">
+			<icon>icon/sessionLogM.png</icon>
+			<link>index.php?page=ACPSessionLogList</link>
+			<parent>wcf.acp.menu.link.log</parent>
+			<permissions>admin.system.canViewLog</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.log.cache">
+			<link>index.php?page=CacheList</link>
+			<parent>wcf.acp.menu.link.log</parent>
+			<permissions>admin.system.canViewLog</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.log.cronjob">
 			<link>index.php?page=CronjobLogList</link>
-			<parent>wcf.acp.menu.link.log.system</parent>
+			<parent>wcf.acp.menu.link.log</parent>
 			<permissions>admin.system.cronjob.canEditCronjob,admin.system.cronjob.canDeleteCronjob</permissions>
 		</acpmenuitem>
-		<!-- /cronjobs -->
+		<!-- /log -->
 		
 		<acpmenuitem name="wcf.acp.menu.link.user">
 			<icon>icon/usersL.png</icon>

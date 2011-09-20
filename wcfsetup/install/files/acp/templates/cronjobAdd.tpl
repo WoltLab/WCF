@@ -13,7 +13,7 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.acp.cronjob.{$action}.success{/lang}</p>	
+	<p class="success">{lang}wcf.global.form.{$action}.success{/lang}</p>	
 {/if}
 
 <p class="info">{lang}wcf.acp.cronjob.intro{/lang}</p>
@@ -31,7 +31,7 @@
 	<div class="border content">
 		
 		<fieldset>
-			<legend>{lang}wcf.acp.cronjob.edit.data{/lang}</legend>
+			<legend>{lang}wcf.acp.cronjob.data{/lang}</legend>
 			
 			<dl id="classNameDiv"{if $errorField == 'className'} class="formError"{/if}>
 				<dt><label for="className">{lang}wcf.acp.cronjob.className{/lang}</label></dt>
@@ -39,8 +39,8 @@
 					<input type="text" id="className" name="className" value="{$className}" class="long" />
 					{if $errorField == 'className'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.acp.cronjob.error.empty{/lang}{/if}
-							{if $errorType == 'doesNotExist'}{lang}wcf.acp.cronjob.error.doesNotExist{/lang}{/if}
+							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+							{if $errorType == 'doesNotExist'}{lang}wcf.acp.cronjob.error.className.doesNotExist{/lang}{/if}
 						</small>
 					{/if}
 					<small id="classNameHelpMessage">{lang}wcf.acp.cronjob.className.description{/lang}</small>
@@ -57,7 +57,7 @@
 		</fieldset>
 		
 		<fieldset>
-			<legend>{lang}wcf.acp.cronjob.edit.timing{/lang}</legend>
+			<legend>{lang}wcf.acp.cronjob.timing{/lang}</legend>
 			
 			<dl id="startMinuteDiv"{if $errorField == 'startMinute'} class="formError"{/if}>
 				<dt><label for="startMinute">{lang}wcf.acp.cronjob.startMinute{/lang}</label></dt>
@@ -65,7 +65,7 @@
 					<input type="text" id="startMinute" name="startMinute" value="{$startMinute}" class="short" />
 					{if $errorField == 'startMinute'}
 						<small class="innerError">
-							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.notValid{/lang}{/if}
+							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.timing.notValid{/lang}{/if}
 						</small>
 					{/if}
 					<small id="startMinuteHelpMessage">{lang}wcf.acp.cronjob.startMinute.description{/lang}</small>
@@ -78,7 +78,7 @@
 					<input type="text" id="startHour" name="startHour" value="{$startHour}" class="short" />
 					{if $errorField == 'startHour'}
 						<small class="innerError">
-							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.notValid{/lang}{/if}
+							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.timing.notValid{/lang}{/if}
 						</small>
 					{/if}
 					<small id="startHourHelpMessage">{lang}wcf.acp.cronjob.startHour.description{/lang}</small>
@@ -91,7 +91,7 @@
 					<input type="text" id="startDom" name="startDom" value="{$startDom}" class="short" />
 					{if $errorField == 'startDom'}
 						<small class="innerError">
-							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.notValid{/lang}{/if}
+							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.timing.notValid{/lang}{/if}
 						</small>
 					{/if}
 					<small id="startDomHelpMessage">{lang}wcf.acp.cronjob.startDom.description{/lang}</small>
@@ -104,7 +104,7 @@
 					<input type="text" id="startMonth" name="startMonth" value="{$startMonth}" class="short" />
 					{if $errorField == 'startMonth'}
 						<small class="innerError">
-							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.notValid{/lang}{/if}
+							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.timing.notValid{/lang}{/if}
 						</small>
 					{/if}
 					<small id="startMonthHelpMessage">{lang}wcf.acp.cronjob.startMonth.description{/lang}</small>
@@ -117,7 +117,7 @@
 					<input type="text" id="startDow" name="startDow" value="{$startDow}" class="short" />
 					{if $errorField == 'startDow'}
 						<small class="innerError">
-							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.notValid{/lang}{/if}
+							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.timing.notValid{/lang}{/if}
 						</small>
 					{/if}
 					<small id="startDowHelpMessage">{lang}wcf.acp.cronjob.startDow.description{/lang}</small>

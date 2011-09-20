@@ -20,7 +20,7 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.acp.group.{@$action}.success{/lang}</p>	
+	<p class="success">{lang}wcf.global.form.{@$action}.success{/lang}</p>	
 {/if}
 
 {if $warningSelfEdit|isset}
@@ -48,7 +48,7 @@
 					<input type="text" id="groupName" name="groupName" value="{$groupName}" class="medium" />
 					{if $errorType.groupName|isset}
 						<small class="innerError">
-							{if $errorType.groupName == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType.groupName == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 						</small>
 					{/if}
 					<small id="groupNameHelpMessage">{lang}wcf.acp.group.groupName.description{/lang}</small>

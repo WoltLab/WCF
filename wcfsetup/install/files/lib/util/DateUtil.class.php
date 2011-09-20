@@ -19,13 +19,13 @@ class DateUtil {
 	 * name of the default date format language variable
 	 * @var string
 	 */
-	const DATE_FORMAT = 'wcf.global.date.dateFormat';
+	const DATE_FORMAT = 'wcf.date.dateFormat';
 	
 	/**
 	 * name of the default time format language variable
 	 * @var string
 	 */
-	const TIME_FORMAT = 'wcf.global.date.timeFormat';
+	const TIME_FORMAT = 'wcf.date.timeFormat';
 	
 	/**
 	 * list of available time zones
@@ -169,62 +169,62 @@ class DateUtil {
 			// full textual representation of the day of the week (l)
 			if (stripos($format, 'l') !== false) {
 				$date = str_replace(array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'), array(
-					$language->get('wcf.global.date.day.sunday'),
-					$language->get('wcf.global.date.day.monday'),
-					$language->get('wcf.global.date.day.tuesday'),
-					$language->get('wcf.global.date.day.wednesday'),
-					$language->get('wcf.global.date.day.thursday'),
-					$language->get('wcf.global.date.day.friday'),
-					$language->get('wcf.global.date.day.saturday')
+					$language->get('wcf.date.day.sunday'),
+					$language->get('wcf.date.day.monday'),
+					$language->get('wcf.date.day.tuesday'),
+					$language->get('wcf.date.day.wednesday'),
+					$language->get('wcf.date.day.thursday'),
+					$language->get('wcf.date.day.friday'),
+					$language->get('wcf.date.day.saturday')
 				), $date);
 			}
 			
 			// textual representation of a day, three letters (D)
 			if (stripos($format, 'D') !== false) {
 				$date = str_replace(array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'), array(
-					$language->get('wcf.global.date.day.sun'),
-					$language->get('wcf.global.date.day.mon'),
-					$language->get('wcf.global.date.day.tue'),
-					$language->get('wcf.global.date.day.wed'),
-					$language->get('wcf.global.date.day.thu'),
-					$language->get('wcf.global.date.day.fri'),
-					$language->get('wcf.global.date.day.sat')
+					$language->get('wcf.date.day.sun'),
+					$language->get('wcf.date.day.mon'),
+					$language->get('wcf.date.day.tue'),
+					$language->get('wcf.date.day.wed'),
+					$language->get('wcf.date.day.thu'),
+					$language->get('wcf.date.day.fri'),
+					$language->get('wcf.date.day.sat')
 				), $date);
 			}
 			
 			// full textual representation of a month (F)
 			if (stripos($format, 'F') !== false) {
 				$date = str_replace(array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'), array(
-					$language->get('wcf.global.date.month.january'),
-					$language->get('wcf.global.date.month.february'),
-					$language->get('wcf.global.date.month.march'),
-					$language->get('wcf.global.date.month.april'),
-					$language->get('wcf.global.date.month.may'),
-					$language->get('wcf.global.date.month.june'),
-					$language->get('wcf.global.date.month.july'),
-					$language->get('wcf.global.date.month.august'),
-					$language->get('wcf.global.date.month.september'),
-					$language->get('wcf.global.date.month.october'),
-					$language->get('wcf.global.date.month.november'),
-					$language->get('wcf.global.date.month.december')
+					$language->get('wcf.date.month.january'),
+					$language->get('wcf.date.month.february'),
+					$language->get('wcf.date.month.march'),
+					$language->get('wcf.date.month.april'),
+					$language->get('wcf.date.month.may'),
+					$language->get('wcf.date.month.june'),
+					$language->get('wcf.date.month.july'),
+					$language->get('wcf.date.month.august'),
+					$language->get('wcf.date.month.september'),
+					$language->get('wcf.date.month.october'),
+					$language->get('wcf.date.month.november'),
+					$language->get('wcf.date.month.december')
 				), $date);
 			}
 			
 			// short textual representation of a month (M)
 			if (stripos($format, 'M') !== false) {
 				$date = str_replace(array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'), array(
-					$language->get('wcf.global.date.month.jan'),
-					$language->get('wcf.global.date.month.feb'),
-					$language->get('wcf.global.date.month.mar'),
-					$language->get('wcf.global.date.month.apr'),
-					$language->get('wcf.global.date.month.may'),
-					$language->get('wcf.global.date.month.jun'),
-					$language->get('wcf.global.date.month.jul'),
-					$language->get('wcf.global.date.month.aug'),
-					$language->get('wcf.global.date.month.sep'),
-					$language->get('wcf.global.date.month.oct'),
-					$language->get('wcf.global.date.month.nov'),
-					$language->get('wcf.global.date.month.dec')
+					$language->get('wcf.date.month.jan'),
+					$language->get('wcf.date.month.feb'),
+					$language->get('wcf.date.month.mar'),
+					$language->get('wcf.date.month.apr'),
+					$language->get('wcf.date.month.may'),
+					$language->get('wcf.date.month.jun'),
+					$language->get('wcf.date.month.jul'),
+					$language->get('wcf.date.month.aug'),
+					$language->get('wcf.date.month.sep'),
+					$language->get('wcf.date.month.oct'),
+					$language->get('wcf.date.month.nov'),
+					$language->get('wcf.date.month.dec')
 				), $date);
 			}
 		}

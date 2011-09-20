@@ -321,13 +321,22 @@ class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Validates the ip address of this session.
+	 * Validates the ip address and the user agent of this session.
 	 * 
 	 * @return	boolean
-	 * 
-	 * @todo	Needs to be implemented, keep proper IPv6 support in mind!
 	 */
 	protected function validate() {
+		if (SESSION_VALIDATE_IP_ADDRESS) {
+			if ($this->session->ipAddress != UserUtil::getIpAddress()) {
+				return false;
+			}
+		}
+		if (SESSION_VALIDATE_USER_AGENT) {
+			if ($this->session->userAgent != UserUtil::getUserAgent()) {
+				return false;
+			}
+		}
+		
 		return true;
 	}
 	

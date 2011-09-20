@@ -87,7 +87,7 @@ class CronjobLogListPage extends SortablePage {
 	 */
 	public function show() {
 		// set active menu item.
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.cronjob.showLog');
+		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.log.cronjob');
 		
 		parent::show();
 	}

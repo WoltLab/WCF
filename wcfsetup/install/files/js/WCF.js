@@ -1270,17 +1270,17 @@ WCF.Date.Time.prototype = {
 		// timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
 		if (this.timestamp < ($timestamp + 3540)) {
 			var $minutes = Math.round((this.timestamp - $timestamp) / 60);
-			$(element).text(eval(WCF.Language.get('wcf.global.date.relative.minutes')));
+			$(element).text(eval(WCF.Language.get('wcf.date.relative.minutes')));
 		}
 		// timestamp is less than 24 hours ago
 		else if (this.timestamp < ($timestamp + 86400)) {
 			var $hours = Math.round((this.timestamp - $timestamp) / 3600);
-			$(element).text(eval(WCF.Language.get('wcf.global.date.relative.hours')));
+			$(element).text(eval(WCF.Language.get('wcf.date.relative.hours')));
 		}
 		// timestamp is less than a week ago
 		else if (this.timestamp < ($timestamp + 604800)) {
 			var $days = Math.round((this.timestamp - $timestamp) / 86400);
-			var $string = eval(WCF.Language.get('wcf.global.date.relative.pastDays'));
+			var $string = eval(WCF.Language.get('wcf.date.relative.pastDays'));
 		
 			// get day of week
 			var $dateObj = WCF.Date.Util.getTimezoneDate(($timestamp * 1000), $offset);
@@ -1290,7 +1290,7 @@ WCF.Date.Time.prototype = {
 		}
 		// timestamp is between ~700 million years BC and last week
 		else {
-			var $string = WCF.Language.get('wcf.global.date.dateTimeFormat');
+			var $string = WCF.Language.get('wcf.date.dateTimeFormat');
 			$(element).text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
 		}
 	}

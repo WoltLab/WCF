@@ -1,4 +1,4 @@
-{capture assign='pageTitle'}{lang}wcf.acp.login{/lang}{/capture}
+{capture assign='pageTitle'}{lang}wcf.user.login{/lang}{/capture}
 {include file='setupHeader'}
 
 <script type="text/javascript">
@@ -20,14 +20,14 @@
 
 <form method="post" action="index.php?form=Login">
 	<fieldset>
-		<legend>{lang}wcf.acp.login.data{/lang}</legend>
+		<legend>{lang}wcf.user.login.data{/lang}</legend>
 		
 		<dl{if $errorField == 'username'} class="errorField"{/if}>
 			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 			<dd><input type="text" id="username" name="username" value="{$username}" class="medium" />
 				{if $errorField == 'username'}
 					<small>
-						{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 						{if $errorType == 'notFound'}{lang}wcf.user.error.username.notFound{/lang}{/if}
 					</small>
 				{/if}
@@ -40,7 +40,7 @@
 				{if $errorField == 'password'}
 					<small>
 						<img src="{@RELATIVE_WCF_DIR}icon/errorS.png" alt="" />
-						{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 						{if $errorType == 'false'}{lang}wcf.user.error.password.false{/lang}{/if}
 					</small>
 				{/if}

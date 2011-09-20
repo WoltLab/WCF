@@ -62,7 +62,7 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.acp.user.{@$action}.success{/lang}</p>	
+	<p class="success">{lang}wcf.global.form.{@$action}.success{/lang}</p>	
 {/if}
 
 {if $userID|isset && $__wcf->user->userID == $userID}
@@ -87,7 +87,7 @@
 				<input type="text" id="username" name="username" value="{$username}" class="medium" />
 				{if $errorType.username|isset}
 					<small class="innerError">
-						{if $errorType.username == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+						{if $errorType.username == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 						{if $errorType.username == 'notValid'}{lang}wcf.user.error.username.notValid{/lang}{/if}
 						{if $errorType.username == 'notUnique'}{lang}wcf.user.error.username.notUnique{/lang}{/if}
 					</small>
@@ -124,7 +124,7 @@
 						<input type="email" id="email" name="email" value="{$email}" class="medium" />
 						{if $errorType.email|isset}
 							<small class="innerError">
-								{if $errorType.email == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+								{if $errorType.email == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 								{if $errorType.email == 'notValid'}{lang}wcf.user.error.email.notValid{/lang}{/if}
 								{if $errorType.email == 'notUnique'}{lang}wcf.user.error.email.notUnique{/lang}{/if}
 							</small>
@@ -156,7 +156,7 @@
 						<input type="password" id="password" name="password" value="{$password}" class="medium" />
 						{if $errorType.password|isset}
 							<small class="innerError">
-								{if $errorType.password == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+								{if $errorType.password == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}
 					</dd>

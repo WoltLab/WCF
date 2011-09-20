@@ -18,7 +18,7 @@
 </header>
 
 {if $success|isset}
-	<p class="success">{lang}wcf.acp.option.success{/lang}</p>
+	<p class="success">{lang}wcf.global.form.edit.success{/lang}</p>
 {/if}
 
 {if $errorField}

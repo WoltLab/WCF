@@ -11,7 +11,7 @@
 			{if $error}
 				<small class="innerError">
 					{if $error == 'empty'}
-						{lang}wcf.global.error.empty{/lang}
+						{lang}wcf.global.form.error.empty{/lang}
 					{else}	
 						{lang}wcf.user.option.error.{$error}{/lang}
 					{/if}

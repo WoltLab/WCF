@@ -74,7 +74,7 @@
 						</fieldset>
 						{if $errorField == 'groupIDs'}
 							<small class="innerError">
-								{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}
 					</dd>
@@ -90,7 +90,7 @@
 				<dd>
 					<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
 					{if $errorField == 'subject'}
-						<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</small>
+						<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}</small>
 					{/if}
 					<small id="subjectHelpMessage">{lang}wcf.acp.user.sendMail.subject.description{/lang}</small>
 				</dd>
@@ -101,7 +101,7 @@
 				<dd>
 					<input type="text" id="from" name="from" value="{$from}" class="medium" />
 					{if $errorField == 'from'}
-						<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</small>
+						<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}</small>
 					{/if}
 					<small id="fromHelpMessage">{lang}wcf.acp.user.sendMail.from.description{/lang}</small><!-- ToDo: Language variable contains paragraphs! -->
 				</dd>
@@ -112,7 +112,7 @@
 				<dd>
 					<textarea id="text" name="text" rows="15" cols="40" class="long">{$text}</textarea>
 					{if $errorField == 'text'}
-						<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}</small>
+						<small class="innerError">{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}</small>
 					{/if}
 					<small id="textHelpMessage">{lang}wcf.acp.user.sendMail.text.description{/lang}</small>
 				</dd>

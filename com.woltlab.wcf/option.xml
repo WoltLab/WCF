@@ -206,13 +206,8 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			</option>
 			<option name="session_validate_ip_address">
 				<categoryname>security.general.session</categoryname>
-				<optiontype>select</optiontype>
-				<selectoptions>0
-1
-2
-3
-4</selectoptions>
-				<defaultvalue>2</defaultvalue>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="session_validate_user_agent">
 				<categoryname>security.general.session</categoryname>
