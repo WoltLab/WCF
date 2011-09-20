@@ -1,7 +1,5 @@
 {include file='header'}
 
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
-
 <header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/time1.svg" alt="" />
 	<hgroup>
@@ -41,7 +39,7 @@
 	
 	{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
 		<nav class="largeButtons">
-			<ul><li><a href="index.php?form=CronjobAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/cronjobAddM.png" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
+			<ul><li><a href="index.php?form=CronjobAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
 		</nav>
 	{/if}
 </div>
@@ -61,7 +59,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th class="columnID columnCronjobID{if $sortField == 'cronjobID'} active{/if}" colspan="2"><a href="index.php?page=CronjobList&amp;pageNo={@$pageNo}&amp;sortField=cronjobID&amp;sortOrder={if $sortField == 'cronjobID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.cronjob.cronjobID{/lang}{if $sortField == 'cronjobID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnID columnCronjobID{if $sortField == 'cronjobID'} active{/if}" colspan="2"><a href="index.php?page=CronjobList&amp;pageNo={@$pageNo}&amp;sortField=cronjobID&amp;sortOrder={if $sortField == 'cronjobID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.global.objectID{/lang}{if $sortField == 'cronjobID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnDate columnStartMinute{if $sortField == 'startMinute'} active{/if}" title="{lang}wcf.acp.cronjob.startMinute{/lang}"><a href="index.php?page=CronjobList&amp;pageNo={@$pageNo}&amp;sortField=startMinute&amp;sortOrder={if $sortField == 'startMinute' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.cronjob.startMinuteShort{/lang}{if $sortField == 'startMinute'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnDate columnStartHour{if $sortField == 'startHour'} active{/if}" title="{lang}wcf.acp.cronjob.startHour{/lang}"><a href="index.php?page=CronjobList&amp;pageNo={@$pageNo}&amp;sortField=startHour&amp;sortOrder={if $sortField == 'startHour' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.cronjob.startHourShort{/lang}{if $sortField == 'startHour'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnText columnStartDom{if $sortField == 'startDom'} active{/if}" title="{lang}wcf.acp.cronjob.startDom{/lang}"><a href="index.php?page=CronjobList&amp;pageNo={@$pageNo}&amp;sortField=startDom&amp;sortOrder={if $sortField == 'startDom' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.cronjob.startDomShort{/lang}{if $sortField == 'startDom'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
@@ -79,9 +77,9 @@
 				<tr class="cronjobRow">
 					<td class="columnIcon">
 						{if $__wcf->session->getPermission('admin.system.cronjob.canEditCronjob')}
-							<img src="{@RELATIVE_WCF_DIR}icon/play1.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" data-objectID="{@$cronjob->cronjobID}" class="executeButton balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/run1.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" data-objectID="{@$cronjob->cronjobID}" class="executeButton balloonTooltip" />
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/play1D.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" />
+							<img src="{@RELATIVE_WCF_DIR}icon/run1D.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" />
 						{/if}
 						
 						{if $cronjob->canBeDisabled()}
@@ -113,7 +111,7 @@
 					<td class="columnDate columnStartMonth"><p>{$cronjob->startMonth|truncate:30:' ...'}</p></td>
 					<td class="columnDate columnStartDow"><p>{$cronjob->startDow|truncate:30:' ...'}</p></td>
 					<td class="columnText columnDescription" title="{$cronjob->description}">
-						{if $cronjob->editable}
+						{if $cronjob->isEditable()}
 							<p><a title="{lang}wcf.acp.cronjob.edit{/lang}" href="index.php?form=CronjobEdit&amp;cronjobID={@$cronjob->cronjobID}{@SID_ARG_2ND}">{$cronjob->description|truncate:50:" ..."}</a></p>
 						{else}
 							<p>{$cronjob->description|truncate:50:' ...'}</p>
@@ -138,7 +136,7 @@
 		
 		{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
 			<nav class="largeButtons">
-				<ul><li><a href="index.php?form=CronjobAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/cronjobAddM.png" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
+				<ul><li><a href="index.php?form=CronjobAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
 			</nav>
 		{/if}
 	</div>

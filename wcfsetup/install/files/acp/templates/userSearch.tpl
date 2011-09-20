@@ -29,9 +29,9 @@
 	<nav class="largeButtons">
 		<ul>
 			{if $__wcf->session->getPermission('admin.user.canAddUser')}
-				<li><a href="index.php?form=UserAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.user.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/userAddM.png" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+				<li><a href="index.php?form=UserAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.user.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 			{/if}
-			<li><a href="index.php?page=UserList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.user.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/usersM.png" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
+			<li><a href="index.php?page=UserList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.user.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>

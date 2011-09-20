@@ -148,7 +148,7 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 					str_replace(
 						'%date%', 
 						DateUtil::format($dateTime, DateUtil::DATE_FORMAT), 
-						WCF::getLanguage()->get('wcf.global.date.dateTimeFormat')
+						WCF::getLanguage()->get('wcf.date.dateTimeFormat')
 					)
 				)
 			);

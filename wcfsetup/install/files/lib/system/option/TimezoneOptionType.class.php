@@ -23,7 +23,7 @@ class TimezoneOptionType extends AbstractOptionType {
 	public function getFormElement(Option $option, $value) {
 		$timezoneOptions = array();
 		foreach (DateUtil::getAvailableTimezones() as $timezone) {
-			$timezoneOptions[$timezone] = WCF::getLanguage()->get('wcf.global.date.timezone.'.str_replace('/', '.', strtolower($timezone)));
+			$timezoneOptions[$timezone] = WCF::getLanguage()->get('wcf.date.timezone.'.str_replace('/', '.', strtolower($timezone)));
 		}
 		
 		WCF::getTPL()->assign(array(

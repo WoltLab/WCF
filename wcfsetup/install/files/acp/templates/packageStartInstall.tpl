@@ -21,7 +21,7 @@
 <div class="contentHeader">
 	<nav class="largeButtons">
 		<ul>
-			<li><a href="index.php?page=PackageList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.package.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageM.png" alt="" /> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+			<li><a href="index.php?page=PackageList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.package.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
 	</nav>
@@ -39,7 +39,7 @@
 					<input type="file" id="uploadPackage" name="uploadPackage" value="" />
 					{if $errorField == 'uploadPackage'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							{if $errorType == 'noValidPackage'}{lang}wcf.acp.package.startInstall.error.noValidPackage{/lang}{/if}
 							{if $errorType == 'noValidUpdate'}{lang}wcf.acp.package.startInstall.error.noValidUpdate{/lang}{/if}
 							{if $errorType == 'noValidInstall'}{lang}wcf.acp.package.startInstall.error.noValidInstall{/lang}{/if}

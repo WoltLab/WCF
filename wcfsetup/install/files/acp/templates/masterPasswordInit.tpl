@@ -35,7 +35,7 @@
 					<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium" />
 					{if $errorField == 'masterPassword'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							{if $errorType == 'notSecure'}{lang}wcf.acp.masterPassword.error.notSecure{/lang}{/if}
 						</small>
 					{/if}
@@ -49,7 +49,7 @@
 					<input type="password" id="confirmMasterPassword" name="confirmMasterPassword" value="{$confirmMasterPassword}" class="medium" />
 					{if $errorField == 'confirmMasterPassword'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							{if $errorType == 'notEqual'}{lang}wcf.acp.masterPassword.error.notEqual{/lang}{/if}
 						</small>
 					{/if}

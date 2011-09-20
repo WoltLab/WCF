@@ -619,14 +619,6 @@ fieldset p.description {
 	color: #999;
 }
 
-fieldset > ul {
-	margin: 7px 0 21px 21px;
-}
-
-fieldset > ul li {
-	list-style-type: circle;
-}
-
 
 
 /* -- -- -- -- -- Tabbed Content -- -- -- -- -- */
@@ -881,9 +873,13 @@ textarea {
 	display: inline;
 }
 
-.largeButtons ul li img {
-	/* Button Icons disabled for now, maybe we get rid oft them */
-	display: none;
+.largeButtons ul li a img {
+	/* ToDo: Button-icons disabled for now, maybe we get rid oft them
+	display: none; */
+	margin: -5px 1px -5px -5px;
+	height: 24px;
+	width: 24px;
+	vertical-align: middle;
 }
 
 /* buttons normal */
@@ -909,7 +905,7 @@ input[type='button'],
 	background-image: -o-linear-gradient(rgba(255, 255, 255, 1), rgba(245, 245, 245, 1) 2px, rgba(235, 235, 235, 1));
 	background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(245, 245, 245, 1) 2px, rgba(235, 235, 235, 1));
 	
-	margin: 0 3px;
+	margin: 3px 2px;
 	padding: 5px 13px;
 	display: inline-block;
 	
@@ -1244,14 +1240,6 @@ input[type='button'][disabled='disabled'],
 	border-color: #ccc #bbb #aaa;
 }
 
-/* ToDo: Images deprecated? */
-.largeButtons ul li a img {
-	margin: 0;
-	height: 24px;
-	width: 24px;
-	vertical-align: middle;
-}
-
 
 
 /* -- -- -- -- -- Border -- -- -- -- -- */
@@ -1259,7 +1247,7 @@ input[type='button'][disabled='disabled'],
 .border {
 	border: 1px solid #ccc;
 	border-radius: 5px;
-	margin: 15px 0 0;
+	margin-top: 15px;
 }
 
 .border.overlay {
@@ -1328,6 +1316,7 @@ input[type='button'][disabled='disabled'],
 	text-align: center;
 	white-space: nowrap;
 	background-color: none;
+	margin-top: 15px;
 	padding: 0 5px;
 	display: block;
 	position: relative;
@@ -1632,7 +1621,7 @@ thead th.active:hover a {
 thead th a img {
 	/* sort-icon orientation does not work */
 	text-align: right;
-	/* negative margins to prevent table-cells from expanding when ths sort-icon shows up */
+	/* negative margins to prevent table-cells from expanding when the sort-icon shows up */
 	margin-top: -5px !important;
 	margin-bottom: -5px !important;
 }
@@ -1641,11 +1630,6 @@ thead th a img {
 
 tbody tr {
 	border-bottom: 1px solid rgba(255, 255, 255, .3);
-}
-
-tbody tr:first-child {
-	/* prevents line-breaks in icon-column */
-	white-space: nowrap;
 }
 
 tbody tr:last-child {
@@ -1717,6 +1701,7 @@ tr .columnMark,
 tr .columnStatus {
 	text-align: center;
 	width: 1% !important;
+	white-space: nowrap;
 }
 
 tr .columnStatus .badge {
@@ -1728,11 +1713,13 @@ tr .columnDigits,
 tr .columnID {
 	text-align: right;
 	width: 1% !important;
+	white-space: nowrap;
 }
 
 tr .columnIcon {
 	text-align: left;
-	width: 1% !important
+	width: 1% !important;
+	white-space: nowrap;
 }
 
 tr .columnIcon img:not(.balloonTooltip):hover {
@@ -1783,7 +1770,7 @@ table input[type='checkbox'] {
 
 /* -- -- -- -- -- ToDo: Page Navigation -- -- -- -- -- */
 
-/* This is only experimental for the moment */
+/* Page-Navigation Popups are still missing */
 
 .pageNavigation ul li:not(.children) {
 	color: #999;
@@ -2171,10 +2158,8 @@ div.ui-widget-overlay {
 
 /* Buttons */
 
-.badgeButton {
-	text-decoration: none !important;
-	text-shadow: 0 1px 0 #fff;
-	color: #999;
+.badgeButton,
+.clipboardEditor {
 	cursor: pointer;
 	
 	border-width: 1px;
@@ -2192,6 +2177,7 @@ div.ui-widget-overlay {
 	margin-right: 0;
 	margin-left: 0;
 	padding: 3px 10px 5px;
+	display: inline-block;
 	
 	-webkit-transition: all .2s linear;
 	-moz-transition: all .2s linear;
@@ -2200,41 +2186,70 @@ div.ui-widget-overlay {
 	transition: all .2s linear;
 }
 
-.badgeButton:hover {
-	color: #666;
-	
+li.badgeButton,
+li > .badgeButton {
+	margin-top: 7px;
+	margin-right: 3px;
+	margin-left: 3px;
+	float: left;
+}
+
+.badgeButton:hover,
+.clipboardEditor:hover {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #ffc053 #fa2 #fc9e07;
 	
 	background-color: #fff9f4;
-	background-image: -webkit-linear-gradient(rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
-	background-image: -moz-linear-gradient(rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
-	background-image: -ms-linear-gradient(rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
-	background-image: -o-linear-gradient(rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
-	background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
+	background-image: -webkit-linear-gradient(rgb(255, 255, 255), rgb(255, 237, 217) 2px, rgb(255, 229, 200));
+	background-image: -moz-linear-gradient(rgb(255, 255, 255), rgb(255, 237, 217) 2px, rgb(255, 229, 200));
+	background-image: -ms-linear-gradient(rgb(255, 255, 255), rgb(255, 237, 217) 2px, rgb(255, 229, 200));
+	background-image: -o-linear-gradient(rgb(255, 255, 255), rgb(255, 237, 217) 2px, rgb(255, 229, 200));
+	background-image: linear-gradient(rgb(255, 255, 255), rgb(255, 237, 217) 2px, rgb(255, 229, 200));
 }
 
 .badgeButton:active,
-.badgeButton:focus {
-	color: #333;
-	
+.badgeButton:focus,
+.clipboardEditor:active,
+.clipboardEditor:focus {	
 	border-width: 1px;
 	border-style: solid;
 	border-color: #fc9e07 #fa2 #ffc053;
 	
 	background-color: #fff9f4;
-	background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
-	background-image: -moz-linear-gradient(bottom, rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
-	background-image: -ms-linear-gradient(bottom, rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
-	background-image: -o-linear-gradient(bottom, rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
-	background-image: linear-gradient(bottom, rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
+	background-image: -webkit-linear-gradient(bottom, rgb(255, 255, 255), rgb(255, 237, 217) 2px, rgb(255, 229, 200));
+	background-image: -moz-linear-gradient(bottom, rgb(255, 255, 255), rgb(255, 237, 217) 2px, rgb(255, 229, 200));
+	background-image: -ms-linear-gradient(bottom, rgb(255, 255, 255), rgb(255, 237, 217) 2px, rgb(255, 229, 200));
+	background-image: -o-linear-gradient(bottom, rgb(255, 255, 255), rgb(255, 237, 217) 2px, rgb(255, 229, 200));
+	background-image: linear-gradient(bottom, rgb(255, 255, 255), rgb(255, 237, 217) 2px, rgb(255, 229, 200));
 	
 	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-ms-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-o-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+}
+
+.badgeButton,
+.badgeButton a,
+.clipboardEditor {
+	text-decoration: none !important;
+	text-shadow: 0 1px 0 #fff;
+	color: #999;
+}
+
+.badgeButton:hover,
+.badgeButton a:hover,
+.clipboardEditor:hover {
+	text-decoration: none !important;
+	color: #666;
+}
+
+.badgeButton:active,
+.badgeButton:focus,
+.badgeButton a:active,
+.badgeButton a:focus {
+	color: #333;
 }
 
 
@@ -2246,7 +2261,7 @@ div.ui-widget-overlay {
 #balloonTooltip {
 	font-size: .85em;
 	color: #fff;
-	border: 1px solid rgba(255, 255, 255, .7) !important;
+	border: 1px solid rgba(255, 255, 255, .7);
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, .7);
 	padding: 5px 10px 7px;
@@ -2257,7 +2272,7 @@ div.ui-widget-overlay {
 }
 
 .balloonTooltip {
-	/* That could be wrong */
+	/* Not reliable, sometimes not wanted! */
 	cursor: pointer;
 }
 
@@ -2280,41 +2295,78 @@ div.ui-widget-overlay {
 /* Clipboard API - TESTING ONLY / TODO */
 
 .clipboardEditor {
+	font-size: .85em;
+	margin: 7px 3px 0;
+	padding: 2px 5px 3px !important;
 	position: relative;
+	float: left;
 }
 
-.clipboardEditor span {
-	background-color: rgb(224, 224, 224);
-	border: 1px solid rgb(192, 192, 192);
-	border-radius: 3px;
-	cursor: pointer;
-	padding: 3px;
+.clipboardEditor p {
+	background-image: url('../../icon/dropdown1.svg');
+	background-position: right center;
+	background-repeat: no-repeat;
+	padding-right: 12px;
+	display: inline-block;
 }
 
 .clipboardEditor ol {
-	border: 1px solid rgba(192, 192, 192, 0.9);
-	border-radius: 3px;
-	display: inline-block;
-	left: 0px;
-	margin-top: 19px;
+	border: 1px solid rgba(255, 255, 255, .7);
+	border-radius: 5px;
+	background-color: rgba(0, 0, 0, .7);
+	margin-top: 20px;
 	position: absolute;
-	top: 0px;
+	top: 0;
+	left: 0;
+	
+	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-ms-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 }
 
 .clipboardEditor li {
-	background-color: rgba(224, 224, 224, 0.9);
-	border-top: 1px solid rgba(192, 192, 192, 0.9);
-	cursor: pointer;
-	padding: 3px;
+	text-shadow: none;
+	color: #ccc;
+	cursor: pointer; 
+	padding: 5px 7px;
+	
+	-webkit-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	-ms-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	transition: all .2s linear;
+}
+
+.clipboardEditor li:first-child {
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+.clipboardEditor li:last-child {
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
 }
 
 .clipboardEditor li:hover {
-	background-color: rgb(207, 207, 207);
-	text-shadow: 0 0 3px #999;
+	color: #fff;
+	background-color: rgba(0, 0, 0, .5);
 }
 
 .clipboardEditor li:first-child {
 	border-top-width: 0;
 }
+
+
+
+
+
+/* ToDo: Proxy Loading */
+
+.actionProxyLoading {
+	
+}
+
 
 /* -- -- -- -- -- EOF -- -- -- -- -- */

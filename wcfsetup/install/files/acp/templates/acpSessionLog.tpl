@@ -1,7 +1,5 @@
 {include file='header'}
 
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
-
 <header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/session1.svg" alt="" />
 	<hgroup>
@@ -22,8 +20,8 @@
 		<table>
 			<thead>
 				<tr>
-					<th class="columnID columnSessionAccessLogID{if $sortField == 'sessionAccessLogID'} active{/if}"><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLogID}&amp;pageNo={@$pageNo}&amp;sortField=sessionAccessLogID&amp;sortOrder={if $sortField == 'sessionAccessLogID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.sessionAccessLogID{/lang}{if $sortField == 'sessionAccessLogID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnURL columnIpAddress{if $sortField == 'ipAddress'} active{/if}"><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLogID}&amp;pageNo={@$pageNo}&amp;sortField=ipAddress&amp;sortOrder={if $sortField == 'ipAddress' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.ipAddress{/lang}{if $sortField == 'ipAddress'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnID columnSessionAccessLogID{if $sortField == 'sessionAccessLogID'} active{/if}"><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLogID}&amp;pageNo={@$pageNo}&amp;sortField=sessionAccessLogID&amp;sortOrder={if $sortField == 'sessionAccessLogID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.global.objectID{/lang}{if $sortField == 'sessionAccessLogID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnURL columnIpAddress{if $sortField == 'ipAddress'} active{/if}"><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLogID}&amp;pageNo={@$pageNo}&amp;sortField=ipAddress&amp;sortOrder={if $sortField == 'ipAddress' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.user.ipAddress{/lang}{if $sortField == 'ipAddress'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnDate{if $sortField == 'time'} active{/if}"><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLogID}&amp;pageNo={@$pageNo}&amp;sortField=time&amp;sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.time{/lang}{if $sortField == 'time'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnTitle columnPackageName{if $sortField == 'packageName'} active{/if}"><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLogID}&amp;pageNo={@$pageNo}&amp;sortField=packageName&amp;sortOrder={if $sortField == 'packageName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.packageName{/lang}{if $sortField == 'packageName'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnText columnClassName{if $sortField == 'className'} active{/if}"><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLogID}&amp;pageNo={@$pageNo}&amp;sortField=className&amp;sortOrder={if $sortField == 'className' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.className{/lang}{if $sortField == 'className'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></p></th>

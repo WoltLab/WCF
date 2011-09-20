@@ -12,7 +12,7 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.acp.updateServer.{$action}.success{/lang}</p>	
+	<p class="success">{lang}wcf.global.form.{$action}.success{/lang}</p>	
 {/if}
 
 {if $packageUpdateServer|isset && $packageUpdateServer->errorMessage}
@@ -21,7 +21,7 @@
 
 <div class="contentHeader">
 	<nav class="largeButtons">
-		<ul><li><a href="index.php?page=UpdateServerList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/updateServerM.png" alt="" /> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li></ul>
+		<ul><li><a href="index.php?page=UpdateServerList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/server1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li></ul>
 	</nav>
 </div>
 
@@ -37,7 +37,7 @@
 					<input type="text" id="serverURL" name="serverURL" value="{$serverURL}" class="long" />
 					{if $errorField == 'serverURL'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							{if $errorType == 'notValid'}{lang}wcf.acp.updateServer.serverURL.error.notValid{/lang}{/if}
 						</small>
 					{/if}

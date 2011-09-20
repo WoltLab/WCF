@@ -58,11 +58,11 @@
 			WCF.Language.addObject({
 				'wcf.global.button.next': '{lang}wcf.global.button.next{/lang}',
 				'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
-				'wcf.global.date.relative.minutes': '{capture assign=relativeMinutes}{lang}wcf.global.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
-				'wcf.global.date.relative.hours': '{capture assign=relativeHours}{lang}wcf.global.date.relative.hours{/lang}{/capture}{@$relativeHours|encodeJS}',
-				'wcf.global.date.relative.pastDays': '{capture assign=relativePastDays}{lang}wcf.global.date.relative.pastDays{/lang}{/capture}{@$relativePastDays|encodeJS}',
-				'wcf.global.date.dateTimeFormat': '{lang}wcf.global.date.dateTimeFormat{/lang}',
-				'__days': [ '{lang}wcf.global.date.day.sunday{/lang}', '{lang}wcf.global.date.day.monday{/lang}', '{lang}wcf.global.date.day.tuesday{/lang}', '{lang}wcf.global.date.day.wednesday{/lang}', '{lang}wcf.global.date.day.thursday{/lang}', '{lang}wcf.global.date.day.friday{/lang}', '{lang}wcf.global.date.day.saturday{/lang}' ],
+				'wcf.date.relative.minutes': '{capture assign=relativeMinutes}{lang}wcf.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
+				'wcf.date.relative.hours': '{capture assign=relativeHours}{lang}wcf.date.relative.hours{/lang}{/capture}{@$relativeHours|encodeJS}',
+				'wcf.date.relative.pastDays': '{capture assign=relativePastDays}{lang}wcf.date.relative.pastDays{/lang}{/capture}{@$relativePastDays|encodeJS}',
+				'wcf.date.dateTimeFormat': '{lang}wcf.date.dateTimeFormat{/lang}',
+				'__days': [ '{lang}wcf.date.day.sunday{/lang}', '{lang}wcf.date.day.monday{/lang}', '{lang}wcf.date.day.tuesday{/lang}', '{lang}wcf.date.day.wednesday{/lang}', '{lang}wcf.date.day.thursday{/lang}', '{lang}wcf.date.day.friday{/lang}', '{lang}wcf.date.day.saturday{/lang}' ],
 				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 				'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
 				'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
@@ -85,7 +85,8 @@
 			<nav id="topMenu" class="topMenu">
 				<div>
 					<ul>
-						<li><a href="#" title="Hello World" class="balloonTooltip">Hello World!</a></li>
+						<li>{lang}wcf.acp.user.userNote{/lang}</li>
+						<li><a href="{link}index.php?action=Logout&amp;t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
 					</ul>
 				</div>
 			</nav>

@@ -23,7 +23,7 @@
 					<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium" />
 					{if $errorField == 'masterPassword'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							{if $errorType == 'invalid'}{lang}wcf.acp.masterPassword.error.invalid{/lang}{/if}
 						</small>
 					{/if}
