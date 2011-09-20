@@ -698,7 +698,7 @@ WCF.Clipboard = {
 			// create container
 			var $container = $containers[$typeName];
 			var $editor = data.items[$typeName];
-			var $label = $('<span>' + $editor.label + '</span>').appendTo($container).click(function(event) {
+			var $label = $('<p>' + $editor.label + '</p>').appendTo($container).click(function(event) {
 				var $span = $(event.target);
 				$span.next().toggle();
 			});
@@ -855,7 +855,7 @@ WCF.Action.Proxy.prototype = {
 			this.options.init(this);
 		}
 		
-		$('<div id="actionProxyLoading" style="display: none;">'+WCF.Language.get('wcf.global.loading')+'</div>').appendTo($('body'));
+		$('<div id="actionProxyLoading" class="actionProxyLoading" style="display: none;">'+WCF.Language.get('wcf.global.loading')+'</div>').appendTo($('body'));
 		this.loading = $('#actionProxyLoading');
 		this.loading.wcfDropIn();
 	},
@@ -2028,7 +2028,7 @@ WCF.Effect.BalloonTooltip = function() { this.init(); };
 WCF.Effect.BalloonTooltip.prototype = {
 	init: function() {
 		// create empty div
-		this.tooltip = $('<div style="position:absolute" id="balloonTooltip"></div>').appendTo(document.body).hide();
+		this.tooltip = $('<div id="balloonTooltip" style="position:absolute"></div>').appendTo(document.body).hide();
 	
 		// init elements
 		$('.balloonTooltip').each($.proxy(this._initTooltip, this));
@@ -2325,7 +2325,7 @@ $.widget('ui.wcfPages', {
 	},
 	
 	/**
-	 * Renders th pages widget.
+	 * Renders the pages widget.
 	 */
 	_render: function() {
 		// only render if we have more than 1 page

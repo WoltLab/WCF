@@ -3,6 +3,7 @@ namespace wcf\system\language;
 use wcf\data\language\Language;
 use wcf\system\cache\CacheHandler;
 use wcf\system\template\TemplateScriptingCompiler;
+use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -16,24 +17,31 @@ use wcf\util\StringUtil;
  * @subpackage	system.language
  * @category 	Community Framework
  */
-abstract class LanguageFactory {
+class LanguageFactory extends SingletonFactory {
 	/**
 	 * language cache
 	 * @var	array<array>
 	 */
-	private static $cache = null;
+	protected $cache = null;
 	
 	/**
 	 * initialized languages
 	 * @var	array<wcf\data\language\Language>
 	 */
-	private static $languages = array();
+	protected $languages = array();
 	
 	/**
 	 * active template scripting compiler
 	 * @var	wcf\system\template\TemplateScriptingCompiler
 	 */
-	private static $scriptingCompiler = null;
+	protected $scriptingCompiler = null;
+	
+	/**
+	 * @see	wcf\system\SingletonFactory::init()
+	 */
+	protected function init() {
+		$this->loadCache();
+	}
 	
 	/**
 	 * Returns a Language object for the language with the given id.
@@ -41,22 +49,20 @@ abstract class LanguageFactory {
 	 * @param	integer		$languageID
 	 * @return	wcf\data\language\Language
 	 */
-	public static function getLanguage($languageID) {
-		self::loadCache();
-		
-		if (!isset(self::$languages[$languageID])) {
+	public function getLanguage($languageID) {
+		if (!isset($this->languages[$languageID])) {
 			$language = new Language($languageID);
 			
 			if (!$language->languageID) {
-				$languageID = self::findPreferredLanguage();
+				$languageID = $this->findPreferredLanguage();
 				$language = new Language($languageID);
 			}
 			
-			self::$languages[$language->languageID] = $language;
-			self::setLocale($languageID);
+			$this->languages[$language->languageID] = $language;
+			$this->setLocale($languageID);
 		}
 		
-		return self::$languages[$languageID];
+		return $this->languages[$languageID];
 	}
 	
 	/**
@@ -65,10 +71,8 @@ abstract class LanguageFactory {
 	 * @param	string		$categoryName
 	 * @return	boolean
 	 */
-	public static function isValidCategory($categoryName) {
-		self::loadCache();
-		
-		return isset(self::$cache['categories'][$categoryName]);
+	public function isValidCategory($categoryName) {
+		return isset($this->cache['categories'][$categoryName]);
 	}
 	
 	/**
@@ -77,9 +81,9 @@ abstract class LanguageFactory {
 	 * @param	string		$categoryName
 	 * @return	wcf\data\language\category\LanguageCategory
 	 */
-	public static function getCategory($categoryName) {
-		if (isset(self::$cache['categories'][$categoryName])) {
-			return self::$cache['categories'][$categoryName];
+	public function getCategory($categoryName) {
+		if (isset($this->cache['categories'][$categoryName])) {
+			return $this->cache['categories'][$categoryName];
 		}
 		
 		return null;
@@ -90,28 +94,28 @@ abstract class LanguageFactory {
 	 * 
 	 * @return	array<wcf\data\language\category\LanguageCategory>
 	 */	
-	public static function getCategories() {
-		return self::$cache['categories'];
+	public function getCategories() {
+		return $this->cache['categories'];
 	}
 	
 	/**
 	 * Searches the preferred language of the current user.
 	 */
-	private static function findPreferredLanguage() {
+	protected function findPreferredLanguage() {
 		// get available language codes
 		$availableLanguageCodes = array();
-		foreach (self::getAvailableLanguages(PACKAGE_ID) as $language) {
+		foreach ($this->getAvailableLanguages(PACKAGE_ID) as $language) {
 			$availableLanguageCodes[] = $language['languageCode'];
 		}
 		
 		// get default language
-		$defaultLanguageCode = self::$cache['languages'][self::$cache['default']]['languageCode'];
+		$defaultLanguageCode = $this->cache['languages'][$this->cache['default']]['languageCode'];
 		
 		// get preferred language
-		$languageCode = self::getPreferredLanguage($availableLanguageCodes, $defaultLanguageCode);
+		$languageCode = $this->getPreferredLanguage($availableLanguageCodes, $defaultLanguageCode);
 		
 		// get language id of preferred language
-		foreach (self::$cache['languages'] as $key => $language) {
+		foreach ($this->cache['languages'] as $key => $language) {
 			if ($language['languageCode'] == $languageCode) {
 				return $key;
 			}
@@ -125,12 +129,12 @@ abstract class LanguageFactory {
 	 * @param	string		$defaultLanguageCode
 	 * @return	string
 	 */
-	public static function getPreferredLanguage($availableLanguageCodes, $defaultLanguageCode) {
+	public function getPreferredLanguage($availableLanguageCodes, $defaultLanguageCode) {
 		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $_SERVER['HTTP_ACCEPT_LANGUAGE']) {
 			$acceptedLanguages = explode(',', str_replace('_', '-', strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE'])));
 			foreach ($acceptedLanguages as $acceptedLanguage) {
 				foreach ($availableLanguageCodes as $availableLanguageCode) {
-					$fixedCode = strtolower(self::fixLanguageCode($availableLanguageCode));
+					$fixedCode = strtolower($this->fixLanguageCode($availableLanguageCode));
 					
 					if ($fixedCode == $acceptedLanguage || $fixedCode == preg_replace('%^([a-z]{2}).*$%i', '$1', $acceptedLanguage)) {
 						return $availableLanguageCode;
@@ -149,12 +153,12 @@ abstract class LanguageFactory {
 	 * @param 	integer		$packageID
 	 * @return	array
 	 */
-	public static function getAvailableLanguages($packageID = PACKAGE_ID) {
+	public function getAvailableLanguages($packageID = PACKAGE_ID) {
 		// get list of all available languages
 		$availableLanguages = array();
-		if (isset(self::$cache['packages'][$packageID])) {
-			foreach (self::$cache['packages'][$packageID] as $availableLanguageID) {
-				$availableLanguages[] = self::$cache['languages'][$availableLanguageID];
+		if (isset($this->cache['packages'][$packageID])) {
+			foreach ($this->cache['packages'][$packageID] as $availableLanguageID) {
+				$availableLanguages[] = $this->cache['languages'][$availableLanguageID];
 			}
 		}
 		return $availableLanguages;
@@ -166,11 +170,9 @@ abstract class LanguageFactory {
 	 * @param	string		$languageCode
 	 * @return	wcf\data\language\Language
 	 */
-	public static function getLanguageByCode($languageCode) {
-		if (self::$cache === null) self::loadCache();
-		
+	public function getLanguageByCode($languageCode) {
 		// called within WCFSetup
-		if (self::$cache === false || !count(self::$cache['codes'])) {
+		if ($this->cache === false || !count($this->cache['codes'])) {
 			$sql = "SELECT	languageID
 				FROM	wcf".WCF_N."_language
 				WHERE	languageCode = ?";
@@ -179,8 +181,8 @@ abstract class LanguageFactory {
 			$row = $statement->fetchArray();
 			if (isset($row['languageID'])) return new Language($row['languageID']);
 		}
-		else if (isset(self::$cache['codes'][$languageCode])) {
-			return self::getLanguage(self::$cache['codes'][$languageCode]);
+		else if (isset($this->cache['codes'][$languageCode])) {
+			return $this->getLanguage($this->cache['codes'][$languageCode]);
 		}
 		
 		return null;
@@ -191,35 +193,31 @@ abstract class LanguageFactory {
 	 *
 	 * @return	wcf\system\template\TemplateScriptingCompiler
 	 */
-	public static function getScriptingCompiler() {
-		if (self::$scriptingCompiler === null) {
-			self::$scriptingCompiler = new TemplateScriptingCompiler(WCF::getTPL());
+	public function getScriptingCompiler() {
+		if ($this->scriptingCompiler === null) {
+			$this->scriptingCompiler = new TemplateScriptingCompiler(WCF::getTPL());
 		}
 		
-		return self::$scriptingCompiler;
+		return $this->scriptingCompiler;
 	}
 	
 	/**
 	 * Loads the language cache.
 	 */
-	private static function loadCache() {
-		if (self::$cache === null) {
-			CacheHandler::getInstance()->addResource(
-				'languages',
-				WCF_DIR.'cache/cache.languages.php',
-				'wcf\system\cache\builder\LanguageCacheBuilder'
-			);
-			
-			self::$cache = CacheHandler::getInstance()->get('languages');
-		}
+	protected function loadCache() {
+		CacheHandler::getInstance()->addResource(
+			'languages',
+			WCF_DIR.'cache/cache.languages.php',
+			'wcf\system\cache\builder\LanguageCacheBuilder'
+		);
+		
+		$this->cache = CacheHandler::getInstance()->get('languages');
 	}
 	
 	/**
 	 * Clears languages cache.
 	 */
-	public static function clearCache() {
-		self::$cache = null;
-		
+	public function clearCache() {
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.languages.php');
 	}
 	
@@ -229,11 +227,11 @@ abstract class LanguageFactory {
 	 *
 	 * @param	integer		$languageID
 	 */
-	private static function setLocale($languageID) {
+	protected function setLocale($languageID) {
 		// set locale for string comparison, character classification and
 		// conversion and date and time formatting
-		setlocale(LC_COLLATE, self::$languages[$languageID]->get('wcf.global.locale.unix').'.UTF-8', self::$languages[$languageID]->get('wcf.global.locale.unix'), self::$languages[$languageID]->get('wcf.global.locale.win'));
-		setlocale(LC_CTYPE, self::$languages[$languageID]->get('wcf.global.locale.unix').'.UTF-8', self::$languages[$languageID]->get('wcf.global.locale.unix'), self::$languages[$languageID]->get('wcf.global.locale.win'));
+		setlocale(LC_COLLATE, $this->languages[$languageID]->get('wcf.global.locale.unix').'.UTF-8', $this->languages[$languageID]->get('wcf.global.locale.unix'), $this->languages[$languageID]->get('wcf.global.locale.win'));
+		setlocale(LC_CTYPE, $this->languages[$languageID]->get('wcf.global.locale.unix').'.UTF-8', $this->languages[$languageID]->get('wcf.global.locale.unix'), $this->languages[$languageID]->get('wcf.global.locale.win'));
 	}
 	
 	/**
@@ -243,7 +241,7 @@ abstract class LanguageFactory {
 	 * @param	string		$languageCode
 	 * @return	string		$languageCode
 	 */
-	public static function fixLanguageCode($languageCode) {
+	public function fixLanguageCode($languageCode) {
 		return preg_replace('/-[a-z0-9]+/', '', $languageCode);
 	}
 	
@@ -252,8 +250,8 @@ abstract class LanguageFactory {
 	 *
 	 * @return	integer
 	 */
-	public static function getDefaultLanguageID() {
-		return self::$cache['default'];
+	public function getDefaultLanguageID() {
+		return $this->cache['default'];
 	}
 	
 	/**
@@ -262,12 +260,12 @@ abstract class LanguageFactory {
 	 * @param 	integer		$packageID
 	 * @return	array		$availableLanguages 	infos about each language (code, id, encoding, etc)
 	 */
-	public static function getAvailableContentLanguages($packageID = PACKAGE_ID) {
+	public function getAvailableContentLanguages($packageID = PACKAGE_ID) {
 		$availableLanguages = array();
-		if (isset(self::$cache['packages'][$packageID])) {
-			foreach (self::$cache['packages'][$packageID] as $availableLanguageID) {
-				if (self::$cache['languages'][$availableLanguageID]['hasContent']) {
-					$availableLanguages[$availableLanguageID] = self::$cache['languages'][$availableLanguageID];
+		if (isset($this->cache['packages'][$packageID])) {
+			foreach ($this->cache['packages'][$packageID] as $availableLanguageID) {
+				if ($this->cache['languages'][$availableLanguageID]['hasContent']) {
+					$availableLanguages[$availableLanguageID] = $this->cache['languages'][$availableLanguageID];
 				}
 			}
 		}
@@ -280,7 +278,7 @@ abstract class LanguageFactory {
 	 *
 	 * @param	integer		$languageID
 	 */
-	public static function makeDefault($languageID) {
+	public function makeDefault($languageID) {
 		// remove old default language
 		$sql = "UPDATE	wcf".WCF_N."_language
 			SET	isDefault = 0
@@ -296,7 +294,7 @@ abstract class LanguageFactory {
 		$statement->execute(array($languageID));
 		
 		// rebuild language cache
-		self::clearCache();
+		$this->clearCache();
 	}
 	
 	/**
@@ -305,9 +303,9 @@ abstract class LanguageFactory {
 	 * 
 	 * @return	array<string>
 	 */	
-	public static function getLanguages() {
+	public function getLanguages() {
 		$languages = array();
-		foreach (self::$cache['codes'] as $languageCode => $languageID) {
+		foreach ($this->cache['codes'] as $languageCode => $languageID) {
 			$languages[$languageID] = WCF::getLanguage()->getDynamicVariable('wcf.global.language.'.$languageCode);
 		}
 		
@@ -320,9 +318,9 @@ abstract class LanguageFactory {
 	 * 
 	 * @return	array<string>
 	 */
-	public static function getLanguageCodes() {
+	public function getLanguageCodes() {
 		$languageCodes = array();
-		foreach (self::$cache['codes'] as $languageCode => $languageID) {
+		foreach ($this->cache['codes'] as $languageCode => $languageID) {
 			$languageCodes[$languageID] = $languageCode;
 		}
 		

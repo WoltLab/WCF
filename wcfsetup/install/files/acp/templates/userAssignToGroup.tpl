@@ -1,7 +1,7 @@
 {include file='header'}
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/usersL.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.user.assignToGroup{/lang}</h1>
 	</hgroup>
@@ -18,24 +18,26 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.user.assignToGroup.markedUsers{/lang}</legend>
 			
-			<div>
-				{implode from=$users item=$user}<a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user}</a>{/implode}
-			</div>
+			<ul>
+				{implode from=$users item=$user}<li class="badge badgeButton"><a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user}</a></li>{/implode}
+			</ul>
 		</fieldset>	
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.user.groups{/lang}</legend>
 			
-			<div><!-- ToDo: Definition List -->
-				<div{if $errorField == 'groupIDs'} class="formError"{/if}>
-					{htmlCheckboxes options=$groups name=groupIDs selected=$groupIDs}
+			<!-- ToDo: Definition List -->
+			<dl{if $errorField == 'groupIDs'} class="formError"{/if}>
+				<dt></dt>
+				<dd>{htmlCheckboxes options=$groups name=groupIDs selected=$groupIDs}
 					{if $errorField == 'groupIDs'}
 						<small class="innerError">
 							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 						</small>
 					{/if}
-				</div>
-			</div>
+				<dd>
+			</dl>
+			
 		</fieldset>
 		
 	</div>

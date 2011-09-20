@@ -24,7 +24,7 @@
 	{if $__wcf->session->getPermission('admin.system.package.canInstallPackage') || $additionalLargeButtons|isset}
 		<nav class="largeButtons">
 			<ul>
-				{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}<li><a href="index.php?form=PackageStartInstall&amp;action=install{@SID_ARG_2ND}" title="{lang}wcf.acp.package.startInstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageInstallM.png" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>{/if}
+				{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}<li><a href="index.php?form=PackageStartInstall&amp;action=install{@SID_ARG_2ND}" title="{lang}wcf.acp.package.startInstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>{/if}
 				{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 			</ul>
 		</nav>
@@ -72,9 +72,9 @@
 							{if $package->standalone}
 								<img src="{@RELATIVE_WCF_DIR}icon/packageStandalone1.svg" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" class="balloonTooltip" />
 							{elseif $package->isPlugin()}
-								<img src="{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="balloonTooltip" />
 							{else}
-								<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="balloonTooltip" />
 							{/if}
 						</td>
 						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->packageDescription}">
@@ -99,7 +99,7 @@
 	{if $__wcf->session->getPermission('admin.system.package.canInstallPackage') || $additionalLargeButtons|isset}
 		<nav class="largeButtons">
 			<ul>
-				{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}<li><a href="index.php?form=PackageStartInstall&amp;action=install{@SID_ARG_2ND}" title="{lang}wcf.acp.package.startInstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageInstallM.png" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>{/if}
+				{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}<li><a href="index.php?form=PackageStartInstall&amp;action=install{@SID_ARG_2ND}" title="{lang}wcf.acp.package.startInstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>{/if}
 				{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 			</ul>
 		</nav>

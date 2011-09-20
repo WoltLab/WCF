@@ -129,7 +129,7 @@ class LanguageEditor extends DatabaseObjectEditor {
 						
 						// compile dynamic language variables
 						if ($categoryName != 'wcf.global' && strpos($languageItemValue, '{') !== false) {
-							$file->write("\$this->dynamicItems['".$languageItem."'] = '".str_replace("'", "\'", LanguageFactory::getScriptingCompiler()->compileString($languageItem, $languageItemValue))."';\n");
+							$file->write("\$this->dynamicItems['".$languageItem."'] = '".str_replace("'", "\'", LanguageFactory::getInstance()->getScriptingCompiler()->compileString($languageItem, $languageItemValue))."';\n");
 						}
 					}
 					
@@ -340,7 +340,7 @@ class LanguageEditor extends DatabaseObjectEditor {
 		$languageCode = self::readLanguageCodeFromXML($xml);
 		
 		// try to find an existing language with the given language code
-		$language = LanguageFactory::getLanguageByCode($languageCode);
+		$language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
 		
 		// create new language
 		if ($language === null) {

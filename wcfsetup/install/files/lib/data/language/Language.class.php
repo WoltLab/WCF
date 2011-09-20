@@ -59,7 +59,7 @@ class Language extends DatabaseObject {
 	 * @return	string
 	 */
 	public function getFixedLanguageCode() {
-		return LanguageFactory::fixLanguageCode($this->languageCode);
+		return LanguageFactory::getInstance()->fixLanguageCode($this->languageCode);
 	}
 		
 	/**
@@ -125,7 +125,7 @@ class Language extends DatabaseObject {
 	 * @return	boolean
 	 */
 	protected function loadCategory($category) {
-		if (!LanguageFactory::isValidCategory($category)) {
+		if (!LanguageFactory::getInstance()->isValidCategory($category)) {
 			return false;
 		}
 		
@@ -137,7 +137,7 @@ class Language extends DatabaseObject {
 			}
 			
 			// rebuild language file
-			$languageCategory = LanguageFactory::getCategory($category);
+			$languageCategory = LanguageFactory::getInstance()->getCategory($category);
 			$this->editor->updateCategory(array($languageCategory->languageCategoryID), array($this->packageID));
 		}
 		

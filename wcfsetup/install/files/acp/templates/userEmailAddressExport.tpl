@@ -20,9 +20,9 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.user.exportEmailAddress.markedUsers{/lang}</legend>
 			
-			<div>
-				{implode from=$users item=$user}<a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user}</a>{/implode}
-			</div>
+			<ul>
+				{implode from=$users item=$user}<li class="badge badgeButton"><a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user}</a></li>{/implode}
+			</ul>
 		</fieldset>	
 		
 		<fieldset>

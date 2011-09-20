@@ -1,5 +1,17 @@
 {include file='header'}
 
+<script type="text/javascript">
+	//<![CDATA[
+	$(function() {
+		WCF.Icon.addObject({
+			'wcf.global.opened': '{@RELATIVE_WCF_DIR}icon/opened2.svg',
+			'wcf.global.closed': '{@RELATIVE_WCF_DIR}icon/closed2.svg'
+		});
+		WCF.Collapsible.Simple.init();
+	});
+	//]]>
+</script>
+
 <header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/packageStandalone1.svg" alt="" /><!-- ToDo: Add possibility to show a custom app icon if given! -->
 	<hgroup>
@@ -85,10 +97,10 @@
 	<nav class="largeButtons">
 		<ul>
 			{if PACKAGE_ID != $package->packageID}
-				{if $package->standalone && $package->package != 'com.woltlab.wcf'}<li><a href="{@RELATIVE_WCF_DIR}{$package->packageDir}acp/index.php{@SID_ARG_1ST}" title="{lang}wcf.acp.package.view.button.makeActive{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageMakeActiveM.png" alt="" /> <span>{lang}wcf.acp.package.view.button.makeActive{/lang}</span></a></li>{/if}
-				{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $noDependentIsActive}<li><a href="index.php?page=Package&amp;action=startUninstall&amp;packageID={@$package->packageID}{@SID_ARG_2ND}" onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" title="{lang}wcf.acp.package.view.button.uninstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageUninstallM.png" alt="" /> <span>{lang}wcf.acp.package.view.button.uninstall{/lang}</span></a></li>{/if}
+				{if $package->standalone && $package->package != 'com.woltlab.wcf'}<li><a href="{@RELATIVE_WCF_DIR}{$package->packageDir}acp/index.php{@SID_ARG_1ST}" title="{lang}wcf.acp.package.view.button.makeActive{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageACP1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.makeActive{/lang}</span></a></li>{/if}
+				{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $noDependentIsActive}<li><a href="index.php?page=Package&amp;action=startUninstall&amp;packageID={@$package->packageID}{@SID_ARG_2ND}" onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" title="{lang}wcf.acp.package.view.button.uninstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.uninstall{/lang}</span></a></li>{/if}
 			{/if}
-			{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}<li><a href="index.php?form=PackageStartInstall&amp;action=update&amp;packageID={@$package->packageID}{@SID_ARG_2ND}" title="{lang}wcf.acp.package.view.button.update{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageUpdateM.png" alt="" /> <span>{lang}wcf.acp.package.view.button.update{/lang}</span></a></li>{/if}
+			{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}<li><a href="index.php?form=PackageStartInstall&amp;action=update&amp;packageID={@$package->packageID}{@SID_ARG_2ND}" title="{lang}wcf.acp.package.view.button.update{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.update{/lang}</span></a></li>{/if}
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
 	</nav>
@@ -96,7 +108,7 @@
 
 {if $requiredPackages|count > 0}
 	<div class="border boxTitle">
-		<a onclick="openList('requiredPackages')"><img id="requiredPackagesImage" src="{@RELATIVE_WCF_DIR}icon/close.svg" alt="" /></a>
+		<a data-isOpen="1" data-collapsibleContainer="requiredPackages" class="collapsible"><img src="{@RELATIVE_WCF_DIR}icon/opened2.svg" alt="" title="{lang}wcf.global.button.collapsible{/lang}" class="balloonTooltip" /></a>
 		<hgroup>
 			<h1><a onclick="openList('requiredPackages')">{lang}wcf.acp.package.view.requiredPackages{/lang}</a></h1>
 			<h2>{lang}wcf.acp.package.view.requiredPackages.description{/lang}</h2>
@@ -105,11 +117,11 @@
 		<table id="requiredPackages">
 			<thead>
 				<tr class="tableHead">
-					<th colspan="2"><p class="emptyHead">{lang}wcf.acp.package.list.id{/lang}</p></th>
-					<th colspan="2"><p class="emptyHead">{lang}wcf.acp.package.list.name{/lang}</p></th>
-					<th><p class="emptyHead">{lang}wcf.acp.package.list.author{/lang}</p></th>
-					<th><p class="emptyHead">{lang}wcf.acp.package.list.version{/lang}</p></th>
-					<th><p class="emptyHead">{lang}wcf.acp.package.list.date{/lang}</p></th>
+					<th colspan="2" class="columnID">{lang}wcf.acp.package.list.id{/lang}</th>
+					<th colspan="2" class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
+					<th class="columnText">{lang}wcf.acp.package.list.author{/lang}</th>
+					<th class="columnText">{lang}wcf.acp.package.list.version{/lang}</th>
+					<th class="columnDigits">{lang}wcf.acp.package.list.date{/lang}</th>
 					
 					{if $additionalColumns|isset}{@$additionalColumns}{/if}
 				</tr>
@@ -163,7 +175,7 @@
 
 {if $dependentPackages|count > 0}
 	<div class="border boxTitle">
-		<a onclick="openList('dependentPackages')"><img id="dependentPackagesImage" src="{@RELATIVE_WCF_DIR}icon/close.svg" alt="" /></a>
+		<a data-isOpen="1" data-collapsibleContainer="dependentPackages" class="collapsible"><img src="{@RELATIVE_WCF_DIR}icon/opened2.svg" alt="" title="{lang}wcf.global.button.collapsible{/lang}" class="balloonTooltip" /></a>
 		<hgroup>
 			<h1><a onclick="openList('dependentPackages')">{lang}wcf.acp.package.view.dependentPackages{/lang}</a></h1>
 			<h2>{lang}wcf.acp.package.view.dependentPackages.description{/lang}</h2>

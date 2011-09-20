@@ -349,7 +349,7 @@ class WCF {
 		mb_language('uni');
 		
 		// get language
-		self::$languageObj = LanguageFactory::getLanguage(self::getSession()->getLanguageID());
+		self::$languageObj = LanguageFactory::getInstance()->getLanguage(self::getSession()->getLanguageID());
 	}
 	
 	/**
@@ -491,7 +491,7 @@ class WCF {
 	 * @param	integer		$languageID
 	 */
 	public static final function setLanguage($languageID) {
-		self::$languageObj = LanguageFactory::getLanguage($languageID);
+		self::$languageObj = LanguageFactory::getInstance()->getLanguage($languageID);
 		self::getTPL()->setLanguageID(self::getLanguage()->languageID);
 	}
 	

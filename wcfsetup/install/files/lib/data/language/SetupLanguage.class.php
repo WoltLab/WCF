@@ -64,7 +64,7 @@ class SetupLanguage extends Language {
 					
 					// compile dynamic language variables
 					if (strpos($name['cdata'], '{') !== false) {
-						$file->write("\$this->dynamicItems['".$name['name']."'] = '".str_replace("'", "\'", LanguageFactory::getScriptingCompiler()->compileString($name['name'], $name['cdata']))."';\n");
+						$file->write("\$this->dynamicItems['".$name['name']."'] = '".str_replace("'", "\'", LanguageFactory::getInstance()->getScriptingCompiler()->compileString($name['name'], $name['cdata']))."';\n");
 					}
 				}
 		
