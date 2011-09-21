@@ -136,7 +136,7 @@ header.pageHeader nav.topMenu {
 	top: 0;
 	right: 0;
 	left: 0;
-	min-height: 25px;
+	min-height: 20px;
 	min-width: 800px;
 	z-index: 500;
 	
@@ -148,7 +148,7 @@ header.pageHeader nav.topMenu {
 }
 
 header.pageHeader nav.topMenu > div {
-	padding: 5px 23px 3px;
+	padding: 0 23px 0;
 	
 }
 
@@ -161,6 +161,136 @@ header.pageHeader nav.topMenu ul li a {
 header.pageHeader nav.topMenu ul li a:hover {
 	color: #fff;
 }
+
+
+
+
+
+
+
+/*  */
+
+
+/* Todo: Top Menu Dropdowns */
+
+nav.topMenu .dropdownCaption {
+	cursor: pointer; 
+}
+
+nav.topMenu ul {
+	position: relative;
+	display: inline-block;
+}
+
+nav.topMenu ul li ul.dropdown {
+	color: #fff;
+	border: 1px solid rgba(255, 255, 255, .5);
+	border-radius: 0 5px 5px 5px;
+	background-color: rgba(0, 0, 0, .7);
+	margin-top: 25px;
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 500;
+	
+	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-ms-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+}
+
+nav.topMenu ul span.dropdownCaption {
+	display: block !important;
+	padding: 6px;
+}
+
+nav.topMenu ul:hover span.dropdownCaption {
+	color: #fff;
+	background-color: rgba(0, 0, 0, .7);
+	display: block !important;
+}
+
+nav.topMenu ul:hover span.dropdownCaption ~ ul.dropdown {
+	display: block !important;
+}
+
+nav.topMenu ul li ul.dropdown > li {
+	text-shadow: none;
+	color: #ccc;
+	cursor: pointer; 
+	padding: 5px 7px;
+	
+	-webkit-transition: all .1s linear;
+	-moz-transition: all .1s linear;
+	-ms-transition: all .1s linear;
+	-o-transition: all .1s linear;
+	transition: all .1s linear;
+}
+
+nav.topMenu ul li ul.dropdown > li a {
+	text-decoration: none;
+}
+
+nav.topMenu ul li ul.dropdown > li a:hover {
+	color: #fff;
+}
+
+.preInput .inputDropdown > li:first-child {
+	border-top-right-radius: 3px;
+}
+
+nav.topMenu ul li ul.dropdown > li:last-child {
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+nav.topMenu ul li ul.dropdown > li:hover {
+	color: #fff;
+	background-color: rgba(0, 0, 0, .5);
+}
+
+nav.topMenu ul li ul.dropdown > li:first-child {
+	border-top-width: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Todo */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Logo */
 
@@ -893,27 +1023,17 @@ textarea {
 	white-space: nowrap;
 }
 
-.preInput .preInputDropdown {
-	position: absolute;
-	left: 0;
-	top: 25px;
-	z-index: 500;
-	display: none;
-}
-
-.preInput:hover .dropdownCaption ~ .preInputDropdown {
-	display: block !important;
-}
-
-.preInput .preInputDropdown {
+.preInput .inputDropdown {
 	color: #fff;
 	border: 1px solid rgba(255, 255, 255, .7);
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, .7);
 	margin-top: 25px;
+	display: none;
 	position: absolute;
 	top: 0;
 	left: 0;
+	z-index: 500;
 	
 	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
@@ -922,35 +1042,39 @@ textarea {
 	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 }
 
-.preInput .preInputDropdown > li {
+.preInput:hover .dropdownCaption ~ .inputDropdown {
+	display: block !important;
+}
+
+.preInput .inputDropdown > li {
 	text-shadow: none;
 	color: #ccc;
 	cursor: pointer; 
 	padding: 5px 7px;
 	
-	-webkit-transition: all .2s linear;
-	-moz-transition: all .2s linear;
-	-ms-transition: all .2s linear;
-	-o-transition: all .2s linear;
-	transition: all .2s linear;
+	-webkit-transition: all .1s linear;
+	-moz-transition: all .1s linear;
+	-ms-transition: all .1s linear;
+	-o-transition: all .1s linear;
+	transition: all .1s linear;
 }
 
-.preInput .preInputDropdown > li:first-child {
+.preInput .inputDropdown > li:first-child {
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 }
 
-.preInput .preInputDropdown > li:last-child {
+.preInput .inputDropdown > li:last-child {
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
 }
 
-.preInput .preInputDropdown > li:hover {
+.preInput .inputDropdown > li:hover {
 	color: #fff;
 	background-color: rgba(0, 0, 0, .5);
 }
 
-.preInput .preInputDropdown > li:first-child {
+.preInput .inputDropdown > li:first-child {
 	border-top-width: 0;
 }
 

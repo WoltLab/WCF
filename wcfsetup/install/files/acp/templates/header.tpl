@@ -84,9 +84,13 @@
 			<!-- top menu -->
 			<nav id="topMenu" class="topMenu">
 				<div>
-					<ul>
-						<li>{lang}wcf.acp.user.userNote{/lang}</li>
-						<li><a href="{link}index.php?action=Logout&amp;t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
+					<ul id="userMenu">
+						<li>
+							<span class="dropdownCaption">{lang}wcf.acp.user.userNote{/lang}</span>
+							<ul class="dropdown">
+								<li><a href="{link}index.php?action=Logout&amp;t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
+							</ul>
+						</li>
 					</ul>
 				</div>
 			</nav>
