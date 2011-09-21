@@ -3,7 +3,7 @@ namespace wcf\system\option;
 use wcf\data\option\Option;
 
 /**
- * Any option type should implement this interface.
+ * Any option type has to implement this interface.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -14,34 +14,36 @@ use wcf\data\option\Option;
  */
 interface IOptionType {
 	/**
-	 * Returns the html code for the form element of this option.
+	 * Returns the html code of the form element for the given option of this
+	 * option type.
 	 * 
-	 * @param	Option		$option
-	 * @param	mixed		$value
-	 * @return	string		html
+	 * @param	wcf\data\option\Option		$option
+	 * @param	mixed				$value
+	 * @return	string
 	 */
 	public function getFormElement(Option $option, $value);
 	
 	/**
-	 * Validates the form input for this option.
-	 * Throws an exception, if validation fails.
+	 * Validates the input for the given option of this option type and throws
+	 * a wcf\system\exception\UserInputException if the validation should fail.
 	 * 
-	 * @param	Option		$option
-	 * @param	string		$newValue
+	 * @param	wcf\data\option\Option		$option
+	 * @param	string				$newValue
 	 */
 	public function validate(Option $option, $newValue);
 	
 	/**
-	 * Returns the value of this option for saving in the database.
+	 * Returns the value of the given option of this option type which will
+	 * be saved in the database.
 	 * 
-	 * @param	Option		$option
-	 * @param	string		$newValue
+	 * @param	wcf\data\option\Option		$option
+	 * @param	string				$newValue
 	 * @return	string
 	 */
 	public function getData(Option $option, $newValue);
 	
 	/**
-	 * Returns css class name for this form element. 
+	 * Returns the css class name for this option tye. 
 	 * 
 	 * @return	string
 	 */
