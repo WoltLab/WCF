@@ -156,9 +156,10 @@ header.pageHeader nav.topMenu ul li,
 header.pageHeader nav.topMenu ul li a {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
 	color: #69c;
+	display: block;
 }
 
-header.pageHeader nav.topMenu ul li a:hover {
+header.pageHeader nav.topMenu li ul li:hover a {
 	color: #fff;
 }
 
@@ -996,7 +997,31 @@ textarea {
 	width: auto;
 }
 
-/* Pre-Input Buttons & Dropdowns */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Input Buttons & Dropdowns */
+
+/* Input Button Area */
 
 .preInput {
 	position: relative;
@@ -1009,12 +1034,23 @@ textarea {
 	clear: both;
 }
 
+.preInput > input { /* ToDo: All this needed? */
+	border-radius: 0 3px 3px 0;
+	margin: 0;
+	position: relative;
+	right: 0;
+	left: 0;
+	display: inline-block;
+}
+
+/* Input Button */
+
 .preInput .dropdownCaption {
 	margin-right: -1px;
 	float: left;
 }
 
-.preInput .dropdownCaption span {
+.preInput .dropdownCaption span { /* ToDo: Icon will be toggled by a class in the future! */
 	background-image: url('../../icon/dropdown1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
@@ -1023,81 +1059,7 @@ textarea {
 	white-space: nowrap;
 }
 
-.preInput .inputDropdown {
-	color: #fff;
-	border: 1px solid rgba(255, 255, 255, .7);
-	border-radius: 5px;
-	background-color: rgba(0, 0, 0, .7);
-	margin-top: 25px;
-	display: none;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 500;
-	
-	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-ms-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-}
-
-.preInput:hover .dropdownCaption ~ .inputDropdown {
-	display: block !important;
-}
-
-.preInput .inputDropdown > li {
-	text-shadow: none;
-	color: #ccc;
-	cursor: pointer; 
-	padding: 5px 7px;
-	
-	-webkit-transition: all .1s linear;
-	-moz-transition: all .1s linear;
-	-ms-transition: all .1s linear;
-	-o-transition: all .1s linear;
-	transition: all .1s linear;
-}
-
-.preInput .inputDropdown > li:first-child {
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
-}
-
-.preInput .inputDropdown > li:last-child {
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
-}
-
-.preInput .inputDropdown > li:hover {
-	color: #fff;
-	background-color: rgba(0, 0, 0, .5);
-}
-
-.preInput .inputDropdown > li:first-child {
-	border-top-width: 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-.preInput > input {
-	border-radius: 0 3px 3px 0;
-	margin: 0;
-	position: relative;
-	right: 0;
-	left: 0;
-	display: inline-block;
-}
+/* ToDo: Coloring classes copied from Buttons! */
 
 /* normal */
 .preInput .dropdownCaption {
@@ -1166,6 +1128,104 @@ textarea {
 	-o-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Input Dropdown */
+
+.preInput .dropdown {
+	color: #fff;
+	border: 1px solid rgba(255, 255, 255, .7);
+	border-radius: 5px;
+	background-color: rgba(0, 0, 0, .7);
+	margin-top: 25px;
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 500;
+	
+	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-ms-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+}
+
+.preInput:hover .dropdownCaption ~ .dropdown {
+	display: block !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Dropdown Entries */
+
+.preInput .dropdown > li {
+	text-shadow: none;
+	color: #ccc;
+	cursor: pointer; 
+	padding: 5px 7px;
+	
+	-webkit-transition: all .1s linear;
+	-moz-transition: all .1s linear;
+	-ms-transition: all .1s linear;
+	-o-transition: all .1s linear;
+	transition: all .1s linear;
+}
+
+.preInput .dropdown > li:first-child {
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+.preInput .dropdown > li:last-child {
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+.preInput .dropdown > li:hover {
+	color: #fff;
+	background-color: rgba(0, 0, 0, .5);
+}
+
+.preInput .dropdown > li:first-child {
+	border-top-width: 0;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2653,7 +2713,21 @@ li > .badgeButton {
 
 
 
-/* CSS Experiments (active) */
+/* -- -- -- -- -- CSS Experiments (active) -- -- -- -- -- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Clipboard API - TESTING ONLY / TODO */
 
@@ -2734,6 +2808,19 @@ li > .badgeButton {
 .actionProxyLoading {
 	
 }
+
+
+
+
+
+
+
+
+
+/* -- -- -- -- -- Global Button Color & Effect Library -- -- -- -- -- */
+
+
+
 
 
 /* -- -- -- -- -- EOF -- -- -- -- -- */
