@@ -2249,7 +2249,13 @@ div#ajaxExceptionStacktrace {
 	padding: 7px 21px 7px;
 	position: fixed;
 	top: 0;
-	left: 43%;
+	right: 20px;
+	z-index: 1000;
+}
+
+#actionProxyLoading img {
+	height: 24px;
+	width: 24px;
 }
 
 div.wcfDimensions {
