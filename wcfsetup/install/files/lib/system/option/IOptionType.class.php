@@ -43,7 +43,7 @@ interface IOptionType {
 	public function getData(Option $option, $newValue);
 	
 	/**
-	 * Returns the css class name for this option tye. 
+	 * Returns the css class name for this option type. 
 	 * 
 	 * @return	string
 	 */
