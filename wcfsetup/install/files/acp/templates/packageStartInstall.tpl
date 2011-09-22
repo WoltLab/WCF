@@ -39,6 +39,7 @@
 					<input type="file" id="uploadPackage" name="uploadPackage" value="" />
 					{if $errorField == 'uploadPackage'}
 						<small class="innerError">
+							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							{if $errorType == 'noValidPackage'}{lang}wcf.acp.package.startInstall.error.noValidPackage{/lang}{/if}
 							{if $errorType == 'noValidUpdate'}{lang}wcf.acp.package.startInstall.error.noValidUpdate{/lang}{/if}
@@ -58,6 +59,7 @@
 					<input type="text" id="downloadPackage" name="downloadPackage" value="" class="long" />
 					{if $errorField == 'downloadPackage'}
 						<small class="innerError">
+							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'notFound'}{lang}wcf.acp.package.startInstall.error.notFound{/lang}{/if}
 							{if $errorType == 'noValidPackage'}{lang}wcf.acp.package.startInstall.error.noValidPackage{/lang}{/if}
 							{if $errorType == 'noValidUpdate'}{lang}wcf.acp.package.startInstall.error.noValidUpdate{/lang}{/if}

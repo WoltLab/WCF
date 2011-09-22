@@ -22,11 +22,11 @@
 	<fieldset>
 		<legend>{lang}wcf.user.login.data{/lang}</legend>
 		
-		<dl{if $errorField == 'username'} class="errorField"{/if}>
+		<dl{if $errorField == 'username'} class="formError"{/if}>
 			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 			<dd><input type="text" id="username" name="username" value="{$username}" class="medium" />
 				{if $errorField == 'username'}
-					<small>
+					<small class="innerError">
 						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 						{if $errorType == 'notFound'}{lang}wcf.user.error.username.notFound{/lang}{/if}
 					</small>
@@ -34,11 +34,11 @@
 			</dd>
 		</dl>
 		
-		<dl{if $errorField == 'password'} class="errorField"{/if}>
+		<dl{if $errorField == 'password'} class="formError"{/if}>
 			<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 			<dd><input type="password" id="password" name="password" value="" class="medium" />
 				{if $errorField == 'password'}
-					<small>
+					<small class="innerError">
 						<img src="{@RELATIVE_WCF_DIR}icon/errorS.png" alt="" />
 						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 						{if $errorType == 'false'}{lang}wcf.user.error.password.false{/lang}{/if}

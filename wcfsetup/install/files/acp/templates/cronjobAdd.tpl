@@ -8,6 +8,8 @@
 	</hgroup>
 </header>
 
+<p class="info">{lang}wcf.acp.cronjob.intro{/lang}</p>
+
 {if $errorField}
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
@@ -15,8 +17,6 @@
 {if $success|isset}
 	<p class="success">{lang}wcf.global.form.{$action}.success{/lang}</p>	
 {/if}
-
-<p class="info">{lang}wcf.acp.cronjob.intro{/lang}</p>
 
 <div class="contentHeader">
 	<nav class="largeButtons">
@@ -39,6 +39,7 @@
 					<input type="text" id="className" name="className" value="{$className}" class="long" />
 					{if $errorField == 'className'}
 						<small class="innerError">
+							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							{if $errorType == 'doesNotExist'}{lang}wcf.acp.cronjob.error.className.doesNotExist{/lang}{/if}
 						</small>
@@ -65,6 +66,7 @@
 					<input type="text" id="startMinute" name="startMinute" value="{$startMinute}" class="short" />
 					{if $errorField == 'startMinute'}
 						<small class="innerError">
+							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.timing.notValid{/lang}{/if}
 						</small>
 					{/if}
@@ -78,6 +80,7 @@
 					<input type="text" id="startHour" name="startHour" value="{$startHour}" class="short" />
 					{if $errorField == 'startHour'}
 						<small class="innerError">
+							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.timing.notValid{/lang}{/if}
 						</small>
 					{/if}
@@ -91,6 +94,7 @@
 					<input type="text" id="startDom" name="startDom" value="{$startDom}" class="short" />
 					{if $errorField == 'startDom'}
 						<small class="innerError">
+							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.timing.notValid{/lang}{/if}
 						</small>
 					{/if}
@@ -104,6 +108,7 @@
 					<input type="text" id="startMonth" name="startMonth" value="{$startMonth}" class="short" />
 					{if $errorField == 'startMonth'}
 						<small class="innerError">
+							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.timing.notValid{/lang}{/if}
 						</small>
 					{/if}
@@ -117,6 +122,7 @@
 					<input type="text" id="startDow" name="startDow" value="{$startDow}" class="short" />
 					{if $errorField == 'startDow'}
 						<small class="innerError">
+							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.timing.notValid{/lang}{/if}
 						</small>
 					{/if}

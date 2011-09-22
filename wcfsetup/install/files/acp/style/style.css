@@ -263,30 +263,7 @@ nav.topMenu ul li ul.dropdown > li:first-child {
 
 
 
-
-
-
 /* Todo */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -997,6 +974,17 @@ textarea {
 	width: auto;
 }
 
+/* Form Errors */
+
+.formError input[type='text'],
+.formError input[type='search'],
+.formError input[type='email'],
+.formError input[type='password'],
+.formError textarea {
+	border-color: #f00;
+	background-color: #fff6f6;
+}
+
 
 
 
@@ -1174,54 +1162,6 @@ textarea {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* -- -- -- -- -- Large Buttons -- -- -- -- -- */
 
 /* Colors are being taken from the global color styles */
@@ -1366,8 +1306,6 @@ input[type='button'],
 	position: relative;
 	bottom: -1px;
 	z-index: 10;
-	max-width: 200px;
-	overflow: hidden;
 }
 
 .tabMenu li:not(.ui-state-active) a:hover {
@@ -1936,10 +1874,64 @@ p.error {
 	background-repeat: no-repeat;
 }
 
+/* small error notifications */
 
+.innerError {
+	text-shadow: 0 1px 0 #fff;
+	line-height: 1.5;
+	color: #c00;
+	
+	border: 1px solid #ccc;
+	border-radius: 7px;
+	
+	background-color: #fff;
+	background-image: url('../../icon/systemError.svg');
+	background-size: 16px;
+	background-position: 5px center;
+	background-repeat: no-repeat;
+	
+	margin-top: 5px;
+	padding: 2px 10px 2px 25px;
+	position: relative;
+	display: inline-block;
+	clear: both;
+	
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
+	-ms-box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
+	-o-box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
+	
+}
 
+/* small error notification arrows */
 
+.innerError .arrowOuter {	
+	border-width: 0 7px 7px;
+	border-style: solid;
+	border-color: #ccc transparent;
+	display: inline-block !important;
+	width: 0;
+	position: absolute;
+	top: -7px !important;
+	left: 10%;
+}
 
+.innerError .arrowInner {	
+	border-width: 0 5px 5px;
+	border-style: solid;
+	border-color: #fff transparent;
+	display: inline-block;
+	width: 0;
+	position: absolute;
+	top: 2px;
+	left: -5px;
+}
+
+.preInput ~ .innerError .arrowOuter {	
+	right: 10%;
+	left: auto;
+}
 
 
 /* ToDo: Installation */

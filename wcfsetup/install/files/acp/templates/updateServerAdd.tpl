@@ -34,9 +34,10 @@
 			<dl id="serverURLDiv"{if $errorField == 'serverURL'} class="formError"{/if}>
 				<dt><label for="serverURL">{lang}wcf.acp.updateServer.serverURL{/lang}</label></dt>
 				<dd>
-					<input type="text" id="serverURL" name="serverURL" value="{$serverURL}" class="long" />
+					<input type="text" id="serverURL" name="serverURL" value="{$serverURL}" class="medium" />
 					{if $errorField == 'serverURL'}
 						<small class="innerError">
+							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							{if $errorType == 'notValid'}{lang}wcf.acp.updateServer.serverURL.error.notValid{/lang}{/if}
 						</small>
