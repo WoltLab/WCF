@@ -16,20 +16,20 @@ use wcf\util\ClassUtil;
 class ProcessibleDatabaseObject extends DatabaseObject {
 	/**
 	 * name of the interface the processor of this database object should implement
-	 * @var string
+	 * @var	string
 	 */
 	protected static $processorInterface = '';
 	
 	/**
 	 * processor this database object
-	 * @var wcf\data\IDatabaseObjectProcessor
+	 * @var	wcf\data\IDatabaseObjectProcessor
 	 */
 	protected $processor = null;
 	
 	/**
 	 * Returns the processor this database object.
 	 * 
-	 * @return wcf\data\IDatabaseObjectProcessor
+	 * @return	wcf\data\IDatabaseObjectProcessor
 	 */
 	public function getProcessor() {
 		if ($this->processor === null) {
