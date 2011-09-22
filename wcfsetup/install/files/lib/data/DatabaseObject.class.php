@@ -15,47 +15,46 @@ use wcf\system\WCF;
 abstract class DatabaseObject implements IStorableObject {
 	/**
 	 * database table for this object
-	 * @var string
+	 * @var	string
 	 */
 	protected static $databaseTableName = '';
 	
 	/**
 	 * indicates if database table index is an identity column
-	 * @var boolean 
+	 * @var	boolean 
 	 */	
 	protected static $databaseTableIndexIsIdentity = true;
 	
 	/**
 	 * name of the primary index column
-	 * @var string
+	 * @var	string
 	 */
 	protected static $databaseTableIndexName = '';
 	
 	/**
 	 * sort field
-	 * @var mixed
+	 * @var	mixed
 	 */
 	protected static $sortBy = null;
 	
 	/**
 	 * sort order
-	 * @var mixed
+	 * @var	mixed
 	 */
 	protected static $sortOrder = null;
 	
 	/**
 	 * object data
-	 * @var array
+	 * @var	array
 	 */
 	protected $data = null;
 	
 	/**
 	 * Creates a new instance of the DatabaseObject class.
-	 * Stores object data.
 	 *  
-	 * @param	mixed			$id
-	 * @param	array			$row
-	 * @param	DatabaseObject		$object
+	 * @param	mixed				$id
+	 * @param	array				$row
+	 * @param	wcf\data\DatabaseObject		$object
 	 */
 	public function __construct($id, array $row = null, DatabaseObject $object = null) {
 		if ($id !== null) {
@@ -91,7 +90,7 @@ abstract class DatabaseObject implements IStorableObject {
 	}
 
 	/**
-	 * @see wcf\data\IStorableObject::__get()
+	 * @see	wcf\data\IStorableObject::__get()
 	 */
 	public function __get($name) {
 		if (isset($this->data[$name])) {
@@ -103,14 +102,14 @@ abstract class DatabaseObject implements IStorableObject {
 	}
 	
 	/**
-	 * @see wcf\data\IStorableObject::__isset()
+	 * @see	wcf\data\IStorableObject::__isset()
 	 */
 	public function __isset($name) {
 		return isset($this->data[$name]);
 	}
 	
 	/**
-	 * @see wcf\data\IStorableObject::getDatabaseTableName()
+	 * @see	wcf\data\IStorableObject::getDatabaseTableName()
 	 */
 	public static function getDatabaseTableName() {
 		return 'wcf'.WCF_N.'_'.static::$databaseTableName;
@@ -131,7 +130,7 @@ abstract class DatabaseObject implements IStorableObject {
 	}
 	
 	/**
-	 * @see wcf\data\IStorableObject::getDatabaseTableIndexName()
+	 * @see	wcf\data\IStorableObject::getDatabaseTableIndexName()
 	 */
 	public static function getDatabaseTableIndexName() {
 		return static::$databaseTableIndexName;
@@ -140,9 +139,9 @@ abstract class DatabaseObject implements IStorableObject {
 	/**
 	 * Sorts a list of database objects.
 	 *
-	 * @param	array<DatabaseObject>	$objects
-	 * @param	mixed			$sortBy
-	 * @param	string			$sortOrder
+	 * @param	array<wcf\data\DatabaseObject>	$objects
+	 * @param	mixed				$sortBy
+	 * @param	string				$sortOrder
 	 * @return	boolean
 	 */
 	public static function sort(&$objects, $sortBy, $sortOrder = 'ASC', $maintainIndexAssociation = true) {
@@ -160,8 +159,8 @@ abstract class DatabaseObject implements IStorableObject {
 	/**
 	 * Compares to database objects.
 	 *
-	 * @param	DatabaseObject		$objectA
-	 * @param	DatabaseObject		$objectB
+	 * @param	wcf\data\DatabaseObject		$objectA
+	 * @param	wcf\data\DatabaseObject		$objectB
 	 * @return	float
 	 */
 	protected static function compareObjects($objectA, $objectB) {
