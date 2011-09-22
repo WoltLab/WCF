@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\language\category\LanguageCategoryList;
+use wcf\data\language\LanguageList;
 use wcf\system\WCF;
 
 /**
@@ -43,36 +44,21 @@ class LanguageCacheBuilder implements ICacheBuilder {
 				$data['packages'][$row['packageID']] = array();
 			}
 			$data['packages'][$row['packageID']][] = $row['languageID'];
-			
-			// language to packages
-			if (!isset($languageToPackages[$row['languageID']])) {
-				$languageToPackages[$row['languageID']] = array();
-			}
-			$languageToPackages[$row['languageID']][] = $row['packageID'];
 		}
 		
 		// get languages
-		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_language";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			// language data
-			$data['languages'][$row['languageID']] = $row;
-			
-			// language to packages
-			if (!isset($languageToPackages[$row['languageID']])) {
-				$languageToPackages[$row['languageID']] = array();
-			}
-			$data['languages'][$row['languageID']]['packages'] = $languageToPackages[$row['languageID']];
-			
+		$languageList = new LanguageList();
+		$languageList->sqlLimit = 0;
+		$languageList->readObjects();
+		$data['languages'] = $languageList->getObjects();
+		foreach ($languageList->getObjects() as $language) {
 			// default language
-			if ($row['isDefault']) {
-				$data['default'] = $row['languageID'];
+			if ($language->isDefault) {
+				$data['default'] = $language->languageID;
 			}
 			
 			// language code to language id
-			$data['codes'][$row['languageCode']] = $row['languageID'];
+			$data['codes'][$language->languageCode] = $language->languageID;
 		}
 		
 		// get language categories

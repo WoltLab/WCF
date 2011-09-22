@@ -52,12 +52,11 @@ class LanguageFactory extends SingletonFactory {
 	 */
 	public function getLanguage($languageID) {
 		if (!isset($this->languages[$languageID])) {
-			$language = new Language($languageID);
-			if (!$language->languageID) {
+			if (!isset($this->cache['languages'][$languageID])) {
 				return null;
 			}
 			
-			$this->languages[$language->languageID] = $language;
+			$this->languages[$languageID] = $this->cache['languages'][$languageID];
 		}
 		
 		return $this->languages[$languageID];
@@ -147,14 +146,14 @@ class LanguageFactory extends SingletonFactory {
 		}
 		
 		// get default language
-		$defaultLanguageCode = $this->cache['languages'][$this->cache['default']]['languageCode'];
+		$defaultLanguageCode = $this->cache['languages'][$this->cache['default']]->languageCode;
 		
 		// get preferred language
 		$languageCode = self::getPreferredLanguage($availableLanguageCodes, $defaultLanguageCode);
 		
 		// get language id of preferred language
 		foreach ($this->cache['languages'] as $key => $language) {
-			if ($language['languageCode'] == $languageCode) {
+			if ($language->languageCode == $languageCode) {
 				return $key;
 			}
 		}
@@ -268,7 +267,7 @@ class LanguageFactory extends SingletonFactory {
 		$availableLanguages = array();
 		if (isset($this->cache['packages'][$packageID])) {
 			foreach ($this->cache['packages'][$packageID] as $availableLanguageID) {
-				if ($this->cache['languages'][$availableLanguageID]['hasContent']) {
+				if ($this->cache['languages'][$availableLanguageID]->hasContent) {
 					$availableLanguages[$availableLanguageID] = $this->getLanguage($availableLanguageID);
 				}
 			}
