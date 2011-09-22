@@ -206,40 +206,40 @@
 		<!-- /users -->
 		
 		<!-- user groups -->
-		<acpmenuitem name="wcf.acp.menu.link.group">
+		<acpmenuitem name="wcf.acp.menu.link.user.group">
 			<parent>wcf.acp.menu.link.user</parent>
 			<showorder>2</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.group.general">
-			<parent>wcf.acp.menu.link.group</parent>
+		<acpmenuitem name="wcf.acp.menu.link.user.group.general">
+			<parent>wcf.acp.menu.link.user.group</parent>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.group.list">
+		<acpmenuitem name="wcf.acp.menu.link.user.group.list">
 			<icon>icon/userGroupM.png</icon>
 			<link>index.php?page=UserGroupList</link>
-			<parent>wcf.acp.menu.link.group.general</parent>
+			<parent>wcf.acp.menu.link.user.group.general</parent>
 			<permissions>admin.user.canEditGroup,admin.user.canDeleteGroup</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>	
 		
-		<acpmenuitem name="wcf.acp.menu.link.group.add">
+		<acpmenuitem name="wcf.acp.menu.link.user.group.add">
 			<link>index.php?form=UserGroupAdd</link>
-			<parent>wcf.acp.menu.link.group.general</parent>
+			<parent>wcf.acp.menu.link.user.group.general</parent>
 			<permissions>admin.user.canAddGroup</permissions>
 			<showorder>2</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.group.additional">
-			<parent>wcf.acp.menu.link.group</parent>
+		<acpmenuitem name="wcf.acp.menu.link.user.group.additional">
+			<parent>wcf.acp.menu.link.user.group</parent>
 			<showorder>2</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.group.mail">
+		<acpmenuitem name="wcf.acp.menu.link.user.group.mail">
 			<icon>icon/emailM.png</icon>
 			<link>index.php?form=UserMail&amp;action=group</link>
-			<parent>wcf.acp.menu.link.group.additional</parent>
+			<parent>wcf.acp.menu.link.user.group.additional</parent>
 			<permissions>admin.user.canMailUser</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
