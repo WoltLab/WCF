@@ -7,6 +7,7 @@ use wcf\form\AbstractForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\wcf;
 use wcf\util\ArrayUtil;
 use wcf\util\HeaderUtil;
@@ -165,7 +166,7 @@ class UserSearchForm extends UserOptionListForm {
 			'languageIDs' => $this->languageIDs,
 			'optionTree' => $this->optionTree,
 			'availableGroups' => $this->getAvailableGroups(),
-			'availableLanguages' => $this->getAvailablelanguages(),
+			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'invertGroupIDs' => $this->invertGroupIDs,
 			'sortField' => $this->sortField,
 			'sortOrder' => $this->sortOrder,

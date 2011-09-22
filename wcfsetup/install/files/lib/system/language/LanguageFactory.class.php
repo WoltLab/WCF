@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\language;
 use wcf\data\language\Language;
+use wcf\data\DatabaseObject;
 use wcf\system\cache\CacheHandler;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\SingletonFactory;
@@ -66,6 +67,30 @@ class LanguageFactory extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns an instance of Language or NULL for a given language code.
+	 *
+	 * @param	string		$languageCode
+	 * @return	wcf\data\language\Language
+	 */
+	public function getLanguageByCode($languageCode) {
+		// called within WCFSetup
+		if ($this->cache === false || !count($this->cache['codes'])) {
+			$sql = "SELECT	languageID
+				FROM	wcf".WCF_N."_language
+				WHERE	languageCode = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($languageCode));
+			$row = $statement->fetchArray();
+			if (isset($row['languageID'])) return new Language($row['languageID']);
+		}
+		else if (isset($this->cache['codes'][$languageCode])) {
+			return $this->getLanguage($this->cache['codes'][$languageCode]);
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Returns true if the language category with the given name exists.
 	 *
 	 * @param	string		$categoryName
@@ -104,8 +129,8 @@ class LanguageFactory extends SingletonFactory {
 	protected function findPreferredLanguage() {
 		// get available language codes
 		$availableLanguageCodes = array();
-		foreach ($this->getAvailableLanguages(PACKAGE_ID) as $language) {
-			$availableLanguageCodes[] = $language['languageCode'];
+		foreach ($this->getLanguages(PACKAGE_ID) as $language) {
+			$availableLanguageCodes[] = $language->languageCode;
 		}
 		
 		// get default language
@@ -144,48 +169,6 @@ class LanguageFactory extends SingletonFactory {
 		}
 		
 		return $defaultLanguageCode;
-	}
-	
-	/**
-	 * Returns infos (code, id, encoding, etc) about all available languages
-	 * for package with the given id.
-	 *
-	 * @param 	integer		$packageID
-	 * @return	array
-	 */
-	public function getAvailableLanguages($packageID = PACKAGE_ID) {
-		// get list of all available languages
-		$availableLanguages = array();
-		if (isset($this->cache['packages'][$packageID])) {
-			foreach ($this->cache['packages'][$packageID] as $availableLanguageID) {
-				$availableLanguages[] = $this->cache['languages'][$availableLanguageID];
-			}
-		}
-		return $availableLanguages;
-	}
-	
-	/**
-	 * Returns an instance of Language or NULL for a given language code.
-	 *
-	 * @param	string		$languageCode
-	 * @return	wcf\data\language\Language
-	 */
-	public function getLanguageByCode($languageCode) {
-		// called within WCFSetup
-		if ($this->cache === false || !count($this->cache['codes'])) {
-			$sql = "SELECT	languageID
-				FROM	wcf".WCF_N."_language
-				WHERE	languageCode = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($languageCode));
-			$row = $statement->fetchArray();
-			if (isset($row['languageID'])) return new Language($row['languageID']);
-		}
-		else if (isset($this->cache['codes'][$languageCode])) {
-			return $this->getLanguage($this->cache['codes'][$languageCode]);
-		}
-		
-		return null;
 	}
 	
 	/**
@@ -257,21 +240,41 @@ class LanguageFactory extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns all available languages for package with the given id.
+	 *
+	 * @param 	integer		$packageID
+	 * @return	array<wcf\data\language\Language>
+	 */
+	public function getLanguages($packageID = PACKAGE_ID) {
+		// get list of all available languages
+		$availableLanguages = array();
+		if (isset($this->cache['packages'][$packageID])) {
+			foreach ($this->cache['packages'][$packageID] as $availableLanguageID) {
+				$availableLanguages[$availableLanguageID] = $this->getLanguage($availableLanguageID);
+			}
+		}
+		
+		DatabaseObject::sort($availableLanguages, 'languageName');
+		return $availableLanguages;
+	}
+	
+	/**
 	 * Returns all available content languages for given package.
 	 *
 	 * @param 	integer		$packageID
-	 * @return	array		$availableLanguages 	infos about each language (code, id, encoding, etc)
+	 * @return	array<wcf\data\language\Language>
 	 */
-	public function getAvailableContentLanguages($packageID = PACKAGE_ID) {
+	public function getContentLanguages($packageID = PACKAGE_ID) {
 		$availableLanguages = array();
 		if (isset($this->cache['packages'][$packageID])) {
 			foreach ($this->cache['packages'][$packageID] as $availableLanguageID) {
 				if ($this->cache['languages'][$availableLanguageID]['hasContent']) {
-					$availableLanguages[$availableLanguageID] = $this->cache['languages'][$availableLanguageID];
+					$availableLanguages[$availableLanguageID] = $this->getLanguage($availableLanguageID);
 				}
 			}
 		}
 		
+		DatabaseObject::sort($availableLanguages, 'languageName');
 		return $availableLanguages;
 	}
 	
@@ -297,36 +300,5 @@ class LanguageFactory extends SingletonFactory {
 		
 		// rebuild language cache
 		$this->clearCache();
-	}
-	
-	/**
-	 * Returns an ordered list of the names of all installed languages in the
-	 * active language.
-	 * 
-	 * @return	array<string>
-	 */	
-	public function getLanguages() {
-		$languages = array();
-		foreach ($this->cache['codes'] as $languageCode => $languageID) {
-			$languages[$languageID] = WCF::getLanguage()->getDynamicVariable('wcf.global.language.'.$languageCode);
-		}
-		
-		StringUtil::sort($languages);
-		return $languages;
-	}
-	
-	/**
-	 * Returns an ordered list of all installed language codes.
-	 * 
-	 * @return	array<string>
-	 */
-	public function getLanguageCodes() {
-		$languageCodes = array();
-		foreach ($this->cache['codes'] as $languageCode => $languageID) {
-			$languageCodes[$languageID] = $languageCode;
-		}
-		
-		StringUtil::sort($languageCodes);
-		return $languageCodes;
 	}
 }

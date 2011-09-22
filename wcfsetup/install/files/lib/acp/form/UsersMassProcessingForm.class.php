@@ -11,6 +11,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\LanguageFactory;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 		
@@ -52,7 +53,6 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	
 	// data
 	public $availableGroups = array();
-	public $availableLanguages = array();
 	public $options = array();
 	public $availableActions = array('sendMail', 'exportMailAddress', 'assignToGroup', 'delete');
 	public $affectedUsers = 0;
@@ -335,7 +335,6 @@ class UsersMassProcessingForm extends UserOptionListForm {
 		}
 		
 		$this->availableGroups = $this->getAvailableGroups();
-		$this->availableLanguages = $this->getAvailableLanguages();
 		
 		foreach ($this->activeOptions as $name => $option) {
 			if (isset($this->values[$name])) {
@@ -359,7 +358,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 			'languageIDArray' => $this->languageIDArray,
 			'invertGroupIDs' => $this->invertGroupIDs,
 			'availableGroups' => $this->availableGroups,
-			'availableLanguages' => $this->availableLanguages,
+			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'options' => $this->options,
 			'availableActions' => $this->availableActions,
 			// assign to group

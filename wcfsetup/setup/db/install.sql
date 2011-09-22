@@ -192,6 +192,7 @@ DROP TABLE IF EXISTS wcf1_language;
 CREATE TABLE wcf1_language (
 	languageID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	languageCode VARCHAR(20) NOT NULL DEFAULT '',
+	languageName VARCHAR(255) NOT NULL DEFAULT '',
 	isDefault TINYINT(1) NOT NULL DEFAULT 0,
 	hasContent TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY languageCode (languageCode)

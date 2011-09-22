@@ -33,40 +33,6 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * Returns a list of all available languages.
-	 * 
-	 * @return	array
-	 */
-	protected function getAvailableLanguages() {
-		$availableLanguages = array();
-		foreach (LanguageFactory::getInstance()->getAvailableLanguages(PACKAGE_ID) as $language) {
-			$availableLanguages[$language['languageID']] = WCF::getLanguage()->get('wcf.global.language.'.$language['languageCode']);	
-		}
-		
-		// sort languages
-		StringUtil::sort($availableLanguages);
-		
-		return $availableLanguages;
-	}
-	
-	/**
-	 * Returns a list of all available content languages.
-	 * 
-	 * @return	array
-	 */
-	public static function getAvailableContentLanguages() {
-		$availableLanguages = array();
-		foreach (LanguageFactory::getInstance()->getAvailableContentLanguages(PACKAGE_ID) as $language) {
-			$availableLanguages[$language['languageID']] = WCF::getLanguage()->get('wcf.global.language.'.$language['languageCode']);	
-		}
-		
-		// sort languages
-		StringUtil::sort($availableLanguages);
-		
-		return $availableLanguages;
-	}
-	
-	/**
 	 * Returns the default-form language id    
 	 * 
 	 * @return 	integer		$languageID

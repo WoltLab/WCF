@@ -329,6 +329,24 @@ class LanguageEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
+	 * Takes an XML object and returns the specific language name.
+	 *
+	 * @param	wcf\util\XML	$xml
+	 * @return	string		language name
+	 */
+	public static function readLanguageNameFromXML(XML $xml) {
+		$rootNode = $xml->xpath()->query('/ns:language')->item(0);
+		$attributes = $xml->xpath()->query('attribute::*', $rootNode);
+		foreach ($attributes as $attribute) {
+			if ($attribute->name == 'languagename') {
+				return $attribute->value;
+			}
+		}
+		
+		throw new SystemException("missing attribute 'languagename' in language file");
+	}
+	
+	/**
 	 * Imports language items from an XML file into a new or a current language.
 	 * Updates the relevant language files automatically.
 	 *
@@ -344,8 +362,10 @@ class LanguageEditor extends DatabaseObjectEditor {
 		
 		// create new language
 		if ($language === null) {
+			$languageName = self::readLanguageNameFromXML($xml);
 			$language = self::create(array(
-				'languageCode' => $languageCode
+				'languageCode' => $languageCode,
+				'languageName' => $languageName
 			));
 		}
 		

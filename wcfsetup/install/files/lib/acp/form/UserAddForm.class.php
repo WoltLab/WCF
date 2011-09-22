@@ -304,10 +304,10 @@ class UserAddForm extends UserOptionListForm {
 			'groupIDs' => $this->groupIDs,
 			'optionTree' => $this->optionTree,
 			'availableGroups' => $this->getAvailableGroups(),
-			'availableLanguages' => $this->getAvailableLanguages(),
+			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'languageID' => $this->languageID,
 			'visibleLanguages' => $this->visibleLanguages,
-			'availableContentLanguages' => $this->getAvailableContentLanguages(),
+			'availableContentLanguages' => LanguageFactory::getInstance()->getContentLanguages(),
 			'action' => 'add'
 		));
 	}

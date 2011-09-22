@@ -38,7 +38,7 @@ class CronjobListPage extends SortablePage {
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
-	 */	
+	 */
 	public $objectListClassName = 'wcf\data\cronjob\CronjobList';
 	
 	/**
