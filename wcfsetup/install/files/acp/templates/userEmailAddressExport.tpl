@@ -21,7 +21,7 @@
 			<legend>{lang}wcf.acp.user.exportEmailAddress.markedUsers{/lang}</legend>
 			
 			<ul>
-				{implode from=$users item=$user}<li class="badge badgeButton"><a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user}</a></li>{/implode}
+				{implode from=$users item=$user}<li><a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}" class="badge badgeButton">{$user}</a></li>{/implode}
 			</ul>
 		</fieldset>	
 		

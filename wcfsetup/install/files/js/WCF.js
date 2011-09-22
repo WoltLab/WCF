@@ -198,6 +198,20 @@ $.fn.extend({
 	enable: function() {
 		return this.removeAttr('disabled');
 	},
+
+	/**
+	 * Returns the element's id. If none is set, a random unique
+	 * ID will be assigned.
+	 * 
+	 * @return	string
+	 */
+	wcfIdentify: function() {
+		if (!this.attr('id')) {
+			this.attr('id', WCF.getRandomID());
+		}
+
+		return this.attr('id');
+	},
 	
 	/**
 	 * Applies a grow-effect by resizing element while moving the
@@ -684,10 +698,13 @@ WCF.Clipboard = {
 				$containers[$typeName] = $container;
 			}
 			
+			var $containerID = $container.wcfIdentify();
+			WCF.CloseOverlayHandler.removeCallback($containerID);
+
 			$container.empty();
 		});
 		
-		// do not buid new editors
+		// do not build new editors
 		if (!data.items) return;
 		
 		// rebuild editors
@@ -719,7 +736,22 @@ WCF.Clipboard = {
 				// bind event
 				$listItem.click($.proxy(this._executeAction, this));
 			}
+
+			// block click event
+			$container.click(function(event) {
+				event.stopPropagation();
+			});
+
+			// register event handler
+			var $containerID = $container.wcfIdentify();
+			WCF.CloseOverlayHandler.addCallback($containerID, $.proxy(this._closeLists, this));
 		}
+	},
+
+	_closeLists: function() {
+		$('.clipboardEditor ul ol').each(function(index, list) {
+			$(this).hide();
+		});
 	},
 	
 	/**
@@ -810,6 +842,30 @@ WCF.Action = {};
 WCF.Action.Proxy = function(options) { this.init(options); };
 WCF.Action.Proxy.prototype = {
 	/**
+	 * count of active requests
+	 * @var	integer
+	 */
+	_activeRequests: 0,
+
+	/**
+	 * loading overlay
+	 * @var	jQuery
+	 */
+	_loadingOverlay: null,
+
+	/**
+	 * loading overlay state
+	 * @var	boolean
+	 */
+	_loadingOverlayVisible: false,
+
+	/**
+	 * timer for overlay activity
+	 * @var	integer
+	 */
+	_loadingOverlayVisibleTimer: 0,
+
+	/**
 	 * Initializes AJAXProxy.
 	 * 
 	 * @param	object		options
@@ -860,9 +916,43 @@ WCF.Action.Proxy.prototype = {
 			this.options.init(this);
 		}
 		
-		$('<div id="actionProxyLoading" class="actionProxyLoading" style="display: none;">'+WCF.Language.get('wcf.global.loading')+'</div>').appendTo($('body'));
-		this.loading = $('#actionProxyLoading');
-		this.loading.wcfDropIn();
+		this._activeRequests++;
+		this._showLoadingOverlay();
+	},
+
+	/**
+	 * Displays the loading overlay if not already visible due to an active request.
+	 */
+	_showLoadingOverlay: function() {
+		// create loading overlay on first run
+		if (this._loadingOverlay === null) {
+			this._loadingOverlay = $('<div id="actionProxyLoading" class="actionProxyLoading"><img src="' + RELATIVE_WCF_DIR + 'icon/spinner.svg" alt="" />' + WCF.Language.get('wcf.global.loading') + '</div>').hide().appendTo($('body'));
+		}
+
+		// fade in overlay
+		if (!this._loadingOverlayVisible) {
+			this._loadingOverlayVisible = true;
+			this._loadingOverlay.stop(true, true).fadeIn(200, $.proxy(function() {
+				new WCF.PeriodicalExecuter($.proxy(this._hideLoadingOverlay, this), 100);
+			}, this));
+		}
+	},
+
+	/**
+	 * Hides loading overlay if no requests are active and the timer reached at least 1 second.
+	 * 
+	 * @param	object		pe
+	 */
+	_hideLoadingOverlay: function(pe) {
+		this._loadingOverlayVisibleTimer += 100;
+		
+		if (this._activeRequests == 0 && this._loadingOverlayVisibleTimer >= 1000) {
+			this._loadingOverlayVisible = false;
+			this._loadingOverlayVisibleTimer = 0;
+			pe.stop();
+
+			this._loadingOverlay.fadeOut(200);
+		}
 	},
 	
 	/**
@@ -916,8 +1006,8 @@ WCF.Action.Proxy.prototype = {
 		if ($.isFunction(this.options.after)) {
 			this.options.after();
 		}
-		
-		this.loading.wcfDropOut('up');
+
+		this._activeRequests--;
 	},
 	
 	/**
@@ -2016,7 +2106,7 @@ WCF.Effect.SmoothScroll.prototype = {
 					if ($targetOffset < 0) $targetOffset = 0;
 				}
 				
-				$('html,body').animate({ scrollTop: $targetOffset }, 1200, function (x, t, b, c, d) {
+				$('html,body').animate({ scrollTop: $targetOffset }, 400, function (x, t, b, c, d) {
 					return -c * ((t=t/d-1)*t*t*t - 1) + b;
 				});
 				
@@ -2027,7 +2117,7 @@ WCF.Effect.SmoothScroll.prototype = {
 };
 
 /**
- * Creates a smooth scroll effect.
+ * Creates the balloon tool-tip.
  */
 WCF.Effect.BalloonTooltip = function() { this.init(); };
 WCF.Effect.BalloonTooltip.prototype = {
@@ -2088,6 +2178,77 @@ WCF.Effect.BalloonTooltip.prototype = {
 				right: "auto"
 			});
 		}
+	}
+};
+
+/**
+ * Handles clicks outside an overlay, hitting body-tag through bubbling.
+ * 
+ * You should always remove callbacks before disposing the attached element,
+ * preventing errors from blocking the iteration. Furthermore you should
+ * always handle clicks on your overlay's container and return 'false' to
+ * prevent bubbling.
+ */
+WCF.CloseOverlayHandler = {
+	/**
+	 * list of callbacks
+	 * @var	WCF.Dictionary
+	 */
+	_callbacks: new WCF.Dictionary(),
+
+	/**
+	 * indicates that overlay handler is listening to click events on body-tag
+	 * @var	boolean
+	 */
+	_isListening: false,
+
+	/**
+	 * Adds a new callback.
+	 * 
+	 * @param	string		identifier
+	 * @param	object		callback
+	 */
+	addCallback: function(identifier, callback) {
+		this._bindListener();
+
+		if (this._callbacks.isset(identifier)) {
+			cosole.debug("[WCF.CloseOverlayHandler] identifier '" + identifier + "' is already bound to a callback");
+			return false;
+		}
+
+		this._callbacks.add(identifier, callback);
+	},
+
+	/**
+	 * Removes a callback from list.
+	 * 
+	 * @param	string		identifier
+	 */
+	removeCallback: function(identifier) {
+		if (this._callbacks.isset(identifier)) {
+			this._callbacks.remove(identifier);
+		}
+	},
+
+	/**
+	 * Binds click event handler.
+	 */
+	_bindListener: function() {
+		if (this._isListening) return;
+
+		$('body').click($.proxy(this._executeCallbacks, this));
+
+		this._isListening = true;
+	},
+
+	/**
+	 * Executes callbacks on click.
+	 */
+	_executeCallbacks: function() {
+		this._callbacks.each(function(pair) {
+			// execute callback
+			pair.value();
+		});
 	}
 };
 

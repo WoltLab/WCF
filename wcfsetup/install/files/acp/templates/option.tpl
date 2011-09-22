@@ -30,13 +30,13 @@
 		<nav class="tabMenu">
 			<ul>
 				{foreach from=$optionTree item=categoryLevel1}
-					<li><a href="#{@$categoryLevel1[object]->categoryName}">{*<span>*}{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}{*</span>*}</a></li>
+					<li><a href="#{@$categoryLevel1[object]->categoryName}" title="{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}">{*<span>*}{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}{*</span>*}</a></li>
 				{/foreach}
 			</ul>
 		</nav>
 		
 		{foreach from=$optionTree item=categoryLevel1}
-			<div class="border tabMenuContent hidden" id="{@$categoryLevel1[object]->categoryName}">
+			<div id="{@$categoryLevel1[object]->categoryName}" class="border tabMenuContent hidden">
 				<hgroup class="subHeading">
 					<h1>{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
 					<h2>{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}.description{/lang}</h2>

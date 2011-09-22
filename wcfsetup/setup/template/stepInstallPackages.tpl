@@ -1,3 +1,4 @@
+{assign var=lastStep value=true}
 {include file='header'}
 
 <hgroup class="subHeading">

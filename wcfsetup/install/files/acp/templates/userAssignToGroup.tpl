@@ -19,17 +19,18 @@
 			<legend>{lang}wcf.acp.user.assignToGroup.markedUsers{/lang}</legend>
 			
 			<ul>
-				{implode from=$users item=$user}<li class="badge badgeButton"><a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}">{$user}</a></li>{/implode}
+				{implode from=$users item=$user}<li><a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}" class="badge badgeButton">{$user}</a></li>{/implode}
 			</ul>
 		</fieldset>	
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.user.groups{/lang}</legend>
 			
-			<!-- ToDo: Definition List -->
+			
 			<dl{if $errorField == 'groupIDs'} class="formError"{/if}>
 				<dt></dt>
-				<dd>{htmlCheckboxes options=$groups name=groupIDs selected=$groupIDs}
+				<dd><!-- ToDo: Build proper definition list -->
+					{htmlCheckboxes options=$groups name=groupIDs selected=$groupIDs}
 					{if $errorField == 'groupIDs'}
 						<small class="innerError">
 							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}

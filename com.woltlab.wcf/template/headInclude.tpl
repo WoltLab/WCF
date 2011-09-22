@@ -19,3 +19,21 @@
 	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 	//]]>
 </script>
+
+{*
+{if $specialStyles|isset}
+	<!-- special styles -->
+	{@$specialStyles}
+{/if}
+*}
+
+<!-- Stylesheets -->
+<style type="text/css">
+	@import url("{@RELATIVE_WCF_DIR}acp/style/style.css") screen;
+	{*
+	
+	@import url("{@RELATIVE_WCF_DIR}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css") screen;
+
+	@import url("{@RELATIVE_WCF_DIR}acp/style/print.css") print;
+	*}
+</style>
