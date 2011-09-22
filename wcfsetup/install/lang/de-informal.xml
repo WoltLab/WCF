@@ -224,10 +224,6 @@
 		<item name="wcf.acp.menu.link.cronjob.showLog"><![CDATA[Protokoll anzeigen]]></item>
 		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[Zeitgesteuerte Aufgaben auflisten]]></item>
 		<item name="wcf.acp.menu.link.display"><![CDATA[Darstellung]]></item>
-		<item name="wcf.acp.menu.link.group"><![CDATA[Benutzergruppen]]></item>
-		<item name="wcf.acp.menu.link.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
-		<item name="wcf.acp.menu.link.group.mail"><![CDATA[E-Mail an Gruppenmitglieder]]></item>
-		<item name="wcf.acp.menu.link.group.list"><![CDATA[Benutzergruppen auflisten]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Protokoll]]></item>
 		<item name="wcf.acp.menu.link.log.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Sitzungen]]></item>
@@ -243,6 +239,10 @@
 		<item name="wcf.acp.menu.link.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.menu.link.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.add"><![CDATA[Benutzer hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.user.group"><![CDATA[Benutzergruppen]]></item>
+		<item name="wcf.acp.menu.link.user.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.user.group.mail"><![CDATA[E-Mail an Gruppenmitglieder]]></item>
+		<item name="wcf.acp.menu.link.user.group.list"><![CDATA[Benutzergruppen auflisten]]></item>
 		<item name="wcf.acp.menu.link.user.list"><![CDATA[Benutzer auflisten]]></item>
 		<item name="wcf.acp.menu.link.user.mail"><![CDATA[E-Mail an alle Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Benutzer]]></item>
