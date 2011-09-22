@@ -26,7 +26,9 @@ class LangPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');
 		$rdq = preg_quote($compiler->getRightDelimiter(), '~');
-		$sourceContent = preg_replace("~{$ldq}lang{$rdq}([\w\.]+){$ldq}/lang{$rdq}~e", 'wcf\system\WCF::getLanguage()->get(\'$1\')', $sourceContent);
+		$sourceContent = preg_replace_callback("~{$ldq}lang{$rdq}([\w\.]+){$ldq}/lang{$rdq}~", function ($match) {
+			return WCF::getLanguage()->get($match[1]);
+		}, $sourceContent);
 
 		return $sourceContent;
 	}

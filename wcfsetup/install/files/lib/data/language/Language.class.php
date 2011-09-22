@@ -159,4 +159,16 @@ class Language extends DatabaseObject {
 		
 		return false;
 	}
+	
+	/**
+	 * Sets the local language.
+	 * Recall this function after language changed.
+	 *
+	 * @param	integer		$languageID
+	 */
+	public function setLocale() {
+		// set locale for string comparison, character classification and conversion
+		setlocale(LC_COLLATE, $this->get('wcf.global.locale.unix').'.UTF-8', $this->get('wcf.global.locale.unix'), $this->get('wcf.global.locale.win'));
+		setlocale(LC_CTYPE, $this->get('wcf.global.locale.unix').'.UTF-8', $this->get('wcf.global.locale.unix'), $this->get('wcf.global.locale.win'));
+	}
 }

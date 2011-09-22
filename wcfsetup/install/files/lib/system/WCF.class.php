@@ -349,7 +349,8 @@ class WCF {
 		mb_language('uni');
 		
 		// get language
-		self::$languageObj = LanguageFactory::getInstance()->getLanguage(self::getSession()->getLanguageID());
+		self::$languageObj = LanguageFactory::getInstance()->getUserLanguage(self::getSession()->getLanguageID());
+		self::$languageObj->setLocale();
 	}
 	
 	/**

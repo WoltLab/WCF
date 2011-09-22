@@ -53,17 +53,30 @@ class LanguageFactory extends SingletonFactory {
 	public function getLanguage($languageID) {
 		if (!isset($this->languages[$languageID])) {
 			$language = new Language($languageID);
-			
 			if (!$language->languageID) {
-				$languageID = $this->findPreferredLanguage();
-				$language = new Language($languageID);
+				return null;
 			}
 			
 			$this->languages[$language->languageID] = $language;
-			$this->setLocale($languageID);
 		}
 		
 		return $this->languages[$languageID];
+	}
+	
+	/**
+	 * Gets the preferred language of the current user.
+	 *
+	 * @param	integer		$languageID
+	 * @return	wcf\data\language\Language
+	 */
+	public function getUserLanguage($languageID = 0) {
+		if ($languageID) {
+			$language = $this->getLanguage($languageID);
+			if ($language !== null) return $language;
+		}
+		
+		$languageID = $this->findPreferredLanguage();
+		return $this->getLanguage($languageID);
 	}
 	
 	/**
@@ -204,19 +217,6 @@ class LanguageFactory extends SingletonFactory {
 	 */
 	public function clearCache() {
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.languages.php');
-	}
-	
-	/**
-	 * Sets the local language.
-	 * Recall this function after language changed.
-	 *
-	 * @param	integer		$languageID
-	 */
-	protected function setLocale($languageID) {
-		// set locale for string comparison, character classification and
-		// conversion and date and time formatting
-		setlocale(LC_COLLATE, $this->languages[$languageID]->get('wcf.global.locale.unix').'.UTF-8', $this->languages[$languageID]->get('wcf.global.locale.unix'), $this->languages[$languageID]->get('wcf.global.locale.win'));
-		setlocale(LC_CTYPE, $this->languages[$languageID]->get('wcf.global.locale.unix').'.UTF-8', $this->languages[$languageID]->get('wcf.global.locale.unix'), $this->languages[$languageID]->get('wcf.global.locale.win'));
 	}
 	
 	/**

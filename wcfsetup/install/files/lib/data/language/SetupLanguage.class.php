@@ -76,16 +76,4 @@ class SetupLanguage extends Language {
 		include_once($filename);
 		$this->setLocale();
 	}
-	
-	/**
-	 * Sets the local language.
-	 */
-	private function setLocale() {
-		// set locale for:
-		// - string comparison
-		// - character classification and conversion
-		// - date and time formatting
-		setlocale(LC_COLLATE, $this->get('wcf.global.locale.unix').'.UTF-8', $this->get('wcf.global.locale.unix'), $this->get('wcf.global.locale.win'));
-		setlocale(LC_CTYPE, $this->get('wcf.global.locale.unix').'.UTF-8', $this->get('wcf.global.locale.unix'), $this->get('wcf.global.locale.win'));
-	}
 }
