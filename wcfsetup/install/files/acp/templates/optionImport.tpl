@@ -27,6 +27,7 @@
 					<input type="file" id="optionImport" name="optionImport" value="" />
 					{if $errorField == 'optionImport'}
 						<small class="innerError">
+							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							{if $errorType == 'importFailed'}{lang}wcf.acp.option.import.error.importFailed{/lang}{/if}
 							{if $errorType == 'uploadFailed'}{lang}wcf.acp.option.import.error.uploadFailed{/lang}{/if}

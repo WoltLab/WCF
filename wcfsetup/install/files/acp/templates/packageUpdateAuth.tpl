@@ -42,7 +42,7 @@
 				<dt><label for="loginUsername">{lang}wcf.acp.packageUpdate.auth.loginUsername{/lang}</label></dt>
 				<dd>
 					<input type="text" id="loginUsername" name="loginUsername" value="{$loginUsername}" class="long" />
-					<small id="loginUsernameHelpMessage"><p>{lang}wcf.acp.packageUpdate.auth.loginUsername.description{/lang}</p></small>
+					<small id="loginUsernameHelpMessage">{lang}wcf.acp.packageUpdate.auth.loginUsername.description{/lang}</small>
 				</dd>
 			</dl>
 			
@@ -52,6 +52,7 @@
 					<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="medium" />
 					{if $errorField == 'loginPassword'}
 						<small class="innerError">
+							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'invalid'}{lang}wcf.acp.packageUpdate.auth.error{/lang}{/if}
 						</small>
 					{/if}

@@ -87,6 +87,7 @@
 				<input type="text" id="username" name="username" value="{$username}" class="medium" />
 				{if $errorType.username|isset}
 					<small class="innerError">
+						<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 						{if $errorType.username == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 						{if $errorType.username == 'notValid'}{lang}wcf.user.error.username.notValid{/lang}{/if}
 						{if $errorType.username == 'notUnique'}{lang}wcf.user.error.username.notUnique{/lang}{/if}
@@ -124,6 +125,7 @@
 						<input type="email" id="email" name="email" value="{$email}" class="medium" />
 						{if $errorType.email|isset}
 							<small class="innerError">
+								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 								{if $errorType.email == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 								{if $errorType.email == 'notValid'}{lang}wcf.user.error.email.notValid{/lang}{/if}
 								{if $errorType.email == 'notUnique'}{lang}wcf.user.error.email.notUnique{/lang}{/if}
@@ -138,6 +140,7 @@
 						<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium" />
 						{if $errorType.confirmEmail|isset}
 							<small class="innerError">
+								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 								{if $errorType.confirmEmail == 'notEqual'}{lang}wcf.user.error.confirmEmail.notEqual{/lang}{/if}
 							</small>
 						{/if}
@@ -156,6 +159,7 @@
 						<input type="password" id="password" name="password" value="{$password}" class="medium" />
 						{if $errorType.password|isset}
 							<small class="innerError">
+								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 								{if $errorType.password == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}
@@ -168,6 +172,7 @@
 						<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" />
 						{if $errorType.confirmPassword|isset}
 							<small class="innerError">
+								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 								{if $errorType.confirmPassword == 'notEqual'}{lang}wcf.user.error.confirmPassword.notEqual{/lang}{/if}
 							</small>
 						{/if}

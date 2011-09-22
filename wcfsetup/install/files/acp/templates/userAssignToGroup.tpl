@@ -33,6 +33,7 @@
 					{htmlCheckboxes options=$groups name=groupIDs selected=$groupIDs}
 					{if $errorField == 'groupIDs'}
 						<small class="innerError">
+							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 						</small>
 					{/if}
