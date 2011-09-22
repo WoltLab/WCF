@@ -22,27 +22,22 @@
 		//]]>
 	</script>
 	
+	<!-- Stylesheets -->
+	<style type="text/css">
+		@import url("{@RELATIVE_WCF_DIR}acp/style/style.css") screen;
+		{*
+		
+		@import url("{@RELATIVE_WCF_DIR}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css") screen;
+	
+		@import url("{@RELATIVE_WCF_DIR}acp/style/print.css") print;
+		*}
+	</style>
+	
 	{*
 	{if $specialStyles|isset}
 		<!-- special styles -->
 		{@$specialStyles}
 	{/if}
-	*}
-	
-	<!-- Testing stylesheets -->
-	<link rel="stylesheet" type="text/css" href="{@RELATIVE_WCF_DIR}acp/style/testing.css" />
-	<!-- /Testing stylesheets -->
-	
-	{*
-	<style type="text/css">
-		@import url("{@RELATIVE_WCF_DIR}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css");
-	</style>
-	
-	<!--[if IE 8]>
-		<style type="text/css">
-			@import url("{@RELATIVE_WCF_DIR}style/extra/ie8-fix{if $__wcf->getLanguage()->getPageDirection() == 'rtl'}-rtl{/if}.css");
-		</style>
-	<![endif]-->
 	*}
 	
 	<script type="text/javascript">
@@ -84,7 +79,7 @@
 			<!-- top menu -->
 			<nav id="topMenu" class="topMenu">
 				<div>
-					<ul id="userMenu">
+					<ul id="userMenu" class="userMenu"><!-- ToDo: We need an ID and/or class for each list here, this ID may change! -->
 						<li>
 							<span class="dropdownCaption">{lang}wcf.acp.user.userNote{/lang}</span>
 							<ul class="dropdown">

@@ -1107,10 +1107,11 @@ textarea {
 	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 }
 
+/* Show/hide will be done by Javascript now! 
 .preInput:hover .dropdownCaption ~ .dropdown {
 	display: block !important;
 }
-
+*/
 
 
 
@@ -2200,20 +2201,6 @@ li > .badgeButton {
 
 
 
-/* -- -- -- -- -- CSS Experiments (active) -- -- -- -- -- */
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* -- -- -- -- -- ToDo: Clipboard Editor -- -- -- -- -- */
 
 .clipboardEditor {
@@ -2285,31 +2272,6 @@ li > .badgeButton {
 .clipboardEditor ul > li > ol > li:first-child {
 	border-top-width: 0;
 }
-
-
-
-
-
-/* ToDo: Proxy Loading */
-
-.actionProxyLoading {
-	
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2692,10 +2654,228 @@ input[type='button'][disabled='disabled'],
 
 
 
+/* -- -- -- -- -- CSS Experiments (active) -- -- -- -- -- */
 
 
 
 
+
+
+
+
+
+
+
+/* ToDo: Proxy Loading */
+
+.actionProxyLoading {
+	
+}
+
+
+
+
+
+
+
+
+/* ToDo: User Panel 
+
+this is taken from "userPanel.tpl" (inline-css) 
+will change soon! 
+
+*/
+
+
+/* This style is old and conflicts with the new one! 
+ul#userMenu {
+	margin: 0;
+	padding: 0;
+}
+
+ul#userMenu > li {
+	border-radius: 3px;
+	background-color: rgba(224, 224, 224, 1);
+	margin: 0 3px 0 3px;
+	padding: 7px;
+	display: inline-block;
+	box-shadow: 0 0 5px rgba(151, 151, 151, 1);
+}
+*/
+
+div.userNotificationContainer {
+	border: 1px solid rgba(192, 192, 192, 1);
+	background-color: rgba(224, 224, 224, .9);
+	position: absolute;
+	width: 250px;
+}
+
+div.scrollableContainer {
+	position: relative;
+	width: 250px;
+	overflow: hidden;
+}
+
+div.scrollableContainer div.scrollableItems {
+	position: relative;
+	width: 20000em;
+}
+
+div.scrollableContainer div.scrollableItems > div {
+	border-right: 1px solid rgba(192, 192, 192, 1);
+	float: left;
+	width: 250px;
+}
+
+div.scrollableContainer {
+	font-size: 90%;
+}
+
+div.scrollableContainer > div:first-child ul {
+	margin: 0;
+	padding: 0;
+}
+
+div.scrollableContainer > div:first-child li {
+	border-top: 1px solid rgba(192, 192, 192, 1);
+	padding: 7px;
+}
+
+div.scrollableContainer > div:first-child li:first-child {
+	border-top-width: 0;
+}
+
+div.scrollableContainer > div:first-child p {
+	padding: 7px;
+}
+
+.userNotificationDetails {
+	padding: 7px;
+	width: 236px;
+}
+
+.userNotificationDetails hgroup {
+	margin-bottom: 7px;
+	display: table;
+	width: 100%;
+}
+
+.userNotificationDetails .row {
+	display: table-row;
+}
+
+.userNotificationDetails .row div {
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.userNotificationDetails .row div:first-child {
+	width: 64px;
+}
+
+.userNotificationDetails .row div:last-child {
+	padding-left: 7px;
+}
+
+.userNotificationDetails .avatar img {
+	height: 64px;
+	width: 64px;
+}
+
+.userNotificationDetails h1 {
+	font-size: 110%;
+}
+
+.userNotificationDetails section {
+	border-top: 1px solid rgba(192, 192, 192, 1);
+	padding-top: 7px;
+}
+
+.userNotificationDetails nav {
+	text-align: center;
+	border-top: 1px solid rgba(192, 192, 192, 1);
+	margin-top: 7px;
+	padding-top: 7px;
+}
+
+.userNotificationDetails ul {
+	list-style-type: none;
+	display: inline-block;
+}
+
+.userNotificationDetails li {
+	cursor: pointer;
+	border: 1px solid rgba(192, 192, 192, 1) !important;
+	background-image: -webkit-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
+	background-image: -moz-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
+	background-image: -ms-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
+	background-image: -o-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
+	background-image: linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
+	padding: 3px;
+	display: inline-block;
+}
+
+.userNotificationDetails li:hover {
+	background-image: -webkit-linear-gradient(top, rgb(192, 192, 192, 1), rgb(224, 224, 224,));
+	background-image: -moz-linear-gradient(top, rgb(192, 192, 192, 1), rgb(224, 224, 224,));
+	background-image: -ms-linear-gradient(top, rgb(192, 192, 192, 1), rgb(224, 224, 224,));
+	background-image: -o-linear-gradient(top, rgb(192, 192, 192, 1), rgb(224, 224, 224,));
+	background-image: linear-gradient(top, rgb(192, 192, 192, 1), rgb(224, 224, 224,));
+}
+
+#userNotificationDetailsLoading {
+	background-color: rgba(255, 255, 255, .6);
+	background-image: url('{@RELATIVE_WCF_DIR}icon/ajax-loader.gif');
+	background-position: center center;
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+	
+	
+
+
+
+/* ToDo: Profile Button 
+
+this is taken from "user.tpl" (inline-css) 
+will change soon! 
+
+*/
+
+
+
+
+
+div#profileButtonContainer {
+	margin: 7px;
+}
+
+div#profileButtonContainer button {
+	cursor: pointer;
+	
+	border: 1px solid rgba(192, 192, 192, 1);
+	border-radius: 3px;
+	
+	background-image: -webkit-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
+	background-image: -moz-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
+	background-image: -ms-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
+	background-image: -o-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
+	background-image: linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
+	
+	margin-right: 3px;
+	padding: 3px;
+	height: 60px;
+}
+
+div#profileButtonContainer button:hover {
+	background-image: -webkit-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
+	background-image: -moz-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
+	background-image: -ms-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
+	background-image: -o-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
+	background-image: linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
+}
 
 
 
