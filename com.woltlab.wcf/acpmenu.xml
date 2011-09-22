@@ -2,7 +2,6 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/acpmenu.xsd">
 	<import>
 		<acpmenuitem name="wcf.acp.menu.link.system">
-			<icon>icon/systemL.png</icon>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
@@ -43,7 +42,6 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.list">
-			<icon>icon/packageM.png</icon>
 			<link>index.php?page=PackageList</link>
 			<parent>wcf.acp.menu.link.package.management</parent>
 			<permissions>admin.system.package.canUpdatePackage,admin.system.package.canUninstallPackage</permissions>
@@ -63,7 +61,6 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.autoupdate">
-			<icon>icon/updateM.png</icon>
 			<link>index.php?page=PackageAutoUpdateList</link>
 			<parent>wcf.acp.menu.link.package.update</parent>
 			<permissions>admin.system.package.canUpdatePackage</permissions>
@@ -83,7 +80,6 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.server.list">
-			<icon>icon/updateServerM.png</icon>
 			<link>index.php?page=UpdateServerList</link>
 			<parent>wcf.acp.menu.link.package.server</parent>
 			<permissions>admin.system.package.canEditServer</permissions>
@@ -105,7 +101,6 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.cronjob.list">
-			<icon>icon/cronjobM.png</icon>
 			<link>index.php?page=CronjobList</link>
 			<parent>wcf.acp.menu.link.cronjob</parent>
 			<permissions>admin.system.cronjobs.canEditCronjob,admin.system.cronjob.canDeleteCronjob,admin.system.cronjobs.canEnableDisableCronjob</permissions>
@@ -127,7 +122,6 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.log.session">
-			<icon>icon/sessionLogM.png</icon>
 			<link>index.php?page=ACPSessionLogList</link>
 			<parent>wcf.acp.menu.link.log</parent>
 			<permissions>admin.system.canViewLog</permissions>
@@ -147,7 +141,6 @@
 		<!-- /log -->
 		
 		<acpmenuitem name="wcf.acp.menu.link.user">
-			<icon>icon/usersL.png</icon>
 			<showorder>2</showorder>
 		</acpmenuitem>
 		
@@ -163,7 +156,6 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.list">
-			<icon>icon/usersM.png</icon>
 			<link>index.php?page=UserList</link>
 			<parent>wcf.acp.menu.link.user.management.general</parent>
 			<permissions>admin.user.canSearchUser</permissions>
@@ -171,7 +163,6 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.search">
-			<icon>icon/searchM.png</icon>
 			<link>index.php?form=UserSearch</link>
 			<parent>wcf.acp.menu.link.user.management.general</parent>
 			<permissions>admin.user.canSearchUser</permissions>
@@ -217,7 +208,6 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.group.list">
-			<icon>icon/userGroupM.png</icon>
 			<link>index.php?page=UserGroupList</link>
 			<parent>wcf.acp.menu.link.group.general</parent>
 			<permissions>admin.user.canEditGroup,admin.user.canDeleteGroup</permissions>
@@ -237,7 +227,6 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.group.mail">
-			<icon>icon/emailM.png</icon>
 			<link>index.php?form=UserMail&amp;action=group</link>
 			<parent>wcf.acp.menu.link.group.additional</parent>
 			<permissions>admin.user.canMailUser</permissions>
@@ -246,12 +235,10 @@
 		<!-- user groups -->
 		
 		<acpmenuitem name="wcf.acp.menu.link.display">
-			<icon>icon/displayL.png</icon>
 			<showorder>3</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.content">
-			<icon>icon/contentL.png</icon>
 			<showorder>4</showorder>
 		</acpmenuitem>
 	</import>
