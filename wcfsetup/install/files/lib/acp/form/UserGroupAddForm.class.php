@@ -35,7 +35,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	 * name of the active acp menu item
 	 * @var string
 	 */
-	public $menuItemName = 'wcf.acp.menu.link.group.add';
+	public $menuItemName = 'wcf.acp.menu.link.user.group.add';
 	
 	/**
 	 * @see wcf\acp\form\AbstractOptionListForm::$cacheName

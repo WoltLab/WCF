@@ -93,7 +93,7 @@ class UserGroupListPage extends SortablePage {
 	 */
 	public function show() {
 		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.group.list');
+		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.user.group.list');
 		
 		parent::show();
 	}

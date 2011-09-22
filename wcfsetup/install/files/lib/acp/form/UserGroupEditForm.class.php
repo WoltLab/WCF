@@ -23,7 +23,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	/**
 	 * @see wcf\acp\form\UserGroupAddForm::$menuItemName
 	 */
-	public $menuItemName = 'wcf.acp.menu.link.group';
+	public $menuItemName = 'wcf.acp.menu.link.user.group';
 	
 	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions

@@ -40,7 +40,7 @@ class UserMailForm extends ACPForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		$this->activeMenuItem = ($this->action == 'all' ? 'wcf.acp.menu.link.user.mail' : ($this->action == 'group' ? 'wcf.acp.menu.link.group.mail' : 'wcf.acp.menu.link.user.management'));
+		$this->activeMenuItem = ($this->action == 'all' ? 'wcf.acp.menu.link.user.mail' : ($this->action == 'group' ? 'wcf.acp.menu.link.user.group.mail' : 'wcf.acp.menu.link.user.management'));
 	}
 	
 	/**
