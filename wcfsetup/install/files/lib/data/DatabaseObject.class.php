@@ -157,7 +157,7 @@ abstract class DatabaseObject implements IStorableObject {
 	}
 	
 	/**
-	 * Compares to database objects.
+	 * Compares two database objects.
 	 *
 	 * @param	wcf\data\DatabaseObject		$objectA
 	 * @param	wcf\data\DatabaseObject		$objectB
