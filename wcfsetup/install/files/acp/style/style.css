@@ -1935,6 +1935,7 @@ p.error {
 }
 
 
+
 /* ToDo: Installation */
 
 div#packageInstallationDialogContainer {
@@ -2025,7 +2026,7 @@ span.ui-dialog-title {
 }
 
 a.ui-dialog-titlebar-close {
-	background-image: url('../../icon/deleteM.png');
+	background-image: url('../../icon/delete1.svg');
 	background-position: top left;
 	background-repeat: no-repeat;
 	position: absolute !important;

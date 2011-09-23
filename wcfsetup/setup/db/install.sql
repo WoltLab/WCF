@@ -849,7 +849,7 @@ INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Users', 3);
 INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Administrators', 4);
 INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Moderators', 4);
 INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Super Moderators', 4);
-		
+
 -- default user group options
 INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, adminDefaultValue, showOrder) VALUES ('admin.general.canUseAcp', 'admin.general', 'boolean', '0', '1', 1);
 INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, adminDefaultValue, showOrder) VALUES ('admin.system.package.canInstallPackage', 'admin.system.package', 'boolean', '0', '1', 1);
@@ -862,9 +862,7 @@ INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (4, 1, '1');	-- Administrators
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (4, 2, '1');	-- Administrators
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (4, 3, '1');	-- Administrators
-		
+
 -- default update servers
-INSERT INTO wcf1_package_update_server (serverURL, status, disabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/tempest/', 'online', 0, NULL, 0, '', '');
 INSERT INTO wcf1_package_update_server (serverURL, status, disabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/maelstrom/', 'online', 0, NULL, 0, '', '');
-INSERT INTO wcf1_package_update_server (serverURL, status, disabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/tempest/', 'online', 0, NULL, 0, '', '');
 INSERT INTO wcf1_package_update_server (serverURL, status, disabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/maelstrom/', 'online', 0, NULL, 0, '', '');
