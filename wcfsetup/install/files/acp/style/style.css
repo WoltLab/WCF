@@ -469,6 +469,7 @@ section.content {
 div.main > div section:only-child {
 	display: block !important;
 	width: auto;
+	min-height: 100px;
 }
 
 section.content .content {

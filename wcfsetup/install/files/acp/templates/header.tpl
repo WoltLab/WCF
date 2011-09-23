@@ -79,8 +79,8 @@
 			<!-- top menu -->
 			<nav id="topMenu" class="topMenu">
 				<div>
-					<ul id="userMenu" class="userMenu"><!-- ToDo: We need an ID and/or class for each list here, this ID may change! -->
-						<li>
+					<ul>
+						<li id="userMenu" class="userMenu"><!-- ToDo: We need an ID and/or class for each list here, this ID may also change! -->
 							<span class="dropdownCaption">{lang}wcf.acp.user.userNote{/lang}</span>
 							<ul class="dropdown">
 								<li><a href="{link}index.php?action=Logout&amp;t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
