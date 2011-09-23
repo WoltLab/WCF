@@ -20,11 +20,11 @@
 				<hgroup class="subHeading">
 					<h1>
 						{if $package.standalone == 1}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageTypeStandaloneS.png" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" class="balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/packageStandalone1.svg" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" class="balloonTooltip" />
 						{elseif $package.plugin != ''}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageTypePluginS.png" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="balloonTooltip" />
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageS.png" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="balloonTooltip" />
 						{/if}
 						{$package.packageName}
 					</h1>

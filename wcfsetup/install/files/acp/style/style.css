@@ -1894,7 +1894,7 @@ p.error {
 	margin-top: 5px;
 	padding: 2px 10px 2px 25px;
 	position: relative;
-	display: inline-block;
+	display: table;
 	clear: both;
 	
 	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
@@ -1933,6 +1933,7 @@ p.error {
 	right: 10%;
 	left: auto;
 }
+
 
 
 /* ToDo: Installation */
@@ -2025,7 +2026,7 @@ span.ui-dialog-title {
 }
 
 a.ui-dialog-titlebar-close {
-	background-image: url('../../icon/deleteM.png');
+	background-image: url('../../icon/delete1.svg');
 	background-position: top left;
 	background-repeat: no-repeat;
 	position: absolute !important;
