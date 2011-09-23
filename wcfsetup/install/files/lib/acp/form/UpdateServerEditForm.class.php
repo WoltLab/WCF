@@ -55,7 +55,7 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 		
 		// save server
 		$updateServerAction = new PackageUpdateServerAction(array($this->packageUpdateServerID), 'update', array('data' => array(
-			'server' => $this->serverURL,
+			'serverURL' => $this->serverURL,
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword
 		)));
@@ -73,7 +73,7 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 		parent::readData();
 		
 		if (!count($_POST)) {
-			$this->server = $this->updateServer->server;
+			$this->serverURL = $this->updateServer->serverURL;
 			$this->loginUsername = $this->updateServer->loginUsername;
 			$this->loginPassword = $this->updateServer->loginPassword;
 		}
