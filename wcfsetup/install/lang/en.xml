@@ -718,7 +718,7 @@
 		<item name="wcf.acp.user.sendMail.subject.description"><![CDATA[Enter here the e-mail subject.]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Message]]></item>
 		<item name="wcf.acp.user.sendMail.text.description"><![CDATA[Enter here the message you want to send to users.]]></item>
-		<item name="wcf.acp.user.userNote"><![CDATA[Welcome {$this->user->username}.]]></item>
+		<item name="wcf.acp.user.userNote"><![CDATA[Welcome {$__wcf->user->username}.]]></item>
 	</category>
 	<category name="wcf.acp.worker">
 		<item name="wcf.acp.worker.currentStep"><![CDATA[Current process]]></item>
