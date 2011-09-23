@@ -1,11 +1,48 @@
 <a id="top"></a>
 <!-- HEADER -->
 <header class="pageHeader">
-	{event name='pageHeaderStart'}
-	
-	{include file=headerMenu}
-	
-	{event name='pageHeaderEnd'}
+	<div>
+		{hascontent}
+			<!-- top menu -->
+			<nav id="topMenu" class="topMenu">
+				<div>
+					<ul>
+						{content}{event name='topMenu'}{/content}
+					</ul>
+				</div>
+			</nav>
+			<!-- /top menu -->
+		{/hascontent}
+		
+		<!-- logo -->
+		<div id="logo" class="logo">
+			<!-- clickable area -->
+			<a href="{link}index.php{/link}">
+				<!-- *** insert header logo here -->
+			</a>
+			<!-- /clickable area -->
+			
+			<!-- search area -->
+			{event name='searchArea'}
+			<!-- /search area -->
+		</div>
+		<!-- /logo -->
+		
+		<!-- main menu -->
+		{include file='mainMenu'}
+		<!-- /main menu -->
+		
+		<!-- header navigation -->
+		<nav class="headerNavigation">
+			<div>
+				<ul>
+					{event name='headerNavigation'}
+					<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}" class="balloonTooltip"><img src="{@RELATIVE_WCF_DIR}icon/toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+				</ul>
+			</div>
+		</nav>
+		<!-- /header navigation -->
+	</div>
 </header>
 <!-- /HEADER -->
 

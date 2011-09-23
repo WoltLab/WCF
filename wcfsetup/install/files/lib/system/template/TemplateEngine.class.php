@@ -732,7 +732,7 @@ class TemplateEngine extends SingletonFactory {
 	 */
 	protected function loadTemplateListenerCode($templateName) {
 		// cache was already loaded
-		if (count($this->templateListeners[$templateName])) return;
+		if (!isset($this->templateListeners[$templateName]) || count($this->templateListeners[$templateName])) return;
 		
 		$cacheName = PACKAGE_ID.'-'.$this->environment.'-'.$templateName;
 		CacheHandler::getInstance()->addResource(

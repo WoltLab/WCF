@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateScriptingCompiler;
+use wcf\system\WCF;
 
 /**
  * The 'event' prefilter inserts template listener's code before compilation.
@@ -22,7 +23,9 @@ class EventPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');
 		$rdq = preg_quote($compiler->getRightDelimiter(), '~');
-		$sourceContent = preg_replace("~{$ldq}event\ name\=\'([\w]+)\'{$rdq}~e", 'wcf\system\WCF::getTPL()->getTemplateListenerCode(\''.$templateName.'\', \'$1\')', $sourceContent);
+		$sourceContent = preg_replace_callback("~{$ldq}event\ name\=\'([\w]+)\'{$rdq}~", function ($match) use ($templateName) {
+			return WCF::getTPL()->getTemplateListenerCode($templateName, $match[1]);
+		}, $sourceContent);
 		
 		return $sourceContent;
 	}
