@@ -19,17 +19,17 @@ class LanguageServerAction extends AbstractDatabaseObjectAction {
 	protected $className = 'wcf\data\language\server\LanguageServerEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$createPermissions
 	 */
-	protected $permissionsCreate = array('admin.language.canAddServer');
+	protected $createPermissions = array('admin.language.canAddServer');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$deletePermissions
 	 */
-	protected $permissionsDelete = array('admin.language.canDeleteServer');
+	protected $deletePermissions = array('admin.language.canDeleteServer');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$updatePermissions
 	 */
-	protected $permissionsUpdate = array('admin.language.canEditServer');
+	protected $updatePermissions = array('admin.language.canEditServer');
 }

@@ -21,17 +21,17 @@ class TemplateGroupAction extends AbstractDatabaseObjectAction {
 	protected $className = 'wcf\data\template\group\TemplateGroupEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$createPermissions
 	 */
-	protected $permissionsCreate = array('admin.template.canAddTemplateGroup');
+	protected $createPermissions = array('admin.template.canAddTemplateGroup');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$deletePermissions
 	 */
-	protected $permissionsDelete = array('admin.template.canDeleteTemplateGroup');
+	protected $deletePermissions = array('admin.template.canDeleteTemplateGroup');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$updatePermissions
 	 */
-	protected $permissionsUpdate = array('admin.template.canEditTemplateGroup');
+	protected $updatePermissions = array('admin.template.canEditTemplateGroup');
 }

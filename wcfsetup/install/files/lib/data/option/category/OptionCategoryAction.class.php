@@ -21,17 +21,17 @@ class OptionCategoryAction extends AbstractDatabaseObjectAction {
 	protected $className = 'wcf\data\option\category\OptionCategoryEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$createPermissions
 	 */
-	protected $permissionsCreate = array('admin.system.canEditOption');
+	protected $createPermissions = array('admin.system.canEditOption');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$deletePermissions
 	 */
-	protected $permissionsDelete = array('admin.system.canEditOption');
+	protected $deletePermissions = array('admin.system.canEditOption');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$updatePermissions
 	 */
-	protected $permissionsUpdate = array('admin.system.canEditOption');
+	protected $updatePermissions = array('admin.system.canEditOption');
 }
