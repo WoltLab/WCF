@@ -36,14 +36,14 @@
 			<dd>{$cacheData.version}</dd>
 		</dl>
 	{/if}
-	<dl>
+	{if $cacheData.size}<dl>
 		<dt>{lang}wcf.acp.cache.data.size{/lang}</dt>
 		<dd>{@$cacheData.size|filesize}</dd>
-	</dl>
-	<dl>
+	</dl>{/if}
+	{if $cacheData.files}<dl>
 		<dt>{lang}wcf.acp.cache.data.files{/lang}</dt>
 		<dd>{#$cacheData.files}</dd>
-	</dl>
+	</dl>{/if}
 	
 	{if $additionalFields|isset}{@$additionalFields}{/if}
 </fieldset>
@@ -51,7 +51,7 @@
 <div class="contentHeader">
 	<nav class="largeButtons">
 		<ul>
-			<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="index.php?action=CacheClear{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
+			{if $cacheData.files}<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="index.php?action=CacheClear{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
 	</nav>
@@ -99,7 +99,7 @@
 <div class="contentFooter">
 	<nav class="largeButtons">
 		<ul>
-			<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="index.php?action=CacheClear{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
+			{if $cacheData.files}<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="index.php?action=CacheClear{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
 	</nav>
