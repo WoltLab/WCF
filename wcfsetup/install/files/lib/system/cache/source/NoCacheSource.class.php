@@ -2,7 +2,7 @@
 namespace wcf\system\cache\source;
 
 /**
- * DevNullCacheSource is an implementation of CacheSource that stores the cache in /dev/null.
+ * NoCacheSource is an implementation of CacheSource that does not store any data.
  * 
  * @author	Tim Düsterhus
  * @copyright	2011 Tim Düsterhus
