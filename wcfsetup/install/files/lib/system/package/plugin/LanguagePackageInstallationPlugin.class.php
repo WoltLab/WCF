@@ -121,7 +121,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 			if ($languageFile !== null) {
 				if ($xml = $this->readLanguage($languageFile)) {
 					// get language object
-					$language = LanguageFactory::getLanguageByCode($installedLanguage['languageCode']);
+					$language = LanguageFactory::getInstance()->getLanguageByCode($installedLanguage['languageCode']);
 					$languageEditor = new LanguageEditor($language);
 					
 					// import xml
