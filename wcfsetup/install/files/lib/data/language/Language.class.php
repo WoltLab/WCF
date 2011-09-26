@@ -27,31 +27,36 @@ class Language extends DatabaseObject {
 	
 	/**
 	 * list of language items
-	 * 
-	 * @var	array
+	 * @var	array<string>
 	 */
 	protected $items = array();
 	
 	/**
 	 * list of dynamic language items
-	 * 
-	 * @param	array
+	 * @var	array<string>
 	 */
 	protected $dynamicItems = array();
 	
 	/**
 	 * instance of LanguageEditor
-	 * 
-	 * @var	LanguageEditor
+	 * @var	wcf\data\language\LanguageEditor
 	 */
 	private $editor = null;
 	
 	/**
-	 * Active package id
-	 * 
+	 * id of the active package
 	 * @var	integer
 	 */
 	public $packageID = PACKAGE_ID;
+	
+	/**
+	 * Returns the name of this language in the language of the active user.
+	 * 
+	 * @return	string
+	 */
+	public function __toString() {
+		return WCF::getLanguage()->get('wcf.global.language.'.$this->languageCode);
+	}
 	
 	/**
 	 * Returns the fixed language code of this language.
