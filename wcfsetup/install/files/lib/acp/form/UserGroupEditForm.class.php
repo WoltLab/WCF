@@ -7,6 +7,7 @@ use wcf\data\user\group\UserGroupEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
 /**
@@ -66,6 +67,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	 */
 	public function readData() {
 		if (!count($_POST)) {
+			I18nHandler::getInstance()->setOptions('groupName',  $this->group->groupName, 'wcf.acp.group.group\d+');
 			$this->groupName = $this->group->groupName;
 			
 			// get default values
@@ -95,6 +97,9 @@ class UserGroupEditForm extends UserGroupAddForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
+		
+		$useRequestData = (count($_POST)) ? true : false;
+		I18nHandler::getInstance()->assignVariables(1, $useRequestData);
 		
 		WCF::getTPL()->assign(array(
 			'groupID' => $this->group->groupID,
@@ -129,6 +134,16 @@ class UserGroupEditForm extends UserGroupAddForm {
 				}
 			}
 		}
+		
+		$this->groupName = 'wcf.acp.group.group'.$this->group->groupID;
+		if (I18nHandler::getInstance()->isPlainValue('groupName')) {
+			I18nHandler::getInstance()->remove($this->groupName, 1);
+			$this->groupName = I18nHandler::getInstance()->getValue('groupName');
+		}
+		else {
+			I18nHandler::getInstance()->save('groupName', $this->groupName, 'wcf.acp.group', 1);
+		}
+		
 		$data = array(
 			'data' => array_merge(array('groupName' => $this->groupName), $this->additionalFields),
 			'options' => $saveOptions

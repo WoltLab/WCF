@@ -4,6 +4,10 @@
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
+
+		var $availableLanguages = { {implode from=$availableLanguages key=languageID item=languageName}{@$languageID}: '{$languageName}'{/implode} };
+		var $groupNameValues = { {implode from=$groupName_i18n key=languageID item=value}'{@$languageID}': '{$value}'{/implode} };
+		new WCF.MultipleLanguageInput('groupName', false, $groupNameValues, $availableLanguages);
 	});
 	//]]>
 </script>

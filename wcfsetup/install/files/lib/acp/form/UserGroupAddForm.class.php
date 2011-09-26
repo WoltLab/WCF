@@ -3,8 +3,10 @@ namespace wcf\acp\form;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupAction;
+use wcf\data\user\group\UserGroupEditor;
 use wcf\system\exception\UserInputException;
 use wcf\system\exception\SystemException;
+use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\ClassUtil;
@@ -72,13 +74,21 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	 */
 	public $additionalFields = array();
 	
+	public function readParameters() {
+		parent::readParameters();
+		
+		I18nHandler::getInstance()->register('groupName');
+	}
+	
 	/**
 	 * @see wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_POST['groupName'])) $this->groupName = StringUtil::trim($_POST['groupName']);
+		I18nHandler::getInstance()->readValues();
+		
+		if (I18nHandler::getInstance()->isPlainValue('groupName')) $this->groupName = I18nHandler::getInstance()->getValue('groupName');
 		if (isset($_POST['activeTabMenuItem'])) $this->activeTabMenuItem = $_POST['activeTabMenuItem'];
 		if (isset($_POST['activeSubTabMenuItem'])) $this->activeSubTabMenuItem = $_POST['activeSubTabMenuItem'];
 	}
@@ -92,7 +102,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		
 		// validate group name
 		try {
-			if (empty($this->groupName)) {
+			if (!I18nHandler::getInstance()->validateValue('groupName')) {
 				throw new UserInputException('groupName');
 			}
 		}
@@ -126,6 +136,19 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		);
 		$groupAction = new UserGroupAction(array(), 'create', $data);
 		$groupAction->executeAction();
+		
+		if (!I18nHandler::getInstance()->isPlainValue('groupName')) {
+			$returnValues = $groupAction->getReturnValues();
+			$groupID = $returnValues['returnValues']->groupID;
+			I18nHandler::getInstance()->save('groupName', 'wcf.acp.group.group'.$groupID, 'wcf.acp.group', 1);
+			
+			// update group name
+			$groupEditor = new UserGroupEditor($returnValues['returnValues']);
+			$groupEditor->update(array(
+				'groupName' => 'wcf.acp.group.group'.$groupID
+			));
+		}
+		
 		$this->saved();
 		
 		// show success message
@@ -155,6 +178,8 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
+		
+		I18nHandler::getInstance()->assignVariables(1);
 		
 		WCF::getTPL()->assign(array(
 			'groupName' => $this->groupName,
