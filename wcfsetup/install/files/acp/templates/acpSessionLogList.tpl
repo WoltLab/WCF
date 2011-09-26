@@ -37,7 +37,7 @@
 				<tr class="{if $sessionLog->active} activeContainer{/if}">
 					<td class="columnID columnSessionLogID"><p>{@$sessionLog->sessionLogID}</p></td>
 					<td class="columnTitle columnUsername"><p>{if $__wcf->user->userID == $sessionLog->userID}<img src="{@RELATIVE_WCF_DIR}icon/user1.svg" alt="" />{/if} <a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->username}</a></p></td>
-					<td class="columnURL columnIpAddress"><p><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->ipAddress}</a><br /><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->hostname}</a></p></td>
+					<td class="columnURL columnIpAddress"><p><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->ipAddress}</a>{if $sessionLog->hostname != $sessionLog->ipAddress}<br /><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->hostname}</a>{/if}</p></td>
 					<td class="columnText columnUserAgent"><p><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->userAgent}</a></p></td>
 					<td class="columnDate columnTime"><p>{@$sessionLog->time|time}</p></td>
 					<td class="columnDate columnLastActivityTime"><p>{@$sessionLog->lastActivityTime|time}</p></td>

@@ -265,6 +265,7 @@
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Please select the type of cache you want to use. Some of the types have special requirements to the server system and cannot be used in your environment.]]></item>
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[File system (default)]]></item>
 		<item name="wcf.acp.option.cache_source_type.memcache"><![CDATA[Memcache (experimental)]]></item>
+		<item name="wcf.acp.option.cache_source_type.no"><![CDATA[Disable caching (not recommended)]]></item>
 		<item name="wcf.acp.option.category.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.description"><![CDATA[]]></item>

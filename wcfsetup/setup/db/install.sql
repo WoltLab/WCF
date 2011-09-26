@@ -23,6 +23,7 @@ CREATE TABLE wcf1_acp_session (
 	requestURI VARCHAR(255) NOT NULL DEFAULT '',
 	requestMethod VARCHAR(4) NOT NULL DEFAULT '',
 	username VARCHAR(255) NOT NULL DEFAULT '',
+	sessionVariables MEDIUMTEXT,
 	KEY sessionID (sessionID, packageID)
 );
 
@@ -37,12 +38,6 @@ CREATE TABLE wcf1_acp_session_access_log (
 	requestMethod VARCHAR(4) NOT NULL DEFAULT '',
 	className VARCHAR(255) NOT NULL DEFAULT '',
 	KEY sessionLogID (sessionLogID)
-);
-
-DROP TABLE IF EXISTS wcf1_acp_session_data;
-CREATE TABLE wcf1_acp_session_data (
-	sessionID CHAR(40) NOT NULL PRIMARY KEY,
-	sessionVariables MEDIUMTEXT
 );
 
 DROP TABLE IF EXISTS wcf1_acp_session_log;
@@ -487,14 +482,9 @@ CREATE TABLE wcf1_session (
 	requestURI VARCHAR(255) NOT NULL DEFAULT '',
 	requestMethod VARCHAR(4) NOT NULL DEFAULT '',
 	username VARCHAR(255) NOT NULL DEFAULT '',
+	sessionVariables MEDIUMTEXT,
 	spiderID INT(10) NOT NULL DEFAULT 0,
 	KEY packageID (packageID, lastActivityTime, spiderID)
-);
-
-DROP TABLE IF EXISTS wcf1_session_data;
-CREATE TABLE wcf1_session_data (
-	sessionID CHAR(40) NOT NULL PRIMARY KEY,
-	sessionVariables MEDIUMTEXT
 );
 
 DROP TABLE IF EXISTS wcf1_spider;
@@ -719,8 +709,6 @@ ALTER TABLE wcf1_acp_session ADD FOREIGN KEY (packageID) REFERENCES wcf1_package
 ALTER TABLE wcf1_acp_session_access_log ADD FOREIGN KEY (sessionLogID) REFERENCES wcf1_acp_session_log (sessionLogID) ON DELETE CASCADE;
 ALTER TABLE wcf1_acp_session_access_log ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE SET NULL;
 
-ALTER TABLE wcf1_acp_session_data ADD FOREIGN KEY (sessionID) REFERENCES wcf1_acp_session (sessionID) ON DELETE CASCADE;
-
 ALTER TABLE wcf1_acp_session_log ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_acp_template ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
@@ -802,8 +790,6 @@ ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) O
 
 ALTER TABLE wcf1_session ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
-
-ALTER TABLE wcf1_session_data ADD FOREIGN KEY (sessionID) REFERENCES wcf1_session (sessionID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_storage ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_storage ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;

@@ -3,7 +3,7 @@
 	<category name="wcf.acp.cronjob">
 		<item name="wcf.acp.cronjob.list"><![CDATA[Zeitgesteuerte Aufgaben]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Zeitgesteuerte Aufgabe hinzufügen]]></item>
-		<item name="wcf.acp.cronjob.list.count"><![CDATA[Ingesamt {#$items} zeitgesteuerte Aufgabe{if $items != 1}n{/if}]]></item>
+		<item name="wcf.acp.cronjob.list.count"><![CDATA[{#$items} zeitgesteuerte Aufgabe{if $items != 1}n{/if}]]></item>
 		<item name="wcf.acp.cronjob.subtitle"><![CDATA[&raquo;Cronjobs&laquo;]]></item>
 		<item name="wcf.acp.cronjob.startDom"><![CDATA[Tag des Monats]]></item>
 		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[An diesen Tagen des Monats (1 - 31) soll die Aufgabe ausgeführt werden.]]></item>
@@ -291,6 +291,7 @@
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Bitte wählen Sie die gewünschte Cache-Methode aus! Beachten Sie, dass einige Methoden spezielle Anforderungen an das Server-System stellen und nicht auf jedem Server zur Verfügung stehen.]]></item>
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Dateisystem (Standard)]]></item>
 		<item name="wcf.acp.option.cache_source_type.memcache"><![CDATA[Memcache]]></item>
+		<item name="wcf.acp.option.cache_source_type.no"><![CDATA[Caching deaktivieren (Nicht empfohlen)]]></item>
 		<item name="wcf.acp.option.blacklist_hostnames"><![CDATA[Hostname ausschließen]]></item>
 		<item name="wcf.acp.option.blacklist_hostnames.description"><![CDATA[Geben Sie pro Zeile einen Hostname an, die Sie von der Seite ausschließen möchten.]]></item>
 		<item name="wcf.acp.option.blacklist_ip_addresses"><![CDATA[IP-Adresse ausschließen]]></item>
@@ -335,8 +336,8 @@
 		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Wollen Sie den Server &raquo;{$updateServer->serverURL}&laquo; wirklich löschen?]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Server bearbeiten]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Fehlermeldungen]]></item>
-		<item name="wcf.acp.updateServer.list"><![CDATA[Verfügbare Update-Server]]></item>
-		<item name="wcf.acp.updateServer.list.count"><![CDATA[{#$items} Updateserver eingetragen]]></item>
+		<item name="wcf.acp.updateServer.list"><![CDATA[Update-Server]]></item>
+		<item name="wcf.acp.updateServer.list.count"><![CDATA[{#$items} Update-Server]]></item>
 		<item name="wcf.acp.updateServer.lastErrorText"><![CDATA[Beim letzten Verbindungsversuch trat folgender Fehler auf:]]></item>
 		<item name="wcf.acp.updateServer.loginPassword"><![CDATA[Kennwort]]></item>
 		<item name="wcf.acp.updateServer.loginPassword.description"><![CDATA[Geben Sie ein Kennwort an, das zur Authentifizierung benötigt wird (optional).]]></item>

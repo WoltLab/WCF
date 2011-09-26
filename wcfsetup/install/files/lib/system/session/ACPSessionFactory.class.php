@@ -20,18 +20,12 @@ class ACPSessionFactory {
 	protected $sessionEditor = 'wcf\data\acp\session\ACPSessionEditor';
 	
 	/**
-	 * session data editor class name
-	 * @var	string
-	 */
-	protected $sessionDataEditor = 'wcf\data\acp\session\data\ACPSessionDataEditor';
-	
-	/**
 	 * Loads the object of the active session.
 	 */	
 	public function load() {
 		// get session
 		$sessionID = $this->readSessionID();
-		SessionHandler::getInstance()->load($this->sessionEditor, $this->sessionDataEditor, $sessionID);
+		SessionHandler::getInstance()->load($this->sessionEditor, $sessionID);
 		
 		// call shouldInit event
 		if (!defined('NO_IMPORTS')) {
