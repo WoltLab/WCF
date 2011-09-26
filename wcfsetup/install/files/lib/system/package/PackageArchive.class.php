@@ -809,7 +809,7 @@ class PackageArchive {
 			FROM		wcf".WCF_N."_package_exclusion package_exclusion
 			LEFT JOIN	wcf".WCF_N."_package package
 			ON		(package.packageID = package_exclusion.packageID)	
-			WHERE		excludedPackage = ?'".$this->packageInfo['name']."'";
+			WHERE		excludedPackage = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->packageInfo['name']));
 		while ($row = $statement->fetchArray()) {
