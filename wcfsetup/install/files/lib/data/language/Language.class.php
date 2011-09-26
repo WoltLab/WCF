@@ -50,12 +50,12 @@ class Language extends DatabaseObject {
 	public $packageID = PACKAGE_ID;
 	
 	/**
-	 * Returns the name of this language in the language of the active user.
+	 * Returns the name of this language.
 	 * 
 	 * @return	string
 	 */
 	public function __toString() {
-		return WCF::getLanguage()->get('wcf.global.language.'.$this->languageCode);
+		return $this->languageName;
 	}
 	
 	/**
