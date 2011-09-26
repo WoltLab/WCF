@@ -167,6 +167,11 @@ class CacheListPage extends AbstractPage {
 				}
 			}
 		}
+		// disabled
+		else if ($this->cacheData['source'] == 'wcf\system\cache\source\NoCacheSource') {
+			$this->cacheData['version'] = WCF_VERSION;
+			$this->cacheData['files'] = $this->cacheData['size'] = 0;
+		}
 	}
 	
 	/**
