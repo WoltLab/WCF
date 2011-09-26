@@ -59,24 +59,6 @@ class SessionHandler extends SingletonFactory {
 	protected $session = null;
 	
 	/**
-	 * session data object
-	 * @var	wcf\data\acp\session\data\ACPSessionData
-	 */
-	protected $sessionData = null;
-	
-	/**
-	 * session data class name
-	 * @var	string
-	 */
-	protected $sessionDataClassName = '';
-	
-	/**
-	 * session data editor class name
-	 * @var	string
-	 */
-	protected $sessionDataEditorClassName = '';
-	
-	/**
 	 * session class name
 	 * @var	string
 	 */	
@@ -130,14 +112,11 @@ class SessionHandler extends SingletonFactory {
 	 * Loads an existing session or creates a new one.
 	 *
 	 * @param	string		$sessionEditorClassName
-	 * @param	string		$sessionEditorDataClassName
 	 * @param	string		$sessionID
 	 */	
-	public function load($sessionEditorClassName, $sessionEditorDataClassName, $sessionID) {
+	public function load($sessionEditorClassName, $sessionID) {
 		$this->sessionEditorClassName = $sessionEditorClassName;
 		$this->sessionClassName = call_user_func(array($sessionEditorClassName, 'getBaseClass'));
-		$this->sessionDataEditorClassName = $sessionEditorDataClassName;
-		$this->sessionDataClassName = call_user_func(array($sessionEditorDataClassName, 'getBaseClass'));
 		
 		// try to get existing session
 		if (!empty($sessionID)) {
@@ -285,7 +264,7 @@ class SessionHandler extends SingletonFactory {
 	 * Initializes session variables.
 	 */	
 	protected function loadVariables() {
-		@$this->variables = unserialize($this->sessionData->sessionVariables);
+		@$this->variables = unserialize($this->session->sessionVariables);
 		if (!is_array($this->variables)) {
 			$this->variables = array();
 		}
@@ -309,12 +288,9 @@ class SessionHandler extends SingletonFactory {
 	protected function getExistingSession($sessionID) {
 		$this->session = new $this->sessionClassName($sessionID);
 		if (!$this->session->sessionID || !$this->validate()) {
-			$this->session = $this->sessionData = null;
+			$this->session = null;
 			return;
 		}
-		
-		// load session data
-		$this->sessionData = new $this->sessionDataClassName($this->session->sessionID);
 		
 		// load user
 		$this->user = new User($this->session->userID);
@@ -370,11 +346,6 @@ class SessionHandler extends SingletonFactory {
 			'lastActivityTime' => TIME_NOW,
 			'requestURI' => UserUtil::getRequestURI(),
 			'requestMethod' => $requestMethod
-		));
-		
-		// creaty entry in session data
-		$this->sessionData = call_user_func(array($this->sessionDataEditorClassName, 'create'), array(
-			'sessionID' => $this->session->sessionID
 		));
 	}
 	
@@ -490,7 +461,6 @@ class SessionHandler extends SingletonFactory {
 	 */	
 	public function changeUser(User $user) {
 		$sessionTable = call_user_func(array($this->sessionClassName, 'getDatabaseTableName'));
-		$sessionDataTable = call_user_func(array($this->sessionDataClassName, 'getDatabaseTableName'));
 		
 		if ($user->userID) {
 			// user is not a gest, delete all other sessions of this user
@@ -504,14 +474,6 @@ class SessionHandler extends SingletonFactory {
 			
 			if ($row) {
 				$sql = "DELETE FROM 	".$sessionTable."
-					WHERE 		sessionID = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(
-					$row['sessionID']
-				));
-				
-				// delete session data
-				$sql = "DELETE FROM 	".$sessionDataTable."
 					WHERE 		sessionID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute(array(
@@ -539,34 +501,28 @@ class SessionHandler extends SingletonFactory {
 	public function update() {
 		if ($this->doNotUpdate) return;
 		
-		// update session
-		$sessionEditor = new $this->sessionEditorClassName($this->session);
-		$sessionEditor->update(array(
+		// set up data
+		$data = array(
 			'ipAddress' => $this->ipAddress,
 			'userAgent' => $this->userAgent,
 			'requestURI' => $this->requestURI,
 			'requestMethod' => $this->requestMethod,
 			'lastActivityTime' => TIME_NOW,
 			'packageID' => PACKAGE_ID
-		));
-		
-		// update session variables
+		);
 		if ($this->variablesChanged) {
-			$sessionDataEditor = new $this->sessionDataEditorClassName($this->sessionData);
-			$sessionDataEditor->update(array(
-				'sessionVariables' => serialize($this->variables)
-			));
+			$data['sessionVariables'] = serialize($this->variables);
 		}
+		
+		// update session
+		$sessionEditor = new $this->sessionEditorClassName($this->session);
+		$sessionEditor->update($data);
 	}
 	
 	/**
 	 * Deletes this session and it's related data.
 	 */	
 	public function delete() {
-		// remove session data
-		$sessionDataEditor = new $this->sessionDataEditorClassName($this->sessionData);
-		$sessionDataEditor->delete();
-		
 		// remove session
 		$sessionEditor = new $this->sessionEditorClassName($this->session);
 		$sessionEditor->delete();

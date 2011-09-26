@@ -19,11 +19,6 @@ class SessionFactory extends ACPSessionFactory {
 	protected $sessionEditor = 'wcf\data\session\SessionEditor';
 	
 	/**
-	 * @see	wcf\system\session\ACPSessionFactory::$sessionDataEditor
-	 */
-	protected $sessionDataEditor = 'wcf\data\session\data\SessionDataEditor';
-	
-	/**
 	 * @see	wcf\system\session\ACPSessionFactory::readSessionID()
 	 */	
 	protected function readSessionID() {

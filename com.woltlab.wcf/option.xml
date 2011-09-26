@@ -314,15 +314,10 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 memcache:wcf.acp.option.cache_source_type.memcache
 apc:wcf.acp.option.cache_source_type.apc
 no:wcf.acp.option.cache_source_type.no]]></selectoptions>
-				<enableoptions><![CDATA[disk:!cache_source_memcache_host,!cache_source_memcache_use_pconnect,!enable_session_data_cache
-memcache:cache_source_memcache_host,cache_source_memcache_use_pconnect,enable_session_data_cache
-apc:!cache_source_memcache_host,!cache_source_memcache_use_pconnect,!enable_session_data_cache
-no:!cache_source_memcache_host,!cache_source_memcache_use_pconnect,!enable_session_data_cache]]></enableoptions>
-			</option>
-			
-			<option name="enable_session_data_cache">
-				<categoryname>general.cache.general</categoryname>
-				<optiontype>boolean</optiontype>
+				<enableoptions><![CDATA[disk:!cache_source_memcache_host,!cache_source_memcache_use_pconnect
+memcache:cache_source_memcache_host,cache_source_memcache_use_pconnect
+apc:!cache_source_memcache_host,!cache_source_memcache_use_pconnect
+no:!cache_source_memcache_host,!cache_source_memcache_use_pconnect]]></enableoptions>
 			</option>
 			
 			<option name="cache_source_memcache_host">

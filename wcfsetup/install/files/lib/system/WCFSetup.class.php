@@ -29,7 +29,6 @@ define('HTTP_ENABLE_NO_CACHE_HEADERS', 0);
 define('HTTP_ENABLE_GZIP', 0);
 define('HTTP_GZIP_LEVEL', 0);
 define('CACHE_SOURCE_TYPE', 'disk');
-define('ENABLE_SESSION_DATA_CACHE', 0);
 define('MODULE_MASTER_PASSWORD', 1);
 
 /**
