@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
+	<!-- include types -->
+	<xs:include schemaLocation="types.xsd" />
+	
+	<!-- delete element -->
+	<xs:complexType name="delete">
+		 <xs:choice maxOccurs="unbounded">
+			<xs:element name="optioncategory" type="category_delete" minOccurs="0" />
+			<xs:element name="option" type="option_delete" minOccurs="0" />
+		</xs:choice>
+	</xs:complexType>
+	
+	<!-- deleted category element type -->
+	<xs:complexType name="category_delete">
+		<xs:attribute name="name" type="woltlab_varchar" use="required" />
+	</xs:complexType>
+	
+	<!-- deleted option element type -->
+	<xs:complexType name="option_delete">
+		<xs:attribute name="name" type="woltlab_varchar" use="required" />
+	</xs:complexType>
+</xs:schema>

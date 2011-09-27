@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/userGroupOption.xsd">
+	<import>
+		<categories>
+			<category name="user"></category>
+			<category name="mod"></category>
+			<category name="admin"></category>
+			<category name="admin.general">
+				<parent>admin</parent>
+			</category>
+			<category name="admin.system">
+				<parent>admin</parent>
+			</category>
+			<category name="admin.system.cronjob">
+				<parent>admin.system</parent>
+			</category>
+			<category name="admin.system.package">
+				<parent>admin.system</parent>
+			</category>
+			<category name="admin.maintenance">
+				<parent>admin.system</parent>
+			</category>
+			<category name="admin.user">
+				<parent>admin</parent>
+			</category>
+			<category name="admin.user.user">
+				<parent>admin.user</parent>
+			</category>
+			<category name="admin.user.group">
+				<parent>admin.user</parent>
+			</category>
+			
+			<category name="admin.display">
+				<parent>admin</parent>
+			</category>
+			<category name="admin.content">
+				<parent>admin</parent>
+			</category>
+			<category name="admin.style">
+				<parent>admin.display</parent>
+			</category>
+			<category name="admin.language">
+				<parent>admin.display</parent>
+			</category>
+		</categories>
+		
+		<options>
+			<option name="admin.general.canViewPrivateUserOptions">
+				<categoryname>admin.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.system.canEditOption">
+				<categoryname>admin.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.system.canViewLog">
+				<categoryname>admin.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.system.cronjob.canAddCronjob">
+				<categoryname>admin.system.cronjob</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.system.cronjob.canEditCronjob">
+				<categoryname>admin.system.cronjob</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.system.cronjob.canDeleteCronjob">
+				<categoryname>admin.system.cronjob</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.system.cronjob.canEnableDisableCronjob">
+				<categoryname>admin.system.cronjob</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.system.cronjob.canDeleteCronjobLog">
+				<categoryname>admin.system.cronjob</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.system.package.canUpdatePackage">
+				<categoryname>admin.system.package</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.system.package.canUninstallPackage">
+				<categoryname>admin.system.package</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.system.package.canEditServer">
+				<categoryname>admin.system.package</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.user.accessibleGroups">
+				<categoryname>admin.user.group</categoryname>
+				<optiontype>userGroups</optiontype>
+				<defaultvalue></defaultvalue>
+				<admindefaultvalue>1,2,3,4,5,6</admindefaultvalue>
+			</option>
+			<option name="admin.user.canAddUser">
+				<categoryname>admin.user.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.user.canSearchUser">
+				<categoryname>admin.user.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.user.canEditUser">
+				<categoryname>admin.user.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.user.canEditMailAddress">
+				<categoryname>admin.user.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.user.canEditPassword">
+				<categoryname>admin.user.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.user.canDeleteUser">
+				<categoryname>admin.user.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.user.canMailUser">
+				<categoryname>admin.user.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.user.canAddGroup">
+				<categoryname>admin.user.group</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.user.canDeleteGroup">
+				<categoryname>admin.user.group</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.style.canUseDisabledStyle">
+				<categoryname>admin.style</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.language.canAddServer">
+				<categoryname>admin.language</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.language.canDeleteServer">
+				<categoryname>admin.language</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.language.canEditServer">
+				<categoryname>admin.language</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+		</options>
+	</import>
+</data>

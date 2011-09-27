@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is used for xml files which install, update or delete clip board actions. -->
+<xs:schema id="data" targetNamespace="http://www.woltlab.com" xmlns="http://www.woltlab.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified">
+	<!-- action element -->
+	<xs:element name="action">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="actionclassname" type="xs:string" minOccurs="0" />
+				<xs:element name="showorder" type="xs:string" minOccurs="0" />
+				<xs:element name="pages" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="page" nillable="true" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="name" form="unqualified" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- data element -->
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="action" />
+				<xs:element name="import">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="action" minOccurs="0" maxOccurs="unbounded" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="delete">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="action" minOccurs="0" maxOccurs="unbounded" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

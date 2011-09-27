@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/coreObject.xsd">
+	<import>
+		<coreobject>
+			<objectname><![CDATA[wcf\system\breadcrumb\Breadcrumbs]]></objectname>
+		</coreobject>
+		<coreobject>
+			<objectname><![CDATA[wcf\system\request\LinkHandler]]></objectname>
+		</coreobject>
+		<coreobject>
+			<objectname><![CDATA[wcf\system\menu\page\PageMenu]]></objectname>
+		</coreobject>
+		<coreobject>
+			<objectname><![CDATA[wcf\system\menu\acp\ACPMenu]]></objectname>
+		</coreobject>
+	</import>
+</data>
