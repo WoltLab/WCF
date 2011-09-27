@@ -127,7 +127,7 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 			CronjobLogEditor::create(array(
 				'cronjobID' => $cronjob->cronjobID,
 				'execTime' => TIME_NOW,
-				'success' => (int) ($error != ''),
+				'success' => (int) ($error == ''),
 				'error' => $error
 			));
 				
