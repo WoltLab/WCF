@@ -21,6 +21,7 @@ Thumbs.db
 
 # Netbeans
 nbproject/
+catalog.xml
 nbactions.xml
 
 # Eclipse
