@@ -3,6 +3,7 @@ namespace wcf\system\package;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\language\LanguageEditor;
+use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
@@ -116,7 +117,13 @@ class PackageInstallationDispatcher {
 		$this->nodeBuilder->completeNode($node);
 		
 		// assign next node
-		$step->setNode($this->nodeBuilder->getNextNode($node));
+		$node = $this->nodeBuilder->getNextNode($node);
+		$step->setNode($node);
+		
+		// update options.inc.php if installation is completed
+		if ($node == '') {
+			OptionEditor::resetCache();
+		}
 		
 		return $step;
 	}

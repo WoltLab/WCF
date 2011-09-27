@@ -98,11 +98,4 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 			$optionEditor->update($data);
 		}
 	}
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
-	 */
-	protected function cleanup() {
-		OptionEditor::resetCache();
-	}
 }

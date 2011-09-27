@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\package;
 use wcf\system\menu\acp\ACPMenu;
+use wcf\data\option\OptionEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
@@ -61,9 +62,15 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 		
 		// mark node as completed
 		$this->nodeBuilder->completeNode($node);
+		$node = $this->nodeBuilder->getNextNode($node);
+		
+		// update options.inc.php if uninstallation is completed
+		if ($node == '') {
+			OptionEditor::resetCache();
+		}
 		
 		// return next node
-		return $this->nodeBuilder->getNextNode($node);
+		return $node;
 	}
 	
 	/**
