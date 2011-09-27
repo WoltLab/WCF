@@ -1649,13 +1649,12 @@ WCF.MultipleLanguageInput.prototype = {
 		this._element.wrap('<div class="preInput" />');
 		var $wrapper = this._element.parent();
 		var $button = $('<p class="dropdownCaption"><span>enable i18n</span></p>').prependTo($wrapper);
-		var $span = $button.children('span');
 
-		$span.click($.proxy(this._enable, this));
+		$button.click($.proxy(this._enable, this));
 		WCF.CloseOverlayHandler.addCallback(this._element.wcfIdentify(), $.proxy(this._closeSelection, this));
 		
 		if (enableOnInit) {
-			$span.trigger('click');
+			$button.trigger('click');
 
 			// pre-select current language
 			this._list.children('li').each($.proxy(function(index, listItem) {
@@ -1675,6 +1674,10 @@ WCF.MultipleLanguageInput.prototype = {
 	_enable: function(event) {
 		if (!this._isEnabled) {
 			var $button = $(event.target);
+			if ($button.getTagName() == 'p') {
+				$button = $button.children('span');
+			}
+
 			$button.addClass('active');
 
 			// insert list
