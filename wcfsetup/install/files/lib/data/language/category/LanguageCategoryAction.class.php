@@ -21,17 +21,17 @@ class LanguageCategoryAction extends AbstractDatabaseObjectAction {
 	protected $className = 'wcf\data\language\category\LanguageCategoryEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$createPermissions
 	 */
-	protected $permissionsCreate = array('admin.language.canAddLanguage');
+	protected $createPermissions = array('admin.language.canAddLanguage');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$deletePermissions
 	 */
-	protected $permissionsDelete = array('admin.language.canDeleteLanguage');
+	protected $deletePermissions = array('admin.language.canDeleteLanguage');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$updatePermissions
 	 */
-	protected $permissionsUpdate = array('admin.language.canEditLanguage');
+	protected $updatePermissions = array('admin.language.canEditLanguage');
 }

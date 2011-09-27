@@ -52,19 +52,19 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	 * list of permissions required to create objects
 	 * @var	array<string>
 	 */
-	protected $permissionsCreate = array();
+	protected $createPermissions = array();
 	
 	/**
 	 * list of permissions required to delete objects
 	 * @var	array<string>
 	 */
-	protected $permissionsDelete = array();
+	protected $deletePermissions = array();
 	
 	/**
 	 * list of permissions required to update objects
 	 * @var	array<string>
 	 */
-	protected $permissionsUpdate = array();
+	protected $updatePermissions = array();
 	
 	/**
 	 * values returned by executed action
@@ -162,9 +162,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	 */
 	public function validateCreate() {
 		// validate permissions
-		if (is_array($this->permissionsCreate) && count($this->permissionsCreate)) {
+		if (is_array($this->createPermissions) && count($this->createPermissions)) {
 			try {
-				WCF::getSession()->checkPermissions($this->permissionsCreate);
+				WCF::getSession()->checkPermissions($this->createPermissions);
 			}
 			catch (PermissionDeniedException $e) {
 				throw new ValidateActionException('Insufficient permissions');
@@ -180,9 +180,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	 */
 	public function validateDelete() {
 		// validate permissions
-		if (is_array($this->permissionsDelete) && count($this->permissionsDelete)) {
+		if (is_array($this->deletePermissions) && count($this->deletePermissions)) {
 			try {
-				WCF::getSession()->checkPermissions($this->permissionsDelete);
+				WCF::getSession()->checkPermissions($this->deletePermissions);
 			}
 			catch (PermissionDeniedException $e) {
 				throw new ValidateActionException('Insufficient permissions');
@@ -205,9 +205,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	 */
 	public function validateUpdate() {
 		// validate permissions
-		if (is_array($this->permissionsUpdate) && count($this->permissionsUpdate)) {
+		if (is_array($this->updatePermissions) && count($this->updatePermissions)) {
 			try {
-				WCF::getSession()->checkPermissions($this->permissionsUpdate);
+				WCF::getSession()->checkPermissions($this->updatePermissions);
 			}
 			catch (PermissionDeniedException $e) {
 				throw new ValidateActionException('Insufficient permissions');

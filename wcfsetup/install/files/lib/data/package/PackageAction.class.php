@@ -19,17 +19,17 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	protected $className = 'wcf\data\package\PackageEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$createPermissions
 	 */
-	protected $permissionsCreate = array('admin.system.package.canInstallPackage');
+	protected $createPermissions = array('admin.system.package.canInstallPackage');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$deletePermissions
 	 */
-	protected $permissionsDelete = array('admin.system.package.canUninstallPackage');
+	protected $deletePermissions = array('admin.system.package.canUninstallPackage');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$updatePermissions
 	 */
-	protected $permissionsUpdate = array('admin.system.package.canUpdatePackage');
+	protected $updatePermissions = array('admin.system.package.canUpdatePackage');
 }

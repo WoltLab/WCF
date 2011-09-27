@@ -22,19 +22,19 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 	protected $className = 'wcf\data\cronjob\CronjobEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$createPermissions
 	 */
-	protected $permissionsCreate = array('admin.system.cronjob.canAddCronjob');
+	protected $createPermissions = array('admin.system.cronjob.canAddCronjob');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$deletePermissions
 	 */
-	protected $permissionsDelete = array('admin.system.cronjob.canDeleteCronjob');
+	protected $deletePermissions= array('admin.system.cronjob.canDeleteCronjob');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$updatePermissions
 	 */
-	protected $permissionsUpdate = array('admin.system.cronjob.canEditCronjob');
+	protected $updatePermissions = array('admin.system.cronjob.canEditCronjob');
 	
 	/**
 	 * Validates permissions and parameters

@@ -21,19 +21,19 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction {
 	protected $className = 'wcf\data\package\update\server\PackageUpdateServerEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$createPermissions
 	 */
-	protected $permissionsCreate = array('admin.system.package.canEditServer');
+	protected $createPermissions = array('admin.system.package.canEditServer');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$deletePermissions
 	 */
-	protected $permissionsDelete = array('admin.system.package.canEditServer');
+	protected $deletePermissions = array('admin.system.package.canEditServer');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$updatePermissions
 	 */
-	protected $permissionsUpdate = array('admin.system.package.canEditServer');
+	protected $updatePermissions = array('admin.system.package.canEditServer');
 	
 	/**
 	 * Validates permissions and parameters

@@ -23,19 +23,19 @@ class UserAction extends AbstractDatabaseObjectAction {
 	public $className = 'wcf\data\user\UserEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$createPermissions
 	 */
-	protected $permissionsCreate = array('admin.user.canAddUser');
+	protected $createPermissions = array('admin.user.canAddUser');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$deletePermissions
 	 */
-	protected $permissionsDelete = array('admin.user.canDeleteUser');
+	protected $deletePermissions = array('admin.user.canDeleteUser');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$updatePermissions
 	 */
-	protected $permissionsUpdate = array('admin.user.canEditUser');
+	protected $updatePermissions = array('admin.user.canEditUser');
 	
 	/**
 	 * Validates permissions and parameters.
