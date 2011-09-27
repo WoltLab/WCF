@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <!-- The file "cronjobs.xsd" is used for xml-files which installs, updates or deletes searchable cronjobs.  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
-	
 	<!-- include types -->
 	<xs:include schemaLocation="types.xsd" />
 	
-	<!-- Represents the data-node. -->
+	<!-- data element -->
 	<xs:element name="data">
 		<xs:complexType>
 			<xs:all>
@@ -15,23 +14,23 @@
 		</xs:complexType>
 	</xs:element>
 	
-	<!-- Represents the import-node. -->
+	<!-- import element type -->
 	<xs:complexType name="import">
 		<xs:sequence>
-				<xs:element name="cronjob" type="cronjob" maxOccurs="unbounded" />
+			<xs:element name="cronjob" type="cronjob" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
 	
-	<!-- Represents the delete-node. -->
+	<!-- delete element type -->
 	<xs:complexType name="delete">
 		<xs:sequence>
 			<xs:element name="cronjob" type="cronjob" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
 	
-	<!-- Represents a cronjob which will be installed,updated or deleted. Extends the type "cronjob_delete". -->
+	<!-- cronjob element type -->
 	<xs:complexType name="cronjob">
-		<xs:all>                                        
+		<xs:all>
 			<xs:element name="classname" type="woltlab_varchar_nullable" minOccurs="0" />
 			<xs:element name="description" type="woltlab_varchar_nullable" minOccurs="0" />
 			<xs:element name="startminute" type="woltlab_varchar" minOccurs="1" />
