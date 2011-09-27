@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!-- This file is used for xml files which install or delete core objects. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
+	<!-- include types -->
+	<xs:include schemaLocation="types.xsd" />
+	
+	<!-- data node -->
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="import" type="import" minOccurs="0" />
+				<xs:element name="delete" type="delete" minOccurs="0" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- import element type -->
+	<xs:complexType name="import">
+		<xs:sequence>
+			<xs:element name="coreobject" type="coreObject" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- delete element type -->
+	<xs:complexType name="delete">
+		<xs:sequence>
+			<xs:element name="coreobject" type="coreObject" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	    
+	<!-- core object element type -->
+	<xs:complexType name="coreObject">
+		<xs:all>
+			<xs:element name="objectname" maxOccurs="1" minOccurs="1" type="woltlab_varchar" />
+		</xs:all>
+	</xs:complexType>
+</xs:schema>

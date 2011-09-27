@@ -15,17 +15,17 @@
 	</authorinformation>
 	
 	<instructions type="install">
-		<instruction type="packageinstallationplugin">pip.xml</instruction>
-		<instruction type="acpmenu">acpmenu.xml</instruction>
-		<instruction type="usergroupoption">usergroupoption.xml</instruction>
+		<instruction type="packageinstallationplugin">packageInstallationPlugin.xml</instruction>
+		<instruction type="acpmenu">acpMenu.xml</instruction>
+		<instruction type="usergroupoption">userGroupOption.xml</instruction>
 		<instruction type="option">option.xml</instruction>
-		<instruction type="useroption">useroption.xml</instruction>
+		<instruction type="useroption">userOption.xml</instruction>
 		<instruction type="template">template.tar</instruction>
-		<instruction type="eventlistener">eventlistener.xml</instruction>
+		<instruction type="eventlistener">eventListener.xml</instruction>
 		<instruction type="script">acp/install.php</instruction>
 		<instruction type="cronjob">cronjob.xml</instruction>
-		<instruction type="coreobject">coreobject.xml</instruction>
-		<instruction type="clipboardaction">clipboardaction.xml</instruction>
-		<instruction type="clipboarditemtype">clipboarditemtype.xml</instruction>
+		<instruction type="coreobject">coreObject.xml</instruction>
+		<instruction type="clipboardaction">clipBoardAction.xml</instruction>
+		<instruction type="clipboarditemtype">clipBoardItemType.xml</instruction>
 	</instructions>
 </package>
