@@ -2,6 +2,7 @@
 namespace wcf\system\language;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -218,6 +219,9 @@ class I18nHandler extends SingletonFactory {
 				));
 			}
 		}
+		
+		// reset language cache
+		LanguageFactory::getInstance()->deleteLanguageCache();
 	}
 	
 	/**
@@ -235,6 +239,9 @@ class I18nHandler extends SingletonFactory {
 			$languageVariable,
 			$packageID
 		));
+		
+		// reset language cache
+		LanguageFactory::getInstance()->deleteLanguageCache();
 	}
 	
 	/**

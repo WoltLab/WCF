@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\language;
 use wcf\data\language\Language;
+use wcf\data\language\LanguageEditor;
 use wcf\data\DatabaseObject;
 use wcf\system\cache\CacheHandler;
 use wcf\system\template\TemplateScriptingCompiler;
@@ -299,5 +300,13 @@ class LanguageFactory extends SingletonFactory {
 		
 		// rebuild language cache
 		$this->clearCache();
+	}
+	
+	/**
+	 * Removes language cache and compiled templates.
+	 */
+	public function deleteLanguageCache() {
+		LanguageEditor::deleteLanguageFiles();
+		LanguageEditor::deleteCompiledTemplates();
 	}
 }
