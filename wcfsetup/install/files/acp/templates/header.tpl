@@ -9,6 +9,7 @@
 		var SID_ARG_2ND	= '{@SID_ARG_2ND_NOT_ENCODED}';
 		var RELATIVE_WCF_DIR = '{@RELATIVE_WCF_DIR}';
 		var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
+		var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 		//]]>
 	</script>
 	<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/3rdParty/jquery.min.js"></script>
