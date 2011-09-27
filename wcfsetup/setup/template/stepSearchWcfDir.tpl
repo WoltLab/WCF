@@ -1,5 +1,85 @@
 {include file='header'}
 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+	//<![CDATA[
+	if (window.jQuery) {
+		$(function() {
+			$('#wcfUrlContainer').show();
+
+			// data
+			var $domainName = '{@$domainName|encodeJS}';
+			var $installScriptDir = '{@$installScriptDir|encodeJS}';
+			var $installScriptUrl = '{@$installScriptUrl|encodeJS}';
+			var $invalidErrorMessage = '{lang}wcf.global.wcfDir.error.invalid{/lang}';
+			var $wcfDir = $('#wcfDir');
+			var $wcfUrl = $('#wcfUrl');
+
+			function updateWcfUrl() {
+				// split paths and remove empty parts
+				var $installScriptDirs = removeEmptyDirParts($installScriptDir.split('/'));
+				var $wcfDirs = removeEmptyDirParts($wcfDir.val().split('/'));
+				var $installScriptUrlDirs = removeEmptyDirParts($installScriptUrl.split('/'));
+				
+				// get relative path
+				var $relativePathDirs = [];
+				var $max = ($wcfDirs.length > $installScriptDirs.length) ? $wcfDirs.length : $installScriptDirs.length;
+				for (var $i = 0; $i < $max; $i++) {
+					if ($i < $installScriptDirs.length && $i < $wcfDirs.length) {
+						if ($installScriptDirs[$i] != $wcfDirs[$i]) {
+							$wcfDirs.splice(0, i);
+							for (var $j = 0, $length = $installScriptDirs.length - $i; $j < $length; $j++) $relativePathDirs.push('..');
+							$relativePathDirs = $relativePathDirs.concat($wcfDirs);
+							break;
+						}
+					}	
+					// go up one level
+					else if ($i < $installScriptDirs.length && $i >= $wcfDirs.length) {
+						$relativePathDirs.push('..');
+					}
+					else {
+						$relativePathDirs.push($wcfDirs[$i]);
+					}
+				}
+
+				// loop dirs
+				for (var $i = 0; $i < $relativePathDirs.length; $i++) {
+					if ($relativePathDirs[$i] == '..') {
+						if ($installScriptUrlDirs.length < 1) {
+							$wcfUrl.val($invalidErrorMessage);
+							return;
+						}
+				
+						$installScriptUrlDirs.pop();
+					}
+					else {
+						$installScriptUrlDirs.push($relativePathDirs[$i]);
+					}
+				}
+		
+				// implode and show result
+				var $result = $domainName;
+				for (var $i = 0; $i < $installScriptUrlDirs.length; $i++) $result += '/' + $installScriptUrlDirs[$i];
+				$wcfUrl.val($result);
+			}
+
+			function removeEmptyDirParts(dir) {
+				for (var $i = dir.length; $i >= 0; $i--) {
+					if (dir[$i] == '' || dir[$i] == '.') {
+						dir.splice($i, 1);
+					}
+				}
+
+				return dir;
+			}
+
+			$wcfDir.keyup(updateWcfUrl).blur(updateWcfUrl);
+			updateWcfUrl();
+		});
+	}
+	//]]>
+</script>
+
 <hgroup class="subHeading">
 	<h1>{lang}wcf.global.wcfDir{/lang}</h1>
 	<h2>{lang}wcf.global.wcfDir.description{/lang}</h2>
@@ -24,7 +104,7 @@
 				<small>{lang}wcf.global.wcfDir.dir.description{/lang}</small>
 			</dd>
 		</dl>
-		<dl>
+		<dl id="wcfUrlContainer" style="display: none;">
 			<dt><label for="wcfUrl">{lang}wcf.global.wcfDir.url{/lang}</label></dt>
 			<dd>
 				<input type="text" id="wcfUrl" name="wcfUrl" value="" readonly="readonly" class="long" />
@@ -42,80 +122,5 @@
 		<input type="hidden" name="dev" value="{@$developerMode}" />
 	</div>
 </form>
-
-<script type="text/javascript">
-	//<![CDATA[
-	// data
-	var domainName = '{@$domainName|encodeJS}';
-	var installScriptDir = '{@$installScriptDir|encodeJS}';
-	var installScriptUrl = '{@$installScriptUrl|encodeJS}';
-	var invalidErrorMessage = '{lang}wcf.global.wcfDir.error.invalid{/lang}';
-	
-	// function
-	function refreshWcfUrl() {
-		// split paths
-		var installScriptDirs = installScriptDir.split('/');
-		var wcfDirs = document.getElementById('wcfDir').value.split('/');
-		var installScriptUrlDirs = installScriptUrl.split('/');
-		
-		// remove empty elements
-		for (var i = installScriptDirs.length; i >= 0; i--) if (installScriptDirs[i] == '' || installScriptDirs[i] == '.') installScriptDirs.splice(i, 1);
-		for (var i = wcfDirs.length; i >= 0; i--) if (wcfDirs[i] == '' || wcfDirs[i] == '.') wcfDirs.splice(i, 1);
-		for (var i = installScriptUrlDirs.length; i >= 0; i--) if (installScriptUrlDirs[i] == '') installScriptUrlDirs.splice(i, 1);
-		
-		// get relative path
-		var relativePathDirs = new Array();
-		var max = (wcfDirs.length > installScriptDirs.length ? wcfDirs.length : installScriptDirs.length);
-		for (var i = 0; i < max; i++) {
-			if (i < installScriptDirs.length && i < wcfDirs.length) {
-				if (installScriptDirs[i] != wcfDirs[i]) {
-					wcfDirs.splice(0, i);
-					for (var j = 0; j < installScriptDirs.length - i; j++) relativePathDirs.push('..');
-					relativePathDirs = relativePathDirs.concat(wcfDirs);
-					break;
-				}
-			}	
-			// go up one level
-			else if (i < installScriptDirs.length && i >= wcfDirs.length) {
-				relativePathDirs.push('..');
-			}
-			else {
-				relativePathDirs.push(wcfDirs[i]);
-			}
-		}
-		
-		// loop dirs
-		for (var i = 0; i < relativePathDirs.length; i++) {
-			if (relativePathDirs[i] == '..') {
-				if (installScriptUrlDirs.length < 1) {
-					document.getElementById('wcfUrl').value = invalidErrorMessage;
-					return;
-				}
-				
-				installScriptUrlDirs.pop();
-			}
-			else {
-				installScriptUrlDirs.push(relativePathDirs[i]);
-			}
-		}
-		
-		// implode and show result
-		var result = domainName;
-		for (var i = 0; i < installScriptUrlDirs.length; i++) result += '/' + installScriptUrlDirs[i];
-		document.getElementById('wcfUrl').value = result;
-	}
-	
-	window.onload = function() {
-		// set onchange listener
-		document.getElementById('wcfDir').onkeyup = function() { refreshWcfUrl(); };
-		
-		// set onblur listener
-		document.getElementById('wcfDir').onblur = function() { refreshWcfUrl(); };
-		
-		// set default value
-		refreshWcfUrl();
-	}
-	//]]>
-</script>
 
 {include file='footer'}
