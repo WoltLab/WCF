@@ -25,7 +25,7 @@
 		<instruction type="script">acp/install.php</instruction>
 		<instruction type="cronjob">cronjob.xml</instruction>
 		<instruction type="coreobject">coreObject.xml</instruction>
-		<instruction type="clipboardaction">clipBoardAction.xml</instruction>
-		<instruction type="clipboarditemtype">clipBoardItemType.xml</instruction>
+		<instruction type="clipboardaction">clipboardAction.xml</instruction>
+		<instruction type="clipboarditemtype">clipboardItemType.xml</instruction>
 	</instructions>
 </package>
