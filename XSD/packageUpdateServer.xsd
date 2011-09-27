@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- This file is used for package server xml files. -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
 	<!-- include types -->
 	<xs:include schemaLocation="types.xsd" />
 	
-	<!-- section tag -->
+	<!-- section element -->
 	<xs:element name="section">
 		<xs:complexType>
 			<xs:sequence>
@@ -17,16 +18,16 @@
 	<xs:element name="package">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="packageinformation" />
-				<xs:element ref="authorinformation" />
+				<xs:element ref="packageInformation" />
+				<xs:element ref="authorInformation" />
 				<xs:element ref="versions" />
 			</xs:sequence>
 			<xs:attribute name="name" use="required" type="woltlab_varchar" />
 		</xs:complexType>
 	</xs:element>
 	
-	<!-- package -->
-	<xs:element name="packageinformation">
+	<!-- package information element -->
+	<xs:element name="packageInformation">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="packagename" />
@@ -38,13 +39,21 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+	<!-- package name element -->
 	<xs:element name="packagename" type="woltlab_varchar" />
+	
+	<!-- package description element -->
 	<xs:element name="packagedescription" type="woltlab_varchar" />
+	
+	<!-- plugin element -->
 	<xs:element name="plugin" type="woltlab_varchar" />
+	
+	<!-- standalone element -->
 	<xs:element name="standalone" type="woltlab_boolean" />
 	
-	<!-- author -->
-	<xs:element name="authorinformation">
+	<!-- author information element -->
+	<xs:element name="authorInformation">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="author" />
@@ -52,10 +61,14 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+	<!-- author element -->
 	<xs:element name="author" type="xs:string" />
+	
+	<!-- author url element -->
 	<xs:element name="authorurl" type="xs:anyURI" />
 	
-	<!-- versions -->
+	<!-- versions element -->
 	<xs:element name="versions">
 		<xs:complexType>
 			<xs:sequence>
@@ -63,6 +76,8 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+	<!-- version element -->
 	<xs:element name="version">
 		<xs:complexType>
 			<xs:sequence>
@@ -76,6 +91,8 @@
 			<xs:attribute name="name" use="required" />
 		</xs:complexType>
 	</xs:element>
+	
+	<!-- from versions element -->
 	<xs:element name="fromversions">
 		<xs:complexType>
 			<xs:sequence>
@@ -83,7 +100,11 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+	<!-- fromversion element -->
 	<xs:element name="fromversion" type="xs:string" />
+	
+	<!-- required packages element -->
 	<xs:element name="requiredpackages">
 		<xs:complexType>
 			<xs:sequence>
@@ -91,6 +112,8 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+	<!-- required package element -->
 	<xs:element name="requiredpackage">
 		<xs:complexType>
 			<xs:simpleContent>
@@ -100,8 +123,16 @@
 			</xs:simpleContent>
 		</xs:complexType>
 	</xs:element>
+	
+	<!-- update type element -->
 	<xs:element name="updatetype" type="xs:NCName" />
+	
+	<!-- timestamp element -->
 	<xs:element name="timestamp" type="xs:integer" />
+	
+	<!-- version type element -->
 	<xs:element name="versiontype" type="xs:NCName" />
+	
+	<!-- license element -->
 	<xs:element name="license" type="xs:NCName" />
 </xs:schema>
