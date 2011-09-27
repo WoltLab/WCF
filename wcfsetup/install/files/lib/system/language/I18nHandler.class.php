@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\language;
+use wcf\data\language\LanguageEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -218,6 +219,9 @@ class I18nHandler extends SingletonFactory {
 				));
 			}
 		}
+		
+		// delete language files
+		LanguageEditor::deleteLanguageFiles('.*', $languageCategory);
 	}
 	
 	/**
