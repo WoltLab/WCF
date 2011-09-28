@@ -1,9 +1,16 @@
 {capture assign='pageTitle'}{lang}wcf.user.login{/lang}{/capture}
-{include file='setupHeader'}
+{include file='header'}
 
 <script type="text/javascript">
 	//<![CDATA[
-	onloadEvents.push(function() { if (!'{$username|encodeJS}' || '{$errorField}' == 'username') document.getElementById('username').focus(); else document.getElementById('password').focus(); });
+	$(function() {
+		if (!$('#username').val() || '{$errorField}' == 'username') {
+			$('#username').focus();
+		}
+		else {
+			$('#password').focus();
+		}
+	});
 	//]]>
 </script>
 
