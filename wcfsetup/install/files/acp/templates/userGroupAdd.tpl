@@ -53,7 +53,11 @@
 					{if $errorType.groupName|isset}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType.groupName == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+							{if $errorType.groupName == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.group.groupName.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 					<small id="groupNameHelpMessage">{lang}wcf.acp.group.groupName.description{/lang}</small>

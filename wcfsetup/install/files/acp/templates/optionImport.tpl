@@ -28,9 +28,11 @@
 					{if $errorField == 'optionImport'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							{if $errorType == 'importFailed'}{lang}wcf.acp.option.import.error.importFailed{/lang}{/if}
-							{if $errorType == 'uploadFailed'}{lang}wcf.acp.option.import.error.uploadFailed{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.option.import.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 					<small id="optionImportHelpMessage">{lang}wcf.acp.option.import.upload.description{/lang}</small>
