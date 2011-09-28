@@ -202,7 +202,6 @@
 							
 							{if $errorField == 'action'}
 								<small class="innerError">
-									<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 								</small>
 							{/if}
@@ -222,7 +221,6 @@
 						<input type="email" id="from" name="from" value="{$from}" class="medium" />
 						{if $errorField == 'from'}
 							<small class="innerError">
-								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}
@@ -236,7 +234,6 @@
 						<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
 						{if $errorField == 'subject'}
 							<small class="innerError">
-								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}
@@ -250,7 +247,6 @@
 						<textarea id="text" name="text" rows="15" cols="40">{$text}</textarea>
 						{if $errorField == 'text'}
 							<small class="innerError" class="long">
-								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}
@@ -310,7 +306,6 @@
 						{htmlCheckboxes options=$availableGroups name=assignToGroupIDArray selected=$assignToGroupIDArray}
 						{if $errorField == 'assignToGroupIDArray'}
 							<small class="innerError">
-								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}

@@ -52,7 +52,6 @@
 					<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="medium" />
 					{if $errorField == 'loginPassword'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'invalid'}{lang}wcf.acp.packageUpdate.auth.error{/lang}{/if}
 						</small>
 					{/if}

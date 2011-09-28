@@ -23,7 +23,6 @@
 					<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium" />
 					{if $errorField == 'masterPassword'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}

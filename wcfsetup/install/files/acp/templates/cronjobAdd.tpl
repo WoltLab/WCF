@@ -39,7 +39,6 @@
 					<input type="text" id="className" name="className" value="{$className}" class="long" />
 					{if $errorField == 'className'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
@@ -69,7 +68,6 @@
 					<input type="text" id="startMinute" name="startMinute" value="{$startMinute}" class="short" />
 					{if $errorField == 'startMinute'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
@@ -83,7 +81,6 @@
 					<input type="text" id="startHour" name="startHour" value="{$startHour}" class="short" />
 					{if $errorField == 'startHour'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
@@ -97,7 +94,6 @@
 					<input type="text" id="startDom" name="startDom" value="{$startDom}" class="short" />
 					{if $errorField == 'startDom'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
@@ -111,7 +107,6 @@
 					<input type="text" id="startMonth" name="startMonth" value="{$startMonth}" class="short" />
 					{if $errorField == 'startMonth'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
@@ -125,7 +120,6 @@
 					<input type="text" id="startDow" name="startDow" value="{$startDow}" class="short" />
 					{if $errorField == 'startDow'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}

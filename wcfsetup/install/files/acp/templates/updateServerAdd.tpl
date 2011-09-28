@@ -37,7 +37,6 @@
 					<input type="text" id="serverURL" name="serverURL" value="{$serverURL}" class="medium" />
 					{if $errorField == 'serverURL'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}

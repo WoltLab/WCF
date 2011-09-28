@@ -52,7 +52,6 @@
 					<input type="text" id="groupName" name="groupName" value="{$groupName}" class="medium" />
 					{if $errorType.groupName|isset}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType.groupName == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}

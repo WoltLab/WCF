@@ -10,7 +10,6 @@
 		<dd>{@$optionData[html]}
 			{if $error}
 				<small class="innerError">
-					<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 					{if $error == 'empty'}
 						{lang}wcf.global.form.error.empty{/lang}
 					{else}	

@@ -27,7 +27,6 @@
 			<dd><input type="text" id="username" name="username" value="{$username}" class="medium" />
 				{if $errorField == 'username'}
 					<small class="innerError">
-						<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
@@ -43,7 +42,6 @@
 			<dd><input type="password" id="password" name="password" value="" class="medium" />
 				{if $errorField == 'password'}
 					<small class="innerError">
-						<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}

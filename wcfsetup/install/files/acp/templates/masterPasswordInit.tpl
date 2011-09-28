@@ -29,13 +29,12 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.masterPassword.init{/lang}</legend>
 		
-			<dl{if $errorField == 'masterPassword'} class="formError{/if}">
+			<dl{if $errorField == 'masterPassword'} class="formError"{/if}>
 				<dt><label for="masterPassword">{lang}wcf.acp.masterPassword{/lang}</label></dt>
 				<dd>
 					<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium" />
 					{if $errorField == 'masterPassword'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
@@ -53,7 +52,6 @@
 					<input type="password" id="confirmMasterPassword" name="confirmMasterPassword" value="{$confirmMasterPassword}" class="medium" />
 					{if $errorField == 'confirmMasterPassword'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}

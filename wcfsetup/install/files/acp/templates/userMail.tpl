@@ -74,7 +74,6 @@
 						</fieldset>
 						{if $errorField == 'groupIDs'}
 							<small class="innerError">
-								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
@@ -96,7 +95,6 @@
 					<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
 					{if $errorField == 'subject'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
@@ -114,7 +112,6 @@
 					<input type="text" id="from" name="from" value="{$from}" class="medium" />
 					{if $errorField == 'from'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
@@ -132,7 +129,6 @@
 					<textarea id="text" name="text" rows="15" cols="40" class="long">{$text}</textarea>
 					{if $errorField == 'text'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}

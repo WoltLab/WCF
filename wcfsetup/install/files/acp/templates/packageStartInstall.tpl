@@ -39,7 +39,6 @@
 					<input type="file" id="uploadPackage" name="uploadPackage" value="" />
 					{if $errorField == 'uploadPackage'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{elseif $errorType == 'phpRequirements'}
@@ -60,7 +59,6 @@
 					<input type="text" id="downloadPackage" name="downloadPackage" value="" class="long" />
 					{if $errorField == 'downloadPackage'}
 						<small class="innerError">
-							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 							{lang}wcf.acp.package.startInstall.error.{@$errorType}{/lang}
 						</small>
 					{/if}

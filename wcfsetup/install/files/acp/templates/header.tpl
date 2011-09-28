@@ -67,6 +67,7 @@
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
 			new WCF.Effect.BalloonTooltip();
+			$('<span class="arrowOuter"><span class="arrowInner"></span></span>').appendTo('.innerError');
 		});
 		//]]>
 	</script>

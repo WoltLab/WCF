@@ -87,7 +87,6 @@
 				<input type="text" id="username" name="username" value="{$username}" class="medium" />
 				{if $errorType.username|isset}
 					<small class="innerError">
-						<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 						{if $errorType.username == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
@@ -127,7 +126,6 @@
 						<input type="email" id="email" name="email" value="{$email}" class="medium" />
 						{if $errorType.email|isset}
 							<small class="innerError">
-								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 								{if $errorType.email == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
@@ -144,7 +142,6 @@
 						<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium" />
 						{if $errorType.confirmEmail|isset}
 							<small class="innerError">
-								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 								{lang}wcf.user.confirmEmail.error.{@$errorType.confirmEmail}{/lang}
 							</small>
 						{/if}
@@ -163,7 +160,6 @@
 						<input type="password" id="password" name="password" value="{$password}" class="medium" />
 						{if $errorType.password|isset}
 							<small class="innerError">
-								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 								{if $errorType.password == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
@@ -180,7 +176,6 @@
 						<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" />
 						{if $errorType.confirmPassword|isset}
 							<small class="innerError">
-								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
 								{lang}wcf.user.confirmPassword.error.{@$errorType.confirmPassword}{/lang}
 							</small>
 						{/if}
