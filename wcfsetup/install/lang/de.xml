@@ -30,8 +30,8 @@
 		<item name="wcf.acp.cronjob.timing"><![CDATA[Zeitsteuerung]]></item>
 		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von zeitgesteuerten Aufgaben erfordert eine genaue Kenntnis der Crontab-Syntax auf unixähnlichen Systemen. Weiterführende Informationen dazu erhalten Sie auf dieser Website: <a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>]]></item>
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Aufgabe jetzt ausführen]]></item>
-		<item name="wcf.acp.cronjob.error.className.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
-		<item name="wcf.acp.cronjob.error.timing.notValid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
+		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
+		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
 		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Sind Sie sicher, dass Sie diese zeitgesteuerte Aufgabe &raquo;{$cronjob->description|truncate:50:' ...'}&laquo; löschen möchten?]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten Zeitgesteuerten Aufgaben]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Alle löschen]]></item>
@@ -606,14 +606,14 @@
 		<item name="wcf.user.confirmEmail"><![CDATA[E-Mail-Adresse wiederholen]]></item>
 		<item name="wcf.user.confirmPassword"><![CDATA[Kennwort wiederholen]]></item>
 		<item name="wcf.user.email"><![CDATA[E-Mail-Adresse]]></item>
-		<item name="wcf.user.error.confirmEmail.notEqual"><![CDATA[Die eingegebenen E-Mail-Adressen sind nicht identisch.]]></item>
-		<item name="wcf.user.error.confirmPassword.notEqual"><![CDATA[Die eingegebenen Kennwörter sind nicht identisch.]]></item>
-		<item name="wcf.user.error.email.notUnique"><![CDATA[Diese E-Mail-Adresse ist bereits durch einen anderen Benutzer vergeben.]]></item>
-		<item name="wcf.user.error.email.notValid"><![CDATA[Sie haben eine ungültige E-Mail-Adresse eingegeben.]]></item>
-		<item name="wcf.user.error.password.false"><![CDATA[Dieses Kennwort ist falsch.]]></item>
-		<item name="wcf.user.error.username.notFound"><![CDATA[Der Benutzername &raquo;{$username}&laquo; konnte nicht gefunden werden.]]></item>
-		<item name="wcf.user.error.username.notUnique"><![CDATA[Dieser Benutzername ist bereits vergeben.]]></item>
-		<item name="wcf.user.error.username.notValid"><![CDATA[Sie haben einen ungültigen Benutzernamen eingegeben.]]></item>
+		<item name="wcf.user.confirmEmail.error.notEqual"><![CDATA[Die eingegebenen E-Mail-Adressen sind nicht identisch.]]></item>
+		<item name="wcf.user.confirmPassword.error.notEqual"><![CDATA[Die eingegebenen Kennwörter sind nicht identisch.]]></item>
+		<item name="wcf.user.email.error.notUnique"><![CDATA[Diese E-Mail-Adresse ist bereits durch einen anderen Benutzer vergeben.]]></item>
+		<item name="wcf.user.email.error.notValid"><![CDATA[Sie haben eine ungültige E-Mail-Adresse eingegeben.]]></item>
+		<item name="wcf.user.password.error.false"><![CDATA[Dieses Kennwort ist falsch.]]></item>
+		<item name="wcf.user.username.error.notFound"><![CDATA[Der Benutzername &raquo;{$username}&laquo; konnte nicht gefunden werden.]]></item>
+		<item name="wcf.user.username.error.notUnique"><![CDATA[Dieser Benutzername ist bereits vergeben.]]></item>
+		<item name="wcf.user.username.error.notValid"><![CDATA[Sie haben einen ungültigen Benutzernamen eingegeben.]]></item>
 		<item name="wcf.user.language"><![CDATA[Sprache]]></item>
 		<item name="wcf.user.language.description"><![CDATA[Bitte wählen Sie aus, in welcher Sprache die Benutzeroberfläche erscheinen soll!]]></item>
 		<item name="wcf.user.logout"><![CDATA[Abmelden]]></item>

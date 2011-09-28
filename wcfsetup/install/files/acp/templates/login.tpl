@@ -31,7 +31,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.user.error.username.{@$errorType}{/lang}
+							{lang}wcf.user.username.error.{@$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -47,7 +47,7 @@
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.user.error.password.{@$errorType}{/lang}
+							{lang}wcf.user.password.error.{@$errorType}{/lang}
 						{/if}
 					</small>
 				{/if}

@@ -91,7 +91,7 @@
 						{if $errorType.username == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.user.error.username.{@$errorType.username}{/lang}
+							{lang}wcf.user.username.error.{@$errorType.username}{/lang}
 						{/if}
 					</small>
 				{/if}
@@ -131,7 +131,7 @@
 								{if $errorType.email == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.user.error.email.{@$errorType.email}{/lang}
+									{lang}wcf.user.email.error.{@$errorType.email}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -145,7 +145,7 @@
 						{if $errorType.confirmEmail|isset}
 							<small class="innerError">
 								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-								{lang}wcf.user.error.confirmEmail.{@$errorType.confirmEmail}{/lang}
+								{lang}wcf.user.confirmEmail.error.{@$errorType.confirmEmail}{/lang}
 							</small>
 						{/if}
 					</dd>
@@ -167,7 +167,7 @@
 								{if $errorType.password == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.user.error.password.{@$errorType.password}{/lang}
+									{lang}wcf.user.password.error.{@$errorType.password}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -181,7 +181,7 @@
 						{if $errorType.confirmPassword|isset}
 							<small class="innerError">
 								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-								{lang}wcf.user.error.confirmPassword.{@$errorType.confirmPassword}{/lang}
+								{lang}wcf.user.confirmPassword.error.{@$errorType.confirmPassword}{/lang}
 							</small>
 						{/if}
 					</dd>

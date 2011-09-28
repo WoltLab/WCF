@@ -43,7 +43,7 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.cronjob.error.className.{@$errorType}{/lang}
+								{lang}wcf.acp.cronjob.className.error.{@$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
@@ -70,7 +70,7 @@
 					{if $errorField == 'startMinute'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{lang}wcf.acp.cronjob.error.timing.{@$errorType}{/lang}
+							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
 					<small id="startMinuteHelpMessage">{lang}wcf.acp.cronjob.startMinute.description{/lang}</small>
@@ -84,7 +84,7 @@
 					{if $errorField == 'startHour'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{lang}wcf.acp.cronjob.error.timing.{@$errorType}{/lang}
+							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
 					<small id="startHourHelpMessage">{lang}wcf.acp.cronjob.startHour.description{/lang}</small>
@@ -98,7 +98,7 @@
 					{if $errorField == 'startDom'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{lang}wcf.acp.cronjob.error.timing.{@$errorType}{/lang}
+							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
 					<small id="startDomHelpMessage">{lang}wcf.acp.cronjob.startDom.description{/lang}</small>
@@ -112,7 +112,7 @@
 					{if $errorField == 'startMonth'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{lang}wcf.acp.cronjob.error.timing.{@$errorType}{/lang}
+							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
 					<small id="startMonthHelpMessage">{lang}wcf.acp.cronjob.startMonth.description{/lang}</small>
@@ -126,7 +126,7 @@
 					{if $errorField == 'startDow'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{lang}wcf.acp.cronjob.error.timing.{@$errorType}{/lang}
+							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
 					<small id="startDowHelpMessage">{lang}wcf.acp.cronjob.startDow.description{/lang}</small>
