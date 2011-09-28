@@ -307,6 +307,10 @@ class LanguageFactory extends SingletonFactory {
 	 */
 	public function deleteLanguageCache() {
 		LanguageEditor::deleteLanguageFiles();
-		LanguageEditor::deleteCompiledTemplates();
+		
+		foreach ($this->cache['languages'] as $language) {
+			$languageEditor = new LanguageEditor($language);
+			$languageEditor->deleteCompiledTemplates();
+		}
 	}
 }
