@@ -33,7 +33,7 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.cronjob.data{/lang}</legend>
 			
-			<dl id="classNameDiv"{if $errorField == 'className'} class="formError"{/if}>
+			<dl{if $errorField == 'className'} class="formError"{/if}>
 				<dt><label for="className">{lang}wcf.acp.cronjob.className{/lang}</label></dt>
 				<dd>
 					<input type="text" id="className" name="className" value="{$className}" class="long" />
@@ -47,15 +47,15 @@
 							{/if}
 						</small>
 					{/if}
-					<small id="classNameHelpMessage">{lang}wcf.acp.cronjob.className.description{/lang}</small>
+					<small>{lang}wcf.acp.cronjob.className.description{/lang}</small>
 				</dd>
 			</dl>
 			
-			<dl id="descriptionDiv">
+			<dl>
 				<dt><label for="description">{lang}wcf.acp.cronjob.description{/lang}</label></dt>
 				<dd>
 					<input type="text" id="description" name="description" value="{$description}" class="long" />
-					<small id="descriptionHelpMessage">{lang}wcf.acp.cronjob.description.description{/lang}</small>
+					<small>{lang}wcf.acp.cronjob.description.description{/lang}</small>
 				</dd>
 			</dl>
 		</fieldset>
@@ -63,7 +63,7 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.cronjob.timing{/lang}</legend>
 			
-			<dl id="startMinuteDiv"{if $errorField == 'startMinute'} class="formError"{/if}>
+			<dl{if $errorField == 'startMinute'} class="formError"{/if}>
 				<dt><label for="startMinute">{lang}wcf.acp.cronjob.startMinute{/lang}</label></dt>
 				<dd>
 					<input type="text" id="startMinute" name="startMinute" value="{$startMinute}" class="short" />
@@ -73,11 +73,11 @@
 							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
-					<small id="startMinuteHelpMessage">{lang}wcf.acp.cronjob.startMinute.description{/lang}</small>
+					<small>{lang}wcf.acp.cronjob.startMinute.description{/lang}</small>
 				</dd>
 			</dl>
 			
-			<dl id="startHourDiv"{if $errorField == 'startHour'} class="formError"{/if}>
+			<dl{if $errorField == 'startHour'} class="formError"{/if}>
 				<dt><label for="startHour">{lang}wcf.acp.cronjob.startHour{/lang}</label></dt>
 				<dd>
 					<input type="text" id="startHour" name="startHour" value="{$startHour}" class="short" />
@@ -87,11 +87,11 @@
 							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
-					<small id="startHourHelpMessage">{lang}wcf.acp.cronjob.startHour.description{/lang}</small>
+					<small>{lang}wcf.acp.cronjob.startHour.description{/lang}</small>
 				</dd>
 			</dl>
 			
-			<dl id="startDomDiv"{if $errorField == 'startDom'} class="formError"{/if}>
+			<dl{if $errorField == 'startDom'} class="formError"{/if}>
 				<dt><label for="startDom">{lang}wcf.acp.cronjob.startDom{/lang}</label></dt>
 				<dd>
 					<input type="text" id="startDom" name="startDom" value="{$startDom}" class="short" />
@@ -101,11 +101,11 @@
 							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
-					<small id="startDomHelpMessage">{lang}wcf.acp.cronjob.startDom.description{/lang}</small>
+					<small>{lang}wcf.acp.cronjob.startDom.description{/lang}</small>
 				</dd>
 			</dl>
 			
-			<dl id="startMonthDiv"{if $errorField == 'startMonth'} class="formError"{/if}>
+			<dl{if $errorField == 'startMonth'} class="formError"{/if}>
 				<dt><label for="startMonth">{lang}wcf.acp.cronjob.startMonth{/lang}</label></dt>
 				<dd>
 					<input type="text" id="startMonth" name="startMonth" value="{$startMonth}" class="short" />
@@ -115,11 +115,11 @@
 							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
-					<small id="startMonthHelpMessage">{lang}wcf.acp.cronjob.startMonth.description{/lang}</small>
+					<small>{lang}wcf.acp.cronjob.startMonth.description{/lang}</small>
 				</dd>
 			</dl>
 			
-			<dl id="startDowDiv"{if $errorField == 'startDow'} class="formError"{/if}>
+			<dl{if $errorField == 'startDow'} class="formError"{/if}>
 				<dt><label for="startDow">{lang}wcf.acp.cronjob.startDow{/lang}</label></dt>
 				<dd>
 					<input type="text" id="startDow" name="startDow" value="{$startDow}" class="short" />
@@ -129,7 +129,7 @@
 							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
-					<small id="startDowHelpMessage">{lang}wcf.acp.cronjob.startDow.description{/lang}</small>
+					<small>{lang}wcf.acp.cronjob.startDow.description{/lang}</small>
 				</dd>
 			</dl>
 		</fieldset>

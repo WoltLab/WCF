@@ -21,7 +21,7 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.option.import{/lang}</legend>
 		
-			<dl id="optionImportDiv"{if $errorField == 'optionImport'} class="formError"{/if}>
+			<dl{if $errorField == 'optionImport'} class="formError"{/if}>
 				<dt><label for="optionImport">{lang}wcf.acp.option.import.upload{/lang}</label></dt>
 				<dd>
 					<input type="file" id="optionImport" name="optionImport" value="" />
@@ -35,7 +35,7 @@
 							{/if}
 						</small>
 					{/if}
-					<small id="optionImportHelpMessage">{lang}wcf.acp.option.import.upload.description{/lang}</small>
+					<small>{lang}wcf.acp.option.import.upload.description{/lang}</small>
 				</dd>
 			</dl>
 		</fieldset>

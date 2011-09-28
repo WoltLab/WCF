@@ -17,7 +17,7 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.masterPassword.enter{/lang}</legend>
 		
-			<dl id="masterPasswordDiv"{if $errorField == 'masterPassword'} class="formError"{/if}>
+			<dl{if $errorField == 'masterPassword'} class="formError"{/if}>
 				<dt><label for="masterPassword">{lang}wcf.acp.masterPassword{/lang}</label></dt>
 				<dd>
 					<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium" />
@@ -31,7 +31,7 @@
 							{/if}
 						</small>
 					{/if}
-					<small id="masterPasswordHelpMessage">{lang}wcf.acp.masterPassword.enter.description{/lang}</small>
+					<small>{lang}wcf.acp.masterPassword.enter.description{/lang}</small>
 				</dd>
 			</dl>
 		</fieldset>

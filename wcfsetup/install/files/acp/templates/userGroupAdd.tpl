@@ -46,7 +46,7 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.group.data{/lang}</legend>
 			
-			<dl id="groupNameDiv"{if $errorType.groupName|isset} class="formError"{/if}>
+			<dl{if $errorType.groupName|isset} class="formError"{/if}>
 				<dt><label for="groupName">{lang}wcf.acp.group.groupName{/lang}</label></dt>
 				<dd>
 					<input type="text" id="groupName" name="groupName" value="{$groupName}" class="medium" />
@@ -60,7 +60,7 @@
 							{/if}
 						</small>
 					{/if}
-					<small id="groupNameHelpMessage">{lang}wcf.acp.group.groupName.description{/lang}</small>
+					<small>{lang}wcf.acp.group.groupName.description{/lang}</small>
 				</dd>
 			</dl>
 			

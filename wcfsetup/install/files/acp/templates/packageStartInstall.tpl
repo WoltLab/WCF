@@ -33,7 +33,7 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.package.startInstall.source{/lang}</legend>
 		
-			<dl id="uploadPackageDiv"{if $errorField == 'uploadPackage'} class="formError"{/if}>
+			<dl{if $errorField == 'uploadPackage'} class="formError"{/if}>
 				<dt><label for="uploadPackage">{lang}wcf.acp.package.startInstall.source.upload{/lang}</label></dt>
 				<dd>
 					<input type="file" id="uploadPackage" name="uploadPackage" value="" />
@@ -50,11 +50,11 @@
 							{/if}
 						</small>
 					{/if}
-					<small id="uploadPackageHelpMessage">{lang}wcf.acp.package.startInstall.source.upload.description{/lang}</small>
+					<small>{lang}wcf.acp.package.startInstall.source.upload.description{/lang}</small>
 				</dd>
 			</dl>
 			
-			<dl id="downloadPackageDiv"{if $errorField == 'downloadPackage'} class="formError"{/if}>
+			<dl{if $errorField == 'downloadPackage'} class="formError"{/if}>
 				<dt><label for="downloadPackage">{lang}wcf.acp.package.startInstall.source.download{/lang}</label></dt>
 				<dd>
 					<input type="text" id="downloadPackage" name="downloadPackage" value="" class="long" />
@@ -64,7 +64,7 @@
 							{lang}wcf.acp.package.startInstall.error.{@$errorType}{/lang}
 						</small>
 					{/if}
-					<small id="downloadPackageHelpMessage">{lang}wcf.acp.package.startInstall.source.download.description{/lang}</small>
+					<small>{lang}wcf.acp.package.startInstall.source.download.description{/lang}</small>
 				</dd>
 			</dl>
 		</fieldset>

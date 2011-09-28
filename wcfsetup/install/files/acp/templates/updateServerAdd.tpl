@@ -31,7 +31,7 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.updateServer.data{/lang}</legend>
 			
-			<dl id="serverURLDiv"{if $errorField == 'serverURL'} class="formError"{/if}>
+			<dl{if $errorField == 'serverURL'} class="formError"{/if}>
 				<dt><label for="serverURL">{lang}wcf.acp.updateServer.serverURL{/lang}</label></dt>
 				<dd>
 					<input type="text" id="serverURL" name="serverURL" value="{$serverURL}" class="medium" />
@@ -45,23 +45,23 @@
 							{/if}
 						</small>
 					{/if}
-					<small id="serverURLHelpMessage">{lang}wcf.acp.updateServer.serverURL.description{/lang}</small>
+					<small>{lang}wcf.acp.updateServer.serverURL.description{/lang}</small>
 				</dd>
 			</dl>
 			
-			<dl id="loginUsernameDiv">
+			<dl>
 				<dt><label for="loginUsername">{lang}wcf.acp.updateServer.loginUsername{/lang}</label></dt>
 				<dd>
 					<input type="text" id="loginUsername" name="loginUsername" value="{$loginUsername}" class="long" />
-					<small id="loginUsernameHelpMessage">{lang}wcf.acp.updateServer.loginUsername.description{/lang}</small>
+					<small>{lang}wcf.acp.updateServer.loginUsername.description{/lang}</small>
 				</dd>
 			</dl>
 			
-			<dl id="loginPasswordDiv">
+			<dl>
 				<dt><label for="loginPassword">{lang}wcf.acp.updateServer.loginPassword{/lang}</label></dt>
 				<dd>
 					<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="long" />
-					<small id="loginPasswordHelpMessage"><p>{lang}wcf.acp.updateServer.loginPassword.description{/lang}</p></small>
+					<small><p>{lang}wcf.acp.updateServer.loginPassword.description{/lang}</p></small>
 				</dd>
 			</dl>
 			

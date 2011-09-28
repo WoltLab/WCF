@@ -216,7 +216,7 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.user.sendMail.mail{/lang}</legend>
 				
-				<dl id="fromDiv"{if $errorField == 'from'} class="formError"{/if}>
+				<dl{if $errorField == 'from'} class="formError"{/if}>
 					<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
 					<dd>
 						<input type="email" id="from" name="from" value="{$from}" class="medium" />
@@ -226,11 +226,11 @@
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}
-						<small id="fromHelpMessage">{lang}wcf.acp.user.sendMail.from.description{/lang}</small>
+						<small>{lang}wcf.acp.user.sendMail.from.description{/lang}</small>
 					</dd>
 				</dl>
 				
-				<dl id="subjectDiv"{if $errorField == 'subject'} class="formError"{/if}>
+				<dl{if $errorField == 'subject'} class="formError"{/if}>
 					<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
 					<dd>
 						<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
@@ -240,11 +240,11 @@
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}
-						<small id="subjectHelpMessage">{lang}wcf.acp.user.sendMail.subject.description{/lang}</small>
+						<small>{lang}wcf.acp.user.sendMail.subject.description{/lang}</small>
 					</dd>
 				</dl>
 				
-				<dl id="textDiv"{if $errorField == 'text'} class="formError"{/if}>
+				<dl{if $errorField == 'text'} class="formError"{/if}>
 					<dt><label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label></dt>
 					<dd>
 						<textarea id="text" name="text" rows="15" cols="40">{$text}</textarea>
@@ -254,7 +254,7 @@
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}
-						<small id="textHelpMessage">{lang}wcf.acp.user.sendMail.text.description{/lang}</small>
+						<small>{lang}wcf.acp.user.sendMail.text.description{/lang}</small>
 					</dd>
 				</dl>
 				
