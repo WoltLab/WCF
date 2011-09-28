@@ -88,9 +88,11 @@
 				{if $errorType.username|isset}
 					<small class="innerError">
 						<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-						{if $errorType.username == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-						{if $errorType.username == 'notValid'}{lang}wcf.user.error.username.notValid{/lang}{/if}
-						{if $errorType.username == 'notUnique'}{lang}wcf.user.error.username.notUnique{/lang}{/if}
+						{if $errorType.username == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.user.error.username.{@$errorType.username}{/lang}
+						{/if}
 					</small>
 				{/if}
 			</dd>
@@ -126,9 +128,11 @@
 						{if $errorType.email|isset}
 							<small class="innerError">
 								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-								{if $errorType.email == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-								{if $errorType.email == 'notValid'}{lang}wcf.user.error.email.notValid{/lang}{/if}
-								{if $errorType.email == 'notUnique'}{lang}wcf.user.error.email.notUnique{/lang}{/if}
+								{if $errorType.email == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.user.error.email.{@$errorType.email}{/lang}
+								{/if}
 							</small>
 						{/if}
 					</dd>
@@ -141,7 +145,7 @@
 						{if $errorType.confirmEmail|isset}
 							<small class="innerError">
 								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-								{if $errorType.confirmEmail == 'notEqual'}{lang}wcf.user.error.confirmEmail.notEqual{/lang}{/if}
+								{lang}wcf.user.error.confirmEmail.{@$errorType.confirmEmail}{/lang}
 							</small>
 						{/if}
 					</dd>
@@ -160,7 +164,11 @@
 						{if $errorType.password|isset}
 							<small class="innerError">
 								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-								{if $errorType.password == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+								{if $errorType.password == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.user.error.password.{@$errorType.password}{/lang}
+								{/if}
 							</small>
 						{/if}
 					</dd>
@@ -173,7 +181,7 @@
 						{if $errorType.confirmPassword|isset}
 							<small class="innerError">
 								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-								{if $errorType.confirmPassword == 'notEqual'}{lang}wcf.user.error.confirmPassword.notEqual{/lang}{/if}
+								{lang}wcf.user.error.confirmPassword.{@$errorType.confirmPassword}{/lang}
 							</small>
 						{/if}
 					</dd>

@@ -75,7 +75,11 @@
 						{if $errorField == 'groupIDs'}
 							<small class="innerError">
 								<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.user.sendMail.groups.error.{@$errorType}{/lang}
+								{/if}
 							</small>
 						{/if}
 					</dd>
@@ -93,7 +97,11 @@
 					{if $errorField == 'subject'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.user.sendMail.subject.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 					<small id="subjectHelpMessage">{lang}wcf.acp.user.sendMail.subject.description{/lang}</small>
@@ -107,7 +115,11 @@
 					{if $errorField == 'from'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.user.sendMail.subject.from.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 					<small id="fromHelpMessage">{lang}wcf.acp.user.sendMail.from.description{/lang}</small><!-- ToDo: Language variable contains paragraphs! -->
@@ -121,7 +133,11 @@
 					{if $errorField == 'text'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.user.sendMail.text.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 					<small id="textHelpMessage">{lang}wcf.acp.user.sendMail.text.description{/lang}</small>

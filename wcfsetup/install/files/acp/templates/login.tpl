@@ -14,7 +14,7 @@
 	</hgroup>
 </header>
 
-{if $errorField != ''}
+{if $errorField}
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
@@ -27,8 +27,12 @@
 			<dd><input type="text" id="username" name="username" value="{$username}" class="medium" />
 				{if $errorField == 'username'}
 					<small class="innerError">
-						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-						{if $errorType == 'notFound'}{lang}wcf.user.error.username.notFound{/lang}{/if}
+						<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.user.error.username.{@$errorType}{/lang}
+						{/if}
 					</small>
 				{/if}
 			</dd>
@@ -39,9 +43,12 @@
 			<dd><input type="password" id="password" name="password" value="" class="medium" />
 				{if $errorField == 'password'}
 					<small class="innerError">
-						<img src="{@RELATIVE_WCF_DIR}icon/errorS.png" alt="" />
-						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-						{if $errorType == 'false'}{lang}wcf.user.error.password.false{/lang}{/if}
+						<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.user.error.password.{@$errorType}{/lang}
+						{/if}
 					</small>
 				{/if}
 			</dd>

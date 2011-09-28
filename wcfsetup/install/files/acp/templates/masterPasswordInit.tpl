@@ -36,8 +36,11 @@
 					{if $errorField == 'masterPassword'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							{if $errorType == 'notSecure'}{lang}wcf.acp.masterPassword.error.notSecure{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.masterPassword.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 					<small id="masterPasswordHelpMessage">{lang}wcf.acp.masterPassword.init.description{/lang}</small>
@@ -51,8 +54,11 @@
 					{if $errorField == 'confirmMasterPassword'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							{if $errorType == 'notEqual'}{lang}wcf.acp.masterPassword.error.notEqual{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.masterPassword.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 				</dd>

@@ -40,8 +40,11 @@
 					{if $errorField == 'className'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							{if $errorType == 'doesNotExist'}{lang}wcf.acp.cronjob.error.className.doesNotExist{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.cronjob.error.className.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 					<small id="classNameHelpMessage">{lang}wcf.acp.cronjob.className.description{/lang}</small>
@@ -67,7 +70,7 @@
 					{if $errorField == 'startMinute'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.timing.notValid{/lang}{/if}
+							{lang}wcf.acp.cronjob.error.timing.{@$errorType}{/lang}
 						</small>
 					{/if}
 					<small id="startMinuteHelpMessage">{lang}wcf.acp.cronjob.startMinute.description{/lang}</small>
@@ -81,7 +84,7 @@
 					{if $errorField == 'startHour'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.timing.notValid{/lang}{/if}
+							{lang}wcf.acp.cronjob.error.timing.{@$errorType}{/lang}
 						</small>
 					{/if}
 					<small id="startHourHelpMessage">{lang}wcf.acp.cronjob.startHour.description{/lang}</small>
@@ -95,7 +98,7 @@
 					{if $errorField == 'startDom'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.timing.notValid{/lang}{/if}
+							{lang}wcf.acp.cronjob.error.timing.{@$errorType}{/lang}
 						</small>
 					{/if}
 					<small id="startDomHelpMessage">{lang}wcf.acp.cronjob.startDom.description{/lang}</small>
@@ -109,7 +112,7 @@
 					{if $errorField == 'startMonth'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.timing.notValid{/lang}{/if}
+							{lang}wcf.acp.cronjob.error.timing.{@$errorType}{/lang}
 						</small>
 					{/if}
 					<small id="startMonthHelpMessage">{lang}wcf.acp.cronjob.startMonth.description{/lang}</small>
@@ -123,7 +126,7 @@
 					{if $errorField == 'startDow'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType == 'notValid'}{lang}wcf.acp.cronjob.error.timing.notValid{/lang}{/if}
+							{lang}wcf.acp.cronjob.error.timing.{@$errorType}{/lang}
 						</small>
 					{/if}
 					<small id="startDowHelpMessage">{lang}wcf.acp.cronjob.startDow.description{/lang}</small>
