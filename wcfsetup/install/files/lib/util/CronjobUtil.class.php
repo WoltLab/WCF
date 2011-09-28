@@ -1,5 +1,6 @@
 <?php
 namespace wcf\util;
+use wcf\system\exception\SystemException;
 
 /**
  * Provides methods used for cron-like time calculations.
