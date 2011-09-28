@@ -40,13 +40,14 @@
 					{if $errorField == 'uploadPackage'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							{if $errorType == 'noValidPackage'}{lang}wcf.acp.package.startInstall.error.noValidPackage{/lang}{/if}
-							{if $errorType == 'noValidUpdate'}{lang}wcf.acp.package.startInstall.error.noValidUpdate{/lang}{/if}
-							{if $errorType == 'noValidInstall'}{lang}wcf.acp.package.startInstall.error.noValidInstall{/lang}{/if}
-							{if $errorType == 'uploadFailed'}{lang}wcf.acp.package.startInstall.error.uploadFailed{/lang}{/if}
-							{if $errorType == 'uniqueAlreadyInstalled'}{lang}wcf.acp.package.startInstall.error.uniqueAlreadyInstalled{/lang}{/if}
-							{if $errorType == 'phpRequirements'}<pre>{$phpRequirements|print_r}</pre>{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{elseif $errorType == 'phpRequirements'}
+								{* todo: use language variable (-> else) *}
+								<pre>{$phpRequirements|print_r}</pre>
+							{else}
+								{lang}wcf.acp.package.startInstall.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 					<small id="uploadPackageHelpMessage">{lang}wcf.acp.package.startInstall.source.upload.description{/lang}</small>
@@ -60,11 +61,7 @@
 					{if $errorField == 'downloadPackage'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType == 'notFound'}{lang}wcf.acp.package.startInstall.error.notFound{/lang}{/if}
-							{if $errorType == 'noValidPackage'}{lang}wcf.acp.package.startInstall.error.noValidPackage{/lang}{/if}
-							{if $errorType == 'noValidUpdate'}{lang}wcf.acp.package.startInstall.error.noValidUpdate{/lang}{/if}
-							{if $errorType == 'noValidInstall'}{lang}wcf.acp.package.startInstall.error.noValidInstall{/lang}{/if}
-							{if $errorType == 'uniqueAlreadyInstalled'}{lang}wcf.acp.package.startInstall.error.uniqueAlreadyInstalled{/lang}{/if}
+							{lang}wcf.acp.package.startInstall.error.{@$errorType}{/lang}
 						</small>
 					{/if}
 					<small id="downloadPackageHelpMessage">{lang}wcf.acp.package.startInstall.source.download.description{/lang}</small>

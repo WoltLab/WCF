@@ -38,8 +38,11 @@
 					{if $errorField == 'serverURL'}
 						<small class="innerError">
 							<span class="arrowOuter" style="display: none;"><span class="arrowInner"></span></span>
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							{if $errorType == 'notValid'}{lang}wcf.acp.updateServer.serverURL.error.notValid{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.updateServer.serverURL.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 					<small id="serverURLHelpMessage">{lang}wcf.acp.updateServer.serverURL.description{/lang}</small>
