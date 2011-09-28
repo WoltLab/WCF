@@ -5,6 +5,7 @@ use wcf\data\option\category\OptionCategory;
 use wcf\data\option\OptionAction;
 use wcf\data\option\Option;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 
@@ -49,6 +50,11 @@ class OptionForm extends AbstractOptionListForm {
 	public $optionTree = array();
 	
 	/**
+	 * @see	wcf\acp\form\AbstractOptionListForm::$languageItemPattern
+	 */
+	protected $languageItemPattern = 'wcf.option.option\d+';
+	
+	/**
 	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -80,7 +86,20 @@ class OptionForm extends AbstractOptionListForm {
 		// save options
 		$saveOptions = array();
 		foreach ($this->options as $option) {
-			$saveOptions[$option->optionID] = $this->optionValues[$option->optionName];
+			// handle i18n support
+			if ($option->supportI18n) {
+				if (I18nHandler::getInstance()->isPlainValue($option->optionName)) {
+					I18nHandler::getInstance()->remove('wcf.option.option' . $option->optionID, $option->packageID);
+					$saveOptions[$option->optionID] = I18nHandler::getInstance()->getValue($option->optionName);
+				}
+				else {
+					I18nHandler::getInstance()->save($option->optionName, 'wcf.option.option' . $option->optionID, 'wcf.option', $option->packageID);
+					$saveOptions[$option->optionID] = 'wcf.option.option' . $option->optionID;
+				}
+			}
+			else {
+				$saveOptions[$option->optionID] = $this->optionValues[$option->optionName];
+			}
 		}
 		$optionAction = new OptionAction(array(), 'updateAll', array('data' => $saveOptions));
 		$optionAction->executeAction();
@@ -102,7 +121,10 @@ class OptionForm extends AbstractOptionListForm {
 				$this->optionValues[$option->optionName] = $option->optionValue;
 			}
 		}
+		
+		// load option tree
 		$this->optionTree = $this->getOptionTree($this->category->categoryName);
+		
 		if (!count($_POST)) {
 			$this->activeTabMenuItem = $this->optionTree[0]['object']->categoryName;
 		}

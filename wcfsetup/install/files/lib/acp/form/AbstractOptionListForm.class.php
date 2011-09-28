@@ -6,6 +6,7 @@ use wcf\form\AbstractForm;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\I18nHandler;
 use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
@@ -95,6 +96,12 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	 * @var array
 	 */
 	public $typeObjects = array();
+	
+	/**
+	 * language item pattern
+	 * @var	string
+	 */
+	protected $languageItemPattern = '';
 		
 	/**
 	 * @see wcf\form\IForm::readFormParameters()
@@ -103,6 +110,14 @@ abstract class AbstractOptionListForm extends AbstractForm {
 		parent::readFormParameters();
 		
 		if (isset($_POST['values']) && is_array($_POST['values'])) $this->rawValues = $_POST['values'];
+		
+		foreach ($this->options as $option) {
+			if ($option->supportI18n) {
+				I18nHandler::getInstance()->register($option->optionName);
+				I18nHandler::getInstance()->setOptions($option->optionName, $option->packageID, $option->optionValue, $this->languageItemPattern);
+			}
+		}
+		I18nHandler::getInstance()->readValues();
 	}
 
 	/**
@@ -331,7 +346,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 				}
 			}
 		}
-	
+		
 		return $tree;
 	}
 	
@@ -377,5 +392,18 @@ abstract class AbstractOptionListForm extends AbstractForm {
 		}
 		
 		return $children;
+	}
+	
+	public function readData() {
+		parent::readData();
+		
+		if (!count($_POST)) {
+			foreach ($this->options as $option) {
+				if ($option->supportI18n) {
+					I18nHandler::getInstance()->register($option->optionName);
+					I18nHandler::getInstance()->setOptions($option->optionName, $option->packageID, $option->optionValue, $this->languageItemPattern);
+				}
+			}
+		}
 	}
 }

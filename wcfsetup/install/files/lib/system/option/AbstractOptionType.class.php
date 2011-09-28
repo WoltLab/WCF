@@ -14,6 +14,12 @@ use wcf\data\option\Option;
  */
 abstract class AbstractOptionType implements IOptionType {
 	/**
+	 * internationalization support
+	 * @var	boolean
+	 */
+	protected $supportI18n = false;
+	
+	/**
 	 * @see wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {}
@@ -30,5 +36,12 @@ abstract class AbstractOptionType implements IOptionType {
 	 */
 	public function getCSSClassName() {
 		return '';
+	}
+	
+	/**
+	 * @see	wcf\system\option\IOptionType::supportI18n()
+	 */
+	public function supportI18n() {
+		return $this->supportI18n;
 	}
 }

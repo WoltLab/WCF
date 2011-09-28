@@ -112,7 +112,8 @@
 			<!-- general.page -->
 			<option name="page_title">
 				<categoryname>general.page</categoryname>
-				<optiontype>text</optiontype>
+				<optiontype>texti18n</optiontype>
+				<supporti18n>1</supporti18n>
 			</option>
 			<option name="page_description">
 				<categoryname>general.page</categoryname>

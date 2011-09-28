@@ -48,4 +48,11 @@ interface IOptionType {
 	 * @return	string
 	 */
 	public function getCSSClassName();
+	
+	/**
+	 * Returns true, if options supports internationalization .
+	 * 
+	 * @return	boolean
+	 */
+	public function supportI18n();
 }

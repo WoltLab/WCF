@@ -129,6 +129,9 @@ class I18nHandler extends SingletonFactory {
 				return false;
 			}
 		}
+		else if (!isset($this->i18nValues[$elementID]) || empty($this->i18nValues[$elementID])) {
+			return false;
+		}
 		else {
 			foreach ($this->i18nValues[$elementID] as $value) {
 				if (empty($value)) {
@@ -251,8 +254,9 @@ class I18nHandler extends SingletonFactory {
 	 * @param	string		$value
 	 * @param	string		$pattern
 	 */
-	public function setOptions($elementID, $value, $pattern) {
+	public function setOptions($elementID, $packageID, $value, $pattern) {
 		$this->elementOptions[$elementID] = array(
+			'packageID' => $packageID,
 			'pattern' => $pattern,
 			'value' => $value
 		);
@@ -260,28 +264,29 @@ class I18nHandler extends SingletonFactory {
 	
 	/**
 	 * Assigns element values to template. Using request data once reading
-	 * initial database data is explicitly disallowed. Restrictions on package
-	 * id apply as explained in save().
+	 * initial database data is explicitly disallowed.
 	 * 
-	 * @param	integer		$packageID
 	 * @param	boolean		$useRequestData
 	 */
-	public function assignVariables($packageID, $useRequestData = true) {
+	public function assignVariables($useRequestData = true) {
+		$elementValues = array();
+		$elementValuesI18n = array();
+		
 		foreach ($this->elementIDs as $elementID) {
-			$elementValue = '';
-			$elementI18nValues = array();
+			$value = '';
+			$i18nValues = array();
 			
 			// use POST values instead of querying database
 			if ($useRequestData) {
 				if ($this->isPlainValue($elementID)) {
-					$elementValue = $this->getValue($elementID);
+					$value = $this->getValue($elementID);
 				}
 				else {
 					if ($this->hasI18nValues($elementID)) {
-						$elementI18nValues = $this->i18nValues[$elementID];
+						$i18nValues = $this->i18nValues[$elementID];
 					}
 					else {
-						$elementI18nValues = array();
+						$i18nValues = array();
 					}
 				}
 			}
@@ -295,24 +300,26 @@ class I18nHandler extends SingletonFactory {
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute(array(
 						$this->elementOptions[$elementID]['value'],
-						$packageID
-						));
+						$this->elementOptions[$elementID]['packageID']
+					));
 					while ($row = $statement->fetchArray()) {
-						$elementI18nValues[$row['languageID']] = $row['languageItemValue'];
+						$i18nValues[$row['languageID']] = $row['languageItemValue'];
 					}
-					
 				}
 				else {
 					// use data provided by setOptions()
-					$elementValue = $this->elementOptions[$elementID]['value'];
+					$value = $this->elementOptions[$elementID]['value'];
 				}
 			}
 			
-			WCF::getTPL()->assign(array(
-				'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
-				$elementID => $elementValue,
-				$elementID.'_i18n' => $elementI18nValues
-			));
+			$elementValues[$elementID] = $value;
+			$elementValuesI18n[$elementID] = $i18nValues;
 		}
+		
+		WCF::getTPL()->assign(array(
+			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
+			'i18nPlainValues' => $elementValues,
+			'i18nValues' => $elementValuesI18n
+		));
 	}
 }
