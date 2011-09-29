@@ -21,7 +21,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 	 */	
 	public $tableName = 'option';
 
-	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'validationpattern', 'enableoptions', 'showorder', 'hidden', 'selectoptions', 'categoryname', 'permissions', 'options', 'attrs', 'cdata');
+	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'validationpattern', 'enableoptions', 'showorder', 'hidden', 'selectoptions', 'categoryname', 'permissions', 'options', 'attrs', 'cdata', 'supporti18n');
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
@@ -30,7 +30,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 		// default values
 		$optionName = $optionType = $defaultValue = $validationPattern = $selectOptions = $enableOptions = $permissions = $options = '';
 		$showOrder = null;
-		$hidden = 0;
+		$hidden = $supportI18n = 0;
 		
 		// get values
 		if (isset($option['name'])) $optionName = $option['name'];
@@ -44,6 +44,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 		if (isset($option['selectoptions'])) $selectOptions = $option['selectoptions'];
 		if (isset($option['permissions'])) $permissions = $option['permissions'];
 		if (isset($option['options'])) $options = $option['options'];
+		if (isset($option['supporti18n'])) $supportI18n = $option['supporti18n'];
 		
 		// check if optionType exists
 		$className = 'wcf\system\option\\'.StringUtil::firstCharToUpperCase($optionType).'OptionType';
@@ -68,6 +69,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 			'hidden' => $hidden,
 			'permissions' => $permissions,
 			'options' => $options,
+			'supportI18n' => $supportI18n,
 			'additionalData' => serialize($additionalData)
 		);
 		
