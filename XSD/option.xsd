@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- The file "option.xsd" is used for xml-files which installs, updates or deletes options.  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
 	<!-- include types -->
@@ -61,13 +61,14 @@
 					<xs:element name="categoryname" type="woltlab_varchar" minOccurs="1" />
 					<xs:element name="optiontype" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="defaultvalue" type="xs:string" minOccurs="0" />
-					<xs:element name="validationpattern" type="xs:string" minOccurs="0" />				   
+					<xs:element name="validationpattern" type="xs:string" minOccurs="0" />
 					<xs:element name="selectoptions" type="xs:string" minOccurs="0" />
 					<xs:element name="enableoptions" type="xs:string" minOccurs="0" />
-					<xs:element name="hidden" type="woltlab_boolean" minOccurs="0" />					
+					<xs:element name="hidden" type="woltlab_boolean" minOccurs="0" />
 					<xs:element name="showorder" type="xs:unsignedInt" minOccurs="0" />
 					<xs:element name="options" type="xs:string" minOccurs="0" />
 					<xs:element name="permissions" type="xs:string" minOccurs="0" />
+					<xs:element name="supporti18n" type="woltlab_boolean" minOccurs="0" />
 				</xs:all>
 			</xs:extension>
 		</xs:complexContent>
