@@ -193,8 +193,8 @@ class I18nHandler extends SingletonFactory {
 		// insert language items
 		if (count($insertLanguageIDs)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_language_item
-						(languageID, languageItem, languageItemValue, languageCategoryID, packageID)
-				VALUES		(?, ?, ?, ?, ?)";
+						(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
+				VALUES		(?, ?, ?, ?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($insertLanguageIDs as $languageID) {
@@ -202,6 +202,7 @@ class I18nHandler extends SingletonFactory {
 					$languageID,
 					$languageVariable,
 					$this->i18nValues[$elementID][$languageID],
+					0,
 					$languageCategoryID,
 					$packageID
 				));
