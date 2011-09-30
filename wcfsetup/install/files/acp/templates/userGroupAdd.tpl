@@ -6,7 +6,7 @@
 		WCF.TabMenu.init();
 
 		var $availableLanguages = { {implode from=$availableLanguages key=languageID item=languageName}{@$languageID}: '{$languageName}'{/implode} };
-		var $groupNameValues = { {implode from=$groupName_i18n key=languageID item=value}'{@$languageID}': '{$value}'{/implode} };
+		var $groupNameValues = { {implode from=$i18nValues['groupName'] key=languageID item=value}'{@$languageID}': '{$value}'{/implode} };
 		new WCF.MultipleLanguageInput('groupName', false, $groupNameValues, $availableLanguages);
 	});
 	//]]>
@@ -49,7 +49,7 @@
 			<dl{if $errorType.groupName|isset} class="formError"{/if}>
 				<dt><label for="groupName">{lang}wcf.acp.group.groupName{/lang}</label></dt>
 				<dd>
-					<input type="text" id="groupName" name="groupName" value="{$groupName}" class="medium" />
+					<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" class="medium" />
 					{if $errorType.groupName|isset}
 						<small class="innerError">
 							{if $errorType.groupName == 'empty'}

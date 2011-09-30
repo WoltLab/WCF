@@ -179,7 +179,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		I18nHandler::getInstance()->assignVariables(1);
+		I18nHandler::getInstance()->assignVariables();
 		
 		WCF::getTPL()->assign(array(
 			'groupName' => $this->groupName,
