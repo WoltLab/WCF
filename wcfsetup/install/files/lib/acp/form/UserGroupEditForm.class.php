@@ -67,7 +67,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	 */
 	public function readData() {
 		if (!count($_POST)) {
-			I18nHandler::getInstance()->setOptions('groupName',  $this->group->groupName, 'wcf.acp.group.group\d+');
+			I18nHandler::getInstance()->setOptions('groupName', 1, $this->group->groupName, 'wcf.acp.group.group\d+');
 			$this->groupName = $this->group->groupName;
 			
 			// get default values
@@ -99,7 +99,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 		parent::assignVariables();
 		
 		$useRequestData = (count($_POST)) ? true : false;
-		I18nHandler::getInstance()->assignVariables(1, $useRequestData);
+		I18nHandler::getInstance()->assignVariables($useRequestData);
 		
 		WCF::getTPL()->assign(array(
 			'groupID' => $this->group->groupID,

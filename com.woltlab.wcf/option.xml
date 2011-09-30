@@ -117,7 +117,8 @@
 			</option>
 			<option name="page_description">
 				<categoryname>general.page</categoryname>
-				<optiontype>text</optiontype>
+				<optiontype>texti18n</optiontype>
+				<supporti18n>1</supporti18n>
 			</option>
 			<option name="page_url">
 				<categoryname>general.page</categoryname>
@@ -258,8 +259,9 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			</option>
 			<option name="mail_signature">
 				<categoryname>general.mail.general</categoryname>
-				<optiontype>textarea</optiontype>
+				<optiontype>textareai18n</optiontype>
 				<defaultvalue><![CDATA[]]></defaultvalue>
+				<supporti18n>1</supporti18n>
 			</option>
 			<!-- /mail.general -->
 			

@@ -5,7 +5,7 @@ use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
 /**
- * TextI18nOptionType is an implementation of IOptionType for 'input type="text"' tags with i18n support.
+ * TextareaI18nOptionType is an implementation of IOptionType for 'textarea' tags with i18n support.
  *
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class TextI18nOptionType extends TextOptionType {
+class TextareaI18nOptionType extends TextareaOptionType {
 	/**
 	 * @see	wcf\system\option\AbstractOptionType::$supportI18n
 	 */
@@ -29,10 +29,9 @@ class TextI18nOptionType extends TextOptionType {
 		
 		WCF::getTPL()->assign(array(
 			'option' => $option,
-			'inputType' => $this->inputType,
 			'value' => $value
 		));
-		return WCF::getTPL()->fetch('optionTypeTextI18n');
+		return WCF::getTPL()->fetch('optionTypeTextareaI18n');
 	}
 	
 	/**

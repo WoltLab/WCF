@@ -62,6 +62,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 		foreach ($elements as $element) {
 			$data = array(
 				'attributes' => array(),
+				'elements' => array(),
 				'value' => $element->nodeValue
 			);
 			
@@ -69,6 +70,12 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			$attributes = $xpath->query('attribute::*', $element);
 			foreach ($attributes as $attribute) {
 				$data['attributes'][$attribute->name] = $attribute->value;
+			}
+			
+			// get child elements
+			$childNodes = $xpath->query('child::*', $element);
+			foreach ($childNodes as $childNode) {
+				$data['elements'][$childNode->name] = $childNode->value;
 			}
 			
 			$items[] = $data;
