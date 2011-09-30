@@ -114,7 +114,7 @@ class StyleUtil {
 					$contents = StyleUtil::compressCSS($contents);
 					// fix icon/image path
 					$contents = str_replace('../icon/', '../../icon/', $contents);
-					$contents = str_replace('../images/', '../../images/', $contents);
+					$contents = str_replace('../image/', '../../image/', $contents);
 					// write style
 					$file->write("/* static: ".basename($staticStyle)." */\n");
 					$file->write(StringUtil::trim($contents)."\n");

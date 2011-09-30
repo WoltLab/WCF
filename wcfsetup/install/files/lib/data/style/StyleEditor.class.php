@@ -325,7 +325,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		if (!empty($data['image'])) {
 			$i = $tar->getIndexByFilename($data['image']);
 			if ($i !== false) {
-				$tar->extract($i, WCF_DIR.'images/'.$data['image']);
+				$tar->extract($i, WCF_DIR.'image/'.$data['image']);
 				@chmod(WCF_DIR.'images/'.$data['image'], 0777);
 			}
 		}

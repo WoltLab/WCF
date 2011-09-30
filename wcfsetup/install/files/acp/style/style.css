@@ -120,7 +120,7 @@ hr {
 header.pageHeader {
 	/* Disabled, because the WoltLab header-image is not LGPL 
 	Activate it if you want to test your own header image */
-	/* background-image: url('../images/header.png'); */
+	/* background-image: url('../image/header.png'); */
 	background-position: left top;
 	background-repeat: repeat-x;
 	min-width: 800px;
@@ -1218,7 +1218,7 @@ input[type='button'],
 	background-color: #369;
 	/* Disabled, because the WoltLab header-image is not LGPL 
 	Activate it if you want to test your own header image */
-	/* background-image: url('../images/header.png'); */
+	/* background-image: url('../image/header.png'); */
 	background-position: left top;
 	background-repeat: repeat-x;	
 	

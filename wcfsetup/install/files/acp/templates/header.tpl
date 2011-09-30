@@ -100,7 +100,7 @@
 				<!-- clickable area -->
 				<a href="index.php{@SID_ARG_1ST}">
 					<h1>WoltLab Community Framework 2.0 Pre-Alpha 1</h1>
-					<img src="{@RELATIVE_WCF_DIR}acp/images/wcfLogoWhite.svg" width="300" height="58" alt="Product-logo" title="WoltLab Community Framework 2.0 Pre-Alpha 1" />
+					<img src="{@RELATIVE_WCF_DIR}acp/image/wcfLogoWhite.svg" width="300" height="58" alt="Product-logo" title="WoltLab Community Framework 2.0 Pre-Alpha 1" />
 				</a>
 				<!-- /clickable area -->
 				

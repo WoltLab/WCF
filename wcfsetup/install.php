@@ -19,7 +19,7 @@ set_error_handler('handleError', E_ALL);
 // define list of needed file
 $neededFilesPattern = array(
 	'!^setup/.*!',
-	'!^install/files/acp/images/wcfLogo.*!',
+	'!^install/files/acp/image/wcfLogo.*!',
 	'!^install/files/acp/style/.*!',
 	'!^install/files/lib/data/.*!',
 	'!^install/files/icon/.*!',
@@ -741,7 +741,7 @@ function readFileResource($key, $directory) {
 
 // show image from temp folder
 if (isset($_GET['showImage'])) {
-	readFileResource('showImage', TMP_DIR . 'install/files/acp/images/');
+	readFileResource('showImage', TMP_DIR . 'install/files/acp/image/');
 }
 // show icon from temp folder
 if (isset($_GET['showIcon'])) {
