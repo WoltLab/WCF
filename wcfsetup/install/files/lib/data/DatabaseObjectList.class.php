@@ -291,7 +291,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	}
 	
 	/**
-	 * @see	wcf\data\ItraversableObject::search()
+	 * @see	wcf\data\ITraversableObject::search()
 	 */
 	public function search($objectID) {
 		try {
