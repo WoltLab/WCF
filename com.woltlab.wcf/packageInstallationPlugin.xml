@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/packageInstallationPlugin.xsd">
 	<import>
-		<pip name="acpmenu">wcf\system\package\plugin\ACPMenuPackageInstallationPlugin</pip>
-		<pip name="acptemplate">wcf\system\package\plugin\ACPTemplatePackageInstallationPlugin</pip>
-		<pip name="clipboardaction">wcf\system\package\plugin\ClipboardActionPackageInstallationPlugin</pip>
-		<pip name="clipboarditemtype">wcf\system\package\plugin\ClipboardItemTypePackageInstallationPlugin</pip>
-		<pip name="coreobject">wcf\system\package\plugin\CoreObjectPackageInstallationPlugin</pip>
+		<pip name="acpMenu">wcf\system\package\plugin\ACPMenuPackageInstallationPlugin</pip>
+		<pip name="acpTemplate">wcf\system\package\plugin\ACPTemplatePackageInstallationPlugin</pip>
+		<pip name="clipboardAction">wcf\system\package\plugin\ClipboardActionPackageInstallationPlugin</pip>
+		<pip name="clipboardItemType">wcf\system\package\plugin\ClipboardItemTypePackageInstallationPlugin</pip>
+		<pip name="coreObject">wcf\system\package\plugin\CoreObjectPackageInstallationPlugin</pip>
 		<pip name="cronjob">wcf\system\package\plugin\CronjobPackageInstallationPlugin</pip>
-		<pip name="eventlistener">wcf\system\package\plugin\EventListenerPackageInstallationPlugin</pip>
+		<pip name="eventListener">wcf\system\package\plugin\EventListenerPackageInstallationPlugin</pip>
 		<pip name="file">wcf\system\package\plugin\FilePackageInstallationPlugin</pip>
-		<pip name="usergroupoption">wcf\system\package\plugin\UserGroupOptionPackageInstallationPlugin</pip>
 		<pip name="language">wcf\system\package\plugin\LanguagePackageInstallationPlugin</pip>
 		<pip name="option">wcf\system\package\plugin\OptionPackageInstallationPlugin</pip>
-		<pip name="pagemenu">wcf\system\package\plugin\PageMenuPackageInstallationPlugin</pip>
+		<pip name="pageMenu">wcf\system\package\plugin\PageMenuPackageInstallationPlugin</pip>
 		<pip name="script">wcf\system\package\plugin\ScriptPackageInstallationPlugin</pip>
 		<pip name="sql">wcf\system\package\plugin\SQLPackageInstallationPlugin</pip>
-		<pip name="templatelistener">wcf\system\package\plugin\TemplateListenerPackageInstallationPlugin</pip>
+		<pip name="templateListener">wcf\system\package\plugin\TemplateListenerPackageInstallationPlugin</pip>
 		<pip name="template">wcf\system\package\plugin\TemplatePackageInstallationPlugin</pip>
-		<pip name="useroption">wcf\system\package\plugin\UserOptionPackageInstallationPlugin</pip>
+		<pip name="userGroupOption">wcf\system\package\plugin\UserGroupOptionPackageInstallationPlugin</pip>
+		<pip name="userOption">wcf\system\package\plugin\UserOptionPackageInstallationPlugin</pip>
 	</import>
 </data>
