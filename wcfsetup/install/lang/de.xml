@@ -71,11 +71,11 @@
 		<item name="wcf.acp.group.option.admin.system.cronjob.canDeleteCronjob"><![CDATA[Kann zeitgesteuerte Aufgaben löschen]]></item>
 		<item name="wcf.acp.group.option.admin.system.cronjob.canDeleteCronjob.description"><![CDATA[Mitglieder dieser Benutzergruppe können vorhandene zeitgesteuerte Aufgaben löschen.]]></item>
 		<item name="wcf.acp.group.option.admin.system.cronjob.canDeleteCronjobLog"><![CDATA[Kann Protokoll der zeitgesteuerten Aufgaben löschen]]></item>
-		<item name="wcf.acp.group.option.admin.system.cronjob.canDeleteCronjobLog.description"><![CDATA[Mitglieder dieser Benutzergruppe können das Protokoll der zeitgesteuerten Aufgaben löschen. Bei der Ausführung einer zeitgesteuerten Aufgabe wird festgehalten, ob dieser erfolgreich ausgeführt wurde.]]></item>
+		<item name="wcf.acp.group.option.admin.system.cronjob.canDeleteCronjobLog.description"><![CDATA[Mitglieder dieser Benutzergruppe können das Protokoll der zeitgesteuerten Aufgaben löschen.]]></item>
 		<item name="wcf.acp.group.option.admin.system.cronjob.canEditCronjob"><![CDATA[Kann zeitgesteuerte Aufgaben ändern]]></item>
 		<item name="wcf.acp.group.option.admin.system.cronjob.canEditCronjob.description"><![CDATA[Mitglieder dieser Benutzergruppe können vorhandene zeitgesteuerte Aufgaben bearbeiten.]]></item>
 		<item name="wcf.acp.group.option.admin.system.cronjob.canEnableDisableCronjob"><![CDATA[Kann zeitgesteuerte Aufgaben deaktivieren]]></item>
-		<item name="wcf.acp.group.option.admin.system.cronjob.canEnableDisableCronjob.description"><![CDATA[Mitglieder dieser Benutzergruppe können vorhandene zeitgesteuerte Aufgaben deaktivieren. Diese werden dann nicht mehr ausgeführt, können später jedoch auch wieder aktiviert werden.]]></item>
+		<item name="wcf.acp.group.option.admin.system.cronjob.canEnableDisableCronjob.description"><![CDATA[Mitglieder dieser Benutzergruppe können vorhandene zeitgesteuerte Aufgaben deaktivieren.]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canEditServer"><![CDATA[Kann Update-Server bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canEditServer.description"><![CDATA[Mitglieder dieser Benutzergruppe können vorhandene Update-Server bearbeiten und neue hinzufügen.]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canInstallPackage"><![CDATA[Kann Pakete installieren]]></item>
@@ -354,7 +354,7 @@
 	<category name="wcf.acp.sessionLog">
 		<item name="wcf.acp.sessionLog.access.list"><![CDATA[Aktionen der protokollierten Sitzung von &raquo;{$sessionLog->username}&laquo;]]></item>
 		<item name="wcf.acp.sessionLog.access.list.count"><![CDATA[{#$items} protokollierte Aktion{if $items != 1}en{/if}]]></item>
-		<item name="wcf.acp.sessionLog.accesses"><![CDATA[Aktionen]]></item>
+		<item name="wcf.acp.sessionLog.actions"><![CDATA[Aktionen]]></item>
 		<item name="wcf.acp.sessionLog.className"><![CDATA[Klasse]]></item>
 		<item name="wcf.acp.sessionLog.lastActivityTime"><![CDATA[Letzte Aktion]]></item>
 		<item name="wcf.acp.sessionLog.list"><![CDATA[Protokollierte Sitzungen]]></item>
@@ -479,7 +479,7 @@
 		<item name="wcf.date.timezone.america.tijuana"><![CDATA[(UTC-08:00) Tijuana, Niederkalifornien]]></item>
 		<item name="wcf.date.timezone.america.los_angeles"><![CDATA[(UTC-08:00) Pacific Zeit]]></item>
 		<item name="wcf.date.timezone.america.phoenix"><![CDATA[(UTC-07:00) Arizona]]></item>
-		<item name="wcf.date.timezone.america.chihuahua"><![CDATA[(UTC-07:00) Chihuahua, La Paz, Mazatlan]]></item>
+		<item name="wcf.date.timezone.america.chihuahua"><![CDATA[(UTC-07:00) Chihuahua, La Paz, Mazatlán]]></item>
 		<item name="wcf.date.timezone.america.denver"><![CDATA[(UTC-07:00) Mountain Zeit]]></item>
 		<item name="wcf.date.timezone.america.chicago"><![CDATA[(UTC-06:00) Central Zeit]]></item>
 		<item name="wcf.date.timezone.america.mexico_city"><![CDATA[(UTC-06:00) Guadalajara, Mexiko-Stadt, Monterrey]]></item>
@@ -490,13 +490,13 @@
 		<item name="wcf.date.timezone.america.indiana.indianapolis"><![CDATA[(UTC-05:00) Indiana (Ost)]]></item>
 		<item name="wcf.date.timezone.america.rio_branco"><![CDATA[(UTC-05:00) Rio Branco]]></item>
 		<item name="wcf.date.timezone.america.caracas"><![CDATA[(UTC-04:30) Caracas]]></item>
-		<item name="wcf.date.timezone.america.asuncion"><![CDATA[(UTC-04:00) Asuncion]]></item>
+		<item name="wcf.date.timezone.america.asuncion"><![CDATA[(UTC-04:00) Asunción]]></item>
 		<item name="wcf.date.timezone.america.halifax"><![CDATA[(UTC-04:00) Atlantic (Kanada)]]></item>
-		<item name="wcf.date.timezone.america.cuiaba"><![CDATA[(UTC-04:00) Cuiaba]]></item>
+		<item name="wcf.date.timezone.america.cuiaba"><![CDATA[(UTC-04:00) Cuiabá]]></item>
 		<item name="wcf.date.timezone.america.la_paz"><![CDATA[(UTC-04:00) Georgetown, La Paz, Manaus, San Juan]]></item>
 		<item name="wcf.date.timezone.america.santiago"><![CDATA[(UTC-04:00) Santiago]]></item>
 		<item name="wcf.date.timezone.america.st_johns"><![CDATA[(UTC-03:30) Neufundland]]></item>
-		<item name="wcf.date.timezone.america.sao_paulo"><![CDATA[(UTC-03:00) Brasilia]]></item>
+		<item name="wcf.date.timezone.america.sao_paulo"><![CDATA[(UTC-03:00) Brasília]]></item>
 		<item name="wcf.date.timezone.america.argentina.buenos_aires"><![CDATA[(UTC-03:00) Buenos Aires]]></item>
 		<item name="wcf.date.timezone.america.cayenne"><![CDATA[(UTC-03:00) Cayenne, Fortaleza]]></item>
 		<item name="wcf.date.timezone.america.godthab"><![CDATA[(UTC-03:00) Grönland]]></item>
@@ -506,9 +506,9 @@
 		<item name="wcf.date.timezone.atlantic.cape_verde"><![CDATA[(UTC-01:00) Kap Verde]]></item>
 		<item name="wcf.date.timezone.africa.casablanca"><![CDATA[(UTC) Casablanca]]></item>
 		<item name="wcf.date.timezone.europe.london"><![CDATA[(UTC) Dublin, Edinburgh, Lissabon, London]]></item>
-		<item name="wcf.date.timezone.africa.monrovia"><![CDATA[(UTC) Monrovia, Reykjavik]]></item>
+		<item name="wcf.date.timezone.africa.monrovia"><![CDATA[(UTC) Monrovia, Reykjavík]]></item>
 		<item name="wcf.date.timezone.europe.berlin"><![CDATA[(UTC+01:00) Amsterdam, Berlin, Bern, Rom, Stockholm, Wien]]></item>
-		<item name="wcf.date.timezone.europe.belgrade"><![CDATA[(UTC+01:00) Belgrad, Bratislava, Bupdapest, Ljubljana, Prag]]></item>
+		<item name="wcf.date.timezone.europe.belgrade"><![CDATA[(UTC+01:00) Belgrad, Bratislava, Budapest, Ljubljana, Prag]]></item>
 		<item name="wcf.date.timezone.europe.paris"><![CDATA[(UTC+01:00) Brüssel, Kopenhagen, Madrid, Paris]]></item>
 		<item name="wcf.date.timezone.europe.sarajevo"><![CDATA[(UTC+01:00) Sarajevo, Skopje, Warschau, Zagreb]]></item>
 		<item name="wcf.date.timezone.africa.algiers"><![CDATA[(UTC+01:00) West-Zentralafrika]]></item>
@@ -547,7 +547,7 @@
 		<item name="wcf.date.timezone.asia.krasnoyarsk"><![CDATA[(UTC+07:00) Krasnojarsk]]></item>
 		<item name="wcf.date.timezone.asia.irkutsk"><![CDATA[(UTC+08:00) Irkutsk]]></item>
 		<item name="wcf.date.timezone.asia.kuala_lumpur"><![CDATA[(UTC+08:00) Kuala Lumpur, Singapur]]></item>
-		<item name="wcf.date.timezone.asia.chongqing"><![CDATA[(UTC+08:00) Peking, Chongqing, Hongkong, Urumchi]]></item>
+		<item name="wcf.date.timezone.asia.chongqing"><![CDATA[(UTC+08:00) Peking, Chongqing, Hongkong, Ürümqi]]></item>
 		<item name="wcf.date.timezone.australia.perth"><![CDATA[(UTC+08:00) Perth]]></item>
 		<item name="wcf.date.timezone.asia.taipei"><![CDATA[(UTC+08:00) Taipeh]]></item>
 		<item name="wcf.date.timezone.asia.ulaanbaatar"><![CDATA[(UTC+08:00) Ulan-Bator]]></item>
@@ -594,6 +594,8 @@
 		<item name="wcf.global.button.collapsible"><![CDATA[Auf- und Zuklappen]]></item>
 		<item name="wcf.global.page.next"><![CDATA[nächste Seite]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[vorherige Seite]]></item>
+		<item name="wcf.global.locale.unix"><![CDATA[de_DE]]></item> <!-- system variable; do not translate -->
+		<item name="wcf.global.locale.win"><![CDATA[deu_deu]]></item> <!-- system variable; do not translate -->
 	</category>
 	
 	<category name="wcf.user">
@@ -621,5 +623,6 @@
 		<item name="wcf.user.registrationDate"><![CDATA[Registrierungsdatum]]></item>
 		<item name="wcf.user.visibleLanguages"><![CDATA[Zeige Inhalte in folgenden Sprachen an]]></item>
 		<item name="wcf.user.visibleLanguages.description"><![CDATA[Geben Sie an, in welchen Sprachen erstellte Inhalte angezeigt werden sollen.]]></item>
+		<item name="wcf.user.userID"><![CDATA[Benutzer-ID]]></item>
 	</category>
 </language>
