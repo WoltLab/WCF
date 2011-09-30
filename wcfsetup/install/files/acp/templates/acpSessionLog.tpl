@@ -11,7 +11,7 @@
 	{pages print=true assign=pagesLinks link="index.php?page=ACPSessionLog&sessionLogID=$sessionLogID&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"|concat:SID_ARG_2ND_NOT_ENCODED}
 </div>
 
-{if $sessionAccessLogs|count}
+{hascontent}
 	<div class="border boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.sessionLog.access.list{/lang} <span class="badge" title="{lang}wcf.acp.sessionLog.access.list.count{/lang}">{#$items}</span></h1>
@@ -33,19 +33,21 @@
 			</thead>
 			
 			<tbody>
-			{foreach from=$sessionAccessLogs item=sessionAccessLog}
-				<tr>
-					<td class="columnID columnSessionAccessLogID"><p>{@$sessionAccessLog->sessionAccessLogID}</p></td>
-					<td class="columnURL columnIpAddress"{if $sessionAccessLog->ipAddress != $sessionLog->ipAddress} style="color: red"{/if}><p>{$sessionAccessLog->ipAddress}</p></td>
-					<td class="columnDate columnTime"><p>{@$sessionAccessLog->time|time}</p></td>
-					<td class="columnTitle columnPackageName"><p>{$sessionAccessLog->packageName}</p></td>
-					<td class="columnText columnClassName"><p>{$sessionAccessLog->className}</p></td>
-					<td class="columnURL columnRequestURI" title="{$sessionAccessLog->requestURI}"><p>{if !$sessionAccessLog->hasProtectedURI()}<a href="{$sessionAccessLog->requestURI}{@SID_ARG_2ND}">{$sessionAccessLog->requestURI|truncate:50}</a>{else}{$sessionAccessLog->requestURI|truncate:50}{/if}</p></td>
-					<td class="columnTextolumnRequestMethod"><p>{$sessionAccessLog->requestMethod}</p></td>
+				{content}
+					{foreach from=$objects item=sessionAccessLog}
+						<tr>
+							<td class="columnID columnSessionAccessLogID"><p>{@$sessionAccessLog->sessionAccessLogID}</p></td>
+							<td class="columnURL columnIpAddress"{if $sessionAccessLog->ipAddress != $sessionLog->ipAddress} style="color: red"{/if}><p>{$sessionAccessLog->ipAddress}</p></td>
+							<td class="columnDate columnTime"><p>{@$sessionAccessLog->time|time}</p></td>
+							<td class="columnTitle columnPackageName"><p>{$sessionAccessLog->packageName}</p></td>
+							<td class="columnText columnClassName"><p>{$sessionAccessLog->className}</p></td>
+							<td class="columnURL columnRequestURI" title="{$sessionAccessLog->requestURI}"><p>{if !$sessionAccessLog->hasProtectedURI()}<a href="{$sessionAccessLog->requestURI}{@SID_ARG_2ND}">{$sessionAccessLog->requestURI|truncate:50}</a>{else}{$sessionAccessLog->requestURI|truncate:50}{/if}</p></td>
+							<td class="columnTextolumnRequestMethod"><p>{$sessionAccessLog->requestMethod}</p></td>
 					
-					{if $additionalColumns.$sessionAccessLog->sessionAccessLogID|isset}{@$additionalColumns.$sessionAccessLog->sessionAccessLogID}{/if}
-				</tr>
-			{/foreach}
+							{if $additionalColumns.$sessionAccessLog->sessionAccessLogID|isset}{@$additionalColumns.$sessionAccessLog->sessionAccessLogID}{/if}
+						</tr>
+					{/foreach}
+				{/content}
 			</tbody>
 		</table>
 		

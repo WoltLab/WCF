@@ -28,11 +28,7 @@
 	</nav>
 </div>
 
-{if !$items}
-	<div class="border content">
-		<p class="warning">{lang}wcf.acp.updateServer.list.noneAvailable{/lang}</p>
-	</div>
-{else}
+{hascontent}
 	<div class="border boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.updateServer.list{/lang} <span class="badge" title="{lang}wcf.acp.updateServer.list.count{/lang}">{#$items}</span></h1>
@@ -53,25 +49,27 @@
 			</thead>
 			
 			<tbody>
-				{foreach from=$updateServers item=updateServer}
-					<tr class="updateServerRow">
-						<td class="columnIcon">
-							<img src="{@RELATIVE_WCF_DIR}icon/{if !$updateServer->disabled}enabled{else}disabled{/if}1.svg" alt="" title="{lang}wcf.global.button.{if !$updateServer->disabled}disable{else}enable{/if}{/lang}" data-objectID="{@$updateServer->packageUpdateServerID}" data-disableMessage="{lang}wcf.global.button.disable{/lang}" data-enableMessage="{lang}wcf.global.button.enable{/lang}" class="toggleButton balloonTooltip" />
-							<a href="index.php?form=UpdateServerEdit&amp;packageUpdateServerID={@$updateServer->packageUpdateServerID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
-							<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" data-objectID="{@$updateServer->packageUpdateServerID}" data-confirmMessage="{lang}wcf.acp.updateServer.delete.sure{/lang}" class="deleteButton balloonTooltip" />
+				{content}
+					{foreach from=$objects item=updateServer}
+						<tr class="updateServerRow">
+							<td class="columnIcon">
+								<img src="{@RELATIVE_WCF_DIR}icon/{if !$updateServer->disabled}enabled{else}disabled{/if}1.svg" alt="" title="{lang}wcf.global.button.{if !$updateServer->disabled}disable{else}enable{/if}{/lang}" data-objectID="{@$updateServer->packageUpdateServerID}" data-disableMessage="{lang}wcf.global.button.disable{/lang}" data-enableMessage="{lang}wcf.global.button.enable{/lang}" class="toggleButton balloonTooltip" />
+								<a href="index.php?form=UpdateServerEdit&amp;packageUpdateServerID={@$updateServer->packageUpdateServerID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
+								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" data-objectID="{@$updateServer->packageUpdateServerID}" data-confirmMessage="{lang}wcf.acp.updateServer.delete.sure{/lang}" class="deleteButton balloonTooltip" />
 							
-							{if $additionalButtons[$updateServer->packageUpdateServerID]|isset}{@$additionalButtons[$updateServer->packageUpdateServerID]}{/if}
-						</td>
-						<td class="columnID"><p>{@$updateServer->packageUpdateServerID}</p></td>
-						<td class="columnText columnTitle"><p><a href="index.php?form=UpdateServerEdit&amp;packageUpdateServerID={@$updateServer->packageUpdateServerID}{@SID_ARG_2ND}" title="{lang}wcf.global.button.edit{/lang}">{$updateServer->serverURL}</a></p></td>
-						<td class="columnDigits"><p>{#$updateServer->packages}</p></td>
-						<td class="columnStatus"><p class="badge{if $updateServer->status == 'online'} badgeSuccess{else} badgeError{/if}">{@$updateServer->status}</p></td>
-						<td class="columnText"><p title="{@$updateServer->errorMessage}">{@$updateServer->errorMessage|truncate:"30"}</p></td>
-						<td class="columnDate"><p>{if $updateServer->lastUpdateTime}{@$updateServer->lastUpdateTime|time}{/if}</p></td>
+								{if $additionalButtons[$updateServer->packageUpdateServerID]|isset}{@$additionalButtons[$updateServer->packageUpdateServerID]}{/if}
+							</td>
+							<td class="columnID"><p>{@$updateServer->packageUpdateServerID}</p></td>
+							<td class="columnText columnTitle"><p><a href="index.php?form=UpdateServerEdit&amp;packageUpdateServerID={@$updateServer->packageUpdateServerID}{@SID_ARG_2ND}" title="{lang}wcf.global.button.edit{/lang}">{$updateServer->serverURL}</a></p></td>
+							<td class="columnDigits"><p>{#$updateServer->packages}</p></td>
+							<td class="columnStatus"><p class="badge{if $updateServer->status == 'online'} badgeSuccess{else} badgeError{/if}">{@$updateServer->status}</p></td>
+							<td class="columnText"><p title="{@$updateServer->errorMessage}">{@$updateServer->errorMessage|truncate:"30"}</p></td>
+							<td class="columnDate"><p>{if $updateServer->lastUpdateTime}{@$updateServer->lastUpdateTime|time}{/if}</p></td>
 						
-						{if $additionalColumns[$updateServer->packageUpdateServerID]|isset}{@$additionalColumns[$updateServer->packageUpdateServerID]}{/if}
-					</tr>
-				{/foreach}
+							{if $additionalColumns[$updateServer->packageUpdateServerID]|isset}{@$additionalColumns[$updateServer->packageUpdateServerID]}{/if}
+						</tr>
+					{/foreach}
+				{/content}
 			</tbody>
 		</table>
 		
@@ -84,6 +82,10 @@
 			<ul><li><a href="index.php?form=UpdateServerAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.updateServer.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li></ul>
 		</nav>
 	</div>
-{/if}
+{hascontentelse}
+	<div class="border content">
+		<p class="warning">{lang}wcf.acp.updateServer.list.noneAvailable{/lang}</p>
+	</div>
+{/hascontent}
 
 {include file='footer'}

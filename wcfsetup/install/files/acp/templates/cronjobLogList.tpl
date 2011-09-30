@@ -32,27 +32,27 @@
 				</thead>
 				
 				<tbody>
-				{content}
-					{foreach from=$cronjobLogs item=cronjobLog}
-						<tr>
-							<td class="columnID columnCronjobID"><p>{@$cronjobLog->cronjobID}</p></td>
-							<td class="columnTitle columnClassName"><p>{$cronjobLog->className}</p></td>
-							<td class="columnText columnDescription"><p>{$cronjobLog->description}</p></td>
-							{if $cronjobLog->success}
-								<td class="columnDate columnExecTime"><p>{@$cronjobLog->execTime|time} {lang}wcf.acp.cronjob.log.success{/lang}</p></td>
-							{elseif $cronjobLog->error}
-								<td class="columnDate columnExecTime">
-									<p>{@$cronjobLog->execTime|time} {lang}wcf.acp.cronjob.log.error{/lang}<br />
-									{@$cronjobLog->error}</p>
-								</td>
-							{else}
-								<td class="columnDate columnExecTime"></td>
-							{/if}
+					{content}
+						{foreach from=$objects item=cronjobLog}
+							<tr>
+								<td class="columnID columnCronjobID"><p>{@$cronjobLog->cronjobID}</p></td>
+								<td class="columnTitle columnClassName"><p>{$cronjobLog->className}</p></td>
+								<td class="columnText columnDescription"><p>{$cronjobLog->description}</p></td>
+								{if $cronjobLog->success}
+									<td class="columnDate columnExecTime"><p>{@$cronjobLog->execTime|time} {lang}wcf.acp.cronjob.log.success{/lang}</p></td>
+								{elseif $cronjobLog->error}
+									<td class="columnDate columnExecTime">
+										<p>{@$cronjobLog->execTime|time} {lang}wcf.acp.cronjob.log.error{/lang}<br />
+										{@$cronjobLog->error}</p>
+									</td>
+								{else}
+									<td class="columnDate columnExecTime"></td>
+								{/if}
 							
-							{if $cronjobLog->additionalColumns|isset}{@$cronjobLog->additionalColumns}{/if}
-						</tr>
-					{/foreach}
-				{/content}
+								{if $cronjobLog->additionalColumns|isset}{@$cronjobLog->additionalColumns}{/if}
+							</tr>
+						{/foreach}
+					{/content}
 				</tbody>
 			</table>
 			

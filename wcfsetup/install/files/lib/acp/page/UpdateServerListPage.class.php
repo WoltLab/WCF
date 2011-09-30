@@ -71,7 +71,6 @@ class UpdateServerListPage extends SortablePage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'updateServers' => $this->objectList->getObjects(),
 			'deletedPackageUpdateServerID' => $this->deletedPackageUpdateServerID
 		));
 	}

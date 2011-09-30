@@ -83,7 +83,6 @@ class UserGroupListPage extends SortablePage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'groups' => $this->objectList->getObjects(),
 			'deletedGroups' => $this->deletedGroups
 		));
 	}

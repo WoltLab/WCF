@@ -17,7 +17,7 @@
 	</nav>
 </div>
 
-{if $groups|count}
+{hascontent}
 	<div class="border boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.group.list{/lang} <span class="badge" title="{lang}wcf.acp.group.list.count{/lang}">{#$items}</span></h1>
@@ -35,43 +35,45 @@
 			</thead>
 			
 			<tbody>
-				{foreach from=$groups item=group}
-					<tr id="groupContainer{@$group->groupID}">
-						<td class="columnIcon">
-							{if $group->isEditable()}
-								<a href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
-							{else}
-								<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.acp.group.edit{/lang}" />
-							{/if}
-							{if $group->isDeletable()}
-								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" data-objectID="{@$group->groupID}" data-confirmMessage="{lang}wcf.acp.group.delete.sure{/lang}" title="{lang}wcf.global.button.delete{/lang}" class="deleteButton balloonTooltip" />
-							{else}
-								<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" />
-							{/if}
+				{content}
+					{foreach from=$objects item=group}
+						<tr id="groupContainer{@$group->groupID}">
+							<td class="columnIcon">
+								{if $group->isEditable()}
+									<a href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
+								{else}
+									<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.acp.group.edit{/lang}" />
+								{/if}
+								{if $group->isDeletable()}
+									<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" data-objectID="{@$group->groupID}" data-confirmMessage="{lang}wcf.acp.group.delete.sure{/lang}" title="{lang}wcf.global.button.delete{/lang}" class="deleteButton balloonTooltip" />
+								{else}
+									<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" />
+								{/if}
 							
-							{if $additionalButtons[$group->groupID]|isset}{@$additionalButtons[$group->groupID]}{/if}
-						</td>
-						<td class="columnID columnGroupID"><p>{@$group->groupID}</p></td>
-						<td class="columnTitle columnGroupName">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{lang}{$group->groupName}{/lang}</a>{else}{lang}{$group->groupName}{/lang}</p>{/if}</td>
-						<td class="columnDigits columnMembers"><p><a title="{lang}wcf.acp.group.showMembers{/lang}" href="index.php?form=UserSearch&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{#$group->members}</p></a></td>
+								{if $additionalButtons[$group->groupID]|isset}{@$additionalButtons[$group->groupID]}{/if}
+							</td>
+							<td class="columnID columnGroupID"><p>{@$group->groupID}</p></td>
+							<td class="columnTitle columnGroupName">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="index.php?form=UserGroupEdit&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{lang}{$group->groupName}{/lang}</a>{else}{lang}{$group->groupName}{/lang}</p>{/if}</td>
+							<td class="columnDigits columnMembers"><p><a title="{lang}wcf.acp.group.showMembers{/lang}" href="index.php?form=UserSearch&amp;groupID={@$group->groupID}{@SID_ARG_2ND}">{#$group->members}</p></a></td>
 						
-						{if $additionalColumns[$group->groupID]|isset}{@$additionalColumns[$group->groupID]}{/if}
-					</tr>
-				{/foreach}
+							{if $additionalColumns[$group->groupID]|isset}{@$additionalColumns[$group->groupID]}{/if}
+						</tr>
+					{/foreach}
+				{/content}
 			</tbody>
 		</table>
 		
 	</div>
-{/if}
-
-<div class="contentFooter">
-	{@$pagesLinks}
-	<nav class="largeButtons">
-		<ul>
-			<li><a href="index.php?form=UserGroupAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.group.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
-			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
-		</ul>
-	</nav>
-</div>
+	
+	<div class="contentFooter">
+		{@$pagesLinks}
+		<nav class="largeButtons">
+			<ul>
+				<li><a href="index.php?form=UserGroupAdd{@SID_ARG_2ND}" title="{lang}wcf.acp.group.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
+				{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
+			</ul>
+		</nav>
+	</div>
+{/hascontent}
 
 {include file='footer'}

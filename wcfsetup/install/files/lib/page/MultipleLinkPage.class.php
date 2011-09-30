@@ -66,12 +66,6 @@ abstract class MultipleLinkPage extends AbstractPage {
 	public $objectListClassName = '';
 	
 	/**
-	 * list of DatabaseObject objects
-	 * @var	array<wcf\data\DatabaseObject>
-	 */	
-	public $objects = array();
-	
-	/**
 	 * @see	wcf\data\DatabaseObjectList::$sqlLimit
 	 */	
 	public $sqlLimit = 0;
@@ -140,8 +134,6 @@ abstract class MultipleLinkPage extends AbstractPage {
 		$this->objectList->sqlOffset = $this->sqlOffset;
 		$this->objectList->sqlOrderBy = $this->sqlOrderBy;
 		$this->objectList->readObjects();
-		
-		$this->objects = $this->objectList->getObjects();
 	}
 	
 	/**
@@ -193,7 +185,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 			'itemsPerPage' => $this->itemsPerPage,
 			'startIndex' => $this->startIndex,
 			'endIndex' => $this->endIndex,
-			'objects' => $this->objects
+			'objects' => $this->objectList
 		));
 	}
 }

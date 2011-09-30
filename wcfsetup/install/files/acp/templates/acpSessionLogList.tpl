@@ -11,7 +11,7 @@
 	{pages print=true assign=pagesLinks link="index.php?page=ACPSessionLogList&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"|concat:SID_ARG_2ND_NOT_ENCODED}
 </div>
 
-{if $sessionLogs|count}
+{hascontent}
 	<div class="border boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.sessionLog.list{/lang} <span class="badge" title="{lang}wcf.acp.sessionLog.list.count{/lang}">{#$items}</span></h1>
@@ -26,26 +26,28 @@
 					<th class="columnText columnUserAgent{if $sortField == 'userAgent'} active{/if}"><a href="index.php?page=ACPSessionLogList&amp;pageNo={@$pageNo}&amp;sortField=userAgent&amp;sortOrder={if $sortField == 'userAgent' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.user.userAgent{/lang}{if $sortField == 'userAgent'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnDate columnTime{if $sortField == 'time'} active{/if}"><a href="index.php?page=ACPSessionLogList&amp;pageNo={@$pageNo}&amp;sortField=time&amp;sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.time{/lang}{if $sortField == 'time'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnDate columnLastActivityTime{if $sortField == 'lastActivityTime'} active{/if}"><a href="index.php?page=ACPSessionLogList&amp;pageNo={@$pageNo}&amp;sortField=lastActivityTime&amp;sortOrder={if $sortField == 'lastActivityTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.lastActivityTime{/lang}{if $sortField == 'lastActivityTime'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnDigits columnActions{if $sortField == 'actions'} active{/if}"><a href="index.php?page=ACPSessionLogList&amp;pageNo={@$pageNo}&amp;sortField=actions&amp;sortOrder={if $sortField == 'actions' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.actions{/lang}{if $sortField == 'actions'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnDigits columnAccesses{if $sortField == 'accesses'} active{/if}"><a href="index.php?page=ACPSessionLogList&amp;pageNo={@$pageNo}&amp;sortField=accesses&amp;sortOrder={if $sortField == 'accesses' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.sessionLog.accesses{/lang}{if $sortField == 'accesses'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					
 					{if $additionalColumnHeads|isset}{@$additionalColumnHeads}{/if}
 				</tr>
 			</thead>
 			
 			<tbody>
-			{foreach from=$sessionLogs item=sessionLog}
-				<tr class="{if $sessionLog->active} activeContainer{/if}">
-					<td class="columnID columnSessionLogID"><p>{@$sessionLog->sessionLogID}</p></td>
-					<td class="columnTitle columnUsername"><p>{if $__wcf->user->userID == $sessionLog->userID}<img src="{@RELATIVE_WCF_DIR}icon/user1.svg" alt="" />{/if} <a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->username}</a></p></td>
-					<td class="columnURL columnIpAddress"><p><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->ipAddress}</a>{if $sessionLog->hostname != $sessionLog->ipAddress}<br /><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->hostname}</a>{/if}</p></td>
-					<td class="columnText columnUserAgent"><p><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->userAgent}</a></p></td>
-					<td class="columnDate columnTime"><p>{@$sessionLog->time|time}</p></td>
-					<td class="columnDate columnLastActivityTime"><p>{@$sessionLog->lastActivityTime|time}</p></td>
-					<td class="columnDigits columnActions"><p>{#$sessionLog->actions}</p></td>
+				{content}
+					{foreach from=$objects item=sessionLog}
+						<tr class="{if $sessionLog->active} activeContainer{/if}">
+							<td class="columnID columnSessionLogID"><p>{@$sessionLog->sessionLogID}</p></td>
+							<td class="columnTitle columnUsername"><p>{if $__wcf->user->userID == $sessionLog->userID}<img src="{@RELATIVE_WCF_DIR}icon/user1.svg" alt="" />{/if} <a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->username}</a></p></td>
+							<td class="columnURL columnIpAddress"><p><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->ipAddress}</a>{if $sessionLog->hostname != $sessionLog->ipAddress}<br /><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->hostname}</a>{/if}</p></td>
+							<td class="columnText columnUserAgent"><p><a href="index.php?page=ACPSessionLog&amp;sessionLogID={@$sessionLog->sessionLogID}{@SID_ARG_2ND}">{$sessionLog->userAgent}</a></p></td>
+							<td class="columnDate columnTime"><p>{@$sessionLog->time|time}</p></td>
+							<td class="columnDate columnLastActivityTime"><p>{@$sessionLog->lastActivityTime|time}</p></td>
+							<td class="columnDigits columnAccesses"><p>{#$sessionLog->accesses}</p></td>
 					
-					{if $additionalColumns.$sessionLog->sessionLogID|isset}{@$additionalColumns.$sessionLog->sessionLogID}{/if}
-				</tr>
-			{/foreach}
+							{if $additionalColumns.$sessionLog->sessionLogID|isset}{@$additionalColumns.$sessionLog->sessionLogID}{/if}
+						</tr>
+					{/foreach}
+				{/content}
 			</tbody>
 		</table>
 		
@@ -54,6 +56,6 @@
 	<div class="contentFooter">
 		{@$pagesLinks}
 	</div>
-{/if}
+{/hascontent}
 
 {include file='footer'}

@@ -44,13 +44,7 @@
 	{/if}
 </div>
 
-{if !$items}
-	<div class="border content">
-		<div class="container-1">
-			<p class="warning">{lang}wcf.acp.cronjob.noneAvailable{/lang}</p>
-		</div>
-	</div>
-{else}
+{hascontent}
 	<div class="border boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.cronjob.list{/lang} <span class="badge" title="{lang}wcf.acp.cronjob.list.count{/lang}">{#$items}</span></h1>
@@ -73,59 +67,61 @@
 			</thead>
 			
 			<tbody>
-			{foreach from=$cronjobs item=cronjob}
-				<tr class="cronjobRow">
-					<td class="columnIcon">
-						{if $__wcf->session->getPermission('admin.system.cronjob.canEditCronjob')}
-							<img src="{@RELATIVE_WCF_DIR}icon/run1.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" data-objectID="{@$cronjob->cronjobID}" class="executeButton balloonTooltip" />
-						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/run1D.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" />
-						{/if}
+				{content}
+					{foreach from=$objects item=cronjob}
+						<tr class="cronjobRow">
+							<td class="columnIcon">
+								{if $__wcf->session->getPermission('admin.system.cronjob.canEditCronjob')}
+									<img src="{@RELATIVE_WCF_DIR}icon/run1.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" data-objectID="{@$cronjob->cronjobID}" class="executeButton balloonTooltip" />
+								{else}
+									<img src="{@RELATIVE_WCF_DIR}icon/run1D.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" />
+								{/if}
 						
-						{if $cronjob->canBeDisabled()}
-							<img src="{@RELATIVE_WCF_DIR}icon/{if $cronjob->active}enabled{else}disabled{/if}1.svg" alt="" data-objectID="{@$cronjob->cronjobID}" data-disableMessage="{lang}wcf.global.button.disable{/lang}" data-enableMessage="{lang}wcf.global.button.enable{/lang}" title="{lang}wcf.global.button.{if $cronjob->active}disable{else}enable{/if}{/lang}" class="toggleButton balloonTooltip" />
-						{else}
-							{if $cronjob->active}
-								<img src="{@RELATIVE_WCF_DIR}icon/enabled1D.svg" alt="" title="{lang}wcf.global.button.disable{/lang}" />
-							{else}
-								<img src="{@RELATIVE_WCF_DIR}icon/disabled1D.svg" alt="" title="{lang}wcf.global.button.enable{/lang}" />
-							{/if}
-						{/if}
+								{if $cronjob->canBeDisabled()}
+									<img src="{@RELATIVE_WCF_DIR}icon/{if $cronjob->active}enabled{else}disabled{/if}1.svg" alt="" data-objectID="{@$cronjob->cronjobID}" data-disableMessage="{lang}wcf.global.button.disable{/lang}" data-enableMessage="{lang}wcf.global.button.enable{/lang}" title="{lang}wcf.global.button.{if $cronjob->active}disable{else}enable{/if}{/lang}" class="toggleButton balloonTooltip" />
+								{else}
+									{if $cronjob->active}
+										<img src="{@RELATIVE_WCF_DIR}icon/enabled1D.svg" alt="" title="{lang}wcf.global.button.disable{/lang}" />
+									{else}
+										<img src="{@RELATIVE_WCF_DIR}icon/disabled1D.svg" alt="" title="{lang}wcf.global.button.enable{/lang}" />
+									{/if}
+								{/if}
 						
-						{if $cronjob->isEditable()}
-							<a href="index.php?form=CronjobEdit&amp;cronjobID={@$cronjob->cronjobID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
-						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" />
-						{/if}
-						{if $cronjob->isDeletable()}
-							<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" data-objectID="{@$cronjob->cronjobID}" data-confirmMessage="{lang}wcf.acp.cronjob.delete.sure{/lang}" title="{lang}wcf.global.button.delete{/lang}" class="deleteButton balloonTooltip" />
-						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" />
-						{/if}
-						{if $additionalButtons[$cronjob->cronjobID]|isset}{@$additionalButtons[$cronjob->cronjobID]}{/if}
-					</td>
-					<td class="columnID"><p>{@$cronjob->cronjobID}</p></td>
-					<td class="columnDate columnStartMinute"><p>{$cronjob->startMinute|truncate:30:' ...'}</p></td>
-					<td class="columnDate columnStartHour"><p>{$cronjob->startHour|truncate:30:' ...'}</p></td>
-					<td class="columnDate columnStartDom"><p>{$cronjob->startDom|truncate:30:' ...'}</p></td>
-					<td class="columnDate columnStartMonth"><p>{$cronjob->startMonth|truncate:30:' ...'}</p></td>
-					<td class="columnDate columnStartDow"><p>{$cronjob->startDow|truncate:30:' ...'}</p></td>
-					<td class="columnText columnDescription" title="{$cronjob->description}">
-						{if $cronjob->isEditable()}
-							<p><a title="{lang}wcf.acp.cronjob.edit{/lang}" href="index.php?form=CronjobEdit&amp;cronjobID={@$cronjob->cronjobID}{@SID_ARG_2ND}">{$cronjob->description|truncate:50:" ..."}</a></p>
-						{else}
-							<p>{$cronjob->description|truncate:50:' ...'}</p>
-						{/if}
-					</td>
-					<td class="columnDate columnNextExec">
-						{if $cronjob->active && $cronjob->nextExec != 1}
-							<p>{@$cronjob->nextExec|plainTime}</p>
-						{/if}
-					</td>
+								{if $cronjob->isEditable()}
+									<a href="index.php?form=CronjobEdit&amp;cronjobID={@$cronjob->cronjobID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
+								{else}
+									<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" />
+								{/if}
+								{if $cronjob->isDeletable()}
+									<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" data-objectID="{@$cronjob->cronjobID}" data-confirmMessage="{lang}wcf.acp.cronjob.delete.sure{/lang}" title="{lang}wcf.global.button.delete{/lang}" class="deleteButton balloonTooltip" />
+								{else}
+									<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" />
+								{/if}
+								{if $additionalButtons[$cronjob->cronjobID]|isset}{@$additionalButtons[$cronjob->cronjobID]}{/if}
+							</td>
+							<td class="columnID"><p>{@$cronjob->cronjobID}</p></td>
+							<td class="columnDate columnStartMinute"><p>{$cronjob->startMinute|truncate:30:' ...'}</p></td>
+							<td class="columnDate columnStartHour"><p>{$cronjob->startHour|truncate:30:' ...'}</p></td>
+							<td class="columnDate columnStartDom"><p>{$cronjob->startDom|truncate:30:' ...'}</p></td>
+							<td class="columnDate columnStartMonth"><p>{$cronjob->startMonth|truncate:30:' ...'}</p></td>
+							<td class="columnDate columnStartDow"><p>{$cronjob->startDow|truncate:30:' ...'}</p></td>
+							<td class="columnText columnDescription" title="{$cronjob->description}">
+								{if $cronjob->isEditable()}
+									<p><a title="{lang}wcf.acp.cronjob.edit{/lang}" href="index.php?form=CronjobEdit&amp;cronjobID={@$cronjob->cronjobID}{@SID_ARG_2ND}">{$cronjob->description|truncate:50:" ..."}</a></p>
+								{else}
+									<p>{$cronjob->description|truncate:50:' ...'}</p>
+								{/if}
+							</td>
+							<td class="columnDate columnNextExec">
+								{if $cronjob->active && $cronjob->nextExec != 1}
+									<p>{@$cronjob->nextExec|plainTime}</p>
+								{/if}
+							</td>
 					
-					{if $additionalColumns[$cronjob->cronjobID]|isset}{@$additionalColumns[$cronjob->cronjobID]}{/if}
-				</tr>
-			{/foreach}
+							{if $additionalColumns[$cronjob->cronjobID]|isset}{@$additionalColumns[$cronjob->cronjobID]}{/if}
+						</tr>
+					{/foreach}
+				{/content}
 			</tbody>
 		</table>
 		
@@ -140,6 +136,12 @@
 			</nav>
 		{/if}
 	</div>
-{/if}
+{hascontentelse}
+	<div class="border content">
+		<div class="container-1">
+			<p class="warning">{lang}wcf.acp.cronjob.noneAvailable{/lang}</p>
+		</div>
+	</div>
+{/hascontent}
 
 {include file='footer'}

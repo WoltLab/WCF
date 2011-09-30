@@ -31,7 +31,7 @@
 	{/if}
 </div>
 
-{if $packages|count > 0}
+{if $objects|count > 0}
 	<div class="border boxTitle">
 		<hgroup>
 			<h1><a href="#">{lang}wcf.acp.package.list{/lang} <span class="badge" title="{lang}wcf.acp.package.list.count{/lang}">{#$items}</span></a></h1>
@@ -51,7 +51,7 @@
 			</thead>
 			
 			<tbody>
-				{foreach from=$packages item=$package}
+				{foreach from=$objects item=$package}
 					<tr class="packageRow">
 						<td class="columnIcon">
 							{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
