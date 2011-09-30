@@ -9,8 +9,13 @@
 	<fieldset>
 		<legend>{lang}wcf.global.welcome.language{/lang}</legend>
 		
+		{capture assign=languageChooser}<select name="languageCode" id="languageCode">
+			{foreach from=$availableLanguages key=availableLanguageCode item=languageName}
+				<option value="{$availableLanguageCode}"{if $availableLanguageCode == $languageCode} selected="selected"{/if}>{$languageName} ({$availableLanguageCode})</option>
+			{/foreach}
+		</select>{/capture}
 		<label for="languageCode">{lang}wcf.global.welcome.language.description{/lang}</label>
-		{htmlOptions name="languageCode" id="languageCode" options=$availableLanguages selected=$languageCode disableEncoding=true}
+		
 		<button type="submit" value="{lang}wcf.global.welcome.language.change{/lang}" class="badge badgeButton" />{lang}wcf.global.welcome.language.change{/lang}</button>
 		<input type="hidden" name="step" value="selectSetupLanguage" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
