@@ -172,7 +172,7 @@
 		<item name="wcf.acp.menu.link.option.importAndExport"><![CDATA[Import &amp; export]]></item>
 		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Cron jobs]]></item>
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Add new cron job]]></item>
-		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[List cronjobs]]></item>
+		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[List cron jobs]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Logs]]></item>
 		<item name="wcf.acp.menu.link.log.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Sessions]]></item>
@@ -189,7 +189,7 @@
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[List installed packages]]></item>
 		<item name="wcf.acp.menu.link.package.autoupdate"><![CDATA[Automatic update]]></item>
 		<item name="wcf.acp.menu.link.user"><![CDATA[User]]></item>
-		<item name="wcf.acp.menu.link.user.add"><![CDATA[Add user]]></item>
+		<item name="wcf.acp.menu.link.user.add"><![CDATA[Add new user]]></item>
 		<item name="wcf.acp.menu.link.user.list"><![CDATA[List users]]></item>
 		<item name="wcf.acp.menu.link.user.mail"><![CDATA[E-mail all users]]></item>
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Users]]></item>
@@ -407,8 +407,8 @@
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[Send e-mail as HTML]]></item>
 		<item name="wcf.acp.user.sendMail.from"><![CDATA[Sender]]></item>
 		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[<p>Here you can enter the sender's e-mail address in the following format:</p>
-<p style="text-align: center; line-height: 2em;"><code>{if MAIL_USE_FORMATTED_ADDRESS}Senders name &lt;email@sender.tld&gt;{else}email@sender.tld{/if}</code></p>
-<p>If you have completely filled in the section under System -> Options -> E-mail, then this field will automatically be filled in. If you are sending e-mails using SMTP, then the sender's e-mail-Address must also be accepted by the server.</p>]]></item>
+<p style="line-height: 2em;"><code>{if MAIL_USE_FORMATTED_ADDRESS}Senders name &lt;email@sender.tld&gt;{else}email@sender.tld{/if}</code></p>
+<p>If you have completely filled in the section under <em>System -&gt; Options -&gt; General -&gt; E-mails</em>, then this field will automatically be filled in. If you are sending e-mails using SMTP, then the sender's e-mail-Address must also be accepted by the server.</p>]]></item>
 		<item name="wcf.acp.user.sendMail.group"><![CDATA[E-mail all group members]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[Send an e-mail to the members of the following user groups:]]></item>
 		<item name="wcf.acp.user.sendMail.mail"><![CDATA[E-mail]]></item>
@@ -417,7 +417,7 @@
 		<item name="wcf.acp.user.sendMail.subject.description"><![CDATA[Enter here the e-mail subject.]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Message]]></item>
 		<item name="wcf.acp.user.sendMail.text.description"><![CDATA[Enter here the message you want to send to users.]]></item>
-		<item name="wcf.acp.user.userNote"><![CDATA[Welcome {$this->user->username}.]]></item>
+		<item name="wcf.acp.user.userNote"><![CDATA[Welcome {$__wcf->user->username}.]]></item>
 	</category>
 	
 	<category name="wcf.date">

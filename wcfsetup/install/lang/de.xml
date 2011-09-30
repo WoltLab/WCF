@@ -407,8 +407,8 @@
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[E-Mail als HTML versenden]]></item>
 		<item name="wcf.acp.user.sendMail.from"><![CDATA[Absender]]></item>
 		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[<p>Hier können Sie die E-Mail-Adresse des Absenders definieren.{if MAIL_USE_FORMATTED_ADDRESS} Es ist auch folgendes Format möglich:{/if}</p>
-{if MAIL_USE_FORMATTED_ADDRESS}<p style="text-align: center; line-height: 2em;"><code>Absender Name &lt;email@absender.tld&gt;</code></p>{/if}
-<p>Wenn Sie unter System -> Optionen -> E-Mail alles ausgefüllt haben, wird dieses Feld automatisch ausgefüllt. Sollten Sie E-Mails per SMTP senden, so achten Sie darauf, dass die E-Mail-Adresse des Absenders auch vom Server akzeptiert werden muss.</p>]]></item>
+{if MAIL_USE_FORMATTED_ADDRESS}<p style="line-height: 2em;"><code>Absender Name &lt;email@absender.tld&gt;</code></p>{/if}
+<p>Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alles ausgefüllt haben, wird dieses Feld automatisch ausgefüllt. Sollten Sie E-Mails per SMTP senden, so achten Sie darauf, dass die E-Mail-Adresse des Absenders auch vom Server akzeptiert werden muss.</p>]]></item>
 		<item name="wcf.acp.user.sendMail.group"><![CDATA[E-Mail an Gruppenmitglieder]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[E-Mail an die Mitglieder folgender Benutzergruppen senden]]></item>
 		<item name="wcf.acp.user.sendMail.mail"><![CDATA[E-Mail]]></item>
