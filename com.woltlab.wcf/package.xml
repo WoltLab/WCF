@@ -16,7 +16,7 @@
 	
 	<instructions type="install">
 		<instruction type="packageInstallationPlugin">packageInstallationPlugin.xml</instruction>
-		<instruction type="acpmenu">acpMenu.xml</instruction>
+		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="userOption">userOption.xml</instruction>
@@ -24,7 +24,7 @@
 		<instruction type="eventListener">eventListener.xml</instruction>
 		<instruction type="script">acp/install.php</instruction>
 		<instruction type="cronjob">cronjob.xml</instruction>
-		<instruction type="coreobject">coreObject.xml</instruction>
+		<instruction type="coreObject">coreObject.xml</instruction>
 		<instruction type="clipboardAction">clipboardAction.xml</instruction>
 		<instruction type="clipboardItemType">clipboardItemType.xml</instruction>
 	</instructions>
