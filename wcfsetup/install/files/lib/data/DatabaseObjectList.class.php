@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @subpackage	data
  * @category 	Community Framework
  */
-abstract class DatabaseObjectList {
+abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	/**
 	 * object class name
 	 * @var	string
@@ -73,6 +73,18 @@ abstract class DatabaseObjectList {
 	 * @var	wcf\system\database\util\PreparedStatementConditionBuilder
 	 */
 	protected $conditionBuilder = null;
+	
+	/**
+	 * current iterator index
+	 * @var	integer
+	 */
+	protected $index = 0;
+	
+	/**
+	 * list of index to object relation
+	 * @var	array<integer>
+	 */
+	protected $indexToObject = null;
 	
 	/**
 	 * Creates a new DatabaseObjectList object.
@@ -148,7 +160,10 @@ abstract class DatabaseObjectList {
 		// use table index as array index
 		$objects = array();
 		foreach($this->objects as $object) {
-			$objects[$object->{$this->getDatabaseTableIndexName()}] = $object;
+			$objectID = $object->{$this->getDatabaseTableIndexName()};
+			$objects[$objectID] = $object;
+			
+			$this->indexToObject[] = $objectID;
 		}
 		$this->objects = $objects;
 	}
@@ -205,5 +220,86 @@ abstract class DatabaseObjectList {
 	 */
 	public function getDatabaseTableAlias() {
 		return call_user_func(array($this->className, 'getDatabaseTableAlias'));
+	}
+	
+	/**
+	 * @see	\Countable::count()
+	 */
+	public function count() {
+		return count($this->objects);
+	}
+	
+	/**
+	 * @see	\Iterator::current()
+	 */
+	public function current() {
+		$objectID = $this->indexToObject[$this->index];
+		return $this->objects[$objectID];
+	}
+	
+	/**
+	 * CAUTION: This methods does not return the current iterator index,
+	 * rather than the object key which maps to that index.
+	 * 
+	 * @see	\Iterator::key()
+	 */
+	public function key() {
+		return $this->indexToObject[$this->index];
+	}
+	
+	/**
+	 * @see	\Iterator::next()
+	 */
+	public function next() {
+		++$this->index;
+	}
+	
+	/**
+	 * @see	\Iterator::rewind()
+	 */
+	public function rewind() {
+		$this->index = 0;
+	}
+	
+	/**
+	 * @see	\Iterator::valid()
+	 */
+	public function valid() {
+		return isset($this->indexToObject[$this->index]);
+	}
+	
+	/**
+	 * @see	\SeekableIterator::seek()
+	 */
+	public function seek($index) {
+		$this->index = $index;
+		
+		if (!$this->valid()) {
+			throw new \OutOfBoundsException();
+		}
+	}
+	
+	/**
+	 * @see	wcf\data\ITraversableObject::seekTo()
+	 */
+	public function seekTo($objectID) {
+		$this->index = array_search($objectID, $this->indexToObject);
+		
+		if ($this->index === false) {
+			throw new SystemException("object id '".$objectID."' is invalid");
+		}
+	}
+	
+	/**
+	 * @see	wcf\data\ItraversableObject::search()
+	 */
+	public function search($objectID) {
+		try {
+			$this->seekTo($objectID);
+			return $this->current();
+		}
+		catch (SystemException $e) {
+			return null;
+		}
 	}
 }
