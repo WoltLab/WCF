@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de">
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de" languagename="Deutsch">
 	<category name="wcf.global">
 		<item name="wcf.global.pageTitle"><![CDATA[{$setupPackageName} Installation]]></item>
 		<item name="wcf.global.title"><![CDATA[{$setupPackageName}]]></item>
@@ -8,51 +8,13 @@
 		<item name="wcf.global.locale.unix"><![CDATA[de_DE]]></item>
 		<item name="wcf.global.locale.win"><![CDATA[deu_deu]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[,]]></item>
-		<item name="wcf.global.thousandsSeparator"><![CDATA[&nbsp;]]></item>
+		<item name="wcf.global.thousandsSeparator"><![CDATA[.]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Weiter &raquo;]]></item>
 		<item name="wcf.global.progressBar"><![CDATA[{@$progress}% fertiggestellt]]></item>
-		<item name="wcf.global.dateMethod"><![CDATA[strftime]]></item>
-		<item name="wcf.global.dateFormat"><![CDATA[%d.%m.%Y]]></item>
-		<item name="wcf.global.timeFormat"><![CDATA[%d.%m.%Y, %H:%M]]></item>
-		<item name="wcf.global.dateFormatLocalized"><![CDATA[%e. %B %Y]]></item>
-		<item name="wcf.global.timeFormatLocalized"><![CDATA[%A, %e. %B %Y, %H:%M]]></item>
-		<item name="wcf.global.dateFormatToday"><![CDATA[<b>Heute</b>, %H:%M]]></item>
-		<item name="wcf.global.dateFormatYesterday"><![CDATA[Gestern, %H:%M]]></item>
 		<item name="wcf.global.welcome"><![CDATA[Vielen Dank, dass Sie sich für {$setupPackageName} entschieden haben]]></item>
 		<item name="wcf.global.welcome.description"><![CDATA[Dieser Installationsassistent hilft Ihnen bei der Einrichtung von <br /><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} und von <b>{$setupPackageName}</b>{/if}.]]></item>
 		<item name="wcf.global.welcome.language"><![CDATA[Sprache]]></item>
-		<item name="wcf.global.language.en"><![CDATA[Englisch]]></item>
-		<item name="wcf.global.language.de"><![CDATA[Deutsch]]></item>
-		<item name="wcf.global.language.de-informal"><![CDATA[Deutsch (Anrede &raquo;Du&laquo;)]]></item>
-		<item name="wcf.global.language.fr"><![CDATA[Französisch]]></item>
-		<item name="wcf.global.language.ja"><![CDATA[Japanisch]]></item>
-		<item name="wcf.global.language.es"><![CDATA[Spanisch]]></item>
-		<item name="wcf.global.language.zh-TW"><![CDATA[Chinesisch (traditionell)]]></item>
-		<item name="wcf.global.language.zh-CN"><![CDATA[Chinesisch (vereinfacht)]]></item>
-		<item name="wcf.global.language.it"><![CDATA[Italienisch]]></item>
-		<item name="wcf.global.language.nl"><![CDATA[Niederländisch]]></item>
-		<item name="wcf.global.language.ru"><![CDATA[Russisch]]></item>
-		<item name="wcf.global.language.ko"><![CDATA[Koreanisch]]></item>
-		<item name="wcf.global.language.pt"><![CDATA[Portugiesisch]]></item>
-		<item name="wcf.global.language.pt-BR"><![CDATA[Portugiesisch (Brasilien)]]></item>
-		<item name="wcf.global.language.sv"><![CDATA[Schwedisch]]></item>
-		<item name="wcf.global.language.pl"><![CDATA[Polnisch]]></item>
-		<item name="wcf.global.language.da"><![CDATA[Dänisch]]></item>
-		<item name="wcf.global.language.cs"><![CDATA[Tschechisch]]></item>
-		<item name="wcf.global.language.tr"><![CDATA[Türkisch]]></item>
-		<item name="wcf.global.language.hu"><![CDATA[Ungarisch]]></item>
-		<item name="wcf.global.language.ar"><![CDATA[Arabisch]]></item>
-		<item name="wcf.global.language.he"><![CDATA[Hebräisch]]></item>
-		<item name="wcf.global.language.fa"><![CDATA[Persisch]]></item>
-		<item name="wcf.global.language.no"><![CDATA[Norwegisch]]></item>
-		<item name="wcf.global.language.fi"><![CDATA[Finnisch]]></item>
-		<item name="wcf.global.language.ro"><![CDATA[Rumänisch]]></item>
-		<item name="wcf.global.language.bs"><![CDATA[Bosnisch]]></item>
-		<item name="wcf.global.language.hr"><![CDATA[Kroatisch]]></item>
-		<item name="wcf.global.language.sr"><![CDATA[Serbisch]]></item>
-		<item name="wcf.global.language.sk"><![CDATA[Slowakisch]]></item>
-		<item name="wcf.global.language.el"><![CDATA[Griechisch]]></item>
-		<item name="wcf.global.welcome.language.description"><![CDATA[Die Sprache dieses Assistenten ist zur Zeit ]]></item>
+		<item name="wcf.global.welcome.language.description"><![CDATA[Die Sprache dieses Assistenten ist zur Zeit {@$languageChooser}]]></item>
 		<item name="wcf.global.welcome.language.change"><![CDATA[Sprache wechseln]]></item>
 		<item name="wcf.global.license"><![CDATA[Lizenzbestimmungen]]></item>
 		<item name="wcf.global.license.description"><![CDATA[Bitte lesen Sie die folgenden Lizenzbestimmungen. Verwenden Sie die Bildlaufleiste, um das gesamte Dokument anzuzeigen.]]></item>
@@ -67,7 +29,7 @@
 		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[Empfohlen:]]></item>
 		<item name="wcf.global.systemRequirements.php"><![CDATA[Installierte Version der Skriptsprache &raquo;PHP&laquo;]]></item>
 		<item name="wcf.global.systemRequirements.php.description"><![CDATA[Die installierte Version der Skriptsprache &raquo;PHP&laquo; ist für einen stabilen Betrieb dieser Software zu alt. Bitte veranlassen Sie eine Aktualisierung der installierten Version bevor Sie mit der Installation fortfahren.]]></item>
-		<item name="wcf.global.systemRequirements.php.description2"><![CDATA[Ihre PHP Version ist stark veraltet. Für einen einwandfreien Betrieb empfehlen wir PHP Version 5.0.5 oder höher.]]></item>
+		<item name="wcf.global.systemRequirements.php.description2"><![CDATA[Ihre PHP Version ist stark veraltet. Für einen einwandfreien Betrieb empfehlen wir PHP Version 5.3.0 oder höher.]]></item>
 		<item name="wcf.global.systemRequirements.sql"><![CDATA[Datenbank-Unterstützung]]></item>
 		<item name="wcf.global.systemRequirements.sql.notFound"><![CDATA[nicht gefunden]]></item>
 		<item name="wcf.global.systemRequirements.sql.description"><![CDATA[Ohne die Unterstützung einer kompatiblen Datenbank kann diese Software nicht installiert werden.]]></item>
@@ -76,11 +38,9 @@
 		<item name="wcf.global.systemRequirements.gdLib"><![CDATA[Installierte Version der Grafikbearbeitungs-Bibliothek &raquo;gdlib&laquo;]]></item>
 		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[Grafikbearbeitungs-Bibliothek &raquo;gdlib&laquo; ist für die dynamische Generierung von Bildern zuständig. Ohne sie werden einige Funktionalitäten der Software nicht funktionieren.]]></item>
 		<item name="wcf.global.systemRequirements.mbString"><![CDATA[Bibliothek für Zeichen mit mehreren Bytes (&raquo;multibyte string&laquo;)]]></item>
-		<item name="wcf.global.systemRequirements.mbString.description"><![CDATA[Ohne diese Bibliothek ist auschließlich der Betrieb von westeuropäischen Sprachen möglich.]]></item>
+		<item name="wcf.global.systemRequirements.mbString.description"><![CDATA[Diese Bibliothek ist für den Betrieb der Software zwingend erforderlich.]]></item>
 		<item name="wcf.global.systemRequirements.safeMode"><![CDATA[Sicherheitseinstellung &raquo;safe mode&laquo; in Skriptsprache &raquo;PHP&laquo;]]></item>
-		<item name="wcf.global.systemRequirements.safeMode.description"><![CDATA[Es wird empfohlen diese Einstellung zu deaktivieren, da ansonsten ein einwandfreier Betrieb der Software nicht garantiert werden kann.]]></item>
-		<item name="wcf.global.systemRequirements.ftp"><![CDATA[Bibliothek für Datenübertragungen per FTP]]></item>
-		<item name="wcf.global.systemRequirements.ftp.description"><![CDATA[Bei der aktivierten Sicherheitseinstellung &raquo;safe mode&laquo; wird diese Bibliothek für einen Großteil der Dateioperationen der Software benutzt. Es wird dringend empfohlen, diese Bibliothek zu aktivieren.]]></item>
+		<item name="wcf.global.systemRequirements.safeMode.description"><![CDATA[Diese Einstellung muss deaktiviert werden, da ansonsten ein einwandfreier Betrieb der Software nicht gewährleistet ist.]]></item>
 		<item name="wcf.global.systemRequirements.active"><![CDATA[aktiviert]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[nicht aktiviert]]></item>
 		<item name="wcf.global.wcfDir"><![CDATA[Installationsverzeichnis wählen]]></item>
@@ -91,53 +51,24 @@
 		<item name="wcf.global.wcfDir.error.invalid"><![CDATA[Das eingegebene Verzeichnis ist ungültig.]]></item>
 		<item name="wcf.global.wcfDir.url"><![CDATA[Installationsadresse (URL)]]></item>
 		<item name="wcf.global.wcfDir.url.description"><![CDATA[Nach der Installation in das angegebene Installationsverzeichnis ist <b>WoltLab Community Framework</b> über diese Adresse (URL) erreichbar.]]></item>
-		<item name="wcf.global.ftp"><![CDATA[Eingabe der Zugangsdaten für FTP]]></item>
-		<item name="wcf.global.ftp.description"><![CDATA[Da auf Ihrem Server der PHP-SafeMode aktiviert ist, muss WoltLab Community Framework über die FTP-Funktionen installiert werden. Bitte geben Sie Benutzernamen und Kennwort für den FTP-Zugang zu diesem Server an. Die Daten werden nicht gespeichert oder weitergeleitet, sondern lediglich zur Installation dieses Paketes verwendet. Möglicherweise müssen Sie diese FTP-Zugangsdaten während dieser Installation mehrfach angeben.]]></item>
-		<item name="wcf.global.ftp.accessData"><![CDATA[Zugangsdaten für FTP]]></item>
-		<item name="wcf.global.ftp.host"><![CDATA[Hostname]]></item>
-		<item name="wcf.global.ftp.user"><![CDATA[Benutzername]]></item>
-		<item name="wcf.global.ftp.password"><![CDATA[Kennwort]]></item>
-		<item name="wcf.global.ftp.error"><![CDATA[Mit den angegebenen Zugangsdaten konnte keine Verbindung zu einem FTP-Server hergestellt werden.]]></item>
 		<item name="wcf.global.next"><![CDATA[Lade nächsten Schritt ...]]></item>
 		<item name="wcf.global.next.description"><![CDATA[Die Installation lädt im Moment den nächsten Schritt. Bitte haben Sie einen Augenblick Geduld.]]></item>
 		<item name="wcf.global.languages"><![CDATA[Sprachen wählen]]></item>
 		<item name="wcf.global.languages.description"><![CDATA[Sie können diese Software mehrsprachig betreiben. Bitte wählen Sie aus, welche Sprachen Sie installieren möchten.]]></item>
-		<item name="wcf.global.languages.charset"><![CDATA[Zeichenkodierung]]></item>
-		<item name="wcf.global.languages.charset.description"><![CDATA[Über die Zeichenkodierung wird die technische Speicherung und Darstellung von Sprachen beeinflusst. Bitte beachten Sie, dass die Zeichenkodierung zu einem späteren Zeitpunkt nicht mehr gewechselt werden kann.]]></item>
-		
-		<!-- <item name="wcf.global.languages.charset.ISO-8859-1"><![CDATA[Die Verwendung von ISO-8859-1 wird empfohlen, wenn Sie ausschließlich westeuropäische Sprachen installieren möchten.]]></item>
-		<item name="wcf.global.languages.charset.UTF-8"><![CDATA[UTF-8 wird für den Betrieb von nicht westeuropäischen Sprachen benötigt. Wenn Sie jetzt oder zu einem späteren Zeitpunkt eine nicht westeuropäischen Sprache installieren möchten, müssen Sie hier UTF-8 auswählen.]]></item>-->
-		
-		<item name="wcf.global.languages.charset.UTF-8"><![CDATA[Unicode]]></item>
-		<item name="wcf.global.languages.charset.ISO-8859-1"><![CDATA[Westeuropäisch]]></item>
-		<item name="wcf.global.languages.charset.ISO-8859-2"><![CDATA[Mitteleuropäisch]]></item>
-		<item name="wcf.global.languages.charset.ISO-8859-7"><![CDATA[Griechisch]]></item>
-		<item name="wcf.global.languages.charset.ISO-8859-8"><![CDATA[Hebräisch]]></item>
-		<item name="wcf.global.languages.charset.ISO-8859-9"><![CDATA[Türkisch]]></item>
-		<item name="wcf.global.languages.charset.EUC-JP"><![CDATA[Japanisch]]></item>
-		<item name="wcf.global.languages.charset.SJIS"><![CDATA[Japanisch]]></item>
-		<item name="wcf.global.languages.charset.BIG-5"><![CDATA[Chinesisch (traditionell)]]></item>
-		<item name="wcf.global.languages.charset.CP936"><![CDATA[Chinesisch (vereinfacht)]]></item>
-		<item name="wcf.global.languages.charset.EUC-CN"><![CDATA[Chinesisch (vereinfacht)]]></item>
-		<item name="wcf.global.languages.charset.KOI8-R"><![CDATA[Kyrillisch]]></item>
-		<item name="wcf.global.languages.charset.Windows-1251"><![CDATA[Kyrillisch]]></item>
-		<item name="wcf.global.languages.charset.EUC-KR"><![CDATA[Koreanisch]]></item>
-		
 		<item name="wcf.global.languages.languages"><![CDATA[Sprachen]]></item>
 		<item name="wcf.global.languages.error.empty"><![CDATA[Bitte wählen Sie mindestens eine Sprache aus!]]></item>
-		<item name="wcf.global.languages.error.notAvailable"><![CDATA[Sie haben Sprachen ausgewählt, die in der gleichzeitig ausgewählten Zeichencodierung nicht zur Verfügung stehen. Bitte korrigieren Sie Ihre Auswahl.]]></item>
 		<item name="wcf.global.configureDB"><![CDATA[Datenbankzugang konfigurieren]]></item>
-		<item name="wcf.global.configureDB.description"><![CDATA[Die Daten der Software werden in einer SQL-Datenbank gespeichert. Bitte geben Sie die Zugangsdaten für diese Datenbank an!]]></item>
+		<item name="wcf.global.configureDB.description"><![CDATA[Die Daten der Software werden in einer SQL-Datenbank gespeichert. Bitte geben Sie die Zugangsdaten für diese Datenbank an! Falls Ihnen die Zugangsdaten nicht bekannt sind, wenden Sie sich bitte an Ihren Serveradministrator oder Webhoster.]]></item>
 		<item name="wcf.global.configureDB.accessData"><![CDATA[Datenbankzugangsdaten]]></item>
-		<item name="wcf.global.configureDB.host"><![CDATA[Hostname]]></item>
+		<item name="wcf.global.configureDB.host"><![CDATA[Server-Hostname]]></item>
 		<item name="wcf.global.configureDB.user"><![CDATA[Benutzername]]></item>
 		<item name="wcf.global.configureDB.password"><![CDATA[Kennwort]]></item>
 		<item name="wcf.global.configureDB.database"><![CDATA[Datenbankname]]></item>
+		<item name="wcf.global.configureDB.database.description"><![CDATA[Die spezifizierte Datenbank muss bereits angelegt sein.]]></item>
 		<item name="wcf.global.configureDB.number"><![CDATA[Installationsnummer]]></item>
+		<item name="wcf.global.configureDB.number.description"><![CDATA[Die Installationsnummer erlaubt Ihnen mehrere Installationen der Software in der gleichen Datenbank zu speichern. Wenn dies Ihre erste Installation der Software in dieser Datenbank ist, sollten Sie hier den Wert <em>1</em> wählen.]]></item>
 		<item name="wcf.global.configureDB.error"><![CDATA[Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
-		<br /><b>{$exception->getMessage()}{if $exception|get_class == 'DatabaseException'}<br />{$exception->getErrorDesc()}{/if}</b>
-		<br />Weitere Informationen zu diesem Problem erhalten Sie im Nachschlagewerk von WoltLab:
-		<br /><a href="http://www.woltlab.com/help/?code={@$exception->getCode()}">http://www.woltlab.com/help/?code={@$exception->getCode()}</a>]]></item>
+		<br /><strong>{$exception->getMessage()}{if $exception|get_class == 'DatabaseException'}<br />{$exception->getErrorDesc()}{/if}</strong>]]></item>
 		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[Folgende Tabelle{if $conflictedTables|count > 1}n{/if} existier{if $conflictedTables|count > 1}en{else}t{/if} schon in der Datenbank &raquo;{$dbName}&laquo;:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />Um dieses Problem zu beheben, können Sie:<br />1. diese Tabelle{if $conflictedTables|count > 1}n{/if} überschreiben, indem Sie die &raquo;Überschreiben&laquo; Option aktivieren und die &raquo;Weiter&laquo; Schaltfläche betätigen, oder<br />2. Sie geben die Daten einer anderen Datenbank ein und betätigen die &raquo;Weiter&laquo; Schaltfläche, oder<br />3. Sie geben eine von &raquo;{$dbNumber}&laquo; unterschiedliche Installationsnummer an und betätigen die &raquo;Weiter&laquo; Schaltfläche.]]></item>
 		<item name="wcf.global.configureDB.conflictedTables.overwrite"><![CDATA[Oben genannte Tabelle{if $conflictedTables|count > 1}n{/if} überschreiben]]></item>
 		<item name="wcf.global.configureDB.class"><![CDATA[Datenbank-Typ]]></item>
@@ -159,8 +90,9 @@
 		<item name="wcf.global.createUser.error.confirmEmail.notEqual"><![CDATA[Die eingegebenen E-Mail-Adressen sind nicht identisch. Bitte tragen Sie zur Sicherheit in beide Eingabefelder die selbe E-Mail-Adresse ein.]]></item>
 		<item name="wcf.global.createUser.error.confirmPassword.notEqual"><![CDATA[Die eingegebenen Kennwörter sind nicht identisch. Bitte tragen Sie zur Sicherheit in beide Eingabefelder das selbe Kennwort ein.]]></item>
 		<item name="wcf.global.wcfDir.error"><![CDATA[Beim Versuch die Dateien zu entpacken, ist folgender Fehler aufgetreten:
-		<br /><b>{$exception->getMessage()}</b><br />
-		Bitte kontrollieren Sie, ob das Zielverzeichnis existiert und beschreibbar ist.
-		<br /><br />Weitere Informationen zu diesem Problem erhalten Sie im Nachschlagewerk von WoltLab:<br /><a href="http://www.woltlab.com/help/?code={@$exception->getCode()}">http://www.woltlab.com/help/?code={@$exception->getCode()}</a>]]></item>
+		<br /><strong>{$exception->getMessage()}</strong><br />
+		Bitte kontrollieren Sie, ob das Zielverzeichnis existiert und beschreibbar ist.]]></item>
+		<item name="wcf.global.scrollDown"><![CDATA[Zum Seitenende]]></item>
+		<item name="wcf.global.scrollUp"><![CDATA[Zum Seitenanfang]]></item>
 	</category>
 </language>

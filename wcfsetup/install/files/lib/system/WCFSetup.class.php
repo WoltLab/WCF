@@ -84,13 +84,13 @@ class WCFSetup extends WCF {
 	 * Gets the selected language.
 	 */
 	protected static function getLanguageSelection() {
-		self::$availableLanguages = self::getAllLanguages();
+		self::$availableLanguages = self::getAvailableLanguages();
 		
-		if (isset($_REQUEST['languageCode']) && in_array($_REQUEST['languageCode'], self::$availableLanguages)) {
+		if (isset($_REQUEST['languageCode']) && isset(self::$availableLanguages[$_REQUEST['languageCode']])) {
 			self::$selectedLanguageCode = $_REQUEST['languageCode'];
 		}
 		else {
-			self::$selectedLanguageCode = LanguageFactory::getPreferredLanguage(self::$availableLanguages, self::$selectedLanguageCode);
+			self::$selectedLanguageCode = LanguageFactory::getPreferredLanguage(array_keys(self::$availableLanguages), self::$selectedLanguageCode);
 		}
 		
 		if (isset($_POST['selectedLanguages']) && is_array($_POST['selectedLanguages'])) {
@@ -148,7 +148,7 @@ class WCFSetup extends WCF {
 	 */
 	protected function initTPL() {
 		self::$tplObj = SetupTemplateEngine::getInstance();
-		self::getTPL()->setLanguageID(array_search(self::$selectedLanguageCode, self::$availableLanguages));
+		self::getTPL()->setLanguageID((self::$selectedLanguageCode == 'en' ? 0 : 1));
 		self::getTPL()->setCompileDir(TMP_DIR);
 		self::getTPL()->addTemplatePath(PACKAGE_ID, TMP_DIR);
 		self::getTPL()->registerPrefilter(array('lang'));
@@ -167,18 +167,23 @@ class WCFSetup extends WCF {
 	 *
 	 * @return	array
 	 */
-	protected static function getAllLanguages() {
+	protected static function getAvailableLanguages() {
 		$languages = $match = array();
 		$tar = new Tar(SETUP_FILE);
 		foreach ($tar->getContentList() as $file) {
-			if (strpos($file['filename'], 'setup/lang/') === 0 && substr($file['filename'], -4) == '.xml' && preg_match('!^setup_([a-z]{2}(?:-[A-Za-z0-9]+)?(?:_[A-Za-z]{2})?)$!', basename($file['filename'], '.xml'), $match)) {
-				$languages[] = $match[1];
+			if (strpos($file['filename'], 'setup/lang/') === 0 && substr($file['filename'], -4) == '.xml') {
+				$xml = new XML();
+				$xml->load(TMP_DIR.$file['filename']);
+				$languageCode = LanguageEditor::readLanguageCodeFromXML($xml);
+				$languageName = LanguageEditor::readLanguageNameFromXML($xml);
+				
+				$languages[$languageCode] = $languageName;
 			}
 		}
 		$tar->close();
 
-		// sort languages by language code
-		sort($languages);
+		// sort languages by language name
+		asort($languages);
 
 		return $languages;
 	}
@@ -289,17 +294,8 @@ class WCFSetup extends WCF {
 	 * Shows the first setup page.
 	 */
 	protected function selectSetupLanguage() {
-		// build language list
-		$languages = array();
-		foreach (self::$availableLanguages as $languageCode) {
-			$languages[$languageCode] = self::getLanguage()->get('wcf.global.language.'.$languageCode).' ('.$languageCode.')';
-		}
-		
-		// sort languages
-		StringUtil::sort($languages);
-		
 		WCF::getTPL()->assign(array(
-			'availableLanguages' => $languages,
+			'availableLanguages' => self::$availableLanguages,
 			'nextStep' => 'showLicense'
 		));
 		WCF::getTPL()->display('stepSelectSetupLanguage');
@@ -452,14 +448,7 @@ class WCFSetup extends WCF {
 	 */
 	protected function selectLanguages() {
 		$errorField = $errorType = '';
-		$allLanguages = $this->getAllLanguages();
 		$illegalLanguages = array();
-		
-		// build visible language list
-		$languages = array();
-		foreach ($allLanguages as $languageCode) {
-			$languages[$languageCode] = self::getLanguage()->get('wcf.global.language.'.$languageCode).' ('.$languageCode.')';
-		}
 		
 		// skip step in developer mode
 		// select all available languages automatically
@@ -474,9 +463,6 @@ class WCFSetup extends WCF {
 			exit;
 		}
 		
-		// sort languages
-		StringUtil::sort($languages);
-		
 		// start error handling
 		if (isset($_POST['send'])) {
 			try {
@@ -487,7 +473,7 @@ class WCFSetup extends WCF {
 				
 				// illegal selection
 				foreach (self::$selectedLanguages as $language) {
-					if (!isset($languages[$language])) {
+					if (!isset(self::$availableLanguages[$language])) {
 						throw new UserInputException('selectedLanguages');
 					}
 				}
@@ -510,7 +496,7 @@ class WCFSetup extends WCF {
 		WCF::getTPL()->assign(array(
 			'errorField' => $errorField,
 			'errorType' => $errorType,
-			'languages' => $languages,
+			'availableLanguages' => self::$availableLanguages,
 			'nextStep' => 'selectLanguages'
 		));
 		WCF::getTPL()->display('stepSelectLanguages');

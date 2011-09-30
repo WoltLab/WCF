@@ -13,13 +13,12 @@
 	<fieldset>
 		<legend>{lang}wcf.global.languages.languages{/lang}</legend>
 			
-			<dl class="languages">
-				{foreach from=$languages key=language item=languageName}
-					<dt></dt>
-					<dd><label><input type="checkbox" name="selectedLanguages[]" value="{@$language}" {if $language|in_array:$selectedLanguages}checked="checked" {/if}/> {@$languageName}</label></dd>
-				{/foreach}
-			</dl>
-		
+		<dl class="languages">
+			{foreach from=$availableLanguages key=availableLanguageCode item=languageName}
+				<dt></dt>
+				<dd><label><input type="checkbox" name="selectedLanguages[]" value="{@$availableLanguageCode}" {if $availableLanguageCode|in_array:$selectedLanguages}checked="checked" {/if}/> {$languageName} ({$availableLanguageCode})</label></dd>
+			{/foreach}
+		</dl>
 	</fieldset>
 	
 	<div class="formSubmit">

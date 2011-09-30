@@ -45,12 +45,18 @@
 		
 		<dl>
 			<dt><label for="dbName">{lang}wcf.global.configureDB.database{/lang}</label></dt>
-			<dd><input type="text" id="dbName" name="dbName" value="{$dbName}" class="medium"  /></dd>
+			<dd>
+				<input type="text" id="dbName" name="dbName" value="{$dbName}" class="medium"  />
+				<small>{lang}wcf.global.configureDB.database.description{/lang}</small>
+			</dd>
 		</dl>
 		
 		<dl>
 			<dt><label for="dbNumber">{lang}wcf.global.configureDB.number{/lang}</label></dt>
-			<dd><input type="text" id="dbNumber" name="dbNumber" value="{$dbNumber}" class="short" /></dd>
+			<dd>	
+				<input type="text" id="dbNumber" name="dbNumber" value="{$dbNumber}" class="short" />
+				<small>{lang}wcf.global.configureDB.number.description{/lang}</small>
+			</dd>
 		</dl>
 		
 		{if $conflictedTables|isset}
