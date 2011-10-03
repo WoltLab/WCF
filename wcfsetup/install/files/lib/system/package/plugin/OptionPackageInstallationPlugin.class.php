@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\option\Option;
 use wcf\data\option\OptionEditor;
+use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
