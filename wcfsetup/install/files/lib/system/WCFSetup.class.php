@@ -454,7 +454,7 @@ class WCFSetup extends WCF {
 		// select all available languages automatically
 		if (self::$developerMode) {
 			self::$selectedLanguages = array();
-			foreach ($allLanguages as $languageCode) {
+			foreach (self::$availableLanguages as $languageCode => $language) {
 				self::$selectedLanguages[] = $languageCode;
 			}
 			
