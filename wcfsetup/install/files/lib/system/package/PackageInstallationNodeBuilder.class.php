@@ -53,6 +53,15 @@ class PackageInstallationNodeBuilder {
 	}
 	
 	/**
+	 * Sets parent node.
+	 * 
+	 * @param	string		$parentNode
+	 */
+	public function setParentNode($parentNode) {
+		$this->parentNode = $parentNode;
+	}
+	
+	/**
 	 * Builds nodes for current installation queue.
 	 */
 	public function buildNodes() {
@@ -177,11 +186,9 @@ class PackageInstallationNodeBuilder {
 		
 		$sql = "SELECT	done
 			FROM	wcf".WCF_N."_package_installation_node
-			WHERE	queueID = ?
-				AND processNo = ?";
+			WHERE	processNo = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-			$this->installation->queue->queueID,
 			$this->installation->queue->processNo
 		));
 		while ($row = $statement->fetchArray()) {
@@ -339,6 +346,7 @@ class PackageInstallationNodeBuilder {
 	 */
 	protected function buildRequirementNodes() {
 		$packageNodes = array();
+		$queue = $this->installation->queue;
 		
 		$requiredPackages = $this->installation->getArchive()->getRequirements();
 		foreach ($requiredPackages as $packageName => $package) {
@@ -347,38 +355,49 @@ class PackageInstallationNodeBuilder {
 				continue;
 			}
 			
-			$this->parentNode = $this->node;
-			$this->node = $this->getToken();
-			$this->sequenceNo = 0;
-			
-			$packageNodes[] = array(
-				'data' => array(
-					'file' => $package['file'],
-					'packageName' => $packageName
-				),
-				'node' => $this->node,
-				'parentNode' => $this->parentNode,
-				'sequenceNo' => $this->sequenceNo
-			);
-		}
-		
-		if (!empty($packageNodes)) {
-			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_node
-						(queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
-				VALUES		(?, ?, ?, ?, ?, ?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			foreach ($packageNodes as $nodeData) {
-				$statement->execute(array(
-					$this->installation->queue->queueID,
-					$this->installation->queue->processNo,
-					$nodeData['sequenceNo'],
-					$nodeData['node'],
-					$nodeData['parentNode'],
-					'requiredPackage',
-					serialize($nodeData['data'])
-				));
+			if ($this->node == '' && !empty($this->parentNode)) {
+				$this->node = $this->parentNode;
 			}
+			
+			// extract package
+			$index = $this->installation->getArchive()->getTar()->getIndexByFilename($package['file']);
+			if ($index === false) {
+				throw new SystemException("Unable to find required package '".$package['file']."' within archive.");
+			}
+			
+			$fileName = FileUtil::getTemporaryFilename('package_', preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', basename($package['file'])));
+			$this->installation->getArchive()->getTar()->extract($index, $fileName);
+			
+			// get archive data
+			$archive = new PackageArchive($fileName);
+			$archive->openArchive();
+			
+			// create new queue
+			$queue = PackageInstallationQueueEditor::create(array(
+				'parentQueueID' => $queue->queueID,
+				'processNo' => $queue->processNo,
+				'userID' => WCF::getUser()->userID,
+				'package' => $archive->getPackageInfo('name'),
+				'packageName' => $archive->getPackageInfo('packageName'),
+				'archive' => $fileName,
+				'action' => $queue->action
+			));
+			
+			// spawn nodes
+			$installation = new PackageInstallationDispatcher($queue);
+			$installation->nodeBuilder->setParentNode($this->node);
+			$installation->nodeBuilder->buildNodes();
+			$this->node = $installation->nodeBuilder->getCurrentNode();
 		}
+	}
+	
+	/**
+	 * Returns current node
+	 * 
+	 * @return	string
+	 */
+	public function getCurrentNode() {
+		return $this->node;
 	}
 	
 	/**

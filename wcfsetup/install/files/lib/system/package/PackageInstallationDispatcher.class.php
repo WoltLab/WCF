@@ -32,42 +32,36 @@ use wcf\util\StringUtil;
 class PackageInstallationDispatcher {
 	/**
 	 * current installation type
-	 *
 	 * @var	string
 	 */
 	protected $action = '';
 	
 	/**
 	 * instance of PackageArchive
-	 *
-	 * @var	PackageArchive
+	 * @var	wcf\system\package\PackageArchive
 	 */
 	public $archive = null;
 	
 	/**
 	 * instance of PackageInstallationNodeBuilder
-	 *
-	 * @var	PackageInstallationNodeBuilder
+	 * @var	wcf\system\package\PackageInstallationNodeBuilder
 	 */
 	public $nodeBuilder = null;
 	
 	/**
 	 * instance of Package
-	 *
-	 * @var	Package
+	 * @var	wcf\data\package\Package
 	 */
 	public $package = null;
 	
 	/**
 	 * instance of PackageInstallationQueue
-	 *
-	 * @var	PackageInstallationQueue
+	 * @var	wcf\system\package\PackageInstallationQueue
 	 */
 	public $queue = null;
 	
 	/**
 	 * default name of the config file
-	 *
 	 * @var string
 	 */
 	const CONFIG_FILE = 'config.inc.php';
