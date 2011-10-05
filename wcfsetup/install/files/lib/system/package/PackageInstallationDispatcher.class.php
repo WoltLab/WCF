@@ -99,6 +99,10 @@ class PackageInstallationDispatcher {
 				case 'pip':
 					$step = $this->executePIP($nodeData);
 				break;
+				
+				default:
+					die("Unknown node type: '".$data['nodeType']."'");
+				break;
 			}
 			
 			if ($step->splitNode()) {
@@ -513,32 +517,6 @@ class PackageInstallationDispatcher {
 	}
 	
 	/**
-	 * Returns next queue within an installation process.
-	 *
-	 * @return	integer
-	 */
-	protected function getNextQueue() {
-		$sql = "SELECT		queueID
-			FROM		wcf".WCF_N."_package_installation_queue
-			WHERE		userID = ?
-					AND processNo = ?
-					AND done = 0
-			ORDER BY	queueID ASC";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			WCF::getUser()->userID,
-			$this->queue->processNo
-		));
-		$row = $statement->fetchArray();
-		
-		if (!$row) {
-			return 0;
-		}
-		
-		return $row['queueID'];
-	}
-	
-	/**
 	 * Executes post-setup actions.
 	 */
 	public function completeSetup() {
@@ -563,18 +541,11 @@ class PackageInstallationDispatcher {
 			));
 		}
 		
-		// return next queue within the same process no
-		$queueID = $this->getNextQueue();
+		// clear language files once whole installation is completed
+		LanguageEditor::deleteLanguageFiles();
 		
-		if (!$queueID) {
-			// clear language files once whole installation is completed
-			LanguageEditor::deleteLanguageFiles();
-			
-			// reset all caches
-			CacheHandler::getInstance()->clear(WCF_DIR.'cache/', '*');
-		}
-		
-		return $queueID;
+		// reset all caches
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', '*');
 	}
 	
 	/**

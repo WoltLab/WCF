@@ -774,6 +774,8 @@ dl > dd > small {
 dl > dd > fieldset {
 	margin-top: 0;
 	margin-bottom: 0;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 dl > dd > fieldset > legend {
@@ -1005,9 +1007,6 @@ textarea {
 
 
 
-
-
-
 /* Input Buttons & Dropdowns */
 
 /* Input Button Area */
@@ -1041,7 +1040,7 @@ textarea {
 	float: left;
 }
 
-.preInput .dropdownCaption span { /* ToDo: Icon will be toggled by a class in the future! */
+.preInput .dropdownCaption span.active {
 	background-image: url('../../icon/dropdown1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
@@ -1132,13 +1131,13 @@ textarea {
 }
 
 .preInput .dropdown > li:first-child {
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
 
 .preInput .dropdown > li:last-child {
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 
 .preInput .dropdown > li:hover {
