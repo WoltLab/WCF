@@ -5,7 +5,7 @@
  * @copyright	2011 WoltLab GmbH 
  */
 
-/* -- -- -- -- -- Reset -- -- -- -- -- */
+/* ############## Reset ############## */
 
 /**
  * Parts taken from
@@ -58,7 +58,7 @@ q:after {
 
 
 
-/* -- -- -- -- -- Globals -- -- -- -- -- */
+/* ############## Globals ############## */
 
 * {
 	text-overflow: ellipsis;
@@ -115,7 +115,9 @@ hr {
 
 
 
-/* -- -- -- -- -- Page Header -- -- -- -- -- */
+/* ############## Page Header ############## */
+
+/* Globals */
 
 header.pageHeader {
 	/* Disabled, because the WoltLab header-image is not LGPL 
@@ -127,7 +129,9 @@ header.pageHeader {
 	width: 100%;
 }
 
-/* Top Menu */
+/* -- -- -- Top Menu -- -- -- */
+
+/* Globals */
 
 header.pageHeader nav.topMenu {
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
@@ -163,15 +167,6 @@ header.pageHeader nav.topMenu li ul li:hover a {
 	color: #fff;
 }
 
-
-
-
-
-
-
-/* ToDo */
-
-
 /* Todo: Top Menu Dropdowns */
 
 nav.topMenu .dropdownCaption {
@@ -186,7 +181,7 @@ nav.topMenu ul {
 nav.topMenu ul li ul.dropdown {
 	color: #fff;
 	border: 1px solid rgba(255, 255, 255, .5);
-	border-radius: 0 5px 5px 5px;
+	border-radius: 0 0 5px 5px;
 	background-color: rgba(0, 0, 0, .7);
 	margin-top: 25px;
 	display: none;
@@ -256,21 +251,7 @@ nav.topMenu ul li ul.dropdown > li:first-child {
 	border-top-width: 0;
 }
 
-
-
-
-
-
-
-
-/* Todo */
-
-
-
-
-
-
-/* Logo */
+/* -- -- -- Logo -- -- -- */
 
 header.pageHeader div#logo {
 	margin: 0 23px 0;
@@ -304,7 +285,7 @@ header.pageHeader div#logo > div {
 	height: 110px;
 }
 
-/* Main Menu  */
+/* -- -- -- Main Menu -- -- -- */
 
 nav.mainMenu {
 	/* This is the general toggle switch for main menu orientation (options: left|center|right) */
@@ -398,7 +379,7 @@ nav.mainMenu ul li.activeMenuItem:only-child {
 	margin: 5px 0 -5px;
 }
 
-/* Header Navigation  */
+/* -- -- -- Header Navigation -- -- -- */
 
 nav.headerNavigation {
 	background-color: #e7f2fd;
@@ -445,7 +426,7 @@ nav.headerNavigation ul li {
 
 
 
-/* -- -- -- -- -- Main -- -- -- -- -- */
+/* ############## Main ############## */
 
 div.main {
 	margin: 0 23px;
@@ -454,7 +435,7 @@ div.main {
 
 
 
-/* -- -- -- -- -- Content -- -- -- -- -- */
+/* -- -- -- Content -- -- -- */
 
 section.content {
 	background-color: #fff;
@@ -480,7 +461,7 @@ section.content .content {
 
 
 
-/* -- -- -- -- -- Content Header & Footer -- -- -- -- -- */
+/* -- -- -- Content Header & Footer -- -- -- */
 
 .contentHeader,
 .contentFooter {
@@ -489,7 +470,9 @@ section.content .content {
 
 
 
-/* -- -- -- -- -- Sidebar -- -- -- -- -- */
+/* ############## Sidebar ############## */
+
+/* Globals */
 
 aside.sidebar {
 	border-right: 1px solid #bcd;
@@ -573,7 +556,9 @@ nav.sidebarMenu > div ul li.activeMenuItem a {
 
 
 
-/* -- -- -- -- -- Page Footer -- -- -- -- --  */
+/* ############## Page Footer ##############  */
+
+/* Globals */
 
 footer.pageFooter {
 	text-align: center;
@@ -604,6 +589,8 @@ footer.pageFooter > div:after {
 	clear: both;
 }
 
+/* -- -- -- Copyright -- -- -- */
+
 footer.pageFooter .copyright {
 	padding-top: 20px;
 	display: inline-block;
@@ -619,7 +606,7 @@ footer.pageFooter .copyright a:hover {
 	color: #69c;
 }
 
-/* Footer Navigation */
+/* -- -- -- Footer Navigation -- -- -- */
 
 footer.pageFooter nav.footerNavigation ul li {
 	display: inline-block;
@@ -636,9 +623,9 @@ footer.pageFooter nav.footerNavigation ul li {
 
 
 
-/* -- -- -- -- -- Headings -- -- -- -- -- */
+/* ############## Headings ############## */
 
-/* Main Heading */
+/* -- -- -- Main Heading -- -- -- */
 
 .mainHeading {
 	position: relative;
@@ -677,7 +664,7 @@ footer.pageFooter nav.footerNavigation ul li {
 	padding-top: 3px;
 } 
 
-/* Sub Heading */
+/* -- -- -- Sub Heading -- -- -- */
 
 .subHeading h1 {
 	font-size: 150%;
@@ -690,7 +677,7 @@ footer.pageFooter nav.footerNavigation ul li {
 
 
 
-/* -- -- -- -- -- Fieldsets -- -- -- -- -- */
+/* ############## Fieldsets ############## */
 
 fieldset {
 	border: 1px solid #ccc;
@@ -730,7 +717,7 @@ fieldset p.description {
 
 
 
-/* -- -- -- -- -- Tabbed Content -- -- -- -- -- */
+/* ############## Tabbed Content ############## */
 
 /* Simple */
 
@@ -823,7 +810,7 @@ fieldset dt.reversed {
 
 
 
-/* -- -- -- -- -- Forms -- -- -- -- -- */
+/* ############## Forms ############## */
 
 /* Globals */
 
@@ -947,7 +934,7 @@ textarea[disabled='disabled'] {
 	background-color: rgba(255, 255, 255, .5);
 }
 
-/* Widths */
+/* -- -- -- Widths -- -- -- */
 
 textarea {
 	width: 99%;
@@ -977,7 +964,7 @@ textarea {
 	width: auto;
 }
 
-/* Form Errors */
+/* -- -- -- Form Errors -- -- -- */
 
 .formError input[type='text'],
 .formError input[type='search'],
@@ -990,91 +977,52 @@ textarea {
 
 
 
+/* -- -- -- Input Buttons & Dropdowns -- -- --  */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Input Buttons & Dropdowns */
-
-/* Input Button Area */
+/* Bounding Box */
 
 /* ToDo: Change the class-name! */
-
 .preInput {
+	display: table;
 	position: relative;
-	white-space: nowrap;
+	width: 100%;
 }
 
-.preInput:after {
-	content: '';
-	display: block;
-	clear: both;
-}
-
-.preInput > input { /* ToDo: All this needed? */
+.preInput > input,
+.preInput > textarea { /* ToDo: Textarea solution is not really perfect */
 	border-radius: 0 3px 3px 0;
-	margin: 0;
-	position: relative;
-	right: 0;
-	left: 0;
-	display: inline-block;
+	margin: 0 !important;
+	display: table-cell;
+	width: 99%;
+	min-width: 300px;
 }
 
-/* Input Button */
+/* Button */
 
 .preInput .dropdownCaption {
+	letter-spacing: -1px;
+	cursor: pointer;
+	border-radius: 3px 0 0 3px;
+	padding-right: 5px;
+	display: table-cell;
+	width: 1%;
+	vertical-align: middle;
+}
+
+.preInput .dropdownCaption span {
 	margin-right: -1px;
-	float: left;
+	padding-left: 5px;
+	white-space: nowrap;
 }
 
 .preInput .dropdownCaption span.active {
 	background-image: url('../../icon/dropdown1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
-	margin-right: -5px;
 	padding-right: 10px;
-	white-space: nowrap;
 }
 
-/* ToDo: Coloring classes copied from Buttons! */
-
-/* normal */
-.preInput .dropdownCaption {
-	cursor: pointer;
-	
-	border-radius: 3px 0 0 3px;
-	padding: 5px 10px;
-	display: inline-block;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Input Dropdown */
+/* Dropdown */
 
 .preInput .dropdown {
 	color: #fff;
@@ -1095,27 +1043,7 @@ textarea {
 	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 }
 
-/* Show/hide will be done by Javascript now! 
-.preInput:hover .dropdownCaption ~ .dropdown {
-	display: block !important;
-}
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Dropdown Entries */
+/* Dropdown Items */
 
 .preInput .dropdown > li {
 	text-shadow: none;
@@ -1140,7 +1068,21 @@ textarea {
 	border-bottom-right-radius: 5px;
 }
 
-.preInput .dropdown > li:hover {
+.preInput .dropdown > li.divider {
+	border-top: 1px solid rgba(255, 255, 255, .7);
+}
+
+.preInput .dropdown > li.missingValue {
+	/* color: #990; */
+	background-image: url('../../icon/systemWarning.svg');
+	background-size: 16px;
+	background-position: 95% center;
+	background-repeat: no-repeat;
+	/* background-color: #ffd; */
+}
+
+.preInput .dropdown > li:hover,
+.preInput .dropdown > li.active {
 	color: #fff;
 	background-color: rgba(0, 0, 0, .5);
 }
@@ -1151,20 +1093,11 @@ textarea {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-/* -- -- -- -- -- Large Buttons -- -- -- -- -- */
+/* ############## Large Buttons ############## */
 
 /* Colors are being taken from the global color styles */
+
+/* Globals */
 
 .largeButtons {
 	text-align: right;
@@ -1181,16 +1114,15 @@ textarea {
 	vertical-align: middle;
 }
 
-/* buttons normal */
+/* Normal State */
+
 input[type='reset'],
 input[type='submit'],
 input[type='button'],
 .largeButtons ul li a {
 	font-size: 100%;
 	font-weight: bold;
-	
 	border-radius: 30px;
-	
 	margin: 3px 2px;
 	padding: 5px 13px;
 	display: inline-block;
@@ -1198,7 +1130,7 @@ input[type='button'],
 
 
 
-/* -- -- -- -- -- Border -- -- -- -- -- */
+/* ############## Border ############## */
 
 .border {
 	border: 1px solid #ccc;
@@ -1210,7 +1142,11 @@ input[type='button'],
 	margin-top: 0 !important;
 }
 
-/* -- -- -- -- -- Box Title -- -- -- -- -- */
+
+
+/* ############## Box Title ############## */
+
+/* Globals */
 
 .boxTitle {
 	border-radius: 7px;
@@ -1227,6 +1163,8 @@ input[type='button'],
 	-o-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 	box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 }
+
+/* Headings */
 
 .boxTitle > hgroup {
 	text-shadow: 0 -1px 0 #000;
@@ -1250,6 +1188,7 @@ input[type='button'],
 	margin-top: 5px;
 }
 
+/* experimental */
 .boxTitle img.handle {
 	cursor: pointer;
 	margin-top: -1px;
@@ -1260,11 +1199,11 @@ input[type='button'],
 
 
 
-/* -- -- -- -- -- Tab Menu -- -- -- -- -- */
+/* ############## Tab Menu ############## */
 
 /* Parts taken from jQuery UI @ themes/base/jquery.ui.tabs.css */
 
-/* Tab Menu */
+/* Globals */
 
 .tabMenu {
 	text-shadow: 0 1px 0 #fff;
@@ -1283,6 +1222,8 @@ input[type='button'],
 	display: block;
 	clear: both;
 }
+
+/* Tabs */
 
 .tabMenu li {
 	white-space: nowrap;
@@ -1378,7 +1319,9 @@ input[type='button'],
 
 
 
-/* -- -- -- -- -- Menu -- -- -- -- -- */
+/* ############## Menu ############## */
+
+/* Standard */
 
 .menu {
 	color: #666;
@@ -1499,9 +1442,9 @@ input[type='button'],
 
 
 
-/* -- -- -- -- -- ToDo: Tables -- -- -- -- -- */
+/* ############## Tables ############## */
 
-/* Table */
+/* Globals */
 
 table {
 	border-spacing: 0;
@@ -1724,9 +1667,7 @@ table input[type='checkbox'] {
 
 
 
-/* -- -- -- -- -- ToDo: Page Navigation -- -- -- -- -- */
-
-/* Page-Navigation Popups are still missing */
+/* ############## Page Navigation ############## */
 
 .pageNavigation ul li:not(.children) {
 	border-radius: 3px;
@@ -1809,7 +1750,9 @@ table input[type='checkbox'] {
 
 
 
-/* -- -- -- -- -- System Notifications -- -- -- -- -- */
+/* ############## System Notifications ############## */
+
+/* Globals */
 
 p.info,
 p.error,
@@ -1833,6 +1776,8 @@ p.warning {
 	-o-transition: all .1s linear;
 	transition: all .1s linear;
 }
+
+/* Types */
 
 p.info {
 	color: #68b;
@@ -1874,7 +1819,7 @@ p.error {
 	background-repeat: no-repeat;
 }
 
-/* small error notifications */
+/* Inline Error Notifications */
 
 .innerError {
 	text-shadow: 0 1px 0 #fff;
@@ -1903,8 +1848,6 @@ p.error {
 	box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
 	
 }
-
-/* small error notification arrows */
 
 .innerError .arrowOuter {	
 	border-width: 0 7px 7px;
@@ -1935,7 +1878,7 @@ p.error {
 
 
 
-/* ToDo: Installation */
+/* ############## ToDo: Installation ############## */
 
 div#packageInstallationDialogContainer {
 	padding: 20px;
@@ -1974,7 +1917,7 @@ div#ajaxExceptionStacktrace {
 
 
 
-/* ToDo */
+/* ############## ToDo ############## */
 
 #actionProxyLoading {
 	border: 1px solid #f80;
@@ -2050,7 +1993,9 @@ div.ui-widget-overlay {
 
 
 
-/* ToDo: Is all that really necessary? We wanted to support good browsers only */
+/* ############## ToDo ############## */
+
+/* Is all that really still necessary? We wanted to support good browsers only */
 
 .ui-helper-clearfix {
 	display: inline-block;
@@ -2080,7 +2025,7 @@ div.ui-widget-overlay {
 }
 
 
-/* -- -- -- -- -- Badges -- -- -- -- -- */
+/* ############## Badges ############## */
 
 /* Globals */
 
@@ -2158,9 +2103,9 @@ li > .badgeButton {
 
 
 
-/* -- -- -- -- -- GUI Widgets -- -- -- -- -- */
+/* ############## GUI Widgets ############## */
 
-/* Balloon Tooltips */
+/* -- -- -- Balloon Tooltips -- -- -- */
 
 #balloonTooltip {
 	font-size: .85em;
@@ -2180,7 +2125,7 @@ li > .badgeButton {
 	cursor: pointer;
 }
 
-/* Collapsible */
+/* -- -- -- Collapsible -- -- -- */
 
 .collapsible {
 	margin: 5px 0 0 10px;
@@ -2194,11 +2139,9 @@ li > .badgeButton {
 
 
 
-/* -- -- -- -- -- ToDo: Clipboard Editor -- -- -- -- -- */
+/* ############## ToDo: Clipboard Editor ############## */
 
-.clipboardEditor {
-	
-}
+/* Globals */
 
 .clipboardEditor > ul {
 	font-size: .85em;
@@ -2248,6 +2191,7 @@ li > .badgeButton {
 }
 
 .clipboardEditor ul > li > ol > li:first-child {
+	border-top-width: 0;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 }
@@ -2262,17 +2206,12 @@ li > .badgeButton {
 	background-color: rgba(0, 0, 0, .5);
 }
 
-.clipboardEditor ul > li > ol > li:first-child {
-	border-top-width: 0;
-}
 
 
+/* ############## Global Button Color & Effect Library ############## */
 
-/* -- -- -- -- -- Global Button Color & Effect Library -- -- -- -- -- */
+/* Normal State */
 
-/* Put individual settings to their respective declarations */
-
-/* normal state */
 input[type='reset'],
 input[type='submit'],
 input[type='button'],
@@ -2303,7 +2242,8 @@ input[type='button'],
 	transition: all .1s linear;
 }
 
-/* hover state */
+/* Hover State */
+
 input[type='reset']:hover,
 input[type='submit']:hover,
 input[type='button']:hover,
@@ -2326,7 +2266,8 @@ input[type='button'].default:hover,
 	background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 237, 217, 1) 2px, rgba(255, 229, 200, 1));
 }
 
-/* active state */
+/* Active State */
+
 input[type='reset']:focus,
 input[type='submit']:focus,
 input[type='button']:focus,
@@ -2364,7 +2305,8 @@ input[type='button'].default:active,
 	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 }
 
-/* default glow */
+/* Default State Glow */
+
 @-webkit-keyframes glowLargeButtons {
     0% {
         -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .3);
@@ -2406,7 +2348,8 @@ input[type='button'].default:active,
     }
 }
 
-/* default normal state */
+/* Default Normal State */
+
 input[type='submit'],
 input[type='button'].default,
 .largeButtons ul li.default a {
@@ -2459,7 +2402,8 @@ input[type='button'].default,
 	animation-timing-function: ease-in-out;
 }
 
-/* default hover glow */
+/* Default Hover State Glow */
+
 @-webkit-keyframes glowLargeButtonsHover {
     0% {
         -webkit-box-shadow: 0 0 13px rgba(255, 153, 51, .3);
@@ -2501,7 +2445,8 @@ input[type='button'].default,
     }
 }
 
-/* default hover state */
+/* Default Hover State */
+
 input[type='submit']:hover,
 input[type='button'].default:hover,
 .largeButtons ul li.default a:hover {	
@@ -2542,7 +2487,8 @@ input[type='button'].default:hover,
 	animation-timing-function: ease-in-out;
 }
 
-/* default active glow */
+/* Default Active State Glow */
+
 @-webkit-keyframes glowDefaultLargeButtonsActive {
     0% {
         -webkit-box-shadow: 0 0 13px rgba(255, 153, 51, .3), inset 0 1px 3px rgba(0, 0, 0, .1);
@@ -2584,7 +2530,8 @@ input[type='button'].default:hover,
     }
 }
 
-/* default active state */
+/* Default Active State */
+
 input[type='submit']:focus,
 input[type='button'].default:focus,
 .largeButtons ul li.default a:focus,
@@ -2628,7 +2575,8 @@ input[type='button'].default:active,
 	animation-timing-function: ease-in-out;
 }
 
-/* disabled state */
+/* Disabled State */
+
 input[disabled='disabled'],
 input[type='button'][disabled='disabled'],
 .largeButtons ul li.disabled a {
@@ -2647,12 +2595,7 @@ input[type='button'][disabled='disabled'],
 
 
 
-/* -- -- -- -- -- CSS Experiments (active) -- -- -- -- -- */
-
-
-
-
-
+/* ############## CSS Experiments (active) ############## */
 
 
 
