@@ -69,31 +69,23 @@ class InstallPackageAction extends AbstractDialogAction {
 	 */
 	protected function stepInstall() {
 		$step = $this->installation->install($this->node);
+		$queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $step->getNode());
 		
 		if ($step->hasDocument()) {
 			$this->data = array(
 				'innerTemplate' => $step->getTemplate(),
 				'node' => $step->getNode(),
 				'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
-				'step' => 'install'
+				'step' => 'install',
+				'queueID' => $queueID
 			);
 		}
 		else {
 			if ($step->getNode() == '') {
 				// perform final actions
-				$queueID = $this->installation->completeSetup();
+				$this->installation->completeSetup();
 				
-				// begin with next queue
-				if ($queueID) {
-					$this->data = array(
-						'progress' => 100,
-						'queueID' => $queueID,
-						'step' => 'prepare'
-					);
-					return;
-				}
-				
-				// no more queues, show success
+				// show success
 				$this->data = array(
 					'progress' => 100,
 					'step' => 'success'
@@ -105,7 +97,8 @@ class InstallPackageAction extends AbstractDialogAction {
 			$this->data = array(
 				'step' => 'install',
 				'node' => $step->getNode(),
-				'progress' => $this->installation->nodeBuilder->calculateProgress($this->node)
+				'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
+				'queueID' => $queueID
 			);
 		}
 	}
@@ -123,9 +116,10 @@ class InstallPackageAction extends AbstractDialogAction {
 		// create node tree
 		$this->installation->nodeBuilder->buildNodes();
 		$nextNode = $this->installation->nodeBuilder->getNextNode();
+		$queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $nextNode);
 		
 		WCF::getTPL()->assign(array(
-			'queue' => $this->queue
+			'packageName' => $this->installation->queue->packageName
 		));
 		
 		$this->data = array(
@@ -133,7 +127,8 @@ class InstallPackageAction extends AbstractDialogAction {
 			'step' => 'install',
 			'node' => $nextNode,
 			'currentAction' => WCF::getLanguage()->get('wcf.package.installation.step.installing'),
-			'progress' => 0
+			'progress' => 0,
+			'queueID' => $queueID
 		);
 	}
 	

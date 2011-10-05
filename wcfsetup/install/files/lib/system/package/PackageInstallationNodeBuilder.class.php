@@ -1,7 +1,9 @@
 <?php
 namespace wcf\system\package;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
+use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -87,12 +89,10 @@ class PackageInstallationNodeBuilder {
 	public function getNextNode($parentNode = '') {
 		$sql = "SELECT	node
 			FROM	wcf".WCF_N."_package_installation_node
-			WHERE	queueID = ?
-				AND processNo = ?
+			WHERE	processNo = ?
 				AND parentNode = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-			$this->installation->queue->queueID,
 			$this->installation->queue->processNo,
 			$parentNode
 		));
@@ -114,13 +114,11 @@ class PackageInstallationNodeBuilder {
 	public function getNodeData($node) {
 		$sql = "SELECT		nodeType, nodeData, sequenceNo
 			FROM		wcf".WCF_N."_package_installation_node
-			WHERE		queueID = ?
-					AND processNo = ?
+			WHERE		processNo = ?
 					AND node = ?
 			ORDER BY	sequenceNo ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-			$this->installation->queue->queueID,
 			$this->installation->queue->processNo,
 			$node
 		));
@@ -140,12 +138,10 @@ class PackageInstallationNodeBuilder {
 	public function completeNode($node) {
 		$sql = "UPDATE	wcf".WCF_N."_package_installation_node
 			SET	done = 1
-			WHERE	queueID = ?
-				AND processNo = ?
+			WHERE	processNo = ?
 				AND node = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-			$this->installation->queue->queueID,
 			$this->installation->queue->processNo,
 			$node
 		));
@@ -225,13 +221,11 @@ class PackageInstallationNodeBuilder {
 		$sql = "UPDATE	wcf".WCF_N."_package_installation_node
 			SET	parentNode = ?
 			WHERE	parentNode = ?
-				AND queueID = ?
 				AND processNo = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			$newNode,
 			$node,
-			$this->installation->queue->queueID,
 			$this->installation->queue->processNo
 		));
 		
@@ -239,13 +233,11 @@ class PackageInstallationNodeBuilder {
 		$sql = "SELECT	nodeType, nodeData, done
 			FROM	wcf".WCF_N."_package_installation_node
 			WHERE	node = ?
-				AND queueID = ?
 				AND processNo = ?
 				AND sequenceNo = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			$node,
-			$this->installation->queue->queueID,
 			$this->installation->queue->processNo,
 			$sequenceNo
 		));
@@ -272,7 +264,6 @@ class PackageInstallationNodeBuilder {
 				node = ?,
 				sequenceNo = (sequenceNo - ?)
 			WHERE	node = ?
-				AND queueID = ?
 				AND processNo = ?
 				AND sequenceNo > ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -281,7 +272,6 @@ class PackageInstallationNodeBuilder {
 			$newNode,
 			$sequenceNo,
 			$node,
-			$this->installation->queue->queueID,
 			$this->installation->queue->processNo,
 			$sequenceNo
 		));
@@ -504,5 +494,27 @@ class PackageInstallationNodeBuilder {
 	 */
 	protected function getToken() {
 		return StringUtil::substring(StringUtil::getRandomID(), 0, 8);
+	}
+	
+	/**
+	 * Returns queue id based upon current node.
+	 * 
+	 * @param	integer		$processNo
+	 * @param	string		$node
+	 * @return	integer
+	 */
+	public function getQueueByNode($processNo, $node) {
+		$sql = "SELECT	queueID
+			FROM	wcf".WCF_N."_package_installation_node
+			WHERE	processNo = ?
+				AND node = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			$processNo,
+			$node
+		));
+		$row = $statement->fetchArray();
+		
+		return $row['queueID'];
 	}
 }
