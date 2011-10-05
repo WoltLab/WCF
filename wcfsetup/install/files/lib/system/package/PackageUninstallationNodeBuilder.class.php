@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\package;
+use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
+use wcf\system\package\PackageUninstallationDispatcher;
 use wcf\system\WCF;
 
 /**
@@ -19,6 +21,13 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 	 * Builds node for current uninstallation queue.
 	 */
 	public function buildNodes() {
+		if (!empty($this->parentNode)) {
+			$this->node = $this->getToken();
+		}
+		
+		// build nodes for dependent packages
+		$this->buildDependentPackageNodes();
+		
 		// build pip nodes
 		$this->buildPluginNodes();
 		
@@ -27,11 +36,44 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 	}
 	
 	/**
+	 * Builds nodes for all dependent packages.
+	 */
+	protected function buildDependentPackageNodes() {
+		if (!PackageUninstallationDispatcher::hasDependencies($this->installation->queue->packageID)) {
+			return;
+		}
+		
+		$packageList = PackageUninstallationDispatcher::getOrderedPackageDependencies($this->installation->queue->packageID);
+		$queue = $this->installation->queue;
+		
+		foreach ($packageList as $package) {
+			$queue = PackageInstallationQueueEditor::create(array(
+				'processNo' => $queue->processNo,
+				'parentQueueID' => $queue->queueID,
+				'userID' => WCF::getUser()->userID,
+				'package' => $package->package,
+				'packageName' => $package->getName(),
+				'packageID' => $package->packageID,
+				'action' => 'uninstall'
+			));
+			
+			// spawn nodes
+			$uninstallation = new PackageUninstallationDispatcher($queue);
+			$uninstallation->nodeBuilder->setParentNode($this->node);
+			$uninstallation->nodeBuilder->buildNodes();
+			$this->parentNode = $uninstallation->nodeBuilder->getCurrentNode();
+			$this->node = $this->getToken();
+		}
+	}
+	
+	/**
 	 * Creates a node-tree for package installation plugins, whereas the PIP- and files-plugin
 	 * will be executed last.
 	 */
 	protected function buildPluginNodes() {
-		$this->node = $this->getToken();
+		if (empty($this->node)) {
+			$this->node = $this->getToken();
+		}
 		
 		// fetch ordered pips
 		$pips = array();
@@ -47,8 +89,8 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 		
 		// insert pips
 		$sql = "INSERT INTO	wcf".WCF_N."_package_installation_node
-					(queueID, processNo, sequenceNo, node, nodeType, nodeData)
-			VALUES		(?, ?, ?, ?, ?, ?)";
+					(queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
+			VALUES		(?, ?, ?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$sequenceNo = 0;
 		
@@ -58,6 +100,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 				$this->installation->queue->processNo,
 				$sequenceNo,
 				$this->node,
+				$this->parentNode,
 				'pip',
 				serialize(array(
 					'pluginName' => $pip['pluginName'],

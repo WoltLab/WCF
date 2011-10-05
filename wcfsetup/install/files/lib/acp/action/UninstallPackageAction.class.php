@@ -64,42 +64,38 @@ class UninstallPackageAction extends InstallPackageAction {
 			throw new IllegalLinkException();
 		}
 		
-		if (PackageUninstallationDispatcher::hasDependencies($package->packageID)) {
-			throw new SystemException('hasDependencies');
-		}
-		else {
-			// get new process no
-			$processNo = PackageInstallationQueue::getNewProcessNo();
+		// get new process no
+		$processNo = PackageInstallationQueue::getNewProcessNo();
 			
-			// create queue
-			$queue = PackageInstallationQueueEditor::create(array(
-				'processNo' => $processNo,
-				'userID' => WCF::getUser()->userID,
-				'packageName' => $package->getName(),
-				'packageID' => $package->packageID,
-				'action' => 'uninstall',
-				'cancelable' => 0
-			));
+		// create queue
+		$queue = PackageInstallationQueueEditor::create(array(
+			'processNo' => $processNo,
+			'userID' => WCF::getUser()->userID,
+			'packageName' => $package->getName(),
+			'packageID' => $package->packageID,
+			'action' => 'uninstall',
+			'cancelable' => 0
+		));
 			
-			// initialize uninstallation
-			$this->installation = new PackageUninstallationDispatcher($queue);
+		// initialize uninstallation
+		$this->installation = new PackageUninstallationDispatcher($queue);
 			
-			$this->installation->nodeBuilder->purgeNodes();
-			$this->installation->nodeBuilder->buildNodes();
+		$this->installation->nodeBuilder->purgeNodes();
+		$this->installation->nodeBuilder->buildNodes();
 			
-			WCF::getTPL()->assign(array(
-				'queue' => $queue
-			));
-			
-			$this->data = array(
-				'template' => WCF::getTPL()->fetch($this->templateName),
-				'step' => 'uninstall',
-				'node' => $this->installation->nodeBuilder->getNextNode(),
-				'currentAction' => WCF::getLanguage()->get('wcf.package.installation.step.uninstalling'),
-				'progress' => 0,
-				'queueID' => $queue->queueID
-			);
-		}
+		WCF::getTPL()->assign(array(
+			'queue' => $queue
+		));
+		
+		$queueID = $this->installation->nodeBuilder->getQueueByNode($queue->processNo, $this->installation->nodeBuilder->getNextNode());
+		$this->data = array(
+			'template' => WCF::getTPL()->fetch($this->templateName),
+			'step' => 'uninstall',
+			'node' => $this->installation->nodeBuilder->getNextNode(),
+			'currentAction' => WCF::getLanguage()->get('wcf.package.installation.step.uninstalling'),
+			'progress' => 0,
+			'queueID' => $queueID
+		);
 	}
 	
 	/**
@@ -115,7 +111,7 @@ class UninstallPackageAction extends InstallPackageAction {
 			// remove node data
 			$this->installation->nodeBuilder->purgeNodes();
 			
-			// TODO: Show 'success' template at this point
+			// show success
 			$this->data = array(
 				'progress' => 100,
 				'step' => 'success'
@@ -124,10 +120,12 @@ class UninstallPackageAction extends InstallPackageAction {
 		}
 		
 		// continue with next node
+		$queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $this->node);
 		$this->data = array(
 			'step' => 'uninstall',
 			'node' => $node,
-			'progress' => $this->installation->nodeBuilder->calculateProgress($this->node)
+			'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
+			'queueID' => $queueID
 		);
 	}
 	

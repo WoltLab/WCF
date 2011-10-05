@@ -4,6 +4,7 @@ use wcf\system\menu\acp\ACPMenu;
 use wcf\data\option\OptionEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
+use wcf\data\package\PackageList;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\system\cache\CacheHandler;
@@ -172,6 +173,54 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 		}
 		
 		return $packages;
+	}
+	
+	/**
+	 * Returns an ordered list of depenencies for given package id. The order is
+	 * curcial, whereas the first package has to be uninstalled first.
+	 * 
+	 * @package	integer
+	 * @return	wcf\data\package\PackageList
+	 */
+	public static function getOrderedPackageDependencies($packageID) {
+		$sql = "SELECT		packageID, MAX(level) AS level
+			FROM		wcf".WCF_N."_package_requirement_map
+			WHERE		requirement = ?
+			GROUP BY	packageID";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($packageID));
+		
+		$dependencies = array();
+		while ($row = $statement->fetchArray()) {
+			$dependencies[$row['packageID']] = $row['level'];
+		}
+		
+		$packageIDs = array();
+		$maxLevel = max(array_values($dependencies));
+		if ($maxLevel == 0) {
+			// order does not matter
+			$packageIDs = array_keys($dependencies);
+		}
+		else {
+			// order by level while ignoring individual connections as they don't
+			// matter if uninstall begins with the lowest dependency in tree
+			for ($i = $maxLevel; $i >= 0; $i--) {
+				foreach ($dependencies as $packageID => $level) {
+					if ($level == $i) {
+						$packageIDs[] = $packageID;
+						unset($dependencies[$packageID]);
+					}
+				}
+			}
+		}
+		
+		// get packages
+		$packageList = new PackageList();
+		$packageList->sqlLimit = 0;
+		$packageList->getConditionBuilder()->add("packageID IN (?)", array($packageIDs));
+		$packageList->readObjects();
+		
+		return $packageList;
 	}
 	
 	/**
