@@ -44,7 +44,6 @@
 							{/if}
 						</small>
 					{/if}
-					<small>{lang}wcf.acp.updateServer.serverURL.description{/lang}</small>
 				</dd>
 			</dl>
 			

@@ -46,7 +46,6 @@
 							{/if}
 						</small>
 					{/if}
-					<small>{lang}wcf.acp.cronjob.className.description{/lang}</small>
 				</dd>
 			</dl>
 			
@@ -54,7 +53,6 @@
 				<dt><label for="description">{lang}wcf.acp.cronjob.description{/lang}</label></dt>
 				<dd>
 					<input type="text" id="description" name="description" value="{$description}" class="long" />
-					<small>{lang}wcf.acp.cronjob.description.description{/lang}</small>
 				</dd>
 			</dl>
 		</fieldset>

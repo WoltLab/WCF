@@ -102,7 +102,6 @@
 							{/if}
 						</small>
 					{/if}
-					<small>{lang}wcf.acp.user.sendMail.subject.description{/lang}</small>
 				</dd>
 			</dl>
 			
@@ -136,7 +135,6 @@
 							{/if}
 						</small>
 					{/if}
-					<small>{lang}wcf.acp.user.sendMail.text.description{/lang}</small>
 				</dd>
 			</dl>
 			

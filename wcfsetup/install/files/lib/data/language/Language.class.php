@@ -80,9 +80,10 @@ class Language extends DatabaseObject {
 	 * Returns a single language variable.
 	 * 
 	 * @param	string		$item
+	 * @param	boolean		$optional
 	 * @return	string
 	 */
-	public function get($item) {
+	public function get($item, $optional = false) {
 		if (!isset($this->items[$item])) {
 			// load category file
 			$explodedItem = explode('.', $item);
@@ -103,6 +104,7 @@ class Language extends DatabaseObject {
 		}
 		
 		// return plain variable
+		if ($optional) return '';
 		return $item;
 	}
 	
@@ -110,11 +112,13 @@ class Language extends DatabaseObject {
 	 * Executes template scripting in a language variable.
 	 *
 	 * @param 	string 		$item
-	 * @param 	array 		$variables 
+	 * @param 	array 		$variables
+	 * @param	boolean		$optional
 	 * @return 	string 		result
 	 */
-	public function getDynamicVariable($item, array $variables = array()) {
-		$staticItem = $this->get($item);
+	public function getDynamicVariable($item, array $variables = array(), $optional = false) {
+		$staticItem = $this->get($item, $optional);
+		if (!$staticItem) return '';
 		
 		if (isset($this->dynamicItems[$this->languageID][$item])) {
 			return WCF::getTPL()->fetchString($this->dynamicItems[$this->languageID][$item], $variables);

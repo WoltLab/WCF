@@ -13,7 +13,7 @@
 	<img src="{@RELATIVE_WCF_DIR}icon/options1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.option.category.{$category->categoryName}{/lang}</h1>
-		<h2>{lang}wcf.acp.option.category.{$category->categoryName}.description{/lang}</h2>
+		{hascontent}<h2>{content}{lang __optional=true}wcf.acp.option.category.{$category->categoryName}.description{/lang}{/content}</h2>{/hascontent}
 	</hgroup>
 </header>
 
@@ -39,7 +39,7 @@
 			<div id="{@$categoryLevel1[object]->categoryName}" class="border tabMenuContent hidden">
 				<hgroup class="subHeading">
 					<h1>{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
-					<h2>{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}.description{/lang}</h2>
+					<h2>{lang __optional=true}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}.description{/lang}</h2>
 				</hgroup>
 				
 				{if $categoryLevel1[options]|count}
@@ -53,7 +53,7 @@
 					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 						<fieldset>
 							<legend>{lang}wcf.acp.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>
-							{hascontent}<p class="description">{content}{lang}wcf.acp.option.category.{$categoryLevel2[object]->categoryName}.description{/lang}{/content}</p>{/hascontent}
+							{hascontent}<p class="description">{content}{lang __optional=true}wcf.acp.option.category.{$categoryLevel2[object]->categoryName}.description{/lang}{/content}</p>{/hascontent}
 							
 							{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.option.'}
 						</fieldset>
@@ -67,8 +67,7 @@
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}
- 		<input type="hidden" id="activeTabMenuItem" name="activeTabMenuItem" value="{$activeTabMenuItem}" />
-	</div>
+ 	</div>
 </form>
 
 {include file='footer'}
