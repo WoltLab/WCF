@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\element;
+use wcf\system\exception\SystemException;
 
 /**
  * Provides a checkbox form element.
@@ -12,6 +13,18 @@ namespace wcf\system\form\element;
  * @category 	Community Framework
  */
 class MultipleSelectionFormElement extends AbstractNamedFormElement {
+	/**
+	 * @see	wcf\system\form\element\AbstractNamedFormElement::setValue()
+	 */
+	public function setValue($value) {
+		if (!is_array($value)) {
+			parent::setValue($value);
+		}
+		else {
+			$this->value = array_map(array('wcf\util\StringUtil', 'trim'), $value);
+		}
+	}
+	
 	/**
 	 * @see	wcf\system\form\IFormElement::getHTML()
 	 */

@@ -385,6 +385,7 @@ class PackageInstallationDispatcher {
 	 */
 	protected function promptPackageDir() {
 		if (!PackageInstallationFormManager::findForm($this->queue, 'packageDir')) {
+			
 			$container = new container\GroupFormElementContainer();
 			$packageDir = new element\TextInputFormElement($container);
 			$packageDir->setName('packageDir');
@@ -423,9 +424,11 @@ class PackageInstallationDispatcher {
 	protected function promptOptionalPackages(array $packages) {
 		if (!PackageInstallationFormManager::findForm($this->queue, 'optionalPackages')) {
 			$container = new container\MultipleSelectionFormElementContainer();
+			$container->setName('optionalPackages');
 			
 			foreach ($packages as $package) {
 				$optionalPackage = new element\MultipleSelectionFormElement($container);
+				$optionalPackage->setName('optionalPackages');
 				$optionalPackage->setLabel($package['packageName']);
 				$optionalPackage->setValue($package['package']);
 				
@@ -443,6 +446,12 @@ class PackageInstallationDispatcher {
 			$document->handleRequest();
 			
 			$packages = $document->getValue('optionalPackages');
+			if (!empty($packages)) {
+				foreach ($packages as $package) {
+					// haha, this is going to be mad
+					
+				}
+			}
 			die('<pre>'.print_r($packages, true));
 		}
 	}

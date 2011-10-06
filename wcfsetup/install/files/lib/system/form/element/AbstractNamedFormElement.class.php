@@ -49,6 +49,9 @@ abstract class AbstractNamedFormElement extends AbstractFormElement {
 	 * @param	string		$value
 	 */
 	public function setValue($value) {
+		if (!is_string($value)) {
+			die(print_r($value, true));
+		}
 		$this->value = StringUtil::trim($value);
 	}
 	

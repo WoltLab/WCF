@@ -28,15 +28,6 @@ class MultipleSelectionFormElementContainer extends SelectionFormElementContaine
 	}
 	
 	/**
-	 * Returns container value.
-	 *
-	 * @return	array
-	 */
-	public function getValue() {
-		return $this->value;
-	}
-	
-	/**
 	 * @see	wcf\system\form\IFormElementContainer::getHTML()
 	 */
 	public function getHTML($formName) {

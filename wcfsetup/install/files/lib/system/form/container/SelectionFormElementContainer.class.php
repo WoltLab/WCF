@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\container;
+use wcf\util\StringUtil;
 
 /**
  * Basic implementation for form selection element containers.
