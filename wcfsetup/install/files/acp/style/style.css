@@ -1671,7 +1671,6 @@ table input[type='checkbox'] {
 
 .pageNavigation ul li:not(.children) {
 	border-radius: 3px;
-	
 	display: inline-block;
 	position: relative;
 }
@@ -1837,8 +1836,8 @@ p.error {
 	
 	margin-top: 5px;
 	padding: 2px 10px 2px 25px;
+	display: table !important;
 	position: relative;
-	display: inline-block;
 	clear: both;
 	
 	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
@@ -1846,7 +1845,6 @@ p.error {
 	-ms-box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
 	-o-box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
 	box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
-	
 }
 
 .innerError .arrowOuter {	
