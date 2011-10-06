@@ -100,6 +100,10 @@ class PackageInstallationDispatcher {
 					$step = $this->executePIP($nodeData);
 				break;
 				
+				case 'optionalPackages':
+					$step = $this->selectOptionalPackages($nodeData);
+				break;
+				
 				default:
 					die("Unknown node type: '".$data['nodeType']."'");
 				break;
@@ -336,6 +340,19 @@ class PackageInstallationDispatcher {
 		return $installationStep;
 	}
 	
+	protected function selectOptionalPackages(array $nodeData) {
+		$installationStep = new PackageInstallationStep();
+		
+		$document = $this->promptOptionalPackages($nodeData);
+		if ($document !== null && $document instanceof form\FormDocument) {
+			$installationStep->setDocument($document);
+		}
+		
+		$installationStep->setSplitNode();
+		
+		return $installationStep;
+	}
+	
 	/**
 	 * Extracts files from .tar (or .tar.gz) archive and installs them
 	 *
@@ -400,6 +417,33 @@ class PackageInstallationDispatcher {
 			}
 			
 			return null;
+		}
+	}
+	
+	protected function promptOptionalPackages(array $packages) {
+		if (!PackageInstallationFormManager::findForm($this->queue, 'optionalPackages')) {
+			$container = new container\MultipleSelectionFormElementContainer();
+			
+			foreach ($packages as $package) {
+				$optionalPackage = new element\MultipleSelectionFormElement($container);
+				$optionalPackage->setLabel($package['packageName']);
+				$optionalPackage->setValue($package['package']);
+				
+				$container->appendChild($optionalPackage);
+			}
+			
+			$document = new form\FormDocument('optionalPackages');
+			$document->appendContainer($container);
+			
+			PackageInstallationFormManager::registerForm($this->queue, $document);
+			return $document;
+		}
+		else {
+			$document = PackageInstallationFormManager::getForm($this->queue, 'optionalPackages');
+			$document->handleRequest();
+			
+			$packages = $document->getValue('optionalPackages');
+			die('<pre>'.print_r($packages, true));
 		}
 	}
 	

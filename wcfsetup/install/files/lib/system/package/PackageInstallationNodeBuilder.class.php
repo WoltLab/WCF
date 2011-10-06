@@ -451,39 +451,49 @@ class PackageInstallationNodeBuilder {
 	 * not really matter at this point).
 	 */
 	protected function buildOptionalNodes() {
-		$packageNodes = array();
+		$packages = array();
 		
 		$optionalPackages = $this->installation->getArchive()->getOptionals();
 		foreach ($optionalPackages as $package) {
-			$packageNodes[] = array(
-				'data' => $package
-			);
+			// extract package
+			$index = $this->installation->getArchive()->getTar()->getIndexByFilename($package['file']);
+			if ($index === false) {
+				throw new SystemException("Unable to find required package '".$package['file']."' within archive.");
+			}
 			
-			$lastNode = $newNode;
+			$fileName = FileUtil::getTemporaryFilename('package_', preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', basename($package['file'])));
+			$this->installation->getArchive()->getTar()->extract($index, $fileName);
+			
+			// get archive data
+			$archive = new PackageArchive($fileName);
+			$archive->openArchive();
+			
+			$packages[] = array(
+				'archive' => $fileName,
+				'package' => $archive->getPackageInfo('name'),
+				'packageName' => $archive->getPackageInfo('packageName'),
+				'selected' => 0
+			);
 		}
 		
-		if (!empty($packageNodes)) {
+		if (!empty($packages)) {
 			$this->parentNode = $this->node;
 			$this->node = $this->getToken();
-			$this->sequenceNo = -1;
+			$this->sequenceNo = 0;
 			
 			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_node
 						(queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
 				VALUES		(?, ?, ?, ?, ?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			foreach ($packageNodes as $nodeData) {
-				$this->sequenceNo = 0;
-				
-				$statement->execute(array(
-					$this->installation->queue->queueID,
-					$this->installation->queue->processNo,
-					$this->sequenceNo,
-					$this->node,
-					$this->parentNode,
-					'optionalPackage',
-					serialize($nodeData['data'])
-				));
-			}
+			$statement->execute(array(
+				$this->installation->queue->queueID,
+				$this->installation->queue->processNo,
+				$this->sequenceNo,
+				$this->node,
+				$this->parentNode,
+				'optionalPackages',
+				serialize($packages)
+			));
 		}
 	}
 	
