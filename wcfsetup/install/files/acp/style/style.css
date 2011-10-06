@@ -2115,6 +2115,10 @@ li > .badgeButton {
 	max-width: 300px;
 	z-index: 900;
 	
+	-webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+	-moz-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+	-ms-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+	-o-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
 	box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
 }
 
