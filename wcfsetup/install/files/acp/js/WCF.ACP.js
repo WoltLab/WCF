@@ -243,10 +243,13 @@ WCF.ACP.PackageInstallation.prototype = {
 					var $additionalData = {};
 					$('#packageInstallationInnerContent').find('input').each(function(index, inputElement) {
 						var $inputElement = $(inputElement);
+						var $type = $inputElement.attr('type');
 						
-						if ($inputElement.is(':checked')) {
-							$additionalData[$inputElement.attr('name')] = $inputElement.val();
+						if (($type == 'checkbox' || $type == 'radio') && $inputElement.not(':checked')) {
+							return false;
 						}
+						
+						$additionalData[$inputElement.attr('name')] = $inputElement.val();
 					});
 					
 					this._executeStep($data.step, $data.node, $additionalData);
