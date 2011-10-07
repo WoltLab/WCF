@@ -6,19 +6,19 @@
 		<item name="wcf.acp.cronjob.list.count"><![CDATA[{#$items} cron job{if $items != 1}s{/if}]]></item>
 		<item name="wcf.acp.cronjob.subtitle"><![CDATA[]]></item>
 		<item name="wcf.acp.cronjob.startDom"><![CDATA[Day of month]]></item>
-		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[Day of the month (1 - 31) in which the cron job should be executed.]]></item>
+		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[Day of the month (1 - 31), the cron job should be executed.]]></item>
 		<item name="wcf.acp.cronjob.startDomShort"><![CDATA[D]]></item>
 		<item name="wcf.acp.cronjob.startDow"><![CDATA[Weekday]]></item>
-		<item name="wcf.acp.cronjob.startDow.description"><![CDATA[Weekday (0 - 6 with Sunday = 0 or mon - sun) in which the cron job should be executed.]]></item>
+		<item name="wcf.acp.cronjob.startDow.description"><![CDATA[Weekday (0 - 6 with Sunday = 0, or mon - sun), the cron job should be executed.]]></item>
 		<item name="wcf.acp.cronjob.startDowShort"><![CDATA[DoW]]></item>
 		<item name="wcf.acp.cronjob.startHour"><![CDATA[Hour]]></item>
-		<item name="wcf.acp.cronjob.startHour.description"><![CDATA[Hours (0 - 23) in which the cron job should be executed.]]></item>
+		<item name="wcf.acp.cronjob.startHour.description"><![CDATA[Hours (0 - 23), the cron job should be executed.]]></item>
 		<item name="wcf.acp.cronjob.startHourShort"><![CDATA[h]]></item>
 		<item name="wcf.acp.cronjob.startMinute"><![CDATA[Minute]]></item>
-		<item name="wcf.acp.cronjob.startMinute.description"><![CDATA[Minutes (0 - 59) in which the cron job should be executed.]]></item>
+		<item name="wcf.acp.cronjob.startMinute.description"><![CDATA[Minutes (0 - 59), the cron job should be executed.]]></item>
 		<item name="wcf.acp.cronjob.startMinuteShort"><![CDATA[m]]></item>
 		<item name="wcf.acp.cronjob.startMonth"><![CDATA[Month]]></item>
-		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Month (1 - 12 or jan - dec) in which the cron job should be executed.]]></item>
+		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Month (1 - 12, or jan - dec), the cron job should be executed.]]></item>
 		<item name="wcf.acp.cronjob.startMonthShort"><![CDATA[M]]></item>
 		<item name="wcf.acp.cronjob.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.cronjob.nextExec"><![CDATA[Next scheduled execution]]></item>
@@ -50,8 +50,8 @@
 		<item name="wcf.acp.group.delete.sure"><![CDATA[Are you sure you would like to remove the user group &quot;{$group->groupName}&quot;?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Edit user group]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[You are currently a member of this user group. Changing the permissions of this user group could result in locking yourself out of the Administration Control Panel. Please be careful!]]></item>
-		<item name="wcf.acp.group.groupName"><![CDATA[Name of this user group]]></item>
-		<item name="wcf.acp.group.groupName.description"><![CDATA[Enter here a name for this group.]]></item>
+		<item name="wcf.acp.group.groupName"><![CDATA[User group name]]></item>
+		<item name="wcf.acp.group.groupName.description"><![CDATA[Enter a name for this group.]]></item>
 		<item name="wcf.acp.group.list"><![CDATA[User groups]]></item>
 		<item name="wcf.acp.group.list.count"><![CDATA[{#$items} user group{if $items != 1}s{/if}]]></item>
 		<item name="wcf.acp.group.members"><![CDATA[Number of members]]></item>
@@ -71,7 +71,7 @@
 		<item name="wcf.acp.group.option.admin.system.package.canUninstallPackage"><![CDATA[Can remove packages]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canUpdatePackage"><![CDATA[Can update packages]]></item>
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups"><![CDATA[Accessible user groups]]></item>
-		<item name="wcf.acp.group.option.admin.user.accessibleGroups.description"><![CDATA[Members of this user group have access to the following groups. For example, here you can set if the user group has permission to edit themselves.]]></item>
+		<item name="wcf.acp.group.option.admin.user.accessibleGroups.description"><![CDATA[Members of this user group have access to the following groups. For example, you may set if the user group has permission to edit themselves.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canAddGroup"><![CDATA[Can add new user groups]]></item>
 		<item name="wcf.acp.group.option.admin.user.canAddUser"><![CDATA[Can add new users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canAddUser.description"><![CDATA[If the option for &quot;Accessible User groups&quot; has been enabled, then on creation of the user, the appropriate accessible user groups can also be assigned.]]></item>
@@ -83,15 +83,15 @@
 		<item name="wcf.acp.group.option.admin.user.canEditUser"><![CDATA[Can edit users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canMailUser"><![CDATA[Can send e-mails to users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canSearchUser"><![CDATA[Can search users]]></item>
-		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrator permissions]]></item>
-		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[General administrator permissions]]></item>
+		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrative permissions]]></item>
+		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[General administrative permissions]]></item>
 		<item name="wcf.acp.group.option.category.admin.system"><![CDATA[System functions]]></item>
 		<item name="wcf.acp.group.option.category.admin.system.cronjob"><![CDATA[Cron jobs]]></item>
 		<item name="wcf.acp.group.option.category.admin.system.package"><![CDATA[Package management]]></item>
 		<item name="wcf.acp.group.option.category.admin.user"><![CDATA[User functions]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.group"><![CDATA[Group management]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[User management]]></item>
-		<item name="wcf.acp.group.option.category.mod"><![CDATA[Moderator permissions]]></item>
+		<item name="wcf.acp.group.option.category.mod"><![CDATA[Moderative permissions]]></item>
 		<item name="wcf.acp.group.option.category.user"><![CDATA[General permissions]]></item>
 		<item name="wcf.acp.group.option.category.admin.display"><![CDATA[Design]]></item>
 		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Can view disabled styles]]></item>
@@ -119,14 +119,14 @@
 		<item name="wcf.acp.masterPassword"><![CDATA[Master password]]></item>
 		<item name="wcf.acp.masterPassword.confirm"><![CDATA[Confirm master password]]></item>
 		<item name="wcf.acp.masterPassword.enter"><![CDATA[Master password required]]></item>
-		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[This page or action requires you to enter the master password due to security reasons. You only need to do so once within a session. If you have forgotten the master password you can reset it by deleting the file <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em>.]]></item>
-		<item name="wcf.acp.masterPassword.error.invalid"><![CDATA[The master password is not correct.If you have forgotten the master password you can reset it by deleting the file <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em>.]]></item>
+		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[This page or action requires you to enter the master password due to security reasons. You only need to do so once for a session. If you have forgotten the master password you can reset it by deleting the file <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em>.]]></item>
+		<item name="wcf.acp.masterPassword.error.invalid"><![CDATA[The master password is not correct. If you have forgotten the master password you can reset it by deleting the file <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em>.]]></item>
 		<item name="wcf.acp.masterPassword.error.notEqual"><![CDATA[The entered passwords are not identical.]]></item>
-		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[The password is not secure. It has to contain at least eight characters, small and capital latin letters as well as numbers and special characters. It must not be identically with passwords of administrators of this page.]]></item>
+		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[The password is not secure. It has to contain at least eight characters, small and capital latin letters as well as numbers and special characters. It must not be identically with passwords of other administrators of this page.]]></item>
 		<item name="wcf.acp.masterPassword.example"><![CDATA[Suggestion]]></item>
 		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Use suggestion]]></item>
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Set master password]]></item>
-		<item name="wcf.acp.masterPassword.init.description"><![CDATA[The master password is an additional protection for functions that are relevant to security. You should use a very secure password that must not be identically with your normal administrator password, unknown to others and not used on other websites.]]></item>
+		<item name="wcf.acp.masterPassword.init.description"><![CDATA[The master password is an additional protection for functions that are relevant to security. You should use a very secure password that must not be identically with your normal administrator password, unknown to others and not be used on other websites.]]></item>
 	</category>
 	
 	<category name="wcf.acp.menu">
@@ -174,10 +174,10 @@
 		<item name="wcf.acp.option.page_description"><![CDATA[Page description]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Page title]]></item>
 		<item name="wcf.acp.option.page_title.description"><![CDATA[That title will show up inside the page header, if you have enabled it with the style editor.]]></item>
-		<item name="wcf.acp.option.page_url"><![CDATA[Page URL]]></item>
-		<item name="wcf.acp.option.page_url.description"><![CDATA[Please enter the URL of the page (without trailing slash).]]></item>
-		<item name="wcf.acp.option.page_urls"><![CDATA[Further URLs]]></item>
-		<item name="wcf.acp.option.page_urls.description"><![CDATA[Enter further URLs which are also directed at your site.]]></item>
+		<item name="wcf.acp.option.page_url"><![CDATA[Page adress (URL)]]></item>
+		<item name="wcf.acp.option.page_url.description"><![CDATA[Please enter the adress (URL) of the page (without trailing slash).]]></item>
+		<item name="wcf.acp.option.page_urls"><![CDATA[Further adresses (URLs)]]></item>
+		<item name="wcf.acp.option.page_urls.description"><![CDATA[Enter further adresses (URLs) which also link to your site.]]></item>
 		<item name="wcf.acp.option.category.general.http"><![CDATA[HTTP]]></item>
 		<item name="wcf.acp.option.category.general.http.cookie"><![CDATA[Cookies]]></item>
 		<item name="wcf.acp.option.category.general.http.http"><![CDATA[HTTP]]></item>
@@ -198,23 +198,23 @@
 		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Transmission]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator's e-mail address]]></item>
-		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[Enter the administrator's e-mail address here.]]></item>
+		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[Enter the administrator's e-mail address.]]></item>
 		<item name="wcf.acp.option.mail_debug_logfile_path"><![CDATA[Path to the debug log file]]></item>
 		<item name="wcf.acp.option.mail_from_address"><![CDATA[Sender's e-mail address]]></item>
-		<item name="wcf.acp.option.mail_from_address.description"><![CDATA[Enter the sender's e-mail address that should be used for automated e-mails here.]]></item>
+		<item name="wcf.acp.option.mail_from_address.description"><![CDATA[Enter the sender's e-mail address that should be used for automated e-mails.]]></item>
 		<item name="wcf.acp.option.mail_from_name"><![CDATA[Sender's name]]></item>
-		<item name="wcf.acp.option.mail_from_name.description"><![CDATA[Enter the sender's name that should be used for automated e-mails here.]]></item>
-		<item name="wcf.acp.option.mail_send_method"><![CDATA[E-mail method]]></item>
+		<item name="wcf.acp.option.mail_from_name.description"><![CDATA[Enter the sender's name that should be used for automated e-mails.]]></item>
+		<item name="wcf.acp.option.mail_send_method"><![CDATA[Sending method]]></item>
 		<item name="wcf.acp.option.mail_send_method.debug"><![CDATA[Debug]]></item>
 		<item name="wcf.acp.option.mail_send_method.php"><![CDATA[PHP]]></item>
 		<item name="wcf.acp.option.mail_send_method.smtp"><![CDATA[SMTP]]></item>
 		<item name="wcf.acp.option.mail_signature"><![CDATA[Sender's signature]]></item>
-		<item name="wcf.acp.option.mail_signature.description"><![CDATA[Enter a signature that should be sent with system e-mails here.]]></item>
+		<item name="wcf.acp.option.mail_signature.description"><![CDATA[Enter a signature that should be sent with system e-mails.]]></item>
 		<item name="wcf.acp.option.mail_smtp_host"><![CDATA[SMTP host]]></item>
 		<item name="wcf.acp.option.mail_smtp_password"><![CDATA[SMTP password]]></item>
 		<item name="wcf.acp.option.mail_smtp_port"><![CDATA[SMTP port]]></item>
 		<item name="wcf.acp.option.mail_smtp_user"><![CDATA[SMTP username]]></item>
-		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[Enable the &quot;-f&quot; parameter]]></item>
+		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[Enable &quot;-f&quot; parameter]]></item>
 		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Some servers may require the &quot;-f&quot; parameter to be used when sending e-mails. If your users experience problems with receiving e-mails, try enabling this option.]]></item>
 		<item name="wcf.acp.option.mail_use_formatted_address"><![CDATA[Use formatted e-mail addresses]]></item>
 		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Sender's and receiver's addresses are formatted in &quot;Name &lt;email@domain.tld&gt;&quot;. This option is not supported by all mail servers and should be turned off in case of any problems.]]></item>
@@ -232,21 +232,21 @@
 		<item name="wcf.acp.option.cache_source_type.memcache"><![CDATA[Memcache]]></item>
 		<item name="wcf.acp.option.cache_source_type.no"><![CDATA[Disable caching (not recommended)]]></item>
 		<item name="wcf.acp.option.blacklist_hostnames"><![CDATA[Exclude hostnames]]></item>
-		<item name="wcf.acp.option.blacklist_hostnames.description"><![CDATA[Enter one hostname each row you want to exclude from this site.]]></item>
+		<item name="wcf.acp.option.blacklist_hostnames.description"><![CDATA[Enter one hostname each row.]]></item>
 		<item name="wcf.acp.option.blacklist_ip_addresses"><![CDATA[Exclude IP addresses]]></item>
-		<item name="wcf.acp.option.blacklist_ip_addresses.description"><![CDATA[Enter one IP address each row you want to exclude from this site.]]></item>
+		<item name="wcf.acp.option.blacklist_ip_addresses.description"><![CDATA[Enter one IP address each row.]]></item>
 		<item name="wcf.acp.option.blacklist_user_agents"><![CDATA[Exclude user agents]]></item>
-		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[Enter one user agent each row you want to exclude from this site.]]></item>
+		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[Enter one user agent each row.]]></item>
 		<item name="wcf.acp.option.category.security.blacklist"><![CDATA[Blacklist]]></item>
 		<item name="wcf.acp.option.category.security.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.security.general.session"><![CDATA[Sessions]]></item>
 		<item name="wcf.acp.option.session_timeout"><![CDATA[Session timeout]]></item>
-		<item name="wcf.acp.option.session_timeout.description"><![CDATA[Enter how long a session should remain valid for here [seconds].]]></item>
+		<item name="wcf.acp.option.session_timeout.description"><![CDATA[Enter the time a session should remain valid [seconds].]]></item>
 		<item name="wcf.acp.option.session_validate_ip_address"><![CDATA[Check IP address of session]]></item>
-		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Should the IP address should be checked while reading the session data?]]></item>
+		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Should the IP address be checked while reading the session data?]]></item>
 		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Check user agent of session]]></item>
 		<item name="wcf.acp.option.user_online_timeout"><![CDATA[Users online timeout]]></item>
-		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Enter here how long users should remain marked as online after they are inactive [seconds].]]></item>
+		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Enter the time users should remain marked as online when they are inactive [seconds].]]></item>
 		<item name="wcf.acp.option.export"><![CDATA[Export options]]></item>
 		<item name="wcf.acp.option.export.download"><![CDATA[Download the exported options]]></item>
 		<item name="wcf.acp.option.export.download.description"><![CDATA[Download the exported options as a backup file to your local machine.]]></item>
@@ -256,16 +256,16 @@
 		<item name="wcf.acp.option.importAndExport"><![CDATA[Import &amp; export options]]></item>
 		<item name="wcf.acp.option.category.general.date"><![CDATA[Date and time]]></item>
 		<item name="wcf.acp.option.category.general.image"><![CDATA[Graphics]]></item>
-		<item name="wcf.acp.option.import.error.importFailed"><![CDATA[The import of the chosen file has failed.]]></item>
+		<item name="wcf.acp.option.import.error.importFailed"><![CDATA[The import of the options file has failed.]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Time zone offset]]></item>
-		<item name="wcf.acp.option.timezone.description"><![CDATA[Choose your default time zone for your site.]]></item>
-		<item name="wcf.acp.option.import.success"><![CDATA[The options have been imported successfully.]]></item>
+		<item name="wcf.acp.option.timezone.description"><![CDATA[Choose the default time zone for your site.]]></item>
+		<item name="wcf.acp.option.import.success"><![CDATA[The options have been successfully imported.]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add server]]></item>
 		<item name="wcf.acp.updateServer.data"><![CDATA[Server data]]></item>
-		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Do you really want to delete the server &quot;{$updateServer->serverURL}&quot;?]]></item>
+		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Are you sure that you would like to delete the server &quot;{$updateServer->serverURL}&quot;?]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Edit server]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Error messages]]></item>
 		<item name="wcf.acp.updateServer.list"><![CDATA[Update servers]]></item>
@@ -274,16 +274,16 @@
 		<item name="wcf.acp.updateServer.loginPassword"><![CDATA[Password]]></item>
 		<item name="wcf.acp.updateServer.loginPassword.description"><![CDATA[Please enter a valid password (optional).]]></item>
 		<item name="wcf.acp.updateServer.loginUsername"><![CDATA[Username]]></item>
-		<item name="wcf.acp.updateServer.loginUsername.description"><![CDATA[Please enter a valid user name (optional).]]></item>
+		<item name="wcf.acp.updateServer.loginUsername.description"><![CDATA[Please enter a valid username (optional).]]></item>
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Address (URL)]]></item>
-		<item name="wcf.acp.updateServer.serverURL.error.notValid"><![CDATA[The entered address is invalid.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.notValid"><![CDATA[The entered address (URL) is not valid.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.updateServer.lastUpdateTime"><![CDATA[Last access]]></item>
 	</category>
 	
 	<category name="wcf.acp.sessionLog">
-		<item name="wcf.acp.sessionLog.access.list"><![CDATA[Actions of the logged session of &quot;{$sessionLog->username}&quot;]]></item>
+		<item name="wcf.acp.sessionLog.access.list"><![CDATA[Actions of the logged session by &quot;{$sessionLog->username}&quot;]]></item>
 		<item name="wcf.acp.sessionLog.access.list.count"><![CDATA[{#$items} logged action{if $items != 1}s{/if}]]></item>
 		<item name="wcf.acp.sessionLog.actions"><![CDATA[Actions]]></item>
 		<item name="wcf.acp.sessionLog.className"><![CDATA[Class name]]></item>
@@ -308,9 +308,9 @@
 		<item name="wcf.acp.user.exportEmailAddress.fileType.csv"><![CDATA[CSV (<em>Character Separated Values</em>)]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType.xml"><![CDATA[XML (<em>Extensible Markup Language</em>)]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.format"><![CDATA[Export options]]></item>
-		<item name="wcf.acp.user.exportEmailAddress.markedUsers"><![CDATA[Export the e-mail addresses from the following users]]></item>
-		<item name="wcf.acp.user.exportEmailAddress.separator"><![CDATA[Separate the addresses with a]]></item>
-		<item name="wcf.acp.user.exportEmailAddress.textSeparator"><![CDATA[Enclose the addresses with]]></item>
+		<item name="wcf.acp.user.exportEmailAddress.markedUsers"><![CDATA[Export the e-mail addresses of the following users]]></item>
+		<item name="wcf.acp.user.exportEmailAddress.separator"><![CDATA[Separator]]></item>
+		<item name="wcf.acp.user.exportEmailAddress.textSeparator"><![CDATA[Text delimiter]]></item>
 		<item name="wcf.acp.user.groups"><![CDATA[Group memberships]]></item>
 		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Find users that are not members of the chosen user groups.]]></item>
 		<item name="wcf.acp.user.list"><![CDATA[Users]]></item>
@@ -319,11 +319,11 @@
 		<item name="wcf.acp.user.massProcessing"><![CDATA[Bulk processing of users]]></item>
 		<item name="wcf.acp.user.massProcessing.action"><![CDATA[Action]]></item>
 		<item name="wcf.acp.user.massProcessing.conditions"><![CDATA[Conditions]]></item>
-		<item name="wcf.acp.user.massProcessing.success"><![CDATA[The chosen action has been executed successfully on {#$affectedUsers} users.]]></item>
-		<item name="wcf.acp.user.massProcessing.warning"><![CDATA[The bulk processor will perform the following tasks <strong>without additional security notification</strong>, on all users matching the set conditions. Bulk processing can be very performance intensive, so it should only be executed while the forum is set offline. To have a correct display of your content you should update the counters. The processing can not be reversed, so please be attentive when using this function.]]></item>
+		<item name="wcf.acp.user.massProcessing.success"><![CDATA[The chosen action has been successfully executed on {#$affectedUsers} users.]]></item>
+		<item name="wcf.acp.user.massProcessing.warning"><![CDATA[The bulk processor will perform the following tasks <strong>without additional security notification</strong> on all users matching the set conditions. Bulk processing can be very performance intensive, so it should only be executed while the forum is being set to offline. To have a correct display of your content you should update the counters afterwards. The processing can not be reversed, so please be attentive when using this function.]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Search for users]]></item>
-		<item name="wcf.acp.user.search.conditions.general"><![CDATA[General search criteria]]></item>
-		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profile search criteria]]></item>
+		<item name="wcf.acp.user.search.conditions.general"><![CDATA[General]]></item>
+		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profile]]></item>
 		<item name="wcf.acp.user.search.display"><![CDATA[Display]]></item>
 		<item name="wcf.acp.user.search.display.columns"><![CDATA[Columns]]></item>
 		<item name="wcf.acp.user.search.display.columns.other"><![CDATA[Other]]></item>
@@ -331,15 +331,15 @@
 		<item name="wcf.acp.user.search.display.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.user.search.display.itemsPerPage"><![CDATA[Users per page]]></item>
 		<item name="wcf.acp.user.search.display.sort"><![CDATA[Sorting]]></item>
-		<item name="wcf.acp.user.search.error.noMatches"><![CDATA[No users have been found.]]></item>
-		<item name="wcf.acp.user.search.matches"><![CDATA[Your search produced {if $items == 1}one result{else}{#$items} results{/if}]]></item>
+		<item name="wcf.acp.user.search.error.noMatches"><![CDATA[No users have been found for the given search criteria.]]></item>
+		<item name="wcf.acp.user.search.matches"><![CDATA[Your search returned {if $items == 1}one result{else}{#$items} results{/if}]]></item>
 		<item name="wcf.acp.user.sendMail"><![CDATA[Send an e-mail]]></item>
-		<item name="wcf.acp.user.sendMail.all"><![CDATA[E-Mail all Users]]></item>
+		<item name="wcf.acp.user.sendMail.all"><![CDATA[E-Mail all users]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[Send e-mail as HTML]]></item>
 		<item name="wcf.acp.user.sendMail.from"><![CDATA[Sender]]></item>
-		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[<p>Here you can enter the sender's e-mail address in the following format:</p>
+		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[<p>Enter the sender's e-mail address in the following format:</p>
 <p style="line-height: 2em;"><code>{if MAIL_USE_FORMATTED_ADDRESS}Senders name &lt;email@sender.tld&gt;{else}email@sender.tld{/if}</code></p>
-<p>If you have completely filled in the section under <em>System -&gt; Options -&gt; General -&gt; E-mails</em>, then this field will automatically be filled in. If you are sending e-mails using SMTP, then the sender's e-mail-Address must also be accepted by the server.</p>]]></item>
+<p>If you have completely filled in the section under <em>System -&gt; Options -&gt; General -&gt; E-mails</em>, then this field will automatically be filled in. If you are sending e-mails using SMTP, then the sender's e-mail address must also be accepted by the server.</p>]]></item>
 		<item name="wcf.acp.user.sendMail.group"><![CDATA[E-mail all group members]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[Send an e-mail to the members of the following user groups:]]></item>
 		<item name="wcf.acp.user.sendMail.mail"><![CDATA[E-mail]]></item>
@@ -466,21 +466,21 @@
 		<item name="wcf.global.button.enable"><![CDATA[Enable]]></item>
 		<item name="wcf.global.button.disable"><![CDATA[Disable]]></item>
 		<item name="wcf.global.scrollDown"><![CDATA[Go to page bottom]]></item>
-		<item name="wcf.global.scrollUp"><![CDATA[Go to page end]]></item>
+		<item name="wcf.global.scrollUp"><![CDATA[Go to page top]]></item>
 		<item name="wcf.global.objectID"><![CDATA[ID]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.form.error.empty"><![CDATA[Please enter the required information for this field.]]></item>
-		<item name="wcf.global.form.error"><![CDATA[The data you have entered are invalid. Please check the information you have given in the marked fields.]]></item>
-		<item name="wcf.global.form.edit.success"><![CDATA[The changes have been successfully saved.]]></item>
+		<item name="wcf.global.form.error"><![CDATA[The data you have entered are not valid. Please check the information you have given in the marked fields.]]></item>
+		<item name="wcf.global.form.edit.success"><![CDATA[Your changes have been successfully saved.]]></item>
 		<item name="wcf.global.form.add.success"><![CDATA[The new entry has been successfully saved.]]></item>
 		<item name="wcf.global.loading"><![CDATA[Loading …]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Next &raquo;]]></item>
 		<item name="wcf.global.sortOrder.ascending"><![CDATA[ascending]]></item>
 		<item name="wcf.global.sortOrder.descending"><![CDATA[descending]]></item>
 		<item name="wcf.global.button.back"><![CDATA[&laquo; Back]]></item>
-		<item name="wcf.global.button.collapsible"><![CDATA[Expand or collapse]]></item>
+		<item name="wcf.global.button.collapsible"><![CDATA[Expand and collapse]]></item>
 		<item name="wcf.global.page.next"><![CDATA[Next page]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Previous page]]></item>
 		<item name="wcf.global.locale.unix"><![CDATA[en_US]]></item> <!-- system variable; do not translate -->
@@ -502,16 +502,16 @@
 		<item name="wcf.user.email.error.notUnique"><![CDATA[The e-mail address you have entered has already been used by another user.]]></item>
 		<item name="wcf.user.email.error.notValid"><![CDATA[The e-mail address you have entered is not valid.]]></item>
 		<item name="wcf.user.password.error.false"><![CDATA[The password is not correct.]]></item>
-		<item name="wcf.user.username.error.notFound"><![CDATA[The user name &quot;{$username}&quot; could not be found.]]></item>
-		<item name="wcf.user.username.error.notUnique"><![CDATA[The user name you have entered is already in use.]]></item>
+		<item name="wcf.user.username.error.notFound"><![CDATA[The username &quot;{$username}&quot; could not be found.]]></item>
+		<item name="wcf.user.username.error.notUnique"><![CDATA[The username you have entered is already taken.]]></item>
 		<item name="wcf.user.username.error.notValid"><![CDATA[The username you have entered is not valid.]]></item>
 		<item name="wcf.user.language"><![CDATA[Language]]></item>
-		<item name="wcf.user.language.description"><![CDATA[Please select the user interface-language to be used.]]></item>
-		<item name="wcf.user.logout"><![CDATA[Logout]]></item>
-		<item name="wcf.user.logout.sure"><![CDATA[Do you really want to logout?]]></item>
+		<item name="wcf.user.language.description"><![CDATA[Please select the user interface language to be used.]]></item>
+		<item name="wcf.user.logout"><![CDATA[Log out]]></item>
+		<item name="wcf.user.logout.sure"><![CDATA[Do you really want to log out?]]></item>
 		<item name="wcf.user.registrationDate"><![CDATA[Date of registration]]></item>
 		<item name="wcf.user.visibleLanguages"><![CDATA[Show content in the following languages]]></item>
-		<item name="wcf.user.visibleLanguages.description"><![CDATA[Select the content-languages that should be used.]]></item>
+		<item name="wcf.user.visibleLanguages.description"><![CDATA[Select the content languages that should be used.]]></item>
 		<item name="wcf.user.userID"><![CDATA[User ID]]></item>
 	</category>
 </language>

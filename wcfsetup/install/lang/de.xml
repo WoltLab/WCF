@@ -6,19 +6,19 @@
 		<item name="wcf.acp.cronjob.list.count"><![CDATA[{#$items} zeitgesteuerte Aufgabe{if $items != 1}n{/if}]]></item>
 		<item name="wcf.acp.cronjob.subtitle"><![CDATA[&raquo;Cronjobs&laquo;]]></item>
 		<item name="wcf.acp.cronjob.startDom"><![CDATA[Tag des Monats]]></item>
-		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[An diesen Tagen des Monats (1 - 31) soll die Aufgabe ausgeführt werden.]]></item>
+		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[Tage des Monats (1 - 31), an welchen die Aufgabe ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startDomShort"><![CDATA[D]]></item>
 		<item name="wcf.acp.cronjob.startDow"><![CDATA[Tag der Woche]]></item>
-		<item name="wcf.acp.cronjob.startDow.description"><![CDATA[An diesen Tagen der Woche (0 - 6 mit Sonntag = 0 oder mon - sun) soll die Aufgabe ausgeführt werden.]]></item>
+		<item name="wcf.acp.cronjob.startDow.description"><![CDATA[Tage der Woche (0 - 6 mit Sonntag = 0, oder mon - sun), an welchen die Aufgabe ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startDowShort"><![CDATA[DoW]]></item>
 		<item name="wcf.acp.cronjob.startHour"><![CDATA[Stunde]]></item>
-		<item name="wcf.acp.cronjob.startHour.description"><![CDATA[Zu diesen Stunden (0 - 23) soll die Aufgabe ausgeführt werden.]]></item>
+		<item name="wcf.acp.cronjob.startHour.description"><![CDATA[Stunden (0 - 23), zu welchen die Aufgabe ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startHourShort"><![CDATA[h]]></item>
 		<item name="wcf.acp.cronjob.startMinute"><![CDATA[Minute]]></item>
-		<item name="wcf.acp.cronjob.startMinute.description"><![CDATA[Zu diesen Minuten (0 - 59) soll die Aufgabe ausgeführt werden.]]></item>
+		<item name="wcf.acp.cronjob.startMinute.description"><![CDATA[Minuten (0 - 59), zu welchen die Aufgabe ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startMinuteShort"><![CDATA[m]]></item>
 		<item name="wcf.acp.cronjob.startMonth"><![CDATA[Monat]]></item>
-		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[In diesen Monaten (1 - 12 oder jan - dec) soll die Aufgabe ausgeführt werden.]]></item>
+		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Monate (1 - 12, oder jan - dec), an welchen die Aufgabe ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startMonthShort"><![CDATA[M]]></item>
 		<item name="wcf.acp.cronjob.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.cronjob.nextExec"><![CDATA[Nächste Ausführung]]></item>
@@ -100,7 +100,7 @@
 	
 	<category name="wcf.acp.cache">
 		<item name="wcf.acp.cache.button.clear"><![CDATA[Cache leeren]]></item>
-		<item name="wcf.acp.cache.clear.success"><![CDATA[Der Cache wurde erfolgreich gelöscht.]]></item>
+		<item name="wcf.acp.cache.clear.success"><![CDATA[Der Cache wurde erfolgreich geleert.]]></item>
 		<item name="wcf.acp.cache.clear.sure"><![CDATA[Wollen Sie den Cache wirklich komplett leeren?]]></item>
 		<item name="wcf.acp.cache.data"><![CDATA[Eigenschaften]]></item>
 		<item name="wcf.acp.cache.data.files"><![CDATA[Dateien]]></item>
@@ -176,8 +176,8 @@
 		<item name="wcf.acp.option.page_title.description"><![CDATA[Dieser Titel wird im Seitenkopf dargestellt, wenn Sie die Anzeige dieses Textes im Stileditor aktiviert haben.]]></item>
 		<item name="wcf.acp.option.page_url"><![CDATA[Adresse (URL) der Seite]]></item>
 		<item name="wcf.acp.option.page_url.description"><![CDATA[Adresse (URL) unter der die Seite aufzurufen ist (ohne abschließenden Slash).]]></item>
-		<item name="wcf.acp.option.page_urls"><![CDATA[Weitere URLs]]></item>
-		<item name="wcf.acp.option.page_urls.description"><![CDATA[Weitere URLs unter denen Ihre Seite erreichbar ist.]]></item>
+		<item name="wcf.acp.option.page_urls"><![CDATA[Weitere Adressen (URLs)]]></item>
+		<item name="wcf.acp.option.page_urls.description"><![CDATA[Weitere Adressen (URLs) unter denen Ihre Seite erreichbar ist.]]></item>
 		<item name="wcf.acp.option.category.general.http"><![CDATA[HTTP]]></item>
 		<item name="wcf.acp.option.category.general.http.cookie"><![CDATA[Cookies]]></item>
 		<item name="wcf.acp.option.category.general.http.http"><![CDATA[HTTP]]></item>
@@ -199,7 +199,7 @@
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Versand]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator-Adresse]]></item>
 		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[E-Mail-Adresse des Administrators]]></item>
-		<item name="wcf.acp.option.mail_debug_logfile_path"><![CDATA[Logfile-Pfad]]></item>
+		<item name="wcf.acp.option.mail_debug_logfile_path"><![CDATA[Debug Logfile-Pfad]]></item>
 		<item name="wcf.acp.option.mail_from_address"><![CDATA[Absender-Adresse]]></item>
 		<item name="wcf.acp.option.mail_from_address.description"><![CDATA[Absender-Adresse für automatisch generierte E-Mails]]></item>
 		<item name="wcf.acp.option.mail_from_name"><![CDATA[Absender-Name]]></item>
@@ -250,7 +250,7 @@
 		<item name="wcf.acp.option.export"><![CDATA[Optionen sichern]]></item>
 		<item name="wcf.acp.option.export.download"><![CDATA[Sicherung der Optionen herunterladen]]></item>
 		<item name="wcf.acp.option.export.download.description"><![CDATA[Laden Sie eine Sicherung der Optionen auf Ihren lokalen Rechner herunter.]]></item>
-		<item name="wcf.acp.option.import"><![CDATA[Optionen wiederherstellen]]></item>
+		<item name="wcf.acp.option.import"><![CDATA[Optionen importieren]]></item>
 		<item name="wcf.acp.option.import.upload"><![CDATA[Sicherung der Optionen vom lokalen Computer hochladen]]></item>
 		<item name="wcf.acp.option.import.upload.description"><![CDATA[Wählen Sie eine Sicherung der Optionen von Ihrem lokalen Rechner aus.]]></item>
 		<item name="wcf.acp.option.importAndExport"><![CDATA[Optionen sichern &amp; wiederherstellen]]></item>
@@ -312,7 +312,7 @@
 		<item name="wcf.acp.user.exportEmailAddress.separator"><![CDATA[Trennzeichen]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.textSeparator"><![CDATA[Texttrenner]]></item>
 		<item name="wcf.acp.user.groups"><![CDATA[Benutzergruppe(n)]]></item>
-		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Finde Benutzer, die keine Mitglieder der ausgewählten Benutzergruppen sind.]]></item>
+		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Finde Benutzer, die nicht Mitglied der ausgewählten Benutzergruppen sind.]]></item>
 		<item name="wcf.acp.user.list"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[Alle Benutzer]]></item>
 		<item name="wcf.acp.user.list.count"><![CDATA[{#$items} Benutzer]]></item>
@@ -325,7 +325,7 @@
 		<item name="wcf.acp.user.search.conditions.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profil]]></item>
 		<item name="wcf.acp.user.search.display"><![CDATA[Darstellung]]></item>
-		<item name="wcf.acp.user.search.display.columns"><![CDATA[Angezeigte Informationen]]></item>
+		<item name="wcf.acp.user.search.display.columns"><![CDATA[Spalten]]></item>
 		<item name="wcf.acp.user.search.display.columns.other"><![CDATA[Sonstiges]]></item>
 		<item name="wcf.acp.user.search.display.columns.profile"><![CDATA[Profil]]></item>
 		<item name="wcf.acp.user.search.display.general"><![CDATA[Allgemein]]></item>
@@ -551,7 +551,7 @@
 		<item name="wcf.user.logout.sure"><![CDATA[Wollen Sie sich wirklich abmelden?]]></item>
 		<item name="wcf.user.registrationDate"><![CDATA[Registrierungsdatum]]></item>
 		<item name="wcf.user.visibleLanguages"><![CDATA[Zeige Inhalte in folgenden Sprachen an]]></item>
-		<item name="wcf.user.visibleLanguages.description"><![CDATA[Geben Sie an, in welchen Sprachen erstellte Inhalte angezeigt werden sollen.]]></item>
+		<item name="wcf.user.visibleLanguages.description"><![CDATA[Wählen Sie, in welchen Sprachen erstellte Inhalte angezeigt werden sollen.]]></item>
 		<item name="wcf.user.userID"><![CDATA[Benutzer-ID]]></item>
 	</category>
 </language>
