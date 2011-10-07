@@ -68,6 +68,17 @@
 			new WCF.Effect.SmoothScroll();
 			new WCF.Effect.BalloonTooltip();
 			$('<span class="arrowOuter"><span class="arrowInner"></span></span>').appendTo('.innerError');
+			
+			
+			$(function () {
+				// Change opacity of topmenu. The further you scroll the more opaque the menu is.
+				new WCF.PeriodicalExecuter(function () {
+					var $opacity = .4 + Math.min(.6, document.body.scrollTop / 350);
+					$('#topMenu').css({
+						backgroundColor: 'rgba(0,0,0,'+$opacity+')'
+					});
+				}, 100);
+			});
 		});
 		//]]>
 	</script>
