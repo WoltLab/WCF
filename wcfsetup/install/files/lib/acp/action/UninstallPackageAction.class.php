@@ -120,7 +120,7 @@ class UninstallPackageAction extends InstallPackageAction {
 		}
 		
 		// continue with next node
-		$queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $this->node);
+		$queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $this->installation->nodeBuilder->getNextNode($this->node));
 		$this->data = array(
 			'step' => 'uninstall',
 			'node' => $node,
