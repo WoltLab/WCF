@@ -205,14 +205,16 @@ WCF.ACP.PackageInstallation.prototype = {
 		
 		// handle success
 		if ($data.step == 'success') {
-			var $id = WCF.getRandomID();
-			$('#packageInstallationInnerContent').append('<div class="formSubmit"><input type="button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" class="default" /></div>');
-			
-			$('#' + $id).click($.proxy(function() {
-				window.location.href = "index.php?page=PackageList" + SID_ARG_2ND;
-			}, this));
-			
-			$('#packageInstallationInnerContentContainer').wcfBlindIn();
+			this._purgeTemplateContent(function() {
+				var $id = WCF.getRandomID();
+				$('#packageInstallationInnerContent').append('<div class="formSubmit"><input type="button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" class="default" /></div>');
+				
+				$('#' + $id).click($.proxy(function() {
+					window.location.href = "index.php?page=PackageList" + SID_ARG_2ND;
+				}, this));
+				
+				$('#packageInstallationInnerContentContainer').wcfBlindIn();
+			});
 			
 			return;
 		}
@@ -240,7 +242,11 @@ WCF.ACP.PackageInstallation.prototype = {
 					// collect form values
 					var $additionalData = {};
 					$('#packageInstallationInnerContent').find('input').each(function(index, inputElement) {
-						$additionalData[$(inputElement).attr('name')] = $(inputElement).attr('value');
+						var $inputElement = $(inputElement);
+						
+						if ($inputElement.is(':checked')) {
+							$additionalData[$inputElement.attr('name')] = $inputElement.val();
+						}
 					});
 					
 					this._executeStep($data.step, $data.node, $additionalData);
@@ -254,22 +260,31 @@ WCF.ACP.PackageInstallation.prototype = {
 		}
 		
 		// purge content
+		this._purgeTemplateContent($.proxy(function() {
+			// execute next step
+			if ($data.step && $data.node) {
+				this._executeStep($data.step, $data.node);
+			}
+		}, this));
+	},
+	
+	/**
+	 * Purges template content.
+	 * 
+	 * @param	function	callback
+	 */
+	_purgeTemplateContent: function(callback) {
 		if ($('#packageInstallationInnerContent').children().length > 1) {
 			$('#packageInstallationInnerContentContainer').wcfBlindOut('down', $.proxy(function() {
 				$('#packageInstallationInnerContent').empty();
 				this._dialog.wcfDialog('redraw');
 				
-				// execute next step
-				if ($data.step && $data.node) {
-					this._executeStep($data.step, $data.node);
-				}
+				// execute callback
+				callback();
 			}, this));
 		}
 		else {
-			// execute next step
-			if ($data.step && $data.node) {
-				this._executeStep($data.step, $data.node);
-			}
+			callback();
 		}
 	},
 	
