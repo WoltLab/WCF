@@ -2456,6 +2456,11 @@ WCF.Effect.BalloonTooltip.prototype = {
 	 * Moves tooltip to cursor position.
 	 */
 	_mouseMoveHandler: function(event) {
+		var $element = $(event.currentTarget);
+		if ($element.attr('title')) {
+			this._mouseEnterHandler(event);
+		}
+		
 		if ($(document).width() - event.pageX < this.tooltip.getDimensions().width) {
 			this.tooltip.css({
 				top: (event.pageY) + "px",
