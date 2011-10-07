@@ -245,7 +245,7 @@ WCF.ACP.PackageInstallation.prototype = {
 						var $inputElement = $(inputElement);
 						var $type = $inputElement.attr('type');
 						
-						if (($type == 'checkbox' || $type == 'radio') && $inputElement.not(':checked')) {
+						if (($type == 'checkbox' || $type == 'radio') && !$inputElement.attr('checked')) {
 							return false;
 						}
 						
