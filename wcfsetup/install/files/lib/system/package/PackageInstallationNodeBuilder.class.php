@@ -214,7 +214,7 @@ class PackageInstallationNodeBuilder {
 	 * @param	string		$node
 	 * @param	integer		$sequenceNo
 	 */
-	public function insertNode($node, $sequenceNo) {
+	public function cloneNode($node, $sequenceNo) {
 		$newNode = $this->getToken();
 		
 		// update descendants
@@ -274,6 +274,57 @@ class PackageInstallationNodeBuilder {
 			$node,
 			$this->installation->queue->processNo,
 			$sequenceNo
+		));
+	}
+	
+	/**
+	 * Inserts a node before given target node. Will shift all target
+	 * nodes to provide to be descendants of the new node. If you intend
+	 * to insert more than a single node, you should prefer shiftNodes().
+	 * 
+	 * @param	string		$beforeNode
+	 * @param	function	$callback
+	 */
+	public function insertNode($beforeNode, $callback) {
+		// verify if callback is a valid function
+		if (!is_callable($callback)) {
+			throw new SystemException("Provided callback is not a callable function.");
+		}
+		
+		$newNode = $this->getToken();
+		
+		// update descendants
+		$sql = "UPDATE	wcf".WCF_N."_package_installation_node
+			SET	parentNode = ?
+			WHERE	parentNode = ?
+				AND processNo = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			$newNode,
+			$beforeNode,
+			$this->installation->queue->processNo
+		));
+		
+		// execute callback
+		$callback($beforeNode, $newNode);
+	}
+	
+	/**
+	 * Shifts nodes to allow dynamic inserts at runtime.
+	 * 
+	 * @param	string		$oldParentNode
+	 * @param	string		$newParentNode
+	 */
+	public function shiftNodes($oldParentNode, $newParentNode) {
+		$sql = "UPDATE	wcf".WCF_N."_package_installation_node
+			SET	parentNode = ?
+			WHERE	parentNode = ?
+				AND processNo = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			$newParentNode,
+			$oldParentNode,
+			$this->installation->queue->processNo
 		));
 	}
 	

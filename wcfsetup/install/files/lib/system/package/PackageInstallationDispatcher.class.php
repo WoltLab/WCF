@@ -101,7 +101,7 @@ class PackageInstallationDispatcher {
 				break;
 				
 				case 'optionalPackages':
-					$step = $this->selectOptionalPackages($nodeData);
+					$step = $this->selectOptionalPackages($node, $nodeData);
 				break;
 				
 				default:
@@ -110,7 +110,7 @@ class PackageInstallationDispatcher {
 			}
 			
 			if ($step->splitNode()) {
-				$this->nodeBuilder->insertNode($node, $data['sequenceNo']);
+				$this->nodeBuilder->cloneNode($node, $data['sequenceNo']);
 				break;
 			}
 		}
@@ -340,15 +340,50 @@ class PackageInstallationDispatcher {
 		return $installationStep;
 	}
 	
-	protected function selectOptionalPackages(array $nodeData) {
+	protected function selectOptionalPackages($currentNode, array $nodeData) {
 		$installationStep = new PackageInstallationStep();
 		
 		$document = $this->promptOptionalPackages($nodeData);
 		if ($document !== null && $document instanceof form\FormDocument) {
 			$installationStep->setDocument($document);
+			$installationStep->setSplitNode();
 		}
-		
-		$installationStep->setSplitNode();
+		// insert new nodes for each package
+		else if (is_array($document)) {
+			// get target child node
+			$node = $currentNode;
+			$queue = $this->queue;
+			$shiftNodes = false;
+			
+			foreach ($nodeData as $package) {
+				if (in_array($package['package'], $document)) {
+					if (!$shiftNodes) {
+						$this->nodeBuilder->shiftNodes($currentNode, 'tempNode');
+						$shiftNodes = true;
+					}
+					
+					$queue = PackageInstallationQueueEditor::create(array(
+						'parentQueueID' => $queue->queueID,
+						'processNo' => $this->queue->processNo,
+						'userID' => WCF::getUser()->userID,
+						'package' => $package['package'],
+						'packageName' => $package['packageName'],
+						'archive' => $package['archive'],
+						'action' => $queue->action
+					));
+					
+					$installation = new PackageInstallationDispatcher($queue);
+					$installation->nodeBuilder->setParentNode($node);
+					$installation->nodeBuilder->buildNodes();
+					$node = $installation->nodeBuilder->getCurrentNode();
+				}
+			}
+			
+			// shift nodes
+			if ($shiftNodes) {
+				$this->nodeBuilder->shiftNodes('tempNode', $node);
+			}
+		}
 		
 		return $installationStep;
 	}
@@ -445,14 +480,7 @@ class PackageInstallationDispatcher {
 			$document = PackageInstallationFormManager::getForm($this->queue, 'optionalPackages');
 			$document->handleRequest();
 			
-			$packages = $document->getValue('optionalPackages');
-			if (!empty($packages)) {
-				foreach ($packages as $package) {
-					// haha, this is going to be mad
-					
-				}
-			}
-			die('<pre>'.print_r($packages, true));
+			return $document->getValue('optionalPackages');
 		}
 	}
 	
