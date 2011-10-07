@@ -160,7 +160,9 @@ header.pageHeader nav.topMenu ul li,
 header.pageHeader nav.topMenu ul li a {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
 	color: #69c;
-	display: block;
+	padding-right: 3px;
+	padding-left: 3px;
+	display: inline-block;
 }
 
 header.pageHeader nav.topMenu li ul li:hover a {
@@ -169,10 +171,6 @@ header.pageHeader nav.topMenu li ul li:hover a {
 
 /* Todo: Top Menu Dropdowns */
 
-nav.topMenu .dropdownCaption {
-	cursor: pointer; 
-}
-
 nav.topMenu ul {
 	position: relative;
 	display: inline-block;
@@ -180,7 +178,9 @@ nav.topMenu ul {
 
 nav.topMenu ul li ul.dropdown {
 	color: #fff;
-	border: 1px solid rgba(255, 255, 255, .5);
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+	border-color: rgba(255, 255, 255, .5);
 	border-radius: 0 0 5px 5px;
 	background-color: rgba(0, 0, 0, .7);
 	margin-top: 25px;
@@ -197,18 +197,19 @@ nav.topMenu ul li ul.dropdown {
 	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 }
 
-nav.topMenu ul span.dropdownCaption {
+nav.topMenu ul .dropdownCaption {
+	cursor: pointer;
+	padding: 6px; 
 	display: block !important;
-	padding: 6px;
 }
 
-nav.topMenu ul:hover span.dropdownCaption {
+nav.topMenu ul:hover .dropdownCaption {
 	color: #fff;
 	background-color: rgba(0, 0, 0, .7);
 	display: block !important;
 }
 
-nav.topMenu ul:hover span.dropdownCaption ~ ul.dropdown {
+nav.topMenu ul:hover .dropdownCaption ~ ul.dropdown {
 	display: block !important;
 }
 
@@ -250,6 +251,20 @@ nav.topMenu ul li ul.dropdown > li:hover {
 nav.topMenu ul li ul.dropdown > li:first-child {
 	border-top-width: 0;
 }
+
+/* ToDo: Login Box */
+
+/* do not use the class ".loginBox" to style the box! */
+
+#loginBox {
+	/* background-color: rgba(0, 0, 0, .5); */
+}
+
+#loginBox dl {
+	margin-right: 20px;
+}
+
+
 
 /* -- -- -- Logo -- -- -- */
 
@@ -2621,6 +2636,12 @@ input[type='button'][disabled='disabled'],
 
 this is taken from "userPanel.tpl" (inline-css) 
 will change soon! 
+
+	CSS should be moved to a user css-file, whereas many parts may be left out except for the following ones:
+	 - [.scrollableContainer] Don't touch!
+	 - [.scrollableItems] Keep the inflated width, you may lower its number but it must be incredible bloated
+	 - [.scrollableItems > div] Must be a fixed-width float, otherwise it would break the scrollable class
+	   from jQueryTools. Do NOT use css-tables or [display: inline-block] as it won't work with the whole magic
 
 */
 
