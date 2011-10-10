@@ -1237,6 +1237,26 @@ input[type='button'],
 	position: relative;
 	bottom: -1px;
 	z-index: 10;
+	
+	-webkit-transition-property: border, background-color, background-image, color;
+	-webkit-transition-duration: .3s;
+	-webkit-transition-timing-function: ease;
+	
+	-moz-transition-property: border, background-color, background-image, color;
+	-moz-transition-duration: .3s;
+	-moz-transition-timing-function: ease;
+	
+	-ms-transition-property: border, background-color, background-image, color;
+	-ms-transition-duration: .3s;
+	-ms-transition-timing-function: ease;
+	
+	-o-transition-property: border, background-color, background-image, color;
+	-o-transition-duration: .3s;
+	-o-transition-timing-function: ease;
+	
+	transition-property: border, background-color, background-image, color;
+	transition-duration: .3s;
+	transition-timing-function: ease;
 }
 
 .tabMenu li:not(.ui-state-active) a:hover {
@@ -2306,7 +2326,7 @@ input[type='button'].default:active,
 
 @-webkit-keyframes glowLargeButtons {
     0% {
-        -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .3);
+        -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
     }
     100% {
         -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
@@ -2314,7 +2334,7 @@ input[type='button'].default:active,
 }
 @-moz-keyframes glowLargeButtons {
     0% {
-        -moz-box-shadow: 0 0 13px rgba(102, 153, 204, .3);
+        -moz-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
     }
     100% {
         -moz-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
@@ -2322,7 +2342,7 @@ input[type='button'].default:active,
 }
 @-ms-keyframes glowLargeButtons {
     0% {
-        -ms-box-shadow: 0 0 13px rgba(102, 153, 204, .3);
+        -ms-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
     }
     100% {
         -ms-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
@@ -2330,7 +2350,7 @@ input[type='button'].default:active,
 }
 @-o-keyframes glowLargeButtons {
     0% {
-        -o-box-shadow: 0 0 13px rgba(102, 153, 204, .3);
+        -o-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
     }
     100% {
         -o-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
@@ -2338,7 +2358,7 @@ input[type='button'].default:active,
 }
 @keyframes glowLargeButtons {
     0% {
-        box-shadow: 0 0 13px rgba(102, 153, 204, .3);
+        box-shadow: 0 0 13px rgba(102, 153, 204, .5);
     }
     100% {
         box-shadow: 0 0 13px rgba(102, 153, 204, .1);
