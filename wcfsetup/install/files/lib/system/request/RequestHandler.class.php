@@ -28,25 +28,12 @@ class RequestHandler extends SingletonFactory {
 	 * @param	boolean		$isACP
 	 */
 	public function handle($application = 'wcf', $isACP = false) {
-		// default values
-		$pageName = 'Index';
-		$pageType = 'page';
-		
-		if (!empty($_GET['page']) || !empty($_POST['page'])) {
-			$pageName = (!empty($_GET['page']) ? $_GET['page'] : $_POST['page']);
-			$pageType = 'page';
-		}
-		else if (!empty($_GET['form']) || !empty($_POST['form'])) {
-			$pageName = (!empty($_GET['form']) ? $_GET['form'] : $_POST['form']);
-			$pageType = 'form';
-		}
-		else if (!empty($_GET['action']) || !empty($_POST['action'])) {
-			$pageName = (!empty($_GET['action']) ? $_GET['action'] : $_POST['action']);
-			$pageType = 'action';
+		if (!RouteHandler::getInstance()->matches($isACP)) {
+			throw new SystemException("Cannot handle request, no valid route provided.");
 		}
 		
 		// build request
-		$this->buildRequest($pageName, $pageType, $application, $isACP);
+		$this->buildRequest($application, $isACP);
 		// start request
 		$this->activeRequest->execute();
 	}
@@ -54,38 +41,58 @@ class RequestHandler extends SingletonFactory {
 	/**
 	 * Builds a new request.
 	 *
-	 * @param 	string 		$pageName
 	 * @param 	string 		$application
-	 * @param 	string 		$pageType
 	 * @param	boolean		$isACP
 	 */
-	protected function buildRequest($pageName, $pageType, $application, $isACP) {
+	protected function buildRequest($application, $isACP) {
 		try {
+			$routeData = RouteHandler::getInstance()->getRouteData();
+			$controller = $routeData['controller'];
+			
 			// validate class name
-			if (!preg_match('~^[a-z0-9_]+$~i', $pageName)) {
-				throw new SystemException("Illegal class name '".$pageName."'");
+			if (!preg_match('~^[a-z0-9_]+$~i', $controller)) {
+				throw new SystemException("Illegal class name '".$controller."'");
 			}
 			
 			// find class
-			$className = $application.'\\'.($isACP ? 'acp\\' : '').$pageType.'\\'.ucfirst($pageName).ucfirst($pageType);
-			if ($application != 'wcf' && !class_exists($className)) {
-				$className = 'wcf\\'.($isACP ? 'acp\\' : '').$pageType.'\\'.ucfirst($pageName).ucfirst($pageType);
+			$classData = $this->getClassData($controller, 'page', $application, $isACP);
+			if ($classData === null) $classData = $this->getClassData($controller, 'form', $application, $isACP);
+			if ($classData === null) $classData = $this->getClassData($controller, 'action', $application, $isACP);
+			
+			if ($classData === null) {
+				throw new SystemException("unable to find class for controller '".$controller."'");
 			}
-			if (!class_exists($className)) {
-				throw new SystemException("unable to find class '".$className."'");
+			else if (!class_exists($classData['className'])) {
+				throw new SystemException("unable to find class '".$classData['className']."'");
 			}
 			
-			// check whether the class is abstract
-			$reflectionClass = new \ReflectionClass($className);
-			if ($reflectionClass->isAbstract()) {
-				throw new SystemException("class '".$className."' is abstract");
-			}
-			
-			$this->activeRequest = new Request($className, $pageName, $pageType);
+			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType']);
 		}
 		catch (SystemException $e) {
 			throw new IllegalLinkException();
 		}
+	}
+	
+	protected function getClassData($controller, $pageType, $application, $isACP) {
+		$className = $application.'\\'.($isACP ? 'acp\\' : '').$pageType.'\\'.ucfirst($controller).ucfirst($pageType);
+		if ($application != 'wcf' && !class_exists($className)) {
+			$className = 'wcf\\'.($isACP ? 'acp\\' : '').$pageType.'\\'.ucfirst($controller).ucfirst($pageType);
+		}
+		if (!class_exists($className)) {
+			return null;
+		}
+		
+		// check whether the class is abstract
+		$reflectionClass = new \ReflectionClass($className);
+		if ($reflectionClass->isAbstract()) {
+			return null;
+		}
+		
+		return array(
+			'className' => $className,
+			'controller' => $controller,
+			'pageType' => $pageType
+		);
 	}
 	
 	/**

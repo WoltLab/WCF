@@ -83,7 +83,7 @@ class MasterPasswordForm extends ACPForm {
 		
 		// forward
 		if (empty($this->url)) {
-			$this->url = 'index.php?page=Index'.SID_ARG_2ND_NOT_ENCODED;
+			$this->url = 'index.php/Index/'.SID_ARG_1ST;
 		}
 		HeaderUtil::redirect($this->url, false);
 		exit;

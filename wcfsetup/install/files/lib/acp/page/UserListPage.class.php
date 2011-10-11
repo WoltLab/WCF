@@ -114,7 +114,7 @@ class UserListPage extends SortablePage {
 		$this->readUsers();
 		
 		// build page url
-		$this->url = 'index.php?page=UserList&searchID='.$this->searchID.'&action='.rawurlencode($this->action).'&pageNo='.$this->pageNo.'&sortField='.$this->sortField.'&sortOrder='.$this->sortOrder.''.SID_ARG_2ND_NOT_ENCODED;
+		$this->url = 'index.php/UserList/?searchID='.$this->searchID.'&action='.rawurlencode($this->action).'&pageNo='.$this->pageNo.'&sortField='.$this->sortField.'&sortOrder='.$this->sortOrder.''.SID_ARG_2ND_NOT_ENCODED;
 	}
 	
 	/**

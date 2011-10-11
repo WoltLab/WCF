@@ -10,10 +10,10 @@
 </header>
 
 <div class="contentHeader">
-	{pages print=true assign=pagesLinks link="index.php?page=PackageUpdateSearchResult&searchID=$searchID&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"|concat:SID_ARG_2ND_NOT_ENCODED}
+	{pages print=true assign=pagesLinks link="index.php/PackageUpdateSearchResult/$searchID/?pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"|concat:SID_ARG_2ND_NOT_ENCODED}
 </div>
 
-<form method="post" action="index.php?form=PackageUpdate">
+<form method="post" action="index.php/PackageUpdate/">
 	{foreach from=$packages item=package}
 		<article class="message content">
 			<div class="messageInner container-{cycle name='styles' values='1,2'}">
@@ -105,9 +105,8 @@
 	<div class="formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		<input type="hidden" name="packageID" value="{@PACKAGE_ID}" />
 		{@SID_INPUT_TAG}
-		<input type="hidden" name="searchID" value="{@$searchID}" />
+		<input type="hidden" name="id" value="{@$searchID}" />
  	</div>
 </form>
 

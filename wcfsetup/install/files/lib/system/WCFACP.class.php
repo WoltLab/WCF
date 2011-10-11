@@ -45,9 +45,12 @@ class WCFACP extends WCF {
 	 * Does the user authentication.
 	 */
 	protected function initAuth() {
+		/**
+		 * @todo	FIX THIS!
+		 */
 		if ((!isset($_REQUEST['page']) || ($_REQUEST['page'] != 'Logout' && $_REQUEST['page'] != 'ACPCaptcha')) && (isset($_REQUEST['page']) || !isset($_REQUEST['form']) || $_REQUEST['form'] != 'Login')) {
 			if (WCF::getUser()->userID == 0) {
-				util\HeaderUtil::redirect('index.php?form=Login'.SID_ARG_2ND_NOT_ENCODED);
+				util\HeaderUtil::redirect('index.php/Login/'.SID_ARG_1ST);
 				exit;
 			}
 			else {

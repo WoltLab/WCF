@@ -214,7 +214,7 @@ class UserSearchForm extends UserOptionListForm {
 		$this->saved();
 		
 		// forward to result page
-		HeaderUtil::redirect('index.php?page=UserList&searchID='.$this->searchID.'&sortField='.rawurlencode($this->sortField).'&sortOrder='.rawurlencode($this->sortOrder).''.SID_ARG_2ND_NOT_ENCODED);
+		HeaderUtil::redirect('index.php/UserList/?searchID='.$this->searchID.'&sortField='.rawurlencode($this->sortField).'&sortOrder='.rawurlencode($this->sortOrder).''.SID_ARG_2ND_NOT_ENCODED);
 		exit;
 	}
 	

@@ -34,13 +34,13 @@
 <div class="contentHeader">
 	<nav class="largeButtons">
 		<ul>
-			<li><a href="index.php?page=UserGroupList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.group.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
+			<li><a href="index.php/UserGroupList/{@SID_ARG_1ST}" title="{lang}wcf.acp.menu.link.group.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
 	</nav>
 </div>
 
-<form method="post" action="index.php?form=UserGroup{@$action|ucfirst}">
+<form method="post" action="index.php/UserGroup{@$action|ucfirst}/">
 	<div class="border content">
 		
 		<fieldset>
@@ -123,7 +123,7 @@
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}
  		<input type="hidden" name="action" value="{@$action}" />
- 		{if $groupID|isset}<input type="hidden" name="groupID" value="{@$groupID}" />{/if}
+ 		{if $groupID|isset}<input type="hidden" name="id" value="{@$groupID}" />{/if}
  		<input type="hidden" id="activeTabMenuItem" name="activeTabMenuItem" value="{$activeTabMenuItem}" />
  		<input type="hidden" id="activeSubTabMenuItem" name="activeSubTabMenuItem" value="{$activeSubTabMenuItem}" />
  	</div>

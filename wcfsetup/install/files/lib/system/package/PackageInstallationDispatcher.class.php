@@ -525,11 +525,11 @@ class PackageInstallationDispatcher {
 		$packageInstallation = $statement->fetchArray();
 		
 		if (!isset($packageInstallation['queueID'])) {
-			HeaderUtil::redirect('index.php?page=PackageList'.SID_ARG_2ND_NOT_ENCODED);
+			HeaderUtil::redirect('index.php/PackageList/?'.SID_ARG_1ST);
 			exit;
 		}
 		else {
-			HeaderUtil::redirect('index.php?page=Package&action='.$packageInstallation['action'].'&queueID='.$packageInstallation['queueID'].''.SID_ARG_2ND_NOT_ENCODED);
+			HeaderUtil::redirect('index.php/Package/?action='.$packageInstallation['action'].'&queueID='.$packageInstallation['queueID'].''.SID_ARG_2ND_NOT_ENCODED);
 			exit;
 		}
 	}

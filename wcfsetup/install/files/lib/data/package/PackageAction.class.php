@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\package;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\WCF;
 
 /**
  * Executes package-related actions.
@@ -32,4 +33,29 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.system.package.canUpdatePackage');
+	
+	/**
+	 * @todo	Implement validation
+	 */
+	public function validateGetPluginList() {}
+	
+	/**
+	 * Returns a list of plugins.
+	 * 
+	 * @return	array
+	 */
+	public function getPluginList() {
+		$pluginList = Package::getPluginList();
+		$pluginList->sqlLimit = 1;
+		$pluginList->sqlOffset = (($this->parameters['activePage'] - 1) * 1);
+		$pluginList->readObjects();
+		
+		WCF::getTPL()->assign(array(
+			'plugins' => $pluginList
+		));
+		return array(
+			'activePage' => $this->parameters['activePage'],
+			'template' => WCF::getTPL()->fetch('packageListPlugins')
+		);
+	}
 }

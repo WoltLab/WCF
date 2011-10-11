@@ -1,63 +1,69 @@
 <?php
 namespace wcf\acp\page;
-use wcf\system\menu\acp\ACPMenu;
+use wcf\data\package\Package;
 use wcf\data\package\PackageList;
-use wcf\page\SortablePage;
+use wcf\page\AbstractPage;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 
-/**
- * Shows a list of all installed packages.
- * 
- * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	acp.page
- * @category 	Community Framework
- */
-class PackageListPage extends SortablePage {
+class PackageListPage extends AbstractPage {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
+	 * list of applications
+	 * @var	wcf\data\package\PackageList
 	 */
-	public $templateName = 'packageList';
+	protected $applicationList = null;
 	
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * plugin count
+	 * @var	integer
 	 */
-	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canUninstallPackage');
+	protected $pluginCount = 0;
 	
 	/**
-	 * @see wcf\page\MultipleLinkPage::$itemsPerPage
+	 * list of plugins
+	 * @var	wcf\data\package\PackageList
 	 */
-	public $itemsPerPage = 50;
+	protected $pluginList = null;
 	
 	/**
-	 * @see wcf\page\SortablePage::$defaultSortField
+	 * @see	wcf\page\IPage::readData()
 	 */
-	public $defaultSortField = 'packageType';
-	
-	/**
-	 * @see wcf\page\SortablePage::$defaultSortOrder
-	 */
-	public $defaultSortOrder = 'DESC';
-	
-	/**
-	 * @see wcf\page\SortablePage::$validSortFields
-	 */
-	public $validSortFields = array('packageID', 'package', 'packageDir', 'packageName', 'instanceNo', 'packageDescription', 'packageVersion', 'packageDate', 'packageURL', 'parentPackageID', 'isUnique', 'standalone', 'author', 'authorURL', 'installDate', 'updateDate');
-	
-	/**
-	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
-	 */	
-	public $objectListClassName = 'wcf\data\package\PackageList';
-	
-	/**
-	 * @see	wcf\page\MultipleLinkPage::readObjects()
-	 */	
-	protected function readObjects() {
-		$this->sqlOrderBy = 'package.'.($this->sortField == 'packageType' ? 'standalone '.$this->sortOrder.', package.parentPackageID '.$this->sortOrder : $this->sortField.' '.$this->sortOrder).($this->sortField != 'packageName' ? ', package.packageName ASC' : '');
+	public function readData() {
+		parent::readData();
 		
-		parent::readObjects();
+		// read applications
+		$this->applicationList = new PackageList();
+		$this->applicationList->getConditionBuilder()->add("package.standalone = ?", array(1));
+		
+		// DEBUG ONLY - remove comment to exclude WCF from display
+		//$this->applicationList->getConditionBuilder()->add("package.packageID <> ?", array(1));
+		// DEBUG ONLY
+		
+		$this->applicationList->sqlLimit = 0;
+		$this->applicationList->readObjects();
+		
+		// read plugins
+		$this->pluginList = Package::getPluginList();
+		
+		// count total plugins
+		$this->pluginCount = $this->pluginList->countObjects();
+		
+		// read plugins
+		$this->pluginList->sqlLimit = 1;
+		$this->pluginList->readObjects();
+	}
+	
+	/**
+	 * @see	wcf\page\IPage::assignVariables()
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
+		
+		WCF::getTPL()->assign(array(
+			'applications' => $this->applicationList,
+			'plugins' => $this->pluginList,
+			'pluginsCount' => $this->pluginCount
+		));
 	}
 	
 	/**

@@ -86,7 +86,7 @@
 							<li id="userMenu" class="userMenu"><!-- ToDo: We need an ID and/or class for each list here, this ID may also change! -->
 								<span class="dropdownCaption">{lang}wcf.acp.user.userNote{/lang}</span>
 								<ul class="dropdown">
-									<li><a href="{link}index.php?action=Logout&amp;t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
+									<li><a href="{link}index.php/Logout/?t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -98,7 +98,7 @@
 			<!-- logo -->
 			<div id="logo" class="logo">
 				<!-- clickable area -->
-				<a href="index.php{@SID_ARG_1ST}">
+				<a href="{@SID_ARG_1ST}">
 					<h1>WoltLab Community Framework 2.0 Pre-Alpha 1</h1>
 					<img src="{@RELATIVE_WCF_DIR}acp/images/wcfLogoWhite.svg" width="300" height="58" alt="Product-logo" title="WoltLab Community Framework 2.0 Pre-Alpha 1" />
 				</a>

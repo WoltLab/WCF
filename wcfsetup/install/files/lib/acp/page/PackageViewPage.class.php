@@ -64,7 +64,7 @@ class PackageViewPage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['packageID'])) $this->packageID = intval($_REQUEST['packageID']);
+		if (isset($_REQUEST['id'])) $this->packageID = intval($_REQUEST['id']);
 		$this->package = new Package($this->packageID);
 		if (!$this->package->packageID) {
 			throw new IllegalLinkException();

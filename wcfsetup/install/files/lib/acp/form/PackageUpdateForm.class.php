@@ -103,7 +103,7 @@ class PackageUpdateForm extends ACPForm {
 			$this->saved();
 			
 			// open queue
-			HeaderUtil::redirect('index.php?page=Package&action=openQueue&processNo='.$processNo.''.SID_ARG_2ND_NOT_ENCODED);
+			HeaderUtil::redirect('index.php/Package/?action=openQueue&processNo='.$processNo.''.SID_ARG_2ND_NOT_ENCODED);
 			exit;
 		}
 	}

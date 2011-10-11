@@ -25,7 +25,7 @@
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
-<form method="post" action="index.php?form=Login">
+<form method="post" action="index.php/Login/">
 	<fieldset>
 		<legend>{lang}wcf.user.login.data{/lang}</legend>
 		

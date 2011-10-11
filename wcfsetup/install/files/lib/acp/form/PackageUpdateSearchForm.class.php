@@ -242,7 +242,7 @@ class PackageUpdateSearchForm extends ACPForm {
 		$this->saved();
 		
 		// forward
-		HeaderUtil::redirect('index.php?page=PackageUpdateSearchResult&searchID='.$search->searchID.''.SID_ARG_2ND_NOT_ENCODED);
+		HeaderUtil::redirect('index.php/PackageUpdateSearchResult/'.$search->searchID.'/'.SID_ARG_1ST);
 		exit;
 	}
 	
