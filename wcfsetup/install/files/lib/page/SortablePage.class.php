@@ -67,6 +67,15 @@ abstract class SortablePage extends MultipleLinkPage {
 	}
 	
 	/**
+	 * @see wcf\page\MultipleLinkPage::readObjects()
+	 */	
+	protected function readObjects() {
+		$this->sqlOrderBy = $this->sortField." ".$this->sortOrder;
+		
+		parent::readObjects();
+	}
+	
+	/**
 	 * Validates the given sort field parameter. 
 	 */
 	public function validateSortField() {
