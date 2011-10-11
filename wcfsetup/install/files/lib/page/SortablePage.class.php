@@ -16,18 +16,6 @@ use wcf\system\event\EventHandler;
  */
 abstract class SortablePage extends MultipleLinkPage {
 	/**
-	 * selected sort field
-	 * @var string
-	 */
-	public $sortField = '';
-	
-	/**
-	 * selected sort order
-	 * @var string
-	 */
-	public $sortOrder = '';
-	
-	/**
 	 * default sort field
 	 * @var string
 	 */
@@ -64,15 +52,6 @@ abstract class SortablePage extends MultipleLinkPage {
 		$this->validateSortField();
 				
 		parent::readData();
-	}
-	
-	/**
-	 * @see wcf\page\MultipleLinkPage::readObjects()
-	 */	
-	protected function readObjects() {
-		$this->sqlOrderBy = $this->sortField." ".$this->sortOrder;
-		
-		parent::readObjects();
 	}
 	
 	/**

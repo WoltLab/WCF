@@ -66,6 +66,18 @@ abstract class MultipleLinkPage extends AbstractPage {
 	public $objectListClassName = '';
 	
 	/**
+	 * selected sort field
+	 * @var string
+	 */
+	public $sortField = '';
+	
+	/**
+	 * selected sort order
+	 * @var string
+	 */
+	public $sortOrder = '';
+	
+	/**
 	 * @see	wcf\data\DatabaseObjectList::$sqlLimit
 	 */	
 	public $sqlLimit = 0;
@@ -106,6 +118,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 		if ($this->items) {
 			$this->sqlLimit = $this->itemsPerPage;
 			$this->sqlOffset = ($this->pageNo - 1) * $this->itemsPerPage;
+			if ($this->sortField && $this->sortOrder) $this->sqlOrderBy = $this->sortField." ".$this->sortOrder;
 			$this->readObjects();
 		}
 	}
