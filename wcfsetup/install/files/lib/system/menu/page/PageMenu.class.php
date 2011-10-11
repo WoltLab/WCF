@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\menu\page;
 use wcf\data\page\menu\item\PageMenuItem;
+use wcf\system\event\EventHandler;
 use wcf\system\menu\TreeMenu;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\cache\CacheHandler;
@@ -16,6 +17,25 @@ use wcf\system\cache\CacheHandler;
  * @category 	Community Framework
  */
 class PageMenu extends TreeMenu {
+	/**
+	 * @see wcf\system\SingletonFactory::init()
+	 */
+	protected function init() {
+		// get menu items from cache
+		$this->loadCache();
+		
+		// check menu items
+		$this->checkMenuItems('header');
+		$this->checkMenuItems('footer');
+		
+		// build plain menu item list
+		$this->buildMenuItemList('header');
+		$this->buildMenuItemList('footer');
+		
+		// call init event
+		EventHandler::getInstance()->fireAction($this, 'init');
+	}
+	
 	/**
 	 * @see	wcf\system\menu\TreeMenu::loadCache()
 	 */
