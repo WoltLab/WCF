@@ -74,8 +74,8 @@ class UserListPage extends SortablePage {
 		
 		$this->conditions = new PreparedStatementConditionBuilder();
 		
-		if (!empty($_REQUEST['searchID'])) {
-			$this->searchID = intval($_REQUEST['searchID']);
+		if (!empty($_REQUEST['id'])) {
+			$this->searchID = intval($_REQUEST['id']);
 			if ($this->searchID) $this->readSearchResult();
 			if (!count($this->userIDs)) {
 				throw new IllegalLinkException();

@@ -6,6 +6,16 @@ use wcf\page\AbstractPage;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 
+/**
+ * Shows a list of installed packages and plugins.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2009 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	acp.page
+ * @category 	Community Framework
+ */
 class PackageListPage extends AbstractPage {
 	/**
 	 * list of applications

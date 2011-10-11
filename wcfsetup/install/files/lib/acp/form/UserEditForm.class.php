@@ -49,17 +49,16 @@ class UserEditForm extends UserAddForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['userID'])) {
-			$this->userID = intval($_REQUEST['userID']);
-			$user = new User($this->userID);
-			if (!$user->userID) {
-				throw new IllegalLinkException();
-			}
-			
-			$this->user = new UserEditor($user);
-			if (!UserGroup::isAccessibleGroup($this->user->getGroupIDs())) {
-				throw new PermissionDeniedException();
-			}
+		if (isset($_REQUEST['id'])) $this->userID = intval($_REQUEST['id']);
+		
+		$user = new User($this->userID);
+		if (!$user->userID) {
+			throw new IllegalLinkException();
+		}
+		
+		$this->user = new UserEditor($user);
+		if (!UserGroup::isAccessibleGroup($this->user->getGroupIDs())) {
+			throw new PermissionDeniedException();
 		}
 	}
 	

@@ -217,9 +217,18 @@ class PackageInstallationDispatcher {
 			$this->package = null;
 			
 			if ($package->standalone) {
+				$domainPath = '';
+				if (isset($_SERVER['PHP_SELF'])) {
+					$domainPath = $_SERVER['PHP_SELF'];
+					if (strpos($domainPath, '.php') !== false) {
+						$domainPath = preg_replace('~index\.php$~', '', $domainPath);
+					}
+				}
+				
 				// insert as application
 				ApplicationEditor::create(array(
-					'domainName' => '',
+					'domainName' => (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME'] : '',
+					'domainPath' => $domainPath,
 					'packageID' => $package->packageID
 				));
 			}

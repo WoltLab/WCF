@@ -61,7 +61,7 @@ class ACPSessionLogPage extends SortablePage {
 		parent::readParameters();
 		
 		// get session log
-		if (isset($_REQUEST['sessionLogID'])) $this->sessionLogID = intval($_REQUEST['sessionLogID']);
+		if (isset($_REQUEST['id'])) $this->sessionLogID = intval($_REQUEST['id']);
 		$this->sessionLog = new ACPSessionLog($this->sessionLogID);
 		if (!$this->sessionLog->sessionLogID) {
 			throw new IllegalLinkException();

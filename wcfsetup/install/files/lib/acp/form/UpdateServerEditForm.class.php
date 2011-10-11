@@ -40,7 +40,7 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['packageUpdateServerID'])) $this->packageUpdateServerID = intval($_REQUEST['packageUpdateServerID']);
+		if (isset($_REQUEST['id'])) $this->packageUpdateServerID = intval($_REQUEST['id']);
 		$this->updateServer = new PackageUpdateServer($this->packageUpdateServerID);
 		if (!$this->updateServer->packageUpdateServerID) {
 			throw new IllegalLinkException();

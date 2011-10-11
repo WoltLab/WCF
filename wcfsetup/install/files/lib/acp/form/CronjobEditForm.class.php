@@ -44,7 +44,7 @@ class CronjobEditForm extends CronjobAddForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['cronjobID'])) $this->cronjobID = intval($_REQUEST['cronjobID']);
+		if (isset($_REQUEST['id'])) $this->cronjobID = intval($_REQUEST['id']);
 		$this->cronjob = new Cronjob($this->cronjobID);
 		if (!$this->cronjob->cronjobID) {
 			throw new IllegalLinkException();

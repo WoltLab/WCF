@@ -42,7 +42,7 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.list">
-			<link>index.php/PackageList</link>
+			<link>index.php/PackageList/</link>
 			<parent>wcf.acp.menu.link.package.management</parent>
 			<permissions>admin.system.package.canUpdatePackage,admin.system.package.canUninstallPackage</permissions>
 			<showorder>1</showorder>

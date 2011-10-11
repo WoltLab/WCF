@@ -50,7 +50,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 		parent::readParameters();
 		
 		// get group
-		if (isset($_REQUEST['groupID'])) $this->groupID = intval($_REQUEST['groupID']);
+		if (isset($_REQUEST['id'])) $this->groupID = intval($_REQUEST['id']);
 		$group = new UserGroup($this->groupID);
 		if (!$group->groupID) {
 			throw new IllegalLinkException();
