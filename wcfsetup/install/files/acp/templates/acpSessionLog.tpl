@@ -56,6 +56,6 @@
 	<div class="contentFooter">
 		{@$pagesLinks}
 	</div>
-{/if}
+{/hascontent}
 
 {include file='footer'}
