@@ -85,7 +85,7 @@ abstract class PackageInstallationFormManager {
 		$statement->execute(array(
 			$queue->queueID,
 			$document->getName(),
-			serialize($document)
+			base64_encode(serialize($document))
 		));
 	}
 	
@@ -102,7 +102,7 @@ abstract class PackageInstallationFormManager {
 				AND formName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-			serialize($document),
+			base64_encode(serialize($document)),
 			$queue->queueID,
 			$document->formName
 		));
@@ -140,7 +140,7 @@ abstract class PackageInstallationFormManager {
 		$row = $statement->fetchArray();
 		
 		if ($row) {
-			$document = unserialize($row['document']);
+			$document = unserialize(base64_decode($row['document']));
 			return $document;
 		}
 		
