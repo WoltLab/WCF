@@ -45,10 +45,10 @@ class WCFACP extends WCF {
 	 * Does the user authentication.
 	 */
 	protected function initAuth() {
-		/**
-		 * @todo	FIX THIS!
-		 */
-		if ((!isset($_REQUEST['page']) || ($_REQUEST['page'] != 'Logout' && $_REQUEST['page'] != 'ACPCaptcha')) && (isset($_REQUEST['page']) || !isset($_REQUEST['form']) || $_REQUEST['form'] != 'Login')) {
+		// this is a work-around since neither RequestHandler
+		// nor RouteHandler are populated right now
+		$pathInfo = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : '';
+		if (empty($pathInfo) || !preg_match('~^/(ACPCaptcha|Login)/~', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
 				util\HeaderUtil::redirect('index.php/Login/'.SID_ARG_1ST);
 				exit;
