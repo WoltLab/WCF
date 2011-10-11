@@ -106,7 +106,6 @@ abstract class MultipleLinkPage extends AbstractPage {
 		if ($this->items) {
 			$this->sqlLimit = $this->itemsPerPage;
 			$this->sqlOffset = ($this->pageNo - 1) * $this->itemsPerPage;
-			$this->sqlOrderBy = $this->sortField." ".$this->sortOrder;
 			$this->readObjects();
 		}
 	}
@@ -132,7 +131,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	protected function readObjects() {
 		$this->objectList->sqlLimit = $this->sqlLimit;
 		$this->objectList->sqlOffset = $this->sqlOffset;
-		$this->objectList->sqlOrderBy = $this->sqlOrderBy;
+		if ($this->sqlOrderBy) $this->objectList->sqlOrderBy = $this->sqlOrderBy;
 		$this->objectList->readObjects();
 	}
 	
