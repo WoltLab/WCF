@@ -21,6 +21,11 @@ use wcf\system\WCFACP;
  * @category 	Community Framework
  */
 class PackagePage extends AbstractPage {
+	/**
+	 * @see	wcf\page\AbstractPage::$useTemplate
+	 */
+	public $useTemplate = false;
+	
 	const DO_NOT_LOG = true;
 	public $parentQueueID = 0;
 	public $processNo = 0;
