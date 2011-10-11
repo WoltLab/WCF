@@ -567,4 +567,18 @@ class Package extends DatabaseObject {
 			self::rebuildPackageDependencies($row['packageID']);
 		}
 	}
+	
+	/**
+	 * Returns a list of plugins for currently active application.
+	 * 
+	 * @todo	Care about plugins within dependencies, but are simple plugins just providing some crap.
+	 * @return	wcf\data\package\PackageList
+	 */
+	public static function getPluginList() {
+		$pluginList = new PackageList();
+		//$pluginList->getConditionBuilder()->add("package.packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+		$pluginList->getConditionBuilder()->add("package.standalone = ?", array(0));
+		
+		return $pluginList;
+	}
 }
