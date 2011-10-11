@@ -1888,14 +1888,18 @@ WCF.String = {
 	 */
 	addThousandsSeparator: function(number) {
 		var $numberString = String(number);
-		var parts = $numberString.split(/[^0-9]/);
+		var parts = $numberString.split(/[^0-9]+/);
 
-		var $decimalPoint = $numberString.match(/[^0-9]/g);
+		var $decimalPoint = $numberString.match(/[^0-9]+/);
 		
 		$numberString = parts[0];
-		delete parts[0];
-		var $decimalPart = $decimalPoint.join('')+parts.join('');
-		
+		if ($decimalPoint === null) {
+			var $decimalPart = '';
+		}
+		else {
+			delete parts[0];
+			var $decimalPart = $decimalPoint.join('')+parts.join('');
+		}
 		if (parseInt(number) >= 1000 || parseInt(number) <= -1000) {
 			var $negative = false;
 			if (parseInt(number) <= -1000) {
@@ -2456,6 +2460,11 @@ WCF.Effect.BalloonTooltip.prototype = {
 	 * Moves tooltip to cursor position.
 	 */
 	_mouseMoveHandler: function(event) {
+		var $element = $(event.currentTarget);
+		if ($element.attr('title')) {
+			this._mouseEnterHandler(event);
+		}
+		
 		if ($(document).width() - event.pageX < this.tooltip.getDimensions().width) {
 			this.tooltip.css({
 				top: (event.pageY) + "px",
