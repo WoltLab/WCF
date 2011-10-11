@@ -21,13 +21,13 @@
 <div class="contentHeader">
 	<nav class="largeButtons">
 		<ul>
-			<li><a href="index.php?page=PackageList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.package.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+			<li><a href="index.php/PackageList/{@SID_ARG_1ST}" title="{lang}wcf.acp.menu.link.package.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
 	</nav>
 </div>
 
-<form method="post" action="index.php?form=PackageStartInstall" enctype="multipart/form-data">
+<form method="post" action="index.php/PackageStartInstall/" enctype="multipart/form-data">
 	<div class="border content">
 		
 		<fieldset>
@@ -75,7 +75,7 @@
 		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}
  		<input type="hidden" name="action" value="{$action}" />
- 		{if $packageID != 0}<input type="hidden" name="packageID" value="{@$packageID}" />{/if}
+ 		{if $packageID != 0}<input type="hidden" name="id" value="{@$packageID}" />{/if}
 	</div>
 </form>
 

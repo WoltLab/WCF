@@ -93,7 +93,7 @@
 			<tbody>
 			{foreach from=$updatableInstances item=$package}
 				<tr>
-					<td class="columnTitle"><p><a href="index.php?page=Package&amp;action=install&amp;queueID={@$queueID}&amp;step=changeToUpdate&amp;packageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
+					<td class="columnTitle"><p><a href="index.php/Package/?action=install&amp;queueID={@$queueID}&amp;step=changeToUpdate&amp;packageID={@$package.packageID}{@SID_ARG_2ND}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
 					<td class="columnDigits"><p>{$package.packageVersion}</p></td>
 				</tr>
 			{/foreach}
@@ -129,7 +129,7 @@
 {/if}
 
 <div class="formSubmit">
-	<input type="button" onclick="document.location.href=fixURL('index.php?page=Package&amp;action={@$action}&amp;queueID={@$queueID}&amp;step=cancel{@SID_ARG_2ND}')" value="{lang}wcf.global.button.back{/lang}" accesskey="c" />
+	<input type="button" onclick="document.location.href=fixURL('index.php/Package/?action={@$action}&amp;queueID={@$queueID}&amp;step=cancel{@SID_ARG_2ND}')" value="{lang}wcf.global.button.back{/lang}" accesskey="c" />
 	{if $missingPackages == 0 && $excludingPackages|count == 0 && $excludedPackages|count == 0}
 		<input type="button" id="submitButton" value="{lang}wcf.global.button.next{/lang}" class="default" accesskey="s" />
 	{/if}

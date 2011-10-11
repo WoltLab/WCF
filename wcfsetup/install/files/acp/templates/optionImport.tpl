@@ -15,7 +15,7 @@
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
-<form method="post" action="index.php?form=OptionImport" enctype="multipart/form-data">
+<form method="post" action="index.php/OptionImport/" enctype="multipart/form-data">
 	<div>
 		
 		<fieldset>
@@ -64,7 +64,7 @@
 		<dl id="optionExportDiv">
 			<dt><label>{lang}wcf.acp.option.export.download{/lang}</label></dt>
 			<dd>
-				<p><a href="index.php?action=OptionExport{@SID_ARG_2ND}" id="optionExport" class="badge badgeButton">{lang}wcf.acp.option.export{/lang}</a></p>
+				<p><a href="index.php/OptionExport/{@SID_ARG_1ST}" id="optionExport" class="badge badgeButton">{lang}wcf.acp.option.export{/lang}</a></p>
 				<small>{lang}wcf.acp.option.export.download.description{/lang}</small>
 			</dd>
 		</dl>

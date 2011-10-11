@@ -197,7 +197,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 				// show worker template
 				WCF::getTPL()->assign(array(
 					'pageTitle' => WCF::getLanguage()->get('wcf.acp.user.sendMail'),
-					'url' => 'index.php?action=UserMail&mailID='.$mailID.''.SID_ARG_2ND_NOT_ENCODED
+					'url' => 'index.php/UserMail/'.$mailID.'/'.SID_ARG_1ST
 				));
 				WCF::getTPL()->display('worker');
 				exit;

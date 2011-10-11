@@ -21,11 +21,11 @@
 
 <div class="contentHeader">
 	<nav class="largeButtons">
-		<ul><li><a href="index.php?page=UpdateServerList{@SID_ARG_2ND}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/server1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li></ul>
+		<ul><li><a href="index.php/UpdateServerList/{@SID_ARG_1ST}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/server1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li></ul>
 	</nav>
 </div>
 
-<form method="post" action="index.php?form=UpdateServer{@$action|ucfirst}{if $packageUpdateServerID|isset}&amp;packageUpdateServerID={@$packageUpdateServerID}{/if}">
+<form method="post" action="index.php/UpdateServer{@$action|ucfirst}/{if $packageUpdateServerID|isset}{@$packageUpdateServerID}/{/if}">
 	<div class="border content">
 		
 		<fieldset>

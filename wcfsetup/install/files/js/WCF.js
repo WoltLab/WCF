@@ -483,12 +483,12 @@ WCF.Clipboard = {
 		
 		this._actionProxy = new WCF.Action.Proxy({
 			success: $.proxy(this._actionSuccess, this),
-			url: 'index.php?action=ClipboardProxy&t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php/ClipboardProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
 		
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this),
-			url: 'index.php?action=Clipboard&t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php/Clipboard/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
 		
 		// init containers first
@@ -512,7 +512,7 @@ WCF.Clipboard = {
 				pageClassName: this._page
 			},
 			success: $.proxy(this._loadMarkedItemsSuccess, this),
-			url: 'index.php?action=ClipboardLoadMarkedItems&t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php/ClipboardLoadMarkedItems/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
 	},
 	
@@ -898,7 +898,7 @@ WCF.Action.Proxy.prototype = {
 			failure: null,
 			success: null,
 			type: 'POST',
-			url: 'index.php?action=AJAXProxy&t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		}, options);
 		
 		this.confirmationDialog = null;

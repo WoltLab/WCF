@@ -83,7 +83,7 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 					'packageID' => $packageID,
 					'menuItem' => 'wcf.acp.option.category.'.$row['categoryName'],
 					'parentMenuItem' => 'wcf.acp.menu.link.option.category',
-					'menuItemLink' => 'index.php?form=Option&categoryID='.$row['categoryID'],
+					'menuItemLink' => 'index.php/Option/'.$row['categoryID'].'/',
 					'packageDir' => '',
 					'permissions' => $row['permissions'],
 					'options' => $row['options']

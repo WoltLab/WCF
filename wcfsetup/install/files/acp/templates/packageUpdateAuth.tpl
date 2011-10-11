@@ -74,7 +74,7 @@
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="form" value="PackageUpdateAuth" />
 		{@SID_INPUT_TAG}
-		<input type="hidden" name="packageUpdateServerID" value="{@$packageUpdateServerID}" />
+		<input type="hidden" name="id" value="{@$packageUpdateServerID}" />
 		{@$postParameters}
 	</div>
 </form>

@@ -118,6 +118,67 @@ WCF.ACP.Menu.prototype = {
 	}
 };
 
+WCF.ACP.Package = {};
+
+WCF.ACP.Package.List = function(pages) { this.init(pages); };
+WCF.ACP.Package.List.prototype = {
+	_pages: {},
+	_pluginLists: [],
+	_proxy: null,
+	_template: null,
+	
+	init: function(pages) {
+		$('.pluginList').each($.proxy(function(index, pluginList) {
+			var $wcfPages = $(pluginList).wcfPages({
+				activePage: 1,
+				maxPage: pages
+			}).bind('wcfpagesshouldswitch', $.proxy(this._cachePage, this)).bind('wcfpagesswitched', $.proxy(this._loadPage, this));
+			
+			this._pluginLists.push($wcfPages);
+		}, this));
+		
+		if (this._pluginLists.length > 0) {
+			this._proxy = new WCF.Action.Proxy({
+				success: $.proxy(this._success, this)
+			});
+			this._template = $('#plugins ol');
+		}
+	},
+	
+	_cachePage: function(event, data) {
+		if (!this._pages[data.currentPage]) {
+			this._pages[data.currentPage] = $('#plugins ol').html();
+		}
+	},
+	
+	_loadPage: function(event, data) {
+		// update active page
+		for (var $i = 0, $size = this._pluginLists.length; $i < $size; $i++) {
+			this._pluginLists[$i].wcfPages('overridePage', data.activePage);
+		}
+		
+		if (this._pages[data.activePage]) {
+			this._template.html(this._pages[data.activePage]);
+			return;
+		}
+		
+		// load content using AJAX
+		this._proxy.setOption('data', {
+			actionName: 'getPluginList',
+			className: 'wcf\\data\\package\\PackageAction',
+			parameters: {
+				activePage: data.activePage
+			}
+		});
+		this._proxy.sendRequest();
+	},
+	
+	_success: function(data, textStatus, jqXHR) {
+		this._pages[data.returnValues.activePage] = data.returnValues.template;
+		this._loadPage(null, { activePage: data.returnValues.activePage });
+	}
+};
+
 /**
  * Handles package installation dialog.
  * 
@@ -173,7 +234,7 @@ WCF.ACP.PackageInstallation.prototype = {
 	prepareInstallation: function() {
 		WCF.showAJAXDialog('packageInstallationDialog', true, {
 			ajax: {
-				url: 'index.php?action=' + this._actionName + '&t=' + SECURITY_TOKEN + SID_ARG_2ND,
+				url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
 				type: 'POST',
 				data: { queueID: this._queueID, step: 'prepare' },
 				success: $.proxy(this._handleResponse, this)
@@ -210,7 +271,7 @@ WCF.ACP.PackageInstallation.prototype = {
 				$('#packageInstallationInnerContent').append('<div class="formSubmit"><input type="button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" class="default" /></div>');
 				
 				$('#' + $id).click($.proxy(function() {
-					window.location.href = "index.php?page=PackageList" + SID_ARG_2ND;
+					window.location.href = "index.php/PackageList/" + SID_ARG_1ST;
 				}, this));
 				
 				$('#packageInstallationInnerContentContainer').wcfBlindIn();
@@ -308,7 +369,7 @@ WCF.ACP.PackageInstallation.prototype = {
 		}, additionalData);
 		
 		$.ajax({
-			url: 'index.php?action=' + this._actionName + '&t=' + SECURITY_TOKEN + SID_ARG_2ND,
+			url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
 			dataType: 'json',
 			type: 'POST',
 			data: $data,
@@ -366,7 +427,7 @@ WCF.ACP.PackageUninstallation.prototype = {
 			// initialize dialog
 			WCF.showAJAXDialog('packageInstallationDialog', true, {
 				ajax: {
-					url: 'index.php?action=UninstallPackage&t=' + SECURITY_TOKEN + SID_ARG_2ND,
+					url: 'index.php/UninstallPackage/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
 					type: 'POST',
 					data: { packageID: packageID, step: 'prepare' },
 					success: $.proxy(this._installation._handleResponse, this._installation)
@@ -585,7 +646,7 @@ WCF.ACP.Worker.prototype = {
 		// initialize AJAX-based dialog
 		WCF.showAJAXDialog(this._dialogID, true, {
 			ajax: {
-				url: 'index.php?action=WorkerProxy&t=' + SECURITY_TOKEN + SID_ARG_2ND,
+				url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
 				type: 'POST',
 				data: {
 					className: className,
@@ -617,7 +678,7 @@ WCF.ACP.Worker.prototype = {
 		if ($data.progress < 100) {
 			// send request for next loop
 			$.ajax({
-				url: 'index.php?action=WorkerProxy&t=' + SECURITY_TOKEN + SID_ARG_2ND,
+				url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
 				type: 'POST',
 				data: {
 					className: $data.className,

@@ -11,7 +11,7 @@
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
-<form method="post" action="index.php?form=UserAssignToGroup">
+<form method="post" action="index.php/UserAssignToGroup/">
 
 	<div class="border content">
 		
@@ -19,7 +19,7 @@
 			<legend>{lang}wcf.acp.user.assignToGroup.markedUsers{/lang}</legend>
 			
 			<ul>
-				{implode from=$users item=$user}<li><a href="index.php?form=UserEdit&amp;userID={@$user->userID}{@SID_ARG_2ND}" class="badge badgeButton">{$user}</a></li>{/implode}
+				{implode from=$users item=$user}<li><a href="index.php/UserEdit/{@$user->userID}/{@SID_ARG_1ST}" class="badge badgeButton">{$user}</a></li>{/implode}
 			</ul>
 		</fieldset>	
 		

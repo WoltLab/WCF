@@ -1,5 +1,13 @@
 {include file='header'}
 
+<script type="text/javascript">
+	//<![CDATA[
+	$(function() {
+		$('#masterPassword').focus();
+	});
+	//]]>
+</script>
+
 <header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/login1.svg" alt="" />
 	<hgroup>
@@ -11,7 +19,7 @@
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
-<form method="post" action="index.php?form=MasterPassword">
+<form method="post" action="index.php/MasterPassword/">
 	<div class="border content">
 		
 		<fieldset>
@@ -45,13 +53,5 @@
  		<input type="hidden" name="url" value="{$url}" />
  	</div>
 </form>
-
-<script type="text/javascript">
-	//<![CDATA[
-	document.observe("dom:loaded", function() {
-		$('masterPassword').focus();
-	});
-	//]]>
-</script>
 
 {include file='footer'}

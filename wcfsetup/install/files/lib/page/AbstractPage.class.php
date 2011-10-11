@@ -22,6 +22,12 @@ abstract class AbstractPage implements IPage {
 	public $templateName = '';
 	
 	/**
+	 * enables template usage
+	 * @var	string
+	 */
+	public $useTemplate = true;
+	
+	/**
 	 * value of the given action parameter
 	 * @var string
 	 */
@@ -131,8 +137,15 @@ abstract class AbstractPage implements IPage {
 		// call show event
 		EventHandler::getInstance()->fireAction($this, 'show');
 		
-		// show template
-		if (!empty($this->templateName)) {
+		if ($this->useTemplate) {
+			// try to guess template name
+			if (empty($this->templateName)) {
+				$classParts = explode('\\', get_class($this));
+				$className = preg_replace('~(Form|Page)$~', '', array_pop($classParts));
+				$this->templateName = lcfirst($className);
+			}
+			
+			// show template
 			WCF::getTPL()->display($this->templateName);
 		}
 	}
