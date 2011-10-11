@@ -139,8 +139,7 @@ header.pageHeader nav.topMenu {
 	position: fixed;
 	top: 0;
 	right: 0;
-	left: 0;
-	min-height: 20px;
+	left: 0;	
 	min-width: 800px;
 	z-index: 500;
 	
@@ -149,122 +148,90 @@ header.pageHeader nav.topMenu {
 	-ms-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
 	-o-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
 	box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+	
+	-webkit-transition: background .2s linear;
+	-moz-transition: background .2s linear;
+	-ms-transition: background .2s linear;
+	-o-transition: background .2s linear;
+	transition: background .2s linear;
+}
+
+header.pageHeader nav.topMenu:hover {
+	background-color: rgba(0, 0, 0, .5);
 }
 
 header.pageHeader nav.topMenu > div {
 	padding: 0 23px 0;
-	
 }
 
-header.pageHeader nav.topMenu ul li,
-header.pageHeader nav.topMenu ul li a {
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
-	color: #69c;
-	padding-right: 3px;
-	padding-left: 3px;
-	display: inline-block;
-}
-
-header.pageHeader nav.topMenu li ul li:hover a {
-	color: #fff;
-}
-
-/* Todo: Top Menu Dropdowns */
-
-nav.topMenu ul {
+header.pageHeader nav.topMenu > div > ul {
 	position: relative;
-	display: inline-block;
+	display: table;
 }
 
-nav.topMenu ul li ul.dropdown {
-	color: #fff;
-	border-width: 0 1px 1px 1px;
-	border-style: solid;
-	border-color: rgba(255, 255, 255, .5);
-	border-radius: 0 0 5px 5px;
-	background-color: rgba(0, 0, 0, .7);
-	margin-top: 25px;
-	display: none;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 500;
-	
-	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-ms-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-}
+/* ToDo: Top-Menu Dropdown Caption */
 
-nav.topMenu ul .dropdownCaption {
-	cursor: pointer;
-	padding: 6px; 
-	display: block !important;
-}
-
-nav.topMenu ul:hover .dropdownCaption {
-	color: #fff;
-	background-color: rgba(0, 0, 0, .7);
-	display: block !important;
-}
-
-nav.topMenu ul:hover .dropdownCaption ~ ul.dropdown {
-	display: block !important;
-}
-
-nav.topMenu ul li ul.dropdown > li {
-	text-shadow: none;
-	color: #ccc;
-	cursor: pointer; 
-	padding: 5px 7px;
-	
-	-webkit-transition: all .1s linear;
-	-moz-transition: all .1s linear;
-	-ms-transition: all .1s linear;
-	-o-transition: all .1s linear;
-	transition: all .1s linear;
-}
-
-nav.topMenu ul li ul.dropdown > li a {
+nav.topMenu > div > ul > li,
+nav.topMenu > div > ul > li a {
 	text-decoration: none;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
+	color: #69c !important;
+	display: table-cell;
 }
 
-nav.topMenu ul li ul.dropdown > li a:hover {
-	color: #fff;
+nav.topMenu > div > ul > li:hover span.dropdownCaption,
+nav.topMenu > div > ul > li:hover span.dropdownCaption a {
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
+	color: #fff !important;
+	background-color: rgba(0, 0, 0, .7);
 }
 
-.preInput .inputDropdown > li:first-child {
-	border-top-right-radius: 3px;
+nav.topMenu > div > ul > li > span {
+	padding: 6px;
 }
 
-nav.topMenu ul li ul.dropdown > li:last-child {
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
+nav.topMenu ul li .dropdownCaption {
+	cursor: pointer;
+	background-image: url('../../icon/dropdown2.svg');
+	background-position: 97% center;
+	background-repeat: no-repeat;
+	padding-right: 15px !important;
+	display: table-cell;
 }
 
-nav.topMenu ul li ul.dropdown > li:hover {
-	color: #fff;
-	background-color: rgba(0, 0, 0, .5);
+/* ToDo: Top-Menu Dropdown Tweaks */
+
+/* Auto-Opening Dropdowns */
+nav.topMenu ul:hover .dropdownCaption ~ .dropdown {
+	display: block !important;
 }
 
-nav.topMenu ul li ul.dropdown > li:first-child {
+nav.topMenu ul li .dropdown {
+	border-width: 0 1px 1px 1px;
+	border-radius: 0 0 5px 5px;
+}
+
+nav.topMenu ul li .dropdown > li:first-child {
 	border-top-width: 0;
 }
 
 /* ToDo: Login Box */
-
 /* do not use the class ".loginBox" to style the box! */
+/* Note that the login-box is subject to changes */
 
 #loginBox {
-	/* background-color: rgba(0, 0, 0, .5); */
+	
 }
 
 #loginBox dl {
 	margin-right: 20px;
 }
 
-
+#loginBox dl dt,
+#loginBox dl dd,
+#loginBox dl label {
+	color: #fff;
+}
 
 /* -- -- -- Logo -- -- -- */
 
@@ -1004,7 +971,7 @@ textarea {
 }
 
 .preInput > input,
-.preInput > textarea { /* ToDo: Textarea solution is not really perfect */
+.preInput > textarea { /* ToDo: The textarea solution is not so nice */
 	border-radius: 0 3px 3px 0;
 	margin: 0 !important;
 	display: table-cell;
@@ -1012,7 +979,7 @@ textarea {
 	min-width: 300px;
 }
 
-/* Button */
+/* Dropdown Caption */
 
 .preInput .dropdownCaption {
 	letter-spacing: -1px;
@@ -1037,11 +1004,15 @@ textarea {
 	padding-right: 10px;
 }
 
-/* Dropdown */
 
-.preInput .dropdown {
+
+/* ############## ToDo: Dropdown Global ############## */
+
+.dropdown {
 	color: #fff;
-	border: 1px solid rgba(255, 255, 255, .7);
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgba(255, 255, 255, .7);
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, .7);
 	margin-top: 25px;
@@ -1060,7 +1031,7 @@ textarea {
 
 /* Dropdown Items */
 
-.preInput .dropdown > li {
+.dropdown > li {
 	text-shadow: none;
 	color: #ccc;
 	cursor: pointer; 
@@ -1073,18 +1044,32 @@ textarea {
 	transition: all .1s linear;
 }
 
-.preInput .dropdown > li:first-child {
+.dropdown > li:first-child {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
 
-.preInput .dropdown > li:last-child {
+.dropdown > li:last-child {
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 }
 
-.preInput .dropdown > li.divider {
+.dropdown > li:hover,
+.dropdown > li.active {
+	color: #fff;
+	background-color: rgba(0, 0, 0, .5);
+}
+
+.dropdown > li.divider:not(:first-child) {
 	border-top: 1px solid rgba(255, 255, 255, .7);
+}
+
+.dropdown > li a {
+	text-decoration: none;
+}
+
+.dropdown > li a:hover {
+	color: #fff !important;
 }
 
 .preInput .dropdown > li.missingValue {
@@ -1094,16 +1079,6 @@ textarea {
 	background-position: 95% center;
 	background-repeat: no-repeat;
 	/* background-color: #ffd; */
-}
-
-.preInput .dropdown > li:hover,
-.preInput .dropdown > li.active {
-	color: #fff;
-	background-color: rgba(0, 0, 0, .5);
-}
-
-.preInput .dropdown > li:first-child {
-	border-top-width: 0;
 }
 
 
@@ -1262,6 +1237,26 @@ input[type='button'],
 	position: relative;
 	bottom: -1px;
 	z-index: 10;
+	
+	-webkit-transition-property: border, background-color, background-image, color;
+	-webkit-transition-duration: .3s;
+	-webkit-transition-timing-function: ease;
+	
+	-moz-transition-property: border, background-color, background-image, color;
+	-moz-transition-duration: .3s;
+	-moz-transition-timing-function: ease;
+	
+	-ms-transition-property: border, background-color, background-image, color;
+	-ms-transition-duration: .3s;
+	-ms-transition-timing-function: ease;
+	
+	-o-transition-property: border, background-color, background-image, color;
+	-o-transition-duration: .3s;
+	-o-transition-timing-function: ease;
+	
+	transition-property: border, background-color, background-image, color;
+	transition-duration: .3s;
+	transition-timing-function: ease;
 }
 
 .tabMenu li:not(.ui-state-active) a:hover {
@@ -1516,8 +1511,9 @@ thead th:hover a {
 	background-color: rgba(0, 0, 0, .2);
 }
 
+thead th a:active,
+thead th a:focus,
 thead th.active a {
-	font-weight: bold;
 	color: #fff;
 	background-color: rgba(0, 0, 0, .1);
 	
@@ -1526,6 +1522,10 @@ thead th.active a {
 	-ms-box-shadow: inset 0 5px 15px rgba(0, 0, 0, .4);
 	-o-box-shadow: inset 0 5px 15px rgba(0, 0, 0, .4);
 	box-shadow: inset 0 5px 15px rgba(0, 0, 0, .4);
+}
+
+thead th.active a {
+	font-weight: bold;
 }
 
 thead th.active:hover a {
@@ -2326,7 +2326,7 @@ input[type='button'].default:active,
 
 @-webkit-keyframes glowLargeButtons {
     0% {
-        -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .3);
+        -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
     }
     100% {
         -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
@@ -2334,7 +2334,7 @@ input[type='button'].default:active,
 }
 @-moz-keyframes glowLargeButtons {
     0% {
-        -moz-box-shadow: 0 0 13px rgba(102, 153, 204, .3);
+        -moz-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
     }
     100% {
         -moz-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
@@ -2342,7 +2342,7 @@ input[type='button'].default:active,
 }
 @-ms-keyframes glowLargeButtons {
     0% {
-        -ms-box-shadow: 0 0 13px rgba(102, 153, 204, .3);
+        -ms-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
     }
     100% {
         -ms-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
@@ -2350,7 +2350,7 @@ input[type='button'].default:active,
 }
 @-o-keyframes glowLargeButtons {
     0% {
-        -o-box-shadow: 0 0 13px rgba(102, 153, 204, .3);
+        -o-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
     }
     100% {
         -o-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
@@ -2358,7 +2358,7 @@ input[type='button'].default:active,
 }
 @keyframes glowLargeButtons {
     0% {
-        box-shadow: 0 0 13px rgba(102, 153, 204, .3);
+        box-shadow: 0 0 13px rgba(102, 153, 204, .5);
     }
     100% {
         box-shadow: 0 0 13px rgba(102, 153, 204, .1);
