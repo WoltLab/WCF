@@ -105,6 +105,8 @@ hr {
 	margin-top: 13px;
 }
 
+
+
 /* ############## Body ############## */
 
 /* Globals */
@@ -136,6 +138,7 @@ body#tplWCFInstaller {background-image: -webkit-linear-gradient(-45deg, rgba(255
 }
 
 
+
 /* ############## Page Header ############## */
 
 /* Globals */
@@ -149,6 +152,8 @@ header.pageHeader {
 	min-width: 800px;
 	width: 100%;
 }
+
+
 
 /* -- -- -- Top Menu -- -- -- */
 
@@ -190,6 +195,8 @@ header.pageHeader nav.topMenu > div > ul {
 	display: table;
 }
 
+
+
 /* ToDo: Top-Menu Dropdown Caption */
 
 nav.topMenu > div > ul > li,
@@ -220,6 +227,8 @@ nav.topMenu ul li .dropdownCaption {
 	display: table-cell;
 }
 
+
+
 /* ToDo: Top-Menu Dropdown Tweaks */
 
 /* Auto-Opening Dropdowns */
@@ -235,6 +244,8 @@ nav.topMenu ul li .dropdown {
 nav.topMenu ul li .dropdown > li:first-child {
 	border-top-width: 0;
 }
+
+
 
 /* ToDo: Login Box */
 /* do not use the class ".loginBox" to style the box! */
@@ -253,6 +264,8 @@ nav.topMenu ul li .dropdown > li:first-child {
 #loginBox dl label {
 	color: #fff;
 }
+
+
 
 /* -- -- -- Logo -- -- -- */
 
@@ -287,6 +300,8 @@ header.pageHeader div#logo > div {
 	display: block;
 	height: 110px;
 }
+
+
 
 /* -- -- -- Main Menu -- -- -- */
 
@@ -381,6 +396,8 @@ nav.mainMenu ul li.activeMenuItem:only-child {
 	cursor: default !important;
 	margin: 5px 0 -5px;
 }
+
+
 
 /* -- -- -- Header Navigation -- -- -- */
 
@@ -493,6 +510,8 @@ aside.sidebar {
 	box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
 }
 
+
+
 /* Sidebar Menu */
 
 nav.sidebarMenu {
@@ -592,6 +611,8 @@ footer.pageFooter > div:after {
 	clear: both;
 }
 
+
+
 /* -- -- -- Copyright -- -- -- */
 
 footer.pageFooter .copyright {
@@ -608,6 +629,8 @@ footer.pageFooter .copyright a:hover {
 	text-decoration: none;
 	color: #69c;
 }
+
+
 
 /* -- -- -- Footer Navigation -- -- -- */
 
@@ -667,6 +690,8 @@ footer.pageFooter nav.footerNavigation ul li {
 	padding-top: 3px;
 } 
 
+
+
 /* -- -- -- Sub Heading -- -- -- */
 
 .subHeading h1 {
@@ -676,6 +701,10 @@ footer.pageFooter nav.footerNavigation ul li {
 	border-bottom: 1px solid #ccc;
 	margin: 10px 0;
 	padding: 10px 0;
+}
+
+.subHeading h2 {
+	font-weight: normal;
 }
 
 
@@ -834,7 +863,11 @@ input[type='radio'] ~ small {
 	margin-left: 21px;
 }
 
-/* Form Elements */
+
+
+/* -- -- -- Form Elements -- -- -- */
+
+/* Globals */
 
 input[type='reset'],
 input[type='submit'],
@@ -852,7 +885,8 @@ input[type='password'] {
 	padding: 5px 3px;
 }
 
-/* inputs normal */
+/* Normal State */
+
 input[type='text'],
 input[type='search'],
 input[type='email'],
@@ -877,7 +911,8 @@ textarea {
 	transition: all .2s linear;
 }
 
-/* inputs hover */
+/* Hover State */
+
 input[type='text']:hover,
 input[type='search']:hover,
 input[type='email']:hover,
@@ -887,7 +922,8 @@ textarea:hover {
 	background-color: #fff9f4;
 }
 
-/* inputs active */
+/* Active & Focus State */
+
 input[type='text']:active,
 input[type='search']:active,
 input[type='email']:active,
@@ -909,7 +945,8 @@ textarea:focus {
 	box-shadow: 0 0 5px rgba(255, 170, 34, .5), inset 0 1px 5px rgba(0, 0, 0, .2);
 }
 
-/* inputs read only */
+/* Read Only State */
+
 input[type='text'][readonly='readonly'],
 input[type='search'][readonly='readonly'],
 input[type='email'][readonly='readonly'],
@@ -926,7 +963,8 @@ textarea[readonly='readonly'] {
 	box-shadow: inset 0 1px 5px rgba(0, 0, 0, .05);
 }
 
-/* inputs read only */
+/* Disabled State */
+
 input[type='text'][disabled='disabled'],
 input[type='search'][disabled='disabled'],
 input[type='email'][disabled='disabled'],
@@ -937,7 +975,9 @@ textarea[disabled='disabled'] {
 	background-color: rgba(255, 255, 255, .5);
 }
 
-/* -- -- -- Widths -- -- -- */
+
+
+/* -- -- -- Input Widths -- -- -- */
 
 textarea {
 	width: 99%;
@@ -966,6 +1006,8 @@ textarea {
 .auto {
 	width: auto;
 }
+
+
 
 /* -- -- -- Form Errors -- -- -- */
 
@@ -1093,7 +1135,7 @@ textarea {
 	color: #fff !important;
 }
 
-.preInput .dropdown > li.missingValue {
+.preInput .dropdown > li.missingValue { /* ToDo */
 	/* color: #990; */
 	background-image: url('../../icon/systemWarning.svg');
 	background-size: 16px;
@@ -1199,7 +1241,8 @@ input[type='button'],
 	margin-top: 5px;
 }
 
-/* experimental */
+/* Experimental */
+
 .boxTitle img.handle {
 	cursor: pointer;
 	margin-top: -1px;
@@ -1350,7 +1393,7 @@ input[type='button'],
 
 
 
-/* ############## Menu ############## */
+/* ############## Pill Menu ############## */
 
 /* Standard */
 
@@ -1630,6 +1673,13 @@ tbody tr:hover td {
 	border-top-right-radius: 0 !important;
 }
 
+/* Table Checkboxes */
+
+table input[type='checkbox'] {
+	margin-top: -5px !important;
+	margin-bottom: -5px !important;
+}
+
 /* Table Column Formats */
 
 tr .columnMark,
@@ -1694,16 +1744,11 @@ tr .columnURL {
 	text-align: left;
 }
 
-/* Table Checkboxes */
-
-table input[type='checkbox'] {
-	margin-top: -5px !important;
-	margin-bottom: -5px !important;
-}
-
 
 
 /* ############## Page Navigation ############## */
+
+/* ToDo */
 
 .pageNavigation ul li:not(.children) {
 	border-radius: 3px;
@@ -1854,7 +1899,7 @@ p.error {
 	background-repeat: no-repeat;
 }
 
-/* Inline Error Notifications */
+/* Inline Errors */
 
 .innerError {
 	text-shadow: 0 1px 0 #fff;
@@ -1904,6 +1949,8 @@ p.error {
 	top: 2px;
 	left: -5px;
 }
+
+/* Special */
 
 .preInput ~ .innerError .arrowOuter {	
 	right: 10%;
@@ -2197,7 +2244,7 @@ li > .badgeButton {
 	display: inline-block;
 }
 
-/* Dropdown */
+/* ToDo: Dropdown (merge with other dropdown-declarations!) */
 
 .clipboardEditor ul > li > ol {
 	border: 1px solid rgba(255, 255, 255, .7);
@@ -2230,13 +2277,13 @@ li > .badgeButton {
 
 .clipboardEditor ul > li > ol > li:first-child {
 	border-top-width: 0;
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
 
 .clipboardEditor ul > li > ol > li:last-child {
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 
 .clipboardEditor ul > li > ol > li:hover {
@@ -2666,22 +2713,7 @@ will change soon!
 
 */
 
-
-/* This style is old and conflicts with the new one! 
-ul#userMenu {
-	margin: 0;
-	padding: 0;
-}
-
-ul#userMenu > li {
-	border-radius: 3px;
-	background-color: rgba(224, 224, 224, 1);
-	margin: 0 3px 0 3px;
-	padding: 7px;
-	display: inline-block;
-	box-shadow: 0 0 5px rgba(151, 151, 151, 1);
-}
-*/
+/* ToDo: User Notifications */
 
 div.userNotificationContainer {
 	border: 1px solid rgba(192, 192, 192, 1);
