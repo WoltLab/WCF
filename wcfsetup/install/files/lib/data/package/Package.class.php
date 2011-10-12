@@ -496,7 +496,7 @@ class Package extends DatabaseObject {
 		$currentPrefix = strtoupper(Package::getAbbreviation($package->package));
 		
 		// get dependencies (only standalones)
-		$sql = "SELECT		package.*, IF(package.packageID = ?, 1, 0) AS sortOrder
+		$sql = "SELECT		package.*, CASE WHEN package.packageID = ? THEN 1 ELSE 0 END AS sortOrder 
 			FROM		wcf".WCF_N."_package_dependency package_dependency
 			LEFT JOIN	wcf".WCF_N."_package package
 			ON		(package.packageID = package_dependency.dependency)
