@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\request;
+use wcf\system\event\EventHandler;
 use wcf\system\SingletonFactory;
 
 /**
@@ -17,6 +18,12 @@ use wcf\system\SingletonFactory;
  */
 class RouteHandler extends SingletonFactory {
 	/**
+	 * router filter for ACP
+	 * @var	boolean
+	 */
+	protected $isACP = false;
+	
+	/**
 	 * list of available routes
 	 * @var	array<wcf\system\request\Route>
 	 */
@@ -33,6 +40,9 @@ class RouteHandler extends SingletonFactory {
 	 */
 	protected function init() {
 		$this->addDefaultRoutes();
+		
+		// fire event
+		EventHandler::getInstance()->fireAction($this, 'didInit');
 	}
 	
 	/**
@@ -70,10 +80,12 @@ class RouteHandler extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function matches($isACP) {
+		$this->isACP = $isACP;
+		
 		$pathInfo = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : '';
 		
 		foreach ($this->routes as $route) {
-			if ($isACP != $route->isACP()) {
+			if ($this->isACP != $route->isACP()) {
 				continue;
 			}
 			
@@ -104,5 +116,26 @@ class RouteHandler extends SingletonFactory {
 			$_GET[$key] = $value;
 			$_REQUEST[$key] = $value;
 		}
+	}
+	
+	/**
+	 * Builds a route based upon route components, this is nothing
+	 * but a reverse lookup.
+	 * 
+	 * @param	array		$components
+	 * @return	string
+	 */
+	public function buildRoute(array $components) {
+		foreach ($this->routes as $route) {
+			if ($this->isACP != $route->isACP()) {
+				continue;
+			}
+			
+			if ($route->canHandle($components)) {
+				return $route->buildLink($components);
+			}
+		}
+		
+		throw new SystemException("Unable to build route, no available route is satisfied.");
 	}
 }

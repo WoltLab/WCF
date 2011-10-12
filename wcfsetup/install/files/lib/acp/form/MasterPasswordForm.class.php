@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\form;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -83,7 +84,7 @@ class MasterPasswordForm extends ACPForm {
 		
 		// forward
 		if (empty($this->url)) {
-			$this->url = 'index.php/Index/'.SID_ARG_1ST;
+			$this->url = LinkHandler::getInstance()->getLink('', array('controller' => 'Index'));
 		}
 		HeaderUtil::redirect($this->url, false);
 		exit;

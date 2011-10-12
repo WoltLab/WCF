@@ -10,10 +10,10 @@
 </header>
 
 <div class="contentHeader">
-	{pages print=true assign=pagesLinks link="index.php/PackageUpdateSearchResult/$searchID/?pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"|concat:SID_ARG_2ND_NOT_ENCODED}
+	{pages print=true assign=pagesLinks controller="PackageUpdateSearchResult" id=$searchID link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 </div>
 
-<form method="post" action="index.php/PackageUpdate/">
+<form method="post" action="{link controller='PackageUpdate'}{/link}">
 	{foreach from=$packages item=package}
 		<article class="message content">
 			<div class="messageInner container-{cycle name='styles' values='1,2'}">

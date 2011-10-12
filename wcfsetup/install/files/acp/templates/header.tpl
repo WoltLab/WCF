@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{@$__wcf->getLanguage()->getFixedLanguageCode()}">
 <head>
+	<base href="{$baseHref}" />
 	<meta charset="utf-8" />
 	<title>{if $pageTitle|isset}{@$pageTitle}{else}{lang}wcf.global.pageTitle{/lang}{/if} - {lang}wcf.acp{/lang}</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -87,7 +88,7 @@
 							<li id="userMenu" class="userMenu"><!-- ToDo: We need an ID and/or class for each list here, this ID may also change! -->
 								<span class="dropdownCaption">{lang}wcf.acp.user.userNote{/lang}</span>
 								<ul class="dropdown">
-									<li><a href="{link}index.php/Logout/?t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
+									<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
 								</ul>
 							</li>
 						</ul>

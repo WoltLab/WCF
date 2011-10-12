@@ -181,6 +181,65 @@ class Route {
 	}
 	
 	/**
+	 * Returns true if current route can handle the build request.
+	 * 
+	 * @param	array		$components
+	 * @return	boolean
+	 */
+	public function canHandle(array $components) {
+		foreach ($this->routeSchema as $schemaPart) {
+			if (isset($components[$schemaPart])) {
+				// validate parameter against a regex pattern
+				if ($this->parameterOptions[$schemaPart]['regexPattern'] !== null) {
+					$pattern = '~^' . $this->parameterOptions[$schemaPart]['regexPattern'] . '$~';
+					if (!preg_match($pattern, $components[$schemaPart])) {
+						return false;
+					}
+				}
+			}
+			else {
+				if (isset($this->parameterOptions[$schemaPart])) {
+					// default value is provided
+					if ($this->parameterOptions[$schemaPart]['default'] !== null) {
+						continue;
+					}
+					
+					// required parameter is missing
+					if (!$this->parameterOptions[$schemaPart]['isOptional']) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Builds a link upon route components.
+	 * 
+	 * @param	array		$components
+	 * @return	string
+	 */
+	public function buildLink(array $components) {
+		$link = 'index.php/';
+		foreach ($this->routeSchema as $component) {
+			if (!isset($components[$component])) {
+				continue;
+			}
+			
+			$link .= $components[$component] . '/';
+			unset($components[$component]);
+		}
+		
+		if (!empty($components)) {
+			$link .= '?' . html_build_query($components, '', '&');
+		}
+		
+		return $link;
+	}
+	
+	/**
 	 * Returns true if route applies for ACP.
 	 * 
 	 * @return	boolean

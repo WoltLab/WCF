@@ -14,6 +14,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\form;
 use wcf\system\form\container;
 use wcf\system\form\element;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
@@ -534,11 +535,13 @@ class PackageInstallationDispatcher {
 		$packageInstallation = $statement->fetchArray();
 		
 		if (!isset($packageInstallation['queueID'])) {
-			HeaderUtil::redirect('index.php/PackageList/?'.SID_ARG_1ST);
+			$url = LinkHandler::getInstance()->getLink('', array('controller' => 'PackageList'));
+			HeaderUtil::redirect($url);
 			exit;
 		}
 		else {
-			HeaderUtil::redirect('index.php/Package/?action='.$packageInstallation['action'].'&queueID='.$packageInstallation['queueID'].''.SID_ARG_2ND_NOT_ENCODED);
+			$url = LinkHandler::getInstance()->getLink('action='.$packageInstallation['action'].'&queueID='.$packageInstallation['queueID'], array('controller' => 'Package'));
+			HeaderUtil::redirect($url);
 			exit;
 		}
 	}

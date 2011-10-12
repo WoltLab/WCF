@@ -27,7 +27,7 @@
 {/if}
 
 {if $packageInstallationStack|count}
-	<form method="post" action="index.php/PackageUpdate/">
+	<form method="post" action="{link controller='PackageUpdate'}{/link}">
 		<div class="border content">
 			
 			<fieldset>

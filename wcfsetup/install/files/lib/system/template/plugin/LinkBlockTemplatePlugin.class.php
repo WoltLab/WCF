@@ -2,6 +2,7 @@
 namespace wcf\system\template\plugin;
 use wcf\system\request\LinkHandler;
 use wcf\system\template\TemplateEngine;
+use wcf\util\StringUtil;
 
 /**
  * Shortcut for usage of LinkHandler::getInstance()->getLink() in template scripting.
@@ -27,12 +28,15 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin {
 	 * @see wcf\system\template\IBlockTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, $blockContent, TemplateEngine $tplObj) {
-		$application = 'wcf';
-		if (!empty($tagArgs['application'])) {
-			$application = $tagArgs['application'];
+		if (!isset($tagArgs['application']) || empty($tagArgs['application'])) {
+			$tagArgs['application'] = 'wcf';
 		}
 		
-		return LinkHandler::getInstance()->getLink($blockContent, $application);
+		if (isset($tagArgs['encode']) && !$tagArgs['encode']) {
+			return LinkHandler::getInstance()->getLink($blockContent, $tagArgs);
+		}
+		
+		return StringUtil::encodeHTML(LinkHandler::getInstance()->getLink($blockContent, $tagArgs));
 	}
 	
 	/**

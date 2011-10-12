@@ -5,6 +5,7 @@ use wcf\data\search\SearchEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageUpdateDispatcher;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\ArrayUtil;
@@ -242,7 +243,11 @@ class PackageUpdateSearchForm extends ACPForm {
 		$this->saved();
 		
 		// forward
-		HeaderUtil::redirect('index.php/PackageUpdateSearchResult/'.$search->searchID.'/'.SID_ARG_1ST);
+		$url = LinkHandler::getInstance()->getLink('', array(
+			'controller' => 'PackageUpdateSearchResult',
+			'id' => $search->searchID
+		));
+		HeaderUtil::redirect($url);
 		exit;
 	}
 	

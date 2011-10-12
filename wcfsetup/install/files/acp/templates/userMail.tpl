@@ -34,14 +34,14 @@
 <div class="contentHeader">
 	<nav class="largeButtons">
 		<ul>
-			<li><a href="index.php/UserList/{@SID_ARG_1ST}" title="{lang}wcf.acp.menu.link.user.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
-			<li><a href="index.php/UserSearch/{@SID_ARG_1ST}" title="{lang}wcf.acp.user.search{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/search1.svg" alt="" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
+			<li><a href="{link controller='UserList'}{/link}" title="{lang}wcf.acp.menu.link.user.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/search1.svg" alt="" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
 	</nav>
 </div>
 
-<form method="post" action="index.php/UserMail/">
+<form method="post" action="{link controller='UserMail'}{/link}">
 	<div class="border content">
 		
 		{if $action == ''}
@@ -49,7 +49,7 @@
 				<legend>{lang}wcf.acp.user.sendMail.markedUsers{/lang}</legend>
 				
 				<div>
-					{implode from=$users item=$user}<a href="index.php/UserEdit/{@$user->userID}/{@SID_ARG_1ST}">{$user}</a>{/implode}
+					{implode from=$users item=$user}<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user}</a>{/implode}
 				</div>
 			</fieldset>	
 		{/if}

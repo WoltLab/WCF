@@ -19,7 +19,7 @@
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
-<form method="post" action="index.php/MasterPassword/">
+<form method="post" action="{link controller='MasterPassword'}{/link}">
 	<div class="border content">
 		
 		<fieldset>

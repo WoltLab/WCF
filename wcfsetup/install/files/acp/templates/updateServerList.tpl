@@ -21,10 +21,10 @@
 {/if}
 
 <div class="contentHeader">
-	{pages print=true assign=pagesLinks link="index.php/UpdateServerList/?pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"|concat:SID_ARG_2ND_NOT_ENCODED}
+	{pages print=true assign=pagesLinks controller="UpdateServerList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	
 	<nav class="largeButtons">
-		<ul><li><a href="index.php/UpdateServerAdd/{@SID_ARG_1ST}" title="{lang}wcf.acp.updateServer.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li></ul>
+		<ul><li><a href="{link controller='UpdateServerAdd'}{/link}" title="{lang}wcf.acp.updateServer.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li></ul>
 	</nav>
 </div>
 
@@ -37,12 +37,12 @@
 		<table class="bigList">
 			<thead>
 				<tr>
-					<th class="columnID columnPackageUpdateServerID{if $sortField == 'packageUpdateServerID'} active{/if}" colspan="2"><a href="index.php/UpdateServerList/?pageNo={@$pageNo}&amp;sortField=packageUpdateServerID&amp;sortOrder={if $sortField == 'packageUpdateServerID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.global.objectID{/lang}{if $sortField == 'packageUpdateServerID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnTitle columnURL columnServer{if $sortField == 'serverURL'} active{/if}"><a href="index.php/UpdateServerList/?pageNo={@$pageNo}&amp;sortField=serverURL&amp;sortOrder={if $sortField == 'serverURL' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.updateServer.serverURL{/lang}{if $sortField == 'serverURL'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnDigits columnPackages{if $sortField == 'packages'} active{/if}"><a href="index.php/UpdateServerList/?pageNo={@$pageNo}&amp;sortField=packages&amp;sortOrder={if $sortField == 'packages' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.updateServer.packages{/lang}{if $sortField == 'packages'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnStatus{if $sortField == 'status'} active{/if}"><a href="index.php/UpdateServerList/?pageNo={@$pageNo}&amp;sortField=status&amp;sortOrder={if $sortField == 'status' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.updateServer.status{/lang}{if $sortField == 'status'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnText columnErrorText{if $sortField == 'errorMessage'} active{/if}"><a href="index.php/UpdateServerList/?pageNo={@$pageNo}&amp;sortField=errorMessage&amp;sortOrder={if $sortField == 'errorMessage' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.updateServer.errorMessage{/lang}{if $sortField == 'errorMessage'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnDate columnTimestamp{if $sortField == 'lastUpdateTime'} active{/if}"><a href="index.php/UpdateServerList/?pageNo={@$pageNo}&amp;sortField=lastUpdateTime&amp;sortOrder={if $sortField == 'lastUpdateTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@SID_ARG_2ND}">{lang}wcf.acp.updateServer.lastUpdateTime{/lang}{if $sortField == 'lastUpdateTime'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnID columnPackageUpdateServerID{if $sortField == 'packageUpdateServerID'} active{/if}" colspan="2"><a href="{link controller='UpdateServerList'}pageNo={@$pageNo}&sortField=packageUpdateServerID&sortOrder={if $sortField == 'packageUpdateServerID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'packageUpdateServerID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnTitle columnURL columnServer{if $sortField == 'serverURL'} active{/if}"><a href="{link controller='UpdateServerList'}pageNo={@$pageNo}&sortField=serverURL&sortOrder={if $sortField == 'serverURL' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.updateServer.serverURL{/lang}{if $sortField == 'serverURL'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnDigits columnPackages{if $sortField == 'packages'} active{/if}"><a href="{link controller='UpdateServerList'}pageNo={@$pageNo}&sortField=packages&sortOrder={if $sortField == 'packages' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.updateServer.packages{/lang}{if $sortField == 'packages'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnStatus{if $sortField == 'status'} active{/if}"><a href="{link controller='UpdateServerList'}pageNo={@$pageNo}&sortField=status&sortOrder={if $sortField == 'status' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.updateServer.status{/lang}{if $sortField == 'status'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnText columnErrorText{if $sortField == 'errorMessage'} active{/if}"><a href="{link controller='UpdateServerList'}pageNo={@$pageNo}&sortField=errorMessage&sortOrder={if $sortField == 'errorMessage' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.updateServer.errorMessage{/lang}{if $sortField == 'errorMessage'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnDate columnTimestamp{if $sortField == 'lastUpdateTime'} active{/if}"><a href="{link controller='UpdateServerList'}pageNo={@$pageNo}&sortField=lastUpdateTime&sortOrder={if $sortField == 'lastUpdateTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.updateServer.lastUpdateTime{/lang}{if $sortField == 'lastUpdateTime'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					
 					{if $additionalHeadColumns|isset}{@$additionalHeadColumns}{/if}
 				</tr>
@@ -54,13 +54,13 @@
 						<tr class="updateServerRow">
 							<td class="columnIcon">
 								<img src="{@RELATIVE_WCF_DIR}icon/{if !$updateServer->disabled}enabled{else}disabled{/if}1.svg" alt="" title="{lang}wcf.global.button.{if !$updateServer->disabled}disable{else}enable{/if}{/lang}" data-objectID="{@$updateServer->packageUpdateServerID}" data-disableMessage="{lang}wcf.global.button.disable{/lang}" data-enableMessage="{lang}wcf.global.button.enable{/lang}" class="toggleButton balloonTooltip" />
-								<a href="index.php/UpdateServerEdit/{@$updateServer->packageUpdateServerID}/{@SID_ARG_1ST}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
+								<a href="{link controller='UpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
 								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" data-objectID="{@$updateServer->packageUpdateServerID}" data-confirmMessage="{lang}wcf.acp.updateServer.delete.sure{/lang}" class="deleteButton balloonTooltip" />
 							
 								{if $additionalButtons[$updateServer->packageUpdateServerID]|isset}{@$additionalButtons[$updateServer->packageUpdateServerID]}{/if}
 							</td>
 							<td class="columnID"><p>{@$updateServer->packageUpdateServerID}</p></td>
-							<td class="columnText columnTitle"><p><a href="index.php/UpdateServerEdit/{@$updateServer->packageUpdateServerID}/{@SID_ARG_1ST}" title="{lang}wcf.global.button.edit{/lang}">{$updateServer->serverURL}</a></p></td>
+							<td class="columnText columnTitle"><p><a href="{link controller='UpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.global.button.edit{/lang}">{$updateServer->serverURL}</a></p></td>
 							<td class="columnDigits"><p>{#$updateServer->packages}</p></td>
 							<td class="columnStatus"><p class="badge{if $updateServer->status == 'online'} badgeSuccess{else} badgeError{/if}">{@$updateServer->status}</p></td>
 							<td class="columnText"><p title="{@$updateServer->errorMessage}">{@$updateServer->errorMessage|truncate:"30"}</p></td>
@@ -79,7 +79,7 @@
 		{@$pagesLinks}
 		
 		<nav class="largeButtons">
-			<ul><li><a href="index.php/UpdateServerAdd/{@SID_ARG_1ST}" title="{lang}wcf.acp.updateServer.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li></ul>
+			<ul><li><a href="{link controller='UpdateServerAdd'}{/link}" title="{lang}wcf.acp.updateServer.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li></ul>
 		</nav>
 	</div>
 {hascontentelse}

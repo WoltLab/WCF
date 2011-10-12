@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
+use wcf\system\request\RouteHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -65,8 +66,9 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * @see wcf\system\template\IFunctionTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
-		// needed params: link, page, pages
+		// needed params: controller, link, page, pages
 		if (!isset($tagArgs['link'])) throw new SystemException("missing 'link' argument in pages tag");
+		if (!isset($tagArgs['controller'])) throw new SystemException("missing 'controller' argument in pages tag");
 		if (!isset($tagArgs['pages'])) {
 			if (($tagArgs['pages'] = $tplObj->get('pages')) === null) {
 				throw new SystemException("missing 'pages' argument in pages tag");
@@ -79,8 +81,11 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			// define page link for js function
 			$html .= "<script type=\"text/javascript\">\n//<![CDATA[\nmultiPagesLinks.setPageLink('".StringUtil::replace("'", "\'", $tagArgs['link'])."');\n//]]>\n</script>";
 			
-			// encode link
-			$tagArgs['link'] = StringUtil::encodeHTML($tagArgs['link']);
+			// create and encode route link
+			$routeComponents = array('controller' => $tagArgs['controller']);
+			if (isset($tagArgs['id'])) $routeComponents['id'] = $tagArgs['id'];
+			$routeURL = RouteHandler::getInstance()->buildRoute($routeComponents);
+			$tagArgs['link'] = StringUtil::encodeHTML($routeURL . $tagArgs['link']);
 		
 			if (!isset($tagArgs['page'])) {
 				if (($tagArgs['page'] = $tplObj->get('pageNo')) === null) {

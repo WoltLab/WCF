@@ -21,13 +21,13 @@
 <div class="contentHeader">
 	<nav class="largeButtons">
 		<ul>
-			<li><a href="index.php/CronjobList/{@SID_ARG_1ST}" title="{lang}wcf.acp.menu.link.cronjob.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/time1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.cronjob.list{/lang}</span></a></li>
-			{if $action == 'edit'}<li><a href="index.php/CronjobExecute/{@$cronjobID}/{@SID_ARG_1ST}" title="{lang}wcf.acp.cronjob.execute{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/run1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.execute{/lang}</span></a></li>{/if}
+			<li><a href="{link controller='CronjobList'}{/link}" title="{lang}wcf.acp.menu.link.cronjob.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/time1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.cronjob.list{/lang}</span></a></li>
+			{if $action == 'edit'}<li><a href="{link controller='CronjobExecute' id=$cronjobID}{/link}" title="{lang}wcf.acp.cronjob.execute{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/run1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.execute{/lang}</span></a></li>{/if}
 		</ul>
 	</nav>
 </div>
 
-<form method="post" action="index.php/Cronjob{$action|ucfirst}/">
+<form method="post" action="{if $action == 'add'}{link controller='CronjobAdd'}{/link}{else}{link controller='CronjobEdit'}{/link}{/if}">
 	<div class="border content">
 		
 		<fieldset>

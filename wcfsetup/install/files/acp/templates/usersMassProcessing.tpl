@@ -82,7 +82,7 @@
 
 <p class="warning">{lang}wcf.acp.user.massProcessing.warning{/lang}</p>
 
-<form method="post" action="index.php/UsersMassProcessing/">
+<form method="post" action="{link controller='UsersMassProcessing'}{/link}">
 	<div class="border content">
 		
 		<hgroup class="subHeading">

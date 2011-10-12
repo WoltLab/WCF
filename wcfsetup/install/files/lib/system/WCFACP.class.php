@@ -45,10 +45,10 @@ class WCFACP extends WCF {
 	 * Does the user authentication.
 	 */
 	protected function initAuth() {
-		/**
-		 * @todo	FIX THIS!
-		 */
-		if ((!isset($_REQUEST['page']) || ($_REQUEST['page'] != 'Logout' && $_REQUEST['page'] != 'ACPCaptcha')) && (isset($_REQUEST['page']) || !isset($_REQUEST['form']) || $_REQUEST['form'] != 'Login')) {
+		// this is a work-around since neither RequestHandler
+		// nor RouteHandler are populated right now
+		$pathInfo = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : '';
+		if (empty($pathInfo) || !preg_match('~^/(ACPCaptcha|Login)/~', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
 				util\HeaderUtil::redirect('index.php/Login/'.SID_ARG_1ST);
 				exit;
@@ -85,7 +85,19 @@ class WCFACP extends WCF {
 	protected function assignDefaultTemplateVariables() {
 		parent::assignDefaultTemplateVariables();
 		
+		// base tag is determined on runtime
+		$phpSelf = $_SERVER['PHP_SELF'];
+		if (isset($_SERVER['PATH_INFO'])) {
+			// strip path info
+			$phpSelf = str_replace($_SERVER['PATH_INFO'], '', $phpSelf);
+		}
+		if (($pos = strpos($phpSelf, 'index.php')) !== false) {
+			// strip index.php
+			$phpSelf = substr($phpSelf, 0, $pos);
+		}
+		
 		self::getTPL()->assign(array(
+			'baseHref' => $phpSelf,
 			'quickAccessPackages' => $this->getQuickAccessPackages(),
 			//'timezone' => util\DateUtil::getTimezone()
 		));
