@@ -18,11 +18,12 @@ class LinkHandler extends SingletonFactory {
 	/**
 	 * Returns a relative link.
 	 * 
-	 * @param 	string		$url
+	 * @param	string		$controller
 	 * @param 	array		$parameters
+	 * @param 	string		$url
 	 * @return	string
 	 */
-	public function getLink($url, array $parameters = array()) {
+	public function getLink($controller = null, array $parameters = array(), $url = '') {
 		$abbreviation = 'wcf';
 		$isRaw = false;
 		if (isset($parameters['application'])) {
@@ -35,9 +36,10 @@ class LinkHandler extends SingletonFactory {
 		}
 		
 		// build route
-		if (isset($parameters['controller'])) {
+		if ($controller !== null) {
+			$parameters['controller'] = $controller;
 			$routeURL = RouteHandler::getInstance()->buildRoute($parameters);
-			if (!$isRaw) {
+			if (!$isRaw && !empty($url)) {
 				$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';
 			}
 			$url = $routeURL . $url;

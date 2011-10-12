@@ -222,15 +222,29 @@ class Route {
 	 * @return	string
 	 */
 	public function buildLink(array $components) {
-		$link = 'index.php/';
-		foreach ($this->routeSchema as $component) {
-			if (!isset($components[$component])) {
-				continue;
+		$link = '';
+		
+		// handle default values for controller
+		$buildRoute = true;
+		if (count($components) == 1) {
+			if (isset($this->parameterOptions['controller']) && strcasecmp($this->parameterOptions['controller']['default'], $components['controller']) == 0) {
+				// only the controller was given and matches default, omit routing
+				$buildRoute = false;
 			}
-			
-			$link .= $components[$component] . '/';
-			unset($components[$component]);
 		}
+		
+		if ($buildRoute) {
+			foreach ($this->routeSchema as $component) {
+				if (!isset($components[$component])) {
+					continue;
+				}
+			
+				$link .= $components[$component] . '/';
+				unset($components[$component]);
+			}
+		}
+		
+		$link = 'index.php' . (!empty($link) ? '/' : '');
 		
 		if (!empty($components)) {
 			$link .= '?' . html_build_query($components, '', '&');

@@ -535,12 +535,12 @@ class PackageInstallationDispatcher {
 		$packageInstallation = $statement->fetchArray();
 		
 		if (!isset($packageInstallation['queueID'])) {
-			$url = LinkHandler::getInstance()->getLink('', array('controller' => 'PackageList'));
+			$url = LinkHandler::getInstance()->getLink('PackageList');
 			HeaderUtil::redirect($url);
 			exit;
 		}
 		else {
-			$url = LinkHandler::getInstance()->getLink('action='.$packageInstallation['action'].'&queueID='.$packageInstallation['queueID'], array('controller' => 'Package'));
+			$url = LinkHandler::getInstance()->getLink('Package', array(), 'action='.$packageInstallation['action'].'&queueID='.$packageInstallation['queueID']);
 			HeaderUtil::redirect($url);
 			exit;
 		}

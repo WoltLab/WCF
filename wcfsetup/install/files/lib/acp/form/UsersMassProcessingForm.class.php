@@ -195,10 +195,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 				WCF::getSession()->register('userMailData', $userMailData);
 				$this->saved();
 				
-				$url = LinkHandler::getInstance()->getLink('', array(
-					'controller' => 'UserMail',
-					'id' => $mailID
-				));
+				$url = LinkHandler::getInstance()->getLink('UserMail', array('id' => $mailID));
 				
 				// show worker template
 				WCF::getTPL()->assign(array(

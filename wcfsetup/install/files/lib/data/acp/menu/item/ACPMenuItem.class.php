@@ -29,6 +29,6 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	 * @see wcf\system\menu\ITreeMenuItem::getLink()
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink($this->menuItemLink);
+		return LinkHandler::getInstance()->getLink(null, array(), $this->menuItemLink);
 	}
 }

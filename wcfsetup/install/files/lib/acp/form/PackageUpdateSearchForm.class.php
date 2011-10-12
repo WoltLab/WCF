@@ -243,10 +243,7 @@ class PackageUpdateSearchForm extends ACPForm {
 		$this->saved();
 		
 		// forward
-		$url = LinkHandler::getInstance()->getLink('', array(
-			'controller' => 'PackageUpdateSearchResult',
-			'id' => $search->searchID
-		));
+		$url = LinkHandler::getInstance()->getLink('PackageUpdateSearchResult', array('id' => $search->searchID));
 		HeaderUtil::redirect($url);
 		exit;
 	}

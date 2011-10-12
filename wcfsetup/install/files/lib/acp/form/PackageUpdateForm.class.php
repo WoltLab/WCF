@@ -104,7 +104,7 @@ class PackageUpdateForm extends ACPForm {
 			$this->saved();
 			
 			// open queue
-			$url = LinkHandler::getInstance()->getLink('action=openQueue&processNo='.$processNo, array('controller' => 'Package'));
+			$url = LinkHandler::getInstance()->getLink('Package', array(), 'action=openQueue&processNo='.$processNo);
 			HeaderUtil::redirect($url);
 			exit;
 		}

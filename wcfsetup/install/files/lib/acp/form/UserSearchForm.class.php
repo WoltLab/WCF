@@ -215,10 +215,7 @@ class UserSearchForm extends UserOptionListForm {
 		$this->saved();
 		
 		// forward to result page
-		$url = LinkHandler::getInstance()->getLink('sortField='.rawurlencode($this->sortField).'&sortOrder='.rawurlencode($this->sortOrder), array(
-			'controller' => 'UserList',
-			'id' => $this->searchID
-		));
+		$url = LinkHandler::getInstance()->getLink('UserList', array('id' => $this->searchID), 'sortField='.rawurlencode($this->sortField).'&sortOrder='.rawurlencode($this->sortOrder));
 		HeaderUtil::redirect($url);
 		exit;
 	}
