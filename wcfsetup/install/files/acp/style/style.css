@@ -64,14 +64,6 @@ q:after {
 	text-overflow: ellipsis;
 }
 
-body {
-	font-family: 'Trebuchet MS', Arial, sans-serif;
-	font-size: 80%;
-	color: #666;
-	line-height: 1;
-	background-color: #29374a;
-}
-
 img {
 	vertical-align: middle !important;
 }
@@ -113,6 +105,35 @@ hr {
 	margin-top: 13px;
 }
 
+/* ############## Body ############## */
+
+/* Globals */
+
+body {
+	font-family: 'Trebuchet MS', Arial, sans-serif;
+	font-size: 80%;
+	color: #666;
+	line-height: 1;
+	background-color: #29374a;
+}
+
+/* Special */
+
+body#tplWCFInstaller {background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, .05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%, transparent 75%, transparent);
+	background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, .05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%, transparent 75%, transparent);
+	background-image: -ms-linear-gradient(-45deg, rgba(255, 255, 255, .05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%, transparent 75%, transparent);
+	background-image: -o-linear-gradient(-45deg, rgba(255, 255, 255, .05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%, transparent 75%, transparent);
+	background-image: linear-gradient(-45deg, rgba(255, 255, 255, .05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%, transparent 75%, transparent);
+	
+	-webkit-background-size: 50px 50px;
+	-moz-background-size: 50px 50px;
+	-ms-background-size: 50px 50px;
+	-o-background-size: 50px 50px;
+	background-size: 50px 50px;
+	
+	background-position: left top;
+	background-repeat: repeat;
+}
 
 
 /* ############## Page Header ############## */
