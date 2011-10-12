@@ -143,7 +143,7 @@
 												<img src="{@RELATIVE_WCF_DIR}icon/update1D.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
 											{/if}
 											{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $requiredPackage.package != 'com.woltlab.wcf' && $requiredPackage.packageID != PACKAGE_ID}
-												<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="index.php/Package/?action=startUninstall&amp;packageID={@$requiredPackage.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="balloonTooltip" /></a>
+												<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="{link controller='Package'}action=startUninstall&packageID={@$requiredPackage.packageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="balloonTooltip" /></a>
 											{else}
 												<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" />
 											{/if}
@@ -201,7 +201,7 @@
 												<img src="{@RELATIVE_WCF_DIR}icon/update1D.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
 											{/if}
 											{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $dependentPackage.package != 'com.woltlab.wcf' && $dependentPackage.packageID != PACKAGE_ID}
-												<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="index.php/Package/?action=startUninstall&amp;packageID={@$dependentPackage.packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="balloonTooltip" /></a>
+												<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="{link controller='Package'}action=startUninstall&packageID={@$dependentPackage.packageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="balloonTooltip" /></a>
 											{else}
 												<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" />
 											{/if}
@@ -244,7 +244,7 @@
 		<ul>
 			{if PACKAGE_ID != $package->packageID}
 				{if $package->standalone && $package->package != 'com.woltlab.wcf'}<li><a href="{@RELATIVE_WCF_DIR}{$package->packageDir}acp/index.php{@SID_ARG_1ST}" title="{lang}wcf.acp.package.view.button.makeActive{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageACP1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.makeActive{/lang}</span></a></li>{/if}
-				{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $noDependentIsActive}<li><a href="index.php/Package/?action=startUninstall&amp;packageID={@$package->packageID}{@SID_ARG_2ND}" onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" title="{lang}wcf.acp.package.view.button.uninstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.uninstall{/lang}</span></a></li>{/if}
+				{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $noDependentIsActive}<li><a href="{link controller='Package'}action=startUninstall&packageID={@$package->packageID}{/link}" onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" title="{lang}wcf.acp.package.view.button.uninstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.uninstall{/lang}</span></a></li>{/if}
 			{/if}
 			{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}<li><a href="index.php/PackageStartInstall/{@$package->packageID}/?action=update{@SID_ARG_2ND}" title="{lang}wcf.acp.package.view.button.update{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.update{/lang}</span></a></li>{/if}
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}

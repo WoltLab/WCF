@@ -224,6 +224,10 @@ class Route {
 	public function buildLink(array $components) {
 		$link = 'index.php/';
 		foreach ($this->routeSchema as $component) {
+			if (!isset($components[$component])) {
+				continue;
+			}
+			
 			$link .= $components[$component] . '/';
 			unset($components[$component]);
 		}

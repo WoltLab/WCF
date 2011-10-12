@@ -69,7 +69,7 @@
 				<div style="text-align: right;">
 					<ul>
 						<li style="display: inline-block;"><a href="index.php/PackageView/{@$packageID}/{@SID_ARG_1ST}">details</a></li>
-						<li style="display: inline-block;"><a href="index.php/PackageStartInstall/{@$packageID}/?action=update{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a></li>
+						<li style="display: inline-block;"><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a></li>
 					</ul>
 				</div>
 			</fieldset>
