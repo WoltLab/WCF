@@ -85,7 +85,19 @@ class WCFACP extends WCF {
 	protected function assignDefaultTemplateVariables() {
 		parent::assignDefaultTemplateVariables();
 		
+		// base tag is determined on runtime
+		$phpSelf = $_SERVER['PHP_SELF'];
+		if (isset($_SERVER['PATH_INFO'])) {
+			// strip path info
+			$phpSelf = str_replace($_SERVER['PATH_INFO'], '', $phpSelf);
+		}
+		if (($pos = strpos($phpSelf, 'index.php')) !== false) {
+			// strip index.php
+			$phpSelf = substr($phpSelf, 0, $pos);
+		}
+		
 		self::getTPL()->assign(array(
+			'baseHref' => $phpSelf,
 			'quickAccessPackages' => $this->getQuickAccessPackages(),
 			//'timezone' => util\DateUtil::getTimezone()
 		));

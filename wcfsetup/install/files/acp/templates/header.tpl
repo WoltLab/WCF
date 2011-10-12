@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html dir="{@$__wcf->getLanguage()->getPageDirection()}" lang="{@$__wcf->getLanguage()->getFixedLanguageCode()}">
 <head>
+	<base href="{$baseHref}" />
 	<meta charset="utf-8" />
 	<title>{if $pageTitle|isset}{@$pageTitle}{else}{lang}wcf.global.pageTitle{/lang}{/if} - {lang}wcf.acp{/lang}</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
