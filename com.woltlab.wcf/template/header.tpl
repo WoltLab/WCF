@@ -17,7 +17,7 @@
 		<!-- logo -->
 		<div id="logo" class="logo">
 			<!-- clickable area -->
-			<a href="{link}index.php{/link}">
+			<a href="{link controller='Index'}{/link}">
 				<!-- *** insert header logo here -->
 			</a>
 			<!-- /clickable area -->
