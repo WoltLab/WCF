@@ -247,7 +247,7 @@ class Route {
 		$link = 'index.php' . (!empty($link) ? '/' : '');
 		
 		if (!empty($components)) {
-			$link .= '?' . html_build_query($components, '', '&');
+			$link .= '?' . http_build_query($components, '', '&');
 		}
 		
 		return $link;
