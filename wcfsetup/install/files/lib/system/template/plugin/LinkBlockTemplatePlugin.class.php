@@ -27,12 +27,11 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin {
 	 * @see wcf\system\template\IBlockTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, $blockContent, TemplateEngine $tplObj) {
-		$application = 'wcf';
-		if (!empty($tagArgs['application'])) {
-			$application = $tagArgs['application'];
+		if (!isset($tagArgs['application']) || empty($tagArgs['application'])) {
+			$tagArgs['application'] = 'wcf';
 		}
 		
-		return LinkHandler::getInstance()->getLink($blockContent, $application);
+		return LinkHandler::getInstance()->getLink($blockContent, $tagArgs);
 	}
 	
 	/**
