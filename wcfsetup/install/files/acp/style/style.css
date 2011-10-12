@@ -696,6 +696,7 @@ footer.pageFooter nav.footerNavigation ul li {
 
 .subHeading h1 {
 	font-size: 150%;
+	font-weight: bold;
 	text-shadow: 0 1px 0 #fff;
 	color: #999;
 	border-bottom: 1px solid #ccc;
@@ -705,6 +706,7 @@ footer.pageFooter nav.footerNavigation ul li {
 
 .subHeading h2 {
 	font-weight: normal;
+	color: #aaa;
 }
 
 
