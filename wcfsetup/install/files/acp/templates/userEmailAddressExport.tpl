@@ -15,13 +15,13 @@
 	</hgroup>
 </header>
 
-<form method="post" action="index.php/UserEmailAddressExport/">
+<form method="post" action="{link controller='UserEmailAddressExport'}{/link}">
 	<div class="border content">
 		<fieldset>
 			<legend>{lang}wcf.acp.user.exportEmailAddress.markedUsers{/lang}</legend>
 			
 			<ul>
-				{implode from=$users item=$user}<li><a href="index.php/UserEdit/{@$user->userID}/{@SID_ARG_1ST}" class="badge badgeButton">{$user}</a></li>{/implode}
+				{implode from=$users item=$user}<li><a href="{link controller='UserEdit' id=$user->userID}{/link}" class="badge badgeButton">{$user}</a></li>{/implode}
 			</ul>
 		</fieldset>	
 		

@@ -39,7 +39,7 @@
 	
 	{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
 		<nav class="largeButtons">
-			<ul><li><a href="index.php/CronjobAdd/{@SID_ARG_1ST}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
+			<ul><li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
 		</nav>
 	{/if}
 </div>
@@ -88,7 +88,7 @@
 								{/if}
 						
 								{if $cronjob->isEditable()}
-									<a href="index.php/CronjobEdit/{@$cronjob->cronjobID}/{@SID_ARG_1ST}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
+									<a href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
 								{else}
 									<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" />
 								{/if}
@@ -107,7 +107,7 @@
 							<td class="columnDate columnStartDow"><p>{$cronjob->startDow|truncate:30:' ...'}</p></td>
 							<td class="columnText columnDescription" title="{$cronjob->description}">
 								{if $cronjob->isEditable()}
-									<p><a title="{lang}wcf.acp.cronjob.edit{/lang}" href="index.php/CronjobEdit/{@$cronjob->cronjobID}/{@SID_ARG_1ST}">{$cronjob->description|truncate:50:" ..."}</a></p>
+									<p><a title="{lang}wcf.acp.cronjob.edit{/lang}" href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}">{$cronjob->description|truncate:50:" ..."}</a></p>
 								{else}
 									<p>{$cronjob->description|truncate:50:' ...'}</p>
 								{/if}
@@ -132,7 +132,7 @@
 		
 		{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
 			<nav class="largeButtons">
-				<ul><li><a href="index.php/CronjobAdd/{@SID_ARG_1ST}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
+				<ul><li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
 			</nav>
 		{/if}
 	</div>

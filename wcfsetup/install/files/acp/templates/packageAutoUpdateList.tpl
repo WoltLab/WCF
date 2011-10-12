@@ -21,7 +21,7 @@
 	//]]>
 </script>
 
-<form method="post" action="index.php/PackageUpdate/" id="updateForm">
+<form method="post" action="{link controller='PackageUpdate'}{/link}" id="updateForm">
 	<header class="mainHeading">
 		<img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" />
 		<hgroup>

@@ -10,6 +10,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\request\LinkHandler;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -231,7 +232,8 @@ class PackageStartInstallForm extends ACPForm {
 		$this->saved();
 		
 		// open queue
-		HeaderUtil::redirect('index.php/Package/?action=openQueue&processNo='.$processNo.SID_ARG_2ND_NOT_ENCODED);
+		$url = LinkHandler::getInstance()->getLink('action=openQueue&processNo='.$processNo, array('controller' => 'Package'));
+		HeaderUtil::redirect($url);
 		exit;
 	}
 	

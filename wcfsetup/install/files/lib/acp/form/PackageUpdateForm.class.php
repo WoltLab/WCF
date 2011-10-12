@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageUpdateDispatcher;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\HeaderUtil;
@@ -103,7 +104,8 @@ class PackageUpdateForm extends ACPForm {
 			$this->saved();
 			
 			// open queue
-			HeaderUtil::redirect('index.php/Package/?action=openQueue&processNo='.$processNo.''.SID_ARG_2ND_NOT_ENCODED);
+			$url = LinkHandler::getInstance()->getLink('action=openQueue&processNo='.$processNo, array('controller' => 'Package'));
+			HeaderUtil::redirect($url);
 			exit;
 		}
 	}

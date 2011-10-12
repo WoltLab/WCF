@@ -8,7 +8,7 @@
 </header>
 
 <div class="contentHeader">
-	{pages print=true assign=pagesLinks controller='ACPSessionLog' id=$sessionLogID link="?pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"|concat:SID_ARG_2ND_NOT_ENCODED}
+	{pages print=true assign=pagesLinks controller='ACPSessionLog' id=$sessionLogID link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 </div>
 
 {hascontent}

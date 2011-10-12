@@ -83,7 +83,7 @@
 			{if $package->parentPackageID}
 				<dl>
 					<dt>{lang}wcf.acp.package.view.parent{/lang}</dt>
-					<dd><a href="index.php/PackageView/{@$package->parentPackageID}/{@SID_ARG_1ST}">{$package->getParentPackage()->getName()}</a></dd>
+					<dd><a href="{link controller='PackageView' id=$package->parentPackageID}{/link}">{$package->getParentPackage()->getName()}</a></dd>
 				</dl>
 			{/if}
 			<dl>
@@ -138,7 +138,7 @@
 									<tr>
 										<td class="columnIcon">
 											{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-												<a href="index.php/PackageStartInstall/{@$requiredPackage.packageID}/?action=update{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a>
+												<a href="{link controller='PackageStartInstall' id=$requiredPackage.packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a>
 											{else}
 												<img src="{@RELATIVE_WCF_DIR}icon/update1D.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
 											{/if}
@@ -158,7 +158,7 @@
 												<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="balloonTooltip" />
 											{/if}
 										</td>
-										<td class="columnText" title="{$requiredPackage.packageDescription}"><p><a href="index.php/PackageView/{@$requiredPackage.packageID}/{@SID_ARG_1ST}">{$requiredPackage.packageName}{if $requiredPackage.instanceNo > 1 && $requiredPackage.instanceName == ''} (#{#$requiredPackage.instanceNo}){/if}</a></p></td>
+										<td class="columnText" title="{$requiredPackage.packageDescription}"><p><a href="{link controller='PackageView' id=$requiredPackage.packageID}{/link}">{$requiredPackage.packageName}{if $requiredPackage.instanceNo > 1 && $requiredPackage.instanceName == ''} (#{#$requiredPackage.instanceNo}){/if}</a></p></td>
 										<td class="columnText">{if $requiredPackage.authorURL}<p><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$requiredPackage.authorURL|rawurlencode}" class="externalURL">{$requiredPackage.author}</a>{else}{$requiredPackage.author}</p>{/if}</td>
 										<td class="columnText"><p>{$requiredPackage.packageVersion}</p></td>
 										<td class="columnDate"><p>{@$requiredPackage.packageDate|date}</p></td>
@@ -196,7 +196,7 @@
 									<tr>
 										<td class="columnIcon">
 											{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-												<a href="index.php/PackageStartInstall/{@$dependentPackage.packageID}/?action=update{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a>
+												<a href="{link controller='PackageStartInstall' id=$dependentPackage.packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a>
 											{else}
 												<img src="{@RELATIVE_WCF_DIR}icon/update1D.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
 											{/if}
@@ -216,7 +216,7 @@
 												<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="balloonTooltip" />
 											{/if}
 										</td>
-										<td class="columnText" title="{$dependentPackage.packageDescription}"><p><a href="index.php/PackageView/{@$dependentPackage.packageID}/{@SID_ARG_1ST}">{$dependentPackage.packageName}{if $dependentPackage.instanceNo > 1 && $dependentPackage.instanceName == ''} (#{#$dependentPackage.instanceNo}){/if}</a></p></td>
+										<td class="columnText" title="{$dependentPackage.packageDescription}"><p><a href="{link controller='PackageView' id=$dependentPackage.packageID}{/link}">{$dependentPackage.packageName}{if $dependentPackage.instanceNo > 1 && $dependentPackage.instanceName == ''} (#{#$dependentPackage.instanceNo}){/if}</a></p></td>
 										<td class="columnText">{if $dependentPackage.authorURL}<p><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$dependentPackage.authorURL|rawurlencode}" class="externalURL">{$dependentPackage.author}</a>{else}{$dependentPackage.author}</p>{/if}</td>
 										<td class="columnText"><p>{$dependentPackage.packageVersion}</p></td>
 										<td class="columnDate"><p>{@$dependentPackage.packageDate|date}</p></td>
@@ -246,7 +246,7 @@
 				{if $package->standalone && $package->package != 'com.woltlab.wcf'}<li><a href="{@RELATIVE_WCF_DIR}{$package->packageDir}acp/index.php{@SID_ARG_1ST}" title="{lang}wcf.acp.package.view.button.makeActive{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageACP1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.makeActive{/lang}</span></a></li>{/if}
 				{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $noDependentIsActive}<li><a href="{link controller='Package'}action=startUninstall&packageID={@$package->packageID}{/link}" onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" title="{lang}wcf.acp.package.view.button.uninstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.uninstall{/lang}</span></a></li>{/if}
 			{/if}
-			{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}<li><a href="index.php/PackageStartInstall/{@$package->packageID}/?action=update{@SID_ARG_2ND}" title="{lang}wcf.acp.package.view.button.update{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.update{/lang}</span></a></li>{/if}
+			{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}<li><a href="{link controller='PackageStartInstall' id=$package->packageID}action=update{/link}" title="{lang}wcf.acp.package.view.button.update{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.update{/lang}</span></a></li>{/if}
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
 	</nav>

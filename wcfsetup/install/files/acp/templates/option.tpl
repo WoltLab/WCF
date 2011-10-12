@@ -25,7 +25,7 @@
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
-<form method="post" action="index.php/Option/{@$category->categoryID}/">
+<form method="post" action="{link controller='Option' id=$category->categoryID}{/link}">
 	<div data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" class="tabMenuContainer">
 		<nav class="tabMenu">
 			<ul>

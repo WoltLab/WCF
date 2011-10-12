@@ -8,6 +8,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\StringUtil;
@@ -114,7 +115,7 @@ class UserListPage extends SortablePage {
 		$this->readUsers();
 		
 		// build page url
-		$this->url = 'index.php/UserList/?searchID='.$this->searchID.'&action='.rawurlencode($this->action).'&pageNo='.$this->pageNo.'&sortField='.$this->sortField.'&sortOrder='.$this->sortOrder.''.SID_ARG_2ND_NOT_ENCODED;
+		$this->url = LinkHandler::getInstance('searchID='.$this->searchID.'&action='.rawurlencode($this->action).'&pageNo='.$this->pageNo.'&sortField='.$this->sortField.'&sortOrder='.$this->sortOrder, array('controller' => 'UserList'));
 	}
 	
 	/**

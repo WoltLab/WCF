@@ -51,7 +51,7 @@
 {if !$updateServers|count}
 	<p class="warning">{lang}wcf.acp.updateServer.view.noneAvailable{/lang}</p>
 {else}
-	<form method="post" action="index.php/PackageUpdateSearch/">
+	<form method="post" action="{link controller='PackageUpdateSearch'}{/link}">
 		<div class="border content">
 			
 			<fieldset>

@@ -68,7 +68,7 @@
 
 				<div style="text-align: right;">
 					<ul>
-						<li style="display: inline-block;"><a href="index.php/PackageView/{@$packageID}/{@SID_ARG_1ST}">details</a></li>
+						<li style="display: inline-block;"><a href="{link controller='PackageView' id=$packageID}{/link}">details</a></li>
 						<li style="display: inline-block;"><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a></li>
 					</ul>
 				</div>
@@ -98,7 +98,7 @@
 <div class="contentFooter">
 	<nav class="largeButtons">
 		<ul>
-			<li><a href="index.php/DetailedPackageList/{@SID_ARG_1ST}">detailed package list</a></li>
+			<li><a href="{link controller='DetailedPackageList'}{/link}">detailed package list</a></li>
 		</ul>
 	</nav>
 </div>

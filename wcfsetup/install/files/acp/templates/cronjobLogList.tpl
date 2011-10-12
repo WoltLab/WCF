@@ -13,7 +13,7 @@
 </div>
 
 {hascontent}
-	<form method="post" action="index.php/CronjobLogDelete/">
+	<form method="post" action="{link controller='CronjobLogDelete'}{/link}">
 		<div class="border boxTitle">
 			<hgroup>
 				<h1>{lang}wcf.acp.cronjob.log{/lang} <span class="badge" title="{lang}wcf.acp.cronjob.log.count{/lang}">{#$items}</span></h1>

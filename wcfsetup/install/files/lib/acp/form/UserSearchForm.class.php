@@ -8,6 +8,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\request\LinkHandler;
 use wcf\system\wcf;
 use wcf\util\ArrayUtil;
 use wcf\util\HeaderUtil;
@@ -214,7 +215,11 @@ class UserSearchForm extends UserOptionListForm {
 		$this->saved();
 		
 		// forward to result page
-		HeaderUtil::redirect('index.php/UserList/'.$this->searchID.'/?sortField='.rawurlencode($this->sortField).'&sortOrder='.rawurlencode($this->sortOrder).''.SID_ARG_2ND_NOT_ENCODED);
+		$url = LinkHandler::getInstance()->getLink('sortField='.rawurlencode($this->sortField).'&sortOrder='.rawurlencode($this->sortOrder), array(
+			'controller' => 'UserList',
+			'id' => $this->searchID
+		));
+		HeaderUtil::redirect($url);
 		exit;
 	}
 	

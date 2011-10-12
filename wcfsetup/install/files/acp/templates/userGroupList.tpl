@@ -11,7 +11,7 @@
 	{pages print=true assign=pagesLinks controller="UserGroupList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	<nav class="largeButtons">
 		<ul>
-			<li><a href="index.php/UserGroupAdd/{@SID_ARG_1ST}" title="{lang}wcf.acp.group.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
+			<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}			
 		</ul>
 	</nav>
@@ -40,7 +40,7 @@
 						<tr id="groupContainer{@$group->groupID}">
 							<td class="columnIcon">
 								{if $group->isEditable()}
-									<a href="index.php/UserGroupEdit/{@$group->groupID}/{@SID_ARG_1ST}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
+									<a href="{link controller='UserGroupEdit' id=$group->groupID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
 								{else}
 									<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.acp.group.edit{/lang}" />
 								{/if}
@@ -53,7 +53,7 @@
 								{if $additionalButtons[$group->groupID]|isset}{@$additionalButtons[$group->groupID]}{/if}
 							</td>
 							<td class="columnID columnGroupID"><p>{@$group->groupID}</p></td>
-							<td class="columnTitle columnGroupName">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="index.php/UserGroupEdit/{@$group->groupID}/{@SID_ARG_1ST}">{lang}{$group->groupName}{/lang}</a>{else}{lang}{$group->groupName}{/lang}</p>{/if}</td>
+							<td class="columnTitle columnGroupName">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="{link controller='UserGroupEdit' id=$group->groupID}{/link}">{lang}{$group->groupName}{/lang}</a>{else}{lang}{$group->groupName}{/lang}</p>{/if}</td>
 							<td class="columnDigits columnMembers"><p><a title="{lang}wcf.acp.group.showMembers{/lang}" href="{link controller='UserSearch'}groupID={@$group->groupID}{/link}">{#$group->members}</p></a></td>
 						
 							{if $additionalColumns[$group->groupID]|isset}{@$additionalColumns[$group->groupID]}{/if}
@@ -69,7 +69,7 @@
 		{@$pagesLinks}
 		<nav class="largeButtons">
 			<ul>
-				<li><a href="index.php/UserGroupAdd/{@SID_ARG_1ST}" title="{lang}wcf.acp.group.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
+				<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 				{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 			</ul>
 		</nav>

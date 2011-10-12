@@ -12,6 +12,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\request\LinkHandler;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 		
@@ -194,10 +195,15 @@ class UsersMassProcessingForm extends UserOptionListForm {
 				WCF::getSession()->register('userMailData', $userMailData);
 				$this->saved();
 				
+				$url = LinkHandler::getInstance()->getLink('', array(
+					'controller' => 'UserMail',
+					'id' => $mailID
+				));
+				
 				// show worker template
 				WCF::getTPL()->assign(array(
 					'pageTitle' => WCF::getLanguage()->get('wcf.acp.user.sendMail'),
-					'url' => 'index.php/UserMail/'.$mailID.'/'.SID_ARG_1ST
+					'url' => $url
 				));
 				WCF::getTPL()->display('worker');
 				exit;

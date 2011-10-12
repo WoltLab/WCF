@@ -10,6 +10,7 @@ use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
+use wcf\system\request\LinkHandler;
 use wcf\system\setup\Uninstaller;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -280,7 +281,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 			));
 		}
 		
-		HeaderUtil::redirect('index.php/Package/?action=openQueue&processNo='.$processNo.''.SID_ARG_2ND_NOT_ENCODED);
+		$url = LinkHandler::getInstance()->getLink('action=openQueue&processNo='.$processNo, array('controller' => 'Package'));
+		HeaderUtil::redirect($url);
 		exit;
 	}
 }
