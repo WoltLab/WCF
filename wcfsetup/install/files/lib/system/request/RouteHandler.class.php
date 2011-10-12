@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\request;
+use wcf\system\event\EventHandler;
 use wcf\system\SingletonFactory;
 
 /**
@@ -39,6 +40,9 @@ class RouteHandler extends SingletonFactory {
 	 */
 	protected function init() {
 		$this->addDefaultRoutes();
+		
+		// fire event
+		EventHandler::getInstance()->fireAction($this, 'didInit');
 	}
 	
 	/**
