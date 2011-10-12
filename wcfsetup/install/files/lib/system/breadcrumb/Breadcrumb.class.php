@@ -26,6 +26,17 @@ class Breadcrumb {
 	protected $url = '';
 	
 	/**
+	 * Creates a new Breadcrumb object.
+	 * 
+	 * @param	string		$label
+	 * @param	string		$url
+	 */
+	public function __construct($label = null, $url = null) {
+		if ($label !== null) $this->setLabel($label);
+		if ($url !== null) $this->setURL($url);
+	}
+	
+	/**
 	 * Sets the displayed label.
 	 * 
 	 * @param	string		$label
