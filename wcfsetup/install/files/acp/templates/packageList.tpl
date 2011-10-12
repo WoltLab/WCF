@@ -29,67 +29,71 @@
 			{if $plugins|count}<li><a href="#plugins" title="plugins">plugins</a></li>{/if}
 		</ul>
 	</nav>
-
+	
 	<div id="applications" class="border tabMenuContent hidden">
 		<hgroup class="subHeading">
-			<h1>installed applications</h1>
+			<h1>Installed Applications</h1>
 		</hgroup>
-
+		
 		{foreach from=$applications key=packageID item=package}
-			<fieldset>
+			<fieldset class="infoPackageStandalone">
 				<legend>{$package->getName()}</legend>
-
-				&lt;gimme sum icon&gt;
-
-				<dl>
-					<dt>package</dt>
-					<dd>{$package->package}</dd>
-				</dl>
-				<dl>
-					<dt>installed version</dt>
-					<dd>{$package->packageVersion}</dd>
-				</dl>
-				<dl>
-					<dt>create date</dt>
-					<dd>{$package->packageDate|date}</dd>
-				</dl>
-				<dl>
-					<dt>install date</dt>
-					<dd>{@$package->installDate|time}</dd>
-				</dl>
-				<dl>
-					<dt>update date</dt>
-					<dd>{@$package->updateDate|time}</dd>
-				</dl>
-				<dl>
-					<dt>creator</dt>
-					<dd>{if $package->authorURL}<a href="dereferrer.php?url={$package->authorURL|rawurlencode}">{/if}{$package->author}{if $package->authorURL}</a>{/if}</dd>
-				</dl>
-
-				<div style="text-align: right;">
-					<ul>
-						<li style="display: inline-block;"><a href="{link controller='PackageView' id=$packageID}{/link}">details</a></li>
-						<li style="display: inline-block;"><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a></li>
-					</ul>
-				</div>
+				
+				<img src="{@RELATIVE_WCF_DIR}icon/wcfIcon1.svg" alt="" title="{$package->getName()}" class="packageStandaloneIcon" />
+				
+				<section>
+					<dl>
+						<dt>package</dt>
+						<dd><span class="badge badgeNote">{$package->package}</span></dd>
+					</dl>
+					<dl>
+						<dt>installed version</dt>
+						<dd>{$package->packageVersion}</dd>
+					</dl>
+					<dl>
+						<dt>create date</dt>
+						<dd>{$package->packageDate|date}</dd>
+					</dl>
+					<dl>
+						<dt>install date</dt>
+						<dd>{@$package->installDate|time}</dd>
+					</dl>
+					<dl>
+						<dt>update date</dt>
+						<dd>{@$package->updateDate|time}</dd>
+					</dl>
+					<dl>
+						<dt>creator</dt>
+						<dd>{if $package->authorURL}<a href="dereferrer.php?url={$package->authorURL|rawurlencode}">{/if}{$package->author}{if $package->authorURL}</a>{/if}</dd>
+					</dl>
+				</section>
+				
+				<footer>
+					<nav>
+						<ul class="smallButtons">
+							<li><a href="{link controller='PackageView' id=$packageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/info1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="bal loonTooltip" /> Details</a></li>
+							<li><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="bal loonTooltip" /> Update</a></li>
+						</ul>
+					</nav>
+				</footer>
 			</fieldset>
 		{/foreach}
 	</div>
-
+	
 	{hascontent}
 		<div id="plugins" class="border tabMenuContent hidden">
 			<hgroup class="subHeading">
 				<h1>installed plugins</h1>
 			</hgroup>
-
+			
 			<div class="pluginList"></div>
-
+			
 			<ol>
 				{content}
 					{include file='packageListPlugins'}
 				{/content}
 			</ol>
-
+			
 			<div class="pluginList"></div>
 		</div>
 	{/hascontent}

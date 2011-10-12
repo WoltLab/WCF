@@ -65,7 +65,7 @@
 			
 			{if $additionalFields|isset}{@$additionalFields}{/if}
 		</fieldset>
-	
+		
 		{if $additionalFieldSets|isset}{@$additionalFieldSets}{/if}
 		
 		<div class="tabMenuContainer" data-active="{$activeSubTabMenuItem}" data-store="activeTabMenuItem">
@@ -86,18 +86,18 @@
 							{/foreach}
 						</ul>
 					</nav>
-	
+					
 					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 						<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}" class="hidden">
 							<hgroup class="subHeading">
 								<h1>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h1>
 								<h2>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}</h2>
 							</hgroup>
-						
+							
 							{if $categoryLevel2[options]|count}
 								{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.group.option.'}
 							{/if}
-						
+							
 							{if $categoryLevel2[categories]|count}
 								{foreach from=$categoryLevel2[categories] item=categoryLevel3}
 									<fieldset>
@@ -110,7 +110,7 @@
 									</fieldset>
 								{/foreach}
 							{/if}
-						
+							
 						</div>
 					{/foreach}
 				</div>
