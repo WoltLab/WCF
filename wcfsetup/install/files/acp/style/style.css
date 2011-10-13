@@ -1191,6 +1191,12 @@ input[type='button'],
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	margin-top: 15px;
+	
+	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-o-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
 }
 
 .border.overlay {
@@ -1846,11 +1852,11 @@ p.warning {
 	margin-top: 15px;
 	padding: 7px 15px 7px 50px;
 	
-	-webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-	-moz-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-	-ms-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-	-o-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-	box-shadow: 0 0 7px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-o-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
 	
 	-webkit-transition: all .1s linear;
 	-moz-transition: all .1s linear;
