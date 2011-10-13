@@ -34,7 +34,7 @@
 			<dl{if $errorField == 'serverURL'} class="formError"{/if}>
 				<dt><label for="serverURL">{lang}wcf.acp.updateServer.serverURL{/lang}</label></dt>
 				<dd>
-					<input type="text" id="serverURL" name="serverURL" value="{$serverURL}" class="medium" />
+					<input type="text" id="serverURL" name="serverURL" value="{$serverURL}" class="long" />
 					{if $errorField == 'serverURL'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -50,7 +50,7 @@
 			<dl>
 				<dt><label for="loginUsername">{lang}wcf.acp.updateServer.loginUsername{/lang}</label></dt>
 				<dd>
-					<input type="text" id="loginUsername" name="loginUsername" value="{$loginUsername}" class="long" />
+					<input type="text" id="loginUsername" name="loginUsername" value="{$loginUsername}" class="medium" />
 					<small>{lang}wcf.acp.updateServer.loginUsername.description{/lang}</small>
 				</dd>
 			</dl>
@@ -58,7 +58,7 @@
 			<dl>
 				<dt><label for="loginPassword">{lang}wcf.acp.updateServer.loginPassword{/lang}</label></dt>
 				<dd>
-					<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="long" />
+					<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="medium" />
 					<small><p>{lang}wcf.acp.updateServer.loginPassword.description{/lang}</p></small>
 				</dd>
 			</dl>
