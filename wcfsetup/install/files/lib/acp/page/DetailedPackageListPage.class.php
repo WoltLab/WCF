@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @subpackage	acp.page
  * @category 	Community Framework
  */
-class PackageListDetailedPage extends SortablePage {
+class DetailedPackageListPage extends SortablePage {
 	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
