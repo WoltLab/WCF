@@ -2869,7 +2869,6 @@ div.scrollableContainer > div:first-child p {
 
 .infoPackageStandalone {
 	position: relative;
-	padding-bottom: 0;
 }
 
 .infoPackageStandalone .packageStandaloneIcon {
@@ -2881,14 +2880,16 @@ div.scrollableContainer > div:first-child p {
 }
 
 .infoPackageStandalone section {
+	margin-bottom: -15px;
 	margin-left: 30px;
 }
 
-/* Navigation */
+/* Footer */
 
 .infoPackageStandalone footer {
 	position: relative;
 	right: -15px;
+	bottom: -15px;
 }
 
 .infoPackageStandalone footer nav {
@@ -2906,24 +2907,23 @@ div.scrollableContainer > div:first-child p {
 	opacity: 1;
 }
 
+/* Small Buttons */
+
 .infoPackageStandalone footer nav ul.smallButtons {
 	list-style-type: none;
-	display: inline-block;
 	margin-right: -1px;
 	margin-bottom: -1px;
 }
 
 .infoPackageStandalone footer nav ul.smallButtons > li {
-	float: left;
-	position: relative;
-	margin-left: -1px;
+	margin-left: -5px;
+	display: inline-block;
 }
 
 .infoPackageStandalone footer nav ul.smallButtons > li > a {
-	text-decoration: none;
 	white-space: nowrap;
 	padding: 3px 7px;
-	overflow: hidden;
+	display: block;
 }
 
 .infoPackageStandalone footer nav ul.smallButtons > li.separator > a {
@@ -2936,11 +2936,6 @@ div.scrollableContainer > div:first-child p {
 
 .infoPackageStandalone footer nav ul.smallButtons > li:last-child > a {
 	border-bottom-right-radius: 7px;
-}
-
-.infoPackageStandalone footer nav ul.smallButtons > li > a img {
-	border: 0 !important;
-	vertical-align: middle;
 }
 
 
