@@ -238,13 +238,13 @@ class Route {
 				if (!isset($components[$component])) {
 					continue;
 				}
-			
+				
 				$link .= $components[$component] . '/';
 				unset($components[$component]);
 			}
 		}
 		
-		$link = 'index.php' . (!empty($link) ? '/' : '');
+		$link = 'index.php' . (!empty($link) ? '/' : '') . $link;
 		
 		if (!empty($components)) {
 			$link .= '?' . http_build_query($components, '', '&');
