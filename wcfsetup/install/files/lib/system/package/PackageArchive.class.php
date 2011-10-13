@@ -108,7 +108,7 @@ class PackageArchive {
 	 */
 	public function __construct($archive, Package $package = null) {
 		$this->archive = $archive; 	// be careful: this is a string within this class, 
-						// but an object in the packageStartInstallForm.class!
+						// but an object in the packageInstallationForm.class!
 		$this->package = $package;
 	}
 	

@@ -29,7 +29,7 @@ class PackageStartInstallForm extends ACPForm {
 	/**
 	 * @see wcf\page\AbstractPage::$templateName
 	 */
-	public $templateName = 'packageStartInstall';
+	public $templateName = 'packageInstallation';
 	
 	/**
 	 * @see wcf\acp\form\ACPForm::$activeMenuItem

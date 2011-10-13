@@ -93,7 +93,7 @@
 				<tr>
 					<td class="columnIcon">
 						{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-							<a href="{link controller='PackageStartInstall' id=$package.packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a>
+							<a href="{link controller='PackageInstallation' id=$package.packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a>
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/updateD1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
 						{/if}

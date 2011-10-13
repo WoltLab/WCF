@@ -4,7 +4,7 @@
 	{if $packageID == 0}
 		<img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" />
 		<hgroup>
-			<h1>{lang}wcf.acp.package.startInstall{/lang}</h1>
+			<h1>{lang}wcf.acp.package.installation{/lang}</h1>
 		</hgroup>
 	{else}
 		<img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" />
@@ -27,14 +27,14 @@
 	</nav>
 </div>
 
-<form method="post" action="{link controller='PackageStartInstall'}{/link}" enctype="multipart/form-data">
+<form method="post" action="{link controller='PackageInstallation'}{/link}" enctype="multipart/form-data">
 	<div class="border content">
 		
 		<fieldset>
-			<legend>{lang}wcf.acp.package.startInstall.source{/lang}</legend>
+			<legend>{lang}wcf.acp.package.installation.source{/lang}</legend>
 		
 			<dl{if $errorField == 'uploadPackage'} class="formError"{/if}>
-				<dt><label for="uploadPackage">{lang}wcf.acp.package.startInstall.source.upload{/lang}</label></dt>
+				<dt><label for="uploadPackage">{lang}wcf.acp.package.installation.source.upload{/lang}</label></dt>
 				<dd>
 					<input type="file" id="uploadPackage" name="uploadPackage" value="" />
 					{if $errorField == 'uploadPackage'}
@@ -45,24 +45,24 @@
 								{* todo: use language variable (-> else) *}
 								<pre>{$phpRequirements|print_r}</pre>
 							{else}
-								{lang}wcf.acp.package.startInstall.error.{@$errorType}{/lang}
+								{lang}wcf.acp.package.installation.error.{@$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
-					<small>{lang}wcf.acp.package.startInstall.source.upload.description{/lang}</small>
+					<small>{lang}wcf.acp.package.installation.source.upload.description{/lang}</small>
 				</dd>
 			</dl>
 			
 			<dl{if $errorField == 'downloadPackage'} class="formError"{/if}>
-				<dt><label for="downloadPackage">{lang}wcf.acp.package.startInstall.source.download{/lang}</label></dt>
+				<dt><label for="downloadPackage">{lang}wcf.acp.package.installation.source.download{/lang}</label></dt>
 				<dd>
 					<input type="text" id="downloadPackage" name="downloadPackage" value="" class="long" />
 					{if $errorField == 'downloadPackage'}
 						<small class="innerError">
-							{lang}wcf.acp.package.startInstall.error.{@$errorType}{/lang}
+							{lang}wcf.acp.package.installation.error.{@$errorType}{/lang}
 						</small>
 					{/if}
-					<small>{lang}wcf.acp.package.startInstall.source.download.description{/lang}</small>
+					<small>{lang}wcf.acp.package.installation.source.download.description{/lang}</small>
 				</dd>
 			</dl>
 		</fieldset>
