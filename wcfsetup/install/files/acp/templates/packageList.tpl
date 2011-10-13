@@ -44,7 +44,7 @@
 				<section>
 					<dl>
 						<dt>package</dt>
-						<dd><span class="badge badgeNote">{$package->package}</span></dd>
+						<dd>{$package->package}</dd>
 					</dl>
 					<dl>
 						<dt>installed version</dt>
