@@ -230,6 +230,9 @@ class Route {
 			if (isset($this->parameterOptions['controller']) && strcasecmp($this->parameterOptions['controller']['default'], $components['controller']) == 0) {
 				// only the controller was given and matches default, omit routing
 				$buildRoute = false;
+				
+				// unset the controller, since it would otherwise added with http_build_query()
+				unset($components['controller']);
 			}
 		}
 		
