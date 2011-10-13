@@ -132,7 +132,9 @@
 		
 		{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
 			<nav class="largeButtons">
-				<ul><li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
+				<ul>
+					<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+				</ul>
 			</nav>
 		{/if}
 	</div>
