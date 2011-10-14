@@ -521,8 +521,8 @@
 		<item name="wcf.global.sortOrder.descending"><![CDATA[in absteigender Reihenfolge]]></item>
 		<item name="wcf.global.button.back"><![CDATA[&laquo; Zurück]]></item>
 		<item name="wcf.global.button.collapsible"><![CDATA[Auf- und Zuklappen]]></item>
-		<item name="wcf.global.page.next"><![CDATA[nächste Seite]]></item>
-		<item name="wcf.global.page.previous"><![CDATA[vorherige Seite]]></item>
+		<item name="wcf.global.page.next"><![CDATA[Nächste Seite]]></item>
+		<item name="wcf.global.page.previous"><![CDATA[Vorherige Seite]]></item>
 		<item name="wcf.global.locale.unix"><![CDATA[de_DE]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.locale.win"><![CDATA[deu_deu]]></item> <!-- system variable; do not translate -->
 	</category>

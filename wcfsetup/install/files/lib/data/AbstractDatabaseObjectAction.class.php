@@ -73,6 +73,12 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	protected $returnValues = null;
 	
 	/**
+	 * disallow guest access
+	 * @var	boolean
+	 */
+	protected $allowGuestAccess = false;
+	
+	/**
 	 * Initialized a new DatabaseObject-related action.
 	 *
 	 * @param	array		$objectIDs
@@ -92,6 +98,11 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	 * @see	wcf\data\IDatabaseObjectAction::validateAction()
 	 */
 	public function validateAction() {
+		// validate if user is logged in
+		if (!$this->allowGuestAccess && !WCF::getUser()->userID) {
+			throw new ValidateActionException("Please login before executing this action");
+		}
+		
 		// validate action name
 		if (!method_exists($this, $this->getActionName())) {
 			throw new ValidateActionException("unknown action '".$this->getActionName()."'");

@@ -1191,6 +1191,20 @@ input[type='button'],
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	margin-top: 15px;
+	
+	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-o-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+}
+
+.tabMenu ~ .border {
+	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
+	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
+	-o-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
 }
 
 .border.overlay {
@@ -1329,8 +1343,8 @@ input[type='button'],
 	color: #666;
 	border-width: 1px;
 	border-style: solid;
-	border-color: #fa2 #fa2 #ccc;
-	background-color: #fff9f4;
+	border-color: rgb(255, 170, 34) rgb(255, 170, 34) rgb(204, 204, 204);
+	background-color: rgba(255, 249, 244, 1);
 }
 
 .tabMenu li:not(.ui-state-active) a:active,
@@ -1752,6 +1766,14 @@ tr .columnURL {
 
 /* ToDo */
 
+.pageNavigation ul li:not(href):not(.active) {
+	cursor: pointer;
+}
+
+.pageNavigation ul li:not(:first-child) {
+	margin-left: 3px;
+}
+
 .pageNavigation ul li:not(.children) {
 	border-radius: 3px;
 	display: inline-block;
@@ -1846,11 +1868,11 @@ p.warning {
 	margin-top: 15px;
 	padding: 7px 15px 7px 50px;
 	
-	-webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-	-moz-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-	-ms-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-	-o-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-	box-shadow: 0 0 7px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-o-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
 	
 	-webkit-transition: all .1s linear;
 	-moz-transition: all .1s linear;
@@ -2323,11 +2345,25 @@ input[type='button'],
 	background-image: -o-linear-gradient(rgba(255, 255, 255, 1), rgba(245, 245, 245, 1) 2px, rgba(235, 235, 235, 1));
 	background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(245, 245, 245, 1) 2px, rgba(235, 235, 235, 1));
 	
-	-webkit-transition: all .1s linear;
-	-moz-transition: all .1s linear;
-	-ms-transition: all .1s linear;
-	-o-transition: all .1s linear;
-	transition: all .1s linear;
+	-webkit-transition-property: border, box-shadow, background-color, background-image, color;
+	-webkit-transition-duration: .1s;
+	-webkit-transition-timing-function: linear;
+	
+	-moz-transition-property: border, box-shadow, background-color, background-image, color;
+	-moz-transition-duration: .1s;
+	-moz-transition-timing-function: linear;
+	
+	-ms-transition-property: border, box-shadow, background-color, background-image, color;
+	-ms-transition-duration: .1s;
+	-ms-transition-timing-function: linear;
+	
+	-o-transition-property: border, box-shadow, background-color, background-image, color;
+	-o-transition-duration: .1s;
+	-o-transition-timing-function: linear;
+	
+	transition-property: border, box-shadow, background-color, background-image, color;
+	transition-duration: .1s;
+	transition-timing-function: linear;
 }
 
 /* Hover State */
@@ -2730,6 +2766,7 @@ div.userNotificationContainer {
 	background-color: rgba(224, 224, 224, .9);
 	position: absolute;
 	width: 250px;
+	z-index: 501;	/* adjust to any value you like, it *MUST* be higher than 'header.pageHeader nav.topMenu' */
 }
 
 div.scrollableContainer {
@@ -2760,6 +2797,7 @@ div.scrollableContainer > div:first-child ul {
 
 div.scrollableContainer > div:first-child li {
 	border-top: 1px solid rgba(192, 192, 192, 1);
+	cursor: pointer;
 	padding: 7px;
 }
 
@@ -2829,11 +2867,13 @@ div.scrollableContainer > div:first-child p {
 .userNotificationDetails li {
 	cursor: pointer;
 	border: 1px solid rgba(192, 192, 192, 1) !important;
+	
 	background-image: -webkit-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
 	background-image: -moz-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
 	background-image: -ms-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
 	background-image: -o-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
 	background-image: linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
+	
 	padding: 3px;
 	display: inline-block;
 }
@@ -2871,7 +2911,7 @@ div.scrollableContainer > div:first-child p {
 	position: relative;
 }
 
-.infoPackageStandalone .packageStandaloneIcon {
+.infoPackageStandalone img.packageStandaloneIcon {
 	position: absolute;
 	top: 30px;
 	left: 25px;
@@ -2879,12 +2919,10 @@ div.scrollableContainer > div:first-child p {
 	height: 96px;
 }
 
-.infoPackageStandalone section {
+.infoPackageStandalone div {
 	margin-bottom: -15px;
 	margin-left: 30px;
 }
-
-/* Footer */
 
 .infoPackageStandalone footer {
 	position: relative;
@@ -2892,49 +2930,194 @@ div.scrollableContainer > div:first-child p {
 	bottom: -15px;
 }
 
-.infoPackageStandalone footer nav {
-	text-align: right;
-	opacity: 0;
+/* -- -- -- Package Plugin -- -- -- */
+
+/* Globals */
+
+.infoPackagePlugin {
+	text-align: center;
+	border: 1px solid rgba(204, 204, 204, 1);
+	border-radius: 7px;
+	background-color: rgba(0, 0, 0, .015);
+	margin-top: 15px;
+	display: inline-block;
+	position: relative;
+	width: 150px;
+	height: 150px;
+	overflow: hidden;
 	
-	-webkit-transition: all .2s linear;
-	-moz-transition: all .2s linear;
-	-ms-transition: all .2s linear;
-	-o-transition: all .2s linear;
-	transition: all .2s linear;
+	-webkit-transition: background, border, color .1s linear;
+	-moz-transition: background, border, color .1s linear;
+	-ms-transition: background, border, color .1s linear;
+	-o-transition: background, border, color .1s linear;
+	transition: background, border, color .1s linear;
 }
 
-.infoPackageStandalone:hover footer nav {
+.infoPackagePlugin a {
+	text-decoration: none;
+}
+
+.infoPackagePlugin > div > a {
+	color: #999;
+	background-size: 96px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin: 1px;
+	display: block;
+	position: relative;
+	width: 148px;
+	height: 148px;
+}
+
+.infoPackagePlugin:hover > div > a {
+	color: #666;
+}
+
+.infoPackagePlugin > div > a > h1 {
+	font-size: 100%;
+	font-weight: bold;
+	text-shadow: 0 1px 0 #fff;
+	word-wrap: break-word;
+	border-bottom: 1px solid rgba(204, 204, 204, 1);
+	
+	background-color: rgba(0, 0, 0, .015);
+	background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: -ms-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	
+	margin: 0 -1px;
+	padding: 3px 1px;
+	display: block;
+	position: relative;
+	z-index: 100;
+}
+
+.infoPackagePlugin footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+.infoPackagePlugin > div > a > small {
+	font-size: 85%;
+	font-weight: normal;
+	text-shadow: none;
+	border-radius: 7px;
+	padding: 40px 5px;
+	display: block;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 139px;
+	opacity: 0;
+	
+	-webkit-transition: all .1s linear;
+	-moz-transition: all .1s linear;
+	-ms-transition: all .1s linear;
+	-o-transition: all .1s linear;
+	transition: all .1s linear;
+}
+
+.infoPackagePlugin:hover > div > a > small {
+	background-color: rgba(255, 255, 255, .9);
+	z-index: 10;
 	opacity: 1;
 }
 
-/* Small Buttons */
+/* SmallButtonBar */
 
-.infoPackageStandalone footer nav ul.smallButtons {
+.infoPackagePlugin .smallButtonBar {
+	text-align: center !important;
+	border-top: 1px solid rgba(204, 204, 204, 1);
+	border-radius: 0 0 7px 7px;
+	
+	background-color: rgba(0, 0, 0, .015);
+	background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: -ms-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	
+	padding: 3px;
+	position: relative;
+	z-index: 100;
+}
+
+.infoPackagePlugin .smallButtonBar li {
+	display: inline;
+	position: relative;
+}
+
+.infoPackagePlugin .smallButtonBar li span {
+	/* removes the caption of the buttons */
+	position: absolute;
+	left: -9000px;
+	top: -9000px;
+	width: 0;
+}
+
+
+
+/* -- -- -- Package Footers -- -- -- */
+
+.infoPackageStandalone footer nav,
+.infoPackagePlugin footer nav {
+	text-align: right;
+	opacity: 0;
+	
+	-webkit-transition: all .1s linear;
+	-moz-transition: all .1s linear;
+	-ms-transition: all .1s linear;
+	-o-transition: all .1s linear;
+	transition: all .1s linear;
+}
+
+.infoPackageStandalone:hover footer nav,
+.infoPackagePlugin:hover footer nav {
+	opacity: 1;
+}
+
+
+
+
+
+
+
+
+
+
+/* ############## ToDo: Small Buttons ############## */
+
+/* Globals */
+
+ul.smallButtons {
 	list-style-type: none;
 	margin-right: -1px;
 	margin-bottom: -1px;
 }
 
-.infoPackageStandalone footer nav ul.smallButtons > li {
+ul.smallButtons > li {
 	margin-left: -5px;
 	display: inline-block;
 }
 
-.infoPackageStandalone footer nav ul.smallButtons > li > a {
+ul.smallButtons > li > a {
 	white-space: nowrap;
 	padding: 3px 7px;
 	display: block;
 }
 
-.infoPackageStandalone footer nav ul.smallButtons > li.separator > a {
+ul.smallButtons > li.separator > a {
 	border-right: 1px dotted #bcd;
 }
 
-.infoPackageStandalone footer nav ul.smallButtons > li:first-child > a {
+ul.smallButtons > li:first-child > a {
 	border-top-left-radius: 13px;
 }
 
-.infoPackageStandalone footer nav ul.smallButtons > li:last-child > a {
+ul.smallButtons > li:last-child > a {
 	border-bottom-right-radius: 7px;
 }
 
