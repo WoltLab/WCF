@@ -2953,7 +2953,7 @@ $.widget('ui.wcfPages', {
 			$pageList.append($nextElement);
 			
 			if (this.options.activePage < this.options.maxPage) {
-				var $nextLink = $('<a title="' + ((this.options.nextPage != null) ? (' title="' + this.options.nextPage + '"') : ('')) + '"></a>');
+				var $nextLink = $('<a' + ((this.options.nextPage != null) ? (' title="' + this.options.nextPage + '"') : ('')) + '></a>').addClass('ballonTooltip');
 				$nextElement.append($nextLink);
 				this._bindSwitchPage($nextLink, this.options.activePage + 1);
 				
