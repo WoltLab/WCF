@@ -1191,6 +1191,12 @@ input[type='button'],
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	margin-top: 15px;
+	
+	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-o-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
 }
 
 .border.overlay {
@@ -1846,11 +1852,11 @@ p.warning {
 	margin-top: 15px;
 	padding: 7px 15px 7px 50px;
 	
-	-webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-	-moz-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-	-ms-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-	-o-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-	box-shadow: 0 0 7px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-o-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
 	
 	-webkit-transition: all .1s linear;
 	-moz-transition: all .1s linear;
@@ -2730,7 +2736,6 @@ div.userNotificationContainer {
 	background-color: rgba(224, 224, 224, .9);
 	position: absolute;
 	width: 250px;
-	z-index: 501;	/* adjust to any value you like, it *MUST* be higher than 'header.pageHeader nav.topMenu' */
 }
 
 div.scrollableContainer {
@@ -2761,7 +2766,6 @@ div.scrollableContainer > div:first-child ul {
 
 div.scrollableContainer > div:first-child li {
 	border-top: 1px solid rgba(192, 192, 192, 1);
-	cursor: pointer;
 	padding: 7px;
 }
 
@@ -2871,7 +2875,6 @@ div.scrollableContainer > div:first-child p {
 
 .infoPackageStandalone {
 	position: relative;
-	padding-bottom: 0;
 }
 
 .infoPackageStandalone .packageStandaloneIcon {
@@ -2883,14 +2886,16 @@ div.scrollableContainer > div:first-child p {
 }
 
 .infoPackageStandalone section {
+	margin-bottom: -15px;
 	margin-left: 30px;
 }
 
-/* Navigation */
+/* Footer */
 
 .infoPackageStandalone footer {
 	position: relative;
 	right: -15px;
+	bottom: -15px;
 }
 
 .infoPackageStandalone footer nav {
@@ -2908,24 +2913,23 @@ div.scrollableContainer > div:first-child p {
 	opacity: 1;
 }
 
+/* Small Buttons */
+
 .infoPackageStandalone footer nav ul.smallButtons {
 	list-style-type: none;
-	display: inline-block;
 	margin-right: -1px;
 	margin-bottom: -1px;
 }
 
 .infoPackageStandalone footer nav ul.smallButtons > li {
-	float: left;
-	position: relative;
-	margin-left: -1px;
+	margin-left: -5px;
+	display: inline-block;
 }
 
 .infoPackageStandalone footer nav ul.smallButtons > li > a {
-	text-decoration: none;
 	white-space: nowrap;
 	padding: 3px 7px;
-	overflow: hidden;
+	display: block;
 }
 
 .infoPackageStandalone footer nav ul.smallButtons > li.separator > a {
@@ -2938,11 +2942,6 @@ div.scrollableContainer > div:first-child p {
 
 .infoPackageStandalone footer nav ul.smallButtons > li:last-child > a {
 	border-bottom-right-radius: 7px;
-}
-
-.infoPackageStandalone footer nav ul.smallButtons > li > a img {
-	border: 0 !important;
-	vertical-align: middle;
 }
 
 
