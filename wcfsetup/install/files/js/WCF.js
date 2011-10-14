@@ -2808,7 +2808,7 @@ $.widget('ui.wcfPages', {
 			var $pageList = $('<ul></ul>');
 			this.element.append($pageList);
 			
-			var $previousElement = $('<li></li>');
+			var $previousElement = $('<li></li>').addClass('skip');
 			$pageList.append($previousElement);
 			
 			if (this.options.activePage > 1) {
@@ -2822,8 +2822,8 @@ $.widget('ui.wcfPages', {
 			else {
 				var $previousImage = $('<img src="' + this.options.previousDisabledIcon + '" alt="" />');
 				$previousElement.append($previousImage);
+				$previousElement.addClass('disabled');
 			}
-			$previousElement.addClass('skip');
 			
 			// add first page
 			$pageList.append(this._renderLink(1));
@@ -2949,7 +2949,7 @@ $.widget('ui.wcfPages', {
 			$pageList.append(this._renderLink(this.options.maxPage));
 			
 			// add next button
-			var $nextElement = $('<li></li>');
+			var $nextElement = $('<li></li>').addClass('skip');
 			$pageList.append($nextElement);
 			
 			if (this.options.activePage < this.options.maxPage) {
@@ -2963,8 +2963,8 @@ $.widget('ui.wcfPages', {
 			else {
 				var $nextImage = $('<img src="' + this.options.nextDisabledIcon + '" alt="" />');
 				$nextElement.append($nextImage);
+				$nextElement.addClass('disabled');
 			}
-			$nextElement.addClass('skip');
 		}
 		else {
 			// otherwise hide the paginator if not already hidden
