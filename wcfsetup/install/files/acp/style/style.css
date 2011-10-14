@@ -1199,6 +1199,14 @@ input[type='button'],
 	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
 }
 
+.tabMenu ~ .border {
+	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
+	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
+	-o-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
+}
+
 .border.overlay {
 	margin-top: 0 !important;
 }
@@ -1335,8 +1343,8 @@ input[type='button'],
 	color: #666;
 	border-width: 1px;
 	border-style: solid;
-	border-color: #fa2 #fa2 #ccc;
-	background-color: #fff9f4;
+	border-color: rgb(255, 170, 34) rgb(255, 170, 34) rgb(204, 204, 204);
+	background-color: rgba(255, 249, 244, 1);
 }
 
 .tabMenu li:not(.ui-state-active) a:active,
