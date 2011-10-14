@@ -2880,7 +2880,7 @@ $.widget('ui.wcfPages', {
 					var $leftChildrenImage = $('<img src="' + this.options.arrowDownIcon + '" alt="" />');
 					$leftChildrenLink.append($leftChildrenImage);
 					
-					var $leftChildrenInput = $('<input type="text" class="inputText" name="pageNo" />');
+					var $leftChildrenInput = $('<input type="text" name="pageNo" class="short" />');
 					$leftChildren.append($leftChildrenInput);
 					$leftChildrenInput.keydown($.proxy(this._handleInput, this));
 					$leftChildrenInput.keyup($.proxy(this._handleInput, this));
@@ -2923,7 +2923,7 @@ $.widget('ui.wcfPages', {
 					var $rightChildrenImage = $('<img src="' + this.options.arrowDownIcon + '" alt="" />');
 					$rightChildrenLink.append($rightChildrenImage);
 					
-					var $rightChildrenInput = $('<input type="text" class="inputText" name="pageNo" />');
+					var $rightChildrenInput = $('<input type="text" name="pageNo" class="short" />');
 					$rightChildren.append($rightChildrenInput);
 					$rightChildrenInput.keydown($.proxy(this._handleInput, this));
 					$rightChildrenInput.keyup($.proxy(this._handleInput, this));

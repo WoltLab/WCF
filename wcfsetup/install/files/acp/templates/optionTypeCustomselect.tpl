@@ -6,6 +6,6 @@
 	{/foreach}
 	<li>
 		<label><input type="radio" name="values[{$option->optionName}]"{if $value == $customValue} checked="checked"{/if} value="" /></label>
-		<input type="text" id="{$option->optionName}_custom" name="values[{$option->optionName}_custom]" value="{$customValue}" class="inputText" />
+		<input type="text" id="{$option->optionName}_custom" name="values[{$option->optionName}_custom]" value="{$customValue}" class="medium" />
 	</li>
 </ul>

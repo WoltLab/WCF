@@ -41,7 +41,7 @@
 				
 				<img src="{@RELATIVE_WCF_DIR}icon/wcfIcon1.svg" alt="" title="{$package->getName()}" class="packageStandaloneIcon" />
 				
-				<section>
+				<div>
 					<dl>
 						<dt>package</dt>
 						<dd>{$package->package}</dd>
@@ -66,13 +66,13 @@
 						<dt>creator</dt>
 						<dd>{if $package->authorURL}<a href="dereferrer.php?url={$package->authorURL|rawurlencode}">{/if}{$package->author}{if $package->authorURL}</a>{/if}</dd>
 					</dl>
-				</section>
+				</div>
 				
 				<footer>
 					<nav>
 						<ul class="smallButtons">
-							<li><a href="{link controller='PackageView' id=$packageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/info1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="bal loonTooltip" /> Details</a></li>
-							<li><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="bal loonTooltip" /> Update</a></li>
+							<li><a href="{link controller='PackageView' id=$packageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/info1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" /> <span>Details</span></a></li>
+							<li><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" /> <span>Update</span></a></li>
 						</ul>
 					</nav>
 				</footer>
@@ -83,18 +83,24 @@
 	{hascontent}
 		<div id="plugins" class="border tabMenuContent hidden">
 			<hgroup class="subHeading">
-				<h1>installed plugins</h1>
+				<h1>Installed Plugins</h1>
 			</hgroup>
 			
-			<div class="pluginList"></div>
+			<div class="contentHeader">
+				<div class="pluginList"></div>
+			</div>
 			
-			<ol>
-				{content}
-					{include file='packageListPlugins'}
-				{/content}
-			</ol>
+			<section class="packageListPlugin">
+				<ol>
+					{content}
+						{include file='packageListPlugins'}
+					{/content}
+				</ol>
+			</section>
 			
-			<div class="pluginList"></div>
+			<div class="contentFooter">
+				<div class="pluginList"></div>
+			</div>
 		</div>
 	{/hascontent}
 </div>

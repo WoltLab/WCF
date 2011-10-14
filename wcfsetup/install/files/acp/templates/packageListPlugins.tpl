@@ -1,12 +1,20 @@
 {foreach from=$plugins key=packageID item=package}
-	<li class="package" style="border: 1px solid rgb(192, 192, 192); display: inline-block; text-align: center; width: 150px;">
-		<a href="index.php/PackageView/{@$packageID}{@SID_ARG_1ST}">
-			<span style="border-bottom: 1px solid rgb(192, 192, 192); display: block;">{$package->getName()}</span>
-			<img src="http://s-ak.buzzfed.com/static/enhanced/web05/2011/3/18/1/enhanced-buzz-15854-1300424464-1.jpg" alt="" style="width: 100px;" />
-		</a>
-		<ul style="text-align: right;">
-			<li style="display: inline-block;"><a href="index.php?form=PackageStartInstall&amp;action=update&amp;packageID={@$packageID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a></li>
-			<li style="display: inline-block;"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="uninstallButton balloonTooltip" data-objectID="{@$package->packageID}" /></li>
-		</ul>
+	<li class="infoPackagePlugin">
+		<div>
+			<a href="index.php/PackageView/{@$packageID}{@SID_ARG_1ST}" title="{$package->getName()}" style="background-image: url('{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg');">
+				<h1>{$package->getName()}</h1>
+				<small>Short descriptive text goes here</small>
+			</a>
+		</div>
+		
+		<footer>
+			<nav>
+				<ul class="smallButtonBar">
+					<li><a href="index.php/PackageView/{@$packageID}{@SID_ARG_1ST}" title="{$package->getName()}" class="balloonTooltip"><img src="{@RELATIVE_WCF_DIR}icon/info1.svg" alt="" /> <span>Update</span></a></li>
+					<li><a href="index.php?form=PackageStartInstall&amp;action=update&amp;packageID={@$packageID}{@SID_ARG_2ND}" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" /> <span>Update</span></a></li>
+					<li title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="balloonTooltip separator"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" class="uninstallButton" data-objectID="{@$package->packageID}" /> <span>Delete</span></li>
+				</ul>
+			</nav>
+		</footer>
 	</li>
 {/foreach}
