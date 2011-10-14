@@ -70,6 +70,28 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 	}
 	
 	/**
+	 * @see wcf\data\IEditableObject::updateCounters()
+	 */
+	public function updateCounters(array $counters = array()) {
+		if (!count($counters)) return;
+		
+		$updateSQL = '';
+		$statementParameters = array();
+		foreach ($counters as $key => $value) {
+			if (!empty($updateSQL)) $updateSQL .= ', ';
+			$updateSQL .= $key . ' = ' . $key . ' + ?';
+			$statementParameters[] = $value;
+		}
+		$statementParameters[] = $this->__get(static::getDatabaseTableIndexName());
+		
+		$sql = "UPDATE	".static::getDatabaseTableName()."
+			SET	".$updateSQL."
+			WHERE	".static::getDatabaseTableIndexName()." = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($statementParameters);
+	}
+	
+	/**
 	 * @see wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {

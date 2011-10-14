@@ -28,6 +28,13 @@ interface IEditableObject extends IStorableObject {
 	public function update(array $parameters = array());
 	
 	/**
+	 * Updates the counters of this object.
+	 * 
+	 * @param	array		$counters
+	 */
+	public function updateCounters(array $counters = array());
+	
+	/**
 	 * Deletes this object.
 	 */
 	public function delete();
