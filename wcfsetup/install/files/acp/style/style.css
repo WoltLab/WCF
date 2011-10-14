@@ -2736,6 +2736,7 @@ div.userNotificationContainer {
 	background-color: rgba(224, 224, 224, .9);
 	position: absolute;
 	width: 250px;
+	z-index: 501;	/* adjust to any value you like, it *MUST* be higher than 'header.pageHeader nav.topMenu' */
 }
 
 div.scrollableContainer {
@@ -2766,6 +2767,7 @@ div.scrollableContainer > div:first-child ul {
 
 div.scrollableContainer > div:first-child li {
 	border-top: 1px solid rgba(192, 192, 192, 1);
+	cursor: pointer;
 	padding: 7px;
 }
 
