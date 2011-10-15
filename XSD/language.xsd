@@ -11,6 +11,7 @@
 				<xs:element name="category" type="category" maxOccurs="unbounded" />
 			</xs:sequence>
 			<xs:attribute name="languagecode" type="woltlab_varchar" use="required" />
+			<xs:attribute name="languagname" type="woltlab_varchar" use="required" />
 		</xs:complexType>
 	</xs:element>
 	
