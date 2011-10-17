@@ -2229,8 +2229,9 @@ li > .badgeButton {
 	box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
 }
 
-.balloonTooltip {
-	/* Not reliable, sometimes not wanted! */
+a.balloonTooltip,
+a .balloonTooltip {
+	/* ToDo: Find a way to show a hand-cursor even without link! */
 	cursor: pointer;
 }
 
