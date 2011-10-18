@@ -37,7 +37,7 @@
 	{else}
 		{foreach from=$availableUpdates item=availableUpdate}
 			<article class="message content"{if $availableUpdate.version.updateType == 'security'} style="border-color: #c00"{/if}>
-				<div class="messageInner container-{cycle name='styles' values='1,2'}">
+				<div class="messageInner container-{cycle name='styles' values='1,2'}"><!-- ToDo: Remove cycle -->
 					<hgroup class="subHeading">
 						<h1>
 							<label>

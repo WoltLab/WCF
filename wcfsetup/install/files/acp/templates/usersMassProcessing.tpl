@@ -150,8 +150,8 @@
 	
 		{if $additionalFields|isset}{@$additionalFields}{/if}
 		
-		<nav>
-			<ul class="tabMenu">
+		<nav class="tabMenu"><!-- ToDo: Fix that TabMenu! -->
+			<ul>
 				{if $options|count}<li id="profile"><a onclick="tabMenu.showSubTabMenu('profile');"><span>{lang}wcf.acp.user.search.conditions.profile{/lang}</span></a></li>{/if}
 				{if $additionalTabs|isset}{@$additionalTabs}{/if}
 			</ul>

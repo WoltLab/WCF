@@ -9,7 +9,7 @@
 </script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/installation1.svg" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/working1.svg" alt="" />
 	<hgroup>
 		<h1>{$archive->getPackageInfo('packageName')}</h1>
 		<h2>{$archive->getPackageInfo('packageDescription')}</h2>
