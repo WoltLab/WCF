@@ -2,6 +2,7 @@
 namespace wcf\system\cache\source;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
+use wcf\system\Callback;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\DirectoryUtil;
@@ -101,11 +102,11 @@ class DiskCacheSource implements ICacheSource {
 			$directory .= '/';	
 		}
 
-		DirectoryUtil::getInstance($directory)->executeCallback(function ($filename) {
+		DirectoryUtil::getInstance($directory)->executeCallback(new Callback(function ($filename) {
 			if (!@touch($filename, 1)) {
 				@unlink($filename);
 			}
-		}, '%^'.$directory.$filepattern.'$%i');
+		}), '%^'.$directory.$filepattern.'$%i');
 	}
 	
 	/**
