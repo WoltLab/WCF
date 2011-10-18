@@ -9,6 +9,13 @@
 		new WCF.ACP.PackageUninstallation($('.package .uninstallButton'));
 
 		{if $pluginsCount > 1}
+			WCF.Icon.addObject({
+				'wcf.icon.arrow.down': 'icon/dropDown1.svg',
+				'wcf.icon.next': 'icon/next1.svg',
+				'wcf.icon.next.disabled': 'icon/next1D.svg',
+				'wcf.icon.previous': 'icon/previous1.svg',
+				'wcf.icon.previous.disabled': 'icon/previous1D.svg'
+			});
 			new WCF.ACP.Package.List({@($pluginsCount / 1)|ceil});
 		{/if}
 	});

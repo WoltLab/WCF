@@ -2950,11 +2950,11 @@ $.widget('ui.wcfPages', {
 		maxPage: 1,
 		
 		// icons
-		previousIcon: RELATIVE_WCF_DIR + 'icon/previous1.svg',
-		previousDisabledIcon: RELATIVE_WCF_DIR + 'icon/previous1D.svg',
-		arrowDownIcon: RELATIVE_WCF_DIR + 'icon/dropDown1.svg',
-		nextIcon: RELATIVE_WCF_DIR + 'icon/next1.svg',
-		nextDisabledIcon: RELATIVE_WCF_DIR + 'icon/next1D.svg',
+		previousIcon: WCF.Icon.get('wcf.icon.previous'),
+		previousDisabledIcon: WCF.Icon.get('wcf.icon.previous.disabled'),
+		arrowDownIcon: WCF.Icon.get('wcf.icon.arrow.down'),
+		nextIcon: WCF.Icon.get('wcf.icon.next'),
+		nextDisabledIcon: WCF.Icon.get('wcf.icon.next.disabled'),
 		
 		// language
 		// we use options here instead of language variables, because the paginator is not only usable with pages
