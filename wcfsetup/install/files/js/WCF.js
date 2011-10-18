@@ -2667,7 +2667,7 @@ WCF.Effect.BalloonTooltip.prototype = {
 		else {
 			this.tooltip.css({
 				top: (event.pageY + 20) + "px",
-				left: (event.pageX +5) + "px",
+				left: (event.pageX + 5) + "px",
 				right: "auto"
 			});
 		}
