@@ -2226,8 +2226,14 @@ li > .badgeButton {
 
 a.balloonTooltip,
 a .balloonTooltip,
-img[src*='delete']{
-	/* ToDo: Find a way to show a hand-cursor even without link! */
+img[src*='delete'],
+img[src*='uninstall'],
+img[src*='install'],
+img[src*='update'],
+img[src*='run'],
+img[src*='info'],
+img[src*='disable'],
+img[src*='enable'] {
 	cursor: pointer;
 }
 
