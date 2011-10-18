@@ -262,6 +262,25 @@
 		<item name="wcf.acp.option.import.success"><![CDATA[Die Optionen wurden erfolgreich importiert.]]></item>
 	</category>
 	
+	<category name="wcf.acp.package">
+		<item name="wcf.acp.package.list"><![CDATA[Installierte Pakete]]></item>
+		<item name="wcf.acp.package.list.count"><![CDATA[Anzahl installierte Pakete]]></item>
+		<item name="wcf.acp.package.list.id"><![CDATA[ID]]></item>
+		<item name="wcf.acp.package.list.name"><![CDATA[Name]]></item>
+		<item name="wcf.acp.package.list.author"><![CDATA[Hersteller]]></item>
+		<item name="wcf.acp.package.list.version"><![CDATA[Version]]></item>
+		<item name="wcf.acp.package.updateDate"><![CDATA[Aktualisierungsdatum]]></item>
+		<item name="wcf.acp.package.startInstall"><![CDATA[Neues Paket installieren]]></item>
+		<item name="wcf.acp.package.list.standalone"><![CDATA[Endanwendung]]></item>
+		<item name="wcf.acp.package.view.button.uninstall"><![CDATA[Paket deinstallieren]]></item>
+		<item name="wcf.acp.package.view.button.update"><![CDATA[Paket aktuallisieren]]></item>
+		<item name="wcf.acp.package.startInstall.source"><![CDATA[Quelle auswählen]]></item>
+		<item name="wcf.acp.package.startInstall.source.upload"><![CDATA[Paket vom lokalen Computer hochladen]]></item>
+		<item name="wcf.acp.package.startInstall.source.upload.description"><![CDATA[Geben Sie eine Paketdatei von Ihrem lokalen Rechner an.]]></item>
+		<item name="wcf.acp.package.startInstall.source.download"><![CDATA[Direkten Pfad zum Paket angeben]]></item>
+		<item name="wcf.acp.package.startInstall.source.download.description"><![CDATA[Geben Sie den direkten Pfad zur Paketdatei an. Dabei kann es sich um die Internet Adresse der Paketdatei oder alternativ den Pfad zur Paketdatei im Dateisystem handeln.]]></item>
+	</category>
+	
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Server hinzufügen]]></item>
 		<item name="wcf.acp.updateServer.data"><![CDATA[Server-Daten]]></item>

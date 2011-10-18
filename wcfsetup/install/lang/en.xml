@@ -262,6 +262,25 @@
 		<item name="wcf.acp.option.import.success"><![CDATA[The options have been successfully imported.]]></item>
 	</category>
 	
+	<category name="wcf.acp.package">
+		<item name="wcf.acp.package.list"><![CDATA[Installed packages]]></item>
+		<item name="wcf.acp.package.list.count"><![CDATA[Number of installed packages]]></item>
+		<item name="wcf.acp.package.list.id"><![CDATA[ID]]></item>
+		<item name="wcf.acp.package.list.name"><![CDATA[Name]]></item>
+		<item name="wcf.acp.package.list.author"><![CDATA[Author]]></item>
+		<item name="wcf.acp.package.list.version"><![CDATA[Version]]></item>
+		<item name="wcf.acp.package.updateDate"><![CDATA[Last updated]]></item>
+		<item name="wcf.acp.package.startInstall"><![CDATA[Install new package]]></item>
+		<item name="wcf.acp.package.list.standalone"><![CDATA[Standalone Application]]></item>
+		<item name="wcf.acp.package.view.button.uninstall"><![CDATA[Uninstall package]]></item>
+		<item name="wcf.acp.package.view.button.update"><![CDATA[Update package]]></item>
+		<item name="wcf.acp.package.startInstall.source"><![CDATA[Select package source]]></item>
+		<item name="wcf.acp.package.startInstall.source.upload"><![CDATA[Upload package from your local computer]]></item>
+		<item name="wcf.acp.package.startInstall.source.upload.description"><![CDATA[Enter the package file to be uploaded from your computer here.]]></item>
+		<item name="wcf.acp.package.startInstall.source.download"><![CDATA[Enter the path of the package located on your server]]></item>
+		<item name="wcf.acp.package.startInstall.source.download.description"><![CDATA[Enter a direct path to the package-file here. An internet address can be used or alternatively the path to the package file using the server's file system.]]></item>
+	</category>
+	
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add server]]></item>
 		<item name="wcf.acp.updateServer.data"><![CDATA[Server data]]></item>
