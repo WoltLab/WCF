@@ -1,17 +1,18 @@
 <?php
 namespace wcf\util;
+use wcf\system\Callback;
 use wcf\system\exception\SystemException;
 
 /**
-* Contains directory-related functions
-* 
-* @author	Tim Düsterhus
-* @copyright	2011 Tim Düsterhus
-* @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
-* @package	com.woltlab.wcf
-* @subpackage	util
-* @category	Community Framework
-*/
+ * Contains directory-related functions
+ * 
+ * @author	Tim Düsterhus
+ * @copyright	2011 Tim Düsterhus
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	util
+ * @category	Community Framework
+ */
 class DirectoryUtil {
 	/**
 	 * @var \DirectoryIterator
@@ -254,16 +255,14 @@ class DirectoryUtil {
 	/**
 	 * Executes a callback on each file and returns false if callback is invalid.
 	 * 
-	 * @param	callback	$callback	valid callback
-	 * @param	string		$pattern	callback is only applied to files matching the given pattern
+	 * @param	wcf\system\Callback		$callback
+	 * @param	string				$pattern	callback is only applied to files matching the given pattern
 	 * @return	boolean
 	 */
-	public function executeCallback($callback, $pattern = '') {
-		if (!is_callable($callback)) return false;
-		
+	public function executeCallback(Callback $callback, $pattern = '') {
 		$files = $this->getFileObjects(self::SORT_NONE, $pattern);
 		foreach ($files as $filename => $obj) {
-			call_user_func($callback, $filename, $obj);
+			$callback($filename, $obj);
 		}
 		
 		return true;
