@@ -73,10 +73,11 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	protected $returnValues = null;
 	
 	/**
-	 * disallow guest access
-	 * @var	boolean
+	 * allows guest access for all specified methods, by default
+	 * guest access is completely disabled
+	 * @var	array<string>
 	 */
-	protected $allowGuestAccess = false;
+	protected $allowGuestAccess = array();
 	
 	/**
 	 * Initialized a new DatabaseObject-related action.
@@ -99,7 +100,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	 */
 	public function validateAction() {
 		// validate if user is logged in
-		if (!$this->allowGuestAccess && !WCF::getUser()->userID) {
+		if (!WCF::getUser()->userID && !in_array($this->getActionName(), $this->allowGuestAccess)) {
 			throw new ValidateActionException("Please login before executing this action");
 		}
 		
