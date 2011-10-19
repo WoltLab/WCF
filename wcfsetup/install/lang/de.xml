@@ -264,7 +264,7 @@
 	
 	<category name="wcf.acp.package">
 		<item name="wcf.acp.package.list"><![CDATA[Installierte Pakete]]></item>
-		<item name="wcf.acp.package.list.count"><![CDATA[Anzahl installierte Pakete]]></item>
+		<item name="wcf.acp.package.list.count"><![CDATA[Anzahl installierter Pakete]]></item>
 		<item name="wcf.acp.package.list.id"><![CDATA[ID]]></item>
 		<item name="wcf.acp.package.list.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.package.list.author"><![CDATA[Hersteller]]></item>

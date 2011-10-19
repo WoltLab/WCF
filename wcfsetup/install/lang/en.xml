@@ -269,7 +269,7 @@
 		<item name="wcf.acp.package.list.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.package.list.author"><![CDATA[Author]]></item>
 		<item name="wcf.acp.package.list.version"><![CDATA[Version]]></item>
-		<item name="wcf.acp.package.updateDate"><![CDATA[Last updated]]></item>
+		<item name="wcf.acp.package.updateDate"><![CDATA[Date of update]]></item>
 		<item name="wcf.acp.package.startInstall"><![CDATA[Install new package]]></item>
 		<item name="wcf.acp.package.list.standalone"><![CDATA[Standalone Application]]></item>
 		<item name="wcf.acp.package.view.button.uninstall"><![CDATA[Uninstall package]]></item>
