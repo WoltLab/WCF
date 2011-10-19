@@ -111,7 +111,6 @@ class ObjectTypeCache extends SingletonFactory {
 	 */
 	public function getObjectTypes($definitionName) {
 		if (isset($this->groupedObjectTypes[$definitionName])) {
-			die('<pre>'.print_r($this->groupedObjectTypes, true));
 			return $this->groupedObjectTypes[$definitionName];
 		}
 		
