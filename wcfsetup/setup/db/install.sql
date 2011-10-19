@@ -608,6 +608,14 @@ CREATE TABLE wcf1_user (
 	KEY styleID (styleID)
 );
 
+DROP TABLE IF EXISTS wcf1_user_collapsible_content;
+CREATE TABLE wcf1_user_collapsible_content (
+	objectTypeID INT(10) NOT NULL,
+	objectID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	UNIQUE KEY (objectTypeID, objectID, userID)
+);
+
 DROP TABLE IF EXISTS wcf1_user_group;
 CREATE TABLE wcf1_user_group (
 	groupID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -833,6 +841,9 @@ ALTER TABLE wcf1_template ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (p
 ALTER TABLE wcf1_template ADD FOREIGN KEY (templateGroupID) REFERENCES wcf1_template_group (templateGroupID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_template_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_collapsible_content ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_collapsible_content ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_group_option ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
