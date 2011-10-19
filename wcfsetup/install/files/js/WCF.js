@@ -6,6 +6,13 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
+ /* Simple JavaScript Inheritance
+ * By John Resig http://ejohn.org/
+ * MIT Licensed.
+ */
+// Inspired by base2 and Prototype
+(function(){var a=false,b=/xyz/.test(function(){xyz})?/\b_super\b/:/.*/;this.Class=function(){};Class.extend=function(c){function g(){if(!a&&this.init)this.init.apply(this,arguments)}var d=this.prototype;a=true;var e=new this;a=false;for(var f in c){e[f]=typeof c[f]=="function"&&typeof d[f]=="function"&&b.test(c[f])?function(a,b){return function(){var c=this._super;this._super=d[a];var e=b.apply(this,arguments);this._super=c;return e}}(f,c[f]):c[f]}g.prototype=e;g.prototype.constructor=g;g.extend=arguments.callee;return g}})()
+
 /**
  * Initialize WCF namespace
  */
@@ -2350,6 +2357,191 @@ WCF.Collapsible.Simple = {
 };
 
 /**
+ * Basic implementation for collapsible containers with AJAX support. Results for open
+ * and closed state will be cached.
+ *
+ * @param	string		className
+ */
+WCF.Collapsible.Remote = Class.extend({
+	/**
+	 * class name
+	 * @var	string
+	 */
+	_className: '',
+
+	/**
+	 * content cache per container
+	 * @var	object
+	 */
+	_content: {},
+
+	/**
+	 * list of active containers
+	 * @var	object
+	 */
+	_containers: {},
+
+	/**
+	 * container meta data
+	 * @var	object
+	 */
+	_containerData: {},
+
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+
+	/**
+	 * Initializes the controller for collapsible containers with AJAX support.
+	 * 
+	 * @param	string	className
+	 */
+	init: function(className) {
+		this._className = className;
+		
+		// validate containers
+		var $containers = this._getContainers();
+		if ($containers.length == 0) {
+			console.debug('[WCF.Collapsible.Remote] Empty container set given, aborting.');
+		}
+		
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		// initialize each container
+		$containers.each($.proxy(function(index, container) {
+			var $container = $(container);
+			var $id = $container.wcfIdentify();
+			this._containers[$id] = $container;
+			
+			var $target = this._getTarget($id);
+			var $buttonContainer = this._getButtonContainer($id);
+			var $button = this._createButton($id, $buttonContainer);
+			
+			// store container meta data
+			this._containerData[$id] = {
+				button: $button,
+				buttonContainer: $buttonContainer,
+				isOpen: $container.data('isOpen'),
+				target: $target
+			};
+			
+			// prepare content cache
+			this._content[$id] = {
+				'close': '',
+				'open': ''
+			};
+		}, this));
+	},
+	
+	/**
+	 * Returns a collection of collapsible containers.
+	 * 
+	 * @return	jQuery
+	 */
+	_getContainers: function() { },
+	
+	/**
+	 * Returns the target element for current collapsible container.
+	 * 
+	 * @param	integer		containerID
+	 * @return	jQuery
+	 */
+	_getTarget: function(containerID) { },
+	
+	/**
+	 * Returns the button container for current collapsible container.
+	 * 
+	 * @param	integer		containerID
+	 * @return	jQuery
+	 */
+	_getButtonContainer: function(containerID) { },
+	
+	/**
+	 * Creates the toggle button.
+	 * 
+	 * @param	integer		containerID
+	 * @param	jQuery		buttonContainer
+	 */
+	_createButton: function(containerID, buttonContainer) {
+		var $isOpen = this._containers[containerID].data('isOpen');
+		var $button = $('<img src="' + WCF.Icon.get('wcf.icon.' + ($isOpen ? 'closed' : 'opened')) + '" alt="" />').prependTo(buttonContainer);
+		$button.data('containerID', containerID).click($.proxy(this._toggleContainer, this));
+	},
+	
+	/**
+	 * Toggles a container.
+	 * 
+	 * @param	object		event
+	 */
+	_toggleContainer: function(event) {
+		var $button = $(event.target);
+		var $containerID = $button.data('containerID');
+		var $isOpen = this._containerData[$containerID].isOpen
+		var $state = ($isOpen) ? 'open' : 'close';
+		var $newState = ($isOpen) ? 'close' : 'open';
+		
+		// save container content
+		this._content[$containerID][$state] = this._containerData[$containerID].target.html();
+		
+		// set container content from cache
+		if (this._content[$containerID][$newState] != '') {
+			this._containerData[$containerID].target.html(this._content[$containerID][$newState]);
+			this._containerData[$containerID].isOpen = ($isOpen) ? false : true;
+			return;
+		}
+		
+		// fetch content state via AJAX
+		this._proxy.setOption('data', {
+			actionName: 'toggleContainer',
+			className: this._className,
+			parameters: {
+				containerID: $containerID,
+				currentState: $state,
+				newState: $newState,
+				objectID: this._getObjectID($containerID)
+			}
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Returns the object id for current container.
+	 * 
+	 * @param	integer		containerID
+	 * @return	integer
+	 */
+	_getObjectID: function(containerID) { },
+	
+	/**
+	 * Sets content upon successfull AJAX request.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		// validate container id
+		if (!data.returnValues.containerID) return;
+		var $containerID = data.returnValues.containerID;
+		
+		// check if container id is known
+		if (!this._containers[$containerID]) return;
+		
+		// update content storage
+		this._containerData[$containerID].isOpen = (data.returnValues.isOpen) ? true : false;
+		var $newState = (data.returnValues.isOpen) ? 'opened' : 'closed';
+		this._content[$containerID][$newState] = data.returnValues.content;
+		
+		// update container content
+		this._containerData[$containerID].target.html(data.returnValues.content);
+	}
+});
+
+/**
  * Holds userdata of the current user
  */
 WCF.User = {
@@ -2474,8 +2666,8 @@ WCF.Effect.BalloonTooltip.prototype = {
 		}
 		else {
 			this.tooltip.css({
-				top: (event.pageY) + "px",
-				left: (event.pageX + 15) + "px",
+				top: (event.pageY + 20) + "px",
+				left: (event.pageX + 5) + "px",
 				right: "auto"
 			});
 		}
@@ -2758,11 +2950,11 @@ $.widget('ui.wcfPages', {
 		maxPage: 1,
 		
 		// icons
-		previousIcon: RELATIVE_WCF_DIR + 'icon/previous1.svg',
-		previousDisabledIcon: RELATIVE_WCF_DIR + 'icon/previous1D.svg',
-		arrowDownIcon: RELATIVE_WCF_DIR + 'icon/dropDown1.svg',
-		nextIcon: RELATIVE_WCF_DIR + 'icon/next1.svg',
-		nextDisabledIcon: RELATIVE_WCF_DIR + 'icon/next1D.svg',
+		previousIcon: WCF.Icon.get('wcf.icon.previous'),
+		previousDisabledIcon: WCF.Icon.get('wcf.icon.previous.disabled'),
+		arrowDownIcon: WCF.Icon.get('wcf.icon.arrow.down'),
+		nextIcon: WCF.Icon.get('wcf.icon.next'),
+		nextDisabledIcon: WCF.Icon.get('wcf.icon.next.disabled'),
 		
 		// language
 		// we use options here instead of language variables, because the paginator is not only usable with pages

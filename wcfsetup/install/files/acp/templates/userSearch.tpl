@@ -111,8 +111,8 @@
 		{if $additionalFields|isset}{@$additionalFields}{/if}
 		
 		<div class="tabMenuContainer">
-			<nav>
-				<ul class="tabMenu">
+			<nav class="tabMenu">
+				<ul>
 					{if $optionTree|count}<li><a href="#profile">{*<span>*}{lang}wcf.acp.user.search.conditions.profile{/lang}{*</span>*}</a></li>{/if}
 					{if $additionalTabs|isset}{@$additionalTabs}{/if}
 					<li><a href="#resultOptions">{*<span>*}{lang}wcf.acp.user.search.display{/lang}{*</span>*}</a></li>

@@ -2,6 +2,7 @@
 namespace wcf\system\package;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
+use wcf\system\Callback;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -282,15 +283,10 @@ class PackageInstallationNodeBuilder {
 	 * nodes to provide to be descendants of the new node. If you intend
 	 * to insert more than a single node, you should prefer shiftNodes().
 	 * 
-	 * @param	string		$beforeNode
-	 * @param	function	$callback
+	 * @param	string			$beforeNode
+	 * @param	wcf\system\Callback	$callback
 	 */
-	public function insertNode($beforeNode, $callback) {
-		// verify if callback is a valid function
-		if (!is_callable($callback)) {
-			throw new SystemException("Provided callback is not a callable function.");
-		}
-		
+	public function insertNode($beforeNode, Callback $callback) {
 		$newNode = $this->getToken();
 		
 		// update descendants

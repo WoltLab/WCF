@@ -115,7 +115,7 @@ class UserListPage extends SortablePage {
 		$this->readUsers();
 		
 		// build page url
-		$this->url = LinkHandler::getInstance('searchID='.$this->searchID.'&action='.rawurlencode($this->action).'&pageNo='.$this->pageNo.'&sortField='.$this->sortField.'&sortOrder='.$this->sortOrder, array('controller' => 'UserList'));
+		$this->url = LinkHandler::getInstance()->getLink('UserList', array(), 'searchID='.$this->searchID.'&action='.rawurlencode($this->action).'&pageNo='.$this->pageNo.'&sortField='.$this->sortField.'&sortOrder='.$this->sortOrder);
 	}
 	
 	/**

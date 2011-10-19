@@ -1225,12 +1225,6 @@ input[type='button'],
 	/* background-image: url('../images/header.png'); */
 	background-position: left top;
 	background-repeat: repeat-x;	
-	
-	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
-	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
-	-ms-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
-	-o-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
-	box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 }
 
 /* Headings */
@@ -1753,6 +1747,7 @@ tr .columnRegistrationDate {
 	font-size: 85%;
 	text-align: right;
 	width: 1% !important;
+	white-space: nowrap;
 }
 
 tr .columnURL {
@@ -2230,8 +2225,15 @@ li > .badgeButton {
 }
 
 a.balloonTooltip,
-a .balloonTooltip {
-	/* ToDo: Find a way to show a hand-cursor even without link! */
+a .balloonTooltip,
+img[src*='delete'],
+img[src*='uninstall'],
+img[src*='install'],
+img[src*='update'],
+img[src*='run'],
+img[src*='info'],
+img[src*='disable'],
+img[src*='enable'] {
 	cursor: pointer;
 }
 
