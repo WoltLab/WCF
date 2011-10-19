@@ -191,7 +191,7 @@ class UserEditor extends DatabaseObjectEditor {
 	
 	/**
 	 * Removes a user from multiple user groups.
-	 *
+	 * 
 	 * @param	array		$groupIDs
 	 */
 	public function removeFromGroups(array $groupIDs) {
