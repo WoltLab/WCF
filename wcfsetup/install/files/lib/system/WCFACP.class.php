@@ -96,6 +96,13 @@ class WCFACP extends WCF {
 			$phpSelf = substr($phpSelf, 0, $pos);
 		}
 		
+		// get protocol and domain name
+		$protocol = 'http://';
+		if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' || $_SERVER['SERVER_PORT'] == 443) {
+			$protocol = 'https://';
+		}
+		$phpSelf = $protocol . $_SERVER['HTTP_HOST'] .  $phpSelf;
+		
 		self::getTPL()->assign(array(
 			'baseHref' => $phpSelf,
 			'quickAccessPackages' => $this->getQuickAccessPackages(),
