@@ -133,6 +133,14 @@ CREATE TABLE wcf1_clipboard_page (
 	actionID INT(10) NOT NULL DEFAULT 0
 );
 
+DROP TABLE IF EXISTS wcf1_collapsible_content;
+CREATE TABLE wcf1_collapsible_content (
+	objectTypeID INT(10) NOT NULL,
+	objectID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	UNIQUE KEY (objectTypeID, objectID, userID)
+);
+
 DROP TABLE IF EXISTS wcf1_core_object;
 CREATE TABLE wcf1_core_object (
 	objectID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -749,6 +757,9 @@ ALTER TABLE wcf1_clipboard_item_type ADD FOREIGN KEY (packageID) REFERENCES wcf1
 
 ALTER TABLE wcf1_clipboard_page ADD FOREIGN KEY (actionID) REFERENCES wcf1_clipboard_action (actionID) ON DELETE CASCADE;
 ALTER TABLE wcf1_clipboard_page ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_collapsible_content ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+ALTER TABLE wcf1_collapsible_content ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_core_object ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
