@@ -37,7 +37,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 */
 	protected function getDefinitionID($definitionName) {
 		// get object type id
-		$sql = "SELECT		notification_object_type.definitionID
+		$sql = "SELECT		object_type_definition.definitionID
 			FROM		wcf".WCF_N."_package_dependency package_dependency,
 					wcf".WCF_N."_object_type_definition object_type_definition
 			WHERE		object_type_definition.packageID = package_dependency.dependency
@@ -57,7 +57,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE		objectType = ?
-					definitionID = ?
+					AND definitionID = ?
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
@@ -75,7 +75,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	protected function prepareImport(array $data) {
 		return array(
 			'definitionID' => $this->getDefinitionID($data['elements']['definitionname']),
-			'objectType' => $data['attributes']['name'],
+			'objectType' => $data['elements']['name'],
 			'className' => (isset($data['elements']['classname']) ? $data['elements']['classname'] : ''),
 			'additionalData' => serialize(isset($data['elements']['additionaldata']) ? $data['elements']['additionaldata'] : array())
 		);
@@ -88,7 +88,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	objectType = ?
-				definitionID = ?
+				AND definitionID = ?
 				AND packageID = ?";
 		$parameters = array(
 			$data['objectType'],

@@ -50,7 +50,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	protected function prepareImport(array $data) {
 		return array(
 			'interfaceName' => (isset($data['elements']['interfacename']) ? $data['elements']['interfacename'] : ''),
-			'definitionName' => $data['attributes']['name']
+			'definitionName' => $data['elements']['name']
 		);
 	}
 	

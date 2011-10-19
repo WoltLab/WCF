@@ -11,7 +11,7 @@
 		<pip name="file">wcf\system\package\plugin\FilePackageInstallationPlugin</pip>
 		<pip name="language">wcf\system\package\plugin\LanguagePackageInstallationPlugin</pip>
 		<pip name="objectType">wcf\system\package\plugin\ObjectTypePackageInstallationPlugin</pip>
-		<pip name="objectTypeDefinition">wcf\system\package\plugin\ObjectTypeDefinitionInstallationPlugin</pip>
+		<pip name="objectTypeDefinition">wcf\system\package\plugin\ObjectTypeDefinitionPackageInstallationPlugin</pip>
 		<pip name="option">wcf\system\package\plugin\OptionPackageInstallationPlugin</pip>
 		<pip name="pageMenu">wcf\system\package\plugin\PageMenuPackageInstallationPlugin</pip>
 		<pip name="script">wcf\system\package\plugin\ScriptPackageInstallationPlugin</pip>
