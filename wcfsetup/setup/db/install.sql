@@ -229,6 +229,26 @@ CREATE TABLE wcf1_language_to_package (
 	UNIQUE KEY languageID (languageID, packageID)
 );
 
+DROP TABLE IF EXISTS wcf1_object_type;
+CREATE TABLE wcf1_object_type (
+	objectTypeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	definitionID INT(10) NOT NULL,
+	packageID INT(10) NOT NULL,
+	objectType VARCHAR(255) NOT NULL,
+	className VARCHAR(255) NOT NULL DEFAULT '',
+	additionalData MEDIUMTEXT,
+	UNIQUE KEY objectType (objectType, definitionID, packageID)
+);
+
+DROP TABLE IF EXISTS wcf1_object_type_definition;
+CREATE TABLE wcf1_object_type_definition (
+	definitionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	definitionName VARCHAR(255) NOT NULL,
+	packageID INT(10) NOT NULL,
+	interfaceName VARCHAR(255) NOT NULL DEFAULT '',
+	UNIQUE KEY definitionName (definitionName, packageID)
+);
+
 DROP TABLE IF EXISTS wcf1_option;
 CREATE TABLE wcf1_option (
 	optionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -744,6 +764,11 @@ ALTER TABLE wcf1_language_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_packa
 
 ALTER TABLE wcf1_language_to_package ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_language_to_package ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_object_type ADD FOREIGN KEY (definitionID) REFERENCES wcf1_object_type_definition (definitionID) ON DELETE CASCADE;
+ALTER TABLE wcf1_object_type ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_object_type_definition ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_option ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 

@@ -1,20 +1,20 @@
 <?php
-namespace wcf\data\event\listener;
+namespace wcf\data\object\type;
 use wcf\data\AbstractDatabaseObjectAction;
 
 /**
- * Executes event listener-related actions.
+ * Executes object type-related actions.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	data.event.listener
+ * @subpackage	data.object.type
  * @category 	Community Framework
  */
-class EventListenerAction extends AbstractDatabaseObjectAction {
+class ObjectTypeAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see wcf\data\AbstractDatabaseObjectAction::$className
 	 */
-	protected $className = 'wcf\data\event\listener\EventListenerEditor';
+	protected $className = 'wcf\data\object\type\ObjectTypeEditor';
 }
