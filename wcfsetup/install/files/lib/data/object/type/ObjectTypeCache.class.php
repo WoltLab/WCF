@@ -43,7 +43,7 @@ class ObjectTypeCache extends SingletonFactory {
 	 */
 	protected function init() {
 		// get definition cache
-		CacheHandler::getInstance()->addResource('objectType-'.PACKAGE_ID, WBB_DIR.'cache/cache.objectType-'.PACKAGE_ID.'.php', 'wcf\system\cache\builder\ObjectTypeCacheBuilder');
+		CacheHandler::getInstance()->addResource('objectType-'.PACKAGE_ID, WCF_DIR.'cache/cache.objectType-'.PACKAGE_ID.'.php', 'wcf\system\cache\builder\ObjectTypeCacheBuilder');
 		$this->definitions = CacheHandler::getInstance()->get('objectType-'.PACKAGE_ID, 'definitions');
 		foreach ($this->definitions as $definition) {
 			$this->definitionsByName[$definition->definitionName] = $definition;
@@ -57,7 +57,7 @@ class ObjectTypeCache extends SingletonFactory {
 				$this->groupedObjectTypes[$definition->definitionName] = array();
 			}
 			
-			$this->groupedObjectTypes[$definition->definitionName][$objectType->objectTypeName] = $objectType;
+			$this->groupedObjectTypes[$definition->definitionName][$objectType->objectType] = $objectType;
 		}
 	}
 	
@@ -111,6 +111,7 @@ class ObjectTypeCache extends SingletonFactory {
 	 */
 	public function getObjectTypes($definitionName) {
 		if (isset($this->groupedObjectTypes[$definitionName])) {
+			die('<pre>'.print_r($this->groupedObjectTypes, true));
 			return $this->groupedObjectTypes[$definitionName];
 		}
 		
