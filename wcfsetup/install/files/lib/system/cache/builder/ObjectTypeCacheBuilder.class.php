@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\definition\ObjectTypeDefinition;
 use wcf\system\WCF;
 
