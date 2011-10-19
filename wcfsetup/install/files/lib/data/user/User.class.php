@@ -77,7 +77,7 @@ class User extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns an array with the all the groups in which the actual user is a member.
+	 * Returns an array with all the groups in which the actual user is a member.
 	 *
 	 * @return 	array 		$groupIDs
 	 */
