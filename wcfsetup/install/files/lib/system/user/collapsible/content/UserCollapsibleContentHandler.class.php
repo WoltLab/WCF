@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\user;
+namespace wcf\system\user\collapsible\content;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.user
+ * @subpackage	system.user.collapsible.content
  * @category 	Community Framework
  */
 class UserCollapsibleContentHandler extends SingletonFactory {
@@ -70,7 +70,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 			
 			if (WCF::getUser()->userID) {
 				$sql = "SELECT	objectID
-					FROM	wcf".WCF_N."_collapsible_content
+					FROM	wcf".WCF_N."_user_collapsible_content
 					WHERE	objectTypeID = ?
 					AND userID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
@@ -104,7 +104,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	public function markAsCollapsed($objectTypeID, $objectID) {
 		if (WCF::getUser()->userID) {
 			$sql = "SELECT	*
-				FROM	wcf".WCF_N."_collapsible_content
+				FROM	wcf".WCF_N."_user_collapsible_content
 				WHERE	objectTypeID = ?
 					AND objectID = ?
 					AND userID = ?";
@@ -117,7 +117,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 			$row = $statement->fetchArray();
 			
 			if (!$row) {
-				$sql = "INSERT INTO	wcf".WCF_N."_collapsible_content
+				$sql = "INSERT INTO	wcf".WCF_N."_user_collapsible_content
 							(objectTypeID, objectID, userID)
 					VALUES		(?, ?, ?)";
 				$statement = WCF::getDB()->prepareStatement($sql);
@@ -151,7 +151,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	 */
 	public function markAsOpened($objectTypeID, $objectID) {
 		if (WCF::getUser()->userID) {
-			$sql = "DELETE FROM	wcf".WCF_N."_collapsible_content
+			$sql = "DELETE FROM	wcf".WCF_N."_user_collapsible_content
 				WHERE		objectTypeID = ?
 						AND objectID = ?
 						AND userID = ?";
