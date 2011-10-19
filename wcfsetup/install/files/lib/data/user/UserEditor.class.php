@@ -158,8 +158,8 @@ class UserEditor extends DatabaseObjectEditor {
 	public function addToGroup($groupID) {
 		$sql = "SELECT	COUNT(*) AS count
 			FROM	wcf".WCF_N."_user_to_group
-			WHERE	userID = ?".$this->userID."
-				AND groupID = ?".$groupID;
+			WHERE	userID = ?
+				AND groupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			$this->userID,
