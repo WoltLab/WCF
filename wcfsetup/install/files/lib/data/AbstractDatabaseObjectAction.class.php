@@ -80,7 +80,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	protected $allowGuestAccess = array();
 	
 	/**
-	 * Initialized a new DatabaseObject-related action.
+	 * Initialize a new DatabaseObject-related action.
 	 *
 	 * @param	array		$objectIDs
 	 * @param	string		$action

@@ -80,42 +80,55 @@ class SystemException extends \Exception implements IPrintableException {
 				<title>Fatal error: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></title>
 				<style>
 					.systemException {
-						border: 1px outset lightgrey;
-						padding: 3px;
-						background-color: lightgrey;
-						text-align: left;
-						overflow: auto;
-						font-family: Verdana, Helvetica, sans-serif;
-						font-size: .8em;
-					}
-					.systemException div {
-						border: 1px inset lightgrey;
-						padding: 4px;
+						font-size: 80% !important;
+						text-align: left !important;
+						border: 1px solid #036;
+						border-radius: 7px;
+						background-color: #eee !important;
+						overflow: auto !important;
 					}
 					.systemException h1 {
-						background-color: #154268;
-						padding: 4px;
-						color: #fff;
-						margin: 0 0 3px 0;
-						font-size: 1.15em;
-						word-wrap: break-word;
+						font-size: 130% !important;
+						font-weight: bold !important;
+						line-height: 1.1 !important;
+						text-decoration: none !important;
+						text-shadow: 0 -1px 0 #003 !important;
+						color: #fff !important;
+						word-wrap: break-word !important;
+						border-bottom: 1px solid #036;
+						border-top-right-radius: 6px;
+						border-top-left-radius: 6px;
+						background-color: #369 !important;
+						padding: 5px 10px !important;
+					}
+					.systemException div {
+						border-top: 1px solid #fff;
+						border-bottom-right-radius: 6px;
+						border-bottom-left-radius: 6px;
+						padding: 0 10px !important;
 					}
 					.systemException h2 {
-						font-size: 1.1em;
-						margin-bottom: 0;
+						font-size: 130% !important;
+						font-weight: bold !important;
+						color: #369 !important;
+						text-shadow: 0 1px 0 #fff !important;
+						margin: 5px 0 !important;
 					}
 					.systemException pre, .systemException p {
-						margin: 0;
+						text-shadow: none !important;
+						color: #666 !important;
+						margin: 0 !important;
 					}
 					.systemException pre {
-						font-size: .85em;
+						font-size: .85em !important;
 						font-family: "Courier New";
 						text-overflow: ellipsis;
-						overflow: hidden;
+						padding-bottom: 10px;
+						overflow: hidden !important;
 					}
 					.systemException pre:hover{
-						overflow: auto;
 						text-overflow: clip;
+						overflow: auto !important;
 					}
 				</style>
 			</head>
