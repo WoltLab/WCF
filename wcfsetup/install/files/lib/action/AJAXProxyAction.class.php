@@ -1,6 +1,7 @@
 <?php
 namespace wcf\action;
 use wcf\system\exception\AJAXException;
+use wcf\system\exception\SystemException;
 use wcf\system\exception\ValidateActionException;
 use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
@@ -66,7 +67,7 @@ class AJAXProxyAction extends AbstractSecureAction {
 				throw $e;
 			}
 			else {
-				throw new AJAXException($e->getMessage());
+				throw new AJAXException($e);
 			}
 		}
 	}
@@ -99,10 +100,10 @@ class AJAXProxyAction extends AbstractSecureAction {
 		
 		// validate class name
 		if (!class_exists($this->className)) {
-			throw new AJAXException("unknown class '".$this->className."'");
+			throw new SystemException("unknown class '".$this->className."'");
 		}
 		if (!ClassUtil::isInstanceOf($this->className, 'wcf\data\IDatabaseObjectAction')) {
-			throw new AJAXException("'".$this->className."' should implement wcf\system\IDatabaseObjectAction");
+			throw new SystemException("'".$this->className."' should implement wcf\system\IDatabaseObjectAction");
 		}
 		
 		// create object action instance
@@ -113,7 +114,7 @@ class AJAXProxyAction extends AbstractSecureAction {
 			$this->objectAction->validateAction();
 		}
 		catch (ValidateActionException $e) {
-			throw new AJAXException("validation failed: ".$e->getMessage());
+			throw new SystemException("validation failed: ".$e->getMessage());
 		}
 		
 		// execute action
@@ -121,7 +122,7 @@ class AJAXProxyAction extends AbstractSecureAction {
 			$this->response = $this->objectAction->executeAction();
 		}
 		catch (\Exception $e) {
-			throw new AJAXException('unknown exception caught: '.$e->getMessage());
+			throw new SystemException('unknown exception caught: '.$e->getMessage());
 		}
 		$this->executed();
 		

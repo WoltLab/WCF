@@ -997,12 +997,12 @@ WCF.Action.Proxy.prototype = {
 			}
 			
 			var $randomID = WCF.getRandomID();
-			$('<div id="' + $randomID + '" title="HTTP/1.0 ' + jqXHR.status + ' ' + errorThrown + '"><p>Der Server antwortete: ' + data.message + '.</p></div>').wcfDialog();
+			$('<div class="ajaxDebugMessage" id="' + $randomID + '" title="HTTP/1.0 ' + jqXHR.status + ' ' + errorThrown + '"><p>Der Server antwortete: ' + data.message + '</p><p>Stacktrace:</p><p>' + data.stacktrace + '</p></div>').wcfDialog();
 		}
 		// failed to parse JSON
 		catch (e) {
 			var $randomID = WCF.getRandomID();
-			$('<div id="' + $randomID + '" title="HTTP/1.0 ' + jqXHR.status + ' ' + errorThrown + '"><p>Der Server antwortete: ' + jqXHR.responseText + '.</p></div>').wcfDialog();
+			$('<div class="ajaxDebugMessage" id="' + $randomID + '" title="HTTP/1.0 ' + jqXHR.status + ' ' + errorThrown + '"><p style="padding: 3px;">Der Server antwortete: ' + jqXHR.responseText + '.</p></div>').wcfDialog();
 		}
 		
 		this._after();
@@ -2470,6 +2470,8 @@ WCF.Collapsible.Remote = Class.extend({
 		var $isOpen = this._containers[containerID].data('isOpen');
 		var $button = $('<img src="' + WCF.Icon.get('wcf.icon.' + ($isOpen ? 'closed' : 'opened')) + '" alt="" />').prependTo(buttonContainer);
 		$button.data('containerID', containerID).click($.proxy(this._toggleContainer, this));
+
+		return $button;
 	},
 	
 	/**
@@ -2506,6 +2508,18 @@ WCF.Collapsible.Remote = Class.extend({
 			}
 		});
 		this._proxy.sendRequest();
+
+		// set spinner for current button
+		this._showSpinner($button);
+	},
+
+	_showSpinner: function(button) {
+		console.debug('Updating icon');
+		button.attr('src', WCF.Icon.get('wcf.icon.loading'));
+	},
+
+	_hideSpinner: function(button, newIcon) {
+		button.attr('src', newIcon);
 	},
 	
 	/**
@@ -2538,6 +2552,8 @@ WCF.Collapsible.Remote = Class.extend({
 		
 		// update container content
 		this._containerData[$containerID].target.html(data.returnValues.content);
+
+
 	}
 });
 
