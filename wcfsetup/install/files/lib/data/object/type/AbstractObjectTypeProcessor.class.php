@@ -1,0 +1,21 @@
+<?php
+namespace wcf\data\object\type;
+use wcf\data\DatabaseObjectDecorator;
+use wcf\data\IDatabaseObjectProcessor;
+
+/**
+ * Provides default a implementation for object type processors.
+ *
+ * @author	Marcel Werk
+ * @copyright	2001-2011 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	data.object.type
+ * @category 	Community Framework
+ */
+abstract class AbstractObjectTypeProcessor extends DatabaseObjectDecorator implements IDatabaseObjectProcessor {
+	/**
+	 * @see wcf\data\DatabaseObjectDecorator::$baseClass
+	 */
+	protected static $baseClass = 'wcf\data\object\type\ObjectType';
+}
