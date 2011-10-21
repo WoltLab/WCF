@@ -48,6 +48,7 @@ class ObjectTypeCacheBuilder implements ICacheBuilder {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($packageID));
 		while ($row = $statement->fetchArray()) {
+			$row['additionalData'] = unserialize($row['additionalData']);
 			$data['objectTypes'][$row['objectTypeID']] = new ObjectType(null, $row);
 		}
 		

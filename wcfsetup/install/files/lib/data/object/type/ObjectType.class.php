@@ -26,6 +26,22 @@ class ObjectType extends ProcessibleDatabaseObject {
 	protected static $databaseTableIndexName = 'objectTypeID';
 	
 	/**
+	 * @see	wcf\data\IStorableObject::__get()
+	 */
+	public function __get($name) {
+		$value = parent::__get($name);
+		
+		// treat additional data as data variables if it is an array
+		if ($value === null) {
+			if (is_array($this->additionalData) && isset($this->additionalData[$name])) {
+				$value = $this->additionalData[$name];
+			}
+		}
+		
+		return $value;
+	}
+	
+	/**
 	 * @see	wcf\data\ProcessibleDatabaseObject::getProcessor()
 	 */
 	public function getProcessor() {
