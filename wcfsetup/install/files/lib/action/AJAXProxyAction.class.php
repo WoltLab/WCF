@@ -67,7 +67,7 @@ class AJAXProxyAction extends AbstractSecureAction {
 				throw $e;
 			}
 			else {
-				throw new AJAXException($e);
+				$this->throwException($e);
 			}
 		}
 	}
@@ -114,7 +114,7 @@ class AJAXProxyAction extends AbstractSecureAction {
 			$this->objectAction->validateAction();
 		}
 		catch (ValidateActionException $e) {
-			throw new SystemException("validation failed: ".$e->getMessage());
+			$this->throwException($e);
 		}
 		
 		// execute action
@@ -122,7 +122,7 @@ class AJAXProxyAction extends AbstractSecureAction {
 			$this->response = $this->objectAction->executeAction();
 		}
 		catch (\Exception $e) {
-			throw new SystemException('unknown exception caught: '.$e->getMessage());
+			$this->throwException($e);
 		}
 		$this->executed();
 		
@@ -130,5 +130,19 @@ class AJAXProxyAction extends AbstractSecureAction {
 		header('Content-type: application/json');
 		echo JSON::encode($this->response);
 		exit;
+	}
+	
+	/**
+	 * Throws an previously catched exception while maintaing the propriate stacktrace.
+	 * 
+	 * @param	\Exception	$e
+	 */
+	protected function throwException(\Exception $e) {
+		if ($e instanceof SystemException) {
+			throw new AJAXException($e->getMessage(), $e->__getTraceAsString());
+		}
+		else {
+			throw new AJAXException($e->getMessage(), $e->getTraceAsString());
+		}
 	}
 }

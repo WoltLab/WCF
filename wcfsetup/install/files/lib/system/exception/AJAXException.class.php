@@ -16,19 +16,17 @@ class AJAXException extends \Exception {
 	/**
 	 * Throws a JSON-encoded error message
 	 * 
-	 * @param	\Exception	$exception
+	 * @param	string		$message
+	 * @param	string		$stacktrace
 	 */
-	public function __construct(\Exception $exception) {
-		$stacktrace = $exception->getTraceAsString();
-		if ($exception instanceof SystemException) {
-			$stacktrace = $exception->__getTraceAsString();
-		}
+	public function __construct($message, $stacktrace = null) {
+		if ($stacktrace === null) $stacktrace = $this->getTraceAsString();
 		
 		//header('HTTP/1.0 418 I\'m a Teapot');
 		header('HTTP/1.0 503 Service Unavailable');
 		header('Content-type: application/json');
 		echo JSON::encode(array(
-			'message' => $exception->getMessage(),
+			'message' => $message,
 			'stacktrace' => nl2br($stacktrace)
 		));
 		exit;
