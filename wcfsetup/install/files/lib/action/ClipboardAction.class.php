@@ -43,10 +43,10 @@ class ClipboardAction extends AbstractSecureAction {
 	protected $type = '';
 	
 	/**
-	 * clipboard item type id
+	 * object type id
 	 * @var	integer
 	 */
-	protected $typeID = 0;
+	protected $objectTypeID = 0;
 	
 	/**
 	 * @see	wcf\action\AbstractAction::_construct()
@@ -102,7 +102,7 @@ class ClipboardAction extends AbstractSecureAction {
 		$this->validate();
 		
 		// execute action
-		ClipboardHandler::getInstance()->{$this->action}($this->objectIDs, $this->typeID);
+		ClipboardHandler::getInstance()->{$this->action}($this->objectIDs, $this->objectTypeID);
 	}
 	
 	/**
@@ -158,9 +158,9 @@ class ClipboardAction extends AbstractSecureAction {
 			throw new AJAXException("Clipboard action '".$this->action."' is invalid.");
 		}
 		
-		$this->typeID = (!empty($this->type)) ? ClipboardHandler::getInstance()->getTypeID($this->type) : null;
-		if ($this->typeID === null) {
-			throw new AJAXException("Clipboard item type '".$this->type."' is invalid.");
+		$this->objectTypeID = (!empty($this->type)) ? ClipboardHandler::getInstance()->getObjectTypeID($this->type) : null;
+		if ($this->objectTypeID === null) {
+			throw new AJAXException("object type '".$this->type."' is invalid.");
 		}
 	}
 }

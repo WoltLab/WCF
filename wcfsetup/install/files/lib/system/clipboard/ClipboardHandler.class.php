@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\clipboard;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -40,18 +41,21 @@ class ClipboardHandler extends SingletonFactory {
 	 * cached list of clipboard item types
 	 * @var	array<array>
 	 */
-	protected $typeCache = null;
+	protected $cache = null;
 	
 	/**
 	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		CacheHandler::getInstance()->addResource(
-			'clipboard-itemType-'.PACKAGE_ID,
-			WCF_DIR.'cache/cache.clipboard-itemType-'.PACKAGE_ID.'.php',
-			'wcf\system\cache\builder\ClipboardItemTypeCacheBuilder'
+		$this->cache = array(
+			'objectTypes' => array(),
+			'objectTypeNames' => array()
 		);
-		$this->typeCache = CacheHandler::getInstance()->get('clipboard-itemType-'.PACKAGE_ID);
+		$cache = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.clipboardItem');
+		foreach ($cache as $objectType) {
+			$this->cache['objectTypes'][$objectType->objectTypeID] = $objectType;
+			$this->cache['objectTypeNames'][$objectType->objectType] = $objectType->objectTypeID;
+		}
 		
 		CacheHandler::getInstance()->addResource(
 			'clipboard-page-'.PACKAGE_ID,
@@ -79,19 +83,19 @@ class ClipboardHandler extends SingletonFactory {
 	 * Marks objects as marked.
 	 * 
 	 * @param	array		$objectIDs
-	 * @param	integer		$typeID
+	 * @param	integer		$objectTypeID
 	 */
-	public function mark(array $objectIDs, $typeID) {
+	public function mark(array $objectIDs, $objectTypeID) {
 		// remove existing entries first, prevents conflict with INSERT
-		$this->unmark($objectIDs, $typeID);
+		$this->unmark($objectIDs, $objectTypeID);
 		
 		$sql = "INSERT INTO	wcf".WCF_N."_clipboard_item
-					(typeID, userID, objectID)
+					(objectTypeID, userID, objectID)
 			VALUES		(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($objectIDs as $objectID) {
 			$statement->execute(array(
-				$typeID,
+				$objectTypeID,
 				WCF::getUser()->userID,
 				$objectID
 			));
@@ -102,11 +106,11 @@ class ClipboardHandler extends SingletonFactory {
 	 * Removes an object marking.
 	 * 
 	 * @param	array		$objectIDs
-	 * @param	integer		$typeID
+	 * @param	integer		$objectTypeID
 	 */
-	public function unmark(array $objectIDs, $typeID) {
+	public function unmark(array $objectIDs, $objectTypeID) {
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("typeID = ?", array($typeID));
+		$conditions->add("objectTypeID = ?", array($objectTypeID));
 		$conditions->add("objectID IN (?)", array($objectIDs));
 		$conditions->add("userID = ?", array(WCF::getUser()->userID));
 		
@@ -122,9 +126,9 @@ class ClipboardHandler extends SingletonFactory {
 	 * @param	string		$typeName
 	 * @return	integer
 	 */
-	public function getTypeID($typeName) {
-		if (isset($this->typeCache['typeNames'][$typeName])) {
-			return $this->typeCache['typeNames'][$typeName];
+	public function getObjectTypeID($typeName) {
+		if (isset($this->cache['objectTypeNames'][$typeName])) {
+			return $this->cache['objectTypeNames'][$typeName];
 		}
 		
 		return null;
@@ -134,11 +138,11 @@ class ClipboardHandler extends SingletonFactory {
 	 * Returns a type by type id.
 	 * 
 	 * @param	integer		$typeID
-	 * @return	wcf\data\clipboard\item\type\ClipboardItemType
+	 * @return	wcf\data\object\type\ObjectType
 	 */
-	public function getType($typeID) {
-		if (isset($this->typeCache['types'][$typeID])) {
-			return $this->typeCache['types'][$typeID];
+	public function getObjectType($typeID) {
+		if (isset($this->cache['objectTypes'][$typeID])) {
+			return $this->cache['objectTypes'][$typeID];
 		}
 		
 		return null;
@@ -155,7 +159,7 @@ class ClipboardHandler extends SingletonFactory {
 		if ($typeID !== null) $conditions->add("typeID = ?", array($typeID));
 		
 		// fetch object ids
-		$sql = "SELECT	typeID, objectID
+		$sql = "SELECT	objectTypeID, objectID
 			FROM	wcf".WCF_N."_clipboard_item
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -164,30 +168,30 @@ class ClipboardHandler extends SingletonFactory {
 		// group object ids by type name
 		$data = array();
 		while ($row = $statement->fetchArray()) {
-			$type = $this->getType($row['typeID']);
-			if ($type === null) {
+			$objectType = $this->getObjectType($row['objectTypeID']);
+			if ($objectType === null) {
 				continue;
 			}
 			
-			if (!isset($data[$type->typeName])) {
-				$data[$type->typeName] = array(
-					'className' => $type->listClassName,
+			if (!isset($data[$objectType->objectType])) {
+				$data[$objectType->objectType] = array(
+					'className' => $objectType->listClassName,
 					'objectIDs' => array()
 				);
 			}
 			
-			$data[$type->typeName]['objectIDs'][] = $row['objectID'];
+			$data[$objectType->objectType]['objectIDs'][] = $row['objectID'];
 		}
 		
 		// read objects
 		$this->markedItems = array();
-		foreach ($data as $typeName => $objectData) {
+		foreach ($data as $objectType => $objectData) {
 			$objectList = new $objectData['className']();
 			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias() . "." . $objectList->getDatabaseTableIndexName() . " IN (?)", array($objectData['objectIDs']));
 			$objectList->sqlLimit = 0;
 			$objectList->readObjects();
 			
-			$this->markedItems[$typeName] = $objectList->getObjects();
+			$this->markedItems[$objectType] = $objectList->getObjects();
 		}
 	}
 	

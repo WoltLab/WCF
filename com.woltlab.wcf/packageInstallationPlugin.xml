@@ -4,7 +4,6 @@
 		<pip name="acpMenu">wcf\system\package\plugin\ACPMenuPackageInstallationPlugin</pip>
 		<pip name="acpTemplate">wcf\system\package\plugin\ACPTemplatePackageInstallationPlugin</pip>
 		<pip name="clipboardAction">wcf\system\package\plugin\ClipboardActionPackageInstallationPlugin</pip>
-		<pip name="clipboardItemType">wcf\system\package\plugin\ClipboardItemTypePackageInstallationPlugin</pip>
 		<pip name="coreObject">wcf\system\package\plugin\CoreObjectPackageInstallationPlugin</pip>
 		<pip name="cronjob">wcf\system\package\plugin\CronjobPackageInstallationPlugin</pip>
 		<pip name="eventListener">wcf\system\package\plugin\EventListenerPackageInstallationPlugin</pip>
