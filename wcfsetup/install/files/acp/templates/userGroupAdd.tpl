@@ -78,7 +78,7 @@
 			</nav>
 			
 			{foreach from=$optionTree item=categoryLevel1}
-				<div id="{@$categoryLevel1[object]->categoryName}" data-active="{$activeTabMenuItem}" data-store="activeSubTabMenuItem" class="tabMenuContainer border tabMenuContent ">
+				<div id="{@$categoryLevel1[object]->categoryName}" class="tabMenuContainer border tabMenuContent" data-active="{$activeTabMenuItem}" data-store="activeSubTabMenuItem">
 					<nav class="menu">
 						<ul>
 							{foreach from=$categoryLevel1[categories] item=$categoryLevel2}

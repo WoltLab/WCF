@@ -42,7 +42,7 @@
 	</nav>
 	
 	{hascontent}
-		<table data-type="com.woltlab.wcf.user" class="clipboardContainer">
+		<table class="clipboardContainer" data-type="com.woltlab.wcf.user">
 			<thead>
 				<tr class="tableHead">
 					<th class="columnMark"><label><input type="checkbox" class="clipboardMarkAll" /></label></th>
@@ -95,7 +95,7 @@
 	<div class="contentFooter">
 		{@$pagesLinks}
 		
-		<div data-types="[ 'com.woltlab.wcf.user' ]" class="clipboardEditor"></div>
+		<div class="clipboardEditor" data-types="[ 'com.woltlab.wcf.user' ]"></div>
 		
 		<nav class="largeButtons">
 			<ul>

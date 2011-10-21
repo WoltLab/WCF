@@ -26,7 +26,7 @@
 {/if}
 
 <form method="post" action="{link controller='Option' id=$category->categoryID}{/link}">
-	<div data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" class="tabMenuContainer">
+	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
 		<nav class="tabMenu">
 			<ul>
 				{foreach from=$optionTree item=categoryLevel1}
