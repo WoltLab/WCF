@@ -10,11 +10,11 @@
 
 		{if $pluginsCount > 1}
 			WCF.Icon.addObject({
-				'wcf.icon.arrow.down': 'icon/dropDown1.svg',
-				'wcf.icon.next': 'icon/next1.svg',
-				'wcf.icon.next.disabled': 'icon/next1D.svg',
-				'wcf.icon.previous': 'icon/previous1.svg',
-				'wcf.icon.previous.disabled': 'icon/previous1D.svg'
+				'wcf.icon.arrow.down': '{@RELATIVE_WCF_DIR}icon/dropDown1.svg',
+				'wcf.icon.next': '{@RELATIVE_WCF_DIR}icon/next1.svg',
+				'wcf.icon.next.disabled': '{@RELATIVE_WCF_DIR}icon/next1D.svg',
+				'wcf.icon.previous': '{@RELATIVE_WCF_DIR}icon/previous1.svg',
+				'wcf.icon.previous.disabled': '{@RELATIVE_WCF_DIR}icon/previous1D.svg'
 			});
 			new WCF.ACP.Package.List({@($pluginsCount / 1)|ceil});
 		{/if}
