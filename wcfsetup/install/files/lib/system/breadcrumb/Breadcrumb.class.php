@@ -52,7 +52,7 @@ class Breadcrumb {
 	 * @param	string		$url
 	 * @param	boolean		$appendSession
 	 */	
-	public function setURL($url, $appendSession = true) {
+	public function setURL($url, $appendSession = false) {
 		// append session id
 		if ($appendSession) {
 			if (StringUtil::indexOf($url, '?') === false) {
