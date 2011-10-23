@@ -186,7 +186,7 @@ abstract class Database {
 		try {
 			$pdoStatement = $this->pdo->prepare($statement);
 			if ($pdoStatement instanceof \PDOStatement) {
-				return new $this->preparedStatementClassName($this, $pdoStatement);
+				return new $this->preparedStatementClassName($this, $pdoStatement, $statement);
 			}
 			throw new DatabaseException("Can not prepare statement: ".$statement, $this);
 		}

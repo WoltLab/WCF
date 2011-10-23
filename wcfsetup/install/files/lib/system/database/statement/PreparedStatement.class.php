@@ -30,14 +30,22 @@ class PreparedStatement {
 	protected $pdoStatement = null;
 	
 	/**
+	 * SQL query
+	 * @var string
+	 */
+	protected $query = '';
+	
+	/**
 	 * Creates a new PreparedStatement object.
 	 *
 	 * @param	wcf\system\database\Database	$database
 	 * @param	\PDOStatement			$pdoStatement
+	 * @param	string				$query		SQL query
 	 */
-	public function __construct(Database $database, \PDOStatement $pdoStatement) {
+	public function __construct(Database $database, \PDOStatement $pdoStatement, $query = '') {
 		$this->database = $database;
 		$this->pdoStatement = $pdoStatement;
+		$this->query = $query;
 	}
 	
 	/**
@@ -156,5 +164,14 @@ class PreparedStatement {
 			if (isset($errorInfoArray[2])) return $errorInfoArray[2];
 		}
 		return '';
+	}
+	
+	/**
+	 * Returns the SQL query of this statement.
+	 * 
+	 * @return string
+	 */
+	public function getSQLQuery() {
+		return $this->query;
 	}
 }

@@ -64,7 +64,7 @@ class DatabaseException extends SystemException {
 		$this->preparedStatement = $preparedStatement;
 		
 		// prefer errors from prepared statement
-		if (($this->preparedStatement instanceof PreparedStatement) && $this->preparedStatement->getErrorNumber()) {
+		if ($this->preparedStatement !== null && $this->preparedStatement->getErrorNumber()) {
 			$this->errorNumber = $this->preparedStatement->getErrorNumber();
 			$this->errorDesc = $this->preparedStatement->getErrorDesc();
 		}
@@ -129,6 +129,7 @@ class DatabaseException extends SystemException {
 		$this->information .= '<b>sql error:</b> ' . StringUtil::encodeHTML($this->getErrorDesc()) . '<br />';
 		$this->information .= '<b>sql error number:</b> ' . StringUtil::encodeHTML($this->getErrorNumber()) . '<br />';
 		$this->information .= '<b>sql version:</b> ' . StringUtil::encodeHTML($this->getSQLVersion()) . '<br />';
+		if ($this->preparedStatement !== null) $this->information .= '<b>sql query:</b> ' . StringUtil::encodeHTML($this->preparedStatement->getSQLQuery()) . '<br />';
 		
 		$this->information .= "\n<!-- db error: #".$this->db->getErrorNumber().': '.$this->db->getErrorDesc()." -->\n";
 		if ($this->preparedStatement !== null) {
