@@ -26,5 +26,7 @@
 		<instruction type="cronjob">cronjob.xml</instruction>
 		<instruction type="coreObject">coreObject.xml</instruction>
 		<instruction type="clipboardAction">clipboardAction.xml</instruction>
+		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
+		<instruction type="objectType">objectType.xml</instruction>
 	</instructions>
 </package>
