@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>PHP5 Check</title>
+	<title>PHP 5.3 Check</title>
 </head>
 <body>
 <?php
 /**
- * Tests the support of php5.0.5 or greater.
+ * Tests the support of PHP 5.3.0 or greater.
  * ><p><b>Support for PHP is missing.<br />PHP Unterst&uuml;tzung nicht gefunden</b></p> <!--
  * 
  * @author	Marcel Werk
@@ -17,10 +17,11 @@
 // php version
 $phpVersion = phpversion();
 $comparePhpVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $phpVersion);
-if (!(version_compare($comparePhpVersion, '5.3.0') >= 0)) {
+$neededPhpVersion = '5.3.0';
+if (!(version_compare($comparePhpVersion, $neededPhpVersion) >= 0)) {
 	?>
-	<p>Your PHP version '<?php echo $phpVersion; ?>' is insufficient for installation of this software. PHP version 5.2.0 or greater is required.<br />
-	Ihre PHP Version '<?php echo $phpVersion; ?>' ist unzureichend f&uuml;r die Installation dieser Software. PHP Version 5.2.0 oder h&ouml;her wird ben&ouml;tigt.</p>
+	<p>Your PHP version '<?php echo $phpVersion; ?>' is insufficient for installation of this software. PHP version <?php echo $neededPhpVersion; ?> or greater is required.<br />
+	Ihre PHP Version '<?php echo $phpVersion; ?>' ist unzureichend f&uuml;r die Installation dieser Software. PHP Version <?php echo $neededPhpVersion; ?> oder h&ouml;her wird ben&ouml;tigt.</p>
 	<?php
 }
 
@@ -51,8 +52,8 @@ else if (!function_exists('gzopen')) {
 // 
 else {
 	?>
-	<p>PHP5 or greater is available. You can <a href="install.php">start</a> the installation now.<br />
-	PHP5 oder h&ouml;her wurde gefunden. Sie k&ouml;nnen mit der Installation <a href="install.php">beginnen</a>.</p>
+	<p>PHP <?php echo $neededPhpVersion; ?> or greater is available. You can <a href="install.php">start</a> the installation now.<br />
+	PHP <?php echo $neededPhpVersion; ?> oder h&ouml;her wurde gefunden. Sie k&ouml;nnen mit der Installation <a href="install.php">beginnen</a>.</p>
 	<?php
 }
 ?>
