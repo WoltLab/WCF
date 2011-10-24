@@ -54,3 +54,4 @@
 		<section id="content" class="content">
 			
 			{include file='breadcrumbs' sandbox=false}
+			

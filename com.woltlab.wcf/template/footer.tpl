@@ -1,3 +1,5 @@
+				{include file='breadcrumbs' sandbox=false}
+				
 			</section>
 			<!-- /CONTENT -->
 		</div>
@@ -13,3 +15,4 @@
 	</footer>
 	<!-- /FOOTER -->
 	<a id="bottom"></a>
+	
