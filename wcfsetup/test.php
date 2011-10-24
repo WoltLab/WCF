@@ -17,7 +17,7 @@
 // php version
 $phpVersion = phpversion();
 $comparePhpVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $phpVersion);
-if (!(version_compare($comparePhpVersion, '5.2.0') >= 0)) {
+if (!(version_compare($comparePhpVersion, '5.3.0') >= 0)) {
 	?>
 	<p>Your PHP version '<?php echo $phpVersion; ?>' is insufficient for installation of this software. PHP version 5.2.0 or greater is required.<br />
 	Ihre PHP Version '<?php echo $phpVersion; ?>' ist unzureichend f&uuml;r die Installation dieser Software. PHP Version 5.2.0 oder h&ouml;her wird ben&ouml;tigt.</p>
