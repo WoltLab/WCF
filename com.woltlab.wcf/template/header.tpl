@@ -1,6 +1,6 @@
 <a id="top"></a>
 <!-- HEADER -->
-<header class="pageHeader">
+<header id="pageHeader" class="pageHeader">
 	<div>
 		{hascontent}
 			<!-- top menu -->
@@ -49,6 +49,8 @@
 <!-- MAIN -->
 <div id="main" class="main">
 	<div>
+		
+		<!-- CONTENT -->
 		<section id="content" class="content">
 			
 			{include file='breadcrumbs' sandbox=false}
