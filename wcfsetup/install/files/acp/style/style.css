@@ -1195,16 +1195,18 @@ input[type='button'],
 	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
 	-moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
 	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	/* ToDo: Opera doesn't like that so much! Bug-report sent to Opera 
 	-o-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
-	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);*/
 }
 
 .tabMenu ~ .border {
 	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
 	-moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
 	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
+	/* ToDo: Opera doesn't like that so much! Bug-report sent to Opera 
 	-o-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
-	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);*/
 }
 
 .border.overlay {
@@ -1760,6 +1762,10 @@ tr .columnURL {
 /* ############## Page Navigation ############## */
 
 /* ToDo */
+
+.pageNavigation ul li {
+	min-width: 21px;
+}
 
 .pageNavigation ul li:not(href):not(.active) {
 	cursor: pointer;
