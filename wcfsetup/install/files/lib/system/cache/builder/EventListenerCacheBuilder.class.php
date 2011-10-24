@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\system\event\listener\EventHandler;
+use wcf\system\event\EventHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
