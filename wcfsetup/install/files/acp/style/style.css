@@ -1594,7 +1594,7 @@ input[type='button'],
 
 .breadcrumbs ul li:first-child a {
 	border-radius: 5px 0 0 5px;
-	background-image: url('../wcf/icon/home1.svg');
+	background-image: url('../../icon/home1.svg');
 	background-position: 7px center;
 	background-repeat: no-repeat;
 	background-size: 16px;
