@@ -357,6 +357,12 @@ $.extend(WCF, {
 	 * @var	integer
 	 */
 	_idCounter: 0,
+
+	/**
+	 * Set to true after first dialog was initialized
+	 * @var	boolean
+	 */
+	_didInitDialogs: false,
 	
 	/**
 	 * Shows a modal dialog with a built-in AJAX-loader.
@@ -365,6 +371,13 @@ $.extend(WCF, {
 	 * @param	boolean		resetDialog
 	 */
 	showAJAXDialog: function(dialogID, resetDialog) {
+		if (!this._didInitDialogs) {
+			$('.ui-widget-overlay').live('click', function() {
+				$('.ui-dialog-titlebar-close').trigger('click');
+			});
+			this._didInitDialogs = true;
+		}
+		
 		if (!dialogID) {
 			dialogID = this.getRandomID();
 		}
@@ -394,6 +407,13 @@ $.extend(WCF, {
 		// we cannot work with a non-existant dialog, if you wish to
 		// load content via AJAX, see showAJAXDialog() instead
 		if (!$.wcfIsset(dialogID)) return;
+
+		if (!this._didInitDialogs) {
+			$('.ui-widget-overlay').live('click', function() {
+				$('.ui-dialog-titlebar-close').trigger('click');
+			});
+			this._didInitDialogs = true;
+		}
 		
 		var $dialog = $('#' + $.wcfEscapeID(dialogID));
 		if (moveToBody) {
