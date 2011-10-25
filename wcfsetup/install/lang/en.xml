@@ -261,7 +261,7 @@
 		<item name="wcf.acp.option.timezone.description"><![CDATA[Choose the default time zone for your site.]]></item>
 		<item name="wcf.acp.option.import.success"><![CDATA[The options have been successfully imported.]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Image library]]></item>
-		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD]]></item>
+		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Library (default)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
 	</category>
 	
