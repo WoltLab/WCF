@@ -282,7 +282,7 @@ $.fn.extend({
 			width: $dimensions.width
 		}, options);
 	},
-
+	
 	/**
 	 * Shows an element by sliding and fading it into viewport.
 	 * 
@@ -2803,11 +2803,6 @@ $.widget('ui.wcfDialog', $.ui.dialog, {
 		this.options.width = 'auto';
 		
 		$.ui.dialog.prototype._init.apply(this, arguments);
-
-		// center dialog on resize
-		$(window).resize($.proxy(function() {
-			this.option('position', 'center');
-		}, this));
 	}
 });
 
@@ -2877,11 +2872,6 @@ $.widget('ui.wcfAJAXDialog', $.ui.dialog, {
 				this.element.parent('.ui-dialog').find('a.ui-dialog-titlebar-close').empty().remove();
 			}
 		}
-
-		// center dialog on window resize
-		$(window).resize($.proxy(function() {
-			this.option('position', 'center');
-		}, this));
 	},
 	
 	/**

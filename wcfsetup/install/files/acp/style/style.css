@@ -397,6 +397,28 @@ nav.mainMenu ul li.activeMenuItem:only-child {
 	margin: 5px 0 -5px;
 }
 
+nav.mainMenu ul li a,
+nav.mainMenu ul li:hover a {
+	text-decoration: none;
+}
+
+/* Special */
+
+nav.mainMenu ul li.activeMenuItem .badge {
+	font-size: 75% !important;
+	color: #fff;
+	background-color: #369;
+	top: -3px;	
+	
+	-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
+	-moz-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
+	-ms-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
+	-o-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
+	box-shadow: 0 0 1px rgba(255, 255, 255, 1);
+}
+
+
+
 
 
 /* -- -- -- Header Navigation -- -- -- */
@@ -1588,6 +1610,7 @@ input[type='button'],
 
 .breadcrumbs ul li a {
 	text-decoration: none;
+	text-shadow: 0 1px 0 #fff;
 	color: #999;
 	margin: 0;
 	padding: 5px 1px 5px 20px;
@@ -2135,46 +2158,75 @@ div#ajaxExceptionStacktrace {
 	width: 24px;
 }
 
-div.wcfDimensions {
+
+
+
+
+
+
+.wcfDimensions {
 	display: inline-block;
 }
 
-div.overlayLoading {
+
+
+
+
+
+.overlayLoading {
 	background-color: #fff;
 	background-image: url('../../icon/spinner.svg');
 	background-position: center center;
 	background-repeat: no-repeat;
 }
 
-div.ui-dialog {
-	border: 10px solid rgba(0, 0, 0, .2);
+
+/* ############## ToDo: Overlay ############## */
+
+.ui-dialog {
+	border: 13px solid rgba(0, 0, 0, .5);
 	border-radius: 15px;
-	display: inline-block !important;
+	margin-right: auto !important;
+	margin-left: auto !important;
+	display: block !important;
 	width: auto !important;
-	min-width: 80px;
+	min-width: 80px !important;
+	max-width: 770px !important;
+	top: -350px !important;
+	left: auto !important;
+	
+	-webkit-box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
+	-moz-box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
+	-ms-box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
+	-o-box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
+	box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
 }
 
-div.ui-dialog-titlebar {
-	border-bottom: 5px solid rgba(0, 0, 0, .6);
-	background-color: #ccc;
+.ui-dialog-titlebar {
+	background-color: #333;
 	padding: 7px;
 	position: relative;
 }
 
-span.ui-dialog-title {
+.ui-dialog-title {
 	text-shadow: 5px 0 0 #000;
-	color: #fff;
+}
+
+.ui-dialog-content {
+	background-color: #333;
+	padding-bottom: 25px;
 }
 
 a.ui-dialog-titlebar-close {
-	background-image: url('../../icon/delete1.svg');
+	background-image: url('../../icon/delete2.svg');
 	background-position: top left;
 	background-repeat: no-repeat;
+	background-size: 32px;
 	position: absolute !important;
-	top: -16px;
-	right: -16px;
-	width: 24px;
-	height: 24px;
+	top: 3px;
+	right: 3px;
+	width: 32px;
+	height: 32px;
 }
 
 a.ui-dialog-titlebar-close span {
@@ -2184,8 +2236,9 @@ a.ui-dialog-titlebar-close span {
 
 div.ui-widget-overlay {
 	background-color: #000;
-	opacity: .6;
+	opacity: .7;
 	position: fixed;
+	width: 100% !important;
 	top: 0;
 	left: 0;
 }
@@ -2219,9 +2272,6 @@ div.ui-widget-overlay {
 	left: 0;
 }
 
-.ui-dialog {
-	background-color: rgba(255, 255, 255, .9);
-}
 
 
 /* ############## Badges ############## */
@@ -2230,6 +2280,7 @@ div.ui-widget-overlay {
 
 .badge {
 	font-size: 85%;
+	font-weight: normal;
 	text-shadow: none;
 	color: #666;
 	border-radius: 13px;
