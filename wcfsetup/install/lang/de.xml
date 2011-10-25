@@ -260,6 +260,9 @@
 		<item name="wcf.acp.option.timezone"><![CDATA[Zeitzone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[Standard-Zeitzone Ihrer Seite]]></item>
 		<item name="wcf.acp.option.import.success"><![CDATA[Die Optionen wurden erfolgreich importiert.]]></item>
+		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Bildmanipulation]]></item>
+		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD]]></item>
+		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">
