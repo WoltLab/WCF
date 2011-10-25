@@ -282,7 +282,7 @@ $.fn.extend({
 			width: $dimensions.width
 		}, options);
 	},
-	
+
 	/**
 	 * Shows an element by sliding and fading it into viewport.
 	 * 
@@ -2771,10 +2771,11 @@ WCF.CloseOverlayHandler = {
 $.widget('ui.wcfDialog', $.ui.dialog, {
 	_init: function() {
 		this.options.autoOpen = true;
+		this.options.hide = {
+			effect: 'fade'
+		};
 		this.options.close = function(event, ui) {
-			$(this).parent('.ui-dialog').wcfDropOut('down', $.proxy(function() {
-				$(this).parent('.ui-dialog').empty().remove();
-			}, this));
+			$(this).parent('.ui-dialog').empty().remove();
 		};
 		this.options.height = 'auto';
 		this.options.minHeight = 0;
@@ -2782,6 +2783,11 @@ $.widget('ui.wcfDialog', $.ui.dialog, {
 		this.options.width = 'auto';
 		
 		$.ui.dialog.prototype._init.apply(this, arguments);
+
+		// center dialog on resize
+		$(window).resize($.proxy(function() {
+			this.option('position', 'center');
+		}, this));
 	}
 });
 
@@ -2822,8 +2828,7 @@ $.widget('ui.wcfAJAXDialog', $.ui.dialog, {
 		
 		this.options.modal = true;
 		this.options.hide = {
-			effect: 'drop',
-			direction: 'down'
+			effect: 'fade'
 		};
 		
 		this.options.close = function(event, ui) {
@@ -2852,6 +2857,11 @@ $.widget('ui.wcfAJAXDialog', $.ui.dialog, {
 				this.element.parent('.ui-dialog').find('a.ui-dialog-titlebar-close').empty().remove();
 			}
 		}
+
+		// center dialog on window resize
+		$(window).resize($.proxy(function() {
+			this.option('position', 'center');
+		}, this));
 	},
 	
 	/**
