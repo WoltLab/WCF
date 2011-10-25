@@ -49,7 +49,7 @@
 	</div>
 </form>
 
-<header class="mainHeading" style="margin-top: 50px;">
+<header class="mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/download1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.option.export{/lang}</h1>
