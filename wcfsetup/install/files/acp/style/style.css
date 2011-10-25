@@ -1528,6 +1528,94 @@ input[type='button'],
 
 
 
+/* ############## Bread Crumbs ############## */
+
+/* Globals */
+
+.breadcrumbs {
+	font-size: 100%;
+	text-align: left;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: rgba(255, 255, 255, 1);
+	margin-bottom: 7px !important;
+	display: block;
+	position: relative;
+	overflow: hidden;
+}
+
+.breadcrumbs ul li {
+	list-style: none;
+	float: left;
+	position: relative;
+}
+
+/* Arrow */
+
+.breadcrumbs ul li > span {
+	border-width: 15px;
+	border-style: solid none solid solid;
+	border-color: transparent transparent transparent #ccc;
+	display: block !important;
+	position: absolute;
+	width: 0;
+	height: 0;
+	top: -4px;
+	right: -15px;
+	z-index: 100;
+}
+
+.breadcrumbs ul li > span > span {
+	text-indent: -9000px;
+	border-width: 15px;
+	border-style: solid none solid solid;
+	border-color: transparent transparent transparent #fff;
+	display: block;
+	position: absolute;
+	width: 0;
+	height: 0;
+	top: -15px;
+	left: -16px;
+	overflow: hidden;
+}
+
+/* Caption */
+
+.breadcrumbs ul li a {
+	text-decoration: none;
+	color: #999;
+	margin: 0;
+	padding: 5px 1px 5px 20px;
+	display: inline-block;
+	max-width: 200px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.breadcrumbs ul li:first-child a {
+	border-radius: 5px 0 0 5px;
+	background-image: url('../wcf/icon/home1.svg');
+	background-position: 7px center;
+	background-repeat: no-repeat;
+	background-size: 16px;
+	padding-left: 30px;
+}
+
+.breadcrumbs ul li:hover a,
+.breadcrumbs ul li:last-child a {
+	color: #369;
+	background-color: #e7f2fd;
+	position: relative;
+	z-index: 90;
+}
+
+.breadcrumbs ul li:hover > span > span,
+.breadcrumbs ul li:last-child > span > span{
+	border-color: transparent transparent transparent #e7f2fd;
+}
+
+
+
 /* ############## Tables ############## */
 
 /* Globals */
