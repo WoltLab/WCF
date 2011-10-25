@@ -388,13 +388,17 @@ $.extend(WCF, {
 	/**
 	 * Shows a modal dialog.
 	 * @param	string		dialogID
+	 * @param	boolean		moveToBody
 	 */
-	showDialog: function(dialogID) {
+	showDialog: function(dialogID, moveToBody) {
 		// we cannot work with a non-existant dialog, if you wish to
 		// load content via AJAX, see showAJAXDialog() instead
 		if (!$.wcfIsset(dialogID)) return;
 		
 		var $dialog = $('#' + $.wcfEscapeID(dialogID));
+		if (moveToBody) {
+			$dialog.remove().appendTo($('body'));
+		}
 		
 		var dialogOptions = arguments[2] || {};
 		$dialog.wcfDialog(dialogOptions);
