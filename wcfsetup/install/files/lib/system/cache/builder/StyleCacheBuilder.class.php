@@ -40,8 +40,7 @@ class StyleCacheBuilder implements ICacheBuilder {
 				WHERE	styleID = ?";
 			$statement2 = WCF::getDB()->prepareStatement($sql);
 			$statement2->execute(array($row['styleID']));
-			while ($row = $statement2->fetchArray()) {
-				
+			while ($row2 = $statement2->fetchArray()) {
 				$row['variables'][$row2['variableName']] = $row2['variableValue'];
 			}
 			
@@ -55,7 +54,6 @@ class StyleCacheBuilder implements ICacheBuilder {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
-			
 			if (!isset($data['packages'][$row['packageID']])) {
 				$data['packages'][$row['packageID']] = array('default' => 0, 'disabled' => array());
 			}

@@ -65,6 +65,10 @@ class StyleHandler extends SingletonFactory {
 	 * @return	wcf\data\style\ActiveStyle
 	 */
 	public function getStyle() {
+		if ($this->style === null) {
+			$this->changeStyle();
+		}
+		
 		return $this->style;
 	}
 	
@@ -72,8 +76,9 @@ class StyleHandler extends SingletonFactory {
 	 * Changes the active style.
 	 * 
 	 * @param	integer		$styleID
+	 * @param	boolean		$ignorePermissions
 	 */
-	public function changeStyle($styleID, $ignorePermissions = false) {
+	public function changeStyle($styleID = 0, $ignorePermissions = false) {
 		// check permission
 		if (!$ignorePermissions) {
 			if (isset($this->cache['styles'][$styleID])) {

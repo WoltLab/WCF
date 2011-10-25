@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\style;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StyleUtil;
@@ -42,12 +43,12 @@ class ActiveStyle extends DatabaseObjectDecorator {
 		
 		// load icon cache
 		$cacheName = 'icon-'.PACKAGE_ID.'-'.$this->styleID;
-		WCF::getCache()->addResource(
+		CacheHandler::getInstance()->addResource(
 			$cacheName,
 			WCF_DIR.'cache/cache.'.$cacheName.'.php',
 			'wcf\system\cache\builder\IconCacheBuilder'
 		);
-		$this->iconCache = WCF::getCache()->get($cacheName);
+		$this->iconCache = CacheHandler::getInstance()->get($cacheName);
 	}
 	
 	/**
@@ -67,8 +68,8 @@ class ActiveStyle extends DatabaseObjectDecorator {
 	 * @param	string		$iconName
 	 * @return	string
 	 */
-	public function getIconPath($iconName) {
-		if (isset($this->iconCache[$iconName])) return $this->iconCache[$iconName];
-		return RELATIVE_WCF_DIR.'icon/'.$iconName;
+	public function getIconPath($iconName, $size = 'L') {
+		if (isset($this->iconCache[$iconName][$size])) return $this->iconCache[$iconName][$size];
+		return RELATIVE_WCF_DIR.'icon/'.$iconName.'.svg';
 	}
 }

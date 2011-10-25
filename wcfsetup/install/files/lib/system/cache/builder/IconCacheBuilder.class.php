@@ -26,22 +26,24 @@ class IconCacheBuilder implements ICacheBuilder {
 
 		// get active package
 		$activePackage = new Package($packageID);
-		$activePackageDir = FileUtil::getRealPath(WCF_DIR.$activePackage->getDir());
+		$activePackageDir = FileUtil::getRealPath(WCF_DIR.$activePackage->packageDir);
 		
 		// get package dirs
 		$packageDirs = array();
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add("packageID IN (?) AND packageDir <> ''", array(PackageDependencyHandler::getDependenciesString()));
-		$sql = "SELECT		DISTINCT packageDir
-			FROM		wcf".WCF_N."_package package
+		$conditionBuilder->add("dependency.packageID IN (?) AND package.packageDir <> ''", array(PackageDependencyHandler::getDependencies()));
+		$sql = "SELECT		DISTINCT package.packageDir
+			FROM		wcf".WCF_N."_package_dependency dependency
+			LEFT JOIN	wcf".WCF_N."_package package
+			ON		(package.packageID = dependency.dependency)
 			".$conditionBuilder->__toString()."
-			ORDER BY	priority DESC";
+			ORDER BY	dependency.priority DESC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
 		while ($row = $statement->fetchArray()) {
 			$packageDirs[] = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
 		}
-		$packageDirs[] = WCF_DIR;
+		$packageDirs[] = FileUtil::unifyDirSeperator(WCF_DIR);
 		
 		// get style icon path
 		$iconDirs = array();
@@ -58,14 +60,35 @@ class IconCacheBuilder implements ICacheBuilder {
 		// get icons
 		foreach ($packageDirs as $packageDir) {
 			$relativePackageDir = ($activePackageDir != $packageDir ? FileUtil::getRelativePath($activePackageDir, $packageDir) : '');
-			
+			echo $relativePackageDir."\n";
 			foreach ($iconDirs as $iconDir) {
 				$path = FileUtil::addTrailingSlash($packageDir.$iconDir);
-				$icons = self::getIconFiles($path);
+				
+				// get png icons
+				$icons = self::getIconFiles($path, 'png');
 				foreach ($icons as $icon) {
 					$icon = str_replace($path, '', $icon);
-					if (!isset($data[$icon])) {
-						$data[$icon] = $relativePackageDir.$iconDir.$icon;
+					if (preg_match('/^(.*)(S|M|L)\.png$/', $icon, $match)) {
+						if (!isset($data[$match[1]][$match[2]])) {
+							$data[$match[1]][$match[2]] = $relativePackageDir.$iconDir.$icon;
+						}
+					}
+				}
+				
+				// get svg icons
+				$icons = self::getIconFiles($path, 'svg');
+				foreach ($icons as $icon) {
+					$icon = str_replace($path, '', $icon);
+					if (preg_match('/^(.*)\.svg$/', $icon, $match)) {
+						if (!isset($data[$match[1]]['S'])) {
+							$data[$match[1]]['S'] = $relativePackageDir.$iconDir.$icon;
+						}
+						if (!isset($data[$match[1]]['M'])) {
+							$data[$match[1]]['M'] = $relativePackageDir.$iconDir.$icon;
+						}
+						if (!isset($data[$match[1]]['L'])) {
+							$data[$match[1]]['L'] = $relativePackageDir.$iconDir.$icon;
+						}
 					}
 				}
 			}
@@ -74,13 +97,13 @@ class IconCacheBuilder implements ICacheBuilder {
 		return $data;
 	}
 	
-	protected static function getIconFiles($path) {
+	protected static function getIconFiles($path, $extension = 'svg') {
 		$files = array();
 		if (is_dir($path)) {
 			$iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
 			foreach ($iterator as $file) {
-				if (preg_match('/\.png$/', $file->getFilename())) {
-					$files[] = $file->getPathname();
+				if (preg_match('/\.'.$extension.'$/', $file->getFilename())) {
+					$files[] = FileUtil::unifyDirSeperator($file->getPathname());
 				}
 			}
 		}

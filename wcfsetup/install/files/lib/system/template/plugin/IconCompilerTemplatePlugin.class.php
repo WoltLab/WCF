@@ -7,7 +7,7 @@ use wcf\util\StringUtil;
  * The 'icon' compiler function compiles dynamic icon paths.
  *
  * Usage:
- * {icon}{$foo}{/icon}
+ * {icon size='L'}{$foo}{/icon}
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -18,9 +18,30 @@ use wcf\util\StringUtil;
  */
 class IconCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	/**
+	 * icon size
+	 * @var string
+	 */
+	protected $size = '';
+	
+	/**
+	 * valid icon sizes
+	 * @var array<string>
+	 */
+	protected static $validSizes = array('S', 'M', 'L');
+	
+	/**
 	 * @see wcf\system\template\ICompilerTemplatePlugin::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
+		// set default size
+		$this->size = 'L';
+		
+		// get size
+		if (isset($tagArgs['size'])) {
+			if (strlen($tagArgs['size']) > 1) $tagArgs['size'] = substr($tagArgs['size'], 1, 1);
+			if (in_array($tagArgs['size'], self::$validSizes)) $this->size = $tagArgs['size'];
+		}
+
 		$compiler->pushTag('icon');
 		return "<?php ob_start(); ?>";
 	}
@@ -31,6 +52,6 @@ class IconCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		$compiler->popTag('icon');
 		$hash = StringUtil::getRandomID();
-		return "<?php \$_icon".$hash." = ob_get_contents(); ob_end_clean(); echo wcf\system\style\StyleHandler::getInstance()->getStyle()->getIconPath(\$_icon".$hash."); ?>";
+		return "<?php \$_icon".$hash." = ob_get_contents(); ob_end_clean(); echo wcf\system\style\StyleHandler::getInstance()->getStyle()->getIconPath(\$_icon".$hash.", '".$this->size."'); ?>";
 	}
 }

@@ -73,24 +73,6 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns the installation dir of this package.
-	 *
-	 * @return	string
-	 */
-	public function getDir() {
-		return $this->dir;
-	}
-	
-	/**
-	 * Sets the installation dir of this package.
-	 *
-	 * @param	string		$dir
-	 */
-	public function setDir($dir) {
-		$this->dir = $dir;
-	}
-	
-	/**
 	 * Returns the abbreviation of the package name.
 	 *
 	 * @param	string		$package
