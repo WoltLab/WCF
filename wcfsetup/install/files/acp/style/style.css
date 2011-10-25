@@ -1629,16 +1629,14 @@ input[type='button'],
 	padding-left: 30px;
 }
 
-.breadcrumbs ul li:hover a,
-.breadcrumbs ul li:last-child a {
+.breadcrumbs ul li:hover a {
 	color: #369;
 	background-color: #e7f2fd;
 	position: relative;
 	z-index: 90;
 }
 
-.breadcrumbs ul li:hover > span > span,
-.breadcrumbs ul li:last-child > span > span{
+.breadcrumbs ul li:hover > span > span {
 	border-color: transparent transparent transparent #e7f2fd;
 }
 
@@ -2239,35 +2237,6 @@ div.ui-widget-overlay {
 	opacity: .7;
 	position: fixed;
 	width: 100% !important;
-	top: 0;
-	left: 0;
-}
-
-
-
-/* ############## ToDo ############## */
-
-/* Is all that really still necessary? We wanted to support good browsers only */
-
-.ui-helper-clearfix {
-	display: inline-block;
-}
-
-/* Required comment for clearfix to work in Opera \*/
-* html .ui-helper-clearfix {
-	height: 1%;
-}
-
-.ui-helper-clearfix {
-	display: block;
-}
-
-/* end clearfix */
-.ui-helper-zfix {
-	opacity: 0;
-	position: absolute;
-	width: 100%;
-	height: 100%;
 	top: 0;
 	left: 0;
 }
@@ -3345,6 +3314,35 @@ div.ajaxDebugMessage p:last-child {
 
 div.ajaxDebugMessage p:last-child {
 	font-family: Monospace;
+}
+
+
+
+/* ############## ToDo ############## */
+
+/* Is all that really still necessary? We wanted to support good browsers only */
+
+.ui-helper-clearfix {
+	display: inline-block;
+}
+
+/* Required comment for clearfix to work in Opera \*/
+* html .ui-helper-clearfix {
+	height: 1%;
+}
+
+.ui-helper-clearfix {
+	display: block;
+}
+
+/* end clearfix */
+.ui-helper-zfix {
+	opacity: 0;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
 }
 
 /* -- -- -- -- -- EOF -- -- -- -- -- */
