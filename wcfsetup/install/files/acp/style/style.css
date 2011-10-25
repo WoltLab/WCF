@@ -655,6 +655,11 @@ footer.pageFooter nav.footerNavigation ul li {
 
 .mainHeading {
 	position: relative;
+	margin-top: 15px;
+}
+
+.mainHeading:not(:first-child) {
+	margin-top: 30px;
 }
 
 .mainHeading img {
@@ -1538,7 +1543,7 @@ input[type='button'],
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	background-color: rgba(255, 255, 255, 1);
-	margin-bottom: 7px !important;
+	margin-top: 15px;
 	display: block;
 	position: relative;
 	overflow: hidden;
