@@ -118,7 +118,7 @@
 				{if PACKAGE_ID}
 					<ul>
 						{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=menuItem}
-							<li data-menuItem="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</li>
+							<li data-menuItem="{$menuItem->menuItem}"><a>{lang}{@$menuItem->menuItem}{/lang}</a></li>
 						{/foreach}
 					</ul>
 				{/if}

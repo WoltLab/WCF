@@ -70,11 +70,13 @@ WCF.ACP.Menu.prototype = {
 	 * @param	object		event
 	 */
 	_toggleSidebar: function(event) {
-		if ($(event.target).hasClass('activeMenuItem')) {
+		var $target = $(event.target).parent();
+		
+		if ($target.hasClass('activeMenuItem')) {
 			return;
 		}
 		
-		this._renderSidebar($(event.target).data('menuItem'), []);
+		this._renderSidebar($target.data('menuItem'), []);
 	},
 	
 	/**
