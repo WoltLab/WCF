@@ -482,7 +482,7 @@ div.main {
 section.content {
 	background-color: #fff;
 	display: table-cell;
-	padding: 25px 40px;
+	padding: 5px 40px 25px;
 	position: relative;
 	width: 100%;
 	z-index: 100;
@@ -676,34 +676,52 @@ footer.pageFooter nav.footerNavigation ul li {
 /* -- -- -- Main Heading -- -- -- */
 
 .mainHeading {
+	margin-top: 25px;
 	position: relative;
-	margin-top: 15px;
 }
 
-.mainHeading:not(:first-child) {
+.mainHeading:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.mainHeading:not(:first-of-type) {
 	margin-top: 30px;
 }
 
-.mainHeading img {
-	position: absolute;
-	top: 0;
-	left: 0;
+.mainHeading > img {
+	float: left;
 	width: 48px;
 	height: 48px;
 }
 
 .mainHeading > hgroup {
+	display: block;
+	position: relative;
+	min-height: 48px;
+}
+
+.mainHeading > img ~ hgroup {
 	padding-left: 60px;
-	min-height: 56px;
 }
 
 .mainHeading > hgroup h1 {
 	font-size: 175%;
 	font-weight: bold;
+	border-bottom: 1px solid #999;
+	padding: 1px 0 10px;	
+}
+
+.mainHeading > hgroup h1,
+.mainHeading > hgroup h1 a {
+	text-decoration: none;
 	text-shadow: 0 1px 0 #fff;
 	color: #666;
-	border-bottom: 1px solid #999;
-	padding-bottom: 10px;
+}
+
+.mainHeading > hgroup h1 a:hover {
+		
 }
 
 .mainHeading > hgroup h2 {
@@ -1265,7 +1283,8 @@ input[type='button'],
 	display: inline-block;
 }
 
-.boxTitle > hgroup a, .boxTitle > a {
+.boxTitle > a,
+.boxTitle > hgroup a {
 	text-decoration: none;
 	color: #fff;
 }
@@ -1630,14 +1649,14 @@ input[type='button'],
 }
 
 .breadcrumbs ul li:hover a {
-	color: #369;
-	background-color: #e7f2fd;
+	color: #666;
+	background-color: #f9f9f9;
 	position: relative;
 	z-index: 90;
 }
 
 .breadcrumbs ul li:hover > span > span {
-	border-color: transparent transparent transparent #e7f2fd;
+	border-color: transparent transparent transparent #f9f9f9;
 }
 
 
