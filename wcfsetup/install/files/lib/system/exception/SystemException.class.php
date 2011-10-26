@@ -80,6 +80,7 @@ class SystemException extends \Exception implements IPrintableException {
 				<title>Fatal error: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></title>
 				<style>
 					.systemException {
+						font-family: 'Trebuchet MS', Arial, sans-serif !important;
 						font-size: 80% !important;
 						text-align: left !important;
 						border: 1px solid #036;
@@ -117,14 +118,14 @@ class SystemException extends \Exception implements IPrintableException {
 					}
 					.systemException pre, .systemException p {
 						text-shadow: none !important;
-						color: #666 !important;
+						color: #555 !important;
 						margin: 0 !important;
 					}
 					.systemException pre {
 						font-size: .85em !important;
-						font-family: "Courier New";
+						font-family: "Courier New" !important;
 						text-overflow: ellipsis;
-						padding-bottom: 10px;
+						padding-bottom: 1px;
 						overflow: hidden !important;
 					}
 					.systemException pre:hover{
