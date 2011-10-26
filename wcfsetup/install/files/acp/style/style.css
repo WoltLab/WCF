@@ -1560,7 +1560,6 @@ input[type='button'],
 /* Globals */
 
 .breadcrumbs {
-	font-size: 100%;
 	text-align: left;
 	border: 1px solid #ccc;
 	border-radius: 5px;
@@ -1572,6 +1571,7 @@ input[type='button'],
 }
 
 .breadcrumbs ul li {
+	font-size: 85%;
 	list-style: none;
 	float: left;
 	position: relative;

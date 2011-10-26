@@ -99,6 +99,7 @@ class SystemException extends \Exception implements IPrintableException {
 						border-top-right-radius: 6px;
 						border-top-left-radius: 6px;
 						background-color: #369 !important;
+						margin: 0 !important;
 						padding: 5px 10px !important;
 					}
 					.systemException div {
