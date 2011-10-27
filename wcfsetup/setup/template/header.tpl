@@ -33,7 +33,7 @@
 			<div id="logo" class="logo">
 				<div><!-- ToDo: This is just a little trick to compensate the missing link here, find a better solution -->
 					<h1>{lang}wcf.global.pageTitle{/lang}</h1>
-					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/images/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage={/if}wcfLogoWhite.svg" width="300" height="58" alt="Product-logo" title="Installation" />
+					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/images/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage={/if}wcfLogo2.svg" width="300" height="58" alt="" />
 				</div>
 				
 				<!-- no search area -->
