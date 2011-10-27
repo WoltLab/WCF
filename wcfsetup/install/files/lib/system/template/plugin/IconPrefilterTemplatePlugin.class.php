@@ -6,7 +6,7 @@ use wcf\system\template\TemplateScriptingCompiler;
  * The 'icon' prefilter compiles static icon paths.
  * 
  * Usage:
- * {icon}iconS.png{/icon}
+ * {icon size='L'}iconS.png{/icon}
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -19,10 +19,10 @@ class IconPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 	/**
 	 * @see wcf\system\template\ITemplatePluginPrefilter::execute()
 	 */
-	public function execute($sourceContent, TemplateScriptingCompiler $compiler) {
+	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');
 		$rdq = preg_quote($compiler->getRightDelimiter(), '~');
-		$sourceContent = preg_replace("~{$ldq}icon{$rdq}([\w\.]+){$ldq}/icon{$rdq}~", '{literal}<?php echo wcf\system\style\StyleHandler::getInstance()->getStyle()->getIconPath(\'$1\'); ?>{/literal}', $sourceContent);
+		$sourceContent = preg_replace("~{$ldq}icon size='?(S|M|L)'?{$rdq}([\w\.]+){$ldq}/icon{$rdq}~", '{literal}<?php echo \wcf\system\style\StyleHandler::getInstance()->getStyle()->getIconPath(\'$2\', \'$1\'); ?>{/literal}', $sourceContent);
 
 		return $sourceContent;
 	}
