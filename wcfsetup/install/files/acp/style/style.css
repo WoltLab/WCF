@@ -2205,12 +2205,10 @@ div#ajaxExceptionStacktrace {
 	border-radius: 15px;
 	margin-right: auto !important;
 	margin-left: auto !important;
-	display: block !important;
-	width: auto !important;
-	min-width: 80px !important;
-	max-width: 770px !important;
-	top: -350px !important;
-	left: auto !important;
+	position: fixed !important;
+	min-width: 500px !important;
+	max-width: 780px !important;
+	top: 150px !important;
 	
 	-webkit-box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
 	-moz-box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
@@ -2253,7 +2251,7 @@ a.ui-dialog-titlebar-close span {
 
 div.ui-widget-overlay {
 	background-color: #000;
-	opacity: .7;
+	opacity: .5;
 	position: fixed;
 	width: 100% !important;
 	top: 0;
