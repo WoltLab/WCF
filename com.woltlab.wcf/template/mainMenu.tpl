@@ -2,7 +2,7 @@
 	<nav id="mainMenu" class="mainMenu">
 		<ul>
 			{foreach from=$__wcf->getPageMenu()->getMenuItems('header') item=menuItem}
-				<li{if $__wcf->getPageMenu()->getActiveMenuItem() == $menuItem->menuItem} class="activeMenuItem"{/if}><a href="{$menuItem->menuItemLink}">{$menuItem->menuItem}</a> <span class="badge">{#$menuItem->getProcessor()->getNotifications()}</span>
+				<li{if $__wcf->getPageMenu()->getActiveMenuItem() == $menuItem->menuItem} class="activeMenuItem"{/if}><a href="{$menuItem->menuItemLink}">{$menuItem->menuItem} <span class="badge">{#$menuItem->getProcessor()->getNotifications()}</span></a> 
 				
 				{if $__wcf->getPageMenu()->getMenuItems($menuItem->menuItem)|count > 0}
 					<ul>

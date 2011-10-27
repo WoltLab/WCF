@@ -251,10 +251,6 @@ nav.topMenu ul li .dropdown > li:first-child {
 /* do not use the class ".loginBox" to style the box! */
 /* Note that the login-box is subject to changes */
 
-#loginBox {
-	
-}
-
 #loginBox dl {
 	margin-right: 20px;
 }
@@ -290,7 +286,7 @@ header.pageHeader div#logo a:hover {
 
 header.pageHeader div#logo img {
 	position: absolute;
-	bottom: 10px;
+	bottom: 20px;
 	left: 0;
 }
 
@@ -298,7 +294,7 @@ header.pageHeader div#logo > a,
 header.pageHeader div#logo > div {
 	text-align: right;
 	display: block;
-	height: 110px;
+	height: 120px;
 }
 
 
@@ -311,7 +307,6 @@ nav.mainMenu {
 	margin: 0 30px;
 	display: block;
 	position: relative;
-	bottom: -7px; /* closes the gap between tabs and menu bar */
 }
 
 nav.mainMenu:after {
@@ -328,18 +323,31 @@ nav.mainMenu ul {
 }
 
 nav.mainMenu ul li {
-	font-size: 123%;
+	font-size: 120%;
+	display: inline-block;
+}
+
+nav.mainMenu ul li.activeMenuItem:first-child {
+	margin: -5px -5px 0 0;
+}
+
+nav.mainMenu ul li.activeMenuItem:last-child {
+	margin: -5px 0 0 -5px;
+}
+
+nav.mainMenu ul li:only-child,
+nav.mainMenu ul li.activeMenuItem:only-child {
+	margin: -5px 0 0;
+}
+
+nav.mainMenu ul li a {
 	font-weight: normal;
 	text-shadow: 0 -1px 0 #000;
 	color: #69c;
 	cursor: pointer;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	margin: 5px 0 0;
 	padding: 10px 20px;
 	display: inline-block;
 	position: relative;
-	top: -7px;
 	z-index: 1;
 	
 	-webkit-transition-property: border, background-color, background-image, color;
@@ -363,15 +371,24 @@ nav.mainMenu ul li {
 	transition-timing-function: ease;
 }
 
-nav.mainMenu ul li:hover {
+nav.mainMenu ul li a,
+nav.mainMenu ul li:hover a {
+	text-decoration: none;
+}
+
+nav.mainMenu ul li:not(.activeMenuItem):hover a {
 	color: #fff;
 }
 
-nav.mainMenu ul li.activeMenuItem {
-	text-shadow: 0 1px 0 #fff;
-	font-size: 150%;
+nav.mainMenu ul li.activeMenuItem a {
+	font-size: 115%;
 	font-weight: bold;
+	text-shadow: 0 1px 0 #fff;
 	color: #369;
+	cursor: default !important;
+	
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 	
 	background-color: #e7f2fd;
 	background-image: -webkit-linear-gradient(#fff, #e7f2fd);
@@ -380,29 +397,10 @@ nav.mainMenu ul li.activeMenuItem {
 	background-image: -o-linear-gradient(#fff, #e7f2fd);
 	background-image: linear-gradient(#fff, #e7f2fd);
 	
-	z-index: 10;
+	z-index: 100;
 }
 
-nav.mainMenu ul li.activeMenuItem:first-child {
-	margin: 5px -5px -5px 0;
-}
-
-nav.mainMenu ul li.activeMenuItem:last-child {
-	margin: 5px 0 -5px -5px;
-}
-
-nav.mainMenu ul li:only-child,
-nav.mainMenu ul li.activeMenuItem:only-child {
-	cursor: default !important;
-	margin: 5px 0 -5px;
-}
-
-nav.mainMenu ul li a,
-nav.mainMenu ul li:hover a {
-	text-decoration: none;
-}
-
-/* Special */
+/* ToDo: Special */
 
 nav.mainMenu ul li.activeMenuItem .badge {
 	font-size: 75% !important;
@@ -416,8 +414,6 @@ nav.mainMenu ul li.activeMenuItem .badge {
 	-o-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
 	box-shadow: 0 0 1px rgba(255, 255, 255, 1);
 }
-
-
 
 
 
@@ -2273,7 +2269,7 @@ div.ui-widget-overlay {
 	background-color: #fff;
 	margin-right: -3px;
 	margin-left: 3px;
-	padding: 1px 5px 2px;
+	padding: 2px 5px;
 	display: inline-block;
 	position: relative;
 	top: -1px;
