@@ -1381,6 +1381,17 @@ WCF.Date.Time.prototype = {
 		
 		// re-calculate relative datetime every minute
 		new WCF.PeriodicalExecuter($.proxy(this._refresh, this), 60000);
+
+		// bind dom node inserted listener
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Date.Time', $.proxy(this._domNodeInserted, this));
+	},
+
+	/**
+	 * Updates element collection once a DOM node was inserted.
+	 */
+	_domNodeInserted: function() {
+		this.elements = $('time.datetime');
+		this._refresh();
 	},
 	
 	/**
@@ -2786,6 +2797,88 @@ WCF.CloseOverlayHandler = {
 };
 
 /**
+ * Notifies objects once a DOM node was inserted.
+ */
+WCF.DOMNodeInsertedHandler = {
+	/**
+	 * list of callbacks
+	 * @var	WCF.Dictionary
+	 */
+	_callbacks: new WCF.Dictionary(),
+
+	/**
+	 * prevent infinite loop if a callback manipulates DOM
+	 * @var	boolean
+	 */
+	_isExecuting: false,
+
+	/**
+	 * indicates that overlay handler is listening to click events on body-tag
+	 * @var	boolean
+	 */
+	_isListening: false,
+
+	/**
+	 * Adds a new callback.
+	 * 
+	 * @param	string		identifier
+	 * @param	object		callback
+	 */
+	addCallback: function(identifier, callback) {
+		this._bindListener();
+
+		if (this._callbacks.isset(identifier)) {
+			cosole.debug("[WCF.DOMNodeInsertedHandler] identifier '" + identifier + "' is already bound to a callback");
+			return false;
+		}
+
+		this._callbacks.add(identifier, callback);
+	},
+
+	/**
+	 * Removes a callback from list.
+	 * 
+	 * @param	string		identifier
+	 */
+	removeCallback: function(identifier) {
+		if (this._callbacks.isset(identifier)) {
+			this._callbacks.remove(identifier);
+		}
+	},
+
+	/**
+	 * Binds click event handler.
+	 */
+	_bindListener: function() {
+		if (this._isListening) return;
+
+		$(document).bind('DOMNodeInserted', $.proxy(this._executeCallbacks, this));
+
+		this._isListening = true;
+	},
+
+	/**
+	 * Executes callbacks on click.
+	 */
+	_executeCallbacks: function(event) {
+		if (this._isExecuting) return;
+
+		// do not track events fired within the next 100 ms
+		this._isExecuting = true;
+		new WCF.PeriodicalExecuter($.proxy(function(pe) {
+			this._isExecuting = false;
+
+			pe.stop();
+		}, this), 100);
+
+		this._callbacks.each(function(pair) {
+			// execute callback
+			pair.value(event);
+		});
+	}
+};
+
+/**
  * Basic implementation for WCF dialogs.
  */
 $.widget('ui.wcfDialog', $.ui.dialog, {
@@ -3009,7 +3102,7 @@ $.widget('ui.wcfPages', {
 		// language
 		// we use options here instead of language variables, because the paginator is not only usable with pages
 		nextPage: null,
-		previousPage: null,
+		previousPage: null
 	},
 	
 	/**
