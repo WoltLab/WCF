@@ -22,7 +22,7 @@ class IconPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');
 		$rdq = preg_quote($compiler->getRightDelimiter(), '~');
-		$sourceContent = preg_replace("~{$ldq}icon size='?(S|M|L)'?{$rdq}([\w\.]+){$ldq}/icon{$rdq}~", '{literal}<?php echo \wcf\system\style\StyleHandler::getInstance()->getStyle()->getIconPath(\'$2\', \'$1\'); ?>{/literal}', $sourceContent);
+		$sourceContent = preg_replace("~{$ldq}icon size='?([SML])'?{$rdq}([\w\.]+){$ldq}/icon{$rdq}~", '{literal}<?php echo \wcf\system\style\StyleHandler::getInstance()->getStyle()->getIconPath(\'$2\', \'$1\'); ?>{/literal}', $sourceContent);
 
 		return $sourceContent;
 	}
