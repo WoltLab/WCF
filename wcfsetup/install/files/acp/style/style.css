@@ -105,6 +105,11 @@ hr {
 	margin-top: 13px;
 }
 
+::selection {
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .5) !important;
+	color: #300;
+	background-color: rgba(255, 170, 34, .7);
+}
 
 
 /* ############## Body ############## */
@@ -1893,7 +1898,8 @@ tr .columnURL {
 /* ToDo */
 
 .pageNavigation ul li {
-	min-width: 21px;
+	text-align: center;
+	min-width: 19px;
 }
 
 .pageNavigation ul li:not(href):not(.active) {
@@ -1928,7 +1934,7 @@ tr .columnURL {
 }
 
 .pageNavigation ul li.skip {	
-	padding: 2px 2px 1px 3px;
+	padding: 2px 0 1px;
 	top: -1px;
 }
 
@@ -1965,7 +1971,7 @@ tr .columnURL {
 	background-image: -ms-linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0) 3px) !important;
 	background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0) 3px) !important;
 	
-	padding: 3px 5px;
+	padding: 3px 0;
 }
 
 /* ToDo: Children */
@@ -2569,7 +2575,7 @@ input[type='button'].default:active,
 
 /* Default State Glow */
 
-@-webkit-keyframes glowLargeButtons {
+@-webkit-keyframes glowButtons {
     0% {
         -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
     }
@@ -2577,7 +2583,7 @@ input[type='button'].default:active,
         -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
     }
 }
-@-moz-keyframes glowLargeButtons {
+@-moz-keyframes glowButtons {
     0% {
         -moz-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
     }
@@ -2585,7 +2591,7 @@ input[type='button'].default:active,
         -moz-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
     }
 }
-@-ms-keyframes glowLargeButtons {
+@-ms-keyframes glowButtons {
     0% {
         -ms-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
     }
@@ -2593,7 +2599,7 @@ input[type='button'].default:active,
         -ms-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
     }
 }
-@-o-keyframes glowLargeButtons {
+@-o-keyframes glowButtons {
     0% {
         -o-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
     }
@@ -2601,7 +2607,7 @@ input[type='button'].default:active,
         -o-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
     }
 }
-@keyframes glowLargeButtons {
+@keyframes glowButtons {
     0% {
         box-shadow: 0 0 13px rgba(102, 153, 204, .5);
     }
@@ -2634,31 +2640,31 @@ input[type='button'].default,
 	-o-box-shadow: 0 0 10px #369;
 	box-shadow: 0 0 10px #369;
 	
-	-webkit-animation-name: glowLargeButtons;
+	-webkit-animation-name: glowButtons;
 	-webkit-animation-duration: 1s;
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-direction: alternate;
 	-webkit-animation-timing-function: ease-in-out; 
 	
-	-moz-animation-name: glowLargeButtons;
+	-moz-animation-name: glowButtons;
 	-moz-animation-duration: 1s;
 	-moz-animation-iteration-count: infinite;
 	-moz-animation-direction: alternate;
 	-moz-animation-timing-function: ease-in-out;
 	
-	-ms-animation-name: glowLargeButtons;
+	-ms-animation-name: glowButtons;
 	-ms-animation-duration: 1s;
 	-ms-animation-iteration-count: infinite;
 	-ms-animation-direction: alternate;
 	-ms-animation-timing-function: ease-in-out; 
 	
-	-o-animation-name: glowLargeButtons;
+	-o-animation-name: glowButtons;
 	-o-animation-duration: 1s;
 	-o-animation-iteration-count: infinite;
 	-o-animation-direction: alternate;
 	-o-animation-timing-function: ease-in-out;
 	
-	animation-name: glowLargeButtons;
+	animation-name: glowButtons;
 	animation-duration: 1s;
 	animation-iteration-count: infinite;
 	animation-direction: alternate;
@@ -2667,7 +2673,7 @@ input[type='button'].default,
 
 /* Default Hover State Glow */
 
-@-webkit-keyframes glowLargeButtonsHover {
+@-webkit-keyframes glowButtonsHover {
     0% {
         -webkit-box-shadow: 0 0 13px rgba(255, 153, 51, .3);
     }
@@ -2675,7 +2681,7 @@ input[type='button'].default,
         -webkit-box-shadow: 0 0 13px rgba(255, 153, 51, .1);
     }
 }
-@-moz-keyframes glowLargeButtonsHover {
+@-moz-keyframes glowButtonsHover {
     0% {
         -moz-box-shadow: 0 0 13px rgba(255, 153, 51, .3);
     }
@@ -2683,7 +2689,7 @@ input[type='button'].default,
         -moz-box-shadow: 0 0 13px rgba(255, 153, 51, .1);
     }
 }
-@-ms-keyframes glowLargeButtonsHover {
+@-ms-keyframes glowButtonsHover {
     0% {
         -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .3);
     }
@@ -2691,7 +2697,7 @@ input[type='button'].default,
         -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .1);
     }
 }
-@-o-keyframes glowLargeButtonsHover {
+@-o-keyframes glowButtonsHover {
     0% {
         -o-box-shadow: 0 0 13px rgba(255, 153, 51, .3);
     }
@@ -2699,7 +2705,7 @@ input[type='button'].default,
         -o-box-shadow: 0 0 13px rgba(255, 153, 51, .1);
     }
 }
-@keyframes glowLargeButtonsHover {
+@keyframes glowButtonsHover {
     0% {
         box-shadow: 0 0 13px rgba(255, 153, 51, .3);
     }
@@ -2720,31 +2726,31 @@ input[type='button'].default:hover,
 	-o-box-shadow: 0 0 10px #fa2;
 	box-shadow: 0 0 10px #fa2;
 	
-	-webkit-animation-name: glowLargeButtonsHover;
+	-webkit-animation-name: glowButtonsHover;
 	-webkit-animation-duration: 1s;
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-direction: alternate;
 	-webkit-animation-timing-function: ease-in-out; 
 	
-	-moz-animation-name: glowLargeButtonsHover;
+	-moz-animation-name: glowButtonsHover;
 	-moz-animation-duration: 1s;
 	-moz-animation-iteration-count: infinite;
 	-moz-animation-direction: alternate;
 	-moz-animation-timing-function: ease-in-out;
 	
-	-ms-animation-name: glowLargeButtonsHover;
+	-ms-animation-name: glowButtonsHover;
 	-ms-animation-duration: 1s;
 	-ms-animation-iteration-count: infinite;
 	-ms-animation-direction: alternate;
 	-ms-animation-timing-function: ease-in-out; 
 	
-	-o-animation-name: glowLargeButtonsHover;
+	-o-animation-name: glowButtonsHover;
 	-o-animation-duration: 1s;
 	-o-animation-iteration-count: infinite;
 	-o-animation-direction: alternate;
 	-o-animation-timing-function: ease-in-out;
 	
-	animation-name: glowLargeButtonsHover;
+	animation-name: glowButtonsHover;
 	animation-duration: 1s;
 	animation-iteration-count: infinite;
 	animation-direction: alternate;
@@ -2753,7 +2759,7 @@ input[type='button'].default:hover,
 
 /* Default Active State Glow */
 
-@-webkit-keyframes glowDefaultLargeButtonsActive {
+@-webkit-keyframes glowDefaultButtonsActive {
     0% {
         -webkit-box-shadow: 0 0 13px rgba(255, 153, 51, .3), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
@@ -2761,7 +2767,7 @@ input[type='button'].default:hover,
         -webkit-box-shadow: 0 0 13px rgba(255, 153, 51, .1), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
 }
-@-moz-keyframes glowDefaultLargeButtonsActive {
+@-moz-keyframes glowDefaultButtonsActive {
     0% {
         -moz-box-shadow: 0 0 13px rgba(255, 153, 51, .3), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
@@ -2769,7 +2775,7 @@ input[type='button'].default:hover,
         -moz-box-shadow: 0 0 13px rgba(255, 153, 51, .1), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
 }
-@-ms-keyframes glowDefaultLargeButtonsActive {
+@-ms-keyframes glowDefaultButtonsActive {
     0% {
         -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .3), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
@@ -2777,7 +2783,7 @@ input[type='button'].default:hover,
         -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .1), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
 }
-@-o-keyframes glowDefaultLargeButtonsActive {
+@-o-keyframes glowDefaultButtonsActive {
     0% {
         -o-box-shadow: 0 0 13px rgba(255, 153, 51, .3), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
@@ -2785,7 +2791,7 @@ input[type='button'].default:hover,
         -o-box-shadow: 0 0 13px rgba(255, 153, 51, .1), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
 }
-@keyframes glowDefaultLargeButtonsActive {
+@keyframes glowDefaultButtonsActive {
     0% {
         box-shadow: 0 0 13px rgba(255, 153, 51, .3), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
@@ -2809,31 +2815,31 @@ input[type='button'].default:active,
 	-o-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	
-	-webkit-animation-name: glowDefaultLargeButtonsActive;
+	-webkit-animation-name: glowDefaultButtonsActive;
 	-webkit-animation-duration: 1s;
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-direction: alternate;
 	-webkit-animation-timing-function: ease-in-out; 
 	
-	-moz-animation-name: glowDefaultLargeButtonsActive;
+	-moz-animation-name: glowDefaultButtonsActive;
 	-moz-animation-duration: 1s;
 	-moz-animation-iteration-count: infinite;
 	-moz-animation-direction: alternate;
 	-moz-animation-timing-function: ease-in-out;
 	
-	-ms-animation-name: glowDefaultLargeButtonsActive;
+	-ms-animation-name: glowDefaultButtonsActive;
 	-ms-animation-duration: 1s;
 	-ms-animation-iteration-count: infinite;
 	-ms-animation-direction: alternate;
 	-ms-animation-timing-function: ease-in-out; 
 	
-	-o-animation-name: glowDefaultLargeButtonsActive;
+	-o-animation-name: glowDefaultButtonsActive;
 	-o-animation-duration: 1s;
 	-o-animation-iteration-count: infinite;
 	-o-animation-direction: alternate;
 	-o-animation-timing-function: ease-in-out;
 	
-	animation-name: glowDefaultLargeButtonsActive;
+	animation-name: glowDefaultButtonsActive;
 	animation-duration: 1s;
 	animation-iteration-count: infinite;
 	animation-direction: alternate;
