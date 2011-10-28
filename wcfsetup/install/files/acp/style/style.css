@@ -386,7 +386,7 @@ nav.mainMenu ul li:not(.activeMenuItem):hover a {
 }
 
 nav.mainMenu ul li.activeMenuItem a {
-	font-size: 115%;
+	font-size: 110%;
 	font-weight: bold;
 	text-shadow: 0 1px 0 #fff;
 	color: #369;
@@ -411,7 +411,6 @@ nav.mainMenu ul li.activeMenuItem .badge {
 	font-size: 75% !important;
 	color: #fff;
 	background-color: #369;
-	top: -3px;	
 	
 	-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
 	-moz-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
@@ -3114,7 +3113,7 @@ div.scrollableContainer > div:first-child p {
 	color: #666;
 }
 
-.infoPackagePlugin > div > a > h1 {
+.infoPackagePlugin > div > a > h1 { /* ToDo: h1 inside a ??? */
 	font-size: 100%;
 	font-weight: bold;
 	text-shadow: 0 1px 0 #fff;
