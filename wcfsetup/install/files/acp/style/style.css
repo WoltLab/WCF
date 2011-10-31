@@ -154,8 +154,19 @@ header.pageHeader {
 	/* background-image: url('../images/header.png'); */
 	background-position: left top;
 	background-repeat: repeat-x;
-	min-width: 800px;
 	width: 100%;
+}
+
+@media screen and (min-width: 480px) {
+	header.pageHeader {
+		min-width: 800px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	header.pageHeader {
+		min-width: auto;
+	}
 }
 
 
@@ -171,7 +182,6 @@ header.pageHeader nav.topMenu {
 	top: 0;
 	right: 0;
 	left: 0;	
-	min-width: 800px;
 	z-index: 500;
 	
 	-webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
@@ -185,6 +195,20 @@ header.pageHeader nav.topMenu {
 	-ms-transition: background .2s linear;
 	-o-transition: background .2s linear;
 	transition: background .2s linear;
+}
+
+@media screen and (min-width: 480px) {
+	
+	header.pageHeader nav.topMenu {
+		min-width: 800px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	
+	header.pageHeader nav.topMenu {
+		min-width: auto;
+	}
 }
 
 header.pageHeader nav.topMenu:hover {
@@ -277,11 +301,26 @@ header.pageHeader div#logo {
 }
 
 header.pageHeader div#logo h1 {
-	font-size: 150%;
 	text-shadow: 0 -1px 0 #000;
 	color: #d8e7f5;
 	position: relative;
 	top: 70px;
+}
+
+@media screen and (min-width: 480px) {
+	
+	header.pageHeader div#logo h1 {
+		font-size: 150%;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	header.pageHeader div#logo h1 {
+		font-size: 100%;
+	}
+	
 }
 
 header.pageHeader div#logo a:hover {
@@ -328,8 +367,21 @@ nav.mainMenu ul {
 }
 
 nav.mainMenu ul li {
-	font-size: 120%;
 	display: inline-block;
+}
+
+@media screen and (min-width: 480px) {
+	
+	nav.mainMenu ul li {
+		font-size: 120%;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	
+	nav.mainMenu ul li {
+		font-size: 100%;
+	}
 }
 
 nav.mainMenu ul li.activeMenuItem:first-child {
@@ -350,7 +402,6 @@ nav.mainMenu ul li a {
 	text-shadow: 0 -1px 0 #000;
 	color: #69c;
 	cursor: pointer;
-	padding: 10px 20px;
 	display: inline-block;
 	position: relative;
 	z-index: 1;
@@ -374,6 +425,22 @@ nav.mainMenu ul li a {
 	transition-property: border, background-color, background-image, color;
 	transition-duration: .3s;
 	transition-timing-function: ease;
+}
+
+@media screen and (min-width: 480px) {
+	
+	nav.mainMenu ul li a {
+		padding: 10px 20px;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	nav.mainMenu ul li a {
+		padding: 10px 10px;
+	}
+	
 }
 
 nav.mainMenu ul li a,
@@ -404,7 +471,9 @@ nav.mainMenu ul li.activeMenuItem a {
 	
 	z-index: 100;
 }
-
+		
+		
+		
 /* ToDo: Special */
 
 nav.mainMenu ul li.activeMenuItem .badge {
@@ -431,7 +500,22 @@ nav.headerNavigation {
 	margin: 0 23px;
 	display: block;
 	position: relative;
-	min-width: 800px;
+}
+
+@media screen and (min-width: 480px) {
+	
+	nav.headerNavigation {
+		min-width: 800px;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	nav.headerNavigation {
+		min-width: auto;
+	}
+	
 }
 
 nav.headerNavigation:after {
@@ -472,7 +556,22 @@ nav.headerNavigation ul li {
 
 div.main {
 	margin: 0 23px;
-	min-width: 800px;
+}
+
+@media screen and (min-width: 480px) {
+	
+	div.main {
+		min-width: 800px;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	div.main {
+		min-width: auto;
+	}
+	
 }
 
 
@@ -492,8 +591,23 @@ section.content {
 div.main > div section:only-child {
 	display: block !important;
 	width: auto;
-	min-height: 100px;
 }
+
+@media screen and (min-width: 480px) {
+
+	div.main > div section:only-child {
+		min-height: 100px;
+	}
+	
+}	
+
+@media screen and (max-width: 480px) {
+
+	div.main > div section:only-child {
+		min-height: auto;
+	}
+	
+}	
 
 section.content .content {
 	border: 1px solid #ccc;
@@ -554,7 +668,6 @@ nav.sidebarMenu > div a:hover {
 
 nav.sidebarMenu > div h1 {
 	cursor: pointer;
-	font-size: 130%;
 	font-weight: bold;
 	color: #369;
 	background-image: url('../../icon/closed.svg');
@@ -562,16 +675,45 @@ nav.sidebarMenu > div h1 {
 	background-size: 16px;
 	background-repeat: no-repeat;
 	margin-top: 5px;
-	padding: 7px 25px 7px 35px;
 	position: relative;
+}
+
+@media screen and (min-width: 480px) {
+	
+	nav.sidebarMenu > div h1 {
+		font-size: 130%;
+		padding: 7px 25px 7px 35px;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	nav.sidebarMenu > div h1 {
+		font-size: 100%;
+		padding: 7px 15px 7px 35px;
+	}
+	
 }
 
 nav.sidebarMenu > div h1.activeMenuItem {
 	background-image: url('../../icon/opened.svg');
 }
 
-nav.sidebarMenu > div ul li {
-	font-size: 110%;
+@media screen and (min-width: 480px) {
+	
+	nav.sidebarMenu > div ul li {
+		font-size: 110%;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	nav.sidebarMenu > div ul li {
+		font-size: 100%;
+	}
+	
 }
 
 nav.sidebarMenu > div ul li a {
@@ -609,7 +751,22 @@ footer.pageFooter {
 	padding: 0 23px;
 	clear: both;
 	position: relative;
-	min-width: 800px;
+}
+
+@media screen and (min-width: 480px) {
+	
+	footer.pageFooter {
+		min-width: 800px;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	footer.pageFooter {
+		min-width: auto;
+	}
+	
 }
 
 footer.pageFooter:after {
@@ -692,8 +849,6 @@ footer.pageFooter nav.footerNavigation ul li {
 
 .mainHeading > img {
 	float: left;
-	width: 48px;
-	height: 48px;
 }
 
 .mainHeading > hgroup {
@@ -702,15 +857,44 @@ footer.pageFooter nav.footerNavigation ul li {
 	min-height: 48px;
 }
 
-.mainHeading > img ~ hgroup {
-	padding-left: 60px;
-}
-
 .mainHeading > hgroup h1 {
-	font-size: 175%;
 	font-weight: bold;
 	border-bottom: 1px solid #999;
 	padding: 1px 0 10px;	
+}
+
+@media screen and (min-width: 480px) {
+	
+	.mainHeading > img {
+		width: 48px;
+		height: 48px;
+	}
+	
+	.mainHeading > img ~ hgroup {
+		padding-left: 60px;
+	}
+	
+	.mainHeading > hgroup h1 {
+		font-size: 175%;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	.mainHeading > img {
+		width: 24px;
+		height: 24px;
+	}
+	
+	.mainHeading > img ~ hgroup {
+		padding-left: 35px;
+	}
+	
+	.mainHeading > hgroup h1 {
+		font-size: 110%;
+	}
+	
 }
 
 .mainHeading > hgroup h1,
@@ -747,6 +931,22 @@ footer.pageFooter nav.footerNavigation ul li {
 	border-bottom: 1px solid #ccc;
 	margin: 10px 0;
 	padding: 10px 0;
+}
+
+@media screen and (min-width: 480px) {
+	
+	.subHeading h1 {
+		font-size: 150%;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	.subHeading h1 {
+		font-size: 100%;
+	}
+	
 }
 
 .subHeading h2 {
@@ -811,9 +1011,24 @@ dl > dt {
 	color: #69c;
 	margin-top: 5px; /* not so nice */
 	float: left;
-	width: 230px;
 }
 
+@media screen and (min-width: 480px) {
+	
+	dl > dt {
+		width: 230px;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	dl > dt {
+		width: 130px;
+	}
+	
+}
+	
 dl > dt > label {
 	margin-top: 5px;
 	display: block;
@@ -824,8 +1039,23 @@ dl.disabled > dt {
 }
 
 dl > dd {
-	margin-left: 250px;
 	padding-top: 5px;
+}
+
+@media screen and (min-width: 480px) {
+	
+	dl > dd {
+		margin-left: 250px;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	dl > dd {
+		margin-left: 150px;
+	}
+	
 }
 
 dl > dd > small {
@@ -867,25 +1097,28 @@ dt.reversed {
 	text-align: left;
 	margin-top: 2px;
 	position: absolute;
-	left: 270px;
 	width: auto;
+}
+
+@media screen and (min-width: 480px) {
+	
+	dt.reversed {
+		left: 270px;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	dt.reversed {
+		left: 170px;
+	}
+	
 }
 
 dt.reversed ~ dd > input[type='checkbox'] {
 	margin-left: 0;
 }
-
-/* Special (experimental) 
-
-fieldset dl > dd {
-	margin-left: 235px;
-	padding-top: 5px;
-}
-
-fieldset dt.reversed {
-	left: 255px;
-}
-*/
 
 
 
@@ -1026,28 +1259,60 @@ textarea[disabled='disabled'] {
 
 /* -- -- -- Input Widths -- -- -- */
 
-textarea {
-	width: 99%;
-	min-width: 300px;
+@media screen and (min-width: 480px) {
+	
+	textarea {
+		width: 99%;
+		min-width: 300px;
+	}
+	
+	.tiny {
+		width: 100px;
+	}
+	
+	.short {
+		width: 10%;
+		min-width: 100px;
+	}
+	
+	.medium {
+		width: 50%;
+		min-width: 200px;
+	}
+	
+	.long {
+		width: 99%;
+		min-width: 300px;
+	}
+	
 }
 
-.tiny {
-	width: 100px;
-}
-
-.short {
-	width: 10%;
-	min-width: 100px;
-}
-
-.medium {
-	width: 50%;
-	min-width: 200px;
-}
-
-.long {
-	width: 99%;
-	min-width: 300px;
+@media screen and (max-width: 480px) {
+	
+	textarea {
+		width: 99%;
+		min-width: auto;
+	}
+	
+	.tiny {
+		width: 50px;
+	}
+	
+	.short {
+		width: 10%;
+		min-width: 50px;
+	}
+	
+	.medium {
+		width: 30%;
+		min-width: 100px;
+	}
+	
+	.long {
+		width: 99%;
+		min-width: 150px;
+	}
+	
 }
 
 .auto {
@@ -1086,7 +1351,24 @@ textarea {
 	margin: 0 !important;
 	display: table-cell;
 	width: 99%;
-	min-width: 300px;
+}
+
+@media screen and (min-width: 480px) {
+	
+	.preInput > input,
+	.preInput > textarea {
+		min-width: 300px;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	.preInput > input,
+	.preInput > textarea {
+		min-width: 100px;
+	}
+	
 }
 
 /* Dropdown Caption */
@@ -1209,9 +1491,25 @@ textarea {
 
 .largeButtons ul li a img {
 	margin: -5px 1px -5px -5px;
-	height: 24px;
-	width: 24px;
 	vertical-align: middle;
+}
+
+@media screen and (min-width: 480px) {
+	
+	.largeButtons ul li a img {
+		height: 24px;
+		width: 24px;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	.largeButtons ul li a img {
+		height: 16px;
+		width: 16px;
+	}
+	
 }
 
 /* Normal State */
@@ -1319,7 +1617,7 @@ input[type='button'],
 
 .tabMenu {
 	text-shadow: 0 1px 0 #fff;
-	/* This is the general toggle switch for tab menu orientation (options: left|center|right) */
+	/* Toggle for tab menu orientation (options: left|center|right) */
 	text-align: center;
 	white-space: nowrap;
 	background-color: none;
@@ -1344,11 +1642,9 @@ input[type='button'],
 }
 
 .tabMenu li a {
-	font-size: 110%;
 	text-decoration: none;
 	color: #999;
 	cursor: pointer;
-	padding: 10px 15px 7px;
 	border-width: 1px 1px 0 1px;
 	border-style: solid;
 	border-color: #ddd;
@@ -1381,6 +1677,24 @@ input[type='button'],
 	transition-timing-function: ease;
 }
 
+@media screen and (min-width: 480px) {
+	
+	.tabMenu li a {
+		font-size: 110%;
+		padding: 10px 15px 7px;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	.tabMenu li a {
+		font-size: 100%;
+		padding: 5px 10px;
+	}
+	
+}
+
 .tabMenu li:not(.ui-state-active) a:hover {
 	color: #666;
 	border-width: 1px;
@@ -1403,7 +1717,6 @@ input[type='button'],
 }
 
 .tabMenu li.ui-state-active a {
-	font-size: 130%;
 	font-weight: bold;
 	color: #333 !important;
 	border-width: 1px;
@@ -1413,6 +1726,22 @@ input[type='button'],
 	background-color: rgba(255, 255, 255, 1);
 	bottom: 0;
 	z-index: 30;
+}
+
+@media screen and (min-width: 480px) {
+	
+	.tabMenu li.ui-state-active a {
+		font-size: 130%;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	.tabMenu li.ui-state-active a {
+		font-size: 100%;
+	}
+	
 }
 
 .tabMenu li.ui-state-active a,
@@ -1634,9 +1963,24 @@ input[type='button'],
 	margin: 0;
 	padding: 5px 1px 5px 20px;
 	display: inline-block;
-	max-width: 200px;
 	overflow: hidden;
 	white-space: nowrap;
+}
+
+@media screen and (min-width: 480px) {
+	
+	.breadcrumbs ul li a {
+		max-width: 250px;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	.breadcrumbs ul {
+		max-width: 90px;
+	}
+	
 }
 
 .breadcrumbs ul li:first-child a {
@@ -1678,12 +2022,12 @@ thead th {
 }
 
 thead th:first-child {
-	/* rounded corners for the first table header cell to the left */
+	/* Rounded corners for the first table header cell to the left */
 	border-top-left-radius: 5px;
 }
 
 thead th:last-child {
-	/* rounded corners for the last table header cell to the left */
+	/* Rounded corners for the last table header cell to the left */
 	border-top-right-radius: 5px;
 }
 
@@ -1742,9 +2086,9 @@ thead th.active:hover a {
 }
 
 thead th a img {
-	/* sort-icon orientation does not work */
+	/* ToDo: Sort-icon orientation does not work */
 	text-align: right;
-	/* negative margins to prevent table-cells from expanding when the sort-icon shows up */
+	/* Negative margins to prevent table-cells from expanding when the sort-icon shows up */
 	margin-top: -5px !important;
 	margin-bottom: -5px !important;
 }
@@ -1756,17 +2100,17 @@ tbody tr {
 }
 
 tbody tr:last-child {
-	/* no border for the last table row */
+	/* No border for the last table row */
 	border-bottom-width: 0;
 }
 
 tbody tr:last-child td:first-child {
-	/* rounded corners for the last table cell to the left */
+	/* Rounded corners for the last table cell to the left */
 	border-bottom-left-radius: 5px;
 }
 
 tbody tr:last-child td:last-child {
-	/* rounded corners for the last table cell to the right */
+	/* Rounded corners for the last table cell to the right */
 	border-bottom-right-radius: 5px;
 }
 
@@ -1774,7 +2118,7 @@ tbody td {
 	background-color: #fcfdfe;
 	border-right: 1px solid rgba(255, 255, 255, .3);
 	padding: 5px;
-	/* this is experimental - only works in combination with "table-layout: fixed;" */
+	/* This is experimental - only works in combination with "table-layout: fixed;" */
 	word-wrap: break-word;
 }
 
@@ -2077,7 +2421,7 @@ p.error {
 	margin-top: 5px;
 	padding: 2px 10px 2px 25px;
 	display: table !important;
-	position: relative;
+	position: relative; /* Firefox will support this in version 10 */
 	clear: both;
 	
 	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
@@ -2171,9 +2515,22 @@ div#ajaxExceptionStacktrace {
 	z-index: 1000;
 }
 
-#actionProxyLoading img {
-	height: 24px;
-	width: 24px;
+@media screen and (min-width: 480px) {
+	
+	#actionProxyLoading img {
+		height: 24px;
+		width: 24px;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	#actionProxyLoading img {
+		height: 16px;
+		width: 16px;
+	}
+	
 }
 
 
@@ -2207,15 +2564,32 @@ div#ajaxExceptionStacktrace {
 	margin-right: auto !important;
 	margin-left: auto !important;
 	position: fixed !important;
-	min-width: 500px !important;
-	max-width: 780px !important;
-	top: 150px !important;
 	
 	-webkit-box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
 	-moz-box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
 	-ms-box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
 	-o-box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
 	box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
+}
+
+@media screen and (min-width: 480px) {
+	
+	.ui-dialog {
+		min-width: 500px !important;
+		max-width: 780px !important;
+		top: 150px !important;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	.ui-dialog {
+		min-width: 200px !important;
+		max-width: 380px !important;
+		top: 120px !important;
+	}
+	
 }
 
 .ui-dialog-titlebar {
@@ -2237,12 +2611,29 @@ a.ui-dialog-titlebar-close {
 	background-image: url('../../icon/delete2.svg');
 	background-position: top left;
 	background-repeat: no-repeat;
-	background-size: 32px;
 	position: absolute !important;
 	top: 3px;
 	right: 3px;
-	width: 32px;
-	height: 32px;
+}
+
+@media screen and (min-width: 480px) {
+	
+	a.ui-dialog-titlebar-close {
+		background-size: 32px;
+		width: 32px;
+		height: 32px;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	
+	a.ui-dialog-titlebar-close {
+		background-size: 24px;
+		width: 24px;
+		height: 24px;
+	}
+	
 }
 
 a.ui-dialog-titlebar-close span {
