@@ -581,7 +581,6 @@ div.main {
 section.content {
 	background-color: #fff;
 	display: table-cell;
-	padding: 5px 40px 25px;
 	position: relative;
 	width: 100%;
 	z-index: 100;
@@ -594,7 +593,11 @@ div.main > div section:only-child {
 }
 
 @media screen and (min-width: 480px) {
-
+	
+	section.content {
+		padding: 5px 40px 25px;
+	}
+	
 	div.main > div section:only-child {
 		min-height: 100px;
 	}
@@ -602,7 +605,11 @@ div.main > div section:only-child {
 }	
 
 @media screen and (max-width: 480px) {
-
+	
+	section.content {
+		padding: 5px 15px 25px;
+	}
+	
 	div.main > div section:only-child {
 		min-height: auto;
 	}
