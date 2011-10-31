@@ -346,7 +346,6 @@
 		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[E-Mail an folgende Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.subject"><![CDATA[Betreff]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Nachricht]]></item>
-		<item name="wcf.acp.user.userNote"><![CDATA[Hallo {$__wcf->user->username}!]]></item>
 	</category>
 	
 	<category name="wcf.date">
@@ -553,5 +552,6 @@
 		<item name="wcf.user.visibleLanguages"><![CDATA[Zeige Inhalte in folgenden Sprachen an]]></item>
 		<item name="wcf.user.visibleLanguages.description"><![CDATA[Wählen Sie, in welchen Sprachen erstellte Inhalte angezeigt werden sollen.]]></item>
 		<item name="wcf.user.userID"><![CDATA[Benutzer-ID]]></item>
+		<item name="wcf.user.userNote"><![CDATA[Hallo {$__wcf->user->username}!]]></item>
 	</category>
 </language>

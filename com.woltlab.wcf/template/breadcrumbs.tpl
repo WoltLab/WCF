@@ -1,3 +1,4 @@
+{if $__wcf->getBreadcrumbs()->get()|count}
 <nav class="breadcrumbs">
 	<ul>
 		{foreach from=$__wcf->getBreadcrumbs()->get() item=$breadcrumb}
@@ -7,3 +8,4 @@
 		{/foreach}
 	</ul>
 </nav>
+{/if}
