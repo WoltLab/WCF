@@ -125,28 +125,33 @@ class User extends DatabaseObject {
 	 */
 	public function getLanguageIDs() {
 		if ($this->languageIDs === null) {
-			// load storage data
-			UserStorageHandler::getInstance()->loadStorage(array($this->userID), 1);
-			
-			// get language ids
-			$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'languageIDs', 1);
-			
-			// cache does not exist or is outdated
-			if ($data[$this->userID] === null) {
-				$sql = "SELECT	languageID
-					FROM	wcf".WCF_N."_user_to_language
-					WHERE	userID = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array($this->userID));
-				while ($row = $statement->fetchArray()) {
-					$this->languageIDs[] = $row['languageID'];
-				}
-				
-				// update storage data
-				UserStorageHandler::getInstance()->update($this->userID, 'languageIDs', serialize($this->languageIDs), 1);
+			if (!$this->userID) {
+				$this->languageIDs = array();
 			}
 			else {
-				$this->languageIDs = unserialize($data[$this->userID]);
+				// load storage data
+				UserStorageHandler::getInstance()->loadStorage(array($this->userID), 1);
+				
+				// get language ids
+				$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'languageIDs', 1);
+				
+				// cache does not exist or is outdated
+				if ($data[$this->userID] === null) {
+					$sql = "SELECT	languageID
+						FROM	wcf".WCF_N."_user_to_language
+						WHERE	userID = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute(array($this->userID));
+					while ($row = $statement->fetchArray()) {
+						$this->languageIDs[] = $row['languageID'];
+					}
+					
+					// update storage data
+					UserStorageHandler::getInstance()->update($this->userID, 'languageIDs', serialize($this->languageIDs), 1);
+				}
+				else {
+					$this->languageIDs = unserialize($data[$this->userID]);
+				}
 			}
 		}
 		
