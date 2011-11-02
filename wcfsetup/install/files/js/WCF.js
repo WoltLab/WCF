@@ -2708,10 +2708,10 @@ WCF.Effect.BalloonTooltip.prototype = {
 			this._mouseEnterHandler(event);
 		}
 		
-		if ($(document).width() - event.pageX < this.tooltip.getDimensions().width) {
+		if (event.pageX + 10 + this.tooltip.getDimensions().width >= $(window).width()) {
 			this.tooltip.css({
-				top: (event.pageY) + "px",
-				right: ($(document).width() - event.pageX) + "px",
+				top: (event.pageY + 20) + "px",
+				right: ($(document).width() - event.pageX - 5) + "px",
 				left: "auto"
 			});
 		}
