@@ -1,5 +1,5 @@
 /**
- * ACP Testing Styles  
+ * WCF Testing Styles  
  *
  * @author		Harald Szekely 
  * @copyright	2011 WoltLab GmbH 
@@ -157,13 +157,13 @@ header.pageHeader {
 	width: 100%;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	header.pageHeader {
 		min-width: 800px;
 	}
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	header.pageHeader {
 		min-width: auto;
 	}
@@ -197,14 +197,14 @@ header.pageHeader nav.topMenu {
 	transition: background .2s linear;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	header.pageHeader nav.topMenu {
 		min-width: 800px;
 	}
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	header.pageHeader nav.topMenu {
 		min-width: auto;
@@ -277,7 +277,7 @@ nav.topMenu ul li .dropdown > li:first-child {
 
 
 /* ToDo: Login Box */
-/* do not use the class ".loginBox" to style the box! */
+/* Do not use the class ".loginBox" to style the box! */
 /* Note that the login-box is subject to changes */
 
 #loginBox dl {
@@ -307,7 +307,7 @@ header.pageHeader div#logo h1 {
 	top: 70px;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	header.pageHeader div#logo h1 {
 		font-size: 150%;
@@ -315,7 +315,7 @@ header.pageHeader div#logo h1 {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	header.pageHeader div#logo h1 {
 		font-size: 100%;
@@ -370,14 +370,14 @@ nav.mainMenu ul li {
 	display: inline-block;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	nav.mainMenu ul li {
 		font-size: 120%;
 	}
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	nav.mainMenu ul li {
 		font-size: 100%;
@@ -427,7 +427,7 @@ nav.mainMenu ul li a {
 	transition-timing-function: ease;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	nav.mainMenu ul li a {
 		padding: 10px 20px;
@@ -435,7 +435,7 @@ nav.mainMenu ul li a {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	nav.mainMenu ul li a {
 		padding: 10px 10px;
@@ -458,7 +458,6 @@ nav.mainMenu ul li.activeMenuItem a {
 	text-shadow: 0 1px 0 #fff;
 	color: #369;
 	cursor: default !important;
-	
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	
@@ -502,7 +501,7 @@ nav.headerNavigation {
 	position: relative;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	nav.headerNavigation {
 		min-width: 800px;
@@ -510,7 +509,7 @@ nav.headerNavigation {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	nav.headerNavigation {
 		min-width: auto;
@@ -543,7 +542,7 @@ nav.headerNavigation ul li {
 }
 
 #tplLogin header.pageHeader nav.headerNavigation ul li.toBottomLink {
-	/* removes the to-bottom-link on the log-in page */
+	/* Removes the to-bottom-link on the log-in page */
 	position: absolute;
 	left: -9000px;
 	top: -9000px;
@@ -558,7 +557,7 @@ div.main {
 	margin: 0 23px;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	div.main {
 		min-width: 800px;
@@ -566,7 +565,7 @@ div.main {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	div.main {
 		min-width: auto;
@@ -592,7 +591,7 @@ div.main > div section:only-child {
 	width: auto;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	section.content {
 		padding: 5px 40px 25px;
@@ -604,7 +603,7 @@ div.main > div section:only-child {
 	
 }	
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	section.content {
 		padding: 5px 15px 25px;
@@ -685,7 +684,7 @@ nav.sidebarMenu > div h1 {
 	position: relative;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	nav.sidebarMenu > div h1 {
 		font-size: 130%;
@@ -694,7 +693,7 @@ nav.sidebarMenu > div h1 {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	nav.sidebarMenu > div h1 {
 		font-size: 100%;
@@ -707,7 +706,7 @@ nav.sidebarMenu > div h1.activeMenuItem {
 	background-image: url('../../icon/opened.svg');
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	nav.sidebarMenu > div ul li {
 		font-size: 110%;
@@ -715,7 +714,7 @@ nav.sidebarMenu > div h1.activeMenuItem {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	nav.sidebarMenu > div ul li {
 		font-size: 100%;
@@ -760,7 +759,7 @@ footer.pageFooter {
 	position: relative;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	footer.pageFooter {
 		min-width: 800px;
@@ -768,7 +767,7 @@ footer.pageFooter {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	footer.pageFooter {
 		min-width: auto;
@@ -826,7 +825,7 @@ footer.pageFooter nav.footerNavigation ul li {
 }
 
 #tplLogin footer.pageFooter nav.footerNavigation ul li.toTopLink {
-	/* removes the to-top-link on the log-in page */
+	/* Removes the to-top-link on the log-in page */
 	position: absolute;
 	left: -9000px;
 	top: -9000px;
@@ -870,7 +869,7 @@ footer.pageFooter nav.footerNavigation ul li {
 	padding: 1px 0 10px;	
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	.mainHeading > img {
 		width: 48px;
@@ -887,11 +886,11 @@ footer.pageFooter nav.footerNavigation ul li {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	.mainHeading > img {
-		width: 24px;
-		height: 24px;
+		width: 32px;
+		height: 32px;
 	}
 	
 	.mainHeading > img ~ hgroup {
@@ -909,10 +908,6 @@ footer.pageFooter nav.footerNavigation ul li {
 	text-decoration: none;
 	text-shadow: 0 1px 0 #fff;
 	color: #666;
-}
-
-.mainHeading > hgroup h1 a:hover {
-		
 }
 
 .mainHeading > hgroup h2 {
@@ -940,7 +935,7 @@ footer.pageFooter nav.footerNavigation ul li {
 	padding: 10px 0;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	.subHeading h1 {
 		font-size: 150%;
@@ -948,7 +943,7 @@ footer.pageFooter nav.footerNavigation ul li {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	.subHeading h1 {
 		font-size: 100%;
@@ -1020,7 +1015,7 @@ dl > dt {
 	float: left;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	dl > dt {
 		width: 230px;
@@ -1028,7 +1023,7 @@ dl > dt {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	dl > dt {
 		width: 130px;
@@ -1049,7 +1044,7 @@ dl > dd {
 	padding-top: 5px;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	dl > dd {
 		margin-left: 250px;
@@ -1057,7 +1052,7 @@ dl > dd {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	dl > dd {
 		margin-left: 150px;
@@ -1107,7 +1102,7 @@ dt.reversed {
 	width: auto;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	dt.reversed {
 		left: 270px;
@@ -1115,7 +1110,7 @@ dt.reversed {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	dt.reversed {
 		left: 170px;
@@ -1191,11 +1186,11 @@ textarea {
 	-o-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
 	box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
 	
-	-webkit-transition: all .2s linear;
-	-moz-transition: all .2s linear;
-	-ms-transition: all .2s linear;
-	-o-transition: all .2s linear;
-	transition: all .2s linear;
+	-webkit-transition: background-color, border .2s linear;
+	-moz-transition: background-color, border .2s linear;
+	-ms-transition: background-color, border .2s linear;
+	-o-transition: background-color, border .2s linear;
+	transition: background-color, border .2s linear;
 }
 
 /* Hover State */
@@ -1266,7 +1261,7 @@ textarea[disabled='disabled'] {
 
 /* -- -- -- Input Widths -- -- -- */
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	textarea {
 		width: 99%;
@@ -1294,7 +1289,7 @@ textarea[disabled='disabled'] {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	textarea {
 		width: 99%;
@@ -1360,7 +1355,7 @@ textarea[disabled='disabled'] {
 	width: 99%;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	.preInput > input,
 	.preInput > textarea {
@@ -1369,7 +1364,7 @@ textarea[disabled='disabled'] {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	.preInput > input,
 	.preInput > textarea {
@@ -1501,7 +1496,7 @@ textarea[disabled='disabled'] {
 	vertical-align: middle;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	.largeButtons ul li a img {
 		height: 24px;
@@ -1510,7 +1505,11 @@ textarea[disabled='disabled'] {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
+	
+	.largeButtons ul li {
+		font-size: 85%;
+	}
 	
 	.largeButtons ul li a img {
 		height: 16px;
@@ -1684,7 +1683,7 @@ input[type='button'],
 	transition-timing-function: ease;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	.tabMenu li a {
 		font-size: 110%;
@@ -1693,7 +1692,7 @@ input[type='button'],
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	.tabMenu li a {
 		font-size: 100%;
@@ -1735,7 +1734,7 @@ input[type='button'],
 	z-index: 30;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	.tabMenu li.ui-state-active a {
 		font-size: 130%;
@@ -1743,7 +1742,7 @@ input[type='button'],
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	.tabMenu li.ui-state-active a {
 		font-size: 100%;
@@ -1974,7 +1973,7 @@ input[type='button'],
 	white-space: nowrap;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	.breadcrumbs ul li a {
 		max-width: 250px;
@@ -1982,10 +1981,10 @@ input[type='button'],
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
-	.breadcrumbs ul {
-		max-width: 90px;
+	.breadcrumbs ul li a {
+		max-width: 100px;
 	}
 	
 }
@@ -2359,12 +2358,6 @@ p.warning {
 	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
 	-o-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
 	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
-	
-	-webkit-transition: all .1s linear;
-	-moz-transition: all .1s linear;
-	-ms-transition: all .1s linear;
-	-o-transition: all .1s linear;
-	transition: all .1s linear;
 }
 
 /* Types */
@@ -2415,16 +2408,13 @@ p.error {
 	text-shadow: 0 1px 0 #fff;
 	line-height: 1.5;
 	color: #c00;
-	
 	border: 1px solid #ccc;
 	border-radius: 7px;
-	
 	background-color: #fff;
 	background-image: url('../../icon/systemError.svg');
 	background-size: 16px;
 	background-position: 5px center;
 	background-repeat: no-repeat;
-	
 	margin-top: 5px;
 	padding: 2px 10px 2px 25px;
 	display: table !important;
@@ -2522,7 +2512,7 @@ div#ajaxExceptionStacktrace {
 	z-index: 1000;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	#actionProxyLoading img {
 		height: 24px;
@@ -2531,7 +2521,7 @@ div#ajaxExceptionStacktrace {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	#actionProxyLoading img {
 		height: 16px;
@@ -2579,7 +2569,7 @@ div#ajaxExceptionStacktrace {
 	box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	.ui-dialog {
 		min-width: 500px !important;
@@ -2589,7 +2579,7 @@ div#ajaxExceptionStacktrace {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	.ui-dialog {
 		min-width: 200px !important;
@@ -2623,7 +2613,7 @@ a.ui-dialog-titlebar-close {
 	right: 3px;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 800px) {
 	
 	a.ui-dialog-titlebar-close {
 		background-size: 32px;
@@ -2633,7 +2623,7 @@ a.ui-dialog-titlebar-close {
 	
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
 	
 	a.ui-dialog-titlebar-close {
 		background-size: 24px;
@@ -2713,9 +2703,7 @@ div.ui-widget-overlay {
 .badgeButton,
 .clipboardEditor > ul > li {
 	cursor: pointer;
-	
 	border-radius: 30px;
-	
 	margin-right: 0;
 	margin-left: 0;
 	padding: 3px 10px 5px;
@@ -2830,11 +2818,11 @@ img[src*='enable'] {
 	cursor: pointer; 
 	padding: 5px 7px;
 	
-	-webkit-transition: all .2s linear;
-	-moz-transition: all .2s linear;
-	-ms-transition: all .2s linear;
-	-o-transition: all .2s linear;
-	transition: all .2s linear;
+	-webkit-transition: color, background .2s linear;
+	-moz-transition: color, background .2s linear;
+	-ms-transition: color, background .2s linear;
+	-o-transition: color, background .2s linear;
+	transition: color, background .2s linear;
 }
 
 .clipboardEditor ul > li > ol > li:first-child {
@@ -2871,7 +2859,6 @@ input[type='button'],
 	text-decoration: none;
 	text-shadow: 0 1px 0 #fff;
 	color: #999;
-	
 	border-width: 1px;
 	border-style: solid;
 	border-color: #ccc #bbb #aaa;
@@ -3417,11 +3404,11 @@ div.scrollableContainer > div:first-child p {
 }
 
 .userNotificationDetails li:hover {
-	background-image: -webkit-linear-gradient(top, rgb(192, 192, 192, 1), rgb(224, 224, 224,));
-	background-image: -moz-linear-gradient(top, rgb(192, 192, 192, 1), rgb(224, 224, 224,));
-	background-image: -ms-linear-gradient(top, rgb(192, 192, 192, 1), rgb(224, 224, 224,));
-	background-image: -o-linear-gradient(top, rgb(192, 192, 192, 1), rgb(224, 224, 224,));
-	background-image: linear-gradient(top, rgb(192, 192, 192, 1), rgb(224, 224, 224,));
+	background-image: -webkit-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
+	background-image: -moz-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
+	background-image: -ms-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
+	background-image: -o-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
+	background-image: linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
 }
 
 #userNotificationDetailsLoading {
@@ -3551,11 +3538,11 @@ div.scrollableContainer > div:first-child p {
 	width: 139px;
 	opacity: 0;
 	
-	-webkit-transition: all .1s linear;
-	-moz-transition: all .1s linear;
-	-ms-transition: all .1s linear;
-	-o-transition: all .1s linear;
-	transition: all .1s linear;
+	-webkit-transition: opacity .1s linear;
+	-moz-transition: opacity .1s linear;
+	-ms-transition: opacity .1s linear;
+	-o-transition: opacity .1s linear;
+	transition: opacity .1s linear;
 }
 
 .infoPackagePlugin:hover > div > a > small {
@@ -3589,7 +3576,7 @@ div.scrollableContainer > div:first-child p {
 }
 
 .infoPackagePlugin .smallButtonBar li span {
-	/* removes the caption of the buttons */
+	/* Removes the button-caption */
 	position: absolute;
 	left: -9000px;
 	top: -9000px;
@@ -3605,11 +3592,11 @@ div.scrollableContainer > div:first-child p {
 	text-align: right;
 	opacity: 0;
 	
-	-webkit-transition: all .1s linear;
-	-moz-transition: all .1s linear;
-	-ms-transition: all .1s linear;
-	-o-transition: all .1s linear;
-	transition: all .1s linear;
+	-webkit-transition: opacity .1s linear;
+	-moz-transition: opacity .1s linear;
+	-ms-transition: opacity .1s linear;
+	-o-transition: opacity .1s linear;
+	transition: opacity .1s linear;
 }
 
 .infoPackageStandalone:hover footer nav,
@@ -3683,7 +3670,6 @@ div#profileButtonContainer {
 
 div#profileButtonContainer button {
 	cursor: pointer;
-	
 	border: 1px solid rgba(192, 192, 192, 1);
 	border-radius: 3px;
 	
@@ -3705,6 +3691,19 @@ div#profileButtonContainer button:hover {
 	background-image: -o-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
 	background-image: linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3751,7 +3750,7 @@ div.ajaxDebugMessage p:last-child {
 	display: block;
 }
 
-/* end clearfix */
+/* End clearfix */
 .ui-helper-zfix {
 	opacity: 0;
 	position: absolute;
