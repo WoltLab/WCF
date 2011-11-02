@@ -457,6 +457,7 @@ nav.mainMenu ul li.activeMenuItem a {
 	font-weight: bold;
 	text-shadow: 0 1px 0 #fff;
 	color: #369;
+	white-space: nowrap;
 	cursor: default !important;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
@@ -1513,6 +1514,7 @@ textarea[disabled='disabled'] {
 	
 	.largeButtons ul li a {
 		padding: 10px 15px !important;
+		white-space: nowrap;
 	}
 	
 	.largeButtons ul li a img {
