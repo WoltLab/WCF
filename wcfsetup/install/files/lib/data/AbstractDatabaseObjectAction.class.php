@@ -153,6 +153,15 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	}
 	
 	/**
+	 * Sets the database objects.
+	 * 
+	 * @param	array<wcf\data\DatabaseObject>		$objects
+	 */
+	public function setObjects(array $objects) {
+		$this->objects = $objects;
+	}
+	
+	/**
 	 * @see	wcf\data\IDatabaseObjectAction::getParameters()
 	 */
 	public function getParameters() {
@@ -205,7 +214,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 		}
 		
 		// read data
-		$this->readObjects();
+		if (!count($this->objects)) {
+			$this->readObjects();
+		}
 		
 		if (!count($this->objects)) {
 			throw new ValidateActionException('Invalid object id');
@@ -230,7 +241,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 		}
 		
 		// read data
-		$this->readObjects();
+		if (!count($this->objects)) {
+			$this->readObjects();
+		}
 		
 		if (!count($this->objects)) {
 			throw new ValidateActionException('Invalid object id');
