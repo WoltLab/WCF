@@ -2665,16 +2665,19 @@ WCF.Effect.BalloonTooltip.prototype = {
 		this.tooltip = $('<div id="balloonTooltip" style="position:absolute"></div>').appendTo(document.body).hide();
 	
 		// init elements
-		$('.balloonTooltip').each($.proxy(this._initTooltip, this));
+		$('.balloonTooltip').live('mouseenter', $.proxy(this._initTooltip, this));
 	},
 	
-	_initTooltip: function(index, element) {
-		$(element).hover(
+	_initTooltip: function(event) {
+		$(event.currentTarget).die('mouseenter');
+		$(event.currentTarget).removeClass('balloonTooltip');
+		
+		$(event.currentTarget).hover(
 			$.proxy(this._mouseEnterHandler, this),	
 			$.proxy(this._mouseLeaveHandler, this)
 		);
 		
-		$(element).mousemove(
+		$(event.currentTarget).mousemove(
 			$.proxy(this._mouseMoveHandler, this)	
 		);
 	},
