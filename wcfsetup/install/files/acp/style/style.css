@@ -157,13 +157,13 @@ header.pageHeader {
 	width: 100%;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	header.pageHeader {
 		min-width: 800px;
 	}
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	header.pageHeader {
 		min-width: auto;
 	}
@@ -197,14 +197,14 @@ header.pageHeader nav.topMenu {
 	transition: background .2s linear;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	header.pageHeader nav.topMenu {
 		min-width: 800px;
 	}
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	header.pageHeader nav.topMenu {
 		min-width: auto;
@@ -307,7 +307,7 @@ header.pageHeader div#logo h1 {
 	top: 70px;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	header.pageHeader div#logo h1 {
 		font-size: 150%;
@@ -315,10 +315,10 @@ header.pageHeader div#logo h1 {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	header.pageHeader div#logo h1 {
-		font-size: 100%;
+		font-size: 175%;
 	}
 	
 }
@@ -370,17 +370,17 @@ nav.mainMenu ul li {
 	display: inline-block;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	nav.mainMenu ul li {
 		font-size: 120%;
 	}
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	nav.mainMenu ul li {
-		font-size: 100%;
+		font-size: 150%;
 	}
 }
 
@@ -427,7 +427,7 @@ nav.mainMenu ul li a {
 	transition-timing-function: ease;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	nav.mainMenu ul li a {
 		padding: 10px 20px;
@@ -435,7 +435,7 @@ nav.mainMenu ul li a {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	nav.mainMenu ul li a {
 		padding: 10px 10px;
@@ -501,7 +501,7 @@ nav.headerNavigation {
 	position: relative;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	nav.headerNavigation {
 		min-width: 800px;
@@ -509,7 +509,7 @@ nav.headerNavigation {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	nav.headerNavigation {
 		min-width: auto;
@@ -557,7 +557,7 @@ div.main {
 	margin: 0 23px;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	div.main {
 		min-width: 800px;
@@ -565,7 +565,7 @@ div.main {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	div.main {
 		min-width: auto;
@@ -591,7 +591,7 @@ div.main > div section:only-child {
 	width: auto;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	section.content {
 		padding: 5px 40px 25px;
@@ -603,7 +603,7 @@ div.main > div section:only-child {
 	
 }	
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	section.content {
 		padding: 5px 15px 25px;
@@ -684,7 +684,7 @@ nav.sidebarMenu > div h1 {
 	position: relative;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	nav.sidebarMenu > div h1 {
 		font-size: 130%;
@@ -693,10 +693,10 @@ nav.sidebarMenu > div h1 {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	nav.sidebarMenu > div h1 {
-		font-size: 100%;
+		font-size: 150%;
 		padding: 7px 15px 7px 35px;
 	}
 	
@@ -706,7 +706,7 @@ nav.sidebarMenu > div h1.activeMenuItem {
 	background-image: url('../../icon/opened.svg');
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	nav.sidebarMenu > div ul li {
 		font-size: 110%;
@@ -714,10 +714,10 @@ nav.sidebarMenu > div h1.activeMenuItem {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	nav.sidebarMenu > div ul li {
-		font-size: 100%;
+		font-size: 120%;
 	}
 	
 }
@@ -759,7 +759,7 @@ footer.pageFooter {
 	position: relative;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	footer.pageFooter {
 		min-width: 800px;
@@ -767,7 +767,7 @@ footer.pageFooter {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	footer.pageFooter {
 		min-width: auto;
@@ -869,7 +869,7 @@ footer.pageFooter nav.footerNavigation ul li {
 	padding: 1px 0 10px;	
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	.mainHeading > img {
 		width: 48px;
@@ -886,19 +886,19 @@ footer.pageFooter nav.footerNavigation ul li {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	.mainHeading > img {
-		width: 32px;
-		height: 32px;
+		width: 64px;
+		height: 64px;
 	}
 	
 	.mainHeading > img ~ hgroup {
-		padding-left: 35px;
+		padding-left: 65px;
 	}
 	
 	.mainHeading > hgroup h1 {
-		font-size: 110%;
+		font-size: 200%;
 	}
 	
 }
@@ -935,7 +935,7 @@ footer.pageFooter nav.footerNavigation ul li {
 	padding: 10px 0;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	.subHeading h1 {
 		font-size: 150%;
@@ -943,10 +943,10 @@ footer.pageFooter nav.footerNavigation ul li {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	.subHeading h1 {
-		font-size: 100%;
+		font-size: 175%;
 	}
 	
 }
@@ -1015,7 +1015,7 @@ dl > dt {
 	float: left;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	dl > dt {
 		width: 230px;
@@ -1023,7 +1023,7 @@ dl > dt {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	dl > dt {
 		width: 130px;
@@ -1044,7 +1044,7 @@ dl > dd {
 	padding-top: 5px;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	dl > dd {
 		margin-left: 250px;
@@ -1052,7 +1052,7 @@ dl > dd {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	dl > dd {
 		margin-left: 150px;
@@ -1102,7 +1102,7 @@ dt.reversed {
 	width: auto;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	dt.reversed {
 		left: 270px;
@@ -1110,7 +1110,7 @@ dt.reversed {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	dt.reversed {
 		left: 170px;
@@ -1261,7 +1261,7 @@ textarea[disabled='disabled'] {
 
 /* -- -- -- Input Widths -- -- -- */
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	textarea {
 		width: 99%;
@@ -1289,7 +1289,7 @@ textarea[disabled='disabled'] {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	textarea {
 		width: 99%;
@@ -1355,7 +1355,7 @@ textarea[disabled='disabled'] {
 	width: 99%;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	.preInput > input,
 	.preInput > textarea {
@@ -1364,7 +1364,7 @@ textarea[disabled='disabled'] {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	.preInput > input,
 	.preInput > textarea {
@@ -1496,7 +1496,7 @@ textarea[disabled='disabled'] {
 	vertical-align: middle;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	.largeButtons ul li a img {
 		height: 24px;
@@ -1505,15 +1505,19 @@ textarea[disabled='disabled'] {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	.largeButtons ul li {
-		font-size: 85%;
+		font-size: 125%;
+	}
+	
+	.largeButtons ul li a {
+		padding: 10px 15px !important;
 	}
 	
 	.largeButtons ul li a img {
-		height: 16px;
-		width: 16px;
+		height: 32px;
+		width: 32px;
 	}
 	
 }
@@ -1617,8 +1621,6 @@ input[type='button'],
 
 /* ############## Tab Menu ############## */
 
-/* Parts taken from jQuery UI @ themes/base/jquery.ui.tabs.css */
-
 /* Globals */
 
 .tabMenu {
@@ -1683,7 +1685,7 @@ input[type='button'],
 	transition-timing-function: ease;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	.tabMenu li a {
 		font-size: 110%;
@@ -1692,11 +1694,12 @@ input[type='button'],
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	.tabMenu li a {
-		font-size: 100%;
+		font-size: 150%;
 		padding: 5px 10px;
+		max-width: 100px;
 	}
 	
 }
@@ -1734,7 +1737,7 @@ input[type='button'],
 	z-index: 30;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	.tabMenu li.ui-state-active a {
 		font-size: 130%;
@@ -1742,10 +1745,10 @@ input[type='button'],
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	.tabMenu li.ui-state-active a {
-		font-size: 100%;
+		font-size: 150%;
 	}
 	
 }
@@ -1973,7 +1976,7 @@ input[type='button'],
 	white-space: nowrap;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	.breadcrumbs ul li a {
 		max-width: 250px;
@@ -1981,7 +1984,7 @@ input[type='button'],
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	.breadcrumbs ul li a {
 		max-width: 100px;
@@ -2512,7 +2515,7 @@ div#ajaxExceptionStacktrace {
 	z-index: 1000;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	#actionProxyLoading img {
 		height: 24px;
@@ -2521,11 +2524,11 @@ div#ajaxExceptionStacktrace {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	#actionProxyLoading img {
-		height: 16px;
-		width: 16px;
+		height: 32px;
+		width: 32px;
 	}
 	
 }
@@ -2569,7 +2572,7 @@ div#ajaxExceptionStacktrace {
 	box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 480px) {
 	
 	.ui-dialog {
 		min-width: 500px !important;
@@ -2579,12 +2582,12 @@ div#ajaxExceptionStacktrace {
 	
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 480px) {
 	
 	.ui-dialog {
 		min-width: 200px !important;
 		max-width: 380px !important;
-		top: 120px !important;
+		top: 80px !important;
 	}
 	
 }
@@ -2606,31 +2609,14 @@ div#ajaxExceptionStacktrace {
 
 a.ui-dialog-titlebar-close {
 	background-image: url('../../icon/delete2.svg');
+	background-size: 32px;
 	background-position: top left;
 	background-repeat: no-repeat;
 	position: absolute !important;
+	width: 32px;
+	height: 32px;
 	top: 3px;
 	right: 3px;
-}
-
-@media screen and (min-width: 800px) {
-	
-	a.ui-dialog-titlebar-close {
-		background-size: 32px;
-		width: 32px;
-		height: 32px;
-	}
-	
-}
-
-@media screen and (max-width: 800px) {
-	
-	a.ui-dialog-titlebar-close {
-		background-size: 24px;
-		width: 24px;
-		height: 24px;
-	}
-	
 }
 
 a.ui-dialog-titlebar-close span {
@@ -2759,6 +2745,8 @@ img[src*='disable'],
 img[src*='enable'] {
 	cursor: pointer;
 }
+
+
 
 /* -- -- -- Collapsible -- -- -- */
 
