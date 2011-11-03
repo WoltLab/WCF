@@ -314,12 +314,14 @@ $.fn.extend({
 	 * 
 	 * @param	string		direction
 	 * @param	object		callback
+	 * @param	integer		duration
 	 * @returns	jQuery
 	 */
-	wcfBlindIn: function(direction, callback) {
+	wcfBlindIn: function(direction, callback, duration) {
 		if (!direction) direction = 'vertical';
+		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.show(WCF.getEffect(this.getTagName(), 'blind'), { direction: direction }, 200, callback);
+		return this.show(WCF.getEffect(this.getTagName(), 'blind'), { direction: direction }, duration, callback);
 	},
 	
 	/**
@@ -327,12 +329,14 @@ $.fn.extend({
 	 * 
 	 * @param	string		direction
 	 * @param	object		callback
+	 * @param	integer		duration
 	 * @returns	jQuery
 	 */
-	wcfBlindOut: function(direction, callback) {
+	wcfBlindOut: function(direction, callback, duration) {
 		if (!direction) direction = 'vertical';
+		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.hide(WCF.getEffect(this.getTagName(), 'blind'), { direction: direction }, 200, callback);
+		return this.hide(WCF.getEffect(this.getTagName(), 'blind'), { direction: direction }, duration, callback);
 	},
 	
 	/**
@@ -2759,7 +2763,7 @@ WCF.CloseOverlayHandler = {
 		this._bindListener();
 
 		if (this._callbacks.isset(identifier)) {
-			cosole.debug("[WCF.CloseOverlayHandler] identifier '" + identifier + "' is already bound to a callback");
+			console.debug("[WCF.CloseOverlayHandler] identifier '" + identifier + "' is already bound to a callback");
 			return false;
 		}
 
@@ -2831,7 +2835,7 @@ WCF.DOMNodeInsertedHandler = {
 		this._bindListener();
 
 		if (this._callbacks.isset(identifier)) {
-			cosole.debug("[WCF.DOMNodeInsertedHandler] identifier '" + identifier + "' is already bound to a callback");
+			console.debug("[WCF.DOMNodeInsertedHandler] identifier '" + identifier + "' is already bound to a callback");
 			return false;
 		}
 
@@ -2890,16 +2894,25 @@ $.widget('ui.wcfDialog', $.ui.dialog, {
 		this.options.hide = {
 			effect: 'fade'
 		};
-		this.options.close = function(event, ui) {
-			$(this).parent('.ui-dialog').empty().remove();
+
+		if (this.options.hideTitle) {
+			// remove title element
+			this.element.prev().empty().remove();
+		}
+
+		this.options.close = function() {
+			// "display: inline-block" is set by stylesheet, but additionally flagged
+			// with important, thus we have to force the dialog to stay hidden
+			$(this).parent('.ui-dialog').css({ display: 'none !important'});
 		};
+		
 		this.options.height = 'auto';
 		this.options.minHeight = 0;
 		this.options.modal = true;
 		this.options.width = 'auto';
 		
 		$.ui.dialog.prototype._init.apply(this, arguments);
-				
+		
 		// center dialog on resize
 		$(window).resize($.proxy(function() {
 			this.option('position', 'center');
