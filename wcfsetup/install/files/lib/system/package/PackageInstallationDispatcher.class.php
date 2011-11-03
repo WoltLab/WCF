@@ -15,6 +15,7 @@ use wcf\system\form;
 use wcf\system\form\container;
 use wcf\system\form\element;
 use wcf\system\request\LinkHandler;
+use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
@@ -218,18 +219,13 @@ class PackageInstallationDispatcher {
 			$this->package = null;
 			
 			if ($package->standalone) {
-				$domainPath = '';
-				if (isset($_SERVER['PHP_SELF'])) {
-					$domainPath = $_SERVER['PHP_SELF'];
-					if (strpos($domainPath, '.php') !== false) {
-						$domainPath = preg_replace('~index\.php$~', '', $domainPath);
-					}
-				}
+				$host = RouteHandler::getHost();
+				$path = RouteHandler::getPath(array('acp'));
 				
 				// insert as application
 				ApplicationEditor::create(array(
-					'domainName' => (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME'] : '',
-					'domainPath' => $domainPath,
+					'domainName' => $host,
+					'domainPath' => $path,
 					'packageID' => $package->packageID
 				));
 			}

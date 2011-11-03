@@ -2,6 +2,7 @@
 namespace wcf\system\request;
 use wcf\system\event\EventHandler;
 use wcf\system\SingletonFactory;
+use wcf\util\FileUtil;
 
 /**
  * Handles routes for HTTP requests.
@@ -17,6 +18,18 @@ use wcf\system\SingletonFactory;
  * @category 	Community Framework
  */
 class RouteHandler extends SingletonFactory {
+	/**
+	 * current host and protocol
+	 * @var	string
+	 */
+	protected static $host = '';
+	
+	/**
+	 * current absolute path
+	 * @var	string
+	 */
+	protected static $path = '';
+	
 	/**
 	 * router filter for ACP
 	 * @var	boolean
@@ -137,5 +150,53 @@ class RouteHandler extends SingletonFactory {
 		}
 		
 		throw new SystemException("Unable to build route, no available route is satisfied.");
+	}
+	
+	/**
+	 * Returns protocol and domain name.
+	 * 
+	 * @return	string
+	 */
+	public static function getHost() {
+		if (empty(self::$host)) {
+			// get protocol and domain name
+			$protocol = 'http://';
+			if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' || $_SERVER['SERVER_PORT'] == 443) {
+				$protocol = 'https://';
+			}
+			
+			self::$host = $protocol . $_SERVER['HTTP_HOST'];
+		}
+		
+		return self::$host;
+	}
+	
+	/**
+	 * Returns absolute domain path.
+	 * 
+	 * @param	array		$removeComponents
+	 * @return	string
+	 */
+	public static function getPath(array $removeComponents = array()) {
+		if (empty(self::$path)) {
+			self::$path = FileUtil::addTrailingSlash(dirname($_SERVER['SCRIPT_NAME']));
+		}
+		
+		if (!empty($removeComponents)) {
+			$path = explode('/', self::$path);
+			foreach ($path as $index => $component) {
+				if (empty($path[$index])) {
+					unset($path[$index]);
+				}
+				
+				if (in_array($component, $removeComponents)) {
+					unset($path[$index]);
+				}
+			}
+			
+			return implode('/', $path) . '/';
+		}
+		
+		return self::$path;
 	}
 }

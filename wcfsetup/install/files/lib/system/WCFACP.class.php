@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system;
 use wcf\system\cache\CacheHandler;
+use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\template\ACPTemplateEngine;
@@ -86,25 +87,11 @@ class WCFACP extends WCF {
 		parent::assignDefaultTemplateVariables();
 		
 		// base tag is determined on runtime
-		$phpSelf = $_SERVER['PHP_SELF'];
-		if (isset($_SERVER['PATH_INFO'])) {
-			// strip path info
-			$phpSelf = str_replace($_SERVER['PATH_INFO'], '', $phpSelf);
-		}
-		if (($pos = strpos($phpSelf, 'index.php')) !== false) {
-			// strip index.php
-			$phpSelf = substr($phpSelf, 0, $pos);
-		}
-		
-		// get protocol and domain name
-		$protocol = 'http://';
-		if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' || $_SERVER['SERVER_PORT'] == 443) {
-			$protocol = 'https://';
-		}
-		$phpSelf = $protocol . $_SERVER['HTTP_HOST'] .  $phpSelf;
+		$host = RouteHandler::getHost();
+		$path = RouteHandler::getPath();
 		
 		self::getTPL()->assign(array(
-			'baseHref' => $phpSelf,
+			'baseHref' => $host . $path,
 			'quickAccessPackages' => $this->getQuickAccessPackages(),
 			//'timezone' => util\DateUtil::getTimezone()
 		));
