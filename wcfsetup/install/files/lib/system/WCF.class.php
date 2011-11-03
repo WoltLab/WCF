@@ -444,9 +444,12 @@ class WCF {
 			throw new exception\SystemException('Unable to run '.$row['package'].', '.$className.' missing.');
 		}
 		
-		// load options
 		if (!$isDepedentApplication) {
+			// load options
 			$this->loadOptions($packageDir.'options.inc.php', $application->packageID);
+			
+			// assign base tag
+			$this->getTPL()->assign('baseHref', $application->domainName . $application->domainPath);
 		}
 	}
 	

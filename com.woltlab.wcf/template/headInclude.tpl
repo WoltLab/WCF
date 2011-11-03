@@ -1,3 +1,4 @@
+<base href="{$baseHref}" />
 <meta charset="utf-8" />
 <meta name="description" content="{META_DESCRIPTION}" />
 <meta name="keywords" content="{META_KEYWORDS}" />
