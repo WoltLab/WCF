@@ -2664,66 +2664,165 @@ WCF.Effect.SmoothScroll.prototype = {
  */
 WCF.Effect.BalloonTooltip = function() { this.init(); };
 WCF.Effect.BalloonTooltip.prototype = {
+	/**
+	 * initialization state
+	 * @var	boolean
+	 */
+	_didInit: false,
+
+	/**
+	 * tooltip element
+	 * @var	jQuery
+	 */
+	_tooltip: null,
+
+	/**
+	 * cache viewport dimensions
+	 * @var	object
+	 */
+	_viewportDimensions: { },
+
+	/**
+	 * Initializes tooltips.
+	 */
 	init: function() {
-		// create empty div
-		this.tooltip = $('<div id="balloonTooltip" style="position:absolute"><span id="balloonTooltipText"></span><span class="arrowOuter"><span class="arrowInner"></span></span></div>').appendTo(document.body).hide();
-	
+		if (!this._didInit) {
+			// create empty div
+			this._tooltip = $('<div id="balloonTooltip" style="position:absolute"><span id="balloonTooltipText"></span><span class="arrowOuter"><span class="arrowInner"></span></span></div>').appendTo($('body')).hide();
+
+			// get viewport dimensions
+			this._updateViewportDimensions();
+
+			// update viewport dimensions on resize
+			$(window).resize($.proxy(this._updateViewportDimensions, this));
+
+			// observe DOM changes
+			WCF.DOMNodeInsertedHandler.addCallback('WCF.Effect.BallonTooltip', $.proxy(this.init, this));
+
+			this._didInit = true;
+		}
+		
 		// init elements
-		$('.balloonTooltip').live('mouseenter', $.proxy(this._initTooltip, this));
+		$('.balloonTooltip').each($.proxy(this._initTooltip, this));
+	},
+
+	/**
+	 * Updates cached viewport dimensions.
+	 */
+	_updateViewportDimensions: function() {
+		this._viewportDimensions = $(document).getDimensions();
 	},
 	
-	_initTooltip: function(event) {
-		$(event.currentTarget).die('mouseenter');
-		$(event.currentTarget).removeClass('balloonTooltip');
+	/**
+	 * Initializes a tooltip element.
+	 * 
+	 * @param	integer		index
+	 * @param	object		element
+	 */
+	_initTooltip: function(index, element) {
+		var $element = $(element);
 		
-		$(event.currentTarget).hover(
-			$.proxy(this._mouseEnterHandler, this),	
-			$.proxy(this._mouseLeaveHandler, this)
-		);
-		
-		this._mouseEnterHandler(event);
+		if ($element.hasClass('balloonTooltip')) {
+			$element.removeClass('balloonTooltip');
+			var $title = $element.attr('title');
+
+			// ignore empty elements
+			if ($title !== '') {
+				$element.data('tooltip', $title);
+				$element.removeAttr('title')
+
+				$element.hover(
+					$.proxy(this._mouseEnterHandler, this),
+					$.proxy(this._mouseLeaveHandler, this)
+				);
+			}
+		}
 	},
 	
+	/**
+	 * Shows tooltip on hover.
+	 * 
+	 * @param	object		event
+	 */
 	_mouseEnterHandler: function(event) {
 		var $element = $(event.currentTarget);
-		if ($element.attr('title')) {
-			$element.data('tooltip', $element.attr('title'));
-			$element.attr('title', '');
 		
-			// update text
-			this.tooltip.find('#balloonTooltipText').text($element.data('tooltip'));
-			
-			// calculate position
-			var $elementOffsets = $element.getOffsets('offset');
-			var $elementDimensions = $element.getDimensions('outer');
-			var $tooltipDimensions = this.tooltip.getDimensions('outer');
-			
-			var $top = $elementOffsets.top + $elementDimensions.height;
-			var $left = $elementOffsets.left - ($tooltipDimensions.width / 2) + ($elementDimensions.width / 2);
+		// update text
+		this._tooltip.children('span:eq(0)').text($element.data('tooltip'));
+
+		// get arrow
+		var $arrow = this._tooltip.find('.arrowOuter');
+
+		// get arrow width
+		this._tooltip.show();
+		var $arrowWidth = $arrow.outerWidth();
+		this._tooltip.hide();
 		
-			this.tooltip.css({
-				top: ($top + 7) + "px",
-				left: ($left) + "px"
-			});
-			
-			// arrow positioning
-			this.tooltip.find('.arrowOuter').css({
-				left: (this.tooltip.getDimensions().width / 2 + 3) + "px"
-			});
+		// calculate position
+		var $elementOffsets = $element.getOffsets('offset');
+		var $elementDimensions = $element.getDimensions('outer');
+		var $tooltipDimensions = this._tooltip.getDimensions('outer');
+		var $tooltipDimensionsInner = this._tooltip.getDimensions('inner');
+
+		var $elementCenter = $elementOffsets.left + Math.ceil($elementDimensions.width / 2);
+		var $tooltipHalfWidth = Math.ceil($tooltipDimensions.width / 2);
 		
-			// show tooltip
-			this.tooltip.fadeIn('fast');
+		// determine alignment
+		$alignment = 'center';
+		if (($elementCenter - $tooltipHalfWidth) < 5) {
+			$alignment = 'left';
 		}
+		else if ((this._viewportDimensions.width - 5) < ($elementCenter + $tooltipHalfWidth)) {
+			$alignment = 'right';
+		}
+
+		// calculate top offset
+		var $top = $elementOffsets.top + $elementDimensions.height + 7;
+
+		// calculate left offset
+		switch ($alignment) {
+			case 'center':
+				var $left = Math.round($elementOffsets.left - $tooltipHalfWidth + ($elementDimensions.width / 2));
+
+				$arrow.css({
+					left: ($tooltipDimensionsInner.width / 2 - $arrowWidth / 2) + "px"
+				});
+			break;
+
+			case 'left':
+				var $left = $elementOffsets.left;
+
+				$arrow.css({
+					left: "0px"
+				});
+			break;
+
+			case 'right':
+				var $left = $elementOffsets.left + $elementDimensions.width - $tooltipDimensions.width;
+
+				$arrow.css({
+					left: ($tooltipDimensionsInner.width - $arrowWidth) + "px"
+				});
+			break;
+		}
+
+		// move tooltip
+		this._tooltip.css({
+			top: $top + "px",
+			left: $left + "px"
+		});
+		
+		// show tooltip
+		this._tooltip.fadeIn('fast');
 	},
 	
+	/**
+	 * Hides tooltip once cursor left the element.
+	 * 
+	 * @param	object		event
+	 */
 	_mouseLeaveHandler: function(event) {
-		var $element = $(event.currentTarget);
-		if ($element.data('tooltip')) {
-			$element.attr('title', $element.data('tooltip'));
-			$element.data('tooltip', '');
-			
-			this.tooltip.hide();
-		}
+		this._tooltip.hide();
 	}
 };
 
