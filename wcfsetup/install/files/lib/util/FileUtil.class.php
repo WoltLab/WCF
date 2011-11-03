@@ -74,9 +74,22 @@ class FileUtil {
 		if (substr($path, -1) != '/') {
 			return $path.'/';
 		}
-		else {
-			return $path;
-		}	
+		
+		return $path;
+	}
+	
+	/**
+	 * Adds a leading slash.
+	 * 
+	 * @param	string		$path
+	 * @return	string		$path
+	 */
+	public static function addLeadingSlash($path) {
+		if (substr($path, 0, 1) != '/') {
+			return '/'.$path;
+		}
+		
+		return $path;
 	}
 
 	/**

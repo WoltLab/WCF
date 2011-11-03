@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\package;
 use wcf\system\menu\acp\ACPMenu;
+use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\language\LanguageEditor;
 use wcf\data\option\OptionEditor;
@@ -15,6 +16,7 @@ use wcf\system\form;
 use wcf\system\form\container;
 use wcf\system\form\element;
 use wcf\system\request\LinkHandler;
+use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
@@ -218,18 +220,13 @@ class PackageInstallationDispatcher {
 			$this->package = null;
 			
 			if ($package->standalone) {
-				$domainPath = '';
-				if (isset($_SERVER['PHP_SELF'])) {
-					$domainPath = $_SERVER['PHP_SELF'];
-					if (strpos($domainPath, '.php') !== false) {
-						$domainPath = preg_replace('~index\.php$~', '', $domainPath);
-					}
-				}
+				$host = RouteHandler::getHost();
+				$path = RouteHandler::getPath(array('acp'));
 				
 				// insert as application
 				ApplicationEditor::create(array(
-					'domainName' => (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME'] : '',
-					'domainPath' => $domainPath,
+					'domainName' => $host,
+					'domainPath' => $path,
 					'packageID' => $package->packageID
 				));
 			}
@@ -436,7 +433,8 @@ class PackageInstallationDispatcher {
 			$packageDir->setName('packageDir');
 			$packageDir->setLabel(WCF::getLanguage()->get('wcf.acp.package.packageDir.input'));
 			
-			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator($_SERVER['DOCUMENT_ROOT']));
+			$path = RouteHandler::getPath(array('wcf', 'acp'));
+			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator($_SERVER['DOCUMENT_ROOT'] . $path));
 			$packageDir->setValue($defaultPath);
 			$container->appendChild($packageDir);
 			
@@ -455,6 +453,17 @@ class PackageInstallationDispatcher {
 				$packageEditor = new PackageEditor($this->getPackage());
 				$packageEditor->update(array(
 					'packageDir' => FileUtil::getRelativePath(WCF_DIR, $packageDir)
+				));
+				
+				// parse domain path
+				$domainPath = FileUtil::getRelativePath(FileUtil::unifyDirSeperator($_SERVER['DOCUMENT_ROOT']), FileUtil::unifyDirSeperator($packageDir));
+				$domainPath = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($domainPath));
+				
+				// update application path
+				$application = new Application($this->getPackage()->packageID);
+				$applicationEditor = new ApplicationEditor($application);
+				$applicationEditor->update(array(
+					'domainPath' => $domainPath
 				));
 				
 				// create directory and set permissions
