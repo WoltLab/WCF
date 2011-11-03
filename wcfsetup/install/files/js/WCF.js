@@ -2747,6 +2747,9 @@ WCF.Effect.BalloonTooltip.prototype = {
 	_mouseEnterHandler: function(event) {
 		var $element = $(event.currentTarget);
 		
+		var $title = $element.attr('title');
+		if ($title && $title !== '') $element.data('tooltip', $title);
+		
 		// update text
 		this._tooltip.children('span:eq(0)').text($element.data('tooltip'));
 
