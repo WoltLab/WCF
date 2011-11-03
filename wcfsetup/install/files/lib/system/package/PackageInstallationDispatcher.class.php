@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\package;
 use wcf\system\menu\acp\ACPMenu;
+use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\language\LanguageEditor;
 use wcf\data\option\OptionEditor;
@@ -452,6 +453,17 @@ class PackageInstallationDispatcher {
 				$packageEditor = new PackageEditor($this->getPackage());
 				$packageEditor->update(array(
 					'packageDir' => FileUtil::getRelativePath(WCF_DIR, $packageDir)
+				));
+				
+				// parse domain path
+				$domainPath = FileUtil::getRelativePath(FileUtil::unifyDirSeperator($_SERVER['DOCUMENT_ROOT']), FileUtil::unifyDirSeperator($packageDir));
+				$domainPath = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($domainPath));
+				
+				// update application path
+				$application = new Application($this->getPackage()->packageID);
+				$applicationEditor = new ApplicationEditor($application);
+				$applicationEditor->update(array(
+					'domainPath' => $domainPath
 				));
 				
 				// create directory and set permissions
