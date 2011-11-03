@@ -51,6 +51,12 @@
 			'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}'
 			{event name='javascriptLanguageImport'}
 		});
+
+		WCF.Icon.addObject({
+			'foo': 'bar'
+			{event name='javascriptIconImport'}
+		});
+		
 		new WCF.Date.Time();
 		new WCF.Effect.SmoothScroll();
 		new WCF.Effect.BalloonTooltip();
