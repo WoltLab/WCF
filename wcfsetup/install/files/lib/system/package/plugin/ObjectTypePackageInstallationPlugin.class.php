@@ -30,6 +30,12 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	public $tagName = 'type';
 	
 	/**
+	 * list of reserved tags
+	 * @var	array
+	 */
+	public static $reservedTags = array('classname', 'definitionname');
+	
+	/**
 	 * Gets the definition id by name
 	 * 
 	 * @param	string		$definitionName
@@ -73,11 +79,16 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
+		$additionalData = array();
+		foreach ($data['elements'] as $tagName => $nodeValue) {
+			if (!in_array($tagName, self::$reservedTags)) $additionalData[$tagName] = $nodeValue;
+		}
+		
 		return array(
 			'definitionID' => $this->getDefinitionID($data['elements']['definitionname']),
 			'objectType' => $data['elements']['name'],
 			'className' => (isset($data['elements']['classname']) ? $data['elements']['classname'] : ''),
-			'additionalData' => serialize(isset($data['elements']['additionaldata']) ? $data['elements']['additionaldata'] : array())
+			'additionalData' => serialize($additionalData)
 		);
 	}
 	
