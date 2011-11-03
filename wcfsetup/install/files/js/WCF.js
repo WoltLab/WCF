@@ -2714,6 +2714,16 @@ WCF.Effect.BalloonTooltip.prototype = {
 			// show tooltip
 			this.tooltip.fadeIn('fast');
 		}
+	},
+	
+	_mouseLeaveHandler: function(event) {
+		var $element = $(event.currentTarget);
+		if ($element.data('tooltip')) {
+			$element.attr('title', $element.data('tooltip'));
+			$element.data('tooltip', '');
+			
+			this.tooltip.hide();
+		}
 	}
 };
 
