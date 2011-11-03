@@ -194,7 +194,7 @@ class RouteHandler extends SingletonFactory {
 				}
 			}
 			
-			return implode('/', $path) . '/';
+			return '/' . implode('/', $path) . '/';
 		}
 		
 		return self::$path;
