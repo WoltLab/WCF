@@ -49,12 +49,15 @@
 			'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 			'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
 			'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
-			'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}'
+			'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
+			'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}'
 			{event name='javascriptLanguageImport'}
 		});
 
 		WCF.Icon.addObject({
-			'foo': 'bar'
+			'wcf.icon.loading': '{icon}spinner{/icon}',
+			'wcf.icon.opened': '{icon size='S'}opened2{/icon}',
+			'wcf.icon.closed': '{icon size='S'}closed2{/icon}'
 			{event name='javascriptIconImport'}
 		});
 		

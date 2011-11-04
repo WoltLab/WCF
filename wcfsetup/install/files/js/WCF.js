@@ -2469,10 +2469,10 @@ WCF.Collapsible.Remote = Class.extend({
 			};
 			
 			// prepare content cache
-			this._content[$id] = {
+			/*this._content[$id] = {
 				'close': '',
 				'open': ''
-			};
+			};*/
 		}, this));
 	},
 	
@@ -2507,7 +2507,7 @@ WCF.Collapsible.Remote = Class.extend({
 	 */
 	_createButton: function(containerID, buttonContainer) {
 		var $isOpen = this._containers[containerID].data('isOpen');
-		var $button = $('<img src="' + WCF.Icon.get('wcf.icon.' + ($isOpen ? 'closed' : 'opened')) + '" alt="" />').prependTo(buttonContainer);
+		var $button = $('<a class="balloonTooltip" title="'+WCF.Language.get('wcf.global.button.collapsible')+'"><img src="' + WCF.Icon.get('wcf.icon.' + ($isOpen ? 'opened' : 'closed')) + '" alt="" /></a>').prependTo(buttonContainer);
 		$button.data('containerID', containerID).click($.proxy(this._toggleContainer, this));
 
 		return $button;
@@ -2519,21 +2519,21 @@ WCF.Collapsible.Remote = Class.extend({
 	 * @param	object		event
 	 */
 	_toggleContainer: function(event) {
-		var $button = $(event.target);
+		var $button = $(event.currentTarget);
 		var $containerID = $button.data('containerID');
 		var $isOpen = this._containerData[$containerID].isOpen
 		var $state = ($isOpen) ? 'open' : 'close';
 		var $newState = ($isOpen) ? 'close' : 'open';
 		
 		// save container content
-		this._content[$containerID][$state] = this._containerData[$containerID].target.html();
+		// this._content[$containerID][$state] = this._containerData[$containerID].target.html();
 		
 		// set container content from cache
-		if (this._content[$containerID][$newState] != '') {
+		/*if (this._content[$containerID][$newState] != '') {
 			this._containerData[$containerID].target.html(this._content[$containerID][$newState]);
 			this._containerData[$containerID].isOpen = ($isOpen) ? false : true;
 			return;
-		}
+		}*/
 		
 		// fetch content state via AJAX
 		this._proxy.setOption('data', {
@@ -2553,12 +2553,11 @@ WCF.Collapsible.Remote = Class.extend({
 	},
 
 	_showSpinner: function(button) {
-		console.debug('Updating icon');
-		button.attr('src', WCF.Icon.get('wcf.icon.loading'));
+		button.find('img').attr('src', WCF.Icon.get('wcf.icon.loading'));
 	},
 
 	_hideSpinner: function(button, newIcon) {
-		button.attr('src', newIcon);
+		button.find('img').attr('src', newIcon);
 	},
 	
 	/**
@@ -2587,12 +2586,13 @@ WCF.Collapsible.Remote = Class.extend({
 		// update content storage
 		this._containerData[$containerID].isOpen = (data.returnValues.isOpen) ? true : false;
 		var $newState = (data.returnValues.isOpen) ? 'opened' : 'closed';
-		this._content[$containerID][$newState] = data.returnValues.content;
+		//this._content[$containerID][$newState] = data.returnValues.content;
 		
 		// update container content
 		this._containerData[$containerID].target.html(data.returnValues.content);
-
-
+		
+		// update icon
+		this._hideSpinner(this._containerData[$containerID].button, WCF.Icon.get('wcf.icon.' + (data.returnValues.isOpen ? 'opened' : 'closed')));
 	}
 });
 
