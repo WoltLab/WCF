@@ -991,6 +991,8 @@ class WCFSetup extends WCF {
 			
 			// register essential wcf package
 			$queue = PackageInstallationQueueEditor::create(array(
+				'processNo' => $processNo,
+				'userID' => $admin->userID,
 				'package' => 'com.woltlab.wcf',
 				'packageName' => 'WoltLab Community Framework',
 				'archive' => TMP_DIR.'install/packages/'.$wcfPackageFile
@@ -1013,6 +1015,8 @@ class WCFSetup extends WCF {
 			
 			$queue = PackageInstallationQueueEditor::create(array(
 				'parentQueueID' => $queue->queueID,
+				'processNo' => $processNo,
+				'userID' => $admin->userID,
 				'package' => $packageName,
 				'packageName' => $archive->getPackageInfo('packageName'),
 				'archive' => TMP_DIR.'install/packages/'.$packageFile
