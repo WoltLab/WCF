@@ -11,11 +11,16 @@ namespace wcf\system\exception;
  * @subpackage	system.exception
  * @category 	Community Framework
  */
-abstract class UserException extends \Exception implements IPrintableException {
+abstract class UserException extends LoggedException implements IPrintableException {
 	/**
 	 * @see wcf\system\exception\IPrintableException::show()
 	 */
 	public function show() {
-		echo '<pre>' . $this->getTraceAsString() . '</pre>';
+		if (DEBUG_MODE == 'debug') {
+			echo '<pre>' . $this->getTraceAsString() . '</pre>';
+		}
+		else {
+			echo '<pre>' . $this->getMessage() . '</pre>';
+		}
 	}
 }

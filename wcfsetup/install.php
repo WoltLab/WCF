@@ -10,6 +10,7 @@
 define('INSTALL_SCRIPT_DIR', dirname(__FILE__).'/');
 define('SETUP_FILE', INSTALL_SCRIPT_DIR . 'WCFSetup.tar.gz');
 define('NO_IMPORTS', 1);
+define('DEBUG_MODE', 'debug');
 
 // set exception handler
 set_exception_handler('handleException');

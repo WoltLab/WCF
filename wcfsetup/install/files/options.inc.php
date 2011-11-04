@@ -25,3 +25,6 @@ define('SESSION_VALIDATE_USER_AGENT', 0);
 define('CACHE_SOURCE_TYPE', 'disk');
 define('MODULE_MASTER_PASSWORD', 1);
 define('TIMEZONE', 'Europe/Berlin');
+
+// TODO: Change to 'production' later
+define('DEBUG_MODE', 'debug');

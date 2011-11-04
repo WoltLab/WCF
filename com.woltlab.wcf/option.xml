@@ -108,6 +108,17 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
+
+			<option name="debug_mode">
+				<categoryname>module.system</categoryname>
+				<optiontype>radiobuttons</optiontype>
+				<!-- TODO: change to 'production' later -->
+				<defaultvalue><![CDATA[debug]]></defaultvalue>
+				<selectoptions>
+					<![CDATA[debug:wcf.acp.option.debug_mode.debug
+production:wcf.acp.option.debug_mode.production]]>
+				</selectoptions>
+			</option>
 			
 			<!-- general.page -->
 			<option name="page_title">
