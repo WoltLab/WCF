@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.exception
  * @category 	Community Framework
  */
-class SystemException extends \Exception implements IPrintableException {
+class SystemException extends LoggedException implements IPrintableException {
 	/**
 	 * error description
 	 * @var string
@@ -66,6 +66,9 @@ class SystemException extends \Exception implements IPrintableException {
 	 * @see wcf\system\exception\IPrintableException::show()
 	 */
 	public function show() {
+		// log error
+		$this->logError();
+		
 		// send status code
 		@header('HTTP/1.1 503 Service Unavailable');
 		
@@ -137,28 +140,30 @@ class SystemException extends \Exception implements IPrintableException {
 			<body>
 				<div class="systemException">
 					<h1>Fatal error: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></h1>
-
-					<div>
-						<p><?php echo $this->getDescription(); ?></p>
+					
+					<?php if (DEBUG_MODE == 'debug') { ?>
+						<div>
+							<p><?php echo $this->getDescription(); ?></p>
 						
-						<h2>Information:</h2>
-						<p>
-							<b>error message:</b> <?php echo StringUtil::encodeHTML($this->getMessage()); ?><br>
-							<b>error code:</b> <?php echo intval($this->getCode()); ?><br>
-							<?php echo $this->information; ?>
-							<b>file:</b> <?php echo StringUtil::encodeHTML($this->getFile()); ?> (<?php echo $this->getLine(); ?>)<br>
-							<b>php version:</b> <?php echo StringUtil::encodeHTML(phpversion()); ?><br>
-							<b>wcf version:</b> <?php echo WCF_VERSION; ?><br>
-							<b>date:</b> <?php echo gmdate('r'); ?><br>
-							<b>request:</b> <?php if (isset($_SERVER['REQUEST_URI']))  echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?><br>
-							<b>referer:</b> <?php if (isset($_SERVER['HTTP_REFERER'])) echo StringUtil::encodeHTML($_SERVER['HTTP_REFERER']); ?><br>
-						</p>
+							<h2>Information:</h2>
+							<p>
+								<b>error message:</b> <?php echo StringUtil::encodeHTML($this->getMessage()); ?><br>
+								<b>error code:</b> <?php echo intval($this->getCode()); ?><br>
+								<?php echo $this->information; ?>
+								<b>file:</b> <?php echo StringUtil::encodeHTML($this->getFile()); ?> (<?php echo $this->getLine(); ?>)<br>
+								<b>php version:</b> <?php echo StringUtil::encodeHTML(phpversion()); ?><br>
+								<b>wcf version:</b> <?php echo WCF_VERSION; ?><br>
+								<b>date:</b> <?php echo gmdate('r'); ?><br>
+								<b>request:</b> <?php if (isset($_SERVER['REQUEST_URI']))  echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?><br>
+								<b>referer:</b> <?php if (isset($_SERVER['HTTP_REFERER'])) echo StringUtil::encodeHTML($_SERVER['HTTP_REFERER']); ?><br>
+							</p>
 
-						<h2>Stacktrace:</h2>
-						<pre><?php echo StringUtil::encodeHTML($this->__getTraceAsString()); ?></pre>
-					</div>
+							<h2>Stacktrace:</h2>
+							<pre><?php echo StringUtil::encodeHTML($this->__getTraceAsString()); ?></pre>
+						</div>
+					<?php } ?>
 
-				<?php echo $this->functions; ?>
+					<?php echo $this->functions; ?>
 				</div>
 			</body>
 		</html>

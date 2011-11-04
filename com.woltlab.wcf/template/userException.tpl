@@ -19,11 +19,13 @@
 	//]]>
 </script>
 
-<!-- 
-{$name} thrown in {$file} ({@$line})
-Stracktrace:
-{$stacktrace}
--->
+{if DEBUG_MODE == 'debug'}
+	<!-- 
+	{$name} thrown in {$file} ({@$line})
+	Stracktrace:
+	{$stacktrace}
+	-->
+{/if}
 
 {include file='footer' sandbox=false}
 </body>

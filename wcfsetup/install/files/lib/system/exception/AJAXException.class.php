@@ -12,7 +12,7 @@ use wcf\util\JSON;
  * @subpackage	system.exception
  * @category 	Community Framework
  */
-class AJAXException extends \Exception {
+class AJAXException extends LoggedException {
 	/**
 	 * Throws a JSON-encoded error message
 	 * 
@@ -22,13 +22,25 @@ class AJAXException extends \Exception {
 	public function __construct($message, $stacktrace = null) {
 		if ($stacktrace === null) $stacktrace = $this->getTraceAsString();
 		
+		if (DEBUG_MODE == 'debug') {
+			$responseData = array(
+				'message' => $message,
+				'stacktrace' => nl2br($stacktrace)
+			);
+		}
+		else {
+			$responseData = array(
+				'message' => $this->getMessage()
+			);
+		}
+		
+		// log error
+		$this->logError();
+		
 		//header('HTTP/1.0 418 I\'m a Teapot');
 		header('HTTP/1.0 503 Service Unavailable');
 		header('Content-type: application/json');
-		echo JSON::encode(array(
-			'message' => $message,
-			'stacktrace' => nl2br($stacktrace)
-		));
+		echo JSON::encode($responseData);
 		exit;
 	}
 }
