@@ -305,4 +305,11 @@ class User extends DatabaseObject {
 	public function __toString() {
 		return $this->username;
 	}
+	
+	/**
+	 * @see	wcf\data\IStorableObject::getDatabaseTableAlias()
+	 */
+	public static function getDatabaseTableAlias() {
+		return 'user_table';
+	}
 }
