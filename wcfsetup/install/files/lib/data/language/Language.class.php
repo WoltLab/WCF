@@ -180,4 +180,8 @@ class Language extends DatabaseObject {
 		setlocale(LC_COLLATE, $this->get('wcf.global.locale.unix').'.UTF-8', $this->get('wcf.global.locale.unix'), $this->get('wcf.global.locale.win'));
 		setlocale(LC_CTYPE, $this->get('wcf.global.locale.unix').'.UTF-8', $this->get('wcf.global.locale.unix'), $this->get('wcf.global.locale.win'));
 	}
+	
+	public function __wakeup() {
+		$this->packageID = PACKAGE_ID;
+	}
 }
