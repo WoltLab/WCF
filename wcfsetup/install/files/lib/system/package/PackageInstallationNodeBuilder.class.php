@@ -553,7 +553,7 @@ class PackageInstallationNodeBuilder {
 	 */
 	protected function buildChildQueues() {
 		$queueList = new PackageInstallationQueueList();
-		$queueList->getConditionBuilder->add("package_installation_queue.parentQueueID = ?", array($this->installation->queue->queueID));
+		$queueList->getConditionBuilder()->add("package_installation_queue.parentQueueID = ?", array($this->installation->queue->queueID));
 		$queueList->sqlLimit = 0;
 		$queueList->readObjects();
 		
