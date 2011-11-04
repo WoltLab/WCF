@@ -80,7 +80,7 @@ class SystemException extends LoggedException implements IPrintableException {
 		<!DOCTYPE html>
 		<html>
 			<head>
-				<title>Fatal error: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></title>
+				<title>Fatal error: <?php echo StringUtil::encodeHTML($this->_getMessage()); ?></title>
 				<style>
 					.systemException {
 						font-family: 'Trebuchet MS', Arial, sans-serif !important;
@@ -139,7 +139,7 @@ class SystemException extends LoggedException implements IPrintableException {
 			</head>
 			<body>
 				<div class="systemException">
-					<h1>Fatal error: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></h1>
+					<h1>Fatal error: <?php echo StringUtil::encodeHTML($this->_getMessage()); ?></h1>
 					
 					<?php if (DEBUG_MODE == 'debug') { ?>
 						<div>
@@ -147,7 +147,7 @@ class SystemException extends LoggedException implements IPrintableException {
 						
 							<h2>Information:</h2>
 							<p>
-								<b>error message:</b> <?php echo StringUtil::encodeHTML($this->getMessage()); ?><br>
+								<b>error message:</b> <?php echo StringUtil::encodeHTML($this->_getMessage()); ?><br>
 								<b>error code:</b> <?php echo intval($this->getCode()); ?><br>
 								<?php echo $this->information; ?>
 								<b>file:</b> <?php echo StringUtil::encodeHTML($this->getFile()); ?> (<?php echo $this->getLine(); ?>)<br>

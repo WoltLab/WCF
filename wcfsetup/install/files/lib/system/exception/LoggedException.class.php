@@ -12,7 +12,7 @@ namespace wcf\system\exception;
  * @subpackage	system.exception
  * @category 	Community Framework
  */
-class LoggedExceptions extends \Exception {
+class LoggedException extends \Exception {
 	/**
 	 * Surpresses the original error message, you can bypass this
 	 * by setting $raw to true.
@@ -20,9 +20,9 @@ class LoggedExceptions extends \Exception {
 	 * @param	boolean		$raw
 	 * @see		\Exception::getMessage()
 	 */
-	public function getMessage($raw = false) {
+	public function _getMessage($raw = false) {
 		if ($raw) {
-			return parent::getMessage();
+			return $this->getMessage();
 		}
 		
 		return 'An error occured. Sorry.';
