@@ -12,7 +12,7 @@ namespace wcf\system\exception;
  * @subpackage	system.exception
  * @category 	Community Framework
  */
-class LoggedExceptions extends \Exception {
+class LoggedException extends \Exception {
 	/**
 	 * Surpresses the original error message, you can bypass this
 	 * by setting $raw to true.
