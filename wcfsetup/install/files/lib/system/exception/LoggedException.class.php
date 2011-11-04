@@ -14,18 +14,16 @@ namespace wcf\system\exception;
  */
 class LoggedException extends \Exception {
 	/**
-	 * Surpresses the original error message, you can bypass this
-	 * by setting $raw to true.
+	 * Surpresses the original error message.
 	 * 
-	 * @param	boolean		$raw
 	 * @see		\Exception::getMessage()
 	 */
-	public function _getMessage($raw = false) {
-		if ($raw) {
-			return $this->getMessage();
+	public function _getMessage() {
+		if (DEBUG_MODE == 'production') {
+			return 'An error occured. Sorry.';
 		}
 		
-		return 'An error occured. Sorry.';
+		return $this->getMessage();
 	}
 	
 	/**
@@ -49,7 +47,7 @@ class LoggedException extends \Exception {
 		}
 		
 		// build message
-		$message = date('r', TIME_NOW) . "\n" . $this->getMessage(true) . "\n\n" . $this->getTraceAsString() . "\n\n\n";
+		$message = date('r', TIME_NOW) . "\n" . $this->getMessage() . "\n\n" . $this->getTraceAsString() . "\n\n\n";
 		
 		// append
 		@file_put_contents($logFile, $message, FILE_APPEND);
