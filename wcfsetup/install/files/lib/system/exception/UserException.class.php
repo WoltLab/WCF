@@ -20,7 +20,7 @@ abstract class UserException extends LoggedException implements IPrintableExcept
 			echo '<pre>' . $this->getTraceAsString() . '</pre>';
 		}
 		else {
-			echo '<pre>' . $this->getMessage() . '</pre>';
+			echo '<pre>' . $this->_getMessage() . '</pre>';
 		}
 	}
 }

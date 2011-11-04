@@ -30,7 +30,7 @@ class AJAXException extends LoggedException {
 		}
 		else {
 			$responseData = array(
-				'message' => $this->getMessage()
+				'message' => $this->_getMessage()
 			);
 		}
 		
