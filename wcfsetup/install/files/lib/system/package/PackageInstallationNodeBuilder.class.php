@@ -2,6 +2,7 @@
 namespace wcf\system\package;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
+use wcf\data\package\installation\queue\PackageInstallationQueueList;
 use wcf\system\Callback;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -79,6 +80,9 @@ class PackageInstallationNodeBuilder {
 		
 		// optional packages
 		$this->buildOptionalNodes();
+		
+		// child queues
+		$this->buildChildQueues();
 	}
 	
 	/**
@@ -541,6 +545,23 @@ class PackageInstallationNodeBuilder {
 				'optionalPackages',
 				serialize($packages)
 			));
+		}
+	}
+	
+	/**
+	 * Recursively build nodes for child queues.
+	 */
+	protected function buildChildQueues() {
+		$queueList = new PackageInstallationQueueList();
+		$queueList->getConditionBuilder->add("package_installation_queue.parentQueueID = ?", array($this->installation->queue->queueID));
+		$queueList->sqlLimit = 0;
+		$queueList->readObjects();
+		
+		foreach ($queueList as $queue) {
+			$installation = new PackageInstallationDispatcher($queue);
+			$installation->nodeBuilder->setParentNode($this->node);
+			$installation->nodeBuilder->buildNodes();
+			$this->node = $installation->nodeBuilder->getCurrentNode();
 		}
 	}
 	
