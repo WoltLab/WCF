@@ -33,8 +33,8 @@ class ObjectType extends ProcessibleDatabaseObject {
 		
 		// treat additional data as data variables if it is an array
 		if ($value === null) {
-			if (is_array($this->additionalData) && isset($this->additionalData[$name])) {
-				$value = $this->additionalData[$name];
+			if (is_array($this->data['additionalData']) && isset($this->data['additionalData'][$name])) {
+				$value = $this->data['additionalData'][$name];
 			}
 		}
 		
