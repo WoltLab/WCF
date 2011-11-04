@@ -33,7 +33,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * list of reserved tags
 	 * @var	array
 	 */
-	public static $reservedTags = array('classname', 'definitionname');
+	public static $reservedTags = array('classname', 'definitionname', 'name');
 	
 	/**
 	 * Gets the definition id by name
