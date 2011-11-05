@@ -3,6 +3,7 @@ namespace wcf\system\package;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueueList;
+use wcf\system\exception\SystemException;
 use wcf\system\Callback;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -404,6 +405,11 @@ class PackageInstallationNodeBuilder {
 			// extract package
 			$index = $this->installation->getArchive()->getTar()->getIndexByFilename($package['file']);
 			if ($index === false) {
+				// workaround for WCFSetup
+				if (!PACKAGE_ID && $packageName == 'com.woltlab.wcf') {
+					continue;
+				}
+				
 				throw new SystemException("Unable to find required package '".$package['file']."' within archive.");
 			}
 			
@@ -554,7 +560,9 @@ class PackageInstallationNodeBuilder {
 	 */
 	protected function buildChildQueues() {
 		$queueList = new PackageInstallationQueueList();
+		$queueList->sqlJoins = "LEFT JOIN wcf".WCF_N."_package_installation_node package_installation_node ON (package_installation_node.queueID = package_installation_queue.queueID)";
 		$queueList->getConditionBuilder()->add("package_installation_queue.parentQueueID = ?", array($this->installation->queue->queueID));
+		$queueList->getConditionBuilder()->add("package_installation_node.node IS NOT NULL");
 		$queueList->sqlLimit = 0;
 		$queueList->readObjects();
 		
