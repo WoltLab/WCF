@@ -562,7 +562,7 @@ class PackageInstallationNodeBuilder {
 		$queueList = new PackageInstallationQueueList();
 		$queueList->sqlJoins = "LEFT JOIN wcf".WCF_N."_package_installation_node package_installation_node ON (package_installation_node.queueID = package_installation_queue.queueID)";
 		$queueList->getConditionBuilder()->add("package_installation_queue.parentQueueID = ?", array($this->installation->queue->queueID));
-		$queueList->getConditionBuilder()->add("package_installation_node.node IS NOT NULL");
+		$queueList->getConditionBuilder()->add("package_installation_node.node IS NULL");
 		$queueList->sqlLimit = 0;
 		$queueList->readObjects();
 		
