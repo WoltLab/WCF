@@ -389,7 +389,8 @@ class PackageInstallationNodeBuilder {
 		$packageNodes = array();
 		$queue = $this->installation->queue;
 		
-		$requiredPackages = $this->installation->getArchive()->getRequirements();
+		// handle requirements
+		$requiredPackages = $this->installation->getArchive()->getOpenRequirements();
 		foreach ($requiredPackages as $packageName => $package) {
 			if (!isset($package['file'])) {
 				// ignore requirements which are not to be installed
