@@ -154,6 +154,7 @@ header.pageHeader {
 	/* background-image: url('../images/header.png'); */
 	background-position: left top;
 	background-repeat: repeat-x;
+	background-attachment: fixed;
 	width: 100%;
 }
 
@@ -1609,12 +1610,14 @@ input[type='button'],
 	margin-top: 5px;
 }
 
-/* Experimental */
+/* Collapse Icon */
 
-.boxTitle img.handle {
-	cursor: pointer;
-	margin-top: -1px;
-	float: right !important;
+.boxTitle > a {
+	margin: 5px 0 0 10px;
+	float: left;
+}
+
+.boxTitle > a img {
 	height: 16px;
 	width: 16px;
 }
@@ -2207,9 +2210,11 @@ tr .columnIcon {
 	white-space: nowrap;
 }
 
+/* ToDo: does not function any more! 
 tr .columnIcon img:not(.balloonTooltip):hover {
 	cursor: not-allowed;
 }
+*/
 
 tr .columnIcon img {
 	height: 16px;
@@ -2768,18 +2773,6 @@ img[src*='enable'] {
 	position: absolute;
 	top: 2px;
 	left: -5px;
-}
-
-/* -- -- -- Collapsible -- -- -- */
-
-.collapsible {
-	margin: 5px 0 0 10px;
-	float: left;
-}
-
-.collapsible img {
-	height: 16px;
-	width: 16px;
 }
 
 
