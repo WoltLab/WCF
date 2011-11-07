@@ -2756,7 +2756,7 @@ img[src*='enable'] {
 #balloonTooltip .arrowOuter {	
 	border-width: 0 7px 7px;
 	border-style: solid;
-	border-color: #ccc transparent;
+	border-color: rgba(255, 255, 255, .7) transparent;
 	display: inline-block !important;
 	width: 0;
 	position: absolute;
@@ -2767,7 +2767,7 @@ img[src*='enable'] {
 #balloonTooltip .arrowInner {	
 	border-width: 0 5px 5px;
 	border-style: solid;
-	border-color: #000 transparent;
+	border-color: rgba(0, 0, 0, .7) transparent;
 	display: inline-block;
 	width: 0;
 	position: absolute;

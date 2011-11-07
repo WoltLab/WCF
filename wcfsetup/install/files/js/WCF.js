@@ -2796,7 +2796,7 @@ WCF.Effect.BalloonTooltip.prototype = {
 				var $left = $elementOffsets.left;
 
 				$arrow.css({
-					left: "0px"
+					left: "5px"
 				});
 			break;
 
@@ -2804,7 +2804,7 @@ WCF.Effect.BalloonTooltip.prototype = {
 				var $left = $elementOffsets.left + $elementDimensions.width - $tooltipDimensions.width;
 
 				$arrow.css({
-					left: ($tooltipDimensionsInner.width - $arrowWidth) + "px"
+					left: ($tooltipDimensionsInner.width - $arrowWidth - 5) + "px"
 				});
 			break;
 		}
