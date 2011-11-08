@@ -94,13 +94,15 @@ class OptionCacheBuilder implements ICacheBuilder {
 			// get option class from type
 			$className = 'wcf\data\option\Option';
 			if (!empty($type)) {
-				preg_match_all('~((?:^|[A-Z])[a-z]+)~', $type, $matches);
+				// strip trailing underscore
+				$rawType = substr($type, 0, -1);
+				preg_match_all('~((?:^|[A-Z])[a-z]+)~', $rawType, $matches);
 				if (isset($matches[1])) {
 					$className = 'wcf\data\\';
-					for ($i = 0, $length = sizeof($matches[1]); $i < $length; $i++) {
+					for ($i = 0, $length = count($matches[1]); $i < $length; $i++) {
 						$className .= $matches[1][$i] . '\\';
 					}
-					$className .= ucfirst($type);
+					$className .= 'option\\' . ucfirst($rawType) . 'Option';
 				}
 			}
 			
