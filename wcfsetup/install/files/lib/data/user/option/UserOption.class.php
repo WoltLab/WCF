@@ -22,4 +22,16 @@ class UserOption extends Option {
 	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'optionID';
+	
+	/**
+	 * option value
+	 * @var	string
+	 */
+	public $optionValue = '';
+	
+	/**
+	 * output data
+	 * @var	array
+	 */
+	public $outputData = array();
 }
