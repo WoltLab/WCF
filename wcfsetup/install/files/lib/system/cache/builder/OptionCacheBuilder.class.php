@@ -97,7 +97,7 @@ class OptionCacheBuilder implements ICacheBuilder {
 				preg_match_all('~((?:^|[A-Z])[a-z]+)~', $type, $matches);
 				if (isset($matches[1])) {
 					$className = 'wcf\data\\';
-					for ($i = 0, $length = sizeof($matches[1]); $i < $length; $i++) {
+					for ($i = 0, $length = count($matches[1]); $i < $length; $i++) {
 						$className .= $matches[1][$i] . '\\';
 					}
 					$className .= ucfirst($type);
