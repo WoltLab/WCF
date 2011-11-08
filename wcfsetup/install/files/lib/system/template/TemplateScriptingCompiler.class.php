@@ -314,19 +314,15 @@ class TemplateScriptingCompiler {
 					if ($openTag != 'if' && $openTag != 'elseif') {
 						throw new SystemException($this->formatSyntaxError('unexpected {else}', $this->currentIdentifier, $this->currentLineNo));
 					}
-					else {
-						$this->pushTag('else');
-						return '<?php } else { ?>';
-					}
+					$this->pushTag('else');
+					return '<?php } else { ?>';
 					
 				case '/if':
 					list($openTag) = end($this->tagStack);
 					if ($openTag != 'if' && $openTag != 'elseif' && $openTag != 'else') {
 						throw new SystemException($this->formatSyntaxError('unexpected {/if}', $this->currentIdentifier, $this->currentLineNo));
 					}
-					else {
-						$this->popTag('if');
-					}
+					$this->popTag('if');
 					return '<?php } ?>';
 				
 				case 'include':
@@ -341,12 +337,14 @@ class TemplateScriptingCompiler {
 					if ($openTag != 'foreach') {
 						throw new SystemException($this->formatSyntaxError('unexpected {foreachelse}', $this->currentIdentifier, $this->currentLineNo));
 					}
-					else {
-						$this->pushTag('foreachelse');
-						return '<?php } } else { { ?>';
-					}
+					$this->pushTag('foreachelse');
+					return '<?php } } else { { ?>';
 					
 				case '/foreach':
+					list($openTag) = end($this->tagStack);
+					if ($openTag != 'foreach' && $openTag != 'foreachelse') {
+						throw new SystemException($this->formatSyntaxError('unexpected {/foreach}', $this->currentIdentifier, $this->currentLineNo));
+					}
 					$this->popTag('foreach');
 					return "<?php } } ?>";
 					
@@ -359,12 +357,14 @@ class TemplateScriptingCompiler {
 					if ($openTag != 'section') {
 						throw new SystemException($this->formatSyntaxError('unexpected {sectionelse}', $this->currentIdentifier, $this->currentLineNo));
 					}
-					else {
-						$this->pushTag('sectionelse');
-						return '<?php } } else { { ?>';
-					}
+					$this->pushTag('sectionelse');
+					return '<?php } } else { { ?>';
 					
 				case '/section':
+					list($openTag) = end($this->tagStack);
+					if ($openTag != 'section' && $openTag != 'sectionelse') {
+						throw new SystemException($this->formatSyntaxError('unexpected {/section}', $this->currentIdentifier, $this->currentLineNo));
+					}
 					$this->popTag('section');
 					return "<?php } } ?>";
 					
@@ -373,6 +373,10 @@ class TemplateScriptingCompiler {
 					return $this->compileCaptureTag(true, $tagArgs);
 			
 				case '/capture':
+					list($openTag) = end($this->tagStack);
+					if ($openTag != 'capture') {
+						throw new SystemException($this->formatSyntaxError('unexpected {/capture}', $this->currentIdentifier, $this->currentLineNo));
+					}
 					$this->popTag('capture');
 					return $this->compileCaptureTag(false);
 					
@@ -456,10 +460,14 @@ class TemplateScriptingCompiler {
 			$phpCode .= "while (\$this->pluginObjects['".$className."']->next(\$this)) { ob_start(); ?>";
 		}
 		else {
+			list($openTag) = end($this->tagStack);
+			if ($openTag != $tagCommand) {
+				throw new SystemException($this->formatSyntaxError('unexpected {/'.$tagCommand.'}', $this->currentIdentifier, $this->currentLineNo));
+			}
 			$this->popTag($tagCommand);
 			$phpCode = "<?php echo \$this->pluginObjects['".$className."']->execute(\$this->tagStack[count(\$this->tagStack) - 1][1], ob_get_clean(), \$this); }\n";
 			$phpCode .= "array_pop(\$this->tagStack);\n";
-			$phpCode .= "unset(\$blockContent, \$blockRepeat); ?>";
+			$phpCode .= "unset(\$blockContent); ?>";
 		}
 		
 		return $phpCode;
@@ -505,6 +513,11 @@ class TemplateScriptingCompiler {
 			$phpCode = $this->compilerPlugins[$className]->executeStart($tagArgs, $this);
 		}
 		else {
+			list($openTag) = end($this->tagStack);
+			if ($openTag != $tagCommand) {
+				throw new SystemException($this->formatSyntaxError('unexpected {/'.$tagCommand.'}', $this->currentIdentifier, $this->currentLineNo));
+			}
+			$this->popTag($tagCommand);
 			$phpCode = $this->compilerPlugins[$className]->executeEnd($this);
 		}
 		
