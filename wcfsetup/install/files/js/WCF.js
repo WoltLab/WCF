@@ -2539,12 +2539,12 @@ WCF.Collapsible.Remote = Class.extend({
 		this._proxy.setOption('data', {
 			actionName: 'toggleContainer',
 			className: this._className,
-			parameters: {
+			parameters: $.extend(true, {
 				containerID: $containerID,
 				currentState: $state,
 				newState: $newState,
 				objectID: this._getObjectID($containerID)
-			}
+			}, this._getAdditionalParameters($containerID))
 		});
 		this._proxy.sendRequest();
 
@@ -2567,6 +2567,16 @@ WCF.Collapsible.Remote = Class.extend({
 	 * @return	integer
 	 */
 	_getObjectID: function(containerID) { },
+	
+	/**
+	 * Returns additional parameters.
+	 * 
+	 * @param	integer		containerID
+	 * @return	object
+	 */
+	_getAdditionalParameters: function(containerID) {
+		return {};
+	},
 	
 	/**
 	 * Sets content upon successfull AJAX request.
