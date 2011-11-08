@@ -457,9 +457,7 @@ class TemplateScriptingCompiler {
 		}
 		else {
 			$this->popTag($tagCommand);
-			$phpCode = "<?php \$blockContent = ob_get_contents();\n";
-			$phpCode .= "ob_end_clean();\n";
-			$phpCode .= "echo \$this->pluginObjects['".$className."']->execute(\$this->tagStack[count(\$this->tagStack) - 1][1], \$blockContent, \$this); }\n";
+			$phpCode = "<?php echo \$this->pluginObjects['".$className."']->execute(\$this->tagStack[count(\$this->tagStack) - 1][1], ob_get_clean(), \$this); }\n";
 			$phpCode .= "array_pop(\$this->tagStack);\n";
 			$phpCode .= "unset(\$blockContent, \$blockRepeat); ?>";
 		}
@@ -545,7 +543,7 @@ class TemplateScriptingCompiler {
 		else {
 			$capture = array_pop($this->captureStack);
 			$phpCode = "<?php\n";
-			$phpCode .= "\$this->v['tpl']['capture'][".$capture['name']."] = ob_get_contents();\nob_end_clean();\n";
+			$phpCode .= "\$this->v['tpl']['capture'][".$capture['name']."] = ob_get_clean();\n";
 			if (!empty($capture['variable'])) $phpCode .= "\$this->".($capture['append'] ? 'append' : 'assign')."(".$capture['variable'].", \$this->v['tpl']['capture'][".$capture['name']."]);\n";
 			$phpCode .= "?>";
 			return $phpCode;
@@ -733,7 +731,7 @@ class TemplateScriptingCompiler {
 		$phpCode .= '$this->includeTemplate('.$file.', array('.$argString.'), ('.$sandbox.' ? 1 : 0), $this->v[\'__PACKAGE_ID\']);'."\n";
 		
 		if ($assignVar !== false) {
-			$phpCode .= '$this->'.($append ? 'append' : 'assign').'('.$assignVar.', ob_get_contents()); ob_end_clean();'."\n";
+			$phpCode .= '$this->'.($append ? 'append' : 'assign').'('.$assignVar.', ob_get_clean());'."\n";
 		}
 		
 		$phpCode .= "\$this->v['tpl']['template'] = \$outerTemplateName".$hash.";\n";

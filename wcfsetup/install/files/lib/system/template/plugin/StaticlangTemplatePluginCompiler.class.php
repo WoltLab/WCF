@@ -31,7 +31,6 @@ class StaticlangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		$compiler->popTag('staticlang');
-		$hash = StringUtil::getRandomID();
-		return "<?php \$_lang".$hash." = ob_get_contents(); ob_end_clean(); echo \wcf\system\WCF::getLanguage()->get(\$_lang".$hash."); ?>";
+		return "<?php echo \wcf\system\WCF::getLanguage()->get(ob_get_clean()); ?>";
 	}
 }

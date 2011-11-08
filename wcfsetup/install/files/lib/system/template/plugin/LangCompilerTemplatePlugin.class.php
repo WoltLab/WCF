@@ -38,7 +38,6 @@ class LangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		$compiler->popTag('lang');
-		$hash = StringUtil::getRandomID();
-		return "<?php \$_lang".$hash." = ob_get_contents(); ob_end_clean(); echo wcf\system\WCF::getLanguage()->getDynamicVariable(\$_lang".$hash.", \$this->tagStack[count(\$this->tagStack) - 1][1], (isset(\$this->tagStack[count(\$this->tagStack) - 1][1]['__optional']) ? \$this->tagStack[count(\$this->tagStack) - 1][1]['__optional'] : false)); array_pop(\$this->tagStack); ?>";
+		return "<?php echo wcf\system\WCF::getLanguage()->getDynamicVariable(ob_get_clean(), \$this->tagStack[count(\$this->tagStack) - 1][1], (isset(\$this->tagStack[count(\$this->tagStack) - 1][1]['__optional']) ? \$this->tagStack[count(\$this->tagStack) - 1][1]['__optional'] : false)); array_pop(\$this->tagStack); ?>";
 	}
 }
