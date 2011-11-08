@@ -2,6 +2,7 @@
 namespace wcf\system;
 use wcf\data\language\LanguageEditor;
 use wcf\data\language\SetupLanguage;
+use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\cache\CacheHandler;
@@ -975,7 +976,6 @@ class WCFSetup extends WCF {
 		$statement->execute();
 		$result = $statement->fetchArray();
 		$processNo = intval($result['processNo']) + 1;
-		$statementParameters = array();
 		
 		// search existing wcf package
 		$sql = "SELECT	COUNT(*) AS count
@@ -990,11 +990,13 @@ class WCFSetup extends WCF {
 			}
 			
 			// register essential wcf package
-			$statementParameters[] = array(
+			$queue = PackageInstallationQueueEditor::create(array(
+				'processNo' => $processNo,
+				'userID' => $admin->userID,
 				'package' => 'com.woltlab.wcf',
 				'packageName' => 'WoltLab Community Framework',
 				'archive' => TMP_DIR.'install/packages/'.$wcfPackageFile
-			);
+			));
 		}
 		
 		// register all other delivered packages
@@ -1011,28 +1013,14 @@ class WCFSetup extends WCF {
 				continue;
 			}
 			
-			$statementParameters[] = array(
+			$queue = PackageInstallationQueueEditor::create(array(
+				'parentQueueID' => $queue->queueID,
+				'processNo' => $processNo,
+				'userID' => $admin->userID,
 				'package' => $packageName,
 				'packageName' => $archive->getPackageInfo('packageName'),
 				'archive' => TMP_DIR.'install/packages/'.$packageFile
-			);
-		}
-		
-		if (!empty($statementParameters)) {
-			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_queue
-						(processNo, userID, package, packageName, archive)
-				VALUES		(?, ?, ?, ?, ?)";
-			$statement = self::getDB()->prepareStatement($sql);
-			
-			foreach ($statementParameters as $parameter) {
-				$statement->execute(array(
-					$processNo,
-					$admin->userID,
-					$parameter['package'],
-					$parameter['packageName'],
-					$parameter['archive']
-				));
-			}
+			));
 		}
 		
 		// login as admin

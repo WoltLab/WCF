@@ -84,7 +84,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			// create and encode route link
 			$routeComponents = array('controller' => $tagArgs['controller']);
 			if (isset($tagArgs['id'])) $routeComponents['id'] = $tagArgs['id'];
-			$routeURL = RouteHandler::getInstance()->buildRoute($tagArgs['controller'], $routeComponents);
+			$routeURL = RouteHandler::getInstance()->buildRoute($routeComponents);
 			$tagArgs['link'] = StringUtil::encodeHTML($routeURL . $tagArgs['link']);
 		
 			if (!isset($tagArgs['page'])) {

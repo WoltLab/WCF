@@ -2,6 +2,8 @@
 namespace wcf\system\package;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
+use wcf\data\package\installation\queue\PackageInstallationQueueList;
+use wcf\system\exception\SystemException;
 use wcf\system\Callback;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -79,6 +81,9 @@ class PackageInstallationNodeBuilder {
 		
 		// optional packages
 		$this->buildOptionalNodes();
+		
+		// child queues
+		$this->buildChildQueues();
 	}
 	
 	/**
@@ -385,7 +390,8 @@ class PackageInstallationNodeBuilder {
 		$packageNodes = array();
 		$queue = $this->installation->queue;
 		
-		$requiredPackages = $this->installation->getArchive()->getRequirements();
+		// handle requirements
+		$requiredPackages = $this->installation->getArchive()->getOpenRequirements();
 		foreach ($requiredPackages as $packageName => $package) {
 			if (!isset($package['file'])) {
 				// ignore requirements which are not to be installed
@@ -399,6 +405,11 @@ class PackageInstallationNodeBuilder {
 			// extract package
 			$index = $this->installation->getArchive()->getTar()->getIndexByFilename($package['file']);
 			if ($index === false) {
+				// workaround for WCFSetup
+				if (!PACKAGE_ID && $packageName == 'com.woltlab.wcf') {
+					continue;
+				}
+				
 				throw new SystemException("Unable to find required package '".$package['file']."' within archive.");
 			}
 			
@@ -541,6 +552,24 @@ class PackageInstallationNodeBuilder {
 				'optionalPackages',
 				serialize($packages)
 			));
+		}
+	}
+	
+	/**
+	 * Recursively build nodes for child queues.
+	 */
+	protected function buildChildQueues() {
+		$queueList = new PackageInstallationQueueList();
+		$queueList->getConditionBuilder()->add("package_installation_queue.parentQueueID = ?", array($this->installation->queue->queueID));
+		$queueList->getConditionBuilder()->add("package_installation_queue.queueID NOT IN (SELECT queueID FROM wcf".WCF_N."_package_installation_node)");
+		$queueList->sqlLimit = 0;
+		$queueList->readObjects();
+		
+		foreach ($queueList as $queue) {
+			$installation = new PackageInstallationDispatcher($queue);
+			$installation->nodeBuilder->setParentNode($this->node);
+			$installation->nodeBuilder->buildNodes();
+			$this->node = $installation->nodeBuilder->getCurrentNode();
 		}
 	}
 	

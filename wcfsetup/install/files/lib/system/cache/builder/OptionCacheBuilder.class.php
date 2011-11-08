@@ -91,6 +91,21 @@ class OptionCacheBuilder implements ICacheBuilder {
 		}
 		
 		if (count($optionIDs) > 0) {
+			// get option class from type
+			$className = 'wcf\data\option\Option';
+			if (!empty($type)) {
+				// strip trailing underscore
+				$rawType = substr($type, 0, -1);
+				preg_match_all('~((?:^|[A-Z])[a-z]+)~', $rawType, $matches);
+				if (isset($matches[1])) {
+					$className = 'wcf\data\\';
+					for ($i = 0, $length = count($matches[1]); $i < $length; $i++) {
+						$className .= $matches[1][$i] . '\\';
+					}
+					$className .= 'option\\' . ucfirst($rawType) . 'Option';
+				}
+			}
+			
 			// get needed options
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("optionID IN (?)", array($optionIDs));
@@ -102,7 +117,7 @@ class OptionCacheBuilder implements ICacheBuilder {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
-				$data['options'][$row['optionName']] = new Option(null, $row);
+				$data['options'][$row['optionName']] = new $className(null, $row);
 				if (!isset($data['optionToCategories'][$row['categoryName']])) {
 					$data['optionToCategories'][$row['categoryName']] = array();
 				}
