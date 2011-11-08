@@ -1614,7 +1614,7 @@ input[type='button'],
 /* Collapse Icon */
 
 .boxTitle > a {
-	margin: 5px 0 0 10px;
+	margin: 7px 0 0 10px;
 	float: left;
 }
 
@@ -1929,6 +1929,7 @@ input[type='button'],
 	background-color: rgba(255, 255, 255, 1);
 	margin-top: 15px;
 	display: block;
+	clear: both;
 	position: relative;
 	overflow: hidden;
 }
