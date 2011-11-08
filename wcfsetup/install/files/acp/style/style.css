@@ -1601,6 +1601,7 @@ input[type='button'],
 }
 
 .boxTitle > hgroup h1 {
+	font-size: 120%;
 	display: inline-block;
 }
 
