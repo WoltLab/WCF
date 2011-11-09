@@ -2993,6 +2993,76 @@ WCF.DOMNodeInsertedHandler = {
 };
 
 /**
+ * Provides a toggleable sidebar.
+ */
+$.widget('ui.wcfSidebar', {
+	/**
+	 * toggle button
+	 * @var	jQuery
+	 */
+	_button: null,
+
+	/**
+	 * sidebar visibility
+	 * @var	boolean
+	 */
+	_visible: true,
+
+	/**
+	 * Creates a new toggleable sidebar.
+	 */
+	_create: function() {
+		this.element.wrap('<div class="collapsibleSidebar"></div>');
+		
+		// create toggle button
+		this._button = $('<span class="collapsibleSidebarButton">&laquo;</div>').appendTo(this.element.parent('div'));
+
+		// bind event
+		this._button.click($.proxy(this._toggle, this));
+	},
+
+	/**
+	 * Toggles visibility on button click.
+	 */
+	_toggle: function() {
+		if (this._visible) {
+			this.hide();
+		}
+		else {
+			this.show();
+		}
+	},
+
+	/**
+	 * Shows sidebar content.
+	 */
+	show: function() {
+		if (this._visible) {
+			return;
+		}
+
+		this._visible = true;
+		this.element.wcfBlindIn('horizontal', $.proxy(function() {
+			this._button.html('&laquo;');
+		}, this));
+	},
+
+	/**
+	 * Hides the sidebar content.
+	 */
+	hide: function() {
+		if (!this._visible) {
+			return;
+		}
+		
+		this._visible = false;
+		this.element.wcfBlindOut('horizontal',  $.proxy(function() {
+			this._button.html('&raquo;');
+		}, this));
+	}
+});
+
+/**
  * Basic implementation for WCF dialogs.
  */
 $.widget('ui.wcfDialog', $.ui.dialog, {

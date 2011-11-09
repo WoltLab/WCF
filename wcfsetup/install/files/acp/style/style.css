@@ -3703,7 +3703,30 @@ div#profileButtonContainer button:hover {
 
 
 
+/* TODO: This is just a prototype for collapsible sidebars */
+.collapsibleSidebarButton {
+	background-color: rgb(216, 231, 245);
+	border: 1px solid rgb(192, 192, 192);
+	border-left-width: 0;
+	border-radius: 0 3px 3px 0;
+	padding: 3px;
+	opacity: 0.6;
+	position: absolute;
+	right: -15px;
+	top: 46%;
+	z-index: 101;
+	
+	-webkit-transition: opacity .2s linear;
+	-moz-transition: opacity .2s linear;
+	-ms-transition: opacity .2s linear;
+	-o-transition: opacity .2s linear;
+	transition: opacity .2s linear;
+}
 
+.collapsibleSidebarButton:hover {
+	cursor: pointer;
+	opacity: 1.0;
+}
 
 
 
