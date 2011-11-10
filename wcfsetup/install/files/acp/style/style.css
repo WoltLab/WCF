@@ -85,7 +85,7 @@ a:hover {
 }
 
 a.externalURL {
-	background-image: url('../../icon/externalURL.svg');
+	background-image: url('../../icon/externalURL1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
 	padding-right: 17px;
@@ -597,9 +597,6 @@ div.main > div section:only-child {
 	
 	section.content {
 		padding: 5px 40px 25px;
-	}
-	
-	div.main > div section:only-child {
 		min-height: 100px;
 	}
 	
@@ -609,9 +606,6 @@ div.main > div section:only-child {
 	
 	section.content {
 		padding: 5px 15px 25px;
-	}
-	
-	div.main > div section:only-child {
 		min-height: auto;
 	}
 	
@@ -2559,7 +2553,7 @@ div#ajaxExceptionStacktrace {
 
 .overlayLoading {
 	background-color: #fff;
-	background-image: url('../../icon/spinner.svg');
+	background-image: url('../../icon/spinner1.svg');
 	background-position: center center;
 	background-repeat: no-repeat;
 }
@@ -3418,7 +3412,7 @@ div.scrollableContainer > div:first-child p {
 
 #userNotificationDetailsLoading {
 	background-color: rgba(255, 255, 255, .6);
-	background-image: url('{@RELATIVE_WCF_DIR}icon/ajax-loader.gif');
+	background-image: url('{@RELATIVE_WCF_DIR}icon/spinner1.svg');
 	background-position: center center;
 	background-repeat: no-repeat;
 	position: absolute;

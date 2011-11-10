@@ -3,8 +3,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
 	
-	<title>Options</title> 
-	<desc>Options Icon</desc> 
+	<title>Working</title>
+	<desc>Working Icon (animated)</desc>
 	
 	<!--
 		@author		Harald Szekely 
@@ -13,14 +13,19 @@
 	--> 
 	
 	<defs>
-		
+		<style type="text/css">
+			<![CDATA[
+				.Upper1 {fill: #666;}
+				.Lower1 {fill: #fff;}
+			]]>
+		</style>
 	</defs>
 	
-	<g id="IconOptions">
+	<g id="IconWorkingA">
 		<g>
 			<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 7.5 8.5" to="360 7.5 8.5" begin="0s" dur="10s"  repeatCount="indefinite" />
 			
-			<path class="Lower" style="fill: #fff;" d="M13.5058594,7.4238281l-1.7324219-0.2666016
+			<path class="Lower1" d="M13.5058594,7.4238281l-1.7324219-0.2666016
 				C11.6933594,6.902832,11.59375,6.659668,11.4716797,6.4267578l1.0361328-1.4125977
 				c0.1630859-0.2216797,0.1367188-0.5625-0.0576172-0.7568359L11.7431641,3.550293
 				c-0.1943359-0.1943359-0.5351562-0.2207031-0.7568359-0.0576172L9.5732422,4.5283203
@@ -47,7 +52,7 @@
 		<g>
 			<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 7.5 7.5" to="360 7.5 7.5" begin="0s" dur="10s"  repeatCount="indefinite" />
 			
-			<path class="Upper" style="fill: #666;" d="M13.5058594,6.4238281l-1.7324219-0.2666016
+			<path class="Upper1" d="M13.5058594,6.4238281l-1.7324219-0.2666016
 				C11.6933594,5.902832,11.59375,5.659668,11.4716797,5.4267578l1.0361328-1.4125977
 				c0.1630859-0.2216797,0.1367188-0.5625-0.0576172-0.7568359L11.7431641,2.550293
 				c-0.1943359-0.1943359-0.5351562-0.2207031-0.7568359-0.0576172L9.5732422,3.5283203

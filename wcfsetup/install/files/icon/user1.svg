@@ -3,8 +3,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
 	
-	<title>User</title> 
-	<desc>User Icon</desc> 
+	<title>User</title>
+	<desc>User Icon</desc>
 	
 	<!--
 		@author		Harald Szekely 
@@ -13,12 +13,17 @@
 	--> 
 	
 	<defs>
-		
+		<style type="text/css">
+			<![CDATA[
+				.Upper1 {fill: #666;}
+				.Lower1 {fill: #fff;}
+			]]>
+		</style>
 	</defs>
 	
 	<g id="IconUser">
 		<g id="Silhouette">
-			<path class="Lower" style="fill-rule: evenodd; clip-rule: evenodd; fill: #fff;" d="M14,15
+			<path class="Lower1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M14,15
 				c-0.2333984-1.171875-0.6699219-3.6777344-1.7470703-4.1445312c-0.8632812-0.375-1.5673828-0.8359375-2.109375-1.3808594
 				C9.8984375,9.125,9.4882812,8.9316406,8.9165039,8.8886719c-0.152832-0.3769531-0.1459961-0.84375,0.019043-1.3994141
 				C9.28125,7.1186523,9.5078125,6.5932617,9.6201172,5.9116211C9.6113281,5.6884766,9.484375,5.5981445,9.2373047,5.6386719
@@ -30,7 +35,7 @@
 				c0.1738281,0.6591797,0.3232422,1.0898438,0.9648438,1.4794922l0.0415039,0.390625L4.6547852,9.9414062
 				c-0.8051758,0.5859375-1.7163086,1.0996094-2.734375,1.5371094c-0.2436523,0.2128906-0.9057617,3.1230469-0.9174805,3.5058594
 				C1.0019531,14.9882812,1.0004883,14.9960938,1,15H14z"/>
-			<path class="Upper" style="fill-rule: evenodd; clip-rule: evenodd; fill: #666;" d="M14,14
+			<path class="Upper1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M14,14
 				c-0.2333984-1.1708984-0.6699219-3.6777344-1.7470703-4.1435547c-0.8632812-0.375-1.5673828-0.8369141-2.109375-1.3808594
 				C9.8984375,8.125,9.4882812,7.9316406,8.9165039,7.8896484c-0.152832-0.3779297-0.1459961-0.8442383,0.019043-1.3999023
 				C9.28125,6.1191406,9.5078125,5.59375,9.6201172,4.9121094C9.6113281,4.6889648,9.484375,4.5986328,9.2373047,4.6391602

@@ -3,8 +3,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
 	
-	<title>Run</title>
-	<desc>Run Icon (framed)</desc>
+	<title>Sorting Ascending</title>
+	<desc>Sorting Ascending Icon</desc>
 	
 	<!--
 		@author		Harald Szekely 
@@ -15,18 +15,14 @@
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper1 {fill: #666;}
-				.Lower1 {fill: #fff;}
+				.SortingUpper {fill: #fff;}
+				.SortingLower {fill: #000;}
 			]]>
 		</style>
 	</defs>
 	
-	<g id="IconRun">
-		<path class="Lower1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M13,2H2C1.4477539,2,1,2.4477539,1,3v11
-			c0,0.5527344,0.4477539,1,1,1h11c0.5527344,0,1-0.4472656,1-1V3C14,2.4477539,13.5527344,2,13,2z M4,13.0097656v-9l7,4.4990234
-			L4,13.0097656z"/>
-		<path class="Upper1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M13,1H2C1.4477539,1,1,1.4477539,1,2v11
-			c0,0.5527344,0.4477539,1,1,1h11c0.5527344,0,1-0.4472656,1-1V2C14,1.4477539,13.5527344,1,13,1z M4,12.0097656v-9l7,4.4990234
-			L4,12.0097656z"/>
+	<g id="IconSortingArrowASC">
+		<polygon class="SortingLower" style="fill-rule: evenodd; clip-rule: evenodd;" points="2,10 7.9995117,4 14,10"/>
+		<polygon class="SortingUpper" style="fill-rule: evenodd; clip-rule: evenodd;" points="3,9.5996094 7.9995117,4.5996094 13,9.5996094"/>
 	</g>
 </svg>
