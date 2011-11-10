@@ -22,4 +22,11 @@ class Session extends ACPSession {
 	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'sessionID';
+	
+	/**
+	 * @see wcf\data\acp\session\ACPSession::supportsPersistentLogins()
+	 */
+	public static function supportsPersistentLogins() {
+		return true;
+	}
 }

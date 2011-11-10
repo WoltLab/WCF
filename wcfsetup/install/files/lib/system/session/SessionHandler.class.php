@@ -324,7 +324,7 @@ class SessionHandler extends SingletonFactory {
 		$sessionID = StringUtil::getRandomID();
 		
 		// get user automatically
-		$this->user = UserAuthenticationFactory::getUserAuthentication()->loginAutomatically();
+		$this->user = UserAuthenticationFactory::getUserAuthentication()->loginAutomatically(call_user_func(array($this->sessionClassName, 'supportsPersistentLogins')));
 		
 		// create user
 		if ($this->user === null) {
@@ -332,9 +332,6 @@ class SessionHandler extends SingletonFactory {
 			// create guest user
 			$this->user = new User(null);
 		}
-		
-		// insert session into database
-		$requestMethod = (!empty($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '');
 		
 		// save session
 		$this->session = call_user_func(array($this->sessionEditorClassName, 'create'), array(
@@ -345,7 +342,7 @@ class SessionHandler extends SingletonFactory {
 			'userAgent' => UserUtil::getUserAgent(),
 			'lastActivityTime' => TIME_NOW,
 			'requestURI' => UserUtil::getRequestURI(),
-			'requestMethod' => $requestMethod
+			'requestMethod' => (!empty($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '')
 		));
 	}
 	

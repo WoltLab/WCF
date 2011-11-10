@@ -28,4 +28,13 @@ class ACPSession extends DatabaseObject {
 	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'sessionID';
+	
+	/**
+	 * Returns true, if this session type supports persistent logins.
+	 * 
+	 * @return	boolean
+	 */
+	public static function supportsPersistentLogins() {
+		return false;
+	}
 }
