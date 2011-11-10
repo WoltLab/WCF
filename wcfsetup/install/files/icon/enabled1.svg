@@ -13,30 +13,28 @@
 	--> 
 	
 	<defs>
-		
+		<style type="text/css">
+			<![CDATA[
+				.Upper1 {fill: #666;}
+				.Lower1 {fill: #fff;}
+			]]>
+		</style>
 	</defs>
 	
 	<g id="IconEnabled">
-		<g class="Lower">
-			<path id="Circle1" style="fill-rule: evenodd; clip-rule: evenodd; fill: #fff;" d="M2.347168,8.5
+		<g class="Lower1">
+			<path id="Circle2" style="fill-rule: evenodd; clip-rule: evenodd;" d="M2.347168,8.5
 				c0,2.8447266,2.3066406,5.1523438,5.152832,5.1523438c2.8447266,0,5.1523438-2.3076172,5.1523438-5.1523438
 				c0-2.8466797-2.3076172-5.1533203-5.1523438-5.1533203C4.6538086,3.3466797,2.347168,5.6533203,2.347168,8.5z M1,8.5
 				C1,4.909668,3.909668,2,7.5,2C11.0898438,2,14,4.909668,14,8.5c0,3.5888672-2.9101562,6.5-6.5,6.5C3.909668,15,1,12.0888672,1,8.5z"/>
-			<circle id="Point1" style="fill: #fff;" cx="7.5" cy="8.5" r="1.5">
-				<animate attributeType="XML" attributeName="r" values="1.5; 3; 1.5;" dur="3s" calcMode="paced" repeatCount="indefinite"/>
-				<animate attributeType="CSS" attributeName="opacity" values="1; .1; 1;" dur="3s" repeatCount="indefinite" />
-			</circle>
+			<circle id="Point2" cx="7.5" cy="8.5" r="1.5"/>
 		</g>
-		<g class="Upper">
-			<path id="Circle2" style="fill-rule: evenodd; clip-rule: evenodd; fill: #666;" d="M2.347168,7.5
+		<g class="Upper1">
+			<path id="Circle1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M2.347168,7.5
 				c0,2.8447266,2.3066406,5.1523438,5.152832,5.1523438c2.8447266,0,5.1523438-2.3076172,5.1523438-5.1523438
 				c0-2.8466797-2.3076172-5.1533203-5.1523438-5.1533203C4.6538086,2.3466797,2.347168,4.6533203,2.347168,7.5z M1,7.5
 				C1,3.909668,3.909668,1,7.5,1C11.0898438,1,14,3.909668,14,7.5c0,3.5888672-2.9101562,6.5-6.5,6.5C3.909668,14,1,11.0888672,1,7.5z"/>
-			<circle id="Point2" style="fill: #666;" cx="7.5" cy="7.5" r="1.5">
-				<animate attributeType="XML" attributeName="r" values="1.5; 3; 1.5;" dur="3s" calcMode="paced" repeatCount="indefinite"/>
-				<animate attributeType="CSS" attributeName="opacity" values="1; .1; 1;" dur="3s" repeatCount="indefinite" />
-				<animate attributeType="CSS" attributeName="fill" values="#666; #0f0; #666;" dur="6s" repeatCount="indefinite" />
-			</circle>
+			<circle id="Point1" cx="7.5" cy="7.5" r="1.5"/>
 		</g>
 	</g>
 </svg>

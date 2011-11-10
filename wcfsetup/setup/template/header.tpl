@@ -63,7 +63,7 @@
 			<section id="content" class="content">
 				
 				<header class="mainHeading setup">
-					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}installation1.svg" alt="" />
+					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}working1.svg" alt="" />
 					<hgroup>
 						<h1>{lang}wcf.global.title{/lang}</h1>
 						<h2>{lang}wcf.global.title.subtitle{/lang}</h2>

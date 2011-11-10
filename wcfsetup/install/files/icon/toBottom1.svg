@@ -3,8 +3,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
 	
-	<title>Run</title>
-	<desc>Run Icon (framed)</desc>
+	<title>To Bottom</title>
+	<desc>To Bottom Of Page Icon</desc>
 	
 	<!--
 		@author		Harald Szekely 
@@ -21,12 +21,12 @@
 		</style>
 	</defs>
 	
-	<g id="IconRun">
-		<path class="Lower1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M13,2H2C1.4477539,2,1,2.4477539,1,3v11
-			c0,0.5527344,0.4477539,1,1,1h11c0.5527344,0,1-0.4472656,1-1V3C14,2.4477539,13.5527344,2,13,2z M4,13.0097656v-9l7,4.4990234
-			L4,13.0097656z"/>
-		<path class="Upper1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M13,1H2C1.4477539,1,1,1.4477539,1,2v11
-			c0,0.5527344,0.4477539,1,1,1h11c0.5527344,0,1-0.4472656,1-1V2C14,1.4477539,13.5527344,1,13,1z M4,12.0097656v-9l7,4.4990234
-			L4,12.0097656z"/>
+	<g id="IconToBottom">
+		<path class="Lower1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M7.5,15C3.909668,15,1,12.0908203,1,8.5
+			c0-3.0673828,2.1411133-5.6367188,5-6.3193359V9H3.5l4,5l4-5.0004883L9,9V2.1806641C11.8652344,2.859375,14,5.4277344,14,8.5
+			C14,12.0908203,11.0898438,15,7.5,15z"/>
+		<path class="Upper1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M7.5,14C3.909668,14,1,11.0908203,1,7.5
+			c0-3.0673828,2.1411133-5.6367188,5-6.3193359V8H3.5l4,5l4-5.0004883L9,8V1.1806641C11.8652344,1.859375,14,4.4277344,14,7.5
+			C14,11.0908203,11.0898438,14,7.5,14z"/>
 	</g>
 </svg>
