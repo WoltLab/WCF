@@ -3042,9 +3042,14 @@ $.widget('ui.wcfSidebar', {
 		}
 
 		this._visible = true;
+		this.element.parent('div').removeClass('collapsedSidebar');
+		this._button.html('&laquo;');
+
+		/*
 		this.element.wcfBlindIn('horizontal', $.proxy(function() {
 			this._button.html('&laquo;');
 		}, this));
+		*/
 	},
 
 	/**
@@ -3056,9 +3061,14 @@ $.widget('ui.wcfSidebar', {
 		}
 		
 		this._visible = false;
+		this.element.parent('div').addClass('collapsedSidebar');
+		this._button.html('&raquo;');
+
+		/*
 		this.element.wcfBlindOut('horizontal',  $.proxy(function() {
 			this._button.html('&raquo;');
 		}, this));
+		*/
 	}
 });
 

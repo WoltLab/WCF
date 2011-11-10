@@ -3728,7 +3728,20 @@ div#profileButtonContainer button:hover {
 	opacity: 1.0;
 }
 
+.collapsibleSidebar {
+	-webkit-transition: width .5s linear;
+	-moz-transition: width .5s linear;
+	-ms-transition: width .5s linear;
+	-o-transition: width .5s linear;
+	transition: width .5s linear;
+	
+	width: 100%;
+}
 
+.collapsibleSidebar.collapsedSidebar {
+	overflow: hidden;
+	width: 0%;
+}
 
 
 
