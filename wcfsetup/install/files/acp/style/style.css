@@ -2257,7 +2257,7 @@ tr .columnURL {
 	min-width: 19px;
 }
 
-.pageNavigation ul li:not(href):not(.active) {
+.pageNavigation ul li:not(href):not(.disabled) {
 	cursor: pointer;
 }
 
