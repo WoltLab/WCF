@@ -3697,18 +3697,23 @@ div#profileButtonContainer button:hover {
 
 
 
-/* TODO: This is just a prototype for collapsible sidebars */
+/* ToDo: Collapsible Sidebar Button */
+
 .collapsibleSidebarButton {
-	background-color: rgb(216, 231, 245);
-	border: 1px solid rgb(192, 192, 192);
-	border-left-width: 0;
-	border-radius: 0 3px 3px 0;
+	border-right: 1px solid transparent;
+	border-left: 1px solid transparent;
+	background-image: url('../../icon/handle1.svg');
+	background-size: 48px;
+	background-position: left center;
+	background-repeat: no-repeat;
 	padding: 3px;
-	opacity: 0.6;
 	position: absolute;
+	top: 0;
 	right: -15px;
-	top: 46%;
-	z-index: 101;
+	bottom: 0;
+	width: 7px;
+	z-index: 500;
+	opacity: .6;
 	
 	-webkit-transition: opacity .2s linear;
 	-moz-transition: opacity .2s linear;
@@ -3719,22 +3724,22 @@ div#profileButtonContainer button:hover {
 
 .collapsibleSidebarButton:hover {
 	cursor: pointer;
-	opacity: 1.0;
+	color: #999;	
+	border-right-color: #ccc;
+	border-left-color: #ccc;
+	background-color: rgba(0, 0, 0, .015);
+	opacity: 1;
 }
 
-.collapsibleSidebar {
-	-webkit-transition: width .5s linear;
-	-moz-transition: width .5s linear;
-	-ms-transition: width .5s linear;
-	-o-transition: width .5s linear;
-	transition: width .5s linear;
-	
-	width: 100%;
-}
-
-.collapsibleSidebar.collapsedSidebar {
+.collapsedSidebar {
 	overflow: hidden;
-	width: 0%;
+	width: 0;
+}
+
+.collapsedSidebar nav {
+	overflow: hidden;
+	width: 0;
+	display: none;
 }
 
 
