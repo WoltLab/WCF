@@ -3063,6 +3063,97 @@ $.widget('ui.wcfSidebar', {
 });
 
 /**
+ * Provides a toggleable sidebar with persistent visibility.
+ */
+$.widget('ui.wcfPersistentSidebar', $.ui.wcfSidebar, {
+	/**
+	 * widget options
+	 * @var	object
+	 */
+	options: {
+		className: '',
+		collapsed: false,
+		objectTypeID: 0
+	},
+
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+
+	/**
+	 * Creates a new toggleable sidebar.
+	 */
+	_create: function() {
+		if (this.options.className === '' || this.options.objectTypeID === 0) {
+			console.debug('[ui.wcfPersistentSidebar] Class name or object type id missing, aborting.');
+			return;
+		}
+		
+		$.ui.dialog.prototype._init.apply(this, arguments);
+
+		// collapse on init
+		if (this.options.collapsed) {
+			this.element.hide();
+			this._visible = false;
+		}
+
+		// init proxy
+		this._proxy = new WCF.Action.Proxy();
+	},
+
+	/**
+	 * Shows sidebar content.
+	 */
+	show: function() {
+		if (this._visible) {
+			return;
+		}
+
+		$.ui.dialog.prototype._init.apply(this, arguments);
+
+		// save state
+		this._save();
+	},
+
+	/**
+	 * Hides the sidebar content.
+	 */
+	hide: function() {
+		if (!this._visible) {
+			return;
+		}
+
+		$.ui.dialog.prototype._init.apply(this, arguments);
+
+		// save state
+		this._save();
+	},
+
+	/**
+	 * Save collapsible state
+	 */
+	_save: function() {
+		var $currentState = (!this._visible) ? 'close' : 'open';
+		var $state = (this._visible) ? 'open' : 'close';
+
+		this._proxy.setOption('data', {
+			actionName: 'toggleSidebar',
+			className: this.options.className,
+			parameters: {
+				data: {
+					currentState: $currentState,
+					newState: $newState,
+					objectTypeID: this.options.objectTypeID
+				}
+			}
+		});
+		this._proxy.sendRequest();
+	}
+});
+
+/**
  * Basic implementation for WCF dialogs.
  */
 $.widget('ui.wcfDialog', $.ui.dialog, {
