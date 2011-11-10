@@ -203,7 +203,7 @@ class User extends DatabaseObject {
 			return null;
 		}
 		
-		return self::$userOptions[$name]['optionID'];
+		return self::$userOptions[$name]->optionID;
 	}
 	
 	/**
