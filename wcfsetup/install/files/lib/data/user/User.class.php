@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  * @subpackage	data.user
  * @category 	Community Framework
  */
-class User extends DatabaseObject {
+final class User extends DatabaseObject {
 	/**
 	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
@@ -55,6 +55,30 @@ class User extends DatabaseObject {
 	 * @var	array<string>
 	 */
 	protected static $userOptions = null;
+	
+	/**
+	 * @see	wcf\data\DatabaseObject::__construct()
+	 */
+	public function __construct($id, $row = null, User $object = null) {
+		if ($id !== null) {
+			$sql = "SELECT		*
+				FROM		wcf".WCF_N."_user user_table
+				LEFT JOIN	wcf".WCF_N."_user_option_value user_option_value
+				ON		(user_option_value.userID = user_table.userID)
+				WHERE		user_table.userID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($id));
+			$row = $statement->fetchArray();
+			
+			// enforce data type 'array'
+			if ($row === false) $row = array();
+		}
+		else if ($object !== null) {
+			$row = $object->data;
+		}
+		
+		$this->handleData($row);
+	}
 	
 	/**
 	 * Returns true, if the given password is the correct password for this user.

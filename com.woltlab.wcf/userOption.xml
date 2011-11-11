@@ -9,7 +9,7 @@
 			<option name="inlineHelpStatus">
 				<categoryname>hidden</categoryname>
 				<optiontype>text</optiontype>
-				<visible>4</visible>
+				<visible>0</visible>
 				<editable>4</editable>
 				<defaultvalue>all</defaultvalue>
 			</option>
