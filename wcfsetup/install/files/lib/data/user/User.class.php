@@ -61,7 +61,7 @@ final class User extends DatabaseObject {
 	 */
 	public function __construct($id, $row = null, User $object = null) {
 		if ($id !== null) {
-			$sql = "SELECT		*
+			$sql = "SELECT		user_option_value.*, user_table.*
 				FROM		wcf".WCF_N."_user user_table
 				LEFT JOIN	wcf".WCF_N."_user_option_value user_option_value
 				ON		(user_option_value.userID = user_table.userID)
