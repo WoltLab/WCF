@@ -72,6 +72,12 @@ class SystemException extends LoggedException implements IPrintableException {
 		// send status code
 		@header('HTTP/1.1 503 Service Unavailable');
 		
+		// show user-defined system-exception
+		if (defined('SYSTEMEXCEPTION_FILE') && file_exists(SYSTEMEXCEPTION_FILE)) {
+			require(SYSTEMEXCEPTION_FILE);
+			return;
+		}
+		
 		// print report
 		echo '<?xml version="1.0" encoding="UTF-8"?>';
 		
