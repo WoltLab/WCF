@@ -242,7 +242,14 @@ class Route {
 					continue;
 				}
 				
-				$link .= $components[$component] . '/';
+				// handle built-in SEO
+				if ($component === 'id' && isset($components['title'])) {
+					$link .= $components[$component] . '-' . $components['title'] . '/';
+					unset($components['title']);
+				}
+				else {
+					$link .= $components[$component] . '/';
+				}
 				unset($components[$component]);
 			}
 		}
