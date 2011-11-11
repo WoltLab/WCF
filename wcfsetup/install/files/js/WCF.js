@@ -2409,12 +2409,6 @@ WCF.Collapsible.Remote = Class.extend({
 	_className: '',
 
 	/**
-	 * content cache per container
-	 * @var	object
-	 */
-	_content: {},
-
-	/**
 	 * list of active containers
 	 * @var	object
 	 */
@@ -2456,24 +2450,22 @@ WCF.Collapsible.Remote = Class.extend({
 			var $id = $container.wcfIdentify();
 			this._containers[$id] = $container;
 			
-			var $target = this._getTarget($id);
-			var $buttonContainer = this._getButtonContainer($id);
-			var $button = this._createButton($id, $buttonContainer);
-			
-			// store container meta data
-			this._containerData[$id] = {
-				button: $button,
-				buttonContainer: $buttonContainer,
-				isOpen: $container.data('isOpen'),
-				target: $target
-			};
-			
-			// prepare content cache
-			/*this._content[$id] = {
-				'close': '',
-				'open': ''
-			};*/
+			this._initContainer($id, $container);
 		}, this));
+	},
+	
+	_initContainer: function(containerID, container) {
+		var $target = this._getTarget(containerID);
+		var $buttonContainer = this._getButtonContainer(containerID);
+		var $button = this._createButton(containerID, $buttonContainer);
+		
+		// store container meta data
+		this._containerData[containerID] = {
+			button: $button,
+			buttonContainer: $buttonContainer,
+			isOpen: container.data('isOpen'),
+			target: $target
+		};
 	},
 	
 	/**
@@ -2525,16 +2517,6 @@ WCF.Collapsible.Remote = Class.extend({
 		var $state = ($isOpen) ? 'open' : 'close';
 		var $newState = ($isOpen) ? 'close' : 'open';
 		
-		// save container content
-		// this._content[$containerID][$state] = this._containerData[$containerID].target.html();
-		
-		// set container content from cache
-		/*if (this._content[$containerID][$newState] != '') {
-			this._containerData[$containerID].target.html(this._content[$containerID][$newState]);
-			this._containerData[$containerID].isOpen = ($isOpen) ? false : true;
-			return;
-		}*/
-		
 		// fetch content state via AJAX
 		this._proxy.setOption('data', {
 			actionName: 'toggleContainer',
@@ -2579,6 +2561,17 @@ WCF.Collapsible.Remote = Class.extend({
 	},
 	
 	/**
+	 * Updates container content.
+	 * 
+	 * @param	integer		containerID
+	 * @param	string		newContent
+	 * @param	string		newState
+	 */
+	_updateContent: function(containerID, newContent, newState) {
+		this._containerData[containerID].target.html(newContent);
+	},
+	
+	/**
 	 * Sets content upon successfull AJAX request.
 	 * 
 	 * @param	object		data
@@ -2596,10 +2589,9 @@ WCF.Collapsible.Remote = Class.extend({
 		// update content storage
 		this._containerData[$containerID].isOpen = (data.returnValues.isOpen) ? true : false;
 		var $newState = (data.returnValues.isOpen) ? 'opened' : 'closed';
-		//this._content[$containerID][$newState] = data.returnValues.content;
 		
 		// update container content
-		this._containerData[$containerID].target.html(data.returnValues.content);
+		this._updateContent($containerID, data.returnValues.content, $newState);
 		
 		// update icon
 		this._hideSpinner(this._containerData[$containerID].button, WCF.Icon.get('wcf.icon.' + (data.returnValues.isOpen ? 'opened' : 'closed')));
