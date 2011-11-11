@@ -37,6 +37,16 @@ class LinkHandler extends SingletonFactory {
 		
 		// build route
 		if ($controller !== null) {
+			// handle object
+			if (isset($parameters['object']) && $parameters['object'] instanceof \wcf\system\request\IRouteController) {
+				$parameters['id'] = $parameters['object']->getID();
+				
+				// remove illegal characters
+				$parameters['title'] = preg_replace('/[\x0-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+/', '-', $parameters['object']->getTitle());
+				
+				unset($parameters['object']);
+			}
+			
 			$parameters['controller'] = $controller;
 			$routeURL = RouteHandler::getInstance()->buildRoute($parameters);
 			if (!$isRaw && !empty($url)) {
