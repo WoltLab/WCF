@@ -35,6 +35,14 @@
 	{event name='stylesheetImport'}
 </style>
 
+<noscript>
+	<style type="text/css">
+		.javascriptOnly {
+			display: none !important;
+		}
+	</style>
+</noscript>
+
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {

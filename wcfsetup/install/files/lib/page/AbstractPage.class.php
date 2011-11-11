@@ -131,6 +131,13 @@ abstract class AbstractPage implements IPage {
 		// read data
 		$this->readData();
 
+		// try to guess template name
+		if (empty($this->templateName)) {
+			$classParts = explode('\\', get_class($this));
+			$className = preg_replace('~(Form|Page)$~', '', array_pop($classParts));
+			$this->templateName = lcfirst($className);
+		}
+		
 		// assign variables
 		$this->assignVariables();		
 		
@@ -138,13 +145,6 @@ abstract class AbstractPage implements IPage {
 		EventHandler::getInstance()->fireAction($this, 'show');
 		
 		if ($this->useTemplate) {
-			// try to guess template name
-			if (empty($this->templateName)) {
-				$classParts = explode('\\', get_class($this));
-				$className = preg_replace('~(Form|Page)$~', '', array_pop($classParts));
-				$this->templateName = lcfirst($className);
-			}
-			
 			// show template
 			WCF::getTPL()->display($this->templateName);
 		}

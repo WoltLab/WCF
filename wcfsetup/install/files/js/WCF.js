@@ -3002,6 +3002,8 @@ $.widget('ui.wcfSidebar', {
 	 */
 	_button: null,
 
+	_container: null,
+
 	/**
 	 * sidebar visibility
 	 * @var	boolean
@@ -3013,9 +3015,10 @@ $.widget('ui.wcfSidebar', {
 	 */
 	_create: function() {
 		this.element.wrap('<div class="collapsibleSidebar"></div>');
+		this._container = this.element.parent('div');
 		
 		// create toggle button
-		this._button = $('<span class="collapsibleSidebarButton">&laquo;</div>').appendTo(this.element.parent('div'));
+		this._button = $('<span class="collapsibleSidebarButton" title="' + WCF.Language.get('wcf.global.button.collapsible') + '"></span>').appendTo(this._container);
 
 		// bind event
 		this._button.click($.proxy(this._toggle, this));
@@ -3042,14 +3045,7 @@ $.widget('ui.wcfSidebar', {
 		}
 
 		this._visible = true;
-		this.element.parent('div').removeClass('collapsedSidebar');
-		this._button.html('&laquo;');
-
-		/*
-		this.element.wcfBlindIn('horizontal', $.proxy(function() {
-			this._button.html('&laquo;');
-		}, this));
-		*/
+		this._container.removeClass('collapsedSidebar');
 	},
 
 	/**
@@ -3061,14 +3057,7 @@ $.widget('ui.wcfSidebar', {
 		}
 		
 		this._visible = false;
-		this.element.parent('div').addClass('collapsedSidebar');
-		this._button.html('&raquo;');
-
-		/*
-		this.element.wcfBlindOut('horizontal',  $.proxy(function() {
-			this._button.html('&raquo;');
-		}, this));
-		*/
+		this._container.addClass('collapsedSidebar');
 	}
 });
 
