@@ -26,6 +26,12 @@ class Option extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'optionID';
 	
+	const VISIBILITY_NONE = 0;
+	const VISIBILITY_OWNER = 1;
+	const VISIBILITY_ADMINISTRATOR = 2;
+	const VISIBILITY_OTHER = 4;
+	const VISIBILITY_ALL = 7;
+	
 	/**
 	 * @see wcf\data\DatabaseObject::handleData()
 	 */
