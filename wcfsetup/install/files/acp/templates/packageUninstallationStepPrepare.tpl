@@ -1,4 +1,4 @@
-<div id="packageInstallationDialogContainer" class="border overlay">
+<div id="packageInstallationDialogContainer" class="overlay">
 	<header class="mainHeading">
 		<img src="{@RELATIVE_WCF_DIR}icon/working1.svg" alt="" />
 		<hgroup>
@@ -8,7 +8,7 @@
 		</hgroup>
 	</header>
 	
-	<div id="packageInstallationInnerContentContainer" class="" style="display: none;">
-		<div id="packageInstallationInnerContent" class=""></div>
+	<div id="packageInstallationInnerContentContainer" style="display: none;">
+		<div id="packageInstallationInnerContent"></div>
 	</div>
 </div>

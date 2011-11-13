@@ -976,6 +976,13 @@ footer.pageFooter nav.footerNavigation ul li {
 	padding-top: 5px;
 }
 
+.overlay .mainHeading > hgroup h1,
+.overlay .mainHeading > hgroup h1 a,
+.overlay .mainHeading > hgroup h2 {
+	text-shadow: 0 -1px 0 #000;
+	color: #fff;
+}
+
 .mainHeading > hgroup p {
 	padding-top: 3px;
 } 
