@@ -3311,9 +3311,11 @@ $.widget('ui.wcfAJAXDialog', $.ui.dialog, {
 	_createDialog: function(data) {
 		data.ignoreTemplate = true;
 		this.element.data('responseData', data);
+
+		// work-around for AJAXProxy's different return values
 		
 		this.element.wcfGrow({
-			content: data.template,
+			content: this._getResponseValue('template'),
 			parent: this.element.parent('.ui-dialog')
 		}, {
 			duration: 600,
@@ -3330,13 +3332,39 @@ $.widget('ui.wcfAJAXDialog', $.ui.dialog, {
 				this._callbackExecuted = true;
 				
 				this.element.removeClass('overlayLoading');
-				this.element.html(this.element.data('responseData').template);
+				this.element.html(this._getResponseValue('template'));
 				
 				if (this.options.ajax.success) {
 					this.options.ajax.success();
 				}
 			}, this)
 		});
+	},
+
+	/**
+	 * Returns specific AJAX response value.
+	 * 
+	 * @param	string		key
+	 * @return	mixed
+	 */
+	_getResponseValue: function(key) {
+		var $data = this.element.data('responseData');
+
+		// no response data stored
+		if (!$data) {
+			return null;
+		}
+
+		// AJAXProxy
+		if ($data.returnValues[key]) {
+			return $data.returnValues[key];
+		}
+		// PackageInstallation
+		else if ($data[key]) {
+			return $data[key];
+		}
+
+		return null;
 	},
 	
 	/**
