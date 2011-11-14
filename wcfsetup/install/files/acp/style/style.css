@@ -2301,6 +2301,16 @@ tr .columnTitle {
 	text-align: left;
 }
 
+tr .columnTopic img.boardFirstNew {
+	float: left;
+}
+
+tr .columnTopic small {
+	font-size: 85%;
+	margin-top: 7px;
+	display: inline-block;
+}
+
 tr .columnText {
 	font-weight: normal;
 	text-align: left;
