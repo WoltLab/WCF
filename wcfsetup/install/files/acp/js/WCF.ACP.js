@@ -75,9 +75,9 @@ WCF.ACP.Menu.prototype = {
 		if ($target.hasClass('activeMenuItem')) {
 			return;
 		}
-
+		
 		this._renderSidebar($target.data('menuItem'), []);
-
+		
 		// force sidebar to be displayed
 		this._sidebarNavigation.wcfSidebar('show');
 	},

@@ -1,6 +1,6 @@
-<div id="workerContainer">
+<div id="workerContainer" class="overlay">
 	<header class="mainHeading">
-		<img src="{@RELATIVE_WCF_DIR}icon/working1.svg" alt="" />
+		<img src="{@RELATIVE_WCF_DIR}icon/working2.svg" alt="" />
 		<hgroup>
 			<h1>Aufgaben werden ausgeführt &hellip;</h1>
 			<h2>Aktueller Schritt: <span id="workerAction">{lang}wcf.package.installation.step.prepare{/lang}</span></h2>
@@ -8,7 +8,7 @@
 		</hgroup>
 	</header>
 	
-	<div id="workerInnerContentContainer" class="" style="display: none;">
-		<div id="workerInnerContent" class=""></div>
+	<div id="workerInnerContentContainer" style="display: none;">
+		<div id="workerInnerContent"></div>
 	</div>
 </div>
