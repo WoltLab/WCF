@@ -3239,9 +3239,10 @@ $.widget('ui.wcfAJAXDialog', $.ui.dialog, {
 			effect: 'fade'
 		};
 		
-		this.options.close = function(event, ui) {
-			// loading ajax content seems to block properly closing
-			$(this).parent('.ui-dialog').empty().remove();
+		this.options.close = function() {
+			// "display: inline-block" is set by stylesheet, but additionally flagged
+			// with important, thus we have to force the dialog to stay hidden
+			$(this).parent('.ui-dialog').css({ display: 'none !important'});
 		};
 		
 		if (this.options.preventClose) {
