@@ -3339,19 +3339,51 @@ $.widget('ui.wcfAJAXDialog', $.ui.dialog, {
 });
 
 /**
- * Workaround for ids containing a dot ".", until jQuery UI devs learn
- * to properly escape ids ... (it took 18 months until they finally
- * fixed it!)
- * 
- * @see	http://bugs.jqueryui.com/ticket/4681
+ * Custom tab menu implementation for WCF.
  */
 $.widget('ui.wcfTabs', $.ui.tabs, {
-	_init: function() {
-		$.ui.dialog.prototype._init.apply(this, arguments);
-	},
-	
+	/**
+	 * Workaround for ids containing a dot ".", until jQuery UI devs learn
+	 * to properly escape ids ... (it took 18 months until they finally
+	 * fixed it!)
+	 * 
+	 * @see	http://bugs.jqueryui.com/ticket/4681
+	 * @see	$.ui.tabs.prototype._sanitizeSelector()
+	 */
 	_sanitizeSelector: function(hash) {
 		return hash.replace(/([:\.])/g, '\\$1');
+	},
+
+	/**
+	 * @see	$.ui.tabs.prototype.select()
+	 */
+	select: function(index) {
+		if (!$.isNumeric(index)) {
+			// panel identifier given
+			this.panels.each(function(i, panel) {
+				if ($(panel).wcfIdentify() === index) {
+					index = i;
+					return false;
+				}
+			});
+			
+			// unable to identify panel
+			if (!$.isNumeric(index)) {
+				console.debug("[ui.wcfTabs] Unable to find panel identified by '" + index + "', aborting.");
+				return;
+			}
+		}
+
+		$.ui.tabs.prototype.select.apply(this, arguments);
+	},
+
+	/**
+	 * Returns the currently selected tab index.
+	 * 
+	 * @return	integer
+	 */
+	getCurrentIndex: function() {
+		return this.lis.index(this.lis.filter('.ui-tabs-selected'))
 	}
 });
 
