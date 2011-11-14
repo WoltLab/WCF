@@ -152,7 +152,7 @@ header.pageHeader {
 	/* Disabled, because the WoltLab header-image is not LGPL 
 	Activate it if you want to test your own header image */
 	/* background-image: url('../images/header.png'); */
-	background-position: left top;
+	background-position: center top;
 	background-repeat: repeat-x;
 	background-attachment: fixed;
 	width: 100%;
@@ -244,7 +244,7 @@ nav.topMenu > div > ul > li:hover span.dropdownCaption a {
 	background-color: rgba(0, 0, 0, .7);
 }
 
-nav.topMenu > div > ul > li > span {
+nav.topMenu > div > ul > li > span:not(.badge) {
 	padding: 6px;
 }
 
@@ -782,8 +782,8 @@ aside.sidebar.collapsedSidebar .collapsibleSidebarButton {
 }
 
 aside.sidebar .collapsibleSidebarButton:hover {
-	cursor: pointer;
-	color: #999;	
+	color: #999;
+	cursor: pointer;	
 	border-right-color: rgba(0, 0, 0, .15);
 	border-left-color: rgba(0, 0, 0, .15);
 	background-color: rgba(0, 0, 0, .015);
@@ -807,7 +807,7 @@ aside.sidebar.collapsedSidebar nav {
 
 
 
-/* ############## Page Footer ##############  */
+/* ############## Page Footer ############## */
 
 /* Globals */
 
@@ -889,6 +889,83 @@ footer.pageFooter nav.footerNavigation ul li {
 	left: -9000px;
 	top: -9000px;
 	width: 0;
+}
+
+
+
+/* ############## Badges ############## */
+
+/* Globals */
+
+.badge {
+	font-size: 85%;
+	font-weight: bold;
+	text-shadow: none;
+	color: #666;
+	border-radius: 13px;
+	background-color: #fff;
+	margin-right: -3px;
+	margin-left: 3px;
+	padding: 2px 5px;
+	display: inline-block;
+	position: relative;
+	top: -1px;
+}
+
+/* Types */
+
+.badgeNote {
+	border: 1px solid #ccc;
+}
+
+.badgeInfo {
+	color: #68b;
+	border: 1px solid #9be;
+	background-color: #def;
+}
+
+.badgeSuccess {
+	color: #090;
+	border: 1px solid #0c0;
+	background-color: #efe;
+}
+
+.badgeWarning {
+	color: #990;
+	border: 1px solid #cc0;
+	background-color: #ffd;
+}
+
+.badgeError {
+	color: #c00;
+	border: 1px solid #f99;
+	background-color: #fee;
+}
+
+/* Buttons */
+
+.badgeButton,
+.clipboardEditor > ul > li {
+	cursor: pointer;
+	border-radius: 30px;
+	margin-right: 0;
+	margin-left: 0;
+	padding: 3px 10px 5px;
+	display: inline-block;
+}
+
+li.badgeButton,
+li > .badgeButton {
+	margin-top: 7px;
+	margin-right: 3px;
+	margin-left: 3px;
+	float: left;
+}
+
+.badgeButton,
+.badgeButton a,
+.clipboardEditor > ul > li > span {
+	text-decoration: none !important;
 }
 
 
@@ -2219,9 +2296,9 @@ tbody tr:hover td {
 	background-color: #d8e7f5;
 }
 
-/* ToDo: Table Specials */
+/* ToDo: Table Header Specials */
 
-/*
+/* Is that still in use? 
 .menu ~ .border {
 	border-top-left-radius: 0 !important;
 	border-top-right-radius: 0 !important;
@@ -2301,16 +2378,6 @@ tr .columnTitle {
 	text-align: left;
 }
 
-tr .columnTopic img.boardFirstNew {
-	float: left;
-}
-
-tr .columnTopic small {
-	font-size: 85%;
-	margin-top: 7px;
-	display: inline-block;
-}
-
 tr .columnText {
 	font-weight: normal;
 	text-align: left;
@@ -2329,6 +2396,36 @@ tr .columnURL {
 	font-size: 85%;
 	text-align: left;
 }
+
+/* Table Body Special */
+
+tbody tr .columnTopic img.boardFirstNew {
+	display: inline-block;
+	margin-right: 5px;
+}
+
+tbody tr .columnTopic > p {
+	font-size: 110%;
+	display: inline-block;
+}
+
+tbody tr .columnTopic small {
+	font-size: 85%;
+	margin-top: 7px;
+	display: inline-block;
+}
+
+/* ToDo */
+tbody tr .columnTopic > p .badge {
+	text-shadow: 0 -1px 0 #000;
+	color: rgb(255, 255, 255);
+	background-color: #369;
+}
+
+
+
+
+
 
 
 
@@ -2743,82 +2840,6 @@ div.ui-widget-overlay {
 	width: 100% !important;
 	top: 0;
 	left: 0;
-}
-
-
-
-/* ############## Badges ############## */
-
-/* Globals */
-
-.badge {
-	font-size: 85%;
-	text-shadow: none;
-	color: #666;
-	border-radius: 13px;
-	background-color: #fff;
-	margin-right: -3px;
-	margin-left: 3px;
-	padding: 2px 5px;
-	display: inline-block;
-	position: relative;
-	top: -1px;
-}
-
-/* Types */
-
-.badgeNote {
-	border: 1px solid #ccc;
-}
-
-.badgeInfo {
-	color: #68b;
-	border: 1px solid #9be;
-	background-color: #def;
-}
-
-.badgeSuccess {
-	color: #090;
-	border: 1px solid #0c0;
-	background-color: #efe;
-}
-
-.badgeWarning {
-	color: #990;
-	border: 1px solid #cc0;
-	background-color: #ffd;
-}
-
-.badgeError {
-	color: #c00;
-	border: 1px solid #f99;
-	background-color: #fee;
-}
-
-/* Buttons */
-
-.badgeButton,
-.clipboardEditor > ul > li {
-	cursor: pointer;
-	border-radius: 30px;
-	margin-right: 0;
-	margin-left: 0;
-	padding: 3px 10px 5px;
-	display: inline-block;
-}
-
-li.badgeButton,
-li > .badgeButton {
-	margin-top: 7px;
-	margin-right: 3px;
-	margin-left: 3px;
-	float: left;
-}
-
-.badgeButton,
-.badgeButton a,
-.clipboardEditor > ul > li > span {
-	text-decoration: none !important;
 }
 
 
