@@ -31,7 +31,8 @@ class NamedUserException extends UserException {
 			'file' => $this->getFile(),
 			'line' => $this->getLine(),
 			'message' => $this->_getMessage(),
-			'stacktrace' => $this->getTraceAsString()
+			'stacktrace' => $this->getTraceAsString(),
+			'templateName' => 'userException'
 		));
 		WCF::getTPL()->display('userException');
 	}
