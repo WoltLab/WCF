@@ -756,6 +756,7 @@ aside.sidebar .collapsibleSidebarButton {
 	right: -17px;
 	bottom: 0;
 	width: 15px;
+	height: 100%;
 	z-index: 500;
 	opacity: .3;
 	
@@ -773,7 +774,7 @@ aside.sidebar .collapsibleSidebarButton {
 	display: none;
 }
 
-aside.sidebar .collapsedSidebar .collapsibleSidebarButton {
+aside.sidebar.collapsedSidebar .collapsibleSidebarButton {
 	/*border-right: 1px solid transparent;
 	border-left: 1px solid transparent;*/
 	background-image: url('../../icon/arrowRight1.svg'), url('../../icon/arrowRight1.svg'), url('../../icon/arrowRight1.svg');
@@ -789,17 +790,16 @@ aside.sidebar .collapsibleSidebarButton:hover {
 	opacity: 1;
 }
 
-aside.sidebar .collapsedSidebar .collapsibleSidebarButton:hover {
+aside.sidebar.collapsedSidebar .collapsibleSidebarButton:hover {
 	border-right-color: rgba(0, 0, 0, .15);
 	border-left-color: transparent;
 }
 
-aside.sidebar .collapsedSidebar {
-	overflow: hidden;
+aside.sidebar.collapsedSidebar {
 	width: 0;
 }
 
-aside.sidebar .collapsedSidebar nav {
+aside.sidebar.collapsedSidebar nav {
 	overflow: hidden;
 	width: 0;
 	display: none;
@@ -974,6 +974,13 @@ footer.pageFooter nav.footerNavigation ul li {
 	font-weight: normal;
 	color: #999;
 	padding-top: 5px;
+}
+
+.overlay .mainHeading > hgroup h1,
+.overlay .mainHeading > hgroup h1 a,
+.overlay .mainHeading > hgroup h2 {
+	text-shadow: 0 -1px 0 #000;
+	color: #fff;
 }
 
 .mainHeading > hgroup p {
@@ -2292,6 +2299,16 @@ tr .columnIcon img {
 tr .columnTitle {
 	font-weight: bold;
 	text-align: left;
+}
+
+tr .columnTopic img.boardFirstNew {
+	float: left;
+}
+
+tr .columnTopic small {
+	font-size: 85%;
+	margin-top: 7px;
+	display: inline-block;
 }
 
 tr .columnText {
