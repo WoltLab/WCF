@@ -61,7 +61,7 @@
 				{content}
 					{foreach from=$users item=user}
 						<tr id="userRow{@$user->userID}">
-							<td class="columnMark"><input type="checkbox" class="clipboardItem" data-objectID="{@$user->userID}" /></td>
+							<td class="columnMark"><input type="checkbox" class="clipboardItem" data-object-id="{@$user->userID}" /></td>
 							<td class="columnIcon">
 								{if $user->editable}
 									<a href="{link controller='UserEdit' id=$user->userID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="balloonTooltip" /></a>
