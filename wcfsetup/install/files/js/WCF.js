@@ -6,6 +6,26 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
+(function() {
+	// store original implementation
+	var $jQueryData = jQuery.fn.data;
+
+	/**
+	 * Override jQuery.fn.data() to support custom 'ID' suffix which will
+	 * be translated to '-id' at runtime.
+	 * 
+	 * @see	jQuery.fn.data()
+	 */
+	jQuery.fn.data = function(key, value) {
+		if (key.indexOf('ID') > 0) {
+			arguments[0] = key.replace('ID', '-id');
+		}
+
+		// call jQuery's own data method
+		return $jQueryData.apply(this, arguments);
+	}
+})();
+
  /* Simple JavaScript Inheritance
  * By John Resig http://ejohn.org/
  * MIT Licensed.
@@ -3007,7 +3027,7 @@ $.widget('ui.wcfSidebar', {
 	 */
 	_create: function() {
 		this.element.wrap('<div class="collapsibleSidebar"></div>');
-		this._container = this.element.parents('aside:eq(0)');
+		this._container = this.element.parent('div');
 		
 		// create toggle button
 		this._button = $('<span class="collapsibleSidebarButton" title="' + WCF.Language.get('wcf.global.button.collapsible') + '"></span>').appendTo(this._container);
