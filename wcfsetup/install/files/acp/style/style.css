@@ -234,6 +234,7 @@ nav.topMenu > div > ul > li a {
 	text-decoration: none;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
 	color: #69c !important;
+	padding-right: 5px;
 	display: table-cell;
 }
 
@@ -2399,33 +2400,16 @@ tr .columnURL {
 
 /* Table Body Special */
 
-tbody tr .columnTopic img.boardFirstNew {
-	display: inline-block;
-	margin-right: 5px;
-}
-
 tbody tr .columnTopic > p {
 	font-size: 110%;
-	display: inline-block;
+	display: block;
 }
 
 tbody tr .columnTopic small {
 	font-size: 85%;
-	margin-top: 7px;
+	margin-top: 5px;
 	display: inline-block;
 }
-
-/* ToDo */
-tbody tr .columnTopic > p .badge {
-	text-shadow: 0 -1px 0 #000;
-	color: rgb(255, 255, 255);
-	background-color: #369;
-}
-
-
-
-
-
 
 
 
@@ -2795,11 +2779,6 @@ div#ajaxExceptionStacktrace {
 	font-weight: bold;
 	text-shadow: 0 -1px 0 #000;
 	color: rgba(255, 255, 255, 1);
-	background-image: url('../../icon/logIn2.svg');
-	background-position: left center;
-	background-size: 24px;
-	background-repeat: no-repeat;
-	padding-left: 35px;
 	display: block;
 }
 
@@ -3521,26 +3500,16 @@ div.scrollableContainer > div:first-child p {
 	cursor: pointer;
 	border: 1px solid rgba(192, 192, 192, 1) !important;
 	
-	background-image: -webkit-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
-	background-image: -moz-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
-	background-image: -ms-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
-	background-image: -o-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
-	background-image: linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
-	
 	padding: 3px;
 	display: inline-block;
 }
 
 .userNotificationDetails li:hover {
-	background-image: -webkit-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
-	background-image: -moz-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
-	background-image: -ms-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
-	background-image: -o-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
-	background-image: linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
+	
 }
 
 #userNotificationDetailsLoading {
-	background-color: rgba(255, 255, 255, .6);
+	background-color: rgba(255, 255, 255, .5);
 	background-image: url('{@RELATIVE_WCF_DIR}icon/spinner1.svg');
 	background-position: center center;
 	background-repeat: no-repeat;
