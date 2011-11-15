@@ -95,15 +95,15 @@ WCF.ACP.Menu.prototype = {
 		
 		if (activeMenuItems.length === 0) {
 			// show active menu
-			this._headerNavigation.find('li[data-menuItem="' + menuItem + '"]').addClass('activeMenuItem');
-			this._sidebarNavigation.find('div[data-parentMenuItem="' + menuItem + '"]').show();
+			this._headerNavigation.find('li[data-menu-item="' + menuItem + '"]').addClass('activeMenuItem');
+			this._sidebarNavigation.find('div[data-parent-menu-item="' + menuItem + '"]').show();
 		}
 		else {
 			// open menu by active menu items, first element is always a head navigation item
 			menuItem = activeMenuItems.shift();
 			
-			this._headerNavigation.find('li[data-menuItem="' + menuItem + '"]').addClass('activeMenuItem');
-			this._sidebarNavigation.find('div[data-parentMenuItem="' + menuItem + '"]').show();
+			this._headerNavigation.find('li[data-menu-item="' + menuItem + '"]').addClass('activeMenuItem');
+			this._sidebarNavigation.find('div[data-parent-menu-item="' + menuItem + '"]').show();
 			
 			for (var $i = 0, $size = activeMenuItems.length; $i < $size; $i++) {
 				var $item = activeMenuItems[$i];

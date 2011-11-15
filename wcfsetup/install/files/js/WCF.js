@@ -6,6 +6,26 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
+(function() {
+	// store original implementation
+	var $jQueryData = jQuery.fn.data;
+
+	/**
+	 * Override jQuery.fn.data() to support custom 'ID' suffix which will
+	 * be translated to '-id' at runtime.
+	 * 
+	 * @see	jQuery.fn.data()
+	 */
+	jQuery.fn.data = function(key, value) {
+		if (key.indexOf('ID') > 0) {
+			arguments[0] = key.replace('ID', '-id');
+		}
+
+		// call jQuery's own data method
+		return $jQueryData.apply(this, arguments);
+	}
+})();
+
  /* Simple JavaScript Inheritance
  * By John Resig http://ejohn.org/
  * MIT Licensed.
@@ -3007,7 +3027,7 @@ $.widget('ui.wcfSidebar', {
 	 */
 	_create: function() {
 		this.element.wrap('<div class="collapsibleSidebar"></div>');
-		this._container = this.element.parents('aside:eq(0)');
+		this._container = this.element.parent('div');
 		
 		// create toggle button
 		this._button = $('<span class="collapsibleSidebarButton" title="' + WCF.Language.get('wcf.global.button.collapsible') + '"></span>').appendTo(this._container);
@@ -3219,9 +3239,10 @@ $.widget('ui.wcfAJAXDialog', $.ui.dialog, {
 			effect: 'fade'
 		};
 		
-		this.options.close = function(event, ui) {
-			// loading ajax content seems to block properly closing
-			$(this).parent('.ui-dialog').empty().remove();
+		this.options.close = function() {
+			// "display: inline-block" is set by stylesheet, but additionally flagged
+			// with important, thus we have to force the dialog to stay hidden
+			$(this).parent('.ui-dialog').css({ display: 'none !important'});
 		};
 		
 		if (this.options.preventClose) {
@@ -3290,9 +3311,11 @@ $.widget('ui.wcfAJAXDialog', $.ui.dialog, {
 	_createDialog: function(data) {
 		data.ignoreTemplate = true;
 		this.element.data('responseData', data);
+
+		// work-around for AJAXProxy's different return values
 		
 		this.element.wcfGrow({
-			content: data.template,
+			content: this._getResponseValue('template'),
 			parent: this.element.parent('.ui-dialog')
 		}, {
 			duration: 600,
@@ -3309,13 +3332,39 @@ $.widget('ui.wcfAJAXDialog', $.ui.dialog, {
 				this._callbackExecuted = true;
 				
 				this.element.removeClass('overlayLoading');
-				this.element.html(this.element.data('responseData').template);
+				this.element.html(this._getResponseValue('template'));
 				
 				if (this.options.ajax.success) {
 					this.options.ajax.success();
 				}
 			}, this)
 		});
+	},
+
+	/**
+	 * Returns specific AJAX response value.
+	 * 
+	 * @param	string		key
+	 * @return	mixed
+	 */
+	_getResponseValue: function(key) {
+		var $data = this.element.data('responseData');
+
+		// no response data stored
+		if (!$data) {
+			return null;
+		}
+
+		// AJAXProxy
+		if ($data.returnValues && $data.returnValues[key]) {
+			return $data.returnValues[key];
+		}
+		// PackageInstallation
+		else if ($data[key]) {
+			return $data[key];
+		}
+
+		return null;
 	},
 	
 	/**

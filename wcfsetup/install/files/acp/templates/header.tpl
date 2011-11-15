@@ -121,7 +121,7 @@
 				{if PACKAGE_ID}
 					<ul>
 						{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=menuItem}
-							<li data-menuItem="{$menuItem->menuItem}"><a>{lang}{@$menuItem->menuItem}{/lang}</a></li>
+							<li data-menu-item="{$menuItem->menuItem}"><a>{lang}{@$menuItem->menuItem}{/lang}</a></li>
 						{/foreach}
 					</ul>
 				{/if}
@@ -151,18 +151,18 @@
 					{* work-around for unknown core-object during WCFSetup *}
 					{if PACKAGE_ID}
 						{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=parentMenuItem}
-							<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="menuContainer" data-parentMenuItem="{$parentMenuItem->menuItem}">
+							<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="menuContainer" data-parent-menu-item="{$parentMenuItem->menuItem}">
 								{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
-									<h1 class="menuHeader" data-menuItem="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</h1>
+									<h1 class="menuHeader" data-menu-item="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</h1>
 									<div class="sidebarMenuGroup">
 										<ul id="{$menuItem->menuItem}">
 											{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItem->menuItem) item=menuItemCategory}
 												{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
 													{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem) item=subMenuItem}
-														<li id="{$subMenuItem->menuItem}" data-menuItem="{$subMenuItem->menuItem}"><a href="{$subMenuItem->getLink()}">{lang}{$subMenuItem->menuItem}{/lang}</a></li>
+														<li id="{$subMenuItem->menuItem}" data-menu-item="{$subMenuItem->menuItem}"><a href="{$subMenuItem->getLink()}">{lang}{$subMenuItem->menuItem}{/lang}</a></li>
 													{/foreach}
 												{else}
-													<li id="{$menuItemCategory->menuItem}" data-menuItem="{$menuItemCategory->menuItem}"><a href="{$menuItemCategory->getLink()}">{lang}{$menuItemCategory->menuItem}{/lang}</a></li>
+													<li id="{$menuItemCategory->menuItem}" data-menu-item="{$menuItemCategory->menuItem}"><a href="{$menuItemCategory->getLink()}">{lang}{$menuItemCategory->menuItem}{/lang}</a></li>
 												{/if}
 											{/foreach}
 										</ul>

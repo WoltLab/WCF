@@ -72,13 +72,13 @@
 						<tr class="cronjobRow">
 							<td class="columnIcon">
 								{if $__wcf->session->getPermission('admin.system.cronjob.canEditCronjob')}
-									<img src="{@RELATIVE_WCF_DIR}icon/run1.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" class="executeButton balloonTooltip" data-objectID="{@$cronjob->cronjobID}" />
+									<img src="{@RELATIVE_WCF_DIR}icon/run1.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" class="executeButton balloonTooltip" data-object-id="{@$cronjob->cronjobID}" />
 								{else}
 									<img src="{@RELATIVE_WCF_DIR}icon/run1D.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" />
 								{/if}
 						
 								{if $cronjob->canBeDisabled()}
-									<img src="{@RELATIVE_WCF_DIR}icon/{if $cronjob->active}enabled{else}disabled{/if}1.svg" alt="" title="{lang}wcf.global.button.{if $cronjob->active}disable{else}enable{/if}{/lang}" class="toggleButton balloonTooltip" data-objectID="{@$cronjob->cronjobID}" data-disableMessage="{lang}wcf.global.button.disable{/lang}" data-enableMessage="{lang}wcf.global.button.enable{/lang}" />
+									<img src="{@RELATIVE_WCF_DIR}icon/{if $cronjob->active}enabled{else}disabled{/if}1.svg" alt="" title="{lang}wcf.global.button.{if $cronjob->active}disable{else}enable{/if}{/lang}" class="toggleButton balloonTooltip" data-object-id="{@$cronjob->cronjobID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
 								{else}
 									{if $cronjob->active}
 										<img src="{@RELATIVE_WCF_DIR}icon/enabled1D.svg" alt="" title="{lang}wcf.global.button.disable{/lang}" />
@@ -93,7 +93,7 @@
 									<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" />
 								{/if}
 								{if $cronjob->isDeletable()}
-									<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="deleteButton balloonTooltip" data-objectID="{@$cronjob->cronjobID}" data-confirmMessage="{lang}wcf.acp.cronjob.delete.sure{/lang}" />
+									<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="deleteButton balloonTooltip" data-object-id="{@$cronjob->cronjobID}" data-confirm-message="{lang}wcf.acp.cronjob.delete.sure{/lang}" />
 								{else}
 									<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" />
 								{/if}
