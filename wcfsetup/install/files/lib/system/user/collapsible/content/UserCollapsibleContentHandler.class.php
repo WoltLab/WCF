@@ -179,4 +179,34 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 			WCF::getSession()->register('collapsedContent', $collapsedContent);
 		}
 	}
+	
+	/**
+	 * Deletes all saved states for a specific object type.
+	 * 
+	 * @param	integer		$objectTypeID
+	 */
+	public function reset($objectTypeID) {
+		if (WCF::getUser()->userID) {
+			$sql = "DELETE FROM	wcf".WCF_N."_user_collapsible_content
+				WHERE		objectTypeID = ?
+						AND userID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array(
+				$objectTypeID,
+				WCF::getUser()->userID
+			));
+		}
+		else {
+			$collapsedContent = WCF::getSession()->getVar('collapsedContent');
+			if ($collapsedContent === null || !is_array($collapsedContent)) {
+				$collapsedContent = array();
+			}
+			
+			if (isset($collapsedContent[$objectTypeID])) {
+				unset($collapsedContent[$objectTypeID]);
+			}
+			
+			WCF::getSession()->register('collapsedContent', $collapsedContent);
+		}
+	}
 }

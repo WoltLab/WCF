@@ -2720,6 +2720,7 @@ div#ajaxExceptionStacktrace {
 	background-color: #fff;
 	background-image: url('../../icon/spinner1.svg');
 	background-position: center center;
+	background-size: 32px;
 	background-repeat: no-repeat;
 }
 
@@ -3523,7 +3524,7 @@ div.scrollableContainer > div:first-child p {
 
 
 
-/* ############## Package List ############## */
+/* ############## ACP Package List ############## */
 
 /* -- -- -- Package Standalone -- -- -- */
 
