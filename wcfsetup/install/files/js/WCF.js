@@ -3027,7 +3027,7 @@ $.widget('ui.wcfSidebar', {
 	 */
 	_create: function() {
 		this.element.wrap('<div class="collapsibleSidebar"></div>');
-		this._container = this.element.parent('div');
+		this._container = this.element.parents('aside:eq(0)');
 		
 		// create toggle button
 		this._button = $('<span class="collapsibleSidebarButton" title="' + WCF.Language.get('wcf.global.button.collapsible') + '"></span>').appendTo(this._container);
