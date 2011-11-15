@@ -42,17 +42,13 @@ class LabelFormElement extends AbstractFormElement {
 	 */
 	public function getHTML($formName) {
 		return <<<HTML
-<div class="formElement">
-	<div class="formFieldLabel">
-		<label>{$this->getLabel()}</label>
-	</div>
-	<div class="formField">
+<dl>
+	<dt><label>{$this->getLabel()}</label></dt>
+	<dd>
 		{$this->getText()}
-	</div>
-	<div class="formFieldDesc">
-		<p>{$this->getDescription()}</p>
-	</div>
-</div>
+		<small>{$this->getDescription()}</small>
+	</dd>
+</dl>
 HTML;
 	}
 }

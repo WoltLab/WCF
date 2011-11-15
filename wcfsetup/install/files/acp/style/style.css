@@ -492,7 +492,7 @@ nav.mainMenu ul li.activeMenuItem .badge {
 
 
 
-/* -- -- -- Header Navigation -- -- -- */
+/* -- -- -- Header/Footer Navigation -- -- -- */
 
 nav.headerNavigation {
 	background-color: #e7f2fd;
@@ -527,7 +527,7 @@ nav.headerNavigation:after {
 }
 
 nav.headerNavigation > div {
-	padding: 3px 7px;
+	padding: 0 7px;
 }
 
 nav.headerNavigation > div:after {
@@ -540,11 +540,26 @@ nav.headerNavigation ul {
 	display: block;
 }
 
-nav.headerNavigation ul li {
+nav.headerNavigation ul li,
+footer.pageFooter nav.footerNavigation ul li {
+	cursor: pointer;
+	margin: 0 3px;
 	float: right;
 }
 
-#tplLogin header.pageHeader nav.headerNavigation ul li.toBottomLink {
+nav.headerNavigation ul li a,
+footer.pageFooter nav.footerNavigation ul li a {
+	padding: 3px;
+	display: inline-block;
+}
+
+nav.headerNavigation ul li a:hover,
+footer.pageFooter nav.footerNavigation ul li a:hover {
+	background-color: #d8e7f5;
+}
+
+#tplLogin header.pageHeader nav.headerNavigation ul li.toBottomLink,
+#tplLogin footer.pageFooter nav.footerNavigation ul li.toTopLink {
 	/* Removes the to-bottom-link on the log-in page */
 	position: absolute;
 	left: -9000px;
@@ -846,7 +861,7 @@ footer.pageFooter > div {
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
 	background-color: #e7f2fd;
-	padding: 3px 7px;
+	padding: 0 7px;
 	clear: both;
 }
 
@@ -873,23 +888,6 @@ footer.pageFooter .copyright a {
 footer.pageFooter .copyright a:hover {
 	text-decoration: none;
 	color: #69c;
-}
-
-
-
-/* -- -- -- Footer Navigation -- -- -- */
-
-footer.pageFooter nav.footerNavigation ul li {
-	display: inline-block;
-	float: right;
-}
-
-#tplLogin footer.pageFooter nav.footerNavigation ul li.toTopLink {
-	/* Removes the to-top-link on the log-in page */
-	position: absolute;
-	left: -9000px;
-	top: -9000px;
-	width: 0;
 }
 
 
@@ -988,6 +986,10 @@ li > .badgeButton {
 
 .mainHeading:not(:first-of-type) {
 	margin-top: 30px;
+}
+
+.ui-dialog .mainHeading {
+	margin-top: 0;
 }
 
 .mainHeading > img {
@@ -2645,8 +2647,12 @@ div#ajaxExceptionStacktrace {
 }
 
 div#packageInstallationInnerContentContainer {
-	margin-top: 20px;
 	padding-top: 15px;
+}
+
+div#packageInstallationInnerContentContainer fieldset {
+	border-color: #666;
+	background-color: rgba(0, 0, 0, .1);
 }
 
 div#packageInstallationInnerContent p.error {
@@ -2762,6 +2768,8 @@ div#ajaxExceptionStacktrace {
 	
 }
 
+/* Dialog Titlebar */
+
 .ui-dialog-titlebar {
 	border-top-left-radius: 7px;
 	border-top-right-radius: 7px;
@@ -2803,12 +2811,22 @@ a.ui-dialog-titlebar-close span {
 	width: 0;
 }
 
+/* Dialog Content */
+
 .ui-dialog-content {
-	border-bottom-left-radius: 7px;
-	border-bottom-right-radius: 7px;
 	background-color: #333;
 	padding-top: 7px;
-	padding-bottom: 20px;
+}
+
+.ui-dialog > .ui-dialog-content {
+	border-radius: 7px;
+}
+
+.ui-dialog-titlebar ~ .ui-dialog-content {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
 }
 
 

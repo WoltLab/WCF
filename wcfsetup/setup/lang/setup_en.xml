@@ -3,7 +3,7 @@
 	<category name="wcf.global">
 		<item name="wcf.global.pageTitle"><![CDATA[{$setupPackageName} installation]]></item>
 		<item name="wcf.global.title"><![CDATA[{$setupPackageName}]]></item>
-		<item name="wcf.global.title.subtitle"><![CDATA[Installation]]></item>
+		<item name="wcf.global.title.subtitle"><![CDATA[Prepairing installation]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.locale.unix"><![CDATA[en_US]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.locale.win"><![CDATA[english]]></item> <!-- system variable; do not translate -->

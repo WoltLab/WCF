@@ -196,21 +196,8 @@ class WCFSetup extends WCF {
 	 * @param	integer		$currentStep
 	 */
 	protected function calcProgress($currentStep) {
-		// count delivered packages
-		$packages = 1; // one for wcf setup
-		$tar = new Tar(SETUP_FILE);
-		foreach ($tar->getContentList() as $file) {
-			if ($file['type'] != 'folder' && StringUtil::indexOf($file['filename'], 'install/packages/') === 0) {
-				$packages++;
-			}
-		}
-		$tar->close();
-		
-		// calculate part of total install
-		$part = 100 / $packages;
-		
 		// calculate progress
-		$progress = round($part / 11 * $currentStep, 0);
+		$progress = round((100 / 12) * ++$currentStep, 0);
 		self::getTPL()->assign(array('progress' => $progress));
 	}
 	
