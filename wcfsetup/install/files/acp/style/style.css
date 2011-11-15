@@ -990,6 +990,10 @@ li > .badgeButton {
 	margin-top: 30px;
 }
 
+.overlay .mainHeading:not(:first-of-type) {
+	margin-top: 0;
+}
+
 .mainHeading > img {
 	float: left;
 }
@@ -2645,8 +2649,11 @@ div#ajaxExceptionStacktrace {
 }
 
 div#packageInstallationInnerContentContainer {
-	margin-top: 20px;
 	padding-top: 15px;
+}
+
+div#packageInstallationInnerContentContainer fieldset {
+	border-color: #000;
 }
 
 div#packageInstallationInnerContent p.error {
@@ -2808,7 +2815,6 @@ a.ui-dialog-titlebar-close span {
 	border-bottom-right-radius: 7px;
 	background-color: #333;
 	padding-top: 7px;
-	padding-bottom: 20px;
 }
 
 
