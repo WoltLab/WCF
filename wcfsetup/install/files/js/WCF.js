@@ -3356,7 +3356,7 @@ $.widget('ui.wcfAJAXDialog', $.ui.dialog, {
 		}
 
 		// AJAXProxy
-		if ($data.returnValues[key]) {
+		if ($data.returnValues && $data.returnValues[key]) {
 			return $data.returnValues[key];
 		}
 		// PackageInstallation
