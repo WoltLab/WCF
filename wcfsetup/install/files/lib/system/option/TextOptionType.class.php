@@ -25,12 +25,19 @@ class TextOptionType extends AbstractOptionType implements ISearchableUserOption
 	protected $inputType = 'text';
 	
 	/**
+	 * input css class
+	 * @var string
+	 */
+	protected $inputClass = 'long';
+	
+	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		WCF::getTPL()->assign(array(
 			'option' => $option,
 			'inputType' => $this->inputType,
+			'inputClass' => $this->inputClass,
 			'value' => $value
 		));
 		return WCF::getTPL()->fetch('optionTypeText');

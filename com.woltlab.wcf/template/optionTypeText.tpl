@@ -1,1 +1,1 @@
-<input id="{$optionData.optionName}" type="{@$inputType}" class="inputText" name="values[{$optionData.optionName}]" value="{$optionData.optionValue}" />
+<input type="{@$inputType}" id="{$option->optionName}" name="values[{$option->optionName}]" value="{$value}"{if $inputClass} class="{@$inputClass}"{/if} />

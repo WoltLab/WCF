@@ -1,10 +1,8 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
-use wcf\system\WCF;
-use wcf\util\DateUtil;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 
 /**
  * DateOptionType is an implementation of IOptionType for date inputs.
@@ -16,127 +14,29 @@ use wcf\util\DateUtil;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class DateOptionType extends AbstractOptionType implements ISearchableUserOption {
-	protected $yearRequired = true;
+class DateOptionType extends TextOptionType {
+	/**
+	 * @see wcf\system\option\TextOptionType::$inputType
+	 */
+	protected $inputType = 'date';
+	
+	/**
+	 * @see wcf\system\option\TextOptionType::$inputClass
+	 */
+	protected $inputClass = '';
 	
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
-	public function getFormElement(array &$optionData) {
-		if (!isset($optionData['optionValue'])) {
-			if (isset($optionData['defaultValue'])) $optionData['optionValue'] = $optionData['defaultValue'];
-			else $optionData['optionValue'] = '';
-		}
-		$optionData['isOptionGroup'] = true;
-		$optionData['divClass'] = 'formDate';
+	public function validate(Option $option, $newValue) {
+		if (empty($newValue)) return;
 		
-		$year = $month = $day = '';
-		$optionValue = explode('-', (is_array($optionData['optionValue']) ? implode('-', $optionData['optionValue']) : $optionData['optionValue']));
-		if (isset($optionValue[0])) $year = intval($optionValue[0]);
-		if (empty($year)) $year = '';
-		if (isset($optionValue[1])) $month = $optionValue[1];
-		if (isset($optionValue[2])) $day = $optionValue[2];
-		$dateInputOrder = explode('-', WCF::getLanguage()->get('wcf.global.dateInputOrder'));
-		
-		// generate days
-		$days = array();
-		$days[0] = '';
-		for ($i = 1; $i < 32; $i++) {
-			$days[$i] = $i;		
+		if (!preg_match('^(\d{4})-(\d{2})-(\d{2})$', $newValue, $match)) {
+			throw new UserInputException($option->optionName, 'validationFailed');
 		}
 		
-		// generate months
-		$months = array();
-		$months[0] = '';
-		// TODO: $dateFormatLocalized is no longer available, fix this!
-		$monthFormat = (Language::$dateFormatLocalized ? '%B' : '%m');
-		for ($i = 1; $i < 13; $i++) {
-			$months[$i] = DateUtil::formatDate($monthFormat, gmmktime(0, 0, 0, $i, 10, 2006), false, true);
+		if (!checkdate(intval($match[2]), intval($match[3]), intval($match[1]))) {
+			throw new UserInputException($option->optionName, 'validationFailed');
 		}
-		
-		WCF::getTPL()->assign(array(
-			'year' => $year,
-			'month' => $month,
-			'day' => $day,
-			'days' => $days,
-			'months' => $months,
-			'optionData' => $optionData,
-			'dateInputOrder' => $dateInputOrder,
-			'yearRequired' => $this->yearRequired
-		));
-		return WCF::getTPL()->fetch('optionTypeDate');
-	}
-	
-	/**
-	 * Formats the user input.
-	 * 
-	 * @param	array		$newValue
-	 */
-	protected function getValue(array &$newValue) {
-		if (isset($newValue['year'])) $newValue['year'] = intval($newValue['year']);
-		else $newValue['year'] = 0;
-		if (isset($newValue['month'])) $newValue['month'] = intval($newValue['month']);
-		else $newValue['month'] = 0;
-		if (isset($newValue['day'])) $newValue['day'] = intval($newValue['day']);
-		else $newValue['day'] = 0;
-	}
-	
-	/**
-	 * @see wcf\system\option\IOptionType::validate()
-	 */
-	public function validate(array $optionData, $newValue) {
-		$this->getValue($newValue);
-		
-		if ($newValue['year'] || $newValue['month'] || $newValue['day']) {
-			if (strlen($newValue['year']) == 2) {
-				$newValue['year'] = '19'.$newValue['year'];
-			}
-			
-			if (!checkdate(intval($newValue['month']), intval($newValue['day']), ((!$this->yearRequired && !$newValue['year']) ? 2000 : intval($newValue['year'])))) {
-				throw new UserInputException($optionData['optionName'], 'validationFailed');
-			}
-			if (($newValue['year'] || $this->yearRequired) && ((strlen($newValue['year']) != 4 && strlen($newValue['year']) != 2) || $newValue['year'] < 1902)) {
-				throw new UserInputException($optionData['optionName'], 'validationFailed');
-			}
-		}
-	}
-	
-	/**
-	 * @see wcf\system\option\IOptionType::getData()
-	 */
-	public function getData(array $optionData, $newValue) {
-		$this->getValue($newValue);
-		
-		if ($newValue['year'] || $newValue['month'] || $newValue['day']) {
-			if ($newValue['month'] < 10) $newValue['month'] = '0'.$newValue['month'];
-			if ($newValue['day'] < 10) $newValue['day'] = '0'.$newValue['day'];
-			if (strlen($newValue['year']) == 2) {
-				$newValue['year'] = '19'.$newValue['year'];
-			}
-			if (!$this->yearRequired && strlen($newValue['year']) < 2) {
-				$newValue['year'] = '0000';
-			}
-			return $newValue['year'].'-'.$newValue['month'].'-'.$newValue['day'];
-		}
-		
-		return '';
-	}
-	
-	/**
-	 * @see wcf\system\option\ISearchableUserOption::getSearchFormElement()
-	 */
-	public function getSearchFormElement(array &$optionData) {
-		return $this->getFormElement($optionData);
-	}
-	
-	/**
-	 * @see wcf\system\option\ISearchableUserOption::getCondition()
-	 */
-	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
-		$value = $this->getData($optionData, $value);
-		if ($value == '') return false;
-		
-		$conditions->add("option_value.userOption".$option->optionID." = ?", array($value));
-		return true;
 	}
 }
