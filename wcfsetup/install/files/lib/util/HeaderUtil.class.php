@@ -101,4 +101,21 @@ class HeaderUtil {
 		if ($sendStatusCode) @header('HTTP/1.1 307 Temporary Redirect');
 		header('Location: '.$location);
 	}
+	
+	/**
+	 * Does a delayed redirect.
+	 *
+	 * @param	string		$location
+	 * @param 	string		$message
+	 * @param	integer		$delay
+	 */
+	public static function delayedRedirect($location, $message, $delay = 5) {
+		WCF::getTPL()->assign(array(
+			'url' => $location,
+			'message' => $message,
+			'wait' => $delay,
+			'templateName' => 'redirect'
+		));
+		WCF::getTPL()->display('redirect');
+	}
 }

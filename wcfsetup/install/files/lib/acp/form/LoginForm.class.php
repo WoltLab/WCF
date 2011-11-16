@@ -95,12 +95,13 @@ class LoginForm extends AbstractForm {
 						$this->user = EmailUserAuthentication::getInstance()->loginManually($this->username, $this->password);
 					}
 					catch (UserInputException $e2) {
-						if ($e->getField() == 'username') throw $e;
+						if ($e2->getField() == 'username') throw $e;
 						throw $e2;
 					}
 				}
-				
-				throw $e;
+				else {
+					throw $e;
+				}
 			}
 			else {
 				throw $e;
