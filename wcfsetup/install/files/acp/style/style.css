@@ -222,11 +222,13 @@ header.pageHeader nav.topMenu > div {
 
 header.pageHeader nav.topMenu > div > ul {
 	position: relative;
-	display: table;
 }
 
 header.pageHeader nav.topMenu > div > ul > li {
 	cursor: pointer;
+	padding-right: 5px;
+	float: left;
+	position: relative;
 }
 
 
@@ -238,8 +240,6 @@ nav.topMenu > div > ul > li a {
 	text-decoration: none;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
 	color: #69c;
-	padding-right: 5px;
-	display: table-cell;
 }
 
 nav.topMenu > div > ul > li:hover .dropdownCaption,
@@ -271,7 +271,7 @@ nav.topMenu ul li .dropdownCaption {
 	background-position: 97% center;
 	background-repeat: no-repeat;
 	padding-right: 15px !important;
-	display: table-cell;
+	display: inline-block;
 }
 
 
@@ -287,7 +287,6 @@ nav.topMenu ul li:hover .dropdownCaption ~ .dropdown {
 
 nav.topMenu ul li {
 	white-space: nowrap;
-	position: relative;
 }
 
 nav.topMenu ul li .dropdown {
@@ -2713,38 +2712,6 @@ div#ajaxExceptionStacktrace {
 
 
 
-/* ############## ToDo ############## */
-
-#actionProxyLoading {
-	border: 1px solid #f80;
-	border-top-width: 0;
-	border-radius: 0 0 5px 5px;
-	background-color: #faebd7;
-	padding: 7px 21px 7px;
-	position: fixed;
-	top: 0;
-	right: 20px;
-	z-index: 1000;
-}
-
-@media screen and (min-width: 480px), screen and (min-device-width: 480px) {
-	
-	#actionProxyLoading img {
-		height: 24px;
-		width: 24px;
-	}
-	
-}
-
-@media screen and (max-width: 480px), screen and (max-device-width: 480px) {
-	
-	#actionProxyLoading img {
-		height: 32px;
-		width: 32px;
-	}
-	
-}
-
 
 
 
@@ -2812,7 +2779,9 @@ div#ajaxExceptionStacktrace {
 	border-top-left-radius: 7px;
 	border-top-right-radius: 7px;
 	background-color: #29374a;
-	background-image: url('../images/header.png');
+	/* Disabled, because the WoltLab header-image is not LGPL 
+	Activate it if you want to test your own header image */
+	/* background-image: url('../images/header.png'); */
 	background-position: left top;
 	background-repeat: repeat-x;
 	margin-bottom: 1px;
@@ -3419,22 +3388,6 @@ input[type='button'][disabled='disabled'],
 
 
 
-
-
-
-/* ToDo: Proxy Loading */
-
-.actionProxyLoading {
-	
-}
-
-
-
-
-
-
-
-
 /* ToDo: User Panel 
 
 this is taken from "userPanel.tpl" (inline-css) 
@@ -3812,10 +3765,6 @@ will change soon!
 
 */
 
-
-
-
-
 div#profileButtonContainer {
 	margin: 7px;
 }
@@ -3844,7 +3793,36 @@ div#profileButtonContainer button:hover {
 	background-image: linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
 }
 
+/* ############## ToDo ############## */
 
+#actionProxyLoading {
+	text-align: center;
+	color: #fff;
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgba(0, 0, 0, .3);
+	border-radius: 5px;
+	background-color: rgba(0, 0, 0, .7);
+	padding: 7px 0;
+	position: fixed;
+	top: 200px;
+	left: 46%;
+	right: 46%;
+	width: 8%;
+	z-index: 1000;
+	
+	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-ms-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+}
+
+#actionProxyLoading img {
+	margin-bottom: 10px;
+	height: 48px;
+	width: 48px;
+}
 
 
 
