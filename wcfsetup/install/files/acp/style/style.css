@@ -225,6 +225,10 @@ header.pageHeader nav.topMenu > div > ul {
 	display: table;
 }
 
+header.pageHeader nav.topMenu > div > ul > li {
+	cursor: pointer;
+}
+
 
 
 /* ToDo: Top-Menu Dropdown Caption */
@@ -233,16 +237,28 @@ nav.topMenu > div > ul > li,
 nav.topMenu > div > ul > li a {
 	text-decoration: none;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
-	color: #69c !important;
+	color: #69c;
 	padding-right: 5px;
 	display: table-cell;
 }
 
-nav.topMenu > div > ul > li:hover span.dropdownCaption,
-nav.topMenu > div > ul > li:hover span.dropdownCaption a {
+nav.topMenu > div > ul > li:hover .dropdownCaption,
+nav.topMenu > div > ul > li:hover .dropdownCaption a {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
-	color: #fff !important;
+	color: #fff;
 	background-color: rgba(0, 0, 0, .7);
+}
+
+nav.topMenu > div > ul > li > .dropdownCaption > .badge,
+nav.topMenu > div > ul > li:hover > .dropdownCaption > .badge {
+	font-size: 75%;
+	color: #369 !important;
+	margin: -3px 3px;
+	padding: 1px 3px;
+}
+
+nav.topMenu > div > ul > li > .dropdownCaption > img {
+	margin: -7px 0 -5px 0;
 }
 
 nav.topMenu > div > ul > li > span:not(.badge) {
@@ -263,8 +279,15 @@ nav.topMenu ul li .dropdownCaption {
 /* ToDo: Top-Menu Dropdown Tweaks */
 
 /* Auto-Opening Dropdowns */
-nav.topMenu ul:hover .dropdownCaption ~ .dropdown {
-	display: block !important;
+nav.topMenu ul li:hover .dropdownCaption ~ .dropdown {
+	border-color: rgba(255, 255, 255, .5);
+	background-color: rgba(0, 0, 0, .7);
+	height: 100% !important;
+}
+
+nav.topMenu ul li {
+	white-space: nowrap;
+	position: relative;
 }
 
 nav.topMenu ul li .dropdown {
@@ -272,15 +295,16 @@ nav.topMenu ul li .dropdown {
 	border-radius: 0 0 5px 5px;
 }
 
-nav.topMenu ul li .dropdown > li:first-child {
+nav.topMenu ul li .dropdown > :first-child {
 	border-top-width: 0;
 }
 
 
 
 /* ToDo: Login Box */
+
 /* Do not use the class ".loginBox" to style the box! */
-/* Note that the login-box is subject to changes */
+/* Note that the login-box is still subject to changes */
 
 #loginBox dl {
 	margin-right: 20px;
@@ -536,25 +560,26 @@ nav.headerNavigation > div:after {
 	clear: both;
 }
 
-nav.headerNavigation ul {
+nav.headerNavigation ul,
+nav.footerNavigation ul {
 	display: block;
 }
 
 nav.headerNavigation ul li,
-footer.pageFooter nav.footerNavigation ul li {
+nav.footerNavigation ul li {
 	cursor: pointer;
 	margin: 0 3px;
 	float: right;
 }
 
 nav.headerNavigation ul li a,
-footer.pageFooter nav.footerNavigation ul li a {
+nav.footerNavigation ul li a {
 	padding: 3px;
 	display: inline-block;
 }
 
 nav.headerNavigation ul li a:hover,
-footer.pageFooter nav.footerNavigation ul li a:hover {
+nav.footerNavigation ul li a:hover {
 	background-color: #d8e7f5;
 }
 
@@ -900,7 +925,6 @@ footer.pageFooter .copyright a:hover {
 	font-size: 85%;
 	font-weight: bold;
 	text-shadow: none;
-	color: #666;
 	border-radius: 13px;
 	background-color: #fff;
 	margin-right: -3px;
@@ -965,6 +989,88 @@ li > .badgeButton {
 .badgeButton a,
 .clipboardEditor > ul > li > span {
 	text-decoration: none !important;
+}
+
+
+
+/* ############## ToDo: Dropdown Global ############## */
+
+.dropdown {
+	color: #fff;
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+	border-color: rgba(255, 255, 255, 0);
+	border-radius: 5;
+	background-color: rgba(0, 0, 0, 0);
+	margin-top: 25px;
+	height: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 500;
+	overflow: hidden;
+	
+	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-ms-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	
+	-webkit-transition: all .1s ease;
+	-moz-transition: all .1s ease;
+	-ms-transition: all .1s ease;
+	-o-transition: all .1s ease;
+	transition: all .1s ease;
+	
+	-webkit-transition-delay: .2s;
+	-moz-transition-delay: .2s;
+	-ms-transition-delay: .2s;
+	-o-transition-delay: .2s;
+	transition-delay: .2s;
+}
+
+/* Dropdown Items */
+
+.dropdown > li,
+.dropdown > div {
+	text-shadow: none;
+	color: #ccc;
+	cursor: pointer; 
+	padding: 5px 7px;
+	
+	-webkit-transition: all .1s linear;
+	-moz-transition: all .1s linear;
+	-ms-transition: all .1s linear;
+	-o-transition: all .1s linear;
+	transition: all .1s linear;
+}
+
+.dropdown > li:first-child {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.dropdown > li:last-child {
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.dropdown > :hover,
+.dropdown > .active {
+	color: #fff;
+	background-color: rgba(0, 0, 0, .5);
+}
+
+.dropdown > li.divider:not(:first-child) {
+	border-top: 1px solid rgba(255, 255, 255, .7);
+}
+
+.dropdown > li a {
+	text-decoration: none;
+}
+
+.dropdown > li a:hover {
+	color: #fff !important;
 }
 
 
@@ -1542,74 +1648,6 @@ textarea[disabled='disabled'] {
 	background-position: right center;
 	background-repeat: no-repeat;
 	padding-right: 10px;
-}
-
-
-
-/* ############## ToDo: Dropdown Global ############## */
-
-.dropdown {
-	color: #fff;
-	border-width: 1px;
-	border-style: solid;
-	border-color: rgba(255, 255, 255, .7);
-	border-radius: 5px;
-	background-color: rgba(0, 0, 0, .7);
-	margin-top: 25px;
-	display: none;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 500;
-	
-	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-ms-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-}
-
-/* Dropdown Items */
-
-.dropdown > li {
-	text-shadow: none;
-	color: #ccc;
-	cursor: pointer; 
-	padding: 5px 7px;
-	
-	-webkit-transition: all .1s linear;
-	-moz-transition: all .1s linear;
-	-ms-transition: all .1s linear;
-	-o-transition: all .1s linear;
-	transition: all .1s linear;
-}
-
-.dropdown > li:first-child {
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-}
-
-.dropdown > li:last-child {
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-}
-
-.dropdown > li:hover,
-.dropdown > li.active {
-	color: #fff;
-	background-color: rgba(0, 0, 0, .5);
-}
-
-.dropdown > li.divider:not(:first-child) {
-	border-top: 1px solid rgba(255, 255, 255, .7);
-}
-
-.dropdown > li a {
-	text-decoration: none;
-}
-
-.dropdown > li a:hover {
-	color: #fff !important;
 }
 
 .preInput .dropdown > li.missingValue { /* ToDo */
@@ -3412,52 +3450,50 @@ will change soon!
 
 /* ToDo: User Notifications */
 
-div.userNotificationContainer {
-	border: 1px solid rgba(192, 192, 192, 1);
-	background-color: rgba(224, 224, 224, .9);
-	position: absolute;
-	width: 250px;
-	z-index: 501;	/* adjust to any value you like, it *MUST* be higher than 'header.pageHeader nav.topMenu' */
+.userNotificationContainer {
+	width: 240px;
+	z-index: 510;	/* adjust to any value you like, it *MUST* be higher than 'header.pageHeader nav.topMenu' */
+	overflow: hidden;
 }
 
-div.scrollableContainer {
+.scrollableContainer {
 	position: relative;
 	width: 250px;
 	overflow: hidden;
 }
 
-div.scrollableContainer div.scrollableItems {
+.scrollableContainer .scrollableItems {
 	position: relative;
 	width: 20000em;
 }
 
-div.scrollableContainer div.scrollableItems > div {
+.scrollableContainer .scrollableItems > div {
 	border-right: 1px solid rgba(192, 192, 192, 1);
 	float: left;
 	width: 250px;
 }
 
-div.scrollableContainer {
+.scrollableContainer {
 	font-size: 90%;
 }
 
-div.scrollableContainer > div:first-child ul {
+.scrollableContainer > div:first-child ul {
 	margin: 0;
 	padding: 0;
 }
 
-div.scrollableContainer > div:first-child li {
+.scrollableContainer > div:first-child li {
 	border-top: 1px solid rgba(192, 192, 192, 1);
 	cursor: pointer;
 	padding: 7px;
 }
 
-div.scrollableContainer > div:first-child li:first-child {
+.scrollableContainer > div:first-child li:first-child {
 	border-top-width: 0;
 }
 
 div.scrollableContainer > div:first-child p {
-	padding: 7px;
+	padding: 0 1px;
 }
 
 .userNotificationDetails {
@@ -3518,7 +3554,6 @@ div.scrollableContainer > div:first-child p {
 .userNotificationDetails li {
 	cursor: pointer;
 	border: 1px solid rgba(192, 192, 192, 1) !important;
-	
 	padding: 3px;
 	display: inline-block;
 }
@@ -3531,6 +3566,7 @@ div.scrollableContainer > div:first-child p {
 	background-color: rgba(255, 255, 255, .5);
 	background-image: url('{@RELATIVE_WCF_DIR}icon/spinner1.svg');
 	background-position: center center;
+	background-size: 24px;
 	background-repeat: no-repeat;
 	position: absolute;
 }

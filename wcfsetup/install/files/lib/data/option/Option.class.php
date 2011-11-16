@@ -163,4 +163,13 @@ class Option extends DatabaseObject {
 		
 		return $result;
 	}
+	
+	/**
+	 * Returns true, if option is visible
+	 * 
+	 * @return	boolean
+	 */
+	public function isVisible() {
+		return !$this->hidden;
+	}
 }
