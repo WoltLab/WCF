@@ -1,10 +1,9 @@
-<ul class="formOptionsLong">
-	{foreach from=$options item=option key=key}
-		<li>
-			<label><input {if $option.enableOptions}onclick="if (IS_SAFARI) {@$option.enableOptions}" onfocus="{@$option.enableOptions}" {/if}
-			type="radio" name="values[{$optionData.optionName}]" value="{$key}"
-			{if $optionData.optionValue == $key}checked="checked" {/if}/>
-			{lang}{@$option.value}{/lang}</label>
-		</li>
-	{/foreach}
-</ul>
+<fieldset>
+	<dl>
+		{foreach from=$selectOptions key=key item=selectOption}
+			<dd>
+				<label><input type="radio" name="values[{$option->optionName}]" value="{$key}" {if $value == $key} checked="checked"{/if} {if $disableOptions[$key]|isset || $enableOptions[$key]|isset}class="enablesOptions" data-disable-options="[ {@$disableOptions[$key]}]" data-enable-options="[ {@$enableOptions[$key]}]"{/if} /> {lang}{@$selectOption}{/lang}</label>
+			</dd>
+		{/foreach}
+	</dl>
+</fieldset>

@@ -1,5 +1,5 @@
-<select name="values[{$optionData.optionName}]" id="{$optionData.optionName}">
-{foreach from=$options item=option key=key}
-	<option value="{$key}"{if $optionData.optionValue == $key} selected="selected"{/if}>{lang}{@$option}{/lang}</option>
+<select id="{$option->optionName}" name="values[{$option->optionName}]">
+{foreach from=$selectOptions key=key item=selectOption}
+	<option value="{$key}"{if $value == $key} selected="selected"{/if}>{lang}{@$selectOption}{/lang}</option>
 {/foreach}
 </select>

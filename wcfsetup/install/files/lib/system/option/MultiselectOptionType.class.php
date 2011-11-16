@@ -5,7 +5,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\OptionUtil;
 
 /**
  * MultiselectOptionType is an implementation of IOptionType for multiple 'select' tags.
@@ -21,21 +20,11 @@ class MultiselectOptionType extends SelectOptionType {
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
-	public function getFormElement(array &$optionData) {
-		if (!isset($optionData['optionValue'])) {
-			if (isset($optionData['defaultValue'])) $optionData['optionValue'] = explode("\n", $optionData['defaultValue']);
-			else $optionData['optionValue'] = array();
-		}
-		else if (!is_array($optionData['optionValue'])) {
-			$optionData['optionValue'] = explode("\n", $optionData['optionValue']);
-		}
-		
-		// get options
-		$options = OptionUtil::parseSelectOptions($optionData['selectOptions']);
-		
+	public function getFormElement(Option $option, $value) {
 		WCF::getTPL()->assign(array(
-			'optionData' => $optionData,
-			'options' => $options
+			'option' => $option,
+			'selectOptions' => $option->parseSelectOptions(),
+			'value' => explode("\n", $value)
 		));
 		return WCF::getTPL()->fetch('optionTypeMultiselect');
 	}
@@ -43,33 +32,28 @@ class MultiselectOptionType extends SelectOptionType {
 	/**
 	 * @see wcf\system\option\IOptionType::validate()
 	 */
-	public function validate(array $optionData, $newValue) {
+	public function validate(Option $option, $newValue) {
 		if (!is_array($newValue)) $newValue = array();
-		$options = OptionUtil::parseSelectOptions($optionData['selectOptions']);
+		$options = $option->parseSelectOptions();
 		foreach ($newValue as $value) {
-			if (!isset($options[$value])) throw new UserInputException($optionData['optionName'], 'validationFailed');
+			if (!isset($options[$value])) {
+				throw new UserInputException($option->optionName, 'validationFailed');
+			}
 		}
 	}
 	
 	/**
 	 * @see wcf\system\option\IOptionType::getData()
 	 */
-	public function getData(array $optionData, $newValue) {
+	public function getData(Option $option, $newValue) {
 		if (!is_array($newValue)) $newValue = array();
 		return implode("\n", $newValue);
 	}
 	
 	/**
-	 * @see wcf\system\option\ISearchableUserOption::getSearchFormElement()
-	 */
-	public function getSearchFormElement(array &$optionData) {
-		return $this->getFormElement($optionData);
-	}
-	
-	/**
 	 * @see wcf\system\option\ISearchableUserOption::getCondition()
 	 */
-	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $options, $value) {
+	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		if (!is_array($value) || !count($value)) return false;
 		$value = ArrayUtil::trim($value);
 		if (!count($value)) return false;

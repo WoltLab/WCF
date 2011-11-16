@@ -1,3 +1,1 @@
-<input {if $optionData.enableOptions}onclick="{@$optionData.enableOptions}" {/if}
-id="{$optionData.optionName}" type="checkbox" name="values[{$optionData.optionName}]" value="1"
-{if $optionData.optionValue}checked="checked" {/if}/>
+<input type="checkbox" id="{$option->optionName}" {if $value} checked="checked"{/if} name="values[{$option->optionName}]" value="1" {if $disableOptions || $enableOptions}class="enablesOptions" data-disable-options="[ {@$disableOptions}]" data-enable-options="[ {@$enableOptions}]" {/if} />
