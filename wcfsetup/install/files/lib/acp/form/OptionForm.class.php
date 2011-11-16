@@ -52,20 +52,20 @@ class OptionForm extends AbstractOptionListForm {
 	/**
 	 * @see	wcf\acp\form\AbstractOptionListForm::$languageItemPattern
 	 */
-	protected $languageItemPattern = 'wcf.option.option\d+';
+	protected $languageItemPattern = 'wcf.acp.option.option\d+';
 	
 	/**
 	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
-		parent::readParameters();
-		
 		if (isset($_REQUEST['id'])) $this->categoryID = intval($_REQUEST['id']);
 		$this->category = new OptionCategory($this->categoryID);
 		if (!isset($this->category->categoryID)) {
 			throw new IllegalLinkException();
 		}
 		$this->categoryName = $this->category->categoryName;
+		
+		parent::readParameters();
 	}
 	
 	/**
@@ -84,23 +84,7 @@ class OptionForm extends AbstractOptionListForm {
 		parent::save();
 		
 		// save options
-		$saveOptions = array();
-		foreach ($this->options as $option) {
-			// handle i18n support
-			if ($option->supportI18n) {
-				if (I18nHandler::getInstance()->isPlainValue($option->optionName)) {
-					I18nHandler::getInstance()->remove('wcf.option.option' . $option->optionID, $option->packageID);
-					$saveOptions[$option->optionID] = I18nHandler::getInstance()->getValue($option->optionName);
-				}
-				else {
-					I18nHandler::getInstance()->save($option->optionName, 'wcf.option.option' . $option->optionID, 'wcf.option', $option->packageID);
-					$saveOptions[$option->optionID] = 'wcf.option.option' . $option->optionID;
-				}
-			}
-			else {
-				$saveOptions[$option->optionID] = $this->optionValues[$option->optionName];
-			}
-		}
+		$saveOptions = $this->optionHandler->save('wcf.acp.option', 'wcf.acp.option.option');
 		$optionAction = new OptionAction(array(), 'updateAll', array('data' => $saveOptions));
 		$optionAction->executeAction();
 		$this->saved();
@@ -115,15 +99,8 @@ class OptionForm extends AbstractOptionListForm {
 	public function readData() {
 		parent::readData();
 		
-		if (!count($_POST)) {
-			// get option values
-			foreach ($this->options as $option) {
-				$this->optionValues[$option->optionName] = $option->optionValue;
-			}
-		}
-		
 		// load option tree
-		$this->optionTree = $this->getOptionTree($this->category->categoryName);
+		$this->optionTree = $this->optionHandler->getOptionTree($this->category->categoryName);
 		
 		if (!count($_POST)) {
 			$this->activeTabMenuItem = $this->optionTree[0]['object']->categoryName;
@@ -157,9 +134,6 @@ class OptionForm extends AbstractOptionListForm {
 			// check master password
 			WCFACP::checkMasterPassword();
 		}
-		
-		// get options and categories from cache
-		$this->readCache();
 		
 		// show form
 		parent::show();
