@@ -3797,18 +3797,26 @@ div#profileButtonContainer button:hover {
 
 #actionProxyLoading {
 	text-align: center;
+	text-shadow: 0 -1px 0 #000;
 	color: #fff;
 	border-width: 1px;
 	border-style: solid;
 	border-color: rgba(0, 0, 0, .3);
 	border-radius: 5px;
-	background-color: rgba(0, 0, 0, .7);
+	
+	background-color: rgba(0, 0, 0, .5) !important;
+	background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, .7), rgba(0, 0, 0, 0)) !important;
+	background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, .7), rgba(0, 0, 0, 0)) !important;
+	background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, .7), rgba(0, 0, 0, 0)) !important;
+	background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, .7), rgba(0, 0, 0, 0)) !important;
+	background-image: linear-gradient(bottom, rgba(0, 0, 0, .7), rgba(0, 0, 0, 0)) !important;
+	
 	padding: 7px 0;
 	position: fixed;
 	top: 200px;
 	left: 46%;
 	right: 46%;
-	width: 8%;
+	width: 70px;
 	z-index: 1000;
 	
 	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
