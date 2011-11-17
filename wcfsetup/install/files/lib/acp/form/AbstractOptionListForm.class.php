@@ -62,12 +62,18 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	public $optionHandlerClassName = 'wcf\system\option\OptionHandler';
 	
 	/**
+	 * true if option supports i18n
+	 * @var	boolean
+	 */
+	public $supportI18n = true;
+	
+	/**
 	 * @see	wcf\page\Page::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
 		
-		$this->optionHandler = new $this->optionHandlerClassName($this->cacheName, $this->cacheClass, $this->languageItemPattern, $this->categoryName);
+		$this->optionHandler = new $this->optionHandlerClassName($this->cacheName, $this->cacheClass, $this->supportI18n, $this->languageItemPattern, $this->categoryName);
 	}
 	
 	/**

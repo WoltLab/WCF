@@ -8,7 +8,9 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\option\UserOptions;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\StringUtil;
@@ -61,7 +63,6 @@ class UserListPage extends SortablePage {
 	public $users = array();
 	public $url = '';
 	public $columns = array('email', 'registrationDate');
-	public $outputObjects = array();
 	public $options = array();
 	public $columnValues = array();
 	public $columnHeads = array();
@@ -217,8 +218,8 @@ class UserListPage extends SortablePage {
 			foreach ($this->users as $key => $user) {
 				foreach ($this->columns as $column) {
 					if (isset($this->options[$column])) {
-						if ($this->options[$column]['outputClass']) {
-							$outputObj = $this->getOutputObject($this->options[$column]['outputClass']);
+						if ($this->options[$column]->outputClass) {
+							$outputObj = UserOptions::getInstance()->getOutputObject($this->options[$column]->outputClass);
 							$this->columnValues[$user->userID][$column] = $outputObj->getOutput($user, $this->options[$column], $user->{$column});
 						}
 						else {
@@ -295,31 +296,6 @@ class UserListPage extends SortablePage {
 		}
 	}
 	
-	/**
-	 * Returns an object of the requested option output type.
-	 * 
-	 * @param	string			$type
-	 * @return	UserOptionOutput
-	 */
-	protected function getOutputObject($className) {
-		if (!isset($this->outputObjects[$className])) {
-			// include class file
-			$classPath = WCF_DIR.'lib/data/user/option/'.$className.'.class.php';
-			if (!file_exists($classPath)) {
-				throw new SystemException("unable to find class file '".$classPath."'");
-			}
-			require_once($classPath);
-			
-			// create instance
-			if (!class_exists($className)) {
-				throw new SystemException("unable to find class '".$className."'");
-			}
-			$this->outputObjects[$className] = new $className();
-		}
-		
-		return $this->outputObjects[$className];
-	}
-
 	/**
 	 * @see	wcf\page\MultipleLinkPage::initObjectList()
 	 */		

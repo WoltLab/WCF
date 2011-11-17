@@ -34,4 +34,46 @@ class UserOption extends Option {
 	 * @var	array
 	 */
 	public $outputData = array();
+	
+	/**
+	 * @see	wcf\data\option\Option::isVisible()
+	 */
+	public function isVisible() {
+		$bitmask = $this->options[$optionName]->visible;
+		// check if option is hidden
+		if ($bitmask & Option::VISIBILITY_NONE) {
+			$visible = false;
+		}
+		// proceed if option is visible for all
+		else if ($bitmask & Option::VISIBILITY_OTHER) {
+			$visible = true;
+		}
+		else {
+			$isAdmin = $isOwner = $visible = false;
+			// check admin permissions
+			if ($bitmask & Option::VISIBILITY_ADMINISTRATOR) {
+				if (WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
+					$isAdmin = true;
+				}
+			}
+			
+			// check owner state
+			if ($bitmask & Option::VISIBILITY_OWNER) {
+				if ($user->userID == WCF::getUser()->userID) {
+					$isOwner = true;
+				}
+			}
+			
+			if ($isAdmin) {
+				$visible = true;
+			}
+			else if ($isOwner) {
+				$visible = true;
+			}
+		}
+		
+		if (!$visible || $this->disabled) return false;
+		
+		return true;
+	}
 }

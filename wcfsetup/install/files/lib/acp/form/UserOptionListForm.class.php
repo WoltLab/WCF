@@ -21,7 +21,17 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 	/**
 	 * @see wcf\acp\form\AbstractOptionListForm::$cacheName
 	 */
-	public $cacheName = 'user-option-';
+	public $cacheName = 'user-option';
+	
+	/**
+	 * @see	wcf\acp\form\AbstractOptionListForm::$supportI18n
+	 */
+	public $supportI18n = false;
+	
+	/**
+	 * @see	wcf\acp\form\AbstractOptionListForm::$optionHandlerClassName
+	 */
+	public $optionHandlerClassName = 'wcf\system\option\user\UserOptionHandler';
 	
 	/**
 	 * Returns a list of all available user groups.
@@ -39,16 +49,5 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 	 */
 	protected function getDefaultFormLanguageID() {
 		return LanguageFactory::getInstance()->getDefaultLanguageID();
-	}
-	
-	/**
-	 * @see wcf\acp\form\AbstractOptionListForm::validateOption()
-	 */
-	protected function validateOption(Option $option) {
-		parent::validateOption($option);
-
-		if ($option->required && empty($this->optionValues[$option->optionName])) {
-			throw new UserInputException($option->optionName);
-		}
 	}
 }

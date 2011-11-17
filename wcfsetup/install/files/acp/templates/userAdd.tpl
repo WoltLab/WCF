@@ -1,52 +1,10 @@
 {include file='header'}
 
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/TabMenu.class.js"></script>
-{if $userID|isset}
-	<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/AjaxRequest.class.js"></script>
-	<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/InlineListEdit.class.js"></script>
-	<script type="text/javascript" src="{@RELATIVE_WCF_DIR}acp/js/UserListEdit.class.js"></script>
-{/if}
 <script type="text/javascript">
 	//<![CDATA[
-	var tabMenu = new TabMenu();
-	{if $optionTree|count}onloadEvents.push(function() { tabMenu.showSubTabMenu('{@$options[0][object]->categoryName}') });{/if}
-	
-	{if $userID|isset}
-		var userData = new Hash();
-		userData.set({@$userID}, {
-			'isMarked': {@$user->isMarked()}
-		});
-		
-		var url = '{@$url|encodeJS}';
-		
-		// language
-		var language = new Object();
-		language['wcf.global.button.mark']		= '{lang}wcf.global.button.mark{/lang}';
-		language['wcf.global.button.unmark']		= '{lang}wcf.global.button.unmark{/lang}';
-		language['wcf.global.button.delete']		= '{lang}wcf.global.button.delete{/lang}';
-		language['wcf.acp.user.button.sendMail']	= '{lang}wcf.acp.user.button.sendMail{/lang}';
-		language['wcf.acp.user.button.exportMail']	= '{lang}wcf.acp.user.button.exportMail{/lang}';
-		language['wcf.acp.user.button.assignGroup']	= '{lang}wcf.acp.user.button.assignGroup{/lang}';
-		language['wcf.acp.user.deleteMarked.sure']	= '{lang}wcf.acp.user.deleteMarked.sure{/lang}';
-		language['wcf.acp.user.delete.sure']		= '{lang}wcf.acp.user.delete.sure{/lang}';
-		language['wcf.acp.user.markedUsers']		= '{lang}wcf.acp.user.markedUsers{/lang}';
-		
-		// additional options
-		var additionalOptions = new Array();
-		var additionalUserOptions = new Array();
-		{if $additionalUserOptions|isset}{@$additionalUserOptions}{/if}
-		{if $additionalMarkedOptions|isset}{@$additionalMarkedOptions}{/if}
-		
-		// permissions
-		var permissions = new Object();
-		permissions['canEditUser'] = {if $__wcf->session->getPermission('admin.user.canEditUser')}1{else}0{/if};
-		permissions['canDeleteUser'] = {if $__wcf->session->getPermission('admin.user.canDeleteUser')}1{else}0{/if};
-		permissions['canMailUser'] = {if $__wcf->session->getPermission('admin.user.canMailUser')}1{else}0{/if};
-		permissions['canEditMailAddress'] = {if $__wcf->session->getPermission('admin.user.canEditMailAddress')}1{else}0{/if};
-		permissions['canEditPassword'] = {if $__wcf->session->getPermission('admin.user.canEditPassword')}1{else}0{/if};
-		
-		onloadEvents.push(function() { userListEdit = new UserListEdit(userData, {@$markedUsers}, additionalUserOptions, additionalOptions); });
-	{/if}
+	$(function() {
+		WCF.TabMenu.init();
+	});
 	//]]>
 </script>
 
@@ -187,68 +145,65 @@
 		{if $additionalFields|isset}{@$additionalFields}{/if}
 		
 		{if $optionTree|count || $additionalTabs|isset}
-			<nav>
-				<div class="tabMenu">
+			<div class="tabMenuContainer">
+				<nav class="tabMenu">
 					<ul>
 						{foreach from=$optionTree item=categoryLevel1}
-							<li id="{@$categoryLevel1[object]->categoryName}"><a onclick="tabMenu.showSubTabMenu('{@$categoryLevel1[object]->categoryName}');"><span>{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</span></a></li>
+							<li><a href="#{@$categoryLevel1[object]->categoryName}">{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
 						{/foreach}
 						
-						{if $additionalTabs|isset}{@$additionalTabs}{/if}
+						{event name='tabMenuTabs'}
 					</ul>
-				</div>
-			<nav>
-			<div class="menu">
-				<div class="containerHead"><div> </div></div>
-			</div>
+				</nav>
 			
-			{foreach from=$optionTree item=categoryLevel1}
-				<div id="{@$categoryLevel1[object]->categoryName}-content" class="border tabMenuContent hidden">
-					<hgroup class="subHeading">
-						<h1>{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
-					</hgroup>
+				{foreach from=$optionTree item=categoryLevel1}
+					<div id="{@$categoryLevel1[object]->categoryName}" class="border tabMenuContent">
+						<hgroup class="subHeading">
+							<h1>{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
+						</hgroup>
 					
-					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
-						<fieldset>
-							<legend>{lang}wcf.user.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>
+						{foreach from=$categoryLevel1[categories] item=categoryLevel2}
+							<fieldset>
+								<legend>{lang}wcf.user.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>
 							
-							{if $categoryLevel2[object]->categoryName == 'settings.general' && $availableLanguages|count > 1}
-								<dl>
-									<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>
-									<dd>
-										{htmlOptions options=$availableLanguages selected=$languageID name=languageID id=languageID disableEncoding=true}
-									</dd>
-								</dl>
-									
-								{if $availableContentLanguages|count > 1}
+								{if $categoryLevel2[object]->categoryName == 'settings.general' && $availableLanguages|count > 1}
 									<dl>
-										<dt>
-											{lang}wcf.user.visibleLanguages{/lang}
-										</dt>
+										<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>
 										<dd>
-											<fieldset>
-												<legend>{lang}wcf.user.visibleLanguages{/lang}</legend>
-												<dl>
-													<dd>
-														{foreach from=$availableContentLanguages key=availableLanguageID item=availableLanguage}
-															<label><input type="checkbox" name="visibleLanguages[]" value="{@$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked="checked"{/if} /> {@$availableLanguage}</label>
-														{/foreach}
-													</dd>
-												</dl>
-											</fieldset>
+											{htmlOptions options=$availableLanguages selected=$languageID name=languageID id=languageID disableEncoding=true}
 										</dd>
 									</dl>
+									
+									{if $availableContentLanguages|count > 1}
+										<dl>
+											<dt>
+												{lang}wcf.user.visibleLanguages{/lang}
+											</dt>
+											<dd>
+												<fieldset>
+													<legend>{lang}wcf.user.visibleLanguages{/lang}</legend>
+													<dl>
+														<dd>
+															{foreach from=$availableContentLanguages key=availableLanguageID item=availableLanguage}
+																<label><input type="checkbox" name="visibleLanguages[]" value="{@$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked="checked"{/if} /> {@$availableLanguage}</label>
+															{/foreach}
+														</dd>
+													</dl>
+												</fieldset>
+											</dd>
+										</dl>
+									{/if}
 								{/if}
-							{/if}
 							
-							{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.user.option.'}
-						</fieldset>
-					{/foreach}
-				</div>
-			{/foreach}
+								{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.user.option.'}
+							</fieldset>
+						{/foreach}
+					</div>
+				{/foreach}
+
+				{event name='tabMenuContent'}
+			</div>
 		{/if}
-		
-		{if $additionalTabContents|isset}{@$additionalTabContents}{/if}
 	</div>
 	
 	<div class="formSubmit">

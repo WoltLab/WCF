@@ -17,10 +17,11 @@ interface IOptionHandler {
 	 * 
 	 * @param	string		$cacheName
 	 * @param	string		$cacheClass
+	 * @param	boolean		$supportI18n
 	 * @param	string		$languageItemPattern
 	 * @param	string		$categoryName
 	 */
-	public function __construct($cacheName, $cacheClass, $languageItemPattern = '', $categoryName = '');
+	public function __construct($cacheName, $cacheClass, $supportI18n, $languageItemPattern = '', $categoryName = '');
 	
 	/**
 	 * Reads user input from given source array.
@@ -66,5 +67,5 @@ interface IOptionHandler {
 	 * @param	string		$optionPrefix
 	 * @return	array
 	 */
-	public function save($categoryName, $optionPrefix);
+	public function save($categoryName = null, $optionPrefix = null);
 }

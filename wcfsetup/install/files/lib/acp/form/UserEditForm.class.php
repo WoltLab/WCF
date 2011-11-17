@@ -88,6 +88,17 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
+	 * @see	wcf\acp\form\UserAddForm::readOptionTree()
+	 */
+	protected function readOptionTree() {
+		if (empty($_POST)) {
+			$this->optionHandler->setUser($this->user->getDecoratedObject());
+		}
+		
+		parent::readOptionTree();
+	}
+	
+	/**
 	 * Gets the selected languages.
 	 */
 	protected function readVisibleLanguages() {
@@ -102,13 +113,6 @@ class UserEditForm extends UserAddForm {
 		$this->email = $this->confirmEmail = $this->user->email;
 		$this->groupIDs = $this->user->getGroupIDs();
 		$this->languageID = $this->user->languageID;
-		
-		foreach ($this->options as $option) {
-			$value = $this->user->{'userOption'.$option->optionID};
-			if ($value !== null) {
-				$this->optionValues[$option->optionName] = $value;
-			}
-		}
 	}
 	
 	/**
@@ -143,10 +147,7 @@ class UserEditForm extends UserAddForm {
 		$this->groupIDs = array_unique($this->groupIDs);
 		
 		// save user
-		$saveOptions = array();
-		foreach ($this->options as $option) {
-			$saveOptions[$option->optionID] = $this->optionValues[$option->optionName];
-		}
+		$saveOptions = $this->optionHandler->save();
 		$this->additionalFields['languageID'] = $this->languageID;
 		$data = array(
 			'data' => array_merge($this->additionalFields, array(

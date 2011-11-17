@@ -125,14 +125,19 @@ class UserAction extends AbstractDatabaseObjectAction {
 		
 		$groupIDs = (isset($this->parameters['groups'])) ? $this->parameters['groups'] : array();
 		$removeGroups = (isset($this->parameters['removeGroups'])) ? $this->parameters['removeGroups'] : array();
+		$userOptions = (isset($this->parameters['options'])) ? $this->parameters['options'] : array();
 		
 		foreach ($this->objects as $userEditor) {
-			if (count($groupIDs)) {
+			if (!empty($groupIDs)) {
 				$userEditor->addToGroups($groupIDs);
 			}
 			
-			if (count($removeGroups)) {
+			if (!empty($removeGroups)) {
 				$userEditor->removeFromGroups($removeGroups);
+			}
+			
+			if (!empty($userOptions)) {
+				$userEditor->updateUserOptions($userOptions);
 			}
 		}
 	}

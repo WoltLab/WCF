@@ -184,10 +184,7 @@ class UserAddForm extends UserOptionListForm {
 		AbstractForm::save();
 		
 		// create
-		$saveOptions = array();
-		foreach ($this->options as $option) {
-			$saveOptions[$option->optionID] = $this->optionValues[$option->optionName];
-		}
+		$saveOptions = $this->optionHandler->save();
 		$this->additionalFields['languageID'] = $this->languageID;
 		$data = array(
 			'data' => array_merge($this->additionalFields, array(
@@ -286,7 +283,14 @@ class UserAddForm extends UserOptionListForm {
 	public function readData() {
 		parent::readData();
 		
-		$this->optionTree = $this->getOptionTree();
+		$this->readOptionTree();
+	}
+	
+	/**
+	 * Reads option tree on page init.
+	 */
+	protected function readOptionTree() {
+		$this->optionTree = $this->optionHandler->getOptionTree();
 	}
 	
 	/**
@@ -322,9 +326,6 @@ class UserAddForm extends UserOptionListForm {
 		// get the default langauge id
 		$this->languageID = $this->getDefaultFormLanguageID();
 		
-		// get user options and categories from cache
-		$this->readCache();
-		
 		// show form
 		parent::show();
 	}
@@ -332,9 +333,10 @@ class UserAddForm extends UserOptionListForm {
 	/**
 	 * @see wcf\acp\form\AbstractOptionListForm::checkOption()
 	 */
+	/*
 	protected static function checkOption(Option $option) {
 		if (!parent::checkOption($option)) return false;
 		
 		return ($option->editable != 1 && $option->editable != 4 && !$option->disabled);
-	}
+	}*/
 }

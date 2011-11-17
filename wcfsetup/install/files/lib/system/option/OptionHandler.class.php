@@ -3,6 +3,7 @@ namespace wcf\system\option;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
 use wcf\system\cache\CacheHandler;
+use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\util\ClassUtil;
@@ -92,13 +93,20 @@ class OptionHandler implements IOptionHandler {
 	public $rawValues = array();
 	
 	/**
+	 * true, if options support i18n
+	 * @var	boolean
+	 */
+	public $supportI18n = false;
+	
+	/**
 	 * @see	wcf\system\option\IOptionHandler::__construct()
 	 */
-	public function __construct($cacheName, $cacheClass, $languageItemPattern = '', $categoryName = '') {
+	public function __construct($cacheName, $cacheClass, $supportI18n, $languageItemPattern = '', $categoryName = '') {
 		$this->cacheName = $cacheName;
 		$this->cacheClass = $cacheClass;
 		$this->categoryName = $categoryName;
 		$this->languageItemPattern = $languageItemPattern;
+		$this->supportI18n = $supportI18n;
 		
 		// load cache on init
 		$this->readCache();
@@ -110,13 +118,15 @@ class OptionHandler implements IOptionHandler {
 	public function readUserInput(array &$source) {
 		if (isset($source['values']) && is_array($source['values'])) $this->rawValues = $source['values'];
 		
-		foreach ($this->options as $option) {
-			if ($option->supportI18n) {
-				I18nHandler::getInstance()->register($option->optionName);
-				I18nHandler::getInstance()->setOptions($option->optionName, $option->packageID, $option->optionValue, $this->languageItemPattern);
+		if ($this->supportI18n) {
+			foreach ($this->options as $option) {
+				if ($option->supportI18n) {
+					I18nHandler::getInstance()->register($option->optionName);
+					I18nHandler::getInstance()->setOptions($option->optionName, $option->packageID, $option->optionValue, $this->languageItemPattern);
+				}
 			}
+			I18nHandler::getInstance()->readValues();
 		}
-		I18nHandler::getInstance()->readValues();
 	}
 	
 	/**
@@ -153,7 +163,7 @@ class OptionHandler implements IOptionHandler {
 					'options' => array()
 				);
 				
-				if (static::checkCategory($superCategoryObject)) {
+				if ($this->checkCategory($superCategoryObject)) {
 					if ($level <= 1) {
 						$superCategory['categories'] = $this->getOptionTree($superCategoryName, $level + 1);
 					}
@@ -189,25 +199,11 @@ class OptionHandler implements IOptionHandler {
 		
 		// get options
 		if (isset($this->cachedOptionToCategories[$categoryName])) {
-			$i = 0;
-			$last = count($this->cachedOptionToCategories[$categoryName]) - 1;
 			foreach ($this->cachedOptionToCategories[$categoryName] as $optionName) {
 				if (!isset($this->options[$optionName]) || !$this->checkOption($this->options[$optionName])) continue;
 				
-				// get option object
-				$option = $this->options[$optionName];
-				
-				// get form element html
-				$html = $this->getFormElement($option->optionType, $option);
-				
 				// add option to list
-				$children[] = array(
-					'object' => $option,
-					'html' => $html,
-					'cssClassName' => $this->getTypeObject($option->optionType)->getCSSClassName()
-				);
-				
-				$i++;
+				$children[] = $this->getOption($optionName);
 			}
 		}
 		
@@ -219,7 +215,7 @@ class OptionHandler implements IOptionHandler {
 	 */
 	public function readData() {
 		foreach ($this->options as $option) {
-			if ($option->supportI18n) {
+			if ($this->supportI18n && $option->supportI18n) {
 				I18nHandler::getInstance()->register($option->optionName);
 				I18nHandler::getInstance()->setOptions($option->optionName, $option->packageID, $option->optionValue, $this->languageItemPattern);
 			}
@@ -231,12 +227,16 @@ class OptionHandler implements IOptionHandler {
 	/**
 	 * @see	wcf\system\option\IOptionHandler::save()
 	 */
-	public function save($categoryName, $optionPrefix) {
+	public function save($categoryName = null, $optionPrefix = null) {
 		$saveOptions = array();
+		
+		if ($this->supportI18n && ($categoryName === null || $optionPrefix === null)) {
+			throw new SystemException("category name or option prefix missing");
+		}
 		
 		foreach ($this->options as $option) {
 			// handle i18n support
-			if ($option->supportI18n) {
+			if ($this->supportI18n && $option->supportI18n) {
 				if (I18nHandler::getInstance()->isPlainValue($option->optionName)) {
 					I18nHandler::getInstance()->remove($optionPrefix . $option->optionID, $option->packageID);
 					$saveOptions[$option->optionID] = I18nHandler::getInstance()->getValue($option->optionName);
@@ -252,6 +252,26 @@ class OptionHandler implements IOptionHandler {
 		}
 		
 		return $saveOptions;
+	}
+	
+	/**
+	 * Returns a parsed option.
+	 * 
+	 * @param	string		$optionName
+	 * @return	array
+	 */
+	protected function getOption($optionName) {
+		// get option object
+		$option = $this->options[$optionName];
+		
+		// get form element html
+		$html = $this->getFormElement($option->optionType, $option);
+		
+		return array(
+			'object' => $option,
+			'html' => $html,
+			'cssClassName' => $this->getTypeObject($option->optionType)->getCSSClassName()
+		);
 	}
 	
 	/**
