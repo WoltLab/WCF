@@ -2758,7 +2758,6 @@ div#ajaxExceptionStacktrace {
 	.ui-dialog {
 		min-width: 500px !important;
 		max-width: 780px !important;
-		top: 150px !important;
 	}
 	
 }
@@ -2768,7 +2767,6 @@ div#ajaxExceptionStacktrace {
 	.ui-dialog {
 		min-width: 200px !important;
 		max-width: 380px !important;
-		top: 80px !important;
 	}
 	
 }
@@ -2822,7 +2820,7 @@ a.ui-dialog-titlebar-close span {
 
 .ui-dialog-content {
 	background-color: #333;
-	padding-top: 7px;
+	padding: 7px 0 25px;
 }
 
 .ui-dialog > .ui-dialog-content {
