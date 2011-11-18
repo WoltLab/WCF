@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\user\option;
 use wcf\data\option\Option;
+use wcf\system\option\user\IUserOptionOutput;
 
 /**
  * Represents a user option.

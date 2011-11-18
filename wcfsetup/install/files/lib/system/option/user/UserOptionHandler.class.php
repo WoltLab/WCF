@@ -2,6 +2,7 @@
 namespace wcf\system\option\user;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
+use wcf\data\user\option\ViewableUserOption;
 use wcf\data\user\User;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\OptionHandler;
@@ -17,13 +18,34 @@ use wcf\system\option\OptionHandler;
  * @category 	Community Framework
  */
 class UserOptionHandler extends OptionHandler {
+	/**
+	 * current user
+	 * @var	wcf\data\user\User
+	 */
+	public $user = null;
+	
+	/**
+	 * Sets option values for a certain user.
+	 * 
+	 * @param	wcf\data\user\User
+	 */
 	public function setUser(User $user) {
 		$this->optionValues = array();
+		$this->user = $user;
 		
 		foreach ($this->options as $option) {
 			$userOption = 'userOption' . $option->optionID;
-			$this->optionValues[$option->optionName] = $user->{$userOption};
+			$this->optionValues[$option->optionName] = $this->user->{$userOption};
 		}
+	}
+	
+	/**
+	 * @see	wcf\system\option\OptionHandler::getCategoryOptions()
+	 */
+	public function getCategoryOptions($categoryName = '', $inherit = true) {
+		$options = parent::getCategoryOptions($categoryName, $inherit);
+		
+		die('<pre>'.print_r($options, true));
 	}
 	
 	/**
