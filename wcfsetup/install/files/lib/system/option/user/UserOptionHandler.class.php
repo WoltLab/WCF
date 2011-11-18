@@ -37,6 +37,12 @@ class UserOptionHandler extends OptionHandler {
 			$userOption = 'userOption' . $option->optionID;
 			$this->optionValues[$option->optionName] = $this->user->{$userOption};
 		}
+		
+		if (!$this->didInit) {
+			$this->loadActiveOptions($this->categoryName);
+			
+			$this->didInit = true;
+		}
 	}
 	
 	/**
@@ -68,5 +74,14 @@ class UserOptionHandler extends OptionHandler {
 		}
 		
 		return parent::checkCategory($category);
+	}
+	
+	/**
+	 * @see	wcf\system\option\OptionHandler::checkVisibility()
+	 */
+	protected function checkVisibility(Option $option) {
+		$option->setUser($this->user);
+		
+		return $option->isVisible();
 	}
 }

@@ -1,7 +1,9 @@
 <?php
 namespace wcf\data\user\option;
 use wcf\data\option\Option;
+use wcf\data\user\User;
 use wcf\system\option\user\IUserOptionOutput;
+use wcf\system\WCF;
 
 /**
  * Represents a user option.
@@ -37,30 +39,49 @@ class UserOption extends Option {
 	public $outputData = array();
 	
 	/**
+	 * user object
+	 * @var	wcf\data\user\User
+	 */
+	public $user = null;
+	
+	/**
+	 * Sets target user object.
+	 * 
+	 * @param	wcf\data\user\User	$user
+	 */
+	public function setUser(User $user) {
+		$this->user = $user;
+	}
+	
+	/**
 	 * @see	wcf\data\option\Option::isVisible()
 	 */
 	public function isVisible() {
-		$bitmask = $this->options[$optionName]->visible;
 		// check if option is hidden
-		if ($bitmask & Option::VISIBILITY_NONE) {
-			$visible = false;
+		if (!$this->visible) {
+			return false;
 		}
+		
 		// proceed if option is visible for all
-		else if ($bitmask & Option::VISIBILITY_OTHER) {
+		if ($this->visible & Option::VISIBILITY_GUEST) {
+			$visible = true;
+		}
+		// proceed if option is visible for registered users and current user is logged in
+		else if (($this->visible & Option::VISIBILITY_REGISTERED) && WCF::getUser()->userID) {
 			$visible = true;
 		}
 		else {
 			$isAdmin = $isOwner = $visible = false;
 			// check admin permissions
-			if ($bitmask & Option::VISIBILITY_ADMINISTRATOR) {
+			if ($this->visible & Option::VISIBILITY_ADMINISTRATOR) {
 				if (WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
 					$isAdmin = true;
 				}
 			}
 			
 			// check owner state
-			if ($bitmask & Option::VISIBILITY_OWNER) {
-				if ($user->userID == WCF::getUser()->userID) {
+			if ($this->visible & Option::VISIBILITY_OWNER) {
+				if ($this->user->userID == WCF::getUser()->userID) {
 					$isOwner = true;
 				}
 			}

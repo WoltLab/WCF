@@ -54,7 +54,7 @@ class OptionHandler implements IOptionHandler {
 	 * option structure
 	 * @var array
 	 */
-	protected $cachedOptionToCategories = null;
+	public $cachedOptionToCategories = null;
 	
 	/**
 	 * Name of the active option category.
@@ -99,9 +99,15 @@ class OptionHandler implements IOptionHandler {
 	public $supportI18n = false;
 	
 	/**
+	 * cache initialization state
+	 * @var	boolean
+	 */
+	public $didInit = false;
+	
+	/**
 	 * @see	wcf\system\option\IOptionHandler::__construct()
 	 */
-	public function __construct($cacheName, $cacheClass, $supportI18n, $languageItemPattern = '', $categoryName = '') {
+	public function __construct($cacheName, $cacheClass, $supportI18n, $languageItemPattern = '', $categoryName = '', $loadActiveOptions = true) {
 		$this->cacheName = $cacheName;
 		$this->cacheClass = $cacheClass;
 		$this->categoryName = $categoryName;
@@ -109,7 +115,7 @@ class OptionHandler implements IOptionHandler {
 		$this->supportI18n = $supportI18n;
 		
 		// load cache on init
-		$this->readCache();
+		$this->readCache($loadActiveOptions);
 	}
 	
 	/**
@@ -334,8 +340,10 @@ class OptionHandler implements IOptionHandler {
 	
 	/**
 	 * Gets all options and option categories from cache.
+	 * 
+	 * @param	boolean		$loadActiveOptions
 	 */
-	protected function readCache() {
+	protected function readCache($loadActiveOptions) {
 		$cacheName = $this->cacheName . '-' . PACKAGE_ID;
 		CacheHandler::getInstance()->addResource($cacheName, WCF_DIR.'cache/cache.'.$cacheName.'.php', $this->cacheClass);
 		
@@ -345,8 +353,13 @@ class OptionHandler implements IOptionHandler {
 		$this->cachedCategoryStructure = CacheHandler::getInstance()->get($cacheName, 'categoryStructure');
 		$this->cachedOptionToCategories = CacheHandler::getInstance()->get($cacheName, 'optionToCategories');
 		
-		// get active options
-		$this->loadActiveOptions($this->categoryName);
+		if ($loadActiveOptions) {
+			// get active options
+			$this->loadActiveOptions($this->categoryName);
+			
+			// mark options as initialized
+			$this->didInit = true;
+		}
 	}
 	
 	/**
@@ -443,10 +456,20 @@ class OptionHandler implements IOptionHandler {
 			if (!$hasEnabledOption) return false;
 		}
 		
-		if (!$option->isVisible()) {
+		if (!$this->checkVisibility($option)) {
 			return false;
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * Checks visibility of an option.
+	 * 
+	 * @param	wcf\data\option\Option		$option
+	 * @return	boolean
+	 */
+	protected function checkVisibility(Option $option) {
+		return $option->isVisible();
 	}
 }
