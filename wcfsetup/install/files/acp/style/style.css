@@ -151,7 +151,7 @@ body#tplWCFInstaller {background-image: -webkit-linear-gradient(-45deg, rgba(255
 header.pageHeader {
 	/* Disabled, because the WoltLab header-image is not LGPL 
 	Activate it if you want to test your own header image */
-	/* background-image: url('../images/header.png'); */
+	/* background-image: url('../../../images/header.png'); */
 	background-position: center top;
 	background-repeat: repeat-x;
 	background-attachment: fixed;
@@ -1761,7 +1761,7 @@ input[type='button'],
 	background-color: #369;
 	/* Disabled, because the WoltLab header-image is not LGPL 
 	Activate it if you want to test your own header image */
-	/* background-image: url('../images/header.png'); */
+	/* background-image: url('../../../images/header.png'); */
 	background-position: left top;
 	background-repeat: repeat-x;	
 }
@@ -1794,6 +1794,7 @@ input[type='button'],
 
 .boxTitle > hgroup .badge {
 	font-size: 75%;
+	color: #369;
 }
 
 /* Collapse Icon */
@@ -1924,6 +1925,8 @@ input[type='button'],
 	border-color: #ccc;
 	border-bottom-color: #fff;
 	background-color: rgba(255, 255, 255, 1);
+	margin-right: -7px;
+	margin-left: -7px;
 	bottom: 0;
 	z-index: 30;
 }
@@ -2163,7 +2166,7 @@ input[type='button'],
 	color: #999;
 	margin: 0;
 	padding: 5px 1px 5px 20px;
-	display: inline-block;
+	display: block;
 	overflow: hidden;
 	white-space: nowrap;
 }
@@ -2746,11 +2749,11 @@ div#ajaxExceptionStacktrace {
 	margin-left: auto !important;
 	position: fixed !important;
 	
-	-webkit-box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
-	-moz-box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
-	-ms-box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
-	-o-box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
-	box-shadow: 0 1px 23px rgba(0, 0, 0, 1);
+	-webkit-box-shadow: 0 1px 23px rgba(0, 0, 0, .3);
+	-moz-box-shadow: 0 1px 23px rgba(0, 0, 0, .3);
+	-ms-box-shadow: 0 1px 23px rgba(0, 0, 0, .3);
+	-o-box-shadow: 0 1px 23px rgba(0, 0, 0, .3);
+	box-shadow: 0 1px 23px rgba(0, 0, 0, .3);
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -2779,13 +2782,14 @@ div#ajaxExceptionStacktrace {
 	background-color: #29374a;
 	/* Disabled, because the WoltLab header-image is not LGPL 
 	Activate it if you want to test your own header image */
-	/* background-image: url('../images/header.png'); */
+	/* background-image: url('../../../images/header.png'); */
 	background-position: left top;
 	background-repeat: repeat-x;
 	margin-bottom: 1px;
 	padding: 13px;
 	position: relative;
 	display: block;
+	cursor: move;
 }
 
 .ui-dialog-title {
@@ -2820,7 +2824,6 @@ a.ui-dialog-titlebar-close span {
 
 .ui-dialog-content {
 	background-color: #333;
-	padding: 7px 0 25px;
 }
 
 .ui-dialog > .ui-dialog-content {
@@ -3028,6 +3031,9 @@ input[type='reset']:hover,
 input[type='submit']:hover,
 input[type='button']:hover,
 input[type='button'].default:hover,
+input[type='button'].default:hover,
+.largeButtons ul li.default a:hover,
+.smallButtons > li.default > a:hover,
 .largeButtons ul li a:hover,
 .smallButtons > li > a:hover,
 .badgeButton:hover,
@@ -3053,6 +3059,8 @@ input[type='reset']:focus,
 input[type='submit']:focus,
 input[type='button']:focus,
 input[type='button'].default:focus,
+input[type='button'].default:focus,
+.largeButtons ul li.default a:focus,
 .largeButtons ul li a:focus,
 .smallButtons > li > a:focus,
 .badgeButton:focus,
@@ -3065,6 +3073,8 @@ input[type='button']:active,
 input[type='button'].default:active,
 .largeButtons ul li a:active,
 .smallButtons > li > a:active,
+.largeButtons ul li.default a:active,
+.smallButtons > li.default > a:active,
 .badgeButton:active,
 .pageNavigation ul li:not(.disabled):focus,
 .clipboardEditor > ul > li:active,

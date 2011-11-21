@@ -44,6 +44,11 @@ class UserEditForm extends UserAddForm {
 	public $user = null;
 	
 	/**
+	 * @see	wcf\acp\form\AbstractOptionListForm::$loadActiveOptions
+	 */
+	public $loadActiveOptions = false;
+	
+	/**
 	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -60,6 +65,9 @@ class UserEditForm extends UserAddForm {
 		if (!UserGroup::isAccessibleGroup($this->user->getGroupIDs())) {
 			throw new PermissionDeniedException();
 		}
+		
+		$this->optionHandler->setUser($this->user->getDecoratedObject());
+		$this->optionHandler->showEmptyOptions();
 	}
 	
 	/**

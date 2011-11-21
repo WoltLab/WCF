@@ -26,11 +26,16 @@ class Option extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'optionID';
 	
+	// equals to an empty bitmask, NOT a valid bit!
 	const VISIBILITY_NONE = 0;
+	
 	const VISIBILITY_OWNER = 1;
 	const VISIBILITY_ADMINISTRATOR = 2;
-	const VISIBILITY_OTHER = 4;
-	const VISIBILITY_ALL = 7;
+	const VISIBILITY_REGISTERED = 4;
+	const VISIBILITY_GUEST = 8;
+	
+	// equals to VISIBILITY_GUEST, NOT a valid bit!
+	const VISIBILITY_ALL = 15;
 	
 	/**
 	 * @see wcf\data\DatabaseObject::handleData()
