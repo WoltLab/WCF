@@ -2,6 +2,7 @@
 namespace wcf\data\user\option;
 use wcf\data\user\User;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\system\exception\SystemException;
 use wcf\system\option\user\IUserOptionOutputContactInformation;
 use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
@@ -41,7 +42,7 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 		
 		// use output class
 		if ($this->outputClass) {
-			$outputObj = $this->getOutputObject($this->outputClass);
+			$outputObj = $this->getOutputObject();
 			
 			if ($outputObj instanceof IUserOptionOutputContactInformation) {
 				$this->outputData = $outputObj->getOutputData($user, $this->getDecoratedObject(), $optionValue);
@@ -62,20 +63,20 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	 * @return	wcf\system\option\user\IUserOptionOutput
 	 */
 	public function getOutputObject() {
-		if (!isset(self::$outputObjects[$this->className])) {
+		if (!isset(self::$outputObjects[$this->outputClass])) {
 			// create instance
-			if (!class_exists($this->className)) {
-				throw new SystemException("unable to find class '".$this->className."'");
+			if (!class_exists($this->outputClass)) {
+				throw new SystemException("unable to find class '".$this->outputClass."'");
 			}
 			
 			// validate interface
-			if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\user\option\IUserOptionOutput')) {
-				throw new SystemException("'".$this->className."' should implement wcf\system\user\option\IUserOptionOutput");
+			if (!ClassUtil::isInstanceOf($this->outputClass, 'wcf\system\option\user\IUserOptionOutput')) {
+				throw new SystemException("'".$this->outputClass."' should implement wcf\system\option\user\IUserOptionOutput");
 			}
 			
-			self::$outputObjects[$this->className] = new $this->className();
+			self::$outputObjects[$this->outputClass] = new $this->outputClass();
 		}
 		
-		return self::$outputObjects[$this->className];
+		return self::$outputObjects[$this->outputClass];
 	}
 }

@@ -51,6 +51,10 @@ class UserOptionHandler extends OptionHandler {
 	public function getCategoryOptions($categoryName = '', $inherit = true) {
 		$options = parent::getCategoryOptions($categoryName, $inherit);
 		
+		foreach ($options as $optionData) {
+			$optionData['object'] = new ViewableUserOption($optionData['object']);
+			$optionData['object']->setOptionValue($this->user);
+		}
 		die('<pre>'.print_r($options, true));
 	}
 	
