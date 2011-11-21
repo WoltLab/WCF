@@ -173,14 +173,15 @@ class OptionHandler implements IOptionHandler {
 					if ($level <= 1) {
 						$superCategory['categories'] = $this->getOptionTree($superCategoryName, $level + 1);
 					}
-					if ($level > 1 || count($superCategory['categories']) == 0) {
+					
+					if ($level > 1 || empty($superCategory['categories'])) {
 						$superCategory['options'] = $this->getCategoryOptions($superCategoryName);
 					}
 					else {
 						$superCategory['options'] = $this->getCategoryOptions($superCategoryName, false);
 					}
 					
-					if (count($superCategory['categories']) > 0 || count($superCategory['options']) > 0) {
+					if (!empty($superCategory['categories']) || !empty($superCategory['options'])) {
 						$tree[] = $superCategory;
 					}
 				}
@@ -209,7 +210,10 @@ class OptionHandler implements IOptionHandler {
 				if (!isset($this->options[$optionName]) || !$this->checkOption($this->options[$optionName])) continue;
 				
 				// add option to list
-				$children[] = $this->getOption($optionName);
+				$option = $this->getOption($optionName);
+				if ($option !== null) {
+					$children[] = $this->getOption($optionName);
+				}
 			}
 		}
 		

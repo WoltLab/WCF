@@ -19,10 +19,30 @@ use wcf\system\option\OptionHandler;
  */
 class UserOptionHandler extends OptionHandler {
 	/**
+	 * true, if empty options should be removed
+	 * @var	boolean
+	 */
+	public $removeEmptyOptions = false;
+	
+	/**
 	 * current user
 	 * @var	wcf\data\user\User
 	 */
 	public $user = null;
+	
+	/**
+	 * Hides empty options.
+	 */
+	public function hideEmptyOptions() {
+		$this->removeEmptyOptions = true;
+	}
+	
+	/**
+	 * Shows empty options.
+	 */
+	public function showEmptyOptions() {
+		$this->removeEmptyOptions = false;
+	}
 	
 	/**
 	 * Sets option values for a certain user.
@@ -46,16 +66,19 @@ class UserOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	wcf\system\option\OptionHandler::getCategoryOptions()
+	 * @see	wcf\system\option\OptionHandler::getOption()
 	 */
-	public function getCategoryOptions($categoryName = '', $inherit = true) {
-		$options = parent::getCategoryOptions($categoryName, $inherit);
+	public function getOption($optionName) {
+		$optionData = parent::getOption($optionName);
 		
-		foreach ($options as $optionData) {
-			$optionData['object'] = new ViewableUserOption($optionData['object']);
-			$optionData['object']->setOptionValue($this->user);
+		$optionData['object'] = new ViewableUserOption($optionData['object']);
+		$optionData['object']->setOptionValue($this->user);
+		
+		if ($this->removeEmptyOptions && empty($optionData['object']->optionValue)) {
+			return null;
 		}
-		die('<pre>'.print_r($options, true));
+		
+		return $optionData;
 	}
 	
 	/**

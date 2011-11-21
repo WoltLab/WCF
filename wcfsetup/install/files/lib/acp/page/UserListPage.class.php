@@ -3,6 +3,7 @@ namespace wcf\acp\page;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\data\user\User;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\option\ViewableUserOption;
 use wcf\page\SortablePage;
 use wcf\system\cache\CacheHandler;
 use wcf\system\clipboard\ClipboardHandler;
@@ -10,7 +11,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\option\UserOptions;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\StringUtil;
@@ -67,6 +67,8 @@ class UserListPage extends SortablePage {
 	public $columnValues = array();
 	public $columnHeads = array();
 	public $sqlConditions = '';
+	
+	protected $optionHandler = null;
 	
 	/**
 	 * @see wcf\page\IPage::readParameters()
@@ -217,24 +219,27 @@ class UserListPage extends SortablePage {
 			// get special columns
 			foreach ($this->users as $key => $user) {
 				foreach ($this->columns as $column) {
-					if (isset($this->options[$column])) {
-						if ($this->options[$column]->outputClass) {
-							$outputObj = UserOptions::getInstance()->getOutputObject($this->options[$column]->outputClass);
-							$this->columnValues[$user->userID][$column] = $outputObj->getOutput($user, $this->options[$column], $user->{$column});
-						}
-						else {
-							$this->columnValues[$user->userID][$column] = StringUtil::encodeHTML($user->{$column});
-						}
-					}
-					else {
-						switch ($column) {
-							case 'email':
-								$this->columnValues[$user->userID][$column] = '<a href="mailto:'.StringUtil::encodeHTML($user->email).'">'.StringUtil::encodeHTML($user->email).'</a>';
-								break;
-							case 'registrationDate':
-								$this->columnValues[$user->userID][$column] = DateUtil::format(DateUtil::getDateTimeByTimestamp($user->{$column}), DateUtil::DATE_FORMAT);
-								break;
-						}
+					switch ($column) {
+						case 'email':
+							$this->columnValues[$user->userID][$column] = '<a href="mailto:'.StringUtil::encodeHTML($user->email).'">'.StringUtil::encodeHTML($user->email).'</a>';
+						break;
+						
+						case 'registrationDate':
+							$this->columnValues[$user->userID][$column] = DateUtil::format(DateUtil::getDateTimeByTimestamp($user->{$column}), DateUtil::DATE_FORMAT);
+						break;
+						
+						default:
+							if (isset($this->options[$column])) {
+								if ($this->options[$column]->outputClass) {
+									$this->options[$column]->setOptionValue($user);
+									$outputObj = $this->options[$column]->getOutputObject();
+									$this->columnValues[$user->userID][$column] = $outputObj->getOutput($user, $this->options[$column]->getDecoratedObject(), $user->{$column});
+								}
+								else {
+									$this->columnValues[$user->userID][$column] = StringUtil::encodeHTML($user->{$column});
+								}
+							}
+						break;
 					}
 				}
 			}
@@ -280,6 +285,11 @@ class UserListPage extends SortablePage {
 			'wcf\system\cache\builder\OptionCacheBuilder'
 		);
 		$this->options = CacheHandler::getInstance()->get($cacheName, 'options');
+		
+		foreach ($this->options as &$option) {
+			$option = new ViewableUserOption($option);
+		}
+		unset($option);
 	}
 	
 	/**
