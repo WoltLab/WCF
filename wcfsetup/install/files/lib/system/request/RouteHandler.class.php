@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\request;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\util\FileUtil;
 
