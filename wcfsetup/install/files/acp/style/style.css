@@ -1924,6 +1924,8 @@ input[type='button'],
 	border-color: #ccc;
 	border-bottom-color: #fff;
 	background-color: rgba(255, 255, 255, 1);
+	margin-right: -7px;
+	margin-left: -7px;
 	bottom: 0;
 	z-index: 30;
 }
@@ -2163,7 +2165,7 @@ input[type='button'],
 	color: #999;
 	margin: 0;
 	padding: 5px 1px 5px 20px;
-	display: inline-block;
+	display: block;
 	overflow: hidden;
 	white-space: nowrap;
 }
