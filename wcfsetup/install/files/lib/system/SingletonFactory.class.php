@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system;
+use wcf\system\exception\SystemException;
 
 /**
  * Basis class for singleton classes.
@@ -35,6 +36,14 @@ abstract class SingletonFactory {
 	 * Object cloning is disallowed.
 	 */
 	protected final function __clone() { }
+	
+	/**
+	 * Object serializing is disallowed.
+	 */
+	public final function __sleep() {
+		throw new SystemException('Serializing of Singletons is not allowed');
+		// Turret: I'm different
+	}
 	
 	/**
 	 * Returns an unique instance of current child class.
