@@ -400,7 +400,7 @@ class SessionHandler extends SingletonFactory {
 		$cacheName = 'groups-'.PACKAGE_ID.'-'.$groups;
 		CacheHandler::getInstance()->addResource(
 			$cacheName,
-			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			WCF_DIR.'cache/cache.groups-'.PACKAGE_ID.'-'.$groupsFileName.'.php',
 			'wcf\system\cache\builder\UserGroupPermissionCacheBuilder'
 		);
 		

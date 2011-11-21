@@ -109,7 +109,7 @@ final class User extends DatabaseObject {
 		if ($this->groupIDs === null) {
 			if (!$this->userID) {
 				// user is a guest, use default guest group
-				$this->groupIDs = UserGroup::getGroupIDsByType(array(UserGroup::GUESTS));
+				$this->groupIDs = UserGroup::getGroupIDsByType(array(UserGroup::GUESTS, UserGroup::EVERYONE));
 			}
 			else {
 				// load storage data
