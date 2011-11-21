@@ -1161,6 +1161,7 @@ li > .badgeButton {
 	padding-top: 5px;
 }
 
+/* ToDo: Get rid of that ".overlay" class! */
 .overlay .mainHeading > hgroup h1,
 .overlay .mainHeading > hgroup h1 a,
 .overlay .mainHeading > hgroup h2 {
@@ -1746,6 +1747,7 @@ input[type='button'],
 	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);*/
 }
 
+/* ToDo: Get rid of that ".overlay" class! */
 .border.overlay {
 	margin-top: 0 !important;
 }
@@ -2672,50 +2674,6 @@ p.error {
 
 
 
-/* ############## ToDo: Installation ############## */
-
-div#packageInstallationDialogContainer {
-	padding: 20px;
-	height: 100%;
-	max-width: 600px;
-}
-
-div#ajaxExceptionStacktrace {
-	white-space: nowrap;
-	overflow: scroll;
-	overflow-y: hidden;
-}
-
-div#packageInstallationInnerContentContainer {
-	padding-top: 15px;
-}
-
-div#packageInstallationInnerContentContainer fieldset {
-	border-color: #666;
-	background-color: rgba(0, 0, 0, .1);
-}
-
-div#packageInstallationInnerContent p.error {
-	border: 1px solid #ed1c24;
-	border-radius: 5px;
-	background-color: #fdd;
-	margin-bottom: 15px;
-	padding: 7px;
-}
-
-div#ajaxExceptionStacktrace {
-	font-family: monospace;
-	font-size: 90%;
-	line-height: 1.2;
-	border: 1px solid #ccc;
-	padding: 3px;
-}
-
-
-
-
-
-
 
 
 
@@ -2729,7 +2687,7 @@ div#ajaxExceptionStacktrace {
 
 
 
-
+/* ToDo: Change that class-name! */
 .overlayLoading {
 	background-color: #fff;
 	background-image: url('../../icon/spinner1.svg');
@@ -2786,7 +2744,7 @@ div#ajaxExceptionStacktrace {
 	background-position: left top;
 	background-repeat: repeat-x;
 	margin-bottom: 1px;
-	padding: 13px;
+	padding: 10px 20px;
 	position: relative;
 	display: block;
 	cursor: move;
@@ -2808,8 +2766,8 @@ a.ui-dialog-titlebar-close {
 	position: absolute !important;
 	width: 32px;
 	height: 32px;
-	top: 7px;
-	right: 7px;
+	top: 5px;
+	right: 10px;
 }
 
 a.ui-dialog-titlebar-close span {
@@ -2828,6 +2786,7 @@ a.ui-dialog-titlebar-close span {
 
 .ui-dialog > .ui-dialog-content {
 	border-radius: 7px;
+	padding: 20px;
 }
 
 .ui-dialog-titlebar ~ .ui-dialog-content {
@@ -2835,11 +2794,51 @@ a.ui-dialog-titlebar-close span {
 	border-top-right-radius: 0;
 	border-bottom-left-radius: 7px;
 	border-bottom-right-radius: 7px;
+	padding: 10px 20px 20px;
+}
+
+/* ToDo: Installation */
+
+.ui-dialog-content > div {
+	padding: 20px;
+	height: 100%;
+	max-width: 600px;
+}
+
+.ui-dialog-content > div fieldset {
+	border-color: #666;
+	background-color: rgba(0, 0, 0, .1);
+}
+
+.ui-dialog-content > div p.error {
+	border: 1px solid #ed1c24;
+	border-radius: 5px;
+	background-color: #fdd;
+	margin-bottom: 15px;
+	padding: 7px;
+}
+
+/* Special */
+
+div#ajaxExceptionStacktrace {
+	white-space: nowrap;
+	overflow: scroll;
+	overflow-y: hidden;
+}
+
+div#ajaxExceptionStacktrace {
+	font-family: monospace;
+	font-size: 90%;
+	line-height: 1.2;
+	border: 1px solid #ccc;
+	padding: 3px;
 }
 
 
 
-div.ui-widget-overlay {
+/* ############## ToDo: Overlay Spinner ############## */
+
+.ui-widget-overlay {
 	background-color: #000;
 	opacity: .5;
 	position: fixed;
@@ -2847,6 +2846,10 @@ div.ui-widget-overlay {
 	top: 0;
 	left: 0;
 }
+
+
+
+
 
 
 
