@@ -4,7 +4,7 @@
 		<item name="wcf.acp.cronjob.list"><![CDATA[Zeitgesteuerte Aufgaben]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Zeitgesteuerte Aufgabe hinzufügen]]></item>
 		<item name="wcf.acp.cronjob.list.count"><![CDATA[{#$items} zeitgesteuerte Aufgabe{if $items != 1}n{/if}]]></item>
-		<item name="wcf.acp.cronjob.subtitle"><![CDATA[&raquo;Cronjobs&laquo;]]></item>
+		<item name="wcf.acp.cronjob.subtitle"><![CDATA[&bdquo;Cronjobs&ldquo;]]></item>
 		<item name="wcf.acp.cronjob.startDom"><![CDATA[Tag des Monats]]></item>
 		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[Tage des Monats (1 - 31), an welchen die Aufgabe ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startDomShort"><![CDATA[D]]></item>
@@ -30,7 +30,7 @@
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Aufgabe jetzt ausführen]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
-		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Sind Sie sicher, dass Sie diese zeitgesteuerte Aufgabe &raquo;{$cronjob->description|truncate:50:' ...'}&laquo; löschen möchten?]]></item>
+		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Sind Sie sicher, dass Sie diese zeitgesteuerte Aufgabe &bdquo;{$cronjob->description|truncate:50:' ...'}&ldquo; löschen möchten?]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten Zeitgesteuerten Aufgaben]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Alle löschen]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Sind Sie sicher, dass Sie alle Protokoll-Einträge löschen möchten?]]></item>
@@ -47,7 +47,7 @@
 		<item name="wcf.acp.group.users"><![CDATA[Registrierte Benutzer]]></item>
 		<item name="wcf.acp.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
 		<item name="wcf.acp.group.data"><![CDATA[Allgemeine Daten]]></item>
-		<item name="wcf.acp.group.delete.sure"><![CDATA[Wollen Sie diese Benutzergruppe &raquo;{$group->groupName}&laquo; wirklich löschen?]]></item>
+		<item name="wcf.acp.group.delete.sure"><![CDATA[Wollen Sie diese Benutzergruppe &bdquo;{$group->groupName}&ldquo; wirklich löschen?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Benutzergruppe bearbeiten]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Sie sind selbst Mitglied dieser Benutzergruppe. Änderungen an den Zugriffsrechten dieser Benutzergruppe können womöglich dazu führen, dass Sie aus der Administrationsoberfläche ausgeschlossen werden. Bitte seien Sie entsprechend vorsichtig!]]></item>
 		<item name="wcf.acp.group.groupName"><![CDATA[Name der Benutzergruppe]]></item>
@@ -214,8 +214,8 @@
 		<item name="wcf.acp.option.mail_smtp_password"><![CDATA[SMTP-Kennwort]]></item>
 		<item name="wcf.acp.option.mail_smtp_port"><![CDATA[SMTP-Port]]></item>
 		<item name="wcf.acp.option.mail_smtp_user"><![CDATA[SMTP-Benutzer]]></item>
-		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[&raquo;-f&laquo; Parameter verwenden]]></item>
-		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Manche Server benötigen den &raquo;-f&laquo; Parameter beim Versenden von E-Mails. Falls Sie Probleme mit dem Versand von E-Mails haben, aktivieren Sie diese Einstellung.]]></item>
+		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[&bdquo;-f&ldquo; Parameter verwenden]]></item>
+		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Manche Server benötigen den &bdquo;-f&ldquo; Parameter beim Versenden von E-Mails. Falls Sie Probleme mit dem Versand von E-Mails haben, aktivieren Sie diese Einstellung.]]></item>
 		<item name="wcf.acp.option.mail_use_formatted_address"><![CDATA[Formatierte E-Mail-Adressen verwenden]]></item>
 		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Absender- und Empfänger-Adressen werden in folgendes Format gebracht: &quot;Name &lt;email@domain.tld&gt;&quot;. Diese Funktion wird nicht von allen Mailservern unterstützt und sollte daher bei Problemen abgeschaltet werden.]]></item>
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
@@ -261,11 +261,18 @@
 		<item name="wcf.acp.option.timezone.description"><![CDATA[Standard-Zeitzone Ihrer Seite]]></item>
 		<item name="wcf.acp.option.import.success"><![CDATA[Die Optionen wurden erfolgreich importiert.]]></item>
 	</category>
+
+	<category name="wcf.acp.package">
+		<item name="wcf.acp.package.installation.currentStep"><![CDATA[Aktueller Schritt:]]></item>
+		<item name="wcf.acp.package.installation.step.install"><![CDATA[&bdquo;{$packageName}&ldquo; wird installiert &hellip;]]></item>
+		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Installation wird vorbereitet &hellip;]]></item>
+		<item name="wcf.acp.package.installation.title"><![CDATA[&bdquo;{$packageName}&ldquo; wird installiert &hellip;]]></item>
+	</category>
 	
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Server hinzufügen]]></item>
 		<item name="wcf.acp.updateServer.data"><![CDATA[Server-Daten]]></item>
-		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Wollen Sie den Server &raquo;{$updateServer->serverURL}&laquo; wirklich löschen?]]></item>
+		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Wollen Sie den Server &bdquo;{$updateServer->serverURL}&ldquo; wirklich löschen?]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Server bearbeiten]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Fehlermeldungen]]></item>
 		<item name="wcf.acp.updateServer.list"><![CDATA[Update-Server]]></item>
