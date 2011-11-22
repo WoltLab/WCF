@@ -196,6 +196,111 @@ header.pageHeader nav.topMenu {
 	-ms-transition: background .2s linear;
 	-o-transition: background .2s linear;
 	transition: background .2s linear;
+	
+	-webkit-animation-name: showTopMenu;
+	-webkit-animation-duration: .3s;
+	-webkit-animation-timing-function: linear; 
+	
+	-moz-animation-name: showTopMenu;
+	-moz-animation-duration: .3s;
+	-moz-animation-timing-function: linear;
+	
+	-ms-animation-name: showTopMenu;
+	-ms-animation-duration: .3s;
+	-ms-animation-timing-function: linear; 
+	/* disabled to ease rendering work for Opera 
+	-o-animation-name: showTopMenu;
+	-o-animation-duration: .3s;
+	-o-animation-timing-function: linear;
+	*/
+	animation-name: showTopMenu;
+	animation-duration: .3s;
+	animation-timing-function: linear;
+}
+
+/* Show Top Menu */
+
+@-webkit-keyframes showTopMenu {
+	0% {
+		opacity: 0;
+		top: -50px;
+	}
+	60% {
+		top: 0px;
+	}
+	80% {
+		top: -15px;
+	}
+	100% {
+		opacity: 1;
+		top: auto;
+	}
+}
+@-moz-keyframes glowButtons {
+	0% {
+		opacity: 0;
+		top: -50px;
+	}
+	60% {
+		top: 0px;
+	}
+	80% {
+		top: -15px;
+	}
+	100% {
+		opacity: 1;
+		top: auto;
+	}
+}
+@-ms-keyframes glowButtons {
+	0% {
+		opacity: 0;
+		top: -50px;
+	}
+	60% {
+		top: 0px;
+	}
+	80% {
+		top: -15px;
+	}
+	100% {
+		opacity: 1;
+		top: auto;
+	}
+}
+/* disabled to ease rendering work for Opera 
+@-o-keyframes glowButtons {
+	0% {
+		opacity: 0;
+		top: -50px;
+	}
+	60% {
+		top: 0px;
+	}
+	80% {
+		top: -15px;
+	}
+	100% {
+		opacity: 1;
+		top: auto;
+	}
+}
+*/
+@keyframes glowButtons {
+	0% {
+		opacity: 0;
+		top: -50px;
+	}
+	60% {
+		top: 0px;
+	}
+	80% {
+		top: -15px;
+	}
+	100% {
+		opacity: 1;
+		top: auto;
+	}
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -2690,16 +2795,6 @@ p.error {
 
 
 
-/* ToDo: Change that class-name! */
-.overlayLoading {
-	background-color: #fff;
-	background-image: url('../../icon/spinner1.svg');
-	background-position: center center;
-	background-size: 32px;
-	background-repeat: no-repeat;
-}
-
-
 /* ############## ToDo: Overlay ############## */
 
 .ui-dialog {
@@ -2848,6 +2943,16 @@ div#ajaxExceptionStacktrace {
 	width: 100% !important;
 	top: 0;
 	left: 0;
+}
+
+
+/* ToDo: What is that and change that class-name! */
+.overlayLoading {
+	background-color: #fff;
+	background-image: url('../../icon/spinner1.svg');
+	background-position: center center;
+	background-size: 32px;
+	background-repeat: no-repeat;
 }
 
 
@@ -3107,44 +3212,46 @@ input[type='button'].default:active,
 /* Default State Glow */
 
 @-webkit-keyframes glowButtons {
-    0% {
-        -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
-    }
-    100% {
-        -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
-    }
+	0% {
+		-webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
+	}
+	100% {
+		-webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
+	}
 }
 @-moz-keyframes glowButtons {
-    0% {
-        -moz-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
-    }
-    100% {
-        -moz-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
-    }
+	0% {
+		-moz-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
+	}
+	100% {
+		-moz-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
+	}
 }
 @-ms-keyframes glowButtons {
-    0% {
-        -ms-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
-    }
-    100% {
-        -ms-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
-    }
+	0% {
+		-ms-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
+	}
+	100% {
+		-ms-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
+	}
 }
+/* disabled to ease rendering work for Opera 
 @-o-keyframes glowButtons {
-    0% {
-        -o-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
-    }
-    100% {
-        -o-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
-    }
+	0% {
+		-o-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
+	}
+	100% {
+		-o-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
+	}
 }
+*/
 @keyframes glowButtons {
-    0% {
-        box-shadow: 0 0 13px rgba(102, 153, 204, .5);
-    }
-    100% {
-        box-shadow: 0 0 13px rgba(102, 153, 204, .1);
-    }
+	0% {
+		box-shadow: 0 0 13px rgba(102, 153, 204, .5);
+	}
+	100% {
+		box-shadow: 0 0 13px rgba(102, 153, 204, .1);
+	}
 }
 
 /* Default Normal State */
@@ -3188,13 +3295,13 @@ input[type='button'].default,
 	-ms-animation-iteration-count: infinite;
 	-ms-animation-direction: alternate;
 	-ms-animation-timing-function: ease-in-out; 
-	
+	/* disabled to ease rendering work for Opera 
 	-o-animation-name: glowButtons;
 	-o-animation-duration: 1s;
 	-o-animation-iteration-count: infinite;
 	-o-animation-direction: alternate;
 	-o-animation-timing-function: ease-in-out;
-	
+	*/
 	animation-name: glowButtons;
 	animation-duration: 1s;
 	animation-iteration-count: infinite;
@@ -3228,6 +3335,7 @@ input[type='button'].default,
         -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .1);
     }
 }
+/* disabled to ease rendering work for Opera 
 @-o-keyframes glowButtonsHover {
     0% {
         -o-box-shadow: 0 0 13px rgba(255, 153, 51, .3);
@@ -3236,6 +3344,7 @@ input[type='button'].default,
         -o-box-shadow: 0 0 13px rgba(255, 153, 51, .1);
     }
 }
+*/
 @keyframes glowButtonsHover {
     0% {
         box-shadow: 0 0 13px rgba(255, 153, 51, .3);
@@ -3274,13 +3383,13 @@ input[type='button'].default:hover,
 	-ms-animation-iteration-count: infinite;
 	-ms-animation-direction: alternate;
 	-ms-animation-timing-function: ease-in-out; 
-	
+	/* disabled to ease rendering work for Opera 
 	-o-animation-name: glowButtonsHover;
 	-o-animation-duration: 1s;
 	-o-animation-iteration-count: infinite;
 	-o-animation-direction: alternate;
 	-o-animation-timing-function: ease-in-out;
-	
+	*/
 	animation-name: glowButtonsHover;
 	animation-duration: 1s;
 	animation-iteration-count: infinite;
@@ -3314,6 +3423,7 @@ input[type='button'].default:hover,
         -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .1), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
 }
+/* disabled to ease rendering work for Opera 
 @-o-keyframes glowDefaultButtonsActive {
     0% {
         -o-box-shadow: 0 0 13px rgba(255, 153, 51, .3), inset 0 1px 3px rgba(0, 0, 0, .1);
@@ -3322,6 +3432,7 @@ input[type='button'].default:hover,
         -o-box-shadow: 0 0 13px rgba(255, 153, 51, .1), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
 }
+*/
 @keyframes glowDefaultButtonsActive {
     0% {
         box-shadow: 0 0 13px rgba(255, 153, 51, .3), inset 0 1px 3px rgba(0, 0, 0, .1);
@@ -3363,13 +3474,13 @@ input[type='button'].default:active,
 	-ms-animation-iteration-count: infinite;
 	-ms-animation-direction: alternate;
 	-ms-animation-timing-function: ease-in-out; 
-	
+	/* disabled to ease rendering work for Opera 
 	-o-animation-name: glowDefaultButtonsActive;
 	-o-animation-duration: 1s;
 	-o-animation-iteration-count: infinite;
 	-o-animation-direction: alternate;
 	-o-animation-timing-function: ease-in-out;
-	
+	*/
 	animation-name: glowDefaultButtonsActive;
 	animation-duration: 1s;
 	animation-iteration-count: infinite;
@@ -3709,18 +3820,37 @@ div.scrollableContainer > div:first-child p {
 .infoPackageStandalone footer nav,
 .infoPackagePlugin footer nav {
 	text-align: right;
-	opacity: 0;
-	
-	-webkit-transition: opacity .1s linear;
-	-moz-transition: opacity .1s linear;
-	-ms-transition: opacity .1s linear;
-	-o-transition: opacity .1s linear;
-	transition: opacity .1s linear;
 }
 
-.infoPackageStandalone:hover footer nav,
-.infoPackagePlugin:hover footer nav {
-	opacity: 1;
+@media screen and (min-width: 480px), screen and (min-device-width: 480px) {
+	
+	.infoPackageStandalone footer nav,
+	.infoPackagePlugin footer nav {
+		opacity: 0;
+		
+		-webkit-transition: opacity .1s linear;
+		-moz-transition: opacity .1s linear;
+		-ms-transition: opacity .1s linear;
+		-o-transition: opacity .1s linear;
+		transition: opacity .1s linear;
+	}
+	
+	.infoPackageStandalone:hover footer nav,
+	.infoPackagePlugin:hover footer nav {
+		opacity: 1;
+	}
+	
+}
+
+@media screen and (max-width: 480px), screen and (max-device-width: 480px) {
+	
+	.infoPackageStandalone footer nav,
+	.infoPackagePlugin footer nav,
+	.infoPackageStandalone:hover footer nav,
+	.infoPackagePlugin:hover footer nav {
+		opacity: 1;
+	}
+	
 }
 
 
