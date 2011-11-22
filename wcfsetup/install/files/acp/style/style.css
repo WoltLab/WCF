@@ -1843,6 +1843,11 @@ input[type='button'],
 	display: inline-block;
 }
 
+.tabMenu li.ui-state-active {
+	margin-right: -7px;
+	margin-left: -7px;
+}
+
 .tabMenu li a {
 	text-decoration: none;
 	color: #999;
@@ -1927,8 +1932,6 @@ input[type='button'],
 	border-color: #ccc;
 	border-bottom-color: #fff;
 	background-color: rgba(255, 255, 255, 1);
-	margin-right: -7px;
-	margin-left: -7px;
 	bottom: 0;
 	z-index: 30;
 }
@@ -2735,6 +2738,7 @@ p.error {
 /* Dialog Titlebar */
 
 .ui-dialog-titlebar {
+	border-bottom: 1px solid #036;
 	border-top-left-radius: 7px;
 	border-top-right-radius: 7px;
 	background-color: #29374a;
@@ -2743,7 +2747,6 @@ p.error {
 	/* background-image: url('../../../images/header.png'); */
 	background-position: left top;
 	background-repeat: repeat-x;
-	margin-bottom: 1px;
 	padding: 10px 20px;
 	position: relative;
 	display: block;
