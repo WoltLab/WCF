@@ -73,6 +73,7 @@ class InstallPackageAction extends AbstractDialogAction {
 		
 		if ($step->hasDocument()) {
 			$this->data = array(
+				'currentAction' => $this->getCurrentAction($queueID),
 				'innerTemplate' => $step->getTemplate(),
 				'node' => $step->getNode(),
 				'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
@@ -87,6 +88,7 @@ class InstallPackageAction extends AbstractDialogAction {
 				
 				// show success
 				$this->data = array(
+					'currentAction' => $this->getCurrentAction(null),
 					'progress' => 100,
 					'step' => 'success'
 				);
@@ -95,6 +97,7 @@ class InstallPackageAction extends AbstractDialogAction {
 			
 			// continue with next node
 			$this->data = array(
+				'currentAction' => $this->getCurrentAction($queueID),
 				'step' => 'install',
 				'node' => $step->getNode(),
 				'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
@@ -126,7 +129,7 @@ class InstallPackageAction extends AbstractDialogAction {
 			'template' => WCF::getTPL()->fetch($this->templateName),
 			'step' => 'install',
 			'node' => $nextNode,
-			'currentAction' => WCF::getLanguage()->get('wcf.package.installation.step.installing'),
+			'currentAction' => $this->getCurrentAction($queueID),
 			'progress' => 0,
 			'queueID' => $queueID
 		);
@@ -146,5 +149,25 @@ class InstallPackageAction extends AbstractDialogAction {
 				throw new IllegalLinkException();
 			break;
 		}
+	}
+	
+	/**
+	 * Returns current action by queue id.
+	 * 
+	 * @param	integer		$queueID
+	 * @return	string
+	 */
+	protected function getCurrentAction($queueID) {
+		if ($queueID === null) {
+			// success message
+			$currentAction = WCF::getLanguage()->get('wcf.acp.package.installation.step.install.success');
+		}
+		else {
+			// build package name
+			$packageName = $this->installation->nodeBuilder->getPackageNameByQueue($queueID);
+			$currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.installation.step.install', array('packageName' => $packageName));
+		}
+		
+		return $currentAction;
 	}
 }

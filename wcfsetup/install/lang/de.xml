@@ -263,10 +263,10 @@
 	</category>
 
 	<category name="wcf.acp.package">
-		<item name="wcf.acp.package.installation.currentStep"><![CDATA[Aktueller Schritt:]]></item>
 		<item name="wcf.acp.package.installation.step.install"><![CDATA[&bdquo;{$packageName}&ldquo; wird installiert &hellip;]]></item>
+		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation abgeschlossen]]></item>
 		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Installation wird vorbereitet &hellip;]]></item>
-		<item name="wcf.acp.package.installation.title"><![CDATA[&bdquo;{$packageName}&ldquo; wird installiert &hellip;]]></item>
+		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">

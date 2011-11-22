@@ -267,6 +267,12 @@ WCF.ACP.PackageInstallation.prototype = {
 		// update progress
 		if ($data.progress) {
 			$('#packageInstallationProgress').attr('value', $data.progress).text($data.progress + '%');
+			$('#packageInstallationProgressLabel').text($data.progress + '%');
+		}
+
+		// update action
+		if ($data.currentAction) {
+			$('#packageInstallationAction').html($data.currentAction);
 		}
 		
 		// handle success
@@ -288,11 +294,6 @@ WCF.ACP.PackageInstallation.prototype = {
 		// update template
 		if ($data.template && !$data.ignoreTemplate) {
 			this._dialog.html($data.template);
-		}
-		
-		// update action
-		if ($data.currentAction) {
-			$('#packageInstallationAction').text($data.currentAction);
 		}
 		
 		// handle inner template
