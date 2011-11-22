@@ -261,6 +261,13 @@
 		<item name="wcf.acp.option.timezone.description"><![CDATA[Choose the default time zone for your site.]]></item>
 		<item name="wcf.acp.option.import.success"><![CDATA[The options have been successfully imported.]]></item>
 	</category>
+
+	<category name="wcf.acp.package">
+		<item name="wcf.acp.package.installation.step.install"><![CDATA[Installing &ldquo;{$packageName}&rdquo; &hellip;]]></item>
+		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation completed]]></item>
+		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Prepairing installation &hellip;]]></item>
+		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
+	</category>
 	
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add server]]></item>

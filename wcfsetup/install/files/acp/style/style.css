@@ -196,6 +196,111 @@ header.pageHeader nav.topMenu {
 	-ms-transition: background .2s linear;
 	-o-transition: background .2s linear;
 	transition: background .2s linear;
+	
+	-webkit-animation-name: showTopMenu;
+	-webkit-animation-duration: .3s;
+	-webkit-animation-timing-function: linear; 
+	
+	-moz-animation-name: showTopMenu;
+	-moz-animation-duration: .3s;
+	-moz-animation-timing-function: linear;
+	
+	-ms-animation-name: showTopMenu;
+	-ms-animation-duration: .3s;
+	-ms-animation-timing-function: linear; 
+	/* disabled to ease rendering work for Opera 
+	-o-animation-name: showTopMenu;
+	-o-animation-duration: .3s;
+	-o-animation-timing-function: linear;
+	*/
+	animation-name: showTopMenu;
+	animation-duration: .3s;
+	animation-timing-function: linear;
+}
+
+/* Show Top Menu */
+
+@-webkit-keyframes showTopMenu {
+	0% {
+		opacity: 0;
+		top: -50px;
+	}
+	60% {
+		top: 0px;
+	}
+	80% {
+		top: -15px;
+	}
+	100% {
+		opacity: 1;
+		top: auto;
+	}
+}
+@-moz-keyframes glowButtons {
+	0% {
+		opacity: 0;
+		top: -50px;
+	}
+	60% {
+		top: 0px;
+	}
+	80% {
+		top: -15px;
+	}
+	100% {
+		opacity: 1;
+		top: auto;
+	}
+}
+@-ms-keyframes glowButtons {
+	0% {
+		opacity: 0;
+		top: -50px;
+	}
+	60% {
+		top: 0px;
+	}
+	80% {
+		top: -15px;
+	}
+	100% {
+		opacity: 1;
+		top: auto;
+	}
+}
+/* disabled to ease rendering work for Opera 
+@-o-keyframes glowButtons {
+	0% {
+		opacity: 0;
+		top: -50px;
+	}
+	60% {
+		top: 0px;
+	}
+	80% {
+		top: -15px;
+	}
+	100% {
+		opacity: 1;
+		top: auto;
+	}
+}
+*/
+@keyframes glowButtons {
+	0% {
+		opacity: 0;
+		top: -50px;
+	}
+	60% {
+		top: 0px;
+	}
+	80% {
+		top: -15px;
+	}
+	100% {
+		opacity: 1;
+		top: auto;
+	}
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -1161,6 +1266,7 @@ li > .badgeButton {
 	padding-top: 5px;
 }
 
+/* ToDo: Get rid of that ".overlay" class! */
 .overlay .mainHeading > hgroup h1,
 .overlay .mainHeading > hgroup h1 a,
 .overlay .mainHeading > hgroup h2 {
@@ -1746,6 +1852,7 @@ input[type='button'],
 	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);*/
 }
 
+/* ToDo: Get rid of that ".overlay" class! */
 .border.overlay {
 	margin-top: 0 !important;
 }
@@ -1841,6 +1948,11 @@ input[type='button'],
 	display: inline-block;
 }
 
+.tabMenu li.ui-state-active {
+	margin-right: -7px;
+	margin-left: -7px;
+}
+
 .tabMenu li a {
 	text-decoration: none;
 	color: #999;
@@ -1925,8 +2037,6 @@ input[type='button'],
 	border-color: #ccc;
 	border-bottom-color: #fff;
 	background-color: rgba(255, 255, 255, 1);
-	margin-right: -7px;
-	margin-left: -7px;
 	bottom: 0;
 	z-index: 30;
 }
@@ -2672,50 +2782,6 @@ p.error {
 
 
 
-/* ############## ToDo: Installation ############## */
-
-div#packageInstallationDialogContainer {
-	padding: 20px;
-	height: 100%;
-	max-width: 600px;
-}
-
-div#ajaxExceptionStacktrace {
-	white-space: nowrap;
-	overflow: scroll;
-	overflow-y: hidden;
-}
-
-div#packageInstallationInnerContentContainer {
-	padding-top: 15px;
-}
-
-div#packageInstallationInnerContentContainer fieldset {
-	border-color: #666;
-	background-color: rgba(0, 0, 0, .1);
-}
-
-div#packageInstallationInnerContent p.error {
-	border: 1px solid #ed1c24;
-	border-radius: 5px;
-	background-color: #fdd;
-	margin-bottom: 15px;
-	padding: 7px;
-}
-
-div#ajaxExceptionStacktrace {
-	font-family: monospace;
-	font-size: 90%;
-	line-height: 1.2;
-	border: 1px solid #ccc;
-	padding: 3px;
-}
-
-
-
-
-
-
 
 
 
@@ -2727,16 +2793,6 @@ div#ajaxExceptionStacktrace {
 
 
 
-
-
-
-.overlayLoading {
-	background-color: #fff;
-	background-image: url('../../icon/spinner1.svg');
-	background-position: center center;
-	background-size: 32px;
-	background-repeat: no-repeat;
-}
 
 
 /* ############## ToDo: Overlay ############## */
@@ -2777,6 +2833,7 @@ div#ajaxExceptionStacktrace {
 /* Dialog Titlebar */
 
 .ui-dialog-titlebar {
+	border-bottom: 1px solid #036;
 	border-top-left-radius: 7px;
 	border-top-right-radius: 7px;
 	background-color: #29374a;
@@ -2785,8 +2842,7 @@ div#ajaxExceptionStacktrace {
 	/* background-image: url('../../../images/header.png'); */
 	background-position: left top;
 	background-repeat: repeat-x;
-	margin-bottom: 1px;
-	padding: 13px;
+	padding: 10px 20px;
 	position: relative;
 	display: block;
 	cursor: move;
@@ -2808,8 +2864,8 @@ a.ui-dialog-titlebar-close {
 	position: absolute !important;
 	width: 32px;
 	height: 32px;
-	top: 7px;
-	right: 7px;
+	top: 5px;
+	right: 10px;
 }
 
 a.ui-dialog-titlebar-close span {
@@ -2828,6 +2884,7 @@ a.ui-dialog-titlebar-close span {
 
 .ui-dialog > .ui-dialog-content {
 	border-radius: 7px;
+	padding: 20px;
 }
 
 .ui-dialog-titlebar ~ .ui-dialog-content {
@@ -2835,11 +2892,51 @@ a.ui-dialog-titlebar-close span {
 	border-top-right-radius: 0;
 	border-bottom-left-radius: 7px;
 	border-bottom-right-radius: 7px;
+	padding: 10px 20px 20px;
+}
+
+/* ToDo: Installation */
+
+.ui-dialog-content > div {
+	padding: 20px;
+	height: 100%;
+	max-width: 600px;
+}
+
+.ui-dialog-content > div fieldset {
+	border-color: #666;
+	background-color: rgba(0, 0, 0, .1);
+}
+
+.ui-dialog-content > div p.error {
+	border: 1px solid #ed1c24;
+	border-radius: 5px;
+	background-color: #fdd;
+	margin-bottom: 15px;
+	padding: 7px;
+}
+
+/* Special */
+
+div#ajaxExceptionStacktrace {
+	white-space: nowrap;
+	overflow: scroll;
+	overflow-y: hidden;
+}
+
+div#ajaxExceptionStacktrace {
+	font-family: monospace;
+	font-size: 90%;
+	line-height: 1.2;
+	border: 1px solid #ccc;
+	padding: 3px;
 }
 
 
 
-div.ui-widget-overlay {
+/* ############## ToDo: Overlay Spinner ############## */
+
+.ui-widget-overlay {
 	background-color: #000;
 	opacity: .5;
 	position: fixed;
@@ -2847,6 +2944,20 @@ div.ui-widget-overlay {
 	top: 0;
 	left: 0;
 }
+
+
+/* ToDo: What is that and change that class-name! */
+.overlayLoading {
+	background-color: #fff;
+	background-image: url('../../icon/spinner1.svg');
+	background-position: center center;
+	background-size: 32px;
+	background-repeat: no-repeat;
+}
+
+
+
+
 
 
 
@@ -3101,44 +3212,46 @@ input[type='button'].default:active,
 /* Default State Glow */
 
 @-webkit-keyframes glowButtons {
-    0% {
-        -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
-    }
-    100% {
-        -webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
-    }
+	0% {
+		-webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
+	}
+	100% {
+		-webkit-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
+	}
 }
 @-moz-keyframes glowButtons {
-    0% {
-        -moz-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
-    }
-    100% {
-        -moz-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
-    }
+	0% {
+		-moz-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
+	}
+	100% {
+		-moz-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
+	}
 }
 @-ms-keyframes glowButtons {
-    0% {
-        -ms-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
-    }
-    100% {
-        -ms-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
-    }
+	0% {
+		-ms-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
+	}
+	100% {
+		-ms-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
+	}
 }
+/* disabled to ease rendering work for Opera 
 @-o-keyframes glowButtons {
-    0% {
-        -o-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
-    }
-    100% {
-        -o-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
-    }
+	0% {
+		-o-box-shadow: 0 0 13px rgba(102, 153, 204, .5);
+	}
+	100% {
+		-o-box-shadow: 0 0 13px rgba(102, 153, 204, .1);
+	}
 }
+*/
 @keyframes glowButtons {
-    0% {
-        box-shadow: 0 0 13px rgba(102, 153, 204, .5);
-    }
-    100% {
-        box-shadow: 0 0 13px rgba(102, 153, 204, .1);
-    }
+	0% {
+		box-shadow: 0 0 13px rgba(102, 153, 204, .5);
+	}
+	100% {
+		box-shadow: 0 0 13px rgba(102, 153, 204, .1);
+	}
 }
 
 /* Default Normal State */
@@ -3182,13 +3295,13 @@ input[type='button'].default,
 	-ms-animation-iteration-count: infinite;
 	-ms-animation-direction: alternate;
 	-ms-animation-timing-function: ease-in-out; 
-	
+	/* disabled to ease rendering work for Opera 
 	-o-animation-name: glowButtons;
 	-o-animation-duration: 1s;
 	-o-animation-iteration-count: infinite;
 	-o-animation-direction: alternate;
 	-o-animation-timing-function: ease-in-out;
-	
+	*/
 	animation-name: glowButtons;
 	animation-duration: 1s;
 	animation-iteration-count: infinite;
@@ -3222,6 +3335,7 @@ input[type='button'].default,
         -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .1);
     }
 }
+/* disabled to ease rendering work for Opera 
 @-o-keyframes glowButtonsHover {
     0% {
         -o-box-shadow: 0 0 13px rgba(255, 153, 51, .3);
@@ -3230,6 +3344,7 @@ input[type='button'].default,
         -o-box-shadow: 0 0 13px rgba(255, 153, 51, .1);
     }
 }
+*/
 @keyframes glowButtonsHover {
     0% {
         box-shadow: 0 0 13px rgba(255, 153, 51, .3);
@@ -3268,13 +3383,13 @@ input[type='button'].default:hover,
 	-ms-animation-iteration-count: infinite;
 	-ms-animation-direction: alternate;
 	-ms-animation-timing-function: ease-in-out; 
-	
+	/* disabled to ease rendering work for Opera 
 	-o-animation-name: glowButtonsHover;
 	-o-animation-duration: 1s;
 	-o-animation-iteration-count: infinite;
 	-o-animation-direction: alternate;
 	-o-animation-timing-function: ease-in-out;
-	
+	*/
 	animation-name: glowButtonsHover;
 	animation-duration: 1s;
 	animation-iteration-count: infinite;
@@ -3308,6 +3423,7 @@ input[type='button'].default:hover,
         -ms-box-shadow: 0 0 13px rgba(255, 153, 51, .1), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
 }
+/* disabled to ease rendering work for Opera 
 @-o-keyframes glowDefaultButtonsActive {
     0% {
         -o-box-shadow: 0 0 13px rgba(255, 153, 51, .3), inset 0 1px 3px rgba(0, 0, 0, .1);
@@ -3316,6 +3432,7 @@ input[type='button'].default:hover,
         -o-box-shadow: 0 0 13px rgba(255, 153, 51, .1), inset 0 1px 3px rgba(0, 0, 0, .1);
     }
 }
+*/
 @keyframes glowDefaultButtonsActive {
     0% {
         box-shadow: 0 0 13px rgba(255, 153, 51, .3), inset 0 1px 3px rgba(0, 0, 0, .1);
@@ -3357,13 +3474,13 @@ input[type='button'].default:active,
 	-ms-animation-iteration-count: infinite;
 	-ms-animation-direction: alternate;
 	-ms-animation-timing-function: ease-in-out; 
-	
+	/* disabled to ease rendering work for Opera 
 	-o-animation-name: glowDefaultButtonsActive;
 	-o-animation-duration: 1s;
 	-o-animation-iteration-count: infinite;
 	-o-animation-direction: alternate;
 	-o-animation-timing-function: ease-in-out;
-	
+	*/
 	animation-name: glowDefaultButtonsActive;
 	animation-duration: 1s;
 	animation-iteration-count: infinite;
@@ -3703,18 +3820,37 @@ div.scrollableContainer > div:first-child p {
 .infoPackageStandalone footer nav,
 .infoPackagePlugin footer nav {
 	text-align: right;
-	opacity: 0;
-	
-	-webkit-transition: opacity .1s linear;
-	-moz-transition: opacity .1s linear;
-	-ms-transition: opacity .1s linear;
-	-o-transition: opacity .1s linear;
-	transition: opacity .1s linear;
 }
 
-.infoPackageStandalone:hover footer nav,
-.infoPackagePlugin:hover footer nav {
-	opacity: 1;
+@media screen and (min-width: 480px), screen and (min-device-width: 480px) {
+	
+	.infoPackageStandalone footer nav,
+	.infoPackagePlugin footer nav {
+		opacity: 0;
+		
+		-webkit-transition: opacity .1s linear;
+		-moz-transition: opacity .1s linear;
+		-ms-transition: opacity .1s linear;
+		-o-transition: opacity .1s linear;
+		transition: opacity .1s linear;
+	}
+	
+	.infoPackageStandalone:hover footer nav,
+	.infoPackagePlugin:hover footer nav {
+		opacity: 1;
+	}
+	
+}
+
+@media screen and (max-width: 480px), screen and (max-device-width: 480px) {
+	
+	.infoPackageStandalone footer nav,
+	.infoPackagePlugin footer nav,
+	.infoPackageStandalone:hover footer nav,
+	.infoPackagePlugin:hover footer nav {
+		opacity: 1;
+	}
+	
 }
 
 
@@ -3866,6 +4002,7 @@ div.ajaxDebugMessage p:last-child {
 
 div.ajaxDebugMessage p:last-child {
 	font-family: Monospace;
+	font-size: 110%;
 }
 
 

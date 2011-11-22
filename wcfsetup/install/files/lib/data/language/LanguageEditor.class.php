@@ -89,7 +89,7 @@ class LanguageEditor extends DatabaseObjectEditor {
 				// get language items
 				if ($packageID === 0) {
 					// update after wcf installation
-					$conditions->add("packageID = ?", array(0));
+					$conditions->add("packageID IS NULL");
 					
 					$sql = "SELECT 	languageItem, languageItemValue, languageCustomItemValue, languageUseCustomValue
 						FROM	wcf".WCF_N."_language_item
