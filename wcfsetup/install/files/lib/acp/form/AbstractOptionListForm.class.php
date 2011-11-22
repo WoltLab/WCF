@@ -16,18 +16,18 @@ use wcf\system\option\OptionHandler;
  */
 abstract class AbstractOptionListForm extends AbstractForm {
 	/**
-	 * @see wcf\form\AbstractForm::$errorField
+	 * @see	wcf\form\AbstractForm::$errorField
 	 */
 	public $errorField = array();
 	
 	/**
-	 * @see wcf\form\AbstractForm::$errorType
+	 * @see	wcf\form\AbstractForm::$errorType
 	 */
 	public $errorType = array();
 	
 	/**
 	 * cache name
-	 * @var string
+	 * @var	string
 	 */
 	public $cacheName = 'option';
 	
@@ -38,8 +38,8 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	public $cacheClass = 'wcf\system\cache\builder\OptionCacheBuilder';
 	
 	/**
-	 * Name of the active option category.
-	 * @var string
+	 * name of the active option category
+	 * @var	string
 	 */
 	public $categoryName = '';
 	
@@ -48,6 +48,12 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	 * @var	string
 	 */
 	protected $languageItemPattern = '';
+	
+	/**
+	 * true if active options are loaded when option handler is initialized
+	 * @var	boolean
+	 */
+	public $loadActiveOptions = true;
 	
 	/**
 	 * option handler object
@@ -68,16 +74,16 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	public $supportI18n = true;
 	
 	/**
-	 * @see	wcf\page\Page::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
 		
-		$this->optionHandler = new $this->optionHandlerClassName($this->cacheName, $this->cacheClass, $this->supportI18n, $this->languageItemPattern, $this->categoryName);
+		$this->optionHandler = new $this->optionHandlerClassName($this->cacheName, $this->cacheClass, $this->supportI18n, $this->languageItemPattern, $this->categoryName, $this->loadActiveOptions);
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -86,7 +92,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -98,6 +104,9 @@ abstract class AbstractOptionListForm extends AbstractForm {
 		}
 	}
 	
+	/**
+	 * @see	wcf\page\IPage::readData()
+	 */
 	public function readData() {
 		parent::readData();
 		
