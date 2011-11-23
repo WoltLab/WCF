@@ -331,6 +331,9 @@ WCF.ACP.PackageInstallation.prototype = {
 		
 		// purge content
 		this._purgeTemplateContent($.proxy(function() {
+			// redraw container
+			this._dialog.wcfDialog('redraw');
+			
 			// execute next step
 			if ($data.step && $data.node) {
 				this._executeStep($data.step, $data.node);
@@ -345,7 +348,7 @@ WCF.ACP.PackageInstallation.prototype = {
 	 */
 	_purgeTemplateContent: function(callback) {
 		if ($('#packageInstallationInnerContent').children().length > 1) {
-			$('#packageInstallationInnerContentContainer').wcfBlindOut('down', $.proxy(function() {
+			$('#packageInstallationInnerContentContainer').wcfBlindOut('vertical', $.proxy(function() {
 				$('#packageInstallationInnerContent').empty();
 				this._dialog.wcfDialog('redraw');
 				

@@ -259,37 +259,40 @@ $.fn.extend({
 	},
 	
 	/**
-	 * Applies a grow-effect by resizing element while moving the
-	 * element appropriately
+	 * Applies a grow-effect by resizing element while moving the element
+	 * appropriately. Make sure the passed data.content element contains
+	 * all elements which affect this indirectly, this includes outer
+	 * containers which may apply an obstrusive padding.
 	 * 
 	 * @param	object		data
 	 * @param	object		options
 	 * @return	jQuery
 	 */
 	wcfGrow: function(data, options) {
-		// create temporarily element to determine dimensions
-		var $tempElementID = WCF.getRandomID();
-		$('body').append('<div id="' + $tempElementID + '" class="wcfDimensions">' + data.content + '</div>');
-		var $tempElement = $('#' + $tempElementID);
-		
-		// get content dimensions
-		var $dimensions = $tempElement.getDimensions();
-		
-		// remove temporarily element
-		$tempElement.empty().remove();
+		// calculate dimensions
+		var $windowDimensions = $(window).getDimensions();
+		var $elementDimensions = data.content.getDimensions('outer');
+		var $parentDimensions = data.parent.getDimensions('outer');
+		var $parentInnerDimensions = data.parent.getDimensions('inner');
+		var $parentDifference = {
+			height: $parentDimensions.height - $parentInnerDimensions.height,
+			width: $parentDimensions.width - $parentInnerDimensions.width
+		};
+
+		// calculate offsets
+		var $leftOffset = Math.round(($windowDimensions.width - ($elementDimensions.width + $parentDifference.width)) / 2);
+		var $topOffset = Math.round(($windowDimensions.height - ($elementDimensions.height + $parentDifference.height)) / 2);
+
+		// try to align vertically at 30% if previously calculated value is NOT lower
+		var $desiredTopOffset = Math.round(($windowDimensions / 100) * 30);
+		if ($desiredTopOffset < $topOffset) {
+			$topOffset = $desiredTopOffset;
+		}
 		
 		// move parent element, used if applying effect on dialogs
 		if (!data.parent) {
 			data.parent = this;
 		}
-		
-		// calculate values for grow-effect
-		var $borderHeight = parseInt(data.parent.css('borderTopWidth')) + parseInt(data.parent.css('borderBottomWidth'));
-		var $borderWidth = parseInt(data.parent.css('borderLeftWidth')) + parseInt(data.parent.css('borderRightWidth'));
-		
-		var $windowDimensions = $(window).getDimensions();
-		var $leftOffset = Math.round(($windowDimensions.width - ($dimensions.width + $borderWidth)) / 2);
-		var $topOffset = Math.round(($windowDimensions.height - ($dimensions.height + $borderHeight)) / 2);
 		
 		data.parent.makePositioned('fixed', false);
 		data.parent.animate({
@@ -298,8 +301,8 @@ $.fn.extend({
 		}, options);
 		
 		return this.animate({
-			height: $dimensions.height,
-			width: $dimensions.width
+			height: $elementDimensions.height,
+			width: $elementDimensions.width
 		}, options);
 	},
 	
@@ -3196,6 +3199,25 @@ $.widget('ui.wcfDialog', $.ui.dialog, {
 		$(window).resize($.proxy(function() {
 			this.option('position', 'center');
 		}, this));
+	},
+
+	/**
+	 * Redraws dialog, should be executed everytime content is changed.
+	 */
+	redraw: function() {
+		var $dimensions = this.element.getDimensions();
+		
+		if ($dimensions.height > 200) {
+			this.element.wcfGrow({
+				content: this.element,//.html(),
+				parent: this.element.parent('.ui-dialog')
+			}, {
+				duration: 600,
+				complete: function() {
+					$(this).css({ height: 'auto' });
+				}
+			});
+		}
 	}
 });
 
@@ -3297,10 +3319,24 @@ $.widget('ui.wcfAJAXDialog', $.ui.dialog, {
 			type: $type,
 			data: $data,
 			success: $.proxy(this._createDialog, this),
-			error: function(transport) {
-				alert(transport.responseText);
-			}
+			error: $.proxy(this._showError, this)
 		});
+	},
+
+	_showError: function(transport) {
+		var $iframe = $('<div><iframe></iframe></div>').appendTo($('body')).wcfDialog();
+		$iframe = $iframe.children('iframe');
+		$iframe.contents().find('body').append(transport.responseText);
+
+		// force dimensions
+		$iframe.css({ height: '500px', width: '860px' });
+
+		// DO NOT execute redraw until it properly works with iframes. Sadly
+		// cloning the item causes the content to be lost, resulting in zero
+		// dimensions. Fix this!
+
+		// redraw dialog
+		$iframe.parent('div').wcfDialog('redraw');
 	},
 	
 	/**
@@ -3375,7 +3411,7 @@ $.widget('ui.wcfAJAXDialog', $.ui.dialog, {
 		
 		if ($dimensions.height > 200) {
 			this.element.wcfGrow({
-				content: this.element.html(),
+				content: this.element,//.html(),
 				parent: this.element.parent('.ui-dialog')
 			}, {
 				duration: 600,
