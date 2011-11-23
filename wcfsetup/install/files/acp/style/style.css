@@ -2211,6 +2211,10 @@ input[type='button'],
 	box-shadow: inset 0 2px 15px rgba(0, 0, 0, .5);
 }
 
+.boxTitle > .menu ul li a .badge {
+	color: #369 !important;
+}
+
 
 
 /* ############## Bread Crumbs ############## */
@@ -2896,7 +2900,6 @@ a.ui-dialog-titlebar-close span {
 /* ToDo: Installation */
 
 .ui-dialog-content > div {
-	padding: 20px;
 	height: 100%;
 	max-width: 600px;
 }
