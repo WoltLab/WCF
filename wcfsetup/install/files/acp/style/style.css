@@ -587,7 +587,6 @@ nav.mainMenu ul li.activeMenuItem a {
 	text-shadow: 0 1px 0 #fff;
 	color: #369;
 	white-space: nowrap;
-	cursor: default !important;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	
