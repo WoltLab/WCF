@@ -269,11 +269,14 @@ $.fn.extend({
 	 * @return	jQuery
 	 */
 	wcfGrow: function(data, options) {
+		var $content = $(data.content);
+		var $parent = (data.parent) ? $(data.parent) : $(this);
+		
 		// calculate dimensions
 		var $windowDimensions = $(window).getDimensions();
-		var $elementDimensions = data.content.getDimensions('outer');
-		var $parentDimensions = data.parent.getDimensions('outer');
-		var $parentInnerDimensions = data.parent.getDimensions('inner');
+		var $elementDimensions = $content.getDimensions('outer');
+		var $parentDimensions = $parent.getDimensions('outer');
+		var $parentInnerDimensions = $parent.getDimensions('inner');
 		var $parentDifference = {
 			height: $parentDimensions.height - $parentInnerDimensions.height,
 			width: $parentDimensions.width - $parentInnerDimensions.width
@@ -289,13 +292,8 @@ $.fn.extend({
 			$topOffset = $desiredTopOffset;
 		}
 		
-		// move parent element, used if applying effect on dialogs
-		if (!data.parent) {
-			data.parent = this;
-		}
-		
-		data.parent.makePositioned('fixed', false);
-		data.parent.animate({
+		$parent.makePositioned('fixed', false);
+		$parent.animate({
 			left: $leftOffset + 'px',
 			top: $topOffset + 'px'
 		}, options);
@@ -396,6 +394,7 @@ $.extend(WCF, {
 	 * 
 	 * @param	string		dialogID
 	 * @param	boolean		resetDialog
+	 * @return	$.ui.wcfAJAXDialog
 	 */
 	showAJAXDialog: function(dialogID, resetDialog) {
 		if (!this._didInitDialogs) {
@@ -422,7 +421,7 @@ $.extend(WCF, {
 		dialog.addClass('overlayLoading');
 		
 		var dialogOptions = arguments[2] || {};
-		dialog.wcfAJAXDialog(dialogOptions);
+		return dialog.wcfAJAXDialog(dialogOptions);
 	},
 	
 	/**
