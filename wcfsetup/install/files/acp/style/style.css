@@ -2815,6 +2815,7 @@ p.error {
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
 	.ui-dialog {
+		width: auto !important;
 		min-width: 500px !important;
 		max-width: 780px !important;
 	}
@@ -2824,6 +2825,7 @@ p.error {
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
 	.ui-dialog {
+		width: auto !important;
 		min-width: 200px !important;
 		max-width: 380px !important;
 	}
