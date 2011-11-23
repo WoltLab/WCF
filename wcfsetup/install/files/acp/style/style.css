@@ -326,12 +326,11 @@ header.pageHeader nav.topMenu > div {
 }
 
 header.pageHeader nav.topMenu > div > ul {
-	position: relative;
+	
 }
 
 header.pageHeader nav.topMenu > div > ul > li {
 	cursor: pointer;
-	padding-right: 5px;
 	float: left;
 	position: relative;
 }
@@ -340,11 +339,27 @@ header.pageHeader nav.topMenu > div > ul > li {
 
 /* ToDo: Top-Menu Dropdown Caption */
 
+nav.topMenu > div > ul > li {
+	border-width: 0 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
 nav.topMenu > div > ul > li,
 nav.topMenu > div > ul > li a {
 	text-decoration: none;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
 	color: #69c;
+}
+
+nav.topMenu > div > ul > li:hover,
+nav.topMenu > div > ul > li:hover a {
+	border-color: rgba(255, 255, 255, .5);
+}
+
+nav.topMenu > div > ul > li .dropdownCaption,
+nav.topMenu > div > ul > li .dropdownCaption a {
+	padding-right: 5px;
 }
 
 nav.topMenu > div > ul > li:hover .dropdownCaption,
@@ -387,7 +402,8 @@ nav.topMenu ul li .dropdownCaption {
 nav.topMenu ul li:hover .dropdownCaption ~ .dropdown {
 	border-color: rgba(255, 255, 255, .5);
 	background-color: rgba(0, 0, 0, .7);
-	height: 100% !important;
+	height: auto !important;
+	left: -1px;
 }
 
 nav.topMenu ul li {
@@ -401,23 +417,6 @@ nav.topMenu ul li .dropdown {
 
 nav.topMenu ul li .dropdown > :first-child {
 	border-top-width: 0;
-}
-
-
-
-/* ToDo: Login Box */
-
-/* Do not use the class ".loginBox" to style the box! */
-/* Note that the login-box is still subject to changes */
-
-#loginBox dl {
-	margin-right: 20px;
-}
-
-#loginBox dl dt,
-#loginBox dl dd,
-#loginBox dl label {
-	color: #fff;
 }
 
 
@@ -1107,10 +1106,10 @@ li > .badgeButton {
 	border-radius: 5;
 	background-color: rgba(0, 0, 0, 0);
 	margin-top: 25px;
-	height: 0;
 	position: absolute;
 	top: 0;
 	left: 0;
+	height: 0;
 	z-index: 500;
 	overflow: hidden;
 	
@@ -1120,17 +1119,11 @@ li > .badgeButton {
 	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 	
-	-webkit-transition: all .1s ease;
-	-moz-transition: all .1s ease;
-	-ms-transition: all .1s ease;
-	-o-transition: all .1s ease;
-	transition: all .1s ease;
-	
-	-webkit-transition-delay: .2s;
-	-moz-transition-delay: .2s;
-	-ms-transition-delay: .2s;
-	-o-transition-delay: .2s;
-	transition-delay: .2s;
+	-webkit-transition: color background height .1s ease;
+	-moz-transition: color background height .1s ease;
+	-ms-transition: color background height .1s ease;
+	-o-transition: color background height .1s ease;
+	transition: color background height .1s ease;
 }
 
 /* Dropdown Items */
@@ -1140,21 +1133,24 @@ li > .badgeButton {
 	text-shadow: none;
 	color: #ccc;
 	cursor: pointer; 
-	padding: 5px 7px;
 	
-	-webkit-transition: all .1s linear;
-	-moz-transition: all .1s linear;
-	-ms-transition: all .1s linear;
-	-o-transition: all .1s linear;
-	transition: all .1s linear;
+	-webkit-transition: color background .2s linear;
+	-moz-transition: color background .2s linear;
+	-ms-transition: color background .2s linear;
+	-o-transition: color background .2s linear;
+	transition: color background .2s linear;
 }
 
-.dropdown > li:first-child {
+.dropdown > div {
+	padding: 5px 7px;
+}
+
+.dropdown > :first-child {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
 
-.dropdown > li:last-child {
+.dropdown > :last-child {
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 }
@@ -1171,6 +1167,8 @@ li > .badgeButton {
 
 .dropdown > li a {
 	text-decoration: none;
+	padding: 5px 7px;
+	display: inline-block;
 }
 
 .dropdown > li a:hover {
@@ -2931,6 +2929,20 @@ div#ajaxExceptionStacktrace {
 	line-height: 1.2;
 	border: 1px solid #ccc;
 	padding: 3px;
+}
+
+/* Login Box */
+
+/* Do not use the class ".loginBox" to style the box! */
+
+#loginBox dl {
+	margin-right: 20px;
+}
+
+#loginBox dl dt,
+#loginBox dl dd,
+#loginBox dl label {
+	color: #fff;
 }
 
 
