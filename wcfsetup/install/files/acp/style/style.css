@@ -739,7 +739,7 @@ div.main > div section:only-child {
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
 	section.content {
-		padding: 5px 40px 25px;
+		padding: 5px 40px 20px;
 		min-height: 100px; /* ToDo: Does not work! */
 	}
 	
@@ -748,7 +748,7 @@ div.main > div section:only-child {
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
 	section.content {
-		padding: 5px 15px 25px;
+		padding: 5px 15px 20px;
 		min-height: auto;
 	}
 	
@@ -2546,22 +2546,14 @@ tr .columnRegistrationDate {
 	white-space: nowrap;
 }
 
+tr .columnInfo {
+	text-align: left;
+	width: 1% !important;
+}
+
 tr .columnURL {
 	font-size: 85%;
 	text-align: left;
-}
-
-/* Table Body Special */
-
-tbody tr .columnTopic > p {
-	font-size: 110%;
-	display: block;
-}
-
-tbody tr .columnTopic small {
-	font-size: 85%;
-	margin-top: 5px;
-	display: inline-block;
 }
 
 
