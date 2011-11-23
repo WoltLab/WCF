@@ -4,18 +4,21 @@
 		<eventlistener>
 			<eventclassname>wcf\page\AbstractPage</eventclassname>
 			<eventname>readParameters</eventname>
+			<environment>admin</environment>
 			<inherit>1</inherit>
 			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 		</eventlistener>
 		<eventlistener>
 			<eventclassname>wcf\form\AbstractForm</eventclassname>
 			<eventname>readParameters</eventname>
+			<environment>admin</environment>
 			<inherit>1</inherit>
 			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 		</eventlistener>
 		<eventlistener>
 			<eventclassname>wcf\action\AbstractAction</eventclassname>
 			<eventname>readParameters</eventname>
+			<environment>admin</environment>
 			<inherit>1</inherit>
 			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 		</eventlistener>

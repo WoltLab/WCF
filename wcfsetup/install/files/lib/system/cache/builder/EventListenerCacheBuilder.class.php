@@ -37,22 +37,26 @@ class EventListenerCacheBuilder implements ICacheBuilder {
 		while ($row = $statement->fetchArray()) {
 			// distinguish between inherited actions and non-inherited actions
 			if (!$row['inherit']) {
-				$data['actions'][EventHandler::generateKey($row['eventClassName'], $row['eventName'])][] = $row;
+				$data['actions'][$row['environment']][EventHandler::generateKey($row['eventClassName'], $row['eventName'])][] = $row;
 			}
 			else {
-				if (!isset($data['inheritedActions'][$row['eventClassName']])) $data['inheritedActions'][$row['eventClassName']] = array();
-				$data['inheritedActions'][$row['eventClassName']][$row['eventName']][] = $row;	
+				if (!isset($data['inheritedActions'][$row['environment']][$row['eventClassName']])) $data['inheritedActions'][$row['environment']][$row['eventClassName']] = array();
+				$data['inheritedActions'][$row['environment']][$row['eventClassName']][$row['eventName']][] = $row;	
 			}
 		}
 		
 		// sort data by nice value and class name
-		foreach ($data['actions'] as $key => $listeners) {
-			uasort($data['actions'][$key], array(__CLASS__, 'sortListeners'));
+		foreach ($data['actions'] as &$listenerMap) {
+			foreach ($listenerMap as &$listeners) {
+				uasort($listeners, array(__CLASS__, 'sortListeners'));
+			}
 		}
 		
-		foreach ($data['inheritedActions'] as $class => $listeners) {
-			foreach ($listeners as $key => $val) {
-				uasort($data['inheritedActions'][$class][$key], array(__CLASS__, 'sortListeners'));
+		foreach ($data['inheritedActions'] as &$listenerMap) {
+			foreach ($listenerMap as &$listeners) {
+				foreach ($listeners as &$val) {
+					uasort($val, array(__CLASS__, 'sortListeners'));
+				}
 			}
 		}
 		

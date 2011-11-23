@@ -167,12 +167,13 @@ DROP TABLE IF EXISTS wcf1_event_listener;
 CREATE TABLE wcf1_event_listener (
 	listenerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10) NOT NULL,
+	environment ENUM('user', 'admin') NOT NULL DEFAULT 'user',
 	eventClassName VARCHAR(80) NOT NULL DEFAULT '',
 	eventName VARCHAR(50) NOT NULL DEFAULT '',
 	listenerClassName VARCHAR(200) NOT NULL DEFAULT '',
 	inherit TINYINT(1) NOT NULL DEFAULT 0,
 	niceValue TINYINT(3) NOT NULL DEFAULT 0,
-	UNIQUE KEY packageID (packageID, eventClassName, eventName, listenerClassName)
+	UNIQUE KEY packageID (packageID, environment, eventClassName, eventName, listenerClassName)
 );
 
 DROP TABLE IF EXISTS wcf1_language;

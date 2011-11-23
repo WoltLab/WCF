@@ -35,6 +35,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE		packageID = ?
+					AND environment = ?
 					AND eventClassName = ?
 					AND eventName = ?,
 					AND inherit = ?
@@ -43,6 +44,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		foreach ($items as $item) {
 			$statement->execute(array(
 				$this->installation->getPackageID(),
+				(isset($item['elements']['environment']) ? $item['elements']['environment'] : 'user'),
 				$item['elements']['eventclassname'],
 				$item['elements']['eventname'],
 				$item['elements']['inherit'],
@@ -60,6 +62,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		else if ($nice > 127) $nice = 127;
 		
 		return array(
+			'environment' => (isset($data['elements']['environment']) ? $data['elements']['environment'] : 'user'),
 			'eventClassName' => $data['elements']['eventclassname'],
 			'eventName' => $data['elements']['eventname'],
 			'inherit' => (isset($data['elements']['inherit'])) ? intval($data['elements']['inherit']) : 0,
@@ -74,15 +77,17 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_".$this->tableName."
-			WHERE	eventClassName = ?
+			WHERE	packageID = ?
+				AND environment = ?
+				AND eventClassName = ?
 				AND eventName = ?
-				AND listenerClassName = ?
-				AND packageID = ?";
+				AND listenerClassName = ?";
 		$parameters = array(
+			$this->installation->getPackageID(),
+			$data['environment'],
 			$data['eventClassName'],
 			$data['eventName'],
-			$data['listenerClassName'],
-			$this->installation->getPackageID()
+			$data['listenerClassName']
 		);
 		
 		return array(

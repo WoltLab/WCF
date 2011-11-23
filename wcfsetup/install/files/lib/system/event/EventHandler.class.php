@@ -50,6 +50,7 @@ class EventHandler extends SingletonFactory {
 	 * Loads all registered actions of the active package.
 	 */
 	protected function loadActions() {
+		$environment = (class_exists('wcf\system\WCFACP', false) ? 'admin' : 'user');
 		$cacheName = 'eventListener-'.PACKAGE_ID;
 		CacheHandler::getInstance()->addResource(
 			$cacheName,
@@ -58,11 +59,11 @@ class EventHandler extends SingletonFactory {
 		);
 		$cache = CacheHandler::getInstance()->get($cacheName);
 		
-		if (isset($cache['actions'])) {
-			$this->actions = $cache['actions'];
+		if (isset($cache['actions'][$environment])) {
+			$this->actions = $cache['actions'][$environment];
 		}
-		if (isset($cache['inheritedActions'])) {
-			$this->inheritedActions = $cache['inheritedActions'];
+		if (isset($cache['inheritedActions'][$environment])) {
+			$this->inheritedActions = $cache['inheritedActions'][$environment];
 		}
 		unset($cache);
 		
