@@ -2815,7 +2815,6 @@ p.error {
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
 	.ui-dialog {
-		width: auto !important;
 		min-width: 500px !important;
 		max-width: 780px !important;
 	}
@@ -2825,7 +2824,6 @@ p.error {
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
 	.ui-dialog {
-		width: auto !important;
 		min-width: 200px !important;
 		max-width: 380px !important;
 	}
@@ -2886,7 +2884,8 @@ a.ui-dialog-titlebar-close span {
 
 .ui-dialog > .ui-dialog-content {
 	border-radius: 7px;
-	padding: 20px;
+	padding: 0;
+	width: auto !important;
 }
 
 .ui-dialog-titlebar ~ .ui-dialog-content {
