@@ -259,11 +259,18 @@ $.fn.extend({
 	},
 	
 	/**
+	 * CAUTION:	This method does not work properly, you should not rely
+	 *		on it for now. It seems to work with the old jQuery UI-
+	 *		based dialog, but no longer works with usual elements.
+	 *		I will either try to fix it or remove it later, thus
+	 *		this method will be deprecated for now.      -Alexander
+	 * 
 	 * Applies a grow-effect by resizing element while moving the element
 	 * appropriately. Make sure the passed data.content element contains
 	 * all elements which affect this indirectly, this includes outer
 	 * containers which may apply an obstrusive padding.
 	 * 
+	 * @deprecated
 	 * @param	object		data
 	 * @param	object		options
 	 * @return	jQuery
@@ -410,32 +417,19 @@ $.extend(WCF, {
 	_idCounter: 0,
 
 	/**
-	 * Set to true after first dialog was initialized
-	 * @var	boolean
-	 */
-	_didInitDialogs: false,
-	
-	/**
 	 * Shows a modal dialog with a built-in AJAX-loader.
 	 * 
 	 * @param	string		dialogID
 	 * @param	boolean		resetDialog
-	 * @return	$.ui.wcfAJAXDialog
+	 * @return	jQuery
 	 */
 	showAJAXDialog: function(dialogID, resetDialog) {
-		if (!this._didInitDialogs) {
-			$('.ui-widget-overlay').live('click', function() {
-				$('.ui-dialog-titlebar-close').trigger('click');
-			});
-			this._didInitDialogs = true;
-		}
-		
 		if (!dialogID) {
 			dialogID = this.getRandomID();
 		}
 		
 		if (!$.wcfIsset(dialogID)) {
-			$('body').append($('<div id="' + dialogID + '"></div>'));
+			$('<div id="' + dialogID + '"></div>').appendTo(document.body);
 		}
 		
 		var dialog = $('#' + $.wcfEscapeID(dialogID));
@@ -444,10 +438,10 @@ $.extend(WCF, {
 			dialog.empty();
 		}
 		
-		dialog.addClass('overlayLoading');
-		
 		var dialogOptions = arguments[2] || {};
-		return dialog.wcfAJAXDialog(dialogOptions);
+		dialog.wcfDialog(dialogOptions);
+
+		return dialog;
 	},
 	
 	/**
@@ -460,13 +454,6 @@ $.extend(WCF, {
 		// load content via AJAX, see showAJAXDialog() instead
 		if (!$.wcfIsset(dialogID)) return;
 
-		if (!this._didInitDialogs) {
-			$('.ui-widget-overlay').live('click', function() {
-				$('.ui-dialog-titlebar-close').trigger('click');
-			});
-			this._didInitDialogs = true;
-		}
-		
 		var $dialog = $('#' + $.wcfEscapeID(dialogID));
 		if (moveToBody) {
 			$dialog.remove().appendTo($('body'));
@@ -3435,263 +3422,6 @@ $.widget('ui.wcfDialog', {
 				left: $leftOffset + 'px',
 				top: $topOffset + 'px'
 			}, 200);
-		}
-	}
-});
-
-
-/**
- * Basic implementation for WCF dialogs.
- */
-$.widget('ui.wcfDialog_old', $.ui.dialog, {
-	_init: function() {
-		this.options.autoOpen = true;
-		this.options.hide = {
-			effect: 'fade'
-		};
-
-		if (this.options.hideTitle) {
-			// remove title element
-			this.element.prev().empty().remove();
-		}
-
-		this.options.close = function() {
-			// "display: inline-block" is set by stylesheet, but additionally flagged
-			// with important, thus we have to force the dialog to stay hidden
-			$(this).parent('.ui-dialog').css({ display: 'none !important'});
-		};
-		
-		this.options.height = 'auto';
-		this.options.minHeight = 0;
-		this.options.modal = true;
-		this.options.width = 'auto';
-		
-		$.ui.dialog.prototype._init.apply(this, arguments);
-		
-		// center dialog on resize
-		$(window).resize($.proxy(function() {
-			this.option('position', 'center');
-		}, this));
-	},
-
-	/**
-	 * Redraws dialog, should be executed everytime content is changed.
-	 */
-	redraw: function() {
-		var $dimensions = this.element.getDimensions();
-		
-		if ($dimensions.height > 200) {
-			this.element.wcfGrow({
-				content: this.element,//.html(),
-				parent: this.element.parent('.ui-dialog')
-			}, {
-				duration: 600,
-				complete: function() {
-					$(this).css({ height: 'auto' });
-				}
-			});
-		}
-	}
-});
-
-/**
- * Basic implementation for WCF dialogs loading content
- * via AJAX before calling dialog itself.
- */
-$.widget('ui.wcfAJAXDialog_old', $.ui.dialog, {
-	/**
-	 * Indicates wether callback was already executed
-	 * 
-	 * @var	boolean
-	 */
-	_callbackExecuted: false,
-	
-	/**
-	 * Initializes AJAX-request to fetch content.
-	 */
-	_init: function() {
-		if (this.options.ajax) {
-			this._loadContent();
-		}
-		
-		// force dialog to be placed centered
-		this.options.position = {
-			my: 'center center',
-			at: 'center center'
-		};
-		
-		// dialog should display a spinner-like image, thus immediately fire up dialog
-		this.options.autoOpen = true;
-		this.options.width = 'auto';
-		this.options.minHeight = 80;
-		
-		// disable ability to move dialog
-		this.options.resizable = false;
-		this.options.draggable = false;
-		
-		this.options.modal = true;
-		this.options.hide = {
-			effect: 'fade'
-		};
-		
-		this.options.close = function() {
-			// "display: inline-block" is set by stylesheet, but additionally flagged
-			// with important, thus we have to force the dialog to stay hidden
-			$(this).parent('.ui-dialog').css({ display: 'none !important'});
-		};
-		
-		if (this.options.preventClose) {
-			this.options.closeOnEscape = false;
-		}
-		
-		$.ui.dialog.prototype._init.apply(this, arguments);
-		
-		// remove complete node instead of removing node-by-node
-		if (this.options.hideTitle && this.options.preventClose) {
-			this.element.parent('.ui-dialog').find('div.ui-dialog-titlebar').empty().remove();
-		}
-		else {
-			if (this.options.hideTitle) {
-				// remove title element
-				$('#ui-dialog-title-' + this.element.attr('id')).empty().remove();
-			}
-			
-			if (this.options.preventClose) {
-				// remove close-button
-				this.element.parent('.ui-dialog').find('a.ui-dialog-titlebar-close').empty().remove();
-			}
-		}
-		
-		// center dialog on window resize
-		$(window).resize($.proxy(function() {
-			this.option('position', 'center');
-		}, this));
-	},
-	
-	/**
-	 * Loads content via AJAX.
-	 * 
-	 * @todo	Enforce JSON
-	 */
-	_loadContent: function() {
-		var $type = 'GET';
-		if (this.options.ajax.type) {
-			$type = this.options.ajax.type;
-			
-			if (this.options.ajax.type != 'GET' && this.options.ajax.type != 'POST') {
-				$type = 'GET';
-			}
-		}
-		
-		var $data = this.options.ajax.data || {};
-		
-		$.ajax({
-			url: this.options.ajax.url,
-			context: this,
-			dataType: 'json',
-			type: $type,
-			data: $data,
-			success: $.proxy(this._createDialog, this),
-			error: $.proxy(this._showError, this)
-		});
-	},
-
-	_showError: function(transport) {
-		var $iframe = $('<div><iframe></iframe></div>').appendTo($('body')).wcfDialog();
-		$iframe = $iframe.children('iframe');
-		$iframe.contents().find('body').append(transport.responseText);
-
-		// force dimensions
-		$iframe.css({ height: '500px', width: '860px' });
-
-		// DO NOT execute redraw until it properly works with iframes. Sadly
-		// cloning the item causes the content to be lost, resulting in zero
-		// dimensions. Fix this!
-
-		// redraw dialog
-		$iframe.parent('div').wcfDialog('redraw');
-	},
-	
-	/**
-	 * Inserts content.
-	 * 
-	 * @param	string		data
-	 */
-	_createDialog: function(data) {
-		data.ignoreTemplate = true;
-		this.element.data('responseData', data);
-
-		// work-around for AJAXProxy's different return values
-		
-		this.element.wcfGrow({
-			content: this._getResponseValue('template'),
-			parent: this.element.parent('.ui-dialog')
-		}, {
-			duration: 600,
-			complete: $.proxy(function(data) {
-				this.element.css({
-					height: 'auto'
-				});
-				
-				// prevent double execution due to two complete-calls (two times animate)
-				if (this._callbackExecuted) {
-					return;
-				}
-				
-				this._callbackExecuted = true;
-				
-				this.element.removeClass('overlayLoading');
-				this.element.html(this._getResponseValue('template'));
-				
-				if (this.options.ajax.success) {
-					this.options.ajax.success();
-				}
-			}, this)
-		});
-	},
-
-	/**
-	 * Returns specific AJAX response value.
-	 * 
-	 * @param	string		key
-	 * @return	mixed
-	 */
-	_getResponseValue: function(key) {
-		var $data = this.element.data('responseData');
-
-		// no response data stored
-		if (!$data) {
-			return null;
-		}
-
-		// AJAXProxy
-		if ($data.returnValues && $data.returnValues[key]) {
-			return $data.returnValues[key];
-		}
-		// PackageInstallation
-		else if ($data[key]) {
-			return $data[key];
-		}
-
-		return null;
-	},
-	
-	/**
-	 * Redraws dialog, should be executed everytime content is changed.
-	 */
-	redraw: function() {
-		var $dimensions = this.element.getDimensions();
-		
-		if ($dimensions.height > 200) {
-			this.element.wcfGrow({
-				content: this.element,//.html(),
-				parent: this.element.parent('.ui-dialog')
-			}, {
-				duration: 600,
-				complete: function() {
-					$(this).css({ height: 'auto' });
-				}
-			});
 		}
 	}
 });

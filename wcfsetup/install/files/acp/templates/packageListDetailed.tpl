@@ -5,7 +5,7 @@
 	$(function() {
 		WCF.Language.add('wcf.acp.package.view.button.uninstall.sure', '{lang}wcf.acp.package.view.button.uninstall.sure{/lang}');
 		
-		new WCF.ACP.PackageUninstallation($('.packageRow .uninstallButton'));
+		new WCF.ACP.Package.Uninstallation($('.packageRow .uninstallButton'));
 	});
 	//]]>
 </script>

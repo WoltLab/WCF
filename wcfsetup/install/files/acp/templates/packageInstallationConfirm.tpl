@@ -3,7 +3,7 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		var packageInstallation = new WCF.ACP.PackageInstallation('install', {@$queueID}, true);
+		var packageInstallation = new WCF.ACP.Package.Installation('install', {@$queueID}, true);
 	});
 	//]]>
 </script>

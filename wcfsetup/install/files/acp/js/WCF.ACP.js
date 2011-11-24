@@ -123,16 +123,49 @@ WCF.ACP.Menu.prototype = {
 	}
 };
 
+/**
+ * Namespace for ACP package management.
+ */
 WCF.ACP.Package = {};
 
+/**
+ * Paginated package list.
+ * 
+ * @param	integer		pages
+ */
 WCF.ACP.Package.List = function(pages) { this.init(pages); };
 WCF.ACP.Package.List.prototype = {
+	/**
+	 * page cache
+	 * @var	object
+	 */
 	_pages: {},
+
+	/**
+	 * plugin list references
+	 * @var	object
+	 */
 	_pluginLists: [],
+
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
 	_proxy: null,
+
+	/**
+	 * target container
+	 * @var	jQuery
+	 */
 	_template: null,
 	
+	/**
+	 * Initializes the package list.
+	 * 
+	 * @param	integer		pages
+	 */
 	init: function(pages) {
+		// handle pagination
 		$('.pluginList').each($.proxy(function(index, pluginList) {
 			var $wcfPages = $(pluginList).wcfPages({
 				activePage: 1,
@@ -142,6 +175,7 @@ WCF.ACP.Package.List.prototype = {
 			this._pluginLists.push($wcfPages);
 		}, this));
 		
+		// initialize
 		if (this._pluginLists.length > 0) {
 			this._proxy = new WCF.Action.Proxy({
 				success: $.proxy(this._success, this)
@@ -150,18 +184,31 @@ WCF.ACP.Package.List.prototype = {
 		}
 	},
 	
+	/**
+	 * Caches currently active page.
+	 * 
+	 * @param	object		event
+	 * @param	object		data
+	 */
 	_cachePage: function(event, data) {
 		if (!this._pages[data.currentPage]) {
 			this._pages[data.currentPage] = $('#plugins ol').html();
 		}
 	},
 	
+	/**
+	 * Loads the request page using AJAX.
+	 * 
+	 * @param	object		event
+	 * @param	object		data
+	 */
 	_loadPage: function(event, data) {
 		// update active page
 		for (var $i = 0, $size = this._pluginLists.length; $i < $size; $i++) {
 			this._pluginLists[$i].wcfPages('overridePage', data.activePage);
 		}
 		
+		// load page from cache if applicable
 		if (this._pages[data.activePage]) {
 			this._template.html(this._pages[data.activePage]);
 			return;
@@ -178,6 +225,13 @@ WCF.ACP.Package.List.prototype = {
 		this._proxy.sendRequest();
 	},
 	
+	/**
+	 * Displays the fetched page.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
 	_success: function(data, textStatus, jqXHR) {
 		this._pages[data.returnValues.activePage] = data.returnValues.template;
 		this._loadPage(null, { activePage: data.returnValues.activePage });
@@ -191,8 +245,8 @@ WCF.ACP.Package.List.prototype = {
  * @param	integer		queueID
  * @param	boolean		initialize
  */
-WCF.ACP.PackageInstallation = function(actionName, queueID, initialize) { this.init(actionName, queueID, initialize); };
-WCF.ACP.PackageInstallation.prototype = {
+WCF.ACP.Package.Installation = function(actionName, queueID, initialize) { this.init(actionName, queueID, initialize); };
+WCF.ACP.Package.Installation.prototype = {
 	/**
 	 * package installation type
 	 * 
@@ -200,6 +254,10 @@ WCF.ACP.PackageInstallation.prototype = {
 	 */
 	_actionName: '',
 
+	/**
+	 * dialog api
+	 * @var	$.ui.wcfDialog
+	 */
 	_api: null,
 
 	/**
@@ -209,6 +267,12 @@ WCF.ACP.PackageInstallation.prototype = {
 	 */
 	_dialog: null,
 	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+
 	/**
 	 * queue id
 	 *
@@ -226,7 +290,11 @@ WCF.ACP.PackageInstallation.prototype = {
 	init: function(actionName, queueID, initialize) {
 		this._actionName = WCF.String.ucfirst(actionName) + 'Package';
 		this._queueID = queueID;
-		
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._handleResponse, this),
+			url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+		});
+
 		if (initialize) {
 			$('#submitButton').click($.proxy(function(event) {
 				this.prepareInstallation();
@@ -239,53 +307,54 @@ WCF.ACP.PackageInstallation.prototype = {
 	 * Prepares installation dialog.
 	 */
 	prepareInstallation: function() {
-		this._api = WCF.showAJAXDialog('packageInstallationDialog', true, {
-			ajax: {
-				url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
-				type: 'POST',
-				data: { queueID: this._queueID, step: 'prepare' },
-				success: $.proxy(this._handleResponse, this)
-			},
+		var $dialog = WCF.showAJAXDialog('packageInstallationDialog', true, {
+			url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
+			data: { queueID: this._queueID, step: 'prepare' },
+			success: $.proxy(this._handleResponse, this),
 			preventClose: true,
 			hideTitle: true
 		});
+
+		this._api = $dialog.data('wcfDialog');
 	},
 	
 	/**
 	 * Executes response instructions.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
 	 */
-	_handleResponse: function() {
+	_handleResponse: function(data. textStatus, jqXHR) {
 		if (this._dialog == null) {
 			this._dialog = $('#packageInstallationDialog');
 		}
 		
-		var $data = this._dialog.data('responseData');
-		
 		// receive new queue id
-		if ($data.queueID) {
-			this._queueID = $data.queueID;
+		if (data.queueID) {
+			this._queueID = data.queueID;
 		}
 		
 		// update progress
-		if ($data.progress) {
-			$('#packageInstallationProgress').attr('value', $data.progress).text($data.progress + '%');
-			$('#packageInstallationProgressLabel').text($data.progress + '%');
+		if (data.progress) {
+			$('#packageInstallationProgress').attr('value', data.progress).text(data.progress + '%');
+			$('#packageInstallationProgressLabel').text(data.progress + '%');
 		}
 
 		// update action
-		if ($data.currentAction) {
-			$('#packageInstallationAction').html($data.currentAction);
+		if (data.currentAction) {
+			$('#packageInstallationAction').html(data.currentAction);
 		}
 		
 		// handle success
-		if ($data.step == 'success') {
+		if (data.step == 'success') {
 			this._purgeTemplateContent(function() {
 				var $id = WCF.getRandomID();
 				$('#packageInstallationInnerContent').append('<div class="formSubmit"><input type="button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" class="default" /></div>');
 				
-				$('#' + $id).click($.proxy(function() {
+				$('#' + $id).click(function() {
 					window.location.href = "index.php/PackageList/" + SID_ARG_1ST;
-				}, this));
+				});
 				
 				$('#packageInstallationInnerContentContainer').wcfBlindIn();
 			});
@@ -294,24 +363,24 @@ WCF.ACP.PackageInstallation.prototype = {
 		}
 		
 		// update template
-		if ($data.template && !$data.ignoreTemplate) {
-			this._dialog.html($data.template);
-			this._api.redraw();
+		if (data.template && !data.ignoreTemplate) {
+			this._dialog.html(data.template);
+			this._api.render();
 		}
 		
 		// handle inner template
-		if ($data.innerTemplate) {
-			$('#packageInstallationInnerContent').html($data.innerTemplate);
+		if (data.innerTemplate) {
+			$('#packageInstallationInnerContent').html(data.innerTemplate);
 			
 			// create button to handle next step
-			if ($data.step && $data.node) {
+			if (data.step && data.node) {
 				var $id = WCF.getRandomID();
 				$('#packageInstallationInnerContent').append('<div class="formSubmit"><input type="button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" class="default" /></div>');
 				
 				$('#' + $id).click($.proxy(function() {
 					// collect form values
 					var $additionalData = {};
-					$('#packageInstallationInnerContent').find('input').each(function(index, inputElement) {
+					$('#packageInstallationInnerContent input').each(function(index, inputElement) {
 						var $inputElement = $(inputElement);
 						var $type = $inputElement.attr('type');
 						
@@ -322,24 +391,24 @@ WCF.ACP.PackageInstallation.prototype = {
 						$additionalData[$inputElement.attr('name')] = $inputElement.val();
 					});
 					
-					this._executeStep($data.step, $data.node, $additionalData);
+					this._executeStep(data.step, data.node, $additionalData);
 				}, this));
 			}
 			
 			$('#packageInstallationInnerContentContainer').wcfBlindIn();
 			
-			this._api.redraw();
+			this._api.render();
 			return;
 		}
 		
 		// purge content
 		this._purgeTemplateContent($.proxy(function() {
-			// redraw container
-			this._api.redraw();
+			// render container
+			this._api.render();
 			
 			// execute next step
-			if ($data.step && $data.node) {
-				this._executeStep($data.step, $data.node);
+			if (data.step && data.node) {
+				this._executeStep(data.step, data.node);
 			}
 		}, this));
 	},
@@ -353,7 +422,7 @@ WCF.ACP.PackageInstallation.prototype = {
 		if ($('#packageInstallationInnerContent').children().length > 1) {
 			$('#packageInstallationInnerContentContainer').wcfBlindOut('vertical', $.proxy(function() {
 				$('#packageInstallationInnerContent').empty();
-				this._api.redraw();
+				this._api.render();
 				
 				// execute callback
 				callback();
@@ -379,20 +448,9 @@ WCF.ACP.PackageInstallation.prototype = {
 			queueID: this._queueID,
 			step: step
 		}, additionalData);
-		
-		$.ajax({
-			url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
-			dataType: 'json',
-			type: 'POST',
-			data: $data,
-			success: $.proxy(function(data) {
-				this._dialog.data('responseData', data);
-				this._handleResponse();
-			}, this),
-			error: function(transport) {
-				alert(transport.responseText);
-			}
-		});
+
+		this._proxy.setOption('data', $data);
+		this._proxy.sendRequest();
 	}
 };
 
@@ -401,12 +459,12 @@ WCF.ACP.PackageInstallation.prototype = {
  * 
  * @param	jQuery		elements
  */
-WCF.ACP.PackageUninstallation = function(elements) { this.init(elements); };
-WCF.ACP.PackageUninstallation.prototype = {
+WCF.ACP.Package.Uninstallation = function(elements) { this.init(elements); };
+WCF.ACP.Package.Uninstallation.prototype = {
 	/**
-	 * WCF.ACP.PackageInstallation object
+	 * WCF.ACP.Package.Installation object
 	 * 
-	 * @var	WCF.ACP.PackageInstallation
+	 * @var	WCF.ACP.Package.Installation
 	 */
 	_installation: null,
 	
@@ -434,16 +492,13 @@ WCF.ACP.PackageUninstallation.prototype = {
 		var packageID = $element.data('objectID');
 		
 		if (confirm(WCF.Language.get('wcf.acp.package.view.button.uninstall.sure'))) {
-			this._installation = new WCF.ACP.PackageInstallation('uninstall', 0, false);
+			this._installation = new WCF.ACP.Package.Installation('uninstall', 0, false);
 			
 			// initialize dialog
 			WCF.showAJAXDialog('packageInstallationDialog', true, {
-				ajax: {
-					url: 'index.php/UninstallPackage/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
-					type: 'POST',
-					data: { packageID: packageID, step: 'prepare' },
-					success: $.proxy(this._installation._handleResponse, this._installation)
-				},
+				url: 'index.php/UninstallPackage/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
+				data: { packageID: packageID, step: 'prepare' },
+				success: $.proxy(this._installation._handleResponse, this._installation),
 				preventClose: true,
 				hideTitle: true
 			});
@@ -715,7 +770,7 @@ WCF.ACP.Worker.prototype = {
 			
 			$('#workerInnerContentContainer').wcfBlindIn();
 			
-			this._dialog.wcfDialog('redraw');
+			this._dialog.wcfDialog('render');
 		}
 	}
 };
