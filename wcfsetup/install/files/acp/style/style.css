@@ -2790,7 +2790,8 @@ p.error {
 
 /* ############## ToDo: Overlay ############## */
 
-.ui-dialog {
+.ui-dialog,
+.wcfDialogContainer {
 	border: 23px solid transparent;
 	border-radius: 15px;
 	background-color: rgba(0, 0, 0, .4);
@@ -2807,7 +2808,8 @@ p.error {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.ui-dialog {
+	.ui-dialog,
+	.wcfDialogContainer {
 		min-width: 500px !important;
 		max-width: 780px !important;
 	}
@@ -2816,7 +2818,8 @@ p.error {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.ui-dialog {
+	.ui-dialog,
+	.wcfDialogContainer {
 		min-width: 200px !important;
 		max-width: 380px !important;
 	}
@@ -2825,7 +2828,8 @@ p.error {
 
 /* Dialog Titlebar */
 
-.ui-dialog-titlebar {
+.ui-dialog-titlebar,
+.wcfDialogTitlebar {
 	border-bottom: 1px solid #036;
 	border-top-left-radius: 7px;
 	border-top-right-radius: 7px;
@@ -2838,10 +2842,11 @@ p.error {
 	padding: 10px 20px;
 	position: relative;
 	display: block;
-	cursor: move;
+	/*cursor: move;*/
 }
 
-.ui-dialog-title {
+.ui-dialog-title,
+.wcfDialogTitle {
 	font-size: 170%;
 	font-weight: bold;
 	text-shadow: 0 -1px 0 #000;
@@ -2849,7 +2854,8 @@ p.error {
 	display: block;
 }
 
-a.ui-dialog-titlebar-close {
+a.ui-dialog-titlebar-close,
+a.wcfDialogCloseButton {
 	background-image: url('../../icon/delete2.svg');
 	background-size: 32px;
 	background-position: top left;
@@ -2859,9 +2865,11 @@ a.ui-dialog-titlebar-close {
 	height: 32px;
 	top: 5px;
 	right: 10px;
+	cursor: pointer;
 }
 
-a.ui-dialog-titlebar-close span {
+a.ui-dialog-titlebar-close span,
+a.wcfDialogCloseButton span {
 	/* Removes the button-caption */
 	position: absolute;
 	left: -9000px;
@@ -2871,17 +2879,21 @@ a.ui-dialog-titlebar-close span {
 
 /* Dialog Content */
 
-.ui-dialog-content {
+.ui-dialog-content,
+.wcfDialogContent {
 	background-color: #333;
+	overflow: auto;
 }
 
-.ui-dialog > .ui-dialog-content {
+.ui-dialog > .ui-dialog-content,
+.wcfDialogContainer > .wcfDialogContent {
 	border-radius: 7px;
 	padding: 0;
 	width: auto !important;
 }
 
-.ui-dialog-titlebar ~ .ui-dialog-content {
+.ui-dialog-titlebar ~ .ui-dialog-content,
+.wcfDialogTitlebar ~ .wcfDialogContent {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 	border-bottom-left-radius: 7px;
@@ -2943,7 +2955,8 @@ div#ajaxExceptionStacktrace {
 
 /* ############## ToDo: Overlay Spinner ############## */
 
-.ui-widget-overlay {
+.ui-widget-overlay,
+.wcfDialogOverlay {
 	background-color: #000;
 	opacity: .5;
 	position: fixed;

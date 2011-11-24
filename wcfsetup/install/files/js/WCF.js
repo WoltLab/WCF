@@ -369,6 +369,32 @@ $.fn.extend({
 	 */
 	wcfHighlight: function(options, callback) {
 		return this.effect('highlight', options, 600, callback);
+	},
+
+	/**
+	 * Shows an element by fading it in.
+	 * 
+	 * @param	object		callback
+	 * @param	integer		duration
+	 * @returns	jQuery
+	 */
+	wcfFadeIn: function(callback, duration) {
+		if (!duration || !parseInt(duration)) duration = 200;
+		
+		return this.show(WCF.getEffect(this.getTagName(), 'fade'), { }, duration, callback);
+	},
+
+	/**
+	 * Hides an element by fading it out.
+	 * 
+	 * @param	object		callback
+	 * @param	integer		duration
+	 * @returns	jQuery
+	 */
+	wcfFadeOut: function(callback, duration) {
+		if (!duration || !parseInt(duration)) duration = 200;
+		
+		return this.hide(WCF.getEffect(this.getTagName(), 'fade'), { }, duration, callback);
 	}
 });
 
@@ -3104,7 +3130,7 @@ $.widget('ui.wcfPersistentSidebar', $.ui.wcfSidebar, {
 			return;
 		}
 		
-		$.ui.dialog.prototype._init.apply(this, arguments);
+		$.ui.wcfSidebar.prototype._init.apply(this, arguments);
 
 		// collapse on init
 		if (this.options.collapsed) {
@@ -3124,7 +3150,7 @@ $.widget('ui.wcfPersistentSidebar', $.ui.wcfSidebar, {
 			return;
 		}
 
-		$.ui.dialog.prototype._init.apply(this, arguments);
+		$.ui.wcfSidebar.prototype._init.apply(this, arguments);
 
 		// save state
 		this._save();
@@ -3138,7 +3164,7 @@ $.widget('ui.wcfPersistentSidebar', $.ui.wcfSidebar, {
 			return;
 		}
 
-		$.ui.dialog.prototype._init.apply(this, arguments);
+		$.ui.wcfSidebar.prototype._init.apply(this, arguments);
 
 		// save state
 		this._save();
@@ -3167,9 +3193,257 @@ $.widget('ui.wcfPersistentSidebar', $.ui.wcfSidebar, {
 });
 
 /**
+ * WCF implementation for dialogs, based upon ideas by jQuery UI.
+ */
+$.widget('ui.wcfDialog', {
+	/**
+	 * close button
+	 * @var	jQuery
+	 */
+	_closeButton: null,
+
+	/**
+	 * dialog container
+	 * @var	jQuery
+	 */
+	_container: null,
+
+	/**
+	 * dialog content
+	 * @var	jQuery
+	 */
+	_content: null,
+
+	/**
+	 * modal overlay
+	 * @var	jQuery
+	 */
+	_overlay: null,
+
+	/**
+	 * plain html for title
+	 * @var	string
+	 */
+	_title: null,
+
+	/**
+	 * title bar
+	 * @var	jQuery
+	 */
+	_titlebar: null,
+
+	/**
+	 * dialog visibility state
+	 * @var	boolean
+	 */
+	_isOpen: false,
+
+	/**
+	 * option list
+	 * @var	object
+	 */
+	options: {
+		// dialog
+		autoOpen: true,
+		closable: true,
+		closeButtonLabel: null,
+		hideTitle: false,
+		modal: true,
+		title: '',
+		zIndex: 1000,
+
+		// AJAX support
+		ajax: false,
+		data: { },
+		success: null,
+		type: 'POST',
+		url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+	},
+
+	/**
+	 * Initializes a new dialog.
+	 */
+	_init: function() {
+		if (this.options.closeButtonLabel === null) {
+			this.options.closeButtonLabel = WCF.Language.get('wcf.global.close');
+		}
+
+		if (this.options.ajax) {
+			new WCF.Action.Proxy({
+				autoSend: true,
+				data: this.options.data,
+				success: $.proxy(this._success, this),
+				type: this.options.type,
+				url: this.options.url
+			});
+
+			// force open if using AJAX
+			this.options.autoOpen = true;
+		}
+
+		if (this.options.autoOpen) {
+			this.open();
+		}
+
+		// act on resize
+		$(window).resize($.proxy(this.render, this));
+	},
+
+	/**
+	 * Creates a new dialog instance.
+	 */
+	_create: function() {
+		// create dialog container
+		this._container = $('<div class="wcfDialogContainer"></div>').hide().css({ zIndex: this.options.zIndex }).appendTo(document.body);
+		
+		// create title
+		if (!this.options.hideTitle && this.options.title != '') {
+			this._titlebar = $('<header class="wcfDialogTitlebar"></header>').appendTo(this._container);
+			this._title = $('<span class="wcfDialogTitle"></div>').html(this.options.title).appendTo(this._titlebar);
+		}
+
+		// create close button
+		if (this.options.closable) {
+			this._closeButton = $('<a class="wcfDialogCloseButton"><span>TODO: close</span></a>').click($.proxy(this.close, this))
+
+			if (!this.options.hideTitle && this.options.title != '') {
+				this._closeButton.appendTo(this._titlebar);
+			}
+			else {
+				this._closeButton.appendTo(this._container);
+			}
+		}
+		
+		// create content container
+		this._content = $('<div class="wcfDialogContent"></div>').appendTo(this._container);
+
+		// move target element into content
+		var $content = this.element.remove();
+		this._content.html($content);
+
+		// create modal view
+		if (this.options.modal) {
+			this._overlay = $('<div class="wcfDialogOverlay"></div>').css({ height: '100%', zIndex: 900 }).appendTo(document.body);
+
+			if (this.options.closable) {
+				this._overlay.click($.proxy(this.close, this));
+				
+				$(document).keyup($.proxy(function(event) {
+					if (event.keyCode && event.keyCode === $.ui.keyCode.ESCAPE) {
+						this.close();
+						event.preventDefault();
+					}
+				}, this));
+			}
+		}
+	},
+
+	/**
+	 * Handles successful AJAX requests.
+	 *
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		if (this.options.success !== null && $.isFunction(this.options.success)) {
+			this.options.success(data, textStatus, jqXHR);
+		}
+	},
+
+	/**
+	 * Opens this dialog.
+	 */
+	open: function() {
+		if (this.isOpen()) {
+			return;
+		}
+
+		this.render();
+		this._isOpen = true;
+	},
+
+	/**
+	 * Returns true, if dialog is visible.
+	 * 
+	 * @return	boolean
+	 */
+	isOpen: function() {
+		return this._isOpen;
+	},
+
+	/**
+	 * Closes this dialog.
+	 */
+	close: function() {
+		if (!this.isOpen()) {
+			return;
+		}
+
+		this._isOpen = false;
+		this._container.wcfFadeOut();
+
+		if (this._overlay !== null) {
+			this._overlay.hide();
+		}
+	},
+
+	/**
+	 * Renders this dialog, should be called whenever content is updated.
+	 */
+	render: function() {
+		if (!this.isOpen()) {
+			// temporarily display container
+			this._container.show();
+		}
+		
+		// calculate dimensions
+		var $windowDimensions = $(window).getDimensions();
+		var $containerDimensions = this._container.getDimensions('outer');
+		var $contentDimensions = this._content.getDimensions('outer');
+
+		// move container
+		var $leftOffset = Math.round(($windowDimensions.width - $containerDimensions.width) / 2);
+		var $topOffset = Math.round(($windowDimensions.height - $containerDimensions.height) / 2);
+
+		// place container at 20% height if possible
+		var $desiredTopOffset = Math.round(($windowDimensions.height / 100) * 20);
+		if ($desiredTopOffset < $topOffset) {
+			$topOffset = $desiredTopOffset;
+		}
+
+		// calculate maximum content height
+		var $heightDifference = $containerDimensions.height - $contentDimensions.height;
+		var $maximumHeight = $windowDimensions.height - $heightDifference - 60;
+		this._content.css({ maxHeight: $maximumHeight + 'px' });
+
+		if (!this.isOpen()) {
+			// hide container again
+			this._container.hide();
+
+			// apply offset
+			this._container.css({
+				left: $leftOffset + 'px',
+				top: $topOffset + 'px'
+			});
+
+			// fade in container
+			this._container.wcfFadeIn(undefined, 600);
+		}
+		else {
+			this._container.animate({
+				left: $leftOffset + 'px',
+				top: $topOffset + 'px'
+			}, 200);
+		}
+	}
+});
+
+
+/**
  * Basic implementation for WCF dialogs.
  */
-$.widget('ui.wcfDialog', $.ui.dialog, {
+$.widget('ui.wcfDialog_old', $.ui.dialog, {
 	_init: function() {
 		this.options.autoOpen = true;
 		this.options.hide = {
@@ -3224,7 +3498,7 @@ $.widget('ui.wcfDialog', $.ui.dialog, {
  * Basic implementation for WCF dialogs loading content
  * via AJAX before calling dialog itself.
  */
-$.widget('ui.wcfAJAXDialog', $.ui.dialog, {
+$.widget('ui.wcfAJAXDialog_old', $.ui.dialog, {
 	/**
 	 * Indicates wether callback was already executed
 	 * 
