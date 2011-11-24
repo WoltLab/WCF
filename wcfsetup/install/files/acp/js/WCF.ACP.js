@@ -199,7 +199,9 @@ WCF.ACP.PackageInstallation.prototype = {
 	 * @var	string
 	 */
 	_actionName: '',
-	
+
+	_api: null,
+
 	/**
 	 * package installation dialog
 	 *
@@ -237,7 +239,7 @@ WCF.ACP.PackageInstallation.prototype = {
 	 * Prepares installation dialog.
 	 */
 	prepareInstallation: function() {
-		WCF.showAJAXDialog('packageInstallationDialog', true, {
+		this._api = WCF.showAJAXDialog('packageInstallationDialog', true, {
 			ajax: {
 				url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
 				type: 'POST',
@@ -294,6 +296,7 @@ WCF.ACP.PackageInstallation.prototype = {
 		// update template
 		if ($data.template && !$data.ignoreTemplate) {
 			this._dialog.html($data.template);
+			this._api.redraw();
 		}
 		
 		// handle inner template
@@ -325,14 +328,14 @@ WCF.ACP.PackageInstallation.prototype = {
 			
 			$('#packageInstallationInnerContentContainer').wcfBlindIn();
 			
-			this._dialog.wcfDialog('redraw');
+			this._api.redraw();
 			return;
 		}
 		
 		// purge content
 		this._purgeTemplateContent($.proxy(function() {
 			// redraw container
-			this._dialog.wcfDialog('redraw');
+			this._api.redraw();
 			
 			// execute next step
 			if ($data.step && $data.node) {
@@ -350,7 +353,7 @@ WCF.ACP.PackageInstallation.prototype = {
 		if ($('#packageInstallationInnerContent').children().length > 1) {
 			$('#packageInstallationInnerContentContainer').wcfBlindOut('vertical', $.proxy(function() {
 				$('#packageInstallationInnerContent').empty();
-				this._dialog.wcfDialog('redraw');
+				this._api.redraw();
 				
 				// execute callback
 				callback();
@@ -372,9 +375,9 @@ WCF.ACP.PackageInstallation.prototype = {
 		if (!additionalData) additionalData = {};
 		
 		var $data = $.extend({
-				node: node,
-				queueID: this._queueID,
-				step: step
+			node: node,
+			queueID: this._queueID,
+			step: step
 		}, additionalData);
 		
 		$.ajax({
