@@ -18,7 +18,7 @@ class Benchmark extends SingletonFactory {
 	
 	/**
 	 * general benchmark start time
-	 * @var integer
+	 * @var float
 	 */
 	protected $startTime = 0;
 	
@@ -36,7 +36,7 @@ class Benchmark extends SingletonFactory {
 	
 	/**
 	 * total sql query execution time
-	 * @var unknown_type
+	 * @var float
 	 */
 	protected $queryTime = 0;
 
@@ -85,7 +85,7 @@ class Benchmark extends SingletonFactory {
 	/**
 	 * Returns the execution time.
 	 * 
-	 * @return integer
+	 * @return float
 	 */
 	public function getExecutionTime() {
 		return $this->compareMicrotimes($this->startTime, self::getMicrotime());
@@ -94,7 +94,7 @@ class Benchmark extends SingletonFactory {
 	/**
 	 * Returns the sql query execution time
 	 * 
-	 * @return integer
+	 * @return float
 	 */
 	public function getQueryExecutionTime() {
 		return $this->queryTime;
