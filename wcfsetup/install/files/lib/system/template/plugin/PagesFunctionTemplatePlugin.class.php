@@ -1,10 +1,13 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
+use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
+use wcf\system\style\StyleHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
+
 
 /**
  * The 'pages' template function is used to generate sliding pagers.
@@ -78,15 +81,15 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		$html = '';
 		
 		if ($tagArgs['pages'] > 1) {
-			// define page link for js function
-			$html .= "<script type=\"text/javascript\">\n//<![CDATA[\nmultiPagesLinks.setPageLink('".StringUtil::replace("'", "\'", $tagArgs['link'])."');\n//]]>\n</script>";
-			
 			// create and encode route link
-			$routeComponents = array('controller' => $tagArgs['controller']);
-			if (isset($tagArgs['id'])) $routeComponents['id'] = $tagArgs['id'];
-			$routeURL = RouteHandler::getInstance()->buildRoute($routeComponents);
-			$tagArgs['link'] = StringUtil::encodeHTML($routeURL . $tagArgs['link']);
-		
+			$parameters = array();
+			if (isset($tagArgs['id'])) $parameters['id'] = $tagArgs['id'];
+			if (isset($tagArgs['title'])) $parameters['title'] = $tagArgs['title'];
+			if (isset($tagArgs['object'])) $parameters['object'] = $tagArgs['object'];
+			if (isset($tagArgs['application'])) $parameters['application'] = $tagArgs['application'];
+			
+			$link = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink($tagArgs['controller'], $parameters, $tagArgs['link']));
+					
 			if (!isset($tagArgs['page'])) {
 				if (($tagArgs['page'] = $tplObj->get('pageNo')) === null) {
 					$tagArgs['page'] = 0;
@@ -94,19 +97,19 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			}
 			
 			// open div and ul
-			$html .= "<div class=\"pageNavigation\">\n<ul>\n";
+			$html .= "<div class=\"pageNavigation\" data-link=\"".$link."\">\n<ul>\n";
 			
 			// previous page
 			$previousTitle = WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous');
 			if ($tagArgs['page'] > 1) {
-				$html .= '<li class="skip"><a href="'.$this->insertPageNumber($tagArgs['link'], $tagArgs['page'] - 1).'" title="'.$previousTitle.'" class="balloonTooltip"><img src="'.self::getIconPath('previous1.svg').'" alt="" /></a></li>'."\n";
+				$html .= '<li class="skip"><a href="'.$this->insertPageNumber($link, $tagArgs['page'] - 1).'" title="'.$previousTitle.'" class="balloonTooltip"><img src="'.self::getIconPath('previous1').'" alt="" /></a></li>'."\n";
 			}
 			else {
-				$html .= '<li class="skip disabled"><img src="'.self::getIconPath('previous1D.svg').'" alt="" /></li>'."\n";
+				$html .= '<li class="skip disabled"><img src="'.self::getIconPath('previous1D').'" alt="" /></li>'."\n";
 			}
 			
 			// first page
-			$html .= $this->makeLink($tagArgs['link'], 1, $tagArgs['page']);
+			$html .= $this->makeLink($link, 1, $tagArgs['page']);
 			
 			// calculate page links
 			$maxLinks = self::SHOW_LINKS - 4;
@@ -148,15 +151,15 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			// left ... links
 			if ($left > 1) {
 				if ($left - 1 < 2) {
-					$html .= $this->makeLink($tagArgs['link'], 2, $tagArgs['page']);
+					$html .= $this->makeLink($link, 2, $tagArgs['page']);
 				}
 				else {
-					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)">&hellip;<img src="'.self::getIconPath('arrowDown.png').'" alt="" /></a><input type="text" name="pageNo" class="short" /><div><ul>'."\n";
+					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)">&hellip;<img src="'.self::getIconPath('arrowDown').'" alt="" /></a><input type="text" name="pageNo" class="tiny" /><div><ul>'."\n";
 					
 					$k = 0;
 					$step = intval(ceil(($left - 2) / self::SHOW_SUB_LINKS));
 					for ($i = 2; $i <= $left; $i += $step) {
-						$html .= $this->makeLink($tagArgs['link'], $i, $tagArgs['page'], $k != 0 && $k % 4 == 0);
+						$html .= $this->makeLink($link, $i, $tagArgs['page'], $k != 0 && $k % 4 == 0);
 						$k++;
 					}
 					
@@ -166,21 +169,21 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			
 			// visible links
 			for ($i = $left + 1; $i < $right; $i++) {
-				$html .= $this->makeLink($tagArgs['link'], $i, $tagArgs['page']);
+				$html .= $this->makeLink($link, $i, $tagArgs['page']);
 			}
 			
 			// right ... links
 			if ($right < $tagArgs['pages']) {
 				if ($tagArgs['pages'] - $right < 2) {
-					$html .= $this->makeLink($tagArgs['link'], $tagArgs['pages'] - 1, $tagArgs['page']);
+					$html .= $this->makeLink($link, $tagArgs['pages'] - 1, $tagArgs['page']);
 				}
 				else {
-					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)">&hellip;<img src="'.self::getIconPath('dropown1.svg').'" alt="" /></a><input type="text" name="page" class="short" /><div><ul>'."\n";
+					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)">&hellip;<img src="'.self::getIconPath('dropdown1').'" alt="" /></a><input type="text" name="page" class="tiny" /><div><ul>'."\n";
 					
 					$k = 0;
 					$step = intval(ceil(($tagArgs['pages'] - $right) / self::SHOW_SUB_LINKS));
 					for ($i = $right; $i < $tagArgs['pages']; $i += $step) {
-						$html .= $this->makeLink($tagArgs['link'], $i, $tagArgs['page'], $k != 0 && $k % 4 == 0);
+						$html .= $this->makeLink($link, $i, $tagArgs['page'], $k != 0 && $k % 4 == 0);
 						$k++;
 					}
 					
@@ -189,15 +192,15 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			}
 			
 			// last page
-			$html .= $this->makeLink($tagArgs['link'], $tagArgs['pages'], $tagArgs['page']);
+			$html .= $this->makeLink($link, $tagArgs['pages'], $tagArgs['page']);
 			
 			// next page
 			$nextTitle = WCF::getLanguage()->getDynamicVariable('wcf.global.page.next');
 			if ($tagArgs['page'] && $tagArgs['page'] < $tagArgs['pages']) {
-				$html .= '<li class="skip"><a href="'.$this->insertPageNumber($tagArgs['link'], $tagArgs['page'] + 1).'" title="'.$nextTitle.'" class="balloonTooltip"><img src="'.self::getIconPath('next1.svg').'" alt="" /></a></li>'."\n";
+				$html .= '<li class="skip"><a href="'.$this->insertPageNumber($link, $tagArgs['page'] + 1).'" title="'.$nextTitle.'" class="balloonTooltip"><img src="'.self::getIconPath('next1').'" alt="" /></a></li>'."\n";
 			}
 			else {
-				$html .= '<li class="skip disabled"><img src="'.self::getIconPath('next1D.svg').'" alt="" /></li>'."\n";
+				$html .= '<li class="skip disabled"><img src="'.self::getIconPath('next1D').'" alt="" /></li>'."\n";
 			}
 			
 			// close div and ul
@@ -213,12 +216,12 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		return $html;
 	}
 	
-	private static function getIconPath($filename) {
-		if (class_exists('StyleManager')) {
-			return StyleManager::getStyle()->getIconPath($filename);
+	private static function getIconPath($iconName) {
+		if (class_exists('wcf\system\WCFACP', false)) {
+			return RELATIVE_WCF_DIR.'icon/'.$iconName.'.svg';
 		}
 		else {
-			return RELATIVE_WCF_DIR.'icon/'.$filename;
+			return StyleHandler::getInstance()->getStyle()->getIconPath($iconName, 'S');
 		}
 	}
 }
