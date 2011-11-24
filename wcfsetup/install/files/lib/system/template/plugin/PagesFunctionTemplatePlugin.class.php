@@ -151,7 +151,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 					$html .= $this->makeLink($tagArgs['link'], 2, $tagArgs['page']);
 				}
 				else {
-					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)">&hellip;<img src="'.self::getIconPath('arrowDown.png').'" alt="" /></a><input type="text" name="pageNo" class="short" /><div><ul>'."\n";
+					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)">&hellip;<img src="'.self::getIconPath('arrowDown.png').'" alt="" /></a><input type="text" name="pageNo" class="tiny" /><div><ul>'."\n";
 					
 					$k = 0;
 					$step = intval(ceil(($left - 2) / self::SHOW_SUB_LINKS));
@@ -175,7 +175,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 					$html .= $this->makeLink($tagArgs['link'], $tagArgs['pages'] - 1, $tagArgs['page']);
 				}
 				else {
-					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)">&hellip;<img src="'.self::getIconPath('dropown1.svg').'" alt="" /></a><input type="text" name="page" class="short" /><div><ul>'."\n";
+					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)">&hellip;<img src="'.self::getIconPath('dropdown1.svg').'" alt="" /></a><input type="text" name="page" class="tiny" /><div><ul>'."\n";
 					
 					$k = 0;
 					$step = intval(ceil(($tagArgs['pages'] - $right) / self::SHOW_SUB_LINKS));

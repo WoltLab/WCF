@@ -3611,13 +3611,13 @@ $.widget('ui.wcfPages', {
 					var $leftChildrenImage = $('<img src="' + this.options.arrowDownIcon + '" alt="" />');
 					$leftChildrenLink.append($leftChildrenImage);
 					
-					var $leftChildrenInput = $('<input type="text" name="pageNo" class="short" />');
+					var $leftChildrenInput = $('<input type="text" name="pageNo" class="tiny" />');
 					$leftChildren.append($leftChildrenInput);
 					$leftChildrenInput.keydown($.proxy(this._handleInput, this));
 					$leftChildrenInput.keyup($.proxy(this._handleInput, this));
 					$leftChildrenInput.blur($.proxy(this._stopInput, this));
 					
-					var $leftChildrenContainer = $('<div></div>');
+					var $leftChildrenContainer = $('<div class="dropdown"></div>');
 					$leftChildren.append($leftChildrenContainer);
 					
 					var $leftChildrenList = $('<ul></u>');
@@ -3654,13 +3654,13 @@ $.widget('ui.wcfPages', {
 					var $rightChildrenImage = $('<img src="' + this.options.arrowDownIcon + '" alt="" />');
 					$rightChildrenLink.append($rightChildrenImage);
 					
-					var $rightChildrenInput = $('<input type="text" name="pageNo" class="short" />');
+					var $rightChildrenInput = $('<input type="text" name="pageNo" class="tiny" />');
 					$rightChildren.append($rightChildrenInput);
 					$rightChildrenInput.keydown($.proxy(this._handleInput, this));
 					$rightChildrenInput.keyup($.proxy(this._handleInput, this));
 					$rightChildrenInput.blur($.proxy(this._stopInput, this));
 					
-					var $rightChildrenContainer = $('<div></div>');
+					var $rightChildrenContainer = $('<div class="dropdown"></div>');
 					$rightChildren.append($rightChildrenContainer);
 					
 					var $rightChildrenList = $('<ul></ul>');

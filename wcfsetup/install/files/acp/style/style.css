@@ -326,7 +326,7 @@ header.pageHeader nav.topMenu > div {
 }
 
 header.pageHeader nav.topMenu > div > ul {
-	
+	/* none */
 }
 
 header.pageHeader nav.topMenu > div > ul > li {
@@ -772,6 +772,8 @@ section.content .content {
 
 
 /* ############## Sidebar ############## */
+
+/* Note that the sidebar may change to float soon! */
 
 /* Globals */
 
@@ -1763,6 +1765,41 @@ textarea[disabled='disabled'] {
 
 
 
+/* ############## ToDo: Small Buttons ############## */
+
+/* Globals */
+
+.smallButtons {
+	list-style-type: none;
+	margin-right: -1px;
+	margin-bottom: -1px;
+}
+
+.smallButtons > li {
+	margin-left: -5px;
+	display: inline-block;
+}
+
+.smallButtons > li > a {
+	white-space: nowrap;
+	padding: 3px 7px;
+	display: block;
+}
+
+.smallButtons > li.separator > a {
+	border-right: 1px dotted #bcd;
+}
+
+.smallButtons > li:first-child > a {
+	border-top-left-radius: 13px;
+}
+
+.smallButtons > li:last-child > a {
+	border-bottom-right-radius: 7px;
+}
+
+
+
 /* ############## Large Buttons ############## */
 
 /* Colors are being taken from the global color styles */
@@ -2110,7 +2147,7 @@ input[type='button'],
 }
 
 .menu ul {
-	/* This is the general toggle switch for menu orientation (options: left|center|right) */
+	/* Toggle switch for menu orientation (options: left|center|right) */
 	text-align: center;
 }
 
@@ -2452,13 +2489,6 @@ tbody tr:hover td {
 
 /* ToDo: Table Header Specials */
 
-/* Is that still in use? 
-.menu ~ .border {
-	border-top-left-radius: 0 !important;
-	border-top-right-radius: 0 !important;
-}
-*/
-
 .menu ~ .border thead th:first-child {
 	border-top-left-radius: 0 !important;
 }
@@ -2641,11 +2671,40 @@ tr .columnURL {
 
 /* ToDo: Children */
 
-.pageNavigation ul li.children,
-.pageNavigation ul li.children:hover,
-.pageNavigation ul li.children:active,
-.pageNavigation ul li.children:focus {
+.pageNavigation ul li.children {
 	display: inline-block;
+	position: relative;
+}
+
+.pageNavigation ul li.children > a {
+	margin-right: -30px;
+	position: relative;
+	z-index: 100;
+}
+
+.pageNavigation ul li.children div {
+	text-align: left;
+	border-radius: 3px;
+	position: absolute;
+	margin-top: 5px;
+	width: 0px;
+	height: 0px;
+	overflow: hidden;
+}
+
+.pageNavigation ul li.children:hover a ~ div {
+	width: auto;
+	height: auto;
+	min-width: 150px;
+	max-width: 200px;
+	left: auto;
+	top: auto;
+	overflow: visible;
+}
+
+.pageNavigation ul li.children input {
+	width: 28px;
+	height: 9px;
 }
 
 .pageNavigation ul li.children img {
@@ -2927,7 +2986,7 @@ div#ajaxExceptionStacktrace {
 
 /* Login Box */
 
-/* Do not use the class ".loginBox" to style the box! */
+/* Note: Do not use the class ".loginBox" to style the box! */
 
 #loginBox dl {
 	margin-right: 20px;
@@ -3155,7 +3214,7 @@ input[type='button'].default:hover,
 .largeButtons ul li a:hover,
 .smallButtons > li > a:hover,
 .badgeButton:hover,
-.pageNavigation ul li:not(.disabled):hover,
+.pageNavigation ul li:not(.disabled):not(.children):hover,
 .clipboardEditor > ul > li:hover,
 .preInput:hover .dropdownCaption {
 	color: #666;
@@ -3182,7 +3241,7 @@ input[type='button'].default:focus,
 .largeButtons ul li a:focus,
 .smallButtons > li > a:focus,
 .badgeButton:focus,
-.pageNavigation ul li:not(.disabled):active,
+.pageNavigation ul li:not(.disabled):not(.children):active,
 .clipboardEditor > ul > li:focus,
 .preInput .dropdownCaption:focus,
 input[type='reset']:active,
@@ -3194,7 +3253,7 @@ input[type='button'].default:active,
 .largeButtons ul li.default a:active,
 .smallButtons > li.default > a:active,
 .badgeButton:active,
-.pageNavigation ul li:not(.disabled):focus,
+.pageNavigation ul li:not(.disabled):not(.children):focus,
 .clipboardEditor > ul > li:active,
 .preInput .dropdownCaption:active {
 	color: #333;
@@ -3510,159 +3569,6 @@ input[type='button'][disabled='disabled'],
 
 
 
-
-
-
-
-
-
-/* ############## CSS Experiments (active) ############## */
-
-
-
-/* ToDo: User Panel 
-
-this is taken from "userPanel.tpl" (inline-css) 
-will change soon! 
-
-	CSS should be moved to a user css-file, whereas many parts may be left out except for the following ones:
-	 - [.scrollableContainer] Don't touch!
-	 - [.scrollableItems] Keep the inflated width, you may lower its number but it must be incredible bloated
-	 - [.scrollableItems > div] Must be a fixed-width float, otherwise it would break the scrollable class
-	   from jQueryTools. Do NOT use css-tables or [display: inline-block] as it won't work with the whole magic
-
-*/
-
-/* ToDo: User Notifications */
-
-.userNotificationContainer {
-	width: 240px;
-	z-index: 510;	/* adjust to any value you like, it *MUST* be higher than 'header.pageHeader nav.topMenu' */
-	overflow: hidden;
-}
-
-.scrollableContainer {
-	position: relative;
-	width: 250px;
-	overflow: hidden;
-}
-
-.scrollableContainer .scrollableItems {
-	position: relative;
-	width: 20000em;
-}
-
-.scrollableContainer .scrollableItems > div {
-	border-right: 1px solid rgba(192, 192, 192, 1);
-	float: left;
-	width: 250px;
-}
-
-.scrollableContainer {
-	font-size: 90%;
-}
-
-.scrollableContainer > div:first-child ul {
-	margin: 0;
-	padding: 0;
-}
-
-.scrollableContainer > div:first-child li {
-	border-top: 1px solid rgba(192, 192, 192, 1);
-	cursor: pointer;
-	padding: 7px;
-}
-
-.scrollableContainer > div:first-child li:first-child {
-	border-top-width: 0;
-}
-
-div.scrollableContainer > div:first-child p {
-	padding: 0 1px;
-}
-
-.userNotificationDetails {
-	padding: 7px;
-	width: 236px;
-}
-
-.userNotificationDetails hgroup {
-	margin-bottom: 7px;
-	display: table;
-	width: 100%;
-}
-
-.userNotificationDetails .row {
-	display: table-row;
-}
-
-.userNotificationDetails .row div {
-	text-align: center;
-	display: table-cell;
-	vertical-align: middle;
-}
-
-.userNotificationDetails .row div:first-child {
-	width: 64px;
-}
-
-.userNotificationDetails .row div:last-child {
-	padding-left: 7px;
-}
-
-.userNotificationDetails .avatar img {
-	height: 64px;
-	width: 64px;
-}
-
-.userNotificationDetails h1 {
-	font-size: 110%;
-}
-
-.userNotificationDetails section {
-	border-top: 1px solid rgba(192, 192, 192, 1);
-	padding-top: 7px;
-}
-
-.userNotificationDetails nav {
-	text-align: center;
-	border-top: 1px solid rgba(192, 192, 192, 1);
-	margin-top: 7px;
-	padding-top: 7px;
-}
-
-.userNotificationDetails ul {
-	list-style-type: none;
-	display: inline-block;
-}
-
-.userNotificationDetails li {
-	cursor: pointer;
-	border: 1px solid rgba(192, 192, 192, 1) !important;
-	padding: 3px;
-	display: inline-block;
-}
-
-.userNotificationDetails li:hover {
-	
-}
-
-#userNotificationDetailsLoading {
-	background-color: rgba(255, 255, 255, .5);
-	background-image: url('{@RELATIVE_WCF_DIR}icon/spinner1.svg');
-	background-position: center center;
-	background-size: 24px;
-	background-repeat: no-repeat;
-	position: absolute;
-}
-
-
-
-
-
-
-
-
 /* ############## ACP Package List ############## */
 
 /* -- -- -- Package Standalone -- -- -- */
@@ -3869,38 +3775,148 @@ div.scrollableContainer > div:first-child p {
 
 
 
-/* ############## ToDo: Small Buttons ############## */
+/* ############## CSS Experiments (active) ############## */
 
-/* Globals */
 
-ul.smallButtons {
-	list-style-type: none;
-	margin-right: -1px;
-	margin-bottom: -1px;
+
+/* ToDo: User Panel 
+
+this is taken from "userPanel.tpl" (inline-css) 
+will change soon! 
+
+	CSS should be moved to a user css-file, whereas many parts may be left out except for the following ones:
+	 - [.scrollableContainer] Don't touch!
+	 - [.scrollableItems] Keep the inflated width, you may lower its number but it must be incredible bloated
+	 - [.scrollableItems > div] Must be a fixed-width float, otherwise it would break the scrollable class
+	   from jQueryTools. Do NOT use css-tables or [display: inline-block] as it won't work with the whole magic
+
+*/
+
+/* ToDo: User Notifications */
+
+.userNotificationContainer {
+	width: 240px;
+	z-index: 510;	/* adjust to any value you like, it *MUST* be higher than 'header.pageHeader nav.topMenu' */
+	overflow: hidden;
 }
 
-ul.smallButtons > li {
-	margin-left: -5px;
+.scrollableContainer {
+	position: relative;
+	width: 250px;
+	overflow: hidden;
+}
+
+.scrollableContainer .scrollableItems {
+	position: relative;
+	width: 20000em;
+}
+
+.scrollableContainer .scrollableItems > div {
+	border-right: 1px solid rgba(192, 192, 192, 1);
+	float: left;
+	width: 250px;
+}
+
+.scrollableContainer {
+	font-size: 90%;
+}
+
+.scrollableContainer > div:first-child ul {
+	margin: 0;
+	padding: 0;
+}
+
+.scrollableContainer > div:first-child li {
+	border-top: 1px solid rgba(192, 192, 192, 1);
+	cursor: pointer;
+	padding: 7px;
+}
+
+.scrollableContainer > div:first-child li:first-child {
+	border-top-width: 0;
+}
+
+div.scrollableContainer > div:first-child p {
+	padding: 0 1px;
+}
+
+.userNotificationDetails {
+	padding: 7px;
+	width: 236px;
+}
+
+.userNotificationDetails hgroup {
+	margin-bottom: 7px;
+	display: table;
+	width: 100%;
+}
+
+.userNotificationDetails .row {
+	display: table-row;
+}
+
+.userNotificationDetails .row div {
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.userNotificationDetails .row div:first-child {
+	width: 64px;
+}
+
+.userNotificationDetails .row div:last-child {
+	padding-left: 7px;
+}
+
+.userNotificationDetails .avatar img {
+	height: 64px;
+	width: 64px;
+}
+
+.userNotificationDetails h1 {
+	font-size: 110%;
+}
+
+.userNotificationDetails section {
+	border-top: 1px solid rgba(192, 192, 192, 1);
+	padding-top: 7px;
+}
+
+.userNotificationDetails nav {
+	text-align: center;
+	border-top: 1px solid rgba(192, 192, 192, 1);
+	margin-top: 7px;
+	padding-top: 7px;
+}
+
+.userNotificationDetails ul {
+	list-style-type: none;
 	display: inline-block;
 }
 
-ul.smallButtons > li > a {
-	white-space: nowrap;
-	padding: 3px 7px;
-	display: block;
+.userNotificationDetails li {
+	cursor: pointer;
+	border: 1px solid rgba(192, 192, 192, 1) !important;
+	padding: 3px;
+	display: inline-block;
 }
 
-ul.smallButtons > li.separator > a {
-	border-right: 1px dotted #bcd;
+.userNotificationDetails li:hover {
+	
 }
 
-ul.smallButtons > li:first-child > a {
-	border-top-left-radius: 13px;
+#userNotificationDetailsLoading {
+	background-color: rgba(255, 255, 255, .5);
+	background-image: url('{@RELATIVE_WCF_DIR}icon/spinner1.svg');
+	background-position: center center;
+	background-size: 24px;
+	background-repeat: no-repeat;
+	position: absolute;
 }
 
-ul.smallButtons > li:last-child > a {
-	border-bottom-right-radius: 7px;
-}
+
+
 
 
 
@@ -3944,7 +3960,9 @@ div#profileButtonContainer button:hover {
 	background-image: linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
 }
 
-/* ############## ToDo ############## */
+
+
+/* ############## ToDo: Action Proxy Loading ############## */
 
 #actionProxyLoading {
 	text-align: center;
@@ -4016,7 +4034,7 @@ div.ajaxDebugMessage p:last-child {
 
 /* ############## ToDo ############## */
 
-/* Is all that really still necessary? We wanted to support good browsers only */
+/* Is that really still necessary? We wanted to support good browsers only */
 
 /* End clearfix */
 .ui-helper-zfix {
