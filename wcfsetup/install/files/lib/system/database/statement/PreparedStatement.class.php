@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\database\statement;
 use wcf\data\DatabaseObject;
+use wcf\system\benchmark\Benchmark;
 use wcf\system\database\Database;
 use wcf\system\database\DatabaseException;
 
@@ -78,8 +79,14 @@ class PreparedStatement {
 		$this->database->incrementQueryCount();
 		
 		try {
-			if (!count($parameters)) return $this->pdoStatement->execute();
-			return $this->pdoStatement->execute($parameters);
+			Benchmark::getInstance()->start($this->query, Benchmark::TYPE_SQL_QUERY);
+			
+			if (!count($parameters)) $result = $this->pdoStatement->execute();
+			else $result = $this->pdoStatement->execute($parameters);
+			
+			Benchmark::getInstance()->stop();
+			
+			return $result;
 		}
 		catch (\PDOException $e) {
 			throw new DatabaseException('Could not execute prepared statement: '.$e->getMessage(), $this->database, $this);
