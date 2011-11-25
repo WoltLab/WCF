@@ -446,6 +446,7 @@ $.extend(WCF, {
 	
 	/**
 	 * Shows a modal dialog.
+	 * 
 	 * @param	string		dialogID
 	 * @param	boolean		moveToBody
 	 */
@@ -810,7 +811,7 @@ WCF.Clipboard = {
 			
 			var $editor = data.items[$typeName];
 			var $label = $('<li><span>' + $editor.label + '</span></li>').appendTo($list).click(function(event) {
-				$(event.target).next().toggle();
+				$(event.target).next().toggleClass('open');
 			});
 			var $itemList = $('<ol></ol>').appendTo($label).hide();
 			

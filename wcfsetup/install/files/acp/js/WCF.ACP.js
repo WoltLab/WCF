@@ -308,13 +308,14 @@ WCF.ACP.Package.Installation.prototype = {
 	 */
 	prepareInstallation: function() {
 		var $dialog = WCF.showAJAXDialog('packageInstallationDialog', true, {
+			ajax: true,
 			url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
 			data: { queueID: this._queueID, step: 'prepare' },
 			success: $.proxy(this._handleResponse, this),
 			preventClose: true,
 			hideTitle: true
 		});
-
+		
 		this._api = $dialog.data('wcfDialog');
 	},
 	
@@ -325,7 +326,7 @@ WCF.ACP.Package.Installation.prototype = {
 	 * @param	string		textStatus
 	 * @param	jQuery		jqXHR
 	 */
-	_handleResponse: function(data. textStatus, jqXHR) {
+	_handleResponse: function(data, textStatus, jqXHR) {
 		if (this._dialog == null) {
 			this._dialog = $('#packageInstallationDialog');
 		}
