@@ -4,6 +4,7 @@ use wcf\data\DatabaseObject;
 use wcf\system\benchmark\Benchmark;
 use wcf\system\database\Database;
 use wcf\system\database\DatabaseException;
+use wcf\system\WCF;
 
 /**
  * This is an implementation of prepared statements based upon pdo statements.
@@ -79,12 +80,12 @@ class PreparedStatement {
 		$this->database->incrementQueryCount();
 		
 		try {
-			Benchmark::getInstance()->start($this->query, Benchmark::TYPE_SQL_QUERY);
+			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start($this->query, Benchmark::TYPE_SQL_QUERY);
 			
 			if (!count($parameters)) $result = $this->pdoStatement->execute();
 			else $result = $this->pdoStatement->execute($parameters);
 			
-			Benchmark::getInstance()->stop();
+			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->stop();
 			
 			return $result;
 		}

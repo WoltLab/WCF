@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\exception;
+use wcf\system\WCF;
 
 /**
  * A UserException is thrown when a user gives invalid input data.
@@ -16,7 +17,7 @@ abstract class UserException extends LoggedException implements IPrintableExcept
 	 * @see wcf\system\exception\IPrintableException::show()
 	 */
 	public function show() {
-		if (DEBUG_MODE == 'debug') {
+		if (WCF::debugModeIsEnabled()) {
 			echo '<pre>' . $this->getTraceAsString() . '</pre>';
 		}
 		else {

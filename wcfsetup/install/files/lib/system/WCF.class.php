@@ -573,4 +573,25 @@ class WCF {
 		
 		return null;
 	}
+	
+	/**
+	 * Returns true if the debug mode is enabled, otherwise false.
+	 * 
+	 * @return boolean
+	 */
+	public static function debugModeIsEnabled() {
+		if (defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE) return true;
+		return false;
+	}
+	
+	/**
+	 * Returns true if benchmarking is enabled, otherwise false.
+	 * 
+	 * @return boolean
+	 */
+	public static function benchmarkIsEnabled() {
+		// benchmarking is enabled by default
+		if (!defined('ENABLE_BENCHMARK') || ENABLE_BENCHMARK) return true;
+		return false;
+	}
 }

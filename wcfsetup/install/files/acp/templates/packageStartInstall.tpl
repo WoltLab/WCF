@@ -19,8 +19,8 @@
 {/if}
 
 <div class="contentHeader">
-	<nav class="largeButtons">
-		<ul>
+	<nav>
+		<ul class="largeButtons">
 			<li><a href="{link controller='PackageList'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageStandalone1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>
