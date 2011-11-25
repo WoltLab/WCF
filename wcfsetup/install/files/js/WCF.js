@@ -3397,11 +3397,26 @@ $.widget('ui.wcfDialog', {
 			// temporarily display container
 			this._container.show();
 		}
+
+		// force content to be visible
+		this._content.children().each(function() {
+			$(this).show();
+		});
 		
 		// calculate dimensions
 		var $windowDimensions = $(window).getDimensions();
 		var $containerDimensions = this._container.getDimensions('outer');
 		var $contentDimensions = this._content.getDimensions('outer');
+
+		// calculate maximum content height
+		var $heightDifference = $containerDimensions.height - $contentDimensions.height;
+		var $maximumHeight = $windowDimensions.height - $heightDifference - 60;
+		this._content.css({ maxHeight: $maximumHeight + 'px' });
+		
+		// re-caculate values if container height was previously limited
+		if ($maximumHeight < $contentDimensions.height) {
+			$containerDimensions = this._container.getDimensions('outer');
+		}
 
 		// move container
 		var $leftOffset = Math.round(($windowDimensions.width - $containerDimensions.width) / 2);
@@ -3412,11 +3427,6 @@ $.widget('ui.wcfDialog', {
 		if ($desiredTopOffset < $topOffset) {
 			$topOffset = $desiredTopOffset;
 		}
-
-		// calculate maximum content height
-		var $heightDifference = $containerDimensions.height - $contentDimensions.height;
-		var $maximumHeight = $windowDimensions.height - $heightDifference - 60;
-		this._content.css({ maxHeight: $maximumHeight + 'px' });
 
 		if (!this.isOpen()) {
 			// hide container again
