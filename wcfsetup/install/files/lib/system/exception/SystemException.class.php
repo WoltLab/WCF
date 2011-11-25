@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\exception;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
@@ -141,7 +142,7 @@ class SystemException extends LoggedException implements IPrintableException {
 				<div class="systemException">
 					<h1>Fatal error: <?php echo StringUtil::encodeHTML($this->_getMessage()); ?></h1>
 					
-					<?php if (DEBUG_MODE == 'debug') { ?>
+					<?php if (WCF::debugModeIsEnabled()) { ?>
 						<div>
 							<p><?php echo $this->getDescription(); ?></p>
 						

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\exception;
+use wcf\system\WCF;
 use wcf\util\JSON;
 
 /**
@@ -22,7 +23,7 @@ class AJAXException extends LoggedException {
 	public function __construct($message, $stacktrace = null) {
 		if ($stacktrace === null) $stacktrace = $this->getTraceAsString();
 		
-		if (DEBUG_MODE == 'debug') {
+		if (WCF::debugModeIsEnabled()) {
 			$responseData = array(
 				'message' => $message,
 				'stacktrace' => nl2br($stacktrace)

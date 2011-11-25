@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\exception;
+use wcf\system\WCF;
 
 /**
  * A logged exceptions prevents information disclosures and provides an easy
@@ -19,7 +20,7 @@ class LoggedException extends \Exception {
 	 * @see		\Exception::getMessage()
 	 */
 	public function _getMessage() {
-		if (DEBUG_MODE == 'production') {
+		if (!WCF::debugModeIsEnabled()) {
 			return 'An error occured. Sorry.';
 		}
 		

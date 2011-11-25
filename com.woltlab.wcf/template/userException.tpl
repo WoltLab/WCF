@@ -19,7 +19,7 @@
 	//]]>
 </script>
 
-{if DEBUG_MODE == 'debug'}
+{if ENABLE_DEBUG_MODE}
 	<!-- 
 	{$name} thrown in {$file} ({@$line})
 	Stracktrace:

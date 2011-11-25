@@ -23,8 +23,8 @@ define('SESSION_VALIDATE_IP_ADDRESS', 0);
 define('SESSION_VALIDATE_USER_AGENT', 0);
 
 define('CACHE_SOURCE_TYPE', 'disk');
-define('MODULE_MASTER_PASSWORD', 1);
+define('MODULE_MASTER_PASSWORD', 0);
 define('TIMEZONE', 'Europe/Berlin');
 
-// TODO: Change to 'production' later
-define('DEBUG_MODE', 'debug');
+define('ENABLE_DEBUG_MODE', 1);
+define('ENABLE_BENCHMARK', 1);
