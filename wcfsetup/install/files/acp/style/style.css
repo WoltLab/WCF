@@ -2396,6 +2396,12 @@ thead th {
 	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
 	
 	padding: 7px;
+	
+	-webkit-transition: background .2s linear;
+	-moz-transition: background .2s linear;
+	-ms-transition: background .2s linear;
+	-o-transition: background .2s linear;
+	transition: background .2s linear;
 }
 
 thead th a {
@@ -2472,6 +2478,12 @@ tbody td {
 	padding: 5px;
 	/* This is experimental - only works in combination with "table-layout: fixed;" */
 	word-wrap: break-word;
+	
+	-webkit-transition: background .2s linear;
+	-moz-transition: background .2s linear;
+	-ms-transition: background .2s linear;
+	-o-transition: background .2s linear;
+	transition: background .2s linear;
 }
 
 tbody td:last-child {
