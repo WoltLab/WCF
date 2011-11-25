@@ -1156,7 +1156,7 @@ li > .badgeButton {
 	border-bottom-right-radius: 5px;
 }
 
-.dropdown > :hover,
+.dropdown > :hover:not(ul),
 .dropdown > .active {
 	color: #fff;
 	background-color: rgba(0, 0, 0, .5);
@@ -1810,18 +1810,18 @@ textarea[disabled='disabled'] {
 	text-align: right;
 }
 
-.largeButtons ul li {
+.largeButtons > li {
 	display: inline;
 }
 
-.largeButtons ul li a img {
+.largeButtons > li > a img {
 	margin: -5px 1px -5px -5px;
 	vertical-align: middle;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.largeButtons ul li a img {
+	.largeButtons > li > a img {
 		height: 24px;
 		width: 24px;
 	}
@@ -1830,16 +1830,16 @@ textarea[disabled='disabled'] {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.largeButtons ul li {
+	.largeButtons > li {
 		font-size: 125%;
 	}
 	
-	.largeButtons ul li a {
+	.largeButtons > li > a {
 		padding: 10px 15px !important;
 		white-space: nowrap;
 	}
 	
-	.largeButtons ul li a img {
+	.largeButtons > li > a img {
 		height: 32px;
 		width: 32px;
 	}
@@ -1851,7 +1851,7 @@ textarea[disabled='disabled'] {
 input[type='reset'],
 input[type='submit'],
 input[type='button'],
-.largeButtons ul li a {
+.largeButtons > li > a {
 	font-size: 100%;
 	font-weight: bold;
 	border-radius: 30px;
@@ -2605,7 +2605,7 @@ tr .columnURL {
 	margin-left: 3px;
 }
 
-.pageNavigation ul li:not(.children) {
+.pageNavigation ul li {
 	border-radius: 3px;
 	display: inline-block;
 	position: relative;
@@ -2672,7 +2672,6 @@ tr .columnURL {
 /* ToDo: Children */
 
 .pageNavigation ul li.children {
-	display: inline-block;
 	position: relative;
 }
 
@@ -2680,26 +2679,6 @@ tr .columnURL {
 	margin-right: -30px;
 	position: relative;
 	z-index: 100;
-}
-
-.pageNavigation ul li.children div {
-	text-align: left;
-	border-radius: 3px;
-	position: absolute;
-	margin-top: 5px;
-	width: 0px;
-	height: 0px;
-	overflow: hidden;
-}
-
-.pageNavigation ul li.children:hover a ~ div {
-	width: auto;
-	height: auto;
-	min-width: 150px;
-	max-width: 200px;
-	left: auto;
-	top: auto;
-	overflow: visible;
 }
 
 .pageNavigation ul li.children input {
@@ -2712,16 +2691,66 @@ tr .columnURL {
 	width: 7px;
 }
 
+.pageNavigation ul li.children .dropdown {
+	text-align: left;
+	border-radius: 3px;
+	background-color: rgba(0, 0, 0, .7);
+	margin-top: 28px;
+	margin-left: -2px;
+	position: absolute;
+	display: none;
+}
 
+.pageNavigation ul li.children:hover .dropdown {
+	display: inline-block;
+	height: auto;
+	min-width: 150px;
+	max-width: 200px;
+	overflow: visible;
+}
+
+.pageNavigation ul li.children .dropdown ul {
+	padding: 0 5px 5px 2px;
+	display: block;
+}
+
+.pageNavigation ul li.children .dropdown ul li {
+	margin-top: 5px;
+	margin-left: 3px;
+}
+
+/* Pointer */
+
+.pageNavigation ul li.children .pointer {	
+	border-width: 0 7px 7px;
+	border-style: solid;
+	border-color: rgba(255, 255, 255, .7) transparent;
+	display: inline-block !important;
+	width: 0;
+	position: absolute;
+	top: -7px !important;
+	left: 11px;
+}
+
+.pageNavigation ul li.children .pointer span {	
+	border-width: 0 5px 5px;
+	border-style: solid;
+	border-color: rgba(0, 0, 0, .7) transparent;
+	display: inline-block;
+	width: 0;
+	position: absolute;
+	top: 2px;
+	left: -5px;
+}
 
 /* ############## System Notifications ############## */
 
 /* Globals */
 
-p.info,
-p.error,
-p.success,
-p.warning {
+.info,
+.error,
+.success,
+.warning {
 	text-shadow: 0 1px 0 #fff;
 	line-height: 1.5;
 	border-radius: 7px;
@@ -2737,7 +2766,7 @@ p.warning {
 
 /* Types */
 
-p.info {
+.info {
 	color: #68b;
 	border: 1px solid #9be;
 	background-color: #def;
@@ -2747,7 +2776,7 @@ p.info {
 	background-repeat: no-repeat;
 }
 
-p.success {
+.success {
 	color: #090;
 	border: 1px solid #0c0;
 	background-color: #efe;
@@ -2757,7 +2786,7 @@ p.success {
 	background-repeat: no-repeat;
 }
 
-p.warning {
+.warning {
 	color: #990;
 	border: 1px solid #cc0;
 	background-color: #ffd;
@@ -2767,7 +2796,7 @@ p.warning {
 	background-repeat: no-repeat;
 }
 
-p.error {
+.error {
 	color: #c00;
 	border: 1px solid #f99;
 	background-color: #fee;
@@ -2793,7 +2822,7 @@ p.error {
 	margin-top: 5px;
 	padding: 2px 10px 2px 25px;
 	display: table !important;
-	position: relative; /* Firefox will support this in version 10 */
+	position: relative; /* Firefox should support this from version 10 on */
 	clear: both;
 	
 	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
@@ -2803,7 +2832,7 @@ p.error {
 	box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
 }
 
-.innerError .arrowOuter {	
+.innerError .pointer {	
 	border-width: 0 7px 7px;
 	border-style: solid;
 	border-color: #ccc transparent;
@@ -2814,7 +2843,7 @@ p.error {
 	left: 10%;
 }
 
-.innerError .arrowInner {	
+.innerError .pointer span {	
 	border-width: 0 5px 5px;
 	border-style: solid;
 	border-color: #fff transparent;
@@ -2827,7 +2856,7 @@ p.error {
 
 /* Special */
 
-.preInput ~ .innerError .arrowOuter {	
+.preInput ~ .innerError .pointer {	
 	right: 10%;
 	left: auto;
 }
@@ -3074,7 +3103,7 @@ img[src*='enable'] {
 	cursor: pointer;
 }
 
-#balloonTooltip .arrowOuter {	
+#balloonTooltip .pointer {	
 	border-width: 0 7px 7px;
 	border-style: solid;
 	border-color: rgba(255, 255, 255, .7) transparent;
@@ -3085,7 +3114,7 @@ img[src*='enable'] {
 	left: 50%;
 }
 
-#balloonTooltip .arrowInner {	
+#balloonTooltip .pointer span {	
 	border-width: 0 5px 5px;
 	border-style: solid;
 	border-color: rgba(0, 0, 0, .7) transparent;
@@ -3174,8 +3203,8 @@ img[src*='enable'] {
 input[type='reset'],
 input[type='submit'],
 input[type='button'],
-.largeButtons ul li a,
 .smallButtons > li > a,
+.largeButtons > li > a,
 .badgeButton,
 .pageNavigation ul li:not(.children),
 .clipboardEditor > ul > li,
@@ -3222,10 +3251,10 @@ input[type='submit']:hover,
 input[type='button']:hover,
 input[type='button'].default:hover,
 input[type='button'].default:hover,
-.largeButtons ul li.default a:hover,
-.smallButtons > li.default > a:hover,
-.largeButtons ul li a:hover,
 .smallButtons > li > a:hover,
+.smallButtons > li.default > a:hover,
+.largeButtons > li > a:hover,
+.largeButtons > li.default > a:hover,
 .badgeButton:hover,
 .pageNavigation ul li:not(.disabled):not(.children):hover,
 .clipboardEditor > ul > li:hover,
@@ -3250,9 +3279,10 @@ input[type='submit']:focus,
 input[type='button']:focus,
 input[type='button'].default:focus,
 input[type='button'].default:focus,
-.largeButtons ul li.default a:focus,
-.largeButtons ul li a:focus,
 .smallButtons > li > a:focus,
+.smallButtons > li.default > a:focus,
+.largeButtons > li > a:focus,
+.largeButtons > li.default > a:focus,
 .badgeButton:focus,
 .pageNavigation ul li:not(.disabled):not(.children):active,
 .clipboardEditor > ul > li:focus,
@@ -3261,10 +3291,10 @@ input[type='reset']:active,
 input[type='submit']:active,
 input[type='button']:active,
 input[type='button'].default:active,
-.largeButtons ul li a:active,
 .smallButtons > li > a:active,
-.largeButtons ul li.default a:active,
 .smallButtons > li.default > a:active,
+.largeButtons > li a:active,
+.largeButtons > li.default > a:active,
 .badgeButton:active,
 .pageNavigation ul li:not(.disabled):not(.children):focus,
 .clipboardEditor > ul > li:active,
@@ -3337,8 +3367,8 @@ input[type='button'].default:active,
 
 input[type='submit'],
 input[type='button'].default,
-.largeButtons ul li.default a,
-.smallButtons > li.default > a {
+.smallButtons > li.default > a,
+.largeButtons > li.default > a {
 	color: #69c;
 	border-width: 1px;
 	border-style: solid;
@@ -3437,7 +3467,7 @@ input[type='button'].default,
 
 input[type='submit']:hover,
 input[type='button'].default:hover,
-.largeButtons ul li.default a:hover,
+.largeButtons > li.default > a:hover,
 .smallButtons > li.default > a:hover {	
 	-webkit-box-shadow: 0 0 10px #fa2;
 	-moz-box-shadow: 0 0 10px #fa2;
@@ -3525,11 +3555,12 @@ input[type='button'].default:hover,
 
 input[type='submit']:focus,
 input[type='button'].default:focus,
-.largeButtons ul li.default a:focus,
+.smallButtons > li.default > a:active,
+.largeButtons > li.default > a:active,
 input[type='submit']:active,
 input[type='button'].default:active,
-.largeButtons ul li.default a:active,
-.smallButtons > li.default > a:active {
+.smallButtons > li.default > a:active,
+.largeButtons > li.default > a:active {
 	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-ms-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
@@ -3571,8 +3602,8 @@ input[type='button'].default:active,
 
 input[disabled='disabled'],
 input[type='button'][disabled='disabled'],
-.largeButtons ul li.disabled a,
-.smallButtons > li.disabled > a {
+.smallButtons > li.disabled > a,
+.largeButtons > li.disabled > a {
 	color: #999;
 	cursor: default;
 	border-width: 1px;

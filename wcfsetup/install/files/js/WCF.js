@@ -2731,7 +2731,7 @@ WCF.Effect.BalloonTooltip.prototype = {
 	init: function() {
 		if (!this._didInit) {
 			// create empty div
-			this._tooltip = $('<div id="balloonTooltip" style="position:absolute"><span id="balloonTooltipText"></span><span class="arrowOuter"><span class="arrowInner"></span></span></div>').appendTo($('body')).hide();
+			this._tooltip = $('<div id="balloonTooltip" style="position: absolute"><span id="balloonTooltipText"></span><span class="pointer"><span></span></span></div>').appendTo($('body')).hide();
 
 			// get viewport dimensions
 			this._updateViewportDimensions();
@@ -2797,7 +2797,7 @@ WCF.Effect.BalloonTooltip.prototype = {
 		this._tooltip.children('span:eq(0)').text($element.data('tooltip'));
 
 		// get arrow
-		var $arrow = this._tooltip.find('.arrowOuter');
+		var $arrow = this._tooltip.find('.pointer');
 
 		// get arrow width
 		this._tooltip.show();
@@ -3335,7 +3335,7 @@ $.widget('ui.wcfDialog', {
 			}
 		}
 	},
-
+	
 	/**
 	 * Handles successful AJAX requests.
 	 *
@@ -3351,7 +3351,7 @@ $.widget('ui.wcfDialog', {
 			this.options.success(data, textStatus, jqXHR);
 		}
 	},
-
+	
 	/**
 	 * Opens this dialog.
 	 */
@@ -3372,7 +3372,7 @@ $.widget('ui.wcfDialog', {
 	isOpen: function() {
 		return this._isOpen;
 	},
-
+	
 	/**
 	 * Closes this dialog.
 	 */
@@ -3388,7 +3388,7 @@ $.widget('ui.wcfDialog', {
 			this._overlay.hide();
 		}
 	},
-
+	
 	/**
 	 * Renders this dialog, should be called whenever content is updated.
 	 */
