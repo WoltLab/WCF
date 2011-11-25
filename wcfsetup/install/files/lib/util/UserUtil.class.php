@@ -150,32 +150,31 @@ class UserUtil {
 	 */
 	public static function getRequestURI() {
 		$REQUEST_URI = '';
-		/*if (!empty($_SERVER['REQUEST_URI'])) {
-			$REQUEST_URI = $_SERVER['REQUEST_URI'];
+		
+		if (!empty($_SERVER['ORIG_PATH_INFO']) && strpos($_SERVER['ORIG_PATH_INFO'], '.php') !== false) {
+			$REQUEST_URI = $_SERVER['ORIG_PATH_INFO'];
 		}
-		else {*/
-			if (!empty($_SERVER['ORIG_PATH_INFO']) && strpos($_SERVER['ORIG_PATH_INFO'], '.php') !== false) {
-				$REQUEST_URI = $_SERVER['ORIG_PATH_INFO'];
-			}
-			else if (!empty($_SERVER['ORIG_SCRIPT_NAME'])) {
-				$REQUEST_URI = $_SERVER['ORIG_SCRIPT_NAME'];
-			}
-			else if (!empty($_SERVER['SCRIPT_NAME'])) {
-				$REQUEST_URI = $_SERVER['SCRIPT_NAME'];
-			}
-			else if (!empty($_SERVER['PHP_SELF'])) {
-				$REQUEST_URI = $_SERVER['PHP_SELF'];
-			}
-			else if (!empty($_SERVER['PATH_INFO'])) {
-				$REQUEST_URI = $_SERVER['PATH_INFO'];
-			}
-			if (!empty($_SERVER['QUERY_STRING'])) {
-				$REQUEST_URI .= '?'.$_SERVER['QUERY_STRING'];
-			}
-		//}
+		else if (!empty($_SERVER['ORIG_SCRIPT_NAME'])) {
+			$REQUEST_URI = $_SERVER['ORIG_SCRIPT_NAME'];
+		}
+		else if (!empty($_SERVER['SCRIPT_NAME'])) {
+			$REQUEST_URI = $_SERVER['SCRIPT_NAME'];
+		}
+		else if (!empty($_SERVER['PHP_SELF'])) {
+			$REQUEST_URI = $_SERVER['PHP_SELF'];
+		}
+		else if (!empty($_SERVER['PATH_INFO'])) {
+			$REQUEST_URI = $_SERVER['PATH_INFO'];
+		}
+		if (!empty($_SERVER['QUERY_STRING'])) {
+			$REQUEST_URI .= '?'.$_SERVER['QUERY_STRING'];
+		}
 		
-		//if (!strstr($REQUEST_URI, '.')) $REQUEST_URI = 'index.php';
+		// fix encoding
+		if (!StringUtil::isASCII($REQUEST_URI) && !StringUtil::isUTF8($REQUEST_URI)) {
+			$REQUEST_URI = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $REQUEST_URI);
+		}
 		
-		return substr(FileUtil::unifyDirSeperator($REQUEST_URI), 0, 255);
+		return StringUtil::substring(FileUtil::unifyDirSeperator($REQUEST_URI), 0, 255);
 	}
 }
