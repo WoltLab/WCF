@@ -291,6 +291,7 @@ WCF.ACP.Package.Installation.prototype = {
 		this._actionName = WCF.String.ucfirst(actionName) + 'Package';
 		this._queueID = queueID;
 		this._proxy = new WCF.Action.Proxy({
+			showLoadingOverlay: false,
 			success: $.proxy(this._handleResponse, this),
 			url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
@@ -311,6 +312,7 @@ WCF.ACP.Package.Installation.prototype = {
 			ajax: true,
 			closable: false,
 			data: { queueID: this._queueID, step: 'prepare' },
+			showLoadingOverlay: false,
 			success: $.proxy(this._handleResponse, this),
 			title: WCF.Language.get('wcf.acp.package.installation.title'),
 			url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND

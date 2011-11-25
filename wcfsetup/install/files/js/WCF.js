@@ -967,6 +967,7 @@ WCF.Action.Proxy.prototype = {
 			after: null,
 			init: null,
 			failure: null,
+			showLoadingOverlay: true,
 			success: null,
 			type: 'POST',
 			url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
@@ -1005,8 +1006,10 @@ WCF.Action.Proxy.prototype = {
 			this.options.init(this);
 		}
 		
-		this._activeRequests++;
-		this._showLoadingOverlay();
+		if (this.options.showLoadingOverlay) {
+			this._activeRequests++;
+			this._showLoadingOverlay();
+		}
 	},
 
 	/**
@@ -1096,7 +1099,9 @@ WCF.Action.Proxy.prototype = {
 			this.options.after();
 		}
 
-		this._activeRequests--;
+		if (this.options.showLoadingOverlay) {
+			this._activeRequests--;
+		}
 	},
 	
 	/**
@@ -3243,6 +3248,7 @@ $.widget('ui.wcfDialog', {
 		// AJAX support
 		ajax: false,
 		data: { },
+		showLoadingOverlay: true,
 		success: null,
 		type: 'POST',
 		url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
@@ -3260,6 +3266,7 @@ $.widget('ui.wcfDialog', {
 			new WCF.Action.Proxy({
 				autoSend: true,
 				data: this.options.data,
+				showLoadingOverlay: this.options.showLoadingOverlay,
 				success: $.proxy(this._success, this),
 				type: this.options.type,
 				url: this.options.url
