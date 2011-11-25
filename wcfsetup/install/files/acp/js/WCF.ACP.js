@@ -309,11 +309,11 @@ WCF.ACP.Package.Installation.prototype = {
 	prepareInstallation: function() {
 		var $dialog = WCF.showAJAXDialog('packageInstallationDialog', true, {
 			ajax: true,
-			url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
+			closable: false,
 			data: { queueID: this._queueID, step: 'prepare' },
 			success: $.proxy(this._handleResponse, this),
-			preventClose: true,
-			hideTitle: true
+			title: WCF.Language.get('wcf.acp.package.installation.title'),
+			url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
 		
 		this._api = $dialog.data('wcfDialog');

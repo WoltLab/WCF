@@ -3,7 +3,8 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		var packageInstallation = new WCF.ACP.Package.Installation('install', {@$queueID}, true);
+		WCF.Language.add('wcf.acp.package.installation.title', '{lang}wcf.acp.package.installation.title{/lang}');
+		new WCF.ACP.Package.Installation('install', {@$queueID}, true);
 	});
 	//]]>
 </script>
