@@ -1156,7 +1156,7 @@ li > .badgeButton {
 	border-bottom-right-radius: 5px;
 }
 
-.dropdown > :hover:not(ul),
+.dropdown > :hover:not(ul):not(.pointer),
 .dropdown > .active {
 	color: #fff;
 	background-color: rgba(0, 0, 0, .5);
@@ -2705,20 +2705,30 @@ tr .columnURL {
 
 .pageNavigation ul li.children .dropdown {
 	text-align: left;
+	border-color: transparent;
 	border-radius: 3px;
 	background-color: rgba(0, 0, 0, .7);
 	margin-top: 28px;
 	margin-left: -2px;
+	display: inline-block;
 	position: absolute;
-	display: none;
+	overflow: visible;
+	height: 0;
+	min-width: 165px;
+	max-width: 250px;
+	opacity: 0;
+	
+	-webkit-transition: opacity .2s linear;
+	-moz-transition: opacity .2s linear;
+	-ms-transition: opacity .2s linear;
+	-o-transition: opacity .2s linear;
+	transition: opacity .2s linear;
 }
 
 .pageNavigation ul li.children:hover .dropdown {
-	display: inline-block;
+	border-color: rgba(255, 255, 255, .7);
 	height: auto;
-	min-width: 150px;
-	max-width: 200px;
-	overflow: visible;
+	opacity: 1;
 }
 
 .pageNavigation ul li.children .dropdown ul {
