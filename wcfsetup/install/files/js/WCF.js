@@ -3274,6 +3274,9 @@ $.widget('ui.wcfDialog', {
 
 			// force open if using AJAX
 			this.options.autoOpen = true;
+
+			// apply loading overlay
+			this._content.addClass('overlayLoading');
 		}
 
 		if (this.options.autoOpen) {
@@ -3341,6 +3344,9 @@ $.widget('ui.wcfDialog', {
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		// remove loading overlay
+		this._content.removeClass('overlayLoading');
+		
 		if (this.options.success !== null && $.isFunction(this.options.success)) {
 			this.options.success(data, textStatus, jqXHR);
 		}
