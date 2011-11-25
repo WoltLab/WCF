@@ -2948,7 +2948,7 @@ a.wcfDialogCloseButton span {
 .wcfDialogContainer > .wcfDialogContent {
 	border-radius: 7px;
 	padding: 0;
-	width: auto !important;
+	/*width: auto !important;*/
 }
 
 .ui-dialog-titlebar ~ .ui-dialog-content,

@@ -3208,6 +3208,12 @@ $.widget('ui.wcfDialog', {
 	_content: null,
 
 	/**
+	 * dialog content dimensions
+	 * @var	object
+	 */
+	_contentDimensions: null,
+
+	/**
 	 * modal overlay
 	 * @var	jQuery
 	 */
@@ -3344,6 +3350,9 @@ $.widget('ui.wcfDialog', {
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		// initialize dialog content
+		this._initDialog(data);
+
 		// remove loading overlay
 		this._content.removeClass('overlayLoading');
 		
@@ -3353,11 +3362,48 @@ $.widget('ui.wcfDialog', {
 	},
 
 	/**
+	 * Initializes dialog content if applicable.
+	 * 
+	 * @param	object		data
+	 */
+	_initDialog: function(data) {
+		// insert template
+		data.ignoreTemplate = true;
+		var $template = this._getResponseValue(data, 'template');
+		if ($template !== null) {
+			this._content.children().html($template);
+			this.render();
+		}
+	},
+
+	/**
+	 * Returns a response value, taking care of different object
+	 * structure returned by AJAXProxy.
+	 * 
+	 * @param	object		data
+	 * @param	string		key
+	 */
+	_getResponseValue: function(data, key) {
+		if (data.returnValues && data.returnValues[key]) {
+			return data.returnValues[key];
+		}
+		else if (data[key]) {
+			return data[key];
+		}
+
+		return null;
+	},
+
+	/**
 	 * Opens this dialog.
 	 */
 	open: function() {
 		if (this.isOpen()) {
 			return;
+		}
+
+		if (this._overlay !== null) {
+			this._overlay.show();
 		}
 
 		this.render();
@@ -3397,12 +3443,19 @@ $.widget('ui.wcfDialog', {
 			// temporarily display container
 			this._container.show();
 		}
+		else {
+			// remove fixed content dimensions for calculation
+			this._content.css({
+				height: 'auto',
+				width: 'auto'
+			});
+		}
 
 		// force content to be visible
 		this._content.children().each(function() {
 			$(this).show();
 		});
-		
+
 		// calculate dimensions
 		var $windowDimensions = $(window).getDimensions();
 		var $containerDimensions = this._container.getDimensions('outer');
@@ -3438,14 +3491,58 @@ $.widget('ui.wcfDialog', {
 				top: $topOffset + 'px'
 			});
 
+			// set height to maximum height if exceeded
+			if ($contentDimensions.height > $maximumHeight) {
+				$contentDimensions.height = $maximumHeight;
+			}
+
+			// save current dimensions
+			this._contentDimensions = $contentDimensions;
+
+			// force dimensions
+			this._content.css({
+				height: this._contentDimensions.height + 'px',
+				width: this._contentDimensions.width + 'px'
+			});
+
 			// fade in container
 			this._container.wcfFadeIn();
 		}
 		else {
+			// save reference (used in callback)
+			var $content = this._content;
+			console.debug(this._contentDimensions);
+			// force previous dimensions
+			$content.css({
+				height: this._contentDimensions.height + 'px',
+				width: this._contentDimensions.width + 'px'
+			});
+
+			// set height to maximum height if exceeded
+			if ($contentDimensions.height > $maximumHeight) {
+				$contentDimensions.height = $maximumHeight;
+			}
+			
+			// apply new dimensions
+			$content.animate({
+				height: ($contentDimensions.height - 30) + 'px',
+				width: ($contentDimensions.width - 40) + 'px'
+			}, 600, function() {
+				// remove static dimensions
+				$content.css({
+					height: 'auto',
+					width: 'auto'
+				});
+			});
+			
+			// store new dimensions
+			this._contentDimensions = $contentDimensions;
+
+			// move container
 			this._container.animate({
 				left: $leftOffset + 'px',
 				top: $topOffset + 'px'
-			}, 200);
+			}, 600);
 		}
 	}
 });
