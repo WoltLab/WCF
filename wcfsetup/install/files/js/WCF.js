@@ -3439,7 +3439,7 @@ $.widget('ui.wcfDialog', {
 			});
 
 			// fade in container
-			this._container.wcfFadeIn(undefined, 600);
+			this._container.wcfFadeIn();
 		}
 		else {
 			this._container.animate({
