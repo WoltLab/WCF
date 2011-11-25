@@ -32,8 +32,8 @@
 {/if}
 
 <div class="contentHeader">
-	<nav class="largeButtons">
-		<ul>
+	<nav>
+		<ul class="largeButtons">
 			<li><a href="{link controller='UserGroupList'}{/link}" title="{lang}wcf.acp.menu.link.group.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>

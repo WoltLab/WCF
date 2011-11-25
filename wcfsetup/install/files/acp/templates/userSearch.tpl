@@ -26,8 +26,8 @@
 {/if*}
 
 <div class="contentHeader">
-	<nav class="largeButtons">
-		<ul>
+	<nav>
+		<ul class="largeButtons">
 			{if $__wcf->session->getPermission('admin.user.canAddUser')}
 				<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 			{/if}

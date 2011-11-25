@@ -38,8 +38,10 @@
 	{pages print=true assign=pagesLinks controller="CronjobList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	
 	{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
-		<nav class="largeButtons">
-			<ul><li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li></ul>
+		<nav>
+			<ul class="largeButtons">
+				<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+			</ul>
 		</nav>
 	{/if}
 </div>
@@ -131,8 +133,8 @@
 		{@$pagesLinks}
 		
 		{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
-			<nav class="largeButtons">
-				<ul>
+			<nav>
+				<ul class="largeButtons">
 					<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 				</ul>
 			</nav>

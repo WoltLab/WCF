@@ -21,8 +21,8 @@
 	{pages print=true assign=pagesLinks controller='PackageListDetailed' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 
 	{if $__wcf->session->getPermission('admin.system.package.canInstallPackage') || $additionalLargeButtons|isset}
-		<nav class="largeButtons">
-			<ul>
+		<nav>
+			<ul class="largeButtons">
 				{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>{/if}
 				{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 			</ul>
@@ -96,8 +96,8 @@
 	{@$pagesLinks}
 	
 	{if $__wcf->session->getPermission('admin.system.package.canInstallPackage') || $additionalLargeButtons|isset}
-		<nav class="largeButtons">
-			<ul>
+		<nav>
+			<ul class="largeButtons">
 				{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>{/if}
 				{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 			</ul>
