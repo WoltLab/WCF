@@ -99,7 +99,7 @@ abstract class AbstractPage implements IPage {
 		if (count($this->neededModules)) {
 			foreach ($this->neededModules as $module) {
 				if (!defined($module) || !constant($module)) {
-					throw new wcf\system\exception\IllegalLinkException();
+					throw new \wcf\system\exception\IllegalLinkException();
 				}
 			}
 		}
