@@ -275,10 +275,15 @@ WCF.ACP.Package.Installation.prototype = {
 
 	/**
 	 * queue id
-	 *
 	 * @var	integer
 	 */
 	_queueID: 0,
+
+	/**
+	 * render dialog
+	 * @var	boolean
+	 */
+	_shouldRender: false,
 	
 	/**
 	 * Initializes package installation.
@@ -351,7 +356,7 @@ WCF.ACP.Package.Installation.prototype = {
 		
 		// handle success
 		if (data.step == 'success') {
-			this._purgeTemplateContent(function() {
+			this._purgeTemplateContent($.proxy(function() {
 				var $id = WCF.getRandomID();
 				$('#packageInstallationInnerContent').append('<div class="formSubmit"><input type="button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" class="default" /></div>');
 				
@@ -359,8 +364,9 @@ WCF.ACP.Package.Installation.prototype = {
 					window.location.href = "index.php/PackageList/" + SID_ARG_1ST;
 				});
 				
-				$('#packageInstallationInnerContentContainer').wcfBlindIn();
-			});
+				$('#packageInstallationInnerContentContainer').show();
+				this._api.render();
+			}, this));
 			
 			return;
 		}
@@ -368,7 +374,7 @@ WCF.ACP.Package.Installation.prototype = {
 		// update template
 		if (data.template && !data.ignoreTemplate) {
 			this._dialog.html(data.template);
-			this._api.render();
+			this._shouldRender = true;
 		}
 		
 		// handle inner template
@@ -398,7 +404,7 @@ WCF.ACP.Package.Installation.prototype = {
 				}, this));
 			}
 			
-			$('#packageInstallationInnerContentContainer').wcfBlindIn();
+			$('#packageInstallationInnerContentContainer').show();
 			
 			this._api.render();
 			return;
@@ -407,7 +413,9 @@ WCF.ACP.Package.Installation.prototype = {
 		// purge content
 		this._purgeTemplateContent($.proxy(function() {
 			// render container
-			this._api.render();
+			if (this._shouldRender) {
+				this._api.render();
+			}
 			
 			// execute next step
 			if (data.step && data.node) {
@@ -425,7 +433,7 @@ WCF.ACP.Package.Installation.prototype = {
 		if ($('#packageInstallationInnerContent').children().length > 1) {
 			$('#packageInstallationInnerContentContainer').wcfBlindOut('vertical', $.proxy(function() {
 				$('#packageInstallationInnerContent').empty();
-				this._api.render();
+				this._shouldRender = true;
 				
 				// execute callback
 				callback();
