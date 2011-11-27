@@ -3214,6 +3214,15 @@ $.widget('ui.wcfDialog', {
 	_contentDimensions: null,
 
 	/**
+	 * difference between inner and outer content width
+	 * @var	object
+	 */
+	_dimensionDifferences: {
+		height: 0,
+		width: 0
+	},
+
+	/**
 	 * modal overlay
 	 * @var	jQuery
 	 */
@@ -3340,6 +3349,16 @@ $.widget('ui.wcfDialog', {
 				}, this));
 			}
 		}
+
+		// caulculate dimensions differences
+		this._container.show();
+		var $contentInnerDimensions = this._content.getDimensions();
+		var $contentOuterDimensions = this._content.getDimensions('outer');
+		
+		this._dimensionDifferences = {
+			height: ($contentOuterDimensions.height - $contentInnerDimensions.height),
+			width: ($contentOuterDimensions.width - $contentInnerDimensions.width)
+		};
 	},
 	
 	/**
@@ -3463,7 +3482,7 @@ $.widget('ui.wcfDialog', {
 
 		// calculate maximum content height
 		var $heightDifference = $containerDimensions.height - $contentDimensions.height;
-		var $maximumHeight = $windowDimensions.height - $heightDifference - 60;
+		var $maximumHeight = $windowDimensions.height - $heightDifference - (this._dimensionDifferences.height * 2);
 		this._content.css({ maxHeight: $maximumHeight + 'px' });
 		
 		// re-caculate values if container height was previously limited
@@ -3496,6 +3515,12 @@ $.widget('ui.wcfDialog', {
 				$contentDimensions.height = $maximumHeight;
 			}
 
+			// fix dimensions
+			$contentDimensions = {
+				height: $contentDimensions.height - this._dimensionDifferences.height,
+				width: $contentDimensions.width - this._dimensionDifferences.width
+			};
+
 			// save current dimensions
 			this._contentDimensions = $contentDimensions;
 
@@ -3511,7 +3536,7 @@ $.widget('ui.wcfDialog', {
 		else {
 			// save reference (used in callback)
 			var $content = this._content;
-			console.debug(this._contentDimensions);
+			
 			// force previous dimensions
 			$content.css({
 				height: this._contentDimensions.height + 'px',
@@ -3522,11 +3547,17 @@ $.widget('ui.wcfDialog', {
 			if ($contentDimensions.height > $maximumHeight) {
 				$contentDimensions.height = $maximumHeight;
 			}
+
+			// fix dimensions
+			$contentDimensions = {
+				height: $contentDimensions.height - this._dimensionDifferences.height,
+				width: $contentDimensions.width - this._dimensionDifferences.width
+			};
 			
 			// apply new dimensions
 			$content.animate({
-				height: ($contentDimensions.height - 30) + 'px',
-				width: ($contentDimensions.width - 40) + 'px'
+				height: ($contentDimensions.height) + 'px',
+				width: ($contentDimensions.width) + 'px'
 			}, 600, function() {
 				// remove static dimensions
 				$content.css({
