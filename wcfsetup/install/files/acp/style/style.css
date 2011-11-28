@@ -4048,6 +4048,116 @@ div.scrollableContainer > div:first-child p {
 
 
 
+/* ToDo: User Comment List */
+
+.commentList {
+	background-color: rgba(0, 0, 0, .015);
+	margin: 0 auto;
+}
+
+.commentList small {
+	color: rgb(192, 192, 192);
+	font-size: 85%;
+}
+
+.commentList > li:first-child {
+	border-top-width: 0;
+}
+
+.commentContent > .border > div {
+	background-color: rgba(0, 0, 0, .015);
+	border-top: 1px solid rgb(204, 204, 204);
+	padding: 7px;
+}
+
+.commentContent > .border > div:last-child {
+	border-bottom-width: 0;
+}
+
+.commentContent > .border > div a {
+	cursor: pointer;
+}
+
+.commentList li,
+.commentResponseAdd {
+	border-top: 1px solid rgb(204, 204, 204);
+	padding: 7px;
+}
+
+.commentResponseAdd {
+	background-color: rgb(231, 242, 253);
+}
+
+.commentList li > div,
+.commentResponseAdd > div {
+	
+}
+
+.commentList li > div > :first-child,
+.commentResponseAdd > div > :first-child {
+	display: table-cell;
+	padding-right: 7px;
+}
+
+.commentList li > div > :last-child,
+.commentResponseAdd > div > :last-child {
+	display: table-cell;
+	padding-right: 3px;
+	vertical-align: top;
+	width: 100%;
+}
+
+.commentContent > p > a {
+	display: block;
+}
+
+.commentResponseList {
+	background-color: rgba(0, 0, 0, .015);
+	width: 100%;
+}
+
+.commentOptions li {
+	border-width: 0;
+	display: inline-block;
+	color: rgb(192, 192, 192);
+	font-size: 85%;
+	margin: 7px 0 3px 0;
+	padding: 0 3px 0 0;
+}
+
+.commentOptions li:last-child {
+	padding-right: 0;
+}
+
+.commentOptions li a {
+	cursor: pointer;
+}
+
+.commentResponseList ul.commentOptions li {
+	margin-bottom: 0;
+}
+
+.commentContent .border > :first-child {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-top-width: 0;
+}
+
+.commentContent .border > :last-child {
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.commentList .userAvatar img {
+	background-color: #fff;
+	padding: 1px;
+	border: 1px solid #ddd;
+}
+
+
+
+
+
 
 
 
