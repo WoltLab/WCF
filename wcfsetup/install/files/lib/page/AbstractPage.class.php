@@ -1,7 +1,8 @@
 <?php
 namespace wcf\page;
-use wcf\system\WCF;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\IllegalLinkException;
+use wcf\system\WCF;
 
 /**
  * This class provides default implementations for the Page interface.
@@ -99,7 +100,7 @@ abstract class AbstractPage implements IPage {
 		if (count($this->neededModules)) {
 			foreach ($this->neededModules as $module) {
 				if (!defined($module) || !constant($module)) {
-					throw new \wcf\system\exception\IllegalLinkException();
+					throw new IllegalLinkException();
 				}
 			}
 		}
