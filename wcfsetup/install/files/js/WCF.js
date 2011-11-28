@@ -3223,6 +3223,12 @@ $.widget('ui.wcfDialog', {
 	},
 
 	/**
+	 * rendering state
+	 * @var	boolean
+	 */
+	_isRendering: false,
+
+	/**
 	 * modal overlay
 	 * @var	jQuery
 	 */
@@ -3475,6 +3481,13 @@ $.widget('ui.wcfDialog', {
 			$(this).show();
 		});
 
+		// handle multiple rendering requests
+		if (this._isRendering) {
+			// stop current process
+			this._container.stop();
+			this._content.stop();
+		}
+
 		// calculate dimensions
 		var $windowDimensions = $(window).getDimensions();
 		var $containerDimensions = this._container.getDimensions('outer');
@@ -3489,6 +3502,15 @@ $.widget('ui.wcfDialog', {
 		if ($maximumHeight < $contentDimensions.height) {
 			$containerDimensions = this._container.getDimensions('outer');
 		}
+
+		// handle multiple rendering requests
+		if (this._isRendering) {
+			// use current dimensions as previous ones
+			this._contentDimensions = this._getContentDimensions($maximumHeight);
+		}
+
+		// calculate new dimensions
+		$contentDimensions = this._getContentDimensions($maximumHeight);
 
 		// move container
 		var $leftOffset = Math.round(($windowDimensions.width - $containerDimensions.width) / 2);
@@ -3510,17 +3532,6 @@ $.widget('ui.wcfDialog', {
 				top: $topOffset + 'px'
 			});
 
-			// set height to maximum height if exceeded
-			if ($contentDimensions.height > $maximumHeight) {
-				$contentDimensions.height = $maximumHeight;
-			}
-
-			// fix dimensions
-			$contentDimensions = {
-				height: $contentDimensions.height - this._dimensionDifferences.height,
-				width: $contentDimensions.width - this._dimensionDifferences.width
-			};
-
 			// save current dimensions
 			this._contentDimensions = $contentDimensions;
 
@@ -3531,7 +3542,9 @@ $.widget('ui.wcfDialog', {
 			});
 
 			// fade in container
-			this._container.wcfFadeIn();
+			this._container.wcfFadeIn($.proxy(function() {
+				this._isRendering = false;
+			}));
 		}
 		else {
 			// save reference (used in callback)
@@ -3543,17 +3556,6 @@ $.widget('ui.wcfDialog', {
 				width: this._contentDimensions.width + 'px'
 			});
 
-			// set height to maximum height if exceeded
-			if ($contentDimensions.height > $maximumHeight) {
-				$contentDimensions.height = $maximumHeight;
-			}
-
-			// fix dimensions
-			$contentDimensions = {
-				height: $contentDimensions.height - this._dimensionDifferences.height,
-				width: $contentDimensions.width - this._dimensionDifferences.width
-			};
-			
 			// apply new dimensions
 			$content.animate({
 				height: ($contentDimensions.height) + 'px',
@@ -3573,8 +3575,35 @@ $.widget('ui.wcfDialog', {
 			this._container.animate({
 				left: $leftOffset + 'px',
 				top: $topOffset + 'px'
-			}, 600);
+			}, 600, $.proxy(function() {
+				this._isRendering = false;
+			}));
 		}
+
+		this._isRendering = true;
+	},
+
+	/**
+	 * Returns calculated content dimensions.
+	 * 
+	 * @param	integer		maximumHeight
+	 * @return	object
+	 */
+	_getContentDimensions: function(maximumHeight) {
+		var $contentDimensions = this._content.getDimensions();
+
+		// set height to maximum height if exceeded
+		if ($contentDimensions.height > maximumHeight) {
+			$contentDimensions.height = maximumHeight;
+		}
+		
+		// fix dimensions
+		$contentDimensions = {
+			height: $contentDimensions.height - this._dimensionDifferences.height,
+			width: $contentDimensions.width - this._dimensionDifferences.width
+		};
+
+		return $contentDimensions;
 	}
 });
 
