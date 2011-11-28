@@ -102,13 +102,20 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 	 * @see wcf\data\IEditableObject::deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
-		$sql = "DELETE FROM	".static::getDatabaseTableName()."
-			WHERE		".static::getDatabaseTableIndexName()." = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
+		if (!count($objectIDs)) return;
+
+		$updateSQL = '';
+		$statementParameters = array();
 		foreach ($objectIDs as $objectID) {
-			$statement->execute(array($objectID));
+			$updateSQL .= ', ?';
+			$statementParameters[] = $objectID;
 		}
-		
-		return count($objectIDs);
+		$updateSQL = ltrim($updateSQL, ',');
+
+		$sql = "DELETE FROM	".static::getDatabaseTableName()."
+			WHERE		".static::getDatabaseTableIndexName()." IN (".$updateSQL.")";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$affectedRows = $statement->execute($statementParameters);
+		return $affectedRows;
 	}
 }
