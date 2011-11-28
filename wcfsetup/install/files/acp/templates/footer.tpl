@@ -14,7 +14,7 @@
 			</nav>
 		</div>
 		
-		{if ENABLE_BENCHMARK}{include file='benchmark' sandbox=false}{/if}
+		{if PACKAGE_ID && ENABLE_BENCHMARK}{include file='benchmark' sandbox=false}{/if}
 		
 		<address class="copyright"><a href="http://www.woltlab.com" title="Go to the WoltLab website">Copyright &copy; 2001-2011 WoltLab&reg; GmbH</a></address>
 	</footer>
