@@ -3599,7 +3599,7 @@ $.widget('ui.wcfDialog', {
 		
 		// fix dimensions
 		$contentDimensions = {
-			height: $contentDimensions.height - this._dimensionDifferences.height,
+			height: $contentDimensions.height/* - this._dimensionDifferences.height*/,
 			width: $contentDimensions.width - this._dimensionDifferences.width
 		};
 
