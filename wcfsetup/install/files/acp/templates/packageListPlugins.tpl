@@ -3,7 +3,7 @@
 		<div>
 			<a href="index.php/PackageView/{@$packageID}{@SID_ARG_1ST}" title="{$package->getName()}" style="background-image: url('{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg');">
 				<h1>{$package->getName()}</h1>
-				<small>Short descriptive text goes here</small>
+				<small>{$package->packageDescription|truncate:300}</small>
 			</a>
 		</div>
 		
