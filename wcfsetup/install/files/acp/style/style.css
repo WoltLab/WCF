@@ -1511,6 +1511,7 @@ input[type='radio'] ~ small {
 
 /* Globals */
 
+button,
 input[type='reset'],
 input[type='submit'],
 input[type='button'],
@@ -1852,6 +1853,7 @@ textarea[disabled='disabled'] {
 
 /* Normal State */
 
+button,
 input[type='reset'],
 input[type='submit'],
 input[type='button'],
@@ -3215,7 +3217,7 @@ img[src*='enable'] {
 /* ############## Global Button Color & Effect Library ############## */
 
 /* Normal State */
-
+button,
 input[type='reset'],
 input[type='submit'],
 input[type='button'],
@@ -3262,6 +3264,7 @@ input[type='button'],
 
 /* Hover State */
 
+button:hover,
 input[type='reset']:hover,
 input[type='submit']:hover,
 input[type='button']:hover,
@@ -3290,6 +3293,7 @@ input[type='button'].default:hover,
 
 /* Active State */
 
+button:focus,
 input[type='reset']:focus,
 input[type='submit']:focus,
 input[type='button']:focus,
@@ -3303,6 +3307,7 @@ input[type='button'].default:focus,
 .pageNavigation ul li:not(.disabled):not(.children):active,
 .clipboardEditor > ul > li:focus,
 .preInput .dropdownCaption:focus,
+button:active,
 input[type='reset']:active,
 input[type='submit']:active,
 input[type='button']:active,
@@ -3381,6 +3386,7 @@ input[type='button'].default:active,
 
 /* Default Normal State */
 
+button.default,
 input[type='submit'],
 input[type='button'].default,
 .smallButtons > li.default > a,
@@ -3481,6 +3487,7 @@ input[type='button'].default,
 
 /* Default Hover State */
 
+button.default:hover,
 input[type='submit']:hover,
 input[type='button'].default:hover,
 .largeButtons > li.default > a:hover,
@@ -3569,10 +3576,12 @@ input[type='button'].default:hover,
 
 /* Default Active State */
 
+button.default:focus,
 input[type='submit']:focus,
 input[type='button'].default:focus,
 .smallButtons > li.default > a:active,
 .largeButtons > li.default > a:active,
+button.default:active,
 input[type='submit']:active,
 input[type='button'].default:active,
 .smallButtons > li.default > a:active,
@@ -3616,6 +3625,7 @@ input[type='button'].default:active,
 
 /* Disabled State */
 
+button[disabled='disabled'],
 input[disabled='disabled'],
 input[type='button'][disabled='disabled'],
 .smallButtons > li.disabled > a,
@@ -3860,6 +3870,8 @@ will change soon!
 	overflow: hidden;
 }
 
+/* ToDo: Scrollable Container */
+
 .scrollableContainer {
 	position: relative;
 	width: 250px;
@@ -3900,12 +3912,14 @@ div.scrollableContainer > div:first-child p {
 	padding: 0 1px;
 }
 
+/* ToDo: User Notification Details */
+
 .userNotificationDetails {
 	padding: 7px;
 	width: 236px;
 }
 
-.userNotificationDetails hgroup {
+.userNotificationDetails header {
 	margin-bottom: 7px;
 	display: table;
 	width: 100%;
@@ -3962,10 +3976,6 @@ div.scrollableContainer > div:first-child p {
 	display: inline-block;
 }
 
-.userNotificationDetails li:hover {
-	
-}
-
 #userNotificationDetailsLoading {
 	background-color: rgba(255, 255, 255, .5);
 	background-image: url('{@RELATIVE_WCF_DIR}icon/spinner1.svg');
@@ -3985,39 +3995,10 @@ div.scrollableContainer > div:first-child p {
 
 
 
-/* ToDo: Profile Button 
+/* ToDo: Profile Button */
 
-this is taken from "user.tpl" (inline-css) 
-will change soon! 
-
-*/
-
-div#profileButtonContainer {
-	margin: 7px;
-}
-
-div#profileButtonContainer button {
-	cursor: pointer;
-	border: 1px solid rgba(192, 192, 192, 1);
-	border-radius: 3px;
-	
-	background-image: -webkit-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
-	background-image: -moz-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
-	background-image: -ms-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
-	background-image: -o-linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
-	background-image: linear-gradient(top, rgba(192, 192, 192, 1), rgba(224, 224, 224, 1));
-	
-	margin-right: 3px;
-	padding: 3px;
-	height: 60px;
-}
-
-div#profileButtonContainer button:hover {
-	background-image: -webkit-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
-	background-image: -moz-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
-	background-image: -ms-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
-	background-image: -o-linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
-	background-image: linear-gradient(top, rgba(224, 224, 224, 1), rgba(192, 192, 192, 1));
+#profileButtonContainer {
+	text-align: center;
 }
 
 
