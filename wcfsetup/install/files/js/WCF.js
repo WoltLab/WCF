@@ -3217,10 +3217,11 @@ $.widget('ui.wcfDialog', {
 	 * difference between inner and outer content width
 	 * @var	object
 	 */
+	/*
 	_dimensionDifferences: {
 		height: 0,
 		width: 0
-	},
+	},*/
 
 	/**
 	 * rendering state
@@ -3356,6 +3357,7 @@ $.widget('ui.wcfDialog', {
 			}
 		}
 
+		/*
 		// caulculate dimensions differences
 		this._container.show();
 		var $contentInnerDimensions = this._content.getDimensions();
@@ -3365,6 +3367,7 @@ $.widget('ui.wcfDialog', {
 			height: ($contentOuterDimensions.height - $contentInnerDimensions.height),
 			width: ($contentOuterDimensions.width - $contentInnerDimensions.width)
 		};
+		*/
 	},
 	
 	/**
@@ -3491,11 +3494,11 @@ $.widget('ui.wcfDialog', {
 		// calculate dimensions
 		var $windowDimensions = $(window).getDimensions();
 		var $containerDimensions = this._container.getDimensions('outer');
-		var $contentDimensions = this._content.getDimensions('outer');
+		var $contentDimensions = this._content.getDimensions();
 
 		// calculate maximum content height
 		var $heightDifference = $containerDimensions.height - $contentDimensions.height;
-		var $maximumHeight = $windowDimensions.height - $heightDifference - (this._dimensionDifferences.height * 2);
+		var $maximumHeight = $windowDimensions.height - $heightDifference/* - (this._dimensionDifferences.height * 2)*/;
 		this._content.css({ maxHeight: $maximumHeight + 'px' });
 		
 		// re-caculate values if container height was previously limited
@@ -3598,10 +3601,12 @@ $.widget('ui.wcfDialog', {
 		}
 		
 		// fix dimensions
+		/*
 		$contentDimensions = {
-			height: $contentDimensions.height/* - this._dimensionDifferences.height*/,
+			height: $contentDimensions.height*//* - this._dimensionDifferences.height*//*,
 			width: $contentDimensions.width - this._dimensionDifferences.width
 		};
+		*/
 
 		return $contentDimensions;
 	}
