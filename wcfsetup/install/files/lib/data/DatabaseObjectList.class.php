@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
