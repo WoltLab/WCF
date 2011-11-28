@@ -48,6 +48,7 @@
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.global.button.next': '{lang}wcf.global.button.next{/lang}',
+			'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
 			'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 			'wcf.date.relative.minutes': '{capture assign=relativeMinutes}{lang}wcf.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
 			'wcf.date.relative.hours': '{capture assign=relativeHours}{lang}wcf.date.relative.hours{/lang}{/capture}{@$relativeHours|encodeJS}',

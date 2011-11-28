@@ -1064,12 +1064,12 @@ WCF.Action.Proxy.prototype = {
 			}
 			
 			var $randomID = WCF.getRandomID();
-			$('<div class="ajaxDebugMessage" id="' + $randomID + '" title="HTTP/1.0 ' + jqXHR.status + ' ' + errorThrown + '"><p>Der Server antwortete: ' + data.message + '</p><p>Stacktrace:</p><p>' + data.stacktrace + '</p></div>').wcfDialog();
+			$('<div class="ajaxDebugMessage" id="' + $randomID + '"><p>' + data.message + '</p><p>Stacktrace:</p><p>' + data.stacktrace + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
 		}
 		// failed to parse JSON
 		catch (e) {
 			var $randomID = WCF.getRandomID();
-			$('<div class="ajaxDebugMessage" id="' + $randomID + '" title="HTTP/1.0 ' + jqXHR.status + ' ' + errorThrown + '"><p style="padding: 3px;">Der Server antwortete: ' + jqXHR.responseText + '.</p></div>').wcfDialog();
+			$('<div class="ajaxDebugMessage" id="' + $randomID + '"><p style="padding: 3px;">' + jqXHR.responseText + '.</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
 		}
 		
 		this._after();
