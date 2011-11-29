@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
+use wcf\system\request\LinkHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -55,21 +56,27 @@ class SmallpagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * @see wcf\system\template\IFunctionTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
-		// needed params: link, pages
-		if (!isset($tagArgs['link'])) throw new SystemException("missing 'link' argument in pages tag");
+		// needed params: controller, link, pages
+		if (!isset($tagArgs['link'])) throw new SystemException("missing 'link' argument in smallpages tag");
+		if (!isset($tagArgs['controller'])) throw new SystemException("missing 'controller' argument in smallpages tag");
 		if (!isset($tagArgs['pages'])) {
 			if (($tagArgs['pages'] = $tplObj->get('pages')) === null) {
-				throw new SystemException("missing 'pages' argument in pages tag");
+				throw new SystemException("missing 'pages' argument in smallpages tag");
 			}
 		}
 		
 		$html = '';
 		if ($tagArgs['pages'] > 1) {
-			// encode link
-			$link = StringUtil::encodeHTML($tagArgs['link']);
-		
+			// create and encode route link
+			$parameters = array();
+			if (isset($tagArgs['id'])) $parameters['id'] = $tagArgs['id'];
+			if (isset($tagArgs['title'])) $parameters['title'] = $tagArgs['title'];
+			if (isset($tagArgs['object'])) $parameters['object'] = $tagArgs['object'];
+			if (isset($tagArgs['application'])) $parameters['application'] = $tagArgs['application'];
+			$link = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink($tagArgs['controller'], $parameters, $tagArgs['link']));
+			
 			// open div and ul
-			$html .= "<div class=\"pageNavigation\">\n<ul>\n";
+			$html .= "<div class=\"pageNavigation\" data-link=\"".$link."\">\n<ul>\n";
 			
 			// generate simple links
 			$simpleLinks = $tagArgs['pages'];
