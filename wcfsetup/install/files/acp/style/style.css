@@ -4156,6 +4156,11 @@ div.scrollableContainer > div:first-child p {
 	display: block;
 }
 
+.commentContent > .userName time {
+	font-size: 85%;
+	color: rgb(153, 153, 153);
+}
+
 
 
 /* Comment Response List */
@@ -4179,24 +4184,42 @@ div.scrollableContainer > div:first-child p {
 
 /* Comment Options */
 
-.commentOptions {
+.commentContent > .commentOptions,
+.commentResponseList > li .commentOptions {
 	display: block;
 	font-size: 85%;
-	padding: 3px 0 0;
+	position: absolute;
+	top: 2px;
+	right: 2px;
 }
 
-.commentOptions > li {
-	color: rgb(153, 153, 153);
-	display: inline-block;
-	margin: 0 5px 0 0;
+.commentContent > .commentOptions > li,
+.commentResponseList > li .commentOptions > li {
+	opacity: 0;
+	
+	-webkit-transition: opacity .1s linear;
+	-moz-transition: opacity .1s linear;
+	-ms-transition: opacity .1s linear;
+	-o-transition: opacity .1s linear;
+	transition: opacity .1s linear;
 }
 
-.commentOptions li a {
+.commentContent:hover > .commentOptions > li,
+.commentResponseList > li:hover .commentOptions > li {
+	opacity: 1; 
+}
+
+.commentContent > .commentOptions > li a,
+.commentResponseList > li .commentOptions li a {
 	color: rgb(153, 153, 153);
 	cursor: pointer;
+	display: inline-block;
+	padding: 5px 10px;
 }
 
 
+
+/* Toggle Comments Links */
 
 .commentResponsePrevious,
 .commentResponseRecent {
