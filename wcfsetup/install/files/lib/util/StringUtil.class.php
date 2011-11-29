@@ -229,7 +229,7 @@ class StringUtil {
 	 * @param 	array		$strings 
 	 * @return 	boolean
 	 */
-	public static function sort(&$strings) {
+	public static function sort(array &$strings) {
 		return asort($strings, SORT_LOCALE_STRING);
 	}
 		

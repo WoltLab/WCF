@@ -7,7 +7,6 @@
 
 <form method="post" action="install.php?step={@$nextStep}">
 	<div class="formSubmit">
-		<input type="submit" name="nextButton" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
 		<input type="hidden" name="languageCode" value="{@$languageCode}" />
 		<input type="hidden" name="wcfDir" value="{$wcfDir}" />
@@ -22,7 +21,6 @@
 <script type="text/javascript">
 	//<![CDATA[
 	window.onload = function() {
-		document.forms[0].nextButton.disabled = true;
 		document.forms[0].submit();
 	}
 	//]]>
