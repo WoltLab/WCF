@@ -125,8 +125,8 @@ class ObjectTypeCache extends SingletonFactory {
 	 * @return	wcf\data\object\type\ObjectType
 	 */
 	public function getObjectTypeByName($definitionName, $objectTypeName) {
-		if (isset($this->groupedObjectTypes[$definitionName]) && isset($this->groupedObjectTypes[$definitionName][$typeName])) {
-			return $this->groupedObjectTypes[$definitionName][$typeName];
+		if (isset($this->groupedObjectTypes[$definitionName]) && isset($this->groupedObjectTypes[$definitionName][$objectTypeName])) {
+			return $this->groupedObjectTypes[$definitionName][$objectTypeName];
 		}
 		
 		return null;
