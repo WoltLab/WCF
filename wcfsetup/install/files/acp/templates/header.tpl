@@ -142,10 +142,10 @@
 	<!-- /HEADER -->
 	
 	<!-- MAIN -->
-	<div id="main" class="main left">
+	<div id="main" class="main left"><!-- ToDo: We now use a floating sidebar. Thus we need some trigger for its orientation, which has to reside at least one level above the sidebar. This trigger should be set either to "left" or "right", although "top" or "bottom" would also be nice (not for the ACP but maybe in other applications like the gallery or so). Also for 2 sidebars we can mix the trigger values, support is already here!!! -->
 		<div>
 			<!-- SIDEBAR -->
-			<aside class="sidebar">
+			<aside class="sidebar"><!-- ToDo: Please remove the sidebar completely if there is no content in it! The remaining empty sidebar frame causes many display problems and makes proper styling nearly impossible! A simple "if"-construct should be possible i think? -->
 				<!-- sidebar menu -->
 				<nav id="sidebarMenu" class="sidebarMenu">
 					{* work-around for unknown core-object during WCFSetup *}
