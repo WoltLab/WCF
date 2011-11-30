@@ -1,37 +1,37 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de" languagename="Deutsch">
 	<category name="wcf.acp.cronjob">
-		<item name="wcf.acp.cronjob.list"><![CDATA[Zeitgesteuerte Aufgaben]]></item>
-		<item name="wcf.acp.cronjob.add"><![CDATA[Zeitgesteuerte Aufgabe hinzufügen]]></item>
-		<item name="wcf.acp.cronjob.list.count"><![CDATA[{#$items} zeitgesteuerte Aufgabe{if $items != 1}n{/if}]]></item>
-		<item name="wcf.acp.cronjob.subtitle"><![CDATA[&bdquo;Cronjobs&ldquo;]]></item>
+		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
+		<item name="wcf.acp.cronjob.add"><![CDATA[Cronjob hinzufügen]]></item>
+		<item name="wcf.acp.cronjob.list.count"><![CDATA[{#$items} Cronjob{if $items != 1}s{/if}]]></item>
+		<item name="wcf.acp.cronjob.subtitle"><![CDATA[&bdquo;Zeitgesteuerte Aufgaben&ldquo;]]></item>
 		<item name="wcf.acp.cronjob.startDom"><![CDATA[Tag des Monats]]></item>
-		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[Tage des Monats (1 - 31), an welchen die Aufgabe ausgeführt werden soll.]]></item>
+		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[Tage des Monats (1 - 31), an welchen der Cronjob ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startDomShort"><![CDATA[D]]></item>
 		<item name="wcf.acp.cronjob.startDow"><![CDATA[Tag der Woche]]></item>
-		<item name="wcf.acp.cronjob.startDow.description"><![CDATA[Tage der Woche (0 - 6 mit Sonntag = 0, oder mon - sun), an welchen die Aufgabe ausgeführt werden soll.]]></item>
+		<item name="wcf.acp.cronjob.startDow.description"><![CDATA[Tage der Woche (0 - 6 mit Sonntag = 0, oder mon - sun), an welchen der Cronjob ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startDowShort"><![CDATA[DoW]]></item>
 		<item name="wcf.acp.cronjob.startHour"><![CDATA[Stunde]]></item>
-		<item name="wcf.acp.cronjob.startHour.description"><![CDATA[Stunden (0 - 23), zu welchen die Aufgabe ausgeführt werden soll.]]></item>
+		<item name="wcf.acp.cronjob.startHour.description"><![CDATA[Stunden (0 - 23), zu welchen der Cronjob ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startHourShort"><![CDATA[h]]></item>
 		<item name="wcf.acp.cronjob.startMinute"><![CDATA[Minute]]></item>
-		<item name="wcf.acp.cronjob.startMinute.description"><![CDATA[Minuten (0 - 59), zu welchen die Aufgabe ausgeführt werden soll.]]></item>
+		<item name="wcf.acp.cronjob.startMinute.description"><![CDATA[Minuten (0 - 59), zu welchen der Cronjob ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startMinuteShort"><![CDATA[m]]></item>
 		<item name="wcf.acp.cronjob.startMonth"><![CDATA[Monat]]></item>
-		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Monate (1 - 12, oder jan - dec), an welchen die Aufgabe ausgeführt werden soll.]]></item>
+		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Monate (1 - 12, oder jan - dec), an welchen der Cronjob ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startMonthShort"><![CDATA[M]]></item>
 		<item name="wcf.acp.cronjob.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.cronjob.nextExec"><![CDATA[Nächste Ausführung]]></item>
-		<item name="wcf.acp.cronjob.edit"><![CDATA[Zeitgesteuerte Aufgabe bearbeiten]]></item>
+		<item name="wcf.acp.cronjob.edit"><![CDATA[Cronjob bearbeiten]]></item>
 		<item name="wcf.acp.cronjob.className"><![CDATA[Klassenname]]></item>
 		<item name="wcf.acp.cronjob.data"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.acp.cronjob.timing"><![CDATA[Zeitsteuerung]]></item>
-		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von zeitgesteuerten Aufgaben erfordert eine genaue Kenntnis der Crontab-Syntax auf unixähnlichen Systemen. Weiterführende Informationen dazu erhalten Sie auf dieser Website: <a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>]]></item>
-		<item name="wcf.acp.cronjob.execute"><![CDATA[Aufgabe jetzt ausführen]]></item>
+		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von Cronjobs (zeitgesteuerten Aufgaben) erfordert eine genaue Kenntnis der Crontab-Syntax auf unixähnlichen Systemen. Weiterführende Informationen dazu erhalten Sie auf dieser Website: <a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>]]></item>
+		<item name="wcf.acp.cronjob.execute"><![CDATA[Cronjob jetzt ausführen]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
-		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Sind Sie sicher, dass Sie diese zeitgesteuerte Aufgabe &bdquo;{$cronjob->description|truncate:50:' ...'}&ldquo; löschen möchten?]]></item>
-		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten Zeitgesteuerten Aufgaben]]></item>
+		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Sind Sie sicher, dass Sie diesen Cronjob &bdquo;{$cronjob->description|truncate:50:' ...'}&ldquo; löschen möchten?]]></item>
+		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Alle löschen]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Sind Sie sicher, dass Sie alle Protokoll-Einträge löschen möchten?]]></item>
 		<item name="wcf.acp.cronjob.log.count"><![CDATA[{#$items} {if $items == 1}Eintrag{else}Einträge{/if}]]></item>
