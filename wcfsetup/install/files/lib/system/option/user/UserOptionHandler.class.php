@@ -53,15 +53,15 @@ class UserOptionHandler extends OptionHandler {
 		$this->optionValues = array();
 		$this->user = $user;
 		
-		foreach ($this->options as $option) {
-			$userOption = 'userOption' . $option->optionID;
-			$this->optionValues[$option->optionName] = $this->user->{$userOption};
-		}
-		
 		if (!$this->didInit) {
 			$this->loadActiveOptions($this->categoryName);
 			
 			$this->didInit = true;
+		}
+		
+		foreach ($this->options as $option) {
+			$userOption = 'userOption' . $option->optionID;
+			$this->optionValues[$option->optionName] = $this->user->{$userOption};
 		}
 	}
 	
