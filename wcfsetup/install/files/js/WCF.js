@@ -3051,7 +3051,7 @@ $.widget('ui.wcfSidebar', {
 		this._container = this.element.parents('aside:eq(0)');
 		
 		// create toggle button
-		this._button = $('<span class="collapsibleSidebarButton" title="' + WCF.Language.get('wcf.global.button.collapsible') + '"></span>').appendTo(this._container);
+		this._button = $('<span class="collapsibleSidebarButton" title="' + WCF.Language.get('wcf.global.button.collapsible') + '"><span></span></span>').appendTo(this._container);
 
 		// bind event
 		this._button.click($.proxy(this._toggle, this));
@@ -3078,7 +3078,7 @@ $.widget('ui.wcfSidebar', {
 		}
 
 		this._visible = true;
-		this._container.removeClass('collapsedSidebar');
+		this._container.removeClass('collapsed');
 	},
 
 	/**
@@ -3090,7 +3090,7 @@ $.widget('ui.wcfSidebar', {
 		}
 		
 		this._visible = false;
-		this._container.addClass('collapsedSidebar');
+		this._container.addClass('collapsed');
 	}
 });
 

@@ -747,11 +747,11 @@ section.content {
 	-o-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 	box-shadow: 0 0 5px rgba(0, 0, 0, .1);*/
 	
-	-webkit-transition: margin .5s ease;
-	-moz-transition: margin .5s ease;
-	-ms-transition: margin .5s ease;
-	-o-transition: margin .5s ease;
-	transition: margin .5s ease;
+	-webkit-transition: margin .1s ease;
+	-moz-transition: margin .1s ease;
+	-ms-transition: margin .1s ease;
+	-o-transition: margin .1s ease;
+	transition: margin .1s ease;
 }
 
 section.content:after {
@@ -761,12 +761,12 @@ section.content:after {
 }
 
 .left section.content {
-	border-left: 1px solid #bcd;
+	border-left: 1px solid rgba(187, 204, 221, 1);
 	margin-left: 249px;
 }
 
 .right section.content {
-	border-right: 1px solid #bcd;
+	border-right: 1px solid rgba(187, 204, 221, 1);
 	margin-right: 249px;
 }
 
@@ -817,16 +817,14 @@ section.content .content {
 aside.sidebar {
 	margin-bottom: -10px;
 	display: block;
-	position: relative;
 	width: 250px;
-	overflow: hidden;
 	z-index: 110;
 	
-	-webkit-transition: width .5s ease;
-	-moz-transition: width .5s ease;
-	-ms-transition: width .5s ease;
-	-o-transition: width .5s ease;
-	transition: width .5s ease;
+	-webkit-transition: width .1s ease;
+	-moz-transition: width .1s ease;
+	-ms-transition: width .1s ease;
+	-o-transition: width .1s ease;
+	transition: width .1s ease;
 }
 
 /* Toggle for sidebar orientation (options: left|right|top|bottom) */
@@ -845,31 +843,50 @@ aside.sidebar {
 
 /* Collapsed */
 
-aside.collapsedSidebar {
-	width: 1px;
+aside.collapsed {
+	width: 0;
 }
 
-aside.sidebar.collapsedSidebar + section.content {
+.left aside.sidebar.collapsed + section.content {
 	border: 0;
-	margin: 0;
+	margin-left: 0;
 }
+
+.right aside.sidebar.collapsed + section.content {
+	border: 0;
+	margin-right: 0;
+}
+
+/* Collapsible Button */
 
 aside.sidebar .collapsibleSidebarButton {
 	cursor: pointer;
-	border: 1px solid #f60;
-	background-color: red;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 250px;
+	width: 15px;
+	height: 100%;
+	z-index: 1500;
+	opacity: .5;
+	
+	-webkit-transition: left .1s ease;
+	-moz-transition: left .1s ease;
+	-ms-transition: left .1s ease;
+	-o-transition: left .1s ease;
+	transition: left .1s ease;
+}
+
+aside.sidebar .collapsibleSidebarButton span {
 	background-image: url('../../icon/arrowLeft1.svg');
 	background-size: 10px;
 	background-position: center center;
 	background-repeat: no-repeat;
-	position: absolute;
+	display: inline-block;
+	position: relative;
 	top: 50%;
-	left: 200px;
-	margin-right: -5px;
-	width: 50px;
-	height: 50px;
-	z-index: 1500;
-	opacity: 1;
+	width: 16px;
+	height: 16px;
 }
 
 #tplLogin aside.sidebar .collapsibleSidebarButton {
@@ -879,18 +896,21 @@ aside.sidebar .collapsibleSidebarButton {
 	display: none;
 }
 
-aside.sidebar.collapsedSidebar .collapsibleSidebarButton {
-	/*border-right: 1px solid transparent;
-	border-left: 1px solid transparent;*/
+aside.sidebar.collapsed .collapsibleSidebarButton {
+	left: 0;
+}
+
+aside.sidebar.collapsed .collapsibleSidebarButton span {
 	background-image: url('../../icon/arrowRight1.svg');
 }
 
 aside.sidebar .collapsibleSidebarButton:hover {
 	color: #999;
+	border-right: 1px solid rgba(187, 204, 221, .3);
 	opacity: 1;
 }
 
-aside.sidebar.collapsedSidebar .collapsibleSidebarButton:hover {
+aside.sidebar.collapsed .collapsibleSidebarButton:hover {
 	
 }
 
@@ -906,6 +926,8 @@ nav.sidebarMenu > div {
 	text-shadow: 0 1px 0 #fff;
 	color: #69c;
 	position: relative;
+	overflow: hidden;
+	z-index: 120;
 }
 
 nav.sidebarMenu > div a:hover {
@@ -922,7 +944,6 @@ nav.sidebarMenu > div h1 {
 	background-size: 16px;
 	background-repeat: no-repeat;
 	margin-top: 5px;
-	position: relative;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
