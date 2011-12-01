@@ -220,8 +220,7 @@ class Mail {
 	 * @return	string
 	 */
 	public function getToString() {
-		if (!empty($this->to)) return implode(', ', $this->to);
-		else return '';
+		return implode(', ', $this->to);
 	}
 	
 	/**
@@ -314,8 +313,7 @@ class Mail {
 	 * @return	string
 	 */
 	public function getCCString() {
-		if (!empty($this->cc)) return implode(', ', $this->cc);
-		else return '';
+		return implode(', ', $this->cc);
 	}
 	
 	/**
@@ -349,8 +347,7 @@ class Mail {
 	 * @return	string
 	 */
 	public function getBCCString() {
-		if (!empty($this->bcc)) return implode(', ', $this->bcc);
-		else return '';
+		return implode(', ', $this->bcc);
 	}
 	
 	/**
