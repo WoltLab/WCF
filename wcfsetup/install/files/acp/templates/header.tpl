@@ -144,37 +144,41 @@
 	<!-- MAIN -->
 	<div id="main" class="main left"><!-- ToDo: We now use a floating sidebar. Thus we need some trigger for its orientation, which has to reside at least one level above the sidebar. This trigger should be set either to "left" or "right", although "top" or "bottom" would also be nice (not for the ACP but maybe in other applications like the gallery or so). Also for 2 sidebars we can mix the trigger values, support is already here!!! -->
 		<div>
-			<!-- SIDEBAR -->
-			<aside class="sidebar"><!-- ToDo: Please remove the sidebar completely if there is no content in it! The remaining empty sidebar frame causes many display problems and makes proper styling nearly impossible! A simple "if"-construct should be possible i think? -->
-				<!-- sidebar menu -->
-				<nav id="sidebarMenu" class="sidebarMenu">
-					{* work-around for unknown core-object during WCFSetup *}
-					{if PACKAGE_ID}
-						{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=parentMenuItem}
-							<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="menuContainer" data-parent-menu-item="{$parentMenuItem->menuItem}">
-								{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
-									<h1 class="menuHeader" data-menu-item="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</h1>
-									<div class="sidebarMenuGroup">
-										<ul id="{$menuItem->menuItem}">
-											{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItem->menuItem) item=menuItemCategory}
-												{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
-													{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem) item=subMenuItem}
-														<li id="{$subMenuItem->menuItem}" data-menu-item="{$subMenuItem->menuItem}"><a href="{$subMenuItem->getLink()}">{lang}{$subMenuItem->menuItem}{/lang}</a></li>
+			{hascontent}
+				<!-- SIDEBAR -->
+				<aside class="sidebar">
+					<!-- sidebar menu -->
+					<nav id="sidebarMenu" class="sidebarMenu">
+						{content}
+							{* work-around for unknown core-object during WCFSetup *}
+							{if PACKAGE_ID}
+								{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=parentMenuItem}
+									<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="menuContainer" data-parent-menu-item="{$parentMenuItem->menuItem}">
+										{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
+											<h1 class="menuHeader" data-menu-item="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</h1>
+											<div class="sidebarMenuGroup">
+												<ul id="{$menuItem->menuItem}">
+													{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItem->menuItem) item=menuItemCategory}
+														{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
+															{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem) item=subMenuItem}
+																<li id="{$subMenuItem->menuItem}" data-menu-item="{$subMenuItem->menuItem}"><a href="{$subMenuItem->getLink()}">{lang}{$subMenuItem->menuItem}{/lang}</a></li>
+															{/foreach}
+														{else}
+															<li id="{$menuItemCategory->menuItem}" data-menu-item="{$menuItemCategory->menuItem}"><a href="{$menuItemCategory->getLink()}">{lang}{$menuItemCategory->menuItem}{/lang}</a></li>
+														{/if}
 													{/foreach}
-												{else}
-													<li id="{$menuItemCategory->menuItem}" data-menu-item="{$menuItemCategory->menuItem}"><a href="{$menuItemCategory->getLink()}">{lang}{$menuItemCategory->menuItem}{/lang}</a></li>
-												{/if}
-											{/foreach}
-										</ul>
+												</ul>
+											</div>
+										{/foreach}
 									</div>
 								{/foreach}
-							</div>
-						{/foreach}
-					{/if}
-				</nav>
-				<!-- /sidebar menu -->
-			</aside>
-			<!-- /SIDEBAR -->
+							{/if}
+						{/content}
+					</nav>
+					<!-- /sidebar menu -->
+				</aside>
+				<!-- /SIDEBAR -->
+			{/hascontent}
 			
 			<!-- CONTENT -->
 			<section id="content" class="content">
