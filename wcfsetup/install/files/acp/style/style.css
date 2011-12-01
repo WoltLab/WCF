@@ -818,7 +818,7 @@ aside.sidebar {
 	margin-bottom: -10px;
 	display: block;
 	width: 250px;
-	z-index: 110;
+	z-index: 80;
 	
 	-webkit-transition: width .1s ease;
 	-moz-transition: width .1s ease;
@@ -865,10 +865,10 @@ aside.sidebar .collapsibleSidebarButton {
 	top: 0;
 	bottom: 0;
 	left: 250px;
-	width: 15px;
+	width: 23px;
 	height: 100%;
-	z-index: 1500;
-	opacity: .5;
+	z-index: 150;
+	opacity: .3;
 	
 	-webkit-transition: left .1s ease;
 	-moz-transition: left .1s ease;
@@ -884,16 +884,8 @@ aside.sidebar .collapsibleSidebarButton span {
 	background-repeat: no-repeat;
 	display: inline-block;
 	position: relative;
-	top: 50%;
-	width: 16px;
-	height: 16px;
-}
-
-#tplLogin aside.sidebar .collapsibleSidebarButton {
-	/* ToDo: This should not be necessary! Is there no way to 
-	remove the sidebar by script on pages like log-in? If we 
-	find a way to achieve this, this declaration can be deleted. */
-	display: none;
+	height: 100%;
+	width: 23px;
 }
 
 aside.sidebar.collapsed .collapsibleSidebarButton {
@@ -906,12 +898,9 @@ aside.sidebar.collapsed .collapsibleSidebarButton span {
 
 aside.sidebar .collapsibleSidebarButton:hover {
 	color: #999;
-	border-right: 1px solid rgba(187, 204, 221, .3);
+	border-right: 1px solid rgba(187, 204, 221, .5);
+	background-color: rgba(0, 0, 0, .015);
 	opacity: 1;
-}
-
-aside.sidebar.collapsed .collapsibleSidebarButton:hover {
-	
 }
 
 
@@ -927,7 +916,7 @@ nav.sidebarMenu > div {
 	color: #69c;
 	position: relative;
 	overflow: hidden;
-	z-index: 120;
+	z-index: 110;
 }
 
 nav.sidebarMenu > div a:hover {
@@ -995,7 +984,6 @@ nav.sidebarMenu > div ul li.activeMenuItem {
 	background-color: #fff;
 	margin-right: -1px;
 	overflow: hidden;
-	z-index: 110;
 	
 	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
