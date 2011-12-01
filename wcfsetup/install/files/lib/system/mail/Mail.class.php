@@ -257,7 +257,7 @@ class Mail {
 	 * @return	string
 	 */
 	public function getMessage() {
-		return preg_replace('%(\r\n|\r|\n)%', self::$crlf, $this->message . (MAIL_SIGNATURE ? self::$crlf . self::$crlf . MAIL_SIGNATURE : ''));
+		return preg_replace('%(\r\n|\r|\n)%', self::$crlf, $this->message . (MAIL_SIGNATURE ? self::$crlf . '-- ' . self::$crlf  MAIL_SIGNATURE : ''));
 	}
 	
 	/**
