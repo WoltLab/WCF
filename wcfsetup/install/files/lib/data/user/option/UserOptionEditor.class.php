@@ -46,7 +46,7 @@ class UserOptionEditor extends DatabaseObjectEditor {
 		parent::update($parameters);
 		
 		// alter the table "wcf".WCF_N."_user_option_value" with this new option
-		$sql = WCF::getDB()->getEditor()->updateColumn(
+		WCF::getDB()->getEditor()->alterColumn(
 			'wcf'.WCF_N.'_user_option_value',
 			'userOption'.$this->optionID,
 			'userOption'.$this->optionID,
