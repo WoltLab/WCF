@@ -60,7 +60,7 @@ class IconCacheBuilder implements ICacheBuilder {
 		// get icons
 		foreach ($packageDirs as $packageDir) {
 			$relativePackageDir = ($activePackageDir != $packageDir ? FileUtil::getRelativePath($activePackageDir, $packageDir) : '');
-			echo $relativePackageDir."\n";
+			
 			foreach ($iconDirs as $iconDir) {
 				$path = FileUtil::addTrailingSlash($packageDir.$iconDir);
 				
