@@ -839,7 +839,7 @@ aside.sidebar {
 
 
 
-/* ToDo: Collapsible Sidebar */
+/* -- -- -- Collapsible Sidebar -- -- -- */
 
 /* Collapsed */
 
@@ -857,16 +857,25 @@ aside.collapsed {
 	margin-right: 0;
 }
 
-/* Collapsible Button */
+
+
+/* -- -- -- Collapsible Button -- -- -- */
+
+/* Default (Right) */
 
 aside.sidebar .collapsibleSidebarButton {
 	cursor: pointer;
+	background-image: url('../../icon/arrowLeft1.svg'), url('../../icon/arrowLeft1.svg');
+	background-position: center 1%, center 99%;
+	background-size: 10px 10px, 10px 10px;
+	background-repeat: no-repeat;
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	left: 250px;
 	width: 20px;
 	height: 100%;
+	overflow: hidden;
 	z-index: 150;
 	opacity: .3;
 	
@@ -878,17 +887,23 @@ aside.sidebar .collapsibleSidebarButton {
 }
 
 aside.sidebar .collapsibleSidebarButton span {
+	background-color: rgba(255, 255, 255, 1);
 	background-image: url('../../icon/arrowLeft1.svg');
-	background-size: 10px;
-	background-position: center center;
+    background-position: center center;
+	background-size: 10px 10px;
 	background-repeat: no-repeat;
-	display: inline-block;
-	position: relative;
-	height: 100%;
+	margin-top: -300px;
+	display: block;
+	position: absolute;
+	top: 50%;
 	width: 20px;
+	height: 600px;
 }
 
+/* Collapsed (Left) */
+
 aside.sidebar.collapsed .collapsibleSidebarButton {
+	background-image: url('../../icon/arrowRight1.svg'), url('../../icon/arrowRight1.svg');
 	left: 0;
 }
 
@@ -896,16 +911,16 @@ aside.sidebar.collapsed .collapsibleSidebarButton span {
 	background-image: url('../../icon/arrowRight1.svg');
 }
 
-aside.sidebar .collapsibleSidebarButton:hover {
-	color: #999;
+aside.sidebar .collapsibleSidebarButton:hover,
+aside.sidebar .collapsibleSidebarButton:hover span{
 	border-right: 1px solid rgba(187, 204, 221, .5);
-	background-color: rgba(0, 0, 0, .015);
+	background-color: rgba(252, 252, 252, 1);
 	opacity: 1;
 }
 
 
 
-/* Sidebar Menu */
+/* -- -- -- Sidebar Menu -- -- -- */
 
 nav.sidebarMenu {
 	white-space: nowrap;
