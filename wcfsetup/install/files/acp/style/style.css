@@ -934,6 +934,10 @@ nav.sidebarMenu > div {
 	z-index: 110;
 }
 
+.collapsed nav.sidebarMenu > div {
+	width: 0;
+}
+
 nav.sidebarMenu > div a:hover {
 	text-decoration: none !important;
 	color: #369;
