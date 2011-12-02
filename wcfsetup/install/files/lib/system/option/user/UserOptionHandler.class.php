@@ -72,7 +72,9 @@ class UserOptionHandler extends OptionHandler {
 		$optionData = parent::getOption($optionName);
 		
 		$optionData['object'] = new ViewableUserOption($optionData['object']);
-		$optionData['object']->setOptionValue($this->user);
+		if ($this->user !== null) {
+			$optionData['object']->setOptionValue($this->user);
+		}
 		
 		if ($this->removeEmptyOptions && empty($optionData['object']->optionValue)) {
 			return null;
@@ -107,7 +109,9 @@ class UserOptionHandler extends OptionHandler {
 	 * @see	wcf\system\option\OptionHandler::checkVisibility()
 	 */
 	protected function checkVisibility(Option $option) {
-		$option->setUser($this->user);
+		if ($this->user !== null) {
+			$option->setUser($this->user);
+		}
 		
 		return $option->isVisible();
 	}
