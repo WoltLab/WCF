@@ -37,12 +37,6 @@ class Request {
 	protected $executed = false;
 	
 	/**
-	 * controller object
-	 * @var object
-	 */
-	protected $controller = null;
-	
-	/**
 	 * Creates a new request object.
 	 * 
 	 * @param	string		$className
@@ -61,7 +55,7 @@ class Request {
 	public function execute() {
 		if (!$this->executed) {
 			$this->executed = true;
-			$this->controller = new $this->className();
+			new $this->className();
 		}
 	}
 	
@@ -99,14 +93,5 @@ class Request {
 	 */
 	public function getPageType() {
 		return $this->pageType;
-	}
-	
-	/**
-	 * Returns the controller of this request.
-	 *
-	 * @return	object
-	 */
-	public function getController() {
-		return $this->controller;
 	}
 }
