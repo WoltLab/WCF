@@ -1735,7 +1735,7 @@ WCF.MultipleLanguageInput.prototype = {
 	_prepareElement: function(enableOnInit) {
 		this._element.wrap('<div class="preInput" />');
 		var $wrapper = this._element.parent();
-		var $button = $('<p class="dropdownCaption"><span>enable i18n</span></p>').prependTo($wrapper);
+		var $button = $('<p class="dropDownCaption"><span>enable i18n</span></p>').prependTo($wrapper);
 
 		$button.click($.proxy(this._enable, this));
 		WCF.CloseOverlayHandler.addCallback(this._element.wcfIdentify(), $.proxy(this._closeSelection, this));
@@ -1769,7 +1769,7 @@ WCF.MultipleLanguageInput.prototype = {
 
 			// insert list
 			if (this._list === null) {
-				this._list = $('<ul class="dropdown"></ul>').insertAfter($button.parent());
+				this._list = $('<ul class="dropDown"></ul>').insertAfter($button.parent());
 				this._list.click(function(event) {
 					// discard click event
 					event.stopPropagation();
@@ -1858,7 +1858,7 @@ WCF.MultipleLanguageInput.prototype = {
 		$button.addClass('active');
 
 		// update label
-		this._list.prev('.dropdownCaption').children('span').text(this._availableLanguages[this._languageID]);
+		this._list.prev('.dropDownCaption').children('span').text(this._availableLanguages[this._languageID]);
 
 		// close selection and set focus on input element
 		this._closeSelection();
@@ -1870,7 +1870,7 @@ WCF.MultipleLanguageInput.prototype = {
 	 */
 	_disable: function() {
 		// remove active marking
-		this._list.prev('.dropdownCaption').children('span').removeClass('active').text('enable i18n');
+		this._list.prev('.dropDownCaption').children('span').removeClass('active').text('enable i18n');
 		this._closeSelection();
 
 		// update element value
@@ -3807,7 +3807,7 @@ $.widget('ui.wcfPages', {
 					$leftChildrenInput.keyup($.proxy(this._handleInput, this));
 					$leftChildrenInput.blur($.proxy(this._stopInput, this));
 					
-					var $leftChildrenContainer = $('<div class="dropdown"></div>');
+					var $leftChildrenContainer = $('<div class="dropDown"></div>');
 					$leftChildren.append($leftChildrenContainer);
 					
 					var $leftChildrenList = $('<ul></u>');
@@ -3850,7 +3850,7 @@ $.widget('ui.wcfPages', {
 					$rightChildrenInput.keyup($.proxy(this._handleInput, this));
 					$rightChildrenInput.blur($.proxy(this._stopInput, this));
 					
-					var $rightChildrenContainer = $('<div class="dropdown"></div>');
+					var $rightChildrenContainer = $('<div class="dropDown"></div>');
 					$rightChildren.append($rightChildrenContainer);
 					
 					var $rightChildrenList = $('<ul></ul>');
