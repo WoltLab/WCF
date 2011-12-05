@@ -1,7 +1,7 @@
 <?php
 namespace wcf\util;
 use wcf\system\io\File;
-use wcf\system\io\ZipFile;
+use wcf\system\io\GZipFile;
 use wcf\system\io\RemoteFile;
 use wcf\system\exception\SystemException;
 
@@ -538,7 +538,7 @@ class FileUtil {
 			return false;	
 		}
 		
-		$sourceFile = new ZipFile($gzipped, 'rb');
+		$sourceFile = new GZipFile($gzipped, 'rb');
 		//$filesize = $sourceFile->getFileSize();
 		$targetFile = new File($destination);
 		while (!$sourceFile->eof()) {
