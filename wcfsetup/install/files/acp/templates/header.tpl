@@ -27,7 +27,7 @@
 	
 	<!-- Stylesheets -->
 	<style type="text/css">
-		@import url("{@RELATIVE_WCF_DIR}acp/style/style.css") screen;
+		@import url("{@RELATIVE_WCF_DIR}acp/style/wcf.css") screen;
 		{*
 		
 		@import url("{@RELATIVE_WCF_DIR}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css") screen;
@@ -142,7 +142,7 @@
 	<!-- /HEADER -->
 	
 	<!-- MAIN -->
-	<div id="main" class="main left"><!-- ToDo: We now use a floating sidebar. Thus we need some trigger for its orientation, which has to reside at least one level above the sidebar. This trigger should be set either to "left" or "right", although "top" or "bottom" would also be nice (not for the ACP but maybe in other applications like the gallery or so). Also for 2 sidebars we can mix the trigger values, support is already here!!! -->
+	<div id="main" class="main left"><!-- ToDo: We now use a floated sidebar. Thus we need some trigger for its orientation, which has to reside at least one level above the sidebar. This trigger should be set either to "left" or "right", although "top" or "bottom" would also be nice (not for the ACP but maybe in other applications like the gallery or so). Also for 2 sidebars we can mix the trigger values, support is already here!!! -->
 		<div>
 			{hascontent}
 				<!-- SIDEBAR -->

@@ -24,7 +24,7 @@
 
 <!-- Stylesheets -->
 <style type="text/css">
-	@import url("{@RELATIVE_WCF_DIR}acp/style/style.css") screen;
+	@import url("{@RELATIVE_WCF_DIR}acp/style/wcf.css") screen;
 	
 	{*
 	@import url("{@RELATIVE_WCF_DIR}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css") screen;
@@ -73,7 +73,7 @@
 		new WCF.Date.Time();
 		new WCF.Effect.SmoothScroll();
 		new WCF.Effect.BalloonTooltip();
-		$('<span class="arrowOuter"><span class="arrowInner"></span></span>').appendTo('.innerError');
+		$('<span class="pointer"><span></span></span>').appendTo('.innerError');
 
 		{event name='javascriptInit'}
 	});
