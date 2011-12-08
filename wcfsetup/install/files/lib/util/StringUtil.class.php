@@ -17,6 +17,7 @@ class StringUtil {
 			(?:\s*[a-z]+\s*=\s*(?:
 			"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^\s>]
 			))*\s*/?>~ix';
+	const HTML_COMMENT_PATTERN = '~<!--(.*?)-->~';
 	
 	/**
 	 * Returns a salted hash of the given value.
@@ -493,7 +494,7 @@ class StringUtil {
 	 * @return	string
 	 */
 	public static function stripHTML($string) {
-		return preg_replace(self::HTML_PATTERN, '', $string);
+		return preg_replace(self::HTML_PATTERN, '', preg_replace(self::HTML_COMMENT_PATTERN, '', $string));
 	}
 	
 	/**
