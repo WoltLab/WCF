@@ -4298,20 +4298,4 @@ div.ajaxDebugMessage p:last-child {
 	font-size: 110%;
 }
 
-
-
-/* ############## ToDo ############## */
-
-/* Is that really still necessary? We wanted to support good browsers only */
-
-/* End clearfix */
-.ui-helper-zfix {
-	opacity: 0;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-}
-
 /* -- -- -- -- -- EOF -- -- -- -- -- */
