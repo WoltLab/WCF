@@ -50,7 +50,7 @@ class UserStorageHandler extends SingletonFactory {
 		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("userID IN (?)", array($tmp));
-		$conditions->add("packageID = ?", array(PACKAGE_ID));
+		$conditions->add("packageID = ?", array($packageID));
 		
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_user_storage
