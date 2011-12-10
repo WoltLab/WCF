@@ -23,7 +23,7 @@
 
 		// call jQuery's own data method
 		return $jQueryData.apply(this, arguments);
-	}
+	};
 })();
 
  /* Simple JavaScript Inheritance
@@ -31,7 +31,7 @@
  * MIT Licensed.
  */
 // Inspired by base2 and Prototype
-(function(){var a=false,b=/xyz/.test(function(){xyz})?/\b_super\b/:/.*/;this.Class=function(){};Class.extend=function(c){function g(){if(!a&&this.init)this.init.apply(this,arguments)}var d=this.prototype;a=true;var e=new this;a=false;for(var f in c){e[f]=typeof c[f]=="function"&&typeof d[f]=="function"&&b.test(c[f])?function(a,b){return function(){var c=this._super;this._super=d[a];var e=b.apply(this,arguments);this._super=c;return e}}(f,c[f]):c[f]}g.prototype=e;g.prototype.constructor=g;g.extend=arguments.callee;return g}})()
+(function(){var a=false,b=/xyz/.test(function(){xyz})?/\b_super\b/:/.*/;this.Class=function(){};Class.extend=function(c){function g(){if(!a&&this.init)this.init.apply(this,arguments);}var d=this.prototype;a=true;var e=new this;a=false;for(var f in c){e[f]=typeof c[f]=="function"&&typeof d[f]=="function"&&b.test(c[f])?function(a,b){return function(){var c=this._super;this._super=d[a];var e=b.apply(this,arguments);this._super=c;return e;};}(f,c[f]):c[f]}g.prototype=e;g.prototype.constructor=g;g.extend=arguments.callee;return g;};})();
 
 /**
  * Initialize WCF namespace
@@ -765,7 +765,7 @@ WCF.Clipboard = {
 			objectIDs: objectIDs,
 			pageClassName: this._page,
 			type: type
-		})
+		});
 		this._proxy.sendRequest();
 	},
 	
@@ -1961,7 +1961,7 @@ WCF.Number = {
 		
 		return Math.round(number * floatingPoint) / floatingPoint;
 	}
-}
+};
 
 /**
  * String utilities.
@@ -1980,10 +1980,8 @@ WCF.String = {
 		var $decimalPoint = $numberString.match(/[^0-9]+/);
 		
 		$numberString = parts[0];
-		if ($decimalPoint === null) {
-			var $decimalPart = '';
-		}
-		else {
+		var $decimalPart = '';
+		if ($decimalPoint !== null) {
 			delete parts[0];
 			var $decimalPart = $decimalPoint.join('')+parts.join('');
 		}
@@ -1997,12 +1995,12 @@ WCF.String = {
 			
 			if ($separator != null && $separator != '') {
 				var $numElements = new Array();
-				var $firstPart = $numberString.length % 3
+				var $firstPart = $numberString.length % 3;
 				if ($firstPart == 0) $firstPart = 3;
 				for (var $i = 0; $i < Math.ceil($numberString.length / 3); $i++) {
 					if ($i == 0) $numElements.push($numberString.substring(0, $firstPart));
 					else {
-						var $start = (($i - 1) * 3) + $firstPart
+						var $start = (($i - 1) * 3) + $firstPart;
 						$numElements.push($numberString.substring($start, $start + 3));
 					}
 				}
@@ -2431,7 +2429,7 @@ WCF.Collapsible.Simple = {
 			return element;
 		}
 		
-		console.debug('[WCF.Collapsible.Simple] Could not find valid parent, aborting.')
+		console.debug('[WCF.Collapsible.Simple] Could not find valid parent, aborting.');
 		return false;
 	}
 };
@@ -2554,7 +2552,7 @@ WCF.Collapsible.Remote = Class.extend({
 	_toggleContainer: function(event) {
 		var $button = $(event.currentTarget);
 		var $containerID = $button.data('containerID');
-		var $isOpen = this._containerData[$containerID].isOpen
+		var $isOpen = this._containerData[$containerID].isOpen;
 		var $state = ($isOpen) ? 'open' : 'close';
 		var $newState = ($isOpen) ? 'close' : 'open';
 		
@@ -2772,7 +2770,7 @@ WCF.Effect.BalloonTooltip.prototype = {
 			// ignore empty elements
 			if ($title !== '') {
 				$element.data('tooltip', $title);
-				$element.removeAttr('title')
+				$element.removeAttr('title');
 
 				$element.hover(
 					$.proxy(this._mouseEnterHandler, this),
@@ -3324,7 +3322,7 @@ $.widget('ui.wcfDialog', {
 
 		// create close button
 		if (this.options.closable) {
-			this._closeButton = $('<a class="wcfDialogCloseButton"><span>TODO: close</span></a>').click($.proxy(this.close, this))
+			this._closeButton = $('<a class="wcfDialogCloseButton"><span>TODO: close</span></a>').click($.proxy(this.close, this));
 
 			if (!this.options.hideTitle && this.options.title != '') {
 				this._closeButton.appendTo(this._titlebar);
@@ -3657,7 +3655,7 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 	 * @return	integer
 	 */
 	getCurrentIndex: function() {
-		return this.lis.index(this.lis.filter('.ui-tabs-selected'))
+		return this.lis.index(this.lis.filter('.ui-tabs-selected'));
 	}
 });
 
@@ -3977,7 +3975,7 @@ $.widget('ui.wcfPages', {
 					this.element.children().remove();
 				}
 				else {
-					this._render()
+					this._render();
 				}
 			}
 			else if (key == 'maxPage') {
@@ -4019,7 +4017,7 @@ $.widget('ui.wcfPages', {
 		$childInput.css('display', 'none');
 		
 		// show a-tag
-		var $childContainer = $childInput.parent('li')
+		var $childContainer = $childInput.parent('li');
 		if ($childContainer != undefined && $childContainer != null) {
 			$childContainer.children('a').show();
 		}
