@@ -42,7 +42,7 @@ class UserStorageHandler extends SingletonFactory {
 	public function loadStorage(array $userIDs, $packageID = PACKAGE_ID) {
 		$tmp = array();
 		foreach ($userIDs as $userID) {
-			if (!isset($this->cache[$userID])) $tmp[] = $userID;
+			if (!isset($this->cache[$userID][$packageID])) $tmp[] = $userID;
 		}
 		
 		// ignore users whose storage data is already loaded
@@ -50,7 +50,7 @@ class UserStorageHandler extends SingletonFactory {
 		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("userID IN (?)", array($tmp));
-		$conditions->add("packageID = ?", array(PACKAGE_ID));
+		$conditions->add("packageID = ?", array($packageID));
 		
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_user_storage
