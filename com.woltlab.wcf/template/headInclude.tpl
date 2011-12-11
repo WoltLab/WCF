@@ -64,7 +64,7 @@
 		});
 
 		WCF.Icon.addObject({
-			'wcf.icon.loading': '{icon size='S'}spinner{/icon}',
+			'wcf.icon.loading': '{icon size='S'}spinner1{/icon}',
 			'wcf.icon.opened': '{icon size='S'}opened2{/icon}',
 			'wcf.icon.closed': '{icon size='S'}closed2{/icon}'
 			{event name='javascriptIconImport'}
