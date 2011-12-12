@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
+use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
@@ -19,7 +20,11 @@ class FileSizeOptionType extends IntegerOptionType {
 	 * @see wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
-		$number = intval($newValue);
+		$number = StringUtil::replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $newValue);
+		$d = preg_quote(WCF::getLanguage()->get('wcf.global.decimalPoint'), '~');
+		if (!preg_match('~^(?:\d*)(?:'.$d.')?\d+~', $number, $matches)) return 0;
+		
+		$number = $matches[0];
 		if (preg_match('/[kmgt]i?b$/i', $newValue, $multiplier)) {
 			switch (StringUtil::toLowerCase($multiplier[0])) {
 				case 'tb':
