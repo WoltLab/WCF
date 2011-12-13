@@ -86,7 +86,7 @@
 		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrative Rechte]]></item>
 		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[Allgemeine administrative Rechte]]></item>
 		<item name="wcf.acp.group.option.category.admin.system"><![CDATA[System-Funktionen]]></item>
-		<item name="wcf.acp.group.option.category.admin.system.cronjob"><![CDATA[Zeitgesteuerte Aufgaben]]></item>
+		<item name="wcf.acp.group.option.category.admin.system.cronjob"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.group.option.category.admin.system.package"><![CDATA[Paketverwaltung]]></item>
 		<item name="wcf.acp.group.option.category.admin.user"><![CDATA[Benutzer-Funktionen]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.group"><![CDATA[Gruppenverwaltung]]></item>
@@ -134,13 +134,13 @@
 		<item name="wcf.acp.menu.link.option"><![CDATA[Optionen]]></item>
 		<item name="wcf.acp.menu.link.package"><![CDATA[Paketverwaltung]]></item>
 		<item name="wcf.acp.menu.link.option.importAndExport"><![CDATA[Sichern &amp; Wiederherstellen]]></item>
-		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Zeitgesteuerte Aufgaben]]></item>
+		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Aufgabe hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[Aufgaben auflisten]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Protokoll]]></item>
 		<item name="wcf.acp.menu.link.log.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Sitzungen]]></item>
-		<item name="wcf.acp.menu.link.log.cronjob"><![CDATA[Zeitgesteuerte Aufgaben]]></item>
+		<item name="wcf.acp.menu.link.log.cronjob"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.group"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.menu.link.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.group.mail"><![CDATA[E-Mail an Gruppenmitglieder]]></item>

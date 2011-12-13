@@ -3952,7 +3952,7 @@ will change soon!
 	border-top-width: 0;
 }
 
-div.scrollableContainer > div:first-child p {
+.scrollableContainer > div:first-child p {
 	padding: 0 1px;
 }
 
