@@ -23,7 +23,14 @@ interface IPageMenuItemProvider extends IDatabaseObjectProcessor {
 	/**
 	 * Returns the number of notifications for the associated menu item.
 	 * 
-	 * @return	boolean
+	 * @return	integer
 	 */
 	public function getNotifications();
+	
+	/**
+	 * Returns the href of the associated menu item.
+	 *
+	 * @return	string
+	 */
+	public function getLink();
 }

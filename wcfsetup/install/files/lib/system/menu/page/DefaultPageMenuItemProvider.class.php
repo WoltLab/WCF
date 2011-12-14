@@ -31,4 +31,12 @@ class DefaultPageMenuItemProvider extends DatabaseObjectDecorator implements IPa
 	public function getNotifications() {
 		return 0;
 	}
+	
+	/**
+	 * @see	wcf\system\menu\page\IPageMenuItemProvider::getLink()
+	 */
+	public function getLink() {
+		// explicit call to satisfy our interface
+		return $this->getDecoratedObject()->getLink();
+	}
 }
