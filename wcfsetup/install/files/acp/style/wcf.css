@@ -240,7 +240,7 @@ header.pageHeader nav.topMenu {
 		top: auto;
 	}
 }
-@-moz-keyframes glowButtons {
+@-moz-keyframes showTopMenu {
 	0% {
 		opacity: 0;
 		top: -50px;
@@ -256,7 +256,7 @@ header.pageHeader nav.topMenu {
 		top: auto;
 	}
 }
-@-ms-keyframes glowButtons {
+@-ms-keyframes showTopMenu {
 	0% {
 		opacity: 0;
 		top: -50px;
@@ -273,7 +273,7 @@ header.pageHeader nav.topMenu {
 	}
 }
 /* disabled to ease rendering work for Opera 
-@-o-keyframes glowButtons {
+@-o-keyframes showTopMenu {
 	0% {
 		opacity: 0;
 		top: -50px;
@@ -290,7 +290,7 @@ header.pageHeader nav.topMenu {
 	}
 }
 */
-@keyframes glowButtons {
+@keyframes showTopMenu {
 	0% {
 		opacity: 0;
 		top: -50px;
