@@ -43,7 +43,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 		return array(
 			'menuItem' => $data['attributes']['name'],
 			'menuItemLink' => (isset($data['elements']['link'])) ? $data['elements']['link'] : '',
-			'options' => (isset($data['elements']['option'])) ? $data['elements']['options'] : '',
+			'options' => (isset($data['elements']['options'])) ? $data['elements']['options'] : '',
 			'parentMenuItem' => (isset($data['elements']['parent'])) ? $data['elements']['parent'] : '',
 			'permissions' => (isset($data['elements']['permissions'])) ? $data['elements']['permissions'] : '',
 			'showOrder' => $showOrder
