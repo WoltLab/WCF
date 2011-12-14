@@ -97,7 +97,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	public function validate() {
 		parent::validate();
 		
-		$this->errorType = $this->optionHandler->validate();
+		$this->errorType = array_merge($this->optionHandler->validate(), $this->errorType);
 		
 		if (count($this->errorType) > 0) {
 			throw new UserInputException('options', $this->errorType);
