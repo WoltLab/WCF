@@ -24,7 +24,7 @@ abstract class MailSender {
 	 * @return	MailSender
 	 */
 	public static function getInstance() {
-		if (self::$instance == null) {
+		if (self::$instance === null) {
 			switch (MAIL_SEND_METHOD) {
 				case 'php':
 					self::$instance = new PHPMailSender();
