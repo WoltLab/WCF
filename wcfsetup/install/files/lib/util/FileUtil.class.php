@@ -41,12 +41,7 @@ class FileUtil {
 	 * @return 	string 		$path
 	 */
 	public static function removeLeadingSlash($path) {
-		if (substr($path, 0, 1) == '/') {
-			return substr($path, 1);
-		}
-		else {
-			return $path;	
-		}	
+		return ltrim($path, '/');
 	}
 
 	/**
@@ -56,12 +51,7 @@ class FileUtil {
 	 * @return 	string 		$path
 	 */
 	public static function removeTrailingSlash($path) {
-		if (substr($path, -1) == '/') {
-			return substr($path, 0, -1);
-		}
-		else {
-			return $path;
-		}	
+		return rtrim($path, '/');
 	}
 	
 	/**
@@ -71,11 +61,7 @@ class FileUtil {
 	 * @return 	string 		$path
 	 */
 	public static function addTrailingSlash($path) {
-		if (substr($path, -1) != '/') {
-			return $path.'/';
-		}
-		
-		return $path;
+		return rtrim($path, '/').'/';
 	}
 	
 	/**
@@ -85,11 +71,7 @@ class FileUtil {
 	 * @return	string		$path
 	 */
 	public static function addLeadingSlash($path) {
-		if (substr($path, 0, 1) != '/') {
-			return '/'.$path;
-		}
-		
-		return $path;
+		return '/'.ltrim($path, '/');
 	}
 
 	/**
