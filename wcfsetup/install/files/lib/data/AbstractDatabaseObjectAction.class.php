@@ -213,7 +213,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 			throw new ValidateActionException('Insufficient permissions');
 		}
 		
-		// read data
+		// read objects
 		if (!count($this->objects)) {
 			$this->readObjects();
 		}
@@ -240,7 +240,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 			throw new ValidateActionException('Insufficient permissions');
 		}
 		
-		// read data
+		// read objects
 		if (!count($this->objects)) {
 			$this->readObjects();
 		}
@@ -290,8 +290,10 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
-		foreach ($this->objects as $object) {
-			$object->update($this->parameters['data']);
+		if (isset($this->parameters['data'])) {
+			foreach ($this->objects as $object) {
+				$object->update($this->parameters['data']);
+			}
 		}
 	}
 	
