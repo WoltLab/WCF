@@ -12,12 +12,17 @@ use wcf\system\SingletonFactory;
  * @subpackage	system.breadcrumb
  * @category 	Community Framework
  */
-class Breadcrumbs extends SingletonFactory {
+class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	/**
 	 * list of breadcrumbs
 	 * @var	array<wcf\system\breadcrumb\Breadcrumb>
 	 */	
 	protected $items = array();
+	
+	/**
+	 * Current iterator-index
+	 */
+	protected $index = 0;
 	
 	/**
 	 * Adds a breadcrumb (insertion order is crucial!).
@@ -68,5 +73,47 @@ class Breadcrumbs extends SingletonFactory {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * @see \Countable::count()
+	 */
+	public function count() {
+		return count($this->items);
+	}
+	
+	/**
+	 * @see \Iterator::current()
+	 */
+	public function current() {
+		return $this->items[$this->index];
+	}
+	
+	/**
+	 * @see \Iterator::key()
+	 */
+	public function key() {
+		return $this->index;
+	}
+	
+	/**
+	 * @see \Iterator::valid()
+	 */
+	public function valid() {
+		return isset($this->items[$this->index]);
+	}
+	
+	/**
+	 * @see \Iterator::rewind()
+	 */
+	public function rewind() {
+		$this->index = 0;
+	}
+	
+	/**
+	 * @see \Iterator::next()
+	 */
+	public function next() {
+		$this->index++;
 	}
 }
