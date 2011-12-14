@@ -389,7 +389,7 @@ nav.topMenu > div > ul > li > span:not(.badge) {
 	padding: 6px;
 }
 
-nav.topMenu ul li .dropDownCaption {
+nav.topMenu > div > ul > li > .dropDownCaption {
 	cursor: pointer;
 	background-image: url('../../icon/dropDown2.svg');
 	background-position: 97% center;
@@ -2925,22 +2925,8 @@ tr .columnURL {
 
 
 
-
-
-
-
-
-.wcfDimensions {
-	display: inline-block;
-}
-
-
-
-
-
 /* ############## ToDo: Overlay ############## */
 
-.ui-dialog,
 .wcfDialogContainer {
 	border: 23px solid transparent;
 	border-radius: 15px;
@@ -2958,7 +2944,6 @@ tr .columnURL {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.ui-dialog,
 	.wcfDialogContainer {
 		min-width: 500px !important;
 		max-width: 780px !important;
@@ -2968,7 +2953,6 @@ tr .columnURL {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.ui-dialog,
 	.wcfDialogContainer {
 		min-width: 200px !important;
 		max-width: 380px !important;
@@ -2978,7 +2962,6 @@ tr .columnURL {
 
 /* Dialog Titlebar */
 
-.ui-dialog-titlebar,
 .wcfDialogTitlebar {
 	border-bottom: 1px solid #036;
 	border-top-left-radius: 7px;
@@ -2995,7 +2978,6 @@ tr .columnURL {
 	/*cursor: move;*/
 }
 
-.ui-dialog-title,
 .wcfDialogTitle {
 	font-size: 170%;
 	font-weight: bold;
@@ -3004,7 +2986,6 @@ tr .columnURL {
 	display: block;
 }
 
-a.ui-dialog-titlebar-close,
 a.wcfDialogCloseButton {
 	background-image: url('../../icon/delete2.svg');
 	background-size: 32px;
@@ -3018,7 +2999,6 @@ a.wcfDialogCloseButton {
 	cursor: pointer;
 }
 
-a.ui-dialog-titlebar-close span,
 a.wcfDialogCloseButton span {
 	/* Removes the button-caption */
 	position: absolute;
@@ -3029,20 +3009,17 @@ a.wcfDialogCloseButton span {
 
 /* Dialog Content */
 
-.ui-dialog-content,
 .wcfDialogContent {
 	background-color: #333;
 	overflow: auto;
 }
 
-.ui-dialog > .ui-dialog-content,
 .wcfDialogContainer > .wcfDialogContent {
 	border-radius: 7px;
 	padding: 0;
 	/*width: auto !important;*/
 }
 
-.ui-dialog-titlebar ~ .ui-dialog-content,
 .wcfDialogTitlebar ~ .wcfDialogContent {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
@@ -3051,7 +3028,9 @@ a.wcfDialogCloseButton span {
 	padding: 10px 20px 20px;
 }
 
-/* ToDo: Installation */
+/* ToDo: Installation
+
+is this obsolete die to our new overlay? */
 
 .ui-dialog-content > div {
 	height: 100%;
@@ -3105,7 +3084,6 @@ div#ajaxExceptionStacktrace {
 
 /* ############## ToDo: Overlay Spinner ############## */
 
-.ui-widget-overlay,
 .wcfDialogOverlay {
 	background-color: #000;
 	opacity: .5;
@@ -3890,6 +3868,13 @@ input[type='button'][disabled='disabled'],
 
 
 /* ############## CSS Experiments (active) ############## */
+
+/* what is that? */
+.wcfDimensions {
+	display: inline-block;
+}
+
+
 
 
 
