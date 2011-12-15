@@ -25,6 +25,12 @@ class PreparedStatement {
 	protected $database = null;
 	
 	/**
+	 * SQL query parameters
+	 * @var	array
+	 */
+	protected $parameters = array();
+	
+	/**
 	 * pdo statement object
 	 *
 	 * @var	\PDOStatement
@@ -76,6 +82,7 @@ class PreparedStatement {
 	 * @param	array		$parameters
 	 */
 	public function execute(array $parameters = array()) {
+		$this->parameters = $parameters;
 		$this->database->incrementQueryCount();
 		$this->database->beginTransaction();
 		
@@ -101,6 +108,7 @@ class PreparedStatement {
 	 * @param	array		$parameters
 	 */
 	public function executeUnbuffered(array $parameters = array()) {
+		$this->parameters = $parameters;
 		$this->database->incrementQueryCount();
 		
 		try {
@@ -203,5 +211,14 @@ class PreparedStatement {
 	 */
 	public function getSQLQuery() {
 		return $this->query;
+	}
+	
+	/**
+	 * Returns the SQL query parameters of this statement.
+	 * 
+	 * @return	array
+	 */
+	public function getSQLParameters() {
+		return $this->parameters;
 	}
 }

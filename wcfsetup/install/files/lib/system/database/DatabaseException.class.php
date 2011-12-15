@@ -129,11 +129,14 @@ class DatabaseException extends SystemException {
 		$this->information .= '<b>sql error:</b> ' . StringUtil::encodeHTML($this->getErrorDesc()) . '<br />';
 		$this->information .= '<b>sql error number:</b> ' . StringUtil::encodeHTML($this->getErrorNumber()) . '<br />';
 		$this->information .= '<b>sql version:</b> ' . StringUtil::encodeHTML($this->getSQLVersion()) . '<br />';
-		if ($this->preparedStatement !== null) $this->information .= '<b>sql query:</b> ' . StringUtil::encodeHTML($this->preparedStatement->getSQLQuery()) . '<br />';
-		
-		$this->information .= "\n<!-- db error: #".$this->db->getErrorNumber().': '.$this->db->getErrorDesc()." -->\n";
 		if ($this->preparedStatement !== null) {
-			$this->information .= "\n<!-- statement error: #".$this->preparedStatement->getErrorNumber().': '.$this->preparedStatement->getErrorDesc()." -->\n";
+			$this->information .= '<b>sql query:</b> ' . StringUtil::encodeHTML($this->preparedStatement->getSQLQuery()) . '<br />';
+			$parameters = $this->preparedStatement->getSQLParameters();
+			if (!empty($parameters)) {
+				foreach ($parameters as $index => $parameter) {
+					$this->information .= '<b>sql query parameter ' . $index . ':</b>' . StringUtil::encodeHTML($parameter) . '<br />';
+				}
+			}
 		}
 		
 		parent::show();
