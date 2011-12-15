@@ -78,13 +78,14 @@ class PreparedStatement {
 	
 	/**
 	 * Executes a prepared statement within a transaction.
+	 * CAUTION: Transactions disabled for now, use manual transaction if you like
 	 *
 	 * @param	array		$parameters
 	 */
 	public function execute(array $parameters = array()) {
 		$this->parameters = $parameters;
 		$this->database->incrementQueryCount();
-		$this->database->beginTransaction();
+		//$this->database->beginTransaction();
 		
 		try {
 			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start($this->query, Benchmark::TYPE_SQL_QUERY);
@@ -94,10 +95,10 @@ class PreparedStatement {
 			
 			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->stop();
 			
-			$this->database->commitTransaction();
+			//$this->database->commitTransaction();
 		}
 		catch (\PDOException $e) {
-			$this->database->rollBackTransaction();
+			//$this->database->rollBackTransaction();
 			throw new DatabaseException('Could not execute prepared statement: '.$e->getMessage(), $this->database, $this);
 		}
 	}
