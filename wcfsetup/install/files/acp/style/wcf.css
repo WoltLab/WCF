@@ -2532,8 +2532,6 @@ tbody td {
 	background-color: #fcfdfe;
 	border-right: 1px solid rgba(255, 255, 255, .3);
 	padding: 5px;
-	/* This is experimental - only works in combination with "table-layout: fixed;" */
-	word-wrap: break-word;
 	
 	-webkit-transition: background .1s linear;
 	-moz-transition: background .1s linear;
@@ -2986,7 +2984,7 @@ tr .columnURL {
 	display: block;
 }
 
-a.wcfDialogCloseButton {
+.wcfDialogCloseButton {
 	background-image: url('../../icon/delete2.svg');
 	background-size: 32px;
 	background-position: top left;
@@ -2999,7 +2997,7 @@ a.wcfDialogCloseButton {
 	cursor: pointer;
 }
 
-a.wcfDialogCloseButton span {
+.wcfDialogCloseButton span {
 	/* Removes the button-caption */
 	position: absolute;
 	left: -9000px;
@@ -3030,7 +3028,7 @@ a.wcfDialogCloseButton span {
 
 /* ToDo: Installation
 
-is this obsolete die to our new overlay? */
+is this obsolete due to our new overlay? */
 
 .ui-dialog-content > div {
 	height: 100%;
