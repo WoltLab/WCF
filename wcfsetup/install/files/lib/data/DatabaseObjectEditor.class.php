@@ -105,9 +105,12 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 		$sql = "DELETE FROM	".static::getDatabaseTableName()."
 			WHERE		".static::getDatabaseTableIndexName()." = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
 		foreach ($objectIDs as $objectID) {
-			$statement->execute(array($objectID));
+			$statement->executeUnbuffered(array($objectID));
 		}
+		WCF::getDB()->commitTransaction();
 		
 		return count($objectIDs);
 	}

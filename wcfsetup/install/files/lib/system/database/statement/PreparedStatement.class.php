@@ -71,23 +71,45 @@ class PreparedStatement {
 	}
 	
 	/**
+	 * Executes a prepared statement within a transaction.
+	 *
+	 * @param	array		$parameters
+	 */
+	public function execute(array $parameters = array()) {
+		$this->database->incrementQueryCount();
+		$this->database->beginTransaction();
+		
+		try {
+			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start($this->query, Benchmark::TYPE_SQL_QUERY);
+			
+			if (!count($parameters)) $this->pdoStatement->execute();
+			else $this->pdoStatement->execute($parameters);
+			
+			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->stop();
+			
+			$this->database->commitTransaction();
+		}
+		catch (\PDOException $e) {
+			$this->database->rollBackTransaction();
+			throw new DatabaseException('Could not execute prepared statement: '.$e->getMessage(), $this->database, $this);
+		}
+	}
+	
+	/**
 	 * Executes a prepared statement.
 	 *
 	 * @param	array		$parameters
-	 * @return	boolean		true on success
 	 */
-	public function execute(array $parameters = array()) {
+	public function executeUnbuffered(array $parameters = array()) {
 		$this->database->incrementQueryCount();
 		
 		try {
 			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start($this->query, Benchmark::TYPE_SQL_QUERY);
 			
-			if (!count($parameters)) $result = $this->pdoStatement->execute();
-			else $result = $this->pdoStatement->execute($parameters);
+			if (!count($parameters)) $this->pdoStatement->execute();
+			else $this->pdoStatement->execute($parameters);
 			
 			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->stop();
-			
-			return $result;
 		}
 		catch (\PDOException $e) {
 			throw new DatabaseException('Could not execute prepared statement: '.$e->getMessage(), $this->database, $this);

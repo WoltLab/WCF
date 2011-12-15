@@ -705,9 +705,11 @@ class WCFSetup extends WCF {
 				VALUES		(?)";
 			$statement = self::getDB()->prepareStatement($sql);
 			
+			self::getDB()->beginTransaction();
 			foreach ($acpTemplateInserts as $acpTemplate) {
-				$statement->execute(array($acpTemplate));
+				$statement->executeUnbuffered(array($acpTemplate));
 			}
+			self::getDB()->commitTransaction();
 		}
 		
 		// save file log
@@ -717,9 +719,11 @@ class WCFSetup extends WCF {
 				VALUES		(?)";
 			$statement = self::getDB()->prepareStatement($sql);
 			
+			self::getDB()->beginTransaction();
 			foreach ($fileInserts as $file) {
-				$statement->execute(array($file));
+				$statement->executeUnbuffered(array($file));
 			}
+			self::getDB()->commitTransaction();
 		}
 		
 		$this->gotoNextStep('installLanguage');
