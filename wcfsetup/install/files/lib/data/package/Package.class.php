@@ -4,6 +4,7 @@ use wcf\data\DatabaseObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
+use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -558,7 +559,7 @@ class Package extends DatabaseObject {
 	 */
 	public static function getPluginList() {
 		$pluginList = new PackageList();
-		//$pluginList->getConditionBuilder()->add("package.packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+		$pluginList->getConditionBuilder()->add("package.packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
 		$pluginList->getConditionBuilder()->add("package.standalone = ?", array(0));
 		
 		return $pluginList;

@@ -44,11 +44,7 @@ class PackageListPage extends AbstractPage {
 		// read applications
 		$this->applicationList = new PackageList();
 		$this->applicationList->getConditionBuilder()->add("package.standalone = ?", array(1));
-		
-		// DEBUG ONLY - remove comment to exclude WCF from display
-		//$this->applicationList->getConditionBuilder()->add("package.packageID <> ?", array(1));
-		// DEBUG ONLY
-		
+		$this->applicationList->getConditionBuilder()->add("package.packageID <> ?", array(1));
 		$this->applicationList->sqlLimit = 0;
 		$this->applicationList->readObjects();
 		
@@ -59,7 +55,7 @@ class PackageListPage extends AbstractPage {
 		$this->pluginCount = $this->pluginList->countObjects();
 		
 		// read plugins
-		$this->pluginList->sqlLimit = 1;
+		$this->pluginList->sqlLimit = 20;
 		$this->pluginList->readObjects();
 	}
 	

@@ -205,7 +205,7 @@ WCF.ACP.Package.List.prototype = {
 	_loadPage: function(event, data) {
 		// update active page
 		for (var $i = 0, $size = this._pluginLists.length; $i < $size; $i++) {
-			this._pluginLists[$i].wcfPages('overridePage', data.activePage);
+			this._pluginLists[$i].wcfPages('switchPage', data.activePage);
 		}
 		
 		// load page from cache if applicable

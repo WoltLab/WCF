@@ -6,7 +6,7 @@
 		WCF.TabMenu.init();
 
 		WCF.Language.add('wcf.acp.package.view.button.uninstall.sure', 'wcf.acp.package.view.button.uninstall.sure');
-		new WCF.ACP.PackageUninstallation($('.package .uninstallButton'));
+		new WCF.ACP.Package.Uninstallation($('.package .uninstallButton'));
 
 		{if $pluginsCount > 1}
 			WCF.Icon.addObject({
@@ -16,7 +16,7 @@
 				'wcf.icon.previous': '{@RELATIVE_WCF_DIR}icon/previous1.svg',
 				'wcf.icon.previous.disabled': '{@RELATIVE_WCF_DIR}icon/previous1D.svg'
 			});
-			new WCF.ACP.Package.List({@($pluginsCount / 1)|ceil});
+			new WCF.ACP.Package.List({@($pluginsCount / 20)|ceil});
 		{/if}
 	});
 	//]]>
