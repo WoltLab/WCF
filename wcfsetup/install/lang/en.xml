@@ -132,6 +132,7 @@
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.menu.link.option"><![CDATA[Options]]></item>
+		<item name="wcf.acp.menu.link.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.menu.link.package"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.menu.link.option.importAndExport"><![CDATA[Import &amp; export]]></item>
 		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Cron jobs]]></item>
