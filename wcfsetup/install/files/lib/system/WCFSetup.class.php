@@ -13,6 +13,7 @@ use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
+use wcf\system\Regex;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\setup\Installer;
@@ -1037,7 +1038,7 @@ class WCFSetup extends WCF {
 		
 		// delete tmp files
 		$directory = TMP_DIR.'/';
-		DirectoryUtil::getInstance($directory)->removePattern('~\.tar(\.gz)?$~', true);
+		DirectoryUtil::getInstance($directory)->removePattern(new Regex('\.tar(\.gz)?$'), true);
 	}
 	
 	/**

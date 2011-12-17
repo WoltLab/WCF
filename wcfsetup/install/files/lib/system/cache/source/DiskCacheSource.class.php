@@ -3,6 +3,7 @@ namespace wcf\system\cache\source;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\Callback;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\DirectoryUtil;
@@ -106,7 +107,7 @@ class DiskCacheSource implements ICacheSource {
 			if (!@touch($filename, 1)) {
 				@unlink($filename);
 			}
-		}), '%^'.$directory.$filepattern.'$%i');
+		}), new Regex('^'.$directory.$filepattern.'$', Regex::CASE_INSENSITIVE));
 	}
 	
 	/**
@@ -207,7 +208,7 @@ class DiskCacheSource implements ICacheSource {
 		while ($row = $statement->fetchArray()) {
 			$packageDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
 			$cacheDir = $packageDir.'cache';
-			DirectoryUtil::getInstance($cacheDir)->removePattern('~.*\.php$~');
+			DirectoryUtil::getInstance($cacheDir)->removePattern(new Regex('.*\.php$'));
 		}
 	}
 }

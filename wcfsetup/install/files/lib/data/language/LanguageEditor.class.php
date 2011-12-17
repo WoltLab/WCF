@@ -10,6 +10,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\io\File;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageDependencyHandler;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\XML;
 use wcf\util\DirectoryUtil;
@@ -290,7 +291,7 @@ class LanguageEditor extends DatabaseObjectEditor {
 		if ($languageID != '.*') $languageID = intval($languageID);
 		if ($packageID != '.*') $packageID = intval($packageID);
 
-		DirectoryUtil::getInstance(WCF_DIR.'language/')->removePattern('~'.$packageID.'_'.$languageID.'_'.$category.'\.php$~');
+		DirectoryUtil::getInstance(WCF_DIR.'language/')->removePattern(new Regex($packageID.'_'.$languageID.'_'.$category.'\.php$'));
 	}
 	
 	/**
@@ -298,9 +299,9 @@ class LanguageEditor extends DatabaseObjectEditor {
 	 */
 	public function deleteCompiledTemplates() {
 		// templates
-		DirectoryUtil::getInstance(WCF_DIR.'templates/compiled/')->removePattern('~.*_'.$this->languageID.'_.*\.php$~');
+		DirectoryUtil::getInstance(WCF_DIR.'templates/compiled/')->removePattern(new Regex('.*_'.$this->languageID.'_.*\.php$'));
 		// acp templates
-		DirectoryUtil::getInstance(WCF_DIR.'acp/templates/compiled/')->removePattern('~.*_'.$this->languageID.'_.*\.php$~');
+		DirectoryUtil::getInstance(WCF_DIR.'acp/templates/compiled/')->removePattern(new Regex('.*_'.$this->languageID.'_.*\.php$'));
 	}
 	
 	/**
