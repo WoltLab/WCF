@@ -112,16 +112,10 @@ final class Regex {
 	 */
 	public function match($string, $all = false) {
 		if ($all) {
-			$result = preg_match_all($this->regex, $string, $this->matches);
-		}
-		else {
-			$result = preg_match($this->regex, $string, $this->matches);
+			return $this->checkResult(preg_match_all($this->regex, $string, $this->matches), 'match');
 		}
 		
-		if ($result === false) {
-			throw new SystemException('Could not execute match on '.$this->regex);
-		}
-		return $result;
+		return $this->checkResult(preg_match($this->regex, $string, $this->matches), 'match');
 	}
 	
 	/**
@@ -133,16 +127,10 @@ final class Regex {
 	 */
 	public function replace($string, $replacement) {
 		if ($replacement instanceof Callback) {
-			$result = preg_replace_callback($this->regex, $replacement, $string);
-		}
-		else {
-			$result = preg_replace($this->regex, $replacement, $string);
+			return $this->checkResult(preg_replace_callback($this->regex, $replacement, $string), 'replace');
 		}
 		
-		if ($result === false) {
-			throw new SystemException('Could not execute replace on '.$this->regex);
-		}
-		return $result;
+		return $this->checkResult(preg_replace($this->regex, $replacement, $string), 'replace');
 	}
 	
 	/**
@@ -152,10 +140,34 @@ final class Regex {
 	 * @return	array<string>
 	 */
 	public function split($string) {
-		$result = preg_split($this->regex, $string);
-		
+		return $this->checkResult(preg_split($this->regex, $string), 'split');
+	}
+	
+	/**
+	 * Checks whether there was success.
+	 *
+	 * @param	mixed	$result
+	 */
+	private function checkResult($result, $method = '') {
 		if ($result === false) {
-			throw new SystemException('Could not execute split on '.$this->regex);
+			switch (preg_last_error()) {
+				case PREG_INTERNAL_ERROR:
+					$error = 'Internal error';
+				break;
+				case PREG_BACKTRACK_LIMIT_ERROR:
+					$error = 'Backtrack limit was exhausted';
+				break;
+				case PREG_RECURSION_LIMIT_ERROR:
+					$error = 'Recursion limit was exhausted';
+				break;
+				case PREG_BAD_UTF8_ERROR:
+					$error = 'Bad UTF8';
+				break;
+				default:
+					$error = 'Unknown error';
+			}
+
+			throw new SystemException('Could not execute '.($method ? $method.' on ' : '').$this->regex.': '.$error);
 		}
 		return $result;
 	}
