@@ -109,7 +109,16 @@ class UserUtil {
 	public static function getIpAddress() {
 		$REMOTE_ADDR = '';
 		if (isset($_SERVER['REMOTE_ADDR'])) $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
-		
+		if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) $HTTP_X_FORWARDED_FOR = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		else $HTTP_X_FORWARDED_FOR = '';
+	
+		if (!empty($HTTP_X_FORWARDED_FOR)) {
+			$match = array();
+			if (preg_match("/^([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/", $HTTP_X_FORWARDED_FOR, $match)) {
+				$REMOTE_ADDR = preg_replace(self::$privateIpList, $REMOTE_ADDR, $match[1]);	
+			}
+		}
+			
 		// darwin fix
 		if ($REMOTE_ADDR == '::1' || $REMOTE_ADDR == 'fe80::1') {
 			$REMOTE_ADDR = '127.0.0.1'; 
