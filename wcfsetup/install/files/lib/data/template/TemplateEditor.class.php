@@ -2,6 +2,7 @@
 namespace wcf\data\template;
 use wcf\data\DatabaseObjectEditor;
 use wcf\system\io\File;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 
@@ -112,6 +113,6 @@ class TemplateEditor extends DatabaseObjectEditor {
 	 * Deletes the compiled files of this template.
 	 */
 	public function deleteCompiledFiles() {
-		DirectoryUtil::getInstance(WCF_DIR . 'templates/compiled/')->removePattern('~' . intval($this->packageID) . '_.*_' . preg_quote($this->templateName, '~') . '.php~');
+		DirectoryUtil::getInstance(WCF_DIR . 'templates/compiled/')->removePattern(new Regex(intval($this->packageID) . '_.*_' . preg_quote($this->templateName) . '.php$'));
 	}
 }
