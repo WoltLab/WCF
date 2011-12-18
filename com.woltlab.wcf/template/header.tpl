@@ -47,9 +47,14 @@
 <!-- /HEADER -->
 
 <!-- MAIN -->
-<div id="main" class="main">
+<div id="main" class="main{if $sidebarDirection|isset} {@$sidebarDirection}{/if}">
 	<div>
-		
+		{if $sidebar|isset}
+			<aside class="sidebar">
+				{@$sidebar}
+			</aside>
+		{/if}
+				
 		<!-- CONTENT -->
 		<section id="content" class="content">
 			
