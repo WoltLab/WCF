@@ -47,7 +47,7 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	public function getPluginList() {
 		$pluginList = Package::getPluginList();
 		$pluginList->sqlLimit = 20;
-		$pluginList->sqlOffset = (($this->parameters['activePage'] - 1) * 20);
+		$pluginList->sqlOffset = (($this->parameters['activePage'] - 1) * $pluginList->sqlLimit);
 		$pluginList->readObjects();
 		
 		WCF::getTPL()->assign(array(
