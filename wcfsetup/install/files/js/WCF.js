@@ -2789,7 +2789,10 @@ WCF.Effect.BalloonTooltip.prototype = {
 		var $element = $(event.currentTarget);
 		
 		var $title = $element.attr('title');
-		if ($title && $title !== '') $element.data('tooltip', $title);
+		if ($title && $title !== '') {
+			$element.data('tooltip', $title);
+			$element.removeAttr('title');
+		}
 		
 		// update text
 		this._tooltip.children('span:eq(0)').text($element.data('tooltip'));
