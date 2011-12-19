@@ -452,16 +452,6 @@ class StringUtil {
 	}
 	
 	/**
-	 * Extracts the class name from a standardised class path.
-	 * 
-	 * @param	string		$classPath
-	 * @return	string		class name
-	 */
-	public static function getClassName($classPath) {
-		return preg_replace('~(?:.*/)?([^/]+).class.php~i', '\\1', $classPath);
-	}
-	
-	/**
 	 * Escapes the closing cdata tag.
 	 * 
 	 * @param	string		$string
