@@ -1843,6 +1843,7 @@ textarea[disabled='disabled'] {
 	white-space: nowrap;
 	padding: 3px 7px;
 	display: block;
+	min-height: 16px;
 }
 
 .smallButtons > li.separator > a {
