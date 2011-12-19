@@ -16,10 +16,16 @@ use wcf\system\WCF;
  */
 abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	/**
-	 * object class name
+	 * class name
 	 * @var	string
 	 */
 	public $className = '';
+	
+	/**
+	 * object class name
+	 * @var	string
+	 */
+	public $objectClassName = '';
 	
 	/**
 	 * result objects
@@ -144,7 +150,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 					".(!empty($this->sqlOrderBy) ? "ORDER BY ".$this->sqlOrderBy : '');
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($this->objectIDs);
-			$this->objects = $statement->fetchObjects($this->className);
+			$this->objects = $statement->fetchObjects(($this->objectClassName ?: $this->className));
 		}
 		else {
 			$sql = "SELECT	".(!empty($this->sqlSelects) ? $this->sqlSelects.',' : '')."
@@ -155,7 +161,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 					".(!empty($this->sqlOrderBy) ? "ORDER BY ".$this->sqlOrderBy : '');
 			$statement = WCF::getDB()->prepareStatement($sql, $this->sqlLimit, $this->sqlOffset);
 			$statement->execute($this->getConditionBuilder()->getParameters());
-			$this->objects = $statement->fetchObjects($this->className);
+			$this->objects = $statement->fetchObjects(($this->objectClassName ?: $this->className));
 		}
 		
 		// use table index as array index
