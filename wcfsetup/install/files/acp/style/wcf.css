@@ -3188,20 +3188,26 @@ img[src*='enable'] {
 
 /* ToDo: Dropdown (merge with other dropdown-declarations!) */
 
-.clipboardEditor ul > li > ol {
+.clipboardEditor ul > li > .dropDown {
 	border: 1px solid rgba(255, 255, 255, .7);
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, .7);
 	margin-top: 23px;
+	display: none;
 	position: absolute;
 	top: 0;
 	left: 0;
+	height: auto;
 	
 	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 	-ms-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+}
+
+.clipboardEditor ul > li > .open {
+	display: block;
 }
 
 .clipboardEditor ul > li > ol > li {
