@@ -3027,6 +3027,150 @@ WCF.DOMNodeInsertedHandler = {
 };
 
 /**
+ * Namespace for search related classes.
+ */
+WCF.Search = {};
+
+/**
+ * Performs a quick search for users and user groups.
+ */
+WCF.Search.User = Class.extend({
+	/**
+	 * notification callback
+	 * @var	object
+	 */
+	_callback: null,
+
+	/**
+	 * include user groups in search
+	 * @var	boolean
+	 */
+	_includeUserGroups: false,
+
+	/**
+	 * result list
+	 * @var	jQuery
+	 */
+	_list: null,
+
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+
+	/**
+	 * search input field
+	 * @var	jQuery
+	 */
+	_searchInput: null,
+
+	/**
+	 * Initializes a new search.
+	 * 
+	 * @param	jQuery		searchInput
+	 * @param	object		callback
+	 * @param	boolean		includeUserGroups
+	 */
+	init: function(searchInput, callback, includeUserGroups) {
+		if (!$.isFunction(callback)) {
+			console.debug("[WCF.Search.User] Given callback is invalid, aborting.");
+			return;
+		}
+
+		this._callback = callback;
+		this._includeUserGroups = includeUserGroups;
+		this._searchInput = $(searchInput).keyup($.proxy(this._keyUp, this));
+		this._searchInput.wrap('<div class="preInput" />');
+		this._list = $('<ul class="dropDown" />').insertAfter(this._searchInput);
+		
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+	},
+
+	/**
+	 * Performs a search upon key up.
+	 */
+	_keyUp: function() {
+		var $content = $.trim(this._searchInput.val());
+		if ($content === '') {
+			this._clearList(true);
+		}
+		else {
+			this._proxy.setOption('data', {
+				actionName: 'getList',
+				className: 'wcf\\data\\user\\UserAction',
+				parameters: {
+					data: {
+						includeUserGroups: this._includeUserGroups,
+						searchString: $content
+					}
+				}
+			});
+			this._proxy.sendRequest();
+		}
+	},
+
+	/**
+	 * Evalutes search results.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		if (!$.getLength(data.returnValues)) {
+			this._clearList(false);
+
+			return;
+		}
+
+		this._clearList(false);
+		for (var $i in data.returnValues) {
+			var $item = data.returnValues[$i];
+
+			var $listItem = $('<li><img src="' + RELATIVE_WCF_DIR + 'icon/user' + ($item.type == 'group' ? 's' : '') + '1.svg" alt="" />' + $item.label + '</li>').appendTo(this._list);
+			$listItem.data('type', $item.type).data('objectID', $item.objectID).data('label', $item.label).click($.proxy(this._executeCallback, this));
+		}
+
+		this._list.addClass('open');
+	},
+
+	/**
+	 * Executes callback upon result click.
+	 * 
+	 * @param	object		event
+	 */
+	_executeCallback: function(event) {
+		var $listItem = $(event.currentTarget);
+
+		// notify callback
+		this._callback({
+			label: $listItem.data('label'),
+			objectID: $listItem.data('objectID'),
+			type: $listItem.data('type')
+		});
+
+		// close list and revert input
+		this._clearList(true);
+	},
+
+	/**
+	 * Closes the suggestion list and clears search input on demand.
+	 * 
+	 * @param	boolean		clearSearchInput
+	 */
+	_clearList: function(clearSearchInput) {
+		if (clearSearchInput) {
+			this._searchInput.val('');
+		}
+
+		this._list.removeClass('open').empty();
+	}
+});
+
+/**
  * Provides a toggleable sidebar.
  */
 $.widget('ui.wcfSidebar', {
