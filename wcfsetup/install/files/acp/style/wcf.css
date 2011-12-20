@@ -1025,7 +1025,6 @@ nav.sidebarMenu > div ul li.activeMenuItem a {
 footer.pageFooter {
 	text-align: center;
 	padding: 0 23px;
-	clear: both;
 	position: relative;
 }
 
@@ -1057,7 +1056,6 @@ footer.pageFooter > div {
 	border-bottom-right-radius: 3px;
 	background-color: #e7f2fd;
 	padding: 0 7px;
-	clear: both;
 }
 
 footer.pageFooter > div:after {
