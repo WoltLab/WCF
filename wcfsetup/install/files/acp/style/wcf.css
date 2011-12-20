@@ -3188,7 +3188,8 @@ img[src*='enable'] {
 
 /* ToDo: Dropdown (merge with other dropdown-declarations!) */
 
-.clipboardEditor ul > li > .dropDown {
+.clipboardEditor ul > li > .dropDown,
+.aclContainer .dropDown {
 	border: 1px solid rgba(255, 255, 255, .7);
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, .7);
@@ -3206,7 +3207,8 @@ img[src*='enable'] {
 	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 }
 
-.clipboardEditor ul > li > .open {
+.clipboardEditor ul > li > .open,
+.aclContainer .open {
 	display: block;
 }
 
