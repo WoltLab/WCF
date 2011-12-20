@@ -810,10 +810,10 @@ WCF.Clipboard = {
 			}
 			
 			var $editor = data.items[$typeName];
-			var $label = $('<li><span>' + $editor.label + '</span></li>').appendTo($list).click(function(event) {
-				$(event.target).next().toggleClass('open');
-			});
-			var $itemList = $('<ol></ol>').appendTo($label).hide();
+			var $label = $('<li><span>' + $editor.label + '</span></li>').appendTo($list)
+			var $itemList = $('<ol class="dropDown"></ol>').appendTo($label);
+
+			$label.click(function() { $itemList.toggleClass('open'); });
 			
 			// create editor items
 			for (var $itemIndex in $editor.items) {
@@ -839,7 +839,7 @@ WCF.Clipboard = {
 
 	_closeLists: function() {
 		$('.clipboardEditor ul ol').each(function(index, list) {
-			$(this).hide();
+			$(this).removeClass('open');
 		});
 	},
 	
