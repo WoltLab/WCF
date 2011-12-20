@@ -406,7 +406,7 @@ nav.topMenu > div > ul > li > .dropDownCaption {
 nav.topMenu ul li:hover .dropDownCaption ~ .dropDown {
 	border-color: rgba(255, 255, 255, .5);
 	background-color: rgba(0, 0, 0, .7);
-	height: auto !important;
+	display: block !important;
 	left: -1px;
 }
 
@@ -415,7 +415,7 @@ nav.topMenu ul li {
 }
 
 nav.topMenu ul li .dropDown {
-	border-width: 0 1px 1px 1px;
+	border-width: 0 1px 1px 1px !important;
 	border-radius: 0 0 5px 5px;
 }
 
@@ -1167,16 +1167,16 @@ li > .badgeButton {
 
 .dropDown {
 	color: #fff;
-	border-width: 0 1px 1px 1px;
+	border-width: 1px;
 	border-style: solid;
-	border-color: rgba(255, 255, 255, 0);
-	border-radius: 5;
-	background-color: rgba(0, 0, 0, 0);
+	border-color: rgba(255, 255, 255, .7);
+	border-radius: 5px;
+	background-color: rgba(0, 0, 0, .7);
 	margin-top: 25px;
+	display: none;
 	position: absolute;
 	top: 0;
 	left: 0;
-	height: 0;
 	z-index: 500;
 	overflow: hidden;
 	
@@ -1191,6 +1191,10 @@ li > .badgeButton {
 	-ms-transition: color background height .1s ease;
 	-o-transition: color background height .1s ease;
 	transition: color background height .1s ease;
+}
+
+.dropDown.open {
+	display: block;
 }
 
 /* Dropdown Items */
@@ -1225,6 +1229,7 @@ li > .badgeButton {
 .dropDown > :hover:not(ul):not(.pointer),
 .dropDown > .active {
 	color: #fff;
+	cursor: pointer;
 	background-color: rgba(0, 0, 0, .5);
 }
 
@@ -1232,14 +1237,22 @@ li > .badgeButton {
 	border-top: 1px solid rgba(255, 255, 255, .7);
 }
 
-.dropDown > li a {
+.dropDown > li {
 	text-decoration: none;
 	padding: 5px 7px;
-	display: inline-block;
+	display: block;
+}
+
+.dropDown > li a {
+	text-decoration: none;
+	color: #ccc;
+	padding: -5px -7px;
+	display: block;
 }
 
 .dropDown > li a:hover {
-	color: #fff !important;
+	color: #fff;
+	background-color: rgba(0, 0, 0, .5);
 }
 
 
@@ -3166,7 +3179,7 @@ img[src*='enable'] {
 
 
 
-/* ############## ToDo: Clipboard Editor ############## */
+/* ############## Clipboard Editor Buttons ############## */
 
 /* Globals */
 
@@ -3185,62 +3198,6 @@ img[src*='enable'] {
 	padding-right: 12px;
 	display: inline-block;
 }
-
-/* ToDo: Dropdown (merge with other dropdown-declarations!) */
-
-.clipboardEditor ul > li > .dropDown,
-.aclContainer .dropDown {
-	border: 1px solid rgba(255, 255, 255, .7);
-	border-radius: 5px;
-	background-color: rgba(0, 0, 0, .7);
-	margin-top: 23px;
-	display: none;
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: auto;
-	
-	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-ms-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-}
-
-.clipboardEditor ul > li > .open,
-.aclContainer .open {
-	display: block;
-}
-
-.clipboardEditor ul > li > ol > li {
-	text-shadow: none;
-	color: #ccc;
-	cursor: pointer; 
-	padding: 5px 7px;
-	
-	-webkit-transition: color, background .2s linear;
-	-moz-transition: color, background .2s linear;
-	-ms-transition: color, background .2s linear;
-	-o-transition: color, background .2s linear;
-	transition: color, background .2s linear;
-}
-
-.clipboardEditor ul > li > ol > li:first-child {
-	border-top-width: 0;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-}
-
-.clipboardEditor ul > li > ol > li:last-child {
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-}
-
-.clipboardEditor ul > li > ol > li:hover {
-	color: #fff;
-	background-color: rgba(0, 0, 0, .5);
-}
-
 
 
 /* ############## Global Button Color & Effect Library ############## */
