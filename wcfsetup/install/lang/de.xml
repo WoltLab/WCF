@@ -272,10 +272,10 @@
 		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Installation wird vorbereitet &hellip;]]></item>
 		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
 	</category>
-        
-        <category name="wcf.acp.packageUpdate">
+	
+	<category name="wcf.acp.packageUpdate">
 		<item name="wcf.acp.packageUpdate"><![CDATA[Pakete aktualisieren]]></item>
-                <item name="wcf.acp.packageUpdate.noneAvailable"><![CDATA[Derzeit sind keine Updates verfügbar.]]></item>
+		<item name="wcf.acp.packageUpdate.noneAvailable"><![CDATA[Derzeit sind keine Updates verfügbar.]]></item>
 	</category>
         
 	<category name="wcf.acp.updateServer">
