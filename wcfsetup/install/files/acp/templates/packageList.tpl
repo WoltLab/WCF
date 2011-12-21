@@ -10,7 +10,7 @@
 
 		{if $pluginsCount > 1}
 			WCF.Icon.addObject({
-				'wcf.icon.arrow.down': '{@RELATIVE_WCF_DIR}icon/dropDown1.svg',
+				'wcf.icon.arrow.down': '{@RELATIVE_WCF_DIR}icon/dropdown1.svg',
 				'wcf.icon.next': '{@RELATIVE_WCF_DIR}icon/next1.svg',
 				'wcf.icon.next.disabled': '{@RELATIVE_WCF_DIR}icon/next1D.svg',
 				'wcf.icon.previous': '{@RELATIVE_WCF_DIR}icon/previous1.svg',

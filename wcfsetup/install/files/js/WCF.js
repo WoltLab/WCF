@@ -811,7 +811,7 @@ WCF.Clipboard = {
 			
 			var $editor = data.items[$typeName];
 			var $label = $('<li><span>' + $editor.label + '</span></li>').appendTo($list)
-			var $itemList = $('<ol class="dropDown"></ol>').appendTo($label);
+			var $itemList = $('<ol class="dropdown"></ol>').appendTo($label);
 
 			$label.click(function() { $itemList.toggleClass('open'); });
 			
@@ -1735,7 +1735,7 @@ WCF.MultipleLanguageInput.prototype = {
 	_prepareElement: function(enableOnInit) {
 		this._element.wrap('<div class="preInput" />');
 		var $wrapper = this._element.parent();
-		var $button = $('<p class="dropDownCaption"><span>enable i18n</span></p>').prependTo($wrapper);
+		var $button = $('<p class="dropdownCaption"><span>enable i18n</span></p>').prependTo($wrapper);
 
 		$button.click($.proxy(this._enable, this));
 		WCF.CloseOverlayHandler.addCallback(this._element.wcfIdentify(), $.proxy(this._closeSelection, this));
@@ -1769,7 +1769,7 @@ WCF.MultipleLanguageInput.prototype = {
 
 			// insert list
 			if (this._list === null) {
-				this._list = $('<ul class="dropDown"></ul>').insertAfter($button.parent());
+				this._list = $('<ul class="dropdown"></ul>').insertAfter($button.parent());
 				this._list.click(function(event) {
 					// discard click event
 					event.stopPropagation();
@@ -1858,7 +1858,7 @@ WCF.MultipleLanguageInput.prototype = {
 		$button.addClass('active');
 
 		// update label
-		this._list.prev('.dropDownCaption').children('span').text(this._availableLanguages[this._languageID]);
+		this._list.prev('.dropdownCaption').children('span').text(this._availableLanguages[this._languageID]);
 
 		// close selection and set focus on input element
 		this._closeSelection();
@@ -1870,7 +1870,7 @@ WCF.MultipleLanguageInput.prototype = {
 	 */
 	_disable: function() {
 		// remove active marking
-		this._list.prev('.dropDownCaption').children('span').removeClass('active').text('enable i18n');
+		this._list.prev('.dropdownCaption').children('span').removeClass('active').text('enable i18n');
 		this._closeSelection();
 
 		// update element value
@@ -3082,7 +3082,7 @@ WCF.Search.User = Class.extend({
 		this._includeUserGroups = includeUserGroups;
 		this._searchInput = $(searchInput).keyup($.proxy(this._keyUp, this));
 		this._searchInput.wrap('<div class="preInput" />');
-		this._list = $('<ul class="dropDown" />').insertAfter(this._searchInput);
+		this._list = $('<ul class="dropdown" />').insertAfter(this._searchInput);
 		
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
@@ -3952,7 +3952,7 @@ $.widget('ui.wcfPages', {
 					$leftChildrenInput.keyup($.proxy(this._handleInput, this));
 					$leftChildrenInput.blur($.proxy(this._stopInput, this));
 					
-					var $leftChildrenContainer = $('<div class="dropDown"></div>');
+					var $leftChildrenContainer = $('<div class="dropdown"></div>');
 					$leftChildren.append($leftChildrenContainer);
 					
 					var $leftChildrenList = $('<ul></u>');
@@ -3995,7 +3995,7 @@ $.widget('ui.wcfPages', {
 					$rightChildrenInput.keyup($.proxy(this._handleInput, this));
 					$rightChildrenInput.blur($.proxy(this._stopInput, this));
 					
-					var $rightChildrenContainer = $('<div class="dropDown"></div>');
+					var $rightChildrenContainer = $('<div class="dropdown"></div>');
 					$rightChildren.append($rightChildrenContainer);
 					
 					var $rightChildrenList = $('<ul></ul>');

@@ -101,10 +101,6 @@ hr {
 	top: -9000px;
 }
 
-.separated {
-	margin-top: 13px;
-}
-
 ::selection {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, .5) !important;
 	color: #300;
@@ -361,27 +357,27 @@ nav.topMenu > div > ul > li:hover a {
 	border-color: rgba(255, 255, 255, .5);
 }
 
-nav.topMenu > div > ul > li .dropDownCaption,
-nav.topMenu > div > ul > li .dropDownCaption a {
+nav.topMenu > div > ul > li .dropdownCaption,
+nav.topMenu > div > ul > li .dropdownCaption a {
 	padding-right: 5px;
 }
 
-nav.topMenu > div > ul > li:hover .dropDownCaption,
-nav.topMenu > div > ul > li:hover .dropDownCaption a {
+nav.topMenu > div > ul > li:hover .dropdownCaption,
+nav.topMenu > div > ul > li:hover .dropdownCaption a {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
 	color: #fff;
 	background-color: rgba(0, 0, 0, .7);
 }
 
-nav.topMenu > div > ul > li > .dropDownCaption > .badge,
-nav.topMenu > div > ul > li:hover > .dropDownCaption > .badge {
+nav.topMenu > div > ul > li > .dropdownCaption > .badge,
+nav.topMenu > div > ul > li:hover > .dropdownCaption > .badge {
 	font-size: 75%;
 	color: #369 !important;
 	margin: -3px 3px;
 	padding: 1px 3px;
 }
 
-nav.topMenu > div > ul > li > .dropDownCaption > img {
+nav.topMenu > div > ul > li > .dropdownCaption > img {
 	margin: -7px 0 -5px 0;
 }
 
@@ -389,9 +385,9 @@ nav.topMenu > div > ul > li > span:not(.badge) {
 	padding: 6px;
 }
 
-nav.topMenu > div > ul > li > .dropDownCaption {
+nav.topMenu > div > ul > li > .dropdownCaption {
 	cursor: pointer;
-	background-image: url('../../icon/dropDown2.svg');
+	background-image: url('../../icon/dropdown2.svg');
 	background-position: 97% center;
 	background-repeat: no-repeat;
 	padding-right: 15px !important;
@@ -403,7 +399,7 @@ nav.topMenu > div > ul > li > .dropDownCaption {
 /* ToDo: Top-Menu Dropdown Tweaks */
 
 /* Auto-Opening Dropdowns */
-nav.topMenu ul li:hover .dropDownCaption ~ .dropDown {
+nav.topMenu ul li:hover .dropdownCaption ~ .dropdown {
 	border-color: rgba(255, 255, 255, .5);
 	background-color: rgba(0, 0, 0, .7);
 	display: block !important;
@@ -414,12 +410,12 @@ nav.topMenu ul li {
 	white-space: nowrap;
 }
 
-nav.topMenu ul li .dropDown {
+nav.topMenu ul li .dropdown {
 	border-width: 0 1px 1px 1px !important;
 	border-radius: 0 0 5px 5px;
 }
 
-nav.topMenu ul li .dropDown > :first-child {
+nav.topMenu ul li .dropdown > :first-child {
 	border-top-width: 0;
 }
 
@@ -1172,7 +1168,7 @@ li > .badgeButton {
 
 /* ############## ToDo: Dropdown Global ############## */
 
-.dropDown {
+.dropdown {
 	color: #fff;
 	border-width: 1px;
 	border-style: solid;
@@ -1200,14 +1196,14 @@ li > .badgeButton {
 	transition: color background height .1s ease;
 }
 
-.dropDown.open {
+.dropdown.open {
 	display: block;
 }
 
 /* Dropdown Items */
 
-.dropDown > li,
-.dropDown > div {
+.dropdown > li,
+.dropdown > div {
 	text-shadow: none;
 	color: #ccc;
 	cursor: pointer; 
@@ -1219,45 +1215,45 @@ li > .badgeButton {
 	transition: color background .2s linear;
 }
 
-.dropDown > div {
+.dropdown > div {
 	padding: 5px 7px;
 }
 
-.dropDown > :first-child {
+.dropdown > :first-child {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
 
-.dropDown > :last-child {
+.dropdown > :last-child {
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 }
 
-.dropDown > :hover:not(ul):not(.pointer),
-.dropDown > .active {
+.dropdown > :hover:not(ul):not(.pointer),
+.dropdown > .active {
 	color: #fff;
 	cursor: pointer;
 	background-color: rgba(0, 0, 0, .5);
 }
 
-.dropDown > li.divider:not(:first-child) {
+.dropdown > li.divider:not(:first-child) {
 	border-top: 1px solid rgba(255, 255, 255, .7);
 }
 
-.dropDown > li {
+.dropdown > li {
 	text-decoration: none;
 	padding: 5px 7px;
 	display: block;
 }
 
-.dropDown > li a {
+.dropdown > li a {
 	text-decoration: none;
 	color: #ccc;
 	padding: -5px -7px;
 	display: block;
 }
 
-.dropDown > li a:hover {
+.dropdown > li a:hover {
 	color: #fff;
 	background-color: rgba(0, 0, 0, .5);
 }
@@ -1810,7 +1806,7 @@ textarea[disabled='disabled'] {
 
 /* Dropdown Caption */
 
-.preInput .dropDownCaption {
+.preInput .dropdownCaption {
 	letter-spacing: -1px;
 	cursor: pointer;
 	border-radius: 3px 0 0 3px;
@@ -1820,20 +1816,20 @@ textarea[disabled='disabled'] {
 	vertical-align: middle;
 }
 
-.preInput .dropDownCaption span {
+.preInput .dropdownCaption span {
 	margin-right: -1px;
 	padding-left: 5px;
 	white-space: nowrap;
 }
 
-.preInput .dropDownCaption span.active {
-	background-image: url('../../icon/dropDown1.svg');
+.preInput .dropdownCaption span.active {
+	background-image: url('../../icon/dropdown1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
 	padding-right: 10px;
 }
 
-.preInput .dropDown > li.missingValue { /* ToDo */
+.preInput .dropdown > li.missingValue { /* ToDo */
 	/* color: #990; */
 	background-image: url('../../icon/systemWarning.svg');
 	background-size: 16px;
@@ -2766,7 +2762,7 @@ tr .columnURL {
 	width: 7px;
 }
 
-.pageNavigation ul li.children .dropDown {
+.pageNavigation ul li.children .dropdown {
 	text-align: left;
 	border-color: transparent;
 	border-radius: 3px;
@@ -2788,19 +2784,19 @@ tr .columnURL {
 	transition: opacity .2s linear;
 }
 
-.pageNavigation ul li.children:hover .dropDown {
+.pageNavigation ul li.children:hover .dropdown {
 	border-color: rgba(255, 255, 255, .7);
 	height: auto;
 	overflow: visible;
 	opacity: 1;
 }
 
-.pageNavigation ul li.children .dropDown ul {
+.pageNavigation ul li.children .dropdown ul {
 	padding: 0 5px 5px 2px;
 	display: block;
 }
 
-.pageNavigation ul li.children .dropDown ul li {
+.pageNavigation ul li.children .dropdown ul li {
 	margin-top: 5px;
 	margin-left: 3px;
 }
@@ -3198,7 +3194,7 @@ img[src*='enable'] {
 }
 
 .clipboardEditor > ul > li > span {
-	background-image: url('../../icon/dropDown1.svg');
+	background-image: url('../../icon/dropdown1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
 	padding-right: 12px;
@@ -3218,7 +3214,7 @@ input[type='button'],
 .badgeButton,
 .pageNavigation ul li:not(.children),
 .clipboardEditor > ul > li,
-.preInput .dropDownCaption {
+.preInput .dropdownCaption {
 	text-decoration: none;
 	text-shadow: 0 1px 0 #fff;
 	color: #999;
@@ -3269,7 +3265,7 @@ input[type='button'].default:hover,
 .badgeButton:hover,
 .pageNavigation ul li:not(.disabled):not(.children):hover,
 .clipboardEditor > ul > li:hover,
-.preInput:hover .dropDownCaption {
+.preInput:hover .dropdownCaption {
 	color: #666;
 	border-width: 1px;
 	border-style: solid;
@@ -3298,7 +3294,7 @@ input[type='button'].default:focus,
 .badgeButton:focus,
 .pageNavigation ul li:not(.disabled):not(.children):active,
 .clipboardEditor > ul > li:focus,
-.preInput .dropDownCaption:focus,
+.preInput .dropdownCaption:focus,
 button:active,
 input[type='reset']:active,
 input[type='submit']:active,
@@ -3311,7 +3307,7 @@ input[type='button'].default:active,
 .badgeButton:active,
 .pageNavigation ul li:not(.disabled):not(.children):focus,
 .clipboardEditor > ul > li:active,
-.preInput .dropDownCaption:active {
+.preInput .dropdownCaption:active {
 	color: #333;
 	border-width: 1px;
 	border-style: solid;
