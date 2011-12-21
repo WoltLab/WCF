@@ -62,7 +62,7 @@
 			'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}'
 			{event name='javascriptLanguageImport'}
 		});
-
+		
 		WCF.Icon.addObject({
 			'wcf.icon.loading': '{icon size='S'}spinner{/icon}',
 			'wcf.icon.opened': '{icon size='S'}opened2{/icon}',
@@ -74,7 +74,9 @@
 		new WCF.Effect.SmoothScroll();
 		new WCF.Effect.BalloonTooltip();
 		$('<span class="pointer"><span></span></span>').appendTo('.innerError');
-
+		
+		$('#sidebarMenu').wcfSidebar();
+		
 		{event name='javascriptInit'}
 	});
 	//]]>

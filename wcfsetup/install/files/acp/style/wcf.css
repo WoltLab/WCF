@@ -810,8 +810,6 @@ section.content .content {
 
 /* ############## Sidebar ############## */
 
-/* Note that the sidebar may change to float soon! */
-
 /* Globals */
 
 aside.sidebar {
@@ -859,7 +857,7 @@ aside.collapsed {
 
 
 
-/* -- -- -- Collapsible Button -- -- -- */
+/* -- -- -- Collapsible Sidebar Button -- -- -- */
 
 /* Default (Right) */
 
@@ -928,7 +926,6 @@ nav.sidebarMenu {
 
 nav.sidebarMenu > div {
 	text-shadow: 0 1px 0 #fff;
-	color: #69c;
 	position: relative;
 	overflow: hidden;
 	z-index: 110;
@@ -938,47 +935,58 @@ nav.sidebarMenu > div {
 	width: 0;
 }
 
-nav.sidebarMenu > div a:hover {
+nav.sidebarMenu > .collapsible a:hover {
 	text-decoration: none !important;
 	color: #369;
 }
 
-nav.sidebarMenu > div h1 {
+nav.sidebarMenu > div > h1 {
 	cursor: pointer;
 	font-weight: bold;
 	color: #369;
+	margin-top: 5px;
+}
+
+nav.sidebarMenu > .collapsible > h1 {
 	background-image: url('../../icon/arrowRight.svg');
 	background-position: 15px center;
 	background-size: 16px;
 	background-repeat: no-repeat;
-	margin-top: 5px;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	nav.sidebarMenu > div h1 {
+	nav.sidebarMenu > div > h1 {
 		font-size: 130%;
-		padding: 7px 25px 7px 35px;
+		padding: 7px 15px 7px 35px;
+	}
+	
+	nav.sidebarMenu > div:not(.collapsible) > h1 {
+		padding: 7px 15px 7px 15px;
 	}
 	
 }
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	nav.sidebarMenu > div h1 {
+	nav.sidebarMenu > div > h1 {
 		font-size: 150%;
 		padding: 7px 15px 7px 35px;
 	}
 	
+	nav.sidebarMenu > div:not(.collapsible) > h1 {
+		padding: 7px 15px 7px 15px;
+	}
+	
 }
 
-nav.sidebarMenu > div h1.activeMenuItem {
+nav.sidebarMenu > .collapsible h1.activeMenuItem {
 	background-image: url('../../icon/arrowDown.svg');
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	nav.sidebarMenu > div ul li {
+	nav.sidebarMenu > div ul > li {
 		font-size: 110%;
 	}
 	
@@ -986,20 +994,21 @@ nav.sidebarMenu > div h1.activeMenuItem {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	nav.sidebarMenu > div ul li {
+	nav.sidebarMenu > div ul > li {
 		font-size: 120%;
 	}
 	
 }
 
-nav.sidebarMenu > div ul li a {
+nav.sidebarMenu > div ul > li > a,
+nav.sidebarMenu > div ul > li > div {
 	text-shadow: 0 1px 0 #fff;
 	color: #69c;
-	padding: 5px 25px 7px 35px;
+	padding: 5px 15px 7px 35px;
 	display: block;
 }
 
-nav.sidebarMenu > div ul li.activeMenuItem {
+nav.sidebarMenu > div ul > li.activeMenuItem {
 	background-color: #fff;
 	margin-right: -1px;
 	overflow: hidden;
@@ -1011,7 +1020,7 @@ nav.sidebarMenu > div ul li.activeMenuItem {
 	box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 }
 
-nav.sidebarMenu > div ul li.activeMenuItem a {
+nav.sidebarMenu > div ul > li.activeMenuItem a {
 	font-weight: bold;
 	color: #369;
 }
