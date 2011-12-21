@@ -176,7 +176,7 @@ header.pageHeader {
 
 /* Globals */
 
-header.pageHeader nav.topMenu {
+nav.topMenu {
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
 	background-color: rgba(0, 0, 0, .4);
 	position: fixed;
@@ -305,87 +305,82 @@ header.pageHeader nav.topMenu {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	header.pageHeader nav.topMenu {
+	nav.topMenu {
 		min-width: 800px;
 	}
 }
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	header.pageHeader nav.topMenu {
+	nav.topMenu {
 		min-width: auto;
 	}
 }
 
-header.pageHeader nav.topMenu:hover {
-	background-color: rgba(0, 0, 0, .5);
+.topMenu:hover {
+	background-color: rgba(0, 0, 0, .7);
 }
 
-header.pageHeader nav.topMenu > div {
+.topMenu > div {
 	padding: 0 23px 0;
 }
 
-header.pageHeader nav.topMenu > div > ul {
-	/* none */
-}
+/* Menu Items (1st level) */
 
-header.pageHeader nav.topMenu > div > ul > li {
+.topMenu > div > ul > li {
 	cursor: pointer;
+	border-width: 0 1px;
+	border-style: solid;
+	border-color: transparent;
 	float: left;
 	position: relative;
+}
+
+.topMenu > div > ul > li,
+.topMenu > div > ul > li a {
+	text-decoration: none;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
+	color: #69c;
+}
+
+.topMenu > div > ul > li:hover,
+.topMenu > div > ul > li:hover a {
+	border-color: rgba(255, 255, 255, .5);
 }
 
 
 
 /* ToDo: Top-Menu Dropdown Caption */
 
-nav.topMenu > div > ul > li {
-	border-width: 0 1px;
-	border-style: solid;
-	border-color: transparent;
-}
-
-nav.topMenu > div > ul > li,
-nav.topMenu > div > ul > li a {
-	text-decoration: none;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
-	color: #69c;
-}
-
-nav.topMenu > div > ul > li:hover,
-nav.topMenu > div > ul > li:hover a {
-	border-color: rgba(255, 255, 255, .5);
-}
-
-nav.topMenu > div > ul > li .dropdownCaption,
-nav.topMenu > div > ul > li .dropdownCaption a {
+.topMenu > div > ul > li .dropdownCaption,
+.topMenu > div > ul > li .dropdownCaption a {
 	padding-right: 5px;
 }
 
-nav.topMenu > div > ul > li:hover .dropdownCaption,
-nav.topMenu > div > ul > li:hover .dropdownCaption a {
+.topMenu > div > ul > li:hover .dropdownCaption,
+.topMenu > div > ul > li:hover .dropdownCaption a {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
 	color: #fff;
 	background-color: rgba(0, 0, 0, .7);
 }
 
-nav.topMenu > div > ul > li > .dropdownCaption > .badge,
-nav.topMenu > div > ul > li:hover > .dropdownCaption > .badge {
+.topMenu > div > ul > li > .dropdownCaption > .badge,
+.topMenu > div > ul > li:hover > .dropdownCaption > .badge {
 	font-size: 75%;
 	color: #369 !important;
 	margin: -3px 3px;
 	padding: 1px 3px;
 }
 
-nav.topMenu > div > ul > li > .dropdownCaption > img {
+.topMenu > div > ul > li > .dropdownCaption > img {
 	margin: -7px 0 -5px 0;
 }
 
-nav.topMenu > div > ul > li > span:not(.badge) {
+.topMenu > div > ul > li > span:not(.badge) {
 	padding: 6px;
 }
 
-nav.topMenu > div > ul > li > .dropdownCaption {
+.topMenu > div > ul > li > .dropdownCaption {
 	cursor: pointer;
 	background-image: url('../../icon/dropdown2.svg');
 	background-position: 97% center;
@@ -399,23 +394,23 @@ nav.topMenu > div > ul > li > .dropdownCaption {
 /* ToDo: Top-Menu Dropdown Tweaks */
 
 /* Auto-Opening Dropdowns */
-nav.topMenu ul li:hover .dropdownCaption ~ .dropdown {
+.topMenu ul li:hover .dropdownCaption ~ .dropdown {
 	border-color: rgba(255, 255, 255, .5);
 	background-color: rgba(0, 0, 0, .7);
 	display: block !important;
 	left: -1px;
 }
 
-nav.topMenu ul li {
+.topMenu ul li {
 	white-space: nowrap;
 }
 
-nav.topMenu ul li .dropdown {
+.topMenu ul li .dropdown {
 	border-width: 0 1px 1px 1px !important;
 	border-radius: 0 0 5px 5px;
 }
 
-nav.topMenu ul li .dropdown > :first-child {
+.topMenu ul li .dropdown > :first-child {
 	border-top-width: 0;
 }
 
@@ -423,13 +418,13 @@ nav.topMenu ul li .dropdown > :first-child {
 
 /* -- -- -- Logo -- -- -- */
 
-header.pageHeader div#logo {
+.pageHeader .logo {
 	margin: 0 23px 0;
 	position: relative;
 	z-index: 1;
 }
 
-header.pageHeader div#logo h1 {
+.pageHeader .logo h1 {
 	text-shadow: 0 -1px 0 #000;
 	color: #d8e7f5;
 	position: relative;
@@ -438,7 +433,7 @@ header.pageHeader div#logo h1 {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	header.pageHeader div#logo h1 {
+	.pageHeader .logo h1 {
 		font-size: 150%;
 	}
 	
@@ -446,25 +441,25 @@ header.pageHeader div#logo h1 {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	header.pageHeader div#logo h1 {
+	.pageHeader .logo h1 {
 		font-size: 175%;
 	}
 	
 }
 
-header.pageHeader div#logo a:hover {
+.pageHeader .logo a:hover {
 	text-decoration: none !important;
 	color: #d8e7f5;
 }
 
-header.pageHeader div#logo img {
+.pageHeader .logo img {
 	position: absolute;
 	bottom: 20px;
 	left: 0;
 }
 
-header.pageHeader div#logo > a,
-header.pageHeader div#logo > div {
+.pageHeader .logo > a,
+.pageHeader .logo > div {
 	text-align: right;
 	display: block;
 	height: 120px;
@@ -474,7 +469,7 @@ header.pageHeader div#logo > div {
 
 /* -- -- -- Main Menu -- -- -- */
 
-nav.mainMenu {
+.mainMenu {
 	/* This is the general toggle switch for main menu orientation (options: left|center|right) */
 	text-align: left;
 	margin: 0 30px;
@@ -482,51 +477,51 @@ nav.mainMenu {
 	position: relative;
 }
 
-nav.mainMenu:after {
+.mainMenu:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-nav.mainMenu ul {
+.mainMenu ul {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	background-color: rgba(0, 0, 0, .4);
 	display: inline-block;
 }
 
-nav.mainMenu ul li {
+.mainMenu ul li {
 	display: inline-block;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	nav.mainMenu ul li {
+	.mainMenu ul li {
 		font-size: 120%;
 	}
 }
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	nav.mainMenu ul li {
+	.mainMenu ul li {
 		font-size: 150%;
 	}
 }
 
-nav.mainMenu ul li.activeMenuItem:first-child {
+.mainMenu ul li.activeMenuItem:first-child {
 	margin: -5px -5px 0 0;
 }
 
-nav.mainMenu ul li.activeMenuItem:last-child {
+.mainMenu ul li.activeMenuItem:last-child {
 	margin: -5px 0 0 -5px;
 }
 
-nav.mainMenu ul li:only-child,
-nav.mainMenu ul li.activeMenuItem:only-child {
+.mainMenu ul li:only-child,
+.mainMenu ul li.activeMenuItem:only-child {
 	margin: -5px 0 0;
 }
 
-nav.mainMenu ul li a {
+.mainMenu ul li a {
 	font-weight: normal;
 	text-shadow: 0 -1px 0 #000;
 	color: #69c;
@@ -558,7 +553,7 @@ nav.mainMenu ul li a {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	nav.mainMenu ul li a {
+	.mainMenu ul li a {
 		padding: 10px 20px;
 	}
 	
@@ -566,22 +561,22 @@ nav.mainMenu ul li a {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	nav.mainMenu ul li a {
+	.mainMenu ul li a {
 		padding: 10px 10px;
 	}
 	
 }
 
-nav.mainMenu ul li a,
-nav.mainMenu ul li:hover a {
+.mainMenu ul li a,
+.mainMenu ul li:hover a {
 	text-decoration: none;
 }
 
-nav.mainMenu ul li:not(.activeMenuItem):hover a {
+.mainMenu ul li:not(.activeMenuItem):hover a {
 	color: #fff;
 }
 
-nav.mainMenu ul li.activeMenuItem a {
+.mainMenu ul li.activeMenuItem a {
 	font-size: 110%;
 	font-weight: bold;
 	text-shadow: 0 1px 0 #fff;
@@ -604,7 +599,7 @@ nav.mainMenu ul li.activeMenuItem a {
 		
 /* ToDo: Special */
 
-nav.mainMenu ul li.activeMenuItem .badge {
+.mainMenu ul li.activeMenuItem .badge {
 	font-size: 75% !important;
 	color: #fff;
 	background-color: #369;
@@ -620,7 +615,7 @@ nav.mainMenu ul li.activeMenuItem .badge {
 
 /* -- -- -- Header/Footer Navigation -- -- -- */
 
-nav.headerNavigation {
+.headerNavigation {
 	background-color: #e7f2fd;
 	border-bottom: 1px solid #bcd;
 	border-top-left-radius: 3px;
@@ -632,7 +627,7 @@ nav.headerNavigation {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	nav.headerNavigation {
+	.headerNavigation {
 		min-width: 800px;
 	}
 	
@@ -640,53 +635,53 @@ nav.headerNavigation {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	nav.headerNavigation {
+	.headerNavigation {
 		min-width: auto;
 	}
 	
 }
 
-nav.headerNavigation:after {
+.headerNavigation:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-nav.headerNavigation > div {
+.headerNavigation > div {
 	padding: 0 7px;
 }
 
-nav.headerNavigation > div:after {
+.headerNavigation > div:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-nav.headerNavigation ul,
-nav.footerNavigation ul {
+.headerNavigation ul,
+.footerNavigation ul {
 	display: block;
 }
 
-nav.headerNavigation ul li,
-nav.footerNavigation ul li {
+.headerNavigation ul li,
+.footerNavigation ul li {
 	cursor: pointer;
 	margin: 0 3px;
 	float: right;
 }
 
-nav.headerNavigation ul li a,
-nav.footerNavigation ul li a {
+.headerNavigation ul li a,
+.footerNavigation ul li a {
 	padding: 3px;
 	display: inline-block;
 }
 
-nav.headerNavigation ul li a:hover,
-nav.footerNavigation ul li a:hover {
+.headerNavigation ul li a:hover,
+.footerNavigation ul li a:hover {
 	background-color: #d8e7f5;
 }
 
-#tplLogin header.pageHeader nav.headerNavigation ul li.toBottomLink,
-#tplLogin footer.pageFooter nav.footerNavigation ul li.toTopLink {
+#tplLogin .pageHeader .headerNavigation ul li.toBottomLink,
+#tplLogin .pageFooter .footerNavigation ul li.toTopLink {
 	/* Removes the to-bottom-link on the log-in page */
 	position: absolute;
 	left: -9000px;
@@ -698,7 +693,7 @@ nav.footerNavigation ul li a:hover {
 
 /* ############## Main ############## */
 
-div.main {
+.main {
 	background-color: #d8e7f5;
 	margin: 0 23px;
 	position: relative;
@@ -712,7 +707,7 @@ div.main {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	div.main {
+	.main {
 		min-width: 800px;
 	}
 	
@@ -720,7 +715,7 @@ div.main {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	div.main {
+	.main {
 		min-width: auto;
 	}
 	
@@ -730,7 +725,7 @@ div.main {
 
 /* -- -- -- Content -- -- -- */
 
-section.content {
+.content {
 	background-color: rgba(255, 255, 255, 1);
 	position: relative;
 	min-height: 100px;
@@ -750,30 +745,30 @@ section.content {
 	transition: margin .1s ease;
 }
 
-section.content:after {
+.content:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-.left section.content {
+.left .content {
 	border-left: 1px solid rgba(187, 204, 221, 1);
 	margin-left: 249px;
 }
 
-.right section.content {
+.right .content {
 	border-right: 1px solid rgba(187, 204, 221, 1);
 	margin-right: 249px;
 }
 
 /* ToDo: The sidebar should be removed completely, when there is no content, as on the login-page and similar! Then this declaration would work as expected. */
-div.main > div section:only-child {
+.main > div section:only-child {
 	margin: 0 !important;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	section.content {
+	.content {
 		padding: 5px 40px 20px;
 	}
 	
@@ -781,13 +776,13 @@ div.main > div section:only-child {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	section.content {
+	.content {
 		padding: 5px 15px 20px;
 	}
 	
 }	
 
-section.content .content {
+.content .content {
 	border: 1px solid #ccc;
 	background-color: rgba(0, 0, 0, .01);
 	padding: 13px 23px 23px;
@@ -808,7 +803,7 @@ section.content .content {
 
 /* Globals */
 
-aside.sidebar {
+.sidebar {
 	margin-bottom: -10px;
 	display: block;
 	width: 250px;
@@ -823,11 +818,11 @@ aside.sidebar {
 
 /* Toggle for sidebar orientation (options: left|right|top|bottom) */
 
-.left aside.sidebar {
+.left .sidebar {
 	float: left;
 }
 
-.right aside.sidebar {
+.right .sidebar {
 	float: right;
 }
 
@@ -837,16 +832,16 @@ aside.sidebar {
 
 /* Collapsed */
 
-aside.collapsed {
+.collapsed {
 	width: 0;
 }
 
-.left aside.sidebar.collapsed + section.content {
+.left .sidebar.collapsed + .content {
 	border: 0;
 	margin-left: 0;
 }
 
-.right aside.sidebar.collapsed + section.content {
+.right .sidebar.collapsed + .content {
 	border: 0;
 	margin-right: 0;
 }
@@ -857,7 +852,7 @@ aside.collapsed {
 
 /* Default (Right) */
 
-aside.sidebar .collapsibleSidebarButton {
+.sidebar .collapsibleSidebarButton {
 	cursor: pointer;
 	background-image: url('../../icon/arrowLeft1.svg'), url('../../icon/arrowLeft1.svg');
 	background-position: center 1%, center 99%;
@@ -880,7 +875,7 @@ aside.sidebar .collapsibleSidebarButton {
 	transition: left .1s ease;
 }
 
-aside.sidebar .collapsibleSidebarButton span {
+.sidebar .collapsibleSidebarButton span {
 	background-color: rgba(255, 255, 255, 1);
 	background-image: url('../../icon/arrowLeft1.svg');
     background-position: center center;
@@ -896,17 +891,17 @@ aside.sidebar .collapsibleSidebarButton span {
 
 /* Collapsed (Left) */
 
-aside.sidebar.collapsed .collapsibleSidebarButton {
+.sidebar.collapsed .collapsibleSidebarButton {
 	background-image: url('../../icon/arrowRight1.svg'), url('../../icon/arrowRight1.svg');
 	left: 0;
 }
 
-aside.sidebar.collapsed .collapsibleSidebarButton span {
+.sidebar.collapsed .collapsibleSidebarButton span {
 	background-image: url('../../icon/arrowRight1.svg');
 }
 
-aside.sidebar .collapsibleSidebarButton:hover,
-aside.sidebar .collapsibleSidebarButton:hover span{
+.sidebar .collapsibleSidebarButton:hover,
+.sidebar .collapsibleSidebarButton:hover span{
 	border-right: 1px solid rgba(187, 204, 221, .5);
 	background-color: rgba(252, 252, 252, 1);
 	opacity: 1;
@@ -916,34 +911,34 @@ aside.sidebar .collapsibleSidebarButton:hover span{
 
 /* -- -- -- Sidebar Menu -- -- -- */
 
-nav.sidebarMenu {
+.sidebarMenu {
 	white-space: nowrap;
 }
 
-nav.sidebarMenu > div {
+.sidebarMenu > div {
 	text-shadow: 0 1px 0 #fff;
 	position: relative;
 	overflow: hidden;
 	z-index: 110;
 }
 
-.collapsed nav.sidebarMenu > div {
+.collapsed .sidebarMenu > div {
 	width: 0;
 }
 
-nav.sidebarMenu > .collapsible a:hover {
+.sidebarMenu > .collapsible a:hover {
 	text-decoration: none !important;
 	color: #369;
 }
 
-nav.sidebarMenu > div > h1 {
+.sidebarMenu > div > h1 {
 	cursor: pointer;
 	font-weight: bold;
 	color: #369;
 	margin-top: 5px;
 }
 
-nav.sidebarMenu > .collapsible > h1 {
+.sidebarMenu > .collapsible > h1 {
 	background-image: url('../../icon/arrowRight.svg');
 	background-position: 15px center;
 	background-size: 16px;
@@ -952,12 +947,12 @@ nav.sidebarMenu > .collapsible > h1 {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	nav.sidebarMenu > div > h1 {
+	.sidebarMenu > div > h1 {
 		font-size: 130%;
 		padding: 7px 15px 7px 35px;
 	}
 	
-	nav.sidebarMenu > div:not(.collapsible) > h1 {
+	.sidebarMenu > div:not(.collapsible) > h1 {
 		padding: 7px 15px 7px 15px;
 	}
 	
@@ -965,24 +960,24 @@ nav.sidebarMenu > .collapsible > h1 {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	nav.sidebarMenu > div > h1 {
+	.sidebarMenu > div > h1 {
 		font-size: 150%;
 		padding: 7px 15px 7px 35px;
 	}
 	
-	nav.sidebarMenu > div:not(.collapsible) > h1 {
+	.sidebarMenu > div:not(.collapsible) > h1 {
 		padding: 7px 15px 7px 15px;
 	}
 	
 }
 
-nav.sidebarMenu > .collapsible h1.activeMenuItem {
+.sidebarMenu > .collapsible h1.activeMenuItem {
 	background-image: url('../../icon/arrowDown.svg');
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	nav.sidebarMenu > div ul > li {
+	.sidebarMenu > div ul > li {
 		font-size: 110%;
 	}
 	
@@ -990,21 +985,21 @@ nav.sidebarMenu > .collapsible h1.activeMenuItem {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	nav.sidebarMenu > div ul > li {
+	.sidebarMenu > div ul > li {
 		font-size: 120%;
 	}
 	
 }
 
-nav.sidebarMenu > div ul > li > a,
-nav.sidebarMenu > div ul > li > div {
+.sidebarMenu > div ul > li > a,
+.sidebarMenu > div ul > li > div {
 	text-shadow: 0 1px 0 #fff;
 	color: #69c;
 	padding: 5px 15px 7px 35px;
 	display: block;
 }
 
-nav.sidebarMenu > div ul > li.activeMenuItem {
+.sidebarMenu > div ul > li.activeMenuItem {
 	background-color: #fff;
 	margin-right: -1px;
 	overflow: hidden;
@@ -1016,7 +1011,7 @@ nav.sidebarMenu > div ul > li.activeMenuItem {
 	box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 }
 
-nav.sidebarMenu > div ul > li.activeMenuItem a {
+.sidebarMenu > div ul > li.activeMenuItem a {
 	font-weight: bold;
 	color: #369;
 }
@@ -1027,7 +1022,7 @@ nav.sidebarMenu > div ul > li.activeMenuItem a {
 
 /* Globals */
 
-footer.pageFooter {
+.pageFooter {
 	text-align: center;
 	padding: 0 23px;
 	position: relative;
@@ -1035,7 +1030,7 @@ footer.pageFooter {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	footer.pageFooter {
+	.pageFooter {
 		min-width: 800px;
 	}
 	
@@ -1043,19 +1038,19 @@ footer.pageFooter {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	footer.pageFooter {
+	.pageFooter {
 		min-width: auto;
 	}
 	
 }
 
-footer.pageFooter:after {
+.pageFooter:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-footer.pageFooter > div {
+.pageFooter > div {
 	border-top: 1px solid #bcd;
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
@@ -1063,7 +1058,7 @@ footer.pageFooter > div {
 	padding: 0 7px;
 }
 
-footer.pageFooter > div:after {
+.pageFooter > div:after {
 	content: '';
 	display: block;
 	clear: both;
@@ -1073,17 +1068,17 @@ footer.pageFooter > div:after {
 
 /* -- -- -- Copyright -- -- -- */
 
-footer.pageFooter .copyright {
+.pageFooter .copyright {
 	padding-top: 20px;
 	display: inline-block;
 	min-height: 40px;
 }
 
-footer.pageFooter .copyright a {
+.pageFooter .copyright a {
 	text-shadow: 0 -1px 0 #000;
 }
 
-footer.pageFooter .copyright a:hover {
+.pageFooter .copyright a:hover {
 	text-decoration: none;
 	color: #69c;
 }
@@ -1272,7 +1267,7 @@ li > .badgeButton {
 	margin-top: 30px;
 }
 
-.ui-dialog .mainHeading {
+.wcfDialogContainer .mainHeading {
 	margin-top: 0;
 }
 
@@ -1525,7 +1520,7 @@ dl > dd > fieldset > dl > dd > label {
 
 /* Reversed */
 
-dt.reversed {
+.reversed {
 	text-align: left;
 	margin-top: 2px;
 	position: absolute;
@@ -1534,7 +1529,7 @@ dt.reversed {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	dt.reversed {
+	.reversed {
 		left: 270px;
 	}
 	
@@ -1542,13 +1537,13 @@ dt.reversed {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	dt.reversed {
+	.reversed {
 		left: 170px;
 	}
 	
 }
 
-dt.reversed ~ dd > input[type='checkbox'] {
+.reversed ~ dd > input[type='checkbox'] {
 	margin-left: 0;
 }
 
@@ -2364,7 +2359,7 @@ input[type='button'],
 	z-index: 100;
 }
 
-.breadcrumbs ul li > span > span {
+.breadcrumbs ul li > .pointer > span {
 	text-indent: -9000px;
 	border-width: 15px;
 	border-style: solid none solid solid;
@@ -2423,7 +2418,7 @@ input[type='button'],
 	z-index: 90;
 }
 
-.breadcrumbs ul li:hover > span > span {
+.breadcrumbs ul li:hover > .pointer > span {
 	border-color: transparent transparent transparent #f9f9f9;
 }
 
@@ -3042,6 +3037,8 @@ tr .columnURL {
 	padding: 10px 20px 20px;
 }
 
+
+
 /* ToDo: Installation
 
 is this obsolete due to our new overlay? */
@@ -3064,6 +3061,8 @@ is this obsolete due to our new overlay? */
 	padding: 7px;
 }
 
+
+
 /* Special */
 
 div#ajaxExceptionStacktrace {
@@ -3079,6 +3078,8 @@ div#ajaxExceptionStacktrace {
 	border: 1px solid #ccc;
 	padding: 3px;
 }
+
+
 
 /* Login Box */
 
@@ -4053,20 +4054,20 @@ will change soon!
 
 /* DEBUG ONLY - DO NOT TOUCH! */
 
-div.ajaxDebugMessage p {
+.ajaxDebugMessage p {
 	border-bottom: 1px solid rgb(192, 192, 192);
 	margin: 0 3px;
 	padding: 7px 0 3px 0;
 }
 
-div.ajaxDebugMessage p:first-child,
-div.ajaxDebugMessage p:last-child {
+.ajaxDebugMessage p:first-child,
+.ajaxDebugMessage p:last-child {
 	border-bottom-width: 0;
 	margin: 0;
 	padding: 3px;
 }
 
-div.ajaxDebugMessage p:last-child {
+.ajaxDebugMessage p:last-child {
 	font-family: Monospace;
 	font-size: 110%;
 }
