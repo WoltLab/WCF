@@ -1820,7 +1820,7 @@ WCF.MultipleLanguageInput.prototype = {
 			}, this));
 
 			// show list
-			this._list.show();
+			this._list.addClass('open');
 		}
 	},
 
@@ -1828,7 +1828,7 @@ WCF.MultipleLanguageInput.prototype = {
 	 * Closes the language selection.
 	 */
 	_closeSelection: function() {
-		this._list.hide();
+		this._list.removeClass('open');
 	},
 
 	/**
