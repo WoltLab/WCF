@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de" languagename="Deutsch">
 	<category name="wcf.acp.cronjob">
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
@@ -273,6 +273,11 @@
 		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
 	</category>
 	
+	<category name="wcf.acp.packageUpdate">
+		<item name="wcf.acp.packageUpdate"><![CDATA[Pakete aktualisieren]]></item>
+		<item name="wcf.acp.packageUpdate.noneAvailable"><![CDATA[Derzeit sind keine Updates verfügbar.]]></item>
+	</category>
+        
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Server hinzufügen]]></item>
 		<item name="wcf.acp.updateServer.data"><![CDATA[Server-Daten]]></item>
