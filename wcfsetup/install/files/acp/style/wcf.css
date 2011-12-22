@@ -729,7 +729,7 @@ nav.topMenu {
 
 /* -- -- -- Content -- -- -- */
 
-.content {
+section.content {
 	background-color: rgba(255, 255, 255, 1);
 	position: relative;
 	min-height: 100px;
@@ -749,18 +749,18 @@ nav.topMenu {
 	transition: margin .1s ease;
 }
 
-.content:after {
+section.content:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-.left .content {
+.left section.content {
 	border-left: 1px solid rgba(187, 204, 221, 1);
 	margin-left: 249px;
 }
 
-.right .content {
+.right section.content {
 	border-right: 1px solid rgba(187, 204, 221, 1);
 	margin-right: 249px;
 }
@@ -772,7 +772,7 @@ nav.topMenu {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.content {
+	section.content {
 		padding: 5px 40px 20px;
 	}
 	
@@ -780,13 +780,13 @@ nav.topMenu {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.content {
+	section.content {
 		padding: 5px 15px 20px;
 	}
 	
 }	
 
-.content .content {
+section.content .content {
 	border: 1px solid #ccc;
 	background-color: rgba(0, 0, 0, .01);
 	padding: 13px 23px 23px;
