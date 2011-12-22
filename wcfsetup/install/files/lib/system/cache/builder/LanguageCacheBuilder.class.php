@@ -20,7 +20,6 @@ class LanguageCacheBuilder implements ICacheBuilder {
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-		$languageToPackages = array();
 		$data = array(
 			'codes' => array(),
 			'languages' => array(), 
