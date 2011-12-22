@@ -513,11 +513,6 @@ class TemplateScriptingCompiler {
 			$phpCode = $this->compilerPlugins[$className]->executeStart($tagArgs, $this);
 		}
 		else {
-			list($openTag) = end($this->tagStack);
-			if ($openTag != $tagCommand) {
-				throw new SystemException($this->formatSyntaxError('unexpected {/'.$tagCommand.'}', $this->currentIdentifier, $this->currentLineNo));
-			}
-			$this->popTag($tagCommand);
 			$phpCode = $this->compilerPlugins[$className]->executeEnd($this);
 		}
 		
