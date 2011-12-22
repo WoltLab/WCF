@@ -394,11 +394,15 @@ nav.topMenu {
 /* ToDo: Top-Menu Dropdown Tweaks */
 
 /* Auto-Opening Dropdowns */
-.topMenu ul li:hover .dropdownCaption ~ .dropdown {
+.topMenu ul li .dropdownCaption ~ .dropdown {
 	border-color: rgba(255, 255, 255, .5);
 	background-color: rgba(0, 0, 0, .7);
-	display: block !important;
 	left: -1px;
+	min-width: 100%;
+}
+
+.topMenu ul li:hover .dropdownCaption ~ .dropdown {
+	display: block;
 }
 
 .topMenu ul li {
