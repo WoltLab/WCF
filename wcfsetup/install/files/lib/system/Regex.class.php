@@ -104,6 +104,22 @@ final class Regex {
 	}
 	
 	/**
+	 * Checks whether the regex is syntactically correct.
+	 *
+	 * @return	boolean
+	 */
+	public function isValid() {
+		try {
+			$this->match(''); // we don't care about the result, we only care about the exception
+			return true;
+		}
+		catch (SystemException $e) {
+			// we have a syntax error now
+			return false;
+		}
+	}
+	
+	/**
 	 * Checks whether the regex matches the given string.
 	 * 
 	 * @param	string	$string		String to match.
