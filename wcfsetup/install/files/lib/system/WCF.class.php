@@ -436,8 +436,10 @@ class WCF {
 				throw new exception\SystemException('Unable to load configuration for '.$row['package']);
 			}
 			
-			// start application
-			new $className();
+			// start application if not within ACP
+			if (!class_exists('wcf\system\WCFACP', false)) {
+				new $className();
+			}
 		}
 		else {
 			unset(self::$autoloadDirectories[$abbreviation]);
