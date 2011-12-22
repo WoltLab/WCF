@@ -40,7 +40,11 @@ class WCFACP extends WCF {
 		$this->initBlacklist();
 		$this->initAuth();
 		$this->initCoreObjects();
-		$this->initApplications();
+		
+		// prevent application loading during setup
+		if (PACKAGE_ID) {
+			$this->initApplications();
+		}
 	}
 	
 	/**

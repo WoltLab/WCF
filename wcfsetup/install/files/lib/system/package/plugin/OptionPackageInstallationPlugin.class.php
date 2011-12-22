@@ -31,7 +31,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 		// default values
 		$optionName = $optionType = $defaultValue = $validationPattern = $selectOptions = $enableOptions = $permissions = $options = '';
 		$showOrder = null;
-		$hidden = $supportI18n = $optionalI18n = 0;
+		$hidden = $supportI18n = $requireI18n = 0;
 		
 		// get values
 		if (isset($option['name'])) $optionName = $option['name'];
@@ -46,7 +46,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 		if (isset($option['permissions'])) $permissions = $option['permissions'];
 		if (isset($option['options'])) $options = $option['options'];
 		if (isset($option['supporti18n'])) $supportI18n = $option['supporti18n'];
-		if (isset($option['optionali18n'])) $optionalI18n = $option['optionali18n'];
+		if (isset($option['requirei18n'])) $requireI18n = $option['requirei18n'];
 		
 		// check if optionType exists
 		$className = 'wcf\system\option\\'.StringUtil::firstCharToUpperCase($optionType).'OptionType';
@@ -72,7 +72,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 			'permissions' => $permissions,
 			'options' => $options,
 			'supportI18n' => $supportI18n,
-			'optionalI18n' => $optionalI18n,
+			'requireI18n' => $requireI18n,
 			'additionalData' => serialize($additionalData)
 		);
 		
