@@ -3,6 +3,7 @@ namespace wcf\system\template;
 use wcf\system\cache\CacheHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\Regex;
 use wcf\system\SingletonFactory;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -586,7 +587,7 @@ class TemplateEngine extends SingletonFactory {
 		if (empty($compileDir)) $compileDir = WCF_DIR.'templates/compiled/';
 
 		// delete compiled templates
-		DirectoryUtil::getInstance($compileDir)->removePattern('~.*_.*_.*\.php$~');
+		DirectoryUtil::getInstance($compileDir)->removePattern(new Regex('.*_.*_.*\.php$'));
 	}
 	
 	/**
