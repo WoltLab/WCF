@@ -71,7 +71,7 @@
 			new WCF.Effect.SmoothScroll();
 			new WCF.Effect.BalloonTooltip();
 			$('<span class="pointer"><span></span></span>').appendTo('.innerError');
-
+			
 			$('#sidebarMenu').wcfSidebar();
 		});
 		//]]>
@@ -89,8 +89,8 @@
 					<div>
 						<ul>
 							<li id="userMenu" class="userMenu"><!-- ToDo: We need an ID and/or class for each list here, this ID may also change! -->
-								<span class="dropDownCaption">{lang}wcf.user.userNote{/lang}</span>
-								<ul class="dropDown">
+								<span class="dropdownCaption">{lang}wcf.user.userNote{/lang}</span>
+								<ul class="dropdown">
 									<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
 								</ul>
 							</li>
@@ -153,7 +153,7 @@
 							{* work-around for unknown core-object during WCFSetup *}
 							{if PACKAGE_ID}
 								{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=parentMenuItem}
-									<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="menuContainer" data-parent-menu-item="{$parentMenuItem->menuItem}">
+									<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="menuContainer collapsible" data-parent-menu-item="{$parentMenuItem->menuItem}">
 										{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
 											<h1 class="menuHeader" data-menu-item="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</h1>
 											<div class="sidebarMenuGroup">

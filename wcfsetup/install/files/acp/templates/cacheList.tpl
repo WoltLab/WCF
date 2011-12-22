@@ -49,8 +49,8 @@
 </fieldset>
 
 <div class="contentHeader">
-	<nav class="largeButtons">
-		<ul>
+	<nav>
+		<ul class="largeButtons">
 			{if $cacheData.files}<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="{link controller='CacheClear'}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
 			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
 		</ul>

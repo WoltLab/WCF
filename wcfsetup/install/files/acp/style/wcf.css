@@ -101,10 +101,6 @@ hr {
 	top: -9000px;
 }
 
-.separated {
-	margin-top: 13px;
-}
-
 ::selection {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, .5) !important;
 	color: #300;
@@ -180,7 +176,7 @@ header.pageHeader {
 
 /* Globals */
 
-header.pageHeader nav.topMenu {
+nav.topMenu {
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
 	background-color: rgba(0, 0, 0, .4);
 	position: fixed;
@@ -309,89 +305,84 @@ header.pageHeader nav.topMenu {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	header.pageHeader nav.topMenu {
+	nav.topMenu {
 		min-width: 800px;
 	}
 }
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	header.pageHeader nav.topMenu {
+	nav.topMenu {
 		min-width: auto;
 	}
 }
 
-header.pageHeader nav.topMenu:hover {
-	background-color: rgba(0, 0, 0, .5);
+.topMenu:hover {
+	background-color: rgba(0, 0, 0, .7);
 }
 
-header.pageHeader nav.topMenu > div {
+.topMenu > div {
 	padding: 0 23px 0;
 }
 
-header.pageHeader nav.topMenu > div > ul {
-	/* none */
-}
+/* Menu Items (1st level) */
 
-header.pageHeader nav.topMenu > div > ul > li {
+.topMenu > div > ul > li {
 	cursor: pointer;
+	border-width: 0 1px;
+	border-style: solid;
+	border-color: transparent;
 	float: left;
 	position: relative;
+}
+
+.topMenu > div > ul > li,
+.topMenu > div > ul > li a {
+	text-decoration: none;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
+	color: #69c;
+}
+
+.topMenu > div > ul > li:hover,
+.topMenu > div > ul > li:hover a {
+	border-color: rgba(255, 255, 255, .5);
 }
 
 
 
 /* ToDo: Top-Menu Dropdown Caption */
 
-nav.topMenu > div > ul > li {
-	border-width: 0 1px;
-	border-style: solid;
-	border-color: transparent;
-}
-
-nav.topMenu > div > ul > li,
-nav.topMenu > div > ul > li a {
-	text-decoration: none;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
-	color: #69c;
-}
-
-nav.topMenu > div > ul > li:hover,
-nav.topMenu > div > ul > li:hover a {
-	border-color: rgba(255, 255, 255, .5);
-}
-
-nav.topMenu > div > ul > li .dropDownCaption,
-nav.topMenu > div > ul > li .dropDownCaption a {
+.topMenu > div > ul > li .dropdownCaption,
+.topMenu > div > ul > li .dropdownCaption a {
 	padding-right: 5px;
 }
 
-nav.topMenu > div > ul > li:hover .dropDownCaption,
-nav.topMenu > div > ul > li:hover .dropDownCaption a {
+.topMenu > div > ul > li:hover .dropdownCaption,
+.topMenu > div > ul > li:hover .dropdownCaption a {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
 	color: #fff;
 	background-color: rgba(0, 0, 0, .7);
 }
 
-nav.topMenu > div > ul > li > .dropDownCaption > .badge,
-nav.topMenu > div > ul > li:hover > .dropDownCaption > .badge {
+.topMenu > div > ul > li > .dropdownCaption > .badge,
+.topMenu > div > ul > li:hover > .dropdownCaption > .badge {
 	font-size: 75%;
 	color: #369 !important;
 	margin: -3px 3px;
 	padding: 1px 3px;
 }
 
-nav.topMenu > div > ul > li > .dropDownCaption > img {
+.topMenu > div > ul > li > .dropdownCaption > img {
 	margin: -7px 0 -5px 0;
 }
 
-nav.topMenu > div > ul > li > span:not(.badge) {
+.topMenu > div > ul > li > span:not(.badge) {
 	padding: 6px;
 }
 
-nav.topMenu > div > ul > li > .dropDownCaption {
+.topMenu > div > ul > li > .dropdownCaption {
 	cursor: pointer;
-	background-image: url('../../icon/dropDown2.svg');
+	background-image: url('../../icon/dropdown2.svg');
 	background-position: 97% center;
 	background-repeat: no-repeat;
 	padding-right: 15px !important;
@@ -403,23 +394,27 @@ nav.topMenu > div > ul > li > .dropDownCaption {
 /* ToDo: Top-Menu Dropdown Tweaks */
 
 /* Auto-Opening Dropdowns */
-nav.topMenu ul li:hover .dropDownCaption ~ .dropDown {
+.topMenu ul li .dropdownCaption ~ .dropdown {
 	border-color: rgba(255, 255, 255, .5);
 	background-color: rgba(0, 0, 0, .7);
-	height: auto !important;
 	left: -1px;
+	min-width: 100%;
 }
 
-nav.topMenu ul li {
+.topMenu ul li:hover .dropdownCaption ~ .dropdown {
+	display: block;
+}
+
+.topMenu ul li {
 	white-space: nowrap;
 }
 
-nav.topMenu ul li .dropDown {
-	border-width: 0 1px 1px 1px;
+.topMenu ul li .dropdown {
+	border-width: 0 1px 1px 1px !important;
 	border-radius: 0 0 5px 5px;
 }
 
-nav.topMenu ul li .dropDown > :first-child {
+.topMenu ul li .dropdown > :first-child {
 	border-top-width: 0;
 }
 
@@ -427,13 +422,13 @@ nav.topMenu ul li .dropDown > :first-child {
 
 /* -- -- -- Logo -- -- -- */
 
-header.pageHeader div#logo {
+.pageHeader .logo {
 	margin: 0 23px 0;
 	position: relative;
 	z-index: 1;
 }
 
-header.pageHeader div#logo h1 {
+.pageHeader .logo h1 {
 	text-shadow: 0 -1px 0 #000;
 	color: #d8e7f5;
 	position: relative;
@@ -442,7 +437,7 @@ header.pageHeader div#logo h1 {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	header.pageHeader div#logo h1 {
+	.pageHeader .logo h1 {
 		font-size: 150%;
 	}
 	
@@ -450,25 +445,25 @@ header.pageHeader div#logo h1 {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	header.pageHeader div#logo h1 {
+	.pageHeader .logo h1 {
 		font-size: 175%;
 	}
 	
 }
 
-header.pageHeader div#logo a:hover {
+.pageHeader .logo a:hover {
 	text-decoration: none !important;
 	color: #d8e7f5;
 }
 
-header.pageHeader div#logo img {
+.pageHeader .logo img {
 	position: absolute;
 	bottom: 20px;
 	left: 0;
 }
 
-header.pageHeader div#logo > a,
-header.pageHeader div#logo > div {
+.pageHeader .logo > a,
+.pageHeader .logo > div {
 	text-align: right;
 	display: block;
 	height: 120px;
@@ -478,7 +473,7 @@ header.pageHeader div#logo > div {
 
 /* -- -- -- Main Menu -- -- -- */
 
-nav.mainMenu {
+.mainMenu {
 	/* This is the general toggle switch for main menu orientation (options: left|center|right) */
 	text-align: left;
 	margin: 0 30px;
@@ -486,51 +481,51 @@ nav.mainMenu {
 	position: relative;
 }
 
-nav.mainMenu:after {
+.mainMenu:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-nav.mainMenu ul {
+.mainMenu ul {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	background-color: rgba(0, 0, 0, .4);
 	display: inline-block;
 }
 
-nav.mainMenu ul li {
+.mainMenu ul li {
 	display: inline-block;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	nav.mainMenu ul li {
+	.mainMenu ul li {
 		font-size: 120%;
 	}
 }
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	nav.mainMenu ul li {
+	.mainMenu ul li {
 		font-size: 150%;
 	}
 }
 
-nav.mainMenu ul li.activeMenuItem:first-child {
+.mainMenu ul li.activeMenuItem:first-child {
 	margin: -5px -5px 0 0;
 }
 
-nav.mainMenu ul li.activeMenuItem:last-child {
+.mainMenu ul li.activeMenuItem:last-child {
 	margin: -5px 0 0 -5px;
 }
 
-nav.mainMenu ul li:only-child,
-nav.mainMenu ul li.activeMenuItem:only-child {
+.mainMenu ul li:only-child,
+.mainMenu ul li.activeMenuItem:only-child {
 	margin: -5px 0 0;
 }
 
-nav.mainMenu ul li a {
+.mainMenu ul li a {
 	font-weight: normal;
 	text-shadow: 0 -1px 0 #000;
 	color: #69c;
@@ -562,7 +557,7 @@ nav.mainMenu ul li a {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	nav.mainMenu ul li a {
+	.mainMenu ul li a {
 		padding: 10px 20px;
 	}
 	
@@ -570,22 +565,22 @@ nav.mainMenu ul li a {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	nav.mainMenu ul li a {
+	.mainMenu ul li a {
 		padding: 10px 10px;
 	}
 	
 }
 
-nav.mainMenu ul li a,
-nav.mainMenu ul li:hover a {
+.mainMenu ul li a,
+.mainMenu ul li:hover a {
 	text-decoration: none;
 }
 
-nav.mainMenu ul li:not(.activeMenuItem):hover a {
+.mainMenu ul li:not(.activeMenuItem):hover a {
 	color: #fff;
 }
 
-nav.mainMenu ul li.activeMenuItem a {
+.mainMenu ul li.activeMenuItem a {
 	font-size: 110%;
 	font-weight: bold;
 	text-shadow: 0 1px 0 #fff;
@@ -608,7 +603,7 @@ nav.mainMenu ul li.activeMenuItem a {
 		
 /* ToDo: Special */
 
-nav.mainMenu ul li.activeMenuItem .badge {
+.mainMenu ul li.activeMenuItem .badge {
 	font-size: 75% !important;
 	color: #fff;
 	background-color: #369;
@@ -624,7 +619,7 @@ nav.mainMenu ul li.activeMenuItem .badge {
 
 /* -- -- -- Header/Footer Navigation -- -- -- */
 
-nav.headerNavigation {
+.headerNavigation {
 	background-color: #e7f2fd;
 	border-bottom: 1px solid #bcd;
 	border-top-left-radius: 3px;
@@ -636,7 +631,7 @@ nav.headerNavigation {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	nav.headerNavigation {
+	.headerNavigation {
 		min-width: 800px;
 	}
 	
@@ -644,53 +639,53 @@ nav.headerNavigation {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	nav.headerNavigation {
+	.headerNavigation {
 		min-width: auto;
 	}
 	
 }
 
-nav.headerNavigation:after {
+.headerNavigation:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-nav.headerNavigation > div {
+.headerNavigation > div {
 	padding: 0 7px;
 }
 
-nav.headerNavigation > div:after {
+.headerNavigation > div:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-nav.headerNavigation ul,
-nav.footerNavigation ul {
+.headerNavigation ul,
+.footerNavigation ul {
 	display: block;
 }
 
-nav.headerNavigation ul li,
-nav.footerNavigation ul li {
+.headerNavigation ul li,
+.footerNavigation ul li {
 	cursor: pointer;
 	margin: 0 3px;
 	float: right;
 }
 
-nav.headerNavigation ul li a,
-nav.footerNavigation ul li a {
+.headerNavigation ul li a,
+.footerNavigation ul li a {
 	padding: 3px;
 	display: inline-block;
 }
 
-nav.headerNavigation ul li a:hover,
-nav.footerNavigation ul li a:hover {
+.headerNavigation ul li a:hover,
+.footerNavigation ul li a:hover {
 	background-color: #d8e7f5;
 }
 
-#tplLogin header.pageHeader nav.headerNavigation ul li.toBottomLink,
-#tplLogin footer.pageFooter nav.footerNavigation ul li.toTopLink {
+#tplLogin .pageHeader .headerNavigation ul li.toBottomLink,
+#tplLogin .pageFooter .footerNavigation ul li.toTopLink {
 	/* Removes the to-bottom-link on the log-in page */
 	position: absolute;
 	left: -9000px;
@@ -702,7 +697,7 @@ nav.footerNavigation ul li a:hover {
 
 /* ############## Main ############## */
 
-div.main {
+.main {
 	background-color: #d8e7f5;
 	margin: 0 23px;
 	position: relative;
@@ -716,7 +711,7 @@ div.main {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	div.main {
+	.main {
 		min-width: 800px;
 	}
 	
@@ -724,7 +719,7 @@ div.main {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	div.main {
+	.main {
 		min-width: auto;
 	}
 	
@@ -771,7 +766,7 @@ section.content:after {
 }
 
 /* ToDo: The sidebar should be removed completely, when there is no content, as on the login-page and similar! Then this declaration would work as expected. */
-div.main > div section:only-child {
+.main > div section:only-child {
 	margin: 0 !important;
 }
 
@@ -810,11 +805,9 @@ section.content .content {
 
 /* ############## Sidebar ############## */
 
-/* Note that the sidebar may change to float soon! */
-
 /* Globals */
 
-aside.sidebar {
+.sidebar {
 	margin-bottom: -10px;
 	display: block;
 	width: 250px;
@@ -829,11 +822,11 @@ aside.sidebar {
 
 /* Toggle for sidebar orientation (options: left|right|top|bottom) */
 
-.left aside.sidebar {
+.left .sidebar {
 	float: left;
 }
 
-.right aside.sidebar {
+.right .sidebar {
 	float: right;
 }
 
@@ -843,27 +836,27 @@ aside.sidebar {
 
 /* Collapsed */
 
-aside.collapsed {
+.collapsed {
 	width: 0;
 }
 
-.left aside.sidebar.collapsed + section.content {
+.left .sidebar.collapsed + .content {
 	border: 0;
 	margin-left: 0;
 }
 
-.right aside.sidebar.collapsed + section.content {
+.right .sidebar.collapsed + .content {
 	border: 0;
 	margin-right: 0;
 }
 
 
 
-/* -- -- -- Collapsible Button -- -- -- */
+/* -- -- -- Collapsible Sidebar Button -- -- -- */
 
 /* Default (Right) */
 
-aside.sidebar .collapsibleSidebarButton {
+.sidebar .collapsibleSidebarButton {
 	cursor: pointer;
 	background-image: url('../../icon/arrowLeft1.svg'), url('../../icon/arrowLeft1.svg');
 	background-position: center 1%, center 99%;
@@ -886,7 +879,7 @@ aside.sidebar .collapsibleSidebarButton {
 	transition: left .1s ease;
 }
 
-aside.sidebar .collapsibleSidebarButton span {
+.sidebar .collapsibleSidebarButton span {
 	background-color: rgba(255, 255, 255, 1);
 	background-image: url('../../icon/arrowLeft1.svg');
     background-position: center center;
@@ -902,17 +895,17 @@ aside.sidebar .collapsibleSidebarButton span {
 
 /* Collapsed (Left) */
 
-aside.sidebar.collapsed .collapsibleSidebarButton {
+.sidebar.collapsed .collapsibleSidebarButton {
 	background-image: url('../../icon/arrowRight1.svg'), url('../../icon/arrowRight1.svg');
 	left: 0;
 }
 
-aside.sidebar.collapsed .collapsibleSidebarButton span {
+.sidebar.collapsed .collapsibleSidebarButton span {
 	background-image: url('../../icon/arrowRight1.svg');
 }
 
-aside.sidebar .collapsibleSidebarButton:hover,
-aside.sidebar .collapsibleSidebarButton:hover span{
+.sidebar .collapsibleSidebarButton:hover,
+.sidebar .collapsibleSidebarButton:hover span{
 	border-right: 1px solid rgba(187, 204, 221, .5);
 	background-color: rgba(252, 252, 252, 1);
 	opacity: 1;
@@ -922,63 +915,73 @@ aside.sidebar .collapsibleSidebarButton:hover span{
 
 /* -- -- -- Sidebar Menu -- -- -- */
 
-nav.sidebarMenu {
+.sidebarMenu {
 	white-space: nowrap;
 }
 
-nav.sidebarMenu > div {
+.sidebarMenu > div {
 	text-shadow: 0 1px 0 #fff;
-	color: #69c;
 	position: relative;
 	overflow: hidden;
 	z-index: 110;
 }
 
-.collapsed nav.sidebarMenu > div {
+.collapsed .sidebarMenu > div {
 	width: 0;
 }
 
-nav.sidebarMenu > div a:hover {
+.sidebarMenu > .collapsible a:hover {
 	text-decoration: none !important;
 	color: #369;
 }
 
-nav.sidebarMenu > div h1 {
+.sidebarMenu > div > h1 {
 	cursor: pointer;
 	font-weight: bold;
 	color: #369;
+	margin-top: 5px;
+}
+
+.sidebarMenu > .collapsible > h1 {
 	background-image: url('../../icon/arrowRight.svg');
 	background-position: 15px center;
 	background-size: 16px;
 	background-repeat: no-repeat;
-	margin-top: 5px;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	nav.sidebarMenu > div h1 {
+	.sidebarMenu > div > h1 {
 		font-size: 130%;
-		padding: 7px 25px 7px 35px;
+		padding: 7px 15px 7px 35px;
+	}
+	
+	.sidebarMenu > div:not(.collapsible) > h1 {
+		padding: 7px 15px 7px 15px;
 	}
 	
 }
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	nav.sidebarMenu > div h1 {
+	.sidebarMenu > div > h1 {
 		font-size: 150%;
 		padding: 7px 15px 7px 35px;
 	}
 	
+	.sidebarMenu > div:not(.collapsible) > h1 {
+		padding: 7px 15px 7px 15px;
+	}
+	
 }
 
-nav.sidebarMenu > div h1.activeMenuItem {
+.sidebarMenu > .collapsible h1.activeMenuItem {
 	background-image: url('../../icon/arrowDown.svg');
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	nav.sidebarMenu > div ul li {
+	.sidebarMenu > div ul > li {
 		font-size: 110%;
 	}
 	
@@ -986,20 +989,21 @@ nav.sidebarMenu > div h1.activeMenuItem {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	nav.sidebarMenu > div ul li {
+	.sidebarMenu > div ul > li {
 		font-size: 120%;
 	}
 	
 }
 
-nav.sidebarMenu > div ul li a {
+.sidebarMenu > div ul > li > a,
+.sidebarMenu > div ul > li > div {
 	text-shadow: 0 1px 0 #fff;
 	color: #69c;
-	padding: 5px 25px 7px 35px;
+	padding: 5px 15px 7px 35px;
 	display: block;
 }
 
-nav.sidebarMenu > div ul li.activeMenuItem {
+.sidebarMenu > div ul > li.activeMenuItem {
 	background-color: #fff;
 	margin-right: -1px;
 	overflow: hidden;
@@ -1011,7 +1015,7 @@ nav.sidebarMenu > div ul li.activeMenuItem {
 	box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 }
 
-nav.sidebarMenu > div ul li.activeMenuItem a {
+.sidebarMenu > div ul > li.activeMenuItem a {
 	font-weight: bold;
 	color: #369;
 }
@@ -1022,16 +1026,15 @@ nav.sidebarMenu > div ul li.activeMenuItem a {
 
 /* Globals */
 
-footer.pageFooter {
+.pageFooter {
 	text-align: center;
 	padding: 0 23px;
-	clear: both;
 	position: relative;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	footer.pageFooter {
+	.pageFooter {
 		min-width: 800px;
 	}
 	
@@ -1039,28 +1042,27 @@ footer.pageFooter {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	footer.pageFooter {
+	.pageFooter {
 		min-width: auto;
 	}
 	
 }
 
-footer.pageFooter:after {
+.pageFooter:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-footer.pageFooter > div {
+.pageFooter > div {
 	border-top: 1px solid #bcd;
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
 	background-color: #e7f2fd;
 	padding: 0 7px;
-	clear: both;
 }
 
-footer.pageFooter > div:after {
+.pageFooter > div:after {
 	content: '';
 	display: block;
 	clear: both;
@@ -1070,17 +1072,17 @@ footer.pageFooter > div:after {
 
 /* -- -- -- Copyright -- -- -- */
 
-footer.pageFooter .copyright {
+.pageFooter .copyright {
 	padding-top: 20px;
 	display: inline-block;
 	min-height: 40px;
 }
 
-footer.pageFooter .copyright a {
+.pageFooter .copyright a {
 	text-shadow: 0 -1px 0 #000;
 }
 
-footer.pageFooter .copyright a:hover {
+.pageFooter .copyright a:hover {
 	text-decoration: none;
 	color: #69c;
 }
@@ -1165,18 +1167,18 @@ li > .badgeButton {
 
 /* ############## ToDo: Dropdown Global ############## */
 
-.dropDown {
+.dropdown {
 	color: #fff;
-	border-width: 0 1px 1px 1px;
+	border-width: 1px;
 	border-style: solid;
-	border-color: rgba(255, 255, 255, 0);
-	border-radius: 5;
-	background-color: rgba(0, 0, 0, 0);
+	border-color: rgba(255, 255, 255, .7);
+	border-radius: 5px;
+	background-color: rgba(0, 0, 0, .7);
 	margin-top: 25px;
+	display: none;
 	position: absolute;
 	top: 0;
 	left: 0;
-	height: 0;
 	z-index: 500;
 	overflow: hidden;
 	
@@ -1193,10 +1195,14 @@ li > .badgeButton {
 	transition: color background height .1s ease;
 }
 
+.dropdown.open {
+	display: block;
+}
+
 /* Dropdown Items */
 
-.dropDown > li,
-.dropDown > div {
+.dropdown > li,
+.dropdown > div {
 	text-shadow: none;
 	color: #ccc;
 	cursor: pointer; 
@@ -1208,38 +1214,47 @@ li > .badgeButton {
 	transition: color background .2s linear;
 }
 
-.dropDown > div {
+.dropdown > div {
 	padding: 5px 7px;
 }
 
-.dropDown > :first-child {
+.dropdown > :first-child {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
 
-.dropDown > :last-child {
+.dropdown > :last-child {
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 }
 
-.dropDown > :hover:not(ul):not(.pointer),
-.dropDown > .active {
+.dropdown > :hover:not(ul):not(.pointer),
+.dropdown > .active {
 	color: #fff;
+	cursor: pointer;
 	background-color: rgba(0, 0, 0, .5);
 }
 
-.dropDown > li.divider:not(:first-child) {
+.dropdown > li.divider:not(:first-child) {
 	border-top: 1px solid rgba(255, 255, 255, .7);
 }
 
-.dropDown > li a {
+.dropdown > li {
 	text-decoration: none;
 	padding: 5px 7px;
-	display: inline-block;
+	display: block;
 }
 
-.dropDown > li a:hover {
-	color: #fff !important;
+.dropdown > li a {
+	text-decoration: none;
+	color: #ccc;
+	padding: -5px -7px;
+	display: block;
+}
+
+.dropdown > li a:hover {
+	color: #fff;
+	background-color: rgba(0, 0, 0, .5);
 }
 
 
@@ -1256,7 +1271,7 @@ li > .badgeButton {
 	margin-top: 30px;
 }
 
-.ui-dialog .mainHeading {
+.wcfDialogContainer .mainHeading {
 	margin-top: 0;
 }
 
@@ -1509,7 +1524,7 @@ dl > dd > fieldset > dl > dd > label {
 
 /* Reversed */
 
-dt.reversed {
+.reversed {
 	text-align: left;
 	margin-top: 2px;
 	position: absolute;
@@ -1518,7 +1533,7 @@ dt.reversed {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	dt.reversed {
+	.reversed {
 		left: 270px;
 	}
 	
@@ -1526,13 +1541,13 @@ dt.reversed {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	dt.reversed {
+	.reversed {
 		left: 170px;
 	}
 	
 }
 
-dt.reversed ~ dd > input[type='checkbox'] {
+.reversed ~ dd > input[type='checkbox'] {
 	margin-left: 0;
 }
 
@@ -1790,7 +1805,7 @@ textarea[disabled='disabled'] {
 
 /* Dropdown Caption */
 
-.preInput .dropDownCaption {
+.preInput .dropdownCaption {
 	letter-spacing: -1px;
 	cursor: pointer;
 	border-radius: 3px 0 0 3px;
@@ -1800,20 +1815,20 @@ textarea[disabled='disabled'] {
 	vertical-align: middle;
 }
 
-.preInput .dropDownCaption span {
+.preInput .dropdownCaption span {
 	margin-right: -1px;
 	padding-left: 5px;
 	white-space: nowrap;
 }
 
-.preInput .dropDownCaption span.active {
-	background-image: url('../../icon/dropDown1.svg');
+.preInput .dropdownCaption span.active {
+	background-image: url('../../icon/dropdown1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
 	padding-right: 10px;
 }
 
-.preInput .dropDown > li.missingValue { /* ToDo */
+.preInput .dropdown > li.missingValue { /* ToDo */
 	/* color: #990; */
 	background-image: url('../../icon/systemWarning.svg');
 	background-size: 16px;
@@ -2322,7 +2337,6 @@ input[type='button'],
 	background-color: rgba(255, 255, 255, 1);
 	margin-top: 15px;
 	display: block;
-	clear: both;
 	position: relative;
 	overflow: hidden;
 }
@@ -2349,7 +2363,7 @@ input[type='button'],
 	z-index: 100;
 }
 
-.breadcrumbs ul li > span > span {
+.breadcrumbs ul li > .pointer > span {
 	text-indent: -9000px;
 	border-width: 15px;
 	border-style: solid none solid solid;
@@ -2408,7 +2422,7 @@ input[type='button'],
 	z-index: 90;
 }
 
-.breadcrumbs ul li:hover > span > span {
+.breadcrumbs ul li:hover > .pointer > span {
 	border-color: transparent transparent transparent #f9f9f9;
 }
 
@@ -2747,7 +2761,7 @@ tr .columnURL {
 	width: 7px;
 }
 
-.pageNavigation ul li.children .dropDown {
+.pageNavigation ul li.children .dropdown {
 	text-align: left;
 	border-color: transparent;
 	border-radius: 3px;
@@ -2769,19 +2783,19 @@ tr .columnURL {
 	transition: opacity .2s linear;
 }
 
-.pageNavigation ul li.children:hover .dropDown {
+.pageNavigation ul li.children:hover .dropdown {
 	border-color: rgba(255, 255, 255, .7);
 	height: auto;
 	overflow: visible;
 	opacity: 1;
 }
 
-.pageNavigation ul li.children .dropDown ul {
+.pageNavigation ul li.children .dropdown ul {
 	padding: 0 5px 5px 2px;
 	display: block;
 }
 
-.pageNavigation ul li.children .dropDown ul li {
+.pageNavigation ul li.children .dropdown ul li {
 	margin-top: 5px;
 	margin-left: 3px;
 }
@@ -3027,6 +3041,8 @@ tr .columnURL {
 	padding: 10px 20px 20px;
 }
 
+
+
 /* ToDo: Installation
 
 is this obsolete due to our new overlay? */
@@ -3049,6 +3065,8 @@ is this obsolete due to our new overlay? */
 	padding: 7px;
 }
 
+
+
 /* Special */
 
 div#ajaxExceptionStacktrace {
@@ -3064,6 +3082,8 @@ div#ajaxExceptionStacktrace {
 	border: 1px solid #ccc;
 	padding: 3px;
 }
+
+
 
 /* Login Box */
 
@@ -3166,7 +3186,7 @@ img[src*='enable'] {
 
 
 
-/* ############## ToDo: Clipboard Editor ############## */
+/* ############## Clipboard Editor Buttons ############## */
 
 /* Globals */
 
@@ -3179,60 +3199,12 @@ img[src*='enable'] {
 }
 
 .clipboardEditor > ul > li > span {
-	background-image: url('../../icon/dropDown1.svg');
+	background-image: url('../../icon/dropdown1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
 	padding-right: 12px;
 	display: inline-block;
 }
-
-/* ToDo: Dropdown (merge with other dropdown-declarations!) */
-
-.clipboardEditor ul > li > ol {
-	border: 1px solid rgba(255, 255, 255, .7);
-	border-radius: 5px;
-	background-color: rgba(0, 0, 0, .7);
-	margin-top: 23px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	
-	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-ms-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-}
-
-.clipboardEditor ul > li > ol > li {
-	text-shadow: none;
-	color: #ccc;
-	cursor: pointer; 
-	padding: 5px 7px;
-	
-	-webkit-transition: color, background .2s linear;
-	-moz-transition: color, background .2s linear;
-	-ms-transition: color, background .2s linear;
-	-o-transition: color, background .2s linear;
-	transition: color, background .2s linear;
-}
-
-.clipboardEditor ul > li > ol > li:first-child {
-	border-top-width: 0;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-}
-
-.clipboardEditor ul > li > ol > li:last-child {
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-}
-
-.clipboardEditor ul > li > ol > li:hover {
-	color: #fff;
-	background-color: rgba(0, 0, 0, .5);
-}
-
 
 
 /* ############## Global Button Color & Effect Library ############## */
@@ -3247,7 +3219,7 @@ input[type='button'],
 .badgeButton,
 .pageNavigation ul li:not(.children),
 .clipboardEditor > ul > li,
-.preInput .dropDownCaption {
+.preInput .dropdownCaption {
 	text-decoration: none;
 	text-shadow: 0 1px 0 #fff;
 	color: #999;
@@ -3298,7 +3270,7 @@ input[type='button'].default:hover,
 .badgeButton:hover,
 .pageNavigation ul li:not(.disabled):not(.children):hover,
 .clipboardEditor > ul > li:hover,
-.preInput:hover .dropDownCaption {
+.preInput:hover .dropdownCaption {
 	color: #666;
 	border-width: 1px;
 	border-style: solid;
@@ -3327,7 +3299,7 @@ input[type='button'].default:focus,
 .badgeButton:focus,
 .pageNavigation ul li:not(.disabled):not(.children):active,
 .clipboardEditor > ul > li:focus,
-.preInput .dropDownCaption:focus,
+.preInput .dropdownCaption:focus,
 button:active,
 input[type='reset']:active,
 input[type='submit']:active,
@@ -3340,7 +3312,7 @@ input[type='button'].default:active,
 .badgeButton:active,
 .pageNavigation ul li:not(.disabled):not(.children):focus,
 .clipboardEditor > ul > li:active,
-.preInput .dropDownCaption:active {
+.preInput .dropdownCaption:active {
 	color: #333;
 	border-width: 1px;
 	border-style: solid;
@@ -4086,20 +4058,20 @@ will change soon!
 
 /* DEBUG ONLY - DO NOT TOUCH! */
 
-div.ajaxDebugMessage p {
+.ajaxDebugMessage p {
 	border-bottom: 1px solid rgb(192, 192, 192);
 	margin: 0 3px;
 	padding: 7px 0 3px 0;
 }
 
-div.ajaxDebugMessage p:first-child,
-div.ajaxDebugMessage p:last-child {
+.ajaxDebugMessage p:first-child,
+.ajaxDebugMessage p:last-child {
 	border-bottom-width: 0;
 	margin: 0;
 	padding: 3px;
 }
 
-div.ajaxDebugMessage p:last-child {
+.ajaxDebugMessage p:last-child {
 	font-family: Monospace;
 	font-size: 110%;
 }
