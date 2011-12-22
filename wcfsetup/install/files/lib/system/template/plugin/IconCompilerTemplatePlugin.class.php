@@ -51,7 +51,6 @@ class IconCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		$compiler->popTag('icon');
-		$hash = StringUtil::getRandomID();
-		return "<?php \$_icon".$hash." = ob_get_contents(); ob_end_clean(); echo wcf\system\style\StyleHandler::getInstance()->getStyle()->getIconPath(\$_icon".$hash.", '".$this->size."'); ?>";
+		return "<?php echo wcf\system\style\StyleHandler::getInstance()->getStyle()->getIconPath(ob_get_clean(), '".$this->size."'); ?>";
 	}
 }
