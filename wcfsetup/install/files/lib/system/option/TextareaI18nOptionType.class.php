@@ -39,7 +39,7 @@ class TextareaI18nOptionType extends TextareaOptionType {
 	 * @see wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
-		if (!I18nHandler::getInstance()->validateValue($option->optionName)) {
+		if (!I18nHandler::getInstance()->validateValue($option->optionName, $option->requireI18n)) {
 			throw new UserInputException($option->optionName, 'validationFailed');
 		}
 	}
