@@ -1,6 +1,7 @@
 <?php
 namespace wcf\util;
 use wcf\system\Callback;
+use wcf\system\Regex;
 use wcf\system\exception\SystemException;
 
 /**
@@ -123,20 +124,20 @@ class DirectoryUtil {
 	/**
 	 * Returns a sorted list of files.
 	 * 
-	 * @param	integer		$order			sort-order
-	 * @param	string		$pattern		pattern to match
-	 * @param	boolean		$negativeMatch		true if the pattern should be inversed
+	 * @param	integer			$order			sort-order
+	 * @param	wcf\system\Regex	$pattern		pattern to match
+	 * @param	boolean			$negativeMatch		true if the pattern should be inversed
 	 * @return	array<string>
 	 */
-	public function getFiles($order = SORT_ASC, $pattern = '', $negativeMatch = false) {
+	public function getFiles($order = SORT_ASC, Regex $pattern = null, $negativeMatch = false) {
 		// scan the folder
 		$this->scanFiles();
 		$files = $this->files;
 		
 		// sort out non matching files
-		if (!empty($pattern)) {
+		if ($pattern !== null) {
 			foreach ($files as $filename => $value) {
-				if (((bool) preg_match($pattern, $filename)) == $negativeMatch) unset($files[$filename]);
+				if (((bool) $pattern->match($filename)) === $negativeMatch) unset($files[$filename]);
 			}
 		}
 		
@@ -160,19 +161,19 @@ class DirectoryUtil {
 	 * Returns a sorted list of files, with DirectoryIterator object as value
 	 * 
 	 * @param	integer			$order			sort order
-	 * @param	string			$pattern		pattern to match
+	 * @param	wcf\system\Regex	$pattern		pattern to match
 	 * @param	boolean			$negativeMatch		should the pattern be inversed
 	 * @return	array<\DirectoryIterator>
 	 */
-	public function getFileObjects($order = SORT_ASC, $pattern = '', $negativeMatch = false) {
+	public function getFileObjects($order = SORT_ASC, Regex $pattern = null, $negativeMatch = false) {
 		// scan the folder
 		$this->scanFileObjects();
 		$objects = $this->fileObjects;
 		
 		// sort out non matching files
-		if (!empty($pattern)) {
+		if ($pattern !== null) {
 			foreach ($objects as $filename => $value) {
-				if (((bool) preg_match($pattern, $filename)) == $negativeMatch) unset($objects[$filename]);
+				if (((bool) $pattern->match($filename)) === $negativeMatch) unset($objects[$filename]);
 			}
 		}
 		
@@ -256,11 +257,13 @@ class DirectoryUtil {
 	 * Executes a callback on each file and returns false if callback is invalid.
 	 * 
 	 * @param	wcf\system\Callback		$callback
-	 * @param	string				$pattern	callback is only applied to files matching the given pattern
+	 * @param	wcf\system\Regex		$pattern	callback is only applied to files matching the given pattern
 	 * @return	boolean
 	 */
-	public function executeCallback(Callback $callback, $pattern = '') {
-		$files = $this->getFileObjects(self::SORT_NONE, $pattern);
+	public function executeCallback(Callback $callback, Regex $pattern = null) {
+		if ($pattern !== null) $files = $this->getFileObjects(self::SORT_NONE, $pattern);
+		else $files = $this->getFileObjects(self::SORT_NONE);
+		
 		foreach ($files as $filename => $obj) {
 			$callback($filename, $obj);
 		}
@@ -272,7 +275,7 @@ class DirectoryUtil {
 	 * Recursive remove of directory.
 	 */
 	public function removeAll() {
-		$this->removePattern('');
+		$this->removePattern(new Regex('.'));
 		
 		// destroy cached instance
 		unset(static::$instances[$this->recursive][$this->directory]);
@@ -281,10 +284,10 @@ class DirectoryUtil {
 	/**
 	 * Removes all files that match the given pattern.
 	 * 
-	 * @param	string			$pattern		pattern to match
+	 * @param	wcf\system\Regex	$pattern		pattern to match
 	 * @param	boolean			$negativeMatch		should the pattern be inversed
 	 */
-	public function removePattern($pattern, $negativeMatch = false) {
+	public function removePattern(Regex $pattern, $negativeMatch = false) {
 		if (!$this->recursive) throw new SystemException('Removing of files only works in recursive mode');
 		
 		$files = $this->getFileObjects(self::SORT_NONE, $pattern, $negativeMatch);
