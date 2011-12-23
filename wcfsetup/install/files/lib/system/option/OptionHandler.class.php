@@ -10,7 +10,7 @@ use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
 /**
- * Default implementation for option lists.
+ * Handles options.
  *
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
@@ -70,7 +70,7 @@ class OptionHandler implements IOptionHandler {
 	
 	/**
 	 * Type object cache.
-	 * @var array<wcf\system\option\ITypeObject>
+	 * @var array<wcf\system\option\IOptionType>
 	 */
 	public $typeObjects = array();
 	
