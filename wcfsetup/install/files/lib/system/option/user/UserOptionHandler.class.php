@@ -14,7 +14,7 @@ use wcf\system\option\OptionHandler;
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.option
+ * @subpackage	system.option.user
  * @category 	Community Framework
  */
 class UserOptionHandler extends OptionHandler {
