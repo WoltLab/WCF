@@ -857,34 +857,25 @@ section.content .content {
 
 /* -- -- -- Collapsible Sidebar Button -- -- -- */
 
-/* Default (Right) */
+/* globals */
 
 .sidebar .collapsibleSidebarButton {
 	cursor: pointer;
-	background-image: url('../../icon/arrowLeft1.svg'), url('../../icon/arrowLeft1.svg');
 	background-position: center 1%, center 99%;
 	background-size: 10px 10px, 10px 10px;
 	background-repeat: no-repeat;
 	position: absolute;
 	top: 0;
 	bottom: 0;
-	left: 250px;
 	width: 20px;
 	height: 100%;
 	overflow: hidden;
 	z-index: 150;
 	opacity: .3;
-	
-	-webkit-transition: left .1s ease;
-	-moz-transition: left .1s ease;
-	-ms-transition: left .1s ease;
-	-o-transition: left .1s ease;
-	transition: left .1s ease;
 }
 
 .sidebar .collapsibleSidebarButton span {
 	background-color: rgba(255, 255, 255, 1);
-	background-image: url('../../icon/arrowLeft1.svg');
     background-position: center center;
 	background-size: 10px 10px;
 	background-repeat: no-repeat;
@@ -896,25 +887,79 @@ section.content .content {
 	height: 600px;
 }
 
+/* left */
+
+.left .sidebar .collapsibleSidebarButton {
+	background-image: url('../../icon/arrowLeft1.svg'), url('../../icon/arrowLeft1.svg');
+	left: 250px;
+	-webkit-transition: left .1s ease;
+	-moz-transition: left .1s ease;
+	-ms-transition: left .1s ease;
+	-o-transition: left .1s ease;
+	transition: left .1s ease;
+}
+
+.left .collapsibleSidebarButton span {
+	background-image: url('../../icon/arrowLeft1.svg');
+}
+
+/* right */
+
+.right .sidebar .collapsibleSidebarButton {
+	background-image: url('../../icon/arrowRight1.svg'), url('../../icon/arrowRight1.svg');
+	right: 250px;
+	-webkit-transition: right .1s ease;
+	-moz-transition: right .1s ease;
+	-ms-transition: right .1s ease;
+	-o-transition: right .1s ease;
+	transition: right .1s ease;
+}
+
+.right .collapsibleSidebarButton span {
+	background-image: url('../../icon/arrowRight1.svg');
+}
+
 /* Collapsed (Left) */
 
-.sidebar.collapsed .collapsibleSidebarButton {
+.left .sidebar.collapsed .collapsibleSidebarButton {
 	background-image: url('../../icon/arrowRight1.svg'), url('../../icon/arrowRight1.svg');
 	left: 0;
 }
 
-.sidebar.collapsed .collapsibleSidebarButton span {
+.left .sidebar.collapsed .collapsibleSidebarButton span {
 	background-image: url('../../icon/arrowRight1.svg');
 }
 
+/* Collapsed (Right) */
+
+.right .sidebar.collapsed .collapsibleSidebarButton {
+	background-image: url('../../icon/arrowLeft1.svg'), url('../../icon/arrowLeft1.svg');
+	right: 0;
+}
+
+.right .sidebar.collapsed .collapsibleSidebarButton span {
+	background-image: url('../../icon/arrowLeft1.svg');
+}
+
+/* Global ... again :) */
+
 .sidebar .collapsibleSidebarButton:hover,
-.sidebar .collapsibleSidebarButton:hover span{
-	border-right: 1px solid rgba(187, 204, 221, .5);
+.sidebar .collapsibleSidebarButton:hover span {
 	background-color: rgba(252, 252, 252, 1);
 	opacity: 1;
 }
 
+/* left */
+.left .sidebar .collapsibleSidebarButton:hover,
+.left .sidebar .collapsibleSidebarButton:hover span {
+	border-right: 1px solid rgba(187, 204, 221, .5);
+}
 
+/* right */
+.right .sidebar .collapsibleSidebarButton:hover,
+.right .sidebar .collapsibleSidebarButton:hover span {
+	border-left: 1px solid rgba(187, 204, 221, .5);
+}
 
 /* -- -- -- Sidebar Menu -- -- -- */
 
