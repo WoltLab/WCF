@@ -1286,8 +1286,9 @@ WCF.Action.Delete.prototype = {
  * 
  * @param	string		className
  * @param	jQuery		containerList
+ * @param	string		toggleButtonSelector
  */
-WCF.Action.Toggle = function(className, containerList) { this.init(className, containerList); };
+WCF.Action.Toggle = function(className, containerList, toggleButtonSelector) { this.init(className, containerList, toggleButtonSelector); };
 WCF.Action.Toggle.prototype = {
 	/**
 	 * Initializes 'toggle'-Proxy
@@ -1295,10 +1296,15 @@ WCF.Action.Toggle.prototype = {
 	 * @param	string		className
 	 * @param	jQuery		containerList
 	 */
-	init: function(className, containerList) {
+	init: function(className, containerList, toggleButtonSelector) {
 		if (!containerList.length) return;
 		this.containerList = containerList;
 		this.className = className;
+		
+		this.toggleButtonSelector = '.toggleButton';
+		if (toggleButtonSelector) {
+			this.toggleButtonSelector = toggleButtonSelector;
+		}
 		
 		// initialize proxy
 		var options = {
@@ -1308,7 +1314,7 @@ WCF.Action.Toggle.prototype = {
 		
 		// bind event listener
 		this.containerList.each($.proxy(function(index, container) {
-			$(container).find('.toggleButton').bind('click', $.proxy(this._click, this));
+			$(container).find(this.toggleButtonSelector).bind('click', $.proxy(this._click, this));
 		}, this));
 	},
 	
@@ -1336,8 +1342,8 @@ WCF.Action.Toggle.prototype = {
 	 */
 	_success: function(data, textStatus, jqXHR) {
 		// remove items
-		this.containerList.each(function(index, container) {
-			var $toggleButton = $(container).find('.toggleButton');
+		this.containerList.each($.proxy(function(index, container) {
+			var $toggleButton = $(container).find(this.toggleButtonSelector);
 			if (WCF.inArray($toggleButton.data('objectID'), data.objectIDs)) {
 				$(container).wcfHighlight();
 				
@@ -1360,7 +1366,7 @@ WCF.Action.Toggle.prototype = {
 					}
 				});
 			}
-		});
+		}, this));
 	}
 };
 
