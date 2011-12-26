@@ -2587,7 +2587,9 @@ WCF.Collapsible.Remote = Class.extend({
 	 * @param	integer		containerID
 	 * @return	integer
 	 */
-	_getObjectID: function(containerID) { },
+	_getObjectID: function(containerID) {
+		return $('#' + containerID).data('objectID');
+	},
 	
 	/**
 	 * Returns additional parameters.
