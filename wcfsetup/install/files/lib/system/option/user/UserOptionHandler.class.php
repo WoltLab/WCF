@@ -8,13 +8,13 @@ use wcf\system\exception\UserInputException;
 use wcf\system\option\OptionHandler;
 
 /**
- * Default implementation for user option lists.
+ * Handles user options.
  *
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.option
+ * @subpackage	system.option.user
  * @category 	Community Framework
  */
 class UserOptionHandler extends OptionHandler {
