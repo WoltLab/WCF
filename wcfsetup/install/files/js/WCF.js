@@ -2380,13 +2380,14 @@ WCF.Collapsible.Simple = {
 		
 		if ($isOpen) {
 			$target.stop().wcfBlindOut('vertical', $.proxy(function() {
-				this._toggleImage($button, 'wcf.global.closed');
+				this._toggleImage($button, 'wcf.global.closed', 'wcf.global.button.open');
+				$button.attr('title', WCF.Language.get('wcf.global.button.open'));
 			}, this));
 			$isOpen = false;
 		}
 		else {
 			$target.stop().wcfBlindIn('vertical', $.proxy(function() {
-				this._toggleImage($button, 'wcf.global.opened');
+				this._toggleImage($button, 'wcf.global.opened', 'wcf.global.button.close');
 			}, this));
 			$isOpen = true;
 		}
@@ -2403,13 +2404,15 @@ WCF.Collapsible.Simple = {
 	 * 
 	 * @param	jQuery		button
 	 * @param	string		image
+	 * @param	string		title
 	 */
-	_toggleImage: function(button, image) {
+	_toggleImage: function(button, image, title) {
 		var $icon = WCF.Icon.get(image);
 		var $image = button.find('img');
 		
 		if ($image.length) {
 			$image.attr('src', $icon);
+			$image.attr('title', WCF.Language.get(title));
 		}
 	},
 	
@@ -2538,7 +2541,7 @@ WCF.Collapsible.Remote = Class.extend({
 	 */
 	_createButton: function(containerID, buttonContainer) {
 		var $isOpen = this._containers[containerID].data('isOpen');
-		var $button = $('<a class="balloonTooltip" title="'+WCF.Language.get('wcf.global.button.collapsible')+'"><img src="' + WCF.Icon.get('wcf.icon.' + ($isOpen ? 'opened' : 'closed')) + '" alt="" /></a>').prependTo(buttonContainer);
+		var $button = $('<a class="balloonTooltip" title="'+WCF.Language.get('wcf.global.button.' + ($isOpen ? 'close' : 'open'))+'"><img src="' + WCF.Icon.get('wcf.icon.' + ($isOpen ? 'opened' : 'closed')) + '" alt="" /></a>').prependTo(buttonContainer);
 		$button.data('containerID', containerID).click($.proxy(this._toggleContainer, this));
 
 		return $button;
@@ -2631,6 +2634,9 @@ WCF.Collapsible.Remote = Class.extend({
 		
 		// update container content
 		this._updateContent($containerID, data.returnValues.content, $newState);
+		
+		// update button title
+		this._containerData[$containerID].button.attr('title', WCF.Language.get('wcf.global.button.' + ($newState == 'open' ? 'close' : 'open')));
 		
 		// update icon
 		this._hideSpinner(this._containerData[$containerID].button, WCF.Icon.get('wcf.icon.' + (data.returnValues.isOpen ? 'opened' : 'closed')));
@@ -3257,7 +3263,7 @@ $.widget('ui.wcfSidebar', {
 		this._container = this.element.parents('aside:eq(0)');
 		
 		// create toggle button
-		this._button = $('<span class="collapsibleSidebarButton" title="' + WCF.Language.get('wcf.global.button.collapsible') + '"><span></span></span>').appendTo(this._container);
+		this._button = $('<span class="collapsibleSidebarButton" title="' + WCF.Language.get('wcf.global.button.close') + '"><span></span></span>').appendTo(this._container);
 
 		// bind event
 		this._button.click($.proxy(this._toggle, this));
@@ -3269,9 +3275,11 @@ $.widget('ui.wcfSidebar', {
 	_toggle: function() {
 		if (this._visible) {
 			this.hide();
+			this._button.attr('title', WCF.Language.get('wcf.global.button.open'));
 		}
 		else {
 			this.show();
+			this._button.attr('title', WCF.Language.get('wcf.global.button.close'));
 		}
 	},
 

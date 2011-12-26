@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de" languagename="Deutsch">
 	<category name="wcf.acp.cronjob">
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
@@ -530,7 +530,8 @@
 		<item name="wcf.global.sortOrder.ascending"><![CDATA[in aufsteigender Reihenfolge]]></item>
 		<item name="wcf.global.sortOrder.descending"><![CDATA[in absteigender Reihenfolge]]></item>
 		<item name="wcf.global.button.back"><![CDATA[&laquo; Zurück]]></item>
-		<item name="wcf.global.button.collapsible"><![CDATA[Auf- und Zuklappen]]></item>
+		<item name="wcf.global.button.close"><![CDATA[Zuklappen]]></item>
+		<item name="wcf.global.button.open"><![CDATA[Aufklappen]]></item>
 		<item name="wcf.global.page.next"><![CDATA[Nächste Seite]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Vorherige Seite]]></item>
 		<item name="wcf.global.locale.unix"><![CDATA[de_DE]]></item> <!-- system variable; do not translate -->
