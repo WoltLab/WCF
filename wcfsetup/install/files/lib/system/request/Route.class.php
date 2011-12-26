@@ -17,7 +17,7 @@ use wcf\system\exception\SystemException;
  */
 class Route {
 	/**
-	 * controller for route if controller is no part of the route schema
+	 * route controller if controller is no part of the route schema
 	 * @var	string
 	 */
 	protected $controller = null;
@@ -64,7 +64,7 @@ class Route {
 	}
 	
 	/**
-	 * Sets route schema, e.g. /{controller}/{id}
+	 * Sets route schema, e.g. /{controller}/{id}.
 	 * 
 	 * @param	string		$routeSchema
 	 * @param	string		$controller
@@ -87,11 +87,10 @@ class Route {
 			$part = str_replace(array('{', '}'), '', $part);
 			if ($part == 'controller') {
 				if ($this->controller !== null) {
-					throw new SystemExyception('Controller may not be part of the scheme if a route controller is given.');
+					throw new SystemException('Controller may not be part of the scheme if a route controller is given.');
 				}
-				else {
-					$hasController = true;
-				}
+				
+				$hasController = true;
 			}
 		}
 		
@@ -169,7 +168,7 @@ class Route {
 		
 		$this->routeData = $data;
 		
-		// adds route's controller if necessary
+		// adds route controller if given
 		if ($this->controller !== null) {
 			$this->routeData['controller'] = $this->controller;
 		}
