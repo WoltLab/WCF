@@ -2560,11 +2560,11 @@ WCF.Collapsible.Remote = Class.extend({
 		this._proxy.setOption('data', {
 			actionName: 'toggleContainer',
 			className: this._className,
+			objectIDs: [this._getObjectID($containerID)],
 			parameters: $.extend(true, {
 				containerID: $containerID,
 				currentState: $state,
-				newState: $newState,
-				objectID: this._getObjectID($containerID)
+				newState: $newState
 			}, this._getAdditionalParameters($containerID))
 		});
 		this._proxy.sendRequest();
