@@ -17,6 +17,12 @@ use wcf\system\exception\SystemException;
  */
 class Route {
 	/**
+	 * controller for route if controller is no part of the route schema
+	 * @var	string
+	 */
+	protected $controller = null;
+	
+	/**
 	 * route is restricted to ACP
 	 * @var	boolean
 	 */
@@ -61,11 +67,18 @@ class Route {
 	 * Sets route schema, e.g. /{controller}/{id}
 	 * 
 	 * @param	string		$routeSchema
+	 * @param	string		$controller
 	 */
-	public function setSchema($routeSchema) {
+	public function setSchema($routeSchema, $controller = null) {
 		$schemaParts = $this->getParts($routeSchema);
 		$hasController = false;
 		$pattern = '~^{[a-zA-Z]+}$~';
+		
+		if ($controller !== null) {
+			$this->controller = $controller;
+			$hasController = true;
+		}
+		
 		foreach ($schemaParts as &$part) {
 			if (!preg_match($pattern, $part)) {
 				throw new SystemException("Placeholder expected, but invalid string '" . $part . "' given.");
@@ -73,7 +86,12 @@ class Route {
 			
 			$part = str_replace(array('{', '}'), '', $part);
 			if ($part == 'controller') {
-				$hasController = true;
+				if ($this->controller !== null) {
+					throw new SystemExyception('Controller may not be part of the scheme if a route controller is given.');
+				}
+				else {
+					$hasController = true;
+				}
 			}
 		}
 		
@@ -150,6 +168,12 @@ class Route {
 		}
 		
 		$this->routeData = $data;
+		
+		// adds route's controller if necessary
+		if ($this->controller !== null) {
+			$this->routeData['controller'] = $this->controller;
+		}
+		
 		return true;
 	}
 	
