@@ -39,7 +39,7 @@ class CounterFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 
 		$counter =& $this->counters[$tagArgs['name']];
 
-		if ($counter['assign'] != null) {
+		if ($counter['assign'] !== null) {
 			$tplObj->assign($counter['assign'], $counter['count']);
 		}
 
