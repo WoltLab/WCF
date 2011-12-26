@@ -3032,20 +3032,16 @@ WCF.DOMNodeInsertedHandler = {
 WCF.Search = {};
 
 /**
- * Performs a quick search for users and user groups.
+ * Performs a quick search.
  */
-WCF.Search.User = Class.extend({
+WCF.Search.Base = Class.extend({
 	/**
 	 * notification callback
 	 * @var	object
 	 */
 	_callback: null,
-
-	/**
-	 * include user groups in search
-	 * @var	boolean
-	 */
-	_includeUserGroups: false,
+	
+	_className: '',
 
 	/**
 	 * result list
@@ -3070,16 +3066,14 @@ WCF.Search.User = Class.extend({
 	 * 
 	 * @param	jQuery		searchInput
 	 * @param	object		callback
-	 * @param	boolean		includeUserGroups
 	 */
-	init: function(searchInput, callback, includeUserGroups) {
+	init: function(searchInput, callback) {
 		if (!$.isFunction(callback)) {
-			console.debug("[WCF.Search.User] Given callback is invalid, aborting.");
+			console.debug("[WCF.Search.Base] Given callback is invalid, aborting.");
 			return;
 		}
 
 		this._callback = callback;
-		this._includeUserGroups = includeUserGroups;
 		this._searchInput = $(searchInput).keyup($.proxy(this._keyUp, this));
 		this._searchInput.wrap('<div class="preInput" />');
 		this._list = $('<ul class="dropdown" />').insertAfter(this._searchInput);
@@ -3088,7 +3082,7 @@ WCF.Search.User = Class.extend({
 			success: $.proxy(this._success, this)
 		});
 	},
-
+	
 	/**
 	 * Performs a search upon key up.
 	 */
@@ -3098,18 +3092,29 @@ WCF.Search.User = Class.extend({
 			this._clearList(true);
 		}
 		else {
+			var $parameters = {
+				data: {
+					searchString: $content
+				}		
+			};
+			
 			this._proxy.setOption('data', {
 				actionName: 'getList',
-				className: 'wcf\\data\\user\\UserAction',
-				parameters: {
-					data: {
-						includeUserGroups: this._includeUserGroups,
-						searchString: $content
-					}
-				}
+				className: this._className,
+				parameters: this._getParameters($parameters)
 			});
 			this._proxy.sendRequest();
 		}
+	},
+	
+	/**
+	 * Returns parameters for quick search.
+	 * 
+	 * @param	object		parameters
+	 * @return	object
+	 */
+	_getParameters: function(parameters) {
+		return parameters;
 	},
 
 	/**
@@ -3127,14 +3132,27 @@ WCF.Search.User = Class.extend({
 		}
 
 		this._clearList(false);
+		
 		for (var $i in data.returnValues) {
 			var $item = data.returnValues[$i];
 
-			var $listItem = $('<li><img src="' + RELATIVE_WCF_DIR + 'icon/user' + ($item.type == 'group' ? 's' : '') + '1.svg" alt="" />' + $item.label + '</li>').appendTo(this._list);
-			$listItem.data('type', $item.type).data('objectID', $item.objectID).data('label', $item.label).click($.proxy(this._executeCallback, this));
+			this._createListItem($item);
 		}
-
+		
 		this._list.addClass('open');
+	},
+	
+	/**
+	 * Creates a new list item.
+	 * 
+	 * @param	object		item
+	 * @return	jQuery
+	 */
+	_createListItem: function(item) {
+		var $listItem = $('<li><span>' + $item.label + '</span></li>').appendTo(this._list);
+		$listItem.data('objectID', $item.objectID).data('label', $item.label).click($.proxy(this._executeCallback, this));
+		
+		return $listItem;
 	},
 
 	/**
@@ -3146,11 +3164,7 @@ WCF.Search.User = Class.extend({
 		var $listItem = $(event.currentTarget);
 
 		// notify callback
-		this._callback({
-			label: $listItem.data('label'),
-			objectID: $listItem.data('objectID'),
-			type: $listItem.data('type')
-		});
+		this._callback($listItem.data());
 
 		// close list and revert input
 		this._clearList(true);
@@ -3167,6 +3181,53 @@ WCF.Search.User = Class.extend({
 		}
 
 		this._list.removeClass('open').empty();
+	}
+});
+
+/**
+ * Provides quick search for users and user groups.
+ * 
+ * @see	WCF.Search.Base
+ */
+WCF.Search.User = WCF.Search.Base.extend({
+	/**
+	 * @see	WCF.Search.Base._className
+	 */
+	_className: 'wcf\\data\\user\\UserAction',
+	
+	/**
+	 * include user groups in search
+	 * @var	boolean
+	 */
+	_includeUserGroups: false,
+	
+	/**
+	 * @see	WCF.Search.Base
+	 */
+	init: function(searchInput, callback, includeUserGroups) {
+		this._includeUserGroups = includeUserGroups;
+		
+		this._super(searchInput, callback);
+	},
+	
+	/**
+	 * @see	WCF.Search.Base._getParameters()
+	 */
+	_getParameters: function(parameters) {
+		parameters.data.includeUserGroups = this._includeUserGroups;
+	},
+	
+	/**
+	 * @see	WCF.Search.Base._createListItem()
+	 */
+	_createListItem: function(item) {
+		var $listItem = this._super(item);
+		
+		// insert item type
+		$('<img src="' + RELATIVE_WCF_DIR + 'icon/user' + ($item.type == 'group' ? 's' : '') + '1.svg" alt="" />').insertBefore($listItem.children('span:eq(0)'));
+		$listItem.data('type', item.type);
+		
+		return $listItem;
 	}
 });
 
