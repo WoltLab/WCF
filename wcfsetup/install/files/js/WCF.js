@@ -2627,7 +2627,7 @@ WCF.Collapsible.Remote = Class.extend({
 		
 		// update content storage
 		this._containerData[$containerID].isOpen = (data.returnValues.isOpen) ? true : false;
-		var $newState = (data.returnValues.isOpen) ? 'opened' : 'closed';
+		var $newState = (data.returnValues.isOpen) ? 'open' : 'close';
 		
 		// update container content
 		this._updateContent($containerID, data.returnValues.content, $newState);
