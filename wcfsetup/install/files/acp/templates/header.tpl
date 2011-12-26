@@ -65,7 +65,9 @@
 				'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
 				'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
 				'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
-				'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}'
+				'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}',
+				'wcf.global.button.disable': '{lang}wcf.global.button.disable{/lang}',
+				'wcf.global.button.enable': '{lang}wcf.global.button.enable{/lang}'
 			});
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
