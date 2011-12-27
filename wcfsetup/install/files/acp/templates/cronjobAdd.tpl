@@ -22,7 +22,11 @@
 	<nav>
 		<ul class="largeButtons">
 			<li><a href="{link controller='CronjobList'}{/link}" title="{lang}wcf.acp.menu.link.cronjob.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/time1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.cronjob.list{/lang}</span></a></li>
-			{if $action == 'edit'}<li><a href="{link controller='CronjobExecute' id=$cronjobID}{/link}" title="{lang}wcf.acp.cronjob.execute{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/run1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.execute{/lang}</span></a></li>{/if}
+			{if $action == 'edit'}
+				<li><a href="{link controller='CronjobExecute' id=$cronjobID}{/link}" title="{lang}wcf.acp.cronjob.execute{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/run1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.execute{/lang}</span></a></li>
+			{/if}
+			
+			{event name='largeButtons'}
 		</ul>
 	</nav>
 </div>
@@ -55,6 +59,8 @@
 					<input type="text" id="description" name="description" value="{$description}" class="long" />
 				</dd>
 			</dl>
+			
+			{event name='dataFields'}
 		</fieldset>
 		
 		<fieldset>
@@ -124,9 +130,11 @@
 					<small>{lang}wcf.acp.cronjob.startDow.description{/lang}</small>
 				</dd>
 			</dl>
+			
+			{event name='timingFields'}
 		</fieldset>
 		
-		{if $additionalFields|isset}{@$additionalFields}{/if}
+		{event name='fieldsets'}
 	</div>
 	
 	<div class="formSubmit">

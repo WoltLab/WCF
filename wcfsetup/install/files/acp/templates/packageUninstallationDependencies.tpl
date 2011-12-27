@@ -60,7 +60,7 @@
 		<dd>{if $packageObj->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$packageObj->authorURL|rawurlencode}" class="externalURL">{$packageObj->author}</a>{else}{$packageObj->author}{/if}</dd>
 	</dl>
 	
-	{if $additionalFields|isset}{@$additionalFields}{/if}
+	{event name='propertyFields'}
 </fieldset>
 
 {if $dependentPackages|count > 0}
@@ -84,7 +84,7 @@
 					<th class="columnText">{lang}wcf.acp.package.list.version{/lang}</th>
 					<th class="columnDate">{lang}wcf.acp.package.list.date{/lang}</th>
 					
-					{if $additionalColumns|isset}{@$additionalColumns}{/if}
+					{event name='headColumns'}
 				</tr>
 			</thead>
 			
@@ -103,7 +103,7 @@
 							<img src="{@RELATIVE_WCF_DIR}icon/deleteD1.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" />
 						{/if}
 						
-						{if $package.additionalButtons|isset}{@$package.additionalButtons}{/if}
+						{event name='buttons'}
 					</td>
 					<td class="columnID"><p>{@$package.packageID}</p></td>
 					<td class="columnIcon">
@@ -120,7 +120,7 @@
 					<td class="columnText"><p>{$package.packageVersion}</p></td>
 					<td class="columnDate"><p>{@$package.packageDate|date}</p></td>
 					
-					{if $package.additionalColumns|isset}{@$package.additionalColumns}{/if}
+					{event name='columns'}
 				</tr>
 			{/foreach}
 			</tbody>

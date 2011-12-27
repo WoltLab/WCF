@@ -20,14 +20,19 @@
 <div class="contentHeader">
 	{pages print=true assign=pagesLinks controller='PackageListDetailed' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 
-	{if $__wcf->session->getPermission('admin.system.package.canInstallPackage') || $additionalLargeButtons|isset}
+	{hascontent}
 		<nav>
 			<ul class="largeButtons">
-				{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>{/if}
-				{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
+				{content}
+					{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
+						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+					{/if}
+				
+					{event name='largeButtons'}
+				{/content}
 			</ul>
 		</nav>
-	{/if}
+	{/hascontent}
 </div>
 
 {if $objects|count > 0}
@@ -45,7 +50,7 @@
 					<th class="columnText{if $sortField == 'packageVersion'}active{/if}"><a href="{link controller='PackageListDetailed'}pageNo={@$pageNo}&sortField=packageVersion&sortOrder={if $sortField == 'packageVersion' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.package.list.version{/lang}{if $sortField == 'packageVersion'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnDate{if $sortField == 'updateDate'} active{/if}"><a href="{link controller='PackageListDetailed'}pageNo={@$pageNo}&sortField=updateDate&sortOrder={if $sortField == 'updateDate' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.package.updateDate{/lang}{if $sortField == 'updateDate'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					
-					{if $additionalHeadColumns|isset}{@$additionalHeadColumns}{/if}
+					{event name='headColumns'}
 				</tr>
 			</thead>
 			
@@ -64,7 +69,7 @@
 								<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" />
 							{/if}
 							
-							{if $additionalButtons[$package->packageID]|isset}{@$additionalButtons[$package->packageID]}{/if}
+							{event name='buttons'}
 						</td>
 						<td class="columnID"><p>{@$package->packageID}</p></td>
 						<td class="columnIcon">
@@ -83,7 +88,7 @@
 						<td class="columnText"><p>{$package->packageVersion}</p></td>
 						<td class="columnDate"><p>{@$package->updateDate|time}</p></td>
 						
-						{if $additionalColumns[$package->packageID]|isset}{@$additionalColumns[$package->packageID]}{/if}
+						{event name='columns'}
 					</tr>
 				{/foreach}
 			</tbody>
@@ -95,14 +100,19 @@
 <div class="contentFooter">
 	{@$pagesLinks}
 	
-	{if $__wcf->session->getPermission('admin.system.package.canInstallPackage') || $additionalLargeButtons|isset}
+	{hascontent}
 		<nav>
 			<ul class="largeButtons">
-				{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>{/if}
-				{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
+				{content}
+					{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
+						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+					{/if}
+				
+					{event name='largeButtons'}
+				{/content}
 			</ul>
 		</nav>
-	{/if}
+	{/hascontent}
 </div>
 
 {include file='footer'}
