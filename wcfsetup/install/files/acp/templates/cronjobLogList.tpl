@@ -27,7 +27,7 @@
 						<th class="columnText columnDescription{if $sortField == 'description'} active{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=description&sortOrder={if $sortField == 'description' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.description{/lang}{if $sortField == 'description'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 						<th class="columnDate columnExecTime{if $sortField == 'execTime'} active{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=execTime&sortOrder={if $sortField == 'execTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.log.execTime{/lang}{if $sortField == 'execTime'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 						
-						{if $additionalColumns|isset}{@$additionalColumns}{/if}
+						{event name='headColumns'}
 					</tr>
 				</thead>
 				
@@ -49,7 +49,7 @@
 									<td class="columnDate columnExecTime"></td>
 								{/if}
 							
-								{if $cronjobLog->additionalColumns|isset}{@$cronjobLog->additionalColumns}{/if}
+								{event name='columns'}
 							</tr>
 						{/foreach}
 					{/content}

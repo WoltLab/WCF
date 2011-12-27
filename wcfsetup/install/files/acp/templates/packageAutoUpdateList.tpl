@@ -45,7 +45,7 @@
 								{$availableUpdate.packageName}{if $availableUpdate.instanceNo > 1} (#{#$availableUpdate.instanceNo}){/if}
 							</label>
 						</h1>
-					<hgroup>
+					</hgroup>
 
 					<div class="messageBody">
 						<dl>

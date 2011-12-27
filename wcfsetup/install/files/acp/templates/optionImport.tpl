@@ -37,9 +37,11 @@
 					<small>{lang}wcf.acp.option.import.upload.description{/lang}</small>
 				</dd>
 			</dl>
+			
+			{event name='importFields'}
 		</fieldset>
 		
-		{if $additionalFields|isset}{@$additionalFields}{/if}
+		{event name='importFieldsets'}
 	</div>
 
 	<div class="formSubmit">
@@ -68,9 +70,11 @@
 				<small>{lang}wcf.acp.option.export.download.description{/lang}</small>
 			</dd>
 		</dl>
+		
+		{event name='exportFields'}
 	</fieldset>
 	
-	{if $additionalFields|isset}{@$additionalFields}{/if}
+	{event name='exportFieldsets'}
 </div>
 
 {include file='footer'}
