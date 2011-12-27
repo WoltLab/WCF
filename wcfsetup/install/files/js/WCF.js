@@ -2381,7 +2381,6 @@ WCF.Collapsible.Simple = {
 		if ($isOpen) {
 			$target.stop().wcfBlindOut('vertical', $.proxy(function() {
 				this._toggleImage($button, 'wcf.global.closed', 'wcf.global.button.open');
-				$button.attr('title', WCF.Language.get('wcf.global.button.open'));
 			}, this));
 			$isOpen = false;
 		}
