@@ -5,6 +5,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Executes user-related actions.
@@ -147,5 +148,44 @@ class UserAction extends AbstractDatabaseObjectAction {
 				$userEditor->updateUserOptions($userOptions);
 			}
 		}
+	}
+	
+	public function validateGetList() {
+	}
+	
+	public function getList() {
+		$searchString = $this->parameters['data']['searchString'];
+		$list = array();
+	
+		if ($this->parameters['data']['includeUserGroups']) {
+			$accessibleGroups = UserGroup::getAccessibleGroups();
+			foreach ($accessibleGroups as $group) {
+				$groupName = WCF::getLanguage()->get($group->groupName);
+				$pos = StringUtil::indexOfIgnoreCase($groupName, $searchString);
+				if ($pos !== false && $pos == 0) {
+					$list[] = array(
+						'label' => $groupName,
+						'objectID' => $group->groupID,
+						'type' => 'group'
+					);
+				}
+			}
+		}
+	
+		// find users
+		$sql = "SELECT	userID, username
+			FROM	wcf".WCF_N."_user
+			WHERE	username LIKE ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($searchString.'%'));
+		while ($row = $statement->fetchArray()) {
+			$list[] = array(
+				'label' => $row['username'],
+				'objectID' => $row['userID'],
+				'type' => 'user'
+			);
+		}
+	
+		return $list;
 	}
 }
