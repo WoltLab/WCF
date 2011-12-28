@@ -17,7 +17,7 @@
 	 * @see	jQuery.fn.data()
 	 */
 	jQuery.fn.data = function(key, value) {
-		if (key.indexOf('ID') > 0) {
+		if (key && key.indexOf('ID') > 0) {
 			arguments[0] = key.replace('ID', '-id');
 		}
 
