@@ -17,6 +17,18 @@
 	 * @see	jQuery.fn.data()
 	 */
 	jQuery.fn.data = function(key, value) {
+		if (!key) {
+			var data = $jQueryData.apply(this, arguments);
+			jQuery.each(data, function(innerKey, element) {
+				if (innerKey.match(/Id$/)) {
+					data[innerKey.replace(/Id$/, 'ID')] = element;
+					delete data[innerKey];
+				}
+			});
+			
+			return data;
+		}
+		
 		if (key.indexOf('ID') > 0) {
 			arguments[0] = key.replace('ID', '-id');
 		}
