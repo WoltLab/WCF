@@ -3161,8 +3161,8 @@ WCF.Search.Base = Class.extend({
 	 * @return	jQuery
 	 */
 	_createListItem: function(item) {
-		var $listItem = $('<li><span>' + $item.label + '</span></li>').appendTo(this._list);
-		$listItem.data('objectID', $item.objectID).data('label', $item.label).click($.proxy(this._executeCallback, this));
+		var $listItem = $('<li><span>' + item.label + '</span></li>').appendTo(this._list);
+		$listItem.data('objectID', item.objectID).data('label', item.label).click($.proxy(this._executeCallback, this));
 		
 		return $listItem;
 	},
@@ -3227,6 +3227,8 @@ WCF.Search.User = WCF.Search.Base.extend({
 	 */
 	_getParameters: function(parameters) {
 		parameters.data.includeUserGroups = this._includeUserGroups;
+		
+		return this._super(parameters);
 	},
 	
 	/**
@@ -3236,7 +3238,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 		var $listItem = this._super(item);
 		
 		// insert item type
-		$('<img src="' + RELATIVE_WCF_DIR + 'icon/user' + ($item.type == 'group' ? 's' : '') + '1.svg" alt="" />').insertBefore($listItem.children('span:eq(0)'));
+		$('<img src="' + RELATIVE_WCF_DIR + 'icon/user' + (item.type == 'group' ? 's' : '') + '1.svg" alt="" />').insertBefore($listItem.children('span:eq(0)'));
 		$listItem.data('type', item.type);
 		
 		return $listItem;
