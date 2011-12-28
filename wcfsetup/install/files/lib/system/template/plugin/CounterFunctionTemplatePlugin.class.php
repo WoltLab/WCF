@@ -29,42 +29,26 @@ class CounterFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 
 		if (!isset($this->counters[$tagArgs['name']])) {
 			$this->counters[$tagArgs['name']] = array(
-				'start' => 1,
-				'skip' => 1,
-				'direction' => 'up',
-				'count' => 1
+				'skip' => isset($tagArgs['skip']) ? $tagArgs['skip'] : 1,
+				'direction' => isset($tagArgs['direction']) ? $tagArgs['direction'] : 'up',
+				'assign' => (isset($tagArgs['assign']) && !empty($tagArgs['assign'])) ? $tagArgs['assign'] : null,
+				'print' => isset($tagArgs['print']) ? $tagArgs['print'] : false,
+				'count' => isset($tagArgs['start']) ? $tagArgs['start'] : 1
 			);
 		}
 
 		$counter =& $this->counters[$tagArgs['name']];
 
-		if (isset($tagArgs['start'])) {
-			$counter['start'] = $counter['count'] = intval($tagArgs['start']);
-		}
-
-		if (isset($tagArgs['assign']) && !empty($tagArgs['assign'])) {
-			$counter['assign'] = $tagArgs['assign'];
-		}
-
-		if (isset($counter['assign'])) {
+		if ($counter['assign'] !== null) {
 			$tplObj->assign($counter['assign'], $counter['count']);
 		}
 
-		$result = null;
-		if (!isset($tagArgs['print']) || $tagArgs['print']) {
+		$result = '';
+		if ($counter['print']) {
 			$result = $counter['count'];
 		} 
 		
-		if (isset($tagArgs['skip'])) {
-			$counter['skip'] = intval($tagArgs['skip']);
-		}
-
-		// get direction
-		if (isset($tagArgs['direction'])) {
-			$counter['direction'] = $tagArgs['direction'];
-		}
-
-    		if ($counter['direction'] == 'down') {
+		if ($counter['direction'] == 'down') {
 			$counter['count'] -= $counter['skip'];
     		}
 		else {

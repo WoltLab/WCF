@@ -69,9 +69,11 @@
 					<input type="hidden" id="exampleMasterPassword" name="exampleMasterPassword" value="{@$exampleMasterPassword}" />
 				</dd>
 			</dl>
+			
+			{event name='initFields'}
 		</fieldset>
 		
-		{if $additionalFields|isset}{@$additionalFields}{/if}
+		{event name='fieldsets'}
 	</div>
 
 	<div class="formSubmit">

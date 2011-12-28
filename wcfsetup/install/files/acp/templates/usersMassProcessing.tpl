@@ -148,30 +148,37 @@
 			{/if}
 		</fieldset>
 	
-		{if $additionalFields|isset}{@$additionalFields}{/if}
+		{event name='fieldsets'}
 		
-		<nav class="tabMenu"><!-- ToDo: Fix that TabMenu! -->
-			<ul>
-				{if $options|count}<li id="profile"><a onclick="tabMenu.showSubTabMenu('profile');"><span>{lang}wcf.acp.user.search.conditions.profile{/lang}</span></a></li>{/if}
-				{if $additionalTabs|isset}{@$additionalTabs}{/if}
-			</ul>
-		</nav>
-		
-		<nav class="menu">
-			<div class="containerHead"><div> </div></div>
-		</nav>
-		
-		{if $options|count}
-			<div id="profile-content" class="border tabMenuContent hidden">
-				<hgroup class="subHeading">
-					<h1>{lang}wcf.acp.user.search.conditions.profile{/lang}</h1>
-				</hgroup>
-				
-				{include file='optionFieldList' langPrefix='wcf.user.option.'}
-			</div>
-		{/if}
-		
-		{if $additionalTabContents|isset}{@$additionalTabContents}{/if}
+		{hascontent}
+			<nav class="tabMenu"><!-- ToDo: Fix that TabMenu! -->
+				<ul>
+					{content}
+						{if $options|count}
+							<li id="profile"><a onclick="tabMenu.showSubTabMenu('profile');"><span>{lang}wcf.acp.user.search.conditions.profile{/lang}</span></a></li>
+						{/if}
+
+						{event name='tabMenuTabs'}
+					{/content}
+				</ul>
+			</nav>
+
+			<nav class="menu">
+				<div class="containerHead"><div> </div></div>
+			</nav>
+
+			{if $options|count}
+				<div id="profile-content" class="border tabMenuContent hidden">
+					<hgroup class="subHeading">
+						<h1>{lang}wcf.acp.user.search.conditions.profile{/lang}</h1>
+					</hgroup>
+
+					{include file='optionFieldList' langPrefix='wcf.user.option.'}
+				</div>
+			{/if}
+
+			{event name='tabMenuContent'}
+		{/hascontent}
 	</div>
 	
 	<div class="border content">

@@ -37,13 +37,19 @@
 <div class="contentHeader">
 	{pages print=true assign=pagesLinks controller="CronjobList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	
-	{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
+	{hascontent}
 		<nav>
 			<ul class="largeButtons">
-				<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+				{content}
+					{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
+						<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+					{/if}
+
+					{event name='largeButtons'}
+				{/content}
 			</ul>
 		</nav>
-	{/if}
+	{/hascontent}
 </div>
 
 {hascontent}
@@ -64,7 +70,7 @@
 					<th class="columnText columnDescription{if $sortField == 'description'} active{/if}"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=description&sortOrder={if $sortField == 'description' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.description{/lang}{if $sortField == 'description'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnDate columnNextExec{if $sortField == 'nextExec'} active{/if}"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=nextExec&sortOrder={if $sortField == 'nextExec' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.nextExec{/lang}{if $sortField == 'nextExec'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					
-					{if $additionalHeadColumns|isset}{@$additionalHeadColumns}{/if}
+					{event name='headColumns'}
 				</tr>
 			</thead>
 			
@@ -99,7 +105,8 @@
 								{else}
 									<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" />
 								{/if}
-								{if $additionalButtons[$cronjob->cronjobID]|isset}{@$additionalButtons[$cronjob->cronjobID]}{/if}
+								
+								{event name='buttons'}
 							</td>
 							<td class="columnID"><p>{@$cronjob->cronjobID}</p></td>
 							<td class="columnDate columnStartMinute"><p>{$cronjob->startMinute|truncate:30:' ...'}</p></td>
@@ -120,7 +127,7 @@
 								{/if}
 							</td>
 					
-							{if $additionalColumns[$cronjob->cronjobID]|isset}{@$additionalColumns[$cronjob->cronjobID]}{/if}
+							{event name='columns'}
 						</tr>
 					{/foreach}
 				{/content}
@@ -132,6 +139,7 @@
 	<div class="contentFooter">
 		{@$pagesLinks}
 		
+		{* todo: add large button event *}
 		{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
 			<nav>
 				<ul class="largeButtons">
