@@ -1204,19 +1204,22 @@ WCF.Action.SimpleProxy.prototype = {
  * 
  * @param	string		className
  * @param	jQuery		containerList
+ * @param	jQuery		badgeList
  */
-WCF.Action.Delete = function(className, containerList) { this.init(className, containerList); };
+WCF.Action.Delete = function(className, containerList, badgeList) { this.init(className, containerList, badgeList); };
 WCF.Action.Delete.prototype = {
 	/**
 	 * Initializes 'delete'-Proxy.
 	 * 
 	 * @param	string		className
 	 * @param	jQuery		containerList
+	 * @param	jQuery		badgeList
 	 */
-	init: function(className, containerList) {
+	init: function(className, containerList, badgeList) {
 		if (!containerList.length) return;
 		this.containerList = containerList;
 		this.className = className;
+		this.badgeList = badgeList;
 		
 		// initialize proxy
 		var options = {
@@ -1270,14 +1273,21 @@ WCF.Action.Delete.prototype = {
 	 */
 	_success: function(data, textStatus, jqXHR) {
 		// remove items
-		this.containerList.each(function(index, container) {
+		this.containerList.each($.proxy(function(index, container) {
 			var $objectID = $(container).find('.deleteButton').data('objectID');
 			if (WCF.inArray($objectID, data.objectIDs)) {
 				$(container).wcfBlindOut('up', function() {
 					$(container).empty().remove();
 				}, container);
+				
+				// update badges
+				if (this.badgeList) {
+					this.badgeList.each(function(innerIndex, badge) {
+						$(badge).html($(badge).html() - 1);
+					});
+				}
 			}
-		});
+		}, this));
 	}
 };
 
