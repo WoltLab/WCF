@@ -41,9 +41,11 @@
 					<small>{lang}wcf.acp.masterPassword.enter.description{/lang}</small>
 				</dd>
 			</dl>
+			
+			{event name='enterFields'}
 		</fieldset>
 		
-		{if $additionalFields|isset}{@$additionalFields}{/if}
+		{event name='fieldsets'}
 	</div>
 
 	<div class="formSubmit">

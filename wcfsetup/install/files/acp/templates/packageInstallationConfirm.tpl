@@ -71,7 +71,7 @@
 		<dd>{if $archive->getPackageInfo('authorURL')}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('authorURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('author')}</a>{else}{$archive->getPackageInfo('author')}{/if}</dd>
 	</dl>
 	
-	{if $additionalFields|isset}{@$additionalFields}{/if}
+	{event name='propertyFields'}
 </fieldset>
 
 {if $updatableInstances|count > 0}

@@ -59,8 +59,10 @@
 			</dd>
 		</dl>
 		
-		{if $additionalFields|isset}{@$additionalFields}{/if}
+		{event name='dataFields'}
 	</fieldset>
+	
+	{event name='fieldsets'}
 	
 	<div class="formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />

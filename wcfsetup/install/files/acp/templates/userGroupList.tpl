@@ -12,7 +12,8 @@
 	<nav>
 		<ul class="largeButtons">
 			<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
-			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}			
+			
+			{event name='largeButtons'}
 		</ul>
 	</nav>
 </div>
@@ -30,7 +31,7 @@
 					<th class="columnTitle columnGroupName{if $sortField == 'groupName'} active{/if}"><a href="{link controller='UserGroupList'}pageNo={@$pageNo}&sortField=groupName&sortOrder={if $sortField == 'groupName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.group.groupName{/lang}{if $sortField == 'groupName'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnDigits columnMembers{if $sortField == 'members'} active{/if}"><a href="{link controller='UserGroupList'}pageNo={@$pageNo}&sortField=members&sortOrder={if $sortField == 'members' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.group.members{/lang}{if $sortField == 'members'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					
-					{if $additionalHeadColumns|isset}{@$additionalHeadColumns}{/if}
+					{event name='headColumns'}
 				</tr>
 			</thead>
 			
@@ -49,14 +50,14 @@
 								{else}
 									<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" />
 								{/if}
-							
-								{if $additionalButtons[$group->groupID]|isset}{@$additionalButtons[$group->groupID]}{/if}
+								
+								{event name='buttons'}
 							</td>
 							<td class="columnID columnGroupID"><p>{@$group->groupID}</p></td>
 							<td class="columnTitle columnGroupName">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="{link controller='UserGroupEdit' id=$group->groupID}{/link}">{lang}{$group->groupName}{/lang}</a>{else}{lang}{$group->groupName}{/lang}</p>{/if}</td>
 							<td class="columnDigits columnMembers"><p><a title="{lang}wcf.acp.group.showMembers{/lang}" href="{link controller='UserSearch'}groupID={@$group->groupID}{/link}">{#$group->members}</p></a></td>
 						
-							{if $additionalColumns[$group->groupID]|isset}{@$additionalColumns[$group->groupID]}{/if}
+							{event name='columns'}
 						</tr>
 					{/foreach}
 				{/content}
@@ -70,7 +71,8 @@
 		<nav>
 			<ul class="largeButtons">
 				<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
-				{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
+				
+				{event name='largeButtons'}
 			</ul>
 		</nav>
 	</div>

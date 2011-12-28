@@ -32,6 +32,8 @@
 				<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 			{/if}
 			<li><a href="{link controller='UserList'}{/link}" title="{lang}wcf.acp.menu.link.user.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
+			
+			{event name='largeButtons'}
 		</ul>
 	</nav>
 </div>
@@ -108,13 +110,17 @@
 			{/if}
 		</fieldset>
 		
-		{if $additionalFields|isset}{@$additionalFields}{/if}
+		{event name='fieldsets'}
 		
 		<div class="tabMenuContainer">
 			<nav class="tabMenu">
 				<ul>
-					{if $optionTree|count}<li><a href="#profile">{*<span>*}{lang}wcf.acp.user.search.conditions.profile{/lang}{*</span>*}</a></li>{/if}
-					{if $additionalTabs|isset}{@$additionalTabs}{/if}
+					{if $optionTree|count}
+						<li><a href="#profile">{*<span>*}{lang}wcf.acp.user.search.conditions.profile{/lang}{*</span>*}</a></li>
+					{/if}
+					
+					{event name='tabMenuTabs'}
+					
 					<li><a href="#resultOptions">{*<span>*}{lang}wcf.acp.user.search.display{/lang}{*</span>*}</a></li>
 				</ul>
 			</nav>
@@ -128,7 +134,7 @@
 				</div>
 			{/if}
 		
-			{if $additionalTabContents|isset}{@$additionalTabContents}{/if}
+			{event name='tabMenuContent'}
 		
 			<div id="resultOptions" class="border tabMenuContent hidden">
 				<hgroup class="subHeading">
