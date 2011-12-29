@@ -7,7 +7,7 @@ use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 
 /**
- * MultiselectOptionType is an implementation of IOptionType for multiple 'select' tags.
+ * MultiSelectOptionType is an implementation of IOptionType for multiple 'select' tags.
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -16,7 +16,7 @@ use wcf\util\ArrayUtil;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class MultiselectOptionType extends SelectOptionType {
+class MultiSelectOptionType extends SelectOptionType {
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
@@ -26,7 +26,7 @@ class MultiselectOptionType extends SelectOptionType {
 			'selectOptions' => $option->parseSelectOptions(),
 			'value' => explode("\n", $value)
 		));
-		return WCF::getTPL()->fetch('optionTypeMultiselect');
+		return WCF::getTPL()->fetch('multiSelectOptionType');
 	}
 	
 	/**

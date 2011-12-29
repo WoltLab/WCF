@@ -40,7 +40,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableUserOption
 			'inputClass' => $this->inputClass,
 			'value' => $value
 		));
-		return WCF::getTPL()->fetch('optionTypeText');
+		return WCF::getTPL()->fetch('textOptionType');
 	}
 	
 	/**

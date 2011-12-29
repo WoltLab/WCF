@@ -33,7 +33,7 @@ class TextI18nOptionType extends TextOptionType {
 			'inputType' => $this->inputType,
 			'value' => $value
 		));
-		return WCF::getTPL()->fetch('optionTypeTextI18n');
+		return WCF::getTPL()->fetch('textI18nOptionType');
 	}
 	
 	/**
