@@ -37,7 +37,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * Returns the primary application for current group. Will return current
 	 * application equal to PACKAGE_ID if not within any group.
 	 * 
-	 * @return wcf\data\application\Application
+	 * @return	wcf\data\application\Application
 	 */
 	public function getPrimaryApplication() {
 		return $this->cache['application'][$this->cache['primary']];
@@ -47,7 +47,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * Returns an application based upon it's abbreviation. Will return the
 	 * primary application if $abbreviation equals to 'wcf'
 	 * 
-	 * @return wcf\data\application\Application
+	 * @return	wcf\data\application\Application
 	 */	 
 	public function getApplication($abbreviation) {
 		if ($abbreviation == 'wcf') {
@@ -69,7 +69,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * Returns active application group or 'null' if current application
 	 * is not within a group.
 	 * 
-	 * @return wcf\data\application\group\ApplicationGroup
+	 * @return	wcf\data\application\group\ApplicationGroup
 	 */	
 	public function getActiveGroup() {
 		return $this->cache['group'];
@@ -79,7 +79,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * Returns pseudo-application representing WCF used for special cases,
 	 * e.g. cross-domain files requestable through the webserver.
 	 * 
-	 * @return wcf\data\application\Application
+	 * @return	wcf\data\application\Application
 	 */
 	public function getWCF() {
 		return $this->cache['wcf'];
@@ -88,7 +88,7 @@ class ApplicationHandler extends SingletonFactory {
 	/**
 	 * Returns the currently active application.
 	 * 
-	 * @return wcf\data\application\Application
+	 * @return	wcf\data\application\Application
 	 */	
 	public function getActiveApplication() {
 		return $this->cache['application'][PACKAGE_ID];
@@ -97,7 +97,7 @@ class ApplicationHandler extends SingletonFactory {
 	/**
 	 * Returns a list of dependent applications.
 	 * 
-	 * @return array<wcf\data\application\Application>
+	 * @return	array<wcf\data\application\Application>
 	 */	
 	public function getDependentApplications() {
 		$applications = array();
