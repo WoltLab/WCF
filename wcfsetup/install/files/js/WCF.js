@@ -28,7 +28,7 @@
 		if (key === undefined) {
 			for (var $key in $data) {
 				if ($key.match(/Id$/)) {
-					$data[$key.replace(/Id$/, 'ID'))] = $data[$key];
+					$data[$key.replace(/Id$/, 'ID')] = $data[$key];
 					delete $data[$key];
 				}
 			}
