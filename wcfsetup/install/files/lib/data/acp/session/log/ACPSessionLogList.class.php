@@ -24,7 +24,7 @@ class ACPSessionLogList extends DatabaseObjectList {
 	public function readObjects() {
 		if (!empty($this->sqlSelects)) $this->sqlSelects .= ',';
 		$this->sqlSelects .= "	user_table.username, acp_session.sessionID AS active,
-					(SELECT COUNT(*) FROM wcf".WCF_N."_acp_session_access_log WHERE sessionLogID = ".$this->getDatabaseTableAlias().".sessionLogID) AS actions";
+					(SELECT COUNT(*) FROM wcf".WCF_N."_acp_session_access_log WHERE sessionLogID = ".$this->getDatabaseTableAlias().".sessionLogID) AS accesses";
 		
 		$this->sqlJoins .= "	LEFT JOIN wcf".WCF_N."_user user_table ON (user_table.userID = ".$this->getDatabaseTableAlias().".userID)
 					LEFT JOIN wcf".WCF_N."_acp_session acp_session ON (acp_session.sessionID = ".$this->getDatabaseTableAlias().".sessionID)";
