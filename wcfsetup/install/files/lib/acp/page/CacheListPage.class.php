@@ -78,7 +78,7 @@ class CacheListPage extends AbstractPage {
 			
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
-			$conditions->add("standalone = ?", array(1));
+			$conditions->add("isApplication = ?", array(1));
 			
 			// get package dirs
 			$sql = "SELECT	packageDir
@@ -130,7 +130,7 @@ class CacheListPage extends AbstractPage {
 			
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
-			$conditions->add("standalone = ?", array(1));
+			$conditions->add("isApplication = ?", array(1));
 			
 			// get package dirs
 			$sql = "SELECT	packageDir, packageName, instanceNo

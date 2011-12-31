@@ -219,7 +219,7 @@ class PackageInstallationDispatcher {
 			$this->queue = new PackageInstallationQueue($this->queue->queueID);
 			$this->package = null;
 			
-			if ($package->standalone) {
+			if ($package->isApplication) {
 				$host = RouteHandler::getHost();
 				$path = RouteHandler::getPath(array('acp'));
 				
@@ -235,7 +235,7 @@ class PackageInstallationDispatcher {
 			$this->installPackageParent();
 		}
 		
-		if ($this->getPackage()->standalone && $this->getPackage()->package != 'com.woltlab.wcf' && $this->getAction() == 'install') {
+		if ($this->getPackage()->isApplication && $this->getPackage()->package != 'com.woltlab.wcf' && $this->getAction() == 'install') {
 			if (empty($this->getPackage()->packageDir)) {
 				$document = $this->promptPackageDir();
 				if ($document !== null && $document instanceof form\FormDocument) {
@@ -259,8 +259,8 @@ class PackageInstallationDispatcher {
 	 * Sets parent package and rebuilds dependencies for both.
 	 */	
 	protected function installPackageParent() {
-		// do not handle parent package if current package is standalone or does not have a plugin tag while within installation process
-		if ($this->getArchive()->getPackageInfo('standalone') || $this->getAction() != 'install' || !$this->getArchive()->getPackageInfo('plugin')) {
+		// do not handle parent package if current package is an application or does not have a plugin tag while within installation process
+		if ($this->getArchive()->getPackageInfo('isApplication') || $this->getAction() != 'install' || !$this->getArchive()->getPackageInfo('plugin')) {
 			return;
 		}
 		
@@ -421,7 +421,7 @@ class PackageInstallationDispatcher {
 	}
 	
 	/**
-	 * Prompts for a text input for package directory (applies for standalone-applications only)
+	 * Prompts for a text input for package directory (applies for applications only)
 	 *
 	 * @return	FormDocument
 	 */

@@ -3,7 +3,7 @@
 	<packageinformation>
 		<packagename>WoltLab Community Framework</packagename>
 		<packagedescription>Free web-framework, designed and developed for complex community applications.</packagedescription>
-		<standalone>1</standalone>
+		<isapplication>1</isapplication>
 		<isunique>1</isunique>
 		<version>2.0.0 Alpha 1</version> <!-- codename: maelstrom -->
 		<date>2011-05-19</date>

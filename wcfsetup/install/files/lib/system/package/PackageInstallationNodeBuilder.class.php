@@ -393,7 +393,7 @@ class PackageInstallationNodeBuilder {
 				'packageVersion' => $this->installation->getArchive()->getPackageInfo('version'),
 				'packageDate' => $this->installation->getArchive()->getPackageInfo('date'),
 				'packageURL' => $this->installation->getArchive()->getPackageInfo('packageURL'),
-				'standalone' => $this->installation->getArchive()->getPackageInfo('standalone'),
+				'isApplication' => $this->installation->getArchive()->getPackageInfo('isApplication'),
 				'author' => $this->installation->getArchive()->getAuthorInfo('author'),
 				'authorURL' => $this->installation->getArchive()->getAuthorInfo('authorURL') !== null ? $this->installation->getArchive()->getAuthorInfo('authorURL') : '',
 				'installDate' => TIME_NOW,
@@ -480,7 +480,7 @@ class PackageInstallationNodeBuilder {
 		
 		$instructions = ($this->installation->getAction() == 'install') ? $this->installation->getArchive()->getInstallInstructions() : $this->installation->getArchive()->getUpdateInstructions();
 		foreach ($instructions as $pip) {
-			if (isset($pip['attributes']['run']) && ($pip['attributes']['run'] == 'standalone')) {
+			if (isset($pip['attributes']['run']) && ($pip['attributes']['run'] == 'isApplication')) {
 				$this->parentNode = $this->node;
 				$this->node = $this->getToken();
 				$this->sequenceNo = 0;

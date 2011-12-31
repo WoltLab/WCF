@@ -88,7 +88,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 		// reset options.inc.php files
 		$sql = "SELECT	package, packageID, packageDir
 			FROM	wcf".WCF_N."_package
-			WHERE	standalone = ?";
+			WHERE	isApplication = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(1));
 		while ($row = $statement->fetchArray()) {
