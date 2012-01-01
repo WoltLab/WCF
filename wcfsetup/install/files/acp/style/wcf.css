@@ -488,45 +488,45 @@ nav.topMenu {
 	clear: both;
 }
 
-.mainMenu ul {
+.mainMenu > ul {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	background-color: rgba(0, 0, 0, .4);
 	display: inline-block;
 }
 
-.mainMenu ul li {
+.mainMenu > ul > li {
 	display: inline-block;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.mainMenu ul li {
+	.mainMenu > ul > li {
 		font-size: 120%;
 	}
 }
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.mainMenu ul li {
+	.mainMenu > ul > li {
 		font-size: 150%;
 	}
 }
 
-.mainMenu ul li.activeMenuItem:first-child {
+.mainMenu > ul > li.activeMenuItem:first-child {
 	margin: -5px -5px 0 0;
 }
 
-.mainMenu ul li.activeMenuItem:last-child {
+.mainMenu > ul > li.activeMenuItem:last-child {
 	margin: -5px 0 0 -5px;
 }
 
-.mainMenu ul li:only-child,
-.mainMenu ul li.activeMenuItem:only-child {
+.mainMenu > ul > li:only-child,
+.mainMenu > ul > li.activeMenuItem:only-child {
 	margin: -5px 0 0;
 }
 
-.mainMenu ul li a {
+.mainMenu > ul > li > a {
 	font-weight: normal;
 	text-shadow: 0 -1px 0 #000;
 	color: #69c;
@@ -558,7 +558,7 @@ nav.topMenu {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.mainMenu ul li a {
+	.mainMenu > ul > li > a {
 		padding: 10px 20px;
 	}
 	
@@ -566,22 +566,22 @@ nav.topMenu {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.mainMenu ul li a {
+	.mainMenu > ul > li > a {
 		padding: 10px 10px;
 	}
 	
 }
 
-.mainMenu ul li a,
-.mainMenu ul li:hover a {
+.mainMenu > ul > li > a,
+.mainMenu > ul > li:hover > a {
 	text-decoration: none;
 }
 
-.mainMenu ul li:not(.activeMenuItem):hover a {
+.mainMenu > ul > li:not(.activeMenuItem):hover > a {
 	color: #fff;
 }
 
-.mainMenu ul li.activeMenuItem a {
+.mainMenu > ul > li.activeMenuItem > a {
 	font-size: 110%;
 	font-weight: bold;
 	text-shadow: 0 1px 0 #fff;
@@ -599,12 +599,12 @@ nav.topMenu {
 	
 	z-index: 100;
 }
-		
-		
+
+
 		
 /* ToDo: Special */
 
-.mainMenu ul li.activeMenuItem .badge {
+.mainMenu > ul > li.activeMenuItem .badge {
 	font-size: 75% !important;
 	color: #fff;
 	background-color: #369;
@@ -615,6 +615,24 @@ nav.topMenu {
 	-o-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
 	box-shadow: 0 0 1px rgba(255, 255, 255, 1);
 }
+
+.mainMenu > ul > li > ul {
+	position: absolute;
+	bottom: -18px;
+	z-index: 1000;
+	white-space: nowrap;
+	font-size: 75%;
+}
+
+.mainMenu > ul > li > ul > li {
+	padding: 0 4px;
+	display: inline-block;
+}
+
+.mainMenu > ul > li > ul > li:before {
+	content: "- ";
+}
+
 
 
 
