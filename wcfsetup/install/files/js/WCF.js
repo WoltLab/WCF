@@ -3065,6 +3065,10 @@ WCF.Search.Base = Class.extend({
 	 */
 	_callback: null,
 	
+	/**
+	 * class name
+	 * @var	string
+	 */
 	_className: '',
 
 	/**
@@ -3084,6 +3088,12 @@ WCF.Search.Base = Class.extend({
 	 * @var	jQuery
 	 */
 	_searchInput: null,
+	
+	/**
+	 * minimum search input length, MUST be 1 or higher
+	 * @var	integer
+	 */
+	_triggerLength: 1,
 
 	/**
 	 * Initializes a new search.
@@ -3115,7 +3125,7 @@ WCF.Search.Base = Class.extend({
 		if ($content === '') {
 			this._clearList(true);
 		}
-		else {
+		else if ($content.length >= this._triggerLength) {
 			var $parameters = {
 				data: {
 					searchString: $content
@@ -3128,6 +3138,10 @@ WCF.Search.Base = Class.extend({
 				parameters: this._getParameters($parameters)
 			});
 			this._proxy.sendRequest();
+		}
+		else {
+			// input below trigger length
+			this._clearList(false);
 		}
 	},
 	
