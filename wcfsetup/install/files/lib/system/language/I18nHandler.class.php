@@ -126,7 +126,7 @@ class I18nHandler extends SingletonFactory {
 	 */
 	public function validateValue($elementID, $requireI18n) {
 		if ($this->isPlainValue($elementID)) {
-			if ($requireI18n && $this->getValue($elementID) == '') {
+			if ($requireI18n || $this->getValue($elementID) == '') {
 				return false;
 			}
 		}
