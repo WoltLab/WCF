@@ -149,7 +149,7 @@ class UserSearchForm extends UserOptionListForm {
 	 */
 	public function readData() {
 		parent::readData();
-		
+		//@todo: Adding method getCategoryOptions.
 		$this->optionTree = $this->getCategoryOptions('profile');
 	}
 	
@@ -262,6 +262,21 @@ class UserSearchForm extends UserOptionListForm {
 		while ($row = $statement->fetchArray()) {
 			$this->matches[] = $row['userID'];	
 		}
+	}
+	
+	/**
+	 * Read user options and categories from cache.
+	 */
+	protected function readCache() {
+		$cache = 'user-options';
+		$file = WCF_DIR.'cache/cache.'.$cache.'.php';
+		$className = 'wcf\system\cache\builder\UserOptionCacheBuilder';
+		CacheHandler::getInstance()->addResource($cache, $file, $className);
+		
+		$userOptions = CacheHandler::getInstance()->get($cache, 'options');
+		$categories = CacheHandler::getInstance()->get($cache, 'categories');
+		
+		//@todo: Creating UserOptionCacheBuilder.
 	}
 	
 	/**

@@ -201,9 +201,7 @@ class UserAddForm extends UserOptionListForm {
 		$this->saved();
 		
 		// show empty add form
-		WCF::getTPL()->assign(array(
-			'success' => true
-		));
+		WCF::getTPL()->assign('success', true);
 		
 		// reset values
 		$this->username = $this->email = $this->confirmEmail = $this->password = $this->confirmPassword = '';
