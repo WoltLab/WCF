@@ -155,29 +155,41 @@ class UserAction extends AbstractDatabaseObjectAction {
 	
 	public function getList() {
 		$searchString = $this->parameters['data']['searchString'];
+		$excludedSearchValues = array();
+		if (isset($this->parameters['data']['excludedSearchValues'])) {
+			$excludedSearchValues = $this->parameters['data']['excludedSearchValues'];
+		}
 		$list = array();
 	
 		if ($this->parameters['data']['includeUserGroups']) {
 			$accessibleGroups = UserGroup::getAccessibleGroups();
 			foreach ($accessibleGroups as $group) {
 				$groupName = WCF::getLanguage()->get($group->groupName);
-				$pos = StringUtil::indexOfIgnoreCase($groupName, $searchString);
-				if ($pos !== false && $pos == 0) {
-					$list[] = array(
-						'label' => $groupName,
-						'objectID' => $group->groupID,
-						'type' => 'group'
-					);
+				if (!in_array($groupName, $excludedSearchValues)) {
+					$pos = StringUtil::indexOfIgnoreCase($groupName, $searchString);
+					if ($pos !== false && $pos == 0) {
+						$list[] = array(
+							'label' => $groupName,
+							'objectID' => $group->groupID,
+							'type' => 'group'
+						);
+					}
 				}
 			}
+		}
+		
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add("username LIKE ?", array($searchString.'%'));
+		if (count($excludedSearchValues)) {
+			$conditionBuilder->add("username NOT IN (?)", array($excludedSearchValues));
 		}
 	
 		// find users
 		$sql = "SELECT	userID, username
 			FROM	wcf".WCF_N."_user
-			WHERE	username LIKE ?";
+			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($searchString.'%'));
+		$statement->execute($conditionBuilder->getParameters());
 		while ($row = $statement->fetchArray()) {
 			$list[] = array(
 				'label' => $row['username'],
