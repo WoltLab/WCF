@@ -17,12 +17,24 @@
 	 * @see	jQuery.fn.data()
 	 */
 	jQuery.fn.data = function(key, value) {
-		if (key.indexOf('ID') > 0) {
-			arguments[0] = key.replace('ID', '-id');
+		if (key && key.match(/ID$/)) {
+			arguments[0] = key.replace(/ID$/, '-id');
 		}
 
 		// call jQuery's own data method
-		return $jQueryData.apply(this, arguments);
+		var $data = $jQueryData.apply(this, arguments);
+		
+		// handle .data() call without arguments
+		if (key === undefined) {
+			for (var $key in $data) {
+				if ($key.match(/Id$/)) {
+					$data[$key.replace(/Id$/, 'ID')] = $data[$key];
+					delete $data[$key];
+				}
+			}
+		}
+		
+		return $data;
 	};
 })();
 
@@ -1204,19 +1216,22 @@ WCF.Action.SimpleProxy.prototype = {
  * 
  * @param	string		className
  * @param	jQuery		containerList
+ * @param	jQuery		badgeList
  */
-WCF.Action.Delete = function(className, containerList) { this.init(className, containerList); };
+WCF.Action.Delete = function(className, containerList, badgeList) { this.init(className, containerList, badgeList); };
 WCF.Action.Delete.prototype = {
 	/**
 	 * Initializes 'delete'-Proxy.
 	 * 
 	 * @param	string		className
 	 * @param	jQuery		containerList
+	 * @param	jQuery		badgeList
 	 */
-	init: function(className, containerList) {
+	init: function(className, containerList, badgeList) {
 		if (!containerList.length) return;
 		this.containerList = containerList;
 		this.className = className;
+		this.badgeList = badgeList;
 		
 		// initialize proxy
 		var options = {
@@ -1270,14 +1285,21 @@ WCF.Action.Delete.prototype = {
 	 */
 	_success: function(data, textStatus, jqXHR) {
 		// remove items
-		this.containerList.each(function(index, container) {
+		this.containerList.each($.proxy(function(index, container) {
 			var $objectID = $(container).find('.deleteButton').data('objectID');
 			if (WCF.inArray($objectID, data.objectIDs)) {
 				$(container).wcfBlindOut('up', function() {
 					$(container).empty().remove();
 				}, container);
+				
+				// update badges
+				if (this.badgeList) {
+					this.badgeList.each(function(innerIndex, badge) {
+						$(badge).html($(badge).html() - 1);
+					});
+				}
 			}
-		});
+		}, this));
 	}
 };
 
@@ -1820,7 +1842,7 @@ WCF.MultipleLanguageInput.prototype = {
 			}, this));
 
 			// show list
-			this._list.show();
+			this._list.addClass('open');
 		}
 	},
 
@@ -1828,7 +1850,7 @@ WCF.MultipleLanguageInput.prototype = {
 	 * Closes the language selection.
 	 */
 	_closeSelection: function() {
-		this._list.hide();
+		this._list.removeClass('open');
 	},
 
 	/**
@@ -2560,11 +2582,11 @@ WCF.Collapsible.Remote = Class.extend({
 		this._proxy.setOption('data', {
 			actionName: 'toggleContainer',
 			className: this._className,
+			objectIDs: [this._getObjectID($containerID)],
 			parameters: $.extend(true, {
 				containerID: $containerID,
 				currentState: $state,
-				newState: $newState,
-				objectID: this._getObjectID($containerID)
+				newState: $newState
 			}, this._getAdditionalParameters($containerID))
 		});
 		this._proxy.sendRequest();
@@ -2587,7 +2609,9 @@ WCF.Collapsible.Remote = Class.extend({
 	 * @param	integer		containerID
 	 * @return	integer
 	 */
-	_getObjectID: function(containerID) { },
+	_getObjectID: function(containerID) {
+		return $('#' + containerID).data('objectID');
+	},
 	
 	/**
 	 * Returns additional parameters.
@@ -2627,7 +2651,7 @@ WCF.Collapsible.Remote = Class.extend({
 		
 		// update content storage
 		this._containerData[$containerID].isOpen = (data.returnValues.isOpen) ? true : false;
-		var $newState = (data.returnValues.isOpen) ? 'opened' : 'closed';
+		var $newState = (data.returnValues.isOpen) ? 'open' : 'close';
 		
 		// update container content
 		this._updateContent($containerID, data.returnValues.content, $newState);
@@ -3032,20 +3056,26 @@ WCF.DOMNodeInsertedHandler = {
 WCF.Search = {};
 
 /**
- * Performs a quick search for users and user groups.
+ * Performs a quick search.
  */
-WCF.Search.User = Class.extend({
+WCF.Search.Base = Class.extend({
 	/**
 	 * notification callback
 	 * @var	object
 	 */
 	_callback: null,
-
+	
 	/**
-	 * include user groups in search
-	 * @var	boolean
+	 * class name
+	 * @var	string
 	 */
-	_includeUserGroups: false,
+	_className: '',
+	
+	/**
+	 * list with values that are excluded from seaching
+	 * @var	array
+	 */
+	_excludedSearchValues: [],
 
 	/**
 	 * result list
@@ -3064,22 +3094,30 @@ WCF.Search.User = Class.extend({
 	 * @var	jQuery
 	 */
 	_searchInput: null,
+	
+	/**
+	 * minimum search input length, MUST be 1 or higher
+	 * @var	integer
+	 */
+	_triggerLength: 1,
 
 	/**
 	 * Initializes a new search.
 	 * 
 	 * @param	jQuery		searchInput
 	 * @param	object		callback
-	 * @param	boolean		includeUserGroups
+	 * @param	array		excludedSearchValues
 	 */
-	init: function(searchInput, callback, includeUserGroups) {
+	init: function(searchInput, callback, excludedSearchValues) {
 		if (!$.isFunction(callback)) {
-			console.debug("[WCF.Search.User] Given callback is invalid, aborting.");
+			console.debug("[WCF.Search.Base] Given callback is invalid, aborting.");
 			return;
 		}
 
 		this._callback = callback;
-		this._includeUserGroups = includeUserGroups;
+		if (excludedSearchValues) {
+			this._excludedSearchValues = excludedSearchValues;
+		}
 		this._searchInput = $(searchInput).keyup($.proxy(this._keyUp, this));
 		this._searchInput.wrap('<div class="preInput" />');
 		this._list = $('<ul class="dropdown" />').insertAfter(this._searchInput);
@@ -3088,7 +3126,7 @@ WCF.Search.User = Class.extend({
 			success: $.proxy(this._success, this)
 		});
 	},
-
+	
 	/**
 	 * Performs a search upon key up.
 	 */
@@ -3097,19 +3135,35 @@ WCF.Search.User = Class.extend({
 		if ($content === '') {
 			this._clearList(true);
 		}
-		else {
+		else if ($content.length >= this._triggerLength) {
+			var $parameters = {
+				data: {
+					excludedSearchValues: this._excludedSearchValues,
+					searchString: $content
+				}		
+			};
+			
 			this._proxy.setOption('data', {
 				actionName: 'getList',
-				className: 'wcf\\data\\user\\UserAction',
-				parameters: {
-					data: {
-						includeUserGroups: this._includeUserGroups,
-						searchString: $content
-					}
-				}
+				className: this._className,
+				parameters: this._getParameters($parameters)
 			});
 			this._proxy.sendRequest();
 		}
+		else {
+			// input below trigger length
+			this._clearList(false);
+		}
+	},
+	
+	/**
+	 * Returns parameters for quick search.
+	 * 
+	 * @param	object		parameters
+	 * @return	object
+	 */
+	_getParameters: function(parameters) {
+		return parameters;
 	},
 
 	/**
@@ -3127,14 +3181,27 @@ WCF.Search.User = Class.extend({
 		}
 
 		this._clearList(false);
+		
 		for (var $i in data.returnValues) {
 			var $item = data.returnValues[$i];
 
-			var $listItem = $('<li><img src="' + RELATIVE_WCF_DIR + 'icon/user' + ($item.type == 'group' ? 's' : '') + '1.svg" alt="" />' + $item.label + '</li>').appendTo(this._list);
-			$listItem.data('type', $item.type).data('objectID', $item.objectID).data('label', $item.label).click($.proxy(this._executeCallback, this));
+			this._createListItem($item);
 		}
-
+		
 		this._list.addClass('open');
+	},
+	
+	/**
+	 * Creates a new list item.
+	 * 
+	 * @param	object		item
+	 * @return	jQuery
+	 */
+	_createListItem: function(item) {
+		var $listItem = $('<li><span>' + item.label + '</span></li>').appendTo(this._list);
+		$listItem.data('objectID', item.objectID).data('label', item.label).click($.proxy(this._executeCallback, this));
+		
+		return $listItem;
 	},
 
 	/**
@@ -3146,11 +3213,7 @@ WCF.Search.User = Class.extend({
 		var $listItem = $(event.currentTarget);
 
 		// notify callback
-		this._callback({
-			label: $listItem.data('label'),
-			objectID: $listItem.data('objectID'),
-			type: $listItem.data('type')
-		});
+		this._callback($listItem.data());
 
 		// close list and revert input
 		this._clearList(true);
@@ -3167,6 +3230,78 @@ WCF.Search.User = Class.extend({
 		}
 
 		this._list.removeClass('open').empty();
+	},
+	
+	/**
+	 * Adds an excluded search value.
+	 * 
+	 * @param	string		value
+	 */
+	addExcludedSearchValue: function(value) {
+		if (!WCF.inArray(value, this._excludedSearchValues)) {
+			this._excludedSearchValues.push(value);
+		}
+	},
+	
+	/**
+	 * Adds an excluded search value.
+	 * 
+	 * @param	string		value
+	 */
+	removeExcludedSearchValue: function(value) {
+		var index = $.inArray(value, this._excludedSearchValues);
+		if (index != -1) {
+			this._excludedSearchValues.splice(index, 1);
+		}
+	}
+});
+
+/**
+ * Provides quick search for users and user groups.
+ * 
+ * @see	WCF.Search.Base
+ */
+WCF.Search.User = WCF.Search.Base.extend({
+	/**
+	 * @see	WCF.Search.Base._className
+	 */
+	_className: 'wcf\\data\\user\\UserAction',
+	
+	/**
+	 * include user groups in search
+	 * @var	boolean
+	 */
+	_includeUserGroups: false,
+	
+	/**
+	 * @see	WCF.Search.Base
+	 */
+	init: function(searchInput, callback, includeUserGroups) {
+		this._includeUserGroups = includeUserGroups;
+		
+		this._super(searchInput, callback);
+	},
+	
+	/**
+	 * @see	WCF.Search.Base._getParameters()
+	 */
+	_getParameters: function(parameters) {
+		parameters.data.includeUserGroups = this._includeUserGroups;
+		
+		return parameters;
+	},
+	
+	/**
+	 * @see	WCF.Search.Base._createListItem()
+	 */
+	_createListItem: function(item) {
+		var $listItem = this._super(item);
+		
+		// insert item type
+		$('<img src="' + RELATIVE_WCF_DIR + 'icon/user' + (item.type == 'group' ? 's' : '') + '1.svg" alt="" />').insertBefore($listItem.children('span:eq(0)'));
+		$listItem.data('type', item.type);
+		
+		return $listItem;
 	}
 });
 

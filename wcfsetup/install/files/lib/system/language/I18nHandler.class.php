@@ -121,15 +121,16 @@ class I18nHandler extends SingletonFactory {
 	 * Returns false, if element value is not empty.
 	 * 
 	 * @param	string		$elementID
+	 * @param	boolean		$requireI18n
 	 * @return	boolean
 	 */
-	public function validateValue($elementID) {
+	public function validateValue($elementID, $requireI18n) {
 		if ($this->isPlainValue($elementID)) {
-			if ($this->getValue($elementID) == '') {
+			if ($requireI18n || $this->getValue($elementID) == '') {
 				return false;
 			}
 		}
-		else if (!isset($this->i18nValues[$elementID]) || empty($this->i18nValues[$elementID])) {
+		else if ($requireI18n && (!isset($this->i18nValues[$elementID]) || empty($this->i18nValues[$elementID]))) {
 			return false;
 		}
 		else {

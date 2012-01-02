@@ -258,6 +258,7 @@ CREATE TABLE wcf1_option (
 	permissions TEXT,
 	options TEXT,
 	supportI18n TINYINT(1) NOT NULL DEFAULT 0,
+	requireI18n TINYINT(1) NOT NULL DEFAULT 0,
 	additionalData MEDIUMTEXT,
 	UNIQUE KEY optionName (optionName, packageID)
 );

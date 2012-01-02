@@ -28,7 +28,8 @@
 				<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 			{/if}
 			<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/search1.svg" alt="" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
-			{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
+			
+			{event name='largeButtons'}
 		</ul>
 	</nav>
 </div>
@@ -37,7 +38,8 @@
 	<nav class="menu">
 		<ul>
 			<li{if $action == ''} class="active"{/if}><a href="{link controller='UserList'}{/link}"><span>{lang}wcf.acp.user.list.all{/lang}</span> <span class="badge" title="{lang}wcf.acp.user.list.count{/lang}">{#$items}</span></a></li>
-			{if $additionalUserListOptions|isset}{@$additionalUserListOptions}{/if}
+			
+			{event name='userListOptions'}
 		</ul>
 	</nav>
 	
@@ -53,7 +55,7 @@
 						<th class="column{$column|ucfirst}{if $sortField == $column} active{/if}"><a href="{link controller='UserList'}searchID={@$searchID}&action={@$encodedAction}&pageNo={@$pageNo}&sortField={$column}&sortOrder={if $sortField == $column && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}{$columnLanguageVariable}{/lang}{if $sortField == $column} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					{/foreach}
 					
-					{if $additionalColumnHeads|isset}{@$additionalColumnHeads}{/if}
+					{event name='headColumns'}
 				</tr>
 			</thead>
 			
@@ -74,7 +76,7 @@
 									<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" />
 								{/if}
 						
-								{if $additionalButtons[$user->userID]|isset}{@$additionalButtons[$user->userID]}{/if}
+								{event name='buttons'}
 							</td>
 							<td class="columnID columnUserID"><p>{@$user->userID}</p></td>
 							<td class="columnTitle columnUsername"><p>{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>{else}{$user->username}{/if}</p></td>
@@ -83,7 +85,7 @@
 								<td class="column{$column|ucfirst}"><p>{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</p></td>
 							{/foreach}
 					
-							{if $additionalColumns[$user->userID]|isset}{@$additionalColumns[$user->userID]}{/if}
+							{event name='columns'}
 						</tr>
 					{/foreach}
 				{/content}
@@ -103,7 +105,8 @@
 					<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 				{/if}
 				<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/search1.svg" alt="" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
-				{if $additionalLargeButtons|isset}{@$additionalLargeButtons}{/if}
+				
+				{event name='largeButtons'}
 			</ul>
 		</nav>
 	</div>

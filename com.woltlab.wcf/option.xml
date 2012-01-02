@@ -128,11 +128,13 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>textI18n</optiontype>
 				<supporti18n>1</supporti18n>
+				<requirei18n>0</requirei18n>
 			</option>
 			<option name="page_description">
 				<categoryname>general.page</categoryname>
 				<optiontype>textI18n</optiontype>
 				<supporti18n>1</supporti18n>
+				<requirei18n>0</requirei18n>
 			</option>
 			<option name="page_url">
 				<categoryname>general.page</categoryname>
@@ -276,6 +278,7 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<optiontype>textareaI18n</optiontype>
 				<defaultvalue><![CDATA[]]></defaultvalue>
 				<supporti18n>1</supporti18n>
+				<requirei18n>0</requirei18n>
 			</option>
 			<!-- /mail.general -->
 			

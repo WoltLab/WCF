@@ -23,6 +23,8 @@
 	<nav>
 		<ul class="largeButtons">
 			<li><a href="{link controller='UpdateServerList'}{/link}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/server1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li>
+			
+			{event name='largeButtons'}
 		</ul>
 	</nav>
 </div>
@@ -65,9 +67,10 @@
 				</dd>
 			</dl>
 			
-			{if $additionalFields|isset}{@$additionalFields}{/if}
+			{event name='dataFields'}
 		</fieldset>
 		
+		{event name='fieldsets'}
 	</div>
 	
 	<div class="formSubmit">
