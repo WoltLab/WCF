@@ -3,7 +3,7 @@
 		<div>
 			<a href="{link controller='PackageView' id=$packageID}{/link}" title="{$package->getName()}" style="background-image: url('{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg');">
 				<h1>{$package->getName()}</h1>
-				<small>{$package->packageDescription|truncate:300}</small>
+				<small>{$package->packageDescription|truncate:150}</small>
 			</a>
 		</div>
 		
