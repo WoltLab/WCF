@@ -310,7 +310,7 @@ class PackageInstallationDispatcher {
 		
 		// fetch all pips associated with current PACKAGE_ID and include pips
 		// previously installed by current installation queue
-		$sql = "SELECT	className
+		$sql = "SELECT	pluginName, className
 			FROM	wcf".WCF_N."_package_installation_plugin
 			WHERE	pluginName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -320,7 +320,7 @@ class PackageInstallationDispatcher {
 		$row = $statement->fetchArray();
 		
 		// PIP is unknown
-		if (!$row) {
+		if (!$row || (strcmp($nodeData['pip'], $row['pluginName']) !== 0)) {
 			throw new SystemException("unable to find package installation plugin '".$nodeData['pip']."'");
 		}
 		
