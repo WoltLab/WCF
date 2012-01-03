@@ -1,11 +1,11 @@
 <?php
-namespace wcf\system\request;
+namespace wcf\system\route;
 
 /**
  * Default interface for route controllers.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Alexander Ebert, Matthias Schmidt
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
@@ -13,16 +13,16 @@ namespace wcf\system\request;
  */
 interface IRouteController {
 	/**
-	 * Returns the object id.
+	 * Returns the values of the route's components.
 	 * 
-	 * @return	integer
+	 * @return	array
 	 */
-	public function getID();
+	public function getRouteComponentValues();
 	
 	/**
-	 * Returns the object title.
+	 * Returns the name of the route for this object.
 	 * 
 	 * @return	string
 	 */
-	public function getTitle();
+	public function getRouteName();
 }

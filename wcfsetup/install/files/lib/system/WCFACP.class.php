@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system;
 use wcf\system\cache\CacheHandler;
-use wcf\system\request\RouteHandler;
+use wcf\system\route\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\template\ACPTemplateEngine;

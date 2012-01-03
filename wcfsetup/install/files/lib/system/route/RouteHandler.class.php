@@ -1,5 +1,7 @@
 <?php
-namespace wcf\system\request;
+namespace wcf\system\route;
+use wcf\data\route\Route;
+use wcf\system\cache\CacheHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -11,11 +13,11 @@ use wcf\util\FileUtil;
  * Inspired by routing mechanism used by ASP.NET MVC and released under the terms of
  * the Microsoft Public License (MS-PL) http://www.opensource.org/licenses/ms-pl.html
  * 
- * @author 	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @author 	Alexander Ebert, Matthias Schmidt
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.request
+ * @subpackage	system.route
  * @category 	Community Framework
  */
 class RouteHandler extends SingletonFactory {
@@ -39,9 +41,15 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * list of available routes
-	 * @var	array<wcf\system\request\Route>
+	 * @var	array<wcf\data\route\Route>
 	 */
 	protected $routes = array();
+	
+	/**
+	 * list of available route components
+	 * @var	array<wcf\data\route\component\RouteComponent>
+	 */
+	protected $components = array();
 	
 	/**
 	 * parsed route data
@@ -53,36 +61,72 @@ class RouteHandler extends SingletonFactory {
 	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		$this->addDefaultRoutes();
+		$this->loadCache();
 		
 		// fire event
 		EventHandler::getInstance()->fireAction($this, 'didInit');
 	}
 	
 	/**
-	 * Adds default routes.
+	 * Loads the routes and their components from cache.
 	 */
-	protected function addDefaultRoutes() {
-		$acpRoute = new Route('ACP_default', true);
-		$acpRoute->setSchema('/{controller}/{id}');
-		$acpRoute->setParameterOption('controller', 'Index', null, true);
-		$acpRoute->setParameterOption('id', null, '\d+', true);
-		$this->addRoute($acpRoute);
+	protected function loadCache() {
+		CacheHandler::getInstance()->addResource(
+			'route',
+			WCF_DIR.'cache/cache.route.php',
+			'wcf\system\cache\builder\RouteCacheBuilder'
+		);
 		
-		$defaultRoute = new Route('default');
-		$defaultRoute->setSchema('/{controller}/{id}');
-		$defaultRoute->setParameterOption('controller', 'Index', null, true);
-		$defaultRoute->setParameterOption('id', null, '\d+', true);
-		$this->addRoute($defaultRoute);
+		$this->routes = CacheHandler::getInstance()->get('route', 'routes');
+		$this->components = CacheHandler::getInstance()->get('route', 'components');
 	}
 	
 	/**
-	 * Adds a new route to the beginning of all routes.
+	 * Returns all route components if no route object given or the components
+	 * of the given route.
 	 * 
-	 * @param	wcf\system\request\Route	$route
+	 * @param	wcf\data\route\Route	$route
+	 * @return	array<wcf\data\route\component\RouteComponent>
 	 */
-	public function addRoute(Route $route) {
-		array_unshift($this->routes, $route);
+	public function getComponents(Route $route = null) {
+		if ($route === null) {
+			return $this->components;
+		}
+		
+		$components = array();
+		foreach ($this->components as $component) {
+			if ($component->routeID == $route->routeID) {
+				$components[$component->componentID] = $component;
+			}
+		}
+		
+		return $components;
+	}
+	
+	/**
+	 * Returns all available routes.
+	 * 
+	 * @return	array<wcf\data\route\Route>
+	 */
+	public function getRoutes() {
+		return $this->routes;
+	}
+	
+	/**
+	 * Returns the route object with the given name or null if no such route
+	 * exists.
+	 * 
+	 * @param	string		$routeName
+	 * @return	wcf\data\route\Route
+	 */
+	public function getRouteByName($routeName) {
+		foreach ($this->routes as $route) {
+			if ($route->routeName == $routeName) {
+				return $route;
+			}
+		}
+		
+		return null;
 	}
 	
 	/**
@@ -99,12 +143,12 @@ class RouteHandler extends SingletonFactory {
 		$pathInfo = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : '';
 		
 		foreach ($this->routes as $route) {
-			if ($this->isACP != $route->isACP()) {
+			if ($this->isACP != $route->isACPRoute) {
 				continue;
 			}
 			
 			if ($route->matches($pathInfo)) {
-				$this->routeData = $route->getRouteData();
+				$this->routeData = $route->getRouteData($pathInfo);
 				$this->registerRouteData();
 				return true;
 			}
@@ -141,7 +185,7 @@ class RouteHandler extends SingletonFactory {
 	 */
 	public function buildRoute(array $components) {
 		foreach ($this->routes as $route) {
-			if ($this->isACP != $route->isACP()) {
+			if ($this->isACP != $route->isACPRoute) {
 				continue;
 			}
 			

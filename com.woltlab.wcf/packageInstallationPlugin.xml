@@ -13,6 +13,7 @@
 		<pip name="objectTypeDefinition">wcf\system\package\plugin\ObjectTypeDefinitionPackageInstallationPlugin</pip>
 		<pip name="option">wcf\system\package\plugin\OptionPackageInstallationPlugin</pip>
 		<pip name="pageMenu">wcf\system\package\plugin\PageMenuPackageInstallationPlugin</pip>
+		<pip name="route">wcf\system\package\plugin\RoutePackageInstallationPlugin</pip>
 		<pip name="script">wcf\system\package\plugin\ScriptPackageInstallationPlugin</pip>
 		<pip name="sql">wcf\system\package\plugin\SQLPackageInstallationPlugin</pip>
 		<pip name="templateListener">wcf\system\package\plugin\TemplateListenerPackageInstallationPlugin</pip>
