@@ -220,10 +220,10 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	 * @see wcf\system\database\editor\DatabaseEditor::addIndex()
 	 */
 	public function addIndex($tableName, $indexName, $indexData) {
+		$columns = ArrayUtil::trim(explode(',', $indexData['columns']));
 		if (empty($indexName)) {
 			// create index name
 			// TODO: solve naming conflicts
-			$columns = ArrayUtil::trim(explode(',', $indexData['columns']));
 			$indexName = $tableName.'_'.(!empty($columns[0]) ? $columns[0] : 'generic').'_key';
 		}
 		else {
@@ -232,7 +232,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 		
 		$sql = '';
 		if ($indexData['type'] == 'FULLTEXT') {
-			$sql = "CREATE INDEX ".$indexName." ON ".$tableName." USING gin(to_tsvector('english', \"".implode('" || \' \' || "', explode(',', $indexData['columns']))."\"))";
+			$sql = "CREATE INDEX ".$indexName." ON ".$tableName." USING gin(to_tsvector('english', \"".implode('" || \' \' || "', $columns)."\"))";
 		}
 		else {
 			$sql = "CREATE ".($indexData['type'] == 'UNIQUE' ? "UNIQUE " : "")."INDEX ".$indexName." ON ".$tableName." (".$indexData['columns'].")";
