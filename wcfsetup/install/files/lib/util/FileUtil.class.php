@@ -389,7 +389,7 @@ class FileUtil {
 			// read http response.
 			while (!$remoteFile->eof()) {
 				$readResponse[] = $remoteFile->gets();
-				// look if we are done with transferring the requested file.
+				// look if we are done with transferring the requested file http header.
 				if ($waiting) {
 					if (rtrim($readResponse[count($readResponse) - 1]) == '') {
 						$waiting = false;
