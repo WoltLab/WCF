@@ -220,24 +220,25 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	 * @see wcf\system\database\editor\DatabaseEditor::addIndex()
 	 */
 	public function addIndex($tableName, $indexName, $indexData) {
-		if ($indexData['type'] == 'FULLTEXT') {
-			// TODO: implement fulltext search in postgresql
+		if (empty($indexName)) {
+			// create index name
+			// TODO: solve naming conflicts
+			$columns = ArrayUtil::trim(explode(',', $indexData['columns']));
+			$indexName = $tableName.'_'.(!empty($columns[0]) ? $columns[0] : 'generic').'_key';
 		}
 		else {
-			if (empty($indexName)) {
-				// create index name
-				// TODO: solve naming conflicts
-				$columns = ArrayUtil::trim(explode(',', $indexData['columns']));
-				$indexName = $tableName.'_'.(!empty($columns[0]) ? $columns[0] : 'generic').'_key';
-			}
-			else {
-				$indexName = $tableName.'_'.$indexName.'_key';
-			}
-			
-			$sql = "CREATE ".($indexData['type'] == 'UNIQUE' ? "UNIQUE " : "")."INDEX ".$indexName." ON ".$tableName." (".$indexData['columns'].")";
-			$statement = $this->dbObj->prepareStatement($sql);
-			$statement->execute();
+			$indexName = $tableName.'_'.$indexName.'_key';
 		}
+		
+		$sql = '';
+		if ($indexData['type'] == 'FULLTEXT') {
+			$sql = "CREATE INDEX ".$indexName." ON ".$tableName." USING gin(to_tsvector('english', \"".implode('" || \' \' || "', explode(',', $indexData['columns']))."\"))";
+		}
+		else {
+			$sql = "CREATE ".($indexData['type'] == 'UNIQUE' ? "UNIQUE " : "")."INDEX ".$indexName." ON ".$tableName." (".$indexData['columns'].")";
+		}
+		$statement = $this->dbObj->prepareStatement($sql);
+		$statement->execute();
 	}
 	
 	/**

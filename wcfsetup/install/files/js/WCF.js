@@ -3070,6 +3070,12 @@ WCF.Search.Base = Class.extend({
 	 * @var	string
 	 */
 	_className: '',
+	
+	/**
+	 * list with values that are excluded from seaching
+	 * @var	array
+	 */
+	_excludedSearchValues: [],
 
 	/**
 	 * result list
@@ -3100,14 +3106,18 @@ WCF.Search.Base = Class.extend({
 	 * 
 	 * @param	jQuery		searchInput
 	 * @param	object		callback
+	 * @param	array		excludedSearchValues
 	 */
-	init: function(searchInput, callback) {
+	init: function(searchInput, callback, excludedSearchValues) {
 		if (!$.isFunction(callback)) {
 			console.debug("[WCF.Search.Base] Given callback is invalid, aborting.");
 			return;
 		}
 
 		this._callback = callback;
+		if (excludedSearchValues) {
+			this._excludedSearchValues = excludedSearchValues;
+		}
 		this._searchInput = $(searchInput).keyup($.proxy(this._keyUp, this));
 		this._searchInput.wrap('<div class="preInput" />');
 		this._list = $('<ul class="dropdown" />').insertAfter(this._searchInput);
@@ -3128,6 +3138,7 @@ WCF.Search.Base = Class.extend({
 		else if ($content.length >= this._triggerLength) {
 			var $parameters = {
 				data: {
+					excludedSearchValues: this._excludedSearchValues,
 					searchString: $content
 				}		
 			};
@@ -3219,6 +3230,29 @@ WCF.Search.Base = Class.extend({
 		}
 
 		this._list.removeClass('open').empty();
+	},
+	
+	/**
+	 * Adds an excluded search value.
+	 * 
+	 * @param	string		value
+	 */
+	addExcludedSearchValue: function(value) {
+		if (!WCF.inArray(value, this._excludedSearchValues)) {
+			this._excludedSearchValues.push(value);
+		}
+	},
+	
+	/**
+	 * Adds an excluded search value.
+	 * 
+	 * @param	string		value
+	 */
+	removeExcludedSearchValue: function(value) {
+		var index = $.inArray(value, this._excludedSearchValues);
+		if (index != -1) {
+			this._excludedSearchValues.splice(index, 1);
+		}
 	}
 });
 
