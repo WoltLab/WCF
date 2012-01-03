@@ -50,7 +50,7 @@ class RemoteFile extends File {
 		$this->port = $port;
 		if (count($options)) {
 			$context = stream_context_create($options);
-			$this->resource = fsockopen($host, $port, $this->errorNumber, $this->errorDesc, $timeout, $context);
+			$this->resource = stream_socket_client($host, $port, $this->errorNumber, $this->errorDesc, $timeout, $context);
 		}
 		else {
 			$this->resource = fsockopen($host, $port, $this->errorNumber, $this->errorDesc, $timeout);
