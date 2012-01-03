@@ -59,6 +59,8 @@ class File {
 
 	/**
 	 * Calls the specified function on the open file.
+	 * You can use the stream functions, too, use
+	 * $file->stream_set_timeout(10).
 	 * Do not call this function directly. Use $file->write('') instead.
 	 *
 	 * @param 	string		$function

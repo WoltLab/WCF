@@ -57,14 +57,15 @@ class RemoteFile extends File {
 		$this->protocol = $protocol;
 		$this->host = $host;
 		$this->port = $port;
-		$this->remoteSocket = $this->protocol.'://'.$this->host.':'.$this->port;
+		
+		$remoteSocket = $this->protocol.'://'.$this->host.':'.$this->port;
 
 		if (count($options)) {
 			$context = stream_context_create($options);
-			$this->resource = stream_socket_client($this->remoteSocket, $this->errorNumber, $this->errorDesc, $connectionTimeout, $flags, $context);
+			$this->resource = stream_socket_client($remoteSocket, $this->errorNumber, $this->errorDesc, $connectionTimeout, $flags, $context);
 		}
 		else {
-			$this->resource = stream_socket_client($this->remoteSocket, $this->errorNumber, $this->errorDesc, $connectionTimeout);
+			$this->resource = stream_socket_client($remoteSocket, $this->errorNumber, $this->errorDesc, $connectionTimeout);
 		}
 		
 		if ($this->resource === false) {
