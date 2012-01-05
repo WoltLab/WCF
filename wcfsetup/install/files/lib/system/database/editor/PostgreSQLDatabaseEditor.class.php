@@ -62,7 +62,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute(array($tableName));
 		while ($row = $statement->fetchArray()) {
-      	 		$indices[] = $index['indexname'];
+      	 		$indices[] = $row['indexname'];
    		}
    		
    		return $indices;
