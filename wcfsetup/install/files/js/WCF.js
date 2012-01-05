@@ -3775,6 +3775,9 @@ $.widget('ui.wcfDialog', {
 			// stop current process
 			this._container.stop();
 			this._content.stop();
+			
+			// set dialog to be fully opaque, should prevent weird bugs in WebKit
+			this._container.show().css('opacity', 1.0);
 		}
 
 		// calculate dimensions
