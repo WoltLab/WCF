@@ -223,8 +223,15 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 		$columns = ArrayUtil::trim(explode(',', $indexData['columns']));
 		if (empty($indexName)) {
 			// create index name
-			// TODO: solve naming conflicts
 			$indexName = $tableName.'_'.(!empty($columns[0]) ? $columns[0] : 'generic').'_key';
+			
+			// solve naming conflicts
+			$indices = $this->getIndices($tableName);
+			$i = 2;
+			while (in_array($indexName, $indices)) {
+				$indexName = $tableName.'_'.(!empty($columns[0]) ? $columns[0] : 'generic').'_'.$i.'_key';
+				$i++;
+			}
 		}
 		else {
 			$indexName = $tableName.'_'.$indexName.'_key';
