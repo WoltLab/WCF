@@ -454,7 +454,7 @@ class FileUtil {
 			// put the bytestream's first three bytes to an array.
 			$workArray = array();
 			$workArray = unpack('C3', $sourceContent);
-			if (!is_array($workArray)) {
+			if ((array)$workArray !== $workArray) {
 				throw new SystemException("Unable to process bytestream.");
 			}
 			
@@ -545,7 +545,7 @@ class FileUtil {
 	 */
 	public static function getSafeMode() {
 		$configArray = @ini_get_all();
-		if (is_array($configArray) && isset($configArray['safe_mode']['local_value'])) {
+		if ((array)$configArray === $configArray && isset($configArray['safe_mode']['local_value'])) {
 			return intval($configArray['safe_mode']['local_value']);
 		}
 		return intval(@ini_get('safe_mode'));
