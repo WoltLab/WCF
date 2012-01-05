@@ -1308,8 +1308,9 @@ WCF.Action.Delete.prototype = {
  * 
  * @param	string		className
  * @param	jQuery		containerList
+ * @param	string		toggleButtonSelector
  */
-WCF.Action.Toggle = function(className, containerList) { this.init(className, containerList); };
+WCF.Action.Toggle = function(className, containerList, toggleButtonSelector) { this.init(className, containerList, toggleButtonSelector); };
 WCF.Action.Toggle.prototype = {
 	/**
 	 * Initializes 'toggle'-Proxy
@@ -1317,10 +1318,15 @@ WCF.Action.Toggle.prototype = {
 	 * @param	string		className
 	 * @param	jQuery		containerList
 	 */
-	init: function(className, containerList) {
+	init: function(className, containerList, toggleButtonSelector) {
 		if (!containerList.length) return;
 		this.containerList = containerList;
 		this.className = className;
+		
+		this.toggleButtonSelector = '.toggleButton';
+		if (toggleButtonSelector) {
+			this.toggleButtonSelector = toggleButtonSelector;
+		}
 		
 		// initialize proxy
 		var options = {
@@ -1330,7 +1336,7 @@ WCF.Action.Toggle.prototype = {
 		
 		// bind event listener
 		this.containerList.each($.proxy(function(index, container) {
-			$(container).find('.toggleButton').bind('click', $.proxy(this._click, this));
+			$(container).find(this.toggleButtonSelector).bind('click', $.proxy(this._click, this));
 		}, this));
 	},
 	
@@ -1358,8 +1364,8 @@ WCF.Action.Toggle.prototype = {
 	 */
 	_success: function(data, textStatus, jqXHR) {
 		// remove items
-		this.containerList.each(function(index, container) {
-			var $toggleButton = $(container).find('.toggleButton');
+		this.containerList.each($.proxy(function(index, container) {
+			var $toggleButton = $(container).find(this.toggleButtonSelector);
 			if (WCF.inArray($toggleButton.data('objectID'), data.objectIDs)) {
 				$(container).wcfHighlight();
 				
@@ -1382,7 +1388,7 @@ WCF.Action.Toggle.prototype = {
 					}
 				});
 			}
-		});
+		}, this));
 	}
 };
 
@@ -3065,7 +3071,17 @@ WCF.Search.Base = Class.extend({
 	 */
 	_callback: null,
 	
+	/**
+	 * class name
+	 * @var	string
+	 */
 	_className: '',
+	
+	/**
+	 * list with values that are excluded from seaching
+	 * @var	array
+	 */
+	_excludedSearchValues: [],
 
 	/**
 	 * result list
@@ -3084,20 +3100,30 @@ WCF.Search.Base = Class.extend({
 	 * @var	jQuery
 	 */
 	_searchInput: null,
+	
+	/**
+	 * minimum search input length, MUST be 1 or higher
+	 * @var	integer
+	 */
+	_triggerLength: 1,
 
 	/**
 	 * Initializes a new search.
 	 * 
 	 * @param	jQuery		searchInput
 	 * @param	object		callback
+	 * @param	array		excludedSearchValues
 	 */
-	init: function(searchInput, callback) {
+	init: function(searchInput, callback, excludedSearchValues) {
 		if (!$.isFunction(callback)) {
 			console.debug("[WCF.Search.Base] Given callback is invalid, aborting.");
 			return;
 		}
 
 		this._callback = callback;
+		if (excludedSearchValues) {
+			this._excludedSearchValues = excludedSearchValues;
+		}
 		this._searchInput = $(searchInput).keyup($.proxy(this._keyUp, this));
 		this._searchInput.wrap('<div class="preInput" />');
 		this._list = $('<ul class="dropdown" />').insertAfter(this._searchInput);
@@ -3115,9 +3141,10 @@ WCF.Search.Base = Class.extend({
 		if ($content === '') {
 			this._clearList(true);
 		}
-		else {
+		else if ($content.length >= this._triggerLength) {
 			var $parameters = {
 				data: {
+					excludedSearchValues: this._excludedSearchValues,
 					searchString: $content
 				}		
 			};
@@ -3128,6 +3155,10 @@ WCF.Search.Base = Class.extend({
 				parameters: this._getParameters($parameters)
 			});
 			this._proxy.sendRequest();
+		}
+		else {
+			// input below trigger length
+			this._clearList(false);
 		}
 	},
 	
@@ -3205,6 +3236,29 @@ WCF.Search.Base = Class.extend({
 		}
 
 		this._list.removeClass('open').empty();
+	},
+	
+	/**
+	 * Adds an excluded search value.
+	 * 
+	 * @param	string		value
+	 */
+	addExcludedSearchValue: function(value) {
+		if (!WCF.inArray(value, this._excludedSearchValues)) {
+			this._excludedSearchValues.push(value);
+		}
+	},
+	
+	/**
+	 * Adds an excluded search value.
+	 * 
+	 * @param	string		value
+	 */
+	removeExcludedSearchValue: function(value) {
+		var index = $.inArray(value, this._excludedSearchValues);
+		if (index != -1) {
+			this._excludedSearchValues.splice(index, 1);
+		}
 	}
 });
 

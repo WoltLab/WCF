@@ -62,7 +62,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute(array($tableName));
 		while ($row = $statement->fetchArray()) {
-      	 		$indices[] = $index['indexname'];
+      	 		$indices[] = $row['indexname'];
    		}
    		
    		return $indices;
@@ -220,24 +220,32 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	 * @see wcf\system\database\editor\DatabaseEditor::addIndex()
 	 */
 	public function addIndex($tableName, $indexName, $indexData) {
-		if ($indexData['type'] == 'FULLTEXT') {
-			// TODO: implement fulltext search in postgresql
+		$columns = ArrayUtil::trim(explode(',', $indexData['columns']));
+		if (empty($indexName)) {
+			// create index name
+			$indexName = $tableName.'_'.(!empty($columns[0]) ? $columns[0] : 'generic').'_key';
+			
+			// solve naming conflicts
+			$indices = $this->getIndices($tableName);
+			$i = 2;
+			while (in_array($indexName, $indices)) {
+				$indexName = $tableName.'_'.(!empty($columns[0]) ? $columns[0] : 'generic').'_'.$i.'_key';
+				$i++;
+			}
 		}
 		else {
-			if (empty($indexName)) {
-				// create index name
-				// TODO: solve naming conflicts
-				$columns = ArrayUtil::trim(explode(',', $indexData['columns']));
-				$indexName = $tableName.'_'.(!empty($columns[0]) ? $columns[0] : 'generic').'_key';
-			}
-			else {
-				$indexName = $tableName.'_'.$indexName.'_key';
-			}
-			
-			$sql = "CREATE ".($indexData['type'] == 'UNIQUE' ? "UNIQUE " : "")."INDEX ".$indexName." ON ".$tableName." (".$indexData['columns'].")";
-			$statement = $this->dbObj->prepareStatement($sql);
-			$statement->execute();
+			$indexName = $tableName.'_'.$indexName.'_key';
 		}
+		
+		$sql = '';
+		if ($indexData['type'] == 'FULLTEXT') {
+			$sql = "CREATE INDEX ".$indexName." ON ".$tableName." USING gin(to_tsvector('english', \"".implode('" || \' \' || "', $columns)."\"))";
+		}
+		else {
+			$sql = "CREATE ".($indexData['type'] == 'UNIQUE' ? "UNIQUE " : "")."INDEX ".$indexName." ON ".$tableName." (".$indexData['columns'].")";
+		}
+		$statement = $this->dbObj->prepareStatement($sql);
+		$statement->execute();
 	}
 	
 	/**

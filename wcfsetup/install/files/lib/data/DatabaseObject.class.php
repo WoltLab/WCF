@@ -166,20 +166,22 @@ abstract class DatabaseObject implements IStorableObject {
 	protected static function compareObjects($objectA, $objectB) {
 		foreach (static::$sortBy as $key => $sortBy) {
 			$sortOrder = (isset(static::$sortOrder[$key]) ? static::$sortOrder[$key] : 'ASC');
-			if (is_numeric($objectA->$sortBy) && is_numeric($objectB->$sortBy)) {
-				if ($objectA->$sortBy > $objectB->$sortBy) {
+			$valA = $objectA->$sortBy;
+			$valB = $objectB->$sortBy;
+			if (is_numeric($valA) && is_numeric($valB)) {
+				if ($valA > $valB) {
 					return ($sortOrder == 'ASC' ? 1 : 0);
 				}
-				else if ($objectA->$sortBy < $objectB->$sortBy) {
+				else if ($valA < $valB) {
 					return ($sortOrder == 'ASC' ? 0 : 1);
 				}
 			}
 			else {
 				if ($sortOrder == 'ASC') {
-					$result =  strcoll($objectA->$sortBy, $objectB->$sortBy);
+					$result =  strcoll($valA, $valB);
 				}
 				else {
-					$result = strcoll($objectB->$sortBy, $objectA->$sortBy);
+					$result = strcoll($valB, $valA);
 				}
 				
 				if ($result != 0.0) {
