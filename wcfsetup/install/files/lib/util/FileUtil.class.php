@@ -209,7 +209,7 @@ class FileUtil {
 				return $folder.$filename;
 			}
 
-			if ($recursive == true && @is_dir($folder.$filename)) {
+			if ($recursive === true && @is_dir($folder.$filename)) {
 				if ($found = self::scanFolder($folder.$filename, $searchfile, $recursive)) {
 					@closedir($dirh);
 					return $found;
