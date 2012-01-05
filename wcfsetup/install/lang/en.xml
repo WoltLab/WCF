@@ -490,7 +490,9 @@
 		<item name="wcf.global.sortOrder.ascending"><![CDATA[ascending]]></item>
 		<item name="wcf.global.sortOrder.descending"><![CDATA[descending]]></item>
 		<item name="wcf.global.button.back"><![CDATA[&laquo; Back]]></item>
+		<item name="wcf.global.button.close"><![CDATA[Collapse]]></item>
 		<item name="wcf.global.button.collapsible"><![CDATA[Expand and collapse]]></item>
+		<item name="wcf.global.button.open"><![CDATA[Expand]]></item>
 		<item name="wcf.global.page.next"><![CDATA[Next page]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Previous page]]></item>
 		<item name="wcf.global.locale.unix"><![CDATA[en_US]]></item> <!-- system variable; do not translate -->
