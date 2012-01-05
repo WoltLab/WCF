@@ -18,6 +18,12 @@ use wcf\system\WCF;
  */
 class I18nHandler extends SingletonFactory {
 	/**
+	 * indicates if value variables are assigned in assignVariables()
+	 * @var	boolean
+	 */
+	protected $assignValueVariablesDisabled = false;
+	
+	/**
 	 * list of element ids
 	 * @var	array<string>
 	 */
@@ -278,39 +284,41 @@ class I18nHandler extends SingletonFactory {
 			$value = '';
 			$i18nValues = array();
 			
-			// use POST values instead of querying database
-			if ($useRequestData) {
-				if ($this->isPlainValue($elementID)) {
-					$value = $this->getValue($elementID);
-				}
-				else {
-					if ($this->hasI18nValues($elementID)) {
-						$i18nValues = $this->i18nValues[$elementID];
+			if (!$this->assignValueVariablesDisabled) {
+				// use POST values instead of querying database
+				if ($useRequestData) {
+					if ($this->isPlainValue($elementID)) {
+						$value = $this->getValue($elementID);
 					}
 					else {
-						$i18nValues = array();
-					}
-				}
-			}
-			else {
-				if (preg_match('~^'.$this->elementOptions[$elementID]['pattern'].'$~', $this->elementOptions[$elementID]['value'])) {
-					// use i18n values from language items
-					$sql = "SELECT	languageID, languageItemValue
-						FROM	wcf".WCF_N."_language_item
-						WHERE	languageItem = ?
-							AND packageID = ?";
-					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array(
-						$this->elementOptions[$elementID]['value'],
-						$this->elementOptions[$elementID]['packageID']
-					));
-					while ($row = $statement->fetchArray()) {
-						$i18nValues[$row['languageID']] = $row['languageItemValue'];
+						if ($this->hasI18nValues($elementID)) {
+							$i18nValues = $this->i18nValues[$elementID];
+						}
+						else {
+							$i18nValues = array();
+						}
 					}
 				}
 				else {
-					// use data provided by setOptions()
-					$value = $this->elementOptions[$elementID]['value'];
+					if (preg_match('~^'.$this->elementOptions[$elementID]['pattern'].'$~', $this->elementOptions[$elementID]['value'])) {
+						// use i18n values from language items
+						$sql = "SELECT	languageID, languageItemValue
+							FROM	wcf".WCF_N."_language_item
+							WHERE	languageItem = ?
+								AND packageID = ?";
+						$statement = WCF::getDB()->prepareStatement($sql);
+						$statement->execute(array(
+							$this->elementOptions[$elementID]['value'],
+							$this->elementOptions[$elementID]['packageID']
+						));
+						while ($row = $statement->fetchArray()) {
+							$i18nValues[$row['languageID']] = $row['languageItemValue'];
+						}
+					}
+					else {
+						// use data provided by setOptions()
+						$value = $this->elementOptions[$elementID]['value'];
+					}
 				}
 			}
 			
@@ -323,5 +331,19 @@ class I18nHandler extends SingletonFactory {
 			'i18nPlainValues' => $elementValues,
 			'i18nValues' => $elementValuesI18n
 		));
+	}
+	
+	/**
+	 * Disables assignment of value variables in assignVariables().
+	 */
+	public function disableAssignValueVariables() {
+		$this->assignValueVariablesDisabled = true;
+	}
+	
+	/**
+	 * Enables assignment of value variables in assignVariables().
+	 */
+	public function enableAssignValueVariables() {
+		$this->assignValueVariablesDisabled = false;
 	}
 }
