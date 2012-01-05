@@ -325,7 +325,7 @@ class I18nHandler extends SingletonFactory {
 			$elementValues[$elementID] = $value;
 			$elementValuesI18n[$elementID] = $i18nValues;
 		}
-
+		
 		WCF::getTPL()->assign(array(
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'i18nPlainValues' => $elementValues,
