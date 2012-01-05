@@ -32,7 +32,7 @@ class IconCacheBuilder implements ICacheBuilder {
 		$packageDirs = array();
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		$conditionBuilder->add("dependency.packageID IN (?) AND package.packageDir <> ''", array(PackageDependencyHandler::getDependencies()));
-		$sql = "SELECT		DISTINCT package.packageDir
+		$sql = "SELECT		DISTINCT package.packageDir, dependency.priority
 			FROM		wcf".WCF_N."_package_dependency dependency
 			LEFT JOIN	wcf".WCF_N."_package package
 			ON		(package.packageID = dependency.dependency)

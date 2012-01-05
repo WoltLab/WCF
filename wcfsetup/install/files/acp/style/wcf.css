@@ -157,6 +157,7 @@ header.pageHeader {
 	background-repeat: repeat-x;
 	background-attachment: fixed;
 	width: 100%;
+	overflow: hidden;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -470,6 +471,50 @@ nav.topMenu {
 	height: 120px;
 }
 
+
+
+/* -- -- -- Search -- -- -- */
+
+.search {
+	border: 1px solid rgba(0, 0, 0, .1);
+	border-radius: 5px;
+	background-color: rgba(0, 0, 0, .2);
+	background-image: url('../../icon/search2.svg');
+    background-position: 10px center;
+	background-size: 32px 32px;
+	background-repeat: no-repeat;
+	padding: 10px 30px 10px 50px;
+	position: absolute;
+	top: 50px;
+	right: -30px;
+	
+	-webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+	-moz-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+	-ms-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+	-o-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+	box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+	
+	-webkit-transition: background .2s linear;
+	-moz-transition: background .2s linear;
+	-ms-transition: background .2s linear;
+	-o-transition: background .2s linear;
+	transition: background .2s linear;
+	
+}
+
+.search:hover {
+	background-color: rgba(0, 0, 0, .5);
+}
+
+.search:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.search input[type='search'] {
+	width: 175px;
+}
 
 
 /* -- -- -- Main Menu -- -- -- */
@@ -1615,7 +1660,7 @@ input[type='text'],
 input[type='search'],
 input[type='email'],
 input[type='password'] {
-	padding: 5px 3px;
+	padding: 5px 3px; /* Does not work with input[type='search'] in WebKit browsers */
 }
 
 /* Normal State */
