@@ -67,7 +67,7 @@ class WorkerProxyAction extends AbstractSecureAction {
 		
 		if (isset($_POST['className'])) $this->className = $_POST['className'];
 		if (isset($_POST['loopCount'])) $this->loopCount = intval($_POST['loopCount']);
-		if (isset($_POST['parameters']) && is_array($_POST['parameters'])) $this->parameters = $_POST['parameters'];
+		if (isset($_POST['parameters']) && (array)$_POST['parameters'] === $_POST['parameters']) $this->parameters = $_POST['parameters'];
 		
 		$this->validate();
 	}
