@@ -530,6 +530,7 @@
 		<item name="wcf.global.sortOrder.ascending"><![CDATA[in aufsteigender Reihenfolge]]></item>
 		<item name="wcf.global.sortOrder.descending"><![CDATA[in absteigender Reihenfolge]]></item>
 		<item name="wcf.global.button.back"><![CDATA[&laquo; Zurück]]></item>
+		<item name="wcf.global.button.collapsible"><![CDATA[Auf- und Zuklappen]]></item>
 		<item name="wcf.global.button.close"><![CDATA[Zuklappen]]></item>
 		<item name="wcf.global.button.open"><![CDATA[Aufklappen]]></item>
 		<item name="wcf.global.page.next"><![CDATA[Nächste Seite]]></item>
