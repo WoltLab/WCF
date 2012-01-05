@@ -4,7 +4,9 @@ use wcf\data\package\Package;
 use wcf\data\package\PackageList;
 use wcf\page\AbstractPage;
 use wcf\system\menu\acp\ACPMenu;
+use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 
 /**
  * Shows a list of installed packages and plugins.
@@ -76,6 +78,16 @@ class PackageListPage extends AbstractPage {
 	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
+		// use detailed view if accessing WCF ACP directly
+		if (PACKAGE_ID == 1) {
+			// base tag is determined on runtime
+			$host = RouteHandler::getHost();
+			$path = RouteHandler::getPath();
+			
+			HeaderUtil::redirect($host . $path . 'index.php/PackageListDetailed/' . SID_ARG_1ST, false);
+			exit;
+		}
+		
 		// enable menu item
 		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.list');
 		
