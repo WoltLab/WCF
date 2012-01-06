@@ -2806,6 +2806,7 @@ WCF.Effect.BalloonTooltip.prototype = {
 					$.proxy(this._mouseEnterHandler, this),
 					$.proxy(this._mouseLeaveHandler, this)
 				);
+				$element.click($.proxy(this._mouseLeaveHandler, this));
 			}
 		}
 	},
@@ -2823,6 +2824,12 @@ WCF.Effect.BalloonTooltip.prototype = {
 			$element.data('tooltip', $title);
 			$element.removeAttr('title');
 		}
+		
+		// reset tooltip position
+		this._tooltip.css({
+			top: "0px",
+			left: "0px"
+		});
 		
 		// update text
 		this._tooltip.children('span:eq(0)').text($element.data('tooltip'));
