@@ -479,10 +479,6 @@ nav.topMenu {
 	border: 1px solid rgba(0, 0, 0, .1);
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, .2);
-	background-image: url('../../icon/search2.svg');
-    background-position: 10px center;
-	background-size: 32px 32px;
-	background-repeat: no-repeat;
 	padding: 10px 30px 10px 50px;
 	position: absolute;
 	top: 50px;
