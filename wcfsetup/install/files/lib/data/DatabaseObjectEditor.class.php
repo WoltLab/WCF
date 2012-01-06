@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @subpackage	data
  * @category 	Community Framework
  */
-abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements IEditableObject {
+abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements IEditableCachedObject {
 	/**
 	 * @see wcf\data\IEditableObject::create()
 	 */
@@ -113,5 +113,12 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 		WCF::getDB()->commitTransaction();
 		
 		return count($objectIDs);
+	}
+	
+	/**
+	 * @see wcf\data\IEditableCachedObject::$resetCache()
+	 */
+	public static function resetCache() {
+		
 	}
 }
