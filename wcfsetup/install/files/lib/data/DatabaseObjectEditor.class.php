@@ -116,7 +116,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 	}
 	
 	/**
-	 * @see wcf\data\IEditableCachedObject::$resetCache()
+	 * @see wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		
