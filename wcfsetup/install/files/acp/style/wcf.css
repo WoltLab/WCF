@@ -935,6 +935,13 @@ section.content .content {
 	overflow: hidden;
 	z-index: 150;
 	opacity: .3;
+}
+
+/* Orientation */
+
+.left .collapsibleSidebarButton {
+	background-image: url('../../icon/arrowLeft1.svg'), url('../../icon/arrowLeft1.svg');
+	left: 250px;
 	
 	-webkit-transition: left .1s ease;
 	-moz-transition: left .1s ease;
@@ -943,16 +950,15 @@ section.content .content {
 	transition: left .1s ease;
 }
 
-/* Orientation */
-
-.left .collapsibleSidebarButton {
-	background-image: url('../../icon/arrowLeft1.svg'), url('../../icon/arrowLeft1.svg');
-	left: 250px;
-}
-
 .right .collapsibleSidebarButton {
 	background-image: url('../../icon/arrowRight1.svg'), url('../../icon/arrowRight1.svg');
 	right: 250px;
+	
+	-webkit-transition: right .1s ease;
+	-moz-transition: right .1s ease;
+	-ms-transition: right .1s ease;
+	-o-transition: right .1s ease;
+	transition: right .1s ease;
 }
 
 .sidebar .collapsibleSidebarButton span {
