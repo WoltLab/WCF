@@ -4238,19 +4238,19 @@ $.widget('ui.wcfPages', {
 				// you can prevent the page switching by returning false or by event.preventDefault()
 				// in a shouldSwitch-callback. e.g. if an AJAX request is already running.
 				var $result = this._trigger('shouldSwitch', undefined, {
-					nextPage: value,
+					nextPage: value
 				});
 				
 				if ($result) {
 					this.options[key] = value;
 					this._render();
 					this._trigger('switched', undefined, {
-						activePage: value,
+						activePage: value
 					});
 				}
 				else {
 					this._trigger('notSwitched', undefined, {
-						activePage: value,
+						activePage: value
 					});
 				}
 			}
