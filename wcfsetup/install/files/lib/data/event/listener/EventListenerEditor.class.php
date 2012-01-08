@@ -16,5 +16,5 @@ class EventListenerEditor extends DatabaseObjectEditor {
 	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
-	public static $baseClass = 'wcf\data\event\listener\EventListener';
+	protected static $baseClass = 'wcf\data\event\listener\EventListener';
 }
