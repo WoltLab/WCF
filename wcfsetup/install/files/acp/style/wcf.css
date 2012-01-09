@@ -997,8 +997,7 @@ section.content .content {
 	background-image: url('../../icon/arrowRight1.svg');
 }
 
-.left .sidebar .collapsibleSidebarButton:hover,
-.left .sidebar .collapsibleSidebarButton:hover span {
+.left .sidebar .collapsibleSidebarButton:hover {
 	border-right: 1px solid rgba(187, 204, 221, .5);
 }
 
@@ -1013,8 +1012,7 @@ section.content .content {
 	background-image: url('../../icon/arrowLeft1.svg');
 }
 
-.right .sidebar .collapsibleSidebarButton:hover,
-.right .sidebar .collapsibleSidebarButton:hover span {
+.right .sidebar .collapsibleSidebarButton:hover {
 	border-left: 1px solid rgba(187, 204, 221, .5);
 }
 
