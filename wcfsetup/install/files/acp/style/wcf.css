@@ -873,6 +873,7 @@ section.content .content {
 	margin-bottom: -10px;
 	display: block;
 	width: 250px;
+	overflow: hidden;
 	z-index: 80;
 	
 	-webkit-transition: width .1s ease;
@@ -900,6 +901,7 @@ section.content .content {
 
 .collapsed {
 	width: 0;
+	height: 0;
 }
 
 .left .sidebar.collapsed + .content {
