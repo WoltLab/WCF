@@ -1533,9 +1533,20 @@ fieldset p.description {
 	color: #999;
 }
 
+/* Special */
+
+.sidebar fieldset {
+	border-width: 0;
+	background-color: transparent;
+}
+
+.sidebar fieldset legend {
+	text-transform: uppercase;
+	padding: 0;
+}
 
 
-/* ############## Tabbed Content ############## */
+/* ############## Labeled Content ############## */
 
 /* Simple */
 
@@ -1628,6 +1639,26 @@ dl > dd > fieldset > dl > dd {
 dl > dd > fieldset > dl > dd > label {
 	display: block;
 }
+
+/* Special */
+
+.sidebar dl > dt {
+	text-align: left;
+	float: none;
+	width: auto;
+}
+
+.sidebar dl > dd {
+	margin-left: 0;
+	display: block;
+	margin-bottom: 13px;
+}	
+
+.sidebar dl > dd * {
+	display: block;
+}	
+
+
 
 /* Reversed */
 
@@ -2043,6 +2074,18 @@ input[type='button'],
 	display: inline-block;
 }
 
+/* Special */
+
+.sidebar .largeButtons *,
+.sidebar input {
+	font-size: 50% !important;
+	padding: 3px 7px;
+}
+
+.sidebar .largeButtons *,
+.sidebar input {
+	font-size: 50% !important;
+}
 
 
 /* ############## Border ############## */
