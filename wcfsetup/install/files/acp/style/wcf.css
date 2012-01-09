@@ -2773,11 +2773,9 @@ tr .columnIcon {
 	white-space: nowrap;
 }
 
-/* ToDo: does not function any more! 
-tr .columnIcon img:not(.balloonTooltip):hover {
+tr img[src*="D.svg"] {
 	cursor: not-allowed;
 }
-*/
 
 tr .columnIcon img {
 	height: 16px;
@@ -3991,16 +3989,10 @@ input[type='button'][disabled='disabled'],
 
 /* ############## CSS Experiments (active) ############## */
 
-
-
-
-
 /* what is that? */
 .wcfDimensions {
 	display: inline-block;
 }
-
-
 
 
 
