@@ -75,7 +75,7 @@
 		new WCF.Effect.BalloonTooltip();
 		$('<span class="pointer"><span></span></span>').appendTo('.innerError');
 		
-		$('#sidebarMenu').wcfSidebar();
+		$('#sidebarContent').wcfSidebar();
 		
 		{event name='javascriptInit'}
 	});

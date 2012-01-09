@@ -72,7 +72,7 @@
 			new WCF.Effect.BalloonTooltip();
 			$('<span class="pointer"><span></span></span>').appendTo('.innerError');
 			
-			$('#sidebarMenu').wcfSidebar();
+			$('#sidebarContent').wcfSidebar();
 		});
 		//]]>
 	</script>
@@ -148,7 +148,7 @@
 				<!-- SIDEBAR -->
 				<aside class="sidebar">
 					<!-- sidebar menu -->
-					<nav id="sidebarMenu" class="sidebarMenu">
+					<nav id="sidebarContent" class="sidebarContent">
 						{content}
 							{* work-around for unknown core-object during WCFSetup *}
 							{if PACKAGE_ID}
@@ -156,7 +156,7 @@
 									<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="menuContainer collapsible" data-parent-menu-item="{$parentMenuItem->menuItem}">
 										{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
 											<h1 class="menuHeader" data-menu-item="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</h1>
-											<div class="sidebarMenuGroup">
+											<div class="sidebarContentGroup">
 												<ul id="{$menuItem->menuItem}">
 													{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItem->menuItem) item=menuItemCategory}
 														{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
