@@ -1732,6 +1732,7 @@ select {
 input[type='text'],
 input[type='search'],
 input[type='email'],
+input[type='url'],
 input[type='password'] {
 	padding: 5px 3px; /* Does not work with input[type='search'] in WebKit browsers */
 }
@@ -1741,6 +1742,7 @@ input[type='password'] {
 input[type='text'],
 input[type='search'],
 input[type='email'],
+input[type='url'],
 input[type='password'],
 textarea {
 	border-width: 1px;
@@ -1767,6 +1769,7 @@ textarea {
 input[type='text']:hover,
 input[type='search']:hover,
 input[type='email']:hover,
+input[type='url']:hover,
 input[type='password']:hover,
 textarea:hover {
 	border: 1px solid #fa2;
@@ -1778,11 +1781,13 @@ textarea:hover {
 input[type='text']:active,
 input[type='search']:active,
 input[type='email']:active,
+input[type='url']:active,
 input[type='password']:active,
 textarea:active,
 input[type='text']:focus,
 input[type='search']:focus,
 input[type='email']:focus,
+input[type='url']:focus,
 input[type='password']:focus,
 textarea:focus {
 	border: 1px solid #fa2;
@@ -1801,6 +1806,7 @@ textarea:focus {
 input[type='text'][readonly='readonly'],
 input[type='search'][readonly='readonly'],
 input[type='email'][readonly='readonly'],
+input[type='url'][readonly='readonly'],
 input[type='password'][readonly='readonly'],
 textarea[readonly='readonly'] {
 	border-style: solid;
@@ -1819,6 +1825,7 @@ textarea[readonly='readonly'] {
 input[type='text'][disabled='disabled'],
 input[type='search'][disabled='disabled'],
 input[type='email'][disabled='disabled'],
+input[type='url'][disabled='disabled'],
 input[type='password'][disabled='disabled'],
 textarea[disabled='disabled'] {
 	border-style: solid;
@@ -1897,6 +1904,7 @@ textarea[disabled='disabled'] {
 .formError input[type='text'],
 .formError input[type='search'],
 .formError input[type='email'],
+.formError input[type='url'],
 .formError input[type='password'],
 .formError textarea {
 	border-color: #f00;
@@ -3298,6 +3306,7 @@ div#ajaxExceptionStacktrace {
 	box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
 }
 
+/* ToDo */
 a.balloonTooltip,
 a .balloonTooltip,
 img[src*='delete'],
