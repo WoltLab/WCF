@@ -520,6 +520,7 @@ nav.topMenu {
 	width: 32px;
 	height: 32px;
 	float: left;
+	cursor: pointer;
 }
 
 .search > div {
@@ -567,6 +568,10 @@ nav.topMenu {
 	.mainMenu > ul > li {
 		font-size: 150%;
 	}
+}
+
+.mainMenu > ul > li.activeMenuItem {
+	margin: -5px 0 0;
 }
 
 .mainMenu > ul > li.activeMenuItem:first-child {
