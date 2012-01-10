@@ -469,7 +469,7 @@
 	</category>
 	
 	<category name="wcf.global">
-		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
+		<item name="wcf.global.button.add"><![CDATA[Add]]></item>
 		<item name="wcf.global.button.back"><![CDATA[&laquo; Back]]></item>
 		<item name="wcf.global.button.collapsible"><![CDATA[Expand and collapse]]></item>
 		<item name="wcf.global.button.delete"><![CDATA[Delete]]></item>
@@ -479,6 +479,7 @@
 		<item name="wcf.global.button.next"><![CDATA[Next &raquo;]]></item>
 		<item name="wcf.global.button.reset"><![CDATA[Reset]]></item>
 		<item name="wcf.global.button.submit"><![CDATA[Submit]]></item>
+		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.form.add.success"><![CDATA[The new entry has been successfully saved.]]></item>
 		<item name="wcf.global.form.edit.success"><![CDATA[Your changes have been successfully saved.]]></item>
 		<item name="wcf.global.form.error"><![CDATA[The data you have entered are not valid. Please check the information you have given in the marked fields.]]></item><item name="wcf.global.form.error.empty"><![CDATA[Please enter the required information for this field.]]></item>
