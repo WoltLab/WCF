@@ -2773,7 +2773,7 @@ tr .columnIcon {
 	white-space: nowrap;
 }
 
-tr img[src*="D.svg"] {
+tr img[src$="D.svg"] {
 	cursor: not-allowed;
 }
 
