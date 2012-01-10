@@ -1205,6 +1205,7 @@ section.content .content {
 	font-size: 85%;
 	font-weight: bold;
 	text-shadow: none;
+	text-decoration: none;
 	border-radius: 13px;
 	background-color: #fff;
 	margin-right: -3px;
@@ -1215,7 +1216,7 @@ section.content .content {
 	top: -1px;
 }
 
-/* Types */
+/* Badge Types */
 
 .badgeNote {
 	border: 1px solid #ccc;
@@ -1269,6 +1270,111 @@ li > .badgeButton {
 .badgeButton a,
 .clipboardEditor > ul > li > span {
 	text-decoration: none !important;
+}
+
+
+
+/* ############## ToDo: Labels ############## */
+
+/* Globals */
+
+.label {
+	font-size: 85%;
+	font-weight: bold;
+	color: #eee;
+	text-shadow: none;
+	text-decoration: none;
+	border-radius: 13px;
+	background-color: #666;
+	margin-right: -3px;
+	margin-left: 3px;
+	padding: 1px 5px 2px;
+	display: inline-block;
+	position: relative;
+	top: -1px;
+}
+
+.label a {
+	color: #eee;
+	text-decoration: none;
+}
+
+.label a:hover {
+	color: #fff;
+}
+
+/* Label Default Colors */
+
+.label.black {
+	background-color: #333;
+}
+
+.label.black:hover {
+	background-color: #000;
+}
+
+.label.brown {
+	background-color: #c63;
+}
+
+.label.brown:hover {
+	background-color: #930;
+}
+
+.label.red {
+	background-color: #c00;
+}
+
+.label.red:hover {
+	background-color: #900;
+}
+
+.label.orange {
+	background-color: #f90;
+}
+
+.label.orange:hover {
+	background-color: #f60;
+}
+
+.label.yellow {
+	background-color: #ff0;
+}
+
+.label.yellow:hover {
+	background-color: #cc0;
+}
+
+.label.green {
+	background-color: #0c0;
+}
+
+.label.green:hover {
+	background-color: #090;
+}
+
+.label.blue {
+	background-color: #09f;
+}
+
+.label.blue:hover {
+	background-color: #06c;
+}
+
+.label.lilac {
+	background-color: #c0f;
+}
+
+.label.lilac:hover {
+	background-color: #90c;---
+}
+
+.label.pink {
+	background-color: #f0c;
+}
+
+.label.pink:hover {
+	background-color: #c09;---
 }
 
 
