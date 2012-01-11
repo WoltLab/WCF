@@ -478,6 +478,7 @@
 		<item name="wcf.global.button.enable"><![CDATA[Enable]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Next &raquo;]]></item>
 		<item name="wcf.global.button.reset"><![CDATA[Reset]]></item>
+		<item name="wcf.global.button.search"><![CDATA[Search]]></item>
 		<item name="wcf.global.button.submit"><![CDATA[Submit]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.form.add.success"><![CDATA[The new entry has been successfully saved.]]></item>
