@@ -1886,7 +1886,6 @@ input[type='search'],
 input[type='email'],
 input[type='url'],
 input[type='password'],
-input[type='url'],
 textarea {
 	border-width: 1px;
 	border-style: solid;
@@ -1914,7 +1913,6 @@ input[type='search']:hover,
 input[type='email']:hover,
 input[type='url']:hover,
 input[type='password']:hover,
-input[type='url']:hover,
 textarea:hover {
 	border: 1px solid rgba(255, 170, 34, 1);
 	background-color: rgba(255, 249, 244, 1);
@@ -1927,14 +1925,12 @@ input[type='search']:active,
 input[type='email']:active,
 input[type='url']:active,
 input[type='password']:active,
-input[type='url']:active,
 textarea:active,
 input[type='text']:focus,
 input[type='search']:focus,
 input[type='email']:focus,
 input[type='url']:focus,
 input[type='password']:focus,
-input[type='url']:focus,
 textarea:focus {
 	border: 1px solid rgba(255, 170, 34, 1);
 	background-color: rgba(255, 249, 244, 1);
@@ -1954,7 +1950,6 @@ input[type='search'][readonly='readonly'],
 input[type='email'][readonly='readonly'],
 input[type='url'][readonly='readonly'],
 input[type='password'][readonly='readonly'],
-input[type='url'][readonly='readonly'],
 textarea[readonly='readonly'] {
 	border-style: solid;
 	border-color: rgba(204, 204, 204, 1) rgba(221, 221, 221, 1) rgba(238, 238, 238, 1);
@@ -1974,7 +1969,6 @@ input[type='search'][disabled='disabled'],
 input[type='email'][disabled='disabled'],
 input[type='url'][disabled='disabled'],
 input[type='password'][disabled='disabled'],
-input[type='url'][disabled='disabled'],
 textarea[disabled='disabled'] {
 	border-style: solid;
 	border-color: rgba(255, 255, 255, .5);
@@ -2065,7 +2059,6 @@ input[type=search] {
 .formError input[type='email'],
 .formError input[type='url'],
 .formError input[type='password'],
-.formError input[type='url'],
 .formError textarea {
 	border-color: rgba(255, 0, 0, 1);
 	background-color: rgba(255, 246, 246, 1);
