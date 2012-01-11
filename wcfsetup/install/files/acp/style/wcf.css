@@ -159,6 +159,8 @@ header.pageHeader {
 	background-attachment: fixed;
 	width: 100%;
 	overflow: hidden;
+	position: relative;
+	z-index: 150;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -706,13 +708,6 @@ nav.topMenu {
 	border-top-right-radius: 3px;
 	margin: 0 23px;
 	display: block;
-	position: relative;
-	z-index: 150;
-}
-
-.footerNavigation {
-	position: relative;
-	z-index: 150;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -1163,6 +1158,7 @@ section.content .content {
 	text-align: center;
 	padding: 0 23px;
 	position: relative;
+	z-index: 150;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
