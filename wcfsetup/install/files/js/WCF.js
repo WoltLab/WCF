@@ -2806,6 +2806,7 @@ WCF.Effect.BalloonTooltip.prototype = {
 					$.proxy(this._mouseEnterHandler, this),
 					$.proxy(this._mouseLeaveHandler, this)
 				);
+				$element.click($.proxy(this._mouseLeaveHandler, this));
 			}
 		}
 	},
@@ -2823,6 +2824,12 @@ WCF.Effect.BalloonTooltip.prototype = {
 			$element.data('tooltip', $title);
 			$element.removeAttr('title');
 		}
+		
+		// reset tooltip position
+		this._tooltip.css({
+			top: "0px",
+			left: "0px"
+		});
 		
 		// update text
 		this._tooltip.children('span:eq(0)').text($element.data('tooltip'));
@@ -3775,6 +3782,9 @@ $.widget('ui.wcfDialog', {
 			// stop current process
 			this._container.stop();
 			this._content.stop();
+			
+			// set dialog to be fully opaque, should prevent weird bugs in WebKit
+			this._container.show().css('opacity', 1.0);
 		}
 
 		// calculate dimensions
@@ -4238,19 +4248,19 @@ $.widget('ui.wcfPages', {
 				// you can prevent the page switching by returning false or by event.preventDefault()
 				// in a shouldSwitch-callback. e.g. if an AJAX request is already running.
 				var $result = this._trigger('shouldSwitch', undefined, {
-					nextPage: value,
+					nextPage: value
 				});
 				
 				if ($result) {
 					this.options[key] = value;
 					this._render();
 					this._trigger('switched', undefined, {
-						activePage: value,
+						activePage: value
 					});
 				}
 				else {
 					this._trigger('notSwitched', undefined, {
-						activePage: value,
+						activePage: value
 					});
 				}
 			}

@@ -47,7 +47,7 @@
 <!-- /HEADER -->
 
 <!-- MAIN -->
-<div id="main" class="main{if $sidebarDirection|isset} {@$sidebarDirection}{/if}">
+<div id="main" class="main{if $sidebarOrientation|isset} {@$sidebarOrientation}{/if}">
 	<div>
 		{if $sidebar|isset}
 			<aside class="sidebar">
