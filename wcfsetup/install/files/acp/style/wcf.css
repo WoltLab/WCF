@@ -707,6 +707,12 @@ nav.topMenu {
 	margin: 0 23px;
 	display: block;
 	position: relative;
+	z-index: 150;
+}
+
+.footerNavigation {
+	position: relative;
+	z-index: 150;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
