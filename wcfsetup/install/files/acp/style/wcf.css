@@ -1301,7 +1301,7 @@ li > .badgeButton {
 
 .labelList {
 	margin: 0;
-	padding: 5px 0;
+	padding: 5px 0 0;
 	display: inline-block;
 }
 
@@ -1537,7 +1537,7 @@ li > .badgeButton {
 
 .mainHeading > hgroup h1 {
 	font-weight: bold;
-	border-bottom: 1px solid #999;
+	border-bottom: 1px solid rgba(153, 153, 153, 1);;
 	padding: 1px 0 10px;	
 }
 
@@ -1585,7 +1585,7 @@ li > .badgeButton {
 .mainHeading > hgroup h2 {
 	font-size: 100%;
 	font-weight: normal;
-	color: #999;
+	color: rgba(153, 153, 153, 1);
 	padding-top: 5px;
 }
 
@@ -1609,7 +1609,7 @@ li > .badgeButton {
 	font-size: 150%;
 	font-weight: bold;
 	text-shadow: 0 1px 0 #fff;
-	color: #999;
+	color: rgba(153, 153, 153, 1);
 	border-bottom: 1px solid #ccc;
 	margin: 10px 0;
 	padding: 10px 0;
@@ -1663,7 +1663,7 @@ fieldset.topLink {
 */
 
 fieldset legend {
-	color: #999;
+	color: rgba(153, 153, 153, 1);
 	padding: 0 7px 0;
 }
 
@@ -1673,7 +1673,7 @@ fieldset legend ~ p {
 
 fieldset p.description {
 	font-size: 90%;
-	color: #999;
+	color: rgba(153, 153, 153, 1);
 }
 
 /* Special */
@@ -1700,7 +1700,7 @@ dl {
 
 dl > dt {
 	text-align: right;
-	color: #69c;
+	color: rgba(102, 153, 204, 1);
 	margin-top: 5px; /* not so nice */
 	float: left;
 }
@@ -1727,7 +1727,7 @@ dl > dt > label {
 }
 
 dl.disabled > dt {
-	color: #777;
+	color: rgba(119, 119, 119, 1);
 }
 
 dl > dd {
@@ -1752,7 +1752,7 @@ dl > dd {
 
 dl > dd > small {
 	font-size: 85%;
-	color: #999;
+	color: rgba(153, 153, 153, 1);
 	margin: 3px 0 7px;
 	display: block;
 }
@@ -1839,7 +1839,7 @@ dl > dd > fieldset > dl > dd > label {
 /* Globals */
 
 label {
-	color: #69c;
+	color: rgba(102, 153, 204, 1);
 }
 
 /* Structure */
@@ -1889,9 +1889,9 @@ input[type='password'],
 textarea {
 	border-width: 1px;
 	border-style: solid;
-	border-color: #999 #ccc #eee;
+	border-color: rgba(153, 153, 153, 1) rgba(204, 204, 204, 1) rgba(238, 238, 238, 1);
 	border-radius: 3px;
-	background-color: #fff;
+	background-color: rgba(255, 255, 255, 1);
 	
 	-webkit-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
 	-moz-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
@@ -1914,8 +1914,8 @@ input[type='email']:hover,
 input[type='url']:hover,
 input[type='password']:hover,
 textarea:hover {
-	border: 1px solid #fa2;
-	background-color: #fff9f4;
+	border: 1px solid rgba(255, 170, 34, 1);
+	background-color: rgba(255, 249, 244, 1);
 }
 
 /* Active & Focus State */
@@ -1932,8 +1932,8 @@ input[type='email']:focus,
 input[type='url']:focus,
 input[type='password']:focus,
 textarea:focus {
-	border: 1px solid #fa2;
-	background-color: #fff9f4;
+	border: 1px solid rgba(255, 170, 34, 1);
+	background-color: rgba(255, 249, 244, 1);
 	outline: none;
 	
 	-webkit-box-shadow: 0 0 5px rgba(255, 170, 34, .5), inset 0 1px 5px rgba(0, 0, 0, .2);
@@ -1952,7 +1952,7 @@ input[type='url'][readonly='readonly'],
 input[type='password'][readonly='readonly'],
 textarea[readonly='readonly'] {
 	border-style: solid;
-	border-color: #ccc #ddd #eee;
+	border-color: rgba(204, 204, 204, 1) rgba(221, 221, 221, 1) rgba(238, 238, 238, 1);
 	background-color: transparent;
 	
 	-webkit-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .05);
@@ -2039,7 +2039,18 @@ textarea[disabled='disabled'] {
 	width: auto;
 }
 
+/* Special Search Input Tweaks */
 
+input[type=search] {
+	border-radius: 30px;
+	
+	-webkit-appearance: textfield;
+	-webkit-box-sizing: content-box;
+}
+
+::-webkit-search-decoration {
+	display: none;
+}
 
 /* -- -- -- Form Errors -- -- -- */
 
@@ -2049,8 +2060,8 @@ textarea[disabled='disabled'] {
 .formError input[type='url'],
 .formError input[type='password'],
 .formError textarea {
-	border-color: #f00;
-	background-color: #fff6f6;
+	border-color: rgba(255, 0, 0, 1);
+	background-color: rgba(255, 246, 246, 1);
 }
 
 
@@ -2362,7 +2373,7 @@ input[type='button'],
 
 .tabMenu li a {
 	text-decoration: none;
-	color: #999;
+	color: rgba(153, 153, 153, 1);
 	cursor: pointer;
 	border-width: 1px 1px 0 1px;
 	border-style: solid;
@@ -2534,7 +2545,7 @@ input[type='button'],
 	font-size: 85%;
 	text-shadow: 0 1px 0 #fff;
 	text-decoration: none;
-	color: #999;
+	color: rgba(153, 153, 153, 1);
 	border: 1px solid rgba(0, 0, 0, .2);
 	border-radius: 13px;
 	background-color: rgba(255, 255, 255, .5);
@@ -2683,7 +2694,7 @@ input[type='button'],
 .breadcrumbs ul li a {
 	text-decoration: none;
 	text-shadow: 0 1px 0 #fff;
-	color: #999;
+	color: rgba(153, 153, 153, 1);
 	margin: 0;
 	padding: 5px 1px 5px 20px;
 	display: block;
@@ -3005,7 +3016,7 @@ tr .columnURL {
 .pageNavigation ul li a {
 	text-shadow: 0 1px 0 #fff;
 	text-decoration: none;
-	color: #999;
+	color: rgba(153, 153, 153, 1);
 	display: inline-block;
 }
 
@@ -3522,7 +3533,7 @@ input[type='button'],
 .preInput .dropdownCaption {
 	text-decoration: none;
 	text-shadow: 0 1px 0 #fff;
-	color: #999;
+	color: rgba(153, 153, 153, 1);
 	border-width: 1px;
 	border-style: solid;
 	border-color: #ccc #bbb #aaa;
@@ -3923,7 +3934,7 @@ input[disabled='disabled'],
 input[type='button'][disabled='disabled'],
 .smallButtons > li.disabled > a,
 .largeButtons > li.disabled > a {
-	color: #999;
+	color: rgba(153, 153, 153, 1);
 	cursor: default;
 	border-width: 1px;
 	border-style: solid;
@@ -3989,7 +4000,7 @@ input[type='button'][disabled='disabled'],
 }
 
 .infoPackagePlugin > div > a {
-	color: #999;
+	color: rgba(153, 153, 153, 1);
 	background-size: 96px;
 	background-position: center center;
 	background-repeat: no-repeat;
