@@ -365,7 +365,7 @@ nav.topMenu {
 .topMenu > div > ul > li:hover .dropdownCaption,
 .topMenu > div > ul > li:hover .dropdownCaption a {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 	background-color: rgba(0, 0, 0, .7);
 }
 
@@ -434,7 +434,7 @@ nav.topMenu {
 }
 
 .pageHeader .logo h1 {
-	text-shadow: 0 -1px 0 #000;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 1);
 	color: #d8e7f5;
 	position: relative;
 	top: 70px;
@@ -591,7 +591,7 @@ nav.topMenu {
 
 .mainMenu > ul > li > a {
 	font-weight: normal;
-	text-shadow: 0 -1px 0 #000;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 1);
 	color: #69c;
 	cursor: pointer;
 	display: inline-block;
@@ -641,13 +641,13 @@ nav.topMenu {
 }
 
 .mainMenu > ul > li:not(.activeMenuItem):hover > a {
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 }
 
 .mainMenu > ul > li.activeMenuItem > a {
 	font-size: 110%;
 	font-weight: bold;
-	text-shadow: 0 1px 0 #fff;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	color: #369;
 	white-space: nowrap;
 	border-top-left-radius: 5px;
@@ -669,7 +669,7 @@ nav.topMenu {
 
 .mainMenu > ul > li.activeMenuItem .badge {
 	font-size: 65% !important;
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 	background-color: #369;
 	
 	-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
@@ -691,11 +691,6 @@ nav.topMenu {
 	padding: 0 4px;
 	display: inline-block;
 }
-
-.mainMenu > ul > li > ul > li:before {
-	content: "- ";
-}
-
 
 
 
@@ -1048,7 +1043,7 @@ section.content .content {
 }
 
 .sidebarContent > div {
-	text-shadow: 0 1px 0 #fff;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	position: relative;
 	overflow: hidden;
 	z-index: 110;
@@ -1125,14 +1120,14 @@ section.content .content {
 
 .sidebarContent > div ul > li > a,
 .sidebarContent > div ul > li > div {
-	text-shadow: 0 1px 0 #fff;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	color: #69c;
 	padding: 5px 15px 7px 35px;
 	display: block;
 }
 
 .sidebarContent > div ul > li.activeMenuItem {
-	background-color: #fff;
+	background-color: rgba(255, 255, 255, 1);
 	margin-right: -1px;
 	overflow: hidden;
 	
@@ -1228,7 +1223,7 @@ section.content .content {
 	text-shadow: none;
 	text-decoration: none;
 	border-radius: 13px;
-	background-color: #fff;
+	background-color: rgba(255, 255, 255, 1);
 	margin-right: -3px;
 	margin-left: 3px;
 	padding: 2px 5px;
@@ -1323,10 +1318,11 @@ li > .badgeButton {
 	display: inline-block;
 	position: relative;
 	top: -1px;
+	cursor: pointer;
 }
 
 .label:hover {
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 	background-color: rgba(51, 51, 51, 1);
 }
 
@@ -1336,7 +1332,7 @@ li > .badgeButton {
 }
 
 .label a:hover {
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 }
 
 /* Default Colors */
@@ -1418,7 +1414,7 @@ li > .badgeButton {
 /* ############## ToDo: Dropdown Global ############## */
 
 .dropdown {
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 	border-width: 1px;
 	border-style: solid;
 	border-color: rgba(255, 255, 255, .7);
@@ -1480,7 +1476,7 @@ li > .badgeButton {
 
 .dropdown > :hover:not(ul):not(.pointer),
 .dropdown > .active {
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 	cursor: pointer;
 	background-color: rgba(0, 0, 0, .5);
 }
@@ -1503,7 +1499,7 @@ li > .badgeButton {
 }
 
 .dropdown > li a:hover {
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 	background-color: rgba(0, 0, 0, .5);
 }
 
@@ -1537,7 +1533,7 @@ li > .badgeButton {
 
 .mainHeading > hgroup h1 {
 	font-weight: bold;
-	border-bottom: 1px solid rgba(153, 153, 153, 1);;
+	border-bottom: 1px solid rgba(153, 153, 153, 1);
 	padding: 1px 0 10px;	
 }
 
@@ -1578,7 +1574,7 @@ li > .badgeButton {
 .mainHeading > hgroup h1,
 .mainHeading > hgroup h1 a {
 	text-decoration: none;
-	text-shadow: 0 1px 0 #fff;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	color: #666;
 }
 
@@ -1594,7 +1590,7 @@ li > .badgeButton {
 .overlay .mainHeading > hgroup h1 a,
 .overlay .mainHeading > hgroup h2 {
 	text-shadow: 0 -1px 0 #000;
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 }
 
 .mainHeading > hgroup p {
@@ -1608,7 +1604,7 @@ li > .badgeButton {
 .subHeading h1 {
 	font-size: 150%;
 	font-weight: bold;
-	text-shadow: 0 1px 0 #fff;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	color: rgba(153, 153, 153, 1);
 	border-bottom: 1px solid #ccc;
 	margin: 10px 0;
@@ -2301,7 +2297,7 @@ input[type='button'],
 
 .boxTitle > hgroup {
 	text-shadow: 0 -1px 0 #000;
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 	padding: 7px;
 	display: inline-block;
 }
@@ -2309,7 +2305,7 @@ input[type='button'],
 .boxTitle > a,
 .boxTitle > hgroup a {
 	text-decoration: none;
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 }
 
 .boxTitle > hgroup h1 {
@@ -2347,7 +2343,7 @@ input[type='button'],
 /* Globals */
 
 .tabMenu {
-	text-shadow: 0 1px 0 #fff;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	/* Toggle for tab menu orientation (options: left|center|right) */
 	text-align: center;
 	white-space: nowrap;
@@ -2453,7 +2449,7 @@ input[type='button'],
 	border-width: 1px;
 	border-style: solid;
 	border-color: #ccc;
-	border-bottom-color: #fff;
+	border-bottom-color: rgba(255, 255, 255, 1);
 	background-color: rgba(255, 255, 255, 1);
 	bottom: 0;
 	z-index: 30;
@@ -2543,7 +2539,7 @@ input[type='button'],
 
 .menu ul li a {
 	font-size: 85%;
-	text-shadow: 0 1px 0 #fff;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	text-decoration: none;
 	color: rgba(153, 153, 153, 1);
 	border: 1px solid rgba(0, 0, 0, .2);
@@ -2578,7 +2574,7 @@ input[type='button'],
 .menu ul li.ui-state-active a {
 	font-weight: bold;
 	text-shadow: 0 1px 0 #000;
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 	cursor: default;
 	border: 1px solid rgba(0, 0, 0, .2);
 	background-color: rgba(0, 0, 0, .5);
@@ -2587,7 +2583,7 @@ input[type='button'],
 /* Special */
 
 .boxTitle > .menu {
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 	border: none;
 	margin: 0 !important;
 	padding: 6px 7px !important;
@@ -2615,7 +2611,7 @@ input[type='button'],
 }
 
 .boxTitle > .menu ul li a:hover {
-	color: #fff !important;
+	color: rgba(255, 255, 255, 1) !important;
 	border: 1px solid rgba(0, 0, 0, .3);
 	background-color: rgba(0, 0, 0, .2);
 }
@@ -2679,7 +2675,7 @@ input[type='button'],
 	text-indent: -9000px;
 	border-width: 15px;
 	border-style: solid none solid solid;
-	border-color: transparent transparent transparent #fff;
+	border-color: transparent transparent transparent rgba(255, 255, 255, 1);
 	display: block;
 	position: absolute;
 	width: 0;
@@ -2693,7 +2689,7 @@ input[type='button'],
 
 .breadcrumbs ul li a {
 	text-decoration: none;
-	text-shadow: 0 1px 0 #fff;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	color: rgba(153, 153, 153, 1);
 	margin: 0;
 	padding: 5px 1px 5px 20px;
@@ -2801,14 +2797,14 @@ thead th:last-child a {
 }
 
 thead th:hover a {
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 	background-color: rgba(0, 0, 0, .2);
 }
 
 thead th a:active,
 thead th a:focus,
 thead th.active a {
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 	background-color: rgba(0, 0, 0, .1);
 	
 	-webkit-box-shadow: inset 0 5px 15px rgba(0, 0, 0, .4);
@@ -2978,6 +2974,11 @@ tr .columnURL {
 
 /* ToDo */
 
+:not(.threadStatus) > .pageNavigation {
+	margin: 7px 0;
+	float: left;
+}
+
 .pageNavigation ul li {
 	text-align: center;
 	min-width: 19px;
@@ -2987,11 +2988,8 @@ tr .columnURL {
 	cursor: pointer;
 }
 
-.pageNavigation ul li:not(:first-child) {
-	margin-left: 3px;
-}
-
 .pageNavigation ul li {
+	font-weight: bold;
 	border-radius: 3px;
 	display: inline-block;
 	position: relative;
@@ -3014,7 +3012,7 @@ tr .columnURL {
 }
 
 .pageNavigation ul li a {
-	text-shadow: 0 1px 0 #fff;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	text-decoration: none;
 	color: rgba(153, 153, 153, 1);
 	display: inline-block;
@@ -3036,7 +3034,7 @@ tr .columnURL {
 .pageNavigation ul li.active,
 .pageNavigation ul li.active:hover {
 	text-shadow: 0 1px 0 #000 !important;
-	color: #fff !important;
+	color: rgba(255, 255, 255, 1) !important;
 	border: 1px solid rgba(0, 0, 0, .3) !important;
 	
 	background-color: rgba(0, 0, 0, .5) !important;
@@ -3134,6 +3132,22 @@ tr .columnURL {
 	left: -5px;
 }
 
+/* Special */
+
+.threadStatus .pageNavigation {
+	font-size: 75%;
+}
+
+.threadStatus .pageNavigation ul li {
+	min-width: 9px;
+}
+
+.threadStatus .pageNavigation ul li:not(.skip) a {
+	padding: 1px 3px;
+}
+
+
+
 /* ############## System Notifications ############## */
 
 /* Globals */
@@ -3142,7 +3156,7 @@ tr .columnURL {
 .error,
 .success,
 .warning {
-	text-shadow: 0 1px 0 #fff;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	line-height: 1.5;
 	border-radius: 7px;
 	margin-top: 15px;
@@ -3194,12 +3208,12 @@ tr .columnURL {
 /* Inline Errors */
 
 .innerError {
-	text-shadow: 0 1px 0 #fff;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	line-height: 1.5;
 	color: #c00;
 	border: 1px solid #ccc;
 	border-radius: 7px;
-	background-color: #fff;
+	background-color: rgba(255, 255, 255, 1);
 	background-image: url('../../icon/systemError.svg');
 	background-size: 16px;
 	background-position: 5px center;
@@ -3231,7 +3245,7 @@ tr .columnURL {
 .innerError .pointer span {	
 	border-width: 0 5px 5px;
 	border-style: solid;
-	border-color: #fff transparent;
+	border-color: rgba(255, 255, 255, 1) transparent;
 	display: inline-block;
 	width: 0;
 	position: absolute;
@@ -3304,7 +3318,7 @@ tr .columnURL {
 .wcfDialogTitle {
 	font-size: 170%;
 	font-weight: bold;
-	text-shadow: 0 -1px 0 #000;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 1);
 	color: rgba(255, 255, 255, 1);
 	display: block;
 }
@@ -3353,30 +3367,6 @@ tr .columnURL {
 
 
 
-/* ToDo: Installation
-
-is this obsolete due to our new overlay? */
-
-.ui-dialog-content > div {
-	height: 100%;
-	max-width: 600px;
-}
-
-.ui-dialog-content > div fieldset {
-	border-color: #666;
-	background-color: rgba(0, 0, 0, .1);
-}
-
-.ui-dialog-content > div p.error {
-	border: 1px solid #ed1c24;
-	border-radius: 5px;
-	background-color: #fdd;
-	margin-bottom: 15px;
-	padding: 7px;
-}
-
-
-
 /* Special */
 
 div#ajaxExceptionStacktrace {
@@ -3406,7 +3396,7 @@ div#ajaxExceptionStacktrace {
 #loginBox dl dt,
 #loginBox dl dd,
 #loginBox dl label {
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 }
 
 
@@ -3414,7 +3404,7 @@ div#ajaxExceptionStacktrace {
 /* ############## ToDo: Overlay Spinner ############## */
 
 .wcfDialogOverlay {
-	background-color: #000;
+	background-color: rgba(0, 0, 0, 1);
 	opacity: .5;
 	position: fixed;
 	width: 100% !important;
@@ -3425,16 +3415,12 @@ div#ajaxExceptionStacktrace {
 
 /* ToDo: What is that and change that class-name! */
 .overlayLoading {
-	background-color: #fff;
+	background-color: rgba(255, 255, 255, 1);
 	background-image: url('../../icon/spinner1.svg');
 	background-position: center center;
 	background-size: 32px;
 	background-repeat: no-repeat;
 }
-
-
-
-
 
 
 
@@ -3444,7 +3430,7 @@ div#ajaxExceptionStacktrace {
 
 #balloonTooltip {
 	font-size: .85em;
-	color: #fff;
+	color: rgba(255, 255, 255, 1);
 	border: 1px solid rgba(255, 255, 255, .7);
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, .7);
@@ -3518,6 +3504,7 @@ img[src*='enable'] {
 }
 
 
+
 /* ############## Global Button Color & Effect Library ############## */
 
 /* Normal State */
@@ -3532,7 +3519,7 @@ input[type='button'],
 .clipboardEditor > ul > li,
 .preInput .dropdownCaption {
 	text-decoration: none;
-	text-shadow: 0 1px 0 #fff;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	color: rgba(153, 153, 153, 1);
 	border-width: 1px;
 	border-style: solid;
@@ -4018,7 +4005,7 @@ input[type='button'][disabled='disabled'],
 .infoPackagePlugin > div > a > h1 { /* ToDo: h1 inside a ??? */
 	font-size: 100%;
 	font-weight: bold;
-	text-shadow: 0 1px 0 #fff;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	word-wrap: break-word;
 	border-bottom: 1px solid rgba(204, 204, 204, 1);
 	
