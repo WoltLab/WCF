@@ -94,7 +94,7 @@
 			</hgroup>
 			
 			<div class="contentHeader">
-				<div class="pluginList"></div>
+				
 			</div>
 			
 			<section class="packageListPlugin">
@@ -106,7 +106,7 @@
 			</section>
 			
 			<div class="contentFooter">
-				<div class="pluginList"></div>
+				
 			</div>
 		</div>
 	{/hascontent}
