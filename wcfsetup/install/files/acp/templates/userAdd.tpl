@@ -43,7 +43,7 @@
 		<dl{if $errorType.username|isset} class="formError"{/if}>
 			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 			<dd>
-				<input type="text" id="username" name="username" value="{$username}" pattern="^[^,\n]+$" class="medium" />
+				<input type="text" id="username" name="username" value="{$username}" pattern="^[^,\n]+$" autofocus="autofocus" class="medium" />
 				{if $errorType.username|isset}
 					<small class="innerError">
 						{if $errorType.username == 'empty'}

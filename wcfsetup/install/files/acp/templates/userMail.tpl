@@ -93,7 +93,7 @@
 			<dl{if $errorField == 'subject'} class="formError"{/if}>
 				<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
 				<dd>
-					<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
+					<input type="text" id="subject" name="subject" value="{$subject}" autofocus="autofocus" placeholder="enter subject" class="long" />
 					{if $errorField == 'subject'}
 						<small class="innerError">
 							{if $errorType == 'empty'}

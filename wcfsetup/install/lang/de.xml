@@ -563,6 +563,7 @@
 		<item name="wcf.user.visibleLanguages.description"><![CDATA[Wählen Sie, in welchen Sprachen erstellte Inhalte angezeigt werden sollen.]]></item>
 		<item name="wcf.user.userID"><![CDATA[Benutzer-ID]]></item>
 		<item name="wcf.user.username"><![CDATA[Benutzername]]></item>
+		<item name="wcf.user.username.placeholder"><![CDATA[Geben Sie einen Benutzernamen ein]]></item>
 		<item name="wcf.user.username.error.notFound"><![CDATA[Der Benutzername &raquo;{$username}&laquo; konnte nicht gefunden werden.]]></item>
 		<item name="wcf.user.username.error.notUnique"><![CDATA[Dieser Benutzername ist bereits vergeben.]]></item>
 		<item name="wcf.user.username.error.notValid"><![CDATA[Sie haben einen ungültigen Benutzernamen eingegeben.]]></item>
