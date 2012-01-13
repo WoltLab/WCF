@@ -2,6 +2,7 @@
 namespace wcf\system;
 use wcf\data\application\Application;
 use wcf\data\package\Package;
+use wcf\data\package\PackageCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\statement\PreparedStatement;
@@ -393,36 +394,28 @@ class WCF {
 	protected function initApplications() {
 		if (PACKAGE_ID == 1) return;
 		
-		// prepare statement
-		$sql = "SELECT	package, packageDir
-			FROM	wcf".WCF_N."_package
-			WHERE	packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		
 		// start main application
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
-		$this->loadApplication($statement, $application);
+		$this->loadApplication($application);
 		
 		// start dependent applications
 		$applications = ApplicationHandler::getInstance()->getDependentApplications();
 		foreach ($applications as $application) {
-			$this->loadApplication($statement, $application, true);
+			$this->loadApplication($application, true);
 		}
 	}
 	
 	/**
 	 * Loads an application.
 	 *
-	 * @param	wcf\system\database\statement\PreparedStatement	$statement
 	 * @param	wcf\data\application\Application		$application
 	 * @param	boolean						$isDependentApplication
 	 */	
-	protected function loadApplication(PreparedStatement $statement, Application $application, $isDepedentApplication = false) {
-		$statement->execute(array($application->packageID));
-		$row = $statement->fetchArray();
+	protected function loadApplication(Application $application, $isDepedentApplication = false) {
+		$package = PackageCache::getInstance()->getPackage($application->packageID);
 		
 		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
-		$packageDir = util\FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
+		$packageDir = util\FileUtil::getRealPath(WCF_DIR.$package->packageDir);
 		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
 		
 		$className = $abbreviation.'\system\\'.strtoupper($abbreviation).'Core';
@@ -433,7 +426,7 @@ class WCF {
 				require_once($configPath);
 			}
 			else {
-				throw new exception\SystemException('Unable to load configuration for '.$row['package']);
+				throw new exception\SystemException('Unable to load configuration for '.$package->package);
 			}
 			
 			// start application if not within ACP
@@ -443,7 +436,7 @@ class WCF {
 		}
 		else {
 			unset(self::$autoloadDirectories[$abbreviation]);
-			throw new exception\SystemException('Unable to run '.$row['package'].', '.$className.' missing.');
+			throw new exception\SystemException('Unable to run '.$row->package.', '.$className.' missing.');
 		}
 		
 		// load application settings if not within ACP

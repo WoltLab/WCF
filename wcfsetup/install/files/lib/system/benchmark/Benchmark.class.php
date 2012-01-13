@@ -80,6 +80,8 @@ class Benchmark extends SingletonFactory {
 			$this->queryCount++;
 			$this->queryTime += $this->items[$index]['use'];
 		}
+		
+		
 	}
 
 	/**
