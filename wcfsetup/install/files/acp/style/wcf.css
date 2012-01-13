@@ -1312,9 +1312,8 @@ li > .badgeButton {
 	text-decoration: none;
 	border-radius: 13px;
 	background-color: rgba(102, 102, 102, 1);
-	margin-right: -3px;
-	margin-left: 3px;
-	padding: 1px 7px 2px;
+	margin-right: 3px;
+	padding: 3px 8px 4px;
 	display: inline-block;
 	position: relative;
 	top: -1px;
@@ -1408,6 +1407,26 @@ li > .badgeButton {
 .label.pink:hover {
 	background-color: #c09;
 }
+
+/* Special */
+
+table .label {
+	padding: 1px 6px 2px;
+}
+
+
+
+/* ############## Status Display ############## */
+
+.statusDisplay {
+	float: right;
+	padding: 1px 0;
+}
+
+.statusDisplay .statusIcons li {
+	display: inline-block;
+}
+
 
 
 
