@@ -120,9 +120,9 @@ hr {
 body {
 	font-family: 'Trebuchet MS', Arial, sans-serif;
 	font-size: 80%;
-	color: #666;
+	color: rgba(102, 102, 102, 1);
 	line-height: 1;
-	background-color: #29374a;
+	background-color: rgba(41, 55, 74, 1);
 }
 
 /* Special */
@@ -1594,7 +1594,7 @@ table .label {
 .mainHeading > hgroup h1 a {
 	text-decoration: none;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
-	color: #666;
+	color: rgba(102, 102, 102, 1);
 }
 
 .mainHeading > hgroup h2 {
@@ -2442,7 +2442,7 @@ input[type='button'],
 }
 
 .tabMenu li:not(.ui-state-active) a:hover {
-	color: #666;
+	color: rgba(102, 102, 102, 1);
 	border-width: 1px;
 	border-style: solid;
 	border-color: rgb(255, 170, 34) rgb(255, 170, 34) rgb(204, 204, 204);
@@ -2531,7 +2531,7 @@ input[type='button'],
 /* Standard */
 
 .menu {
-	color: #666;
+	color: rgba(102, 102, 102, 1);
 	border-bottom: 1px solid #ccc;
 	margin: -15px -23px 0;
 	padding: 0 7px 10px;
@@ -2743,7 +2743,7 @@ input[type='button'],
 }
 
 .breadcrumbs ul li:hover a {
-	color: #666;
+	color: rgba(102, 102, 102, 1);
 	background-color: #f9f9f9;
 	position: relative;
 	z-index: 90;
@@ -3038,7 +3038,7 @@ tr .columnURL {
 }
 
 .pageNavigation ul li:not(.disabled):hover a {
-	color: #666;
+	color: rgba(102, 102, 102, 1);
 }
 
 .pageNavigation ul li:not(.skip) a {
@@ -3588,7 +3588,7 @@ input[type='button'].default:hover,
 .pageNavigation ul li:not(.disabled):not(.children):hover,
 .clipboardEditor > ul > li:hover,
 .preInput:hover .dropdownCaption {
-	color: #666;
+	color: rgba(102, 102, 102, 1);
 	border-width: 1px;
 	border-style: solid;
 	border-color: #ffc053 #fa2 #fc9e07;
@@ -4018,7 +4018,7 @@ input[type='button'][disabled='disabled'],
 }
 
 .infoPackagePlugin:hover > div > a {
-	color: #666;
+	color: rgba(102, 102, 102, 1);
 }
 
 .infoPackagePlugin > div > a > h1 { /* ToDo: h1 inside a ??? */
