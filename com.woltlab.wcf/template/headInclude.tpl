@@ -66,7 +66,12 @@
 		WCF.Icon.addObject({
 			'wcf.icon.loading': '{icon size='S'}spinner{/icon}',
 			'wcf.icon.opened': '{icon size='S'}opened2{/icon}',
-			'wcf.icon.closed': '{icon size='S'}closed2{/icon}'
+			'wcf.icon.closed': '{icon size='S'}closed2{/icon}',
+			'wcf.icon.previous': '{icon size='S'}previous1{/icon}',
+			'wcf.icon.previous.disabled': '{icon size='S'}previous1D{/icon}',
+			'wcf.icon.next': '{icon size='S'}next1{/icon}',
+			'wcf.icon.next.disabled': '{icon size='S'}next1D{/icon}',
+			'wcf.icon.dropdown': '{icon size='S'}dropdown1{/icon}'
 			{event name='javascriptIconImport'}
 		});
 		
