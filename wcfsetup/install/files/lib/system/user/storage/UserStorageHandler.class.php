@@ -121,6 +121,10 @@ class UserStorageHandler extends SingletonFactory {
 	public function reset(array $userIDs, $field, $packageID = PACKAGE_ID) {
 		foreach ($userIDs as $userID) {
 			$this->resetFields[$userID][$packageID][] = $field;
+			
+			if (isset($this->cache[$userID][$field])) {
+				unset($this->cache[$userID][$field]);
+			}
 		}
 	}
 	
@@ -139,6 +143,12 @@ class UserStorageHandler extends SingletonFactory {
 			$field,
 			$packageID
 		));
+		
+		foreach ($this->cache as $userID => $fields) {
+			if (isset($fields[$field])) {
+				unset($this->cache[$userID][$field]);
+			}
+		}
 	}
 	
 	/**
@@ -186,5 +196,7 @@ class UserStorageHandler extends SingletonFactory {
 				}
 			}
 		}
+		
+		$this->resetFields = $this->updateFields = array();
 	}
 }
