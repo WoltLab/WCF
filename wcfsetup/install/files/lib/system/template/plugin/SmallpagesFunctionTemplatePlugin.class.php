@@ -76,7 +76,7 @@ class SmallpagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			$link = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink($tagArgs['controller'], $parameters, $tagArgs['link']));
 			
 			// open div and ul
-			$html .= "<div class=\"pageNavigation\" data-link=\"".$link."\">\n<ul>\n";
+			$html .= "<nav class=\"pageNavigation\" data-link=\"".$link."\">\n<ul>\n";
 			
 			// generate simple links
 			$simpleLinks = $tagArgs['pages'];
@@ -97,7 +97,7 @@ class SmallpagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			}
 			
 			// close div and ul
-			$html .= "</ul></div>\n";
+			$html .= "</ul></nav>\n";
 		}
 		
 		// assign html output to template var

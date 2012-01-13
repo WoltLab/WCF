@@ -96,7 +96,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			}
 			
 			// open div and ul
-			$html .= "<div class=\"pageNavigation\" data-link=\"".$link."\">\n<ul>\n";
+			$html .= "<nav class=\"pageNavigation\" data-link=\"".$link."\">\n<ul>\n";
 			
 			// previous page
 			$previousTitle = WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous');
@@ -203,7 +203,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			}
 			
 			// close div and ul
-			$html .= "</ul></div>\n";
+			$html .= "</ul></nav>\n";
 		}
 		
 		// assign html output to template var
