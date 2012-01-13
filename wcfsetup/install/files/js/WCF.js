@@ -3132,7 +3132,7 @@ WCF.Search.Base = Class.extend({
 			this._excludedSearchValues = excludedSearchValues;
 		}
 		this._searchInput = $(searchInput).keyup($.proxy(this._keyUp, this));
-		this._searchInput.wrap('<div class="preInput" />');
+		this._searchInput.wrap('<span />');
 		this._list = $('<ul class="dropdown" />').insertAfter(this._searchInput);
 		
 		this._proxy = new WCF.Action.Proxy({
