@@ -2,6 +2,7 @@
 namespace wcf\data;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
 use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
@@ -82,12 +83,36 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	/**
 	 * Initialize a new DatabaseObject-related action.
 	 *
-	 * @param	array		$objectIDs
+	 * @param	array<mixed>	$objects
 	 * @param	string		$action
 	 * @param	array		$parameters
 	 */
-	public function __construct(array $objectIDs, $action, array $parameters = array()) {
-		$this->objectIDs = $objectIDs;
+	public function __construct(array $objects, $action, array $parameters = array()) {
+		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
+		$baseClass = call_user_func(array($this->className, 'getBaseClass'));
+		
+		foreach ($objects as $object) {
+			if (is_object($object)) {
+				if ($object instanceof $this->className) {
+					$this->objects[] = $object;
+				}
+				else if ($object instanceof $baseClass) {
+					$this->objects[] = new $this->className($object);
+				}
+				else {
+					throw new SystemException('invalid value of parameter objects given');
+				}
+				
+				$this->objectIDs[] = $object->$indexName;
+			}
+			else if (is_int($object)) {
+				$this->objectIDs[] = $object;
+			}
+			else {
+				throw new SystemException('invalid value of parameter objects given');
+			}
+		}
+		
 		$this->action = $action;
 		$this->parameters = $parameters;
 		
