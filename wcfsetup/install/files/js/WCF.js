@@ -3992,7 +3992,7 @@ $.widget('ui.wcfPages', {
 		if (this.options.previousDisabledIcon === null) this.options.previousDisabledIcon = WCF.Icon.get('wcf.icon.previous.disabled');
 		if (this.options.nextIcon === null) this.options.nextIcon = WCF.Icon.get('wcf.icon.next');
 		if (this.options.nextDisabledIcon === null) this.options.nextDisabledIcon = WCF.Icon.get('wcf.icon.next.disabled');
-		if (this.options.arrowDownIcon === null) this.options.arrowDownIcon = WCF.Icon.get('wcf.icon.arrow.down');
+		if (this.options.arrowDownIcon === null) this.options.arrowDownIcon = WCF.Icon.get('wcf.icon.dropdown');
 		
 		this.element.addClass('pageNavigation');
 		
@@ -4023,13 +4023,12 @@ $.widget('ui.wcfPages', {
 			this.element.children().remove();
 			
 			var $pageList = $('<ul></ul>');
-			this.element.append($pageList);
 			
 			var $previousElement = $('<li></li>').addClass('skip');
 			$pageList.append($previousElement);
 			
 			if (this.options.activePage > 1) {
-				var $previousLink = $('<a' + ((this.options.previousPage != null) ? (' title="' + this.options.previousPage + '"') : ('')) + '></a>');
+				var $previousLink = $('<a' + ((this.options.previousPage != null) ? (' title="' + this.options.previousPage + '" class="balloonTooltip"') : ('')) + '></a>');
 				$previousElement.append($previousLink);
 				this._bindSwitchPage($previousLink, this.options.activePage - 1);
 				
@@ -4090,21 +4089,27 @@ $.widget('ui.wcfPages', {
 					var $leftChildren = $('<li class="children"></li>');
 					$pageList.append($leftChildren);
 					
-					var $leftChildrenLink = $('<a>&hellip;</a>');
+					var $leftChildrenLink = $('<a class="dropdownCaption">&hellip;</a>');
 					$leftChildren.append($leftChildrenLink);
-					$leftChildrenLink.click($.proxy(this._startInput, this));
+					// commented all page number input events out, because the normal pagination also
+					// don't have this function at this moment. This may get completely removed or
+					// updated as soon as this gets reimplemented in the normal pagination -- Markus Bartz
+//					$leftChildrenLink.click($.proxy(this._startInput, this));
 					
 					var $leftChildrenImage = $('<img src="' + this.options.arrowDownIcon + '" alt="" />');
 					$leftChildrenLink.append($leftChildrenImage);
 					
 					var $leftChildrenInput = $('<input type="text" name="pageNo" class="tiny" />');
 					$leftChildren.append($leftChildrenInput);
-					$leftChildrenInput.keydown($.proxy(this._handleInput, this));
-					$leftChildrenInput.keyup($.proxy(this._handleInput, this));
-					$leftChildrenInput.blur($.proxy(this._stopInput, this));
+//					$leftChildrenInput.keydown($.proxy(this._handleInput, this));
+//					$leftChildrenInput.keyup($.proxy(this._handleInput, this));
+//					$leftChildrenInput.blur($.proxy(this._stopInput, this));
 					
 					var $leftChildrenContainer = $('<div class="dropdown"></div>');
 					$leftChildren.append($leftChildrenContainer);
+					
+					var $leftPointerContainer = $('<span class="pointer"><span></span></span>');
+					$leftChildrenContainer.append($leftPointerContainer);
 					
 					var $leftChildrenList = $('<ul></u>');
 					$leftChildrenContainer.append($leftChildrenList);
@@ -4133,21 +4138,24 @@ $.widget('ui.wcfPages', {
 					var $rightChildren = $('<li class="children"></li>');
 					$pageList.append($rightChildren);
 					
-					var $rightChildrenLink = $('<a>&hellip;</a>');
+					var $rightChildrenLink = $('<a class="dropdownCaption">&hellip;</a>');
 					$rightChildren.append($rightChildrenLink);
-					$rightChildrenLink.click($.proxy(this._startInput, this));
+//					$rightChildrenLink.click($.proxy(this._startInput, this));
 					
 					var $rightChildrenImage = $('<img src="' + this.options.arrowDownIcon + '" alt="" />');
 					$rightChildrenLink.append($rightChildrenImage);
 					
 					var $rightChildrenInput = $('<input type="text" name="pageNo" class="tiny" />');
 					$rightChildren.append($rightChildrenInput);
-					$rightChildrenInput.keydown($.proxy(this._handleInput, this));
-					$rightChildrenInput.keyup($.proxy(this._handleInput, this));
-					$rightChildrenInput.blur($.proxy(this._stopInput, this));
+//					$rightChildrenInput.keydown($.proxy(this._handleInput, this));
+//					$rightChildrenInput.keyup($.proxy(this._handleInput, this));
+//					$rightChildrenInput.blur($.proxy(this._stopInput, this));
 					
 					var $rightChildrenContainer = $('<div class="dropdown"></div>');
 					$rightChildren.append($rightChildrenContainer);
+					
+					var $rightPointerContainer = $('<span class="pointer"><span></span></span>');
+					$rightChildrenContainer.append($rightPointerContainer);
 					
 					var $rightChildrenList = $('<ul></ul>');
 					$rightChildrenContainer.append($rightChildrenList);
@@ -4170,7 +4178,7 @@ $.widget('ui.wcfPages', {
 			$pageList.append($nextElement);
 			
 			if (this.options.activePage < this.options.maxPage) {
-				var $nextLink = $('<a' + ((this.options.nextPage != null) ? (' title="' + this.options.nextPage + '"') : ('')) + '></a>').addClass('ballonTooltip');
+				var $nextLink = $('<a' + ((this.options.nextPage != null) ? (' title="' + this.options.nextPage + '" class="balloonTooltip"') : ('')) + '></a>');
 				$nextElement.append($nextLink);
 				this._bindSwitchPage($nextLink, this.options.activePage + 1);
 				
@@ -4182,6 +4190,8 @@ $.widget('ui.wcfPages', {
 				$nextElement.append($nextImage);
 				$nextElement.addClass('disabled');
 			}
+			
+			this.element.append($pageList);
 		}
 		else {
 			// otherwise hide the paginator if not already hidden
