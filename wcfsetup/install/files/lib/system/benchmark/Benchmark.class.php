@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\benchmark;
 use wcf\system\SingletonFactory;
+use wcf\util\FileUtil;
 
 /**
  * Provides functions to do a benchmark.
@@ -138,5 +139,14 @@ class Benchmark extends SingletonFactory {
 	 */
 	protected static function compareMicrotimes($startTime, $endTime) {
 		return round($endTime - $startTime, 4);
+	}
+	
+	/**
+	 * Returns the formatted peak of memory_usage.
+	 * 
+	 * @return	string
+	 */
+	public function getMemoryUsage() {
+		return FileUtil::formatFilesize(memory_get_peak_usage());
 	}
 }
