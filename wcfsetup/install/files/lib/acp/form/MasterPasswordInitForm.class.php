@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
@@ -64,19 +65,24 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 			throw new UserInputException('masterPassword', 'notSecure');
 		}
 		// digits
-		if (!preg_match('![0-9]+!', $this->masterPassword)) {
+		if (!Regex::compile('\d')->match($this->masterPassword)) {
 			throw new UserInputException('masterPassword', 'notSecure');
 		}
 		// latin characters (lower-case)
-		if (!preg_match('![a-z]+!', $this->masterPassword)) {
+		if (!Regex::compile('[a-z]')->match($this->masterPassword)) {
 			throw new UserInputException('masterPassword', 'notSecure');
 		}
 		// latin characters (upper-case)
-		if (!preg_match('![A-Z]+!', $this->masterPassword)) {
+		if (!Regex::compile('[A-Z]')->match($this->masterPassword)) {
 			throw new UserInputException('masterPassword', 'notSecure');
 		}
 		// special characters
-		if (!preg_match('![^A-Za-z0-9]+!', $this->masterPassword)) {
+		if (!Regex::compile('[^0-9a-zA-Z]')->match($this->masterPassword)) {
+			throw new UserInputException('masterPassword', 'notSecure');
+		}
+		
+		// password equals username
+		if ($this->masterPassword == WCF::getUser()->username) {
 			throw new UserInputException('masterPassword', 'notSecure');
 		}
 		
