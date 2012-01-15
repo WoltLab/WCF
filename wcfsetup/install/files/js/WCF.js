@@ -3048,18 +3048,16 @@ WCF.DOMNodeInsertedHandler = {
 	_executeCallbacks: function(event) {
 		if (this._isExecuting) return;
 
-		// do not track events fired within the next 100 ms
+		// do not track events while executing callbacks
 		this._isExecuting = true;
-		new WCF.PeriodicalExecuter($.proxy(function(pe) {
-			this._isExecuting = false;
-
-			pe.stop();
-		}, this), 100);
-
+		
 		this._callbacks.each(function(pair) {
 			// execute callback
 			pair.value(event);
 		});
+		
+		// enable listener again
+		this._isExecuting = false;
 	}
 };
 
