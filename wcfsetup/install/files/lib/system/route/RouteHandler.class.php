@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\route;
-use wcf\system\cache\CacheHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
