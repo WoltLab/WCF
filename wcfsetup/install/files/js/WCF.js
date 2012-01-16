@@ -1378,6 +1378,7 @@ WCF.Action.Toggle.prototype = {
 						return this.src.replace(/enabled1\.svg$/, 'disabled1.svg');
 					}
 				});
+				
 				// toogle icon title
 				$toggleButton.attr('title', function() {
 					if (this.src.match(/enabled1\.svg$/)) {
@@ -1387,6 +1388,9 @@ WCF.Action.Toggle.prototype = {
 						return $(this).data('enableMessage');
 					}
 				});
+				
+				// toggle css class
+				$(container).toggleClass('disabled');
 			}
 		}, this));
 	}
