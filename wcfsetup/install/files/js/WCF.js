@@ -1378,15 +1378,27 @@ WCF.Action.Toggle.prototype = {
 						return this.src.replace(/enabled1\.svg$/, 'disabled1.svg');
 					}
 				});
+				
 				// toogle icon title
 				$toggleButton.attr('title', function() {
 					if (this.src.match(/enabled1\.svg$/)) {
-						return $(this).data('disableMessage');
+						if ($(this).data('disableTitle')) {
+							return $(this).data('disableTitle')
+						}
+						
+						return WCF.Language.get('wcf.global.button.disable');
 					}
 					else {
-						return $(this).data('enableMessage');
+						if ($(this).data('enableTitle')) {
+							return $(this).data('enableTitle')
+						}
+						
+						return WCF.Language.get('wcf.global.button.enable');
 					}
 				});
+				
+				// toggle css class
+				$(container).toggleClass('disabled');
 			}
 		}, this));
 	}
