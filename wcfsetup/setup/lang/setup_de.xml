@@ -39,8 +39,6 @@
 		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[Grafikbearbeitungs-Bibliothek &raquo;gdlib&laquo; ist für die dynamische Generierung von Bildern zuständig. Ohne sie werden einige Funktionalitäten der Software nicht funktionieren.]]></item>
 		<item name="wcf.global.systemRequirements.mbString"><![CDATA[Bibliothek für Zeichen mit mehreren Bytes (&raquo;multibyte string&laquo;)]]></item>
 		<item name="wcf.global.systemRequirements.mbString.description"><![CDATA[Diese Bibliothek ist für den Betrieb der Software zwingend erforderlich.]]></item>
-		<item name="wcf.global.systemRequirements.safeMode"><![CDATA[Sicherheitseinstellung &raquo;safe mode&laquo; in Skriptsprache &raquo;PHP&laquo;]]></item>
-		<item name="wcf.global.systemRequirements.safeMode.description"><![CDATA[Diese Einstellung muss deaktiviert werden, da ansonsten ein einwandfreier Betrieb der Software nicht gewährleistet ist.]]></item>
 		<item name="wcf.global.systemRequirements.active"><![CDATA[aktiviert]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[nicht aktiviert]]></item>
 		<item name="wcf.global.wcfDir"><![CDATA[Installationsverzeichnis wählen]]></item>

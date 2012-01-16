@@ -355,9 +355,6 @@ class WCFSetup extends WCF {
 		// mb string
 		$system['mbString']['result'] = extension_loaded('mbstring');
 		
-		// safe mode
-		$system['safeMode']['result'] = (FileUtil::getSafeMode() != 1);
-		
 		WCF::getTPL()->assign(array(
 			'system' => $system,
 			'nextStep' => 'searchWcfDir'
