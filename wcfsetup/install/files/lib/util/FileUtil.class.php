@@ -16,6 +16,61 @@ use wcf\system\exception\SystemException;
  * @category 	Community Framework
  */
 class FileUtil {
+	/**
+	 * Tries to find the temp folder.
+	 * 
+	 * @return	string
+	 */
+	public static function getTempFolder() {
+		// use tmp folder in document root by default
+		if (!empty($_SERVER['DOCUMENT_ROOT'])) {
+			if (strpos($_SERVER['DOCUMENT_ROOT'], 'strato') !== false) {
+				// strato bugfix
+				// create tmp folder in document root automatically
+				if (!@file_exists($_SERVER['DOCUMENT_ROOT'].'/tmp')) { 
+					@mkdir($_SERVER['DOCUMENT_ROOT'].'/tmp/', 0777);
+					@chmod($_SERVER['DOCUMENT_ROOT'].'/tmp/', 0777);
+				}
+			}
+			if (@file_exists($_SERVER['DOCUMENT_ROOT'].'/tmp') && @is_writable($_SERVER['DOCUMENT_ROOT'].'/tmp')) {
+				return $_SERVER['DOCUMENT_ROOT'].'/tmp/';
+			}
+		}
+		
+		if (isset($_ENV['TMP']) && @is_writable($_ENV['TMP'])) {
+			return $_ENV['TMP'] . '/';
+		}
+		if (isset($_ENV['TEMP']) && @is_writable($_ENV['TEMP'])) {
+			return $_ENV['TEMP'] . '/';
+		}
+		if (isset($_ENV['TMPDIR']) && @is_writable($_ENV['TMPDIR'])) {
+			return $_ENV['TMPDIR'] . '/';
+		}
+		
+		// workaround for a bug in php 5.1.2 that returns true for is_writable('/tmp/') with safe_mode = on
+		if (!preg_match('/^5\.1\.2(?![.0-9])/', phpversion())) {
+			if (($path = ini_get('upload_tmp_dir')) && @is_writable($path)) {
+				return $path . '/';
+			}
+			if (@file_exists('/tmp/') && @is_writable('/tmp/')) {
+				return '/tmp/';
+			}
+			if (function_exists('session_save_path') && ($path = session_save_path()) && @is_writable($path)) {
+				return $path . '/';
+			}
+		}
+		
+		$path = WCF_DIR.'tmp/';
+		if (@file_exists($path) && @is_writable($path)) {
+			return $path;
+		}
+		else {
+			if (ini_get('safe_mode')) $reason = "due to php safe_mode restrictions";
+			else $reason = "due to an unknown reason";
+			throw new SystemException('There is no access to the system temporary folder '.$reason.' and no user specific temporary folder exists in '.WCF_DIR.'! This is a misconfiguration of your webserver software! Please create a folder called '.$path.' using your favorite ftp program, make it writable and then retry this installation.');
+		}
+	}
+	
 	/** 
 	 * Generates a new temporary filename in TMP_DIR.
 	 *
@@ -29,7 +84,7 @@ class FileUtil {
 		do {
 			$tmpFile = $dir.$prefix.StringUtil::getRandomID().$extension;
 		}
-		while (file_exists($tmpFile));	
+		while (file_exists($tmpFile));
 		
 		return $tmpFile;
 	}
@@ -87,7 +142,7 @@ class FileUtil {
 		$targetDir = self::removeTrailingSlash(self::unifyDirSeperator($targetDir));
 		
 		if ($currentDir == $targetDir) {
-			return './';	
+			return './';
 		}
 		
 		$current = explode('/', $currentDir);
@@ -99,11 +154,11 @@ class FileUtil {
 			if (isset($current[$i]) && isset($target[$i])) {
 				if ($current[$i] != $target[$i]) {
 					for ($j = 0; $j < $i; $j++) {
-						unset($target[$j]);	
+						unset($target[$j]);
 					}
 					$relPath .= str_repeat('../', count($current) - $i).implode('/', $target).'/';	
 					for ($j = $i + 1; $j < count($current); $j++) {
-						unset($current[$j]);	
+						unset($current[$j]);
 					}
 					break;
 				}
@@ -145,7 +200,7 @@ class FileUtil {
 			if (!@file_exists($parent)) {
 				// could not create parent directory either => abort
 				if (!self::makePath($parent, $chmod)) {
-					return false;	
+					return false;
 				}
 			}
 			
@@ -384,11 +439,11 @@ class FileUtil {
 			// read http response.
 			while (!$remoteFile->eof()) {
 				$readResponse[] = $remoteFile->gets();
-				// look if we are done with transferring the requested file.					 
+				// look if we are done with transferring the requested file.
 				if ($waiting) {
 					if (rtrim($readResponse[count($readResponse) - 1]) == '') {
 						$waiting = false;
-					}						
+					}
 				}
 				else {
 					// look if the webserver sent an error http statuscode
@@ -399,7 +454,7 @@ class FileUtil {
 					}
 					if ($error !== false) {
 						$localFile->close();
-						unlink($newFileName);						
+						unlink($newFileName);
 						throw new SystemException("file ".$path." not found at host '".$host."'");
 					}
 					// write to the target system.
@@ -410,7 +465,7 @@ class FileUtil {
 		
 		$remoteFile->close();
 		$localFile->close();
-		return $newFileName;		
+		return $newFileName;
 	}
 	
 	/**
@@ -480,7 +535,7 @@ class FileUtil {
 		}
 		catch (SystemException $e) {
 			throw $e;
-		}			
+		}
 	}
 	
 	/**
@@ -517,14 +572,14 @@ class FileUtil {
 	 */
 	public static function uncompressFile($gzipped, $destination) {
 		if (!@is_file($gzipped)) {
-			return false;	
+			return false;
 		}
 		
 		$sourceFile = new GZipFile($gzipped, 'rb');
 		//$filesize = $sourceFile->getFileSize();
 		$targetFile = new File($destination);
 		while (!$sourceFile->eof()) {
-			$targetFile->write($sourceFile->read(512), 512);	
+			$targetFile->write($sourceFile->read(512), 512);
 		}
 		$targetFile->close();
 		$sourceFile->close();
@@ -535,20 +590,7 @@ class FileUtil {
 			return false;
 		}*/
 		
-		return true;		
-	}
-	
-	/**
-	 * Returns the value of the 'safe_mode' configuration option.
-	 * 
-	 * @return 	boolean
-	 */
-	public static function getSafeMode() {
-		$configArray = @ini_get_all();
-		if (is_array($configArray) && isset($configArray['safe_mode']['local_value'])) {
-			return intval($configArray['safe_mode']['local_value']);
-		}
-		return intval(@ini_get('safe_mode'));
+		return true;
 	}
 	
 	/**
