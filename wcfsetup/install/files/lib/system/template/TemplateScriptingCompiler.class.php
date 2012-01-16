@@ -118,8 +118,6 @@ class TemplateScriptingCompiler {
 	 */
 	protected $currentLineNo;
 	
-	protected $modifiers = array();
-	
 	/**
 	 * list of automatically loaded tenplate plugins
 	 * @var	array<string>
