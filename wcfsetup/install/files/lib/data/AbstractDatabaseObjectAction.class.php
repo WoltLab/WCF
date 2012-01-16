@@ -105,11 +105,8 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 				
 				$this->objectIDs[] = $object->$indexName;
 			}
-			else if (is_int($object)) {
-				$this->objectIDs[] = $object;
-			}
 			else {
-				throw new SystemException('invalid value of parameter objects given');
+				$this->objectIDs[] = $object;
 			}
 		}
 		

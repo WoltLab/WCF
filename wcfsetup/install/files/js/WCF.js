@@ -3226,10 +3226,10 @@ WCF.Search.Base = Class.extend({
 		var $listItem = $(event.currentTarget);
 
 		// notify callback
-		this._callback($listItem.data());
+		var $clearSearchInput = this._callback($listItem.data());
 
 		// close list and revert input
-		this._clearList(true);
+		this._clearList($clearSearchInput);
 	},
 
 	/**
