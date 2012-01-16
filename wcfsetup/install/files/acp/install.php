@@ -96,6 +96,12 @@ $sql = "UPDATE	wcf".WCF_N."_package_installation_plugin
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute(array(1));
 
+// update routes
+$sql = "UPDATE	wcf".WCF_N."_route
+	SET	packageID = ?";
+$statement = WCF::getDB()->prepareStatement($sql);
+$statement->execute(array(1));
+
 // group options
 $sql = "UPDATE	wcf".WCF_N."_user_group_option
 	SET	packageID = ?";

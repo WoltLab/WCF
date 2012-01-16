@@ -1,7 +1,10 @@
 <?php
 namespace wcf\system\request;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\request\RouteHandler;
+use wcf\system\exception\SystemException;
+use wcf\system\route\RouteHandler;
+use wcf\system\route\IRouteController;
 use wcf\system\SingletonFactory;
 
 /**
@@ -35,34 +38,28 @@ class LinkHandler extends SingletonFactory {
 			unset($parameters['isRaw']);
 		}
 		
-		// build route
-		if ($controller !== null) {
-			// handle object
-			if (isset($parameters['object'])) {
-				if (!($parameters['object'] instanceof \wcf\system\request\IRouteController) && $parameters['object'] instanceof \wcf\data\DatabaseObjectDecorator && $parameters['object']->getDecoratedObject() instanceof \wcf\system\request\IRouteController)  {
-					$parameters['object'] = $parameters['object']->getDecoratedObject();
-				}
-				
-				if ($parameters['object'] instanceof \wcf\system\request\IRouteController) {
-					$parameters['id'] = $parameters['object']->getID();
-					$parameters['title'] = $parameters['object']->getTitle();
-				}
-				
-				unset($parameters['object']);
-			}
-			
-			if (isset($parameters['title'])) {
-				// remove illegal characters
-				$parameters['title'] = trim(preg_replace('/[\x0-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+/', '-', $parameters['title']), '-');
-			}
-			
-			$parameters['controller'] = $controller;
-			$routeURL = RouteHandler::getInstance()->buildRoute($parameters);
-			if (!$isRaw && !empty($url)) {
-				$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';
-			}
-			$url = $routeURL . $url;
+		$routeURL = "";
+		if (is_string($controller)) {
+			$parameters['controller'] = $controller;			
+			$routeURL = RouteHandler::getInstance()->buildRoute(array_map(array($this, 'prepareString'), $parameters));
 		}
+		else if ($controller instanceof IRouteController || ($controller instanceof DatabaseObjectDecorator && $controller->getDecoratedObject() instanceof IRouteController)) {
+			if ($controller instanceof DatabaseObjectDecorator && $controller->getDecoratedObject() instanceof IRouteController) {
+				$controller = $controller->getDecoratedObject();
+			}
+			
+			$route = RouteHandler::getInstance()->getRouteByName($controller->getRouteName());
+			if ($route === null) {
+				throw new SystemException("Unknown route '".$controller->getRouteName()."'");
+			}
+			
+			$routeURL = $route->buildLink(array_map(array($this, 'prepareString'), $controller->getRouteComponentValues()));
+		}
+		
+		if ($routeURL != '' && !$isRaw && !empty($url)) {
+			$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';
+		}
+		$url = $routeURL . $url;
 		
 		// append session id
 		$url .= (strpos($url, '?') === false) ? SID_ARG_1ST : SID_ARG_2ND_NOT_ENCODED;
@@ -81,9 +78,19 @@ class LinkHandler extends SingletonFactory {
 				$application = ApplicationHandler::getInstance()->getPrimaryApplication();
 			}
 			
-			$url = $application->domainName . $application->domainPath . $url;
+			$url = $application->domainName.$application->domainPath.(RequestHandler::getInstance()->isACP() ? 'acp/' : '').$url;
 		}
 		
 		return $url;
+	}
+	
+	/**
+	 * Prepares a string to be used in a link by removing illegal characters.
+	 * 
+	 * @param	string		$string
+	 * @return	string
+	 */
+	public function prepareString($string) {
+		return trim(preg_replace('/[\x0-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+/', '-', $string), '-');
 	}
 }

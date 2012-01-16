@@ -475,6 +475,29 @@ CREATE TABLE wcf1_page_menu_item (
 	UNIQUE KEY (packageID, menuItem)
 );
 
+DROP TABLE IF EXISTS wcf1_route;
+CREATE TABLE wcf1_route (
+	routeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10),
+	routeName VARCHAR(255) NOT NULL,
+	routeSchema VARCHAR(255) NOT NULL,
+	controller VARCHAR(255),
+	isACPRoute TINYINT(1) NOT NULL,
+	partsPattern VARCHAR(255),
+	UNIQUE KEY (packageID, routeName, isACPRoute)
+);
+
+DROP TABLE IF EXISTS wcf1_route_component;
+CREATE TABLE wcf1_route_component (
+	componentID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	routeID INT(10) NOT NULL,
+	componentName VARCHAR(255) NOT NULL,
+	defaultValue VARCHAR(255),
+	pattern VARCHAR(255),
+	isOptional TINYINT(1) NOT NULL,
+	UNIQUE KEY (routeID, componentName)
+);
+
 DROP TABLE IF EXISTS wcf1_search;
 CREATE TABLE wcf1_search (
 	searchID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -812,6 +835,10 @@ ALTER TABLE wcf1_page_location ADD FOREIGN KEY (packageID) REFERENCES wcf1_packa
 
 ALTER TABLE wcf1_page_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_route ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_route_component ADD FOREIGN KEY (routeID) REFERENCES wcf1_route (routeID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_session ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
@@ -877,6 +904,17 @@ INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (4, 1, '1');	-- Administrators
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (4, 2, '1');	-- Administrators
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (4, 3, '1');	-- Administrators
+
+-- default routes
+INSERT INTO wcf1_route (routeName, routeSchema, controller, isACPRoute) VALUES ('com.woltlab.wcf.default', '/{controller}/{id}-{title}', NULL, 0);
+INSERT INTO wcf1_route_component (routeID, componentName, defaultValue, isOptional) VALUES (1, 'controller', 'Index', 1);
+INSERT INTO wcf1_route_component (routeID, componentName, pattern, isOptional) VALUES (1, 'id', '\\d+', 1);
+INSERT INTO wcf1_route_component (routeID, componentName, pattern, isOptional) VALUES (1, 'title', '\\w+', 1);
+
+INSERT INTO wcf1_route (routeName, routeSchema, controller, isACPRoute) VALUES ('com.woltlab.wcf.acp.default', '/{controller}/{id}-{title}', NULL, 1);
+INSERT INTO wcf1_route_component (routeID, componentName, defaultValue, isOptional) VALUES (2, 'controller', 'Index', 1);
+INSERT INTO wcf1_route_component (routeID, componentName, pattern, isOptional) VALUES (2, 'id', '\\d+', 1);
+INSERT INTO wcf1_route_component (routeID, componentName, pattern, isOptional) VALUES (2, 'title', '\\w+', 1);
 
 -- default update servers
 INSERT INTO wcf1_package_update_server (serverURL, status, disabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/maelstrom/', 'online', 0, NULL, 0, '', '');

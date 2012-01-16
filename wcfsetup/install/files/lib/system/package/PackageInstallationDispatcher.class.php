@@ -16,7 +16,7 @@ use wcf\system\form;
 use wcf\system\form\container;
 use wcf\system\form\element;
 use wcf\system\request\LinkHandler;
-use wcf\system\request\RouteHandler;
+use wcf\system\route\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
