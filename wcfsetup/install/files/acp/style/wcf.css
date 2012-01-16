@@ -1800,36 +1800,6 @@ dl > dd > fieldset > dl > dd > label {
 	display: block;
 }
 
-/* Special Sidebar */
-
-.sidebar dl > dt {
-	text-align: left;
-	float: none;
-	width: auto;
-}
-
-.sidebar dl > dd {
-	margin-left: 0;
-	display: block;
-	margin-bottom: 13px;
-}	
-
-.sidebar dl > dd * {
-	display: block;
-}	
-
-/* Special Overlay */
-
-.wcfDialogContainer dl > dt {
-	width: 130px;
-}
-
-.wcfDialogContainer dl > dd {
-	margin-left: 150px;
-}	
-
-
-
 /* Reversed */
 
 .reversed {
@@ -1859,6 +1829,37 @@ dl > dd > fieldset > dl > dd > label {
 	margin-left: 0;
 }
 
+/* Special Sidebar */
+
+.sidebar dl > dt {
+	text-align: left;
+	float: none;
+	width: auto;
+}
+
+.sidebar dl > dd {
+	margin-left: 0;
+	display: block;
+	margin-bottom: 13px;
+}	
+
+.sidebar dl > dd * {
+	display: block;
+}	
+
+/* Special Overlay */
+
+.wcfDialogContainer dl > dt {
+	width: 130px;
+}
+
+.wcfDialogContainer dl > dd {
+	margin-left: 150px;
+}	
+.wcfDialogContainer dl > .reversed {
+	left: 170px;
+	width: auto;
+}
 
 
 /* ############## Forms ############## */
