@@ -26,7 +26,7 @@ class WCFACP extends WCF {
 		self::$autoloadDirectories['wcf'] = WCF_DIR . 'lib/';
 		
 		// define tmp directory
-		if (!defined('TMP_DIR')) define('TMP_DIR', util\BasicFileUtil::getTempFolder());
+		if (!defined('TMP_DIR')) define('TMP_DIR', util\FileUtil::getTempFolder());
 		
 		// start initialization
 		$this->initMagicQuotes();
