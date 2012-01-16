@@ -3505,16 +3505,6 @@ $.widget('ui.wcfDialog', {
 	_contentDimensions: null,
 
 	/**
-	 * difference between inner and outer content width
-	 * @var	object
-	 */
-	/*
-	_dimensionDifferences: {
-		height: 0,
-		width: 0
-	},*/
-
-	/**
 	 * rendering state
 	 * @var	boolean
 	 */
@@ -3597,7 +3587,7 @@ $.widget('ui.wcfDialog', {
 		}
 
 		// act on resize
-		$(window).resize($.proxy(this.render, this));
+		$(window).resize($.proxy(this._resize, this));
 	},
 
 	/**
@@ -3615,7 +3605,7 @@ $.widget('ui.wcfDialog', {
 
 		// create close button
 		if (this.options.closable) {
-			this._closeButton = $('<a class="wcfDialogCloseButton"><span>TODO: close</span></a>').click($.proxy(this.close, this));
+			this._closeButton = $('<a class="wcfDialogCloseButton" title="' + this.options.closeButtonLabel + '"><span>' + this.options.closeButtonLabel + '</span></a>').click($.proxy(this.close, this));
 
 			if (!this.options.hideTitle && this.options.title != '') {
 				this._closeButton.appendTo(this._titlebar);
@@ -3629,7 +3619,7 @@ $.widget('ui.wcfDialog', {
 		this._content = $('<div class="wcfDialogContent"></div>').appendTo(this._container);
 
 		// move target element into content
-		var $content = this.element.remove();
+		var $content = this.element.detach();
 		this._content.html($content);
 
 		// create modal view
@@ -3647,18 +3637,6 @@ $.widget('ui.wcfDialog', {
 				}, this));
 			}
 		}
-
-		/*
-		// caulculate dimensions differences
-		this._container.show();
-		var $contentInnerDimensions = this._content.getDimensions();
-		var $contentOuterDimensions = this._content.getDimensions('outer');
-		
-		this._dimensionDifferences = {
-			height: ($contentOuterDimensions.height - $contentInnerDimensions.height),
-			width: ($contentOuterDimensions.width - $contentInnerDimensions.width)
-		};
-		*/
 	},
 	
 	/**
@@ -3755,6 +3733,15 @@ $.widget('ui.wcfDialog', {
 	},
 	
 	/**
+	 * Renders dialog on resize if visible.
+	 */
+	_resize: function() {
+		if (this.isOpen()) {
+			this.render();
+		}
+	},
+	
+	/**
 	 * Renders this dialog, should be called whenever content is updated.
 	 */
 	render: function() {
@@ -3792,7 +3779,7 @@ $.widget('ui.wcfDialog', {
 
 		// calculate maximum content height
 		var $heightDifference = $containerDimensions.height - $contentDimensions.height;
-		var $maximumHeight = $windowDimensions.height - $heightDifference/* - (this._dimensionDifferences.height * 2)*/;
+		var $maximumHeight = $windowDimensions.height - $heightDifference;
 		this._content.css({ maxHeight: $maximumHeight + 'px' });
 		
 		// re-caculate values if container height was previously limited
@@ -3893,14 +3880,6 @@ $.widget('ui.wcfDialog', {
 		if ($contentDimensions.height > maximumHeight) {
 			$contentDimensions.height = maximumHeight;
 		}
-		
-		// fix dimensions
-		/*
-		$contentDimensions = {
-			height: $contentDimensions.height*//* - this._dimensionDifferences.height*//*,
-			width: $contentDimensions.width - this._dimensionDifferences.width
-		};
-		*/
 
 		return $contentDimensions;
 	}
@@ -3990,7 +3969,7 @@ $.widget('ui.wcfPages', {
 		if (this.options.previousDisabledIcon === null) this.options.previousDisabledIcon = WCF.Icon.get('wcf.icon.previous.disabled');
 		if (this.options.nextIcon === null) this.options.nextIcon = WCF.Icon.get('wcf.icon.next');
 		if (this.options.nextDisabledIcon === null) this.options.nextDisabledIcon = WCF.Icon.get('wcf.icon.next.disabled');
-		if (this.options.arrowDownIcon === null) this.options.arrowDownIcon = WCF.Icon.get('wcf.icon.dropdown');
+		if (this.options.arrowDownIcon === null) this.options.arrowDownIcon = WCF.Icon.get('wcf.icon.arrow.down');
 		
 		this.element.addClass('pageNavigation');
 		
@@ -4021,12 +4000,13 @@ $.widget('ui.wcfPages', {
 			this.element.children().remove();
 			
 			var $pageList = $('<ul></ul>');
+			this.element.append($pageList);
 			
 			var $previousElement = $('<li></li>').addClass('skip');
 			$pageList.append($previousElement);
 			
 			if (this.options.activePage > 1) {
-				var $previousLink = $('<a' + ((this.options.previousPage != null) ? (' title="' + this.options.previousPage + '" class="balloonTooltip"') : ('')) + '></a>');
+				var $previousLink = $('<a' + ((this.options.previousPage != null) ? (' title="' + this.options.previousPage + '"') : ('')) + '></a>');
 				$previousElement.append($previousLink);
 				this._bindSwitchPage($previousLink, this.options.activePage - 1);
 				
@@ -4087,27 +4067,21 @@ $.widget('ui.wcfPages', {
 					var $leftChildren = $('<li class="children"></li>');
 					$pageList.append($leftChildren);
 					
-					var $leftChildrenLink = $('<a class="dropdownCaption">&hellip;</a>');
+					var $leftChildrenLink = $('<a>&hellip;</a>');
 					$leftChildren.append($leftChildrenLink);
-					// commented all page number input events out, because the normal pagination also
-					// don't have this function at this moment. This may get completely removed or
-					// updated as soon as this gets reimplemented in the normal pagination -- Markus Bartz
-//					$leftChildrenLink.click($.proxy(this._startInput, this));
+					$leftChildrenLink.click($.proxy(this._startInput, this));
 					
 					var $leftChildrenImage = $('<img src="' + this.options.arrowDownIcon + '" alt="" />');
 					$leftChildrenLink.append($leftChildrenImage);
 					
 					var $leftChildrenInput = $('<input type="text" name="pageNo" class="tiny" />');
 					$leftChildren.append($leftChildrenInput);
-//					$leftChildrenInput.keydown($.proxy(this._handleInput, this));
-//					$leftChildrenInput.keyup($.proxy(this._handleInput, this));
-//					$leftChildrenInput.blur($.proxy(this._stopInput, this));
+					$leftChildrenInput.keydown($.proxy(this._handleInput, this));
+					$leftChildrenInput.keyup($.proxy(this._handleInput, this));
+					$leftChildrenInput.blur($.proxy(this._stopInput, this));
 					
 					var $leftChildrenContainer = $('<div class="dropdown"></div>');
 					$leftChildren.append($leftChildrenContainer);
-					
-					var $leftPointerContainer = $('<span class="pointer"><span></span></span>');
-					$leftChildrenContainer.append($leftPointerContainer);
 					
 					var $leftChildrenList = $('<ul></u>');
 					$leftChildrenContainer.append($leftChildrenList);
@@ -4136,24 +4110,21 @@ $.widget('ui.wcfPages', {
 					var $rightChildren = $('<li class="children"></li>');
 					$pageList.append($rightChildren);
 					
-					var $rightChildrenLink = $('<a class="dropdownCaption">&hellip;</a>');
+					var $rightChildrenLink = $('<a>&hellip;</a>');
 					$rightChildren.append($rightChildrenLink);
-//					$rightChildrenLink.click($.proxy(this._startInput, this));
+					$rightChildrenLink.click($.proxy(this._startInput, this));
 					
 					var $rightChildrenImage = $('<img src="' + this.options.arrowDownIcon + '" alt="" />');
 					$rightChildrenLink.append($rightChildrenImage);
 					
 					var $rightChildrenInput = $('<input type="text" name="pageNo" class="tiny" />');
 					$rightChildren.append($rightChildrenInput);
-//					$rightChildrenInput.keydown($.proxy(this._handleInput, this));
-//					$rightChildrenInput.keyup($.proxy(this._handleInput, this));
-//					$rightChildrenInput.blur($.proxy(this._stopInput, this));
+					$rightChildrenInput.keydown($.proxy(this._handleInput, this));
+					$rightChildrenInput.keyup($.proxy(this._handleInput, this));
+					$rightChildrenInput.blur($.proxy(this._stopInput, this));
 					
 					var $rightChildrenContainer = $('<div class="dropdown"></div>');
 					$rightChildren.append($rightChildrenContainer);
-					
-					var $rightPointerContainer = $('<span class="pointer"><span></span></span>');
-					$rightChildrenContainer.append($rightPointerContainer);
 					
 					var $rightChildrenList = $('<ul></ul>');
 					$rightChildrenContainer.append($rightChildrenList);
@@ -4176,7 +4147,7 @@ $.widget('ui.wcfPages', {
 			$pageList.append($nextElement);
 			
 			if (this.options.activePage < this.options.maxPage) {
-				var $nextLink = $('<a' + ((this.options.nextPage != null) ? (' title="' + this.options.nextPage + '" class="balloonTooltip"') : ('')) + '></a>');
+				var $nextLink = $('<a' + ((this.options.nextPage != null) ? (' title="' + this.options.nextPage + '"') : ('')) + '></a>').addClass('ballonTooltip');
 				$nextElement.append($nextLink);
 				this._bindSwitchPage($nextLink, this.options.activePage + 1);
 				
@@ -4188,8 +4159,6 @@ $.widget('ui.wcfPages', {
 				$nextElement.append($nextImage);
 				$nextElement.addClass('disabled');
 			}
-			
-			this.element.append($pageList);
 		}
 		else {
 			// otherwise hide the paginator if not already hidden
