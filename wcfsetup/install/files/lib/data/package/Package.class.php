@@ -5,6 +5,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\package\PackageDependencyHandler;
+use wcf\system\route\IRouteController;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -19,7 +20,7 @@ use wcf\util\StringUtil;
  * @subpackage	data.package
  * @category 	Community Framework
  */
-class Package extends DatabaseObject {
+class Package extends DatabaseObject implements IRouteController {
 	/**
 	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
@@ -187,6 +188,17 @@ class Package extends DatabaseObject {
 		}
 		
 		return $this->requiredPackages;
+	}
+	
+	/**
+	 * @see	wcf\system\route\IRouteController::getRouteComponentValues()
+	 */
+	public function getRouteComponentValues() {
+		return array(
+			'controller' => 'PackageView',
+			'id' => $this->packageID,
+			'title' => $this->getName()
+		);
 	}
 	
 	/**

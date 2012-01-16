@@ -50,7 +50,7 @@
 				<legend>{lang}wcf.acp.user.sendMail.markedUsers{/lang}</legend>
 				
 				<div>
-					{implode from=$users item=$user}<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user}</a>{/implode}
+					{implode from=$users item=$user}<a href="{link controller='UserEdit' controllerObject=$user}{/link}">{$user}</a>{/implode}
 				</div>
 			</fieldset>	
 		{/if}

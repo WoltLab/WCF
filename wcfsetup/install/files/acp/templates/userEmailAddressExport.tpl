@@ -22,7 +22,7 @@
 			<legend>{lang}wcf.acp.user.exportEmailAddress.markedUsers{/lang}</legend>
 			
 			<ul>
-				{implode from=$users item=$user}<li><a href="{link controller='UserEdit' id=$user->userID}{/link}" class="wcf-badge wcf-badgeButton">{$user}</a></li>{/implode}
+				{implode from=$users item=$user}<li><a href="{link controller='UserEdit' controllerObject=$user}{/link}" class="wcf-badge wcf-badgeButton">{$user}</a></li>{/implode}
 			</ul>
 		</fieldset>	
 		

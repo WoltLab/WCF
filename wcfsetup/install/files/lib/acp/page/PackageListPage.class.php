@@ -4,7 +4,7 @@ use wcf\data\package\Package;
 use wcf\data\package\PackageList;
 use wcf\page\AbstractPage;
 use wcf\system\menu\acp\ACPMenu;
-use wcf\system\request\RouteHandler;
+use wcf\system\route\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 
