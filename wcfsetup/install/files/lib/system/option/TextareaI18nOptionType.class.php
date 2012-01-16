@@ -32,7 +32,7 @@ class TextareaI18nOptionType extends TextareaOptionType {
 			'option' => $option,
 			'value' => $value
 		));
-		return WCF::getTPL()->fetch('optionTypeTextareaI18n');
+		return WCF::getTPL()->fetch('textareaI18nOptionType');
 	}
 	
 	/**

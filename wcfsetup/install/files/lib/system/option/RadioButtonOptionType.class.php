@@ -16,12 +16,12 @@ use wcf\util\StringUtil;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class RadiobuttonsOptionType extends AbstractOptionType implements ISearchableUserOption {
+class RadioButtonOptionType extends AbstractOptionType implements ISearchableUserOption {
 	/**
 	 * name of the template that contains the form element of this option type
 	 * @var	string
 	 */
-	public $templateName = 'optionTypeRadiobuttons';
+	public $templateName = 'radioButtonOptionType';
 
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
