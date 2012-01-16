@@ -37,7 +37,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 				// get by other packages registered files
 				$conditions = new PreparedStatementConditionBuilder();
 				$conditions->add("packageID <> ?", array($packageID));
-				$conditions->add("packageID IN (SELECT packageID FROM wcf".WCF_N."_package WHERE packageDir = ? AND standalone = ?)", array($this->packageInstallation->getPackage()->packageDir, 0));
+				$conditions->add("packageID IN (SELECT packageID FROM wcf".WCF_N."_package WHERE packageDir = ? AND isApplication = ?)", array($this->packageInstallation->getPackage()->packageDir, 0));
 				$conditions->add("templateName IN (?)", array($fileNames));
 				
 				$sql = "SELECT		*
@@ -52,11 +52,11 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 				}
 				
 				// check if files from installing package are in conflict with already installed files
-				if (!$this->packageInstallation->getPackage()->standalone && count($lockedFiles) > 0) {
+				if (!$this->packageInstallation->getPackage()->isApplication && count($lockedFiles) > 0) {
 					foreach ($fileNames as $key => $file) {
 						if (isset($lockedFiles[$file]) && $packageID != $lockedFiles[$file]) {
 							$owningPackage = new Package($lockedFiles[$file]);
-							throw new SystemException("A non-standalone package can't overwrite template files. Only an update from the package which owns the template can do that. (Package '".$this->packageInstallation->getPackage()->getPackage()."' tries to overwrite template '".$file."', which is owned by package '".$owningPackage->package."')");
+							throw new SystemException("A non-application package can't overwrite template files. Only an update from the package which owns the template can do that. (Package '".$this->packageInstallation->getPackage()->getPackage()."' tries to overwrite template '".$file."', which is owned by package '".$owningPackage->package."')");
 						}
 					}
 				}

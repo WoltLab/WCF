@@ -97,7 +97,7 @@
 				<dl>
 					<dt>{lang}wcf.acp.packageUpdate.search.type{/lang}</dt>
 					<dd>
-						<label><input type="checkbox" name="standalone" value="1" {if $standalone == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.type.standalone{/lang}</label> 
+						<label><input type="checkbox" name="isApplication" value="1" {if $isApplication == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.type.isApplication{/lang}</label> 
 					</dd>
 					<dd>
 						<label><input type="checkbox" name="plugin" value="1" {if $plugin == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.type.plugin{/lang}</label> 

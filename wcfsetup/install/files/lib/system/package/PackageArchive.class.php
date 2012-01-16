@@ -201,8 +201,8 @@ class PackageArchive {
 					$this->packageInfo[$name][$languageCode] = $element->nodeValue;
 				break;
 				
-				case 'standalone':
-					$this->packageInfo['standalone'] = intval($element->nodeValue);
+				case 'isapplication':
+					$this->packageInfo['isApplication'] = intval($element->nodeValue);
 				break;
 				
 				case 'plugin':
@@ -376,7 +376,7 @@ class PackageArchive {
 		}
 		
 		// set default values
-		if (!isset($this->packageInfo['standalone'])) $this->packageInfo['standalone'] = 0;
+		if (!isset($this->packageInfo['isApplication'])) $this->packageInfo['isApplication'] = 0;
 		if (!isset($this->packageInfo['plugin'])) $this->packageInfo['plugin'] = '';
 		if (!isset($this->packageInfo['packageURL'])) $this->packageInfo['packageURL'] = '';
 		
