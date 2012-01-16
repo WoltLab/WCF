@@ -39,7 +39,7 @@ class PackageListDetailedPage extends SortablePage {
 	/**
 	 * @see wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('packageID', 'package', 'packageDir', 'packageName', 'instanceNo', 'packageDescription', 'packageVersion', 'packageDate', 'packageURL', 'parentPackageID', 'isUnique', 'standalone', 'author', 'authorURL', 'installDate', 'updateDate');
+	public $validSortFields = array('packageID', 'package', 'packageDir', 'packageName', 'instanceNo', 'packageDescription', 'packageVersion', 'packageDate', 'packageURL', 'parentPackageID', 'isUnique', 'isApplication', 'author', 'authorURL', 'installDate', 'updateDate');
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
@@ -50,7 +50,7 @@ class PackageListDetailedPage extends SortablePage {
 	 * @see	wcf\page\MultipleLinkPage::readObjects()
 	 */	
 	protected function readObjects() {
-		$this->sqlOrderBy = 'package.'.($this->sortField == 'packageType' ? 'standalone '.$this->sortOrder.', package.parentPackageID '.$this->sortOrder : $this->sortField.' '.$this->sortOrder).($this->sortField != 'packageName' ? ', package.packageName ASC' : '');
+		$this->sqlOrderBy = 'package.'.($this->sortField == 'packageType' ? 'isApplication '.$this->sortOrder.', package.parentPackageID '.$this->sortOrder : $this->sortField.' '.$this->sortOrder).($this->sortField != 'packageName' ? ', package.packageName ASC' : '');
 		
 		parent::readObjects();
 	}

@@ -291,7 +291,7 @@ CREATE TABLE wcf1_package (
 	packageURL VARCHAR(255) NOT NULL DEFAULT '',
 	parentPackageID INT(10) NOT NULL DEFAULT 0,
 	isUnique TINYINT(1) NOT NULL DEFAULT 0,
-	standalone TINYINT(1) NOT NULL DEFAULT 0,
+	isApplication TINYINT(1) NOT NULL DEFAULT 0,
 	author VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
 	KEY package (package)
@@ -398,7 +398,7 @@ CREATE TABLE wcf1_package_update (
 	packageDescription VARCHAR(255) NOT NULL DEFAULT '',
 	author VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
-	standalone TINYINT(1) NOT NULL DEFAULT 0,
+	isApplication TINYINT(1) NOT NULL DEFAULT 0,
 	plugin VARCHAR(255) NOT NULL DEFAULT '',
 	UNIQUE KEY packageUpdateServerID (packageUpdateServerID, package)
 );

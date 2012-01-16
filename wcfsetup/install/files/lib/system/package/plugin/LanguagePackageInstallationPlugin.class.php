@@ -125,8 +125,8 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 					$languageEditor = new LanguageEditor($language);
 					
 					// import xml
-					// don't update language files if package is standalone
-					$languageEditor->updateFromXML($xml, $this->installation->getPackageID(), !$this->installation->getPackage()->standalone);
+					// don't update language files if package is an application
+					$languageEditor->updateFromXML($xml, $this->installation->getPackageID(), !$this->installation->getPackage()->isApplication);
 					
 					// add language to this package
 					$addedLanguageIDArray[] = $language->languageID;

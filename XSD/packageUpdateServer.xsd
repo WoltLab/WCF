@@ -34,7 +34,7 @@
 				<xs:element ref="packagedescription" />
 				<xs:choice minOccurs="0">
 					<xs:element ref="plugin" />
-					<xs:element ref="standalone" />
+					<xs:element ref="isapplication" />
 				</xs:choice>
 			</xs:sequence>
 		</xs:complexType>
@@ -49,8 +49,8 @@
 	<!-- plugin element -->
 	<xs:element name="plugin" type="woltlab_varchar" />
 	
-	<!-- standalone element -->
-	<xs:element name="standalone" type="woltlab_boolean" />
+	<!-- isapplication element -->
+	<xs:element name="isapplication" type="woltlab_boolean" />
 	
 	<!-- author information element -->
 	<xs:element name="authorInformation">

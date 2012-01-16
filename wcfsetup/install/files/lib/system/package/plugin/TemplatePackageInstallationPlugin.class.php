@@ -63,7 +63,7 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 		if (count($templates) > 0) {
 			// delete template files
 			$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$this->installation->getPackage()->packageDir));
-			$deleteEmptyDirectories = $this->installation->getPackage()->standalone;
+			$deleteEmptyDirectories = $this->installation->getPackage()->isApplication;
 			$this->installation->deleteFiles($packageDir, $templates, false, $deleteEmptyDirectories);
 			
 			// delete log entries

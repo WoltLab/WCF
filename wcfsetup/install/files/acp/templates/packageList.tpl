@@ -23,7 +23,7 @@
 </script>
 
 <header class="mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/packageStandalone1.svg" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.package.list{/lang}</h1>
 	</hgroup>
@@ -43,10 +43,10 @@
 		</hgroup>
 		
 		{foreach from=$applications key=packageID item=package}
-			<fieldset class="infoPackageStandalone">
+			<fieldset class="infoPackageApplication">
 				<legend>{$package->getName()}</legend>
 				
-				<img src="{@RELATIVE_WCF_DIR}icon/wcfIcon1.svg" alt="" title="{$package->getName()}" class="packageStandaloneIcon" />
+				<img src="{@RELATIVE_WCF_DIR}icon/wcfIcon1.svg" alt="" title="{$package->getName()}" class="packageApplicationIcon" />
 				
 				<div>
 					<dl>
@@ -115,7 +115,7 @@
 <div class="contentFooter">
 	<nav>
 		<ul class="largeButtons">
-			<li><a href="{link controller='PackageListDetailed'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageStandalone1.svg" alt="" /> <span>detailed package list</span></a></li>
+			<li><a href="{link controller='PackageListDetailed'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" /> <span>detailed package list</span></a></li>
 		</ul>
 	</nav>
 </div>

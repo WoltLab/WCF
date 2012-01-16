@@ -3975,15 +3975,15 @@ input[type='button'][disabled='disabled'],
 
 /* ############## ACP Package List ############## */
 
-/* -- -- -- Package Standalone -- -- -- */
+/* -- -- -- Application Package -- -- -- */
 
 /* Globals */
 
-.infoPackageStandalone {
+.infoPackageApplication {
 	position: relative;
 }
 
-.infoPackageStandalone img.packageStandaloneIcon {
+.infoPackageApplication img.packageApplicationIcon {
 	position: absolute;
 	top: 30px;
 	left: 25px;
@@ -3991,12 +3991,12 @@ input[type='button'][disabled='disabled'],
 	height: 96px;
 }
 
-.infoPackageStandalone div {
+.infoPackageApplication div {
 	margin-bottom: -15px;
 	margin-left: 30px;
 }
 
-.infoPackageStandalone footer {
+.infoPackageApplication footer {
 	position: relative;
 	right: -15px;
 	bottom: -15px;
@@ -4134,14 +4134,14 @@ input[type='button'][disabled='disabled'],
 
 /* -- -- -- Package Footers -- -- -- */
 
-.infoPackageStandalone footer nav,
+.infoPackageApplication footer nav,
 .infoPackagePlugin footer nav {
 	text-align: right;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.infoPackageStandalone footer nav,
+	.infoPackageApplication footer nav,
 	.infoPackagePlugin footer nav {
 		opacity: 0;
 		
@@ -4152,7 +4152,7 @@ input[type='button'][disabled='disabled'],
 		transition: opacity .1s linear;
 	}
 	
-	.infoPackageStandalone:hover footer nav,
+	.infoPackageApplication:hover footer nav,
 	.infoPackagePlugin:hover footer nav {
 		opacity: 1;
 	}
@@ -4161,9 +4161,9 @@ input[type='button'][disabled='disabled'],
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.infoPackageStandalone footer nav,
+	.infoPackageApplication footer nav,
 	.infoPackagePlugin footer nav,
-	.infoPackageStandalone:hover footer nav,
+	.infoPackageApplication:hover footer nav,
 	.infoPackagePlugin:hover footer nav {
 		opacity: 1;
 	}
