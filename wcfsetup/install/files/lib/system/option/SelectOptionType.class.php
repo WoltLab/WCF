@@ -28,7 +28,7 @@ class SelectOptionType extends RadiobuttonsOptionType {
 			'selectOptions' => $option->parseSelectOptions(),
 			'value' => $value
 		));
-		return WCF::getTPL()->fetch('optionTypeSelect');
+		return WCF::getTPL()->fetch('selectOptionType');
 	}
 	
 	/**
