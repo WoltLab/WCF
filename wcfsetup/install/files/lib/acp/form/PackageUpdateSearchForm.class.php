@@ -69,14 +69,13 @@ class PackageUpdateSearchForm extends ACPForm {
 	public $plugin = 1;
 	
 	/**
-	 * indicates if standalone applications are searched
+	 * indicates if applications are searched
 	 * @var	integer
 	 */
-	public $standalone = 1;
+	public $isApplication = 1;
 	
 	/**
-	 * indicates if packages that aren't plugins or standalone applications
-	 * are searched
+	 * indicates if packages that aren't plugins or applications are searched
 	 * @var	integer
 	 */
 	public $other = 0;
@@ -105,13 +104,13 @@ class PackageUpdateSearchForm extends ACPForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		$this->ignoreUniques = $this->plugin = $this->standalone = 0;
+		$this->ignoreUniques = $this->plugin = $this->isApplication = 0;
 		if (isset($_POST['packageUpdateServerIDs']) && is_array($_POST['packageUpdateServerIDs'])) $this->packageUpdateServerIDs = ArrayUtil::toIntegerArray($_POST['packageUpdateServerIDs']);
 		if (isset($_POST['packageName'])) $this->packageName = StringUtil::trim($_POST['packageName']);
 		if (isset($_POST['author'])) $this->author = StringUtil::trim($_POST['author']);
 		if (isset($_POST['searchDescription'])) $this->searchDescription = intval($_POST['searchDescription']);
 		if (isset($_POST['plugin'])) $this->plugin = intval($_POST['plugin']);
-		if (isset($_POST['standalone'])) $this->standalone = intval($_POST['standalone']);
+		if (isset($_POST['isApplication'])) $this->isApplication = intval($_POST['isApplication']);
 		if (isset($_POST['other'])) $this->other = intval($_POST['other']);
 		if (isset($_POST['ignoreUniques'])) $this->ignoreUniques = intval($_POST['ignoreUniques']);
 	}
@@ -146,9 +145,9 @@ class PackageUpdateSearchForm extends ACPForm {
 		// ignore already installed uniques
 		if ($this->ignoreUniques == 1) $conditions->add("package NOT IN (SELECT package FROM wcf".WCF_N."_package WHERE isUnique = 1)");
 		// package type
-		if (($this->plugin == 0 || $this->standalone == 0 || $this->other == 0) && ($this->plugin == 1 || $this->standalone == 1 || $this->other == 1)) {
-			if ($this->standalone == 1) {
-				$condition = 'standalone = 1';
+		if (($this->plugin == 0 || $this->isApplication == 0 || $this->other == 0) && ($this->plugin == 1 || $this->isApplication == 1 || $this->other == 1)) {
+			if ($this->isApplication == 1) {
+				$condition = 'isApplication = 1';
 				if ($this->plugin == 1) {
 					$condition .= " OR plugin IN (SELECT package FROM wcf".WCF_N."_package)";
 				}
@@ -161,13 +160,13 @@ class PackageUpdateSearchForm extends ACPForm {
 			else if ($this->plugin == 1) {
 				$condition = "plugin IN (SELECT package FROM wcf".WCF_N."_package)";
 				if ($this->other == 1) { 
-					$condition .= " OR standalone = 0";
+					$condition .= " OR isApplication = 0";
 				}
 				
 				$conditions->add('('.$condition.')');
 			}
 			else if ($this->other) {
-				$conditions->add("(standalone = 0 AND plugin = '')");
+				$conditions->add("(isApplication = 0 AND plugin = '')");
 			}
 		}
 		
@@ -268,7 +267,7 @@ class PackageUpdateSearchForm extends ACPForm {
 			'packageName' => $this->packageName,
 			'searchDescription' => $this->searchDescription,
 			'author' => $this->author,
-			'standalone' => $this->standalone,
+			'isApplication' => $this->isApplication,
 			'plugin' => $this->plugin,
 			'other' => $this->other,
 			'packageUpdateServerIDs' => $this->packageUpdateServerIDs,

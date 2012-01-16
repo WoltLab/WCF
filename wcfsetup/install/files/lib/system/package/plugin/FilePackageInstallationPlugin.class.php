@@ -39,8 +39,8 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 				// use parents package dir
 				$dir = $this->installation->getPackage()->getParentPackage()->packageDir;
 			}
-			else if ($this->installation->getPackage()->standalone == 1 && $this->installation->getPackage()->package != 'com.woltlab.wcf' && $this->installation->getAction() == 'install') {
-				// standalone package
+			else if ($this->installation->getPackage()->isApplication == 1 && $this->installation->getPackage()->package != 'com.woltlab.wcf' && $this->installation->getAction() == 'install') {
+				// application
 				// prompt package dir
 				$dir = $this->promptPackageDir();
 			}
@@ -67,8 +67,8 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		// extract content of files.tar
 		$fileInstaller = $this->installation->extractFiles($packageDir, $sourceFile, $fileHandler);
 		
-		// if this a standalone package, write config.inc.php for this package
-		if ($this->installation->getPackage()->standalone == 1 && $this->installation->getPackage()->package != 'com.woltlab.wcf' && $this->installation->getAction() == 'install') {
+		// if this a an application, write config.inc.php for this package
+		if ($this->installation->getPackage()->isApplication == 1 && $this->installation->getPackage()->package != 'com.woltlab.wcf' && $this->installation->getAction() == 'install') {
 			// touch file
 			$fileInstaller->touchFile(PackageInstallationDispatcher::CONFIG_FILE);
 			

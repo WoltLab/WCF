@@ -663,8 +663,6 @@ nav.topMenu {
 	z-index: 100;
 }
 
-
-
 /* ToDo: Special */
 
 .mainMenu > ul > li.activeMenuItem .badge {
@@ -679,22 +677,9 @@ nav.topMenu {
 	box-shadow: 0 0 1px rgba(255, 255, 255, 1);
 }
 
-.mainMenu > ul > li > ul {
-	position: absolute;
-	bottom: -18px;
-	z-index: 1000;
-	white-space: nowrap;
-	font-size: 75%;
-}
-
-.mainMenu > ul > li > ul > li {
-	padding: 0 4px;
-	display: inline-block;
-}
 
 
-
-/* -- -- -- Header/Footer Navigation -- -- -- */
+/* -- -- -- Header/Footer Navigation & Main Menu Sub Menu -- -- -- */
 
 .headerNavigation {
 	background-color: #e7f2fd;
@@ -757,6 +742,7 @@ nav.topMenu {
 
 .headerNavigation ul li a:hover,
 .footerNavigation ul li a:hover {
+	text-decoration: none;
 	background-color: #d8e7f5;
 }
 
@@ -767,6 +753,21 @@ nav.topMenu {
 	left: -9000px;
 	top: -9000px;
 	width: 0;
+}
+
+/* Sub Menu */
+
+.headerNavigation .subMenu {
+	float: left;
+}
+
+.headerNavigation .subMenu > li {
+	line-height: 1.25;
+}
+
+.headerNavigation .subMenu > li > a {
+	padding-right: 5px;
+	padding-left: 5px;
 }
 
 
@@ -1704,6 +1705,7 @@ fieldset p.description {
 }
 
 
+
 /* ############## Labeled Content ############## */
 
 /* Simple */
@@ -1798,26 +1800,6 @@ dl > dd > fieldset > dl > dd > label {
 	display: block;
 }
 
-/* Special */
-
-.sidebar dl > dt {
-	text-align: left;
-	float: none;
-	width: auto;
-}
-
-.sidebar dl > dd {
-	margin-left: 0;
-	display: block;
-	margin-bottom: 13px;
-}	
-
-.sidebar dl > dd * {
-	display: block;
-}	
-
-
-
 /* Reversed */
 
 .reversed {
@@ -1847,6 +1829,37 @@ dl > dd > fieldset > dl > dd > label {
 	margin-left: 0;
 }
 
+/* Special Sidebar */
+
+.sidebar dl > dt {
+	text-align: left;
+	float: none;
+	width: auto;
+}
+
+.sidebar dl > dd {
+	margin-left: 0;
+	display: block;
+	margin-bottom: 13px;
+}	
+
+.sidebar dl > dd * {
+	display: block;
+}	
+
+/* Special Overlay */
+
+.wcfDialogContainer dl > dt {
+	width: 130px;
+}
+
+.wcfDialogContainer dl > dd {
+	margin-left: 150px;
+}	
+.wcfDialogContainer dl > .reversed {
+	left: 170px;
+	width: auto;
+}
 
 
 /* ############## Forms ############## */
@@ -2668,16 +2681,27 @@ input[type='button'],
 	overflow: hidden;
 }
 
-.breadcrumbs ul li {
+.breadcrumbs > ul > li {
 	font-size: 85%;
 	list-style: none;
 	float: left;
 	position: relative;
+	max-width: 30%;
+	
+	-webkit-transition: max-width .2s linear;
+	-moz-transition: max-width .2s linear;
+	-ms-transition: max-width .2s linear;
+	-o-transition: max-width .2s linear;
+	transition: max-width .2s linear;
+}
+
+.breadcrumbs > ul > li:hover {
+	max-width: 100%;
 }
 
 /* Arrow */
 
-.breadcrumbs ul li > span {
+.breadcrumbs > ul > li > span {
 	border-width: 15px;
 	border-style: solid none solid solid;
 	border-color: transparent transparent transparent #ccc;
@@ -2690,7 +2714,7 @@ input[type='button'],
 	z-index: 100;
 }
 
-.breadcrumbs ul li > .pointer > span {
+.breadcrumbs > ul > li > .pointer > span {
 	text-indent: -9000px;
 	border-width: 15px;
 	border-style: solid none solid solid;
@@ -2706,7 +2730,7 @@ input[type='button'],
 
 /* Caption */
 
-.breadcrumbs ul li a {
+.breadcrumbs > ul > li a {
 	text-decoration: none;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	color: rgba(153, 153, 153, 1);
@@ -2719,7 +2743,7 @@ input[type='button'],
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.breadcrumbs ul li a {
+	.breadcrumbs > ul > li a {
 		max-width: 250px;
 	}
 	
@@ -2727,13 +2751,13 @@ input[type='button'],
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.breadcrumbs ul li a {
+	.breadcrumbs > ul > li a {
 		max-width: 100px;
 	}
 	
 }
 
-.breadcrumbs ul li:first-child a {
+.breadcrumbs > ul > li:first-child a {
 	border-radius: 5px 0 0 5px;
 	background-image: url('../../icon/home1.svg');
 	background-position: 7px center;
@@ -2742,14 +2766,14 @@ input[type='button'],
 	padding-left: 30px;
 }
 
-.breadcrumbs ul li:hover a {
+.breadcrumbs > ul > li:hover a {
 	color: rgba(102, 102, 102, 1);
 	background-color: #f9f9f9;
 	position: relative;
 	z-index: 90;
 }
 
-.breadcrumbs ul li:hover > .pointer > span {
+.breadcrumbs > ul > li:hover > .pointer > span {
 	border-color: transparent transparent transparent #f9f9f9;
 }
 
@@ -3951,15 +3975,15 @@ input[type='button'][disabled='disabled'],
 
 /* ############## ACP Package List ############## */
 
-/* -- -- -- Package Standalone -- -- -- */
+/* -- -- -- Application Package -- -- -- */
 
 /* Globals */
 
-.infoPackageStandalone {
+.infoPackageApplication {
 	position: relative;
 }
 
-.infoPackageStandalone img.packageStandaloneIcon {
+.infoPackageApplication img.packageApplicationIcon {
 	position: absolute;
 	top: 30px;
 	left: 25px;
@@ -3967,12 +3991,12 @@ input[type='button'][disabled='disabled'],
 	height: 96px;
 }
 
-.infoPackageStandalone div {
+.infoPackageApplication div {
 	margin-bottom: -15px;
 	margin-left: 30px;
 }
 
-.infoPackageStandalone footer {
+.infoPackageApplication footer {
 	position: relative;
 	right: -15px;
 	bottom: -15px;
@@ -4110,14 +4134,14 @@ input[type='button'][disabled='disabled'],
 
 /* -- -- -- Package Footers -- -- -- */
 
-.infoPackageStandalone footer nav,
+.infoPackageApplication footer nav,
 .infoPackagePlugin footer nav {
 	text-align: right;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.infoPackageStandalone footer nav,
+	.infoPackageApplication footer nav,
 	.infoPackagePlugin footer nav {
 		opacity: 0;
 		
@@ -4128,7 +4152,7 @@ input[type='button'][disabled='disabled'],
 		transition: opacity .1s linear;
 	}
 	
-	.infoPackageStandalone:hover footer nav,
+	.infoPackageApplication:hover footer nav,
 	.infoPackagePlugin:hover footer nav {
 		opacity: 1;
 	}
@@ -4137,9 +4161,9 @@ input[type='button'][disabled='disabled'],
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.infoPackageStandalone footer nav,
+	.infoPackageApplication footer nav,
 	.infoPackagePlugin footer nav,
-	.infoPackageStandalone:hover footer nav,
+	.infoPackageApplication:hover footer nav,
 	.infoPackagePlugin:hover footer nav {
 		opacity: 1;
 	}

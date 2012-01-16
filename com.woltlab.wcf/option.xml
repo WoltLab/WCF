@@ -157,7 +157,7 @@
 			<!-- general.image -->
 			<option name="image_adapter_type">
 				<categoryname>general.image</categoryname>
-				<optiontype>radiobuttons</optiontype>
+				<optiontype>radioButton</optiontype>
 				<defaultvalue><![CDATA[gd]]></defaultvalue>
 				<selectoptions>
 					<![CDATA[gd:wcf.acp.option.image_adapter_type.gd
@@ -285,7 +285,7 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			<!-- mail.send -->
 			<option name="mail_send_method">
 				<categoryname>general.mail.send</categoryname>
-				<optiontype>radiobuttons</optiontype>
+				<optiontype>radioButton</optiontype>
 				<defaultvalue><![CDATA[php]]></defaultvalue>
 				<selectoptions><![CDATA[php:wcf.acp.option.mail_send_method.php
 smtp:wcf.acp.option.mail_send_method.smtp
@@ -328,7 +328,7 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 			<!-- general.cache -->
 			<option name="cache_source_type">
 				<categoryname>general.cache.general</categoryname>
-				<optiontype>radiobuttons</optiontype>
+				<optiontype>radioButton</optiontype>
 				<defaultvalue><![CDATA[disk]]></defaultvalue>
 				<selectoptions><![CDATA[disk:wcf.acp.option.cache_source_type.disk
 memcache:wcf.acp.option.cache_source_type.memcache

@@ -1059,7 +1059,7 @@ class WCFSetup extends WCF {
 	}
 	
 	/**
-	 * Gets the package name of the first standalone application in WCFSetup.tar.gz.
+	 * Gets the package name of the first application in WCFSetup.tar.gz.
 	 */
 	protected static function getPackageName() {
 		// get package name

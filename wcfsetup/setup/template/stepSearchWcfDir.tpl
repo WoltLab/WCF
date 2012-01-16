@@ -46,7 +46,7 @@
 				for (var $i = 0; $i < $relativePathDirs.length; $i++) {
 					if ($relativePathDirs[$i] == '..') {
 						if ($installScriptUrlDirs.length < 1) {
-							$wcfUrl.val($invalidErrorMessage);
+							$wcfUrl.html($invalidErrorMessage);
 							return;
 						}
 				
@@ -60,7 +60,7 @@
 				// implode and show result
 				var $result = $domainName;
 				for (var $i = 0; $i < $installScriptUrlDirs.length; $i++) $result += '/' + $installScriptUrlDirs[$i];
-				$wcfUrl.val($result);
+				$wcfUrl.html($result);
 			}
 
 			function removeEmptyDirParts(dir) {
@@ -107,7 +107,7 @@
 		<dl id="wcfUrlContainer" style="display: none;">
 			<dt><label for="wcfUrl">{lang}wcf.global.wcfDir.url{/lang}</label></dt>
 			<dd>
-				<input type="text" id="wcfUrl" name="wcfUrl" value="" readonly="readonly" class="long" />
+				<p id="wcfUrl"></p>
 				<small>{lang}wcf.global.wcfDir.url.description{/lang}</small>
 			</dd>
 		</dl>

@@ -1030,7 +1030,7 @@ WCF.Action.Proxy.prototype = {
 	_showLoadingOverlay: function() {
 		// create loading overlay on first run
 		if (this._loadingOverlay === null) {
-			this._loadingOverlay = $('<div id="actionProxyLoading" class="actionProxyLoading"><img src="' + RELATIVE_WCF_DIR + 'icon/spinner1.svg" alt="" />' + WCF.Language.get('wcf.global.loading') + '</div>').hide().appendTo($('body'));
+			this._loadingOverlay = $('<div id="actionProxyLoading" class="actionProxyLoading"><img src="' + WCF.Icon.get('wcf.global.spinner') + '" alt="" />' + WCF.Language.get('wcf.global.loading') + '</div>').hide().appendTo($('body'));
 		}
 
 		// fade in overlay
@@ -1378,15 +1378,27 @@ WCF.Action.Toggle.prototype = {
 						return this.src.replace(/enabled1\.svg$/, 'disabled1.svg');
 					}
 				});
+				
 				// toogle icon title
 				$toggleButton.attr('title', function() {
 					if (this.src.match(/enabled1\.svg$/)) {
-						return $(this).data('disableMessage');
+						if ($(this).data('disableTitle')) {
+							return $(this).data('disableTitle')
+						}
+						
+						return WCF.Language.get('wcf.global.button.disable');
 					}
 					else {
-						return $(this).data('enableMessage');
+						if ($(this).data('enableTitle')) {
+							return $(this).data('enableTitle')
+						}
+						
+						return WCF.Language.get('wcf.global.button.enable');
 					}
 				});
+				
+				// toggle css class
+				$(container).toggleClass('disabled');
 			}
 		}, this));
 	}
@@ -3048,18 +3060,16 @@ WCF.DOMNodeInsertedHandler = {
 	_executeCallbacks: function(event) {
 		if (this._isExecuting) return;
 
-		// do not track events fired within the next 100 ms
+		// do not track events while executing callbacks
 		this._isExecuting = true;
-		new WCF.PeriodicalExecuter($.proxy(function(pe) {
-			this._isExecuting = false;
-
-			pe.stop();
-		}, this), 100);
-
+		
 		this._callbacks.each(function(pair) {
 			// execute callback
 			pair.value(event);
 		});
+		
+		// enable listener again
+		this._isExecuting = false;
 	}
 };
 
@@ -3311,7 +3321,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 		var $listItem = this._super(item);
 		
 		// insert item type
-		$('<img src="' + RELATIVE_WCF_DIR + 'icon/user' + (item.type == 'group' ? 's' : '') + '1.svg" alt="" />').insertBefore($listItem.children('span:eq(0)'));
+		$('<img src="' + WCF.Icon.get('wcf.user.user' + (item.type == 'group' ? 's' : '')) + '" alt="" />').insertBefore($listItem.children('span:eq(0)'));
 		$listItem.data('type', item.type);
 		
 		return $listItem;
@@ -3507,16 +3517,6 @@ $.widget('ui.wcfDialog', {
 	_contentDimensions: null,
 
 	/**
-	 * difference between inner and outer content width
-	 * @var	object
-	 */
-	/*
-	_dimensionDifferences: {
-		height: 0,
-		width: 0
-	},*/
-
-	/**
 	 * rendering state
 	 * @var	boolean
 	 */
@@ -3599,7 +3599,7 @@ $.widget('ui.wcfDialog', {
 		}
 
 		// act on resize
-		$(window).resize($.proxy(this.render, this));
+		$(window).resize($.proxy(this._resize, this));
 	},
 
 	/**
@@ -3617,7 +3617,7 @@ $.widget('ui.wcfDialog', {
 
 		// create close button
 		if (this.options.closable) {
-			this._closeButton = $('<a class="wcfDialogCloseButton"><span>TODO: close</span></a>').click($.proxy(this.close, this));
+			this._closeButton = $('<a class="wcfDialogCloseButton" title="' + this.options.closeButtonLabel + '"><span>' + this.options.closeButtonLabel + '</span></a>').click($.proxy(this.close, this));
 
 			if (!this.options.hideTitle && this.options.title != '') {
 				this._closeButton.appendTo(this._titlebar);
@@ -3631,7 +3631,7 @@ $.widget('ui.wcfDialog', {
 		this._content = $('<div class="wcfDialogContent"></div>').appendTo(this._container);
 
 		// move target element into content
-		var $content = this.element.remove();
+		var $content = this.element.detach();
 		this._content.html($content);
 
 		// create modal view
@@ -3649,18 +3649,6 @@ $.widget('ui.wcfDialog', {
 				}, this));
 			}
 		}
-
-		/*
-		// caulculate dimensions differences
-		this._container.show();
-		var $contentInnerDimensions = this._content.getDimensions();
-		var $contentOuterDimensions = this._content.getDimensions('outer');
-		
-		this._dimensionDifferences = {
-			height: ($contentOuterDimensions.height - $contentInnerDimensions.height),
-			width: ($contentOuterDimensions.width - $contentInnerDimensions.width)
-		};
-		*/
 	},
 	
 	/**
@@ -3757,6 +3745,15 @@ $.widget('ui.wcfDialog', {
 	},
 	
 	/**
+	 * Renders dialog on resize if visible.
+	 */
+	_resize: function() {
+		if (this.isOpen()) {
+			this.render();
+		}
+	},
+	
+	/**
 	 * Renders this dialog, should be called whenever content is updated.
 	 */
 	render: function() {
@@ -3794,7 +3791,7 @@ $.widget('ui.wcfDialog', {
 
 		// calculate maximum content height
 		var $heightDifference = $containerDimensions.height - $contentDimensions.height;
-		var $maximumHeight = $windowDimensions.height - $heightDifference/* - (this._dimensionDifferences.height * 2)*/;
+		var $maximumHeight = $windowDimensions.height - $heightDifference;
 		this._content.css({ maxHeight: $maximumHeight + 'px' });
 		
 		// re-caculate values if container height was previously limited
@@ -3895,14 +3892,6 @@ $.widget('ui.wcfDialog', {
 		if ($contentDimensions.height > maximumHeight) {
 			$contentDimensions.height = maximumHeight;
 		}
-		
-		// fix dimensions
-		/*
-		$contentDimensions = {
-			height: $contentDimensions.height*//* - this._dimensionDifferences.height*//*,
-			width: $contentDimensions.width - this._dimensionDifferences.width
-		};
-		*/
 
 		return $contentDimensions;
 	}
