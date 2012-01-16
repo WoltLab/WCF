@@ -1705,6 +1705,7 @@ fieldset p.description {
 }
 
 
+
 /* ############## Labeled Content ############## */
 
 /* Simple */
@@ -1799,7 +1800,7 @@ dl > dd > fieldset > dl > dd > label {
 	display: block;
 }
 
-/* Special */
+/* Special Sidebar */
 
 .sidebar dl > dt {
 	text-align: left;
@@ -1815,6 +1816,16 @@ dl > dd > fieldset > dl > dd > label {
 
 .sidebar dl > dd * {
 	display: block;
+}	
+
+/* Special Overlay */
+
+.wcfDialogContainer dl > dt {
+	width: 130px;
+}
+
+.wcfDialogContainer dl > dd {
+	margin-left: 150px;
 }	
 
 
