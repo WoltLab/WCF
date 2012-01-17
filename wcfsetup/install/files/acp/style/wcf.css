@@ -746,6 +746,15 @@ nav.topMenu {
 	background-color: #d8e7f5;
 }
 
+.headerNavigation ul li a:hover:active,
+.headerNavigation ul li a:hover:focus,
+.footerNavigation ul li a:hover:active,
+.footerNavigation ul li a:hover:focus {
+	background-color: #fff9f4;
+}
+
+/* Special */
+
 #tplLogin .pageHeader .headerNavigation ul li.toBottomLink,
 #tplLogin .pageFooter .footerNavigation ul li.toTopLink {
 	/* Removes the to-bottom-link on the log-in page */
@@ -755,7 +764,7 @@ nav.topMenu {
 	width: 0;
 }
 
-/* Sub Menu */
+/* Special: Sub Menu */
 
 .headerNavigation .subMenu {
 	float: left;
@@ -1152,7 +1161,7 @@ section.content .content {
 
 .pageFooter {
 	text-align: center;
-	padding: 0 23px;
+	padding: 0 23px 33px;
 	position: relative;
 	z-index: 150;
 }
