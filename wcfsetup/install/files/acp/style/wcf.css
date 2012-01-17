@@ -3303,6 +3303,36 @@ tr .columnURL {
 	left: auto;
 }
 
+/* TODO: Overlay */
+
+.systemNotification {
+	/* declarations taken from .success */
+
+	background-color: rgba(238, 255, 238, 1.0);
+	border: 1px solid rgba(0, 204, 0, 1.0);
+	border-top-width: 0;
+	border-radius: 0 0 5px 5px;
+	color: rgba(0, 153, 0, 1.0);
+	left: 40%;
+	padding: 14px;
+	padding-top: 10px;
+	position: fixed;
+	text-align: center;
+	top: -38px;
+	width: auto;
+	z-index: 500;
+	
+	-webkit-transition: top .5s linear;
+	-moz-transition: top .5s linear;
+	-ms-transition: top .5s linear;
+	-o-transition: top .5s linear;
+	transition: top .5s linear;
+}
+
+.systemNotification.open {
+	top: 0px;
+}
+
 
 
 /* ############## ToDo: WCF Dialog ############## */

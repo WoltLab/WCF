@@ -3329,6 +3329,80 @@ WCF.Search.User = WCF.Search.Base.extend({
 });
 
 /**
+ * Namespace for system-related classes.
+ */
+WCF.System = { };
+
+/**
+ * System notification overlays.
+ * 
+ * @param	string		message
+ * @param	string		cssClassNames
+ */
+WCF.System.Notification = Class.extend({
+	/**
+	 * callback on notification close
+	 * @var	object
+	 */
+	_callback: null,
+	
+	/**
+	 * notification overlay
+	 * @var	jQuery
+	 */
+	_overlay: null,
+	
+	/**
+	 * Creates a new system notification overlay.
+	 * 
+	 * @param	string		message
+	 * @param	string		cssClassNames
+	 */
+	init: function(message, cssClassNames) {
+		this._overlay = $('<div class="systemNotification"><p>' + message + '</p></div>').appendTo(document.body);
+		
+		if (cssClassNames) {
+			this._overlay.children('p').addClass(cssClassNames);
+		}
+	},
+	
+	/**
+	 * Shows the notification overlay.
+	 * 
+	 * @param	object		callback
+	 * @param	integer		duration
+	 */
+	show: function(callback, duration) {
+		duration = parseInt(duration);
+		if (!duration) duration = 2000;
+		
+		if (callback && $.isFunction(callback)) {
+			this._callback = callback;
+		}
+		
+		// hide overlay after specified duration
+		new WCF.PeriodicalExecuter($.proxy(this._hide, this), duration);
+		
+		this._overlay.addClass('open');
+	},
+	
+	/**
+	 * Hides the notification overlay after executing the callback.
+	 * 
+	 * @param	WCF.PeriodicalExecuter		pe
+	 */
+	_hide: function(pe) {
+		if (this._callback !== null) {
+			this._callback();
+		}
+		
+		this._overlay.removeClass('open');
+		
+		pe.stop();
+	}
+});
+
+/**
  * Provides a toggleable sidebar.
  */
 $.widget('ui.wcfSidebar', {
