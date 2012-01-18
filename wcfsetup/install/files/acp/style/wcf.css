@@ -461,6 +461,7 @@ nav.topMenu {
 	color: #d8e7f5;
 }
 
+.pageHeader .logo > div > img,
 .pageHeader .logo > a > img {
 	position: absolute;
 	bottom: 20px;
@@ -1549,7 +1550,8 @@ table .label {
 	margin-top: 0;
 }
 
-.mainHeading > img {
+.mainHeading > img,
+.mainHeading > svg{
 	float: left;
 }
 
@@ -1567,12 +1569,14 @@ table .label {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.mainHeading > img {
+	.mainHeading > img,
+	.mainHeading > svg {
 		width: 48px;
 		height: 48px;
 	}
 	
-	.mainHeading > img ~ hgroup {
+	.mainHeading > img ~ hgroup,
+	.mainHeading > svg ~ hgroup {
 		padding-left: 60px;
 	}
 	
@@ -1584,12 +1588,14 @@ table .label {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.mainHeading > img {
+	.mainHeading > img,
+	.mainHeading > svg {
 		width: 64px;
 		height: 64px;
 	}
 	
-	.mainHeading > img ~ hgroup {
+	.mainHeading > img ~ hgroup,
+	.mainHeading > svg ~ hgroup {
 		padding-left: 65px;
 	}
 	
