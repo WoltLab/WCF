@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class SelectOptionType extends RadiobuttonsOptionType {
+class SelectOptionType extends RadioButtonOptionType {
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
