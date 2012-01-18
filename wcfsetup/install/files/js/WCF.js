@@ -3403,6 +3403,232 @@ WCF.System.Notification = Class.extend({
 });
 
 /**
+ * Default implementation for inline editors.
+ */
+WCF.InlineEditor = Class.extend({
+	/**
+	 * list of registered callbacks
+	 * @var	array<object>
+	 */
+	_callbacks: [ ],
+	
+	/**
+	 * list of container elements
+	 * @var	object
+	 */
+	_elements: { },
+	
+	/**
+	 * list of dropdown selections
+	 * @var	object
+	 */
+	_dropdowns: { },
+	
+	/**
+	 * element jQuery selector
+	 * @var	string
+	 */
+	_elementSelector: '',
+	
+	/**
+	 * list of known options
+	 * @var	array<object>
+	 */
+	_options: [ ],
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * Initializes a new inline editor.
+	 */
+	init: function() {
+		if (!this._elementSelector) {
+			return;
+		}
+		
+		var $elements = $(this._elementSelector);
+		if (!$elements.length) {
+			return;
+		}
+		
+		var self = this;
+		$elements.each(function(index, element) {
+			var $element = $(element);
+			var $elementID = $element.wcfIdentify();
+			
+			// find trigger element
+			var $trigger = this._getTriggerElement($element);
+			if ($trigger === null || $trigger.length !== 1) {
+				return;
+			}
+			
+			$trigger.click(self._show).data('elementID', $elementID);
+			
+			// store reference
+			self._elements[$elementID] = $element;
+		});
+		
+		this._proxy = new WCF.Action.Proxy({
+			success: self._success
+		});
+	},
+	
+	/**
+	 * Register an option callback for validation and execution.
+	 * 
+	 * @param	object		callback
+	 */
+	registerCallback: function(callback) {
+		if ($.isFunction(callback)) {
+			this._callbacks.push(callback);
+		}
+	},
+	
+	/**
+	 * Returns the triggering element.
+	 * 
+	 * @param	jQuery		element
+	 * @return	jQuery
+	 */
+	_getTriggerElement: function(element) {
+		return null;
+	},
+	
+	/**
+	 * Shows a dropdown menu if options are available.
+	 * 
+	 * @param	object		event
+	 */
+	_show: function(event) {
+		var $elementID = $(event.currentTarget).data('elementID');
+		
+		// build drop down
+		if (!this._dropdowns[$elementID]) {
+			this._elements[$elementID].wrap('<span />');
+			this._dropdowns[$elementID] = $('<ul class="dropdown" />').insertAfter(this._elements[$elementID]);
+		}
+		
+		// validate options
+		var $hasOptions = false;
+		for (var $i = 0, $length = this._options.length; $i < $length; $i++) {
+			var $option = this._options[$i];
+			
+			if (this._validate($elementID, $option.optionName) || this._validateCallbacks($elementID, $option.optionName)) {
+				var $listItem = $('<li><span>' + $option.label + '</span></li>').appendTo(this._dropdowns[$elementID]);
+				$listItem.data('elementID', $elementID).data('optionName', $option.optionName).click($.proxy(this._click, this));
+				
+				$hasOptions = true;
+			}
+		}
+		
+		if ($hasOptions) {
+			this._dropdowns[$elementID].addClass('open');
+		}
+	},
+	
+	/**
+	 * Validates an option.
+	 * 
+	 * @param	string		elementID
+	 * @param	string		optionName
+	 * @returns	boolean
+	 */
+	_validate: function(elementID, optionName) {
+		return false;
+	},
+	
+	/**
+	 * Validates an option provided by callbacks.
+	 * 
+	 * @param	string		elementID
+	 * @param	string		optionName
+	 * @return	boolean
+	 */
+	_validateCallbacks: function(elementID, optionName) {
+		var $length = this._callbacks.length;
+		if ($length) {
+			for (var $i = 0; $i < $length; $i++) {
+				if (this._callbacks[$i].validate(this._elements[elementID], optionName)) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	},
+	
+	/**
+	 * Handles AJAX responses.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) { },
+	
+	/**
+	 * Handles clicks within dropdown.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		var $listItem = $(event.currentTarget);
+		var $elementID = $listItem.data('elementID');
+		var $optionName = $listItem.data('optionName');
+		
+		if (!this._execute($elementID, $optionName)) {
+			this._executeCallback($elementID, $optionName);
+		}
+		
+		this._hide($elementID);
+	},
+	
+	/**
+	 * Executes actions associated with an option.
+	 * 
+	 * @param	string		elementID
+	 * @param	string		optionName
+	 * @return	boolean
+	 */
+	_execute: function(elementID, optionName) {
+		return false;
+	},
+	
+	/**
+	 * Executes actions associated with an option provided by callbacks.
+	 * 
+	 * @param	string		elementID
+	 * @param	string		optionName
+	 * @return	boolean
+	 */
+	_executeCallback: function(elementID, optionName) {
+		var $length = this._callbacks.length;
+		if ($length) {
+			for (var $i = 0; $i < $length; $i++) {
+				if (this._callbacks[$i].execute(this._elements[elementID], optionName)) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	},
+	
+	/**
+	 * Hides a dropdown menu.
+	 * 
+	 * @param	string		elementID
+	 */
+	_hide: function(elementID) {
+		this._dropdowns[elementID].empty().removeClass('open');
+	}
+});
+
+/**
  * Provides a toggleable sidebar.
  */
 $.widget('ui.wcfSidebar', {
