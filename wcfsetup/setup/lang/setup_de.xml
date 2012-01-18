@@ -11,7 +11,7 @@
 		<item name="wcf.global.thousandsSeparator"><![CDATA[.]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Weiter &raquo;]]></item>
 		<item name="wcf.global.progressBar"><![CDATA[{@$progress}% fertiggestellt]]></item>
-		<item name="wcf.global.welcome"><![CDATA[Vielen Dank, dass Sie sich für {$setupPackageName} entschieden haben]]></item>
+		<item name="wcf.global.welcome"><![CDATA[Vielen Dank, dass Sie sich für {$setupPackageName} entschieden haben!]]></item>
 		<item name="wcf.global.welcome.description"><![CDATA[Dieser Installationsassistent hilft Ihnen bei der Einrichtung von <br /><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} und von <b>{$setupPackageName}</b>{/if}.]]></item>
 		<item name="wcf.global.welcome.language"><![CDATA[Sprache]]></item>
 		<item name="wcf.global.welcome.language.description"><![CDATA[Die Sprache dieses Assistenten ist zur Zeit {@$languageChooser}]]></item>
