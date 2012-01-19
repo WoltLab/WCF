@@ -3425,12 +3425,6 @@ WCF.InlineEditor = Class.extend({
 	_dropdowns: { },
 	
 	/**
-	 * element jQuery selector
-	 * @var	string
-	 */
-	_elementSelector: '',
-	
-	/**
 	 * list of known options
 	 * @var	array<object>
 	 */
@@ -3443,14 +3437,16 @@ WCF.InlineEditor = Class.extend({
 	_proxy: null,
 	
 	/**
+	 * list of data to update upon success
+	 * @var	array<object>
+	 */
+	_updateData: [ ],
+	
+	/**
 	 * Initializes a new inline editor.
 	 */
-	init: function() {
-		if (!this._elementSelector) {
-			return;
-		}
-		
-		var $elements = $(this._elementSelector);
+	init: function(elementSelector) {
+		var $elements = $(elementSelector);
 		if (!$elements.length) {
 			return;
 		}
@@ -3461,21 +3457,30 @@ WCF.InlineEditor = Class.extend({
 			var $elementID = $element.wcfIdentify();
 			
 			// find trigger element
-			var $trigger = this._getTriggerElement($element);
+			var $trigger = self._getTriggerElement($element);
 			if ($trigger === null || $trigger.length !== 1) {
 				return;
 			}
 			
-			$trigger.click(self._show).data('elementID', $elementID);
+			$trigger.click($.proxy(self._show, self)).data('elementID', $elementID);
 			
 			// store reference
 			self._elements[$elementID] = $element;
 		});
 		
 		this._proxy = new WCF.Action.Proxy({
-			success: self._success
+			success: $.proxy(this._success, this)
 		});
+		
+		this._setOptions();
 	},
+	
+	/**
+	 * Sets options for this inline editor.
+	 */
+	_setOptions: function() {
+		this._options = [ ];
+	}
 	
 	/**
 	 * Register an option callback for validation and execution.
@@ -3505,11 +3510,11 @@ WCF.InlineEditor = Class.extend({
 	 */
 	_show: function(event) {
 		var $elementID = $(event.currentTarget).data('elementID');
-		
+		console.debug(this);
 		// build drop down
 		if (!this._dropdowns[$elementID]) {
-			this._elements[$elementID].wrap('<span />');
-			this._dropdowns[$elementID] = $('<ul class="dropdown" />').insertAfter(this._elements[$elementID]);
+			var $trigger = this._getTriggerElement(this._elements[$elementID]).wrap('<span />');
+			this._dropdowns[$elementID] = $('<ul class="dropdown" />').insertAfter($trigger);
 		}
 		
 		// validate options
@@ -3568,7 +3573,21 @@ WCF.InlineEditor = Class.extend({
 	 * @param	string		textStatus
 	 * @param	jQuery		jqXHR
 	 */
-	_success: function(data, textStatus, jqXHR) { },
+	_success: function(data, textStatus, jqXHR) {
+		var $length = this._updateData.length;
+		if (!$length) {
+			return;
+		}
+		
+		this._updateState();
+		
+		this._updateData = [ ];
+	},
+	
+	/**
+	 * Update element states based upon update data.
+	 */
+	_updateState: function() { },
 	
 	/**
 	 * Handles clicks within dropdown.
