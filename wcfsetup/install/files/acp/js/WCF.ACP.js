@@ -507,11 +507,12 @@ WCF.ACP.Package.Uninstallation.prototype = {
 			
 			// initialize dialog
 			WCF.showAJAXDialog('packageInstallationDialog', true, {
-				url: 'index.php/UninstallPackage/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
+				ajax: true,
+				closable: false,
 				data: { packageID: packageID, step: 'prepare' },
 				success: $.proxy(this._installation._handleResponse, this._installation),
-				preventClose: true,
-				hideTitle: true
+				title: 'wcf.acp.package.uninstall.title',
+				url: 'index.php/UninstallPackage/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 			});
 		}
 	}
