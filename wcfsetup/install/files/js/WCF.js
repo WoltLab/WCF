@@ -3404,6 +3404,8 @@ WCF.System.Notification = Class.extend({
 
 /**
  * Default implementation for inline editors.
+ * 
+ * @param	string		elementSelector
  */
 WCF.InlineEditor = Class.extend({
 	/**
@@ -3480,7 +3482,7 @@ WCF.InlineEditor = Class.extend({
 	 */
 	_setOptions: function() {
 		this._options = [ ];
-	}
+	},
 	
 	/**
 	 * Register an option callback for validation and execution.
