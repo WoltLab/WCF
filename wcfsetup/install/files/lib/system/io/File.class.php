@@ -71,7 +71,7 @@ class File {
 			array_unshift($arguments, $this->resource);
 			return call_user_func_array('f' . $function, $arguments);
 		}
-		else if (strpos($function, 'stream') == 0) {
+		else if (strpos($function, 'stream') === 0) {
 			array_unshift($arguments, $this->resource);
 			return call_user_func_array($function, $arguments);
 		}
