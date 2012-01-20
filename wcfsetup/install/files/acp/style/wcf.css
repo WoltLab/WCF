@@ -3631,7 +3631,7 @@ input[type='button'],
 .pageNavigation ul li:not(.children),
 .clipboardEditor > ul > li,
 .preInput .dropdownCaption,
-.likeWidget > ul > li a {
+.likesWidget > ul > li a {
 	text-decoration: none;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	color: rgba(153, 153, 153, 1);
@@ -3683,7 +3683,7 @@ input[type='button'].default:hover,
 .pageNavigation ul li:not(.disabled):not(.children):hover,
 .clipboardEditor > ul > li:hover,
 .preInput:hover .dropdownCaption,
-.likeWidget > ul > li a:hover {
+.likesWidget > ul > li a:hover {
 	color: rgba(102, 102, 102, 1);
 	border-width: 1px;
 	border-style: solid;
@@ -3713,6 +3713,7 @@ input[type='button'].default:focus,
 .pageNavigation ul li:not(.disabled):not(.children):active,
 .clipboardEditor > ul > li:focus,
 .preInput .dropdownCaption:focus,
+.likesWidget > ul > li a:focus,
 button:active,
 input[type='reset']:active,
 input[type='submit']:active,
@@ -3726,8 +3727,8 @@ input[type='button'].default:active,
 .pageNavigation ul li:not(.disabled):not(.children):focus,
 .clipboardEditor > ul > li:active,
 .preInput .dropdownCaption:active,
-.likeWidget > ul > li a:active,
-.likeWidget > ul > li.active a {
+.likesWidget > ul > li a:active,
+.likesWidget > ul > li.active a {
 	color: #333;
 	border-width: 1px;
 	border-style: solid;
@@ -4038,7 +4039,7 @@ input[disabled='disabled'],
 input[type='button'][disabled='disabled'],
 .smallButtons > li.disabled > a,
 .largeButtons > li.disabled > a,
-.likeWidget > ul > li.disabled a {
+.likesWidget > ul > li.disabled a {
 	color: rgba(153, 153, 153, 1);
 	cursor: default;
 	border-width: 1px;
@@ -4347,7 +4348,7 @@ input[type='button'][disabled='disabled'],
 
 
 
-/* ############## ToDo: Like Widget ############## */
+/* ############## ToDo: Likes Widget ############## */
 
 /*  @see theadPostList.tpl */
 
@@ -4355,86 +4356,83 @@ input[type='button'][disabled='disabled'],
 
 /* Globals */
 
-.likeWidget {
-	margin: 3px 15px;
-	float: right;
+.likesWidget {
+	margin: 3px 15px 0 30px;
 }
 
 /* Buttons */
 
-.likeWidget > ul > li {
+.likesWidget > ul {
+	float: right;
+	margin-right: 7px;
+	margin-left: 10px;
+}
+
+.likesWidget > ul > li {
 	text-align: right;
 	margin-top: 3px;
 	display: inline-block;
 }
 
-.likeWidget > ul > li > a {
+.likesWidget > ul > li > a {
 	padding: 3px 5px;
 }
 
-.likeWidget > ul > li:first-child {
+.likesWidget > ul > li:first-child {
 	margin-right: -5px;
 }
 
-.likeWidget > ul > li:first-child a {
+.likesWidget > ul > li:first-child a {
 	border-radius: 7px 0 0 7px;
 }
 
-.likeWidget > ul > li:nth-child(2) a {
+.likesWidget > ul > li:nth-child(2) a {
 	border-radius: 0 7px 7px 0;
-}
-
-.likeWidget > ul > li > a > .badge {
-	font-size: 75%;
-	color: rgba(255, 255, 255, 1);
-	background-color: rgba(0, 0, 0, .7);
-	margin-left: -1px;
-	margin-right: 0;
-	padding: 1px 3px;
 }
 
 /* Cummulative Likes Display */
 
-.likeWidget > .display {
+.likesWidget > .likesDisplay a {
 	border-width: 1px;
 	border-style: solid;
-	border-color: rgba(255, 255, 255, .7);
-	display: inline;
+	border-radius: 3px;
+	border-color: rgba(204, 204, 204, 1);
+	background-color: rgba(255, 255, 255, 1);
+	margin: 1px 0 0 7px;
+	padding: 2px 5px 1px;
+	float: right;
 	position: relative;
-	top: -42px;
-	right: -13%;
+	height: 13px;
 }
 
-.likeWidget > .display > .displayText {
+.likesWidget > .likesDisplay a {
 	font-size: 75%;
-	color: rgba(255, 255, 255, 1);
-	border-radius: 3px;
-	background-color: rgba(0, 0, 0, .7);
-	padding: 2px 5px;
+	color: #666;
+	text-decoration: none;
 }
 
 /* -- -- -- -- Like Widget Pointer -- -- -- -- -- */
 
-.likeWidget > .display > .pointer {	
-	border-width: 7px 7px 0 7px;
+.likesWidget > .likesDisplay .pointer {	
+	border-width: 5px 0 5px 5px;
 	border-style: solid;
-	border-color: rgba(255, 255, 255, .7) transparent;
+	border-color: transparent rgba(204, 204, 204, 1);
 	display: inline-block !important;
 	width: 0;
 	position: absolute;
-	bottom: -8px !important;
-	right: 10%;
+	bottom: 3px !important;
+	right: -6px;
 }
 
-.likeWidget > .display > .pointer span {	
-	border-width: 5px 5px 0 5px;
+.likesWidget > .likesDisplay .pointer > span {	
+	border-width: 5px 0 5px 5px;
 	border-style: solid;
-	border-color: rgba(0, 0, 0, .7) transparent;
+	border-color: transparent rgba(255, 255, 255, 1);
 	display: inline-block;
 	width: 0;
 	position: absolute;
-	bottom: 2px;
-	left: -5px;
+	bottom: -5px;
+	left: -6px;
 }
 
 
