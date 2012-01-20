@@ -2750,7 +2750,7 @@ input[type='button'],
 	height: 0;
 	top: -4px;
 	right: -15px;
-	z-index: 10;
+	z-index: 20;
 }
 
 .breadcrumbs > ul > li > .pointer > span {
@@ -2780,22 +2780,6 @@ input[type='button'],
 	white-space: nowrap;
 }
 
-@media screen and (min-width: 480px), screen and (min-device-width: 480px) {
-	
-	.breadcrumbs > ul > li a {
-		max-width: 250px;
-	}
-	
-}
-
-@media screen and (max-width: 480px), screen and (max-device-width: 480px) {
-	
-	.breadcrumbs > ul > li a {
-		max-width: 100px;
-	}
-	
-}
-
 .breadcrumbs > ul > li:first-child a {
 	border-radius: 5px 0 0 5px;
 	background-image: url('../../icon/home1.svg');
@@ -2809,7 +2793,7 @@ input[type='button'],
 	color: rgba(102, 102, 102, 1);
 	background-color: #f9f9f9;
 	position: relative;
-	z-index: 20;
+	z-index: 10;
 }
 
 .breadcrumbs > ul > li:hover > .pointer > span {
@@ -3672,6 +3656,7 @@ input[type='button'],
 
 button:hover,
 .button:hover,
+.default .button:hover,
 input[type='reset']:hover,
 input[type='submit']:hover,
 input[type='button']:hover,
@@ -3703,6 +3688,7 @@ input[type='button'].default:hover,
 
 button:focus,
 .button:focus,
+.default .button:focus,
 input[type='reset']:focus,
 input[type='submit']:focus,
 input[type='button']:focus,
@@ -3719,6 +3705,7 @@ input[type='button'].default:focus,
 .likesWidget > ul > li a:focus,
 button:active,
 .button:active,
+.active .button,
 input[type='reset']:active,
 input[type='submit']:active,
 input[type='button']:active,
@@ -3800,7 +3787,7 @@ input[type='button'].default:active,
 /* Default Normal State */
 
 button.default,
-.button.default,
+.default .button,
 input[type='submit'],
 input[type='button'].default,
 .smallButtons > li.default > a,
@@ -3902,7 +3889,7 @@ input[type='button'].default,
 /* Default Hover State */
 
 button.default:hover,
-.button.default:hover,
+.default .button:hover,
 input[type='submit']:hover,
 input[type='button'].default:hover,
 .largeButtons > li.default > a:hover,
@@ -3992,13 +3979,13 @@ input[type='button'].default:hover,
 /* Default Active State */
 
 button.default:focus,
-.button.default:focus,
+.default .button:focus,
 input[type='submit']:focus,
 input[type='button'].default:focus,
 .smallButtons > li.default > a:active,
 .largeButtons > li.default > a:active,
 button.default:active,
-.button.default:active,
+.default .button:active,
 input[type='submit']:active,
 input[type='button'].default:active,
 .smallButtons > li.default > a:active,
@@ -4043,7 +4030,7 @@ input[type='button'].default:active,
 /* Disabled State */
 
 button[disabled='disabled'],
-.button.disabled,
+.disabled .button,
 input[disabled='disabled'],
 input[type='button'][disabled='disabled'],
 .smallButtons > li.disabled > a,
@@ -4427,8 +4414,8 @@ input[type='button'][disabled='disabled'],
 	border-style: solid;
 	border-color: transparent rgba(204, 204, 204, 1);
 	display: inline-block !important;
-	width: 0;
 	position: absolute;
+	width: 0;
 	bottom: 3px !important;
 	right: -6px;
 }
@@ -4438,8 +4425,8 @@ input[type='button'][disabled='disabled'],
 	border-style: solid;
 	border-color: transparent rgba(255, 255, 255, 1);
 	display: inline-block;
-	width: 0;
 	position: absolute;
+	width: 0;
 	bottom: -5px;
 	left: -6px;
 }
