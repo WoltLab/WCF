@@ -433,6 +433,18 @@ nav.topMenu {
 	z-index: 1;
 }
 
+.pageHeader .logo > a,
+.pageHeader .logo > div {
+	text-align: right;
+	display: block;
+	height: 120px;
+}
+
+.pageHeader .logo > a:hover {
+	text-decoration: none !important;
+	color: #d8e7f5;
+}
+
 .pageHeader .logo h1 {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 1);
 	color: #d8e7f5;
@@ -455,24 +467,11 @@ nav.topMenu {
 	}
 	
 }
-
-.pageHeader .logo a:hover {
-	text-decoration: none !important;
-	color: #d8e7f5;
-}
-
 .pageHeader .logo > div > img,
 .pageHeader .logo > a > img {
 	position: absolute;
 	bottom: 20px;
 	left: 0;
-}
-
-.pageHeader .logo > a,
-.pageHeader .logo > div {
-	text-align: right;
-	display: block;
-	height: 120px;
 }
 
 
@@ -3621,7 +3620,9 @@ img[src*='enable'] {
 /* ############## Global Button Color & Effect Library ############## */
 
 /* Normal State */
+
 button,
+.button,
 input[type='reset'],
 input[type='submit'],
 input[type='button'],
@@ -3670,6 +3671,7 @@ input[type='button'],
 /* Hover State */
 
 button:hover,
+.button:hover,
 input[type='reset']:hover,
 input[type='submit']:hover,
 input[type='button']:hover,
@@ -3700,6 +3702,7 @@ input[type='button'].default:hover,
 /* Active State */
 
 button:focus,
+.button:focus,
 input[type='reset']:focus,
 input[type='submit']:focus,
 input[type='button']:focus,
@@ -3715,6 +3718,7 @@ input[type='button'].default:focus,
 .preInput .dropdownCaption:focus,
 .likesWidget > ul > li a:focus,
 button:active,
+.button:active,
 input[type='reset']:active,
 input[type='submit']:active,
 input[type='button']:active,
@@ -3796,6 +3800,7 @@ input[type='button'].default:active,
 /* Default Normal State */
 
 button.default,
+.button.default,
 input[type='submit'],
 input[type='button'].default,
 .smallButtons > li.default > a,
@@ -3897,6 +3902,7 @@ input[type='button'].default,
 /* Default Hover State */
 
 button.default:hover,
+.button.default:hover,
 input[type='submit']:hover,
 input[type='button'].default:hover,
 .largeButtons > li.default > a:hover,
@@ -3986,11 +3992,13 @@ input[type='button'].default:hover,
 /* Default Active State */
 
 button.default:focus,
+.button.default:focus,
 input[type='submit']:focus,
 input[type='button'].default:focus,
 .smallButtons > li.default > a:active,
 .largeButtons > li.default > a:active,
 button.default:active,
+.button.default:active,
 input[type='submit']:active,
 input[type='button'].default:active,
 .smallButtons > li.default > a:active,
@@ -4035,6 +4043,7 @@ input[type='button'].default:active,
 /* Disabled State */
 
 button[disabled='disabled'],
+.button.disabled,
 input[disabled='disabled'],
 input[type='button'][disabled='disabled'],
 .smallButtons > li.disabled > a,
