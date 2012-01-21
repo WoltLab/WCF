@@ -155,6 +155,7 @@ class UserStorageHandler extends SingletonFactory {
 	 * Removes and inserts data records on shutdown.
 	 */
 	public function shutdown() {
+		WCF::getDB()->beginTransaction();
 		// remove outdated entries
 		if (count($this->resetFields)) {
 			$sql = "DELETE FROM	wcf".WCF_N."_user_storage
@@ -166,7 +167,7 @@ class UserStorageHandler extends SingletonFactory {
 			foreach ($this->resetFields as $userID => $data) {
 				foreach ($data as $packageID => $fields) {
 					foreach ($fields as $field) {
-						$statement->execute(array(
+						$statement->executeUnbuffered(array(
 							$userID,
 							$field,
 							$packageID
@@ -186,7 +187,7 @@ class UserStorageHandler extends SingletonFactory {
 			foreach ($this->updateFields as $userID => $data) {
 				foreach ($data as $packageID => $fieldValues) {
 					foreach ($fieldValues as $field => $fieldValue) {
-						$statement->execute(array(
+						$statement->executeUnbuffered(array(
 							$userID,
 							$field,
 							$fieldValue,
@@ -196,6 +197,7 @@ class UserStorageHandler extends SingletonFactory {
 				}
 			}
 		}
+		WCF::getDB()->commitTransaction();
 		
 		$this->resetFields = $this->updateFields = array();
 	}
