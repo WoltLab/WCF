@@ -167,7 +167,7 @@ class UserStorageHandler extends SingletonFactory {
 			foreach ($this->resetFields as $userID => $data) {
 				foreach ($data as $packageID => $fields) {
 					foreach ($fields as $field) {
-						$statement->executeUnbuffered(array(
+						$statement->execute(array(
 							$userID,
 							$field,
 							$packageID
@@ -187,7 +187,7 @@ class UserStorageHandler extends SingletonFactory {
 			foreach ($this->updateFields as $userID => $data) {
 				foreach ($data as $packageID => $fieldValues) {
 					foreach ($fieldValues as $field => $fieldValue) {
-						$statement->executeUnbuffered(array(
+						$statement->execute(array(
 							$userID,
 							$field,
 							$fieldValue,
