@@ -68,6 +68,11 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public $optionHandlerClassName = 'wcf\system\option\user\group\UserGroupOptionHandler';
 	
 	/**
+	 * @see	wcf\acp\form\AbstractOptionListForm::$supportI18n
+	 */
+	public $supportI18n = false;
+	
+	/**
 	 * group name
 	 * @var string
 	 */
@@ -131,10 +136,12 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		
 		// get default group
 		$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
+		$optionValues = $this->optionHandler->save();
 		$saveOptions = array();
-		foreach ($this->options as $option) {
-			if ($this->optionValues[$option->optionName] != $defaultGroup->getGroupOption($option->optionName)) {
-				$saveOptions[$option->optionID] = $this->optionValues[$option->optionName];
+		foreach ($this->optionHandler->getCategoryOptions() as $option) {
+			$option = $option['object'];
+			if ($optionValues[$option->optionID] != $defaultGroup->getGroupOption($option->optionName)) {
+				$saveOptions[$option->optionID] = $optionValues[$option->optionID];
 			}
 		}
 		
