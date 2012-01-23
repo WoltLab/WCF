@@ -69,22 +69,23 @@ class UserGroupEditForm extends UserGroupAddForm {
 		if (!count($_POST)) {
 			I18nHandler::getInstance()->setOptions('groupName', 1, $this->group->groupName, 'wcf.acp.group.group\d+');
 			$this->groupName = $this->group->groupName;
+			$options = $this->optionHandler->getCategoryOptions();
 			
 			// get default values
 			if ($this->group->groupType != UserGroup::EVERYONE) {
 				$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
-				foreach ($this->options as $option) {
-					$value = $defaultGroup->getGroupOption($option->optionName);
+				foreach ($options as $option) {
+					$value = $defaultGroup->getGroupOption($option['object']->optionName);
 					if ($value !== null) {
-						$this->optionValues[$option->optionName] = $value;
+						$this->optionValues[$option['object']->optionName] = $value;
 					}
 				}
 			}
 			
-			foreach ($this->options as $option) {
-				$value = $this->group->getGroupOption($option->optionName);
+			foreach ($options as $option) {
+				$value = $this->group->getGroupOption($option['object']->optionName);
 				if ($value !== null) {
-					$this->optionValues[$option->optionName] = $value;
+					$this->optionValues[$option['object']->optionName] = $value;
 				}
 			}
 		}
