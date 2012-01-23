@@ -42,7 +42,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	/**
 	 * @see wcf\acp\form\AbstractOptionListForm::$cacheName
 	 */
-	public $cacheName = 'user_group-option-';
+	public $cacheName = 'userGroup-option';
 	
 	/**
 	 * active tab menu item name
@@ -63,6 +63,11 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public $optionTree = array();
 	
 	/**
+	 * @see	wcf\acp\form\AbstractOptionListForm::$optionHandlerClassName
+	 */
+	public $optionHandlerClassName = 'wcf\system\option\user\group\UserGroupOptionHandler';
+	
+	/**
 	 * group name
 	 * @var string
 	 */
@@ -74,6 +79,9 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	 */
 	public $additionalFields = array();
 	
+	/**
+	 * @see	wcf\page\IPage::readParameters()
+	 */
 	public function readParameters() {
 		parent::readParameters();
 		
@@ -165,9 +173,9 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	 * @see wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		AbstractOptionListForm::readData();
+		parent::readData();
 		
-		$this->optionTree = $this->getOptionTree();
+		$this->optionTree = $this->optionHandler->getOptionTree();
 		if (!count($_POST)) {
 			$this->activeTabMenuItem = $this->optionTree[0]['object']->categoryName;
 		}
@@ -199,9 +207,6 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		
 		// check master password
 		WCFACP::checkMasterPassword();
-		
-		// get user options and categories from cache
-		$this->readCache();
 		
 		// show form
 		parent::show();
