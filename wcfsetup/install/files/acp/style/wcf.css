@@ -985,7 +985,7 @@ section.content .content {
 	width: 20px;
 	height: 100%;
 	overflow: hidden;
-	z-index: 150;
+	z-index: 140;
 	opacity: .3;
 }
 
@@ -1014,7 +1014,6 @@ section.content .content {
 }
 
 .sidebar .collapsibleSidebarButton span {
-	background-color: rgba(255, 255, 255, 1);
     background-position: center center;
 	background-size: 10px 10px;
 	background-repeat: no-repeat;
@@ -1034,12 +1033,18 @@ section.content .content {
 	background-image: url('../../icon/arrowRight1.svg');
 }
 
-/* Collapsed */
-
-.sidebar .collapsibleSidebarButton:hover,
-.sidebar .collapsibleSidebarButton:hover span {
+.sidebar .collapsibleSidebarButton:hover {
 	background-color: rgba(252, 252, 252, 1);
 	opacity: 1;
+}
+
+.sidebar .collapsibleSidebarButton:focus,
+.sidebar .collapsibleSidebarButton:active {
+	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	-ms-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	-o-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 }
 
 /* Collapsed (Left) */
@@ -1995,6 +2000,7 @@ input[type='email']:active,
 input[type='url']:active,
 input[type='password']:active,
 textarea:active,
+
 input[type='text']:focus,
 input[type='search']:focus,
 input[type='email']:focus,
@@ -3699,10 +3705,11 @@ input[type='button'].default:focus,
 .largeButtons > li > a:focus,
 .largeButtons > li.default > a:focus,
 .badgeButton:focus,
-.pageNavigation ul li:not(.disabled):not(.children):active,
+.pageNavigation ul li:not(.disabled):not(.children):focus,
 .clipboardEditor > ul > li:focus,
 .preInput .dropdownCaption:focus,
 .likesWidget > ul > li a:focus,
+
 button:active,
 .button:active,
 .active .button,
@@ -3715,7 +3722,7 @@ input[type='button'].default:active,
 .largeButtons > li a:active,
 .largeButtons > li.default > a:active,
 .badgeButton:active,
-.pageNavigation ul li:not(.disabled):not(.children):focus,
+.pageNavigation ul li:not(.disabled):not(.children):active,
 .clipboardEditor > ul > li:active,
 .preInput .dropdownCaption:active,
 .likesWidget > ul > li a:active,
@@ -3982,8 +3989,9 @@ button.default:focus,
 .default .button:focus,
 input[type='submit']:focus,
 input[type='button'].default:focus,
-.smallButtons > li.default > a:active,
-.largeButtons > li.default > a:active,
+.smallButtons > li.default > a:focus,
+.largeButtons > li.default > a:focus,
+
 button.default:active,
 .default .button:active,
 input[type='submit']:active,
