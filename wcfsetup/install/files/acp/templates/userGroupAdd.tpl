@@ -73,7 +73,7 @@
 			<nav class="tabMenu">
 				<ul>
 					{foreach from=$optionTree item=categoryLevel1}
-						<li id="{@$categoryLevel1[object]->categoryName}"><a href="#{@$categoryLevel1[object]->categoryName}">{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
+						<li><a href="#{@$categoryLevel1[object]->categoryName}">{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
 					{/foreach}
 				</ul>
 			</nav>
