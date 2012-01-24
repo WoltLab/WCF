@@ -1864,7 +1864,9 @@ WCF.MultipleLanguageInput.prototype = {
 	 * Closes the language selection.
 	 */
 	_closeSelection: function() {
-		this._list.removeClass('open');
+		if (this._list !== null) {
+			this._list.removeClass('open');
+		}
 	},
 
 	/**
