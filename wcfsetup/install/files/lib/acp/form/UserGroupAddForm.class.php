@@ -85,6 +85,12 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public $additionalFields = array();
 	
 	/**
+	 * list of values of group 'Anyone'
+	 * @var	array
+	 */
+	public $defaultValues = array();
+	
+	/**
 	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
