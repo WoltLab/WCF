@@ -2911,6 +2911,12 @@ WCF.Effect.BalloonTooltip.prototype = {
 			left: "0px"
 		});
 		
+		// empty tooltip, skip
+		if (!$element.data('tooltip')) {
+			this._tooltip.hide();
+			return;
+		}
+		
 		// update text
 		this._tooltip.children('span:eq(0)').text($element.data('tooltip'));
 
