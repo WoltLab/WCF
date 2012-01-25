@@ -4,7 +4,7 @@
 		<hgroup>
 			<h1>Paket &raquo;{$queue->packageName}&laquo; wird deinstalliert &hellip;</h1>
 			<h2>Aktueller Schritt: <span id="packageInstallationAction">{lang}wcf.package.uninstallation.step.prepare{/lang}</span></h2>
-			<p><progress id="packageInstallationProgress" value="0" max="100" style="width: 200px;">0%</progress></p>
+			<p><progress id="packageInstallationProgress" value="0" max="100">0%</progress></p>
 		</hgroup>
 	</header>
 	

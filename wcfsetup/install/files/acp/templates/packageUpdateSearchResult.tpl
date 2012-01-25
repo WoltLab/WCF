@@ -16,7 +16,7 @@
 <form method="post" action="{link controller='PackageUpdate'}{/link}">
 	{foreach from=$packages item=package}
 		<article class="message content">
-			<div class="messageInner container-{cycle name='styles' values='1,2'}">
+			<div class="messageInner"><!-- ToDo! -->
 				<hgroup class="subHeading">
 					<h1>
 						{if $package.isApplication == 1}
