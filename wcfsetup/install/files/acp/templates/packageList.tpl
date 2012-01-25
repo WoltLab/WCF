@@ -78,8 +78,8 @@
 				<footer>
 					<nav>
 						<ul class="smallButtons">
-							<li><a href="{link controller='PackageView' id=$packageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/info1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="button" /> <span>Details</span></a></li>
-							<li><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="button" /> <span>Update</span></a></li>
+							<li><a href="{link controller='PackageView' id=$packageID}{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/info1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" /> <span>Details</span></a></li>
+							<li><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" /> <span>Update</span></a></li>
 						</ul>
 					</nav>
 				</footer>
