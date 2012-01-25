@@ -534,7 +534,7 @@ nav.topMenu {
 /* -- -- -- Main Menu -- -- -- */
 
 .mainMenu {
-	/* This is the general toggle switch for main menu orientation (options: left|center|right) */
+	/* General toggle switch for main menu orientation (options: left|center|right) */
 	text-align: left;
 	margin: 0 30px;
 	display: block;
@@ -2604,7 +2604,7 @@ input[type='button'],
 }
 
 .menu ul {
-	/* Toggle switch for menu orientation (options: left|center|right) */
+	/* General toggle switch for menu orientation (options: left|center|right) */
 	text-align: center;
 }
 
@@ -4036,6 +4036,11 @@ button[disabled='disabled'] {
 	bottom: -15px;
 }
 
+.infoPackageApplication footer nav {
+	/* General toggle switch for package nav-bar orientation (options: left|center|right) */
+	text-align: right;
+}
+
 /* -- -- -- Package Plugin -- -- -- */
 
 /* Globals */
@@ -4168,11 +4173,6 @@ button[disabled='disabled'] {
 
 
 /* -- -- -- Package Footers -- -- -- */
-
-.infoPackageApplication footer nav,
-.infoPackagePlugin footer nav {
-	text-align: right;
-}
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
