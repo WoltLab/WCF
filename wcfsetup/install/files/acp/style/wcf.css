@@ -4045,7 +4045,7 @@ button[disabled='disabled'] {
 	border: 1px solid rgba(204, 204, 204, 1);
 	border-radius: 7px;
 	background-color: rgba(0, 0, 0, .015);
-	margin-top: 15px;
+	margin: 15px 10px 0 0;
 	display: inline-block;
 	position: relative;
 	width: 150px;
@@ -4066,7 +4066,7 @@ button[disabled='disabled'] {
 .infoPackagePlugin > div > a {
 	color: rgba(153, 153, 153, 1);
 	background-size: 96px;
-	background-position: center center;
+	background-position: center 70%;
 	background-repeat: no-repeat;
 	margin: 1px;
 	display: block;
@@ -4084,6 +4084,14 @@ button[disabled='disabled'] {
 	font-weight: bold;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	word-wrap: break-word;
+	margin: 0 -1px;
+	padding: 3px 1px;
+	display: block;
+	position: relative;
+	z-index: 100;
+}
+
+.infoPackagePlugin:hover > div > a > h1 {
 	border-bottom: 1px solid rgba(204, 204, 204, 1);
 	
 	background-color: rgba(0, 0, 0, .015);
@@ -4092,17 +4100,10 @@ button[disabled='disabled'] {
 	background-image: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
 	background-image: -ms-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
 	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
-	
-	margin: 0 -1px;
-	padding: 3px 1px;
-	display: block;
-	position: relative;
-	z-index: 100;
 }
 
 .infoPackagePlugin footer {
-	position: absolute;
-	bottom: 0;
+	margin-top: -22px;
 	width: 100%;
 }
 
@@ -4196,9 +4197,7 @@ button[disabled='disabled'] {
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
 	.infoPackageApplication footer nav,
-	.infoPackagePlugin footer nav,
-	.infoPackageApplication:hover footer nav,
-	.infoPackagePlugin:hover footer nav {
+	.infoPackagePlugin footer nav {
 		opacity: 1;
 	}
 	

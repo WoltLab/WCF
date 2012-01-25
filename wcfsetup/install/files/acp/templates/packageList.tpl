@@ -97,8 +97,8 @@
 				
 			</div>
 			
-			<section class="packageListPlugin">
-				<ol>
+			<section>
+				<ol class="packageListPlugin">
 					{content}
 						{include file='packageListPlugins'}
 					{/content}
