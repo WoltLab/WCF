@@ -121,18 +121,18 @@ class UserGroupEditForm extends UserGroupAddForm {
 		AbstractForm::save();
 		
 		// save group
+		$optionValues = $this->optionHandler->save();
 		$saveOptions = array();
 		if ($this->group->groupType == UserGroup::EVERYONE) {
-			foreach ($this->options as $option) {
-				$saveOptions[$option->optionID] = $this->optionValues[$option->optionName];
-			}
+			$saveOptions = $optionValues;
 		}
 		else {
 			// get default group
 			$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
-			foreach ($this->options as $option) {
-				if ($this->optionValues[$option->optionName] != $defaultGroup->getGroupOption($option->optionName)) {
-					$saveOptions[$option->optionID] = $this->optionValues[$option->optionName];
+			foreach ($this->optionHandler->getCategoryOptions() as $option) {
+				$option = $option['object'];
+				if ($optionValues[$option->optionID] != $defaultGroup->getGroupOption($option->optionName)) {
+					$saveOptions[$option->optionID] = $optionValues[$option->optionID];
 				}
 			}
 		}
