@@ -95,20 +95,39 @@ hr {
 	display: none;
 }
 
-.invisible {
-	position: absolute;
-	left: -9000px;
-	top: -9000px;
-}
-
 ::selection {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, .5) !important;
 	color: #300;
 	background-color: rgba(255, 170, 34, .7);
 }
 
+
+
+/* ############## ToDo: Global Structural Classes ############## */
+
+/* Single Classes */
+
 .hot {
 	color: #b00; 
+}
+
+.invisible {
+	position: absolute;
+	left: -9000px;
+	top: -9000px;
+}
+
+/* Floated Elements */
+
+.floatContainer:after {
+	content: "";
+	height: 0;
+	display: block;
+	clear: both;
+}
+
+.floated {
+	float: left;
 }
 
 
@@ -123,25 +142,6 @@ body {
 	color: rgba(102, 102, 102, 1);
 	line-height: 1;
 	background-color: rgba(41, 55, 74, 1);
-}
-
-/* Special */
-
-body#tplWCFInstaller {
-	background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, .03) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .03) 50%, rgba(255, 255, 255, .03) 75%, transparent 75%, transparent);
-	background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, .03) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .03) 50%, rgba(255, 255, 255, .03) 75%, transparent 75%, transparent);
-	background-image: -ms-linear-gradient(-45deg, rgba(255, 255, 255, .03) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .03) 50%, rgba(255, 255, 255, .03) 75%, transparent 75%, transparent);
-	background-image: -o-linear-gradient(-45deg, rgba(255, 255, 255, .03) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .03) 50%, rgba(255, 255, 255, .03) 75%, transparent 75%, transparent);
-	background-image: linear-gradient(-45deg, rgba(255, 255, 255, .03) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .03) 50%, rgba(255, 255, 255, .03) 75%, transparent 75%, transparent);
-	
-	-webkit-background-size: 50px 50px;
-	-moz-background-size: 50px 50px;
-	-ms-background-size: 50px 50px;
-	-o-background-size: 50px 50px;
-	background-size: 50px 50px;
-	
-	background-position: left top;
-	background-repeat: repeat;
 }
 
 
