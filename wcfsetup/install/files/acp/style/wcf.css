@@ -3670,8 +3670,6 @@ button {
 input[type='reset']:hover,
 input[type='submit']:hover,
 input[type='button']:hover,
-input[type='button'].default:hover,
-input[type='button'].default:hover,
 button:hover {
 	text-decoration: none;
 	color: rgba(102, 102, 102, 1);
@@ -3689,20 +3687,19 @@ button:hover {
 
 /* Active State */
 
-.button:focus,						
+.button:focus,
 .active .button,
-.default .button:focus						
-input[type='reset']:focus,			
-input[type='submit']:focus,			
-input[type='button']:focus,			
-input[type='button'].default:focus,	
+.default .button:focus,
+input[type='reset']:focus,
+input[type='submit']:focus,
+input[type='button']:focus,
 button:focus,
 
 .button:active,
+.default .button:active,
 input[type='reset']:active,
 input[type='submit']:active,
 input[type='button']:active,
-input[type='button'].default:active,
 button:active {
 	color: #333;
 	border-width: 1px;
