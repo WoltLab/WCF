@@ -95,20 +95,39 @@ hr {
 	display: none;
 }
 
-.invisible {
-	position: absolute;
-	left: -9000px;
-	top: -9000px;
-}
-
 ::selection {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, .5) !important;
 	color: #300;
 	background-color: rgba(255, 170, 34, .7);
 }
 
+
+
+/* ############## ToDo: Global Structural Classes ############## */
+
+/* Single Classes */
+
 .hot {
 	color: #b00; 
+}
+
+.invisible {
+	position: absolute;
+	left: -9000px;
+	top: -9000px;
+}
+
+/* Floated Elements */
+
+.floatContainer:after {
+	content: "";
+	height: 0;
+	display: block;
+	clear: both;
+}
+
+.floated {
+	float: left;
 }
 
 
@@ -123,25 +142,6 @@ body {
 	color: rgba(102, 102, 102, 1);
 	line-height: 1;
 	background-color: rgba(41, 55, 74, 1);
-}
-
-/* Special */
-
-body#tplWCFInstaller {
-	background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, .03) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .03) 50%, rgba(255, 255, 255, .03) 75%, transparent 75%, transparent);
-	background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, .03) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .03) 50%, rgba(255, 255, 255, .03) 75%, transparent 75%, transparent);
-	background-image: -ms-linear-gradient(-45deg, rgba(255, 255, 255, .03) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .03) 50%, rgba(255, 255, 255, .03) 75%, transparent 75%, transparent);
-	background-image: -o-linear-gradient(-45deg, rgba(255, 255, 255, .03) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .03) 50%, rgba(255, 255, 255, .03) 75%, transparent 75%, transparent);
-	background-image: linear-gradient(-45deg, rgba(255, 255, 255, .03) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .03) 50%, rgba(255, 255, 255, .03) 75%, transparent 75%, transparent);
-	
-	-webkit-background-size: 50px 50px;
-	-moz-background-size: 50px 50px;
-	-ms-background-size: 50px 50px;
-	-o-background-size: 50px 50px;
-	background-size: 50px 50px;
-	
-	background-position: left top;
-	background-repeat: repeat;
 }
 
 
@@ -1947,6 +1947,7 @@ select {
 
 input[type='text'],
 input[type='search'],
+input[type='date'],
 input[type='email'],
 input[type='url'],
 input[type='password'] {
@@ -1957,6 +1958,7 @@ input[type='password'] {
 
 input[type='text'],
 input[type='search'],
+input[type='date'],
 input[type='email'],
 input[type='url'],
 input[type='password'],
@@ -1984,6 +1986,7 @@ textarea {
 
 input[type='text']:hover,
 input[type='search']:hover,
+input[type='date']:hover,
 input[type='email']:hover,
 input[type='url']:hover,
 input[type='password']:hover,
@@ -1996,6 +1999,7 @@ textarea:hover {
 
 input[type='text']:active,
 input[type='search']:active,
+input[type='date']:active,
 input[type='email']:active,
 input[type='url']:active,
 input[type='password']:active,
@@ -2003,6 +2007,7 @@ textarea:active,
 
 input[type='text']:focus,
 input[type='search']:focus,
+input[type='date']:focus,
 input[type='email']:focus,
 input[type='url']:focus,
 input[type='password']:focus,
@@ -2023,6 +2028,7 @@ textarea:focus {
 input[type='text'][readonly='readonly'],
 input[type='search'][readonly='readonly'],
 input[type='email'][readonly='readonly'],
+input[type='date'][readonly='readonly'],
 input[type='url'][readonly='readonly'],
 input[type='password'][readonly='readonly'],
 textarea[readonly='readonly'] {
@@ -2041,6 +2047,7 @@ textarea[readonly='readonly'] {
 
 input[type='text'][disabled='disabled'],
 input[type='search'][disabled='disabled'],
+input[type='date'][disabled='disabled'],
 input[type='email'][disabled='disabled'],
 input[type='url'][disabled='disabled'],
 input[type='password'][disabled='disabled'],
@@ -3046,7 +3053,7 @@ tr .columnURL {
 
 /* ToDo */
 
-:not(.threadStatus) > .pageNavigation {
+:not(.statusDisplay) > .pageNavigation {
 	margin: 7px 0;
 	float: left;
 }
@@ -3126,7 +3133,7 @@ tr .columnURL {
 }
 
 .pageNavigation ul li.children > a {
-	margin-right: -30px;
+	margin-right: -17px;
 	position: relative;
 	z-index: 10;
 }
@@ -3137,9 +3144,14 @@ tr .columnURL {
 }
 
 .pageNavigation ul li.children img {
-	height: 9px;
+	position: relative;
 	width: 7px;
+	height: 9px;
+	bottom: 1px;
+	left: 20px;
 }
+
+/* ToDo: Dropdown */
 
 .pageNavigation ul li.children .dropdown {
 	text-align: left;
@@ -3206,15 +3218,15 @@ tr .columnURL {
 
 /* Special */
 
-.threadStatus .pageNavigation {
-	font-size: 75%;
+.statusDisplay .pageNavigation {
+	font-size: 80%;
 }
 
-.threadStatus .pageNavigation ul li {
+.statusDisplay .pageNavigation ul li {
 	min-width: 9px;
 }
 
-.threadStatus .pageNavigation ul li:not(.skip) a {
+.statusDisplay .pageNavigation ul li:not(.skip) a {
 	padding: 1px 3px;
 }
 

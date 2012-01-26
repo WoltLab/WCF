@@ -49,7 +49,7 @@ class SmallpagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * @return	string
 	 */
 	protected function makeLink($link, $pageNo) {
-		return '<li><a href="'.$this->insertPageNumber($link, $pageNo).'" title="' . WCF::getLanguage()->getDynamicVariable('wcf.page.pageNo', array('pageNo' => $pageNo)) . '">'.StringUtil::formatInteger($pageNo).'</a></li>'."\n";
+		return '<li class="button"><a href="'.$this->insertPageNumber($link, $pageNo).'" title="' . WCF::getLanguage()->getDynamicVariable('wcf.page.pageNo', array('pageNo' => $pageNo)) . '">'.StringUtil::formatInteger($pageNo).'</a></li>'."\n";
 	}
 	
 	/**
@@ -90,7 +90,7 @@ class SmallpagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			
 			if ($tagArgs['pages'] > self::SHOW_LINKS) {
 				// jumper
-				$html .= '<li><a onclick="var result = prompt(\''.WCF::getLanguage()->get('wcf.global.page.input').'\', \''.$tagArgs['pages'].'\'); if (typeof(result) != \'object\' &amp;&amp; typeof(result) != \'undefined\') document.location.href = fixURL((\''.StringUtil::replace("'", "\'", $link).'\').replace(/%d/, result));">&hellip;</a></li>'."\n";
+				$html .= '<li class="button"><a onclick="var result = prompt(\''.WCF::getLanguage()->get('wcf.global.page.input').'\', \''.$tagArgs['pages'].'\'); if (typeof(result) != \'object\' &amp;&amp; typeof(result) != \'undefined\') document.location.href = fixURL((\''.StringUtil::replace("'", "\'", $link).'\').replace(/%d/, result));">&hellip;</a></li>'."\n";
 
 				// last page
 				$html .= $this->makeLink($link, $tagArgs['pages']);

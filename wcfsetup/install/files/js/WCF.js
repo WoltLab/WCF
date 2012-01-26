@@ -1771,7 +1771,7 @@ WCF.MultipleLanguageInput.prototype = {
 	_prepareElement: function(enableOnInit) {
 		this._element.wrap('<div class="preInput" />');
 		var $wrapper = this._element.parent();
-		var $button = $('<p class="dropdownCaption"><span>enable i18n</span></p>').prependTo($wrapper);
+		var $button = $('<p class="button dropdownCaption"><span>enable i18n</span></p>').prependTo($wrapper);
 
 		$button.click($.proxy(this._enable, this));
 		WCF.CloseOverlayHandler.addCallback(this._element.wcfIdentify(), $.proxy(this._closeSelection, this));
@@ -4440,7 +4440,7 @@ $.widget('ui.wcfPages', {
 			var $pageList = $('<ul></ul>');
 			this.element.append($pageList);
 			
-			var $previousElement = $('<li></li>').addClass('skip');
+			var $previousElement = $('<li></li>').addClass('button skip');
 			$pageList.append($previousElement);
 			
 			if (this.options.activePage > 1) {
@@ -4505,14 +4505,14 @@ $.widget('ui.wcfPages', {
 					var $leftChildren = $('<li class="children"></li>');
 					$pageList.append($leftChildren);
 					
-					var $leftChildrenLink = $('<a>&hellip;</a>');
+					var $leftChildrenLink = $('<a></a>');
 					$leftChildren.append($leftChildrenLink);
 					$leftChildrenLink.click($.proxy(this._startInput, this));
 					
 					var $leftChildrenImage = $('<img src="' + this.options.arrowDownIcon + '" alt="" />');
 					$leftChildrenLink.append($leftChildrenImage);
 					
-					var $leftChildrenInput = $('<input type="text" name="pageNo" class="tiny" />');
+					var $leftChildrenInput = $('<input type="text" name="pageNo" placeholder="…" class="tiny" />');
 					$leftChildren.append($leftChildrenInput);
 					$leftChildrenInput.keydown($.proxy(this._handleInput, this));
 					$leftChildrenInput.keyup($.proxy(this._handleInput, this));
@@ -4548,14 +4548,14 @@ $.widget('ui.wcfPages', {
 					var $rightChildren = $('<li class="children"></li>');
 					$pageList.append($rightChildren);
 					
-					var $rightChildrenLink = $('<a>&hellip;</a>');
+					var $rightChildrenLink = $('<a></a>');
 					$rightChildren.append($rightChildrenLink);
 					$rightChildrenLink.click($.proxy(this._startInput, this));
 					
 					var $rightChildrenImage = $('<img src="' + this.options.arrowDownIcon + '" alt="" />');
 					$rightChildrenLink.append($rightChildrenImage);
 					
-					var $rightChildrenInput = $('<input type="text" name="pageNo" class="tiny" />');
+					var $rightChildrenInput = $('<input type="text" name="pageNo" placeholder="…" class="tiny" />');
 					$rightChildren.append($rightChildrenInput);
 					$rightChildrenInput.keydown($.proxy(this._handleInput, this));
 					$rightChildrenInput.keyup($.proxy(this._handleInput, this));
@@ -4581,7 +4581,7 @@ $.widget('ui.wcfPages', {
 			$pageList.append(this._renderLink(this.options.maxPage));
 			
 			// add next button
-			var $nextElement = $('<li></li>').addClass('skip');
+			var $nextElement = $('<li></li>').addClass('button skip');
 			$pageList.append($nextElement);
 			
 			if (this.options.activePage < this.options.maxPage) {
@@ -4612,7 +4612,7 @@ $.widget('ui.wcfPages', {
 	 * @return		$(element)
 	 */
 	_renderLink: function(page, lineBreak) {
-		var $pageElement = $('<li></li>');
+		var $pageElement = $('<li class="button"></li>');
 		if (lineBreak != undefined && lineBreak) {
 			$pageElement.addClass('break');
 		}
