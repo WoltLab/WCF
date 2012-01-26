@@ -57,10 +57,10 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	protected function makeLink($link, $pageNo, $activePage, $break = false) {
 		// first page
 		if ($activePage != $pageNo) {
-			return '<li'.($break ? ' class="break"' : '').'><a href="'.$this->insertPageNumber($link, $pageNo).'">'.StringUtil::formatInteger($pageNo).'</a></li>'."\n";
+			return '<li class="button '.($break ? 'break' : '').'"><a href="'.$this->insertPageNumber($link, $pageNo).'">'.StringUtil::formatInteger($pageNo).'</a></li>'."\n";
 		}
 		else {
-			return '<li class="'.($break ? 'break ' : '').'active"><span>'.StringUtil::formatInteger($pageNo).'</span></li>'."\n";
+			return '<li class="button '.($break ? 'break ' : '').'active"><span>'.StringUtil::formatInteger($pageNo).'</span></li>'."\n";
 		}
 	}
 	
@@ -101,10 +101,10 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			// previous page
 			$previousTitle = WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous');
 			if ($tagArgs['page'] > 1) {
-				$html .= '<li class="skip"><a href="'.$this->insertPageNumber($link, $tagArgs['page'] - 1).'" title="'.$previousTitle.'" class="balloonTooltip"><img src="'.self::getIconPath('previous1').'" alt="" /></a></li>'."\n";
+				$html .= '<li class="button skip"><a href="'.$this->insertPageNumber($link, $tagArgs['page'] - 1).'" title="'.$previousTitle.'" class="balloonTooltip"><img src="'.self::getIconPath('previous1').'" alt="" /></a></li>'."\n";
 			}
 			else {
-				$html .= '<li class="skip disabled"><img src="'.self::getIconPath('previous1D').'" alt="" /></li>'."\n";
+				$html .= '<li class="button skip disabled"><img src="'.self::getIconPath('previous1D').'" alt="" /></li>'."\n";
 			}
 			
 			// first page
@@ -153,7 +153,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 					$html .= $this->makeLink($link, 2, $tagArgs['page']);
 				}
 				else {
-					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)" class="dropdownCaption">&hellip;<img src="'.self::getIconPath('dropdown1').'" alt="" /></a><input type="text" name="pageNo" class="tiny" /><div class="dropdown"><span class="pointer"><span></span></span><ul>'."\n";
+					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)" class="dropdownCaption"><img src="'.self::getIconPath('dropdown1').'" alt="" /></a><input type="text" name="pageNo" placeholder="…" class="tiny" /><div class="dropdown"><span class="pointer"><span></span></span><ul>'."\n";
 					
 					$k = 0;
 					$step = intval(ceil(($left - 2) / self::SHOW_SUB_LINKS));
@@ -177,7 +177,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 					$html .= $this->makeLink($link, $tagArgs['pages'] - 1, $tagArgs['page']);
 				}
 				else {
-					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)" class="dropdownCaption">&hellip;<img src="'.self::getIconPath('dropdown1').'" alt="" /></a><input type="text" name="page" class="tiny" /><div class="dropdown"><span class="pointer"><span></span></span><ul>'."\n";
+					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)" class="dropdownCaption"><img src="'.self::getIconPath('dropdown1').'" alt="" /></a><input type="text" name="page" placeholder="…" class="tiny" /><div class="dropdown"><span class="pointer"><span></span></span><ul>'."\n";
 					
 					$k = 0;
 					$step = intval(ceil(($tagArgs['pages'] - $right) / self::SHOW_SUB_LINKS));
@@ -196,7 +196,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			// next page
 			$nextTitle = WCF::getLanguage()->getDynamicVariable('wcf.global.page.next');
 			if ($tagArgs['page'] && $tagArgs['page'] < $tagArgs['pages']) {
-				$html .= '<li class="skip"><a href="'.$this->insertPageNumber($link, $tagArgs['page'] + 1).'" title="'.$nextTitle.'" class="balloonTooltip"><img src="'.self::getIconPath('next1').'" alt="" /></a></li>'."\n";
+				$html .= '<li class="button skip"><a href="'.$this->insertPageNumber($link, $tagArgs['page'] + 1).'" title="'.$nextTitle.'" class="balloonTooltip"><img src="'.self::getIconPath('next1').'" alt="" /></a></li>'."\n";
 			}
 			else {
 				$html .= '<li class="skip disabled"><img src="'.self::getIconPath('next1D').'" alt="" /></li>'."\n";

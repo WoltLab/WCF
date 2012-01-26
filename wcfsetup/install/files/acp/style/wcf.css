@@ -3046,7 +3046,7 @@ tr .columnURL {
 
 /* ToDo */
 
-:not(.threadStatus) > .pageNavigation {
+:not(.statusDisplay) > .pageNavigation {
 	margin: 7px 0;
 	float: left;
 }
@@ -3126,7 +3126,7 @@ tr .columnURL {
 }
 
 .pageNavigation ul li.children > a {
-	margin-right: -30px;
+	margin-right: -17px;
 	position: relative;
 	z-index: 10;
 }
@@ -3137,9 +3137,14 @@ tr .columnURL {
 }
 
 .pageNavigation ul li.children img {
-	height: 9px;
+	position: relative;
 	width: 7px;
+	height: 9px;
+	bottom: 1px;
+	left: 20px;
 }
+
+/* ToDo: Dropdown */
 
 .pageNavigation ul li.children .dropdown {
 	text-align: left;
@@ -3206,15 +3211,15 @@ tr .columnURL {
 
 /* Special */
 
-.threadStatus .pageNavigation {
-	font-size: 75%;
+.statusDisplay .pageNavigation {
+	font-size: 80%;
 }
 
-.threadStatus .pageNavigation ul li {
+.statusDisplay .pageNavigation ul li {
 	min-width: 9px;
 }
 
-.threadStatus .pageNavigation ul li:not(.skip) a {
+.statusDisplay .pageNavigation ul li:not(.skip) a {
 	padding: 1px 3px;
 }
 
