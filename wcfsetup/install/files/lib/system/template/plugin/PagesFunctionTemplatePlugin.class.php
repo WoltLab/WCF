@@ -104,7 +104,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 				$html .= '<li class="button skip"><a href="'.$this->insertPageNumber($link, $tagArgs['page'] - 1).'" title="'.$previousTitle.'" class="balloonTooltip"><img src="'.self::getIconPath('previous1').'" alt="" /></a></li>'."\n";
 			}
 			else {
-				$html .= '<li class="button skip disabled"><img src="'.self::getIconPath('previous1D').'" alt="" /></li>'."\n";
+				$html .= '<li class="skip disabled"><img src="'.self::getIconPath('previous1D').'" alt="" /></li>'."\n";
 			}
 			
 			// first page

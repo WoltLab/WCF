@@ -4581,11 +4581,11 @@ $.widget('ui.wcfPages', {
 			$pageList.append(this._renderLink(this.options.maxPage));
 			
 			// add next button
-			var $nextElement = $('<li></li>').addClass('button skip');
+			var $nextElement = $('<li></li>').addClass('skip');
 			$pageList.append($nextElement);
 			
 			if (this.options.activePage < this.options.maxPage) {
-				var $nextLink = $('<a' + ((this.options.nextPage != null) ? (' title="' + this.options.nextPage + '"') : ('')) + '></a>').addClass('ballonTooltip');
+				var $nextLink = $('<a' + ((this.options.nextPage != null) ? (' title="' + this.options.nextPage + '"') : ('')) + '></a>').addClass('button ballonTooltip');
 				$nextElement.append($nextLink);
 				this._bindSwitchPage($nextLink, this.options.activePage + 1);
 				
