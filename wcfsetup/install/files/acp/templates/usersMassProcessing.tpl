@@ -1,67 +1,62 @@
 {include file='header'}
 
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/Suggestion.class.js"></script>
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/TabMenu.class.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
-	// disable
-	function disableAll() {
-		{foreach from=$availableActions item=availableAction}
-		disable{@$availableAction|ucfirst}();
-		{/foreach}
-	}
-	
-	function disableSendMail() {
-		hideOptions('sendMailDiv');
-	}
-	
-	function disableExportMailAddress() {
-		hideOptions('exportMailAddressDiv');
-	}
-	
-	function disableAssignToGroup() {
-		hideOptions('assignToGroupDiv');
-	}
-	
-	function disableDelete() { }
-	
-	// enable
-	function enableSendMail() {
-		disableAll();
-		showOptions('sendMailDiv');
-	}
-	
-	function enableExportMailAddress() {
-		disableAll();
-		showOptions('exportMailAddressDiv');
-	}
-	
-	function enableAssignToGroup() {
-		disableAll();
-		showOptions('assignToGroupDiv');
-	}
-	
-	function enableDelete() {
-		disableAll();
-	}
-	
-	var tabMenu = new TabMenu();
-	onloadEvents.push(function() {
-		tabMenu.showSubTabMenu('profile')
-		{if $action != ''}enable{@$action|ucfirst}();{else}disableAll();{/if}
-	});
-	
-	function setFileType(newType) {
-		switch (newType) {
-			case 'csv':
-				showOptions('separatorDiv', 'textSeparatorDiv');
-				break;
-			case 'xml':
-				hideOptions('separatorDiv', 'textSeparatorDiv');
-				break;
+	$(function() {
+		function toggleContainer(value) {
+			for (var $name in $targetContainers) {
+				if ($name === value) {
+					$targetContainers[$name].show();
+				}
+				else {
+					$targetContainers[$name].hide();
+				}
+			}
 		}
-	}
-	onloadEvents.push(function() { setFileType('{@$fileType}'); });
+		
+		var $targetContainers = { };
+		$('input[name=action]').each(function(index, input) {
+			var $input = $(input);
+			var $value = $input.prop('value');
+			
+			if (!$targetContainers[$value]) {
+				var $container = $('#' + $.wcfEscapeID($value + 'Div'));
+				if ($container.length) {
+					$targetContainers[$value] = $container;
+				}
+			}
+			
+			$input.change(function(event) {
+				toggleContainer($(event.currentTarget).prop('value'));
+			});
+		});
+		
+		function setFileType(newType) {
+			if (newType === 'csv') {
+				$('#separatorDiv').show().next().show();
+			}
+			else {
+				$('#separatorDiv').hide().next().hide();
+			}
+		}
+		
+		$('input[name=fileType]').each(function(index, input) {
+			var $input = $(input);
+			
+			$input.change(function(event) {
+				setFileType($input.prop('value'));
+			});
+		});
+		
+		toggleContainer('{@$action}');
+		setFileType('{@$fileType}');
+		
+		new WCF.Search.User($('#username'), function(data) {
+			$('#username').val(data.label);
+			return false;
+		}, false);
+		WCF.TabMenu.init();
+	});
 	//]]>
 </script>
 
@@ -96,12 +91,6 @@
 				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 				<dd>
 					<input type="text" id="username" name="username" value="{$username}" class="medium" />
-					<script type="text/javascript">
-						//<![CDATA[
-						suggestion.enableMultiple(false);
-						suggestion.init('username');
-						//]]>
-					</script>
 				</dd>
 			</dl>
 			
@@ -151,33 +140,31 @@
 		{event name='fieldsets'}
 		
 		{hascontent}
-			<nav class="tabMenu"><!-- ToDo: Fix that TabMenu! -->
-				<ul>
-					{content}
-						{if $options|count}
-							<li id="profile"><a onclick="tabMenu.showSubTabMenu('profile');"><span>{lang}wcf.acp.user.search.conditions.profile{/lang}</span></a></li>
-						{/if}
-
-						{event name='tabMenuTabs'}
-					{/content}
-				</ul>
-			</nav>
-
-			<nav class="menu">
-				<div class="containerHead"><div> </div></div>
-			</nav>
-
-			{if $options|count}
-				<div id="profile-content" class="border tabMenuContent hidden">
-					<hgroup class="subHeading">
-						<h1>{lang}wcf.acp.user.search.conditions.profile{/lang}</h1>
-					</hgroup>
-
-					{include file='optionFieldList' langPrefix='wcf.user.option.'}
-				</div>
-			{/if}
-
-			{event name='tabMenuContent'}
+			<div class="tabMenuContainer">
+				<nav class="tabMenu">
+					<ul>
+						{content}
+							{if $options|count}
+								<li><a href="#profile">{lang}wcf.acp.user.search.conditions.profile{/lang}</a></li>
+							{/if}
+	
+							{event name='tabMenuTabs'}
+						{/content}
+					</ul>
+				</nav>
+				
+				{if $options|count}
+					<div id="profile" class="border tabMenuContent hidden">
+						<hgroup class="subHeading">
+							<h1>{lang}wcf.acp.user.search.conditions.profile{/lang}</h1>
+						</hgroup>
+						
+						{include file='optionFieldList' langPrefix='wcf.user.option.'}
+					</div>
+				{/if}
+				
+				{event name='tabMenuContent'}
+			</div>
 		{/hascontent}
 	</div>
 	
@@ -195,17 +182,17 @@
 					<dl>
 						<dd>
 							{if $__wcf->session->getPermission('admin.user.canMailUser')}
-								<label><input type="radio" onclick="if (IS_SAFARI) enableSendMail()" onfocus="enableSendMail()" name="action" value="sendMail" {if $action == 'sendMail'}checked="checked" {/if}/> {lang}wcf.acp.user.sendMail{/lang}</label>
-								<label><input type="radio" onclick="if (IS_SAFARI) enableExportMailAddress()" onfocus="enableExportMailAddress()" name="action" value="exportMailAddress" {if $action == 'exportMailAddress'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress{/lang}</label>
+								<label><input type="radio" name="action" value="sendMail" {if $action == 'sendMail'}checked="checked" {/if}/> {lang}wcf.acp.user.sendMail{/lang}</label>
+								<label><input type="radio" name="action" value="exportMailAddress" {if $action == 'exportMailAddress'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress{/lang}</label>
 							{/if}
 							{if $__wcf->session->getPermission('admin.user.canEditUser')}
-								<label><input type="radio" onclick="if (IS_SAFARI) enableAssignToGroup()" onfocus="enableAssignToGroup()" name="action" value="assignToGroup" {if $action == 'assignToGroup'}checked="checked" {/if}/> {lang}wcf.acp.user.assignToGroup{/lang}</label>
+								<label><input type="radio" name="action" value="assignToGroup" {if $action == 'assignToGroup'}checked="checked" {/if}/> {lang}wcf.acp.user.assignToGroup{/lang}</label>
 							{/if}
 							{if $__wcf->session->getPermission('admin.user.canDeleteUser')}
-								<label><input type="radio" onclick="if (IS_SAFARI) enableDelete()" onfocus="enableDelete()" name="action" value="delete" {if $action == 'delete'}checked="checked" {/if}/> {lang}wcf.acp.user.delete{/lang}</label>
+								<label><input type="radio" name="action" value="delete" {if $action == 'delete'}checked="checked" {/if}/> {lang}wcf.acp.user.delete{/lang}</label>
 							{/if}
 							
-							{if $additionalActions|isset}{@$additionalActions}{/if}
+							{event name='additionalActions'}
 							
 							{if $errorField == 'action'}
 								<small class="innerError">
@@ -281,8 +268,8 @@
 							<legend>{lang}wcf.acp.user.exportEmailAddress.fileType{/lang}</legend>
 							
 							<dl>
-								<dd><label><input type="radio" onclick="if (IS_SAFARI) setFileType('csv')" onfocus="setFileType('csv')" name="fileType" value="csv" {if $fileType == 'csv'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.csv{/lang}</label></dd>
-								<dd><label><input type="radio" onclick="if (IS_SAFARI) setFileType('xml')" onfocus="setFileType('xml')" name="fileType" value="xml" {if $fileType == 'xml'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label></dd>
+								<dd><label><input type="radio" name="fileType" value="csv" {if $fileType == 'csv'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.csv{/lang}</label></dd>
+								<dd><label><input type="radio" name="fileType" value="xml" {if $fileType == 'xml'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label></dd>
 							</dl>
 						</fieldset>
 					</dd>
