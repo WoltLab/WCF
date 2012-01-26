@@ -117,15 +117,15 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	 */
 	protected static function updateAccessibleGroups($groupID, $delete = false) {
 		if ($delete) {
-			$sql = "UPDATE	wcf".WCF_N."_group_option_value
+			$sql = "UPDATE	wcf".WCF_N."_user_group_option_value
 					SET	optionValue = ?
 					WHERE	groupID = ?
 					AND	optionID = ?";
 			$updateStatement = WCF::getDB()->prepareStatement($sql);
 			
 			$sql = "SELECT		groupID, optionValue, groupOption.optionID
-				FROM		wcf".WCF_N."_group_option groupOption
-				LEFT JOIN	wcf".WCF_N."_group_option_value optionValue
+				FROM		wcf".WCF_N."_user_group_option groupOption
+				LEFT JOIN	wcf".WCF_N."_user_group_option_value optionValue
 				ON		(groupOption.optionID = optionValue.optionID)
 				WHERE		groupOption.optionname = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
