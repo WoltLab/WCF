@@ -1668,8 +1668,23 @@ WCF.Language = {
 	 * @param	string		key
 	 * @return	mixed
 	 */
-	get: function(key) {
-		return this._variables.get(key);
+	get: function(key, parameters) {
+		// initialize parameters with an empty object
+		if (typeof parameters === 'undefined') var parameters = {};
+		
+		var value = this._variables.get(key);
+		
+		if (typeof value === 'string') {
+			// transform strings into template and try to refetch
+			this.add(key, new WCF.Template(value));
+			return this.get(key, parameters);
+		}
+		else if (value !== null && typeof value === 'object' && typeof value.fetch !== 'undefined') {
+			// evaluate templates
+			value = value.fetch(parameters);
+		}
+		
+		return value;
 	}
 };
 
