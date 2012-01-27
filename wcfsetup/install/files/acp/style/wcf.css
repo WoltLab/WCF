@@ -1093,9 +1093,11 @@ section.content .content {
 
 /* -- -- -- Sidebar Content -- -- -- */
 
+/* Should be obsolete now 
 .sidebarContent {
 	white-space: nowrap;
 }
+*/
 
 .sidebarContent > div {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
@@ -1722,19 +1724,10 @@ fieldset {
 	padding: 15px;
 }
 
-fieldset:last-child, fieldset:only-child {
+fieldset:last-child,
+fieldset:only-child {
 	margin-bottom: 7px !important;
 }
-
-/* experimental 
-fieldset.topLink {
-	background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
-	background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
-	background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
-	background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
-	background-image: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 50px);
-}
-*/
 
 fieldset legend {
 	color: rgba(153, 153, 153, 1);
@@ -1858,7 +1851,7 @@ dl > dd > fieldset > dl > dd > label {
 	display: block;
 }
 
-/* Reversed */
+/* Reversed (flips the label aside the checkbox or radio button) */
 
 .reversed {
 	text-align: left;
@@ -1887,7 +1880,7 @@ dl > dd > fieldset > dl > dd > label {
 	margin-left: 0;
 }
 
-/* Special Sidebar */
+/* Special -> Sidebar */
 
 .sidebar dl > dt {
 	text-align: left;
@@ -1905,7 +1898,7 @@ dl > dd > fieldset > dl > dd > label {
 	display: block;
 }	
 
-/* Special Overlay */
+/* Special -> Overlay */
 
 .wcfDialogContainer dl > dt {
 	width: 130px;
@@ -2133,7 +2126,7 @@ textarea[disabled='disabled'] {
 	width: auto;
 }
 
-/* Special Search Input Tweaks */
+/* Special -> Search Input */
 
 input[type=search] {
 	border-radius: 30px;
@@ -2145,6 +2138,8 @@ input[type=search] {
 ::-webkit-search-decoration {
 	display: none;
 }
+
+
 
 /* -- -- -- Form Errors -- -- -- */
 
@@ -2160,11 +2155,13 @@ input[type=search] {
 
 
 
-/* -- -- -- Input Buttons & Dropdowns -- -- --  */
+/* ############## ToDo: Pre-Input Buttons & Dropdowns ############## */
 
-/* Bounding Box */
+/* -- -- -- Bounding Box -- -- --  */
 
-/* ToDo: Change the class-name! */
+/* (Colors are being taken from the 
+"Global Button Color & Effect Library") */
+
 .preInput {
 	display: table;
 	position: relative;
@@ -2197,6 +2194,10 @@ input[type=search] {
 	
 }
 
+
+
+/* -- -- -- Dropdowns -- -- --  */
+
 /* Dropdown Caption */
 
 .preInput .dropdownCaption {
@@ -2222,6 +2223,10 @@ input[type=search] {
 	padding-right: 10px;
 }
 
+
+
+/* -- -- -- Special -> System Notification -- -- --  */
+
 .preInput .dropdown > li.missingValue { /* ToDo */
 	/* color: #990; */
 	background-image: url('../../icon/systemWarning.svg');
@@ -2234,6 +2239,9 @@ input[type=search] {
 
 
 /* ############## ToDo: Small Buttons ############## */
+
+/* (Colors are being taken from the 
+"Global Button Color & Effect Library") */
 
 /* Globals */
 
@@ -2271,7 +2279,8 @@ input[type=search] {
 
 /* ############## Large Buttons ############## */
 
-/* Colors are being taken from the global color styles */
+/* (Colors are being taken from the 
+"Global Button Color & Effect Library") */
 
 /* Globals */
 
@@ -2342,6 +2351,7 @@ input[type='button'],
 .sidebar input {
 	font-size: 75% !important;
 }
+
 
 
 /* ############## Border ############## */
@@ -2449,7 +2459,9 @@ input[type='button'],
 	position: relative;
 }
 
-/* Tabs */
+/* -- -- -- Tabs -- -- --  */
+
+/* Globals */
 
 .tabMenu ul {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
@@ -2573,7 +2585,9 @@ input[type='button'],
 	cursor: default;
 }
 
-/* Tab Menu Content */
+
+
+/* -- -- -- Tab Menu Content -- -- --  */
 
 .tabMenuContent {
 	border: 1px solid #ccc;
@@ -2836,7 +2850,9 @@ table {
 	width: 100% !important;
 }
 
-/* Table Header */
+
+
+/* -- -- -- Table Header -- -- -- */
 
 thead th {
 	font-size: 87%;
@@ -2921,7 +2937,9 @@ thead th a img {
 	margin-bottom: -5px !important;
 }
 
-/* Table Body */
+
+
+/* -- -- -- Table Body -- -- -- */
 
 tbody tr {
 	border-bottom: 1px solid rgba(255, 255, 255, .3);
@@ -2967,7 +2985,9 @@ tbody tr:hover td {
 	background-color: #d8e7f5;
 }
 
-/* ToDo: Table Header Specials */
+
+
+/* -- -- -- Special -> Table Header -- -- -- */
 
 .menu ~ .border thead th:first-child {
 	border-top-left-radius: 0 !important;
@@ -2987,14 +3007,18 @@ tbody tr:hover td {
 	border-top-right-radius: 0 !important;
 }
 
-/* Table Checkboxes */
 
-table input[type='checkbox'] {
+
+/* -- -- -- Special -> Checkboxes in Table Headers -- -- -- */
+
+thead input[type='checkbox'] {
 	margin-top: -5px !important;
 	margin-bottom: -5px !important;
 }
 
-/* Table Column Formats */
+
+
+/* -- -- -- ToDo: Table Column Formats -- -- -- */
 
 tr .columnMark,
 tr .columnStatus {
@@ -3061,15 +3085,20 @@ tr .columnURL {
 
 
 
-/* ############## Page Navigation ############## */
+/* ############## ToDo: Page Navigation ############## */
 
-/* ToDo */
+/* (Colors are being taken from the 
+"Global Button Color & Effect Library") */
+
+/* Globals */
 
 :not(.statusDisplay) > .pageNavigation {
 	margin: 5px -3px;
 	float: left;
 	width: 50%;
 }
+
+/* -- -- -- Buttons (Level 1 & 2) -- -- -- */
 
 .pageNavigation ul li {
 	font-weight: bold;
@@ -3140,7 +3169,9 @@ tr .columnURL {
 	padding: 3px 0;
 }
 
-/* ToDo: Children */
+/* -- -- -- ToDo: Children (Level 2) -- -- -- */
+
+/* Buttons */
 
 .pageNavigation ul li.children {
 	position: relative;
@@ -3166,7 +3197,7 @@ tr .columnURL {
 	left: 25px;
 }
 
-/* ToDo: Dropdown */
+/* Dropdown */
 
 .pageNavigation ul li.children .dropdown {
 	text-align: left;
@@ -3231,7 +3262,7 @@ tr .columnURL {
 	left: -5px;
 }
 
-/* Special */
+/* Special -> Status Display */
 
 .statusDisplay .pageNavigation {
 	font-size: 80%;
@@ -3247,7 +3278,7 @@ tr .columnURL {
 
 
 
-/* ############## System Notifications ############## */
+/* ############## System Notifications (Inline) ############## */
 
 /* Globals */
 
@@ -3352,14 +3383,17 @@ tr .columnURL {
 	left: -5px;
 }
 
-/* Special */
+/* Special -> Pre Input */
 
 .preInput ~ .innerError .pointer {	
 	right: 10%;
 	left: auto;
 }
 
-/* TODO: Overlay */
+
+/* ############## System Notifications (Sheet) ############## */
+
+/* Globals */
 
 .systemNotification {
 	/* declarations taken from .success */
@@ -3392,6 +3426,8 @@ tr .columnURL {
 
 
 /* ############## ToDo: WCF Dialog ############## */
+
+/* Globals */
 
 .wcfDialogContainer {
 	border: 23px solid transparent;
@@ -3426,7 +3462,7 @@ tr .columnURL {
 	
 }
 
-/* Dialog Titlebar */
+/* Titlebar */
 
 .wcfDialogTitlebar {
 	border-bottom: 1px solid #036;
@@ -3473,7 +3509,7 @@ tr .columnURL {
 	width: 0;
 }
 
-/* Dialog Content */
+/* Content */
 
 .wcfDialogContent {
 	background-color: #333;
@@ -3498,13 +3534,13 @@ tr .columnURL {
 
 /* Special */
 
-div#ajaxExceptionStacktrace {
+#ajaxExceptionStacktrace {
 	white-space: nowrap;
 	overflow: scroll;
 	overflow-y: hidden;
 }
 
-div#ajaxExceptionStacktrace {
+#ajaxExceptionStacktrace {
 	font-family: monospace;
 	font-size: 90%;
 	line-height: 1.2;
@@ -3514,7 +3550,7 @@ div#ajaxExceptionStacktrace {
 
 
 
-/* Login Box */
+/* ToDo: Login Box */
 
 /* Note: Do not use the class ".loginBox" to style the box! */
 
@@ -3553,9 +3589,9 @@ div#ajaxExceptionStacktrace {
 
 
 
-/* ############## GUI Widgets ############## */
+/* ############## Balloon Tooltips ############## */
 
-/* -- -- -- Balloon Tooltips -- -- -- */
+/* Globals */
 
 #balloonTooltip {
 	font-size: .85em;
@@ -3574,7 +3610,6 @@ div#ajaxExceptionStacktrace {
 	box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
 }
 
-/* ToDo */
 a.balloonTooltip,
 a .balloonTooltip,
 img[src*='delete'],
@@ -3587,6 +3622,8 @@ img[src*='disable'],
 img[src*='enable'] {
 	cursor: pointer;
 }
+
+/* Pointer */
 
 #balloonTooltip .pointer {	
 	border-width: 0 7px 7px;
@@ -3608,6 +3645,98 @@ img[src*='enable'] {
 	position: absolute;
 	top: 2px;
 	left: -5px;
+}
+
+
+
+/* ############## ToDo: Likes Widget ############## */
+
+/*  @see theadPostList.tpl */
+
+/* (Colors are being taken from the 
+"Global Button Color & Effect Library") */
+
+/* -- -- -- -- Widget -- -- -- -- -- */
+
+/* Globals */
+
+.likesWidget {
+	margin: 3px 15px 0 30px;
+}
+
+/* Buttons */
+
+.likesWidget > ul {
+	float: right;
+	margin-right: 7px;
+	margin-left: 10px;
+}
+
+.likesWidget > ul > li {
+	text-align: right;
+	margin-top: 3px;
+	display: inline-block;
+}
+
+.likesWidget > ul > li > a {
+	padding: 2px 4px 3px;
+}
+
+.likesWidget > ul > li:first-child {
+	margin-right: -5px;
+}
+
+.likesWidget > ul > li:first-child a {
+	border-radius: 7px 0 0 7px;
+}
+
+.likesWidget > ul > li:nth-child(2) a {
+	border-radius: 0 7px 7px 0;
+}
+
+/* Cummulative Likes Display */
+
+.likesWidget > .likesDisplay a {
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 3px;
+	border-color: rgba(204, 204, 204, 1);
+	background-color: rgba(255, 255, 255, 1);
+	margin: 1px 0 0 7px;
+	padding: 2px 5px 1px;
+	float: right;
+	position: relative;
+	height: 13px;
+}
+
+.likesWidget > .likesDisplay a {
+	font-size: 75%;
+	color: #666;
+	text-decoration: none;
+}
+
+/* -- -- -- -- Like Widget Pointer -- -- -- -- -- */
+
+.likesWidget > .likesDisplay .pointer {	
+	border-width: 5px 0 5px 5px;
+	border-style: solid;
+	border-color: transparent rgba(204, 204, 204, 1);
+	display: inline-block !important;
+	position: absolute;
+	width: 0;
+	bottom: 3px !important;
+	right: -6px;
+}
+
+.likesWidget > .likesDisplay .pointer > span {	
+	border-width: 5px 0 5px 5px;
+	border-style: solid;
+	border-color: transparent rgba(255, 255, 255, 1);
+	display: inline-block;
+	position: absolute;
+	width: 0;
+	bottom: -5px;
+	left: -6px;
 }
 
 
@@ -3742,6 +3871,8 @@ button:active {
 	-o-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 }
+
+
 
 /* -- -- -- Default Buttons -- -- -- */
 
@@ -4026,6 +4157,8 @@ button.default:active {
 	animation-timing-function: ease-in-out;
 }
 
+
+
 /* -- -- -- Special Buttons -- -- -- */
 
 /* Disabled State */
@@ -4076,6 +4209,8 @@ button[disabled='disabled'] {
 	/* General toggle switch for package nav-bar orientation (options: left|center|right) */
 	text-align: right;
 }
+
+
 
 /* -- -- -- Package Plugin -- -- -- */
 
@@ -4338,95 +4473,6 @@ button[disabled='disabled'] {
 
 
 
-
-
-
-/* ############## ToDo: Likes Widget ############## */
-
-/*  @see theadPostList.tpl */
-
-/* -- -- -- -- Widget -- -- -- -- -- */
-
-/* Globals */
-
-.likesWidget {
-	margin: 3px 15px 0 30px;
-}
-
-/* Buttons */
-
-.likesWidget > ul {
-	float: right;
-	margin-right: 7px;
-	margin-left: 10px;
-}
-
-.likesWidget > ul > li {
-	text-align: right;
-	margin-top: 3px;
-	display: inline-block;
-}
-
-.likesWidget > ul > li > a {
-	padding: 3px 5px;
-}
-
-.likesWidget > ul > li:first-child {
-	margin-right: -5px;
-}
-
-.likesWidget > ul > li:first-child a {
-	border-radius: 7px 0 0 7px;
-}
-
-.likesWidget > ul > li:nth-child(2) a {
-	border-radius: 0 7px 7px 0;
-}
-
-/* Cummulative Likes Display */
-
-.likesWidget > .likesDisplay a {
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 3px;
-	border-color: rgba(204, 204, 204, 1);
-	background-color: rgba(255, 255, 255, 1);
-	margin: 1px 0 0 7px;
-	padding: 2px 5px 1px;
-	float: right;
-	position: relative;
-	height: 13px;
-}
-
-.likesWidget > .likesDisplay a {
-	font-size: 75%;
-	color: #666;
-	text-decoration: none;
-}
-
-/* -- -- -- -- Like Widget Pointer -- -- -- -- -- */
-
-.likesWidget > .likesDisplay .pointer {	
-	border-width: 5px 0 5px 5px;
-	border-style: solid;
-	border-color: transparent rgba(204, 204, 204, 1);
-	display: inline-block !important;
-	position: absolute;
-	width: 0;
-	bottom: 3px !important;
-	right: -6px;
-}
-
-.likesWidget > .likesDisplay .pointer > span {	
-	border-width: 5px 0 5px 5px;
-	border-style: solid;
-	border-color: transparent rgba(255, 255, 255, 1);
-	display: inline-block;
-	position: absolute;
-	width: 0;
-	bottom: -5px;
-	left: -6px;
-}
 
 
 
