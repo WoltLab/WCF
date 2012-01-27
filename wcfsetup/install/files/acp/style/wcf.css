@@ -3550,22 +3550,6 @@ tr .columnURL {
 
 
 
-/* ToDo: Login Box */
-
-/* Note: Do not use the class ".loginBox" to style the box! */
-
-#loginBox dl {
-	margin-right: 20px;
-}
-
-#loginBox dl dt,
-#loginBox dl dd,
-#loginBox dl label {
-	color: rgba(255, 255, 255, 1);
-}
-
-
-
 /* ############## ToDo: Overlay Spinner ############## */
 
 .wcfDialogOverlay {
