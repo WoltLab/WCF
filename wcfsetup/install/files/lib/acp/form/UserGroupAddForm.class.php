@@ -54,7 +54,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	 * active sub tab menu item name
 	 * @var string
 	 */
-	public $activeSubTabMenuItem = '';
+	public $activeMenuItem = '';
 	
 	/**
 	 * the option tree
@@ -109,7 +109,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		
 		if (I18nHandler::getInstance()->isPlainValue('groupName')) $this->groupName = I18nHandler::getInstance()->getValue('groupName');
 		if (isset($_POST['activeTabMenuItem'])) $this->activeTabMenuItem = $_POST['activeTabMenuItem'];
-		if (isset($_POST['activeSubTabMenuItem'])) $this->activeSubTabMenuItem = $_POST['activeSubTabMenuItem'];
+		if (isset($_POST['activeMenuItem'])) $this->activeMenuItem = $_POST['activeMenuItem'];
 	}
 	
 	/**
@@ -207,7 +207,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 			'optionTree' => $this->optionTree,
 			'action' => 'add',
 			'activeTabMenuItem' => $this->activeTabMenuItem,
-			'activeSubTabMenuItem' => $this->activeSubTabMenuItem
+			'activeMenuItem' => $this->activeMenuItem
 		));
 	}
 

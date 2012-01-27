@@ -69,7 +69,7 @@
 		
 		{event name='fieldsets'}
 		
-		<div class="tabMenuContainer" data-active="{$activeSubTabMenuItem}" data-store="activeTabMenuItem">
+		<div class="tabMenuContainer" data-active="{$activeMenuItem}" data-store="activeTabMenuItem">
 			<nav class="tabMenu">
 				<ul>
 					{foreach from=$optionTree item=categoryLevel1}
@@ -79,7 +79,7 @@
 			</nav>
 			
 			{foreach from=$optionTree item=categoryLevel1}
-				<div id="{@$categoryLevel1[object]->categoryName}" class="tabMenuContainer border tabMenuContent" data-active="{$activeTabMenuItem}" data-store="activeSubTabMenuItem">
+				<div id="{@$categoryLevel1[object]->categoryName}" class="tabMenuContainer border tabMenuContent" data-active="{$activeTabMenuItem}" data-store="activeMenuItem">
 					<nav class="menu">
 						<ul>
 							{foreach from=$categoryLevel1[categories] item=$categoryLevel2}
@@ -126,7 +126,7 @@
  		<input type="hidden" name="action" value="{@$action}" />
  		{if $groupID|isset}<input type="hidden" name="id" value="{@$groupID}" />{/if}
  		<input type="hidden" id="activeTabMenuItem" name="activeTabMenuItem" value="{$activeTabMenuItem}" />
- 		<input type="hidden" id="activeSubTabMenuItem" name="activeSubTabMenuItem" value="{$activeSubTabMenuItem}" />
+ 		<input type="hidden" id="activeMenuItem" name="activeMenuItem" value="{$activeMenuItem}" />
  	</div>
 </form>
 

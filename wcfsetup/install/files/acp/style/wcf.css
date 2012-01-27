@@ -1906,10 +1906,17 @@ dl > dd > fieldset > dl > dd > label {
 
 .wcfDialogContainer dl > dd {
 	margin-left: 150px;
-}	
+}
+
 .wcfDialogContainer dl > .reversed {
 	left: 170px;
 	width: auto;
+}
+
+/* Special -> Installation */
+
+dl.wcfUrlContainer > dd.wcfUrl > p {
+	margin-top: 5px;
 }
 
 
@@ -3391,18 +3398,17 @@ tr .columnURL {
 }
 
 
-/* ############## System Notifications (Sheet) ############## */
+
+/* ############## ToDo: System Notifications (Sheet) ############## */
 
 /* Globals */
 
-.systemNotification {
-	/* declarations taken from .success */
-
-	background-color: rgba(238, 255, 238, 1.0);
-	border: 1px solid rgba(0, 204, 0, 1.0);
+.systemNotification { /* declarations taken from .success */
+	background-color: rgba(238, 255, 238, 1);
+	border: 1px solid rgba(0, 204, 0, 1);
 	border-top-width: 0;
 	border-radius: 0 0 5px 5px;
-	color: rgba(0, 153, 0, 1.0);
+	color: rgba(0, 153, 0, 1);
 	left: 40%;
 	padding: 14px;
 	padding-top: 10px;
@@ -3420,7 +3426,7 @@ tr .columnURL {
 }
 
 .systemNotification.open {
-	top: 0px;
+	top: 0;
 }
 
 
@@ -3546,22 +3552,6 @@ tr .columnURL {
 	line-height: 1.2;
 	border: 1px solid #ccc;
 	padding: 3px;
-}
-
-
-
-/* ToDo: Login Box */
-
-/* Note: Do not use the class ".loginBox" to style the box! */
-
-#loginBox dl {
-	margin-right: 20px;
-}
-
-#loginBox dl dt,
-#loginBox dl dd,
-#loginBox dl label {
-	color: rgba(255, 255, 255, 1);
 }
 
 
