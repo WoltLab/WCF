@@ -387,4 +387,11 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 		
 		throw new DatabaseException("Unknown / unsupported data type '".$mySQLType."'", $this->dbObj);
 	}
+	
+	/**
+	 * @see	wcf\system\database\editor\DatabaseEditor::dropConflictedTables()
+	 */
+	public function dropConflictedTables(array $conflictedTables) {
+		die('IMPLEMENT ME: PostgreSQLDatabaseEditor::dropConflictedTables');
+	}
 }

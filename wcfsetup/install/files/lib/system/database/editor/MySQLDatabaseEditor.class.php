@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\database\editor;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\database\Database;
 
 /**
@@ -227,5 +228,50 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		$definition .= " (".str_replace(',', ',', preg_replace('/\s+/', '', $indexData['columns'])).")";
 		
 		return $definition;
+	}
+	
+	/**
+	 * @see	wcf\system\database\editor\DatabaseEditor::dropConflictedTables()
+	 */
+	public function dropConflictedTables(array $conflictedTables) {
+		$tables = array();
+		foreach ($conflictedTables as $tableName) {
+			$tables[$tableName] = array();
+		}
+		
+		// get current database
+		$sql = "SELECT	DATABASE() AS currentDB";
+		$statement = $this->dbObj->prepareStatement($sql);
+		$statement->execute();
+		$row = $statement->fetchArray();
+		$currentDB = $row['currentDB'];
+		
+		// get constraints
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("TABLE_SCHEMA = ?", array($currentDB));
+		$conditions->add("TABLE_NAME IN (?)", array($conflictedTables));
+		$conditions->add("REFERENCED_TABLE_NAME IS NOT NULL");
+		$conditions->add("CONSTRAINT_NAME LIKE ?", array('%_fk'));
+		
+		$sql = "SELECT	CONSTRAINT_NAME, TABLE_NAME
+			FROM	information_schema.KEY_COLUMN_USAGE
+			".$conditions;
+		$statement = $this->dbObj->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		while ($row = $statement->fetchArray()) {
+			$this->tables[$row['TABLE_NAME']][] = $row['CONSTRAINT_NAME'];
+		}
+		
+		// drop foreign keys
+		foreach ($this->tables as $tableName => $foreignKeys) {
+			foreach ($foreignKeys as $fk) {
+				$this->dropForeignKey($tableName, $fk);
+			}
+		}
+		
+		// drop tables
+		foreach (array_keys($this->tables) as $tableName) {
+			$this->dropTable($tableName);
+		}
 	}
 }

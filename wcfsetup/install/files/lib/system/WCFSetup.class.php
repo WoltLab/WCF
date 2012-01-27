@@ -555,6 +555,10 @@ class WCFSetup extends WCF {
 				
 				// check for table conflicts
 				$conflictedTables = $this->getConflictedTables($db, $dbNumber);
+				if (!empty($conflictedTables) && ($overwriteTables || self::$developerMode)) {
+					// remove tables
+					$db->getEditor()->dropConflictedTables($conflictedTables);
+				}
 				
 				// write config.inc
 				if (empty($conflictedTables) || $overwriteTables || self::$developerMode) {
