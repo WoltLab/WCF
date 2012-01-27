@@ -262,6 +262,33 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 			$this->tables[$row['TABLE_NAME']][] = $row['CONSTRAINT_NAME'];
 		}
 		
+		// handle foreign keys from 3rd party tables
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("TABLE_SCHEMA = ?", array($currentDB));
+		$conditions->add("REFERENCED_TABLE_NAME IN (?)", array($conflictedTables));
+		$conditions->add("CONSTRAINT_NAME LIKE ?", array('%_fk'));
+		
+		$sql = "SELECT	CONSTRAINT_NAME, TABLE_NAME
+			FROM	information_schema.KEY_COLUMN_USAGE
+			".$conditions;
+		$statement = $this->dbObj->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		$foreignConstraints = array();
+		while ($row = $statement->fetchArray()) {
+			if (!isset($foreignConstraints[$row['TABLE_NAME']])) {
+				$foreignConstraints[$row['TABLE_NAME']] = array();
+			}
+			
+			$foreignConstraints[$row['TABLE_NAME']][] = $row['CONSTRAINT_NAME'];
+		}
+		
+		// drop foreign keys from 3rd party tables
+		foreach ($foreignConstraints as $tableName => $foreignKeys) {
+			foreach ($foreignKeys as $fk) {
+				$this->dropForeignKey($tableName, $fk);
+			}
+		}
+		
 		// drop foreign keys
 		foreach ($this->tables as $tableName => $foreignKeys) {
 			foreach ($foreignKeys as $fk) {
