@@ -11,6 +11,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\system\exception\SystemException;
 
 /**
  * Shows the assign user to group form.

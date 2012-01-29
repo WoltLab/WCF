@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\form\element;
-use wcf\system\util\StringUtil;
+use wcf\util\StringUtil;
 
 /**
  * Provides a label form element.

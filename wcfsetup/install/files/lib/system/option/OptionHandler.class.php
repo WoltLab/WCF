@@ -8,6 +8,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
+use wcf\system\WCF;
 
 /**
  * Handles options.

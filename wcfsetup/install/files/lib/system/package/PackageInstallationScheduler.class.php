@@ -6,6 +6,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\system\io\File;
 
 /**
  * Contains business logic related to preparation of package installations.

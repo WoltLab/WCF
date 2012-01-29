@@ -1,5 +1,6 @@
 <?php
 namespace wcf\action;
+use wcf\util\JSON;
 
 /**
  * Provides method to send JSON-encoded responses.

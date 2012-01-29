@@ -14,6 +14,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\StringUtil;
+use wcf\system\exception\IllegalLinkException;
 
 /**
  * Shows the result of a user search.

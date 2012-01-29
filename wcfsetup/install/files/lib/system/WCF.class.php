@@ -13,7 +13,10 @@ use wcf\system\session\SessionHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\exception;
-use wcf\util;
+use wcf\util\ArrayUtil;
+use wcf\util\FileUtil;
+use wcf\util\ClassUtil;
+use wcf\util\StringUtil;
 
 // try to disable execution time limit
 @set_time_limit(0);
@@ -103,7 +106,7 @@ class WCF {
 		self::$autoloadDirectories['wcf'] = WCF_DIR . 'lib/';
 		
 		// define tmp directory
-		if (!defined('TMP_DIR')) define('TMP_DIR', util\FileUtil::getTempFolder());
+		if (!defined('TMP_DIR')) define('TMP_DIR', FileUtil::getTempFolder());
 		
 		// start initialization
 		$this->initMagicQuotes();
@@ -154,22 +157,22 @@ class WCF {
 		if (function_exists('get_magic_quotes_gpc')) {
 			if (@get_magic_quotes_gpc()) {
 				if (count($_REQUEST)) {
-					$_REQUEST = util\ArrayUtil::stripslashes($_REQUEST);
+					$_REQUEST = ArrayUtil::stripslashes($_REQUEST);
 				}
 				if (count($_POST)) {
-					$_POST = util\ArrayUtil::stripslashes($_POST);
+					$_POST = ArrayUtil::stripslashes($_POST);
 				}
 				if (count($_GET)) {
-					$_GET = util\ArrayUtil::stripslashes($_GET);
+					$_GET = ArrayUtil::stripslashes($_GET);
 				}
 				if (count($_COOKIE)) {
-					$_COOKIE = util\ArrayUtil::stripslashes($_COOKIE);
+					$_COOKIE = ArrayUtil::stripslashes($_COOKIE);
 				}
 				if (count($_FILES)) {
 					foreach ($_FILES as $name => $attributes) {
 						foreach ($attributes as $key => $value) {
 							if ($key != 'tmp_name') {
-								$_FILES[$name][$key] = util\ArrayUtil::stripslashes($value);
+								$_FILES[$name][$key] = ArrayUtil::stripslashes($value);
 							}
 						}
 					}
@@ -368,17 +371,17 @@ class WCF {
 	 */
 	protected function initBlacklist() {
 		if (defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
-			if (!util\StringUtil::executeWordFilter(WCF::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
+			if (!StringUtil::executeWordFilter(WCF::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
 				throw new exception\PermissionDeniedException();
 			}
 		}
 		if (defined('BLACKLIST_USER_AGENTS') && BLACKLIST_USER_AGENTS != '') {
-			if (!util\StringUtil::executeWordFilter(WCF::getSession()->userAgent, BLACKLIST_USER_AGENTS)) {
+			if (!StringUtil::executeWordFilter(WCF::getSession()->userAgent, BLACKLIST_USER_AGENTS)) {
 				throw new exception\PermissionDeniedException();
 			}
 		}
 		if (defined('BLACKLIST_HOSTNAMES') && BLACKLIST_HOSTNAMES != '') {
-			if (!util\StringUtil::executeWordFilter(@gethostbyaddr(WCF::getSession()->ipAddress), BLACKLIST_HOSTNAMES)) {
+			if (!StringUtil::executeWordFilter(@gethostbyaddr(WCF::getSession()->ipAddress), BLACKLIST_HOSTNAMES)) {
 				throw new exception\PermissionDeniedException();
 			}
 		}
@@ -415,11 +418,11 @@ class WCF {
 		$package = PackageCache::getInstance()->getPackage($application->packageID);
 		
 		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
-		$packageDir = util\FileUtil::getRealPath(WCF_DIR.$package->packageDir);
+		$packageDir = FileUtil::getRealPath(WCF_DIR.$package->packageDir);
 		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
 		
 		$className = $abbreviation.'\system\\'.strtoupper($abbreviation).'Core';
-		if (class_exists($className) && util\ClassUtil::isInstanceOf($className, 'wcf\system\application\IApplication')) {
+		if (class_exists($className) && ClassUtil::isInstanceOf($className, 'wcf\system\application\IApplication')) {
 			// include config file
 			$configPath = $packageDir . PackageInstallationDispatcher::CONFIG_FILE;
 			if (file_exists($configPath)) {
@@ -545,7 +548,7 @@ class WCF {
 		}
 		
 		if (class_exists($objectName)) {
-			if (!(util\ClassUtil::isInstanceOf($objectName, 'wcf\system\SingletonFactory'))) {
+			if (!(ClassUtil::isInstanceOf($objectName, 'wcf\system\SingletonFactory'))) {
 				throw new exception\SystemException("class '".$objectName."' does not implement the interface 'SingletonFactory'");
 			}
 			

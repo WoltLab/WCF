@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\event;
-use wcf\data\DatabaseObjectProcessor;
+use wcf\data\DatabaseObjectProcessor; // TODO: undefined class
 
 /**
  * EventListeners can be registered for a specific event in many controller objects.

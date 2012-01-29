@@ -15,6 +15,8 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
+use wcf\data\user\User;
+use wcf\data\session\Session;
 		
 /**
  * Shows the users mass processing form.

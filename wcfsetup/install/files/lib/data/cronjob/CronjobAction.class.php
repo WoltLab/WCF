@@ -4,6 +4,7 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\cronjob\log\CronjobLogEditor;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
+use wcf\system\exception\ValidateActionException;
 
 /**
  * Executes cronjob-related actions.

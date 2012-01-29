@@ -8,6 +8,7 @@ use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 use wcf\util\XML;
+use Exception;
 
 /**
  * This class holds all information of a package archive. 
