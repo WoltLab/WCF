@@ -26,7 +26,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	public function validatePrepareQueue() {
 		if (isset($this->parameters['packageID'])) $this->packageID = intval($this->parameters['packageID']);
 		
-		$this->package = new Package($packageID);
+		$this->package = new Package($packageID); //TODO: undefined variable
 		if (!$this->package->packageID) {
 			throw new ValidateActionException('Invalid package id');
 		}

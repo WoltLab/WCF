@@ -148,7 +148,7 @@ class LanguageServerProcessor extends SingletonFactory {
 			// find location
 			if (preg_match('/location:([^\n]*)/i', $header, $match)) {
 				$location = trim($match[1]);
-				if ($location != $url) {
+				if ($location != $url) { //TODO: undefined variable
 					$this->importLanguageFile($location, $packageList);
 					return;
 				}

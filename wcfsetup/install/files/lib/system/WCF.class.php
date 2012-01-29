@@ -436,7 +436,7 @@ class WCF {
 		}
 		else {
 			unset(self::$autoloadDirectories[$abbreviation]);
-			throw new exception\SystemException('Unable to run '.$row->package.', '.$className.' missing.');
+			throw new exception\SystemException('Unable to run '.$row->package.', '.$className.' missing.'); //TODO: undefined variable
 		}
 		
 		// load application settings if not within ACP

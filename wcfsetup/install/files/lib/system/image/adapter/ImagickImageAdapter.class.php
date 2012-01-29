@@ -52,7 +52,7 @@ class ImagickImageAdapter implements IImageAdapter {
 			throw new SystemException("Object must be an instance of Imagick");
 		}
 		
-		$this->imagick = $imagick;
+		$this->imagick = $imagick; //TODO: undefined variable
 		$this->height = $this->imagick->getImageHeight();
 		$this->width = $this->imagick->getImageWidth();
 	}

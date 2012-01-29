@@ -255,7 +255,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 				WCF::getSession()->checkPermissions(array('admin.user.canEditUser'));
 				
 				$userIDArray = $this->fetchUsers(function($userID, array $userData) {
-					$user = new UserEditor(new User(null, $row));
+					$user = new UserEditor(new User(null, $row)); //TODO: undefined variable
 					$user->addToGroups($this->assignToGroupIDArray, false, false);
 				});
 				
