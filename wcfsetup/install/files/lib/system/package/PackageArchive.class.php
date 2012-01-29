@@ -8,7 +8,6 @@ use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 use wcf\util\XML;
-use Exception;
 
 /**
  * This class holds all information of a package archive. 
@@ -161,7 +160,7 @@ class PackageArchive {
 		try {
 			$xml->loadXML(self::INFO_FILE, $this->tar->extractToString(self::INFO_FILE));
 		}
-		catch (Exception $e) { // bugfix to avoid file caching problems
+		catch (\Exception $e) { // bugfix to avoid file caching problems
 			$xml->loadXML(self::INFO_FILE, $this->tar->extractToString(self::INFO_FILE));
 		}
 		

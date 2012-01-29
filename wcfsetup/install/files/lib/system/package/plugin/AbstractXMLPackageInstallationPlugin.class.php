@@ -5,7 +5,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\XML;
-use Exception;
 
 /**
  * Default implementation of some functions for a PackageInstallationPlugin using xml definitions.
@@ -262,12 +261,12 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			$this->installation->getArchive()->getTar()->extract($fileIndex, $tmpFile);
 			$xml->load($tmpFile);
 		}
-		catch (Exception $e) { // bugfix to avoid file caching problems
+		catch (\Exception $e) { // bugfix to avoid file caching problems
 			try {
 				$this->installation->getArchive()->getTar()->extract($fileIndex, $tmpFile);
 				$xml->load($tmpFile);
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				$this->installation->getArchive()->getTar()->extract($fileIndex, $tmpFile);
 				$xml->load($tmpFile);
 			}

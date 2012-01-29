@@ -24,7 +24,6 @@ use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
 use wcf\util\XML;
-use Exception;
 
 // define
 define('PACKAGE_ID', '0');
@@ -422,7 +421,7 @@ class WCFSetup extends WCF {
 			try {
 				$this->installFiles();
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				WCF::getTPL()->assign(array('exception' => $e));
 				$this->searchWcfDir();
 				return;

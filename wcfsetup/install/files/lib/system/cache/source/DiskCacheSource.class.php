@@ -7,7 +7,6 @@ use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\DirectoryUtil;
-use Exception;
 
 /**
  * DiskCacheSource is an implementation of CacheSource that stores the cache as simple files in the file system.
@@ -153,7 +152,7 @@ class DiskCacheSource implements ICacheSource {
 				// load cache file
 				$this->loadCacheFile($cacheResource);
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				return false;
 			}
 			
