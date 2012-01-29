@@ -7,6 +7,7 @@ use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\package\PackageUninstallationDispatcher;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
+use PackageInstallationRollback; // TODO: undefined class
 
 /**
  * Handles all request on the package.php script

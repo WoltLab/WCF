@@ -5,6 +5,9 @@ use wcf\data\package\update\server\PackageUpdateServerEditor;
 use wcf\system\package\PackageUpdateAuthorizationRequiredException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
+use wcf\system\exception\IllegalLinkException;
+use wcf\system\request\RequestHandler;
+use wcf\util\ArrayUtil;
 
 /**
  * Shows the package update authentification form.

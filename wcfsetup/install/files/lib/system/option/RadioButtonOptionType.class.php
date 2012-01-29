@@ -3,7 +3,7 @@ namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
-use wcf\system\UserInputException;
+use wcf\system\exception\UserInputException;
 use wcf\util\StringUtil;
 
 /**

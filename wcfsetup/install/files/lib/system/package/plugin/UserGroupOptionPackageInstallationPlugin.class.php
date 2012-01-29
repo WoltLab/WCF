@@ -5,6 +5,7 @@ use wcf\data\user\group\option\UserGroupOptionEditor;
 use wcf\data\user\group\UserGroup;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
+use wcf\system\exception\SystemException;
 
 /**
  * This PIP installs, updates or deletes user group permissions.

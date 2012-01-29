@@ -7,6 +7,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
+use wcf\system\exception\SystemException;
 
 /**
  * Shows the export user mail addresses form.

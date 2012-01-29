@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package;
+use wcf\system\exception\UserException;
 use wcf\acp\form\PackageUpdateAuthForm;
 
 /**

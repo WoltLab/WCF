@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\container;
+use wcf\util\StringUtil;
 
 /**
  * Provides a single selection form element container.

@@ -20,7 +20,7 @@ interface ICompilerTemplatePlugin {
 	 * @param	wcf\system\template\TemplateScriptingCompiler	$compiler
 	 * @return	string		php code	
 	 */
-	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler);
+	public function executeStart(array $tagArgs, TemplateScriptingCompiler $compiler);
 	
 	/**
 	 * Executes the end tag of this compiler function.

@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\image\adapter;
-use wcf\system\session\SystemException;
+use wcf\system\exception\SystemException;
 
 /**
  * Wrapper for image adapters.

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\cronjob\log;
+use wcf\system\WCF;
 use wcf\data\DatabaseObjectEditor;
 
 /**

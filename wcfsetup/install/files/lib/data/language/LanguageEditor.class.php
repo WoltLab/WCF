@@ -12,8 +12,10 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageDependencyHandler;
 use wcf\system\Regex;
 use wcf\system\WCF;
-use wcf\util\XML;
 use wcf\util\DirectoryUtil;
+use wcf\util\StringUtil;
+use wcf\util\XML;
+use wcf\system\exception\SystemException;
 
 /**
  * Provides functions to edit languages.
