@@ -21,6 +21,7 @@ use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
+use SplitNodeException; // TODO: undefined class
 
 /**
  * PackageInstallationDispatcher handles the whole installation process.

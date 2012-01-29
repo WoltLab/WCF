@@ -21,7 +21,7 @@ class LangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	/**
 	 * @see wcf\system\template\ICompilerTemplatePlugin::executeStart()
 	 */
-	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
+	public function executeStart(array $tagArgs, TemplateScriptingCompiler $compiler) {
 		$compiler->pushTag('lang');
 		
 		$newTagArgs = array();

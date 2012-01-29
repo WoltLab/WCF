@@ -5,6 +5,7 @@ use wcf\system\benchmark\Benchmark;
 use wcf\system\database\Database;
 use wcf\system\database\DatabaseException;
 use wcf\system\WCF;
+use wcf\system\exception\SystemException;
 
 /**
  * This is an implementation of prepared statements based upon pdo statements.

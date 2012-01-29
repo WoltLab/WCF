@@ -2,6 +2,7 @@
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * SelectOptionType is an implementation of IOptionType for 'select' tags.

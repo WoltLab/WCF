@@ -5,6 +5,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\XML;
+use Exception;
 
 /**
  * Default implementation of some functions for a PackageInstallationPlugin using xml definitions.

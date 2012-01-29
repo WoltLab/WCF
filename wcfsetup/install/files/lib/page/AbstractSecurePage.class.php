@@ -1,5 +1,7 @@
 <?php
 namespace wcf\page;
+use wcf\system\WCF;
+use wcf\system\exception\IllegalLinkException;
 
 /**
  * Extends AbstractPage by a function to validate a given security token.
