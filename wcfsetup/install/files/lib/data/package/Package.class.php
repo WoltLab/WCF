@@ -467,7 +467,7 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * Writes the config.inc.php for a standalone application.
+	 * Writes the config.inc.php for an application.
 	 *
 	 * @param	integer		$packageID
 	 */
@@ -478,13 +478,13 @@ class Package extends DatabaseObject {
 		$file->write("<?php\n");
 		$currentPrefix = strtoupper(Package::getAbbreviation($package->package));
 		
-		// get dependencies (only standalones)
+		// get dependencies (only spplications)
 		$sql = "SELECT		package.*, CASE WHEN package.packageID = ? THEN 1 ELSE 0 END AS sortOrder 
 			FROM		wcf".WCF_N."_package_dependency package_dependency
 			LEFT JOIN	wcf".WCF_N."_package package
 			ON		(package.packageID = package_dependency.dependency)
 			WHERE		package_dependency.packageID = ?
-					AND package.standalone = 1
+					AND package.isApplication = 1
 					AND package.packageDir <> ''
 			ORDER BY	sortOrder DESC,
 					package_dependency.priority DESC";
@@ -560,7 +560,7 @@ class Package extends DatabaseObject {
 	public static function getPluginList() {
 		$pluginList = new PackageList();
 		$pluginList->getConditionBuilder()->add("package.packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
-		$pluginList->getConditionBuilder()->add("package.standalone = ?", array(0));
+		$pluginList->getConditionBuilder()->add("package.isApplication = ?", array(0));
 		
 		return $pluginList;
 	}

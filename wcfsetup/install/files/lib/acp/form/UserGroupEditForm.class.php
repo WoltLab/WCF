@@ -60,6 +60,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 		}
 		
 		$this->group = new UserGroupEditor($group);
+		$this->optionHandler->setUserGroup($group);
 	}
 	
 	/**
@@ -69,22 +70,23 @@ class UserGroupEditForm extends UserGroupAddForm {
 		if (!count($_POST)) {
 			I18nHandler::getInstance()->setOptions('groupName', 1, $this->group->groupName, 'wcf.acp.group.group\d+');
 			$this->groupName = $this->group->groupName;
+			$options = $this->optionHandler->getCategoryOptions();
 			
 			// get default values
 			if ($this->group->groupType != UserGroup::EVERYONE) {
 				$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
-				foreach ($this->options as $option) {
-					$value = $defaultGroup->getGroupOption($option->optionName);
+				foreach ($options as $option) {
+					$value = $defaultGroup->getGroupOption($option['object']->optionName);
 					if ($value !== null) {
-						$this->optionValues[$option->optionName] = $value;
+						$this->optionValues[$option['object']->optionName] = $value;
 					}
 				}
 			}
 			
-			foreach ($this->options as $option) {
-				$value = $this->group->getGroupOption($option->optionName);
+			foreach ($options as $option) {
+				$value = $this->group->getGroupOption($option['object']->optionName);
 				if ($value !== null) {
-					$this->optionValues[$option->optionName] = $value;
+					$this->optionValues[$option['object']->optionName] = $value;
 				}
 			}
 		}
@@ -119,18 +121,18 @@ class UserGroupEditForm extends UserGroupAddForm {
 		AbstractForm::save();
 		
 		// save group
+		$optionValues = $this->optionHandler->save();
 		$saveOptions = array();
 		if ($this->group->groupType == UserGroup::EVERYONE) {
-			foreach ($this->options as $option) {
-				$saveOptions[$option->optionID] = $this->optionValues[$option->optionName];
-			}
+			$saveOptions = $optionValues;
 		}
 		else {
 			// get default group
 			$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
-			foreach ($this->options as $option) {
-				if ($this->optionValues[$option->optionName] != $defaultGroup->getGroupOption($option->optionName)) {
-					$saveOptions[$option->optionID] = $this->optionValues[$option->optionName];
+			foreach ($this->optionHandler->getCategoryOptions() as $option) {
+				$option = $option['object'];
+				if ($optionValues[$option->optionID] != $defaultGroup->getGroupOption($option->optionName)) {
+					$saveOptions[$option->optionID] = $optionValues[$option->optionID];
 				}
 			}
 		}

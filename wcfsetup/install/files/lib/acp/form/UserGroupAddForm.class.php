@@ -42,7 +42,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	/**
 	 * @see wcf\acp\form\AbstractOptionListForm::$cacheName
 	 */
-	public $cacheName = 'user_group-option-';
+	public $cacheName = 'userGroup-option';
 	
 	/**
 	 * active tab menu item name
@@ -54,13 +54,23 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	 * active sub tab menu item name
 	 * @var string
 	 */
-	public $activeSubTabMenuItem = '';
+	public $activeMenuItem = '';
 	
 	/**
 	 * the option tree
 	 * @var array
 	 */
 	public $optionTree = array();
+	
+	/**
+	 * @see	wcf\acp\form\AbstractOptionListForm::$optionHandlerClassName
+	 */
+	public $optionHandlerClassName = 'wcf\system\option\user\group\UserGroupOptionHandler';
+	
+	/**
+	 * @see	wcf\acp\form\AbstractOptionListForm::$supportI18n
+	 */
+	public $supportI18n = false;
 	
 	/**
 	 * group name
@@ -74,6 +84,15 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	 */
 	public $additionalFields = array();
 	
+	/**
+	 * list of values of group 'Anyone'
+	 * @var	array
+	 */
+	public $defaultValues = array();
+	
+	/**
+	 * @see	wcf\page\IPage::readParameters()
+	 */
 	public function readParameters() {
 		parent::readParameters();
 		
@@ -90,7 +109,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		
 		if (I18nHandler::getInstance()->isPlainValue('groupName')) $this->groupName = I18nHandler::getInstance()->getValue('groupName');
 		if (isset($_POST['activeTabMenuItem'])) $this->activeTabMenuItem = $_POST['activeTabMenuItem'];
-		if (isset($_POST['activeSubTabMenuItem'])) $this->activeSubTabMenuItem = $_POST['activeSubTabMenuItem'];
+		if (isset($_POST['activeMenuItem'])) $this->activeMenuItem = $_POST['activeMenuItem'];
 	}
 	
 	/**
@@ -123,10 +142,12 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		
 		// get default group
 		$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
+		$optionValues = $this->optionHandler->save();
 		$saveOptions = array();
-		foreach ($this->options as $option) {
-			if ($this->optionValues[$option->optionName] != $defaultGroup->getGroupOption($option->optionName)) {
-				$saveOptions[$option->optionID] = $this->optionValues[$option->optionName];
+		foreach ($this->optionHandler->getCategoryOptions() as $option) {
+			$option = $option['object'];
+			if ($optionValues[$option->optionID] != $defaultGroup->getGroupOption($option->optionName)) {
+				$saveOptions[$option->optionID] = $optionValues[$option->optionID];
 			}
 		}
 		
@@ -165,9 +186,9 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	 * @see wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		AbstractOptionListForm::readData();
+		parent::readData();
 		
-		$this->optionTree = $this->getOptionTree();
+		$this->optionTree = $this->optionHandler->getOptionTree();
 		if (!count($_POST)) {
 			$this->activeTabMenuItem = $this->optionTree[0]['object']->categoryName;
 		}
@@ -186,7 +207,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 			'optionTree' => $this->optionTree,
 			'action' => 'add',
 			'activeTabMenuItem' => $this->activeTabMenuItem,
-			'activeSubTabMenuItem' => $this->activeSubTabMenuItem
+			'activeMenuItem' => $this->activeMenuItem
 		));
 	}
 
@@ -199,9 +220,6 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		
 		// check master password
 		WCFACP::checkMasterPassword();
-		
-		// get user options and categories from cache
-		$this->readCache();
 		
 		// show form
 		parent::show();

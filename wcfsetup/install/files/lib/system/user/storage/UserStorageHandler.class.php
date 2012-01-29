@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\storage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\package\PackageDependencyHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -42,7 +43,7 @@ class UserStorageHandler extends SingletonFactory {
 	public function loadStorage(array $userIDs, $packageID = PACKAGE_ID) {
 		$tmp = array();
 		foreach ($userIDs as $userID) {
-			if (!isset($this->cache[$userID][$packageID])) $tmp[] = $userID;
+			if (!isset($this->cache[$userID])) $tmp[] = $userID;
 		}
 		
 		// ignore users whose storage data is already loaded
@@ -50,7 +51,7 @@ class UserStorageHandler extends SingletonFactory {
 		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("userID IN (?)", array($tmp));
-		$conditions->add("packageID = ?", array($packageID));
+		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getDependencies($packageID)));
 		
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_user_storage
@@ -62,11 +63,7 @@ class UserStorageHandler extends SingletonFactory {
 				$this->cache[$row['userID']] = array();
 			}
 			
-			if (!isset($this->cache[$row['userID']][$row['packageID']])) {
-				$this->cache[$row['userID']][$row['packageID']] = array();
-			}
-			
-			$this->cache[$row['userID']][$row['packageID']][$row['field']] = $row['fieldValue'];
+			$this->cache[$row['userID']][$row['field']] = $row['fieldValue'];
 		}
 	}
 	
@@ -75,15 +72,14 @@ class UserStorageHandler extends SingletonFactory {
 	 * 
 	 * @param	array<integer>	$userIDs
 	 * @param	string		$field
-	 * @param	integer		$packageID
 	 * @return	array<array>
 	 */
-	public function getStorage(array $userIDs, $field, $packageID = PACKAGE_ID) {
+	public function getStorage(array $userIDs, $field) {
 		$data = array();
 		
 		foreach ($userIDs as $userID) {
-			if (isset($this->cache[$userID][$packageID][$field])) {
-				$data[$userID] = $this->cache[$userID][$packageID][$field];
+			if (isset($this->cache[$userID][$field])) {
+				$data[$userID] = $this->cache[$userID][$field];
 			}
 			else {
 				$data[$userID] = null;
@@ -109,11 +105,7 @@ class UserStorageHandler extends SingletonFactory {
 			$this->cache[$userID] = array();
 		}
 		
-		if (!isset($this->cache[$userID][$packageID])) {
-			$this->cache[$userID][$packageID] = array();
-		}
-		
-		$this->cache[$userID][$packageID][$field] = $fieldValue;
+		$this->cache[$userID][$field] = $fieldValue;
 		
 		// flag key as outdated
 		self::reset(array($userID), $field, $packageID);
@@ -129,6 +121,10 @@ class UserStorageHandler extends SingletonFactory {
 	public function reset(array $userIDs, $field, $packageID = PACKAGE_ID) {
 		foreach ($userIDs as $userID) {
 			$this->resetFields[$userID][$packageID][] = $field;
+			
+			if (isset($this->cache[$userID][$field])) {
+				unset($this->cache[$userID][$field]);
+			}
 		}
 	}
 	
@@ -147,6 +143,12 @@ class UserStorageHandler extends SingletonFactory {
 			$field,
 			$packageID
 		));
+		
+		foreach ($this->cache as $userID => $fields) {
+			if (isset($fields[$field])) {
+				unset($this->cache[$userID][$field]);
+			}
+		}
 	}
 	
 	/**
@@ -194,5 +196,7 @@ class UserStorageHandler extends SingletonFactory {
 				}
 			}
 		}
+		
+		$this->resetFields = $this->updateFields = array();
 	}
 }

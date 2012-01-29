@@ -389,7 +389,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 					$sql = "SELECT	*
 						FROM	wcf".WCF_N."_package
 						WHERE	package = ?
-							AND standalone = ?";
+							AND isApplication = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute(array(
 						$package,
@@ -447,7 +447,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 					$sql = "SELECT	*
 						FROM	wcf".WCF_N."_package
 						WHERE	package = ?
-							AND standalone = ?";
+							AND isApplication = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute(array(
 						$package,
@@ -632,7 +632,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			// get package dirs
 			$sql = "SELECT	package, packageDir
 				FROM	wcf".WCF_N."_package
-				WHERE	standalone = 1
+				WHERE	isApplication = 1
 					AND (packageDir <> '' OR package = 'com.woltlab.wcf')";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute();

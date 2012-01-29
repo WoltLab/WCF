@@ -26,7 +26,7 @@ class WCFACP extends WCF {
 		self::$autoloadDirectories['wcf'] = WCF_DIR . 'lib/';
 		
 		// define tmp directory
-		if (!defined('TMP_DIR')) define('TMP_DIR', util\BasicFileUtil::getTempFolder());
+		if (!defined('TMP_DIR')) define('TMP_DIR', util\FileUtil::getTempFolder());
 		
 		// start initialization
 		$this->initMagicQuotes();
@@ -130,7 +130,7 @@ class WCFACP extends WCF {
 		$packages = CacheHandler::getInstance()->get('packages');
 		if (isset($_REQUEST['packageID'])) $packageID = intval($_REQUEST['packageID']);
 		
-		if (!isset($packages[$packageID]) || !$packages[$packageID]['standalone']) {
+		if (!isset($packages[$packageID]) || !$packages[$packageID]['isApplication']) {
 			// package id is invalid
 			$packageID = self::getWcfPackageID();
 		}
@@ -158,7 +158,7 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * Returns a list of all installed standalone packages.
+	 * Returns a list of all installed applications packages.
 	 * 
 	 * @return	array
 	 */
@@ -166,7 +166,7 @@ class WCFACP extends WCF {
 		$quickAccessPackages = array();
 		$packages = CacheHandler::getInstance()->get('packages');
 		foreach ($packages as $packageID => $package) {
-			if (!$package->standalone) break;
+			if (!$package->isApplication) break;
 			if ($package->package != 'com.woltlab.wcf') {
 				$quickAccessPackages[] = $package;
 			}

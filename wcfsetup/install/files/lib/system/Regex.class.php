@@ -56,6 +56,20 @@ final class Regex {
 	const NO_ANALYSE = 8;
 	
 	/**
+	 * Ignore whitepsace in regex.
+	 *
+	 * @var	integer
+	 */
+	const IGNORE_WHITESPACE = 16;
+	
+	/**
+	 * A dot matches every char.
+	 *
+	 * @var	integer
+	 */
+	const DOT_ALL = 32;
+	
+	/**
 	 * The compiled regex (:D)
 	 *
 	 * @var	string
@@ -86,7 +100,9 @@ final class Regex {
 		if ($modifier & self::CASE_INSENSITIVE) $this->regex .= 'i';
 		if ($modifier & self::UNGREEDY) $this->regex .= 'U';
 		if ($modifier & self::EVAL_REPLACEMENT) $this->regex .= 'e';
-		if (~$modifier & self::NO_ANALYSE) $this->regex .= 's';
+		if (~$modifier & self::NO_ANALYSE) $this->regex .= 'S';
+		if ($modifier & self::IGNORE_WHITESPACE) $this->regex .= 'x';
+		if ($modifier & self::DOT_ALL) $this->regex .= 's';
 	}
 	
 	/**

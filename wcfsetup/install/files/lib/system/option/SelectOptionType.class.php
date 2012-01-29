@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @subpackage	system.option
  * @category 	Community Framework
  */
-class SelectOptionType extends RadiobuttonsOptionType {
+class SelectOptionType extends RadioButtonOptionType {
 	/**
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
@@ -28,7 +28,7 @@ class SelectOptionType extends RadiobuttonsOptionType {
 			'selectOptions' => $option->parseSelectOptions(),
 			'value' => $value
 		));
-		return WCF::getTPL()->fetch('optionTypeSelect');
+		return WCF::getTPL()->fetch('selectOptionType');
 	}
 	
 	/**

@@ -355,9 +355,6 @@ class WCFSetup extends WCF {
 		// mb string
 		$system['mbString']['result'] = extension_loaded('mbstring');
 		
-		// safe mode
-		$system['safeMode']['result'] = (FileUtil::getSafeMode() != 1);
-		
 		WCF::getTPL()->assign(array(
 			'system' => $system,
 			'nextStep' => 'searchWcfDir'
@@ -558,6 +555,10 @@ class WCFSetup extends WCF {
 				
 				// check for table conflicts
 				$conflictedTables = $this->getConflictedTables($db, $dbNumber);
+				if (!empty($conflictedTables) && ($overwriteTables || self::$developerMode)) {
+					// remove tables
+					$db->getEditor()->dropConflictedTables($conflictedTables);
+				}
 				
 				// write config.inc
 				if (empty($conflictedTables) || $overwriteTables || self::$developerMode) {
@@ -1059,7 +1060,7 @@ class WCFSetup extends WCF {
 	}
 	
 	/**
-	 * Gets the package name of the first standalone application in WCFSetup.tar.gz.
+	 * Gets the package name of the first application in WCFSetup.tar.gz.
 	 */
 	protected static function getPackageName() {
 		// get package name

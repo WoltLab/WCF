@@ -239,7 +239,7 @@ abstract class PackageUpdateDispatcher {
 		// define default values
 		$packageInfo = array(
 			'packageDescription' => '',
-			'standalone' => 0,
+			'isApplication' => 0,
 			'plugin' => '',
 			'author' => '',
 			'authorURL' => '',
@@ -258,8 +258,8 @@ abstract class PackageUpdateDispatcher {
 					$packageInfo['packageDescription'] = $element->nodeValue;
 				break;
 				
-				case 'standalone':
-					$packageInfo['standalone'] = intval($element->nodeValue);
+				case 'isapplication':
+					$packageInfo['isApplication'] = intval($element->nodeValue);
 				break;
 				
 				case 'plugin':
@@ -396,7 +396,7 @@ abstract class PackageUpdateDispatcher {
 					'packageDescription' => $packageData['packageDescription'],
 					'author' => $packageData['author'],
 					'authorURL' => $packageData['authorURL'],
-					'standalone' => $packageData['standalone'],
+					'isApplication' => $packageData['isApplication'],
 					'plugin' => $packageData['plugin']
 				));
 			}
@@ -409,7 +409,7 @@ abstract class PackageUpdateDispatcher {
 					'packageDescription' => $packageData['packageDescription'],
 					'author' => $packageData['author'],
 					'authorURL' => $packageData['authorURL'],
-					'standalone' => $packageData['standalone'],
+					'isApplication' => $packageData['isapplication'],
 					'plugin' => $packageData['plugin']
 				));
 				
@@ -575,7 +575,7 @@ abstract class PackageUpdateDispatcher {
 		// get existing packages and their versions
 		$existingPackages = array();
 		$sql = "SELECT	packageID, package, instanceNo, packageDescription,
-				packageVersion, packageDate, author, authorURL, standalone,
+				packageVersion, packageDate, author, authorURL, isApplication,
 				CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
 			FROM	wcf".WCF_N."_package";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -636,11 +636,11 @@ abstract class PackageUpdateDispatcher {
 			$updates[$packageID]['version'] = end($updates[$packageID]['versions']);
 		}
 		
-		// remove requirements of standalone packages
+		// remove requirements of application packages
 		if ($removeRequirements) {
 			foreach ($existingPackages as $identifier => $instances) {
 				foreach ($instances as $instance) {
-					if ($instance['standalone'] && isset($updates[$instance['packageID']])) {
+					if ($instance['isApplication'] && isset($updates[$instance['packageID']])) {
 						$updates = self::removeUpdateRequirements($updates, $updates[$instance['packageID']]['version']['servers'][0]['packageUpdateVersionID']);
 					}
 				}

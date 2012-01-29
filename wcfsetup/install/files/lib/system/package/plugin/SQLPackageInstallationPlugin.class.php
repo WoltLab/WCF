@@ -36,8 +36,8 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 				$package = $package->getParentPackage();
 			}
 			
-			if ($package->standalone == 1) {
-				// package is standalone
+			if ($package->isApplication == 1) {
+				// package is application
 				$packageAbbr = Package::getAbbreviation($package->package);
 				$tablePrefix = WCF_N.'_'.$package->instanceNo.'_';
 				

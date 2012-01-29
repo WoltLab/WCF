@@ -11,7 +11,7 @@
 		<item name="wcf.global.thousandsSeparator"><![CDATA[.]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Weiter &raquo;]]></item>
 		<item name="wcf.global.progressBar"><![CDATA[{@$progress}% fertiggestellt]]></item>
-		<item name="wcf.global.welcome"><![CDATA[Vielen Dank, dass Sie sich für {$setupPackageName} entschieden haben]]></item>
+		<item name="wcf.global.welcome"><![CDATA[Vielen Dank, dass Sie sich für {$setupPackageName} entschieden haben!]]></item>
 		<item name="wcf.global.welcome.description"><![CDATA[Dieser Installationsassistent hilft Ihnen bei der Einrichtung von <br /><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} und von <b>{$setupPackageName}</b>{/if}.]]></item>
 		<item name="wcf.global.welcome.language"><![CDATA[Sprache]]></item>
 		<item name="wcf.global.welcome.language.description"><![CDATA[Die Sprache dieses Assistenten ist zur Zeit {@$languageChooser}]]></item>
@@ -39,8 +39,6 @@
 		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[Grafikbearbeitungs-Bibliothek &raquo;gdlib&laquo; ist für die dynamische Generierung von Bildern zuständig. Ohne sie werden einige Funktionalitäten der Software nicht funktionieren.]]></item>
 		<item name="wcf.global.systemRequirements.mbString"><![CDATA[Bibliothek für Zeichen mit mehreren Bytes (&raquo;multibyte string&laquo;)]]></item>
 		<item name="wcf.global.systemRequirements.mbString.description"><![CDATA[Diese Bibliothek ist für den Betrieb der Software zwingend erforderlich.]]></item>
-		<item name="wcf.global.systemRequirements.safeMode"><![CDATA[Sicherheitseinstellung &raquo;safe mode&laquo; in Skriptsprache &raquo;PHP&laquo;]]></item>
-		<item name="wcf.global.systemRequirements.safeMode.description"><![CDATA[Diese Einstellung muss deaktiviert werden, da ansonsten ein einwandfreier Betrieb der Software nicht gewährleistet ist.]]></item>
 		<item name="wcf.global.systemRequirements.active"><![CDATA[aktiviert]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[nicht aktiviert]]></item>
 		<item name="wcf.global.wcfDir"><![CDATA[Installationsverzeichnis wählen]]></item>

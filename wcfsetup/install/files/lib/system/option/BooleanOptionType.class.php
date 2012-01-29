@@ -28,7 +28,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableUserOpt
 			'option' => $option,
 			'value' => $value
 		));
-		return WCF::getTPL()->fetch('optionTypeBoolean');
+		return WCF::getTPL()->fetch('booleanOptionType');
 	}
 	
 	/**

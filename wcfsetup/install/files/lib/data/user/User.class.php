@@ -114,10 +114,10 @@ final class User extends DatabaseObject implements IRouteController {
 			}
 			else {
 				// load storage data
-				UserStorageHandler::getInstance()->loadStorage(array($this->userID), 1);
+				UserStorageHandler::getInstance()->loadStorage(array($this->userID));
 				
 				// get group ids
-				$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'groupIDs', 1);
+				$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'groupIDs');
 				
 				// cache does not exist or is outdated
 				if ($data[$this->userID] === null) {
@@ -155,10 +155,10 @@ final class User extends DatabaseObject implements IRouteController {
 			}
 			else {
 				// load storage data
-				UserStorageHandler::getInstance()->loadStorage(array($this->userID), 1);
+				UserStorageHandler::getInstance()->loadStorage(array($this->userID));
 				
 				// get language ids
-				$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'languageIDs', 1);
+				$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'languageIDs');
 				
 				// cache does not exist or is outdated
 				if ($data[$this->userID] === null) {

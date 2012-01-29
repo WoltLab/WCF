@@ -22,7 +22,7 @@
 <div class="contentHeader">
 	<nav>
 		<ul class="largeButtons">
-			<li><a href="{link controller='UpdateServerList'}{/link}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/server1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li>
+			<li><a href="{link controller='UpdateServerList'}{/link}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/server1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>
@@ -38,7 +38,7 @@
 			<dl{if $errorField == 'serverURL'} class="formError"{/if}>
 				<dt><label for="serverURL">{lang}wcf.acp.updateServer.serverURL{/lang}</label></dt>
 				<dd>
-					<input type="text" id="serverURL" name="serverURL" value="{$serverURL}" class="long" />
+					<input type="url" id="serverURL" name="serverURL" value="{$serverURL}" required="required" class="long" />
 					{if $errorField == 'serverURL'}
 						<small class="innerError">
 							{if $errorType == 'empty'}

@@ -4,7 +4,7 @@
 		<hgroup>
 			<h1>{lang}wcf.acp.package.installation.title{/lang}</h1>
 			<h2 id="packageInstallationAction">{lang}wcf.acp.package.installation.step.prepare{/lang}</span></h2>
-			<p><progress id="packageInstallationProgress" value="0" max="100" style="width: 200px;">0%</progress> <span id="packageInstallationProgressLabel">0%</span></p>
+			<p><progress id="packageInstallationProgress" value="0" max="100">0%</progress> <span id="packageInstallationProgressLabel">0%</span></p>
 		</hgroup>
 	</header>
 	

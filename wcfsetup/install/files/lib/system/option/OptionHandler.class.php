@@ -325,14 +325,9 @@ class OptionHandler implements IOptionHandler {
 	 */
 	protected function getTypeObject($type) {
 		if (!isset($this->typeObjects[$type])) {
-			$className = 'wcf\system\option\\'.ucfirst($type).'OptionType';
-			
-			// validate class
-			if (!class_exists($className)) {
-				throw new SystemException("unable to find class '".$className."'");
-			}
-			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\IOptionType')) {
-				throw new SystemException("'".$className."' should implement wcf\system\option\IOptionType");
+			$className = $this->getClassName($type);
+			if ($className === null) {
+				throw new SystemException("unable to find class for option type '".$type."'");
 			}
 			
 			// create instance
@@ -340,6 +335,26 @@ class OptionHandler implements IOptionHandler {
 		}
 		
 		return $this->typeObjects[$type];
+	}
+	
+	/**
+	 * Returns class name for option type.
+	 * 
+	 * @param	string		$type
+	 * @return	string
+	 */
+	protected function getClassName($type) {
+		$className = 'wcf\system\option\\'.ucfirst($type).'OptionType';
+		
+		// validate class
+		if (!class_exists($className)) {
+			return null;
+		}
+		if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\IOptionType')) {
+			throw new SystemException("'".$className."' should implement wcf\system\option\IOptionType");
+		}
+		
+		return $className;
 	}
 	
 	/**

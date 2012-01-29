@@ -10,7 +10,7 @@
  * ><p><b>Support for PHP is missing.<br />PHP Unterst&uuml;tzung nicht gefunden</b></p> <!--
  * 
  * @author	Marcel Werk
- * @copyright	2001-2007 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 // check php version
@@ -18,6 +18,7 @@
 $phpVersion = phpversion();
 $comparePhpVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $phpVersion);
 $neededPhpVersion = '5.3.0';
+$configArray = @ini_get_all();
 if (!(version_compare($comparePhpVersion, $neededPhpVersion) >= 0)) {
 	?>
 	<p>Your PHP version '<?php echo $phpVersion; ?>' is insufficient for installation of this software. PHP version <?php echo $neededPhpVersion; ?> or greater is required.<br />
@@ -49,7 +50,15 @@ else if (!function_exists('gzopen')) {
 	<?php
 }
 
-// 
+// check safemode
+else if ((is_array($configArray) && !empty($configArray['safe_mode']['local_value'])) || @ini_get('safe_mode')) {
+	?>
+	<p>PHP Safemode is enabled. You must disable it to install this software.<br />
+	Der PHP Safemode ist aktiviert. Für den Betrieb der Software muss der Safemode deaktiviert sein.</p>
+	<?php
+}
+
+// everything is fine
 else {
 	?>
 	<p>PHP <?php echo $neededPhpVersion; ?> or greater is available. You can <a href="install.php">start</a> the installation now.<br />

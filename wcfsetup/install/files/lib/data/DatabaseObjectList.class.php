@@ -172,6 +172,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 			
 			$this->indexToObject[] = $objectID;
 		}
+		$this->objectIDs = $this->indexToObject;
 		$this->objects = $objects;
 	}
 	

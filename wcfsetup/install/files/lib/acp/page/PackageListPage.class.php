@@ -45,7 +45,7 @@ class PackageListPage extends AbstractPage {
 		
 		// read applications
 		$this->applicationList = new PackageList();
-		$this->applicationList->getConditionBuilder()->add("package.standalone = ?", array(1));
+		$this->applicationList->getConditionBuilder()->add("package.isApplication = ?", array(1));
 		$this->applicationList->getConditionBuilder()->add("package.packageID <> ?", array(1));
 		$this->applicationList->sqlLimit = 0;
 		$this->applicationList->readObjects();

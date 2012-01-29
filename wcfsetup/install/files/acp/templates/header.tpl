@@ -65,14 +65,16 @@
 				'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
 				'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
 				'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
-				'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}'
+				'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}',
+				'wcf.global.button.disable': '{lang}wcf.global.button.disable{/lang}',
+				'wcf.global.button.enable': '{lang}wcf.global.button.enable{/lang}'
 			});
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
 			new WCF.Effect.BalloonTooltip();
 			$('<span class="pointer"><span></span></span>').appendTo('.innerError');
 			
-			$('#sidebarMenu').wcfSidebar();
+			$('#sidebarContent').wcfSidebar();
 		});
 		//]]>
 	</script>
@@ -148,7 +150,7 @@
 				<!-- SIDEBAR -->
 				<aside class="sidebar">
 					<!-- sidebar menu -->
-					<nav id="sidebarMenu" class="sidebarMenu">
+					<nav id="sidebarContent" class="sidebarContent">
 						{content}
 							{* work-around for unknown core-object during WCFSetup *}
 							{if PACKAGE_ID}
@@ -156,7 +158,7 @@
 									<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="menuContainer collapsible" data-parent-menu-item="{$parentMenuItem->menuItem}">
 										{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
 											<h1 class="menuHeader" data-menu-item="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</h1>
-											<div class="sidebarMenuGroup">
+											<div class="sidebarContentGroup">
 												<ul id="{$menuItem->menuItem}">
 													{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItem->menuItem) item=menuItemCategory}
 														{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}

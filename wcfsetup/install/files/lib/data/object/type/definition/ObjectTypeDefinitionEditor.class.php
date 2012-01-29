@@ -16,5 +16,5 @@ class ObjectTypeDefinitionEditor extends DatabaseObjectEditor {
 	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
-	public static $baseClass = 'wcf\data\object\type\definition\ObjectTypeDefinition';
+	protected static $baseClass = 'wcf\data\object\type\definition\ObjectTypeDefinition';
 }

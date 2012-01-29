@@ -22,6 +22,6 @@ class TextareaOptionType extends TextOptionType {
 			'option' => $option,
 			'value' => $value
 		));
-		return WCF::getTPL()->fetch('optionTypeTextarea');
+		return WCF::getTPL()->fetch('textareaOptionType');
 	}
 }

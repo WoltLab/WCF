@@ -16,11 +16,11 @@
 <form method="post" action="{link controller='PackageUpdate'}{/link}">
 	{foreach from=$packages item=package}
 		<article class="message content">
-			<div class="messageInner container-{cycle name='styles' values='1,2'}">
+			<div class="messageInner"><!-- ToDo! -->
 				<hgroup class="subHeading">
 					<h1>
-						{if $package.standalone == 1}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageStandalone1.svg" alt="" title="{lang}wcf.acp.package.list.standalone{/lang}" class="balloonTooltip" />
+						{if $package.isApplication == 1}
+							<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" title="{lang}wcf.acp.package.list.isApplication{/lang}" class="balloonTooltip" />
 						{elseif $package.plugin != ''}
 							<img src="{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="balloonTooltip" />
 						{else}

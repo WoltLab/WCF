@@ -44,17 +44,6 @@
 			
 		</fieldset>
 		
-		<fieldset>
-			<legend>{lang}wcf.global.systemRequirements.safeMode{/lang}</legend>
-			<dl>
-				<dt>{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.notActive{/lang}</dt>
-				<dd>
-					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.safeMode.result}badgeWarning{else}badgeSuccess{/if}">{if !$system.safeMode.result}{lang}wcf.global.systemRequirements.active{/lang}{else}{lang}wcf.global.systemRequirements.notActive{/lang}{/if}</span>
-					{if !$system.safeMode.result}<small>{lang}wcf.global.systemRequirements.safeMode.description{/lang}</small>{/if}
-				</dd>
-			</dl>
-		</fieldset>
-		
 </fieldset>
 
 <fieldset>
@@ -86,7 +75,7 @@
 
 <form method="post" action="install.php">	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result || !$system.mbString.result || !$system.safeMode.result} disabled="disabled"{/if} accesskey="s"/>
+		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result || !$system.mbString.result} disabled="disabled"{/if} accesskey="s"/>
 		<input type="hidden" name="step" value="{@$nextStep}" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
 		<input type="hidden" name="languageCode" value="{@$languageCode}" />

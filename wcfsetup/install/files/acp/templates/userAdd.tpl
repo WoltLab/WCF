@@ -30,8 +30,8 @@
 <div class="contentHeader">
 	<nav>
 		<ul class="largeButtons">
-			<li><a href="{link controller='UserList'}{/link}" title="{lang}wcf.acp.menu.link.user.list{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
-			<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}"><img src="{@RELATIVE_WCF_DIR}icon/search1.svg" alt="" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
+			<li><a href="{link controller='UserList'}{/link}" title="{lang}wcf.acp.menu.link.user.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/search1.svg" alt="" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>
@@ -43,7 +43,7 @@
 		<dl{if $errorType.username|isset} class="formError"{/if}>
 			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 			<dd>
-				<input type="text" id="username" name="username" value="{$username}" class="medium" />
+				<input type="text" id="username" name="username" value="{$username}" pattern="^[^,\n]+$" autofocus="autofocus" class="medium" />
 				{if $errorType.username|isset}
 					<small class="innerError">
 						{if $errorType.username == 'empty'}
@@ -82,7 +82,7 @@
 				<dl{if $errorType.email|isset} class="formError"{/if}>
 					<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
 					<dd>	
-						<input type="email" id="email" name="email" value="{$email}" class="medium" />
+						<input type="email" id="email" name="email" value="{$email}" required="required" class="medium" />
 						{if $errorType.email|isset}
 							<small class="innerError">
 								{if $errorType.email == 'empty'}
@@ -98,7 +98,7 @@
 				<dl{if $errorType.confirmEmail|isset} class="formError"{/if}>
 					<dt><label for="confirmEmail">{lang}wcf.user.confirmEmail{/lang}</label></dt>
 					<dd>
-						<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium" />
+						<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" required="required" class="medium" />
 						{if $errorType.confirmEmail|isset}
 							<small class="innerError">
 								{lang}wcf.user.confirmEmail.error.{@$errorType.confirmEmail}{/lang}
@@ -116,7 +116,7 @@
 				<dl{if $errorType.password|isset} class="formError"{/if}>
 					<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 					<dd>
-						<input type="password" id="password" name="password" value="{$password}" class="medium" />
+						<input type="password" id="password" name="password" value="{$password}"{if $action == 'add'} required="required"{/if} class="medium" />
 						{if $errorType.password|isset}
 							<small class="innerError">
 								{if $errorType.password == 'empty'}
@@ -132,7 +132,7 @@
 				<dl{if $errorType.confirmPassword|isset} class="formError"{/if}>
 					<dt><label for="confirmPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
 					<dd>
-						<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" />
+						<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}"{if $action == 'add'} required="required"{/if} class="medium" />
 						{if $errorType.confirmPassword|isset}
 							<small class="innerError">
 								{lang}wcf.user.confirmPassword.error.{@$errorType.confirmPassword}{/lang}
