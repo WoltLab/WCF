@@ -19,7 +19,7 @@ class InlineCalendar {
 		// create calendar data
 		$dayOptions = array(0 => '');
 		$hourOptions = $minuteOptions = array('' => '');
-		$monthList = $weekdayList = '';
+		$weekdayList = '';
 		$weekdays = $monthOptions = array();
 		
 		// days
