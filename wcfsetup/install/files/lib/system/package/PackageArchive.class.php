@@ -484,27 +484,44 @@ class PackageArchive {
 	}
 	
 	/**
-	 * checks if the current package is already installed
+	 * Checks if the current package is already installed, as it is not
+	 * possible to install non-applications multiple times within the
+	 * same environment.
 	 * 
-	 * if the package is not a unique package, this method
-	 * returns false, because a non-unique package may be
-	 * installed as many times as one wants while a unique 
-	 * package can only be installed once.
-	 *
-	 * @return 	boolean 	isAlreadyInstalled
-	 * @todo	FIX THIS (isUnique is deprecated)
+	 * @return	boolean
 	 */
 	public function isAlreadyInstalled() {
-		// is not a unique package and can be
-		// installed as many times as you want
-		//if ($this->packageInfo['isUnique'] == 0) {
-		//	return false;
-		//}
-		// this package may only be installed
-		// once (e. g. library package)
-		//else {
-			return (count($this->getDuplicates()) != 0);
-		//}
+		$duplicates = $this->getDuplicates();
+		
+		// package is not installed
+		if (empty($duplicates)) {
+			return false;
+		}
+		
+		$parentPackageIDs = array();
+		foreach ($duplicates as $package) {
+			// standalones are always allowed
+			if ($package['standalone']) {
+				return false;
+			}
+			
+			// wcf packages must be unique
+			if (!$package['parentPackageID']) {
+				return true;
+			}
+			
+			$parentPackageIDs[] = $package['parentPackageID'];
+		}
+		
+		// determine if plugin is unique within current application
+		$packageIDs = PackageDependencyHandler::getDependencies();
+		foreach ($parentPackageIDs as $packageID) {
+			if (in_array($packageID, $packageIDs)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
