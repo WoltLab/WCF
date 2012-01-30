@@ -3,9 +3,9 @@ namespace wcf\action;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\ValidateActionException;
-use wcf\util\StringUtil;
 use wcf\util\ClassUtil;
 use wcf\util\JSON;
+use wcf\util\StringUtil;
 
 /**
  * Clipboard proxy implementation.

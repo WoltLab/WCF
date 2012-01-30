@@ -1,12 +1,12 @@
 <?php
 namespace wcf\system\language;
+use wcf\data\DatabaseObject;
 use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
-use wcf\data\DatabaseObject;
-use wcf\system\cache\CacheHandler;
-use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\system\cache\CacheHandler;
+use wcf\system\template\TemplateScriptingCompiler;
 use wcf\util\StringUtil;
 
 /**

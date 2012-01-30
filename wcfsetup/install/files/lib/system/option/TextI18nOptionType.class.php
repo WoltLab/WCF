@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
+use wcf\system\WCF;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
-use wcf\system\WCF;
 
 /**
  * TextI18nOptionType is an implementation of IOptionType for 'input type="text"' tags with i18n support.

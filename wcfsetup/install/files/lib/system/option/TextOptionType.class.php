@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
+use wcf\system\WCF;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\option\OptionType;  // TODO: undefined class
 use wcf\system\option\SearchableUserOption; // TODO: undefined class
-use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**

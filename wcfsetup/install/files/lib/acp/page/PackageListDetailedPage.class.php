@@ -1,9 +1,9 @@
 <?php
 namespace wcf\acp\page;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\data\package\PackageList;
 use wcf\page\SortablePage;
 use wcf\system\WCF;
+use wcf\system\menu\acp\ACPMenu;
 
 /**
  * Shows a list of all installed packages.

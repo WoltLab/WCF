@@ -1,10 +1,10 @@
 <?php
 namespace wcf\acp\page;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\data\acp\session\log\ACPSessionLog;
 use wcf\page\SortablePage;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
+use wcf\system\exception\IllegalLinkException;
+use wcf\system\menu\acp\ACPMenu;
 
 /**
  * Shows the details of a logged sessions.

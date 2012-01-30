@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\package;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
-use wcf\system\package\PackageUninstallationDispatcher;
 use wcf\system\WCF;
+use wcf\system\package\PackageUninstallationDispatcher;
 
 /**
  * PackageUninstallationNodeBuilder creates a logical node-based uninstallation tree.

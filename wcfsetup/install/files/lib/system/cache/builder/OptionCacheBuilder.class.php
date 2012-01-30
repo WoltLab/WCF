@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\data\option\category\OptionCategory;
 use wcf\system\WCF;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 
 /**
  * Caches the options and option categories

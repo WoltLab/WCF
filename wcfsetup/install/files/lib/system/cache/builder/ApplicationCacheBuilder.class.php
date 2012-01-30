@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\data\application\group\ApplicationGroup;
 use wcf\data\application;
+use wcf\data\application\group\ApplicationGroup;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
 use wcf\system\WCF;

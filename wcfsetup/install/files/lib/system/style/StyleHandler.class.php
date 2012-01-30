@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\style;
 use wcf\data\style\ActiveStyle;
-use wcf\system\cache\CacheHandler;
-use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\system\cache\CacheHandler;
+use wcf\system\exception\SystemException;
 
 /**
  * Handles style-related actions.

@@ -1,8 +1,8 @@
 <?php
 namespace wcf\action;
+use wcf\system\WCF;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\WCF;
 
 /**
  * This class provides default implementations for the Action interface.

@@ -1,8 +1,8 @@
 <?php
 namespace wcf\action;
-use wcf\util\StringUtil;
 use wcf\util\ArrayUtil;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Abstract handler for object-actions using the AJAX-API.

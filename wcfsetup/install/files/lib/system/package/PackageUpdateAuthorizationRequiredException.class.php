@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\package;
-use wcf\system\exception\UserException;
 use wcf\acp\form\PackageUpdateAuthForm;
+use wcf\system\exception\UserException;
 
 /**
  * A PackageUpdateAuthorizationRequiredException is thrown when a package update server requires a user authorization.

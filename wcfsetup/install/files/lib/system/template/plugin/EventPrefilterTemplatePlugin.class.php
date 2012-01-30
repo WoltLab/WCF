@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\WCF;
+use wcf\system\template\TemplateScriptingCompiler;
 
 /**
  * The 'event' prefilter inserts template listener's code before compilation.

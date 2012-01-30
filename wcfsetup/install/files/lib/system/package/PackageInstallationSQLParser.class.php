@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\package;
 use wcf\data\package\Package;
+use wcf\system\WCF;
 use wcf\system\database\util\SQLParser;
 use wcf\system\exception\SystemException;
-use wcf\system\WCF;
 
 /**
  * PackageInstallationSQLParser extends SQLParser by testing and logging functions.

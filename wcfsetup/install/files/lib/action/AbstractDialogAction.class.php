@@ -1,9 +1,9 @@
 <?php
 namespace wcf\action;
 use wcf\system\exception\AJAXException;
+use wcf\system\exception\IllegalLinkException;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
-use wcf\system\exception\IllegalLinkException;
 
 /**
  * Abstract implementation of an action that displays a dialog and that is executed

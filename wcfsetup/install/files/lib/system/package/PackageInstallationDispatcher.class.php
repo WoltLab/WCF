@@ -1,27 +1,27 @@
 <?php
 namespace wcf\system\package;
-use wcf\system\menu\acp\ACPMenu;
+use SplitNodeException; // TODO: undefined class
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\language\LanguageEditor;
 use wcf\data\option\OptionEditor;
-use wcf\data\package\installation\queue\PackageInstallationQueue;
-use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
+use wcf\data\package\installation\queue\PackageInstallationQueue;
+use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
+use wcf\system\WCF;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\form;
 use wcf\system\form\container;
 use wcf\system\form\element;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
-use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
-use SplitNodeException; // TODO: undefined class
 
 /**
  * PackageInstallationDispatcher handles the whole installation process.

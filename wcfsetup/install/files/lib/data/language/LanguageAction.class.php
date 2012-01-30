@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\language;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\ValidateActionException;
 
 /**
  * Executes language-related actions.

@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\template;
 use wcf\data\DatabaseObject;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 

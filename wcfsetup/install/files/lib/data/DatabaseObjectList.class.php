@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data;
+use wcf\system\WCF;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
-use wcf\system\WCF;
 
 /**
  * Abstract class for a list of database objects.

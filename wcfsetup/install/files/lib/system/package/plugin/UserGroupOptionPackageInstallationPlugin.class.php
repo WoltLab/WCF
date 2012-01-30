@@ -1,11 +1,11 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\option\UserGroupOptionEditor;
-use wcf\data\user\group\UserGroup;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 use wcf\system\exception\SystemException;
+use wcf\util\StringUtil;
 
 /**
  * This PIP installs, updates or deletes user group permissions.

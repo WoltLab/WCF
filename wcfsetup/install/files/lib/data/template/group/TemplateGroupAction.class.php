@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\template\group;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
+use wcf\system\exception\ValidateActionException;
 
 /**
  * Executes template group-related actions.

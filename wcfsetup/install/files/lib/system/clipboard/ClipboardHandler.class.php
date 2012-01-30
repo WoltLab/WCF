@@ -1,11 +1,11 @@
 <?php
 namespace wcf\system\clipboard;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
-use wcf\system\SingletonFactory;
-use wcf\system\WCF;
 use wcf\util\ClassUtil;
 
 /**

@@ -2,12 +2,12 @@
 namespace wcf\acp\form;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerEditor;
-use wcf\system\package\PackageUpdateAuthorizationRequiredException;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\package\PackageUpdateAuthorizationRequiredException;
 use wcf\system\request\RequestHandler;
 use wcf\util\ArrayUtil;
+use wcf\util\StringUtil;
 
 /**
  * Shows the package update authentification form.

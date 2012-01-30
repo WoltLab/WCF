@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\package;
-use wcf\system\cache\CacheHandler;
 use wcf\system\SingletonFactory;
+use wcf\system\cache\CacheHandler;
 
 /**
  * Manages the package cache.

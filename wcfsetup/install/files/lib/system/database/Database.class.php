@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\database;
-use wcf\system\database\statement\PreparedStatement;
 use wcf\data\DatabaseObject;
+use wcf\system\database\statement\PreparedStatement;
 use wcf\system\exception\SystemException;
 
 /**

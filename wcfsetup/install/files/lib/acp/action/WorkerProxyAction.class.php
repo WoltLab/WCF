@@ -1,9 +1,9 @@
 <?php
 namespace wcf\acp\action;
 use wcf\action\AbstractSecureAction;
+use wcf\system\WCF;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\SystemException;
-use wcf\system\WCF;
 use wcf\util\ClassUtil;
 use wcf\util\JSON;
 

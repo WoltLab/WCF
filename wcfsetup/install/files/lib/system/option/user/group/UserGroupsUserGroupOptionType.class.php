@@ -2,10 +2,10 @@
 namespace wcf\system\option\user\Group;
 use wcf\data\option\Option;
 use wcf\data\user\group\UserGroup;
+use wcf\system\exception\UserInputException;
 use wcf\system\option\AbstractOptionType;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
-use wcf\system\exception\UserInputException;
 
 /**
  * UserGroupsUserGroupOptionType generates a select-list of all available user groups.

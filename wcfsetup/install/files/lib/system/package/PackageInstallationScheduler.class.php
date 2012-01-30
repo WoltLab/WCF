@@ -1,12 +1,12 @@
 <?php
 namespace wcf\system\package;
-use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\Package;
+use wcf\data\package\update\server\PackageUpdateServer;
+use wcf\system\WCF;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
-use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\system\io\File;
+use wcf\util\FileUtil;
 
 /**
  * Contains business logic related to preparation of package installations.

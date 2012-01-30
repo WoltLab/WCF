@@ -1,8 +1,8 @@
 <?php
 namespace wcf\page\util;
 use wcf\data\language\Language;
-use wcf\util\DateUtil;
 use wcf\system\WCF;
+use wcf\util\DateUtil;
 
 /**
  * Assigns default variables for the usage of the inline (javascript) calendar.

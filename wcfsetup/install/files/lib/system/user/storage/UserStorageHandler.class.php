@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\user\storage;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\package\PackageDependencyHandler;
 
 /**
  * Handles the persistent user data storage.
