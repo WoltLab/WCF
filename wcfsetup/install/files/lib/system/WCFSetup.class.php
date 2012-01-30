@@ -436,7 +436,6 @@ class WCFSetup extends WCF {
 	 */
 	protected function selectLanguages() {
 		$errorField = $errorType = '';
-		$illegalLanguages = array();
 		
 		// skip step in developer mode
 		// select all available languages automatically

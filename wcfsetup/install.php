@@ -295,7 +295,6 @@ class Tar {
 	 * @param 	string 		$archiveName
 	 */
 	public function __construct($archiveName) {
-		$match = array();
 		if (!is_file($archiveName)) {
 			throw new SystemException("unable to find tar archive '".$archiveName."'");
 		}

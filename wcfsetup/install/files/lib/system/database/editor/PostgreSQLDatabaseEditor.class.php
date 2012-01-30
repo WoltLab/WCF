@@ -237,7 +237,6 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 			$indexName = $tableName.'_'.$indexName.'_key';
 		}
 		
-		$sql = '';
 		if ($indexData['type'] == 'FULLTEXT') {
 			$sql = "CREATE INDEX ".$indexName." ON ".$tableName." USING gin(to_tsvector('english', \"".implode('" || \' \' || "', $columns)."\"))";
 		}

@@ -223,7 +223,6 @@ class PackageInstallationSQLParser extends SQLParser {
 			WHERE		packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->package->packageID));
-		$packages = array();
 		while ($row = $statement->fetchArray()) {
 			$this->dependentPackageIDs[] = $row['dependency'];
 		}

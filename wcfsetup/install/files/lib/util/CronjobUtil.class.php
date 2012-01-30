@@ -140,8 +140,7 @@ abstract class CronjobUtil {
 	 * @param	array		$values
 	 */
 	protected static function calculateTime(array &$values) {
-		$timestamp = false;
-		
+
 		// calculation starts with month, thus start with
 		// month of $time (if within values)
 		$currentMonth = date('n', self::$timeBase);

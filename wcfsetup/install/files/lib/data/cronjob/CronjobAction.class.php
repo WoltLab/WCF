@@ -96,7 +96,7 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 	 * Executes cronjobs.
 	 */
 	public function execute() {
-		$cronjob = $return = array();
+		$return = array();
 		
 		foreach ($this->objects as $key => $cronjob) {
 			// skip jobs that are already being processed

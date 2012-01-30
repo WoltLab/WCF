@@ -507,14 +507,12 @@ class FileUtil {
 			}
 			
 			// put the bytestream's first three bytes to an array.
-			$workArray = array();
 			$workArray = unpack('C3', $sourceContent);
 			if (!is_array($workArray)) {
 				throw new SystemException("Unable to process bytestream.");
 			}
 			
 			// detect the UTF-8 BOM.
-			$destinationContent = '';
 			if (($workArray['1'] == $firstByte) && ($workArray['2'] == $secondByte) && ($workArray['3'] == $thirdByte)) {
 				$tmpname = FileUtil::getTemporaryFilename('stripBoms_');
 				$tmpStream = fopen($tmpname, 'w+');

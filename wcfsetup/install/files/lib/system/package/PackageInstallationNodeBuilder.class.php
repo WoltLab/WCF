@@ -408,7 +408,6 @@ class PackageInstallationNodeBuilder {
 	 * @return	string
 	 */
 	protected function buildRequirementNodes() {
-		$packageNodes = array();
 		$queue = $this->installation->queue;
 		
 		// handle requirements
