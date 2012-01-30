@@ -146,21 +146,21 @@ abstract class DatabaseObject implements IStorableObject {
 	 */
 	public static function sort(&$objects, $sortBy, $sortOrder = 'ASC', $maintainIndexAssociation = true) {
 		$sortArray = $objects2 = array();
-		foreach($objects as $idx => $obj) {
+		foreach ($objects as $idx => $obj) {
 			$sortArray[$idx] = $obj->$sortBy;
 
 			// array_multisort will drop index association if key is not a string
-			if($maintainIndexAssociation) {
+			if ($maintainIndexAssociation) {
 				$objects2[$idx."x"] = $obj;
 			}
 		}
 
-		if($maintainIndexAssociation) {
+		if ($maintainIndexAssociation) {
 			$objects = array();
 			array_multisort($sortArray, $sortOrder == 'ASC' ? SORT_ASC : SORT_DESC, $objects2);
 
 			$objects = array();
-			foreach($objects2 as $idx => $obj) {
+			foreach ($objects2 as $idx => $obj) {
 				$objects[substr($idx, 0, -1)] = $obj;
 			}
 		} else {
