@@ -409,7 +409,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	 */
 	protected function executeDropIndexStatement($tableName, $indexName) {
 		if ($this->test) {
-			if ($ownerPackageID = $this->getIndexOwnerID($tableName, $columnName)) {
+			if ($ownerPackageID = $this->getIndexOwnerID($tableName, $columnName)) { //TODO: undefined variable
 				if ($ownerPackageID != $this->package->packageID) {
 					throw new SystemException("Can not drop index '.$indexName.'. A package can only drop own indices.");
 				}
