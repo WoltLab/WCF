@@ -1683,6 +1683,10 @@ WCF.Language = {
 			// evaluate templates
 			value = value.fetch(parameters);
 		}
+		else if (value === null) {
+			// return key again
+			return key;
+		}
 		
 		return value;
 	}
