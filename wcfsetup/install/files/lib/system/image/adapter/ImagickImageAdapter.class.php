@@ -94,7 +94,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	 * @see	wcf\system\image\adapter\IImageAdapter::resize()
 	 */
 	public function resize($originX, $originY, $originWidth, $originHeight, $targetX, $targetY, $targetWidth, $targetHeight) {
-		// TODO: Implement resize() method.
+		throw new \Exception("resize() method not implemented yet."); // TODO: Implement resize() method.
 	}
 	
 	/**
