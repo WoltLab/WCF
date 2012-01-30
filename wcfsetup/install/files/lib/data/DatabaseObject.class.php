@@ -135,7 +135,7 @@ abstract class DatabaseObject implements IStorableObject {
 	public static function getDatabaseTableIndexName() {
 		return static::$databaseTableIndexName;
 	}
-	
+
 	/**
 	 * Sorts a list of database objects.
 	 *
@@ -145,51 +145,26 @@ abstract class DatabaseObject implements IStorableObject {
 	 * @return	boolean
 	 */
 	public static function sort(&$objects, $sortBy, $sortOrder = 'ASC', $maintainIndexAssociation = true) {
-		static::$sortBy = (!is_array($sortBy) ? array($sortBy) : $sortBy);
-		static::$sortOrder = (!is_array($sortOrder) ? array($sortOrder) : $sortOrder);
+		$sortArray = $objects2 = array();
+		foreach ($objects as $idx => $obj) {
+			$sortArray[$idx] = $obj->$sortBy;
+
+			// array_multisort will drop index association if key is not a string
+			if ($maintainIndexAssociation) {
+				$objects2[$idx."x"] = $obj;
+			}
+		}
 
 		if ($maintainIndexAssociation) {
-			return uasort($objects, array('static', 'compareObjects'));
-		}
-		else {
-			return usort($objects, array('static', 'compareObjects'));
-		}
-	}
-	
-	/**
-	 * Compares two database objects.
-	 *
-	 * @param	wcf\data\DatabaseObject		$objectA
-	 * @param	wcf\data\DatabaseObject		$objectB
-	 * @return	float
-	 */
-	protected static function compareObjects($objectA, $objectB) {
-		foreach (static::$sortBy as $key => $sortBy) {
-			$sortOrder = (isset(static::$sortOrder[$key]) ? static::$sortOrder[$key] : 'ASC');
-			$valA = $objectA->$sortBy;
-			$valB = $objectB->$sortBy;
-			if (is_numeric($valA) && is_numeric($valB)) {
-				if ($valA > $valB) {
-					return ($sortOrder == 'ASC' ? 1 : 0);
-				}
-				else if ($valA < $valB) {
-					return ($sortOrder == 'ASC' ? 0 : 1);
-				}
+			$objects = array();
+			array_multisort($sortArray, $sortOrder == 'ASC' ? SORT_ASC : SORT_DESC, $objects2);
+
+			$objects = array();
+			foreach ($objects2 as $idx => $obj) {
+				$objects[substr($idx, 0, -1)] = $obj;
 			}
-			else {
-				if ($sortOrder == 'ASC') {
-					$result =  strcoll($valA, $valB);
-				}
-				else {
-					$result = strcoll($valB, $valA);
-				}
-				
-				if ($result != 0.0) {
-					return $result;
-				}
-			}
+		} else {
+			array_multisort($sortArray, $sortOrder == 'ASC' ? SORT_ASC : SORT_DESC, $objects);
 		}
-		
-		return 0;
 	}
 }
