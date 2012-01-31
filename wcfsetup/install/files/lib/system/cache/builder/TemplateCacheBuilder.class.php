@@ -29,14 +29,6 @@ class TemplateCacheBuilder implements ICacheBuilder {
 		
 		$data = array();
 		
-		// get package directory for given package id
-		$sql = "SELECT	packageDir
-			FROM	wcf".WCF_N."_package
-			WHERE	packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
-		$row = $statement->fetchArray();
-		
 		// get all templates and filter options with low priority
 		$sql = "SELECT		templateName, template.packageID 
 			FROM		wcf".WCF_N."_".$prefix."template template

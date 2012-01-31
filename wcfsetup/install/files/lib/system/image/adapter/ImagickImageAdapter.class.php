@@ -76,8 +76,6 @@ class ImagickImageAdapter implements IImageAdapter {
 	 */
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
 		$thumbnail = $this->imagick;
-		
-		$thumbnail = $this->imagick;
 		$thumbnail->cropThumbnailImage($maxWidth, $maxHeight);
 		
 		return $thumbnail;
@@ -89,11 +87,18 @@ class ImagickImageAdapter implements IImageAdapter {
 	public function clip($originX, $originY, $width, $height) {
 		$this->imagick->cropImage($width, $height, $originX, $originY);
 	}
+
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::resize()
+	 */
+	public function resize($originX, $originY, $originWidth, $originHeight, $targetX, $targetY, $targetWidth, $targetHeight) {
+		throw new \Exception("resize() method not implemented yet."); // TODO: Implement resize() method.
+	}
 	
 	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::drawRectangle()
 	 */
-	public function drawRectangle($startX, $startY, $endX, $endY, $color) {
+	public function drawRectangle($startX, $startY, $endX, $endY) {
 		$draw = new \ImagickDraw();
 		$draw->setFillColor($this->color);
 		$draw->setStrokeColor($this->color);
@@ -105,7 +110,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::drawText()
 	 */
-	public function drawText($string, $x, $y, $color, $font = 4) {
+	public function drawText($string, $x, $y) {
 		$draw = new \ImagickDraw();
 		$draw->setFillColor($this->color);
 		$draw->setTextAntialias(true);
