@@ -385,11 +385,7 @@ class WCF {
 	}
 	
 	/**
-	 * Initialises applications.
-	 *
-	 * @todo	Determine all required applications as such connected
-	 * 		with each other. Ensure all applications implement the
-	 * 		'Application' interface.
+	 * Initializes applications.
 	 */
 	protected function initApplications() {
 		if (PACKAGE_ID == 1) return;
@@ -435,8 +431,16 @@ class WCF {
 			}
 		}
 		else {
+			// get package name for better readability
+			$sql = "SELECT	package
+				FROM	wcf".WCF_N."_package
+				WHERE	packageID = ?";
+			$statement = self::getDB()->prepareStatement($sql);
+			$statement->execute(array($application->packageID));
+			$row = $statement->fetchArray();
+			
 			unset(self::$autoloadDirectories[$abbreviation]);
-			throw new exception\SystemException('Unable to run '.$row->package.', '.$className.' missing.'); //TODO: undefined variable
+			throw new exception\SystemException("Unable to run '".$row['package']."', '".$className."' is missing or does not implement 'wcf\system\application\IApplication'.");
 		}
 		
 		// load application settings if not within ACP

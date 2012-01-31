@@ -286,7 +286,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	 * @see wcf\system\database\editor\DatabaseEditor::dropForeignKey()
 	 */
 	public function dropForeignKey($tableName, $indexName) {
-		// TODO: implement this function
+		// TODO: Could it be, that this method is not required because Postgre is clever enough to delete references anyway?
 	}
 	
 	/**

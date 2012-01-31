@@ -25,8 +25,7 @@ class UserOptionCategory extends DatabaseObject {
 	protected static $databaseTableIndexName = 'categoryID';
 	
 	/**
-	 * @todo	Methode so beibehalten und effektiv DatabaseObject::__construct() klonen
-	 * 		oder generell so etwas mit einem zusätzlichen Query abfragen?
+	 * @see	wcf\data\DatabaseObject::__construct()
 	 */
 	public function __construct($categoryID, $row = null, UserOptionCategory $category = null) {
 		if ($categoryID !== null) {

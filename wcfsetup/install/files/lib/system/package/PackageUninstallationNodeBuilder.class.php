@@ -6,8 +6,6 @@ use wcf\system\WCF;
 
 /**
  * PackageUninstallationNodeBuilder creates a logical node-based uninstallation tree.
- *
- * @todo	Change to use Prepared Statements, see line 42
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH

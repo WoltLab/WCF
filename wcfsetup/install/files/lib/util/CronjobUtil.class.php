@@ -483,8 +483,6 @@ abstract class CronjobUtil {
 	 * @param	string		$startDom
 	 * @param	string		$startMonth
 	 * @param	string		$startDow
-	 * 
-	 * @todo	Move code to seperate class, e.g. CronjobUtil
 	 */
 	public static function validate($startMinute, $startHour, $startDom, $startMonth, $startDow) {
 		self::validateAttribute('startMinute', $startMinute);
@@ -499,7 +497,6 @@ abstract class CronjobUtil {
 	 * 
 	 * @param	string		$name
 	 * @param	string		$value
-	 * @todo	Move code to seperate class, e.g. CronjobUtil
 	 */
 	protected static function validateAttribute($name, $value) {
 		if ($value === '') {
