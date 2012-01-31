@@ -178,7 +178,7 @@ class PackageInstallationScheduler {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
-				if (!isset($installedPackages[$row2['package']])) $installedPackages[$row2['package']] = array();
+				if (!isset($installedPackages[$row2['package']])) $installedPackages[$row2['package']] = array(); //TODO: undefined variable
 				$installedPackages[$row2['package']][$row2['packageID']] = (isset($this->virtualPackageVersions[$row2['packageID']]) ? $this->virtualPackageVersions[$row2['packageID']] : $row2['packageVersion']);
 			}
 			

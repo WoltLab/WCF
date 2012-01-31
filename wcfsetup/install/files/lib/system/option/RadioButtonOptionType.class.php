@@ -69,7 +69,7 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableUse
 	 * @see wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
-		return $this->getFormElement($optionData, $value);
+		return $this->getFormElement($optionData, $value); //TODO: undefined variable
 	}
 	
 	/**

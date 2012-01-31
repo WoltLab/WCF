@@ -269,7 +269,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				$statement->execute(array($templateGroupName));
 				$row = $statement->fetchArray();
 				if (!$row['count']) break;
-				$templateGroupName = $originalTemplatePackName . '_' . $i;
+				$templateGroupName = $originalTemplatePackName . '_' . $i; //TODO: undefined variable
 				$i++;
 			}
 			while (true);
