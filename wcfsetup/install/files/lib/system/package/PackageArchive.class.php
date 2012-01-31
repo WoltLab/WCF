@@ -427,7 +427,6 @@ class PackageArchive {
 	 * @return	string		path to the dowloaded file
 	 */
 	public function downloadArchive() {
-		$parsedUrl = parse_url($this->archive);
 		$prefix = 'package';
 		
 		// file transfer via hypertext transfer protocol.

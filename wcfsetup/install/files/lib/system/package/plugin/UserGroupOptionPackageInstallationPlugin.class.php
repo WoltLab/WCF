@@ -101,9 +101,6 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		);
 		
 		if (!empty($row['optionID'])) {
-			// update existing option
-			$optionID = $row['optionID'];
-			
 			$groupOption = new UserGroupOption(null, $row);
 			$groupOptionEditor = new UserGroupOptionEditor($groupOption);
 			$groupOptionEditor->update($data);

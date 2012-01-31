@@ -138,7 +138,7 @@ class CacheListPage extends AbstractPage {
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
-			$pattern = array();
+
 			$packageNames = array();
 			while ($row = $statement->fetchArray()) {
 				$packagePath = FileUtil::getRealPath(WCF_DIR.$row['packageDir']).'cache/';

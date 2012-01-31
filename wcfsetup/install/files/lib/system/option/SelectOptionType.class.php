@@ -52,7 +52,7 @@ class SelectOptionType extends RadioButtonOptionType {
 			$options = $option->parseMultipleEnableOptions();
 			
 			foreach ($options as $key => $optionData) {
-				$tmp = explode(',', $optionData);
+				$tmp = explode(',', $optionData); // TODO: is either optionData an array or tmp?
 				
 				foreach ($optionData as $item) {
 					if ($item{0} == '!') {

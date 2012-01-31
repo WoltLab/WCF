@@ -256,7 +256,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		// create template group
 		$templateGroupID = 0;
 		if (!empty($data['templates'])) {
-			$originalTemplateGroupName = $templateGroupName = $data['name'];
+			$templateGroupName = $data['name'];
 			$templateGroupFolderName = preg_replace('/[^a-z0-9_-]/i', '', $templateGroupName);
 			if (empty($templateGroupFolderName)) $templateGroupFolderName = 'generic'.StringUtil::substring(StringUtil::getRandomID(), 0, 8);
 			$originalTemplatePackFolderName = $templateGroupFolderName;

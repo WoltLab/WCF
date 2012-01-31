@@ -138,7 +138,7 @@ class StyleAttributePackageInstallationPlugin extends AbstractXMLPackageInstalla
 		
 		foreach ($styleList->getObjects() as $style) {
 			$styleEditor = new StyleEditor($style);
-			$style->writeStyleFile();
+			$styleEditor->writeStyleFile();
 		}
 	}
 }
