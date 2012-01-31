@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\package;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 
 /**
  * FilesFileHandler is a FileHandler implementation for the installation of regular files.

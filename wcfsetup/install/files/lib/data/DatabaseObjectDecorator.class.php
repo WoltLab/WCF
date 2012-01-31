@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data;
-use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\system\exception\SystemException;
 
 /**
  * Basic implementation for object decorators.

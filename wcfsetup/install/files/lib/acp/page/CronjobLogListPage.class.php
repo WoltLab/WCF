@@ -1,9 +1,9 @@
 <?php
 namespace wcf\acp\page;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\page\SortablePage;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
+use wcf\system\menu\acp\ACPMenu;
+use wcf\system\package\PackageDependencyHandler;
 
 /**
  * Shows cronjob log information.

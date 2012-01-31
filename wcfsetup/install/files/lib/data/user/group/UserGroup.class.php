@@ -1,10 +1,10 @@
 <?php
 namespace wcf\data\user\group;
 use wcf\data\DatabaseObject;
+use wcf\system\WCF;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
-use wcf\system\WCF;
 
 /**
  * Represents a user group.

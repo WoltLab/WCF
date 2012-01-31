@@ -1,11 +1,11 @@
 <?php
 namespace wcf\acp\form;
+use wcf\system\WCF;
+use wcf\system\WCFACP;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
-use wcf\system\WCFACP;
 use wcf\util\HeaderUtil;
 
 /**

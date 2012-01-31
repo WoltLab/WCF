@@ -1,7 +1,7 @@
 <?php
 namespace wcf\form;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
+use wcf\system\exception\IllegalLinkException;
 
 /**
  * Extends AbstractForm by a function to validate a given security token.

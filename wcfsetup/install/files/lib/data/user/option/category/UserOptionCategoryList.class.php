@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\user\option\category;
 use wcf\data\DatabaseObjectList;
-use wcf\system\database\util\ConditionBuilder;
 use wcf\system\WCF;
+use wcf\system\database\util\ConditionBuilder;
 
 /**
  * Represents an list of user option categories.

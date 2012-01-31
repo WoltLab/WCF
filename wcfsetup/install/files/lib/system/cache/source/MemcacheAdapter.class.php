@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\cache\source;
-use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
+use wcf\system\exception\SystemException;
 use wcf\util\StringUtil;
 
 /**

@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\menu\acp;
-use wcf\system\menu\TreeMenu;
 use wcf\system\cache\CacheHandler;
+use wcf\system\menu\TreeMenu;
 
 /**
  * Builds the acp menu.

@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\option\user;
-use wcf\data\user\option\UserOption;
 use wcf\data\user\User;
+use wcf\data\user\option\UserOption;
 
 /**
  * Any user option output class should implement this interface.

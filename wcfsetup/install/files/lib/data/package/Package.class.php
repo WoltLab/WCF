@@ -1,11 +1,11 @@
 <?php
 namespace wcf\data\package;
 use wcf\data\DatabaseObject;
+use wcf\system\WCF;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\package\PackageDependencyHandler;
-use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 

@@ -4,10 +4,10 @@ use wcf\action\AbstractDialogAction;
 use wcf\data\package\Package;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
+use wcf\system\WCF;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\package\PackageUninstallationDispatcher;
-use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**

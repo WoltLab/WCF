@@ -1,18 +1,20 @@
 <?php
 namespace wcf\data\style;
-use wcf\data\template\group\TemplateGroupEditor;
-use wcf\data\template\TemplateEditor;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
+use wcf\data\template\TemplateEditor;
+use wcf\data\template\group\TemplateGroup;
+use wcf\data\template\group\TemplateGroupEditor;
+use wcf\system\WCF;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\image\Thumbnail;
+use wcf\system\image\Thumbnail; // TODO: undefined class
 use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\io\TarWriter;
-use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
+use wcf\util\StyleUtil;
 use wcf\util\XML;
 
 /**

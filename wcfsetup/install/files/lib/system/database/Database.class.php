@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\database;
-use wcf\system\database\statement\PreparedStatement;
 use wcf\data\DatabaseObject;
-use wcf\system\SystemException;
+use wcf\system\database\statement\PreparedStatement;
+use wcf\system\exception\SystemException;
 
 /**
  * This is an abstract implementation of a database access class using PDO.

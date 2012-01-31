@@ -2,6 +2,7 @@
 namespace wcf\data\package\installation\queue;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\package\Package;
+use wcf\system\WCF;
 use wcf\system\exception\ValidateActionException;
 
 /**

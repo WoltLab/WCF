@@ -5,15 +5,17 @@ use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\category\LanguageCategoryEditor;
 use wcf\data\language\item\LanguageItemEditor;
 use wcf\data\language\item\LanguageItemList;
+use wcf\system\Regex;
+use wcf\system\WCF;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageDependencyHandler;
-use wcf\system\Regex;
-use wcf\system\WCF;
-use wcf\util\XML;
 use wcf\util\DirectoryUtil;
+use wcf\util\StringUtil;
+use wcf\util\XML;
 
 /**
  * Provides functions to edit languages.

@@ -1,8 +1,8 @@
 <?php
 namespace wcf\util;
-use wcf\system\WCF;
-use wcf\data\user\User;
 use wcf\data\language\Language;
+use wcf\data\user\User;
+use wcf\system\WCF;
 
 /**
  * Contains date-related functions.

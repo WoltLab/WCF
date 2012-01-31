@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\page\location;
-use wcf\data\page\location\PageLocation;
 use wcf\data\IDatabaseObjectProcessor;
+use wcf\data\page\location\PageLocation;
 
 /**
  * Any page location class should implement this interface.

@@ -1,9 +1,10 @@
 <?php
 namespace wcf\acp\form;
-use wcf\system\menu\acp\ACPMenu;
+use wcf\data\option\Option;
+use wcf\data\session\Session;
+use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\group\UserGroup;
-use wcf\data\option\Option;
 use wcf\form\AbstractForm;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
@@ -12,6 +13,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;

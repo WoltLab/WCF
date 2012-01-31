@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\option\user;
-use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
-use wcf\data\user\option\ViewableUserOption;
+use wcf\data\option\category\OptionCategory;
 use wcf\data\user\User;
+use wcf\data\user\option\ViewableUserOption;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\OptionHandler;
 

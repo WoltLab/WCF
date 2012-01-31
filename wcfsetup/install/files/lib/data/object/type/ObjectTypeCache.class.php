@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\object\type;
-use wcf\system\cache\CacheHandler;
 use wcf\system\SingletonFactory;
+use wcf\system\cache\CacheHandler;
 
 /**
  * Manages the object type cache.

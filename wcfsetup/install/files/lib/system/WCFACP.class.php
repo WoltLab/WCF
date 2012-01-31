@@ -5,7 +5,8 @@ use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\template\ACPTemplateEngine;
-use wcf\util;
+use wcf\util\FileUtil;
+use wcf\util\HeaderUtil;
 
 /**
  * Extends WCF class with functions for the admin control panel.
@@ -26,7 +27,7 @@ class WCFACP extends WCF {
 		self::$autoloadDirectories['wcf'] = WCF_DIR . 'lib/';
 		
 		// define tmp directory
-		if (!defined('TMP_DIR')) define('TMP_DIR', util\FileUtil::getTempFolder());
+		if (!defined('TMP_DIR')) define('TMP_DIR', FileUtil::getTempFolder());
 		
 		// start initialization
 		$this->initMagicQuotes();
@@ -56,7 +57,7 @@ class WCFACP extends WCF {
 		$pathInfo = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : '';
 		if (empty($pathInfo) || !preg_match('~^/(ACPCaptcha|Login)/~', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
-				util\HeaderUtil::redirect('index.php/Login/'.SID_ARG_1ST);
+				HeaderUtil::redirect('index.php/Login/'.SID_ARG_1ST);
 				exit;
 			}
 			else {

@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\database\util;
-use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\system\exception\SystemException;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 

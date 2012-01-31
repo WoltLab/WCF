@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\image;
+use wcf\system\SingletonFactory;
 use wcf\system\exception\SystemException;
 use wcf\system\image\adapter\ImageAdapter;
-use wcf\system\SingletonFactory;
 
 /**
  * Handler for all available image adapters.

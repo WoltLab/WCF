@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\cronjob;
 use wcf\data\DatabaseObject;
-use wcf\util\CronjobUtil;
 use wcf\system\WCF;
+use wcf\util\CronjobUtil;
 
 /**
  * Represents a cronjob.
