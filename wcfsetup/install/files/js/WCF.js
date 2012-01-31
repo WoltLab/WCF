@@ -894,27 +894,53 @@ WCF.Clipboard = {
 WCF.PeriodicalExecuter = function(callback, delay) { this.init(callback, delay); };
 WCF.PeriodicalExecuter.prototype = {
 	/**
+	 * callback for each execution cycle
+	 * @var	object
+	 */
+	_callback: null,
+	
+	/**
+	 * interval id
+	 * @var integer
+	 */
+	_intervalID: null,
+	
+	/**
+	 * execution state
+	 * @var	boolean
+	 */
+	_isExecuting: false,
+	
+	/**
 	 * Initializes a periodical executer.
 	 * 
 	 * @param	function		callback
 	 * @param	integer			delay
 	 */
 	init: function(callback, delay) {
-		this.callback = callback;
-		this.delay = delay;
-		this.loop = true;
+		if (!$.isFunction(callback)) {
+			console.debug('[WCF.PeriodicalExecuter] Given callback is invalid, aborting.');
+			return;
+		}
 		
-		this.intervalID = setInterval($.proxy(this._execute, this), this.delay);
+		this._callback = callback;
+		this._intervalID = setInterval($.proxy(this._execute, this), delay);
 	},
 	
 	/**
 	 * Executes callback.
 	 */
 	_execute: function() {
-		this.callback(this);
-		
-		if (!this.loop) {
-			clearInterval(this.intervalID);
+		if (!this._isExecuting) {
+			try {
+				this._isExecuting = true;
+				this._callback(this);
+				this._isExecuting = false;
+			}
+			catch (e) {
+				this._isExecuting = false;
+				throw e;
+			}
 		}
 	},
 	
@@ -922,7 +948,11 @@ WCF.PeriodicalExecuter.prototype = {
 	 * Terminates loop.
 	 */
 	stop: function() {
-		this.loop = false;
+		if (!this._intervalID) {
+			return;
+		}
+		
+		clearInterval(this._intervalID);
 	}
 };
 
