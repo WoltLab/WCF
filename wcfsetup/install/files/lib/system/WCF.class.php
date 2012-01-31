@@ -431,20 +431,15 @@ class WCF {
 			}
 		}
 		else {
-			// get package name for better readability
-			$sql = "SELECT	package
-				FROM	wcf".WCF_N."_package
-				WHERE	packageID = ?";
-			$statement = self::getDB()->prepareStatement($sql);
-			$statement->execute(array($application->packageID));
-			$row = $statement->fetchArray();
-			
 			unset(self::$autoloadDirectories[$abbreviation]);
-			throw new exception\SystemException("Unable to run '".$row['package']."', '".$className."' is missing or does not implement 'wcf\system\application\IApplication'.");
+			throw new exception\SystemException("Unable to run '".$package->package."', '".$className."' is missing or does not implement 'wcf\system\application\IApplication'.");
 		}
 		
-		// load application settings if not within ACP
-		if (!class_exists('wcf\system\WCFACP', false) && !$isDepedentApplication) {
+		// register template path in ACP
+		if (class_exists('wcf\system\WCFACP', false)) {
+			$this->getTPL()->addTemplatePath($application->packageID, $packageDir . 'acp/templates/');
+		}
+		else if (!$isDepedentApplication) {
 			// load options
 			$this->loadOptions($packageDir.'options.inc.php', $application->packageID);
 			
