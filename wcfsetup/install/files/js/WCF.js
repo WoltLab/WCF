@@ -818,7 +818,7 @@ WCF.Clipboard = {
 			}
 			
 			var $editor = data.items[$typeName];
-			var $label = $('<li><span>' + $editor.label + '</span></li>').appendTo($list)
+			var $label = $('<li><span>' + $editor.label + '</span></li>').appendTo($list);
 			var $itemList = $('<ol class="dropdown"></ol>').appendTo($label);
 
 			$label.click(function() { $itemList.toggleClass('open'); });
@@ -1379,14 +1379,14 @@ WCF.Action.Toggle.prototype = {
 				$toggleButton.attr('title', function() {
 					if (this.src.match(/enabled1\.svg$/)) {
 						if ($(this).data('disableTitle')) {
-							return $(this).data('disableTitle')
+							return $(this).data('disableTitle');
 						}
 						
 						return WCF.Language.get('wcf.global.button.disable');
 					}
 					else {
 						if ($(this).data('enableTitle')) {
-							return $(this).data('enableTitle')
+							return $(this).data('enableTitle');
 						}
 						
 						return WCF.Language.get('wcf.global.button.enable');
@@ -3891,8 +3891,8 @@ $.widget('ui.wcfPersistentSidebar', $.ui.wcfSidebar, {
 	 */
 	_save: function() {
 		var $currentState = (!this._visible) ? 'close' : 'open';
-		var $state = (this._visible) ? 'open' : 'close';
-
+		var $newState = (this._visible) ? 'open' : 'close';
+		
 		this._proxy.setOption('data', {
 			actionName: 'toggleSidebar',
 			className: this.options.className,
