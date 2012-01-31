@@ -480,7 +480,7 @@ class PackageInstallationNodeBuilder {
 		
 		$instructions = ($this->installation->getAction() == 'install') ? $this->installation->getArchive()->getInstallInstructions() : $this->installation->getArchive()->getUpdateInstructions();
 		foreach ($instructions as $pip) {
-			if (isset($pip['attributes']['run']) && ($pip['attributes']['run'] == 'isApplication')) {
+			if (isset($pip['attributes']['run']) && ($pip['attributes']['run'] == 'standalone')) {
 				$this->parentNode = $this->node;
 				$this->node = $this->getToken();
 				$this->sequenceNo = 0;
