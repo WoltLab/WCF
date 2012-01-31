@@ -162,7 +162,6 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
-		$optionIDs = array();
 		while ($row = $statement->fetchArray()) {
 			WCF::getDB()->getEditor()->dropColumn('wcf'.WCF_N.'_user_option_value', 'userOption'.$row['optionID']);
 		}
