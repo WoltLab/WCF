@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\data\language\category\LanguageCategoryList;
 use wcf\data\language\LanguageList;
+use wcf\data\language\category\LanguageCategoryList;
 use wcf\system\WCF;
 
 /**

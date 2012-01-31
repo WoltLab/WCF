@@ -1,14 +1,14 @@
 <?php
 namespace wcf\acp\form;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\data\option\Option;
-use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserAction;
+use wcf\data\user\group\UserGroup;
 use wcf\form\AbstractForm;
+use wcf\system\WCF;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\WCF;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;

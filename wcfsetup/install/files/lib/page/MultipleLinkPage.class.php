@@ -1,8 +1,8 @@
 <?php
 namespace wcf\page;
+use wcf\system\WCF;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\WCF;
 use wcf\util\ClassUtil;
 
 /**

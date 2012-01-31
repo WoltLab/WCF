@@ -2,8 +2,8 @@
 namespace wcf\acp\form;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobAction;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
+use wcf\system\exception\IllegalLinkException;
 
 /**
  * Shows the cronjob edit form.

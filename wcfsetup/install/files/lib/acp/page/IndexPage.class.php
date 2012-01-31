@@ -1,10 +1,10 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\AbstractPage;
-use wcf\system\cache\CacheHandler;
-use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
+use wcf\system\cache\CacheHandler;
+use wcf\system\package\PackageInstallationDispatcher;
 
 /**
  * Shows the welcome page in admin control panel.

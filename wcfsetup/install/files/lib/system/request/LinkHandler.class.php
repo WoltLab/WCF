@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\request;
+use wcf\system\SingletonFactory;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\request\RouteHandler;
-use wcf\system\SingletonFactory;
 
 /**
  * Handles relative links within the wcf.

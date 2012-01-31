@@ -1,13 +1,13 @@
 <?php
 namespace wcf\acp\form;
-use wcf\system\menu\acp\ACPMenu;
-use wcf\data\option\category\OptionCategory;
-use wcf\data\option\OptionAction;
 use wcf\data\option\Option;
-use wcf\system\exception\IllegalLinkException;
-use wcf\system\language\I18nHandler;
+use wcf\data\option\OptionAction;
+use wcf\data\option\category\OptionCategory;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
+use wcf\system\exception\IllegalLinkException;
+use wcf\system\language\I18nHandler;
+use wcf\system\menu\acp\ACPMenu;
 
 /**
  * Shows the option edit form.

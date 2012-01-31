@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\system\WCF;
 use wcf\system\exception\SystemException;
 use wcf\system\io\Tar;
 use wcf\system\package\TemplatesFileHandler;
-use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**

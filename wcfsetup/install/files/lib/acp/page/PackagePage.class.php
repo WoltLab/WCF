@@ -2,11 +2,11 @@
 namespace wcf\acp\page;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\page\AbstractPage;
+use wcf\system\WCF;
+use wcf\system\WCFACP;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\package\PackageUninstallationDispatcher;
-use wcf\system\WCF;
-use wcf\system\WCFACP;
 
 /**
  * Handles all request on the package.php script
@@ -71,7 +71,7 @@ class PackagePage extends AbstractPage {
 				die('ROLLBACK');
 				WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
 				require_once(WCF_DIR.'lib/acp/package/PackageInstallationRollback.class.php');
-				new PackageInstallationRollback($this->queueID);
+				new PackageInstallationRollback($this->queueID); // TODO: undefined class PackageInstallationRollback
 			break;
 			
 			case 'openQueue':

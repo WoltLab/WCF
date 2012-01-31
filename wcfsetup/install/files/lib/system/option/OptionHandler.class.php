@@ -1,12 +1,12 @@
 <?php
 namespace wcf\system\option;
-use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
+use wcf\data\option\category\OptionCategory;
+use wcf\system\WCF;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
-use wcf\system\WCF;
 use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 

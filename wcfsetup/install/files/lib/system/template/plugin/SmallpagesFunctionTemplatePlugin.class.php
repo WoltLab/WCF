@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\template\plugin;
+use wcf\system\WCF;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\template\TemplateEngine;
-use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**

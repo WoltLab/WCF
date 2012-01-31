@@ -5,9 +5,9 @@ use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\data\user\group\UserGroup;
 use wcf\form\AbstractForm;
+use wcf\system\WCF;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**

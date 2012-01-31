@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\page\menu\item;
 use wcf\data\ProcessibleDatabaseObject;
-use wcf\system\menu\page\DefaultPageMenuItemProvider;
 use wcf\system\menu\ITreeMenuItem;
+use wcf\system\menu\page\DefaultPageMenuItemProvider;
 use wcf\system\request\LinkHandler;
 
 /**

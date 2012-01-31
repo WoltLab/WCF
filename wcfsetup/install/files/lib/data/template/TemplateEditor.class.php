@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\template;
 use wcf\data\DatabaseObjectEditor;
-use wcf\system\io\File;
 use wcf\system\Regex;
 use wcf\system\WCF;
+use wcf\system\io\File;
 use wcf\util\DirectoryUtil;
 
 /**

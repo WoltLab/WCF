@@ -2,8 +2,8 @@
 namespace wcf\data\cronjob;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\cronjob\log\CronjobLogEditor;
-use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
+use wcf\system\exception\ValidateActionException;
 use wcf\util\DateUtil;
 
 /**
