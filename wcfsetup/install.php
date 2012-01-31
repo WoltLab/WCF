@@ -370,7 +370,7 @@ class Tar {
 		}
 		
 		if (!isset($this->contentList[$fileIndex])) {
-			throw new SystemException("Tar: could find file '$index' in archive"); //TODO: undefined variable
+			throw new SystemException("Tar: could find file '".$fileIndex."' in archive");
 		}
 		return $this->contentList[$fileIndex];
 	}

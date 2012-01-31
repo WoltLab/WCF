@@ -51,7 +51,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
-      	 		$indices[] = $index['Key_name']; //TODO: undefined variable
+      	 		$indices[] = $row['Key_name'];
    		}
    		
    		return $indices;

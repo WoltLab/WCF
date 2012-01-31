@@ -4,6 +4,7 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 use wcf\util\StyleUtil;
 
 /**

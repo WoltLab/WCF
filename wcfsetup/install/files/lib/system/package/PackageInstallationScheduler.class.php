@@ -4,6 +4,7 @@ use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\io\File;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -178,8 +179,8 @@ class PackageInstallationScheduler {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
-				if (!isset($installedPackages[$row2['package']])) $installedPackages[$row2['package']] = array(); //TODO: undefined variable
-				$installedPackages[$row2['package']][$row2['packageID']] = (isset($this->virtualPackageVersions[$row2['packageID']]) ? $this->virtualPackageVersions[$row2['packageID']] : $row2['packageVersion']);
+				if (!isset($installedPackages[$row['package']])) $installedPackages[$row['package']] = array();
+				$installedPackages[$row['package']][$row['packageID']] = (isset($this->virtualPackageVersions[$row['packageID']]) ? $this->virtualPackageVersions[$row['packageID']] : $row['packageVersion']);
 			}
 			
 			// check installed / missing packages

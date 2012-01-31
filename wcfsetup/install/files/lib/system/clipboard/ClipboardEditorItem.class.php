@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\clipboard;
-use wcf\system\SystemException;
+use wcf\system\exception\SystemException;
 use wcf\util\StringUtil;
 
 /**

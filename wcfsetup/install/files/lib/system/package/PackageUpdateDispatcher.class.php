@@ -508,7 +508,7 @@ abstract class PackageUpdateDispatcher {
 			}
 		}
 		
-		if (!empty($excludedPackagesInserts)) {
+		if (!empty($excludedPackagesParameters)) {
 			// clear records
 			$sql = "DELETE pue FROM	wcf".WCF_N."_package_update_exclusion pue
 				LEFT JOIN	wcf".WCF_N."_package_update_version puv
@@ -524,7 +524,7 @@ abstract class PackageUpdateDispatcher {
 						(packageUpdateVersionID, excludedPackage, excludedPackageVersion)
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			foreach ($excludedPackagesInserts as $excludedPackage) {
+			foreach ($excludedPackagesParameters as $excludedPackage) {
 				$statement->execute(array(
 					$excludedPackage['packageUpdateVersionID'],
 					$excludedPackage['excludedPackage'],

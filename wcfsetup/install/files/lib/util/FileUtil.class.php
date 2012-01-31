@@ -4,6 +4,7 @@ use wcf\system\io\File;
 use wcf\system\io\GZipFile;
 use wcf\system\io\RemoteFile;
 use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 
 /**
  * Contains file-related functions.

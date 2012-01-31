@@ -1,6 +1,7 @@
 <?php
 namespace wcf\action;
 use wcf\system\exception\AJAXException;
+use wcf\system\exception\IllegalLinkException;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 

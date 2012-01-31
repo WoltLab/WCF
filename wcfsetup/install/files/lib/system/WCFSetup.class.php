@@ -421,7 +421,7 @@ class WCFSetup extends WCF {
 			try {
 				$this->installFiles();
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				WCF::getTPL()->assign(array('exception' => $e));
 				$this->searchWcfDir();
 				return;

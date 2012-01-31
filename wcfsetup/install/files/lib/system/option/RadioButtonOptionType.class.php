@@ -2,15 +2,15 @@
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
-use wcf\system\UserInputException;
 use wcf\util\StringUtil;
 
 /**
  * RadiobuttonsOptionType is an implementation of IOptionType for 'input type="radio"' tags.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -69,7 +69,7 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableUse
 	 * @see wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
-		return $this->getFormElement($optionData, $value); //TODO: undefined variable
+		return $this->getFormElement($option, $value);
 	}
 	
 	/**

@@ -3,6 +3,7 @@ namespace wcf\data\package\installation\queue;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\package\Package;
 use wcf\system\exception\ValidateActionException;
+use wcf\system\WCF;
 
 /**
  * Executes package installation queue-related actions.
@@ -26,7 +27,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	public function validatePrepareQueue() {
 		if (isset($this->parameters['packageID'])) $this->packageID = intval($this->parameters['packageID']);
 		
-		$this->package = new Package($packageID); //TODO: undefined variable
+		$this->package = new Package($this->packageID);
 		if (!$this->package->packageID) {
 			throw new ValidateActionException('Invalid package id');
 		}

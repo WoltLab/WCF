@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\worker;
+use wcf\data\user\User;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;

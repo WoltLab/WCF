@@ -160,7 +160,7 @@ class PackageArchive {
 		try {
 			$xml->loadXML(self::INFO_FILE, $this->tar->extractToString(self::INFO_FILE));
 		}
-		catch (Exception $e) { // bugfix to avoid file caching problems
+		catch (\Exception $e) { // bugfix to avoid file caching problems
 			$xml->loadXML(self::INFO_FILE, $this->tar->extractToString(self::INFO_FILE));
 		}
 		

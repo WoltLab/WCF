@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\language;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
 

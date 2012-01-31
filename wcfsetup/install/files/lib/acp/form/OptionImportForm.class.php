@@ -3,6 +3,8 @@ namespace wcf\acp\form;
 use wcf\acp\option\Options;
 use wcf\data\option\OptionAction;
 use wcf\system\exception\UserInputException;
+use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\XML;
 

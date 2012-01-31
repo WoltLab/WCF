@@ -152,7 +152,7 @@ class DiskCacheSource implements ICacheSource {
 				// load cache file
 				$this->loadCacheFile($cacheResource);
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				return false;
 			}
 			

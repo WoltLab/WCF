@@ -4,6 +4,7 @@ use wcf\data\DatabaseObject;
 use wcf\system\benchmark\Benchmark;
 use wcf\system\database\Database;
 use wcf\system\database\DatabaseException;
+use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**

@@ -2,12 +2,13 @@
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * SelectOptionType is an implementation of IOptionType for 'select' tags.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -35,12 +36,13 @@ class SelectOptionType extends RadioButtonOptionType {
 	 * @see wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
-		return $this->getFormElement($optionData, $value); //TODO: undefined variable
+		return $this->getFormElement($option, $value);
 	}
 	
 	/**
-	 * @todo	This is not really tested yet!
-	 * @param	Option		$option
+	 * Prepares JSON-encoded values for disabling or enabling dependent options.
+	 * 
+	 * @param	wcf\data\option\Option	$option
 	 * @return	array
 	 */
 	protected function parseEnableOptions(Option $option) {

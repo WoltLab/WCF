@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\mail;
-use wcf\sytem\io\File;
+use wcf\system\io\File;
 
 /**
  * DebugMailSender is a debug implementation of mailsender.

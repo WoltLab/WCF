@@ -69,7 +69,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		foreach ($items as $item) {
 			$statement->execute(array(
 				$item['attributes']['name'],
-				$this->getDefinitionID($data['elements']['definitionname']), //TODO: undefined variable
+				$this->getDefinitionID($item['elements']['definitionname']),
 				$this->installation->getPackageID()
 			));
 		}

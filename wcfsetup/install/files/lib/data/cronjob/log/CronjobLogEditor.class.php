@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\cronjob\log;
 use wcf\data\DatabaseObjectEditor;
+use wcf\system\WCF;
 
 /**
  * Provides functions to edit cronjob logs.
