@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\Package;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
-use wcf\system\WCF;
 use wcf\system\form\FormDocument;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**

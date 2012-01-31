@@ -1,7 +1,7 @@
 <?php
 namespace wcf\action;
-use wcf\system\WCF;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\WCF;
 
 /**
  * Extends AbstractAction by a function to validate a given security token.

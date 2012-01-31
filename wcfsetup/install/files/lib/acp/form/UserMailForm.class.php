@@ -1,12 +1,12 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\user\UserList;
 use wcf\data\user\group\UserGroup;
-use wcf\system\WCF;
+use wcf\data\user\UserList;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 

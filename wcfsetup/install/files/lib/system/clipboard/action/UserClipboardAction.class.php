@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\clipboard\action;
 use wcf\data\user\group\UserGroup;
-use wcf\system\WCF;
 use wcf\system\clipboard\ClipboardEditorItem;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 
 /**
  * Prepares clipboard editor items for user objects.

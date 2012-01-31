@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\language;
-use wcf\system\SingletonFactory;
-use wcf\system\WCF;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Provides internationalization support for input fields.

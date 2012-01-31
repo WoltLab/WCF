@@ -1,9 +1,8 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
-use wcf\data\user\group\UserGroup;
-use wcf\system\WCF;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
@@ -11,6 +10,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\session\SessionHandler;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 
 /**

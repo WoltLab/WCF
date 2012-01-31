@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\data\language\LanguageEditor;
-use wcf\system\WCF;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\WCF;
 use wcf\util\XML;
 
 /**

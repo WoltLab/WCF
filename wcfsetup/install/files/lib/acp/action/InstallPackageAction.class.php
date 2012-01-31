@@ -2,9 +2,9 @@
 namespace wcf\acp\action;
 use wcf\action\AbstractDialogAction;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
-use wcf\system\WCF;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**

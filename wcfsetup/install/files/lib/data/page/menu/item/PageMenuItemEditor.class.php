@@ -2,8 +2,8 @@
 namespace wcf\data\page\menu\item;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\system\WCF;
 use wcf\system\cache\CacheHandler;
+use wcf\system\WCF;
 
 /**
  * Provides functions to edit page menu items.

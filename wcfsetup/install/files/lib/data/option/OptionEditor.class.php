@@ -2,9 +2,9 @@
 namespace wcf\data\option;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\system\WCF;
 use wcf\system\cache\CacheHandler;
 use wcf\system\io\File;
+use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**

@@ -3,12 +3,12 @@ namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupAction;
 use wcf\data\user\group\UserGroupEditor;
-use wcf\system\WCF;
-use wcf\system\WCFACP;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\menu\acp\ACPMenu;
+use wcf\system\WCF;
+use wcf\system\WCFACP;
 use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 

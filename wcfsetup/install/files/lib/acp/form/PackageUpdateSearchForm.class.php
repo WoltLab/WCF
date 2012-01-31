@@ -2,12 +2,12 @@
 namespace wcf\acp\form;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\search\SearchEditor;
-use wcf\system\WCF;
-use wcf\system\WCFACP;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
+use wcf\system\WCFACP;
 use wcf\util\ArrayUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;

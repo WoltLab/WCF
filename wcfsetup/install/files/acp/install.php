@@ -1,10 +1,10 @@
 <?php
 namespace wcf\acp;
 use wcf\data\language\LanguageEditor;
-use wcf\system\WCF;
 use wcf\system\cache\CacheHandler;
 use wcf\system\session\SessionHandler;
 use wcf\system\template\ACPTemplateEngine;
+use wcf\system\WCF;
 
 /**
  * @author	Marcel Werk

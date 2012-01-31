@@ -1,13 +1,13 @@
 <?php
 namespace wcf\system\session;
-use wcf\data\user\User;
 use wcf\data\user\group\UserGroup;
-use wcf\system\SingletonFactory;
-use wcf\system\WCF;
+use wcf\data\user\User;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\SingletonFactory;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
 

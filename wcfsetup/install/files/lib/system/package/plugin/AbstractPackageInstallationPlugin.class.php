@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\system\WCF;
 use wcf\system\event\EventHandler;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\WCF;
 
 /**
  * Default implementation of some PackageInstallationPlugin functions.

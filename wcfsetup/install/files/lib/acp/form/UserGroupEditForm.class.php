@@ -5,10 +5,10 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupAction;
 use wcf\data\user\group\UserGroupEditor;
 use wcf\form\AbstractForm;
-use wcf\system\WCF;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\language\I18nHandler;
+use wcf\system\WCF;
 
 /**
  * Shows the group edit form.

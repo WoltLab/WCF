@@ -1,12 +1,12 @@
 <?php
 namespace wcf\data\user;
 use wcf\data\DatabaseObject;
-use wcf\data\user\UserList;
 use wcf\data\user\group\UserGroup;
-use wcf\system\WCF;
+use wcf\data\user\UserList;
 use wcf\system\cache\CacheHandler;
 use wcf\system\request\IRouteController;
 use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**

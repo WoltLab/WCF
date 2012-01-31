@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\system\WCF;
 use wcf\system\event\EventHandler;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**

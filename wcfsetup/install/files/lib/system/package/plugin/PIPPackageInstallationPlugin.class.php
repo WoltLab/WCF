@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\system\WCF;
 use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 
 /**
  * This PIP installs, updates or deletes package installation plugins.

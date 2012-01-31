@@ -4,8 +4,8 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueueList;
 use wcf\system\Callback;
-use wcf\system\WCF;
 use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 

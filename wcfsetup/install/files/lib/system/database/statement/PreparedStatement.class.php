@@ -1,11 +1,11 @@
 <?php
 namespace wcf\system\database\statement;
 use wcf\data\DatabaseObject;
-use wcf\system\WCF;
 use wcf\system\benchmark\Benchmark;
 use wcf\system\database\Database;
 use wcf\system\database\DatabaseException;
 use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 
 /**
  * This is an implementation of prepared statements based upon pdo statements.

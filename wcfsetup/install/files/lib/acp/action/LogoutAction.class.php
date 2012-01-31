@@ -1,8 +1,8 @@
 <?php
 namespace wcf\acp\action;
 use wcf\action\AbstractSecureAction;
-use wcf\system\WCF;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 
 /**

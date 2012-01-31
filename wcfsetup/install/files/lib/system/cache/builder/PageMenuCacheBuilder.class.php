@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\page\menu\item\PageMenuItem;
-use wcf\system\WCF;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\WCF;
 
 /**
  * Caches the page menu items.

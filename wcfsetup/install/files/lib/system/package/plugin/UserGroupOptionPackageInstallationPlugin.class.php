@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\option\UserGroupOptionEditor;
-use wcf\system\WCF;
+use wcf\data\user\group\UserGroup;
 use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**

@@ -1,11 +1,11 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\data\user\option\UserOption;
-use wcf\data\user\option\UserOptionEditor;
 use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\category\UserOptionCategoryEditor;
-use wcf\system\WCF;
+use wcf\data\user\option\UserOption;
+use wcf\data\user\option\UserOptionEditor;
 use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**

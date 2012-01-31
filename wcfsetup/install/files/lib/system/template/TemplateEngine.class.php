@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\template;
-use wcf\system\Regex;
-use wcf\system\SingletonFactory;
 use wcf\system\cache\CacheHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\Regex;
+use wcf\system\SingletonFactory;
 use wcf\util\DirectoryUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;

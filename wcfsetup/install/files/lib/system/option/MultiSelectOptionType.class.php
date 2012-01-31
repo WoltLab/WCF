@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
-use wcf\system\WCF;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 
 /**

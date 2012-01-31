@@ -2,9 +2,9 @@
 namespace wcf\acp\form;
 use wcf\data\cronjob\CronjobAction;
 use wcf\data\package\Package;
-use wcf\system\WCF;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\WCF;
 use wcf\util\CronjobUtil;
 use wcf\util\StringUtil;
 

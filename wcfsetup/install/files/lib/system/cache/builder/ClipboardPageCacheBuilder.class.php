@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\system\WCF;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageDependencyHandler;
+use wcf\system\WCF;
 
 /**
  * Caches clipboard pages.

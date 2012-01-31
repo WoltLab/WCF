@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\application;
-use wcf\system\SingletonFactory;
 use wcf\system\cache\CacheHandler;
+use wcf\system\SingletonFactory;
 
 /**
  * Handles multi-application environments.

@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\package;
 use wcf\data\package\Package;
-use wcf\system\WCF;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 
 /**
  * ACPTemplatesFileHandler is a FileHandler implementation for the installation of ACP-template files.

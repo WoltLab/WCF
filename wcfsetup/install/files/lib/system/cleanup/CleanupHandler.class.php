@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\cleanup;
-use wcf\system\WCF;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
 

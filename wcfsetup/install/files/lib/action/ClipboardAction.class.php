@@ -1,8 +1,8 @@
 <?php
 namespace wcf\action;
-use wcf\system\WCF;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\AJAXException;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;

@@ -1,12 +1,12 @@
 <?php
 namespace wcf\data\user\group;
+use wcf\data\acp\session\ACPSession;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\data\acp\session\ACPSession;
-use wcf\system\WCF;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\session\SessionHandler;
+use wcf\system\WCF;
 
 /**
  * Provides functions to edit user groups.

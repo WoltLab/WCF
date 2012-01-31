@@ -2,9 +2,9 @@
 namespace wcf\data\user;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\user\group\UserGroup;
-use wcf\system\WCF;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\ValidateActionException;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**

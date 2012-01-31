@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
-use wcf\system\WCF;
 use wcf\system\cache\CacheHandler;
+use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 use wcf\util\XML;

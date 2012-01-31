@@ -2,8 +2,8 @@
 namespace wcf\data\user\option;
 use wcf\data\option\Option;
 use wcf\data\user\User;
-use wcf\system\WCF;
 use wcf\system\option\user\IUserOptionOutput;
+use wcf\system\WCF;
 
 /**
  * Represents a user option.

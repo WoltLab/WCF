@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\event;
-use wcf\system\SingletonFactory;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\SingletonFactory;
 use wcf\util\ClassUtil;
 
 /**

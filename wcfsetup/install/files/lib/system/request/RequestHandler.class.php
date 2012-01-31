@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\request;
-use wcf\system\SingletonFactory;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
+use wcf\system\SingletonFactory;
 
 /**
  * Handles http requests.

@@ -1,10 +1,10 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\AbstractPage;
-use wcf\system\WCF;
-use wcf\system\WCFACP;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\package\PackageUpdateDispatcher;
+use wcf\system\WCF;
+use wcf\system\WCFACP;
 
 /**
  * Shows the list of available updates for installed packages.
