@@ -2223,6 +2223,12 @@ WCF.TabMenu = {
 				}
 			}
 		}
+		else {
+			// revert to default values
+			for (var $containerID in this._containers) {
+				this._containers[$containerID].wcfTabs('revertToDefault');
+			}
+		}
 	}
 };
 
@@ -4388,6 +4394,16 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 		});
 		
 		return $matches;
+	},
+	
+	/**
+	 * Shows default tab.
+	 */
+	revertToDefault: function() {
+		var $active = this.element.data('active');
+		if (!$active || $active === '') $active = 0;
+		
+		this.select($active);
 	}
 });
 
