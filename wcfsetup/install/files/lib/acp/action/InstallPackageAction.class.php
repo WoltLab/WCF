@@ -112,7 +112,7 @@ class InstallPackageAction extends AbstractDialogAction {
 				$row = $statement->fetchArray();
 				
 				// build redirect location
-				$location = $row['domainName'] . $row['domainPath'] . 'index.php/PackageList/' . SID_ARG_1ST;
+				$location = $row['domainName'] . $row['domainPath'] . 'acp/index.php/PackageList/' . SID_ARG_1ST;
 				
 				// show success
 				$this->data = array(
