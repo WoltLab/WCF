@@ -361,7 +361,7 @@ WCF.ACP.Package.Installation.prototype = {
 				$('#packageInstallationInnerContent').append('<div class="formSubmit"><input type="button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" class="default" /></div>');
 				
 				$('#' + $id).click(function() {
-					window.location.href = "index.php/PackageList/" + SID_ARG_1ST;
+					window.location.href = data.redirectLocation;
 				});
 				
 				$('#packageInstallationInnerContentContainer').show();
