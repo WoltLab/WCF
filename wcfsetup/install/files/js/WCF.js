@@ -1280,16 +1280,27 @@ WCF.Action.Delete.prototype = {
 		var $target = $(event.target);
 		
 		if ($target.data('confirmMessage')) {
-			if (confirm($target.data('confirmMessage'))) {
-				this.proxy.showSpinner($target);
-				this._sendRequest($target);
-			}
+			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
 		}
 		else {
 			this.proxy.showSpinner($target);
 			this._sendRequest($target);
 		}
+	},
+	
+	/**
+	 * Executes deletion.
+	 * 
+	 * @param	string		action
+	 * @param	object		parameters
+	 */
+	_execute: function(action, parameters) {
+		if (action === 'cancel') {
+			return;
+		}
 		
+		this.proxy.showSpinner(parameters.target);
+		this._sendRequest(parameters.target);
 	},
 	
 	_sendRequest: function(object) {
@@ -3548,6 +3559,12 @@ WCF.System.Confirmation = {
 	_dialog: null,
 	
 	/**
+	 * callback parameters
+	 * @var	object
+	 */
+	_parameters: null,
+	
+	/**
 	 * dialog visibility
 	 * @var	boolean
 	 */
@@ -3558,8 +3575,9 @@ WCF.System.Confirmation = {
 	 * 
 	 * @param	string		message
 	 * @param	object		callback
+	 * @param	object		parameters
 	 */
-	show: function(message, callback) {
+	show: function(message, callback, parameters) {
 		if (this._visible) {
 			console.debug('[WCF.System.Confirmation] Confirmation dialog is already open, refusing action.');
 			return;
@@ -3571,6 +3589,7 @@ WCF.System.Confirmation = {
 		}
 		
 		this._callback = callback;
+		this._parameters = parameters;
 		if (this._dialog === null) {
 			this._createDialog();
 		}
@@ -3623,7 +3642,7 @@ WCF.System.Confirmation = {
 		this._visible = false;
 		this._dialog.wcfDialog('close');
 		
-		this._callback(action);
+		this._callback(action, this._parameters);
 	},
 	
 	/**
