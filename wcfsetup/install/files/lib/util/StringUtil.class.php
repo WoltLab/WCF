@@ -142,9 +142,6 @@ class StringUtil {
 	 * @return 	string 		$string
 	 */
 	public static function decodeHTML($string) {
-		if (is_object($string)) 
-			$string = $string->__toString();
-		
 		$string = str_ireplace('&nbsp;', ' ', $string); // convert non-breaking spaces to ascii 32; not ascii 160
 		return @html_entity_decode($string, ENT_COMPAT, 'UTF-8');
 	}
