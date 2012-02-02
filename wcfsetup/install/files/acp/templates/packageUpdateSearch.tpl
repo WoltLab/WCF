@@ -37,7 +37,7 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/search1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.packageUpdate.search{/lang}</h1>
@@ -45,14 +45,14 @@
 </header>
 
 {if $errorField != ''}
-	<p class="error">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
+	<p class="wcf-error">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
 {/if}
 
 {if !$updateServers|count}
-	<p class="warning">{lang}wcf.acp.updateServer.view.noneAvailable{/lang}</p>
+	<p class="wcf-warning">{lang}wcf.acp.updateServer.view.noneAvailable{/lang}</p>
 {else}
 	<form method="post" action="{link controller='PackageUpdateSearch'}{/link}">
-		<div class="border content">
+		<div class="wcf-border wcf-content">
 			
 			<fieldset>
 				<legend>{lang}wcf.acp.packageUpdate.search.server{/lang}</legend>

@@ -1,6 +1,6 @@
 {include file='header'}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/{$action}1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.cronjob.{$action}{/lang}</h1>
@@ -8,17 +8,17 @@
 	</hgroup>
 </header>
 
-<p class="info">{lang}wcf.acp.cronjob.intro{/lang}</p>
-
 {if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
+
+<p class="wcf-info">{lang}wcf.acp.cronjob.intro{/lang}</p>
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.form.{$action}.success{/lang}</p>	
+	<p class="wcf-success">{lang}wcf.global.form.{$action}.success{/lang}</p>	
 {/if}
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	<nav>
 		<ul class="largeButtons">
 			<li><a href="{link controller='CronjobList'}{/link}" title="{lang}wcf.acp.menu.link.cronjob.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/time1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.cronjob.list{/lang}</span></a></li>
@@ -32,7 +32,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='CronjobAdd'}{/link}{else}{link controller='CronjobEdit'}{/link}{/if}">
-	<div class="border content">
+	<div class="wcf-border wcf-content">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.cronjob.data{/lang}</legend>
@@ -42,7 +42,7 @@
 				<dd>
 					<input type="text" id="className" name="className" value="{$className}" required="required" pattern="^\\?([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*\\)*[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$" class="long" />
 					{if $errorField == 'className'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
@@ -71,7 +71,7 @@
 				<dd>
 					<input type="text" id="startMinute" name="startMinute" value="{$startMinute}" class="short" />
 					{if $errorField == 'startMinute'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
@@ -84,7 +84,7 @@
 				<dd>
 					<input type="text" id="startHour" name="startHour" value="{$startHour}" class="short" />
 					{if $errorField == 'startHour'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
@@ -97,7 +97,7 @@
 				<dd>
 					<input type="text" id="startDom" name="startDom" value="{$startDom}" class="short" />
 					{if $errorField == 'startDom'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
@@ -110,7 +110,7 @@
 				<dd>
 					<input type="text" id="startMonth" name="startMonth" value="{$startMonth}" class="short" />
 					{if $errorField == 'startMonth'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}
@@ -123,7 +123,7 @@
 				<dd>
 					<input type="text" id="startDow" name="startDow" value="{$startDow}" class="short" />
 					{if $errorField == 'startDow'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{lang}wcf.acp.cronjob.timing.error.{@$errorType}{/lang}
 						</small>
 					{/if}

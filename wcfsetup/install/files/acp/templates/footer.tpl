@@ -16,7 +16,7 @@
 		
 		{if PACKAGE_ID && ENABLE_BENCHMARK}{include file='benchmark' sandbox=false}{/if}
 		
-		<address class="copyright"><a href="http://www.woltlab.com" title="Go to the WoltLab website">Copyright &copy; 2001-2012 WoltLab&reg; GmbH</a></address>
+		<address class="wcf-copyright"><a href="http://www.woltlab.com" title="Go to the WoltLab website">Copyright &copy; 2001-2012 WoltLab&reg; GmbH</a></address>
 	</footer>
 	<!-- /FOOTER -->
 	<a id="bottom"></a>

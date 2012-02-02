@@ -1,6 +1,6 @@
 {include file='header'}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/time1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.cronjob.log{/lang}</h1>
@@ -8,13 +8,13 @@
 	</hgroup>
 </header>
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	{pages print=true assign=pagesLinks controller="CronjobLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 </div>
 
 {hascontent}
 	<form method="post" action="{link controller='CronjobLogDelete'}{/link}">
-		<div class="border boxTitle">
+		<div class="wcf-border wcf-boxTitle">
 			<hgroup>
 				<h1>{lang}wcf.acp.cronjob.log{/lang} <span class="badge" title="{lang}wcf.acp.cronjob.log.count{/lang}">{#$items}</span></h1>
 			</hgroup>
@@ -64,11 +64,11 @@
 		</div>
 	</form>
 	
-	<div class="contentFooter">
+	<div class="wcf-contentFooter">
 		{@$pagesLinks}
 	</div>
 {hascontentelse}
-	<p class="info">{lang}wcf.acp.cronjob.log.noEntries{/lang}</p>
+	<p class="wcf-info">{lang}wcf.acp.cronjob.log.noEntries{/lang}</p>
 {/hascontent}
 
 {include file='footer'}

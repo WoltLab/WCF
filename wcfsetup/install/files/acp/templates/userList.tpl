@@ -9,7 +9,7 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/{if $searchID}search{else}user{/if}1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.user.{if $searchID}search{else}list{/if}{/lang}</h1>
@@ -19,7 +19,7 @@
 
 {assign var=encodedURL value=$url|rawurlencode}
 {assign var=encodedAction value=$action|rawurlencode}
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	{pages print=true assign=pagesLinks controller="UserList" link="pageNo=%d&searchID=$searchID&action=$encodedAction&sortField=$sortField&sortOrder=$sortOrder"}
 	
 	<nav>
@@ -34,7 +34,7 @@
 	</nav>
 </div>
 
-<div class="border boxTitle">
+<div class="wcf-border wcf-boxTitle">
 	<nav class="menu">
 		<ul>
 			<li{if $action == ''} class="active"{/if}><a href="{link controller='UserList'}{/link}"><span>{lang}wcf.acp.user.list.all{/lang}</span> <span class="badge" title="{lang}wcf.acp.user.list.count{/lang}">{#$items}</span></a></li>
@@ -94,7 +94,7 @@
 		
 	</div>
 	
-	<div class="contentFooter">
+	<div class="wcf-contentFooter">
 		{@$pagesLinks}
 		
 		<div class="clipboardEditor" data-types="[ 'com.woltlab.wcf.user' ]"></div>
@@ -113,7 +113,7 @@
 {hascontentelse}
 </div>
 
-<p class="info">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
+<p class="wcf-info">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
 {/hascontent}
 
 {include file='footer'}

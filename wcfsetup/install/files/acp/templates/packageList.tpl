@@ -22,7 +22,7 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.package.list{/lang}</h1>
@@ -37,8 +37,8 @@
 		</ul>
 	</nav>
 	
-	<div id="applications" class="border tabMenuContent hidden">
-		<hgroup class="subHeading">
+	<div id="applications" class="wcf-border tabMenuContent hidden">
+		<hgroup class="wcf-subHeading">
 			<h1>Installed Applications</h1>
 		</hgroup>
 		
@@ -88,12 +88,12 @@
 	</div>
 	
 	{hascontent}
-		<div id="plugins" class="border tabMenuContent hidden">
-			<hgroup class="subHeading">
+		<div id="plugins" class="wcf-border tabMenuContent hidden">
+			<hgroup class="wcf-subHeading">
 				<h1>Installed Plugins</h1>
 			</hgroup>
 			
-			<div class="contentHeader">
+			<div class="wcf-contentHeader">
 				
 			</div>
 			
@@ -105,14 +105,14 @@
 				</ol>
 			</section>
 			
-			<div class="contentFooter">
+			<div class="wcf-contentFooter">
 				
 			</div>
 		</div>
 	{/hascontent}
 </div>
 
-<div class="contentFooter">
+<div class="wcf-contentFooter">
 	<nav>
 		<ul class="largeButtons">
 			<li><a href="{link controller='PackageListDetailed'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" /> <span>detailed package list</span></a></li>

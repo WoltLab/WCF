@@ -107,11 +107,13 @@ hr {
 
 /* Single Classes */
 
-.hot {
+.hot,
+.wcf-hot {
 	color: #b00; 
 }
 
-.invisible {
+.invisible,
+.wcf-invisible {
 	position: absolute;
 	left: -9000px;
 	top: -9000px;
@@ -545,7 +547,8 @@ nav.topMenu {
 
 /* -- -- -- Main Menu -- -- -- */
 
-.mainMenu {
+.mainMenu,
+.wcf-mainMenu {
 	/* General toggle switch for main menu orientation (options: left|center|right) */
 	text-align: left;
 	margin: 0 30px;
@@ -553,55 +556,66 @@ nav.topMenu {
 	position: relative;
 }
 
-.mainMenu:after {
+.mainMenu:after,
+.wcf-mainMenu:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-.mainMenu > ul {
+.mainMenu > ul,
+.wcf-mainMenu > ul {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	background-color: rgba(0, 0, 0, .4);
 	display: inline-block;
 }
 
-.mainMenu > ul > li {
+.mainMenu > ul > li,
+.wcf-mainMenu > ul > li {
 	display: inline-block;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.mainMenu > ul > li {
+	.mainMenu > ul > li,
+	.wcf-mainMenu > ul > li {
 		font-size: 120%;
 	}
 }
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.mainMenu > ul > li {
+	.mainMenu > ul > li,
+	.wcf-mainMenu > ul > li {
 		font-size: 150%;
 	}
 }
 
-.mainMenu > ul > li.activeMenuItem {
+.mainMenu > ul > li.activeMenuItem,
+.wcf-mainMenu > ul > li.activeMenuItem {
 	margin: -5px 0 0;
 }
 
-.mainMenu > ul > li.activeMenuItem:first-child {
+.mainMenu > ul > li.activeMenuItem:first-child,
+.wcf-mainMenu > ul > li.activeMenuItem:first-child {
 	margin: -5px -5px 0 0;
 }
 
-.mainMenu > ul > li.activeMenuItem:last-child {
+.mainMenu > ul > li.activeMenuItem:last-child,
+.wcf-mainMenu > ul > li.activeMenuItem:last-child {
 	margin: -5px 0 0 -5px;
 }
 
 .mainMenu > ul > li:only-child,
-.mainMenu > ul > li.activeMenuItem:only-child {
+.mainMenu > ul > li.activeMenuItem:only-child,
+.wcf-mainMenu > ul > li:only-child,
+.wcf-mainMenu > ul > li.activeMenuItem:only-child {
 	margin: -5px 0 0;
 }
 
-.mainMenu > ul > li > a {
+.mainMenu > ul > li > a,
+.wcf-mainMenu > ul > li > a {
 	font-weight: normal;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 1);
 	color: #69c;
@@ -633,7 +647,8 @@ nav.topMenu {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.mainMenu > ul > li > a {
+	.mainMenu > ul > li > a,
+	.wcf-mainMenu > ul > li > a {
 		padding: 10px 20px;
 	}
 	
@@ -641,22 +656,27 @@ nav.topMenu {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.mainMenu > ul > li > a {
+	.mainMenu > ul > li > a,
+	.wcf-mainMenu > ul > li > a {
 		padding: 10px 10px;
 	}
 	
 }
 
 .mainMenu > ul > li > a,
-.mainMenu > ul > li:hover > a {
+.mainMenu > ul > li:hover > a,
+.wcf-mainMenu > ul > li > a,
+.wcf-mainMenu > ul > li:hover > a {
 	text-decoration: none;
 }
 
-.mainMenu > ul > li:not(.activeMenuItem):hover > a {
+.mainMenu > ul > li:not(.activeMenuItem):hover > a,
+.wcf-mainMenu > ul > li:not(.activeMenuItem):hover > a {
 	color: rgba(255, 255, 255, 1);
 }
 
-.mainMenu > ul > li.activeMenuItem > a {
+.mainMenu > ul > li.activeMenuItem > a,
+.wcf-mainMenu > ul > li.activeMenuItem > a {
 	font-size: 110%;
 	font-weight: bold;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
@@ -677,7 +697,8 @@ nav.topMenu {
 
 /* Rounded Bottom Corners */
 
-.mainMenu > ul > li.activeMenuItem > a:before {
+.mainMenu > ul > li.activeMenuItem > a:before,
+.wcf-mainMenu > ul > li.activeMenuItem > a:before {
 	position: absolute;
     bottom: 0;
     width: 7px;
@@ -689,7 +710,8 @@ nav.topMenu {
     box-shadow: 2px 2px 0 #e7f2fd;
 }
 
-.mainMenu > ul > li.activeMenuItem > a:after {
+.mainMenu > ul > li.activeMenuItem > a:after,
+.wcf-mainMenu > ul > li.activeMenuItem > a:after {
 	position: absolute;
     bottom: 0;
     width: 7px;
@@ -703,7 +725,8 @@ nav.topMenu {
 
 /* ToDo: Special */
 
-.mainMenu > ul > li.activeMenuItem .badge {
+.mainMenu > ul > li.activeMenuItem .badge,
+.wcf-mainMenu > ul > li.activeMenuItem .wcf-badge {
 	font-size: 65% !important;
 	color: rgba(255, 255, 255, 1);
 	background-color: #369;
@@ -823,7 +846,8 @@ nav.topMenu {
 
 /* ############## Main ############## */
 
-.main {
+.main,
+.wcf-main {
 	background-color: #d8e7f5;
 	margin: 0 23px;
 	position: relative;
@@ -837,7 +861,8 @@ nav.topMenu {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.main {
+	.main,
+	.wcf-main {
 		min-width: 800px;
 	}
 	
@@ -845,7 +870,8 @@ nav.topMenu {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.main {
+	.main
+	.wcf-main {
 		min-width: auto;
 	}
 	
@@ -857,7 +883,8 @@ nav.topMenu {
 
 /* ToDo: Change the class name, since now we have the class "content" 2 times! */
 
-section.content {
+section.content,
+section.wcf-content {
 	background-color: rgba(255, 255, 255, 1);
 	position: relative;
 	min-height: 100px;
@@ -877,30 +904,34 @@ section.content {
 	transition: margin .1s ease;
 }
 
-section.content:after {
+section.content:after,
+section.wcf-content:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-.left section.content {
+.left section.content,
+.left section.wcf-content {
 	border-left: 1px solid rgba(187, 204, 221, 1);
 	margin-left: 249px;
 }
 
-.right section.content {
+.right section.content,
+.right section.wcf-content {
 	border-right: 1px solid rgba(187, 204, 221, 1);
 	margin-right: 249px;
 }
 
-/* ToDo: The sidebar should be removed completely, when there is no content, as on the login-page and similar! Then this declaration would work as expected. */
-.main > div section:only-child {
+.main > div section:only-child,
+.wcf-main > div section:only-child {
 	margin: 0 !important;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	section.content {
+	section.content,
+	section.wcf-content {
 		padding: 5px 40px 20px;
 	}
 	
@@ -908,13 +939,17 @@ section.content:after {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	section.content {
+	section.content,
+	section.wcf-content {
 		padding: 5px 15px 20px;
 	}
 	
 }	
 
-section.content .content {
+section.content .content,
+section.wcf-content .wcf-content,
+section.content .wcf-content,
+section.wcf-content .content {
 	/* Test: border: 1px solid #ccc;*/
 	background-color: rgba(0, 0, 0, .01);
 	padding: 13px 23px 23px;
@@ -925,7 +960,9 @@ section.content .content {
 /* -- -- -- Content Header & Footer -- -- -- */
 
 .contentHeader,
-.contentFooter {
+.contentFooter,
+.wcf-contentHeader,
+.wcf-contentFooter {
 	margin-top: 15px;
 }
 
@@ -935,7 +972,8 @@ section.content .content {
 
 /* Globals */
 
-.sidebar {
+.sidebar,
+.wcf-sidebar {
 	margin-bottom: -10px;
 	display: block;
 	width: 250px;
@@ -951,11 +989,13 @@ section.content .content {
 
 /* Toggle for sidebar orientation (options: left|right|top|bottom) */
 
-.left .sidebar {
+.left .sidebar,
+.left .wcf-sidebar {
 	float: left;
 }
 
-.right .sidebar {
+.right .sidebar
+.right .wcf-sidebar {
 	float: right;
 }
 
@@ -970,12 +1010,14 @@ section.content .content {
 	height: 0;
 }
 
-.left .sidebar.collapsed + .content {
+.left .sidebar.collapsed + .content,
+.left .wcf-sidebar.collapsed + .wcf-content {
 	border: 0;
 	margin-left: 0;
 }
 
-.right .sidebar.collapsed + .content {
+.right .sidebar.collapsed + .content,
+.right .wcf-sidebar.collapsed + .wcf-content {
 	border: 0;
 	margin-right: 0;
 }
@@ -986,7 +1028,8 @@ section.content .content {
 
 /* Globals */
 
-.sidebar .collapsibleSidebarButton {
+.sidebar .collapsibleSidebarButton,
+.wcf-sidebar .collapsibleSidebarButton {
 	cursor: pointer;
 	background-position: center 1%, center 99%;
 	background-size: 10px 10px, 10px 10px;
@@ -1025,7 +1068,8 @@ section.content .content {
 	transition: right .1s ease;
 }
 
-.sidebar .collapsibleSidebarButton span {
+.sidebar .collapsibleSidebarButton span,
+.wcf-sidebar .collapsibleSidebarButton span {
     background-position: center center;
 	background-size: 10px 10px;
 	background-repeat: no-repeat;
@@ -1045,13 +1089,16 @@ section.content .content {
 	background-image: url('../../icon/arrowRight1.svg');
 }
 
-.sidebar .collapsibleSidebarButton:hover {
+.sidebar .collapsibleSidebarButton:hover,
+.wcf-sidebar .collapsibleSidebarButton:hover {
 	background-color: rgba(252, 252, 252, 1);
 	opacity: 1;
 }
 
 .sidebar .collapsibleSidebarButton:focus,
-.sidebar .collapsibleSidebarButton:active {
+.sidebar .collapsibleSidebarButton:active,
+.wcf-sidebar .collapsibleSidebarButton:focus,
+.wcf-sidebar .collapsibleSidebarButton:active {
 	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-ms-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
@@ -1070,7 +1117,8 @@ section.content .content {
 	background-image: url('../../icon/arrowRight1.svg');
 }
 
-.left .sidebar .collapsibleSidebarButton:hover {
+.left .sidebar .collapsibleSidebarButton:hover,
+.left .wcf-sidebar .collapsibleSidebarButton:hover {
 	border-right: 1px solid rgba(187, 204, 221, .5);
 }
 
@@ -1085,7 +1133,8 @@ section.content .content {
 	background-image: url('../../icon/arrowLeft1.svg');
 }
 
-.right .sidebar .collapsibleSidebarButton:hover {
+.right .sidebar .collapsibleSidebarButton:hover,
+.right .wcf-sidebar .collapsibleSidebarButton:hover {
 	border-left: 1px solid rgba(187, 204, 221, .5);
 }
 
@@ -1253,16 +1302,19 @@ section.content .content {
 
 /* -- -- -- Copyright -- -- -- */
 
-.pageFooter .copyright {
+.pageFooter .copyright,
+.pageFooter .wcf-copyright {
 	padding-top: 20px;
 	display: inline-block;
 }
 
-.pageFooter .copyright a {
+.pageFooter .copyright a,
+.pageFooter .wcf-copyright a {
 	text-shadow: 0 -1px 0 #000;
 }
 
-.pageFooter .copyright a:hover {
+.pageFooter .copyright a:hover,
+.pageFooter .wcf-copyright a:hover {
 	text-decoration: none;
 	color: #69c;
 }
@@ -1273,7 +1325,8 @@ section.content .content {
 
 /* Globals */
 
-.badge {
+.badge,
+.wcf-badge {
 	font-size: 85%;
 	font-weight: bold;
 	text-shadow: none;
@@ -1290,29 +1343,34 @@ section.content .content {
 
 /* Badge Types */
 
-.badgeNote {
+.badgeNote,
+.wcf-badgeNote {
 	border: 1px solid #ccc;
 }
 
-.badgeInfo {
+.badgeInfo,
+.wcf-badgeInfo {
 	color: #68b;
 	border: 1px solid #9be;
 	background-color: #def;
 }
 
-.badgeSuccess {
+.badgeSuccess,
+.wcf-badgeSuccess {
 	color: #090;
 	border: 1px solid #0c0;
 	background-color: #efe;
 }
 
-.badgeWarning {
+.badgeWarning,
+.wcf-badgeWarning {
 	color: #990;
 	border: 1px solid #cc0;
 	background-color: #ffd;
 }
 
-.badgeError {
+.badgeError,
+.wcf-badgeError {
 	color: #c00;
 	border: 1px solid #f99;
 	background-color: #fee;
@@ -1321,6 +1379,7 @@ section.content .content {
 /* Buttons */
 
 .badgeButton,
+.wcf-badgeButton,
 .clipboardEditor > ul > li {
 	cursor: pointer;
 	border-radius: 30px;
@@ -1330,8 +1389,10 @@ section.content .content {
 	display: inline-block;
 }
 
-li.badgeButton,
-li > .badgeButton {
+.badgeButton,
+.wcf-badgeButton,
+li > .badgeButton,
+li > .wcf-badgeButton {
 	margin-top: 7px;
 	margin-right: 3px;
 	margin-left: 3px;
@@ -1339,7 +1400,9 @@ li > .badgeButton {
 }
 
 .badgeButton,
+.wcf-badgeButton,
 .badgeButton a,
+.wcf-badgeButton a,
 .clipboardEditor > ul > li > span {
 	text-decoration: none !important;
 }
@@ -1584,30 +1647,37 @@ table .label {
 
 /* -- -- -- Main Heading -- -- -- */
 
-.mainHeading {
+.mainHeading,
+.wcf-mainHeading {
 	margin-top: 25px;
 }
 
-.mainHeading:not(:first-of-type) {
+.mainHeading:not(:first-of-type)
+.wcf-mainHeading:not(:first-of-type) {
 	margin-top: 30px;
 }
 
-.wcfDialogContainer .mainHeading {
+.wcfDialogContainer .mainHeading
+.wcfDialogContainer .wcf-mainHeading {
 	margin-top: 0;
 }
 
 .mainHeading > img,
-.mainHeading > svg{
+.mainHeading > svg,
+.wcf-mainHeading > img,
+.wcf-mainHeading > svg {
 	float: left;
 }
 
-.mainHeading > hgroup {
+.mainHeading > hgroup,
+.wcf-mainHeading > hgroup {
 	display: block;
 	position: relative;
 	min-height: 48px;
 }
 
-.mainHeading > hgroup h1 {
+.mainHeading > hgroup h1
+.wcf-mainHeading > hgroup h1 {
 	font-weight: bold;
 	border-bottom: 1px solid rgba(153, 153, 153, 1);
 	padding: 1px 0 10px;	
@@ -1616,17 +1686,22 @@ table .label {
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
 	.mainHeading > img,
-	.mainHeading > svg {
+	.mainHeading > svg,
+	.wcf-mainHeading > img,
+	.wcf-mainHeading > svg {
 		width: 48px;
 		height: 48px;
 	}
 	
 	.mainHeading > img ~ hgroup,
-	.mainHeading > svg ~ hgroup {
+	.mainHeading > svg ~ hgroup,
+	.wcf-mainHeading > img ~ hgroup,
+	.wcf-mainHeading > svg ~ hgroup {
 		padding-left: 60px;
 	}
 	
-	.mainHeading > hgroup h1 {
+	.mainHeading > hgroup h1,
+	.wcf-mainHeading > hgroup h1 {
 		font-size: 175%;
 	}
 	
@@ -1635,45 +1710,46 @@ table .label {
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
 	.mainHeading > img,
-	.mainHeading > svg {
+	.mainHeading > svg,
+	.wcf-mainHeading > img,
+	.wcf-mainHeading > svg {
 		width: 64px;
 		height: 64px;
 	}
 	
 	.mainHeading > img ~ hgroup,
-	.mainHeading > svg ~ hgroup {
+	.mainHeading > svg ~ hgroup,
+	.wcf-mainHeading > img ~ hgroup,
+	.wcf-mainHeading > svg ~ hgroup {
 		padding-left: 65px;
 	}
 	
-	.mainHeading > hgroup h1 {
+	.mainHeading > hgroup h1,
+	.wcf-mainHeading > hgroup h1 {
 		font-size: 200%;
 	}
 	
 }
 
 .mainHeading > hgroup h1,
-.mainHeading > hgroup h1 a {
+.mainHeading > hgroup h1 a,
+.wcf-mainHeading > hgroup h1,
+.wcf-mainHeading > hgroup h1 a {
 	text-decoration: none;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	color: rgba(102, 102, 102, 1);
 }
 
-.mainHeading > hgroup h2 {
+.mainHeading > hgroup h2,
+.wcf-mainHeading > hgroup h2 {
 	font-size: 100%;
 	font-weight: normal;
 	color: rgba(153, 153, 153, 1);
 	padding-top: 5px;
 }
 
-/* ToDo: Get rid of that ".overlay" class! */
-.overlay .mainHeading > hgroup h1,
-.overlay .mainHeading > hgroup h1 a,
-.overlay .mainHeading > hgroup h2 {
-	text-shadow: 0 -1px 0 #000;
-	color: rgba(255, 255, 255, 1);
-}
-
-.mainHeading > hgroup p {
+.mainHeading > hgroup p,
+.wcf-mainHeading > hgroup p {
 	padding-top: 3px;
 } 
 
@@ -1681,7 +1757,8 @@ table .label {
 
 /* -- -- -- Sub Heading -- -- -- */
 
-.subHeading h1 {
+.subHeading h1,
+.wcf-subHeading h1 {
 	font-size: 150%;
 	font-weight: bold;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
@@ -1693,7 +1770,8 @@ table .label {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.subHeading h1 {
+	.subHeading h1,
+	.wcf-subHeading h1 {
 		font-size: 150%;
 	}
 	
@@ -1701,13 +1779,15 @@ table .label {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.subHeading h1 {
+	.subHeading h1,
+	.wcf-subHeading h1 {
 		font-size: 175%;
 	}
 	
 }
 
-.subHeading h2 {
+.subHeading h2,
+.wcf-subHeading h2 {
 	font-weight: normal;
 	color: #aaa;
 }
@@ -1882,19 +1962,22 @@ dl > dd > fieldset > dl > dd > label {
 
 /* Special -> Sidebar */
 
-.sidebar dl > dt {
+.sidebar dl > dt,
+.wcf-sidebar dl > dt {
 	text-align: left;
 	float: none;
 	width: auto;
 }
 
-.sidebar dl > dd {
+.sidebar dl > dd,
+.wcf-sidebar dl > dd {
 	margin-left: 0;
 	display: block;
 	margin-bottom: 13px;
 }	
 
-.sidebar dl > dd * {
+.sidebar dl > dd *,
+.wcf-sidebar dl > dd * {
 	display: block;
 }	
 
@@ -2349,13 +2432,17 @@ input[type='button'],
 /* Special */
 
 .sidebar .largeButtons *,
-.sidebar input {
+.sidebar input,
+.wcf-sidebar .largeButtons *,
+.wcf-sidebar input {
 	font-size: 75% !important;
 	padding: 3px 7px;
 }
 
 .sidebar .largeButtons *,
-.sidebar input {
+.sidebar input,
+.wcf-sidebar .largeButtons *,
+.wcf-sidebar input {
 	font-size: 75% !important;
 }
 
@@ -2363,7 +2450,8 @@ input[type='button'],
 
 /* ############## Border ############## */
 
-.border {
+.border,
+.wcf-border {
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	margin-top: 15px;
@@ -2376,7 +2464,8 @@ input[type='button'],
 	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);*/
 }
 
-.tabMenu ~ .border {
+.tabMenu ~ .border,
+.tabMenu ~ .wcf-border {
 	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
 	-moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
 	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
@@ -2385,18 +2474,14 @@ input[type='button'],
 	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);*/
 }
 
-/* ToDo: Get rid of that ".overlay" class! */
-.border.overlay {
-	margin-top: 0 !important;
-}
-
 
 
 /* ############## Box Title ############## */
 
 /* Globals */
 
-.boxTitle {
+.boxTitle,
+.wcf-boxTitle {
 	border-radius: 7px;
 	background-color: #369;
 	/* Disabled, because the WoltLab header-image is not LGPL 
@@ -2410,7 +2495,8 @@ input[type='button'],
 
 /* Headings */
 
-.boxTitle > hgroup {
+.boxTitle > hgroup,
+.wcf-boxTitle > hgroup {
 	text-shadow: 0 -1px 0 #000;
 	color: rgba(255, 255, 255, 1);
 	padding: 7px;
@@ -2418,35 +2504,42 @@ input[type='button'],
 }
 
 .boxTitle > a,
-.boxTitle > hgroup a {
+.boxTitle > hgroup a,
+.wcf-boxTitle > a,
+.wcf-boxTitle > hgroup a {
 	text-decoration: none;
 	color: rgba(255, 255, 255, 1);
 }
 
-.boxTitle > hgroup h1 {
+.boxTitle > hgroup h1,
+.wcf-boxTitle > hgroup h1 {
 	font-size: 120%;
 	display: inline-block;
 }
 
-.boxTitle > hgroup h2 {
+.boxTitle > hgroup h2,
+.wcf-boxTitle > hgroup h2 {
 	font-size: 85%;
 	color: rgba(255, 255, 255, .9);
 	margin-top: 5px;
 }
 
-.boxTitle > hgroup .badge {
+.boxTitle > hgroup .badge,
+.wcf-boxTitle > hgroup .wcf-badge {
 	font-size: 75%;
 	color: #369;
 }
 
 /* Collapse Icon */
 
-.boxTitle > a {
+.boxTitle > a,
+.wcf-boxTitle > a {
 	margin: 7px 0 0 10px;
 	float: left;
 }
 
-.boxTitle > a img {
+.boxTitle > a img,
+.wcf-boxTitle > a img {
 	height: 16px;
 	width: 16px;
 }
@@ -2699,18 +2792,21 @@ input[type='button'],
 
 /* Special */
 
-.boxTitle > .menu {
+.boxTitle > .menu,
+.wcf-boxTitle > .menu {
 	color: rgba(255, 255, 255, 1);
 	border: none;
 	margin: 0 !important;
 	padding: 6px 7px !important;
 }
 
-.boxTitle > .menu ul li {
+.boxTitle > .menu ul li,
+.wcf-boxTitle > .menu ul li {
 	margin-top: 0;
 }
 
-.boxTitle > .menu ul li a {
+.boxTitle > .menu ul li a,
+.wcf-boxTitle > .menu ul li a {
 	font-size: 85%;
 	text-decoration: none;
 	text-shadow: 0 -1px 0 #000;
@@ -2727,7 +2823,8 @@ input[type='button'],
 	transition: color .1s linear;
 }
 
-.boxTitle > .menu ul li a:hover {
+.boxTitle > .menu ul li a:hover,
+.wcf-boxTitle > .menu ul li a:hover {
 	color: rgba(255, 255, 255, 1) !important;
 	border: 1px solid rgba(0, 0, 0, .3);
 	background-color: rgba(0, 0, 0, .2);
@@ -2735,7 +2832,10 @@ input[type='button'],
 
 .boxTitle > .menu ul li a:active,
 .boxTitle > .menu ul li a:focus,
-.boxTitle > .menu ul li.ui-state-active a {
+.boxTitle > .menu ul li.ui-state-active a,
+.wcf-boxTitle > .menu ul li a:active,
+.wcf-boxTitle > .menu ul li a:focus,
+.wcf-boxTitle > .menu ul li.ui-state-active a {
 	border: 1px solid rgba(0, 0, 0, .5);
 	
 	-webkit-box-shadow: inset 0 2px 15px rgba(0, 0, 0, .5);
@@ -2745,7 +2845,8 @@ input[type='button'],
 	box-shadow: inset 0 2px 15px rgba(0, 0, 0, .5);
 }
 
-.boxTitle > .menu ul li a .badge {
+.boxTitle > .menu ul li a .badge,
+.wcf-boxTitle > .menu ul li a .wcf-badge {
 	color: #369 !important;
 }
 
@@ -2996,21 +3097,27 @@ tbody tr:hover td {
 
 /* -- -- -- Special -> Table Header -- -- -- */
 
-.menu ~ .border thead th:first-child {
-	border-top-left-radius: 0 !important;
-}
-
-.menu ~ .border thead th:last-child {
-	border-top-right-radius: 0 !important;
-}
-
 .menu ~ .border thead th:first-child,
-.boxTitle > table thead th:first-child {
+.menu ~ .wcf-border thead th:first-child {
 	border-top-left-radius: 0 !important;
 }
 
 .menu ~ .border thead th:last-child,
-.boxTitle > table thead th:last-child {
+.menu ~ .wcf-border thead th:last-child {
+	border-top-right-radius: 0 !important;
+}
+
+.menu ~ .border thead th:first-child,
+.boxTitle > table thead th:first-child,
+.menu ~ .wcf-border thead th:first-child,
+.wcf-boxTitle > table thead th:first-child {
+	border-top-left-radius: 0 !important;
+}
+
+.menu ~ .border thead th:last-child,
+.boxTitle > table thead th:last-child,
+.menu ~ .wcf-border thead th:last-child,
+.wcf-boxTitle > table thead th:last-child {
 	border-top-right-radius: 0 !important;
 }
 
@@ -3292,7 +3399,11 @@ tr .columnURL {
 .info,
 .error,
 .success,
-.warning {
+.warning,
+.wcf-info,
+.wcf-error,
+.wcf-success,
+.wcf-warning {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	line-height: 1.5;
 	border-radius: 7px;
@@ -3302,7 +3413,8 @@ tr .columnURL {
 
 /* Types */
 
-.info {
+.info,
+.wcf-info {
 	color: #68b;
 	border: 1px solid #9be;
 	background-color: #def;
@@ -3312,7 +3424,8 @@ tr .columnURL {
 	background-repeat: no-repeat;
 }
 
-.success {
+.success,
+.wcf-success {
 	color: #090;
 	border: 1px solid #0c0;
 	background-color: #efe;
@@ -3322,7 +3435,8 @@ tr .columnURL {
 	background-repeat: no-repeat;
 }
 
-.warning {
+.warning,
+.wcf-warning {
 	color: #990;
 	border: 1px solid #cc0;
 	background-color: #ffd;
@@ -3332,7 +3446,8 @@ tr .columnURL {
 	background-repeat: no-repeat;
 }
 
-.error {
+.error,
+.wcf-error {
 	color: #c00;
 	border: 1px solid #f99;
 	background-color: #fee;
@@ -3344,7 +3459,8 @@ tr .columnURL {
 
 /* Inline Errors */
 
-.innerError {
+.innerError,
+.wcf-innerError {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	line-height: 1.5;
 	color: #c00;
@@ -3368,7 +3484,8 @@ tr .columnURL {
 	box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
 }
 
-.innerError .pointer {	
+.innerError .pointer,
+.wcf-innerError .pointer {	
 	border-width: 0 7px 7px;
 	border-style: solid;
 	border-color: #ccc transparent;
@@ -3379,7 +3496,8 @@ tr .columnURL {
 	left: 10%;
 }
 
-.innerError .pointer span {	
+.innerError .pointer span,
+.wcf-innerError .pointer span {	
 	border-width: 0 5px 5px;
 	border-style: solid;
 	border-color: rgba(255, 255, 255, 1) transparent;
@@ -3392,7 +3510,8 @@ tr .columnURL {
 
 /* Special -> Pre Input */
 
-.preInput ~ .innerError .pointer {	
+.preInput ~ .innerError .pointer,
+.preInput ~ .wcf-innerError .pointer {	
 	right: 10%;
 	left: auto;
 }
@@ -3403,7 +3522,8 @@ tr .columnURL {
 
 /* Globals */
 
-.systemNotification { /* declarations taken from .success */
+.systemNotification,
+.wcf-systemNotification { /* declarations taken from .success */
 	background-color: rgba(238, 255, 238, 1);
 	border: 1px solid rgba(0, 204, 0, 1);
 	border-top-width: 0;
@@ -3425,7 +3545,8 @@ tr .columnURL {
 	transition: top .5s linear;
 }
 
-.systemNotification.open {
+.systemNotification.open,
+.wcf-systemNotification.open {
 	top: 0;
 }
 
@@ -3435,7 +3556,8 @@ tr .columnURL {
 
 /* Globals */
 
-.wcfDialogContainer {
+.wcfDialogContainer,
+.wcf-dialogContainer {
 	border: 23px solid transparent;
 	border-radius: 15px;
 	background-color: rgba(0, 0, 0, .4);
@@ -3452,7 +3574,8 @@ tr .columnURL {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.wcfDialogContainer {
+	.wcfDialogContainer,
+	.wcf-dialogContainer {
 		min-width: 500px !important;
 		max-width: 780px !important;
 	}
@@ -3461,7 +3584,8 @@ tr .columnURL {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.wcfDialogContainer {
+	.wcfDialogContainer,
+	.wcf-dialogContainer {
 		min-width: 200px !important;
 		max-width: 380px !important;
 	}
@@ -3470,7 +3594,8 @@ tr .columnURL {
 
 /* Titlebar */
 
-.wcfDialogTitlebar {
+.wcfDialogTitlebar,
+.wcf-dialogTitlebar {
 	border-bottom: 1px solid #036;
 	border-top-left-radius: 7px;
 	border-top-right-radius: 7px;
@@ -3486,7 +3611,8 @@ tr .columnURL {
 	/*cursor: move;*/
 }
 
-.wcfDialogTitle {
+.wcfDialogTitle,
+.wcf-dialogTitle {
 	font-size: 170%;
 	font-weight: bold;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 1);
@@ -3494,7 +3620,8 @@ tr .columnURL {
 	display: block;
 }
 
-.wcfDialogCloseButton {
+.wcfDialogCloseButton,
+.wcf-dialogCloseButton {
 	background-image: url('../../icon/delete2.svg');
 	background-size: 32px;
 	background-position: top left;
@@ -3507,7 +3634,8 @@ tr .columnURL {
 	cursor: pointer;
 }
 
-.wcfDialogCloseButton span {
+.wcfDialogCloseButton span,
+.wcf-dialogCloseButton span {
 	/* Removes the button-caption */
 	position: absolute;
 	left: -9000px;
@@ -3517,26 +3645,27 @@ tr .columnURL {
 
 /* Content */
 
-.wcfDialogContent {
+.wcfDialogContent,
+.wcf-dialogContent {
 	background-color: #333;
 	overflow: auto;
 }
 
-.wcfDialogContainer > .wcfDialogContent {
+.wcfDialogContainer > .wcfDialogContent,
+.wcf-dialogContainer > .wcf-dialogContent {
 	border-radius: 7px;
 	padding: 0;
 	/*width: auto !important;*/
 }
 
-.wcfDialogTitlebar ~ .wcfDialogContent {
+.wcfDialogTitlebar ~ .wcfDialogContent,
+.wcf-dialogTitlebar ~ .wcf-dialogContent {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 	border-bottom-left-radius: 7px;
 	border-bottom-right-radius: 7px;
 	padding: 10px 20px 20px;
 }
-
-
 
 /* Special */
 
@@ -3558,7 +3687,8 @@ tr .columnURL {
 
 /* ############## ToDo: Overlay Spinner ############## */
 
-.wcfDialogOverlay {
+.wcfDialogOverlay,
+.wcf-dialogOverlay {
 	background-color: rgba(0, 0, 0, 1);
 	opacity: .5;
 	position: fixed;
@@ -3569,7 +3699,8 @@ tr .columnURL {
 
 
 /* ToDo: What is that and change that class-name! */
-.overlayLoading {
+.overlayLoading,
+.wcf-overlayLoading {
 	background-color: rgba(255, 255, 255, 1);
 	background-image: url('../../icon/spinner1.svg');
 	background-position: center center;
@@ -3735,7 +3866,8 @@ img[src*='enable'] {
 
 /* Globals */
 
-.clipboardEditor > ul {
+.clipboardEditor > ul,
+.wcf-clipboardEditor > ul {
 	font-size: .85em;
 	margin: 6px 3px 0;
 	display: block;
@@ -3743,7 +3875,8 @@ img[src*='enable'] {
 	float: left;
 }
 
-.clipboardEditor > ul > li > span {
+.clipboardEditor > ul > li > span,
+.wcf-clipboardEditor > ul > li > span {
 	background-image: url('../../icon/dropdown1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
@@ -4393,7 +4526,10 @@ button[disabled='disabled'] {
 
 /* ############## ToDo: Action Proxy Loading ############## */
 
-#actionProxyLoading {
+/* Spinner */
+
+#actionProxyLoading,
+#wcf-spinner {
 	text-align: center;
 	text-shadow: 0 -1px 0 #000;
 	color: #fff;
@@ -4424,7 +4560,8 @@ button[disabled='disabled'] {
 	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 }
 
-#actionProxyLoading img {
+#actionProxyLoading img,
+#wcf-spinner img {
 	margin-bottom: 10px;
 	height: 48px;
 	width: 48px;

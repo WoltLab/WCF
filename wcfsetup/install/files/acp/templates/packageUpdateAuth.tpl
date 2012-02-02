@@ -1,6 +1,6 @@
 {include file='header'}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.packageUpdate.auth{/lang}</h1>
@@ -8,11 +8,11 @@
 </header>
 
 {if $errorField != ''}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 <form method="{$requestMethod}" action="index.php{if $getParameters}?{@$getParameters}{/if}">
-	<div class="border content">
+	<div class="wcf-border wcf-content">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.packageUpdate.auth.data{/lang}</legend>
@@ -51,7 +51,7 @@
 				<dd>
 					<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="medium" />
 					{if $errorField == 'loginPassword'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{if $errorType == 'invalid'}{lang}wcf.acp.packageUpdate.auth.error{/lang}{/if}
 						</small>
 					{/if}

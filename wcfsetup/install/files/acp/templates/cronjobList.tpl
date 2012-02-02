@@ -1,6 +1,6 @@
 {include file='header'}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/time1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.cronjob.list{/lang}</h1>
@@ -34,7 +34,7 @@
 	</script>
 </header>
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	{pages print=true assign=pagesLinks controller="CronjobList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	
 	{hascontent}
@@ -53,7 +53,7 @@
 </div>
 
 {hascontent}
-	<div class="border boxTitle">
+	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.cronjob.list{/lang} <span class="badge" title="{lang}wcf.acp.cronjob.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
@@ -136,7 +136,7 @@
 		
 	</div>
 	
-	<div class="contentFooter">
+	<div class="wcf-contentFooter">
 		{@$pagesLinks}
 		
 		{* todo: add large button event *}
@@ -149,9 +149,9 @@
 		{/if}
 	</div>
 {hascontentelse}
-	<div class="border content">
-		<div class="container-1">
-			<p class="warning">{lang}wcf.acp.cronjob.noneAvailable{/lang}</p>
+	<div class="wcf-border wcf-content">
+		<div>
+			<p class="wcf-warning">{lang}wcf.acp.cronjob.noneAvailable{/lang}</p>
 		</div>
 	</div>
 {/hascontent}

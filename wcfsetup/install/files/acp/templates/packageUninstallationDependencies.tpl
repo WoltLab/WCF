@@ -8,7 +8,7 @@
 //	]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.package.uninstall{/lang}: {$packageObj->getName()}</h1>
@@ -65,12 +65,12 @@
 
 {if $dependentPackages|count > 0}
 	{if $uninstallAvailable}
-		<p class="warning">{lang}wcf.acp.package.uninstall.dependentPackages.warning{/lang}</p>
+		<p class="wcf-warning">{lang}wcf.acp.package.uninstall.dependentPackages.warning{/lang}</p>
 	{else}
-		<p class="error">{lang}wcf.acp.package.uninstall.dependentPackages.error{/lang}</p>
+		<p class="wcf-error">{lang}wcf.acp.package.uninstall.dependentPackages.error{/lang}</p>
 	{/if}
 
-	<div class="border boxTitle">
+	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.package.view.dependentPackages{/lang}</h1>
 		</hgroup>

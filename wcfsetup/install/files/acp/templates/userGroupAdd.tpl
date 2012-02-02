@@ -12,7 +12,7 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/{@$action}1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.group.{@$action}{/lang}</h1>
@@ -20,18 +20,18 @@
 </header>
 
 {if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 {if $warningSelfEdit|isset}
-	<p class="warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</p>	
+	<p class="wcf-warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</p>	
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.form.{@$action}.success{/lang}</p>	
+	<p class="wcf-success">{lang}wcf.global.form.{@$action}.success{/lang}</p>	
 {/if}
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	<nav>
 		<ul class="largeButtons">
 			<li><a href="{link controller='UserGroupList'}{/link}" title="{lang}wcf.acp.menu.link.group.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
@@ -42,7 +42,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='UserGroupAdd'}{/link}{else}{link controller='UserGroupEdit'}{/link}{/if}">
-	<div class="border content">
+	<div class="wcf-border wcf-content">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.group.data{/lang}</legend>
@@ -52,7 +52,7 @@
 				<dd>
 					<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" class="medium" />
 					{if $errorType.groupName|isset}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{if $errorType.groupName == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}

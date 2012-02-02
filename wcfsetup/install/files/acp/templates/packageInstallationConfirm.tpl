@@ -9,7 +9,7 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/working1.svg" alt="" />
 	<hgroup>
 		<h1>{$archive->getPackageInfo('packageName')}</h1>
@@ -18,11 +18,11 @@
 </header>
 
 {if $missingPackages > 0}
-	<p class="error">{lang}wcf.acp.package.install.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.acp.package.install.error{/lang}</p>
 {/if}
 
 {if $excludingPackages|count > 0}
-	<div class="error">{lang}wcf.acp.package.install.error.excludingPackages{/lang}
+	<div class="wcf-error">{lang}wcf.acp.package.install.error.excludingPackages{/lang}
 		<ul>
 		{foreach from=$excludingPackages item=excludingPackage}
 			<li>{lang}wcf.acp.package.install.error.excludingPackages.excludingPackage{/lang}</li>
@@ -32,7 +32,7 @@
 {/if}
 
 {if $excludedPackages|count > 0}
-	<div class="error">{lang}wcf.acp.package.install.error.excludedPackages{/lang}
+	<div class="wcf-error">{lang}wcf.acp.package.install.error.excludedPackages{/lang}
 		<ul>
 		{foreach from=$excludedPackages item=excludedPackage}
 			<li>{lang}wcf.acp.package.install.error.excludedPackages.excludedPackage{/lang}</li>
@@ -75,9 +75,9 @@
 </fieldset>
 
 {if $updatableInstances|count > 0}
-	<p class="warning">{lang}wcf.acp.package.install.updatableInstances.warning{/lang}</p>
+	<p class="wcf-warning">{lang}wcf.acp.package.install.updatableInstances.warning{/lang}</p>
 	
-	<div class="border boxTitle">
+	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.package.install.updatableInstances{/lang}</h1>
 			<h2>{lang}wcf.acp.package.install.updatableInstances.description{/lang}</h2>
@@ -104,7 +104,7 @@
 {/if}
 
 {if $requiredPackages|count > 0}
-	<div class="border boxTitle">
+	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.package.view.requiredPackages{/lang} <span class="badge" title="{lang}wcf.acp.package.view.requiredPackages.description{/lang}">{#$requiredPackages|count}</span></h1>
 		</hgroup>

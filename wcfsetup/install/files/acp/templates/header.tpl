@@ -121,7 +121,7 @@
 			<!-- /logo -->
 			
 			<!-- main menu -->
-			<nav id="mainMenu" class="mainMenu">
+			<nav id="mainMenu" class="wcf-mainMenu">
 				{* work-around for unknown core-object during WCFSetup *}
 				{if PACKAGE_ID}
 					<ul>
@@ -147,11 +147,11 @@
 	<!-- /HEADER -->
 	
 	<!-- MAIN -->
-	<div id="main" class="main left"><!-- ToDo: We now use a floated sidebar. Thus we need some trigger for its orientation, which has to reside at least one level above the sidebar. This trigger should be set either to "left" or "right", although "top" or "bottom" would also be nice (not for the ACP but maybe in other applications like the gallery or so). Also for 2 sidebars we can mix the trigger values, support is already here!!! -->
+	<div id="main" class="wcf-main left">
 		<div>
 			{hascontent}
 				<!-- SIDEBAR -->
-				<aside class="sidebar">
+				<aside class="wcf-sidebar">
 					<!-- sidebar menu -->
 					<nav id="sidebarContent" class="sidebarContent">
 						{content}
@@ -186,5 +186,5 @@
 			{/hascontent}
 			
 			<!-- CONTENT -->
-			<section id="content" class="content">
+			<section id="content" class="wcf-content">
 				

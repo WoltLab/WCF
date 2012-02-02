@@ -1,6 +1,6 @@
 {include file='header'}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	{if $packageID == 0}
 		<img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" />
 		<hgroup>
@@ -15,10 +15,10 @@
 </header>
 
 {if $errorField != ''}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	<nav>
 		<ul class="largeButtons">
 			<li><a href="{link controller='PackageList'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
@@ -29,7 +29,7 @@
 </div>
 
 <form method="post" action="{link controller='PackageStartInstall'}{/link}" enctype="multipart/form-data">
-	<div class="border content">
+	<div class="wcf-border wcf-content">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.package.startInstall.source{/lang}</legend>

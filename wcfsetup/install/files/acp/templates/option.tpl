@@ -9,7 +9,7 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/options1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.option.category.{$category->categoryName}{/lang}</h1>
@@ -18,11 +18,11 @@
 </header>
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.form.edit.success{/lang}</p>
+	<p class="wcf-success">{lang}wcf.global.form.edit.success{/lang}</p>
 {/if}
 
 {if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 <form method="post" action="{link controller='Option' id=$category->categoryID}{/link}">
@@ -37,7 +37,7 @@
 		
 		{foreach from=$optionTree item=categoryLevel1}
 			<div id="{@$categoryLevel1[object]->categoryName}" class="border tabMenuContent hidden">
-				<hgroup class="subHeading">
+				<hgroup class="wcf-subHeading">
 					<h1>{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
 					<h2>{lang __optional=true}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}.description{/lang}</h2>
 				</hgroup>

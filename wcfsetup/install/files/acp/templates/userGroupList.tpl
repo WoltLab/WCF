@@ -8,14 +8,14 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.group.list{/lang}</h1>
 	</hgroup>
 </header>
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	{pages print=true assign=pagesLinks controller="UserGroupList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	<nav>
 		<ul class="largeButtons">
@@ -27,7 +27,7 @@
 </div>
 
 {hascontent}
-	<div class="border boxTitle">
+	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.group.list{/lang} <span class="badge" title="{lang}wcf.acp.group.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
@@ -74,7 +74,7 @@
 		
 	</div>
 	
-	<div class="contentFooter">
+	<div class="wcf-contentFooter">
 		{@$pagesLinks}
 		<nav>
 			<ul class="largeButtons">

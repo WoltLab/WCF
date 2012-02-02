@@ -10,14 +10,14 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.package.list{/lang}</h1>
 	</hgroup>
 </header>
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	{pages print=true assign=pagesLinks controller='PackageListDetailed' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 
 	{hascontent}
@@ -36,7 +36,7 @@
 </div>
 
 {if $objects|count > 0}
-	<div class="border boxTitle">
+	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
 			<h1><a href="#">{lang}wcf.acp.package.list{/lang} <span class="badge" title="{lang}wcf.acp.package.list.count{/lang}">{#$items}</span></a></h1>
 		</hgroup>
@@ -97,7 +97,7 @@
 	</div>
 {/if}
 
-<div class="contentFooter">
+<div class="wcf-contentFooter">
 	{@$pagesLinks}
 	
 	{hascontent}

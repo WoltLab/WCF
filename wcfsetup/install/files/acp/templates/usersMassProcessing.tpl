@@ -60,7 +60,7 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/user1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.user.massProcessing{/lang}</h1>
@@ -68,19 +68,19 @@
 </header>
 
 {if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
+
+<p class="wcf-warning">{lang}wcf.acp.user.massProcessing.warning{/lang}</p>
 
 {if $affectedUsers|isset}
-	<p class="success">{lang}wcf.acp.user.massProcessing.success{/lang}</p>	
+	<p class="wcf-success">{lang}wcf.acp.user.massProcessing.success{/lang}</p>	
 {/if}
 
-<p class="warning">{lang}wcf.acp.user.massProcessing.warning{/lang}</p>
-
 <form method="post" action="{link controller='UsersMassProcessing'}{/link}">
-	<div class="border content">
+	<div class="wcf-border wcf-content">
 		
-		<hgroup class="subHeading">
+		<hgroup class="wcf-subHeading">
 			<h1>{lang}wcf.acp.user.massProcessing.conditions{/lang}</h1>
 		</hgroup>
 		
@@ -113,7 +113,7 @@
 								<dd>
 									{htmlCheckboxes options=$availableGroups name='groupIDArray' selected=$groupIDArray}
 									
-									<label style="margin-top: 10px"><input type="checkbox" name="invertGroupIDs" value="1" {if $invertGroupIDs == 1}checked="checked" {/if}/> {lang}wcf.acp.user.groups.invertSearch{/lang}</label>
+									<!-- ToDo --><label style="margin-top: 10px"><input type="checkbox" name="invertGroupIDs" value="1" {if $invertGroupIDs == 1}checked="checked" {/if}/> {lang}wcf.acp.user.groups.invertSearch{/lang}</label>
 								</dd>
 							</dl>
 						</fieldset>
@@ -154,8 +154,8 @@
 				</nav>
 				
 				{if $options|count}
-					<div id="profile" class="border tabMenuContent hidden">
-						<hgroup class="subHeading">
+					<div id="profile" class="wcf-border tabMenuContent hidden">
+						<hgroup class="wcf-subHeading">
 							<h1>{lang}wcf.acp.user.search.conditions.profile{/lang}</h1>
 						</hgroup>
 						
@@ -168,8 +168,8 @@
 		{/hascontent}
 	</div>
 	
-	<div class="border content">
-		<hgroup class="subHeading">
+	<div class="wcf-border wcf-content">
+		<hgroup class="wcf-subHeading">
 			<h1>{lang}wcf.acp.user.massProcessing.action{/lang}</h1>
 		</hgroup>
 			
@@ -195,7 +195,7 @@
 							{event name='additionalActions'}
 							
 							{if $errorField == 'action'}
-								<small class="innerError">
+								<small class="wcf-innerError">
 									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 								</small>
 							{/if}
@@ -214,7 +214,7 @@
 					<dd>
 						<input type="email" id="from" name="from" value="{$from}" class="medium" />
 						{if $errorField == 'from'}
-							<small class="innerError">
+							<small class="wcf-innerError">
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}
@@ -227,7 +227,7 @@
 					<dd>
 						<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
 						{if $errorField == 'subject'}
-							<small class="innerError">
+							<small class="wcf-innerError">
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}
@@ -240,7 +240,7 @@
 					<dd>
 						<textarea id="text" name="text" rows="15" cols="40">{$text}</textarea>
 						{if $errorField == 'text'}
-							<small class="innerError" class="long">
+							<small class="wcf-innerError" class="long">
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}

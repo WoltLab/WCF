@@ -8,7 +8,7 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" /><!-- ToDo: Add possibility to show a custom app icon if given! -->
 	<hgroup>
 		<h1>{$package->getName()}</h1>
@@ -24,8 +24,8 @@
 		</ul>
 	</nav>
 
-	<div id="overview" class="border tabMenuContent hidden">
-		<hgroup class="subHeading">
+	<div id="overview" class="wcf-border tabMenuContent hidden">
+		<hgroup class="wcf-subHeading">
 			<h1>information</h1>
 		</hgroup>
 
@@ -95,7 +95,7 @@
 		</fieldset>
 
 		{if $package->packageDescription}
-			<hgroup class="subHeading">
+			<hgroup class="wcf-subHeading">
 				<h1>description</h1>
 			</hgroup>
 
@@ -104,7 +104,7 @@
 	</div>
 
 	{if $requiredPackages|count || $dependentPackages|count}
-		<div id="dependencies" class="border tabMenuContainer tabMenuContent">
+		<div id="dependencies" class="wcf-border tabMenuContainer tabMenuContent">
 			<nav class="menu">
 				<ul>
 					{if $requiredPackages|count}<li><a href="#dependencies-required">required</a></li>{/if}
@@ -113,13 +113,13 @@
 			</nav>
 
 			{hascontent}
-				<div id="dependencies-required" class="hidden">
-					<hgroup class="subHeading">
+				<div id="dependencies-required" class="wcf-hidden">
+					<hgroup class="wcf-subHeading">
 						<h1>{lang}wcf.acp.package.view.requiredPackages{/lang}</h1>
 						<h2>{lang}wcf.acp.package.view.requiredPackages.description{/lang}</h2>
 					</hgroup>
 		
-					<table>
+					<table class="wcf-border wcf-boxTitle">
 						<thead>
 							<tr class="tableHead">
 								<th colspan="2" class="columnID">{lang}wcf.acp.package.list.id{/lang}</th>
@@ -158,7 +158,7 @@
 												<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="balloonTooltip" />
 											{/if}
 										</td>
-										<td class="columnText" title="{$requiredPackage.packageDescription}"><p><a href="{link controller='PackageView' id=$requiredPackage.packageID}{/link}">{$requiredPackage.packageName}{if $requiredPackage.instanceNo > 1 && $requiredPackage.instanceName == ''} (#{#$requiredPackage.instanceNo}){/if}</a></p></td>
+										<td class="columnTitle" title="{$requiredPackage.packageDescription}"><p><a href="{link controller='PackageView' id=$requiredPackage.packageID}{/link}">{$requiredPackage.packageName}{if $requiredPackage.instanceNo > 1 && $requiredPackage.instanceName == ''} (#{#$requiredPackage.instanceNo}){/if}</a></p></td>
 										<td class="columnText">{if $requiredPackage.authorURL}<p><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$requiredPackage.authorURL|rawurlencode}" class="externalURL">{$requiredPackage.author}</a>{else}{$requiredPackage.author}</p>{/if}</td>
 										<td class="columnText"><p>{$requiredPackage.packageVersion}</p></td>
 										<td class="columnDate"><p>{@$requiredPackage.packageDate|date}</p></td>
@@ -174,19 +174,19 @@
 
 			{hascontent}
 				<div id="dependencies-dependent" class="hidden">
-					<hgroup class="subHeading">
+					<hgroup class="wcf-subHeading">
 						<h1>{lang}wcf.acp.package.view.dependentPackages{/lang}</h1>
 						<h2>{lang}wcf.acp.package.view.dependentPackages.description{/lang}</h2>
 					</hgroup>
 		
-					<table>
+					<table class="wcf-border wcf-boxTitle">
 						<thead>
 							<tr class="tableHead">
-								<th colspan="2">{lang}wcf.acp.package.list.id{/lang}</th>
-								<th colspan="2">{lang}wcf.acp.package.list.name{/lang}</th>
-								<th>{lang}wcf.acp.package.list.author{/lang}</th>
-								<th>{lang}wcf.acp.package.list.version{/lang}</th>
-								<th>{lang}wcf.acp.package.list.date{/lang}</th>
+								<th colspan="2" class="columnID">{lang}wcf.acp.package.list.id{/lang}</th>
+								<th colspan="2" class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
+								<th class="columnText">{lang}wcf.acp.package.list.author{/lang}</th>
+								<th class="columnText">{lang}wcf.acp.package.list.version{/lang}</th>
+								<th class="columnDigits">{lang}wcf.acp.package.list.date{/lang}</th>
 								
 								{event name='dependencyHeadColumns'}
 							</tr>
@@ -218,7 +218,7 @@
 												<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="balloonTooltip" />
 											{/if}
 										</td>
-										<td class="columnText" title="{$dependentPackage.packageDescription}"><p><a href="{link controller='PackageView' id=$dependentPackage.packageID}{/link}">{$dependentPackage.packageName}{if $dependentPackage.instanceNo > 1 && $dependentPackage.instanceName == ''} (#{#$dependentPackage.instanceNo}){/if}</a></p></td>
+										<td class="columnTitle" title="{$dependentPackage.packageDescription}"><p><a href="{link controller='PackageView' id=$dependentPackage.packageID}{/link}">{$dependentPackage.packageName}{if $dependentPackage.instanceNo > 1 && $dependentPackage.instanceName == ''} (#{#$dependentPackage.instanceNo}){/if}</a></p></td>
 										<td class="columnText">{if $dependentPackage.authorURL}<p><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$dependentPackage.authorURL|rawurlencode}" class="externalURL">{$dependentPackage.author}</a>{else}{$dependentPackage.author}</p>{/if}</td>
 										<td class="columnText"><p>{$dependentPackage.packageVersion}</p></td>
 										<td class="columnDate"><p>{@$dependentPackage.packageDate|date}</p></td>
@@ -244,7 +244,7 @@
 {/foreach}
 
 {hascontent}
-	<div class="contentFooter">
+	<div class="wcf-contentFooter">
 		<nav>
 			<ul class="largeButtons">
 				{content}

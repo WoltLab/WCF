@@ -1,18 +1,18 @@
 {include file='header'}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/upload1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.option.import{/lang}</h1>
 	</hgroup>
 </header>
 
-{if $success|isset}
-	<p class="success">{lang}wcf.acp.option.import.success{/lang}</p>	
+{if $errorField != ''}
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
-{if $errorField != ''}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
+{if $success|isset}
+	<p class="wcf-success">{lang}wcf.acp.option.import.success{/lang}</p>	
 {/if}
 
 <form method="post" action="{link controller='OptionImport'}{/link}" enctype="multipart/form-data">
@@ -26,7 +26,7 @@
 				<dd>
 					<input type="file" id="optionImport" name="optionImport" value="" />
 					{if $errorField == 'optionImport'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
@@ -51,7 +51,7 @@
 	</div>
 </form>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/download1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.option.export{/lang}</h1>
@@ -66,7 +66,7 @@
 		<dl id="optionExportDiv">
 			<dt><label>{lang}wcf.acp.option.export.download{/lang}</label></dt>
 			<dd>
-				<p><a href="{link controller='OptionExport'}{/link}" id="optionExport" class="badge badgeButton">{lang}wcf.acp.option.export{/lang}</a></p>
+				<p><a href="{link controller='OptionExport'}{/link}" id="optionExport" class="wcf-badge wcf-badgeButton">{lang}wcf.acp.option.export{/lang}</a></p>
 				<small>{lang}wcf.acp.option.export.download.description{/lang}</small>
 			</dd>
 		</dl>

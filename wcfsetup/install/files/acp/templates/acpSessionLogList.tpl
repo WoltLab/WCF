@@ -1,18 +1,18 @@
 {include file='header'}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/session1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.sessionLog.list{/lang}</h1>
 	</hgroup>
 </header>
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	{pages print=true assign=pagesLinks controller="ACPSessionLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 </div>
 
 {hascontent}
-	<div class="border boxTitle">
+	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.sessionLog.list{/lang} <span class="badge" title="{lang}wcf.acp.sessionLog.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
@@ -53,7 +53,7 @@
 		
 	</div>
 
-	<div class="contentFooter">
+	<div class="wcf-contentFooter">
 		{@$pagesLinks}
 	</div>
 {/hascontent}

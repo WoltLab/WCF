@@ -8,7 +8,7 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img {if $userID|isset}id="userEdit{@$userID}" {/if}src="{@RELATIVE_WCF_DIR}icon/{@$action}1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.user.{@$action}{/lang}</h1>
@@ -16,18 +16,18 @@
 </header>
 
 {if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
-{/if}
-
-{if $success|isset}
-	<p class="success">{lang}wcf.global.form.{@$action}.success{/lang}</p>	
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 {if $userID|isset && $__wcf->user->userID == $userID}
-	<p class="warning">{lang}wcf.acp.user.edit.warning.selfEdit{/lang}</p>	
+	<p class="wcf-warning">{lang}wcf.acp.user.edit.warning.selfEdit{/lang}</p>	
 {/if}
 
-<div class="contentHeader">
+{if $success|isset}
+	<p class="wcf-success">{lang}wcf.global.form.{@$action}.success{/lang}</p>	
+{/if}
+
+<div class="wcf-contentHeader">
 	<nav>
 		<ul class="largeButtons">
 			<li><a href="{link controller='UserList'}{/link}" title="{lang}wcf.acp.menu.link.user.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
@@ -39,7 +39,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='UserAdd'}{/link}{else}{link controller='UserEdit'}{/link}{/if}">
-	<div class="border content">
+	<div class="wcf-border wcf-content">
 		<dl{if $errorType.username|isset} class="formError"{/if}>
 			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 			<dd>

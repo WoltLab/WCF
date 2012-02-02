@@ -22,7 +22,7 @@
 </script>
 
 <form method="post" action="{link controller='PackageUpdate'}{/link}" id="updateForm">
-	<header class="mainHeading">
+	<header class="wcf-mainHeading">
 		<img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" />
 		<hgroup>
 			<h1>{lang}wcf.acp.packageUpdate{/lang}</h1>
@@ -33,10 +33,10 @@
 	</header>
 	
 	{if !$availableUpdates|count}
-		<p class="info">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
+		<p class="wcf-info">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
 	{else}
-		{foreach from=$availableUpdates item=availableUpdate}
-			<article class="message content"{if $availableUpdate.version.updateType == 'security'} style="border-color: #c00"{/if}>
+		{foreach from=$availableUpdates item=availableUpdate}<!-- ToDo: Style! -->
+			<article class="message wcf-content"{if $availableUpdate.version.updateType == 'security'} style="border-color: #c00"{/if}>
 				<div class="messageInner container-{cycle name='styles' values='1,2'}"><!-- ToDo: Remove cycle -->
 					<hgroup class="subHeading">
 						<h1>

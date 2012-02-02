@@ -1,6 +1,6 @@
 {include file='header'}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.packageUpdate{/lang}</h1>
@@ -9,15 +9,15 @@
 
 {if $errorField == 'updates'}
 	{if $errorType === 'empty'}
-		<p class="error">{lang}wcf.acp.packageUpdate.noneSelected{/lang}</p>
+		<p class="wcf-error">{lang}wcf.acp.packageUpdate.noneSelected{/lang}</p>
 	{else}
-		<p class="error">{lang}wcf.acp.packageUpdate.error{/lang} {$errorType->getMessage()} ({@$errorType->getCode()})</p>
+		<p class="wcf-error">{lang}wcf.acp.packageUpdate.error{/lang} {$errorType->getMessage()} ({@$errorType->getCode()})</p>
 		<!-- {$errorType->getTraceAsString()} -->
 	{/if}
 {/if}
 
 {if $errorField == 'excludedPackages'}
-	<div class="error">{lang}wcf.acp.packageUpdate.excludedPackages{/lang}
+	<div class="wcf-error">{lang}wcf.acp.packageUpdate.excludedPackages{/lang}
 		<ul>
 		{foreach from=$excludedPackages item=excludedPackage}
 			<li>{if $excludedPackage.conflict == 'existingPackageExcludesNewPackage'}{lang}wcf.acp.packageUpdate.excludedPackages.existingPackageExcludesNewPackage{/lang}{else}{lang}wcf.acp.packageUpdate.excludedPackages.newPackageExcludesExistingPackage{/lang}{/if}</li>
@@ -28,7 +28,7 @@
 
 {if $packageInstallationStack|count}
 	<form method="post" action="{link controller='PackageUpdate'}{/link}">
-		<div class="border content">
+		<div class="wcf-border wcf-content">
 			
 			<fieldset>
 				<legend>{lang}wcf.acp.packageUpdate.updates{/lang}</legend>

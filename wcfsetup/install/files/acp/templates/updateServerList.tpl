@@ -9,7 +9,7 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/server1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.updateServer.list{/lang}</h1>
@@ -17,10 +17,10 @@
 </header>
 
 {if $deletedPackageUpdateServerID}
-	<p class="success">{lang}wcf.acp.updateServer.delete.success{/lang}</p>
+	<p class="wcf-success">{lang}wcf.acp.updateServer.delete.success{/lang}</p>
 {/if}
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	{pages print=true assign=pagesLinks controller="UpdateServerList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	
 	<nav>
@@ -33,7 +33,7 @@
 </div>
 
 {hascontent}
-	<div class="border boxTitle">
+	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.updateServer.list{/lang} <span class="badge" title="{lang}wcf.acp.updateServer.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
@@ -79,7 +79,7 @@
 		
 	</div>
 	
-	<div class="contentFooter">
+	<div class="wcf-contentFooter">
 		{@$pagesLinks}
 		
 		<nav>
@@ -91,7 +91,7 @@
 		</nav>
 	</div>
 {hascontentelse}
-	<div class="border content">
+	<div class="wcf-border wcf-content">
 		<p class="warning">{lang}wcf.acp.updateServer.list.noneAvailable{/lang}</p>
 	</div>
 {/hascontent}

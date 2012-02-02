@@ -2,22 +2,22 @@
 
 <script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/search1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.packageUpdate.search{/lang}</h1>
 	</hgroup>
 </header>
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	{pages print=true assign=pagesLinks controller="PackageUpdateSearchResult" id=$searchID link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 </div>
 
 <form method="post" action="{link controller='PackageUpdate'}{/link}">
 	{foreach from=$packages item=package}
-		<article class="message content">
+		<article class="message wcf-content">
 			<div class="messageInner"><!-- ToDo! -->
-				<hgroup class="subHeading">
+				<hgroup class="wcf-subHeading">
 					<h1>
 						{if $package.isApplication == 1}
 							<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" title="{lang}wcf.acp.package.list.isApplication{/lang}" class="balloonTooltip" />

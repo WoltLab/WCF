@@ -1,6 +1,6 @@
 {include file='header' templateName='userException'}
 
-<p id="errorMessage" class="error">
+<p id="errorMessage" class="wcf-error">
 	{@$message}
 </p>
 

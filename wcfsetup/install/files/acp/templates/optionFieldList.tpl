@@ -9,7 +9,7 @@
 		<dt{if $optionData[cssClassName]} class="{$optionData[cssClassName]}"{/if}><label for="{$option->optionName}">{lang}{@$langPrefix}{$option->optionName}{/lang}</label></dt>
 		<dd>{@$optionData[html]}
 			{if $error}
-				<small class="innerError">
+				<small class="wcf-innerError">
 					{if $error == 'empty'}
 						{lang}wcf.global.form.error.empty{/lang}
 					{else}	
