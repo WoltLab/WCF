@@ -1,4 +1,4 @@
-<div id="packageInstallationDialogContainer" class="overlay">
+<div id="packageInstallationDialogContainer">
 	<header class="wcf-mainHeading">
 		<img src="{@RELATIVE_WCF_DIR}icon/working2.svg" alt="" />
 		<hgroup>
