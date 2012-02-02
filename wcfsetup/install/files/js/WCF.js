@@ -3532,6 +3532,109 @@ WCF.System.Notification = Class.extend({
 });
 
 /**
+ * Provides dialog-based confirmations.
+ */
+WCF.System.Confirmation = {
+	/**
+	 * notification callback
+	 * @var	object
+	 */
+	_callback: null,
+	
+	/**
+	 * confirmation dialog
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * dialog visibility
+	 * @var	boolean
+	 */
+	_visible: false,
+	
+	/**
+	 * Displays a confirmation dialog.
+	 * 
+	 * @param	string		message
+	 * @param	object		callback
+	 */
+	show: function(message, callback) {
+		if (this._visible) {
+			console.debug('[WCF.System.Confirmation] Confirmation dialog is already open, refusing action.');
+			return;
+		}
+		
+		if (!$.isFunction(callback)) {
+			console.debug('[WCF.System.Confirmation] Given callback is invalid, aborting.');
+			return;
+		}
+		
+		this._callback = callback;
+		if (this._dialog === null) {
+			this._createDialog();
+		}
+		
+		this._dialog.find('p').html(message);
+		this._dialog.wcfDialog({
+			onClose: $.proxy(this._close, this),
+			onShow: $.proxy(this._show, this),
+			title: WCF.Language.get('wcf.global.confirmation.title')
+		});
+		
+		this._visible = true;
+	},
+	
+	/**
+	 * Creates the confirmation dialog on first use.
+	 */
+	_createDialog: function() {
+		this._dialog = $('<div id="wcfSystemConfirmation"><p></p></div>').hide().appendTo(document.body);
+		var $formButtons = $('<div class="formSubmit" />').appendTo(this._dialog);
+		
+		$('<button class="default">' + WCF.Language.get('wcf.global.confirmation.confirm') + '</button>').data('action', 'confirm').click($.proxy(this._click, this)).appendTo($formButtons);
+		$('<button>' + WCF.Language.get('wcf.global.confirmation.cancel') + '</button>').data('action', 'cancel').click($.proxy(this._click, this)).appendTo($formButtons);
+	},
+	
+	/**
+	 * Handles button clicks.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		this._notify($(event.currentTarget).data('action'));
+	},
+	
+	/**
+	 * Handles dialog being closed.
+	 */
+	_close: function() {
+		if (this._visible) {
+			this._notify('cancel');
+		}
+	},
+	
+	/**
+	 * Notifies callback upon user's decision.
+	 * 
+	 * @param	string		action
+	 */
+	_notify: function(action) {
+		this._visible = false;
+		this._dialog.wcfDialog('close');
+		
+		this._callback(action);
+	},
+	
+	/**
+	 * Tries to set focus on confirm button.
+	 */
+	_show: function() {
+		this._dialog.find('button:eq(0)').blur().focus();
+	}
+};
+
+/**
  * Default implementation for inline editors.
  * 
  * @param	string		elementSelector
@@ -4016,7 +4119,11 @@ $.widget('ui.wcfDialog', {
 		showLoadingOverlay: true,
 		success: null,
 		type: 'POST',
-		url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+		url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
+		
+		// event callbacks
+		onClose: null,
+		onShow: null
 	},
 
 	/**
@@ -4192,6 +4299,10 @@ $.widget('ui.wcfDialog', {
 		if (this._overlay !== null) {
 			this._overlay.hide();
 		}
+		
+		if (this.options.onClose !== null) {
+			this.options.onClose();
+		}
 	},
 	
 	/**
@@ -4324,6 +4435,10 @@ $.widget('ui.wcfDialog', {
 			}, 600, $.proxy(function() {
 				this._isRendering = false;
 			}));
+		}
+		
+		if (this.options.onShow !== null) {
+			this.options.onShow();
 		}
 
 		this._isRendering = true;
