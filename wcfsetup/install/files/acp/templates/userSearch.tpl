@@ -27,11 +27,11 @@
 
 <div class="wcf-contentHeader">
 	<nav>
-		<ul class="largeButtons">
+		<ul class="wcf-largeButtons">
 			{if $__wcf->session->getPermission('admin.user.canAddUser')}
-				<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+				<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 			{/if}
-			<li><a href="{link controller='UserList'}{/link}" title="{lang}wcf.acp.menu.link.user.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserList'}{/link}" title="{lang}wcf.acp.menu.link.user.list{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>
@@ -112,8 +112,8 @@
 		
 		{event name='fieldsets'}
 		
-		<div class="tabMenuContainer">
-			<nav class="tabMenu">
+		<div class="wcf-tabMenuContainer">
+			<nav class="wcf-tabMenu">
 				<ul>
 					{if $optionTree|count}
 						<li><a href="#profile">{*<span>*}{lang}wcf.acp.user.search.conditions.profile{/lang}{*</span>*}</a></li>
@@ -126,7 +126,7 @@
 			</nav>
 			
 			{if $optionTree|count}
-				<div id="profile" class="wcf-border tabMenuContent hidden">
+				<div id="profile" class="wcf-border wcf-tabMenuContent hidden">
 					<div>
 						<h3 class="wcf-subHeading">{lang}wcf.acp.user.search.conditions.profile{/lang}</h3>
 						{include file='optionFieldList' langPrefix='wcf.user.option.' options=$optionTree}
@@ -136,7 +136,7 @@
 		
 			{event name='tabMenuContent'}
 		
-			<div id="resultOptions" class="wcf-border tabMenuContent hidden">
+			<div id="resultOptions" class="wcf-border wcf-tabMenuContent hidden">
 				<hgroup class="wcf-subHeading">
 					<h1>{lang}wcf.acp.user.search.display{/lang}</h1>
 				</hgroup>
@@ -220,7 +220,7 @@
 		</div>
 	</div>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}

@@ -3333,7 +3333,8 @@ tr .columnIcon img {
 	width: 16px;
 }
 
-.bigList tr .columnIcon img {
+.bigList tr .columnIcon img,
+.wcf-bigList tr .columnIcon img {
 	height: 24px;
 	width: 24px;
 }

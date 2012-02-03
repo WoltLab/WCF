@@ -16,8 +16,8 @@
 	</hgroup>
 </header>
 
-<div class="tabMenuContainer">
-	<nav class="tabMenu">
+<div class="wcf-tabMenuContainer">
+	<nav class="wcf-tabMenu">
 		<ul>
 			<li><a href="#overview">overview</a></li>
 			{if $requiredPackages|count || $dependentPackages|count}<li><a href="#dependencies">dependencies</a></li>{/if}
@@ -77,7 +77,7 @@
 			{if $package->packageURL != ''}
 				<dl>
 					<dt>{lang}wcf.acp.package.view.url{/lang}</dt>
-					<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package->packageURL|rawurlencode}" class="externalURL">{$package->packageURL}</a></dd>
+					<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package->packageURL|rawurlencode}" class="wcf-externalURL">{$package->packageURL}</a></dd>
 				</dl>
 			{/if}
 			{if $package->parentPackageID}
@@ -88,7 +88,7 @@
 			{/if}
 			<dl>
 				<dt>{lang}wcf.acp.package.view.author{/lang}</dt>
-				<dd>{if $package->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</dd>
+				<dd>{if $package->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="wcf-externalURL">{$package->author}</a>{else}{$package->author}{/if}</dd>
 			</dl>
 	
 			{event name='propertyFields'}
@@ -104,8 +104,8 @@
 	</div>
 
 	{if $requiredPackages|count || $dependentPackages|count}
-		<div id="dependencies" class="wcf-border tabMenuContainer tabMenuContent">
-			<nav class="menu">
+		<div id="dependencies" class="wcf-border wcf-tabMenuContainer wcf-tabMenuContent">
+			<nav class="wcf-menu">
 				<ul>
 					{if $requiredPackages|count}<li><a href="#dependencies-required">required</a></li>{/if}
 					{if $dependentPackages|count}<li><a href="#dependencies-dependent">dependent</a></li>{/if}
@@ -121,7 +121,7 @@
 		
 					<table class="wcf-border wcf-boxTitle">
 						<thead>
-							<tr class="tableHead">
+							<tr>
 								<th colspan="2" class="columnID">{lang}wcf.acp.package.list.id{/lang}</th>
 								<th colspan="2" class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
 								<th class="columnText">{lang}wcf.acp.package.list.author{/lang}</th>
@@ -181,7 +181,7 @@
 		
 					<table class="wcf-border wcf-boxTitle">
 						<thead>
-							<tr class="tableHead">
+							<tr>
 								<th colspan="2" class="columnID">{lang}wcf.acp.package.list.id{/lang}</th>
 								<th colspan="2" class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
 								<th class="columnText">{lang}wcf.acp.package.list.author{/lang}</th>
@@ -246,18 +246,18 @@
 {hascontent}
 	<div class="wcf-contentFooter">
 		<nav>
-			<ul class="largeButtons">
+			<ul class="wcf-largeButtons">
 				{content}
 					{if PACKAGE_ID != $package->packageID}
 						{if $package->isApplication && $package->package != 'com.woltlab.wcf'}
-							<li><a href="{@RELATIVE_WCF_DIR}{$package->packageDir}acp/index.php{@SID_ARG_1ST}" title="{lang}wcf.acp.package.view.button.makeActive{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/packageACP1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.makeActive{/lang}</span></a></li>
+							<li><a href="{@RELATIVE_WCF_DIR}{$package->packageDir}acp/index.php{@SID_ARG_1ST}" title="{lang}wcf.acp.package.view.button.makeActive{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/packageACP1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.makeActive{/lang}</span></a></li>
 						{/if}
 						{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $noDependentIsActive}
-							<li><a href="{link controller='Package'}action=startUninstall&packageID={@$package->packageID}{/link}" onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.uninstall{/lang}</span></a></li>
+							<li><a href="{link controller='Package'}action=startUninstall&packageID={@$package->packageID}{/link}" onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.uninstall{/lang}</span></a></li>
 						{/if}
 					{/if}
 					{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-						<li><a href="{link controller='PackageStartInstall' id=$package->packageID}action=update{/link}" title="{lang}wcf.acp.package.view.button.update{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.update{/lang}</span></a></li>
+						<li><a href="{link controller='PackageStartInstall' id=$package->packageID}action=update{/link}" title="{lang}wcf.acp.package.view.button.update{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" /> <span>{lang}wcf.acp.package.view.button.update{/lang}</span></a></li>
 					{/if}
 					
 					{event name='largeButtons'}

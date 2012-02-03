@@ -22,10 +22,10 @@
 
 	{hascontent}
 		<nav>
-			<ul class="largeButtons">
+			<ul class="wcf-largeButtons">
 				{content}
 					{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
-						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
 				
 					{event name='largeButtons'}
@@ -102,10 +102,10 @@
 	
 	{hascontent}
 		<nav>
-			<ul class="largeButtons">
+			<ul class="wcf-largeButtons">
 				{content}
 					{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
-						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
 				
 					{event name='largeButtons'}
