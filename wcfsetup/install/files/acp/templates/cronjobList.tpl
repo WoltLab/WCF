@@ -39,10 +39,10 @@
 	
 	{hascontent}
 		<nav>
-			<ul class="largeButtons">
+			<ul class="wcf-largeButtons">
 				{content}
 					{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
-						<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+						<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 					{/if}
 
 					{event name='largeButtons'}
@@ -142,8 +142,8 @@
 		{* todo: add large button event *}
 		{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
 			<nav>
-				<ul class="largeButtons">
-					<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+				<ul class="wcf-largeButtons">
+					<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 				</ul>
 			</nav>
 		{/if}

@@ -50,8 +50,8 @@
 
 <div class="wcf-contentHeader">
 	<nav>
-		<ul class="largeButtons">
-			{if $cacheData.files}<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="{link controller='CacheClear'}{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
+		<ul class="wcf-largeButtons">
+			{if $cacheData.files}<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="{link controller='CacheClear'}{/link}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
 			
 			{event name='largeButtons'}
 		</ul>
@@ -98,9 +98,9 @@
 {/foreach}
 
 <div class="wcf-contentFooter">
-	<nav class="largeButtons">
+	<nav class="wcf-largeButtons">
 		<ul>
-			{if $cacheData.files}<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="{link controller='CacheClear'}{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
+			{if $cacheData.files}<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="{link controller='CacheClear'}{/link}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
 			
 			{event name='largeButtons'}
 		</ul>
