@@ -57,30 +57,33 @@
 	</script>
 {/if}
 
-<div class="mainHeadline">
+<div class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/languageEditL.png" alt="" />
-	<div class="headlineContainer">
+	<div>
 		<h2>{lang}wcf.acp.language.edit{/lang}</h2>
 	</div>
 </div>
 
 {if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.acp.language.edit.success{/lang}</p>	
+	<p class="wcf-success">{lang}wcf.acp.language.edit.success{/lang}</p>	
 {/if}
 
-<div class="contentHeader">
-	<div class="largeButtons">
-		<ul><li><a href="index.php?page=LanguageList{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/languageM.png" alt="" title="{lang}wcf.acp.menu.link.language.view{/lang}" /> <span>{lang}wcf.acp.menu.link.language.view{/lang}</span></a></li>
-		<li><a href="index.php?form=LanguageSearch{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/searchM.png" alt="" title="{lang}wcf.acp.menu.link.language.view{/lang}" /> <span>{lang}wcf.acp.menu.link.language.search{/lang}</span></a></li></ul>
+<div class="wcf-contentHeader">
+	<div class="wcf-largeButtons">
+		<ul>
+			<li><a href="index.php?page=LanguageList{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/languageM.png" alt="" title="{lang}wcf.acp.menu.link.language.view{/lang}" class="wcf-button" /> <span>{lang}wcf.acp.menu.link.language.view{/lang}</span></a></li>
+			<li><a href="index.php?form=LanguageSearch{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/searchM.png" alt="" title="{lang}wcf.acp.menu.link.language.view{/lang}" class="wcf-button" /> <span>{lang}wcf.acp.menu.link.language.search{/lang}</span></a></li>
+		</ul>
 	</div>
 </div>
+
 <form method="get" action="index.php">
-	<div class="border content">
-		<div class="container-1">
+	<div class="wcf-border wcf-content">
+		<div>
 			<div class="formElement">
 				<p class="formField">
 					<span>{lang}wcf.global.language.{@$language->languageCode}{/lang} ({@$language->languageCode})</span>
@@ -88,8 +91,8 @@
 				</p>
 			</div>
 			
-			<div class="formElement{if $errorField == 'languageCategoryID'} formError{/if}">
-				<div class="formFieldLabel">
+			<div class="formElement{if $errorField == 'languageCategoryID'} wcf-formError{/if}">
+				<div class="formFieldLabel"><!-- Todo: Def. List! -->
 					<label for="languageCategoryID">{lang}wcf.acp.language.category{/lang}</label>
 				</div>
 				<div class="formField">
@@ -98,14 +101,14 @@
 						{htmlOptions options=$languageCategories selected=$languageCategoryID}
 					</select>
 					{if $errorField == 'languageCategoryID'}
-						<p class="innerError">
+						<p class="wcf-innerError">
 							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
 						</p>
 					{/if}
 				</div>
 			</div>
 			
-			<div class="formElement">
+			<div class="formElement"><!-- Todo: Def. List! -->
 				<div class="formField">
 					<label><input onclick="this.form.submit()" type="checkbox" name="customVariables" value="1" {if $customVariables == 1}checked="checked" {/if}/> {lang}wcf.acp.language.showCustomVariables{/lang}</label>
 				</div>
@@ -132,9 +135,9 @@
 		</fieldset>
 		
 		{foreach from=$languageItems item=category}
-			<div class="border content">
-				<div class="container-1">
-					<h3 class="subHeadline">{$category.category}</h3>
+			<div class="wcf-border wcf-content">
+				<div>
+					<h3 class="wcf-subHeadline">{$category.category}</h3>
 					{foreach from=$category.items key=$languageItem item=languageItemValue}
 						<a id="languageItem{@$languageItemIDs.$languageItem}"></a>
 						
@@ -177,7 +180,7 @@
 		
 		{if $additionalFields|isset}{@$additionalFields}{/if}
 		
-		<div class="formSubmit">
+		<div class="wcf-formSubmit">
 			<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 			<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
 	 		{@SID_INPUT_TAG}

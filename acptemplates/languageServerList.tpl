@@ -9,20 +9,20 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/language1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.languageServer.list{/lang}</h1>
 	</hgroup>
 </header>
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	{pages print=true assign=pagesLinks controller='LanguageServerList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	
 	{if $__wcf->getSession()->getPermission('admin.language.canAddServer')}
 		<nav>
-			<ul class="largeButtons">
-				<li><a href="{link controller='LanguageServerAdd'}{/link}" title="{lang}wcf.acp.languageServer.add{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
+			<ul class="wcf-largeButtons">
+				<li><a href="{link controller='LanguageServerAdd'}{/link}" title="{lang}wcf.acp.languageServer.add{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
 				
 				{event name='largeButtons'}
 			</ul>
@@ -31,13 +31,13 @@
 </div>
 
 {if !$languageServers|count}
-	<div class="border content">
-		<div class="container-1">
+	<div class="wcf-border wcf-content">
+		<div>
 			<p>{lang}wcf.acp.languageServer.view.noneAvailable{/lang}</p>
 		</div>
 	</div>
 {else}
-	<div class="border boxTitle">
+	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.languageServer.list{/lang} <span class="badge" title="{lang}wcf.acp.languageServer.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
@@ -81,13 +81,13 @@
 		</table>
 	</div>
 	
-	<div class="contentFooter">
+	<div class="wcf-contentFooter">
 		{@$pagesLinks}
 		
 		{if $__wcf->getSession()->getPermission('admin.language.canAddServer')}
 			<nav>
-				<ul class="largeButtons">
-					<li><a href="{link controller='LanguageServerAdd'}{/link}" title="{lang}wcf.acp.languageServer.add{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
+				<ul class="wcf-largeButtons">
+					<li><a href="{link controller='LanguageServerAdd'}{/link}" title="{lang}wcf.acp.languageServer.add{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
 					
 					{event name='largeButtons'}
 				</ul>

@@ -1,6 +1,6 @@
 {include file='header'}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/export1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.language.export{/lang}</h1>
@@ -8,23 +8,23 @@
 </header>
 
 {if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.acp.language.add.success{/lang}</p>	
+	<p class="wcf-success">{lang}wcf.acp.language.add.success{/lang}</p>	
 {/if}
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	<nav>
-		<ul class="largeButtons">
-			<li><a href="{link controller='LanguageList'}{/link}" title="{lang}wcf.acp.menu.link.language.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/language1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
+		<ul class="wcf-largeButtons">
+			<li><a href="{link controller='LanguageList'}{/link}" title="{lang}wcf.acp.menu.link.language.list{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/language1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageExport' id=$languageID}{/link}">
-	<div class="border content">
+	<div class="wcf-border wcf-content">
 		<dl>
 			<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>
 			<dd>
@@ -54,7 +54,7 @@
 		</dl>
 	</div>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="submit" accesskey="s" value="{lang}wcf.global.button.submit{/lang}" />
 		<input type="reset" accesskey="r" value="{lang}wcf.global.button.reset{/lang}" />
 		{@SID_INPUT_TAG}

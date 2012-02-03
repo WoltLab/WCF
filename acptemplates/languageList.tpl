@@ -28,20 +28,20 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/language1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.language.list{/lang}</h1>
 	</hgroup>
 </header>
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	{pages print=true assign=pagesLinks controller='LanguageList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	
 	{if $__wcf->getSession()->getPermission('admin.language.canAddLanguage')}
 		<nav>
-			<ul class="largeButtons">
-				<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
+			<ul class="wcf-largeButtons">
+				<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
 				
 				{event name='largeButtons'}
 			</ul>
@@ -50,9 +50,9 @@
 </div>
 
 {if $objects|count}
-	<div class="border boxTitle">
+	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
-			<h1>{lang}wcf.acp.language.list{/lang} <span class="badge" title="{lang}wcf.acp.language.list.count{/lang}">{#$items}</span></h1>
+			<h1>{lang}wcf.acp.language.list{/lang} <span class="wcf-badge" title="{lang}wcf.acp.language.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
 	
 		<table>
@@ -118,13 +118,13 @@
 		</table>
 	</div>
 
-	<div class="contentFooter">
+	<div class="wcf-contentFooter">
 		{@$pagesLinks}
 		
 		{if $__wcf->getSession()->getPermission('admin.language.canAddLanguage')}
 			<nav>
-				<ul class="largeButtons">
-					<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
+				<ul class="wcf-largeButtons">
+					<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
 					
 					{event name='largeButtons'}
 				</ul>
