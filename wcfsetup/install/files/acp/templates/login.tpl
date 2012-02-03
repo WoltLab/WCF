@@ -29,7 +29,7 @@
 	<fieldset>
 		<legend>{lang}wcf.user.login.data{/lang}</legend>
 		
-		<dl{if $errorField == 'username'} class="formError"{/if}>
+		<dl{if $errorField == 'username'} class="wcf-formError"{/if}>
 			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 			<dd><input type="text" id="username" name="username" value="{$username}" class="medium" />
 				{if $errorField == 'username'}
@@ -44,7 +44,7 @@
 			</dd>
 		</dl>
 		
-		<dl{if $errorField == 'password'} class="formError"{/if}>
+		<dl{if $errorField == 'password'} class="wcf-formError"{/if}>
 			<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 			<dd><input type="password" id="password" name="password" value="" class="medium" />
 				{if $errorField == 'password'}
@@ -64,7 +64,7 @@
 	
 	{event name='fieldsets'}
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="url" value="{$url}" />

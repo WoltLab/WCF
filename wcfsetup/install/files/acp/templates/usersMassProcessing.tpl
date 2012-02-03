@@ -140,8 +140,8 @@
 		{event name='fieldsets'}
 		
 		{hascontent}
-			<div class="tabMenuContainer">
-				<nav class="tabMenu">
+			<div class="wcf-tabMenuContainer">
+				<nav class="wcf-tabMenu">
 					<ul>
 						{content}
 							{if $options|count}
@@ -173,7 +173,7 @@
 			<h1>{lang}wcf.acp.user.massProcessing.action{/lang}</h1>
 		</hgroup>
 			
-		<dl{if $errorField == 'action'} class="formError"{/if}>
+		<dl{if $errorField == 'action'} class="wcf-formError"{/if}>
 			<dt><label>{lang}wcf.acp.user.massProcessing.action{/lang}</label></dt>
 			<dd>
 				<fieldset>
@@ -209,7 +209,7 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.user.sendMail.mail{/lang}</legend>
 				
-				<dl{if $errorField == 'from'} class="formError"{/if}>
+				<dl{if $errorField == 'from'} class="wcf-formError"{/if}>
 					<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
 					<dd>
 						<input type="email" id="from" name="from" value="{$from}" class="medium" />
@@ -222,7 +222,7 @@
 					</dd>
 				</dl>
 				
-				<dl{if $errorField == 'subject'} class="formError"{/if}>
+				<dl{if $errorField == 'subject'} class="wcf-formError"{/if}>
 					<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
 					<dd>
 						<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
@@ -235,7 +235,7 @@
 					</dd>
 				</dl>
 				
-				<dl{if $errorField == 'text'} class="formError"{/if}>
+				<dl{if $errorField == 'text'} class="wcf-formError"{/if}>
 					<dt><label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label></dt>
 					<dd>
 						<textarea id="text" name="text" rows="15" cols="40">{$text}</textarea>
@@ -296,7 +296,7 @@
 				<legend>{lang}wcf.acp.user.groups{/lang}</legend>
 				
 				<dl>
-					<dd{if $errorField == 'assignToGroupIDArray'} class="formError"{/if}>
+					<dd{if $errorField == 'assignToGroupIDArray'} class="wcf-formError"{/if}>
 						{htmlCheckboxes options=$availableGroups name=assignToGroupIDArray selected=$assignToGroupIDArray}
 						{if $errorField == 'assignToGroupIDArray'}
 							<small class="innerError">
@@ -311,7 +311,7 @@
 		{if $additionalActionSettings|isset}{@$additionalActionSettings}{/if}
 	</div>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}

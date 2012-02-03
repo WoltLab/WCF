@@ -38,7 +38,7 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.packageUpdate.auth.input{/lang}</legend>
 			
-			<dl{if $errorField == 'loginPassword'} class="formError"{/if}>
+			<dl{if $errorField == 'loginPassword'} class="wcf-formError"{/if}>
 				<dt><label for="loginUsername">{lang}wcf.acp.packageUpdate.auth.loginUsername{/lang}</label></dt>
 				<dd>
 					<input type="text" id="loginUsername" name="loginUsername" value="{$loginUsername}" class="long" />
@@ -46,7 +46,7 @@
 				</dd>
 			</dl>
 			
-			<dl{if $errorField == 'loginPassword'} class="formError"{/if}>
+			<dl{if $errorField == 'loginPassword'} class="wcf-formError"{/if}>
 				<dt><label for="loginPassword">{lang}wcf.acp.packageUpdate.auth.loginPassword{/lang}</label></dt>
 				<dd>
 					<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="medium" />
@@ -69,7 +69,7 @@
 			
 	</div>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="form" value="PackageUpdateAuth" />

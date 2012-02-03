@@ -25,7 +25,7 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.masterPassword.enter{/lang}</legend>
 		
-			<dl{if $errorField == 'masterPassword'} class="formError"{/if}>
+			<dl{if $errorField == 'masterPassword'} class="wcf-formError"{/if}>
 				<dt><label for="masterPassword">{lang}wcf.acp.masterPassword{/lang}</label></dt>
 				<dd>
 					<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium" />
@@ -48,7 +48,7 @@
 		{event name='fieldsets'}
 	</div>
 
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}

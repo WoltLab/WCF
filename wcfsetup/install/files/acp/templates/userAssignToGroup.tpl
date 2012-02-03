@@ -27,7 +27,7 @@
 			<legend>{lang}wcf.acp.user.groups{/lang}</legend>
 			
 			
-			<dl{if $errorField == 'groupIDs'} class="formError"{/if}>
+			<dl{if $errorField == 'groupIDs'} class="wcf-formError"{/if}>
 				<dt></dt>
 				<dd><!-- ToDo: Build proper definition list -->
 					{htmlCheckboxes options=$groups name=groupIDs selected=$groupIDs}
@@ -43,7 +43,7 @@
 		
 	</div>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}

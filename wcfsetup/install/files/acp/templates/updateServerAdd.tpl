@@ -21,7 +21,7 @@
 
 <div class="wcf-contentHeader">
 	<nav>
-		<ul class="largeButtons">
+		<ul class="wcf-largeButtons">
 			<li><a href="{link controller='UpdateServerList'}{/link}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/server1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
@@ -35,12 +35,12 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.updateServer.data{/lang}</legend>
 			
-			<dl{if $errorField == 'serverURL'} class="formError"{/if}>
+			<dl{if $errorField == 'serverURL'} class="wcf-formError"{/if}>
 				<dt><label for="serverURL">{lang}wcf.acp.updateServer.serverURL{/lang}</label></dt>
 				<dd>
 					<input type="url" id="serverURL" name="serverURL" value="{$serverURL}" required="required" class="long" />
 					{if $errorField == 'serverURL'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
@@ -73,7 +73,7 @@
 		{event name='fieldsets'}
 	</div>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{if $packageUpdateServerID|isset}<input type="hidden" name="id" value="{@$packageUpdateServerID}" />{/if}

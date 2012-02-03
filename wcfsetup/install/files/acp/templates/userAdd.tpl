@@ -40,12 +40,12 @@
 
 <form method="post" action="{if $action == 'add'}{link controller='UserAdd'}{/link}{else}{link controller='UserEdit'}{/link}{/if}">
 	<div class="wcf-border wcf-content">
-		<dl{if $errorType.username|isset} class="formError"{/if}>
+		<dl{if $errorType.username|isset} class="wcf-formError"{/if}>
 			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 			<dd>
 				<input type="text" id="username" name="username" value="{$username}" pattern="^[^,\n]+$" autofocus="autofocus" class="medium" />
 				{if $errorType.username|isset}
-					<small class="innerError">
+					<small class="wcf-innerError">
 						{if $errorType.username == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
@@ -79,12 +79,12 @@
 			<fieldset>
 				<legend>{lang}wcf.user.email{/lang}</legend>
 				
-				<dl{if $errorType.email|isset} class="formError"{/if}>
+				<dl{if $errorType.email|isset} class="wcf-formError"{/if}>
 					<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
 					<dd>	
 						<input type="email" id="email" name="email" value="{$email}" required="required" class="medium" />
 						{if $errorType.email|isset}
-							<small class="innerError">
+							<small class="wcf-innerError">
 								{if $errorType.email == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
@@ -95,12 +95,12 @@
 					</dd>
 				</dl>
 				
-				<dl{if $errorType.confirmEmail|isset} class="formError"{/if}>
+				<dl{if $errorType.confirmEmail|isset} class="wcf-formError"{/if}>
 					<dt><label for="confirmEmail">{lang}wcf.user.confirmEmail{/lang}</label></dt>
 					<dd>
 						<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" required="required" class="medium" />
 						{if $errorType.confirmEmail|isset}
-							<small class="innerError">
+							<small class="wcf-innerError">
 								{lang}wcf.user.confirmEmail.error.{@$errorType.confirmEmail}{/lang}
 							</small>
 						{/if}
@@ -113,12 +113,12 @@
 			<fieldset>
 				<legend>{lang}wcf.user.password{/lang}</legend>
 				
-				<dl{if $errorType.password|isset} class="formError"{/if}>
+				<dl{if $errorType.password|isset} class="wcf-formError"{/if}>
 					<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 					<dd>
 						<input type="password" id="password" name="password" value="{$password}"{if $action == 'add'} required="required"{/if} class="medium" />
 						{if $errorType.password|isset}
-							<small class="innerError">
+							<small class="wcf-innerError">
 								{if $errorType.password == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
@@ -129,12 +129,12 @@
 					</dd>
 				</dl>
 				
-				<dl{if $errorType.confirmPassword|isset} class="formError"{/if}>
+				<dl{if $errorType.confirmPassword|isset} class="wcf-formError"{/if}>
 					<dt><label for="confirmPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
 					<dd>
 						<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}"{if $action == 'add'} required="required"{/if} class="medium" />
 						{if $errorType.confirmPassword|isset}
-							<small class="innerError">
+							<small class="wcf-innerError">
 								{lang}wcf.user.confirmPassword.error.{@$errorType.confirmPassword}{/lang}
 							</small>
 						{/if}
@@ -146,8 +146,8 @@
 		{event name='fieldsets'}
 		
 		{if $optionTree|count || $additionalTabs|isset}
-			<div class="tabMenuContainer">
-				<nav class="tabMenu">
+			<div class="wcf-tabMenuContainer">
+				<nav class="wcf-tabMenu">
 					<ul>
 						{foreach from=$optionTree item=categoryLevel1}
 							<li><a href="#{@$categoryLevel1[object]->categoryName}">{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
@@ -158,8 +158,8 @@
 				</nav>
 			
 				{foreach from=$optionTree item=categoryLevel1}
-					<div id="{@$categoryLevel1[object]->categoryName}" class="border tabMenuContent">
-						<hgroup class="subHeading">
+					<div id="{@$categoryLevel1[object]->categoryName}" class="wcf-border wcf-tabMenuContent">
+						<hgroup class="wcf-subHeading">
 							<h1>{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
 						</hgroup>
 					
@@ -207,7 +207,7 @@
 		{/if}
 	</div>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}

@@ -1,24 +1,24 @@
 {include file='header'}
 
-<hgroup class="subHeading">
+<hgroup class="wcf-subHeading">
 	<h1>{lang}wcf.global.createUser{/lang}</h1>
 	<h2>{lang}wcf.global.createUser.description{/lang}</h2>
 </hgroup>
 
 {if $errorField}
-	<p class="error">{lang}wcf.global.createUser.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.createUser.error{/lang}</p>
 {/if}
 
 <form method="post" action="install.php">
 	<fieldset>
 		<legend>{lang}wcf.global.createUser.data{/lang}</legend>
 		
-		<dl{if $errorField == 'username'} class="formError"{/if}>
+		<dl{if $errorField == 'username'} class="wcf-formError"{/if}>
 			<dt><label for="username">{lang}wcf.global.createUser.username{/lang}</label></dt>
 			<dd>
 				<input type="text" id="username" name="username" value="{$username}" class="medium" />
 				{if $errorField == 'username'}
-					<small class="innerError">
+					<small class="wcf-innerError">
 						{if $errorType == 'empty'}{lang}wcf.global.createUser.error.empty{/lang}{/if}
 						{if $errorType == 'notValid'}{lang}wcf.global.createUser.error.username.notValid{/lang}{/if}
 					</small>
@@ -26,12 +26,12 @@
 			</dd>
 		</dl>
 		
-		<dl{if $errorField == 'email'} class="formError"{/if}>
+		<dl{if $errorField == 'email'} class="wcf-formError"{/if}>
 			<dt><label for="email">{lang}wcf.global.createUser.email{/lang}</label></dt>
 			<dd>
 				<input type="text" id="email" name="email" value="{$email}" class="medium" />
 				{if $errorField == 'email'}
-					<small class="innerError">
+					<small class="wcf-innerError">
 						{if $errorType == 'empty'}{lang}wcf.global.createUser.error.empty{/lang}{/if}
 						{if $errorType == 'notValid'}{lang}wcf.global.createUser.error.email.notValid{/lang}{/if}
 					</small>
@@ -39,36 +39,36 @@
 			</dd>
 		</dl>
 		
-		<dl{if $errorField == 'confirmEmail'} class="formError"{/if}>
+		<dl{if $errorField == 'confirmEmail'} class="wcf-formError"{/if}>
 			<dt><label for="confirmEmail">{lang}wcf.global.createUser.confirmEmail{/lang}</label></dt>
 			<dd>
 				<input type="text" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" class="medium" />
 				{if $errorField == 'confirmEmail'}
-					<small class="innerError">
+					<small class="wcf-innerError">
 						{if $errorType == 'notEqual'}{lang}wcf.global.createUser.error.confirmEmail.notEqual{/lang}{/if}
 					</small>
 				{/if}
 			</dd>
 		</dl>
 		
-		<dl{if $errorField == 'password'} class="formError"{/if}>
+		<dl{if $errorField == 'password'} class="wcf-formError"{/if}>
 			<dt><label for="password">{lang}wcf.global.createUser.password{/lang}</label></dt>
 			<dd>
 				<input type="password" id="password" name="password" value="{$password}" class="medium" />
 				{if $errorField == 'password'}
-					<small class="innerError">
+					<small class="wcf-innerError">
 						{if $errorType == 'empty'}{lang}wcf.global.createUser.error.empty{/lang}{/if}
 					</small>
 				{/if}
 			</dd>
 		</dl>
 		
-		<dl{if $errorField == 'confirmPassword'} class="formError"{/if}>
+		<dl{if $errorField == 'confirmPassword'} class="wcf-formError"{/if}>
 			<dt><label for="confirmPassword">{lang}wcf.global.createUser.confirmPassword{/lang}</label></dt>
 			<dd>
 				<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" />
 				{if $errorField == 'confirmPassword'}
-					<small class="innerError">
+					<small class="wcf-innerError">
 						{if $errorType == 'notEqual'}{lang}wcf.global.createUser.error.confirmPassword.notEqual{/lang}{/if}
 					</small>
 				{/if}
@@ -77,7 +77,7 @@
 		
 	</fieldset>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
 		<input type="hidden" name="send" value="1" />
 		<input type="hidden" name="step" value="{@$nextStep}" />

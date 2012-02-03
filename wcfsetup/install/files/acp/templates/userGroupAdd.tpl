@@ -33,8 +33,8 @@
 
 <div class="wcf-contentHeader">
 	<nav>
-		<ul class="largeButtons">
-			<li><a href="{link controller='UserGroupList'}{/link}" title="{lang}wcf.acp.menu.link.group.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
+		<ul class="wcf-largeButtons">
+			<li><a href="{link controller='UserGroupList'}{/link}" title="{lang}wcf.acp.menu.link.group.list{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>
@@ -69,7 +69,7 @@
 		
 		{event name='fieldsets'}
 		
-		<div class="tabMenuContainer" data-active="{$activeMenuItem}" data-store="activeTabMenuItem">
+		<div class="wcf-tabMenuContainer" data-active="{$activeMenuItem}" data-store="activeTabMenuItem">
 			<nav class="tabMenu">
 				<ul>
 					{foreach from=$optionTree item=categoryLevel1}
@@ -79,8 +79,8 @@
 			</nav>
 			
 			{foreach from=$optionTree item=categoryLevel1}
-				<div id="{@$categoryLevel1[object]->categoryName}" class="tabMenuContainer border tabMenuContent" data-active="{$activeTabMenuItem}" data-store="activeMenuItem">
-					<nav class="menu">
+				<div id="{@$categoryLevel1[object]->categoryName}" class="wcf-border wcf-tabMenuContainer wcf-tabMenuContent" data-active="{$activeTabMenuItem}" data-store="activeMenuItem">
+					<nav class="wcf-menu">
 						<ul>
 							{foreach from=$categoryLevel1[categories] item=$categoryLevel2}
 								<li><a href="#{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</a></li>
@@ -90,7 +90,7 @@
 					
 					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 						<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}" class="hidden">
-							<hgroup class="subHeading">
+							<hgroup class="wcf-subHeading">
 								<h1>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h1>
 								<h2>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}</h2>
 							</hgroup>
@@ -119,7 +119,7 @@
 		</div>
 	</div>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}
