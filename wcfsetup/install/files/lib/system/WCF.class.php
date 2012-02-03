@@ -238,8 +238,8 @@ class WCF {
 			exit;
 		}
 		
-		print $e;
-		exit;
+		// repack Exception
+		self::handleException(new exception\SystemException($e->getMessage(), $e->getCode(), '', $e));
 	}
 	
 	/**

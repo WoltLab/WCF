@@ -14,6 +14,7 @@ use wcf\system\WCF;
  * @category 	Community Framework
  */
 class LoggedException extends \Exception {
+	
 	/**
 	 * Surpresses the original error message.
 	 * 
@@ -24,7 +25,8 @@ class LoggedException extends \Exception {
 			return 'An error occured. Sorry.';
 		}
 		
-		return $this->getMessage();
+		$e = ($this->getPrevious() ?: $this);
+		return $e->getMessage();
 	}
 	
 	/**
@@ -47,8 +49,9 @@ class LoggedException extends \Exception {
 			return;
 		}
 		
+		$e = ($this->getPrevious() ?: $this);
 		// build message
-		$message = date('r', TIME_NOW) . "\n" . $this->getMessage() . "\n\n" . $this->getTraceAsString() . "\n\n\n";
+		$message = date('r', TIME_NOW) . "\n" . $e->getMessage() . "\n\n" . $e->getTraceAsString() . "\n\n\n";
 		
 		// append
 		@file_put_contents($logFile, $message, FILE_APPEND);
