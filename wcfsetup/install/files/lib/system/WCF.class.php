@@ -407,7 +407,7 @@ class WCF {
 	 * @param	wcf\data\application\Application		$application
 	 * @param	boolean						$isDependentApplication
 	 */	
-	protected function loadApplication(Application $application, $isDepedentApplication = false) {
+	protected function loadApplication(Application $application, $isDependentApplication = false) {
 		$package = PackageCache::getInstance()->getPackage($application->packageID);
 		
 		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
@@ -439,7 +439,7 @@ class WCF {
 		if (class_exists('wcf\system\WCFACP', false)) {
 			$this->getTPL()->addTemplatePath($application->packageID, $packageDir . 'acp/templates/');
 		}
-		else if (!$isDepedentApplication) {
+		else if (!$isDependentApplication) {
 			// load options
 			$this->loadOptions($packageDir.'options.inc.php', $application->packageID);
 			

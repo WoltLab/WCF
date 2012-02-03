@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 class LoggedException extends \Exception {
 	/**
-	 * Surpresses the original error message.
+	 * Suppresses the original error message.
 	 * 
 	 * @see		\Exception::getMessage()
 	 */
