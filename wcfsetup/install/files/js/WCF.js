@@ -818,7 +818,7 @@ WCF.Clipboard = {
 			}
 			
 			var $editor = data.items[$typeName];
-			var $label = $('<li><span class="wcf-dropdownCaption wcf-button">' + $editor.label + '</span></li>').appendTo($list);
+			var $label = $('<li class="wcf-dropdownCaption wcf-button"><span>' + $editor.label + '</span></li>').appendTo($list);
 			var $itemList = $('<ol class="wcf-dropdown"></ol>').appendTo($label);
 
 			$label.click(function() { $itemList.toggleClass('open'); });
