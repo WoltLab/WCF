@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="com.woltlab.wcf.acp.language" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/package.xsd">
+	<packageinformation>
+		<packagename>Language Administration</packagename>
+		<packagedescription>Comprehensive language manager</packagedescription>
+		<version>1.0.0 Alpha 1</version>
+		<date>2011-06-30</date>
+	</packageinformation>
+	
+	<authorinformation>
+		<author>WoltLab GmbH</author>
+		<authorurl>http://www.woltlab.com</authorurl>
+	</authorinformation>
+	
+	<requiredpackages>
+		<requiredpackage minversion="2.0.0 Alpha 1">com.woltlab.wcf</requiredpackage>
+	</requiredpackages>
+	
+	<instructions type="install">
+		<instruction type="acpMenu">acpmenu.xml</instruction>
+		<instruction type="acpTemplate">acptemplates.tar</instruction>
+		<instruction type="file">files.tar</instruction>
+		<instruction type="userGroupOption">usergroupoption.xml</instruction>
+		<instruction type="language">language/*.xml</instruction>
+	</instructions>
+</package>
