@@ -44,10 +44,10 @@
 	</nav>
 	
 	{hascontent}
-		<table class="clipboardContainer" data-type="com.woltlab.wcf.user">
+		<table class="jsClipboardContainer" data-type="com.woltlab.wcf.user">
 			<thead>
 				<tr>
-					<th class="columnMark"><label><input type="checkbox" class="clipboardMarkAll" /></label></th>
+					<th class="columnMark"><label><input type="checkbox" class="jsClipboardMarkAll" /></label></th>
 					<th class="columnID columnUserID{if $sortField == 'userID'} active{/if}" colspan="2"><a href="{link controller='UserList'}searchID={@$searchID}&action={@$encodedAction}&pageNo={@$pageNo}&sortField=userID&sortOrder={if $sortField == 'userID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'userID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnTitle columnUsername{if $sortField == 'username'} active{/if}"><a href="{link controller='UserList'}searchID={@$searchID}&action={@$encodedAction}&pageNo={@$pageNo}&sortField=username&sortOrder={if $sortField == 'username' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.user.username{/lang}{if $sortField == 'username'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					
@@ -63,7 +63,7 @@
 				{content}
 					{foreach from=$users item=user}
 						<tr id="userRow{@$user->userID}">
-							<td class="columnMark"><input type="checkbox" class="clipboardItem" data-object-id="{@$user->userID}" /></td>
+							<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}" /></td>
 							<td class="columnIcon">
 								{if $user->editable}
 									<a href="{link controller='UserEdit' id=$user->userID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="balloonTooltip" /></a>
@@ -97,7 +97,7 @@
 	<div class="wcf-contentFooter">
 		{@$pagesLinks}
 		
-		<div class="clipboardEditor" data-types="[ 'com.woltlab.wcf.user' ]"></div>
+		<div class="jsClipboardEditor" data-types="[ 'com.woltlab.wcf.user' ]"></div>
 		
 		<nav>
 			<ul class="wcf-largeButtons">
