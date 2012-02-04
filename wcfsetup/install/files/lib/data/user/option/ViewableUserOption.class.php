@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\user\option;
-use wcf\data\DatabaseObjectDecorator;
 use wcf\data\user\User;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\system\exception\SystemException;
 use wcf\system\option\user\IUserOptionOutputContactInformation;
 use wcf\util\ClassUtil;

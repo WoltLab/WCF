@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\database\editor;
-use wcf\system\database\Database;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\database\Database;
 
 /**
  * This is the database editor implementation for MySQL4.1 or higher.

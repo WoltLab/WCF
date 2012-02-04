@@ -1,10 +1,10 @@
 <?php
 namespace wcf\data\style;
-use wcf\data\DatabaseObjectEditor;
-use wcf\data\IEditableCachedObject;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupEditor;
 use wcf\data\template\TemplateEditor;
+use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\image\Thumbnail; // TODO: Undefined class Thumbnail

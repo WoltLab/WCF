@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\cronjob;
+use wcf\data\cronjob\log\CronjobLogEditor;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
-use wcf\data\cronjob\log\CronjobLogEditor;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
