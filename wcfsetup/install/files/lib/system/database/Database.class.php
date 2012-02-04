@@ -182,7 +182,10 @@ abstract class Database {
 	 */
 	public function prepareStatement($statement, $limit = 0, $offset = 0) {
 		$statement = $this->handleLimitParameter($statement, $limit, $offset);
-		
+		$statement = str_replace('wcf1_', 'wcf'.WCF_N.'_', $statement);
+		foreach (\wcf\system\WCF::getApplications() as $key => $val) {
+			$statement = str_replace($key.'1_1_', $key.constant(strtoupper($key.'_N')).'_', $statement);
+		}
 		try {
 			$pdoStatement = $this->pdo->prepare($statement);
 			if ($pdoStatement instanceof \PDOStatement) {

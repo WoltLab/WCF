@@ -42,6 +42,12 @@ if (!defined('NO_IMPORTS')) {
  */
 class WCF {
 	/**
+	 * list of active applications
+	 * @var array<wcf\system\application\IApplication
+	 */
+	protected static $applications = array();
+	
+	/**
 	 * list of autoload directories
 	 * @var array
 	 */
@@ -225,6 +231,15 @@ class WCF {
 	 */
 	public static final function getTPL() {
 		return self::$tplObj;
+	}
+	
+	/**
+	 * Returns array of applications
+	 *
+	 * @return	array<wcf\system\application\IApplication>
+	 */
+	public static final function getApplications() {
+		return self::$applications;
 	}
 	
 	/**
@@ -427,8 +442,10 @@ class WCF {
 			
 			// start application if not within ACP
 			if (!class_exists('wcf\system\WCFACP', false)) {
-				new $className();
+				self::$applications[$abbreviation] = new $className();
 			}
+			
+			self::$applications[$abbreviation] = null;
 		}
 		else {
 			unset(self::$autoloadDirectories[$abbreviation]);
