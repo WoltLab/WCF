@@ -1035,7 +1035,7 @@ section.wcf-content .content {
 	float: left;
 }
 
-.right .sidebar
+.right .sidebar,
 .right .wcf-sidebar {
 	float: right;
 }
