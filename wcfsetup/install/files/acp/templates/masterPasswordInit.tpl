@@ -65,7 +65,7 @@
 			<dl>
 				<dt><label for="exampleMasterPassword">{lang}wcf.acp.masterPassword.example{/lang}</label></dt>
 				<dd>
-					<p><a href="#" id="setPassword" title="{lang}wcf.acp.masterPassword.example.set{/lang}">{@$exampleMasterPassword}</a></p>
+					<p><a id="setPassword" title="{lang}wcf.acp.masterPassword.example.set{/lang}">{@$exampleMasterPassword}</a></p>
 					<input type="hidden" id="exampleMasterPassword" name="exampleMasterPassword" value="{@$exampleMasterPassword}" />
 				</dd>
 			</dl>

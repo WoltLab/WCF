@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system;
+use wcf\util\StringStack;
+
 use wcf\data\application\Application;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
@@ -621,5 +623,19 @@ class WCF {
 		}
 		
 		return $this->applications[$abbreviation]->domainName . $this->applications[$abbreviation]->domainPath;
+	}
+	
+	/**
+	 * Returns a fully qualified anchor for current page.
+	 * 
+	 * @param	string		$fragment
+	 * @return	string
+	 */
+	public function getAnchor($fragment) {
+		// resolve path and query components
+		$path = str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['REQUEST_URI']);
+		$baseHref = self::getTPL()->get('baseHref');
+		
+		return $baseHref . 'index.php' . $path . '#' . $fragment;
 	}
 }
