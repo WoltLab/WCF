@@ -42,6 +42,12 @@ if (!defined('NO_IMPORTS')) {
  */
 class WCF {
 	/**
+	 * list of currently loaded applications
+	 * @var	array<wcf\system\application\IApplication>
+	 */
+	protected $applications = array();
+	
+	/**
 	 * list of autoload directories
 	 * @var array
 	 */
@@ -394,6 +400,10 @@ class WCF {
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
 		$this->loadApplication($application);
 		
+		// register primary application
+		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
+		$this->applications[$abbreviation] = $application;
+		
 		// start dependent applications
 		$applications = ApplicationHandler::getInstance()->getDependentApplications();
 		foreach ($applications as $application) {
@@ -446,6 +456,9 @@ class WCF {
 			// assign base tag
 			$this->getTPL()->assign('baseHref', $application->domainName . $application->domainPath);
 		}
+		
+		// register application
+		$this->applications[$abbreviation] = $application;
 	}
 	
 	/**
@@ -588,5 +601,25 @@ class WCF {
 		// benchmarking is enabled by default
 		if (!defined('ENABLE_BENCHMARK') || ENABLE_BENCHMARK) return true;
 		return false;
+	}
+	
+	/**
+	 * Returns domain path for given application.
+	 * 
+	 * @param	string		$abbreviation
+	 * @return	string
+	 */
+	public function getPath($abbreviation = 'wcf') {
+		if (empty($this->applications)) {
+			$this->applications = array(
+				'wcf' => new Application(1)
+			);
+		}
+		
+		if (!isset($this->applications[$abbreviation])) {
+			$abbreviation = 'wcf';
+		}
+		
+		return $this->applications[$abbreviation]->domainName . $this->applications[$abbreviation]->domainPath;
 	}
 }

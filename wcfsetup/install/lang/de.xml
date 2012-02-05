@@ -26,7 +26,7 @@
 		<item name="wcf.acp.cronjob.className"><![CDATA[Klassenname]]></item>
 		<item name="wcf.acp.cronjob.data"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.acp.cronjob.timing"><![CDATA[Zeitsteuerung]]></item>
-		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von Cronjobs (zeitgesteuerten Aufgaben) erfordert eine genaue Kenntnis der Crontab-Syntax auf unixähnlichen Systemen. Weiterführende Informationen dazu erhalten Sie auf dieser Website: <a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>]]></item>
+		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von Cronjobs (zeitgesteuerten Aufgaben) erfordert eine genaue Kenntnis der Crontab-Syntax auf unixähnlichen Systemen. Weiterführende Informationen dazu erhalten Sie auf dieser Website: <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>]]></item>
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Cronjob jetzt ausführen]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[Das Zeitformat ist ungültig.]]></item>

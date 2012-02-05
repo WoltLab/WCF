@@ -26,7 +26,7 @@
 		<item name="wcf.acp.cronjob.className"><![CDATA[Class name]]></item>
 		<item name="wcf.acp.cronjob.data"><![CDATA[General information]]></item>
 		<item name="wcf.acp.cronjob.timing"><![CDATA[Schedule]]></item>
-		<item name="wcf.acp.cronjob.intro"><![CDATA[Configuring cron jobs (automatized scheduled tasks) requires distinct knowledge of the crontab syntax on Unix based systems. More information about this topic can be obtained on the following Webpage: <a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>.]]></item>
+		<item name="wcf.acp.cronjob.intro"><![CDATA[Configuring cron jobs (automatized scheduled tasks) requires distinct knowledge of the crontab syntax on Unix based systems. More information about this topic can be obtained on the following Webpage: <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>.]]></item>
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Execute cron job now]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[There is no class with the given name.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[The timings you have set are invalid.]]></item>

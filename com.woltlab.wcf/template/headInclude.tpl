@@ -7,14 +7,14 @@
 <script type="text/javascript">
 	//<![CDATA[
 	var SID_ARG_2ND	= '{@SID_ARG_2ND_NOT_ENCODED}';
-	var RELATIVE_WCF_DIR = '{@RELATIVE_WCF_DIR}';
+	var RELATIVE_WCF_DIR = '{@$__wcf->getPath('wcf')}';
 	var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 	//]]>
 </script>
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/3rdParty/jquery.min.js"></script>
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/3rdParty/jquery-ui.min.js"></script>
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/3rdParty/jquery.tools.min.js"></script>
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/WCF.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/3rdParty/jquery.min.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/3rdParty/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/3rdParty/jquery.tools.min.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
 	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
@@ -24,12 +24,12 @@
 
 <!-- Stylesheets -->
 <style type="text/css">
-	@import url("{@RELATIVE_WCF_DIR}acp/style/wcf.css") screen;
+	@import url("{@$__wcf->getPath('wcf')}acp/style/wcf.css") screen;
 	
 	{*
-	@import url("{@RELATIVE_WCF_DIR}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css") screen;
+	@import url("{@$__wcf->getPath('wcf')}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css") screen;
 
-	@import url("{@RELATIVE_WCF_DIR}acp/style/print.css") print;
+	@import url("{@$__wcf->getPath('wcf')}acp/style/print.css") print;
 	*}
 	
 	{event name='stylesheetImport'}
