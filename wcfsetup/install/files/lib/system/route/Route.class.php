@@ -240,11 +240,11 @@ class Route {
 		$link = $this->routeSchema;
 		foreach ($this->routeSchemaParts as $part) {
 			$part = StringUtil::replace(array('{', '}'), '', $part);
- 
+			
 			if ($part == 'controller' && $this->controller) {
 				$components[$part] = $this->controller;
 			}
- 
+			
 			if (!isset($components[$part])) {
 				// check if missing component is optional
 				if ($this->components[$part] !== null && $this->components[$part]->isOptional) {
@@ -268,7 +268,7 @@ class Route {
 					throw new SystemException("Missing route component '".$part."'");
 				}
 			}
- 
+			
 			$link = StringUtil::replace('{'.$part.'}', $components[$part], $link);
 			unset($components[$part]);
 		}

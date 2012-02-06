@@ -59,6 +59,6 @@ class RouteComponent {
 	 * @return	boolean
 	 */
 	public function matches($string) {
-		return !($this->pattern !== null && !Regex::compile('^'.$this->pattern.'$')->match($string));
+		return $this->pattern === null || Regex::compile('^'.$this->pattern.'$')->match($string);
 	}
 }

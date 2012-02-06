@@ -6,6 +6,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\route\IRouteController;
 use wcf\system\route\RouteHandler;
 use wcf\system\SingletonFactory;
+use wcf\system\Regex;
 
 /**
  * Handles relative links within the wcf.
@@ -41,7 +42,7 @@ class LinkHandler extends SingletonFactory {
 		// build route
 		$routeURL = "";
 		if (is_string($controller)) {
-			$parameters['controller'] = $controller;			
+			$parameters['controller'] = $controller;
 			$routeURL = RouteHandler::getInstance()->buildRoute(array_map(array($this, 'prepareString'), $parameters));
 		}
 		else if ($controller instanceof IRouteController || ($controller instanceof DatabaseObjectDecorator && $controller->getDecoratedObject() instanceof IRouteController)) {
@@ -87,6 +88,6 @@ class LinkHandler extends SingletonFactory {
 	 * @return	string
 	 */
 	public function prepareString($string) {
-		return trim(preg_replace('/[\x0-\x21\x23\x25\x2A\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+/', '-', $string), '-');
+		return trim(Regex::compile('[\x0-\x21\x23\x25\x2A\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+')->replace('-', $string), '-');
 	}
 }
