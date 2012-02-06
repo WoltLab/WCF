@@ -75,7 +75,7 @@
 			<h1>{lang}wcf.acp.package.view.dependentPackages{/lang}</h1>
 		</hgroup>
 		
-		<table>
+		<table class="wcf-table">
 			<thead>
 				<tr>
 					<th colspan="2" class="columnID">{lang}wcf.acp.package.list.id{/lang}</th>

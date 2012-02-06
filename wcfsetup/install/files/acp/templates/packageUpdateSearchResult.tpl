@@ -15,8 +15,8 @@
 
 <form method="post" action="{link controller='PackageUpdate'}{/link}">
 	{foreach from=$packages item=package}
-		<article class="message wcf-content">
-			<div class="messageInner"><!-- ToDo! -->
+		<article class="wcf-message wcf-content">
+			<div><!-- ToDo! -->
 				<hgroup class="wcf-subHeading">
 					<h1>
 						{if $package.isApplication == 1}
@@ -30,7 +30,7 @@
 					</h1>
 				<hgroup>
 
-				<div class="messageBody">
+				<div class="wcf-messageBody">
 					<dl>
 						<dt><label for="packageVersion-{$package.package}">{lang}wcf.acp.package.list.version{/lang}</label></dt>
 						<dd>

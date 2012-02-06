@@ -119,7 +119,7 @@
 						<h2>{lang}wcf.acp.package.view.requiredPackages.description{/lang}</h2>
 					</hgroup>
 		
-					<table class="wcf-border wcf-boxTitle">
+					<table class="wcf-table wcf-border wcf-boxTitle">
 						<thead>
 							<tr>
 								<th colspan="2" class="columnID">{lang}wcf.acp.package.list.id{/lang}</th>
@@ -179,7 +179,7 @@
 						<h2>{lang}wcf.acp.package.view.dependentPackages.description{/lang}</h2>
 					</hgroup>
 		
-					<table class="wcf-border wcf-boxTitle">
+					<table class="wcf-table wcf-border wcf-boxTitle">
 						<thead>
 							<tr>
 								<th colspan="2" class="columnID">{lang}wcf.acp.package.list.id{/lang}</th>

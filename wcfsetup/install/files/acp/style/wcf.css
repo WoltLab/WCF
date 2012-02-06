@@ -3244,8 +3244,7 @@ tr .columnIcon img {
 	width: 16px;
 }
 
-.bigList tr .columnIcon img,
-.wcf-bigList tr .columnIcon img {
+.big tr .columnIcon img {
 	height: 24px;
 	width: 24px;
 }
@@ -4371,11 +4370,11 @@ button[disabled='disabled'] {
 
 /* Globals */
 
-.infoPackageApplication {
+.wcf-infoPackageApplication {
 	position: relative;
 }
 
-.infoPackageApplication img.packageApplicationIcon {
+.wcf-infoPackageApplication img.wcf-packageApplicationIcon {
 	position: absolute;
 	top: 30px;
 	left: 25px;
@@ -4383,18 +4382,18 @@ button[disabled='disabled'] {
 	height: 96px;
 }
 
-.infoPackageApplication div {
+.wcf-infoPackageApplication div {
 	margin-bottom: -15px;
 	margin-left: 30px;
 }
 
-.infoPackageApplication footer {
+.wcf-infoPackageApplication footer {
 	position: relative;
 	right: -15px;
 	bottom: -15px;
 }
 
-.infoPackageApplication footer nav {
+.wcf-infoPackageApplication footer nav {
 	/* General toggle switch for package nav-bar orientation (options: left|center|right) */
 	text-align: right;
 }
@@ -4405,7 +4404,7 @@ button[disabled='disabled'] {
 
 /* Globals */
 
-.infoPackagePlugin {
+.wcf-infoPackagePlugin {
 	text-align: center;
 	border: 1px solid rgba(204, 204, 204, 1);
 	border-radius: 7px;
@@ -4424,11 +4423,11 @@ button[disabled='disabled'] {
 	transition: background, border, color .1s linear;
 }
 
-.infoPackagePlugin a {
+.wcf-infoPackagePlugin a {
 	text-decoration: none;
 }
 
-.infoPackagePlugin > div > a {
+.wcf-infoPackagePlugin > div > a {
 	color: rgba(153, 153, 153, 1);
 	background-size: 96px;
 	background-position: center 70%;
@@ -4440,11 +4439,11 @@ button[disabled='disabled'] {
 	height: 148px;
 }
 
-.infoPackagePlugin:hover > div > a {
+.wcf-infoPackagePlugin:hover > div > a {
 	color: rgba(102, 102, 102, 1);
 }
 
-.infoPackagePlugin > div > a > h1 { /* ToDo: h1 inside a ??? */
+.wcf-infoPackagePlugin > div > a > h1 { /* ToDo: h1 inside a ??? */
 	font-size: 100%;
 	font-weight: bold;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
@@ -4456,7 +4455,7 @@ button[disabled='disabled'] {
 	z-index: 100;
 }
 
-.infoPackagePlugin:hover > div > a > h1 {
+.wcf-infoPackagePlugin:hover > div > a > h1 {
 	border-bottom: 1px solid rgba(204, 204, 204, 1);
 	
 	background-color: rgba(0, 0, 0, .015);
@@ -4467,12 +4466,12 @@ button[disabled='disabled'] {
 	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
 }
 
-.infoPackagePlugin footer {
+.wcf-infoPackagePlugin footer {
 	margin-top: -22px;
 	width: 100%;
 }
 
-.infoPackagePlugin > div > a > small {
+.wcf-infoPackagePlugin > div > a > small {
 	font-size: 85%;
 	font-weight: normal;
 	text-shadow: none;
@@ -4492,15 +4491,15 @@ button[disabled='disabled'] {
 	transition: opacity .1s linear;
 }
 
-.infoPackagePlugin:hover > div > a > small {
+.wcf-infoPackagePlugin:hover > div > a > small {
 	background-color: rgba(255, 255, 255, .9);
 	z-index: 10;
 	opacity: 1;
 }
 
-/* SmallButtonBar */
+/* Small Button Bar */
 
-.infoPackagePlugin .smallButtonBar {
+.wcf-infoPackagePlugin .wcf-smallButtonBar {
 	text-align: center !important;
 	border-top: 1px solid rgba(204, 204, 204, 1);
 	border-radius: 0 0 7px 7px;
@@ -4517,12 +4516,12 @@ button[disabled='disabled'] {
 	z-index: 100;
 }
 
-.infoPackagePlugin .smallButtonBar li {
+.wcf-infoPackagePlugin .wcf-smallButtonBar li {
 	display: inline;
 	position: relative;
 }
 
-.infoPackagePlugin .smallButtonBar li span {
+.wcf-infoPackagePlugin .wcf-smallButtonBar li span {
 	/* Removes the button-caption */
 	position: absolute;
 	left: -9000px;
@@ -4536,8 +4535,8 @@ button[disabled='disabled'] {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.infoPackageApplication footer nav,
-	.infoPackagePlugin footer nav {
+	.wcf-infoPackageApplication footer nav,
+	.wcf-infoPackagePlugin footer nav {
 		opacity: 0;
 		
 		-webkit-transition: opacity .1s linear;
@@ -4547,8 +4546,8 @@ button[disabled='disabled'] {
 		transition: opacity .1s linear;
 	}
 	
-	.infoPackageApplication:hover footer nav,
-	.infoPackagePlugin:hover footer nav {
+	.wcf-infoPackageApplication:hover footer nav,
+	.wcf-infoPackagePlugin:hover footer nav {
 		opacity: 1;
 	}
 	
@@ -4556,8 +4555,8 @@ button[disabled='disabled'] {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.infoPackageApplication footer nav,
-	.infoPackagePlugin footer nav {
+	.wcf-infoPackageApplication footer nav,
+	.wcf-infoPackagePlugin footer nav {
 		opacity: 1;
 	}
 	

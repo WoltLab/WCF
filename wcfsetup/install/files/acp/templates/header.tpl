@@ -29,7 +29,6 @@
 	<style type="text/css">
 		@import url("{@RELATIVE_WCF_DIR}acp/style/wcf.css") screen;
 		{*
-		
 		@import url("{@RELATIVE_WCF_DIR}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css") screen;
 	
 		@import url("{@RELATIVE_WCF_DIR}acp/style/print.css") print;
@@ -75,7 +74,7 @@
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
 			new WCF.Effect.BalloonTooltip();
-			$('<span class="pointer"><span></span></span>').appendTo('.innerError');
+			$('<span class="pointer"><span></span></span>').appendTo('.wcf-innerError');
 			
 			$('#sidebarContent').wcfSidebar();
 		});
@@ -86,11 +85,11 @@
 <body id="tpl{$templateName|ucfirst}">
 	<a id="top"></a>
 	<!-- HEADER -->
-	<header id="pageHeader" class="pageHeader">
+	<header id="pageHeader" class="wcf-pageHeader">
 		<div>
 			{if $__wcf->user->userID}
 				<!-- top menu -->
-				<nav id="topMenu" class="topMenu">
+				<nav id="topMenu" class="wcf-topMenu">
 					<div>
 						<ul>
 							<li id="userMenu" class="userMenu"><!-- ToDo: We need an ID and/or class for each list here, this ID may also change! -->
@@ -106,7 +105,7 @@
 			{/if}
 			
 			<!-- logo -->
-			<div id="logo" class="logo">
+			<div id="logo" class="wcf-logo">
 				<!-- clickable area -->
 				<a href="{link controller='Index'}{/link}">
 					<h1>WoltLab Community Framework 2.0 Alpha 1</h1>
@@ -134,7 +133,7 @@
 			<!-- /main menu -->
 			
 			<!-- header navigation -->
-			<nav class="headerNavigation">
+			<nav class="wcf-headerNavigation">
 				<div>
 					<ul>
 						<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="balloonTooltip"><img src="{@RELATIVE_WCF_DIR}icon/toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
@@ -153,15 +152,15 @@
 				<!-- SIDEBAR -->
 				<aside class="wcf-sidebar">
 					<!-- sidebar menu -->
-					<nav id="sidebarContent" class="sidebarContent">
+					<nav id="sidebarContent" class="wcf-sidebarContent">
 						{content}
 							{* work-around for unknown core-object during WCFSetup *}
 							{if PACKAGE_ID}
 								{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=parentMenuItem}
-									<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="menuContainer collapsible" data-parent-menu-item="{$parentMenuItem->menuItem}">
+									<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="wcf-menuContainer collapsible" data-parent-menu-item="{$parentMenuItem->menuItem}">
 										{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
-											<h1 class="menuHeader" data-menu-item="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</h1>
-											<div class="sidebarContentGroup">
+											<h1 class="wcf-menuHeader" data-menu-item="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</h1>
+											<div class="wcf-sidebarContentGroup">
 												<ul id="{$menuItem->menuItem}">
 													{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItem->menuItem) item=menuItemCategory}
 														{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}

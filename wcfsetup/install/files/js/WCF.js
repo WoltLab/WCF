@@ -1062,7 +1062,7 @@ WCF.Action.Proxy.prototype = {
 		// fade in overlay
 		if (!this._loadingOverlayVisible) {
 			this._loadingOverlayVisible = true;
-			this._loadingOverlay.stop(true, true).fadeIn(200, $.proxy(function() {
+			this._loadingOverlay.stop(true, true).fadeIn(100, $.proxy(function() {
 				new WCF.PeriodicalExecuter($.proxy(this._hideLoadingOverlay, this), 100);
 			}, this));
 		}
@@ -1076,12 +1076,12 @@ WCF.Action.Proxy.prototype = {
 	_hideLoadingOverlay: function(pe) {
 		this._loadingOverlayVisibleTimer += 100;
 		
-		if (this._activeRequests == 0 && this._loadingOverlayVisibleTimer >= 1000) {
+		if (this._activeRequests == 0 && this._loadingOverlayVisibleTimer >= 100) {
 			this._loadingOverlayVisible = false;
 			this._loadingOverlayVisibleTimer = 0;
 			pe.stop();
 
-			this._loadingOverlay.fadeOut(200);
+			this._loadingOverlay.fadeOut(100);
 		}
 	},
 	
@@ -3922,11 +3922,11 @@ $.widget('ui.wcfSidebar', {
 	 * Creates a new toggleable sidebar.
 	 */
 	_create: function() {
-		this.element.wrap('<div class="collapsibleSidebar"></div>');
+		this.element.wrap('<div class="wcf-collapsibleSidebar"></div>');
 		this._container = this.element.parents('aside:eq(0)');
 		
 		// create toggle button
-		this._button = $('<span class="collapsibleSidebarButton" title="' + WCF.Language.get('wcf.global.button.collapsible') + '"><span></span></span>').appendTo(this._container);
+		this._button = $('<span class="wcf-collapsibleSidebarButton" title="' + WCF.Language.get('wcf.global.button.collapsible') + '"><span></span></span>').appendTo(this._container);
 
 		// bind event
 		this._button.click($.proxy(this._toggle, this));
@@ -4436,7 +4436,7 @@ $.widget('ui.wcfDialog', {
 			$content.animate({
 				height: ($contentDimensions.height) + 'px',
 				width: ($contentDimensions.width) + 'px'
-			}, 600, function() {
+			}, 200, function() {
 				// remove static dimensions
 				$content.css({
 					height: 'auto',
@@ -4451,7 +4451,7 @@ $.widget('ui.wcfDialog', {
 			this._container.animate({
 				left: $leftOffset + 'px',
 				top: $topOffset + 'px'
-			}, 600, $.proxy(function() {
+			}, 200, $.proxy(function() {
 				this._isRendering = false;
 			}));
 		}
@@ -4608,7 +4608,7 @@ $.widget('ui.wcfPages', {
 		if (this.options.nextDisabledIcon === null) this.options.nextDisabledIcon = WCF.Icon.get('wcf.icon.next.disabled');
 		if (this.options.arrowDownIcon === null) this.options.arrowDownIcon = WCF.Icon.get('wcf.icon.arrow.down');
 		
-		this.element.addClass('pageNavigation');
+		this.element.addClass('wcf-pageNavigation');
 		
 		this._render();
 	},

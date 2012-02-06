@@ -36,8 +36,8 @@
 		<p class="wcf-info">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
 	{else}
 		{foreach from=$availableUpdates item=availableUpdate}<!-- ToDo: Style! -->
-			<article class="message wcf-content"{if $availableUpdate.version.updateType == 'security'} style="border-color: #c00"{/if}>
-				<div class="messageInner container-{cycle name='styles' values='1,2'}"><!-- ToDo: Remove cycle -->
+			<article class="wcf-message wcf-content"{if $availableUpdate.version.updateType == 'security'} style="border-color: #c00"{/if}>
+				<div class="container-{cycle name='styles' values='1,2'}"><!-- ToDo: Remove cycle -->
 					<hgroup class="wcf-subHeading">
 						<h1>
 							<label>
@@ -47,7 +47,7 @@
 						</h1>
 					</hgroup>
 
-					<div class="messageBody">
+					<div class="wcf-messageBody">
 						<dl>
 							<dt><label>{lang}wcf.acp.packageUpdate.currentVersion{/lang}</label></dt>
 							<dd>{$availableUpdate.packageVersion}</dd>

@@ -5,9 +5,9 @@
 	<!-- /MAIN -->
 	
 	<!-- FOOTER -->
-	<footer id="pageFooter" class="pageFooter">
+	<footer id="pageFooter" class="wcf-pageFooter">
 		<div>
-			<nav id="footerNavigation" class="footerNavigation">
+			<nav id="footerNavigation" class="wcf-footerNavigation">
 				<ul>
 					<li id="toTopLink" class="toTopLink"><a href="{@$__wcf->getAnchor('top')}" title="{lang}wcf.global.scrollUp{/lang}" class="balloonTooltip"><img src="{@RELATIVE_WCF_DIR}icon/toTop.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollUp{/lang}</span></a></li>
 				</ul>

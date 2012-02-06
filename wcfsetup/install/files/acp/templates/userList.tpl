@@ -44,7 +44,7 @@
 	</nav>
 	
 	{hascontent}
-		<table class="jsClipboardContainer" data-type="com.woltlab.wcf.user">
+		<table class="wcf-table jsClipboardContainer" data-type="com.woltlab.wcf.user">
 			<thead>
 				<tr>
 					<th class="columnMark"><label><input type="checkbox" class="jsClipboardMarkAll" /></label></th>

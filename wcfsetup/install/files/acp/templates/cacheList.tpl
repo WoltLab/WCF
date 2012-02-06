@@ -67,7 +67,7 @@
 				<h1>{$cache} <span class="badge" title="{lang}wcf.acp.cache.data.files.count{/lang}">{#$files|count}</span></h1>
 			</hgroup>
 			
-			<table id="cache{@$cacheIndex}">
+			<table id="cache{@$cacheIndex}" class="wcf-table">
 				<thead>
 					<tr>
 						<th class="columnTitle">{lang}wcf.acp.cache.list.name{/lang}</th>

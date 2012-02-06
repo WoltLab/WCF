@@ -109,7 +109,7 @@
 			<h1>{lang}wcf.acp.package.view.requiredPackages{/lang} <span class="wcf-badge" title="{lang}wcf.acp.package.view.requiredPackages.description{/lang}">{#$requiredPackages|count}</span></h1>
 		</hgroup>
 		
-		<table>
+		<table class="wcf-table">
 			<thead>
 				<tr>
 					<th class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
