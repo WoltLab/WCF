@@ -24,7 +24,7 @@
 		</ul>
 	</nav>
 
-	<div id="overview" class="wcf-border tabMenuContent hidden">
+	<div id="overview" class="wcf-border wcf-tabMenuContent hidden">
 		<hgroup class="wcf-subHeading">
 			<h1>information</h1>
 		</hgroup>

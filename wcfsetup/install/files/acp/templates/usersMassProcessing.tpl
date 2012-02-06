@@ -154,7 +154,7 @@
 				</nav>
 				
 				{if $options|count}
-					<div id="profile" class="wcf-border tabMenuContent hidden">
+					<div id="profile" class="wcf-border wcf-tabMenuContent hidden">
 						<hgroup class="wcf-subHeading">
 							<h1>{lang}wcf.acp.user.search.conditions.profile{/lang}</h1>
 						</hgroup>

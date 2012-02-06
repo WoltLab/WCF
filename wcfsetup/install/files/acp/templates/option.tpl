@@ -26,8 +26,8 @@
 {/if}
 
 <form method="post" action="{link controller='Option' id=$category->categoryID}{/link}">
-	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
-		<nav class="tabMenu">
+	<div class="wcf-tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
+		<nav class="wcf-tabMenu">
 			<ul>
 				{foreach from=$optionTree item=categoryLevel1}
 					<li><a href="#{@$categoryLevel1[object]->categoryName}" title="{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}">{*<span>*}{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}{*</span>*}</a></li>
@@ -36,7 +36,7 @@
 		</nav>
 		
 		{foreach from=$optionTree item=categoryLevel1}
-			<div id="{@$categoryLevel1[object]->categoryName}" class="border tabMenuContent hidden">
+			<div id="{@$categoryLevel1[object]->categoryName}" class="wcf-border wcf-tabMenuContent hidden">
 				<hgroup class="wcf-subHeading">
 					<h1>{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
 					<h2>{lang __optional=true}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}.description{/lang}</h2>

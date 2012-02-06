@@ -2209,7 +2209,7 @@ WCF.TabMenu = {
 			
 			// display active item on init
 			if ($tabMenu.data('active')) {
-				$tabMenu.find('.tabMenuContent').each(function(innerIndex, tabMenuItem) {
+				$tabMenu.find('.wcf-tabMenuContent').each(function(innerIndex, tabMenuItem) {
 					var $tabMenuItem = $(tabMenuItem);
 					if ($tabMenuItem.attr('id') == $tabMenu.data('active')) {
 						$tabMenu.wcfTabs('select', innerIndex);
