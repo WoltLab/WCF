@@ -68,7 +68,7 @@ class Route {
 	 * default pattern for cutting a request url/a route schema in pieces
 	 * @var	string
 	 */
-	protected static $defaultPartsPattern = '(\/|\-|\_|\.)';
+	protected static $defaultPartsPattern = '(/|\-|\_|\.)';
 	
 	/**
 	 * Creates a new route.
@@ -249,7 +249,9 @@ class Route {
 				// check if missing component is optional
 				if ($this->components[$part] !== null && $this->components[$part]->isOptional) {
 					// cosmetic corrections: remove part delimiters for missing optional components
-					if (preg_match('~'.static::$defaultPartsPattern.'{'.$part.'}'.static::$defaultPartsPattern.'?~', $link, $matches)) {
+					$regex = new Regex(static::$defaultPartsPattern.'{'.$part.'}'.static::$defaultPartsPattern.'?');
+					if ($regex->match($link)) {
+						$matches = $regex->getMatches();
 						$replace = '/';
 						if (!isset($matches[2])) {
 							$replace = $matches[2] = '';
@@ -273,7 +275,7 @@ class Route {
 			unset($components[$part]);
 		}
 		
-		$link = 'index.php' . (!empty($link) && $link[0] != '/' ? '/' : '') . $link;
+		$link = 'index.php' . (!empty($link) && $link[0] != '/' ? '/' : '') . $link . (StringUtil::substring($link, -1) != '/' ? '/' : '');
 		
 		if (!empty($components)) {
 			$link .= '?' . http_build_query($components, '', '&');
