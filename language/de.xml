@@ -26,7 +26,7 @@
 		<item name="wcf.acp.language.add.new"><![CDATA[Neue Sprache]]></item>
 		<item name="wcf.acp.language.add.source"><![CDATA[Zu übersetzende Sprache]]></item>
 		<item name="wcf.acp.language.code"><![CDATA[Sprachcode]]></item>
-		<item name="wcf.acp.language.code.description"><![CDATA[Geben Sie hier den passenden Sprachcode nach <strong>ISO 639-1</strong> an. Weitere Informationen zu Sprachcodes finden Sie unter <a href="http://de.wikipedia.org/wiki/ISO_639-1" class="externalURL">http://de.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
+		<item name="wcf.acp.language.code.description"><![CDATA[Geben Sie hier den passenden Sprachcode nach <strong>ISO 639-1</strong> an. Weitere Informationen zu Sprachcodes finden Sie unter <a href="http://de.wikipedia.org/wiki/ISO_639-1" class="wcf-externalURL">http://de.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
 		<item name="wcf.acp.language.delete.sure"><![CDATA[Wollen Sie die Sprache &raquo;{$language->languageName}&laquo; wirklich löschen?]]></item>
 		<item name="wcf.acp.language.export.allPackages"><![CDATA[Alle Pakete]]></item>
 		<item name="wcf.acp.language.export.customValues"><![CDATA[Veränderte Variablen exportieren]]></item>
