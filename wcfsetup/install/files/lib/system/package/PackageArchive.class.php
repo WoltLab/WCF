@@ -499,8 +499,8 @@ class PackageArchive {
 		
 		$parentPackageIDs = array();
 		foreach ($duplicates as $package) {
-			// standalones are always allowed
-			if ($package['standalone']) {
+			// application are always allowed
+			if ($package['isApplication']) {
 				return false;
 			}
 			
