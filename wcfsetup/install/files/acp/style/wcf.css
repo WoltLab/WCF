@@ -2088,15 +2088,15 @@ dl > dd > fieldset > dl > dd > label {
 
 /* Special -> Overlay */
 
-.wcfDialogContainer dl > dt {
+.wcf-dialogContainer dl > dt {
 	width: 130px;
 }
 
-.wcfDialogContainer dl > dd {
+.wcf-dialogContainer dl > dd {
 	margin-left: 150px;
 }
 
-.wcfDialogContainer dl > .reversed {
+.wcf-dialogContainer dl > .reversed {
 	left: 170px;
 	width: auto;
 }
