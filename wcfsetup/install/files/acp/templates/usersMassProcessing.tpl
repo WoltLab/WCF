@@ -299,7 +299,7 @@
 					<dd{if $errorField == 'assignToGroupIDArray'} class="wcf-formError"{/if}>
 						{htmlCheckboxes options=$availableGroups name=assignToGroupIDArray selected=$assignToGroupIDArray}
 						{if $errorField == 'assignToGroupIDArray'}
-							<small class="innerError">
+							<small class="wcf-innerError">
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}

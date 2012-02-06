@@ -58,7 +58,7 @@
 			
 		</div>
 		
-		<div class="formSubmit">
+		<div class="wcf-formSubmit">
 			{@SID_INPUT_TAG}
 			<input type="submit" onclick="return confirm('{lang}wcf.acp.cronjob.log.clear.confirm{/lang}')" value="{lang}wcf.acp.cronjob.log.clear{/lang}" accesskey="c" />
 		</div>

@@ -70,7 +70,7 @@
 		{event name='fieldsets'}
 		
 		<div class="wcf-tabMenuContainer" data-active="{$activeMenuItem}" data-store="activeTabMenuItem">
-			<nav class="tabMenu">
+			<nav class="wcf-tabMenu">
 				<ul>
 					{foreach from=$optionTree item=categoryLevel1}
 						<li><a href="#{@$categoryLevel1[object]->categoryName}">{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
