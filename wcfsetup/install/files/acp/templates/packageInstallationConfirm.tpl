@@ -83,7 +83,7 @@
 			<h2>{lang}wcf.acp.package.install.updatableInstances.description{/lang}</h2>
 		</hgroup>
 		
-		<table>
+		<table class="wcf-table">
 			<thead>
 				<tr>
 					<th class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
