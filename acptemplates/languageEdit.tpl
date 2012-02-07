@@ -58,7 +58,7 @@
 {/if}
 
 <div class="wcf-mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/languageEditL.png" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/language1.svg" alt="" />
 	<div>
 		<h2>{lang}wcf.acp.language.edit{/lang}</h2>
 	</div>
@@ -75,8 +75,8 @@
 <div class="wcf-contentHeader">
 	<div class="wcf-largeButtons">
 		<ul>
-			<li><a href="index.php?page=LanguageList{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/languageM.png" alt="" title="{lang}wcf.acp.menu.link.language.view{/lang}" class="wcf-button" /> <span>{lang}wcf.acp.menu.link.language.view{/lang}</span></a></li>
-			<li><a href="index.php?form=LanguageSearch{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/searchM.png" alt="" title="{lang}wcf.acp.menu.link.language.view{/lang}" class="wcf-button" /> <span>{lang}wcf.acp.menu.link.language.search{/lang}</span></a></li>
+			<li><a href="index.php?page=LanguageList{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/language1.svg" alt="" title="{lang}wcf.acp.menu.link.language.view{/lang}" class="wcf-button" /> <span>{lang}wcf.acp.menu.link.language.view{/lang}</span></a></li>
+			<li><a href="index.php?form=LanguageSearch{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/search1.svg" alt="" title="{lang}wcf.acp.menu.link.language.view{/lang}" class="wcf-button" /> <span>{lang}wcf.acp.menu.link.language.search{/lang}</span></a></li>
 		</ul>
 	</div>
 </div>
@@ -87,7 +87,7 @@
 			<div class="formElement">
 				<p class="formField">
 					<span>{lang}wcf.global.language.{@$language->languageCode}{/lang} ({@$language->languageCode})</span>
-					<img src="{@RELATIVE_WCF_DIR}icon/language{@$language->languageCode|ucfirst}S.png" alt="" />
+					<img src="{@RELATIVE_WCF_DIR}icon/language{@$language->languageCode|ucfirst}1.svg" alt="" />
 				</p>
 			</div>
 			
@@ -143,7 +143,7 @@
 						
 						<fieldset data-languageItem="{$languageItem}" class="languageItem" id="item{$languageItem|strtolower}">
 							<legend>
-								{if $__wcf->getSession()->getPermission('admin.language.canDeleteLanguage')}<a onclick="return confirm('{lang}wcf.acp.language.variable.delete.sure{/lang}')" href="index.php?action=LanguageVariableDelete&amp;languageItem={$languageItem}&amp;languageID={@$languageID}&amp;languageCategoryID={@$languageCategoryID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/deleteS.png" alt="" title="{lang}wcf.acp.language.variable.delete{/lang}" /></a>{/if}
+								{if $__wcf->getSession()->getPermission('admin.language.canDeleteLanguage')}<a onclick="return confirm('{lang}wcf.acp.language.variable.delete.sure{/lang}')" href="index.php?action=LanguageVariableDelete&amp;languageItem={$languageItem}&amp;languageID={@$languageID}&amp;languageCategoryID={@$languageCategoryID}{@SID_ARG_2ND}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.language.variable.delete{/lang}" /></a>{/if}
 								<label for="languageCustomItems-{$languageItem}">{$languageItem}</label>
 							</legend>
 							

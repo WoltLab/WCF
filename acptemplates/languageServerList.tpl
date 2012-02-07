@@ -3,8 +3,8 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		{if $__wcf->getSession()->getPermission('admin.language.canDeleteServer')}new WCF.Action.Delete('wcf\\data\\language\\server\\LanguageServerAction', $('.languageServerRow'));{/if}
-		{if $__wcf->getSession()->getPermission('admin.language.canEditServer')}new WCF.Action.Toggle('wcf\\data\\language\\server\\LanguageServerAction', $('.languageServerRow'));{/if}
+		{if $__wcf->getSession()->getPermission('admin.language.canDeleteServer')}new WCF.Action.Delete('wcf\\data\\language\\server\\LanguageServerAction', $('.jsLanguageServerRow'));{/if}
+		{if $__wcf->getSession()->getPermission('admin.language.canEditServer')}new WCF.Action.Toggle('wcf\\data\\language\\server\\LanguageServerAction', $('.jsLanguageServerRow'));{/if}
 	});
 	//]]>
 </script>
@@ -51,18 +51,18 @@
 			</thead>
 			<tbody>
 				{foreach from=$languageServers item=languageServer}
-					<tr class="languageServerRow">
+					<tr class="jsLanguageServerRow">
 						<td class="columnIcon">
 							{if $__wcf->getSession()->getPermission('admin.language.canEditServer')}
-								<img src="{@RELATIVE_WCF_DIR}icon/{if !$languageServer->disabled}enabled{else}disabled{/if}1.svg" alt="" title="{lang}wcf.global.button.{if !$languageServer->disabled}disable{else}enable{/if}{/lang}" class="toggleButton balloonTooltip" data-object-id="{@$languageServer->languageServerID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
-								<a href="{link controller='LanguageServerEdit' id=$languageServer->languageServerID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
+								<img src="{@RELATIVE_WCF_DIR}icon/{if !$languageServer->disabled}enabled{else}disabled{/if}1.svg" alt="" title="{lang}wcf.global.button.{if !$languageServer->disabled}disable{else}enable{/if}{/lang}" class="jsToggleButton wcf-balloonTooltip" data-object-id="{@$languageServer->languageServerID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
+								<a href="{link controller='LanguageServerEdit' id=$languageServer->languageServerID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="wcf-balloonTooltip" /></a>
 							{else}
 								<img src="{@RELATIVE_WCF_DIR}icon/{if !$languageServer->disabled}enabled{else}disabled{/if}1D.svg" alt="" title="{lang}wcf.global.button.{if !$languageServer->disabled}disable{else}enable{/if}{/lang}" />
 								<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" />
 							{/if}
 							
 							{if $__wcf->getSession()->getPermission('admin.language.canDeleteServer')}
-								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="balloonTooltip deleteButton" data-object-id="{@$languageServer->languageServerID}" data-confirm-message="{lang}wcf.acp.languageServer.delete.sure{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="wcf-balloonTooltip jsDeleteButton" data-object-id="{@$languageServer->languageServerID}" data-confirm-message="{lang}wcf.acp.languageServer.delete.sure{/lang}" />
 							{else}
 								<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" />
 							{/if}

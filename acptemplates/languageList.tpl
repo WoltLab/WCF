@@ -3,23 +3,23 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		new WCF.Action.Delete('wcf\\data\\language\\LanguageAction', $('.languageRow'));
+		new WCF.Action.Delete('wcf\\data\\language\\LanguageAction', $('.jsLanguageRow'));
 		new WCF.Action.SimpleProxy({
 			action: 'setAsDefault',
 			className: 'wcf\\data\\language\\LanguageAction',
-			elements: $('.languageRow .setAsDefaultButton')
+			elements: $('.jsLanguageRow .setAsDefaultButton')
 		}, {
 			success: function(data, statusText, jqXHR) {
-				$('.languageRow').each(function(index, row) {
-					var $button = $(row).find('.setAsDefaultButton');
+				$('.jsLanguageRow').each(function(index, row) {
+					var $button = $(row).find('.jsSetAsDefaultButton');
 					
 					if (WCF.inArray($($button).data('objectID'), data.objectIDs)) {
-						$($button).attr('src', '{@RELATIVE_WCF_DIR}icon/defaultDisabledS.png');
-						$(row).find('.deleteButton').attr('src', '{@RELATIVE_WCF_DIR}icon/deleteDisabledS.png');
+						$($button).attr('src', '{@RELATIVE_WCF_DIR}icon/default1D.svg');
+						$(row).find('.jsDeleteButton').attr('src', '{@RELATIVE_WCF_DIR}icon/delete1D.svg');
 					}
 					else {
-						$($button).attr('src', '{@RELATIVE_WCF_DIR}icon/defaultS.png');
-						$(row).find('.deleteButton').attr('src', '{@RELATIVE_WCF_DIR}icon/deleteS.png');
+						$($button).attr('src', '{@RELATIVE_WCF_DIR}icon/default1.svg');
+						$(row).find('.jsDeleteButton').attr('src', '{@RELATIVE_WCF_DIR}icon/delete1.svg');
 					}
 				});
 			}
@@ -68,19 +68,19 @@
 			
 			<tbody>
 			{foreach from=$objects item=language}
-				<tr class="languageRow">
+				<tr class="jsLanguageRow">
 					<td class="columnIcon">
 						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
 							<a href="{link controller='LanguageExport' id=$language->languageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/download1.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" class="balloonTooltip" /></a>
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/download1D.png" alt="" title="{lang}wcf.acp.language.export{/lang}" />
+							<img src="{@RELATIVE_WCF_DIR}icon/download1D.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" />
 						{/if}
 						
 						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
 							{if !$language->isDefault}
-								<img src="{@RELATIVE_WCF_DIR}icon/default1.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="setAsDefaultButton balloonTooltip" data-objectID="{@$language->languageID}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/default1.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="jsSetAsDefaultButton wcf-balloonTooltip" data-objectID="{@$language->languageID}" />
 							{else}
-								<img src="{@RELATIVE_WCF_DIR}icon/default1D.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="setAsDefaultButton" data-objectID="{@$language->languageID}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/default1D.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="jsSetAsDefaultButton" data-objectID="{@$language->languageID}" />
 							{/if}
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/default1D.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" />
@@ -93,9 +93,9 @@
 						{/if}
 						{if $__wcf->getSession()->getPermission('admin.language.canDeleteLanguage')}
 							{if !$language->isDefault}
-								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="balloonTooltip deleteButton" data-objectID="{@$language->languageID}" data-confirmMessage="{lang}wcf.acp.language.delete.sure{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="balloonTooltip jsDeleteButton" data-objectID="{@$language->languageID}" data-confirmMessage="{lang}wcf.acp.language.delete.sure{/lang}" />
 							{else}
-								<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="deleteButton" data-objectID="{@$language->languageID}" data-confirmMessage="{lang}wcf.acp.language.delete.sure{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton" data-objectID="{@$language->languageID}" data-confirmMessage="{lang}wcf.acp.language.delete.sure{/lang}" />
 							{/if}
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" />
