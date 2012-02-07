@@ -100,8 +100,7 @@ hr {
 
 /* Single Classes */
 
-a.externalURL,
-a.wcf-externalURL {
+.wcf-externalURL {
 	background-image: url('../../icon/externalURL1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
@@ -165,7 +164,6 @@ body {
 
 /* Globals */
 
-header.pageHeader,
 header.wcf-pageHeader {
 	/* Disabled, because the WoltLab header-image is not LGPL 
 	Activate it if you want to test your own header image */
@@ -180,14 +178,14 @@ header.wcf-pageHeader {
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
-	header.pageHeader,
+	
 	header.wcf-pageHeader {
 		min-width: 800px;
 	}
 }
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
-	header.pageHeader,
+	
 	header.wcf-pageHeader {
 		min-width: auto;
 	}
@@ -199,7 +197,7 @@ header.wcf-pageHeader {
 
 /* Globals */
 
-nav.topMenu {
+nav.wcf-topMenu {
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
 	background-color: rgba(0, 0, 0, .4);
 	position: fixed;
@@ -328,29 +326,29 @@ nav.topMenu {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	nav.topMenu {
+	nav.wcf-topMenu {
 		min-width: 800px;
 	}
 }
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	nav.topMenu {
+	nav.wcf-topMenu {
 		min-width: auto;
 	}
 }
 
-.topMenu:hover {
+.wcf-topMenu:hover {
 	background-color: rgba(0, 0, 0, .7);
 }
 
-.topMenu > div {
+.wcf-topMenu > div {
 	padding: 0 23px 0;
 }
 
 /* Menu Items (1st level) */
 
-.topMenu > div > ul > li {
+.wcf-topMenu > div > ul > li {
 	cursor: pointer;
 	border-width: 0 1px;
 	border-style: solid;
@@ -359,15 +357,15 @@ nav.topMenu {
 	position: relative;
 }
 
-.topMenu > div > ul > li,
-.topMenu > div > ul > li a {
+.wcf-topMenu > div > ul > li,
+.wcf-topMenu > div > ul > li a {
 	text-decoration: none;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
 	color: #69c;
 }
 
-.topMenu > div > ul > li:hover,
-.topMenu > div > ul > li:hover a {
+.wcf-topMenu > div > ul > li:hover,
+.wcf-topMenu > div > ul > li:hover a {
 	border-color: rgba(255, 255, 255, .5);
 }
 
@@ -375,35 +373,35 @@ nav.topMenu {
 
 /* ToDo: Top-Menu Dropdown Caption */
 
-.topMenu > div > ul > li .dropdownCaption,
-.topMenu > div > ul > li .dropdownCaption a {
+.wcf-topMenu > div > ul > li .wcf-dropdownCaption,
+.wcf-topMenu > div > ul > li .wcf-dropdownCaption a {
 	padding-right: 5px;
 }
 
-.topMenu > div > ul > li:hover .dropdownCaption,
-.topMenu > div > ul > li:hover .dropdownCaption a {
+.wcf-topMenu > div > ul > li:hover .wcf-dropdownCaption,
+.topMenu > div > ul > li:hover .wcf-dropdownCaption a {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
 	color: rgba(255, 255, 255, 1);
 	background-color: rgba(0, 0, 0, .7);
 }
 
-.topMenu > div > ul > li > .dropdownCaption > .badge,
-.topMenu > div > ul > li:hover > .dropdownCaption > .badge {
+.wcf-topMenu > div > ul > li > .wcf-dropdownCaption > .wcf-badge,
+.wcf-topMenu > div > ul > li:hover > .wcf-dropdownCaption > .wcf-badge {
 	font-size: 75%;
 	color: #369 !important;
 	margin: -3px 3px;
 	padding: 1px 3px;
 }
 
-.topMenu > div > ul > li > .dropdownCaption > img {
+.wcf-topMenu > div > ul > li > .wcf-dropdownCaption > img {
 	margin: -7px 0 -5px 0;
 }
 
-.topMenu > div > ul > li > span:not(.badge) {
+.topMenu > div > ul > li > span:not(.wcf-badge) {
 	padding: 6px;
 }
 
-.topMenu > div > ul > li > .dropdownCaption {
+.wcf-topMenu > div > ul > li > .wcf-dropdownCaption {
 	cursor: pointer;
 	background-image: url('../../icon/dropdown2.svg');
 	background-position: 97% center;
@@ -417,27 +415,27 @@ nav.topMenu {
 /* ToDo: Top-Menu Dropdown Tweaks */
 
 /* Auto-Opening Dropdowns */
-.topMenu ul li .dropdownCaption ~ .dropdown {
+.wcf-topMenu ul li .wcf-dropdownCaption ~ .wcf-dropdown {
 	border-color: rgba(255, 255, 255, .5);
 	background-color: rgba(0, 0, 0, .7);
 	left: -1px;
 	min-width: 100%;
 }
 
-.topMenu ul li:hover .dropdownCaption ~ .dropdown {
+.wcf-topMenu ul li:hover .wcf-dropdownCaption ~ .wcf-dropdown {
 	display: block;
 }
 
-.topMenu ul li {
+.wcf-topMenu ul li {
 	white-space: nowrap;
 }
 
-.topMenu ul li .dropdown {
+.wcf-topMenu ul li .wcf-dropdown {
 	border-width: 0 1px 1px 1px !important;
 	border-radius: 0 0 5px 5px;
 }
 
-.topMenu ul li .dropdown > :first-child {
+.wcf-topMenu ul li .wcf-dropdown > :first-child {
 	border-top-width: 0;
 }
 
@@ -445,15 +443,12 @@ nav.topMenu {
 
 /* -- -- -- Logo -- -- -- */
 
-.logo,
 .wcf-logo {
 	margin: 0 23px 0;
 	position: relative;
 	z-index: 1;
 }
 
-.logo > a,
-.logo > div,
 .wcf-logo > a,
 .wcf-logo > div {
 	text-align: right;
@@ -461,13 +456,11 @@ nav.topMenu {
 	height: 120px;
 }
 
-.logo > a:hover,
 .wcf-logo > a:hover {
 	text-decoration: none !important;
 	color: #d8e7f5;
 }
 
-.logo h1,
 .wcf-logo h1 {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 1);
 	color: #d8e7f5;
@@ -486,15 +479,12 @@ nav.topMenu {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.logo h1,
 	.wcf-logo h1 {
 		font-size: 175%;
 	}
 	
 }
 
-.logo > div > img,
-.logo > a > img,
 .wcf-logo > div > img,
 .wcf-logo > a > img {
 	position: absolute;
@@ -506,7 +496,6 @@ nav.topMenu {
 
 /* -- -- -- Search -- -- -- */
 
-.search,
 .wcf-search {
 	border: 1px solid rgba(0, 0, 0, .1);
 	border-radius: 5px;
@@ -530,25 +519,21 @@ nav.topMenu {
 	
 }
 
-.search:hover,
 .wcf-search:hover {
 	background-color: rgba(0, 0, 0, .5);
 }
 
-.search:after,
 .wcf-search:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-.search input[type='search'],
 .wcf-search input[type='search'] {
 	width: 175px;
 	margin: 5px 10px;
 }
 
-.search > img.collapsible,
 .wcf-search > img.collapsible {
 	margin: 0;
 	display: inline;
@@ -558,7 +543,6 @@ nav.topMenu {
 	cursor: pointer;
 }
 
-.search > div,
 .wcf-search > div {
 	display: inline;
 	margin-left: 1px;
@@ -567,7 +551,6 @@ nav.topMenu {
 
 /* -- -- -- Main Menu -- -- -- */
 
-.mainMenu,
 .wcf-mainMenu {
 	/* General toggle switch for main menu orientation (options: left|center|right) */
 	text-align: left;
@@ -576,14 +559,12 @@ nav.topMenu {
 	position: relative;
 }
 
-.mainMenu:after,
 .wcf-mainMenu:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-.mainMenu > ul,
 .wcf-mainMenu > ul {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
@@ -591,14 +572,12 @@ nav.topMenu {
 	display: inline-block;
 }
 
-.mainMenu > ul > li,
 .wcf-mainMenu > ul > li {
 	display: inline-block;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.mainMenu > ul > li,
 	.wcf-mainMenu > ul > li {
 		font-size: 120%;
 	}
@@ -606,35 +585,28 @@ nav.topMenu {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.mainMenu > ul > li,
 	.wcf-mainMenu > ul > li {
 		font-size: 150%;
 	}
 }
 
-.mainMenu > ul > li.activeMenuItem,
 .wcf-mainMenu > ul > li.activeMenuItem {
 	margin: -5px 0 0;
 }
 
-.mainMenu > ul > li.activeMenuItem:first-child,
 .wcf-mainMenu > ul > li.activeMenuItem:first-child {
 	margin: -5px -5px 0 0;
 }
 
-.mainMenu > ul > li.activeMenuItem:last-child,
 .wcf-mainMenu > ul > li.activeMenuItem:last-child {
 	margin: -5px 0 0 -5px;
 }
 
-.mainMenu > ul > li:only-child,
-.mainMenu > ul > li.activeMenuItem:only-child,
 .wcf-mainMenu > ul > li:only-child,
 .wcf-mainMenu > ul > li.activeMenuItem:only-child {
 	margin: -5px 0 0;
 }
 
-.mainMenu > ul > li > a,
 .wcf-mainMenu > ul > li > a {
 	font-weight: normal;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 1);
@@ -667,7 +639,6 @@ nav.topMenu {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.mainMenu > ul > li > a,
 	.wcf-mainMenu > ul > li > a {
 		padding: 10px 20px;
 	}
@@ -676,26 +647,21 @@ nav.topMenu {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.mainMenu > ul > li > a,
 	.wcf-mainMenu > ul > li > a {
 		padding: 10px 10px;
 	}
 	
 }
 
-.mainMenu > ul > li > a,
-.mainMenu > ul > li:hover > a,
 .wcf-mainMenu > ul > li > a,
 .wcf-mainMenu > ul > li:hover > a {
 	text-decoration: none;
 }
 
-.mainMenu > ul > li:not(.activeMenuItem):hover > a,
 .wcf-mainMenu > ul > li:not(.activeMenuItem):hover > a {
 	color: rgba(255, 255, 255, 1);
 }
 
-.mainMenu > ul > li.activeMenuItem > a,
 .wcf-mainMenu > ul > li.activeMenuItem > a {
 	font-size: 110%;
 	font-weight: bold;
@@ -717,7 +683,6 @@ nav.topMenu {
 
 /* Rounded Bottom Corners */
 
-.mainMenu > ul > li.activeMenuItem > a:before,
 .wcf-mainMenu > ul > li.activeMenuItem > a:before {
 	position: absolute;
     bottom: 0;
@@ -730,7 +695,6 @@ nav.topMenu {
     box-shadow: 2px 2px 0 #e7f2fd;
 }
 
-.mainMenu > ul > li.activeMenuItem > a:after,
 .wcf-mainMenu > ul > li.activeMenuItem > a:after {
 	position: absolute;
     bottom: 0;
@@ -745,7 +709,6 @@ nav.topMenu {
 
 /* ToDo: Special */
 
-.mainMenu > ul > li.activeMenuItem .badge,
 .wcf-mainMenu > ul > li.activeMenuItem .wcf-badge {
 	font-size: 65% !important;
 	color: rgba(255, 255, 255, 1);
@@ -762,7 +725,6 @@ nav.topMenu {
 
 /* -- -- -- Header/Footer Navigation & Main Menu Sub Menu -- -- -- */
 
-.headerNavigation,
 .wcf-headerNavigation {
 	background-color: #e7f2fd;
 	border-bottom: 1px solid #bcd;
@@ -774,7 +736,6 @@ nav.topMenu {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.headerNavigation,
 	.wcf-headerNavigation {
 		min-width: 800px;
 	}
@@ -783,41 +744,33 @@ nav.topMenu {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.headerNavigation,
 	.wcf-headerNavigation {
 		min-width: auto;
 	}
 	
 }
 
-.headerNavigation:after,
 .wcf-headerNavigation:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-.headerNavigation > div,
 .wcf-headerNavigation > div {
 	padding: 0 7px;
 }
 
-.headerNavigation > div:after,
 .wcf-headerNavigation > div:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-.headerNavigation ul,
-.footerNavigation ul,
 .wcf-headerNavigation ul,
 .wcf-footerNavigation ul {
 	display: block;
 }
 
-.headerNavigation ul li,
-.footerNavigation ul li,
 .wcf-headerNavigation ul li,
 .wcf-footerNavigation ul li {
 	cursor: pointer;
@@ -827,24 +780,18 @@ nav.topMenu {
 	z-index: 190;
 }
 
-.headerNavigation ul li a,
-.footerNavigation ul li a,
 .wcf-headerNavigation ul li a,
 .wcf-footerNavigation ul li a {
 	padding: 3px;
 	display: inline-block;
 }
 
-.headerNavigation ul li a:hover,
-.footerNavigation ul li a:hover,
 .wcf-headerNavigation ul li a:hover,
 .wcf-footerNavigation ul li a:hover {
 	text-decoration: none;
 	background-color: #d8e7f5;
 }
 
-.headerNavigation ul li a:hover:active,
-.headerNavigation ul li a:hover:focus,
 .wcf-footerNavigation ul li a:hover:active,
 .wcf-footerNavigation ul li a:hover:focus {
 	background-color: #fff9f4;
@@ -852,10 +799,6 @@ nav.topMenu {
 
 /* Special */
 
-#tplLogin .pageHeader .headerNavigation ul li.toBottomLink,
-#tplLogin .pageFooter .footerNavigation ul li.toTopLink,
-#tplLogin .pageHeader .wcf-headerNavigation ul li.toBottomLink,
-#tplLogin .pageFooter .wcf-footerNavigation ul li.toTopLink,
 #tplLogin .wcf-pageHeader .wcf-headerNavigation ul li.toBottomLink,
 #tplLogin .wcf-pageFooter .wcf-footerNavigation ul li.toTopLink {
 	/* Removes the to-bottom-link on the log-in page */
@@ -867,17 +810,14 @@ nav.topMenu {
 
 /* Special: Sub Menu */
 
-.headerNavigation .subMenu,
 .wcf-headerNavigation .wcf-subMenu {
 	float: left;
 }
 
-.headerNavigation .subMenu > li,
 .wcf-headerNavigation .wcf-subMenu > li {
 	line-height: 1.25;
 }
 
-.headerNavigation .subMenu > li > a,
 .wcf-headerNavigation .wcf-subMenu > li > a {
 	padding-right: 5px;
 	padding-left: 5px;
@@ -887,7 +827,6 @@ nav.topMenu {
 
 /* ############## Main ############## */
 
-.main,
 .wcf-main {
 	background-color: #d8e7f5;
 	margin: 0 23px;
@@ -902,7 +841,6 @@ nav.topMenu {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.main,
 	.wcf-main {
 		min-width: 800px;
 	}
@@ -911,7 +849,6 @@ nav.topMenu {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.main
 	.wcf-main {
 		min-width: auto;
 	}
@@ -924,7 +861,6 @@ nav.topMenu {
 
 /* ToDo: Change the class name, since now we have the class "content" 2 times! */
 
-section.content,
 section.wcf-content {
 	background-color: rgba(255, 255, 255, 1);
 	position: relative;
@@ -945,33 +881,28 @@ section.wcf-content {
 	transition: margin .1s ease;
 }
 
-section.content:after,
 section.wcf-content:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-.left section.content,
 .left section.wcf-content {
 	border-left: 1px solid rgba(187, 204, 221, 1);
 	margin-left: 249px;
 }
 
-.right section.content,
 .right section.wcf-content {
 	border-right: 1px solid rgba(187, 204, 221, 1);
 	margin-right: 249px;
 }
 
-.main > div section:only-child,
 .wcf-main > div section:only-child {
 	margin: 0 !important;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	section.content,
 	section.wcf-content {
 		padding: 5px 40px 20px;
 	}
@@ -980,17 +911,13 @@ section.wcf-content:after {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	section.content,
 	section.wcf-content {
 		padding: 5px 15px 20px;
 	}
 	
 }	
 
-section.content .content,
-section.wcf-content .wcf-content,
-section.content .wcf-content,
-section.wcf-content .content {
+section.wcf-content .wcf-content {
 	/* Test: border: 1px solid #ccc;*/
 	background-color: rgba(0, 0, 0, .01);
 	padding: 13px 23px 23px;
@@ -1000,8 +927,6 @@ section.wcf-content .content {
 
 /* -- -- -- Content Header & Footer -- -- -- */
 
-.contentHeader,
-.contentFooter,
 .wcf-contentHeader,
 .wcf-contentFooter {
 	margin-top: 15px;
@@ -1013,7 +938,6 @@ section.wcf-content .content {
 
 /* Globals */
 
-.sidebar,
 .wcf-sidebar {
 	margin-bottom: -10px;
 	display: block;
@@ -1030,12 +954,10 @@ section.wcf-content .content {
 
 /* Toggle for sidebar orientation (options: left|right|top|bottom) */
 
-.left .sidebar,
 .left .wcf-sidebar {
 	float: left;
 }
 
-.right .sidebar,
 .right .wcf-sidebar {
 	float: right;
 }
@@ -1051,13 +973,11 @@ section.wcf-content .content {
 	height: 0;
 }
 
-.left .sidebar.collapsed + .content,
 .left .wcf-sidebar.collapsed + .wcf-content {
 	border: 0;
 	margin-left: 0;
 }
 
-.right .sidebar.collapsed + .content,
 .right .wcf-sidebar.collapsed + .wcf-content {
 	border: 0;
 	margin-right: 0;
@@ -1069,7 +989,6 @@ section.wcf-content .content {
 
 /* Globals */
 
-.sidebar .collapsibleSidebarButton,
 .wcf-sidebar .collapsibleSidebarButton {
 	cursor: pointer;
 	background-position: center 1%, center 99%;
@@ -1109,7 +1028,6 @@ section.wcf-content .content {
 	transition: right .1s ease;
 }
 
-.sidebar .collapsibleSidebarButton span,
 .wcf-sidebar .collapsibleSidebarButton span {
     background-position: center center;
 	background-size: 10px 10px;
@@ -1130,14 +1048,11 @@ section.wcf-content .content {
 	background-image: url('../../icon/arrowRight1.svg');
 }
 
-.sidebar .collapsibleSidebarButton:hover,
 .wcf-sidebar .collapsibleSidebarButton:hover {
 	background-color: rgba(252, 252, 252, 1);
 	opacity: 1;
 }
 
-.sidebar .collapsibleSidebarButton:focus,
-.sidebar .collapsibleSidebarButton:active,
 .wcf-sidebar .collapsibleSidebarButton:focus,
 .wcf-sidebar .collapsibleSidebarButton:active {
 	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
@@ -1158,7 +1073,6 @@ section.wcf-content .content {
 	background-image: url('../../icon/arrowRight1.svg');
 }
 
-.left .sidebar .collapsibleSidebarButton:hover,
 .left .wcf-sidebar .collapsibleSidebarButton:hover {
 	border-right: 1px solid rgba(187, 204, 221, .5);
 }
@@ -1959,21 +1873,18 @@ dl > dd > fieldset > dl > dd > label {
 
 /* Special -> Sidebar */
 
-.sidebar dl > dt,
 .wcf-sidebar dl > dt {
 	text-align: left;
 	float: none;
 	width: auto;
 }
 
-.sidebar dl > dd,
 .wcf-sidebar dl > dd {
 	margin-left: 0;
 	display: block;
 	margin-bottom: 13px;
 }	
 
-.sidebar dl > dd *,
 .wcf-sidebar dl > dd * {
 	display: block;
 }	
@@ -2230,12 +2141,12 @@ input[type=search] {
 
 /* -- -- -- Form Errors -- -- -- */
 
-.formError input[type='text'],
-.formError input[type='search'],
-.formError input[type='email'],
-.formError input[type='url'],
-.formError input[type='password'],
-.formError textarea {
+.wcf-formError input[type='text'],
+.wcf-formError input[type='search'],
+.wcf-formError input[type='email'],
+.wcf-formError input[type='url'],
+.wcf-formError input[type='password'],
+.wcf-formError textarea {
 	border-color: rgba(255, 0, 0, 1);
 	background-color: rgba(255, 246, 246, 1);
 }
@@ -2330,6 +2241,8 @@ input[type=search] {
 /* (Colors are being taken from the 
 "Global Button Color & Effect Library") */
 
+/* -- -- -- Standard -- -- -- */
+
 /* Globals */
 
 .wcf-smallButtons {
@@ -2360,6 +2273,40 @@ input[type=search] {
 
 .wcf-smallButtons > li:last-child > a {
 	border-bottom-right-radius: 7px;
+}
+
+
+
+/* -- -- -- Small Button Bar -- -- -- */
+
+.wcf-smallButtonBar {
+	text-align: center !important;
+	border-top: 1px solid rgba(204, 204, 204, 1);
+	border-radius: 0 0 7px 7px;
+	
+	background-color: rgba(0, 0, 0, .015);
+	background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: -ms-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
+	
+	padding: 3px;
+	position: relative;
+	z-index: 100;
+}
+
+.wcf-smallButtonBar li {
+	display: inline;
+	position: relative;
+}
+
+.wcf-smallButtonBar li span {
+	/* Removes the button-caption */
+	position: absolute;
+	left: -9000px;
+	top: -9000px;
+	width: 0;
 }
 
 
@@ -3102,26 +3049,26 @@ thead input[type='checkbox'] {
 
 /* -- -- -- ToDo: Table Column Formats -- -- -- */
 
-tr .columnMark,
-tr .columnStatus {
+.columnMark,
+.columnStatus {
 	text-align: center;
 	width: 1% !important;
 	white-space: nowrap;
 }
 
-tr .columnStatus .badge {
+.columnStatus .badge {
 	margin-right: 1px !important;
 	margin-left: 1px !important;
 }
 
-tr .columnDigits,
-tr .columnID {
+.columnDigits,
+.columnID {
 	text-align: right;
 	width: 1% !important;
 	white-space: nowrap;
 }
 
-tr .columnIcon {
+.columnIcon {
 	text-align: left;
 	width: 1% !important;
 	white-space: nowrap;
@@ -3136,31 +3083,31 @@ tr .columnIcon img {
 	width: 16px;
 }
 
-.big tr .columnIcon img {
+.big .columnIcon img {
 	height: 24px;
 	width: 24px;
 }
 
-tr .columnTitle {
+.columnTitle {
 	font-weight: bold;
 	text-align: left;
 }
 
-tr .columnText {
+.columnText {
 	font-weight: normal;
 	text-align: left;
 	max-width: 20%;
 }
 
-tr .columnDate,
-tr .columnRegistrationDate {
+.columnDate,
+.columnRegistrationDate {
 	font-size: 85%;
 	text-align: right;
 	width: 1% !important;
 	white-space: nowrap;
 }
 
-tr .columnURL {
+.columnURL {
 	font-size: 85%;
 	text-align: left;
 }
@@ -4389,38 +4336,6 @@ button[disabled='disabled'] {
 	opacity: 1;
 }
 
-/* Small Button Bar */
-
-.wcf-infoPackagePlugin .wcf-smallButtonBar {
-	text-align: center !important;
-	border-top: 1px solid rgba(204, 204, 204, 1);
-	border-radius: 0 0 7px 7px;
-	
-	background-color: rgba(0, 0, 0, .015);
-	background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
-	background-image: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
-	background-image: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
-	background-image: -ms-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
-	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .05));
-	
-	padding: 3px;
-	position: relative;
-	z-index: 100;
-}
-
-.wcf-infoPackagePlugin .wcf-smallButtonBar li {
-	display: inline;
-	position: relative;
-}
-
-.wcf-infoPackagePlugin .wcf-smallButtonBar li span {
-	/* Removes the button-caption */
-	position: absolute;
-	left: -9000px;
-	top: -9000px;
-	width: 0;
-}
-
 
 
 /* -- -- -- Package Footers -- -- -- */
@@ -4453,10 +4368,6 @@ button[disabled='disabled'] {
 	}
 	
 }
-
-
-
-
 
 
 

@@ -1267,7 +1267,7 @@ WCF.Action.Delete.prototype = {
 		
 		// bind event listener
 		this.containerList.each($.proxy(function(index, container) {
-			$(container).find('.deleteButton').bind('click', $.proxy(this._click, this));
+			$(container).find('.jsDeleteButton').bind('click', $.proxy(this._click, this));
 		}, this));
 	},
 	
@@ -1323,7 +1323,7 @@ WCF.Action.Delete.prototype = {
 	_success: function(data, textStatus, jqXHR) {
 		// remove items
 		this.containerList.each($.proxy(function(index, container) {
-			var $objectID = $(container).find('.deleteButton').data('objectID');
+			var $objectID = $(container).find('.jsDeleteButton').data('objectID');
 			if (WCF.inArray($objectID, data.objectIDs)) {
 				$(container).wcfBlindOut('up', function() {
 					$(container).empty().remove();
@@ -1360,7 +1360,7 @@ WCF.Action.Toggle.prototype = {
 		this.containerList = containerList;
 		this.className = className;
 		
-		this.toggleButtonSelector = '.toggleButton';
+		this.toggleButtonSelector = '.jsToggleButton';
 		if (toggleButtonSelector) {
 			this.toggleButtonSelector = toggleButtonSelector;
 		}
