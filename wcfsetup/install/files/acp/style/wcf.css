@@ -1174,7 +1174,6 @@ section.wcf-content .content {
 	background-image: url('../../icon/arrowLeft1.svg');
 }
 
-.right .sidebar .collapsibleSidebarButton:hover,
 .right .wcf-sidebar .collapsibleSidebarButton:hover {
 	border-left: 1px solid rgba(187, 204, 221, .5);
 }
@@ -1184,13 +1183,11 @@ section.wcf-content .content {
 /* -- -- -- Sidebar Content -- -- -- */
 
 /* Should be obsolete now 
-.sidebarContent,
 .wcf-sidebarContent {
 	white-space: nowrap;
 }
 */
 
-.sidebarContent > div,
 .wcf-sidebarContent > div {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	position: relative;
@@ -1198,18 +1195,15 @@ section.wcf-content .content {
 	z-index: 110;
 }
 
-.collapsed .sidebarContent > div,
 .collapsed .wcf-sidebarContent > div {
 	width: 0;
 }
 
-.sidebarContent > .collapsible a:hover,
 .wcf-sidebarContent > .collapsible a:hover {
 	text-decoration: none !important;
 	color: #369;
 }
 
-.sidebarContent > div > h1,
 .wcf-sidebarContent > div > h1 {
 	cursor: pointer;
 	font-weight: bold;
@@ -1217,7 +1211,6 @@ section.wcf-content .content {
 	margin-top: 5px;
 }
 
-.sidebarContent > .collapsible > h1,
 .wcf-sidebarContent > .collapsible > h1 {
 	background-image: url('../../icon/arrowRight.svg');
 	background-position: 15px center;
@@ -1227,13 +1220,11 @@ section.wcf-content .content {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.sidebarContent > div > h1,
 	.wcf-sidebarContent > div > h1 {
 		font-size: 130%;
 		padding: 7px 15px 7px 35px;
 	}
 	
-	.sidebarContent > div:not(.collapsible) > h1,
 	.wcf-sidebarContent > div:not(.collapsible) > h1 {
 		padding: 7px 15px 7px 15px;
 	}
@@ -1242,27 +1233,23 @@ section.wcf-content .content {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.sidebarContent > div > h1,
 	.wcf-sidebarContent > div > h1 {
 		font-size: 150%;
 		padding: 7px 15px 7px 35px;
 	}
 	
-	.sidebarContent > div:not(.collapsible) > h1,
 	.wcf-sidebarContent > div:not(.collapsible) > h1 {
 		padding: 7px 15px 7px 15px;
 	}
 	
 }
 
-.sidebarContent > .collapsible h1.activeMenuItem,
 .wcf-sidebarContent > .collapsible h1.activeMenuItem {
 	background-image: url('../../icon/arrowDown.svg');
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.sidebarContent > div ul > li,
 	.wcf-sidebarContent > div ul > li {
 		font-size: 110%;
 	}
@@ -1271,15 +1258,12 @@ section.wcf-content .content {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.sidebarContent > div ul > li,
 	.wcf-sidebarContent > div ul > li {
 		font-size: 120%;
 	}
 	
 }
 
-.sidebarContent > div ul > li > a,
-.sidebarContent > div ul > li > div,
 .wcf-sidebarContent > div ul > li > a,
 .wcf-sidebarContent > div ul > li > div {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
@@ -1288,7 +1272,6 @@ section.wcf-content .content {
 	display: block;
 }
 
-.sidebarContent > div ul > li.activeMenuItem,
 .wcf-sidebarContent > div ul > li.activeMenuItem {
 	background-color: rgba(255, 255, 255, 1);
 	margin-right: -1px;
@@ -1301,7 +1284,6 @@ section.wcf-content .content {
 	box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 }
 
-.sidebarContent > div ul > li.activeMenuItem a,
 .wcf-sidebarContent > div ul > li.activeMenuItem a {
 	font-weight: bold;
 	color: #369;
@@ -1313,7 +1295,6 @@ section.wcf-content .content {
 
 /* Globals */
 
-.pageFooter,
 .wcf-pageFooter {
 	text-align: center;
 	padding: 0 23px 33px;
@@ -1323,7 +1304,6 @@ section.wcf-content .content {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.pageFooter,
 	.wcf-pageFooter {
 		min-width: 800px;
 	}
@@ -1332,21 +1312,18 @@ section.wcf-content .content {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.pageFooter,
 	.wcf-pageFooter {
 		min-width: auto;
 	}
 	
 }
 
-.pageFooter:after,
 .wcf-pageFooter:after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-.pageFooter > div,
 .wcf-pageFooter > div {
 	border-top: 1px solid #bcd;
 	border-bottom-left-radius: 3px;
@@ -1355,7 +1332,6 @@ section.wcf-content .content {
 	padding: 0 7px;
 }
 
-.pageFooter > div:after,
 .wcf-pageFooter > div:after {
 	content: '';
 	display: block;
@@ -1366,18 +1342,15 @@ section.wcf-content .content {
 
 /* -- -- -- Copyright -- -- -- */
 
-.pageFooter .copyright,
 .wcf-pageFooter .wcf-copyright {
 	padding-top: 20px;
 	display: inline-block;
 }
 
-.pageFooter .copyright a,
 .wcf-pageFooter .wcf-copyright a {
 	text-shadow: 0 -1px 0 #000;
 }
 
-.pageFooter .copyright a:hover,
 .wcf-pageFooter .wcf-copyright a:hover {
 	text-decoration: none;
 	color: #69c;
@@ -1389,7 +1362,6 @@ section.wcf-content .content {
 
 /* Globals */
 
-.badge,
 .wcf-badge {
 	font-size: 85%;
 	font-weight: bold;
@@ -1407,12 +1379,10 @@ section.wcf-content .content {
 
 /* Badge Types */
 
-.badgeNote,
 .wcf-badgeNote {
 	border: 1px solid #ccc;
 }
 
-.badgeInfo,
 .wcf-badgeInfo {
 	color: #68b;
 	border: 1px solid #9be;
@@ -1426,14 +1396,12 @@ section.wcf-content .content {
 	background-color: #efe;
 }
 
-.badgeWarning,
 .wcf-badgeWarning {
 	color: #990;
 	border: 1px solid #cc0;
 	background-color: #ffd;
 }
 
-.badgeError,
 .wcf-badgeError {
 	color: #c00;
 	border: 1px solid #f99;
@@ -1442,9 +1410,8 @@ section.wcf-content .content {
 
 /* Buttons */
 
-.badgeButton,
 .wcf-badgeButton,
-.clipboardEditor > ul > li {
+.wcf-clipboardEditor > ul > li {
 	cursor: pointer;
 	border-radius: 30px;
 	margin-right: 0;
@@ -1453,9 +1420,7 @@ section.wcf-content .content {
 	display: inline-block;
 }
 
-.badgeButton,
 .wcf-badgeButton,
-li > .badgeButton,
 li > .wcf-badgeButton {
 	margin-top: 7px;
 	margin-right: 3px;
@@ -1463,11 +1428,9 @@ li > .wcf-badgeButton {
 	float: left;
 }
 
-.badgeButton,
 .wcf-badgeButton,
-.badgeButton a,
 .wcf-badgeButton a,
-.clipboardEditor > ul > li > span {
+.wcf-clipboardEditor > ul > li > span {
 	text-decoration: none !important;
 }
 
@@ -1477,7 +1440,6 @@ li > .wcf-badgeButton {
 
 /* -- -- -- Label List -- -- -- */
 
-.labelList,
 .wcf-labelList {
 	margin: 0;
 	padding: 5px 0 0;
@@ -1488,7 +1450,6 @@ li > .wcf-badgeButton {
 
 /* Globals */
 
-.label,
 .wcf-label {
 	font-size: 85%;
 	font-weight: bold;
@@ -1505,118 +1466,96 @@ li > .wcf-badgeButton {
 	cursor: pointer;
 }
 
-.label:hover,
 .wcf-label:hover {
 	color: rgba(255, 255, 255, 1);
 	background-color: rgba(51, 51, 51, 1);
 }
 
-.label a,
 .wcf-label a {
 	color: #eee;
 	text-decoration: none;
 }
 
-.label a:hover,
 .wcf-label a:hover {
 	color: rgba(255, 255, 255, 1);
 }
 
 /* Default Colors */
 
-.label.black,
 .wcf-label.black {
 	background-color: #333;
 }
 
-.label.black:hover,
 .wcf-label.black:hover {
 	background-color: #000;
 }
 
-.label.brown,
 .wcf-label.brown {
 	background-color: #c63;
 }
 
-.label.brown:hover,
 .wcf-label.brown:hover {
 	background-color: #930;
 }
 
-.label.red,
 .wcf-label.red {
 	background-color: #c00;
 }
 
-.label.red:hover,
 .wcf-label.red:hover {
 	background-color: #900;
 }
 
-.label.orange,
 .wcf-label.orange {
 	background-color: #f90;
 }
 
-.label.orange:hover,
 .wcf-label.orange:hover {
 	background-color: #f60;
 }
 
-.label.yellow,
 .wcf-label.yellow {
 	background-color: #ff0;
 }
 
-.label.yellow:hover,
 .wcf-label.yellow:hover {
 	background-color: #cc0;
 }
 
-.label.green,
 .wcf-label.green {
 	background-color: #0c0;
 }
 
-.label.green:hover,
 .wcf-label.green:hover {
 	background-color: #090;
 }
 
-.label.blue,
 .wcf-label.blue {
 	background-color: #09f;
 }
 
-.label.blue:hover,
 .wcf-label.blue:hover {
 	background-color: #06c;
 }
 
-.label.purple,
 .wcf-label.purple {
 	background-color: #c0f;
 }
 
-.label.purple:hover,
 .wcf-label.purple:hover {
 	background-color: #90c;
 }
 
-.label.pink,
 .wcf-label.pink {
 	background-color: #f0c;
 }
 
-.label.pink:hover,
 .wcf-label.pink:hover {
 	background-color: #c09;
 }
 
 /* Special */
 
-table .label,
 table .wcf-label {
 	padding: 1px 6px 2px;
 }
@@ -1625,13 +1564,11 @@ table .wcf-label {
 
 /* ############## Status Display ############## */
 
-.statusDisplay,
 .wcf-statusDisplay {
 	float: right;
 	padding: 1px 0;
 }
 
-.statusDisplay .statusIcons li,
 .wcf-statusDisplay .wcf-statusIcons li {
 	display: inline-block;
 }
@@ -1641,7 +1578,6 @@ table .wcf-label {
 
 /* ############## ToDo: Dropdown Global ############## */
 
-.dropdown,
 .wcf-dropdown {
 	color: rgba(255, 255, 255, 1);
 	border-width: 1px;
@@ -1670,15 +1606,12 @@ table .wcf-label {
 	transition: color background height .1s ease;
 }
 
-.dropdown.open,
 .wcf-dropdown.open {
 	display: block;
 }
 
 /* Dropdown Items */
 
-.dropdown > li,
-.dropdown > div,
 .wcf-dropdown > li,
 .wcf-dropdown > div {
 	text-shadow: none;
@@ -1692,25 +1625,20 @@ table .wcf-label {
 	transition: color background .2s linear;
 }
 
-.dropdown > div,
 .wcf-dropdown > div {
 	padding: 5px 7px;
 }
 
-.dropdown > :first-child,
 .wcf-dropdown > :first-child {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
 
-.dropdown > :last-child,
 .wcf-dropdown > :last-child {
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 }
 
-.dropdown > :hover:not(ul):not(.pointer),
-.dropdown > .active,
 .wcf-dropdown > :hover:not(ul):not(.pointer),
 .wcf-dropdown > .active {
 	color: rgba(255, 255, 255, 1);
@@ -1718,19 +1646,16 @@ table .wcf-label {
 	background-color: rgba(0, 0, 0, .5);
 }
 
-.dropdown > li.divider:not(:first-child),
 .wcf-dropdown > li.divider:not(:first-child) {
 	border-top: 1px solid rgba(255, 255, 255, .7);
 }
 
-.dropdown > li,
 .wcf-dropdown > li {
 	text-decoration: none;
 	padding: 5px 7px;
 	display: block;
 }
 
-.dropdown > li a,
 .wcf-dropdown > li a {
 	text-decoration: none;
 	color: #ccc;
@@ -1738,7 +1663,6 @@ table .wcf-label {
 	display: block;
 }
 
-.dropdown > li a:hover,
 .wcf-dropdown > li a:hover {
 	color: rgba(255, 255, 255, 1);
 	background-color: rgba(0, 0, 0, .5);
@@ -1750,36 +1674,29 @@ table .wcf-label {
 
 /* -- -- -- Main Heading -- -- -- */
 
-.mainHeading,
 .wcf-mainHeading {
 	margin-top: 25px;
 }
 
-.mainHeading:not(:first-of-type)
 .wcf-mainHeading:not(:first-of-type) {
 	margin-top: 30px;
 }
 
-.wcfDialogContainer .mainHeading
 .wcfDialogContainer .wcf-mainHeading {
 	margin-top: 0;
 }
 
-.mainHeading > img,
-.mainHeading > svg,
 .wcf-mainHeading > img,
 .wcf-mainHeading > svg {
 	float: left;
 }
 
-.mainHeading > hgroup,
 .wcf-mainHeading > hgroup {
 	display: block;
 	position: relative;
 	min-height: 48px;
 }
 
-.mainHeading > hgroup h1
 .wcf-mainHeading > hgroup h1 {
 	font-weight: bold;
 	border-bottom: 1px solid rgba(153, 153, 153, 1);
@@ -1788,22 +1705,17 @@ table .wcf-label {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.mainHeading > img,
-	.mainHeading > svg,
 	.wcf-mainHeading > img,
 	.wcf-mainHeading > svg {
 		width: 48px;
 		height: 48px;
 	}
 	
-	.mainHeading > img ~ hgroup,
-	.mainHeading > svg ~ hgroup,
 	.wcf-mainHeading > img ~ hgroup,
 	.wcf-mainHeading > svg ~ hgroup {
 		padding-left: 60px;
 	}
 	
-	.mainHeading > hgroup h1,
 	.wcf-mainHeading > hgroup h1 {
 		font-size: 175%;
 	}
@@ -1812,30 +1724,23 @@ table .wcf-label {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.mainHeading > img,
-	.mainHeading > svg,
 	.wcf-mainHeading > img,
 	.wcf-mainHeading > svg {
 		width: 64px;
 		height: 64px;
 	}
 	
-	.mainHeading > img ~ hgroup,
-	.mainHeading > svg ~ hgroup,
 	.wcf-mainHeading > img ~ hgroup,
 	.wcf-mainHeading > svg ~ hgroup {
 		padding-left: 65px;
 	}
 	
-	.mainHeading > hgroup h1,
 	.wcf-mainHeading > hgroup h1 {
 		font-size: 200%;
 	}
 	
 }
 
-.mainHeading > hgroup h1,
-.mainHeading > hgroup h1 a,
 .wcf-mainHeading > hgroup h1,
 .wcf-mainHeading > hgroup h1 a {
 	text-decoration: none;
@@ -1843,7 +1748,6 @@ table .wcf-label {
 	color: rgba(102, 102, 102, 1);
 }
 
-.mainHeading > hgroup h2,
 .wcf-mainHeading > hgroup h2 {
 	font-size: 100%;
 	font-weight: normal;
@@ -1851,7 +1755,6 @@ table .wcf-label {
 	padding-top: 5px;
 }
 
-.mainHeading > hgroup p,
 .wcf-mainHeading > hgroup p {
 	padding-top: 3px;
 } 
@@ -1860,7 +1763,6 @@ table .wcf-label {
 
 /* -- -- -- Sub Heading -- -- -- */
 
-.subHeading h1,
 .wcf-subHeading h1 {
 	font-size: 150%;
 	font-weight: bold;
@@ -1873,7 +1775,6 @@ table .wcf-label {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.subHeading h1,
 	.wcf-subHeading h1 {
 		font-size: 150%;
 	}
@@ -1882,14 +1783,12 @@ table .wcf-label {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.subHeading h1,
 	.wcf-subHeading h1 {
 		font-size: 175%;
 	}
 	
 }
 
-.subHeading h2,
 .wcf-subHeading h2 {
 	font-weight: normal;
 	color: #aaa;
@@ -1921,20 +1820,13 @@ fieldset legend ~ p {
 	margin-bottom: 14px;
 }
 
-fieldset p.description {
-	font-size: 90%;
-	color: rgba(153, 153, 153, 1);
-}
-
 /* Special Sidebar */
 
-.sidebar fieldset,
 .wcf-sidebar fieldset {
 	border-width: 0;
 	background-color: transparent;
 }
 
-.sidebar fieldset legend,
 .wcf-sidebar fieldset legend {
 	text-transform: uppercase;
 	padding: 0;
