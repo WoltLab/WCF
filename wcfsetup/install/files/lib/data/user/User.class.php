@@ -4,7 +4,6 @@ use wcf\data\DatabaseObject;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
 use wcf\system\cache\CacheHandler;
-use wcf\system\request\IRouteController;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -19,7 +18,7 @@ use wcf\util\StringUtil;
  * @subpackage	data.user
  * @category 	Community Framework
  */
-final class User extends DatabaseObject implements IRouteController {
+final class User extends DatabaseObject {
 	/**
 	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
@@ -336,19 +335,5 @@ final class User extends DatabaseObject implements IRouteController {
 	 */
 	public static function getDatabaseTableAlias() {
 		return 'user_table';
-	}
-	
-	/**
-	 * @see	wcf\system\request\IRouteController::getID()
-	 */
-	public function getID() {
-		return $this->userID;
-	}
-	
-	/**
-	 * @see	wcf\system\request\IRouteController::getTitle()
-	 */
-	public function getTitle() {
-		return $this->username;
 	}
 }

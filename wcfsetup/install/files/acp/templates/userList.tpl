@@ -66,7 +66,7 @@
 							<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}" /></td>
 							<td class="columnIcon">
 								{if $user->editable}
-									<a href="{link controller='UserEdit' id=$user->userID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="balloonTooltip" /></a>
+									<a href="{link controller='UserEdit' id=$user->userID title=$user->username}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="balloonTooltip" /></a>
 								{else}
 									<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" />
 								{/if}
@@ -79,7 +79,7 @@
 								{event name='buttons'}
 							</td>
 							<td class="columnID columnUserID"><p>{@$user->userID}</p></td>
-							<td class="columnTitle columnUsername"><p>{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>{else}{$user->username}{/if}</p></td>
+							<td class="columnTitle columnUsername"><p>{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="{link controller='UserEdit' id=$user->userID title=$user->username}{/link}">{$user->username}</a>{else}{$user->username}{/if}</p></td>
 					
 							{foreach from=$columnHeads key=column item=columnLanguageVariable}
 								<td class="column{$column|ucfirst}"><p>{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</p></td>
