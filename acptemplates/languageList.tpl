@@ -71,14 +71,14 @@
 				<tr class="jsLanguageRow">
 					<td class="columnIcon">
 						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
-							<a href="{link controller='LanguageExport' id=$language->languageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/download1.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" class="wcf-balloonTooltip" /></a>
+							<a href="{link controller='LanguageExport' id=$language->languageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/download1.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" class="jsTooltip" /></a>
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/download1D.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" />
 						{/if}
 						
 						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
 							{if !$language->isDefault}
-								<img src="{@RELATIVE_WCF_DIR}icon/default1.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="jsSetAsDefaultButton wcf-balloonTooltip" data-objectID="{@$language->languageID}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/default1.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="jsSetAsDefaultButton jsTooltip" data-objectID="{@$language->languageID}" />
 							{else}
 								<img src="{@RELATIVE_WCF_DIR}icon/default1D.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="jsSetAsDefaultButton" data-objectID="{@$language->languageID}" />
 							{/if}
@@ -87,13 +87,13 @@
 						{/if}
 						
 						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
-							<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
+							<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip" /></a>
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" />
 						{/if}
 						{if $__wcf->getSession()->getPermission('admin.language.canDeleteLanguage')}
 							{if !$language->isDefault}
-								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="wcf-balloonTooltip jsDeleteButton" data-objectID="{@$language->languageID}" data-confirmMessage="{lang}wcf.acp.language.delete.sure{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsTooltip jsDeleteButton" data-objectID="{@$language->languageID}" data-confirmMessage="{lang}wcf.acp.language.delete.sure{/lang}" />
 							{else}
 								<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton" data-objectID="{@$language->languageID}" data-confirmMessage="{lang}wcf.acp.language.delete.sure{/lang}" />
 							{/if}
