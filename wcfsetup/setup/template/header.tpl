@@ -46,7 +46,7 @@
 			<nav class="wcf-headerNavigation">
 				<div>
 					<ul>
-						<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}" class="wcf-balloonTooltip"><img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+						<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 					</ul>
 				</div>
 			</nav>

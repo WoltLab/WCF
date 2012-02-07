@@ -93,12 +93,12 @@
 				<tr>
 					<td class="columnIcon">
 						{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-							<a href="{link controller='PackageStartInstall' id=$package.packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="wcf-balloonTooltip" /></a>
+							<a href="{link controller='PackageStartInstall' id=$package.packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="jsTooltip" /></a>
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/updateD1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
 						{/if}
 						{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $package.package != 'com.woltlab.wcf' && $package.packageID != PACKAGE_ID}
-							<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="{link controller='Package' id=$package.packageID}action=startUninstall{/link}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="wcf-balloonTooltip" /></a>
+							<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="{link controller='Package' id=$package.packageID}action=startUninstall{/link}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="jsTooltip" /></a>
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/deleteD1.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" />
 						{/if}
@@ -108,11 +108,11 @@
 					<td class="columnID"><p>{@$package.packageID}</p></td>
 					<td class="columnIcon">
 						{if $package.isApplication}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" title="{lang}wcf.acp.package.list.isApplication{/lang}" class="wcf-balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" title="{lang}wcf.acp.package.list.isApplication{/lang}" class="jsTooltip" />
 						{elseif $package.parentPackageID}
-							<img src="{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="wcf-balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="jsTooltip" />
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="wcf-balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="jsTooltip" />
 						{/if}
 					</td>
 					<td class="columnTitle" title="{$package.packageDescription}"><p><a href="{link controller='PackageView' id=$package.packageID}{/link}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>

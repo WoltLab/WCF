@@ -20,11 +20,11 @@
 				<hgroup class="wcf-subHeading">
 					<h1>
 						{if $package.isApplication == 1}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" title="{lang}wcf.acp.package.list.isApplication{/lang}" class="wcf-balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" title="{lang}wcf.acp.package.list.isApplication{/lang}" class="jsTooltip" />
 						{elseif $package.plugin != ''}
-							<img src="{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="wcf-balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="jsTooltip" />
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="wcf-balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="jsTooltip" />
 						{/if}
 						{$package.packageName}
 					</h1>

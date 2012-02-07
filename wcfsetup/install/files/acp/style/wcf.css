@@ -94,6 +94,17 @@ hr {
 	background-color: rgba(255, 170, 34, .7);
 }
 
+img[src*='delete'],
+img[src*='uninstall'],
+img[src*='install'],
+img[src*='update'],
+img[src*='run'],
+img[src*='info'],
+img[src*='disable'],
+img[src*='enable'] {
+	cursor: pointer;
+}
+
 
 
 /* ############## ToDo: Global Structural Classes ############## */
@@ -3607,6 +3618,10 @@ tr .columnIcon img {
 
 /* Globals */
 
+.jsTooltip {
+	cursor: pointer;
+}
+
 #wcf-balloonTooltip {
 	font-size: .85em;
 	color: rgba(255, 255, 255, 1);
@@ -3622,19 +3637,6 @@ tr .columnIcon img {
 	-ms-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
 	-o-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
 	box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
-}
-
-a.wcf-balloonTooltip,
-a .wcf-balloonTooltip,
-img[src*='delete'],
-img[src*='uninstall'],
-img[src*='install'],
-img[src*='update'],
-img[src*='run'],
-img[src*='info'],
-img[src*='disable'],
-img[src*='enable'] {
-	cursor: pointer;
 }
 
 /* Pointer */

@@ -57,9 +57,9 @@
 					{foreach from=$objects item=updateServer}
 						<tr class="jsUpdateServerRow">
 							<td class="columnIcon">
-								<img src="{@RELATIVE_WCF_DIR}icon/{if !$updateServer->disabled}enabled{else}disabled{/if}1.svg" alt="" title="{lang}wcf.global.button.{if !$updateServer->disabled}disable{else}enable{/if}{/lang}" class="jsToggleButton wcf-balloonTooltip" data-object-id="{@$updateServer->packageUpdateServerID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
-								<a href="{link controller='UpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="wcf-balloonTooltip" /></a>
-								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton wcf-balloonTooltip" data-object-id="{@$updateServer->packageUpdateServerID}" data-confirm-message="{lang}wcf.acp.updateServer.delete.sure{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/{if !$updateServer->disabled}enabled{else}disabled{/if}1.svg" alt="" title="{lang}wcf.global.button.{if !$updateServer->disabled}disable{else}enable{/if}{/lang}" class="jsToggleButton jsTooltip" data-object-id="{@$updateServer->packageUpdateServerID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
+								<a href="{link controller='UpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip" /></a>
+								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip" data-object-id="{@$updateServer->packageUpdateServerID}" data-confirm-message="{lang}wcf.acp.updateServer.delete.sure{/lang}" />
 							
 								{event name='buttons'}
 							</td>

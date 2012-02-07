@@ -101,7 +101,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			// previous page
 			$previousTitle = WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous');
 			if ($tagArgs['page'] > 1) {
-				$html .= '<li class="wcf-button skip"><a href="'.$this->insertPageNumber($link, $tagArgs['page'] - 1).'" title="'.$previousTitle.'" class="wcf-balloonTooltip"><img src="'.self::getIconPath('previous1').'" alt="" /></a></li>'."\n";
+				$html .= '<li class="wcf-button skip"><a href="'.$this->insertPageNumber($link, $tagArgs['page'] - 1).'" title="'.$previousTitle.'" class="jsTooltip"><img src="'.self::getIconPath('previous1').'" alt="" /></a></li>'."\n";
 			}
 			else {
 				$html .= '<li class="skip disabled"><img src="'.self::getIconPath('previous1D').'" alt="" /></li>'."\n";
@@ -196,7 +196,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			// next page
 			$nextTitle = WCF::getLanguage()->getDynamicVariable('wcf.global.page.next');
 			if ($tagArgs['page'] && $tagArgs['page'] < $tagArgs['pages']) {
-				$html .= '<li class="wcf-button skip"><a href="'.$this->insertPageNumber($link, $tagArgs['page'] + 1).'" title="'.$nextTitle.'" class="wcf-balloonTooltip"><img src="'.self::getIconPath('next1').'" alt="" /></a></li>'."\n";
+				$html .= '<li class="wcf-button skip"><a href="'.$this->insertPageNumber($link, $tagArgs['page'] + 1).'" title="'.$nextTitle.'" class="jsTooltip"><img src="'.self::getIconPath('next1').'" alt="" /></a></li>'."\n";
 			}
 			else {
 				$html .= '<li class="skip disabled"><img src="'.self::getIconPath('next1D').'" alt="" /></li>'."\n";

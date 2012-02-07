@@ -2712,7 +2712,7 @@ WCF.Collapsible.Remote = Class.extend({
 	 */
 	_createButton: function(containerID, buttonContainer) {
 		var $isOpen = this._containers[containerID].data('isOpen');
-		var $button = $('<a class="wcf-balloonTooltip" title="'+WCF.Language.get('wcf.global.button.collapsible')+'"><img src="' + WCF.Icon.get('wcf.icon.' + ($isOpen ? 'opened' : 'closed')) + '" alt="" /></a>').prependTo(buttonContainer);
+		var $button = $('<a class="jsTooltip" title="'+WCF.Language.get('wcf.global.button.collapsible')+'"><img src="' + WCF.Icon.get('wcf.icon.' + ($isOpen ? 'opened' : 'closed')) + '" alt="" /></a>').prependTo(buttonContainer);
 		$button.data('containerID', containerID).click($.proxy(this._toggleContainer, this));
 
 		return $button;
@@ -2920,7 +2920,7 @@ WCF.Effect.BalloonTooltip.prototype = {
 		}
 		
 		// init elements
-		$('.wcf-balloonTooltip').each($.proxy(this._initTooltip, this));
+		$('.jsTooltip').each($.proxy(this._initTooltip, this));
 	},
 
 	/**
@@ -2939,8 +2939,8 @@ WCF.Effect.BalloonTooltip.prototype = {
 	_initTooltip: function(index, element) {
 		var $element = $(element);
 		
-		if ($element.hasClass('wcf-balloonTooltip')) {
-			$element.removeClass('wcf-balloonTooltip');
+		if ($element.hasClass('jsTooltip')) {
+			$element.removeClass('jsTooltip');
 			var $title = $element.attr('title');
 
 			// ignore empty elements
