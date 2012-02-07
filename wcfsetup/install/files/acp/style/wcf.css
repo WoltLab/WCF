@@ -4266,7 +4266,7 @@ button[disabled='disabled'] {
 	position: relative;
 }
 
-.wcf-infoPackageApplication img.wcf-packageApplicationIcon {
+.wcf-infoPackageApplication .wcf-packageApplicationIcon {
 	position: absolute;
 	top: 30px;
 	left: 25px;

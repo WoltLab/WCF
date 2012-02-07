@@ -91,7 +91,7 @@ WCF.ACP.Menu.prototype = {
 	_renderSidebar: function(menuItem, activeMenuItems) {
 		// reset visible and active items
 		this._headerNavigation.find('li').removeClass('activeMenuItem');
-		this._sidebarNavigation.find('div.menuContainer').hide();
+		this._sidebarNavigation.find('div.wcf-menuContainer').hide();
 		
 		if (activeMenuItems.length === 0) {
 			// show active menu
@@ -166,7 +166,7 @@ WCF.ACP.Package.List.prototype = {
 	 */
 	init: function(pages) {
 		// handle pagination
-		$('.pluginList').each($.proxy(function(index, pluginList) {
+		$('.wcf-pluginList').each($.proxy(function(index, pluginList) {
 			var $wcfPages = $(pluginList).wcfPages({
 				activePage: 1,
 				maxPage: pages
