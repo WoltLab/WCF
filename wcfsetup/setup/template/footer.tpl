@@ -5,7 +5,7 @@
 	<!-- /MAIN -->
 	
 	<!-- FOOTER -->
-	<footer id="pageFooter" class="pageFooter">
+	<footer id="pageFooter" class="wcf-pageFooter">
 		<div>
 			<nav id="footerNavigation" class="wcf-footerNavigation">
 				<ul>
