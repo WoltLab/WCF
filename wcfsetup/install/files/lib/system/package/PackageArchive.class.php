@@ -499,7 +499,7 @@ class PackageArchive {
 		
 		$parentPackageIDs = array();
 		foreach ($duplicates as $package) {
-			// application are always allowed
+			// applications are always allowed
 			if ($package['isApplication']) {
 				return false;
 			}
