@@ -55,7 +55,7 @@
 			<h1>{lang}wcf.acp.language.list{/lang} <span class="wcf-badge" title="{lang}wcf.acp.language.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
 	
-		<table>
+		<table class="wcf-table">
 			<thead>
 				<tr>
 					<th class="columnID columnLanguageID{if $sortField == 'languageID'} active{/if}" colspan="2"><a href="{link controller='LanguageList'}pageNo={@$pageNo}&sortField=languageID&sortOrder={if $sortField == 'languageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'languageID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
