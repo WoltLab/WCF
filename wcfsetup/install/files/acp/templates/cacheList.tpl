@@ -62,9 +62,9 @@
 	{counter name=cacheIndex assign=cacheIndex print=false start=0}
 	{if $files|count}
 		<div class="wcf-border wcf-boxTitle">
-			<a class="collapsible" data-is-open="1" data-collapsible-container="cache{@$cacheIndex}"><img src="{@RELATIVE_WCF_DIR}icon/opened2.svg" alt="" title="{lang}wcf.global.button.collapsible{/lang}" class="balloonTooltip" /></a>
+			<a class="collapsible" data-is-open="1" data-collapsible-container="cache{@$cacheIndex}"><img src="{@RELATIVE_WCF_DIR}icon/opened2.svg" alt="" title="{lang}wcf.global.button.collapsible{/lang}" class="wcf-balloonTooltip" /></a>
 			<hgroup>
-				<h1>{$cache} <span class="badge" title="{lang}wcf.acp.cache.data.files.count{/lang}">{#$files|count}</span></h1>
+				<h1>{$cache} <span class="wcf-badge" title="{lang}wcf.acp.cache.data.files.count{/lang}">{#$files|count}</span></h1>
 			</hgroup>
 			
 			<table id="cache{@$cacheIndex}" class="wcf-table">

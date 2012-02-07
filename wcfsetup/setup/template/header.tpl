@@ -10,7 +10,7 @@
 	{if !$lastStep|isset}
 		<style type="text/css">
 			/*<![CDATA[*/
-			p.wcf-error {
+			.wcf-error {
 				background-image: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showIcon=systemError.svg') !important;
 			}
 		

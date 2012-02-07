@@ -66,12 +66,12 @@
 							<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}" /></td>
 							<td class="columnIcon">
 								{if $user->editable}
-									<a href="{link controller='UserEdit' id=$user->userID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="balloonTooltip" /></a>
+									<a href="{link controller='UserEdit' id=$user->userID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="wcf-balloonTooltip" /></a>
 								{else}
 									<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" />
 								{/if}
 								{if $user->deletable}
-									<a onclick="return confirm('{lang}wcf.acp.user.delete.sure{/lang}')" href="{link controller='UserDelete' id=$user->userID}url={@$encodedURL}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="balloonTooltip" /></a>
+									<a onclick="return confirm('{lang}wcf.acp.user.delete.sure{/lang}')" href="{link controller='UserDelete' id=$user->userID}url={@$encodedURL}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="wcf-balloonTooltip" /></a>
 								{else}
 									<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" />
 								{/if}

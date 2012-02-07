@@ -40,7 +40,7 @@
 				<!-- /main menu sub menu -->
 				
 				<ul>
-					<li id="toBottomLink" class="wcf-toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="balloonTooltip"><img src="{icon size='S'}toBottom{/icon}" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+					<li id="toBottomLink" class="wcf-toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="wcf-balloonTooltip"><img src="{icon size='S'}toBottom{/icon}" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 					{event name='headerNavigation'}
 				</ul>
 			</div>
@@ -51,7 +51,7 @@
 <!-- /HEADER -->
 
 <!-- MAIN -->
-<div id="main" class="main{if $sidebarOrientation|isset} {@$sidebarOrientation}{/if}">
+<div id="main" class="wcf-main{if $sidebarOrientation|isset} {@$sidebarOrientation}{/if}">
 	<div>
 		{if $sidebar|isset}
 			<aside class="wcf-sidebar">
