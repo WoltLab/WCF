@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de" languagename="Deutsch">
 	<category name="wcf.acp.cronjob">
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
@@ -511,12 +511,14 @@
 	<category name="wcf.global">
 		<item name="wcf.global.button.add"><![CDATA[Hinzufügen]]></item>
 		<item name="wcf.global.button.back"><![CDATA[&laquo; Zurück]]></item>
+		<item name="wcf.global.button.close"><![CDATA[Zuklappen]]></item>
 		<item name="wcf.global.button.collapsible"><![CDATA[Auf- und Zuklappen]]></item>
 		<item name="wcf.global.button.delete"><![CDATA[Löschen]]></item>
 		<item name="wcf.global.button.disable"><![CDATA[Deaktivieren]]></item>
 		<item name="wcf.global.button.edit"><![CDATA[Bearbeiten]]></item>
 		<item name="wcf.global.button.enable"><![CDATA[Aktivieren]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Weiter &raquo;]]></item>
+		<item name="wcf.global.button.open"><![CDATA[Aufklappen]]></item>
 		<item name="wcf.global.button.reset"><![CDATA[Zurücksetzen]]></item>
 		<item name="wcf.global.button.search"><![CDATA[Suche]]></item>
 		<item name="wcf.global.button.submit"><![CDATA[Absenden]]></item>
