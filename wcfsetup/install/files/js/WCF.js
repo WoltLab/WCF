@@ -2905,7 +2905,7 @@ WCF.Effect.BalloonTooltip.prototype = {
 	init: function() {
 		if (!this._didInit) {
 			// create empty div
-			this._tooltip = $('<div id="balloonTooltip" style="position: absolute"><span id="balloonTooltipText"></span><span class="pointer"><span></span></span></div>').appendTo($('body')).hide();
+			this._tooltip = $('<div id="balloonTooltip" class="wcf-balloonTooltip"><span id="balloonTooltipText"></span><span class="pointer"><span></span></span></div>').appendTo($('body')).hide();
 
 			// get viewport dimensions
 			this._updateViewportDimensions();
@@ -2914,7 +2914,7 @@ WCF.Effect.BalloonTooltip.prototype = {
 			$(window).resize($.proxy(this._updateViewportDimensions, this));
 
 			// observe DOM changes
-			WCF.DOMNodeInsertedHandler.addCallback('WCF.Effect.BallonTooltip', $.proxy(this.init, this));
+			WCF.DOMNodeInsertedHandler.addCallback('WCF.Effect.BalloonTooltip', $.proxy(this.init, this));
 
 			this._didInit = true;
 		}
@@ -3608,11 +3608,11 @@ WCF.System.Confirmation = {
 	 * Creates the confirmation dialog on first use.
 	 */
 	_createDialog: function() {
-		this._dialog = $('<div id="wcfSystemConfirmation"><p></p></div>').hide().appendTo(document.body);
+		this._dialog = $('<div id="wcfSystemConfirmation" class="wcf-systemConfirmation"><p></p></div>').hide().appendTo(document.body);
 		var $formButtons = $('<div class="wcf-formSubmit" />').appendTo(this._dialog);
 		
-		$('<button class="default">' + WCF.Language.get('wcf.global.confirmation.confirm') + '</button>').data('action', 'confirm').click($.proxy(this._click, this)).appendTo($formButtons);
 		$('<button>' + WCF.Language.get('wcf.global.confirmation.cancel') + '</button>').data('action', 'cancel').click($.proxy(this._click, this)).appendTo($formButtons);
+		$('<button class="default">' + WCF.Language.get('wcf.global.confirmation.confirm') + '</button>').data('action', 'confirm').click($.proxy(this._click, this)).appendTo($formButtons);
 	},
 	
 	/**

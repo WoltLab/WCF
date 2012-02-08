@@ -38,7 +38,7 @@
 			<dl>
 				<dt>{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.active{/lang}</dt>
 				<dd>
-					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.mbString.result}badgeWarning{else}badgeSuccess{/if}">{if !$system.mbString.result}{lang}wcf.global.systemRequirements.notActive{/lang}{else}{lang}wcf.global.systemRequirements.active{/lang}{/if}</span>{if !$system.mbString.result}<small>{lang}wcf.global.systemRequirements.mbString.description{/lang}</small>{/if}
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="wcf-badge {if !$system.mbString.result}wcf-badgeWarning{else}wcf-badgeSuccess{/if}">{if !$system.mbString.result}{lang}wcf.global.systemRequirements.notActive{/lang}{else}{lang}wcf.global.systemRequirements.active{/lang}{/if}</span>{if !$system.mbString.result}<small>{lang}wcf.global.systemRequirements.mbString.description{/lang}</small>{/if}
 				</dd>
 			</dl>
 			

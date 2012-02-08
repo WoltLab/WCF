@@ -90,7 +90,7 @@
 			<dl>
 				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{$username}" class="medium" />
+					<input type="text" id="username" name="username" value="{$username}" autofocus="autofocus" class="medium" />
 				</dd>
 			</dl>
 			

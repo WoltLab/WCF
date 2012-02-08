@@ -22,7 +22,7 @@
 <div class="wcf-contentHeader">
 	<nav>
 		<ul class="wcf-largeButtons">
-			<li><a href="{link controller='UpdateServerList'}{/link}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/server1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li>
+			<li><a href="{link controller='UpdateServerList'}{/link}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/server1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>

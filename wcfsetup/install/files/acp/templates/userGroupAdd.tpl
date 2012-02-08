@@ -50,7 +50,7 @@
 			<dl{if $errorType.groupName|isset} class="formError"{/if}>
 				<dt><label for="groupName">{lang}wcf.acp.group.groupName{/lang}</label></dt>
 				<dd>
-					<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" class="medium" />
+					<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus="autofocus" class="medium" />
 					{if $errorType.groupName|isset}
 						<small class="wcf-innerError">
 							{if $errorType.groupName == 'empty'}
