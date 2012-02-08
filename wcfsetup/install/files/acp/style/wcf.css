@@ -120,8 +120,8 @@ a[href^="https:"]*/ {
 	padding-right: 17px;
 }
 
-.wcf-eMailLink/*,
-a[href^="mailto:"]*/ {
+.wcf-eMailLink,
+a[href^="mailto:"] {
 	background-image: url('../../icon/email1.svg');
 	background-position: left center;
 	background-repeat: no-repeat;
@@ -1348,7 +1348,7 @@ section.wcf-content .wcf-content {
 /* Buttons */
 
 .wcf-badgeButton,
-.wcf-clipboardEditor > ul > li {
+.jsClipboardEditor > ul > li {
 	cursor: pointer;
 	border-radius: 30px;
 	margin-right: 0;
@@ -1367,7 +1367,7 @@ li > .wcf-badgeButton {
 
 .wcf-badgeButton,
 .wcf-badgeButton a,
-.wcf-clipboardEditor > ul > li > span {
+.jsClipboardEditor > ul > li > span {
 	text-decoration: none !important;
 }
 
