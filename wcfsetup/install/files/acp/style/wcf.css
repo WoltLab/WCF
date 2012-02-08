@@ -112,20 +112,20 @@ img[src*='enable'] {
 /* Single Classes */
 
 .wcf-externalURL,
-a[href^="http:"],
-a[href^="https:"] {
+/*a[href^="http:"],
+a[href^="https:"]*/ {
 	background-image: url('../../icon/externalURL1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
 	padding-right: 17px;
 }
 
-.wcf-eMailLink,
-a[href^="mailto:"] {
+.wcf-eMailLink/*,
+a[href^="mailto:"]*/ {
 	background-image: url('../../icon/email1.svg');
-	background-position: right center;
+	background-position: left center;
 	background-repeat: no-repeat;
-	padding-right: 17px;
+	padding-left: 17px;
 }
 
 .hot,
@@ -813,6 +813,8 @@ nav.wcf-topMenu {
 	background-color: #d8e7f5;
 }
 
+.wcf-headerNavigation ul li a:hover:active,
+.wcf-headerNavigation ul li a:hover:focus,
 .wcf-footerNavigation ul li a:hover:active,
 .wcf-footerNavigation ul li a:hover:focus {
 	background-color: #fff9f4;
@@ -1355,7 +1357,7 @@ section.wcf-content .wcf-content {
 	display: inline-block;
 }
 
-.wcf-badgeButton,
+li.wcf-badgeButton,
 li > .wcf-badgeButton {
 	margin-top: 7px;
 	margin-right: 3px;
@@ -1617,7 +1619,7 @@ table .wcf-label {
 	margin-top: 30px;
 }
 
-.wcfDialogContainer .wcf-mainHeading {
+.wcf-DialogContainer .wcf-mainHeading {
 	margin-top: 0;
 }
 
@@ -3766,11 +3768,11 @@ tr .columnIcon img {
 
 
 
-/* ############## Clipboard Editor Buttons ############## */
+/* ############## ToDo: Clipboard Editor Buttons ############## */
 
 /* Globals */
 
-.wcf-clipboardEditor > ul {
+.jsClipboardEditor > ul {
 	font-size: .85em;
 	margin: 6px 3px 0;
 	display: block;
@@ -3778,7 +3780,7 @@ tr .columnIcon img {
 	float: left;
 }
 
-.wcf-clipboardEditor > ul > li > span {
+.jsClipboardEditor > ul > li > span {
 	background-image: url('../../icon/dropdown1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
@@ -3794,7 +3796,6 @@ tr .columnIcon img {
 
 /* Normal State */
 
-.button,
 .wcf-button,
 input[type='reset'],
 input[type='submit'],
@@ -3843,8 +3844,6 @@ button {
 
 /* Hover State */
 
-.button:hover,
-.default .button:hover,
 .wcf-button:hover,
 .default .wcf-button:hover,
 input[type='reset']:hover,
@@ -3867,9 +3866,6 @@ button:hover {
 
 /* Active State */
 
-.button:focus,
-.active .button,
-.default .button:focus,
 .wcf-button:focus,
 .active .wcf-button,
 .default .wcf-button:focus,
@@ -3878,8 +3874,6 @@ input[type='submit']:focus,
 input[type='button']:focus,
 button:focus,
 
-.button:active,
-.default .button:active,
 .wcf-button:active,
 .default .wcf-button:active,
 input[type='reset']:active,
@@ -3956,7 +3950,6 @@ button:active {
 
 /* Default Normal State */
 
-.default .button,
 .default .wcf-button,
 input[type='submit'],
 input[type='button'].default,
@@ -4057,7 +4050,6 @@ button.default {
 
 /* Default Hover State */
 
-.default .button:hover,
 .default .wcf-button:hover,
 input[type='submit']:hover,
 input[type='button'].default:hover,
@@ -4146,13 +4138,11 @@ button.default:hover {
 
 /* Default Active State */
 
-.default .button:focus,
 .default .wcf-button:focus,
 input[type='submit']:focus,
 input[type='button'].default:focus,
 button.default:focus,
 
-.default .button:active,
 .default .wcf-button:active,
 input[type='submit']:active,
 input[type='button'].default:active,
@@ -4200,7 +4190,6 @@ button.default:active {
 
 /* Disabled State */
 
-.disabled .button,
 .disabled .wcf-button,
 input[disabled='disabled'],
 input[type='button'][disabled='disabled'],
