@@ -111,11 +111,21 @@ img[src*='enable'] {
 
 /* Single Classes */
 
-.wcf-externalURL {
+.wcf-externalURL,
+/*a[href^="http:"],
+a[href^="https:"]*/ {
 	background-image: url('../../icon/externalURL1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
 	padding-right: 17px;
+}
+
+.wcf-eMailLink,
+a[href^="mailto:"] {
+	background-image: url('../../icon/email1.svg');
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding-left: 17px;
 }
 
 .hot,
@@ -408,7 +418,7 @@ nav.wcf-topMenu {
 	margin: -7px 0 -5px 0;
 }
 
-.topMenu > div > ul > li > span:not(.wcf-badge) {
+.wcf-topMenu > div > ul > li > span:not(.wcf-badge) {
 	padding: 6px;
 }
 
@@ -803,6 +813,8 @@ nav.wcf-topMenu {
 	background-color: #d8e7f5;
 }
 
+.wcf-headerNavigation ul li a:hover:active,
+.wcf-headerNavigation ul li a:hover:focus,
 .wcf-footerNavigation ul li a:hover:active,
 .wcf-footerNavigation ul li a:hover:focus {
 	background-color: #fff9f4;
@@ -1000,7 +1012,7 @@ section.wcf-content .wcf-content {
 
 /* Globals */
 
-.wcf-sidebar .collapsibleSidebarButton {
+.wcf-sidebar .wcf-collapsibleSidebarButton {
 	cursor: pointer;
 	background-position: center 1%, center 99%;
 	background-size: 10px 10px, 10px 10px;
@@ -1017,7 +1029,7 @@ section.wcf-content .wcf-content {
 
 /* Orientation */
 
-.left .collapsibleSidebarButton {
+.left .wcf-collapsibleSidebarButton {
 	background-image: url('../../icon/arrowLeft1.svg'), url('../../icon/arrowLeft1.svg');
 	left: 250px;
 	
@@ -1028,7 +1040,7 @@ section.wcf-content .wcf-content {
 	transition: left .1s ease;
 }
 
-.right .collapsibleSidebarButton {
+.right .wcf-collapsibleSidebarButton {
 	background-image: url('../../icon/arrowRight1.svg'), url('../../icon/arrowRight1.svg');
 	right: 250px;
 	
@@ -1039,7 +1051,7 @@ section.wcf-content .wcf-content {
 	transition: right .1s ease;
 }
 
-.wcf-sidebar .collapsibleSidebarButton span {
+.wcf-sidebar .wcf-collapsibleSidebarButton span {
     background-position: center center;
 	background-size: 10px 10px;
 	background-repeat: no-repeat;
@@ -1051,21 +1063,21 @@ section.wcf-content .wcf-content {
 	height: 600px;
 }
 
-.left .collapsibleSidebarButton span {
+.left .wcf-collapsibleSidebarButton span {
 	background-image: url('../../icon/arrowLeft1.svg');
 }
 
-.right .collapsibleSidebarButton span {
+.right .wcf-collapsibleSidebarButton span {
 	background-image: url('../../icon/arrowRight1.svg');
 }
 
-.wcf-sidebar .collapsibleSidebarButton:hover {
+.wcf-sidebar .wcf-collapsibleSidebarButton:hover {
 	background-color: rgba(252, 252, 252, 1);
 	opacity: 1;
 }
 
-.wcf-sidebar .collapsibleSidebarButton:focus,
-.wcf-sidebar .collapsibleSidebarButton:active {
+.wcf-sidebar .wcf-collapsibleSidebarButton:focus,
+.wcf-sidebar .wcf-collapsibleSidebarButton:active {
 	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-ms-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
@@ -1075,31 +1087,31 @@ section.wcf-content .wcf-content {
 
 /* Collapsed (Left) */
 
-.left .collapsed .collapsibleSidebarButton {
+.left .collapsed .wcf-collapsibleSidebarButton {
 	background-image: url('../../icon/arrowRight1.svg'), url('../../icon/arrowRight1.svg');
 	left: 0;
 }
 
-.left .collapsed .collapsibleSidebarButton span {
+.left .collapsed .wcf-collapsibleSidebarButton span {
 	background-image: url('../../icon/arrowRight1.svg');
 }
 
-.left .wcf-sidebar .collapsibleSidebarButton:hover {
+.left .wcf-sidebar .wcf-collapsibleSidebarButton:hover {
 	border-right: 1px solid rgba(187, 204, 221, .5);
 }
 
 /* Collapsed (Right) */
 
-.right .collapsed .collapsibleSidebarButton {
+.right .collapsed .wcf-collapsibleSidebarButton {
 	background-image: url('../../icon/arrowLeft1.svg'), url('../../icon/arrowLeft1.svg');
 	right: 0;
 }
 
-.right .collapsed .collapsibleSidebarButton span {
+.right .collapsed .wcf-collapsibleSidebarButton span {
 	background-image: url('../../icon/arrowLeft1.svg');
 }
 
-.right .wcf-sidebar .collapsibleSidebarButton:hover {
+.right .wcf-sidebar .wcf-collapsibleSidebarButton:hover {
 	border-left: 1px solid rgba(187, 204, 221, .5);
 }
 
@@ -1336,7 +1348,7 @@ section.wcf-content .wcf-content {
 /* Buttons */
 
 .wcf-badgeButton,
-.wcf-clipboardEditor > ul > li {
+.jsClipboardEditor > ul > li {
 	cursor: pointer;
 	border-radius: 30px;
 	margin-right: 0;
@@ -1345,7 +1357,7 @@ section.wcf-content .wcf-content {
 	display: inline-block;
 }
 
-.wcf-badgeButton,
+li.wcf-badgeButton,
 li > .wcf-badgeButton {
 	margin-top: 7px;
 	margin-right: 3px;
@@ -1355,7 +1367,7 @@ li > .wcf-badgeButton {
 
 .wcf-badgeButton,
 .wcf-badgeButton a,
-.wcf-clipboardEditor > ul > li > span {
+.jsClipboardEditor > ul > li > span {
 	text-decoration: none !important;
 }
 
@@ -1607,7 +1619,7 @@ table .wcf-label {
 	margin-top: 30px;
 }
 
-.wcfDialogContainer .wcf-mainHeading {
+.wcf-DialogContainer .wcf-mainHeading {
 	margin-top: 0;
 }
 
@@ -1919,11 +1931,6 @@ dl > dd > fieldset > dl > dd > label {
 	width: auto;
 }
 
-/* Special -> Installation */
-
-dl.wcfUrlContainer > dd.wcfUrl > p {
-	margin-top: 5px;
-}
 
 
 /* ############## Forms ############## */
@@ -3761,11 +3768,11 @@ tr .columnIcon img {
 
 
 
-/* ############## Clipboard Editor Buttons ############## */
+/* ############## ToDo: Clipboard Editor Buttons ############## */
 
 /* Globals */
 
-.wcf-clipboardEditor > ul {
+.jsClipboardEditor > ul {
 	font-size: .85em;
 	margin: 6px 3px 0;
 	display: block;
@@ -3773,7 +3780,7 @@ tr .columnIcon img {
 	float: left;
 }
 
-.wcf-clipboardEditor > ul > li > span {
+.jsClipboardEditor > ul > li > span {
 	background-image: url('../../icon/dropdown1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
@@ -3789,7 +3796,6 @@ tr .columnIcon img {
 
 /* Normal State */
 
-.button,
 .wcf-button,
 input[type='reset'],
 input[type='submit'],
@@ -3838,8 +3844,6 @@ button {
 
 /* Hover State */
 
-.button:hover,
-.default .button:hover,
 .wcf-button:hover,
 .default .wcf-button:hover,
 input[type='reset']:hover,
@@ -3862,9 +3866,6 @@ button:hover {
 
 /* Active State */
 
-.button:focus,
-.active .button,
-.default .button:focus,
 .wcf-button:focus,
 .active .wcf-button,
 .default .wcf-button:focus,
@@ -3873,8 +3874,6 @@ input[type='submit']:focus,
 input[type='button']:focus,
 button:focus,
 
-.button:active,
-.default .button:active,
 .wcf-button:active,
 .default .wcf-button:active,
 input[type='reset']:active,
@@ -3951,7 +3950,6 @@ button:active {
 
 /* Default Normal State */
 
-.default .button,
 .default .wcf-button,
 input[type='submit'],
 input[type='button'].default,
@@ -4052,7 +4050,6 @@ button.default {
 
 /* Default Hover State */
 
-.default .button:hover,
 .default .wcf-button:hover,
 input[type='submit']:hover,
 input[type='button'].default:hover,
@@ -4141,13 +4138,11 @@ button.default:hover {
 
 /* Default Active State */
 
-.default .button:focus,
 .default .wcf-button:focus,
 input[type='submit']:focus,
 input[type='button'].default:focus,
 button.default:focus,
 
-.default .button:active,
 .default .wcf-button:active,
 input[type='submit']:active,
 input[type='button'].default:active,
@@ -4195,7 +4190,6 @@ button.default:active {
 
 /* Disabled State */
 
-.disabled .button,
 .disabled .wcf-button,
 input[disabled='disabled'],
 input[type='button'][disabled='disabled'],
