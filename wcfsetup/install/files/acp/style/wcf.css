@@ -2476,8 +2476,8 @@ input[type='button'],
 }
 
 .wcf-boxTitle > hgroup .wcf-badge {
-	font-size: 75%;
-	color: #369;
+	font-size: 65%;
+	color: #036;
 }
 
 /* Collapse Icon */
@@ -3075,7 +3075,7 @@ thead input[type='checkbox'] {
 	white-space: nowrap;
 }
 
-.columnStatus .badge {
+.columnStatus .wcf-badge {
 	margin-right: 1px !important;
 	margin-left: 1px !important;
 }
