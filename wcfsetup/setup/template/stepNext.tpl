@@ -1,12 +1,12 @@
 {include file='header'}
 
-<hgroup class="subHeading">
+<hgroup class="wcf-subHeading">
 	<h1>{lang}wcf.global.next{/lang}</h1>
 	<h2>{lang}wcf.global.next.description{/lang}</h2>
 </hgroup>
 
 <form method="post" action="install.php?step={@$nextStep}">
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
 		<input type="hidden" name="languageCode" value="{@$languageCode}" />
 		<input type="hidden" name="wcfDir" value="{$wcfDir}" />

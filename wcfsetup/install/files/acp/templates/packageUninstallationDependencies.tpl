@@ -8,7 +8,7 @@
 //	]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.package.uninstall{/lang}: {$packageObj->getName()}</h1>
@@ -46,7 +46,7 @@
 	{if $packageObj->packageURL != ''}
 		<dl>
 			<dt>{lang}wcf.acp.package.view.url{/lang}</dt>
-			<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$packageObj->packageURL|rawurlencode}" class="externalURL">{$packageObj->packageURL}</a></dd>
+			<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$packageObj->packageURL|rawurlencode}" class="wcf-externalURL">{$packageObj->packageURL}</a></dd>
 		</dl>
 	{/if}
 	{if $packageObj->parentPackageID}
@@ -57,7 +57,7 @@
 	{/if}
 	<dl>
 		<dt>{lang}wcf.acp.package.view.author{/lang}</dt>
-		<dd>{if $packageObj->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$packageObj->authorURL|rawurlencode}" class="externalURL">{$packageObj->author}</a>{else}{$packageObj->author}{/if}</dd>
+		<dd>{if $packageObj->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$packageObj->authorURL|rawurlencode}" class="wcf-externalURL">{$packageObj->author}</a>{else}{$packageObj->author}{/if}</dd>
 	</dl>
 	
 	{event name='propertyFields'}
@@ -65,17 +65,17 @@
 
 {if $dependentPackages|count > 0}
 	{if $uninstallAvailable}
-		<p class="warning">{lang}wcf.acp.package.uninstall.dependentPackages.warning{/lang}</p>
+		<p class="wcf-warning">{lang}wcf.acp.package.uninstall.dependentPackages.warning{/lang}</p>
 	{else}
-		<p class="error">{lang}wcf.acp.package.uninstall.dependentPackages.error{/lang}</p>
+		<p class="wcf-error">{lang}wcf.acp.package.uninstall.dependentPackages.error{/lang}</p>
 	{/if}
 
-	<div class="border boxTitle">
+	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.package.view.dependentPackages{/lang}</h1>
 		</hgroup>
 		
-		<table>
+		<table class="wcf-table">
 			<thead>
 				<tr>
 					<th colspan="2" class="columnID">{lang}wcf.acp.package.list.id{/lang}</th>
@@ -93,12 +93,12 @@
 				<tr>
 					<td class="columnIcon">
 						{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-							<a href="{link controller='PackageStartInstall' id=$package.packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="balloonTooltip" /></a>
+							<a href="{link controller='PackageStartInstall' id=$package.packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="jsTooltip" /></a>
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/updateD1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
 						{/if}
 						{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $package.package != 'com.woltlab.wcf' && $package.packageID != PACKAGE_ID}
-							<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="{link controller='Package' id=$package.packageID}action=startUninstall{/link}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="balloonTooltip" /></a>
+							<a onclick="return confirm('{lang}wcf.acp.package.view.button.uninstall.sure{/lang}')" href="{link controller='Package' id=$package.packageID}action=startUninstall{/link}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" class="jsTooltip" /></a>
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/deleteD1.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" />
 						{/if}
@@ -108,15 +108,15 @@
 					<td class="columnID"><p>{@$package.packageID}</p></td>
 					<td class="columnIcon">
 						{if $package.isApplication}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" title="{lang}wcf.acp.package.list.isApplication{/lang}" class="balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" title="{lang}wcf.acp.package.list.isApplication{/lang}" class="jsTooltip" />
 						{elseif $package.parentPackageID}
-							<img src="{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="jsTooltip" />
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="balloonTooltip" />
+							<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="jsTooltip" />
 						{/if}
 					</td>
 					<td class="columnTitle" title="{$package.packageDescription}"><p><a href="{link controller='PackageView' id=$package.packageID}{/link}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
-					<td class="columnText"><p>{if $package.authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package.authorURL|rawurlencode}" class="externalURL">{$package.author}</a>{else}{$package.author}{/if}</p></td>
+					<td class="columnText"><p>{if $package.authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package.authorURL|rawurlencode}" class="wcf-externalURL">{$package.author}</a>{else}{$package.author}{/if}</p></td>
 					<td class="columnText"><p>{$package.packageVersion}</p></td>
 					<td class="columnDate"><p>{@$package.packageDate|date}</p></td>
 					
@@ -129,7 +129,7 @@
 	</div>
 {/if}
 
-<div class="formSubmit">
+<div class="wcf-formSubmit">
 	{@SID_INPUT_TAG}
  	<input type="hidden" name="action" value="startUninstall" />
  	<input type="hidden" name="packageID" value="{@$packageObj->packageID}" />

@@ -1,4 +1,4 @@
-<div id="workerContainer" class="overlay">
+<div id="workerContainer">
 	<header class="mainHeading">
 		<img src="{@RELATIVE_WCF_DIR}icon/working2.svg" alt="" />
 		<hgroup>

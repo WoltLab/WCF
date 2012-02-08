@@ -12,7 +12,7 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/cache1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.cache.list{/lang}</h1>
@@ -20,7 +20,7 @@
 </header>
 
 {if $cleared}
-	<p class="success">{lang}wcf.acp.cache.clear.success{/lang}</p>	
+	<p class="wcf-success">{lang}wcf.acp.cache.clear.success{/lang}</p>	
 {/if}
 
 <fieldset>
@@ -48,10 +48,10 @@
 	{event name='dataFields'}
 </fieldset>
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	<nav>
-		<ul class="largeButtons">
-			{if $cacheData.files}<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="{link controller='CacheClear'}{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
+		<ul class="wcf-largeButtons">
+			{if $cacheData.files}<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="{link controller='CacheClear'}{/link}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
 			
 			{event name='largeButtons'}
 		</ul>
@@ -61,13 +61,13 @@
 {foreach from=$caches key=cache item=files}
 	{counter name=cacheIndex assign=cacheIndex print=false start=0}
 	{if $files|count}
-		<div class="border boxTitle">
-			<a class="collapsible" data-is-open="1" data-collapsible-container="cache{@$cacheIndex}"><img src="{@RELATIVE_WCF_DIR}icon/opened2.svg" alt="" title="{lang}wcf.global.button.collapsible{/lang}" class="balloonTooltip" /></a>
+		<div class="wcf-border wcf-boxTitle">
+			<a class="collapsible" data-is-open="1" data-collapsible-container="cache{@$cacheIndex}"><img src="{@RELATIVE_WCF_DIR}icon/opened2.svg" alt="" title="{lang}wcf.global.button.collapsible{/lang}" class="jsTooltip" /></a>
 			<hgroup>
-				<h1>{$cache} <span class="badge" title="{lang}wcf.acp.cache.data.files.count{/lang}">{#$files|count}</span></h1>
+				<h1>{$cache} <span class="wcf-badge" title="{lang}wcf.acp.cache.data.files.count{/lang}">{#$files|count}</span></h1>
 			</hgroup>
 			
-			<table id="cache{@$cacheIndex}">
+			<table id="cache{@$cacheIndex}" class="wcf-table">
 				<thead>
 					<tr>
 						<th class="columnTitle">{lang}wcf.acp.cache.list.name{/lang}</th>
@@ -97,10 +97,10 @@
 	{/if}
 {/foreach}
 
-<div class="contentFooter">
-	<nav class="largeButtons">
+<div class="wcf-contentFooter">
+	<nav class="wcf-largeButtons">
 		<ul>
-			{if $cacheData.files}<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="{link controller='CacheClear'}{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
+			{if $cacheData.files}<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="{link controller='CacheClear'}{/link}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
 			
 			{event name='largeButtons'}
 		</ul>

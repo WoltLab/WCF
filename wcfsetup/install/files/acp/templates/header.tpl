@@ -29,7 +29,6 @@
 	<style type="text/css">
 		@import url("{@RELATIVE_WCF_DIR}acp/style/wcf.css") screen;
 		{*
-		
 		@import url("{@RELATIVE_WCF_DIR}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css") screen;
 	
 		@import url("{@RELATIVE_WCF_DIR}acp/style/print.css") print;
@@ -67,12 +66,15 @@
 				'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
 				'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}',
 				'wcf.global.button.disable': '{lang}wcf.global.button.disable{/lang}',
-				'wcf.global.button.enable': '{lang}wcf.global.button.enable{/lang}'
+				'wcf.global.button.enable': '{lang}wcf.global.button.enable{/lang}',
+				'wcf.global.confirmation.cancel': '{lang}wcf.global.confirmation.cancel{/lang}',
+				'wcf.global.confirmation.confirm': '{lang}wcf.global.confirmation.confirm{/lang}',
+				'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}'
 			});
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
 			new WCF.Effect.BalloonTooltip();
-			$('<span class="pointer"><span></span></span>').appendTo('.innerError');
+			$('<span class="pointer"><span></span></span>').appendTo('.wcf-innerError');
 			
 			$('#sidebarContent').wcfSidebar();
 		});
@@ -83,16 +85,16 @@
 <body id="tpl{$templateName|ucfirst}">
 	<a id="top"></a>
 	<!-- HEADER -->
-	<header id="pageHeader" class="pageHeader">
+	<header id="pageHeader" class="wcf-pageHeader">
 		<div>
 			{if $__wcf->user->userID}
 				<!-- top menu -->
-				<nav id="topMenu" class="topMenu">
+				<nav id="topMenu" class="wcf-topMenu">
 					<div>
 						<ul>
-							<li id="userMenu" class="userMenu"><!-- ToDo: We need an ID and/or class for each list here, this ID may also change! -->
-								<span class="dropdownCaption userAvatar">{lang}wcf.user.userNote{/lang}</span>
-								<ul class="dropdown">
+							<li id="userMenu" class="wcf-userMenu"><!-- ToDo: We need an ID and/or class for each list here, this ID may also change! -->
+								<span class="wcf-dropdownCaption userAvatar">{lang}wcf.user.userNote{/lang}</span>
+								<ul class="wcf-dropdown">
 									<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
 								</ul>
 							</li>
@@ -103,7 +105,7 @@
 			{/if}
 			
 			<!-- logo -->
-			<div id="logo" class="logo">
+			<div id="logo" class="wcf-logo">
 				<!-- clickable area -->
 				<a href="{link controller='Index'}{/link}">
 					<h1>WoltLab Community Framework 2.0 Alpha 1</h1>
@@ -118,7 +120,7 @@
 			<!-- /logo -->
 			
 			<!-- main menu -->
-			<nav id="mainMenu" class="mainMenu">
+			<nav id="mainMenu" class="wcf-mainMenu">
 				{* work-around for unknown core-object during WCFSetup *}
 				{if PACKAGE_ID}
 					<ul>
@@ -131,10 +133,10 @@
 			<!-- /main menu -->
 			
 			<!-- header navigation -->
-			<nav class="headerNavigation">
+			<nav class="wcf-headerNavigation">
 				<div>
 					<ul>
-						<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}" class="balloonTooltip"><img src="{@RELATIVE_WCF_DIR}icon/toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+						<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{@RELATIVE_WCF_DIR}icon/toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 					</ul>
 				</div>
 			</nav>
@@ -144,21 +146,21 @@
 	<!-- /HEADER -->
 	
 	<!-- MAIN -->
-	<div id="main" class="main left"><!-- ToDo: We now use a floated sidebar. Thus we need some trigger for its orientation, which has to reside at least one level above the sidebar. This trigger should be set either to "left" or "right", although "top" or "bottom" would also be nice (not for the ACP but maybe in other applications like the gallery or so). Also for 2 sidebars we can mix the trigger values, support is already here!!! -->
+	<div id="main" class="wcf-main left">
 		<div>
 			{hascontent}
 				<!-- SIDEBAR -->
-				<aside class="sidebar">
+				<aside class="wcf-sidebar">
 					<!-- sidebar menu -->
-					<nav id="sidebarContent" class="sidebarContent">
+					<nav id="sidebarContent" class="wcf-sidebarContent">
 						{content}
 							{* work-around for unknown core-object during WCFSetup *}
 							{if PACKAGE_ID}
 								{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=parentMenuItem}
-									<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="menuContainer collapsible" data-parent-menu-item="{$parentMenuItem->menuItem}">
+									<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="wcf-menuContainer collapsible" data-parent-menu-item="{$parentMenuItem->menuItem}">
 										{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
-											<h1 class="menuHeader" data-menu-item="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</h1>
-											<div class="sidebarContentGroup">
+											<h1 class="wcf-menuHeader" data-menu-item="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</h1>
+											<div class="wcf-sidebarContentGroup">
 												<ul id="{$menuItem->menuItem}">
 													{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItem->menuItem) item=menuItemCategory}
 														{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
@@ -183,5 +185,5 @@
 			{/hascontent}
 			
 			<!-- CONTENT -->
-			<section id="content" class="content">
+			<section id="content" class="wcf-content">
 				

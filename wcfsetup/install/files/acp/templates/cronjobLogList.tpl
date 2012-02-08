@@ -1,6 +1,6 @@
 {include file='header'}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/time1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.cronjob.log{/lang}</h1>
@@ -8,18 +8,18 @@
 	</hgroup>
 </header>
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	{pages print=true assign=pagesLinks controller="CronjobLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 </div>
 
 {hascontent}
 	<form method="post" action="{link controller='CronjobLogDelete'}{/link}">
-		<div class="border boxTitle">
+		<div class="wcf-border wcf-boxTitle">
 			<hgroup>
 				<h1>{lang}wcf.acp.cronjob.log{/lang} <span class="badge" title="{lang}wcf.acp.cronjob.log.count{/lang}">{#$items}</span></h1>
 			</hgroup>
 			
-			<table>
+			<table class="wcf-table">
 				<thead>
 					<tr>
 						<th class="columnID columnCronjobID{if $sortField == 'cronjobID'} active{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=cronjobID&sortOrder={if $sortField == 'cronjobID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'cronjobID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
@@ -58,17 +58,17 @@
 			
 		</div>
 		
-		<div class="formSubmit">
+		<div class="wcf-formSubmit">
 			{@SID_INPUT_TAG}
 			<input type="submit" onclick="return confirm('{lang}wcf.acp.cronjob.log.clear.confirm{/lang}')" value="{lang}wcf.acp.cronjob.log.clear{/lang}" accesskey="c" />
 		</div>
 	</form>
 	
-	<div class="contentFooter">
+	<div class="wcf-contentFooter">
 		{@$pagesLinks}
 	</div>
 {hascontentelse}
-	<p class="info">{lang}wcf.acp.cronjob.log.noEntries{/lang}</p>
+	<p class="wcf-info">{lang}wcf.acp.cronjob.log.noEntries{/lang}</p>
 {/hascontent}
 
 {include file='footer'}

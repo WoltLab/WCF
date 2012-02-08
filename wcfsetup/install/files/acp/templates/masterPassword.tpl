@@ -8,7 +8,7 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/login1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.masterPassword.enter{/lang}</h1>
@@ -16,21 +16,21 @@
 </header>
 
 {if $errorField != ''}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 <form method="post" action="{link controller='MasterPassword'}{/link}">
-	<div class="border content">
+	<div class="wcf-border wcf-content">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.masterPassword.enter{/lang}</legend>
 		
-			<dl{if $errorField == 'masterPassword'} class="formError"{/if}>
+			<dl{if $errorField == 'masterPassword'} class="wcf-formError"{/if}>
 				<dt><label for="masterPassword">{lang}wcf.acp.masterPassword{/lang}</label></dt>
 				<dd>
 					<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium" />
 					{if $errorField == 'masterPassword'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
@@ -48,7 +48,7 @@
 		{event name='fieldsets'}
 	</div>
 
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}

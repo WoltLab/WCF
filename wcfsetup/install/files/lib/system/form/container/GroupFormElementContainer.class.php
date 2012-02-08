@@ -25,7 +25,7 @@ class GroupFormElementContainer extends AbstractFormElementContainer {
 <fieldset>
 	<legend>{$this->getLabel()}</legend>
 	
-	<p class="description">{$this->getDescription()}</p>
+	<small>{$this->getDescription()}</small>
 	
 	{$content}
 </fieldset>

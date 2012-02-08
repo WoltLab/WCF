@@ -1,13 +1,13 @@
 {assign var=lastStep value=true}
 {include file='header'}
 
-<hgroup class="subHeading">
+<hgroup class="wcf-subHeading">
 	<h1>{lang}wcf.global.next{/lang}</h1>
 	<h2>{lang}wcf.global.next.description{/lang}</h2>
 </hgroup>
 
 <form method="get" action="{@RELATIVE_WCF_DIR}acp/index.php">
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		{@SID_INPUT_TAG}
 	</div>
 </form>

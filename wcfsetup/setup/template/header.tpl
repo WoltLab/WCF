@@ -10,11 +10,11 @@
 	{if !$lastStep|isset}
 		<style type="text/css">
 			/*<![CDATA[*/
-			p.error {
+			.wcf-error {
 				background-image: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showIcon=systemError.svg') !important;
 			}
 		
-			.innerError {
+			.wcf-innerError {
 				background-image: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showIcon=systemError.svg') !important;
 			}
 			/*]]>*/
@@ -25,12 +25,12 @@
 <body id="tplWCFInstaller">
 	<a id="top"></a>
 	<!-- HEADER -->
-	<header id="pageHeader" class="pageHeader">
+	<header id="pageHeader" class="wcf-pageHeader">
 		<div>
 			<!-- no top menu -->
 			
 			<!-- logo -->
-			<div id="logo" class="logo">
+			<div id="logo" class="wcf-logo">
 				<div><!-- ToDo: This is just a little trick to compensate the missing link here, find a better solution -->
 					<h1>{lang}wcf.global.pageTitle{/lang}</h1>
 					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/images/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage={/if}wcfLogo2.svg" width="300" height="58" alt="" />
@@ -43,10 +43,10 @@
 			<!-- no main menu -->
 			
 			<!-- header navigation -->
-			<nav class="headerNavigation">
+			<nav class="wcf-headerNavigation">
 				<div>
 					<ul>
-						<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}" class="balloonTooltip"><img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+						<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 					</ul>
 				</div>
 			</nav>
@@ -56,13 +56,13 @@
 	<!-- /HEADER -->
 	
 	<!-- MAIN -->
-	<div id="main" class="main">
+	<div id="main" class="wcf-main">
 		<div>
 			
 			<!-- CONTENT -->
-			<section id="content" class="content">
+			<section id="content" class="wcf-content">
 				
-				<header class="mainHeading setup">
+				<header class="wcf-mainHeading setup">
 					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}working1.svg" alt="" />
 					<hgroup>
 						<h1>{lang}wcf.global.title{/lang}</h1>

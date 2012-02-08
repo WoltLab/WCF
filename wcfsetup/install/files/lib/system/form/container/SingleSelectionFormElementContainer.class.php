@@ -47,23 +47,20 @@ class SingleSelectionFormElementContainer extends SelectionFormElementContainer 
 		}
 		
 		return <<<HTML
-<div class="formGroup">
-	<div class="formGroupLabel">
-		<label>{$this->getLabel()}</label>
-	</div>
-	<div class="formGroupField">
+<dl>
+	<dt><label>{$this->getLabel()}</label></dt>
+	<dd>
 		<fieldset>
 			<legend>{$this->getLabel()}</legend>
 			
-			<div class="formField">
+			<div>
 				{$content}
 			</div>
 		</fieldset>
+	</dd>
+	<small>{$this->getDescription()}</small>
 	</div>
-	<div class="formGroupFieldDesc">
-		<p>{$this->getDescription()}</p>
-	</div>
-</div>
+</dl>
 HTML;
 	}
 }

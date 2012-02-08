@@ -1,6 +1,6 @@
 {include file='header'}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	{if $packageID == 0}
 		<img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" />
 		<hgroup>
@@ -15,13 +15,13 @@
 </header>
 
 {if $errorField != ''}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	<nav>
-		<ul class="largeButtons">
-			<li><a href="{link controller='PackageList'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+		<ul class="wcf-largeButtons">
+			<li><a href="{link controller='PackageList'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>
@@ -29,17 +29,17 @@
 </div>
 
 <form method="post" action="{link controller='PackageStartInstall'}{/link}" enctype="multipart/form-data">
-	<div class="border content">
+	<div class="wcf-border wcf-content">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.package.startInstall.source{/lang}</legend>
 		
-			<dl{if $errorField == 'uploadPackage'} class="formError"{/if}>
+			<dl{if $errorField == 'uploadPackage'} class="wcf-formError"{/if}>
 				<dt><label for="uploadPackage">{lang}wcf.acp.package.startInstall.source.upload{/lang}</label></dt>
 				<dd>
 					<input type="file" id="uploadPackage" name="uploadPackage" value="" />
 					{if $errorField == 'uploadPackage'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{elseif $errorType == 'phpRequirements'}
@@ -54,12 +54,12 @@
 				</dd>
 			</dl>
 			
-			<dl{if $errorField == 'downloadPackage'} class="formError"{/if}>
+			<dl{if $errorField == 'downloadPackage'} class="wcf-formError"{/if}>
 				<dt><label for="downloadPackage">{lang}wcf.acp.package.startInstall.source.download{/lang}</label></dt>
 				<dd>
 					<input type="text" id="downloadPackage" name="downloadPackage" value="" class="long" />
 					{if $errorField == 'downloadPackage'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{lang}wcf.acp.package.startInstall.error.{@$errorType}{/lang}
 						</small>
 					{/if}
@@ -73,7 +73,7 @@
 		{event name='fieldsets'}
 	</div>
 
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}

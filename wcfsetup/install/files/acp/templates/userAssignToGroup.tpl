@@ -1,6 +1,6 @@
 {include file='header'}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.user.assignToGroup{/lang}</h1>
@@ -8,18 +8,18 @@
 </header>
 
 {if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 <form method="post" action="{link controller='UserAssignToGroup'}{/link}">
 
-	<div class="border content">
+	<div class="wcf-border wcf-content">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.user.assignToGroup.markedUsers{/lang}</legend>
 			
 			<ul>
-				{implode from=$users item=$user}<li><a href="{link controller='UserEdit' id=$user->userID}{/link}" class="badge badgeButton">{$user}</a></li>{/implode}
+				{implode from=$users item=$user}<li><a href="{link controller='UserEdit' id=$user->userID}{/link}" class="wcf-badge wcf-badgeButton">{$user}</a></li>{/implode}
 			</ul>
 		</fieldset>	
 		
@@ -27,12 +27,12 @@
 			<legend>{lang}wcf.acp.user.groups{/lang}</legend>
 			
 			
-			<dl{if $errorField == 'groupIDs'} class="formError"{/if}>
+			<dl{if $errorField == 'groupIDs'} class="wcf-formError"{/if}>
 				<dt></dt>
 				<dd><!-- ToDo: Build proper definition list -->
 					{htmlCheckboxes options=$groups name=groupIDs selected=$groupIDs}
 					{if $errorField == 'groupIDs'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 						</small>
 					{/if}
@@ -43,7 +43,7 @@
 		
 	</div>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}

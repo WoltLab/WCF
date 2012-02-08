@@ -9,7 +9,7 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/working1.svg" alt="" />
 	<hgroup>
 		<h1>{$archive->getPackageInfo('packageName')}</h1>
@@ -18,11 +18,11 @@
 </header>
 
 {if $missingPackages > 0}
-	<p class="error">{lang}wcf.acp.package.install.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.acp.package.install.error{/lang}</p>
 {/if}
 
 {if $excludingPackages|count > 0}
-	<div class="error">{lang}wcf.acp.package.install.error.excludingPackages{/lang}
+	<div class="wcf-error">{lang}wcf.acp.package.install.error.excludingPackages{/lang}
 		<ul>
 		{foreach from=$excludingPackages item=excludingPackage}
 			<li>{lang}wcf.acp.package.install.error.excludingPackages.excludingPackage{/lang}</li>
@@ -32,7 +32,7 @@
 {/if}
 
 {if $excludedPackages|count > 0}
-	<div class="error">{lang}wcf.acp.package.install.error.excludedPackages{/lang}
+	<div class="wcf-error">{lang}wcf.acp.package.install.error.excludedPackages{/lang}
 		<ul>
 		{foreach from=$excludedPackages item=excludedPackage}
 			<li>{lang}wcf.acp.package.install.error.excludedPackages.excludedPackage{/lang}</li>
@@ -62,28 +62,28 @@
 	{if $archive->getPackageInfo('packageURL') != ''}
 		<dl>
 			<dt>{lang}wcf.acp.package.view.url{/lang}</dt>
-			<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
+			<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="wcf-externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
 		</dl>
 	{/if}
 	
 	<dl>
 		<dt>{lang}wcf.acp.package.view.author{/lang}</dt>
-		<dd>{if $archive->getPackageInfo('authorURL')}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('authorURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('author')}</a>{else}{$archive->getPackageInfo('author')}{/if}</dd>
+		<dd>{if $archive->getPackageInfo('authorURL')}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('authorURL')|rawurlencode}" class="wcf-externalURL">{$archive->getPackageInfo('author')}</a>{else}{$archive->getPackageInfo('author')}{/if}</dd>
 	</dl>
 	
 	{event name='propertyFields'}
 </fieldset>
 
 {if $updatableInstances|count > 0}
-	<p class="warning">{lang}wcf.acp.package.install.updatableInstances.warning{/lang}</p>
+	<p class="wcf-warning">{lang}wcf.acp.package.install.updatableInstances.warning{/lang}</p>
 	
-	<div class="border boxTitle">
+	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.package.install.updatableInstances{/lang}</h1>
 			<h2>{lang}wcf.acp.package.install.updatableInstances.description{/lang}</h2>
 		</hgroup>
 		
-		<table>
+		<table class="wcf-table">
 			<thead>
 				<tr>
 					<th class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
@@ -104,12 +104,12 @@
 {/if}
 
 {if $requiredPackages|count > 0}
-	<div class="border boxTitle">
+	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
-			<h1>{lang}wcf.acp.package.view.requiredPackages{/lang} <span class="badge" title="{lang}wcf.acp.package.view.requiredPackages.description{/lang}">{#$requiredPackages|count}</span></h1>
+			<h1>{lang}wcf.acp.package.view.requiredPackages{/lang} <span class="wcf-badge" title="{lang}wcf.acp.package.view.requiredPackages.description{/lang}">{#$requiredPackages|count}</span></h1>
 		</hgroup>
 		
-		<table>
+		<table class="wcf-table">
 			<thead>
 				<tr>
 					<th class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
@@ -129,7 +129,7 @@
 	</div>
 {/if}
 
-<div class="formSubmit">
+<div class="wcf-formSubmit">
 	<input type="button" onclick="document.location.href=fixURL('{link controller='Package'}action={@$action}&queueID={@$queueID}&step=cancel{/link}')" value="{lang}wcf.global.button.back{/lang}" accesskey="c" />
 	{if $missingPackages == 0 && $excludingPackages|count == 0 && $excludedPackages|count == 0}
 		<input type="button" id="submitButton" value="{lang}wcf.global.button.next{/lang}" class="default" accesskey="s" />

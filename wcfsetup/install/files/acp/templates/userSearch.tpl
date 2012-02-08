@@ -8,7 +8,7 @@
 	//]]>
 </script>
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/search1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.user.search{/lang}</h1>
@@ -16,22 +16,22 @@
 </header>
 
 {if $errorField == 'search'}
-	<p class="error">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
+	<p class="wcf-error">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
 {/if}
 
 {*if $deletedUsers}
-	<p class="success">{lang}wcf.acp.user.delete.success{/lang}</p>	
+	<p class="wcf-success">{lang}wcf.acp.user.delete.success{/lang}</p>	
 {elseif $deletedUsers === 0}
-	<p class="error">{lang}wcf.acp.user.delete.error{/lang}</p>	
+	<p class="wcf-error">{lang}wcf.acp.user.delete.error{/lang}</p>	
 {/if*}
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	<nav>
-		<ul class="largeButtons">
+		<ul class="wcf-largeButtons">
 			{if $__wcf->session->getPermission('admin.user.canAddUser')}
-				<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+				<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 			{/if}
-			<li><a href="{link controller='UserList'}{/link}" title="{lang}wcf.acp.menu.link.user.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserList'}{/link}" title="{lang}wcf.acp.menu.link.user.list{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>
@@ -39,7 +39,7 @@
 </div>
 
 <form method="post" action="{link controller='UserSearch'}{/link}">
-	<div class="border content">
+	<div class="wcf-border wcf-content">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.user.search.conditions.general{/lang}</legend>
@@ -86,7 +86,7 @@
 								<dd>{htmlCheckboxes options=$availableGroups name='groupIDs' selected=$groupIDs}</dd>
 							</dl>
 							
-							<label style="margin-top: 10px"><input type="checkbox" name="invertGroupIDs" value="1" {if $invertGroupIDs == 1}checked="checked" {/if}/> {lang}wcf.acp.user.groups.invertSearch{/lang}</label>
+							<!-- ToDo --><label style="margin-top: 10px"><input type="checkbox" name="invertGroupIDs" value="1" {if $invertGroupIDs == 1}checked="checked" {/if}/> {lang}wcf.acp.user.groups.invertSearch{/lang}</label>
 						</fieldset>
 					</dd>
 				</dl>
@@ -112,8 +112,8 @@
 		
 		{event name='fieldsets'}
 		
-		<div class="tabMenuContainer">
-			<nav class="tabMenu">
+		<div class="wcf-tabMenuContainer">
+			<nav class="wcf-tabMenu">
 				<ul>
 					{if $optionTree|count}
 						<li><a href="#profile">{*<span>*}{lang}wcf.acp.user.search.conditions.profile{/lang}{*</span>*}</a></li>
@@ -126,9 +126,9 @@
 			</nav>
 			
 			{if $optionTree|count}
-				<div id="profile" class="border tabMenuContent hidden">
+				<div id="profile" class="wcf-border wcf-tabMenuContent hidden">
 					<div>
-						<h3 class="subHeading">{lang}wcf.acp.user.search.conditions.profile{/lang}</h3>
+						<h3 class="wcf-subHeading">{lang}wcf.acp.user.search.conditions.profile{/lang}</h3>
 						{include file='optionFieldList' langPrefix='wcf.user.option.' options=$optionTree}
 					</div>
 				</div>
@@ -136,8 +136,8 @@
 		
 			{event name='tabMenuContent'}
 		
-			<div id="resultOptions" class="border tabMenuContent hidden">
-				<hgroup class="subHeading">
+			<div id="resultOptions" class="wcf-border wcf-tabMenuContent hidden">
+				<hgroup class="wcf-subHeading">
 					<h1>{lang}wcf.acp.user.search.display{/lang}</h1>
 				</hgroup>
 				
@@ -220,7 +220,7 @@
 		</div>
 	</div>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}

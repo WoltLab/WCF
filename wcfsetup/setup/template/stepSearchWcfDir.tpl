@@ -80,7 +80,7 @@
 	//]]>
 </script>
 
-<hgroup class="subHeading">
+<hgroup class="wcf-subHeading">
 	<h1>{lang}wcf.global.wcfDir{/lang}</h1>
 	<h2>{lang}wcf.global.wcfDir.description{/lang}</h2>
 </hgroup>
@@ -90,7 +90,7 @@
 {/if}
 
 {if $exception|isset}
-	<p class="error">{lang}wcf.global.wcfDir.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.wcfDir.error{/lang}</p>
 {/if}
 
 <form method="post" action="install.php">
@@ -114,7 +114,7 @@
 		
 	</fieldset>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
 		<input type="hidden" name="step" value="{@$nextStep}" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />

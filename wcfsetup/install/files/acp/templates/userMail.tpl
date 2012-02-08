@@ -12,7 +12,7 @@
 	</script>
 {/if}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/email1.svg" alt="" />
 	<hgroup>
 		<h1>
@@ -28,14 +28,14 @@
 </header>
 
 {if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
-<div class="contentHeader">
+<div class="wcf-contentHeader">
 	<nav>
-		<ul class="largeButtons">
-			<li><a href="{link controller='UserList'}{/link}" title="{lang}wcf.acp.menu.link.user.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
-			<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/search1.svg" alt="" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
+		<ul class="wcf-largeButtons">
+			<li><a href="{link controller='UserList'}{/link}" title="{lang}wcf.acp.menu.link.user.list{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/search1.svg" alt="" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>
@@ -43,7 +43,7 @@
 </div>
 
 <form method="post" action="{link controller='UserMail'}{/link}">
-	<div class="border content">
+	<div class="wcf-border wcf-content">
 		
 		{if $action == ''}
 			<fieldset>
@@ -59,7 +59,7 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.user.sendMail.groups{/lang}</legend>
 				
-				<dl{if $errorField == 'groupIDs'} class="formError"{/if}>
+				<dl{if $errorField == 'groupIDs'} class="wcf-formError"{/if}>
 					<dt>
 						<label>{lang}wcf.acp.user.groups{/lang}</label>
 					</dt>
@@ -74,7 +74,7 @@
 							</dl>
 						</fieldset>
 						{if $errorField == 'groupIDs'}
-							<small class="innerError">
+							<small class="wcf-innerError">
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
@@ -90,12 +90,12 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.user.sendMail.mail{/lang}</legend>
 			
-			<dl{if $errorField == 'subject'} class="formError"{/if}>
+			<dl{if $errorField == 'subject'} class="wcf-formError"{/if}>
 				<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
 				<dd>
 					<input type="text" id="subject" name="subject" value="{$subject}" autofocus="autofocus" placeholder="enter subject" class="long" />
 					{if $errorField == 'subject'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
@@ -106,12 +106,12 @@
 				</dd>
 			</dl>
 			
-			<dl{if $errorField == 'from'} class="formError"{/if}>
+			<dl{if $errorField == 'from'} class="wcf-formError"{/if}>
 				<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
 				<dd>
 					<input type="text" id="from" name="from" value="{$from}" class="medium" />
 					{if $errorField == 'from'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
@@ -123,12 +123,12 @@
 				</dd>
 			</dl>
 			
-			<dl{if $errorField == 'text'} class="formError"{/if}>
+			<dl{if $errorField == 'text'} class="wcf-formError"{/if}>
 				<dt><label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label></dt>
 				<dd>
 					<textarea id="text" name="text" rows="15" cols="40" class="long">{$text}</textarea>
 					{if $errorField == 'text'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
@@ -152,7 +152,7 @@
 		{event name='fieldsets'}
 	</div>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="action" value="{@$action}" />

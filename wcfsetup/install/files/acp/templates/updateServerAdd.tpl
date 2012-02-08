@@ -1,6 +1,6 @@
 {include file='header'}
 
-<header class="mainHeading">
+<header class="wcf-mainHeading">
 	<img src="{@RELATIVE_WCF_DIR}icon/{@$action}1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.updateServer.{$action}{/lang}</h1>
@@ -8,21 +8,21 @@
 </header>
 
 {if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
-{/if}
-
-{if $success|isset}
-	<p class="success">{lang}wcf.global.form.{$action}.success{/lang}</p>	
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 {if $packageUpdateServer|isset && $packageUpdateServer->errorMessage}
-	<p class="warning">{lang}wcf.acp.updateServer.lastErrorMessage{/lang}<br />{$packageUpdateServer->errorMessage}</p>	
+	<p class="wcf-warning">{lang}wcf.acp.updateServer.lastErrorMessage{/lang}<br />{$packageUpdateServer->errorMessage}</p>	
 {/if}
 
-<div class="contentHeader">
+{if $success|isset}
+	<p class="wcf-success">{lang}wcf.global.form.{$action}.success{/lang}</p>	
+{/if}
+
+<div class="wcf-contentHeader">
 	<nav>
-		<ul class="largeButtons">
-			<li><a href="{link controller='UpdateServerList'}{/link}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/server1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li>
+		<ul class="wcf-largeButtons">
+			<li><a href="{link controller='UpdateServerList'}{/link}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/server1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>
@@ -30,17 +30,17 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='UpdateServerAdd'}{/link}{else}{link controller='UpdateServerEdit'}{/link}{/if}">
-	<div class="border content">
+	<div class="wcf-border wcf-content">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.updateServer.data{/lang}</legend>
 			
-			<dl{if $errorField == 'serverURL'} class="formError"{/if}>
+			<dl{if $errorField == 'serverURL'} class="wcf-formError"{/if}>
 				<dt><label for="serverURL">{lang}wcf.acp.updateServer.serverURL{/lang}</label></dt>
 				<dd>
 					<input type="url" id="serverURL" name="serverURL" value="{$serverURL}" required="required" class="long" />
 					{if $errorField == 'serverURL'}
-						<small class="innerError">
+						<small class="wcf-innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
@@ -73,7 +73,7 @@
 		{event name='fieldsets'}
 	</div>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{if $packageUpdateServerID|isset}<input type="hidden" name="id" value="{@$packageUpdateServerID}" />{/if}

@@ -1,16 +1,16 @@
 {include file='header'}
 
-<hgroup class="subHeading">
+<hgroup class="wcf-subHeading">
 	<h1>{lang}wcf.global.configureDB{/lang}</h1>
 	<h2>{lang}wcf.global.configureDB.description{/lang}</h2>
 </hgroup>
 
 {if $exception|isset}
-	<p class="error">{lang}wcf.global.configureDB.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.configureDB.error{/lang}</p>
 {/if}
 
 {if $conflictedTables|isset}
-	<p class="error">{lang}wcf.global.configureDB.conflictedTables{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.configureDB.conflictedTables{/lang}</p>
 {/if}
 
 <form method="post" action="install.php">
@@ -68,7 +68,7 @@
 		
 	</fieldset>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
 		<input type="hidden" name="send" value="1" />
 		<input type="hidden" name="step" value="{@$nextStep}" />

@@ -14,7 +14,7 @@
 	//]]>
 </script>
 
-<header class="mainHeading setup">
+<header class="wcf-mainHeading setup">
 	<img src="{@RELATIVE_WCF_DIR}icon/logIn1.svg" alt="" />
 	<hgroup>
 		<h1>{@$pageTitle}</h1>
@@ -22,18 +22,18 @@
 </header>
 
 {if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 <form method="post" action="{link controller='Login'}{/link}">
 	<fieldset>
 		<legend>{lang}wcf.user.login.data{/lang}</legend>
 		
-		<dl{if $errorField == 'username'} class="formError"{/if}>
+		<dl{if $errorField == 'username'} class="wcf-formError"{/if}>
 			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 			<dd><input type="text" id="username" name="username" value="{$username}" class="medium" />
 				{if $errorField == 'username'}
-					<small class="innerError">
+					<small class="wcf-innerError">
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
@@ -44,11 +44,11 @@
 			</dd>
 		</dl>
 		
-		<dl{if $errorField == 'password'} class="formError"{/if}>
+		<dl{if $errorField == 'password'} class="wcf-formError"{/if}>
 			<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 			<dd><input type="password" id="password" name="password" value="" class="medium" />
 				{if $errorField == 'password'}
-					<small class="innerError">
+					<small class="wcf-innerError">
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
@@ -64,7 +64,7 @@
 	
 	{event name='fieldsets'}
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="url" value="{$url}" />

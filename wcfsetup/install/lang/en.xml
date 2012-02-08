@@ -26,7 +26,7 @@
 		<item name="wcf.acp.cronjob.className"><![CDATA[Class name]]></item>
 		<item name="wcf.acp.cronjob.data"><![CDATA[General information]]></item>
 		<item name="wcf.acp.cronjob.timing"><![CDATA[Schedule]]></item>
-		<item name="wcf.acp.cronjob.intro"><![CDATA[Configuring cron jobs (automatized scheduled tasks) requires distinct knowledge of the crontab syntax on Unix based systems. More information about this topic can be obtained on the following Webpage: <a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>.]]></item>
+		<item name="wcf.acp.cronjob.intro"><![CDATA[Configuring cron jobs (automatized scheduled tasks) requires distinct knowledge of the crontab syntax on Unix based systems. More information about this topic can be obtained on the following Webpage: <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="wcf-externalURL">Newbie: Intro to cron</a>.]]></item>
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Execute cron job now]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[There is no class with the given name.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[The timings you have set are invalid.]]></item>
@@ -222,7 +222,7 @@
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcache"><![CDATA[Memcache]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcache.description"><![CDATA[Memcache stores data in the memory that is often accessed. This may reduce the database load dramatically. Read more about the memcache on the following site: <a href="http://memcached.org/" class="externalURL">memcached.org</a>.]]></item>
+		<item name="wcf.acp.option.category.general.cache.memcache.description"><![CDATA[Memcache stores data in the memory that is often accessed. This may reduce the database load dramatically. Read more about the memcache on the following site: <a href="http://memcached.org/" class="wcf-externalURL">memcached.org</a>.]]></item>
 		<item name="wcf.acp.option.cache_source_memcache_host"><![CDATA[Memcache server]]></item>
 		<item name="wcf.acp.option.cache_source_memcache_host.description"><![CDATA[You can enter one server each row.]]></item>
 		<item name="wcf.acp.option.cache_source_memcache_use_pconnect"><![CDATA[Use persistent connections]]></item>
@@ -480,6 +480,9 @@
 		<item name="wcf.global.button.reset"><![CDATA[Reset]]></item>
 		<item name="wcf.global.button.search"><![CDATA[Search]]></item>
 		<item name="wcf.global.button.submit"><![CDATA[Submit]]></item>
+		<item name="wcf.global.confirmation.cancel"><![CDATA[Cancel]]></item>
+		<item name="wcf.global.confirmation.confirm"><![CDATA[OK]]></item>
+		<item name="wcf.global.confirmation.title"><![CDATA[Confirmation required]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.form.add.success"><![CDATA[The new entry has been successfully saved.]]></item>
 		<item name="wcf.global.form.edit.success"><![CDATA[Your changes have been successfully saved.]]></item>

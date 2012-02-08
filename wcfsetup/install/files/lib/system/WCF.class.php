@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system;
+use wcf\util\StringStack;
+
 use wcf\data\application\Application;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
@@ -41,6 +43,12 @@ if (!defined('NO_IMPORTS')) {
  * @category 	Community Framework
  */
 class WCF {
+	/**
+	 * list of currently loaded applications
+	 * @var	array<wcf\system\application\IApplication>
+	 */
+	protected $applications = array();
+	
 	/**
 	 * list of autoload directories
 	 * @var array
@@ -388,11 +396,19 @@ class WCF {
 	 * Initializes applications.
 	 */
 	protected function initApplications() {
+		// register WCF as application
+		$this->applications['wcf'] = new Application(1);
+		
+		// do not init applications if within wcf
 		if (PACKAGE_ID == 1) return;
 		
 		// start main application
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
 		$this->loadApplication($application);
+		
+		// register primary application
+		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
+		$this->applications[$abbreviation] = $application;
 		
 		// start dependent applications
 		$applications = ApplicationHandler::getInstance()->getDependentApplications();
@@ -407,7 +423,7 @@ class WCF {
 	 * @param	wcf\data\application\Application		$application
 	 * @param	boolean						$isDependentApplication
 	 */	
-	protected function loadApplication(Application $application, $isDepedentApplication = false) {
+	protected function loadApplication(Application $application, $isDependentApplication = false) {
 		$package = PackageCache::getInstance()->getPackage($application->packageID);
 		
 		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
@@ -439,13 +455,16 @@ class WCF {
 		if (class_exists('wcf\system\WCFACP', false)) {
 			$this->getTPL()->addTemplatePath($application->packageID, $packageDir . 'acp/templates/');
 		}
-		else if (!$isDepedentApplication) {
+		else if (!$isDependentApplication) {
 			// load options
 			$this->loadOptions($packageDir.'options.inc.php', $application->packageID);
 			
 			// assign base tag
 			$this->getTPL()->assign('baseHref', $application->domainName . $application->domainPath);
 		}
+		
+		// register application
+		$this->applications[$abbreviation] = $application;
 	}
 	
 	/**
@@ -588,5 +607,33 @@ class WCF {
 		// benchmarking is enabled by default
 		if (!defined('ENABLE_BENCHMARK') || ENABLE_BENCHMARK) return true;
 		return false;
+	}
+	
+	/**
+	 * Returns domain path for given application.
+	 * 
+	 * @param	string		$abbreviation
+	 * @return	string
+	 */
+	public function getPath($abbreviation = 'wcf') {
+		if (!isset($this->applications[$abbreviation])) {
+			$abbreviation = 'wcf';
+		}
+		
+		return $this->applications[$abbreviation]->domainName . $this->applications[$abbreviation]->domainPath;
+	}
+	
+	/**
+	 * Returns a fully qualified anchor for current page.
+	 * 
+	 * @param	string		$fragment
+	 * @return	string
+	 */
+	public function getAnchor($fragment) {
+		// resolve path and query components
+		$path = str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['REQUEST_URI']);
+		$baseHref = self::getTPL()->get('baseHref');
+		
+		return $baseHref . 'index.php' . $path . '#' . $fragment;
 	}
 }

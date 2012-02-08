@@ -37,23 +37,19 @@ class MultipleSelectionFormElementContainer extends SelectionFormElementContaine
 		}
 		
 		return <<<HTML
-<div class="formGroup">
-	<div class="formGroupLabel">
-		<label>{$this->getLabel()}</label>
-	</div>
-	<div class="formGroupField">
+<dl>
+	<dt><label>{$this->getLabel()}</label></dt>
+	<dd>
 		<fieldset>
 			<legend>{$this->getLabel()}</legend>
 			
-			<div class="formField">
+			<div>
 				{$content}
 			</div>
 		</fieldset>
-	</div>
-	<div class="formGroupFieldDesc">
-		<p>{$this->getDescription()}</p>
-	</div>
-</div>
+		<small>{$this->getDescription()}</small>
+	</dd>
+</dl>
 HTML;
 	}
 }

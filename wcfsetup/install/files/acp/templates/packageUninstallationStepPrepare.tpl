@@ -1,5 +1,5 @@
-<div id="packageInstallationDialogContainer" class="overlay">
-	<header class="mainHeading">
+<div id="packageInstallationDialogContainer">
+	<header class="wcf-mainHeading">
 		<img src="{@RELATIVE_WCF_DIR}icon/working2.svg" alt="" />
 		<hgroup>
 			<h1>Paket &raquo;{$queue->packageName}&laquo; wird deinstalliert &hellip;</h1>
