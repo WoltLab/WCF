@@ -3608,7 +3608,7 @@ WCF.System.Confirmation = {
 	 * Creates the confirmation dialog on first use.
 	 */
 	_createDialog: function() {
-		this._dialog = $('<div id="wcfSystemConfirmation"><p></p></div>').hide().appendTo(document.body);
+		this._dialog = $('<div id="wcfSystemConfirmation" class="wcf-systemConfirmation"><p></p></div>').hide().appendTo(document.body);
 		var $formButtons = $('<div class="wcf-formSubmit" />').appendTo(this._dialog);
 		
 		$('<button>' + WCF.Language.get('wcf.global.confirmation.cancel') + '</button>').data('action', 'cancel').click($.proxy(this._click, this)).appendTo($formButtons);

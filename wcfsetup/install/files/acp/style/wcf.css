@@ -918,6 +918,7 @@ section.wcf-content:after {
 }
 
 .wcf-main > div section:only-child {
+	border-width: 0 !important;
 	margin: 0 !important;
 }
 
@@ -3557,6 +3558,7 @@ tr .columnIcon img {
 /* Content */
 
 .wcf-dialogContent {
+	color: rgba(238, 238, 238, 1);
 	background-color: #333;
 	overflow: auto;
 }
