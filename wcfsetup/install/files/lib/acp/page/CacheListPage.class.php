@@ -71,6 +71,30 @@ class CacheListPage extends AbstractPage {
 			'files' => 0
 		);
 		
+		$_this = $this;
+		$readFileCache = function($cacheDir) use ($_this) {
+			$_this->caches[$cacheDir] = array();
+			
+			// get files in cache directory
+			$files = glob($cacheDir.'/*.php');
+			// get additional file information
+			if (is_array($files)) {
+				foreach ($files as $file) {
+					$filesize = filesize($file);
+					$_this->caches[$cacheDir][] = array(
+						'filename' => basename($file),
+						'filesize' => $filesize,
+						'mtime' => filemtime($file),
+						'perm' => substr(sprintf('%o', fileperms($file)), -3),
+						'writable' => is_writable($file)
+					);
+					
+					$_this->cacheData['files']++;
+					$_this->cacheData['size'] += $filesize;
+				}
+			}
+		};
+		
 		// filesystem cache
 		if ($this->cacheData['source'] == 'wcf\system\cache\source\DiskCacheSource') {
 			// set version
@@ -88,29 +112,7 @@ class CacheListPage extends AbstractPage {
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
 				$packageDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
-				$cacheDir = $packageDir.'cache';
-				if (file_exists($cacheDir)) {
-					$this->caches[$cacheDir] = array();
-
-					// get files in cache directory
-					$files = glob($cacheDir.'/*.php');
-					// get additional file information
-					if (is_array($files)) {
-						foreach ($files as $file) {
-							$filesize = filesize($file);
-							$this->caches[$cacheDir][] = array(
-								'filename' => basename($file),
-								'filesize' => $filesize,
-								'mtime' => filemtime($file),
-								'perm' => substr(sprintf('%o', fileperms($file)), -3),
-								'writable' => is_writable($file)
-							);
-							
-							$this->cacheData['files']++;
-							$this->cacheData['size'] += $filesize;
-						}
-					}
-				}
+				$readFileCache($packageDir.'cache');
 			}
 		}
 		// memcache
@@ -150,7 +152,7 @@ class CacheListPage extends AbstractPage {
 			foreach ($cacheList as $cache) {
 				$cachePath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(dirname($cache['info'])));
 				if (isset($packageNames[$cachePath])) {
-					// Use the pacakgeName + the instance number, because pathes could confuse the administrator.
+					// Use the packageName + the instance number, because pathes could confuse the administrator.
 					// He could think this is a file cache. If instanceName would be unique, we could use it instead.
 					$packageName = $packageNames[$cachePath];
 					if (!isset($this->caches[$packageName])) $this->caches[$packageName] = array();
@@ -172,6 +174,10 @@ class CacheListPage extends AbstractPage {
 			$this->cacheData['version'] = WCF_VERSION;
 			$this->cacheData['files'] = $this->cacheData['size'] = 0;
 		}
+		
+		$readFileCache(WCF_DIR.'language');
+		$readFileCache(WCF_DIR.'templates/compiled');
+		$readFileCache(WCF_DIR.'acp/templates/compiled');
 	}
 	
 	/**
