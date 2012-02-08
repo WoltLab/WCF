@@ -1326,7 +1326,6 @@ section.wcf-content .wcf-content {
 	background-color: #def;
 }
 
-.badgeSuccess,
 .wcf-badgeSuccess {
 	color: #090;
 	border: 1px solid #0c0;
@@ -1347,8 +1346,7 @@ section.wcf-content .wcf-content {
 
 /* Buttons */
 
-.wcf-badgeButton,
-.jsClipboardEditor > ul > li {
+.wcf-badgeButton {
 	cursor: pointer;
 	border-radius: 30px;
 	margin-right: 0;
@@ -1366,8 +1364,7 @@ li > .wcf-badgeButton {
 }
 
 .wcf-badgeButton,
-.wcf-badgeButton a,
-.jsClipboardEditor > ul > li > span {
+.wcf-badgeButton a {
 	text-decoration: none !important;
 }
 
@@ -3772,19 +3769,24 @@ tr .columnIcon img {
 
 /* Globals */
 
-.jsClipboardEditor > ul {
+.wcf-clipboardEditor li {
 	font-size: .85em;
-	margin: 6px 3px 0;
-	display: block;
+	border-radius: 30px;
+	margin-top: 7px;
+	margin-right: 3px;
+	margin-left: 3px;
 	position: relative;
 	float: left;
 }
 
-.jsClipboardEditor > ul > li > span {
+.wcf-clipboardEditor li span {
+	text-decoration: none !important;
+	cursor: pointer;
 	background-image: url('../../icon/dropdown1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
-	padding-right: 12px;
+	margin-right: 5px;
+	padding: 3px 12px 5px 10px;
 	display: inline-block;
 }
 

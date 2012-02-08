@@ -97,7 +97,7 @@
 	<div class="wcf-contentFooter">
 		{@$pagesLinks}
 		
-		<div class="jsClipboardEditor" data-types="[ 'com.woltlab.wcf.user' ]"></div>
+		<div class="wcf-clipboardEditor jsClipboardEditor" data-types="[ 'com.woltlab.wcf.user' ]"></div>
 		
 		<nav>
 			<ul class="wcf-largeButtons">
