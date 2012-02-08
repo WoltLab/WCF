@@ -1087,7 +1087,7 @@ section.wcf-content .wcf-content {
 
 /* Collapsed (Left) */
 
-.left .collapsed .collapsibleSidebarButton {
+.left .collapsed .wcf-collapsibleSidebarButton {
 	background-image: url('../../icon/arrowRight1.svg'), url('../../icon/arrowRight1.svg');
 	left: 0;
 }
