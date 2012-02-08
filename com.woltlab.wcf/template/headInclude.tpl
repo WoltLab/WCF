@@ -83,7 +83,7 @@
 		new WCF.Date.Time();
 		new WCF.Effect.SmoothScroll();
 		new WCF.Effect.BalloonTooltip();
-		$('<span class="pointer"><span></span></span>').appendTo('.innerError');
+		$('<span class="pointer"><span></span></span>').appendTo('.wcf-innerError');
 		
 		$('#sidebarContent').wcfSidebar();
 		
