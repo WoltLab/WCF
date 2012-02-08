@@ -97,7 +97,7 @@
 				<h1>Installed Plugins</h1>
 			</hgroup>
 			
-			<div class="wcf-contentHeader">
+			<div class="wcf-contentHeader jsPluginListPagination">
 				
 			</div>
 			
@@ -109,7 +109,7 @@
 				</ol>
 			</section>
 			
-			<div class="wcf-contentFooter">
+			<div class="wcf-contentFooter jsPluginListPagination">
 				
 			</div>
 		</div>

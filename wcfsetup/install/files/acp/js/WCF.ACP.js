@@ -166,7 +166,7 @@ WCF.ACP.Package.List.prototype = {
 	 */
 	init: function(pages) {
 		// handle pagination
-		$('.wcf-pluginList').each($.proxy(function(index, pluginList) {
+		$('.jsPluginListPagination').each($.proxy(function(index, pluginList) {
 			var $wcfPages = $(pluginList).wcfPages({
 				activePage: 1,
 				maxPage: pages
@@ -358,7 +358,7 @@ WCF.ACP.Package.Installation.prototype = {
 		if (data.step == 'success') {
 			this._purgeTemplateContent($.proxy(function() {
 				var $id = WCF.getRandomID();
-				$('#packageInstallationInnerContent').append('<div class="wcf-formSubmit"><input type="button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" class="default" /></div>');
+				$('#packageInstallationInnerContent').append('<div class="wcf-formSubmit"><input type="wcf-button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" class="default" /></div>');
 				
 				$('#' + $id).click(function() {
 					window.location.href = data.redirectLocation;
@@ -384,7 +384,7 @@ WCF.ACP.Package.Installation.prototype = {
 			// create button to handle next step
 			if (data.step && data.node) {
 				var $id = WCF.getRandomID();
-				$('#packageInstallationInnerContent').append('<div class="wcf-formSubmit"><input type="button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" class="default" /></div>');
+				$('#packageInstallationInnerContent').append('<div class="wcf-formSubmit"><input type="wcf-button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" class="default" /></div>');
 				
 				$('#' + $id).click($.proxy(function() {
 					// collect form values
