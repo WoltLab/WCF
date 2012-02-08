@@ -3,6 +3,7 @@ namespace wcf\system\template;
 use wcf\system\exception\SystemException;
 use wcf\system\template\plugin\ICompilerTemplatePlugin;
 use wcf\system\template\plugin\IPrefilterTemplatePlugin;
+use wcf\system\WCF;
 use wcf\util\StringStack;
 use wcf\util\StringUtil;
 
@@ -187,9 +188,10 @@ class TemplateScriptingCompiler {
 	 * 
 	 * @param	string		$identifier
 	 * @param	string		$sourceContent
+	 * @param	array		$metaData
 	 * @return	string
 	 */
-	public function compileString($identifier, $sourceContent) {
+	public function compileString($identifier, $sourceContent, array $metaData = array()) {
 		// reset vars
 		$this->autoloadPlugins = $this->tagStack = $this->stringStack = $this->literalStack = array();
 		$this->currentIdentifier = $identifier;
@@ -219,7 +221,7 @@ class TemplateScriptingCompiler {
 		$compiledTags = array();
 		for ($i = 0, $j = count($templateTags); $i < $j; $i++) {
 			$this->currentLineNo += StringUtil::countSubstring($textBlocks[$i], "\n");
-			$compiledTags[] = $this->compileTag($templateTags[$i]);
+			$compiledTags[] = $this->compileTag($templateTags[$i], $metaData);
 			$this->currentLineNo += StringUtil::countSubstring($templateTags[$i], "\n");
 		}
 		
@@ -252,17 +254,9 @@ class TemplateScriptingCompiler {
 		$compiledAutoloadPlugins = '';
 		if (count($this->autoloadPlugins) > 0) {
 			$compiledAutoloadPlugins = "<?php\n";
-			foreach ($this->autoloadPlugins as $className/* => $fileName*/) {
+			foreach ($this->autoloadPlugins as $className) {
 				$compiledAutoloadPlugins .= "use ".$className.";\n";
 				$compiledAutoloadPlugins .= "if (!isset(\$this->pluginObjects['$className'])) {\n";
-				/*
-				if (WCF_DIR != '' && strpos($fileName, WCF_DIR) === 0) {
-					$compiledAutoloadPlugins .= "require_once(WCF_DIR.'".StringUtil::replace(WCF_DIR, '', $fileName)."');\n";
-				}
-				else {
-					$compiledAutoloadPlugins .= "require_once('".$fileName."');\n";
-				}
-				*/
 				$compiledAutoloadPlugins .= "\$this->pluginObjects['$className'] = new $className;\n";
 				$compiledAutoloadPlugins .= "}\n";
 			}
@@ -276,8 +270,9 @@ class TemplateScriptingCompiler {
 	 * Compiles a template tag.
 	 * 
 	 * @param	string		$tag
+	 * @param	array		$metaData
 	 */
-	protected function compileTag($tag) {
+	protected function compileTag($tag, array &$metaData) {
 		if (preg_match('~^'.$this->outputPattern.'~s', $tag)) {
 			// variable output
 			return $this->compileOutputTag($tag);
@@ -324,7 +319,7 @@ class TemplateScriptingCompiler {
 					return '<?php } ?>';
 				
 				case 'include':
-					return $this->compileIncludeTag($tagArgs);
+					return $this->compileIncludeTag($tagArgs, $metaData);
 					
 				case 'foreach':
 					$this->pushTag('foreach');
@@ -681,9 +676,10 @@ class TemplateScriptingCompiler {
 	 * Compiles an include tag.
 	 *
 	 * @param 	string 		$includeTag
-	 * @return 	string 				phpCode
+	 * @param	array		$metaData
+	 * @return 	string 		phpCode
 	 */
-	protected function compileIncludeTag($includeTag) {
+	protected function compileIncludeTag($includeTag, array &$metaData) {
 		$args = $this->parseTagArgs($includeTag, 'include');
 		$append = false;
 		
@@ -719,6 +715,12 @@ class TemplateScriptingCompiler {
 		if (isset($args['once'])) {
 			$once = $args['once'];
 			unset($args['once']);
+		}
+		
+		// check for static includes
+		if ($sandbox === false && $assignVar === false && $once === false) {
+			$content = WCF::getTPL()->fetch($file, array(), false, $metaData['packageID']);
+			return $metaData;
 		}
 		
 		// make argument string

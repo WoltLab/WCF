@@ -300,11 +300,17 @@ class TemplateEngine extends SingletonFactory {
 		$tplPackageID = $this->getPackageID($templateName, $packageID);
 		$compiledFilename = $this->getCompiledFilename($templateName, $packageID);
 		$sourceFilename = $this->getSourceFilename($templateName, $tplPackageID);
+		$metaDataFilename = $this->getMetaDataFilename($templateName, $packageID);
+		$metaData = $this->getMetaData($templateName, $metaDataFilename);
 		
 		// check if compilation is necessary
-		if (!$this->isCompiled($templateName, $sourceFilename, $compiledFilename)) {
+		if (!$this->isCompiled($templateName, $sourceFilename, $compiledFilename, $metaData)) {
 			// compile
-			$this->compileTemplate($templateName, $sourceFilename, $compiledFilename);
+			$this->compileTemplate($templateName, $sourceFilename, $compiledFilename, array(
+				'data' => $metaData,
+				'filename' => $metaDataFilename,
+				'packageID' => $packageID
+			));
 		}
 		
 		// assign current package id
@@ -325,7 +331,7 @@ class TemplateEngine extends SingletonFactory {
 	 * @param	integer		$packageID
 	 * @return	integer
 	 */
-	protected function getPackageID($templateName, $packageID) {
+	public function getPackageID($templateName, $packageID) {
 		if ($packageID != 1 && isset($this->templatePaths[$packageID])) {
 			$path = $this->getPath($this->templatePaths[$packageID], $templateName);
 			
@@ -389,10 +395,20 @@ class TemplateEngine extends SingletonFactory {
 	 * Returns the absolute filename of a compiled template.
 	 *
 	 * @param 	string 		$templateName
-	 * @return 	string 		$path
+	 * @param	integer		$packageID
 	 */
 	public function getCompiledFilename($templateName, $packageID) {
 		return $this->compileDir.$packageID.'_'.$this->templateGroupID.'_'.$this->languageID.'_'.$templateName.'.php';
+	}
+	
+	/**
+	 * Returns the absolute filename for template's meta data.
+	 * 
+	 * @param	string		$templateName
+	 * @param	integer		$packageID
+	 */
+	public function getMetaDataFilename($templateName, $packageID) {
+		return $this->compileDir.$packageID.'_'.$this->templateGroupID.'_'.$templateName.'.meta.php';
 	}
 	
 	/**
@@ -401,10 +417,11 @@ class TemplateEngine extends SingletonFactory {
 	 * @param	string		$templateName
 	 * @param 	string 		$sourceFilename
 	 * @param 	string 		$compiledFilename
+	 * @param	array		$metaData
 	 * @return 	boolean 	$isCompiled
 	 */
-	protected function isCompiled($templateName, $sourceFilename, $compiledFilename) {
-		if ($this->forceCompile || !file_exists($compiledFilename)) {
+	protected function isCompiled($templateName, $sourceFilename, $compiledFilename, array $metaData) {
+		if ($this->forceCompile || !file_exists($compiledFilename) || !file_exists($metaDataFilename)) {
 			return false;
 		}
 		else {
@@ -415,6 +432,18 @@ class TemplateEngine extends SingletonFactory {
 				return false;
 			}
 			else {
+				// check for meta data
+				if (!empty($metaData['include'])) {
+					foreach ($metaData['include'] as $template) {
+						$includedTemplateFilename = $this->getSourceFilename($template['templateName'], $packageID);
+						$includedMTime = @filemtime($includedTemplateFilename);
+						
+						if ($includedMTime >= $compileMTime) {
+							return false;
+						}
+					}
+				}
+				
 				// check for template listeners
 				if ($this->hasTemplateListeners($templateName)) {
 					$this->loadTemplateListenerCode($templateName);
@@ -436,8 +465,9 @@ class TemplateEngine extends SingletonFactory {
 	 * @param 	string 		$templateName
 	 * @param 	string 		$sourceFilename
 	 * @param 	string 		$compiledFilename
+	 * @param	array		$metaData
 	 */
-	protected function compileTemplate($templateName, $sourceFilename, $compiledFilename) {
+	protected function compileTemplate($templateName, $sourceFilename, $compiledFilename, array $metaData) {
 		// get compiler
 		if (!($this->compilerObj instanceof TemplateCompiler)) {
 			$this->compilerObj = $this->getCompiler();
@@ -447,7 +477,7 @@ class TemplateEngine extends SingletonFactory {
 		$sourceContent = $this->getSourceContent($sourceFilename);
 		
 		// compile template
-		$this->compilerObj->compile($templateName, $sourceContent, $compiledFilename);
+		$this->compilerObj->compile($templateName, $sourceContent, $compiledFilename, $metaData);
 	}
 	
 	/**
@@ -760,5 +790,36 @@ class TemplateEngine extends SingletonFactory {
 		}
 		
 		return '';
+	}
+	
+	/**
+	 * Reads meta data from file.
+	 * 
+	 * @param	string		$templateName
+	 * @param	string		$filename
+	 * @return	array
+	 */
+	protected function getMetaData($templateName, $filename) {
+		if (!file_exists($filename) || !is_readable($filename)) {
+			return null;
+		}
+		
+		// get file contents
+		$contents = file_get_contents($filename);
+		
+		// find first newline
+		$position = strpos($contents, "\n");
+		if ($position === false) throw new SystemException("Unable to load meta data for template '".$templateName."'");
+		
+		// cut contents
+		$contents = substr($contents, $position + 1);
+		
+		// read serializes data
+		$data = @unserialize($contents);
+		if ($data === false || !is_array($data)) {
+			throw new SystemException("Invalid meta data for template '".$templateName."'");
+		}
+		
+		return $data;
 	}
 }
