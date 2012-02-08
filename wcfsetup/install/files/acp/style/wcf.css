@@ -1827,6 +1827,10 @@ dl > dd > small {
 	display: block;
 }
 
+dl > dd > p {
+	margin-top: 5px;
+}
+
 /* Nested */
 
 dl > dd > fieldset {
