@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\user;
-use wcf\data\DatabaseObjectEditor;
 use wcf\data\user\group\UserGroup;
+use wcf\data\DatabaseObjectEditor;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 

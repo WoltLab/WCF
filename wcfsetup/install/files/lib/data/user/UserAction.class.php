@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\user;
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\user\group\UserGroup;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;

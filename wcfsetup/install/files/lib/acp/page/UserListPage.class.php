@@ -1,9 +1,8 @@
 <?php
 namespace wcf\acp\page;
-use wcf\system\menu\acp\ACPMenu;
-use wcf\data\user\User;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\option\ViewableUserOption;
+use wcf\data\user\User;
 use wcf\page\SortablePage;
 use wcf\system\cache\CacheHandler;
 use wcf\system\clipboard\ClipboardHandler;
@@ -11,6 +10,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;

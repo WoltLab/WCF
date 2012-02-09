@@ -2,8 +2,6 @@
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\option\OptionType;
-use wcf\system\option\SearchableUserOption;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 

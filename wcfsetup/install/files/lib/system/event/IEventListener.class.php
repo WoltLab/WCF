@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\event;
-use wcf\data\DatabaseObjectProcessor;
 
 /**
  * EventListeners can be registered for a specific event in many controller objects.
