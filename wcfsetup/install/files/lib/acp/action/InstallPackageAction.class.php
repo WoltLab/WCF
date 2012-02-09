@@ -1,14 +1,12 @@
 <?php
 namespace wcf\acp\action;
-use wcf\system\cache\CacheHandler;
-
-use wcf\util\FileUtil;
-
 use wcf\action\AbstractDialogAction;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
+use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -219,9 +217,9 @@ class InstallPackageAction extends AbstractDialogAction {
 		$statement->execute();
 		
 		while ($row = $statement->fetchArray()) {
-			$packageDir = FileUtil::getRealPath(WCF_DIR . $row['packageDir']);
+			$cacheDir = FileUtil::getRealPath(WCF_DIR . $row['packageDir'] . 'cache/');
 			
-			CacheHandler::getInstance()->clear($packageDir, '*.php');
+			CacheHandler::getInstance()->clear($cacheDir, '*.php');
 		}
 	}
 }
