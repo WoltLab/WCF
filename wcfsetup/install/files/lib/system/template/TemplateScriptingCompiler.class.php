@@ -799,7 +799,7 @@ class TemplateScriptingCompiler {
 			$sourceFilename = WCF::getTPL()->getSourceFilename($templateName, $tplPackageID);
 			$metaDataFilename = WCF::getTPL()->getMetaDataFilename($templateName, $tplPackageID);
 			
-			$data = $this->compileString($identifier, file_get_contents($sourceFilename), array(
+			$data = $this->compileString($templateName, file_get_contents($sourceFilename), array(
 				'data' => null,
 				'filename' => '',
 				'packageID' => $tplPackageID
