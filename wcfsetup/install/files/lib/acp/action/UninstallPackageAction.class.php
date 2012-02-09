@@ -110,6 +110,7 @@ class UninstallPackageAction extends InstallPackageAction {
 		if ($node == '') {
 			// remove node data
 			$this->installation->nodeBuilder->purgeNodes();
+			$this->finalize($queueID);
 			
 			// redirect to application if not already within one
 			if (PACKAGE_ID == 1) {
