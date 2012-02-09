@@ -87,7 +87,7 @@ class InstallPackageAction extends AbstractDialogAction {
 			if ($step->getNode() == '') {
 				// perform final actions
 				$this->installation->completeSetup();
-				$this->finalize($queueID);
+				$this->finalize();
 				
 				// redirect to application if not already within one
 				if (PACKAGE_ID == 1) {
@@ -205,10 +205,8 @@ class InstallPackageAction extends AbstractDialogAction {
 	
 	/**
 	 * Clears resources after successful installation.
-	 * 
-	 * @param	integer		$queueID
 	 */
-	protected function finalize($queueID) {
+	protected function finalize() {
 		// clear cache
 		$sql = "SELECT	packageDir
 			FROM	wcf".WCF_N."_package
