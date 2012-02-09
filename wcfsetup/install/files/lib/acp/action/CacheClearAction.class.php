@@ -40,8 +40,8 @@ class CacheClearAction extends AbstractAction {
 		$sql = "SELECT	packageDir
 			FROM	wcf".WCF_N."_package
 			".$conditions;
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditions->getParameters());
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
 			$packageDir = FileUtil::getRealPath(WCF_DIR . $row['packageDir']);
 			try {
