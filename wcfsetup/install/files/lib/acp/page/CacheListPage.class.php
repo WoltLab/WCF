@@ -1,13 +1,16 @@
 <?php
 namespace wcf\acp\page;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\page\AbstractPage;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\cache\source\MemcacheAdapter;
 use wcf\system\cache\CacheHandler;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\menu\acp\ACPMenu;
+use wcf\system\exception\SystemException;
 use wcf\system\package\PackageDependencyHandler;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\DirectoryUtil;
 
 /**
  * Shows a list of all cache resources.
@@ -71,6 +74,36 @@ class CacheListPage extends AbstractPage {
 			'files' => 0
 		);
 		
+		$_this = $this;
+		$readFileCache = function($cacheDir, Regex $ignore = null) use ($_this) {
+			$_this->caches[$cacheDir] = array();
+			
+			// get files in cache directory
+			try {
+				$directoryUtil = DirectoryUtil::getInstance($cacheDir);
+			}
+			catch(SystemException $e) {
+				return;
+			}
+			$files = $directoryUtil->getFileObjects(SORT_ASC, new Regex('\.php$'));
+			// get additional file information
+			if (is_array($files)) {
+				foreach ($files as $file) {
+					if ($ignore !== null) if ($ignore->match($file)) continue;
+					$_this->caches[$cacheDir][] = array(
+						'filename' => $file->getBasename(),
+						'filesize' => $file->getSize(),
+						'mtime' => $file->getMtime(),
+						'perm' => substr(sprintf('%o', $file->getPerms()), -3),
+						'writable' => $file->isWritable()
+					);
+					
+					$_this->cacheData['files']++;
+					$_this->cacheData['size'] += $file->getSize();
+				}
+			}
+		};
+		
 		// filesystem cache
 		if ($this->cacheData['source'] == 'wcf\system\cache\source\DiskCacheSource') {
 			// set version
@@ -88,29 +121,7 @@ class CacheListPage extends AbstractPage {
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
 				$packageDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
-				$cacheDir = $packageDir.'cache';
-				if (file_exists($cacheDir)) {
-					$this->caches[$cacheDir] = array();
-
-					// get files in cache directory
-					$files = glob($cacheDir.'/*.php');
-					// get additional file information
-					if (is_array($files)) {
-						foreach ($files as $file) {
-							$filesize = filesize($file);
-							$this->caches[$cacheDir][] = array(
-								'filename' => basename($file),
-								'filesize' => $filesize,
-								'mtime' => filemtime($file),
-								'perm' => substr(sprintf('%o', fileperms($file)), -3),
-								'writable' => is_writable($file)
-							);
-							
-							$this->cacheData['files']++;
-							$this->cacheData['size'] += $filesize;
-						}
-					}
-				}
+				$readFileCache($packageDir.'cache');
 			}
 		}
 		// memcache
@@ -150,7 +161,7 @@ class CacheListPage extends AbstractPage {
 			foreach ($cacheList as $cache) {
 				$cachePath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(dirname($cache['info'])));
 				if (isset($packageNames[$cachePath])) {
-					// Use the pacakgeName + the instance number, because pathes could confuse the administrator.
+					// Use the packageName + the instance number, because pathes could confuse the administrator.
 					// He could think this is a file cache. If instanceName would be unique, we could use it instead.
 					$packageName = $packageNames[$cachePath];
 					if (!isset($this->caches[$packageName])) $this->caches[$packageName] = array();
@@ -172,6 +183,10 @@ class CacheListPage extends AbstractPage {
 			$this->cacheData['version'] = WCF_VERSION;
 			$this->cacheData['files'] = $this->cacheData['size'] = 0;
 		}
+		
+		$readFileCache(WCF_DIR.'language');
+		$readFileCache(WCF_DIR.'templates/compiled', new Regex('\.meta\.php$'));
+		$readFileCache(WCF_DIR.'acp/templates/compiled', new Regex('\.meta\.php$'));
 	}
 	
 	/**
