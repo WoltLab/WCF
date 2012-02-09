@@ -23,12 +23,14 @@ use wcf\util\HeaderUtil;
  */
 class CacheClearAction extends AbstractAction {
 	/**
+	 * @see wcf\action\AbstractAction::$neededPermissions
+	 */
+	public $neededPermissions = array('admin.system.canViewLog');
+	/**
 	 * @see wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();
-		WCF::getSession()->checkPermissions(array('admin.system.canViewLog'));
-		
 		// this will clean up the templates as well
 		LanguageFactory::getInstance()->deleteLanguageCache();
 		
