@@ -1,10 +1,10 @@
 <?php
 namespace wcf\data\language;
-use wcf\data\DatabaseObjectEditor;
 use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\category\LanguageCategoryEditor;
 use wcf\data\language\item\LanguageItemEditor;
 use wcf\data\language\item\LanguageItemList;
+use wcf\data\DatabaseObjectEditor;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;

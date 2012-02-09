@@ -1,10 +1,10 @@
 <?php
 namespace wcf\acp\page;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\page\AbstractPage;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\cache\source\MemcacheAdapter;
 use wcf\system\cache\CacheHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;

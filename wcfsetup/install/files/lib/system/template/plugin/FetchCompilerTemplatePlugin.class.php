@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\exception\SystemException;
+use wcf\system\template\TemplateScriptingCompiler;
 
 /**
  * The 'fetch' compiler function fetches files from the local file system, http, or ftp and displays the content.

@@ -1,7 +1,7 @@
 <?php
 namespace wcf\acp\form;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\form\AbstractForm;
+use wcf\system\menu\acp\ACPMenu;
 
 /**
  * Provides a default implementation for the show method in acp forms.

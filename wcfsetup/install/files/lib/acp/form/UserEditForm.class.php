@@ -1,9 +1,9 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
-use wcf\data\user\group\UserGroup;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;

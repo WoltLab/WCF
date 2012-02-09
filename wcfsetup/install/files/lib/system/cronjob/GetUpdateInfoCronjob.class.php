@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\cronjob;
-use wcf\acp\package\update\PackageUpdate;
 use wcf\data\cronjob\Cronjob;
+use wcf\data\package\update\PackageUpdate;
 
 /**
  * Gets update package information.

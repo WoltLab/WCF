@@ -5,8 +5,8 @@ use wcf\system\io\File;
 use wcf\system\Callback;
 use wcf\system\Regex;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\DirectoryUtil;
+use wcf\util\FileUtil;
 
 /**
  * DiskCacheSource is an implementation of CacheSource that stores the cache as simple files in the file system.

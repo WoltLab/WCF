@@ -7,7 +7,7 @@ use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\image\Thumbnail;
+use wcf\system\image\Thumbnail; // TODO: Undefined class Thumbnail
 use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\io\TarWriter;

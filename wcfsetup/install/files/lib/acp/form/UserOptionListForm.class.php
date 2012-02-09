@@ -2,9 +2,9 @@
 namespace wcf\acp\form;
 use wcf\data\option\Option;
 use wcf\data\user\group\UserGroup;
-use wcf\system\WCF;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**

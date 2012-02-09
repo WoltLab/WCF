@@ -2,9 +2,9 @@
 namespace wcf\acp\form;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerAction;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
-use wcf\system\exception\UserInputException;
 use wcf\util\StringUtil;
 
 /**
