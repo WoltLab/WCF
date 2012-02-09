@@ -567,6 +567,8 @@ nav.wcf-topMenu {
 	float: left;
 }
 
+
+
 /* -- -- -- Main Menu -- -- -- */
 
 .wcf-mainMenu {
@@ -588,6 +590,7 @@ nav.wcf-topMenu {
 	border-top-right-radius: 5px;
 	background-color: rgba(0, 0, 0, .4);
 	display: inline-block;
+	position: relative;
 }
 
 .wcf-mainMenu > ul > li {
@@ -632,7 +635,6 @@ nav.wcf-topMenu {
 	cursor: pointer;
 	display: inline-block;
 	position: relative;
-	z-index: 1;
 	
 	-webkit-transition-property: border, background-color, background-image, color;
 	-webkit-transition-duration: .3s;
@@ -699,29 +701,29 @@ nav.wcf-topMenu {
 	z-index: 10;
 }
 
-/* Rounded Bottom Corners */
+/* Rounded Bottom Corners: Active Tab */
 
 .wcf-mainMenu > ul > li.activeMenuItem > a:before {
-	position: absolute;
+	border-bottom-right-radius: 6px;
+    border-width: 0 1px 1px 0;
+    position: absolute;
     bottom: 0;
+    left: -7px;
     width: 7px;
     height: 7px;
-    content: " ";
-    left: -7px;
-    border-bottom-right-radius: 6px;
-    border-width: 0 1px 1px 0;
+    content: "";
     box-shadow: 2px 2px 0 #e7f2fd;
 }
 
 .wcf-mainMenu > ul > li.activeMenuItem > a:after {
-	position: absolute;
+	border-bottom-left-radius: 6px;
+    border-width: 0 0 1px 1px;
+    position: absolute;
+    right: -7px;
     bottom: 0;
     width: 7px;
     height: 7px;
-    content: " ";
-    right: -7px;
-    border-bottom-left-radius: 6px;
-    border-width: 0 0 1px 1px;
+    content: "";
     box-shadow: -2px 2px 0 #e7f2fd;
 }
 
@@ -3762,7 +3764,7 @@ tr .columnIcon img {
 
 /* Globals */
 
-.wcf-clipboardEditor li {
+.wcf-clipboardEditor > ul > li {
 	font-size: .85em;
 	border-radius: 30px;
 	margin-top: 7px;
@@ -3772,7 +3774,7 @@ tr .columnIcon img {
 	float: left;
 }
 
-.wcf-clipboardEditor li span {
+.wcf-clipboardEditor > ul > li span {
 	text-decoration: none !important;
 	cursor: pointer;
 	background-image: url('../../icon/dropdown1.svg');
