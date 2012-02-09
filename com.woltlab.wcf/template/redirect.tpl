@@ -4,12 +4,13 @@
 	{include file='headInclude' sandbox=false}
 	<meta http-equiv="refresh" content="{if $wait|isset}{@$wait}{else}10{/if};URL={$url}" />
 </head>
+
 <body{if $templateName|isset} id="tpl{$templateName|ucfirst}"{/if}>
 {include file='header' sandbox=false}
 
-<div id="main">
+<div id="main" class="wcf-main">
 	
-	<div class="success">
+	<div class="wcf-success">
 		<p>{@$message}</p>
 		<p><a href="{$url}">{lang}wcf.global.redirect.url{/lang}</a></p>
 	</div>
