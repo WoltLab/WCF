@@ -6,13 +6,9 @@
 
 <body{if $templateName|isset} id="tpl{$templateName|ucfirst}"{/if}>
 {include file='header' sandbox=false}
-
-<div id="main" class="wcf-main">
 	
 	<p class="wcf-error">{lang}wcf.global.error.permissionDenied{/lang}</p>
-
-</div>
-
+	
 {if ENABLE_DEBUG_MODE}
 	<!-- 
 	{$name} thrown in {$file} ({@$line})

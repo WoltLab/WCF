@@ -590,7 +590,6 @@ nav.wcf-topMenu {
 	border-top-right-radius: 5px;
 	background-color: rgba(0, 0, 0, .4);
 	display: inline-block;
-	position: relative;
 }
 
 .wcf-mainMenu > ul > li {
@@ -1130,7 +1129,7 @@ section.wcf-content .wcf-content {
 	width: 0;
 }
 
-.wcf-sidebarContent > .collapsible a:hover {
+.wcf-sidebarContent > .collapsibleMenus a:hover {
 	text-decoration: none !important;
 	color: #369;
 }
@@ -1142,7 +1141,7 @@ section.wcf-content .wcf-content {
 	margin-top: 5px;
 }
 
-.wcf-sidebarContent > .collapsible > h1 {
+.wcf-sidebarContent > .collapsibleMenus > h1 {
 	background-image: url('../../icon/arrowRight.svg');
 	background-position: 15px center;
 	background-size: 16px;
@@ -1156,7 +1155,7 @@ section.wcf-content .wcf-content {
 		padding: 7px 15px 7px 35px;
 	}
 	
-	.wcf-sidebarContent > div:not(.collapsible) > h1 {
+	.wcf-sidebarContent > div:not(.collapsibleMenus) > h1 {
 		padding: 7px 15px 7px 15px;
 	}
 	
@@ -1169,13 +1168,13 @@ section.wcf-content .wcf-content {
 		padding: 7px 15px 7px 35px;
 	}
 	
-	.wcf-sidebarContent > div:not(.collapsible) > h1 {
+	.wcf-sidebarContent > div:not(.collapsibleMenus) > h1 {
 		padding: 7px 15px 7px 15px;
 	}
 	
 }
 
-.wcf-sidebarContent > .collapsible h1.activeMenuItem {
+.wcf-sidebarContent > .collapsibleMenus h1.activeMenuItem {
 	background-image: url('../../icon/arrowDown.svg');
 }
 
