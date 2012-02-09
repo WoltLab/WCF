@@ -3,6 +3,7 @@ namespace wcf\system\template;
 use wcf\system\exception\SystemException;
 use wcf\system\template\plugin\ICompilerTemplatePlugin;
 use wcf\system\template\plugin\IPrefilterTemplatePlugin;
+use wcf\system\WCF;
 use wcf\util\StringStack;
 use wcf\util\StringUtil;
 
@@ -167,6 +168,18 @@ class TemplateScriptingCompiler {
 	protected $rdq;
 	
 	/**
+	 * list of static includes per template
+	 * @var	array<string>
+	 */
+	protected $staticIncludes = array();
+	
+	/**
+	 * list of previously included namespaces
+	 * @var	array<string>
+	 */
+	protected $includedNamespaces = array();
+	
+	/**
 	 * Creates a new TemplateScriptingCompiler object.
 	 * 
 	 * @param	wcf\system\templateTemplateEngine	$template
@@ -187,9 +200,25 @@ class TemplateScriptingCompiler {
 	 * 
 	 * @param	string		$identifier
 	 * @param	string		$sourceContent
+	 * @param	array		$metaData
+	 * @param	boolean		$isolated
 	 * @return	string
 	 */
-	public function compileString($identifier, $sourceContent) {
+	public function compileString($identifier, $sourceContent, array $metaData = array(), $isolated = false) {
+		if ($isolated) {
+			$previousData = array(
+				'autoloadPlugins' => $this->autoloadPlugins,
+				'currentIdentifier' => $this->currentIdentifier,
+				'currentLineNo' => $this->currentLineNo,
+				'literalStack' => $this->literalStack,
+				'stringStack' => $this->stringStack,
+				'tagStack' => $this->tagStack
+			);
+		}
+		else {
+			$this->includedNamespaces = $this->staticIncludes = array();
+		}
+		
 		// reset vars
 		$this->autoloadPlugins = $this->tagStack = $this->stringStack = $this->literalStack = array();
 		$this->currentIdentifier = $identifier;
@@ -219,7 +248,7 @@ class TemplateScriptingCompiler {
 		$compiledTags = array();
 		for ($i = 0, $j = count($templateTags); $i < $j; $i++) {
 			$this->currentLineNo += StringUtil::countSubstring($textBlocks[$i], "\n");
-			$compiledTags[] = $this->compileTag($templateTags[$i]);
+			$compiledTags[] = $this->compileTag($templateTags[$i], $identifier, $metaData);
 			$this->currentLineNo += StringUtil::countSubstring($templateTags[$i], "\n");
 		}
 		
@@ -252,32 +281,48 @@ class TemplateScriptingCompiler {
 		$compiledAutoloadPlugins = '';
 		if (count($this->autoloadPlugins) > 0) {
 			$compiledAutoloadPlugins = "<?php\n";
-			foreach ($this->autoloadPlugins as $className/* => $fileName*/) {
-				$compiledAutoloadPlugins .= "use ".$className.";\n";
+			foreach ($this->autoloadPlugins as $className) {
+				// prevent multiple use on the same namespace
+				if (!in_array($className, $this->includedNamespaces)) {
+					// TODO: We're using the classes with prepended namespace, why should we first
+					//	 import them with "use" for no reason?
+					//$compiledAutoloadPlugins .= "use ".$className.";\n";
+					$this->includedNamespaces[] = $className;
+				}
+				
 				$compiledAutoloadPlugins .= "if (!isset(\$this->pluginObjects['$className'])) {\n";
-				/*
-				if (WCF_DIR != '' && strpos($fileName, WCF_DIR) === 0) {
-					$compiledAutoloadPlugins .= "require_once(WCF_DIR.'".StringUtil::replace(WCF_DIR, '', $fileName)."');\n";
-				}
-				else {
-					$compiledAutoloadPlugins .= "require_once('".$fileName."');\n";
-				}
-				*/
 				$compiledAutoloadPlugins .= "\$this->pluginObjects['$className'] = new $className;\n";
 				$compiledAutoloadPlugins .= "}\n";
 			}
 			$compiledAutoloadPlugins .= "?>";
 		}
 		
-		return $compiledAutoloadPlugins.$compiledContent;
+		// restore data
+		if ($isolated) {
+			$this->autoloadPlugins = $previousData['autoloadPlugins'];
+			$this->currentIdentifier = $previousData['currentIdentifier'];
+			$this->currentLineNo = $previousData['currentLineNo'];
+			$this->literalStack = $previousData['literalStack'];
+			$this->stringStack = $previousData['stringStack'];
+			$this->tagStack = $previousData['tagStack'];
+		}
+		
+		return array(
+			'meta' => array(
+				'include' => $this->staticIncludes
+			),
+			'template' => $compiledAutoloadPlugins.$compiledContent
+		);
 	}
 	
 	/**
 	 * Compiles a template tag.
 	 * 
 	 * @param	string		$tag
+	 * @param	string		$identifier
+	 * @param	array		$metaData
 	 */
-	protected function compileTag($tag) {
+	protected function compileTag($tag, $identifier, array &$metaData) {
 		if (preg_match('~^'.$this->outputPattern.'~s', $tag)) {
 			// variable output
 			return $this->compileOutputTag($tag);
@@ -324,7 +369,7 @@ class TemplateScriptingCompiler {
 					return '<?php } ?>';
 				
 				case 'include':
-					return $this->compileIncludeTag($tagArgs);
+					return $this->compileIncludeTag($tagArgs, $identifier, $metaData);
 					
 				case 'foreach':
 					$this->pushTag('foreach');
@@ -681,9 +726,11 @@ class TemplateScriptingCompiler {
 	 * Compiles an include tag.
 	 *
 	 * @param 	string 		$includeTag
-	 * @return 	string 				phpCode
+	 * @param	string		$identifier
+	 * @param	array		$metaData
+	 * @return 	string 		phpCode
 	 */
-	protected function compileIncludeTag($includeTag) {
+	protected function compileIncludeTag($includeTag, $identifier, array &$metaData) {
 		$args = $this->parseTagArgs($includeTag, 'include');
 		$append = false;
 		
@@ -719,6 +766,46 @@ class TemplateScriptingCompiler {
 		if (isset($args['once'])) {
 			$once = $args['once'];
 			unset($args['once']);
+		}
+		
+		$templateName = substr($file, 1, -1);
+		// check for static includes
+		if ($sandbox === 'false' && $assignVar === false && $once === false) {
+			$phpCode = '';
+			if (!in_array($templateName, $this->staticIncludes)) {
+				$this->staticIncludes[] = $templateName;
+			}
+			
+			// pass remaining tag args as variables
+			$variables = array();
+			if (!empty($args)) {
+				foreach ($args as $variable => $value) {
+					if (substr($value, 0, 1) == "'") {
+						$phpCode .= "\$this->v['".$variable."'] = ".$value.";\n";
+					}
+					else {
+						if (preg_match('~^\$this->v\[\'(.*)\'\]$~U', $value, $matches)) {
+							$phpCode .= "\$this->v['".$matches[1]."'] = ".$value.";\n";
+						}
+						else {
+							throw new SystemException("Could not resolve variable type for value '".$value."'");
+						}
+					}
+				}
+			}
+			if (!empty($phpCode)) $phpCode = "<?php\n".$phpCode."\n?>";
+			
+			$tplPackageID = WCF::getTPL()->getPackageID($templateName, $metaData['packageID']);
+			$sourceFilename = WCF::getTPL()->getSourceFilename($templateName, $tplPackageID);
+			$metaDataFilename = WCF::getTPL()->getMetaDataFilename($templateName, $tplPackageID);
+			
+			$data = $this->compileString($templateName, file_get_contents($sourceFilename), array(
+				'data' => null,
+				'filename' => '',
+				'packageID' => $tplPackageID
+			), true);
+			
+			return $phpCode . $data['template'];
 		}
 		
 		// make argument string

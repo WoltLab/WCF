@@ -1,5 +1,5 @@
 {if $__wcf->getBreadcrumbs()|count}
-<nav class="breadcrumbs">
+<nav class="wcf-breadcrumbs">
 	<ul>
 		{foreach from=$__wcf->getBreadcrumbs() item=$breadcrumb}
 			<li title="{$breadcrumb->getLabel()}" itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">

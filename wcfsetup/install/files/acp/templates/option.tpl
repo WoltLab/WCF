@@ -26,8 +26,8 @@
 {/if}
 
 <form method="post" action="{link controller='Option' id=$category->categoryID}{/link}">
-	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
-		<nav class="tabMenu">
+	<div class="wcf-tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
+		<nav class="wcf-tabMenu">
 			<ul>
 				{foreach from=$optionTree item=categoryLevel1}
 					<li><a href="#{@$categoryLevel1[object]->categoryName}" title="{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}">{*<span>*}{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}{*</span>*}</a></li>
@@ -36,7 +36,7 @@
 		</nav>
 		
 		{foreach from=$optionTree item=categoryLevel1}
-			<div id="{@$categoryLevel1[object]->categoryName}" class="border tabMenuContent hidden">
+			<div id="{@$categoryLevel1[object]->categoryName}" class="wcf-border wcf-tabMenuContent hidden">
 				<hgroup class="wcf-subHeading">
 					<h1>{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
 					<h2>{lang __optional=true}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}.description{/lang}</h2>
@@ -53,7 +53,7 @@
 					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 						<fieldset>
 							<legend>{lang}wcf.acp.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>
-							{hascontent}<p class="description">{content}{lang __optional=true}wcf.acp.option.category.{$categoryLevel2[object]->categoryName}.description{/lang}{/content}</p>{/hascontent}
+							{hascontent}<small>{content}{lang __optional=true}wcf.acp.option.category.{$categoryLevel2[object]->categoryName}.description{/lang}{/content}</small>{/hascontent}
 							
 							{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.option.'}
 						</fieldset>
@@ -63,7 +63,7 @@
 		{/foreach}
 	</div>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SID_INPUT_TAG}

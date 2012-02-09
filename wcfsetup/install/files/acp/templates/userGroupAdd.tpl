@@ -50,7 +50,7 @@
 			<dl{if $errorType.groupName|isset} class="formError"{/if}>
 				<dt><label for="groupName">{lang}wcf.acp.group.groupName{/lang}</label></dt>
 				<dd>
-					<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" class="medium" />
+					<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus="autofocus" class="medium" />
 					{if $errorType.groupName|isset}
 						<small class="wcf-innerError">
 							{if $errorType.groupName == 'empty'}
@@ -70,7 +70,7 @@
 		{event name='fieldsets'}
 		
 		<div class="wcf-tabMenuContainer" data-active="{$activeMenuItem}" data-store="activeTabMenuItem">
-			<nav class="tabMenu">
+			<nav class="wcf-tabMenu">
 				<ul>
 					{foreach from=$optionTree item=categoryLevel1}
 						<li><a href="#{@$categoryLevel1[object]->categoryName}">{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
@@ -103,7 +103,7 @@
 								{foreach from=$categoryLevel2[categories] item=categoryLevel3}
 									<fieldset>
 										<legend>{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}{/lang}</legend>
-										{hascontent}<p class="description">{content}{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}.description{/lang}{/content}</p>{/hascontent}
+										{hascontent}<small>{content}{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}.description{/lang}{/content}</small>{/hascontent}
 								
 										<div>
 											{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.acp.group.option.'}

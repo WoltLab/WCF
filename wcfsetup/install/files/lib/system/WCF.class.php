@@ -246,8 +246,8 @@ class WCF {
 			exit;
 		}
 		
-		print $e;
-		exit;
+		// repack Exception
+		self::handleException(new exception\SystemException($e->getMessage(), $e->getCode(), '', $e));
 	}
 	
 	/**
@@ -396,6 +396,10 @@ class WCF {
 	 * Initializes applications.
 	 */
 	protected function initApplications() {
+		// register WCF as application
+		$this->applications['wcf'] = new Application(1);
+		
+		// do not init applications if within wcf
 		if (PACKAGE_ID == 1) return;
 		
 		// start main application
@@ -612,12 +616,6 @@ class WCF {
 	 * @return	string
 	 */
 	public function getPath($abbreviation = 'wcf') {
-		if (empty($this->applications)) {
-			$this->applications = array(
-				'wcf' => new Application(1)
-			);
-		}
-		
 		if (!isset($this->applications[$abbreviation])) {
 			$abbreviation = 'wcf';
 		}

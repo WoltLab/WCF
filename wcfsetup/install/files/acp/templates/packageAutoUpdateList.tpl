@@ -36,9 +36,9 @@
 		<p class="wcf-info">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
 	{else}
 		{foreach from=$availableUpdates item=availableUpdate}<!-- ToDo: Style! -->
-			<article class="message wcf-content"{if $availableUpdate.version.updateType == 'security'} style="border-color: #c00"{/if}>
-				<div class="messageInner container-{cycle name='styles' values='1,2'}"><!-- ToDo: Remove cycle -->
-					<hgroup class="subHeading">
+			<article class="wcf-message wcf-content"{if $availableUpdate.version.updateType == 'security'} style="border-color: #c00"{/if}>
+				<div class="container-{cycle name='styles' values='1,2'}"><!-- ToDo: Remove cycle -->
+					<hgroup class="wcf-subHeading">
 						<h1>
 							<label>
 								<input type="checkbox" name="updates[{@$availableUpdate.packageID}]" onclick="enableFormElements(document.getElementById('version-{@$availableUpdate.packageID}Div'), this.checked)" value="{$availableUpdate.version.packageVersion}" />
@@ -47,7 +47,7 @@
 						</h1>
 					</hgroup>
 
-					<div class="messageBody">
+					<div class="wcf-messageBody">
 						<dl>
 							<dt><label>{lang}wcf.acp.packageUpdate.currentVersion{/lang}</label></dt>
 							<dd>{$availableUpdate.packageVersion}</dd>
@@ -67,7 +67,7 @@
 						{if $availableUpdate.author}
 							<dl>
 								<dt><label>{lang}wcf.acp.package.list.author{/lang}</label></dt>
-								<dd>{if $availableUpdate.authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$availableUpdate.authorURL|rawurlencode}" class="externalURL">{$availableUpdate.author}</a>{else}{$availableUpdate.author}{/if}</dd>
+								<dd>{if $availableUpdate.authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$availableUpdate.authorURL|rawurlencode}" class="wcf-externalURL">{$availableUpdate.author}</a>{else}{$availableUpdate.author}{/if}</dd>
 							</dl>
 						{/if}
 						
@@ -83,7 +83,7 @@
 			</article>			
 		{/foreach}
 		
-		<div class="formSubmit">
+		<div class="wcf-formSubmit">
 			<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 			{@SID_INPUT_TAG}

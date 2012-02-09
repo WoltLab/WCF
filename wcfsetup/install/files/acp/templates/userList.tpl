@@ -44,7 +44,7 @@
 	</nav>
 	
 	{hascontent}
-		<table class="jsClipboardContainer" data-type="com.woltlab.wcf.user">
+		<table class="wcf-table jsClipboardContainer" data-type="com.woltlab.wcf.user">
 			<thead>
 				<tr>
 					<th class="columnMark"><label><input type="checkbox" class="jsClipboardMarkAll" /></label></th>
@@ -66,12 +66,12 @@
 							<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}" /></td>
 							<td class="columnIcon">
 								{if $user->editable}
-									<a href="{link controller='UserEdit' id=$user->userID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="balloonTooltip" /></a>
+									<a href="{link controller='UserEdit' id=$user->userID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="jsTooltip" /></a>
 								{else}
 									<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" />
 								{/if}
 								{if $user->deletable}
-									<a onclick="return confirm('{lang}wcf.acp.user.delete.sure{/lang}')" href="{link controller='UserDelete' id=$user->userID}url={@$encodedURL}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="balloonTooltip" /></a>
+									<a onclick="return confirm('{lang}wcf.acp.user.delete.sure{/lang}')" href="{link controller='UserDelete' id=$user->userID}url={@$encodedURL}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="jsTooltip" /></a>
 								{else}
 									<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" />
 								{/if}
@@ -97,7 +97,7 @@
 	<div class="wcf-contentFooter">
 		{@$pagesLinks}
 		
-		<div class="jsClipboardEditor" data-types="[ 'com.woltlab.wcf.user' ]"></div>
+		<div class="wcf-clipboardEditor jsClipboardEditor" data-types="[ 'com.woltlab.wcf.user' ]"></div>
 		
 		<nav>
 			<ul class="wcf-largeButtons">

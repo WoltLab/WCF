@@ -1,12 +1,12 @@
 <?php
 namespace wcf\system\package;
-use wcf\data\package\Package;
-use wcf\data\package\update\PackageUpdateEditor;
-use wcf\data\package\update\PackageUpdateList;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerEditor;
 use wcf\data\package\update\version\PackageUpdateVersionEditor;
 use wcf\data\package\update\version\PackageUpdateVersionList;
+use wcf\data\package\update\PackageUpdateEditor;
+use wcf\data\package\update\PackageUpdateList;
+use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\io\RemoteFile;

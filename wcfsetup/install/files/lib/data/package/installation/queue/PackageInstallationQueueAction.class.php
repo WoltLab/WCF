@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\package\installation\queue;
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\package\Package;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
 

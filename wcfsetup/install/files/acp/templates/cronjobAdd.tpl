@@ -40,7 +40,7 @@
 			<dl{if $errorField == 'className'} class="wcf-formError"{/if}>
 				<dt><label for="className">{lang}wcf.acp.cronjob.className{/lang}</label></dt>
 				<dd>
-					<input type="text" id="className" name="className" value="{$className}" required="required" pattern="^\\?([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*\\)*[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$" class="long" />
+					<input type="text" id="className" name="className" value="{$className}" required="required" autofocus="autofocus" pattern="^\\?([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*\\)*[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$" class="long" />
 					{if $errorField == 'className'}
 						<small class="wcf-innerError">
 							{if $errorType == 'empty'}

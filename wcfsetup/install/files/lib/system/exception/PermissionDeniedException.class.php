@@ -27,6 +27,10 @@ class PermissionDeniedException extends UserException {
 		@header('HTTP/1.0 403 Forbidden');
 		
 		WCF::getTPL()->assign(array(
+			'name' => get_class($this),
+			'file' => $this->getFile(),
+			'line' => $this->getLine(),
+			'stacktrace' => $this->getTraceAsString(),
 			'templateName' => 'permissionDenied'
 		));
 		WCF::getTPL()->display('permissionDenied');

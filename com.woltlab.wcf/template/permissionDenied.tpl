@@ -12,6 +12,14 @@
 
 </div>
 
+{if ENABLE_DEBUG_MODE}
+	<!-- 
+	{$name} thrown in {$file} ({@$line})
+	Stracktrace:
+	{$stacktrace}
+	-->
+{/if}
+
 {include file='footer' sandbox=false}
 </body>
 </html>

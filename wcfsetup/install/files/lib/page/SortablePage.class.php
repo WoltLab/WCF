@@ -1,7 +1,7 @@
 <?php
 namespace wcf\page;
-use wcf\system\WCF;
 use wcf\system\event\EventHandler;
+use wcf\system\WCF;
 
 /**
  * Provides default implementations for a sortable page of listed items.

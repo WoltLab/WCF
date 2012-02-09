@@ -1,6 +1,6 @@
 {include file='header'}
 
-<hgroup class="subHeading">
+<hgroup class="wcf-subHeading">
 	<h1>{lang}wcf.global.welcome{/lang}</h1>
 	<h2>{lang}wcf.global.welcome.description{/lang}</h2>
 </hgroup>
@@ -17,7 +17,7 @@
 		<label for="languageCode">{lang}wcf.global.welcome.language.description{/lang}</label>
 	</fieldset>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="submit" accesskey="s" value="{lang}wcf.global.button.next{/lang}" />
 		<input type="hidden" name="step" value="{@$nextStep}" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />

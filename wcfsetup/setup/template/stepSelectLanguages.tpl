@@ -1,12 +1,12 @@
 {include file='header'}
 
-<hgroup class="subHeading">
+<hgroup class="wcf-subHeading">
 	<h1>{lang}wcf.global.languages{/lang}</h1>
 	<h2>{lang}wcf.global.languages.description{/lang}</h2>
 </hgroup>
 
 {if $errorField}
-	<p class="error">{if $errorType == 'empty'}{lang}wcf.global.languages.error.empty{/lang}{/if}</p>
+	<p class="wcf-error">{if $errorType == 'empty'}{lang}wcf.global.languages.error.empty{/lang}{/if}</p>
 {/if}
 
 <form method="post" action="install.php">
@@ -21,7 +21,7 @@
 		</dl>
 	</fieldset>
 	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
 		<input type="hidden" name="send" value="1" />
 		<input type="hidden" name="step" value="{@$nextStep}" />

@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\language;
 use wcf\data\DatabaseObject;
-use wcf\system\WCF;
 use wcf\system\language\LanguageFactory;
+use wcf\system\WCF;
 
 /**
  * Represents a language.

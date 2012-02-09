@@ -90,7 +90,7 @@
 			<dl>
 				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{$username}" class="medium" />
+					<input type="text" id="username" name="username" value="{$username}" autofocus="autofocus" class="medium" />
 				</dd>
 			</dl>
 			
@@ -154,7 +154,7 @@
 				</nav>
 				
 				{if $options|count}
-					<div id="profile" class="wcf-border tabMenuContent hidden">
+					<div id="profile" class="wcf-border wcf-tabMenuContent hidden">
 						<hgroup class="wcf-subHeading">
 							<h1>{lang}wcf.acp.user.search.conditions.profile{/lang}</h1>
 						</hgroup>
@@ -299,7 +299,7 @@
 					<dd{if $errorField == 'assignToGroupIDArray'} class="wcf-formError"{/if}>
 						{htmlCheckboxes options=$availableGroups name=assignToGroupIDArray selected=$assignToGroupIDArray}
 						{if $errorField == 'assignToGroupIDArray'}
-							<small class="innerError">
+							<small class="wcf-innerError">
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}

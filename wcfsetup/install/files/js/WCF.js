@@ -1062,7 +1062,7 @@ WCF.Action.Proxy.prototype = {
 		// fade in overlay
 		if (!this._loadingOverlayVisible) {
 			this._loadingOverlayVisible = true;
-			this._loadingOverlay.stop(true, true).fadeIn(200, $.proxy(function() {
+			this._loadingOverlay.stop(true, true).fadeIn(100, $.proxy(function() {
 				new WCF.PeriodicalExecuter($.proxy(this._hideLoadingOverlay, this), 100);
 			}, this));
 		}
@@ -1076,12 +1076,12 @@ WCF.Action.Proxy.prototype = {
 	_hideLoadingOverlay: function(pe) {
 		this._loadingOverlayVisibleTimer += 100;
 		
-		if (this._activeRequests == 0 && this._loadingOverlayVisibleTimer >= 1000) {
+		if (this._activeRequests == 0 && this._loadingOverlayVisibleTimer >= 100) {
 			this._loadingOverlayVisible = false;
 			this._loadingOverlayVisibleTimer = 0;
 			pe.stop();
 
-			this._loadingOverlay.fadeOut(200);
+			this._loadingOverlay.fadeOut(100);
 		}
 	},
 	
@@ -1267,7 +1267,7 @@ WCF.Action.Delete.prototype = {
 		
 		// bind event listener
 		this.containerList.each($.proxy(function(index, container) {
-			$(container).find('.deleteButton').bind('click', $.proxy(this._click, this));
+			$(container).find('.jsDeleteButton').bind('click', $.proxy(this._click, this));
 		}, this));
 	},
 	
@@ -1323,7 +1323,7 @@ WCF.Action.Delete.prototype = {
 	_success: function(data, textStatus, jqXHR) {
 		// remove items
 		this.containerList.each($.proxy(function(index, container) {
-			var $objectID = $(container).find('.deleteButton').data('objectID');
+			var $objectID = $(container).find('.jsDeleteButton').data('objectID');
 			if (WCF.inArray($objectID, data.objectIDs)) {
 				$(container).wcfBlindOut('up', function() {
 					$(container).empty().remove();
@@ -1360,7 +1360,7 @@ WCF.Action.Toggle.prototype = {
 		this.containerList = containerList;
 		this.className = className;
 		
-		this.toggleButtonSelector = '.toggleButton';
+		this.toggleButtonSelector = '.jsToggleButton';
 		if (toggleButtonSelector) {
 			this.toggleButtonSelector = toggleButtonSelector;
 		}
@@ -2209,7 +2209,7 @@ WCF.TabMenu = {
 			
 			// display active item on init
 			if ($tabMenu.data('active')) {
-				$tabMenu.find('.tabMenuContent').each(function(innerIndex, tabMenuItem) {
+				$tabMenu.find('.wcf-tabMenuContent').each(function(innerIndex, tabMenuItem) {
 					var $tabMenuItem = $(tabMenuItem);
 					if ($tabMenuItem.attr('id') == $tabMenu.data('active')) {
 						$tabMenu.wcfTabs('select', innerIndex);
@@ -2712,7 +2712,7 @@ WCF.Collapsible.Remote = Class.extend({
 	 */
 	_createButton: function(containerID, buttonContainer) {
 		var $isOpen = this._containers[containerID].data('isOpen');
-		var $button = $('<a class="wcf-balloonTooltip" title="'+WCF.Language.get('wcf.global.button.collapsible')+'"><img src="' + WCF.Icon.get('wcf.icon.' + ($isOpen ? 'opened' : 'closed')) + '" alt="" /></a>').prependTo(buttonContainer);
+		var $button = $('<a class="jsTooltip" title="'+WCF.Language.get('wcf.global.button.collapsible')+'"><img src="' + WCF.Icon.get('wcf.icon.' + ($isOpen ? 'opened' : 'closed')) + '" alt="" /></a>').prependTo(buttonContainer);
 		$button.data('containerID', containerID).click($.proxy(this._toggleContainer, this));
 
 		return $button;
@@ -2905,7 +2905,7 @@ WCF.Effect.BalloonTooltip.prototype = {
 	init: function() {
 		if (!this._didInit) {
 			// create empty div
-			this._tooltip = $('<div id="balloonTooltip" style="position: absolute"><span id="balloonTooltipText"></span><span class="pointer"><span></span></span></div>').appendTo($('body')).hide();
+			this._tooltip = $('<div id="balloonTooltip" class="wcf-balloonTooltip"><span id="balloonTooltipText"></span><span class="pointer"><span></span></span></div>').appendTo($('body')).hide();
 
 			// get viewport dimensions
 			this._updateViewportDimensions();
@@ -2914,13 +2914,13 @@ WCF.Effect.BalloonTooltip.prototype = {
 			$(window).resize($.proxy(this._updateViewportDimensions, this));
 
 			// observe DOM changes
-			WCF.DOMNodeInsertedHandler.addCallback('WCF.Effect.BallonTooltip', $.proxy(this.init, this));
+			WCF.DOMNodeInsertedHandler.addCallback('WCF.Effect.BalloonTooltip', $.proxy(this.init, this));
 
 			this._didInit = true;
 		}
 		
 		// init elements
-		$('.wcf-balloonTooltip').each($.proxy(this._initTooltip, this));
+		$('.jsTooltip').each($.proxy(this._initTooltip, this));
 	},
 
 	/**
@@ -2939,8 +2939,8 @@ WCF.Effect.BalloonTooltip.prototype = {
 	_initTooltip: function(index, element) {
 		var $element = $(element);
 		
-		if ($element.hasClass('wcf-balloonTooltip')) {
-			$element.removeClass('wcf-balloonTooltip');
+		if ($element.hasClass('jsTooltip')) {
+			$element.removeClass('jsTooltip');
 			var $title = $element.attr('title');
 
 			// ignore empty elements
@@ -3608,11 +3608,11 @@ WCF.System.Confirmation = {
 	 * Creates the confirmation dialog on first use.
 	 */
 	_createDialog: function() {
-		this._dialog = $('<div id="wcfSystemConfirmation"><p></p></div>').hide().appendTo(document.body);
+		this._dialog = $('<div id="wcfSystemConfirmation" class="wcf-systemConfirmation"><p></p></div>').hide().appendTo(document.body);
 		var $formButtons = $('<div class="wcf-formSubmit" />').appendTo(this._dialog);
 		
-		$('<button class="default">' + WCF.Language.get('wcf.global.confirmation.confirm') + '</button>').data('action', 'confirm').click($.proxy(this._click, this)).appendTo($formButtons);
 		$('<button>' + WCF.Language.get('wcf.global.confirmation.cancel') + '</button>').data('action', 'cancel').click($.proxy(this._click, this)).appendTo($formButtons);
+		$('<button class="default">' + WCF.Language.get('wcf.global.confirmation.confirm') + '</button>').data('action', 'confirm').click($.proxy(this._click, this)).appendTo($formButtons);
 	},
 	
 	/**
@@ -3922,11 +3922,11 @@ $.widget('ui.wcfSidebar', {
 	 * Creates a new toggleable sidebar.
 	 */
 	_create: function() {
-		this.element.wrap('<div class="collapsibleSidebar"></div>');
+		this.element.wrap('<div class="wcf-collapsibleSidebar"></div>');
 		this._container = this.element.parents('aside:eq(0)');
 		
 		// create toggle button
-		this._button = $('<span class="collapsibleSidebarButton" title="' + WCF.Language.get('wcf.global.button.collapsible') + '"><span></span></span>').appendTo(this._container);
+		this._button = $('<span class="wcf-collapsibleSidebarButton" title="' + WCF.Language.get('wcf.global.button.collapsible') + '"><span></span></span>').appendTo(this._container);
 
 		// bind event
 		this._button.click($.proxy(this._toggle, this));
@@ -4436,7 +4436,7 @@ $.widget('ui.wcfDialog', {
 			$content.animate({
 				height: ($contentDimensions.height) + 'px',
 				width: ($contentDimensions.width) + 'px'
-			}, 600, function() {
+			}, 200, function() {
 				// remove static dimensions
 				$content.css({
 					height: 'auto',
@@ -4451,7 +4451,7 @@ $.widget('ui.wcfDialog', {
 			this._container.animate({
 				left: $leftOffset + 'px',
 				top: $topOffset + 'px'
-			}, 600, $.proxy(function() {
+			}, 200, $.proxy(function() {
 				this._isRendering = false;
 			}));
 		}
@@ -4608,7 +4608,7 @@ $.widget('ui.wcfPages', {
 		if (this.options.nextDisabledIcon === null) this.options.nextDisabledIcon = WCF.Icon.get('wcf.icon.next.disabled');
 		if (this.options.arrowDownIcon === null) this.options.arrowDownIcon = WCF.Icon.get('wcf.icon.arrow.down');
 		
-		this.element.addClass('pageNavigation');
+		this.element.addClass('wcf-pageNavigation');
 		
 		this._render();
 	},

@@ -62,13 +62,13 @@
 	{if $archive->getPackageInfo('packageURL') != ''}
 		<dl>
 			<dt>{lang}wcf.acp.package.view.url{/lang}</dt>
-			<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
+			<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="wcf-externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
 		</dl>
 	{/if}
 	
 	<dl>
 		<dt>{lang}wcf.acp.package.view.author{/lang}</dt>
-		<dd>{if $archive->getPackageInfo('authorURL')}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('authorURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('author')}</a>{else}{$archive->getPackageInfo('author')}{/if}</dd>
+		<dd>{if $archive->getPackageInfo('authorURL')}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('authorURL')|rawurlencode}" class="wcf-externalURL">{$archive->getPackageInfo('author')}</a>{else}{$archive->getPackageInfo('author')}{/if}</dd>
 	</dl>
 	
 	{event name='propertyFields'}
@@ -83,7 +83,7 @@
 			<h2>{lang}wcf.acp.package.install.updatableInstances.description{/lang}</h2>
 		</hgroup>
 		
-		<table>
+		<table class="wcf-table">
 			<thead>
 				<tr>
 					<th class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
@@ -106,10 +106,10 @@
 {if $requiredPackages|count > 0}
 	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
-			<h1>{lang}wcf.acp.package.view.requiredPackages{/lang} <span class="badge" title="{lang}wcf.acp.package.view.requiredPackages.description{/lang}">{#$requiredPackages|count}</span></h1>
+			<h1>{lang}wcf.acp.package.view.requiredPackages{/lang} <span class="wcf-badge" title="{lang}wcf.acp.package.view.requiredPackages.description{/lang}">{#$requiredPackages|count}</span></h1>
 		</hgroup>
 		
-		<table>
+		<table class="wcf-table">
 			<thead>
 				<tr>
 					<th class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
@@ -129,7 +129,7 @@
 	</div>
 {/if}
 
-<div class="formSubmit">
+<div class="wcf-formSubmit">
 	<input type="button" onclick="document.location.href=fixURL('{link controller='Package'}action={@$action}&queueID={@$queueID}&step=cancel{/link}')" value="{lang}wcf.global.button.back{/lang}" accesskey="c" />
 	{if $missingPackages == 0 && $excludingPackages|count == 0 && $excludedPackages|count == 0}
 		<input type="button" id="submitButton" value="{lang}wcf.global.button.next{/lang}" class="default" accesskey="s" />

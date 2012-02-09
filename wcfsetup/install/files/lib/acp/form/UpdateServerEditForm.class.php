@@ -3,8 +3,8 @@ namespace wcf\acp\form;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerAction;
 use wcf\form\AbstractForm;
-use wcf\system\WCF;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\WCF;
 
 /**
  * Shows the server edit form.

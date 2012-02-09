@@ -1,6 +1,6 @@
 {include file='header'}
 
-<hgroup class="subHeading">
+<hgroup class="wcf-subHeading">
 	<h1>{lang}wcf.global.systemRequirements{/lang}</h1>
 	<h2>{lang}wcf.global.systemRequirements.description{/lang}</h2>
 </hgroup>
@@ -13,7 +13,7 @@
 			<dl>
 				<dt>{lang}wcf.global.systemRequirements.element.required{/lang} 5.3.0</dt>
 				<dd>
-					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.phpVersion.result}badgeWarning{else}badgeSuccess{/if}">{$system.phpVersion.value}</span>
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="wcf-badge {if !$system.phpVersion.result}wcf-badgeWarning{else}wcf-badgeSuccess{/if}">{$system.phpVersion.value}</span>
 					{if !$system.phpVersion.result}<small>{lang}wcf.global.systemRequirements.php.description{/lang}</small>{/if}
 				</dd>
 			</dl>
@@ -24,7 +24,7 @@
 			<dl>
 				<dt>{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.active{/lang}</dt>
 				<dd>
-					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.sql.result}badgeWarning{else}badgeSuccess{/if}">
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="wcf-badge {if !$system.sql.result}wcf-badgeWarning{else}wcf-badgeSuccess{/if}">
 					{if !$system.sql.result}{lang}wcf.global.systemRequirements.sql.notFound{/lang}{else}
 						{implode from=$system.sql.value item=$sqlType glue=', '}{lang}wcf.global.configureDB.class.{@$sqlType}{/lang}{/implode}
 					{/if}</span>
@@ -38,7 +38,7 @@
 			<dl>
 				<dt>{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.active{/lang}</dt>
 				<dd>
-					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.mbString.result}badgeWarning{else}badgeSuccess{/if}">{if !$system.mbString.result}{lang}wcf.global.systemRequirements.notActive{/lang}{else}{lang}wcf.global.systemRequirements.active{/lang}{/if}</span>{if !$system.mbString.result}<small>{lang}wcf.global.systemRequirements.mbString.description{/lang}</small>{/if}
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="wcf-badge {if !$system.mbString.result}wcf-badgeWarning{else}wcf-badgeSuccess{/if}">{if !$system.mbString.result}{lang}wcf.global.systemRequirements.notActive{/lang}{else}{lang}wcf.global.systemRequirements.active{/lang}{/if}</span>{if !$system.mbString.result}<small>{lang}wcf.global.systemRequirements.mbString.description{/lang}</small>{/if}
 				</dd>
 			</dl>
 			
@@ -54,7 +54,7 @@
 			<dl>
 				<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang} > 0</dt>
 				<dd>
-					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.uploadMaxFilesize.result}badgeWarning{else}badgeSuccess{/if}">{$system.uploadMaxFilesize.value}</span>
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="wcf-badge {if !$system.uploadMaxFilesize.result}wcf-badgeWarning{else}wcf-badgeSuccess{/if}">{$system.uploadMaxFilesize.value}</span>
 					{if !$system.uploadMaxFilesize.result}<small>{lang}wcf.global.systemRequirements.uploadMaxFilesize.description{/lang}</small>{/if}
 				</dd>
 			</dl>
@@ -65,7 +65,7 @@
 			<dl>
 				<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang} 2.0.0</dt>
 				<dd>
-					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.gdLib.result}badgeWarning{else}badgeSuccess{/if}">{$system.gdLib.value}</span>
+					{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="wcf-badge {if !$system.gdLib.result}wcf-badgeWarning{else}wcf-badgeSuccess{/if}">{$system.gdLib.value}</span>
 					{if !$system.gdLib.result}<small>{lang}wcf.global.systemRequirements.gdLib.description{/lang}</small>{/if}
 				</dd>
 			</dl>
@@ -74,7 +74,7 @@
 </fieldset>
 
 <form method="post" action="install.php">	
-	<div class="formSubmit">
+	<div class="wcf-formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result || !$system.mbString.result} disabled="disabled"{/if} accesskey="s"/>
 		<input type="hidden" name="step" value="{@$nextStep}" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />

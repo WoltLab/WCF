@@ -1,10 +1,10 @@
 <?php
 namespace wcf\data\language;
-use wcf\data\DatabaseObjectEditor;
 use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\category\LanguageCategoryEditor;
 use wcf\data\language\item\LanguageItemEditor;
 use wcf\data\language\item\LanguageItemList;
+use wcf\data\DatabaseObjectEditor;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -132,7 +132,8 @@ class LanguageEditor extends DatabaseObjectEditor {
 						
 						// compile dynamic language variables
 						if ($categoryName != 'wcf.global' && strpos($languageItemValue, '{') !== false) {
-							$file->write("\$this->dynamicItems['".$languageItem."'] = '".str_replace("'", "\'", LanguageFactory::getInstance()->getScriptingCompiler()->compileString($languageItem, $languageItemValue))."';\n");
+							$output = LanguageFactory::getInstance()->getScriptingCompiler()->compileString($languageItem, $languageItemValue);
+							$file->write("\$this->dynamicItems['".$languageItem."'] = '".str_replace("'", "\'", $output['template'])."';\n");
 						}
 					}
 					

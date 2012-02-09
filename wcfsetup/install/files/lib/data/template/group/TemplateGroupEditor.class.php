@@ -2,8 +2,8 @@
 namespace wcf\data\template\group;
 use wcf\data\DatabaseObjectEditor;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\DirectoryUtil;
+use wcf\util\FileUtil;
 
 /**
  * TemplateGroupEditor provides functions to create, edit or delete template group. 
