@@ -2516,7 +2516,7 @@ WCF.Collapsible.Simple = {
 	 * Initializes collapsibles.
 	 */
 	init: function() {
-		$('.collapsible').each($.proxy(function(index, button) {
+		$('.jsCollapsible').each($.proxy(function(index, button) {
 			this._initButton(button);
 		}, this));
 	},
