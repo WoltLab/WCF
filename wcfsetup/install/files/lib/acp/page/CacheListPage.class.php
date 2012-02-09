@@ -1,13 +1,16 @@
 <?php
 namespace wcf\acp\page;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\page\AbstractPage;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\cache\source\MemcacheAdapter;
 use wcf\system\cache\CacheHandler;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\menu\acp\ACPMenu;
+use wcf\system\exception\SystemException;
 use wcf\system\package\PackageDependencyHandler;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\DirectoryUtil;
 
 /**
  * Shows a list of all cache resources.
@@ -72,25 +75,31 @@ class CacheListPage extends AbstractPage {
 		);
 		
 		$_this = $this;
-		$readFileCache = function($cacheDir) use ($_this) {
+		$readFileCache = function($cacheDir, Regex $ignore = null) use ($_this) {
 			$_this->caches[$cacheDir] = array();
 			
 			// get files in cache directory
-			$files = glob($cacheDir.'/*.php');
+			try {
+				$directoryUtil = DirectoryUtil::getInstance($cacheDir);
+			}
+			catch(SystemException $e) {
+				return;
+			}
+			$files = $directoryUtil->getFileObjects(SORT_ASC, new Regex('\.php$'));
 			// get additional file information
 			if (is_array($files)) {
 				foreach ($files as $file) {
-					$filesize = filesize($file);
+					if ($ignore !== null) if ($ignore->match($file)) continue;
 					$_this->caches[$cacheDir][] = array(
-						'filename' => basename($file),
-						'filesize' => $filesize,
-						'mtime' => filemtime($file),
-						'perm' => substr(sprintf('%o', fileperms($file)), -3),
-						'writable' => is_writable($file)
+						'filename' => $file->getBasename(),
+						'filesize' => $file->getSize(),
+						'mtime' => $file->getMtime(),
+						'perm' => substr(sprintf('%o', $file->getPerms()), -3),
+						'writable' => $file->isWritable()
 					);
 					
 					$_this->cacheData['files']++;
-					$_this->cacheData['size'] += $filesize;
+					$_this->cacheData['size'] += $file->getSize();
 				}
 			}
 		};
@@ -176,8 +185,8 @@ class CacheListPage extends AbstractPage {
 		}
 		
 		$readFileCache(WCF_DIR.'language');
-		$readFileCache(WCF_DIR.'templates/compiled');
-		$readFileCache(WCF_DIR.'acp/templates/compiled');
+		$readFileCache(WCF_DIR.'templates/compiled', new Regex('\.meta\.php$'));
+		$readFileCache(WCF_DIR.'acp/templates/compiled', new Regex('\.meta\.php$'));
 	}
 	
 	/**
