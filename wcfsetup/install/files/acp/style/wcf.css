@@ -94,6 +94,7 @@ hr {
 	background-color: rgba(255, 170, 34, .7);
 }
 
+a,
 img[src*='delete'],
 img[src*='uninstall'],
 img[src*='install'],
@@ -128,13 +129,11 @@ a[href^="mailto:"] {
 	padding-left: 17px;
 }
 
-.hot,
-.wcf-hot {
+.hot {
 	color: #b00; 
 }
 
-.invisible,
-.wcf-invisible {
+.invisible {
 	position: absolute;
 	left: -9000px;
 	top: -9000px;
@@ -554,13 +553,12 @@ nav.wcf-topMenu {
 	margin: 5px 10px;
 }
 
-.wcf-search > img.collapsible {
+.wcf-search > .wcf-searchButton {
 	margin: 0;
 	display: inline;
 	width: 32px;
 	height: 32px;
 	float: left;
-	cursor: pointer;
 }
 
 .wcf-search > div {
@@ -889,7 +887,7 @@ section.wcf-content {
 	
 	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
-	-ms-box-shadow: 0 0 50pxrgba(0, 0, 0, .1);
+	-ms-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 	/* ToDo: Opera doesn't like that so much! Bug-report sent to Opera 
 	-o-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 	box-shadow: 0 0 5px rgba(0, 0, 0, .1);*/
@@ -989,7 +987,7 @@ section.wcf-content .wcf-content {
 
 /* Globals */
 
-.collapsed {
+.wcf-sidebar.collapsed {
 	width: 0;
 	height: 0;
 }
@@ -1010,7 +1008,7 @@ section.wcf-content .wcf-content {
 
 /* Globals */
 
-.wcf-sidebar .wcf-collapsibleSidebarButton {
+.wcf-collapsibleSidebarButton {
 	cursor: pointer;
 	background-position: center 1%, center 99%;
 	background-size: 10px 10px, 10px 10px;
@@ -1025,31 +1023,14 @@ section.wcf-content .wcf-content {
 	opacity: .3;
 }
 
-/* Orientation */
-
-.left .wcf-collapsibleSidebarButton {
-	background-image: url('../../icon/arrowLeft1.svg'), url('../../icon/arrowLeft1.svg');
-	left: 250px;
-	
-	-webkit-transition: left .1s ease;
-	-moz-transition: left .1s ease;
-	-ms-transition: left .1s ease;
-	-o-transition: left .1s ease;
-	transition: left .1s ease;
+.wcf-collapsibleSidebarButton:hover,
+.wcf-collapsibleSidebarButton:hover span {
+	background-color: rgba(252, 252, 252, 1);
+	opacity: 1;
 }
 
-.right .wcf-collapsibleSidebarButton {
-	background-image: url('../../icon/arrowRight1.svg'), url('../../icon/arrowRight1.svg');
-	right: 250px;
-	
-	-webkit-transition: right .1s ease;
-	-moz-transition: right .1s ease;
-	-ms-transition: right .1s ease;
-	-o-transition: right .1s ease;
-	transition: right .1s ease;
-}
-
-.wcf-sidebar .wcf-collapsibleSidebarButton span {
+.wcf-collapsibleSidebarButton span {
+	background-color: rgba(255, 255, 255, 1);
     background-position: center center;
 	background-size: 10px 10px;
 	background-repeat: no-repeat;
@@ -1061,26 +1042,47 @@ section.wcf-content .wcf-content {
 	height: 600px;
 }
 
-.left .wcf-collapsibleSidebarButton span {
-	background-image: url('../../icon/arrowLeft1.svg');
-}
-
-.right .wcf-collapsibleSidebarButton span {
-	background-image: url('../../icon/arrowRight1.svg');
-}
-
-.wcf-sidebar .wcf-collapsibleSidebarButton:hover {
-	background-color: rgba(252, 252, 252, 1);
-	opacity: 1;
-}
-
-.wcf-sidebar .wcf-collapsibleSidebarButton:focus,
-.wcf-sidebar .wcf-collapsibleSidebarButton:active {
+.wcf-collapsibleSidebarButton span:focus,
+.wcf-collapsibleSidebarButton span:active {
 	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-ms-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-o-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+}
+
+/* Orientation */
+
+.left .wcf-collapsibleSidebarButton {
+	border-right: 1px solid rgba(187, 204, 221, .5);
+	background-image: url('../../icon/arrowLeft1.svg'), url('../../icon/arrowLeft1.svg');
+	left: 250px;
+	
+	-webkit-transition: left .1s ease;
+	-moz-transition: left .1s ease;
+	-ms-transition: left .1s ease;
+	-o-transition: left .1s ease;
+	transition: left .1s ease;
+}
+
+.left .wcf-collapsibleSidebarButton span {
+	background-image: url('../../icon/arrowLeft1.svg');
+}
+
+.right .wcf-collapsibleSidebarButton {
+	border-left: 1px solid rgba(187, 204, 221, .5);
+	background-image: url('../../icon/arrowRight1.svg'), url('../../icon/arrowRight1.svg');
+	right: 250px;
+	
+	-webkit-transition: right .1s ease;
+	-moz-transition: right .1s ease;
+	-ms-transition: right .1s ease;
+	-o-transition: right .1s ease;
+	transition: right .1s ease;
+}
+
+.right .wcf-collapsibleSidebarButton span {
+	background-image: url('../../icon/arrowRight1.svg');
 }
 
 /* Collapsed (Left) */
@@ -1094,10 +1096,6 @@ section.wcf-content .wcf-content {
 	background-image: url('../../icon/arrowRight1.svg');
 }
 
-.left .wcf-sidebar .wcf-collapsibleSidebarButton:hover {
-	border-right: 1px solid rgba(187, 204, 221, .5);
-}
-
 /* Collapsed (Right) */
 
 .right .collapsed .wcf-collapsibleSidebarButton {
@@ -1107,10 +1105,6 @@ section.wcf-content .wcf-content {
 
 .right .collapsed .wcf-collapsibleSidebarButton span {
 	background-image: url('../../icon/arrowLeft1.svg');
-}
-
-.right .wcf-sidebar .wcf-collapsibleSidebarButton:hover {
-	border-left: 1px solid rgba(187, 204, 221, .5);
 }
 
 
