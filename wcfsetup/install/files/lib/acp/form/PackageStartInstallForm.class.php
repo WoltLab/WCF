@@ -1,16 +1,16 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\package\Package;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
-use wcf\system\WCF;
-use wcf\system\WCFACP;
+use wcf\data\package\Package;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
+use wcf\system\WCFACP;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;

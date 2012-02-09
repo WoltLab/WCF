@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\exception\SystemException;
+use wcf\system\template\TemplateScriptingCompiler;
 
 /**
  * The 'assign' compiler function calls the assign function on the template object.

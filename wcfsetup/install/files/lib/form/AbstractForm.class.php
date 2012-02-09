@@ -1,9 +1,9 @@
 <?php
 namespace wcf\form;
 use wcf\page\AbstractPage;
-use wcf\system\WCF;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
+use wcf\system\WCF;
 
 /**
  * This class provides default implementations for the Form interface.

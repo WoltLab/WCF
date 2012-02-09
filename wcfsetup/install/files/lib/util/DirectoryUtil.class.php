@@ -1,8 +1,8 @@
 <?php
 namespace wcf\util;
+use wcf\system\exception\SystemException;
 use wcf\system\Callback;
 use wcf\system\Regex;
-use wcf\system\exception\SystemException;
 
 /**
  * Contains directory-related functions

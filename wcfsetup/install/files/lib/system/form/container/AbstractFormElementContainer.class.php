@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\form\container;
+use wcf\system\form\element\AbstractNamedFormElement;
 use wcf\system\form\IFormElement;
 use wcf\system\form\IFormElementContainer;
-use wcf\system\form\element\AbstractNamedFormElement;
 use wcf\util\StringUtil;
 
 /**
