@@ -85,8 +85,8 @@ class OptionForm extends AbstractOptionListForm {
 		
 		// save options
 		$saveOptions = $this->optionHandler->save('wcf.acp.option', 'wcf.acp.option.option');
-		$optionAction = new OptionAction(array(), 'updateAll', array('data' => $saveOptions));
-		$optionAction->executeAction();
+		$this->objectAction = new OptionAction(array(), 'updateAll', array('data' => $saveOptions));
+		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show succes message

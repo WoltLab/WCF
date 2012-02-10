@@ -103,8 +103,8 @@ class OptionImportForm extends ACPForm {
 		parent::save();
 		
 		// save
-		$optionAction = new OptionAction(array(), 'import', array('data' => $this->options));
-		$optionAction->executeAction();
+		$this->objectAction = new OptionAction(array(), 'import', array('data' => $this->options));
+		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show success message

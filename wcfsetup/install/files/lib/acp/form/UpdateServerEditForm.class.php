@@ -54,12 +54,12 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 		AbstractForm::save();
 		
 		// save server
-		$updateServerAction = new PackageUpdateServerAction(array($this->packageUpdateServerID), 'update', array('data' => array(
+		$this->objectAction = new PackageUpdateServerAction(array($this->packageUpdateServerID), 'update', array('data' => array(
 			'serverURL' => $this->serverURL,
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword
 		)));
-		$updateServerAction->executeAction();
+		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show success message

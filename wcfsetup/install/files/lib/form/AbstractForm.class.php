@@ -30,6 +30,12 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	public $errorType = '';
 	
 	/**
+	 * database object action
+	 * @var	wcf\data\AbstractDatabaseObjectAction
+	 */
+	public $objectAction = null;
+	
+	/**
 	 * @see wcf\form\IForm::submit()
 	 */
 	public function submit() {

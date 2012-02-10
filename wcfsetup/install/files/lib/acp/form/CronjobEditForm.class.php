@@ -70,8 +70,8 @@ class CronjobEditForm extends CronjobAddForm {
 			'startDow' => $this->startDow
 		);
 		
-		$cronjobAction = new CronjobAction(array($this->cronjobID), 'update', array('data' => $data));
-		$cronjobAction->executeAction();
+		$this->objectAction = new CronjobAction(array($this->cronjobID), 'update', array('data' => $data));
+		$this->objectAction->executeAction();
 		
 		$this->saved();
 		

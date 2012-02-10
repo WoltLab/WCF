@@ -196,8 +196,8 @@ class UserAddForm extends UserOptionListForm {
 			'languages' => $this->visibleLanguages,
 			'options' => $saveOptions
 		);
-		$userAction = new UserAction(array(), 'create', $data);
-		$userAction->executeAction();
+		$this->objectAction = new UserAction(array(), 'create', $data);
+		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show empty add form

@@ -84,12 +84,12 @@ class UpdateServerAddForm extends ACPForm {
 		parent::save();
 		
 		// save server
-		$updateServerAction = new PackageUpdateServerAction(array(), 'create', array('data' => array(
+		$this->objectAction = new PackageUpdateServerAction(array(), 'create', array('data' => array(
 			'serverURL' => $this->serverURL,
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword
 		)));
-		$updateServer = $updateServerAction->executeAction();
+		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// reset values

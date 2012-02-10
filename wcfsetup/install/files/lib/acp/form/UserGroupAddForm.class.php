@@ -155,8 +155,8 @@ class UserGroupAddForm extends AbstractOptionListForm {
 			'data' => array_merge($this->additionalFields, array('groupName' => $this->groupName)),
 			'options' => $saveOptions
 		);
-		$groupAction = new UserGroupAction(array(), 'create', $data);
-		$groupAction->executeAction();
+		$this->objectAction = new UserGroupAction(array(), 'create', $data);
+		$this->objectAction->executeAction();
 		
 		if (!I18nHandler::getInstance()->isPlainValue('groupName')) {
 			$returnValues = $groupAction->getReturnValues();

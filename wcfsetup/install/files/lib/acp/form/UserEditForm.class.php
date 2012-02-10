@@ -167,8 +167,8 @@ class UserEditForm extends UserAddForm {
 			'languages' => $this->visibleLanguages,
 			'options' => $saveOptions
 		);
-		$userAction = new UserAction(array($this->userID), 'update', $data);
-		$userAction->executeAction();
+		$this->objectAction = new UserAction(array($this->userID), 'update', $data);
+		$this->objectAction->executeAction();
 		
 		$this->saved();
 		
