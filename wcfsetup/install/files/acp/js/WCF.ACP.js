@@ -527,7 +527,7 @@ WCF.ACP.Options.prototype = {
 	 * Initializes options.
 	 */
 	init: function() {
-		$('.enablesOptions').each($.proxy(this._initOption, this));
+		$('.jsEnablesOptions').each($.proxy(this._initOption, this));
 	},
 	
 	/**
