@@ -1,6 +1,6 @@
 <?php
 namespace wcf\action;
-use wcf\system\upload;
+use wcf\system\upload\UploadHandler;
 
 /**
  * Default implementation for file uploads using the AJAX-API.
