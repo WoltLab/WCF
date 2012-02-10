@@ -2794,7 +2794,7 @@ input[type='button'],
 
 .wcf-breadcrumbs {
 	text-align: left;
-	border: 1px solid #ccc;
+	border: 1px solid rgba(204, 204, 204, 1);
 	border-radius: 5px;
 	background-color: rgba(255, 255, 255, 1);
 	margin-top: 15px;
@@ -2826,7 +2826,7 @@ input[type='button'],
 .wcf-breadcrumbs > ul > li > span {
 	border-width: 15px;
 	border-style: solid none solid solid;
-	border-color: transparent transparent transparent #ccc;
+	border-color: transparent transparent transparent rgba(204, 204, 204, 1);
 	display: block !important;
 	position: absolute;
 	width: 0;
@@ -2874,13 +2874,13 @@ input[type='button'],
 
 .wcf-breadcrumbs > ul > li:hover a {
 	color: rgba(102, 102, 102, 1);
-	background-color: #f9f9f9;
+	background-color: rgba(249, 249, 249, 1);
 	position: relative;
 	z-index: 10;
 }
 
 .wcf-breadcrumbs > ul > li:hover > .pointer > span {
-	border-color: transparent transparent transparent #f9f9f9;
+	border-color: transparent transparent transparent rgba(249, 249, 249, 1);
 }
 
 
@@ -2904,12 +2904,14 @@ thead th {
 }
 
 thead th:first-child {
-	/* Rounded corners for the first table header cell to the left */
+	/* Rounded corners for the first table header cell
+	(only in effect if the table is not inside a "div" with class ".boxTitle") */
 	border-top-left-radius: 5px;
 }
 
 thead th:last-child {
-	/* Rounded corners for the last table header cell to the left */
+	/* Rounded corners for the last table header cell
+	(only in effect if the table is not inside a "div" with class ".boxTitle") */
 	border-top-right-radius: 5px;
 }
 
@@ -2976,7 +2978,7 @@ thead th.active:hover a {
 thead th a img {
 	/* ToDo: Sort-icon orientation does not work */
 	text-align: right;
-	/* Negative margins to prevent table-cells from expanding when the sort-icon shows up */
+	/* Negative margins to prevent table-cells from expanding vertically when the sort-icon shows up */
 	margin-top: -5px !important;
 	margin-bottom: -5px !important;
 }
@@ -2995,12 +2997,12 @@ tbody tr:last-child {
 }
 
 tbody tr:last-child td:first-child {
-	/* Rounded corners for the last table cell to the left */
+	/* Rounded corners for the first table cell in the last row */
 	border-bottom-left-radius: 5px;
 }
 
 tbody tr:last-child td:last-child {
-	/* Rounded corners for the last table cell to the right */
+	/* Rounded corners for the last table cell in the last row */
 	border-bottom-right-radius: 5px;
 }
 
@@ -3021,7 +3023,7 @@ tbody td:last-child {
 }
 
 tbody tr:nth-child(2n+1) td {
-	/* auto-colorer for every 2nd row */
+	/* Auto-colorer for every 2nd row */
 	background-color: #f2f6fa;
 }
 
@@ -3033,21 +3035,21 @@ tbody tr:hover td {
 
 /* -- -- -- Special -> Table Header -- -- -- */
 
-.wcf-menu ~ .wcf-border thead th:first-child {
+.wcf-menu ~ .wcf-border thead th:first-child { /* ToDo: Does this case really exist any more? */
 	border-top-left-radius: 0 !important;
 }
 
-.wcf-menu ~ .wcf-border thead th:last-child {
+.wcf-menu ~ .wcf-border thead th:last-child { /* ToDo: Does this case really exist any more? */
 	border-top-right-radius: 0 !important;
 }
 
-.wcf-menu ~ .wcf-border thead th:first-child,
-.wcf-boxTitle > table thead th:first-child {
+.wcf-boxTitle > hgroup + table th:first-child, /* Boxes with a title bar */
+.wcf-boxTitle > nav + table th:first-child { /* Boxes with a menu in the title bar */
 	border-top-left-radius: 0 !important;
 }
 
-.wcf-menu ~ .wcf-border thead th:last-child,
-.wcf-boxTitle > table thead th:last-child {
+.wcf-boxTitle > hgroup + table th:last-child, /* Boxes with a title bar */
+.wcf-boxTitle > .wcf-menu + table th:last-child { /* Boxes with a menu in the title bar */
 	border-top-right-radius: 0 !important;
 }
 
