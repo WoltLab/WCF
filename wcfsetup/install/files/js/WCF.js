@@ -2538,7 +2538,7 @@ WCF.Collapsible.Simple = {
 		
 		if (!$isOpen) {
 			// hide container on init
-			$($button.data('collapsibleContainer')).hide();
+			$('#' + $button.data('collapsibleContainer')).hide();
 		}
 		
 		$button.click($.proxy(this._toggle, this));
@@ -2550,11 +2550,7 @@ WCF.Collapsible.Simple = {
 	 * @param	object		event
 	 */
 	_toggle: function(event) {
-		var $button = this._findElement($(event.target));
-		if ($button === false) {
-			return false;
-		}
-		
+		var $button = $(event.currentTarget);
 		var $isOpen = $button.data('isOpen');
 		var $target = $('#' + $.wcfEscapeID($button.data('collapsibleContainer')));
 		
@@ -2591,26 +2587,6 @@ WCF.Collapsible.Simple = {
 		if ($image.length) {
 			$image.attr('src', $icon);
 		}
-	},
-	
-	/**
-	 * Finds the anchor element (sometimes the image will show up as target).
-	 * 
-	 * @param	jQuery		element
-	 * @return	jQuery
-	 */
-	_findElement: function(element) {
-		if (element.getTagName() == 'a') {
-			return element;
-		}
-		
-		element = $(element.parent('a'));
-		if (element.length == 1) {
-			return element;
-		}
-		
-		console.debug('[WCF.Collapsible.Simple] Could not find valid parent, aborting.');
-		return false;
 	}
 };
 
