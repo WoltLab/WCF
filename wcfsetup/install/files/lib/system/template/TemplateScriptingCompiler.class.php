@@ -785,7 +785,7 @@ class TemplateScriptingCompiler {
 					}
 					else {
 						if (preg_match('~^\$this->v\[\'(.*)\'\]$~U', $value, $matches)) {
-							$phpCode .= "\$this->v['".$matches[1]."'] = ".$value.";\n";
+							$phpCode .= "\$this->v['".$variable."'] = ".$value.";\n";
 						}
 						else {
 							throw new SystemException("Could not resolve variable type for value '".$value."'");
