@@ -76,14 +76,14 @@ class FilesFileHandler extends PackageInstallationFileHandler {
 		// ignore files which have already been installed
 		$installFiles = array();
 		foreach ($files as $file) {
-			if (in_array($file, $files)) {
+			if (in_array($file, $installedFiles)) {
 				continue;
 			}
 			
 			$installFiles[] = $file;
 		}
 		
-		if (!empty($installedFiles)) {
+		if (!empty($installFiles)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_file_log
 						(packageID, filename)
 				VALUES		(?, ?)";
