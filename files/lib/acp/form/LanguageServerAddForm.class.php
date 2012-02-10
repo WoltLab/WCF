@@ -65,10 +65,10 @@ class LanguageServerAddForm extends ACPForm {
 		parent::save();
 		
 		// save server
-		$languageServerAction = new LanguageServerAction(array(), 'create', array('data' => array(
+		$this->objectAction = new LanguageServerAction(array(), 'create', array('data' => array(
 			'serverURL' => $this->server
 		)));
-		$languageServerAction->executeAction();
+		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// reset values

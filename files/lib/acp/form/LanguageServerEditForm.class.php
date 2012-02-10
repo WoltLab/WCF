@@ -64,10 +64,10 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 		AbstractForm::save();
 		
 		// save server
-		$languageServerAction = new LanguageServerAction(array($this->languageServerID), 'update', array('data' => array(
+		$this->objectAction = new LanguageServerAction(array($this->languageServerID), 'update', array('data' => array(
 			'serverURL' => $this->server
 		)));
-		$languageServerAction->executeAction();
+		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show success message
