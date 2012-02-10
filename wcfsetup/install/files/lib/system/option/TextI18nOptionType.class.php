@@ -40,7 +40,7 @@ class TextI18nOptionType extends TextOptionType {
 	 * @see wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
-		if (!I18nHandler::getInstance()->validateValue($option->optionName, $option->requireI18n)) {
+		if (!I18nHandler::getInstance()->validateValue($option->optionName, $option->requireI18n, true)) {
 			throw new UserInputException($option->optionName, 'validationFailed');
 		}
 	}
