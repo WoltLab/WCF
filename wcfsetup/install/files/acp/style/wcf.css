@@ -194,7 +194,7 @@ header.wcf-pageHeader {
 	width: 100%;
 	overflow: hidden;
 	position: relative;
-	z-index: 110;
+	z-index: 100;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -379,7 +379,6 @@ nav.wcf-topMenu {
 
 .wcf-topMenu > div > ul > li,
 .wcf-topMenu > div > ul > li a {
-	text-decoration: none;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
 	color: #69c;
 }
@@ -466,7 +465,6 @@ nav.wcf-topMenu {
 .wcf-logo {
 	margin: 0 23px 0;
 	position: relative;
-	z-index: 1;
 }
 
 .wcf-logo > a,
@@ -718,14 +716,14 @@ nav.wcf-topMenu {
 
 .wcf-mainMenu > ul > li.activeMenuItem > a:after {
 	border-bottom-left-radius: 6px;
-    border-width: 0 0 1px 1px;
-    position: absolute;
-    right: -7px;
-    bottom: 0;
-    width: 7px;
-    height: 7px;
-    content: "";
-    box-shadow: -2px 2px 0 #e7f2fd;
+	border-width: 0 0 1px 1px;
+	position: absolute;
+	right: -7px;
+	bottom: 0;
+	width: 7px;
+	height: 7px;
+	content: "";
+	box-shadow: -2px 2px 0 #e7f2fd;
 }
 
 /* ToDo: Special */
@@ -754,6 +752,7 @@ nav.wcf-topMenu {
 	margin: 0 23px;
 	display: block;
 	min-height: 7px;
+	position: relative;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -774,6 +773,7 @@ nav.wcf-topMenu {
 
 .wcf-footerNavigation {
 	min-height: 7px;
+	position: relative;
 }
 
 .wcf-headerNavigation:after {
@@ -802,7 +802,6 @@ nav.wcf-topMenu {
 	cursor: pointer;
 	margin: 0 3px;
 	float: right;
-	position: relative;
 }
 
 .wcf-headerNavigation ul li a,
@@ -855,10 +854,16 @@ nav.wcf-topMenu {
 /* ############## Main ############## */
 
 .wcf-main {
-	background-color: #d8e7f5;
+	background-color: rgba(216, 231, 245, 1);
 	margin: 0 23px;
 	position: relative;
 	z-index: 90;
+	
+	-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
+	-moz-box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
+	-ms-box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
+	-o-box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
+	box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -887,7 +892,7 @@ section.wcf-content {
 	background-color: rgba(255, 255, 255, 1);
 	position: relative;
 	min-height: 100px;
-	z-index: 100;
+	z-index: 20;
 	
 	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
@@ -919,6 +924,7 @@ section.wcf-content:after {
 	margin-right: 249px;
 }
 
+/* ToDo: Does this still work? */
 .wcf-main > div section:only-child {
 	border-width: 0 !important;
 	margin: 0 !important;
@@ -941,7 +947,6 @@ section.wcf-content:after {
 }	
 
 section.wcf-content .wcf-content {
-	/* Test: border: 1px solid #ccc;*/
 	background-color: rgba(0, 0, 0, .01);
 	padding: 13px 23px 23px;
 }
@@ -966,7 +971,7 @@ section.wcf-content .wcf-content {
 	display: block;
 	width: 250px;
 	overflow: hidden;
-	z-index: 80;
+	z-index: 10;
 	
 	-webkit-transition: width .1s ease;
 	-moz-transition: width .1s ease;
@@ -1023,7 +1028,7 @@ section.wcf-content .wcf-content {
 	width: 20px;
 	height: 100%;
 	overflow: hidden;
-	z-index: 140;
+	z-index: 30;
 	opacity: .3;
 }
 
@@ -1125,7 +1130,7 @@ section.wcf-content .wcf-content {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	position: relative;
 	overflow: hidden;
-	z-index: 110;
+	z-index: 40;
 }
 
 .collapsed .wcf-sidebarContent > div {
@@ -1232,7 +1237,7 @@ section.wcf-content .wcf-content {
 	text-align: center;
 	padding: 0 23px 33px;
 	position: relative;
-	z-index: 110;
+	z-index: 80;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -1520,7 +1525,7 @@ table .wcf-label {
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: 500;
+	z-index: 400;
 	overflow: hidden;
 	
 	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
@@ -1612,7 +1617,7 @@ table .wcf-label {
 	margin-top: 30px;
 }
 
-.wcf-DialogContainer .wcf-mainHeading {
+.wcf-dialogContainer .wcf-mainHeading {
 	margin-top: 0;
 }
 
@@ -2172,8 +2177,11 @@ input[type=search] {
 
 /* -- -- -- Bounding Box -- -- --  */
 
-/* (Colors are being taken from the 
-"Global Button Color & Effect Library") */
+/** 
+ * This defines the shape of the Pre-Input Buttons 
+ * Colors & effects are being defined by the 
+ * "Global Button Color & Effect Library" 
+ */
 
 .wcf-preInput {
 	display: table;
@@ -2253,8 +2261,11 @@ input[type=search] {
 
 /* ############## ToDo: Small Buttons ############## */
 
-/* (Colors are being taken from the 
-"Global Button Color & Effect Library") */
+/** 
+ * This defines the shape of the Small Buttons 
+ * Colors & effects are being defined by the 
+ * "Global Button Color & Effect Library" 
+ */
 
 /* -- -- -- Standard -- -- -- */
 
@@ -2328,8 +2339,11 @@ input[type=search] {
 
 /* ############## Large Buttons ############## */
 
-/* (Colors are being taken from the 
-"Global Button Color & Effect Library") */
+/** 
+ * This defines the shape of the Large Buttons 
+ * Colors & effects are being defined by the 
+ * "Global Button Color & Effect Library"  
+ */
 
 /* Globals */
 
@@ -3133,8 +3147,11 @@ tr .columnIcon img {
 
 /* ############## ToDo: Page Navigation ############## */
 
-/* (Colors are being taken from the 
-"Global Button Color & Effect Library") */
+/** 
+ * This defines the shape of the Page-Navigation widget  
+ * Colors & effects are being defined by the 
+ * "Global Button Color & Effect Library" 
+ */
 
 /* Globals */
 
@@ -3625,7 +3642,7 @@ tr .columnIcon img {
 
 /* Globals */
 
-.jsTooltip {
+.jsTooltip { /* Do not change this style */
 	cursor: pointer;
 }
 
@@ -3677,8 +3694,11 @@ tr .columnIcon img {
 
 /*  @see theadPostList.tpl */
 
-/* (Colors are being taken from the 
-"Global Button Color & Effect Library") */
+/** 
+ * This defines the shape of the Likes widget  
+ * Colors & effects are being defined by the 
+ * "Global Button Color & Effect Library" 
+ */
 
 /* -- -- -- -- Widget -- -- -- -- -- */
 
@@ -3775,8 +3795,8 @@ tr .columnIcon img {
 	margin-top: 7px;
 	margin-right: 3px;
 	margin-left: 3px;
-	position: relative;
 	float: left;
+	position: relative;
 }
 
 .wcf-clipboardEditor > ul > li span {
@@ -3793,6 +3813,11 @@ tr .columnIcon img {
 
 
 /* ############## Global Button Color & Effect Library ############## */
+
+/** 
+ * This defines the colors & effects of Button elements 
+ * Define the shape of the element in a separate class 
+ */
 
 /* -- -- -- Normal Buttons -- -- -- */
 
