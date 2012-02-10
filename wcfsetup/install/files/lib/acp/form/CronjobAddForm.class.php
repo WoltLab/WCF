@@ -144,8 +144,8 @@ class CronjobAddForm extends ACPForm {
 			'startDow' => $this->startDow
 		);
 		
-		$cronjobAction = new CronjobAction(array(), 'create', array('data' => $data));
-		$cronjobAction->executeAction();
+		$this->objectAction = new CronjobAction(array(), 'create', array('data' => $data));
+		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// reset values

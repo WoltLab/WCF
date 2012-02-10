@@ -150,8 +150,8 @@ class UserGroupEditForm extends UserGroupAddForm {
 			'data' => array_merge(array('groupName' => $this->groupName), $this->additionalFields),
 			'options' => $saveOptions
 		);
-		$groupAction = new UserGroupAction(array($this->groupID), 'update', $data);
-		$groupAction->executeAction();
+		$this->objectAction = new UserGroupAction(array($this->groupID), 'update', $data);
+		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show success message

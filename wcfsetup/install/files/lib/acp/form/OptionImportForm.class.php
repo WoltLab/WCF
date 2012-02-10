@@ -1,9 +1,8 @@
 <?php
 namespace wcf\acp\form;
-use wcf\acp\option\Options;
 use wcf\data\option\OptionAction;
-use wcf\system\exception\UserInputException;
 use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\XML;
@@ -104,8 +103,8 @@ class OptionImportForm extends ACPForm {
 		parent::save();
 		
 		// save
-		$optionAction = new OptionAction(array(), 'import', array('data' => $this->options));
-		$optionAction->executeAction();
+		$this->objectAction = new OptionAction(array(), 'import', array('data' => $this->options));
+		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show success message

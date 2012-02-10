@@ -33,6 +33,13 @@ class SetupTemplateEngine extends TemplateEngine {
 	}
 	
 	/**
+	 * @see wcf\system\template\TemplateEngine::getMetaDataFilename()
+	 */
+	public function getMetaDataFilename($templateName, $packageID) {
+		return $this->compileDir.'setup/template/compiled/'.$this->languageID.'_'.$templateName.'.meta.php';
+	}
+
+	/**
 	 * @see	wcf\system\template\TemplateEngine::getPackageID()
 	 */
 	public function getPackageID($templateName, $packageID) {
@@ -42,13 +49,6 @@ class SetupTemplateEngine extends TemplateEngine {
 		}
 		
 		throw new SystemException("Unable to find template '$templateName'");
-	}
-	
-	/**
-	 * @see wcf\system\template\TemplateEngine::getCompiler()
-	 */
-	protected function getCompiler() {
-		return new TemplateCompiler($this);
 	}
 	
 	/**

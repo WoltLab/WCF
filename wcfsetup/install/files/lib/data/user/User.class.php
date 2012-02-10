@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\user;
-use wcf\data\DatabaseObject;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
+use wcf\data\DatabaseObject;
 use wcf\system\cache\CacheHandler;
 use wcf\system\request\IRouteController;
 use wcf\system\user\storage\UserStorageHandler;

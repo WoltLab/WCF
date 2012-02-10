@@ -226,7 +226,7 @@ class PackageInstallationNodeBuilder {
 		if (!$progress['done']) {
 			return 0;
 		}
-		else if ($progress['done'] == $progress['outstanding']) {
+		else if (!$progress['outstanding']) {
 			return 100;
 		}
 		else {

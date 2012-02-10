@@ -2,9 +2,9 @@
 namespace wcf\acp\form;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerAction;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
-use wcf\system\exception\UserInputException;
 use wcf\util\StringUtil;
 
 /**
@@ -84,12 +84,12 @@ class UpdateServerAddForm extends ACPForm {
 		parent::save();
 		
 		// save server
-		$updateServerAction = new PackageUpdateServerAction(array(), 'create', array('data' => array(
+		$this->objectAction = new PackageUpdateServerAction(array(), 'create', array('data' => array(
 			'serverURL' => $this->serverURL,
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword
 		)));
-		$updateServer = $updateServerAction->executeAction();
+		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// reset values

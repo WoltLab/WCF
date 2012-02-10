@@ -94,6 +94,7 @@ hr {
 	background-color: rgba(255, 170, 34, .7);
 }
 
+a,
 img[src*='delete'],
 img[src*='uninstall'],
 img[src*='install'],
@@ -128,13 +129,11 @@ a[href^="mailto:"] {
 	padding-left: 17px;
 }
 
-.hot,
-.wcf-hot {
+.hot {
 	color: #b00; 
 }
 
-.invisible,
-.wcf-invisible {
+.invisible {
 	position: absolute;
 	left: -9000px;
 	top: -9000px;
@@ -195,7 +194,7 @@ header.wcf-pageHeader {
 	width: 100%;
 	overflow: hidden;
 	position: relative;
-	z-index: 150;
+	z-index: 110;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -555,13 +554,12 @@ nav.wcf-topMenu {
 	margin: 5px 10px;
 }
 
-.wcf-search > img.collapsible {
+.wcf-search > .wcf-searchButton {
 	margin: 0;
 	display: inline;
 	width: 32px;
 	height: 32px;
 	float: left;
-	cursor: pointer;
 }
 
 .wcf-search > div {
@@ -569,6 +567,8 @@ nav.wcf-topMenu {
 	margin-left: 1px;
 	float: left;
 }
+
+
 
 /* -- -- -- Main Menu -- -- -- */
 
@@ -591,6 +591,7 @@ nav.wcf-topMenu {
 	border-top-right-radius: 5px;
 	background-color: rgba(0, 0, 0, .4);
 	display: inline-block;
+	position: relative;
 }
 
 .wcf-mainMenu > ul > li {
@@ -635,7 +636,6 @@ nav.wcf-topMenu {
 	cursor: pointer;
 	display: inline-block;
 	position: relative;
-	z-index: 1;
 	
 	-webkit-transition-property: border, background-color, background-image, color;
 	-webkit-transition-duration: .3s;
@@ -702,29 +702,29 @@ nav.wcf-topMenu {
 	z-index: 10;
 }
 
-/* Rounded Bottom Corners */
+/* Rounded Bottom Corners: Active Tab */
 
 .wcf-mainMenu > ul > li.activeMenuItem > a:before {
-	position: absolute;
+	border-bottom-right-radius: 6px;
+    border-width: 0 1px 1px 0;
+    position: absolute;
     bottom: 0;
+    left: -7px;
     width: 7px;
     height: 7px;
-    content: " ";
-    left: -7px;
-    border-bottom-right-radius: 6px;
-    border-width: 0 1px 1px 0;
+    content: "";
     box-shadow: 2px 2px 0 #e7f2fd;
 }
 
 .wcf-mainMenu > ul > li.activeMenuItem > a:after {
-	position: absolute;
+	border-bottom-left-radius: 6px;
+    border-width: 0 0 1px 1px;
+    position: absolute;
+    right: -7px;
     bottom: 0;
     width: 7px;
     height: 7px;
-    content: " ";
-    right: -7px;
-    border-bottom-left-radius: 6px;
-    border-width: 0 0 1px 1px;
+    content: "";
     box-shadow: -2px 2px 0 #e7f2fd;
 }
 
@@ -753,6 +753,7 @@ nav.wcf-topMenu {
 	border-top-right-radius: 3px;
 	margin: 0 23px;
 	display: block;
+	min-height: 7px;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -769,6 +770,10 @@ nav.wcf-topMenu {
 		min-width: auto;
 	}
 	
+}
+
+.wcf-footerNavigation {
+	min-height: 7px;
 }
 
 .wcf-headerNavigation:after {
@@ -798,7 +803,6 @@ nav.wcf-topMenu {
 	margin: 0 3px;
 	float: right;
 	position: relative;
-	z-index: 190;
 }
 
 .wcf-headerNavigation ul li a,
@@ -854,12 +858,7 @@ nav.wcf-topMenu {
 	background-color: #d8e7f5;
 	margin: 0 23px;
 	position: relative;
-	
-	-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
-	-moz-box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
-	-ms-box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
-	-o-box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
-	box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
+	z-index: 90;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -892,7 +891,7 @@ section.wcf-content {
 	
 	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
-	-ms-box-shadow: 0 0 50pxrgba(0, 0, 0, .1);
+	-ms-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 	/* ToDo: Opera doesn't like that so much! Bug-report sent to Opera 
 	-o-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 	box-shadow: 0 0 5px rgba(0, 0, 0, .1);*/
@@ -921,6 +920,7 @@ section.wcf-content:after {
 }
 
 .wcf-main > div section:only-child {
+	border-width: 0 !important;
 	margin: 0 !important;
 }
 
@@ -991,7 +991,7 @@ section.wcf-content .wcf-content {
 
 /* Globals */
 
-.collapsed {
+.wcf-sidebar.collapsed {
 	width: 0;
 	height: 0;
 }
@@ -1012,7 +1012,7 @@ section.wcf-content .wcf-content {
 
 /* Globals */
 
-.wcf-sidebar .wcf-collapsibleSidebarButton {
+.wcf-collapsibleSidebarButton {
 	cursor: pointer;
 	background-position: center 1%, center 99%;
 	background-size: 10px 10px, 10px 10px;
@@ -1027,31 +1027,14 @@ section.wcf-content .wcf-content {
 	opacity: .3;
 }
 
-/* Orientation */
-
-.left .wcf-collapsibleSidebarButton {
-	background-image: url('../../icon/arrowLeft1.svg'), url('../../icon/arrowLeft1.svg');
-	left: 250px;
-	
-	-webkit-transition: left .1s ease;
-	-moz-transition: left .1s ease;
-	-ms-transition: left .1s ease;
-	-o-transition: left .1s ease;
-	transition: left .1s ease;
+.wcf-collapsibleSidebarButton:hover,
+.wcf-collapsibleSidebarButton:hover span {
+	background-color: rgba(252, 252, 252, 1);
+	opacity: 1;
 }
 
-.right .wcf-collapsibleSidebarButton {
-	background-image: url('../../icon/arrowRight1.svg'), url('../../icon/arrowRight1.svg');
-	right: 250px;
-	
-	-webkit-transition: right .1s ease;
-	-moz-transition: right .1s ease;
-	-ms-transition: right .1s ease;
-	-o-transition: right .1s ease;
-	transition: right .1s ease;
-}
-
-.wcf-sidebar .wcf-collapsibleSidebarButton span {
+.wcf-collapsibleSidebarButton span {
+	background-color: rgba(255, 255, 255, 1);
     background-position: center center;
 	background-size: 10px 10px;
 	background-repeat: no-repeat;
@@ -1063,26 +1046,47 @@ section.wcf-content .wcf-content {
 	height: 600px;
 }
 
-.left .wcf-collapsibleSidebarButton span {
-	background-image: url('../../icon/arrowLeft1.svg');
-}
-
-.right .wcf-collapsibleSidebarButton span {
-	background-image: url('../../icon/arrowRight1.svg');
-}
-
-.wcf-sidebar .wcf-collapsibleSidebarButton:hover {
-	background-color: rgba(252, 252, 252, 1);
-	opacity: 1;
-}
-
-.wcf-sidebar .wcf-collapsibleSidebarButton:focus,
-.wcf-sidebar .wcf-collapsibleSidebarButton:active {
+.wcf-collapsibleSidebarButton span:focus,
+.wcf-collapsibleSidebarButton span:active {
 	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-ms-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-o-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+}
+
+/* Orientation */
+
+.left .wcf-collapsibleSidebarButton {
+	border-right: 1px solid rgba(187, 204, 221, .5);
+	background-image: url('../../icon/arrowLeft1.svg'), url('../../icon/arrowLeft1.svg');
+	left: 250px;
+	
+	-webkit-transition: left .1s ease;
+	-moz-transition: left .1s ease;
+	-ms-transition: left .1s ease;
+	-o-transition: left .1s ease;
+	transition: left .1s ease;
+}
+
+.left .wcf-collapsibleSidebarButton span {
+	background-image: url('../../icon/arrowLeft1.svg');
+}
+
+.right .wcf-collapsibleSidebarButton {
+	border-left: 1px solid rgba(187, 204, 221, .5);
+	background-image: url('../../icon/arrowRight1.svg'), url('../../icon/arrowRight1.svg');
+	right: 250px;
+	
+	-webkit-transition: right .1s ease;
+	-moz-transition: right .1s ease;
+	-ms-transition: right .1s ease;
+	-o-transition: right .1s ease;
+	transition: right .1s ease;
+}
+
+.right .wcf-collapsibleSidebarButton span {
+	background-image: url('../../icon/arrowRight1.svg');
 }
 
 /* Collapsed (Left) */
@@ -1096,10 +1100,6 @@ section.wcf-content .wcf-content {
 	background-image: url('../../icon/arrowRight1.svg');
 }
 
-.left .wcf-sidebar .wcf-collapsibleSidebarButton:hover {
-	border-right: 1px solid rgba(187, 204, 221, .5);
-}
-
 /* Collapsed (Right) */
 
 .right .collapsed .wcf-collapsibleSidebarButton {
@@ -1109,10 +1109,6 @@ section.wcf-content .wcf-content {
 
 .right .collapsed .wcf-collapsibleSidebarButton span {
 	background-image: url('../../icon/arrowLeft1.svg');
-}
-
-.right .wcf-sidebar .wcf-collapsibleSidebarButton:hover {
-	border-left: 1px solid rgba(187, 204, 221, .5);
 }
 
 
@@ -1136,7 +1132,7 @@ section.wcf-content .wcf-content {
 	width: 0;
 }
 
-.wcf-sidebarContent > .collapsible a:hover {
+.wcf-sidebarContent > .collapsibleMenus a:hover {
 	text-decoration: none !important;
 	color: #369;
 }
@@ -1148,7 +1144,7 @@ section.wcf-content .wcf-content {
 	margin-top: 5px;
 }
 
-.wcf-sidebarContent > .collapsible > h1 {
+.wcf-sidebarContent > .collapsibleMenus > h1 {
 	background-image: url('../../icon/arrowRight.svg');
 	background-position: 15px center;
 	background-size: 16px;
@@ -1162,7 +1158,7 @@ section.wcf-content .wcf-content {
 		padding: 7px 15px 7px 35px;
 	}
 	
-	.wcf-sidebarContent > div:not(.collapsible) > h1 {
+	.wcf-sidebarContent > div:not(.collapsibleMenus) > h1 {
 		padding: 7px 15px 7px 15px;
 	}
 	
@@ -1175,13 +1171,13 @@ section.wcf-content .wcf-content {
 		padding: 7px 15px 7px 35px;
 	}
 	
-	.wcf-sidebarContent > div:not(.collapsible) > h1 {
+	.wcf-sidebarContent > div:not(.collapsibleMenus) > h1 {
 		padding: 7px 15px 7px 15px;
 	}
 	
 }
 
-.wcf-sidebarContent > .collapsible h1.activeMenuItem {
+.wcf-sidebarContent > .collapsibleMenus h1.activeMenuItem {
 	background-image: url('../../icon/arrowDown.svg');
 }
 
@@ -1236,7 +1232,7 @@ section.wcf-content .wcf-content {
 	text-align: center;
 	padding: 0 23px 33px;
 	position: relative;
-	z-index: 150;
+	z-index: 110;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -2798,7 +2794,7 @@ input[type='button'],
 
 .wcf-breadcrumbs {
 	text-align: left;
-	border: 1px solid #ccc;
+	border: 1px solid rgba(204, 204, 204, 1);
 	border-radius: 5px;
 	background-color: rgba(255, 255, 255, 1);
 	margin-top: 15px;
@@ -2830,7 +2826,7 @@ input[type='button'],
 .wcf-breadcrumbs > ul > li > span {
 	border-width: 15px;
 	border-style: solid none solid solid;
-	border-color: transparent transparent transparent #ccc;
+	border-color: transparent transparent transparent rgba(204, 204, 204, 1);
 	display: block !important;
 	position: absolute;
 	width: 0;
@@ -2878,13 +2874,13 @@ input[type='button'],
 
 .wcf-breadcrumbs > ul > li:hover a {
 	color: rgba(102, 102, 102, 1);
-	background-color: #f9f9f9;
+	background-color: rgba(249, 249, 249, 1);
 	position: relative;
 	z-index: 10;
 }
 
 .wcf-breadcrumbs > ul > li:hover > .pointer > span {
-	border-color: transparent transparent transparent #f9f9f9;
+	border-color: transparent transparent transparent rgba(249, 249, 249, 1);
 }
 
 
@@ -2908,12 +2904,14 @@ thead th {
 }
 
 thead th:first-child {
-	/* Rounded corners for the first table header cell to the left */
+	/* Rounded corners for the first table header cell
+	(only in effect if the table is not inside a "div" with class ".boxTitle") */
 	border-top-left-radius: 5px;
 }
 
 thead th:last-child {
-	/* Rounded corners for the last table header cell to the left */
+	/* Rounded corners for the last table header cell
+	(only in effect if the table is not inside a "div" with class ".boxTitle") */
 	border-top-right-radius: 5px;
 }
 
@@ -2980,7 +2978,7 @@ thead th.active:hover a {
 thead th a img {
 	/* ToDo: Sort-icon orientation does not work */
 	text-align: right;
-	/* Negative margins to prevent table-cells from expanding when the sort-icon shows up */
+	/* Negative margins to prevent table-cells from expanding vertically when the sort-icon shows up */
 	margin-top: -5px !important;
 	margin-bottom: -5px !important;
 }
@@ -2999,12 +2997,12 @@ tbody tr:last-child {
 }
 
 tbody tr:last-child td:first-child {
-	/* Rounded corners for the last table cell to the left */
+	/* Rounded corners for the first table cell in the last row */
 	border-bottom-left-radius: 5px;
 }
 
 tbody tr:last-child td:last-child {
-	/* Rounded corners for the last table cell to the right */
+	/* Rounded corners for the last table cell in the last row */
 	border-bottom-right-radius: 5px;
 }
 
@@ -3025,7 +3023,7 @@ tbody td:last-child {
 }
 
 tbody tr:nth-child(2n+1) td {
-	/* auto-colorer for every 2nd row */
+	/* Auto-colorer for every 2nd row */
 	background-color: #f2f6fa;
 }
 
@@ -3037,21 +3035,21 @@ tbody tr:hover td {
 
 /* -- -- -- Special -> Table Header -- -- -- */
 
-.wcf-menu ~ .wcf-border thead th:first-child {
+.wcf-menu ~ .wcf-border thead th:first-child { /* ToDo: Does this case really exist any more? */
 	border-top-left-radius: 0 !important;
 }
 
-.wcf-menu ~ .wcf-border thead th:last-child {
+.wcf-menu ~ .wcf-border thead th:last-child { /* ToDo: Does this case really exist any more? */
 	border-top-right-radius: 0 !important;
 }
 
-.wcf-menu ~ .wcf-border thead th:first-child,
-.wcf-boxTitle > table thead th:first-child {
+.wcf-boxTitle > hgroup + table th:first-child, /* Boxes with a title bar */
+.wcf-boxTitle > nav + table th:first-child { /* Boxes with a menu in the title bar */
 	border-top-left-radius: 0 !important;
 }
 
-.wcf-menu ~ .wcf-border thead th:last-child,
-.wcf-boxTitle > table thead th:last-child {
+.wcf-boxTitle > hgroup + table th:last-child, /* Boxes with a title bar */
+.wcf-boxTitle > .wcf-menu + table th:last-child { /* Boxes with a menu in the title bar */
 	border-top-right-radius: 0 !important;
 }
 
@@ -3561,6 +3559,7 @@ tr .columnIcon img {
 /* Content */
 
 .wcf-dialogContent {
+	color: rgba(238, 238, 238, 1);
 	background-color: #333;
 	overflow: auto;
 }
@@ -3630,13 +3629,14 @@ tr .columnIcon img {
 	cursor: pointer;
 }
 
-#wcf-balloonTooltip {
+.wcf-balloonTooltip {
 	font-size: .85em;
 	color: rgba(255, 255, 255, 1);
 	border: 1px solid rgba(255, 255, 255, .7);
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, .7);
 	padding: 5px 10px 7px;
+	position: absolute;
 	max-width: 300px;
 	z-index: 800;
 	
@@ -3649,7 +3649,7 @@ tr .columnIcon img {
 
 /* Pointer */
 
-#wcf-balloonTooltip .pointer {	
+.wcf-balloonTooltip .pointer {	
 	border-width: 0 7px 7px;
 	border-style: solid;
 	border-color: rgba(255, 255, 255, .7) transparent;
@@ -3660,7 +3660,7 @@ tr .columnIcon img {
 	left: 50%;
 }
 
-#wcf-balloonTooltip .pointer span {	
+.wcf-balloonTooltip .pointer span {	
 	border-width: 0 5px 5px;
 	border-style: solid;
 	border-color: rgba(0, 0, 0, .7) transparent;
@@ -3769,7 +3769,7 @@ tr .columnIcon img {
 
 /* Globals */
 
-.wcf-clipboardEditor li {
+.wcf-clipboardEditor > ul > li {
 	font-size: .85em;
 	border-radius: 30px;
 	margin-top: 7px;
@@ -3779,7 +3779,7 @@ tr .columnIcon img {
 	float: left;
 }
 
-.wcf-clipboardEditor li span {
+.wcf-clipboardEditor > ul > li span {
 	text-decoration: none !important;
 	cursor: pointer;
 	background-image: url('../../icon/dropdown1.svg');

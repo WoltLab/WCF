@@ -5,9 +5,9 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
+use wcf\util\DirectoryUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
-use wcf\util\DirectoryUtil;
 
 /**
  * TemplateEngine loads and displays template.
@@ -304,12 +304,12 @@ class TemplateEngine extends SingletonFactory {
 		$metaData = $this->getMetaData($templateName, $metaDataFilename);
 		
 		// check if compilation is necessary
-		if (!$this->isCompiled($templateName, $sourceFilename, $compiledFilename, $metaData)) {
+		if (($metaData === null) || !$this->isCompiled($templateName, $sourceFilename, $compiledFilename, $packageID, $metaData)) {
 			// compile
 			$this->compileTemplate($templateName, $sourceFilename, $compiledFilename, array(
 				'data' => $metaData,
 				'filename' => $metaDataFilename,
-				'packageID' => $packageID
+				'packageID' => $tplPackageID
 			));
 		}
 		
@@ -417,11 +417,12 @@ class TemplateEngine extends SingletonFactory {
 	 * @param	string		$templateName
 	 * @param 	string 		$sourceFilename
 	 * @param 	string 		$compiledFilename
+	 * @param	integer		$packageID
 	 * @param	array		$metaData
 	 * @return 	boolean 	$isCompiled
 	 */
-	protected function isCompiled($templateName, $sourceFilename, $compiledFilename, array $metaData) {
-		if ($this->forceCompile || !file_exists($compiledFilename) || !file_exists($metaDataFilename)) {
+	protected function isCompiled($templateName, $sourceFilename, $compiledFilename, $packageID, array $metaData) {
+		if ($this->forceCompile || !file_exists($compiledFilename)) {
 			return false;
 		}
 		else {
@@ -434,8 +435,9 @@ class TemplateEngine extends SingletonFactory {
 			else {
 				// check for meta data
 				if (!empty($metaData['include'])) {
-					foreach ($metaData['include'] as $template) {
-						$includedTemplateFilename = $this->getSourceFilename($template['templateName'], $packageID);
+					foreach ($metaData['include'] as $includedTemplate) {
+						$tplPackageID = $this->getPackageID($includedTemplate, $packageID);
+						$includedTemplateFilename = $this->getSourceFilename($includedTemplate, $tplPackageID);
 						$includedMTime = @filemtime($includedTemplateFilename);
 						
 						if ($includedMTime >= $compileMTime) {
@@ -468,16 +470,11 @@ class TemplateEngine extends SingletonFactory {
 	 * @param	array		$metaData
 	 */
 	protected function compileTemplate($templateName, $sourceFilename, $compiledFilename, array $metaData) {
-		// get compiler
-		if (!($this->compilerObj instanceof TemplateCompiler)) {
-			$this->compilerObj = $this->getCompiler();
-		}
-		
 		// get source
 		$sourceContent = $this->getSourceContent($sourceFilename);
 		
 		// compile template
-		$this->compilerObj->compile($templateName, $sourceContent, $compiledFilename, $metaData);
+		$this->getCompiler()->compile($templateName, $sourceContent, $compiledFilename, $metaData);
 	}
 	
 	/**
@@ -485,8 +482,12 @@ class TemplateEngine extends SingletonFactory {
 	 * 
 	 * @return	wcf\system\template\TemplateCompiler
 	 */
-	protected function getCompiler() {
-		return new TemplateCompiler($this);
+	public function getCompiler() {
+		if ($this->compilerObj === null) {
+			$this->compilerObj = new TemplateCompiler($this);
+		}
+		
+		return $this->compilerObj;
 	}
 	
 	/**
@@ -809,7 +810,9 @@ class TemplateEngine extends SingletonFactory {
 		
 		// find first newline
 		$position = strpos($contents, "\n");
-		if ($position === false) throw new SystemException("Unable to load meta data for template '".$templateName."'");
+		if ($position === false) {
+			return null;
+		}
 		
 		// cut contents
 		$contents = substr($contents, $position + 1);
@@ -817,7 +820,7 @@ class TemplateEngine extends SingletonFactory {
 		// read serializes data
 		$data = @unserialize($contents);
 		if ($data === false || !is_array($data)) {
-			throw new SystemException("Invalid meta data for template '".$templateName."'");
+			return null;
 		}
 		
 		return $data;

@@ -1,5 +1,5 @@
 <div id="workerContainer">
-	<header class="mainHeading">
+	<header class="wcf-mainHeading">
 		<img src="{@RELATIVE_WCF_DIR}icon/working2.svg" alt="" />
 		<hgroup>
 			<h1>Aufgaben werden ausgeführt &hellip;</h1>

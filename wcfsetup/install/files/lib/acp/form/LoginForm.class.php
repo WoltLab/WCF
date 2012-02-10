@@ -2,10 +2,10 @@
 namespace wcf\acp\form;
 use wcf\data\user\User;
 use wcf\form\AbstractForm;
-use wcf\system\user\authentication\UserAuthenticationFactory;
-use wcf\system\user\authentication\EmailUserAuthentication;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\user\authentication\EmailUserAuthentication;
+use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;

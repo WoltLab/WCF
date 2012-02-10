@@ -1,9 +1,9 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
-use wcf\data\user\group\UserGroup;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -167,8 +167,8 @@ class UserEditForm extends UserAddForm {
 			'languages' => $this->visibleLanguages,
 			'options' => $saveOptions
 		);
-		$userAction = new UserAction(array($this->userID), 'update', $data);
-		$userAction->executeAction();
+		$this->objectAction = new UserAction(array($this->userID), 'update', $data);
+		$this->objectAction->executeAction();
 		
 		$this->saved();
 		

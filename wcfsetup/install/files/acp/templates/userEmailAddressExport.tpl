@@ -38,8 +38,8 @@
 						
 						<dl>
 							<dd><!-- ToDo: Definition List -->
-								<li><label><input type="radio" name="fileType" value="csv" {if $fileType == 'csv'}checked="checked" {/if}class="enablesOptions" data-disable-options="[ ]" data-enable-options="[ 'separatorDiv', 'textSeparatorDiv' ]" /> {lang}wcf.acp.user.exportEmailAddress.fileType.csv{/lang}</label></li>
-								<li><label><input type="radio" class="enablesOptions" name="fileType" value="xml" {if $fileType == 'xml'}checked="checked" {/if}data-disable-options="[ 'separatorDiv', 'textSeparatorDiv' ]" data-enable-options="[ ]" /> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label></li>
+								<li><label><input type="radio" name="fileType" value="csv" {if $fileType == 'csv'}checked="checked" {/if}class="jsEnablesOptions" data-disable-options="[ ]" data-enable-options="[ 'separatorDiv', 'textSeparatorDiv' ]" /> {lang}wcf.acp.user.exportEmailAddress.fileType.csv{/lang}</label></li>
+								<li><label><input type="radio" class="jsEnablesOptions" name="fileType" value="xml" {if $fileType == 'xml'}checked="checked" {/if}data-disable-options="[ 'separatorDiv', 'textSeparatorDiv' ]" data-enable-options="[ ]" /> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label></li>
 							</dd>
 						</dl>
 					</fieldset>

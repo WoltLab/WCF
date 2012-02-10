@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\form;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\data\option\Option;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserAction;
@@ -8,6 +7,7 @@ use wcf\form\AbstractForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
@@ -196,8 +196,8 @@ class UserAddForm extends UserOptionListForm {
 			'languages' => $this->visibleLanguages,
 			'options' => $saveOptions
 		);
-		$userAction = new UserAction(array(), 'create', $data);
-		$userAction->executeAction();
+		$this->objectAction = new UserAction(array(), 'create', $data);
+		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show empty add form

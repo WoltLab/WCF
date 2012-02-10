@@ -1,11 +1,11 @@
 <?php
 namespace wcf\acp\form;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\data\option\category\OptionCategory;
-use wcf\data\option\OptionAction;
 use wcf\data\option\Option;
+use wcf\data\option\OptionAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 
@@ -85,8 +85,8 @@ class OptionForm extends AbstractOptionListForm {
 		
 		// save options
 		$saveOptions = $this->optionHandler->save('wcf.acp.option', 'wcf.acp.option.option');
-		$optionAction = new OptionAction(array(), 'updateAll', array('data' => $saveOptions));
-		$optionAction->executeAction();
+		$this->objectAction = new OptionAction(array(), 'updateAll', array('data' => $saveOptions));
+		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// show succes message

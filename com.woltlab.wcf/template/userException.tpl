@@ -3,21 +3,20 @@
 	<title>{lang}wcf.global.error.title{/lang} - {lang}{PAGE_TITLE}{/lang}</title>
 	{include file='headInclude' sandbox=false}
 </head>
+
 <body{if $templateName|isset} id="tpl{$templateName|ucfirst}"{/if}>
 {include file='header' sandbox=false}
-
-<div id="main">
-	<p class="error" id="errorMessage">
+	
+	<p id="errorMessage" class="wcf-error">
 		{@$message}
 	</p>
-</div>
-<script type="text/javascript">
-	//<![CDATA[
-	if (document.referrer) {
-		$('#errorMessage').append('<br /><a href="' + document.referrer + '">{lang}wcf.global.error.backward{/lang}</a>'); 
-	}
-	//]]>
-</script>
+	<script type="text/javascript">
+		//<![CDATA[
+		if (document.referrer) {
+			$('#errorMessage').append('<br /><a href="' + document.referrer + '">{lang}wcf.global.error.backward{/lang}</a>'); 
+		}
+		//]]>
+	</script>
 
 {if ENABLE_DEBUG_MODE}
 	<!-- 

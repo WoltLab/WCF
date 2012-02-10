@@ -38,9 +38,10 @@ class SystemException extends LoggedException implements IPrintableException {
 	 * @param	string		$message	error message
 	 * @param	integer		$code		error code
 	 * @param	string		$description	description of the error
+	 * @param	\Exception	$previous	repacked Exception
 	 */
-	public function __construct($message = '', $code = 0, $description = '') {
-		parent::__construct($message, $code);
+	public function __construct($message = '', $code = 0, $description = '', \Exception $previous = null) {
+		parent::__construct($message, $code, $previous);
 		$this->description = $description;
 	}
 	
@@ -58,7 +59,8 @@ class SystemException extends LoggedException implements IPrintableException {
 	 * @see	\Exception::getTraceAsString()
 	 */
 	public function __getTraceAsString() {
-		$string = preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $this->getTraceAsString());
+		$e = ($this->getPrevious() ?: $this);
+		$string = preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e->getTraceAsString());
 		$string = preg_replace('/mysqli->mysqli\(.*\)/', 'mysqli->mysqli(...)', $string);
 		return $string;
 	}
@@ -81,7 +83,7 @@ class SystemException extends LoggedException implements IPrintableException {
 		
 		// print report
 		echo '<?xml version="1.0" encoding="UTF-8"?>';
-		
+		$e = ($this->getPrevious() ?: $this);
 		?>
 
 		<!DOCTYPE html>
@@ -155,9 +157,9 @@ class SystemException extends LoggedException implements IPrintableException {
 							<h2>Information:</h2>
 							<p>
 								<b>error message:</b> <?php echo StringUtil::encodeHTML($this->_getMessage()); ?><br>
-								<b>error code:</b> <?php echo intval($this->getCode()); ?><br>
+								<b>error code:</b> <?php echo intval($e->getCode()); ?><br>
 								<?php echo $this->information; ?>
-								<b>file:</b> <?php echo StringUtil::encodeHTML($this->getFile()); ?> (<?php echo $this->getLine(); ?>)<br>
+								<b>file:</b> <?php echo StringUtil::encodeHTML($e->getFile()); ?> (<?php echo $e->getLine(); ?>)<br>
 								<b>php version:</b> <?php echo StringUtil::encodeHTML(phpversion()); ?><br>
 								<b>wcf version:</b> <?php echo WCF_VERSION; ?><br>
 								<b>date:</b> <?php echo gmdate('r'); ?><br>

@@ -1,15 +1,15 @@
 <?php
 namespace wcf\system\package;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\data\option\OptionEditor;
+use wcf\data\package\installation\queue\PackageInstallationQueue;
+use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
 use wcf\data\package\PackageList;
-use wcf\data\package\installation\queue\PackageInstallationQueue;
-use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\setup\Uninstaller;
 use wcf\system\WCF;

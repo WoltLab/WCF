@@ -1,9 +1,9 @@
 <?php
 namespace wcf\acp\action;
 use wcf\action\AbstractDialogAction;
-use wcf\data\package\Package;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
+use wcf\data\package\Package;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\package\PackageUninstallationDispatcher;
@@ -110,10 +110,40 @@ class UninstallPackageAction extends InstallPackageAction {
 		if ($node == '') {
 			// remove node data
 			$this->installation->nodeBuilder->purgeNodes();
+			$this->finalize();
+			
+			// redirect to application if not already within one
+			if (PACKAGE_ID == 1) {
+				// select first installed application
+				$sql = "SELECT		packageID
+					FROM		wcf".WCF_N."_package
+					WHERE		packageID <> 1
+							AND isApplication = 1
+					ORDER BY	installDate ASC";
+				$statement = WCF::getDB()->prepareStatement($sql, 1);
+				$statement->execute();
+				$row = $statement->fetchArray();
+				$packageID = ($row === false) ? 1 : $row['packageID'];
+			}
+			else {
+				$packageID = PACKAGE_ID;
+			}
+				
+			// get domain path
+			$sql = "SELECT	domainName, domainPath
+				FROM	wcf".WCF_N."_application
+				WHERE	packageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($packageID));
+			$row = $statement->fetchArray();
+			
+			// build redirect location
+			$location = $row['domainName'] . $row['domainPath'] . 'acp/index.php/PackageList/' . SID_ARG_1ST;
 			
 			// show success
 			$this->data = array(
 				'progress' => 100,
+				'redirectLocation' => $location,
 				'step' => 'success'
 			);
 			return;

@@ -2,9 +2,11 @@
 namespace wcf\acp\action;
 use wcf\action\AbstractDialogAction;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
+use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -85,6 +87,7 @@ class InstallPackageAction extends AbstractDialogAction {
 			if ($step->getNode() == '') {
 				// perform final actions
 				$this->installation->completeSetup();
+				$this->finalize();
 				
 				// redirect to application if not already within one
 				if (PACKAGE_ID == 1) {
@@ -198,5 +201,23 @@ class InstallPackageAction extends AbstractDialogAction {
 		}
 		
 		return $currentAction;
+	}
+	
+	/**
+	 * Clears resources after successful installation.
+	 */
+	protected function finalize() {
+		// clear cache
+		$sql = "SELECT	packageDir
+			FROM	wcf".WCF_N."_package
+			WHERE	isApplication = 1";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		
+		while ($row = $statement->fetchArray()) {
+			$cacheDir = FileUtil::getRealPath(WCF_DIR . $row['packageDir'] . 'cache/');
+			
+			CacheHandler::getInstance()->clear($cacheDir, '*.php');
+		}
 	}
 }

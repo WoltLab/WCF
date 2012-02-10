@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\data\package\Package;
-use wcf\system\package\PackageInstallationSQLParser;
 use wcf\system\exception\SystemException;
+use wcf\system\package\PackageInstallationSQLParser;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 

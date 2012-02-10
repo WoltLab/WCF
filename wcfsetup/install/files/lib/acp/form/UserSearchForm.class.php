@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\form;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\data\option\Option;
 use wcf\data\search\SearchEditor;
 use wcf\form\AbstractForm;
@@ -8,6 +7,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\wcf;
 use wcf\util\ArrayUtil;

@@ -113,13 +113,17 @@ class StringUtil {
 	}
 
 	/**
-	 * alias to php trim() function
+	 * Swallowes whitespace from beginnung and end of the string.
 	 * 
 	 * @param 	string 		$string
 	 * @return 	string 		$string
 	 */
 	public static function trim($text) {
-		return trim($text);
+		// Whitespace + (narrow) non breaking spaces.
+		// No one can triforce now.
+		$text = preg_replace('/^(\s|'.chr(226).chr(128).chr(175).'|'.chr(194).chr(160).')+/', '', $text);
+		$text = preg_replace('/(\s|'.chr(226).chr(128).chr(175).'|'.chr(194).chr(160).')+$/', '', $text);
+		return $text;
 	}
 
 	/**

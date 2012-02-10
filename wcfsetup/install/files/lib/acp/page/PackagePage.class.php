@@ -71,7 +71,7 @@ class PackagePage extends AbstractPage {
 				die('ROLLBACK');
 				WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
 				require_once(WCF_DIR.'lib/acp/package/PackageInstallationRollback.class.php');
-				new PackageInstallationRollback($this->queueID);
+				new PackageInstallationRollback($this->queueID); // TODO: undefined class PackageInstallationRollback
 			break;
 			
 			case 'openQueue':

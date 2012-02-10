@@ -1,9 +1,9 @@
 <?php
 namespace wcf\form;
 use wcf\page\AbstractPage;
-use wcf\system\WCF;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
+use wcf\system\WCF;
 
 /**
  * This class provides default implementations for the Form interface.
@@ -28,6 +28,12 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	 * @var string
 	 */
 	public $errorType = '';
+	
+	/**
+	 * database object action
+	 * @var	wcf\data\AbstractDatabaseObjectAction
+	 */
+	public $objectAction = null;
 	
 	/**
 	 * @see wcf\form\IForm::submit()

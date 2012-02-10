@@ -1,12 +1,12 @@
 <?php
 namespace wcf\acp\form;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupAction;
 use wcf\data\user\group\UserGroupEditor;
-use wcf\system\exception\UserInputException;
 use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\ClassUtil;
@@ -155,8 +155,8 @@ class UserGroupAddForm extends AbstractOptionListForm {
 			'data' => array_merge($this->additionalFields, array('groupName' => $this->groupName)),
 			'options' => $saveOptions
 		);
-		$groupAction = new UserGroupAction(array(), 'create', $data);
-		$groupAction->executeAction();
+		$this->objectAction = new UserGroupAction(array(), 'create', $data);
+		$this->objectAction->executeAction();
 		
 		if (!I18nHandler::getInstance()->isPlainValue('groupName')) {
 			$returnValues = $groupAction->getReturnValues();

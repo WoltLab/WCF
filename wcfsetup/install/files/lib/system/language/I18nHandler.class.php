@@ -24,6 +24,12 @@ class I18nHandler extends SingletonFactory {
 	protected $assignValueVariablesDisabled = false;
 	
 	/**
+	 * list of available languages
+	 * @var	array<wcf\data\language\Language>
+	 */
+	protected $availableLanguages = array();
+	
+	/**
 	 * list of element ids
 	 * @var	array<string>
 	 */
@@ -47,6 +53,13 @@ class I18nHandler extends SingletonFactory {
 	 */
 	protected $elementOptions = array();
 	
+	/**
+	 * @see wcf\system\SingletonFactory::init()
+	 */
+	protected function init() {
+		 $this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
+	}
+
 	/**
 	 * Registers a new element id, returns false if element id is already set.
 	 * 
@@ -128,10 +141,16 @@ class I18nHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$elementID
 	 * @param	boolean		$requireI18n
+	 * @param	boolean		$permitEmptyValue
 	 * @return	boolean
 	 */
-	public function validateValue($elementID, $requireI18n = false) {
+	public function validateValue($elementID, $requireI18n = false, $permitEmptyValue = false) {
 		if ($this->isPlainValue($elementID)) {
+			// plain values may be left empty
+			if ($permitEmptyValue) {
+				return true;
+			}
+			
 			if ($requireI18n || $this->getValue($elementID) == '') {
 				return false;
 			}
@@ -140,8 +159,12 @@ class I18nHandler extends SingletonFactory {
 			return false;
 		}
 		else {
-			foreach ($this->i18nValues[$elementID] as $value) {
-				if (empty($value)) {
+			foreach ($this->availableLanguages as $language) {
+				if (!isset($this->i18nValues[$elementID][$language->languageID])) {
+					return false;
+				}
+				
+				if (empty($this->i18nValues[$elementID][$language->languageID])) {
 					return false;
 				}
 			}
@@ -327,7 +350,7 @@ class I18nHandler extends SingletonFactory {
 		}
 		
 		WCF::getTPL()->assign(array(
-			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
+			'availableLanguages' => $this->availableLanguages,
 			'i18nPlainValues' => $elementValues,
 			'i18nValues' => $elementValuesI18n
 		));
