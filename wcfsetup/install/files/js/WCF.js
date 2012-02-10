@@ -1836,7 +1836,7 @@ WCF.MultipleLanguageInput.prototype = {
 		$button.click($.proxy(this._enable, this));
 		WCF.CloseOverlayHandler.addCallback(this._element.wcfIdentify(), $.proxy(this._closeSelection, this));
 		
-		if (enableOnInit) {
+		if (enableOnInit || this._forceSelection) {
 			$button.trigger('click');
 
 			// pre-select current language
@@ -1877,7 +1877,9 @@ WCF.MultipleLanguageInput.prototype = {
 				}
 
 				// disable language input
-				$('<li class="divider">disable i18n</li>').click($.proxy(this._disable, this)).appendTo(this._list);
+				if (!this._forceSelection) {
+					$('<li class="divider">disable i18n</li>').click($.proxy(this._disable, this)).appendTo(this._list);
+				}
 			}
 
 			this._isEnabled = true;
@@ -1967,6 +1969,10 @@ WCF.MultipleLanguageInput.prototype = {
 	 * Disables language selection for current element.
 	 */
 	_disable: function() {
+		if (this._forceSelection) {
+			return;
+		}
+		
 		// remove active marking
 		this._list.prev('.wcf-dropdownCaption').children('span').removeClass('active').text('enable i18n');
 		this._closeSelection();
