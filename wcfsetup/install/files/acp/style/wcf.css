@@ -194,6 +194,7 @@ header.wcf-pageHeader {
 	width: 100%;
 	overflow: hidden;
 	position: relative;
+	z-index: 110;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -590,6 +591,7 @@ nav.wcf-topMenu {
 	border-top-right-radius: 5px;
 	background-color: rgba(0, 0, 0, .4);
 	display: inline-block;
+	position: relative;
 }
 
 .wcf-mainMenu > ul > li {
@@ -856,6 +858,7 @@ nav.wcf-topMenu {
 	background-color: #d8e7f5;
 	margin: 0 23px;
 	position: relative;
+	z-index: 90;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -1229,6 +1232,7 @@ section.wcf-content .wcf-content {
 	text-align: center;
 	padding: 0 23px 33px;
 	position: relative;
+	z-index: 110;
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
