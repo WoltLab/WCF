@@ -2403,6 +2403,9 @@ WCF.Template.prototype = {
 		// insert delimiter tags
 		$compiled = $compiled.replace('{ldelim}', '{').replace('{rdelim}', '}');
 		
+		// escape newlines
+		$compiled = $compiled.replace(/(\r\n|\n|\r)/g, '\\n');
+		
 		// and re-insert saved literals
 		return new WCF.Template.Compiled("'" + this.insertLiterals($compiled) + "';");
 	}
