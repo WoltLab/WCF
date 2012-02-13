@@ -18,7 +18,7 @@
 		<div id="logo" class="wcf-logo">
 			<!-- clickable area -->
 			<a href="{link controller='Index'}{/link}">
-				<!-- *** insert header logo here -->
+				{event name='headerLogo'}
 			</a>
 			<!-- /clickable area -->
 			

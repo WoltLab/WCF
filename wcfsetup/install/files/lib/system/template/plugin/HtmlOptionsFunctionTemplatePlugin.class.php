@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
+use wcf\data\DatabaseObjectList;
 use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
@@ -13,9 +14,11 @@ use wcf\util\StringUtil;
  * {htmlOptions options=$array name="x"}
  * {htmlOptions output=$outputArray}
  * {htmlOptions output=$outputArray values=$valueArray}
+ * {htmlOptions object=$databaseObjectList}
+ * {htmlOptions object=$databaseObjectList selected=$foo}
  *
  * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
@@ -28,7 +31,10 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 	 * @see wcf\system\template\IFunctionTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
-		if (isset($tagArgs['output']) && is_array($tagArgs['output'])) {
+		if (isset($tagArgs['object']) && ($tagArgs['object'] instanceof DatabaseObjectList)) {
+			$tagArgs['options'] = $tagArgs['object'];
+		}
+		else if (isset($tagArgs['output']) && is_array($tagArgs['output'])) {
 			if (count($tagArgs['output'])) {
 				if (isset($tagArgs['values']) && is_array($tagArgs['values'])) {
 					if (count($tagArgs['output']) == count($tagArgs['values'])) {
@@ -47,8 +53,8 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 			}
 		}
 
-		if (!isset($tagArgs['options']) || !is_array($tagArgs['options'])) {
-			throw new SystemException("missing 'options' argument in htmlOptions tag");
+		if (!isset($tagArgs['options']) || (!is_array($tagArgs['options']) && !($tagArgs['options'] instanceof DatabaseObjectList))) {
+			throw new SystemException("missing 'options' or 'object' argument in htmlOptions tag");
 		}
 		
 		if (isset($tagArgs['disableEncoding']) && $tagArgs['disableEncoding']) {
@@ -71,7 +77,7 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 		// create also a 'select' tag
 		if (isset($tagArgs['name'])) {
 			// unset all system vars
-			unset($tagArgs['options'], $tagArgs['selected'], $tagArgs['output'], $tagArgs['values'], $tagArgs['disableEncoding']);
+			unset($tagArgs['object'], $tagArgs['options'], $tagArgs['selected'], $tagArgs['output'], $tagArgs['values'], $tagArgs['disableEncoding']);
 			
 			// generate 'select' parameters
 			$params = '';
@@ -98,12 +104,19 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 			$html = '<optgroup label="'.$this->encodeHTML($key).'">'."\n";
 		}
 		
-		foreach ($values as $childKey => $value) {
-			if (is_array($value)) {
-				$html .= $this->makeOptionGroup($childKey, $value);
-			}
-			else {
+		if ($values instanceof DatabaseObjectList) {
+			foreach ($values as $childKey => $value) {
 				$html .= $this->makeOption($childKey, $value);
+			}
+		}
+		else {
+			foreach ($values as $childKey => $value) {
+				if (is_array($value)) {
+					$html .= $this->makeOptionGroup($childKey, $value);
+				}
+				else {
+					$html .= $this->makeOption($childKey, $value);
+				}
 			}
 		}
 		
