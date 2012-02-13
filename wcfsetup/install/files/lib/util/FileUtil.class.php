@@ -18,6 +18,12 @@ use wcf\system\WCF;
  */
 class FileUtil {
 	/**
+	 * finfo instance
+	 * @var \finfo
+	 */
+	protected static $finfo = null;
+	
+	/**
 	 * Tries to find the temp folder.
 	 * 
 	 * @return	string
@@ -599,5 +605,20 @@ class FileUtil {
 	 */
 	public static function isApacheModule() {
 		return function_exists('apache_get_version');
+	}
+	
+	/**
+	 * Returns the mime type of a file.
+	 * 
+	 * @param	string		$filename
+	 * @return	string
+	 */
+	public static function getMimeType($filename) {
+		if (self::$finfo === null) {
+			if (!class_exists('\finfo', false)) return '';
+			self::$finfo = new \finfo(FILEINFO_MIME_TYPE);
+		}
+		
+		return self::$finfo->file($filename);
 	}
 }

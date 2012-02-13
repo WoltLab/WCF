@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\upload;
+use wcf\util\FileUtil;
 
 /**
  * Handles file uploads.
@@ -33,11 +34,11 @@ class UploadHandler {
 		if (is_array($rawFileData['name'])) {
 			// multiple uploads
 			for ($i = 0, $l = count($rawFileData['name']); $i < $l; $i++) {
-				$this->files[] = new UploadFile($rawFileData['name'][$i], $rawFileData['tmp_name'][$i], $rawFileData['size'][$i], $rawFileData['error'][$i], $rawFileData['type'][$i]);
+				$this->files[] = new UploadFile($rawFileData['name'][$i], $rawFileData['tmp_name'][$i], $rawFileData['size'][$i], $rawFileData['error'][$i], (FileUtil::getMimeType($rawFileData['tmp_name'][$i]) ?: $rawFileData['type'][$i]));
 			}
 		}
 		else {
-			$this->files[] = new UploadFile($rawFileData['name'], $rawFileData['tmp_name'], $rawFileData['size'], $rawFileData['error'], $rawFileData['type']);
+			$this->files[] = new UploadFile($rawFileData['name'], $rawFileData['tmp_name'], $rawFileData['size'], $rawFileData['error'], (FileUtil::getMimeType($rawFileData['tmp_name']) ?: $rawFileData['type']));
 		}
 	}
 	
