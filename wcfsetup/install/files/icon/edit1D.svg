@@ -17,11 +17,12 @@
 			<![CDATA[
 				.Upper1 {fill: #666;}
 				.Lower1 {fill: #fff;}
+				.disabled {opacity: .3;}
 			]]>
 		</style>
 	</defs>
 	
-	<g id="IconEdit" style="opacity: .3;">
+	<g id="IconEdit" class="disabled">
 		<g id="Line">
 			<path class="Lower1" d="M1,15c1.6845703,0.171875,3,0.296875,4.1586914-0.125
 				c1.1821289-0.4306641,1.3759766-0.3876953,2.1137695-0.5917969C9.2773438,13.7285156,9.9814453,13.9970703,12,13.9970703

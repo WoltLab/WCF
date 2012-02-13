@@ -17,11 +17,12 @@
 			<![CDATA[
 				.Upper1 {fill: #666;}
 				.Lower1 {fill: #fff;}
+				.disabled {opacity: .3;}
 			]]>
 		</style>
 	</defs>
 	
-	<g id="IconEnabled" style="opacity: .3;">
+	<g id="IconEnabled" class="disabled">
 		<g class="Lower1">
 			<path id="Circle2" style="fill-rule: evenodd; clip-rule: evenodd;" d="M2.347168,8.5
 				c0,2.8447266,2.3066406,5.1523438,5.152832,5.1523438c2.8447266,0,5.1523438-2.3076172,5.1523438-5.1523438

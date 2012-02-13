@@ -398,7 +398,7 @@ nav.wcf-topMenu {
 }
 
 .wcf-topMenu > div > ul > li:hover .wcf-dropdownCaption,
-.topMenu > div > ul > li:hover .wcf-dropdownCaption a {
+.wcf-topMenu > div > ul > li:hover .wcf-dropdownCaption a {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
 	color: rgba(255, 255, 255, 1);
 	background-color: rgba(0, 0, 0, .7);
@@ -1512,6 +1512,16 @@ table .wcf-label {
 
 
 /* ############## ToDo: Dropdown Global ############## */
+
+/* Dropdown Caption */
+
+.wcf-dropdownCaption,
+.wcf-dropdownCaption a {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+/* Dropdown */
 
 .wcf-dropdown {
 	color: rgba(255, 255, 255, 1);
