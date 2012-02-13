@@ -1,7 +1,7 @@
 {include file='header'}
 
 <header class="wcf-mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/export1.svg" alt="" />
+	<img src="{@RELATIVE_WCF_DIR}icon/download1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.language.export{/lang}</h1>
 	</hgroup>
