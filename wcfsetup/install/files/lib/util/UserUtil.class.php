@@ -151,14 +151,19 @@ class UserUtil {
 	public static function getRequestURI() {
 		$REQUEST_URI = '';
 		
+		$appendQueryString = true;
 		if (!empty($_SERVER['ORIG_PATH_INFO']) && strpos($_SERVER['ORIG_PATH_INFO'], '.php') !== false) {
 			$REQUEST_URI = $_SERVER['ORIG_PATH_INFO'];
 		}
 		else if (!empty($_SERVER['ORIG_SCRIPT_NAME'])) {
 			$REQUEST_URI = $_SERVER['ORIG_SCRIPT_NAME'];
 		}
-		else if (!empty($_SERVER['SCRIPT_NAME'])) {
-			$REQUEST_URI = $_SERVER['SCRIPT_NAME'];
+		else if (!empty($_SERVER['SCRIPT_NAME']) && (isset($_SERVER['PATH_INFO']) && !empty($_SERVER['PATH_INFO']))) {
+			$REQUEST_URI = $_SERVER['SCRIPT_NAME'] . $_SERVER['PATH_INFO'];
+		}
+		else if (isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])) {
+			$REQUEST_URI = $_SERVER['REQUEST_URI'];
+			$appendQueryString = false;
 		}
 		else if (!empty($_SERVER['PHP_SELF'])) {
 			$REQUEST_URI = $_SERVER['PHP_SELF'];
@@ -166,7 +171,7 @@ class UserUtil {
 		else if (!empty($_SERVER['PATH_INFO'])) {
 			$REQUEST_URI = $_SERVER['PATH_INFO'];
 		}
-		if (!empty($_SERVER['QUERY_STRING'])) {
+		if ($appendQueryString && !empty($_SERVER['QUERY_STRING'])) {
 			$REQUEST_URI .= '?'.$_SERVER['QUERY_STRING'];
 		}
 		
