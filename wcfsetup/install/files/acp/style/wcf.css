@@ -366,6 +366,10 @@ nav.wcf-topMenu {
 	padding: 0 23px 0;
 }
 
+.wcf-topMenu ul li {
+	white-space: nowrap;
+}
+
 /* Menu Items (1st level) */
 
 .wcf-topMenu > div > ul > li {
@@ -396,17 +400,26 @@ nav.wcf-topMenu {
 
 /* ToDo: Top-Menu Dropdown Caption */
 
+.wcf-topMenu > div > ul > li > .wcf-dropdownCaption {
+	background-image: url('../../icon/dropdown2.svg');
+	background-position: 97% center;
+	background-repeat: no-repeat;
+	padding-right: 15px !important;
+}
+
 .wcf-topMenu > div > ul > li > .wcf-dropdownCaption,
-.wcf-topMenu > div > ul > li .wcf-dropdownCaption > a {
+.wcf-topMenu > div > ul > li > .wcf-dropdownCaption > a {
 	padding: 6px;
 }
 
-.wcf-topMenu > div > ul > li:hover .wcf-dropdownCaption,
-.wcf-topMenu > div > ul > li:hover .wcf-dropdownCaption a {
+.wcf-topMenu > div > ul > li:hover > .wcf-dropdownCaption,
+.wcf-topMenu > div > ul > li:hover > .wcf-dropdownCaption a {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, .7);
 	color: rgba(255, 255, 255, 1);
 	background-color: rgba(0, 0, 0, .7);
 }
+
+/* Badges */
 
 .wcf-topMenu > div > ul > li > .wcf-dropdownCaption > .wcf-badge {
 	margin: -3px 3px;
@@ -419,15 +432,10 @@ nav.wcf-topMenu {
 	color: #369 !important;
 }
 
+/* Images in front of the caption */
+
 .wcf-topMenu > div > ul > li > .wcf-dropdownCaption > img {
 	margin: -7px 0 -5px 0;
-}
-
-.wcf-topMenu > div > ul > li > .wcf-dropdownCaption {
-	background-image: url('../../icon/dropdown2.svg');
-	background-position: 97% center;
-	background-repeat: no-repeat;
-	padding-right: 15px !important;
 }
 
 
@@ -444,10 +452,6 @@ nav.wcf-topMenu {
 
 .wcf-topMenu ul li:hover .wcf-dropdownCaption ~ .wcf-dropdown {
 	display: block;
-}
-
-.wcf-topMenu ul li {
-	white-space: nowrap;
 }
 
 .wcf-topMenu ul li .wcf-dropdown {
