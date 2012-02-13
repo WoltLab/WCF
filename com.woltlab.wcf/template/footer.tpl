@@ -1,4 +1,4 @@
-				{include file='breadcrumbs' sandbox=false}
+				{include file='breadcrumbs' sandbox=false __microdata=false}
 				
 			</section>
 			<!-- /CONTENT -->
