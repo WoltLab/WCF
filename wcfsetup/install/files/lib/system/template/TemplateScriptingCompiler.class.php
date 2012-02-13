@@ -781,14 +781,17 @@ class TemplateScriptingCompiler {
 			if (!empty($args)) {
 				foreach ($args as $variable => $value) {
 					if (substr($value, 0, 1) == "'") {
+						// string values
 						$phpCode .= "\$this->v['".$variable."'] = ".$value.";\n";
 					}
 					else {
 						if (preg_match('~^\$this->v\[\'(.*)\'\]$~U', $value, $matches)) {
+							// value is a variable itself
 							$phpCode .= "\$this->v['".$variable."'] = ".$value.";\n";
 						}
 						else {
-							throw new SystemException("Could not resolve variable type for value '".$value."'");
+							// value is boolean, an integer or anything else
+							$phpCode .= "\$this->v['".$variable."'] = ".$value.";\n";
 						}
 					}
 				}
