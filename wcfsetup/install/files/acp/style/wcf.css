@@ -1997,16 +1997,18 @@ select {
 }
 
 input[type='text'],
-input[type='search'],
+input[type='search'], /* Does not work in WebKit browsers */
 input[type='date'],
 input[type='email'],
 input[type='url'],
-input[type='password'] {
-	padding: 5px 3px; /* Does not work with input[type='search'] in WebKit browsers */
+input[type='password'],
+textarea {
+	padding: 5px 3px;
 }
 
 /* Normal State */
 
+.wcf-input,
 input[type='text'],
 input[type='search'],
 input[type='date'],
@@ -2035,6 +2037,7 @@ textarea {
 
 /* Hover State */
 
+:not(.wcf-aclContainer ul).wcf-input:hover,
 input[type='text']:hover,
 input[type='search']:hover,
 input[type='date']:hover,
@@ -2048,6 +2051,7 @@ textarea:hover {
 
 /* Active & Focus State */
 
+.wcf-input:active,
 input[type='text']:active,
 input[type='search']:active,
 input[type='date']:active,
@@ -2056,6 +2060,7 @@ input[type='url']:active,
 input[type='password']:active,
 textarea:active,
 
+.wcf-input:focus,
 input[type='text']:focus,
 input[type='search']:focus,
 input[type='date']:focus,
@@ -2076,6 +2081,7 @@ textarea:focus {
 
 /* Read Only State */
 
+.wcf-input[readonly='readonly'],
 input[type='text'][readonly='readonly'],
 input[type='search'][readonly='readonly'],
 input[type='email'][readonly='readonly'],
@@ -2096,6 +2102,7 @@ textarea[readonly='readonly'] {
 
 /* Disabled State */
 
+.wcf-input[disabled='disabled'],
 input[type='text'][disabled='disabled'],
 input[type='search'][disabled='disabled'],
 input[type='date'][disabled='disabled'],
@@ -2172,7 +2179,7 @@ textarea[disabled='disabled'] {
 	width: auto;
 }
 
-/* Special -> Search Input */
+/* Special -> Search Input WebKit */
 
 input[type=search] {
 	border-radius: 30px;
@@ -3384,40 +3391,65 @@ tr .columnIcon img {
 	color: #68b;
 	border: 1px solid #9be;
 	background-color: #def;
-	background-image: url('../../icon/systemInfo.svg');
-	background-size: 24px;
-	background-position: 13px center;
-	background-repeat: no-repeat;
+	
+    background-image: url('../../icon/systemInfo.svg'), -webkit-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemInfo.svg'), -moz-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemInfo.svg'), -ms-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemInfo.svg'), -o-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemInfo.svg'), repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    
+	background-size: 24px, auto;
+	background-position: 13px center, left top;
+	background-repeat: no-repeat, repeat;
 }
 
 .wcf-success {
 	color: #090;
 	border: 1px solid #0c0;
 	background-color: #efe;
-	background-image: url('../../icon/systemSuccess.svg');
-	background-size: 24px;
-	background-position: 13px center;
-	background-repeat: no-repeat;
+	
+    background-image: url('../../icon/systemSuccess.svg'), -webkit-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemSuccess.svg'), -moz-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemSuccess.svg'), -ms-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemSuccess.svg'), -o-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemSuccess.svg'), repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    
+	background-size: 24px, auto;
+	background-position: 13px center, left top;
+	background-repeat: no-repeat, repeat;
+	
 }
 
 .wcf-warning {
 	color: #990;
 	border: 1px solid #cc0;
 	background-color: #ffd;
-	background-image: url('../../icon/systemWarning.svg');
-	background-size: 24px;
-	background-position: 13px center;
-	background-repeat: no-repeat;
+	
+    background-image: url('../../icon/systemWarning.svg'), -webkit-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemWarning.svg'), -moz-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemWarning.svg'), -ms-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemWarning.svg'), -o-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemWarning.svg'), repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    
+	background-size: 24px, auto;
+	background-position: 13px center, left top;
+	background-repeat: no-repeat, repeat;
 }
 
 .wcf-error {
 	color: #c00;
 	border: 1px solid #f99;
 	background-color: #fee;
-	background-image: url('../../icon/systemError.svg');
-	background-size: 24px;
-	background-position: 13px center;
-	background-repeat: no-repeat;
+	
+    background-image: url('../../icon/systemError.svg'), -webkit-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemError.svg'), -moz-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemError.svg'), -ms-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemError.svg'), -o-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemError.svg'), repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    
+	background-size: 24px, auto;
+	background-position: 13px center, left top;
+	background-repeat: no-repeat, repeat;
 }
 
 /* Inline Errors */
@@ -3428,7 +3460,7 @@ tr .columnIcon img {
 	color: #c00;
 	border: 1px solid #ccc;
 	border-radius: 7px;
-	background-color: rgba(255, 255, 255, 1);
+	background-color: rgba(255, 238, 238, 1);
 	background-image: url('../../icon/systemError.svg');
 	background-size: 16px;
 	background-position: 5px center;
@@ -3436,7 +3468,7 @@ tr .columnIcon img {
 	margin-top: 5px;
 	padding: 2px 10px 2px 25px;
 	display: table !important;
-	position: relative; /* Firefox should support this from version 10 on */
+	position: relative; /* Firefox support (from version 10 on) is buggy */
 	clear: both;
 	
 	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
@@ -3460,7 +3492,7 @@ tr .columnIcon img {
 .wcf-innerError .pointer span {	
 	border-width: 0 5px 5px;
 	border-style: solid;
-	border-color: rgba(255, 255, 255, 1) transparent;
+	border-color: rgba(255, 238, 238, 1) transparent;
 	display: inline-block;
 	width: 0;
 	position: absolute;
@@ -3481,7 +3513,6 @@ tr .columnIcon img {
 
 /* Globals */
 
-.systemNotification,
 .wcf-systemNotification { /* declarations taken from .success */
 	background-color: rgba(238, 255, 238, 1);
 	border: 1px solid rgba(0, 204, 0, 1);
@@ -3504,7 +3535,6 @@ tr .columnIcon img {
 	transition: top .5s linear;
 }
 
-.systemNotification.open,
 .wcf-systemNotification.open {
 	top: 0;
 }
