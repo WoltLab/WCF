@@ -7,16 +7,12 @@
 
 <body{if $templateName|isset} id="tpl{$templateName|ucfirst}"{/if}>
 {include file='header' sandbox=false}
-
-<div id="main" class="wcf-main">
 	
 	<div class="wcf-success">
 		<p>{@$message}</p>
 		<p><a href="{$url}">{lang}wcf.global.redirect.url{/lang}</a></p>
 	</div>
-
-</div>
-
+	
 {include file='footer' sandbox=false}
 </body>
 </html>
