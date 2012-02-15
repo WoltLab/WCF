@@ -393,7 +393,7 @@ nav.wcf-topMenu {
 
 /* Removes the doubled padding if there's a link in the top menu */
 .wcf-topMenu > div > ul > li > span > a {
-	margin: -5px 0 -5px -5px;
+	margin: -6px 0 -6px -6px;
 }
 
 
@@ -620,23 +620,24 @@ nav.wcf-topMenu {
 }
 
 .wcf-mainMenu > ul > li.activeMenuItem:first-child {
-	margin: -5px -5px 0 0;
+	margin-right: -5px;
 }
 
 .wcf-mainMenu > ul > li.activeMenuItem:last-child {
-	margin: -5px 0 0 -5px;
+	margin-left: -5px;
 }
 
-.wcf-mainMenu > ul > li:only-child,
 .wcf-mainMenu > ul > li.activeMenuItem:only-child {
 	margin: -5px 0 0;
 }
 
 .wcf-mainMenu > ul > li > a {
 	font-weight: normal;
+	text-decoration: none;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 1);
 	color: #69c;
 	cursor: pointer;
+	white-space: nowrap;
 	display: inline-block;
 	position: relative;
 	
@@ -677,9 +678,8 @@ nav.wcf-topMenu {
 	
 }
 
-.wcf-mainMenu > ul > li > a,
-.wcf-mainMenu > ul > li:hover > a {
-	text-decoration: none;
+.wcf-mainMenu > ul > li:not(.activeMenuItem) {
+	margin-top: -3px;
 }
 
 .wcf-mainMenu > ul > li:not(.activeMenuItem):hover > a {
@@ -691,16 +691,15 @@ nav.wcf-topMenu {
 	font-weight: bold;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	color: #369;
-	white-space: nowrap;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	
 	background-color: #e7f2fd;
-	background-image: -webkit-linear-gradient(#fff, #e7f2fd);
-	background-image: -moz-linear-gradient(#fff, #e7f2fd);
-	background-image: -ms-linear-gradient(#fff, #e7f2fd);
-	background-image: -o-linear-gradient(#fff, #e7f2fd);
-	background-image: linear-gradient(#fff, #e7f2fd);
+	background-image: -webkit-linear-gradient(rgba(255, 255, 255, 1), #e7f2fd);
+	background-image: -moz-linear-gradient(rgba(255, 255, 255, 1), #e7f2fd);
+	background-image: -ms-linear-gradient(rgba(255, 255, 255, 1), #e7f2fd);
+	background-image: -o-linear-gradient(rgba(255, 255, 255, 1), #e7f2fd);
+	background-image: linear-gradient(rgba(255, 255, 255, 1), #e7f2fd);
 	
 	z-index: 10;
 }
