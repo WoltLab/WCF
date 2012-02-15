@@ -3458,7 +3458,7 @@ tr .columnIcon img {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	line-height: 1.5;
 	color: #c00;
-	border: 1px solid #ccc;
+	border: 1px solid #f99;
 	border-radius: 7px;
 	background-color: rgba(255, 238, 238, 1);
 	background-image: url('../../icon/systemError.svg');
@@ -3481,7 +3481,7 @@ tr .columnIcon img {
 .wcf-innerError .pointer {	
 	border-width: 0 7px 7px;
 	border-style: solid;
-	border-color: #ccc transparent;
+	border-color: #f99 transparent;
 	display: inline-block !important;
 	width: 0;
 	position: absolute;
