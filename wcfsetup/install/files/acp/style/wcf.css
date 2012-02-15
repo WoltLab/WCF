@@ -1561,11 +1561,11 @@ table .wcf-label {
 	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 	
-	-webkit-transition: color background height .1s ease;
-	-moz-transition: color background height .1s ease;
-	-ms-transition: color background height .1s ease;
-	-o-transition: color background height .1s ease;
-	transition: color background height .1s ease;
+	-webkit-transition: color background .1s ease;
+	-moz-transition: color background .1s ease;
+	-ms-transition: color background .1s ease;
+	-o-transition: color background .1s ease;
+	transition: color background .1s ease;
 }
 
 .wcf-dropdown.open {
@@ -1776,6 +1776,7 @@ fieldset:only-child {
 fieldset legend {
 	color: rgba(153, 153, 153, 1);
 	padding: 0 7px 0;
+	margin: auto -7px;
 }
 
 fieldset legend ~ p {
