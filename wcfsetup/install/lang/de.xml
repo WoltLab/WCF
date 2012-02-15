@@ -49,7 +49,7 @@
 		<item name="wcf.acp.group.data"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.acp.group.delete.sure"><![CDATA[Wollen Sie diese Benutzergruppe &bdquo;{$group->groupName}&ldquo; wirklich löschen?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Benutzergruppe bearbeiten]]></item>
-		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Sie sind selbst Mitglied dieser Benutzergruppe. Änderungen an den Zugriffsrechten dieser Benutzergruppe können womöglich dazu führen, dass Sie aus der Administrationsoberfläche ausgeschlossen werden. Bitte seien Sie entsprechend vorsichtig!]]></item>
+		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Sie sind Mitglied dieser Benutzergruppe! Änderungen an den Zugriffsrechten dieser Benutzergruppe können dazu führen, dass Sie aus der Administrationsoberfläche ausgeschlossen werden. Bitte seien Sie entsprechend vorsichtig!]]></item>
 		<item name="wcf.acp.group.groupName"><![CDATA[Name der Benutzergruppe]]></item>
 		<item name="wcf.acp.group.groupName.description"><![CDATA[Geben Sie einen Namen für die Gruppe an.]]></item>
 		<item name="wcf.acp.group.list"><![CDATA[Benutzergruppen]]></item>
