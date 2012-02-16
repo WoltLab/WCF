@@ -180,7 +180,7 @@ body {
 
 
 
-/* ############## Page Header ############## */
+/* ############## Page Header & Page Footer ############## */
 
 /* Globals */
 
@@ -199,16 +199,49 @@ header.wcf-pageHeader {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	header.wcf-pageHeader {
+	header.wcf-pageHeader,
+	header.wcf-pageFooter {
 		min-width: 800px;
 	}
 }
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	header.wcf-pageHeader {
+	header.wcf-pageHeader,
+	header.wcf-pageFooter {
 		min-width: auto;
 	}
+}
+
+.wcf-pageHeader:after,
+.wcf-pageFooter:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.wcf-pageFooter {
+	text-align: center;
+	position: relative;
+	z-index: 80;
+}
+
+
+
+/* -- -- -- Copyright -- -- -- */
+
+.wcf-pageFooter .wcf-copyright {
+	padding-top: 20px;
+	display: inline-block;
+}
+
+.wcf-pageFooter .wcf-copyright a {
+	text-shadow: 0 -1px 0 #000;
+}
+
+.wcf-pageFooter .wcf-copyright a:hover {
+	text-decoration: none;
+	color: #69c;
 }
 
 
@@ -750,20 +783,33 @@ nav.wcf-topMenu {
 
 /* Menu Bars */
 
-.wcf-headerNavigation {
+.wcf-headerNavigation,
+.wcf-footerNavigation {
 	background-color: #e7f2fd;
-	border-bottom: 1px solid #bcd;
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
+	border-style: solid;
+	border-color: #bcd;
 	margin: 0 23px;
 	display: block;
 	min-height: 7px;
 	position: relative;
 }
 
+.wcf-headerNavigation {
+	border-width: 0 0 1px 0;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+.wcf-footerNavigation {
+	border-width: 1px 0 0 0;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.wcf-headerNavigation {
+	.wcf-headerNavigation,
+	.wcf-footerNavigation {
 		min-width: 800px;
 	}
 	
@@ -771,28 +817,15 @@ nav.wcf-topMenu {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.wcf-headerNavigation {
+	.wcf-headerNavigation,
+	.wcf-footerNavigation {
 		min-width: auto;
 	}
 	
 }
 
-.wcf-footerNavigation {
-	min-height: 7px;
-	position: relative;
-}
-
-.wcf-headerNavigation:after {
-	content: '';
-	display: block;
-	clear: both;
-}
-
-.wcf-headerNavigation > div {
-	padding: 0 7px;
-}
-
-.wcf-headerNavigation > div:after {
+.wcf-headerNavigation:after,
+.wcf-footerNavigation:after {
 	content: '';
 	display: block;
 	clear: both;
@@ -800,51 +833,54 @@ nav.wcf-topMenu {
 
 /* Icon Menus */
 
-.wcf-headerNavigation > div > ul,
-.wcf-footerNavigation > div > ul {
+.wcf-headerNavigation > ul,
+.wcf-footerNavigation > ul {
+	padding: 0 7px;
 	float: right;
 }
 
-.wcf-headerNavigation > div > ul > li,
-.wcf-footerNavigation > div > ul > li {
+.wcf-headerNavigation > ul > li,
+.wcf-footerNavigation > ul > li {
 	cursor: pointer;
 	margin: 0 3px;
 	float: right;
 }
 
-.wcf-headerNavigation > div > ul > li a,
-.wcf-footerNavigation > div > ul > li a {
+.wcf-headerNavigation > ul > li a,
+.wcf-footerNavigation > ul > li a {
 	padding: 3px;
 	display: inline-block;
 }
 
-.wcf-headerNavigation > div > ul > li a:hover,
-.wcf-footerNavigation > div > ul > li a:hover {
+.wcf-headerNavigation > ul > li a:hover,
+.wcf-footerNavigation > ul > li a:hover {
 	text-decoration: none;
 	background-color: #d8e7f5;
 }
 
-.wcf-headerNavigation > div > ul > li a:hover:active,
-.wcf-headerNavigation > div > ul > li a:hover:focus,
-.wcf-footerNavigation > div > ul > li a:hover:active,
-.wcf-footerNavigation > div > ul > li a:hover:focus {
+.wcf-headerNavigation > ul > li a:hover:active,
+.wcf-headerNavigation > ul > li a:hover:focus,
+
+.wcf-footerNavigation > ul > li a:hover:active,
+.wcf-footerNavigation > ul > li a:hover:focus {
 	background-color: #fff9f4;
 }
 
-/* Special */
+/* Special -> Page Scroll Links */
 
-#tplLogin .wcf-pageHeader .wcf-headerNavigation > ul > li.toBottomLink,
-#tplLogin .wcf-pageFooter .wcf-footerNavigation > ul > li.toTopLink {
-	/* Removes the to-bottom-link on the log-in page */
+#tplLogin .wcf-headerNavigation .toBottomLink,
+#tplLogin .wcf-footerNavigation .toTopLink {
+	/* Removes the jump-to-links on the log-in page */
 	position: absolute;
 	left: -9000px;
 	top: -9000px;
 	width: 0;
 }
 
-/* Special: Sub Menu */
+/* Special -> Sub Menu */
 
 .wcf-headerNavigation .wcf-menu {
+	padding: 0 7px;
 	display: inline;
 	max-width: 75%;
 }
@@ -1236,73 +1272,6 @@ section.wcf-content .wcf-content {
 .wcf-sidebarContent > div ul > li.activeMenuItem a {
 	font-weight: bold;
 	color: #369;
-}
-
-
-
-/* ############## Page Footer ############## */
-
-/* Globals */
-
-.wcf-pageFooter {
-	text-align: center;
-	padding: 0 23px 33px;
-	position: relative;
-	z-index: 80;
-}
-
-@media screen and (min-width: 480px), screen and (min-device-width: 480px) {
-	
-	.wcf-pageFooter {
-		min-width: 800px;
-	}
-	
-}
-
-@media screen and (max-width: 480px), screen and (max-device-width: 480px) {
-	
-	.wcf-pageFooter {
-		min-width: auto;
-	}
-	
-}
-
-.wcf-pageFooter:after {
-	content: '';
-	display: block;
-	clear: both;
-}
-
-.wcf-pageFooter > div {
-	border-top: 1px solid #bcd;
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
-	background-color: #e7f2fd;
-	padding: 0 7px;
-}
-
-.wcf-pageFooter > div:after {
-	content: '';
-	display: block;
-	clear: both;
-}
-
-
-
-/* -- -- -- Copyright -- -- -- */
-
-.wcf-pageFooter .wcf-copyright {
-	padding-top: 20px;
-	display: inline-block;
-}
-
-.wcf-pageFooter .wcf-copyright a {
-	text-shadow: 0 -1px 0 #000;
-}
-
-.wcf-pageFooter .wcf-copyright a:hover {
-	text-decoration: none;
-	color: #69c;
 }
 
 
