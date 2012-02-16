@@ -3886,6 +3886,227 @@ WCF.InlineEditor = Class.extend({
 });
 
 /**
+ * Default implementation for ajax file uploads
+ * 
+ * @param	jquery		buttonSelector
+ * @param	jquery		fileListSelector
+ * @param	string		className
+ * @param	jquery		options
+ */
+WCF.Upload = Class.extend({
+	/**
+	 * name of the upload field
+	 * @var string
+	 */
+	_name: '__files[]',
+	
+	/**
+	 * button selector
+	 * @var jquery
+	 */
+	_buttonSelector: null,
+	
+	/**
+	 * file list selector
+	 * @var jquery
+	 */
+	_fileListSelector: null,
+	
+	/**
+	 * upload file
+	 * @var jquery
+	 */
+	_fileUpload: null,
+	
+	/**
+	 * class name
+	 * @var string
+	 */
+	_className: '',
+	
+	/**
+	 * additional options
+	 * @var jquery
+	 */
+	_options: {},
+	
+	/**
+	 * upload matrix
+	 * @var array
+	 */
+	_uploadMatrix: [],
+	
+	/**
+	 * True, if your browser supports ajax file uploads. False, if your browser sucks.
+	 * @var boolean
+	 */
+	_supportsAJAXUpload: true,
+	
+	/**
+	 * fallback overlay for stupid browsers
+	 * @var jquery
+	 */
+	_overlay: null,
+	
+	/**
+	 * Initializes a new upload handler.
+	 */
+	init: function(buttonSelector, fileListSelector, className, options) {
+		this._buttonSelector = buttonSelector;
+		this._fileListSelector = fileListSelector;
+		this._className = className;
+		this._options = $.extend(true, {
+			action: 'upload',
+			multiple: false,
+			url: 'index.php/AJAXUpload/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+		}, options);
+		
+		// check for ajax upload support
+		var $xhr = new XMLHttpRequest();
+		this._supportsAJAXUpload = ($xhr && ('upload' in $xhr) && ('onprogress' in $xhr.upload));
+		
+		// create upload button
+		this._createButton();
+	},
+	
+	/**
+	 * Creates the upload button.
+	 */
+	_createButton: function() {
+		if (this._supportsAJAXUpload) {
+			this._fileUpload = $('<input type="file" name="'+this._name+'" style="opacity: 0" '+(this._options.multiple ? 'multiple="true" ' : '')+'/>');
+			this._fileUpload.change($.proxy(this._upload, this));
+			var $button = $('<p class="wcf-button" style="display: inline-block; position: relative; overflow: hidden; width: 100px"><span style="position: absolute; top: 0; left: 0">Upload</span></p>');
+			$button.append(this._fileUpload);
+		}
+		else {
+			var $button = $('<p class="wcf-button" style="display: inline-block;"><span>Upload</span></p>');
+			$button.click($.proxy(this._showOverlay, this));
+		}
+		
+		this._insertButton($button);
+	},
+	
+	/**
+	 * Inserts the upload button.
+	 */
+	_insertButton: function(button) {
+		this._buttonSelector.append(button);
+	},
+	
+	/**
+	 * Callback for file uploads.
+	 */
+	_upload: function() {
+		var $files = this._fileUpload.prop('files');
+		
+		if ($files.length > 0) {
+			var $fd = new FormData();
+			var self = this;
+			var $uploadID = this._uploadMatrix.length;
+			this._uploadMatrix[$uploadID] = [];
+			
+			for (var $i = 0; $i < $files.length; $i++) {
+				this._uploadMatrix[$uploadID].push(this._initFile($files[$i]));
+				$fd.append('__files[]', $files[$i]);
+			}
+			$fd.append('actionName', this._options.action);
+			$fd.append('className', this._className);
+			
+			$.ajax({ 
+				type: 'POST',
+				url: this._options.url,
+				enctype: 'multipart/form-data',
+				data: $fd,
+				contentType: false,
+				processData: false,
+				success: $.proxy(this._success, this),
+				error: $.proxy(this._error, this),
+				xhr: function() {
+					var $xhr = $.ajaxSettings.xhr();
+					if ($xhr) {
+						$xhr.upload.addEventListener('progress', function(event) {
+							self._progress(event, $uploadID);
+						}, false);
+					}
+					return $xhr;
+				}
+			});
+		}
+	},
+	
+	/**
+	 * Callback for success event
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		console.debug(jqXHR.responseText);
+	},
+	
+	/**
+	 * Callback for error event
+	 */
+	_error: function(jqXHR, textStatus, errorThrown) {
+		console.debug(jqXHR.responseText);
+	},
+	
+	/**
+	 * Callback for progress event
+	 */
+	_progress: function(event, uploadID) {
+		var $percentComplete = Math.round(event.loaded * 100 / event.total);
+		
+		for (var $i = 0; $i < this._uploadMatrix[uploadID].length; $i++) {
+			this._uploadMatrix[uploadID][$i].find('progress').attr('value', $percentComplete);
+		}
+	},
+	
+	
+	_initFile: function(file) {
+		var $li = $('<li>'+file.name+' ('+file.size+')<progress max="100"></progress></li>');
+		this._fileListSelector.append($li);
+		
+		return $li;
+	},
+	
+	/**
+	 * Shows the fallback overlay (work in progress)
+	 */
+	_showOverlay: function() {
+		var $self = this;
+		if (!this._overlay) {
+			// create overlay
+			this._overlay = $('<div style="display: none;"><form enctype="multipart/form-data" method="post" action="'+this._options.url+'"><dl><dt><label for="__fileUpload">File</label></dt><dd><input type="file" id="__fileUpload" name="'+this._name+'" '+(this._options.multiple ? 'multiple="true" ' : '')+'/></dd></dl><div class="wcf-formSubmit"><input type="submit" value="Upload" accesskey="s" /></div></form></div>');
+		}
+		
+		// create iframe
+		var $iframe = $('<iframe style="display: none"></iframe>'); // width: 300px; height: 100px; border: 5px solid red
+		$iframe.attr('name', $iframe.wcfIdentify());
+		$('body').append($iframe);
+		this._overlay.find('form').attr('target', $iframe.wcfIdentify());
+		
+		// add events (iframe onload)
+		$iframe.load(function() {
+			console.debug('iframe ready');
+			console.debug($iframe.contents());
+		});
+		
+		this._overlay.find('form').submit(function() {
+			$iframe.data('loading', true);
+			$self._overlay.wcfDialog('close');
+		});
+		
+		this._overlay.wcfDialog({
+			title: 'Upload',
+			onClose: function() {
+				if (!$iframe.data('loading')) {
+					$iframe.remove();
+				}
+			}
+		});
+	}
+});
+
+/**
  * Provides a toggleable sidebar.
  */
 $.widget('ui.wcfSidebar', {
