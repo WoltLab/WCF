@@ -1,4 +1,4 @@
-				{include file='breadcrumbs' sandbox=false __microdata=false}
+				{if $skipBreadcrumbs|empty}{include file='breadcrumbs' sandbox=false __microdata=false}{/if}
 				
 			</section>
 			<!-- /CONTENT -->
