@@ -1613,10 +1613,6 @@ table .wcf-label {
 	margin-top: 30px;
 }
 
-.wcf-dialogContainer .wcf-mainHeading {
-	margin-top: 0;
-}
-
 .wcf-mainHeading > img,
 .wcf-mainHeading > svg {
 	float: left;
@@ -1689,6 +1685,18 @@ table .wcf-label {
 .wcf-mainHeading > hgroup p {
 	padding-top: 3px;
 } 
+
+/* Special -> Dialog */
+
+.wcf-dialogContainer .wcf-mainHeading {
+	margin-top: 0;
+}
+
+.wcf-dialogContainer .wcf-mainHeading > hgroup h1,
+.wcf-dialogContainer .wcf-mainHeading > hgroup h1 a {
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 1);
+	color: rgba(255, 255, 255, 1);
+}
 
 
 
