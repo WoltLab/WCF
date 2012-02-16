@@ -166,6 +166,207 @@ a[href^="mailto:"] {
 
 
 
+/* ############## Badges ############## */
+
+/* Globals */
+
+.wcf-badge {
+	font-size: 85%;
+	font-weight: bold;
+	text-shadow: none;
+	text-decoration: none;
+	border-radius: 13px;
+	background-color: rgba(255, 255, 255, 1);
+	margin-right: -3px;
+	margin-left: 3px;
+	padding: 2px 5px;
+	display: inline-block;
+	position: relative;
+	top: -1px;
+}
+
+/* Badge Types */
+
+.wcf-badgeNote {
+	border: 1px solid #ccc;
+}
+
+.wcf-badgeInfo {
+	color: #68b;
+	border: 1px solid #9be;
+	background-color: #def;
+}
+
+.wcf-badgeSuccess {
+	color: #090;
+	border: 1px solid #0c0;
+	background-color: #efe;
+}
+
+.wcf-badgeWarning {
+	color: #990;
+	border: 1px solid #cc0;
+	background-color: #ffd;
+}
+
+.wcf-badgeError {
+	color: #c00;
+	border: 1px solid #f99;
+	background-color: #fee;
+}
+
+/* Buttons */
+
+.wcf-badgeButton {
+	cursor: pointer;
+	border-radius: 30px;
+	margin-right: 0;
+	margin-left: 0;
+	padding: 3px 10px 5px;
+	display: inline-block;
+}
+
+li.wcf-badgeButton,
+li > .wcf-badgeButton {
+	margin-top: 7px;
+	margin-right: 3px;
+	margin-left: 3px;
+	float: left;
+}
+
+.wcf-badgeButton,
+.wcf-badgeButton a {
+	text-decoration: none !important;
+}
+
+
+
+/* ############## Labels ############## */
+
+/* -- -- -- Label List -- -- -- */
+
+.wcf-labelList {
+	margin: 0;
+	padding: 5px 0 0;
+	display: inline-block;
+}
+
+/* -- -- -- Label -- -- -- */
+
+/* Globals */
+
+.wcf-label {
+	font-size: 85%;
+	font-weight: bold;
+	color: #eee;
+	text-shadow: none;
+	text-decoration: none;
+	border-radius: 13px;
+	background-color: rgba(102, 102, 102, 1);
+	margin-right: 3px;
+	padding: 3px 8px 4px;
+	display: inline-block;
+	position: relative;
+	top: -1px;
+	cursor: pointer;
+}
+
+.wcf-label:hover {
+	color: rgba(255, 255, 255, 1);
+	background-color: rgba(51, 51, 51, 1);
+}
+
+.wcf-label a {
+	color: #eee;
+	text-decoration: none;
+}
+
+.wcf-label a:hover {
+	color: rgba(255, 255, 255, 1);
+}
+
+/* Default Colors */
+
+.wcf-label.black {
+	background-color: #333;
+}
+
+.wcf-label.black:hover {
+	background-color: #000;
+}
+
+.wcf-label.brown {
+	background-color: #c63;
+}
+
+.wcf-label.brown:hover {
+	background-color: #930;
+}
+
+.wcf-label.red {
+	background-color: #c00;
+}
+
+.wcf-label.red:hover {
+	background-color: #900;
+}
+
+.wcf-label.orange {
+	background-color: #f90;
+}
+
+.wcf-label.orange:hover {
+	background-color: #f60;
+}
+
+.wcf-label.yellow {
+	background-color: #ff0;
+}
+
+.wcf-label.yellow:hover {
+	background-color: #cc0;
+}
+
+.wcf-label.green {
+	background-color: #0c0;
+}
+
+.wcf-label.green:hover {
+	background-color: #090;
+}
+
+.wcf-label.blue {
+	background-color: #09f;
+}
+
+.wcf-label.blue:hover {
+	background-color: #06c;
+}
+
+.wcf-label.purple {
+	background-color: #c0f;
+}
+
+.wcf-label.purple:hover {
+	background-color: #90c;
+}
+
+.wcf-label.pink {
+	background-color: #f0c;
+}
+
+.wcf-label.pink:hover {
+	background-color: #c09;
+}
+
+/* Special */
+
+table .wcf-label {
+	padding: 1px 6px 2px;
+}
+
+
+
 /* ############## Body ############## */
 
 /* Globals */
@@ -1167,12 +1368,6 @@ section.wcf-content .wcf-content {
 
 /* -- -- -- Sidebar Content -- -- -- */
 
-/* Should be obsolete now 
-.wcf-sidebarContent {
-	white-space: nowrap;
-}
-*/
-
 .wcf-sidebarContent > div {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	position: relative;
@@ -1184,7 +1379,7 @@ section.wcf-content .wcf-content {
 	width: 0;
 }
 
-.wcf-sidebarContent > .collapsibleMenus a:hover {
+.wcf-sidebarContent a:hover {
 	text-decoration: none !important;
 	color: #369;
 }
@@ -1272,207 +1467,6 @@ section.wcf-content .wcf-content {
 .wcf-sidebarContent > div ul > li.activeMenuItem a {
 	font-weight: bold;
 	color: #369;
-}
-
-
-
-/* ############## Badges ############## */
-
-/* Globals */
-
-.wcf-badge {
-	font-size: 85%;
-	font-weight: bold;
-	text-shadow: none;
-	text-decoration: none;
-	border-radius: 13px;
-	background-color: rgba(255, 255, 255, 1);
-	margin-right: -3px;
-	margin-left: 3px;
-	padding: 2px 5px;
-	display: inline-block;
-	position: relative;
-	top: -1px;
-}
-
-/* Badge Types */
-
-.wcf-badgeNote {
-	border: 1px solid #ccc;
-}
-
-.wcf-badgeInfo {
-	color: #68b;
-	border: 1px solid #9be;
-	background-color: #def;
-}
-
-.wcf-badgeSuccess {
-	color: #090;
-	border: 1px solid #0c0;
-	background-color: #efe;
-}
-
-.wcf-badgeWarning {
-	color: #990;
-	border: 1px solid #cc0;
-	background-color: #ffd;
-}
-
-.wcf-badgeError {
-	color: #c00;
-	border: 1px solid #f99;
-	background-color: #fee;
-}
-
-/* Buttons */
-
-.wcf-badgeButton {
-	cursor: pointer;
-	border-radius: 30px;
-	margin-right: 0;
-	margin-left: 0;
-	padding: 3px 10px 5px;
-	display: inline-block;
-}
-
-li.wcf-badgeButton,
-li > .wcf-badgeButton {
-	margin-top: 7px;
-	margin-right: 3px;
-	margin-left: 3px;
-	float: left;
-}
-
-.wcf-badgeButton,
-.wcf-badgeButton a {
-	text-decoration: none !important;
-}
-
-
-
-/* ############## Labels ############## */
-
-/* -- -- -- Label List -- -- -- */
-
-.wcf-labelList {
-	margin: 0;
-	padding: 5px 0 0;
-	display: inline-block;
-}
-
-/* -- -- -- Label -- -- -- */
-
-/* Globals */
-
-.wcf-label {
-	font-size: 85%;
-	font-weight: bold;
-	color: #eee;
-	text-shadow: none;
-	text-decoration: none;
-	border-radius: 13px;
-	background-color: rgba(102, 102, 102, 1);
-	margin-right: 3px;
-	padding: 3px 8px 4px;
-	display: inline-block;
-	position: relative;
-	top: -1px;
-	cursor: pointer;
-}
-
-.wcf-label:hover {
-	color: rgba(255, 255, 255, 1);
-	background-color: rgba(51, 51, 51, 1);
-}
-
-.wcf-label a {
-	color: #eee;
-	text-decoration: none;
-}
-
-.wcf-label a:hover {
-	color: rgba(255, 255, 255, 1);
-}
-
-/* Default Colors */
-
-.wcf-label.black {
-	background-color: #333;
-}
-
-.wcf-label.black:hover {
-	background-color: #000;
-}
-
-.wcf-label.brown {
-	background-color: #c63;
-}
-
-.wcf-label.brown:hover {
-	background-color: #930;
-}
-
-.wcf-label.red {
-	background-color: #c00;
-}
-
-.wcf-label.red:hover {
-	background-color: #900;
-}
-
-.wcf-label.orange {
-	background-color: #f90;
-}
-
-.wcf-label.orange:hover {
-	background-color: #f60;
-}
-
-.wcf-label.yellow {
-	background-color: #ff0;
-}
-
-.wcf-label.yellow:hover {
-	background-color: #cc0;
-}
-
-.wcf-label.green {
-	background-color: #0c0;
-}
-
-.wcf-label.green:hover {
-	background-color: #090;
-}
-
-.wcf-label.blue {
-	background-color: #09f;
-}
-
-.wcf-label.blue:hover {
-	background-color: #06c;
-}
-
-.wcf-label.purple {
-	background-color: #c0f;
-}
-
-.wcf-label.purple:hover {
-	background-color: #90c;
-}
-
-.wcf-label.pink {
-	background-color: #f0c;
-}
-
-.wcf-label.pink:hover {
-	background-color: #c09;
-}
-
-/* Special */
-
-table .wcf-label {
-	padding: 1px 6px 2px;
 }
 
 
