@@ -112,6 +112,20 @@ abstract class DatabaseObject implements IStorableObject {
 	 * @see	wcf\data\IStorableObject::getDatabaseTableName()
 	 */
 	public static function getDatabaseTableName() {
+		if (empty(static::$databaseTableName)) {
+			$className = get_called_class();
+			$className = substr($className, (strrpos($className, '\\') + 1));
+			
+			preg_match_all('~((?:^|[A-Z])[a-z]+)~', $className, $matches);
+			foreach ($matches[1] as $part) {
+				if (!empty(static::$databaseTableName)) {
+					static::$databaseTableName .= '_';
+				}
+				
+				static::$databaseTableName .= strtolower($part);
+			}
+		}
+		
 		return 'wcf'.WCF_N.'_'.static::$databaseTableName;
 	}
 	
