@@ -12,9 +12,9 @@
 	</script>
 {/if}
 
-<header class="wcf-mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/email1.svg" alt="" />
-	<hgroup>
+<header class="wcf-container wcf-mainHeading">
+	<img src="{@RELATIVE_WCF_DIR}icon/email1.svg" alt="" class="wcf-containerIcon" />
+	<hgroup class="wcf-containerContent">
 		<h1>
 			{if $action == 'all'}
 				{lang}wcf.acp.user.sendMail.all{/lang}

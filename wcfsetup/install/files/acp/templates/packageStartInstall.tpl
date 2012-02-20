@@ -1,14 +1,14 @@
 {include file='header'}
 
-<header class="wcf-mainHeading">
+<header class="wcf-container wcf-mainHeading">
 	{if $packageID == 0}
-		<img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" />
-		<hgroup>
+		<img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" class="wcf-containerIcon" />
+		<hgroup class="wcf-containerContent">
 			<h1>{lang}wcf.acp.package.startInstall{/lang}</h1>
 		</hgroup>
 	{else}
-		<img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" />
-		<hgroup>
+		<img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" class="wcf-containerIcon" />
+		<hgroup class="wcf-containerContent">
 			<h1>{lang}wcf.acp.package.startUpdate{/lang}</h1>
 		</hgroup>
 	{/if}

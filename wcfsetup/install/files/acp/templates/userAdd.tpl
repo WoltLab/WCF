@@ -8,9 +8,9 @@
 	//]]>
 </script>
 
-<header class="wcf-mainHeading">
-	<img {if $userID|isset}id="userEdit{@$userID}" {/if}src="{@RELATIVE_WCF_DIR}icon/{@$action}1.svg" alt="" />
-	<hgroup>
+<header class="wcf-container wcf-mainHeading">
+	<img {if $userID|isset}id="userEdit{@$userID}" {/if}src="{@RELATIVE_WCF_DIR}icon/{@$action}1.svg" alt="" class="wcf-containerIcon" />
+	<hgroup class="wcf-containerContent">
 		<h1>{lang}wcf.acp.user.{@$action}{/lang}</h1>
 	</hgroup>
 </header>

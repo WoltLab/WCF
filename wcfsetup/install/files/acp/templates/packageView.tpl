@@ -8,9 +8,9 @@
 	//]]>
 </script>
 
-<header class="wcf-mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" /><!-- ToDo: Add possibility to show a custom app icon if given! -->
-	<hgroup>
+<header class="wcf-container wcf-mainHeading">
+	<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" class="wcf-containerIcon" /><!-- ToDo: Add possibility to show a custom app icon if given! -->
+	<hgroup class="wcf-containerContent">
 		<h1>{$package->getName()}</h1>
 		<h2>{$package->packageDescription}</h2>
 	</hgroup>

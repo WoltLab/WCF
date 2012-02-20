@@ -9,11 +9,11 @@
 	//]]>
 </script>
 
-<header class="wcf-mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/{if $searchID}search{else}user{/if}1.svg" alt="" />
-	<hgroup>
+<header class="wcf-container wcf-mainHeading">
+	<img src="{@RELATIVE_WCF_DIR}icon/{if $searchID}search{else}user{/if}1.svg" alt="" class="wcf-containerIcon" />
+	<hgroup class="wcf-containerContent">
 		<h1>{lang}wcf.acp.user.{if $searchID}search{else}list{/if}{/lang}</h1>
-		<h2>{if $searchID}{lang}wcf.acp.user.search.matches{/lang}{/if}</h2><!-- deprecated display -->
+		<h2>{if $searchID}{lang}wcf.acp.user.search.matches{/lang}{/if}</h2><!-- ToDo: deprecated display -->
 	</hgroup>
 </header>
 
@@ -44,7 +44,7 @@
 	</nav>
 	
 	{hascontent}
-		<table class="wcf-table jsClipboardContainer" data-type="com.woltlab.wcf.user">
+		<table data-type="com.woltlab.wcf.user" class="wcf-table jsClipboardContainer">
 			<thead>
 				<tr>
 					<th class="columnMark"><label><input type="checkbox" class="jsClipboardMarkAll" /></label></th>

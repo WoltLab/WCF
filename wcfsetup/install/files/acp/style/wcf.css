@@ -139,6 +139,49 @@ a[href^="mailto:"] {
 	top: -9000px;
 }
 
+
+
+/* ############## Container ############## */
+
+/* -- -- -- Globals -- -- --  */
+
+/** 
+ * This is a generic container for surrounding blocks of  
+ * text with an optional leading icon. The icon-size is
+ * free. The box collapses if there's no icon given or 
+ * if it doesn't load. 
+ * Note: 
+ * This box does not support RTL in WebKit-browsers! 
+ * Thus the box-style may change in the future. 
+ */
+
+.wcf-container {
+	display: table;
+	width: 100%;
+}
+
+.wcf-containerIcon {
+	display: table-cell;
+}
+
+img.wcf-containerIcon {
+	display: table-cell;
+	margin-right: 1em;
+}
+
+.wcf-containerIcon img {
+	margin-right: 1em;
+}
+
+.wcf-containerContent {
+	display: table-cell;
+	width: 100%;
+	vertical-align: top;
+	position: relative;
+}
+
+
+
 /* Floated Elements */
 
 .floatContainer:after {
@@ -363,6 +406,116 @@ li > .wcf-badgeButton {
 
 table .wcf-label {
 	padding: 1px 6px 2px;
+}
+
+
+
+/* ############## ToDo: Dropdown ############## */
+
+/* Dropdown Caption */
+
+.wcf-dropdownCaption,
+.wcf-dropdownCaption a {
+	text-decoration: none;
+	cursor: pointer;
+	display: inline-block;
+}
+
+.wcf-dropdownCaption:hover,
+.wcf-dropdownCaption a:hover {
+	text-decoration: none;
+}
+
+/* Dropdown */
+
+.wcf-dropdown {
+	color: rgba(255, 255, 255, 1);
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgba(255, 255, 255, .7);
+	border-radius: 5px;
+	background-color: rgba(0, 0, 0, .7);
+	margin-top: 25px;
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 400;
+	overflow: hidden;
+	
+	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-ms-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
+	
+	-webkit-transition: color background .1s ease;
+	-moz-transition: color background .1s ease;
+	-ms-transition: color background .1s ease;
+	-o-transition: color background .1s ease;
+	transition: color background .1s ease;
+}
+
+.wcf-dropdown.open {
+	display: block;
+}
+
+/* Dropdown Items */
+
+.wcf-dropdown > li,
+.wcf-dropdown > div {
+	text-shadow: none;
+	color: #ccc;
+	cursor: pointer; 
+	
+	-webkit-transition: color background .2s linear;
+	-moz-transition: color background .2s linear;
+	-ms-transition: color background .2s linear;
+	-o-transition: color background .2s linear;
+	transition: color background .2s linear;
+}
+
+.wcf-dropdown > div {
+	padding: 5px 7px;
+}
+
+.wcf-dropdown > :first-child {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.wcf-dropdown > :last-child {
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.wcf-dropdown > :hover:not(ul):not(.pointer),
+.wcf-dropdown > .active {
+	color: rgba(255, 255, 255, 1);
+	cursor: pointer;
+	background-color: rgba(0, 0, 0, .5);
+}
+
+.wcf-dropdown > li.divider:not(:first-child) {
+	border-top: 1px solid rgba(255, 255, 255, .7);
+}
+
+.wcf-dropdown > li {
+	text-decoration: none;
+	padding: 5px 7px;
+	display: block;
+}
+
+.wcf-dropdown > li a {
+	text-decoration: none;
+	color: #ccc;
+	padding: -5px -7px;
+	display: block;
+}
+
+.wcf-dropdown > li a:hover {
+	color: rgba(255, 255, 255, 1);
+	background-color: rgba(0, 0, 0, .5);
 }
 
 
@@ -1474,123 +1627,12 @@ section.wcf-content .wcf-content {
 /* ############## Status Display ############## */
 
 .wcf-statusDisplay {
-	float: right;
 	padding: 1px 0;
+	float: right;
 }
 
 .wcf-statusDisplay .wcf-statusIcons li {
 	display: inline-block;
-}
-
-
-
-
-/* ############## ToDo: Dropdown ############## */
-
-/* Dropdown Caption */
-
-.wcf-dropdownCaption,
-.wcf-dropdownCaption a {
-	text-decoration: none;
-	cursor: pointer;
-	display: inline-block;
-}
-
-.wcf-dropdownCaption:hover,
-.wcf-dropdownCaption a:hover {
-	text-decoration: none;
-}
-
-/* Dropdown */
-
-.wcf-dropdown {
-	color: rgba(255, 255, 255, 1);
-	border-width: 1px;
-	border-style: solid;
-	border-color: rgba(255, 255, 255, .7);
-	border-radius: 5px;
-	background-color: rgba(0, 0, 0, .7);
-	margin-top: 25px;
-	display: none;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 400;
-	overflow: hidden;
-	
-	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-ms-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
-	
-	-webkit-transition: color background .1s ease;
-	-moz-transition: color background .1s ease;
-	-ms-transition: color background .1s ease;
-	-o-transition: color background .1s ease;
-	transition: color background .1s ease;
-}
-
-.wcf-dropdown.open {
-	display: block;
-}
-
-/* Dropdown Items */
-
-.wcf-dropdown > li,
-.wcf-dropdown > div {
-	text-shadow: none;
-	color: #ccc;
-	cursor: pointer; 
-	
-	-webkit-transition: color background .2s linear;
-	-moz-transition: color background .2s linear;
-	-ms-transition: color background .2s linear;
-	-o-transition: color background .2s linear;
-	transition: color background .2s linear;
-}
-
-.wcf-dropdown > div {
-	padding: 5px 7px;
-}
-
-.wcf-dropdown > :first-child {
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-}
-
-.wcf-dropdown > :last-child {
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-}
-
-.wcf-dropdown > :hover:not(ul):not(.pointer),
-.wcf-dropdown > .active {
-	color: rgba(255, 255, 255, 1);
-	cursor: pointer;
-	background-color: rgba(0, 0, 0, .5);
-}
-
-.wcf-dropdown > li.divider:not(:first-child) {
-	border-top: 1px solid rgba(255, 255, 255, .7);
-}
-
-.wcf-dropdown > li {
-	text-decoration: none;
-	padding: 5px 7px;
-	display: block;
-}
-
-.wcf-dropdown > li a {
-	text-decoration: none;
-	color: #ccc;
-	padding: -5px -7px;
-	display: block;
-}
-
-.wcf-dropdown > li a:hover {
-	color: rgba(255, 255, 255, 1);
-	background-color: rgba(0, 0, 0, .5);
 }
 
 
@@ -1607,14 +1649,7 @@ section.wcf-content .wcf-content {
 	margin-top: 30px;
 }
 
-.wcf-mainHeading > img,
-.wcf-mainHeading > svg {
-	float: left;
-}
-
 .wcf-mainHeading > hgroup {
-	display: block;
-	position: relative;
 	min-height: 48px;
 }
 
@@ -1626,18 +1661,12 @@ section.wcf-content .wcf-content {
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
 	
-	.wcf-mainHeading > img,
-	.wcf-mainHeading > svg {
+	.wcf-mainHeading .wcf-containerIcon {
 		width: 48px;
 		height: 48px;
 	}
 	
-	.wcf-mainHeading > img ~ hgroup,
-	.wcf-mainHeading > svg ~ hgroup {
-		padding-left: 60px;
-	}
-	
-	.wcf-mainHeading > hgroup h1 {
+	.wcf-mainHeading hgroup h1 {
 		font-size: 175%;
 	}
 	
@@ -1645,18 +1674,12 @@ section.wcf-content .wcf-content {
 
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
-	.wcf-mainHeading > img,
-	.wcf-mainHeading > svg {
+	.wcf-mainHeading .wcf-containerIcon {
 		width: 64px;
 		height: 64px;
 	}
 	
-	.wcf-mainHeading > img ~ hgroup,
-	.wcf-mainHeading > svg ~ hgroup {
-		padding-left: 65px;
-	}
-	
-	.wcf-mainHeading > hgroup h1 {
+	.wcf-mainHeading hgroup h1 {
 		font-size: 200%;
 	}
 	
@@ -1667,6 +1690,7 @@ section.wcf-content .wcf-content {
 	text-decoration: none;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	color: rgba(102, 102, 102, 1);
+	display: block;
 }
 
 .wcf-mainHeading > hgroup h2 {
@@ -1679,6 +1703,16 @@ section.wcf-content .wcf-content {
 .wcf-mainHeading > hgroup p {
 	padding-top: 3px;
 } 
+
+/* Special -> Badges */
+
+.wcf-mainHeading > hgroup h1 .wcf-badge,
+.wcf-mainHeading > hgroup h1 a .wcf-badge {
+	font-size: 75%;
+	text-decoration: none;
+	background-color: rgba(102, 102, 102, 1);
+	color: rgba(255, 255, 255, 1);
+}
 
 /* Special -> Dialog */
 
@@ -1979,7 +2013,6 @@ textarea {
 
 /* Normal State */
 
-.wcf-input,
 input[type='text'],
 input[type='search'],
 input[type='date'],
@@ -2008,7 +2041,6 @@ textarea {
 
 /* Hover State */
 
-:not(.wcf-aclContainer ul).wcf-input:hover,
 input[type='text']:hover,
 input[type='search']:hover,
 input[type='date']:hover,
@@ -2022,7 +2054,6 @@ textarea:hover {
 
 /* Active & Focus State */
 
-.wcf-input:active,
 input[type='text']:active,
 input[type='search']:active,
 input[type='date']:active,
@@ -2031,7 +2062,6 @@ input[type='url']:active,
 input[type='password']:active,
 textarea:active,
 
-.wcf-input:focus,
 input[type='text']:focus,
 input[type='search']:focus,
 input[type='date']:focus,
@@ -2052,7 +2082,6 @@ textarea:focus {
 
 /* Read Only State */
 
-.wcf-input[readonly='readonly'],
 input[type='text'][readonly='readonly'],
 input[type='search'][readonly='readonly'],
 input[type='email'][readonly='readonly'],
@@ -2073,7 +2102,6 @@ textarea[readonly='readonly'] {
 
 /* Disabled State */
 
-.wcf-input[disabled='disabled'],
 input[type='text'][disabled='disabled'],
 input[type='search'][disabled='disabled'],
 input[type='date'][disabled='disabled'],
@@ -2518,7 +2546,7 @@ input[type='button'],
 	/* Toggle for tab menu orientation (options: left|center|right) */
 	text-align: center;
 	margin-top: 15px;
-	padding: 0 5px;
+	padding: 0 10px;
 	display: block;
 	position: relative;
 }

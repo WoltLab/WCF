@@ -1,7 +1,7 @@
 <div id="packageInstallationDialogContainer">
-	<header class="wcf-mainHeading">
-		<img src="{@RELATIVE_WCF_DIR}icon/working2.svg" alt="" />
-		<hgroup>
+	<header class="wcf-container wcf-mainHeading">
+		<img src="{@RELATIVE_WCF_DIR}icon/working2.svg" alt="" class="wcf-containerIcon" />
+		<hgroup class="wcf-containerContent">
 			<h1>{lang}wcf.acp.package.installation.title{/lang}</h1>
 			<h2 id="packageInstallationAction">{lang}wcf.acp.package.installation.step.prepare{/lang}</span></h2>
 			<p><progress id="packageInstallationProgress" value="0" max="100">0%</progress> <span id="packageInstallationProgressLabel">0%</span></p>

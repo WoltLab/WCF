@@ -14,9 +14,9 @@
 	//]]>
 </script>
 
-<header class="wcf-mainHeading setup">
-	<img src="{@RELATIVE_WCF_DIR}icon/logIn1.svg" alt="" />
-	<hgroup>
+<header class="wcf-container wcf-mainHeading setup">
+	<img src="{@RELATIVE_WCF_DIR}icon/logIn1.svg" alt="" class="wcf-containerIcon" />
+	<hgroup class="wcf-containerContent">
 		<h1>{@$pageTitle}</h1>
 	</hgroup>
 </header>

@@ -1,8 +1,8 @@
 {include file='header'}
 
-<header class="wcf-mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/time1.svg" alt="" />
-	<hgroup>
+<header class="wcf-container wcf-mainHeading">
+	<img src="{@RELATIVE_WCF_DIR}icon/time1.svg" alt="" class="wcf-containerIcon" />
+	<hgroup class="wcf-containerContent">
 		<h1>{lang}wcf.acp.cronjob.log{/lang}</h1>
 		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>
 	</hgroup>
@@ -16,7 +16,7 @@
 	<form method="post" action="{link controller='CronjobLogDelete'}{/link}">
 		<div class="wcf-border wcf-boxTitle">
 			<hgroup>
-				<h1>{lang}wcf.acp.cronjob.log{/lang} <span class="badge" title="{lang}wcf.acp.cronjob.log.count{/lang}">{#$items}</span></h1>
+				<h1>{lang}wcf.acp.cronjob.log{/lang} <span class="wcf-badge" title="{lang}wcf.acp.cronjob.log.count{/lang}">{#$items}</span></h1>
 			</hgroup>
 			
 			<table class="wcf-table">
