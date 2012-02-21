@@ -32,10 +32,10 @@
 	<div class="wcf-border wcf-content">
 		
 		<fieldset>
-			<legend>{lang}wcf.acp.package.startInstall.source{/lang}</legend>
+			<legend>{lang}wcf.acp.package.source{/lang}</legend>
 		
 			<dl{if $errorField == 'uploadPackage'} class="wcf-formError"{/if}>
-				<dt><label for="uploadPackage">{lang}wcf.acp.package.startInstall.source.upload{/lang}</label></dt>
+				<dt><label for="uploadPackage">{lang}wcf.acp.package.source.upload{/lang}</label></dt>
 				<dd>
 					<input type="file" id="uploadPackage" name="uploadPackage" value="" />
 					{if $errorField == 'uploadPackage'}
@@ -46,24 +46,24 @@
 								{* todo: use language variable (-> else) *}
 								<pre>{$phpRequirements|print_r}</pre>
 							{else}
-								{lang}wcf.acp.package.startInstall.error.{@$errorType}{/lang}
+								{lang}wcf.acp.package.error.{@$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
-					<small>{lang}wcf.acp.package.startInstall.source.upload.description{/lang}</small>
+					<small>{lang}wcf.acp.package.source.upload.description{/lang}</small>
 				</dd>
 			</dl>
 			
 			<dl{if $errorField == 'downloadPackage'} class="wcf-formError"{/if}>
-				<dt><label for="downloadPackage">{lang}wcf.acp.package.startInstall.source.download{/lang}</label></dt>
+				<dt><label for="downloadPackage">{lang}wcf.acp.package.source.download{/lang}</label></dt>
 				<dd>
 					<input type="text" id="downloadPackage" name="downloadPackage" value="" class="long" />
 					{if $errorField == 'downloadPackage'}
 						<small class="wcf-innerError">
-							{lang}wcf.acp.package.startInstall.error.{@$errorType}{/lang}
+							{lang}wcf.acp.package.error.{@$errorType}{/lang}
 						</small>
 					{/if}
-					<small>{lang}wcf.acp.package.startInstall.source.download.description{/lang}</small>
+					<small>{lang}wcf.acp.package.source.download.description{/lang}</small>
 				</dd>
 			</dl>
 			

@@ -56,7 +56,7 @@
 								<dd>{$package->package}</dd>
 							</dl>
 							<dl>
-								<dt>{lang}wcf.acp.package.installedVersion{/lang}</dt>
+								<dt>{lang}wcf.acp.package.version{/lang}</dt>
 								<dd>{$package->packageVersion}</dd>
 							</dl>
 							<dl>

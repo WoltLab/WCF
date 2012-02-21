@@ -267,10 +267,42 @@
 	</category>
 
 	<category name="wcf.acp.package">
+		<item name="wcf.acp.package.application.installed"><![CDATA[Installed applications]]></item>
+		<item name="wcf.acp.package.application.title"><![CDATA[Applications]]></item>
+		<item name="wcf.acp.package.author"><![CDATA[Developer]]></item>
+		<item name="wcf.acp.package.button.info"><![CDATA[Informations]]></item>
+		<item name="wcf.acp.package.button.uninstall"><![CDATA[Uninstall]]></item>
+		<item name="wcf.acp.package.button.update"><![CDATA[Update]]></item>
+		<item name="wcf.acp.package.dependencies.dependent"><![CDATA[Dependent packages]]></item>
+		<item name="wcf.acp.package.dependencies.dependent.description"><![CDATA[Packages dependent on this package to work]]></item>
+		<item name="wcf.acp.package.dependencies.required"><![CDATA[Required packages]]></item>
+		<item name="wcf.acp.package.dependencies.required.description"><![CDATA[Packages required for this package to work]]></item>
+		<item name="wcf.acp.package.dependencies.title"><![CDATA[Dependencies]]></item>
+		<item name="wcf.acp.package.description"><![CDATA[Description]]></item>
+		<item name="wcf.acp.package.identifier"><![CDATA[Identifier]]></item>
+		<item name="wcf.acp.package.information.properties"><![CDATA[Properties]]></item>
+		<item name="wcf.acp.package.information.title"><![CDATA[Informations]]></item>
+		<item name="wcf.acp.package.installDate"><![CDATA[Installation date]]></item>
 		<item name="wcf.acp.package.installation.step.install"><![CDATA[Installing &ldquo;{$packageName}&rdquo; &hellip;]]></item>
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation completed]]></item>
 		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Prepairing installation &hellip;]]></item>
 		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
+		<item name="wcf.acp.package.list"><![CDATA[Package list]]></item>
+		<item name="wcf.acp.package.list.detailed"><![CDATA[Detailed package list]]></item>
+		<item name="wcf.acp.package.name"><![CDATA[Package]]></item>
+		<item name="wcf.acp.package.packageDate"><![CDATA[Creation date]]></item>
+		<item name="wcf.acp.package.plugin.installed"><![CDATA[Installed packages]]></item>
+		<item name="wcf.acp.package.plugin.title"><![CDATA[Extensions]]></item>
+		<item name="wcf.acp.package.source"><![CDATA[Data source]]></item>
+		<item name="wcf.acp.package.source.download"><![CDATA[Download package]]></item>
+		<item name="wcf.acp.package.source.upload"><![CDATA[Upload package]]></item>
+		<item name="wcf.acp.package.startInstall"><![CDATA[Install package]]></item>
+		<item name="wcf.acp.package.startUpdate"><![CDATA[Update package]]></item>
+		<item name="wcf.acp.package.type.application"><![CDATA[Application]]></item>
+		<item name="wcf.acp.package.type.other"><![CDATA[Base package]]></item>
+		<item name="wcf.acp.package.type.plugin"><![CDATA[Extension]]></item>
+		<item name="wcf.acp.package.updateDate"><![CDATA[Update date]]></item>
+		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">
