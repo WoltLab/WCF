@@ -23,7 +23,7 @@
 		<item name="wcf.global.systemRequirements"><![CDATA[Checking system-requirements]]></item>
 		<item name="wcf.global.systemRequirements.description"><![CDATA[These are the system-requirements:]]></item>
 		<item name="wcf.global.systemRequirements.required"><![CDATA[Required system-component]]></item>
-		<item name="wcf.global.systemRequirements.recommended"><![CDATA[Recommended system component]]></item>
+		<item name="wcf.global.systemRequirements.recommended"><![CDATA[Recommended system-component]]></item>
 		<item name="wcf.global.systemRequirements.element.required"><![CDATA[Required:]]></item>
 		<item name="wcf.global.systemRequirements.element.yours"><![CDATA[Found:]]></item>
 		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[Recommended:]]></item>
@@ -47,8 +47,8 @@
 		<item name="wcf.global.wcfDir.dir"><![CDATA[Installation-folder]]></item>
 		<item name="wcf.global.wcfDir.dir.description"><![CDATA[If you are unsure, keep the name which the system suggests and run the standard-installation.]]></item>
 		<item name="wcf.global.wcfDir.error.invalid"><![CDATA[The given folder is not valid.]]></item>
-		<item name="wcf.global.wcfDir.url"><![CDATA[Installation-adress (URL)]]></item>
-		<item name="wcf.global.wcfDir.url.description"><![CDATA[After the installation into the given folder you will be able to access <b>WoltLab Community Framework</b> through this adress (URL).]]></item>
+		<item name="wcf.global.wcfDir.url"><![CDATA[Installation-address (URL)]]></item>
+		<item name="wcf.global.wcfDir.url.description"><![CDATA[After the installation into the given folder you will be able to access <b>WoltLab Community Framework</b> through this address (URL).]]></item>
 		<item name="wcf.global.next"><![CDATA[Loading next step ...]]></item>
 		<item name="wcf.global.next.description"><![CDATA[The installation is currently loading the next step, please wait.]]></item>
 		<item name="wcf.global.languages"><![CDATA[Choose languages to install]]></item>
