@@ -48,6 +48,7 @@
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.global.button.next': '{lang}wcf.global.button.next{/lang}',
+			'wcf.global.button.edit': '{lang}wcf.global.button.edit{/lang}',
 			'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
 			'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 			'wcf.date.relative.minutes': '{capture assign=relativeMinutes}{lang}wcf.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
@@ -69,7 +70,7 @@
 		});
 		
 		WCF.Icon.addObject({
-			'wcf.icon.loading': '{icon size='S'}spinner{/icon}',
+			'wcf.icon.loading': '{icon size='S'}spinner1{/icon}',
 			'wcf.icon.opened': '{icon size='S'}opened2{/icon}',
 			'wcf.icon.closed': '{icon size='S'}closed2{/icon}',
 			'wcf.icon.previous': '{icon size='S'}previous1{/icon}',

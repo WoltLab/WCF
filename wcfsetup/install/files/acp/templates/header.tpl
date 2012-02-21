@@ -71,6 +71,9 @@
 				'wcf.global.confirmation.confirm': '{lang}wcf.global.confirmation.confirm{/lang}',
 				'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}'
 			});
+			WCF.Icon.addObject({
+				'wcf.icon.loading': '{icon size='S'}spinner1{/icon}'
+			});
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
 			new WCF.Effect.BalloonTooltip();

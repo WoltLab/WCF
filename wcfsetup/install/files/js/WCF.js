@@ -1056,7 +1056,7 @@ WCF.Action.Proxy.prototype = {
 	_showLoadingOverlay: function() {
 		// create loading overlay on first run
 		if (this._loadingOverlay === null) {
-			this._loadingOverlay = $('<div id="actionProxyLoading" class="actionProxyLoading"><img src="' + WCF.Icon.get('wcf.global.loading') + '" alt="" />' + WCF.Language.get('wcf.global.loading') + '</div>').hide().appendTo($('body'));
+			this._loadingOverlay = $('<div id="actionProxyLoading" class="actionProxyLoading"><img src="' + WCF.Icon.get('wcf.icon.loading') + '" alt="" />' + WCF.Language.get('wcf.global.loading') + '</div>').hide().appendTo($('body'));
 		}
 
 		// fade in overlay
