@@ -386,8 +386,14 @@ class OptionHandler implements IOptionHandler {
 	 * Creates a list of all active options.
 	 * 
 	 * @param	string		$parentCategoryName
+	 * @param	array<string>	$ignoreCategories
 	 */
-	protected function loadActiveOptions($parentCategoryName) {
+	protected function loadActiveOptions($parentCategoryName, array $ignoreCategories = array()) {
+		// skip ignored categories
+		if (in_array($parentCategoryName, $ignoreCategories)) {
+			return;
+		}
+		
 		if (!isset($this->cachedCategories[$parentCategoryName]) || $this->checkCategory($this->cachedCategories[$parentCategoryName])) {
 			if (isset($this->cachedOptionToCategories[$parentCategoryName])) {
 				foreach ($this->cachedOptionToCategories[$parentCategoryName] as $optionName) {
@@ -399,7 +405,7 @@ class OptionHandler implements IOptionHandler {
 			
 			if (isset($this->cachedCategoryStructure[$parentCategoryName])) {
 				foreach ($this->cachedCategoryStructure[$parentCategoryName] as $categoryName) {
-					$this->loadActiveOptions($categoryName);
+					$this->loadActiveOptions($categoryName, $ignoreCategories);
 				}
 			}
 		}

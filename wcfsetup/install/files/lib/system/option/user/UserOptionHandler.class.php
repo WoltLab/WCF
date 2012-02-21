@@ -47,14 +47,15 @@ class UserOptionHandler extends OptionHandler {
 	/**
 	 * Sets option values for a certain user.
 	 * 
-	 * @param	wcf\data\user\User
+	 * @param	wcf\data\user\User	$user
+	 * @param	array<string>		$ignoreCategories
 	 */
-	public function setUser(User $user) {
+	public function setUser(User $user, array $ignoreCategories) {
 		$this->optionValues = array();
 		$this->user = $user;
 		
 		if (!$this->didInit) {
-			$this->loadActiveOptions($this->categoryName);
+			$this->loadActiveOptions($this->categoryName, $ignoreCategories);
 			
 			$this->didInit = true;
 		}
