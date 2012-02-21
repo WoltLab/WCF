@@ -31,7 +31,7 @@
 			<dl{if $errorField == 'server'} class="wcf-formError"{/if}>
 				<dt><label for="server">{lang}wcf.acp.languageServer.server{/lang}</label></dt>
 				<dd>
-					<input type="text" name="server" id="server" value="{$server}" class="long" />
+					<input type="text" name="server" id="server" value="{$server}" autofocus="autofocus" class="long" />
 					{if $errorField == 'server'}
 						<small class="wcf-innerError">
 							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
