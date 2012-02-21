@@ -22,9 +22,9 @@
 </script>
 
 <form method="post" action="{link controller='PackageUpdate'}{/link}" id="updateForm">
-	<header class="wcf-mainHeading">
-		<img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" />
-		<hgroup>
+	<header class="wcf-container wcf-mainHeading">
+		<img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" class="wcf-containerIcon" />
+		<hgroup class="wcf-containerContent">
 			<h1>{lang}wcf.acp.packageUpdate{/lang}</h1>
 			{if $availableUpdates|count}
 				<h2><label><input type="checkbox" onclick="checkUncheckAllPackages(document.getElementById('updateForm'))" /> {lang}wcf.acp.packageUpdate.selectAll{/lang}</label></h2>

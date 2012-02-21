@@ -60,9 +60,9 @@
 			<!-- CONTENT -->
 			<section id="content" class="wcf-content">
 				
-				<header class="wcf-mainHeading setup">
-					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}working1.svg" alt="" />
-					<hgroup>
+				<header class="wcf-container wcf-mainHeading setup">
+					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}working1.svg" alt="" class="wcf-containerIcon" />
+					<hgroup class="wcf-containerContent">
 						<h1>{lang}wcf.global.title{/lang}</h1>
 						<h2>{lang}wcf.global.title.subtitle{/lang}</h2>
 						<p><progress id="packageInstallationProgress" value="{@$progress}" max="100" style="width: 300px;" title="{@$progress}%">{@$progress}%</progress></p>
