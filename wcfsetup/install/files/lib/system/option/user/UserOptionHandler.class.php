@@ -50,7 +50,7 @@ class UserOptionHandler extends OptionHandler {
 	 * @param	wcf\data\user\User	$user
 	 * @param	array<string>		$ignoreCategories
 	 */
-	public function setUser(User $user, array $ignoreCategories) {
+	public function setUser(User $user, array $ignoreCategories = array()) {
 		$this->optionValues = array();
 		$this->user = $user;
 		
