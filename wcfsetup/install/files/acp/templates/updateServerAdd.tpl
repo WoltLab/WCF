@@ -38,7 +38,7 @@
 			<dl{if $errorField == 'serverURL'} class="wcf-formError"{/if}>
 				<dt><label for="serverURL">{lang}wcf.acp.updateServer.serverURL{/lang}</label></dt>
 				<dd>
-					<input type="url" id="serverURL" name="serverURL" value="{$serverURL}" required="required" class="long" />
+					<input type="url" id="serverURL" name="serverURL" value="{$serverURL}" required="required" autofocus="autofocus" class="long" />
 					{if $errorField == 'serverURL'}
 						<small class="wcf-innerError">
 							{if $errorType == 'empty'}
