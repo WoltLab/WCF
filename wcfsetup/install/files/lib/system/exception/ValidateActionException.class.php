@@ -2,11 +2,19 @@
 namespace wcf\system\exception;
 
 /**
- * @todo	Ableitung von welcher Exception und wie soll die
- * 		konkrete Anzeige sein, wenn diese Exception nicht
- * 		ordnungsgemäß abgefangen wird?
+ * Simple exception for AJAX-driven requests.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2012 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	system.exception
+ * @category 	Community Framework
  */
 class ValidateActionException extends \Exception {
+	/**
+	 * @see	\Exception::__construct()
+	 */
 	public function __construct($message) {
 		die($message);
 	}

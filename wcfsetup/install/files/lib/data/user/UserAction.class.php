@@ -3,6 +3,7 @@ namespace wcf\data\user;
 use wcf\data\user\group\UserGroup;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -37,6 +38,12 @@ class UserAction extends AbstractDatabaseObjectAction {
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.user.canEditUser');
+	
+	/**
+	 * list of user actions allowed within update
+	 * @var	array<string>
+	 */
+	public $allowOwnUserUpdate = array('data', 'options');
 	
 	/**
 	 * Validates permissions and parameters.
@@ -79,17 +86,33 @@ class UserAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * Validates permissions and parameters.
-	 * 
-	 * @todo	Handle multiple users?
 	 */
 	public function validateUpdate() {
-		// read and validate user objects
-		parent::validateUpdate();
+		// read objects
+		if (!count($this->objects)) {
+			$this->readObjects();
+		}
 		
-		// editing own user
-		if (count($this->objectIDs) == 1 && WCF::getUser()->userID == $this->objects[0]->userID) return;
+		if (!count($this->objects)) {
+			throw new ValidateActionException('Invalid object id');
+		}
 		
-		throw new ValidateActionException('Insufficient permissions');
+		try {
+			WCF::getSession()->checkPermissions($this->permissionsUpdate);
+		}
+		catch (PermissionDeniedException $e) {
+			// check if we're editing ourselves
+			if (count($this->objects) == 1 && ($this->objects[0]->userID == WCF::getUser()->userID)) {
+				foreach (array_keys($this->parameters) as $key) {
+					// check if action is allowed (prevent the user from updating own groups etc)
+					if (!in_array($key, $this->allowOwnUserUpdate)) {
+						throw new ValidateActionException('Insufficient permissions');
+					}
+				}
+			}
+			
+			throw new ValidateActionException('Insufficient permissions');
+		}
 	}
 	
 	/**
