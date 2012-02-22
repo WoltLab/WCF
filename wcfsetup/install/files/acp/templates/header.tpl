@@ -72,7 +72,7 @@
 				'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}'
 			});
 			WCF.Icon.addObject({
-				'wcf.icon.loading': '{icon size='S'}spinner1{/icon}'
+				'wcf.icon.loading': '{if PACKAGE_ID}{icon size='S'}spinner1{/icon}{else}wcf/icon/spinner1.svg{/if}'
 			});
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
