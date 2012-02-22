@@ -83,4 +83,12 @@ interface IFormElementContainer {
 	 * @return	string
 	 */
 	public function getHTML($formName);
+	
+	/**
+	 * Sets localized error message for named element.
+	 * 
+	 * @param	string		$name
+	 * @param	string		$error
+	 */
+	public function setError($name, $error);
 }

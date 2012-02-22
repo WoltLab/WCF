@@ -121,4 +121,17 @@ class FormDocument {
 			}
 		}
 	}
+	
+	/**
+	 * Sets localized error message for given element.
+	 * 
+	 * @param	string		$name
+	 * @param	string		$error
+	 * @param unknown_type $error
+	 */
+	public function setError($name, $error) {
+		foreach ($this->container as $container) {
+			$this->containers->setError($name, $error);
+		}
+	}
 }

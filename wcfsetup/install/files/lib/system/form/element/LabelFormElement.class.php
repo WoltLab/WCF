@@ -42,11 +42,12 @@ class LabelFormElement extends AbstractFormElement {
 	 */
 	public function getHTML($formName) {
 		return <<<HTML
-<dl>
+<dl{$this->getErrorClass()}>
 	<dt><label>{$this->getLabel()}</label></dt>
 	<dd>
 		{$this->getText()}
 		<small>{$this->getDescription()}</small>
+		{$this->getErrorField()}
 	</dd>
 </dl>
 HTML;

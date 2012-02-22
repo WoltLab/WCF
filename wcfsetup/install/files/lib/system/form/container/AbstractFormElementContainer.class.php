@@ -104,11 +104,26 @@ abstract class AbstractFormElementContainer implements IFormElementContainer {
 	public function handleRequest(array $variables) {
 		foreach ($this->children as $element) {
 			if (!($element instanceof AbstractNamedFormElement)) {
-				return;
+				continue;
 			}
 			
 			if (isset($variables[$element->getName()])) {
 				$element->setValue($variables[$element->getName()]);
+			}
+		}
+	}
+	
+	/**
+	 * @see wcf\system\form\IFormElementContainer::setError()
+	 */
+	public function setError($name, $error) {
+		foreach ($this->children as $element) {
+			if (!($element instanceof AbstractNamedFormElement)) {
+				continue;
+			}
+			
+			if ($element->getName() == $name) {
+				$element->setError($error);
 			}
 		}
 	}

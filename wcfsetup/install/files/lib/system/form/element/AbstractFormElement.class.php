@@ -22,6 +22,12 @@ abstract class AbstractFormElement implements IFormElement {
 	protected $description = '';
 	
 	/**
+	 * localized error string
+	 * @var	string
+	 */
+	protected $error = '';
+	
+	/**
 	 * element label
 	 * @var	string
 	 */
@@ -73,5 +79,37 @@ abstract class AbstractFormElement implements IFormElement {
 	 */
 	public function getParent() {
 		return $this->parent;
+	}
+	
+	/**
+	 * @see	wcf\system\form\IFormElement::setError()
+	 */
+	public function setError($error) {
+		$this->error = $error;
+	}
+	
+	/**
+	 * @see	wcf\system\form\IFormElement::getError()
+	 */
+	public function getError() {
+		return $this->error;
+	}
+	
+	/**
+	 * Returns class attribute if an error occured.
+	 * 
+	 * @return	string
+	 */
+	protected function getErrorClass() {
+		return ($this->getError()) ? ' class="wcf-formError"' : '';
+	}
+	
+	/**
+	 * Returns an error message if occured.
+	 * 
+	 * @return	string
+	 */
+	protected function getErrorField() {
+		return ($this->getError()) ? '<small class="wcf-innerError">'.$this->getError().'</small>' : '';
 	}
 }

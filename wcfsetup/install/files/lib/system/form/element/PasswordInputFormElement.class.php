@@ -18,11 +18,12 @@ class PasswordInputFormElement extends AbstractNamedFormElement {
 	 */
 	public function getHTML($formName) {
 		return <<<HTML
-<dl>
+<dl{$this->getErrorClass()}>
 	<dt><label for="{$this->getName()}">{$this->getLabel()}</label></dt>
 	<dd>
 		<input type="password" id="{$this->getName()}" name="{$formName}{$this->getName()}" value="{$this->getValue()}" class="medium" />
 		<small>{$this->getDescription()}</small>
+		{$this->getErrorField()}
 	</dd>
 </dl>
 HTML;

@@ -450,6 +450,13 @@ class PackageInstallationDispatcher {
 			$packageDir = $document->getValue('packageDir');
 			
 			if ($packageDir !== null) {
+				// validate package dir
+				if (file_exists(FileUtil::addLeadingSlash($packageDir) . 'global.php')) {
+					$document->setError('packageDir', WCF::getLanguage()->get('wcf.acp.package.packageDir.notAvailable'));
+					return null;
+				}
+				
+				// set package dir
 				$packageEditor = new PackageEditor($this->getPackage());
 				$packageEditor->update(array(
 					'packageDir' => FileUtil::getRelativePath(WCF_DIR, $packageDir)
