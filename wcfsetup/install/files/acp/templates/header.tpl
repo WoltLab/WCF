@@ -96,7 +96,7 @@
 					<div>
 						<ul>
 							<li id="userMenu" class="wcf-userMenu"><!-- ToDo: We need an ID and/or class for each list here, this ID may also change! -->
-								<span class="wcf-dropdownCaption userAvatar">{lang}wcf.user.userNote{/lang}</span>
+								<span class="wcf-dropdownCaption wcf-userAvatarFramed">{lang}wcf.user.userNote{/lang}</span>
 								<ul class="wcf-dropdown">
 									<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
 								</ul>
