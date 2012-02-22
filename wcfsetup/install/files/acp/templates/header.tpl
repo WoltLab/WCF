@@ -72,7 +72,7 @@
 				'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}'
 			});
 			WCF.Icon.addObject({
-				'wcf.icon.loading': '{icon size='S'}spinner1{/icon}'
+				'wcf.icon.loading': '{if PACKAGE_ID}{icon size='S'}spinner1{/icon}{else}wcf/icon/spinner1.svg{/if}'
 			});
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
@@ -96,7 +96,7 @@
 					<div>
 						<ul>
 							<li id="userMenu" class="wcf-userMenu"><!-- ToDo: We need an ID and/or class for each list here, this ID may also change! -->
-								<span class="wcf-dropdownCaption userAvatar">{lang}wcf.user.userNote{/lang}</span>
+								<span class="wcf-dropdownCaption wcf-userAvatarFramed">{lang}wcf.user.userNote{/lang}</span>
 								<ul class="wcf-dropdown">
 									<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
 								</ul>
