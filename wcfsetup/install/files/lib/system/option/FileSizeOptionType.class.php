@@ -55,7 +55,6 @@ class FileSizeOptionType extends IntegerOptionType {
 	 * @see wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
-		// TODO: Maybe show more digits after the comma?
 		$value = FileUtil::formatFileSize($value);
 		return parent::getFormElement($option, $value);
 	}

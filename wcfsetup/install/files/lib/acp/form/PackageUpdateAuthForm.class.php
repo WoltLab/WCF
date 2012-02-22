@@ -138,6 +138,7 @@ class PackageUpdateAuthForm extends ACPForm {
 	}
 	
 	/**
+	 * @todo	This whole page is carzy, it's manipulating the requested page, but RequestHandler does not work this way
 	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {

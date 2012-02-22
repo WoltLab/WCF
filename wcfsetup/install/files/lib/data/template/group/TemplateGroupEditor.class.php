@@ -81,7 +81,7 @@ class TemplateGroupEditor extends DatabaseObjectEditor {
 	 */
 	public function deleteFolders() {
 		// default template dir
-		$folders = array(WCF_DIR . 'templates/' . $this->templateGroupFolderName); // TODO: should this folder be deleted, too?
+		$folders = array(WCF_DIR . 'templates/' . $this->templateGroupFolderName);
 		
 		// get package dirs
 		$sql = "SELECT	packageDir

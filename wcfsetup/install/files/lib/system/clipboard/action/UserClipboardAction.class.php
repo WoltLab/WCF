@@ -44,7 +44,7 @@ class UserClipboardAction implements IClipboardAction {
 				}
 				
 				// TODO: use language variable
-				$item->addInternalData('confirmMessage', 'Delete '.$count.' users?');
+				$item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.user.confirmMessage', array('count' => $count)));
 				$item->addParameter('actionName', 'delete');
 				$item->addParameter('className', 'wcf\data\user\UserAction');
 				$item->setName('user.delete');
@@ -131,15 +131,8 @@ class UserClipboardAction implements IClipboardAction {
 	
 	/**
 	 * @see	wcf\system\clipboard\action\IClipboardAction::getEditorLabel()
-	 * @todo	use language variable
 	 */
 	public function getEditorLabel(array $objects) {
-		$count = count($objects);
-		if ($count == 1) {
-			return 'One user marked';
-		}
-		else {
-			return $count . ' users marked';
-		}
+		return WCF::getLanguage()->getDynamicVariable('wcf.clipboard.user.marked', array('count' => count($objects)));
 	}
 }

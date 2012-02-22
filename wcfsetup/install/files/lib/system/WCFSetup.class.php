@@ -1001,9 +1001,44 @@ class WCFSetup extends WCF {
 				$archive->openArchive();
 			}
 			catch (\Exception $e) {
-				// TODO: Maybe break the installation if archive is broken?
-				// this is a broken archive, skip it
-				continue;
+				// we've encountered a broken archive, revert everything and then fail
+				$sql = "SELECT	queueID, parentQueueID
+					FROM	wcf".WCF_N."_package_installation_queue";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute();
+				$queues = array();
+				while ($row = $statement->fetchArray()) {
+					$queues[$row['queueID']] = $row['parentQueueID'];
+				}
+				
+				$queueIDs = array();
+				$queueID = $queue->queueID;
+				while ($queueID) {
+					$queueIDs[] = $queueID;
+					
+					$queueID = (isset($queues[$queueID])) ?: 0;
+				}
+				
+				// remove previously created queues
+				if (!empty($queueIDs)) {
+					$sql = "DELETE FROM	wcf".WCF_N."_package_installation_queue
+						WHERE		queueID = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					WCF::getDB()->beginTransaction();
+					foreach ($queueIDs as $queueID) {
+						$statement->execute(array($queueID));
+					}
+					WCF::getDB()->commitTransaction();
+				}
+				
+				// remove package files
+				@unlink(TMP_DIR.'install/packages/'.$wcfPackageFile);
+				foreach ($otherPackages as $packageFile) {
+					@unlink(TMP_DIR.'install/packages/'.$packageFile);
+				}
+				
+				// throw exception again
+				throw new SystemException('', 0, '', $e);
 			}
 			
 			$queue = PackageInstallationQueueEditor::create(array(
@@ -1024,7 +1059,6 @@ class WCFSetup extends WCF {
 		SessionHandler::getInstance()->register('masterPassword', 1);
 		SessionHandler::getInstance()->update();
 		
-		// TODO: print message if delete fails
 		$installPhpDeleted = @unlink('./install.php');
 		$testPhpDeleted = @unlink('./test.php');
 		$wcfSetupTarDeleted = @unlink('./WCFSetup.tar.gz');

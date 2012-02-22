@@ -174,12 +174,6 @@ class TemplateScriptingCompiler {
 	protected $staticIncludes = array();
 	
 	/**
-	 * list of previously included namespaces
-	 * @var	array<string>
-	 */
-	protected $includedNamespaces = array();
-	
-	/**
 	 * Creates a new TemplateScriptingCompiler object.
 	 * 
 	 * @param	wcf\system\templateTemplateEngine	$template
@@ -216,7 +210,7 @@ class TemplateScriptingCompiler {
 			);
 		}
 		else {
-			$this->includedNamespaces = $this->staticIncludes = array();
+			$this->staticIncludes = array();
 		}
 		
 		// reset vars
@@ -282,14 +276,6 @@ class TemplateScriptingCompiler {
 		if (count($this->autoloadPlugins) > 0) {
 			$compiledAutoloadPlugins = "<?php\n";
 			foreach ($this->autoloadPlugins as $className) {
-				// prevent multiple use on the same namespace
-				if (!in_array($className, $this->includedNamespaces)) {
-					// TODO: We're using the classes with prepended namespace, why should we first
-					//	 import them with "use" for no reason?
-					//$compiledAutoloadPlugins .= "use ".$className.";\n";
-					$this->includedNamespaces[] = $className;
-				}
-				
 				$compiledAutoloadPlugins .= "if (!isset(\$this->pluginObjects['$className'])) {\n";
 				$compiledAutoloadPlugins .= "\$this->pluginObjects['$className'] = new $className;\n";
 				$compiledAutoloadPlugins .= "}\n";

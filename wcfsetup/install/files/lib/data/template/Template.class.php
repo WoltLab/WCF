@@ -74,7 +74,6 @@ class Template extends DatabaseObject {
 	
 	/**
 	 * Searches in templates.
-	 * TODO: move to template editor?
 	 * 
 	 * @param	string		$search		search query
 	 * @param	string		$replace

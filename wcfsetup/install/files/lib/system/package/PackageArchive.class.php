@@ -231,7 +231,8 @@ class PackageArchive {
 						throw new SystemException("package date '".$element->nodeValue."' is invalid, violating ISO-8601 date format.");
 					}
 					
-					$this->packageInfo['date'] = strtotime($element->nodeValue) + 43201; // TODO: Is this even neccessary?
+					// TODO: Is this even neccessary?
+					//$this->packageInfo['date'] = strtotime($element->nodeValue) + 43201;
 				break;
 			}
 		}

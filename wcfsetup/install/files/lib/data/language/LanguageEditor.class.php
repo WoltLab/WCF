@@ -549,11 +549,10 @@ class LanguageEditor extends DatabaseObjectEditor {
 				// search and replace
 				$matches = 0;
 				if ($useRegex) {
-					$newValue = preg_replace('~'.$search.'~s'.(!$caseSensitive ? 'i' : ''), $replace, ($row['languageCustomItemValue'] ? $row['languageCustomItemValue'] : $row['languageItemValue']), -1, $matches); //TODO: undefined variable
+					$newValue = preg_replace('~'.$search.'~s', $replace, ($row['languageCustomItemValue'] ? $row['languageCustomItemValue'] : $row['languageItemValue']), -1, $matches);
 				}
 				else {
-					if ($caseSensitive) $newValue = StringUtil::replace($search, $replace, ($row['languageCustomItemValue'] ? $row['languageCustomItemValue'] : $row['languageItemValue']), $matches); //TODO: undefined variable
-					else $newValue = StringUtil::replaceIgnoreCase($search, $replace, ($row['languageCustomItemValue'] ? $row['languageCustomItemValue'] : $row['languageItemValue']), $matches);
+					$newValue = StringUtil::replaceIgnoreCase($search, $replace, ($row['languageCustomItemValue'] ? $row['languageCustomItemValue'] : $row['languageItemValue']), $matches);
 				}
 				
 				if ($matches > 0) {

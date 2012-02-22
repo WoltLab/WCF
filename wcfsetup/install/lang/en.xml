@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="en" languagename="English">
+	<category name="wcf.clipboard">
+		<item name="wcf.clipboard.user.confirmMessage"><![CDATA[Delete {if $count == 1}one{else}{#$count}{/if} user{if $count > 1}s{/if}?]]></item>
+		<item name="wcf.clipboard.user.marked"><![CDATA[{if $count == 1}One{else}{#$count}{/if} user{if $count > 1}s{/if} marked]]></item>
+	</category>
+	
 	<category name="wcf.acp.cronjob">
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cron jobs]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Add a new cron job]]></item>

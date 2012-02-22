@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\package;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
 
 /**
@@ -35,9 +36,13 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	protected $permissionsUpdate = array('admin.system.package.canUpdatePackage');
 	
 	/**
-	 * @todo	Implement validation
+	 * Validates page parameter.
 	 */
-	public function validateGetPluginList() {}
+	public function validateGetPluginList() {
+		if (!isset($this->parameters['activePage']) || !intval($this->parameters['activePage'])) {
+			throw new ValidateActionException("Missing or invalid parameter 'activePage'");
+		}
+	}
 	
 	/**
 	 * Returns a list of plugins.

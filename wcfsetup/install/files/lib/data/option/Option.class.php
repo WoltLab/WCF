@@ -49,7 +49,6 @@ class Option extends DatabaseObject {
 	
 	/**
 	 * Returns a list of options.
-	 * TODO: move to optionlist
 	 *
 	 * @param	integer		$packageID
 	 * @return	array

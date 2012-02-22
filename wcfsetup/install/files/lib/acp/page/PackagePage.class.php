@@ -12,6 +12,7 @@ use wcf\system\WCFACP;
  * Handles all request on the package.php script
  * and executes the requested action.
  * TODO: split this page into separate pages / actions
+ * TODO: I would recommend removing this entire class, it's pretty nasty to use a page just for redirections
  *
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -69,9 +70,7 @@ class PackagePage extends AbstractPage {
 			case 'rollback':
 				// TODO
 				die('ROLLBACK');
-				WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
-				require_once(WCF_DIR.'lib/acp/package/PackageInstallationRollback.class.php');
-				new PackageInstallationRollback($this->queueID); // TODO: undefined class PackageInstallationRollback
+				//WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
 			break;
 			
 			case 'openQueue':
