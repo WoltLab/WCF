@@ -414,7 +414,25 @@ class PackageInstallationNodeBuilder {
 		$requiredPackages = $this->installation->getArchive()->getOpenRequirements();
 		foreach ($requiredPackages as $packageName => $package) {
 			if (!isset($package['file'])) {
-				// ignore requirements which are not to be installed
+				// package is installed but version does not match
+				if ($package['packageID']) {
+					// get package version
+					$sql = "SELECT	packageVersion
+						FROM	wcf".WCF_N."_package
+						WHERE	packageID = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute(array($package['packageID']));
+					$row = $statement->fetchArray();
+					
+					throw new SystemException("Package '".$this->installation->getArchive()->getPackageInfo('packageName')."' requires the package '".$packageName."' in version '".$package['minversion']."', but '".$row['packageVersion']."' is installed.");
+				}
+				
+				// package is required but not installed
+				if (!$package['packageID']) {
+					throw new SystemException("Package '".$this->installation->getArchive()->getPackageInfo('packageName')."' requires the package '".$packageName."', but it is neither installed nor shipped.");
+				}
+				
+				// ignore requirements which are not to be installed, but are already available
 				continue;
 			}
 			
