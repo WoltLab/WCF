@@ -156,33 +156,24 @@ a[href^="mailto:"] {
  */
 
 .wcf-container {
-	display: table;
-	width: 100%;
+	overflow: hidden;
 }
 
 .wcf-containerIcon {
-	display: table-cell;
-}
-
-img.wcf-containerIcon {
-	display: table-cell;
-	margin-right: 1em;
-}
-
-.wcf-containerIcon img {
-	margin-right: 1em;
+	float: left;
+	margin-right: 5px;
 }
 
 .wcf-containerContent {
-	display: table-cell;
-	width: 100%;
-	vertical-align: top;
-	position: relative;
+	padding: 1px;
+	overflow: hidden;
 }
 
 
 
-/* Floated Elements */
+/* ToDo: Floated Elements */
+
+/* possibly obsolete */
 
 .floatContainer:after {
 	content: "";
@@ -898,10 +889,11 @@ nav.wcf-topMenu {
 	border: 1px solid rgba(0, 0, 0, .1);
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, .2);
-	padding: 5px 40px 5px 10px;
+	padding: 5px;
 	position: absolute;
 	top: 50px;
-	white-space: nowrap;
+	right: 0;
+	min-width: 240px;
 	
 	-webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
 	-moz-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
@@ -921,29 +913,14 @@ nav.wcf-topMenu {
 	background-color: rgba(0, 0, 0, .5);
 }
 
-.wcf-search:after {
-	content: '';
-	display: block;
-	clear: both;
-}
-
 .wcf-search input[type='search'] {
 	width: 175px;
-	margin: 5px 10px;
+	margin: 2px 4px;
 }
 
 .wcf-search > .wcf-searchButton {
-	margin: 0;
-	display: inline;
 	width: 32px;
 	height: 32px;
-	float: left;
-}
-
-.wcf-search > div {
-	display: inline;
-	margin-left: 1px;
-	float: left;
 }
 
 
@@ -3847,6 +3824,18 @@ tr .columnIcon img {
 	margin-right: 5px;
 	padding: 3px 12px 5px 10px;
 	display: inline-block;
+}
+
+
+
+/* ############## ToDo: CK-Editor ############## */
+
+.wcf-wideEditor dt {
+	display: none;
+}
+
+.wcf-wideEditor dd {
+	margin-left: 0;
 }
 
 
