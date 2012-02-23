@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\package;
-use wcf\system\form\FormDocument;
-
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\language\LanguageEditor;
@@ -15,6 +13,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\form\container;
 use wcf\system\form\element;
+use wcf\system\form\FormDocument;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
