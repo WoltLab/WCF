@@ -130,8 +130,8 @@ class FormDocument {
 	 * @param unknown_type $error
 	 */
 	public function setError($name, $error) {
-		foreach ($this->container as $container) {
-			$this->containers->setError($name, $error);
+		foreach ($this->containers as $container) {
+			$container->setError($name, $error);
 		}
 	}
 }

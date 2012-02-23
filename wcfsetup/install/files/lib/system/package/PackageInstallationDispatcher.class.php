@@ -457,9 +457,9 @@ class PackageInstallationDispatcher {
 			
 			if ($packageDir !== null) {
 				// validate package dir
-				if (file_exists(FileUtil::addLeadingSlash($packageDir) . 'global.php')) {
+				if (file_exists(FileUtil::addTrailingSlash($packageDir) . 'global.php')) {
 					$document->setError('packageDir', WCF::getLanguage()->get('wcf.acp.package.packageDir.notAvailable'));
-					return null;
+					return $document;
 				}
 				
 				// set package dir
