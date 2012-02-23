@@ -19,5 +19,6 @@
 		<pip name="template">wcf\system\package\plugin\TemplatePackageInstallationPlugin</pip>
 		<pip name="userGroupOption">wcf\system\package\plugin\UserGroupOptionPackageInstallationPlugin</pip>
 		<pip name="userOption">wcf\system\package\plugin\UserOptionPackageInstallationPlugin</pip>
+		<pip name="packageIcon">wcf\system\package\plugin\PackageIconPackageInstallationPlugin</pip>
 	</import>
 </data>

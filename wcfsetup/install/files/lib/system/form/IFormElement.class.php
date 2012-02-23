@@ -61,4 +61,18 @@ interface IFormElement {
 	 * @return	string
 	 */
 	public function getHTML($formName);
+	
+	/**
+	 * Sets localized error message.
+	 * 
+	 * @param	string		$error
+	 */
+	public function setError($error);
+	
+	/**
+	 * Returns localized error message, empty if no error occured.
+	 * 
+	 * @return	string
+	 */
+	public function getError();
 }
