@@ -2,6 +2,10 @@
 namespace wcf\system\package\plugin;
 use wcf\data\package\Package;
 use wcf\system\exception\SystemException;
+use wcf\system\form\container\GroupFormElementContainer;
+use wcf\system\form\element\LabelFormElement;
+use wcf\system\form\FormDocument;
+use wcf\system\package\PackageInstallationFormManager;
 use wcf\system\package\PackageInstallationSQLParser;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -51,7 +55,49 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			// check queries
 			$parser = new PackageInstallationSQLParser($queries, $package, $this->installation->getAction());
 			$conflicts = $parser->test();
-			if (count($conflicts)) {
+			if (!empty($conflicts)) {
+				if (isset($conflicts['CREATE TABLE']) || isset($conflicts['DROP TABLE'])) {
+					if (!PackageInstallationFormManager::findForm($this->installation->queue, 'overwriteDatabaseTables')) {
+						$container = new GroupFormElementContainer();
+						
+						if (isset($conflicts['CREATE TABLE'])) {
+							$text = implode('<br />', $conflicts['CREATE TABLE']);
+							$label = WCF::getLanguage()->get('wcf.acp.package.error.sql.createTable');
+							$description = WCF::getLanguage()->get('wcf.acp.package.error.sql.createTable.description');
+							
+							$element = new LabelFormElement($container);
+							$element->setLabel($label);
+							$element->setText($text);
+							$element->setDescription($description);
+							$container->appendChild($element);
+						}
+						
+						if (isset($conflicts['DROP TABLE'])) {
+							$text = implode('<br />', $conflicts['DROP TABLE']);
+							$label = WCF::getLanguage()->get('wcf.acp.package.error.sql.dropTable');
+							$description = WCF::getLanguage()->get('wcf.acp.package.error.sql.dropTable.description');
+						
+							$element = new LabelFormElement($container);
+							$element->setLabel($label);
+							$element->setText($text);
+							$element->setDescription($description);
+							$container->appendChild($element);
+						}
+						
+						$document = new FormDocument('overwriteDatabaseTables');
+						$document->appendContainer($container);
+						
+						PackageInstallationFormManager::registerForm($this->installation->queue, $document);
+						return $document;
+					}
+					else {
+						/*
+						 * At this point the user decided to continue the installation (he would called the rollback
+						 * otherwise), thus we do not care about the form anymore
+						 */
+					}
+				}
+				
 				// ask user here
 				// search default value in session
 				if (!WCF::getSession()->getVar('overrideAndDontAskAgain')) {

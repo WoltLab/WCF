@@ -286,8 +286,8 @@ class PackageInstallationSQLParser extends SQLParser {
 					}
 				}
 				else {
-					if (!isset($this->conflicts[$tableName])) $this->conflicts[$tableName] = array();
-					$this->conflicts[$tableName][] = 'CREATE TABLE';
+					if (!isset($this->conflicts['CREATE TABLE'])) $this->conflicts['CREATE TABLE'] = array();
+					$this->conflicts['CREATE TABLE'][] = $tableName;
 				}
 			}
 		}
@@ -435,8 +435,8 @@ class PackageInstallationSQLParser extends SQLParser {
 					}
 				}
 				else {
-					if (!isset($this->conflicts[$tableName])) $this->conflicts[$tableName] = array();
-					$this->conflicts[$tableName][] = 'DROP TABLE';
+					if (!isset($this->conflicts['DROP TABLE'])) $this->conflicts['DROP TABLE'] = array();
+					$this->conflicts['DROP TABLE'][] = $tableName;
 				}
 			}
 		}

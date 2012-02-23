@@ -284,6 +284,10 @@
 		<item name="wcf.acp.package.dependencies.required.description"><![CDATA[Packages required for this package to work]]></item>
 		<item name="wcf.acp.package.dependencies.title"><![CDATA[Dependencies]]></item>
 		<item name="wcf.acp.package.description"><![CDATA[Description]]></item>
+		<item name="wcf.acp.package.error.sql.createTable"><![CDATA[Overwrite existing tables]]></item>
+		<item name="wcf.acp.package.error.sql.createTable.description"><![CDATA[The tables above will be overwritten once you continue the installation process. All data contained in these tables will be lost.]]></item>
+		<item name="wcf.acp.package.error.sql.dropTable"><![CDATA[Remove existing tables]]></item>
+		<item name="wcf.acp.package.error.sql.dropTable.description"><![CDATA[The tables above will be removed once you continue the installation process. All data contained in these tables will be lost.]]></item>
 		<item name="wcf.acp.package.identifier"><![CDATA[Identifier]]></item>
 		<item name="wcf.acp.package.information.properties"><![CDATA[Properties]]></item>
 		<item name="wcf.acp.package.information.title"><![CDATA[Informations]]></item>

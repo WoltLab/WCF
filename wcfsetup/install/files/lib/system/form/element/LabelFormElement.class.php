@@ -25,7 +25,7 @@ class LabelFormElement extends AbstractFormElement {
 	 * @param	string		$text
 	 */
 	public function setText($text) {
-		$text->text = StringUtil::trim($text);
+		$this->text = StringUtil::trim($text);
 	}
 	
 	/**
@@ -42,12 +42,11 @@ class LabelFormElement extends AbstractFormElement {
 	 */
 	public function getHTML($formName) {
 		return <<<HTML
-<dl{$this->getErrorClass()}>
+<dl>
 	<dt><label>{$this->getLabel()}</label></dt>
 	<dd>
 		{$this->getText()}
 		<small>{$this->getDescription()}</small>
-		{$this->getErrorField()}
 	</dd>
 </dl>
 HTML;

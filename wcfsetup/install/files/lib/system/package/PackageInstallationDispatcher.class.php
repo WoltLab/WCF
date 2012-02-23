@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\package;
+use wcf\system\form\FormDocument;
+
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\language\LanguageEditor;
@@ -302,11 +304,11 @@ class PackageInstallationDispatcher {
 	/**
 	 * Executes a package installation plugin.
 	 *
-	 * @param	array		$nodeData
+	 * @param	array		step
 	 * @return	boolean
 	 */
 	protected function executePIP(array $nodeData) {
-		$installationStep = new PackageInstallationStep();
+		$step = new PackageInstallationStep();
 		
 		// fetch all pips associated with current PACKAGE_ID and include pips
 		// previously installed by current installation queue
@@ -338,13 +340,18 @@ class PackageInstallationDispatcher {
 		
 		// execute PIP
 		try {
-			$plugin->{$this->action}();
+			$document = $plugin->{$this->action}();
 		}
 		catch (SplitNodeException $e) {
-			$installationStep->setSplitNode();
+			$step->setSplitNode();
 		}
 		
-		return $installationStep;
+		if ($document !== null && ($document instanceof FormDocument)) {
+			$step->setDocument($document);
+			$step->setSplitNode();
+		}
+		
+		return $step;
 	}
 	
 	protected function selectOptionalPackages($currentNode, array $nodeData) {
