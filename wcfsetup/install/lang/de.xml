@@ -406,7 +406,7 @@
 		<item name="wcf.date.timeFormat"><![CDATA[H:i]]></item>
 		<item name="wcf.date.dateTimeFormat"><![CDATA[%date%, %time%]]></item>
 		
-		<!--  variables for dynamic javascript datetime -->
+		<!-- variables for dynamic javascript datetime -->
 		<item name="wcf.date.relative.minutes"><![CDATA['Vor ' + (($minutes > 1) ? $minutes + ' Minuten' : 'einer Minute' )]]></item>
 		<item name="wcf.date.relative.hours"><![CDATA['Vor ' + (($hours > 1) ? $hours + ' Stunden' : 'einer Stunde' )]]></item>
 		<item name="wcf.date.relative.pastDays"><![CDATA[(($days > 1) ? '%day%' : 'Gestern' ) + ', %time%']]></item>
@@ -436,13 +436,6 @@
 		<item name="wcf.date.month.oct"><![CDATA[Okt]]></item>
 		<item name="wcf.date.month.nov"><![CDATA[Nov]]></item>
 		<item name="wcf.date.month.dec"><![CDATA[Dez]]></item>
-		<item name="wcf.date.day.sunday"><![CDATA[Sonntag]]></item>
-		<item name="wcf.date.day.monday"><![CDATA[Montag]]></item>
-		<item name="wcf.date.day.tuesday"><![CDATA[Dienstag]]></item>
-		<item name="wcf.date.day.wednesday"><![CDATA[Mittwoch]]></item>
-		<item name="wcf.date.day.thursday"><![CDATA[Donnerstag]]></item>
-		<item name="wcf.date.day.friday"><![CDATA[Freitag]]></item>
-		<item name="wcf.date.day.saturday"><![CDATA[Samstag]]></item>
 		<item name="wcf.date.day.sun"><![CDATA[Son]]></item>
 		<item name="wcf.date.day.mon"><![CDATA[Mon]]></item>
 		<item name="wcf.date.day.tue"><![CDATA[Die]]></item>
@@ -450,6 +443,15 @@
 		<item name="wcf.date.day.thu"><![CDATA[Don]]></item>
 		<item name="wcf.date.day.fri"><![CDATA[Fre]]></item>
 		<item name="wcf.date.day.sat"><![CDATA[Sam]]></item>
+
+		<!-- localized days -->
+		<item name="wcf.date.day.sunday"><![CDATA[Sonntag]]></item>
+		<item name="wcf.date.day.monday"><![CDATA[Montag]]></item>
+		<item name="wcf.date.day.tuesday"><![CDATA[Dienstag]]></item>
+		<item name="wcf.date.day.wednesday"><![CDATA[Mittwoch]]></item>
+		<item name="wcf.date.day.thursday"><![CDATA[Donnerstag]]></item>
+		<item name="wcf.date.day.friday"><![CDATA[Freitag]]></item>
+		<item name="wcf.date.day.saturday"><![CDATA[Samstag]]></item>
 
 		<!-- time zones -->
 		<item name="wcf.date.timezone.pacific.kwajalein"><![CDATA[(UTC-12:00) Kwajalein]]></item>

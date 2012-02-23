@@ -406,10 +406,19 @@
 		<item name="wcf.date.timeFormat"><![CDATA[g:ia]]></item>
 		<item name="wcf.date.dateTimeFormat"><![CDATA[%date%, %time%]]></item>
 		
-		<!--  variables for dynamic javascript datetime -->
+		<!-- variables for dynamic javascript datetime -->
 		<item name="wcf.date.relative.minutes"><![CDATA[(($minutes > 1) ? $minutes + ' minutes' : 'A minute') + ' ago']]></item>
 		<item name="wcf.date.relative.hours"><![CDATA[(($hours > 1) ? $hours + ' hours' : 'An hour' ) + ' ago']]></item>
 		<item name="wcf.date.relative.pastDays"><![CDATA[(($days > 1) ? '%day%' : 'Yesterday' ) + ', %time%']]></item>
+		
+		<!-- localized days -->
+		<item name="wcf.date.day.sunday"><![CDATA[Sunday]]></item>
+		<item name="wcf.date.day.monday"><![CDATA[Monday]]></item>
+		<item name="wcf.date.day.tuesday"><![CDATA[Tuesday]]></item>
+		<item name="wcf.date.day.wednesday"><![CDATA[Wednesday]]></item>
+		<item name="wcf.date.day.thursday"><![CDATA[Thursday]]></item>
+		<item name="wcf.date.day.friday"><![CDATA[Friday]]></item>
+		<item name="wcf.date.day.saturday"><![CDATA[Saturday]]></item>
 		
 		<!-- time zones -->
 		<item name="wcf.date.timezone.pacific.kwajalein"><![CDATA[(UTC-12:00) Kwajalein]]></item>
