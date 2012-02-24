@@ -423,7 +423,7 @@ class PackageInstallationNodeBuilder {
 			if (!isset($package['file'])) {
 				// requirements will be checked once package is about to be installed
 				$this->requirements[$packageName] = array(
-					'minVersion' => (isset($package['minversion'])) ?: '',
+					'minVersion' => (isset($package['minversion'])) ? $package['minversion'] : '',
 					'packageID' => $package['packageID']
 				);
 				
