@@ -582,8 +582,8 @@
 		<item name="wcf.global.scrollDown"><![CDATA[Zum Seitenende]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Zum Seitenanfang]]></item>
 		<item name="wcf.global.search.enterSearchTerm"><![CDATA[Suchbegriff eingeben]]></item>
-		<item name="wcf.global.sortOrder.ascending"><![CDATA[in aufsteigender Reihenfolge]]></item>
-		<item name="wcf.global.sortOrder.descending"><![CDATA[in absteigender Reihenfolge]]></item>
+		<item name="wcf.global.sortOrder.ascending"><![CDATA[aufsteigend]]></item>
+		<item name="wcf.global.sortOrder.descending"><![CDATA[absteigend]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[.]]></item>
 	</category>
 	
