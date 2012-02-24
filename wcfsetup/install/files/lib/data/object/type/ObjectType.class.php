@@ -64,7 +64,12 @@ class ObjectType extends ProcessibleDatabaseObject {
 					throw new SystemException("'".$this->className."' should implement ".$definitionInterface);
 				}
 				
-				$this->processor = new $this->className($this);
+				if (ClassUtil::isInstanceOf($this->className, 'wcf\system\SingletonFactory')) {
+					$this->processor = call_user_func(array($this->className, 'getInstance'));
+				}
+				else {
+					$this->processor = new $this->className($this);
+				}
 			}
 		}
 		
