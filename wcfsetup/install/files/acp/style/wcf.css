@@ -4520,7 +4520,15 @@ button[disabled='disabled'] {
 	font-size: 110%;
 }
 
+/* Like colors */
 
+.wcf-liked {
+	color: #090;
+}
+
+.wcf-disliked {
+	color: #900;
+}
 
 
 
