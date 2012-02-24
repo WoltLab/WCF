@@ -4451,8 +4451,7 @@ button[disabled='disabled'] {
 
 /* Spinner */
 
-#actionProxyLoading,
-#wcf-spinner {
+.wcf-spinner {
 	text-align: center;
 	text-shadow: 0 -1px 0 #000;
 	color: #fff;
@@ -4483,8 +4482,7 @@ button[disabled='disabled'] {
 	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 }
 
-#actionProxyLoading img,
-#wcf-spinner img {
+.wcf-spinner img {
 	margin-bottom: 10px;
 	height: 48px;
 	width: 48px;
