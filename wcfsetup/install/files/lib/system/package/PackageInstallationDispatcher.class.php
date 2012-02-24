@@ -167,6 +167,42 @@ class PackageInstallationDispatcher {
 	protected function installPackage(array $nodeData) {
 		$installationStep = new PackageInstallationStep();
 		
+		// check requirements
+		if (!empty($nodeData['requirements'])) {
+			foreach ($nodeData['requirements'] as $package => $requirementData) {
+				// get existing package
+				if ($requirementData['packageID']) {
+					$sql = "SELECT	packageName, packageVersion
+						FROM	wcf".WCF_N."_package
+						WHERE	packageID = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute(array($requirementData['packageID']));
+				}
+				else {
+					// try to find matching package
+					$sql = "SELECT	packageName, packageVersion
+						FROM	wcf".WCF_N."_package
+						WHERE	package = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute(array($package));
+				}
+				$row = $statement->fetchArray();
+				
+				// package is required but not available
+				if ($row === false) {
+					throw new SystemException("Package '".$package."' is required by '".$nodeData['packageName']."', but is neither installed nor shipped.");
+				}
+				
+				// check version requirements
+				if ($requirementData['minVersion']) {
+					if (Package::compareVersion($row['packageVersion'], $requirementData['minVersion']) < 0) {
+						throw new SystemException("Package '".$nodeData['packageName']."' requires the package '".$row['packageName']."' in version '".$requirementData['minVersion']."', but version '".$row['packageVersion']."'");
+					}
+				}
+			}
+		}
+		unset($nodeData['requirements']);
+		
 		if (!$this->queue->packageID) {
 			// create package entry
 			$package = PackageEditor::create($nodeData);

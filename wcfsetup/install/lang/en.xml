@@ -307,7 +307,7 @@
 		<item name="wcf.acp.package.source.download"><![CDATA[Download package]]></item>
 		<item name="wcf.acp.package.source.upload"><![CDATA[Upload package]]></item>
 		<item name="wcf.acp.package.startInstall"><![CDATA[Install package]]></item>
-		<item name="wcf.acp.package.startUpdate"><![CDATA[Update package]]></item>
+		<item name="wcf.acp.package.startUpdate"><![CDATA[Update package &ldquo;{$package->packageName}&rdquo;]]></item>
 		<item name="wcf.acp.package.type.application"><![CDATA[Application]]></item>
 		<item name="wcf.acp.package.type.other"><![CDATA[Base package]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Extension]]></item>

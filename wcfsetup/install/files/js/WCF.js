@@ -422,6 +422,12 @@ $.fn.extend({
  */
 $.extend(WCF, {
 	/**
+	 * count of active dialogs
+	 * @var	integer
+	 */
+	activeDialogs: 0,
+	
+	/**
 	 * Counter for dynamic element id's
 	 *
 	 * @var	integer
@@ -1056,7 +1062,7 @@ WCF.Action.Proxy.prototype = {
 	_showLoadingOverlay: function() {
 		// create loading overlay on first run
 		if (this._loadingOverlay === null) {
-			this._loadingOverlay = $('<div id="actionProxyLoading" class="actionProxyLoading"><img src="' + WCF.Icon.get('wcf.icon.loading') + '" alt="" />' + WCF.Language.get('wcf.global.loading') + '</div>').hide().appendTo($('body'));
+			this._loadingOverlay = $('<div class="wcf-spinner"><img src="' + WCF.Icon.get('wcf.icon.loading') + '" alt="" />' + WCF.Language.get('wcf.global.loading') + '</div>').hide().appendTo($('body'));
 		}
 
 		// fade in overlay
@@ -4418,8 +4424,11 @@ $.widget('ui.wcfDialog', {
 
 		// create modal view
 		if (this.options.modal) {
-			this._overlay = $('<div class="wcf-dialogOverlay"></div>').css({ height: '100%', zIndex: 900 }).appendTo(document.body);
-
+			this._overlay = $('#jsWcfDialogOverlay');
+			if (!this._overlay.length) {
+				this._overlay = $('<div id="jsWcfDialogOverlay" class="wcf-dialogOverlay"></div>').css({ height: '100%', zIndex: 900 }).appendTo(document.body);
+			}
+			
 			if (this.options.closable) {
 				this._overlay.click($.proxy(this.close, this));
 				
@@ -4494,7 +4503,11 @@ $.widget('ui.wcfDialog', {
 		}
 
 		if (this._overlay !== null) {
-			this._overlay.show();
+			WCF.activeDialogs++;
+			
+			if (WCF.activeDialogs === 1) {
+				this._overlay.show();
+			}
 		}
 
 		this.render();
@@ -4522,7 +4535,11 @@ $.widget('ui.wcfDialog', {
 		this._container.wcfFadeOut();
 
 		if (this._overlay !== null) {
-			this._overlay.hide();
+			WCF.activeDialogs--;
+			
+			if (WCF.activeDialogs === 0) {
+				this._overlay.hide();
+			}
 		}
 		
 		if (this.options.onClose !== null) {

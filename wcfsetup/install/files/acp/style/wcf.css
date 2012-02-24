@@ -3356,11 +3356,11 @@ tr .columnIcon img {
 	border: 1px solid #9be;
 	background-color: #def;
 	
-    background-image: url('../../icon/systemInfo.svg'), -webkit-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
-    background-image: url('../../icon/systemInfo.svg'), -moz-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
-    background-image: url('../../icon/systemInfo.svg'), -ms-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
-    background-image: url('../../icon/systemInfo.svg'), -o-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
-    background-image: url('../../icon/systemInfo.svg'), repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .5) 15px, rgba(255, 255, 255, .5) 30px);
+    background-image: url('../../icon/systemInfo.svg'), -webkit-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .3) 15px, rgba(255, 255, 255, .3) 30px);
+    background-image: url('../../icon/systemInfo.svg'), -moz-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .3) 15px, rgba(255, 255, 255, .3) 30px);
+    background-image: url('../../icon/systemInfo.svg'), -ms-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .3) 15px, rgba(255, 255, 255, .3) 30px);
+    background-image: url('../../icon/systemInfo.svg'), -o-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .3) 15px, rgba(255, 255, 255, .3) 30px);
+    background-image: url('../../icon/systemInfo.svg'), repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .3) 15px, rgba(255, 255, 255, .3) 30px);
     
 	background-size: 24px, auto;
 	background-position: 13px center, left top;
@@ -4451,8 +4451,7 @@ button[disabled='disabled'] {
 
 /* Spinner */
 
-#actionProxyLoading,
-#wcf-spinner {
+.wcf-spinner {
 	text-align: center;
 	text-shadow: 0 -1px 0 #000;
 	color: #fff;
@@ -4483,8 +4482,7 @@ button[disabled='disabled'] {
 	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 }
 
-#actionProxyLoading img,
-#wcf-spinner img {
+.wcf-spinner img {
 	margin-bottom: 10px;
 	height: 48px;
 	width: 48px;
