@@ -42,6 +42,12 @@ class PackageInstallationNodeBuilder {
 	public $parentNode = '';
 	
 	/**
+	 * list of requirements to be checked before package installation
+	 * @var	array<array>
+	 */
+	public $requirements = array();
+	
+	/**
 	 * current sequence number within one node
 	 *
 	 * @var	integer
@@ -397,7 +403,8 @@ class PackageInstallationNodeBuilder {
 				'author' => $this->installation->getArchive()->getAuthorInfo('author'),
 				'authorURL' => $this->installation->getArchive()->getAuthorInfo('authorURL') !== null ? $this->installation->getArchive()->getAuthorInfo('authorURL') : '',
 				'installDate' => TIME_NOW,
-				'updateDate' => TIME_NOW
+				'updateDate' => TIME_NOW,
+				'requirements' => $this->requirements
 			))
 		));
 	}
@@ -414,25 +421,12 @@ class PackageInstallationNodeBuilder {
 		$requiredPackages = $this->installation->getArchive()->getOpenRequirements();
 		foreach ($requiredPackages as $packageName => $package) {
 			if (!isset($package['file'])) {
-				// package is installed but version does not match
-				if ($package['packageID']) {
-					// get package version
-					$sql = "SELECT	packageVersion
-						FROM	wcf".WCF_N."_package
-						WHERE	packageID = ?";
-					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array($package['packageID']));
-					$row = $statement->fetchArray();
-					
-					throw new SystemException("Package '".$this->installation->getArchive()->getPackageInfo('packageName')."' requires the package '".$packageName."' in version '".$package['minversion']."', but '".$row['packageVersion']."' is installed.");
-				}
+				// requirements will be checked once package is about to be installed
+				$this->requirements[$packageName] = array(
+					'minVersion' => (isset($package['minversion'])) ?: '',
+					'packageID' => $package['packageID']
+				);
 				
-				// package is required but not installed
-				if (!$package['packageID']) {
-					throw new SystemException("Package '".$this->installation->getArchive()->getPackageInfo('packageName')."' requires the package '".$packageName."', but it is neither installed nor shipped.");
-				}
-				
-				// ignore requirements which are not to be installed, but are already available
 				continue;
 			}
 			
