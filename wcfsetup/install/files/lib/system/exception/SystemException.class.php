@@ -41,7 +41,7 @@ class SystemException extends LoggedException implements IPrintableException {
 	 * @param	\Exception	$previous	repacked Exception
 	 */
 	public function __construct($message = '', $code = 0, $description = '', \Exception $previous = null) {
-		parent::__construct((string)$message, (int)$code, $previous);
+		parent::__construct((string) $message, (int) $code, $previous);
 		$this->description = $description;
 	}
 	
