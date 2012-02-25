@@ -3269,6 +3269,7 @@ WCF.Search.Base = Class.extend({
 		}
 
 		this._callback = callback;
+		this._excludedSearchValues = [];
 		if (excludedSearchValues) {
 			this._excludedSearchValues = excludedSearchValues;
 		}
