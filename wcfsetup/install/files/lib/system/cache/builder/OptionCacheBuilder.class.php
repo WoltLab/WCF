@@ -105,10 +105,11 @@ class OptionCacheBuilder implements ICacheBuilder {
 			if (!empty($type)) {
 				// strip trailing underscore
 				preg_match_all('~((?:^|[A-Z])[a-z]+)~', $type, $matches);
+				
 				if (isset($matches[1])) {
 					$className = 'wcf\data\\';
 					for ($i = 0, $length = count($matches[1]); $i < $length; $i++) {
-						$className .= $matches[1][$i] . '\\';
+						$className .= strtolower($matches[1][$i] . '\\');
 					}
 					$className .= 'option\\' . ucfirst($type) . 'Option';
 				}

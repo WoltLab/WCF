@@ -56,7 +56,7 @@ class WCFACP extends WCF {
 		$pathInfo = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : '';
 		if (empty($pathInfo) || !preg_match('~^/(ACPCaptcha|Login)/~', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
-				util\HeaderUtil::redirect('index.php/Login/'.SID_ARG_1ST);
+				util\HeaderUtil::redirect('index.php/Login/'.SID_ARG_1ST, false);
 				exit;
 			}
 			else {
