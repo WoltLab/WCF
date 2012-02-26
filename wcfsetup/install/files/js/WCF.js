@@ -1587,11 +1587,15 @@ WCF.Date.Time.prototype = {
 WCF.Dictionary = function() { this.init(); };
 WCF.Dictionary.prototype = {
 	/**
+	 * list of variables
+	 * @var	object
+	 */
+	_variables: { },
+	
+	/**
 	 * Initializes a new dictionary.
 	 */
-	init: function() {
-		this.variables = { };
-	},
+	init: function() { },
 	
 	/**
 	 * Adds an entry.
@@ -1600,7 +1604,7 @@ WCF.Dictionary.prototype = {
 	 * @param	mixed		value
 	 */
 	add: function(key, value) {
-		this.variables[key] = value;
+		this._variables[key] = value;
 	},
 	
 	/**
@@ -1633,7 +1637,7 @@ WCF.Dictionary.prototype = {
 	 */
 	get: function(key) {
 		if (this.isset(key)) {
-			return this.variables[key];
+			return this._variables[key];
 		}
 		
 		return null;
@@ -1645,7 +1649,7 @@ WCF.Dictionary.prototype = {
 	 * @param	string		key
 	 */
 	isset: function(key) {
-		return this.variables.hasOwnProperty(key);
+		return this._variables.hasOwnProperty(key);
 	},
 	
 	/**
@@ -1654,7 +1658,7 @@ WCF.Dictionary.prototype = {
 	 * @param	string		key
 	 */
 	remove: function(key) {
-		delete this.variables[key];
+		delete this._variables[key];
 	},
 	
 	/**
@@ -1675,8 +1679,8 @@ WCF.Dictionary.prototype = {
 			return;
 		}
 		
-		for (var $key in this.variables) {
-			var $value = this.variables[$key];
+		for (var $key in this._variables) {
+			var $value = this._variables[$key];
 			var $pair = {
 				key: $key,
 				value: $value
@@ -1684,6 +1688,24 @@ WCF.Dictionary.prototype = {
 			
 			callback($pair);
 		}
+	},
+	
+	/**
+	 * Returns the amount of items.
+	 * 
+	 * @return	integer
+	 */
+	count: function() {
+		return $.getLength(this._variables);
+	},
+	
+	/**
+	 * Returns true, if dictionary is empty.
+	 * 
+	 * @return	integer
+	 */
+	isEmpty: function() {
+		return !this.count();
 	}
 };
 
