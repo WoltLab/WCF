@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\option\user\Group;
+namespace wcf\system\option\user\group;
 use wcf\data\option\Option;
 use wcf\data\user\group\UserGroup;
 use wcf\system\exception\UserInputException;
