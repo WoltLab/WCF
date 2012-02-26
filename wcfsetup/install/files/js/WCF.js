@@ -3441,7 +3441,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 	 * @see	WCF.Search.Base._getParameters()
 	 */
 	_getParameters: function(parameters) {
-		parameters.data.includeUserGroups = this._includeUserGroups;
+		parameters.data.includeUserGroups = this._includeUserGroups ? 1 : 0;
 		
 		return parameters;
 	},
