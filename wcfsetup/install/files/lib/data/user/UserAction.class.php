@@ -40,12 +40,6 @@ class UserAction extends AbstractDatabaseObjectAction {
 	protected $permissionsUpdate = array('admin.user.canEditUser');
 	
 	/**
-	 * list of user actions allowed within update
-	 * @var	array<string>
-	 */
-	public $allowOwnUserUpdate = array('data', 'options');
-	
-	/**
 	 * Validates permissions and parameters.
 	 */
 	public function validateCreate() {
@@ -103,11 +97,9 @@ class UserAction extends AbstractDatabaseObjectAction {
 		catch (PermissionDeniedException $e) {
 			// check if we're editing ourselves
 			if (count($this->objects) == 1 && ($this->objects[0]->userID == WCF::getUser()->userID)) {
-				foreach (array_keys($this->parameters) as $key) {
-					// check if action is allowed (prevent the user from updating own groups etc)
-					if (!in_array($key, $this->allowOwnUserUpdate)) {
-						throw new ValidateActionException('Insufficient permissions');
-					}
+				$count = count($this->parameters);
+				if ($count > 1 || ($count == 1 && !isset($this->parameters['options']))) {
+					throw new ValidateActionException('Insufficient permissions');
 				}
 			}
 			
