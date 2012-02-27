@@ -3923,7 +3923,6 @@ button:hover {
 /* Active State */
 
 .wcf-button:focus,
-.active .wcf-button,
 .default .wcf-button:focus,
 input[type='reset']:focus,
 input[type='submit']:focus,
@@ -3931,6 +3930,7 @@ input[type='button']:focus,
 button:focus,
 
 .wcf-button:active,
+.active .wcf-button,
 .default .wcf-button:active,
 input[type='reset']:active,
 input[type='submit']:active,
