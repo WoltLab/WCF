@@ -2872,7 +2872,7 @@ WCF.Effect.SmoothScroll.prototype = {
 	 * Initializes effect.
 	 */
 	init: function() {
-		$('a[href=#top],a[href=#bottom]').click(function() {
+		$('a[href$=#top],a[href$=#bottom]').click(function() {
 			var $target = $(this.hash);
 			if ($target.length) {
 				var $targetOffset = $target.getOffsets().top;
