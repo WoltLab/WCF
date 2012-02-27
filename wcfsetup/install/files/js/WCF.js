@@ -1595,7 +1595,9 @@ WCF.Dictionary.prototype = {
 	/**
 	 * Initializes a new dictionary.
 	 */
-	init: function() { },
+	init: function() {
+		this._variables = { };
+	},
 	
 	/**
 	 * Adds an entry.
@@ -3104,7 +3106,7 @@ WCF.CloseOverlayHandler = {
 	 */
 	addCallback: function(identifier, callback) {
 		this._bindListener();
-
+		
 		if (this._callbacks.isset(identifier)) {
 			console.debug("[WCF.CloseOverlayHandler] identifier '" + identifier + "' is already bound to a callback");
 			return false;
@@ -3138,7 +3140,7 @@ WCF.CloseOverlayHandler = {
 	/**
 	 * Executes callbacks on click.
 	 */
-	_executeCallbacks: function() {
+	_executeCallbacks: function(event) {
 		this._callbacks.each(function(pair) {
 			// execute callback
 			pair.value();
@@ -3740,6 +3742,17 @@ WCF.InlineEditor = Class.extend({
 		});
 		
 		this._setOptions();
+		
+		WCF.CloseOverlayHandler.addCallback('WCF.InlineEditor', $.proxy(this._closeAll, this));
+	},
+	
+	/**
+	 * Closes all inline editors.
+	 */
+	_closeAll: function() {
+		for (var $elementID in this._elements) {
+			this._hide($elementID);
+		}
 	},
 	
 	/**
@@ -3800,6 +3813,8 @@ WCF.InlineEditor = Class.extend({
 		if ($hasOptions) {
 			this._dropdowns[$elementID].addClass('open');
 		}
+		
+		return false;
 	},
 	
 	/**
@@ -3910,7 +3925,9 @@ WCF.InlineEditor = Class.extend({
 	 * @param	string		elementID
 	 */
 	_hide: function(elementID) {
-		this._dropdowns[elementID].empty().removeClass('open');
+		if (this._dropdowns[elementID]) {
+			this._dropdowns[elementID].empty().removeClass('open');
+		}
 	}
 });
 
