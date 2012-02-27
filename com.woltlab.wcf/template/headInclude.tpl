@@ -77,7 +77,8 @@
 			'wcf.icon.previous.disabled': '{icon size='S'}previous1D{/icon}',
 			'wcf.icon.next': '{icon size='S'}next1{/icon}',
 			'wcf.icon.next.disabled': '{icon size='S'}next1D{/icon}',
-			'wcf.icon.dropdown': '{icon size='S'}dropdown1{/icon}'
+			'wcf.icon.dropdown': '{icon size='S'}dropdown1{/icon}',
+			'wcf.icon.edit': '{icon size='S'}edit1{/icon}'
 			{event name='javascriptIconImport'}
 		});
 		
