@@ -3796,6 +3796,7 @@ WCF.InlineEditor = Class.extend({
 			var $trigger = this._getTriggerElement(this._elements[$elementID]).wrap('<span />');
 			this._dropdowns[$elementID] = $('<ul class="wcf-dropdown" />').insertAfter($trigger);
 		}
+		this._dropdowns[$elementID].empty();
 		
 		// validate options
 		var $hasOptions = false;
