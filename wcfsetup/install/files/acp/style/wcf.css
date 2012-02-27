@@ -141,7 +141,7 @@ a[href^="mailto:"] {
 
 
 
-/* ############## Container ############## */
+/* ############## Containers ############## */
 
 /* -- -- -- Globals -- -- --  */
 
@@ -555,6 +555,7 @@ header.wcf-pageHeader {
 
 .wcf-pageFooter {
 	text-align: center;
+	padding-bottom: 23px;
 	position: relative;
 	z-index: 80;
 }
