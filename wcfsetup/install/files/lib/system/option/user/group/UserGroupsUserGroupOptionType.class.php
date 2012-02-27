@@ -4,6 +4,7 @@ use wcf\data\option\Option;
 use wcf\data\user\group\UserGroup;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\AbstractOptionType;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
@@ -27,13 +28,19 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 		
 		// get all groups
 		$groups = UserGroup::getGroupsByType();
+		$possibleGroups = explode(",", WCF::getSession()->getPermission($option->optionName));
 		
 		// generate html
 		$html = '<fieldset><dl><dd>';
 		foreach ($groups as $group) {
-			$html .= '<label><input type="checkbox" name="values['.StringUtil::encodeHTML($option->optionName).'][]" value="'.$group->groupID.'" '.(in_array($group->groupID, $selectedGroups) ? 'checked="checked" ' : '').'/> '.StringUtil::encodeHTML($group->groupName).'</label>';
+			if (!UserGroupOptionHandler::usePermissionCheck() || in_array($group->groupID, $possibleGroups)) {
+				$html .= '<label><input type="checkbox" name="values['.StringUtil::encodeHTML($option->optionName).'][]" value="'.$group->groupID.'" '.(in_array($group->groupID, $selectedGroups) ? 'checked="checked" ' : '').'/> '.StringUtil::encodeHTML($group->groupName).'</label>';
+			}
 		}
 		
+		if ($html == '<fieldset><dl><dd>') {
+			return null;
+		}
 		return $html.'</dd></dl></fieldset>';
 	}
 	
@@ -52,6 +59,20 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 		foreach ($selectedGroups as $groupID) {
 			if (!isset($groups[$groupID])) {
 				throw new UserInputException($option->optionName, 'validationFailed');
+			}
+		}
+	}
+	
+	/**
+	* @see wcf\system\option\user\group\IUserGroupOptionType::checkPermissions()
+	*/
+	public function checkPermissions(Option $option, $newValue) {
+		if (!is_array($newValue)) $newValue = array();
+		$selectedGroups = ArrayUtil::toIntegerArray($newValue);
+		
+		foreach ($selectedGroups as $selectedGroup) {
+			if (!in_array($selectedGroup, explode(",", WCF::getSession()->getPermission($option->optionName)))) {
+				throw new UserInputException($option->optionName, 'permissionsDenied');
 			}
 		}
 	}

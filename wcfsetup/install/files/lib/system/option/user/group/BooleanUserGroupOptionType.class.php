@@ -1,6 +1,9 @@
 <?php
 namespace wcf\system\option\user\group;
+use wcf\data\option\Option;
+use wcf\system\exception\UserInputException;
 use wcf\system\option\BooleanOptionType;
+use wcf\system\WCF;
 
 /**
  * BooleanUserGroupOptionType is an implementation of IUserGroupOptionType for boolean values.
@@ -23,5 +26,14 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
 		}
 
 		return false;
+	}
+	
+	/**
+	 * @see wcf\system\option\user\group\IUserGroupOptionType::checkPermissions()
+	 */
+	public function checkPermissions(Option $option, $newValue) {
+		if ($newValue && !WCF::getSession()->getPermission($option->optionName)) {
+			throw new UserInputException($option->optionName, 'permissionsDenied');
+		}
 	}
 }

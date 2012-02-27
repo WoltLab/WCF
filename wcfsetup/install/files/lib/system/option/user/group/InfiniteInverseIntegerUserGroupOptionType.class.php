@@ -1,5 +1,8 @@
 <?php
 namespace wcf\system\option\user\group;
+use wcf\data\option\Option;
+use wcf\system\exception\UserInputException;
+use wcf\system\WCF;
 
 /**
  * InfiniteInverseIntegerUserGroupOptionType is an implementation of IUserGroupOptionType
@@ -24,5 +27,17 @@ class InfiniteInverseIntegerUserGroupOptionType extends InverseIntegerUserGroupO
 		
 		if (count($values) == 0) return -1;
 		return min($values);
+	}
+	
+	/**
+	* @see wcf\system\option\user\group\IUserGroupOptionType::checkPermissions()
+	*/
+	public function checkPermissions(Option $option, $newValue) {
+		if (
+			(WCF::getSession()->getPermission($option->optionName) == -1 && $newValue != -1) ||
+			$newValue < WCF::getSession()->getPermission($option->optionName)
+		) {
+			throw new UserInputException($option->optionName, 'permissionsDenied');
+		}
 	}
 }
