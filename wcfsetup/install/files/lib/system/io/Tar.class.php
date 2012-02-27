@@ -269,15 +269,31 @@ class Tar {
 		$i = 0;
 		
 		// Read the 512 bytes header
+		$longFilename = null;
 		while (strlen($binaryData = $this->file->read(512)) != 0) {
 			// read header
 			$header = $this->readHeader($binaryData);
 			if ($header === false) {
 				continue;	
 			}
-			$this->contentList[$i] = $header;
-			$this->contentList[$i]['index'] = $i;
-			$i++;
+			
+			// fixes a bug that files with long names aren't correctly
+			// extracted
+			if ($longFilename !== null) {
+				$header['filename'] = $longFilename;
+				$longFilename = null;
+			}
+			if ($header['typeflag'] == 'L') {
+				$fileData = unpack("a".$header['size']."filename", $this->file->read(512));
+				$longFilename = $fileData['filename'];
+				$header['size'] = 0;
+			}
+			// don't include the @LongLink file in the content list
+			else {
+				$this->contentList[$i] = $header;
+				$this->contentList[$i]['index'] = $i;
+				$i++;
+			}
 			
 			$this->file->seek($this->file->tell() + (512 * ceil(($header['size'] / 512))));
 		}
