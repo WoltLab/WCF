@@ -733,6 +733,10 @@ function readFileResource($key, $directory) {
 			break;
 		}
 		
+		header('Expires: '.gmdate('D, d M Y H:i:s', time() + 3600).' GMT');
+		header('Last-Modified: Mon, 26 Jul 1997 05:00:00 GMT');
+		header('Cache-Control: public, max-age=3600');
+		
 		readfile($directory . $_GET[$key]);
 	}
 	exit;
