@@ -3757,7 +3757,7 @@ tr .columnIcon img {
 
 /* Cummulative Likes Display */
 
-.wcf-likesWidget > .wcf-likesDisplay a {
+.wcf-likesDisplay a {
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 3px;
@@ -3770,15 +3770,16 @@ tr .columnIcon img {
 	height: 13px;
 }
 
-.wcf-likesWidget > .wcf-likesDisplay a {
+.wcf-likesDisplay a {
 	font-size: 75%;
+	font-weight: bold;
 	color: #666;
 	text-decoration: none;
 }
 
 /* -- -- -- -- Like Widget Pointer -- -- -- -- -- */
 
-.wcf-likesWidget > .wcf-likesDisplay .pointer {	
+.wcf-likesDisplay .pointer {	
 	border-width: 5px 0 5px 5px;
 	border-style: solid;
 	border-color: transparent rgba(204, 204, 204, 1);
@@ -3789,7 +3790,7 @@ tr .columnIcon img {
 	right: -6px;
 }
 
-.wcf-likesWidget > .wcf-likesDisplay .pointer > span {	
+.wcf-likesDisplay .pointer > span {	
 	border-width: 5px 0 5px 5px;
 	border-style: solid;
 	border-color: transparent rgba(255, 255, 255, 1);
