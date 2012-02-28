@@ -1161,13 +1161,14 @@ nav.wcf-topMenu {
 
 .wcf-headerNavigation > ul > li,
 .wcf-footerNavigation > ul > li {
-	cursor: pointer;
+	/*cursor: pointer;*/
 	margin: 0 3px;
 	float: right;
 }
 
 .wcf-headerNavigation > ul > li a,
-.wcf-footerNavigation > ul > li a {
+.wcf-footerNavigation > ul > li a,
+.wcf-footerNavigation > ul > li > p {
 	padding: 3px;
 	display: inline-block;
 }

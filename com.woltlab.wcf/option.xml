@@ -255,6 +255,11 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<optiontype>timezone</optiontype>
 				<defaultvalue>Europe/London</defaultvalue>
 			</option>
+			<option name="show_clock">
+				<categoryname>general.date</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<!-- /general.date -->
 			
 			<!-- mail.general -->
