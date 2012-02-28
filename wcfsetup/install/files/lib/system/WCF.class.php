@@ -631,7 +631,13 @@ class WCF {
 	 */
 	public function getAnchor($fragment) {
 		// resolve path and query components
-		$path = str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['REQUEST_URI']);
+		$scriptName = $_SERVER['SCRIPT_NAME'];
+		if (empty($_SERVER['PATH_INFO'])) {
+			// bug fix if URL omits script name and path
+			$scriptName = substr($scriptName, 0, strrpos($scriptName, '/'));
+		}
+		
+		$path = str_replace($scriptName, '', $_SERVER['REQUEST_URI']);
 		$baseHref = self::getTPL()->get('baseHref');
 		
 		return $baseHref . 'index.php' . $path . '#' . $fragment;
