@@ -1,5 +1,5 @@
 {foreach from=$__wcf->getPageMenu()->getMenuItems('header') item=menuItem}
-	{if $__wcf->getPageMenu()->getMenuItems($menuItem->menuItem)|count > 0}
+	{if $__wcf->getPageMenu()->getMenuItems($menuItem->menuItem)|count > 0 && $__wcf->getPageMenu()->getActiveMenuItem() == $menuItem->menuItem}
 		<div class="wcf-menu">
 			<ul>
 				{foreach from=$__wcf->getPageMenu()->getMenuItems($menuItem->menuItem) item=subMenuItem}
