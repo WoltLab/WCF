@@ -141,7 +141,7 @@ a[href^="mailto:"] {
 
 
 
-/* ############## Container ############## */
+/* ############## Containers ############## */
 
 /* -- -- -- Globals -- -- --  */
 
@@ -555,6 +555,7 @@ header.wcf-pageHeader {
 
 .wcf-pageFooter {
 	text-align: center;
+	padding-bottom: 23px;
 	position: relative;
 	z-index: 80;
 }
@@ -1160,13 +1161,14 @@ nav.wcf-topMenu {
 
 .wcf-headerNavigation > ul > li,
 .wcf-footerNavigation > ul > li {
-	cursor: pointer;
+	/*cursor: pointer;*/
 	margin: 0 3px;
 	float: right;
 }
 
 .wcf-headerNavigation > ul > li a,
-.wcf-footerNavigation > ul > li a {
+.wcf-footerNavigation > ul > li a,
+.wcf-footerNavigation > ul > li > p {
 	padding: 3px;
 	display: inline-block;
 }
@@ -3756,7 +3758,7 @@ tr .columnIcon img {
 
 /* Cummulative Likes Display */
 
-.wcf-likesWidget > .wcf-likesDisplay a {
+.wcf-likesDisplay a {
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 3px;
@@ -3769,15 +3771,16 @@ tr .columnIcon img {
 	height: 13px;
 }
 
-.wcf-likesWidget > .wcf-likesDisplay a {
+.wcf-likesDisplay a {
 	font-size: 75%;
+	font-weight: bold;
 	color: #666;
 	text-decoration: none;
 }
 
 /* -- -- -- -- Like Widget Pointer -- -- -- -- -- */
 
-.wcf-likesWidget > .wcf-likesDisplay .pointer {	
+.wcf-likesDisplay .pointer {	
 	border-width: 5px 0 5px 5px;
 	border-style: solid;
 	border-color: transparent rgba(204, 204, 204, 1);
@@ -3788,7 +3791,7 @@ tr .columnIcon img {
 	right: -6px;
 }
 
-.wcf-likesWidget > .wcf-likesDisplay .pointer > span {	
+.wcf-likesDisplay .pointer > span {	
 	border-width: 5px 0 5px 5px;
 	border-style: solid;
 	border-color: transparent rgba(255, 255, 255, 1);
@@ -3922,7 +3925,6 @@ button:hover {
 /* Active State */
 
 .wcf-button:focus,
-.active .wcf-button,
 .default .wcf-button:focus,
 input[type='reset']:focus,
 input[type='submit']:focus,
@@ -3930,6 +3932,7 @@ input[type='button']:focus,
 button:focus,
 
 .wcf-button:active,
+.active .wcf-button,
 .default .wcf-button:active,
 input[type='reset']:active,
 input[type='submit']:active,

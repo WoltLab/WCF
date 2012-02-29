@@ -1587,10 +1587,16 @@ WCF.Date.Time.prototype = {
 WCF.Dictionary = function() { this.init(); };
 WCF.Dictionary.prototype = {
 	/**
+	 * list of variables
+	 * @var	object
+	 */
+	_variables: { },
+	
+	/**
 	 * Initializes a new dictionary.
 	 */
 	init: function() {
-		this.variables = { };
+		this._variables = { };
 	},
 	
 	/**
@@ -1600,7 +1606,7 @@ WCF.Dictionary.prototype = {
 	 * @param	mixed		value
 	 */
 	add: function(key, value) {
-		this.variables[key] = value;
+		this._variables[key] = value;
 	},
 	
 	/**
@@ -1633,7 +1639,7 @@ WCF.Dictionary.prototype = {
 	 */
 	get: function(key) {
 		if (this.isset(key)) {
-			return this.variables[key];
+			return this._variables[key];
 		}
 		
 		return null;
@@ -1645,7 +1651,7 @@ WCF.Dictionary.prototype = {
 	 * @param	string		key
 	 */
 	isset: function(key) {
-		return this.variables.hasOwnProperty(key);
+		return this._variables.hasOwnProperty(key);
 	},
 	
 	/**
@@ -1654,7 +1660,7 @@ WCF.Dictionary.prototype = {
 	 * @param	string		key
 	 */
 	remove: function(key) {
-		delete this.variables[key];
+		delete this._variables[key];
 	},
 	
 	/**
@@ -1675,8 +1681,8 @@ WCF.Dictionary.prototype = {
 			return;
 		}
 		
-		for (var $key in this.variables) {
-			var $value = this.variables[$key];
+		for (var $key in this._variables) {
+			var $value = this._variables[$key];
 			var $pair = {
 				key: $key,
 				value: $value
@@ -1684,6 +1690,24 @@ WCF.Dictionary.prototype = {
 			
 			callback($pair);
 		}
+	},
+	
+	/**
+	 * Returns the amount of items.
+	 * 
+	 * @return	integer
+	 */
+	count: function() {
+		return $.getLength(this._variables);
+	},
+	
+	/**
+	 * Returns true, if dictionary is empty.
+	 * 
+	 * @return	integer
+	 */
+	isEmpty: function() {
+		return !this.count();
 	}
 };
 
@@ -2848,7 +2872,7 @@ WCF.Effect.SmoothScroll.prototype = {
 	 * Initializes effect.
 	 */
 	init: function() {
-		$('a[href=#top],a[href=#bottom]').click(function() {
+		$('a[href$=#top],a[href$=#bottom]').click(function() {
 			var $target = $(this.hash);
 			if ($target.length) {
 				var $targetOffset = $target.getOffsets().top;
@@ -3082,7 +3106,7 @@ WCF.CloseOverlayHandler = {
 	 */
 	addCallback: function(identifier, callback) {
 		this._bindListener();
-
+		
 		if (this._callbacks.isset(identifier)) {
 			console.debug("[WCF.CloseOverlayHandler] identifier '" + identifier + "' is already bound to a callback");
 			return false;
@@ -3116,7 +3140,7 @@ WCF.CloseOverlayHandler = {
 	/**
 	 * Executes callbacks on click.
 	 */
-	_executeCallbacks: function() {
+	_executeCallbacks: function(event) {
 		this._callbacks.each(function(pair) {
 			// execute callback
 			pair.value();
@@ -3441,7 +3465,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 	 * @see	WCF.Search.Base._getParameters()
 	 */
 	_getParameters: function(parameters) {
-		parameters.data.includeUserGroups = this._includeUserGroups;
+		parameters.data.includeUserGroups = this._includeUserGroups ? 1 : 0;
 		
 		return parameters;
 	},
@@ -3718,6 +3742,17 @@ WCF.InlineEditor = Class.extend({
 		});
 		
 		this._setOptions();
+		
+		WCF.CloseOverlayHandler.addCallback('WCF.InlineEditor', $.proxy(this._closeAll, this));
+	},
+	
+	/**
+	 * Closes all inline editors.
+	 */
+	_closeAll: function() {
+		for (var $elementID in this._elements) {
+			this._hide($elementID);
+		}
 	},
 	
 	/**
@@ -3761,6 +3796,7 @@ WCF.InlineEditor = Class.extend({
 			var $trigger = this._getTriggerElement(this._elements[$elementID]).wrap('<span />');
 			this._dropdowns[$elementID] = $('<ul class="wcf-dropdown" />').insertAfter($trigger);
 		}
+		this._dropdowns[$elementID].empty();
 		
 		// validate options
 		var $hasOptions = false;
@@ -3778,6 +3814,8 @@ WCF.InlineEditor = Class.extend({
 		if ($hasOptions) {
 			this._dropdowns[$elementID].addClass('open');
 		}
+		
+		return false;
 	},
 	
 	/**
@@ -3888,7 +3926,9 @@ WCF.InlineEditor = Class.extend({
 	 * @param	string		elementID
 	 */
 	_hide: function(elementID) {
-		this._dropdowns[elementID].empty().removeClass('open');
+		if (this._dropdowns[elementID]) {
+			this._dropdowns[elementID].empty().removeClass('open');
+		}
 	}
 });
 

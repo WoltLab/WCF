@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>Poll</title>
+	<desc>Poll Icon (tilt)</desc>
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2012 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.Upper1 {fill: #666;}
+				.Lower1 {fill: #fff;}
+			]]>
+		</style>
+	</defs>
+	
+	<g id="IconPoll">
+		<g class="Lower1">
+			<path style="fill-rule: evenodd; clip-rule: evenodd;" d="M5.5,14C5.7749023,14,6,13.7753906,6,13.5v-2
+				C6,11.2246094,5.7749023,11,5.5,11h-4C1.2250977,11,1,11.2246094,1,11.5v2C1,13.7753906,1.2250977,14,1.5,14H5.5z M1.5,6
+				C1.2250977,6,1,5.7749023,1,5.5v-2C1,3.2250977,1.2250977,3,1.5,3h12C13.7753906,3,14,3.2250977,14,3.5v2
+				C14,5.7749023,13.7753906,6,13.5,6H1.5z M10,9.5C10,9.7753906,9.7753906,10,9.5,10h-8C1.2250977,10,1,9.7753906,1,9.5v-2
+				C1,7.2250977,1.2250977,7,1.5,7h8C9.7753906,7,10,7.2250977,10,7.5V9.5z"/>
+		</g>
+		<g class="Upper1">
+			<path style="fill-rule: evenodd; clip-rule: evenodd;" d="M5.4995117,13c0.2749023,0,0.5-0.2246094,0.5-0.5v-2
+				c0-0.2753906-0.2250977-0.5-0.5-0.5H1.5C1.2250977,10,1,10.2246094,1,10.5v2C1,12.7753906,1.2250977,13,1.5,13H5.4995117z
+				 M1.5009766,5c-0.2749023,0-0.5-0.2250977-0.5-0.5v-2c0-0.2749023,0.2250977-0.5,0.5-0.5H13.5C13.7753906,2,14,2.2250977,14,2.5v2
+				C14,4.7749023,13.7753906,5,13.5,5H1.5009766z M9.9990234,8.5c0,0.2749023-0.2246094,0.5-0.5,0.5H1.5
+				C1.2250977,9,1,8.7749023,1,8.5v-2C1,6.2250977,1.2250977,6,1.5,6h7.9990234c0.2753906,0,0.5,0.2250977,0.5,0.5V8.5z"/>
+		</g>
+	</g>
+</svg>

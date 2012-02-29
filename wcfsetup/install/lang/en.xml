@@ -269,6 +269,7 @@
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Image library]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Library (default)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
+		<item name="wcf.acp.option.show_clock"><![CDATA[Show current time in page footer]]></item>
 	</category>
 
 	<category name="wcf.acp.package">

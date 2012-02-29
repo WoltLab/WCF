@@ -81,7 +81,7 @@ class UserOption extends Option {
 			
 			// check owner state
 			if ($this->visible & Option::VISIBILITY_OWNER) {
-				if ($this->user->userID == WCF::getUser()->userID) {
+				if ($this->user !== null && $this->user->userID == WCF::getUser()->userID) {
 					$isOwner = true;
 				}
 			}
