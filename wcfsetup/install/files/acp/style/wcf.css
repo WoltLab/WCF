@@ -922,6 +922,7 @@ nav.wcf-topMenu {
 .wcf-search > .wcf-searchButton {
 	width: 32px;
 	height: 32px;
+	margin-left: 5px;
 }
 
 
@@ -1325,6 +1326,8 @@ section.wcf-content .wcf-content {
 .wcf-contentHeader,
 .wcf-contentFooter {
 	margin-top: 15px;
+	display: table;
+	width: 100%;
 }
 
 
@@ -2348,6 +2351,7 @@ input[type=search] {
 
 .wcf-largeButtons {
 	text-align: right;
+	float: right;
 }
 
 .wcf-largeButtons > li {
@@ -3149,9 +3153,8 @@ tr .columnIcon img {
 /* Globals */
 
 :not(.wcf-statusDisplay) > .wcf-pageNavigation {
-	margin: 5px -3px;
+	margin: 5px 0 3px;
 	float: left;
-	width: 50%;
 }
 
 /* -- -- -- Buttons (Level 1 & 2) -- -- -- */
@@ -3262,6 +3265,7 @@ tr .columnIcon img {
 	background-color: rgba(0, 0, 0, .7);
 	margin-top: 28px;
 	margin-left: -2px;
+	padding: 2px 1px;
 	display: inline-block;
 	position: absolute;
 	height: 0;
@@ -3290,8 +3294,7 @@ tr .columnIcon img {
 }
 
 .wcf-pageNavigation ul li.children .wcf-dropdown ul li {
-	margin-top: 5px;
-	margin-left: 3px;
+	margin: 2px 3px;
 }
 
 /* Pointer */
