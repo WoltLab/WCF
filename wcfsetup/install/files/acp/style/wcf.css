@@ -1161,7 +1161,6 @@ nav.wcf-topMenu {
 
 .wcf-headerNavigation > ul > li,
 .wcf-footerNavigation > ul > li {
-	/*cursor: pointer;*/
 	margin: 0 3px;
 	float: right;
 }
@@ -1657,7 +1656,6 @@ section.wcf-content .wcf-content {
 	text-decoration: none;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	color: rgba(102, 102, 102, 1);
-	display: block;
 }
 
 .wcf-mainHeading > hgroup h2 {
