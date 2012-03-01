@@ -42,33 +42,33 @@
 {/if}
 
 <fieldset>
-	<legend>{lang}wcf.acp.package.view.properties{/lang}</legend>
+	<legend>{lang}wcf.acp.package.information.properties{/lang}</legend>
 
 	<dl>
-		<dt>{lang}wcf.acp.package.view.identifier{/lang}</dt>
+		<dt>{lang}wcf.acp.package.identifier{/lang}</dt>
 		<dd>{$archive->getPackageInfo('name')}</dd>
 	</dl>
 	
 	<dl>
-		<dt>{lang}wcf.acp.package.install.version{/lang}</dt>
+		<dt>{lang}wcf.acp.package.version{/lang}</dt>
 		<dd>{$archive->getPackageInfo('version')}</dd>
 	</dl>
 
 	<dl>
-		<dt>{lang}wcf.acp.package.view.date{/lang}</dt>
+		<dt>{lang}wcf.acp.package.date{/lang}</dt>
 		<dd>{@$archive->getPackageInfo('date')|date}</dd>
 	</dl>
 
 	{if $archive->getPackageInfo('packageURL') != ''}
 		<dl>
-			<dt>{lang}wcf.acp.package.view.url{/lang}</dt>
+			<dt>{lang}wcf.acp.package.url{/lang}</dt>
 			<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="wcf-externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
 		</dl>
 	{/if}
 	
 	<dl>
-		<dt>{lang}wcf.acp.package.view.author{/lang}</dt>
-		<dd>{if $archive->getPackageInfo('authorURL')}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('authorURL')|rawurlencode}" class="wcf-externalURL">{$archive->getPackageInfo('author')}</a>{else}{$archive->getPackageInfo('author')}{/if}</dd>
+		<dt>{lang}wcf.acp.package.author{/lang}</dt>
+		<dd>{if $archive->getAuthorInfo('authorURL')}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getAuthorInfo('authorURL')|rawurlencode}" class="wcf-externalURL">{$archive->getAuthorInfo('author')}</a>{else}{$archive->getAuthorInfo('author')}{/if}</dd>
 	</dl>
 	
 	{event name='propertyFields'}
@@ -106,14 +106,14 @@
 {if $requiredPackages|count > 0}
 	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
-			<h1>{lang}wcf.acp.package.view.requiredPackages{/lang} <span class="wcf-badge" title="{lang}wcf.acp.package.view.requiredPackages.description{/lang}">{#$requiredPackages|count}</span></h1>
+			<h1>{lang}wcf.acp.package.dependencies.required{/lang} <span class="wcf-badge" title="{lang}wcf.acp.package.view.requiredPackages.description{/lang}">{#$requiredPackages|count}</span></h1>
 		</hgroup>
 		
 		<table class="wcf-table">
 			<thead>
 				<tr>
-					<th class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
-					<th class="columnDigits">{lang}wcf.acp.package.list.version{/lang}</th>
+					<th class="columnTitle">{lang}wcf.acp.package.name{/lang}</th>
+					<th class="columnDigits">{lang}wcf.acp.package.version{/lang}</th>
 				</tr>
 			</thead>
 			
