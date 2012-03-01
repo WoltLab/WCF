@@ -9,7 +9,10 @@
 		<div>
 			<nav id="footerNavigation" class="wcf-footerNavigation">
 				<ul>
-					<li id="toTopLink" class="toTopLink"><a href="{@$__wcf->getAnchor('top')}" title="{lang}wcf.global.scrollUp{/lang}" class="jsTooltip"><img src="{@RELATIVE_WCF_DIR}icon/toTop.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollUp{/lang}</span></a></li>
+					<li id="toTopLink" class="toTopLink"><a href="{$__wcf->getAnchor('top')}" title="{lang}wcf.global.scrollUp{/lang}" class="jsTooltip"><img src="{@RELATIVE_WCF_DIR}icon/toTop.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollUp{/lang}</span></a></li>
+					{if SHOW_CLOCK}
+						<li class="separator"><p><img src="{icon size='S'}time{/icon}" alt="" /> <span>{@TIME_NOW|plainTime}</span></p></li>
+					{/if}
 				</ul>
 			</nav>
 		</div>
