@@ -1173,13 +1173,21 @@ nav.wcf-topMenu {
 
 .wcf-headerNavigation > ul > li,
 .wcf-footerNavigation > ul > li {
-	margin: 0 3px;
+	padding: 0 3px;
 	float: right;
 }
 
+.wcf-headerNavigation > ul > li.separator,
+.wcf-footerNavigation > ul > li.separator {
+	border-right: 1px dotted #bcd;
+}
+
 .wcf-headerNavigation > ul > li a,
+.wcf-headerNavigation > ul > li p,
 .wcf-footerNavigation > ul > li a,
-.wcf-footerNavigation > ul > li > p {
+.wcf-footerNavigation > ul > li p {
+	text-decoration: none;
+	color: #369;
 	padding: 3px;
 	display: inline-block;
 }
@@ -1190,11 +1198,11 @@ nav.wcf-topMenu {
 	background-color: #d8e7f5;
 }
 
-.wcf-headerNavigation > ul > li a:hover:active,
-.wcf-headerNavigation > ul > li a:hover:focus,
+.wcf-headerNavigation > ul > li a:active,
+.wcf-headerNavigation > ul > li a:focus,
 
-.wcf-footerNavigation > ul > li a:hover:active,
-.wcf-footerNavigation > ul > li a:hover:focus {
+.wcf-footerNavigation > ul > li a:active,
+.wcf-footerNavigation > ul > li a:focus {
 	background-color: #fff9f4;
 }
 
