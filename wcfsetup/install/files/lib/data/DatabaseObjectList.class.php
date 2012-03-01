@@ -76,6 +76,12 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	public $sqlJoins = '';
 	
 	/**
+	 * enables the automatic usage of the qualified shorthand 
+	 * @var boolean
+	 */
+	public $useQualifiedShorthand = true;
+	
+	/**
 	 * sql conditions
 	 * @var	wcf\system\database\util\PreparedStatementConditionBuilder
 	 */
@@ -142,8 +148,8 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 				return;
 			}
 			
-			$sql = "SELECT	".(!empty($this->sqlSelects) ? $this->sqlSelects.',' : '')."
-					".$this->getDatabaseTableAlias().".*
+			$sql = "SELECT	".(!empty($this->sqlSelects) ? $this->sqlSelects.($this->useQualifiedShorthand ? ',' : '') : '')."
+					".($this->useQualifiedShorthand ? $this->getDatabaseTableAlias().'.*' : '')."
 				FROM	".$this->getDatabaseTableName()." ".$this->getDatabaseTableAlias()."
 					".$this->sqlJoins."
 				WHERE	".$this->getDatabaseTableAlias().".".$this->getDatabaseTableIndexName()." IN (?".str_repeat(',?', count($this->objectIDs) - 1).")
@@ -153,8 +159,8 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 			$this->objects = $statement->fetchObjects(($this->objectClassName ?: $this->className));
 		}
 		else {
-			$sql = "SELECT	".(!empty($this->sqlSelects) ? $this->sqlSelects.',' : '')."
-					".$this->getDatabaseTableAlias().".*
+			$sql = "SELECT	".(!empty($this->sqlSelects) ? $this->sqlSelects.($this->useQualifiedShorthand ? ',' : '') : '')."
+					".($this->useQualifiedShorthand ? $this->getDatabaseTableAlias().'.*' : '')."
 				FROM	".$this->getDatabaseTableName()." ".$this->getDatabaseTableAlias()."
 					".$this->sqlJoins."
 					".$this->getConditionBuilder()->__toString()."
