@@ -66,6 +66,7 @@
 				'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
 				'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}',
 				'wcf.global.button.disable': '{lang}wcf.global.button.disable{/lang}',
+				'wcf.global.button.disabledI18n': '{lang}wcf.global.button.disabledI18n{/lang}',
 				'wcf.global.button.enable': '{lang}wcf.global.button.enable{/lang}',
 				'wcf.global.confirmation.cancel': '{lang}wcf.global.confirmation.cancel{/lang}',
 				'wcf.global.confirmation.confirm': '{lang}wcf.global.confirmation.confirm{/lang}',
