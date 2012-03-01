@@ -630,7 +630,7 @@ class PackageInstallationDispatcher {
 			$updatableInstances = $this->getArchive()->getUpdatableInstances();
 		}
 		
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package');
+		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.install');
 		WCF::getTPL()->assign(array(
 			'archive' => $this->getArchive(),
 			'requiredPackages' => $requirements,
