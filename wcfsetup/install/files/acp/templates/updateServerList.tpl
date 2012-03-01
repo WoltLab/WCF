@@ -66,7 +66,7 @@
 							<td class="columnID"><p>{@$updateServer->packageUpdateServerID}</p></td>
 							<td class="columnText columnTitle"><p><a href="{link controller='UpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.global.button.edit{/lang}">{$updateServer->serverURL}</a></p></td>
 							<td class="columnDigits"><p>{#$updateServer->packages}</p></td>
-							<td class="columnStatus"><p class="wcf-badge{if $updateServer->status == 'online'} wcf-badgeSuccess{else} wcf-badgeError{/if}">{@$updateServer->status}</p></td>
+							<td class="columnStatus"><p class="wcf-badge{if $updateServer->status == 'online'} wcf-badgeGreen{else} wcf-badgeRed{/if}">{@$updateServer->status}</p></td>
 							<td class="columnText"><p title="{@$updateServer->errorMessage}">{@$updateServer->errorMessage|truncate:"30"}</p></td>
 							<td class="columnDate"><p>{if $updateServer->lastUpdateTime}{@$updateServer->lastUpdateTime|time}{/if}</p></td>
 						
