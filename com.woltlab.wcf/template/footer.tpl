@@ -14,7 +14,7 @@
 				{include file='footerMenu'}
 				
 				<ul>
-					<li id="toTopLink" class="toTopLink"><a href="{@$__wcf->getAnchor('top')}" title="{lang}wcf.global.scrollUp{/lang}" class="jsTooltip"><img src="{icon size='S'}toTop{/icon}" alt="" /> <span class="invisible">{lang}wcf.global.scrollUp{/lang}</span></a></li>
+					<li id="toTopLink" class="toTopLink"><a href="{$__wcf->getAnchor('top')}" title="{lang}wcf.global.scrollUp{/lang}" class="jsTooltip"><img src="{icon size='S'}toTop{/icon}" alt="" /> <span class="invisible">{lang}wcf.global.scrollUp{/lang}</span></a></li>
 					{if SHOW_CLOCK}
 						<li><p><img src="{icon size='S'}time1{/icon}" alt="" /> <span>{@TIME_NOW|plainTime}</span></p></li>
 					{/if}
