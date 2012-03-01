@@ -130,7 +130,7 @@ class UserOptionEditor extends DatabaseObjectEditor {
 			case 'birthday':
 			case 'date':
 				$column['notNull'] = true;
-				$column['default'] = '0000-00-00';
+				$column['default'] = "'0000-00-00'";
 				$column['length'] = 10;
 				$column['type'] = 'char';
 			break;
