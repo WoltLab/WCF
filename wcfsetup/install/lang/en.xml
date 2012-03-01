@@ -526,6 +526,7 @@
 		<item name="wcf.global.button.collapsible"><![CDATA[Expand and collapse]]></item>
 		<item name="wcf.global.button.delete"><![CDATA[Delete]]></item>
 		<item name="wcf.global.button.disable"><![CDATA[Disable]]></item>
+		<item name="wcf.global.button.disabledI18n"><![CDATA[monolingual]]></item>
 		<item name="wcf.global.button.edit"><![CDATA[Edit]]></item>
 		<item name="wcf.global.button.enable"><![CDATA[Enable]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Next &raquo;]]></item>
