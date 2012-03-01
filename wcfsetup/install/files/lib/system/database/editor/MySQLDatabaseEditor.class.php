@@ -198,7 +198,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		// not null / null
 		if (!empty($columnData['notNull'])) $definition .= " NOT NULL";
 		// default
-		if (isset($columnData['default']) && $columnData['default'] !== '') $definition .= " DEFAULT ".$columnData['default'];
+		if (isset($columnData['default']) && $columnData['default'] !== '') $definition .= " DEFAULT '".$columnData['default']."'";
 		// auto_increment
 		if (!empty($columnData['autoIncrement'])) $definition .= " AUTO_INCREMENT";
 		// key
