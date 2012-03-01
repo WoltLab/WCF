@@ -250,4 +250,29 @@ class DateUtil {
 	public static function getAvailableTimezones() {
 		return self::$availableTimezones;
 	}
+	
+	/**
+	 * Calculates the age of a given date.
+	 * 
+	 * @param	string		$date		format YYYY-MM-DD
+	 * @return	integer
+	 */
+	public static function getAge($date) {
+		// split date
+		$year = $month = $day = 0;
+		$value = explode('-', $date);
+		if (isset($value[0])) $year = intval($value[0]);
+		if (isset($value[1])) $month = intval($value[1]);
+		if (isset($value[2])) $day = intval($value[2]);
+			
+		// calc
+		if ($year) {
+			$age = self::format(null, 'Y') - $year;
+			if (intval(self::format(null, 'n')) < intval($month)) $age--;
+			else if (intval(self::formatDate(null, 'j')) == intval($month) && self::formatDate(null, 'n') < intval($day)) $age--;
+			return $age;
+		}
+		
+		return 0;
+	}
 }

@@ -146,10 +146,9 @@ a[href^="mailto:"] {
 /* -- -- -- Globals -- -- --  */
 
 /** 
- * This is a generic container for surrounding blocks of  
- * text with an optional leading icon. The icon-size is
- * free. The box collapses if there's no icon given or 
- * if it doesn't load. 
+ * This is a generic container for surrounding blocks of 
+ * text with an optional leading icon. The icon-size is 
+ * free. The icon-Container is optional. 
  * Note: 
  * This box does not support RTL in WebKit-browsers! 
  * Thus the box-style may change in the future. 
@@ -1775,8 +1774,12 @@ fieldset legend ~ p {
 /* Simple */
 
 dl {
-	margin-bottom: 7px;
+	margin-top: 7px;
 	position: relative;
+}
+
+fieldset dl:first-of-type {
+	margin-top: 0;
 }
 
 dl > dt {
@@ -4441,13 +4444,6 @@ button[disabled='disabled'] {
 }
 
 
-
-
-/* ToDo: Profile Button */
-
-#profileButtonContainer {
-	text-align: center;
-}
 
 
 
