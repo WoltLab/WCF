@@ -17,7 +17,6 @@
 
 <form method="post" action="{link controller='OptionImport'}{/link}" enctype="multipart/form-data">
 	<div>
-		
 		<fieldset>
 			<legend>{lang}wcf.acp.option.import{/lang}</legend>
 		
@@ -51,15 +50,14 @@
 	</div>
 </form>
 
-<header class="wcf-mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/download1.svg" alt="" />
-	<hgroup>
+<header class="wcf-container wcf-mainHeading">
+	<img src="{@RELATIVE_WCF_DIR}icon/download1.svg" alt="" class="wcf-containerIcon" />
+	<hgroup class="wcf-containerContent">
 		<h1>{lang}wcf.acp.option.export{/lang}</h1>
 	</hgroup>
 </header>
 
 <div>
-	
 	<fieldset>
 		<legend>{lang}wcf.acp.option.export{/lang}</legend>
 	
