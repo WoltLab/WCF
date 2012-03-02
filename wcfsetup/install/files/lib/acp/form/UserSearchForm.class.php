@@ -148,9 +148,16 @@ class UserSearchForm extends UserOptionListForm {
 	 * @see wcf\page\IPage::readData()
 	 */
 	public function readData() {
+		$this->readOptionTree();
+	
 		parent::readData();
-		
-		$this->optionTree = $this->getCategoryOptions('profile');
+	}
+	
+	/**
+	 * Reads option tree on page init.
+	 */
+	protected function readOptionTree() {
+		$this->optionTree = $this->optionHandler->getOptionTree();
 	}
 	
 	/**
@@ -182,9 +189,6 @@ class UserSearchForm extends UserOptionListForm {
 	public function show() {
 		// set active menu item
 		ACPMenu::getInstance()->setActiveMenuItem($this->menuItemName);
-		
-		// get user options and categories from cache
-		$this->readCache();
 		
 		// show form
 		parent::show();
@@ -289,7 +293,7 @@ class UserSearchForm extends UserOptionListForm {
 	 * Builds the dynamic conditions.
 	 */
 	protected function buildDynamicConditions() {
-		foreach ($this->options as $option) {
+		foreach ($this->optionTree as $option) {
 			$value = isset($this->values[$option->optionName]) ? $this->values[$option->optionName] : null;
 			$condition = $this->getTypeObject($option->optionType)->getCondition($option, $value);
 			if ($condition !== false) $this->conditions->add($condition);
@@ -305,6 +309,7 @@ class UserSearchForm extends UserOptionListForm {
 	
 	/**
 	 * @see wcf\acp\form\DynamicOptionListForm::checkOption()
+	 * @todo	deprecated?
 	 */
 	protected static function checkOption(Option $option) {
 		return ($option->searchable == 1 && !$option->disabled && ($option->visible == 3 || $option->visible < 2));
