@@ -84,7 +84,7 @@ class MailWorker extends AbstractWorker {
 		
 		if ($progress == 100) {
 			// clear markings
-			$typeID = ClipboardHandler::getInstance()->getTypeID('com.woltlab.wcf.user');
+			$typeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
 			ClipboardHandler::getInstance()->removeItems($typeID);
 			
 			// clear session

@@ -43,7 +43,7 @@ class UserEmailAddressExportForm extends ACPForm {
 		parent::readParameters();
 		
 		// get type id
-		$this->typeID = ClipboardHandler::getInstance()->getTypeID('com.woltlab.wcf.user');
+		$this->typeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
 		if ($this->typeID === null) {
 			throw new SystemException("clipboard item type 'com.woltlab.wcf.user' is unknown.");
 		}

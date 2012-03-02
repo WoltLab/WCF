@@ -121,7 +121,7 @@ class UserMailForm extends ACPForm {
 			// get marked user ids
 			if (empty($this->action)) {
 				// get type id
-				$typeID = ClipboardHandler::getInstance()->getTypeID('com.woltlab.wcf.user');
+				$typeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
 				if ($typeID === null) {
 					throw new SystemException("clipboard item type 'com.woltlab.wcf.user' is unknown.");
 				}
