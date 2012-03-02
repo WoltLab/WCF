@@ -380,44 +380,9 @@ class PackageArchive {
 		if (!isset($this->packageInfo['plugin'])) $this->packageInfo['plugin'] = '';
 		if (!isset($this->packageInfo['packageURL'])) $this->packageInfo['packageURL'] = '';
 		
-		// get package name in selected language
-		$this->getLocalizedInformation('packageName');
-		
-		// get package description in selected language
-		if (isset($this->packageInfo['packageDescription'])) {
-			$this->getLocalizedInformation('packageDescription');
-		}
-		
-		// get package license in selected language
-		if (isset($this->packageInfo['license'])) {
-			$this->getLocalizedInformation('license');
-		}
-		
-		// get package information in selected language
-		if (isset($this->packageInfo['readme'])) {
-			$this->getLocalizedInformation('readme');
-		}
-		
 		// add plugin to requirements
 		if ($this->packageInfo['plugin'] && !isset($this->requirements[$this->packageInfo['plugin']])) {
 			$this->requirements[$this->packageInfo['plugin']] = array('name' => $this->packageInfo['plugin']);
-		}
-	}
-	
-	/**
-	 * Gets localized package information strings.
-	 * 
-	 * @param 	string		$key
-	 */
-	protected function getLocalizedInformation($key) {
-		if (isset($this->packageInfo[$key][WCF::getLanguage()->getFixedLanguageCode()])) {
-			$this->packageInfo[$key] = $this->packageInfo[$key][WCF::getLanguage()->getFixedLanguageCode()];
-		}
-		else if (isset($this->packageInfo[$key]['default'])) {
-			$this->packageInfo[$key] = $this->packageInfo[$key]['default'];
-		}
-		else {
-			$this->packageInfo[$key] = array_shift($this->packageInfo[$key]);
 		}
 	}
 	
@@ -581,6 +546,23 @@ class PackageArchive {
 	public function getPackageInfo($name) {
 		if (isset($this->packageInfo[$name])) return $this->packageInfo[$name];
 		return null;
+	}
+	
+	/**
+	 * Returns a localized information about this package.
+	 * 
+	 * @param	string		$name
+	 * @return	mixed
+	 */
+	public function getLocalizedPackageInfo($name) {
+		if (isset($this->packageInfo[$name][WCF::getLanguage()->getFixedLanguageCode()])) {
+			return $this->packageInfo[$name][WCF::getLanguage()->getFixedLanguageCode()];
+		}
+		else if (isset($this->packageInfo[$name]['default'])) {
+			return $this->packageInfo[$name]['default'];
+		}
+		
+		return $this->getPackageInfo($name);
 	}
 	
 	/**

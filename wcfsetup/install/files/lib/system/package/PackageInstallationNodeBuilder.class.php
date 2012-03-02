@@ -393,9 +393,9 @@ class PackageInstallationNodeBuilder {
 			'package',
 			serialize(array(
 				'package' => $this->installation->getArchive()->getPackageInfo('name'),
-				'packageName' => $this->installation->getArchive()->getPackageInfo('packageName'),
+				'packageName' => $this->installation->getArchive()->getLocalizedPackageInfo('packageName'),
 				'instanceNo' => $instanceNo,
-				'packageDescription' => $this->installation->getArchive()->getPackageInfo('packageDescription'),
+				'packageDescription' => $this->installation->getArchive()->getLocalizedPackageInfo('packageDescription'),
 				'packageVersion' => $this->installation->getArchive()->getPackageInfo('version'),
 				'packageDate' => $this->installation->getArchive()->getPackageInfo('date'),
 				'packageURL' => $this->installation->getArchive()->getPackageInfo('packageURL'),
@@ -458,7 +458,7 @@ class PackageInstallationNodeBuilder {
 				'processNo' => $queue->processNo,
 				'userID' => WCF::getUser()->userID,
 				'package' => $archive->getPackageInfo('name'),
-				'packageName' => $archive->getPackageInfo('packageName'),
+				'packageName' => $archive->getLocalizedPackageInfo('packageName'),
 				'archive' => $fileName,
 				'action' => $queue->action
 			));
@@ -561,7 +561,7 @@ class PackageInstallationNodeBuilder {
 			$packages[] = array(
 				'archive' => $fileName,
 				'package' => $archive->getPackageInfo('name'),
-				'packageName' => $archive->getPackageInfo('packageName'),
+				'packageName' => $archive->getLocalizedPackageInfo('packageName'),
 				'selected' => 0
 			);
 		}
