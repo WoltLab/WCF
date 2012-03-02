@@ -2,12 +2,12 @@
 
 <header class="wcf-container wcf-mainHeading">
 	{if $packageID == 0}
-		<img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" class="wcf-containerIcon" />
+		<img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="wcf-containerIcon" />
 		<hgroup class="wcf-containerContent">
 			<h1>{lang}wcf.acp.package.startInstall{/lang}</h1>
 		</hgroup>
 	{else}
-		<img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" class="wcf-containerIcon" />
+		<img src="{@$__wcf->getPath()}icon/update1.svg" alt="" class="wcf-containerIcon" />
 		<hgroup class="wcf-containerContent">
 			<h1>{lang}wcf.acp.package.startUpdate{/lang}</h1>
 		</hgroup>
@@ -21,7 +21,7 @@
 <div class="wcf-contentHeader">
 	<nav>
 		<ul class="wcf-largeButtons">
-			<li><a href="{link controller='PackageList'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+			<li><a href="{link controller='PackageList'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/packageApplication1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>

@@ -1,7 +1,7 @@
 {include file='header'}
 
 <header class="wcf-container wcf-mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/{$action}1.svg" alt="" class="wcf-containerIcon" />
+	<img src="{@$__wcf->getPath()}icon/{$action}1.svg" alt="" class="wcf-containerIcon" />
 	<hgroup class="wcf-containerContent">
 		<h1>{lang}wcf.acp.cronjob.{$action}{/lang}</h1>
 		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>
@@ -21,9 +21,9 @@
 <div class="wcf-contentHeader">
 	<nav>
 		<ul class="wcf-largeButtons">
-			<li><a href="{link controller='CronjobList'}{/link}" title="{lang}wcf.acp.menu.link.cronjob.list{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/time1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.cronjob.list{/lang}</span></a></li>
+			<li><a href="{link controller='CronjobList'}{/link}" title="{lang}wcf.acp.menu.link.cronjob.list{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/time1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.cronjob.list{/lang}</span></a></li>
 			{if $action == 'edit'}
-				<li><a href="{link controller='CronjobExecute' id=$cronjobID}{/link}" title="{lang}wcf.acp.cronjob.execute{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/run1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.execute{/lang}</span></a></li>
+				<li><a href="{link controller='CronjobExecute' id=$cronjobID}{/link}" title="{lang}wcf.acp.cronjob.execute{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/run1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.execute{/lang}</span></a></li>
 			{/if}
 			
 			{event name='largeButtons'}
