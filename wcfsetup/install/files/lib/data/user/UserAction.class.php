@@ -56,7 +56,9 @@ class UserAction extends AbstractDatabaseObjectAction {
 		parent::validateDelete();
 		
 		$userIDs = array();
-		foreach ($this->users as $user) $userIDs[] = $user->userID;
+		foreach ($this->objects as $user) {
+			$userIDs[] = $user->userID;
+		}
 		
 		// validate groups
 		$conditions = new PreparedStatementConditionBuilder();

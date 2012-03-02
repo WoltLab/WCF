@@ -151,12 +151,14 @@ class ClipboardHandler extends SingletonFactory {
 	/**
 	 * Loads a list of marked items grouped by type name.
 	 * 
-	 * @param	integer		$typeID
+	 * @param	integer		$objectTypeID
 	 */
-	protected function loadMarkedItems($typeID = null) {
+	protected function loadMarkedItems($objectTypeID = null) {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("userID = ?", array(WCF::getUser()->userID));
-		if ($typeID !== null) $conditions->add("typeID = ?", array($typeID));
+		if ($objectTypeID !== null) {
+			$conditions->add("objectTypeID = ?", array($objectTypeID));
+		}
 		
 		// fetch object ids
 		$sql = "SELECT	objectTypeID, objectID

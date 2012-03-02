@@ -93,7 +93,7 @@ class ClipboardProxyAction extends AbstractSecureAction {
 	 * @return	array<integer>
 	 */
 	protected function getObjectIDs() {
-		$typeID = ClipboardHandler::getInstance()->getTypeID($this->typeName);
+		$typeID = ClipboardHandler::getInstance()->getObjectTypeID($this->typeName);
 		if ($typeID === null) {
 			throw new AJAXException("clipboard item type '".$this->typeName."' is unknown");
 		}
@@ -116,7 +116,7 @@ class ClipboardProxyAction extends AbstractSecureAction {
 		$objectIDs = $this->getObjectIDs();
 		
 		// create object action instance
-		$this->objectAction = new $this->parameters['className']($objectIDs, $this->actionName);
+		$this->objectAction = new $this->parameters['className']($objectIDs, $this->parameters['actionName']);
 		
 		// validate action
 		try {
