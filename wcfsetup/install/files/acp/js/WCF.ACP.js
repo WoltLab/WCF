@@ -684,9 +684,9 @@ WCF.ACP.User.List.prototype = {
 	 */
 	_delete: function(item) {
 		var $confirmMessage = item.data('internalData')['confirmMessage'];
-		if (confirm($confirmMessage)) {
+		WCF.System.Confirmation.show($confirmMessage, function() {
 			WCF.Clipboard.sendRequest(item);
-		}
+		});
 	}
 };
 

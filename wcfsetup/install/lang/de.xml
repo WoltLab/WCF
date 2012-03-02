@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de" languagename="Deutsch">
-	<category name="wcf.clipboard">
-		<item name="wcf.clipboard.user.confirmMessage"><![CDATA[{if $count == 1}Einen{else}{#$count}{/if} Benutzer löschen?]]></item>
-		<item name="wcf.clipboard.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer markiert]]></item>
-	</category>
-	
 	<category name="wcf.acp.cronjob">
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Cronjob hinzufügen]]></item>
@@ -400,6 +395,15 @@
 		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[E-Mail an folgende Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.subject"><![CDATA[Betreff]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Nachricht]]></item>
+	</category>
+	
+	<category name="wcf.clipboard">
+		<item name="wcf.clipboard.item.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
+		<item name="wcf.clipboard.item.user.delete"><![CDATA[Benutzer löschen]]></item>
+		<item name="wcf.clipboard.item.user.delete.confirmMessage"><![CDATA[{if $count == 1}Einen{else}{#$count}{/if} Benutzer löschen?]]></item>
+		<item name="wcf.clipboard.item.user.exportMailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
+		<item name="wcf.clipboard.item.user.sendMail"><![CDATA[E-Mail senden]]></item>
+		<item name="wcf.clipboard.label.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer markiert]]></item>
 	</category>
 	
 	<category name="wcf.date">
