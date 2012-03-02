@@ -221,7 +221,7 @@ class PackageStartInstallForm extends ACPForm {
 			'processNo' => $processNo,
 			'userID' => WCF::getUser()->userID,
 			'package' => $this->archive->getPackageInfo('name'),
-			'packageName' => $this->archive->getPackageInfo('packageName'),
+			'packageName' => $this->archive->getLocalizedPackageInfo('packageName'),
 			'packageID' => $packageID,
 			'archive' => (!empty($this->uploadPackage['tmp_name']) ? $this->uploadPackage['name'] : $this->downloadPackage),
 			'action' => ($this->package != null ? 'update' : 'install'),

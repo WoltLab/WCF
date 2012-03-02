@@ -81,7 +81,7 @@
 								<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="jsTooltip" />
 							{/if}
 						</td>
-						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->packageDescription}">
+						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->packageDescription|language}">
 							<a href="{link controller='PackageView' id=$package->packageID}{/link}"><span>{$package->getName()}{if $package->instanceNo > 1 && $package->instanceName == ''} (#{#$package->instanceNo}){/if}</span></a>
 						</td>
 						<td class="columnText"><p>{if $package->authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="wcf-externalURL">{$package->author}</a>{else}{$package->author}{/if}</p></td>

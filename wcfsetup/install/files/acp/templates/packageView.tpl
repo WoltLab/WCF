@@ -12,7 +12,7 @@
 	<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" class="wcf-containerIcon" /><!-- ToDo: Add possibility to show a custom app icon if given! -->
 	<hgroup class="wcf-containerContent">
 		<h1>{$package->getName()}</h1>
-		<h2>{$package->packageDescription}</h2>
+		<h2>{$package->packageDescription|language}</h2>
 	</hgroup>
 </header>
 
@@ -83,12 +83,12 @@
 			{event name='propertyFields'}
 		</fieldset>
 
-		{if $package->packageDescription}
+		{if $package->packageDescription|language}
 			<hgroup class="wcf-subHeading">
 				<h1>{lang}wcf.acp.package.description{/lang}</h1>
 			</hgroup>
 
-			<p>{$package->packageDescription}</p>
+			<p>{$package->packageDescription|language}</p>
 		{/if}
 	</div>
 
@@ -147,7 +147,7 @@
 												<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.type.other{/lang}" class="jsTooltip" />
 											{/if}
 										</td>
-										<td class="columnTitle" title="{$requiredPackage.packageDescription}"><p><a href="{link controller='PackageView' id=$requiredPackage.packageID}{/link}">{$requiredPackage.packageName}{if $requiredPackage.instanceNo > 1 && $requiredPackage.instanceName == ''} (#{#$requiredPackage.instanceNo}){/if}</a></p></td>
+										<td class="columnTitle" title="{$requiredPackage.packageDescription|language}"><p><a href="{link controller='PackageView' id=$requiredPackage.packageID}{/link}">{$requiredPackage.packageName|language}{if $requiredPackage.instanceNo > 1 && $requiredPackage.instanceName == ''} (#{#$requiredPackage.instanceNo}){/if}</a></p></td>
 										<td class="columnText">{if $requiredPackage.authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$requiredPackage.authorURL|rawurlencode}" class="wcf-externalURL">{$requiredPackage.author}</a>{else}{$requiredPackage.author}</p>{/if}</td>
 										<td class="columnText"><p>{$requiredPackage.packageVersion}</p></td>
 										<td class="columnDate"><p>{@$requiredPackage.packageDate|date}</p></td>
@@ -207,7 +207,7 @@
 												<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.type.other{/lang}" class="jsTooltip" />
 											{/if}
 										</td>
-										<td class="columnTitle" title="{$dependentPackage.packageDescription}"><p><a href="{link controller='PackageView' id=$dependentPackage.packageID}{/link}">{$dependentPackage.packageName}{if $dependentPackage.instanceNo > 1 && $dependentPackage.instanceName == ''} (#{#$dependentPackage.instanceNo}){/if}</a></p></td>
+										<td class="columnTitle" title="{$dependentPackage.packageDescription|language}"><p><a href="{link controller='PackageView' id=$dependentPackage.packageID}{/link}">{$dependentPackage.packageName|language}{if $dependentPackage.instanceNo > 1 && $dependentPackage.instanceName == ''} (#{#$dependentPackage.instanceNo}){/if}</a></p></td>
 										<td class="columnText">{if $dependentPackage.authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$dependentPackage.authorURL|rawurlencode}" class="wcf-externalURL">{$dependentPackage.author}</a>{else}{$dependentPackage.author}</p>{/if}</td>
 										<td class="columnText"><p>{$dependentPackage.packageVersion}</p></td>
 										<td class="columnDate"><p>{@$dependentPackage.packageDate|date}</p></td>
