@@ -59,14 +59,14 @@
 					<tr class="jsPackageRow">
 						<td class="columnIcon">
 							{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-								<a href="{link controller='PackageStartInstall' id=$package->packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" class="jsTooltip" /></a>
+								<a href="{link controller='PackageStartInstall' id=$package->packageID}action=update{/link}"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="jsTooltip" /></a>
 							{else}
-								<img src="{@RELATIVE_WCF_DIR}icon/update1D.svg" alt="" title="{lang}wcf.acp.package.view.button.update{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/update1D.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" />
 							{/if}
 							{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $package->package != 'com.woltlab.wcf' && $package->packageID != PACKAGE_ID}
-								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" data-object-id="{@$package->packageID}" class="jsUninstallButton jsTooltip" />
+								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" class="jsUninstallButton jsTooltip" />
 							{else}
-								<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.acp.package.view.button.uninstall{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" />
 							{/if}
 							
 							{event name='buttons'}
