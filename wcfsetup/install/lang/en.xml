@@ -39,17 +39,17 @@
 	</category>
 	
 	<category name="wcf.acp.group">
-		<item name="wcf.acp.group.administrators"><![CDATA[Administrators]]></item>
-		<item name="wcf.acp.group.everyone"><![CDATA[Everyone]]></item>
-		<item name="wcf.acp.group.guests"><![CDATA[Guests]]></item>
-		<item name="wcf.acp.group.moderators"><![CDATA[Moderators]]></item>
-		<item name="wcf.acp.group.superModerators"><![CDATA[Super Moderators]]></item>
-		<item name="wcf.acp.group.users"><![CDATA[Users]]></item>
 		<item name="wcf.acp.group.add"><![CDATA[Add new user group]]></item>
 		<item name="wcf.acp.group.data"><![CDATA[General group information]]></item>
 		<item name="wcf.acp.group.delete.sure"><![CDATA[Are you sure you would like to remove the user group &quot;{$group->groupName}&quot;?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Edit user group]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[You are currently a member of this user group! Changing the permissions of this user group could result in locking yourself out of the Administration Control Panel. Please be careful!]]></item>
+		<item name="wcf.acp.group.group1"><![CDATA[Everyone]]></item>
+		<item name="wcf.acp.group.group2"><![CDATA[Guests]]></item>
+		<item name="wcf.acp.group.group3"><![CDATA[Users]]></item>
+		<item name="wcf.acp.group.group4"><![CDATA[Administrators]]></item>
+		<item name="wcf.acp.group.group5"><![CDATA[Moderators]]></item>
+		<item name="wcf.acp.group.group6"><![CDATA[Super Moderators]]></item>
 		<item name="wcf.acp.group.groupName"><![CDATA[User group name]]></item>
 		<item name="wcf.acp.group.groupName.description"><![CDATA[Enter a name for this group.]]></item>
 		<item name="wcf.acp.group.list"><![CDATA[User groups]]></item>

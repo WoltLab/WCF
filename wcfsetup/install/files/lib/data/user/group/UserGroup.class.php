@@ -212,12 +212,19 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
+	 * @see	wcf\data\user\group\UserGroup::getName()
+	 */
+	public function __toString() {
+		return $this->getName();
+	}
+	
+	/**
 	 * Returns the name of this user group.
 	 * 
 	 * @return	string
 	 */
-	public function __tostring() {
-		return $this->groupName;
+	public function getName() {
+		return WCF::getLanguage()->get('wcf.acp.group.group'.$this->groupID);
 	}
 	
 	/**

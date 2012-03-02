@@ -21,7 +21,6 @@ class UserGroupCacheBuilder implements ICacheBuilder {
 
 		// get all user groups
 		$groupList = new UserGroupList();
-		$groupList->sqlOrderBy = "user_group.groupName";
 		$groupList->sqlLimit = 0;
 		$groupList->readObjects();
 		$groups = $groupList->getObjects();
