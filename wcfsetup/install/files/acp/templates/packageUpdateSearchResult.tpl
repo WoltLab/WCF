@@ -1,9 +1,7 @@
 {include file='header'}
 
-<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/MultiPagesLinks.class.js"></script>
-
 <header class="wcf-container wcf-mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/search1.svg" alt="" class="wcf-containerIcon" />
+	<img src="{@$__wcf->getPath()}icon/search1.svg" alt="" class="wcf-containerIcon" />
 	<hgroup class="wcf-containerContent">
 		<h1>{lang}wcf.acp.packageUpdate.search{/lang}</h1>
 	</hgroup>
@@ -20,11 +18,11 @@
 				<hgroup class="wcf-subHeading">
 					<h1>
 						{if $package.isApplication == 1}
-							<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" title="{lang}wcf.acp.package.list.isApplication{/lang}" class="jsTooltip" />
+							<img src="{@$__wcf->getPath()}icon/packageApplication1.svg" alt="" title="{lang}wcf.acp.package.list.isApplication{/lang}" class="jsTooltip" />
 						{elseif $package.plugin != ''}
-							<img src="{@RELATIVE_WCF_DIR}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="jsTooltip" />
+							<img src="{@$__wcf->getPath()}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="jsTooltip" />
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="jsTooltip" />
+							<img src="{@$__wcf->getPath()}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="jsTooltip" />
 						{/if}
 						{$package.packageName}
 					</h1>
@@ -63,7 +61,7 @@
 						<dl>
 							<dt><label>{lang}wcf.acp.package.list.author{/lang}</label></dt>
 							<dd>
-								<span>{if $package.authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package.authorURL|rawurlencode}" class="wcf-externalURL">{$package.author}</a>{else}{$package.author}{/if}</span>
+								<span>{if $package.authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package.authorURL|rawurlencode}" class="wcf-externalURL">{$package.author}</a>{else}{$package.author}{/if}</span>
 							</dd>
 						</dl>
 					{/if}

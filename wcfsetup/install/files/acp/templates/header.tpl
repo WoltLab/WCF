@@ -9,16 +9,16 @@
 		//<![CDATA[
 		var SID_ARG_1ST = '{@SID_ARG_1ST}';
 		var SID_ARG_2ND	= '{@SID_ARG_2ND_NOT_ENCODED}';
-		var RELATIVE_WCF_DIR = '{@RELATIVE_WCF_DIR}';
+		var RELATIVE_WCF_DIR = '{@RELATIVE_WCF_DIR}'; // todo: still needed?
 		var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 		var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 		//]]>
 	</script>
-	<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/3rdParty/jquery.min.js"></script>
-	<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/3rdParty/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/3rdParty/jquery.tools.min.js"></script>
-	<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/WCF.js"></script>
-	<script type="text/javascript" src="{@RELATIVE_WCF_DIR}acp/js/WCF.ACP.js"></script>
+	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js"></script>
+	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.tools.min.js"></script>
+	<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.js"></script>
+	<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.js"></script>
 	<script type="text/javascript">
 		//<![CDATA[
 		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
@@ -27,11 +27,11 @@
 	
 	<!-- Stylesheets -->
 	<style type="text/css">
-		@import url("{@RELATIVE_WCF_DIR}acp/style/wcf.css") screen;
+		@import url("{@$__wcf->getPath()}acp/style/wcf.css") screen;
 		{*
-		@import url("{@RELATIVE_WCF_DIR}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css") screen;
+		@import url("{@$__wcf->getPath()}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css") screen;
 	
-		@import url("{@RELATIVE_WCF_DIR}acp/style/print.css") print;
+		@import url("{@$__wcf->getPath()}acp/style/print.css") print;
 		*}
 	</style>
 	
@@ -73,7 +73,7 @@
 				'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}'
 			});
 			WCF.Icon.addObject({
-				'wcf.icon.loading': '{if PACKAGE_ID}{@$__wcf->getPath()}{else}wcf/{/if}icon/spinner1.svg'
+				'wcf.icon.loading': '{@$__wcf->getPath()}icon/spinner1.svg'
 			});
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
@@ -113,7 +113,7 @@
 				<!-- clickable area -->
 				<a href="{link controller='Index'}{/link}">
 					<h1>WoltLab Community Framework 2.0 Alpha 1</h1>
-					<img src="{@RELATIVE_WCF_DIR}acp/images/wcfLogo2.svg" width="321" height="58" alt="Product-logo" title="WoltLab Community Framework 2.0 Alpha 1" />
+					<img src="{@$__wcf->getPath()}acp/images/wcfLogo2.svg" width="321" height="58" alt="Product-logo" title="WoltLab Community Framework 2.0 Alpha 1" />
 				</a>
 				<!-- /clickable area -->
 				
@@ -139,7 +139,7 @@
 			<!-- header navigation -->
 			<nav class="wcf-headerNavigation">
 				<ul>
-					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{@RELATIVE_WCF_DIR}icon/toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{@$__wcf->getPath()}icon/toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 				</ul>
 			</nav>
 			<!-- /header navigation -->

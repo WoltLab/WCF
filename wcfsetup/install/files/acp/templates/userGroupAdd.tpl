@@ -13,7 +13,7 @@
 </script>
 
 <header class="wcf-container wcf-mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/{@$action}1.svg" alt="" class="wcf-containerIcon" />
+	<img src="{@$__wcf->getPath()}icon/{@$action}1.svg" alt="" class="wcf-containerIcon" />
 	<hgroup class="wcf-containerContent">
 		<h1>{lang}wcf.acp.group.{@$action}{/lang}</h1>
 	</hgroup>
@@ -34,7 +34,7 @@
 <div class="wcf-contentHeader">
 	<nav>
 		<ul class="wcf-largeButtons">
-			<li><a href="{link controller='UserGroupList'}{/link}" title="{lang}wcf.acp.menu.link.group.list{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserGroupList'}{/link}" title="{lang}wcf.acp.menu.link.group.list{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>

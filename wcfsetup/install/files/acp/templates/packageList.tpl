@@ -10,11 +10,11 @@
 		
 		{if $pluginsCount > 1}
 			WCF.Icon.addObject({
-				'wcf.icon.arrow.down': '{@RELATIVE_WCF_DIR}icon/dropdown1.svg',
-				'wcf.icon.next': '{@RELATIVE_WCF_DIR}icon/next1.svg',
-				'wcf.icon.next.disabled': '{@RELATIVE_WCF_DIR}icon/next1D.svg',
-				'wcf.icon.previous': '{@RELATIVE_WCF_DIR}icon/previous1.svg',
-				'wcf.icon.previous.disabled': '{@RELATIVE_WCF_DIR}icon/previous1D.svg'
+				'wcf.icon.arrow.down': '{@$__wcf->getPath()}icon/dropdown1.svg',
+				'wcf.icon.next': '{@$__wcf->getPath()}icon/next1.svg',
+				'wcf.icon.next.disabled': '{@$__wcf->getPath()}icon/next1D.svg',
+				'wcf.icon.previous': '{@$__wcf->getPath()}icon/previous1.svg',
+				'wcf.icon.previous.disabled': '{@$__wcf->getPath()}icon/previous1D.svg'
 			});
 			new WCF.ACP.Package.List({@($pluginsCount / 20)|ceil});
 		{/if}
@@ -23,7 +23,7 @@
 </script>
 
 <header class="wcf-container wcf-mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" class="wcf-containerIcon" />
+	<img src="{@$__wcf->getPath()}icon/packageApplication1.svg" alt="" class="wcf-containerIcon" />
 	<hgroup class="wcf-containerContent">
 		<h1>{lang}wcf.acp.package.list{/lang}</h1>
 	</hgroup>
@@ -48,7 +48,7 @@
 					<fieldset>
 						<legend>{$package->getName()}</legend>
 						
-						<img src="{@RELATIVE_WCF_DIR}icon/wcfIcon1.svg" alt="" title="{$package->getName()}" class="wcf-packageApplicationIcon" />
+						<img src="{@$__wcf->getPath()}icon/wcfIcon1.svg" alt="" title="{$package->getName()}" class="wcf-packageApplicationIcon" />
 						
 						<div>
 							<dl>
@@ -80,8 +80,8 @@
 						<footer>
 							<nav>
 								<ul class="wcf-smallButtons">
-									<li><a href="{link controller='PackageView' id=$packageID}{/link}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/info1.svg" alt="" title="{lang}wcf.acp.package.button.info{/lang}" /> <span>{lang}wcf.acp.package.button.info{/lang}</span></a></li>
-									<li><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/update1.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" /> <span>{lang}wcf.acp.package.button.update{/lang}</span></a></li>
+									<li><a href="{link controller='PackageView' id=$packageID}{/link}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/info1.svg" alt="" title="{lang}wcf.acp.package.button.info{/lang}" /> <span>{lang}wcf.acp.package.button.info{/lang}</span></a></li>
+									<li><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/update1.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" /> <span>{lang}wcf.acp.package.button.update{/lang}</span></a></li>
 								</ul>
 							</nav>
 						</footer>
@@ -119,7 +119,7 @@
 <div class="wcf-contentFooter">
 	<nav>
 		<ul class="wcf-largeButtons">
-			<li><a href="{link controller='PackageListDetailed'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/packageApplication1.svg" alt="" /> <span>{lang}wcf.acp.package.list.detailed{/lang}</span></a></li>
+			<li><a href="{link controller='PackageListDetailed'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/packageApplication1.svg" alt="" /> <span>{lang}wcf.acp.package.list.detailed{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>

@@ -616,6 +616,11 @@ class WCF {
 	 * @return	string
 	 */
 	public function getPath($abbreviation = 'wcf') {
+		// workaround during WCFSetup
+		if (!PACKAGE_ID) {
+			return '../';
+		}
+		
 		if (!isset($this->applications[$abbreviation])) {
 			$abbreviation = 'wcf';
 		}
