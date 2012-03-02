@@ -4459,12 +4459,53 @@ button[disabled='disabled'] {
 
 
 
+/* ############## TODO: Sortable lists ############## */
+/* TODO: Everything is working right now and looks pretty much like similar stuff. Adjust the colors, but take care
+	 when changing margins/paddings. Keep them relative to each other, otherwise you might encounter a strange
+	 behavior (in rare cases) which might lead to a situation where you will be unable to move an item properly. - Alex */
 
+/* This is the placeholder (or ghost) which will be inserted on runtime in order to show the possible insertation point - Alex */
+.wcf-sortablePlaceholder {
+	background-color: rgba(255, 255, 204, 1);
+	border-radius: 5px;
+	border: 1px solid rgba(224, 224, 0, 1);
+	margin: 3px 0;
+	padding: 4px;
+}
 
+.wcf-sortableListContainer {
+	background-color: rgba(252, 253, 254, 1);
+	border-radius: 0;
+	padding: 21px;
+}
+
+.wcf-sortableList {
+	list-style-position: outside;
+	list-style-type: decimal;
+	min-height: 10px; /* Do not touch min-height, removing or changing it would break the whole stuff! - Alex */
+	margin-left: 21px;
+}
+
+.wcf-sortableNode {
+	cursor: move;
+}
+
+.wcf-sortableNodeLabel {
+	border-bottom: 1px solid rgba(216, 231, 245, 1);
+	display: block; /* Do not use anything other than block here, otherwise the sortables go crazy - Alex */
+	padding: 7px 7px 11px 0;
+}
+
+.wcf-sortableButtonContainer {
+	float: right;
+}
 
 /* ############## CSS Experiments (active) ############## */
 
 /* what is that? */
+/* Once we're determing the dimensions of an element (within JS) we move it into body and wrap it into
+   a container with class 'wcfDimensions' in order to calculate the precise dimensions. We could also
+   embed it directly into JS (using style-attribute) but I thought it was better this way. - Alex */
 .wcfDimensions {
 	display: inline-block;
 }

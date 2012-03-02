@@ -4154,6 +4154,128 @@ WCF.Upload = Class.extend({
 });
 
 /**
+ * Namespace for sortables.
+ */
+WCF.Sortable = {};
+
+/**
+ * Sortable implementation for lists.
+ * 
+ * @param	string		containerID
+ * @param	string		className
+ */
+WCF.Sortable.List = function(containerID, className) { this.init(containerID, className); };
+WCF.Sortable.List.prototype = {
+	/**
+	 * action class name
+	 * @var	string
+	 */
+	_className: '',
+	
+	/**
+	 * container id
+	 * @var	string
+	 */
+	_containerID: '',
+	
+	/**
+	 * container object
+	 * @var	jQuery
+	 */
+	_container: null,
+	
+	/**
+	 * notification object
+	 * @var	WCF.System.Notification
+	 */
+	_notification: null,
+	
+	/**
+	 * proxy object
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * object structure
+	 * @var	object
+	 */
+	_structure: { },
+	
+	/**
+	 * Creates a new sortable list.
+	 * 
+	 * @param	string		containerID
+	 * @param	string		className
+	 */
+	init: function(containerID, className) {
+		this._containerID = $.wcfEscapeID(containerID);
+		this._container = $('#' + this._containerID);
+		this._className = className;
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		this._structure = { };
+		
+		// init sortable
+		$('#' + this._containerID + ' .wcf-sortableList').sortable({
+			connectWith: '#' + this._containerID + ' .wcf-sortableList',
+			items: 'li',
+			placeholder: 'wcf-sortablePlaceholder',
+			stop: $.proxy(this._save, this)
+		});
+	},
+	
+	/**
+	 * Saves object structure.
+	 */
+	_save: function() {
+		// build structure
+		this._container.find('.wcf-sortableList').each($.proxy(function(index, list) {
+			var $list = $(list);
+			var $parentID = $list.data('objectID');
+			
+			$list.children('li').each($.proxy(function(index, listItem) {
+				var $objectID = $(listItem).data('objectID');
+				
+				if (!this._structure[$parentID]) {
+					this._structure[$parentID] = [ ];
+				}
+				
+				this._structure[$parentID].push($objectID);
+			}, this));
+		}, this));
+		
+		// send request
+		this._proxy.setOption('data', {
+			actionName: 'updatePosition',
+			className: this._className,
+			parameters: {
+				data: {
+					structure: this._structure
+				}
+			}
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Shows notification upon success.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		if (this._notification === null) {
+			this._notification = new WCF.System.Notification('Ihre Änderungen wurden gespeichert.');
+		}
+		
+		this._notification.show();
+	}
+};
+
+/**
  * Provides a toggleable sidebar.
  */
 $.widget('ui.wcfSidebar', {
