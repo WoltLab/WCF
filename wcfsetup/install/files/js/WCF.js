@@ -4268,7 +4268,7 @@ WCF.Sortable.List.prototype = {
 	 */
 	_success: function(data, textStatus, jqXHR) {
 		if (this._notification === null) {
-			this._notification = new WCF.System.Notification('Ihre Änderungen wurden gespeichert.');
+			this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.form.edit.success'));
 		}
 		
 		this._notification.show();
