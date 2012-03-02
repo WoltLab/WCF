@@ -38,7 +38,7 @@
 {if $objects|count > 0}
 	<div class="wcf-border wcf-boxTitle">
 		<hgroup>
-			<h1><a href="{link controller='PackageList'}{/link}">{lang}wcf.acp.package.list{/lang} <span class="badge" title="{lang}wcf.acp.package.list.count{/lang}">{#$items}</span></a></h1>
+			<h1><a href="{link controller='PackageList'}{/link}">{lang}wcf.acp.package.list{/lang} <span class="wcf-badge" title="{lang}wcf.acp.package.list.count{/lang}">{#$items}</span></a></h1>
 		</hgroup>
 		
 		<table class="wcf-table">
