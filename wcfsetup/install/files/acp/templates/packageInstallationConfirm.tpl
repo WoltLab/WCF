@@ -10,7 +10,7 @@
 </script>
 
 <header class="wcf-container wcf-mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/working1.svg" alt="" class="wcf-containerIcon" />
+	<img src="{@$__wcf->getPath()}icon/working1.svg" alt="" class="wcf-containerIcon" />
 	<hgroup class="wcf-containerContent">
 		<h1>{$archive->getPackageInfo('packageName')}</h1>
 		<h2>{$archive->getPackageInfo('packageDescription')}</h2>
@@ -62,13 +62,13 @@
 	{if $archive->getPackageInfo('packageURL') != ''}
 		<dl>
 			<dt>{lang}wcf.acp.package.url{/lang}</dt>
-			<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="wcf-externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
+			<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="wcf-externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
 		</dl>
 	{/if}
 	
 	<dl>
 		<dt>{lang}wcf.acp.package.author{/lang}</dt>
-		<dd>{if $archive->getAuthorInfo('authorURL')}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$archive->getAuthorInfo('authorURL')|rawurlencode}" class="wcf-externalURL">{$archive->getAuthorInfo('author')}</a>{else}{$archive->getAuthorInfo('author')}{/if}</dd>
+		<dd>{if $archive->getAuthorInfo('authorURL')}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getAuthorInfo('authorURL')|rawurlencode}" class="wcf-externalURL">{$archive->getAuthorInfo('author')}</a>{else}{$archive->getAuthorInfo('author')}{/if}</dd>
 	</dl>
 	
 	{event name='propertyFields'}
