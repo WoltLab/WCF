@@ -269,7 +269,7 @@ class DateUtil {
 		if ($year) {
 			$age = self::format(null, 'Y') - $year;
 			if (self::format(null, 'n') < $month) $age--;
-			else if (self::formatDate(null, 'n') == $month && self::formatDate(null, 'j') < $day) $age--;
+			else if (self::format(null, 'n') == $month && self::format(null, 'j') < $day) $age--;
 			return $age;
 		}
 		
