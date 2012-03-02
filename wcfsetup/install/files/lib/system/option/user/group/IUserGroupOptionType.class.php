@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\option\user\group;
+use wcf\data\option\Option;
 use wcf\system\option\IOptionType;
 
 /**
@@ -20,4 +21,12 @@ interface IUserGroupOptionType extends IOptionType {
 	 * @return	mixed
 	 */
 	public function merge(array $values);
+	
+	/**
+	 * Checks if the User has given a value "higher" value than he has
+	 * 
+	 * @param	wcf\data\option\Option		$option
+	 * @param	string						$newValue
+	 */
+	public function checkPermissions(Option $option, $newValue);
 }

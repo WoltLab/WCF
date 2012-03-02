@@ -1,6 +1,9 @@
 <?php
 namespace wcf\system\option\user\group;
+use wcf\data\option\Option;
+use wcf\system\exception\UserInputException;
 use wcf\system\option\IntegerOptionType;
+use wcf\system\WCF;
 
 /**
  * IntegerUserGroupOptionType is an implementation of IUserGroupOptionType for integer values.
@@ -19,5 +22,14 @@ class IntegerUserGroupOptionType extends IntegerOptionType implements IUserGroup
 	 */
 	public function merge(array $values) {
 		return max($values);
+	}
+	
+	/**
+	* @see wcf\system\option\user\group\IUserGroupOptionType::checkPermissions()
+	*/
+	public function checkPermissions(Option $option, $newValue) {
+		if ($newValue > WCF::getSession()->getPermission($option->optionName)) {
+			throw new UserInputException($option->optionName, 'permissionsDenied');
+		}
 	}
 }

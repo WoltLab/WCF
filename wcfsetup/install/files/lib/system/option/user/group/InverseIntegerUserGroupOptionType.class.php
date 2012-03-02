@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\option\user\group;
 use wcf\system\option\IntegerOptionType;
+use wcf\system\WCF;
 
 /**
  * InverseIntegerUserGroupOptionType is an implementation of IUserGroupOptionType for integer values.
@@ -19,5 +20,14 @@ class InverseIntegerUserGroupOptionType extends IntegerOptionType implements IUs
 	 */
 	public function merge(array $values) {
 		return min($values);
+	}
+	
+	/**
+	* @see wcf\system\option\user\group\IUserGroupOptionType::checkPermissions()
+	*/
+	public function checkPermissions(Option $option, $newValue) {
+		if ($newValue < WCF::getSession()->getPermission($option->optionName)) {
+			throw new UserInputException($option->optionName, 'permissionsDenied');
+		}
 	}
 }

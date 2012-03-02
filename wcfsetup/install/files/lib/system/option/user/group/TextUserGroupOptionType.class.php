@@ -1,6 +1,9 @@
 <?php
 namespace wcf\system\option\user\group;
+use wcf\data\option\Option;
+use wcf\system\exception\UserInputException;
 use wcf\system\option\TextOptionType;
+use wcf\system\WCF;
 
 /**
  * TextUserGroupOptionType is an implementation of IUserGroupOptionType for text values.
@@ -26,5 +29,14 @@ class TextUserGroupOptionType extends TextOptionType implements IUserGroupOption
 		}
 
 		return $result;
+	}
+	
+	/**
+	* @see wcf\system\option\user\group\IUserGroupOptionType::checkPermissions()
+	*/
+	public function checkPermissions(Option $option, $newValue) {
+		if (!strpos($newValue, WCF::getSession()->getPermission($option->optionName))) {
+			throw new UserInputException($option->optionName, 'permissionsDenied');
+		}
 	}
 }
