@@ -87,7 +87,7 @@ class Package extends DatabaseObject {
 	 * @return	string
 	 */
 	public function getName() {
-		return WCF::getLanguage()->get($this->instanceName ? $this->instanceName : $this->packageName);
+		return WCF::getLanguage()->get($this->instanceName ?: $this->packageName);
 	}
 	
 	/**
