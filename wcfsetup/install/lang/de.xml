@@ -59,7 +59,14 @@
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Kann Administrationsoberfläche betreten]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Mitglieder dieser Benutzergruppe können die Administrationsoberfläche betreten und dort abhängig von den weiteren Zugriffsrechten verschiedene Aktionen durchführen. Diese Option muss aktiviert sein, wenn diesen Benutzern andere administrative Funktionen erlaubt werden sollen.]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPrivateUserOptions"><![CDATA[Kann versteckte Profilinformationen sehen]]></item>
+		<item name="wcf.acp.group.option.admin.language.canAddLanguage"><![CDATA[Kann neue Sprachen hinzufügen]]></item>
+		<item name="wcf.acp.group.option.admin.language.canAddServer"><![CDATA[Kann neue Sprach-Server hinzufügen]]></item>
+		<item name="wcf.acp.group.option.admin.language.canDeleteLanguage"><![CDATA[Kann Sprachen löschen]]></item>
+		<item name="wcf.acp.group.option.admin.language.canDeleteServer"><![CDATA[Kann Sprach-Server löschen]]></item>
+		<item name="wcf.acp.group.option.admin.language.canEditLanguage"><![CDATA[Kann Sprachen bearbeiten]]></item>
+		<item name="wcf.acp.group.option.admin.language.canEditServer"><![CDATA[Kann Sprach-Server bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.system.canEditOption"><![CDATA[Kann allgemeine Einstellungen vornehmen]]></item>
+		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Kann deaktivierte Stile benutzen]]></item>
 		<item name="wcf.acp.group.option.admin.system.canViewLog"><![CDATA[Kann Protokolle abrufen]]></item>
 		<item name="wcf.acp.group.option.admin.system.cronjob.canAddCronjob"><![CDATA[Kann neue zeitgesteuerte Aufgaben anlegen]]></item>
 		<item name="wcf.acp.group.option.admin.system.cronjob.canDeleteCronjob"><![CDATA[Kann zeitgesteuerte Aufgaben löschen]]></item>
@@ -84,18 +91,18 @@
 		<item name="wcf.acp.group.option.admin.user.canMailUser"><![CDATA[Kann E-Mails an Benutzer senden]]></item>
 		<item name="wcf.acp.group.option.admin.user.canSearchUser"><![CDATA[Kann Benutzer suchen]]></item>
 		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrative Rechte]]></item>
-		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[Allgemeine administrative Rechte]]></item>
-		<item name="wcf.acp.group.option.category.admin.system"><![CDATA[System-Funktionen]]></item>
+		<item name="wcf.acp.group.option.category.admin.display"><![CDATA[Darstellung]]></item>
+		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[Allgemeine Rechte]]></item>
+		<item name="wcf.acp.group.option.category.admin.language"><![CDATA[Sprachen]]></item>
+		<item name="wcf.acp.group.option.category.admin.style"><![CDATA[Stile]]></item>
+		<item name="wcf.acp.group.option.category.admin.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.group.option.category.admin.system.cronjob"><![CDATA[Cronjobs]]></item>
-		<item name="wcf.acp.group.option.category.admin.system.package"><![CDATA[Paketverwaltung]]></item>
-		<item name="wcf.acp.group.option.category.admin.user"><![CDATA[Benutzer-Funktionen]]></item>
-		<item name="wcf.acp.group.option.category.admin.user.group"><![CDATA[Gruppenverwaltung]]></item>
-		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[Benutzerverwaltung]]></item>
+		<item name="wcf.acp.group.option.category.admin.system.package"><![CDATA[Pakete]]></item>
+		<item name="wcf.acp.group.option.category.admin.user"><![CDATA[Benutzer]]></item>
+		<item name="wcf.acp.group.option.category.admin.user.group"><![CDATA[Benutzergruppen]]></item>
+		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.group.option.category.mod"><![CDATA[Moderative Rechte]]></item>
 		<item name="wcf.acp.group.option.category.user"><![CDATA[Allgemeine Rechte]]></item>
-		<item name="wcf.acp.group.option.category.admin.display"><![CDATA[Darstellung]]></item>
-		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Kann deaktivierte Stile benutzen]]></item>
-		<item name="wcf.acp.group.option.category.admin.style"><![CDATA[Stil-Verwaltung]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">

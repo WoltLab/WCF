@@ -39,6 +39,7 @@
 			
 			<ul>
 				<li id="toBottomLink" class="wcf-toBottomLink"><a href="{$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{icon size='S'}toBottom{/icon}" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+				{if $headerNavigation|isset}{@$headerNavigation}{/if}
 				{event name='headerNavigation'}
 			</ul>
 		</nav>
