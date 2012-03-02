@@ -70,7 +70,8 @@
 				'wcf.global.button.enable': '{lang}wcf.global.button.enable{/lang}',
 				'wcf.global.confirmation.cancel': '{lang}wcf.global.confirmation.cancel{/lang}',
 				'wcf.global.confirmation.confirm': '{lang}wcf.global.confirmation.confirm{/lang}',
-				'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}'
+				'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}',
+				'wcf.global.form.edit.success': '{lang}wcf.global.form.edit.success{/lang}'
 			});
 			WCF.Icon.addObject({
 				'wcf.icon.loading': '{@$__wcf->getPath()}icon/spinner1.svg'

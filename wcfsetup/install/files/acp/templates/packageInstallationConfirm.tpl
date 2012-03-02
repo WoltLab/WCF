@@ -55,7 +55,7 @@
 	</dl>
 
 	<dl>
-		<dt>{lang}wcf.acp.package.date{/lang}</dt>
+		<dt>{lang}wcf.acp.package.packageDate{/lang}</dt>
 		<dd>{@$archive->getPackageInfo('date')|date}</dd>
 	</dl>
 
