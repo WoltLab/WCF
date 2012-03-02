@@ -64,6 +64,13 @@
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Can enter Administration Control Panel]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Allows members of this user group to enter the Administration Control Panel and, dependent upon their permissions, run certain actions.]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPrivateUserOptions"><![CDATA[Can view private user options]]></item>
+		<item name="wcf.acp.group.option.admin.language.canAddLanguage"><![CDATA[Can add new languages]]></item>
+		<item name="wcf.acp.group.option.admin.language.canAddServer"><![CDATA[Can add new language servers]]></item>
+		<item name="wcf.acp.group.option.admin.language.canDeleteLanguage"><![CDATA[Can delete languages]]></item>
+		<item name="wcf.acp.group.option.admin.language.canDeleteServer"><![CDATA[Can delete language servers]]></item>
+		<item name="wcf.acp.group.option.admin.language.canEditLanguage"><![CDATA[Can edit languages]]></item>
+		<item name="wcf.acp.group.option.admin.language.canEditServer"><![CDATA[Can edit language servers]]></item>
+		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Can view disabled styles]]></item>
 		<item name="wcf.acp.group.option.admin.system.canEditOption"><![CDATA[Can change the system options]]></item>
 		<item name="wcf.acp.group.option.admin.system.canViewLog"><![CDATA[Can view logs]]></item>
 		<item name="wcf.acp.group.option.admin.system.cronjob.canAddCronjob"><![CDATA[Can add new cron jobs]]></item>
@@ -89,18 +96,18 @@
 		<item name="wcf.acp.group.option.admin.user.canMailUser"><![CDATA[Can send e-mails to users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canSearchUser"><![CDATA[Can search users]]></item>
 		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrative permissions]]></item>
-		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[General administrative permissions]]></item>
-		<item name="wcf.acp.group.option.category.admin.system"><![CDATA[System functions]]></item>
+		<item name="wcf.acp.group.option.category.admin.display"><![CDATA[Design]]></item>
+		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[General permissions]]></item>
+		<item name="wcf.acp.group.option.category.admin.language"><![CDATA[Languages]]></item>
+		<item name="wcf.acp.group.option.category.admin.style"><![CDATA[Styles]]></item>
+		<item name="wcf.acp.group.option.category.admin.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.group.option.category.admin.system.cronjob"><![CDATA[Cron jobs]]></item>
-		<item name="wcf.acp.group.option.category.admin.system.package"><![CDATA[Package management]]></item>
-		<item name="wcf.acp.group.option.category.admin.user"><![CDATA[User functions]]></item>
-		<item name="wcf.acp.group.option.category.admin.user.group"><![CDATA[Group management]]></item>
-		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[User management]]></item>
+		<item name="wcf.acp.group.option.category.admin.system.package"><![CDATA[Packages]]></item>
+		<item name="wcf.acp.group.option.category.admin.user"><![CDATA[Users]]></item>
+		<item name="wcf.acp.group.option.category.admin.user.group"><![CDATA[User groups]]></item>
+		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.group.option.category.mod"><![CDATA[Moderative permissions]]></item>
 		<item name="wcf.acp.group.option.category.user"><![CDATA[General permissions]]></item>
-		<item name="wcf.acp.group.option.category.admin.display"><![CDATA[Design]]></item>
-		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Can view disabled styles]]></item>
-		<item name="wcf.acp.group.option.category.admin.style"><![CDATA[Style management]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
