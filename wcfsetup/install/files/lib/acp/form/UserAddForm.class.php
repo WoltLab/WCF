@@ -323,7 +323,7 @@ class UserAddForm extends UserOptionListForm {
 		// set active menu item
 		ACPMenu::getInstance()->setActiveMenuItem($this->menuItemName);
 		
-		// get the default langauge id
+		// get the default language id
 		$this->languageID = $this->getDefaultFormLanguageID();
 		
 		// show form

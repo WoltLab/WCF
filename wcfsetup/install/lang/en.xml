@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="en" languagename="English">
-	<category name="wcf.clipboard">
-		<item name="wcf.clipboard.user.confirmMessage"><![CDATA[Delete {if $count == 1}one{else}{#$count}{/if} user{if $count > 1}s{/if}?]]></item>
-		<item name="wcf.clipboard.user.marked"><![CDATA[{if $count == 1}One{else}{#$count}{/if} user{if $count > 1}s{/if} marked]]></item>
-	</category>
-	
 	<category name="wcf.acp.cronjob">
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cron jobs]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Add a new cron job]]></item>
@@ -135,11 +130,7 @@
 	</category>
 	
 	<category name="wcf.acp.menu">
-		<item name="wcf.acp.menu.link.system"><![CDATA[System]]></item>
-		<item name="wcf.acp.menu.link.option"><![CDATA[Options]]></item>
 		<item name="wcf.acp.menu.link.content"><![CDATA[Content]]></item>
-		<item name="wcf.acp.menu.link.package"><![CDATA[Packages]]></item>
-		<item name="wcf.acp.menu.link.option.importAndExport"><![CDATA[Import &amp; export]]></item>
 		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Cron jobs]]></item>
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Add new cron job]]></item>
 		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[List cron jobs]]></item>
@@ -152,12 +143,16 @@
 		<item name="wcf.acp.menu.link.group.mail"><![CDATA[E-mail all group members]]></item>
 		<item name="wcf.acp.menu.link.group.list"><![CDATA[List user groups]]></item>
 		<item name="wcf.acp.menu.link.display"><![CDATA[Design]]></item>
+		<item name="wcf.acp.menu.link.option"><![CDATA[Options]]></item>
+		<item name="wcf.acp.menu.link.option.importAndExport"><![CDATA[Import &amp; export]]></item>
+		<item name="wcf.acp.menu.link.package"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.menu.link.package.database"><![CDATA[Search packages]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Install new package]]></item>
 		<item name="wcf.acp.menu.link.package.server.add"><![CDATA[Add new server]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[List update server]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[List installed packages]]></item>
 		<item name="wcf.acp.menu.link.package.autoupdate"><![CDATA[Automatic update]]></item>
+		<item name="wcf.acp.menu.link.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.menu.link.user"><![CDATA[User]]></item>
 		<item name="wcf.acp.menu.link.user.add"><![CDATA[Add new user]]></item>
 		<item name="wcf.acp.menu.link.user.list"><![CDATA[List users]]></item>
@@ -168,7 +163,7 @@
 	</category>
 	
 	<category name="wcf.acp.option">
-		<item name="wcf.acp.option.category.module"><![CDATA[Modules on / off]]></item>
+		<item name="wcf.acp.option.category.module"><![CDATA[Modules]]></item>
 		<item name="wcf.acp.option.category.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.security"><![CDATA[Security]]></item>
 		<item name="wcf.acp.option.category.module.system"><![CDATA[System]]></item>
@@ -402,6 +397,15 @@
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Message]]></item>
 	</category>
 	
+	<category name="wcf.clipboard">
+		<item name="wcf.clipboard.item.user.assignToGroup"><![CDATA[Assign to user group]]></item>
+		<item name="wcf.clipboard.item.user.delete"><![CDATA[Delete users]]></item>
+		<item name="wcf.clipboard.item.user.delete.confirmMessage"><![CDATA[Delete {if $count == 1}one{else}{#$count}{/if} user{if $count > 1}s{/if}?]]></item>
+		<item name="wcf.clipboard.item.user.exportMailAddress"><![CDATA[Export e-mail addresses]]></item>
+		<item name="wcf.clipboard.item.user.sendMail"><![CDATA[Send an e-mail]]></item>
+		<item name="wcf.clipboard.label.user.marked"><![CDATA[{if $count == 1}One{else}{#$count}{/if} user{if $count > 1}s{/if} marked]]></item>
+	</category>
+	
 	<category name="wcf.date">
 		<item name="wcf.date.dateFormat"><![CDATA[M jS Y]]></item>
 		<item name="wcf.date.timeFormat"><![CDATA[g:ia]]></item>
@@ -526,6 +530,7 @@
 		<item name="wcf.global.button.collapsible"><![CDATA[Expand and collapse]]></item>
 		<item name="wcf.global.button.delete"><![CDATA[Delete]]></item>
 		<item name="wcf.global.button.disable"><![CDATA[Disable]]></item>
+		<item name="wcf.global.button.disabledI18n"><![CDATA[monolingual]]></item>
 		<item name="wcf.global.button.edit"><![CDATA[Edit]]></item>
 		<item name="wcf.global.button.enable"><![CDATA[Enable]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Next &raquo;]]></item>

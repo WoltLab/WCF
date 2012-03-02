@@ -4,6 +4,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\system\clipboard\ClipboardEditorItem;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -34,7 +35,7 @@ class UserClipboardAction implements IClipboardAction {
 		switch ($actionName) {
 			case 'assignToGroup':
 				$item->setName('user.assignToGroup');
-				$item->setURL('index.php?form=UserAssignToGroup');
+				$item->setURL(LinkHandler::getInstance()->getLink('UserAssignToGroup'));
 			break;
 			
 			case 'delete':
@@ -43,8 +44,7 @@ class UserClipboardAction implements IClipboardAction {
 					return null;
 				}
 				
-				// TODO: use language variable
-				$item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.user.confirmMessage', array('count' => $count)));
+				$item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.user.delete.confirmMessage', array('count' => $count)));
 				$item->addParameter('actionName', 'delete');
 				$item->addParameter('className', 'wcf\data\user\UserAction');
 				$item->setName('user.delete');
@@ -52,12 +52,12 @@ class UserClipboardAction implements IClipboardAction {
 			
 			case 'exportMailAddress':
 				$item->setName('user.exportMailAddress');
-				$item->setURL('index.php?form=UserEmailAddressExport');
+				$item->setURL(LinkHandler::getInstance()->getLink('UserEmailAddressExport'));
 			break;
 			
 			case 'sendMail':
 				$item->setName('user.sendMail');
-				$item->setURL('index.php?form=UserMail');
+				$item->setURL(LinkHandler::getInstance()->getLink('UserMail'));
 			break;
 			
 			default:
@@ -133,6 +133,6 @@ class UserClipboardAction implements IClipboardAction {
 	 * @see	wcf\system\clipboard\action\IClipboardAction::getEditorLabel()
 	 */
 	public function getEditorLabel(array $objects) {
-		return WCF::getLanguage()->getDynamicVariable('wcf.clipboard.user.marked', array('count' => count($objects)));
+		return WCF::getLanguage()->getDynamicVariable('wcf.clipboard.label.user.marked', array('count' => count($objects)));
 	}
 }

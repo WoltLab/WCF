@@ -268,8 +268,8 @@ class DateUtil {
 		// calc
 		if ($year) {
 			$age = self::format(null, 'Y') - $year;
-			if (intval(self::format(null, 'n')) < intval($month)) $age--;
-			else if (intval(self::formatDate(null, 'j')) == intval($month) && self::formatDate(null, 'n') < intval($day)) $age--;
+			if (self::format(null, 'n') < $month) $age--;
+			else if (self::formatDate(null, 'n') == $month && self::formatDate(null, 'j') < $day) $age--;
 			return $age;
 		}
 		

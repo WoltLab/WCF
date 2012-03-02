@@ -54,17 +54,14 @@ class FileUtil {
 			return $_ENV['TMPDIR'] . '/';
 		}
 		
-		// workaround for a bug in php 5.1.2 that returns true for is_writable('/tmp/') with safe_mode = on
-		if (!preg_match('/^5\.1\.2(?![.0-9])/', phpversion())) {
-			if (($path = ini_get('upload_tmp_dir')) && @is_writable($path)) {
-				return $path . '/';
-			}
-			if (@file_exists('/tmp/') && @is_writable('/tmp/')) {
-				return '/tmp/';
-			}
-			if (function_exists('session_save_path') && ($path = session_save_path()) && @is_writable($path)) {
-				return $path . '/';
-			}
+		if (($path = ini_get('upload_tmp_dir')) && @is_writable($path)) {
+			return $path . '/';
+		}
+		if (@file_exists('/tmp/') && @is_writable('/tmp/')) {
+			return '/tmp/';
+		}
+		if (function_exists('session_save_path') && ($path = session_save_path()) && @is_writable($path)) {
+			return $path . '/';
 		}
 		
 		$path = WCF_DIR.'tmp/';

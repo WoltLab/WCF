@@ -129,13 +129,6 @@ final class ClipboardEditorItem {
 	 * @param	string		$url
 	 */
 	public function setURL($url) {
-		if (StringUtil::indexOf($url, '?') === false) {
-			$url .= SID_ARG_1ST;
-		}
-		else {
-			$url .= SID_ARG_2ND_NOT_ENCODED;
-		}
-		
 		$this->url = $url;
 	}
 }

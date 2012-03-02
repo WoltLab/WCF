@@ -64,7 +64,7 @@ class PackageAutoUpdateListPage extends AbstractPage {
 	 */
 	public function show() {
 		// set active menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.autoupdate');
+		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.autoupdate');
 		
 		// check master password
 		WCFACP::checkMasterPassword();
