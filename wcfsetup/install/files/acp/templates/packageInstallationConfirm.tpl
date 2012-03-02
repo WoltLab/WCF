@@ -12,8 +12,8 @@
 <header class="wcf-container wcf-mainHeading">
 	<img src="{@$__wcf->getPath()}icon/working1.svg" alt="" class="wcf-containerIcon" />
 	<hgroup class="wcf-containerContent">
-		<h1>{$archive->getPackageInfo('packageName')}</h1>
-		<h2>{$archive->getPackageInfo('packageDescription')}</h2>
+		<h1>{$archive->getLocalizedPackageInfo('packageName')}</h1>
+		<h2>{$archive->getLocalizedPackageInfo('packageDescription')}</h2>
 	</hgroup>
 </header>
 

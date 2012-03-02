@@ -12,7 +12,7 @@
 	<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" class="wcf-containerIcon" />
 	<hgroup class="wcf-containerContent">
 		<h1>{lang}wcf.acp.package.uninstall{/lang}: {$packageObj->getName()}</h1>
-		<h2>{$packageObj->packageDescription}</h2>
+		<h2>{$packageObj->packageDescription|language}</h2>
 	</hgroup>
 </header>
 
@@ -115,8 +115,8 @@
 							<img src="{@$__wcf->getPath()}icon/package1.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="jsTooltip" />
 						{/if}
 					</td>
-					<td class="columnTitle" title="{$package.packageDescription}"><p><a href="{link controller='PackageView' id=$package.packageID}{/link}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
-					<td class="columnText"><p>{if $package.authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package.authorURL|rawurlencode}" class="wcf-externalURL">{$package.author}</a>{else}{$package.author}{/if}</p></td>
+					<td class="columnTitle" title="{$package.packageDescription|language}"><p><a href="{link controller='PackageView' id=$package.packageID}{/link}">{$package.packageName|language}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
+					<td class="columnText"><p>{if $package.authorURL}<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={$package.authorURL|rawurlencode}" class="wcf-externalURL">{$package.author}</a>{else}{$package.author}{/if}</p></td>
 					<td class="columnText"><p>{$package.packageVersion}</p></td>
 					<td class="columnDate"><p>{@$package.packageDate|date}</p></td>
 					
