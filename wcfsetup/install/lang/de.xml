@@ -39,17 +39,17 @@
 	</category>
 	
 	<category name="wcf.acp.group">
-		<item name="wcf.acp.group.administrators"><![CDATA[Administratoren]]></item>
-		<item name="wcf.acp.group.everyone"><![CDATA[Jeder]]></item>
-		<item name="wcf.acp.group.guests"><![CDATA[Gäste]]></item>
-		<item name="wcf.acp.group.moderators"><![CDATA[Moderatoren]]></item>
-		<item name="wcf.acp.group.superModerators"><![CDATA[Super Moderatoren]]></item>
-		<item name="wcf.acp.group.users"><![CDATA[Registrierte Benutzer]]></item>
 		<item name="wcf.acp.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
 		<item name="wcf.acp.group.data"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.acp.group.delete.sure"><![CDATA[Wollen Sie diese Benutzergruppe &bdquo;{$group->groupName}&ldquo; wirklich löschen?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Benutzergruppe bearbeiten]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Sie sind Mitglied dieser Benutzergruppe! Änderungen an den Zugriffsrechten dieser Benutzergruppe können dazu führen, dass Sie aus der Administrationsoberfläche ausgeschlossen werden. Bitte seien Sie entsprechend vorsichtig!]]></item>
+		<item name="wcf.acp.group.group1"><![CDATA[Jeder]]></item>
+		<item name="wcf.acp.group.group2"><![CDATA[Gäste]]></item>
+		<item name="wcf.acp.group.group3"><![CDATA[Registrierte Benutzer]]></item>
+		<item name="wcf.acp.group.group4"><![CDATA[Administratoren]]></item>
+		<item name="wcf.acp.group.group5"><![CDATA[Moderatoren]]></item>
+		<item name="wcf.acp.group.group6"><![CDATA[Super Moderatoren]]></item>
 		<item name="wcf.acp.group.groupName"><![CDATA[Name der Benutzergruppe]]></item>
 		<item name="wcf.acp.group.groupName.description"><![CDATA[Geben Sie einen Namen für die Gruppe an.]]></item>
 		<item name="wcf.acp.group.list"><![CDATA[Benutzergruppen]]></item>

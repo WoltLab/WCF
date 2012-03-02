@@ -859,12 +859,12 @@ ALTER TABLE wcf1_user_to_language ADD FOREIGN KEY (languageID) REFERENCES wcf1_l
 
 /**** default inserts ****/
 -- default user groups
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Everyone', 1);
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Guests', 2);
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Users', 3);
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Administrators', 4);
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Moderators', 4);
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('Super Moderators', 4);
+INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group1', 1);
+INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group2', 2);
+INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group3', 3);
+INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group4', 4);
+INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group5', 4);
+INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group6', 4);
 
 -- default user group options
 INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, adminDefaultValue, showOrder) VALUES ('admin.general.canUseAcp', 'admin.general', 'boolean', '0', '1', 1);

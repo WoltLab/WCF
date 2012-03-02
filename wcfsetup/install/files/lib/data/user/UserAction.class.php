@@ -181,7 +181,7 @@ class UserAction extends AbstractDatabaseObjectAction {
 		if ($this->parameters['data']['includeUserGroups']) {
 			$accessibleGroups = UserGroup::getAccessibleGroups();
 			foreach ($accessibleGroups as $group) {
-				$groupName = WCF::getLanguage()->get($group->groupName);
+				$groupName = $group->getName();
 				if (!in_array($groupName, $excludedSearchValues)) {
 					$pos = StringUtil::indexOfIgnoreCase($groupName, $searchString);
 					if ($pos !== false && $pos == 0) {
