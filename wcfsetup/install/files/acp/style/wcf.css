@@ -112,9 +112,7 @@ img[src*='enable'] {
 
 /* Single Classes */
 
-.wcf-externalURL,
-/*a[href^="http:"],
-a[href^="https:"]*/ {
+.wcf-externalURL {
 	background-image: url('../../icon/externalURL1.svg');
 	background-position: right center;
 	background-repeat: no-repeat;
@@ -144,7 +142,7 @@ a[href^="mailto:"] {
 }
 
 .marginBottom {
-	margin-top: 15px;
+	margin-bottom: 15px;
 }
 
 
