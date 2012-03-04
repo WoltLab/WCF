@@ -28,25 +28,6 @@ class PackageViewPage extends AbstractPage {
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canUninstallPackage');
 	
 	/**
-	 * list with data of required packages explicitly given in the requiredPackages
-	 * tag during installation
-	 * @var	array<string>
-	 */
-	public $requiredPackages = array();
-	
-	/**
-	 * list with data of dependent packages
-	 * @var	array<string>
-	 */
-	public $dependentPackages = array();
-	
-	/**
-	 * list with data of required packages
-	 * @var	array<string>
-	 */
-	public $dependencies = array();
-	
-	/**
 	 * id of the package
 	 * @var	integer
 	 */
@@ -72,29 +53,12 @@ class PackageViewPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
-	 */
-	public function readData() {
-		parent::readData();
-		
-		// get package data
-		$this->requiredPackages = $this->package->getRequiredPackages();
-		$this->dependentPackages = $this->package->getDependentPackages();
-		$this->dependencies = $this->package->getDependencies();
-	}
-	
-	/**
 	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign(array(
-			'requiredPackages' => $this->requiredPackages,
-			'dependentPackages' => $this->dependentPackages,
-			'dependencies' => $this->dependencies,
-			'package' => $this->package
-		));
+		WCF::getTPL()->assign('package', $this->package);
 	}
 	
 	/**

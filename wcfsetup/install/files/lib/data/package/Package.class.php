@@ -31,11 +31,28 @@ class Package extends DatabaseObject {
 	protected static $databaseTableIndexName = 'packageID';
 	
 	/**
+	 * list of packages that this package requires
+	 * @var	array<wcf\data\package\Package>
+	 */
+	protected $dependencies = null;
+	
+	/**
+	 * list of packages that require this package
+	 * @var	array<wcf\data\package\Package>
+	 */
+	protected $dependentPackages = null;
+	
+	/**
 	 * installation directory
-	 *
 	 * @var	string
 	 */
 	protected $dir = '';
+	
+	/**
+	 * list of packages that were given as required packages during installation
+	 * @var	array<wcf\data\package\Package>
+	 */
+	protected $requiredPackages = null;
 	
 	/**
 	 * Returns true, if this package is required by other packages.
@@ -104,19 +121,22 @@ class Package extends DatabaseObject {
 	 * @return	array
 	 */
 	public function getDependencies() {
-		$sql = "SELECT		package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
-			FROM		wcf".WCF_N."_package_dependency package_dependency
-			LEFT JOIN	wcf".WCF_N."_package package ON (package.packageID = package_dependency.dependency)
-			WHERE		package_dependency.packageID = ?
-			ORDER BY	packageName ASC";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->packageID));
-		$packages = array();
-		while ($row = $statement->fetchArray()) {
-			$packages[] = $row;
+		if ($this->dependencies === null) {
+			$this->dependencies = array();
+			
+			$sql = "SELECT		package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
+				FROM		wcf".WCF_N."_package_dependency package_dependency
+				LEFT JOIN	wcf".WCF_N."_package package ON (package.packageID = package_dependency.dependency)
+				WHERE		package_dependency.packageID = ?
+				ORDER BY	packageName ASC";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->packageID));
+			while ($package = $statement->fetchObject('wcf\data\package\Package')) {
+				$this->dependencies[$package->packageID] = $package;
+			}
 		}
 		
-		return $packages;
+		return $this->dependencies;
 	}
 	
 	/**
@@ -126,19 +146,22 @@ class Package extends DatabaseObject {
 	 * @return	array
 	 */
 	public function getDependentPackages() {
-		$sql = "SELECT		package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
-			FROM		wcf".WCF_N."_package_requirement package_requirement
-			LEFT JOIN	wcf".WCF_N."_package package ON (package.packageID = package_requirement.packageID)
-			WHERE		package_requirement.requirement = ?
-			ORDER BY	packageName ASC";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->packageID));
-		$packages = array();
-		while ($row = $statement->fetchArray()) {
-			$packages[] = $row;
+		if ($this->dependentPackages === null) {
+			$this->dependentPackages = array();
+			
+			$sql = "SELECT		package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
+				FROM		wcf".WCF_N."_package_requirement package_requirement
+				LEFT JOIN	wcf".WCF_N."_package package ON (package.packageID = package_requirement.packageID)
+				WHERE		package_requirement.requirement = ?
+				ORDER BY	packageName ASC";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->packageID));
+			while ($package = $statement->fetchObject('wcf\data\package\Package')) {
+				$this->dependentPackages[$package->packageID] = $package;
+			}
 		}
 		
-		return $packages;
+		return $this->dependentPackages;
 	}
 	
 	/**
@@ -148,19 +171,22 @@ class Package extends DatabaseObject {
 	 * @return	array
 	 */
 	public function getRequiredPackages() {
-		$sql = "SELECT		package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
-			FROM		wcf".WCF_N."_package_requirement package_requirement
-			LEFT JOIN	wcf".WCF_N."_package package ON (package.packageID = package_requirement.requirement)
-			WHERE		package_requirement.packageID = ?
-			ORDER BY	packageName ASC";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->packageID));
-		$packages = array();
-		while ($row = $statement->fetchArray()) {
-			$packages[] = $row;
+		if ($this->requiredPackages === null) {
+			$this->requiredPackages = array();
+			
+			$sql = "SELECT		package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
+				FROM		wcf".WCF_N."_package_requirement package_requirement
+				LEFT JOIN	wcf".WCF_N."_package package ON (package.packageID = package_requirement.requirement)
+				WHERE		package_requirement.packageID = ?
+				ORDER BY	packageName ASC";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->packageID));
+			while ($package = $statement->fetchObject('wcf\data\package\Package')) {
+				$this->requiredPackages[$package->packageID] = $package;
+			}
 		}
 		
-		return $packages;
+		return $this->requiredPackages;
 	}
 	
 	/**
