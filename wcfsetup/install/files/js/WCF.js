@@ -3477,7 +3477,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 		var $listItem = this._super(item);
 		
 		// insert item type
-		$('<img src="' + WCF.Icon.get('wcf.user.user' + (item.type == 'group' ? 's' : '')) + '" alt="" />').insertBefore($listItem.children('span:eq(0)'));
+		$('<img src="' + WCF.Icon.get('wcf.icon.user' + (item.type == 'group' ? 's' : '')) + '" alt="" />').insertBefore($listItem.children('span:eq(0)'));
 		$listItem.data('type', item.type);
 		
 		return $listItem;
