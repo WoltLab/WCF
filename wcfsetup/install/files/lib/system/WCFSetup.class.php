@@ -1046,7 +1046,7 @@ class WCFSetup extends WCF {
 				'processNo' => $processNo,
 				'userID' => $admin->userID,
 				'package' => $packageName,
-				'packageName' => $archive->getPackageInfo('packageName'),
+				'packageName' => $archive->getLocalizedPackageInfo('packageName'),
 				'archive' => TMP_DIR.'install/packages/'.$packageFile
 			));
 		}
@@ -1107,7 +1107,7 @@ class WCFSetup extends WCF {
 					try {
 						$archive = new PackageArchive(TMP_DIR.'install/packages/'.$packageFile);
 						$archive->openArchive();
-						self::$setupPackageName = $archive->getPackageInfo('packageName');
+						self::$setupPackageName = $archive->getLocalizedPackageInfo('packageName');
 						$archive->getTar()->close();
 						break;
 					}
