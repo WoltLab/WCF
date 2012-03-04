@@ -154,11 +154,14 @@
 											{/if}
 										</td>
 <<<<<<< HEAD
+<<<<<<< HEAD
 										<td class="columnTitle" title="{$requiredPackage->packageDescription}"><p><a href="{link controller='PackageView' id=$requiredPackage->packageID}{/link}">{$requiredPackage->packageName}{if $requiredPackage->instanceNo > 1 && $requiredPackage->instanceName == ''} (#{#$requiredPackage->instanceNo}){/if}</a></p></td>
 										<td class="columnText">{if $requiredPackage->authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$requiredPackage->authorURL|rawurlencode}" class="wcf-externalURL">{$requiredPackage->author}</a>{else}{$requiredPackage->author}</p>{/if}</td>
 										<td class="columnText"><p>{$requiredPackage->packageVersion}</p></td>
 										<td class="columnDate"><p>{@$requiredPackage->packageDate|date}</p></td>
 =======
+=======
+>>>>>>> d63e9b3f468a33c4292b7cf6ec70c47e0478f2b2
 										<td class="columnTitle" title="{$requiredPackage.packageDescription|language}"><p><a href="{link controller='PackageView' id=$requiredPackage.packageID}{/link}">{$requiredPackage.packageName|language}{if $requiredPackage.instanceNo > 1 && $requiredPackage.instanceName == ''} (#{#$requiredPackage.instanceNo}){/if}</a></p></td>
 										<td class="columnText">{if $requiredPackage.authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$requiredPackage.authorURL|rawurlencode}" class="wcf-externalURL">{$requiredPackage.author}</a>{else}{$requiredPackage.author}</p>{/if}</td>
 										<td class="columnText"><p>{$requiredPackage.packageVersion}</p></td>
