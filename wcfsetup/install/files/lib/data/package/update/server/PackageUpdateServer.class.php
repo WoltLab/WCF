@@ -32,22 +32,15 @@ class PackageUpdateServer extends DatabaseObject {
 	 * @return	array		$servers
 	 */
 	public static function getActiveUpdateServers(array $packageUpdateServerIDs = array()) {
-		$servers = array();
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("disabled = ?", array(0));
-		if (count($packageUpdateServerIDs)) $conditions->add("packageUpdateServerID IN (?)", array($packageUpdateServerIDs));
-		
-		$sql = "SELECT		* 
-			FROM		wcf".WCF_N."_package_update_server
-			".$conditions."
-			ORDER BY	serverURL ASC";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditions->getParameters());
-		while ($row = $statement->fetchArray()) {
-			$servers[$row['packageUpdateServerID']] = new PackageUpdateServer(null, $row);
+		$list = new PackageUpdateServerList();
+		$list->sqlLimit = 0;
+		$list->getConditionBuilder()->add("disabled = ?", array(0));
+		if (count($packageUpdateServerIDs)) {
+			$list->getConditionBuilder()->add("packageUpdateServerID IN (?)", array($packageUpdateServerIDs));
 		}
+		$list->readObjects();
 		
-		return $servers;
+		return $list->getObjects();
 	}
 	
 	/**
