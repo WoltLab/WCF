@@ -20,7 +20,9 @@
 	<nav class="wcf-tabMenu">
 		<ul>
 			<li><a href="#information">{lang}wcf.acp.package.information.title{/lang}</a></li>
-			{if $requiredPackages|count || $dependentPackages|count}<li><a href="#dependencies">{lang}wcf.acp.package.dependencies.title{/lang}</a></li>{/if}
+			{if $package->getRequiredPackages()|count || $package->getDependentPackages()|count}
+				<li><a href="#dependencies">{lang}wcf.acp.package.dependencies.title{/lang}</a></li>
+			{/if}
 		</ul>
 	</nav>
 
@@ -92,12 +94,16 @@
 		{/if}
 	</div>
 
-	{if $requiredPackages|count || $dependentPackages|count}
+	{if $package->getRequiredPackages()|count || $package->getDependentPackages()|count}
 		<div id="dependencies" class="wcf-border wcf-tabMenuContainer wcf-tabMenuContent">
 			<nav class="wcf-menu">
 				<ul>
-					{if $requiredPackages|count}<li><a href="#dependencies-required">{lang}wcf.acp.package.dependencies.required{/lang}</a></li>{/if}
-					{if $dependentPackages|count}<li><a href="#dependencies-dependent">{lang}wcf.acp.package.dependencies.dependent{/lang}</a></li>{/if}
+					{if $package->getRequiredPackages()|count}
+						<li><a href="#dependencies-required">{lang}wcf.acp.package.dependencies.required{/lang}</a></li>
+					{/if}
+					{if $package->getDependentPackages()|count}
+						<li><a href="#dependencies-dependent">{lang}wcf.acp.package.dependencies.dependent{/lang}</a></li>
+					{/if}
 				</ul>
 			</nav>
 
@@ -123,34 +129,34 @@
 			
 						<tbody>
 							{content}
-								{foreach from=$requiredPackages item=requiredPackage}
+								{foreach from=$package->getRequiredPackages() item=requiredPackage}
 									<tr>
 										<td class="columnIcon">
 											{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-												<a href="{link controller='PackageStartInstall' id=$requiredPackage.packageID}action=update{/link}"><img src="{@$__wcf->getPath()}icon/update1.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="jsTooltip" /></a>
+												<a href="{link controller='PackageStartInstall' id=$requiredPackage->packageID}action=update{/link}"><img src="{@$__wcf->getPath()}icon/update1.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="jsTooltip" /></a>
 											{else}
 												<img src="{@$__wcf->getPath()}icon/update1D.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" />
 											{/if}
-											{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $requiredPackage.package != 'com.woltlab.wcf' && $requiredPackage.packageID != PACKAGE_ID}
-												<a onclick="return confirm('{lang}wcf.acp.package.button.uninstall.sure{/lang}')" href="{link controller='Package'}action=startUninstall&packageID={@$requiredPackage.packageID}{/link}"><img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="jsTooltip" /></a>
+											{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $requiredPackage->package != 'com.woltlab.wcf' && $requiredPackage->packageID != PACKAGE_ID}
+												<a onclick="return confirm('{lang}wcf.acp.package.button.uninstall.sure{/lang}')" href="{link controller='Package'}action=startUninstall&packageID={@$requiredPackage->packageID}{/link}"><img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="jsTooltip" /></a>
 											{else}
 												<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" />
 											{/if}
 										</td>
-										<td class="columnID"><p>{@$requiredPackage.packageID}</p></td>
+										<td class="columnID"><p>{@$requiredPackage->packageID}</p></td>
 										<td class="columnIcon">
-											{if $requiredPackage.isApplication}
+											{if $requiredPackage->isApplication}
 												<img src="{@$__wcf->getPath()}icon/packageApplication1.svg" alt="" title="{lang}wcf.acp.package.type.application{/lang}" class="jsTooltip" />
-											{elseif $requiredPackage.parentPackageID}
+											{elseif $requiredPackage->parentPackageID}
 												<img src="{@$__wcf->getPath()}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.type.plugin{/lang}" class="jsTooltip" />
 											{else}
 												<img src="{@$__wcf->getPath()}icon/package1.svg" alt="" title="{lang}wcf.acp.package.type.other{/lang}" class="jsTooltip" />
 											{/if}
 										</td>
-										<td class="columnTitle" title="{$requiredPackage.packageDescription}"><p><a href="{link controller='PackageView' id=$requiredPackage.packageID}{/link}">{$requiredPackage.packageName}{if $requiredPackage.instanceNo > 1 && $requiredPackage.instanceName == ''} (#{#$requiredPackage.instanceNo}){/if}</a></p></td>
-										<td class="columnText">{if $requiredPackage.authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$requiredPackage.authorURL|rawurlencode}" class="wcf-externalURL">{$requiredPackage.author}</a>{else}{$requiredPackage.author}</p>{/if}</td>
-										<td class="columnText"><p>{$requiredPackage.packageVersion}</p></td>
-										<td class="columnDate"><p>{@$requiredPackage.packageDate|date}</p></td>
+										<td class="columnTitle" title="{$requiredPackage->packageDescription}"><p><a href="{link controller='PackageView' id=$requiredPackage->packageID}{/link}">{$requiredPackage->packageName}{if $requiredPackage->instanceNo > 1 && $requiredPackage->instanceName == ''} (#{#$requiredPackage->instanceNo}){/if}</a></p></td>
+										<td class="columnText">{if $requiredPackage->authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$requiredPackage->authorURL|rawurlencode}" class="wcf-externalURL">{$requiredPackage->author}</a>{else}{$requiredPackage->author}</p>{/if}</td>
+										<td class="columnText"><p>{$requiredPackage->packageVersion}</p></td>
+										<td class="columnDate"><p>{@$requiredPackage->packageDate|date}</p></td>
 										
 										{event name='requirementColumns'}
 									</tr>
@@ -183,34 +189,34 @@
 			
 						<tbody>
 							{content}
-								{foreach from=$dependentPackages item=dependentPackage}
+								{foreach from=$package->getDependentPackages() item=dependentPackage}
 									<tr>
 										<td class="columnIcon">
 											{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-												<a href="{link controller='PackageStartInstall' id=$dependentPackage.packageID}action=update{/link}"><img src="{@$__wcf->getPath()}icon/update1.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="jsTooltip" /></a>
+												<a href="{link controller='PackageStartInstall' id=$dependentPackage->packageID}action=update{/link}"><img src="{@$__wcf->getPath()}icon/update1.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="jsTooltip" /></a>
 											{else}
 												<img src="{@$__wcf->getPath()}icon/update1D.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" />
 											{/if}
-											{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $dependentPackage.package != 'com.woltlab.wcf' && $dependentPackage.packageID != PACKAGE_ID}
-												<a onclick="return confirm('{lang}wcf.acp.package.button.uninstall.sure{/lang}')" href="{link controller='Package'}action=startUninstall&packageID={@$dependentPackage.packageID}{/link}"><img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="jsTooltip" /></a>
+											{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $dependentPackage->package != 'com.woltlab.wcf' && $dependentPackage->packageID != PACKAGE_ID}
+												<a onclick="return confirm('{lang}wcf.acp.package.button.uninstall.sure{/lang}')" href="{link controller='Package'}action=startUninstall&packageID={@$dependentPackage->packageID}{/link}"><img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="jsTooltip" /></a>
 											{else}
 												<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" />
 											{/if}
 										</td>
-										<td class="columnID"><p>{@$dependentPackage.packageID}</p></td>
+										<td class="columnID"><p>{@$dependentPackage->packageID}</p></td>
 										<td class="columnIcon">
-											{if $dependentPackage.isApplication}
+											{if $dependentPackage->isApplication}
 												<img src="{@$__wcf->getPath()}icon/packageApplication1.svg" alt="" title="{lang}wcf.acp.package.type.application{/lang}" class="jsTooltip" />
-											{elseif $dependentPackage.parentPackageID}
+											{elseif $dependentPackage->parentPackageID}
 												<img src="{@$__wcf->getPath()}icon/packagePlugin1.svg" alt="" title="{lang}wcf.acp.package.type.plugin{/lang}" class="jsTooltip" />
 											{else}
 												<img src="{@$__wcf->getPath()}icon/package1.svg" alt="" title="{lang}wcf.acp.package.type.other{/lang}" class="jsTooltip" />
 											{/if}
 										</td>
-										<td class="columnTitle" title="{$dependentPackage.packageDescription}"><p><a href="{link controller='PackageView' id=$dependentPackage.packageID}{/link}">{$dependentPackage.packageName}{if $dependentPackage.instanceNo > 1 && $dependentPackage.instanceName == ''} (#{#$dependentPackage.instanceNo}){/if}</a></p></td>
-										<td class="columnText">{if $dependentPackage.authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$dependentPackage.authorURL|rawurlencode}" class="wcf-externalURL">{$dependentPackage.author}</a>{else}{$dependentPackage.author}</p>{/if}</td>
-										<td class="columnText"><p>{$dependentPackage.packageVersion}</p></td>
-										<td class="columnDate"><p>{@$dependentPackage.packageDate|date}</p></td>
+										<td class="columnTitle" title="{$dependentPackage->packageDescription}"><p><a href="{link controller='PackageView' id=$dependentPackage->packageID}{/link}">{$dependentPackage->packageName}{if $dependentPackage->instanceNo > 1 && $dependentPackage->instanceName == ''} (#{#$dependentPackage->instanceNo}){/if}</a></p></td>
+										<td class="columnText">{if $dependentPackage->authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$dependentPackage->authorURL|rawurlencode}" class="wcf-externalURL">{$dependentPackage->author}</a>{else}{$dependentPackage->author}</p>{/if}</td>
+										<td class="columnText"><p>{$dependentPackage->packageVersion}</p></td>
+										<td class="columnDate"><p>{@$dependentPackage->packageDate|date}</p></td>
 										
 										{event name='dependencyColumns'}
 									</tr>
@@ -225,8 +231,8 @@
 </div>
 
 {assign var=noDependentIsActive value=true}
-{foreach from=$dependentPackages item=dependentPackage}
-	{if $dependentPackage.package != 'com.woltlab.wcf' && $dependentPackage.packageID == PACKAGE_ID}
+{foreach from=$package->getDependentPackages() item=dependentPackage}
+	{if $dependentPackage->package != 'com.woltlab.wcf' && $dependentPackage->packageID == PACKAGE_ID}
 		{assign var=noDependentIsActive value=false}
 		{* TODO: maybe show users that this package can't be uninstalled because a dependent package is the active application *}
 	{/if}
