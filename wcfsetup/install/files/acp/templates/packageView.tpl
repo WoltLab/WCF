@@ -153,17 +153,10 @@
 												<img src="{@$__wcf->getPath()}icon/package1.svg" alt="" title="{lang}wcf.acp.package.type.other{/lang}" class="jsTooltip" />
 											{/if}
 										</td>
-<<<<<<< HEAD
-										<td class="columnTitle" title="{$requiredPackage->packageDescription}"><p><a href="{link controller='PackageView' id=$requiredPackage->packageID}{/link}">{$requiredPackage->packageName}{if $requiredPackage->instanceNo > 1 && $requiredPackage->instanceName == ''} (#{#$requiredPackage->instanceNo}){/if}</a></p></td>
+										<td class="columnTitle" title="{$requiredPackage->packageDescription|language}"><p><a href="{link controller='PackageView' id=$requiredPackage->packageID}{/link}">{$requiredPackage->packageName|language}{if $requiredPackage->instanceNo > 1 && $requiredPackage->instanceName == ''} (#{#$requiredPackage->instanceNo}){/if}</a></p></td>
 										<td class="columnText">{if $requiredPackage->authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$requiredPackage->authorURL|rawurlencode}" class="wcf-externalURL">{$requiredPackage->author}</a>{else}{$requiredPackage->author}</p>{/if}</td>
 										<td class="columnText"><p>{$requiredPackage->packageVersion}</p></td>
 										<td class="columnDate"><p>{@$requiredPackage->packageDate|date}</p></td>
-=======
-										<td class="columnTitle" title="{$requiredPackage.packageDescription|language}"><p><a href="{link controller='PackageView' id=$requiredPackage.packageID}{/link}">{$requiredPackage.packageName|language}{if $requiredPackage.instanceNo > 1 && $requiredPackage.instanceName == ''} (#{#$requiredPackage.instanceNo}){/if}</a></p></td>
-										<td class="columnText">{if $requiredPackage.authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$requiredPackage.authorURL|rawurlencode}" class="wcf-externalURL">{$requiredPackage.author}</a>{else}{$requiredPackage.author}</p>{/if}</td>
-										<td class="columnText"><p>{$requiredPackage.packageVersion}</p></td>
-										<td class="columnDate"><p>{@$requiredPackage.packageDate|date}</p></td>
->>>>>>> Localized package infos stay localized after installation
 										
 										{event name='requirementColumns'}
 									</tr>
