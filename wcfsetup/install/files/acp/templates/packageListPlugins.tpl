@@ -3,7 +3,7 @@
 		<div>
 			<a href="{link controller='PackageView' id=$packageID}{/link}" title="{$package->getName()}" style="background-image: url('{@$__wcf->getPath()}icon/packagePlugin1.svg');">
 				<h1>{$package->getName()}</h1>
-				<small>{$package->packageDescription|truncate:150}</small>
+				<small>{$package->packageDescription|language|truncate:150}</small>
 			</a>
 		</div>
 		

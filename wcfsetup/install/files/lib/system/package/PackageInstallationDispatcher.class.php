@@ -2,18 +2,22 @@
 namespace wcf\system\package;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
+use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\LanguageEditor;
+use wcf\data\language\LanguageList;
 use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
 use wcf\system\cache\CacheHandler;
+use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\form\container;
 use wcf\system\form\element;
 use wcf\system\form\FormDocument;
+use wcf\system\language\LanguageFactory;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
@@ -207,6 +211,39 @@ class PackageInstallationDispatcher {
 			// create package entry
 			$package = PackageEditor::create($nodeData);
 			
+			// localize package information
+			$sql = "INSERT INTO	wcf".WCF_N."_language_item
+						(languageID, languageItem, languageItemValue, languageCategoryID, packageID)
+				VALUES		(?, ?, ?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			// workaround for WCFSetup
+			if (!PACKAGE_ID) {
+				$sql = "SELECT	*
+					FROM	wcf".WCF_N."_language_category
+					WHERE	languageCategory = ?";
+				$statement2 = WCF::getDB()->prepareStatement($sql);
+				$statement2->execute(array('wcf.acp.package'));
+				$languageCategory = $statement2->fetchObject('wcf\data\language\category\LanguageCategory');
+			}
+			else {
+				$languageCategory = LanguageFactory::getInstance()->getCategory('wcf.acp.package');
+			}
+			
+			// save package name
+			$this->saveLocalizedPackageInfo($statement, $languageCategory, $package, 'packageName');
+			
+			// save package description
+			$this->saveLocalizedPackageInfo($statement, $languageCategory, $package, 'packageDescription');
+			
+			// todo: license and readme
+			
+			$packageEditor = new PackageEditor($package);
+			$packageEditor->update(array(
+				'packageDescription' => 'wcf.acp.package.packageDescription.package'.$package->packageID,
+				'packageName' => 'wcf.acp.package.packageName.package'.$package->packageID
+			));
+			
 			// update package id for current queue
 			$queueEditor = new PackageInstallationQueueEditor($this->queue);
 			$queueEditor->update(array(
@@ -290,6 +327,62 @@ class PackageInstallationDispatcher {
 		}
 		
 		return $installationStep;
+	}
+	
+	/**
+	 * Saves a localized package info.
+	 * 
+	 * @param	wcf\system\database\statement\PreparedStatement		$statement
+	 * @param	wcf\data\language\category\LanguageCategory		$languageCategory
+	 * @param	wcf\data\package\Package				$package
+	 * @param	string							$infoName
+	 */
+	protected function saveLocalizedPackageInfo(PreparedStatement $statement, LanguageCategory $languageCategory, Package $package, $infoName) {
+		$infoValues = $this->getArchive()->getPackageInfo($infoName);
+		
+		// get default value for languages without specified information
+		$defaultValue = '';
+		if (isset($infoValues['default'])) {
+			$defaultValue = $infoValues['default'];
+		}
+		else if (isset($infoValues['en'])) {
+			// fallback to English
+			$defaultValue = $infoValues['en'];
+		}
+		else if (isset($infoValues[WCF::getLanguage()->getFixedLanguageCode()])) {
+			// fallback to the language of the current user
+			$defaultValue = $infoValues[WCF::getLanguage()->getFixedLanguageCode()];
+		}
+		else if ($infoName == 'packageName') {
+			// fallback to the package identifier for the package name
+			$defaultValue = $this->archive->getPackageInfo('name');
+		}
+		
+		// workaround for WCFSetup
+		if (!PACKAGE_ID) {
+			$languageList = new LanguageList();
+			$languageList->sqlLimit = 0;
+			$languageList->readObjects();
+			$languages = $languageList->getObjects();
+		}
+		else {
+			$languages = LanguageFactory::getInstance()->getLanguages();
+		}
+		
+		foreach ($languages as $language) {
+			$value = $defaultValue;
+			if (isset($infoValues[$language->languageCode])) {
+				$value = $infoValues[$language->languageCode];
+			}
+		
+			$statement->execute(array(
+				$language->languageID,
+				'wcf.acp.package.'.$infoName.'.package'.$package->packageID,
+				$value,
+				$languageCategory->languageCategoryID,
+				1
+			));
+		}
 	}
 	
 	/**
@@ -706,7 +799,7 @@ class PackageInstallationDispatcher {
 		if (empty($this->queue->packageName)) {
 			$queueEditor = new PackageInstallationQueueEditor($this->queue);
 			$queueEditor->update(array(
-				'packageName' => $this->getArchive()->getPackageInfo('packageName')
+				'packageName' => $this->getArchive()->getLocalizedPackageInfo('packageName')
 			));
 			
 			// reload queue
