@@ -373,12 +373,12 @@ class TemplateEngine extends SingletonFactory {
 		while ($templateGroupID != 0) {
 			$templateGroup = $this->templateGroupCache[$templateGroupID];
 			
-			$path = $templatePath.$templateGroup['templateGroupFolderName'].$templateName.'.tpl';
+			$path = $templatePath.$templateGroup->templateGroupFolderName.$templateName.'.tpl';
 			if (file_exists($path)) {
 				return $path;
 			}
 			
-			$templateGroupID = $templateGroup['parentTemplateGroupID'];
+			$templateGroupID = $templateGroup->parentTemplateGroupID;
 		}
 		
 		// use default template
