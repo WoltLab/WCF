@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\page;
-use wcf\data\package\PackageList;
 use wcf\page\SortablePage;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
