@@ -19,7 +19,7 @@
 			<legend>{lang}wcf.acp.user.assignToGroup.markedUsers{/lang}</legend>
 			
 			<ul>
-				{implode from=$users item=$user}<li><a href="{link controller='UserEdit' id=$user->userID}{/link}" class="wcf-badge wcf-badgeButton">{$user}</a></li>{/implode}
+				{implode from=$users item=$user}<li><a href="{link controller='UserEdit' id=$user->userID}{/link}" class="wcf-badge wcf-badgeButton wcf-button">{$user}</a></li>{/implode}
 			</ul>
 		</fieldset>	
 		
