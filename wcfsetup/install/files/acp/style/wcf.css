@@ -3766,7 +3766,7 @@ tr .columnIcon img {
 /* Globals */
 
 .wcf-likesWidget {
-	margin: 3px 15px 0 30px;
+	margin: 0 0 0 15px;
 }
 
 /* Buttons */
@@ -3789,60 +3789,6 @@ tr .columnIcon img {
 
 .wcf-likesWidget > ul > li:first-child {
 	margin-right: -5px;
-}
-
-.wcf-likesWidget > ul > li:first-child a {
-	border-radius: 7px 0 0 7px;
-}
-
-.wcf-likesWidget > ul > li:nth-child(2) a {
-	border-radius: 0 7px 7px 0;
-}
-
-/* Cummulative Likes Display */
-
-.wcf-likesDisplay a {
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 3px;
-	border-color: rgba(204, 204, 204, 1);
-	background-color: rgba(255, 255, 255, 1);
-	margin: 1px 0 0 7px;
-	padding: 2px 5px 1px;
-	float: right;
-	position: relative;
-	height: 13px;
-}
-
-.wcf-likesDisplay a {
-	font-size: 75%;
-	font-weight: bold;
-	color: #666;
-	text-decoration: none;
-}
-
-/* -- -- -- -- Like Widget Pointer -- -- -- -- -- */
-
-.wcf-likesDisplay .pointer {	
-	border-width: 5px 0 5px 5px;
-	border-style: solid;
-	border-color: transparent rgba(204, 204, 204, 1);
-	display: inline-block !important;
-	position: absolute;
-	width: 0;
-	bottom: 3px !important;
-	right: -6px;
-}
-
-.wcf-likesDisplay .pointer > span {	
-	border-width: 5px 0 5px 5px;
-	border-style: solid;
-	border-color: transparent rgba(255, 255, 255, 1);
-	display: inline-block;
-	position: absolute;
-	width: 0;
-	bottom: -5px;
-	left: -6px;
 }
 
 
@@ -4507,8 +4453,6 @@ button[disabled='disabled'] {
 	padding: 7px 7px 11px 0;
 	display: block; /* Do not use anything other than block here, otherwise the sortables go crazy - Alex */
 }
-
-
 
 
 
