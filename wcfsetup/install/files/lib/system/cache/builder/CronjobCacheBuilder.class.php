@@ -21,7 +21,7 @@ class CronjobCacheBuilder implements ICacheBuilder {
 	public function getData(array $cacheResource) {
 		// get next execution time
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add("packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+		$conditionBuilder->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		
 		$sql = "SELECT		MIN(nextExec) AS nextExec,
 					MIN(afterNextExec) AS afterNextExec

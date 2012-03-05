@@ -35,7 +35,7 @@ class CacheClearAction extends AbstractAction {
 		LanguageFactory::getInstance()->deleteLanguageCache();
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$conditions->add("isApplication = ?", array(1));
 		
 		// get package dirs

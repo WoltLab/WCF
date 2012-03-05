@@ -477,7 +477,7 @@ class WCF {
 		}
 		
 		self::$coreObjectCache = CacheHandler::getInstance()->get('coreObjects-'.PACKAGE_ID);
-		self::$packageDependencies = \wcf\system\package\PackageDependencyHandler::getDependencies();
+		self::$packageDependencies = \wcf\system\package\PackageDependencyHandler::getInstance()->getDependencies();
 	}
 	
 	/**

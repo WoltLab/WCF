@@ -110,7 +110,7 @@ class CacheListPage extends AbstractPage {
 			$this->cacheData['version'] = WCF_VERSION;
 			
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+			$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 			$conditions->add("isApplication = ?", array(1));
 			
 			// get package dirs
@@ -140,7 +140,7 @@ class CacheListPage extends AbstractPage {
 			$this->cacheData['version'] = phpversion('apc');
 			
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+			$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 			$conditions->add("isApplication = ?", array(1));
 			
 			// get package dirs

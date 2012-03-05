@@ -533,7 +533,7 @@ class LanguageEditor extends DatabaseObjectEditor {
 		}
 		
 		$conditionBuilder->add($searchCondition, $statementParameters);
-		$conditionBuilder->add("packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+		$conditionBuilder->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		if ($languageID !== null) $conditionBuilder->add("languageID = ?", array($languageID));
 		
 		// search

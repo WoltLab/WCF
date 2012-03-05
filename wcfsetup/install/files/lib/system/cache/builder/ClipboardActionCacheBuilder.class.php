@@ -19,7 +19,7 @@ class ClipboardActionCacheBuilder implements ICacheBuilder {
 	 */
 	public function getData(array $cacheResource) {
 		$actionList = new ClipboardActionList();
-		$actionList->getConditionBuilder()->add("packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+		$actionList->getConditionBuilder()->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$actionList->sqlLimit = 0;
 		$actionList->readObjects();
 		

@@ -478,7 +478,7 @@ class PackageArchive {
 		}
 		
 		// determine if plugin is unique within current application
-		$packageIDs = PackageDependencyHandler::getDependencies();
+		$packageIDs = PackageDependencyHandler::getInstance()->getDependencies();
 		foreach ($parentPackageIDs as $packageID) {
 			if (in_array($packageID, $packageIDs)) {
 				return true;

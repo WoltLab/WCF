@@ -22,7 +22,7 @@ class CoreObjectCacheBuilder implements ICacheBuilder {
 		$data = array();
 		
 		$coreObjectList = new CoreObjectList();
-		$coreObjectList->getConditionBuilder()->add("core_object.packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+		$coreObjectList->getConditionBuilder()->add("core_object.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$coreObjectList->sqlLimit = 0;
 		$coreObjectList->readObjects();
 		$coreObjects = $coreObjectList->getObjects();

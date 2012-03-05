@@ -96,7 +96,7 @@ class CronjobScheduler extends SingletonFactory {
 	 */
 	protected function loadCronjobs() {
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("cronjob.packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+		$conditions->add("cronjob.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$conditions->add("(cronjob.nextExec <= ? OR cronjob.afterNextExec <= ?)", array(TIME_NOW, TIME_NOW));
 		$conditions->add("cronjob.active = ?", array(1));
 		$conditions->add("cronjob.failCount < ?", array(3));

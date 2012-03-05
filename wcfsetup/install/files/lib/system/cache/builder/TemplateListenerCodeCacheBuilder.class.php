@@ -24,7 +24,7 @@ class TemplateListenerCodeCacheBuilder implements ICacheBuilder {
 		$templateListenerList = new TemplateListenerList();
 		$templateListenerList->getConditionBuilder()->add("template_listener.environment = ?", array($environment));
 		$templateListenerList->getConditionBuilder()->add("template_listener.templateName = ?", array($templateName));
-		$templateListenerList->getConditionBuilder()->add("template_listener.packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+		$templateListenerList->getConditionBuilder()->add("template_listener.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$templateListenerList->sqlLimit = 0;
 		$templateListenerList->readObjects();
 		

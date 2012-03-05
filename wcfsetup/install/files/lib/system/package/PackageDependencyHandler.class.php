@@ -1,24 +1,39 @@
 <?php
 namespace wcf\system\package;
 use wcf\system\cache\CacheHandler;
+use wcf\system\SingletonFactory;
 
 /**
  * PackageDependencyHandler stores package dependencies and providing a consistent interface for accessing.
  *
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
  * @category 	Community Framework
  */
-abstract class PackageDependencyHandler {
+class PackageDependencyHandler extends SingletonFactory {
 	/**
 	 * cache of package dependencies
 	 *
 	 * @var	array
 	 */	
-	protected static $packageDependencyCache = null;
+	protected $packageDependencyCache = null;
+	
+	/**
+	 * @see wcf\system\SingletonFactory::init()
+	 */
+	protected function init() {
+		$cacheName = 'packageDependencies-'.PACKAGE_ID;
+		CacheHandler::getInstance()->addResource(
+			$cacheName,
+			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'wcf\system\cache\builder\PackageDependencyCacheBuilder'
+		);
+		
+		$this->packageDependencyCache = CacheHandler::getInstance()->get($cacheName);
+	}
 	
 	/**
 	 * Returns the id of a specific package in the active dependencies.
@@ -26,17 +41,13 @@ abstract class PackageDependencyHandler {
 	 * @param	string		$package	package identifier
 	 * @return	mixed
 	 */	
-	public static function getPackageID($package) {
+	public function getPackageID($package) {
 		if (!defined('PACKAGE_ID')) {
 			return null;
 		}
 		
-		if (self::$packageDependencyCache === null) {
-			self::readCache();
-		}
-		
-		if (isset(self::$packageDependencyCache['resolve'][$package])) {
-			$packageID = self::$packageDependencyCache['resolve'][$package];
+		if (isset($this->packageDependencyCache['resolve'][$package])) {
+			$packageID = $this->packageDependencyCache['resolve'][$package];
 			
 			if (is_array($packageID)) {
 				$packageID = array_shift($packageID);
@@ -53,29 +64,11 @@ abstract class PackageDependencyHandler {
 	 *
 	 * @return	array
 	 */	
-	public static function getDependencies() {
+	public function getDependencies() {
 		if (!defined('PACKAGE_ID')) {
 			return null;
 		}
 		
-		if (self::$packageDependencyCache === null) {
-			self::readCache();
-		}
-		
-		return self::$packageDependencyCache['dependency'];
-	}
-	
-	/**
-	 * Reads package dependency cache.
-	 */	
-	protected static function readCache() {
-		$cacheName = 'packageDependencies-'.PACKAGE_ID;
-		CacheHandler::getInstance()->addResource(
-			$cacheName,
-			WCF_DIR.'cache/cache.'.$cacheName.'.php',
-			'wcf\system\cache\builder\PackageDependencyCacheBuilder'
-		);
-		
-		self::$packageDependencyCache = CacheHandler::getInstance()->get($cacheName);
+		return $this->packageDependencyCache['dependency'];
 	}
 }

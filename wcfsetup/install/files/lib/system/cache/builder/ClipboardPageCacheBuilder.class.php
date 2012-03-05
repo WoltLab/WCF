@@ -20,7 +20,7 @@ class ClipboardPageCacheBuilder implements ICacheBuilder {
 	 */
 	public function getData(array $cacheResource) {
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		
 		$sql = "SELECT	pageClassName, actionID
 			FROM	wcf".WCF_N."_clipboard_page

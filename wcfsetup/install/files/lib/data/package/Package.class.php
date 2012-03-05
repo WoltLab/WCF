@@ -585,7 +585,7 @@ class Package extends DatabaseObject {
 	 */
 	public static function getPluginList() {
 		$pluginList = new PackageList();
-		$pluginList->getConditionBuilder()->add("package.packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+		$pluginList->getConditionBuilder()->add("package.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$pluginList->getConditionBuilder()->add("package.isApplication = ?", array(0));
 		
 		return $pluginList;

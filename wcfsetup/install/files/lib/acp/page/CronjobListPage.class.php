@@ -47,7 +47,7 @@ class CronjobListPage extends SortablePage {
 	public function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->getConditionBuilder()->add("cronjob.packageID IN (?)", array(PackageDependencyHandler::getDependencies()));
+		$this->objectList->getConditionBuilder()->add("cronjob.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$this->sqlOrderBy = "cronjob.".$this->sortField." ".$this->sortOrder;
 	}
 	

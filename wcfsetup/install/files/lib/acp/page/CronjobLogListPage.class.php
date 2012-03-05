@@ -59,7 +59,7 @@ class CronjobLogListPage extends SortablePage {
 		
 		$this->objectList->sqlSelects = "cronjob.*";
 		$this->objectList->sqlJoins = "LEFT JOIN wcf".WCF_N."_cronjob cronjob ON (cronjob.cronjobID = cronjob_log.cronjobID)";
-		$this->objectList->getConditionBuilder()->add("cronjob_log.cronjobID IN (SELECT cronjobID FROM wcf".WCF_N."_cronjob WHERE packageID IN (?))", array(PackageDependencyHandler::getDependencies()));
+		$this->objectList->getConditionBuilder()->add("cronjob_log.cronjobID IN (SELECT cronjobID FROM wcf".WCF_N."_cronjob WHERE packageID IN (?))", array(PackageDependencyHandler::getInstance()->getDependencies()));
 	}
 	
 	/**
