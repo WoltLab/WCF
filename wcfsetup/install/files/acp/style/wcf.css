@@ -4431,17 +4431,24 @@ button[disabled='disabled'] {
 	padding: 4px;
 }
 
+/* TODO: This was taken from badgeRed and is used to indicate a list which is not a valid drop target */
+.wcf-badgeYellow.wcf-sortableInvalidTarget {
+	color: #c00;
+	border: 1px solid #f99;
+	background-color: #fee;
+}
+
 .wcf-sortableListContainer {
 	border-radius: 0;
 	background-color: rgba(252, 253, 254, 1);
 	padding: 21px;
 }
 
+/* Notice: min-height was safely removed */
 .wcf-sortableList {
 	list-style-position: outside;
 	list-style-type: decimal;
 	margin-left: 21px;
-	min-height: 10px; /* Do not touch min-height, removing or changing it would break the whole stuff! - Alex */
 }
 
 .wcf-sortableNode {

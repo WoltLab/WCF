@@ -4218,10 +4218,18 @@ WCF.Sortable.List.prototype = {
 		this._structure = { };
 		
 		// init sortable
-		$('#' + this._containerID + ' .wcf-sortableList').sortable({
-			connectWith: '#' + this._containerID + ' .wcf-sortableList',
+		$('#' + this._containerID + ' > .wcf-sortableList').wcfNestedSortable({
+			axis: 'y',
+			connectWith: '#' + this._containerID * ' .wcf-sortableList',
+			disableNesting: 'wcf-sortableNoNesting',
+			errorClass: 'wcf-sortableInvalidTarget',
+			forcePlaceholderSize: true,
+			helper: 'clone',
 			items: 'li',
+			opacity: .6,
 			placeholder: 'wcf-badgeYellow',
+			tolerance: 'pointer',
+			toleranceElement: '> span'
 		});
 		
 		this._container.find('.wcf-formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
@@ -4443,6 +4451,15 @@ $.widget('ui.wcfPersistentSidebar', $.ui.wcfSidebar, {
 		this._proxy.sendRequest();
 	}
 });
+
+/**
+ * WCF implementation for nested sortables.
+ */
+$.widget("ui.wcfNestedSortable", $.extend({}, $.ui.nestedSortable.prototype, {
+	_clearEmpty: function(item) {
+		/* Does nothing because we want to keep empty lists */
+	}
+}));
 
 /**
  * WCF implementation for dialogs, based upon ideas by jQuery UI.
