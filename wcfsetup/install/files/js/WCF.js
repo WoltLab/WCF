@@ -4221,7 +4221,7 @@ WCF.Sortable.List.prototype = {
 		$('#' + this._containerID + ' .wcf-sortableList').sortable({
 			connectWith: '#' + this._containerID + ' .wcf-sortableList',
 			items: 'li',
-			placeholder: 'wcf-sortablePlaceholder',
+			placeholder: 'wcf-badgeYellow',
 			stop: $.proxy(this._save, this)
 		});
 	},
