@@ -2,6 +2,7 @@
 namespace wcf\page;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -113,9 +114,19 @@ abstract class AbstractPage implements IPage {
 		// call checkPermissions event
 		EventHandler::getInstance()->fireAction($this, 'checkPermissions');
 		
-		// check permission
-		if (count($this->neededPermissions)) {
-			WCF::getSession()->checkPermissions($this->neededPermissions);
+		// check permission, it is sufficient to have at least one permission
+		if (!empty($this->neededPermissions)) {
+			$hasPermissions = false;
+			foreach ($this->neededPermissions as $permission) {
+				if (WCF::getSession()->getPermission($permission)) {
+					$hasPermissions = true;
+					break;
+				}
+			}
+			
+			if (!$hasPermissions) {
+				throw new PermissionDeniedException();
+			}
 		}
 	}
 	
