@@ -249,9 +249,8 @@
 				</dl>
 				
 				<dl>
-					<dt class="reversed"><label for="enableHTML">{lang}wcf.acp.user.sendMail.enableHTML{/lang}</label></dt>
 					<dd>
-						<input type="checkbox" id="enableHTML" name="enableHTML" value="1"{if $enableHTML == 1} checked="checked"{/if}/> 
+						<label for="enableHTML"><input type="checkbox" id="enableHTML" name="enableHTML" value="1"{if $enableHTML == 1} checked="checked"{/if}/> {lang}wcf.acp.user.sendMail.enableHTML{/lang}</label>
 					</dd>
 				</dl>
 			</div>

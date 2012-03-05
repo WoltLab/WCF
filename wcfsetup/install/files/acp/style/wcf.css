@@ -137,6 +137,8 @@ a[href^="mailto:"] {
 	top: -9000px;
 }
 
+/* ToDo: Margins */
+
 .marginTop {
 	margin-top: 15px;
 }
@@ -144,6 +146,35 @@ a[href^="mailto:"] {
 .marginBottom {
 	margin-bottom: 15px;
 }
+
+/* ToDo: Columns */
+
+.columnes-2 {
+	width: 45%;
+}
+
+.columnes-3 {
+	width: 30%;
+}
+
+
+/* ToDo: Floated Elements */
+
+/* possibly obsolete */
+
+.floatContainer:after {
+	content: "";
+	height: 0;
+	display: block;
+	clear: both;
+}
+
+.floated {
+	margin-right: 5px;
+	margin-left: 5px;
+	float: left;
+}
+
 
 
 /* ############## Containers ############## */
@@ -172,23 +203,6 @@ a[href^="mailto:"] {
 .wcf-containerContent {
 	padding: 1px;
 	overflow: hidden;
-}
-
-
-
-/* ToDo: Floated Elements */
-
-/* possibly obsolete */
-
-.floatContainer:after {
-	content: "";
-	height: 0;
-	display: block;
-	clear: both;
-}
-
-.floated {
-	float: left;
 }
 
 
@@ -3663,7 +3677,6 @@ tr .columnIcon img {
 
 /* ############## ToDo: Overlay Spinner ############## */
 
-.wcfDialogOverlay,
 .wcf-dialogOverlay {
 	background-color: rgba(0, 0, 0, 1);
 	opacity: .5;
@@ -3675,7 +3688,7 @@ tr .columnIcon img {
 
 
 /* ToDo: What is that and change that class-name! */
-.overlayLoading,
+
 .wcf-overlayLoading {
 	background-color: rgba(255, 255, 255, 1);
 	background-image: url('../../icon/spinner1.svg');
@@ -3753,7 +3766,7 @@ tr .columnIcon img {
 /* Globals */
 
 .wcf-likesWidget {
-	margin: 3px 15px 0 30px;
+	margin: 0 0 0 15px;
 }
 
 /* Buttons */
@@ -3776,60 +3789,6 @@ tr .columnIcon img {
 
 .wcf-likesWidget > ul > li:first-child {
 	margin-right: -5px;
-}
-
-.wcf-likesWidget > ul > li:first-child a {
-	border-radius: 7px 0 0 7px;
-}
-
-.wcf-likesWidget > ul > li:nth-child(2) a {
-	border-radius: 0 7px 7px 0;
-}
-
-/* Cummulative Likes Display */
-
-.wcf-likesDisplay a {
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 3px;
-	border-color: rgba(204, 204, 204, 1);
-	background-color: rgba(255, 255, 255, 1);
-	margin: 1px 0 0 7px;
-	padding: 2px 5px 1px;
-	float: right;
-	position: relative;
-	height: 13px;
-}
-
-.wcf-likesDisplay a {
-	font-size: 75%;
-	font-weight: bold;
-	color: #666;
-	text-decoration: none;
-}
-
-/* -- -- -- -- Like Widget Pointer -- -- -- -- -- */
-
-.wcf-likesDisplay .pointer {	
-	border-width: 5px 0 5px 5px;
-	border-style: solid;
-	border-color: transparent rgba(204, 204, 204, 1);
-	display: inline-block !important;
-	position: absolute;
-	width: 0;
-	bottom: 3px !important;
-	right: -6px;
-}
-
-.wcf-likesDisplay .pointer > span {	
-	border-width: 5px 0 5px 5px;
-	border-style: solid;
-	border-color: transparent rgba(255, 255, 255, 1);
-	display: inline-block;
-	position: absolute;
-	width: 0;
-	bottom: -5px;
-	left: -6px;
 }
 
 
@@ -4460,30 +4419,29 @@ button[disabled='disabled'] {
 
 
 /* ############## TODO: Sortable lists ############## */
+
 /* TODO: Everything is working right now and looks pretty much like similar stuff. Adjust the colors, but take care
 	 when changing margins/paddings. Keep them relative to each other, otherwise you might encounter a strange
 	 behavior (in rare cases) which might lead to a situation where you will be unable to move an item properly. - Alex */
 
 /* This is the placeholder (or ghost) which will be inserted on runtime in order to show the possible insertation point - Alex */
-.wcf-sortablePlaceholder {
-	background-color: rgba(255, 255, 204, 1);
+.wcf-sortableListContainer .wcf-badgeYellow {
 	border-radius: 5px;
-	border: 1px solid rgba(224, 224, 0, 1);
 	margin: 3px 0;
 	padding: 4px;
 }
 
 .wcf-sortableListContainer {
-	background-color: rgba(252, 253, 254, 1);
 	border-radius: 0;
+	background-color: rgba(252, 253, 254, 1);
 	padding: 21px;
 }
 
 .wcf-sortableList {
 	list-style-position: outside;
 	list-style-type: decimal;
-	min-height: 10px; /* Do not touch min-height, removing or changing it would break the whole stuff! - Alex */
 	margin-left: 21px;
+	min-height: 10px; /* Do not touch min-height, removing or changing it would break the whole stuff! - Alex */
 }
 
 .wcf-sortableNode {
@@ -4492,13 +4450,14 @@ button[disabled='disabled'] {
 
 .wcf-sortableNodeLabel {
 	border-bottom: 1px solid rgba(216, 231, 245, 1);
-	display: block; /* Do not use anything other than block here, otherwise the sortables go crazy - Alex */
 	padding: 7px 7px 11px 0;
+	display: block; /* Do not use anything other than block here, otherwise the sortables go crazy - Alex */
 }
 
-.wcf-sortableButtonContainer {
-	float: right;
-}
+
+
+
+
 
 /* ############## CSS Experiments (active) ############## */
 

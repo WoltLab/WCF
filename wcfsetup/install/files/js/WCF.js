@@ -4221,7 +4221,7 @@ WCF.Sortable.List.prototype = {
 		$('#' + this._containerID + ' .wcf-sortableList').sortable({
 			connectWith: '#' + this._containerID + ' .wcf-sortableList',
 			items: 'li',
-			placeholder: 'wcf-sortablePlaceholder'
+			placeholder: 'wcf-badgeYellow',
 		});
 		
 		this._container.find('.wcf-formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
