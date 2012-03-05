@@ -451,14 +451,14 @@ class WCF {
 			throw new exception\SystemException("Unable to run '".$package->package."', '".$className."' is missing or does not implement 'wcf\system\application\IApplication'.");
 		}
 		
+		// load options
+		$this->loadOptions($packageDir.'options.inc.php', $application->packageID);
+		
 		// register template path in ACP
 		if (class_exists('wcf\system\WCFACP', false)) {
 			$this->getTPL()->addTemplatePath($application->packageID, $packageDir . 'acp/templates/');
 		}
 		else if (!$isDependentApplication) {
-			// load options
-			$this->loadOptions($packageDir.'options.inc.php', $application->packageID);
-			
 			// assign base tag
 			$this->getTPL()->assign('baseHref', $application->domainName . $application->domainPath);
 		}
