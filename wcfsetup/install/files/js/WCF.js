@@ -4221,15 +4221,17 @@ WCF.Sortable.List.prototype = {
 		$('#' + this._containerID + ' .wcf-sortableList').sortable({
 			connectWith: '#' + this._containerID + ' .wcf-sortableList',
 			items: 'li',
-			placeholder: 'wcf-sortablePlaceholder',
-			stop: $.proxy(this._save, this)
+			placeholder: 'wcf-sortablePlaceholder'
 		});
+		
+		this._container.find('.wcf-formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
+		this._container.find('.wcf-formSubmit > button[data-type="reset"]').click($.proxy(this._reset, this));
 	},
 	
 	/**
 	 * Saves object structure.
 	 */
-	_save: function() {
+	_submit: function() {
 		// build structure
 		this._container.find('.wcf-sortableList').each($.proxy(function(index, list) {
 			var $list = $(list);
@@ -4257,6 +4259,13 @@ WCF.Sortable.List.prototype = {
 			}
 		});
 		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Reloads current page.
+	 */
+	_reset: function() {
+		window.location.reload(true);
 	},
 	
 	/**
