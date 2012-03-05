@@ -37,10 +37,15 @@
 		<dl>
 			<dt><label for="import">{lang}wcf.acp.language.add.mode{/lang}</label></dt>
 			<dd>
-				<label><input type="radio" name="mode" value="import" id="import" {if $mode == 'import'}checked="checked" {/if}/> {lang}wcf.acp.language.add.mode.import{/lang}</label>
-			</dd>
-			<dd>
-				<label><input type="radio" name="mode" value="copy" id="copy" {if $mode == 'copy'}checked="checked" {/if}/> {lang}wcf.acp.language.add.mode.copy{/lang}</label>
+				<fieldset>
+					<dl>
+						<dd>
+							<label><input type="radio" name="mode" value="import" id="import" {if $mode == 'import'}checked="checked" {/if}/> {lang}wcf.acp.language.add.mode.import{/lang}</label>
+						</dd>
+						<dd>
+							<label><input type="radio" name="mode" value="copy" id="copy" {if $mode == 'copy'}checked="checked" {/if}/> {lang}wcf.acp.language.add.mode.copy{/lang}</label>
+						</dd>
+				</fieldset>
 			</dd>
 		</dl>
 		
