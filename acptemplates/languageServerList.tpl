@@ -31,13 +31,9 @@
 </div>
 
 {if !$languageServers|count}
-	<div class="wcf-border wcf-content">
-		<div>
-			<p>{lang}wcf.acp.languageServer.view.noneAvailable{/lang}</p>
-		</div>
-	</div>
+	<p class="wcf-warning">{lang}wcf.acp.languageServer.view.noneAvailable{/lang}</p>
 {else}
-	<div class="wcf-border wcf-boxTitle">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-shadow1">
 		<hgroup>
 			<h1>{lang}wcf.acp.languageServer.list{/lang} <span class="badge" title="{lang}wcf.acp.languageServer.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>

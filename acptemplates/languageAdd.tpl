@@ -33,7 +33,7 @@
 </div>
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageAdd'}{/link}">
-	<div class="wcf-border wcf-content">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-shadow1">
 		<dl>
 			<dt><label for="import">{lang}wcf.acp.language.add.mode{/lang}</label></dt>
 			<dd>
