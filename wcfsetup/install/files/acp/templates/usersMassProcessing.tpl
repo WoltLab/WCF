@@ -78,7 +78,7 @@
 {/if}
 
 <form method="post" action="{link controller='UsersMassProcessing'}{/link}">
-	<div class="wcf-border wcf-content">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-shadow1">
 		
 		<hgroup class="wcf-subHeading">
 			<h1>{lang}wcf.acp.user.massProcessing.conditions{/lang}</h1>

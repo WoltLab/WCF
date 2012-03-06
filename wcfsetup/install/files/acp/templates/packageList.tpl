@@ -37,7 +37,7 @@
 		</ul>
 	</nav>
 	
-	<div id="applications" class="wcf-border wcf-tabMenuContent hidden">
+	<div id="applications" class="wcf-box wcf-tabMenuContent wcf-boxPadding wcf-shadow1 hidden">
 		<hgroup class="wcf-subHeading">
 			<h1>{lang}wcf.acp.package.application.installed{/lang}</h1>
 		</hgroup>
@@ -92,7 +92,7 @@
 	</div>
 	
 	{hascontent}
-		<div id="plugins" class="wcf-border wcf-tabMenuContent hidden">
+		<div id="plugins" class="wcf-box wcf-boxPadding wcf-tabMenuContent wcf-shadow1 hidden">
 			<hgroup class="wcf-subHeading">
 				<h1>{lang}wcf.acp.package.plugin.installed{/lang}</h1>
 			</hgroup>
