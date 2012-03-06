@@ -158,7 +158,7 @@
 				</nav>
 			
 				{foreach from=$optionTree item=categoryLevel1}
-					<div id="{@$categoryLevel1[object]->categoryName}" class="wcf-border wcf-tabMenuContent">
+					<div id="{@$categoryLevel1[object]->categoryName}" class="wcf-box wcf-boxPadding wcf-tabMenuContent">
 						<hgroup class="wcf-subHeading">
 							<h1>{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
 						</hgroup>

@@ -70,7 +70,7 @@
 		<p class="wcf-error">{lang}wcf.acp.package.uninstall.dependentPackages.error{/lang}</p>
 	{/if}
 
-	<div class="wcf-border wcf-boxTitle">
+	<div class="wcf-box wcf-boxPadding wcf-boxTitle">
 		<hgroup>
 			<h1>{lang}wcf.acp.package.view.dependentPackages{/lang}</h1>
 		</hgroup>

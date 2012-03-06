@@ -154,7 +154,7 @@
 				</nav>
 				
 				{if $options|count}
-					<div id="profile" class="wcf-border wcf-tabMenuContent hidden">
+					<div id="profile" class="wcf-box wcf-boxPadding wcf-tabMenuContent hidden">
 						<hgroup class="wcf-subHeading">
 							<h1>{lang}wcf.acp.user.search.conditions.profile{/lang}</h1>
 						</hgroup>
@@ -168,7 +168,7 @@
 		{/hascontent}
 	</div>
 	
-	<div class="wcf-border wcf-content">
+	<div class="wcf-box wcf-boxPadding wcf-content">
 		<hgroup class="wcf-subHeading">
 			<h1>{lang}wcf.acp.user.massProcessing.action{/lang}</h1>
 		</hgroup>

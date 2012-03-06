@@ -77,7 +77,7 @@
 {if $updatableInstances|count > 0}
 	<p class="wcf-warning">{lang}wcf.acp.package.install.updatableInstances.warning{/lang}</p>
 	
-	<div class="wcf-border wcf-boxTitle">
+	<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
 		<hgroup>
 			<h1>{lang}wcf.acp.package.install.updatableInstances{/lang}</h1>
 			<h2>{lang}wcf.acp.package.install.updatableInstances.description{/lang}</h2>
@@ -104,7 +104,7 @@
 {/if}
 
 {if $requiredPackages|count > 0}
-	<div class="wcf-border wcf-boxTitle">
+	<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
 		<hgroup>
 			<h1>{lang}wcf.acp.package.dependencies.required{/lang} <span class="wcf-badge" title="{lang}wcf.acp.package.view.requiredPackages.description{/lang}">{#$requiredPackages|count}</span></h1>
 		</hgroup>

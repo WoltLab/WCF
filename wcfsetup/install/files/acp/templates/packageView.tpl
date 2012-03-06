@@ -26,7 +26,7 @@
 		</ul>
 	</nav>
 
-	<div id="information" class="wcf-border wcf-tabMenuContent hidden">
+	<div id="information" class="wcf-box wcf-boxPadding wcf-tabMenuContent hidden">
 		<hgroup class="wcf-subHeading">
 			<h1>{lang}wcf.acp.package.information.title{/lang}</h1>
 		</hgroup>
@@ -95,7 +95,7 @@
 	</div>
 
 	{if $package->getRequiredPackages()|count || $package->getDependentPackages()|count}
-		<div id="dependencies" class="wcf-border wcf-tabMenuContainer wcf-tabMenuContent">
+		<div id="dependencies" class="wcf-box wcf-boxPadding wcf-tabMenuContainer wcf-tabMenuContent">
 			<nav class="wcf-menu">
 				<ul>
 					{if $package->getRequiredPackages()|count}
@@ -114,7 +114,7 @@
 						<h2>{lang}wcf.acp.package.dependencies.required.description{/lang}</h2>
 					</hgroup>
 		
-					<table class="wcf-table wcf-border wcf-boxTitle">
+					<table class="wcf-table wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
 						<thead>
 							<tr>
 								<th colspan="2" class="columnID">{lang}wcf.global.objectID{/lang}</th>
@@ -174,7 +174,7 @@
 						<h2>{lang}wcf.acp.package.dependencies.dependent.description{/lang}</h2>
 					</hgroup>
 		
-					<table class="wcf-table wcf-border wcf-boxTitle">
+					<table class="wcf-table wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
 						<thead>
 							<tr>
 								<th colspan="2" class="columnID">{lang}wcf.global.objectID{/lang}</th>

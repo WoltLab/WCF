@@ -39,7 +39,7 @@
 </div>
 
 <form method="post" action="{link controller='UserSearch'}{/link}">
-	<div class="wcf-border wcf-content">
+	<div class="wcf-box wcf-boxPadding wcf-content">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.user.search.conditions.general{/lang}</legend>
@@ -126,7 +126,7 @@
 			</nav>
 			
 			{if $optionTree|count}
-				<div id="profile" class="wcf-border wcf-tabMenuContent hidden">
+				<div id="profile" class="wcf-box wcf-boxPadding wcf-tabMenuContent hidden">
 					<div>
 						<h3 class="wcf-subHeading">{lang}wcf.acp.user.search.conditions.profile{/lang}</h3>
 						{include file='optionFieldList' langPrefix='wcf.user.option.' options=$optionTree}
@@ -136,7 +136,7 @@
 		
 			{event name='tabMenuContent'}
 		
-			<div id="resultOptions" class="wcf-border wcf-tabMenuContent hidden">
+			<div id="resultOptions" class="wcf-box wcf-boxPadding wcf-tabMenuContent hidden">
 				<hgroup class="wcf-subHeading">
 					<h1>{lang}wcf.acp.user.search.display{/lang}</h1>
 				</hgroup>

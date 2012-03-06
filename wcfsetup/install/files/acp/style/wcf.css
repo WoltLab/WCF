@@ -543,7 +543,7 @@ table .wcf-label {
 .wcf-dropdown > li a {
 	text-decoration: none;
 	color: #ccc;
-	padding: -5px -7px;
+	padding: -5px -7px; /* ToDo: what's that? ;-) */
 	display: block;
 }
 
@@ -597,7 +597,7 @@ header.wcf-pageHeader {
 	
 	header.wcf-pageHeader,
 	header.wcf-pageFooter {
-		min-width: auto;
+		/* none */
 	}
 }
 
@@ -777,7 +777,7 @@ nav.wcf-topMenu {
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
 	nav.wcf-topMenu {
-		min-width: auto;
+		/* none */
 	}
 }
 
@@ -1127,7 +1127,12 @@ nav.wcf-topMenu {
     width: 7px;
     height: 7px;
     content: "";
-    box-shadow: 2px 2px 0 #e7f2fd;
+    
+	-webkit-box-shadow: 2px 2px 0 #e7f2fd;
+	-moz-box-shadow: 2px 2px 0 #e7f2fd;
+	-ms-box-shadow: 2px 2px 0 #e7f2fd;
+	-o-box-shadow: 2px 2px 0 #e7f2fd;
+	box-shadow: 2px 2px 0 #e7f2fd;
 }
 
 .wcf-mainMenu > ul > li.activeMenuItem > a:after {
@@ -1139,6 +1144,11 @@ nav.wcf-topMenu {
 	width: 7px;
 	height: 7px;
 	content: "";
+	
+	-webkit-box-shadow: -2px 2px 0 #e7f2fd;
+	-moz-box-shadow: -2px 2px 0 #e7f2fd;
+	-ms-box-shadow: -2px 2px 0 #e7f2fd;
+	-o-box-shadow: -2px 2px 0 #e7f2fd;
 	box-shadow: -2px 2px 0 #e7f2fd;
 }
 
@@ -1199,7 +1209,7 @@ nav.wcf-topMenu {
 	
 	.wcf-headerNavigation,
 	.wcf-footerNavigation {
-		min-width: auto;
+		/* none */
 	}
 	
 }
@@ -1312,7 +1322,7 @@ nav.wcf-topMenu {
 @media screen and (max-width: 480px), screen and (max-device-width: 480px) {
 	
 	.wcf-main {
-		min-width: auto;
+		/* none */
 	}
 	
 }
@@ -2042,7 +2052,7 @@ input[type='submit'],
 input[type='button'],
 input[type='checkbox'],
 input[type='radio'],
-select {
+select:not([multiple]) {
 	cursor: pointer;
 }
 
@@ -2052,9 +2062,14 @@ input[type='date'],
 input[type='email'],
 input[type='url'],
 input[type='password'],
-textarea {
+textarea,
+select[multiple] {
 	padding: 5px 3px;
 	box-sizing: border-box;
+}
+
+select[multiple] {
+	 font-family: 'Courier New', Courier, monospace;
 }
 
 /* Normal State */
@@ -2065,7 +2080,8 @@ input[type='date'],
 input[type='email'],
 input[type='url'],
 input[type='password'],
-textarea {
+textarea,
+select[multiple] {
 	border-width: 1px;
 	border-style: solid;
 	border-color: rgba(153, 153, 153, 1) rgba(204, 204, 204, 1) rgba(238, 238, 238, 1);
@@ -2093,7 +2109,8 @@ input[type='date']:hover,
 input[type='email']:hover,
 input[type='url']:hover,
 input[type='password']:hover,
-textarea:hover {
+textarea:hover,
+select[multiple]:hover {
 	border: 1px solid rgba(255, 170, 34, 1);
 	background-color: rgba(255, 249, 244, 1);
 }
@@ -2107,6 +2124,7 @@ input[type='email']:active,
 input[type='url']:active,
 input[type='password']:active,
 textarea:active,
+select[multiple]:active,
 
 input[type='text']:focus,
 input[type='search']:focus,
@@ -2114,7 +2132,8 @@ input[type='date']:focus,
 input[type='email']:focus,
 input[type='url']:focus,
 input[type='password']:focus,
-textarea:focus {
+textarea:focus,
+select[multiple]:focus {
 	border: 1px solid rgba(255, 170, 34, 1);
 	background-color: rgba(255, 249, 244, 1);
 	outline: none;
@@ -2128,13 +2147,14 @@ textarea:focus {
 
 /* Read Only State */
 
-input[type='text'][readonly='readonly'],
-input[type='search'][readonly='readonly'],
-input[type='email'][readonly='readonly'],
-input[type='date'][readonly='readonly'],
-input[type='url'][readonly='readonly'],
-input[type='password'][readonly='readonly'],
-textarea[readonly='readonly'] {
+input[type='text'][readonly],
+input[type='search'][readonly],
+input[type='email'][readonly],
+input[type='date'][readonly],
+input[type='url'][readonly],
+input[type='password'][readonly],
+textarea[readonly],
+select[multiple][readonly] {
 	border-style: solid;
 	border-color: rgba(204, 204, 204, 1) rgba(221, 221, 221, 1) rgba(238, 238, 238, 1);
 	background-color: transparent;
@@ -2148,13 +2168,14 @@ textarea[readonly='readonly'] {
 
 /* Disabled State */
 
-input[type='text'][disabled='disabled'],
-input[type='search'][disabled='disabled'],
-input[type='date'][disabled='disabled'],
-input[type='email'][disabled='disabled'],
-input[type='url'][disabled='disabled'],
-input[type='password'][disabled='disabled'],
-textarea[disabled='disabled'] {
+input[type='text'][disabled],
+input[type='search'][disabled],
+input[type='date'][disabled],
+input[type='email'][disabled],
+input[type='url'][disabled],
+input[type='password'][disabled],
+textarea[disabled],
+select[multiple][disabled] {
 	border-style: solid;
 	border-color: rgba(255, 255, 255, .5);
 	background-color: rgba(255, 255, 255, .5);
@@ -2196,7 +2217,7 @@ textarea[disabled='disabled'] {
 	
 	textarea {
 		width: 99%;
-		min-width: auto;
+		/* none */
 	}
 	
 	.tiny {
@@ -2675,6 +2696,11 @@ input[type='button'],
     left: -6px;
     border-bottom-right-radius: 6px;
     border-width: 0 1px 1px 0;
+    
+    -webkit-box-shadow: 2px 2px 0 #fff;
+	-moz-box-shadow: 2px 2px 0 #fff;
+	-ms-box-shadow: 2px 2px 0 #fff;
+	-o-box-shadow: 2px 2px 0 #fff;
     box-shadow: 2px 2px 0 #fff;
 }
 
@@ -2688,6 +2714,11 @@ input[type='button'],
     right: -6px;
     border-bottom-left-radius: 6px;
     border-width: 0 0 1px 1px;
+    
+    -webkit-box-shadow: -2px 2px 0 #fff;
+	-moz-box-shadow: -2px 2px 0 #fff;
+	-ms-box-shadow: -2px 2px 0 #fff;
+	-o-box-shadow: -2px 2px 0 #fff;
     box-shadow: -2px 2px 0 #fff;
 }
 
@@ -3112,11 +3143,11 @@ tbody tr:hover td {
 
 /* -- -- -- Special -> Table Header -- -- -- */
 
-.wcf-menu ~ .wcf-border thead th:first-child { /* ToDo: Does this case really exist any more? */
+.wcf-menu ~ .wcf-box thead th:first-child { /* ToDo: Does this case really exist any more? */
 	border-top-left-radius: 0 !important;
 }
 
-.wcf-menu ~ .wcf-border thead th:last-child { /* ToDo: Does this case really exist any more? */
+.wcf-menu ~ .wcf-box thead th:last-child { /* ToDo: Does this case really exist any more? */
 	border-top-right-radius: 0 !important;
 }
 
@@ -3868,10 +3899,10 @@ tr .columnIcon img {
 /* Normal State */
 
 .wcf-button,
-input[type='reset'],
-input[type='submit'],
-input[type='button'],
-button {
+input[type='reset']:not([disabled]),
+input[type='submit']:not([disabled]),
+input[type='button']:not([disabled]),
+button:not([disabled]) {
 	text-decoration: none;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	color: rgba(153, 153, 153, 1);
@@ -3917,10 +3948,10 @@ button {
 
 .wcf-button:hover,
 .default .wcf-button:hover,
-input[type='reset']:hover,
-input[type='submit']:hover,
-input[type='button']:hover,
-button:hover {
+input[type='reset']:not([disabled]):hover,
+input[type='submit']:not([disabled]):hover,
+input[type='button']:not([disabled]):hover,
+button:not([disabled]):hover {
 	text-decoration: none;
 	color: rgba(102, 102, 102, 1);
 	border-width: 1px;
@@ -3939,18 +3970,18 @@ button:hover {
 
 .wcf-button:focus,
 .default .wcf-button:focus,
-input[type='reset']:focus,
-input[type='submit']:focus,
-input[type='button']:focus,
-button:focus,
+input[type='reset']:not([disabled]):focus,
+input[type='submit']:not([disabled]):focus,
+input[type='button']:not([disabled]):focus,
+button:not([disabled]):focus,
 
 .wcf-button:active,
 .active .wcf-button,
 .default .wcf-button:active,
-input[type='reset']:active,
-input[type='submit']:active,
-input[type='button']:active,
-button:active {
+input[type='reset']:not([disabled]):active,
+input[type='submit']:not([disabled]):active,
+input[type='button']:not([disabled]):active,
+button:not([disabled]):active {
 	color: #333;
 	border-width: 1px;
 	border-style: solid;
@@ -4022,9 +4053,9 @@ button:active {
 /* Default Normal State */
 
 .default .wcf-button,
-input[type='submit'],
-input[type='button'].default,
-button.default {
+input[type='submit']:not([disabled]),
+input[type='button']:not([disabled]).default,
+button:not([disabled]).default {
 	color: #69c;
 	border-width: 1px;
 	border-style: solid;
@@ -4122,9 +4153,9 @@ button.default {
 /* Default Hover State */
 
 .default .wcf-button:hover,
-input[type='submit']:hover,
-input[type='button'].default:hover,
-button.default:hover {	
+input[type='submit']:not([disabled]):hover,
+input[type='button']:not([disabled]).default:hover,
+button:not([disabled]).default:hover {	
 	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .1), 0 0 10px #fa2;
 	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .1), 0 0 10px #fa2;
 	-ms-box-shadow: 0 1px 3px rgba(0, 0, 0, .1), 0 0 10px #fa2;
@@ -4210,14 +4241,14 @@ button.default:hover {
 /* Default Active State */
 
 .default .wcf-button:focus,
-input[type='submit']:focus,
-input[type='button'].default:focus,
-button.default:focus,
+input[type='submit']:not([disabled]):focus,
+input[type='button']:not([disabled]).default:focus,
+button:not([disabled]).default:focus,
 
 .default .wcf-button:active,
-input[type='submit']:active,
-input[type='button'].default:active,
-button.default:active {
+input[type='submit']:not([disabled]):active,
+input[type='button']:not([disabled]).default:active,
+button:not([disabled]).default:active {
 	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 	-ms-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
@@ -4262,14 +4293,15 @@ button.default:active {
 /* Disabled State */
 
 .disabled .wcf-button,
-input[disabled='disabled'],
-input[type='button'][disabled='disabled'],
-button[disabled='disabled'] {
+input[disabled],
+input[type='button'][disabled],
+button[disabled] {
 	color: rgba(153, 153, 153, 1);
 	cursor: default;
 	border-width: 1px;
 	border-style: solid;
 	border-color: #ccc #bbb #aaa;
+	background-color: transparent;
 }
 
 
@@ -4487,9 +4519,9 @@ button[disabled='disabled'] {
 /* ############## CSS Experiments (active) ############## */
 
 /* what is that? */
-/* Once we're determing the dimensions of an element (within JS) we move it into body and wrap it into
+/* Once we're determing the dimensions of an element (by JS) we move it into body and wrap it with
    a container with class 'wcfDimensions' in order to calculate the precise dimensions. We could also
-   embed it directly into JS (using style-attribute) but I thought it was better this way. - Alex */
+   embed it directly in JS (using style-attribute) but I thought it was better this way. - Alex */
 .wcfDimensions {
 	display: inline-block;
 }

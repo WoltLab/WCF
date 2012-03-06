@@ -149,7 +149,7 @@
 		{/if}
 	</div>
 {hascontentelse}
-	<div class="wcf-border wcf-content">
+	<div class="wcf-box wcf-boxPadding wcf-content">
 		<div>
 			<p class="wcf-warning">{lang}wcf.acp.cronjob.noneAvailable{/lang}</p>
 		</div>
