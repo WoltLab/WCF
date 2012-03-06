@@ -1,4 +1,5 @@
 {include file="documentHeader"}
+
 <head>
 	<title>{lang}wcf.global.redirect.title{/lang} - {lang}{PAGE_TITLE}{/lang}</title>
 	{include file='headInclude' sandbox=false}
