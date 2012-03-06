@@ -14,6 +14,7 @@
 <script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/3rdParty/jquery.min.js"></script>
 <script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/3rdParty/jquery-ui.min.js"></script>
 <script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/3rdParty/jquery.tools.min.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js"></script>
 <script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
