@@ -110,7 +110,25 @@ img[src*='enable'] {
 
 /* ############## ToDo: Global Structural Classes ############## */
 
-/* Single Classes */
+/* -- -- -- Misc -- -- --  */
+
+.hot {
+	color: #b00; 
+}
+
+.invisible {
+	position: absolute;
+	left: -9000px;
+	top: -9000px;
+}
+
+/* Uniform background image */
+
+.wcf-headerImage {
+	background-image: url('../../../images/header.png');
+}
+
+/* -- -- -- URLs -- -- --  */
 
 .wcf-externalURL {
 	background-image: url('../../icon/externalURL1.svg');
@@ -127,38 +145,30 @@ a[href^="mailto:"] {
 	padding-left: 17px;
 }
 
-.hot {
-	color: #b00; 
-}
+/* -- -- -- Margins -- -- --  */
 
-.invisible {
-	position: absolute;
-	left: -9000px;
-	top: -9000px;
-}
-
-/* ToDo: Margins */
-
-.marginTop {
+.wcf-marginTop {
 	margin-top: 15px;
 }
 
-.marginBottom {
+.wcf-marginBottom {
 	margin-bottom: 15px;
 }
 
+/* -- -- -- Paddings -- -- --  */
+
 /* ToDo: Columns */
 
-.columnes-2 {
+.wcf-columnes-2 {
 	width: 45%;
 }
 
-.columnes-3 {
+.wcf-columnes-3 {
 	width: 30%;
 }
 
 
-/* ToDo: Floated Elements */
+/* -- -- -- ToDo: Floated Elements -- -- --  */
 
 /* possibly obsolete */
 
@@ -173,6 +183,32 @@ a[href^="mailto:"] {
 	margin-right: 5px;
 	margin-left: 5px;
 	float: left;
+}
+
+
+
+/* -- -- -- Shadows -- -- --  */
+
+/* Shadows for boxes - do not use on small boxes! */
+
+.wcf-shadow1 {
+	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	/* ToDo: Opera doesn't like that so much! Bug-report sent to Opera 
+	-o-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);*/
+}
+
+/* Use that shadow for tab menus - do not use on small boxes! */
+
+.wcf-shadow2 {
+	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
+	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
+	/* ToDo: Opera doesn't like that so much! Bug-report sent to Opera 
+	-o-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);*/
 }
 
 
@@ -1346,6 +1382,7 @@ section.wcf-content:after {
 	
 }	
 
+/* Soon to be obsolete! */
 section.wcf-content .wcf-content {
 	background-color: rgba(0, 0, 0, .01);
 	padding: 13px 23px 23px;
@@ -1799,7 +1836,7 @@ fieldset legend ~ p {
 }
 
 .wcf-sidebar fieldset legend {
-	text-transform: uppercase;
+	text-transform: uppercase; /* That's possibly problematic */
 	padding: 0;
 }
 
@@ -1907,7 +1944,8 @@ dl > dd > fieldset > dl > dd > label {
 	display: block;
 }
 
-/* Reversed (flips the label aside the checkbox or radio button) */
+/* Reversed (flips the label aside the checkbox or radio button) - 
+	use only when automatically generating checkboxes or radio-buttons! */
 
 .reversed {
 	text-align: left;
@@ -2460,36 +2498,20 @@ input[type='button'],
 
 
 
-/* ############## Border ############## */
+/* ############## Boxes ############## */
 
-.wcf-border {
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	margin-top: 15px;
-	box-sizing: border-box;
-	
-	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
-	-moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
-	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
-	/* ToDo: Opera doesn't like that so much! Bug-report sent to Opera 
-	-o-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);
-	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1);*/
-}
-
-.wcf-tabMenu ~ .wcf-border {
-	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
-	-moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
-	-ms-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
-	/* ToDo: Opera doesn't like that so much! Bug-report sent to Opera 
-	-o-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);
-	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .1),  0 -8px 10px -10px rgba(0, 0, 0, .1);*/
-}
-
-
-
-/* ############## Box Title ############## */
+/** 
+ * This defines a box with rounded borders 
+ * Use the extra classes to further style boxes 
+ */
 
 /* Globals */
+
+.wcf-box {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-sizing: border-box;
+}
 
 .wcf-boxTitle {
 	border-radius: 7px;
@@ -2501,6 +2523,10 @@ input[type='button'],
 	background-repeat: repeat-x;
 	display: table;
 	width: 100%;
+}
+
+.wcf-boxPadding {
+	padding: 13px 23px 23px;
 }
 
 /* Headings */
@@ -2534,7 +2560,7 @@ input[type='button'],
 	color: #036;
 }
 
-/* Collapse Icon */
+/* Leading icon */
 
 .wcf-boxTitle > a {
 	margin: 7px 0 0 10px;
@@ -2692,10 +2718,8 @@ input[type='button'],
 /* -- -- -- Tab Menu Content -- -- --  */
 
 .wcf-tabMenuContent {
-	border: 1px solid #ccc;
 	background-color: rgba(255, 255, 255, 1);
 	margin-top: -1px;
-	padding: 15px 23px;
 	display: block;
 	position: relative;
 	z-index: 20; /* Prevents border overlay during transition */
@@ -4436,12 +4460,6 @@ button[disabled='disabled'] {
 	color: #c00;
 	border: 1px solid #f99;
 	background-color: #fee;
-}
-
-.wcf-sortableListContainer {
-	border-radius: 0;
-	background-color: rgba(252, 253, 254, 1);
-	padding: 21px;
 }
 
 /* Notice: min-height was safely removed */

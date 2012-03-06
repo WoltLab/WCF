@@ -13,7 +13,7 @@
 
 <form method="post" action="{link controller='UserAssignToGroup'}{/link}">
 
-	<div class="wcf-border wcf-content">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-shadow1">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.user.assignToGroup.markedUsers{/lang}</legend>

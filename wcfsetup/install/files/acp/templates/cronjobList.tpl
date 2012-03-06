@@ -53,7 +53,7 @@
 </div>
 
 {hascontent}
-	<div class="wcf-border wcf-boxTitle">
+	<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
 		<hgroup>
 			<h1>{lang}wcf.acp.cronjob.list{/lang} <span class="wcf-badge" title="{lang}wcf.acp.cronjob.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>

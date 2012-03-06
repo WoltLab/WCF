@@ -14,7 +14,7 @@
 
 {hascontent}
 	<form method="post" action="{link controller='CronjobLogDelete'}{/link}">
-		<div class="wcf-border wcf-boxTitle">
+		<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
 			<hgroup>
 				<h1>{lang}wcf.acp.cronjob.log{/lang} <span class="wcf-badge" title="{lang}wcf.acp.cronjob.log.count{/lang}">{#$items}</span></h1>
 			</hgroup>
