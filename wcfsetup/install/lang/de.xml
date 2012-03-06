@@ -314,6 +314,7 @@
 		<item name="wcf.acp.package.type.application"><![CDATA[Anwendung]]></item>
 		<item name="wcf.acp.package.type.other"><![CDATA[Basispaket]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Erweiterung]]></item>
+		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Wollen Sie das Paket &bdquo;{@$package->getName()}&ldquo; wirklich deinstallieren?]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Aktualisierungsdatum]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 	</category>
