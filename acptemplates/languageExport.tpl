@@ -24,7 +24,7 @@
 </div>
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageExport' id=$languageID}{/link}">
-	<div class="wcf-border wcf-content">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-shadow1">
 		<dl>
 			<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>
 			<dd>
