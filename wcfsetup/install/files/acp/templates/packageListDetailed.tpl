@@ -64,7 +64,7 @@
 								<img src="{@$__wcf->getPath()}icon/update1D.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" />
 							{/if}
 							{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $package->package != 'com.woltlab.wcf' && $package->packageID != PACKAGE_ID}
-								<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="jsUninstallButton jsTooltip" data-object-id="{@$package->packageID}" data-confirmMessage="{lang}wcf.acp.package.uninstallation.confirm{/lang}" />
+								<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="jsUninstallButton jsTooltip" data-object-id="{@$package->packageID}" data-confirm-message="{lang}wcf.acp.package.uninstallation.confirm{/lang}" />
 							{else}
 								<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" />
 							{/if}
@@ -101,6 +101,13 @@
 	{@$pagesLinks}
 	
 	{hascontent}
+		<script type="text/javascript">
+			//<![CDATA[
+			$(function() {
+				new WCF.ACP.Package.Uninstallation($('.jsPluginContainer .jsUninstallButton'));
+			});
+			//]]>
+		</script>
 		<nav>
 			<ul class="wcf-largeButtons">
 				{content}

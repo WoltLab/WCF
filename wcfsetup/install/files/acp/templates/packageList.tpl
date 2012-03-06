@@ -6,7 +6,7 @@
 		WCF.TabMenu.init();
 		
 		WCF.Language.add('wcf.acp.package.view.button.uninstall.sure', 'wcf.acp.package.view.button.uninstall.sure');
-		new WCF.ACP.Package.Uninstallation($('.package .uninstallButton'));
+		new WCF.ACP.Package.Uninstallation($('.jsPackageContainer .jsUninstallButton'));
 		
 		{if $pluginsCount > 1}
 			WCF.Icon.addObject({
