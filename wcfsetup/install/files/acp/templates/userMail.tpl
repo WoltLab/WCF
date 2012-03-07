@@ -43,7 +43,7 @@
 </div>
 
 <form method="post" action="{link controller='UserMail'}{/link}">
-	<div class="wcf-box wcf-boxPadding wcf-content">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-boxDecor">
 		
 		{if $action == ''}
 			<fieldset>

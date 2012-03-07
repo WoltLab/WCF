@@ -91,9 +91,7 @@
 		</nav>
 	</div>
 {hascontentelse}
-	<div class="wcf-box wcf-boxPadding wcf-content">
-		<p class="warning">{lang}wcf.acp.updateServer.list.noneAvailable{/lang}</p>
-	</div>
+	<p class="warning">{lang}wcf.acp.updateServer.list.noneAvailable{/lang}</p>
 {/hascontent}
 
 {include file='footer'}

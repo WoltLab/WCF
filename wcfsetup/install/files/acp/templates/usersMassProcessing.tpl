@@ -168,7 +168,7 @@
 		{/hascontent}
 	</div>
 	
-	<div class="wcf-box wcf-boxPadding wcf-content">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-boxDecor">
 		<hgroup class="wcf-subHeading">
 			<h1>{lang}wcf.acp.user.massProcessing.action{/lang}</h1>
 		</hgroup>

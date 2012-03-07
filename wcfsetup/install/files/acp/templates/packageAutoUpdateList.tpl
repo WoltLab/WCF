@@ -35,9 +35,9 @@
 	{if !$availableUpdates|count}
 		<p class="wcf-info">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
 	{else}
-		{foreach from=$availableUpdates item=availableUpdate}<!-- ToDo: Style! -->
-			<article class="wcf-message wcf-content"{if $availableUpdate.version.updateType == 'security'} style="border-color: #c00"{/if}>
-				<div class="container-{cycle name='styles' values='1,2'}"><!-- ToDo: Remove cycle -->
+		{foreach from=$availableUpdates item=availableUpdate}
+			<article class="wcf-message wcf-messageDecor{if $availableUpdate.version.updateType == 'security'} wcf-messageRed{/if}"><!-- ToDo: Style! -->
+				<div>
 					<hgroup class="wcf-subHeading">
 						<h1>
 							<label>

@@ -12,7 +12,7 @@
 {/if}
 
 <form method="{$requestMethod}" action="index.php{if $getParameters}?{@$getParameters}{/if}">
-	<div class="wcf-box wcf-boxPadding wcf-content">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-boxDecor">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.packageUpdate.auth.data{/lang}</legend>

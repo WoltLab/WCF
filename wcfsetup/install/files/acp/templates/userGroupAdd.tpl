@@ -42,7 +42,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='UserGroupAdd'}{/link}{else}{link controller='UserGroupEdit'}{/link}{/if}">
-	<div class="wcf-box wcf-boxPadding wcf-content">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-boxDecor">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.group.data{/lang}</legend>
@@ -111,7 +111,6 @@
 									</fieldset>
 								{/foreach}
 							{/if}
-							
 						</div>
 					{/foreach}
 				</div>

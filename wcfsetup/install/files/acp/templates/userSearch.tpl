@@ -39,7 +39,7 @@
 </div>
 
 <form method="post" action="{link controller='UserSearch'}{/link}">
-	<div class="wcf-box wcf-boxPadding wcf-content">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-boxDecor">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.user.search.conditions.general{/lang}</legend>

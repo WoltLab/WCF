@@ -1392,10 +1392,8 @@ section.wcf-content:after {
 	
 }	
 
-/* Soon to be obsolete! */
-section.wcf-content .wcf-content {
-	background-color: rgba(0, 0, 0, .01);
-	padding: 13px 23px 23px;
+.wcf-contentDecor {
+	background-color: rgba(253, 253, 253, 1);
 }
 
 
@@ -1817,7 +1815,7 @@ section.wcf-content .wcf-content {
 fieldset {
 	border: 1px solid #ccc;
 	border-radius: 7px;
-	background-color: rgba(0, 0, 0, .015);
+	background-color: rgba(250, 250, 250, 1);
 	margin: 15px 0 0;
 	padding: 15px;
 	box-sizing: border-box;
@@ -1848,6 +1846,12 @@ fieldset legend ~ p {
 .wcf-sidebar fieldset legend {
 	text-transform: uppercase; /* That's possibly problematic */
 	padding: 0;
+}
+
+.fieldsetDecor {
+	border: 1px solid #ccc;
+	border-radius: 7px;
+	background-color: rgba(250, 250, 250, 1);
 }
 
 

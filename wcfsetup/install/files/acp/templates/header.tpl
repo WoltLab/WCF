@@ -189,5 +189,5 @@
 			{/hascontent}
 			
 			<!-- CONTENT -->
-			<section id="content" class="wcf-content">
+			<section id="content" class="wcf-content wcf-contentDecor">
 				
