@@ -24,12 +24,7 @@ class LangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		$compiler->pushTag('lang');
 		
-		$newTagArgs = array();
-		foreach ($tagArgs as $key => $arg) {
-			$newTagArgs[$key] = 'wcf\util\StringUtil::encodeHTML('.$arg.')';
-		}
-		
-		$tagArgs = $compiler->makeArgString($newTagArgs);
+		$tagArgs = $compiler->makeArgString($tagArgs);
 		return "<?php \$this->tagStack[] = array('lang', array($tagArgs)); ob_start(); ?>";
 	}
 	
