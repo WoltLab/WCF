@@ -5,7 +5,7 @@
 	<title>{lang}wcf.global.progressBar{/lang} - {lang}wcf.global.pageTitle{/lang}</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="stylesheet" type="text/css" href="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/style/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showCSS={/if}wcf.css" />
+	<link rel="stylesheet" type="text/css" href="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/style/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showCSS={/if}wcf.less" />
 	
 	{if !$lastStep|isset}
 		<style type="text/css">
