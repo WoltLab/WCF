@@ -24,7 +24,7 @@
 {event name='javascriptInclude'}
 
 <!-- Stylesheets -->
-<link rel="stylesheet/less" type="text/css" href="{@$__wcf->getPath()}acp/style/wcf.less" />
+<link rel="stylesheet/less" type="text/css" media="screen" href="{@$__wcf->getPath()}acp/style/wcf.less" />
 <script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/less.min.js"></script>
 	
 <style type="text/css">
