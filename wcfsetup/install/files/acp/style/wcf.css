@@ -1,8 +1,8 @@
 /**
- * #############################################################################
- * ### CAUTION: This is the LESS-compatible stylesheet used within the whole ###
- * ###		WCF, but during WCFSetup the stylesheet wcf.css is used!     ###
- * #############################################################################
+ * #################################################################
+ * ### CAUTION: This stylesheet applies to WCFSetup only, please ###
+ * ###		see wcf.less for the general stylesheet!	 ###
+ * #################################################################
  */
 
 /**
