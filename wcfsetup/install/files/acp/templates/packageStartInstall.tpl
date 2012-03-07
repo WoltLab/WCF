@@ -29,7 +29,7 @@
 </div>
 
 <form method="post" action="{link controller='PackageStartInstall'}{/link}" enctype="multipart/form-data">
-	<div class="wcf-box wcf-boxDecor wcf-marginTop wcf-boxPadding wcf-shadow1">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-boxDecor wcf-shadow1">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.package.source{/lang}</legend>

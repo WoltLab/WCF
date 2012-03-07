@@ -32,7 +32,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='CronjobAdd'}{/link}{else}{link controller='CronjobEdit'}{/link}{/if}">
-	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-shadow1">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-boxDecor wcf-shadow1">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.cronjob.data{/lang}</legend>

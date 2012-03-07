@@ -159,11 +159,11 @@ a[href^="mailto:"] {
 
 /* ToDo: Columns */
 
-.wcf-columnes-2 {
+.wcf-columns-2 {
 	width: 45%;
 }
 
-.wcf-columnes-3 {
+.wcf-columns-3 {
 	width: 30%;
 }
 
@@ -476,6 +476,7 @@ table .wcf-label {
 	left: 0;
 	z-index: 400;
 	overflow: hidden;
+	white-space: nowrap;
 	
 	-webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
@@ -1817,7 +1818,7 @@ fieldset {
 	border-radius: 7px;
 	background-color: rgba(250, 250, 250, 1);
 	margin: 15px 0 0;
-	padding: 15px;
+	padding: 5px 15px 15px;
 	box-sizing: border-box;
 }
 
@@ -1891,6 +1892,10 @@ dl > dt {
 	}
 	
 }
+
+dl.wide > dt {
+	width: auto; /* ToDo */
+}
 	
 dl > dt > label {
 	margin-top: 5px;
@@ -1919,6 +1924,10 @@ dl > dd {
 		margin-left: 150px;
 	}
 	
+}
+
+dl.wide > dd {
+	margin-left: 0;
 }
 
 dl > dd > small {
@@ -2533,7 +2542,7 @@ input[type='button'],
 /* Globals */
 
 .wcf-box {
-	border: 1px solid #ccc;
+	border: 1px solid rgba(204, 204, 204, 1);
 	border-radius: 5px;
 	box-sizing: border-box;
 }
@@ -2552,6 +2561,10 @@ input[type='button'],
 
 .wcf-boxPadding {
 	padding: 13px 23px 23px;
+}
+
+.wcf-boxDecor {
+	background-color: rgba(253, 253, 253, 1);
 }
 
 /* Headings */
@@ -4352,9 +4365,6 @@ button[disabled] {
 
 .wcf-infoPackagePlugin {
 	text-align: center;
-	border: 1px solid rgba(204, 204, 204, 1);
-	border-radius: 7px;
-	background-color: rgba(0, 0, 0, .015);
 	margin: 15px 10px 0 0;
 	display: inline-block;
 	position: relative;
