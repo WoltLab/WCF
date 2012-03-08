@@ -271,59 +271,6 @@ $.fn.extend({
 	},
 	
 	/**
-	 * CAUTION:	This method does not work properly, you should not rely
-	 *		on it for now. It seems to work with the old jQuery UI-
-	 *		based dialog, but no longer works with usual elements.
-	 *		I will either try to fix it or remove it later, thus
-	 *		this method will be deprecated for now.      -Alexander
-	 * 
-	 * Applies a grow-effect by resizing element while moving the element
-	 * appropriately. Make sure the passed data.content element contains
-	 * all elements which affect this indirectly, this includes outer
-	 * containers which may apply an obstrusive padding.
-	 * 
-	 * @deprecated
-	 * @param	object		data
-	 * @param	object		options
-	 * @return	jQuery
-	 */
-	wcfGrow: function(data, options) {
-		var $content = $(data.content);
-		var $parent = (data.parent) ? $(data.parent) : $(this);
-		
-		// calculate dimensions
-		var $windowDimensions = $(window).getDimensions();
-		var $elementDimensions = $content.getDimensions('outer');
-		var $parentDimensions = $parent.getDimensions('outer');
-		var $parentInnerDimensions = $parent.getDimensions('inner');
-		var $parentDifference = {
-			height: $parentDimensions.height - $parentInnerDimensions.height,
-			width: $parentDimensions.width - $parentInnerDimensions.width
-		};
-
-		// calculate offsets
-		var $leftOffset = Math.round(($windowDimensions.width - ($elementDimensions.width + $parentDifference.width)) / 2);
-		var $topOffset = Math.round(($windowDimensions.height - ($elementDimensions.height + $parentDifference.height)) / 2);
-
-		// try to align vertically at 30% if previously calculated value is NOT lower
-		var $desiredTopOffset = Math.round(($windowDimensions / 100) * 30);
-		if ($desiredTopOffset < $topOffset) {
-			$topOffset = $desiredTopOffset;
-		}
-		
-		$parent.makePositioned('fixed', false);
-		$parent.animate({
-			left: $leftOffset + 'px',
-			top: $topOffset + 'px'
-		}, options);
-		
-		return this.animate({
-			height: $elementDimensions.height,
-			width: $elementDimensions.width
-		}, options);
-	},
-	
-	/**
 	 * Shows an element by sliding and fading it into viewport.
 	 * 
 	 * @param	string		direction
