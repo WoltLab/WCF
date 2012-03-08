@@ -134,7 +134,9 @@ class PackageInstallationDispatcher {
 		if ($node == '') {
 			OptionEditor::resetCache();
 			
-			$this->saveLocalizedPackageInfos();
+			if ($this->action == 'install') {
+				$this->saveLocalizedPackageInfos();
+			}
 		}
 		
 		return $step;
