@@ -2829,6 +2829,17 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 		
 		// exchange icon
 		this._exchangeIcon(this._containerData[$containerID].button, WCF.Icon.get('wcf.icon.' + ($newState === 'open' ? 'opened' : 'closed')));
+		
+		// toggle container
+		if ($newState === 'open') {
+			this._containerData[$containerID].target.show();
+		}
+		else {
+			this._containerData[$containerID].target.hide();
+		}
+		
+		// update container data
+		this._containerData[$containerID].isOpen = ($newState === 'open' ? true : false);
 	}
 });
 

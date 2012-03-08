@@ -79,7 +79,9 @@
 				'wcf.global.form.edit.success': '{lang}wcf.global.form.edit.success{/lang}'
 			});
 			WCF.Icon.addObject({
-				'wcf.icon.loading': '{@$__wcf->getPath()}icon/spinner1.svg'
+				'wcf.icon.closed': '{@$__wcf->getPath()}icon/closed.svg',
+				'wcf.icon.loading': '{@$__wcf->getPath()}icon/spinner1.svg',
+				'wcf.icon.opened': '{@$__wcf->getPath()}icon/opened.svg'
 			});
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
