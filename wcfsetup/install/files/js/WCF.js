@@ -2804,6 +2804,19 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 	},
 	
 	/**
+	 * @see	WCF.Collapsible.Remote._initContainer()
+	 */
+	_initContainer: function(containerID) {
+		this._super(containerID);
+		
+		// hide container on init if applicable
+		if (!this._containerData[containerID].isOpen) {
+			this._containerData[containerID].target.hide();
+			this._exchangeIcon(this._containerData[containerID].button, WCF.Icon.get('wcf.icon.closed'));
+		}
+	},
+	
+	/**
 	 * Toggles container visibility.
 	 * 
 	 * @param	object		event
