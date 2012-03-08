@@ -2622,13 +2622,18 @@ WCF.Collapsible.Remote = Class.extend({
 		// initialize each container
 		$containers.each($.proxy(function(index, container) {
 			var $container = $(container);
-			var $id = $container.wcfIdentify();
-			this._containers[$id] = $container;
+			var $containerID = $container.wcfIdentify();
+			this._containers[$containerID] = $container;
 			
-			this._initContainer($id, $container);
+			this._initContainer($containerID);
 		}, this));
 	},
 	
+	/**
+	 * Initializes a collapsible container.
+	 * 
+	 * @param	string		containerID
+	 */
 	_initContainer: function(containerID, container) {
 		var $target = this._getTarget(containerID);
 		var $buttonContainer = this._getButtonContainer(containerID);
@@ -2638,7 +2643,7 @@ WCF.Collapsible.Remote = Class.extend({
 		this._containerData[containerID] = {
 			button: $button,
 			buttonContainer: $buttonContainer,
-			isOpen: container.data('isOpen'),
+			isOpen: this._containers[containerID].data('isOpen'),
 			target: $target
 		};
 	},
@@ -2694,9 +2699,9 @@ WCF.Collapsible.Remote = Class.extend({
 		
 		// fetch content state via AJAX
 		this._proxy.setOption('data', {
-			actionName: 'toggleContainer',
+			actionName: 'loadContainer',
 			className: this._className,
-			objectIDs: [this._getObjectID($containerID)],
+			objectIDs: [ this._getObjectID($containerID) ],
 			parameters: $.extend(true, {
 				containerID: $containerID,
 				currentState: $state,
@@ -2706,14 +2711,17 @@ WCF.Collapsible.Remote = Class.extend({
 		this._proxy.sendRequest();
 
 		// set spinner for current button
-		this._showSpinner($button);
+		this._exchangeIcon($button);
 	},
-
-	_showSpinner: function(button) {
-		button.find('img').attr('src', WCF.Icon.get('wcf.icon.loading'));
-	},
-
-	_hideSpinner: function(button, newIcon) {
+	
+	/**
+	 * Exchanges button icon.
+	 * 
+	 * @param	jQuery		button
+	 * @param	string		newIcon
+	 */
+	_exchangeIcon: function(button, newIcon) {
+		newIcon = newIcon || WCF.Icon.get('wcf.icon.loading');
 		button.find('img').attr('src', newIcon);
 	},
 	
@@ -2771,7 +2779,56 @@ WCF.Collapsible.Remote = Class.extend({
 		this._updateContent($containerID, data.returnValues.content, $newState);
 		
 		// update icon
-		this._hideSpinner(this._containerData[$containerID].button, WCF.Icon.get('wcf.icon.' + (data.returnValues.isOpen ? 'opened' : 'closed')));
+		this._exchangeIcon(this._containerData[$containerID].button, WCF.Icon.get('wcf.icon.' + (data.returnValues.isOpen ? 'opened' : 'closed')));
+	}
+});
+
+/**
+ * Basic implementation for collapsible containers with AJAX support. Requires collapsible
+ * content to be available in DOM already, if you want to load content on the fly use
+ * WCF.Collapsible.Remote instead.
+ */
+WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
+	/**
+	 * Initializes an AJAX-based collapsible handler.
+	 * 
+	 * @param	string		className
+	 */
+	init: function(className) {
+		this._super(className);
+		
+		// override settings for action proxy
+		this._proxy = new WCF.Action.Proxy({
+			showLoadingOverlay: false
+		});
+	},
+	
+	/**
+	 * Toggles container visibility.
+	 * 
+	 * @param	object		event
+	 */
+	_toggleContainer: function(event) {
+		var $button = $(event.currentTarget);
+		var $containerID = $button.data('containerID');
+		var $isOpen = this._containerData[$containerID].isOpen;
+		var $currentState = ($isOpen) ? 'open' : 'close';
+		var $newState = ($isOpen) ? 'close' : 'open';
+		
+		this._proxy.setOption('data', {
+			actionName: 'toggleContainer',
+			className: this._className,
+			objectIDs: [ this._getObjectID($containerID) ],
+			parameters: {
+				containerID: $containerID,
+				currentState: $currentState,
+				newState: $newState
+			}
+		});
+		this._proxy.sendRequest();
+		
+		// exchange icon
+		this._exchangeIcon(this._containerData[$containerID].button, WCF.Icon.get('wcf.icon.' + ($newState === 'open' ? 'opened' : 'closed')));
 	}
 });
 
