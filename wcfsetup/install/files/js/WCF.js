@@ -2634,7 +2634,7 @@ WCF.Collapsible.Remote = Class.extend({
 	 * 
 	 * @param	string		containerID
 	 */
-	_initContainer: function(containerID, container) {
+	_initContainer: function(containerID) {
 		var $target = this._getTarget(containerID);
 		var $buttonContainer = this._getButtonContainer(containerID);
 		var $button = this._createButton(containerID, $buttonContainer);

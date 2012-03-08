@@ -25,6 +25,7 @@
 		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 		//]]>
 	</script>
+	{event name='javascriptInclude'}
 	
 	<!-- Stylesheets -->
 	<link rel="stylesheet/less" type="text/css" media="screen" href="{@$__wcf->getPath()}acp/style/wcf.less" />
