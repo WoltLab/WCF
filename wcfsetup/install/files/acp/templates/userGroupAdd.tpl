@@ -42,7 +42,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='UserGroupAdd'}{/link}{else}{link controller='UserGroupEdit'}{/link}{/if}">
-	<div class="wcf-border wcf-content">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-boxDecor">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.group.data{/lang}</legend>
@@ -79,7 +79,7 @@
 			</nav>
 			
 			{foreach from=$optionTree item=categoryLevel1}
-				<div id="{@$categoryLevel1[object]->categoryName}" class="wcf-border wcf-tabMenuContainer wcf-tabMenuContent" data-active="{$activeTabMenuItem}" data-store="activeMenuItem">
+				<div id="{@$categoryLevel1[object]->categoryName}" class="wcf-box wcf-boxPadding wcf-tabMenuContainer wcf-tabMenuContent" data-active="{$activeTabMenuItem}" data-store="activeMenuItem">
 					<nav class="wcf-menu">
 						<ul>
 							{foreach from=$categoryLevel1[categories] item=$categoryLevel2}
@@ -111,7 +111,6 @@
 									</fieldset>
 								{/foreach}
 							{/if}
-							
 						</div>
 					{/foreach}
 				</div>

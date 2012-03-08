@@ -17,6 +17,7 @@
 
 <form method="post" action="{link controller='OptionImport'}{/link}" enctype="multipart/form-data">
 	<div>
+		
 		<fieldset>
 			<legend>{lang}wcf.acp.option.import{/lang}</legend>
 		
@@ -58,13 +59,14 @@
 </header>
 
 <div>
+	
 	<fieldset>
 		<legend>{lang}wcf.acp.option.export{/lang}</legend>
 	
 		<dl id="optionExportDiv">
 			<dt><label>{lang}wcf.acp.option.export.download{/lang}</label></dt>
 			<dd>
-				<p><a href="{link controller='OptionExport'}{/link}" id="optionExport" class="wcf-badge wcf-badgeButton">{lang}wcf.acp.option.export{/lang}</a></p>
+				<p><a href="{link controller='OptionExport'}{/link}" id="optionExport" class="wcf-badge wcf-badgeButton wcf-button">{lang}wcf.acp.option.export{/lang}</a></p>
 				<small>{lang}wcf.acp.option.export.download.description{/lang}</small>
 			</dd>
 		</dl>

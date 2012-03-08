@@ -58,7 +58,7 @@
 		{/if}
 				
 		<!-- CONTENT -->
-		<section id="content" class="wcf-content">
+		<section id="content" class="wcf-content wcf-contentDecor">
 			
 			{if $skipBreadcrumbs|empty}{include file='breadcrumbs' sandbox=false}{/if}
 			

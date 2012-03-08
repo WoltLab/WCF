@@ -61,7 +61,7 @@
 {foreach from=$caches key=cache item=files}
 	{counter name=cacheIndex assign=cacheIndex print=false start=0}
 	{if $files|count}
-		<div class="wcf-border wcf-boxTitle">
+		<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
 			<a class="jsCollapsible" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}"><img src="{@$__wcf->getPath()}icon/closed2.svg" alt="" title="{lang}wcf.global.button.collapsible{/lang}" class="jsTooltip" /></a>
 			<hgroup>
 				<h1>{$cache} <span class="wcf-badge" title="{lang}wcf.acp.cache.data.files.count{/lang}">{#$files|count}</span></h1>

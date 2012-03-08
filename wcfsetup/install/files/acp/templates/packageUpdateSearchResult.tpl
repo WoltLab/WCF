@@ -13,8 +13,8 @@
 
 <form method="post" action="{link controller='PackageUpdate'}{/link}">
 	{foreach from=$packages item=package}
-		<article class="wcf-message wcf-content">
-			<div><!-- ToDo! -->
+		<article class="wcf-message wcf-messageDecor"><!-- ToDo! -->
+			<div>
 				<hgroup class="wcf-subHeading">
 					<h1>
 						{if $package.isApplication == 1}

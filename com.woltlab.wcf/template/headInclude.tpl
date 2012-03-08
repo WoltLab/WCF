@@ -24,10 +24,12 @@
 {event name='javascriptInclude'}
 
 <!-- Stylesheets -->
-<style type="text/css">
-	@import url("{@$__wcf->getPath('wcf')}acp/style/wcf.css") screen;
+<link rel="stylesheet/less" type="text/css" media="screen" href="{@$__wcf->getPath()}acp/style/wcf.less" />
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/less.min.js"></script>
 	
+<style type="text/css">
 	{*
+	@import url("{@$__wcf->getPath('wcf')}acp/style/wcf.css") screen;
 	@import url("{@$__wcf->getPath('wcf')}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css") screen;
 
 	@import url("{@$__wcf->getPath('wcf')}acp/style/print.css") print;

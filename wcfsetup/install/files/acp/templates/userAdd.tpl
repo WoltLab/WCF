@@ -39,7 +39,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='UserAdd'}{/link}{else}{link controller='UserEdit'}{/link}{/if}">
-	<div class="wcf-border wcf-content">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-boxDecor wcf-shadow1">
 		<dl{if $errorType.username|isset} class="wcf-formError"{/if}>
 			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 			<dd>
@@ -158,7 +158,7 @@
 				</nav>
 			
 				{foreach from=$optionTree item=categoryLevel1}
-					<div id="{@$categoryLevel1[object]->categoryName}" class="wcf-border wcf-tabMenuContent">
+					<div id="{@$categoryLevel1[object]->categoryName}" class="wcf-box wcf-boxPadding wcf-tabMenuContent">
 						<hgroup class="wcf-subHeading">
 							<h1>{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
 						</hgroup>

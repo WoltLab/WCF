@@ -489,32 +489,43 @@ WCF.ACP.Package.Uninstallation.prototype = {
 		
 		// bind event listener
 		elements.each($.proxy(function(index, element) {
-			$(element).click($.proxy(this._createQueue, this));
+			$(element).click($.proxy(this._prepareQueue, this));
 		}, this));
 	},
 	
 	/**
-	 * Creates a new package uninstallation process.
+	 * Prepares a new package uninstallation process.
 	 * 
 	 * @param	object		event
 	 */
-	_createQueue: function(event) {
+	_prepareQueue: function(event) {
 		var $element = $(event.target);
-		var packageID = $element.data('objectID');
 		
-		if (confirm(WCF.Language.get('wcf.acp.package.view.button.uninstall.sure'))) {
-			this._installation = new WCF.ACP.Package.Installation('uninstall', 0, false);
-			
-			// initialize dialog
-			WCF.showAJAXDialog('packageInstallationDialog', true, {
-				ajax: true,
-				closable: false,
-				data: { packageID: packageID, step: 'prepare' },
-				success: $.proxy(this._installation._handleResponse, this._installation),
-				title: 'wcf.acp.package.uninstall.title',
-				url: 'index.php/UninstallPackage/?t=' + SECURITY_TOKEN + SID_ARG_2ND
-			});
+		WCF.System.Confirmation.show($element.data('confirmMessage'), $.proxy(this._createQueue, this), { packageID: $element.data('objectID') });
+	},
+	
+	/**
+	 * Initializes a new package uninstallation process.
+	 * 
+	 * @param	string		action
+	 * @param	object		parameters
+	 */
+	_createQueue: function(action, parameters) {
+		if (action !== 'confirm') {
+			return;
 		}
+		
+		this._installation = new WCF.ACP.Package.Installation('uninstall', 0, false);
+		
+		// initialize dialog
+		WCF.showAJAXDialog('packageInstallationDialog', true, {
+			ajax: true,
+			closable: false,
+			data: { packageID: parameters.packageID, step: 'prepare' },
+			success: $.proxy(this._installation._handleResponse, this._installation),
+			title: 'wcf.acp.package.uninstall.title',
+			url: 'index.php/UninstallPackage/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+		});
 	}
 };
 

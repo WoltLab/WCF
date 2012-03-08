@@ -4,6 +4,8 @@
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init()
+		
+		new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'));
 	});
 	//]]>
 </script>
@@ -26,7 +28,7 @@
 		</ul>
 	</nav>
 
-	<div id="information" class="wcf-border wcf-tabMenuContent hidden">
+	<div id="information" class="wcf-box wcf-boxPadding wcf-tabMenuContent hidden">
 		<hgroup class="wcf-subHeading">
 			<h1>{lang}wcf.acp.package.information.title{/lang}</h1>
 		</hgroup>
@@ -95,7 +97,7 @@
 	</div>
 
 	{if $package->getRequiredPackages()|count || $package->getDependentPackages()|count}
-		<div id="dependencies" class="wcf-border wcf-tabMenuContainer wcf-tabMenuContent">
+		<div id="dependencies" class="wcf-box wcf-boxPadding wcf-tabMenuContainer wcf-tabMenuContent">
 			<nav class="wcf-menu">
 				<ul>
 					{if $package->getRequiredPackages()|count}
@@ -114,7 +116,7 @@
 						<h2>{lang}wcf.acp.package.dependencies.required.description{/lang}</h2>
 					</hgroup>
 		
-					<table class="wcf-table wcf-border wcf-boxTitle">
+					<table class="wcf-table wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
 						<thead>
 							<tr>
 								<th colspan="2" class="columnID">{lang}wcf.global.objectID{/lang}</th>
@@ -130,7 +132,7 @@
 						<tbody>
 							{content}
 								{foreach from=$package->getRequiredPackages() item=requiredPackage}
-									<tr>
+									<tr class="jsPackageRow">
 										<td class="columnIcon">
 											{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
 												<a href="{link controller='PackageStartInstall' id=$requiredPackage->packageID}action=update{/link}"><img src="{@$__wcf->getPath()}icon/update1.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="jsTooltip" /></a>
@@ -138,7 +140,7 @@
 												<img src="{@$__wcf->getPath()}icon/update1D.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" />
 											{/if}
 											{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $requiredPackage->package != 'com.woltlab.wcf' && $requiredPackage->packageID != PACKAGE_ID}
-												<a onclick="return confirm('{lang}wcf.acp.package.button.uninstall.sure{/lang}')" href="{link controller='Package'}action=startUninstall&packageID={@$requiredPackage->packageID}{/link}"><img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="jsTooltip" /></a>
+												<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="jsTooltip jsUninstallButton" data-objectID="{@$requiredPackage->packageID}" data-confirm-message="{lang package=$requiredPackage}wcf.acp.package.uninstallation.confirm{/lang}" />
 											{else}
 												<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" />
 											{/if}
@@ -174,7 +176,7 @@
 						<h2>{lang}wcf.acp.package.dependencies.dependent.description{/lang}</h2>
 					</hgroup>
 		
-					<table class="wcf-table wcf-border wcf-boxTitle">
+					<table class="wcf-table wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
 						<thead>
 							<tr>
 								<th colspan="2" class="columnID">{lang}wcf.global.objectID{/lang}</th>
@@ -190,7 +192,7 @@
 						<tbody>
 							{content}
 								{foreach from=$package->getDependentPackages() item=dependentPackage}
-									<tr>
+									<tr class="jsPackageRow">
 										<td class="columnIcon">
 											{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
 												<a href="{link controller='PackageStartInstall' id=$dependentPackage->packageID}action=update{/link}"><img src="{@$__wcf->getPath()}icon/update1.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="jsTooltip" /></a>
@@ -198,7 +200,7 @@
 												<img src="{@$__wcf->getPath()}icon/update1D.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" />
 											{/if}
 											{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $dependentPackage->package != 'com.woltlab.wcf' && $dependentPackage->packageID != PACKAGE_ID}
-												<a onclick="return confirm('{lang}wcf.acp.package.button.uninstall.sure{/lang}')" href="{link controller='Package'}action=startUninstall&packageID={@$dependentPackage->packageID}{/link}"><img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="jsTooltip" /></a>
+												<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="jsTooltip jsUninstallButton" data-objectID="{@$dependentPackage->packageID}" data-confirm-message="{lang package=$dependentPackage}wcf.acp.package.uninstallation.confirm{/lang}" />
 											{else}
 												<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" />
 											{/if}

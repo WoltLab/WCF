@@ -271,59 +271,6 @@ $.fn.extend({
 	},
 	
 	/**
-	 * CAUTION:	This method does not work properly, you should not rely
-	 *		on it for now. It seems to work with the old jQuery UI-
-	 *		based dialog, but no longer works with usual elements.
-	 *		I will either try to fix it or remove it later, thus
-	 *		this method will be deprecated for now.      -Alexander
-	 * 
-	 * Applies a grow-effect by resizing element while moving the element
-	 * appropriately. Make sure the passed data.content element contains
-	 * all elements which affect this indirectly, this includes outer
-	 * containers which may apply an obstrusive padding.
-	 * 
-	 * @deprecated
-	 * @param	object		data
-	 * @param	object		options
-	 * @return	jQuery
-	 */
-	wcfGrow: function(data, options) {
-		var $content = $(data.content);
-		var $parent = (data.parent) ? $(data.parent) : $(this);
-		
-		// calculate dimensions
-		var $windowDimensions = $(window).getDimensions();
-		var $elementDimensions = $content.getDimensions('outer');
-		var $parentDimensions = $parent.getDimensions('outer');
-		var $parentInnerDimensions = $parent.getDimensions('inner');
-		var $parentDifference = {
-			height: $parentDimensions.height - $parentInnerDimensions.height,
-			width: $parentDimensions.width - $parentInnerDimensions.width
-		};
-
-		// calculate offsets
-		var $leftOffset = Math.round(($windowDimensions.width - ($elementDimensions.width + $parentDifference.width)) / 2);
-		var $topOffset = Math.round(($windowDimensions.height - ($elementDimensions.height + $parentDifference.height)) / 2);
-
-		// try to align vertically at 30% if previously calculated value is NOT lower
-		var $desiredTopOffset = Math.round(($windowDimensions / 100) * 30);
-		if ($desiredTopOffset < $topOffset) {
-			$topOffset = $desiredTopOffset;
-		}
-		
-		$parent.makePositioned('fixed', false);
-		$parent.animate({
-			left: $leftOffset + 'px',
-			top: $topOffset + 'px'
-		}, options);
-		
-		return this.animate({
-			height: $elementDimensions.height,
-			width: $elementDimensions.width
-		}, options);
-	},
-	
-	/**
 	 * Shows an element by sliding and fading it into viewport.
 	 * 
 	 * @param	string		direction
@@ -2675,14 +2622,19 @@ WCF.Collapsible.Remote = Class.extend({
 		// initialize each container
 		$containers.each($.proxy(function(index, container) {
 			var $container = $(container);
-			var $id = $container.wcfIdentify();
-			this._containers[$id] = $container;
+			var $containerID = $container.wcfIdentify();
+			this._containers[$containerID] = $container;
 			
-			this._initContainer($id, $container);
+			this._initContainer($containerID);
 		}, this));
 	},
 	
-	_initContainer: function(containerID, container) {
+	/**
+	 * Initializes a collapsible container.
+	 * 
+	 * @param	string		containerID
+	 */
+	_initContainer: function(containerID) {
 		var $target = this._getTarget(containerID);
 		var $buttonContainer = this._getButtonContainer(containerID);
 		var $button = this._createButton(containerID, $buttonContainer);
@@ -2691,7 +2643,7 @@ WCF.Collapsible.Remote = Class.extend({
 		this._containerData[containerID] = {
 			button: $button,
 			buttonContainer: $buttonContainer,
-			isOpen: container.data('isOpen'),
+			isOpen: this._containers[containerID].data('isOpen'),
 			target: $target
 		};
 	},
@@ -2747,9 +2699,9 @@ WCF.Collapsible.Remote = Class.extend({
 		
 		// fetch content state via AJAX
 		this._proxy.setOption('data', {
-			actionName: 'toggleContainer',
+			actionName: 'loadContainer',
 			className: this._className,
-			objectIDs: [this._getObjectID($containerID)],
+			objectIDs: [ this._getObjectID($containerID) ],
 			parameters: $.extend(true, {
 				containerID: $containerID,
 				currentState: $state,
@@ -2759,14 +2711,17 @@ WCF.Collapsible.Remote = Class.extend({
 		this._proxy.sendRequest();
 
 		// set spinner for current button
-		this._showSpinner($button);
+		this._exchangeIcon($button);
 	},
-
-	_showSpinner: function(button) {
-		button.find('img').attr('src', WCF.Icon.get('wcf.icon.loading'));
-	},
-
-	_hideSpinner: function(button, newIcon) {
+	
+	/**
+	 * Exchanges button icon.
+	 * 
+	 * @param	jQuery		button
+	 * @param	string		newIcon
+	 */
+	_exchangeIcon: function(button, newIcon) {
+		newIcon = newIcon || WCF.Icon.get('wcf.icon.loading');
 		button.find('img').attr('src', newIcon);
 	},
 	
@@ -2824,7 +2779,80 @@ WCF.Collapsible.Remote = Class.extend({
 		this._updateContent($containerID, data.returnValues.content, $newState);
 		
 		// update icon
-		this._hideSpinner(this._containerData[$containerID].button, WCF.Icon.get('wcf.icon.' + (data.returnValues.isOpen ? 'opened' : 'closed')));
+		this._exchangeIcon(this._containerData[$containerID].button, WCF.Icon.get('wcf.icon.' + (data.returnValues.isOpen ? 'opened' : 'closed')));
+	}
+});
+
+/**
+ * Basic implementation for collapsible containers with AJAX support. Requires collapsible
+ * content to be available in DOM already, if you want to load content on the fly use
+ * WCF.Collapsible.Remote instead.
+ */
+WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
+	/**
+	 * Initializes an AJAX-based collapsible handler.
+	 * 
+	 * @param	string		className
+	 */
+	init: function(className) {
+		this._super(className);
+		
+		// override settings for action proxy
+		this._proxy = new WCF.Action.Proxy({
+			showLoadingOverlay: false
+		});
+	},
+	
+	/**
+	 * @see	WCF.Collapsible.Remote._initContainer()
+	 */
+	_initContainer: function(containerID) {
+		this._super(containerID);
+		
+		// hide container on init if applicable
+		if (!this._containerData[containerID].isOpen) {
+			this._containerData[containerID].target.hide();
+			this._exchangeIcon(this._containerData[containerID].button, WCF.Icon.get('wcf.icon.closed'));
+		}
+	},
+	
+	/**
+	 * Toggles container visibility.
+	 * 
+	 * @param	object		event
+	 */
+	_toggleContainer: function(event) {
+		var $button = $(event.currentTarget);
+		var $containerID = $button.data('containerID');
+		var $isOpen = this._containerData[$containerID].isOpen;
+		var $currentState = ($isOpen) ? 'open' : 'close';
+		var $newState = ($isOpen) ? 'close' : 'open';
+		
+		this._proxy.setOption('data', {
+			actionName: 'toggleContainer',
+			className: this._className,
+			objectIDs: [ this._getObjectID($containerID) ],
+			parameters: {
+				containerID: $containerID,
+				currentState: $currentState,
+				newState: $newState
+			}
+		});
+		this._proxy.sendRequest();
+		
+		// exchange icon
+		this._exchangeIcon(this._containerData[$containerID].button, WCF.Icon.get('wcf.icon.' + ($newState === 'open' ? 'opened' : 'closed')));
+		
+		// toggle container
+		if ($newState === 'open') {
+			this._containerData[$containerID].target.show();
+		}
+		else {
+			this._containerData[$containerID].target.hide();
+		}
+		
+		// update container data
+		this._containerData[$containerID].isOpen = ($newState === 'open' ? true : false);
 	}
 });
 

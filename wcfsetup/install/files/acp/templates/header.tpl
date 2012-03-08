@@ -25,11 +25,15 @@
 		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 		//]]>
 	</script>
+	{event name='javascriptInclude'}
 	
 	<!-- Stylesheets -->
+	<link rel="stylesheet/less" type="text/css" media="screen" href="{@$__wcf->getPath()}acp/style/wcf.less" />
+	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/less.min.js"></script>
+	
 	<style type="text/css">
-		@import url("{@$__wcf->getPath()}acp/style/wcf.css") screen;
 		{*
+		@import url("{@$__wcf->getPath()}acp/style/wcf.css") screen;
 		@import url("{@$__wcf->getPath()}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css") screen;
 	
 		@import url("{@$__wcf->getPath()}acp/style/print.css") print;
@@ -75,7 +79,9 @@
 				'wcf.global.form.edit.success': '{lang}wcf.global.form.edit.success{/lang}'
 			});
 			WCF.Icon.addObject({
-				'wcf.icon.loading': '{@$__wcf->getPath()}icon/spinner1.svg'
+				'wcf.icon.closed': '{@$__wcf->getPath()}icon/closed.svg',
+				'wcf.icon.loading': '{@$__wcf->getPath()}icon/spinner1.svg',
+				'wcf.icon.opened': '{@$__wcf->getPath()}icon/opened.svg'
 			});
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
@@ -189,5 +195,5 @@
 			{/hascontent}
 			
 			<!-- CONTENT -->
-			<section id="content" class="wcf-content">
+			<section id="content" class="wcf-content wcf-contentDecor">
 				

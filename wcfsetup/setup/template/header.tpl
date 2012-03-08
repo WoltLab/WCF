@@ -5,7 +5,8 @@
 	<title>{lang}wcf.global.progressBar{/lang} - {lang}wcf.global.pageTitle{/lang}</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="stylesheet" type="text/css" href="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/style/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showCSS={/if}wcf.css" />
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/style/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showCSS={/if}wcf.css" />
 	
 	{if !$lastStep|isset}
 		<style type="text/css">
@@ -58,7 +59,7 @@
 		<div>
 			
 			<!-- CONTENT -->
-			<section id="content" class="wcf-content">
+			<section id="content" class="wcf-content wcf-contentDecor">
 				
 				<header class="wcf-container wcf-mainHeading setup">
 					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}working1.svg" alt="" class="wcf-containerIcon" />

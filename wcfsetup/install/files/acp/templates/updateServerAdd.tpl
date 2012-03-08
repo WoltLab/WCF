@@ -30,7 +30,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='UpdateServerAdd'}{/link}{else}{link controller='UpdateServerEdit'}{/link}{/if}">
-	<div class="wcf-border wcf-content">
+	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-boxDecor">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.updateServer.data{/lang}</legend>

@@ -33,7 +33,7 @@
 </div>
 
 {hascontent}
-	<div class="wcf-border wcf-boxTitle">
+	<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
 		<hgroup>
 			<h1>{lang}wcf.acp.updateServer.list{/lang} <span class="wcf-badge" title="{lang}wcf.acp.updateServer.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
@@ -91,9 +91,7 @@
 		</nav>
 	</div>
 {hascontentelse}
-	<div class="wcf-border wcf-content">
-		<p class="warning">{lang}wcf.acp.updateServer.list.noneAvailable{/lang}</p>
-	</div>
+	<p class="warning">{lang}wcf.acp.updateServer.list.noneAvailable{/lang}</p>
 {/hascontent}
 
 {include file='footer'}

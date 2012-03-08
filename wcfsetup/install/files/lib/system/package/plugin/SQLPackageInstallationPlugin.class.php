@@ -53,7 +53,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			$queries = str_replace("wcf1_", "wcf".WCF_N."_", $queries);
 			
 			// check queries
-			$parser = new PackageInstallationSQLParser($queries, $package, $this->installation->getAction());
+			$parser = new PackageInstallationSQLParser($queries, $this->installation->getPackage(), $this->installation->getAction());
 			$conflicts = $parser->test();
 			if (!empty($conflicts)) {
 				if (isset($conflicts['CREATE TABLE']) || isset($conflicts['DROP TABLE'])) {

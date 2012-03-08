@@ -34,7 +34,7 @@
 	</nav>
 </div>
 
-<div class="wcf-border wcf-boxTitle">
+<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
 	<nav class="wcf-menu">
 		<ul>
 			<li{if $action == ''} class="active"{/if}><a href="{link controller='UserList'}{/link}"><span>{lang}wcf.acp.user.list.all{/lang}</span> <span class="wcf-badge" title="{lang}wcf.acp.user.list.count{/lang}">{#$items}</span></a></li>
