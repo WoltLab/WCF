@@ -91,6 +91,8 @@ class GDImageAdapter implements IImageAdapter {
 	 */	
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
 		$width = $height = $x = $y = 0;
+		$sourceWidth = $this->width;
+		$sourceHeight = $this->height;
 		
 		if ($obtainDimensions) {
 			if ($maxWidth / $this->width < $maxHeight / $this->height) {
@@ -106,20 +108,20 @@ class GDImageAdapter implements IImageAdapter {
 		else {
 			$width = $height = $maxWidth;
 			
-			if ($width > $height) {
-				$x = ceil(($width - $height) / 2);
-				$width = $height;
+			if ($sourceWidth > $sourceHeight) {
+				$x = ceil(($sourceWidth - $sourceHeight) / 2);
+				$sourceWidth = $sourceHeight;
 			}
 			else {
-				$y = ceil(($height - $width) / 2);
-				$height = $width;
+				$y = ceil(($sourceHeight - $sourceWidth) / 2);
+				$sourceHeight = $sourceWidth;
 			}
 		}
 		
 		// resize image
 		$image = imageCreateTrueColor($width, $height);
 		imageAlphaBlending($image, false);
-		imageCopyResampled($image, $this->image, 0, 0, $x, $y, $width, $height, $this->width, $this->height);
+		imageCopyResampled($image, $this->image, 0, 0, $x, $y, $width, $height, $sourceWidth, $sourceHeight);
 		imageSaveAlpha($image, true);
 		
 		return $image;

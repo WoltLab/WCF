@@ -4054,11 +4054,17 @@ WCF.Upload = Class.extend({
 			this._uploadMatrix[$uploadID] = [];
 			
 			for (var $i = 0; $i < $files.length; $i++) {
-				this._uploadMatrix[$uploadID].push(this._initFile($files[$i]));
+				var $li = this._initFile($files[$i]);
+				$li.data('filename', $files[$i].name);
+				this._uploadMatrix[$uploadID].push($li);
 				$fd.append('__files[]', $files[$i]);
 			}
 			$fd.append('actionName', this._options.action);
 			$fd.append('className', this._className);
+			var $additionalParameters = this._getParameters();
+			for (var $name in $additionalParameters) {
+				$fd.append('parameters['+$name+']', $additionalParameters[$name]);
+			}
 			
 			$.ajax({ 
 				type: 'POST',
@@ -4067,13 +4073,15 @@ WCF.Upload = Class.extend({
 				data: $fd,
 				contentType: false,
 				processData: false,
-				success: $.proxy(this._success, this),
+				success: function(data, textStatus, jqXHR) {
+					self._success($uploadID, data);
+				},
 				error: $.proxy(this._error, this),
 				xhr: function() {
 					var $xhr = $.ajaxSettings.xhr();
 					if ($xhr) {
 						$xhr.upload.addEventListener('progress', function(event) {
-							self._progress(event, $uploadID);
+							self._progress($uploadID, event);
 						}, false);
 					}
 					return $xhr;
@@ -4085,8 +4093,8 @@ WCF.Upload = Class.extend({
 	/**
 	 * Callback for success event
 	 */
-	_success: function(data, textStatus, jqXHR) {
-		console.debug(jqXHR.responseText);
+	_success: function(uploadID, data) {
+		console.debug(data);
 	},
 	
 	/**
@@ -4099,7 +4107,7 @@ WCF.Upload = Class.extend({
 	/**
 	 * Callback for progress event
 	 */
-	_progress: function(event, uploadID) {
+	_progress: function(uploadID, event) {
 		var $percentComplete = Math.round(event.loaded * 100 / event.total);
 		
 		for (var $i = 0; $i < this._uploadMatrix[uploadID].length; $i++) {
@@ -4107,6 +4115,12 @@ WCF.Upload = Class.extend({
 		}
 	},
 	
+	/**
+	 * Returns additional parameters.
+	 */
+	_getParameters: function() {
+		return {};
+	},
 	
 	_initFile: function(file) {
 		var $li = $('<li>'+file.name+' ('+file.size+')<progress max="100"></progress></li>');

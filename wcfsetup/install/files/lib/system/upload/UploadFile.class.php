@@ -71,7 +71,7 @@ class UploadFile {
 	 * @return string
 	 */
 	public function getFilename() {
-		return $this->name;
+		return $this->filename;
 	}
 	
 	/**
@@ -128,5 +128,19 @@ class UploadFile {
 	 */
 	public function getValidationErrorType() {
 		return $this->validationErrorType;
+	}
+	
+	public function getImageData() {
+		if (strpos($this->getMimeType(), 'image/') == 0) {
+			if (($imageData = @getImageSize($this->getLocation())) !== false) {
+				return array(
+					'width' => $imageData[0],
+					'height' => $imageData[1],
+					'mimeType' => $imageData['mime'],
+				);
+			}
+		}
+		
+		return null;
 	}
 }
