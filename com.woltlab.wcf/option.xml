@@ -156,7 +156,7 @@
 			<!-- DEBUG ONLY -->
 			<option name="less_files">
 				<categoryname>general.page</categoryname>
-				<optiontype>text</optiontype>
+				<optiontype>textarea</optiontype>
 			</option>
 			<!-- /DEBUG ONLY -->
 			
