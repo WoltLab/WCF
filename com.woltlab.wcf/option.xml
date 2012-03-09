@@ -152,6 +152,14 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>text</optiontype>
 			</option>
+			
+			<!-- DEBUG ONLY -->
+			<option name="less_files">
+				<categoryname>general.page</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<!-- /DEBUG ONLY -->
+			
 			<!-- /general.page -->
 			
 			<!-- general.image -->
