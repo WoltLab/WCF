@@ -67,7 +67,7 @@ class HeaderUtil {
 	 * Outputs the compressed page content.
 	 */
 	public static function getCompressedOutput($output) {
-		if (true) {//defined('LESS_FILES') && LESS_FILES) {
+		if (defined('LESS_FILES') && LESS_FILES) {
 			// remove .css files
 			$output = preg_replace('~\@import url\("(.*).css"\) screen;~U', '', $output);
 			$output = str_replace(array('<!-- LESS_FILES', 'LESS_FILES -->'), array('', ''), $output);
