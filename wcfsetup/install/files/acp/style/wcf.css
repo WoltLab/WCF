@@ -1,7 +1,7 @@
 /**
  * #################################################################
  * ### CAUTION: This stylesheet applies to WCFSetup only, please ###
- * ###		see wcf.less for the general stylesheet!	 ###
+ * ###		see wcf.less for the general stylesheet!	         ###
  * #################################################################
  */
 
@@ -3719,6 +3719,14 @@ tr .columnIcon img {
 	color: rgba(238, 238, 238, 1);
 	background-color: #333;
 	overflow: auto;
+}
+
+.wcf-dialogContent a {
+	color: #69c;
+}
+
+.wcf-dialogContent a:hover {
+	color: #fff;
 }
 
 .wcf-dialogContainer > .wcf-dialogContent {
