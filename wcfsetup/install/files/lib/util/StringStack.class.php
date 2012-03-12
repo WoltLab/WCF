@@ -11,7 +11,7 @@ namespace wcf\util;
  * @subpackage	util
  * @category 	Community Framework
  */
-class StringStack {
+final class StringStack {
 	protected static $stringStack = array();
 	
 	/**
@@ -66,4 +66,6 @@ class StringStack {
 		
 		return array();
 	}
+	
+	private function __construct() { }
 }
