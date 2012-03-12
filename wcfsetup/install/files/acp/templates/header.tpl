@@ -92,6 +92,8 @@
 			$('<span class="pointer"><span></span></span>').appendTo('.wcf-innerError');
 			
 			$('#sidebarContent').wcfSidebar();
+			
+			{event name='javascriptInit'}
 		});
 		//]]>
 	</script>
