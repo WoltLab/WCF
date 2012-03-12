@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @subpackage	util
  * @category 	Community Framework
  */
-class UserUtil {
+final class UserUtil {
 	protected static $privateIpList = array("/^0\./", "/^127\.0\.0\.1/", "/^192\.168\..*/", "/^172\.16\..*/", "/^10..*/", "/^224..*/", "/^240..*/");
 	
 	/**
@@ -182,4 +182,6 @@ class UserUtil {
 		
 		return StringUtil::substring(FileUtil::unifyDirSeperator($REQUEST_URI), 0, 255);
 	}
+	
+	private function __construct() { }
 }

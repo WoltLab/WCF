@@ -11,7 +11,7 @@ namespace wcf\util;
  * @subpackage	util
  * @category 	Community Framework
  */
-class ArrayUtil {
+final class ArrayUtil {
 	/**
 	 * Applies StringUtil::trim() to all elements of an array.
 	 *
@@ -154,4 +154,6 @@ class ArrayUtil {
 			return $array;
 		}
 	}
+	
+	private function __construct() { }
 }

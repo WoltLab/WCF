@@ -14,7 +14,7 @@ use wcf\system\exception\SystemException;
  * @subpackage	util
  * @category 	Community Framework
  */
-abstract class CronjobUtil {
+final class CronjobUtil {
 	/**
 	 * indicates if day of month is restricted (not '*')
 	 * @var	boolean
@@ -573,4 +573,6 @@ abstract class CronjobUtil {
 			}
 		}
 	}
+	
+	private function __construct() { }
 }
