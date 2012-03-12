@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\upload;
+use wcf\util\StringUtil;
 
 /**
  * Represents a file upload.
@@ -75,6 +76,19 @@ class UploadFile {
 	}
 	
 	/**
+	 * Returns the extension of the original file name.
+	 * 
+	 * @return string
+	 */
+	public function getFileExtension() {
+		if (($position = StringUtil::lastIndexOf($this->getFilename(), '.')) !== false) {
+			return StringUtil::substring($this->getFilename(), $position + 1);
+		}
+		
+		return '';
+	}
+	
+	/**
 	 * Returns the file location.
 	 * 
 	 * @return string
@@ -118,18 +132,36 @@ class UploadFile {
 	 * @return	boolean
 	 */
 	public function validateFile($maxFilesize, array $fileExtensions) {
+		if ($this->errorCode != 0) {
+			$this->validationErrorType = 'uploadFailed';
+			return false;
+		}
 		
+		if ($this->getFilesize() > $maxFilesize) {
+			$this->validationErrorType = 'tooLarge';
+			return false;
+		}
+		
+		if (!in_array($this->getFileExtension(), $fileExtensions)) {
+			$this->validationErrorType = 'invalidExtension';
+			return false;
+		}
 	}
 	
 	/**
 	 * Returns the validation error type.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getValidationErrorType() {
 		return $this->validationErrorType;
 	}
 	
+	/**
+	 * Gets image data.
+	 * 
+	 * @return	array
+	 */
 	public function getImageData() {
 		if (strpos($this->getMimeType(), 'image/') == 0) {
 			if (($imageData = @getImageSize($this->getLocation())) !== false) {

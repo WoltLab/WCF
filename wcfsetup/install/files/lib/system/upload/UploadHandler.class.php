@@ -23,7 +23,7 @@ class UploadHandler {
 	 * list of validation errors.
 	 * @var array
 	 */
-	protected $errors = array();
+	protected $erroneousFiles = array();
 	
 	/**
 	 * Creates a new UploadHandler object.
@@ -62,7 +62,7 @@ class UploadHandler {
 		$result = true;
 		foreach ($this->files as $file) {
 			if (!$file->validateFile($maxFilesize, $fileExtensions)) {
-				$this->errors[$file->getFilename()] = $file->getValidationErrorType();
+				$this->erroneousFiles[] = $file;
 				$result = false;
 			}
 		}
@@ -71,12 +71,12 @@ class UploadHandler {
 	}
 	
 	/**
-	 * Returns a list of validation errors.
+	 * Returns a list of erroneous files.
 	 * 
-	 * @return array
+	 * @return array<wcf\system\upload\UploadFile>
 	 */
-	public function getErrors() {
-		return $this->errors;
+	public function getErroneousFiles() {
+		return $this->erroneousFiles;
 	}
 	
 	/**
@@ -86,7 +86,9 @@ class UploadHandler {
 	 */
 	public function saveFiles(IUploadFileSaveStrategy $saveStrategy) {
 		foreach ($this->files as $file) {
-			$saveStrategy->save($file);
+			if (!$file->getValidationErrorType()) {
+				$saveStrategy->save($file);
+			}
 		}
 	}
 	
