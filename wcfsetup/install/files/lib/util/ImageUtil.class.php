@@ -11,7 +11,7 @@ namespace wcf\util;
  * @subpackage	util
  * @category 	Community Framework
  */
-class ImageUtil {
+final class ImageUtil {
 	/**
 	 * Checks the content of an image for bad sections. 
 	 * e.g. the use of javascript.
@@ -53,4 +53,6 @@ class ImageUtil {
 			default:				return '';
 		}
 	}
+	
+	private function __construct() { }
 }

@@ -19,6 +19,12 @@ use wcf\system\option\OptionHandler;
  */
 class UserOptionHandler extends OptionHandler {
 	/**
+	 * true, if within registration process
+	 * @var	boolean
+	 */
+	public $inRegistration = false;
+	
+	/**
 	 * true, if empty options should be removed
 	 * @var	boolean
 	 */
@@ -42,6 +48,15 @@ class UserOptionHandler extends OptionHandler {
 	 */
 	public function showEmptyOptions() {
 		$this->removeEmptyOptions = false;
+	}
+	
+	/**
+	 * Sets registration mode.
+	 * 
+	 * @param	boolean		$inRegistration
+	 */
+	public function setInRegistration($inRegistration) {
+		$this->inRegistration = $inRegistration;
 	}
 	
 	/**
@@ -114,6 +129,28 @@ class UserOptionHandler extends OptionHandler {
 			$option->setUser($this->user);
 		}
 		
+		if ($this->inRegistration && !$option->askDuringRegistration) {
+			return false;
+		}
+		
 		return $option->isVisible();
+	}
+	
+	/**
+	 * @see wcf\system\option\OptionHandler::save()
+	 */
+	public function save($categoryName = null, $optionPrefix = null) {
+		$options = parent::save($categoryName, $optionPrefix);
+		
+		// remove options which are not asked during registration
+		if ($this->inRegistration && !empty($options)) {
+			foreach ($this->options as $option) {
+				if (!$option->askDuringRegistration && array_key_exists($option->optionID, $options)) {
+					unset($options[$option->optionID]);
+				}
+			}
+		}
+		
+		return $options;
 	}
 }

@@ -1,7 +1,7 @@
 /**
  * #################################################################
  * ### CAUTION: This stylesheet applies to WCFSetup only, please ###
- * ###		see wcf.less for the general stylesheet!	 ###
+ * ###		see wcf.less for the general stylesheet!	         ###
  * #################################################################
  */
 
@@ -2632,6 +2632,10 @@ input[type='button'],
 	position: relative;
 }
 
+fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
+	margin-top: 30px;
+}
+
 /* -- -- -- Tabs -- -- --  */
 
 /* Globals */
@@ -2928,7 +2932,6 @@ input[type='button'],
 	border: 1px solid rgba(204, 204, 204, 1);
 	border-radius: 5px;
 	background-color: rgba(255, 255, 255, 1);
-	margin-top: 15px;
 	display: block;
 	position: relative;
 	overflow: hidden;
@@ -3720,6 +3723,14 @@ tr .columnIcon img {
 	color: rgba(238, 238, 238, 1);
 	background-color: #333;
 	overflow: auto;
+}
+
+.wcf-dialogContent a {
+	color: #69c;
+}
+
+.wcf-dialogContent a:hover {
+	color: #fff;
 }
 
 .wcf-dialogContainer > .wcf-dialogContent {

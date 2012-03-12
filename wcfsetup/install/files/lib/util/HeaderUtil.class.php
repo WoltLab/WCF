@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @subpackage	util
  * @category 	Community Framework
  */
-class HeaderUtil {
+final class HeaderUtil {
 	/**
 	 * alias to php setcookie() function
 	 */
@@ -67,6 +67,12 @@ class HeaderUtil {
 	 * Outputs the compressed page content.
 	 */
 	public static function getCompressedOutput($output) {
+		if (defined('LESS_FILES') && LESS_FILES) {
+			// remove .css files
+			$output = preg_replace('~\@import url\("(.*).css"\) screen;~U', '', $output);
+			$output = str_replace(array('<!-- LESS_FILES', 'LESS_FILES -->'), array('', ''), $output);
+		}
+		
 		$size = strlen($output);
 		$crc = crc32($output);
 
@@ -118,4 +124,6 @@ class HeaderUtil {
 		));
 		WCF::getTPL()->display('redirect');
 	}
+	
+	private function __construct() { }
 }

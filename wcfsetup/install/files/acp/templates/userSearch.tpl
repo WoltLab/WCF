@@ -116,21 +116,31 @@
 			<nav class="wcf-tabMenu">
 				<ul>
 					{if $optionTree|count}
-						<li><a href="#profile">{*<span>*}{lang}wcf.acp.user.search.conditions.profile{/lang}{*</span>*}</a></li>
+						<li><a href="#profile">{lang}wcf.acp.user.search.conditions.profile{/lang}</a></li>
 					{/if}
 					
 					{event name='tabMenuTabs'}
 					
-					<li><a href="#resultOptions">{*<span>*}{lang}wcf.acp.user.search.display{/lang}{*</span>*}</a></li>
+					<li><a href="#resultOptions">{lang}wcf.acp.user.search.display{/lang}</a></li>
 				</ul>
 			</nav>
 			
 			{if $optionTree|count}
 				<div id="profile" class="wcf-box wcf-boxPadding wcf-tabMenuContent hidden">
-					<div>
-						<h3 class="wcf-subHeading">{lang}wcf.acp.user.search.conditions.profile{/lang}</h3>
-						{include file='optionFieldList' langPrefix='wcf.user.option.' options=$optionTree}
-					</div>
+					<hgroup class="wcf-subHeading">
+						<h1>{lang}wcf.acp.user.search.conditions.profile{/lang}</h1>
+					</hgroup>
+					
+					{foreach from=$optionTree[0][categories] item=category}
+						<fieldset>
+							<legend>{lang}wcf.user.option.category.{@$category[object]->categoryName}{/lang}</legend>
+							{hascontent}<h2>{content}{lang __optional=true}wcf.user.option.category.{@$category[object]->categoryName}.description{/lang}{/content}</h2>{/hascontent}
+							
+							<div>
+								{include file='optionFieldList' options=$category[options] langPrefix='wcf.user.option.'}
+							</div>
+						</fieldset>
+					{/foreach}
 				</div>
 			{/if}
 		
@@ -174,8 +184,9 @@
 			
 				<fieldset>
 					<legend>{lang}wcf.acp.user.search.display.columns{/lang}</legend>
-				
-					{if $optionTree|count}
+					
+					{* TODO: Do we still want all this columns supported? *}
+					{*if $optionTree|count}
 						<dl>
 							<dt>
 								<label>{lang}wcf.acp.user.search.display.columns.profile{/lang}</label>
@@ -194,7 +205,7 @@
 								</fieldset>
 							</dd>
 						</dl>
-					{/if}
+					{/if*}
 				
 					<dl>
 						<dt><label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label></dt>

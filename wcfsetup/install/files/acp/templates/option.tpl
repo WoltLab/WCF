@@ -36,7 +36,7 @@
 		</nav>
 		
 		{foreach from=$optionTree item=categoryLevel1}
-			<div id="{@$categoryLevel1[object]->categoryName}" class="wcf-box wcf-boxPadding wcf-tabMenuContent hidden">
+			<div id="{@$categoryLevel1[object]->categoryName}" class="wcf-box wcf-boxPadding wcf-shadow2 wcf-tabMenuContent hidden">
 				<hgroup class="wcf-subHeading">
 					<h1>{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
 					<h2>{lang __optional=true}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}.description{/lang}</h2>

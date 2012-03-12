@@ -28,12 +28,15 @@
 	{event name='javascriptInclude'}
 	
 	<!-- Stylesheets -->
-	<link rel="stylesheet/less" type="text/css" media="screen" href="{@$__wcf->getPath()}acp/style/wcf.less" />
+	
+	<!-- LESS_FILES
+	<link rel="stylesheet/less" type="text/css" media="screen" href="{link controller='LessStylesheets'}{/link}" />
+	LESS_FILES -->
 	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/less.min.js"></script>
 	
 	<style type="text/css">
-		{*
 		@import url("{@$__wcf->getPath()}acp/style/wcf.css") screen;
+		{*
 		@import url("{@$__wcf->getPath()}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css") screen;
 	
 		@import url("{@$__wcf->getPath()}acp/style/print.css") print;
@@ -89,6 +92,8 @@
 			$('<span class="pointer"><span></span></span>').appendTo('.wcf-innerError');
 			
 			$('#sidebarContent').wcfSidebar();
+			
+			{event name='javascriptInit'}
 		});
 		//]]>
 	</script>

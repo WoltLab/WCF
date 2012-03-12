@@ -11,7 +11,7 @@ namespace wcf\util;
  * @subpackage	util
  * @category 	Community Framework
  */
-class MathUtil {
+final class MathUtil {
 	/**
 	 * Generates a random value.
 	 *
@@ -23,4 +23,6 @@ class MathUtil {
 		// generate random value
 		return (($min !== null && $max !== null) ? mt_rand($min, $max) : mt_rand());
 	}
+	
+	private function __construct() { }
 }
