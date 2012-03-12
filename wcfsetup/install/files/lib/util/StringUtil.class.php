@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @subpackage	util
  * @category 	Community Framework
  */
-class StringUtil {
+final class StringUtil {
 	const HTML_PATTERN = '~</?[a-z]+[1-6]?
 			(?:\s*[a-z]+\s*=\s*(?:
 			"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^\s>]
@@ -553,4 +553,6 @@ class StringUtil {
 		
 		return str_shuffle($password);
 	}
+	
+	private function __construct() { }
 }

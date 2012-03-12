@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @subpackage	util
  * @category 	Community Framework
  */
-class DateUtil {
+final class DateUtil {
 	/**
 	 * name of the default date format language variable
 	 * @var string
@@ -275,4 +275,6 @@ class DateUtil {
 		
 		return 0;
 	}
+	
+	private function __construct() { }
 }

@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @subpackage	util
  * @category 	Community Framework
  */
-class HeaderUtil {
+final class HeaderUtil {
 	/**
 	 * alias to php setcookie() function
 	 */
@@ -124,4 +124,6 @@ class HeaderUtil {
 		));
 		WCF::getTPL()->display('redirect');
 	}
+	
+	private function __construct() { }
 }

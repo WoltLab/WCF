@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * @subpackage	util
  * @category 	Community Framework
  */
-class FileUtil {
+final class FileUtil {
 	/**
 	 * finfo instance
 	 * @var \finfo
@@ -618,4 +618,6 @@ class FileUtil {
 		
 		return self::$finfo->file($filename);
 	}
+	
+	private function __construct() { }
 }

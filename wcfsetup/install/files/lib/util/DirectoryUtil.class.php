@@ -14,7 +14,7 @@ use wcf\system\Regex;
  * @subpackage	util
  * @category	Community Framework
  */
-class DirectoryUtil {
+final class DirectoryUtil {
 	/**
 	 * @var \DirectoryIterator
 	 */

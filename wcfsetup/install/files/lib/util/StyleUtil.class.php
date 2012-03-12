@@ -12,7 +12,7 @@ use wcf\system\io\File;
  * @subpackage	util
  * @category 	Community Framework
  */
-class StyleUtil {
+final class StyleUtil {
 	/**
 	 * Converts css code from LTR to RTL.
 	 * 
@@ -159,4 +159,6 @@ class StyleUtil {
 		$file->close();
 		@chmod(WCF_DIR . 'acp/style/style-rtl.css', 0777);
 	}
+	
+	private function __construct() { }
 }

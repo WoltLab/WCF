@@ -12,7 +12,7 @@ use wcf\system\exception\SystemException;
  * @subpackage	util
  * @category 	Community Framework
  */
-class XML {
+final class XML {
 	/**
 	 * DOMDocument object
 	 * @var	\DOMDocument
@@ -39,7 +39,7 @@ class XML {
 	
 	/**
 	 * Prepares a new instance of DOMDocument and enables own error handler for libxml.
-	 */	
+	 */
 	public function __construct() {
 		libxml_use_internal_errors(true);
 		$this->document = new \DOMDocument('1.0', 'UTF-8');
