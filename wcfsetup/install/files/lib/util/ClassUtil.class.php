@@ -11,7 +11,7 @@ namespace wcf\util;
  * @subpackage	util
  * @category 	Community Framework
  */
-class ClassUtil {
+final class ClassUtil {
 	/**
 	 * Checks whether the given objects are equal.
 	 * Objects are considered equal, when they are instances of the same class and all attributes are equal.
@@ -47,4 +47,6 @@ class ClassUtil {
 		
 		return false;
 	}
+	
+	private function __construct() { }
 }

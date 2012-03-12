@@ -11,7 +11,7 @@ namespace wcf\util;
  * @subpackage	util
  * @category 	Community Framework
  */
-class OptionUtil {
+final class OptionUtil {
 	/**
 	 * Returns a list of the available options.
 	 * 
@@ -63,4 +63,6 @@ class OptionUtil {
 		
 		return $result;
 	}
+	
+	private function __construct() { }
 }

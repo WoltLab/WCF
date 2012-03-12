@@ -11,7 +11,7 @@ namespace wcf\util;
  * @subpackage	util
  * @category 	Community Framework
  */
-class JSON {
+final class JSON {
 	/**
 	 * Returns the JSON representation of a value.
 	 * 
@@ -44,4 +44,6 @@ class JSON {
 	public static function getLastError() {
 		return json_last_error();
 	}
+	
+	private function __construct() { }
 }
