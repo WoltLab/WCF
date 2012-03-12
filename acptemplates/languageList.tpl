@@ -78,9 +78,9 @@
 						
 						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
 							{if !$language->isDefault}
-								<img src="{@RELATIVE_WCF_DIR}icon/default1.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="jsSetAsDefaultButton jsTooltip" data-objectID="{@$language->languageID}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/default1.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="jsSetAsDefaultButton jsTooltip" data-object-id="{@$language->languageID}" />
 							{else}
-								<img src="{@RELATIVE_WCF_DIR}icon/default1D.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="jsSetAsDefaultButton" data-objectID="{@$language->languageID}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/default1D.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" />
 							{/if}
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/default1D.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" />
@@ -93,9 +93,9 @@
 						{/if}
 						{if $__wcf->getSession()->getPermission('admin.language.canDeleteLanguage')}
 							{if !$language->isDefault}
-								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsTooltip jsDeleteButton" data-objectID="{@$language->languageID}" data-confirmMessage="{lang}wcf.acp.language.delete.sure{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsTooltip jsDeleteButton" data-object-id="{@$language->languageID}" data-confirmMessage="{lang}wcf.acp.language.delete.sure{/lang}" />
 							{else}
-								<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton" data-objectID="{@$language->languageID}" data-confirmMessage="{lang}wcf.acp.language.delete.sure{/lang}" />
+								<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" />
 							{/if}
 						{else}
 							<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" />
