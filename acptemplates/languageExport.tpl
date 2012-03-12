@@ -28,7 +28,7 @@
 		<dl>
 			<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>
 			<dd>
-				{htmloptions options=$languages selected=$languageID name='languageID' id='languageID'}
+				{htmlOptions options=$languages selected=$languageID name='languageID' id='languageID'}
 			</dd>
 		</dl>
 		
