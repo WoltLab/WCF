@@ -184,8 +184,9 @@
 			
 				<fieldset>
 					<legend>{lang}wcf.acp.user.search.display.columns{/lang}</legend>
-				
-					{if $optionTree|count}
+					
+					{* TODO: Do we still want all this columns supported? *}
+					{*if $optionTree|count}
 						<dl>
 							<dt>
 								<label>{lang}wcf.acp.user.search.display.columns.profile{/lang}</label>
@@ -204,7 +205,7 @@
 								</fieldset>
 							</dd>
 						</dl>
-					{/if}
+					{/if*}
 				
 					<dl>
 						<dt><label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label></dt>

@@ -324,7 +324,7 @@ class OptionHandler implements IOptionHandler {
 	 * @param	string			$type
 	 * @return	wcf\system\option\IOptionType
 	 */
-	protected function getTypeObject($type) {
+	public function getTypeObject($type) {
 		if (!isset($this->typeObjects[$type])) {
 			$className = $this->getClassName($type);
 			if ($className === null) {
