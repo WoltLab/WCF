@@ -2632,6 +2632,10 @@ input[type='button'],
 	position: relative;
 }
 
+fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
+	margin-top: 30px;
+}
+
 /* -- -- -- Tabs -- -- --  */
 
 /* Globals */
