@@ -69,7 +69,7 @@ final class HeaderUtil {
 	public static function getCompressedOutput($output) {
 		if (defined('LESS_FILES') && LESS_FILES) {
 			// remove .css files
-			$output = preg_replace('~\@import url\("(.*).css"\) screen;~U', '', $output);
+			$output = preg_replace('~\\@import url\("((?!burningBoard).)*.css"\) screen;~U', '', $output);
 			$output = str_replace(array('<!-- LESS_FILES', 'LESS_FILES -->'), array('', ''), $output);
 		}
 		
