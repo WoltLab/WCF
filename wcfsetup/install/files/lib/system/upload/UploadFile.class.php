@@ -146,6 +146,8 @@ class UploadFile {
 			$this->validationErrorType = 'invalidExtension';
 			return false;
 		}
+		
+		return true;
 	}
 	
 	/**
