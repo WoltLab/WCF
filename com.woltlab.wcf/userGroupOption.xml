@@ -3,6 +3,10 @@
 	<import>
 		<categories>
 			<category name="user"></category>
+			<category name="user.message">
+				<parent>user</parent>
+			</category>
+			
 			<category name="mod"></category>
 			<category name="admin"></category>
 			<category name="admin.general">
