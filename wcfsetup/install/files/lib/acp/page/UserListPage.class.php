@@ -190,7 +190,7 @@ class UserListPage extends SortablePage {
 			$conditions->add("user_table.userID IN (?)", array($userIDs));
 			
 			$sql = "SELECT	userID, groupID
-				FROM	wcf".WCF_N."_user_to_group
+				FROM	wcf".WCF_N."_user_to_group user_table
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
