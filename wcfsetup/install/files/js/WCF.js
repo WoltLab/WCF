@@ -1737,6 +1737,12 @@ WCF.MultipleLanguageInput.prototype = {
 	 * @var	jQuery
 	 */
 	_element: null,
+	
+	/**
+	 * true, if data was entered after initialization
+	 * @var	boolean
+	 */
+	_insertedDataAfterInit: false,
 
 	/**
 	 * enables multiple language ability
@@ -1792,6 +1798,7 @@ WCF.MultipleLanguageInput.prototype = {
 		
 		// build selection handler
 		var $enableOnInit = ($.getLength(this._values) > 0) ? true : false;
+		this._insertedDataAfterInit = $enableOnInit;
 		this._prepareElement($enableOnInit);
 		
 		// listen for submit event
@@ -1860,6 +1867,7 @@ WCF.MultipleLanguageInput.prototype = {
 			}
 
 			this._isEnabled = true;
+			this._insertedDataAfterInit = false;
 		}
 
 		// toggle list
@@ -1903,6 +1911,13 @@ WCF.MultipleLanguageInput.prototype = {
 	 * Closes the language selection.
 	 */
 	_closeSelection: function() {
+		if (!this._insertedDataAfterInit) {
+			// prevent loop of death
+			this._insertedDataAfterInit = true;
+			
+			this._disable();
+		}
+		
 		if (this._list !== null) {
 			this._list.removeClass('open');
 		}
@@ -1915,12 +1930,13 @@ WCF.MultipleLanguageInput.prototype = {
 	 */
 	_changeLanguage: function(event) {
 		var $button = $(event.target);
-
+		this._insertedDataAfterInit = true;
+		
 		// save current value
 		if (this._didInit) {
 			this._values[this._languageID] = this._element.val();
 		}
-
+		
 		// set new language
 		this._languageID = $button.data('languageID');
 		if (this._values[this._languageID]) {
@@ -1929,14 +1945,14 @@ WCF.MultipleLanguageInput.prototype = {
 		else {
 			this._element.val('');
 		}
-
+		
 		// update marking
 		this._list.children('li').removeClass('active');
 		$button.addClass('active');
-
+		
 		// update label
 		this._list.prev('.wcf-dropdownCaption').children('span').text(this._availableLanguages[this._languageID]);
-
+		
 		// close selection and set focus on input element
 		this._closeSelection();
 		this._element.focus();
