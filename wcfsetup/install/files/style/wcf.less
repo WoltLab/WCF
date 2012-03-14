@@ -2829,7 +2829,7 @@ input[type='button'],
 }
 
 .wcf-boxDecor {
-	background-color: rgba(253, 253, 253, 1);
+	background-color: @backColor10;
 }
 
 /* Headings */
@@ -2873,6 +2873,63 @@ input[type='button'],
 .wcf-boxTitle > a img {
 	height: 16px;
 	width: 16px;
+}
+
+
+
+/* ############## List Box ############## */
+
+/* Globals */
+
+.wcf-listBox {
+	line-height: 1.5;
+	border-width: 1px 0;
+	border-style: @borderStyle;
+	border-color: @borderColor11;
+	background-color: @backColor10;
+	margin-top: -1px !important;
+	box-sizing: border-box;
+}
+
+.wcf-listBox:first-child {
+	border-top-width: 0;
+}
+
+.wcf-listBox:last-child {
+	border-bottom-width: 0;
+}
+
+.wcf-listBox:nth-child(2n+1) {
+	/* auto-colorer for every 2nd row */
+	background-color: transparent;
+}
+
+.wcf-listBox:hover {
+	background-color: darken(@backColor10, 2%);
+}
+
+/* List Box Contents */
+
+.wcf-listBox > .wcf-container {
+	margin-top: 0;
+	padding: 7px;
+}
+
+.wcf-listBox .wcf-username {
+	font-size: 120%;
+	display: inline;
+}
+
+.wcf-listBox time {
+	font-size: 85%;
+	color: rgba(153, 153, 153, 1);
+	display: inline;
+}
+
+.wcf-listBox .wcf-badge {
+	font-size: 85%;
+	padding: 0 5px;
+	display: inline-block;
 }
 
 
