@@ -22,14 +22,14 @@ class ProcessibleDatabaseObject extends DatabaseObject {
 	
 	/**
 	 * processor this database object
-	 * @var	wcf\data\IDatabaseObjectProcessor
+	 * @var	object
 	 */
 	protected $processor = null;
 	
 	/**
 	 * Returns the processor this database object.
 	 * 
-	 * @return	wcf\data\IDatabaseObjectProcessor
+	 * @return	object
 	 */
 	public function getProcessor() {
 		if ($this->processor === null) {
@@ -37,14 +37,20 @@ class ProcessibleDatabaseObject extends DatabaseObject {
 				if (!class_exists($this->className)) {
 					throw new SystemException("Unable to find class '".$this->className."'");
 				}
-				if (!ClassUtil::isInstanceOf($this->className, 'wcf\data\IDatabaseObjectProcessor')) {
-					throw new SystemException("'".$this->className."' should implement wcf\data\IDatabaseObjectProcessor");
-				}
 				if (!ClassUtil::isInstanceOf($this->className, static::$processorInterface)) {
 					throw new SystemException("'".$this->className."' should implement ".$this->processorInterface);
 				}
 				
-				$this->processor = new $this->className($this);
+				if (ClassUtil::isInstanceOf($this->className, 'wcf\system\SingletonFactory')) {
+					$this->processor = call_user_func(array($this->className, 'getInstance'));
+				}
+				else {
+					if (!ClassUtil::isInstanceOf($this->className, 'wcf\data\IDatabaseObjectProcessor')) {
+						throw new SystemException("'".$this->className."' should implement wcf\data\IDatabaseObjectProcessor");
+					}
+					
+					$this->processor = new $this->className($this);
+				}
 			}
 		}
 		
