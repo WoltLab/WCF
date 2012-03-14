@@ -8,7 +8,7 @@ class LessStylesheetsPage extends AbstractPage {
 			@header('Content-Type: text/css');
 			
 			foreach (explode("\n", LESS_FILES) as $stylesheet) {
-				$path = WCF_DIR . 'style/'.$stylesheet.'.less';
+				$path = WCF_DIR . 'style/'.trim($stylesheet).'.less';
 				if (!file_exists($path)) {
 					echo "\n\nFILE NOT FOUND: ".$path."\n\n\n";
 				}
