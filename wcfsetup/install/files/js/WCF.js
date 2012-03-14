@@ -3108,7 +3108,7 @@ WCF.Effect.BalloonTooltip.prototype = {
 		});
 		
 		// show tooltip
-		this._tooltip.fadeIn('fast');
+		this._tooltip.wcfFadeIn();
 	},
 	
 	/**
@@ -3117,7 +3117,9 @@ WCF.Effect.BalloonTooltip.prototype = {
 	 * @param	object		event
 	 */
 	_mouseLeaveHandler: function(event) {
-		this._tooltip.hide();
+		this._tooltip.stop().hide().css({
+			opacity: 1
+		});
 	}
 };
 
