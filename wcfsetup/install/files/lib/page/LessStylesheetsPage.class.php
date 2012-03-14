@@ -18,8 +18,7 @@ class LessStylesheetsPage extends AbstractPage {
 					// use absolute path for url()
 					$application = ApplicationHandler::getInstance()->getApplication('wcf');
 					$absolutePath = $application->domainName . $application->domainPath;
-					
-					preg_replace('~url\(\'..\/~', 'url(\''.$absolutePath, $content);
+					$content = preg_replace('~url\(\'..\/~', 'url(\''.$absolutePath, $content);
 					
 					echo $content;
 				}
