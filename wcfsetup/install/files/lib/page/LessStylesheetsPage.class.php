@@ -1,6 +1,6 @@
 <?php
 namespace wcf\page;
-use wcf\system\application\ApplicationHandler;
+use wcf\data\application\Application;
 
 class LessStylesheetsPage extends AbstractPage {
 	public function show() {
@@ -16,7 +16,7 @@ class LessStylesheetsPage extends AbstractPage {
 					$content = file_get_contents($path);
 					
 					// use absolute path for url()
-					$application = ApplicationHandler::getInstance()->getApplication('wcf');
+					$application = new Application(1);
 					$absolutePath = $application->domainName . $application->domainPath;
 					$content = preg_replace('~url\(\'..\/~', 'url(\''.$absolutePath, $content);
 					
