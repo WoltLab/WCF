@@ -1455,6 +1455,7 @@ nav.wcf-topMenu {
 	border-style: @borderStyle;
 	border-color: @backColor22;
 	margin: 0 23px;
+	padding: 2px;
 	display: block;
 	min-height: 7px;
 	position: relative;
@@ -1569,6 +1570,12 @@ nav.wcf-topMenu {
 
 .wcf-headerNavigation .wcf-menu > ul > li {
 	margin-top: 7px;
+}
+
+.wcf-headerNavigation .wcf-menu > ul > li > a {
+	color: @fontColor31;
+	border-color: @backColor2;
+	background-color: @backColor21;
 }
 
 
@@ -2908,6 +2915,10 @@ input[type='button'],
 
 .wcf-listBox .wcf-listBox {
 	background-color: @backColor1;
+}
+
+.wcf-listBox .wcf-listBox:first-child {
+	border-top-width: 1px;
 }
 
 .wcf-listBox .wcf-listBox:nth-child(2n+1) {
