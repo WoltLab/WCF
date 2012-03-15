@@ -410,7 +410,6 @@ a[href^="mailto:"] {
 /* -- -- -- ToDo: Floated Elements -- -- --  */
 
 /* possibly obsolete */
-
 .floatContainer:after {
 	content: "";
 	height: 0;
@@ -2908,6 +2907,19 @@ input[type='button'],
 	background-color: darken(@backColor10, 2%);
 }
 
+.wcf-listBox .wcf-listBox {
+	background-color: @backColor1;
+}
+
+.wcf-listBox .wcf-listBox:nth-child(2n+1) {
+	/* auto-colorer for every 2nd row */
+	background-color: transparent;
+}
+
+.wcf-listBox .wcf-listBox:hover {
+	background-color: @backColor10;
+}
+
 /* List Box Contents */
 
 .wcf-listBox > .wcf-container {
@@ -2978,6 +2990,7 @@ fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
 .wcf-tabMenu li.ui-state-active {
 	margin-right: -7px;
 	margin-left: -7px;
+	margin-top: -@borderWidth;
 }
 
 .wcf-tabMenu li a {
@@ -2986,7 +2999,7 @@ fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
 	cursor: pointer;
 	display: inline-block;
 	position: relative;
-	bottom: -3px;
+	bottom: -(2px + @borderWidth);
 	z-index: 10;
 }
 
@@ -3031,14 +3044,14 @@ fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
 
 .wcf-tabMenu li.ui-state-active a:before {
 	position: absolute;
-	bottom: -1px;
+	bottom: -@borderWidth;
 	width: 5px;
 	height: 5px;
 	content: "";
-	border: 1px @borderStyle @borderColor11;
-	left: -6px;
+	border: @borderWidth @borderStyle @borderColor11;
+	left: -(5px + @borderWidth);
 	.mxBorderRadiusBR(6px);
-	border-width: 0 1px 1px 0;
+	border-width: 0 @borderWidth @borderWidth 0;
 	
 	-webkit-box-shadow: 2px 2px 0 @backColor1;
 	-khtml-box-shadow: 2px 2px 0 @backColor1;
@@ -3050,14 +3063,14 @@ fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
 
 .wcf-tabMenu li.ui-state-active a:after {
 	position: absolute;
-	bottom: -1px;
+	bottom: -@borderWidth;
 	width: 5px;
 	height: 5px;
 	content: "";
-	border: 1px @borderStyle @borderColor11;
-	right: -6px;
+	border: @borderWidth @borderStyle @borderColor11;
+	right: -(5px + @borderWidth);
 	.mxBorderRadiusBL(6px);
-	border-width: 0 0 1px 1px;
+	border-width: 0 0 @borderWidth @borderWidth;
 	
 	-webkit-box-shadow: -2px 2px 0 @backColor1;
 	-khtml-box-shadow: -2px 2px 0 @backColor1;
