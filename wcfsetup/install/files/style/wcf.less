@@ -66,10 +66,12 @@ q:after {
 
 /* Border Widths (1px) */
 @borderWidth: 1px;
+@borderWidthSeparator: 1px;
 @borderWidthBadge: 1px;
 
 /* Border Styles (solid) */
 @borderStyle: solid;
+@borderStyleSeparator: solid;
 @borderStyleBadge: solid;
 
 /* Border Colors */
@@ -77,6 +79,7 @@ q:after {
 /* Border Color (Middle Grey) */
 @borderColor1: rgba(153, 153, 153, 1);
 @borderColor11: lighten(@borderColor1, 20%);
+@borderColor12: lighten(@borderColor11, 10%);
 
 /* Rounded Corners */
 
@@ -286,7 +289,7 @@ q:after {
 
 /* Test */
 
-.mxTransition1 (@object: color, @time: 1s, @type: linear) {
+.mxTransition1 (@object: color, @time: 1ms, @type: linear) {
 	-webkit-transition: @arguments;
 	-khtml-transition: @arguments;
 	-moz-transition: @arguments;
@@ -2899,6 +2902,10 @@ input[type='button'],
 	box-sizing: border-box;
 }
 
+.wcf-listBox .wcf-listBox {
+	border-color: @borderColor12;
+}
+
 .wcf-listBox:first-child {
 	border-top-width: 0;
 }
@@ -2916,21 +2923,8 @@ input[type='button'],
 	background-color: darken(@backColor10, 2%);
 }
 
-.wcf-listBox .wcf-listBox {
-	background-color: @backColor1;
-}
-
 .wcf-listBox .wcf-listBox:first-child {
 	border-top-width: 1px;
-}
-
-.wcf-listBox .wcf-listBox:nth-child(2n+1) {
-	/* auto-colorer for every 2nd row */
-	background-color: transparent;
-}
-
-.wcf-listBox .wcf-listBox:hover {
-	background-color: @backColor10;
 }
 
 /* List Box Contents */
@@ -2953,8 +2947,13 @@ input[type='button'],
 
 .wcf-listBox .wcf-badge {
 	font-size: 85%;
+	margin-left: 0;
 	padding: 0 5px;
 	display: inline-block;
+}
+
+.wcf-listBox .wcf-likesDisplay {
+	display: inline;
 }
 
 

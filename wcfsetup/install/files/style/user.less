@@ -33,7 +33,7 @@
 
 
 
-/* ############## ToDo: Sidebar User Avatars ############## */
+/* ############## ToDo: Sidebar ############## */
 
 /* I've changed the layout, so the classes may not match any more! */
 
@@ -225,19 +225,14 @@ Be careful with the following classes!
 
 .wcf-commentList .wcf-containerContent small {
 	font-size: 85%;
-	color: rgba(192, 192, 192, 1);
+	color: @fontColor11;
 	margin-top: 3px;
 }
 
 /* Comment List */
 
 .wcf-commentList > .wcf-container {
-	border-top: 1px solid rgba(204, 204, 204, 1);
 	padding: 7px;
-}
-
-.wcf-commentList > .wcf-container:first-child {
-	border-top-width: 0;
 }
 
 /* Comment Add */
@@ -247,8 +242,7 @@ Be careful with the following classes!
 }
 
 .wcf-commentResponseAdd {
-	border-top: 1px solid rgba(204, 204, 204, 1);
-	background-color: rgba(0, 0, 0, .015);
+	border-top: @borderWidthSeparator @borderStyleSeparator @borderColor12;
 	margin-top: 7px;
 	padding: 7px;
 }
@@ -256,8 +250,6 @@ Be careful with the following classes!
 .wcf-commentResponseAdd .wcf-containerIcon {
 	margin-left: 10px;
 }
-
-
 
 /* Comment Response List */
 
@@ -269,24 +261,10 @@ Be careful with the following classes!
 	margin-top: 0;
 }
 
-.wcf-commentResponseList > .wcf-container,
-.wcf-commentResponseList > div > .wcf-container {
-	border-top: 1px solid rgba(204, 204, 204, 1);
-	background-color: rgba(0, 0, 0, .015);
-}
-
-.wcf-commentResponseList > .wcf-container:nth-child(2n+1) {
-	/* Auto-colorer for every 2nd row */
-	background-color: rgba(0, 0, 0, .0);
-}
-
-
-
 /* Comment Options */
 
 .wcf-commentContent > div > .wcf-commentOptions,
 .wcf-commentResponseList > li .wcf-commentOptions {
-	font-size: 85%;
 	display: block;
 	position: absolute;
 	top: 2px;
@@ -298,7 +276,7 @@ Be careful with the following classes!
 	float: left;
 	opacity: 0;
 	
-	.mxTransition1(opacity, .9ms);
+	.mxTransition1(opacity);
 }
 
 .wcf-commentContent > div:hover > .wcf-commentOptions > li,
@@ -308,22 +286,21 @@ Be careful with the following classes!
 
 .wcf-commentContent > div > .wcf-commentOptions > li a,
 .wcf-commentResponseList > li .wcf-commentOptions li a {
-	color: rgba(153, 153, 153, 1);
 	cursor: pointer;
-	display: inline-block;
 	padding: 3px;
+	display: inline-block;
 }
-
-
 
 /* Toggle Comments Links */
 
 .wcf-commentResponsePrevious,
 .wcf-commentResponseRecent {
-	width: 100%;
 	text-align: center;
+	border-top: @borderWidthSeparator @borderStyleSeparator @borderColor12;
 	margin-left: auto;
 	margin-right: auto;
+	padding-top: 7px;
+	width: 100%;
 }
 
 .wcf-commentResponsePrevious a,
@@ -333,8 +310,6 @@ Be careful with the following classes!
 	border-radius: 3px;
 	padding: 0 13px;
 	display: inline-block;
-	width: 15%;
-	min-width: 150px;
 }
 
 
@@ -407,16 +382,17 @@ Be careful with the following classes!
 }
 
 .wcf-userList > li > .wcf-container {
-	border-width: 1px;
-	border-style: @borderStyle;
-	border-color: @borderColor11;
+	border-width: @borderWidthSeparator;
+	border-style: @borderStyleSeparator;
+	border-color: @borderColor12;
 	height: 80px;
 	padding: 7px;
 }
 
+/* ToDo */
 .wcf-userList > li > .wcf-container .wcf-userJoinDate {
 	font-size: 85%;
-	color: rgba(153, 153, 153, 1);
+	color: @fontColor11;
 	display: block;
 }
 
