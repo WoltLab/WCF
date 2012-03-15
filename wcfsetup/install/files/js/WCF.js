@@ -4251,6 +4251,12 @@ WCF.Sortable.List.prototype = {
 	_notification: null,
 	
 	/**
+	 * list of options
+	 * @var	object
+	 */
+	_options: { },
+	
+	/**
 	 * proxy object
 	 * @var	WCF.Action.Proxy
 	 */
@@ -4267,8 +4273,9 @@ WCF.Sortable.List.prototype = {
 	 * 
 	 * @param	string		containerID
 	 * @param	string		className
+	 * @param	object		options
 	 */
-	init: function(containerID, className) {
+	init: function(containerID, className, options) {
 		this._containerID = $.wcfEscapeID(containerID);
 		this._container = $('#' + this._containerID);
 		this._className = className;
@@ -4278,19 +4285,20 @@ WCF.Sortable.List.prototype = {
 		this._structure = { };
 		
 		// init sortable
-		$('#' + this._containerID + ' > .wcf-sortableList').wcfNestedSortable({
+		this._options = $.extend(true, {
 			axis: 'y',
 			connectWith: '#' + this._containerID * ' .wcf-sortableList',
 			disableNesting: 'wcf-sortableNoNesting',
 			errorClass: 'wcf-sortableInvalidTarget',
 			forcePlaceholderSize: true,
 			helper: 'clone',
-			items: 'li',
+			items: 'li:not(.wcf-sortableNoSorting)',
 			opacity: .6,
 			placeholder: 'wcf-badgeYellow',
 			tolerance: 'pointer',
 			toleranceElement: '> span'
-		});
+		}, options || { });
+		$('#' + this._containerID + ' > .wcf-sortableList').wcfNestedSortable(this._options);
 		
 		this._container.find('.wcf-formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
 		this._container.find('.wcf-formSubmit > button[data-type="reset"]').click($.proxy(this._reset, this));
@@ -4305,7 +4313,7 @@ WCF.Sortable.List.prototype = {
 			var $list = $(list);
 			var $parentID = $list.data('objectID');
 			
-			$list.children('li').each($.proxy(function(index, listItem) {
+			$list.children(this._options.items).each($.proxy(function(index, listItem) {
 				var $objectID = $(listItem).data('objectID');
 				
 				if (!this._structure[$parentID]) {
