@@ -1455,7 +1455,7 @@ nav.wcf-topMenu {
 	border-style: @borderStyle;
 	border-color: @backColor22;
 	margin: 0 23px;
-	padding: 2px;
+	padding: 2px 0;
 	display: block;
 	min-height: 7px;
 	position: relative;
@@ -1643,12 +1643,12 @@ section.wcf-content:after {
 }
 
 .left section.wcf-content {
-	border-left: @borderWidth @borderStyle rgba(187, 204, 221, 1);
+	border-left: 1px @borderStyle rgba(187, 204, 221, 1);
 	margin-left: 249px;
 }
 
 .right section.wcf-content {
-	border-right: @borderWidth @borderStyle rgba(187, 204, 221, 1);
+	border-right: 1px @borderStyle rgba(187, 204, 221, 1);
 	margin-right: 249px;
 }
 
@@ -1672,8 +1672,9 @@ section.wcf-content:after {
 		padding: 5px 15px 20px;
 	}
 	
-}	
+}
 
+/* ToDo */
 .wcf-contentDecor {
 	background-color: rgba(253, 253, 253, 1);
 }
@@ -1756,6 +1757,7 @@ section.wcf-content:after {
 	height: 100%;
 	overflow: hidden;
 	z-index: 30;
+	opacity: .3;
 }
 
 .wcf-collapsibleSidebarButton span {
@@ -1774,6 +1776,7 @@ section.wcf-content:after {
 .wcf-collapsibleSidebarButton:hover,
 .wcf-collapsibleSidebarButton:hover span {
 	background-color: @backColor10;
+	opacity: 1;
 }
 
 .wcf-collapsibleSidebarButton span:focus,
