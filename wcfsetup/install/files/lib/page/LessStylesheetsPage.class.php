@@ -19,6 +19,7 @@ class LessStylesheetsPage extends AbstractPage {
 					$application = new Application(1);
 					$absolutePath = $application->domainName . $application->domainPath;
 					$content = preg_replace('~url\(\'..\/~', 'url(\''.$absolutePath, $content);
+					$content = preg_replace('~@import "([a-zA-Z]+)\.less";~', '@import "' . $absolutePath . 'style/$1.less";', $content);
 					
 					echo $content;
 				}
