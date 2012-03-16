@@ -84,7 +84,7 @@ q:after {
 /* Border Color (Middle Blue) */
 @borderColor2: rgba(51, 102, 153, 1);
 @borderColor21: lighten(@borderColor2, 20%);
-@borderColor22: lighten(@borderColor21, 10%);
+@borderColor22: lighten(@borderColor21, 20%);
 
 /* Rounded Corners */
 
@@ -2689,7 +2689,7 @@ input[type=search] {
 }
 
 .wcf-smallButtons > li.separator > a {
-	border-right: @borderWidthSeparator @borderStyleSeparator @borderColorButtonTop3;
+	border-right: @borderWidthSeparator @borderStyleSeparator @borderColorButtonTop3; /* ToDo */
 }
 
 .wcf-smallButtons > li:first-child > a {
@@ -2706,7 +2706,7 @@ input[type=search] {
 
 .wcf-smallButtonBar {
 	text-align: center !important;
-	border-top: 1px solid rgba(204, 204, 204, 1);
+	border-top: @borderWidthButton @borderStyleButton @borderColorButtonTop1;
 	border-radius: 0 0 7px 7px;
 	
 	background-color: rgba(0, 0, 0, .015);
