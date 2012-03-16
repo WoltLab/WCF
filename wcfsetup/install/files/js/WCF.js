@@ -3275,6 +3275,174 @@ WCF.DOMNodeInsertedHandler = {
 };
 
 /**
+ * Notifies objects once a DOM node was removed.
+ */
+WCF.DOMNodeRemovedHandler = {
+	/**
+	 * list of callbacks
+	 * @var	WCF.Dictionary
+	 */
+	_callbacks: new WCF.Dictionary(),
+
+	/**
+	 * prevent infinite loop if a callback manipulates DOM
+	 * @var	boolean
+	 */
+	_isExecuting: false,
+
+	/**
+	 * indicates that overlay handler is listening to DOMNodeRemoved events on body-tag
+	 * @var	boolean
+	 */
+	_isListening: false,
+
+	/**
+	 * Adds a new callback.
+	 * 
+	 * @param	string		identifier
+	 * @param	object		callback
+	 */
+	addCallback: function(identifier, callback) {
+		this._bindListener();
+
+		if (this._callbacks.isset(identifier)) {
+			console.debug("[WCF.DOMNodeRemovedHandler] identifier '" + identifier + "' is already bound to a callback");
+			return false;
+		}
+
+		this._callbacks.add(identifier, callback);
+	},
+
+	/**
+	 * Removes a callback from list.
+	 * 
+	 * @param	string		identifier
+	 */
+	removeCallback: function(identifier) {
+		if (this._callbacks.isset(identifier)) {
+			this._callbacks.remove(identifier);
+		}
+	},
+
+	/**
+	 * Binds click event handler.
+	 */
+	_bindListener: function() {
+		if (this._isListening) return;
+
+		$(document).bind('DOMNodeRemoved', $.proxy(this._executeCallbacks, this));
+
+		this._isListening = true;
+	},
+
+	/**
+	 * Executes callbacks if a DOM node is removed.
+	 */
+	_executeCallbacks: function(event) {
+		if (this._isExecuting) return;
+
+		// do not track events while executing callbacks
+		this._isExecuting = true;
+		
+		this._callbacks.each(function(pair) {
+			// execute callback
+			pair.value(event);
+		});
+		
+		// enable listener again
+		this._isExecuting = false;
+	}
+};
+
+/**
+ * Namespace for table related classes.
+ */
+WCF.Table = {};
+
+/**
+ * Handles empty tables which can be used in combination with WCF.Action.Proxy.
+ */
+WCF.Table.EmptyTableHandler = Class.extend({
+	/**
+	 * handler options
+	 * @var	object
+	 */
+	_options: {},
+	
+	/**
+	 * class name of the relevant rows
+	 * @var	string
+	 */
+	_rowClassName: '',
+	
+	/**
+	 * Initalizes a new WCF.Table.EmptyTableHandler object.
+	 * 
+	 * @param	string		rowClassName
+	 * @param	jQuery		tableContainer
+	 * @param	object		options
+	 */
+	init: function(rowClassName, tableContainer, options) {
+		this._rowClassName = rowClassName;
+		this._tableContainer = tableContainer;
+		
+		this._options = $.extend(true, {
+			emptyMessage: null,
+			messageType: 'wcf-warning',
+			refreshPage: false,
+			updatePageNumber: false
+		}, options || { });
+		
+		WCF.DOMNodeRemovedHandler.addCallback('WCF.Table.EmptyTableHandler.' + rowClassName, $.proxy(this._remove, this));
+	},
+	
+	/**
+	 * Handles the removal of a DOM node.
+	 */
+	_remove: function(event) {
+		var element = $(event.target);
+		
+		// check if DOM element is relevant
+		if (element.hasClass(this._rowClassName)) {
+			var tbody = element.parents('tbody:eq(0)');
+			
+			// check if table will be empty if DOM node is removed
+			if (tbody.children('tr').length == 1) {
+				if (this._options.emptyMessage) {
+					// insert message
+					this._tableContainer.replaceWith($('<p />').addClass(this._options.messageType).text(this._options.emptyMessage));
+				}
+				else if (this._options.refreshPage) {
+					// refresh page
+					if (this._options.updatePageNumber) {
+						// calculate the new page number
+						var pageNumberURLComponents = window.location.href.match(/(\?|&)pageNo=(\d+)/g);
+						if (pageNumberURLComponents) {
+							var currentPageNumber = pageNumberURLComponents[pageNumberURLComponents.length - 1].match(/\d+/g);
+							if (this._options.updatePageNumber > 0) {
+								currentPageNumber++;
+							}
+							else {
+								currentPageNumber--;
+							}
+							
+							window.location = window.location.href.replace(pageNumberURLComponents[pageNumberURLComponents.length - 1], pageNumberURLComponents[pageNumberURLComponents.length - 1][0] + 'pageNo=' + currentPageNumber);
+						}
+					}
+					else {
+						window.location.reload();
+					}
+				}
+				else {
+					// simply remove the table container
+					this._tableContainer.remove();
+				}
+			}
+		}
+	}
+});
+
+/**
  * Namespace for search related classes.
  */
 WCF.Search = {};
