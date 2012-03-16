@@ -4223,9 +4223,10 @@ WCF.Sortable = {};
  * 
  * @param	string		containerID
  * @param	string		className
+ * @param	integer		offset
+ * @param	object		options
  */
-WCF.Sortable.List = function(containerID, className) { this.init(containerID, className); };
-WCF.Sortable.List.prototype = {
+WCF.Sortable.List = Class.extend({
 	/**
 	 * action class name
 	 * @var	string
@@ -4367,7 +4368,7 @@ WCF.Sortable.List.prototype = {
 		
 		this._notification.show();
 	}
-};
+});
 
 /**
  * Provides a toggleable sidebar.
