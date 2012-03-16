@@ -25,6 +25,7 @@ class LinkHandler extends SingletonFactory {
 	 */
 	public function getLink($controller = null, array $parameters = array(), $url = '') {
 		$abbreviation = 'wcf';
+		$anchor = '';
 		$isRaw = false;
 		if (isset($parameters['application'])) {
 			$abbreviation = $parameters['application'];
@@ -33,6 +34,12 @@ class LinkHandler extends SingletonFactory {
 		if (isset($parameters['isRaw'])) {
 			$isRaw = $parameters['isRaw'];
 			unset($parameters['isRaw']);
+		}
+		
+		// remove anchor before parsing
+		if (($pos = strpos($url, '#')) !== false) {
+			$anchor = substr($url, $pos);
+			$url = substr($url, 0, $pos);
 		}
 		
 		// build route
@@ -83,6 +90,9 @@ class LinkHandler extends SingletonFactory {
 			
 			$url = $application->domainName . $application->domainPath . $url;
 		}
+		
+		// append previously removed anchor
+		$url .= $anchor;
 		
 		return $url;
 	}
