@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
@@ -56,7 +57,11 @@ class WCFACP extends WCF {
 		$pathInfo = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : '';
 		if (empty($pathInfo) || !preg_match('~^/(ACPCaptcha|Login)/~', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
-				util\HeaderUtil::redirect('index.php/Login/'.SID_ARG_1ST, false);
+				// build redirect path
+				$application = ApplicationHandler::getInstance()->getActiveApplication();
+				$path = $application->domainName . $application->domainPath . 'acp/index.php/Login/' . SID_ARG_1ST;
+				
+				util\HeaderUtil::redirect($path, false);
 				exit;
 			}
 			else {
