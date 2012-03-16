@@ -116,7 +116,7 @@ class InstallPackageAction extends AbstractDialogAction {
 				
 				// build redirect location
 				$location = $row['domainName'] . $row['domainPath'] . 'acp/index.php/PackageList/' . SID_ARG_1ST;
-				@file_put_contents(WCF_DIR . '__installPackage.txt', $location);
+				@file_put_contents(WCF_DIR . '__installPackage.txt', $row['domainName'] . "\n" . $row['domainPath'] . "\n" . $location);
 				
 				// show success
 				$this->data = array(
