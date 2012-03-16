@@ -1973,10 +1973,6 @@ section.wcf-content:after {
 	margin-top: 30px;
 }
 
-.wcf-mainHeading > hgroup {
-	min-height: 48px;
-}
-
 .wcf-mainHeading > hgroup h1 {
 	font-weight: bold;
 	border-bottom: @borderWidth @borderStyle @borderColor1;
@@ -2207,6 +2203,16 @@ dl > dd > small {
 	display: block;
 }
 
+input[type='checkbox'] ~ small,
+input[type='radio'] ~ small {
+	margin-top: 0;
+	margin-left: 21px;
+}
+
+dl > :not(dt) > label ~ small {
+	margin-left: 21px;
+}
+
 dl > dd > p {
 	margin-top: 5px;
 }
@@ -2315,12 +2321,6 @@ label {
 .wcf-formSubmit {
 	text-align: center;
 	margin-top: 15px;
-}
-
-input[type='checkbox'] ~ small,
-input[type='radio'] ~ small {
-	margin-top: 0;
-	margin-left: 21px;
 }
 
 
