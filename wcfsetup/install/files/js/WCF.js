@@ -4251,6 +4251,12 @@ WCF.Sortable.List.prototype = {
 	_notification: null,
 	
 	/**
+	 * show order offset
+	 * @var	integer
+	 */
+	_offset: 0,
+	
+	/**
 	 * list of options
 	 * @var	object
 	 */
@@ -4273,12 +4279,14 @@ WCF.Sortable.List.prototype = {
 	 * 
 	 * @param	string		containerID
 	 * @param	string		className
+	 * @param	integer		offset
 	 * @param	object		options
 	 */
-	init: function(containerID, className, options) {
+	init: function(containerID, className, offset, options) {
 		this._containerID = $.wcfEscapeID(containerID);
 		this._container = $('#' + this._containerID);
 		this._className = className;
+		this._offset = (offset) ? offset : 0;
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
@@ -4330,6 +4338,7 @@ WCF.Sortable.List.prototype = {
 			className: this._className,
 			parameters: {
 				data: {
+					offset: this._offset,
 					structure: this._structure
 				}
 			}
