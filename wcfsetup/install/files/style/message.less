@@ -5,21 +5,42 @@
  * @copyright	2011 WoltLab GmbH 
  */
 
+
+
+/* ############## LESS Definitions ############## */
+
+/* -- -- -- LESS: Posts -- -- -- */
+
+/* Back Image */
+
+/* Back Image (header.png) */
+@backImagePost: url('../images/header.png');
+
+/* Orientations */
+
+/* Post Orientation (left|top|right|bottom) */
+@postOrientation: left;
+
+/* Post Sidebar Orientation (left|center|right) */
+@postSidebarOrientation: center;
+
+
+
 /* ############## Article ############## */
 
 /* Globals */
 
 .wcf-message {
-	border: 1px solid #bcd;
+	border-color: @borderColor22;
 	background-color: #d8e7f5;
-	margin-top: 15px;
 	position: relative;
+}
+
+.wbb-threadStarter .wcf-message {
+	.mxStripes1;
 	
-	-webkit-box-shadow: 0 3px 7px #eee;
-	-moz-box-shadow: 0 3px 7px #eee;
-	-ms-box-shadow: 0 3px 7px #eee;
-	-o-box-shadow: 0 3px 7px #eee;
-	box-shadow: 0 3px 7px #eee;
+	background-position: @postOrientation top, @postOrientation top;
+	background-repeat: repeat, repeat;
 }
 
 .wcf-message:after {
@@ -48,7 +69,8 @@
 /* Globals */
 
 .wcf-message .wcf-messageContent {
-	border-radius: 5px;
+	.mxBorderRadius;
+	
 	background-color: #fcfdfe;
 }
 
@@ -62,12 +84,12 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 @media screen and (min-width: 480px) {
 	
 	.wcf-message.left .wcf-messageContent {
-		border-left: 1px solid #bcd;
+		border-left: 1px solid @borderColor22;
 		margin: 0 0 0 211px;
 	}
 
 	.wcf-message.right .wcf-messageContent {
-		border-right: 1px solid #bcd;
+		border-right: 1px solid @borderColor22;
 		margin: 0 211px 0 0;
 	}
 	
@@ -76,7 +98,7 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 @media screen and (max-width: 480px) {
 	
 	.wcf-message .wcf-messageContent {
-		border-top: 1px solid #bcd;
+		border-top: 1px solid @borderColor22;
 		margin: 0;
 	}
 
@@ -112,7 +134,7 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 
 .wcf-message .wcf-messageContent header time {
 	font-size: 85%;
-	color: #999;
+	color: @fontColor53;
 	margin-top: 7px;
 }
 
@@ -123,14 +145,14 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 }
 
 .wcf-message .wcf-messageContent header .wcf-likesDisplay .wcf-badge {
-	font-size: 76%;
+	font-size: 75%;
 	margin-left: 0;
 	top: 0;
 }
 
 .wcf-message .wcf-messageContent header .wcf-messageTitle {
 	font-weight: bold;
-	color: #999;
+	color: @fontColor53;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 1);
 }
 
@@ -199,13 +221,13 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 	
 	.wcf-message.left header > .pointer {
 		border-style: solid solid solid none;
-		border-color: transparent #bcd transparent transparent;
+		border-color: transparent @borderColor22 transparent transparent;
 		left: -20px;
 	}
 	
 	.wcf-message.right header > .pointer {
 		border-style: solid none solid solid;
-		border-color: transparent transparent transparent #bcd;
+		border-color: transparent transparent transparent @borderColor22;
 		right: -20px;
 	}
 	
@@ -255,7 +277,7 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 	
 	.wcf-message header > .pointer {
 		border-style: none solid solid solid;
-		border-color: transparent transparent #bcd transparent;
+		border-color: transparent transparent @borderColor22 transparent;
 		left: 47%;
 	}
 	
@@ -288,7 +310,7 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 /* Message Body */
 
 .wcf-message .wcf-messageBody {
-	color: #666;
+	color: @fontColor52;
 	display: block;
 	position: relative;
 }
@@ -319,14 +341,16 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 	clear: both;
 }
 
-.wcf-message .wcf-messageBody > div {
-	border-top: 1px dotted #ccc;
+.wcf-message .wcf-messageBody > div,
+.wcf-message .wcf-messageBody > wcf-signature {
+	border-top: @borderWidthSeparator @borderStyleSeparator @borderColor11;
 	padding: 10px 0;
 	display: block;
 	overflow: hidden;
 }
 
 .wcf-message .wcf-messageBody .wcf-signature {
+	color: @fontColor53;
 	overflow: hidden;
 }
 
@@ -356,6 +380,7 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 	font-size: 90%;
 	line-height: 1.3;
 	position: relative;
+	box-sizing: border-box;
 }
 	
 @media screen and (min-width: 480px) {
@@ -365,7 +390,7 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 		margin-bottom: -1px;
 		padding: 10px 20px 20px;
 		/* Width toggle */
-		width: 170px;
+		width: 210px;
 	}
 }
 
@@ -417,25 +442,25 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 	font-weight: bold;
 	text-decoration: none;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 1);
-	color: #369;
+	color: @fontColor3;
 	padding: 1px 3px;
 }
 
 /* Message Sidebar Contents */
 
 .wcf-message .wcf-messageSidebar a {
-	color: #369;
+	color: @fontColor3;
 }
 
 .wcf-message .wcf-messageSidebar a:hover {
-	color: #036;
+	color: @fontColor3;
 }
 
 .wcf-message .wcf-messageSidebar .userTitle .wcf-badge {
 	font-size: 95%;
-	color: rgba(255, 255, 255, 1);
-	border-radius: 13px;
-	background-color: #369;
+	color: @fontColor1;
+	/* border-radius: 13px; obsolete? */
+	background-color: @backColor3;
 	margin-top: 3px;
 	padding: 0 10px;
 	display: inline-block;
@@ -449,7 +474,7 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 
 .wcf-message .wcf-messageSidebar .userRank {
 	font-size: 95%;
-	color: rgba(255, 255, 255, 1);
+	color: @fontColor1;
 	margin: 3px 0 0;
 	padding: 0 0 7px;
 	display: block;
@@ -468,7 +493,7 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 
 .wcf-message .wcf-messageSidebar .userCredits {
 	font-size: 95%;
-	color: #369;
+	color: @fontColor3;
 	margin: 7px 0 0;
 	padding: 0 0 7px;
 	display: block;
@@ -476,12 +501,12 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 
 .wcf-message .wcf-messageSidebar .userCredits p,
 .wcf-message .wcf-messageSidebar .userCredits a {
-	color: #369;
+	color: @fontColor3;
 }
 
 .wcf-message .wcf-messageSidebar .userStatus,
 .wcf-message .wcf-messageSidebar .userContacts {
-	color: #369;
+	color: @fontColor3;
 	margin: 7px 0 0;
 	display: block;
 }
@@ -504,16 +529,13 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 	padding: 1px 3px 0;
 	display: inline-block;
 	
-	-webkit-transition: background-color .2s linear;
-	-moz-transition: background-color .2s linear;
-	-ms-transition: background-color .2s linear;
-	-o-transition: background-color .2s linear;
-	transition: background-color .2s linear;
+	.mxTransition1 (background-color, .2s);
 }
 
 .wcf-message .wcf-messageSidebar .userStatus ul li a:hover,
 .wcf-message .wcf-messageSidebar .userContacts ul li a:hover {
-	border-radius: 7px;
+	.mxBorderRadius (7px);
+	
 	background-color: #bcd;
 	
 	-webkit-box-shadow: 0 1px 7px #eee;
@@ -537,7 +559,7 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 	.wcf-message.dividers .userRank,
 	.wcf-message.dividers .userCredits,
 	.wcf-message.dividers .userStatus  {
-		border-bottom: 1px dotted #bcd;
+		border-bottom: @borderWidthSeparator @borderStyleSeparator @borderColor22;
 	}
 	
 	.wcf-message.dividers .wcf-messageSidebar div:last-child {
@@ -601,7 +623,7 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 
 .wcf-message .wcf-messageSidebar .userStatus .wbb-threadStarter {
 	border: 1px solid #ccc;
-	background-color: rgba(255, 255, 255, 1);
+	background-color: @backColor1;
 	display: block !important;
 	position: absolute;
 }
@@ -766,14 +788,6 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 	clear: both;
 }
 
-/* Message Footer Signature */
-
-.wcf-message .wcf-messageSignature {
-	color: #999;
-	border-top: 1px dotted #ccc;
-	display: block;
-}
-
 /* Message Footer Navi */
 
 .wcf-message .wcf-messageFooter nav {
@@ -794,11 +808,7 @@ li:nth-child(2n+1) .wcf-message .wcf-messageContent {
 		bottom: -1px;
 		opacity: 0;
 		
-		-webkit-transition: opacity .1s linear;
-		-moz-transition: opacity .1s linear;
-		-ms-transition: opacity .1s linear;
-		-o-transition: opacity .1s linear;
-		transition: opacity .1s linear;
+		.mxTransition1 (opacity, .2s);
 	}
 	
 	.wcf-message:hover .wcf-messageFooter nav {

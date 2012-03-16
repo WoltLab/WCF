@@ -1,10 +1,3 @@
-@import "user.less";
-@import "message.less";
-@import "label.less";
-@import "bbcodes.less";
-
-
-
 /**
  * WCF Styles  
  *
@@ -78,7 +71,7 @@ q:after {
 
 /* Border Styles (solid) */
 @borderStyle: solid;
-@borderStyleSeparator: solid;
+@borderStyleSeparator: dotted;
 @borderStyleBadge: solid;
 
 /* Border Colors */
@@ -87,6 +80,11 @@ q:after {
 @borderColor1: rgba(153, 153, 153, 1);
 @borderColor11: lighten(@borderColor1, 20%);
 @borderColor12: lighten(@borderColor11, 10%);
+
+/* Border Color (Middle Blue) */
+@borderColor2: rgba(51, 102, 153, 1);
+@borderColor21: lighten(@borderColor2, 20%);
+@borderColor22: lighten(@borderColor21, 10%);
 
 /* Rounded Corners */
 
@@ -141,8 +139,8 @@ q:after {
 
 /* Back Images */
 
-/* Back Color1 (White) */
-@backImage:  url('../images/header.png');
+/* Back Image (header.png) */
+@backImage: url('../images/header.png');
 
 /* Back Colors */
 
@@ -298,7 +296,7 @@ q:after {
 
 /* Transitions 1 */
 
-.mxTransition1(@object: color, @time: 1ms, @type: linear) {
+.mxTransition1 (@object: color, @time: 1ms, @type: linear) {
 	-webkit-transition: @arguments;
 	-khtml-transition: @arguments;
 	-moz-transition: @arguments;
@@ -307,9 +305,16 @@ q:after {
 	transition: @arguments;
 }
 
+/* Stripes 1 */
 
-
-
+.mxStripes1 {
+	background-image: -webkit-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .3) 15px, rgba(255, 255, 255, .3) 30px), @backImagePost;
+	background-image: -khtml-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .3) 15px, rgba(255, 255, 255, .3) 30px), @backImagePost;
+	background-image: -moz-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .3) 15px, rgba(255, 255, 255, .3) 30px), @backImagePost;
+	background-image: -ms-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .3) 15px, rgba(255, 255, 255, .3) 30px), @backImagePost;
+	background-image: -o-repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .3) 15px, rgba(255, 255, 255, .3) 30px), @backImagePost;
+	background-image: repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, .3) 15px, rgba(255, 255, 255, .3) 30px), @backImagePost;
+}
 
 
 
@@ -512,7 +517,7 @@ a[href^="mailto:"] {
 	font-weight: bold;
 	text-shadow: none;
 	text-decoration: none;
-	.mxBorderRadius(30px);
+	.mxBorderRadius (30px);
 	background-color: @backColor1;
 	margin-right: -3px;
 	margin-left: 3px;
@@ -556,7 +561,7 @@ a[href^="mailto:"] {
 
 .wcf-badgeButton {
 	cursor: pointer;
-	.mxBorderRadius(30px);
+	.mxBorderRadius (30px);
 	margin-right: 0;
 	margin-left: 0;
 	padding: 3px 10px 5px;
@@ -598,7 +603,7 @@ li > .wcf-badgeButton {
 	color: #eee;
 	text-shadow: none;
 	text-decoration: none;
-	.mxBorderRadius(30px);
+	.mxBorderRadius (30px);
 	background-color: rgba(102, 102, 102, 1);
 	margin-right: 3px;
 	padding: 3px 8px 4px;
@@ -745,7 +750,7 @@ table .wcf-label {
 	-o-box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 	box-shadow: 0 1px 7px rgba(0, 0, 0, .5);
 	
-	.mxTransition1(color background, .1s, ease); /* This multiple shorthand format seems to be deprecated! */
+	.mxTransition1 (color background, .1s, ease); /* This multiple shorthand format seems to be deprecated! */
 }
 
 .wcf-dropdown.open {
@@ -760,7 +765,7 @@ table .wcf-label {
 	color: #ccc;
 	cursor: pointer; 
 	
-	.mxTransition1(color background, .2s); /* This multiple shorthand format seems to be deprecated! */
+	.mxTransition1 (color background, .2s); /* This multiple shorthand format seems to be deprecated! */
 }
 
 .wcf-dropdown > div {
@@ -908,7 +913,7 @@ nav.wcf-topMenu {
 	-o-box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
 	box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
 	
-	.mxTransition1(background, .2s);
+	.mxTransition1 (background, .2s);
 	
 	-webkit-animation-name: showTopMenu;
 	-webkit-animation-duration: .3s;
@@ -1409,7 +1414,7 @@ nav.wcf-topMenu {
 }
 
 .wcf-mainMenu > ul > li.activeMenuItem > a:after {
-	.mxBorderRadiusBL(6px);
+	.mxBorderRadiusBL (6px);
 	border-width: 0 0 1px 1px;
 	position: absolute;
 	right: -7px;
@@ -1465,7 +1470,7 @@ nav.wcf-topMenu {
 .wcf-footerNavigation {
 	background-color: @backColor21;
 	border-style: @borderStyle;
-	border-color: @backColor22;
+	border-color: @borderColor22;
 	margin: 0 23px;
 	padding: 2px 0;
 	display: block;
@@ -1476,14 +1481,14 @@ nav.wcf-topMenu {
 
 .wcf-headerNavigation {
 	border-width: 0 0 @borderWidth 0;
-	.mxBorderRadiusTL(3px);
-	.mxBorderRadiusTR(3px);
+	.mxBorderRadiusTL (3px);
+	.mxBorderRadiusTR (3px);
 }
 
 .wcf-footerNavigation {
 	border-width: @borderWidth 0 0 0;
-	.mxBorderRadiusBR(3px);
-	.mxBorderRadiusBL(3px);
+	.mxBorderRadiusBR (3px);
+	.mxBorderRadiusBL (3px);
 }
 
 @media screen and (min-width: 480px), screen and (min-device-width: 480px) {
@@ -1527,7 +1532,7 @@ nav.wcf-topMenu {
 
 .wcf-headerNavigation > ul > li.separator,
 .wcf-footerNavigation > ul > li.separator {
-	border-right: 1px dotted @backColor22;
+	border-right: @borderWidthSeparator @borderStyleSeparator @borderColor22;
 }
 
 .wcf-headerNavigation > ul > li a,
@@ -1645,7 +1650,7 @@ section.wcf-content {
 	-o-box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 	box-shadow: 0 0 5px rgba(0, 0, 0, .1);*/
 	
-	.mxTransition1(margin, .1s, ease);
+	.mxTransition1 (margin, .1s, ease);
 }
 
 section.wcf-content:after {
@@ -1716,7 +1721,7 @@ section.wcf-content:after {
 	overflow: hidden;
 	z-index: 10;
 	
-	.mxTransition1(width, .1s, ease)
+	.mxTransition1 (width, .1s, ease)
 }
 
 /* Toggle for sidebar orientation (options: left|right|top|bottom) */
@@ -1808,7 +1813,7 @@ section.wcf-content:after {
 	background-image: url('../icon/arrowLeft1.svg'), url('../icon/arrowLeft1.svg');
 	left: 250px;
 	
-	.mxTransition1(left, .1s, ease)
+	.mxTransition1 (left, .1s, ease)
 }
 
 .left .wcf-collapsibleSidebarButton span {
@@ -1820,7 +1825,7 @@ section.wcf-content:after {
 	background-image: url('../icon/arrowRight1.svg'), url('../icon/arrowRight1.svg');
 	right: 250px;
 	
-	.mxTransition1(wight, .1s, ease)
+	.mxTransition1 (wight, .1s, ease)
 }
 
 .right .wcf-collapsibleSidebarButton span {
@@ -2038,7 +2043,7 @@ section.wcf-content:after {
 .wcf-mainHeading > hgroup h1 a .wcf-badge {
 	font-size: 75%;
 	text-decoration: none;
-	background-color: rgba(102, 102, 102, 1);
+	background-color: @fontColor52; /* This shows the badge in the font-color */
 	color: @fontColor1;
 }
 
@@ -2063,7 +2068,7 @@ section.wcf-content:after {
 	font-weight: bold;
 	text-shadow: 0 1px 0 @textShadowColor2;
 	color: @fontColor53;
-	border-bottom: @borderWidth @borderStyle @borderColor11;
+	border-bottom: @borderWidthSeparator @borderStyleSeparator @borderColor11;
 	margin: 10px 0;
 	padding: 10px 0;
 	box-sizing: border-box;
@@ -2096,7 +2101,7 @@ section.wcf-content:after {
 
 fieldset {
 	border: @borderWidth @borderStyle @borderColor11;
-	.mxBorderRadius(7px);
+	.mxBorderRadius (7px);
 	background-color: @backColor10; /* we should remove that asap! */
 	margin: 15px 0 0;
 	padding: 5px 15px 15px;
@@ -2377,7 +2382,7 @@ select[multiple] {
 	border-width: @borderWidthInput;
 	border-style: @borderStyleInput;
 	border-color: @borderColorInputTop1 @borderColorInputSide1 @borderColorInputBottom1;
-	.mxBorderRadius(3px);
+	.mxBorderRadius (3px);
 	background-color: @backColorInput1;
 	
 	-webkit-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
@@ -2387,7 +2392,7 @@ select[multiple] {
 	-o-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
 	box-shadow: inset 0 1px 5px rgba(0, 0, 0, .1);
 	
-	.mxTransition1(background-color border, 2s); /* This multiple shorthand format seems to be deprecated! */
+	.mxTransition1 (background-color border, 2s); /* This multiple shorthand format seems to be deprecated! */
 }
 
 /* Hover State */
@@ -2541,7 +2546,7 @@ select[multiple][disabled] {
 /* Special -> Search Input WebKit */
 
 input[type=search] {
-	.mxBorderRadius(30px);
+	.mxBorderRadius (30px);
 	
 	-webkit-appearance: textfield;
 	-webkit-box-sizing: content-box;
@@ -2684,15 +2689,15 @@ input[type=search] {
 }
 
 .wcf-smallButtons > li.separator > a {
-	border-right: @borderWidthButton @borderStyleButton2 @borderColorButtonTop3;
+	border-right: @borderWidthSeparator @borderStyleSeparator @borderColorButtonTop3;
 }
 
 .wcf-smallButtons > li:first-child > a {
-	.mxBorderRadiusTL(13px);
+	.mxBorderRadiusTL (13px);
 }
 
 .wcf-smallButtons > li:last-child > a {
-	.mxBorderRadiusBR(7px);
+	.mxBorderRadiusBR (7px);
 }
 
 
@@ -2732,7 +2737,7 @@ input[type=search] {
 
 /* ToDo: Separators */
 .wcf-smallButtonBar li.separator > a {
-	border-right: @borderWidthButton @borderStyleButton2 @borderColorButtonTop3;
+	border-right: @borderWidthSeparator @borderStyleSeparator @borderColorButtonTop3;
 }
 
 
@@ -2797,7 +2802,7 @@ input[type='button'],
 .wcf-largeButtons > li > a {
 	font-size: 100%;
 	font-weight: bold;
-	.mxBorderRadius(30px);
+	.mxBorderRadius (30px);
 	margin: 3px 2px;
 	padding: 5px 13px;
 	display: inline-block;
@@ -2834,7 +2839,7 @@ input[type='button'],
 }
 
 .wcf-boxTitle {
-	.mxBorderRadius(7px);
+	.mxBorderRadius (7px);
 	background-color: @backColor3;
 	background-image: @backImage;
 	background-position: left top;
@@ -2912,7 +2917,9 @@ input[type='button'],
 }
 
 .wcf-listBox .wcf-listBox {
+	border-style: @borderStyleSeparator;
 	border-color: @borderColor12;
+	background-color: transparent;
 }
 
 .wcf-listBox:first-child {
@@ -2928,7 +2935,8 @@ input[type='button'],
 	background-color: transparent;
 }
 
-.wcf-listBox:hover {
+.wcf-listBox:hover,
+.wcf-listBox .wcf-listBox:hover {
 	background-color: darken(@backColor10, 2%);
 }
 
@@ -2994,8 +3002,8 @@ fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
 	border-width: 1px 1px 0 1px;
 	border-style: @borderStyle;
 	border-color: fade(@borderColor11, 50%);
-	.mxBorderRadiusTL(3px);
-	.mxBorderRadiusTR(3px);
+	.mxBorderRadiusTL (3px);
+	.mxBorderRadiusTR (3px);
 	background-color: fade(@backColor5, 5%);
 	padding: 0 5px 3px 5px;
 	display: inline-block;
@@ -3052,8 +3060,8 @@ fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
 	color: @fontColor52 !important;
 	border-width: @borderWidth;
 	border-style: @borderStyle;
-	.mxBorderRadiusTL(6px);
-	.mxBorderRadiusTR(6px);
+	.mxBorderRadiusTL (6px);
+	.mxBorderRadiusTR (6px);
 	border-color: @borderColor11 @borderColor11 @backColor1;
 	background-color: @backColor1; /* ToDo: Less: make grey! */
 	padding: 10px 15px 5px;
@@ -3071,7 +3079,7 @@ fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
 	content: "";
 	border: @borderWidth @borderStyle @borderColor11;
 	left: -(5px + @borderWidth);
-	.mxBorderRadiusBR(6px);
+	.mxBorderRadiusBR (6px);
 	border-width: 0 @borderWidth @borderWidth 0;
 	
 	-webkit-box-shadow: 2px 2px 0 @backColor1;
@@ -3090,7 +3098,7 @@ fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
 	content: "";
 	border: @borderWidth @borderStyle @borderColor11;
 	right: -(5px + @borderWidth);
-	.mxBorderRadiusBL(6px);
+	.mxBorderRadiusBL (6px);
 	border-width: 0 0 @borderWidth @borderWidth;
 	
 	-webkit-box-shadow: -2px 2px 0 @backColor1;
@@ -3177,8 +3185,10 @@ fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
 	text-shadow: 0 1px 0 @textShadowColor2;
 	text-decoration: none;
 	color: @fontColor53;
-	border: 1px @borderStyle rgba(0, 0, 0, .2);
-	.mxBorderRadius(13px);
+	border: @borderWidthButton @borderStyle fade(@backColor5, 20%);
+	
+	.mxBorderRadius (13px);
+	
 	background-color: @backColor1;
 	padding: 2px 10px;
 	
@@ -3187,8 +3197,8 @@ fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
 
 .wcf-menu ul li:not(.ui-state-active) a:hover {
 	color: @fontColor52;
-	border-width: @borderWidth;
-	border-style: @borderStyle;
+	border-width: @borderWidthButton;
+	border-style: @borderStyleButton;
 	border-color: #fa2;
 	background-color: rgba(255, 249, 244, 1);
 }
@@ -3208,7 +3218,7 @@ fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
 	text-shadow: 0 1px 0 @textShadowColor1;
 	color: @fontColor1;
 	cursor: default;
-	border: 1px @borderStyle rgba(0, 0, 0, .2);
+	border: @borderWidthButton @borderStyleButton fade(@backColor5, 20%);
 	background-color: fade(@backColor5, 50%);
 }
 
@@ -3233,14 +3243,14 @@ fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
 
 .wcf-boxTitle > .wcf-menu ul li a:hover {
 	color: @fontColor1 !important;
-	border: 1px @borderStyle rgba(0, 0, 0, .3);
+	border: @borderWidthButton @borderStyleButton fade(@backColor5, 30%);
 	background-color: fade(@backColor5, 20%);
 }
 
 .wcf-boxTitle > .wcf-menu ul li a:active,
 .wcf-boxTitle > .wcf-menu ul li a:focus,
 .wcf-boxTitle > .wcf-menu ul li.ui-state-active a {
-	border: 1px @borderStyle rgba(0, 0, 0, .5);
+	border: @borderWidthButton @borderStyleButton fade(@backColor5, 50%);
 	
 	-webkit-box-shadow: inset 0 2px 15px rgba(0, 0, 0, .5);
 	-khtml-box-shadow: inset 0 2px 15px rgba(0, 0, 0, .5);
@@ -3257,7 +3267,7 @@ fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
 /* Special: Menu below tab-menu */
 
 .wcf-tabMenuContainer > .wcf-menu {
-	border-bottom: 1px @borderStyle #ccc;
+	border-bottom: @borderWidthSeparator @borderStyle @borderColor11;
 	margin: -15px -23px 0;
 	padding: 0 7px 10px;
 }
@@ -3295,7 +3305,7 @@ fieldset ~ .wcf-tabMenuContainer .wcf-tabMenu {
 	position: relative;
 	max-width: 30%;
 	
-	.mxTransition1(max-width, .2s);
+	.mxTransition1 (max-width, .2s);
 }
 
 .wcf-breadcrumbs > ul > li:hover {
@@ -3411,7 +3421,7 @@ thead th {
 	
 	padding: 7px;
 	
-	.mxTransition1(background, .2s);
+	.mxTransition1 (background, .2s);
 }
 
 thead th a {
@@ -3490,7 +3500,7 @@ tbody td {
 	border-right: 1px @borderStyle rgba(255, 255, 255, .3);
 	padding: 5px;
 	
-	.mxTransition1(background);
+	.mxTransition1 (background);
 }
 
 tbody td:last-child {
@@ -3511,21 +3521,21 @@ tbody tr:hover td {
 /* -- -- -- Special -> Table Header -- -- -- */
 
 .wcf-menu ~ .wcf-box thead th:first-child { /* ToDo: Does this case really exist any more? */
-	.mxBorderRadiusTL(0) !important;
+	.mxBorderRadiusTL (0) !important;
 }
 
 .wcf-menu ~ .wcf-box thead th:last-child { /* ToDo: Does this case really exist any more? */
-	.mxBorderRadiusTR(0) !important;
+	.mxBorderRadiusTR (0) !important;
 }
 
 .wcf-boxTitle > hgroup + table th:first-child, /* Boxes with a title bar */
 .wcf-boxTitle > nav + table th:first-child { /* Boxes with a menu in the title bar */
-	.mxBorderRadiusTL(0) !important;
+	.mxBorderRadiusTL (0) !important;
 }
 
 .wcf-boxTitle > hgroup + table th:last-child, /* Boxes with a title bar */
 .wcf-boxTitle > .wcf-menu + table th:last-child { /* Boxes with a menu in the title bar */
-	.mxBorderRadiusTR(0) !important;
+	.mxBorderRadiusTR (0) !important;
 }
 
 
@@ -3626,7 +3636,7 @@ tr .columnIcon img {
 .wcf-pageNavigation ul li {
 	font-weight: bold;
 	text-align: center;
-	.mxBorderRadius(3px);
+	.mxBorderRadius (3px);
 	margin: 1px;
 	float: left;
 	min-width: 19px;
@@ -3726,7 +3736,7 @@ tr .columnIcon img {
 .wcf-pageNavigation ul li.children .wcf-dropdown {
 	text-align: left;
 	border-color: transparent;
-	.mxBorderRadius(3px);
+	.mxBorderRadius (3px);
 	background-color: fade(@backColor5, 70%);
 	margin-top: 28px;
 	margin-left: -2px;
@@ -3739,7 +3749,7 @@ tr .columnIcon img {
 	max-width: 250px;
 	opacity: 0;
 	
-	.mxTransition1(opacity, .2s);
+	.mxTransition1 (opacity, .2s);
 }
 
 .wcf-pageNavigation ul li.children:hover .wcf-dropdown {
@@ -3808,7 +3818,7 @@ tr .columnIcon img {
 .wcf-warning {
 	text-shadow: 0 1px 0 @textShadowColor2;
 	line-height: 1.5;
-	.mxBorderRadius(7px);
+	.mxBorderRadius (7px);
 	margin-top: 15px;
 	padding: 7px 15px 7px 50px;
 	box-sizing: border-box;
@@ -3892,7 +3902,7 @@ tr .columnIcon img {
 	line-height: 1.5;
 	color: #c00;
 	border: 1px @borderStyle #f99;
-	.mxBorderRadius(7px);
+	.mxBorderRadius (7px);
 	background-color: rgba(255, 238, 238, 1);
 	background-image: url('../icon/systemError.svg');
 	background-size: 16px;
@@ -3962,7 +3972,7 @@ tr .columnIcon img {
 	width: auto;
 	z-index: 500;
 	
-	.mxTransition1(top, .5s);
+	.mxTransition1 (top, .5s);
 }
 
 .wcf-systemNotification.open {
@@ -3977,7 +3987,7 @@ tr .columnIcon img {
 
 .wcf-dialogContainer {
 	border: 23px @borderStyle transparent;
-	.mxBorderRadius(15px);
+	.mxBorderRadius (15px);
 	background-color: fade(@backColor5, 40%);
 	margin-right: auto !important;
 	margin-left: auto !important;
@@ -4013,8 +4023,8 @@ tr .columnIcon img {
 
 .wcf-dialogTitlebar {
 	border-bottom: @borderWidth @borderStyle #036;
-	.mxBorderRadiusTL(7px);
-	.mxBorderRadiusTR(7px);
+	.mxBorderRadiusTL (7px);
+	.mxBorderRadiusTR (7px);
 	background-color: @backColor3;
 	background-image: @backImage;
 	background-position: left top;
@@ -4070,16 +4080,16 @@ tr .columnIcon img {
 }
 
 .wcf-dialogContainer > .wcf-dialogContent {
-	.mxBorderRadius(7px);
+	.mxBorderRadius (7px);
 	padding: 0;
 	/*width: auto !important;*/
 }
 
 .wcf-dialogTitlebar ~ .wcf-dialogContent {
-	.mxBorderRadiusTL(0);
-	.mxBorderRadiusTR(0);
-	.mxBorderRadiusBL(7px);
-	.mxBorderRadiusBR(7px);
+	.mxBorderRadiusTL (0);
+	.mxBorderRadiusTR (0);
+	.mxBorderRadiusBL (7px);
+	.mxBorderRadiusBR (7px);
 	padding: 10px 20px 20px;
 }
 
@@ -4225,7 +4235,7 @@ tr .columnIcon img {
 
 .wcf-clipboardEditor > ul > li {
 	font-size: .85em;
-	.mxBorderRadius(30px);
+	.mxBorderRadius (30px);
 	margin-top: 7px;
 	margin-right: 3px;
 	margin-left: 3px;
@@ -4783,7 +4793,7 @@ button[disabled] {
 	height: 150px;
 	overflow: hidden;
 	
-	.mxTransition1(background border color); /* This multiple shorthand format seems to be deprecated! */
+	.mxTransition1 (background border color); /* This multiple shorthand format seems to be deprecated! */
 }
 
 .wcf-infoPackagePlugin a {
@@ -4839,7 +4849,7 @@ button[disabled] {
 	font-size: 85%;
 	font-weight: normal;
 	text-shadow: none;
-	.mxBorderRadius(7px);
+	.mxBorderRadius (7px);
 	padding: 40px 5px;
 	display: block;
 	position: absolute;
@@ -4848,7 +4858,7 @@ button[disabled] {
 	width: 139px;
 	opacity: 0;
 	
-	.mxTransition1(opacity);
+	.mxTransition1 (opacity);
 }
 
 .wcf-infoPackagePlugin:hover > div > a > small {
@@ -4867,7 +4877,7 @@ button[disabled] {
 	.wcf-infoPackagePlugin footer nav {
 		opacity: 0;
 		
-		.mxTransition1(opacity);
+		.mxTransition1 (opacity);
 	}
 	
 	.wcf-infoPackageApplication:hover footer nav,
