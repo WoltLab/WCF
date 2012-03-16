@@ -57,7 +57,17 @@ class UserAction extends AbstractDatabaseObjectAction {
 		
 		$userIDs = array();
 		foreach ($this->objects as $user) {
+			// you cannot delete yourself
+			if ($user->userID == WCF::getUser()->userID) {
+				continue;
+			}
+			
 			$userIDs[] = $user->userID;
+		}
+		
+		// list might be empty because only our own user id was given
+		if (empty($userIDs)) {
+			throw new ValidateActionException("Invalid object id");
 		}
 		
 		// validate groups
@@ -167,9 +177,28 @@ class UserAction extends AbstractDatabaseObjectAction {
 		}
 	}
 	
+	/**
+	 * Validates parameters to search for users and -groups.
+	 */
 	public function validateGetList() {
+		if (!isset($this->parameters['data']['searchString'])) {
+			throw new ValidateActionException("Missing parameter 'searchString'");
+		}
+		
+		if (!isset($this->parameters['data']['includeUserGroups'])) {
+			throw new ValidateActionException("Missing parameter 'includeUserGroups'");
+		}
+		
+		if (isset($this->parameters['data']['excludedSearchValues']) && !is_array($this->parameters['data']['excludedSearchValues'])) {
+			throw new ValidateActionException("Invalid parameter 'excludedSearchValues' given");
+		}
 	}
 	
+	/**
+	 * Returns a list of users and -groups based upon given search criteria.
+	 * 
+	 * @return	array<array>
+	 */
 	public function getList() {
 		$searchString = $this->parameters['data']['searchString'];
 		$excludedSearchValues = array();
