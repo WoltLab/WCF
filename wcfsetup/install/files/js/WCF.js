@@ -55,7 +55,7 @@ var WCF = {};
  */
 $.extend(true, {
 	/**
-	 * Returns the given value from the given array.
+	 * Removes the given value from the given array and returns the array.
 	 * 
 	 * @param	array		array
 	 * @param	mixed		element
