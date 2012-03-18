@@ -55,6 +55,19 @@ var WCF = {};
  */
 $.extend(true, {
 	/**
+	 * Returns the given value from the given array.
+	 * 
+	 * @param	array		array
+	 * @param	mixed		element
+	 * @return	array
+	 */
+	removeArrayValue: function(array, value) {
+		return $.grep(array, function(element, index) {
+			return value !== element;
+		});
+	},
+	
+	/**
 	 * Escapes an ID to work with jQuery selectors.
 	 *
 	 * @see		http://docs.jquery.com/Frequently_Asked_Questions#How_do_I_select_an_element_by_an_ID_that_has_characters_used_in_CSS_notation.3F
@@ -495,6 +508,12 @@ WCF.Clipboard = {
 	_hasMarkedItems: false,
 	
 	/**
+	 * list of ids of marked objects
+	 * @var	array
+	 */
+	_markedObjectIDs: [],
+	
+	/**
 	 * current page
 	 * @var	string
 	 */
@@ -558,13 +577,12 @@ WCF.Clipboard = {
 	_loadMarkedItemsSuccess: function(data, textStatus, jqXHR) {
 		for (var $typeName in data.markedItems) {
 			var $objectData = data.markedItems[$typeName];
-			var $objectIDs = [];
 			for (var $i in $objectData) {
-				$objectIDs.push($objectData[$i]);
+				this._markedObjectIDs.push($objectData[$i]);
 			}
 			
 			// loop through all containers
-			this._containers.each(function(index, container) {
+			this._containers.each($.proxy(function(index, container) {
 				var $container = $(container);
 				
 				// typeName does not match, continue
@@ -573,12 +591,12 @@ WCF.Clipboard = {
 				}
 				
 				// mark items as marked
-				$container.find('input.jsClipboardItem').each(function(innerIndex, item) {
+				$container.find('input.jsClipboardItem').each($.proxy(function(innerIndex, item) {
 					var $item = $(item);
-					if (WCF.inArray($item.data('objectID'), $objectIDs)) {
+					if (WCF.inArray($item.data('objectID'), this._markedObjectIDs)) {
 						$item.attr('checked', 'checked');
 					}
-				});
+				}, this));
 				
 				// check if there is a markAll-checkbox
 				$container.find('input.jsClipboardMarkAll').each(function(innerIndex, markAll) {
@@ -595,7 +613,7 @@ WCF.Clipboard = {
 						$(markAll).attr('checked', 'checked');
 					}
 				});
-			});
+			}, this));
 		}
 		
 		// call success method to build item list editors
@@ -638,6 +656,13 @@ WCF.Clipboard = {
 		var $objectID = $item.data('objectID');
 		var $isMarked = ($item.attr('checked')) ? true : false;
 		var $objectIDs = [ $objectID ];
+		
+		if ($isMarked) {
+			this._markedObjectIDs.push($objectID);
+		}
+		else {
+			this._markedObjectIDs = $.removeArrayValue(this._markedObjectIDs, $objectID);
+		}
 		
 		// item is part of a container
 		if ($item.data('hasContainer')) {
@@ -692,21 +717,24 @@ WCF.Clipboard = {
 			var $type = $container.data('type');
 			
 			// toggle state for all associated items
-			$container.find('input.jsClipboardItem').each(function(index, containerItem) {
+			$container.find('input.jsClipboardItem').each($.proxy(function(index, containerItem) {
 				var $containerItem = $(containerItem);
+				var $objectID = $containerItem.data('objectID');
 				if ($isMarked) {
 					if (!$containerItem.attr('checked')) {
 						$containerItem.attr('checked', 'checked');
-						$objectIDs.push($containerItem.data('objectID'));
+						this._markedObjectIDs.push($objectID);
+						$objectIDs.push($objectID);
 					}
 				}
 				else {
 					if ($containerItem.attr('checked')) {
 						$containerItem.removeAttr('checked');
-						$objectIDs.push($containerItem.data('objectID'));
+						this._markedObjectIDs = $.removeArrayValue(this._markedObjectIDs, $objectID);
+						$objectIDs.push($objectID);
 					}
 				}
-			});
+			}, this));
 		}
 		
 		// save new status
@@ -816,8 +844,20 @@ WCF.Clipboard = {
 			window.location.href = $url;
 		}
 		
+		if ($listItem.data('parameters').className && $listItem.data('parameters').actionName) {
+			new WCF.Action.Proxy({
+				autoSend: true,
+				data: {
+					actionName: $listItem.data('parameters').actionName,
+					className: $listItem.data('parameters').className,
+					objectIDs: this._markedObjectIDs
+				},
+				success: $.proxy(this._loadMarkedItems, this)
+			});
+		}
+		
 		// fire event
-		$listItem.trigger('clipboardAction', [ $listItem.data('type'), $listItem.data('actionName') ]);
+		$listItem.trigger('clipboardAction', [ $listItem.data('type'), $listItem.data('actionName'), $listItem.data('parameters') ]);
 	},
 	
 	/**
