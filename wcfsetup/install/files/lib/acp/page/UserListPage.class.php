@@ -131,7 +131,7 @@ class UserListPage extends SortablePage {
 		WCF::getTPL()->assign(array(
 			'users' => $this->users,
 			'searchID' => $this->searchID,
-			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(),
+			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user')),
 			'url' => $this->url,
 			'columnHeads' => $this->columnHeads,
 			'columnValues' => $this->columnValues

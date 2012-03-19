@@ -2,6 +2,7 @@
 namespace wcf\data\user;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObjectEditor;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -38,6 +39,16 @@ class UserEditor extends DatabaseObjectEditor {
 		self::createUserOptions($user->userID);
 		
 		return $user;
+	}
+	
+	/**
+	 * @see	wcf\data\IEditableObject::deleteAll()
+	 */
+	public static function deleteAll(array $objectIDs = array()) {
+		parent::deleteAll($objectIDs);
+		
+		// unmark users
+		ClipboardHandler::getInstance()->unmark($objectIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
 	}
 	
 	/**
