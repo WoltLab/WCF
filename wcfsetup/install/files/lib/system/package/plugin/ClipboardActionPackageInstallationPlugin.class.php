@@ -40,11 +40,13 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE		actionName = ?
+					AND actionClassName = ?
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
 			$statement->execute(array(
 				$item['attributes']['name'],
+				$item['elements']['actionclassname'],
 				$this->installation->getPackageID()
 			));
 		}
@@ -91,9 +93,11 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	actionName = ?
+				AND actionClassName = ?
 				AND packageID = ?";
 		$parameters = array(
 			$data['actionName'],
+			$data['actionClassName'],
 			$this->installation->getPackageID()
 		);
 		
