@@ -1,7 +1,7 @@
 /**
  * Class and function collection for WCF
  * 
- * @author	Markus Bartz, Tim Düsterhus, Alexander Ebert
+ * @author	Markus Bartz, Tim Düsterhus, Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
@@ -496,6 +496,12 @@ WCF.Clipboard = {
 	_actionProxy: null,
 	
 	/**
+	 * action objects
+	 * @var	object
+	 */
+	_actionObjects: {},
+	
+	/**
 	 * list of clipboard containers
 	 * @var	jQuery
 	 */
@@ -528,9 +534,15 @@ WCF.Clipboard = {
 	/**
 	 * Initializes the clipboard API.
 	 */
-	init: function(page, hasMarkedItems) {
+	init: function(page, hasMarkedItems, actionObjects) {
 		this._page = page;
-		if (hasMarkedItems) this._hasMarkedItems = true;
+		this._actionObjects = actionObjects;
+		if (!actionObjects) {
+			this._actionObjects = {};
+		}
+		if (hasMarkedItems) {
+			this._hasMarkedItems = true;
+		}
 		
 		this._actionProxy = new WCF.Action.Proxy({
 			success: $.proxy(this._actionSuccess, this),
@@ -808,6 +820,7 @@ WCF.Clipboard = {
 			for (var $itemIndex in $editor.items) {
 				var $item = $editor.items[$itemIndex];
 				var $listItem = $('<li>' + $item.label + '</li>').appendTo($itemList);
+				$listItem.data('objectType', $typeName);
 				$listItem.data('actionName', $item.actionName).data('parameters', $item.parameters);
 				$listItem.data('internalData', $item.internalData).data('url', $item.url).data('type', $typeName);
 				
@@ -825,7 +838,10 @@ WCF.Clipboard = {
 			WCF.CloseOverlayHandler.addCallback($containerID, $.proxy(this._closeLists, this));
 		}
 	},
-
+	
+	/**
+	 * Closes the clipboard editor item list.
+	 */
 	_closeLists: function() {
 		$('.jsClipboardEditor ul ol').each(function(index, list) {
 			$(this).removeClass('open');
@@ -844,20 +860,46 @@ WCF.Clipboard = {
 			window.location.href = $url;
 		}
 		
-		if ($listItem.data('parameters').className && $listItem.data('parameters').actionName) {
-			new WCF.Action.Proxy({
-				autoSend: true,
-				data: {
-					actionName: $listItem.data('parameters').actionName,
-					className: $listItem.data('parameters').className,
-					objectIDs: this._markedObjectIDs
-				},
-				success: $.proxy(this._loadMarkedItems, this)
-			});
+		if ($listItem.data('parameters').className && $listItem.data('parameters').actionName && $listItem.data('parameters').objectIDs) {
+			var $confirmMessage = $listItem.data('internalData')['confirmMessage'];
+			if ($confirmMessage) {
+				WCF.System.Confirmation.show($confirmMessage, $.proxy(function() {
+					this._executeAJAXActions($listItem);
+				}, this));
+			}
+			else {
+				this._executeAJAXActions($listItem);
+			}
 		}
 		
 		// fire event
 		$listItem.trigger('clipboardAction', [ $listItem.data('type'), $listItem.data('actionName'), $listItem.data('parameters') ]);
+	},
+	
+	/**
+	 * Executes the AJAX actions for the given editor list item.
+	 * 
+	 * @param	jQuery		listItem
+	 */
+	_executeAJAXActions: function(listItem) {
+		var objectIDs = [];
+		$.each(listItem.data('parameters').objectIDs, function(index, objectID) {
+			objectIDs.push(parseInt(objectID));
+		});
+			
+		new WCF.Action.Proxy({
+			autoSend: true,
+			data: {
+				actionName: listItem.data('parameters').actionName,
+				className: listItem.data('parameters').className,
+				objectIDs: objectIDs
+			},
+			success: $.proxy(this._loadMarkedItems, this)
+		});
+		
+		if (this._actionObjects[listItem.data('objectType')] && this._actionObjects[listItem.data('objectType')][listItem.data('parameters').actionName]) {
+			this._actionObjects[listItem.data('objectType')][listItem.data('parameters').actionName].triggerEffect(objectIDs);
+		}
 	},
 	
 	/**
@@ -1314,10 +1356,18 @@ WCF.Action.Delete.prototype = {
 	 * @param	object		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		// remove items
+		this.triggerEffect(data.objectIDs);
+	},
+	
+	/**
+	 * Triggers the delete effect for the objects with the given ids.
+	 * 
+	 * @param	array		objectIDs
+	 */
+	triggerEffect: function(objectIDs) {
 		this.containerList.each($.proxy(function(index, container) {
 			var $objectID = $(container).find('.jsDeleteButton').data('objectID');
-			if (WCF.inArray($objectID, data.objectIDs)) {
+			if (WCF.inArray($objectID, objectIDs)) {
 				$(container).wcfBlindOut('up', function() {
 					$(container).empty().remove();
 				}, container);
@@ -1393,10 +1443,18 @@ WCF.Action.Toggle.prototype = {
 	 * @param	object		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		// remove items
+		this.triggerEffect(data.objectIDs);
+	},
+	
+	/**
+	 * Triggers the toggle effect for the objects with the given ids.
+	 * 
+	 * @param	array		objectIDs
+	 */
+	triggerEffect: function(objectIDs) {
 		this.containerList.each($.proxy(function(index, container) {
 			var $toggleButton = $(container).find(this.toggleButtonSelector);
-			if (WCF.inArray($toggleButton.data('objectID'), data.objectIDs)) {
+			if (WCF.inArray($toggleButton.data('objectID'), objectIDs)) {
 				$(container).wcfHighlight();
 				
 				// toggle icon source

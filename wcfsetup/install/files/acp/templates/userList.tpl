@@ -3,8 +3,18 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		WCF.Clipboard.init('wcf\\acp\\page\\UserListPage', {@$hasMarkedItems});
-		new WCF.ACP.User.List();
+		var actionObjects = { };
+		actionObjects['com.woltlab.wcf.user'] = { };
+		actionObjects['com.woltlab.wcf.user']['delete'] = new WCF.Action.Delete('wcf\\data\\user\\UserAction', $('.jsUserRow'), $('#userTableContainer .wcf-menu li:first-child .wcf-badge'));
+					
+		WCF.Clipboard.init('wcf\\acp\\page\\UserListPage', {@$hasMarkedItems}, actionObjects);
+		
+		var options = { };
+		{if $pages > 1}
+			options.refreshPage = true;
+		{/if}
+		
+		new WCF.Table.EmptyTableHandler($('#userTableContainer'), 'jsUserRow', options);
 	});
 	//]]>
 </script>
@@ -34,7 +44,7 @@
 	</nav>
 </div>
 
-<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
+<div id="userTableContainer" class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
 	<nav class="wcf-menu">
 		<ul>
 			<li{if $action == ''} class="active"{/if}><a href="{link controller='UserList'}{/link}"><span>{lang}wcf.acp.user.list.all{/lang}</span> <span class="wcf-badge" title="{lang}wcf.acp.user.list.count{/lang}">{#$items}</span></a></li>
@@ -62,7 +72,7 @@
 			<tbody>
 				{content}
 					{foreach from=$users item=user}
-						<tr id="userRow{@$user->userID}">
+						<tr class="jsUserRow">
 							<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}" /></td>
 							<td class="columnIcon">
 								{if $user->editable}
@@ -71,7 +81,7 @@
 									<img src="{@$__wcf->getPath()}icon/edit1D.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" />
 								{/if}
 								{if $user->deletable}
-									<a onclick="return confirm('{lang}wcf.acp.user.delete.sure{/lang}')" href="{link controller='UserDelete' id=$user->userID}url={@$encodedURL}{/link}"><img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="jsTooltip" /></a>
+									<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="jsTooltip jsDeleteButton" data-object-id="{@$user->userID}" data-confirm-message="{lang}wcf.acp.user.delete.sure{/lang}" />
 								{else}
 									<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" />
 								{/if}
