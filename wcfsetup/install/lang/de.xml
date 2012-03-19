@@ -283,7 +283,7 @@
 		<item name="wcf.acp.package.button.update"><![CDATA[Aktualisieren]]></item>
 		<item name="wcf.acp.package.dependencies.dependent"><![CDATA[Abhängige Pakete]]></item>
 		<item name="wcf.acp.package.dependencies.dependent.description"><![CDATA[Pakete die dieses Paket zwingend für den Betrieb benötigen]]></item>
-		<item name="wcf.acp.package.dependencies.required"><![CDATA[Notwendige Pakete]]></item>
+		<item name="wcf.acp.package.dependencies.required"><![CDATA[Benötigte Pakete]]></item>
 		<item name="wcf.acp.package.dependencies.required.description"><![CDATA[Pakete die zwingend für den Betrieb dieses Paketes benötigt werden]]></item>
 		<item name="wcf.acp.package.dependencies.title"><![CDATA[Abhängigkeiten]]></item>
 		<item name="wcf.acp.package.description"><![CDATA[Beschreibung]]></item>
