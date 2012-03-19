@@ -39,14 +39,15 @@ class UserClipboardAction implements IClipboardAction {
 			break;
 			
 			case 'delete':
-				$count = $this->validateDelete($objects);
-				if (!$count) {
+				$userIDs = $this->validateDelete($objects);
+				if (!count($userIDs)) {
 					return null;
 				}
 				
-				$item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.user.delete.confirmMessage', array('count' => $count)));
+				$item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.user.delete.confirmMessage', array('count' => count($userIDs))));
 				$item->addParameter('actionName', 'delete');
 				$item->addParameter('className', 'wcf\data\user\UserAction');
+				$item->addParameter('objectIDs', $userIDs);
 				$item->setName('user.delete');
 			break;
 			
@@ -69,7 +70,7 @@ class UserClipboardAction implements IClipboardAction {
 	}
 	
 	/**
-	 * Returns number of users which can be deleted.
+	 * Returns the ids of the users which can be deleted.
 	 * 
 	 * @param	array<wcf\data\user\User>	$objects
 	 * @return	integer
@@ -81,18 +82,16 @@ class UserClipboardAction implements IClipboardAction {
 		}
 		
 		// user cannot delete itself
-		$count = count($objects);
 		$userIDs = array_keys($objects);
 		foreach ($userIDs as $index => $userID) {
 			if ($userID == WCF::getUser()->userID) {
-				$count--;
 				unset($objects[$userID]);
 				unset($userIDs[$index]);
 			}
 		}
 		
 		// no valid users found
-		if (!$count) return 0;
+		if (!count($userIDs)) return array();
 		
 		// fetch user to group associations
 		$conditions = new PreparedStatementConditionBuilder();
@@ -114,19 +113,13 @@ class UserClipboardAction implements IClipboardAction {
 		}
 		
 		// validate if user's group is accessible for current user
-		$count = count($objects);
-		foreach ($userIDs as $index => $userID) {
-			if (!isset($userToGroup[$userID])) {
-				$count--;
-				continue;
-			}
-			
-			if (!UserGroup::isAccessibleGroup($userToGroup[$userID])) {
-				$count--;
+		foreach ($userIDs as $userID) {
+			if (!isset($userToGroup[$userID]) || !UserGroup::isAccessibleGroup($userToGroup[$userID])) {
+				unset($userIDs[$userID]);
 			}
 		}
 		
-		return $count;
+		return $userIDs;
 	}
 	
 	/**
