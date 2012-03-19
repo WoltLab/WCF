@@ -107,7 +107,7 @@ CREATE TABLE wcf1_clipboard_action (
 	actionName VARCHAR(50) NOT NULL DEFAULT '',
 	actionClassName VARCHAR(200) NOT NULL DEFAULT '',
 	showOrder INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY actionName (packageID, actionName)
+	UNIQUE KEY actionName (packageID, actionName, actionClassName)
 );
 
 DROP TABLE IF EXISTS wcf1_clipboard_item;
