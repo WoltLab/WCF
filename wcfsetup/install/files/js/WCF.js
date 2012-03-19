@@ -3418,17 +3418,17 @@ WCF.Table.EmptyTableHandler = Class.extend({
 	/**
 	 * Initalizes a new WCF.Table.EmptyTableHandler object.
 	 * 
-	 * @param	string		rowClassName
 	 * @param	jQuery		tableContainer
+	 * @param	string		rowClassName
 	 * @param	object		options
 	 */
-	init: function(rowClassName, tableContainer, options) {
+	init: function(tableContainer, rowClassName, options) {
 		this._rowClassName = rowClassName;
 		this._tableContainer = tableContainer;
 		
 		this._options = $.extend(true, {
 			emptyMessage: null,
-			messageType: 'wcf-warning',
+			messageType: 'wcf-info',
 			refreshPage: false,
 			updatePageNumber: false
 		}, options || { });
