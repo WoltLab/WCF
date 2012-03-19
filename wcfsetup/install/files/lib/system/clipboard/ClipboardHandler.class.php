@@ -300,18 +300,25 @@ class ClipboardHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns true (1) if at least one item is marked.
+	 * Returns true (1) if at least one item (of the given object type) is marked.
 	 * 
+	 * @param	integer		$objectTypeID
 	 * @return	integer
 	 */
-	public function hasMarkedItems() {
+	public function hasMarkedItems($objectTypeID = null) {
 		if (!WCF::getUser()->userID) return 0;
+		
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add("userID = ?", array(WCF::getUser()->userID));
+		if ($objectTypeID !== null) {
+			$conditionBuilder->add("objectTypeID = ?", array($objectTypeID));
+		}
 		
 		$sql = "SELECT	COUNT(*) AS count
 			FROM	wcf".WCF_N."_clipboard_item
-			WHERE	userID = ?";
+			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(WCF::getUser()->userID));
+		$statement->execute($conditionBuilder->getParameters());
 		$count = $statement->fetchArray();
 		
 		if ($count['count']) {
