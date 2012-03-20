@@ -6,7 +6,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\route\IRouteController;
 use wcf\system\route\RouteHandler;
 use wcf\system\SingletonFactory;
-use wcf\system\Regex;
 
 /**
  * Handles relative links within the wcf.
