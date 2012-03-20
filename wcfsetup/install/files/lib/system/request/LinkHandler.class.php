@@ -2,7 +2,6 @@
 namespace wcf\system\request;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\exception\SystemException;
 use wcf\system\route\IRouteController;
 use wcf\system\route\RouteHandler;
 use wcf\system\SingletonFactory;
