@@ -106,12 +106,14 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 			WHERE		".static::getDatabaseTableIndexName()." = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
+		$affectedCount = 0;
 		WCF::getDB()->beginTransaction();
 		foreach ($objectIDs as $objectID) {
 			$statement->executeUnbuffered(array($objectID));
+			$affectedCount += $statement->getAffectedRows();
 		}
 		WCF::getDB()->commitTransaction();
 		
-		return count($objectIDs);
+		return $affectedCount;
 	}
 }
