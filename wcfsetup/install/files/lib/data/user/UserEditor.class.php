@@ -45,10 +45,10 @@ class UserEditor extends DatabaseObjectEditor {
 	 * @see	wcf\data\IEditableObject::deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
-		parent::deleteAll($objectIDs);
-		
 		// unmark users
 		ClipboardHandler::getInstance()->unmark($objectIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
+	
+		return parent::deleteAll($objectIDs);
 	}
 	
 	/**
