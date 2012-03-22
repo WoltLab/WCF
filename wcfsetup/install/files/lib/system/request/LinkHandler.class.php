@@ -57,12 +57,11 @@ class LinkHandler extends SingletonFactory {
 			$parameters['controller'] = $controller;
 			$routeURL = RouteHandler::getInstance()->buildRoute($parameters);
 		}
-		else if ($controller instanceof IRouteController || ($controller instanceof DatabaseObjectDecorator && $controller->getDecoratedObject() instanceof IRouteController)) {
-			if ($controller instanceof DatabaseObjectDecorator && $controller->getDecoratedObject() instanceof IRouteController) {
-				$controller = $controller->getDecoratedObject();
-			}
-			
+		else if ($controller instanceof IRouteController) {
 			$routeURL = RouteHandler::getInstance()->buildRoute($controller->getRouteComponentValues());
+		}
+		else if ($controller instanceof DatabaseObjectDecorator && $controller->getDecoratedObject() instanceof IRouteController) {
+			$routeURL = RouteHandler::getInstance()->buildRoute($controller->getDecoratedObject()->getRouteComponentValues());
 		}
 		
 		if ($routeURL != '' && !$isRaw && !empty($url)) {
