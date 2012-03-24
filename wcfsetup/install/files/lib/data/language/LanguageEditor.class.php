@@ -145,6 +145,74 @@ class LanguageEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
+	 * Exports this language.
+	 */
+	public function export($packageIDArray = array(), $exportCustomValues = false) {
+		$conditions = new PreparedStatementConditionBuilder();
+		
+		// bom
+		echo "\xEF\xBB\xBF";
+		
+		// header
+		echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<language xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd\" languagecode=\"".$this->languageCode."\">\n";
+		
+		// get items
+		$items = array();
+		if (count($packageIDArray)) {
+			// sql conditions
+			$conditions->add("language_item.packageID IN (?)", array($packageIDArray));
+			$conditions->add("language_item.languageID = ?", array($this->languageID));
+			
+			$sql = "SELECT		languageItem, " . ($exportCustomValues ? "CASE WHEN languageUseCustomValue > 0 THEN languageCustomItemValue ELSE languageItemValue END AS languageItemValue" : "languageItemValue") . ", languageCategory
+				FROM		wcf".WCF_N."_language_item language_item
+				LEFT JOIN	wcf".WCF_N."_language_category language_category
+				ON		(language_category.languageCategoryID = language_item.languageCategoryID)
+				".$conditions;
+		}
+		else {
+			// sql conditions
+			$conditions->add("language_item.packageID = package_dependency.dependency");
+			$conditions->add("package_dependency.packageID = ?", array(PACKAGE_ID));
+			$conditions->add("language_item.languageID = ?", array($this->languageID));
+				
+			$sql = "SELECT		languageItem, " . ($exportCustomValues ? "CASE WHEN languageUseCustomValue > 0 THEN languageCustomItemValue ELSE languageItemValue END AS languageItemValue" : "languageItemValue") . ", languageCategory
+				FROM		wcf".WCF_N."_package_dependency package_dependency,
+						wcf".WCF_N."_language_item language_item
+				LEFT JOIN	wcf".WCF_N."_language_category language_category
+				ON		(language_category.languageCategoryID = language_item.languageCategoryID)
+				".$conditions."
+				ORDER BY 	package_dependency.priority ASC";
+		}
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		while ($row = $statement->fetchArray()) {
+			$items[$row['languageCategory']][$row['languageItem']] = $row['languageItemValue'];
+		}
+		
+		// sort categories
+		ksort($items);
+		
+		foreach ($items as $category => $categoryItems) {
+			// sort items
+			ksort($categoryItems);
+			
+			// category header
+			echo "\t<category name=\"".$category."\">\n";
+			
+			// items
+			foreach ($categoryItems as $item => $value) {
+				echo "\t\t<item name=\"".$item."\"><![CDATA[".StringUtil::escapeCDATA($value)."]]></item>\n";
+			}
+			
+			// category footer
+			echo "\t</category>\n";
+		}
+		
+		// footer
+		echo "</language>";
+	}
+	
+	/**
 	 * Imports language items from an XML file into this language.
 	 * Updates the relevant language files automatically.
 	 *
