@@ -76,7 +76,7 @@
 			{if $package->parentPackageID}
 				<dl>
 					<dt>{lang}wcf.acp.package.parentPackage{/lang}</dt>
-					<dd><a href="{link controller='PackageView' id=$package->parentPackageID}{/link}">{$package->getParentPackage()->getName()}</a></dd>
+					<dd><a href="{link controller=$package->getParentPackage()}{/link}">{$package->getParentPackage()->getName()}</a></dd>
 				</dl>
 			{/if}
 			<dl>
@@ -155,7 +155,7 @@
 												<img src="{@$__wcf->getPath()}icon/package1.svg" alt="" title="{lang}wcf.acp.package.type.other{/lang}" class="jsTooltip" />
 											{/if}
 										</td>
-										<td class="columnTitle" title="{$requiredPackage->packageDescription|language}"><p><a href="{link controller='PackageView' id=$requiredPackage->packageID}{/link}">{$requiredPackage->packageName|language}{if $requiredPackage->instanceNo > 1 && $requiredPackage->instanceName == ''} (#{#$requiredPackage->instanceNo}){/if}</a></p></td>
+										<td class="columnTitle" title="{$requiredPackage->packageDescription|language}"><p><a href="{link controller=$requiredPackage}{/link}">{$requiredPackage->packageName|language}{if $requiredPackage->instanceNo > 1 && $requiredPackage->instanceName == ''} (#{#$requiredPackage->instanceNo}){/if}</a></p></td>
 										<td class="columnText">{if $requiredPackage->authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$requiredPackage->authorURL|rawurlencode}" class="wcf-externalURL">{$requiredPackage->author}</a>{else}{$requiredPackage->author}</p>{/if}</td>
 										<td class="columnText"><p>{$requiredPackage->packageVersion}</p></td>
 										<td class="columnDate"><p>{@$requiredPackage->packageDate|date}</p></td>
@@ -215,7 +215,7 @@
 												<img src="{@$__wcf->getPath()}icon/package1.svg" alt="" title="{lang}wcf.acp.package.type.other{/lang}" class="jsTooltip" />
 											{/if}
 										</td>
-										<td class="columnTitle" title="{$dependentPackage->packageDescription|language}"><p><a href="{link controller='PackageView' id=$dependentPackage->packageID}{/link}">{$dependentPackage->packageName|language}{if $dependentPackage->instanceNo > 1 && $dependentPackage->instanceName == ''} (#{#$dependentPackage->instanceNo}){/if}</a></p></td>
+										<td class="columnTitle" title="{$dependentPackage->packageDescription|language}"><p><a href="{link controller=$dependentPackage}{/link}">{$dependentPackage->packageName|language}{if $dependentPackage->instanceNo > 1 && $dependentPackage->instanceName == ''} (#{#$dependentPackage->instanceNo}){/if}</a></p></td>
 										<td class="columnText">{if $dependentPackage->authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$dependentPackage->authorURL|rawurlencode}" class="wcf-externalURL">{$dependentPackage->author}</a>{else}{$dependentPackage->author}</p>{/if}</td>
 										<td class="columnText"><p>{$dependentPackage->packageVersion}</p></td>
 										<td class="columnDate"><p>{@$dependentPackage->packageDate|date}</p></td>

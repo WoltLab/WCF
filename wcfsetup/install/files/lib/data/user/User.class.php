@@ -4,7 +4,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObject;
 use wcf\system\cache\CacheHandler;
-use wcf\system\request\IRouteController;
+use wcf\system\route\IRouteController;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -339,16 +339,13 @@ final class User extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	wcf\system\request\IRouteController::getID()
+	 * @see	wcf\system\route\IRouteController::getRouteComponentValues()
 	 */
-	public function getID() {
-		return $this->userID;
-	}
-	
-	/**
-	 * @see	wcf\system\request\IRouteController::getTitle()
-	 */
-	public function getTitle() {
-		return $this->username;
+	public function getRouteComponentValues() {
+		return array(
+			'controller' => 'User',
+			'id' => $this->userID,
+			'title' => $this->username
+		);
 	}
 }

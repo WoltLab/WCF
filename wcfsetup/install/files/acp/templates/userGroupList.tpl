@@ -49,7 +49,7 @@
 						<tr id="groupContainer{@$group->groupID}" class="jsUserGroupRow">
 							<td class="columnIcon">
 								{if $group->isEditable()}
-									<a href="{link controller='UserGroupEdit' id=$group->groupID}{/link}"><img src="{@$__wcf->getPath()}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip" /></a>
+									<a href="{link controller='UserGroupEdit' id=$group->groupID title=$group->groupName|language}{/link}"><img src="{@$__wcf->getPath()}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip" /></a>
 								{else}
 									<img src="{@$__wcf->getPath()}icon/edit1D.svg" alt="" title="{lang}wcf.acp.group.edit{/lang}" />
 								{/if}
@@ -62,7 +62,7 @@
 								{event name='buttons'}
 							</td>
 							<td class="columnID columnGroupID"><p>{@$group->groupID}</p></td>
-							<td class="columnTitle columnGroupName">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="{link controller='UserGroupEdit' id=$group->groupID}{/link}">{lang}{$group->groupName}{/lang}</a>{else}{lang}{$group->groupName}{/lang}</p>{/if}</td>
+							<td class="columnTitle columnGroupName">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="{link controller='UserGroupEdit' id=$group->groupID title=$group->groupName|language}{/link}">{lang}{$group->groupName}{/lang}</a>{else}{lang}{$group->groupName}{/lang}</p>{/if}</td>
 							<td class="columnDigits columnMembers"><p><a title="{lang}wcf.acp.group.showMembers{/lang}" href="{link controller='UserSearch'}groupID={@$group->groupID}{/link}">{#$group->members}</p></a></td>
 						
 							{event name='columns'}

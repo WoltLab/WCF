@@ -1,13 +1,15 @@
 <?php
 namespace wcf\system\request;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\request\RouteHandler;
+use wcf\system\route\IRouteController;
+use wcf\system\route\RouteHandler;
 use wcf\system\SingletonFactory;
 
 /**
  * Handles relative links within the wcf.
  * 
- * @author 	Marcel Werk
+ * @author 	Matthias Schmidt, Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -42,34 +44,30 @@ class LinkHandler extends SingletonFactory {
 			$url = substr($url, 0, $pos);
 		}
 		
+		if (isset($parameters['controllerObject']) && $parameters['controllerObject'] instanceof IRouteController) {
+			$object = $parameters['controllerObject'];
+			unset($parameters['controllerObject']);
+			
+			$parameters = array_merge($object->getRouteComponentValues(), $parameters);
+		}
+		
 		// build route
-		if ($controller !== null) {
-			// handle object
-			if (isset($parameters['object'])) {
-				if (!($parameters['object'] instanceof \wcf\system\request\IRouteController) && $parameters['object'] instanceof \wcf\data\DatabaseObjectDecorator && $parameters['object']->getDecoratedObject() instanceof \wcf\system\request\IRouteController)  {
-					$parameters['object'] = $parameters['object']->getDecoratedObject();
-				}
-				
-				if ($parameters['object'] instanceof \wcf\system\request\IRouteController) {
-					$parameters['id'] = $parameters['object']->getID();
-					$parameters['title'] = $parameters['object']->getTitle();
-				}
-				
-				unset($parameters['object']);
-			}
-			
-			if (isset($parameters['title'])) {
-				// remove illegal characters
-				$parameters['title'] = trim(preg_replace('/[\x0-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+/', '-', $parameters['title']), '-');
-			}
-			
+		$routeURL = "";
+		if (is_string($controller)) {
 			$parameters['controller'] = $controller;
 			$routeURL = RouteHandler::getInstance()->buildRoute($parameters);
-			if (!$isRaw && !empty($url)) {
-				$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';
-			}
-			$url = $routeURL . $url;
 		}
+		else if ($controller instanceof IRouteController) {
+			$routeURL = RouteHandler::getInstance()->buildRoute($controller->getRouteComponentValues());
+		}
+		else if ($controller instanceof DatabaseObjectDecorator && $controller->getDecoratedObject() instanceof IRouteController) {
+			$routeURL = RouteHandler::getInstance()->buildRoute($controller->getDecoratedObject()->getRouteComponentValues());
+		}
+		
+		if ($routeURL != '' && !$isRaw && !empty($url)) {
+			$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';
+		}
+		$url = $routeURL . $url;
 		
 		// append session id
 		$url .= (strpos($url, '?') === false) ? SID_ARG_1ST : SID_ARG_2ND_NOT_ENCODED;
@@ -88,7 +86,7 @@ class LinkHandler extends SingletonFactory {
 				$application = ApplicationHandler::getInstance()->getPrimaryApplication();
 			}
 			
-			$url = $application->domainName . $application->domainPath . $url;
+			$url = $application->domainName.$application->domainPath.(RequestHandler::getInstance()->isACPRequest() ? 'acp/' : '').$url;
 		}
 		
 		// append previously removed anchor

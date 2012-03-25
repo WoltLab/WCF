@@ -80,7 +80,7 @@
 						<footer>
 							<nav>
 								<ul class="wcf-smallButtons">
-									<li><a href="{link controller='PackageView' id=$packageID}{/link}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/info1.svg" alt="" title="{lang}wcf.acp.package.button.info{/lang}" /> <span>{lang}wcf.acp.package.button.info{/lang}</span></a></li>
+									<li><a href="{link controller=$package}{/link}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/info1.svg" alt="" title="{lang}wcf.acp.package.button.info{/lang}" /> <span>{lang}wcf.acp.package.button.info{/lang}</span></a></li>
 									<li><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/update1.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" /> <span>{lang}wcf.acp.package.button.update{/lang}</span></a></li>
 								</ul>
 							</nav>

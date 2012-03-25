@@ -2,14 +2,24 @@
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
+use wcf\system\route\IRouteController;
 use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
 
 /**
  * Shortcut for usage of LinkHandler::getInstance()->getLink() in template scripting.
  * 
- * Usage:
- * {link application='wcf'}index.php{/link}
+ * There are several ways to use this template plugin:
+ * - {link controller='Index'}{/link}
+ *	creates a link to the index page
+ * - {link controller=$object}{/link}
+ *	works if $object implements wcf\system\route\IRouteController, then the
+ *	link handler fetches all needed data (including the real controller) from
+ *	the given object
+ * - {link controller='Object' controllerObject=$object}{/link}
+ *	is intended to be used with $object implementing wcf\system\route\IRouteController
+ *	which delivers all needed data (except for the controller which is
+ *	'Object(Action|Form|Page)' in this case)
  *
  * @author 	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -29,7 +39,9 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin {
 	 * @see wcf\system\template\IBlockTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, $blockContent, TemplateEngine $tplObj) {
-		if (!isset($tagArgs['controller'])) throw new SystemException("missing 'controller' argument in link tag");
+		if (!isset($tagArgs['controller'])) {
+			throw new SystemException("missing 'controller' argument in link tag");
+		}
 		if (!isset($tagArgs['application']) || empty($tagArgs['application'])) {
 			$tagArgs['application'] = 'wcf';
 		}

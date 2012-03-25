@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\request;
+namespace wcf\system\route;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -11,11 +11,11 @@ use wcf\util\FileUtil;
  * Inspired by routing mechanism used by ASP.NET MVC and released under the terms of
  * the Microsoft Public License (MS-PL) http://www.opensource.org/licenses/ms-pl.html
  * 
- * @author 	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @author 	Alexander Ebert, Matthias Schmidt
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	system.request
+ * @subpackage	system.route
  * @category 	Community Framework
  */
 class RouteHandler extends SingletonFactory {
@@ -39,9 +39,15 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * list of available routes
-	 * @var	array<wcf\system\request\Route>
+	 * @var	array<wcf\data\route\Route>
 	 */
 	protected $routes = array();
+	
+	/**
+	 * list of available route components
+	 * @var	array<wcf\data\route\component\RouteComponent>
+	 */
+	protected $components = array();
 	
 	/**
 	 * parsed route data
@@ -63,23 +69,25 @@ class RouteHandler extends SingletonFactory {
 	 * Adds default routes.
 	 */
 	protected function addDefaultRoutes() {
-		$acpRoute = new Route('ACP_default', true);
-		$acpRoute->setSchema('/{controller}/{id}');
-		$acpRoute->setParameterOption('controller', 'Index', null, true);
-		$acpRoute->setParameterOption('id', null, '\d+', true);
+		$defaultRouteComponents = array(
+			new RouteComponent('controller', 'Index', null, true),
+			new RouteComponent('id', null, '\d+', true),
+			new RouteComponent('title', null, '[^\s]+', true)
+		);
+		
+		$acpRoute = new Route('com.woltlab.wcf.acp.default', '/{controller}/{id}-{title}', null, true);
+		$acpRoute->addComponents($defaultRouteComponents);
 		$this->addRoute($acpRoute);
 		
-		$defaultRoute = new Route('default');
-		$defaultRoute->setSchema('/{controller}/{id}');
-		$defaultRoute->setParameterOption('controller', 'Index', null, true);
-		$defaultRoute->setParameterOption('id', null, '\d+', true);
-		$this->addRoute($defaultRoute);
+		$route = new Route('com.woltlab.wcf.default', '/{controller}/{id}-{title}');
+		$route->addComponents($defaultRouteComponents);
+		$this->addRoute($route);
 	}
 	
 	/**
 	 * Adds a new route to the beginning of all routes.
 	 * 
-	 * @param	wcf\system\request\Route	$route
+	 * @param	wcf\system\route\Route	$route
 	 */
 	public function addRoute(Route $route) {
 		array_unshift($this->routes, $route);
@@ -99,12 +107,12 @@ class RouteHandler extends SingletonFactory {
 		$pathInfo = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : '';
 		
 		foreach ($this->routes as $route) {
-			if ($this->isACP != $route->isACP()) {
+			if ($this->isACP != $route->isACPRoute()) {
 				continue;
 			}
 			
 			if ($route->matches($pathInfo)) {
-				$this->routeData = $route->getRouteData();
+				$this->routeData = $route->getRouteData($pathInfo);
 				$this->registerRouteData();
 				return true;
 			}
@@ -141,7 +149,7 @@ class RouteHandler extends SingletonFactory {
 	 */
 	public function buildRoute(array $components) {
 		foreach ($this->routes as $route) {
-			if ($this->isACP != $route->isACP()) {
+			if ($this->isACP != $route->isACPRoute()) {
 				continue;
 			}
 			
