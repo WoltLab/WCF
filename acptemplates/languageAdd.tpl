@@ -9,31 +9,31 @@
 	//]]>
 </script>
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" class="icon48" />
+	<hgroup>
 		<h1>{lang}wcf.acp.language.add{/lang}</h1>
 	</hgroup>
 </header>
 
 {if $errorField}
-	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 {if $success|isset}
-	<p class="wcf-success">{lang}wcf.global.form.add.success{/lang}</p>	
+	<p class="success">{lang}wcf.global.form.add.success{/lang}</p>	
 {/if}
 
-<div class="wcf-contentHeader">
+<div class="contentNavigation">
 	<nav>
-		<ul class="wcf-largeButtons">
-			<li><a href="{link controller='LanguageList'}{/link}" title="{lang}wcf.acp.menu.link.language.list{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/language1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
+		<ul>
+			<li><a href="{link controller='LanguageList'}{/link}" title="{lang}wcf.acp.menu.link.language.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/language1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageAdd'}{/link}">
-	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-shadow1">
+	<div class="container containerPadding marginTop shadow">
 		<dl>
 			<dt><label for="import">{lang}wcf.acp.language.add.mode{/lang}</label></dt>
 			<dd>
@@ -52,12 +52,12 @@
 		<fieldset id="importDiv">
 			<legend>{lang}wcf.acp.language.import.source{/lang}</legend>
 			
-			<dl{if $errorField == 'languageFile'} class="wcf-formError"{/if}>
+			<dl{if $errorField == 'languageFile'} class="formError"{/if}>
 				<dt><label for="languageFile">{lang}wcf.acp.language.import.source.file{/lang}</label></dt>
 				<dd>
 					<input type="text" id="languageFile" name="languageFile" value="{$languageFile}" class="long" />
 					{if $errorField == 'languageFile'}
-						<small class="wcf-innerError">
+						<small class="innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.error.empty{/lang}
 							{else}
@@ -69,12 +69,12 @@
 				</dd>
 			</dl>
 			
-			<dl{if $errorField == 'languageUpload'} class="wcf-formError"{/if}>
+			<dl{if $errorField == 'languageUpload'} class="formError"{/if}>
 				<dt><label for="languageUpload">{lang}wcf.acp.language.import.source.upload{/lang}</label></dt>
 				<dd>
 					<input type="file" id="languageUpload" name="languageUpload" />
 					{if $errorField == 'languageUpload'}
-						<small class="wcf-innerError">
+						<small class="innerError">
 							{lang}wcf.acp.language.import.error{/lang} {$errorType}
 						</small>
 					{/if}
@@ -85,12 +85,12 @@
 		<fieldset id="copyDiv">
 			<legend>{lang}wcf.acp.language.add.new{/lang}</legend>
 			
-			<dl{if $errorField == 'languageCode'} class="wcf-formError"{/if}>
+			<dl{if $errorField == 'languageCode'} class="formError"{/if}>
 				<dt><label for="languageCode">{lang}wcf.acp.language.code{/lang}</label></dt>
 				<dd>
 					<input type="text" id="languageCode" name="languageCode" value="{$languageCode}" class="long" />
 					{if $errorField == 'languageCode'}
-						<small class="wcf-innerError">
+						<small class="innerError">
 							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
 							{if $errorType == 'notUnique'}{lang}wcf.acp.language.add.languageCode.error.notUnique{/lang}{/if}
 						</small>
@@ -99,7 +99,7 @@
 				</dd>
 			</dl>
 			
-			<dl{if $errorField == 'sourceLanguageID'} class="wcf-formError"{/if}>
+			<dl{if $errorField == 'sourceLanguageID'} class="formError"{/if}>
 				<dt><label for="sourceLanguageID">{lang}wcf.acp.language.add.source{/lang}</label></dt>
 				<dd>
 					<select id="sourceLanguageID" name="sourceLanguageID">
@@ -108,7 +108,7 @@
 						{/foreach}
 					</select>
 					{if $errorField == 'sourceLanguageID'}
-						<small class="wcf-innerError">
+						<small class="innerError">
 							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
 						</small>
 					{/if}
@@ -119,10 +119,8 @@
 		{if $additionalFields|isset}{@$additionalFields}{/if}
 	</div>
 	
-	<div class="wcf-formSubmit">
-		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		{@SID_INPUT_TAG}
  	</div>
 </form>
 
