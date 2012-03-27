@@ -140,6 +140,30 @@
 	font-size: 120%;
 }
 
+/* ignored boards */
+.wbbIgnoredBoards {
+	.wbbCategory > hgroup label {
+		color: @wcfPageLinkHoverColor;
+	}
+	
+	.wbbBoardContainer {
+		> div {
+			padding: 7px;
+		}
+		
+		> ul > .wbbBoardContainer {
+			> div {
+				padding-left: 28px;
+			}
+			
+			> ul > .wbbBoardContainer > div {
+				padding-left: 56px;
+			}
+		}
+	}
+}
+
+
 /* ############## Thread List ############## */
 
 /* Column Avatar */
@@ -268,3 +292,43 @@
 .wbbThreadPostList > li {
 	overflow: hidden;
 }*/
+
+/* ############## Post Preview ############## */
+.wbbPostPreview {
+	background-color: @wcfTooltipBackgroundColor;
+	border-radius: @wcfContainerBorderRadius;
+	color: @wcfTooltipColor;
+	margin-bottom: 10px;
+	max-width: 450px;
+	min-width: 150px;
+	padding: 7px;
+	position: absolute;
+	z-index: 320;
+	
+	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
+	
+	.pointer {
+		border-color: @wcfTooltipBackgroundColor transparent;
+		border-style: solid;
+		border-width: 9px 9px 0;
+		left: 10%;
+		position: absolute;
+		bottom: -9px;
+	}
+}
+
+.wbbPostPreviewContent {
+	h1 {
+		display: inline-block;
+	}
+	
+	time {
+		font-size: 85%;
+		font-style: italic;
+	}
+	
+	h1, time, p {
+		line-height: 1.5;
+		margin-bottom: 7px;
+	}
+}
