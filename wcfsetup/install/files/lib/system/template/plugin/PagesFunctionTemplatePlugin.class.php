@@ -30,7 +30,6 @@ use wcf\util\StringUtil;
  */
 class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	const SHOW_LINKS = 11;
-	const SHOW_SUB_LINKS = 20;
 	
 	/**
 	 * Inserts the page number into the link.
@@ -51,16 +50,33 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * @param 	string		$link
 	 * @param 	integer		$pageNo
 	 * @param 	integer		$activePage
-	 * @param	boolean		$break
 	 * @return	string
 	 */
 	protected function makeLink($link, $pageNo, $activePage, $break = false) {
 		// first page
 		if ($activePage != $pageNo) {
-			return '<li class="wcf-button '.($break ? 'break' : '').'"><a href="'.$this->insertPageNumber($link, $pageNo).'">'.StringUtil::formatInteger($pageNo).'</a></li>'."\n";
+			return '<li class="button"><a href="'.$this->insertPageNumber($link, $pageNo).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.page.pageNo', array('pageNo' => $pageNo)).'">'.StringUtil::formatInteger($pageNo).'</a></li>'."\n";
 		}
 		else {
-			return '<li class="wcf-button '.($break ? 'break ' : '').'active"><span>'.StringUtil::formatInteger($pageNo).'</span></li>'."\n";
+			return '<li class="button active"><span>'.StringUtil::formatInteger($pageNo).'</span></li>'."\n";
+		}
+	}
+	
+	protected function makePreviousLink($link, $pageNo) {
+		if ($pageNo > 1) {
+			return '<li class="button skip"><a href="'.$this->insertPageNumber($link, $pageNo - 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous').'" class="jsTooltip"><img src="'.self::getIconPath('previous1').'" alt="" /></a></li>'."\n";
+		}
+		else {
+			return '<li class="skip disabled"><img src="'.self::getIconPath('previous1D').'" alt="" /></li>'."\n";
+		}
+	}
+	
+	protected function makeNextLink($link, $pageNo, $pages) {
+		if ($pageNo && $pageNo < $pages) {
+			return '<li class="button skip"><a href="'.$this->insertPageNumber($link, $pageNo + 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.next').'" class="jsTooltip"><img src="'.self::getIconPath('next1').'" alt="" /></a></li>'."\n";
+		}
+		else {
+			return '<li class="skip disabled"><img src="'.self::getIconPath('next1D').'" alt="" /></li>'."\n";
 		}
 	}
 	
@@ -96,22 +112,16 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			}
 			
 			// open div and ul
-			$html .= "<nav class=\"wcf-pageNavigation\" data-link=\"".$link."\">\n<ul>\n";
+			$html .= "<nav class=\"pageNavigation\" data-link=\"".$link."\" data-pages=\"".$tagArgs['pages']."\">\n<ul>\n";
 			
 			// previous page
-			$previousTitle = WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous');
-			if ($tagArgs['page'] > 1) {
-				$html .= '<li class="wcf-button skip"><a href="'.$this->insertPageNumber($link, $tagArgs['page'] - 1).'" title="'.$previousTitle.'" class="jsTooltip"><img src="'.self::getIconPath('previous1').'" alt="" /></a></li>'."\n";
-			}
-			else {
-				$html .= '<li class="skip disabled"><img src="'.self::getIconPath('previous1D').'" alt="" /></li>'."\n";
-			}
+			$html .= $this->makePreviousLink($link, $tagArgs['page']);
 			
 			// first page
 			$html .= $this->makeLink($link, 1, $tagArgs['page']);
 			
 			// calculate page links
-			$maxLinks = self::SHOW_LINKS - 4;
+			$maxLinks = static::SHOW_LINKS - 4;
 			$linksBeforePage = $tagArgs['page'] - 2;
 			if ($linksBeforePage < 0) $linksBeforePage = 0; 
 			$linksAfterPage = $tagArgs['pages'] - ($tagArgs['page'] + 1);
@@ -153,16 +163,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 					$html .= $this->makeLink($link, 2, $tagArgs['page']);
 				}
 				else {
-					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)" class="wcf-dropdownCaption"><img src="'.self::getIconPath('dropdown1').'" alt="" /></a><input type="text" name="pageNo" placeholder="…" class="tiny" /><div class="wcf-dropdown"><span class="pointer"><span></span></span><ul>'."\n";
-					
-					$k = 0;
-					$step = intval(ceil(($left - 2) / self::SHOW_SUB_LINKS));
-					for ($i = 2; $i <= $left; $i += $step) {
-						$html .= $this->makeLink($link, $i, $tagArgs['page'], $k != 0 && $k % 4 == 0);
-						$k++;
-					}
-					
-					$html .= "</ul></div></li>\n";
+					$html .= '<li class="button jumpTo"><a title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.jumpTo').'" class="jsTooltip">...</a></li>'."\n";
 				}
 			}
 			
@@ -177,16 +178,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 					$html .= $this->makeLink($link, $tagArgs['pages'] - 1, $tagArgs['page']);
 				}
 				else {
-					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)" class="wcf-dropdownCaption"><img src="'.self::getIconPath('dropdown1').'" alt="" /></a><input type="text" name="page" placeholder="…" class="tiny" /><div class="wcf-dropdown"><span class="pointer"><span></span></span><ul>'."\n";
-					
-					$k = 0;
-					$step = intval(ceil(($tagArgs['pages'] - $right) / self::SHOW_SUB_LINKS));
-					for ($i = $right; $i < $tagArgs['pages']; $i += $step) {
-						$html .= $this->makeLink($link, $i, $tagArgs['page'], $k != 0 && $k % 4 == 0);
-						$k++;
-					}
-					
-					$html .= "</ul></div></li>\n";
+					$html .= '<li class="button jumpTo"><a title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.jumpTo').'" class="jsTooltip">...</a></li>'."\n";
 				}
 			}
 			
@@ -194,13 +186,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			$html .= $this->makeLink($link, $tagArgs['pages'], $tagArgs['page']);
 			
 			// next page
-			$nextTitle = WCF::getLanguage()->getDynamicVariable('wcf.global.page.next');
-			if ($tagArgs['page'] && $tagArgs['page'] < $tagArgs['pages']) {
-				$html .= '<li class="wcf-button skip"><a href="'.$this->insertPageNumber($link, $tagArgs['page'] + 1).'" title="'.$nextTitle.'" class="jsTooltip"><img src="'.self::getIconPath('next1').'" alt="" /></a></li>'."\n";
-			}
-			else {
-				$html .= '<li class="skip disabled"><img src="'.self::getIconPath('next1D').'" alt="" /></li>'."\n";
-			}
+			$html .= $this->makeNextLink($link, $tagArgs['page'], $tagArgs['pages']);
 			
 			// close div and ul
 			$html .= "</ul></nav>\n";
