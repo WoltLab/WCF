@@ -20,7 +20,7 @@ set_error_handler('handleError', E_ALL);
 $neededFilesPattern = array(
 	'!^setup/.*!',
 	'!^install/files/acp/images/wcfLogo.*!',
-	'!^install/files/acp/style/.*!',
+	'!^install/files/acp/style/setup/.*!',
 	'!^install/files/lib/data/.*!',
 	'!^install/files/icon/.*!',
 	'!^install/files/lib/system/.*!',
@@ -752,7 +752,7 @@ if (isset($_GET['showIcon'])) {
 }
 // show css from temp folder
 if (isset($_GET['showCSS'])) {
-	readFileResource('showCSS', TMP_DIR . 'install/files/acp/style/');
+	readFileResource('showCSS', TMP_DIR . 'install/files/acp/style/setup/');
 }
 
 // check whether setup files are already unzipped
