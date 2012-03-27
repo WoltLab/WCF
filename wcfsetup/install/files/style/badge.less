@@ -1,24 +1,38 @@
 /* ############## Badges ############## */
 
 /* Globals */
+// sets default badge shadows depending on background color
+.badgeShadow(@backgroundColor) when (lightness(@backgroundColor) >= 50%) {
+	box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 1);
+}
+.badgeShadow(@backgroundColor) when (lightness(@backgroundColor) < 50%) {
+	box-shadow: 0px -1px 0px 0px rgba(0, 0, 0, 1);
+}
+
 
 .badge {
-	border-radius: 9px;
+	background-color: @wcfColor;
+	border-radius: 13px;
 	color: @wcfPageLinkHoverColor;
 	display: inline-block;
 	font-size: 11px;
-	font-weight: bold;
-	padding: 2px 6px 2px;
+	padding: 2px 8px;
 	position: relative;
 	text-shadow: none;
 	top: -1px;
 	white-space: nowrap;
 	
-	.linearGradient(lighten(@wcfPageBackgroundColor, 10%), lighten(@wcfPageBackgroundColor, 20%), lighten(@wcfPageBackgroundColor, 5%));
+	.badgeShadow(@wcfContentBackgroundColor);
+	
+	&.badgeUpdate {
+		background-color: #336699;
+		color: @wcfPageLinkHoverColor;
+	}
 	
 	&.badgeInverse {
 		background-color: @wcfPageLinkHoverColor;
-		background-image: none;
-		color: lighten(@wcfPageBackgroundColor, 10%);
+		color: @wcfPageBackgroundColor;
+		
+		.badgeShadow(@wcfPageBackgroundColor);
 	}
 }

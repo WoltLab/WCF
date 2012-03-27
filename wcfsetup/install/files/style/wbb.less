@@ -222,9 +222,8 @@
 		}
 		
 		&:before {
-			background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, rgba(255, 255, 255, .85)), color-stop(.4, rgba(255, 255, 255, 0)));
-			
 			.borderRadius(@wcfContainerBorderRadius, 0, 0, 0);
+			.linearGradientNative(~"left top, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%");
 		}
 	}
 }

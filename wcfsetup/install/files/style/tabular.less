@@ -28,6 +28,18 @@
 	}
 }
 
+.tabularBox:not(.tabularBoxTitle) .table {
+	thead tr:first-child th {
+		&:first-child {
+			.borderRadius(@wcfContainerBorderRadius - 1, 0, 0, 0);
+		}
+		
+		&:last-child {
+			.borderRadius(0, @wcfContainerBorderRadius - 1, 0, 0);
+		}
+	}
+}
+
 .table {
 	border-spacing: 0;
 	width: 100% !important;
@@ -43,18 +55,18 @@
 	/* headline */
 	th {
 		border-right: @wcfContainerBorderWidth @wcfContainerBorderStyle rgba(0, 0, 0, .2);
+		color: @wcfPageLinkColor;
 		font-size: 85%;
 		font-weight: bold;
 		white-space: nowrap;
 		
 		.linearGradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
+		.textShadow(saturate(lighten(@wcfPageBackgroundColor, 20%), 20%));
 		
 		a {
 			color: @wcfPageLinkColor;
 			display: block;
 			margin: -@wcfGapSmall;
-			
-			.textShadow(saturate(lighten(@wcfPageBackgroundColor, 20%), 20%));
 			
 			&:hover {
 				text-decoration: none;
@@ -167,11 +179,11 @@
 .tabularBox .table {
 	tbody tr:last-child td {
 		&:first-child {
-			.borderRadius(0, 0, 0, 4px);
+			.borderRadius(0, 0, 0, @wcfContainerBorderRadius - 1);
 		}
 		
 		&:last-child {
-			.borderRadius(0, 0, 4px, 0);
+			.borderRadius(0, 0, @wcfContainerBorderRadius - 1, 0);
 		}
 	}
 }
