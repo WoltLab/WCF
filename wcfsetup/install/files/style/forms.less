@@ -1,0 +1,192 @@
+/* ############## Fieldsets ############## */
+fieldset {
+	background-color: @wcfContainerBackgroundColor;
+	border: @wcfContainerBorderWidth @wcfContainerBorderStyle @wcfContainerBorderColor;
+	border-radius: @wcfContainerBorderRadius;
+	box-sizing: border-box;
+	margin: @wcfGapMedium 0 0;
+	padding: @wcfGapTiny @wcfGapMedium @wcfGapMedium;
+}
+
+.container fieldset {
+	background-color: @wcfContainerAccentBackgroundColor;
+}
+
+fieldset:last-child,
+fieldset:only-child {
+	margin-bottom: @wcfGapSmall !important;
+}
+
+fieldset legend {
+	color: @wcfLinkColor;
+	margin: auto -@wcfGapSmall;
+	padding: 0 @wcfGapSmall 0;
+	
+	.textShadow(@wcfContainerAccentBackgroundColor);
+}
+
+fieldset legend ~ p {
+	margin-bottom: @wcfGapMedium;
+}
+
+/* Special Sidebar */
+
+.sidebar fieldset {
+	background-color: transparent;
+	border-width: 0;
+}
+
+.sidebar fieldset legend {
+	color: @wcfColor;
+	padding: 0;
+	text-transform: uppercase;
+		
+	.textShadow(@wcfHighlightBackgroundColor);
+}
+
+/* ############## Labeled Content ############## */
+
+/* Simple */
+
+dl {
+	margin-top: @wcfGapSmall;
+	position: relative;
+}
+
+fieldset dl:first-of-type {
+	margin-top: 0;
+}
+
+dl > dt {
+	color: @wcfLabelColor; //rgba(102, 153, 204, 1);
+	float: left;
+	margin-top: 5px;
+	text-align: right;
+}
+
+dl > dt {
+	width: 230px;
+}
+
+dl.wide > dt {
+	display: none;
+}
+
+dl > dt > label {
+	display: block;
+	margin-top: 5px;
+}
+
+dl.disabled > dt {
+	color: @wcfDimmedColor;
+}
+
+dl > dd {
+	padding-top: 5px;
+}
+
+dl > dd {
+	margin-left: 250px;
+}
+
+dl.wide > dd {
+	margin-left: 0;
+}
+
+dl > dd > small {
+	color: @wcfDimmedColor;
+	display: block;
+	font-size: 85%;
+	margin: 3px 0 7px;
+}
+
+dl > dd > p {
+	margin-top: 5px;
+}
+
+/* Nested */
+
+dl > dd > fieldset {
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+dl > dd > fieldset > legend {
+	display: none;
+}
+
+dl > dd > fieldset > dl > dt {
+	margin-right: 20px;
+	width: 150px;
+}
+
+dl > dd > fieldset > dl > dd {
+	margin-left: 0;
+}
+
+dl > dd > fieldset > dl > dd > label {
+	display: block;
+}
+
+/* Reversed (flips the label aside the checkbox or radio button) - 
+	use only when automatically generating checkboxes or radio-buttons! */
+
+.reversed {
+	margin-top: 2px;
+	position: absolute;
+	text-align: left;
+	width: auto;
+}
+
+.reversed {
+	left: 270px;
+}
+
+.reversed ~ dd > input[type='checkbox'] {
+	margin-left: 0;
+}
+
+/* Special -> Sidebar */
+
+.sidebar dl > dt {
+	text-align: left;
+	float: none;
+	width: auto;
+}
+
+.sidebar dl > dd {
+	display: block;
+	margin-left: 0;
+	margin-bottom: 13px;
+}	
+
+.sidebar dl > dd * {
+	display: block;
+}
+
+/* Globals */
+
+label {
+	color: @wcfLabelColor;
+}
+
+/* Structure */
+
+.formSubmit {
+	margin-top: 15px;
+	text-align: center;
+}
+
+input[type='checkbox'] ~ small,
+input[type='radio'] ~ small {
+	margin-top: 0;
+	margin-left: 21px;
+}
+
+/* todo ckeditor fixes */
+.cke_skin_kama {
+	border-width: 0 !important;
+	padding: 0 !important;
+}

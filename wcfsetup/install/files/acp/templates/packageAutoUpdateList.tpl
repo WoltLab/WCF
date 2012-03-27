@@ -22,9 +22,9 @@
 </script>
 
 <form method="post" action="{link controller='PackageUpdate'}{/link}" id="updateForm">
-	<header class="wcf-container wcf-mainHeading">
-		<img src="{@$__wcf->getPath()}icon/update1.svg" alt="" class="wcf-containerIcon" />
-		<hgroup class="wcf-containerContent">
+	<header class="box48 boxHeadline">
+		<img src="{@$__wcf->getPath()}icon/update1.svg" alt="" class="icon48" />
+		<hgroup>
 			<h1>{lang}wcf.acp.packageUpdate{/lang}</h1>
 			{if $availableUpdates|count}
 				<h2><label><input type="checkbox" onclick="checkUncheckAllPackages(document.getElementById('updateForm'))" /> {lang}wcf.acp.packageUpdate.selectAll{/lang}</label></h2>
@@ -33,7 +33,7 @@
 	</header>
 	
 	{if !$availableUpdates|count}
-		<p class="wcf-info">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
+		<p class="info">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
 	{else}
 		{foreach from=$availableUpdates item=availableUpdate}
 			<article class="wcf-message wcf-messageDecor{if $availableUpdate.version.updateType == 'security'} wcf-messageRed{/if}"><!-- ToDo: Style! -->
@@ -83,10 +83,9 @@
 			</article>			
 		{/foreach}
 		
-		<div class="wcf-formSubmit">
+		<div class="formSubmit">
 			<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-			{@SID_INPUT_TAG}
 	 	</div>
 	{/if}
 </form>

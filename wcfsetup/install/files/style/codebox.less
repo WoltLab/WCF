@@ -1,0 +1,182 @@
+/* Code Box */
+.codeBox {
+	padding: 0;
+	
+	hgroup {
+		background-color: @wcfHighlightBackgroundColor;
+		border-top-left-radius: @wcfContainerBorderRadius;
+		border-top-right-radius: @wcfContainerBorderRadius;
+		
+		h1 {
+			padding: 4px 7px;
+			font-weight: bold;
+		}
+	}
+	
+	dl {
+		display: table;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+		overflow-x: auto;
+		
+		dt {
+			text-align: right;
+			background-color: @wcfContainerAccentBackgroundColor;
+			border-bottom-left-radius: @wcfContainerBorderRadius;
+			padding: 0;
+			margin: 0;
+			display: table-cell;
+			width: 1%;
+			float: none;
+			
+			pre {
+				padding: 4px;
+				
+				a {
+					display: block;
+					margin: 0 -4px;
+					padding: 0 5px;
+					text-decoration: none;
+					
+					&:target {
+						color: rgba(0, 0, 0, 1);
+						background-color: #ff3; 
+					}
+				}
+			}
+		}
+		
+		dd {
+			background-color: @wcfContentBackgroundColor;
+			display: table-cell;
+			width: 100%;
+			padding: 0;
+			margin: 0;
+			border-bottom-right-radius: @wcfContainerBorderRadius;
+			
+			pre {
+				padding: 4px;
+			}
+		}
+	
+	}
+}
+
+/* ############## Code Styles ############## */
+
+/* -- -- -- Code Box -- -- -- */
+
+.codeBox .hlQuotes {
+	color: red;
+}
+
+.codeBox .hlComments,
+.codeBox .hlOperators {
+	color: green;
+}
+
+.codeBox .hlKeywords1 {
+	color: blue;
+}
+
+.codeBox .hlKeywords2 {
+	color: darkred;
+}
+
+.codeBox .hlKeywords3 {
+	color: darkviolet;
+}
+
+.codeBox .hlKeywords4 {
+	color: darkgoldenrod;
+}
+
+.codeBox .hlKeywords5 {
+	color: crimson;
+}
+
+.codeBox .hlNumbers {
+	color: darkorange;
+}
+
+/* -- -- -- Code Highlighters -- -- -- */
+
+/* DIFF */
+
+.diffHighlighter .hlComments {
+	color: darkviolet;
+}
+
+.diffHighlighter .hlRemoved {
+	color: red;
+}
+
+.diffHighlighter .hlAdded {
+	color: green;
+}
+
+/* PHP */
+
+.phpHighlighter .hlKeywords2 {
+	color: green;
+}
+
+.phpHighlighter .hlComments {
+	color: darkgoldenrod;
+}
+
+/* CSS */
+
+.cssHighlighter .hlComments {
+	color: #236e26;
+}
+
+.cssHighlighter .hlColors {
+	color: #751116;
+}
+
+.cssHighlighter .hlNumbers,
+.sqlHighlighter .hlNumbers {
+	color: #1906fd;
+}
+
+.cssHighlighter .hlKeywords1 {
+	color: #87154f;
+}
+
+.cssHighlighter .hlKeywords2 {
+	color: #994509;
+}
+
+.cssHighlighter .hlKeywords3,
+.cssHighlighter .hlKeywords4 {
+	color: inherit;
+}
+
+/* SQL */
+
+.sqlHighlighter .hlKeywords1 {
+	color: #663821;
+}
+
+.sqlHighlighter .hlKeywords2 {
+	color: #871550;
+}
+
+/* Quote Box */
+.quoteBox {
+	/*background: url("...quote.svg") 12px 12px no-repeat #fff;*/
+	background-color: @wcfContentBackgroundColor;
+	padding: 10px 20px 10px 58px;
+	
+	header {
+		padding: 0 0 4px 0 !important;
+		border-bottom: 1px dotted @wcfContainerBorderColor;
+		margin-bottom: 8px;
+		
+		h1 {
+			font-weight: bold;
+		}
+	}
+}

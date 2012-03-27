@@ -8,30 +8,30 @@
 	//]]>
 </script>
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/search1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{@$__wcf->getPath()}icon/search1.svg" alt="" class="icon48" />
+	<hgroup>
 		<h1>{lang}wcf.acp.user.search{/lang}</h1>
 	</hgroup>
 </header>
 
 {if $errorField == 'search'}
-	<p class="wcf-error">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
+	<p class="error">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
 {/if}
 
 {*if $deletedUsers}
-	<p class="wcf-success">{lang}wcf.acp.user.delete.success{/lang}</p>	
+	<p class="success">{lang}wcf.acp.user.delete.success{/lang}</p>	
 {elseif $deletedUsers === 0}
-	<p class="wcf-error">{lang}wcf.acp.user.delete.error{/lang}</p>	
+	<p class="error">{lang}wcf.acp.user.delete.error{/lang}</p>	
 {/if*}
 
-<div class="wcf-contentHeader">
+<div class="contentNavigation">
 	<nav>
-		<ul class="wcf-largeButtons">
+		<ul>
 			{if $__wcf->session->getPermission('admin.user.canAddUser')}
-				<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+				<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 			{/if}
-			<li><a href="{link controller='UserList'}{/link}" title="{lang}wcf.acp.menu.link.user.list{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserList'}{/link}" title="{lang}wcf.acp.menu.link.user.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/users1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>
@@ -39,8 +39,7 @@
 </div>
 
 <form method="post" action="{link controller='UserSearch'}{/link}">
-	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-boxDecor">
-		
+	<div class="container containerPadding marginTop shadow">
 		<fieldset>
 			<legend>{lang}wcf.acp.user.search.conditions.general{/lang}</legend>
 			
@@ -112,8 +111,8 @@
 		
 		{event name='fieldsets'}
 		
-		<div class="wcf-tabMenuContainer">
-			<nav class="wcf-tabMenu">
+		<div class="tabMenuContainer">
+			<nav class="tabMenu">
 				<ul>
 					{if $optionTree|count}
 						<li><a href="#profile">{lang}wcf.acp.user.search.conditions.profile{/lang}</a></li>
@@ -126,8 +125,8 @@
 			</nav>
 			
 			{if $optionTree|count}
-				<div id="profile" class="wcf-box wcf-boxPadding wcf-tabMenuContent hidden">
-					<hgroup class="wcf-subHeading">
+				<div id="profile" class="container containerPadding tabMenuContent hidden">
+					<hgroup class="boxSubHeadline">
 						<h1>{lang}wcf.acp.user.search.conditions.profile{/lang}</h1>
 					</hgroup>
 					
@@ -146,8 +145,8 @@
 		
 			{event name='tabMenuContent'}
 		
-			<div id="resultOptions" class="wcf-box wcf-boxPadding wcf-tabMenuContent hidden">
-				<hgroup class="wcf-subHeading">
+			<div id="resultOptions" class="container containerPadding tabMenuContent hidden">
+				<hgroup class="boxSubHeadline">
 					<h1>{lang}wcf.acp.user.search.display{/lang}</h1>
 				</hgroup>
 				
@@ -231,10 +230,8 @@
 		</div>
 	</div>
 	
-	<div class="wcf-formSubmit">
-		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		{@SID_INPUT_TAG}
  	</div>
 </form>
 

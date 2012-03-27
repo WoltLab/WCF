@@ -60,27 +60,26 @@
 	//]]>
 </script>
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/user1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{@$__wcf->getPath()}icon/user1.svg" alt="" class="icon48" />
+	<hgroup>
 		<h1>{lang}wcf.acp.user.massProcessing{/lang}</h1>
 	</hgroup>
 </header>
 
 {if $errorField}
-	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
-<p class="wcf-warning">{lang}wcf.acp.user.massProcessing.warning{/lang}</p>
+<p class="warning">{lang}wcf.acp.user.massProcessing.warning{/lang}</p>
 
 {if $affectedUsers|isset}
-	<p class="wcf-success">{lang}wcf.acp.user.massProcessing.success{/lang}</p>	
+	<p class="success">{lang}wcf.acp.user.massProcessing.success{/lang}</p>	
 {/if}
 
 <form method="post" action="{link controller='UsersMassProcessing'}{/link}">
-	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-shadow1">
-		
-		<hgroup class="wcf-subHeading">
+	<div class="container containerPadding marginTop shadow">
+		<hgroup class="boxSubHeadline">
 			<h1>{lang}wcf.acp.user.massProcessing.conditions{/lang}</h1>
 		</hgroup>
 		
@@ -140,8 +139,8 @@
 		{event name='fieldsets'}
 		
 		{hascontent}
-			<div class="wcf-tabMenuContainer">
-				<nav class="wcf-tabMenu">
+			<div class="tabMenuContainer">
+				<nav class="tabMenu">
 					<ul>
 						{content}
 							{if $options|count}
@@ -154,8 +153,8 @@
 				</nav>
 				
 				{if $options|count}
-					<div id="profile" class="wcf-box wcf-boxPadding wcf-tabMenuContent hidden">
-						<hgroup class="wcf-subHeading">
+					<div id="profile" class="container containerPadding tabMenuContent hidden">
+						<hgroup class="boxSubHeadline">
 							<h1>{lang}wcf.acp.user.search.conditions.profile{/lang}</h1>
 						</hgroup>
 						
@@ -168,12 +167,12 @@
 		{/hascontent}
 	</div>
 	
-	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-boxDecor">
-		<hgroup class="wcf-subHeading">
+	<div class="container containerPadding marginTop shadow">
+		<hgroup class="boxSubHeadline">
 			<h1>{lang}wcf.acp.user.massProcessing.action{/lang}</h1>
 		</hgroup>
 			
-		<dl{if $errorField == 'action'} class="wcf-formError"{/if}>
+		<dl{if $errorField == 'action'} class="formError"{/if}>
 			<dt><label>{lang}wcf.acp.user.massProcessing.action{/lang}</label></dt>
 			<dd>
 				<fieldset>
@@ -195,7 +194,7 @@
 							{event name='additionalActions'}
 							
 							{if $errorField == 'action'}
-								<small class="wcf-innerError">
+								<small class="innerError">
 									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 								</small>
 							{/if}
@@ -209,12 +208,12 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.user.sendMail.mail{/lang}</legend>
 				
-				<dl{if $errorField == 'from'} class="wcf-formError"{/if}>
+				<dl{if $errorField == 'from'} class="formError"{/if}>
 					<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
 					<dd>
 						<input type="email" id="from" name="from" value="{$from}" class="medium" />
 						{if $errorField == 'from'}
-							<small class="wcf-innerError">
+							<small class="innerError">
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}
@@ -222,12 +221,12 @@
 					</dd>
 				</dl>
 				
-				<dl{if $errorField == 'subject'} class="wcf-formError"{/if}>
+				<dl{if $errorField == 'subject'} class="formError"{/if}>
 					<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
 					<dd>
 						<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
 						{if $errorField == 'subject'}
-							<small class="wcf-innerError">
+							<small class="innerError">
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}
@@ -235,12 +234,12 @@
 					</dd>
 				</dl>
 				
-				<dl{if $errorField == 'text'} class="wcf-formError"{/if}>
+				<dl{if $errorField == 'text'} class="formError"{/if}>
 					<dt><label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label></dt>
 					<dd>
 						<textarea id="text" name="text" rows="15" cols="40">{$text}</textarea>
 						{if $errorField == 'text'}
-							<small class="wcf-innerError" class="long">
+							<small class="innerError" class="long">
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}
@@ -295,10 +294,10 @@
 				<legend>{lang}wcf.acp.user.groups{/lang}</legend>
 				
 				<dl>
-					<dd{if $errorField == 'assignToGroupIDArray'} class="wcf-formError"{/if}>
+					<dd{if $errorField == 'assignToGroupIDArray'} class="formError"{/if}>
 						{htmlCheckboxes options=$availableGroups name=assignToGroupIDArray selected=$assignToGroupIDArray}
 						{if $errorField == 'assignToGroupIDArray'}
-							<small class="wcf-innerError">
+							<small class="innerError">
 								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							</small>
 						{/if}
@@ -310,10 +309,8 @@
 		{if $additionalActionSettings|isset}{@$additionalActionSettings}{/if}
 	</div>
 	
-	<div class="wcf-formSubmit">
-		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		{@SID_INPUT_TAG}
  	</div>
 </form>
 

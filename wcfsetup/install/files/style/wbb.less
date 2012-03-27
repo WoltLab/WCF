@@ -1,0 +1,270 @@
+.wbbStats {
+	margin-top: 2px;
+	
+	/* TODO: This should be mentioned in the documentation but not included in stylesheets */
+	//&.wbbStatsAside {
+		left: 50%;
+		position: absolute;
+		top: @wcfGapSmall;
+		width: 15%;
+		
+		dl {
+			display: block;
+			
+			dt {
+				float: right;
+				width: 40%;
+				padding-bottom: 4px;
+				
+				&:after {
+					content: "";
+				}
+			}
+			
+			dd {
+				float: left;
+				text-align: right;
+				width: 58%;
+				padding-bottom: 4px;
+			}
+		}
+	//}
+}
+
+.wbbLastPost {
+	left: 65%;
+	position: absolute;
+	top: @wcfGapSmall;
+	width: 35%; /* = 100% - left */
+	
+	> div {
+		background-color: @wcfContentBackgroundColor;
+		padding: 7px;
+		border: 1px solid @wcfContainerBorderColor;
+		border-radius: @wcfContainerBorderRadius;
+		margin-right: 7px;
+	}
+	
+	hgroup {
+		h1 a {
+			display: inline-block;
+			overflow: hidden;
+			padding-bottom: 2px; /* prevents letters from being cut */
+			text-overflow: ellipsis;
+			width: 98%;
+			white-space: nowrap;
+		}
+		
+		h2 {
+			font-size: 85%;
+			
+			time {
+				color: @wcfDimmedColor;
+			}
+		}
+	}
+}
+
+.wbbSubBoards {
+	margin-top: @wcfGapSmall;
+	
+	li {
+		display: inline-block;
+	}
+}
+
+.wbbBoardDescription {
+	font-size: 90%;
+	padding-top: @wcfGapTiny;
+}
+
+.wbbBoardContainer {
+	position: relative;
+}
+
+.wbbBoardNodeTop {
+	margin-top: @wcfGapMedium;
+}
+
+.wbbBoard {
+	min-height: 42px;
+	padding: @wcfGapSmall;
+	padding-right: 51%;
+	
+	.transition(background, .1s);
+	
+	&~ ul > .wbbBoardContainer > .wbbBoard {
+		padding-left: 43px;
+
+		&~ ul > .wbbBoardContainer > .wbbBoard {
+			padding-left: 79px;
+		}
+	}
+	
+	&:hover {
+		background-color: @wcfHighlightBackgroundColor;
+	}
+}
+
+.wbbBoardNode1 {
+	background-color: @wcfContainerAccentBackgroundColor;
+}
+
+.wbbBoardNode2 {
+	background-color: @wcfContentBackgroundColor;
+}
+
+.wbbBoardList > li.wbbBoardNodeTop:not(.wbbBoardNodeTopEmpty) > div {
+	.borderRadius(@wcfContainerBorderRadius, 0);
+}
+
+.wbbBoardList > li > ul > li:last-child div.wbbBoard:last-child {
+	.borderRadius(0, @wcfContainerBorderRadius);
+}
+
+.wbbBoardNodeTopEmpty div.wbbBoard {
+	.borderRadius(@wcfContainerBorderRadius);
+}
+
+.wbbThreadListLastPost h2 {
+	color: @wcfDimmedColor;
+	font-size: 85%;
+	margin-top: 2px;
+}
+
+.wbbBoardList .new > div > hgroup > h1 {
+	font-weight: bold;
+}
+
+.wbbBoard > div > hgroup > h1 {
+	font-size: 120%;
+}
+
+/* ############## Thread List ############## */
+
+/* Column Avatar */
+.wbbThreadList .columnAvatar div {
+	position: relative;
+	width: 40px;
+	height: 38px;
+}
+
+.wbbThreadList .columnAvatar div > p > img {
+	opacity: .5;
+	
+	.transition(opacity, .2s);
+}
+
+.wbbThreadList tr.new .columnAvatar div > p > img,
+.wbbThreadList tr:hover .columnAvatar div > p > img {
+	opacity: 1;
+} 
+
+.wbbThreadList .columnAvatar .myAvatar {
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	bottom: -2px;
+	left: 24px;
+	opacity: 1;
+	
+	.boxShadow(0, 0, rgba(0, 0, 0, .3), 3px);
+} 
+
+
+.wbbThreadStarter {
+	position: relative;
+	
+	
+	> .message {
+		&:after,
+		&:before {
+			content: "";
+			display: block;
+			height: 128px;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 128px;
+		}
+		
+		&:after {
+			background-image: url(../../icon/threadStarter1.svg);
+			background-position: 4px 4px;
+			background-repeat: no-repeat;
+			background-size: 16px;
+			height: 20px;
+			width: 20px;
+		}
+		
+		&:before {
+			background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, rgba(255, 255, 255, .85)), color-stop(.4, rgba(255, 255, 255, 0)));
+			
+			.borderRadius(@wcfContainerBorderRadius, 0, 0, 0);
+		}
+	}
+}
+
+.newMessageBadge {
+	
+	display: inline-block;
+	border: 1px solid @wcfLinkColor; //@wcfContainerBorderColor;
+	border-radius: 2px;
+	//border-bottom-left-radius: 0px;
+	padding: 6px 10px;
+	position: absolute;
+	left: -220px;
+	top: 30px;
+	font-weight: bold;
+	color: @wcfLinkColor;
+	text-transform: uppercase;
+	font-size: 85%;
+	//
+	.linearGradient(darken(@wcfHighlightBackgroundColor, 10%), @wcfHighlightBackgroundColor, darken(@wcfHighlightBackgroundColor, 10%));
+	.textShadow(darken(@wcfHighlightBackgroundColor, 10%));
+	.boxShadow(1px, 1px, rgba(0, 0, 0, .2), 3px);
+}
+
+.newMessageBadge:before {
+	content: "";
+	display: block;
+	
+	width: 0px;
+	height: 0px;
+	position: absolute;
+	bottom: -7px;
+	left: -8px;
+	
+	
+	border-width: 0px 7px 7px;
+	border-style: solid;
+	border-color: transparent @wcfLinkColor transparent transparent;
+	/*
+	border: 5px solid red;
+	border-width: 5px 0 0 5px;*/
+}
+
+
+/* rotated badge
+.newMessageBadge {
+	background-color: @wcfHoverBackgroundColor;
+	color: @wcfColor;
+	display: block;
+	font-size: 15px;
+	left: -260px;
+	padding: 6px 4px;
+	position: absolute;
+	text-align: center;
+	text-transform: uppercase;
+	top: 20px;
+	width: 150px;
+	
+	-webkit-backface-visibility: hidden;
+	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+	-webkit-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+}
+
+.wbbThreadPostList > li {
+	overflow: hidden;
+}*/

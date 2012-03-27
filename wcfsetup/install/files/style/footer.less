@@ -1,0 +1,20 @@
+.footer {
+	padding-bottom: @wcfGapSmall;
+	z-index: 100;
+	
+	.footerContent {
+		text-align: center;
+		
+		a {
+			color: @wcfPageLinkColor;
+			
+			.textShadow(@wcfPageBackgroundColor);
+			.transition(color, .1s);
+			
+			&:hover {
+				color: @wcfPageLinkHoverColor;
+				text-decoration: none;
+			}
+		}
+	}
+}

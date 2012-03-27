@@ -1,0 +1,89 @@
+/* backgrounds */
+@wcfPageBackgroundColor: rgba(41, 55, 74, 1);
+@wcfHighlightBackgroundColor: rgba(216, 231, 245, 1);
+@wcfHoverBackgroundColor: rgba(255, 229, 200, 1);
+@wcfContentBackgroundColor: rgba(255, 255, 255, 1);
+@wcfContainerBackgroundColor: rgba(252, 253, 254, 1);
+@wcfNavigationBackgroundColor: lighten(@wcfHighlightBackgroundColor, 3%);
+
+/* text colors */
+@wcfColor: rgba(102, 102, 102, 1);
+@wcfLinkColor: rgba(51, 102, 153, 1);
+@wcfLinkHoverColor: darken(@wcfLinkColor, 10%);
+@wcfPageColor: @wcfColor;
+@wcfPageLinkColor: lighten(@wcfLinkColor, 10%);
+@wcfPageLinkHoverColor: #fff;
+@wcfDimmedColor: lighten(@wcfColor, 15%);
+@wcfLabelColor: @wcfLinkColor;
+
+/* font */
+@wcfBaseFontSize: 13px;
+@wcfBaseFontFamily: "Trebuchet MS", Arial, sans-serif;
+@wcfBaseLineHeight: 15px;
+
+/* container */
+@wcfContainerAccentBackgroundColor: darken(@wcfContainerBackgroundColor, 3%);
+@wcfContainerBorderColor: rgba(187, 204, 221, 1); //#CCC;
+@wcfContainerBorderRadius: 5px;
+@wcfContainerBorderWidth: 1px;
+@wcfContainerBorderStyle: solid;
+
+/* dropdown */
+@wcfDropdownBackgroundColor: @wcfContentBackgroundColor;
+@wcfDropdownColor: @wcfColor;
+@wcfDropdownHoverBackgroundColor: @wcfHighlightBackgroundColor;
+
+/* gap */
+@wcfGapTiny: 4px;
+@wcfGapSmall: 7px;
+@wcfGapMedium: 14px;
+@wcfGapLarge: 21px;
+
+/* buttons */
+// default
+@wcfButtonBackgroundColor: lighten(#CCC, 15%);
+@wcfButtonBorderColor: #CCC;
+@wcfButtonColor: darken(#CCC, 20%);
+
+// hover
+@wcfButtonHoverBackgroundColor: lighten(@wcfHoverBackgroundColor, 5%);
+@wcfButtonHoverBorderColor: darken(@wcfHoverBackgroundColor, 10%);
+@wcfButtonHoverColor: darken(@wcfButtonColor, 10%);
+
+// primary
+@wcfButtonPrimaryBackgroundColor: lighten(@wcfHighlightBackgroundColor, 5%);
+@wcfButtonPrimaryBorderColor: darken(@wcfHighlightBackgroundColor, 10%);
+@wcfButtonPrimaryColor: darken(@wcfHighlightBackgroundColor, 30%);
+
+/* form elements */
+@wcfInputBackgroundColor: @wcfContentBackgroundColor;
+@wcfInputColor: @wcfColor;
+@wcfInputBorderColor: @wcfContainerBorderColor;
+@wcfInputHoverBackgroundColor: lighten(@wcfHoverBackgroundColor, 8%);
+@wcfInputHoverBorderColor: darken(@wcfHoverBackgroundColor, 25%);
+
+/* form states and alerts */
+@warningColor: #c09853;
+@warningBackgroundColor: #fcf8e3;
+@warningBorderColor: darken(spin(@warningBackgroundColor, -10), 3%);
+
+@errorColor: #b94a48;
+@errorBackgroundColor: #f2dede;
+@errorBorderColor: darken(spin(@errorBackgroundColor, -10), 3%);
+
+@successColor: #468847;
+@successBackgroundColor: #dff0d8;
+@successBorderColor: darken(spin(@successBackgroundColor, -10), 5%);
+
+@infoColor: #3a87ad;
+@infoBackgroundColor: #d9edf7;
+@infoBorderColor: darken(spin(@infoBackgroundColor, -10), 7%);
+
+/* layouts */
+@wcfLayoutFluidGap: 21px;
+@wcfLayoutFixedWidth: 1000px;
+
+/* tooltip */
+@wcfTooltipBackgroundColor: rgba(0, 0, 0, .8);
+@wcfTooltipBorderColor: transparent;
+@wcfTooltipColor: white;

@@ -1,23 +1,23 @@
 {include file='header'}
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/session1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{@$__wcf->getPath()}icon/session1.svg" alt="" class="icon48" />
+	<hgroup>
 		<h1>{lang}wcf.acp.sessionLog.access.list{/lang}</h1>
 	</hgroup>
 </header>
 
-<div class="wcf-contentHeader">
+<div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller='ACPSessionLog' id=$sessionLogID link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 </div>
 
 {hascontent}
-	<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
+	<div class="tabularBox tabularBoxTitle marginTop shadow">
 		<hgroup>
-			<h1>{lang}wcf.acp.sessionLog.access.list{/lang} <span class="wcf-badge" title="{lang}wcf.acp.sessionLog.access.list.count{/lang}">{#$items}</span></h1>
+			<h1>{lang}wcf.acp.sessionLog.access.list{/lang} <span class="badge" title="{lang}wcf.acp.sessionLog.access.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
 		
-		<table class="wcf-table">
+		<table class="table">
 			<thead>
 				<tr>
 					<th class="columnID columnSessionAccessLogID{if $sortField == 'sessionAccessLogID'} active{/if}"><a href="{link controller='ACPSessionLog' id=$sessionLogID}pageNo={@$pageNo}&sortField=sessionAccessLogID&sortOrder={if $sortField == 'sessionAccessLogID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'sessionAccessLogID'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
@@ -53,7 +53,7 @@
 		
 	</div>
 
-	<div class="wcf-contentFooter">
+	<div class="contentNavigation">
 		{@$pagesLinks}
 	</div>
 {/hascontent}

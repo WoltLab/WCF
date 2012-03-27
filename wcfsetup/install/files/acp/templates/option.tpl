@@ -9,35 +9,35 @@
 	//]]>
 </script>
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/options1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{@$__wcf->getPath()}icon/options1.svg" alt="" class="icon48" />
+	<hgroup>
 		<h1>{lang}wcf.acp.option.category.{$category->categoryName}{/lang}</h1>
 		{hascontent}<h2>{content}{lang __optional=true}wcf.acp.option.category.{$category->categoryName}.description{/lang}{/content}</h2>{/hascontent}
 	</hgroup>
 </header>
 
 {if $success|isset}
-	<p class="wcf-success">{lang}wcf.global.form.edit.success{/lang}</p>
+	<p class="success">{lang}wcf.global.form.edit.success{/lang}</p>
 {/if}
 
 {if $errorField}
-	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 <form method="post" action="{link controller='Option' id=$category->categoryID}{/link}">
-	<div class="wcf-tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
-		<nav class="wcf-tabMenu">
+	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
+		<nav class="tabMenu">
 			<ul>
 				{foreach from=$optionTree item=categoryLevel1}
-					<li><a href="#{@$categoryLevel1[object]->categoryName}" title="{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}">{*<span>*}{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}{*</span>*}</a></li>
+					<li><a href="#{@$categoryLevel1[object]->categoryName}" title="{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}">{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
 				{/foreach}
 			</ul>
 		</nav>
 		
 		{foreach from=$optionTree item=categoryLevel1}
-			<div id="{@$categoryLevel1[object]->categoryName}" class="wcf-box wcf-boxPadding wcf-shadow2 wcf-tabMenuContent hidden">
-				<hgroup class="wcf-subHeading">
+			<div id="{@$categoryLevel1[object]->categoryName}" class="container containerPadding shadow hidden tabMenuContent">
+				<hgroup class="boxSubHeadline">
 					<h1>{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
 					<h2>{lang __optional=true}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}.description{/lang}</h2>
 				</hgroup>
@@ -63,10 +63,9 @@
 		{/foreach}
 	</div>
 	
-	<div class="wcf-formSubmit">
+	<div class="formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		{@SID_INPUT_TAG}
  	</div>
 </form>
 

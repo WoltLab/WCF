@@ -1,23 +1,23 @@
 {include file='header'}
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/session1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{@$__wcf->getPath()}icon/session1.svg" alt="" class="icon48" />
+	<hgroup>
 		<h1>{lang}wcf.acp.sessionLog.list{/lang}</h1>
 	</hgroup>
 </header>
 
-<div class="wcf-contentHeader">
+<div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller="ACPSessionLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 </div>
 
 {hascontent}
-	<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
+	<div class="tabularBox tabularBoxTitle marginTop shadow">
 		<hgroup>
-			<h1>{lang}wcf.acp.sessionLog.list{/lang} <span class="wcf-badge" title="{lang}wcf.acp.sessionLog.list.count{/lang}">{#$items}</span></h1>
+			<h1>{lang}wcf.acp.sessionLog.list{/lang} <span class="badge" title="{lang}wcf.acp.sessionLog.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
 		
-		<table class="wcf-table">
+		<table class="table">
 			<thead>
 				<tr>
 					<th class="columnSessionLogID{if $sortField == 'sessionLogID'} active{/if}"><a href="{link controller='ACPSessionLogList'}pageNo={@$pageNo}&sortField=sessionLogID&sortOrder={if $sortField == 'sessionLogID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'sessionLogID'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
@@ -37,7 +37,7 @@
 					{foreach from=$objects item=sessionLog}
 						<tr class="{if $sessionLog->active} activeContainer{/if}">
 							<td class="columnID columnSessionLogID"><p>{@$sessionLog->sessionLogID}</p></td>
-							<td class="columnTitle columnUsername"><p>{if $__wcf->user->userID == $sessionLog->userID}<img src="{@$__wcf->getPath()}icon/user1.svg" alt="" />{/if} <a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->username}</a></p></td>
+							<td class="columnTitle columnUsername"><p>{if $__wcf->user->userID == $sessionLog->userID}<img src="{@$__wcf->getPath()}icon/user1.svg" alt="" class="icon16" />{/if} <a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->username}</a></p></td>
 							<td class="columnURL columnIpAddress"><p><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->ipAddress}</a>{if $sessionLog->hostname != $sessionLog->ipAddress}<br /><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->hostname}</a>{/if}</p></td>
 							<td class="columnText columnUserAgent"><p><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->userAgent}</a></p></td>
 							<td class="columnDate columnTime"><p>{@$sessionLog->time|time}</p></td>
@@ -52,8 +52,8 @@
 		</table>
 		
 	</div>
-
-	<div class="wcf-contentFooter">
+	
+	<div class="contentNavigation">
 		{@$pagesLinks}
 	</div>
 {/hascontent}

@@ -12,29 +12,29 @@
 	//]]>
 </script>
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/{@$action}1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{@$__wcf->getPath()}icon/{@$action}1.svg" alt="" class="icon48" />
+	<hgroup>
 		<h1>{lang}wcf.acp.group.{@$action}{/lang}</h1>
 	</hgroup>
 </header>
 
 {if $errorField}
-	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 {if $warningSelfEdit|isset}
-	<p class="wcf-warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</p>	
+	<p class="warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</p>	
 {/if}
 
 {if $success|isset}
-	<p class="wcf-success">{lang}wcf.global.form.{@$action}.success{/lang}</p>	
+	<p class="success">{lang}wcf.global.form.{@$action}.success{/lang}</p>	
 {/if}
 
-<div class="wcf-contentHeader">
+<div class="contentNavigation">
 	<nav>
-		<ul class="wcf-largeButtons">
-			<li><a href="{link controller='UserGroupList'}{/link}" title="{lang}wcf.acp.menu.link.group.list{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/users1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
+		<ul>
+			<li><a href="{link controller='UserGroupList'}{/link}" title="{lang}wcf.acp.menu.link.group.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/users1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>
@@ -42,8 +42,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='UserGroupAdd'}{/link}{else}{link controller='UserGroupEdit'}{/link}{/if}">
-	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-boxDecor">
-		
+	<div class="container containerPadding marginTop shadow">
 		<fieldset>
 			<legend>{lang}wcf.acp.group.data{/lang}</legend>
 			
@@ -52,7 +51,7 @@
 				<dd>
 					<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus="autofocus" class="medium" />
 					{if $errorType.groupName|isset}
-						<small class="wcf-innerError">
+						<small class="innerError">
 							{if $errorType.groupName == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
@@ -69,8 +68,8 @@
 		
 		{event name='fieldsets'}
 		
-		<div class="wcf-tabMenuContainer" data-active="{$activeMenuItem}" data-store="activeTabMenuItem">
-			<nav class="wcf-tabMenu">
+		<div class="tabMenuContainer" data-active="{$activeMenuItem}" data-store="activeTabMenuItem">
+			<nav class="tabMenu">
 				<ul>
 					{foreach from=$optionTree item=categoryLevel1}
 						<li><a href="#{@$categoryLevel1[object]->categoryName}">{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
@@ -79,8 +78,8 @@
 			</nav>
 			
 			{foreach from=$optionTree item=categoryLevel1}
-				<div id="{@$categoryLevel1[object]->categoryName}" class="wcf-box wcf-boxPadding wcf-tabMenuContainer wcf-tabMenuContent" data-active="{$activeTabMenuItem}" data-store="activeMenuItem">
-					<nav class="wcf-menu">
+				<div id="{@$categoryLevel1[object]->categoryName}" class="container containerPadding tabMenuContainer tabMenuContent" data-active="{$activeTabMenuItem}" data-store="activeMenuItem">
+					<nav class="menu">
 						<ul>
 							{foreach from=$categoryLevel1[categories] item=$categoryLevel2}
 								<li><a href="#{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</a></li>
@@ -90,7 +89,7 @@
 					
 					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 						<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}" class="hidden">
-							<hgroup class="wcf-subHeading">
+							<hgroup class="boxSubHeadline">
 								<h1>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h1>
 								{hascontent}<h2>{content}{lang __optional=true}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}{/content}</h2>{/hascontent}
 							</hgroup>
@@ -118,11 +117,9 @@
 		</div>
 	</div>
 	
-	<div class="wcf-formSubmit">
-		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		{@SID_INPUT_TAG}
- 		<input type="hidden" name="action" value="{@$action}" />
+		<input type="hidden" name="action" value="{@$action}" />
  		{if $groupID|isset}<input type="hidden" name="id" value="{@$groupID}" />{/if}
  		<input type="hidden" id="activeTabMenuItem" name="activeTabMenuItem" value="{$activeTabMenuItem}" />
  		<input type="hidden" id="activeMenuItem" name="activeMenuItem" value="{$activeMenuItem}" />

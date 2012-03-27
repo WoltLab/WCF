@@ -2,20 +2,19 @@
 <meta charset="utf-8" />
 <meta name="description" content="{META_DESCRIPTION}" />
 <meta name="keywords" content="{META_KEYWORDS}" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 <script type="text/javascript">
 	//<![CDATA[
 	var SID_ARG_2ND	= '{@SID_ARG_2ND_NOT_ENCODED}';
-	var RELATIVE_WCF_DIR = '{@$__wcf->getPath('wcf')}';
+	var RELATIVE_WCF_DIR = '{@$__wcf->getPath()}';
 	var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 	//]]>
 </script>
-<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/3rdParty/jquery.min.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/3rdParty/jquery-ui.min.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/3rdParty/jquery.tools.min.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.tools.min.js"></script>
 <script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
 	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
@@ -24,21 +23,18 @@
 {event name='javascriptInclude'}
 
 <!-- Stylesheets -->
-<!-- LESS_FILES
-<link rel="stylesheet/less" type="text/css" media="screen" href="{link controller='LessStylesheets'}{/link}" />
-LESS_FILES -->
+<link rel="stylesheet/less" type="text/css" href="{@$__wcf->getPath()}style/bootstrap.less" />
+<script type="text/javascript">
+	//<![CDATA[
+	var less = { env: 'development' };
+	//]]>
+</script>
 <script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/less.min.js"></script>
-	
-<style type="text/css">
-	@import url("{@$__wcf->getPath('wcf')}acp/style/wcf.css") screen;
-	{*
-	@import url("{@$__wcf->getPath('wcf')}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css") screen;
-
-	@import url("{@$__wcf->getPath('wcf')}acp/style/print.css") print;
-	*}
-	
-	{event name='stylesheetImport'}
-</style>
+<script type="text/javascript">
+	//<![CDATA[
+	less.watch();
+	//]]>
+</script>
 
 <noscript>
 	<style type="text/css">
@@ -88,11 +84,13 @@ LESS_FILES -->
 		});
 		
 		new WCF.Date.Time();
-		new WCF.Effect.SmoothScroll();
+		//new WCF.Effect.SmoothScroll();
 		new WCF.Effect.BalloonTooltip();
-		$('<span class="pointer"><span></span></span>').appendTo('.wcf-innerError');
+		$('<span class="pointer"><span></span></span>').appendTo('.innerError');
 		
 		$('#sidebarContent').wcfSidebar();
+		
+		WCF.Dropdown.init();
 		
 		{event name='javascriptInit'}
 	});

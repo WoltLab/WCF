@@ -1,0 +1,165 @@
+.dropdown {
+	position: relative;
+	
+	.dropdownToggle:active,
+	&.dropdownOpen .dropdownToggle {
+		outline: 0;
+	}
+	
+	&.preInput {
+		display: table;
+		width: 100%;
+		
+		input,
+		textarea {
+			min-width: 300px;
+		}
+		
+		input {
+			display: table-cell;
+			margin: 0;
+			width: 99%;
+			
+			.borderRadius(0, @wcfContainerBorderRadius, @wcfContainerBorderRadius, 0);
+		}
+		
+		textarea {
+			display: block;
+			margin-top: 0;
+			
+			.borderRadius(0, @wcfContainerBorderRadius, @wcfContainerBorderRadius, @wcfContainerBorderRadius);
+		}
+		
+		.dropdownCaption {
+			cursor: pointer;
+			display: table-cell;
+			letter-spacing: -1px;
+			padding-left: @wcfGapTiny;
+			padding-right: @wcfGapSmall;
+			vertical-align: middle;
+			width: 1%;
+			
+			.borderRadius(@wcfContainerBorderRadius, 0, 0, @wcfContainerBorderRadius);
+			
+			span {
+				margin-right: -1px;
+				padding-left: @wcfGapTiny;
+				white-space: nowrap;
+				
+				&.active {
+					background-image: url(../icon/dropdown1.svg);
+					background-position: right center;
+					background-repeat: no-repeat;
+					color: @wcfColor;
+					padding-right: @wcfGapMedium;
+				}
+			}
+		}
+		
+		.dropdownCaptionTextarea {
+			cursor: pointer;
+			margin: 0 0 -1px 0;
+			padding-left: @wcfGapSmall;
+			padding-right: @wcfGapSmall;
+			
+			.borderRadius(@wcfContainerBorderRadius, 0);
+			
+			&~ .dropdownMenu {
+				top: 10%;
+			}
+			
+			span {
+				white-space: nowrap;
+				
+				&.active {
+					background-image: url(../icon/dropdown1.svg);
+					background-position: right center;
+					background-repeat: no-repeat;
+					color: @wcfColor;
+					padding-right: @wcfGapMedium;
+				}
+			}
+		}
+	}
+
+	.dropdownMenu {
+		background-color: @wcfDropdownBackgroundColor;
+		border: 1px solid @wcfContainerBorderColor;
+		color: @wcfDropdownColor;
+		display: none;
+		float: left;
+		left: 0;
+		min-width: 160px;
+		padding: 4px 0;
+		position: absolute;
+		z-index: 350;
+		
+		.borderRadius();
+		.boxShadow(0, 5px, rgba(0, 0, 0, .2), 10px);
+		
+		&:after {
+			border: 7px solid transparent;
+			border-bottom-color: @wcfContainerBorderColor;
+			border-top-width: 0;
+			content: "";
+			display: inline-block;
+			left: 9px;
+			position: absolute;
+			top: -7px;
+			z-index: 100;
+		}
+		
+		&:before {
+			border: 6px solid transparent;
+			border-bottom-color: @wcfDropdownBackgroundColor;
+			border-top-width: 0;
+			content: "";
+			display: inline-block;
+			left: 10px;
+			position: absolute;
+			top: -6px;
+			z-index: 101;
+		}
+		
+		li {
+			display: block;
+			
+			&:hover:not(.dropdownDivider) {
+				background-color: @wcfDropdownHoverBackgroundColor;
+			}
+			
+			&.dropdownDivider {
+				border-top: 1px dotted rgba(0, 0, 0, .2);
+				margin: @wcfGapTiny;
+			}
+			
+			> a,
+			> span {
+				clear: both;
+				color: @wcfDropdownColor;
+				cursor: pointer;
+				display: block;
+				padding: @wcfGapTiny @wcfGapMedium;
+				white-space: nowrap;
+				
+				.textShadow(@wcfDropdownBackgroundColor);
+				
+				&:hover {
+					color: @wcfDropdownColor;
+					
+					.textShadow(@wcfDropdownHoverBackgroundColor);
+				}
+			}
+		}
+	}
+	
+	&.dropdownOpen {
+		.dropdownToggle {
+			color: @wcfPageLinkHoverColor;
+		}
+		
+		.dropdownMenu {
+			display: block;
+		}
+	}
+}

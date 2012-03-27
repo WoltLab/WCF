@@ -37,23 +37,22 @@
 	//]]>
 </script>
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/search1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{@$__wcf->getPath()}icon/search1.svg" alt="" class="icon48" />
+	<hgroup>
 		<h1>{lang}wcf.acp.packageUpdate.search{/lang}</h1>
 	</hgroup>
 </header>
 
 {if $errorField != ''}
-	<p class="wcf-error">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
+	<p class="error">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
 {/if}
 
 {if !$updateServers|count}
-	<p class="wcf-warning">{lang}wcf.acp.updateServer.view.noneAvailable{/lang}</p>
+	<p class="warning">{lang}wcf.acp.updateServer.view.noneAvailable{/lang}</p>
 {else}
 	<form method="post" action="{link controller='PackageUpdateSearch'}{/link}">
-		<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-boxDecor">
-			
+		<div class="container containerPadding marginTop shadow">
 			<fieldset>
 				<legend>{lang}wcf.acp.packageUpdate.search.server{/lang}</legend>
 				
@@ -114,13 +113,11 @@
 					</dd>
 				</dl>
 			</fieldset>
-			
 		</div>
 		
-		<div class="wcf-formSubmit">
+		<div class="formSubmit">
 			<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-			{@SID_INPUT_TAG}
 	 	</div>
 	</form>
 {/if}

@@ -1,0 +1,50 @@
+#main {
+	z-index: 110;
+	
+	> div {
+		background-color: @wcfHighlightBackgroundColor;
+		.boxShadowInset(0, 0, rgba(0, 0, 0, .1));
+	}
+	
+	&.not(.sidebarOrientationLeft):not(.sidebarOrientationRight) {
+		.sidebar {
+			display: none;
+		}
+	}
+	
+	&.sidebarOrientationLeft {
+		.content {
+			border-left: @wcfContainerBorderWidth @wcfContainerBorderStyle darken(@wcfHighlightBackgroundColor, 8%);
+			margin-left: 249px;
+		}
+		
+		.sidebar {
+			float: left;
+		}
+	}
+	
+	&.sidebarOrientationRight {
+		.content {
+			border-right: @wcfContainerBorderWidth @wcfContainerBorderStyle darken(@wcfHighlightBackgroundColor, 8%);
+			margin-right: 249px;
+		}
+		
+		.sidebar {
+			float: right;
+		}
+	}
+}
+
+.sidebar {
+	width: 250px;
+	z-index: 120;
+}
+
+.content {
+	background-color: @wcfContentBackgroundColor;
+	min-height: 100px;
+	padding: @wcfGapSmall @wcfGapLarge * 2 - @wcfGapTiny @wcfGapLarge;
+	z-index: 130;
+	
+	.boxShadow(0, 0, rgba(0, 0, 0, .1));
+}

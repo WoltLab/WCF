@@ -1,0 +1,96 @@
+/* ############## System Notifications (Inline) ############## */
+
+/* Globals */
+
+.info,
+.error,
+.success,
+.warning {
+	background-position: 13px center, left top;
+	background-repeat: no-repeat, repeat;
+	background-size: 24px, auto;
+	border-radius: @wcfContainerBorderRadius;
+	border-width: @wcfContainerBorderWidth;
+	border-style: @wcfContainerBorderStyle;
+	box-sizing: border-box;
+	line-height: 1.5;
+	margin-top: @wcfGapMedium;
+	padding: @wcfGapSmall @wcfGapMedium @wcfGapSmall 50px;
+	
+	.textShadow(@errorBackgroundColor);
+}
+
+/* Types */
+
+.info {
+	background-color: @infoBackgroundColor;
+	background-image: url('../../icon/systemInfo.svg');
+	border-color: @infoBorderColor;
+	color: @infoColor;
+}
+
+.success {
+	background-color: @successBackgroundColor;
+	background-image: url('../../icon/systemSuccess.svg');
+	border-color: @successBorderColor;
+	color: @successColor;
+}
+
+.warning {
+	background-color: @warningBackgroundColor;
+	background-image: url('../../icon/systemWarning.svg');
+	border-color: @warningBorderColor;
+	color: @warningColor;
+}
+
+.error {
+	background-color: @errorBackgroundColor;
+	background-image: url('../../icon/systemError.svg');
+	border-color: @errorBorderColor;
+	color: @errorColor;
+}
+
+/* Inline Errors */
+
+.innerError {
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+	line-height: 1.5;
+	color: @errorColor;
+	border: @wcfContainerBorderWidth @wcfContainerBorderStyle @errorBorderColor;
+	border-radius: @wcfContainerBorderRadius;
+	background-color: @errorBackgroundColor;
+	background-image: url('../../icon/systemError.svg');
+	background-size: 16px;
+	background-position: 5px center;
+	background-repeat: no-repeat;
+	margin-top: 5px;
+	padding: 2px 10px 2px 25px;
+	display: table !important;
+	position: relative; /* Firefox support (from version 10 on) is buggy */
+	clear: both;
+	
+	.boxShadow(0, 1px, rgba(0, 0, 0, .1), 3px);
+	.textShadow(@errorBackgroundColor);
+	
+	.pointer {	
+		border-width: 0 7px 7px;
+		border-style: solid;
+		border-color: @errorBackgroundColor transparent;
+		display: inline-block !important;
+		width: 0;
+		position: absolute;
+		top: -7px !important;
+		left: 10%;
+			
+			span {	
+				border-width: 0 5px 5px;
+				border-style: solid;
+				border-color: @errorBackgroundColor transparent;
+				display: inline-block;
+				width: 0;
+				position: absolute;
+				top: 2px;
+				left: -5px;
+			}
+	}
+}

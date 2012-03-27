@@ -1,6 +1,6 @@
 {if !$__microdata|isset}{assign var=__microdata value=true}{/if}
 {if $__wcf->getBreadcrumbs()|count}
-<nav class="wcf-breadcrumbs wcf-marginTop">
+<nav class="breadcrumbs marginTop">
 	<ul>
 		{foreach from=$__wcf->getBreadcrumbs() item=$breadcrumb}
 			<li title="{$breadcrumb->getLabel()}"{if $__microdata} itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb"{/if}>

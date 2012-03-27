@@ -1,0 +1,89 @@
+/* ############## Bread Crumbs ############## */
+
+/* Globals */
+
+.breadcrumbs {
+	background-color: @wcfContentBackgroundColor;
+	border: 1px solid @wcfContainerBorderColor;
+	border-radius: @wcfContainerBorderRadius;
+	box-sizing: border-box;
+	display: block;
+	overflow: hidden;
+	position: relative;
+	text-align: left;
+	
+	> ul {
+		> li {
+			float: left;
+			font-size: 85%;
+			list-style: none;
+			max-width: 30%;
+			position: relative;
+			
+			.transition(max-width, .2s);
+			
+			&:hover {
+				max-width: 100%;
+				
+				a {
+					background-color: @wcfContainerAccentBackgroundColor;
+					color: @wcfLinkHoverColor;
+					position: relative;
+					z-index: 10;
+				}
+				
+				> .pointer > span {
+					border-color: transparent transparent transparent @wcfContainerAccentBackgroundColor;
+				}
+			}
+			
+			> span {
+				border-width: 15px;
+				border-style: solid none solid solid;
+				border-color: transparent transparent transparent @wcfContainerBorderColor;
+				display: block !important;
+				position: absolute;
+				width: 0;
+				height: 0;
+				top: -4px;
+				right: -15px;
+				z-index: 20;
+			}
+			
+			> .pointer > span {
+				text-indent: -9000px;
+				border-width: 15px;
+				border-style: solid none solid solid;
+				border-color: transparent transparent transparent @wcfContentBackgroundColor;
+				display: block;
+				position: absolute;
+				width: 0;
+				height: 0;
+				top: -15px;
+				left: -16px;
+				overflow: hidden;
+			}
+			
+			a {
+				color: @wcfLinkColor;
+				display: block;
+				margin: 0;
+				overflow: hidden;
+				padding: 5px 1px 5px 20px;
+				text-decoration: none;
+				white-space: nowrap;
+				
+				.textShadow(@wcfContentBackgroundColor);
+			}
+			
+			&:first-child a {
+				background-image: url('../../icon/home1.svg');
+				background-position: 7px center;
+				background-repeat: no-repeat;
+				background-size: 16px;
+				border-radius: 5px 0 0 5px;
+				padding-left: 30px;
+			}
+		}
+	}
+}

@@ -22,23 +22,23 @@
 	//]]>
 </script>
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/packageApplication1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{@$__wcf->getPath()}icon/packageApplication1.svg" alt="" class="icon48" />
+	<hgroup>
 		<h1>{lang}wcf.acp.package.list{/lang}</h1>
 	</hgroup>
 </header>
 
-<div class="wcf-tabMenuContainer">
-	<nav class="wcf-tabMenu">
+<div class="tabMenuContainer">
+	<nav class="tabMenu">
 		<ul>
 			<li><a href="#applications" title="applications">{lang}wcf.acp.package.application.title{/lang}</a></li>
 			{if $plugins|count}<li><a href="#plugins" title="plugins">{lang}wcf.acp.package.plugin.title{/lang}</a></li>{/if}
 		</ul>
 	</nav>
 	
-	<div id="applications" class="wcf-box wcf-tabMenuContent wcf-boxPadding wcf-shadow1 hidden">
-		<hgroup class="wcf-subHeading">
+	<div id="applications" class="container containerPadding tabMenuContent hidden">
+		<hgroup class="boxSubHeadline">
 			<h1>{lang}wcf.acp.package.application.installed{/lang}</h1>
 		</hgroup>
 		
@@ -92,8 +92,8 @@
 	</div>
 	
 	{hascontent}
-		<div id="plugins" class="wcf-box wcf-boxPadding wcf-tabMenuContent wcf-shadow1 hidden">
-			<hgroup class="wcf-subHeading">
+		<div id="plugins" class="container containerPadding tabMenuContent hidden">
+			<hgroup class="boxSubHeadline">
 				<h1>{lang}wcf.acp.package.plugin.installed{/lang}</h1>
 			</hgroup>
 			
@@ -116,10 +116,10 @@
 	{/hascontent}
 </div>
 
-<div class="wcf-contentFooter">
+<div class="contentNavigation">
 	<nav>
-		<ul class="wcf-largeButtons">
-			<li><a href="{link controller='PackageListDetailed'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/packageApplication1.svg" alt="" /> <span>{lang}wcf.acp.package.list.detailed{/lang}</span></a></li>
+		<ul>
+			<li><a href="{link controller='PackageListDetailed'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/packageApplication1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.package.list.detailed{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>

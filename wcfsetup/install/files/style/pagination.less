@@ -1,0 +1,96 @@
+/* ############## ToDo: Page Navigation ############## */
+
+/** 
+ * This defines the shape of the Page-Navigation widget  
+ * Colors & effects are being defined by the 
+ * "Global Button Color & Effect Library" 
+ */
+
+/* Globals */
+
+:not(.statusDisplay) > .pageNavigation {
+	float: left;
+	margin: 5px 0 3px;
+}
+
+.contentNavigation .pageNavigation ul li {
+	margin: 2px;
+}
+
+/* -- -- -- Buttons (Level 1 & 2) -- -- -- */
+
+.pageNavigation {
+	ul {
+		li {
+			border-radius: 3px;
+			float: left;
+			font-weight: bold;
+			margin: 1px;
+			min-width: 19px;
+			padding: 0;
+			text-align: center;
+			
+			&:not(.active):not(.disabled) {
+				cursor: pointer;
+			}
+			
+			&.disabled {
+				background-image: none !important;
+				border: 1px solid rgba(0, 0, 0, .1) !important;
+				cursor: not-allowed;
+			}
+			
+			&.skip {	
+				padding: 2px 0 1px;
+			}
+			
+			&:not(.disabled):hover a {
+				color: @wcfButtonHoverColor;
+			}
+			
+			&:not(.skip) a {
+				padding: 3px 1px;
+			}
+			
+			&.active, &.active:hover {
+				border: 1px solid darken(@wcfButtonColor, 5%);
+				color: lighten(@wcfButtonBackgroundColor, 5%);
+				padding: 3px 0;
+				
+				.linearGradient(@wcfButtonColor, darken(@wcfButtonColor, 10%), @wcfButtonColor 3px);
+				.textShadow(#000);
+			}
+			
+			img {
+				height: 16px;
+				margin: 0;
+				width: 16px;
+			}
+			
+			a {
+				color: @wcfButtonColor;
+				display: inline-block;
+				text-decoration: none;
+				
+				.textShadow(@wcfButtonBackgroundColor);
+			}
+		}
+	}
+}
+
+
+/* Special -> Status Display */
+
+.statusDisplay .pageNavigation {
+	font-size: 80%;
+	
+	ul {
+		li {
+			min-width: 13px;
+			
+			&:not(.skip) a {
+				padding: 1px;
+			}
+		}
+	}
+}

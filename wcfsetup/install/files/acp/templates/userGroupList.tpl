@@ -8,18 +8,18 @@
 	//]]>
 </script>
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/users1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{@$__wcf->getPath()}icon/users1.svg" alt="" class="icon48" />
+	<hgroup>
 		<h1>{lang}wcf.acp.group.list{/lang}</h1>
 	</hgroup>
 </header>
 
-<div class="wcf-contentHeader">
+<div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller="UserGroupList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	<nav>
-		<ul class="wcf-largeButtons">
-			<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
+		<ul>
+			<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>
@@ -27,12 +27,12 @@
 </div>
 
 {hascontent}
-	<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
+	<div class="tabularBox tabularBoxTitle marginTop shadow">
 		<hgroup>
-			<h1>{lang}wcf.acp.group.list{/lang} <span class="wcf-badge" title="{lang}wcf.acp.group.list.count{/lang}">{#$items}</span></h1>
+			<h1>{lang}wcf.acp.group.list{/lang} <span class="badge" title="{lang}wcf.acp.group.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
 		
-		<table class="wcf-table big">
+		<table class="table">
 			<thead>
 				<tr>
 					<th class="columnID columnGroupID{if $sortField == 'groupID'} active{/if}" colspan="2"><a href="{link controller='UserGroupList'}pageNo={@$pageNo}&sortField=groupID&sortOrder={if $sortField == 'groupID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'groupID'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
@@ -49,14 +49,14 @@
 						<tr id="groupContainer{@$group->groupID}" class="jsUserGroupRow">
 							<td class="columnIcon">
 								{if $group->isEditable()}
-									<a href="{link controller='UserGroupEdit' id=$group->groupID}{/link}"><img src="{@$__wcf->getPath()}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip" /></a>
+									<a href="{link controller='UserGroupEdit' id=$group->groupID}{/link}"><img src="{@$__wcf->getPath()}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 jsTooltip" /></a>
 								{else}
-									<img src="{@$__wcf->getPath()}icon/edit1D.svg" alt="" title="{lang}wcf.acp.group.edit{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/edit1D.svg" alt="" title="{lang}wcf.acp.group.edit{/lang}" class="icon16" />
 								{/if}
 								{if $group->isDeletable()}
-									<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip" data-object-id="{@$group->groupID}" data-confirm-message="{lang}wcf.acp.group.delete.sure{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip" data-object-id="{@$group->groupID}" data-confirm-message="{lang}wcf.acp.group.delete.sure{/lang}" />
 								{else}
-									<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16" />
 								{/if}
 								
 								{event name='buttons'}
@@ -74,11 +74,11 @@
 		
 	</div>
 	
-	<div class="wcf-contentFooter">
+	<div class="contentNavigation">
 		{@$pagesLinks}
 		<nav>
-			<ul class="wcf-largeButtons">
-				<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
+			<ul>
+				<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 				
 				{event name='largeButtons'}
 			</ul>

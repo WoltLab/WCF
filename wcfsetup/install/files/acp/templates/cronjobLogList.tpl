@@ -1,25 +1,25 @@
 {include file='header'}
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/time1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{@$__wcf->getPath()}icon/time1.svg" alt="" class="icon48" />
+	<hgroup>
 		<h1>{lang}wcf.acp.cronjob.log{/lang}</h1>
 		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>
 	</hgroup>
 </header>
 
-<div class="wcf-contentHeader">
+<div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller="CronjobLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 </div>
 
 {hascontent}
 	<form method="post" action="{link controller='CronjobLogDelete'}{/link}">
-		<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
+		<div class="tabularBox tabularBoxTitle marginTop shadow">
 			<hgroup>
-				<h1>{lang}wcf.acp.cronjob.log{/lang} <span class="wcf-badge" title="{lang}wcf.acp.cronjob.log.count{/lang}">{#$items}</span></h1>
+				<h1>{lang}wcf.acp.cronjob.log{/lang} <span class="badge" title="{lang}wcf.acp.cronjob.log.count{/lang}">{#$items}</span></h1>
 			</hgroup>
 			
-			<table class="wcf-table">
+			<table class="table">
 				<thead>
 					<tr>
 						<th class="columnID columnCronjobID{if $sortField == 'cronjobID'} active{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=cronjobID&sortOrder={if $sortField == 'cronjobID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'cronjobID'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
@@ -58,17 +58,16 @@
 			
 		</div>
 		
-		<div class="wcf-formSubmit">
-			{@SID_INPUT_TAG}
+		<div class="formSubmit">
 			<input type="submit" onclick="return confirm('{lang}wcf.acp.cronjob.log.clear.confirm{/lang}')" value="{lang}wcf.acp.cronjob.log.clear{/lang}" accesskey="c" />
 		</div>
 	</form>
 	
-	<div class="wcf-contentFooter">
+	<div class="contentNavigation">
 		{@$pagesLinks}
 	</div>
 {hascontentelse}
-	<p class="wcf-info">{lang}wcf.acp.cronjob.log.noEntries{/lang}</p>
+	<p class="info">{lang}wcf.acp.cronjob.log.noEntries{/lang}</p>
 {/hascontent}
 
 {include file='footer'}

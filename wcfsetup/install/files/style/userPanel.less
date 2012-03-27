@@ -1,0 +1,65 @@
+.userPanel {
+	background-color: rgba(0, 0, 0, .5);
+	border-bottom: 1px solid rgba(0, 0, 0, .1);
+	height: 30px;
+	left: 0;
+	padding: @wcfGapSmall 0;
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 200;
+	
+	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
+	.transition(background-color, .3s);
+	
+	&:hover {
+		background-color: rgba(0, 0, 0, .9);
+	}
+	
+	ul {
+		display: block;
+		float: left;
+		margin-top: -3px;
+		
+		&.userPanelItems > li:not(:first-child) {
+			margin-left: @wcfGapSmall;
+		}
+		
+		> li {
+			display: inline-block;
+			
+			> a,
+			> span,
+			> span > a {
+				color: lighten(@wcfPageLinkColor, 10%);
+				cursor: pointer;
+				display: block;
+				padding: 10px 0;
+				
+				.transition(color, .1s);
+				.textShadow(@wcfPageBackgroundColor);
+				
+				&:hover {
+					color: @wcfPageLinkHoverColor;
+					text-decoration: none;
+				}
+			}
+		}
+	}
+	
+	.searchBar {
+		float: right;
+		
+		input[type="search"] {
+			border: @wcfContainerBorderWidth @wcfContainerBorderStyle @wcfContainerBorderColor;
+			border-radius: 30px;
+			padding: @wcfGapTiny @wcfGapSmall;
+		}
+	}
+	
+	.framed img {
+		padding: 0px;
+		margin-top: -3px;
+		margin-bottom: -3px;
+	}
+}

@@ -19,32 +19,31 @@
 	//]]>
 </script>
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/{if $searchID}search{else}user{/if}1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{@$__wcf->getPath()}icon/{if $searchID}search{else}user{/if}1.svg" alt="" class="icon48" />
+	<hgroup>
 		<h1>{lang}wcf.acp.user.{if $searchID}search{else}list{/if}{/lang}</h1>
-		<h2>{if $searchID}{lang}wcf.acp.user.search.matches{/lang}{/if}</h2><!-- ToDo: deprecated display -->
 	</hgroup>
 </header>
 
 {assign var=encodedURL value=$url|rawurlencode}
 {assign var=encodedAction value=$action|rawurlencode}
-<div class="wcf-contentHeader">
+<div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller="UserList" link="pageNo=%d&searchID=$searchID&action=$encodedAction&sortField=$sortField&sortOrder=$sortOrder"}
 	
 	<nav>
-		<ul class="wcf-largeButtons">
+		<ul>
 			{if $__wcf->session->getPermission('admin.user.canAddUser')}
-				<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+				<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 			{/if}
-			<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/search1.svg" alt="" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
+			<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/search1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>
 	</nav>
 </div>
 
-<div id="userTableContainer" class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
+<div id="userTableContainer" class="tabularBox marginTop shadow">
 	<nav class="wcf-menu">
 		<ul>
 			<li{if $action == ''} class="active"{/if}><a href="{link controller='UserList'}{/link}"><span>{lang}wcf.acp.user.list.all{/lang}</span> <span class="wcf-badge" title="{lang}wcf.acp.user.list.count{/lang}">{#$items}</span></a></li>
@@ -54,7 +53,7 @@
 	</nav>
 	
 	{hascontent}
-		<table data-type="com.woltlab.wcf.user" class="wcf-table jsClipboardContainer">
+		<table data-type="com.woltlab.wcf.user" class="table jsClipboardContainer">
 			<thead>
 				<tr>
 					<th class="columnMark"><label><input type="checkbox" class="jsClipboardMarkAll" /></label></th>
@@ -76,14 +75,14 @@
 							<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}" /></td>
 							<td class="columnIcon">
 								{if $user->editable}
-									<a href="{link controller='UserEdit' id=$user->userID}{/link}"><img src="{@$__wcf->getPath()}icon/edit1.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="jsTooltip" /></a>
+									<a href="{link controller='UserEdit' id=$user->userID}{/link}"><img src="{@$__wcf->getPath()}icon/edit1.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="icon16 jsTooltip" /></a>
 								{else}
-									<img src="{@$__wcf->getPath()}icon/edit1D.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/edit1D.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="icon16" />
 								{/if}
 								{if $user->deletable}
-									<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="jsTooltip jsDeleteButton" data-object-id="{@$user->userID}" data-confirm-message="{lang}wcf.acp.user.delete.sure{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="icon16 jsTooltip jsDeleteButton" data-object-id="{@$user->userID}" data-confirm-message="{lang}wcf.acp.user.delete.sure{/lang}" />
 								{else}
-									<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="icon16" />
 								{/if}
 						
 								{event name='buttons'}
@@ -104,17 +103,17 @@
 		
 	</div>
 	
-	<div class="wcf-contentFooter">
+	<div class="contentNavigation">
 		{@$pagesLinks}
 		
 		<div class="wcf-clipboardEditor jsClipboardEditor" data-types="[ 'com.woltlab.wcf.user' ]"></div>
 		
 		<nav>
-			<ul class="wcf-largeButtons">
+			<ul>
 				{if $__wcf->session->getPermission('admin.user.canAddUser')}
-					<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+					<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 				{/if}
-				<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/search1.svg" alt="" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
+				<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/search1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 				
 				{event name='largeButtons'}
 			</ul>

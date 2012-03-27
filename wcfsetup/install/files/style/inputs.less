@@ -1,0 +1,164 @@
+/* -- -- -- Form Elements -- -- -- */
+/* Globals */
+
+button,
+input[type='reset'],
+input[type='submit'],
+input[type='button'],
+input[type='checkbox'],
+input[type='radio'],
+select:not([multiple]) {
+	cursor: pointer;
+}
+
+input[type='text'],
+input[type='search'], /* Does not work in WebKit browsers */
+input[type='date'],
+input[type='email'],
+input[type='url'],
+input[type='password'],
+textarea,
+select[multiple] {
+	box-sizing: border-box;
+	padding: 5px 3px;
+}
+
+select[multiple] {
+	 font-family: 'Courier New', Courier, monospace;
+}
+
+/* Normal State */
+
+input[type='text'],
+input[type='search'],
+input[type='date'],
+input[type='email'],
+input[type='url'],
+input[type='password'],
+textarea,
+select[multiple] {
+	background-color: @wcfInputBackgroundColor;
+	border-color: darken(@wcfInputBorderColor, 20%) @wcfInputBorderColor lighten(@wcfInputBorderColor, 13%);
+	border-radius: 3px;
+	border-style: solid;
+	border-width: 1px;
+	color: @wcfInputColor;
+	
+	.boxShadowInset(0, 1px, rgba(0, 0, 0, .1));
+	.transition(~"background-color, border", .2s);
+}
+
+/* Hover State */
+
+input[type='text']:hover,
+input[type='search']:hover,
+input[type='date']:hover,
+input[type='email']:hover,
+input[type='url']:hover,
+input[type='password']:hover,
+textarea:hover,
+select[multiple]:hover {
+	background-color: @wcfInputHoverBackgroundColor;
+	border-color: @wcfInputHoverBorderColor;
+	//border: 1px solid rgba(255, 170, 34, 1);
+	//background-color: rgba(255, 249, 244, 1);
+}
+
+/* Active & Focus State */
+
+input[type='text']:active,
+input[type='search']:active,
+input[type='date']:active,
+input[type='email']:active,
+input[type='url']:active,
+input[type='password']:active,
+textarea:active,
+select[multiple]:active,
+
+input[type='text']:focus,
+input[type='search']:focus,
+input[type='date']:focus,
+input[type='email']:focus,
+input[type='url']:focus,
+input[type='password']:focus,
+textarea:focus,
+select[multiple]:focus {
+	background-color: @wcfInputHoverBackgroundColor;
+	border-color: @wcfInputHoverBorderColor;
+	outline: none;
+	
+	// TODO: use mixin 
+	box-shadow: 0 0 5px fade(@wcfInputHoverBorderColor, 50%), inset 0 1px 5px rgba(0, 0, 0, .2);
+		-webkit-box-shadow: 0 0 5px fade(@wcfInputHoverBorderColor, 50%), inset 0 1px 5px rgba(0, 0, 0, .2);
+		-moz-box-shadow: 0 0 5px fade(@wcfInputHoverBorderColor, 50%), inset 0 1px 5px rgba(0, 0, 0, .2);
+		-ms-box-shadow: 0 0 5px fade(@wcfInputHoverBorderColor, 50%), inset 0 1px 5px rgba(0, 0, 0, .2);
+		-o-box-shadow: 0 0 5px fade(@wcfInputHoverBorderColor, 50%), inset 0 1px 5px rgba(0, 0, 0, .2);
+}
+
+/* Read Only State */
+
+input[type='text'][readonly],
+input[type='search'][readonly],
+input[type='email'][readonly],
+input[type='date'][readonly],
+input[type='url'][readonly],
+input[type='password'][readonly],
+textarea[readonly],
+select[multiple][readonly] {
+	background-color: transparent;
+	// TODO:
+	border-color: rgba(204, 204, 204, 1) rgba(221, 221, 221, 1) rgba(238, 238, 238, 1);
+	
+	.boxShadowInset(0, 1px, rgba(0, 0, 0, .01));
+}
+
+/* Disabled State */
+
+input[type='text'][disabled],
+input[type='search'][disabled],
+input[type='date'][disabled],
+input[type='email'][disabled],
+input[type='url'][disabled],
+input[type='password'][disabled],
+textarea[disabled],
+select[multiple][disabled] {
+	background-color: rgba(255, 255, 255, .5);
+	border-color: rgba(255, 255, 255, .5);
+}
+
+/* Width */
+textarea {
+	width: 99%;
+}
+	
+.tiny {
+	width: 50px;
+}
+	
+.short {
+	min-width: 50px;
+	width: 10%;
+}
+	
+.medium {
+	min-width: 100px;
+	width: 30%;
+}
+	
+.long {
+	min-width: 150px;
+	width: 100%;
+}
+
+/* Form Errors */
+
+.formError input[type='text'],
+.formError input[type='search'],
+.formError input[type='email'],
+.formError input[type='url'],
+.formError input[type='password'],
+.formError textarea {
+	border-color: @errorBorderColor;
+	background-color: @errorBackgroundColor;
+	color: @errorColor;
+}

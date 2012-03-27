@@ -28,20 +28,18 @@
 	{event name='javascriptInclude'}
 	
 	<!-- Stylesheets -->
-	
-	<!-- LESS_FILES
-	<link rel="stylesheet/less" type="text/css" media="screen" href="{link controller='LessStylesheets'}{/link}" />
-	LESS_FILES -->
+	<link rel="stylesheet/less" type="text/css" href="{@$__wcf->getPath()}style/bootstrap.less" />
+	<script type="text/javascript">
+		//<![CDATA[
+		var less = { env: 'development' };
+		//]]>
+	</script>
 	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/less.min.js"></script>
-	
-	<style type="text/css">
-		@import url("{@$__wcf->getPath()}acp/style/wcf.css") screen;
-		{*
-		@import url("{@$__wcf->getPath()}acp/style/style-{@$__wcf->getLanguage()->getPageDirection()}.css") screen;
-	
-		@import url("{@$__wcf->getPath()}acp/style/print.css") print;
-		*}
-	</style>
+	<script type="text/javascript">
+		//<![CDATA[
+		less.watch();
+		//]]>
+	</script>
 	
 	{*
 	{if $specialStyles|isset}
@@ -93,6 +91,8 @@
 			
 			$('#sidebarContent').wcfSidebar();
 			
+			WCF.Dropdown.init();
+			
 			{event name='javascriptInit'}
 		});
 		//]]>
@@ -102,16 +102,16 @@
 <body id="tpl{$templateName|ucfirst}">
 	<a id="top"></a>
 	<!-- HEADER -->
-	<header id="pageHeader" class="wcf-pageHeader">
+	<header id="pageHeader" class="layoutFluid">
 		<div>
 			{if $__wcf->user->userID}
 				<!-- top menu -->
-				<nav id="topMenu" class="wcf-topMenu">
-					<div>
+				<nav id="topMenu" class="userPanel">
+					<div class="layoutFluid clearfix">
 						<ul>
-							<li id="userMenu" class="wcf-userMenu"><!-- ToDo: We need an ID and/or class for each list here, this ID may also change! -->
-								<span class="wcf-dropdownCaption wcf-userAvatarFramed">{lang}wcf.user.userNote{/lang}</span>
-								<ul class="wcf-dropdown">
+							<li id="userMenu" class="dropdown">
+								<span class="dropdownToggle" data-toggle="userMenu">{lang}wcf.user.userNote{/lang}</span>
+								<ul class="dropdownMenu">
 									<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
 								</ul>
 							</li>
@@ -122,7 +122,7 @@
 			{/if}
 			
 			<!-- logo -->
-			<div id="logo" class="wcf-logo">
+			<div id="logo" class="logo">
 				<!-- clickable area -->
 				<a href="{link controller='Index'}{/link}">
 					<h1>WoltLab Community Framework 2.0 Alpha 1</h1>
@@ -137,7 +137,7 @@
 			<!-- /logo -->
 			
 			<!-- main menu -->
-			<nav id="mainMenu" class="wcf-mainMenu">
+			<nav id="mainMenu" class="mainMenu">
 				{* work-around for unknown core-object during WCFSetup *}
 				{if PACKAGE_ID}
 					<ul>
@@ -150,9 +150,9 @@
 			<!-- /main menu -->
 			
 			<!-- header navigation -->
-			<nav class="wcf-headerNavigation">
-				<ul>
-					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{@$__wcf->getPath()}icon/toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+			<nav class="navigation navigationHeader clearfix">
+				<ul class="navigationIcons">
+					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{@$__wcf->getPath()}icon/toBottom.svg" alt="" class="icon16" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 				</ul>
 			</nav>
 			<!-- /header navigation -->
@@ -161,21 +161,21 @@
 	<!-- /HEADER -->
 	
 	<!-- MAIN -->
-	<div id="main" class="wcf-main left">
+	<div id="main" class="layoutFluid sidebarOrientationLeft">
 		<div>
 			{hascontent}
 				<!-- SIDEBAR -->
-				<aside class="wcf-sidebar">
+				<aside class="sidebar">
 					<!-- sidebar menu -->
-					<nav id="sidebarContent" class="wcf-sidebarContent">
+					<nav id="sidebarContent" class="sidebarContent">
 						{content}
 							{* work-around for unknown core-object during WCFSetup *}
 							{if PACKAGE_ID}
 								{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=parentMenuItem}
-									<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="wcf-menuContainer collapsibleMenus" data-parent-menu-item="{$parentMenuItem->menuItem}">
+									<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="menuGroup collapsibleMenus" data-parent-menu-item="{$parentMenuItem->menuItem}">
 										{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
-											<h1 class="wcf-menuHeader" data-menu-item="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</h1>
-											<div class="wcf-sidebarContentGroup">
+											<h1 class="menuHeader" data-menu-item="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</h1>
+											<div class="menuGroupItems">
 												<ul id="{$menuItem->menuItem}">
 													{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItem->menuItem) item=menuItemCategory}
 														{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
@@ -200,5 +200,5 @@
 			{/hascontent}
 			
 			<!-- CONTENT -->
-			<section id="content" class="wcf-content wcf-contentDecor">
+			<section id="content" class="content clearfix">
 				

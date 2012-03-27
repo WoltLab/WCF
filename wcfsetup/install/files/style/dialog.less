@@ -1,0 +1,97 @@
+.dialogContainer {
+	background-color: rgba(0, 0, 0, .4);
+	border: 23px solid transparent;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 90%;
+	min-width: 500px;
+	position: fixed;
+	
+	.borderRadius(15px);
+	.boxShadow(0, 1px, rgba(0, 0, 0, .3), 23px);
+	
+	.boxHeadline hgroup {
+		h1,
+		h1 a {
+			color: @wcfDimmedColor;
+			
+			.textShadow(@wcfPageBackgroundColor);
+		}
+	}
+	
+	/*dl {
+		> .reversed {
+			left: 170px;
+			width: auto;
+		}
+		
+		> dd {
+			margin-left: 150px;
+		}
+		
+		> dt {
+			width: 130px;
+		}
+	}*/
+}
+
+.dialogTitlebar {
+	background-color: saturate(lighten(@wcfPageBackgroundColor, 20%), 20%);
+	background-image: url(../../images/header.png);
+	background-position: top left;
+	background-repeat: repeat-x;
+	border-bottom: 1px solid rgba(0, 0, 0, .1);
+	display: block;
+	padding: 10px 20px;
+	position: relative;
+	
+	.borderRadius(7px, 0);
+
+	.dialogTitle {
+		color: @wcfPageLinkHoverColor;
+		display: block;
+		font-size: 170%;
+		font-weight: bold;
+		
+		.textShadow(saturate(lighten(@wcfPageBackgroundColor, 20%), 20%));
+	}
+	
+	.dialogCloseButton {
+		background-image: url(../icon/delete2.svg);
+		background-position: top left;
+		background-repeat: no-repeat;
+		background-size: 32px;
+		cursor: pointer;
+		height: 32px;
+		position: absolute;
+		right: 10px;
+		top: 5px;
+		width: 32px;
+		
+		span {
+			/* remove caption - it's over 9000! */
+			left: -9001px;
+			position: absolute;
+			top: -9001px;
+			width: 0;
+		}
+	}
+}
+
+.dialogContent {
+	background-color: rgba(51, 51, 51, .9);
+	color: lighten(@wcfLabelColor, 10%);
+	overflow: auto;
+	padding: 10px 20px 20px;
+
+	.borderRadius(0, 7px);
+}
+
+.dialogOverlay {
+	background-color: rgba(0, 0, 0, .5);
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+}

@@ -1,0 +1,256 @@
+.navigation {
+	background-color: @wcfNavigationBackgroundColor;
+	padding: 0 7px;
+	
+	a {
+		color: @wcfLinkColor;
+		
+		&:hover {
+			color: @wcfLinkHoverColor;
+		}
+	}
+	
+	ul {
+		display: inline-block;
+		
+		
+		&.navigationIcons {
+			float: right;
+			
+			li {
+				float: right;
+				padding: 0 3px;
+				
+				&.separator {
+					border-right: 1px dotted darken(@wcfNavigationBackgroundColor, 20%);
+				}
+				
+				> * {
+					padding: 3px;
+					display: inline-block;
+					color: @wcfLinkColor;
+				}
+				
+				a:hover {
+					background-color: @wcfHighlightBackgroundColor;
+				}
+			}
+		}
+		
+		&:not(.navigationIcons) {
+			
+			li {
+				display: inline-block;
+				margin-top: 5px;
+				
+				a {
+					padding: 2px 4px;
+					
+					.textShadow(@wcfNavigationBackgroundColor);
+					
+					&:hover {
+						text-decoration: none;
+					}
+				}
+			}
+		}
+	}
+}
+
+.navigationHeader {
+	border-bottom: @wcfContainerBorderWidth @wcfContainerBorderStyle darken(@wcfHighlightBackgroundColor, 8%);
+	border-radius: @wcfContainerBorderRadius @wcfContainerBorderRadius 0 0;
+}
+	
+.navigationFooter {
+	border-top: @wcfContainerBorderWidth @wcfContainerBorderStyle darken(@wcfHighlightBackgroundColor, 8%);
+	border-radius: 0 0 @wcfContainerBorderRadius @wcfContainerBorderRadius;
+}
+
+
+.mainMenu {
+	box-sizing: border-box;
+	display: block;
+	margin: 0 9px;
+	position: relative;
+	text-align: left;
+
+	&:after {
+		clear: both;
+		content: '';
+		display: block;
+	}
+	
+	> ul {
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+		background-color: rgba(0, 0, 0, .4);
+		display: inline-block;
+		position: relative;
+		
+		> li {
+			display: inline-block;
+			font-size: 120%;
+			
+			&.active {
+				margin: -5px 0 0;
+				
+				&:first-child {
+					margin-right: -5px;
+				}
+				
+				&:last-child {
+					margin-left: -5px;
+				}
+				
+				&:only-child {
+					margin: -5px 0 0;
+				}
+				
+				a {
+					border-top-left-radius: 5px;
+					border-top-right-radius: 5px;
+					color: #369;
+					font-size: 110%;
+					font-weight: bold;
+					text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+					z-index: 10;
+					
+					.linearGradient(@wcfNavigationBackgroundColor, rgba(255, 255, 255, 1), @wcfNavigationBackgroundColor);
+					
+					&:after {
+						border-bottom-left-radius: 6px;
+						border-width: 0 0 1px 1px;
+						bottom: 0;
+						content: "";
+						height: 7px;
+						position: absolute;
+						right: -7px;
+						width: 7px;
+						
+						.boxShadow(-2px, 2px, lighten(@wcfHighlightBackgroundColor, 3%), 0);
+					}
+					
+					&:before {
+						border-bottom-right-radius: 6px;
+						border-width: 0 1px 1px 0;
+						bottom: 0;
+						content: "";
+						height: 7px;
+						left: -7px;
+						position: absolute;
+						width: 7px;
+						
+						.boxShadow(2px, 2px, lighten(@wcfHighlightBackgroundColor, 3%), 0);
+					}
+				}
+			}
+			
+			&:not(.active) {
+				margin-top: -3px;
+				
+				&:hover {
+					> a {
+						color: rgba(255, 255, 255, 1);
+					}
+				}
+			}
+			
+			> a {
+				color: #69c;
+				cursor: pointer;
+				display: inline-block;
+				font-weight: normal;
+				padding: 8px 20px;
+				position: relative;
+				text-decoration: none;
+				text-shadow: 0 -1px 0 rgba(0, 0, 0, 1);
+				white-space: nowrap;
+				
+				.transition(border, .3s, ease);
+				.transition(background-color, .3s, ease);
+				.transition(background-image, .3s, ease);
+				.transition(color, .3s, ease);
+			}
+		}
+	}
+}
+
+.contentNavigation {
+	display: table;
+	margin-top: @wcfGapMedium;
+	width: 100%;
+	nav ul {
+		float: left;
+		
+		&:not(.pageNavigation) {
+			float: right;
+			text-align: right;
+		}
+		
+		li {
+			display: inline;
+		}
+	}
+}
+
+.sidebarContent {
+	a:hover {
+		text-decoration: none;
+	}
+	
+	> div {
+		overflow: hidden;
+		position: relative;
+		
+		&.collapsibleMenus > h1 {
+			background-image: url(../icon/arrowRight.svg);
+			background-position: 15px center;
+			background-repeat: no-repeat;
+			background-size: 16px;
+			
+			&.active {
+				background-image: url(../icon/arrowDown.svg);
+			}
+		}
+		
+		&:not(.collapsibleMenus) > h1 {
+			padding-right: @wcfGapLarge;
+		}
+		
+		> h1 {
+			color: @wcfLinkColor;
+			cursor: pointer;
+			font-size: 130%;
+			font-weight: bold;
+			padding: @wcfGapSmall @wcfGapMedium @wcfGapSmall (@wcfGapLarge + 16px + @wcfGapTiny);	// icon size + gap
+			
+			.textShadow(@wcfHighlightBackgroundColor);
+		}
+		
+		ul > li {
+			font-size: 110%;
+			
+			&.active {
+				background-color: @wcfContentBackgroundColor;
+				margin-right: -1px;
+				overflow: hidden;
+				
+				.boxShadow(0, 0, rgba(0, 0, 0, .1));
+				
+				a {
+					font-weight: bold;
+				}
+			}
+			
+			> a,
+			> div {
+				color: @wcfLinkColor;
+				display: block;
+				padding: @wcfGapTiny @wcfGapMedium @wcfGapSmall (@wcfGapLarge + 16px + @wcfGapTiny);
+				
+				.textShadow(@wcfHighlightBackgroundColor);
+			}
+		}
+	}
+}

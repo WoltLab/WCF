@@ -1,0 +1,43 @@
+/* ############## Balloon Tooltips ############## */
+
+/* Globals */
+
+.jsTooltip { /* Do not change this style */
+	cursor: pointer;
+}
+
+.balloonTooltip {
+	font-size: .85em;
+	color: @wcfTooltipColor;
+	border: 1px solid @wcfTooltipBorderColor;
+	border-radius: @wcfContainerBorderRadius;
+	background-color: @wcfTooltipBackgroundColor;
+	padding: 5px 10px 7px;
+	position: absolute;
+	max-width: 300px;
+	z-index: 800;
+	
+	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
+	
+	.pointer {	
+		border-width: 0 7px 7px;
+		border-style: solid;
+		border-color: @wcfTooltipBorderColor transparent;
+		display: inline-block !important;
+		width: 0;
+		position: absolute;
+		top: -8px !important;
+		left: 50%;
+		
+		span {	
+			border-width: 0 5px 5px;
+			border-style: solid;
+			border-color: @wcfTooltipBackgroundColor transparent;
+			display: inline-block;
+			width: 0;
+			position: absolute;
+			top: 2px;
+			left: -5px;
+		}
+	}
+}

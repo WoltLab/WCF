@@ -1,8 +1,8 @@
 {include file='header'}
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/time1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{@$__wcf->getPath()}icon/time1.svg" alt="" class="icon48" />
+	<hgroup>
 		<h1>{lang}wcf.acp.cronjob.list{/lang}</h1>
 		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>
 	</hgroup>
@@ -34,15 +34,15 @@
 	</script>
 </header>
 
-<div class="wcf-contentHeader">
+<div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller="CronjobList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	
 	{hascontent}
 		<nav>
-			<ul class="wcf-largeButtons">
+			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
-						<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+						<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 					{/if}
 
 					{event name='largeButtons'}
@@ -53,12 +53,12 @@
 </div>
 
 {hascontent}
-	<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
+	<div class="tabularBox tabularBoxTitle marginTop shadow">
 		<hgroup>
-			<h1>{lang}wcf.acp.cronjob.list{/lang} <span class="wcf-badge" title="{lang}wcf.acp.cronjob.list.count{/lang}">{#$items}</span></h1>
+			<h1>{lang}wcf.acp.cronjob.list{/lang} <span class="badge" title="{lang}wcf.acp.cronjob.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
 		
-		<table class="wcf-table">
+		<table class="table">
 			<thead>
 				<tr>
 					<th class="columnID columnCronjobID{if $sortField == 'cronjobID'} active{/if}" colspan="2"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=cronjobID&sortOrder={if $sortField == 'cronjobID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'cronjobID'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
@@ -80,30 +80,30 @@
 						<tr class="jsCronjobRow">
 							<td class="columnIcon">
 								{if $__wcf->session->getPermission('admin.system.cronjob.canEditCronjob')}
-									<img src="{@$__wcf->getPath()}icon/run1.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" class="jsExecuteButton jsTooltip" data-object-id="{@$cronjob->cronjobID}" />
+									<img src="{@$__wcf->getPath()}icon/run1.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" class="icon16 jsExecuteButton jsTooltip" data-object-id="{@$cronjob->cronjobID}" />
 								{else}
-									<img src="{@$__wcf->getPath()}icon/run1D.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/run1D.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" class="icon16" />
 								{/if}
 						
 								{if $cronjob->canBeDisabled()}
-									<img src="{@$__wcf->getPath()}icon/{if $cronjob->active}enabled{else}disabled{/if}1.svg" alt="" title="{lang}wcf.global.button.{if $cronjob->active}disable{else}enable{/if}{/lang}" class="jsToggleButton jsTooltip" data-object-id="{@$cronjob->cronjobID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/{if $cronjob->active}enabled{else}disabled{/if}1.svg" alt="" title="{lang}wcf.global.button.{if $cronjob->active}disable{else}enable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip" data-object-id="{@$cronjob->cronjobID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
 								{else}
 									{if $cronjob->active}
-										<img src="{@$__wcf->getPath()}icon/enabled1D.svg" alt="" title="{lang}wcf.global.button.disable{/lang}" />
+										<img src="{@$__wcf->getPath()}icon/enabled1D.svg" alt="" title="{lang}wcf.global.button.disable{/lang}" class="icon16" />
 									{else}
-										<img src="{@$__wcf->getPath()}icon/disabled1D.svg" alt="" title="{lang}wcf.global.button.enable{/lang}" />
+										<img src="{@$__wcf->getPath()}icon/disabled1D.svg" alt="" title="{lang}wcf.global.button.enable{/lang}" class="icon16" />
 									{/if}
 								{/if}
 						
 								{if $cronjob->isEditable()}
-									<a href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}"><img src="{@$__wcf->getPath()}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip" /></a>
+									<a href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}"><img src="{@$__wcf->getPath()}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 jsTooltip" /></a>
 								{else}
-									<img src="{@$__wcf->getPath()}icon/edit1D.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/edit1D.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16" />
 								{/if}
 								{if $cronjob->isDeletable()}
-									<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip" data-object-id="{@$cronjob->cronjobID}" data-confirm-message="{lang}wcf.acp.cronjob.delete.sure{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip" data-object-id="{@$cronjob->cronjobID}" data-confirm-message="{lang}wcf.acp.cronjob.delete.sure{/lang}" />
 								{else}
-									<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16" />
 								{/if}
 								
 								{event name='buttons'}
@@ -136,20 +136,20 @@
 		
 	</div>
 	
-	<div class="wcf-contentFooter">
+	<div class="contentNavigation">
 		{@$pagesLinks}
 		
 		{* todo: add large button event *}
 		{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
 			<nav>
 				<ul class="wcf-largeButtons">
-					<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+					<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 				</ul>
 			</nav>
 		{/if}
 	</div>
 {hascontentelse}
-	<p class="wcf-warning">{lang}wcf.acp.cronjob.noneAvailable{/lang}</p>
+	<p class="warning">{lang}wcf.acp.cronjob.noneAvailable{/lang}</p>
 {/hascontent}
 
 {include file='footer'}

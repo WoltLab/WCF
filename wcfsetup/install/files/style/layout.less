@@ -1,0 +1,233 @@
+/* general definitions */
+body {
+	background-color: @wcfPageBackgroundColor;
+	background-image: url(../../images/header.png);
+	background-repeat: repeat-x;
+	color: @wcfPageColor;
+	font-family: @wcfBaseFontFamily;
+	font-size: @wcfBaseFontSize;
+	line-height: 1;
+}
+
+a {
+	color: @wcfLinkColor;
+	cursor: pointer;
+	text-decoration: none;
+		
+	&:hover {
+		color: @wcfLinkHoverColor;
+		text-decoration: underline;
+	}
+}
+
+#pageHeader {
+	margin-top: 57px;
+	z-index: 100;
+}
+
+#top {
+	display: block;
+	height: 1px;
+	visibility: hidden;
+}
+
+small {
+	font-size: 85%;
+	margin-top: 2px;
+}
+
+.invisible {
+	display: none;
+}
+
+.marginTop {
+	margin-top: @wcfGapMedium;
+}
+
+img {
+	vertical-align: middle !important;
+}
+
+/* basic layout elements */
+.layoutFluid {
+	padding: 0 @wcfLayoutFluidGap;
+}
+
+.layoutFixed {
+	margin: 0 auto;
+	width: @wcfLayoutFixedWidth;
+}
+
+.container {
+	background-color: @wcfContainerBackgroundColor;
+	border: @wcfContainerBorderWidth @wcfContainerBorderStyle @wcfContainerBorderColor;
+	border-radius: @wcfContainerBorderRadius;
+}
+
+.containerPadding {
+	padding: @wcfGapMedium @wcfGapLarge @wcfGapMedium;
+}
+
+.containerList {
+	> li {
+		padding: @wcfGapMedium @wcfGapLarge;
+	
+		.transition(background-color, .1s);
+	
+		&:nth-child(2n) {
+			background-color: @wcfContainerAccentBackgroundColor;
+		}
+		
+		&:first-child {
+			.borderRadius(@wcfContainerBorderRadius, 0);
+		}
+		
+		&:last-child {
+			.borderRadius(0, @wcfContainerBorderRadius);
+		}
+		
+		&:hover {
+			background-color: @wcfHighlightBackgroundColor;
+		}
+	}
+}
+
+.containerHeadline {
+	margin-bottom: @wcfGapSmall;
+	
+	> h1 {
+		font-size: 120%;
+		font-weight: bold;
+		margin-bottom: 2px;
+		
+		> small {
+			color: @wcfDimmedColor;
+			font-weight: normal;
+			text-shadow: none;
+			font-size: 70%;
+		}
+	}
+	
+	> h1, > h1 > a {
+		.textShadow(@wcfContainerBackgroundColor);
+	}
+}
+
+/* boxes with an image */
+.box(@imageSize, @gapOffset: 0) {
+	/* using a min-height prevents us from clearing (which causes a lot of issues) */
+	min-height: @imageSize + 4px;
+	
+	> :first-child {
+		float: left;
+	}
+	
+	> *:not(:first-child) {
+		margin-left: (@imageSize + @gapOffset);
+	}
+	
+	> .framed ~ * {
+		margin-left: (@imageSize + @gapOffset) + 4px;
+	}
+}
+
+.box16 { .box(16px, 3px); }
+.box24 { .box(24px, 5px); }
+.box32 { .box(32px, 4px); }
+.box48 { .box(48px, 8px); }
+.box64 { .box(64px, 10px); }
+.box96 { .box(96px, 12px); }
+.box128 { .box(128px, 16px); }
+.box256 { .box(256px, 32px); }
+
+.boxHeadline {
+	margin-top: @wcfGapLarge;
+	
+	hgroup {
+		> h1 {
+			font-size: 170%;
+			font-weight: bold;
+			border-bottom: 1px solid @wcfColor;
+			padding: 1px 0 10px;
+			
+			.textShadow(@wcfContentBackgroundColor);
+			
+			a {
+				color: @wcfColor;
+				text-decoration: none;
+			}
+		}
+		
+		> h2 {
+			color: @wcfDimmedColor;
+			padding-top: 5px;
+		}
+	}
+}
+
+.boxSubHeadline {
+	> h1 {
+		border-bottom: 1px solid @wcfDimmedColor;
+		color: @wcfDimmedColor;
+		font-size: 150%;
+		font-weight: bold;
+		padding: 1px 0 10px;
+
+		.textShadow(@wcfContainerBackgroundColor);
+	}
+}
+
+.icon(@imageSize) {
+	.square(@imageSize);
+}
+
+.icon16 { .icon(16px); }
+.icon24 { .icon(24px); }
+.icon32 { .icon(32px); }
+.icon48 { .icon(48px); }
+.icon64 { .icon(64px); }
+.icon96 { .icon(96px); }
+.icon128 { .icon(128px); }
+.icon256 { .icon(256px); }
+
+dl.dataList {
+	display: inline-block;
+	font-size: 90%;
+	margin: 0;
+	position: static;
+	
+	dd {
+		display: inline-block;
+		margin: 0;
+		padding: 0;
+	}
+	
+	dt {
+		color: @wcfDimmedColor;
+		display: inline-block;
+		float: none;
+		margin: 0;
+		text-align: left;
+		width: auto;
+		
+		&:after {
+			content: ":";
+		}
+	}
+}
+
+.framed {
+	img  {
+		background-color: @wcfContentBackgroundColor;
+		border: 1px solid @wcfContainerBorderColor;
+		padding: 1px;
+	}
+}
+
+/* -- -- -- Shadows -- -- --  */
+
+/* Shadows for boxes - do not use on small boxes! */
+
+.shadow {
+	.boxShadow(0, 10px, rgba(0, 0, 0, .1), 10px, -10px);
+}

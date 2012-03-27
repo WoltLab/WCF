@@ -9,23 +9,23 @@
 	//]]>
 </script>
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/server1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="box48 boxHeadline">
+	<img src="{@$__wcf->getPath()}icon/server1.svg" alt="" class="icon48" />
+	<hgroup>
 		<h1>{lang}wcf.acp.updateServer.list{/lang}</h1>
 	</hgroup>
 </header>
 
 {if $deletedPackageUpdateServerID}
-	<p class="wcf-success">{lang}wcf.acp.updateServer.delete.success{/lang}</p>
+	<p class="success">{lang}wcf.acp.updateServer.delete.success{/lang}</p>
 {/if}
 
-<div class="wcf-contentHeader">
+<div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller="UpdateServerList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	
 	<nav>
-		<ul class="wcf-largeButtons">
-			<li><a href="{link controller='UpdateServerAdd'}{/link}" title="{lang}wcf.acp.updateServer.add{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li>
+		<ul>
+			<li><a href="{link controller='UpdateServerAdd'}{/link}" title="{lang}wcf.acp.updateServer.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>
@@ -33,12 +33,12 @@
 </div>
 
 {hascontent}
-	<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
+	<div class="tabularBox tabularBoxTitle marginTop shadow">
 		<hgroup>
-			<h1>{lang}wcf.acp.updateServer.list{/lang} <span class="wcf-badge" title="{lang}wcf.acp.updateServer.list.count{/lang}">{#$items}</span></h1>
+			<h1>{lang}wcf.acp.updateServer.list{/lang} <span class="badge" title="{lang}wcf.acp.updateServer.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
 		
-		<table class="wcf-table big">
+		<table class="table">
 			<thead>
 				<tr>
 					<th class="columnID columnPackageUpdateServerID{if $sortField == 'packageUpdateServerID'} active{/if}" colspan="2"><a href="{link controller='UpdateServerList'}pageNo={@$pageNo}&sortField=packageUpdateServerID&sortOrder={if $sortField == 'packageUpdateServerID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'packageUpdateServerID'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
@@ -57,9 +57,9 @@
 					{foreach from=$objects item=updateServer}
 						<tr class="jsUpdateServerRow">
 							<td class="columnIcon">
-								<img src="{@$__wcf->getPath()}icon/{if !$updateServer->disabled}enabled{else}disabled{/if}1.svg" alt="" title="{lang}wcf.global.button.{if !$updateServer->disabled}disable{else}enable{/if}{/lang}" class="jsToggleButton jsTooltip" data-object-id="{@$updateServer->packageUpdateServerID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
-								<a href="{link controller='UpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}"><img src="{@$__wcf->getPath()}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip" /></a>
-								<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip" data-object-id="{@$updateServer->packageUpdateServerID}" data-confirm-message="{lang}wcf.acp.updateServer.delete.sure{/lang}" />
+								<img src="{@$__wcf->getPath()}icon/{if !$updateServer->disabled}enabled{else}disabled{/if}1.svg" alt="" title="{lang}wcf.global.button.{if !$updateServer->disabled}disable{else}enable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip" data-object-id="{@$updateServer->packageUpdateServerID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
+								<a href="{link controller='UpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}"><img src="{@$__wcf->getPath()}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 jsTooltip" /></a>
+								<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip" data-object-id="{@$updateServer->packageUpdateServerID}" data-confirm-message="{lang}wcf.acp.updateServer.delete.sure{/lang}" />
 							
 								{event name='buttons'}
 							</td>
@@ -79,12 +79,12 @@
 		
 	</div>
 	
-	<div class="wcf-contentFooter">
+	<div class="contentNavigation">
 		{@$pagesLinks}
 		
 		<nav>
-			<ul class="wcf-largeButtons">
-				<li><a href="{link controller='UpdateServerAdd'}{/link}" title="{lang}wcf.acp.updateServer.add{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li>
+			<ul>
+				<li><a href="{link controller='UpdateServerAdd'}{/link}" title="{lang}wcf.acp.updateServer.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li>
 				
 				{event name='largeButtons'}
 			</ul>
