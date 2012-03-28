@@ -9,10 +9,10 @@
 <body{if $templateName|isset} id="tpl{$templateName|ucfirst}"{/if}>
 {include file='header' sandbox=false}
 	
-	<div class="wcf-success">
-		<p>{@$message}</p>
-		<p><a href="{$url}">{lang}wcf.global.redirect.url{/lang}</a></p>
-	</div>
+<div class="success">
+	<p>{@$message}</p>
+	<p><a href="{$url}">{lang}wcf.global.redirect.url{/lang}</a></p>
+</div>
 	
 {include file='footer' sandbox=false}
 </body>

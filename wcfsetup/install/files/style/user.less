@@ -1,0 +1,55 @@
+.simpleUserList {
+	h2, p, dl {
+		font-size: 85%;
+	}
+	
+	p, dl {
+		margin-bottom: 2px;
+	}
+}
+
+.userList {
+	> li {
+		padding: 0;
+		float: left;
+		width: 50%;
+		height: 90px;
+		overflow: hidden;
+		
+		&:nth-child(2n) {
+			float: right;
+			
+			&:last-child {
+				.borderRadius(0, 0, @wcfContainerBorderRadius - 1, 0);
+			}
+		}
+		
+		&:nth-child(2n+1) {
+			&:last-child {
+				.borderRadius(0, 0, 0, @wcfContainerBorderRadius - 1);
+			}
+		}
+		
+		&:nth-last-child(2) {
+			.borderRadius(0, 0, 0, @wcfContainerBorderRadius - 1);
+		}
+		
+		&:first-child {
+			.borderRadius(@wcfContainerBorderRadius - 1, 0, 0, 0);
+		}
+		
+		&:nth-child(2) {
+			.borderRadius(0, @wcfContainerBorderRadius - 1, 0, 0);
+		}
+		
+		> div {
+			padding: 14px 21px;
+		}
+	}
+	
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}

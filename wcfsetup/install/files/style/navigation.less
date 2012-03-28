@@ -178,8 +178,14 @@
 
 .contentNavigation {
 	display: table;
-	margin-top: @wcfGapMedium;
 	width: 100%;
+	
+	> :first-child:before {
+		content: "";
+		display: block;
+		margin-top: @wcfGapMedium;
+	}
+	
 	nav ul {
 		float: left;
 		

@@ -18,11 +18,14 @@ fieldset:only-child {
 }
 
 fieldset legend {
-	color: @wcfLinkColor;
 	margin: auto -@wcfGapSmall;
 	padding: 0 @wcfGapSmall 0;
 	
 	.textShadow(@wcfContainerAccentBackgroundColor);
+}
+
+fieldset legend label {
+	color: @wcfColor;
 }
 
 fieldset legend ~ p {
@@ -37,7 +40,6 @@ fieldset legend ~ p {
 }
 
 .sidebar fieldset legend {
-	color: @wcfColor;
 	padding: 0;
 	text-transform: uppercase;
 		

@@ -7,16 +7,16 @@
 <body{if $templateName|isset} id="tpl{$templateName|ucfirst}"{/if}>
 {include file='header' sandbox=false}
 	
-	<p id="errorMessage" class="wcf-error">
-		{@$message}
-	</p>
-	<script type="text/javascript">
-		//<![CDATA[
-		if (document.referrer) {
-			$('#errorMessage').append('<br /><a href="' + document.referrer + '">{lang}wcf.global.error.backward{/lang}</a>'); 
-		}
-		//]]>
-	</script>
+<p id="errorMessage" class="error">
+	{@$message}
+</p>
+<script type="text/javascript">
+	//<![CDATA[
+	if (document.referrer) {
+		$('#errorMessage').append('<br /><a href="' + document.referrer + '">{lang}wcf.global.error.backward{/lang}</a>'); 
+	}
+	//]]>
+</script>
 
 {if ENABLE_DEBUG_MODE}
 	<!-- 
