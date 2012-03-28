@@ -106,7 +106,52 @@
 	z-index: 20; /* Prevents border overlay during transition */
 }
 
-/* randum stuff  */
+.tabMenuContainer > .menu {
+	border-bottom: 1px solid @wcfContainerBorderColor;
+	margin: -@wcfGapMedium -@wcfGapLarge @wcfGapLarge -@wcfGapLarge; /* reverse paddings from .containerPadding */
+	padding: @wcfGapSmall 0;
+	text-align: center;
+	
+	.borderRadius(@wcfContainerBorderRadius, 0);
+	.linearGradient(rgba(0, 0, 0, 0), @wcfContainerBackgroundColor, @wcfContainerAccentBackgroundColor);
+	
+	ul{
+		display: inline-block;
+		
+		li {
+			display: inline-block;
+			
+			&.ui-state-active a,
+			&.ui-state-active a:hover {
+				background-color: @wcfButtonPrimaryBackgroundColor;
+				border-color: @wcfButtonPrimaryBorderColor;
+				color: @wcfButtonPrimaryColor;
+				cursor: default;
+			}
+			
+			a {
+				background-color: @wcfContainerBackgroundColor;
+				border: 1px solid @wcfContainerBorderColor;
+				color: @wcfButtonColor;
+				display: block;
+				font-size: 85%;
+				
+				padding: @wcfGapTiny @wcfGapSmall;
+				
+				.borderRadius(30px);
+				
+				&:hover {
+					background-color: @wcfButtonHoverBackgroundColor;
+					border-color: @wcfButtonHoverBorderColor;
+					color: @wcfButtonHoverColor;
+					text-decoration: none;
+				}
+			}
+		}
+	}
+}
+
+/* random stuff  */
 fieldset ~ .tabMenuContainer .tabMenu {
 	margin-top: 30px;
 }
