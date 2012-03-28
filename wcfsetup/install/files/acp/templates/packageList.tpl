@@ -42,15 +42,14 @@
 			<h1>{lang}wcf.acp.package.application.installed{/lang}</h1>
 		</hgroup>
 		
-		<ol class="wcf-applicationList">
+		<ol class="applicationList">
 			{foreach from=$applications key=packageID item=package}
-				<li class="wcf-infoPackageApplication">
+				<li>
 					<fieldset>
 						<legend>{$package->getName()}</legend>
 						
-						<img src="{@$__wcf->getPath()}icon/wcfIcon1.svg" alt="" title="{$package->getName()}" class="wcf-packageApplicationIcon" />
-						
-						<div>
+						<div class="box96">
+							<img src="{@$__wcf->getPath()}icon/wcfIcon1.svg" alt="" title="{$package->getName()}" class="icon96" />
 							<dl>
 								<dt>{lang}wcf.acp.package.identifier{/lang}</dt>
 								<dd>{$package->package}</dd>
@@ -75,16 +74,16 @@
 								<dt>{lang}wcf.acp.package.author{/lang}</dt>
 								<dd>{if $package->authorURL}<a href="dereferrer.php?url={$package->authorURL|rawurlencode}">{/if}{$package->author}{if $package->authorURL}</a>{/if}</dd>
 							</dl>
+							
+							<footer class="contentOptions clearfix">
+								<nav>
+									<ul class="smallButtons">
+										<li><a href="{link controller='PackageView' id=$packageID}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/info1.svg" alt="" title="{lang}wcf.acp.package.button.info{/lang}" class="icon16" /> <span>{lang}wcf.acp.package.button.info{/lang}</span></a></li>
+										<li><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}" class="button"><img src="{@$__wcf->getPath()}icon/update1.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="icon16" /> <span>{lang}wcf.acp.package.button.update{/lang}</span></a></li>
+									</ul>
+								</nav>
+							</footer>
 						</div>
-						
-						<footer>
-							<nav>
-								<ul class="wcf-smallButtons">
-									<li><a href="{link controller='PackageView' id=$packageID}{/link}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/info1.svg" alt="" title="{lang}wcf.acp.package.button.info{/lang}" /> <span>{lang}wcf.acp.package.button.info{/lang}</span></a></li>
-									<li><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/update1.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" /> <span>{lang}wcf.acp.package.button.update{/lang}</span></a></li>
-								</ul>
-							</nav>
-						</footer>
 					</fieldset>
 				</li>
 			{/foreach}
