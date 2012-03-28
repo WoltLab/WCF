@@ -1,0 +1,30 @@
+.sortableListContainer .sortablePlaceholder {
+	background-color: @warningBackgroundColor;
+	border: 1px solid @warningBorderColor;
+	border-radius: 5px;
+	color: @warningColor;
+	margin: 3px 0;
+	padding: 4px;
+}
+
+.sortablePlaceholder.sortableInvalidTarget {
+	background-color: @errorBackgroundColor;
+	border: 1px solid @errorBorderColor;
+	color: @errorColor;
+}
+
+.sortableList {
+	list-style-position: outside;
+	list-style-type: decimal;
+	margin-left: 21px;
+}
+
+.sortableNode {
+	cursor: move;
+}
+
+.sortableNodeLabel {
+	border-bottom: 1px solid rgba(216, 231, 245, 1);
+	padding: 7px 7px 11px 0;
+	display: block;
+}

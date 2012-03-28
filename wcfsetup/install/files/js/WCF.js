@@ -2947,7 +2947,7 @@ WCF.Collapsible.Remote = Class.extend({
 	 */
 	_createButton: function(containerID, buttonContainer) {
 		var $isOpen = this._containers[containerID].data('isOpen');
-		var $button = $('<a class="wcf-containerIcon jsTooltip" title="'+WCF.Language.get('wcf.global.button.collapsible')+'"><img src="' + WCF.Icon.get('wcf.icon.' + ($isOpen ? 'opened' : 'closed')) + '" alt="" /></a>').prependTo(buttonContainer);
+		var $button = $('<a class="icon16 jsTooltip" title="'+WCF.Language.get('wcf.global.button.collapsible')+'"><img src="' + WCF.Icon.get('wcf.icon.' + ($isOpen ? 'opened' : 'closed')) + '" alt="" /></a>').prependTo(buttonContainer);
 		$button.data('containerID', containerID).click($.proxy(this._toggleContainer, this));
 
 		return $button;
@@ -4716,21 +4716,20 @@ WCF.Sortable.List = Class.extend({
 		// init sortable
 		this._options = $.extend(true, {
 			axis: 'y',
-			connectWith: '#' + this._containerID * ' .wcf-sortableList',
-			disableNesting: 'wcf-sortableNoNesting',
-			errorClass: 'wcf-sortableInvalidTarget',
+			connectWith: '#' + this._containerID * ' .sortableList',
+			disableNesting: 'sortableNoNesting',
+			errorClass: 'sortableInvalidTarget',
 			forcePlaceholderSize: true,
 			helper: 'clone',
-			items: 'li:not(.wcf-sortableNoSorting)',
+			items: 'li:not(.sortableNoSorting)',
 			opacity: .6,
-			placeholder: 'wcf-badgeYellow',
+			placeholder: 'sortablePlaceholder',
 			tolerance: 'pointer',
 			toleranceElement: '> span'
 		}, options || { });
-		$('#' + this._containerID + ' > .wcf-sortableList').wcfNestedSortable(this._options);
+		$('#' + this._containerID + ' > .sortableList').wcfNestedSortable(this._options);
 		
-		this._container.find('.wcf-formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
-		this._container.find('.wcf-formSubmit > button[data-type="reset"]').click($.proxy(this._reset, this));
+		this._container.find('.formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
 	},
 	
 	/**
@@ -4738,7 +4737,7 @@ WCF.Sortable.List = Class.extend({
 	 */
 	_submit: function() {
 		// build structure
-		this._container.find('.wcf-sortableList').each($.proxy(function(index, list) {
+		this._container.find('.sortableList').each($.proxy(function(index, list) {
 			var $list = $(list);
 			var $parentID = $list.data('objectID');
 			
@@ -4765,13 +4764,6 @@ WCF.Sortable.List = Class.extend({
 			}
 		});
 		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Reloads current page.
-	 */
-	_reset: function() {
-		window.location.reload(true);
 	},
 	
 	/**
