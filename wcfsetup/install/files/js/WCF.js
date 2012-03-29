@@ -1634,6 +1634,101 @@ WCF.Action.Toggle.prototype = {
 };
 
 /**
+ * Executes provided callback if scroll threshold is reached. Usuable to determine
+ * if user reached the bottom of an element to load new elements on the fly.
+ * 
+ * If you do not provide a value for 'reference' and 'target' it will assume you're
+ * monitoring page scrolls, otherwise a valid jQuery selector must be provided for both.
+ * 
+ * @param	integer		threshold
+ * @param	object		callback
+ * @param	string		reference
+ * @param	string		target
+ */
+WCF.Action.Scroll = Class.extend({
+	/**
+	 * callback used once threshold is reached
+	 * @var	object
+	 */
+	_callback: null,
+	
+	/**
+	 * reference object
+	 * @var	jQuery
+	 */
+	_reference: null,
+	
+	/**
+	 * target object
+	 * @var	jQuery
+	 */
+	_target: null,
+	
+	/**
+	 * threshold value
+	 * @var	integer
+	 */
+	_threshold: 0,
+	
+	/**
+	 * Initializes a new WCF.Action.Scroll object.
+	 * 
+	 * @param	integer		threshold
+	 * @param	object		callback
+	 * @param	string		reference
+	 * @param	string		target
+	 */
+	init: function(threshold, callback, reference, target) {
+		this._threshold = parseInt(threshold);
+		if (this._threshold === 0) {
+			console.debug("[WCF.Action.Scroll] Given threshold is invalid, aborting.");
+			return;
+		}
+		
+		if ($.isFunction(callback)) this._callback = callback;
+		if (this._callback === null) {
+			console.debug("[WCF.Action.Scroll] Given callback is invalid, aborting.");
+			return;
+		}
+		
+		// bind element references
+		this._reference = $((reference) ? reference : window);
+		this._target = $((target) ? target : document);
+		
+		// watch for scroll event
+		this.start();
+	},
+	
+	/**
+	 * Calculates if threshold is reached and notifies callback.
+	 */
+	_scroll: function() {
+		var $targetHeight = this._target.height();
+		var $topOffset = this._reference.scrollTop();
+		var $referenceHeight = this._reference.height();
+		
+		// calculate if defined threshold is visible
+		if (($targetHeight - ($referenceHeight + $topOffset)) < this._threshold) {
+			this._callback(this);
+		}
+	},
+	
+	/**
+	 * Enables scroll monitoring, may be used to resume.
+	 */
+	start: function() {
+		this._reference.on('scroll', $.proxy(this._scroll, this));
+	}
+	
+	/**
+	 * Disables scroll monitoring, e.g. no more elements loadable.
+	 */
+	stop: function() {
+		this._reference.off('scroll');
+	}
+});
+
+/**
  * Namespace for date-related functions.
  */
 WCF.Date = {};
