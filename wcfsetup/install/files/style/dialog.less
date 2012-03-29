@@ -104,3 +104,24 @@
 #packageInstallationAction {
 	margin-bottom: @wcfGapTiny;
 }
+
+.spinner {
+	border: 1px solid rgba(0, 0, 0, .3);
+	color: #fff;
+	left: 46%;
+	padding: 7px 0;
+	position: fixed;
+	right: 46%;
+	text-align: center;
+	top: 200px;
+	width: 70px;
+	z-index: 401;
+
+	.borderRadius();
+	.boxShadow(0, 1px, rgba(0, 0, 0, .5), 7px);
+	.linearGradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0), rgba(0, 0, 0, .7));
+
+	img {
+		margin-bottom: @wcfGapSmall;
+	}
+}
