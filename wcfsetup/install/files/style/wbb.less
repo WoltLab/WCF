@@ -1,9 +1,16 @@
-.wbbStats {
-	margin-top: 2px;
+/* ############## Board List ############## */
+.wbbBoardList {
+	> li.wbbBoardNodeTop:not(.wbbBoardNodeTopEmpty) > div {
+		.borderRadius(@wcfContainerBorderRadius, 0);
+	}
 	
-	/* TODO: This should be mentioned in the documentation but not included in stylesheets */
-	//&.wbbStatsAside {
+	> li > ul > li:last-child div.wbbBoard:last-child {
+		.borderRadius(0, @wcfContainerBorderRadius);
+	}
+	
+	.wbbStats {
 		left: 50%;
+		margin-top: 2px;
 		position: absolute;
 		top: @wcfGapSmall;
 		width: 15%;
@@ -13,8 +20,8 @@
 			
 			dt {
 				float: right;
-				width: 40%;
 				padding-bottom: 4px;
+				width: 40%;
 				
 				&:after {
 					content: "";
@@ -23,121 +30,108 @@
 			
 			dd {
 				float: left;
+				margin: 0;
+				padding-bottom: 4px;
 				text-align: right;
 				width: 58%;
-				padding-bottom: 4px;
 			}
 		}
-	//}
-}
-
-.wbbLastPost {
-	left: 65%;
-	position: absolute;
-	top: @wcfGapSmall;
-	width: 35%; /* = 100% - left */
-	
-	> div {
-		background-color: @wcfContentBackgroundColor;
-		padding: 7px;
-		border: 1px solid @wcfContainerBorderColor;
-		border-radius: @wcfContainerBorderRadius;
-		margin-right: 7px;
 	}
 	
-	hgroup {
-		h1 a {
-			display: inline-block;
-			overflow: hidden;
-			padding-bottom: 2px; /* prevents letters from being cut */
-			text-overflow: ellipsis;
-			width: 98%;
-			white-space: nowrap;
+	.wbbLastPost {
+		left: 65%;
+		position: absolute;
+		top: @wcfGapSmall;
+		width: 35%; /* = 100% - left */
+		
+		> div {
+			background-color: @wcfContentBackgroundColor;
+			padding: 7px;
+			border: 1px solid @wcfContainerBorderColor;
+			border-radius: @wcfContainerBorderRadius;
+			margin-right: 7px;
 		}
 		
-		h2 {
-			font-size: 85%;
+		hgroup {
+			h1 a {
+				display: inline-block;
+				overflow: hidden;
+				padding-bottom: 2px; /* prevents letters from being cut */
+				text-overflow: ellipsis;
+				width: 98%;
+				white-space: nowrap;
+			}
 			
-			time {
-				color: @wcfDimmedColor;
+			h2 {
+				font-size: 85%;
+				
+				time {
+					color: @wcfDimmedColor;
+				}
 			}
 		}
 	}
-}
-
-.wbbSubBoards {
-	margin-top: @wcfGapSmall;
 	
-	li {
-		display: inline-block;
-	}
-}
-
-.wbbBoardDescription {
-	font-size: 90%;
-	padding-top: @wcfGapTiny;
-}
-
-.wbbBoardContainer {
-	position: relative;
-}
-
-.wbbBoardNodeTop {
-	margin-top: @wcfGapMedium;
-}
-
-.wbbBoard {
-	min-height: 42px;
-	padding: @wcfGapSmall;
-	padding-right: 51%;
-	
-	.transition(background, .1s);
-	
-	&~ ul > .wbbBoardContainer > .wbbBoard {
-		padding-left: 43px;
-
-		&~ ul > .wbbBoardContainer > .wbbBoard {
-			padding-left: 79px;
+	.wbbSubBoards {
+		margin-top: @wcfGapSmall;
+		
+		li {
+			display: inline-block;
 		}
 	}
-	
-	&:hover {
-		background-color: @wcfHighlightBackgroundColor;
+
+	.wbbBoardDescription {
+		font-size: 90%;
+		padding-top: @wcfGapTiny;
 	}
-}
 
-.wbbBoardNode1 {
-	background-color: @wcfContainerAccentBackgroundColor;
-}
+	.wbbBoardContainer {
+		position: relative;
+	}
 
-.wbbBoardNode2 {
-	background-color: @wcfContentBackgroundColor;
-}
+	.wbbBoardNodeTop {
+		margin-top: @wcfGapMedium;
+	}
 
-.wbbBoardList > li.wbbBoardNodeTop:not(.wbbBoardNodeTopEmpty) > div {
-	.borderRadius(@wcfContainerBorderRadius, 0);
-}
+	.wbbBoard {
+		min-height: 42px;
+		padding: @wcfGapSmall;
+		padding-right: 51%;
+		
+		.transition(background, .1s);
+		
+		&~ ul > .wbbBoardContainer > .wbbBoard {
+			padding-left: 43px;
 
-.wbbBoardList > li > ul > li:last-child div.wbbBoard:last-child {
-	.borderRadius(0, @wcfContainerBorderRadius);
-}
+			&~ ul > .wbbBoardContainer > .wbbBoard {
+				padding-left: 79px;
+			}
+		}
+		
+		&:hover {
+			background-color: @wcfHighlightBackgroundColor;
+		}
+	}
 
-.wbbBoardNodeTopEmpty div.wbbBoard {
-	.borderRadius(@wcfContainerBorderRadius);
-}
+	.wbbBoardNode1 {
+		background-color: @wcfContainerAccentBackgroundColor;
+	}
 
-.wbbThreadListLastPost h2 {
-	color: @wcfDimmedColor;
-	font-size: 85%;
-	margin-top: 2px;
-}
-
-.wbbBoardList .new > div > hgroup > h1 {
-	font-weight: bold;
-}
-
-.wbbBoard > div > hgroup > h1 {
-	font-size: 120%;
+	.wbbBoardNode2 {
+		background-color: @wcfContentBackgroundColor;
+	}
+	
+	.wbbBoardNodeTopEmpty div.wbbBoard {
+		.borderRadius(@wcfContainerBorderRadius);
+	}
+	
+	.new > div > hgroup > h1 {
+		font-weight: bold;
+	}
+	
+	.wbbBoard > div > hgroup > h1 {
+		font-size: 120%;
+	}
 }
 
 /* ignored boards */
@@ -163,134 +157,109 @@
 	}
 }
 
-
 /* ############## Thread List ############## */
-
-/* Column Avatar */
-.wbbThreadList .columnAvatar div {
-	position: relative;
-	width: 40px;
-	height: 38px;
-}
-
-.wbbThreadList .columnAvatar div > p > img {
-	opacity: .5;
+.wbbThreadList {
+	.wbbLastPost h2 {
+		color: @wcfDimmedColor;
+		font-size: 85%;
+		margin-top: 2px;
+	}
 	
-	.transition(opacity, .2s);
-}
-
-.wbbThreadList tr.new .columnAvatar div > p > img,
-.wbbThreadList tr:hover .columnAvatar div > p > img {
-	opacity: 1;
-} 
-
-.wbbThreadList .columnAvatar .myAvatar {
-	position: absolute;
-	width: 16px;
-	height: 16px;
-	bottom: -2px;
-	left: 24px;
-	opacity: 1;
-	
-	.boxShadow(0, 0, rgba(0, 0, 0, .3), 3px);
-} 
-
-
-.wbbThreadStarter {
-	position: relative;
-	
-	
-	> .message {
-		&:after,
-		&:before {
-			content: "";
-			display: block;
-			height: 128px;
-			left: 0;
+	.columnAvatar {
+		div {
+			position: relative;
+			width: 40px;
+			height: 38px;
+			
+			> p > img {
+				opacity: .5;
+				
+				.transition(opacity, .2s);
+			}
+		}
+		
+		.myAvatar {
 			position: absolute;
-			top: 0;
-			width: 128px;
+			width: 16px;
+			height: 16px;
+			bottom: -2px;
+			left: 24px;
+			opacity: 1;
+			
+			.boxShadow(0, 0, rgba(0, 0, 0, .3), 3px);
 		}
-		
-		&:after {
-			background-image: url(../../icon/threadStarter1.svg);
-			background-position: 4px 4px;
-			background-repeat: no-repeat;
-			background-size: 16px;
-			height: 20px;
-			width: 20px;
-		}
-		
-		&:before {
-			.borderRadius(@wcfContainerBorderRadius, 0, 0, 0);
-			.linearGradientNative(~"left top, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%");
-		}
+	}
+	
+	tr.new .columnAvatar div > p > img, tr:hover .columnAvatar div > p > img {
+		opacity: 1;
 	}
 }
 
-.newMessageBadge {
+
+/* ############## Post List ############## */
+.wbbThreadPostList {
+	.wbbThreadStarter {
+		position: relative;
+		
+		> .message {
+			&:after,
+			&:before {
+				content: "";
+				display: block;
+				height: 128px;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 128px;
+			}
+			
+			&:after {
+				background-image: url(../../icon/threadStarter1.svg);
+				background-position: 4px 4px;
+				background-repeat: no-repeat;
+				background-size: 16px;
+				height: 20px;
+				width: 20px;
+			}
+			
+			&:before {
+				.borderRadius(@wcfContainerBorderRadius, 0, 0, 0);
+				.linearGradientNative(~"left top, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%");
+			}
+		}
+	}
 	
-	display: inline-block;
-	border: 1px solid @wcfLinkColor; //@wcfContainerBorderColor;
-	border-radius: 2px;
-	//border-bottom-left-radius: 0px;
-	padding: 6px 10px;
-	position: absolute;
-	left: -220px;
-	top: 30px;
-	font-weight: bold;
-	color: @wcfLinkColor;
-	text-transform: uppercase;
-	font-size: 85%;
-	//
-	.linearGradient(darken(@wcfHighlightBackgroundColor, 10%), @wcfHighlightBackgroundColor, darken(@wcfHighlightBackgroundColor, 10%));
-	.textShadow(darken(@wcfHighlightBackgroundColor, 10%));
-	.boxShadow(1px, 1px, rgba(0, 0, 0, .2), 3px);
+	.newMessageBadge {
+		border: 1px solid @wcfLinkColor;
+		border-radius: 2px;
+		color: @wcfLinkColor;
+		display: inline-block;
+		font-weight: bold;
+		font-size: 85%;
+		left: -220px;
+		top: 30px;
+		padding: 6px 10px;
+		position: absolute;
+		text-transform: uppercase;
+		
+		.linearGradient(darken(@wcfHighlightBackgroundColor, 10%), @wcfHighlightBackgroundColor, darken(@wcfHighlightBackgroundColor, 10%));
+		.textShadow(darken(@wcfHighlightBackgroundColor, 10%));
+		.boxShadow(1px, 1px, rgba(0, 0, 0, .2), 3px);
+		
+		&:before {
+			border-color: transparent @wcfLinkColor transparent transparent;
+			border-width: 0px 7px 7px;
+			border-style: solid;
+			bottom: -7px;
+			content: "";
+			display: block;
+			height: 0px;
+			left: -8px;
+			position: absolute;
+			width: 0px;
+		}
+	}
 }
-
-.newMessageBadge:before {
-	content: "";
-	display: block;
-	
-	width: 0px;
-	height: 0px;
-	position: absolute;
-	bottom: -7px;
-	left: -8px;
-	
-	
-	border-width: 0px 7px 7px;
-	border-style: solid;
-	border-color: transparent @wcfLinkColor transparent transparent;
-	/*
-	border: 5px solid red;
-	border-width: 5px 0 0 5px;*/
-}
-
-
-/* rotated badge
-.newMessageBadge {
-	background-color: @wcfHoverBackgroundColor;
-	color: @wcfColor;
-	display: block;
-	font-size: 15px;
-	left: -260px;
-	padding: 6px 4px;
-	position: absolute;
-	text-align: center;
-	text-transform: uppercase;
-	top: 20px;
-	width: 150px;
-	
-	-webkit-backface-visibility: hidden;
-	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
-	-webkit-transform: rotate(-45deg);
-	-o-transform: rotate(-45deg);
-}
-
-.wbbThreadPostList > li {
-	overflow: hidden;
-}*/
 
 /* ############## Post Preview ############## */
 .wbbPostPreview {
@@ -314,20 +283,20 @@
 		position: absolute;
 		bottom: -9px;
 	}
-}
-
-.wbbPostPreviewContent {
-	h1 {
-		display: inline-block;
-	}
 	
-	time {
-		font-size: 85%;
-		font-style: italic;
-	}
-	
-	h1, time, p {
-		line-height: 1.5;
-		margin-bottom: 7px;
+	.wbbPostPreviewContent {
+		h1 {
+			display: inline-block;
+		}
+		
+		time {
+			font-size: 85%;
+			font-style: italic;
+		}
+		
+		h1, time, p {
+			line-height: 1.5;
+			margin-bottom: 7px;
+		}
 	}
 }
