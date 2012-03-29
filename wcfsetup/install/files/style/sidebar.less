@@ -1,0 +1,148 @@
+.sidebarContent {
+	padding-top: @wcfGapLarge;
+	
+	> ul {
+		> li {
+			margin-bottom: @wcfGapMedium;
+			
+			&:not(:last-child) {
+				border-bottom: 1px solid darken(@wcfHighlightBackgroundColor, 8%);
+			}
+			
+			&.sidebarContainer {
+				padding: 0 @wcfGapMedium @wcfGapMedium;
+				
+				.button.more {
+					margin: 5px 0 0;
+					float: right;
+				}
+				
+				&:after {
+					content: "";
+					height: 0;
+					display: block;
+					clear: both;
+				}
+			}
+			
+			.sidebarContainerHeadline {
+				margin-bottom: @wcfGapSmall;
+				
+				> h1 {
+					text-transform: uppercase;
+					
+					.textShadow(@wcfHighlightBackgroundColor);
+					
+					.badge {
+						float: right;
+					}
+				}
+			}
+			
+			dl.dataList {
+				margin-bottom: -4px;
+				
+				dd {
+					margin-bottom: 4px;
+				}
+				
+				dt {
+					font-size: 85%;
+					color: @wcfLinkColor;
+				}
+			}
+			
+			/* forms */
+			fieldset {
+				background-color: transparent;
+				border-width: 0;
+				margin: 0;
+				padding: @wcfGapSmall 0 0;
+				
+				legend {
+					padding: 0;
+					text-transform: uppercase;
+						
+					.textShadow(@wcfHighlightBackgroundColor);
+				}
+			}
+		}
+	}
+	
+	/* menu groups */
+	.menuGroup {
+		overflow: hidden;
+		position: relative;
+		
+		> h1 {
+			margin-bottom: @wcfGapMedium;
+			padding: 0 @wcfGapMedium;
+			
+			.textShadow(@wcfHighlightBackgroundColor);
+		}
+		
+		.menuGroupItems {
+			margin-bottom: @wcfGapSmall;
+			margin-top: -@wcfGapSmall;
+		}
+		
+		a:hover {
+			text-decoration: none;
+		}
+		
+		ul > li {
+			&.active {
+				background-color: @wcfContentBackgroundColor;
+				margin-right: -1px;
+				overflow: hidden;
+				
+				.boxShadow(0, 0, rgba(0, 0, 0, .1));
+				
+				a {
+					font-weight: bold;
+				}
+			}
+			
+			> a,
+			> div {
+				color: @wcfLinkColor;
+				display: block;
+				padding: @wcfGapTiny @wcfGapMedium @wcfGapSmall @wcfGapLarge;
+			}
+		}
+		
+		&.collapsibleMenus {
+			> h1 {
+				background-image: url(../icon/arrowRight.svg);
+				background-position: 15px center;
+				background-repeat: no-repeat;
+				background-size: 16px;
+				color: @wcfLinkColor;
+				cursor: pointer;
+				font-weight: bold;
+				font-size: 130%;
+				padding-left: (@wcfGapLarge + 16px + @wcfGapTiny);
+				
+				&.active {
+					background-image: url(../icon/arrowDown.svg);
+				}
+			}
+			
+			ul > li {
+				font-size: 110%;
+				
+				> a,
+				> div {
+					padding-left: (@wcfGapLarge + 16px + @wcfGapTiny);
+					.textShadow(@wcfHighlightBackgroundColor);
+				}
+			}
+		}
+		
+		&:not(.collapsibleMenus) {
+			> h1 {
+				text-transform: uppercase;
+			}
+		}
+	}
+}

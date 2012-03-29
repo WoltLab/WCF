@@ -162,6 +162,10 @@ img {
 			color: @wcfDimmedColor;
 			padding-top: 5px;
 		}
+		
+		> h3 {
+			color: @wcfDimmedColor;
+		}
 	}
 }
 
@@ -210,6 +214,16 @@ dl.dataList {
 		
 		&:after {
 			content: ":";
+		}
+	}
+}
+
+ul.dataList {
+	li {
+		display: inline-block;
+		
+		&:not(:last-child):after {
+			content: ",";
 		}
 	}
 }

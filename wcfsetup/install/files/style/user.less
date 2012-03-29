@@ -1,3 +1,32 @@
+/* ##### User Sidebar #### */
+.sidebarContent {
+	.userAvatar {
+		text-align: center;
+		overflow: hidden;
+	}
+}
+
+/* todo: framed icon list */
+.framedIconList {
+	li {
+		float: left;
+		margin: 0 4px 4px 0;
+		
+		.framed {
+			display: inline-block;
+		}
+	}
+	
+	&:after {
+		content: "";
+		height: 0;
+		display: block;
+		clear: both;
+	}
+}
+
+
+/* ##### User List #### */
 .simpleUserList {
 	h2, p, dl {
 		font-size: 85%;
