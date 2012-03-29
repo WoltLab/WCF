@@ -15,7 +15,16 @@
 		opacity: 0;
 		
 		.transition(opacity, .1s);
+		
+		a {
+			padding: 4px;
+		}
 	}
+}
+
+.commentResponseList .commentOptions {
+	top: @wcfGapSmall;
+	right: @wcfGapSmall;
 }
 
 .commentContent:hover .commentOptions li {
@@ -50,18 +59,32 @@
 	padding: 7px;
 }
 
-.commentList > li&:nth-child(2n) .commentResponseList > li&:nth-child(2n+1) {
+.commentList > li:nth-child(2n) .commentResponseList > li:nth-child(2n+1) {
 	background-color: @wcfContainerBackgroundColor;
+	
+	.transition(background-color, .1s);
 }
 
-.commentList > li&:nth-child(2n+1) .commentResponseList > li&:nth-child(2n+1) {
+.commentList > li:nth-child(2n+1) .commentResponseList > li:nth-child(2n+1) {
 	background-color: @wcfContainerAccentBackgroundColor;
+	
+	.transition(background-color, .1s);
+}
+
+.commentList > li:nth-child(2n):hover .commentResponseList > li:nth-child(2n+1),
+.commentList > li:nth-child(2n+1):hover .commentResponseList > li:nth-child(2n+1) {
+	background-color: @wcfHighlightBackgroundColor;
+}
+
+/* like display */
+.commentList .likesDisplay {
+	display: inline-block;
+	margin: -2px 0 -2px @wcfGapTiny;
 }
 
 
 
-
-/* Comment List */
+/* Comment List (old?) */
 
 .wcf-commentList > .wcf-container {
 	border-top: 1px solid rgba(204, 204, 204, 1);

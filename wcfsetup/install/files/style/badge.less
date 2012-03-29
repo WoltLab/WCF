@@ -19,7 +19,6 @@
 	padding: 2px 8px;
 	position: relative;
 	text-shadow: none;
-	top: -1px;
 	white-space: nowrap;
 	
 	.badgeShadow(@wcfContentBackgroundColor);
@@ -27,6 +26,16 @@
 	&.badgeUpdate {
 		background-color: #336699;
 		color: @wcfPageLinkHoverColor;
+	}
+	
+	&.badgeGreen {
+		background-color: @successColor;
+		color: #fff;
+	}
+	
+	&.badgeRed {
+		background-color: @errorColor;
+		color: #fff;
 	}
 	
 	&.badgeInverse {
