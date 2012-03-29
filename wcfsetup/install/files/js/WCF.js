@@ -1718,7 +1718,7 @@ WCF.Action.Scroll = Class.extend({
 	 */
 	start: function() {
 		this._reference.on('scroll', $.proxy(this._scroll, this));
-	}
+	},
 	
 	/**
 	 * Disables scroll monitoring, e.g. no more elements loadable.
