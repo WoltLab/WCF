@@ -35,11 +35,6 @@
 		//]]>
 	</script>
 	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/less.min.js"></script>
-	<script type="text/javascript">
-		//<![CDATA[
-		less.watch();
-		//]]>
-	</script>
 	
 	{*
 	{if $specialStyles|isset}
