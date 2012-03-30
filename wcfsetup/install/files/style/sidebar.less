@@ -39,6 +39,26 @@
 				}
 			}
 			
+			.sidebarBox:not(:last-child) {
+				margin-bottom: 7px;
+			}
+			
+			.sidebarBoxHeadline {
+				> h1 {
+					font-weight: bold;
+					margin-bottom: 1px;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					
+					.textShadow(@wcfHighlightBackgroundColor);
+					
+					a {
+						.textShadow(@wcfHighlightBackgroundColor);
+					}
+				}
+			}
+			
 			dl.dataList {
 				margin-bottom: -4px;
 				
