@@ -30,11 +30,6 @@
 	//]]>
 </script>
 <script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/less.min.js"></script>
-<script type="text/javascript">
-	//<![CDATA[
-	less.watch();
-	//]]>
-</script>
 
 <noscript>
 	<style type="text/css">
@@ -84,7 +79,7 @@
 		});
 		
 		new WCF.Date.Time();
-		//new WCF.Effect.SmoothScroll();
+		new WCF.Effect.SmoothScroll();
 		new WCF.Effect.BalloonTooltip();
 		$('<span class="pointer"><span></span></span>').appendTo('.innerError');
 		
