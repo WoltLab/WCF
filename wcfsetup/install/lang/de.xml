@@ -32,6 +32,7 @@
 		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
 		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Sind Sie sicher, dass Sie diesen Cronjob &bdquo;{$cronjob->description|truncate:50:' ...'}&ldquo; löschen möchten?]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten Cronjobs]]></item>
+		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[Es wurden noch keine Cronjobs hinzugefügt.]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Alle löschen]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Sind Sie sicher, dass Sie alle Protokoll-Einträge löschen möchten?]]></item>
 		<item name="wcf.acp.cronjob.log.count"><![CDATA[{#$items} {if $items == 1}Eintrag{else}Einträge{/if}]]></item>
@@ -176,6 +177,10 @@
 		<item name="wcf.acp.option.category.module.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Hauptkennwort aktivieren]]></item>
 		<item name="wcf.acp.option.module_master_password.description"><![CDATA[Aktiviert die zusätzliche Eingabe eines Kennworts beim Aufruf von sicherheitskritischen Bereichen.]]></item>
+		<item name="wcf.acp.option.enable_debug_mode"><![CDATA[Debug Modus aktivieren]]></item>
+		<item name="wcf.acp.option.enable_debug_mode.description"><![CDATA[Aktiviert den Debug Modus. Durch diesen Modus werden Log Dateien erzeugt, wodurch die Fehler durch den Administrator analysiert werden können.]]></item>
+		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Benchmark]]></item>
+		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[Aktiviert den Benchmark, um die Auslastung des Community Frameworks anzuzeigen.]]></item>
 		<item name="wcf.acp.option.category.general.page"><![CDATA[Seite]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta Keywords]]></item>
@@ -300,6 +305,7 @@
 		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Installation wird vorbereitet &hellip;]]></item>
 		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Paketliste]]></item>
+		<item name="wcf.acp.package.list.count"><![CDATA[{#$items} Pakete]]></item>
 		<item name="wcf.acp.package.list.detailed"><![CDATA[Detaillierte Paketliste]]></item>
 		<item name="wcf.acp.package.name"><![CDATA[Paket]]></item>
 		<item name="wcf.acp.package.packageDate"><![CDATA[Erstellungsdatum]]></item>
@@ -308,7 +314,9 @@
 		<item name="wcf.acp.package.plugin.title"><![CDATA[Erweiterungen]]></item>
 		<item name="wcf.acp.package.source"><![CDATA[Datenquelle]]></item>
 		<item name="wcf.acp.package.source.download"><![CDATA[Paket herunterladen]]></item>
+		<item name="wcf.acp.package.source.download.description"><![CDATA[Geben Sie hier den Pfad zum Paket an. Dabei handelt es sich um eine Adresse oder Pfad im Dateisystem.]]></item>
 		<item name="wcf.acp.package.source.upload"><![CDATA[Paket hochladen]]></item>
+		<item name="wcf.acp.package.source.upload.description"><![CDATA[Wählen Sie hier das zu installierende Paket aus.]]></item>
 		<item name="wcf.acp.package.startInstall"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.package.startUpdate"><![CDATA[Paket &bdquo;{@$package->getName()}&ldquo; aktualisieren]]></item>
 		<item name="wcf.acp.package.type.application"><![CDATA[Anwendung]]></item>
@@ -317,6 +325,22 @@
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Wollen Sie das Paket &bdquo;{@$package->getName()}&ldquo; wirklich deinstallieren?]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Aktualisierungsdatum]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
+	</category>
+	
+	<category name="wcf.acp.packageUpdate">
+		<item name="wcf.acp.packageUpdate.noneAvailable"><![CDATA[Derzeit sind keine Updates verfügbar.]]></item>
+		<item name="wcf.acp.packageUpdate.search"><![CDATA[Pakete suchen]]></item>
+		<item name="wcf.acp.packageUpdate.search.server"><![CDATA[Update-Server]]></item>
+		<item name="wcf.acp.packageUpdate.search.server.all"><![CDATA[Alle Update-Server durchsuchen]]></item>
+		<item name="wcf.acp.packageUpdate.search.conditions"><![CDATA[Suche nach ...]]></item>
+		<item name="wcf.acp.packageUpdate.search.packageName"><![CDATA[Paketname]]></item>
+		<item name="wcf.acp.packageUpdate.search.searchDescription"><![CDATA[Paketname und -beschreibung durchsuchen]]></item>
+		<item name="wcf.acp.packageUpdate.search.author"><![CDATA[Entwickler]]></item>
+		<item name="wcf.acp.packageUpdate.search.type"><![CDATA[Art des Paketes]]></item>
+		<item name="wcf.acp.packageUpdate.search.type.isApplication"><![CDATA[Anwendungen]]></item>
+		<item name="wcf.acp.packageUpdate.search.type.plugin"><![CDATA[Sonstige Pakete]]></item>
+		<item name="wcf.acp.packageUpdate.search.type.other"><![CDATA[Sonstige Pakete]]></item>
+		<item name="wcf.acp.packageUpdate.search.ignoreUniques"><![CDATA[Bereits installierte einzigartige Pakete ausblenden]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">
@@ -345,6 +369,7 @@
 		<item name="wcf.acp.sessionLog.actions"><![CDATA[Aktionen]]></item>
 		<item name="wcf.acp.sessionLog.className"><![CDATA[Klasse]]></item>
 		<item name="wcf.acp.sessionLog.lastActivityTime"><![CDATA[Letzte Aktion]]></item>
+		<item name="wcf.acp.sessionLog.accesses"><![CDATA[Aktionen]]></item>
 		<item name="wcf.acp.sessionLog.list"><![CDATA[Protokollierte Sitzungen]]></item>
 		<item name="wcf.acp.sessionLog.list.count"><![CDATA[{#$items} protokollierte Sitzung{if $items != 1}en{/if}]]></item>
 		<item name="wcf.acp.sessionLog.packageName"><![CDATA[Paket]]></item>
