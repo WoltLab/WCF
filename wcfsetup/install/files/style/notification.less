@@ -1,0 +1,71 @@
+/*  
+Be careful with the following classes! 
+ - [.scrollableContainer] Don't touch!
+ - [.scrollableItems] Keep the inflated width, you may lower its number but it must be incredible bloated
+ - [.scrollableItems > div] Must be a fixed-width float, otherwise it would break the "scrollable"-class from jQueryTools. 
+ 	Do NOT use css-tables or [display: inline-block] as it won't work with the whole magic
+*/
+
+.userNotificationContainer {
+	width: 240px;
+}
+
+.userNotificationDetails {
+	padding: @wcfGapSmall;
+	width: 250px - 2 * @wcfGapSmall;
+
+	section {
+		border-top: 1px solid @wcfContainerBorderColor;
+	}
+	
+	nav {
+		border-top: 1px solid @wcfContainerBorderColor;
+		margin-top: @wcfGapSmall;
+		padding-top: @wcfGapSmall;
+		text-align: center;
+		
+		ul {
+			display: inline-block;
+		}
+	}
+}
+
+.scrollableContainer {
+	font-size: 90%;
+	overflow: hidden;
+	position: relative;
+	width: 250px;
+	
+	.scrollableItems {
+		position: relative;
+		width: 20000em;
+		
+		> div {
+			border-right: 1px solid @wcfContainerBorderColor;
+			cursor: default;
+			float: left;
+			width: 250px;
+		}
+	}
+	
+	> div:first-child {
+		ul {
+			margin: 0;
+			padding: 0;
+			
+			li {
+				border-top: 1px solid @wcfContainerBorderColor;
+				cursor: pointer;
+				padding: @wcfGapSmall;
+				
+				&:first-child {
+					border-top-width: 0;
+				}
+			}
+		}
+		
+		p {
+			padding: 4px 14px;
+		}
+	}
+}
