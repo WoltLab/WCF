@@ -88,6 +88,15 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	 * @param	array		$parameters
 	 */
 	public function __construct(array $objects, $action, array $parameters = array()) {
+		// set class name
+		if (empty($this->className)) {
+			$className = get_called_class();
+			
+			if (StringUtil::substring($className, -6) == 'Action') {
+				$this->className = StringUtil::substring($className, 0, -6).'Editor';
+			}
+		}
+		
 		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
 		$baseClass = call_user_func(array($this->className, 'getBaseClass'));
 		
