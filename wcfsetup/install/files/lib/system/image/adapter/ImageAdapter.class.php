@@ -47,6 +47,13 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::createEmptyImage()
+	 */
+	public function createEmptyImage($width, $height) {
+		$this->adapter->createEmptyImage($width, $height);
+	}
+	
+	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::createThumbnail()
 	 */
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
@@ -127,7 +134,12 @@ class ImageAdapter implements IImageAdapter {
 	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::writeImage()
 	 */
-	public function writeImage($image, $filename) {
+	public function writeImage($image, $filename = null) {
+		if ($filename === null) {
+			$filename = $image;
+			$image = $this->adapter->getImage();
+		}
+		
 		$this->adapter->writeImage($image, $filename);
 	}
 	
