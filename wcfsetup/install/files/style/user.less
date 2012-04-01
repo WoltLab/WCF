@@ -45,30 +45,34 @@
 		height: 90px;
 		overflow: hidden;
 		
+		&:last-child {
+			border-radius: 0;
+		}
+		
+		&:first-child {
+			border-radius: @wcfContainerBorderRadius - 1 0 0 0;
+		}
+		
 		&:nth-child(2n) {
 			float: right;
 			
 			&:last-child {
-				.borderRadius(0, 0, @wcfContainerBorderRadius - 1, 0);
+				border-bottom-right-radius: @wcfContainerBorderRadius - 1;
 			}
 		}
 		
 		&:nth-child(2n+1) {
 			&:last-child {
-				.borderRadius(0, 0, 0, @wcfContainerBorderRadius - 1);
+				border-bottom-left-radius: @wcfContainerBorderRadius - 1;
 			}
 		}
 		
 		&:nth-last-child(2) {
-			.borderRadius(0, 0, 0, @wcfContainerBorderRadius - 1);
-		}
-		
-		&:first-child {
-			.borderRadius(@wcfContainerBorderRadius - 1, 0, 0, 0);
+			border-bottom-left-radius: @wcfContainerBorderRadius - 1;
 		}
 		
 		&:nth-child(2) {
-			.borderRadius(0, @wcfContainerBorderRadius - 1, 0, 0);
+			border-top-right-radius: @wcfContainerBorderRadius - 1;
 		}
 		
 		> div {

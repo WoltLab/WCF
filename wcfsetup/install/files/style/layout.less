@@ -60,7 +60,7 @@ img {
 
 .container {
 	background-color: @wcfContainerBackgroundColor;
-	border: @wcfContainerBorderWidth @wcfContainerBorderStyle @wcfContainerBorderColor;
+	border: 1px solid @wcfContainerBorderColor;
 	border-radius: @wcfContainerBorderRadius;
 }
 
@@ -74,20 +74,22 @@ img {
 	
 		.transition(background-color, .1s);
 	
-		&:nth-child(2n) {
+		&:nth-child(even) {
 			background-color: @wcfContainerAccentBackgroundColor;
 		}
 		
 		&:first-child {
-			.borderRadius(@wcfContainerBorderRadius, 0);
+			border-top-left-radius: @wcfContainerBorderRadius;
+			border-top-right-radius: @wcfContainerBorderRadius;
 		}
 		
 		&:last-child {
-			.borderRadius(0, @wcfContainerBorderRadius);
+			border-bottom-left-radius: @wcfContainerBorderRadius;
+			border-bottom-right-radius: @wcfContainerBorderRadius;
 		}
 		
 		&:hover {
-			background-color: @wcfHighlightBackgroundColor;
+			background-color: @wcfContainerHoverBackgroundColor;
 		}
 	}
 }
@@ -145,15 +147,16 @@ img {
 	
 	hgroup {
 		> h1 {
+			color: @wcfHeadlineColor;
 			font-size: 170%;
 			font-weight: bold;
-			border-bottom: 1px solid @wcfColor;
+			border-bottom: 1px solid @wcfHeadlineColor;
 			padding: 1px 0 10px;
 			
 			.textShadow(@wcfContentBackgroundColor);
 			
 			a {
-				color: @wcfColor;
+				color: @wcfHeadlineColor;
 				text-decoration: none;
 			}
 		}

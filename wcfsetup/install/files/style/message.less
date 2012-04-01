@@ -1,6 +1,6 @@
 .message {
 	background-color: @wcfHighlightBackgroundColor;
-	border: @wcfContainerBorderWidth @wcfContainerBorderStyle @wcfContainerBorderColor;
+	border: 1px solid @wcfContainerBorderColor;
 	position: relative;
 	
 	.boxShadow(0, 0, #eee, 7px);
@@ -23,7 +23,7 @@
 	
 .message.messageSidebarOrientationLeft {
 	.messageContent {
-		border-left: @wcfContainerBorderWidth @wcfContainerBorderStyle @wcfContainerBorderColor;
+		border-left: 1px solid @wcfContainerBorderColor;
 		margin: 0 0 0 211px;
 	}
 	
@@ -33,12 +33,12 @@
 	
 	header > .pointer {
 		border-color: transparent @wcfContainerBorderColor transparent transparent;
-		border-style: @wcfContainerBorderStyle @wcfContainerBorderStyle @wcfContainerBorderStyle none;
+		border-style: solid solid solid none;
 		left: -20px;
 		
 		> span {
 			border-color: transparent @wcfContainerBackgroundColor transparent transparent;
-			border-style: @wcfContainerBorderStyle @wcfContainerBorderStyle @wcfContainerBorderStyle none;
+			border-style: solid solid solid none;
 			left: 1px;
 		}
 	}
@@ -46,7 +46,7 @@
 
 .message.messageSidebarOrientationRight {
 	.messageContent {
-		border-right: @wcfContainerBorderWidth @wcfContainerBorderStyle @wcfContainerBorderColor;
+		border-right: 1px solid @wcfContainerBorderColor;
 		margin: 0 211px 0 0;
 	}
 	
@@ -56,12 +56,12 @@
 	
 	header > .pointer {
 		border-color: transparent transparent transparent @wcfContainerBorderColor;
-		border-style: @wcfContainerBorderStyle none @wcfContainerBorderStyle @wcfContainerBorderStyle;
+		border-style: solid none solid solid;
 		right: -20px;
 		
 		> span {
 			border-color: transparent transparent transparent @wcfContainerBorderColor;
-			border-style: @wcfContainerBorderStyle none @wcfContainerBorderStyle @wcfContainerBorderStyle;
+			border-style: solid none solid solid;
 			right: 1px;
 		}			
 	}
@@ -72,7 +72,7 @@
 	.userRank,
 	.userCredits,
 	.userStatus {
-		border-bottom: @wcfContainerBorderWidth dotted darken(@wcfContainerBorderColor, 10%);
+		border-bottom: 1px dotted darken(@wcfContainerBorderColor, 10%);
 	}
 	
 	.messageSidebar div:last-child {
@@ -134,7 +134,7 @@
 	}
 	
 	> div {
-		border-top: @wcfContainerBorderWidth dotted @wcfContainerBorderColor;
+		border-top: 1px dotted @wcfContainerBorderColor;
 		display: block;
 		overflow: hidden;
 		padding: 10px 0;
@@ -301,7 +301,7 @@
 
 .message {
 	.messageSignature {
-		border-top: @wcfContainerBorderWidth dotted @wcfContainerBorderColor;
+		border-top: 1px dotted @wcfContainerBorderColor;
 		color: lighten(@wcfColor, 10%);
 		display: block;
 		margin: 10px 0 0;

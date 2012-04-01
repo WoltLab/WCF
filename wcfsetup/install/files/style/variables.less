@@ -15,6 +15,7 @@
 @wcfPageLinkHoverColor: #fff;
 @wcfDimmedColor: lighten(@wcfColor, 15%);
 @wcfLabelColor: @wcfLinkColor;
+@wcfHeadlineColor: @wcfColor;
 
 /* font */
 @wcfBaseFontSize: 13px;
@@ -25,8 +26,11 @@
 @wcfContainerAccentBackgroundColor: darken(@wcfContainerBackgroundColor, 3%);
 @wcfContainerBorderColor: rgba(187, 204, 221, 1); //#CCC;
 @wcfContainerBorderRadius: 5px;
-@wcfContainerBorderWidth: 1px;
-@wcfContainerBorderStyle: solid;
+@wcfContainerHoverBackgroundColor: @wcfHighlightBackgroundColor;
+
+/* tabular box */
+@wcfTabularBoxBackgroundColor: saturate(lighten(@wcfPageBackgroundColor, 20%), 20%);
+@wcfTabularBoxColor: @wcfPageLinkHoverColor;
 
 /* dropdown */
 @wcfDropdownBackgroundColor: @wcfContentBackgroundColor;

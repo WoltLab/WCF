@@ -58,12 +58,12 @@
 }
 
 .navigationHeader {
-	border-bottom: @wcfContainerBorderWidth @wcfContainerBorderStyle darken(@wcfHighlightBackgroundColor, 8%);
+	border-bottom: 1px solid darken(@wcfHighlightBackgroundColor, 8%);
 	border-radius: @wcfContainerBorderRadius @wcfContainerBorderRadius 0 0;
 }
 	
 .navigationFooter {
-	border-top: @wcfContainerBorderWidth @wcfContainerBorderStyle darken(@wcfHighlightBackgroundColor, 8%);
+	border-top: 1px solid darken(@wcfHighlightBackgroundColor, 8%);
 	border-radius: 0 0 @wcfContainerBorderRadius @wcfContainerBorderRadius;
 }
 
@@ -110,13 +110,13 @@
 				a {
 					border-top-left-radius: 5px;
 					border-top-right-radius: 5px;
-					color: #369;
+					color: @wcfPageLinkColor;
 					font-size: 110%;
 					font-weight: bold;
-					text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 					z-index: 10;
 					
-					.linearGradient(@wcfNavigationBackgroundColor, rgba(255, 255, 255, 1), @wcfNavigationBackgroundColor);
+					.linearGradient(@wcfNavigationBackgroundColor, lighten(@wcfNavigationBackgroundColor, 20%), @wcfNavigationBackgroundColor);
+					.textShadow(@wcfNavigationBackgroundColor);
 					
 					&:after {
 						border-bottom-left-radius: 6px;
@@ -128,7 +128,7 @@
 						right: -7px;
 						width: 7px;
 						
-						.boxShadow(-2px, 2px, lighten(@wcfHighlightBackgroundColor, 3%), 0);
+						.boxShadow(-2px, 2px, @wcfNavigationBackgroundColor, 0);
 					}
 					
 					&:before {
@@ -141,7 +141,7 @@
 						position: absolute;
 						width: 7px;
 						
-						.boxShadow(2px, 2px, lighten(@wcfHighlightBackgroundColor, 3%), 0);
+						.boxShadow(2px, 2px, @wcfNavigationBackgroundColor, 0);
 					}
 				}
 			}
@@ -151,26 +151,23 @@
 				
 				&:hover {
 					> a {
-						color: rgba(255, 255, 255, 1);
+						color: @wcfPageLinkHoverColor;
 					}
 				}
 			}
 			
 			> a {
-				color: #69c;
+				color: @wcfPageLinkColor;
 				cursor: pointer;
 				display: inline-block;
 				font-weight: normal;
 				padding: 8px 20px;
 				position: relative;
 				text-decoration: none;
-				text-shadow: 0 -1px 0 rgba(0, 0, 0, 1);
 				white-space: nowrap;
 				
-				.transition(border, .3s, ease);
-				.transition(background-color, .3s, ease);
-				.transition(background-image, .3s, ease);
-				.transition(color, .3s, ease);
+				.transition(~"border, background-color, background-image, color", .3s, ease);
+				.textShadow(@wcfPageBackgroundColor);
 			}
 		}
 	}

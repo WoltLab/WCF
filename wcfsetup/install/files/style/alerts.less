@@ -10,8 +10,8 @@
 	background-repeat: no-repeat, repeat;
 	background-size: 24px, auto;
 	border-radius: @wcfContainerBorderRadius;
-	border-width: @wcfContainerBorderWidth;
-	border-style: @wcfContainerBorderStyle;
+	border-width: 1px;
+	border-style: solid;
 	box-sizing: border-box;
 	line-height: 1.5;
 	margin-top: @wcfGapMedium;
@@ -56,7 +56,7 @@
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 	line-height: 1.5;
 	color: @errorColor;
-	border: @wcfContainerBorderWidth @wcfContainerBorderStyle @errorBorderColor;
+	border: 1px solid @errorBorderColor;
 	border-radius: @wcfContainerBorderRadius;
 	background-color: @errorBackgroundColor;
 	background-image: url('../../icon/systemError.svg');

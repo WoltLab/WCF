@@ -1,27 +1,27 @@
 .tabularBox {
 	background-image: url(../../images/header.png);
 	
-	background-color: saturate(lighten(@wcfPageBackgroundColor, 20%), 20%);
-	border: @wcfContainerBorderWidth @wcfContainerBorderStyle @wcfContainerBorderColor;
+	background-color: @wcfTabularBoxBackgroundColor;
+	border: 1px solid @wcfContainerBorderColor;
 	
 	.borderRadius();
 }
 
 .tabularBoxTitle > hgroup {
-	color: @wcfPageLinkHoverColor;
+	color: @wcfTabularBoxColor;
 	padding: @wcfGapSmall;
 
 	h1 {
 		font-size: 120%;
 		font-weight: bold;
 		
-		.textShadow(saturate(lighten(@wcfPageBackgroundColor, 20%), 20%));
+		.textShadow(@wcfTabularBoxBackgroundColor);
 
 		a {
-			color: @wcfPageLinkHoverColor;
+			color: @wcfTabularBoxColor;
 			
 			&:hover {
-				color: @wcfPageLinkHoverColor;
+				color: @wcfTabularBoxColor;
 				text-decoration: none;
 			}
 		}
@@ -54,14 +54,14 @@
 	
 	/* headline */
 	th {
-		border-right: @wcfContainerBorderWidth @wcfContainerBorderStyle rgba(0, 0, 0, .2);
+		border-right: 1px solid rgba(0, 0, 0, .2);
 		color: @wcfPageLinkColor;
 		font-size: 85%;
 		font-weight: bold;
 		white-space: nowrap;
 		
 		.linearGradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
-		.textShadow(saturate(lighten(@wcfPageBackgroundColor, 20%), 20%));
+		.textShadow(@wcfTabularBoxBackgroundColor);
 		
 		a {
 			color: @wcfPageLinkColor;
@@ -149,7 +149,7 @@
 	
 	/* striped */
 	tbody {
-		tr:nth-child(odd) td {
+		tr:nth-child(even) td {
 			background-color: @wcfContainerAccentBackgroundColor;
 		}
 	}
@@ -158,17 +158,17 @@
 	tbody {
 		tr {
 			&:not(:last-child) {
-				border-bottom: @wcfContainerBorderWidth @wcfContainerBorderStyle rgba(255, 255, 255, .3);
+				border-bottom: 1px solid rgba(255, 255, 255, .3);
 			}
 			
 			&:hover {
 				td {
-					background-color: @wcfHighlightBackgroundColor;
+					background-color: @wcfContainerHoverBackgroundColor;
 				}
 			}
 			
 			td:not(:last-child) {
-				border-right: @wcfContainerBorderWidth @wcfContainerBorderStyle rgba(255, 255, 255, .3);
+				border-right: 1px solid rgba(255, 255, 255, .3);
 			}
 		}
 	}
