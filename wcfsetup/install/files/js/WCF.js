@@ -4582,13 +4582,13 @@ WCF.Upload = Class.extend({
 	 */
 	_createButton: function() {
 		if (this._supportsAJAXUpload) {
-			this._fileUpload = $('<input type="file" name="'+this._name+'" style="opacity: 0" '+(this._options.multiple ? 'multiple="true" ' : '')+'/>');
+			this._fileUpload = $('<input type="file" name="'+this._name+'" '+(this._options.multiple ? 'multiple="true" ' : '')+'/>');
 			this._fileUpload.change($.proxy(this._upload, this));
-			var $button = $('<p class="wcf-button" style="display: inline-block; position: relative; overflow: hidden; width: 100px"><span style="position: absolute; top: 0; left: 0">Upload</span></p>');
+			var $button = $('<p class="button uploadButton"><span>Upload</span></p>');
 			$button.append(this._fileUpload);
 		}
 		else {
-			var $button = $('<p class="wcf-button" style="display: inline-block;"><span>Upload</span></p>');
+			var $button = $('<p class="button"><span>Upload</span></p>');
 			$button.click($.proxy(this._showOverlay, this));
 		}
 		
