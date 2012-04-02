@@ -78,7 +78,6 @@ class ImagickImageAdapter implements IImageAdapter {
 		$this->imagick->newImage($width, $height, 'white');
 	}
 	
-	
 	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::createThumbnail()
 	 */
