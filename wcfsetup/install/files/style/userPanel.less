@@ -14,6 +14,10 @@
 	
 	&:hover {
 		background-color: rgba(0, 0, 0, .9);
+		
+		.searchBar input[type="text"] {
+			background-color: darken(@wcfPageBackgroundColor, 5%);
+		}
 	}
 	
 	ul {
@@ -50,10 +54,28 @@
 	.searchBar {
 		float: right;
 		
-		input[type="search"] {
-			border: 1px solid @wcfContainerBorderColor;
+		input[type="text"] {
+			/*border: @wcfContainerBorderWidth @wcfContainerBorderStyle @wcfContainerBorderColor;
+			padding: @wcfGapTiny @wcfGapSmall;*/
+			
+			background-color: rgba(0, 0, 0, .5);
+			background-image: url("../icon/search2.svg");
+			background-repeat: no-repeat;
+			background-position: 95% 5px;
+			border: 1px solid rgba(0, 0, 0, .9);
 			border-radius: 30px;
-			padding: @wcfGapTiny @wcfGapSmall;
+			color: @wcfPageLinkHoverColor;
+			padding: 6px 32px 5px 12px;
+			width: 180px;
+			
+			.boxShadowNative(~"inset 0px 1px 3px rgba(0, 0, 0, .9), 0px 1px 0px rgba(255, 255, 255, .1)");
+			.transition(width, .25s, ease-out);
+			.textShadow(@wcfPageBackgroundColor);
+	
+			&:focus {
+				background-image: none;
+				width: 280px;
+			}
 		}
 	}
 	
