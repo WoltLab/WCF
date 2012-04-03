@@ -12,8 +12,20 @@ Be careful with the following classes!
 
 .userNotificationDetails {
 	padding: @wcfGapSmall;
+	padding-bottom: 0;
 	width: 240px - 2 * @wcfGapSmall;
 
+	> header {
+		margin-top: 0;
+		
+		hgroup h1 {
+			border-bottom: 1px solid @wcfContainerBorderColor;
+			font-size: 150%;
+			margin-bottom: @wcfGapSmall;
+			padding-bottom: @wcfGapSmall;
+		}
+	}
+	
 	section {
 		border-top: 1px solid @wcfContainerBorderColor;
 		margin-top: @wcfGapTiny;
