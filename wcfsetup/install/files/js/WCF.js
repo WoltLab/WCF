@@ -4185,11 +4185,11 @@ WCF.System.Confirmation = {
 	 * Creates the confirmation dialog on first use.
 	 */
 	_createDialog: function() {
-		this._dialog = $('<div id="wcfSystemConfirmation" class="wcf-systemConfirmation"><p></p></div>').hide().appendTo(document.body);
-		var $formButtons = $('<div class="wcf-formSubmit" />').appendTo(this._dialog);
+		this._dialog = $('<div id="wcfSystemConfirmation" class="systemConfirmation"><p></p></div>').hide().appendTo(document.body);
+		var $formButtons = $('<div class="formSubmit" />').appendTo(this._dialog);
 		
+		$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.confirmation.confirm') + '</button>').data('action', 'confirm').click($.proxy(this._click, this)).appendTo($formButtons);
 		$('<button>' + WCF.Language.get('wcf.global.confirmation.cancel') + '</button>').data('action', 'cancel').click($.proxy(this._click, this)).appendTo($formButtons);
-		$('<button class="default">' + WCF.Language.get('wcf.global.confirmation.confirm') + '</button>').data('action', 'confirm').click($.proxy(this._click, this)).appendTo($formButtons);
 	},
 	
 	/**
@@ -4226,7 +4226,7 @@ WCF.System.Confirmation = {
 	 * Tries to set focus on confirm button.
 	 */
 	_show: function() {
-		this._dialog.find('button:eq(0)').blur().focus();
+		this._dialog.find('button.buttonPrimary').blur().focus();
 	}
 };
 
