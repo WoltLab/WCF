@@ -18,21 +18,6 @@
 			.textShadow(@wcfPageBackgroundColor);
 		}
 	}
-	
-	/*dl {
-		> .reversed {
-			left: 170px;
-			width: auto;
-		}
-		
-		> dd {
-			margin-left: 150px;
-		}
-		
-		> dt {
-			width: 130px;
-		}
-	}*/
 }
 
 .dialogTitlebar {
@@ -80,7 +65,7 @@
 
 .dialogContent {
 	background-color: rgba(51, 51, 51, .9);
-	color: lighten(@wcfLabelColor, 10%);
+	color: @wcfDialogColor;
 	overflow: auto;
 	padding: 10px 20px 20px;
 
@@ -124,4 +109,8 @@
 	img {
 		margin-bottom: @wcfGapSmall;
 	}
+}
+
+.systemConfirmation p {
+	padding-top: @wcfGapSmall;
 }
