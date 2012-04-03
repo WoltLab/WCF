@@ -7,33 +7,40 @@ Be careful with the following classes!
 */
 
 .userNotificationContainer {
-	width: 240px;
+	width: 250px;
 }
 
 .userNotificationDetails {
-	padding: @wcfGapSmall;
-	padding-bottom: 0;
-	width: 240px - 2 * @wcfGapSmall;
+	padding: @wcfGapMedium;
+	width: 250px - 2 * @wcfGapMedium;
 
 	> header {
 		margin-top: 0;
 		
-		hgroup h1 {
-			border-bottom: 1px solid @wcfContainerBorderColor;
-			font-size: 150%;
-			margin-bottom: @wcfGapSmall;
-			padding-bottom: @wcfGapSmall;
+		hgroup {
+			h1 {
+				border-bottom: 1px solid @wcfContainerBorderColor;
+				font-size: 150%;
+				margin-bottom: @wcfGapTiny;
+				padding-bottom: @wcfGapTiny;
+			}
+			
+			h2 {
+				color: @wcfDimmedColor;
+				font-size: 90%;
+			}
 		}
 	}
 	
 	section {
-		border-top: 1px solid @wcfContainerBorderColor;
+		border-top: 1px dotted @wcfContainerBorderColor;
 		margin-top: @wcfGapTiny;
 		padding-top: @wcfGapMedium;
 	}
 	
 	nav {
-		border-top: 1px solid @wcfContainerBorderColor;
+		border-top: 1px dotted @wcfContainerBorderColor;
+		margin-bottom: -@wcfGapSmall;
 		margin-top: @wcfGapMedium;
 		padding-top: @wcfGapSmall;
 		text-align: center;
@@ -45,11 +52,17 @@ Be careful with the following classes!
 	}
 }
 
+.userNotificationItem hgroup {
+	h2 {
+		color: @wcfDimmedColor;
+		font-size: 85%;
+	}
+}
+
 .scrollableContainer {
-	font-size: 90%;
 	overflow: hidden;
 	position: relative;
-	width: 240px;
+	width: 250px;
 	
 	.scrollableItems {
 		position: relative;
@@ -57,23 +70,22 @@ Be careful with the following classes!
 
 		> div {
 			float: left;
-			width: 240px;
+			width: 250px;
 			
 			&:first-child {
 				border-right: 1px solid @wcfContainerBorderColor;
 				
 				ul li {
-					border-top: 1px solid @wcfContainerBorderColor;
 					cursor: pointer;
 					display: inline-block;
 					overflow: hidden;
-					padding: @wcfGapSmall;
+					padding: @wcfGapSmall @wcfGapMedium;
 					text-overflow: ellipsis;
 					white-space: nowrap;
-					width: 240px - 2 * @wcfGapSmall;
-	
+					width: 250px - 2 * @wcfGapMedium;
+
 					&:first-child {
-						border-top-width: 0;
+						margin-top: @wcfGapSmall;
 					}
 				}
 				
