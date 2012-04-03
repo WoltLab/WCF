@@ -83,7 +83,7 @@
 		new WCF.Effect.BalloonTooltip();
 		$('<span class="pointer"><span></span></span>').appendTo('.innerError');
 		
-		$('#sidebarContent').wcfSidebar();
+		//$('#sidebarContent').wcfSidebar();
 		
 		WCF.Dropdown.init();
 		
