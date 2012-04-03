@@ -12,20 +12,23 @@ Be careful with the following classes!
 
 .userNotificationDetails {
 	padding: @wcfGapSmall;
-	width: 250px - 2 * @wcfGapSmall;
+	width: 240px - 2 * @wcfGapSmall;
 
 	section {
 		border-top: 1px solid @wcfContainerBorderColor;
+		margin-top: @wcfGapTiny;
+		padding-top: @wcfGapMedium;
 	}
 	
 	nav {
 		border-top: 1px solid @wcfContainerBorderColor;
-		margin-top: @wcfGapSmall;
+		margin-top: @wcfGapMedium;
 		padding-top: @wcfGapSmall;
 		text-align: center;
 		
 		ul {
 			display: inline-block;
+			float: none;
 		}
 	}
 }
@@ -34,38 +37,38 @@ Be careful with the following classes!
 	font-size: 90%;
 	overflow: hidden;
 	position: relative;
-	width: 250px;
+	width: 240px;
 	
 	.scrollableItems {
 		position: relative;
 		width: 20000em;
-		
+
 		> div {
-			border-right: 1px solid @wcfContainerBorderColor;
-			cursor: default;
 			float: left;
-			width: 250px;
-		}
-	}
-	
-	> div:first-child {
-		ul {
-			margin: 0;
-			padding: 0;
+			width: 240px;
 			
-			li {
-				border-top: 1px solid @wcfContainerBorderColor;
-				cursor: pointer;
-				padding: @wcfGapSmall;
+			&:first-child {
+				border-right: 1px solid @wcfContainerBorderColor;
 				
-				&:first-child {
-					border-top-width: 0;
+				ul li {
+					border-top: 1px solid @wcfContainerBorderColor;
+					cursor: pointer;
+					display: inline-block;
+					overflow: hidden;
+					padding: @wcfGapSmall;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					width: 240px - 2 * @wcfGapSmall;
+	
+					&:first-child {
+						border-top-width: 0;
+					}
+				}
+				
+				p {
+					padding: @wcfGapSmall;
 				}
 			}
-		}
-		
-		p {
-			padding: 4px 14px;
 		}
 	}
 }
