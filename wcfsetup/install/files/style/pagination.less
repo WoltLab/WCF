@@ -8,13 +8,13 @@
 
 /* Globals */
 
-:not(.statusDisplay) > .pageNavigation {
+.contentNavigation .pageNavigation {
 	float: left;
-	margin: 5px 0 3px;
-}
+	margin: @wcfGapMedium + 5 0 3px;
 
-.contentNavigation .pageNavigation ul li {
-	margin: 2px;
+	ul li {
+		margin: 0 2px;
+	}
 }
 
 /* -- -- -- Buttons (Level 1 & 2) -- -- -- */
@@ -25,7 +25,7 @@
 			border-radius: 3px;
 			float: left;
 			font-weight: bold;
-			margin: 1px;
+			margin: 0 1px;
 			min-width: 19px;
 			padding: 0;
 			text-align: center;
@@ -83,6 +83,9 @@
 
 .statusDisplay .pageNavigation {
 	font-size: 80%;
+	float: left;
+	margin-right: 7px;
+	margin-top: 2px;
 	
 	ul {
 		li {

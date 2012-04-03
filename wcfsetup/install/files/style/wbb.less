@@ -8,9 +8,23 @@
 		.borderRadius(0, @wcfContainerBorderRadius);
 	}
 	
+	> li > ul > .wbbCategory > hgroup {
+		padding-left: 43px;
+	}
+	
+	> li > ul > li > ul > .wbbCategory > hgroup {
+		padding-left: 79px;
+	}
+	
+	.tabularBox:not(.wbbBoardNodeTop) {
+		border-radius: 0;
+		border-width: 1px 0 0;
+	}
+	
 	.wbbStats {
+		font-size: 85%;
 		left: 50%;
-		margin-top: 2px;
+		margin-top: @wcfGapSmall;
 		position: absolute;
 		top: @wcfGapSmall;
 		width: 15%;
@@ -46,10 +60,12 @@
 		
 		> div {
 			background-color: @wcfContentBackgroundColor;
-			padding: 7px;
+			padding: @wcfGapSmall;
 			border: 1px solid @wcfContainerBorderColor;
 			border-radius: @wcfContainerBorderRadius;
-			margin-right: 7px;
+			margin-right: @wcfGapSmall;
+			
+			.boxShadowInset(0, 1px, rgba(0, 0, 0, .1), 3px); 
 		}
 		
 		hgroup {
@@ -94,7 +110,7 @@
 	}
 
 	.wbbBoard {
-		min-height: 42px;
+		min-height: 44px;
 		padding: @wcfGapSmall;
 		padding-right: 51%;
 		
@@ -132,6 +148,11 @@
 	.wbbBoard > div > hgroup > h1 {
 		font-size: 120%;
 	}
+	
+	.wbbCollapsibleCategory .collapsibleButton {
+		display: inline-block;
+		margin-right: 7px;
+	}
 }
 
 /* ignored boards */
@@ -165,6 +186,10 @@
 		margin-top: 2px;
 	}
 	
+	.columnLastPost {
+		white-space: nowrap;
+	}
+	
 	.columnAvatar {
 		div {
 			position: relative;
@@ -172,7 +197,7 @@
 			height: 38px;
 			
 			> p > img {
-				opacity: .5;
+				opacity: .6;
 				
 				.transition(opacity, .2s);
 			}
