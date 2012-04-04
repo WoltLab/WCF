@@ -566,15 +566,20 @@ WCF.Dropdown = {
 	 * @param	object		event
 	 */
 	_toggle: function(event) {
-		console.debug($(event.currentTarget));
-		console.debug($(event.currentTarget).data());
-		var $dropdown = $('#' + $(event.currentTarget).data('toggle')).toggleClass('dropdownOpen');
-		console.debug('Trying to toggle ' + $(event.currentTarget).data('toggle'));
-		if (!$dropdown.hasClass('dropdownOpen')) {
-			this._notifyCallbacks($dropdown, 'close');
-		}
-		else {
-			this._notifyCallbacks($dropdown, 'open');
+		var $target = $('#' + $(event.currentTarget).data('toggle'));
+		var $targetID = $target.wcfIdentify();
+		
+		// close all dropdowns
+		for (var $containerID in this._dropdowns) {
+			var $dropdown = this._dropdowns[$containerID];
+			if ($dropdown.hasClass('dropdownOpen')) {
+				$dropdown.removeClass('dropdownOpen');
+				this._notifyCallbacks($dropdown, 'close');
+			}
+			else if ($containerID === $targetID) {
+				$dropdown.addClass('dropdownOpen');
+				this._notifyCallbacks($dropdown, 'open');
+			}
 		}
 		
 		event.stopPropagation();
