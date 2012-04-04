@@ -86,6 +86,7 @@
 		//$('#sidebarContent').wcfSidebar();
 		
 		WCF.Dropdown.init();
+		WCF.Effect.TopMenu.init();
 		
 		{event name='javascriptInit'}
 	});

@@ -105,7 +105,7 @@
 					<div class="layoutFluid clearfix">
 						<ul>
 							<li id="userMenu" class="dropdown">
-								<span class="dropdownToggle" data-toggle="userMenu">{lang}wcf.user.userNote{/lang}</span>
+								<span class="dropdownToggle" data-toggle="userMenu">{event name='userAvatar'} {lang}wcf.user.userNote{/lang}</span>
 								<ul class="dropdownMenu">
 									<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
 								</ul>

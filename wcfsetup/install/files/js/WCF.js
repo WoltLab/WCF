@@ -566,15 +566,20 @@ WCF.Dropdown = {
 	 * @param	object		event
 	 */
 	_toggle: function(event) {
-		console.debug($(event.currentTarget));
-		console.debug($(event.currentTarget).data());
-		var $dropdown = $('#' + $(event.currentTarget).data('toggle')).toggleClass('dropdownOpen');
-		console.debug('Trying to toggle ' + $(event.currentTarget).data('toggle'));
-		if (!$dropdown.hasClass('dropdownOpen')) {
-			this._notifyCallbacks($dropdown, 'close');
-		}
-		else {
-			this._notifyCallbacks($dropdown, 'open');
+		var $target = $('#' + $(event.currentTarget).data('toggle'));
+		var $targetID = $target.wcfIdentify();
+		
+		// close all dropdowns
+		for (var $containerID in this._dropdowns) {
+			var $dropdown = this._dropdowns[$containerID];
+			if ($dropdown.hasClass('dropdownOpen')) {
+				$dropdown.removeClass('dropdownOpen');
+				this._notifyCallbacks($dropdown, 'close');
+			}
+			else if ($containerID === $targetID) {
+				$dropdown.addClass('dropdownOpen');
+				this._notifyCallbacks($dropdown, 'open');
+			}
 		}
 		
 		event.stopPropagation();
@@ -3471,6 +3476,49 @@ WCF.Effect.BalloonTooltip.prototype = {
 };
 
 /**
+ * Modifies the top menu's opacity depending on scroll offset, might be removed later.
+ */
+WCF.Effect.TopMenu = {
+		/**
+		 * top menu reference
+		 * @var	jQuery
+		 */
+		_topMenu: null,
+		
+		/**
+		 * window reference
+		 * @var	jQuery
+		 */
+		_window: null,
+		
+		/**
+		 * Initializes the references and scroll event listener.
+		 */
+		init: function() {
+			this._topMenu = $('#topMenu');
+			this._window = $(window);
+			
+			$(document).scroll($.proxy(this._scroll, this));
+		},
+		
+		/**
+		 * Calculates scroll offset and executes dependent actions.
+		 */
+		_scroll: function() {
+			var $topOffset = this._window.scrollTop();
+			if ($topOffset > 200) {
+				this._topMenu.removeClass('userPanelReducedOpacity').addClass('userPanelOpaque');
+			}
+			else if ($topOffset > 100) {
+				this._topMenu.removeClass('userPanelOpaque').addClass('userPanelReducedOpacity');
+			}
+			else {
+				this._topMenu.removeClass('userPanelOpaque').removeClass('userPanelReducedOpacity');
+			}
+		}
+	};
+
+/**
  * Handles clicks outside an overlay, hitting body-tag through bubbling.
  * 
  * You should always remove callbacks before disposing the attached element,
@@ -3859,8 +3907,8 @@ WCF.Search.Base = Class.extend({
 			this._excludedSearchValues = excludedSearchValues;
 		}
 		this._searchInput = $(searchInput).keyup($.proxy(this._keyUp, this));
-		this._searchInput.wrap('<span />');
-		this._list = $('<ul class="wcf-dropdown" />').insertAfter(this._searchInput);
+		this._searchInput.wrap('<span class="dropdown" />');
+		this._list = $('<ul class="dropdownMenu" />').insertAfter(this._searchInput);
 		
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
@@ -3914,13 +3962,12 @@ WCF.Search.Base = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		this._clearList(false);
+		
+		// no items available, abort
 		if (!$.getLength(data.returnValues)) {
-			this._clearList(false);
-
 			return;
 		}
-
-		this._clearList(false);
 		
 		for (var $i in data.returnValues) {
 			var $item = data.returnValues[$i];
@@ -3928,7 +3975,9 @@ WCF.Search.Base = Class.extend({
 			this._createListItem($item);
 		}
 		
-		this._list.addClass('open');
+		this._list.parent().addClass('dropdownOpen');
+		
+		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(true) }, this));
 	},
 	
 	/**
@@ -3969,7 +4018,9 @@ WCF.Search.Base = Class.extend({
 			this._searchInput.val('');
 		}
 
-		this._list.removeClass('open').empty();
+		this._list.parent().removeClass('dropdownOpen').end().empty();
+		
+		WCF.CloseOverlayHandler.removeCallback('WCF.Search.Base');
 	},
 	
 	/**
@@ -4038,7 +4089,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 		var $listItem = this._super(item);
 		
 		// insert item type
-		$('<img src="' + WCF.Icon.get('wcf.icon.user' + (item.type == 'group' ? 's' : '')) + '" alt="" />').insertBefore($listItem.children('span:eq(0)'));
+		$('<img src="' + WCF.Icon.get('wcf.icon.user' + (item.type == 'group' ? 's' : '')) + '" alt="" class="icon16" style="margin-right: 4px;" />').prependTo($listItem.children('span:eq(0)'));
 		$listItem.data('type', item.type);
 		
 		return $listItem;
