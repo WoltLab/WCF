@@ -3864,8 +3864,8 @@ WCF.Search.Base = Class.extend({
 			this._excludedSearchValues = excludedSearchValues;
 		}
 		this._searchInput = $(searchInput).keyup($.proxy(this._keyUp, this));
-		this._searchInput.wrap('<span />');
-		this._list = $('<ul class="wcf-dropdown" />').insertAfter(this._searchInput);
+		this._searchInput.wrap('<span class="dropdown" />');
+		this._list = $('<ul class="dropdownMenu" />').insertAfter(this._searchInput);
 		
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
@@ -3919,13 +3919,12 @@ WCF.Search.Base = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		this._clearList(false);
+		
+		// no items available, abort
 		if (!$.getLength(data.returnValues)) {
-			this._clearList(false);
-
 			return;
 		}
-
-		this._clearList(false);
 		
 		for (var $i in data.returnValues) {
 			var $item = data.returnValues[$i];
@@ -3933,7 +3932,9 @@ WCF.Search.Base = Class.extend({
 			this._createListItem($item);
 		}
 		
-		this._list.addClass('open');
+		this._list.parent().addClass('dropdownOpen');
+		
+		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(true) }, this));
 	},
 	
 	/**
@@ -3974,7 +3975,9 @@ WCF.Search.Base = Class.extend({
 			this._searchInput.val('');
 		}
 
-		this._list.removeClass('open').empty();
+		this._list.parent().removeClass('dropdownOpen').end().empty();
+		
+		WCF.CloseOverlayHandler.removeCallback('WCF.Search.Base');
 	},
 	
 	/**
@@ -4043,7 +4046,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 		var $listItem = this._super(item);
 		
 		// insert item type
-		$('<img src="' + WCF.Icon.get('wcf.icon.user' + (item.type == 'group' ? 's' : '')) + '" alt="" />').insertBefore($listItem.children('span:eq(0)'));
+		$('<img src="' + WCF.Icon.get('wcf.icon.user' + (item.type == 'group' ? 's' : '')) + '" alt="" class="icon16" style="margin-right: 4px;" />').prependTo($listItem.children('span:eq(0)'));
 		$listItem.data('type', item.type);
 		
 		return $listItem;
