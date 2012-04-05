@@ -82,7 +82,8 @@ button:not([disabled]):hover {
 input[type='reset']:not([disabled]):active,
 input[type='submit']:not([disabled]):active,
 input[type='button']:not([disabled]):active,
-button:not([disabled]):active {
+button:not([disabled]):active,
+.dropdownOpen .dropdownToggle.button {
 	color: darken(@wcfButtonHoverColor, 10%);
 	border-color: darken(@wcfButtonHoverBorderColor, 14%) darken(@wcfButtonHoverBorderColor, 7%) @wcfButtonHoverBorderColor;
 		
