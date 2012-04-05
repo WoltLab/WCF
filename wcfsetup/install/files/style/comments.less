@@ -1,63 +1,58 @@
 /* ############## Profile Comments ############## */
 
-.commentList > li, .commentResponseList > li {
-	position: relative;
-}
-
-.commentOptions {
-	display: block;
-	position: absolute;
-	top: @wcfGapMedium;
-	right: @wcfGapMedium;
+.commentList {
+	.comment, .commentResponse {
+		position: relative;
+	}
 	
-	li {
-		float: left;
-		opacity: 0;
+	.commentOptions {
+		display: block;
+		position: absolute;
+		top: @wcfGapMedium;
+		right: @wcfGapMedium;
 		
-		.transition(opacity, .1s);
-		
-		a {
-			padding: 4px;
+		li {
+			float: left;
+			opacity: 0;
+			
+			.transition(opacity, .1s);
+			
+			a {
+				padding: 4px;
+			}
 		}
 	}
-}
+	
+	.commentResponseList .commentOptions {
+		top: @wcfGapSmall;
+		right: @wcfGapSmall;
+	}
+	
+	.commentContent:hover .commentOptions li {
+		opacity: 1;
+	}
 
-.commentResponseList .commentOptions {
-	top: @wcfGapSmall;
-	right: @wcfGapSmall;
-}
-
-.commentContent:hover .commentOptions li {
-	opacity: 1;
-}
-
-.commentAdd small, .commentResponseAdd small {
-	color: @wcfDimmedColor;
-	margin-top: 3px;
-}
-
-.commentList > li > div > div > .commentContent {
-	margin-bottom: @wcfGapMedium;
-}
-
-.commentResponseList {
-	> li {
+	.commentAdd small, .commentResponseAdd small {
+		color: @wcfDimmedColor;
+	}
+	
+	.commentContent:not(.commentResponseContent) {
+		margin-bottom: @wcfGapMedium;
+	}
+	
+	.commentResponseList .commentResponse {
 		border-top: 1px solid @wcfContainerBorderColor;
 		padding: @wcfGapSmall;
-		
-		&:nth-child(2n) {
-			//background-color: @wcfContainerAccentBackgroundColor;
-		}
 	}
-}
-
-.commentResponseAdd {
-	border-top: 1px solid @wcfContainerBorderColor;
-	padding: 7px 7px 0;
-}
-
-.commentResponseAdd ~ .commentResponseList > li:first-child {
-	margin-top: 7px;
+	
+	.commentResponseAdd {
+		border-top: 1px solid @wcfContainerBorderColor;
+		padding: 7px 7px 0;
+	}
+	
+	.commentResponseAdd ~ .commentResponseList .commentResponse:first-child {
+		margin-top: 7px;
+	}
 }
 
 .commentList > li:nth-child(2n) .commentResponseList > li:nth-child(2n+1) {

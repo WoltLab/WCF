@@ -6,7 +6,7 @@ body {
 	color: @wcfPageColor;
 	font-family: @wcfBaseFontFamily;
 	font-size: @wcfBaseFontSize;
-	line-height: 1;
+	line-height: @wcfBaseLineHeight;
 }
 
 a {
@@ -36,8 +36,7 @@ a {
 }
 
 small {
-	font-size: 85%;
-	margin-top: 2px;
+	font-size: @wcfSmallFontSize;
 }
 
 .invisible {
@@ -96,15 +95,18 @@ img {
 			background-color: @wcfContainerHoverBackgroundColor;
 		}
 	}
+	
+	> * > li {
+		padding: @wcfGapMedium @wcfGapLarge;
+	}
 }
 
 .containerHeadline {
 	margin-bottom: @wcfGapSmall;
 	
 	> h1 {
-		font-size: 120%;
+		font-size: @wcfTitleFontSize;
 		font-weight: bold;
-		margin-bottom: 2px;
 		
 		> small {
 			color: @wcfDimmedColor;
@@ -152,10 +154,11 @@ img {
 	hgroup {
 		> h1 {
 			color: @wcfHeadlineColor;
-			font-size: 170%;
+			font-family: @wcfHeadlineFontFamily;
+			font-size: @wcfHeadlineFontSize;
 			font-weight: bold;
 			border-bottom: 1px solid @wcfHeadlineColor;
-			padding: 1px 0 10px;
+			padding: 1px 0 5px;
 			
 			.textShadow(@wcfContentBackgroundColor);
 			
@@ -180,9 +183,10 @@ img {
 	> h1 {
 		border-bottom: 1px solid @wcfDimmedColor;
 		color: @wcfDimmedColor;
-		font-size: 150%;
+		font-family: @wcfHeadlineFontFamily;
+		font-size: @wcfSubHeadlineFontSize;
 		font-weight: bold;
-		padding: 1px 0 10px;
+		padding: 1px 0 5px;
 
 		.textShadow(@wcfContainerBackgroundColor);
 	}
@@ -244,8 +248,7 @@ ul.dataList {
 }
 
 .contentOptions {
-	font-size: 100%;
-	line-height: 1;
+	font-size: @wcfSmallFontSize;
 	position: relative;
 	
 	nav {

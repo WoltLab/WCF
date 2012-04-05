@@ -21,7 +21,7 @@
 }
 
 .dialogTitlebar {
-	background-color: saturate(lighten(@wcfPageBackgroundColor, 20%), 20%);
+	background-color: @wcfTabularBoxBackgroundColor;
 	background-image: url(../../images/header.png);
 	background-position: top left;
 	background-repeat: repeat-x;
@@ -35,7 +35,7 @@
 	.dialogTitle {
 		color: @wcfPageLinkHoverColor;
 		display: block;
-		font-size: 170%;
+		font-size: @wcfHeadlineFontSize;
 		font-weight: bold;
 		
 		.textShadow(saturate(lighten(@wcfPageBackgroundColor, 20%), 20%));
