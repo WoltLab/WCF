@@ -3,9 +3,9 @@
 <script type="text/javascript">
 	//<![CDATA[
 	{if $enable == 0}
-		window.onload = function(){
+		$(function () {
 			$('#languageIDs').hide();
-		}
+		});
 	{/if}
 	//]]>
 </script>
