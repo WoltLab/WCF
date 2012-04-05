@@ -22,7 +22,7 @@
 	}
 	
 	.wbbStats {
-		font-size: 85%;
+		font-size: @wcfSmallFontSize;
 		left: 50%;
 		margin-top: @wcfGapSmall;
 		position: absolute;
@@ -34,7 +34,6 @@
 			
 			dt {
 				float: right;
-				padding-bottom: 4px;
 				width: 40%;
 				
 				&:after {
@@ -45,7 +44,6 @@
 			dd {
 				float: left;
 				margin: 0;
-				padding-bottom: 4px;
 				text-align: right;
 				width: 58%;
 			}
@@ -72,14 +70,13 @@
 			h1 a {
 				display: inline-block;
 				overflow: hidden;
-				padding-bottom: 2px; /* prevents letters from being cut */
 				text-overflow: ellipsis;
 				width: 98%;
 				white-space: nowrap;
 			}
 			
 			h2 {
-				font-size: 85%;
+				font-size: @wcfSmallFontSize;
 				
 				time {
 					color: @wcfDimmedColor;
@@ -89,8 +86,6 @@
 	}
 	
 	.wbbSubBoards {
-		margin-top: @wcfGapSmall;
-		
 		li {
 			display: inline-block;
 		}
@@ -98,7 +93,6 @@
 
 	.wbbBoardDescription {
 		font-size: 90%;
-		padding-top: @wcfGapTiny;
 	}
 
 	.wbbBoardContainer {
@@ -141,12 +135,12 @@
 		.borderRadius(@wcfContainerBorderRadius);
 	}
 	
-	.new > div > hgroup > h1 {
-		font-weight: bold;
+	.wbbBoard > div > hgroup > h1 {
+		font-weight: normal;
 	}
 	
-	.wbbBoard > div > hgroup > h1 {
-		font-size: 120%;
+	.new > div > hgroup > h1, .wbbSubBoards li.new a {
+		font-weight: bold;
 	}
 	
 	.wbbCollapsibleCategory .collapsibleButton {
@@ -182,8 +176,7 @@
 .wbbThreadList {
 	.wbbLastPost h2 {
 		color: @wcfDimmedColor;
-		font-size: 85%;
-		margin-top: 2px;
+		font-size: @wcfSmallFontSize;
 	}
 	
 	.columnLastPost {
@@ -213,6 +206,15 @@
 			
 			.boxShadow(0, 0, rgba(0, 0, 0, .3), 3px);
 		}
+	}
+	
+	.columnTopic .labelList {
+		float: right;
+		padding-left: 7px;
+	}
+	
+	.columnTopic .wbbTopicLink {
+		font-size: @wcfTitleFontSize;
 	}
 	
 	tr.new .columnTopic > h1 {
@@ -264,7 +266,7 @@
 		color: @wcfLinkColor;
 		display: inline-block;
 		font-weight: bold;
-		font-size: 85%;
+		font-size: @wcfSmallFontSize;
 		left: -220px;
 		top: 30px;
 		padding: 6px 10px;
@@ -319,7 +321,7 @@
 		}
 		
 		time {
-			font-size: 85%;
+			font-size: @wcfSmallFontSize;
 			font-style: italic;
 		}
 		

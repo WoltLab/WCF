@@ -15,8 +15,8 @@
 	border-radius: 13px;
 	color: @wcfPageLinkHoverColor;
 	display: inline-block;
-	font-size: 70%;
-	padding: 2px 8px;
+	font-size: @wcfSmallFontSize;
+	padding: 1px 8px 2px;
 	position: relative;
 	text-shadow: none;
 	white-space: nowrap;
@@ -24,7 +24,7 @@
 	.badgeShadow(@wcfContentBackgroundColor);
 	
 	&.badgeUpdate {
-		background-color: #336699;
+		background-color: #369;
 		color: @wcfPageLinkHoverColor;
 	}
 	
@@ -44,4 +44,25 @@
 		
 		.badgeShadow(@wcfPageBackgroundColor);
 	}
+}
+
+/* special */
+.containerHeadline h1 .badge {
+	font-size: 70%;
+	top: -1px;
+}
+
+.boxHeadline > hgroup h1 .badge {
+	font-size: 50%;
+	top: -3px;
+}
+
+.mainMenu .badge {
+	font-size: 70%;
+	top: -1px;
+}
+
+.mainMenu .active .badge {
+	font-size: 65%;
+	top: -2px;
 }

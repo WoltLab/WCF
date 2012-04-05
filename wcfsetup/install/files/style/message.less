@@ -3,7 +3,6 @@
 	border: 1px solid @wcfContainerBorderColor;
 	position: relative;
 	
-	//.boxShadow(0, 0, #eee, 7px);
 	.borderRadius();
 	
 	&:after {
@@ -109,12 +108,12 @@
 	
 	.messageCounter {
 		float: right;
-		font-size: 90%;
+		font-size: @wcfSmallFontSize;
 		font-weight: bold;
 		margin-left: @wcfGapSmall;
 		
 		a {
-			padding: 2px 5px;
+			padding: 1px 5px;
 		}
 	}
 }
@@ -150,25 +149,24 @@
 	.borderRadius();
 	
 	header {
-		padding: 20px 20px 5px;
+		padding: 20px 20px 0;
 		position: relative;
 		
 		time {
 			color: @wcfDimmedColor;
-			font-size: 85%;
-			margin-top: @wcfGapSmall;
+			font-size: @wcfSmallFontSize;
 		}
 		
 		.likesDisplay {
 			display: inline-block;
-			margin: -2px 0 -2px @wcfGapTiny;
+			margin: -2px 0 -2px 4px;
 		}
 		
 		.messageTitle {
 			color: @wcfColor;
-			font-size: 130%;
+			font-size: @wcfSubHeadlineFontSize;
 			font-weight: bold;
-			padding: 13px 0 0;
+			padding: @wcfGapSmall 0 0;
 			
 			.textShadow(@wcfContainerBackgroundColor);
 		}
@@ -299,12 +297,8 @@
 }
 
 .message {
-	.messageSignature {
-		border-top: 1px dotted @wcfContainerBorderColor;
+	.signature {
 		color: lighten(@wcfColor, 10%);
-		display: block;
-		margin: 10px 0 0;
-		padding: 10px 0;
 	}
 }
 

@@ -41,7 +41,7 @@
 			}
 			
 			&.skip {	
-				padding: 2px 0 1px;
+				padding: 1px 0 1px;
 			}
 			
 			&:not(.disabled):hover a {
@@ -49,13 +49,13 @@
 			}
 			
 			&:not(.skip) a {
-				padding: 3px 1px;
+				padding: 2px 1px;
 			}
 			
 			&.active, &.active:hover {
 				border: 1px solid darken(@wcfButtonColor, 5%);
 				color: lighten(@wcfButtonBackgroundColor, 5%);
-				padding: 3px 0;
+				padding: 2px 0;
 				
 				.linearGradient(@wcfButtonColor, darken(@wcfButtonColor, 10%), @wcfButtonColor 3px);
 				.textShadow(#000);
@@ -82,9 +82,8 @@
 /* Special -> Status Display */
 
 .statusDisplay .pageNavigation {
-	font-size: 80%;
+	font-size: @wcfSmallFontSize;
 	float: left;
-	margin-right: 7px;
 	margin-top: 2px;
 	
 	ul {
