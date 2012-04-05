@@ -528,7 +528,7 @@ WCF.Dropdown = {
 				
 				// calculate top offset for menu
 				$dropdown.next('.dropdownMenu').css({
-					top: $dropdown.outerHeight() + 10
+					top: $dropdown.outerHeight() + 14
 				});
 			}
 		});
@@ -4127,10 +4127,13 @@ WCF.System.Notification = Class.extend({
 	 * @param	string		cssClassNames
 	 */
 	init: function(message, cssClassNames) {
-		this._overlay = $('<div class="wcf-systemNotification"><p>' + message + '</p></div>').appendTo(document.body);
+		this._overlay = $('#systemNotification');
+		if (!this._overlay.length) {
+			this._overlay = $('<div id="systemNotification"><p>' + message + '</p></div>').appendTo(document.body);
+		}
 		
 		if (cssClassNames) {
-			this._overlay.children('p').addClass(cssClassNames);
+			this._overlay.children('p').removeClass().addClass(cssClassNames);
 		}
 	},
 	
@@ -4139,14 +4142,19 @@ WCF.System.Notification = Class.extend({
 	 * 
 	 * @param	object		callback
 	 * @param	integer		duration
+	 * @param	string		message
+	 * @param	string		cssClassName
 	 */
-	show: function(callback, duration) {
+	show: function(callback, duration, message, cssClassNames) {
 		duration = parseInt(duration);
 		if (!duration) duration = 2000;
 		
 		if (callback && $.isFunction(callback)) {
 			this._callback = callback;
 		}
+		
+		if (message) this._overlay.children('p').html(message);
+		if (cssClassNames) this._overlay.children('p').removeClass().addClass(cssClassNames);
 		
 		// hide overlay after specified duration
 		new WCF.PeriodicalExecuter($.proxy(this._hide, this), duration);
@@ -4294,16 +4302,22 @@ WCF.InlineEditor = Class.extend({
 	_callbacks: [ ],
 	
 	/**
+	 * list of dropdown selections
+	 * @var	object
+	 */
+	_dropdowns: { },
+	
+	/**
 	 * list of container elements
 	 * @var	object
 	 */
 	_elements: { },
 	
 	/**
-	 * list of dropdown selections
-	 * @var	object
+	 * notification object
+	 * @var	WCF.System.Notification
 	 */
-	_dropdowns: { },
+	_notification: null,
 	
 	/**
 	 * list of known options
@@ -4356,6 +4370,8 @@ WCF.InlineEditor = Class.extend({
 		this._setOptions();
 		
 		WCF.CloseOverlayHandler.addCallback('WCF.InlineEditor', $.proxy(this._closeAll, this));
+		
+		this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'), 'success');
 	},
 	
 	/**
@@ -4401,12 +4417,15 @@ WCF.InlineEditor = Class.extend({
 	 * @param	object		event
 	 */
 	_show: function(event) {
+		console.debug(event.currentTarget);
 		var $elementID = $(event.currentTarget).data('elementID');
 		
 		// build drop down
 		if (!this._dropdowns[$elementID]) {
-			var $trigger = this._getTriggerElement(this._elements[$elementID]).wrap('<span />');
-			this._dropdowns[$elementID] = $('<ul class="wcf-dropdown" />').insertAfter($trigger);
+			var $trigger = this._getTriggerElement(this._elements[$elementID]).addClass('dropdownToggle').wrap('<span class="dropdown" />');
+			var $dropdown = $trigger.parent('span');
+			$trigger.data('trigger', $dropdown.wcfIdentify());
+			this._dropdowns[$elementID] = $('<ul class="dropdownMenu" style="top: ' + ($dropdown.outerHeight() + 14) + 'px;" />').insertAfter($trigger);
 		}
 		this._dropdowns[$elementID].empty();
 		
@@ -4415,7 +4434,10 @@ WCF.InlineEditor = Class.extend({
 		for (var $i = 0, $length = this._options.length; $i < $length; $i++) {
 			var $option = this._options[$i];
 			
-			if (this._validate($elementID, $option.optionName) || this._validateCallbacks($elementID, $option.optionName)) {
+			if ($option.optionName === 'divider') {
+				$('<li class="dropdownDivider" />').appendTo(this._dropdowns[$elementID]);
+			}
+			else if (this._validate($elementID, $option.optionName) || this._validateCallbacks($elementID, $option.optionName)) {
 				var $listItem = $('<li><span>' + $option.label + '</span></li>').appendTo(this._dropdowns[$elementID]);
 				$listItem.data('elementID', $elementID).data('optionName', $option.optionName).click($.proxy(this._click, this));
 				
@@ -4424,7 +4446,7 @@ WCF.InlineEditor = Class.extend({
 		}
 		
 		if ($hasOptions) {
-			this._dropdowns[$elementID].addClass('open');
+			this._dropdowns[$elementID].parent('span').addClass('dropdownOpen');
 		}
 		
 		return false;
@@ -4539,7 +4561,7 @@ WCF.InlineEditor = Class.extend({
 	 */
 	_hide: function(elementID) {
 		if (this._dropdowns[elementID]) {
-			this._dropdowns[elementID].empty().removeClass('open');
+			this._dropdowns[elementID].empty().parent('span').removeClass('dropdownOpen');
 		}
 	}
 });
