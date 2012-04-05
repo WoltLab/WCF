@@ -62,26 +62,27 @@
 	.searchBar {
 		float: right;
 		
-		input[type="text"] {
+		input[type="search"] {
 			/*border: @wcfContainerBorderWidth @wcfContainerBorderStyle @wcfContainerBorderColor;
 			padding: @wcfGapTiny @wcfGapSmall;*/
 			
 			background-color: rgba(0, 0, 0, .5);
 			background-image: url("../icon/search2.svg");
 			background-repeat: no-repeat;
-			background-position: 95% 5px;
+			background-position: 7px 5px;
 			border: 1px solid rgba(0, 0, 0, .9);
 			border-radius: 30px;
 			color: @wcfPageLinkHoverColor;
-			padding: 6px 32px 5px 12px;
+			padding: 6px 12px 5px 26px;
 			width: 180px;
+			-webkit-appearance: textfield;
 			
 			.boxShadowNative(~"inset 0px 1px 3px rgba(0, 0, 0, .9), 0px 1px 0px rgba(255, 255, 255, .1)");
 			.transition(width, .25s, ease-out);
 			.textShadow(@wcfPageBackgroundColor);
 	
 			&:focus {
-				background-image: none;
+				//background-image: none;
 				width: 280px;
 			}
 		}
