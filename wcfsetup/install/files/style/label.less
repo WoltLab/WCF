@@ -89,3 +89,25 @@ a.badge.label:hover {
 .labelList, .labelList > li {
 	display: inline-block; 
 }
+
+/* ACP label list */
+#labelList li {
+	float: left;
+	margin-right: 1%;
+	width: 30%;
+	
+	&.labelCustomClass {
+		position: relative;
+		
+		input[type='radio'] {
+			left: 0;
+			position: absolute;
+			top: 0;
+		}
+		
+		span {
+			display: block;
+			margin-left: 24px;
+		}
+	}
+}
