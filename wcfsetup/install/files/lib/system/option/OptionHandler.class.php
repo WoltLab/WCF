@@ -471,9 +471,9 @@ class OptionHandler implements IOptionHandler {
 		
 		if ($option->options) {
 			$hasEnabledOption = false;
-			$options = explode(',', strtoupper($option->options));
-			foreach ($options as $option) {
-				if (defined($option) && constant($option)) {
+			$__options = explode(',', strtoupper($option->options));
+			foreach ($__options as $__option) {
+				if (defined($__option) && constant($__option)) {
 					$hasEnabledOption = true;
 					break;
 				}
