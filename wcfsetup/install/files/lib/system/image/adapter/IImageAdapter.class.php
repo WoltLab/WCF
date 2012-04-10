@@ -28,6 +28,14 @@ interface IImageAdapter {
 	public function loadFile($file);
 	
 	/**
+	 * Creates a new empty image.
+	 * 
+	 * @param	integer		$width
+	 * @param	integer		$height
+	 */
+	public function createEmptyImage($width, $height);
+	
+	/**
 	 * Creates a thumbnail from previously loaded image.
 	 * 
 	 * @param	integer		$maxWidth
