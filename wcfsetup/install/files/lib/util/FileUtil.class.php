@@ -432,9 +432,9 @@ final class FileUtil {
 			}
 			// build and send the http request.
 			$request = "GET ".$path.(!empty($parsedUrl['query']) ? '?'.$parsedUrl['query'] : '')." HTTP/1.0\r\n";
-			$request .= "User-Agent: HTTP.PHP (FileUtil.class.php; WoltLab Community Framework/".WCF_VERSION."; ".WCF::getLanguage()->getLanguageCode().")\r\n";
+			$request .= "User-Agent: HTTP.PHP (FileUtil.class.php; WoltLab Community Framework/".WCF_VERSION."; ".WCF::getLanguage()->languageCode.")\r\n";
 			$request .= "Accept: */*\r\n";
-			$request .= "Accept-Language: ".WCF::getLanguage()->getLanguageCode()."\r\n";
+			$request .= "Accept-Language: ".WCF::getLanguage()->languageCode."\r\n";
 			$request .= "Host: ".$host."\r\n";
 			$request .= "Connection: Close\r\n\r\n";
 			$remoteFile->puts($request);
