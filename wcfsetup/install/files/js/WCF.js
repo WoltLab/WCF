@@ -2307,7 +2307,7 @@ WCF.MultipleLanguageInput.prototype = {
 		
 		// close selection and set focus on input element
 		this._closeSelection();
-		this._element.focus();
+		this._element.blur().focus();
 	},
 
 	/**
@@ -2330,7 +2330,8 @@ WCF.MultipleLanguageInput.prototype = {
 			// no value for current language found, proceed with empty input
 			this._element.val();
 		}
-
+		
+		this._element.blur();
 		this._isEnabled = false;
 	},
 

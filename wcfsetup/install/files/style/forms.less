@@ -1,3 +1,8 @@
+select > option {
+	/* Fixes weird firefox bug */
+	display: block !important;
+}
+
 /* ############## Fieldsets ############## */
 fieldset {
 	background-color: @wcfContainerBackgroundColor;
@@ -171,4 +176,44 @@ input[type='radio'] ~ small {
 .cke_skin_kama {
 	border-width: 0 !important;
 	padding: 0 !important;
+}
+
+/* element list with checkboxes */
+.structuredList {
+	background-color: @wcfContainerBackgroundColor;
+	
+	li {
+		padding: @wcfGapTiny @wcfGapSmall;
+		text-align: right;
+
+		&:hover {
+			background-color: @wcfHoverBackgroundColor;
+		}
+		
+		&:first-child {
+			border-radius: @wcfContainerBorderRadius @wcfContainerBorderRadius 0 0;
+		}
+		
+		&:last-child {
+			border-radius: 0 0 @wcfContainerBorderRadius @wcfContainerBorderRadius;
+		}
+		
+		&.category {
+			background-color: @wcfNavigationBackgroundColor;
+			
+			&:hover {
+				background-color: @wcfHoverBackgroundColor;
+			}
+		}
+		
+		span {
+			float: left;
+		}
+		
+		label {
+			cursor: pointer;
+			margin: 0 @wcfGapSmall;
+			padding: 0 @wcfGapLarge;
+		}
+	}
 }

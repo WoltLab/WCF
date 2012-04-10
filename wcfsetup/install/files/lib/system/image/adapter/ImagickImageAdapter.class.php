@@ -72,6 +72,13 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::createEmptyImage()
+	 */
+	public function createEmptyImage($width, $height) {
+		$this->imagick->newImage($width, $height, 'white');
+	}
+	
+	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::createThumbnail()
 	 */
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
