@@ -36,5 +36,12 @@
 		<item name="wcf.acp.language.import.source.file"><![CDATA[Pfad zur Sprachdatei]]></item>
 		<item name="wcf.acp.language.import.source.file.description"><![CDATA[Geben Sie hier den relativen Pfad zu einer gültigen XML-Sprachdatei an.]]></item>
 		<item name="wcf.acp.language.import.source.upload"><![CDATA[Sprachdatei vom lokalen Computer hochladen]]></item>
+		<item name="wcf.acp.language.multilingualism"><![CDATA[Mehrsprachigkeit verwalten]]></item>
+		<item name="wcf.acp.language.multilingualism.enable"><![CDATA[Mehrsprachige Inhalte aktivieren]]></item>
+		<item name="wcf.acp.language.multilingualism.enable.description"><![CDATA[Haben Sie mehrere Sprachen installiert, können sich Ihre Mitglieder die Programmoberfläche in diesen Sprachen anzeigen lassen. Erstellte Inhalte werden durch die aktivierte Mehrsprachigkeit außerdem einer Sprache zugeordnet. Die Benutzer können in ihrem Profil auswählen, dass ausschließlich Inhalte von bestimmten Sprachen angezeigt werden. Bei der Erstellung von Inhalten ist standardmäßig die aktive Oberflächensprache vorausgewählt.]]></item>
+		<item name="wcf.acp.language.multilingualism.languages"><![CDATA[Inhalte in folgenden Sprachen zulassen]]></item>
+		<item name="wcf.acp.language.multilingualism.languages.error.empty"><![CDATA[Um die Mehrsprachigkeit zu nutzen, müssen Sie mindestens zwei Sprachen auswählen.]]></item>
+		<item name="wcf.acp.language.multilingualism.success"><![CDATA[Ihre Einstellungen wurden erfolgreich gespeichert.]]></item>
+		
 	</category>
 </language>

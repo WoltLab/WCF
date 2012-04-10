@@ -17,6 +17,12 @@
 			<permissions>admin.language.canAddLanguage</permissions>
 		</acpmenuitem>
 		
+		<acpmenuitem name="wcf.acp.menu.link.language.multilingualism">
+			<parent>wcf.acp.menu.link.language</parent>
+			<link>index.php/LanguageMultilingualism/</link>
+			<permissions>admin.language.canEditLanguage</permissions>
+		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.language.server">
 			<parent>wcf.acp.menu.link.language</parent>
 		</acpmenuitem>
