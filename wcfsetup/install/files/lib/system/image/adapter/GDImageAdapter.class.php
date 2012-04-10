@@ -87,6 +87,16 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
+	 * @see wcf\system\image\adapter\IImageAdapter::createEmptyImage()
+	 */
+	public function createEmptyImage($width, $height) {
+		$this->image = imageCreate($width, $height);
+		$this->type = IMAGETYPE_PNG;
+		$this->setColor(0xFF, 0xFF, 0xFF);
+		$this->color = null;
+	}
+	
+	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::createThumbnail()
 	 */	
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
@@ -201,10 +211,10 @@ class GDImageAdapter implements IImageAdapter {
 			imageJPEG($image, '', 90);
 		}
 		
-		$thumbnail = ob_get_contents();
+		$stream = ob_get_contents();
 		ob_end_clean();
 		
-		file_put_contents($filename, $thumbnail);
+		file_put_contents($filename, $stream);
 	}
 	
 	/**
