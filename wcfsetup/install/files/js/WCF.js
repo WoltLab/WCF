@@ -953,19 +953,19 @@ WCF.Clipboard = {
 			var $container = $containers[$typeName];
 			var $list = $container.children('ul');
 			if ($list.length == 0) {
-				$list = $('<ul></ul>').appendTo($container);
+				$list = $('<ul class="dropdown"></ul>').appendTo($container);
 			}
 			
 			var $editor = data.items[$typeName];
-			var $label = $('<li class="wcf-dropdownCaption wcf-button"><span>' + $editor.label + '</span></li>').appendTo($list);
-			var $itemList = $('<ol class="wcf-dropdown"></ol>').appendTo($label);
-
-			$label.click(function() { $itemList.toggleClass('open'); });
+			var $label = $('<li><span class="dropdownToggle button">' + $editor.label + '</span></li>').appendTo($list);
+			var $itemList = $('<ol class="dropdownMenu"></ol>').appendTo($label);
+			
+			$label.click(function() { $list.toggleClass('dropdownOpen'); });
 			
 			// create editor items
 			for (var $itemIndex in $editor.items) {
 				var $item = $editor.items[$itemIndex];
-				var $listItem = $('<li>' + $item.label + '</li>').appendTo($itemList);
+				var $listItem = $('<li><span>' + $item.label + '</span></li>').appendTo($itemList);
 				$listItem.data('objectType', $typeName);
 				$listItem.data('actionName', $item.actionName).data('parameters', $item.parameters);
 				$listItem.data('internalData', $item.internalData).data('url', $item.url).data('type', $typeName);
@@ -989,9 +989,7 @@ WCF.Clipboard = {
 	 * Closes the clipboard editor item list.
 	 */
 	_closeLists: function() {
-		$('.jsClipboardEditor ul ol').each(function(index, list) {
-			$(this).removeClass('open');
-		});
+		$('.jsClipboardEditor ul').removeClass('dropdownOpen')
 	},
 	
 	/**
