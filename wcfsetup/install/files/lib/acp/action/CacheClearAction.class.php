@@ -33,7 +33,7 @@ class CacheClearAction extends AbstractAction {
 	public function execute() {
 		parent::execute();
 		
-		// delete templates as well
+		// delete language cache and compiled templates as well
 		LanguageFactory::getInstance()->deleteLanguageCache();
 		
 		$conditions = new PreparedStatementConditionBuilder();
