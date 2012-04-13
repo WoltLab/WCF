@@ -59,6 +59,8 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 			if (!empty($updateSQL)) $updateSQL .= ', ';
 			$updateSQL .= $key . ' = ?';
 			$statementParameters[] = $value;
+			// update object data
+			$this->getDecoratedObject()->data[$key] = $value;
 		}
 		$statementParameters[] = $this->__get(static::getDatabaseTableIndexName());
 		
@@ -81,6 +83,8 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 			if (!empty($updateSQL)) $updateSQL .= ', ';
 			$updateSQL .= $key . ' = ' . $key . ' + ?';
 			$statementParameters[] = $value;
+			// update object data
+			$this->getDecoratedObject()->data[$key] += $value;
 		}
 		$statementParameters[] = $this->__get(static::getDatabaseTableIndexName());
 		
