@@ -1,12 +1,17 @@
 /* general definitions */
 body {
-	background-color: @wcfPageBackgroundColor;
-	background-image: url(../../images/header.png);
+	background-color: darken(@wcfPageBackgroundColor, 20%);
 	background-repeat: repeat-x;
 	color: @wcfPageColor;
 	font-family: @wcfBaseFontFamily;
 	font-size: @wcfBaseFontSize;
 	line-height: @wcfBaseLineHeight;
+	
+	background-image: url(../../images/header.png), -webkit-linear-gradient(@wcfPageBackgroundColor, darken(@wcfPageBackgroundColor, 20%) 200px);
+	background-image: url(../../images/header.png), -moz-linear-gradient(@wcfPageBackgroundColor, darken(@wcfPageBackgroundColor, 20%) 200px);
+	background-image: url(../../images/header.png), -o-linear-gradient(@wcfPageBackgroundColor, darken(@wcfPageBackgroundColor, 20%) 200px);
+	background-image: url(../../images/header.png), -ms-linear-gradient(@wcfPageBackgroundColor, darken(@wcfPageBackgroundColor, 20%) 200px);
+	background-image: url(../../images/header.png), linear-gradient(@wcfPageBackgroundColor, darken(@wcfPageBackgroundColor, 20%) 200px); 
 }
 
 a {

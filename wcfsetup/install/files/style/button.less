@@ -1,5 +1,4 @@
-/* Normal State */
-
+/* default values */
 button,
 input[type='reset'],
 input[type='submit'],
@@ -16,8 +15,88 @@ input[type='button'],
 	padding: 5px 13px;
 }
 
-/* ToDo: Special */
+/* normal state */
+.button,
+input[type='reset']:not([disabled]),
+input[type='submit']:not([disabled]),
+input[type='button']:not([disabled]),
+button:not([disabled]) {
+	border-color: lighten(@wcfButtonBorderColor, 7%) @wcfButtonBorderColor darken(@wcfButtonBorderColor, 7%);
+	color: @wcfButtonColor;
+	text-decoration: none;
+	
+	.boxShadow(0, 1px, rgba(0, 0, 0, .1), 3px);
+	.linearGradient(lighten(@wcfButtonBackgroundColor, 5%), lighten(@wcfButtonBackgroundColor, 10%), lighten(@wcfButtonBackgroundColor, 5%) 2px, @wcfButtonBackgroundColor);
+	.textShadow(@wcfButtonBackgroundColor);
+	.transition(~"background-color, background-image, border, box-shadow, color", .2s);
+}
 
+/* primary */
+.button.buttonPrimary,
+input[type='submit']:not([disabled]),
+input[type='button']:not([disabled]).buttonPrimary,
+button:not([disabled]).buttonPrimary {
+	border-color: lighten(@wcfButtonPrimaryBorderColor, 7%) @wcfButtonPrimaryBorderColor darken(@wcfButtonPrimaryBorderColor, 7%);
+	color: @wcfButtonPrimaryColor;
+	
+	.boxShadowNative(~"0 1px 3px rgba(0, 0, 0, .1), 0 0 10px" @wcfButtonPrimaryBorderColor);
+	.linearGradient(lighten(@wcfButtonPrimaryBackgroundColor, 5%), lighten(@wcfButtonPrimaryBackgroundColor, 10%), lighten(@wcfButtonPrimaryBackgroundColor, 5%) 2px, @wcfButtonPrimaryBackgroundColor);
+	.textShadow(@wcfButtonPrimaryBackgroundColor);
+}
+
+/* hover */
+.button:hover,
+input[type='reset']:not([disabled]):hover,
+input[type='submit']:not([disabled]):hover,
+input[type='button']:not([disabled]):hover,
+button:not([disabled]):hover {
+	border-color: lighten(@wcfButtonHoverBorderColor, 7%) @wcfButtonHoverBorderColor darken(@wcfButtonHoverBorderColor, 7%);
+	color: @wcfButtonHoverColor;
+	text-decoration: none;
+	
+	.boxShadowNative(~"0 1px 3px rgba(0, 0, 0, .1), 0 0 10px" @wcfButtonHoverBorderColor);
+	.linearGradient(lighten(@wcfButtonHoverBackgroundColor, 5%), lighten(@wcfButtonHoverBackgroundColor, 10%), lighten(@wcfButtonHoverBackgroundColor, 5%) 2px, @wcfButtonHoverBackgroundColor);
+	.textShadow(@wcfButtonHoverBackgroundColor);
+}
+
+/* active */
+.button:active,
+input[type='reset']:not([disabled]):active,
+input[type='submit']:not([disabled]):active,
+input[type='button']:not([disabled]):active,
+button:not([disabled]):active,
+.dropdownOpen .dropdownToggle.button {
+	border-color: darken(@wcfButtonHoverBorderColor, 7%) @wcfButtonHoverBorderColor lighten(@wcfButtonHoverBorderColor, 7%);
+	color: @wcfButtonHoverColor;
+		
+	.boxShadowNative(~"inset 0 1px 3px rgba(0, 0, 0, .1), 0 0 10px" @wcfButtonHoverBorderColor);
+	.linearGradient(lighten(@wcfButtonHoverBackgroundColor, 5%), lighten(@wcfButtonHoverBackgroundColor, 10%), lighten(@wcfButtonHoverBackgroundColor, 5%) 2px, @wcfButtonHoverBackgroundColor, bottom);
+	.textShadow(@wcfButtonHoverBackgroundColor);
+}
+
+/* disabled state */
+input[type='reset']:disabled,
+input[type='submit']:disabled,
+input[type='button']:disabled,
+button:disabled {
+	border-color: darken(@wcfButtonBorderColor, 7%) @wcfButtonBorderColor lighten(@wcfButtonBorderColor, 7%);
+	cursor: not-allowed;
+	color: @wcfButtonColor;
+	
+	.boxShadow(0, 1px, rgba(0, 0, 0, .1), 3px);
+	.linearGradient(lighten(@wcfButtonBackgroundColor, 5%), lighten(@wcfButtonBackgroundColor, 10%), lighten(@wcfButtonBackgroundColor, 5%) 2px, @wcfButtonBackgroundColor, bottom);
+	.textShadow(@wcfButtonBackgroundColor);
+}
+
+
+/* button list */
+.buttonList {
+	> li {
+		display: inline;
+	}
+}
+
+/* sidebar buttons */
 .sidebar {
 	button,
 	input[type='reset'],
@@ -29,64 +108,8 @@ input[type='button'],
 	}
 }
 
+/* button icons */
 .button img {
 	margin: -5px 1px -5px -5px;
 	vertical-align: middle;
-}
-
-/* Normal State */
-
-.button,
-input[type='reset']:not([disabled]),
-input[type='submit']:not([disabled]),
-input[type='button']:not([disabled]),
-button:not([disabled]) {
-	color: @wcfButtonColor;
-	border-color: @wcfButtonBorderColor darken(@wcfButtonBorderColor, 7%) darken(@wcfButtonBorderColor, 14%);
-	text-decoration: none;
-	
-	.boxShadow(0, 1px, rgba(0, 0, 0, .1), 3px);
-	.linearGradient(@wcfButtonBackgroundColor, lighten(@wcfButtonBackgroundColor, 5%), @wcfButtonBackgroundColor 2px, darken(@wcfButtonBackgroundColor, 5%));
-	.textShadow(@wcfButtonBackgroundColor);
-	.transition(~"background-color, background-image, border, box-shadow, color", .1s);
-}
-
-/* primary */
-.button.buttonPrimary,
-input[type='submit']:not([disabled]),
-input[type='button']:not([disabled]).buttonPrimary,
-button:not([disabled]).buttonPrimary {
-	color: @wcfButtonPrimaryColor;
-	border-color: @wcfButtonPrimaryBorderColor darken(@wcfButtonPrimaryBorderColor, 7%) darken(@wcfButtonPrimaryBorderColor, 14%);
-	
-	.boxShadowNative(~"0 1px 3px rgba(0, 0, 0, .1), 0 0 10px" darken(@wcfButtonPrimaryBackgroundColor, 20%));
-	.linearGradient(@wcfButtonPrimaryBackgroundColor, lighten(@wcfButtonPrimaryBackgroundColor, 5%), @wcfButtonPrimaryBackgroundColor 2px, darken(@wcfButtonPrimaryBackgroundColor, 5%));
-}
-
-/* hover */
-.button:hover,
-input[type='reset']:not([disabled]):hover,
-input[type='submit']:not([disabled]):hover,
-input[type='button']:not([disabled]):hover,
-button:not([disabled]):hover {
-	border-color: @wcfButtonHoverBorderColor darken(@wcfButtonHoverBorderColor, 7%) darken(@wcfButtonHoverBorderColor, 14%);
-	color: @wcfButtonHoverColor;
-	text-decoration: none;
-	
-	.boxShadow(0, 1px, rgba(0, 0, 0, .1), 3px);	
-	.linearGradient(@wcfButtonHoverBackgroundColor, lighten(@wcfButtonHoverBackgroundColor, 5%), @wcfButtonHoverBackgroundColor 2px, darken(@wcfButtonHoverBackgroundColor, 5%));
-}
-
-/* active */
-.button:active,
-input[type='reset']:not([disabled]):active,
-input[type='submit']:not([disabled]):active,
-input[type='button']:not([disabled]):active,
-button:not([disabled]):active,
-.dropdownOpen .dropdownToggle.button {
-	color: darken(@wcfButtonHoverColor, 10%);
-	border-color: darken(@wcfButtonHoverBorderColor, 14%) darken(@wcfButtonHoverBorderColor, 7%) @wcfButtonHoverBorderColor;
-		
-	.boxShadowInset(0, 1px, rgba(0, 0, 0, .1), 3px);
-	.linearGradient(@wcfButtonHoverBackgroundColor, lighten(@wcfButtonHoverBackgroundColor, 5%), @wcfButtonHoverBackgroundColor 2px, darken(@wcfButtonHoverBackgroundColor, 5%), bottom);
 }

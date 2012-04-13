@@ -81,12 +81,7 @@
 		new WCF.Date.Time();
 		new WCF.Effect.SmoothScroll();
 		new WCF.Effect.BalloonTooltip();
-		$('<span class="pointer"><span></span></span>').appendTo('.innerError');
-		
-		//$('#sidebarContent').wcfSidebar();
-		
 		WCF.Dropdown.init();
-		WCF.Effect.TopMenu.init();
 		
 		{event name='javascriptInit'}
 	});

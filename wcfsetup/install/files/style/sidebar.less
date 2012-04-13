@@ -6,7 +6,7 @@
 			margin-bottom: @wcfGapMedium;
 			
 			&:not(:last-child) {
-				border-bottom: 1px solid darken(@wcfHighlightBackgroundColor, 8%);
+				border-bottom: 1px solid darken(@wcfSidebarBackgroundColor, 8%);
 			}
 			
 			&.sidebarContainer {
@@ -31,7 +31,7 @@
 				> h1 {
 					text-transform: uppercase;
 					
-					.textShadow(@wcfHighlightBackgroundColor);
+					.textShadow(@wcfSidebarBackgroundColor);
 					
 					.badge {
 						float: right;
@@ -55,10 +55,10 @@
 					text-overflow: ellipsis;
 					white-space: nowrap;
 					
-					.textShadow(@wcfHighlightBackgroundColor);
+					.textShadow(@wcfSidebarBackgroundColor);
 					
 					a {
-						.textShadow(@wcfHighlightBackgroundColor);
+						.textShadow(@wcfSidebarBackgroundColor);
 					}
 					
 					small {
@@ -92,7 +92,7 @@
 					margin: auto;
 					text-transform: uppercase;
 						
-					.textShadow(@wcfHighlightBackgroundColor);
+					.textShadow(@wcfSidebarBackgroundColor);
 				}
 			}
 		}
@@ -107,7 +107,7 @@
 			margin-bottom: @wcfGapMedium;
 			padding: 0 @wcfGapMedium;
 			
-			.textShadow(@wcfHighlightBackgroundColor);
+			.textShadow(@wcfSidebarBackgroundColor);
 		}
 		
 		.menuGroupItems {
@@ -163,7 +163,7 @@
 				> a,
 				> div {
 					padding-left: (@wcfGapLarge + 16px + @wcfGapTiny);
-					.textShadow(@wcfHighlightBackgroundColor);
+					.textShadow(@wcfSidebarBackgroundColor);
 				}
 			}
 		}

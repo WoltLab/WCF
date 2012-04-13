@@ -1,6 +1,6 @@
 /* -- -- -- Form Elements -- -- -- */
-/* Globals */
 
+/* globals */
 button,
 input[type='reset'],
 input[type='submit'],
@@ -27,8 +27,7 @@ select[multiple] {
 	 font-family: 'Courier New', Courier, monospace;
 }
 
-/* Normal State */
-
+/* normal state */
 input[type='text'],
 input[type='search'],
 input[type='date'],
@@ -38,18 +37,17 @@ input[type='password'],
 textarea,
 select[multiple] {
 	background-color: @wcfInputBackgroundColor;
-	border-color: darken(@wcfInputBorderColor, 20%) @wcfInputBorderColor lighten(@wcfInputBorderColor, 13%);
+	border-color: darken(@wcfInputBorderColor, 20%) @wcfInputBorderColor lighten(@wcfInputBorderColor, 10%);
 	border-radius: 3px;
 	border-style: solid;
 	border-width: 1px;
 	color: @wcfInputColor;
 	
 	.boxShadowInset(0, 1px, rgba(0, 0, 0, .1));
-	.transition(~"background-color, border", .2s);
+	.transition(~"background-color, border, box-shadow", .2s);
 }
 
-/* Hover State */
-
+/* hover */
 input[type='text']:hover,
 input[type='search']:hover,
 input[type='date']:hover,
@@ -60,12 +58,9 @@ textarea:hover,
 select[multiple]:hover {
 	background-color: @wcfInputHoverBackgroundColor;
 	border-color: @wcfInputHoverBorderColor;
-	//border: 1px solid rgba(255, 170, 34, 1);
-	//background-color: rgba(255, 249, 244, 1);
 }
 
-/* Active & Focus State */
-
+/* active / focus */
 input[type='text']:active,
 input[type='search']:active,
 input[type='date']:active,
@@ -87,16 +82,10 @@ select[multiple]:focus {
 	border-color: @wcfInputHoverBorderColor;
 	outline: none;
 	
-	// TODO: use mixin 
-	box-shadow: 0 0 5px fade(@wcfInputHoverBorderColor, 50%), inset 0 1px 5px rgba(0, 0, 0, .2);
-		-webkit-box-shadow: 0 0 5px fade(@wcfInputHoverBorderColor, 50%), inset 0 1px 5px rgba(0, 0, 0, .2);
-		-moz-box-shadow: 0 0 5px fade(@wcfInputHoverBorderColor, 50%), inset 0 1px 5px rgba(0, 0, 0, .2);
-		-ms-box-shadow: 0 0 5px fade(@wcfInputHoverBorderColor, 50%), inset 0 1px 5px rgba(0, 0, 0, .2);
-		-o-box-shadow: 0 0 5px fade(@wcfInputHoverBorderColor, 50%), inset 0 1px 5px rgba(0, 0, 0, .2);
+	.boxShadowNative(~"0 0 5px" fade(@wcfInputHoverBorderColor, 50%) ~", inset 0 1px 5px rgba(0, 0, 0, .1)");
 }
 
-/* Read Only State */
-
+/* read only state */
 input[type='text'][readonly],
 input[type='search'][readonly],
 input[type='email'][readonly],
@@ -106,14 +95,12 @@ input[type='password'][readonly],
 textarea[readonly],
 select[multiple][readonly] {
 	background-color: transparent;
-	// TODO:
-	border-color: rgba(204, 204, 204, 1) rgba(221, 221, 221, 1) rgba(238, 238, 238, 1);
+	border-color: @wcfInputBorderColor;
 	
-	.boxShadowInset(0, 1px, rgba(0, 0, 0, .01));
+	.boxShadowInset(0, 1px, rgba(0, 0, 0, .1));
 }
 
-/* Disabled State */
-
+/* disabled state */
 input[type='text'][disabled],
 input[type='search'][disabled],
 input[type='date'][disabled],
@@ -122,11 +109,26 @@ input[type='url'][disabled],
 input[type='password'][disabled],
 textarea[disabled],
 select[multiple][disabled] {
-	background-color: rgba(255, 255, 255, .5);
-	border-color: rgba(255, 255, 255, .5);
+	background-color: transparent;
+	border-color: @wcfInputBorderColor;
+	color: @wcfDimmedColor;
+	
+	.boxShadowInset(0, 1px, rgba(0, 0, 0, .1));
 }
 
-/* Width */
+/* error state */
+.formError input[type='text'],
+.formError input[type='search'],
+.formError input[type='email'],
+.formError input[type='url'],
+.formError input[type='password'],
+.formError textarea {
+	border-color: @wcfErrorBackgroundColor;
+	
+	.boxShadowNative(~"0 0 5px" fade(@wcfErrorBackgroundColor, 50%) ~", inset 0 1px 5px rgba(0, 0, 0, .1)");
+}
+
+/* width */
 textarea {
 	width: 99%;
 }
@@ -150,20 +152,7 @@ textarea {
 	width: 100%;
 }
 
-/* Form Errors */
-
-.formError input[type='text'],
-.formError input[type='search'],
-.formError input[type='email'],
-.formError input[type='url'],
-.formError input[type='password'],
-.formError textarea {
-	border-color: @errorBorderColor;
-	background-color: @errorBackgroundColor;
-	color: @errorColor;
-}
-
-/* Upload Button */
+/* upload button */
 .uploadButton {
 	overflow: hidden;
 	position: relative;

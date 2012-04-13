@@ -23,10 +23,10 @@
 
 // sets default text shadows depending on background color
 .textShadow(@backgroundColor) when (lightness(@backgroundColor) >= 50%) {
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
 }
 .textShadow(@backgroundColor) when (lightness(@backgroundColor) < 50%) {
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 1);
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, .5);
 }
 
 /* CSS 3 */

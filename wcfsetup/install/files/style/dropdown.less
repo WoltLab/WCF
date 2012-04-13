@@ -84,7 +84,7 @@
 
 	.dropdownMenu {
 		background-color: @wcfDropdownBackgroundColor;
-		border: 1px solid @wcfContainerBorderColor;
+		border: 1px solid @wcfDropdownBorderColor;
 		color: @wcfDropdownColor;
 		display: none;
 		float: left;
@@ -95,11 +95,11 @@
 		z-index: 350;
 		
 		.borderRadius();
-		.boxShadow(0, 5px, rgba(0, 0, 0, .2), 10px);
+		.boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
 		
 		&:after {
 			border: 7px solid transparent;
-			border-bottom-color: @wcfContainerBorderColor;
+			border-bottom-color: @wcfDropdownBorderColor;
 			border-top-width: 0;
 			content: "";
 			display: inline-block;
@@ -129,7 +129,7 @@
 			}
 			
 			&.dropdownDivider {
-				border-top: 1px dotted rgba(0, 0, 0, .2);
+				border-top: 1px dotted @wcfDropdownBorderColor;
 				margin: @wcfGapTiny;
 			}
 			
@@ -140,6 +140,7 @@
 				cursor: pointer;
 				display: block;
 				padding: @wcfGapTiny @wcfGapMedium;
+				text-decoration: none;
 				white-space: nowrap;
 				
 				.textShadow(@wcfDropdownBackgroundColor);
@@ -163,7 +164,7 @@
 	
 	&.dropdownOpen {
 		.dropdownToggle {
-			color: @wcfPageLinkHoverColor;
+			//color: @wcfPageLinkHoverColor;
 		}
 		
 		.dropdownMenu {

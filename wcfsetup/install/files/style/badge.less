@@ -1,6 +1,5 @@
 /* ############## Badges ############## */
 
-/* Globals */
 // sets default badge shadows depending on background color
 .badgeShadow(@backgroundColor) when (lightness(@backgroundColor) >= 50%) {
 	box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 1);
@@ -9,11 +8,11 @@
 	box-shadow: 0px -1px 0px 0px rgba(0, 0, 0, 1);
 }
 
-
+/* default values */
 .badge {
 	background-color: @wcfColor;
 	border-radius: 13px;
-	color: @wcfPageLinkHoverColor;
+	color: @wcfContentBackgroundColor;
 	display: inline-block;
 	font-size: @wcfSmallFontSize;
 	padding: 1px 8px 2px;
@@ -23,26 +22,27 @@
 	
 	.badgeShadow(@wcfContentBackgroundColor);
 	
+	/* colors */
 	&.badgeUpdate {
-		background-color: #369;
-		color: @wcfPageLinkHoverColor;
+		background-color: @wcfTabularBoxBackgroundColor;
+		color: @wcfTabularBoxColor;
 	}
 	
 	&.badgeGreen {
-		background-color: @successColor;
-		color: #fff;
+		background-color: @wcfSuccessBackgroundColor;
+		color: @wcfSuccessColor;
 	}
 	
 	&.badgeRed {
-		background-color: @errorColor;
-		color: #fff;
+		background-color: @wcfErrorBackgroundColor;
+		color: @wcfErrorColor;
 	}
 	
 	&.badgeInverse {
-		background-color: @wcfPageLinkHoverColor;
-		color: @wcfPageBackgroundColor;
+		background-color: @wcfTabularBoxColor;
+		color: @wcfTabularBoxBackgroundColor;
 		
-		.badgeShadow(@wcfPageBackgroundColor);
+		.badgeShadow(@wcfTabularBoxBackgroundColor);
 	}
 }
 

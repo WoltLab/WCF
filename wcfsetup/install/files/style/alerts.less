@@ -1,96 +1,115 @@
 /* ############## System Notifications (Inline) ############## */
 
-/* Globals */
-
+/* default values */
 .info,
 .error,
 .success,
 .warning {
-	background-position: 13px center, left top;
-	background-repeat: no-repeat, repeat;
-	background-size: 24px, auto;
 	border-radius: @wcfContainerBorderRadius;
-	border-width: 1px;
-	border-style: solid;
-	box-sizing: border-box;
+	font-weight: bold;
 	line-height: 1.5;
 	margin-top: @wcfGapMedium;
 	padding: @wcfGapSmall @wcfGapMedium @wcfGapSmall 50px;
+	position: relative;
 	
-	.textShadow(@errorBackgroundColor);
+	.boxShadowNative(~"0 1px 2px rgba(0, 0, 0, .5), inset 0 0 1px rgba(0, 0, 0, .2)");
+	
+	&:after {
+		background-repeat: no-repeat, repeat;
+		background-size: 24px, auto;
+		content: "";
+		display: block;
+		height: 24px;
+		left: 13px;
+		position: absolute;
+		top: 4px;
+		width: 24px;
+	}
 }
 
-/* Types */
-
+/* types */
 .info {
-	background-color: @infoBackgroundColor;
-	background-image: url('../../icon/systemInfo.svg');
-	border-color: @infoBorderColor;
-	color: @infoColor;
+	color: @wcfInfoColor;
+	
+	.linearGradient(@wcfInfoBackgroundColor2, @wcfInfoBackgroundColor, @wcfInfoBackgroundColor2);
+	.textShadow(@wcfInfoBackgroundColor2);
+	
+	&:after {
+		background-image: url('../icon/systemInfo.svg');
+	}
 }
 
 .success {
-	background-color: @successBackgroundColor;
-	background-image: url('../../icon/systemSuccess.svg');
-	border-color: @successBorderColor;
-	color: @successColor;
+	color: @wcfSuccessColor;
+	
+	.linearGradient(@wcfSuccessBackgroundColor2, @wcfSuccessBackgroundColor, @wcfSuccessBackgroundColor2);
+	.textShadow(@wcfSuccessBackgroundColor2);
+	
+	&:after {
+		background-image: url('../icon/systemSuccess.svg');
+	}
 }
 
 .warning {
-	background-color: @warningBackgroundColor;
-	background-image: url('../../icon/systemWarning.svg');
-	border-color: @warningBorderColor;
-	color: @warningColor;
+	color: @wcfWarningColor;
+	
+	.linearGradient(@wcfWarningBackgroundColor2, @wcfWarningBackgroundColor, @wcfWarningBackgroundColor2);
+	.textShadow(@wcfWarningBackgroundColor2);
+	
+	&:after {
+		background-image: url('../icon/systemWarning.svg');
+	}
 }
 
 .error {
-	background-color: @errorBackgroundColor;
-	background-image: url('../../icon/systemError.svg');
-	border-color: @errorBorderColor;
-	color: @errorColor;
+	color: @wcfErrorColor;
+	
+	.linearGradient(@wcfErrorBackgroundColor2, @wcfErrorBackgroundColor, @wcfErrorBackgroundColor2);
+	.textShadow(@wcfErrorBackgroundColor2);
+	
+	&:after {
+		background-image: url('../icon/systemError.svg');
+	}
 }
 
 /* Inline Errors */
 
 .innerError {
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
-	line-height: 1.5;
-	color: @errorColor;
-	border: 1px solid @errorBorderColor;
 	border-radius: @wcfContainerBorderRadius;
-	background-color: @errorBackgroundColor;
-	background-image: url('../../icon/systemError.svg');
-	background-size: 16px;
-	background-position: 5px center;
-	background-repeat: no-repeat;
-	margin-top: 5px;
-	padding: 2px 10px 2px 25px;
-	display: table !important;
-	position: relative; /* Firefox support (from version 10 on) is buggy */
 	clear: both;
+	color: @wcfErrorColor;
+	display: table !important;
+	line-height: 1.5;
+	margin-top: 5px;
+	padding: 2px 10px;
+	position: relative; /* Firefox support (from version 10 on) is buggy */
 	
-	.boxShadow(0, 1px, rgba(0, 0, 0, .1), 3px);
-	.textShadow(@errorBackgroundColor);
+	.boxShadowNative(~"0 1px 2px rgba(0, 0, 0, .5), inset 0 0 1px rgba(0, 0, 0, .2)");
+	.linearGradient(@wcfErrorBackgroundColor2, @wcfErrorBackgroundColor, @wcfErrorBackgroundColor2);
+	.textShadow(@wcfErrorBackgroundColor2);
 	
-	.pointer {	
-		border-width: 0 7px 7px;
-		border-style: solid;
-		border-color: @errorBackgroundColor transparent;
-		display: inline-block !important;
-		width: 0;
+	/* pointer */
+	&:after {
+		border: 7px solid transparent;
+		border-bottom-color: @wcfErrorBackgroundColor;
+		border-top-width: 0;
+		content: "";
+		display: inline-block;
+		left: 9px;
 		position: absolute;
-		top: -7px !important;
-		left: 10%;
-			
-			span {	
-				border-width: 0 5px 5px;
-				border-style: solid;
-				border-color: @errorBackgroundColor transparent;
-				display: inline-block;
-				width: 0;
-				position: absolute;
-				top: 2px;
-				left: -5px;
-			}
+		top: -6px;
+		z-index: 100;
+	}
+	
+	&:before {
+		border: 6px solid transparent;
+		border-bottom-color: @wcfErrorBackgroundColor;
+		border-top-width: 0;
+		content: "";
+		display: inline-block;
+		left: 10px;
+		position: absolute;
+		top: -6px;
+		z-index: 101;
 	}
 }

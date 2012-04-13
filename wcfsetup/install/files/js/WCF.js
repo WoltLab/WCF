@@ -3475,49 +3475,6 @@ WCF.Effect.BalloonTooltip.prototype = {
 };
 
 /**
- * Modifies the top menu's opacity depending on scroll offset, might be removed later.
- */
-WCF.Effect.TopMenu = {
-		/**
-		 * top menu reference
-		 * @var	jQuery
-		 */
-		_topMenu: null,
-		
-		/**
-		 * window reference
-		 * @var	jQuery
-		 */
-		_window: null,
-		
-		/**
-		 * Initializes the references and scroll event listener.
-		 */
-		init: function() {
-			this._topMenu = $('#topMenu');
-			this._window = $(window);
-			
-			$(document).scroll($.proxy(this._scroll, this));
-		},
-		
-		/**
-		 * Calculates scroll offset and executes dependent actions.
-		 */
-		_scroll: function() {
-			var $topOffset = this._window.scrollTop();
-			if ($topOffset > 200) {
-				this._topMenu.removeClass('userPanelReducedOpacity').addClass('userPanelOpaque');
-			}
-			else if ($topOffset > 100) {
-				this._topMenu.removeClass('userPanelOpaque').addClass('userPanelReducedOpacity');
-			}
-			else {
-				this._topMenu.removeClass('userPanelOpaque').removeClass('userPanelReducedOpacity');
-			}
-		}
-	};
-
-/**
  * Handles clicks outside an overlay, hitting body-tag through bubbling.
  * 
  * You should always remove callbacks before disposing the attached element,

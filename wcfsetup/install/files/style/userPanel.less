@@ -1,5 +1,5 @@
 .userPanel {
-	background-color: rgba(0, 0, 0, .5);
+	background-color: @wcfUserPanelBackgroundColor;
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
 	height: 30px;
 	left: 0;
@@ -10,49 +10,32 @@
 	z-index: 200;
 	
 	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
-	.transition(background-color, .3s);
 	
-	&:hover {
-		background-color: rgba(0, 0, 0, .9);
-		
-		.searchBar input[type="search"] {
-			background-color: darken(@wcfPageBackgroundColor, 5%);
-		}
-	}
-	
-	&.userPanelReducedOpacity {
-		background-color: rgba(0, 0, 0, .75);
-	}
-	
-	&.userPanelOpaque {
-		background-color: rgba(0, 0, 0, .9);
-	}
-	
-	ul {
+	ul.userPanelItems {
 		display: block;
 		float: left;
-		margin-top: -3px;
+		margin: -7px 0;
 		
-		&.userPanelItems > li:not(:first-child) {
+		> li:not(:first-child) {
 			margin-left: @wcfGapSmall;
 		}
 		
 		> li {
 			display: inline-block;
 			
-			> a,
-			> span,
-			> span > a {
-				color: lighten(@wcfPageLinkColor, 10%);
-				cursor: pointer;
+			> a {
+				color: @wcfUserPanelColor;
 				display: block;
-				padding: 10px 0;
+				padding: 14px 7px 10px;
+				text-shadow: 1px 1px 1px #000;
+				height: 20px;
 				
-				.transition(color, .1s);
-				.textShadow(@wcfPageBackgroundColor);
+				//.textShadow(@wcfUserPanelBackgroundColor);
+				.transition(background-color, .2s);
 				
 				&:hover {
-					color: @wcfPageLinkHoverColor;
+					background-color: rgba(0, 0, 0, .4);
+					color: @wcfUserPanelHoverColor;
 					text-decoration: none;
 				}
 			}
@@ -63,26 +46,22 @@
 		float: right;
 		
 		input[type="search"] {
-			/*border: @wcfContainerBorderWidth @wcfContainerBorderStyle @wcfContainerBorderColor;
-			padding: @wcfGapTiny @wcfGapSmall;*/
-			
 			background-color: rgba(0, 0, 0, .5);
 			background-image: url("../icon/search2.svg");
 			background-repeat: no-repeat;
 			background-position: 7px 5px;
 			border: 1px solid rgba(0, 0, 0, .9);
 			border-radius: 30px;
-			color: @wcfPageLinkHoverColor;
+			color: @wcfUserPanelColor;
 			padding: 6px 12px 5px 26px;
 			width: 180px;
 			-webkit-appearance: textfield;
 			
 			.boxShadowNative(~"inset 0px 1px 3px rgba(0, 0, 0, .9), 0px 1px 0px rgba(255, 255, 255, .1)");
 			.transition(width, .25s, ease-out);
-			.textShadow(@wcfPageBackgroundColor);
+			.textShadow(@wcfUserPanelBackgroundColor);
 	
 			&:focus {
-				//background-image: none;
 				width: 280px;
 			}
 		}
@@ -92,5 +71,13 @@
 		padding: 0px;
 		margin-top: -3px;
 		margin-bottom: -3px;
+	}
+	
+	/* dropdown icon */
+	.dropdownToggle {
+		background-image: url('../icon/dropdown2.svg');
+		background-position: 97% center;
+		background-repeat: no-repeat;
+		padding-right: 15px !important;
 	}
 }
