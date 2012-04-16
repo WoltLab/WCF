@@ -113,18 +113,20 @@ class GDImageAdapter implements IImageAdapter {
 				$height = $maxHeight;
 				$width = round($this->width * ($height / $this->height));
 			}
-			
 		}
 		else {
-			$width = $height = $maxWidth;
+			$width = $maxWidth;
+			$height = $maxHeight;
 			
-			if ($sourceWidth > $sourceHeight) {
-				$x = ceil(($sourceWidth - $sourceHeight) / 2);
-				$sourceWidth = $sourceHeight;
+			if ($maxWidth / $this->width < $maxHeight / $this->height) {
+				$cut = (($sourceWidth * ($maxHeight / $this->height)) - $maxWidth) / ($maxHeight / $this->height);
+				$x = ceil($cut / 2);
+				$sourceWidth = $sourceWidth - $x * 2;
 			}
 			else {
-				$y = ceil(($sourceHeight - $sourceWidth) / 2);
-				$sourceHeight = $sourceWidth;
+				$cut = (($sourceHeight * ($maxWidth / $this->width)) - $maxHeight) / ($maxWidth / $this->width);
+				$y = ceil($cut / 2);
+				$sourceHeight = $sourceHeight - $y * 2;
 			}
 		}
 		
