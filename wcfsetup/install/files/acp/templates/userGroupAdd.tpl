@@ -12,8 +12,7 @@
 	//]]>
 </script>
 
-<header class="box48 boxHeadline">
-	<img src="{@$__wcf->getPath()}icon/{@$action}1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.group.{@$action}{/lang}</h1>
 	</hgroup>
@@ -89,11 +88,6 @@
 					
 					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 						<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}" class="hidden">
-							<hgroup class="boxSubHeadline">
-								<h1>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h1>
-								{hascontent}<h2>{content}{lang __optional=true}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}{/content}</h2>{/hascontent}
-							</hgroup>
-							
 							{if $categoryLevel2[options]|count}
 								{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.group.option.'}
 							{/if}

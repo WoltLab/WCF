@@ -1,13 +1,11 @@
 {include file='header'}
 
-<header class="box48 boxHeadline">
+<header class="boxHeadline">
 	{if $packageID == 0}
-		<img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon48" />
 		<hgroup>
 			<h1>{lang}wcf.acp.package.startInstall{/lang}</h1>
 		</hgroup>
 	{else}
-		<img src="{@$__wcf->getPath()}icon/update1.svg" alt="" class="icon48" />
 		<hgroup>
 			<h1>{lang}wcf.acp.package.startUpdate{/lang}</h1>
 		</hgroup>

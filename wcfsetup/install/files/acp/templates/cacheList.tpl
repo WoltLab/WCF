@@ -12,8 +12,7 @@
 	//]]>
 </script>
 
-<header class="box48 boxHeadline">
-	<img src="{@$__wcf->getPath()}icon/cache1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.cache.list{/lang}</h1>
 	</hgroup>
@@ -23,31 +22,33 @@
 	<p class="success">{lang}wcf.acp.cache.clear.success{/lang}</p>	
 {/if}
 
-<fieldset>
-	<legend>{lang}wcf.acp.cache.data{/lang}</legend>
-	
-	<dl>
-		<dt>{lang}wcf.acp.cache.data.source{/lang}</dt>
-		<dd>{$cacheData.source}</dd>
-	</dl>
-	{if $cacheData.version}
+<div class="container containerPadding marginTop shadow">
+	<fieldset>
+		<legend>{lang}wcf.acp.cache.data{/lang}</legend>
+		
 		<dl>
-			<dt>{lang}wcf.acp.cache.data.version{/lang}</dt>
-			<dd>{$cacheData.version}</dd>
+			<dt>{lang}wcf.acp.cache.data.source{/lang}</dt>
+			<dd>{$cacheData.source}</dd>
 		</dl>
-	{/if}
-	{if $cacheData.size}<dl>
-		<dt>{lang}wcf.acp.cache.data.size{/lang}</dt>
-		<dd>{@$cacheData.size|filesize}</dd>
-	</dl>{/if}
-	{if $cacheData.files}<dl>
-		<dt>{lang}wcf.acp.cache.data.files{/lang}</dt>
-		<dd>{#$cacheData.files}</dd>
-	</dl>{/if}
+		{if $cacheData.version}
+			<dl>
+				<dt>{lang}wcf.acp.cache.data.version{/lang}</dt>
+				<dd>{$cacheData.version}</dd>
+			</dl>
+		{/if}
+		{if $cacheData.size}<dl>
+			<dt>{lang}wcf.acp.cache.data.size{/lang}</dt>
+			<dd>{@$cacheData.size|filesize}</dd>
+		</dl>{/if}
+		{if $cacheData.files}<dl>
+			<dt>{lang}wcf.acp.cache.data.files{/lang}</dt>
+			<dd>{#$cacheData.files}</dd>
+		</dl>{/if}
+		
+		{event name='dataFields'}
+	</fieldset>
+</div>
 	
-	{event name='dataFields'}
-</fieldset>
-
 <div class="contentNavigation">
 	<nav>
 		<ul>

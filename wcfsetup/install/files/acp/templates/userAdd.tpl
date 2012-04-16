@@ -8,8 +8,7 @@
 	//]]>
 </script>
 
-<header class="box48 boxHeadline">
-	<img {if $userID|isset}id="userEdit{@$userID}" {/if}src="{@$__wcf->getPath()}icon/{@$action}1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.user.{@$action}{/lang}</h1>
 	</hgroup>
@@ -159,10 +158,6 @@
 			
 				{foreach from=$optionTree item=categoryLevel1}
 					<div id="{@$categoryLevel1[object]->categoryName}" class="container containerPadding tabMenuContent hidden">
-						<hgroup class="boxSubHeadline">
-							<h1>{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
-						</hgroup>
-					
 						{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 							<fieldset>
 								<legend>{lang}wcf.user.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>

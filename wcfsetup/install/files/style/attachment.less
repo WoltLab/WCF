@@ -1,5 +1,82 @@
 /* #### Attachments #### */
 
+/* attachment thumbnail list */
+.attachmentThumbnailList, .attachmentFileList {
+	margin-top: @wcfGapMedium;
+	padding-top: @wcfGapSmall;
+	
+	> legend {
+		border-bottom: 0;
+		border-top: 1px dotted @wcfContainerBorderColor;
+		color: @wcfColor;
+		font-size: @wcfTitleFontSize;
+		padding: 4px 0 0;
+	}
+}
+
+.attachmentThumbnailList {
+	> ul > li {
+		margin: 0 0 14px 7px;
+	}
+}
+
+.attachmentFileList {
+	> ul > li:not(:first-child) {
+		margin-top: @wcfGapTiny;
+	}
+	
+	hgroup h2 {
+		font-size: @wcfSmallFontSize;
+	}
+}
+
+.attachmentThumbnail {
+	display: inline-block;
+	position: relative;
+	
+	.borderRadius();
+	.boxShadow(0, 1px, rgba(0, 0, 0, 0.2), 1px);
+	.transition(box-shadow, .1s);
+		
+	img {
+		.borderRadius();
+	}
+	
+	> hgroup {
+		background-color: rgba(0, 0, 0, 0.6);
+		bottom: 0;
+		color: #fff;
+		position: absolute;
+		width: 100%;
+		padding: 7px 0;
+		
+		.borderRadius(0, 0, 5px, 5px);
+		
+		> h1, h2 {
+			margin: 0 7px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		
+		> h2 {
+			font-size: @wcfSmallFontSize;
+			height: 0;
+			
+			.transition(height, .25s, ease-out);
+		}
+	}
+	
+	&:hover {
+		.boxShadow(0, 0, @wcfButtonHoverBorderColor, 20px);
+		
+		> hgroup > h2 {
+			height: 1.27em;
+		}
+	}
+}
+
+
 /* attachment form */
 .formAttachmentList {
 	border-bottom: 1px solid @wcfContainerBorderColor;

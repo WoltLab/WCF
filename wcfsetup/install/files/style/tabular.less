@@ -1,7 +1,6 @@
 .tabularBox {
-	background-image: url(../../images/header.png);
-	
 	background-color: @wcfTabularBoxBackgroundColor;
+	background-image: url(../../images/header.png);
 	border: 1px solid @wcfContainerBorderColor;
 	
 	.borderRadius();
@@ -9,7 +8,7 @@
 
 .tabularBoxTitle > hgroup {
 	color: @wcfTabularBoxColor;
-	padding: @wcfGapSmall;
+	padding: 5px 7px;
 
 	h1 {
 		font-size: 120%;
@@ -21,7 +20,7 @@
 			color: @wcfTabularBoxColor;
 			
 			&:hover {
-				color: @wcfTabularBoxColor;
+				color: @wcfTabularBoxHoverColor;
 				text-decoration: none;
 			}
 		}
@@ -42,7 +41,7 @@
 
 .table {
 	border-spacing: 0;
-	width: 100% !important;
+	width: 100%;
 	
 	/* cells */
 	th,
@@ -54,17 +53,17 @@
 	
 	/* headline */
 	th {
+		background-color: rgba(0, 0, 0, .4);
 		border-right: 1px solid rgba(0, 0, 0, .2);
-		color: @wcfPageLinkColor;
-		font-size: 85%;
+		color: @wcfTabularBoxColor;
+		font-size: @wcfSmallFontSize;
 		font-weight: bold;
 		white-space: nowrap;
 		
-		.linearGradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
 		.textShadow(@wcfTabularBoxBackgroundColor);
 		
 		a {
-			color: @wcfPageLinkColor;
+			color: @wcfTabularBoxColor;
 			display: block;
 			margin: -@wcfGapSmall;
 			
@@ -80,7 +79,7 @@
 		&:hover a,
 		&.active a {
 			background-color: rgba(0, 0, 0, .1);
-			color: @wcfPageLinkHoverColor;
+			color: @wcfTabularBoxHoverColor;
 		}
 		
 		&.active a {
@@ -88,7 +87,7 @@
 		}
 		
 		> * {
-			padding: 7px;
+			padding: @wcfGapSmall;
 		}
 	}
 	
@@ -97,10 +96,6 @@
 		background-color: @wcfContainerBackgroundColor;
 		
 		.transition(background, .1s);
-		
-		h1 {
-			font-size: 100%;
-		}
 		
 		&.columnMark,
 		&.columnStatus {
@@ -135,14 +130,14 @@
 		
 		&.columnDate,
 		&.columnRegistrationDate {
-			font-size: 85%;
+			font-size: @wcfSmallFontSize;
 			text-align: right;
 			width: 1% !important;
 			white-space: nowrap;
 		}
 		
 		&.columnURL {
-			font-size: 85%;
+			font-size: @wcfSmallFontSize;
 			text-align: left;
 		}
 	}
@@ -158,7 +153,9 @@
 	tbody {
 		tr {
 			&:not(:last-child) {
-				border-bottom: 1px solid rgba(255, 255, 255, .3);
+				td {
+					border-bottom: 1px solid rgba(255, 255, 255, .3);
+				}
 			}
 			
 			&:hover {
@@ -192,7 +189,7 @@
 	
 	.statusIcons {
 		float: right;
-		margin-left: 7px;
+		margin-left: @wcfGapSmall;
 		
 		li {
 			display: inline-block;

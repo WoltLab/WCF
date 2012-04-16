@@ -1,7 +1,6 @@
 {include file='header'}
 
-<header class="box48 boxHeadline">
-	<img src="{@$__wcf->getPath()}icon/time1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.cronjob.log{/lang}</h1>
 		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>

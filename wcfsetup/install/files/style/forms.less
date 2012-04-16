@@ -1,181 +1,169 @@
-select > option {
-	/* Fixes weird firefox bug */
-	display: block !important;
-}
-
 /* ############## Fieldsets ############## */
 fieldset {
-	background-color: @wcfContainerBackgroundColor;
-	border: 1px solid @wcfContainerBorderColor;
-	border-radius: @wcfContainerBorderRadius;
-	box-sizing: border-box;
-	margin: @wcfGapMedium 0 0;
-	padding: @wcfGapTiny @wcfGapMedium @wcfGapMedium;
-}
-
-.container fieldset {
-	background-color: @wcfContainerAccentBackgroundColor;
-}
-
-fieldset:last-child,
-fieldset:only-child {
-	margin-bottom: @wcfGapSmall !important;
-}
-
-fieldset legend {
-	margin: auto -@wcfGapSmall;
-	padding: 0 @wcfGapSmall 0;
+	padding-top: @wcfGapMedium;
 	
-	.textShadow(@wcfContainerAccentBackgroundColor);
-}
-
-fieldset legend label {
-	color: @wcfColor;
-}
-
-fieldset legend ~ p {
-	margin-bottom: @wcfGapMedium;
-}
-
-/* ############## Labeled Content ############## */
-
-/* Simple */
-
-dl {
-	margin-top: @wcfGapSmall;
-	position: relative;
-}
-
-fieldset dl:first-of-type {
-	margin-top: 0;
-}
-
-dl > dt {
-	color: @wcfLabelColor; //rgba(102, 153, 204, 1);
-	float: left;
-	margin-top: 5px;
-	text-align: right;
-}
-
-dl > dt {
-	width: 230px;
-}
-
-dl.wide > dt {
-	display: none;
-}
-
-dl > dt > label {
-	display: block;
-	margin-top: 5px;
-}
-
-dl.disabled > dt {
-	color: @wcfDimmedColor;
-}
-
-dl > dd {
-	padding-top: 5px;
-}
-
-dl > dd {
-	margin-left: 250px;
-}
-
-dl.wide > dd {
-	margin-left: 0;
-}
-
-dl > dd > small {
-	color: @wcfDimmedColor;
-	display: block;
-}
-
-/* Nested */
-
-dl > dd > fieldset {
-	margin-top: 0;
-	margin-bottom: 0;
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
-
-dl > dd > fieldset > legend {
-	display: none;
-}
-
-dl > dd > fieldset > dl > dt {
-	margin-right: 20px;
-	width: 150px;
-}
-
-dl > dd > fieldset > dl > dd {
-	margin-left: 0;
-}
-
-dl > dd > fieldset > dl > dd > label {
-	display: block;
-}
-
-/* Reversed (flips the label aside the checkbox or radio button) - 
-	use only when automatically generating checkboxes or radio-buttons! */
-
-.reversed {
-	margin-top: 2px;
-	position: absolute;
-	text-align: left;
-	width: auto;
-}
-
-.reversed {
-	left: 270px;
-}
-
-.reversed ~ dd > input[type='checkbox'] {
-	margin-left: 0;
+	legend {
+		border-bottom: 1px solid @wcfContainerBorderColor;
+		color: @wcfDimmedColor;
+		font-family: @wcfHeadlineFontFamily;
+		font-size: @wcfSubHeadlineFontSize;
+		font-weight: bold;
+		width: 100%;
+		padding-bottom: @wcfGapTiny;
+		
+		.textShadow(@wcfContainerBackgroundColor);
+		
+		+ small {
+			top: -7px;
+			position: relative;
+		}
+	}
+	
+	> dl:not(:first-of-type) {
+		margin-top: @wcfGapSmall;
+	}
+	
+	&:not(:first-of-type) {
+		margin-top: @wcfGapMedium;
+	}
+	
+	/* definition list */
+	dl {
+		position: relative;
+		
+		> dd:not(:first-of-type), > dt:not(:first-of-type) {
+			margin-top: @wcfGapSmall;
+		}
+		
+		> dt {
+			color: @wcfLabelColor;
+			float: left;
+			text-align: right;
+			width: 230px;
+			
+			> label {
+				display: block;
+			}
+			
+			/* Reversed (flips the label aside the checkbox or radio button) - 
+				use only when automatically generating checkboxes or radio-buttons! */
+			&.reversed {
+				left: 270px;
+				margin-top: 2px;
+				position: absolute;
+				text-align: left;
+				width: auto;
+				
+				~ dd > input[type='checkbox'], ~ dd > input[type='radio'] {
+					margin-left: 0;
+				}
+			}
+		}
+		
+		> dd {
+			margin-left: 250px;
+			
+			> small {
+				color: @wcfDimmedColor;
+				display: block;
+				margin-top: 2px;
+			}
+			
+			/* nested fieldsets */
+			> fieldset {
+				padding-top: 0;
+				
+				> legend {
+					display: none;
+				}
+				
+				> dl {
+					> dt {
+						margin-right: 20px;
+						width: 150px;
+					}
+					
+					> dd {
+						margin-left: 0;
+						
+						> label {
+							display: block;
+						}
+					}
+				}
+			}
+			
+			> label {
+				color: @wcfLabelColor;
+				
+				> input[type='checkbox'], > input[type='radio'] {
+					margin: 2px;
+				}
+				
+				~ small {
+					margin-left: 21px;
+				}
+			}
+		}
+		
+		/* wide */
+		&.wide {
+			> dt {
+				display: none;
+			}
+			
+			> dd {
+				margin-left: 0;
+			}
+		}
+		
+		/* disabled state */
+		&.disabled > dt {
+			color: @wcfDimmedColor;
+		}
+	}
 }
 
 /* Special -> Sidebar */
-
-.sidebar dl > dt {
-	text-align: left;
-	float: none;
-	width: auto;
-}
-
-.sidebar dl > dd {
-	display: block;
-	margin-left: 0;
-	margin-bottom: 13px;
-}	
-
-.sidebar dl > dd * {
-	display: inline-block;
-}
-
-/* Globals */
-
-label {
-	color: @wcfLabelColor;
+.sidebar {
+	fieldset {
+		> dl {
+			> dt {
+				text-align: left;
+				float: none;
+				width: auto;
+			}
+			
+			> dd {
+				margin-top: 2px;
+				margin-left: 0;
+				margin-bottom: @wcfGapMedium;
+			}
+		}
+	}
 }
 
 /* Structure */
-
 .formSubmit {
-	margin-top: 15px;
+	margin-top: @wcfGapMedium;
 	text-align: center;
 }
 
-input[type='checkbox'] ~ small,
+/*input[type='checkbox'] ~ small,
 input[type='radio'] ~ small {
 	margin-top: 0;
 	margin-left: 21px;
-}
+}*/
 
 /* todo ckeditor fixes */
 .cke_skin_kama {
 	border-width: 0 !important;
 	padding: 0 !important;
+}
+
+/* todo: smiley list */
+#smilies > ul > li {
+	display: inline;
 }
 
 /* element list with checkboxes */
@@ -216,4 +204,10 @@ input[type='radio'] ~ small {
 			padding: 0 @wcfGapLarge;
 		}
 	}
+}
+
+/* todo */
+select > option {
+	/* Fixes weird firefox bug */
+	display: block !important;
 }

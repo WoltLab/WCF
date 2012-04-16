@@ -22,8 +22,7 @@
 </script>
 
 <form method="post" action="{link controller='PackageUpdate'}{/link}" id="updateForm">
-	<header class="box48 boxHeadline">
-		<img src="{@$__wcf->getPath()}icon/update1.svg" alt="" class="icon48" />
+	<header class="boxHeadline">
 		<hgroup>
 			<h1>{lang}wcf.acp.packageUpdate{/lang}</h1>
 			{if $availableUpdates|count}

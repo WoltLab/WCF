@@ -8,8 +8,7 @@
 	//]]>
 </script>
 
-<header class="box48 boxHeadline">
-	<img src="{@$__wcf->getPath()}icon/search1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.user.search{/lang}</h1>
 	</hgroup>
@@ -126,10 +125,6 @@
 			
 			{if $optionTree|count}
 				<div id="profile" class="container containerPadding tabMenuContent hidden">
-					<hgroup class="boxSubHeadline">
-						<h1>{lang}wcf.acp.user.search.conditions.profile{/lang}</h1>
-					</hgroup>
-					
 					{foreach from=$optionTree[0][categories] item=category}
 						<fieldset>
 							<legend>{lang}wcf.user.option.category.{@$category[object]->categoryName}{/lang}</legend>
@@ -146,10 +141,6 @@
 			{event name='tabMenuContent'}
 		
 			<div id="resultOptions" class="container containerPadding tabMenuContent hidden">
-				<hgroup class="boxSubHeadline">
-					<h1>{lang}wcf.acp.user.search.display{/lang}</h1>
-				</hgroup>
-				
 				<fieldset>
 					<legend>{lang}wcf.acp.user.search.display.general{/lang}</legend>
 				

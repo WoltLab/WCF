@@ -9,8 +9,7 @@
 	//]]>
 </script>
 
-<header class="box48 boxHeadline">
-	<img src="{@$__wcf->getPath()}icon/options1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.option.category.{$category->categoryName}{/lang}</h1>
 		{hascontent}<h2>{content}{lang __optional=true}wcf.acp.option.category.{$category->categoryName}.description{/lang}{/content}</h2>{/hascontent}
@@ -37,11 +36,6 @@
 		
 		{foreach from=$optionTree item=categoryLevel1}
 			<div id="{@$categoryLevel1[object]->categoryName}" class="container containerPadding shadow hidden tabMenuContent">
-				<hgroup class="boxSubHeadline">
-					<h1>{lang}wcf.acp.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</h1>
-					<h2>{lang __optional=true}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}.description{/lang}</h2>
-				</hgroup>
-				
 				{if $categoryLevel1[options]|count}
 					<fieldset>
 						<legend>{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}{/lang}</legend>
@@ -64,7 +58,6 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
  	</div>
 </form>

@@ -12,8 +12,7 @@
 	</script>
 {/if}
 
-<header class="box48 boxHeadline">
-	<img src="{@$__wcf->getPath()}icon/email1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>
 			{if $action == 'all'}

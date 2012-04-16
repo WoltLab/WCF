@@ -56,6 +56,12 @@ img {
 	vertical-align: middle !important;
 }
 
+::selection {
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .5) !important;
+	color: #300;
+	background-color: rgba(255, 170, 34, .7);
+}
+
 /* basic layout elements */
 .layoutFluid {
 	padding: 0 @wcfLayoutFluidGap;
@@ -87,13 +93,13 @@ img {
 		}
 		
 		&:first-child {
-			border-top-left-radius: @wcfContainerBorderRadius;
-			border-top-right-radius: @wcfContainerBorderRadius;
+			border-top-left-radius: @wcfContainerBorderRadius - 1;
+			border-top-right-radius: @wcfContainerBorderRadius - 1;
 		}
 		
 		&:last-child {
-			border-bottom-left-radius: @wcfContainerBorderRadius;
-			border-bottom-right-radius: @wcfContainerBorderRadius;
+			border-bottom-left-radius: @wcfContainerBorderRadius - 1;
+			border-bottom-right-radius: @wcfContainerBorderRadius - 1;
 		}
 		
 		&:hover {
@@ -154,7 +160,7 @@ img {
 .box256 { .box(256px, 32px); }
 
 .boxHeadline {
-	margin-top: @wcfGapLarge;
+	margin-top: @wcfGapMedium;
 	
 	hgroup {
 		> h1 {
@@ -162,8 +168,6 @@ img {
 			font-family: @wcfHeadlineFontFamily;
 			font-size: @wcfHeadlineFontSize;
 			font-weight: bold;
-			border-bottom: 1px solid @wcfHeadlineColor;
-			padding: 1px 0 5px;
 			
 			.textShadow(@wcfContentBackgroundColor);
 			
@@ -173,27 +177,10 @@ img {
 			}
 		}
 		
-		> h2 {
+		> h2, h3 {
 			color: @wcfDimmedColor;
-			padding-top: 5px;
+			font-size: @wcfSmallFontSize;
 		}
-		
-		> h3 {
-			color: @wcfDimmedColor;
-		}
-	}
-}
-
-.boxSubHeadline {
-	> h1 {
-		border-bottom: 1px solid @wcfDimmedColor;
-		color: @wcfDimmedColor;
-		font-family: @wcfHeadlineFontFamily;
-		font-size: @wcfSubHeadlineFontSize;
-		font-weight: bold;
-		padding: 1px 0 5px;
-
-		.textShadow(@wcfContainerBackgroundColor);
 	}
 }
 

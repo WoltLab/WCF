@@ -1,11 +1,11 @@
 /* ############## Board List ############## */
 .wbbBoardList {
 	> li.wbbBoardNodeTop:not(.wbbBoardNodeTopEmpty) > div {
-		.borderRadius(@wcfContainerBorderRadius, 0);
+		.borderRadius(@wcfContainerBorderRadius - 1, 0);
 	}
 	
 	> li > ul > li:last-child div.wbbBoard:last-child {
-		.borderRadius(0, @wcfContainerBorderRadius);
+		.borderRadius(0, @wcfContainerBorderRadius - 1);
 	}
 	
 	> li > ul > .wbbCategory > hgroup {
@@ -59,11 +59,10 @@
 		> div {
 			background-color: @wcfContentBackgroundColor;
 			padding: @wcfGapSmall;
-			border: 1px solid @wcfContainerBorderColor;
 			border-radius: @wcfContainerBorderRadius;
 			margin-right: @wcfGapSmall;
 			
-			.boxShadowInset(0, 1px, rgba(0, 0, 0, .1), 3px); 
+			.boxShadowNative(~"inset 0 1px 1px rgba(0, 0, 0, .1)");
 		}
 		
 		hgroup {
@@ -132,7 +131,7 @@
 	}
 	
 	.wbbBoardNodeTopEmpty div.wbbBoard {
-		.borderRadius(@wcfContainerBorderRadius);
+		.borderRadius(@wcfContainerBorderRadius - 1);
 	}
 	
 	.wbbBoard > div > hgroup > h1 {

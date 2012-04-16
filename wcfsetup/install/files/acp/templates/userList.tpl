@@ -19,8 +19,7 @@
 	//]]>
 </script>
 
-<header class="box48 boxHeadline">
-	<img src="{@$__wcf->getPath()}icon/{if $searchID}search{else}user{/if}1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.user.{if $searchID}search{else}list{/if}{/lang}</h1>
 	</hgroup>

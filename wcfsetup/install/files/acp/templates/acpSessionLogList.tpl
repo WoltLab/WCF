@@ -1,7 +1,6 @@
 {include file='header'}
 
-<header class="box48 boxHeadline">
-	<img src="{@$__wcf->getPath()}icon/session1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.sessionLog.list{/lang}</h1>
 	</hgroup>
@@ -14,7 +13,7 @@
 {hascontent}
 	<div class="tabularBox tabularBoxTitle marginTop shadow">
 		<hgroup>
-			<h1>{lang}wcf.acp.sessionLog.list{/lang} <span class="badge" title="{lang}wcf.acp.sessionLog.list.count{/lang}">{#$items}</span></h1>
+			<h1>{lang}wcf.acp.sessionLog.list{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.sessionLog.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
 		
 		<table class="table">

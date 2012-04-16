@@ -22,8 +22,7 @@
 	//]]>
 </script>
 
-<header class="box48 boxHeadline">
-	<img src="{@$__wcf->getPath()}icon/packageApplication1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.package.list{/lang}</h1>
 	</hgroup>
@@ -38,10 +37,6 @@
 	</nav>
 	
 	<div id="applications" class="container containerPadding tabMenuContent hidden">
-		<hgroup class="boxSubHeadline">
-			<h1>{lang}wcf.acp.package.application.installed{/lang}</h1>
-		</hgroup>
-		
 		<ol class="applicationList">
 			{foreach from=$applications key=packageID item=package}
 				<li>
@@ -92,10 +87,6 @@
 	
 	{hascontent}
 		<div id="plugins" class="container containerPadding tabMenuContent hidden">
-			<hgroup class="boxSubHeadline">
-				<h1>{lang}wcf.acp.package.plugin.installed{/lang}</h1>
-			</hgroup>
-			
 			<div class="wcf-contentHeader jsPluginListPagination">
 				
 			</div>

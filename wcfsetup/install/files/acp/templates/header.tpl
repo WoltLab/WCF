@@ -82,7 +82,6 @@
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
 			new WCF.Effect.BalloonTooltip();
-			$('<span class="pointer"><span></span></span>').appendTo('.wcf-innerError');
 			
 			$('#sidebarContent').wcfSidebar();
 			
@@ -103,14 +102,20 @@
 				<!-- top menu -->
 				<nav id="topMenu" class="userPanel">
 					<div class="layoutFluid clearfix">
-						<ul>
+						<ul class="userPanelItems">
 							<li id="userMenu" class="dropdown">
-								<span class="dropdownToggle" data-toggle="userMenu">{event name='userAvatar'} {lang}wcf.user.userNote{/lang}</span>
+								<a class="dropdownToggle" data-toggle="userMenu">{event name='userAvatar'} {lang}wcf.user.userNote{/lang}</a>
 								<ul class="dropdownMenu">
 									<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
 								</ul>
 							</li>
 						</ul>
+						
+						<aside id="search" class="searchBar">
+							<form method="post" action="{link controller='Search'}{/link}">
+								<input type="search" name="q" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" value="" />
+							</form>
+						</aside>
 					</div>
 				</nav>
 				<!-- /top menu -->
@@ -156,7 +161,7 @@
 	<!-- /HEADER -->
 	
 	<!-- MAIN -->
-	<div id="main" class="layoutFluid sidebarOrientationLeft">
+	<div id="main" class="layoutFluid{if $__wcf->user->userID} sidebarOrientationLeft{/if}">
 		<div>
 			{hascontent}
 				<!-- SIDEBAR -->

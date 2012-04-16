@@ -30,7 +30,7 @@
 		float: left;
 	}
 	
-	header > .pointer {
+	.messageHeader > .pointer {
 		border-color: transparent @wcfContainerBorderColor transparent transparent;
 		border-style: solid solid solid none;
 		left: -20px;
@@ -53,7 +53,7 @@
 		float: right;
 	}
 	
-	header > .pointer {
+	.messageHeader > .pointer {
 		border-color: transparent transparent transparent @wcfContainerBorderColor;
 		border-style: solid none solid solid;
 		right: -20px;
@@ -80,13 +80,13 @@
 	
 	.messageSidebar > div {
 		> div,
-		> header {
+		> .messageHeader {
 			vertical-align: top;
 		}
 	}
 }
 
-.message header {
+.message .messageHeader {
 	> .pointer {
 		border-width: 20px;
 		display: block !important;
@@ -148,7 +148,7 @@
 	
 	.borderRadius();
 	
-	header {
+	.messageHeader {
 		padding: 20px 20px 0;
 		position: relative;
 		
@@ -303,11 +303,11 @@
 }
 
 li:nth-child(2n+1) .message {
-	&.messageSidebarOrientationLeft header > .pointer > span {
+	&.messageSidebarOrientationLeft .messageHeader > .pointer > span {
 		border-right-color: @wcfContainerAccentBackgroundColor;
 	}
 	
-	&.messageSidebarOrientationRight header > .pointer > span {
+	&.messageSidebarOrientationRight .messageHeader > .pointer > span {
 		border-left-color: @wcfContainerAccentBackgroundColor;
 	}
 	

@@ -60,8 +60,7 @@
 	//]]>
 </script>
 
-<header class="box48 boxHeadline">
-	<img src="{@$__wcf->getPath()}icon/user1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.user.massProcessing{/lang}</h1>
 	</hgroup>
@@ -79,10 +78,6 @@
 
 <form method="post" action="{link controller='UsersMassProcessing'}{/link}">
 	<div class="container containerPadding marginTop shadow">
-		<hgroup class="boxSubHeadline">
-			<h1>{lang}wcf.acp.user.massProcessing.conditions{/lang}</h1>
-		</hgroup>
-		
 		<fieldset>
 			<legend>{lang}wcf.acp.user.search.conditions.general{/lang}</legend>
 			
@@ -154,10 +149,6 @@
 				
 				{if $options|count}
 					<div id="profile" class="container containerPadding tabMenuContent hidden">
-						<hgroup class="boxSubHeadline">
-							<h1>{lang}wcf.acp.user.search.conditions.profile{/lang}</h1>
-						</hgroup>
-						
 						{include file='optionFieldList' langPrefix='wcf.user.option.'}
 					</div>
 				{/if}
@@ -168,10 +159,6 @@
 	</div>
 	
 	<div class="container containerPadding marginTop shadow">
-		<hgroup class="boxSubHeadline">
-			<h1>{lang}wcf.acp.user.massProcessing.action{/lang}</h1>
-		</hgroup>
-			
 		<dl{if $errorField == 'action'} class="formError"{/if}>
 			<dt><label>{lang}wcf.acp.user.massProcessing.action{/lang}</label></dt>
 			<dd>

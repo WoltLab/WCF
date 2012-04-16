@@ -1,13 +1,12 @@
 {include file='header'}
 
-<header class="box48 boxHeadline">
-	<img src="{@$__wcf->getPath()}icon/upload1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.option.import{/lang}</h1>
 	</hgroup>
 </header>
 
-{if $errorField != ''}
+{if $errorField}
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
@@ -16,7 +15,7 @@
 {/if}
 
 <form method="post" action="{link controller='OptionImport'}{/link}" enctype="multipart/form-data">
-	<div>
+	<div class="container containerPadding marginTop shadow">
 		<fieldset>
 			<legend>{lang}wcf.acp.option.import{/lang}</legend>
 		
@@ -44,19 +43,17 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 	</div>
 </form>
 
-<header class="box48 boxHeadline">
-	<img src="{@$__wcf->getPath()}icon/download1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.option.export{/lang}</h1>
 	</hgroup>
 </header>
 
-<div>
+<div class="container containerPadding marginTop shadow">
 	<fieldset>
 		<legend>{lang}wcf.acp.option.export{/lang}</legend>
 		
