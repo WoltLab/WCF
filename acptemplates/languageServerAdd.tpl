@@ -1,7 +1,6 @@
 {include file='header'}
 
-<header class="box48 boxHeadline">
-	<img src="{@RELATIVE_WCF_DIR}icon/{$action}1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.languageServer.{$action}{/lang}</h1>
 	</hgroup>

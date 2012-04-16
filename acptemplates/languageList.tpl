@@ -28,8 +28,7 @@
 	//]]>
 </script>
 
-<header class="box48 boxHeadline">
-	<img src="{@RELATIVE_WCF_DIR}icon/language1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.language.list{/lang}</h1>
 	</hgroup>
