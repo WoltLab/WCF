@@ -998,7 +998,7 @@ WCF.Clipboard = {
 	 * @param	object		event
 	 */
 	_executeAction: function(event) {
-		var $listItem = $(event.target);
+		var $listItem = $(event.currentTarget);
 		var $url = $listItem.data('url');
 		if ($url) {
 			window.location.href = $url;
