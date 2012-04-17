@@ -22,7 +22,6 @@
 	}
 	
 	.wbbStats {
-		font-size: @wcfSmallFontSize;
 		left: 50%;
 		margin-top: @wcfGapSmall;
 		position: absolute;
@@ -30,21 +29,14 @@
 		width: 15%;
 		
 		dl {
-			display: block;
-			
 			dt {
-				float: right;
+				line-height: @wcfBaseLineHeight;
 				width: 40%;
-				
-				&:after {
-					content: "";
-				}
 			}
 			
 			dd {
-				float: left;
-				margin: 0;
-				text-align: right;
+				font-weight: normal;
+				font-size: @wcfSmallFontSize;
 				width: 58%;
 			}
 		}
