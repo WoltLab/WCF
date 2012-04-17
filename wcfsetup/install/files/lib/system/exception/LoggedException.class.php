@@ -1,13 +1,14 @@
 <?php
 namespace wcf\system\exception;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * A logged exceptions prevents information disclosures and provides an easy
  * way to log errors.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Tim Düsterhus, Alexander Ebert
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.exception
@@ -50,10 +51,23 @@ class LoggedException extends \Exception {
 		}
 		
 		$e = ($this->getPrevious() ?: $this);
-		// build message
-		$message = date('r', TIME_NOW) . "\n" . $e->getMessage() . "\n\n" . $e->getTraceAsString() . "\n\n\n";
+		
+		$message = date('r', TIME_NOW)."\n".
+			'Message: '.$e->getMessage()."\n".
+			'File: '.$e->getFile().' ('.$e->getLine().")\n".
+			'PHP version: '.phpversion()."\n".
+			'WCF version: '.WCF_VERSION."\n".
+			'Request URI: '.(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '')."\n".
+			'Referrer: '.(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '')."\n".
+			"Stacktrace: \n  ".implode("\n  ", explode("\n", $e->getTraceAsString()))."\n";
+		
+		// calculate Exception-ID
+		$id = StringUtil::getHash($message);
+		$message = "<<<<<<<<".$id."<<<<\n".$message."<<<<\n\n";
 		
 		// append
 		@file_put_contents($logFile, $message, FILE_APPEND);
+		
+		return $id;
 	}
 }
