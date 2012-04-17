@@ -70,7 +70,7 @@ class SystemException extends LoggedException implements IPrintableException {
 	 */
 	public function show() {
 		// log error
-		$this->logError();
+		$exceptionID = $this->logError();
 		
 		// send status code
 		@header('HTTP/1.1 503 Service Unavailable');
@@ -153,9 +153,10 @@ class SystemException extends LoggedException implements IPrintableException {
 					<?php if (WCF::debugModeIsEnabled()) { ?>
 						<div>
 							<p><?php echo $this->getDescription(); ?></p>
-						
+							
 							<h2>Information:</h2>
 							<p>
+								<b>id:</b> <code><?php echo $exceptionID; ?></code><br>
 								<b>error message:</b> <?php echo StringUtil::encodeHTML($this->_getMessage()); ?><br>
 								<b>error code:</b> <?php echo intval($e->getCode()); ?><br>
 								<?php echo $this->information; ?>
@@ -166,12 +167,20 @@ class SystemException extends LoggedException implements IPrintableException {
 								<b>request:</b> <?php if (isset($_SERVER['REQUEST_URI']))  echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?><br>
 								<b>referer:</b> <?php if (isset($_SERVER['HTTP_REFERER'])) echo StringUtil::encodeHTML($_SERVER['HTTP_REFERER']); ?><br>
 							</p>
-
+							
 							<h2>Stacktrace:</h2>
 							<pre><?php echo StringUtil::encodeHTML($this->__getTraceAsString()); ?></pre>
 						</div>
+					<?php } else { ?>
+						<div>
+							<h2>Information:</h2>
+							<p>
+								<b>id:</b> <code><?php echo $exceptionID; ?></code><br>
+								Send this ID to the administrator of this website to report this issue.
+							</p>
+						</div>
 					<?php } ?>
-
+					
 					<?php echo $this->functions; ?>
 				</div>
 			</body>
