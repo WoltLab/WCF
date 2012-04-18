@@ -51,9 +51,9 @@
 		> div {
 			background-color: @wcfContentBackgroundColor;
 			padding: @wcfGapSmall;
-			border-radius: @wcfContainerBorderRadius;
 			margin-right: @wcfGapSmall;
 			
+			.borderRadius();
 			.boxShadowNative(~"inset 0 1px 1px rgba(0, 0, 0, .1)");
 		}
 		
@@ -286,7 +286,6 @@
 /* ############## Post Preview ############## */
 .wbbPostPreview {
 	background-color: @wcfTooltipBackgroundColor;
-	border-radius: @wcfContainerBorderRadius;
 	color: @wcfTooltipColor;
 	margin-bottom: 10px;
 	max-width: 450px;
@@ -295,6 +294,7 @@
 	position: absolute;
 	z-index: 320;
 	
+	.borderRadius();
 	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
 	
 	.pointer {

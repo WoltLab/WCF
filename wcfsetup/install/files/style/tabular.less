@@ -11,7 +11,7 @@
 	padding: 5px 7px;
 
 	h1 {
-		font-size: 120%;
+		font-size: @wcfTitleFontSize;
 		font-weight: bold;
 		
 		.textShadow(@wcfTabularBoxBackgroundColor);
@@ -30,11 +30,11 @@
 .tabularBox:not(.tabularBoxTitle) .table {
 	thead tr:first-child th {
 		&:first-child {
-			.borderRadius(@wcfContainerBorderRadius - 1, 0, 0, 0);
+			.borderRadius(@wcfContainerBorderRadius - 2, 0, 0, 0);
 		}
 		
 		&:last-child {
-			.borderRadius(0, @wcfContainerBorderRadius - 1, 0, 0);
+			.borderRadius(0, @wcfContainerBorderRadius - 2, 0, 0);
 		}
 	}
 }
@@ -174,11 +174,11 @@
 .tabularBox .table {
 	tbody tr:last-child td {
 		&:first-child {
-			.borderRadius(0, 0, 0, @wcfContainerBorderRadius - 1);
+			.borderRadius(0, 0, 0, @wcfContainerBorderRadius - 2);
 		}
 		
 		&:last-child {
-			.borderRadius(0, 0, @wcfContainerBorderRadius - 1, 0);
+			.borderRadius(0, 0, @wcfContainerBorderRadius - 2, 0);
 		}
 	}
 }

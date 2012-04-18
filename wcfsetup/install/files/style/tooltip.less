@@ -1,14 +1,8 @@
 /* ############## Balloon Tooltips ############## */
 
 /* Globals */
-
-.jsTooltip { /* Do not change this style */
-	cursor: pointer;
-}
-
 .balloonTooltip {
 	background-color: @wcfTooltipBackgroundColor;
-	border-radius: @wcfContainerBorderRadius;
 	color: @wcfTooltipColor;
 	font-size: .85em;
 	max-width: 300px;
@@ -16,6 +10,7 @@
 	position: absolute;
 	z-index: 800;
 	
+	.borderRadius();
 	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px); 
 	
 	.pointer {
