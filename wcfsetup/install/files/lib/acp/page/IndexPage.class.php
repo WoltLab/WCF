@@ -2,6 +2,7 @@
 namespace wcf\acp\page;
 use wcf\page\AbstractPage;
 use wcf\system\cache\CacheHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
@@ -23,6 +24,44 @@ class IndexPage extends AbstractPage {
 	public $templateName = 'index';
 	
 	/**
+	 * Did you know language item.
+	 *
+	 * @var string
+	 */
+	public $didYouKnow = '';
+	
+	/**
+	 * @see wcf\page\IPage::assignVariables()
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
+		
+		WCF::getTPL()->assign(array(
+			'didYouKnow' => $this->didYouKnow
+		));
+	}
+	
+	/**
+	 * @see wcf\page\IPage::readData()
+	 */
+	public function readData() {
+		parent::readData();
+		
+		$sql = "SELECT
+				languageItem
+			FROM
+				wcf".WCF_N."_language_item
+			WHERE
+				languageCategoryID = ?
+			ORDER BY
+				rand()";
+		$statement = WCF::getDB()->prepareStatement($sql, 1);
+		// TODO: Change category
+		$statement->execute(array(LanguageFactory::getInstance()->getCategory('wcf.global')->languageCategoryID));
+		$this->didYouKnow = $statement->fetchColumn();
+	}
+	
+	/**
 	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
@@ -39,20 +78,6 @@ class IndexPage extends AbstractPage {
 				exit;
 			}
 		}
-		
-		/*
-		if (WCFACP::getWcfPackageID() == PACKAGE_ID) {
-			$packages = CacheHandler::getInstance()->get('packages');
-			foreach ($packages as $packageID => $package) {
-				break;
-			}
-			
-			if (isset($packageID) && $packageID != PACKAGE_ID) {
-				HeaderUtil::redirect('../'.$packages[$packageID]['packageDir'].'acp/index.php'.SID_ARG_1ST, false);
-				exit;
-			}
-		}
-		*/
 		
 		// show page
 		parent::show();
