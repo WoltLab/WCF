@@ -25,10 +25,11 @@
 <p class="{@$health}">{lang}wcf.acp.index.health.summary.{@$health}{/lang}</p>
 {event name='boxes'}
 
-<div class="tabMenuContainer" data-active="{if $health !== 'success'}health{else}credits{/if}" data-store="activeTabMenuItem">
+<div class="tabMenuContainer" data-active="{if $health !== 'success'}health{else}news{/if}" data-store="activeTabMenuItem">
 	<nav class="tabMenu">
 		<ul>
 			{if $health !== 'success'}<li><a href="#health" title="Health">Health</a></li>{/if}
+			<li><a href="#news" title="News">News</a></li>
 			<li><a href="#credits" title="Credits">Credits</a></li>
 			{event name='tabs'}
 		</ul>
@@ -50,6 +51,9 @@
 			{/foreach}
 		</div>
 	{/if}
+	<div id="news" class="container containerPadding shadow hidden tabMenuContent">
+		WoltLab Community Framework is twice as cool now, as the version number is twice as high.
+	</div>
 	<fieldset id="credits" class="container containerPadding shadow hidden tabMenuContent">
 		<dl>
 			<dt>{lang}wcf.acp.index.credits.developedBy{/lang}</dt>
