@@ -733,6 +733,12 @@ WCF.Clipboard = {
 	 * @param	jQuery		jqXHR
 	 */
 	_loadMarkedItemsSuccess: function(data, textStatus, jqXHR) {
+		// unmark all items first
+		this._containers.each(function(index, container) {
+			$(container).find('input.jsClipboardItem').removeAttr('checked').end().find('input.jsClipboardMarkAll').removeAttr('checked');
+		});
+		
+		this._markedObjectIDs = [ ];
 		for (var $typeName in data.markedItems) {
 			var $objectData = data.markedItems[$typeName];
 			for (var $i in $objectData) {
@@ -989,7 +995,7 @@ WCF.Clipboard = {
 	 * Closes the clipboard editor item list.
 	 */
 	_closeLists: function() {
-		$('.jsClipboardEditor ul').removeClass('dropdownOpen')
+		$('.jsClipboardEditor ul').removeClass('dropdownOpen');
 	},
 	
 	/**
@@ -1036,7 +1042,10 @@ WCF.Clipboard = {
 			data: {
 				actionName: listItem.data('parameters').actionName,
 				className: listItem.data('parameters').className,
-				objectIDs: objectIDs
+				objectIDs: objectIDs,
+				parameters: {
+					unmarkItems: true
+				}
 			},
 			success: $.proxy(this._loadMarkedItems, this)
 		});
