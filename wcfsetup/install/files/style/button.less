@@ -28,7 +28,7 @@ button:not([disabled]) {
 	.boxShadow(0, 1px, rgba(0, 0, 0, .1), 3px);
 	.linearGradient(lighten(@wcfButtonBackgroundColor, 5%), lighten(@wcfButtonBackgroundColor, 10%), lighten(@wcfButtonBackgroundColor, 5%) 2px, @wcfButtonBackgroundColor);
 	.textShadow(@wcfButtonBackgroundColor);
-	.transition(~"background-color, background-image, border, box-shadow, color", .2s);
+	.transition(~"background-color, background-image, border, box-shadow, color", .1s);
 }
 
 /* primary */
@@ -59,7 +59,7 @@ button:not([disabled]):hover {
 	.textShadow(@wcfButtonHoverBackgroundColor);
 }
 
-/* active */
+/* active (pressed) */
 .button:active,
 input[type='reset']:not([disabled]):active,
 input[type='submit']:not([disabled]):active,
@@ -86,6 +86,21 @@ button:disabled {
 	.boxShadow(0, 1px, rgba(0, 0, 0, .1), 3px);
 	.linearGradient(lighten(@wcfButtonBackgroundColor, 5%), lighten(@wcfButtonBackgroundColor, 10%), lighten(@wcfButtonBackgroundColor, 5%) 2px, @wcfButtonBackgroundColor, bottom);
 	.textShadow(@wcfButtonBackgroundColor);
+}
+
+/* active (permanently) */
+.button.active,
+input[type='button'].active,
+button.active,
+.button.active:hover,
+input[type='button'].active:hover,
+button.active:hover {
+	border-color: darken(@wcfButtonColor, 5%);
+	color: lighten(@wcfButtonBackgroundColor, 5%);
+	
+	.boxShadow(0, 1px, rgba(0, 0, 0, .1), 3px);	
+	.linearGradient(@wcfButtonColor, darken(@wcfButtonColor, 10%), @wcfButtonColor 3px);
+	.textShadow(darken(@wcfButtonColor, 10%));
 }
 
 

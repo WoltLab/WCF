@@ -199,6 +199,28 @@ img {
 .icon256 { .icon(256px); }
 
 dl.dataList {
+	dt {
+		float: left;
+		overflow: hidden;
+		text-align: right;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 35%;
+	}
+	
+	dd {
+		text-align: left;
+		margin-left: 38%;
+		
+		&:after {
+			display: table;
+			content: "";
+			clear: both;
+		}
+	}
+}
+
+dl.statsDataList {
 	display: block;
 	
 	dt {
@@ -210,7 +232,7 @@ dl.dataList {
 		overflow: hidden;
 		text-align: left;
 		white-space: nowrap;
-		width: 68%;
+		width: 62%;
 		
 		a {
 			color: @wcfDimmedColor;
@@ -227,7 +249,7 @@ dl.dataList {
 		text-align: right;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		width: 30%;
+		width: 35%;
 		
 		a {
 			color: @wcfColor;

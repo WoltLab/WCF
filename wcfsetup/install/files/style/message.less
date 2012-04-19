@@ -67,22 +67,8 @@
 }
 
 .message.dividers {
-	.userAvatar,
-	.userRank,
-	.userCredits,
-	.userStatus {
-		border-bottom: 1px dotted darken(@wcfContainerBorderColor, 10%);
-	}
-	
-	.messageSidebar div:last-child {
-		border: 0;
-	}
-	
-	.messageSidebar > div {
-		> div,
-		> .messageHeader {
-			vertical-align: top;
-		}
+	.userCredits {
+		border-top: 1px dotted darken(@wcfContainerBorderColor, 10%);
 	}
 }
 
@@ -140,6 +126,10 @@
 	
 	> *:last-child {
 		//padding-bottom: @wcfGapMedium;
+	}
+	
+	> footer {
+		padding-bottom: @wcfGapMedium;
 	}
 }
 
@@ -203,6 +193,7 @@
 	
 	.userTitle {
 		/* todo */
+		margin: 7px 0 0;
 	}
 	
 	.userRank {
@@ -211,57 +202,36 @@
 	}
 	
 	.userAvatar {
-		display: block;
+		display: inline-block;
 		margin: @wcfGapSmall 0 0;
-		padding: 0 0 @wcfGapSmall;
 	}
 	
 	.userCredits {
-		color: @wcfLinkColor;
-		display: block;
-		margin: @wcfGapSmall 0 0;
-		padding: 0 0 @wcfGapSmall;
-	}
-	
-	.userStatus,
-	.userContacts {
-		color: @wcfLinkColor;
 		font-size: @wcfSmallFontSize;
-		display: block;
 		margin: @wcfGapSmall 0 0;
-		padding: 0 0 @wcfGapSmall;
+		padding: @wcfGapSmall 0 0;
+		
+		.dataList {
+			dt {
+				width: 47%;
+			}
+			
+			dd {
+				margin-left: 50%;
+			}
+		}
 	}
 	
-	.userStatus ul,
-	.userContact ul {
-		list-style-type: none;
-		
-		li {
-			display: inline;
+	&.online {
+		.userAvatar {
+			.boxShadow(0, 0, @wcfSuccessBackgroundColor, 10px);
 			
-			a {
-				display: inline-block;
-				margin: 0 -3px;
-				padding: 1px 3px 0;
-				text-align: left;
-				text-decoration: none;
-				
-				.transition(background-color, .2s);
-				
-				&:hover {
-					background-color: @wcfContainerBorderColor;
-					
-					.borderRadius(7px);
-					.boxShadow(0, 1px, #eee, 7px);
-				}
-				
-				span {
-					display: block;
-					left: -9000px;
-					position: absolute;
-					top: -9000px;
-				}
-			}
+			/* todo */
+			-webkit-animation-name: onlineStatus;
+			-webkit-animation-duration: 2s;
+			-webkit-animation-iteration-count: infinite;
+			-webkit-animation-direction: alternate;
+			-webkit-animation-timing-function: ease-in-out;
 		}
 	}
 }
@@ -299,3 +269,13 @@ li:nth-child(2n+1) .message {
 .highlight {
 	background-color: rgba(255, 200, 0, 1);
 }
+
+/* todo */
+@-webkit-keyframes onlineStatus {
+	0% {
+		-webkit-box-shadow: 0 0 10px @wcfSuccessBackgroundColor;
+	}
+	100% {
+		-webkit-box-shadow: 0 0 20px @wcfSuccessBackgroundColor;
+	}
+} 
