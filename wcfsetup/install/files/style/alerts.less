@@ -5,13 +5,13 @@
 .error,
 .success,
 .warning {
-	border-radius: @wcfContainerBorderRadius;
 	font-weight: bold;
 	line-height: 1.5;
 	margin-top: @wcfGapMedium;
 	padding: @wcfGapSmall @wcfGapMedium @wcfGapSmall 50px;
 	position: relative;
 	
+	.borderRadius();
 	.boxShadowNative(~"0 1px 2px rgba(0, 0, 0, .5), inset 0 0 1px rgba(0, 0, 0, .2)");
 	
 	&:after {
@@ -92,10 +92,8 @@
 	}
 }
 
-/* Inline Errors */
-
+/* inline errors */
 .innerError {
-	border-radius: @wcfContainerBorderRadius;
 	clear: both;
 	color: @wcfErrorColor;
 	display: table !important;
@@ -104,6 +102,7 @@
 	padding: 2px 10px;
 	position: relative; /* Firefox support (from version 10 on) is buggy */
 	
+	.borderRadius();
 	.boxShadowNative(~"0 1px 2px rgba(0, 0, 0, .5), inset 0 0 1px rgba(0, 0, 0, .2)");
 	.linearGradient(@wcfErrorBackgroundColor2, @wcfErrorBackgroundColor, @wcfErrorBackgroundColor2);
 	.textShadow(@wcfErrorBackgroundColor2);

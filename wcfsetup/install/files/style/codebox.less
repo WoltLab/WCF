@@ -172,9 +172,9 @@
 	margin-bottom: @wcfGapTiny;
 	
 	header {
-		padding-bottom: 4px;
+		padding-bottom: @wcfGapTiny;
 		border-bottom: 1px dotted @wcfContainerBorderColor;
-		margin-bottom: 7px;
+		margin-bottom: @wcfGapSmall;
 		
 		h1 {
 			font-weight: bold;
@@ -183,7 +183,21 @@
 	
 	.quoteBox {
 		background-image: none;
-		padding-left: 21px;
+		padding-left: @wcfGapLarge;
 		min-height: 0;
+	}
+}
+
+/* spoiler box */
+.spoilerBox {
+	background-color: @wcfContentBackgroundColor;
+	padding-bottom: @wcfGapSmall;
+	
+	> header {
+		margin-bottom: @wcfGapSmall;
+	}
+	
+	> div {
+		padding-bottom: @wcfGapSmall;
 	}
 }

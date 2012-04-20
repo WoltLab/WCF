@@ -67,22 +67,8 @@
 }
 
 .message.dividers {
-	.userAvatar,
-	.userRank,
-	.userCredits,
-	.userStatus {
-		border-bottom: 1px dotted darken(@wcfContainerBorderColor, 10%);
-	}
-	
-	.messageSidebar div:last-child {
-		border: 0;
-	}
-	
-	.messageSidebar > div {
-		> div,
-		> .messageHeader {
-			vertical-align: top;
-		}
+	.userCredits {
+		border-top: 1px dotted darken(@wcfContainerBorderColor, 10%);
 	}
 }
 
@@ -122,7 +108,7 @@
 	color: @wcfColor;
 	display: block;
 	line-height: 1.5;
-	padding: 10px 20px 1px;
+	padding: @wcfGapMedium @wcfGapLarge 1px;
 	position: relative;
 	
 	&:after {
@@ -135,11 +121,15 @@
 		border-top: 1px dotted @wcfContainerBorderColor;
 		display: block;
 		overflow: hidden;
-		padding: 10px 0;
+		padding: @wcfGapMedium 0;
 	}
 	
 	> *:last-child {
-		padding-bottom: 20px;
+		//padding-bottom: @wcfGapMedium;
+	}
+	
+	> footer {
+		padding-bottom: @wcfGapMedium;
 	}
 }
 
@@ -149,7 +139,7 @@
 	.borderRadius();
 	
 	.messageHeader {
-		padding: 20px 20px 0;
+		padding: @wcfGapMedium @wcfGapLarge 0;
 		position: relative;
 		
 		time {
@@ -174,10 +164,10 @@
 }
 
 .message .messageSidebar {
-	font-size: 90%;
+	//font-size: 90%;
 	line-height: 1.3;
 	margin-bottom: -1px;
-	padding: 10px 20px 20px;
+	padding: @wcfGapMedium @wcfGapLarge @wcfGapLarge;
 	position: relative;
 	text-align: center;
 	width: 170px; /* Width toggle */
@@ -188,110 +178,60 @@
 		display: block;
 	}
 	
-	header .username,
-	header .username a {
+	header .username {
 		color: @wcfLinkColor;
-		font-size: 110%;
+		font-size: @wcfTitleFontSize;
 		font-weight: bold;
-		padding: 1px 3px;
-		text-decoration: none;
+		padding: 0 3px 1px;
 		
 		.textShadow(@wcfContainerHoverBackgroundColor);
-	}
-	
-	header .username a img {
-		vertical-align: middle;
-	}
-	
-	a {
-		color: @wcfLinkColor;
 		
-		&:hover {
-			color: @wcfLinkHoverColor;
+		a {
+			text-decoration: none;
 		}
 	}
 	
-	.userTitle .badge {
-		background-color: @wcfLinkColor;
-		color: rgba(255, 255, 255, 1);
-		display: inline-block;
-		font-size: 95%;
-		margin-top: 3px;
-		padding: 0 10px;
-		
-		.borderRadius(13px);
-		.boxShadow(0, 1px, rgba(255, 255, 255, 1), 0);
+	.userTitle {
+		/* todo */
+		margin: 7px 0 0;
 	}
 	
 	.userRank {
-		color: rgba(255, 255, 255, 1);
-		display: block;
-		font-size: 95%;
-		margin: 3px 0 0;
-		padding: 0 0 7px;
+		/* todo */
+		margin: 2px 0 0;
 	}
 	
 	.userAvatar {
-		display: block;
-		margin: 7px 0 0;
-		padding: 0 0 7px;
-		
-		img {
-			border: 0;
-			padding: 0;
-		}
-	}
-	
-	.userCredits {
-		color: @wcfLinkColor;
-		display: block;
-		font-size: 95%;
-		margin: 7px 0 0;
-		padding: 0 0 7px;
-		
-		a,
-		p {
-			color: @wcfLinkColor;
-		}
-	}
-	
-	.userStatus,
-	.userContacts {
-		color: @wcfLinkColor;
-		display: block;
+		display: inline-block;
 		margin: @wcfGapSmall 0 0;
 	}
 	
-	.userStatus ul,
-	.userContact ul {
-		list-style-type: none;
+	.userCredits {
+		font-size: @wcfSmallFontSize;
+		margin: @wcfGapSmall 0 0;
+		padding: @wcfGapSmall 0 0;
 		
-		li {
-			display: inline;
-			
-			a {
-				display: inline-block;
-				margin: 0 -3px;
-				padding: 1px 3px 0;
-				text-align: left;
-				text-decoration: none;
-				
-				.transition(background-color, .2s);
-				
-				&:hover {
-					background-color: @wcfContainerBorderColor;
-					
-					.borderRadius(7px);
-					.boxShadow(0, 1px, #eee, 7px);
-				}
-				
-				span {
-					display: block;
-					left: -9000px;
-					position: absolute;
-					top: -9000px;
-				}
+		.dataList {
+			dt {
+				width: 47%;
 			}
+			
+			dd {
+				margin-left: 50%;
+			}
+		}
+	}
+	
+	&.online {
+		.userAvatar {
+			.boxShadow(0, 0, @wcfSuccessBackgroundColor, 10px);
+			
+			/* todo */
+			-webkit-animation-name: onlineStatus;
+			-webkit-animation-duration: 2s;
+			-webkit-animation-iteration-count: infinite;
+			-webkit-animation-direction: alternate;
+			-webkit-animation-timing-function: ease-in-out;
 		}
 	}
 }
@@ -329,3 +269,13 @@ li:nth-child(2n+1) .message {
 .highlight {
 	background-color: rgba(255, 200, 0, 1);
 }
+
+/* todo */
+@-webkit-keyframes onlineStatus {
+	0% {
+		-webkit-box-shadow: 0 0 10px @wcfSuccessBackgroundColor;
+	}
+	100% {
+		-webkit-box-shadow: 0 0 20px @wcfSuccessBackgroundColor;
+	}
+} 
