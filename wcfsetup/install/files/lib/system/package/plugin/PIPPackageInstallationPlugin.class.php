@@ -60,6 +60,18 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
 	protected function findExistingItem(array $data) {
-		return null;
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_".$this->tableName."
+			WHERE	pluginName = ?
+				AND packageID = ?";
+		$parameters = array(
+			$data['pluginName'],
+			$this->installation->getPackageID()
+		);
+		
+		return array(
+			'sql' => $sql,
+			'parameters' => $parameters
+		);
 	}
 }
