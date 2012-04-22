@@ -737,12 +737,6 @@ WCF.Clipboard = {
 	 * @param	jQuery		jqXHR
 	 */
 	_loadMarkedItemsSuccess: function(data, textStatus, jqXHR) {
-		// unmark all items first
-		this._containers.each(function(index, container) {
-			$(container).find('input.jsClipboardItem').removeAttr('checked').end().find('input.jsClipboardMarkAll').removeAttr('checked');
-		});
-		
-		this._markedObjectIDs = [ ];
 		for (var $typeName in data.markedItems) {
 			var $objectData = data.markedItems[$typeName];
 			for (var $i in $objectData) {
@@ -999,7 +993,7 @@ WCF.Clipboard = {
 	 * Closes the clipboard editor item list.
 	 */
 	_closeLists: function() {
-		$('.jsClipboardEditor ul').removeClass('dropdownOpen');
+		$('.jsClipboardEditor ul').removeClass('dropdownOpen')
 	},
 	
 	/**
@@ -1046,10 +1040,7 @@ WCF.Clipboard = {
 			data: {
 				actionName: listItem.data('parameters').actionName,
 				className: listItem.data('parameters').className,
-				objectIDs: objectIDs,
-				parameters: {
-					unmarkItems: true
-				}
+				objectIDs: objectIDs
 			},
 			success: $.proxy(this._loadMarkedItems, this)
 		});
@@ -5101,7 +5092,7 @@ WCF.Popover = Class.extend({
 	_prepare: function() {
 		// hide and reset
 		if (this._popover.is(':visible')) {
-			this._popover.empty().hide();
+			this._hide();
 		}
 		
 		// insert html
@@ -5127,6 +5118,9 @@ WCF.Popover = Class.extend({
 		var $orientation = this._getOrientation($dimensions.height, $dimensions.width);
 		this._popover.css(this._getCSS($orientation.x, $orientation.y));
 		
+		// apply orientation to popover
+		this._popover.removeClass('bottom left right top').addClass($orientation.x).addClass($orientation.y);
+		
 		this._show();
 	},
 	
@@ -5145,10 +5139,45 @@ WCF.Popover = Class.extend({
 	_loadContent: function() { },
 	
 	/**
+	 * Inserts content and animating transition.
+	 * 
+	 * @param	string		elementID
+	 * @param	boolean		animate
+	 */
+	_insertContent: function(elementID, content, animate) {
+		this._data[elementID] = {
+			content: content,
+			loading: false
+		};
+		
+		// only update content if element id is active
+		if (this._activeElementID === elementID) {
+			// get current dimensions
+			var $dimensions = this._popover.getDimensions();
+			
+			// insert new content
+			this._popover.html(this._data[elementID].content);
+			var $newDimensions = this._popover.getDimensions();
+			
+			// enforce current dimensions
+			this._popover.css({
+				height: $dimensions.height + 'px',
+				width: $dimensions.width + 'px'
+			});
+			
+			// animate to new dimensons
+			this._popover.animate({
+				height: $newDimensions.height + 'px',
+				width: $newDimensions.width + 'px'
+			}, 200);
+		}
+	},
+	
+	/**
 	 * Hides the popover.
 	 */
 	_hide: function() {
-		this._popover.hide();
+		this._popover.empty().stop().hide().css({ height: 'auto', width: 'auto' });
 	},
 	
 	/**
@@ -5194,7 +5223,7 @@ WCF.Popover = Class.extend({
 		// try default orientation first
 		var $orientationX = (this._defaultOrientation.x === 'left') ? 'left' : 'right';
 		var $orientationY = (this._defaultOrientation.y === 'bottom') ? 'bottom' : 'top';
-		$result = this._evaluateOrientation($orientationX, $orientationY, $offsets, $elementDimensions, $documentDimensions, height, width);
+		var $result = this._evaluateOrientation($orientationX, $orientationY, $offsets, $elementDimensions, $documentDimensions, height, width);
 		
 		if ($result.flawed) {
 			// try flipping orientationX
@@ -5285,7 +5314,6 @@ WCF.Popover = Class.extend({
 		var $css = {
 			bottom: 'auto',
 			left: 'auto',
-			position: 'absolute',
 			right: 'auto',
 			top: 'auto'
 		};
@@ -5293,11 +5321,11 @@ WCF.Popover = Class.extend({
 		var $element = $('#' + this._activeElementID);
 		var $offsets = $element.getOffsets();
 		var $elementDimensions = $element.getDimensions();
-		var $documentDimensions = $(document).getDimensions();
+		var $windowDimensions = $(window).getDimensions();
 		
 		switch (orientationX) {
 			case 'left':
-				$css.right = $documentDimensions.width - ($offsets.left + $elementDimensions.width);
+				$css.right = $windowDimensions.width - ($offsets.left + $elementDimensions.width);
 			break;
 			
 			case 'right':
@@ -5311,7 +5339,7 @@ WCF.Popover = Class.extend({
 			break;
 			
 			case 'top':
-				$css.bottom = $documentDimensions.height - ($offsets.top - this._popoverOffset);
+				$css.bottom = $windowDimensions.height - ($offsets.top - this._popoverOffset);
 			break;
 		}
 		
