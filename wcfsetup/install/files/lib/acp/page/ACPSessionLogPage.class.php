@@ -30,12 +30,12 @@ class ACPSessionLogPage extends SortablePage {
 	/**
 	 * @see wcf\page\SortablePage::$defaultSortField
 	 */
-	public $defaultSortField = 'time';
+	public $defaultSortField = 'logTime';
 	
 	/**
 	 * @see	wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('sessionAccessLogID', 'ipAddress', 'time', 'requestURI', 'requestMethod', 'className', 'packageName');
+	public $validSortFields = array('sessionAccessLogID', 'ipAddress', 'logTime', 'requestURI', 'requestMethod', 'className', 'packageName');
 	
 	/**
 	 * session log id

@@ -33,7 +33,7 @@ CREATE TABLE wcf1_acp_session_access_log (
 	sessionLogID INT(10) NOT NULL,
 	packageID INT(10),
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
-	time INT(10) NOT NULL DEFAULT 0,
+	logTime INT(10) NOT NULL DEFAULT 0,
 	requestURI VARCHAR(255) NOT NULL DEFAULT '',
 	requestMethod VARCHAR(4) NOT NULL DEFAULT '',
 	className VARCHAR(255) NOT NULL DEFAULT '',
@@ -48,7 +48,7 @@ CREATE TABLE wcf1_acp_session_log (
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	hostname VARCHAR(255) NOT NULL DEFAULT '',
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
-	time INT(10) NOT NULL DEFAULT 0,
+	logTime INT(10) NOT NULL DEFAULT 0,
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
 	KEY sessionID (sessionID)
 );

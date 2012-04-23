@@ -49,7 +49,7 @@ class SessionAccessLogListener implements IEventListener {
 					'ipAddress' => WCF::getSession()->ipAddress,
 					'hostname' => @gethostbyaddr(WCF::getSession()->ipAddress),
 					'userAgent' => WCF::getSession()->userAgent,
-					'time' => TIME_NOW,
+					'logTime' => TIME_NOW,
 					'lastActivityTime' => TIME_NOW
 				));
 				$sessionLogID = $sessionLog->sessionLogID;
@@ -68,7 +68,7 @@ class SessionAccessLogListener implements IEventListener {
 				'sessionLogID' => $sessionLogID,
 				'packageID' => PACKAGE_ID,
 				'ipAddress' => WCF::getSession()->ipAddress,
-				'time' => TIME_NOW,
+				'logTime' => TIME_NOW,
 				'requestURI' => $requestURI,
 				'requestMethod' => WCF::getSession()->requestMethod,
 				'className' => get_class($eventObj)
