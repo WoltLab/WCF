@@ -38,7 +38,7 @@ class ACPSessionLogListPage extends SortablePage {
 	/**
 	 * @see wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('sessionLogID', 'username', 'ipAddress', 'userAgent', 'time', 'lastActivityTime', 'accesses');
+	public $validSortFields = array('sessionLogID', 'username', 'ipAddress', 'userAgent', 'logTime', 'lastActivityTime', 'accesses');
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName

@@ -973,7 +973,8 @@ class WCFSetup extends WCF {
 		// search existing wcf package
 		$sql = "SELECT	COUNT(*) AS count
 			FROM	wcf".WCF_N."_package
-			WHERE	package = 'com.woltlab.wcf'";
+			WHERE	package = 'com.woltlab.wcf'
+			GROUP BY packageID";
 		$statement = self::getDB()->prepareStatement($sql);
 		$statement->execute();
 		$row = $statement->fetchArray();
