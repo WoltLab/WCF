@@ -742,7 +742,7 @@ class TemplateScriptingCompiler {
 			unset($args['append']);
 		}
 		
-		$sandbox = true;
+		$sandbox = false;
 		if (isset($args['sandbox'])) {
 			$sandbox = $args['sandbox'];
 			unset($args['sandbox']);
@@ -810,7 +810,7 @@ class TemplateScriptingCompiler {
 			$phpCode .= "ob_start();\n";
 		}
 		
-		$phpCode .= '$this->includeTemplate('.$file.', array('.$argString.'), ('.$sandbox.' ? 1 : 0), $this->v[\'__PACKAGE_ID\']);'."\n";
+		$phpCode .= '$this->includeTemplate('.$file.', array('.$argString.'), '.($sandbox ? 1 : 0).', $this->v[\'__PACKAGE_ID\']);'."\n";
 		
 		if ($assignVar !== false) {
 			$phpCode .= '$this->'.($append ? 'append' : 'assign').'('.$assignVar.', ob_get_clean());'."\n";
