@@ -4928,8 +4928,8 @@ WCF.Popover = Class.extend({
 	 * @var	object
 	 */
 	_defaultDimensions: {
-		height: 30,
-		width: 150,
+		height: 150,
+		width: 450,
 	},
 	
 	/**
@@ -4975,6 +4975,12 @@ WCF.Popover = Class.extend({
 	_margin: 20,
 	
 	/**
+	 * periodical executer once element or popover is no longer being hovered
+	 * @var	WCF.PeriodicalExecuter
+	 */
+	_peOut: null,
+	
+	/**
 	 * periodical executer once an element is being hovered
 	 * @var	WCF.PeriodicalExecuter
 	 */
@@ -5008,8 +5014,8 @@ WCF.Popover = Class.extend({
 		this._activeElementID = '';
 		this._data = { };
 		this._defaultDimensions = {
-			height: 30,
-			width: 150
+			height: 150,
+			width: 450
 		};
 		this._defaultOrientation = {
 			x: 'right',
@@ -5023,15 +5029,13 @@ WCF.Popover = Class.extend({
 		this._hoverElementID = '';
 		this._hoverPopover = false;
 		this._margin = 20;
+		this._peOut = null;
+		this._peOverElement = null;
 		this._popoverOffset = 10;
 		this._selector = selector;
 		
-		// reuse existing instance or create a new popover
-		this._popover = $('#popover');
-		if (!this._popover.length) {
-			this._popover = $('<div id="popover" class="popover" />').hide().appendTo(document.body);
-			this._popover.hover($.proxy(this._overPopover, this), $.proxy(this._out, this));
-		}
+		this._popover = $('<div class="popover" />').hide().appendTo(document.body);
+		this._popover.hover($.proxy(this._overPopover, this), $.proxy(this._out, this));
 		
 		this._initContainers();
 	},
@@ -5090,6 +5094,10 @@ WCF.Popover = Class.extend({
 	 * Prepares popover to be displayed.
 	 */
 	_prepare: function() {
+		if (this._peOut !== null) {
+			this._peOut.stop();
+		}
+		
 		// hide and reset
 		if (this._popover.is(':visible')) {
 			this._hide();
@@ -5111,6 +5119,9 @@ WCF.Popover = Class.extend({
 				height: Math.max($dimensions.height, this._defaultDimensions.height),
 				width: Math.max($dimensions.width, this._defaultDimensions.width)
 			};
+		}
+		else {
+			$dimensions = this._fixElementDimensions(this._popover, $dimensions);
 		}
 		this._popover.hide();
 		
@@ -5204,6 +5215,10 @@ WCF.Popover = Class.extend({
 	 * Triggered once popover is being hovered.
 	 */
 	_overPopover: function() {
+		if (this._peOut !== null) {
+			this._peOut.stop();
+		}
+		
 		this._hoverElement = false;
 		this._hoverPopover = true;
 	},
@@ -5212,12 +5227,11 @@ WCF.Popover = Class.extend({
 	 * Triggered once element *or* popover is now longer hovered.
 	 */
 	_out: function(event) {
-		console.debug("_out(): init");
 		this._hoverElementID = '';
 		this._hoverElement = false;
 		this._hoverPopover = false;
 		
-		new WCF.PeriodicalExecuter($.proxy(function(pe) {
+		this._peOut = new WCF.PeriodicalExecuter($.proxy(function(pe) {
 			pe.stop();
 			
 			// hide popover is neither element nor popover was hovered given time
@@ -5237,7 +5251,7 @@ WCF.Popover = Class.extend({
 	_getOrientation: function(height, width) {
 		// get offsets and dimensions
 		var $element = $('#' + this._activeElementID);
-		var $offsets = $element.getOffsets();
+		var $offsets = $element.getOffsets('offset');
 		var $elementDimensions = $element.getDimensions();
 		var $documentDimensions = $(document).getDimensions();
 		
@@ -5297,13 +5311,13 @@ WCF.Popover = Class.extend({
 			break;
 			
 			case 'right':
-				$widthDifference = documentDimensions.width - (offsets.left + elementDimensions.width);
+				$widthDifference = documentDimensions.width - (offsets.left + width);
 			break;
 		}
 		
 		switch (orientationY) {
 			case 'bottom':
-				$heightDifference = documentDimensions.height - (offsets.top + elementDimensions.height + this._popoverOffset);
+				$heightDifference = documentDimensions.height - (offsets.top + elementDimensions.height + this._popoverOffset + height);
 			break;
 			
 			case 'top':
@@ -5340,8 +5354,8 @@ WCF.Popover = Class.extend({
 		};
 		
 		var $element = $('#' + this._activeElementID);
-		var $offsets = $element.getOffsets();
-		var $elementDimensions = $element.getDimensions();
+		var $offsets = $element.getOffsets('offset');
+		var $elementDimensions = this._fixElementDimensions($element, $element.getDimensions());
 		var $windowDimensions = $(window).getDimensions();
 		
 		switch (orientationX) {
@@ -5365,6 +5379,27 @@ WCF.Popover = Class.extend({
 		}
 		
 		return $css;
+	},
+	
+	/**
+	 * Tries to fix dimensions if element is partially hidden (overflow: hidden).
+	 * 
+	 * @param	jQuery		element
+	 * @param	object		dimensions
+	 * @return	dimensions
+	 */
+	_fixElementDimensions: function(element, dimensions) {
+		var $parentDimensions = element.parent().getDimensions();
+		
+		if ($parentDimensions.height < dimensions.height) {
+			dimensions.height = $parentDimensions.height;
+		}
+		
+		if ($parentDimensions.width < dimensions.width) {
+			dimensions.width = $parentDimensions.width;
+		}
+		
+		return dimensions;
 	}
 });
 
