@@ -3,7 +3,6 @@
 <header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.cronjob.{$action}{/lang}</h1>
-		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>
 	</hgroup>
 </header>
 

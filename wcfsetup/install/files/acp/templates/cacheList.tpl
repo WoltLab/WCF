@@ -64,7 +64,7 @@
 	{if $files|count}
 		<div class="tabularBox tabularBoxTitle marginTop shadow">
 			<hgroup>
-				<h1><a class="jsCollapsible" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}"><img src="{@$__wcf->getPath()}icon/closed2.svg" alt="" title="{lang}wcf.global.button.collapsible{/lang}" class="icon16 jsTooltip" /></a> {$cache} <span class="wcf-badge" title="{lang}wcf.acp.cache.data.files.count{/lang}">{#$files|count}</span></h1>
+				<h1><a class="jsCollapsible" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}"><img src="{@$__wcf->getPath()}icon/closed2.svg" alt="" title="{lang}wcf.global.button.collapsible{/lang}" class="icon16 jsTooltip" /></a> {$cache} <span class="badge badgeInverse" title="{lang}wcf.acp.cache.data.files.count{/lang}">{#$files|count}</span></h1>
 			</hgroup>
 			
 			<table id="cache{@$cacheIndex}" style="display: none;" class="table">

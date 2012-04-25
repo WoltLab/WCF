@@ -4,6 +4,43 @@
 	
 	> div {
 		overflow: hidden;
+		
+		> dl {
+			display: table;
+			margin-top: 7px;
+			width: 100%;
+			
+			> dt {
+				text-align: right;
+				display: table-cell;
+				width: 1%;
+				
+				> pre {
+					padding: 4px 7px;
+					
+					> a {
+						display: block;
+						margin: 0 -7px;
+						padding: 0 7px;
+						text-decoration: none;
+						
+						&:target {
+							color: #000;
+							background-color: #ff3; 
+						}
+					}
+				}
+			}
+			
+			> dd {
+				display: table-cell;
+				width: 100%;
+				
+				> pre {
+					padding: 4px 7px;
+				}
+			}
+		}
 	}
 	
 	&:hover {
@@ -12,51 +49,13 @@
 		}
 	}
 	
-	hgroup {
+	> hgroup {
 		border-bottom: 1px dotted @wcfContainerBorderColor;
 		
-		h1 {
+		> h1 {
 			padding-bottom: 4px;
 			font-weight: bold;
 		}
-	}
-	
-	dl {
-		display: table;
-		margin-top: 7px;
-		width: 100%;
-		
-		dt {
-			text-align: right;
-			display: table-cell;
-			width: 1%;
-			
-			pre {
-				padding: 4px 7px;
-				
-				a {
-					display: block;
-					margin: 0 -7px;
-					padding: 0 7px;
-					text-decoration: none;
-					
-					&:target {
-						color: #000;
-						background-color: #ff3; 
-					}
-				}
-			}
-		}
-		
-		dd {
-			display: table-cell;
-			width: 100%;
-			
-			pre {
-				padding: 4px 7px;
-			}
-		}
-	
 	}
 }
 
@@ -171,16 +170,17 @@
 	min-height: 28px;
 	margin-bottom: @wcfGapTiny;
 	
-	header {
+	> header {
 		padding-bottom: @wcfGapTiny;
 		border-bottom: 1px dotted @wcfContainerBorderColor;
 		margin-bottom: @wcfGapSmall;
 		
-		h1 {
+		> h1 {
 			font-weight: bold;
 		}
 	}
 	
+	/* nested quotes */
 	.quoteBox {
 		background-image: none;
 		padding-left: @wcfGapLarge;

@@ -148,9 +148,9 @@
 				</nav>
 				
 				{if $options|count}
-					<div id="profile" class="container containerPadding tabMenuContent hidden">
+					<fieldset id="profile" class="container containerPadding tabMenuContent hidden">
 						{include file='optionFieldList' langPrefix='wcf.user.option.'}
-					</div>
+					</fieldset>
 				{/if}
 				
 				{event name='tabMenuContent'}
@@ -159,37 +159,32 @@
 	</div>
 	
 	<div class="container containerPadding marginTop shadow">
-		<dl{if $errorField == 'action'} class="formError"{/if}>
-			<dt><label>{lang}wcf.acp.user.massProcessing.action{/lang}</label></dt>
-			<dd>
-				<fieldset>
-					<legend>{lang}wcf.acp.user.massProcessing.action{/lang}</legend>
+		<fieldset{if $errorField == 'action'} class="formError"{/if}>
+			<legend>{lang}wcf.acp.user.massProcessing.action{/lang}</legend>
+			
+			<dl>
+				<dd>
+					{if $__wcf->session->getPermission('admin.user.canMailUser')}
+						<label><input type="radio" name="action" value="sendMail" {if $action == 'sendMail'}checked="checked" {/if}/> {lang}wcf.acp.user.sendMail{/lang}</label>
+						<label><input type="radio" name="action" value="exportMailAddress" {if $action == 'exportMailAddress'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress{/lang}</label>
+					{/if}
+					{if $__wcf->session->getPermission('admin.user.canEditUser')}
+						<label><input type="radio" name="action" value="assignToGroup" {if $action == 'assignToGroup'}checked="checked" {/if}/> {lang}wcf.acp.user.assignToGroup{/lang}</label>
+					{/if}
+					{if $__wcf->session->getPermission('admin.user.canDeleteUser')}
+						<label><input type="radio" name="action" value="delete" {if $action == 'delete'}checked="checked" {/if}/> {lang}wcf.acp.user.delete{/lang}</label>
+					{/if}
 					
-					<dl>
-						<dd>
-							{if $__wcf->session->getPermission('admin.user.canMailUser')}
-								<label><input type="radio" name="action" value="sendMail" {if $action == 'sendMail'}checked="checked" {/if}/> {lang}wcf.acp.user.sendMail{/lang}</label>
-								<label><input type="radio" name="action" value="exportMailAddress" {if $action == 'exportMailAddress'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress{/lang}</label>
-							{/if}
-							{if $__wcf->session->getPermission('admin.user.canEditUser')}
-								<label><input type="radio" name="action" value="assignToGroup" {if $action == 'assignToGroup'}checked="checked" {/if}/> {lang}wcf.acp.user.assignToGroup{/lang}</label>
-							{/if}
-							{if $__wcf->session->getPermission('admin.user.canDeleteUser')}
-								<label><input type="radio" name="action" value="delete" {if $action == 'delete'}checked="checked" {/if}/> {lang}wcf.acp.user.delete{/lang}</label>
-							{/if}
-							
-							{event name='additionalActions'}
-							
-							{if $errorField == 'action'}
-								<small class="innerError">
-									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-								</small>
-							{/if}
-						</dd>
-					</dl>
-				</fieldset>
-			</dd>
-		</dl>
+					{event name='additionalActions'}
+					
+					{if $errorField == 'action'}
+						<small class="innerError">
+							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+						</small>
+					{/if}
+				</dd>
+			</dl>
+		</fieldset>
 		
 		<div id="sendMailDiv">
 			<fieldset>

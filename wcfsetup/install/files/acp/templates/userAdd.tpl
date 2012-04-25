@@ -39,40 +39,36 @@
 
 <form method="post" action="{if $action == 'add'}{link controller='UserAdd'}{/link}{else}{link controller='UserEdit'}{/link}{/if}">
 	<div class="container containerPadding marginTop shadow">
-		<dl{if $errorType.username|isset} class="formError"{/if}>
-			<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
-			<dd>
-				<input type="text" id="username" name="username" value="{$username}" pattern="^[^,\n]+$" autofocus="autofocus" class="medium" />
-				{if $errorType.username|isset}
-					<small class="innerError">
-						{if $errorType.username == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.user.username.error.{@$errorType.username}{/lang}
-						{/if}
-					</small>
-				{/if}
-			</dd>
-		</dl>
+		<fieldset>
+			<legend>{lang}wcf.acp.user.general{/lang}</legend>
 		
-		{if $availableGroups|count}
-			<dl>
-				<dt>
-					<label>{lang}wcf.acp.user.groups{/lang}</label>
-				</dt>
+			<dl{if $errorType.username|isset} class="formError"{/if}>
+				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 				<dd>
-					<fieldset>
-						<legend>{lang}wcf.acp.user.groups{/lang}</legend>
-						
-						<dl>
-							<dd>
-								{htmlCheckboxes options=$availableGroups name=groupIDs selected=$groupIDs}
-							</dd>
-						</dl>
-					</fieldset>
+					<input type="text" id="username" name="username" value="{$username}" pattern="^[^,\n]+$" autofocus="autofocus" class="medium" />
+					{if $errorType.username|isset}
+						<small class="innerError">
+							{if $errorType.username == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.user.username.error.{@$errorType.username}{/lang}
+							{/if}
+						</small>
+					{/if}
 				</dd>
 			</dl>
-		{/if}
+		
+			{if $availableGroups|count}
+				<dl>
+					<dt>
+						<label>{lang}wcf.acp.user.groups{/lang}</label>
+					</dt>
+					<dd>
+						{htmlCheckboxes options=$availableGroups name=groupIDs selected=$groupIDs}
+					</dd>
+				</dl>
+			{/if}
+		</fieldset>
 		
 		{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
 			<fieldset>

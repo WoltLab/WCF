@@ -10,23 +10,25 @@
 		border-top: 1px dotted @wcfContainerBorderColor;
 		color: @wcfColor;
 		font-size: @wcfTitleFontSize;
-		padding: 4px 0 0;
+		padding: @wcfGapTiny 0 0;
 	}
 }
 
 .attachmentThumbnailList {
 	> ul > li {
-		margin: 0 0 14px 7px;
+		margin: 0 0 @wcfGapMedium @wcfGapSmall;
 	}
 }
 
 .attachmentFileList {
-	> ul > li:not(:first-child) {
-		margin-top: @wcfGapTiny;
-	}
+	> ul > li {
+		&:not(:first-child) {
+			margin-top: @wcfGapTiny;
+		}
 	
-	hgroup h2 {
-		font-size: @wcfSmallFontSize;
+		> hgroup h2 {
+			font-size: @wcfSmallFontSize;
+		}
 	}
 }
 
@@ -38,7 +40,8 @@
 	.boxShadow(0, 1px, rgba(0, 0, 0, 0.2), 1px);
 	.transition(box-shadow, .1s);
 		
-	img {
+	> img,
+	> a > img {
 		.borderRadius();
 	}
 	
@@ -48,12 +51,13 @@
 		color: #fff;
 		position: absolute;
 		width: 100%;
-		padding: 7px 0;
+		padding: @wcfGapSmall 0;
 		
-		.borderRadius(0, 0, 5px, 5px);
+		.borderRadius(0, 0, @wcfContainerBorderRadius - 2, @wcfContainerBorderRadius - 2);
 		
-		> h1, h2 {
-			margin: 0 7px;
+		> h1,
+		> h2 {
+			margin: 0 @wcfGapSmall;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
@@ -80,8 +84,9 @@
 /* attachment form */
 .formAttachmentList {
 	border-bottom: 1px solid @wcfContainerBorderColor;
+	margin-bottom: @wcfGapSmall;
 	padding-bottom: @wcfGapSmall;
-	
+		
 	> li {
 		width: 33%;
 		float: left;
@@ -93,23 +98,13 @@
 			.borderRadius();
 		}
 		
-		hgroup {
-			float: left;
-			margin-right: @wcfGapSmall;
-		}
-		
 		> div {
 			padding-top: @wcfGapSmall;
-		}
-		
-		ul {
 			
+			> hgroup {
+				float: left;
+				margin-right: @wcfGapSmall;
+			}
 		}
-	}
-}
-
-.formAttachmentContent {
-	dl {
-		margin-top: 0;
 	}
 }

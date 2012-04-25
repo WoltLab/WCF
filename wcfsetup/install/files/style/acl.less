@@ -1,4 +1,4 @@
-.aclContainer dd > span {
+.aclContainer > dd > span {
 	position: relative;
 }
 
@@ -7,7 +7,7 @@
 	margin-top: 0;
 	min-height: 100px;
 
-	li {
+	> li {
 		display: block;
 		padding: @wcfGapTiny;
 
@@ -26,7 +26,7 @@
 .aclList {
 	margin-bottom: @wcfGapSmall;
 	
-	li {
+	> li {
 		cursor: pointer;
 
 		&:hover,
@@ -38,7 +38,7 @@
 			background-color: @wcfContainerAccentBackgroundColor;
 		}
 		
-		img:last-child {
+		> img:last-child {
 			float: right;
 			margin-right: @wcfGapSmall;
 		}
@@ -50,7 +50,7 @@
 	min-height: 200px;
 	text-align: right;
 
-	li {
+	> li {
 		&:hover {
 			background-color: @wcfButtonHoverBackgroundColor;
 		}
@@ -61,12 +61,12 @@
 			text-align: left;
 		}
 		
-		span {
+		> span {
 			float: left;
 			padding-left: @wcfGapSmall;
 		}
 		
-		label {
+		> label {
 			cursor: pointer;
 			margin: 0 @wcfGapSmall;
 			padding: 0 @wcfGapLarge;

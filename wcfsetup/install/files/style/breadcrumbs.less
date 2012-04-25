@@ -28,7 +28,6 @@
 				
 				a {
 					background-color: @wcfContainerAccentBackgroundColor;
-					color: @wcfLinkHoverColor;
 					position: relative;
 					z-index: 10;
 				}
@@ -38,35 +37,35 @@
 				}
 			}
 			
-			> span {
-				border-width: 15px;
-				border-style: solid none solid solid;
+			> .pointer {
 				border-color: transparent transparent transparent @wcfContainerBorderColor;
-				display: block !important;
-				position: absolute;
-				width: 0;
-				height: 0;
-				top: -4px;
-				right: -15px;
-				z-index: 20;
-			}
-			
-			> .pointer > span {
-				text-indent: -9000px;
-				border-width: 15px;
 				border-style: solid none solid solid;
-				border-color: transparent transparent transparent @wcfContentBackgroundColor;
-				display: block;
-				position: absolute;
-				width: 0;
+				border-width: 15px;
+				display: block !important;
 				height: 0;
-				top: -15px;
-				left: -16px;
-				overflow: hidden;
+				position: absolute;
+				right: -15px;
+				top: -4px;
+				width: 0;
+				z-index: 20;
+				
+				> span {
+					border-color: transparent transparent transparent @wcfContentBackgroundColor;
+					border-style: solid none solid solid;
+					border-width: 15px;
+					display: block;
+					height: 0;
+					left: -16px;
+					overflow: hidden;
+					position: absolute;
+					text-indent: -9000px;
+					top: -15px;
+					width: 0;
+				}
 			}
 			
-			a {
-				color: @wcfLinkColor;
+			> a {
+				color: @wcfColor;
 				display: block;
 				margin: 0;
 				overflow: hidden;
@@ -77,13 +76,14 @@
 				.textShadow(@wcfContentBackgroundColor);
 			}
 			
-			&:first-child a {
+			&:first-child > a {
 				background-image: url('../icon/home1.svg');
 				background-position: 7px center;
 				background-repeat: no-repeat;
 				background-size: 16px;
-				border-radius: 5px 0 0 5px;
 				padding-left: 30px;
+				
+				.borderRadius(@wcfContainerBorderRadius - 2, 0, 0, @wcfContainerBorderRadius - 2);
 			}
 		}
 	}

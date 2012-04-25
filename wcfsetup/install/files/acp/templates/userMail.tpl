@@ -91,7 +91,7 @@
 			<dl{if $errorField == 'subject'} class="formError"{/if}>
 				<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
 				<dd>
-					<input type="text" id="subject" name="subject" value="{$subject}" autofocus="autofocus" placeholder="enter subject" class="long" />
+					<input type="text" id="subject" name="subject" value="{$subject}" autofocus="autofocus" class="long" />
 					{if $errorField == 'subject'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -107,7 +107,7 @@
 			<dl{if $errorField == 'from'} class="formError"{/if}>
 				<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
 				<dd>
-					<input type="text" id="from" name="from" value="{$from}" class="medium" />
+					<input type="text" id="from" name="from" value="{$from}" class="long" />
 					{if $errorField == 'from'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -138,7 +138,6 @@
 			</dl>
 			
 			<dl>
-				<dt></dt>
 				<dd>
 					<label><input type="checkbox" id="enableHTML" name="enableHTML" {if $enableHTML == 1}checked="checked" {/if}value="1" /> {lang}wcf.acp.user.sendMail.enableHTML{/lang}</label>
 				</dd>

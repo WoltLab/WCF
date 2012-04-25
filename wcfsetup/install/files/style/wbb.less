@@ -1,11 +1,11 @@
 /* ############## Board List ############## */
 .wbbBoardList {
 	> li.wbbBoardNodeTop:not(.wbbBoardNodeTopEmpty) > div {
-		.borderRadius(@wcfContainerBorderRadius - 1, 0);
+		.borderRadius(@wcfContainerBorderRadius - 2, 0);
 	}
 	
 	> li > ul > li:last-child div.wbbBoard:last-child {
-		.borderRadius(0, @wcfContainerBorderRadius - 1);
+		.borderRadius(0, @wcfContainerBorderRadius - 2);
 	}
 	
 	> li > ul > .wbbCategory > hgroup {
@@ -123,7 +123,7 @@
 	}
 	
 	.wbbBoardNodeTopEmpty div.wbbBoard {
-		.borderRadius(@wcfContainerBorderRadius - 1);
+		.borderRadius(@wcfContainerBorderRadius - 2);
 	}
 	
 	.wbbBoard > div > hgroup > h1 {

@@ -1,58 +1,66 @@
 /* ############## Profile Comments ############## */
+.comment,
+.commentResponse {
+	position: relative;
+}
 
-.commentList {
-	.comment, .commentResponse {
-		position: relative;
-	}
+.commentOptions {
+	display: block;
+	position: absolute;
+	top: @wcfGapMedium;
+	right: @wcfGapMedium;
 	
-	.commentOptions {
-		display: block;
-		position: absolute;
-		top: @wcfGapMedium;
-		right: @wcfGapMedium;
+	> li {
+		float: left;
+		opacity: 0;
 		
-		li {
-			float: left;
-			opacity: 0;
-			
-			.transition(opacity, .1s);
-			
-			a {
-				padding: 4px;
-			}
+		.transition(opacity, .1s);
+		
+		> a {
+			padding: @wcfGapTiny;
 		}
 	}
-	
-	.commentResponseList .commentOptions {
-		top: @wcfGapSmall;
-		right: @wcfGapSmall;
-	}
-	
-	.commentContent:hover .commentOptions li {
-		opacity: 1;
-	}
+}
 
-	.commentAdd small, .commentResponseAdd small {
-		color: @wcfDimmedColor;
-	}
+.commentResponseList .commentOptions {
+	top: @wcfGapSmall;
+	right: @wcfGapSmall;
+}
+
+.commentContent:hover > .commentOptions > li {
+	opacity: 1;
+}
+
+.commentAdd > div > small,
+.commentResponseAdd > div > small {
+	color: @wcfDimmedColor;
+	display: block;
+	opacity: 0;
 	
-	.commentContent:not(.commentResponseContent) {
-		margin-bottom: @wcfGapMedium;
-	}
-	
-	.commentResponseList .commentResponse {
-		border-top: 1px solid @wcfContainerBorderColor;
-		padding: @wcfGapSmall;
-	}
-	
-	.commentResponseAdd {
-		border-top: 1px solid @wcfContainerBorderColor;
-		padding: 7px 7px 0;
-	}
-	
-	.commentResponseAdd ~ .commentResponseList .commentResponse:first-child {
-		margin-top: 7px;
-	}
+	.transition(opacity, .1s); 
+}
+
+.commentAdd > div > input:focus + small,
+.commentResponseAdd > div > input:focus + small {
+	opacity: 1;
+}
+
+.commentContent:not(.commentResponseContent) {
+	margin-bottom: @wcfGapMedium;
+}
+
+.commentResponse {
+	border-top: 1px solid @wcfContainerBorderColor;
+	padding: @wcfGapSmall;
+}
+
+.commentResponseAdd {
+	border-top: 1px solid @wcfContainerBorderColor;
+	padding: 7px 7px 0;
+}
+
+.commentResponseAdd + .commentResponseList > .commentResponse:first-child {
+	margin-top: 7px;
 }
 
 .commentList > li:nth-child(2n) .commentResponseList > li:nth-child(2n+1) {

@@ -3,7 +3,6 @@
 <header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.cronjob.log{/lang}</h1>
-		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>
 	</hgroup>
 </header>
 
@@ -15,7 +14,7 @@
 	<form method="post" action="{link controller='CronjobLogDelete'}{/link}">
 		<div class="tabularBox tabularBoxTitle marginTop shadow">
 			<hgroup>
-				<h1>{lang}wcf.acp.cronjob.log{/lang} <span class="badge" title="{lang}wcf.acp.cronjob.log.count{/lang}">{#$items}</span></h1>
+				<h1>{lang}wcf.acp.cronjob.log{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.cronjob.log.count{/lang}">{#$items}</span></h1>
 			</hgroup>
 			
 			<table class="table">

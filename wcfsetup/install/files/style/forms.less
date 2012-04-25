@@ -85,21 +85,24 @@ fieldset {
 					
 					> dd {
 						margin-left: 0;
-						
-						> label {
-							display: block;
-						}
 					}
 				}
 			}
 			
 			> label {
 				color: @wcfLabelColor;
+				display: block;
 				
 				> input[type='checkbox'], > input[type='radio'] {
 					margin: 2px;
 				}
 				
+				~ small {
+					margin-left: 21px;
+				}
+			}
+			
+			> input[type='checkbox'], > input[type='radio'] {
 				~ small {
 					margin-left: 21px;
 				}

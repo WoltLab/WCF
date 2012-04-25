@@ -89,7 +89,12 @@
 					{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 						<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}" class="hidden">
 							{if $categoryLevel2[options]|count}
-								{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.group.option.'}
+								<fieldset>
+									<legend>{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>
+									{hascontent}<small>{content}{lang __optional=true}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}.description{/lang}{/content}</small>{/hascontent}
+								
+									{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.group.option.'}
+								</fieldset>
 							{/if}
 							
 							{if $categoryLevel2[categories]|count}
