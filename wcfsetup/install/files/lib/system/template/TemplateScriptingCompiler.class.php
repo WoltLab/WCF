@@ -742,7 +742,7 @@ class TemplateScriptingCompiler {
 			unset($args['append']);
 		}
 		
-		$sandbox = true;
+		$sandbox = 0;
 		if (isset($args['sandbox'])) {
 			$sandbox = $args['sandbox'];
 			unset($args['sandbox']);

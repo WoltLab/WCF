@@ -288,12 +288,14 @@ $.fn.extend({
 	 * 
 	 * @param	string		direction
 	 * @param	object		callback
+	 * @param	integer		duration
 	 * @returns	jQuery
 	 */
-	wcfDropIn: function(direction, callback) {
+	wcfDropIn: function(direction, callback, duration) {
 		if (!direction) direction = 'up';
+		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.show(WCF.getEffect(this.getTagName(), 'drop'), { direction: direction }, 600, callback);
+		return this.show(WCF.getEffect(this.getTagName(), 'drop'), { direction: direction }, duration, callback);
 	},
 	
 	/**
@@ -301,12 +303,14 @@ $.fn.extend({
 	 * 
 	 * @param	string		direction
 	 * @param	object		callback
+	 * @param	integer		duration
 	 * @returns	jQuery
 	 */
-	wcfDropOut: function(direction, callback) {
+	wcfDropOut: function(direction, callback, duration) {
 		if (!direction) direction = 'down';
+		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.hide(WCF.getEffect(this.getTagName(), 'drop'), { direction: direction }, 600, callback);
+		return this.hide(WCF.getEffect(this.getTagName(), 'drop'), { direction: direction }, duration, callback);
 	},
 	
 	/**
@@ -733,12 +737,6 @@ WCF.Clipboard = {
 	 * @param	jQuery		jqXHR
 	 */
 	_loadMarkedItemsSuccess: function(data, textStatus, jqXHR) {
-		// unmark all items first
-		this._containers.each(function(index, container) {
-			$(container).find('input.jsClipboardItem').removeAttr('checked').end().find('input.jsClipboardMarkAll').removeAttr('checked');
-		});
-		
-		this._markedObjectIDs = [ ];
 		for (var $typeName in data.markedItems) {
 			var $objectData = data.markedItems[$typeName];
 			for (var $i in $objectData) {
@@ -995,7 +993,7 @@ WCF.Clipboard = {
 	 * Closes the clipboard editor item list.
 	 */
 	_closeLists: function() {
-		$('.jsClipboardEditor ul').removeClass('dropdownOpen');
+		$('.jsClipboardEditor ul').removeClass('dropdownOpen')
 	},
 	
 	/**
@@ -1042,10 +1040,7 @@ WCF.Clipboard = {
 			data: {
 				actionName: listItem.data('parameters').actionName,
 				className: listItem.data('parameters').className,
-				objectIDs: objectIDs,
-				parameters: {
-					unmarkItems: true
-				}
+				objectIDs: objectIDs
 			},
 			success: $.proxy(this._loadMarkedItems, this)
 		});
@@ -4912,6 +4907,499 @@ WCF.Sortable.List = Class.extend({
 		}
 		
 		this._notification.show();
+	}
+});
+
+WCF.Popover = Class.extend({
+	/**
+	 * currently active element id
+	 * @var	string
+	 */
+	_activeElementID: '',
+	
+	/**
+	 * element data
+	 * @var	object
+	 */
+	_data: { },
+	
+	/**
+	 * default dimensions, should reflect the estimated size
+	 * @var	object
+	 */
+	_defaultDimensions: {
+		height: 150,
+		width: 450,
+	},
+	
+	/**
+	 * default orientation, may be a combintion of left/right and bottom/top
+	 * @var	object
+	 */
+	_defaultOrientation: {
+		x: 'right',
+		y: 'top'
+	},
+	
+	/**
+	 * delay to show or hide popover, values in miliseconds
+	 * @var	object
+	 */
+	_delay: {
+		show: 250,
+		hide: 500
+	},
+	
+	/**
+	 * true, if an element is being hovered
+	 * @var	boolean
+	 */
+	_hoverElement: false,
+	
+	/**
+	 * element id of element being hovered
+	 * @var	string
+	 */
+	_hoverElementID: '',
+	
+	/**
+	 * true, if popover is being hovered
+	 * @var	boolean
+	 */
+	_hoverPopover: false,
+	
+	/**
+	 * minimum margin (all directions) for popover
+	 * @var	integer
+	 */
+	_margin: 20,
+	
+	/**
+	 * periodical executer once element or popover is no longer being hovered
+	 * @var	WCF.PeriodicalExecuter
+	 */
+	_peOut: null,
+	
+	/**
+	 * periodical executer once an element is being hovered
+	 * @var	WCF.PeriodicalExecuter
+	 */
+	_peOverElement: null,
+	
+	/**
+	 * popover object
+	 * @var	jQuery
+	 */
+	_popover: null,
+	
+	/**
+	 * popover horizontal offset
+	 * @var	integer
+	 */
+	_popoverOffset: 10,
+	
+	/**
+	 * element selector
+	 * @var	string
+	 */
+	_selector: '',
+	
+	/**
+	 * Initializes a new WCF.Popover object.
+	 * 
+	 * @param	string		selector
+	 */
+	init: function(selector) {
+		// assign default values
+		this._activeElementID = '';
+		this._data = { };
+		this._defaultDimensions = {
+			height: 150,
+			width: 450
+		};
+		this._defaultOrientation = {
+			x: 'right',
+			y: 'top'
+		};
+		this._delay = {
+			show: 250,
+			hide: 500
+		};
+		this._hoverElement = false;
+		this._hoverElementID = '';
+		this._hoverPopover = false;
+		this._margin = 20;
+		this._peOut = null;
+		this._peOverElement = null;
+		this._popoverOffset = 10;
+		this._selector = selector;
+		
+		this._popover = $('<div class="popover" />').hide().appendTo(document.body);
+		this._popover.hover($.proxy(this._overPopover, this), $.proxy(this._out, this));
+		
+		this._initContainers();
+	},
+	
+	/**
+	 * Initializes all element triggers.
+	 */
+	_initContainers: function() {
+		var $elements = $(this._selector);
+		if (!$elements.length) {
+			return;
+		}
+		
+		$elements.each($.proxy(function(index, element) {
+			var $element = $(element);
+			var $elementID = $element.wcfIdentify();
+			
+			if (!this._data[$elementID]) {
+				this._data[$elementID] = {
+					'content': null,
+					'isLoading': false
+				};
+				
+				$element.hover($.proxy(this._overElement, this), $.proxy(this._out, this));
+			}
+		}, this));
+	},
+	
+	/**
+	 * Triggered once an element is being hovered.
+	 * 
+	 * @param	object		event
+	 */
+	_overElement: function(event) {
+		if (this._peOverElement !== null) {
+			this._peOverElement.stop();
+		}
+		
+		var $elementID = $(event.currentTarget).wcfIdentify();
+		this._hoverElementID = $elementID;
+		this._peOverElement = new WCF.PeriodicalExecuter($.proxy(function(pe) {
+			pe.stop();
+			
+			// still above the same element
+			if (this._hoverElementID === $elementID) {
+				this._activeElementID = $elementID;
+				this._prepare();
+			}
+		}, this), this._delay.show);
+		
+		this._hoverElement = true;
+		this._hoverPopover = false;
+	},
+	
+	/**
+	 * Prepares popover to be displayed.
+	 */
+	_prepare: function() {
+		if (this._peOut !== null) {
+			this._peOut.stop();
+		}
+		
+		// hide and reset
+		if (this._popover.is(':visible')) {
+			this._hide();
+		}
+		
+		// insert html
+		if (!this._data[this._activeElementID].loading && this._data[this._activeElementID].content) {
+			this._popover.html(this._data[this._activeElementID].content);
+		}
+		else {
+			this._popover.addClass('popoverLoading');
+			this._data[this._activeElementID].loading = true;
+		}
+		
+		// get dimensions
+		var $dimensions = this._popover.show().getDimensions();
+		if (this._data[this._activeElementID].loading) {
+			$dimensions = {
+				height: Math.max($dimensions.height, this._defaultDimensions.height),
+				width: Math.max($dimensions.width, this._defaultDimensions.width)
+			};
+		}
+		else {
+			$dimensions = this._fixElementDimensions(this._popover, $dimensions);
+		}
+		this._popover.hide();
+		
+		// get orientation
+		var $orientation = this._getOrientation($dimensions.height, $dimensions.width);
+		this._popover.css(this._getCSS($orientation.x, $orientation.y));
+		
+		// apply orientation to popover
+		this._popover.removeClass('bottom left right top').addClass($orientation.x).addClass($orientation.y);
+		
+		this._show();
+	},
+	
+	/**
+	 * Displays the popover.
+	 */
+	_show: function() {
+		this._popover.stop().wcfFadeIn();
+		
+		if (this._data[this._activeElementID].loading) {
+			this._loadContent();
+		}
+	},
+	
+	/**
+	 * Loads content, should be overwritten by child classes.
+	 */
+	_loadContent: function() { },
+	
+	/**
+	 * Inserts content and animating transition.
+	 * 
+	 * @param	string		elementID
+	 * @param	boolean		animate
+	 */
+	_insertContent: function(elementID, content, animate) {
+		this._data[elementID] = {
+			content: content,
+			loading: false
+		};
+		
+		// only update content if element id is active
+		if (this._activeElementID === elementID) {
+			if (animate) {
+				// get current dimensions
+				var $dimensions = this._popover.getDimensions();
+				
+				// insert new content
+				this._popover.html(this._data[elementID].content);
+				var $newDimensions = this._popover.getDimensions();
+				
+				// enforce current dimensions and remove HTML
+				this._popover.html('').css({
+					height: $dimensions.height + 'px',
+					width: $dimensions.width + 'px'
+				});
+				
+				// animate to new dimensons
+				this._popover.animate({
+					height: $newDimensions.height + 'px',
+					width: $newDimensions.width + 'px'
+				}, 300, function() {
+					var $content = $('<div style="opacity: 0;">' + content + '</div>');
+					var $this = $(this);
+					
+					$this.html($content);
+					
+					$content.animate({ opacity: 1 }, 200, function() {
+						$content.children().unwrap();
+						$this.removeClass('popoverLoading');
+					});
+				});
+			}
+			else {
+				// insert new content
+				this._popover.html(this._data[elementID].content);
+			}
+		}
+	},
+	
+	/**
+	 * Hides the popover.
+	 */
+	_hide: function() {
+		this._popover.stop().removeClass('popoverLoading').wcfFadeOut(function() {
+			$(this).empty().css({ height: 'auto', width: 'auto' });
+		});
+	},
+	
+	/**
+	 * Triggered once popover is being hovered.
+	 */
+	_overPopover: function() {
+		if (this._peOut !== null) {
+			this._peOut.stop();
+		}
+		
+		this._hoverElement = false;
+		this._hoverPopover = true;
+	},
+	
+	/**
+	 * Triggered once element *or* popover is now longer hovered.
+	 */
+	_out: function(event) {
+		this._hoverElementID = '';
+		this._hoverElement = false;
+		this._hoverPopover = false;
+		
+		this._peOut = new WCF.PeriodicalExecuter($.proxy(function(pe) {
+			pe.stop();
+			
+			// hide popover is neither element nor popover was hovered given time
+			if (!this._hoverElement && !this._hoverPopover) {
+				this._hide();
+			}
+		}, this), this._delay.hide);
+	},
+	
+	/**
+	 * Resolves popover orientation, tries to use default orientation first.
+	 * 
+	 * @param	integer		height
+	 * @param	integer		width
+	 * @return	object
+	 */
+	_getOrientation: function(height, width) {
+		// get offsets and dimensions
+		var $element = $('#' + this._activeElementID);
+		var $offsets = $element.getOffsets('offset');
+		var $elementDimensions = $element.getDimensions();
+		var $documentDimensions = $(document).getDimensions();
+		
+		// try default orientation first
+		var $orientationX = (this._defaultOrientation.x === 'left') ? 'left' : 'right';
+		var $orientationY = (this._defaultOrientation.y === 'bottom') ? 'bottom' : 'top';
+		var $result = this._evaluateOrientation($orientationX, $orientationY, $offsets, $elementDimensions, $documentDimensions, height, width);
+		
+		if ($result.flawed) {
+			// try flipping orientationX
+			$orientationX = ($orientationX === 'left') ? 'right' : 'left';
+			$result = this._evaluateOrientation($orientationX, $orientationY, $offsets, $elementDimensions, $documentDimensions, height, width);
+			
+			if ($result.flawed) {
+				// try flipping orientationY while maintaing original orientationX
+				$orientationX = ($orientationX === 'right') ? 'left' : 'right';
+				$orientationY = ($orientationY === 'bottom') ? 'top' : 'bottom';
+				$result = this._evaluateOrientation($orientationX, $orientationY, $offsets, $elementDimensions, $documentDimensions, height, width);
+				
+				if ($result.flawed) {
+					// try flipping both orientationX and orientationY compared to default values
+					$orientationX = ($orientationX === 'left') ? 'right' : 'left';
+					$result = this._evaluateOrientation($orientationX, $orientationY, $offsets, $elementDimensions, $documentDimensions, height, width);
+					
+					if ($result.flawed) {
+						// fuck this shit, we will use the default orientation
+						$orientationX = (this._defaultOrientationX === 'left') ? 'left' : 'right';
+						$orientationY = (this._defaultOrientationY === 'bottom') ? 'bottom' : 'top';
+					}
+				}
+			}
+		}
+		
+		return {
+			x: $orientationX,
+			y: $orientationY
+		}
+	},
+	
+	/**
+	 * Evaluates if popover fits into given orientation.
+	 * 
+	 * @param	string		orientationX
+	 * @param	string		orientationY
+	 * @param	object		offsets
+	 * @param	object		elementDimensions
+	 * @param	object		documentDimensions
+	 * @param	integer		height
+	 * @param	integer		width
+	 * @return	object
+	 */
+	_evaluateOrientation: function(orientationX, orientationY, offsets, elementDimensions, documentDimensions, height, width) {
+		var $heightDifference = 0, $widthDifference = 0;
+		switch (orientationX) {
+			case 'left':
+				$widthDifference = offsets.left - width;
+			break;
+			
+			case 'right':
+				$widthDifference = documentDimensions.width - (offsets.left + width);
+			break;
+		}
+		
+		switch (orientationY) {
+			case 'bottom':
+				$heightDifference = documentDimensions.height - (offsets.top + elementDimensions.height + this._popoverOffset + height);
+			break;
+			
+			case 'top':
+				$heightDifference = offsets.top - (height - this._popoverOffset);
+			break;
+		}
+		
+		// check if both difference are above margin
+		var $flawed = false;
+		if ($heightDifference < this._margin || $widthDifference < this._margin) {
+			$flawed = true;
+		}
+		
+		return {
+			flawed: $flawed,
+			x: $widthDifference,
+			y: $heightDifference
+		};
+	},
+	
+	/**
+	 * Computes CSS for popover.
+	 * 
+	 * @param	string		orientationX
+	 * @param	string		orientationY
+	 * @return	object
+	 */
+	_getCSS: function(orientationX, orientationY) {
+		var $css = {
+			bottom: 'auto',
+			left: 'auto',
+			right: 'auto',
+			top: 'auto'
+		};
+		
+		var $element = $('#' + this._activeElementID);
+		var $offsets = $element.getOffsets('offset');
+		var $elementDimensions = this._fixElementDimensions($element, $element.getDimensions());
+		var $windowDimensions = $(window).getDimensions();
+		
+		switch (orientationX) {
+			case 'left':
+				$css.right = $windowDimensions.width - ($offsets.left + $elementDimensions.width);
+			break;
+			
+			case 'right':
+				$css.left = $offsets.left;
+			break;
+		}
+		
+		switch (orientationY) {
+			case 'bottom':
+				$css.top = $offsets.top + ($elementDimensions.height + this._popoverOffset);
+			break;
+			
+			case 'top':
+				$css.bottom = $windowDimensions.height - ($offsets.top - this._popoverOffset);
+			break;
+		}
+		
+		return $css;
+	},
+	
+	/**
+	 * Tries to fix dimensions if element is partially hidden (overflow: hidden).
+	 * 
+	 * @param	jQuery		element
+	 * @param	object		dimensions
+	 * @return	dimensions
+	 */
+	_fixElementDimensions: function(element, dimensions) {
+		var $parentDimensions = element.parent().getDimensions();
+		
+		if ($parentDimensions.height < dimensions.height) {
+			dimensions.height = $parentDimensions.height;
+		}
+		
+		if ($parentDimensions.width < dimensions.width) {
+			dimensions.width = $parentDimensions.width;
+		}
+		
+		return dimensions;
 	}
 });
 
