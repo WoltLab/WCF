@@ -25,11 +25,58 @@
 	}
 }
 
+/* user information */
+.userInformation {
+	> hgroup > h2,
+	> .inlineDataList,
+	> .dataList {
+		font-size: @wcfSmallFontSize;
+	}
+}
+
+.userProfilePreview {
+	position: relative;
+
+	> .userInformation {
+		padding-bottom: 16px;// + @wcfGapTiny;
+		
+		> .inlineDataList,
+		> .dataList {
+			margin-bottom: @wcfGapTiny;
+			padding-top: @wcfGapTiny;
+			border-top: 1px dotted @wcfContainerBorderColor;
+		}
+		
+		> .dataList {
+			padding-bottom: @wcfGapTiny;
+			border-bottom: 1px dotted @wcfContainerBorderColor;
+		}
+		
+		> .buttonList {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
+	}
+}
 
 /* ##### User List #### */
 .simpleUserList {
-	h2, p, dl {
-		font-size: @wcfSmallFontSize;
+	> li > div > .userInformation {
+		position: relative;
+		
+		> .buttonList {
+			opacity: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+			
+			.transition(opacity, .1s);
+		}
+	}
+	
+	> li:hover > div > .userInformation > .buttonList {
+		opacity: 1;
 	}
 }
 

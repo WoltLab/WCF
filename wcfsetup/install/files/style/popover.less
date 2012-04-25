@@ -4,7 +4,6 @@
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: 32px;
-	color: @wcfTooltipColor;
 	max-width: 450px;
 	min-height: 32px;
 	min-width: 150px;
@@ -14,7 +13,7 @@
 	z-index: 320;
 	
 	.borderRadius();
-	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
+	.boxShadow(0, 1px, rgba(0, 0, 0, .3), 7px);
 	
 	&:after {
 		border: 10px solid transparent;
@@ -26,12 +25,12 @@
 	
 	&.top:after {
 		border-bottom-width: 0;
-		border-top-color: rgba(0, 0, 0, .2);
+		border-top-color: rgba(0, 0, 0, .4);
 		bottom: -10px;
 	}
 	
 	&.bottom:after {
-		border-bottom-color: rgba(0, 0, 0, .2);
+		border-bottom-color: rgba(0, 0, 0, .4);
 		border-top-width: 0;
 		top: -10px;
 	}
@@ -49,7 +48,7 @@
 	background-color: @wcfContainerBackgroundColor;
 	color: @wcfColor;
 	opacity: 0;
-	padding: @wcfGapSmall;
+	padding: @wcfGapSmall @wcfGapMedium;
 	
 	.borderRadius();
 }
