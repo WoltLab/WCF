@@ -234,7 +234,7 @@ class UserAction extends AbstractDatabaseObjectAction {
 		$sql = "SELECT	userID, username
 			FROM	wcf".WCF_N."_user
 			".$conditionBuilder;
-		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement = WCF::getDB()->prepareStatement($sql, 20); /* TODO: add limit parameter */
 		$statement->execute($conditionBuilder->getParameters());
 		while ($row = $statement->fetchArray()) {
 			$list[] = array(
