@@ -1,9 +1,14 @@
 .popover {
-	background-color: @wcfTooltipBackgroundColor;
+	background-color: rgba(0, 0, 0, .4);
+	background-image: url(../icon/spinner1.svg);
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 32px;
 	color: @wcfTooltipColor;
 	max-width: 450px;
+	min-height: 32px;
 	min-width: 150px;
-	padding: @wcfGapTiny;
+	padding: @wcfGapSmall;
 	position: absolute;
 	vertical-align: middle;
 	z-index: 320;
@@ -21,12 +26,12 @@
 	
 	&.top:after {
 		border-bottom-width: 0;
-		border-top-color: @wcfTooltipBackgroundColor;
+		border-top-color: rgba(0, 0, 0, .2);
 		bottom: -7px;
 	}
 	
 	&.bottom:after {
-		border-bottom-color: @wcfTooltipBackgroundColor;
+		border-bottom-color: rgba(0, 0, 0, .2);
 		border-top-width: 0;
 		top: -7px;
 	}
@@ -38,12 +43,13 @@
 	&.left:after {
 		right: 7px;
 	}
+}
+
+.popoverContent {
+	background-color: @wcfContainerBackgroundColor;
+	color: @wcfColor;
+	opacity: 0;
+	padding: @wcfGapSmall;
 	
-	&.popoverLoading {
-		background-image: url(../icon/spinner1.svg);
-		background-position: center center;
-		background-size: 32px;
-		background-repeat: no-repeat;
-		min-height: 32px;
-	}
+	.borderRadius();
 }

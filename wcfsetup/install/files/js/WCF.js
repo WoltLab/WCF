@@ -4993,6 +4993,13 @@ WCF.Popover = Class.extend({
 	_popover: null,
 	
 	/**
+	 * popover content
+	 * @var	jQuery
+	 */
+	_popoverContent: null,
+	
+	
+	/**
 	 * popover horizontal offset
 	 * @var	integer
 	 */
@@ -5034,7 +5041,8 @@ WCF.Popover = Class.extend({
 		this._popoverOffset = 10;
 		this._selector = selector;
 		
-		this._popover = $('<div class="popover" />').hide().appendTo(document.body);
+		this._popover = $('<div class="popover"><div class="popoverContent"></div></div>').hide().appendTo(document.body);
+		this._popoverContent = this._popover.children('.popoverContent:eq(0)');
 		this._popover.hover($.proxy(this._overPopover, this), $.proxy(this._out, this));
 		
 		this._initContainers();
@@ -5100,15 +5108,14 @@ WCF.Popover = Class.extend({
 		
 		// hide and reset
 		if (this._popover.is(':visible')) {
-			this._hide();
+			this._hide(true);
 		}
 		
 		// insert html
 		if (!this._data[this._activeElementID].loading && this._data[this._activeElementID].content) {
-			this._popover.html(this._data[this._activeElementID].content);
+			this._popoverContent.html(this._data[this._activeElementID].content);
 		}
 		else {
-			this._popover.addClass('popoverLoading');
 			this._data[this._activeElementID].loading = true;
 		}
 		
@@ -5144,6 +5151,9 @@ WCF.Popover = Class.extend({
 		if (this._data[this._activeElementID].loading) {
 			this._loadContent();
 		}
+		else {
+			this._popoverContent.css({ opacity: 1 });
+		}
 	},
 	
 	/**
@@ -5167,37 +5177,30 @@ WCF.Popover = Class.extend({
 		if (this._activeElementID === elementID) {
 			if (animate) {
 				// get current dimensions
-				var $dimensions = this._popover.getDimensions();
+				var $dimensions = this._popoverContent.getDimensions();
 				
 				// insert new content
-				this._popover.html(this._data[elementID].content);
-				var $newDimensions = this._popover.getDimensions();
+				this._popoverContent.html(this._data[elementID].content);
+				var $newDimensions = this._popoverContent.getDimensions();
 				
 				// enforce current dimensions and remove HTML
-				this._popover.html('').css({
+				this._popoverContent.html('').css({
 					height: $dimensions.height + 'px',
 					width: $dimensions.width + 'px'
 				});
 				
 				// animate to new dimensons
-				this._popover.animate({
+				var self = this;
+				this._popoverContent.animate({
 					height: $newDimensions.height + 'px',
 					width: $newDimensions.width + 'px'
 				}, 300, function() {
-					var $content = $('<div style="opacity: 0;">' + content + '</div>');
-					var $this = $(this);
-					
-					$this.html($content);
-					
-					$content.animate({ opacity: 1 }, 200, function() {
-						$content.children().unwrap();
-						$this.removeClass('popoverLoading');
-					});
+					self._popoverContent.html(self._data[elementID].content).css({ opacity: 0 }).animate({ opacity: 1 }, 200);
 				});
 			}
 			else {
 				// insert new content
-				this._popover.html(this._data[elementID].content);
+				this._popoverContent.html(this._data[elementID].content);
 			}
 		}
 	},
@@ -5205,10 +5208,19 @@ WCF.Popover = Class.extend({
 	/**
 	 * Hides the popover.
 	 */
-	_hide: function() {
-		this._popover.stop().removeClass('popoverLoading').wcfFadeOut(function() {
-			$(this).empty().css({ height: 'auto', width: 'auto' });
-		});
+	_hide: function(disableAnimation) {
+		var self = this;
+		this._popoverContent.stop();
+		this._popover.stop();
+		
+		if (disableAnimation) {
+			self._popoverContent.empty().css({ height: 'auto', opacity: 0, width: 'auto' });
+		}
+		else {
+			this._popover.wcfFadeOut(function() {
+				self._popoverContent.empty().css({ height: 'auto', opacity: 0, width: 'auto' });
+			});
+		}
 	},
 	
 	/**
@@ -5236,7 +5248,7 @@ WCF.Popover = Class.extend({
 			
 			// hide popover is neither element nor popover was hovered given time
 			if (!this._hoverElement && !this._hoverPopover) {
-				this._hide();
+				this._hide(false);
 			}
 		}, this), this._delay.hide);
 	},
