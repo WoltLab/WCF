@@ -131,6 +131,16 @@
 	> footer {
 		padding-bottom: @wcfGapMedium;
 	}
+	
+	> .likesSummary {
+		background-color: @wcfContentBackgroundColor;
+		border: 1px solid @wcfContainerBorderColor;
+		display: inline-block;
+		font-size: @wcfSmallFontSize;
+		padding: @wcfGapTiny @wcfGapMedium;
+		
+		.borderRadius();
+	}
 }
 
 .message .messageContent {
@@ -142,17 +152,17 @@
 		padding: @wcfGapMedium @wcfGapLarge 0;
 		position: relative;
 		
-		time {
+		> time {
 			color: @wcfDimmedColor;
 			font-size: @wcfSmallFontSize;
 		}
 		
-		.likesDisplay {
+		> .likesBadge {
 			display: inline-block;
 			margin: -2px 0 -2px 4px;
 		}
 		
-		.messageTitle {
+		> .messageTitle {
 			color: @wcfColor;
 			font-size: @wcfSubHeadlineFontSize;
 			font-weight: bold;

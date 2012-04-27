@@ -44,6 +44,11 @@
 		
 		.badgeShadow(@wcfTabularBoxBackgroundColor);
 	}
+	
+	&:hover {
+		color: @wcfContentBackgroundColor;
+		text-decoration: none;
+	}
 }
 
 /* special */
@@ -57,12 +62,12 @@
 	top: -3px;
 }
 
-.mainMenu > ul > li > .badge {
+.mainMenu > ul > li > a > .badge {
 	font-size: 70%;
 	top: -1px;
 }
 
-.mainMenu > ul > li.active > .badge {
+.mainMenu > ul > li.active > a > .badge {
 	font-size: 65%;
 	top: -2px;
 }
