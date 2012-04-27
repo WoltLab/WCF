@@ -551,7 +551,7 @@ class TemplateEngine extends SingletonFactory {
 	 * @param	integer		$packageID
 	 * @return 	string 		output
 	 */
-	public function fetch($templateName, array $variables = array(), $sandbox = true, $packageID = PACKAGE_ID) {
+	public function fetch($templateName, array $variables = array(), $sandbox = false, $packageID = PACKAGE_ID) {
 		// enable sandbox
 		if ($sandbox) {
 			$this->enableSandbox();
