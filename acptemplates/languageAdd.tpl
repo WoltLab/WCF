@@ -33,20 +33,16 @@
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageAdd'}{/link}">
 	<div class="container containerPadding marginTop shadow">
-		<dl>
-			<dt><label for="import">{lang}wcf.acp.language.add.mode{/lang}</label></dt>
-			<dd>
-				<fieldset>
-					<dl>
-						<dd>
-							<label><input type="radio" name="mode" value="import" id="import" {if $mode == 'import'}checked="checked" {/if}/> {lang}wcf.acp.language.add.mode.import{/lang}</label>
-						</dd>
-						<dd>
-							<label><input type="radio" name="mode" value="copy" id="copy" {if $mode == 'copy'}checked="checked" {/if}/> {lang}wcf.acp.language.add.mode.copy{/lang}</label>
-						</dd>
-				</fieldset>
-			</dd>
-		</dl>
+		<fieldset>
+			<legend>{lang}wcf.acp.language.add.mode{/lang}</legend>
+			
+			<dl>
+					<dd class="floated">
+						<label><input type="radio" name="mode" value="import" id="import" {if $mode == 'import'}checked="checked" {/if}/> {lang}wcf.acp.language.add.mode.import{/lang}</label>
+						<label><input type="radio" name="mode" value="copy" id="copy" {if $mode == 'copy'}checked="checked" {/if}/> {lang}wcf.acp.language.add.mode.copy{/lang}</label>
+					</dd>
+			</dl>
+		</fieldset>
 		
 		<fieldset id="importDiv">
 			<legend>{lang}wcf.acp.language.import.source{/lang}</legend>

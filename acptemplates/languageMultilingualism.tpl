@@ -26,34 +26,27 @@
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageMultilingualism'}{/link}">
 	<div class="container containerPadding marginTop shadow">
-		<dl>
-			<dt><input type="checkbox" id="enable" onclick="if (this.checked) $('#languageIDs').show(); else $('#languageIDs').hide();" name="enable" value="1" {if $enable == 1}checked="checked" {/if}/></dt>
-			<dd>
-				<label for="enable">{lang}wcf.acp.language.multilingualism.enable{/lang}</label>
-				<small>{lang}wcf.acp.language.multilingualism.enable.description{/lang}</small>
-			</dd>
-		</dl>
+		<fieldset>
+			<legend><label><input type="checkbox" id="enable" onclick="if (this.checked) $('#languageIDs').show(); else $('#languageIDs').hide();" name="enable" value="1" {if $enable == 1}checked="checked" {/if}/> {lang}wcf.acp.language.multilingualism.enable{/lang}</label></legend>
+			<small>{lang}wcf.acp.language.multilingualism.enable.description{/lang}</small>
 		
-		<dl{if $errorField == 'languageFile'} class="formError"{/if} id="languageIDs">
-			<dt><label for="languageIDs">{lang}wcf.acp.language.multilingualism.languages{/lang}</label></dt>
-			<dd>
-				<fieldset>
-					<legend>{lang}wcf.acp.language.multilingualism.languages{/lang}</legend>
+			<dl{if $errorField == 'languageFile'} class="formError"{/if} id="languageIDs">
+				<dt><label for="languageIDs">{lang}wcf.acp.language.multilingualism.languages{/lang}</label></dt>
+				<dd class="floated">
+					{htmlCheckboxes options=$languages name=languageIDs selected=$languageIDs disableEncoding=true}
 					
-					<dd>
-						{htmlCheckboxes options=$languages name=languageIDs selected=$languageIDs disableEncoding=true}
-					</dd>
-				</fieldset>
-				
-				{if $errorField == 'languageIDs'}
-					<small class="innerError">
-						{if $errorType == 'empty'}{lang}wcf.acp.language.multilingualism.languages.error.empty{/lang}{/if}
-					</small>
-				{/if}
-			</dd>
-		</dl>
+					{if $errorField == 'languageIDs'}
+						<small class="innerError">
+							{if $errorType == 'empty'}{lang}wcf.acp.language.multilingualism.languages.error.empty{/lang}{/if}
+						</small>
+					{/if}
+				</dd>
+			</dl>
+			
+			{event name='additionalFields'}
+		</fieldset>
 		
-		{event name='additionalFields'}
+		
 	</div>
 	
 	<div class="formSubmit">
