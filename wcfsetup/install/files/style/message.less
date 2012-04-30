@@ -214,6 +214,19 @@
 	.userAvatar {
 		display: inline-block;
 		margin: @wcfGapSmall 0 0;
+		position: relative;
+		text-align: left;
+		
+		> .badgeOnline {
+			border-bottom: 1px solid #fff;
+			bottom: 7px;
+			position: absolute;
+			right: -7px;
+			text-transform: uppercase;
+			
+			//.borderRadius(0);
+			.boxShadow(0, 1px, rgba(0, 0, 0, .3), 7px);
+		}
 	}
 	
 	.userCredits {
@@ -232,18 +245,18 @@
 		}
 	}
 	
-	&.online {
+	/*&.online {
 		.userAvatar {
 			.boxShadow(0, 0, @wcfSuccessBackgroundColor, 10px);
 			
-			/* todo */
+			// todo
 			-webkit-animation-name: onlineStatus;
 			-webkit-animation-duration: 2s;
 			-webkit-animation-iteration-count: infinite;
 			-webkit-animation-direction: alternate;
 			-webkit-animation-timing-function: ease-in-out;
 		}
-	}
+	}*/
 }
 
 .message {
@@ -281,11 +294,11 @@ li:nth-child(2n+1) .message {
 }
 
 /* todo */
-@-webkit-keyframes onlineStatus {
+/*@-webkit-keyframes onlineStatus {
 	0% {
 		-webkit-box-shadow: 0 0 10px @wcfSuccessBackgroundColor;
 	}
 	100% {
 		-webkit-box-shadow: 0 0 20px @wcfSuccessBackgroundColor;
 	}
-} 
+}*/
