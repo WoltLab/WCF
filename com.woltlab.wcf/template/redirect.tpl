@@ -11,7 +11,7 @@
 	
 <div class="success">
 	<p>{@$message}</p>
-	<p><a href="{$url}">{lang}wcf.global.redirect.url{/lang}</a></p>
+	<a href="{$url}">{lang}wcf.global.redirect.url{/lang}</a>
 </div>
 	
 {include file='footer' sandbox=false}

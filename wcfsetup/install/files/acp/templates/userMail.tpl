@@ -58,19 +58,8 @@
 				<legend>{lang}wcf.acp.user.sendMail.groups{/lang}</legend>
 				
 				<dl{if $errorField == 'groupIDs'} class="formError"{/if}>
-					<dt>
-						<label>{lang}wcf.acp.user.groups{/lang}</label>
-					</dt>
 					<dd>
-						<fieldset>
-							<legend>{lang}wcf.acp.user.groups{/lang}</legend>
-							
-							<dl>
-								<dd>
-									{htmlCheckboxes options=$groups name=groupIDs selected=$groupIDs}
-								</dd>
-							</dl>
-						</fieldset>
+						{htmlCheckboxes options=$groups name=groupIDs selected=$groupIDs}
 						{if $errorField == 'groupIDs'}
 							<small class="innerError">
 								{if $errorType == 'empty'}

@@ -77,15 +77,9 @@
 						<label>{lang}wcf.acp.user.groups{/lang}</label>
 					</dt>
 					<dd>
-						<fieldset>
-							<legend>{lang}wcf.acp.user.groups{/lang}</legend>
+						{htmlCheckboxes options=$availableGroups name='groupIDs' selected=$groupIDs}
 							
-							<dl>
-								<dd>{htmlCheckboxes options=$availableGroups name='groupIDs' selected=$groupIDs}</dd>
-							</dl>
-							
-							<!-- ToDo --><label style="margin-top: 10px"><input type="checkbox" name="invertGroupIDs" value="1" {if $invertGroupIDs == 1}checked="checked" {/if}/> {lang}wcf.acp.user.groups.invertSearch{/lang}</label>
-						</fieldset>
+						<!-- ToDo --><label style="margin-top: 10px"><input type="checkbox" name="invertGroupIDs" value="1" {if $invertGroupIDs == 1}checked="checked" {/if}/> {lang}wcf.acp.user.groups.invertSearch{/lang}</label>
 					</dd>
 				</dl>
 			{/if}
@@ -96,13 +90,7 @@
 						<label>{lang}wcf.user.language{/lang}</label>
 					</dt>
 					<dd>
-						<fieldset>
-							<legend>{lang}wcf.acp.user.language{/lang}</legend>
-							
-							<dl>
-								<dd>{htmlCheckboxes options=$availableLanguages name='languageIDs' selected=$languageIDs disableEncoding=true}</dd>
-							</dl>
-						</fieldset>
+						{htmlCheckboxes options=$availableLanguages name='languageIDs' selected=$languageIDs disableEncoding=true}
 					</dd>
 				</dl>
 			{/if}
@@ -182,17 +170,9 @@
 								<label>{lang}wcf.acp.user.search.display.columns.profile{/lang}</label>
 							</dt>
 							<dd>
-								<fieldset>
-									<legend>{lang}wcf.acp.user.search.display.columns.profile{/lang}</legend>
-									
-									<dl>
-										<dd>
-											{foreach from=$optionTree item=option}
-												<label><input type="checkbox" name="columns[]" value="{$option->optionName}" {if $option->optionName|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
-											{/foreach}
-										<dd>
-									</dl>
-								</fieldset>
+								{foreach from=$optionTree item=option}
+									<label><input type="checkbox" name="columns[]" value="{$option->optionName}" {if $option->optionName|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
+								{/foreach}
 							</dd>
 						</dl>
 					{/if*}
@@ -200,18 +180,8 @@
 					<dl>
 						<dt><label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label></dt>
 						<dd>
-							<fieldset>
-								<legend>{lang}wcf.acp.user.search.display.columns.other{/lang}</legend>
-							
-								<dl>
-									<dd>
-										<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label></dd>
-										<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.registrationDate{/lang}</label>
-									</dd>
-									
-									{if $additionalColumns|isset}{@$additionalColumns}{/if}
-								</dl>
-							</fieldset>
+							<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label>
+							<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.registrationDate{/lang}</label>
 						</dd>
 					</dl>
 				

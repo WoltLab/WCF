@@ -103,9 +103,7 @@
 										<legend>{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}{/lang}</legend>
 										{hascontent}<small>{content}{lang __optional=true}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}.description{/lang}{/content}</small>{/hascontent}
 								
-										<div>
-											{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.acp.group.option.'}
-										</div>
+										{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.acp.group.option.'}
 									</fieldset>
 								{/foreach}
 							{/if}

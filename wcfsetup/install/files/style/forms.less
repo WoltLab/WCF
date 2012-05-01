@@ -69,32 +69,12 @@ fieldset {
 				margin-top: 2px;
 			}
 			
-			/* nested fieldsets */
-			> fieldset {
-				padding-top: 0;
-				
-				> legend {
-					display: none;
-				}
-				
-				> dl {
-					> dt {
-						margin-right: 20px;
-						width: 150px;
-					}
-					
-					> dd {
-						margin-left: 0;
-					}
-				}
-			}
-			
 			> label {
 				color: @wcfLabelColor;
 				display: block;
 				
 				> input[type='checkbox'], > input[type='radio'] {
-					margin: 2px;
+					margin: 2px 2px 2px 0;
 				}
 				
 				~ small {
