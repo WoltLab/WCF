@@ -14,12 +14,12 @@
 					var $button = $(row).find('.jsSetAsDefaultButton');
 					
 					if (WCF.inArray($($button).data('objectID'), data.objectIDs)) {
-						$($button).attr('src', '{@RELATIVE_WCF_DIR}icon/default1D.svg');
-						$(row).find('.jsDeleteButton').attr('src', '{@RELATIVE_WCF_DIR}icon/delete1D.svg');
+						$($button).attr('src', '{@$__wcf->getPath()}icon/default1D.svg');
+						$(row).find('.jsDeleteButton').attr('src', '{@$__wcf->getPath()}icon/delete1D.svg');
 					}
 					else {
-						$($button).attr('src', '{@RELATIVE_WCF_DIR}icon/default1.svg');
-						$(row).find('.jsDeleteButton').attr('src', '{@RELATIVE_WCF_DIR}icon/delete1.svg');
+						$($button).attr('src', '{@$__wcf->getPath()}icon/default1.svg');
+						$(row).find('.jsDeleteButton').attr('src', '{@$__wcf->getPath()}icon/delete1.svg');
 					}
 				});
 			}
@@ -40,7 +40,7 @@
 	{if $__wcf->getSession()->getPermission('admin.language.canAddLanguage')}
 		<nav>
 			<ul>
-				<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
+				<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
 				
 				{event name='largeButtons'}
 			</ul>
@@ -57,11 +57,11 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnID columnLanguageID{if $sortField == 'languageID'} active{/if}" colspan="2"><a href="{link controller='LanguageList'}pageNo={@$pageNo}&sortField=languageID&sortOrder={if $sortField == 'languageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'languageID'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnTitle columnLanguageName{if $sortField == 'languageName'} active{/if}"><a href="{link controller='LanguageList'}pageNo={@$pageNo}&sortField=languageName&sortOrder={if $sortField == 'languageName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.language.name{/lang}{if $sortField == 'languageName'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnDigits columnUsers{if $sortField == 'users'} active{/if}"><a href="{link controller='LanguageList'}pageNo={@$pageNo}&sortField=users&sortOrder={if $sortField == 'users' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.language.users{/lang}{if $sortField == 'users'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnDigits columnVariables{if $sortField == 'variables'} active{/if}"><a href="{link controller='LanguageList'}pageNo={@$pageNo}&sortField=variables&sortOrder={if $sortField == 'variables' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.language.variables{/lang}{if $sortField == 'variables'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnDigits columnCustomVariables{if $sortField == 'customVariables'} active{/if}"><a href="{link controller='LanguageList'}pageNo={@$pageNo}&sortField=customVariables&sortOrder={if $sortField == 'customVariables' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.language.customVariables{/lang}{if $sortField == 'customVariables'} <img src="{@RELATIVE_WCF_DIR}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnID columnLanguageID{if $sortField == 'languageID'} active{/if}" colspan="2"><a href="{link controller='LanguageList'}pageNo={@$pageNo}&sortField=languageID&sortOrder={if $sortField == 'languageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'languageID'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnTitle columnLanguageName{if $sortField == 'languageName'} active{/if}"><a href="{link controller='LanguageList'}pageNo={@$pageNo}&sortField=languageName&sortOrder={if $sortField == 'languageName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.language.name{/lang}{if $sortField == 'languageName'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnDigits columnUsers{if $sortField == 'users'} active{/if}"><a href="{link controller='LanguageList'}pageNo={@$pageNo}&sortField=users&sortOrder={if $sortField == 'users' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.language.users{/lang}{if $sortField == 'users'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnDigits columnVariables{if $sortField == 'variables'} active{/if}"><a href="{link controller='LanguageList'}pageNo={@$pageNo}&sortField=variables&sortOrder={if $sortField == 'variables' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.language.variables{/lang}{if $sortField == 'variables'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnDigits columnCustomVariables{if $sortField == 'customVariables'} active{/if}"><a href="{link controller='LanguageList'}pageNo={@$pageNo}&sortField=customVariables&sortOrder={if $sortField == 'customVariables' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.language.customVariables{/lang}{if $sortField == 'customVariables'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 				</tr>
 			</thead>
 			
@@ -70,34 +70,34 @@
 				<tr class="jsLanguageRow">
 					<td class="columnIcon">
 						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
-							<a href="{link controller='LanguageExport' id=$language->languageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/download1.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" class="icon16 jsTooltip" /></a>
+							<a href="{link controller='LanguageExport' id=$language->languageID}{/link}"><img src="{@$__wcf->getPath()}icon/download1.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" class="icon16 jsTooltip" /></a>
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/download1D.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" class="icon16" />
+							<img src="{@$__wcf->getPath()}icon/download1D.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" class="icon16" />
 						{/if}
 						
 						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
 							{if !$language->isDefault}
-								<img src="{@RELATIVE_WCF_DIR}icon/default1.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16 jsSetAsDefaultButton jsTooltip" data-object-id="{@$language->languageID}" />
+								<img src="{@$__wcf->getPath()}icon/default1.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16 jsSetAsDefaultButton jsTooltip" data-object-id="{@$language->languageID}" />
 							{else}
-								<img src="{@RELATIVE_WCF_DIR}icon/default1D.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16" />
+								<img src="{@$__wcf->getPath()}icon/default1D.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16" />
 							{/if}
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/default1D.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16" />
+							<img src="{@$__wcf->getPath()}icon/default1D.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16" />
 						{/if}
 						
 						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
-							<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 jsTooltip" /></a>
+							<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}"><img src="{@$__wcf->getPath()}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 jsTooltip" /></a>
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16" />
+							<img src="{@$__wcf->getPath()}icon/edit1D.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16" />
 						{/if}
 						{if $__wcf->getSession()->getPermission('admin.language.canDeleteLanguage')}
 							{if !$language->isDefault}
-								<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsTooltip jsDeleteButton" data-object-id="{@$language->languageID}" data-confirmMessage="{lang}wcf.acp.language.delete.sure{/lang}" />
+								<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsTooltip jsDeleteButton" data-object-id="{@$language->languageID}" data-confirmMessage="{lang}wcf.acp.language.delete.sure{/lang}" />
 							{else}
-								<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16" />
+								<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16" />
 							{/if}
 						{else}
-							<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16" />
+							<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16" />
 						{/if}
 					</td>
 					<td class="columnID columnLanguageID">{@$language->languageID}</td>
@@ -123,7 +123,7 @@
 		{if $__wcf->getSession()->getPermission('admin.language.canAddLanguage')}
 			<nav>
 				<ul>
-					<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
+					<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
 					
 					{event name='largeButtons'}
 				</ul>

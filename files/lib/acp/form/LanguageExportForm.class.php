@@ -66,6 +66,12 @@ class LanguageExportForm extends ACPForm {
 	public $exportCustomValues = false;
 	
 	/**
+	 * max package name length
+	 * @var integer
+	 */
+	public $packageNameLength = 0; 
+	
+	/**
 	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -130,7 +136,8 @@ class LanguageExportForm extends ACPForm {
 			'languages' => LanguageFactory::getInstance()->getLanguages(),
 			'selectedPackages' => $this->selectedPackages,
 			'packages' => $this->packages,
-			'selectAllPackages' => true
+			'selectAllPackages' => true,
+			'packageNameLength' => $this->packageNameLength
 		));
 	}
 	
@@ -151,7 +158,11 @@ class LanguageExportForm extends ACPForm {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->languageID));
 		while ($row = $statement->fetchArray()) {
+			$row['packageNameLength'] = StringUtil::length($row['packageName']); 
 			$this->packages[] = new Package(null, $row);
+			if ($row['packageNameLength'] > $this->packageNameLength) {
+				$this->packageNameLength = $row['packageNameLength'];	
+			} 
 		}
 	}
 }

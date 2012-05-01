@@ -17,7 +17,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='LanguageList'}{/link}" title="{lang}wcf.acp.menu.link.language.list{/lang}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/language1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
+			<li><a href="{link controller='LanguageList'}{/link}" title="{lang}wcf.acp.menu.link.language.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/language1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>
