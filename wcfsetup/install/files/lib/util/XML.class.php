@@ -12,7 +12,7 @@ use wcf\system\exception\SystemException;
  * @subpackage	util
  * @category 	Community Framework
  */
-final class XML {
+class XML {
 	/**
 	 * DOMDocument object
 	 * @var	\DOMDocument
