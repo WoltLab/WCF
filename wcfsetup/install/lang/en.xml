@@ -535,6 +535,7 @@
 	<category name="wcf.global">
 		<item name="wcf.global.button.add"><![CDATA[Add]]></item>
 		<item name="wcf.global.button.back"><![CDATA[&laquo; Back]]></item>
+		<item name="wcf.global.button.cancel"><![CDATA[Cancel]]></item>
 		<item name="wcf.global.button.collapsible"><![CDATA[Expand and collapse]]></item>
 		<item name="wcf.global.button.delete"><![CDATA[Delete]]></item>
 		<item name="wcf.global.button.disable"><![CDATA[Disable]]></item>
@@ -543,6 +544,7 @@
 		<item name="wcf.global.button.enable"><![CDATA[Enable]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Next &raquo;]]></item>
 		<item name="wcf.global.button.reset"><![CDATA[Reset]]></item>
+		<item name="wcf.global.button.save"><![CDATA[Save]]></item>
 		<item name="wcf.global.button.search"><![CDATA[Search]]></item>
 		<item name="wcf.global.button.submit"><![CDATA[Submit]]></item>
 		<item name="wcf.global.confirmation.cancel"><![CDATA[Cancel]]></item>
