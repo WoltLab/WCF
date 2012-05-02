@@ -16,6 +16,13 @@ class ValidateActionException extends \Exception {
 	 * @see	\Exception::__construct()
 	 */
 	public function __construct($message) {
-		die($message);
+		$this->message = $message;
+	}
+	
+	/**
+	 * @see	\Exception::__toString()
+	 */
+	public function __toString() {
+		return $this->message;
 	}
 }
