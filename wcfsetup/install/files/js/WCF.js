@@ -3263,32 +3263,60 @@ WCF.User = {
 WCF.Effect = {};
 
 /**
+ * Scrolls to a specific element offset, optionally handling menu height.
+ */
+WCF.Effect.Scroll = Class.extend({
+	/**
+	 * Scrolls to a specific element offset.
+	 * 
+	 * @param	jQuery		element
+	 * @param	boolean		excludeMenuHeight
+	 * @return	boolean
+	 */
+	scrollTo: function(element, excludeMenuHeight) {
+		if (!element.length) {
+			return true;
+		}
+		
+		var $elementOffset = element.getOffsets().top;
+		var $documentHeight = $(document).height();
+		var $windowHeight = $(window).height();
+		
+		// handles menu height
+		if (excludeMenuHeight) {
+			$elementOffset = Math.max($elementOffset - $('#topMenu').outerHeight(), 0);
+		}
+		
+		if ($elementOffset > $documentHeight - $windowHeight) {
+			$elementOffset = $documentHeight - $windowHeight;
+			if ($elementOffset < 0) {
+				$elementOffset = 0;
+			}
+		}
+		
+		$('html,body').animate({ scrollTop: $elementOffset }, 400, function (x, t, b, c, d) {
+			return -c * ( ( t = t / d - 1 ) * t * t * t - 1) + b;
+		});
+		
+		return false;
+	}
+});
+
+/**
  * Creates a smooth scroll effect.
  */
-WCF.Effect.SmoothScroll = function() { this.init(); };
-WCF.Effect.SmoothScroll.prototype = {
+WCF.Effect.SmoothScroll = WCF.Effect.Scroll.extend({
 	/**
 	 * Initializes effect.
 	 */
 	init: function() {
+		var self = this;
 		$('a[href$=#top],a[href$=#bottom]').click(function() {
 			var $target = $(this.hash);
-			if ($target.length) {
-				var $targetOffset = $target.getOffsets().top;
-				if ($targetOffset > $(document).height() - $(window).height()) {
-					$targetOffset = $(document).height() - $(window).height();
-					if ($targetOffset < 0) $targetOffset = 0;
-				}
-				
-				$('html,body').animate({ scrollTop: $targetOffset }, 400, function (x, t, b, c, d) {
-					return -c * ((t=t/d-1)*t*t*t - 1) + b;
-				});
-				
-				return false;
-			}
+			self.scrollTo($target, true);
 		});
 	}
-};
+});
 
 /**
  * Creates the balloon tool-tip.
