@@ -4103,6 +4103,18 @@ WCF.System.Notification = Class.extend({
 	_callback: null,
 	
 	/**
+	 * CSS class names
+	 * @var	string
+	 */
+	_cssClassNames: '',
+	
+	/**
+	 * notification message
+	 * @var	string
+	 */
+	_message: '',
+	
+	/**
 	 * notification overlay
 	 * @var	jQuery
 	 */
@@ -4115,13 +4127,12 @@ WCF.System.Notification = Class.extend({
 	 * @param	string		cssClassNames
 	 */
 	init: function(message, cssClassNames) {
+		this._cssClassNames = cssClassNames || 'success';
+		this._message = message;
 		this._overlay = $('#systemNotification');
-		if (!this._overlay.length) {
-			this._overlay = $('<div id="systemNotification"><p>' + message + '</p></div>').appendTo(document.body);
-		}
 		
-		if (cssClassNames) {
-			this._overlay.children('p').removeClass().addClass(cssClassNames);
+		if (!this._overlay.length) {
+			this._overlay = $('<div id="systemNotification"><p></p></div>').appendTo(document.body);
 		}
 	},
 	
@@ -4141,8 +4152,8 @@ WCF.System.Notification = Class.extend({
 			this._callback = callback;
 		}
 		
-		if (message) this._overlay.children('p').html(message);
-		if (cssClassNames) this._overlay.children('p').removeClass().addClass(cssClassNames);
+		this._overlay.children('p').html((message || this._message));
+		this._overlay.children('p').removeClass().addClass((cssClassNames || this._cssClassNames));
 		
 		// hide overlay after specified duration
 		new WCF.PeriodicalExecuter($.proxy(this._hide, this), duration);
