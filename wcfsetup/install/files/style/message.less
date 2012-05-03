@@ -141,6 +141,18 @@
 		
 		.borderRadius();
 	}
+	
+	.messageFooter {
+		> *:not(:first-child) {
+			border-top: 1px solid @wcfContainerBorderColor;
+			margin-top: @wcfGapSmall;
+			padding-top: @wcfGapSmall;
+		}
+		
+		.signature {
+			color: @wcfDimmedColor;
+		}
+	}
 }
 
 .message .messageContent {
@@ -257,12 +269,6 @@
 			-webkit-animation-timing-function: ease-in-out;
 		}
 	}*/
-}
-
-.message {
-	.signature {
-		color: lighten(@wcfColor, 10%);
-	}
 }
 
 li:nth-child(2n+1) .message {
