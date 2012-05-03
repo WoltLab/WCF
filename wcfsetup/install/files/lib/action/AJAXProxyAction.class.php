@@ -149,10 +149,10 @@ class AJAXProxyAction extends AbstractSecureAction {
 	 */
 	protected function throwException(\Exception $e) {
 		if ($e instanceof IllegalLinkException) {
-			throw new AJAXException(WCF::getLanguage()->get('wcf.global.error.sessionExpired'), AJAXException::SESSION_EXPIRED);
+			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED);
 		}
 		else if ($e instanceof PermissionDeniedException) {
-			throw new AJAXException(WCF::getLanguage()->get('wcf.global.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
 		}
 		else if ($e instanceof SystemException) {
 			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->__getTraceAsString());

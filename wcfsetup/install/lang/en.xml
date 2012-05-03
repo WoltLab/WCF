@@ -533,6 +533,10 @@
 	</category>
 	
 	<category name="wcf.global">
+		<item name="wcf.global.ajax.error.badRequest"><![CDATA[The server was unable to proceed your request due to an incomplete request.]]></item>
+		<item name="wcf.global.ajax.error.internalError"><![CDATA[The server encountered an unresolvable problem, please try again later.]]></item>
+		<item name="wcf.global.ajax.error.permissionDenied"><![CDATA[You are not authorized to execute this action.]]></item>
+		<item name="wcf.global.ajax.error.sessionExpired"><![CDATA[Your session expired, please login again.]]></item>
 		<item name="wcf.global.button.add"><![CDATA[Add]]></item>
 		<item name="wcf.global.button.back"><![CDATA[&laquo; Back]]></item>
 		<item name="wcf.global.button.cancel"><![CDATA[Cancel]]></item>

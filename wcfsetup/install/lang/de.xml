@@ -566,6 +566,10 @@
 	</category>
 	
 	<category name="wcf.global">
+		<item name="wcf.global.ajax.error.badRequest"><![CDATA[Die Anfrage war unvollständig und konnte nicht verarbeitet werden.]]></item>
+		<item name="wcf.global.ajax.error.internalError"><![CDATA[Es ist ein Fehler bei der Verarbeitung aufgetreten, bitte versuchen Sie es später erneut.]]></item>
+		<item name="wcf.global.ajax.error.permissionDenied"><![CDATA[Sie besitzen leider nicht die notwendigen Zugriffsrechte um diese Aktion auszuführen.]]></item>
+		<item name="wcf.global.ajax.error.sessionExpired"><![CDATA[Ihre Sitzung ist abgelaufen, bitte loggen Sie sich erneut ein.]]></item>
 		<item name="wcf.global.button.add"><![CDATA[Hinzufügen]]></item>
 		<item name="wcf.global.button.back"><![CDATA[&laquo; Zurück]]></item>
 		<item name="wcf.global.button.cancel"><![CDATA[Abbrechen]]></item>
