@@ -1,7 +1,14 @@
 <?php
 namespace wcf\action;
+use wcf\system\exception\IllegalLinkException;
+
+use wcf\system\WCF;
+
+use wcf\system\exception\PermissionDeniedException;
+
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
 use wcf\system\exception\ValidateActionException;
 use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
@@ -113,6 +120,9 @@ class AJAXProxyAction extends AbstractSecureAction {
 		try {
 			$this->objectAction->validateAction();
 		}
+		catch (UserInputException $e) {
+			$this->throwException($e);
+		}
 		catch (ValidateActionException $e) {
 			$this->throwException($e);
 		}
@@ -138,11 +148,20 @@ class AJAXProxyAction extends AbstractSecureAction {
 	 * @param	\Exception	$e
 	 */
 	protected function throwException(\Exception $e) {
-		if ($e instanceof SystemException) {
-			throw new AJAXException($e->getMessage(), $e->__getTraceAsString());
+		if ($e instanceof IllegalLinkException) {
+			throw new AJAXException(WCF::getLanguage()->get('wcf.global.error.sessionExpired'), AJAXException::SESSION_EXPIRED);
+		}
+		else if ($e instanceof PermissionDeniedException) {
+			throw new AJAXException(WCF::getLanguage()->get('wcf.global.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+		}
+		else if ($e instanceof SystemException) {
+			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->__getTraceAsString());
+		}
+		else if ($e instanceof UserInputException) {
+			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS);
 		}
 		else {
-			throw new AJAXException($e->getMessage(), $e->getTraceAsString());
+			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString());
 		}
 	}
 }

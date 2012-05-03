@@ -15,12 +15,43 @@ use wcf\util\JSON;
  */
 class AJAXException extends LoggedException {
 	/**
+	 * missing parameters
+	 * @var	integer
+	 */
+	const MISSING_PARAMETERS = 400;
+	
+	/**
+	 * session expired
+	 * @var	integer
+	 */
+	const SESSION_EXPIRED = 401;
+	
+	/**
+	 * insufficient permissions
+	 * @var	integer
+	 */
+	const INSUFFICIENT_PERMISSIONS = 403;
+	
+	/**
+	 * bad parameters
+	 * @var	integer
+	 */
+	const BAD_PARAMETERS = 412;
+	
+	/**
+	 * internal server error
+	 * @var	integer
+	 */
+	const INTERNAL_ERROR = 503;
+	
+	/**
 	 * Throws a JSON-encoded error message
 	 * 
 	 * @param	string		$message
+	 * @param	boolean		$isDoomsday
 	 * @param	string		$stacktrace
 	 */
-	public function __construct($message, $stacktrace = null) {
+	public function __construct($message, $errorType = self::INTERNAL_ERROR, $stacktrace = null) {
 		if ($stacktrace === null) $stacktrace = $this->getTraceAsString();
 		
 		if (WCF::debugModeIsEnabled()) {
@@ -35,11 +66,39 @@ class AJAXException extends LoggedException {
 			);
 		}
 		
-		// log error
-		$this->logError();
+		$responseData['code'] = $errorType;
+		$statusHeader = '';
+		switch ($errorType) {
+			case self::MISSING_PARAMETERS:
+				$statusHeader = 'HTTP/1.0 400 Bad Request';
+				
+				$this->logError();
+			break;
+			
+			case self::SESSION_EXPIRED:
+				$statusHeader = 'HTTP/1.0 401 Unauthorized';
+			break;
+			
+			case self::INSUFFICIENT_PERMISSIONS:
+				$statusHeader = 'HTTP/1.0 403 Forbidden';
+			break;
+			
+			case self::BAD_PARAMETERS:
+				$statusHeader = 'HTTP/1.0 412 Precondition Failed';
+			break;
+			
+			default:
+			case self::INTERNAL_ERROR:
+				//header('HTTP/1.0 418 I\'m a Teapot');
+				header('HTTP/1.0 503 Service Unavailable');
+				
+				$responseData['code'] = self::INTERNAL_ERROR;
+				
+				$this->logError();
+			break;
+		}
 		
-		//header('HTTP/1.0 418 I\'m a Teapot');
-		header('HTTP/1.0 503 Service Unavailable');
+		header($statusHeader);
 		header('Content-type: application/json');
 		echo JSON::encode($responseData);
 		exit;
