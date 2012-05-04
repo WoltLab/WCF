@@ -249,9 +249,15 @@
 				.linearGradientNative(~"left top, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%");
 			}
 			
-			.wbbEditNote {
+			.wbbEditNote > small {
+				border-left: 2px solid @wcfContainerBorderColor;
 				color: @wcfDimmedColor;
 				display: block;
+				padding: @wcfGapTiny @wcfGapSmall;
+				
+				@wbbEditNoteGradientColor: fade(@wcfContainerBorderColor, 20%);
+				
+				.linearGradientNative(~"left top, @{wbbEditNoteGradientColor} 0%, rgba(255, 255, 255, 0) 40%");
 			}
 		}
 	}
