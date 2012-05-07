@@ -76,14 +76,16 @@ fieldset {
 				> input[type='checkbox'], > input[type='radio'] {
 					margin: 2px 2px 2px 0;
 				}
-				
+			}
+			
+			> input[type='checkbox'], > input[type='radio'] {
 				~ small {
 					margin-left: 21px;
 				}
 			}
 			
-			> input[type='checkbox'], > input[type='radio'] {
-				~ small {
+			&:not(.floated) {
+				> label ~ small {
 					margin-left: 21px;
 				}
 			}
