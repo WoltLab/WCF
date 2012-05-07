@@ -621,13 +621,13 @@
 		<item name="wcf.user.login.data"><![CDATA[Zugangsdaten]]></item>
 		<item name="wcf.user.password.error.false"><![CDATA[Dieses Kennwort ist falsch.]]></item>
 		<item name="wcf.user.language"><![CDATA[Sprache]]></item>
-		<item name="wcf.user.language.description"><![CDATA[Bitte wählen Sie aus, in welcher Sprache die Benutzeroberfläche erscheinen soll!]]></item>
+		<item name="wcf.user.language.description"><![CDATA[Sprache der Benutzeroberfläche]]></item>
 		<item name="wcf.user.logout"><![CDATA[Abmelden]]></item>
 		<item name="wcf.user.logout.sure"><![CDATA[Wollen Sie sich wirklich abmelden?]]></item>
 		<item name="wcf.user.password"><![CDATA[Kennwort]]></item>
 		<item name="wcf.user.registrationDate"><![CDATA[Registrierungsdatum]]></item>
-		<item name="wcf.user.visibleLanguages"><![CDATA[Zeige Inhalte in folgenden Sprachen an]]></item>
-		<item name="wcf.user.visibleLanguages.description"><![CDATA[Wählen Sie, in welchen Sprachen erstellte Inhalte angezeigt werden sollen.]]></item>
+		<item name="wcf.user.visibleLanguages"><![CDATA[Inhaltssprachen]]></item>
+		<item name="wcf.user.visibleLanguages.description"><![CDATA[Zeigt Inhalte in den ausgewählten Sprachen an]]></item>
 		<item name="wcf.user.userID"><![CDATA[Benutzer-ID]]></item>
 		<item name="wcf.user.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.user.username.placeholder"><![CDATA[Geben Sie einen Benutzernamen ein]]></item>

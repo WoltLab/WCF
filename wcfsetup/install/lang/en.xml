@@ -587,13 +587,13 @@
 		<item name="wcf.user.login.data"><![CDATA[Login details]]></item>
 		<item name="wcf.user.password.error.false"><![CDATA[The password is not correct.]]></item>
 		<item name="wcf.user.language"><![CDATA[Language]]></item>
-		<item name="wcf.user.language.description"><![CDATA[Please select the user interface language to be used.]]></item>
+		<item name="wcf.user.language.description"><![CDATA[User interface language]]></item>
 		<item name="wcf.user.logout"><![CDATA[Log out]]></item>
 		<item name="wcf.user.logout.sure"><![CDATA[Do you really want to log out?]]></item>
 		<item name="wcf.user.password"><![CDATA[Password]]></item>
 		<item name="wcf.user.registrationDate"><![CDATA[Date of registration]]></item>
-		<item name="wcf.user.visibleLanguages"><![CDATA[Show content in the following languages]]></item>
-		<item name="wcf.user.visibleLanguages.description"><![CDATA[Select the content languages that should be used.]]></item>
+		<item name="wcf.user.visibleLanguages"><![CDATA[Content languages]]></item>
+		<item name="wcf.user.visibleLanguages.description"><![CDATA[Shows content in selected languages]]></item>
 		<item name="wcf.user.userID"><![CDATA[User ID]]></item>
 		<item name="wcf.user.username"><![CDATA[Username]]></item>
 		<item name="wcf.user.username.error.notFound"><![CDATA[The username &quot;{$username}&quot; could not be found.]]></item>
