@@ -9,20 +9,19 @@
 	//]]>
 </script>
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/working1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="boxHeadline">
+	<hgroup>
 		<h1>{$archive->getLocalizedPackageInfo('packageName')}</h1>
 		<h2>{$archive->getLocalizedPackageInfo('packageDescription')}</h2>
 	</hgroup>
 </header>
 
 {if $missingPackages > 0}
-	<p class="wcf-error">{lang}wcf.acp.package.install.error{/lang}</p>
+	<p class="error">{lang}wcf.acp.package.install.error{/lang}</p>
 {/if}
 
 {if $excludingPackages|count > 0}
-	<div class="wcf-error">{lang}wcf.acp.package.install.error.excludingPackages{/lang}
+	<div class="error">{lang}wcf.acp.package.install.error.excludingPackages{/lang}
 		<ul>
 		{foreach from=$excludingPackages item=excludingPackage}
 			<li>{lang}wcf.acp.package.install.error.excludingPackages.excludingPackage{/lang}</li>
@@ -32,7 +31,7 @@
 {/if}
 
 {if $excludedPackages|count > 0}
-	<div class="wcf-error">{lang}wcf.acp.package.install.error.excludedPackages{/lang}
+	<div class="error">{lang}wcf.acp.package.install.error.excludedPackages{/lang}
 		<ul>
 		{foreach from=$excludedPackages item=excludedPackage}
 			<li>{lang}wcf.acp.package.install.error.excludedPackages.excludedPackage{/lang}</li>
@@ -41,7 +40,7 @@
 	</div>
 {/if}
 
-<fieldset>
+<fieldset class="marginTop">
 	<legend>{lang}wcf.acp.package.information.properties{/lang}</legend>
 
 	<dl>
@@ -75,15 +74,15 @@
 </fieldset>
 
 {if $updatableInstances|count > 0}
-	<p class="wcf-warning">{lang}wcf.acp.package.install.updatableInstances.warning{/lang}</p>
+	<p class="warning">{lang}wcf.acp.package.install.updatableInstances.warning{/lang}</p>
 	
-	<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
+	<div class="container containerPadding marginTop shadow">
 		<hgroup>
 			<h1>{lang}wcf.acp.package.install.updatableInstances{/lang}</h1>
 			<h2>{lang}wcf.acp.package.install.updatableInstances.description{/lang}</h2>
 		</hgroup>
 		
-		<table class="wcf-table">
+		<table class="table">
 			<thead>
 				<tr>
 					<th class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
@@ -104,12 +103,12 @@
 {/if}
 
 {if $requiredPackages|count > 0}
-	<div class="wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
+	<div class="tabularBox tabularBoxTitle marginTop shadow">
 		<hgroup>
-			<h1>{lang}wcf.acp.package.dependencies.required{/lang} <span class="wcf-badge" title="{lang}wcf.acp.package.view.requiredPackages.description{/lang}">{#$requiredPackages|count}</span></h1>
+			<h1>{lang}wcf.acp.package.dependencies.required{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.package.view.requiredPackages.description{/lang}">{#$requiredPackages|count}</span></h1>
 		</hgroup>
 		
-		<table class="wcf-table">
+		<table class="table">
 			<thead>
 				<tr>
 					<th class="columnTitle">{lang}wcf.acp.package.name{/lang}</th>
@@ -129,7 +128,7 @@
 	</div>
 {/if}
 
-<div class="wcf-formSubmit">
+<div class="formSubmit">
 	<input type="button" onclick="document.location.href=fixURL('{link controller='Package'}action={@$action}&queueID={@$queueID}&step=cancel{/link}')" value="{lang}wcf.global.button.back{/lang}" accesskey="c" />
 	{if $missingPackages == 0 && $excludingPackages|count == 0 && $excludedPackages|count == 0}
 		<input type="button" id="submitButton" value="{lang}wcf.global.button.next{/lang}" class="default" accesskey="s" />

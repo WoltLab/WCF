@@ -1,5 +1,5 @@
 <div id="workerContainer">
-	<header class="wcf-container wcf-mainHeading">
+	<header>
 		<img src="{@$__wcf->getPath()}icon/working2.svg" alt="" class="wcf-containerIcon" />
 		<hgroup class="wcf-containerIcon">
 			<h1>Aufgaben werden ausgeführt &hellip;</h1><!--ToDo: Language variables -->
