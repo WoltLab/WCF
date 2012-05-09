@@ -166,7 +166,7 @@
 
 			{hascontent}
 				<div id="dependencies-dependent" class="tabularBox tabularBoxTitle hidden">
-					<hgroup class="wcf-subHeading">
+					<hgroup>
 						<h1>{lang}wcf.acp.package.dependencies.dependent{/lang}</h1>
 						<h2>{lang}wcf.acp.package.dependencies.dependent.description{/lang}</h2>
 					</hgroup>
