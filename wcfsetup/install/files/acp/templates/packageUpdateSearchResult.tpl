@@ -1,8 +1,7 @@
 {include file='header'}
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/search1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="boxHeadline">
+	<hgroup>
 		<h1>{lang}wcf.acp.packageUpdate.search{/lang}</h1>
 	</hgroup>
 </header>
@@ -100,10 +99,8 @@
 		</article>			
 	{/foreach}
 	
-	<div class="wcf-formSubmit">
-		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		{@SID_INPUT_TAG}
 		<input type="hidden" name="id" value="{@$searchID}" />
  	</div>
 </form>
