@@ -47,7 +47,7 @@ class WCF {
 	 * list of currently loaded applications
 	 * @var	array<wcf\system\application\IApplication>
 	 */
-	protected $applications = array();
+	protected static $applications = array();
 	
 	/**
 	 * list of autoload directories
@@ -397,7 +397,7 @@ class WCF {
 	 */
 	protected function initApplications() {
 		// register WCF as application
-		$this->applications['wcf'] = new Application(1);
+		self::$applications['wcf'] = new Application(1);
 		
 		// do not init applications if within wcf
 		if (PACKAGE_ID == 1) return;
@@ -408,7 +408,7 @@ class WCF {
 		
 		// register primary application
 		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
-		$this->applications[$abbreviation] = $application;
+		self::$applications[$abbreviation] = $application;
 		
 		// start dependent applications
 		$applications = ApplicationHandler::getInstance()->getDependentApplications();
@@ -464,7 +464,7 @@ class WCF {
 		}
 		
 		// register application
-		$this->applications[$abbreviation] = $application;
+		self::$applications[$abbreviation] = $application;
 	}
 	
 	/**
@@ -615,17 +615,17 @@ class WCF {
 	 * @param	string		$abbreviation
 	 * @return	string
 	 */
-	public function getPath($abbreviation = 'wcf') {
+	public static function getPath($abbreviation = 'wcf') {
 		// workaround during WCFSetup
 		if (!PACKAGE_ID) {
 			return '../';
 		}
 		
-		if (!isset($this->applications[$abbreviation])) {
+		if (!isset(self::$applications[$abbreviation])) {
 			$abbreviation = 'wcf';
 		}
 		
-		return $this->applications[$abbreviation]->domainName . $this->applications[$abbreviation]->domainPath;
+		return self::$applications[$abbreviation]->domainName . self::$applications[$abbreviation]->domainPath;
 	}
 	
 	/**
