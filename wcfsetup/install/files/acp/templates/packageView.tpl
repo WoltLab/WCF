@@ -240,19 +240,19 @@
 		<ul>
 			{if PACKAGE_ID != $package->packageID}
 				{if $package->isApplication && $package->package != 'com.woltlab.wcf'}
-					<li><a href="{@$__wcf->getPath()}{$package->packageDir}acp/index.php{@SID_ARG_1ST}" title="{lang}wcf.acp.package.button.switch{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/packageACP1.svg" alt="" /> <span>{lang}wcf.acp.package.button.switch{/lang}</span></a></li>
+					<li><a href="{@$__wcf->getPath()}{$package->packageDir}acp/index.php{@SID_ARG_1ST}" title="{lang}wcf.acp.package.button.switch{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/packageACP1.svg" alt="" /> <span>{lang}wcf.acp.package.button.switch{/lang}</span></a></li>
 				{/if}
 				{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $noDependentIsActive}
-					<li><a href="{link controller='Package'}action=startUninstall&packageID={@$package->packageID}{/link}" onclick="return confirm('{lang}wcf.acp.package.button.uninstall.sure{/lang}')" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></a></li>
+					<li><a href="{link controller='Package'}action=startUninstall&packageID={@$package->packageID}{/link}" onclick="return confirm('{lang}wcf.acp.package.button.uninstall.sure{/lang}')" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></a></li>
 				{/if}
 			{/if}
 			{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-				<li><a href="{link controller='PackageStartInstall' id=$package->packageID}action=update{/link}" title="{lang}wcf.acp.package.button.update{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/update1.svg" alt="" /> <span>{lang}wcf.acp.package.button.update{/lang}</span></a></li>
+				<li><a href="{link controller='PackageStartInstall' id=$package->packageID}action=update{/link}" title="{lang}wcf.acp.package.button.update{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/update1.svg" alt="" /> <span>{lang}wcf.acp.package.button.update{/lang}</span></a></li>
 			{/if}
 			
 			{event name='largeButtons'}
 			
-			<li><a href="{link controller='PackageList'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/packageApplication1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+			<li><a href="{link controller='PackageList'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/packageApplication1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>
