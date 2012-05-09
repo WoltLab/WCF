@@ -1,18 +1,17 @@
 {include file='header'}
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/update1.svg" alt="" class="wcf-containerIcon" />
-	<hgroup class="wcf-containerContent">
+<header class="boxHeadline">
+	<hgroup>
 		<h1>{lang}wcf.acp.packageUpdate.auth{/lang}</h1>
 	</hgroup>
 </header>
 
 {if $errorField != ''}
-	<p class="wcf-error">{lang}wcf.global.form.error{/lang}</p>
+	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 <form method="{$requestMethod}" action="index.php{if $getParameters}?{@$getParameters}{/if}">
-	<div class="wcf-box wcf-marginTop wcf-boxPadding wcf-boxDecor">
+	<div class="container containerPadding marginTop shadow">
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.packageUpdate.auth.data{/lang}</legend>
@@ -69,11 +68,9 @@
 			
 	</div>
 	
-	<div class="wcf-formSubmit">
-		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
+	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="form" value="PackageUpdateAuth" />
-		{@SID_INPUT_TAG}
 		<input type="hidden" name="id" value="{@$packageUpdateServerID}" />
 		{@$postParameters}
 	</div>

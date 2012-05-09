@@ -87,19 +87,19 @@
 	
 	{hascontent}
 		<div id="plugins" class="container containerPadding tabMenuContent hidden">
-			<div class="wcf-contentHeader jsPluginListPagination">
+			<div class="contentHeader jsPluginListPagination">
 				
 			</div>
 			
 			<section>
-				<ol class="wcf-pluginList">
+				<ol class="pluginList">
 					{content}
 						{include file='packageListPlugins'}
 					{/content}
 				</ol>
 			</section>
 			
-			<div class="wcf-contentFooter jsPluginListPagination">
+			<div class="contentFooter jsPluginListPagination">
 				
 			</div>
 		</div>

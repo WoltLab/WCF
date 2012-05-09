@@ -10,16 +10,15 @@
 	//]]>
 </script>
 
-<header class="wcf-container wcf-mainHeading">
-	<img src="{@$__wcf->getPath()}icon/packageApplication1.svg" alt="" class="wcf-containerIcon" /><!-- ToDo: Add possibility to show a custom app icon if given! -->
-	<hgroup class="wcf-containerContent">
+<header class="boxHeadline">
+	<hgroup>
 		<h1>{$package->getName()}</h1>
 		<h2>{$package->packageDescription|language}</h2>
 	</hgroup>
 </header>
 
-<div class="wcf-tabMenuContainer">
-	<nav class="wcf-tabMenu">
+<div class="tabMenuContainer">
+	<nav class="tabMenu">
 		<ul>
 			<li><a href="#information">{lang}wcf.acp.package.information.title{/lang}</a></li>
 			{if $package->getRequiredPackages()|count || $package->getDependentPackages()|count}
@@ -28,11 +27,7 @@
 		</ul>
 	</nav>
 
-	<div id="information" class="wcf-box wcf-boxPadding wcf-tabMenuContent hidden">
-		<hgroup class="wcf-subHeading">
-			<h1>{lang}wcf.acp.package.information.title{/lang}</h1>
-		</hgroup>
-
+	<div id="information" class="container containerPadding shadow hidden tabMenuContent">
 		<fieldset>
 			<legend>{lang}wcf.acp.package.information.properties{/lang}</legend>
 	
@@ -88,17 +83,17 @@
 		</fieldset>
 
 		{if $package->packageDescription|language}
-			<hgroup class="wcf-subHeading">
-				<h1>{lang}wcf.acp.package.description{/lang}</h1>
-			</hgroup>
-
-			<p>{$package->packageDescription|language}</p>
+			<fieldset>
+				<legend>{lang}wcf.acp.package.description{/lang}</legend>
+				
+				<p>{$package->packageDescription|language}</p>
+			</fieldset>
 		{/if}
 	</div>
 
 	{if $package->getRequiredPackages()|count || $package->getDependentPackages()|count}
-		<div id="dependencies" class="wcf-box wcf-boxPadding wcf-tabMenuContainer wcf-tabMenuContent">
-			<nav class="wcf-menu">
+		<div id="dependencies" class="container containerPadding tabMenuContainer tabMenuContent">
+			<nav class="menu">
 				<ul>
 					{if $package->getRequiredPackages()|count}
 						<li><a href="#dependencies-required">{lang}wcf.acp.package.dependencies.required{/lang}</a></li>
@@ -110,13 +105,13 @@
 			</nav>
 
 			{hascontent}
-				<div id="dependencies-required" class="wcf-hidden">
-					<hgroup class="wcf-subHeading">
+				<div id="dependencies-required" class="tabularBox tabularBoxTitle hidden">
+					<hgroup>
 						<h1>{lang}wcf.acp.package.dependencies.required{/lang}</h1>
 						<h2>{lang}wcf.acp.package.dependencies.required.description{/lang}</h2>
 					</hgroup>
 		
-					<table class="wcf-table wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
+					<table class="table">
 						<thead>
 							<tr>
 								<th colspan="2" class="columnID">{lang}wcf.global.objectID{/lang}</th>
@@ -170,13 +165,13 @@
 			{/hascontent}
 
 			{hascontent}
-				<div id="dependencies-dependent" class="hidden">
-					<hgroup class="wcf-subHeading">
+				<div id="dependencies-dependent" class="tabularBox tabularBoxTitle hidden">
+					<hgroup>
 						<h1>{lang}wcf.acp.package.dependencies.dependent{/lang}</h1>
 						<h2>{lang}wcf.acp.package.dependencies.dependent.description{/lang}</h2>
 					</hgroup>
 		
-					<table class="wcf-table wcf-box wcf-boxTitle wcf-marginTop wcf-shadow1">
+					<table class="table">
 						<thead>
 							<tr>
 								<th colspan="2" class="columnID">{lang}wcf.global.objectID{/lang}</th>
@@ -240,9 +235,9 @@
 	{/if}
 {/foreach}
 
-<div class="wcf-contentFooter">
+<div class="contentNavigation">
 	<nav>
-		<ul class="wcf-largeButtons">
+		<ul>
 			{if PACKAGE_ID != $package->packageID}
 				{if $package->isApplication && $package->package != 'com.woltlab.wcf'}
 					<li><a href="{@$__wcf->getPath()}{$package->packageDir}acp/index.php{@SID_ARG_1ST}" title="{lang}wcf.acp.package.button.switch{/lang}" class="wcf-button"><img src="{@$__wcf->getPath()}icon/packageACP1.svg" alt="" /> <span>{lang}wcf.acp.package.button.switch{/lang}</span></a></li>

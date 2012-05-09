@@ -19,10 +19,10 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.user.exportEmailAddress.markedUsers{/lang}</legend>
 			
-			<ul>
-				{implode from=$users item=$user}<li><a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user}</a></li>{/implode}
-			</ul>
-		</fieldset>	
+			<div>
+				{implode from=$users item=$user}<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user}</a>{/implode}
+			</div>
+		</fieldset>
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.user.exportEmailAddress.format{/lang}</legend>
