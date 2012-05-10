@@ -5454,12 +5454,73 @@ WCF.Popover = Class.extend({
 	}
 });
 
+/**
+ * Provides an extensible item list with built-in search.
+ * 
+ * @param	string		itemListSelector
+ * @param	string		searchInputSelector
+ */
 WCF.EditableItemList = Class.extend({
+	/**
+	 * allows custom input not recognized by search to be added
+	 * @var	boolean
+	 */
+	_allowCustomInput: false,
+	
+	/**
+	 * action class name
+	 * @var	string
+	 */
+	_className: '',
+	
+	/**
+	 * internal data storage
+	 * @var	mixed
+	 */
 	_data: { },
+	
+	/**
+	 * form container
+	 * @var	jQuery
+	 */
+	_form: null,
+	
+	/**
+	 * item list container
+	 * @var	jQuery
+	 */
 	_itemList: null,
+	
+	/**
+	 * current object id
+	 * @var	integer
+	 */
+	_objectID: 0,
+	
+	/**
+	 * object type id
+	 * @var	integer
+	 */
+	_objectTypeID: 0,
+	
+	/**
+	 * search controller
+	 * @var	WCF.Search.Base
+	 */
 	_search: null,
+	
+	/**
+	 * search input element
+	 * @var	jQuery
+	 */
 	_searchInput: null,
 	
+	/**
+	 * Creates a new WCF.EditableItemList object.
+	 * 
+	 * @param	string		itemListSelector
+	 * @param	string		searchInputSelector
+	 */
 	init: function(itemListSelector, searchInputSelector) {
 		this._itemList = $(itemListSelector);
 		this._searchInput = $(searchInputSelector);
@@ -5469,8 +5530,38 @@ WCF.EditableItemList = Class.extend({
 			return;
 		}
 		
+		this._objectID = this._getObjectID();
+		this._objectTypeID = this._getObjectTypeID();
+		
 		// bind item listener
 		this._itemList.find('.jsEditableItem').click($.proxy(this._click, this));
+		
+		// create item list
+		if (!this._itemList.children('ul').length) {
+			$('<ul />').appendTo(this._itemList);
+		}
+		this._itemList = this._itemList.children('ul');
+		
+		// bind form submit
+		this._form = this._itemList.parents('form').submit($.proxy(this._submit, this));
+		
+		if (this._allowCustomInput) {
+			var self = this;
+			this._searchInput.keydown(function(event) {
+				var $keyCode = event.which || event.keyCode;
+				if ($keyCode === 13) {
+					self.addItem({
+						objectID: 0,
+						label: self._searchInput.val()
+					});
+					
+					event.stopPropagation();
+					return false;
+				}
+				
+				return true;
+			});
+		}
 	},
 	
 	/**
@@ -5481,13 +5572,19 @@ WCF.EditableItemList = Class.extend({
 	 */
 	load: function(data) { },
 	
+	/**
+	 * Removes an item on click.
+	 * 
+	 * @param	object		event
+	 * @return	boolean
+	 */
 	_click: function(event) {
 		var $element = $(event.currentTarget);
 		var $objectID = $element.data('objectID');
+		var $label = $element.data('label');
 		
-		if (this._data[$objectID]) {
-			delete this._data[$objectID];
-		}
+		this._search.removeExcludedSearchValue($label);
+		this._removeItem($objectID, $label);
 		
 		$element.remove();
 		
@@ -5495,8 +5592,67 @@ WCF.EditableItemList = Class.extend({
 		return false;
 	},
 	
-	addItem: function() {
+	/**
+	 * Returns current object id.
+	 * 
+	 * @return	integer
+	 */
+	_getObjectID: function() {
+		return 0;
+	},
+	
+	/**
+	 * Returns current object type id.
+	 * 
+	 * @return	integer
+	 */
+	_getObjectTypeID: function() {
+		return 0;
+	},
+	
+	/**
+	 * Adds a new item to the list.
+	 * 
+	 * @param	object		data
+	 * @return	boolean
+	 */
+	addItem: function(data) {
+		if (this._data[data.objectID]) {
+			return true;
+		}
 		
+		var $listItem = $('<li class="badge">' + data.label + '</li>').data('objectID', data.objectID).data('label', data.label).appendTo(this._itemList);
+		$listItem.click($.proxy(this._click, this));
+		
+		this._search.addExcludedSearchValue(data.label);
+		this._addItem(data.objectID, data.label);
+		
+		return true;
+	},
+	
+	/**
+	 * Handles form submit, override in your class.
+	 */
+	_submit: function() { },
+	
+	/**
+	 * Adds an item to internal storage.
+	 * 
+	 * @param	integer		objectID
+	 * @param	string		label
+	 */
+	_addItem: function(objectID, label) {
+		this._data[objectID] = label;
+	},
+	
+	/**
+	 * Removes an item from internal storage.
+	 * 
+	 * @param	integer		objectID
+	 * @param	string		label
+	 */
+	_removeItem: function(objectID, label) {
+		delete this._data[objectID];
 	}
 });
 
