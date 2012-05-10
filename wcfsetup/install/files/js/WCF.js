@@ -993,7 +993,7 @@ WCF.Clipboard = {
 	 * Closes the clipboard editor item list.
 	 */
 	_closeLists: function() {
-		$('.jsClipboardEditor ul').removeClass('dropdownOpen')
+		$('.jsClipboardEditor ul').removeClass('dropdownOpen');
 	},
 	
 	/**
@@ -3965,7 +3965,7 @@ WCF.Search.Base = Class.extend({
 		
 		this._list.parent().addClass('dropdownOpen');
 		
-		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(true) }, this));
+		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(true); }, this));
 	},
 	
 	/**
@@ -5339,7 +5339,7 @@ WCF.Popover = Class.extend({
 		return {
 			x: $orientationX,
 			y: $orientationY
-		}
+		};
 	},
 	
 	/**
@@ -5451,6 +5451,52 @@ WCF.Popover = Class.extend({
 		}
 		
 		return dimensions;
+	}
+});
+
+WCF.EditableItemList = Class.extend({
+	_data: { },
+	_itemList: null,
+	_search: null,
+	_searchInput: null,
+	
+	init: function(itemListSelector, searchInputSelector) {
+		this._itemList = $(itemListSelector);
+		this._searchInput = $(searchInputSelector);
+		
+		if (!this._itemList.length || !this._searchInput.length) {
+			console.debug("[WCF.EditableItemList] Item list and/or search input do not exist, aborting.");
+			return;
+		}
+		
+		// bind item listener
+		this._itemList.find('.jsEditableItem').click($.proxy(this._click, this));
+	},
+	
+	/**
+	 * Loads raw data and converts it into internal structure. Override this methods
+	 * in your derived classes.
+	 * 
+	 * @param	object		data
+	 */
+	load: function(data) { },
+	
+	_click: function(event) {
+		var $element = $(event.currentTarget);
+		var $objectID = $element.data('objectID');
+		
+		if (this._data[$objectID]) {
+			delete this._data[$objectID];
+		}
+		
+		$element.remove();
+		
+		event.stopPropagation();
+		return false;
+	},
+	
+	addItem: function() {
+		
 	}
 });
 
