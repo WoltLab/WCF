@@ -13,7 +13,7 @@ use wcf\util\FileUtil;
  * @subpackage	system.io
  * @category 	Community Framework
  */
-class Zip extends File {
+class Zip extends File implements IArchive {
 	const LOCAL_FILE_SIGNATURE = "\x50\x4b\x03\x04";
 	const CENTRAL_DIRECTORY_SIGNATURE = "\x50\x4b\x01\x02";
 	const EOF_SIGNATURE = "\x50\x4b\x05\x06";
@@ -26,17 +26,24 @@ class Zip extends File {
 	}
 	
 	/**
-	 * Returns the offset for the given file and false of failure.
-	 * 
-	 * @param	string	$filename	file to search
-	 * @return	mixed
+	 * @see wcf\system\io\IArchive::getIndexByFilename()
 	 */
-	public function getOffsetByFilename($filename) {
+	public function getIndexByFilename($filename) {
 		$this->jumpToCentralDirectory();
 		$centralDirectory = $this->readCentralDirectory();
 		
 		if (isset($centralDirectory['files'][$filename])) return $centralDirectory['files'][$filename]['offset'];
 		return false;
+	}
+	
+	/**
+	 * @see wcf\system\io\IArchive::getFileInfo()
+	 */
+	public function getFileInfo($offset) {
+		if (!is_int($offset)) $offset = $this->getIndexByFilename($offset);
+		
+		$info = $this->readFile($offset);
+		return $info['header'];
 	}
 	
 	/**
@@ -53,36 +60,41 @@ class Zip extends File {
 			$offset = $this->tell();
 			$file = $this->readFile();
 			$filename = $file['header']['filename'];
-			$this->extract($offset, $destination.dirname($filename));
+			$this->extract($offset, $destination.$filename);
 		}
 	}
 	
 	/**
-	 * Extracts the file at the given offset to a string.
-	 * 
-	 * @param	integer		$offset		The offset to extract
-	 * @return	string
+	 * @see wcf\system\io\IArchive::extractToString()
 	 */
 	public function extractToString($offset) {
-		$file = $this->readFile($offset);
+		if (!is_int($offset)) $offset = $this->getIndexByFilename($offset);
+		
+		try {
+			$file = $this->readFile($offset);
+		}
+		catch (SystemException $e) {
+			return false;
+		}
 		
 		return $file['content'];
 	}
 	
 	/**
-	 * Extracts the file at the given offset to the given destination.
-	 * The directory-structure inside the .zip is ignored.
-	 *
-	 * @param	integer		$offset		The offset to extract
-	 * @param	string		$destination	Where to extract
-	 * @param	string		$filename	The filename. When not given the original filename is used
+	 * @see wcf\system\io\IArchive::extract()
 	 */
-	public function extract($offset, $destination, $filename = null) {
-		$file = $this->readFile($offset);
-		$filename = ($filename ?: $file['header']['filename']);
+	public function extract($offset, $destination) {
+		if (!is_int($offset)) $offset = $this->getIndexByFilename($offset);
 		
-		FileUtil::makePath($destination);
-		$targetFile = new File(FileUtil::addTrailingSlash($destination).basename($filename));
+		try {
+			$file = $this->readFile($offset);
+		}
+		catch (SystemException $e) {
+			return false;
+		}
+		
+		FileUtil::makePath(dirname($destination));
+		$targetFile = new File($destination);
 		$targetFile->write($file['content'], strlen($file['content']));
 		$targetFile->close();
 		
@@ -98,9 +110,11 @@ class Zip extends File {
 		}
 		
 		// check filesize
-		if (filesize(FileUtil::addTrailingSlash($destination).basename($filename)) != $file['header']['uncompressedSize']) {
-			throw new SystemException("Could not unzip file '".$file['header']['filename']."' to '".FileUtil::addTrailingSlash($destination).basename($filename)."'. Maybe disk quota exceeded in folder '".$destination."'.");
+		if (filesize($destination) != $file['header']['uncompressedSize']) {
+			throw new SystemException("Could not unzip file '".$file['header']['filename']."' to '".$destination."'. Maybe disk quota exceeded in folder '".dirname($destination)."'.");
 		}
+		
+		return true;
 	}
 	
 	/**
@@ -125,6 +139,7 @@ class Zip extends File {
 	 */
 	public function readCentralDirectory($offset = null) {
 		if ($offset === null) $offset = $this->tell();
+		if ($offset === false) throw new SystemException('Invalid offset passed to readCentralDirectory');
 		
 		$this->seek($offset);
 		// check signature
@@ -184,6 +199,7 @@ class Zip extends File {
 	 */
 	public function isFile($offset = null) {
 		if ($offset === null) $offset = $this->tell();
+		if ($offset === false) throw new SystemException('Invalid offset passed to isFile');
 		
 		$oldOffset = $this->tell();
 		$this->seek($offset);
@@ -201,6 +217,8 @@ class Zip extends File {
 	 */
 	public function skipFile($offset = null) {
 		if ($offset === null) $offset = $this->tell();
+		if (!is_int($offset)) $offset = $this->getIndexByFilename($offset);
+		if ($offset === false) throw new SystemException('Invalid offset passed to skipFile');
 		
 		$this->seek($offset);
 		// check signature
@@ -229,6 +247,8 @@ class Zip extends File {
 	 */
 	public function readFile($offset = null) {
 		if ($offset === null) $offset = $this->tell();
+		if (!is_int($offset)) $offset = $this->getIndexByFilename($offset);
+		if ($offset === false) throw new SystemException('Invalid offset passed to readFile');
 		
 		$this->seek($offset);
 		// check signature
