@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>To Left</title>
+	<desc>To The Left Icon</desc>
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2011 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.Upper1 {fill: #666;}
+				.Lower1 {fill: #fff;}
+			]]>
+		</style>
+	</defs>
+	
+	<g id="IconToLeft">
+		<path class="Lower1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M1,8.5C1,4.909668,3.9101562,2,7.5,2
+			c3.0683594,0,5.6367188,2.1411133,6.3203125,5H7V4.5l-5,4l5.0019531,4L7,10h6.8203125C13.140625,12.8652344,10.5722656,15,7.5,15
+			C3.9101562,15,1,12.0898438,1,8.5z"/>
+		<path class="Upper1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M1,7.5C1,3.909668,3.9101562,1,7.5,1
+			c3.0683594,0,5.6367188,2.1411133,6.3203125,5H7V3.5l-5,4l5.0019531,4L7,9h6.8203125C13.140625,11.8652344,10.5722656,14,7.5,14
+			C3.9101562,14,1,11.0898438,1,7.5z"/>
+	</g>
+</svg>

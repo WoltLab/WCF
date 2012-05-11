@@ -1607,17 +1607,17 @@ WCF.Action.Toggle.prototype = {
 				
 				// toggle icon source
 				$toggleButton.attr('src', function() {
-					if (this.src.match(/disabled1\.svg$/)) {
-						return this.src.replace(/disabled1\.svg$/, 'enabled1.svg');
+					if (this.src.match(/disabled\.svg$/)) {
+						return this.src.replace(/disabled\.svg$/, 'enabled.svg');
 					}
 					else {
-						return this.src.replace(/enabled1\.svg$/, 'disabled1.svg');
+						return this.src.replace(/enabled\.svg$/, 'disabled.svg');
 					}
 				});
 				
 				// toogle icon title
 				$toggleButton.attr('title', function() {
-					if (this.src.match(/enabled1\.svg$/)) {
+					if (this.src.match(/enabled\.svg$/)) {
 						if ($(this).data('disableTitle')) {
 							return $(this).data('disableTitle');
 						}

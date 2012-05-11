@@ -33,9 +33,9 @@
 	<nav>
 		<ul>
 			{if $__wcf->session->getPermission('admin.user.canAddUser')}
-				<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+				<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 			{/if}
-			<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/search1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
+			<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/search.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 			
 			{event name='largeButtons'}
 		</ul>
@@ -74,14 +74,14 @@
 							<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}" /></td>
 							<td class="columnIcon">
 								{if $user->editable}
-									<a href="{link controller='UserEdit' id=$user->userID}{/link}"><img src="{@$__wcf->getPath()}icon/edit1.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="icon16 jsTooltip" /></a>
+									<a href="{link controller='UserEdit' id=$user->userID}{/link}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="icon16 jsTooltip" /></a>
 								{else}
-									<img src="{@$__wcf->getPath()}icon/edit1D.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="icon16" />
+									<img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.acp.user.edit{/lang}" class="icon16 disabled" />
 								{/if}
 								{if $user->deletable}
-									<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="icon16 jsTooltip jsDeleteButton" data-object-id="{@$user->userID}" data-confirm-message="{lang}wcf.acp.user.delete.sure{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="icon16 jsTooltip jsDeleteButton" data-object-id="{@$user->userID}" data-confirm-message="{lang}wcf.acp.user.delete.sure{/lang}" />
 								{else}
-									<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="icon16" />
+									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="icon16 disabled" />
 								{/if}
 						
 								{event name='buttons'}
@@ -110,9 +110,9 @@
 		<nav>
 			<ul>
 				{if $__wcf->session->getPermission('admin.user.canAddUser')}
-					<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+					<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 				{/if}
-				<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/search1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
+				<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/search.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 				
 				{event name='largeButtons'}
 			</ul>

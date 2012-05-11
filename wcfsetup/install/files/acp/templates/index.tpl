@@ -38,7 +38,7 @@
 		<div id="health" class="container containerPadding shadow hidden tabMenuContent">
 			{foreach from=$healthDetails item='issues' key='healthType'}
 				{hascontent}
-				<fieldset><legend><img src="{$__wcf->getPath()}icon/system{$healthType|ucfirst}.svg" class="icon24" /> {lang}wcf.acp.index.health.detail.{@$healthType}{/lang}</legend>
+				<fieldset><legend><img src="{$__wcf->getPath()}icon/{$healthType}.svg" class="icon24" /> {lang}wcf.acp.index.health.detail.{@$healthType}{/lang}</legend>
 					<ul>
 					{content}
 						{foreach from=$issues item='issue'}

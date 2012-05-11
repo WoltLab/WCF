@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>Message</title>
+	<desc>Message Icon</desc>
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2011 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.Upper1 {fill: #369;}
+				.Lower1 {fill: #fff;}
+			]]>
+		</style>
+	</defs>
+	
+	<g id="IconMessage">
+		<g class="Lower1">
+			<path id="Sheet2" style="fill-rule: evenodd; clip-rule: evenodd;" d="M2,4v9c0,0.9853516,0.046875,1,1,1h6
+				c0.984375,0,1-0.0146484,1-1V7.3999023L5.6000977,3H3C2.03125,3,2,2.9829102,2,4z M1,3c0-0.4702148,0.5014648-1,1-1h4l5,5v7
+				c0,0.5478516-0.5,1-1,1H2c-0.515625,0-1-0.4052734-1-1V3z"/>
+			<path id="Flap2" d="M11,7H7C6.453125,7,6,6.53125,6,6V2L11,7z"/>
+		</g>
+		<g class="Upper1">
+			<path id="Sheet1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M2,3v9c0,0.9853516,0.046875,1,1,1h6
+				c0.984375,0,1-0.0146484,1-1V6.3999023L5.6000977,2H3C2.03125,2,2,1.9833984,2,3z M1,2c0-0.4702148,0.5014648-1,1-1h4l5,5v7
+				c0,0.5478516-0.5,1-1,1H2c-0.515625,0-1-0.4052734-1-1V2z"/>
+			<path id="Flap1" d="M11,6L7,5.9995117C6.453125,5.9995117,6,5.53125,6,5V1L11,6z"/>
+		</g>
+	</g>
+</svg>

@@ -7,7 +7,6 @@ use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
-
 /**
  * The 'pages' template function is used to generate sliding pagers.
  * 
@@ -64,19 +63,19 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	
 	protected function makePreviousLink($link, $pageNo) {
 		if ($pageNo > 1) {
-			return '<li class="button skip"><a href="'.$this->insertPageNumber($link, $pageNo - 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous').'" class="jsTooltip"><img src="'.self::getIconPath('previous1').'" alt="" /></a></li>'."\n";
+			return '<li class="button skip"><a href="'.$this->insertPageNumber($link, $pageNo - 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous').'" class="jsTooltip"><img src="'.self::getIconPath('circleArrowLeft').'" alt="" class="icon16" /></a></li>'."\n";
 		}
 		else {
-			return '<li class="skip disabled"><img src="'.self::getIconPath('previous1D').'" alt="" /></li>'."\n";
+			return '<li class="skip disabled"><img src="'.self::getIconPath('circleArrowLeft').'" alt="" class="icon16 disabled" /></li>'."\n";
 		}
 	}
 	
 	protected function makeNextLink($link, $pageNo, $pages) {
 		if ($pageNo && $pageNo < $pages) {
-			return '<li class="button skip"><a href="'.$this->insertPageNumber($link, $pageNo + 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.next').'" class="jsTooltip"><img src="'.self::getIconPath('next1').'" alt="" /></a></li>'."\n";
+			return '<li class="button skip"><a href="'.$this->insertPageNumber($link, $pageNo + 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.next').'" class="jsTooltip"><img src="'.self::getIconPath('circleArrowRight').'" alt="" class="icon16" /></a></li>'."\n";
 		}
 		else {
-			return '<li class="skip disabled"><img src="'.self::getIconPath('next1D').'" alt="" /></li>'."\n";
+			return '<li class="skip disabled"><img src="'.self::getIconPath('circleArrowLeft').'" alt="" class="icon16 disabled" /></li>'."\n";
 		}
 	}
 	

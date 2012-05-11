@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>Tag</title>
+	<desc>Tag Icon</desc>
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2011 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.Upper1 {fill: #369;}
+				.Lower1 {fill: #fff;}
+			]]>
+		</style>
+	</defs>
+	
+	<g id="IconTag">
+		<path class="Lower1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M8.2929688,2.7070312
+			C8.6816406,2.3183594,9.4501953,2,10,2h3c0.578125,0,1,0.5,1,1v3c0,0.5498047-0.3183594,1.3183594-0.7070312,1.7070312
+			l-6.5859375,6.5859375c-0.3886719,0.3886719-1.0253906,0.3886719-1.4140625,0l-3.5859375-3.5859375
+			c-0.3886719-0.3886719-0.3886719-1.0253906,0-1.4140625L8.2929688,2.7070312z M11.5,6C12.3291016,6,13,5.3286133,13,4.5
+			S12.3291016,3,11.5,3C10.671875,3,10,3.6713867,10,4.5S10.671875,6,11.5,6z"/>
+		<path class="Upper1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M8.2929688,1.7070312
+			C8.6816406,1.3183594,9.4501953,1,10,1h3c0.578125,0,1,0.5,1,1v3c0,0.5498047-0.3183594,1.3183594-0.7070312,1.7070312
+			l-6.5859375,6.5859375c-0.3886719,0.3886719-1.0253906,0.3886719-1.4140625,0L1.7070312,9.7070312
+			c-0.3886719-0.3886719-0.3886719-1.0253906,0-1.4140625L8.2929688,1.7070312z M11.5,5C12.3291016,5,13,4.3286133,13,3.5
+			S12.3291016,2,11.5,2C10.671875,2,10,2.6713867,10,3.5S10.671875,5,11.5,5z"/>
+	</g>
+</svg>

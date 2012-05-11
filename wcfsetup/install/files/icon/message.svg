@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>Private Message</title>
+	<desc>Private Message Icon (type 1)</desc>
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2011 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.Upper1 {fill: #666;}
+				.Lower1 {fill: #fff;}
+			]]>
+		</style>
+	</defs>
+	
+	<g id="IconPrivateMessage1">
+		<g class="Lower1">
+			<path id="Frame2" style="fill-rule: evenodd; clip-rule: evenodd;" d="M13,5H2C1.40625,5,1,5.484375,1,6v8
+				c0,0.5,0.453125,1,1,1h11c0.546875,0,1-0.5,1-1V6C14,5.484375,13.59375,5,13,5z M12,14H3c-0.984375,0-1-0.015625-1-1V6h11v7
+				C13,13.984375,12.984375,14,12,14z"/>
+			<path id="XComplex2" d="M13.1474609,13.7978516L8.543457,10.4501953
+				c0.0175781-0.0166016,0.0380859-0.0283203,0.0551758-0.0449219L13,6.0004883h-0.96875L8.5986328,9.5410156
+				c-0.6015625,0.6210938-1.6152344,0.6015625-2.2001953-0.0019531L2.9692383,6.0004883H2l4.3984375,4.4038086
+				C6.4160156,10.421875,6.4375,10.4335938,6.4555664,10.4501953l-4.6025391,3.3476562l0.2939453,0.4042969l4.7636719-3.4638672
+				c0.3740234,0.1484375,0.8022461,0.1503906,1.1791992,0l4.7626953,3.4638672L13.1474609,13.7978516z"/>
+		</g>
+		<g class="Upper1">
+			<path id="Frame1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M13,4H2C1.40625,4,1,4.484375,1,5v8
+				c0,0.5,0.453125,1,1,1h11c0.546875,0,1-0.5,1-1V5C14,4.484375,13.59375,4,13,4z M12,13H3c-0.984375,0-1-0.015625-1-1V5h11v7
+				C13,12.984375,12.984375,13,12,13z"/>
+			<path id="XComplex1" d="M13.1474609,12.7978516L8.543457,9.4501953
+				C8.5610352,9.4335938,8.581543,9.421875,8.5986328,9.4052734L13,5.0004883h-0.96875L8.5986328,8.5410156
+				C7.9970703,9.1621094,6.9833984,9.1425781,6.3984375,8.5390625L2.9692383,5.0004883H2l4.3984375,4.4038086
+				C6.4160156,9.421875,6.4375,9.4335938,6.4555664,9.4501953l-4.6025391,3.3476562l0.2939453,0.4042969l4.7636719-3.4638672
+				c0.3740234,0.1484375,0.8022461,0.1503906,1.1791992,0l4.7626953,3.4638672L13.1474609,12.7978516z"/>
+		</g>
+	</g>
+</svg>

@@ -1,7 +1,7 @@
 {foreach from=$plugins key=packageID item=package}
 	<li class="wcf-infoPackagePlugin wcf-box wcf-button jsPackageContainer">
 		<div>
-			<a href="{link controller='PackageView' id=$packageID}{/link}" title="{$package->getName()}" style="background-image: url('{@$__wcf->getPath()}icon/packagePlugin1.svg');">
+			<a href="{link controller='PackageView' id=$packageID}{/link}" title="{$package->getName()}" style="background-image: url('{@$__wcf->getPath()}icon/plugin.svg');">
 				<h1>{$package->getName()}</h1>
 				<small>{$package->packageDescription|language|truncate:150}</small>
 			</a>

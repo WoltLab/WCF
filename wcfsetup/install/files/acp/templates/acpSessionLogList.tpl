@@ -36,7 +36,7 @@
 					{foreach from=$objects item=sessionLog}
 						<tr class="{if $sessionLog->active} activeContainer{/if}">
 							<td class="columnID columnSessionLogID"><p>{@$sessionLog->sessionLogID}</p></td>
-							<td class="columnTitle columnUsername"><p>{if $__wcf->user->userID == $sessionLog->userID}<img src="{@$__wcf->getPath()}icon/user1.svg" alt="" class="icon16" />{/if} <a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->username}</a></p></td>
+							<td class="columnTitle columnUsername"><p>{if $__wcf->user->userID == $sessionLog->userID}<img src="{@$__wcf->getPath()}icon/user.svg" alt="" class="icon16" />{/if} <a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->username}</a></p></td>
 							<td class="columnURL columnIpAddress"><p><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->ipAddress}</a>{if $sessionLog->hostname != $sessionLog->ipAddress}<br /><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->hostname}</a>{/if}</p></td>
 							<td class="columnText columnUserAgent"><p><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->userAgent}</a></p></td>
 							<td class="columnDate columnTime"><p>{@$sessionLog->time|time}</p></td>

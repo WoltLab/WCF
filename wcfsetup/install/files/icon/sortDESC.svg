@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>Sorting Descending</title>
+	<desc>Sorting Descending Icon</desc>
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2011 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.SortingUpper {fill: #fff;}
+				.SortingLower {fill: #000;}
+			]]>
+		</style>
+	</defs>
+	
+	<g id="IconSortingArrowDESC">
+		<polygon class="SortingLower" style="fill-rule: evenodd; clip-rule: evenodd;" points="14,5 8.0004883,11 2,5"/>
+		<polygon class="SortingUpper" style="fill-rule: evenodd; clip-rule: evenodd;" points="13,5.4003906 8.0004883,10.4003906 3,5.4003906"/>
+	</g>
+</svg>

@@ -78,9 +78,9 @@
 				'wcf.global.form.edit.success': '{lang}wcf.global.form.edit.success{/lang}'
 			});
 			WCF.Icon.addObject({
-				'wcf.icon.closed': '{@$__wcf->getPath()}icon/closed.svg',
-				'wcf.icon.loading': '{@$__wcf->getPath()}icon/spinner1.svg',
-				'wcf.icon.opened': '{@$__wcf->getPath()}icon/opened.svg'
+				'wcf.icon.closed': '{@$__wcf->getPath()}icon/arrowRightInverse.svg',
+				'wcf.icon.loading': '{@$__wcf->getPath()}icon/spinner.svg',
+				'wcf.icon.opened': '{@$__wcf->getPath()}icon/arrowDownInverse.svg'
 			});
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
@@ -155,7 +155,7 @@
 			<!-- header navigation -->
 			<nav class="navigation navigationHeader clearfix">
 				<ul class="navigationIcons">
-					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{@$__wcf->getPath()}icon/toBottom.svg" alt="" class="icon16" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{@$__wcf->getPath()}icon/circleArrowDownColored.svg" alt="" class="icon16" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 				</ul>
 			</nav>
 			<!-- /header navigation -->

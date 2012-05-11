@@ -3,12 +3,9 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		WCF.Icon.addObject({
-			'wcf.global.opened': '{@$__wcf->getPath()}icon/opened2.svg',
-			'wcf.global.closed': '{@$__wcf->getPath()}icon/closed2.svg'
-		});
 		WCF.Collapsible.Simple.init();
 	});
+	//]]>
 	//]]>
 </script>
 
@@ -52,7 +49,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			{if $cacheData.files}<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="{link controller='CacheClear'}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
+			{if $cacheData.files}<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="{link controller='CacheClear'}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/delete.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
 			
 			{event name='largeButtons'}
 		</ul>
@@ -100,7 +97,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			{if $cacheData.files}<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="{link controller='CacheClear'}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
+			{if $cacheData.files}<li><a onclick="return confirm('{lang}wcf.acp.cache.clear.sure{/lang}')" href="{link controller='CacheClear'}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/delete.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
 			
 			{event name='largeButtons'}
 		</ul>

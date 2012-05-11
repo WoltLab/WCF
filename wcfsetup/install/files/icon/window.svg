@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>Package ACP</title>
+	<desc>Package ACP Icon</desc>
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2011 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.Upper1 {fill: #666;}
+				.Lower1 {fill: #fff;}
+			]]>
+		</style>
+	</defs>
+	
+	<g id="IconPackageACP">
+		<path class="Lower1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M13,2H2C1.4477539,2,1,2.4477539,1,3v11
+			c0,0.5527344,0.4477539,1,1,1h11c0.5527344,0,1-0.4472656,1-1V3C14,2.4477539,13.5527344,2,13,2z M13,14H2V5h11V14z"/>
+		<path class="Upper1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M13,1H2C1.4477539,1,1,1.4477539,1,2v11
+			c0,0.5527344,0.4477539,1,1,1h11c0.5527344,0,1-0.4472656,1-1V2C14,1.4477539,13.5527344,1,13,1z M13,13H2V4h11V13z"/>
+	</g>
+</svg>

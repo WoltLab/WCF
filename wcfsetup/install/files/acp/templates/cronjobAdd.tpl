@@ -19,9 +19,9 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='CronjobList'}{/link}" title="{lang}wcf.acp.menu.link.cronjob.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/time1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.cronjob.list{/lang}</span></a></li>
+			<li><a href="{link controller='CronjobList'}{/link}" title="{lang}wcf.acp.menu.link.cronjob.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.cronjob.list{/lang}</span></a></li>
 			{if $action == 'edit'}
-				<li><a href="{link controller='CronjobExecute' id=$cronjobID}{/link}" title="{lang}wcf.acp.cronjob.execute{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/run1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cronjob.execute{/lang}</span></a></li>
+				<li><a href="{link controller='CronjobExecute' id=$cronjobID}{/link}" title="{lang}wcf.acp.cronjob.execute{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/play.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cronjob.execute{/lang}</span></a></li>
 			{/if}
 			
 			{event name='largeButtons'}

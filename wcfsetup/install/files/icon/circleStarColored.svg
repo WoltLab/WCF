@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>Threadstarter</title>
+	<desc>Threadstarter Icon</desc>
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2011 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.Upper1 {fill: #369;}
+				.Lower1 {fill: #fff;}
+			]]>
+		</style>
+	</defs>
+	
+	<g id="IconThreadstarter">
+		<path class="Lower1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M7.5,2C3.909668,2,1,4.909668,1,8.5
+			C1,12.0888672,3.909668,15,7.5,15c3.5898438,0,6.5-2.9111328,6.5-6.5C14,4.909668,11.0898438,2,7.5,2z M10.3837891,12.46875
+			L7.5,10.3740234L4.6166992,12.46875l1.1010742-3.3896484L2.8344727,6.9838867h3.5639648L7.5,3.5942383l1.1015625,3.3896484
+			h3.5644531L9.2822266,9.0791016L10.3837891,12.46875z"/>
+		<path class="Upper1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M7.5,1C3.909668,1,1,3.909668,1,7.5
+			C1,11.0888672,3.909668,14,7.5,14c3.5898438,0,6.5-2.9111328,6.5-6.5C14,3.909668,11.0898438,1,7.5,1z M10.3837891,11.46875
+			L7.5,9.3740234L4.6166992,11.46875l1.1010742-3.3896484L2.8344727,5.9838867h3.5639648L7.5,2.5942383l1.1015625,3.3896484
+			h3.5644531L9.2822266,8.0791016L10.3837891,11.46875z"/>
+	</g>
+</svg>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>Check</title>
+	<desc>Check Icon</desc>
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2011 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.Upper {fill: #369;}
+				.Lower {fill: #fff;}
+			]]>
+		</style>
+	</defs>
+	
+	<g id="IconCheck">
+		<path class="Lower" style="fill-rule: evenodd; clip-rule: evenodd;" d="M14.4794922,2.2192383L6.4145508,14.9335938
+			C6.3901367,14.9736328,6.3457031,14.9970703,6.2998047,15H6.2944336c-0.0454102,0-0.0883789-0.0224609-0.1142578-0.0546875
+			L1.0297852,8.2504883C0.9975586,8.2075195,0.9897461,8.1489258,1.0151367,8.1010742
+			c0.0244141-0.0483398,0.074707-0.0932617,0.1289062-0.0932617h2.4731445l2.2768555,3.0917969l5.4711914-9.012207
+			C11.390625,2.0458984,11.4375,2,11.4863281,2h2.8710938l0,0c0.0507812,0,0.0996094,0.027832,0.125,0.0742188
+			C14.5078125,2.1186523,14.5048828,2.175293,14.4794922,2.2192383z"/>
+		<path class="Upper" style="fill-rule: evenodd; clip-rule: evenodd;" d="M14.4794922,1.2192383L6.4145508,13.9335938
+			C6.3901367,13.9736328,6.3457031,13.9970703,6.2998047,14H6.2944336c-0.0454102,0-0.0883789-0.0224609-0.1142578-0.0546875
+			L1.0297852,7.2504883C0.9975586,7.2075195,0.9897461,7.1489258,1.0151367,7.1010742
+			c0.0244141-0.0483398,0.074707-0.0932617,0.1289062-0.0932617h2.4731445l2.2768555,3.0917969l5.4711914-9.012207
+			C11.390625,1.0458984,11.4375,1,11.4863281,1h2.8710938l0,0c0.0507812,0,0.0996094,0.027832,0.125,0.0742188
+			C14.5078125,1.1186523,14.5048828,1.175293,14.4794922,1.2192383z"/>
+	</g>
+</svg>

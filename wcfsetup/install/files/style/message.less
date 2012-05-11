@@ -68,7 +68,9 @@
 
 .message.dividers {
 	.userCredits {
-		border-top: 1px dotted darken(@wcfContainerBorderColor, 10%);
+		border-top: 1px solid darken(@wcfSidebarBackgroundColor, 8%); //darken(@wcfContainerBorderColor, 10%);
+		
+		.boxShadowInset(0, 1px, #fff, 0);
 	}
 }
 
@@ -117,9 +119,8 @@
 		display: block;
 	}
 	
-	> div {
+	> div:not(.messageFooter) {
 		border-top: 1px dotted @wcfContainerBorderColor;
-		display: block;
 		overflow: hidden;
 		padding: @wcfGapMedium 0;
 	}
@@ -132,25 +133,23 @@
 		padding-bottom: @wcfGapMedium;
 	}
 	
-	> .likesSummary {
-		background-color: @wcfContentBackgroundColor;
-		border: 1px solid @wcfContainerBorderColor;
-		display: inline-block;
-		font-size: @wcfSmallFontSize;
-		padding: @wcfGapTiny @wcfGapMedium;
-		
-		.borderRadius();
+	> .messageSignature {
+		color: @wcfDimmedColor;
 	}
 	
 	.messageFooter {
 		> *:not(:first-child) {
-			border-top: 1px solid @wcfContainerBorderColor;
 			margin-top: @wcfGapSmall;
-			padding-top: @wcfGapSmall;
 		}
 		
-		.signature {
+		> .messageFooterNote {
+			border-left: 2px solid @wcfContainerBorderColor;
 			color: @wcfDimmedColor;
+			font-size: @wcfSmallFontSize;
+			padding: @wcfGapTiny @wcfGapSmall;
+				
+			@messageFooterNoteGradientColor: fade(@wcfContainerBorderColor, 20%);
+			.linearGradientNative(~"left top, @{messageFooterNoteGradientColor} 0%, transparent 40%");
 		}
 	}
 }
@@ -229,14 +228,21 @@
 		position: relative;
 		text-align: left;
 		
+		> a > img {
+			/* todo */
+			-webkit-box-reflect: below 1px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(.6, transparent), to(rgba(0, 0, 0, .3)));
+		}
+		
 		> .badgeOnline {
-			border-bottom: 1px solid #fff;
+			background-color: fade(@wcfSuccessBackgroundColor, 70%);
+			border-bottom: 1px solid rgba(255, 255, 255, .7); /*todo*/
 			bottom: 7px;
 			position: absolute;
-			right: -7px;
+			right: -5px;
 			text-transform: uppercase;
 			
-			//.borderRadius(0);
+			
+			.borderRadius(2px);
 			.boxShadow(0, 1px, rgba(0, 0, 0, .3), 7px);
 		}
 	}

@@ -236,7 +236,7 @@
 			}
 			
 			&:after {
-				background-image: url(../../icon/threadStarter1.svg);
+				background-image: url(../icon/circleStar.svg);
 				background-position: 4px 4px;
 				background-repeat: no-repeat;
 				background-size: 16px;
@@ -247,17 +247,6 @@
 			&:before {
 				.borderRadius(@wcfContainerBorderRadius, 0, 0, 0);
 				.linearGradientNative(~"left top, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%");
-			}
-			
-			.wbbEditNote > small {
-				border-left: 2px solid @wcfContainerBorderColor;
-				color: @wcfDimmedColor;
-				display: block;
-				padding: @wcfGapTiny @wcfGapSmall;
-				
-				@wbbEditNoteGradientColor: fade(@wcfContainerBorderColor, 20%);
-				
-				.linearGradientNative(~"left top, @{wbbEditNoteGradientColor} 0%, rgba(255, 255, 255, 0) 40%");
 			}
 		}
 	}
@@ -295,7 +284,7 @@
 }
 
 .wbbPostLoading {
-	background-image: url(../icon/spinner1.svg);
+	background-image: url(../icon/spinner.svg);
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: 64px;
@@ -304,7 +293,7 @@
 /* Thread quick reply */
 #threadQuickReply {
 	.wbbThreadQuickReplyLoading {
-		background-image: url(../icon/spinner1.svg);
+		background-image: url(../icon/spinner.svg);
 		background-position: center center;
 		background-repeat: no-repeat;
 		background-size: 64px;

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>Rank Star</title>
+	<desc>Rank Star Icon (golden)</desc>
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2011 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.Upper1 {fill: #666;}
+				.Lower1 {fill: #fff;}
+			]]>
+		</style>
+	</defs>
+	
+	<g id="IconStar">
+		<path class="Lower1" d="M15,6.9658203H9.6533203L8,2L6.3476562,6.9658203H1l4.3266602,3.0693359L3.6738281,15
+			L8,11.9306641L12.3271484,15l-1.6523438-4.9648438L15,6.9658203z"/>
+		<radialGradient id="InnerFill" cx="7.9794922" cy="7.9794922" r="6.6045232" gradientUnits="userSpaceOnUse">
+			<stop offset="0" style="stop-color: #FCEE21"/>
+			<stop offset=".1593729" style="stop-color: #fcea21"/>
+			<stop offset=".3245102" style="stop-color: #fbdd21"/>
+			<stop offset=".4924121" style="stop-color: #f9c922"/>
+			<stop offset=".6621734" style="stop-color: #f7ac22"/>
+			<stop offset=".8315486" style="stop-color: #f48723"/>
+			<stop offset="1" style="stop-color: #f15a24"/>
+		</radialGradient>
+		<polygon id="UpperGold" style="fill: url(#InnerFill);" points="8,1 9.6533203,5.9658203 15,5.9658203 10.6748047,9.0351562 
+			12.3271484,14 8,10.9306641 3.6738281,14 5.3266602,9.0351562 1,5.9658203 6.3476562,5.9658203"/>
+		<path class="Upper1" d="M15,5.9658203H9.6533203L8,1L6.3476562,5.9658203H1l4.3266602,3.0693359
+			L3.6738281,14L8,10.9306641L12.3271484,14l-1.6523438-4.9648438L15,5.9658203z M11.3964844,12.6875L8,10.3125l-3.3955078,2.375
+			l1.25-3.7910156L2.2919922,6.375h4.4165039L8,2.5l1.2919922,3.875h4.4169922l-3.5625,2.5214844L11.3964844,12.6875z"/>
+	</g>
+</svg>

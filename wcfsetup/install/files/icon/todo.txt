@@ -1,0 +1,10 @@
+--- Icon Todo ---
+
+Fix shadow:
+- errorInverse.svg
+- infoInverse.svg
+- successInverse.svg
+- warningInverse.svg
+
+Fix placeholder:
+list.svg

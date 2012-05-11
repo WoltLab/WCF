@@ -10,7 +10,7 @@
 		
 		{if $pluginsCount > 1}
 			WCF.Icon.addObject({
-				'wcf.icon.arrow.down': '{@$__wcf->getPath()}icon/dropdown1.svg',
+				'wcf.icon.arrow.down': '{@$__wcf->getPath()}icon/dropdown.svg',
 				'wcf.icon.next': '{@$__wcf->getPath()}icon/next1.svg',
 				'wcf.icon.next.disabled': '{@$__wcf->getPath()}icon/next1D.svg',
 				'wcf.icon.previous': '{@$__wcf->getPath()}icon/previous1.svg',
@@ -73,8 +73,8 @@
 							<footer class="contentOptions clearfix">
 								<nav>
 									<ul class="smallButtons">
-										<li><a href="{link controller='PackageView' id=$packageID}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/info1.svg" alt="" title="{lang}wcf.acp.package.button.info{/lang}" class="icon16" /> <span>{lang}wcf.acp.package.button.info{/lang}</span></a></li>
-										<li><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}" class="button"><img src="{@$__wcf->getPath()}icon/update1.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="icon16" /> <span>{lang}wcf.acp.package.button.update{/lang}</span></a></li>
+										<li><a href="{link controller='PackageView' id=$packageID}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/info.svg" alt="" title="{lang}wcf.acp.package.button.info{/lang}" class="icon16" /> <span>{lang}wcf.acp.package.button.info{/lang}</span></a></li>
+										<li><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}" class="button"><img src="{@$__wcf->getPath()}icon/update.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="icon16" /> <span>{lang}wcf.acp.package.button.update{/lang}</span></a></li>
 									</ul>
 								</nav>
 							</footer>
@@ -109,7 +109,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='PackageListDetailed'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/packageApplication1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.package.list.detailed{/lang}</span></a></li>
+			<li><a href="{link controller='PackageListDetailed'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.package.list.detailed{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>

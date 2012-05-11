@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>Remove</title>
+	<desc>Remove Icon (inverted)</desc>
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2011 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.Upper1 {fill: #369;}
+				.Lower1 {fill: #fff;}
+			]]>
+		</style>
+	</defs>
+	
+	<g id="IconRemove">
+		<path class="Lower1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M7.5,2C3.909668,2,1,4.9101562,1,8.5
+			C1,12.0908203,3.909668,15,7.5,15c3.5898438,0,6.5-2.9091797,6.5-6.5C14,4.9101562,11.0898438,2,7.5,2z M11.5,9.5h-8
+			c-0.5507812,0-1-0.4492188-1-1c0-0.5493164,0.4492188-1.0004883,1-1.0004883h8c0.5507812,0,1,0.4511719,1,1.0004883
+			C12.5,9.0507812,12.0507812,9.5,11.5,9.5z"/>
+		<path class="Upper1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M7.5,1C3.909668,1,1,3.9101562,1,7.5
+			C1,11.0908203,3.909668,14,7.5,14c3.5898438,0,6.5-2.9091797,6.5-6.5C14,3.9101562,11.0898438,1,7.5,1z M11.5009766,8.5H3.5
+			c-0.5507812,0-1-0.4492188-1-1c0-0.5498047,0.4492188-1.0004883,1-1.0004883h8.0009766
+			C12.0507812,6.4995117,12.5,6.9501953,12.5,7.5C12.5,8.0507812,12.0507812,8.5,11.5009766,8.5z"/>
+	</g>
+</svg>

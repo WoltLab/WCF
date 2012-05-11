@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>Heart</title>
+	<desc>Heart Icon (inverted)</desc>
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2011 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.Upper1 {fill: #666;}
+				.Lower1 {fill: #fff;}
+			]]>
+		</style>
+	</defs>
+	
+	<g id="IconHeart">
+		<path class="Lower1" d="M15,6c0,4.5-7,9-7,9s-7-4.5205078-7-9c0-2.5205078,1.5-4,3.5-4 C7,2,8,4.0209961,8,4.0209961S9,2,11.5009766,2C13.5009766,2,15,3.4584961,15,6z"/>
+		<path class="Upper1" d="M15,5c0,4.5-7,9-7,9S1,9.4794922,1,5c0-2.5205078,1.5-4,3.5-4 C7,1,8,3.0209961,8,3.0209961S9,1,11.5009766,1C13.5009766,1,15,2.4584961,15,5z"/>
+	</g>
+</svg>
