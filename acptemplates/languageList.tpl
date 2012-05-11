@@ -14,12 +14,12 @@
 					var $button = $(row).find('.jsSetAsDefaultButton');
 					
 					if (WCF.inArray($($button).data('objectID'), data.objectIDs)) {
-						$($button).attr('src', '{@$__wcf->getPath()}icon/default1D.svg');
-						$(row).find('.jsDeleteButton').attr('src', '{@$__wcf->getPath()}icon/delete1D.svg');
+						$($button).attr('src', '{@$__wcf->getPath()}icon/default.svg');
+						$(row).find('.jsDeleteButton').attr('src', '{@$__wcf->getPath()}icon/delete.svg');
 					}
 					else {
 						$($button).attr('src', '{@$__wcf->getPath()}icon/default1.svg');
-						$(row).find('.jsDeleteButton').attr('src', '{@$__wcf->getPath()}icon/delete1.svg');
+						$(row).find('.jsDeleteButton').attr('src', '{@$__wcf->getPath()}icon/delete.svg');
 					}
 				});
 			}
@@ -40,7 +40,7 @@
 	{if $__wcf->getSession()->getPermission('admin.language.canAddLanguage')}
 		<nav>
 			<ul>
-				<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
+				<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
 				
 				{event name='largeButtons'}
 			</ul>
@@ -70,34 +70,34 @@
 				<tr class="jsLanguageRow">
 					<td class="columnIcon">
 						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
-							<a href="{link controller='LanguageExport' id=$language->languageID}{/link}"><img src="{@$__wcf->getPath()}icon/download1.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" class="icon16 jsTooltip" /></a>
+							<a href="{link controller='LanguageExport' id=$language->languageID}{/link}"><img src="{@$__wcf->getPath()}icon/download.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" class="icon16 jsTooltip" /></a>
 						{else}
-							<img src="{@$__wcf->getPath()}icon/download1D.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" class="icon16" />
+							<img src="{@$__wcf->getPath()}icon/download.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" class="icon16 disabloed" />
 						{/if}
 						
 						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
 							{if !$language->isDefault}
-								<img src="{@$__wcf->getPath()}icon/default1.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16 jsSetAsDefaultButton jsTooltip" data-object-id="{@$language->languageID}" />
+								<img src="{@$__wcf->getPath()}icon/default.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16 jsSetAsDefaultButton jsTooltip" data-object-id="{@$language->languageID}" />
 							{else}
-								<img src="{@$__wcf->getPath()}icon/default1D.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16" />
+								<img src="{@$__wcf->getPath()}icon/default.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16 disabled" />
 							{/if}
 						{else}
-							<img src="{@$__wcf->getPath()}icon/default1D.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16" />
+							<img src="{@$__wcf->getPath()}icon/default.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16 disabled" />
 						{/if}
 						
 						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
-							<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}"><img src="{@$__wcf->getPath()}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 jsTooltip" /></a>
+							<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 jsTooltip" /></a>
 						{else}
-							<img src="{@$__wcf->getPath()}icon/edit1D.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16" />
+							<img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 disabled" />
 						{/if}
 						{if $__wcf->getSession()->getPermission('admin.language.canDeleteLanguage')}
 							{if !$language->isDefault}
-								<img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsTooltip jsDeleteButton" data-object-id="{@$language->languageID}" data-confirmMessage="{lang}wcf.acp.language.delete.sure{/lang}" />
+								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsTooltip jsDeleteButton" data-object-id="{@$language->languageID}" data-confirmMessage="{lang}wcf.acp.language.delete.sure{/lang}" />
 							{else}
-								<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16" />
+								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 disabled" />
 							{/if}
 						{else}
-							<img src="{@$__wcf->getPath()}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16" />
+							<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 disabled" />
 						{/if}
 					</td>
 					<td class="columnID columnLanguageID">{@$language->languageID}</td>
@@ -123,7 +123,7 @@
 		{if $__wcf->getSession()->getPermission('admin.language.canAddLanguage')}
 			<nav>
 				<ul>
-					<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
+					<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
 					
 					{event name='largeButtons'}
 				</ul>
