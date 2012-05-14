@@ -21,7 +21,7 @@
 	</defs>
 	
 	<g id="IconSortingArrowDESC">
-		<polygon points="14,4.9 8,10.9 2,4.9"/>
+		<polygon class="surface" opacity=".8" points="14,4.9 8,10.9 2,4.9"/>
 		<polygon class="shadow" points="13,5.301 8,10.301 3,5.301"/>
 	</g>
 </svg>

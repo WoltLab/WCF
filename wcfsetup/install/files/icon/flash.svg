@@ -22,7 +22,7 @@
 	</defs>
 	
 	<g id="IconFlash">
-		<polygon class="shadow" style="fill-rule: evenodd; clip-rule: evenodd;" points="14,2 6,2 2,10 6,9 2,15 14,6 8.5,7"/>
+		<polygon class="shadow" opacity=".8" style="fill-rule: evenodd; clip-rule: evenodd;" points="14,2 6,2 2,10 6,9 2,15 14,6 8.5,7"/>
 		<polygon class="surface" style="fill-rule: evenodd; clip-rule: evenodd;" points="14,1 6,1 2,9 6,8 2,14 14,5 8.5,6"/>
 	</g>
 </svg>

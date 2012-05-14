@@ -22,7 +22,7 @@
 	</defs>
 	
 	<g id="IconDropdown">
-		<path class="shadow" style="fill-rule: evenodd; clip-rule: evenodd;" d="M7,6L3.5,9L0.0004883,6H7z M7,4L3.5,1.0019531 L0.0004883,4H7z"/>
+		<path class="shadow" opacity=".8" style="fill-rule: evenodd; clip-rule: evenodd;" d="M7,6L3.5,9L0.0004883,6H7z M7,4L3.5,1.0019531 L0.0004883,4H7z"/>
 		<path class="surface" style="fill-rule: evenodd; clip-rule: evenodd;" d="M7,4.9980469l-3.5,3l-3.4995117-3H7z M7,2.9980469L3.5,0L0.0004883,2.9980469H7z"/>
 	</g>
 </svg>

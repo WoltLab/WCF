@@ -22,8 +22,8 @@
 	
 	<g id="IconEnlarge">
 		<g>
-			<polygon id="ArrowNW2" class="shadow" points="3.5,8 3.5,4 7.5,4 5.5,2 1.5,2 1.5,6 "/>
-			<polygon id="ArrowSO2" class="shadow" points="12.5,9 12.5,13 8.5,13 10.5,15 14.5,15 14.5,11 "/>
+			<polygon id="ArrowNW2" class="shadow" opacity=".8" points="3.5,8 3.5,4 7.5,4 5.5,2 1.5,2 1.5,6 "/>
+			<polygon id="ArrowSO2" class="shadow" opacity=".8" points="12.5,9 12.5,13 8.5,13 10.5,15 14.5,15 14.5,11 "/>
 		</g>
 		<g>
 			<polygon id="ArrowNW1" class="surface" points="3.5,7 3.5,3 7.5,3 5.5,1 1.5,1 1.5,5 "/>

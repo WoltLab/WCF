@@ -22,9 +22,9 @@
 	
 	<g id="IconMessage">
 		<g>
-			<path id="Sheet2" class="shadow" d="M4,4v9c0,0.985,0.047,1,1,1h6c0.984,0,1-0.015,1-1V7.4L7.6,3H5C4.031,3,4,2.983,4,4z M3,3
+			<path id="Sheet2" class="shadow" opacity=".8" d="M4,4v9c0,0.985,0.047,1,1,1h6c0.984,0,1-0.015,1-1V7.4L7.6,3H5C4.031,3,4,2.983,4,4z M3,3
 				c0-0.47,0.501-1,1-1h4l5,5v7c0,0.548-0.5,1-1,1H4c-0.516,0-1-0.405-1-1V3z"/>
-			<path id="Flap2" class="shadow" d="M13,7H9C8.453,7,8,6.531,8,6V2L13,7z"/>
+			<path id="Flap2" class="shadow" opacity=".8" d="M13,7H9C8.453,7,8,6.531,8,6V2L13,7z"/>
 		</g>
 		<g>
 			<path id="Sheet1" class="surface" d="M4,3v9c0,0.985,0.047,1,1,1h6c0.984,0,1-0.015,1-1V6.4L7.6,2H5C4.031,2,4,1.983,4,3z M3,2

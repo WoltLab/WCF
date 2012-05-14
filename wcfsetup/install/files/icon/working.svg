@@ -26,7 +26,7 @@
 			<animateTransform  fill="remove" type="rotate" to="360 8 9" dur="10s" restart="always" begin="0s" from="0 8 9" repeatCount="indefinite" attributeType="XML" additive="replace" attributeName="transform" accumulate="none" calcMode="linear">
 			</animateTransform>
 			
-			<path class="shadow" d="M14.006,7.424l-1.732-0.267c-0.08-0.254-0.18-0.498-0.302-0.73l1.036-1.413
+			<path class="shadow" opacity=".8" d="M14.006,7.424l-1.732-0.267c-0.08-0.254-0.18-0.498-0.302-0.73l1.036-1.413
 				c0.163-0.222,0.137-0.563-0.058-0.757L12.243,3.55c-0.194-0.194-0.535-0.221-0.757-0.058l-1.413,1.036
 				C9.84,4.406,9.598,4.307,9.343,4.227L9.076,2.494C9.034,2.222,8.775,2,8.5,2h-1C7.226,2,6.966,2.222,6.924,2.494L6.658,4.227
 				c-0.255,0.08-0.498,0.18-0.731,0.302L4.514,3.493C4.292,3.33,3.952,3.356,3.757,3.55L3.05,4.257

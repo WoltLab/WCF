@@ -22,7 +22,7 @@
 	</defs>
 	
 	<g id="IconPackage">
-		<g class="shadow">
+		<g class="shadow" opacity=".8">
 			<polygon points="8,2 1,4.0004883 1,5.0004883 8,3 15,5.0004883 15,4.0004883"/>
 			<path d="M8,6L1,4v9l7,2l7-2V4L8,6z M14,12.2861328L8,14l-6-1.7138672V5.2856445L8,7l6-1.7143555V12.2861328z"/>
 		</g>

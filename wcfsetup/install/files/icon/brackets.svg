@@ -21,7 +21,7 @@
 	</defs>
 	
 	<g id="IconBBCode">
-		<path class="shadow" d="M1,8.5l6-6v2l-4,4l4,4v2L1,8.5z M9,2.5v2l4,4l-4,4v2l6-6L9,2.5z"/>
+		<path class="shadow" opacity=".8" d="M1,8.5l6-6v2l-4,4l4,4v2L1,8.5z M9,2.5v2l4,4l-4,4v2l6-6L9,2.5z"/>
 		<path class="surface" d="M1,7.5l6-6v2l-4,4l4,4v2L1,7.5z M9,1.5v2l4,4l-4,4v2l6-6L9,1.5z"/>
 	</g>
 </svg>

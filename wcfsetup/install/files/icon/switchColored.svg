@@ -22,9 +22,9 @@
 	
 	<g id="IconSwitch">
 		<g>
-			<polygon id="ArrowUp2" class="shadow" points="14.5,9.584 8.908,4.001 11.512,4.001 9.508,2 5.5,2 5.5,6.002 7.504,8.002 
+			<polygon id="ArrowUp2" class="shadow" opacity=".8" points="14.5,9.584 8.908,4.001 11.512,4.001 9.508,2 5.5,2 5.5,6.002 7.504,8.002 
 				7.504,5.429 13.083,11 		"/>
-			<polygon id="ArrowDown2" class="shadow" points="8.503,9 8.503,11.6 2.913,6 1.5,7.414 7.077,13 4.509,13 6.506,15 10.5,15 
+			<polygon id="ArrowDown2" class="shadow" opacity=".8" points="8.503,9 8.503,11.6 2.913,6 1.5,7.414 7.077,13 4.509,13 6.506,15 10.5,15 
 				10.5,11 		"/>
 		</g>
 		<g>

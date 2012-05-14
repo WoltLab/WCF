@@ -21,7 +21,7 @@
 	</defs>
 	
 	<g id="ArrowUp">
-		<polygon class="shadow" points="1.5,14 8.001,3 14.5,14 	"/>
+		<polygon class="shadow" opacity=".8" points="1.5,14 8.001,3 14.5,14 	"/>
 		<polygon class="surface" points="1.5,13 8.001,2 14.5,13 	"/>
 	</g>
 </svg>
