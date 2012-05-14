@@ -1,36 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
-	
-	<title>Statistics</title>
-	<desc>Statistics Icon</desc>
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+	<title>Chart Vertical</title>
+	<desc>Chart Vertical Icon</desc>
 	
 	<!--
-		@author		Harald Szekely 
-		@copyright	2011 WoltLab GmbH 
+		@author		Harald Szekely
+		@copyright	2001-2012 WoltLab GmbH 
 		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
 	--> 
 	
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper1 {fill: #369;}
-				.Lower1 {fill: #fff;}
+				.surface { fill: #369; }
+				.shadow { fill: #fff; }
 			]]>
 		</style>
 	</defs>
 	
 	<g id="IconStatistics">
-		<path class="Lower1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M1,10.5C1,10.2246094,1.2250977,10,1.5,10h2
-			C3.7749023,10,4,10.2246094,4,10.5v4C4,14.7753906,3.7749023,15,3.5,15h-2C1.2250977,15,1,14.7753906,1,14.5V10.5z M5,14.5
-			C5,14.7753906,5.2250977,15,5.5,15h2C7.7749023,15,8,14.7753906,8,14.5v-12C8,2.2250977,7.7749023,2,7.5,2h-2
-			C5.2250977,2,5,2.2250977,5,2.5V14.5z M9.5,6C9.2246094,6,9,6.2250977,9,6.5v8C9,14.7753906,9.2246094,15,9.5,15h2
-			c0.2753906,0,0.5-0.2246094,0.5-0.5v-8C12,6.2250977,11.7753906,6,11.5,6H9.5z"/>
-		<path class="Upper1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M1,9.5C1,9.2246094,1.2250977,9,1.5,9h2
-			C3.7749023,9,4,9.2246094,4,9.5v4C4,13.7753906,3.7749023,14,3.5,14h-2C1.2250977,14,1,13.7753906,1,13.5V9.5z M5,13.5
-			C5,13.7753906,5.2250977,14,5.5,14h2C7.7749023,14,8,13.7753906,8,13.5v-12C8,1.2250977,7.7749023,1,7.5,1h-2
-			C5.2250977,1,5,1.2250977,5,1.5V13.5z M9.5,5C9.2246094,5,9,5.2250977,9,5.5v8C9,13.7753906,9.2246094,14,9.5,14h2
-			c0.2753906,0,0.5-0.2246094,0.5-0.5v-8C12,5.2250977,11.7753906,5,11.5,5H9.5z"/>
+		<path class="shadow" d="M2.5,10.5C2.5,10.225,2.725,10,3,10h2c0.275,0,0.5,0.225,0.5,0.5v4C5.5,14.775,5.275,15,5,15H3
+			c-0.275,0-0.5-0.225-0.5-0.5V10.5z M6.5,14.5C6.5,14.775,6.725,15,7,15h2c0.275,0,0.5-0.225,0.5-0.5v-12C9.5,2.225,9.275,2,9,2H7
+			C6.725,2,6.5,2.225,6.5,2.5V14.5z M11,6c-0.275,0-0.5,0.225-0.5,0.5v8c0,0.275,0.225,0.5,0.5,0.5h2c0.275,0,0.5-0.225,0.5-0.5v-8
+			C13.5,6.225,13.275,6,13,6H11z"/>
+		<path class="surface" d="M2.5,9.5C2.5,9.225,2.725,9,3,9h2c0.275,0,0.5,0.225,0.5,0.5v4C5.5,13.775,5.275,14,5,14H3
+			c-0.275,0-0.5-0.225-0.5-0.5V9.5z M6.5,13.5C6.5,13.775,6.725,14,7,14h2c0.275,0,0.5-0.225,0.5-0.5v-12C9.5,1.225,9.275,1,9,1H7
+			C6.725,1,6.5,1.225,6.5,1.5V13.5z M11,5c-0.275,0-0.5,0.225-0.5,0.5v8c0,0.275,0.225,0.5,0.5,0.5h2c0.275,0,0.5-0.225,0.5-0.5v-8
+			C13.5,5.225,13.275,5,13,5H11z"/>
 	</g>
 </svg>

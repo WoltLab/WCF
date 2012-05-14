@@ -8,24 +8,24 @@
 	
 	<!--
 		@author		Harald Szekely 
-		@copyright	2011 WoltLab GmbH 
+		@copyright	2001-2012 WoltLab GmbH 
 		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
 	--> 
 	
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper1 {fill: #666;}
-				.Lower1 {fill: #fff;}
+				.surface {fill: #666;}
+				.shadow {fill: #fff;}
 			]]>
 		</style>
 	</defs>
 	
 	<g id="IconUndo">
-		<path class="Lower1" d="M7,9c5.0292969,0,7,2,7,6h1c0-6.9995117-3-8.9995117-8-8.9995117V2.5166016
+		<path class="shadow" d="M7,9c5.0292969,0,7,2,7,6h1c0-6.9995117-3-8.9995117-8-8.9995117V2.5166016
 			c0-0.5498047-0.4023438-0.6816406-0.7944336-0.2929688L1.5073242,6.7973633c-0.6450195,0.6450195-0.7070312,0.7070312,0,1.4140625
 			l4.6982422,4.565918C6.5976562,13.1660156,7,13.0332031,7,12.484375V9z"/>
-		<path class="Upper1" d="M7,8c5.0292969,0,7,2,7,6h1c0-7-3-9-8-9V1.5161133
+		<path class="surface" d="M7,8c5.0292969,0,7,2,7,6h1c0-7-3-9-8-9V1.5161133
 			c0-0.5498047-0.4023438-0.6816406-0.7944336-0.2929688L1.5073242,5.796875c-0.6450195,0.6450195-0.7070312,0.7070312,0,1.4140625
 			l4.6982422,4.5654297C6.5976562,12.1650391,7,12.0332031,7,11.4833984V8z"/>
 	</g>

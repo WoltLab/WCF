@@ -1,53 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
-	
-	<title>Refresh</title>
-	<desc>Refresh Icon</desc>
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+	<title>Reload</title>
+	<desc>Reload Icon</desc>
 	
 	<!--
-		@author		Harald Szekely 
-		@copyright	2011 WoltLab GmbH 
+		@author		Harald Szekely
+		@copyright	2001-2012 WoltLab GmbH 
 		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
 	--> 
 	
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper1 {fill: #369;}
-				.Lower1 {fill: #fff;}
+				.surface { fill: #369; }
+				.shadow { fill: #fff; }
 			]]>
 		</style>
 	</defs>
 	
 	<g id="IconRefresh">
-		<g class="Lower1">
+		<g>
 			<g id="Arrow12">
-				<polygon style="fill-rule: evenodd; clip-rule: evenodd;" points="3,15 3,11 7,11 5,9 1,9 1,13"/>
-				<path style="fill-rule: evenodd; clip-rule: evenodd;" d="M11.4316406,11.6816406
-					C10.6171875,12.4960938,9.4921875,13,8.25,13c-1.9570312,0-3.6044922-1.2558594-4.2246094-3H1.9306641
-					C2.609375,12.8652344,5.1777344,15,8.25,15c1.7949219,0,3.4199219-0.7275391,4.5957031-1.9042969L11.4316406,11.6816406z"/>
+				<polygon class="shadow" points="3.5,15 3.5,11 7.5,11 5.5,9 1.5,9 1.5,13 			"/>
+				<path class="shadow" d="M11.932,11.682C11.117,12.496,9.992,13,8.75,13c-1.957,0-3.604-1.256-4.225-3H2.431
+					c0.679,2.865,3.247,5,6.319,5c1.795,0,3.42-0.728,4.596-1.904L11.932,11.682z"/>
 			</g>
 			<g id="Arrow22">
-				<polygon style="fill-rule: evenodd; clip-rule: evenodd;" points="12,2 12,6 8,6 10,8 14,8 14,4"/>
-				<path style="fill-rule: evenodd; clip-rule: evenodd;" d="M3.5678711,5.3183594
-					C4.3823242,4.5039062,5.5073242,4,6.75,4c1.9570312,0,3.6044922,1.2563477,4.2246094,3h2.0947266
-					C12.390625,4.1347656,9.8222656,2,6.75,2C4.9550781,2,3.3300781,2.7275391,2.1538086,3.9038086L3.5678711,5.3183594z"/>
+				<polygon class="shadow" points="12.5,2 12.5,6 8.5,6 10.5,8 14.5,8 14.5,4 			"/>
+				<path class="shadow" d="M4.068,5.318C4.882,4.504,6.007,4,7.25,4c1.957,0,3.604,1.256,4.225,3h2.095
+					c-0.679-2.865-3.247-5-6.319-5C5.455,2,3.83,2.728,2.654,3.904L4.068,5.318z"/>
 			</g>
 		</g>
-		<g class="Upper1">
+		<g>
 			<g id="Arrow11">
-				<polygon style="fill-rule: evenodd; clip-rule: evenodd;" points="3,14 3,10 7,10 5,8 1,8 1,12"/>
-				<path style="fill-rule: evenodd; clip-rule: evenodd;" d="M11.4316406,10.6816406
-					C10.6171875,11.4960938,9.4921875,12,8.25,12c-1.9570312,0-3.6044922-1.2558594-4.2246094-3H1.9306641
-					C2.609375,11.8652344,5.1777344,14,8.25,14c1.7949219,0,3.4199219-0.7275391,4.5957031-1.9042969L11.4316406,10.6816406z"/>
+				<polygon class="surface" points="3.5,14 3.5,10 7.5,10 5.5,8 1.5,8 1.5,12 			"/>
+				<path class="surface" d="M11.932,10.682C11.117,11.496,9.992,12,8.75,12c-1.957,0-3.604-1.256-4.225-3H2.431
+					c0.679,2.865,3.247,5,6.319,5c1.795,0,3.42-0.728,4.596-1.904L11.932,10.682z"/>
 			</g>
 			<g id="Arrow21">
-				<polygon style="fill-rule: evenodd; clip-rule: evenodd;" points="12,1 12,5 8,5 10,7 14,7 14,3"/>
-				<path style="fill-rule: evenodd; clip-rule: evenodd;" d="M3.5678711,4.3183594
-					C4.3823242,3.5039062,5.5073242,3,6.75,3c1.9570312,0,3.6044922,1.2563477,4.2246094,3h2.0947266
-					C12.390625,3.1347656,9.8222656,1,6.75,1C4.9550781,1,3.3300781,1.7275391,2.1538086,2.9038086L3.5678711,4.3183594z"/>
+				<polygon class="surface" points="12.5,1 12.5,5 8.5,5 10.5,7 14.5,7 14.5,3 			"/>
+				<path class="surface" d="M4.068,4.318C4.882,3.504,6.007,3,7.25,3c1.957,0,3.604,1.256,4.225,3h2.095
+					c-0.679-2.865-3.247-5-6.319-5C5.455,1,3.83,1.728,2.654,2.904L4.068,4.318z"/>
 			</g>
 		</g>
 	</g>

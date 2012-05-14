@@ -1,46 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
-	
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
 	<title>External Link</title>
 	<desc>External Link Icon</desc>
 	
 	<!--
-		@author		Harald Szekely 
-		@copyright	2011 WoltLab GmbH 
+		@author		Harald Szekely
+		@copyright	2001-2012 WoltLab GmbH 
 		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
 	--> 
 	
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper1 {fill: #666;}
-				.Lower1 {fill: #fff;}
+				.surface { fill: #666; }
+				.shadow { fill: #fff; }
 			]]>
 		</style>
 	</defs>
 	
 	<g id="IconExternalLink">
-		<g class="Lower1">
-			<path id="LargeSquare2" style="fill-rule: evenodd; clip-rule: evenodd;" d="M4.4545898,3
-				C4.2045898,3,4,3.2045898,4,3.4545898v9.0913086C4,12.7958984,4.2045898,13,4.4545898,13h9.0913086
-				C13.7958984,13,14,12.7958984,14,12.5458984V3.4545898C14,3.2045898,13.7958984,3,13.5458984,3H4.4545898z M13,11.5146484
-				C13,11.7822266,12.7822266,12,12.5146484,12H5.484375C5.2182617,12,5,11.7822266,5,11.5146484V4.484375
-				C5,4.2182617,5.2182617,4,5.484375,4h7.0302734C12.7822266,4,13,4.2182617,13,4.484375V11.5146484z"/>
-			<path id="SmallSquare2" style="fill-rule: evenodd; clip-rule: evenodd;" d="M9,13.5
-				C9,13.7753906,8.7749023,14,8.5,14h-5C3.2250977,14,3,13.7753906,3,13.5v-5C3,8.2246094,3.2250977,8,3.5,8V7h-1
-				C2.2250977,7,2,7.2250977,2,7.5v7C2,14.7753906,2.2250977,15,2.5,15h7c0.2753906,0,0.5-0.2246094,0.5-0.5v-1H9z"/>
+		<g>
+			<path id="LargeSquare2" class="shadow" d="M4.455,2.5C4.205,2.5,4,2.705,4,2.955v9.091c0,0.25,0.205,0.454,0.455,0.454h9.091
+				c0.25,0,0.454-0.204,0.454-0.454V2.955c0-0.25-0.204-0.455-0.454-0.455H4.455z M13,11.015c0,0.268-0.218,0.485-0.485,0.485h-7.03
+				C5.218,11.5,5,11.282,5,11.015v-7.03C5,3.718,5.218,3.5,5.484,3.5h7.03C12.782,3.5,13,3.718,13,3.984V11.015z"/>
+			<path id="SmallSquare2" class="shadow" d="M9,13c0,0.275-0.225,0.5-0.5,0.5h-5C3.225,13.5,3,13.275,3,13V8
+				c0-0.275,0.225-0.5,0.5-0.5v-1h-1C2.225,6.5,2,6.725,2,7v7c0,0.275,0.225,0.5,0.5,0.5h7c0.275,0,0.5-0.225,0.5-0.5v-1H9z"/>
 		</g>
-		<g class="Upper1">
-			<path id="LargeSquare1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M4.4545898,2
-				C4.2045898,2,4,2.2045898,4,2.4545898v9.0913086C4,11.7958984,4.2045898,12,4.4545898,12h9.0913086
-				C13.7958984,12,14,11.7958984,14,11.5458984V2.4545898C14,2.2045898,13.7958984,2,13.5458984,2H4.4545898z M13,10.5146484
-				C13,10.7822266,12.7822266,11,12.5146484,11H5.484375C5.2182617,11,5,10.7822266,5,10.5146484V3.484375
-				C5,3.2182617,5.2182617,3,5.484375,3h7.0302734C12.7822266,3,13,3.2182617,13,3.484375V10.5146484z"/>
-			<path id="SmallSquare1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M9,12.5C9,12.7753906,8.7749023,13,8.5,13
-				h-5C3.2250977,13,3,12.7753906,3,12.5v-5C3,7.2250977,3.2250977,7,3.5,7V6h-1C2.2250977,6,2,6.2250977,2,6.5v7
-				C2,13.7753906,2.2250977,14,2.5,14h7c0.2753906,0,0.5-0.2246094,0.5-0.5v-1H9z"/>
+		<g>
+			<path id="LargeSquare1" class="surface" d="M4.455,1.5C4.205,1.5,4,1.705,4,1.955v9.091c0,0.25,0.205,0.454,0.455,0.454h9.091
+				c0.25,0,0.454-0.204,0.454-0.454V1.955c0-0.25-0.204-0.455-0.454-0.455H4.455z M13,10.015c0,0.268-0.218,0.485-0.485,0.485h-7.03
+				C5.218,10.5,5,10.282,5,10.015v-7.03C5,2.718,5.218,2.5,5.484,2.5h7.03C12.782,2.5,13,2.718,13,2.984V10.015z"/>
+			<path id="SmallSquare1" class="surface" d="M9,12c0,0.275-0.225,0.5-0.5,0.5h-5C3.225,12.5,3,12.275,3,12V7
+				c0-0.275,0.225-0.5,0.5-0.5v-1h-1C2.225,5.5,2,5.725,2,6v7c0,0.275,0.225,0.5,0.5,0.5h7c0.275,0,0.5-0.225,0.5-0.5v-1H9z"/>
 		</g>
 	</g>
 </svg>

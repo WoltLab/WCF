@@ -14,7 +14,7 @@
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.surface { fill: #666; }
+				.surface { fill: #369; }
 				.shadow { fill: #fff; }
 			]]>
 		</style>

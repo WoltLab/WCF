@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
-	
-	<title>To Bottom</title>
-	<desc>To Bottom Of Page Icon</desc>
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+	<title>Arrow Down (Circle)</title>
+	<desc>Arrow Down (Circle) Icon</desc>
 	
 	<!--
-		@author		Harald Szekely 
-		@copyright	2011 WoltLab GmbH 
+		@author		Harald Szekely
+		@copyright	2001-2012 WoltLab GmbH 
 		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
 	--> 
 	
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper1 {fill: #666;}
-				.Lower1 {fill: #fff;}
+				.surface { fill: #666; }
+				.shadow { fill: #fff; }
 			]]>
 		</style>
 	</defs>
 	
 	<g id="IconToBottom">
-		<path class="Lower1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M7.5,15C3.909668,15,1,12.0908203,1,8.5
-			c0-3.0673828,2.1411133-5.6367188,5-6.3193359V9H3.5l4,5l4-5.0004883L9,9V2.1806641C11.8652344,2.859375,14,5.4277344,14,8.5
-			C14,12.0908203,11.0898438,15,7.5,15z"/>
-		<path class="Upper1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M7.5,14C3.909668,14,1,11.0908203,1,7.5
-			c0-3.0673828,2.1411133-5.6367188,5-6.3193359V8H3.5l4,5l4-5.0004883L9,8V1.1806641C11.8652344,1.859375,14,4.4277344,14,7.5
-			C14,11.0908203,11.0898438,14,7.5,14z"/>
+		<path class="shadow" d="M8,14.91c-3.59,0-6.5-2.91-6.5-6.5c0-3.067,2.141-5.637,5-6.319v6.82H4l4,5l4-5H9.5V2.09
+			c2.865,0.679,5,3.247,5,6.319C14.5,12,11.59,14.91,8,14.91z"/>
+		<path class="surface" d="M8,13.91c-3.59,0-6.5-2.91-6.5-6.5c0-3.067,2.141-5.637,5-6.319V7.91H4l4,5l4-5.001l-2.5,0V1.09
+			c2.865,0.679,5,3.247,5,6.319C14.5,11,11.59,13.91,8,13.91z"/>
 	</g>
 </svg>

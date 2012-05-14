@@ -8,21 +8,21 @@
 	
 	<!--
 		@author		Harald Szekely 
-		@copyright	2011 WoltLab GmbH 
+		@copyright	2001-2012 WoltLab GmbH 
 		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
 	--> 
 	
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper1 {fill: #369;}
-				.Lower1 {fill: #fff;}
+				.surface {fill: #369;}
+				.shadow {fill: #fff;}
 			]]>
 		</style>
 	</defs>
 	
 	<g id="IconUpdate">
-		<g class="Lower1">
+		<g class="shadow">
 			<path id="Circle2" style="fill-rule: evenodd; clip-rule: evenodd;" d="M12,11.75
 				c-0.6455078-0.6455078-1.3427734-0.0800781-1.3427734-0.0800781C9.8496094,12.4853516,8.7421875,13,7.5,13
 				C5.0146484,13,3,10.9853516,3,8.5S5.0146484,4,7.5,4c1.9570312,0,3.6044922,1.2563477,4.2246094,3h2.0947266
@@ -31,7 +31,7 @@
 			<polygon id="Arrow2" style="fill-rule: evenodd; clip-rule: evenodd;" points="12.75,2 12.75,6 8.75,6 10.75,8 
 				14.75,8 14.75,4"/>
 		</g>
-		<g class="Upper1">
+		<g class="surface">
 			<path id="Circle1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M12,10.75
 				c-0.6455078-0.6455078-1.3427734-0.0800781-1.3427734-0.0800781C9.8496094,11.4853516,8.7421875,12,7.5,12
 				C5.0146484,12,3,9.9853516,3,7.5S5.0146484,3,7.5,3c1.9570312,0,3.6044922,1.2563477,4.2246094,3h2.0947266

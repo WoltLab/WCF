@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
-	
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
 	<title>Note</title>
 	<desc>Note Icon</desc>
 	
 	<!--
-		@author		Harald Szekely 
-		@copyright	2011 WoltLab GmbH 
+		@author		Harald Szekely
+		@copyright	2001-2012 WoltLab GmbH 
 		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
 	--> 
 	
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper1 {fill: #369;}
-				.Lower1 {fill: #fff;}
+				.surface { fill: #369; }
+				.shadow { fill: #fff; }
 			]]>
 		</style>
 	</defs>
 	
 	<g id="IconNote">
-		<g class="Lower1">
-			<path id="Note2" style="fill-rule: evenodd; clip-rule: evenodd;" d="M11.9707031,6h-9
-				c-0.984375,0-0.984375,0.03125-0.984375,0.984375v6.03125C1.9863281,14,1.9863281,14,2.9707031,14H9.046875l3.9394531-3.9599609V7
-				C12.9863281,6.03125,12.9863281,6,11.9707031,6z M12.984375,5c0.4707031,0,1,0.5014648,1,1l0.0019531,4l-5.0014648,5H1.9863281
-				c-0.546875,0-0.9882812-0.5-0.9882812-1V6c0-0.515625,0.4570312-1,1.0507812-1H12.984375z"/>
-			<path id="Flap2" d="M8.9848633,15l0.0024414-4c0-0.546875,0.4677734-1,0.9990234-1h3.9980469L8.9848633,15z"/>
+		<g>
+			<path id="Note2" class="shadow" d="M12.478,4.5h-9c-0.984,0-0.984,0.031-0.984,0.984v6.031c0,0.984,0,0.984,0.984,0.984h6.076
+				l3.939-3.96V5.5C13.493,4.531,13.493,4.5,12.478,4.5z M13.491,3.5c0.471,0,1,0.501,1,1l0.002,4l-5.002,5H2.493
+				c-0.547,0-0.988-0.5-0.988-1v-8c0-0.516,0.457-1,1.051-1H13.491z"/>
+			<path id="Flap2" class="shadow" d="M9.491,13.5l0.003-4c0-0.547,0.468-1,0.999-1h3.998L9.491,13.5z"/>
 		</g>
-		<g class="Upper1">
-			<path id="Note1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M11.9707031,5H2.9716797
-				c-0.984375,0-0.984375,0.03125-0.984375,0.984375v6.03125C1.9873047,13,1.9873047,13,2.9716797,13h6.0771484l3.9394531-3.9599609
-				V6C12.9882812,5.03125,12.9882812,5,11.9707031,5z M12.9863281,4c0.4707031,0,1,0.5014648,1,1l0.0019531,4l-5.0024414,5H1.9873047
-				c-0.546875,0-0.9892578-0.5-0.9892578-1V5c0-0.515625,0.4580078-1,1.0517578-1H12.9863281z"/>
-			<path id="Flap1" d="M8.9858398,14l0.0019531-4c0-0.546875,0.4692383-1,1.0004883-1h3.9980469L8.9858398,14z"/>
+		<g>
+			<path id="Note1" class="surface" d="M12.478,3.5H3.479c-0.984,0-0.984,0.031-0.984,0.984v6.031c0,0.984,0,0.984,0.984,0.984h6.077
+				l3.939-3.96V4.5C13.495,3.531,13.495,3.5,12.478,3.5z M13.493,2.5c0.471,0,1,0.501,1,1l0.002,4l-5.002,5H2.494
+				c-0.547,0-0.989-0.5-0.989-1v-8c0-0.516,0.458-1,1.052-1H13.493z"/>
+			<path id="Flap1" class="surface" d="M9.493,12.5l0.002-4c0-0.547,0.469-1,1-1h3.998L9.493,12.5z"/>
 		</g>
 	</g>
 </svg>
