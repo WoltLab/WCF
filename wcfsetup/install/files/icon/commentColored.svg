@@ -3,26 +3,26 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
 	
-	<title>Quote</title>
-	<desc>Quote Icon (inverted)</desc>
+	<title>Comment</title>
+	<desc>Comment Icon</desc>
 	
 	<!--
 		@author		Harald Szekely 
-		@copyright	2011 WoltLab GmbH 
+		@copyright	2001-2012 WoltLab GmbH 
 		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
 	--> 
 	
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper1 {fill: #369;}
-				.Lower1 {fill: #fff;}
+				.surface {fill: #369;}
+				.shadow {fill: #fff;}
 			]]>
 		</style>
 	</defs>
 	
 	<g id="IconQuote">
-		<path class="Lower1" d="M8,2C4.1337891,2,1,4.4848633,1,7.5507812
+		<path class="shadow" opacity=".8" d="M8,2C4.1337891,2,1,4.4848633,1,7.5507812
 			c0,1.2231445,0.5004883,2.3535156,1.3461914,3.2705078L1.0454102,14L5.5,12.6796875
 			c0.578125,0.125,2.2792969,0.3837891,2.925293,0.4003906c0.0732422,0.0019531,0.1464844,0.0029297,0.21875,0.0029297
 			C12.3916016,13.0830078,15,10.5576172,15,7.5507812C15,4.4848633,11.8662109,2,8,2z M11.9375,10h-7.875
@@ -30,7 +30,7 @@
 			 M11.9375,8h-7.875C3.753418,8,3.5,7.7749023,3.5,7.5S3.753418,7,4.0625,7h7.875C12.2470703,7,12.5,7.2250977,12.5,7.5
 			S12.2470703,8,11.9375,8z M11.9375,6h-7.875C3.753418,6,3.5,5.7749023,3.5,5.5S3.753418,5,4.0625,5h7.875
 			C12.2470703,5,12.5,5.2250977,12.5,5.5S12.2470703,6,11.9375,6z"/>
-		<path class="Upper1" d="M8,1C4.1337891,1,1,3.4848633,1,6.5507812
+		<path class="surface" d="M8,1C4.1337891,1,1,3.4848633,1,6.5507812
 			c0,1.2231445,0.5004883,2.3535156,1.3461914,3.2705078L1.0454102,13L5.5,11.6796875
 			c0.578125,0.125,2.2792969,0.3837891,2.925293,0.4003906c0.0732422,0.0019531,0.1464844,0.0029297,0.21875,0.0029297
 			C12.3916016,12.0830078,15,9.5576172,15,6.5507812C15,3.4848633,11.8662109,1,8,1z M11.9375,9h-7.875

@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
-	
-	<title>Run</title>
-	<desc>Run Icon (framed)</desc>
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+	<title>Play</title>
+	<desc>Play Icon</desc>
 	
 	<!--
-		@author		Harald Szekely 
-		@copyright	2011 WoltLab GmbH 
+		@author		Harald Szekely
+		@copyright	2001-2012 WoltLab GmbH 
 		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
 	--> 
 	
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper1 {fill: #369;}
-				.Lower1 {fill: #fff;}
+				.surface { fill: #369; }
+				.shadow { fill: #fff; }
 			]]>
 		</style>
 	</defs>
 	
 	<g id="IconRun">
-		<path class="Lower1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M13,2H2C1.4477539,2,1,2.4477539,1,3v11
-			c0,0.5527344,0.4477539,1,1,1h11c0.5527344,0,1-0.4472656,1-1V3C14,2.4477539,13.5527344,2,13,2z M4,13.0097656v-9l7,4.4990234
-			L4,13.0097656z"/>
-		<path class="Upper1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M13,1H2C1.4477539,1,1,1.4477539,1,2v11
-			c0,0.5527344,0.4477539,1,1,1h11c0.5527344,0,1-0.4472656,1-1V2C14,1.4477539,13.5527344,1,13,1z M4,12.0097656v-9l7,4.4990234
-			L4,12.0097656z"/>
+		<path class="shadow" opacity=".8" d="M13.5,2h-11c-0.552,0-1,0.448-1,1v11c0,0.553,0.448,1,1,1h11c0.553,0,1-0.447,1-1V3
+			C14.5,2.448,14.053,2,13.5,2z M4.5,13.01v-9l7,4.499L4.5,13.01z"/>
+		<path class="surface" d="M13.5,1h-11c-0.552,0-1,0.448-1,1v11c0,0.553,0.448,1,1,1h11c0.553,0,1-0.447,1-1V2
+			C14.5,1.448,14.053,1,13.5,1z M4.5,12.01v-9l7,4.499L4.5,12.01z"/>
 	</g>
 </svg>

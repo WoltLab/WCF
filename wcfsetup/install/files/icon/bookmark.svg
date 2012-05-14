@@ -1,44 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
-	
-	<title>Bookmarks</title>
-	<desc>Bookmarks Icon</desc>
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+	<title>Bookmark</title>
+	<desc>Bookmark Icon</desc>
 	
 	<!--
-		@author		Harald Szekely 
-		@copyright	2011 WoltLab GmbH 
+		@author		Harald Szekely
+		@copyright	2001-2012 WoltLab GmbH 
 		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
 	--> 
 	
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper1 {fill: #666;}
-				.Lower1 {fill: #fff;}
+				.surface { fill: #666; }
+				.shadow { fill: #fff; }
 			]]>
 		</style>
 	</defs>
 	
-	<g id="IconBookmarks">
-		<path class="Lower1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M6.8642578,8.8500977l1.2719727,2.0336914L5.3193359,9.9052734
-			l-0.3530273,2.9628906C4.9672852,12.8662109,1,6.5268555,1,6.5268555V2.9995117l0.9663086,0.4702148L2.3032227,4.171875
-			C1.9189453,4.1118164,1.5488281,4.3500977,1.4604492,4.7333984c-0.0922852,0.402832,0.1586914,0.8041992,0.5610352,0.8964844
-			C2.3500977,5.7055664,2.6694336,5.5444336,2.8286133,5.265625l0.7080078,1.4736328
-			C3.5366211,6.7392578,5.0947266,7.7275391,6.8642578,8.8500977z M12.390625,11.5400391
-			c0-0.0019531-8.3540039-5.300293-8.3540039-5.300293L2,2h4.6469727L15,7.2988281l-3.8984375,0.4750977L12.390625,11.5400391z
-			 M5.4658203,3.3652344C5.34375,2.8271484,4.8149414,2.4921875,4.2851562,2.6162109
-			c-0.53125,0.1235352-0.8608398,0.6611328-0.7387695,1.1987305c0.1225586,0.5385742,0.6513672,0.8740234,1.1811523,0.7495117
-			C5.2573242,4.4404297,5.5878906,3.902832,5.4658203,3.3652344z"/>
-		<path class="Upper1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M6.8642578,7.8505859l1.2714844,2.0332031L5.3193359,8.90625
-			l-0.3530273,2.9619141C4.9672852,11.8671875,1,5.5273438,1,5.5273438V2l0.9663086,0.4702148l0.3369141,0.7021484
-			C1.9189453,3.1123047,1.5488281,3.3505859,1.4604492,3.7338867c-0.0922852,0.402832,0.1586914,0.8041992,0.5610352,0.8964844
-			c0.3286133,0.0756836,0.6479492-0.0854492,0.8071289-0.3642578l0.7080078,1.4736328
-			C3.5366211,5.7397461,5.0947266,6.7280273,6.8642578,7.8505859z M12.390625,10.5410156
-			c0-0.0019531-8.3540039-5.3007812-8.3540039-5.3007812L2,1.0004883h4.6469727L15,6.2993164l-3.8994141,0.4750977
-			L12.390625,10.5410156z M5.4658203,2.3657227C5.34375,1.8276367,4.8149414,1.4926758,4.2851562,1.6166992
-			c-0.53125,0.1235352-0.8608398,0.6611328-0.7387695,1.1987305c0.1225586,0.5385742,0.6513672,0.8740234,1.1811523,0.7495117
-			C5.2573242,3.440918,5.5878906,2.9033203,5.4658203,2.3657227z"/>
+	<g id="IconBookmark">
+		<path class="shadow" opacity=".8" d="M11.5,2h-9c0,0,3,0,3,2v11l4-5l4,5V4.021C13.5,3,12.5,2,11.5,2z"/>
+		<path class="surface" d="M11.5,1h-9c0,0,3,0,3,2v11l4-5l4,5V3.021C13.5,2,12.5,1,11.5,1z"/>
 	</g>
 </svg>

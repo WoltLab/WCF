@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
-	
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
 	<title>Marker</title>
 	<desc>Marker Icon</desc>
 	
 	<!--
-		@author		Harald Szekely 
-		@copyright	2011 WoltLab GmbH 
+		@author		Harald Szekely
+		@copyright	2001-2012 WoltLab GmbH 
 		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
 	--> 
 	
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper1 {fill: #666;}
-				.Lower1 {fill: #fff;}
+				.surface { fill: #666; }
+				.shadow { fill: #fff; }
 			]]>
 		</style>
 	</defs>
 	
 	<g id="IconMarker">
-		<path class="Lower1" d="M6.9995117,2.0004883C4.4375,2.0004883,3,3.6669922,3,6.0004883
-			C3,8.3598633,6.9995117,15,6.9995117,15S11,8.3598633,11,6.0004883C11,3.625,9.5830078,2.0004883,6.9995117,2.0004883z
-			 M7.0009766,8.0004883c-1.1049805,0-2.0004883-0.8945312-2.0004883-2c0-1.1049805,0.8955078-2,2.0004883-2
-			c1.1044922,0,1.9990234,0.8959961,1.9990234,2C9,7.1049805,8.1054688,8.0004883,7.0009766,8.0004883z"/>
-		<path class="Upper1" d="M6.9995117,1C4.4375,1,3,2.6665039,3,5c0,2.359375,3.9995117,9,3.9995117,9
-			S11,7.359375,11,5C11,2.6245117,9.5830078,1,6.9995117,1z M7.0009766,7C5.8959961,7,5.0004883,6.1054688,5.0004883,5
-			c0-1.1049805,0.8955078-2,2.0004883-2C8.1054688,3,9,3.8959961,9,5C9,6.1044922,8.1054688,7,7.0009766,7z"/>
+		<path class="shadow" opacity=".8" d="M8,2C5.438,2,4,3.667,4,6c0,2.359,4,9,4,9s4-6.64,4-9C12,3.625,10.583,2,8,2z M8.001,8C6.896,8,6,7.106,6,6
+			c0-1.105,0.896-2,2-2C9.105,4,10,4.896,10,6C10,7.105,9.105,8,8.001,8z"/>
+		<path class="surface" d="M8,1C5.438,1,4,2.667,4,5c0,2.359,4,9,4,9s4-6.641,4-9C12,2.625,10.583,1,8,1z M8.001,7
+			C6.896,7,6,6.105,6,5c0-1.105,0.896-2,2-2C9.105,3,10,3.896,10,5C10,6.104,9.105,7,8.001,7z"/>
 	</g>
 </svg>

@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
-	
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
 	<title>Gender Female</title>
 	<desc>Gender Female</desc>
 	
 	<!--
-		@author		Harald Szekely 
-		@copyright	2011 WoltLab GmbH 
+		@author		Harald Szekely
+		@copyright	2001-2012 WoltLab GmbH 
 		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
 	--> 
 	
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper1 {fill: #369;}
-				.Lower1 {fill: #fff;}
+				.surface { fill: #369; }
+				.shadow { fill: #fff; }
 			]]>
 		</style>
 	</defs>
 	
 	<g id="IconGenderMale">
-		<g class="Lower1">
-			<path id="Arrow2" d="M13,2H8v1c0,0.609375,0.4482422,1,1,1h1.5429688L8.0087891,6.5336914
-				l1.4140625,1.4140625L12,5.3706055V7c0,0.5527344,0.4472656,1,1,1s1-0.4472656,1-1V3C14,2.4472656,13.5527344,2,13,2z"/>
-			<path id="Circle2" d="M6,5c-2.7612305,0-5,2.2387695-5,5c0,2.7607422,2.2387695,5,5,5s5-2.2392578,5-5
-				C11,7.2387695,8.7612305,5,6,5z M6,13c-1.6572266,0-3-1.3427734-3-3c0-1.6567383,1.3427734-3,3-3s3,1.3432617,3,3
-				C9,11.6572266,7.6572266,13,6,13z"/>
+		<g>
+			<path id="Arrow2" class="shadow" opacity=".8" d="M13.5,2h-5v1c0,0.609,0.448,1,1,1h1.543L8.509,6.534l1.414,1.414L12.5,5.371V7
+				c0,0.553,0.447,1,1,1s1-0.447,1-1V3C14.5,2.447,14.053,2,13.5,2z"/>
+			<path id="Circle2" class="shadow" opacity=".8" d="M6.5,5c-2.761,0-5,2.239-5,5c0,2.761,2.239,5,5,5c2.762,0,5-2.239,5-5
+				C11.5,7.239,9.262,5,6.5,5z M6.5,13c-1.657,0-3-1.343-3-3c0-1.657,1.343-3,3-3s3,1.343,3,3C9.5,11.657,8.157,13,6.5,13z"/>
 		</g>
-		<g class="Upper1">
-			<path id="Arrow1" d="M13,1H9C8.4472656,1,8,1.4472656,8,2s0.4482422,1,1,1h1.5429688L8.0087891,5.5336914
-				l1.4140625,1.4140625L12,4.3706055V6c0,0.5527344,0.4472656,1,1,1s1-0.4472656,1-1V2C14,1.4472656,13.5527344,1,13,1z"/>
-			<path id="Circle1" d="M6,4C3.2387695,4,1,6.2387695,1,9c0,2.7607422,2.2387695,5,5,5s5-2.2392578,5-5
-				C11,6.2387695,8.7612305,4,6,4z M6,12c-1.6572266,0-3-1.3427734-3-3c0-1.6567383,1.3427734-3,3-3s3,1.3432617,3,3
-				C9,10.6572266,7.6572266,12,6,12z"/>
+		<g>
+			<path id="Arrow1" class="surface" d="M13.5,1h-4c-0.553,0-1,0.447-1,1s0.448,1,1,1h1.543L8.509,5.534l1.414,1.414L12.5,4.371V6
+				c0,0.553,0.447,1,1,1s1-0.447,1-1V2C14.5,1.447,14.053,1,13.5,1z"/>
+			<path id="Circle1" class="surface" d="M6.5,4c-2.761,0-5,2.239-5,5c0,2.761,2.239,5,5,5c2.762,0,5-2.239,5-5
+				C11.5,6.239,9.262,4,6.5,4z M6.5,12c-1.657,0-3-1.343-3-3c0-1.657,1.343-3,3-3s3,1.343,3,3C9.5,10.657,8.157,12,6.5,12z"/>
 		</g>
 	</g>
 </svg>

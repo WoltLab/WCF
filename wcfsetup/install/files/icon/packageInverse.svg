@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>Package</title>
+	<desc>Package Icon</desc>
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2001-2012 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.surface {fill: #fff;}
+				.shadow {fill: #000;}
+			]]>
+		</style>
+	</defs>
+	
+	<g id="IconPackage">
+		<g class="shadow" transform="translate(0 -1)" opacity=".8">
+			<polygon points="8,2 1,4.0004883 1,5.0004883 8,3 15,5.0004883 15,4.0004883"/>
+			<path d="M8,6L1,4v9l7,2l7-2V4L8,6z M14,12.2861328L8,14l-6-1.7138672V5.2856445L8,7l6-1.7143555V12.2861328z"/>
+		</g>
+		<g class="surface" transform="translate(0 1)">
+			<polygon points="8,1 1,3.0004883 1,4.0004883 8,2 15,4.0004883 15,3.0004883"/>
+			<path d="M8,5L1,3v9l7,2l7-2V3L8,5z M14,11.2861328L8,13l-6-1.7138672V4.2856445L8,6l6-1.7143555V11.2861328z"/>
+		</g>
+	</g>
+</svg>

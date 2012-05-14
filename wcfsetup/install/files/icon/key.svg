@@ -1,34 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
-	
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
 	<title>Key</title>
 	<desc>Key Icon</desc>
 	
 	<!--
-		@author		Harald Szekely 
-		@copyright	2011 WoltLab GmbH 
+		@author		Harald Szekely
+		@copyright	2001-2012 WoltLab GmbH 
 		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
 	--> 
 	
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper1 {fill: #666;}
-				.Lower1 {fill: #fff;}
+				.surface { fill: #666; }
+				.shadow { fill: #fff; }
 			]]>
 		</style>
 	</defs>
 	
 	<g id="IconKey">
-		<path class="Lower1" d="M2,11.25h3V13H2V11.25z M15,7.5v3c0,0.8251953-0.6748047,1.5-1.5,1.5h-1
-			c-0.8251953,0-1.5-0.6748047-1.5-1.5V10H5v1H2v-1H1.5126953C1.230957,10,1,9.7753906,1,9.5v-1C1,8.2250977,1.230957,8,1.5126953,8
-			H11V7.5C11,6.6748047,11.6748047,6,12.5,6h1C14.3251953,6,15,6.6748047,15,7.5z M14,7.5C14,7.2250977,13.7753906,7,13.5,7h-1
-			C12.2246094,7,12,7.2250977,12,7.5v3c0,0.2753906,0.2246094,0.5,0.5,0.5h1c0.2753906,0,0.5-0.2246094,0.5-0.5V7.5z"/>
-		<path class="Upper1" d="M2,10.25h3V12H2V10.25z M15,6.5v3c0,0.8251953-0.6748047,1.5-1.5,1.5h-1
-			c-0.8251953,0-1.5-0.6748047-1.5-1.5V9H5v1H2V9H1.5126953C1.230957,9,1,8.7749023,1,8.5v-1C1,7.2250977,1.230957,7,1.5126953,7H11
-			V6.5C11,5.6748047,11.6748047,5,12.5,5h1C14.3251953,5,15,5.6748047,15,6.5z M14,6.5C14,6.2250977,13.7753906,6,13.5,6h-1
-			C12.2246094,6,12,6.2250977,12,6.5v3c0,0.2753906,0.2246094,0.5,0.5,0.5h1c0.2753906,0,0.5-0.2246094,0.5-0.5V6.5z"/>
+		<path class="shadow" opacity=".8" d="M2,10.75h3v1.75H2V10.75z M15,7v3c0,0.825-0.675,1.5-1.5,1.5h-1c-0.825,0-1.5-0.675-1.5-1.5V9.5H5v1H2v-1
+			H1.513C1.231,9.5,1,9.275,1,9V8c0-0.275,0.231-0.5,0.513-0.5H11V7c0-0.825,0.675-1.5,1.5-1.5h1C14.325,5.5,15,6.175,15,7z M14,7
+			c0-0.275-0.225-0.5-0.5-0.5h-1C12.225,6.5,12,6.725,12,7v3c0,0.275,0.225,0.5,0.5,0.5h1c0.275,0,0.5-0.225,0.5-0.5V7z"/>
+		<path class="surface" d="M2,9.75h3v1.75H2V9.75z M15,6v3c0,0.825-0.675,1.5-1.5,1.5h-1C11.675,10.5,11,9.825,11,9V8.5H5v1H2v-1
+			H1.513C1.231,8.5,1,8.275,1,8V7c0-0.275,0.231-0.5,0.513-0.5H11V6c0-0.825,0.675-1.5,1.5-1.5h1C14.325,4.5,15,5.175,15,6z M14,6
+			c0-0.275-0.225-0.5-0.5-0.5h-1C12.225,5.5,12,5.725,12,6v3c0,0.275,0.225,0.5,0.5,0.5h1C13.775,9.5,14,9.275,14,9V6z"/>
 	</g>
 </svg>

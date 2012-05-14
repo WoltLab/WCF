@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
-	
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
 	<title>Image Landscape</title>
 	<desc>Image Landscape Icon</desc>
 	
 	<!--
-		@author		Harald Szekely 
-		@copyright	2011 WoltLab GmbH 
+		@author		Harald Szekely
+		@copyright	2001-2012 WoltLab GmbH 
 		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
 	--> 
 	
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper1 {fill: #369;}
-				.Lower1 {fill: #fff;}
+				.surface { fill: #369; }
+				.shadow { fill: #fff; }
 			]]>
 		</style>
 	</defs>
 	
 	<g id="IconImageLandscape">
-		<g class="Lower1">
-			<polygon id="Landscape2" points="2.5,12 12.5,12 10,9 8.5,10 6,6"/>
-			<circle id="Sun2" cx="11" cy="6" r="1"/>
-			<path id="Frame2" style="fill-rule: evenodd; clip-rule: evenodd;" d="M13,3H2C1.40625,3,1,3.4833984,1,3.9980469
-				v9.0039062C1,13.5009766,1.453125,14,2,14h11c0.546875,0,1-0.4990234,1-0.9980469V3.9980469C14,3.4833984,13.59375,3,13,3z M13,13
-				H2V3.9980469h11V13z"/>
+		<g>
+			<polygon id="Landscape2" class="shadow" opacity=".8" points="3,12 13,12 10.5,9 9,10 6.5,6 		"/>
+			<circle id="Sun2" class="shadow" opacity=".8" cx="11.5" cy="6" r="1"/>
+			<path id="Frame2" class="shadow" opacity=".8" d="M13.5,3h-11c-0.594,0-1,0.483-1,0.998v9.004C1.5,13.501,1.953,14,2.5,14h11
+				c0.547,0,1-0.499,1-0.998V3.998C14.5,3.483,14.094,3,13.5,3z M13.5,13h-11V3.998h11V13z"/>
 		</g>
-		<g class="Upper1">
-			<polygon id="Landscape1" points="2.5,11 12.5,11 10,8 8.5,9 6,5"/>
-			<circle id="Sun1" cx="11" cy="5" r="1"/>
-			<path id="Frame1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M13,2H2C1.40625,2,1,2.4833984,1,2.9980469
-				v9.0039062C1,12.5009766,1.453125,13,2,13h11c0.546875,0,1-0.4990234,1-0.9980469V2.9980469C14,2.4833984,13.59375,2,13,2z M2,12
-				V2.9980469h11V12H2z"/>
+		<g>
+			<polygon id="Landscape1" class="surface" points="3,11 13,11 10.5,8 9,9 6.5,5 		"/>
+			<circle id="Sun1" class="surface" cx="11.5" cy="5" r="1"/>
+			<path id="Frame1" class="surface" d="M13.5,2h-11c-0.594,0-1,0.483-1,0.998v9.004C1.5,12.501,1.953,13,2.5,13h11
+				c0.547,0,1-0.499,1-0.998V2.998C14.5,2.483,14.094,2,13.5,2z M2.5,12V2.998h11V12H2.5z"/>
 		</g>
 	</g>
 </svg>
