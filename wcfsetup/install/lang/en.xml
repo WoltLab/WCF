@@ -573,6 +573,10 @@
 		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
 	</category>
 	
+	<category name="wcf.page">
+		<item name="wcf.page.pageNo"><![CDATA[Page {#$pageNo}]]></item>
+	</category>
+	
 	<category name="wcf.user">
 		<item name="wcf.user.confirmEmail"><![CDATA[Confirm e-mail address]]></item>
 		<item name="wcf.user.confirmPassword"><![CDATA[Confirm password]]></item>

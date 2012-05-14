@@ -598,13 +598,17 @@
 		<item name="wcf.global.objectID"><![CDATA[ID]]></item>
 		<item name="wcf.global.page.next"><![CDATA[Nächste Seite]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Vorherige Seite]]></item>
-		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item>
+		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.scrollDown"><![CDATA[Zum Seitenende]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Zum Seitenanfang]]></item>
 		<item name="wcf.global.search.enterSearchTerm"><![CDATA[Suchbegriff eingeben]]></item>
 		<item name="wcf.global.sortOrder.ascending"><![CDATA[aufsteigend]]></item>
 		<item name="wcf.global.sortOrder.descending"><![CDATA[absteigend]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[.]]></item>
+	</category>
+		
+	<category name="wcf.page">
+		<item name="wcf.page.pageNo"><![CDATA[Seite {#$pageNo}]]></item>
 	</category>
 	
 	<category name="wcf.user">
