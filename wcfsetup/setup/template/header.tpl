@@ -12,11 +12,11 @@
 		<style type="text/css">
 			/*<![CDATA[*/
 			.wcf-error {
-				background-image: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showIcon=systemError.svg') !important;
+				background-image: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showIcon=errorInverse.svg') !important;
 			}
 		
 			.wcf-innerError {
-				background-image: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showIcon=systemError.svg') !important;
+				background-image: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showIcon=errorInverse.svg') !important;
 			}
 			/*]]>*/
 		</style>
@@ -46,7 +46,7 @@
 			<!-- header navigation -->
 			<nav class="wcf-headerNavigation">
 				<ul>
-					<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}toBottom.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+					<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}circleArrowDownColored.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 				</ul>
 			</nav>
 			<!-- /header navigation -->
@@ -62,7 +62,7 @@
 			<section id="content" class="wcf-content wcf-contentDecor">
 				
 				<header class="wcf-container wcf-mainHeading setup">
-					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}working1.svg" alt="" class="wcf-containerIcon" />
+					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}working.svg" alt="" class="wcf-containerIcon" />
 					<hgroup class="wcf-containerContent">
 						<h1>{lang}wcf.global.title{/lang}</h1>
 						<h2>{lang}wcf.global.title.subtitle{/lang}</h2>
