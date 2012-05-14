@@ -8,21 +8,21 @@
 	
 	<!--
 		@author		Harald Szekely 
-		@copyright	2011 WoltLab GmbH 
+		@copyright	2001-2012 WoltLab GmbH 
 		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
 	--> 
 	
 	<defs>
 		<style type="text/css">
 			<![CDATA[
-				.Upper2 {fill: #fff;}
-				.Lower2 {fill: #000;}
+				.surface {fill: #fff;}
+				.shadow {fill: #000;}
 			]]>
 		</style>
 	</defs>
 	
 	<g id="IconDropdown">
-		<path class="Lower2" style="fill-rule: evenodd; clip-rule: evenodd;" d="M7,4.9980469l-3.5,3l-3.4995117-3H7z M7,2.9980469L3.5,0L0.0004883,2.9980469H7z"/>
-		<path class="Upper2" style="fill-rule: evenodd; clip-rule: evenodd;" d="M7,6L3.5,9L0.0004883,6H7z M7,4L3.5,1.0019531 L0.0004883,4H7z"/>
+		<path class="shadow" transform="translate(0 -1)" opacity=".8" style="fill-rule: evenodd; clip-rule: evenodd;" d="M7,6L3.5,9L0.0004883,6H7z M7,4L3.5,1.0019531 L0.0004883,4H7z"/>
+		<path class="surface" transform="translate(0 1)" style="fill-rule: evenodd; clip-rule: evenodd;" d="M7,4.9980469l-3.5,3l-3.4995117-3H7z M7,2.9980469L3.5,0L0.0004883,2.9980469H7z"/>
 	</g>
 </svg>

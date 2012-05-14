@@ -2,8 +2,8 @@
 <!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
-	<title>Arrow Down</title>
-	<desc>Arrow Down Icon</desc>
+	<title>Bookmark</title>
+	<desc>Bookmark Icon</desc>
 	
 	<!--
 		@author		Harald Szekely
@@ -20,8 +20,8 @@
 		</style>
 	</defs>
 	
-	<g id="ArrowDown">
-		<polygon class="shadow" transform="translate(0 -1)" opacity=".8" points="1.5,3 8.001,14 14.5,3 	"/>
-		<polygon class="surface" transform="translate(0 1)" points="1.5,2 8.001,13 14.5,2 	"/>
+	<g id="IconBookmark">
+		<path class="shadow" transform="translate(0 -1)" opacity=".8" d="M11.5,2h-9c0,0,3,0,3,2v11l4-5l4,5V4.021C13.5,3,12.5,2,11.5,2z"/>
+		<path class="surface" transform="translate(0 1)" d="M11.5,1h-9c0,0,3,0,3,2v11l4-5l4,5V3.021C13.5,2,12.5,1,11.5,1z"/>
 	</g>
 </svg>

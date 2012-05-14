@@ -2,8 +2,8 @@
 <!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
-	<title>Arrow Down</title>
-	<desc>Arrow Down Icon</desc>
+	<title>Forbidden</title>
+	<desc>Forbidden Icon</desc>
 	
 	<!--
 		@author		Harald Szekely
@@ -20,8 +20,10 @@
 		</style>
 	</defs>
 	
-	<g id="ArrowDown">
-		<polygon class="shadow" transform="translate(0 -1)" opacity=".8" points="1.5,3 8.001,14 14.5,3 	"/>
-		<polygon class="surface" transform="translate(0 1)" points="1.5,2 8.001,13 14.5,2 	"/>
+	<g id="IconForbidden">
+		<path class="shadow" transform="translate(0 -1)" opacity=".8" d="M8,2c-3.59,0-6.5,2.91-6.5,6.5C1.5,12.088,4.41,15,8,15c3.59,0,6.5-2.912,6.5-6.5C14.5,4.909,11.59,2,8,2z
+			 M2.5,10V7h11v3H2.5z"/>
+		<path class="surface" transform="translate(0 1)" d="M8,1C4.41,1,1.5,3.91,1.5,7.5C1.5,11.089,4.41,14,8,14c3.59,0,6.5-2.911,6.5-6.5C14.5,3.91,11.59,1,8,1z
+			 M2.5,9V6h11v3H2.5z"/>
 	</g>
 </svg>

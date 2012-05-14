@@ -2,8 +2,8 @@
 <!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
-	<title>Arrow Down</title>
-	<desc>Arrow Down Icon</desc>
+	<title>Arrow Up (Circle)</title>
+	<desc>Arrow Up (Circle) Icon</desc>
 	
 	<!--
 		@author		Harald Szekely
@@ -20,8 +20,10 @@
 		</style>
 	</defs>
 	
-	<g id="ArrowDown">
-		<polygon class="shadow" transform="translate(0 -1)" opacity=".8" points="1.5,3 8.001,14 14.5,3 	"/>
-		<polygon class="surface" transform="translate(0 1)" points="1.5,2 8.001,13 14.5,2 	"/>
+	<g id="IconToTop">
+		<path class="shadow" transform="translate(0 -1)" opacity=".8" d="M8,2.09c-3.59,0-6.5,2.91-6.5,6.5c0,3.067,2.141,5.637,5,6.319v-6.82l-2.5,0l4-5l4,5l-2.5,0v6.819
+			c2.865-0.679,5-3.247,5-6.319C14.5,5,11.59,2.09,8,2.09z"/>
+		<path class="surface" transform="translate(0 1)" d="M8,1.09c-3.59,0-6.5,2.91-6.5,6.5c0,3.067,2.141,5.637,5,6.319v-6.82l-2.5,0l4-5l4,5l-2.5,0v6.819
+			c2.865-0.679,5-3.247,5-6.319C14.5,4,11.59,1.09,8,1.09z"/>
 	</g>
 </svg>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml-stylesheet type="text/css" href="svg.css"?>-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+	
+	<title>Update</title>
+	<desc>Update Icon</desc>
+	
+	<!--
+		@author		Harald Szekely 
+		@copyright	2001-2012 WoltLab GmbH 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	--> 
+	
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.surface {fill: #fff;}
+				.shadow {fill: #000;}
+			]]>
+		</style>
+	</defs>
+	
+	<g id="IconUpdate">
+		<g class="shadow" transform="translate(0 -1)" opacity=".8">
+			<path id="Circle2" style="fill-rule: evenodd; clip-rule: evenodd;" d="M12,11.75
+				c-0.6455078-0.6455078-1.3427734-0.0800781-1.3427734-0.0800781C9.8496094,12.4853516,8.7421875,13,7.5,13
+				C5.0146484,13,3,10.9853516,3,8.5S5.0146484,4,7.5,4c1.9570312,0,3.6044922,1.2563477,4.2246094,3h2.0947266
+				C13.140625,4.1347656,10.5722656,2,7.5,2C3.9101562,2,1,4.9101562,1,8.5S3.9101562,15,7.5,15
+				c1.7919922,0,3.4091797-0.7304688,4.5830078-1.9042969C12.0830078,13.0957031,12.6669922,12.4169922,12,11.75z"/>
+			<polygon id="Arrow2" style="fill-rule: evenodd; clip-rule: evenodd;" points="12.75,2 12.75,6 8.75,6 10.75,8 
+				14.75,8 14.75,4"/>
+		</g>
+		<g class="surface" transform="translate(0 1)">
+			<path id="Circle1" style="fill-rule: evenodd; clip-rule: evenodd;" d="M12,10.75
+				c-0.6455078-0.6455078-1.3427734-0.0800781-1.3427734-0.0800781C9.8496094,11.4853516,8.7421875,12,7.5,12
+				C5.0146484,12,3,9.9853516,3,7.5S5.0146484,3,7.5,3c1.9570312,0,3.6044922,1.2563477,4.2246094,3h2.0947266
+				C13.140625,3.1347656,10.5722656,1,7.5,1C3.9101562,1,1,3.9101562,1,7.5S3.9101562,14,7.5,14
+				c1.7919922,0,3.4091797-0.7304688,4.5830078-1.9042969C12.0830078,12.0957031,12.6669922,11.4169922,12,10.75z"/>
+			<polygon id="Arrow1" style="fill-rule: evenodd; clip-rule: evenodd;" points="12.75,1 12.75,5 8.75,5 10.75,7 
+				14.75,7 14.75,3"/>
+		</g>
+	</g>
+</svg>
