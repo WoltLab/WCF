@@ -658,6 +658,12 @@ WCF.Clipboard = {
 	_container: null,
 	
 	/**
+	 * container meta data
+	 * @var	object
+	 */
+	_containerData: { },
+	
+	/**
 	 * user has marked items
 	 * @var	boolean
 	 */
@@ -722,6 +728,7 @@ WCF.Clipboard = {
 		new WCF.Action.Proxy({
 			autoSend: true,
 			data: {
+				containerData: this._containerData,
 				pageClassName: this._page
 			},
 			success: $.proxy(this._loadMarkedItemsSuccess, this),
@@ -796,23 +803,14 @@ WCF.Clipboard = {
 	 */
 	_initContainer: function(container) {
 		var $container = $(container);
+		var $containerID = $container.wcfIdentify();
 		
-		// fetch id or assign a random one if none found
-		var $id = $container.attr('id');
-		if (!$id) {
-			$id = WCF.getRandomID();
-			$container.attr('id', $id);
+		$container.find('.jsClipboardMarkAll').data('hasContainer', $containerID).click($.proxy(this._markAll, this));
+		$container.find('input.jsClipboardItem').data('hasContainer', $containerID).click($.proxy(this._click, this));
+		
+		if ($container.data('typeContainerID')) {
+			this._containerData[$container.data('type')] = $container.data('typeContainerID');
 		}
-		
-		// bind mark all checkboxes
-		$container.find('.jsClipboardMarkAll').each($.proxy(function(index, item) {
-			$(item).data('hasContainer', $id).click($.proxy(this._markAll, this));
-		}, this));
-		
-		// bind item checkboxes
-		$container.find('input.jsClipboardItem').each($.proxy(function(index, item) {
-			$(item).data('hasContainer', $id).click($.proxy(this._click, this));
-		}, this));
 	},
 	
 	/**

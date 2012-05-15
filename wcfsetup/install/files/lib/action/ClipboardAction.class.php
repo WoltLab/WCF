@@ -25,6 +25,12 @@ class ClipboardAction extends AbstractSecureAction {
 	protected $action = '';
 	
 	/**
+	 * container data
+	 * @var	array
+	 */
+	protected $containerData = array();
+	
+	/**
 	 * list of object ids
 	 * @var	array<integer>
 	 */
@@ -72,6 +78,7 @@ class ClipboardAction extends AbstractSecureAction {
 		parent::readParameters();
 		
 		if (isset($_POST['action'])) $this->action = StringUtil::trim($_POST['action']);
+		if (isset($_POST['containerData']) && is_array($_POST['containerData'])) $this->containerData = ArrayUtil::toIntegerArray($_POST['containerData']);
 		if (isset($_POST['objectIDs']) && is_array($_POST['objectIDs'])) $this->objectIDs = ArrayUtil::toIntegerArray($_POST['objectIDs']);
 		if (isset($_POST['pageClassName'])) $this->pageClassName = StringUtil::trim($_POST['pageClassName']);
 		if (isset($_POST['type'])) $this->type = StringUtil::trim($_POST['type']);
@@ -111,7 +118,7 @@ class ClipboardAction extends AbstractSecureAction {
 	 * @return	array<array>
 	 */
 	protected function getEditorItems() {
-		$data = ClipboardHandler::getInstance()->getEditorItems($this->pageClassName);
+		$data = ClipboardHandler::getInstance()->getEditorItems($this->pageClassName, $this->containerData);
 		
 		if ($data === null) {
 			return array();

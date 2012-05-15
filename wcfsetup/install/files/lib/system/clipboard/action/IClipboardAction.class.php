@@ -24,9 +24,10 @@ interface IClipboardAction {
 	 * 
 	 * @param	array		$objects
 	 * @param	string		$actionName
+	 * @param	array		$typeData
 	 * @return	wcf\system\clipboard\ClipboardEditorItem
 	 */
-	public function execute(array $objects, $actionName);
+	public function execute(array $objects, $actionName, $typeData = array());
 	
 	/**
 	 * Returns label for item editor.
