@@ -3,6 +3,7 @@ namespace wcf\data;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Abstract class for a list of database objects.
@@ -103,6 +104,15 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * Creates a new DatabaseObjectList object.
 	 */
 	public function __construct() {
+		// set class name
+		if (empty($this->className)) {
+			$className = get_called_class();
+			
+			if (StringUtil::substring($className, -4) == 'List') {
+				$this->className = StringUtil::substring($className, 0, -4);
+			}
+		}
+		
 		$this->conditionBuilder = new PreparedStatementConditionBuilder();
 	}
 	
