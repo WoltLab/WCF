@@ -84,7 +84,7 @@ class Cronjob extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function isDeletable() {
-		return (WCF::getSession()->getPermission('admin.system.cronjob.canDeleteCronjob') && $this->canBeEdited);
+		return (WCF::getSession()->getPermission('admin.system.cronjob.canDeleteCronjob') && $this->canBeEdited && $this->canBeDisabled);
 	}
 	
 	/**
