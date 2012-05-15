@@ -218,9 +218,10 @@ class Tar implements IArchive {
 		}
 		$header = $this->getFileInfo($index);
 		
-		// can not extract a folder
-		if ($header['type'] != 'file') {
-			return false;
+		FileUtil::makePath(dirname($destination));
+		if ($header['type'] === 'folder') {
+			FileUtil::makePath($destination);
+			return;
 		}
 		
 		// seek to offset
