@@ -2167,7 +2167,9 @@ WCF.MultipleLanguageInput.prototype = {
 		$button.data('toggle', $wrapper.wcfIdentify()).click($.proxy(this._enable, this));
 		
 		// add a special class if next item is a textarea
+		var $top = null;
 		if ($button.next().getTagName() === 'textarea') {
+			$top = $button.outerHeight() - 1;
 			$button.addClass('dropdownCaptionTextarea');
 		}
 		else {
@@ -2177,10 +2179,12 @@ WCF.MultipleLanguageInput.prototype = {
 		// insert list
 		this._list = $('<ul class="dropdownMenu"></ul>').insertAfter($button);
 		
-		// calculate top offset for menu
-		this._list.css({
-			top: $button.parent().outerHeight() + 10
-		});
+		// set top offset for menu
+		if ($top !== null) {
+			this._list.css({
+				top: $top
+			});
+		}
 		
 		// insert available languages
 		for (var $languageID in this._availableLanguages) {
