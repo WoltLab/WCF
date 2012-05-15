@@ -26,12 +26,14 @@ class CacheClearAction extends AbstractAction {
 	 * @see wcf\action\AbstractAction::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canViewLog');
+	
 	/**
 	 * @see wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();
-		// this will clean up the templates as well
+		
+		// delete language cache and compiled templates as well
 		LanguageFactory::getInstance()->deleteLanguageCache();
 		
 		$conditions = new PreparedStatementConditionBuilder();
@@ -49,9 +51,9 @@ class CacheClearAction extends AbstractAction {
 			try {
 				CacheHandler::getInstance()->clear($packageDir.'cache', '*.php');
 			}
-			catch (SystemException $e) {
-			}
+			catch (SystemException $e) { }
 		}
+		
 		$this->executed();
 		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('CacheList'));
 		exit;
