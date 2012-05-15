@@ -37,6 +37,16 @@ class Zip extends File implements IArchive {
 	}
 	
 	/**
+	 * @see wcf\system\io\IArchive::getContentList()
+	 */
+	public function getContentList() {
+		$this->jumpToCentralDirectory();
+		$centralDirectory = $this->readCentralDirectory();
+		
+		return $centralDirectory['files'];
+	}
+	
+	/**
 	 * @see wcf\system\io\IArchive::getFileInfo()
 	 */
 	public function getFileInfo($offset) {
@@ -76,6 +86,7 @@ class Zip extends File implements IArchive {
 		catch (SystemException $e) {
 			return false;
 		}
+		if ($file['header']['type'] === 'folder') return false;
 		
 		return $file['content'];
 	}
@@ -94,6 +105,11 @@ class Zip extends File implements IArchive {
 		}
 		
 		FileUtil::makePath(dirname($destination));
+		if ($file['header']['type'] === 'folder') {
+			FileUtil::makePath($destination);
+			return;
+		}
+		
 		$targetFile = new File($destination);
 		$targetFile->write($file['content'], strlen($file['content']));
 		$targetFile->close();
@@ -105,12 +121,12 @@ class Zip extends File implements IArchive {
 			@$targetFile->chmod(0755);
 		}
 		
-		if ($file['header']['x-timestamp']) {
-			@$targetFile->touch($file['header']['x-timestamp']);
+		if ($file['header']['mtime']) {
+			@$targetFile->touch($file['header']['mtime']);
 		}
 		
 		// check filesize
-		if (filesize($destination) != $file['header']['uncompressedSize']) {
+		if (filesize($destination) != $file['header']['size']) {
 			throw new SystemException("Could not unzip file '".$file['header']['filename']."' to '".$destination."'. Maybe disk quota exceeded in folder '".dirname($destination)."'.");
 		}
 		
@@ -158,9 +174,11 @@ class Zip extends File implements IArchive {
 			$day = $data['mdate'] & 31 /* 5 bits */;
 			$month = ($data['mdate'] >> 5) & 15 /* 4 bits */;
 			$year = (($data['mdate'] >> 9) & 127 /* 7 bits */) + 1980;
-			$data['x-timestamp'] = mktime($hour, $minute, $second, $month, $day, $year);
+			$data['mtime'] = mktime($hour, $minute, $second, $month, $day, $year);
 			
-			$data += unpack('Vcrc32/VcompressedSize/VuncompressedSize/vfilenameLength/vextraFieldLength/vfileCommentLength/vdiskNo/vinternalAttr/vexternalAttr', $this->read(26));
+			$data += unpack('Vcrc32/VcompressedSize/Vsize/vfilenameLength/vextraFieldLength/vfileCommentLength/vdiskNo/vinternalAttr/vexternalAttr', $this->read(26));
+			if ($data['compressedSize'] > 0) $data['type'] = 'file';
+			else $data['type'] = 'folder';
 			$data['offset'] = $this->readAndUnpack(4, 'v');
 			$data['filename'] = $this->read($data['filenameLength']);
 			
@@ -267,7 +285,7 @@ class Zip extends File implements IArchive {
 		$month = ($header['mdate'] >> 5) & 15 /* 4 bits */;
 		$year = (($header['mdate'] >> 9) & 127 /* 7 bits */) + 1980;
 		$header['x-timestamp'] = mktime($hour, $minute, $second, $month, $day, $year);
-		$header += unpack('Vcrc32/VcompressedSize/VuncompressedSize/vfilenameLength/vextraFieldLength', $this->read(16));
+		$header += unpack('Vcrc32/VcompressedSize/Vsize/vfilenameLength/vextraFieldLength', $this->read(16));
 		
 		// read filename
 		$header['filename'] = $this->read($header['filenameLength']);
@@ -276,7 +294,12 @@ class Zip extends File implements IArchive {
 		else $header['extraField'] = '';
 		
 		// read contents
-		$content = $this->read($header['compressedSize']);
+		$header['type'] = 'file';
+		if ($header['compressedSize'] > 0) $content = $this->read($header['compressedSize']);
+		else {
+			$header['type'] = 'folder';
+			$content = false;
+		}
 		
 		// uncompress file
 		switch ($header['compression']) {

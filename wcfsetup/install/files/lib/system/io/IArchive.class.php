@@ -12,6 +12,13 @@ namespace wcf\system\io;
  * @category 	Community Framework
  */
 interface IArchive {
+	/** 
+	 * Returns the table of contents (TOC) list for this tar archive.
+	 * 
+	 * @return 	array 		list of content
+	 */
+	public function getContentList();
+	
 	/**
 	 * Returns an associative array with information
 	 * about a specific file in the archive.
