@@ -1,12 +1,15 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\AbstractPage;
+use wcf\system\cache\source\NoCacheSource;
 use wcf\system\cache\CacheHandler;
 use wcf\system\event\EventHandler;
+use wcf\system\image\adapter\ImagickImageAdapter;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
+use wcf\util\ClassUtil;
 
 /**
  * Shows the welcome page in admin control panel.
@@ -64,14 +67,37 @@ class IndexPage extends AbstractPage {
 			// TODO: Fill this list
 			$shouldBeWritable = array(WCF_DIR);
 			foreach ($shouldBeWritable as $file) {
-				if (!is_writable($file)) $this->healthDetails['warning'][] = WCF::getLanguage()->getDynamicVariable('wcf.acp.index.health.notWritable', array('file' => $file));
+				if (!is_writable($file)) {
+					$this->healthDetails['warning'][] = WCF::getLanguage()->getDynamicVariable('wcf.acp.index.health.notWritable', array(
+						'file' => $file
+					));
+				}
 			}
 			
 			for($i = 0; $i < 7; $i++) {
 				if (file_exists(WCF_DIR.'log/'.date('Y-m-d', TIME_NOW - 86400 * $i).'.txt')) {
-					$this->healthDetails['error'][] = WCF::getLanguage()->getDynamicVariable('wcf.acp.index.health.exception', array('date' => TIME_NOW - 86400 * $i));
+					$this->healthDetails['error'][] = WCF::getLanguage()->getDynamicVariable('wcf.acp.index.health.exception', array(
+						'date' => TIME_NOW - 86400 * $i
+					));
 					break;
 				}
+			}
+			
+			if (CacheHandler::getInstance()->getCacheSource() instanceof NoCacheSource) {
+				$this->healthDetails['warning'][] = WCF::getLanguage()->get('wcf.acp.index.health.noCacheSource');
+			}
+			else if (!ClassUtil::isInstanceOf(CacheHandler::getInstance()->getCacheSource(), 'wcf\system\cache\source'.ucfirst(CACHE_SOURCE_TYPE).'CacheSource')) {
+				$this->healthDetails['error'][] = WCF::getLanguage()->getDynamicVariable('wcf.acp.index.health.cacheFallback', array(
+					'shouldBe' => WCF::getLanguage()->get('wcf.acp.option.cache_source_type.'.CACHE_SOURCE_TYPE)
+				));
+			}
+			
+			if (MAIL_SEND_METHOD === 'debug') {
+				$this->healthDetails['warning'][] = WCF::getLanguage()->get('wcf.acp.index.health.debugMailSender');
+			}
+			
+			if (IMAGE_ADAPTER_TYPE === 'imagick' && !ImagickImageAdapter::isSupported()) {
+				$this->healthDetails['error'][] = WCF::getLanguage()->get('wcf.acp.index.health.imageAdapterFallback');
 			}
 			
 			EventHandler::getInstance()->fireAction($this, 'calculateHealth');
