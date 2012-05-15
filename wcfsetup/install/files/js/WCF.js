@@ -730,6 +730,13 @@ WCF.Clipboard = {
 	},
 	
 	/**
+	 * Reloads the list of marked items.
+	 */
+	reload: function() {
+		this._loadMarkedItems();
+	},
+	
+	/**
 	 * Marks all returned items as marked
 	 * 
 	 * @param	object		data
