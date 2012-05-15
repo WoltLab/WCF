@@ -2305,7 +2305,7 @@ WCF.MultipleLanguageInput.prototype = {
 		$button.addClass('active');
 		
 		// update label
-		this._list.prev('.dropdownCaption').children('span').text(this._availableLanguages[this._languageID]);
+		this._list.prev('.dropdownToggle').children('span').text(this._availableLanguages[this._languageID]);
 		
 		// close selection and set focus on input element
 		this._closeSelection();
@@ -2321,7 +2321,7 @@ WCF.MultipleLanguageInput.prototype = {
 		}
 		
 		// remove active marking
-		this._list.prev('.dropdownCaption').children('span').removeClass('active').text(WCF.Language.get('wcf.global.button.disabledI18n'));
+		this._list.prev('.dropdownToggle').children('span').removeClass('active').text(WCF.Language.get('wcf.global.button.disabledI18n'));
 		this._closeSelection();
 
 		// update element value
