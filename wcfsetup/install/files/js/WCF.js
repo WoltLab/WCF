@@ -658,6 +658,12 @@ WCF.Clipboard = {
 	_container: null,
 	
 	/**
+	 * container meta data
+	 * @var	object
+	 */
+	_containerData: { },
+	
+	/**
 	 * user has marked items
 	 * @var	boolean
 	 */
@@ -722,11 +728,19 @@ WCF.Clipboard = {
 		new WCF.Action.Proxy({
 			autoSend: true,
 			data: {
+				containerData: this._containerData,
 				pageClassName: this._page
 			},
 			success: $.proxy(this._loadMarkedItemsSuccess, this),
 			url: 'index.php/ClipboardLoadMarkedItems/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
+	},
+	
+	/**
+	 * Reloads the list of marked items.
+	 */
+	reload: function() {
+		this._loadMarkedItems();
 	},
 	
 	/**
@@ -789,23 +803,14 @@ WCF.Clipboard = {
 	 */
 	_initContainer: function(container) {
 		var $container = $(container);
+		var $containerID = $container.wcfIdentify();
 		
-		// fetch id or assign a random one if none found
-		var $id = $container.attr('id');
-		if (!$id) {
-			$id = WCF.getRandomID();
-			$container.attr('id', $id);
+		$container.find('.jsClipboardMarkAll').data('hasContainer', $containerID).click($.proxy(this._markAll, this));
+		$container.find('input.jsClipboardItem').data('hasContainer', $containerID).click($.proxy(this._click, this));
+		
+		if ($container.data('typeContainerID')) {
+			this._containerData[$container.data('type')] = $container.data('typeContainerID');
 		}
-		
-		// bind mark all checkboxes
-		$container.find('.jsClipboardMarkAll').each($.proxy(function(index, item) {
-			$(item).data('hasContainer', $id).click($.proxy(this._markAll, this));
-		}, this));
-		
-		// bind item checkboxes
-		$container.find('input.jsClipboardItem').each($.proxy(function(index, item) {
-			$(item).data('hasContainer', $id).click($.proxy(this._click, this));
-		}, this));
 	},
 	
 	/**
@@ -2160,7 +2165,9 @@ WCF.MultipleLanguageInput.prototype = {
 		$button.data('toggle', $wrapper.wcfIdentify()).click($.proxy(this._enable, this));
 		
 		// add a special class if next item is a textarea
+		var $top = null;
 		if ($button.next().getTagName() === 'textarea') {
+			$top = $button.outerHeight() - 1;
 			$button.addClass('dropdownCaptionTextarea');
 		}
 		else {
@@ -2170,10 +2177,12 @@ WCF.MultipleLanguageInput.prototype = {
 		// insert list
 		this._list = $('<ul class="dropdownMenu"></ul>').insertAfter($button);
 		
-		// calculate top offset for menu
-		this._list.css({
-			top: $button.parent().outerHeight() + 10
-		});
+		// set top offset for menu
+		if ($top !== null) {
+			this._list.css({
+				top: $top
+			});
+		}
 		
 		// insert available languages
 		for (var $languageID in this._availableLanguages) {
@@ -2305,7 +2314,7 @@ WCF.MultipleLanguageInput.prototype = {
 		$button.addClass('active');
 		
 		// update label
-		this._list.prev('.dropdownCaption').children('span').text(this._availableLanguages[this._languageID]);
+		this._list.prev('.dropdownToggle').children('span').text(this._availableLanguages[this._languageID]);
 		
 		// close selection and set focus on input element
 		this._closeSelection();
@@ -2321,7 +2330,7 @@ WCF.MultipleLanguageInput.prototype = {
 		}
 		
 		// remove active marking
-		this._list.prev('.dropdownCaption').children('span').removeClass('active').text(WCF.Language.get('wcf.global.button.disabledI18n'));
+		this._list.prev('.dropdownToggle').children('span').removeClass('active').text(WCF.Language.get('wcf.global.button.disabledI18n'));
 		this._closeSelection();
 
 		// update element value

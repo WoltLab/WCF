@@ -21,7 +21,7 @@ use wcf\util\FileUtil;
  * @subpackage	system.io
  * @category 	Community Framework
  */
-class Tar {
+class Tar implements IArchive {
 	/**
 	 * name of the archive
 	 * @var	string
@@ -218,9 +218,10 @@ class Tar {
 		}
 		$header = $this->getFileInfo($index);
 		
-		// can not extract a folder
-		if ($header['type'] != 'file') {
-			return false;
+		FileUtil::makePath(dirname($destination));
+		if ($header['type'] === 'folder') {
+			FileUtil::makePath($destination);
+			return;
 		}
 		
 		// seek to offset
@@ -309,7 +310,7 @@ class Tar {
 		if (strlen($binaryData) != 512) {
 			return false;	
 		}
-
+		
 		$header = array();
 		$checksum = 0;
 		// First part of the header
@@ -325,7 +326,7 @@ class Tar {
 		for ($i = 156; $i < 512; $i++) {
 			$checksum += ord(substr($binaryData, $i, 1));
 		}
-
+		
 		// Extract the values
 		//$data = unpack("a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor", $binaryData);
 		$data = unpack("a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor/a155prefix", $binaryData);

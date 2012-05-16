@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Executes user-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user
@@ -159,6 +159,7 @@ class UserAction extends AbstractDatabaseObjectAction {
 		}
 		
 		$groupIDs = (isset($this->parameters['groups'])) ? $this->parameters['groups'] : array();
+		$languageIDs = (isset($this->parameters['languageIDs'])) ? $this->parameters['languageIDs'] : array();
 		$removeGroups = (isset($this->parameters['removeGroups'])) ? $this->parameters['removeGroups'] : array();
 		$userOptions = (isset($this->parameters['options'])) ? $this->parameters['options'] : array();
 		
@@ -173,6 +174,10 @@ class UserAction extends AbstractDatabaseObjectAction {
 			
 			if (!empty($userOptions)) {
 				$userEditor->updateUserOptions($userOptions);
+			}
+			
+			if (!empty($languageIDs)) {
+				$userEditor->addToLanguages($languageIDs);
 			}
 		}
 	}

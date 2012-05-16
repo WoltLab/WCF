@@ -218,9 +218,10 @@ class ClipboardHandler extends SingletonFactory {
 	 * Returns items for clipboard editor.
 	 * 
 	 * @param	string		$page
+	 * @param	array		$containerData
 	 * @return	array<array>
 	 */
-	public function getEditorItems($page) {
+	public function getEditorItems($page, $containerData) {
 		// ignore unknown pages
 		if (!isset($this->pageCache[$page])) return null;
 		
@@ -270,8 +271,13 @@ class ClipboardHandler extends SingletonFactory {
 				'items' => array()
 			);
 			
+			$typeData = array();
+			if (isset($containerData[$typeName])) {
+				$typeData = $containerData[$typeName];
+			}
+			
 			foreach ($actionData['actions'] as $action) {
-				$data = $actionData['object']->execute($this->markedItems[$typeName], $action);
+				$data = $actionData['object']->execute($this->markedItems[$typeName], $action, $typeData);
 				if ($data === null) {
 					continue;
 				}

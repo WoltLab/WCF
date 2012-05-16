@@ -28,7 +28,7 @@ class UserClipboardAction implements IClipboardAction {
 	/**
 	 * @see	wcf\system\clipboard\action\IClipboardAction::execute()
 	 */
-	public function execute(array $objects, $actionName) {
+	public function execute(array $objects, $actionName, $typeData = array()) {
 		$item = new ClipboardEditorItem();
 		
 		// handle actions
