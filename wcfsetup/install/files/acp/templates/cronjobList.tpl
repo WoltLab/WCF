@@ -134,21 +134,26 @@
 		</table>
 		
 	</div>
-	
-	<div class="contentNavigation">
-		{@$pagesLinks}
-		
-		{* todo: add large button event *}
-		{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
-			<nav>
-				<ul class="wcf-largeButtons">
-					<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
-				</ul>
-			</nav>
-		{/if}
-	</div>
 {hascontentelse}
 	<p class="warning">{lang}wcf.acp.cronjob.noneAvailable{/lang}</p>
 {/hascontent}
+
+<div class="contentNavigation">
+	{@$pagesLinks}
+	
+	{hascontent}
+		<nav>
+			<ul>
+				{content}
+					{if $__wcf->session->getPermission('admin.system.cronjob.canAddCronjob')}
+						<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+					{/if}
+
+					{event name='largeButtons'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
+</div>
 
 {include file='footer'}

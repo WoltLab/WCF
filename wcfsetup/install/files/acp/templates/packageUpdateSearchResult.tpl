@@ -75,22 +75,23 @@
 					<fieldset>
 						<legend>{lang}wcf.acp.packageUpdate.options{/lang}</legend>
 					
-						<div><!-- ToDo: Definition List -->
-							<ul>
-								{* new installation *}
-								{if $package.isUnique && !$package.updatableInstances|count}
-									<li>{lang}wcf.acp.packageUpdate.options.alreadyInstalledUnique{/lang}</li>
-								{/if}
-								{if !$package.isUnique}
-									<li><label><input type="checkbox" id="updates-{$package.package}" name="updates[{$package.package}]" value="{$package.packageVersion}" {if $selectedPackages[$package.package]|isset}checked="checked" {/if}/> {if $package.instances}{lang}wcf.acp.packageUpdate.options.installAlreadyInstalled{/lang}{else}{lang}wcf.acp.packageUpdate.options.install{/lang}{/if}</label></li>
-								{/if}
-								
-								{* update *}
-								{foreach from=$package.updatableInstances item=updatableInstance}
-									<li><label><input type="checkbox" id="updates-{$updatableInstance.packageID}" name="updates[{$updatableInstance.packageID}]" value="{$package.packageVersion}" {if $selectedPackages[$updatableInstance.packageID]|isset}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.options.update{/lang}</label></li>
-								{/foreach}
-							</<ul>
-  						</div>
+						<dl>
+							{* new installation *}
+							{if $package.isUnique && !$package.updatableInstances|count}
+								<dt></dt>
+								<dt>{lang}wcf.acp.packageUpdate.options.alreadyInstalledUnique{/lang}</dd>
+							{/if}
+							{if !$package.isUnique}
+								<dt></dt>
+								<dd><label><input type="checkbox" id="updates-{$package.package}" name="updates[{$package.package}]" value="{$package.packageVersion}" {if $selectedPackages[$package.package]|isset}checked="checked" {/if}/> {if $package.instances}{lang}wcf.acp.packageUpdate.options.installAlreadyInstalled{/lang}{else}{lang}wcf.acp.packageUpdate.options.install{/lang}{/if}</label></dd>
+							{/if}
+							
+							{* update *}
+							{foreach from=$package.updatableInstances item=updatableInstance}
+								<dt></dt>
+								<dd><label><input type="checkbox" id="updates-{$updatableInstance.packageID}" name="updates[{$updatableInstance.packageID}]" value="{$package.packageVersion}" {if $selectedPackages[$updatableInstance.packageID]|isset}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.options.update{/lang}</label></dd>
+							{/foreach}
+						</dl>
 					</fieldset>
 					
 				</div>
