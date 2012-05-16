@@ -16,38 +16,38 @@
 			<div>
 				<hgroup class="wcf-subHeading">
 					<h1>
-						{if $package.isApplication == 1}
+						{if $package[isApplication] == 1}
 							<img src="{@$__wcf->getPath()}icon/window.svg" alt="" title="{lang}wcf.acp.package.list.isApplication{/lang}" class="jsTooltip" />
-						{elseif $package.plugin != ''}
+						{elseif $package[plugin] != ''}
 							<img src="{@$__wcf->getPath()}icon/plugin.svg" alt="" title="{lang}wcf.acp.package.list.plugin{/lang}" class="jsTooltip" />
 						{else}
 							<img src="{@$__wcf->getPath()}icon/package.svg" alt="" title="{lang}wcf.acp.package.list.other{/lang}" class="jsTooltip" />
 						{/if}
-						{$package.packageName}
+						{$package[packageName]}
 					</h1>
 				<hgroup>
 
 				<div class="wcf-messageBody">
 					<dl>
-						<dt><label for="packageVersion-{$package.package}">{lang}wcf.acp.package.list.version{/lang}</label></dt>
+						<dt><label for="packageVersion-{$package[package]}">{lang}wcf.acp.package.list.version{/lang}</label></dt>
 						<dd>
-							<select id="packageVersion-{$package.package}">
-								{foreach from=$package.packageVersions item=$packageVersion}
-									<option value="{$packageVersion}"{if $packageVersion == $package.packageVersion} selected="selected"{/if}>{$packageVersion}</option>
+							<select id="packageVersion-{$package[package]}">
+								{foreach from=$package[packageVersions] item=$packageVersion}
+									<option value="{$packageVersion}"{if $packageVersion == $package[packageVersion]} selected="selected"{/if}>{$packageVersion}</option>
 								{/foreach}
 							</select>
 							<script type="text/javascript">
 								//<![CDATA[
 								onloadEvents.push(function() {
-									document.getElementById('packageVersion-{$package.package|encodeJS}').onchange = function() {
+									document.getElementById('packageVersion-{$package[package]|encodeJS}').onchange = function() {
 										// get value
-										var select = document.getElementById('packageVersion-{$package.package|encodeJS}');
+										var select = document.getElementById('packageVersion-{$package[package]|encodeJS}');
 										var packageVersion = select.options[select.selectedIndex].value;
 										
 										// set value
-										{if !$package.isUnique}document.getElementById('updates-{$package.package}').value = packageVersion;{/if}
-										{foreach from=$package.updatableInstances item=updatableInstance}
-											document.getElementById('updates-{$updatableInstance.packageID}').value = packageVersion;
+										{if !$package[isUnique]}document.getElementById('updates-{$package[package]}').value = packageVersion;{/if}
+										{foreach from=$package[updatableInstances] item=updatableInstance}
+											document.getElementById('updates-{$updatableInstance[packageID]}').value = packageVersion;
 										{/foreach}
 									}
 								});
@@ -56,19 +56,19 @@
 						</dd>
 					</dl>
 					
-					{if $package.author != ''}
+					{if $package[author] != ''}
 						<dl>
 							<dt><label>{lang}wcf.acp.package.list.author{/lang}</label></dt>
 							<dd>
-								<span>{if $package.authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package.authorURL|rawurlencode}" class="wcf-externalURL">{$package.author}</a>{else}{$package.author}{/if}</span>
+								<span>{if $package[authorURL]}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package[authorURL]|rawurlencode}" class="wcf-externalURL">{$package[author]}</a>{else}{$package[author]}{/if}</span>
 							</dd>
 						</dl>
 					{/if}
 					
-					{if $package.packageDescription}
+					{if $package[packageDescription]}
 						<dl>
 							<dt>{lang}wcf.acp.package.description{/lang}</dt>
-							<dd>{$package.packageDescription}</dd>
+							<dd>{$package[packageDescription]}</dd>
 						</dl>
 					{/if}
 					
@@ -77,19 +77,19 @@
 					
 						<dl>
 							{* new installation *}
-							{if $package.isUnique && !$package.updatableInstances|count}
+							{if $package[isUnique] && !$package[updatableInstances]|count}
 								<dt></dt>
 								<dd>{lang}wcf.acp.packageUpdate.options.alreadyInstalledUnique{/lang}</dd>
 							{/if}
-							{if !$package.isUnique}
+							{if !$package[isUnique]}
 								<dt></dt>
-								<dd><label><input type="checkbox" id="updates-{$package.package}" name="updates[{$package.package}]" value="{$package.packageVersion}" {if $selectedPackages[$package.package]|isset}checked="checked" {/if}/> {if $package.instances}{lang}wcf.acp.packageUpdate.options.installAlreadyInstalled{/lang}{else}{lang}wcf.acp.packageUpdate.options.install{/lang}{/if}</label></dd>
+								<dd><label><input type="checkbox" id="updates-{$package[package]}" name="updates[{$package[package]}]" value="{$package[packageVersion]}" {if $selectedPackages[$package[packageID]]|isset}checked="checked" {/if}/> {if $package[instances]}{lang}wcf.acp.packageUpdate.options.installAlreadyInstalled{/lang}{else}{lang}wcf.acp.packageUpdate.options.install{/lang}{/if}</label></dd>
 							{/if}
 							
 							{* update *}
-							{foreach from=$package.updatableInstances item=updatableInstance}
+							{foreach from=$package[updatableInstances] item=updatableInstance}
 								<dt></dt>
-								<dd><label><input type="checkbox" id="updates-{$updatableInstance.packageID}" name="updates[{$updatableInstance.packageID}]" value="{$package.packageVersion}" {if $selectedPackages[$updatableInstance.packageID]|isset}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.options.update{/lang}</label></dd>
+								<dd><label><input type="checkbox" id="updates-{$updatableInstance[packageID]}" name="updates[{$updatableInstance[packageID]}]" value="{$package[packageVersion]}" {if $selectedPackages[$updatableInstance[packageID]]|isset}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.options.update{/lang}</label></dd>
 							{/foreach}
 						</dl>
 					</fieldset>
