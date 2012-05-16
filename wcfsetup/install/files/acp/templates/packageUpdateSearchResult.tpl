@@ -79,7 +79,7 @@
 							{* new installation *}
 							{if $package.isUnique && !$package.updatableInstances|count}
 								<dt></dt>
-								<dt>{lang}wcf.acp.packageUpdate.options.alreadyInstalledUnique{/lang}</dd>
+								<dd>{lang}wcf.acp.packageUpdate.options.alreadyInstalledUnique{/lang}</dd>
 							{/if}
 							{if !$package.isUnique}
 								<dt></dt>
