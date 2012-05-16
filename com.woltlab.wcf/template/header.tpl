@@ -2,21 +2,21 @@
 <!-- HEADER -->
 <header id="pageHeader" class="layoutFluid">
 	<div>
-		{hascontent}
-			<!-- top menu -->
-			<nav id="topMenu" class="userPanel">
-				<div class="layoutFluid clearfix">
+		<!-- top menu -->
+		<nav id="topMenu" class="userPanel">
+			<div class="layoutFluid clearfix">
+				{hascontent}
 					<ul class="userPanelItems">
 						{content}{event name='topMenu'}{/content}
 					</ul>
-					
-					<!-- search area -->
-					{event name='searchArea'}
-					<!-- /search area -->
-				</div>
-			</nav>
-			<!-- /top menu -->
-		{/hascontent}
+				{/hascontent}
+				
+				<!-- search area -->
+				{event name='searchArea'}
+				<!-- /search area -->
+			</div>
+		</nav>
+		<!-- /top menu -->
 		
 		<!-- logo -->
 		<div id="logo" class="logo">

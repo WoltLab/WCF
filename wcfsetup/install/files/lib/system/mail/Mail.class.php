@@ -6,8 +6,8 @@ use wcf\util\StringUtil;
 /**
  * This class represents an e-mail.
  * 
- * @author	Michael Schaefer
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.mail
@@ -15,17 +15,17 @@ use wcf\util\StringUtil;
  */
 class Mail {
 	protected $header = '';
-	protected $boundary;
+	protected $boundary = '';
 	protected $contentType = "text/plain";
-	protected $to;
-	protected $subject;
-	protected $message;
-	protected $from;
-	protected $cc;
-	protected $bcc;
+	protected $to = array();
+	protected $subject = '';
+	protected $message = '';
+	protected $from = array();
+	protected $cc = array();
+	protected $bcc = array();
 	protected $attachments = array();
-	protected $priority;
-	protected $body;
+	protected $priority = 3;
+	protected $body = '';
 	
 	public static $crlf = "\n";
 

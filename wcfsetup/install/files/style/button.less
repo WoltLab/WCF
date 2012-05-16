@@ -122,9 +122,16 @@ button.active:hover {
 	input[type='submit'],
 	input[type='button'],
 	.button {
-		font-size: 75% !important;
-		padding: 3px 7px;
+		font-size: @wcfSmallFontSize;
+		padding: 5px 11px;
 	}
+}
+
+.button.small {
+	font-size: @wcfSmallFontSize;
+	padding: 5px 11px;
+	
+	.borderRadius(3px);
 }
 
 /* button icons */
