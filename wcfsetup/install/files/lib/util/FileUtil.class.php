@@ -395,76 +395,106 @@ final class FileUtil {
 	 * @param	string		$prefix
 	 * @return	string		path to the dowloaded file
 	 */
-	public static function downloadFileFromHttp($httpUrl, $prefix = 'package') {
-		$extension = strrchr($httpUrl, '.');
-		//$newFileName = self::getTemporaryFilename($prefix.'_', $extension);
+	public static function downloadFileFromHttp($httpUrl, $prefix = 'package', $options = array(), $postParameters = array(), &$headers = array()) {
 		$newFileName = self::getTemporaryFilename($prefix.'_');
 		$localFile = new File($newFileName); // the file to write.
 		
-		// get proxy
-		$options = array();
+		// parse options
 		if (PROXY_SERVER_HTTP) {
 			$options['http']['proxy'] = PROXY_SERVER_HTTP;
 			$options['http']['request_fulluri'] = true;
 		}
+		$timeout = 30;
+		if (isset($options['timeout']))  {
+			$timeout = $options['timeout'];
+			unset($options['timeout']);
+		}
+		$method = (!empty($postParameters) ? 'POST' : 'GET');
+		if (isset($options['method'])) {
+			$method = $options['method'];
+			unset($options['method']);
+		}
 		
-		// first look if php's built-in fopen() is available, and if so, use it.
-		if (function_exists('fopen') && ini_get('allow_url_fopen')) {
-			$remoteFile = new File($httpUrl, 'rb', $options); // the file to read.
-			// get the content of the remote file and write it to a local file.
-			while (!$remoteFile->eof()) {
-				$buffer = $remoteFile->gets(4096);
-				$localFile->write($buffer);
+		// parse URL
+		$parsedUrl = parse_url($httpUrl);
+		$port = ($parsedUrl['scheme'] == 'https' ? 443 : 80);
+		$host = $parsedUrl['host'];
+		$path = (isset($parsedUrl['path']) ? $parsedUrl['path'] : '/');
+		
+		// build parameter-string
+		$parameterString = '';
+		foreach ($postParameters as $key => $value) {
+			if (is_array($value)) {
+				foreach($value as $value2) {
+					$parameterString .= urlencode($key).'[]='.urlencode($value2).'&';
+				}
+			}
+			else {
+				$parameterString .= urlencode($key).'='.urlencode($value).'&';
 			}
 		}
-		// if allow_url_fopen isn't active, we attempt to use our own http download functionality.
-		else {
-			$parsedUrl = parse_url($httpUrl);
-			$port = ($parsedUrl['scheme'] == 'https' ? 443 : 80);
-			$host = $parsedUrl['host'];
-			$path = (isset($parsedUrl['path']) ? $parsedUrl['path'] : '/');
-			
-			$remoteFile = new RemoteFile(($parsedUrl['scheme'] == 'https' ? 'ssl://' : '').$host, $port, 30, $options); // the file to read.
-			if (!isset($remoteFile)) {
-				$localFile->close();
-				unlink($newFileName);
-				throw new SystemException("cannot connect to http host '".$host."'");
-			}
-			// build and send the http request.
-			$request = "GET ".$path.(!empty($parsedUrl['query']) ? '?'.$parsedUrl['query'] : '')." HTTP/1.0\r\n";
-			$request .= "User-Agent: HTTP.PHP (FileUtil.class.php; WoltLab Community Framework/".WCF_VERSION."; ".WCF::getLanguage()->languageCode.")\r\n";
-			$request .= "Accept: */*\r\n";
-			$request .= "Accept-Language: ".WCF::getLanguage()->languageCode."\r\n";
-			$request .= "Host: ".$host."\r\n";
-			$request .= "Connection: Close\r\n\r\n";
-			$remoteFile->puts($request);
-			$waiting = true;
-			$readResponse = array();
-			// read http response.
-			while (!$remoteFile->eof()) {
-				$readResponse[] = $remoteFile->gets();
-				// look if we are done with transferring the requested file.
-				if ($waiting) {
-					if (rtrim($readResponse[count($readResponse) - 1]) == '') {
-						$waiting = false;
-					}
-				}
-				else {
-					// look if the webserver sent an error http statuscode
-					// This has still to be checked if really sufficient!
-					$arrayHeader = array('201', '301', '302', '303', '307', '404');
-					foreach ($arrayHeader as $code) {
-						$error = strpos($readResponse[0], $code);
-					}
-					if ($error !== false) {
-						$localFile->close();
-						unlink($newFileName);
-						throw new SystemException("file ".$path." not found at host '".$host."'");
-					}
-					// write to the target system.
-					$localFile->write($readResponse[count($readResponse) - 1]);
+		$parameterString = rtrim($parameterString, '&');
+		
+		// connect
+		try {
+			$remoteFile = new RemoteFile(($parsedUrl['scheme'] == 'https' ? 'ssl://' : '').$host, $port, $timeout, $options);
+		}
+		catch (SystemException $e) {
+			$localFile->close();
+			unlink($newFileName);
+			throw $e;
+		}
+		
+		// build and send the http request.
+		$request = $method." ".$path.(!empty($parsedUrl['query']) ? '?'.$parsedUrl['query'] : '')." HTTP/1.0\r\n";
+		$request .= "User-Agent: HTTP.PHP (FileUtil.class.php; WoltLab Community Framework/".WCF_VERSION."; ".WCF::getLanguage()->languageCode.")\r\n";
+		$request .= "Accept: */*\r\n";
+		$request .= "Accept-Language: ".WCF::getLanguage()->languageCode."\r\n";
+		if ($method !== 'GET') {
+			$request .= "Content-length: ".strlen($parameterString)."\r\n";
+			$request .= "Content-Type: application/x-www-form-urlencoded\r\n";
+		}
+		$request .= "Host: ".$host."\r\n";
+		$request .= "Connection: Close\r\n\r\n";
+		if ($method !== 'GET') $request .= $parameterString."\r\n\r\n";
+		$remoteFile->puts($request);
+		
+		$inHeader = true;
+		$readResponse = array();
+		// read http response.
+		while (!$remoteFile->eof()) {
+			$readResponse[] = $remoteFile->gets();
+			if ($inHeader) {
+				if (rtrim(end($readResponse)) == '') {
+					$inHeader = false;
 				}
 			}
+			else {
+				// look if the webserver sent an error http statuscode
+				// This has still to be checked if really sufficient!
+				$arrayHeader = array('201', '301', '302', '303', '307', '404');
+				foreach ($arrayHeader as $code) {
+					$error = strpos($readResponse[0], $code);
+				}
+				if ($error !== false) {
+					$localFile->close();
+					unlink($newFileName);
+					throw new SystemException("file ".$path." not found at host '".$host."'");
+				}
+				
+				// write to the target system.
+				$localFile->write(end($readResponse));
+			}
+		}
+		
+		foreach ($readResponse as $line) {
+			if (rtrim($line) == '') break;
+			if (strpos($line, ':') === false) {
+				$headers[trim($line)] = trim($line);
+				continue;
+			}
+			list($key, $value) = explode(':', $line, 2);
+			$headers[$key] = trim($value);
 		}
 		
 		$remoteFile->close();
