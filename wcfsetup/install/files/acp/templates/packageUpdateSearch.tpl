@@ -14,7 +14,7 @@
 				$checked = $count;
 			}
 			else {
-				$('input[name="packageUpdateServerIDs[]"]').attr('checked', false);				
+				$('input[name="packageUpdateServerIDs[]"]').removeAttr('checked');
 				$checked = 0;
 			}
 		});
@@ -29,7 +29,7 @@
 				}
 			}
 			else {
-				$('input[name="checkUncheck"]').attr('checked', false);
+				$('input[name="checkUncheck"]').removeAttr('checked');
 				$checked--;
 			}
 		});
