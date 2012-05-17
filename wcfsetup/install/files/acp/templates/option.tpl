@@ -58,7 +58,7 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" name="__submit" accesskey="s" />
  	</div>
 </form>
 
