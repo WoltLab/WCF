@@ -393,9 +393,12 @@ final class FileUtil {
 	 * 
 	 * @param	string		$httpUrl
 	 * @param	string		$prefix
+	 * @param	array		$options
+	 * @param	array		$postParameters
+	 * @param	array		$headers				Should be either an empty array or a not initialized variable.
 	 * @return	string		path to the dowloaded file
 	 */
-	public static function downloadFileFromHttp($httpUrl, $prefix = 'package', $options = array(), $postParameters = array(), &$headers = array()) {
+	public static function downloadFileFromHttp($httpUrl, $prefix = 'package', array $options = array(), array $postParameters = array(), array &$headers = array()) {
 		$newFileName = self::getTemporaryFilename($prefix.'_');
 		$localFile = new File($newFileName); // the file to write.
 		
