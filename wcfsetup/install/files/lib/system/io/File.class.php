@@ -61,9 +61,12 @@ class File {
 	 * Closes the file descriptor.
 	 */
 	public function __destruct() {
-		if (is_resource($this->resource)) {
-			fclose($this->resource);
-		}
+		try {
+			if (is_resource($this->resource)) {
+				fclose($this->resource);
+			}
+		} // we don't care about exceptions when closing
+		catch (SystemException $e) { }
 	}
 	
 	/**
