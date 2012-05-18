@@ -393,26 +393,20 @@ final class FileUtil {
 	 * 
 	 * @param	string		$httpUrl
 	 * @param	string		$prefix
+	 * @param	array		$options
+	 * @param	array		$postParameters
+	 * @param	array		$headers				Should be either an empty array or a not initialized variable.
 	 * @return	string		path to the dowloaded file
 	 */
-	public static function downloadFileFromHttp($httpUrl, $prefix = 'package', $options = array(), $postParameters = array(), &$headers = array()) {
+	public static function downloadFileFromHttp($httpUrl, $prefix = 'package', array $options = array(), array $postParameters = array(), array &$headers = array()) {
 		$newFileName = self::getTemporaryFilename($prefix.'_');
 		$localFile = new File($newFileName); // the file to write.
 		
-		// parse options
-		if (PROXY_SERVER_HTTP) {
-			$options['http']['proxy'] = PROXY_SERVER_HTTP;
-			$options['http']['request_fulluri'] = true;
+		if (!isset($options['timeout'])) {
+			$options['timeout'] = 30;
 		}
-		$timeout = 30;
-		if (isset($options['timeout']))  {
-			$timeout = $options['timeout'];
-			unset($options['timeout']);
-		}
-		$method = (!empty($postParameters) ? 'POST' : 'GET');
-		if (isset($options['method'])) {
-			$method = $options['method'];
-			unset($options['method']);
+		if (!isset($options['method'])) {
+			$options['method'] = (!empty($postParameters) ? 'POST' : 'GET');
 		}
 		
 		// parse URL
@@ -420,6 +414,14 @@ final class FileUtil {
 		$port = ($parsedUrl['scheme'] == 'https' ? 443 : 80);
 		$host = $parsedUrl['host'];
 		$path = (isset($parsedUrl['path']) ? $parsedUrl['path'] : '/');
+		// proxy is set
+		if (PROXY_SERVER_HTTP) {
+			$parsedProxy = parse_url(PROXY_SERVER_HTTP);
+			$host = $parsedProxy['host'];
+			$port = ($parsedProxy['scheme'] == 'https' ? 443 : 80);
+			$path = $httpUrl;
+			$parsedUrl['query'] = '';
+		}
 		
 		// build parameter-string
 		$parameterString = '';
@@ -437,7 +439,7 @@ final class FileUtil {
 		
 		// connect
 		try {
-			$remoteFile = new RemoteFile(($parsedUrl['scheme'] == 'https' ? 'ssl://' : '').$host, $port, $timeout, $options);
+			$remoteFile = new RemoteFile(($port === 443 ? 'ssl://' : '').$host, $port, $options['timeout']);
 		}
 		catch (SystemException $e) {
 			$localFile->close();
@@ -446,7 +448,7 @@ final class FileUtil {
 		}
 		
 		// build and send the http request.
-		$request = $method." ".$path.(!empty($parsedUrl['query']) ? '?'.$parsedUrl['query'] : '')." HTTP/1.0\r\n";
+		$request = $options['method']." ".$path.(!empty($parsedUrl['query']) ? '?'.$parsedUrl['query'] : '')." HTTP/1.0\r\n";
 		$request .= "User-Agent: HTTP.PHP (FileUtil.class.php; WoltLab Community Framework/".WCF_VERSION."; ".WCF::getLanguage()->languageCode.")\r\n";
 		$request .= "Accept: */*\r\n";
 		$request .= "Accept-Language: ".WCF::getLanguage()->languageCode."\r\n";
