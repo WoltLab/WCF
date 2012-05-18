@@ -58,15 +58,6 @@ class File {
 	}
 	
 	/**
-	 * Closes the file descriptor.
-	 */
-	public function __destruct() {
-		if (is_resource($this->resource)) {
-			fclose($this->resource);
-		}
-	}
-	
-	/**
 	 * Calls the specified function on the open file.
 	 * Do not call this function directly. Use $file->write('') instead.
 	 * 
