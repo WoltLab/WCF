@@ -58,18 +58,6 @@ class File {
 	}
 	
 	/**
-	 * Closes the file descriptor.
-	 */
-	public function __destruct() {
-		try {
-			if (is_resource($this->resource)) {
-				fclose($this->resource);
-			}
-		} // we don't care about exceptions when closing
-		catch (SystemException $e) { }
-	}
-	
-	/**
 	 * Calls the specified function on the open file.
 	 * Do not call this function directly. Use $file->write('') instead.
 	 * 
