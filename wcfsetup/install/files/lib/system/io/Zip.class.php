@@ -305,6 +305,9 @@ class Zip extends File implements IArchive {
 		switch ($header['compression']) {
 			case 8:
 				$content = gzinflate($content);
+			break;
+			case 12:
+				$content = bzdecompress($content);
 			case 0:
 			break;
 			default:
