@@ -395,10 +395,10 @@ final class FileUtil {
 	 * @param	string		$prefix
 	 * @param	array		$options
 	 * @param	array		$postParameters
-	 * @param	array		$headers				Should be either an empty array or a not initialized variable.
-	 * @return	string		path to the dowloaded file
+	 * @param	array		$headers		Should be either an empty array or a not initialized variable.
+	 * @return	string					path to the downloaded file
 	 */
-	public static function downloadFileFromHttp($httpUrl, $prefix = 'package', array $options = array(), array $postParameters = array(), array &$headers = array()) {
+	public static function downloadFileFromHttp($httpUrl, $prefix = 'package', array $options = array(), array $postParameters = array(), &$headers = array()) {
 		$newFileName = self::getTemporaryFilename($prefix.'_');
 		$localFile = new File($newFileName); // the file to write.
 		
@@ -452,13 +452,13 @@ final class FileUtil {
 		$request .= "User-Agent: HTTP.PHP (FileUtil.class.php; WoltLab Community Framework/".WCF_VERSION."; ".WCF::getLanguage()->languageCode.")\r\n";
 		$request .= "Accept: */*\r\n";
 		$request .= "Accept-Language: ".WCF::getLanguage()->languageCode."\r\n";
-		if ($method !== 'GET') {
+		if ($options['method'] !== 'GET') {
 			$request .= "Content-length: ".strlen($parameterString)."\r\n";
 			$request .= "Content-Type: application/x-www-form-urlencoded\r\n";
 		}
 		$request .= "Host: ".$host."\r\n";
 		$request .= "Connection: Close\r\n\r\n";
-		if ($method !== 'GET') $request .= $parameterString."\r\n\r\n";
+		if ($options['method'] !== 'GET') $request .= $parameterString."\r\n\r\n";
 		$remoteFile->puts($request);
 		
 		$inHeader = true;
