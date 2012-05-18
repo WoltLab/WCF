@@ -187,7 +187,7 @@ final class StringUtil {
 	 * Formats a double.
 	 * 
 	 * @param	double		$double
-	 * @param	integer		$minDecimals
+	 * @param	integer		$maxDecimals
 	 * @return	string
 	 */
 	public static function formatDouble($double, $maxDecimals = 0) {
