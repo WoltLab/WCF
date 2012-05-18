@@ -307,7 +307,8 @@ class Zip extends File implements IArchive {
 				$content = gzinflate($content);
 			break;
 			case 12:
-				$content = bzdecompress($content);
+				if (function_exists('bzdecompress')) $content = bzdecompress($content);
+				else throw new SystemException('The bzip2 extension is not available');
 			case 0:
 			break;
 			default:
