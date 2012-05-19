@@ -3212,11 +3212,11 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 			actionName: 'toggleContainer',
 			className: this._className,
 			objectIDs: [ this._getObjectID($containerID) ],
-			parameters: {
+			parameters: $.extend(true, {
 				containerID: $containerID,
 				currentState: $currentState,
 				newState: $newState
-			}
+			}, this._getAdditionalParameters($containerID))
 		});
 		this._proxy.sendRequest();
 		
