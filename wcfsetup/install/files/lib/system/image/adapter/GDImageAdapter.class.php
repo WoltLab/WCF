@@ -210,7 +210,7 @@ class GDImageAdapter implements IImageAdapter {
 			imagePNG($image);
 		}
 		else if (function_exists('imageJPEG')) {
-			imageJPEG($image, '', 90);
+			imageJPEG($image, null, 90);
 		}
 		
 		$stream = ob_get_contents();
