@@ -96,7 +96,11 @@
 			border-radius: @wcfContainerBorderRadius - 1 0 0 0;
 		}
 		
-		&:nth-child(2n) {
+		&:nth-child(2) {
+			border-top-right-radius: @wcfContainerBorderRadius - 1;
+		}
+		
+		&:nth-child(even) {
 			float: right;
 			
 			&:last-child {
@@ -104,18 +108,22 @@
 			}
 		}
 		
-		&:nth-child(2n+1) {
+		&:nth-child(odd) {
 			&:last-child {
 				border-bottom-left-radius: @wcfContainerBorderRadius - 1;
 			}
 		}
-		
-		&:nth-last-child(2) {
-			border-bottom-left-radius: @wcfContainerBorderRadius - 1;
+
+		&:nth-child(4n), &:nth-child(4n+1) {
+			background-color: @wcfContainerBackgroundColor;
 		}
 		
-		&:nth-child(2) {
-			border-top-right-radius: @wcfContainerBorderRadius - 1;
+		&:nth-child(4n+2), &:nth-child(4n+3) {
+			background-color: @wcfContainerAccentBackgroundColor;
+		}
+		
+		&:hover {
+			background-color: @wcfContainerHoverBackgroundColor;
 		}
 		
 		> div {

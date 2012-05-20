@@ -187,20 +187,20 @@ final class StringUtil {
 	 * Formats a double.
 	 * 
 	 * @param	double		$double
-	 * @param	integer		$minDecimals
+	 * @param	integer		$maxDecimals
 	 * @return	string
 	 */
-	public static function formatDouble($double, $minDecimals = 0) {
+	public static function formatDouble($double, $maxDecimals = 0) {
 		// consider as integer, if no decimal places found
-		if (!$minDecimals && preg_match('~^(-?\d+)(?:\.(?:0*|00[0-4]\d*))?$~', $double, $match)) {
+		if (!$maxDecimals && preg_match('~^(-?\d+)(?:\.(?:0*|00[0-4]\d*))?$~', $double, $match)) {
 			return self::formatInteger($match[1]);
 		}
 	
 		// round
-		$double = round($double, ($minDecimals > 2 ? $minDecimals : 2));
+		$double = round($double, ($maxDecimals > 2 ? $maxDecimals : 2));
 		
 		// remove last 0
-		if ($minDecimals < 2 && substr($double, -1) == '0') $double = substr($double, 0, -1);
+		if ($maxDecimals < 2 && substr($double, -1) == '0') $double = substr($double, 0, -1);
 		
 		// replace decimal point
 		$double = str_replace('.', WCF::getLanguage()->get('wcf.global.decimalPoint'), $double);

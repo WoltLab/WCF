@@ -393,20 +393,4 @@ class UsersMassProcessingForm extends UserOptionListForm {
 		// show form
 		parent::show();
 	}
-	
-	/**
-	 * @see wcf\system\option\ISearchableOptionType::getSearchFormElement()
-	 */
-	/*
-	protected function getFormElement($type, &$optionData) {
-		return $this->getTypeObject($type)->getSearchFormElement($optionData);
-	}*/
-	
-	/**
-	 * @see wcf\acp\form\AbstractOptionListForm::checkOption()
-	 */
-	/*
-	protected static function checkOption(Option $option) {
-		return ($option->searchable == 1 && !$option->disabled && ($option->visible == 3 || $option->visible < 2));
-	}*/
 }

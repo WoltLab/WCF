@@ -308,19 +308,4 @@ class UserSearchForm extends UserOptionListForm {
 			$this->optionHandler->getTypeObject($option->optionType)->getCondition($this->conditions, $option->getDecoratedObject(), $value);
 		}
 	}
-	
-	/**
-	 * @see wcf\system\option\ISearchableOptionType::getSearchFormElement()
-	 */
-	protected function getFormElement($type, Option $option) {
-		return $this->getTypeObject($type)->getSearchFormElement($option);
-	}
-	
-	/**
-	 * @see wcf\acp\form\DynamicOptionListForm::checkOption()
-	 * @todo	deprecated?
-	 */
-	protected static function checkOption(Option $option) {
-		return ($option->searchable == 1 && !$option->disabled && ($option->visible == 3 || $option->visible < 2));
-	}
 }

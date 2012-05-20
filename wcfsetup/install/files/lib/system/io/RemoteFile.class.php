@@ -45,16 +45,11 @@ class RemoteFile extends File {
 	 * @param 	integer		$timeout
 	 * @param	array		$options
 	 */
-	public function __construct($host, $port, $timeout = 30, $options = array()) {
+	public function __construct($host, $port, $timeout = 30) {
 		$this->host = $host;
 		$this->port = $port;
-		if (count($options)) {
-			$context = stream_context_create($options);
-			$this->resource = fsockopen($host, $port, $this->errorNumber, $this->errorDesc, $timeout, $context);
-		}
-		else {
-			$this->resource = fsockopen($host, $port, $this->errorNumber, $this->errorDesc, $timeout);
-		}
+		
+		$this->resource = fsockopen($host, $port, $this->errorNumber, $this->errorDesc, $timeout);
 		if ($this->resource === false) {
 			throw new SystemException('Can not connect to ' . $host);
 		}

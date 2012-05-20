@@ -329,14 +329,4 @@ class UserAddForm extends UserOptionListForm {
 		// show form
 		parent::show();
 	}
-	
-	/**
-	 * @see wcf\acp\form\AbstractOptionListForm::checkOption()
-	 */
-	/*
-	protected static function checkOption(Option $option) {
-		if (!parent::checkOption($option)) return false;
-		
-		return ($option->editable != 1 && $option->editable != 4 && !$option->disabled);
-	}*/
 }
