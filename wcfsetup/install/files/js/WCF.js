@@ -5564,6 +5564,9 @@ WCF.EditableItemList = Class.extend({
 						label: self._searchInput.val()
 					});
 					
+					// reset input
+					$(this).val('');
+					
 					event.stopPropagation();
 					return false;
 				}
@@ -5627,7 +5630,9 @@ WCF.EditableItemList = Class.extend({
 	 */
 	addItem: function(data) {
 		if (this._data[data.objectID]) {
-			return true;
+			if (!(data.objectID === 0 && this._allowCustomInput)) {
+				return true;
+			}
 		}
 		
 		var $listItem = $('<li class="badge">' + data.label + '</li>').data('objectID', data.objectID).data('label', data.label).appendTo(this._itemList);
