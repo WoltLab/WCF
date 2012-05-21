@@ -165,7 +165,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	}
 	
 	/**
-	 * Returns the next category for the given object type id.
+	 * Returns the next category id for the given object type id.
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @return	integer
