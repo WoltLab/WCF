@@ -177,6 +177,15 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	}
 	
 	/**
+	 * @see wcf\data\AbstractDatabaseObjectAction::$className
+	 * 
+	 * @return string
+	 */
+	public function getEditorClass() {
+		return $this->className;
+	}
+	
+	/**
 	 * @see	wcf\data\IDatabaseObjectAction::getObjectIDs()
 	 */
 	public function getObjectIDs() {
@@ -190,6 +199,15 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	 */
 	public function setObjects(array $objects) {
 		$this->objects = $objects;
+	}
+	
+	/**
+	 * Returns the current set of objects
+	 * 
+	 * @return array<wcf\data\DatabaseObjectEditor>
+	 */
+	public function getObjects() {
+		return $this->objects;
 	}
 	
 	/**
