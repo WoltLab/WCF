@@ -2,11 +2,11 @@
 
 <script type="text/javascript">
 	//<![CDATA[
-	{if $enable == 0}
-		$(function () {
-			$('#languageIDs').hide();
-		});
-	{/if}
+	$(function() {
+		var $languageIDs = $('#languageIDs');
+		$('#enable').click(function() { $languageIDs.toggle(); });
+		{if !$enable}$languageIDs.hide();{/if}
+	});
 	//]]>
 </script>
 
@@ -27,10 +27,10 @@
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageMultilingualism'}{/link}">
 	<div class="container containerPadding marginTop shadow">
 		<fieldset>
-			<legend><label><input type="checkbox" id="enable" onclick="if (this.checked) $('#languageIDs').show(); else $('#languageIDs').hide();" name="enable" value="1" {if $enable == 1}checked="checked" {/if}/> {lang}wcf.acp.language.multilingualism.enable{/lang}</label></legend>
+			<legend><label><input type="checkbox" id="enable" name="enable" value="1" {if $enable}checked="checked" {/if}/> {lang}wcf.acp.language.multilingualism.enable{/lang}</label></legend>
 			<small>{lang}wcf.acp.language.multilingualism.enable.description{/lang}</small>
 		
-			<dl{if $errorField == 'languageFile'} class="formError"{/if} id="languageIDs">
+			<dl id="languageIDs" class="marginTop{if $errorField == 'languageIDs'} formError{/if}">
 				<dt><label for="languageIDs">{lang}wcf.acp.language.multilingualism.languages{/lang}</label></dt>
 				<dd class="floated">
 					{htmlCheckboxes options=$languages name=languageIDs selected=$languageIDs disableEncoding=true}
