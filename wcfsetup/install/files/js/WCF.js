@@ -1432,8 +1432,7 @@ WCF.Action.SimpleProxy.prototype = {
  * @param	jQuery		containerList
  * @param	jQuery		badgeList
  */
-WCF.Action.Delete = function(className, containerList, badgeList) { this.init(className, containerList, badgeList); };
-WCF.Action.Delete.prototype = {
+WCF.Action.Delete = Class.extend({
 	/**
 	 * Initializes 'delete'-Proxy.
 	 * 
@@ -1534,7 +1533,7 @@ WCF.Action.Delete.prototype = {
 			}
 		}, this));
 	}
-};
+});
 
 /**
  * Basic implementation for AJAXProxy-based toggle actions.
@@ -1543,8 +1542,7 @@ WCF.Action.Delete.prototype = {
  * @param	jQuery		containerList
  * @param	string		toggleButtonSelector
  */
-WCF.Action.Toggle = function(className, containerList, toggleButtonSelector) { this.init(className, containerList, toggleButtonSelector); };
-WCF.Action.Toggle.prototype = {
+WCF.Action.Toggle = Class.extend({
 	/**
 	 * Initializes 'toggle'-Proxy
 	 * 
@@ -1643,7 +1641,7 @@ WCF.Action.Toggle.prototype = {
 			}
 		}, this));
 	}
-};
+});
 
 /**
  * Executes provided callback if scroll threshold is reached. Usuable to determine
