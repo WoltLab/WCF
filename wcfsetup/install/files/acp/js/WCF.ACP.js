@@ -1,8 +1,8 @@
 /**
  * Class and function collection for WCF ACP
  * 
- * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Alexander Ebert, Matthias Schmidt
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -754,3 +754,120 @@ WCF.ACP.Worker.prototype = {
 		}
 	}
 };
+
+/**
+ * Namespace for category-related functions.
+ */
+WCF.ACP.Category = {};
+
+/**
+ * Handles collapsing categories.
+ * 
+ * @param	string		className
+ * @param	integer		objectTypeID
+ */
+WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
+	/**
+	 * @see	WCF.Collapsible.Remote.init()
+	 */
+	init: function(className, objectTypeID) {
+		this._objectTypeID = objectTypeID;
+		
+		var sortButton = $('.formSubmit > button[data-type="submit"]');
+		if (sortButton) {
+			sortButton.click($.proxy(this._sort, this));
+		}
+		
+		this._super(className);
+	},
+
+	/**
+	 * @see	WCF.Collapsible.Remote._getAdditionalParameters()
+	 */
+	_getAdditionalParameters: function(containerID) {
+		return {objectTypeID : this._objectTypeID};
+	},
+	
+	/**
+	 * @see	WCF.Collapsible.Remote._getButtonContainer()
+	 */
+	_getButtonContainer: function(containerID) {
+		return $('#' + containerID + ' > .buttons');
+	},
+
+	/**
+	 * @see	WCF.Collapsible.Remote._getContainers()
+	 */
+	_getContainers: function() {
+		return $('.jsCategory').has('ol').has('li');
+	},
+
+	/**
+	 * @see	WCF.Collapsible.Remote._getTarget()
+	 */
+	_getTarget: function(containerID) {
+		return $('#' + containerID + ' > ol');
+	},
+	
+	/**
+	 * Handles a click on the sort button.
+	 */
+	_sort: function() {
+		// remove existing collapsible buttons
+		$('.collapsibleButton').remove();
+		
+		// reinit containers
+		this._containers = {};
+		this._containerData = {};
+		
+		var $containers = this._getContainers();
+		if ($containers.length == 0) {
+			console.debug('[WCF.Category.Collapsible] Empty container set given, aborting.');
+		}
+		$containers.each($.proxy(function(index, container) {
+			var $container = $(container);
+			var $containerID = $container.wcfIdentify();
+			this._containers[$containerID] = $container;
+			
+			this._initContainer($containerID);
+		}, this));
+	}
+});
+
+/**
+ * @see	WCF.Action.Delete
+ */
+WCF.ACP.Category.Delete = WCF.Action.Delete.extend({
+	/**
+	 * @see	WCF.Action.Delete.triggerEffect()
+	 */
+	triggerEffect: function(objectIDs) {
+		this.containerList.each($.proxy(function(index, container) {
+			container = $(container);
+			var $objectID = container.find('.jsDeleteButton').data('objectID');
+			if (WCF.inArray($objectID, objectIDs)) {
+				// move child categories up
+				if (container.has('ol').has('li')) {
+					if (container.is(':only-child')) {
+						container.parent().replaceWith(container.find('> ol'));
+					}
+					else {
+						container.replaceWith(container.find('> ol > li'));
+					}
+				}
+				else {
+					container.wcfBlindOut('up', function() {
+						container.empty().remove();
+					}, container);
+				}
+				
+				// update badges
+				if (this.badgeList) {
+					this.badgeList.each(function(innerIndex, badge) {
+						$(badge).html($(badge).html() - 1);
+					});
+				}
+			}
+		}, this));
+	}
+});
