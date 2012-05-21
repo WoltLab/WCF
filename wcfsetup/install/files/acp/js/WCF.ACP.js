@@ -822,7 +822,7 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
 		
 		var $containers = this._getContainers();
 		if ($containers.length == 0) {
-			console.debug('[WCF.Category.Collapsible] Empty container set given, aborting.');
+			console.debug('[WCF.ACP.Category.Collapsible] Empty container set given, aborting.');
 		}
 		$containers.each($.proxy(function(index, container) {
 			var $container = $(container);
