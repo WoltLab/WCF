@@ -8,5 +8,10 @@
 		<definition>
 			<name>com.woltlab.wcf.clipboardItem</name>
 		</definition>
+		
+		<definition>
+			<interfacename>wcf\system\category\ICategoryType</interfacename>
+			<name>com.woltlab.wcf.category</name>
+		</definition>
 	</import>
 </data>
