@@ -89,6 +89,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 			I18nHandler::getInstance()->setOptions('description', $this->packageID, $this->category->description, $this->objectType->getProcessor()->getI18nLangVarPrefix().'.description.category\d+');
 			I18nHandler::getInstance()->setOptions('title', $this->packageID, $this->category->title, $this->objectType->getProcessor()->getI18nLangVarPrefix().'.title.category\d+');
 			
+			$this->additionalData = $this->category->additionalData;
 			$this->isDisabled = $this->category->isDisabled;
 			$this->parentCategoryID = $this->category->parentCategoryID;
 			$this->showOrder = $this->category->showOrder;
@@ -124,6 +125,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 		// update category
 		$this->objectAction = new CategoryAction(array($this->category), 'update', array(
 			'data' => array(
+				'additionalData' => serialize($this->additionalData),
 				'description' => $this->description,
 				'isDisabled' => $this->isDisabled,
 				'parentCategoryID' => $this->parentCategoryID,

@@ -10,6 +10,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -34,6 +35,12 @@ abstract class AbstractCategoryAddForm extends ACPForm {
 	 * @var	string
 	 */
 	public $addController = '';
+	
+	/**
+	 * additional category data
+	 * @var	array
+	 */
+	public $additionalData = array();
 	
 	/**
 	 * list with the category nodes
@@ -202,6 +209,9 @@ abstract class AbstractCategoryAddForm extends ACPForm {
 		
 		I18nHandler::getInstance()->readValues();
 		
+		if (isset($_POST['additionalData'])) {
+			$this->additionalData = ArrayUtil::trim($_POST['additionalData']);
+		}
 		if (isset($_POST['description'])) {
 			$this->description = StringUtil::trim($_POST['description']);
 		}
@@ -237,6 +247,7 @@ abstract class AbstractCategoryAddForm extends ACPForm {
 		
 		$this->objectAction = new CategoryAction(array(), 'create', array(
 			'data' => array(
+				'additionalData' => serialize($this->additionalData),
 				'description' => $this->description,
 				'isDisabled' => $this->isDisabled,
 				'objectTypeID' => $this->objectType->objectTypeID,
