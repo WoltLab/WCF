@@ -405,6 +405,22 @@
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Nachricht]]></item>
 	</category>
 	
+	<category name="wcf.category">
+		<item name="wcf.category.add"><![CDATA[Kategorie hinzufügen]]></item>
+		<item name="wcf.category.button.list"><![CDATA[Kategorien auflisten]]></item>
+		<item name="wcf.category.data"><![CDATA[Allgemeine Daten]]></item>
+		<item name="wcf.category.delete.sure"><![CDATA[Sind Sie sicher, dass Sie diese Kategorie löschen möchten? Alle sich in dieser Kategorie befindlichen Unterkategorien werden in die Elternkategorie dieser Kategorie verschoben.]]></item>
+		<item name="wcf.category.description"><![CDATA[Beschreibung]]></item>
+		<item name="wcf.category.edit"><![CDATA[Kategorie bearbeiten]]></item>
+		<item name="wcf.category.isDisabled"><![CDATA[deaktiviert]]></item>
+		<item name="wcf.category.list"><![CDATA[Kategorien]]></item>
+		<item name="wcf.category.list.noneAvailable"><![CDATA[Es wurde noch keine Kategorie hinzugefügt.]]></item>
+		<item name="wcf.category.parentCategoryID"><![CDATA[Übergeordnete Kategorie]]></item>
+		<item name="wcf.category.parentCategoryID.error.invalid"><![CDATA[Die ausgewählte Kategorie existiert nicht.]]></item>
+		<item name="wcf.category.showOrder"><![CDATA[Position]]></item>
+		<item name="wcf.category.title"><![CDATA[Titel]]></item>
+	</category>
+	
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
 		<item name="wcf.clipboard.item.user.delete"><![CDATA[Benutzer löschen]]></item>

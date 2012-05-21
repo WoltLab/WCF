@@ -81,6 +81,21 @@ CREATE TABLE wcf1_cache_resource (
 	cacheResource VARCHAR(255) NOT NULL PRIMARY KEY
 );
 
+DROP TABLE IF EXISTS wcf1_category;
+CREATE TABLE wcf1_category (
+	categoryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	objectTypeID INT(10) NOT NULL,
+	objectTypeCategoryID INT(10) NOT NULL,
+	parentCategoryID INT(10) NOT NULL,
+	title VARCHAR(255) NOT NULL,
+	description TEXT,
+	showOrder INT(10) NOT NULL,
+	time INT(10) NOT NULL,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	additionalData TEXT,
+	UNIQUE KEY (objectTypeID, objectTypeCategoryID)
+);
+
 DROP TABLE IF EXISTS wcf1_cleanup_listener;
 CREATE TABLE wcf1_cleanup_listener (
 	listenerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -739,6 +754,8 @@ ALTER TABLE wcf1_acp_template ADD FOREIGN KEY (packageID) REFERENCES wcf1_packag
 
 ALTER TABLE wcf1_application ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_application ADD FOREIGN KEY (groupID) REFERENCES wcf1_application_group (groupID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_category ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_cleanup_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
