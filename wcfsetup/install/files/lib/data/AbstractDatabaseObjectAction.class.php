@@ -353,4 +353,22 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 			$this->objects[] = new $this->className($object);
 		}
 	}
+	
+	/**
+	 * Returns object class name.
+	 * 
+	 * @return	string
+	 */
+	public function getClassName() {
+		return $this->className;
+	}
+	
+	/**
+	 * Returns a list of currently loaded objects.
+	 * 
+	 * @return	array<wcf\data\IEditableObject>
+	 */
+	public function getObjects() {
+		return $this->objects;
+	}
 }
