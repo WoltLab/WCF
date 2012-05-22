@@ -167,8 +167,8 @@ final class DateUtil {
 	public static function localizeDate($date, $format, Language $language) {
 		if ($language->languageCode != 'en') {
 			// full textual representation of the day of the week (l)
-			if (stripos($format, 'l') !== false) {
-				$date = str_replace(array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'), array(
+			if (StringUtil::indexOfIgnoreCase($format, 'l') !== false) {
+				$date = StringUtil::replace(array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'), array(
 					$language->get('wcf.date.day.sunday'),
 					$language->get('wcf.date.day.monday'),
 					$language->get('wcf.date.day.tuesday'),
@@ -180,8 +180,8 @@ final class DateUtil {
 			}
 			
 			// textual representation of a day, three letters (D)
-			if (stripos($format, 'D') !== false) {
-				$date = str_replace(array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'), array(
+			if (StringUtil::indexOfIgnoreCase($format, 'D') !== false) {
+				$date = StringUtil::replace(array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'), array(
 					$language->get('wcf.date.day.sun'),
 					$language->get('wcf.date.day.mon'),
 					$language->get('wcf.date.day.tue'),
@@ -193,8 +193,8 @@ final class DateUtil {
 			}
 			
 			// full textual representation of a month (F)
-			if (stripos($format, 'F') !== false) {
-				$date = str_replace(array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'), array(
+			if (StringUtil::indexOfIgnoreCase($format, 'F') !== false) {
+				$date = StringUtil::replace(array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'), array(
 					$language->get('wcf.date.month.january'),
 					$language->get('wcf.date.month.february'),
 					$language->get('wcf.date.month.march'),
@@ -212,7 +212,7 @@ final class DateUtil {
 			
 			// short textual representation of a month (M)
 			if (stripos($format, 'M') !== false) {
-				$date = str_replace(array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'), array(
+				$date = StringUtil::replace(array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'), array(
 					$language->get('wcf.date.month.jan'),
 					$language->get('wcf.date.month.feb'),
 					$language->get('wcf.date.month.mar'),
