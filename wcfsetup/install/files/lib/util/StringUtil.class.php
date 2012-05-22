@@ -200,10 +200,10 @@ final class StringUtil {
 		$double = round($double, ($maxDecimals > 2 ? $maxDecimals : 2));
 		
 		// remove last 0
-		if ($maxDecimals < 2 && substr($double, -1) == '0') $double = substr($double, 0, -1);
+		if ($maxDecimals < 2 && self::substring($double, -1) == '0') $double = self::substring($double, 0, -1);
 		
 		// replace decimal point
-		$double = str_replace('.', WCF::getLanguage()->get('wcf.global.decimalPoint'), $double);
+		$double = self::replace('.', WCF::getLanguage()->get('wcf.global.decimalPoint'), $double);
 		
 		// add thousands separator
 		$double = self::addThousandsSeparator($double);
@@ -459,7 +459,7 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function escapeCDATA($string) {
-		return str_replace(']]>', ']]]]><![CDATA[>', $string);
+		return self::replace(']]>', ']]]]><![CDATA[>', $string);
 	}
 	
 	/**
@@ -548,7 +548,7 @@ final class StringUtil {
 		$type = 0;
 		for ($i = 0; $i < $length; $i++) {
 			$type = ($i % 4 == 0) ? 0 : ($type + 1);
-			$password .= substr($availableCharacters[$type], MathUtil::getRandomValue(0, strlen($availableCharacters[$type]) - 1), 1);
+			$password .= self::substring($availableCharacters[$type], MathUtil::getRandomValue(0, strlen($availableCharacters[$type]) - 1), 1);
 		}
 		
 		return str_shuffle($password);
