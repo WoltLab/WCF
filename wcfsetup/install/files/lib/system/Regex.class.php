@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system;
 use \wcf\system\exception\SystemException;
+use \wcf\util\StringUtil;
 
 /**
  * Represents a regex.
@@ -91,7 +92,7 @@ final class Regex {
 	 */
 	public function __construct($regex, $modifier = self::MODIFIER_NONE) {
 		// escape delimiter
-		$regex = str_replace(self::REGEX_DELIMITER, '\\'.self::REGEX_DELIMITER, $regex);
+		$regex = StringUtil::replace(self::REGEX_DELIMITER, '\\'.self::REGEX_DELIMITER, $regex);
 		
 		// add delimiter
 		$this->regex = self::REGEX_DELIMITER.$regex.self::REGEX_DELIMITER;
