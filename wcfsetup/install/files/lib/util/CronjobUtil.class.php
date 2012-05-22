@@ -100,7 +100,7 @@ final class CronjobUtil {
 			
 			switch ($fieldName) {
 				case 'dow':
-					if (strlen($fieldValue) == 3 && in_array($fieldName, $dayNames)) {
+					if (StringUtil::length($fieldValue) == 3 && in_array($fieldName, $dayNames)) {
 						$fieldValue = $dayNames[$fieldValue];
 					}
 					// When specifying day of week, both day 0 and day 7
@@ -111,7 +111,7 @@ final class CronjobUtil {
 				break;
 				
 				case 'month':
-					if (strlen($fieldValue) == 3 && in_array($fieldValue, $monthNames)) {
+					if (StringUtil::length($fieldValue) == 3 && in_array($fieldValue, $monthNames)) {
 						$fieldValue = $monthNames[$fieldValue] + 1;
 					}
 				break;
