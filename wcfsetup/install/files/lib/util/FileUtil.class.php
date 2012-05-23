@@ -4,6 +4,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\io\GZipFile;
 use wcf\system\io\RemoteFile;
+use wcf\system\Regex;
 use wcf\system\WCF;
 
 /**
@@ -29,39 +30,43 @@ final class FileUtil {
 	 * @return	string
 	 */
 	public static function getTempFolder() {
-		// use tmp folder in document root by default
+		// use temp directory which is defined in the systems path variable
+		if (sys_get_temp_dir() != '' && @is_writable(sys_get_temp_dir())) {
+			return self::addTrailingSlash(sys_get_temp_dir());
+		}
+
+		// use wcf tmp folder if the systems temp folder isn't available
 		if (!empty($_SERVER['DOCUMENT_ROOT'])) {
+			$rootTmpDir = $_SERVER['DOCUMENT_ROOT'].'/tmp/';
+			
+			// strato bugfix
 			if (strpos($_SERVER['DOCUMENT_ROOT'], 'strato') !== false) {
-				// strato bugfix
 				// create tmp folder in document root automatically
-				if (!@file_exists($_SERVER['DOCUMENT_ROOT'].'/tmp')) { 
-					@mkdir($_SERVER['DOCUMENT_ROOT'].'/tmp/', 0777);
-					@chmod($_SERVER['DOCUMENT_ROOT'].'/tmp/', 0777);
-				}
+				self::makePath($rootTmpDir);
 			}
-			if (@file_exists($_SERVER['DOCUMENT_ROOT'].'/tmp') && @is_writable($_SERVER['DOCUMENT_ROOT'].'/tmp')) {
-				return $_SERVER['DOCUMENT_ROOT'].'/tmp/';
+			if (@file_exists($rootTmpDir) && @is_writable($rootTmpDir)) {
+				return $rootTmpDir;
 			}
 		}
 		
 		if (isset($_ENV['TMP']) && @is_writable($_ENV['TMP'])) {
-			return $_ENV['TMP'] . '/';
+			return self::addTrailingSlash($_ENV['TMP']);
 		}
 		if (isset($_ENV['TEMP']) && @is_writable($_ENV['TEMP'])) {
-			return $_ENV['TEMP'] . '/';
+			return self::addTrailingSlash($_ENV['TEMP']);
 		}
 		if (isset($_ENV['TMPDIR']) && @is_writable($_ENV['TMPDIR'])) {
-			return $_ENV['TMPDIR'] . '/';
+			return self::addTrailingSlash($_ENV['TMPDIR']);
 		}
 		
 		if (($path = ini_get('upload_tmp_dir')) && @is_writable($path)) {
-			return $path . '/';
+			return self::addTrailingSlash($path);
 		}
 		if (@file_exists('/tmp/') && @is_writable('/tmp/')) {
 			return '/tmp/';
 		}
 		if (function_exists('session_save_path') && ($path = session_save_path()) && @is_writable($path)) {
-			return $path . '/';
+			return self::addTrailingSlash($path);
 		}
 		
 		$path = WCF_DIR.'tmp/';
@@ -120,7 +125,7 @@ final class FileUtil {
 	 * @return 	string 		$path
 	 */
 	public static function addTrailingSlash($path) {
-		return rtrim($path, '/').'/';
+		return self::removeTrailingSlash($path).'/';
 	}
 	
 	/**
@@ -130,7 +135,7 @@ final class FileUtil {
 	 * @return	string		$path
 	 */
 	public static function addLeadingSlash($path) {
-		return '/'.ltrim($path, '/');
+		return '/'.self::removeLeadingSlash($path);
 	}
 
 	/**
@@ -285,7 +290,7 @@ final class FileUtil {
 	 * @return	boolean
 	 */
 	public static function isURL($filename) {
-		return preg_match('!^(https?|ftp)://!', $filename);
+		return (boolean) Regex::compile('^(https?|ftp)://')->match($filename);
 	}
 	
 	/**
@@ -594,7 +599,7 @@ final class FileUtil {
 		
 		// get bytes
 		$block = $file->read($blockSize);
-		return (strlen($block) == 0 || preg_match_all('/\x00/', $block, $match) > 0);
+		return (strlen($block) == 0 || Regex::compile('\x00')->match($block, true) > 0);
 	}
 	
 	/**
