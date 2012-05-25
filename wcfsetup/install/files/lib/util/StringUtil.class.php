@@ -334,6 +334,45 @@ final class StringUtil {
 	}
 	
 	/**
+	 * Checks wether $haystack starts with $needle, or not.
+	 * 
+	 * @param	string 		$haystack	The string to be checked for starting with $needle
+	 * @param	string 		$needle		The string to be found at the start of $haystack
+	 * @param	boolean		$ci		Case insensitive or not. Default = false.
+	 * 
+	 * @return boolean True, if $haystack starts with $needle, false otherwise.
+	 */
+	public static function startsWith($haystack, $needle, $ci = false) {
+		if($ci) {
+			$haystack = self::toLowerCase($haystack);
+			$needle = self::toLowerCase($needle);
+		}
+		// using substring and === is MUCH faster for long strings then using indexOf.
+		return self::substring($haystack, 0, self::length($needle)) === $needle;
+	}
+	
+	/**
+	 * Checks wether $haystack ends with $needle, or not.
+	 * 
+	 * @param	string 		$haystack	The string to be checked for ending with $needle
+	 * @param	string 		$needle		The string to be found at the end of $haystack
+	 * @param	boolean		$ci		Case insensitive or not. Default = false.
+	 * 
+	 * @return boolean True, if $haystack ends with $needle, false otherwise. 
+	 * Always returns true if length of $needle is 0.
+	 */	
+	public static function endsWith($haystack, $needle, $ci = false) {
+		if($ci) {
+			$haystack = self::toLowerCase($haystack);
+			$needle = self::toLowerCase($needle);
+		}		
+		$length = self::length($needle);
+		if($length === 0)
+			return true;
+		return (self::substring($haystack, $length * -1) === $needle);
+	}
+	
+	/**
 	 * Unescapes escaped characters in a string.
 	 * 
 	 * @param	string		$string
