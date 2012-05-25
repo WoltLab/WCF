@@ -343,7 +343,7 @@ final class StringUtil {
 	 * @return boolean True, if $haystack starts with $needle, false otherwise.
 	 */
 	public static function startsWith($haystack, $needle, $ci = false) {
-		if($ci) {
+		if ($ci) {
 			$haystack = self::toLowerCase($haystack);
 			$needle = self::toLowerCase($needle);
 		}
@@ -362,13 +362,12 @@ final class StringUtil {
 	 * Always returns true if length of $needle is 0.
 	 */	
 	public static function endsWith($haystack, $needle, $ci = false) {
-		if($ci) {
+		if ($ci) {
 			$haystack = self::toLowerCase($haystack);
 			$needle = self::toLowerCase($needle);
-		}		
+		}
 		$length = self::length($needle);
-		if($length === 0)
-			return true;
+		if ($length === 0) return true;
 		return (self::substring($haystack, $length * -1) === $needle);
 	}
 	
