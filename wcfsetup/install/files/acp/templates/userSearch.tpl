@@ -118,9 +118,7 @@
 							<legend>{lang}wcf.user.option.category.{@$category[object]->categoryName}{/lang}</legend>
 							{hascontent}<h2>{content}{lang __optional=true}wcf.user.option.category.{@$category[object]->categoryName}.description{/lang}{/content}</h2>{/hascontent}
 							
-							<div>
-								{include file='optionFieldList' options=$category[options] langPrefix='wcf.user.option.'}
-							</div>
+							{include file='optionFieldList' options=$category[options] langPrefix='wcf.user.option.'}
 						</fieldset>
 					{/foreach}
 				</div>
