@@ -86,6 +86,20 @@
 		WCF.Dropdown.init();
 		
 		{event name='javascriptInit'}
+
+		{if $executeCronjobs}
+			new WCF.Action.Proxy({
+				autoSend: true,
+				data: {
+					className: 'wcf\\data\\cronjob\\CronjobAction',
+					actionName: 'executeCronjobs'
+				},
+				showLoadingOverlay: false,
+				failure: function() {
+					return false;
+				}
+			});
+		{/if}
 	});
 	//]]>
 </script>

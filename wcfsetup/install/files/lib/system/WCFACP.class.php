@@ -38,6 +38,7 @@ class WCFACP extends WCF {
 		$this->initSession();
 		$this->initLanguage();
 		$this->initTPL();
+		$this->initCronjobs();
 		$this->initBlacklist();
 		$this->initAuth();
 		$this->initCoreObjects();

@@ -2,6 +2,7 @@
 namespace wcf\data\cronjob;
 use wcf\data\cronjob\log\CronjobLogEditor;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -36,6 +37,11 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.system.cronjob.canEditCronjob');
+	
+	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 */
+	protected $allowGuestAccess = array('executeCronjobs');
 	
 	/**
 	 * Validates permissions and parameters
@@ -159,5 +165,17 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 		}
 		
 		return $return;
+	}
+	
+	/**
+	 * Validates permissions and parameters
+	 */
+	public function validateExecuteCronjobs() {}
+	
+	/**
+	 * Executes open cronjobs.
+	 */
+	public function executeCronjobs() {
+		CronjobScheduler::getInstance()->executeCronjobs();
 	}
 }
