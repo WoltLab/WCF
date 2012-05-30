@@ -28,10 +28,10 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname>wcf\system\cronjob\CleanUpCronjobLogCronjob</classname>
-			<description>Deletes old entries from cronjob log</description>
+			<classname>wcf\system\cronjob\DailyCleanUpCronjob</classname>
+			<description>Daily Cleanup</description>
 			<startminute>0</startminute>
-			<starthour>12</starthour>
+			<starthour>1</starthour>
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
@@ -41,29 +41,29 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname>wcf\system\cronjob\CleanUpSessionLogCronjob</classname>
-			<description>Deletes old entries from session log</description>
+			<classname>wcf\system\cronjob\HourlyCleanUpCronjob</classname>
+			<description>Hourly Cleanup</description>
 			<startminute>0</startminute>
-			<starthour>10</starthour>
-			<startdom>*</startdom>
-			<startmonth>*</startmonth>
-			<startdow>*</startdow>
-			<active>1</active>
-			<canbeedited>0</canbeedited>
-			<canbedisabled>0</canbedisabled>
-		</cronjob>
-		
-		<cronjob>
-			<classname>wcf\system\cronjob\CleanupListenerCronjob</classname>
-			<description>Executes the cleanup system</description>
-			<startminute>5,20,35,50</startminute>
 			<starthour>*</starthour>
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
 			<active>1</active>
-			<canbeedited>0</canbeedited>
-			<canbedisabled>0</canbedisabled>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob>
+			<classname>wcf\system\cronjob\SessionCleanUpCronjob</classname>
+			<description>Deletes expired sessions</description>
+			<startminute>*/30</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
 		</cronjob>
 	</import>
 </data>

@@ -29,14 +29,14 @@ class ACPSessionFactory {
 		
 		// call shouldInit event
 		if (!defined('NO_IMPORTS')) {
-			EventHandler::getInstance()->fireAction($this, 'shouldInit');
+			EventHandler::getInstance()->fireAction($this, 'beforeInit');
 		}
 		
 		$this->init();
 		
 		// call didInit event
 		if (!defined('NO_IMPORTS')) {
-			EventHandler::getInstance()->fireAction($this, 'didInit');
+			EventHandler::getInstance()->fireAction($this, 'afterInit');
 		}
 	}
 	

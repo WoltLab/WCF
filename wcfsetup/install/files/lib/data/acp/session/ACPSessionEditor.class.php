@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\acp\session;
 use wcf\data\DatabaseObjectEditor;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
 /**
@@ -45,5 +46,32 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 		}
 		
 		return parent::update($parameters);
+	}
+	
+	/**
+	 * Deletes active sessions of the given users.
+	 * 
+	 * @param	array<integer>	$userIDs
+	 */
+	public static function deleteUserSessions(array $userIDs = array()) {
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		if (count($userIDs)) $conditionBuilder->add('userID IN (?)', array($userIDs));
+		
+		$sql = "DELETE FROM	".call_user_func(array(static::$baseClass, 'getDatabaseTableName'))."
+			".$conditionBuilder;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditionBuilder->getParameters());
+	}
+	
+	/**
+	 * Deletes the expired sessions.
+	 * 
+	 * @param	integer		$timestamp
+	 */
+	public static function deleteExpiredSessions($timestamp) {
+		$sql = "DELETE FROM	".call_user_func(array(static::$baseClass, 'getDatabaseTableName'))."
+			WHERE		lastActivityTime < ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($timestamp));
 	}
 }

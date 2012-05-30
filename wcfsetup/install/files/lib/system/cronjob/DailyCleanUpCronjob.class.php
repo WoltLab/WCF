@@ -4,21 +4,31 @@ use wcf\data\cronjob\Cronjob;
 use wcf\system\WCF;
 
 /**
- * Deletes old entries from session log.
+ * Cronjob for a daily system cleanup.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
  * @category 	Community Framework
  */
-class CleanUpSessionLogCronjob implements ICronjob {
+class DailyCleanUpCronjob extends AbstractCronjob {
 	/**
-	 * @see wcf\system\ICronjob::execute()
+	 * @see wcf\system\cronjob\ICronjob::execute()
 	 */
 	public function execute(Cronjob $cronjob) {
-		// delete access log
+		parent::execute($cronjob);
+		
+		// clean up cronjob log
+		$sql = "DELETE FROM	wcf".WCF_N."_cronjob_log
+			WHERE		execTime < ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			(TIME_NOW - (86400 * 7))
+		));
+		
+		// clean up session access log
 		$sql = "DELETE FROM	wcf".WCF_N."_acp_session_access_log
 			WHERE		sessionLogID IN (
 						SELECT	sessionLogID
@@ -30,7 +40,7 @@ class CleanUpSessionLogCronjob implements ICronjob {
 			(TIME_NOW - (86400 * 30))
 		));
 		
-		// delete session log
+		// clean up session log
 		$sql = "DELETE FROM	wcf".WCF_N."_acp_session_log
 			WHERE		lastActivityTime < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);

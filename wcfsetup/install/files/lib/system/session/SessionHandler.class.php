@@ -333,11 +333,18 @@ class SessionHandler extends SingletonFactory {
 			$this->user = new User(null);
 		}
 		
+		if ($this->user->userID != 0) {
+			// user is no guest
+			// delete all other sessions of this user
+			call_user_func(array($this->sessionEditorClassName, 'deleteUserSessions', array($this->user->userID)));
+		}
+		
 		// save session
 		$this->session = call_user_func(array($this->sessionEditorClassName, 'create'), array(
 			'sessionID' => $sessionID,
 			'packageID' => PACKAGE_ID,
 			'userID' => $this->user->userID,
+			'username' => $this->user->username,
 			'ipAddress' => UserUtil::getIpAddress(),
 			'userAgent' => UserUtil::getUserAgent(),
 			'lastActivityTime' => TIME_NOW,
@@ -460,7 +467,7 @@ class SessionHandler extends SingletonFactory {
 		$sessionTable = call_user_func(array($this->sessionClassName, 'getDatabaseTableName'));
 		
 		if ($user->userID) {
-			// user is not a gest, delete all other sessions of this user
+			// user is not a guest, delete all other sessions of this user
 			$sql = "SELECT		sessionID
 				FROM		".$sessionTable."
 				WHERE		sessionID <> ?
