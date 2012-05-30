@@ -6,7 +6,6 @@
 		WCF.Collapsible.Simple.init();
 	});
 	//]]>
-	//]]>
 </script>
 
 <header class="boxHeadline">
