@@ -165,6 +165,30 @@
 
 /* ############## Thread List ############## */
 .wbbThreadList {
+	/* TODO: keep these colors? */
+	.wbbThreadDeleted:not(:hover) {
+		td {
+			background-color: @wcfErrorBackgroundColor;
+			color: @wcfErrorColor;
+			
+			a {
+				color: @wcfErrorColor;
+			}
+		}
+	}
+	
+	/* TODO: keep these colors? */
+	.wbbThreadDisabled:not(.wbbThreadDeleted):not(:hover) {
+		td {
+			background-color: @wcfSuccessBackgroundColor;
+			color: @wcfSuccessColor;
+			
+			a {
+				color: @wcfSuccessColor;
+			}
+		}
+	}
+	
 	.wbbLastPost h2 {
 		color: @wcfDimmedColor;
 		font-size: @wcfSmallFontSize;
