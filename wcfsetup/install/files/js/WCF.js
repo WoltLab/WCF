@@ -1047,7 +1047,11 @@ WCF.Clipboard = {
 				className: listItem.data('parameters').className,
 				objectIDs: objectIDs
 			},
-			success: $.proxy(this._loadMarkedItems, this)
+			success: $.proxy(function(data) {
+				listItem.trigger('clipboardActionResponse', [ data, listItem.data('type'), listItem.data('actionName'), listItem.data('parameters') ]);
+				
+				this._loadMarkedItems();
+			}, true)
 		});
 		
 		if (this._actionObjects[listItem.data('objectType')] && this._actionObjects[listItem.data('objectType')][listItem.data('parameters').actionName]) {
