@@ -653,7 +653,7 @@ class WCF {
 	 * Initialises the cronjobs.
 	 */
 	protected function initCronjobs() {
-		if (defined('PACKAGE_ID')) {
+		if (PACKAGE_ID) {
 			self::getTPL()->assign('executeCronjobs', CronjobScheduler::getInstance()->getNextExec() < TIME_NOW);
 		}
 	}
