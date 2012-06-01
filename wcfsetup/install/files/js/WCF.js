@@ -751,6 +751,8 @@ WCF.Clipboard = {
 	 * @param	jQuery		jqXHR
 	 */
 	_loadMarkedItemsSuccess: function(data, textStatus, jqXHR) {
+		this._resetMarkings();
+		
 		for (var $typeName in data.markedItems) {
 			var $objectData = data.markedItems[$typeName];
 			for (var $i in $objectData) {
@@ -794,6 +796,17 @@ WCF.Clipboard = {
 		
 		// call success method to build item list editors
 		this._success(data, textStatus, jqXHR);
+	},
+	
+	/**
+	 * Resets all checkboxes.
+	 */
+	_resetMarkings: function() {
+		this._containers.each(function(index, container) {
+			var $container = $(container);
+			
+			$container.find('input.jsClipboardItem, input.jsClipboardMarkAll').removeAttr('checked');
+		});
 	},
 	
 	/**
@@ -1051,7 +1064,7 @@ WCF.Clipboard = {
 				listItem.trigger('clipboardActionResponse', [ data, listItem.data('type'), listItem.data('actionName'), listItem.data('parameters') ]);
 				
 				this._loadMarkedItems();
-			}, true)
+			}, this)
 		});
 		
 		if (this._actionObjects[listItem.data('objectType')] && this._actionObjects[listItem.data('objectType')][listItem.data('parameters').actionName]) {
