@@ -1,6 +1,5 @@
 <?php
 namespace wcf\action;
-use wcf\data\DatabaseObject;
 use wcf\system\api\rest\response\IRESTfulResponse;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
@@ -79,7 +78,7 @@ final class APIAction extends AbstractAjaxAction {
 	 *
 	 * @return array
 	 */
-	protected function prune(DatabaseObject $object) {
+	protected function prune(IRESTfulResponse $object) {
 		$prunedArray = array();
 	
 		foreach($object->getResponseFields() as $fieldName) {
