@@ -344,7 +344,7 @@ class SessionHandler extends SingletonFactory {
 			'sessionID' => $sessionID,
 			'packageID' => PACKAGE_ID,
 			'userID' => $this->user->userID,
-			'username' => $this->user->username,
+			'username' => (PACKAGE_ID) ? $this->user->username : '',
 			'ipAddress' => UserUtil::getIpAddress(),
 			'userAgent' => UserUtil::getUserAgent(),
 			'lastActivityTime' => TIME_NOW,
