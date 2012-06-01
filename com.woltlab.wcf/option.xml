@@ -121,6 +121,13 @@
 				<optiontype>boolean</optiontype>
 				<!-- TODO: change to '0' (production mode) later -->
 				<defaultvalue>1</defaultvalue>
+			</option>	
+			
+			<option name="module_api_access">
+				<categoryname>module.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<!-- TODO: change to '0' (production mode) later -->
+				<defaultvalue>1</defaultvalue>
 			</option>
 			
 			<!-- general.page -->
