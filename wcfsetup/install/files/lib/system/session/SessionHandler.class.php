@@ -514,7 +514,7 @@ class SessionHandler extends SingletonFactory {
 			'requestMethod' => $this->requestMethod,
 			'lastActivityTime' => TIME_NOW,
 			'packageID' => PACKAGE_ID,
-			'controller' => RequestHandler::getInstance()->getActiveRequest()->getClassName()
+			'controller' => (PACKAGE_ID) ? RequestHandler::getInstance()->getActiveRequest()->getClassName() : ''
 		);
 		if ($this->variablesChanged) {
 			$data['sessionVariables'] = serialize($this->variables);
