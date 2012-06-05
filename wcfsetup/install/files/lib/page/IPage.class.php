@@ -13,6 +13,11 @@ namespace wcf\page;
  */
 interface IPage {
 	/**
+	 * Initializes the page.
+	 */
+	public function __run();
+	
+	/**
 	 * Reads the given parameters.
 	 */
 	public function readParameters();

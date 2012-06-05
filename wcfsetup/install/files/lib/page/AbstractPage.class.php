@@ -48,10 +48,9 @@ abstract class AbstractPage implements IPage {
 	public $neededPermissions = array();
 	
 	/**
-	 * Creates a new AbstractPage object.
-	 * Calls the readParameters() and show() methods automatically.
+	 * @see	wcf\page\IPage::__run()
 	 */
-	public function __construct() {
+	public function __run() {
 		// call default methods
 		$this->readParameters();
 		$this->show();
