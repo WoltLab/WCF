@@ -48,6 +48,11 @@ abstract class AbstractPage implements IPage {
 	public $neededPermissions = array();
 	
 	/**
+	 * @see	wcf\form\IPage::__run()
+	 */
+	public final function __construct() { }
+	
+	/**
 	 * @see	wcf\page\IPage::__run()
 	 */
 	public function __run() {

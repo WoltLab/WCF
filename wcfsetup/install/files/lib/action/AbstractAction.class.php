@@ -29,6 +29,11 @@ abstract class AbstractAction implements IAction {
 	public $neededPermissions = array();
 	
 	/**
+	 * @see	wcf\form\IAction::__run()
+	 */
+	public final function __construct() { }
+	
+	/**
 	 * @see	wcf\action\IAction::__run()
 	 */
 	public function __run() {
