@@ -4,6 +4,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\request\RequestHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
@@ -336,7 +337,7 @@ class SessionHandler extends SingletonFactory {
 		if ($this->user->userID != 0) {
 			// user is no guest
 			// delete all other sessions of this user
-			call_user_func(array($this->sessionEditorClassName, 'deleteUserSessions', array($this->user->userID)));
+			call_user_func(array($this->sessionEditorClassName, 'deleteUserSessions'), array($this->user->userID));
 		}
 		
 		// save session
@@ -512,7 +513,8 @@ class SessionHandler extends SingletonFactory {
 			'requestURI' => $this->requestURI,
 			'requestMethod' => $this->requestMethod,
 			'lastActivityTime' => TIME_NOW,
-			'packageID' => PACKAGE_ID
+			'packageID' => PACKAGE_ID,
+			'controller' => RequestHandler::getInstance()->getActiveRequest()->getClassName()
 		);
 		if ($this->variablesChanged) {
 			$data['sessionVariables'] = serialize($this->variables);
