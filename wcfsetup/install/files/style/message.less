@@ -15,8 +15,28 @@
 			opacity: 1;
 	}
 	
-	&.deleted {
-		opacity: .5;
+	&.messageDeleted {
+		background-color: @wcfErrorBackgroundColor;
+		
+		.messageSidebar {
+			color: @wcfErrorColor !important;
+			
+			a {
+				color: @wcfErrorColor !important;
+			}
+		}
+	}
+	
+	&.messageDisabled:not(.messageDeleted) {
+		background-color: @wcfSuccessBackgroundColor;
+		
+		.messageSidebar {
+			color: @wcfSuccessColor !important;
+			
+			a {
+				color: @wcfSuccessColor !important;
+			}
+		}
 	}
 }
 	
@@ -102,6 +122,11 @@
 		
 		a {
 			padding: 1px 5px;
+			vertical-align: middle;
+		}
+		
+		input[type=checkbox] {
+			vertical-align: middle;
 		}
 	}
 }
@@ -157,7 +182,7 @@
 .message .messageContent {
 	background-color: @wcfContainerBackgroundColor;
 	
-	.borderRadius();
+	.borderRadius(5px, 4px, 4px, 5px);
 	
 	.messageHeader {
 		padding: @wcfGapMedium @wcfGapLarge 0;
@@ -297,6 +322,40 @@ li:nth-child(2n+1) .message {
 		left: 0;
 		opacity: 1;
 		position: relative;
+	}
+}
+
+.messageCollapsed {
+	background-color: lighten(@wcfContainerBorderColor, 16%);
+	border-color: lighten(@wcfContainerBorderColor, 8%);
+	color: @wcfDimmedColor;
+	opacity: .7;
+	padding: @wcfGapMedium @wcfGapLarge;
+
+	.boxShadow(0, 0, @wcfErrorBackgroundColor, 10px);
+	.transition(opacity, .1s);
+	
+	&:hover {
+		opacity: 1;
+	}
+	
+	&.messageCollapsedExpandable {
+		cursor: pointer;
+	}
+	
+	p {
+		display: inline-block;
+		vertical-align: middle;
+		
+		span {
+			display: block;
+			font-size: @wcfSmallFontSize;
+			margin-left: @wcfGapSmall;
+		}
+	}
+	
+	.messageCounter {
+		padding-top: 3px;
 	}
 }
 
