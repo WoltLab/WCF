@@ -14,6 +14,11 @@ namespace wcf\action;
  */
 interface IAction {
 	/**
+	 * Initializes this action.
+	 */
+	public function __run();
+	
+	/**
 	 * Reads the given parameters.
 	 */
 	public function readParameters();

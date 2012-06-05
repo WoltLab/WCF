@@ -63,11 +63,11 @@ class AJAXProxyAction extends AbstractSecureAction {
 	protected $response = null;
 	
 	/**
-	 * @see	wcf\action\AbstractAction::_construct()
+	 * @see	wcf\action\IAction::__run()
 	 */
-	public function __construct() {
+	public function __run() {
 		try {
-			parent::__construct();
+			parent::__run();
 		}
 		catch (\Exception $e) {
 			if ($e instanceof AJAXException) {

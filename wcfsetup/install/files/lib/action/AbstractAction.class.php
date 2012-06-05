@@ -29,10 +29,9 @@ abstract class AbstractAction implements IAction {
 	public $neededPermissions = array();
 	
 	/**
-	 * Creates a new AbstractAction object.
-	 * Calls the methods readParameters() and execute() automatically.
+	 * @see	wcf\action\IAction::__run()
 	 */
-	public function __construct() {
+	public function __run() {
 		// call default methods
 		$this->readParameters();
 		$this->execute();

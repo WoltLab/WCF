@@ -31,10 +31,10 @@ class Request {
 	protected $pageType = '';
 	
 	/**
-	 * true, if this request has already been executed
-	 * @var boolean
+	 * request object
+	 * @var	object
 	 */
-	protected $executed = false;
+	protected $requestObject = null;
 	
 	/**
 	 * Creates a new request object.
@@ -53,9 +53,9 @@ class Request {
 	 * Executes this request.
 	 */
 	public function execute() {
-		if (!$this->executed) {
-			$this->executed = true;
-			new $this->className();
+		if ($this->requestObject === null) {
+			$this->requestObject = new $this->className();
+			$this->requestObject->__run();
 		}
 	}
 	
@@ -65,7 +65,7 @@ class Request {
 	 * @return	boolean
 	 */
 	public function isExecuted() {
-		return $this->executed;
+		return ($this->requestObject !== null);
 	}
 	
 	/**
@@ -93,5 +93,14 @@ class Request {
 	 */
 	public function getPageType() {
 		return $this->pageType;
+	}
+	
+	/**
+	 * Returns the current request object.
+	 * 
+	 * @return	object
+	 */
+	public function getRequestObject() {
+		return $this->requestObject;
 	}
 }
