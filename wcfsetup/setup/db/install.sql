@@ -22,6 +22,7 @@ CREATE TABLE wcf1_acp_session (
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
 	requestURI VARCHAR(255) NOT NULL DEFAULT '',
 	requestMethod VARCHAR(4) NOT NULL DEFAULT '',
+	controller VARCHAR(255) NOT NULL DEFAULT '',
 	username VARCHAR(255) NOT NULL DEFAULT '',
 	sessionVariables MEDIUMTEXT,
 	KEY sessionID (sessionID, packageID)
@@ -512,6 +513,7 @@ CREATE TABLE wcf1_session (
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
 	requestURI VARCHAR(255) NOT NULL DEFAULT '',
 	requestMethod VARCHAR(4) NOT NULL DEFAULT '',
+	controller VARCHAR(255) NOT NULL DEFAULT '',
 	username VARCHAR(255) NOT NULL DEFAULT '',
 	sessionVariables MEDIUMTEXT,
 	spiderID INT(10) NOT NULL DEFAULT 0,
