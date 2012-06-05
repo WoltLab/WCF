@@ -53,12 +53,12 @@ class LoginForm extends AbstractForm {
 	/**
 	 * Creates a new LoginForm object.
 	 */
-	public function __construct() {
+	public function __run() {
 		if (WCF::getUser()->userID) {
 			throw new PermissionDeniedException();
 		}
 		
-		parent::__construct();
+		parent::__run();
 	}
 	
 	/**
