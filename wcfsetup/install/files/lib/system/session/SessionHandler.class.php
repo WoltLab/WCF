@@ -336,7 +336,7 @@ class SessionHandler extends SingletonFactory {
 		if ($this->user->userID != 0) {
 			// user is no guest
 			// delete all other sessions of this user
-			call_user_func(array($this->sessionEditorClassName, 'deleteUserSessions', array($this->user->userID)));
+			call_user_func(array($this->sessionEditorClassName, 'deleteUserSessions'), array($this->user->userID));
 		}
 		
 		// save session
