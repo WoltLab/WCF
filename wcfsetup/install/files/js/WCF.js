@@ -1196,6 +1196,12 @@ WCF.Action.Proxy.prototype = {
 	 * @var	integer
 	 */
 	_loadingOverlayVisibleTimer: 0,
+	
+	/**
+	 * suppresses errors
+	 * @var	boolean
+	 */
+	_suppressErrors: false,
 
 	/**
 	 * Initializes AJAXProxy.
@@ -1218,11 +1224,15 @@ WCF.Action.Proxy.prototype = {
 		
 		this.confirmationDialog = null;
 		this.loading = null;
+		this._suppressErrors = false;
 		
 		// send request immediately after initialization
 		if (this.options.autoSend) {
 			this.sendRequest();
 		}
+		
+		var self = this;
+		$(window).on('beforeunload', function() { self._suppressErrors = true; });
 	},
 	
 	/**
@@ -1302,17 +1312,26 @@ WCF.Action.Proxy.prototype = {
 			var data = $.parseJSON(jqXHR.responseText);
 			
 			// call child method if applicable
+			var $showError = true;
 			if ($.isFunction(this.options.failure)) {
-				this.options.failure(jqXHR, textStatus, errorThrown, data);
+				$showError = this.options.failure(jqXHR, textStatus, errorThrown, jqXHR.responseText);
 			}
 			
-			var $randomID = WCF.getRandomID();
-			$('<div class="ajaxDebugMessage" id="' + $randomID + '"><p>' + data.message + '</p><p>Stacktrace:</p><p>' + data.stacktrace + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
+			if (!this._suppressErrors && $showError !== false) {
+				$('<div class="ajaxDebugMessage"><p>' + data.message + '</p><p>Stacktrace:</p><p>' + data.stacktrace + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
+			}
 		}
 		// failed to parse JSON
 		catch (e) {
-			var $randomID = WCF.getRandomID();
-			$('<div class="ajaxDebugMessage" id="' + $randomID + '"><p style="padding: 3px;">' + jqXHR.responseText + '.</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
+			// call child method if applicable
+			var $showError = true;
+			if ($.isFunction(this.options.failure)) {
+				$showError = this.options.failure(jqXHR, textStatus, errorThrown, jqXHR.responseText);
+			}
+			
+			if (!this._suppressErrors && $showError !== false) {
+				$('<div class="ajaxDebugMessage"><p>' + jqXHR.responseText + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
+			}
 		}
 		
 		this._after();
@@ -4981,6 +5000,12 @@ WCF.Popover = Class.extend({
 	_activeElementID: '',
 	
 	/**
+	 * cancels popover
+	 * @var	boolean
+	 */
+	_cancelPopover: false,
+	
+	/**
 	 * element data
 	 * @var	object
 	 */
@@ -5082,6 +5107,7 @@ WCF.Popover = Class.extend({
 	init: function(selector) {
 		// assign default values
 		this._activeElementID = '';
+		this._cancelPopover = false;
 		this._data = { };
 		this._defaultDimensions = {
 			height: 150,
@@ -5131,8 +5157,20 @@ WCF.Popover = Class.extend({
 				};
 				
 				$element.hover($.proxy(this._overElement, this), $.proxy(this._out, this));
+				
+				if ($element.getTagName() === 'a') {
+					$element.click($.proxy(this._cancel, this));
+				}
 			}
 		}, this));
+	},
+	
+	/**
+	 * Cancels popovers if link is being clicked
+	 */
+	_cancel: function(event) {
+		this._cancelPopover = true;
+		this._hide(true);
 	},
 	
 	/**
@@ -5141,6 +5179,10 @@ WCF.Popover = Class.extend({
 	 * @param	object		event
 	 */
 	_overElement: function(event) {
+		if (this._cancelPopover) {
+			return;
+		}
+		
 		if (this._peOverElement !== null) {
 			this._peOverElement.stop();
 		}
@@ -5165,6 +5207,10 @@ WCF.Popover = Class.extend({
 	 * Prepares popover to be displayed.
 	 */
 	_prepare: function() {
+		if (this._cancelPopover) {
+			return;
+		}
+		
 		if (this._peOut !== null) {
 			this._peOut.stop();
 		}
@@ -5209,6 +5255,10 @@ WCF.Popover = Class.extend({
 	 * Displays the popover.
 	 */
 	_show: function() {
+		if (this._cancelPopover) {
+			return;
+		}
+		
 		this._popover.stop().wcfFadeIn();
 		
 		if (this._data[this._activeElementID].loading) {
@@ -5277,6 +5327,7 @@ WCF.Popover = Class.extend({
 		this._popover.stop();
 		
 		if (disableAnimation) {
+			sekf._popover.css({ opacity: 0 });
 			self._popoverContent.empty().css({ height: 'auto', opacity: 0, width: 'auto' });
 		}
 		else {
@@ -5302,6 +5353,10 @@ WCF.Popover = Class.extend({
 	 * Triggered once element *or* popover is now longer hovered.
 	 */
 	_out: function(event) {
+		if (this._cancelPopover) {
+			return;
+		}
+		
 		this._hoverElementID = '';
 		this._hoverElement = false;
 		this._hoverPopover = false;
