@@ -49,6 +49,17 @@
 		padding: @wcfGapSmall;
 		text-align: left;
 		vertical-align: middle;
+		
+		> label {
+			cursor: pointer;
+			display: block;
+			margin: -@wcfGapSmall;
+			padding: @wcfGapSmall;
+			
+			> input[type="checkbox"] {
+				margin: 0 3px;
+			}
+		}
 	}
 	
 	/* headline */
@@ -62,7 +73,7 @@
 		
 		.textShadow(@wcfTabularBoxBackgroundColor);
 		
-		a {
+		> a {
 			color: @wcfTabularBoxColor;
 			display: block;
 			margin: -@wcfGapSmall;
@@ -71,18 +82,16 @@
 				text-decoration: none;
 			}
 			
-			img {
+			> img {
 				margin: -5px 0;
 			}
 		}
 		
-		&:hover a,
-		&.active a {
+		&:hover > a,
+		&.active > a {
 			background-color: rgba(0, 0, 0, .1);
 			color: @wcfTabularBoxHoverColor;
-		}
-		
-		&.active a {
+			
 			.boxShadowInset(0, 10px, rgba(0, 0, 0, .1), 10px, -10px);
 		}
 		
