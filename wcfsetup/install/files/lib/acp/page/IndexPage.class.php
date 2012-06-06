@@ -61,6 +61,17 @@ class IndexPage extends AbstractPage {
 	 */
 	public function calculateHealth() {
 		try {
+			// InnoDB's innodb_flush_log_at_trx_commit=1 causes poor performance, 2 is a better choice
+			if (get_class(WCF::getDB()) == 'wcf\system\database\MySQLDatabase') {
+				$sql = "SHOW VARIABLES LIKE ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array('innodb_flush_log_at_trx_commit'));
+				$row = $statement->fetchArray();
+				if ($row['Value'] == '1') {
+					$this->healthDetails['warning'][] = WCF::getLanguage()->get('wcf.acp.index.health.innodbFlushLog');
+				}
+			}
+			
 			// TODO: Fill this list
 			$shouldBeWritable = array(WCF_DIR);
 			foreach ($shouldBeWritable as $file) {
