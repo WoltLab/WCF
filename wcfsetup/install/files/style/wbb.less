@@ -28,13 +28,13 @@
 		top: @wcfGapSmall;
 		width: 15%;
 		
-		dl {
-			dt {
+		> dl {
+			> dt {
 				line-height: @wcfBaseLineHeight;
 				width: 40%;
 			}
 			
-			dd {
+			> dd {
 				font-weight: normal;
 				font-size: @wcfSmallFontSize;
 				width: 58%;
@@ -58,15 +58,19 @@
 		}
 		
 		hgroup {
-			h1 a {
+			> h1 {
 				display: inline-block;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				width: 98%;
 				white-space: nowrap;
+				
+				> .badge {
+					font-size: @wcfSmallFontSize;
+				}
 			}
 			
-			h2 {
+			> h2 {
 				font-size: @wcfSmallFontSize;
 				
 				time {
