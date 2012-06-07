@@ -6,7 +6,7 @@ use \wcf\system\exception\SystemException;
  * Represents a regex.
  * 
  * @author	Tim Düsterhus
- * @copyright	2011 Tim Düsterhus
+ * @copyright	2011 - 2012 Tim Düsterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
@@ -181,7 +181,7 @@ final class Regex {
 	 * @param	mixed	$result
 	 */
 	private function checkResult($result, $method = '') {
-		if ($result === false) {
+		if ($result === false || $result === null) {
 			switch (preg_last_error()) {
 				case PREG_INTERNAL_ERROR:
 					$error = 'Internal error';
@@ -195,10 +195,12 @@ final class Regex {
 				case PREG_BAD_UTF8_ERROR:
 					$error = 'Bad UTF8';
 				break;
+				case PREG_NO_ERROR:
+					return $result;
 				default:
 					$error = 'Unknown error';
 			}
-
+			
 			throw new SystemException('Could not execute '.($method ? $method.' on ' : '').$this->regex.': '.$error);
 		}
 		return $result;
