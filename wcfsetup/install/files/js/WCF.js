@@ -4459,7 +4459,6 @@ WCF.InlineEditor = Class.extend({
 	 * @param	object		event
 	 */
 	_show: function(event) {
-		console.debug(event.currentTarget);
 		var $elementID = $(event.currentTarget).data('elementID');
 		
 		// build drop down
