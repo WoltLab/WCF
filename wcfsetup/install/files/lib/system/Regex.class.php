@@ -197,8 +197,10 @@ final class Regex {
 				break;
 				case PREG_NO_ERROR:
 					return $result;
+				break;
 				default:
 					$error = 'Unknown error';
+				break;
 			}
 			
 			throw new SystemException('Could not execute '.($method ? $method.' on ' : '').$this->regex.': '.$error);
