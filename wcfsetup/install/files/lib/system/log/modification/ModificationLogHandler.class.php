@@ -68,6 +68,7 @@ class ModificationLogHandler extends SingletonFactory {
 		return ModificationLogEditor::create(array(
 			'objectTypeID' => $objectType->objectTypeID,
 			'objectID' => $objectID,
+			'action' => $action,
 			'userID' => ($userID === null ? WCF::getUser()->userID : $userID),
 			'username' => ($username === null ? WCF::getUser()->username : $username),
 			'time' => $time,
