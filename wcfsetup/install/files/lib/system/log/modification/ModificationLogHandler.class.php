@@ -53,13 +53,13 @@ class ModificationLogHandler extends SingletonFactory {
 	 * @param	string		$objectType
 	 * @param	integer		$objectID
 	 * @param	string		$action
-	 * @param	array		$data
+	 * @param	array		$additionalData
 	 * @param	integer		$time
 	 * @param	integer		$userID
 	 * @param	string		$username
 	 * @return	wcf\data\modification\log\ModificationLog
 	 */
-	public function add($objectType, $objectID, $action, array $data = array(), $time = TIME_NOW, $userID = null, $username = null) {
+	public function add($objectType, $objectID, $action, array $additionalData = array(), $time = TIME_NOW, $userID = null, $username = null) {
 		$objectType = $this->getObjectType($objectType);
 		if ($objectType === null) {
 			throw new SystemException("Object type '".$objectType."' not found within definition 'com.woltlab.wcf.modifiableContent'");
@@ -71,7 +71,7 @@ class ModificationLogHandler extends SingletonFactory {
 			'userID' => ($userID === null ? WCF::getUser()->userID : $userID),
 			'username' => ($username === null ? WCF::getUser()->username : $username),
 			'time' => $time,
-			'data' => serialize($data)
+			'additionalData' => serialize($additionalData)
 		));
 	}
 	
