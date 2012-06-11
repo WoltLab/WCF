@@ -59,7 +59,7 @@ class ModificationLogHandler extends SingletonFactory {
 	 * @param	string		$username
 	 * @return	wcf\data\modification\log\ModificationLog
 	 */
-	public function add($objectType, $objectID, $action, array $additionalData = array(), $time = TIME_NOW, $userID = null, $username = null) {
+	protected function _add($objectType, $objectID, $action, array $additionalData = array(), $time = TIME_NOW, $userID = null, $username = null) {
 		$objectType = $this->getObjectType($objectType);
 		if ($objectType === null) {
 			throw new SystemException("Object type '".$objectType."' not found within definition 'com.woltlab.wcf.modifiableContent'");
@@ -81,7 +81,7 @@ class ModificationLogHandler extends SingletonFactory {
 	 * @param	string		$objectType
 	 * @param	array<integer>	$objectIDs
 	 */
-	public function remove($objectType, array $objectIDs) {
+	protected function _remove($objectType, array $objectIDs) {
 		$objectType = $this->getObjectType($objectType);
 		if ($objectType === null) {
 			throw new SystemException("Object type '".$objectType."' not found within definition 'com.woltlab.wcf.modifiableContent'");
