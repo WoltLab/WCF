@@ -136,7 +136,7 @@ class ClipboardAction extends AbstractSecureAction {
 					'actionName' => $item->getName(),
 					'internalData' => $item->getInternalData(),
 					'parameters' => $item->getParameters(),
-					'label' => WCF::getLanguage()->get('wcf.clipboard.item.' . $item->getName()),
+					'label' => WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.' . $item->getName(), array('count' => $item->getCount())),
 					'url' => $item->getURL()
 				);
 			}

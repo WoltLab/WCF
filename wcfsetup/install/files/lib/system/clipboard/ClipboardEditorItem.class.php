@@ -131,4 +131,17 @@ final class ClipboardEditorItem {
 	public function setURL($url) {
 		$this->url = $url;
 	}
+	
+	/**
+	 * Returns number of affected items.
+	 * 
+	 * @return	integer
+	 */
+	public function getCount() {
+		if (isset($this->parameters['objectIDs'])) {
+			return count($this->parameters['objectIDs']);
+		}
+		
+		return 0;
+	}
 }
