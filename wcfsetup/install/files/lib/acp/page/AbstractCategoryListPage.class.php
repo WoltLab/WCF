@@ -76,9 +76,9 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	public $templateName = 'categoryList';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::assignVariables()
+	 * @see	wcf\page\AbstractPage::__run()
 	 */
-	public function __construct() {
+	public function __run() {
 		$classNameParts = explode('\\', get_called_class());
 		$className = array_pop($classNameParts);
 		
@@ -90,7 +90,7 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 			$this->editController = StringUtil::replace('ListPage', 'Edit', $className);
 		}
 		
-		parent::__construct();
+		parent::__run();
 	}
 	
 	/**
