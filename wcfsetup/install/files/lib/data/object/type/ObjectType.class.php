@@ -42,6 +42,18 @@ class ObjectType extends ProcessibleDatabaseObject {
 	}
 	
 	/**
+	 * @see	wcf\data\DatabaseObject::handleData()
+	 */
+	protected function handleData($data) {
+		parent::handleData($data);
+		
+		$this->data['additionalData'] = @unserialize($this->data['additionalData']);
+		if (!is_array($this->data['additionalData'])) {
+			$this->data['additionalData'] = array();
+		}
+	}
+	
+	/**
 	 * @see	wcf\data\ProcessibleDatabaseObject::getProcessor()
 	 */
 	public function getProcessor() {
