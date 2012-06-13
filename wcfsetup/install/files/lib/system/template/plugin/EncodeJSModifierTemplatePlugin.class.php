@@ -23,18 +23,6 @@ class EncodeJSModifierTemplatePlugin implements IModifierTemplatePlugin {
 	 * @see wcf\system\template\IModifierTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
-		// escape backslash
-		$tagArgs[0] = StringUtil::replace("\\", "\\\\", $tagArgs[0]);
-		
-		// escape singe quote
-		$tagArgs[0] = StringUtil::replace("'", "\'", $tagArgs[0]);
-		
-		// escape new lines
-		$tagArgs[0] = StringUtil::replace("\n", '\n', $tagArgs[0]);
-		
-		// escape slashes
-		$tagArgs[0] = StringUtil::replace("/", '\/', $tagArgs[0]);
-		
-		return $tagArgs[0];
+		return StringUtil::encodeJS($tagArgs[0]);
 	}
 }

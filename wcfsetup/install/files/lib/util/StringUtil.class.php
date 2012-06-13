@@ -140,6 +140,30 @@ final class StringUtil {
 	}
 	
 	/**
+	 * Converts javascript special characters.
+	 *
+	 * @param 	string 		$string
+	 * @return 	string 		$string
+	 */
+	public static function encodeJS($string) {
+		if (is_object($string)) $string = $string->__toString();
+		
+		// escape backslash
+		$string = StringUtil::replace("\\", "\\\\", $string);
+		
+		// escape singe quote
+		$string = StringUtil::replace("'", "\'", $string);
+		
+		// escape new lines
+		$string = StringUtil::replace("\n", '\n', $string);
+		
+		// escape slashes
+		$string = StringUtil::replace("/", '\/', $string);
+		
+		return $string;
+	}
+	
+	/**
 	 * Decodes html entities.
 	 *
 	 * @param 	string 		$string

@@ -129,7 +129,7 @@ class UserOptionHandler extends OptionHandler {
 			$option->setUser($this->user);
 		}
 		
-		if ($this->inRegistration && !$option->askDuringRegistration) {
+		if ($this->inRegistration && !$option->askDuringRegistration && !$option->required) {
 			return false;
 		}
 		

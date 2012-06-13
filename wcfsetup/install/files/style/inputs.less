@@ -86,7 +86,7 @@ textarea:focus,
 select[multiple]:focus {
 	background-color: @wcfInputHoverBackgroundColor;
 	border-color: @wcfInputHoverBorderColor;
-	outline: none;
+	outline: 0;
 	
 	.boxShadowNative(~"0 0 5px" fade(@wcfInputHoverBorderColor, 50%) ~", inset 0 1px 5px rgba(0, 0, 0, .1)");
 }
@@ -132,6 +132,18 @@ select[multiple][disabled] {
 	border-color: @wcfErrorBackgroundColor;
 	
 	.boxShadowNative(~"0 0 5px" fade(@wcfErrorBackgroundColor, 50%) ~", inset 0 1px 5px rgba(0, 0, 0, .1)");
+}
+
+/* success state */
+.formSuccess input[type='text'],
+.formSuccess input[type='search'],
+.formSuccess input[type='email'],
+.formSuccess input[type='url'],
+.formSuccess input[type='password'],
+.formSuccess textarea {
+	border-color: @wcfSuccessBackgroundColor;
+	
+	.boxShadowNative(~"0 0 5px" fade(@wcfSuccessBackgroundColor, 50%) ~", inset 0 1px 5px rgba(0, 0, 0, .1)");
 }
 
 /* width */

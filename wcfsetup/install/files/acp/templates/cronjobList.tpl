@@ -5,33 +5,33 @@
 		<h1>{lang}wcf.acp.cronjob.list{/lang}</h1>
 		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>
 	</hgroup>
-	
-	<script type="text/javascript">
-		//<![CDATA[
-		$(function() {
-			new WCF.Action.Delete('wcf\\data\\cronjob\\CronjobAction', $('.jsCronjobRow'));
-			new WCF.Action.Toggle('wcf\\data\\cronjob\\CronjobAction', $('.jsCronjobRow'));
-			new WCF.Action.SimpleProxy({
-				action: 'execute',
-				className: 'wcf\\data\\cronjob\\CronjobAction',
-				elements: $('.jsCronjobRow .jsExecuteButton')
-			}, {
-				success: function(data, statusText, jqXHR) {
-					$('.jsCronjobRow').each(function(index, row) {
-						$button = $(row).find('.jsExecuteButton');
-						
-						if (WCF.inArray($($button).data('objectID'), data.objectIDs)) {
-							// insert feedback here
-							$(row).find('td.columnNextExec').html(data.returnValues[$($button).data('objectID')].formatted);
-							$(row).wcfHighlight();
-						}
-					});
-				}
-			});
-		});
-		//]]>
-	</script>
 </header>
+
+<script type="text/javascript">
+	//<![CDATA[
+	$(function() {
+		new WCF.Action.Delete('wcf\\data\\cronjob\\CronjobAction', $('.jsCronjobRow'));
+		new WCF.Action.Toggle('wcf\\data\\cronjob\\CronjobAction', $('.jsCronjobRow'));
+		new WCF.Action.SimpleProxy({
+			action: 'execute',
+			className: 'wcf\\data\\cronjob\\CronjobAction',
+			elements: $('.jsCronjobRow .jsExecuteButton')
+		}, {
+			success: function(data, statusText, jqXHR) {
+				$('.jsCronjobRow').each(function(index, row) {
+					$button = $(row).find('.jsExecuteButton');
+					
+					if (WCF.inArray($($button).data('objectID'), data.objectIDs)) {
+						// insert feedback here
+						$(row).find('td.columnNextExec').html(data.returnValues[$($button).data('objectID')].formatted);
+						$(row).wcfHighlight();
+					}
+				});
+			}
+		});
+	});
+	//]]>
+</script>
 
 <div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller="CronjobList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
@@ -132,10 +132,9 @@
 				{/content}
 			</tbody>
 		</table>
-		
 	</div>
 {hascontentelse}
-	<p class="warning">{lang}wcf.acp.cronjob.noneAvailable{/lang}</p>
+	<p class="info">{lang}wcf.acp.cronjob.noneAvailable{/lang}</p>
 {/hascontent}
 
 <div class="contentNavigation">

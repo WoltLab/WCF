@@ -110,8 +110,10 @@ fieldset {
 		}
 		
 		/* disabled state */
-		&.disabled > dt {
-			color: @wcfDimmedColor;
+		&.disabled {
+			> dt, > dd > label {
+				color: @wcfDimmedColor;
+			}
 		}
 	}
 }

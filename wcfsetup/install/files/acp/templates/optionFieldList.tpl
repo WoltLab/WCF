@@ -5,7 +5,7 @@
 	{else}
 		{assign var=error value=''}
 	{/if}
-	<dl class="{$option->optionName}Input">
+	<dl class="{$option->optionName}Input{if $error} formError{/if}">
 		<dt{if $optionData[cssClassName]} class="{$optionData[cssClassName]}"{/if}><label for="{$option->optionName}">{lang}{@$langPrefix}{$option->optionName}{/lang}</label></dt>
 		<dd>{@$optionData[html]}
 			{if $error}
@@ -13,7 +13,7 @@
 					{if $error == 'empty'}
 						{lang}wcf.global.form.error.empty{/lang}
 					{else}	
-						{lang}wcf.user.option.error.{$error}{/lang}
+						{lang}{@$langPrefix}error.{$error}{/lang}
 					{/if}
 				</small>
 			{/if}
