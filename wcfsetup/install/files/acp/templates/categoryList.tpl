@@ -55,9 +55,7 @@
 		<ol class="categoryList sortableList" data-object-id="0">
 			{assign var=oldDepth value=0}
 			{foreach from=$categoryNodeList item=category}
-				{if $categoryNodeList->getDepth() < $oldDepth}
-					</ol></li>
-				{/if}
+				{section name=i loop=$oldDepth-$categoryNodeList->getDepth()}</ol></li>{/section}
 				
 				<li class="{if $objectType->getProcessor()->canEditCategory() && $categoryNodeList|count > 1}sortableNode {/if}jsCategory" data-object-id="{@$category->categoryID}"{if $collapsedCategoryIDs|is_array} data-is-open="{if $collapsedCategoryIDs[$category->categoryID]|isset}0{else}1{/if}"{/if}>
 					<span class="buttons">
