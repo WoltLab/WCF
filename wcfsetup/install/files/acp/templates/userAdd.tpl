@@ -157,7 +157,7 @@
 						{foreach from=$categoryLevel1[categories] item=categoryLevel2}
 							<fieldset>
 								<legend>{lang}wcf.user.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</legend>
-							
+								
 								{if $categoryLevel2[object]->categoryName == 'settings.general' && $availableLanguages|count > 1}
 									<dl>
 										<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>
@@ -186,8 +186,14 @@
 										</dl>
 									{/if}
 								{/if}
-							
+								
 								{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.user.option.'}
+								
+								{if $categoryLevel2[categories]|count}
+									{foreach from=$categoryLevel2[categories] item=categoryLevel3}
+										{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.user.option.'}
+									{/foreach}
+								{/if}
 							</fieldset>
 						{/foreach}
 					</div>

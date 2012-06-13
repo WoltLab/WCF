@@ -171,9 +171,10 @@ class Option extends DatabaseObject {
 	/**
 	 * Returns true, if option is visible
 	 * 
+	 * @param	boolean		$overrideVisibility
 	 * @return	boolean
 	 */
-	public function isVisible() {
+	public function isVisible($overrideVisibility = false) {
 		return !$this->hidden;
 	}
 }

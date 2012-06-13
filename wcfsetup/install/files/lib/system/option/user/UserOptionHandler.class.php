@@ -133,7 +133,7 @@ class UserOptionHandler extends OptionHandler {
 			return false;
 		}
 		
-		return $option->isVisible();
+		return $option->isVisible($this->overrideVisibility);
 	}
 	
 	/**

@@ -88,6 +88,12 @@ class OptionHandler implements IOptionHandler {
 	public $optionValues = array();
 	
 	/**
+	 * visibility override
+	 * @var	boolean
+	 */
+	public $overrideVisibility = false;
+	
+	/**
 	 * raw option values
 	 * @var array<mixed>
 	 */
@@ -455,7 +461,7 @@ class OptionHandler implements IOptionHandler {
 	 * @return	boolean
 	 */
 	protected function checkOption(Option $option) {
-		if ($option->permissions) {
+		if ($option->permissions && !$this->overrideVisibility) {
 			$hasPermission = false;
 			$permissions = explode(',', $option->permissions);
 			foreach ($permissions as $permission) {
@@ -496,6 +502,13 @@ class OptionHandler implements IOptionHandler {
 	 * @return	boolean
 	 */
 	protected function checkVisibility(Option $option) {
-		return $option->isVisible();
+		return $option->isVisible($this->overrideVisibility);
+	}
+	
+	/**
+	 * Overrides option visibility for administrative purposes.
+	 */
+	public function overrideVisibility() {
+		$this->overrideVisibility = true;
 	}
 }

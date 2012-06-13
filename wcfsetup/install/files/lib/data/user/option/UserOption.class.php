@@ -56,10 +56,15 @@ class UserOption extends Option {
 	/**
 	 * @see	wcf\data\option\Option::isVisible()
 	 */
-	public function isVisible() {
+	public function isVisible($overrideVisibility = false) {
 		// check if option is hidden
-		if (!$this->visible) {
+		if (!$this->visible || $this->disabled) {
 			return false;
+		}
+		
+		// ACP visibility override
+		if ($overrideVisibility) {
+			return true;
 		}
 		
 		// proceed if option is visible for all

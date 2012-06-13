@@ -95,6 +95,15 @@ class UserAddForm extends UserOptionListForm {
 	public $additionalFields = array();
 	
 	/**
+	 * @see	wcf\page\IPage::readParameters()
+	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		$this->optionHandler->overrideVisibility();
+	}
+	
+	/**
 	 * @see wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
