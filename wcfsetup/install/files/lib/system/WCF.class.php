@@ -643,7 +643,7 @@ class WCF {
 			$scriptName = substr($scriptName, 0, strrpos($scriptName, '/'));
 		}
 		
-		$path = str_replace($scriptName, '', $_SERVER['REQUEST_URI']);
+		$path = str_replace('/index.php', '', str_replace($scriptName, '', $_SERVER['REQUEST_URI']));
 		$baseHref = self::getTPL()->get('baseHref');
 		
 		return $baseHref . 'index.php' . $path . '#' . $fragment;

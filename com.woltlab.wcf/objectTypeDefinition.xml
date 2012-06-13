@@ -13,5 +13,9 @@
 			<interfacename>wcf\system\category\ICategoryType</interfacename>
 			<name>com.woltlab.wcf.category</name>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.modifiableContent</name>
+		</definition>
 	</import>
 </data>

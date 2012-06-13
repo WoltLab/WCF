@@ -3357,6 +3357,8 @@ WCF.Effect.SmoothScroll = WCF.Effect.Scroll.extend({
 		$('a[href$=#top],a[href$=#bottom]').click(function() {
 			var $target = $(this.hash);
 			self.scrollTo($target, true);
+			
+			return false;
 		});
 	}
 });

@@ -114,9 +114,9 @@ abstract class AbstractCategoryAddForm extends ACPForm {
 	public $title = '';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::assignVariables()
+	 * @see	wcf\page\AbstractPage::__run()
 	 */
-	public function __construct() {
+	public function __run() {
 		$classNameParts = explode('\\', get_called_class());
 		$className = array_pop($classNameParts);
 		
@@ -131,7 +131,7 @@ abstract class AbstractCategoryAddForm extends ACPForm {
 			$this->listController = StringUtil::replace(array('AddForm', 'EditForm'), 'List', $className);
 		}
 		
-		parent::__construct();
+		parent::__run();
 	}
 	
 	/**
