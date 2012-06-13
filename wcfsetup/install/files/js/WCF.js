@@ -4928,6 +4928,7 @@ WCF.Sortable.List = Class.extend({
 		this._options = $.extend(true, {
 			axis: 'y',
 			connectWith: '#' + this._containerID * ' .sortableList',
+			containment: '#' + this._containerID,
 			disableNesting: 'sortableNoNesting',
 			errorClass: 'sortableInvalidTarget',
 			forcePlaceholderSize: true,
