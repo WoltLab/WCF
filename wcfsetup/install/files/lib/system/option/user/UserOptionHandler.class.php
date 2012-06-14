@@ -51,12 +51,13 @@ class UserOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * Sets registration mode.
+	 * Sets registration mode and disables visibility override.
 	 * 
 	 * @param	boolean		$inRegistration
 	 */
 	public function setInRegistration($inRegistration) {
 		$this->inRegistration = $inRegistration;
+		$this->overrideVisibility = false;
 	}
 	
 	/**
