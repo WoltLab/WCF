@@ -59,7 +59,7 @@
 <form method="post" action="{if $action == 'add'}{link controller=$addController}{/link}{else}{link controller=$editController id=$category->categoryID title=$category->getTitle()}{/link}{/if}">
 	<div class="container containerPadding marginTop shadow">
 		<fieldset>
-			<legend>{hascontent}{content}{lang __optional=true}{@$objectType->getProcessor()->getLangVarPrefix()}.data{/lang}{/content}{hascontentelse}{lang}wcf.category.data{/lang}{/hascontent}</legend>
+			<legend>{hascontent}{content}{lang __optional=true}{@$objectType->getProcessor()->getLangVarPrefix()}.data{/lang}{/content}{hascontentelse}{lang}wcf.global.form.data{/lang}{/hascontent}</legend>
 			
 			{if $categoryNodeList|count}
 				<dl{if $errorField == 'parentCategoryID'} class="formError"{/if}>
