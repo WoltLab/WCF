@@ -25,11 +25,6 @@ use wcf\util\ArrayUtil;
  */
 class UserAssignToGroupForm extends ACPForm {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'userAssignToGroup';
-	
-	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditUser');

@@ -20,11 +20,6 @@ use wcf\util\StringUtil;
  */
 class MasterPasswordInitForm extends MasterPasswordForm {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'masterPasswordInit';
-
-	/**
 	 * master password confirm
 	 * @var	string
 	 */

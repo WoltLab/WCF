@@ -26,11 +26,6 @@ use wcf\util\StringUtil;
  */
 class UserSearchForm extends UserOptionListForm {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'userSearch';
-	
-	/**
 	 * active menu item name
 	 * @var string
 	 */

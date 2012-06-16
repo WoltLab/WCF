@@ -16,11 +16,6 @@ use wcf\system\WCF;
  */
 class UserGroupListPage extends SortablePage {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'userGroupList';
-	
-	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditGroup', 'admin.user.canDeleteGroup');

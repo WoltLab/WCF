@@ -24,11 +24,6 @@ use wcf\util\DirectoryUtil;
  */
 class CacheListPage extends AbstractPage {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'cacheList';
-	
-	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canViewLog');

@@ -18,11 +18,6 @@ use wcf\system\WCF;
  */
 class PackageViewPage extends AbstractPage {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'packageView';
-	
-	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canUninstallPackage');

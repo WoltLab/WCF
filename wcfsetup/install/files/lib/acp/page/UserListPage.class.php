@@ -28,11 +28,6 @@ use wcf\util\StringUtil;
  */
 class UserListPage extends SortablePage {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'userList';
-	
-	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canSearchUser');

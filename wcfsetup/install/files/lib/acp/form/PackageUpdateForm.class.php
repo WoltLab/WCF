@@ -20,11 +20,6 @@ use wcf\util\HeaderUtil;
  */
 class PackageUpdateForm extends ACPForm {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'packageUpdate';
-	
-	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canInstallPackage');

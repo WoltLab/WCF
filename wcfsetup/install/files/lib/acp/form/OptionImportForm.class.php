@@ -19,11 +19,6 @@ use wcf\util\XML;
  */
 class OptionImportForm extends ACPForm {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'optionImport';
-	
-	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canEditOption');

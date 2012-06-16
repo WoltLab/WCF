@@ -25,11 +25,6 @@ use wcf\util\UserUtil;
  */
 class UserAddForm extends UserOptionListForm {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'userAdd';
-	
-	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canAddUser');

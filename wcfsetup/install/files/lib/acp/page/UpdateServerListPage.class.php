@@ -16,11 +16,6 @@ use wcf\system\WCF;
  */
 class UpdateServerListPage extends SortablePage {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'updateServerList';
-	
-	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canEditServer');

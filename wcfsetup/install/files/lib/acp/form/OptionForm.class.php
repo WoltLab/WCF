@@ -21,11 +21,6 @@ use wcf\system\WCFACP;
  */
 class OptionForm extends AbstractOptionListForm {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName;
-	 */
-	public $templateName = 'option';
-	
-	/**
 	 * category option
 	 * @var OptionCategory
 	 */

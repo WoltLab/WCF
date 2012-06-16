@@ -30,7 +30,6 @@ use wcf\util\StringUtil;
  */
 class UsersMassProcessingForm extends UserOptionListForm {
 	// system
-	public $templateName = 'usersMassProcessing';
 	public $neededPermissions = array('admin.user.canEditUser', 'admin.user.canDeleteUser', 'admin.user.canMailUser');
 	
 	// parameters

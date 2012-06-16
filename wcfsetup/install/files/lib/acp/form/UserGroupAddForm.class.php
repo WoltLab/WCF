@@ -29,11 +29,6 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public $neededPermissions = array('admin.user.canAddGroup');
 	
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'userGroupAdd';
-	
-	/**
 	 * name of the active acp menu item
 	 * @var string
 	 */

@@ -22,11 +22,6 @@ use wcf\util\StringUtil;
  */
 class LoginForm extends AbstractForm {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'login';
-	
-	/**
 	 * given login username
 	 * @var string
 	 */

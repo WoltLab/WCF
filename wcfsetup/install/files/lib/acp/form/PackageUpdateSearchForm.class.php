@@ -24,11 +24,6 @@ use wcf\util\StringUtil;
  */
 class PackageUpdateSearchForm extends ACPForm {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'packageUpdateSearch';
-	
-	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canInstallPackage');

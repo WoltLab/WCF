@@ -20,11 +20,6 @@ use wcf\util\StringUtil;
  */
 class CronjobAddForm extends ACPForm {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'cronjobAdd';
-	
-	/**
 	 * @see wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.cronjob.add';

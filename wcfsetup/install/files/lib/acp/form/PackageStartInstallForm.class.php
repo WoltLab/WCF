@@ -27,11 +27,6 @@ use wcf\util\StringUtil;
  */
 class PackageStartInstallForm extends ACPForm {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'packageStartInstall';
-	
-	/**
 	 * @see wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.install';

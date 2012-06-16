@@ -17,11 +17,6 @@ use wcf\system\WCF;
  */
 class CronjobListPage extends SortablePage {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'cronjobList';
-	
-	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.cronjob.canEditCronjob', 'admin.system.cronjob.canDeleteCronjob', 'admin.system.cronjob.canEnableDisableCronjob');

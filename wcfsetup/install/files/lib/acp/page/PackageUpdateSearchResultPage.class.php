@@ -20,11 +20,6 @@ use wcf\system\WCF;
  */
 class PackageUpdateSearchResultPage extends SortablePage {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'packageUpdateSearchResult';
-	
-	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canInstallPackage');

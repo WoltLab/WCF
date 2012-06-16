@@ -22,7 +22,6 @@ use wcf\util\StringUtil;
  */
 class UserMailForm extends ACPForm {
 	// system
-	public $templateName = 'userMail';
 	public $neededPermissions = array('admin.user.canMailUser');
 	
 	// parameters

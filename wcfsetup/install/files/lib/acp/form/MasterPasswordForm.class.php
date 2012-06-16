@@ -18,11 +18,6 @@ use wcf\util\StringUtil;
  */
 class MasterPasswordForm extends ACPForm {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'masterPassword';
-	
-	/**
 	 * master password
 	 * @var string
 	 */

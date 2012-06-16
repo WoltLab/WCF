@@ -18,11 +18,6 @@ use wcf\system\WCFACP;
  */
 class PackageAutoUpdateListPage extends AbstractPage {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'packageAutoUpdateList';
-
-	/**
 	 * @see wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage');

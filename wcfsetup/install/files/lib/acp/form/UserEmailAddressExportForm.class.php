@@ -20,7 +20,6 @@ use wcf\util\StringUtil;
  * @category 	Community Framework
  */
 class UserEmailAddressExportForm extends ACPForm {
-	public $templateName = 'userEmailAddressExport';
 	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
 	public $neededPermissions = array('admin.user.canMailUser');
 	

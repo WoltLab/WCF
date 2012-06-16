@@ -20,11 +20,6 @@ use wcf\system\WCFACP;
  */
 class IndexPage extends AbstractPage {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
-	 */
-	public $templateName = 'index';
-	
-	/**
 	 * Did you know language item.
 	 *
 	 * @var string
