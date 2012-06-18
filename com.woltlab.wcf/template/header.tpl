@@ -1,4 +1,4 @@
-div id="page">
+<div id="page">
 	<a id="top"></a>
 	<!-- HEADER -->
 	<header id="pageHeader" class="layoutFluid">
