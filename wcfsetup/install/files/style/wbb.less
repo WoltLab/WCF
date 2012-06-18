@@ -227,12 +227,18 @@
 		}
 	}
 	
-	.columnTopic > h1 > .labelList {
-		float: right;
-		padding-left: 7px;
+	.columnTopic {
+		> h1 > .labelList {
+			float: right;
+			padding-left: 7px;
+			
+			> li > .badge {
+				font-size: @wcfSmallFontSize;
+			}
+		}
 		
-		> li > .badge {
-			font-size: @wcfSmallFontSize;
+		> small {
+			display: block;
 		}
 	}
 	
