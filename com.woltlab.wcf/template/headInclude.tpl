@@ -43,6 +43,7 @@
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
+			'wcf.global.button.add': '{lang}wcf.global.button.add{/lang}',
 			'wcf.global.button.cancel': '{lang}wcf.global.button.cancel{/lang}',
 			'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}',
 			'wcf.global.button.disable': '{lang}wcf.global.button.disable{/lang}',
