@@ -124,7 +124,8 @@
 		li {
 			display: block;
 			
-			&:hover:not(.dropdownDivider) {
+			&:hover:not(.dropdownDivider):not(.dropdownList),
+			&.dropdownList > li:hover:not(.dropdownDivider) {
 				background-color: @wcfDropdownHoverBackgroundColor;
 			}
 			
