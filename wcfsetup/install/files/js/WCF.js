@@ -4256,8 +4256,9 @@ WCF.System.Confirmation = {
 	 * @param	string		message
 	 * @param	object		callback
 	 * @param	object		parameters
+	 * @param	jQuery		template
 	 */
-	show: function(message, callback, parameters) {
+	show: function(message, callback, parameters, template) {
 		if (this._visible) {
 			console.debug('[WCF.System.Confirmation] Confirmation dialog is already open, refusing action.');
 			return;
@@ -4274,6 +4275,11 @@ WCF.System.Confirmation = {
 			this._createDialog();
 		}
 		
+		this._dialog.find('#wcfSystemConfirmationContent').empty().hide();
+		if (template && template.length) {
+			template.appendTo(this._dialog.find('#wcfSystemConfirmationContent').show());
+		}
+		
 		this._dialog.find('p').html(message);
 		this._dialog.wcfDialog({
 			onClose: $.proxy(this._close, this),
@@ -4288,7 +4294,7 @@ WCF.System.Confirmation = {
 	 * Creates the confirmation dialog on first use.
 	 */
 	_createDialog: function() {
-		this._dialog = $('<div id="wcfSystemConfirmation" class="systemConfirmation"><p></p></div>').hide().appendTo(document.body);
+		this._dialog = $('<div id="wcfSystemConfirmation" class="systemConfirmation"><p /><div id="wcfSystemConfirmationContent" /></div>').hide().appendTo(document.body);
 		var $formButtons = $('<div class="formSubmit" />').appendTo(this._dialog);
 		
 		$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.confirmation.confirm') + '</button>').data('action', 'confirm').click($.proxy(this._click, this)).appendTo($formButtons);
