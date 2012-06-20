@@ -1029,8 +1029,10 @@ WCF.Clipboard = {
 		if ($listItem.data('parameters').className && $listItem.data('parameters').actionName && $listItem.data('parameters').objectIDs) {
 			var $confirmMessage = $listItem.data('internalData')['confirmMessage'];
 			if ($confirmMessage) {
-				WCF.System.Confirmation.show($confirmMessage, $.proxy(function() {
-					this._executeAJAXActions($listItem);
+				WCF.System.Confirmation.show($confirmMessage, $.proxy(function(action) {
+					if (action === 'confirm') {
+						this._executeAJAXActions($listItem);
+					}
 				}, this));
 			}
 			else {
