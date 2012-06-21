@@ -1029,14 +1029,27 @@ WCF.Clipboard = {
 		if ($listItem.data('parameters').className && $listItem.data('parameters').actionName && $listItem.data('parameters').objectIDs) {
 			var $confirmMessage = $listItem.data('internalData')['confirmMessage'];
 			if ($confirmMessage) {
+				var $template = $listItem.data('internalData')['template'];
+				if ($template) $template = $($template);
+				
 				WCF.System.Confirmation.show($confirmMessage, $.proxy(function(action) {
 					if (action === 'confirm') {
-						this._executeAJAXActions($listItem);
+						var $data = { };
+						
+						if ($template && $template.length) {
+							$('#wcfSystemConfirmationContent').find('input, select, textarea').each(function(index, item) {
+								var $item = $(item);
+								$data[$item.prop('name')] = $item.val();
+							});
+							console.debug($data);
+						}
+						
+						this._executeAJAXActions($listItem, $data);
 					}
-				}, this));
+				}, this), '', $template);
 			}
 			else {
-				this._executeAJAXActions($listItem);
+				this._executeAJAXActions($listItem, { });
 			}
 		}
 		
@@ -1048,19 +1061,24 @@ WCF.Clipboard = {
 	 * Executes the AJAX actions for the given editor list item.
 	 * 
 	 * @param	jQuery		listItem
+	 * @param	object		data
 	 */
-	_executeAJAXActions: function(listItem) {
-		var objectIDs = [];
+	_executeAJAXActions: function(listItem, data) {
+		data = data || { };
+		var $objectIDs = [];
 		$.each(listItem.data('parameters').objectIDs, function(index, objectID) {
-			objectIDs.push(parseInt(objectID));
+			$objectIDs.push(parseInt(objectID));
 		});
-			
+		
 		new WCF.Action.Proxy({
 			autoSend: true,
 			data: {
 				actionName: listItem.data('parameters').actionName,
 				className: listItem.data('parameters').className,
-				objectIDs: objectIDs
+				objectIDs: $objectIDs,
+				parameters: {
+					data: data
+				}
 			},
 			success: $.proxy(function(data) {
 				listItem.trigger('clipboardActionResponse', [ data, listItem.data('type'), listItem.data('actionName'), listItem.data('parameters') ]);
