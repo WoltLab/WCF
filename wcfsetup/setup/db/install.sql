@@ -532,6 +532,15 @@ CREATE TABLE wcf1_session (
 	KEY packageID (packageID, lastActivityTime, spiderID)
 );
 
+DROP TABLE IF EXISTS wcf1_sitemap;
+CREATE TABLE wcf1_sitemap (
+	sitemapID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10) NOT NULL,
+	sitemapName VARCHAR(80) NOT NULL DEFAULT '',
+	className VARCHAR(255) NOT NULL DEFAULT '',
+	UNIQUE KEY sitemapName (packageID, sitemapName)
+);
+
 DROP TABLE IF EXISTS wcf1_spider;
 CREATE TABLE wcf1_spider (
 	spiderID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -851,6 +860,8 @@ ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) O
 
 ALTER TABLE wcf1_session ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_sitemap ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_storage ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_storage ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
