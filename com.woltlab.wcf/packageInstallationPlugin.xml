@@ -20,5 +20,6 @@
 		<pip name="userGroupOption">wcf\system\package\plugin\UserGroupOptionPackageInstallationPlugin</pip>
 		<pip name="userOption">wcf\system\package\plugin\UserOptionPackageInstallationPlugin</pip>
 		<pip name="packageIcon">wcf\system\package\plugin\PackageIconPackageInstallationPlugin</pip>
+		<pip name="sitemap">wcf\system\package\plugin\SitemapPackageInstallationPlugin</pip>
 	</import>
 </data>
