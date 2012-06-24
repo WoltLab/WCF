@@ -6495,7 +6495,7 @@ $.widget('ui.wcfPages', {
 		if (this.options.nextDisabledIcon === null) this.options.nextDisabledIcon = WCF.Icon.get('wcf.icon.next.disabled');
 		if (this.options.arrowDownIcon === null) this.options.arrowDownIcon = WCF.Icon.get('wcf.icon.arrow.down');
 		
-		this.element.addClass('wcf-pageNavigation');
+		this.element.addClass('pageNavigation');
 		
 		this._render();
 	},
@@ -6526,7 +6526,7 @@ $.widget('ui.wcfPages', {
 			var $pageList = $('<ul></ul>');
 			this.element.append($pageList);
 			
-			var $previousElement = $('<li></li>').addClass('wcf-button skip');
+			var $previousElement = $('<li></li>').addClass('button skip');
 			$pageList.append($previousElement);
 			
 			if (this.options.activePage > 1) {
@@ -6604,7 +6604,7 @@ $.widget('ui.wcfPages', {
 					$leftChildrenInput.keyup($.proxy(this._handleInput, this));
 					$leftChildrenInput.blur($.proxy(this._stopInput, this));
 					
-					var $leftChildrenContainer = $('<div class="wcf-dropdown"></div>');
+					var $leftChildrenContainer = $('<div class="dropdown"></div>');
 					$leftChildren.append($leftChildrenContainer);
 					
 					var $leftChildrenList = $('<ul></u>');
@@ -6647,7 +6647,7 @@ $.widget('ui.wcfPages', {
 					$rightChildrenInput.keyup($.proxy(this._handleInput, this));
 					$rightChildrenInput.blur($.proxy(this._stopInput, this));
 					
-					var $rightChildrenContainer = $('<div class="wcf-dropdown"></div>');
+					var $rightChildrenContainer = $('<div class="dropdown"></div>');
 					$rightChildren.append($rightChildrenContainer);
 					
 					var $rightChildrenList = $('<ul></ul>');
@@ -6667,11 +6667,11 @@ $.widget('ui.wcfPages', {
 			$pageList.append(this._renderLink(this.options.maxPage));
 			
 			// add next button
-			var $nextElement = $('<li></li>').addClass('skip');
+			var $nextElement = $('<li></li>').addClass('button skip');
 			$pageList.append($nextElement);
 			
 			if (this.options.activePage < this.options.maxPage) {
-				var $nextLink = $('<a' + ((this.options.nextPage != null) ? (' title="' + this.options.nextPage + '"') : ('')) + '></a>').addClass('wcf-button wcf-ballonTooltip');
+				var $nextLink = $('<a' + ((this.options.nextPage != null) ? (' title="' + this.options.nextPage + '"') : ('')) + '></a>');
 				$nextElement.append($nextLink);
 				this._bindSwitchPage($nextLink, this.options.activePage + 1);
 				
@@ -6698,7 +6698,7 @@ $.widget('ui.wcfPages', {
 	 * @return		$(element)
 	 */
 	_renderLink: function(page, lineBreak) {
-		var $pageElement = $('<li class="wcf-button"></li>');
+		var $pageElement = $('<li class="button"></li>');
 		if (lineBreak != undefined && lineBreak) {
 			$pageElement.addClass('break');
 		}
