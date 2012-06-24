@@ -3836,7 +3836,7 @@ WCF.Table.EmptyTableHandler = Class.extend({
 		
 		this._options = $.extend(true, {
 			emptyMessage: null,
-			messageType: 'wcf-info',
+			messageType: 'info',
 			refreshPage: false,
 			updatePageNumber: false
 		}, options || { });
@@ -4839,7 +4839,7 @@ WCF.Upload = Class.extend({
 		var $self = this;
 		if (!this._overlay) {
 			// create overlay
-			this._overlay = $('<div style="display: none;"><form enctype="multipart/form-data" method="post" action="'+this._options.url+'"><dl><dt><label for="__fileUpload">File</label></dt><dd><input type="file" id="__fileUpload" name="'+this._name+'" '+(this._options.multiple ? 'multiple="true" ' : '')+'/></dd></dl><div class="wcf-formSubmit"><input type="submit" value="Upload" accesskey="s" /></div></form></div>');
+			this._overlay = $('<div style="display: none;"><form enctype="multipart/form-data" method="post" action="'+this._options.url+'"><dl><dt><label for="__fileUpload">File</label></dt><dd><input type="file" id="__fileUpload" name="'+this._name+'" '+(this._options.multiple ? 'multiple="true" ' : '')+'/></dd></dl><div class="formSubmit"><input type="submit" value="Upload" accesskey="s" /></div></form></div>');
 		}
 		
 		// create iframe
