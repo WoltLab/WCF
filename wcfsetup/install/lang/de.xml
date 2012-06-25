@@ -627,6 +627,10 @@
 		<item name="wcf.page.pageNo"><![CDATA[Seite {#$pageNo}]]></item>
 	</category>
 	
+	<category name="wcf.sitemap">
+		<item name="wcf.sitemap.title"><![CDATA[Schnellnavigation]]></item>
+	</category>
+	
 	<category name="wcf.user">
 		<item name="wcf.user.confirmEmail"><![CDATA[E-Mail-Adresse wiederholen]]></item>
 		<item name="wcf.user.confirmPassword"><![CDATA[Kennwort wiederholen]]></item>

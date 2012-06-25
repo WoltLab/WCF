@@ -64,7 +64,8 @@
 			'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
 			'wcf.global.confirmation.cancel': '{lang}wcf.global.confirmation.cancel{/lang}',
 			'wcf.global.confirmation.confirm': '{lang}wcf.global.confirmation.confirm{/lang}',
-			'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}'
+			'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}',
+			'wcf.sitemap.title': '{lang}wcf.sitemap.title{/lang}'
 			{event name='javascriptLanguageImport'}
 		});
 		
