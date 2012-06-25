@@ -5837,6 +5837,126 @@ $.widget('ui.wcfSidebar', {
 });
 
 /**
+ * Provides a generic sitemap.
+ */
+WCF.Sitemap = Class.extend({
+	/**
+	 * sitemap name cache
+	 */
+	_cache: [ ],
+	
+	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * initialization state
+	 * @var	boolean
+	 */
+	_didInit: false,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * Initializes the generic sitemap.
+	 */
+	init: function() {
+		$('#sitemap').click($.proxy(this._click, this));
+		
+		this._cache = [ ];
+		this._dialog = null;
+		this._didInit = false;
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+	},
+	
+	/**
+	 * Handles clicks on the sitemap icon.
+	 */
+	_click: function() {
+		if (this._dialog === null) {
+			this._dialog = $('<div id="sitemapDialog" />').appendTo(document.body);
+			
+			this._proxy.setOption('data', {
+				actionName: 'getSitemap',
+				className: 'wcf\\data\\sitemap\\SitemapAction'
+			});
+			this._proxy.sendRequest();
+		}
+		else {
+			this._dialog.wcfDialog('open');
+		}
+	},
+	
+	/**
+	 * Handles successful AJAX responses.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		if (this._didInit) {
+			this._cache.push(data.returnValues.sitemapName);
+			
+			this._dialog.find('#sitemap-' + data.returnValues.sitemapName).html(data.returnValues.template);
+			
+			// redraw dialog
+			this._dialog.wcfDialog('render');
+		}
+		else {
+			// mark sitemap name as loaded
+			this._cache.push(data.returnValues.sitemapName);
+			
+			// insert sitemap template
+			this._dialog.html(data.returnValues.template);
+			
+			// bind event listener
+			this._dialog.find('.sitemapNavigation').click($.proxy(this._navigate, this));
+			
+			// show dialog
+			this._dialog.wcfDialog({
+				title: WCF.Language.get('wcf.sitemap.title')
+			});
+			
+			this._didInit = true;
+		}
+	},
+	
+	/**
+	 * Navigates between different sitemaps.
+	 * 
+	 * @param	object		event
+	 */
+	_navigate: function(event) {
+		var $sitemapName = $(event.currentTarget).data('sitemapName');
+		if (WCF.inArray($sitemapName, this._cache)) {
+			this._dialog.find('.tabMenuContainer').wcfTabs('select', 'sitemap-' + $sitemapName);
+			
+			// redraw dialog
+			this._dialog.wcfDialog('render');
+		}
+		else {
+			this._proxy.setOption('data', {
+				actionName: 'getSitemap',
+				className: 'wcf\\data\\sitemap\\SitemapAction',
+				parameters: {
+					sitemapName: $sitemapName
+				}
+			});
+			this._proxy.sendRequest();
+		}
+	}
+});
+
+/**
  * Provides a toggleable sidebar with persistent visibility.
  */
 $.widget('ui.wcfPersistentSidebar', $.ui.wcfSidebar, {

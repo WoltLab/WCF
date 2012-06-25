@@ -38,16 +38,21 @@ class SitemapAction extends AbstractDatabaseObjectAction {
 	public function getSitemap() {
 		if (isset($this->parameters['sitemapName'])) {
 			return array(
+				'sitemapName' => $this->parameters['sitemapName'],
 				'template' => SitemapHandler::getInstance()->getSitemap($this->parameters['sitemapName'])
 			);
 		}
 		else {
+			$sitemapName = SitemapHandler::getInstance()->getDefaultSitemapName();
+			
 			WCF::getTPL()->assign(array(
-				'tree' => SitemapHandler::getInstance()->getTree(),
-				'sitemap' => SitemapHandler::getInstance()->getSitemap()
+				'defaultSitemapName' => $sitemapName,
+				'sitemap' => SitemapHandler::getInstance()->getSitemap($sitemapName),
+				'tree' => SitemapHandler::getInstance()->getTree()
 			));
 			
 			return array(
+				'sitemapName' => $sitemapName,
 				'template' => WCF::getTPL()->fetch('sitemap')
 			);
 		}

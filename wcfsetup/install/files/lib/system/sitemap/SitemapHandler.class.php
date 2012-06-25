@@ -55,25 +55,32 @@ class SitemapHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns sitemap for given sitemap name or falls back to active package id.
+	 * Returns default sitemap name.
 	 * 
-	 * @param	string		$sitemapName
-	 * @return	wcf\data\sitemap\Sitemap
+	 * @return	string
 	 */
-	public function getSitemap($sitemapName = '') {
-		if (empty($sitemapName)) {
-			foreach ($this->cache as $sitemap) {
-				if ($sitemap->packageID == PACKAGE_ID) {
-					$sitemapName = $sitemap->sitemapName;
-				}
-			}
-			
-			if (empty($sitemapName)) {
-				$sitemap = reset($this->cache);
+	public function getDefaultSitemapName() {
+		foreach ($this->cache as $sitemap) {
+			if ($sitemap->packageID == PACKAGE_ID) {
 				$sitemapName = $sitemap->sitemapName;
 			}
 		}
 		
+		if (empty($sitemapName)) {
+			$sitemap = reset($this->cache);
+			$sitemapName = $sitemap->sitemapName;
+		}
+		
+		return $sitemapName;
+	}
+	
+	/**
+	 * Returns sitemap for given sitemap name.
+	 * 
+	 * @param	string		$sitemapName
+	 * @return	wcf\data\sitemap\Sitemap
+	 */
+	public function getSitemap($sitemapName) {
 		foreach ($this->cache as $sitemap) {
 			if ($sitemap->sitemapName == $sitemapName) {
 				return $sitemap->getTemplate();

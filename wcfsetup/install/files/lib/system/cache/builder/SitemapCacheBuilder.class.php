@@ -19,7 +19,7 @@ class SitemapCacheBuilder implements ICacheBuilder {
 	 */
 	public function getData(array $cacheResource) {
 		$sitemapList = new SitemapList();
-		$sitemapList->getConditionBuilder()->add("sitemap.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getPackageIDs()));
+		$sitemapList->getConditionBuilder()->add("sitemap.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$sitemapList->sqlLimit = 0;
 		$sitemapList->readObjects();
 		

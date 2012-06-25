@@ -157,7 +157,6 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 			if (!count($this->objectIDs)) {
 				return;
 			}
-			
 			$sql = "SELECT	".(!empty($this->sqlSelects) ? $this->sqlSelects.($this->useQualifiedShorthand ? ',' : '') : '')."
 					".($this->useQualifiedShorthand ? $this->getDatabaseTableAlias().'.*' : '')."
 				FROM	".$this->getDatabaseTableName()." ".$this->getDatabaseTableAlias()."
@@ -169,6 +168,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 			$this->objects = $statement->fetchObjects(($this->objectClassName ?: $this->className));
 		}
 		else {
+			//if (!empty($this->sqlSelects)) die("x".$this->sqlSelects);
 			$sql = "SELECT	".(!empty($this->sqlSelects) ? $this->sqlSelects.($this->useQualifiedShorthand ? ',' : '') : '')."
 					".($this->useQualifiedShorthand ? $this->getDatabaseTableAlias().'.*' : '')."
 				FROM	".$this->getDatabaseTableName()." ".$this->getDatabaseTableAlias()."

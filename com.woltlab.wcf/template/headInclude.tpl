@@ -84,6 +84,7 @@
 		new WCF.Date.Time();
 		new WCF.Effect.SmoothScroll();
 		new WCF.Effect.BalloonTooltip();
+		new WCF.Sitemap();
 		WCF.Dropdown.init();
 		
 		{event name='javascriptInit'}
