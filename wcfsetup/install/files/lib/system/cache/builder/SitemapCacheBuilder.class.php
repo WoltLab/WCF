@@ -21,6 +21,7 @@ class SitemapCacheBuilder implements ICacheBuilder {
 		$sitemapList = new SitemapList();
 		$sitemapList->getConditionBuilder()->add("sitemap.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$sitemapList->sqlLimit = 0;
+		$sitemapList->sqlOrderBy = "sitemap.showOrder ASC";
 		$sitemapList->readObjects();
 		
 		return $sitemapList->getObjects();

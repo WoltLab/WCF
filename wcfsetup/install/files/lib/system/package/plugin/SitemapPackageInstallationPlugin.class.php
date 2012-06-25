@@ -49,9 +49,13 @@ class SitemapPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
+		$showOrder = (isset($data['elements']['showOrder'])) ? intval($data['elements']['showOrder']) : null;
+		$showOrder = $this->getShowOrder($showOrder, null, 'showOrder');
+		
 		return array(
 			'sitemapName' => $data['attributes']['name'],
-			'className' => $data['elements']['classname']
+			'className' => $data['elements']['classname'],
+			'showOrder' => $showOrder
 		);
 	}
 	
