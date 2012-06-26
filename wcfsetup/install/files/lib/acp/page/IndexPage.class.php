@@ -95,14 +95,10 @@ class IndexPage extends AbstractPage {
 		
 		$this->calculateHealth();
 		
-		$sql = "SELECT
-				languageItem
-			FROM
-				wcf".WCF_N."_language_item
-			WHERE
-				languageCategoryID = ?
-			ORDER BY
-				rand()";
+		$sql = "SELECT		languageItem
+			FROM		wcf".WCF_N."_language_item
+			WHERE		languageCategoryID = ?
+			ORDER BY	".(WCF::getDB()->getDBType() == 'wcf\system\database\PostgreSQLDatabase' ? 'RANDOM()' : 'RAND()');
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
 		// TODO: Change category
 		$statement->execute(array(LanguageFactory::getInstance()->getCategory('wcf.global')->languageCategoryID));
