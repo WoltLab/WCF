@@ -238,13 +238,36 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 		}
 		
 		if ($indexData['type'] == 'FULLTEXT') {
-			$sql = "CREATE INDEX ".$indexName." ON ".$tableName." USING gin(to_tsvector('english', \"".implode('" || \' \' || "', $columns)."\"))";
+			// add new column for fulltext index
+			$sql = "ALTER TABLE ".$tableName." ADD COLUMN ".$indexName." tsvector";
+			$statement = $this->dbObj->prepareStatement($sql);
+			$statement->execute();
+			
+			// add gin index
+			$sql = "CREATE INDEX ".$tableName."_".$indexName."_fulltext_key ON ".$tableName." USING gin(".$indexName.")";
+			$statement = $this->dbObj->prepareStatement($sql);
+			$statement->execute();
+			
+			// update fulltext index
+			$sql = "UPDATE	".$tableName."
+				SET	".$indexName." = to_tsvector('english', \"".implode('" || \' \' || "', $columns)."\")";
+			$statement = $this->dbObj->prepareStatement($sql);
+			$statement->execute();
+			
+			// add trigger
+			$sql = "CREATE TRIGGER 		".$tableName."_".$indexName."_trigger
+				BEFORE INSERT OR UPDATE
+				ON 			".$tableName."
+				FOR EACH ROW EXECUTE PROCEDURE
+				tsvector_update_trigger(".$indexName.", 'pg_catalog.english', ".implode(', ', $columns).");";
+			$statement = $this->dbObj->prepareStatement($sql);
+			$statement->execute();
 		}
 		else {
 			$sql = "CREATE ".($indexData['type'] == 'UNIQUE' ? "UNIQUE " : "")."INDEX ".$indexName." ON ".$tableName." (".$indexData['columns'].")";
+			$statement = $this->dbObj->prepareStatement($sql);
+			$statement->execute();
 		}
-		$statement = $this->dbObj->prepareStatement($sql);
-		$statement->execute();
 	}
 	
 	/**
