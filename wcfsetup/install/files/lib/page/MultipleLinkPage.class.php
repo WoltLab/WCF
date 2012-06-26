@@ -184,6 +184,24 @@ abstract class MultipleLinkPage extends AbstractPage {
 	}
 	
 	/**
+	 * Returns true, if current page is the first page.
+	 * 
+	 * @return	boolean
+	 */
+	public function isFirstPage() {
+		return ($this->pageNo == 1);
+	}
+	
+	/**
+	 * Returns true, if current page is the last page.
+	 * 
+	 * @return	boolean
+	 */
+	public function isLastPage() {
+		return ($this->items == $this->endIndex);
+	}
+	
+	/**
 	 * @see wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
