@@ -1365,6 +1365,9 @@ WCF.Action.Proxy.prototype = {
 	 * @param	object		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		// enable DOMNodeInserted event
+		WCF.DOMNodeInsertedHandler.enable();
+		
 		// call child method if applicable
 		if ($.isFunction(this.options.success)) {
 			this.options.success(data, textStatus, jqXHR);
@@ -1384,6 +1387,9 @@ WCF.Action.Proxy.prototype = {
 		if (this.options.showLoadingOverlay) {
 			this._activeRequests--;
 		}
+		
+		// disable DOMNodeInserted event
+		WCF.DOMNodeInsertedHandler.disable();
 	},
 	
 	/**
@@ -3651,19 +3657,25 @@ WCF.DOMNodeInsertedHandler = {
 	 * @var	WCF.Dictionary
 	 */
 	_callbacks: new WCF.Dictionary(),
-
+	
+	/**
+	 * true if DOMNodeInserted event should be ignored
+	 * @var	boolean
+	 */
+	_discardEvent: true,
+	
 	/**
 	 * prevent infinite loop if a callback manipulates DOM
 	 * @var	boolean
 	 */
 	_isExecuting: false,
-
+	
 	/**
 	 * indicates that overlay handler is listening to click events on body-tag
 	 * @var	boolean
 	 */
 	_isListening: false,
-
+	
 	/**
 	 * Adds a new callback.
 	 * 
@@ -3672,15 +3684,15 @@ WCF.DOMNodeInsertedHandler = {
 	 */
 	addCallback: function(identifier, callback) {
 		this._bindListener();
-
+		
 		if (this._callbacks.isset(identifier)) {
 			console.debug("[WCF.DOMNodeInsertedHandler] identifier '" + identifier + "' is already bound to a callback");
 			return false;
 		}
-
+		
 		this._callbacks.add(identifier, callback);
 	},
-
+	
 	/**
 	 * Removes a callback from list.
 	 * 
@@ -3691,24 +3703,24 @@ WCF.DOMNodeInsertedHandler = {
 			this._callbacks.remove(identifier);
 		}
 	},
-
+	
 	/**
 	 * Binds click event handler.
 	 */
 	_bindListener: function() {
 		if (this._isListening) return;
-
+		
 		$(document).bind('DOMNodeInserted', $.proxy(this._executeCallbacks, this));
-
+		
 		this._isListening = true;
 	},
-
+	
 	/**
 	 * Executes callbacks on click.
 	 */
 	_executeCallbacks: function(event) {
-		if (this._isExecuting) return;
-
+		if (this._discardEvent || this._isExecuting) return;
+		
 		// do not track events while executing callbacks
 		this._isExecuting = true;
 		
@@ -3719,6 +3731,22 @@ WCF.DOMNodeInsertedHandler = {
 		
 		// enable listener again
 		this._isExecuting = false;
+	},
+	
+	/**
+	 * Disables DOMNodeInsertedHandler, should be used after you've enabled it.
+	 */
+	disable: function() {
+		this._discardEvent = true;
+	},
+	
+	/**
+	 * Enables DOMNodeInsertedHandler, should be used if you're inserting HTML (e.g. via AJAX)
+	 * which might contain event-related elements. You have to disable the DOMNodeInsertedHandler
+	 * once you've enabled it, if you fail it will cause an infinite loop!
+	 */
+	enable: function() {
+		this._discardEvent = false;
 	}
 };
 
@@ -5286,7 +5314,7 @@ WCF.Popover = Class.extend({
 			return;
 		}
 		
-		this._popover.stop().wcfFadeIn();
+		this._popover.stop().css({ opacity: 1 }).wcfFadeIn();
 		
 		if (this._data[this._activeElementID].loading) {
 			this._loadContent();
@@ -5354,7 +5382,7 @@ WCF.Popover = Class.extend({
 		this._popover.stop();
 		
 		if (disableAnimation) {
-			sekf._popover.css({ opacity: 0 });
+			self._popover.css({ opacity: 0 });
 			self._popoverContent.empty().css({ height: 'auto', opacity: 0, width: 'auto' });
 		}
 		else {
