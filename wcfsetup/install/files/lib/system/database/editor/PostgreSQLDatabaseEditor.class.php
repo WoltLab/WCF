@@ -233,7 +233,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 				$i++;
 			}
 		}
-		else {
+		else if ($indexData['type'] != 'FULLTEXT') {
 			$indexName = $tableName.'_'.$indexName.'_key';
 		}
 		
