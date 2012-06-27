@@ -123,6 +123,12 @@
 				<defaultvalue>1</defaultvalue>
 			</option>
 			
+			<option name="log_ip_address">
+				<categoryname>module.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
 			<!-- general.page -->
 			<option name="page_title">
 				<categoryname>general.page</categoryname>
@@ -245,7 +251,7 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			<!-- security.blacklist -->
 			<option name="blacklist_ip_addresses">
 				<categoryname>security.blacklist</categoryname>
-				<optiontype>textarea</optiontype>
+				<optiontype>textareaIpAddress</optiontype>
 			</option>
 			<option name="blacklist_user_agents">
 				<categoryname>security.blacklist</categoryname>
