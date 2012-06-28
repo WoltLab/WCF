@@ -6620,10 +6620,8 @@ $.widget('ui.wcfPages', {
 		
 		// icons
 		previousIcon: null,
-		previousDisabledIcon: null,
 		arrowDownIcon: null,
 		nextIcon: null,
-		nextDisabledIcon: null,
 		
 		// language
 		// we use options here instead of language variables, because the paginator is not only usable with pages
@@ -6637,10 +6635,8 @@ $.widget('ui.wcfPages', {
 	_create: function() {
 		if (this.options.nextPage === null) this.options.nextPage = WCF.Language.get('wcf.global.page.next');
 		if (this.options.previousPage === null) this.options.previousPage = WCF.Language.get('wcf.global.page.previous');
-		if (this.options.previousIcon === null) this.options.previousIcon = WCF.Icon.get('wcf.icon.previous');
-		if (this.options.previousDisabledIcon === null) this.options.previousDisabledIcon = WCF.Icon.get('wcf.icon.previous.disabled');
-		if (this.options.nextIcon === null) this.options.nextIcon = WCF.Icon.get('wcf.icon.next');
-		if (this.options.nextDisabledIcon === null) this.options.nextDisabledIcon = WCF.Icon.get('wcf.icon.next.disabled');
+		if (this.options.previousIcon === null) this.options.previousIcon = WCF.Icon.get('wcf.icon.arrow.left.circle');
+		if (this.options.nextIcon === null) this.options.nextIcon = WCF.Icon.get('wcf.icon.arrow.right.circle');
 		if (this.options.arrowDownIcon === null) this.options.arrowDownIcon = WCF.Icon.get('wcf.icon.arrow.down');
 		
 		this.element.addClass('pageNavigation');
@@ -6686,10 +6682,12 @@ $.widget('ui.wcfPages', {
 				$previousLink.append($previousImage);
 			}
 			else {
-				var $previousImage = $('<img src="' + this.options.previousDisabledIcon + '" alt="" />');
+				var $previousImage = $('<img src="' + this.options.previousIcon + '" alt="" />');
 				$previousElement.append($previousImage);
 				$previousElement.addClass('disabled');
+				$previousImage.addClass('disabled');
 			}
+			$previousImage.addClass('icon16');
 			
 			// add first page
 			$pageList.append(this._renderLink(1));
@@ -6827,10 +6825,12 @@ $.widget('ui.wcfPages', {
 				$nextLink.append($nextImage);
 			}
 			else {
-				var $nextImage = $('<img src="' + this.options.nextDisabledIcon + '" alt="" />');
+				var $nextImage = $('<img src="' + this.options.nextIcon + '" alt="" />');
 				$nextElement.append($nextImage);
 				$nextElement.addClass('disabled');
+				$nextImage.addClass('disabled');
 			}
+			$nextImage.addClass('icon16');
 		}
 		else {
 			// otherwise hide the paginator if not already hidden
