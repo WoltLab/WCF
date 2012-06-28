@@ -6654,10 +6654,12 @@ $.widget('ui.wcfPages', {
 				$previousLink.append($previousImage);
 			}
 			else {
-				var $previousImage = $('<img src="' + this.options.previousIcon + '" alt="" class="disabled" />');
+				var $previousImage = $('<img src="' + this.options.previousIcon + '" alt="" />');
 				$previousElement.append($previousImage);
 				$previousElement.addClass('disabled');
+				$previousImage.addClass('disabled');
 			}
+			$previousImage.addClass('icon16');
 			
 			// add first page
 			$pageList.append(this._renderLink(1));
@@ -6795,10 +6797,12 @@ $.widget('ui.wcfPages', {
 				$nextLink.append($nextImage);
 			}
 			else {
-				var $nextImage = $('<img src="' + this.options.nextIcon + '" alt="" class="disabled" />');
+				var $nextImage = $('<img src="' + this.options.nextIcon + '" alt="" />');
 				$nextElement.append($nextImage);
 				$nextElement.addClass('disabled');
+				$nextImage.addClass('disabled');
 			}
+			$nextImage.addClass('icon16');
 		}
 		else {
 			// otherwise hide the paginator if not already hidden
