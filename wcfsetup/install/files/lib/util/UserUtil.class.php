@@ -144,6 +144,47 @@ final class UserUtil {
 	}
 	
 	/**
+	 * Converts IPv6 embedded IPv4 address into IPv4 or returns input if true IPv6.
+	 * 
+	 * @param	string		$ip
+	 * @return	string
+	 */
+	public static function convertIPv6To4($ip) {
+		// validate if given IP is a proper IPv6 address
+		if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+			// validate if given IP is a proper IPv4 address
+			if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false) {
+				// TODO: Use an exception instead?
+				// ip address is invalid
+				return '';
+			}
+			
+			return $ip;
+		}
+		
+		// check if ip is a masked IPv4 address
+		if (substr($ip, 0, 7) == '::ffff:') {
+			$ip = explode(':', substr($ip, 7));
+			$ip[0] = base_convert($ip[0], 16, 10);
+			$ip[1] = base_convert($ip[1], 16, 10);
+			
+			$ipParts = array();
+			$tmp = $ip[0] % 256;
+			$ipParts[] = ($ip[0] - $tmp) / 256;
+			$ipParts[] = $tmp;
+			$tmp = $ip[1] % 256;
+			$ipParts[] = ($ip[1] - $tmp) / 256;
+			$ipParts[] = $tmp;
+			
+			return implode('.', $ipParts);
+		}
+		else {
+			// given ip is an IPv6 address and cannot be converted
+			return $ip;
+		}
+	}
+	
+	/**
 	 * Returns the request uri of the active request.
 	 * 
 	 * @return	string

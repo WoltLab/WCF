@@ -120,9 +120,7 @@ class Tar implements IArchive {
 	}
 	
 	/** 
-	 * Returns the table of contents (TOC) list for this tar archive.
-	 * 
-	 * @return 	array 		list of content
+	 * @see	wcf\system\io\IArchive::getContentList()
 	 */
 	public function getContentList() {
 		if (!$this->read) {
@@ -132,12 +130,8 @@ class Tar implements IArchive {
 		return $this->contentList;
 	}
 	
-	/**
-	 * Returns an associative array with information
-	 * about a specific file in the archive.
-	 *
-	 * @param 	mixed 	$fileindex	index or name of the requested file
-	 * @return 	array 	$fileInfo
+	/** 
+	 * @see	wcf\system\io\IArchive::getFileInfo()
 	 */
 	public function getFileInfo($fileIndex) {
 		if (!is_int($fileIndex)) {
@@ -150,13 +144,8 @@ class Tar implements IArchive {
 		return $this->contentList[$fileIndex];
 	}
 	
-	/**
-	 * Searchs a file in the tar archive
-	 * and returns the numeric fileindex.
-	 * Returns false if not found.
-	 *
-	 * @param 	string 		$filename
-	 * @return 	integer 			index of the requested file
+	/** 
+	 * @see	wcf\system\io\IArchive::getIndexByFilename()
 	 */
 	public function getIndexByFilename($filename) {
 		foreach ($this->contentList as $index => $file) {
@@ -167,12 +156,8 @@ class Tar implements IArchive {
 		return false;
 	}
 	
-	/**
-	 * Extracts a specific file and returns the content as string.
-	 * Returns false if extraction failed.
-	 * 
-	 * @param 	mixed 		$index		index or name of the requested file
-	 * @return 	string 				content of the requested file
+	/** 
+	 * @see	wcf\system\io\IArchive::extractToString()
 	 */
 	public function extractToString($index) {
 		if (!$this->read) {
@@ -203,13 +188,8 @@ class Tar implements IArchive {
 		return $content;
 	}
 	
-	/**
-	 * Extracts a specific file and writes it's content
-	 * to the file specified with $destination.
-	 * 
-	 * @param 	mixed 		$index		index or name of the requested file
-	 * @param 	string 		$destination
-	 * @return 	boolean 	$success
+	/** 
+	 * @see	wcf\system\io\IArchive::extract()
 	 */
 	public function extract($index, $destination) {
 		if (!$this->read) {
