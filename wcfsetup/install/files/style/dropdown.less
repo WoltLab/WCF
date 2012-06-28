@@ -124,7 +124,7 @@
 		li {
 			display: block;
 			
-			&:hover:not(.dropdownDivider):not(.dropdownList),
+			&:hover:not(.dropdownDivider):not(.dropdownList):not(.dropdownText),
 			&.dropdownList > li:hover:not(.dropdownDivider) {
 				background-color: @wcfDropdownHoverBackgroundColor;
 			}
@@ -132,6 +132,11 @@
 			&.dropdownDivider {
 				border-top: 1px dotted @wcfDropdownBorderColor;
 				margin: @wcfGapTiny;
+			}
+			
+			&.dropdownText {
+				font-size: @wcfSmallFontSize;
+				padding: @wcfGapTiny @wcfGapMedium;
 			}
 			
 			> a,
