@@ -75,7 +75,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			return '<li class="button skip"><a href="'.$this->insertPageNumber($link, $pageNo + 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.next').'" class="jsTooltip"><img src="'.self::getIconPath('circleArrowRight').'" alt="" class="icon16" /></a></li>'."\n";
 		}
 		else {
-			return '<li class="skip disabled"><img src="'.self::getIconPath('circleArrowLeft').'" alt="" class="icon16 disabled" /></li>'."\n";
+			return '<li class="skip disabled"><img src="'.self::getIconPath('circleArrowRight').'" alt="" class="icon16 disabled" /></li>'."\n";
 		}
 	}
 	
