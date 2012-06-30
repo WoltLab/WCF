@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\language\LanguageEditor;
+use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
