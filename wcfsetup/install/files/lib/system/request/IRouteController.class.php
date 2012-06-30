@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\request;
+use wcf\data\ITitledDatabaseObject;
 
 /**
  * Default interface for route controllers.
@@ -11,18 +12,11 @@ namespace wcf\system\request;
  * @subpackage	system.request
  * @category 	Community Framework
  */
-interface IRouteController {
+interface IRouteController extends ITitledDatabaseObject {
 	/**
 	 * Returns the object id.
 	 * 
 	 * @return	integer
 	 */
 	public function getID();
-	
-	/**
-	 * Returns the object title.
-	 * 
-	 * @return	string
-	 */
-	public function getTitle();
 }
