@@ -543,12 +543,21 @@ class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns currently active language id
+	 * Returns currently active language id.
 	 *
 	 * @return	integer
 	 */	
 	public function getLanguageID() {
 		return $this->languageID;
+	}
+	
+	/**
+	 * Sets the currently active language id.
+	 *
+	 * @param	integer		$languageID
+	 */	
+	public function setLanguageID($languageID) {
+		$this->languageID = $languageID;
 	}
 	
 	/**
