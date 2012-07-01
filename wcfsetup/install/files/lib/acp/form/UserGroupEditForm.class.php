@@ -32,6 +32,11 @@ class UserGroupEditForm extends UserGroupAddForm {
 	public $neededPermissions = array('admin.user.canEditGroup');
 	
 	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
+	public $templateName = 'userGroupAdd';
+	
+	/**
 	 * group id
 	 * @var integer
 	 */
