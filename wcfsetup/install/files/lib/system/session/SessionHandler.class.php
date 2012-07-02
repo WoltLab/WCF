@@ -486,6 +486,11 @@ class SessionHandler extends SingletonFactory {
 			'username' => $this->user->username
 		));
 		
+		// reset caches
+		$this->groupData = null;
+		$this->languageIDs = null;
+		$this->languageID = $this->user->languageID;
+		
 		// truncate session variables
 	}
 	
