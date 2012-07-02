@@ -501,6 +501,7 @@ CREATE TABLE wcf1_page_menu_item (
 	options TEXT NULL,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	className VARCHAR(255) NOT NULL DEFAULT '',
+	isLandingPage TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY (packageID, menuItem)
 );
 

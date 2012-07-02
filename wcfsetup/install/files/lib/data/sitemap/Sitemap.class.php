@@ -22,6 +22,12 @@ class Sitemap extends DatabaseObject {
 	protected $sitemapObj = null;
 	
 	/**
+	 * database table for this object
+	 * @var	string
+	 */
+	protected static $databaseTableName = 'sitemap';
+	
+	/**
 	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'sitemapID';
