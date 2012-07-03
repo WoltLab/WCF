@@ -463,11 +463,12 @@ class SessionHandler extends SingletonFactory {
 	 * logged in, after the login his old session is used to store his full data.
 	 *
 	 * @param	User		$user
+	 * @param	boolean		$hideSession	When set to true the database will not be updated.
 	 */
-	public function changeUser(User $user) {
+	public function changeUser(User $user, $hideSession = false) {
 		$sessionTable = call_user_func(array($this->sessionClassName, 'getDatabaseTableName'));
 		
-		if ($user->userID) {
+		if ($user->userID && !$hideSession) {
 			// user is not a guest, delete all other sessions of this user
 			$sql = "DELETE FROM	".$sessionTable."
 				WHERE		sessionID <> ?
@@ -479,12 +480,14 @@ class SessionHandler extends SingletonFactory {
 		// update user reference
 		$this->user = $user;
 		
-		// update session
-		$sessionEditor = new $this->sessionEditorClassName($this->session);
-		$sessionEditor->update(array(
-			'userID' => $this->user->userID,
-			'username' => $this->user->username
-		));
+		if (!$hideSession) {
+			// update session
+			$sessionEditor = new $this->sessionEditorClassName($this->session);
+			$sessionEditor->update(array(
+				'userID' => $this->user->userID,
+				'username' => $this->user->username
+			));
+		}
 		
 		// reset caches
 		$this->groupData = null;
