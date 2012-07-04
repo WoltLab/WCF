@@ -30,6 +30,9 @@ class UserEditor extends DatabaseObjectEditor {
 		$parameters['salt'] = StringUtil::getRandomID();
 		$parameters['password'] = StringUtil::getDoubleSaltedHash($parameters['password'], $parameters['salt']);
 		
+		// create accessToken for AbstractAuthedPage
+		$parameters['accessToken'] = StringUtil::getRandomID();
+		
 		// handle registration date
 		if (!isset($parameters['registrationDate'])) $parameters['registrationDate'] = TIME_NOW;
 		
@@ -60,8 +63,11 @@ class UserEditor extends DatabaseObjectEditor {
 			$parameters['salt'] = StringUtil::getRandomID();
 			$parameters['password'] = StringUtil::getDoubleSaltedHash($parameters['password'], $parameters['salt']);
 			
-			// update salt
+			$parameters['accessToken'] = StringUtil::getRandomID();
+			
+			// update salt and accessToken
 			$this->salt = $parameters['salt'];
+			$this->accessToken = $parameters['accessToken'];
 		}
 		
 		parent::update($parameters);

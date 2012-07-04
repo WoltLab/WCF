@@ -16,7 +16,7 @@ use wcf\util\UserUtil;
  * SessionHandler provides an abstract implementation for session handling.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.session
@@ -26,43 +26,43 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * prevents update on shutdown
 	 * @var	boolean
-	 */	
+	 */
 	protected $doNotUpdate = false;
 	
 	/**
 	 * various environment variables
 	 * @var	array
-	 */	
+	 */
 	protected $environment = array();
 	
 	/**
 	 * group data and permissions
 	 * @var array<array>
-	 */	
+	 */
 	protected $groupData = null;
 	
 	/**
 	 * language id for active user
 	 * @var	integer
-	 */	
+	 */
 	protected $languageID = 0;
 	
 	/**
 	 * language ids for active user
 	 * @var	array<integer>
-	 */	
+	 */
 	protected $languageIDs = null;
 	
 	/**
 	 * session object
 	 * @var	wcf\data\acp\session\ACPSession
-	 */	
+	 */
 	protected $session = null;
 	
 	/**
 	 * session class name
 	 * @var	string
-	 */	
+	 */
 	protected $sessionClassName = '';
 	
 	/**
@@ -80,19 +80,19 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * user object
 	 * @var	wcf\data\user\User
-	 */	
+	 */
 	protected $user = null;
 	
 	/**
 	 * session variables
 	 * @var	array
-	 */	
+	 */
 	protected $variables = null;
 	
 	/**
 	 * indicates if session variables changed and must be saved upon shutdown
 	 * @var	boolean
-	 */	
+	 */
 	protected $variablesChanged = false;
 	
 	/**
@@ -100,7 +100,7 @@ class SessionHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$key
 	 * @return	mixed
-	 */	
+	 */
 	public function __get($key) {
 		if (isset($this->environment[$key])) {
 			return $this->environment[$key];
@@ -114,7 +114,7 @@ class SessionHandler extends SingletonFactory {
 	 *
 	 * @param	string		$sessionEditorClassName
 	 * @param	string		$sessionID
-	 */	
+	 */
 	public function load($sessionEditorClassName, $sessionID) {
 		$this->sessionEditorClassName = $sessionEditorClassName;
 		$this->sessionClassName = call_user_func(array($sessionEditorClassName, 'getBaseClass'));
@@ -132,7 +132,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Initializes session system.
-	 */	
+	 */
 	public function initSession() {
 		// init session environment
 		$this->loadVariables();
@@ -148,7 +148,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Enables cookie support.
-	 */	
+	 */
 	public function enableCookies() {
 		$this->useCookies = true;
 	}
@@ -200,7 +200,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Initializes security token.
-	 */	
+	 */
 	protected function initSecurityToken() {
 		if ($this->getVar('__SECURITY_TOKEN') === null) {
 			$this->register('__SECURITY_TOKEN', StringUtil::getRandomID());
@@ -232,7 +232,7 @@ class SessionHandler extends SingletonFactory {
 	 *
 	 * @param	string		$key
 	 * @param	string		$value
-	 */	
+	 */
 	public function register($key, $value) {
 		$this->variables[$key] = $value;
 		$this->variablesChanged = true;
@@ -242,7 +242,7 @@ class SessionHandler extends SingletonFactory {
 	 * Unsets a session variable.
 	 * 
 	 * @param	string		$key
-	 */	
+	 */
 	public function unregister($key) {
 		unset($this->variables[$key]);
 		$this->variablesChanged = true;
@@ -263,7 +263,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Initializes session variables.
-	 */	
+	 */
 	protected function loadVariables() {
 		@$this->variables = unserialize($this->session->sessionVariables);
 		if (!is_array($this->variables)) {
@@ -285,7 +285,7 @@ class SessionHandler extends SingletonFactory {
 	 *
 	 * @param	string		$sessionID 
 	 * @return	UserSession
-	 */	
+	 */
 	protected function getExistingSession($sessionID) {
 		$this->session = new $this->sessionClassName($sessionID);
 		if (!$this->session->sessionID || !$this->validate()) {
@@ -319,7 +319,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Creates a new session.
-	 */	
+	 */
 	protected function create() {
 		// create new session hash
 		$sessionID = StringUtil::getRandomID();
@@ -381,7 +381,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Loads group data from cache.
-	 */	
+	 */
 	protected function loadGroupData() {
 		if ($this->groupData !== null) return;
 		
@@ -423,7 +423,7 @@ class SessionHandler extends SingletonFactory {
 	 * Returns language ids for active user.
 	 *
 	 * @return	array<integer>
-	 */	
+	 */
 	public function getLanguageIDs() {
 		$this->loadLanguageIDs();
 		
@@ -432,7 +432,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Loads language ids for active user.
-	 */	
+	 */
 	protected function loadLanguageIDs() {
 		if ($this->languageIDs !== null) return;
 		
@@ -463,46 +463,43 @@ class SessionHandler extends SingletonFactory {
 	 * logged in, after the login his old session is used to store his full data.
 	 *
 	 * @param	User		$user
-	 */	
-	public function changeUser(User $user) {
+	 * @param	boolean		$hideSession	When set to true the database will not be updated.
+	 */
+	public function changeUser(User $user, $hideSession = false) {
 		$sessionTable = call_user_func(array($this->sessionClassName, 'getDatabaseTableName'));
 		
-		if ($user->userID) {
+		if ($user->userID && !$hideSession) {
 			// user is not a guest, delete all other sessions of this user
-			$sql = "SELECT		sessionID
-				FROM		".$sessionTable."
+			$sql = "DELETE FROM	".$sessionTable."
 				WHERE		sessionID <> ?
 						AND userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($this->sessionID, $this->userID));
-			$row = $statement->fetchArray();
-			
-			if ($row) {
-				$sql = "DELETE FROM 	".$sessionTable."
-					WHERE 		sessionID = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(
-					$row['sessionID']
-				));
-			}
 		}
 		
 		// update user reference
 		$this->user = $user;
 		
-		// update session
-		$sessionEditor = new $this->sessionEditorClassName($this->session);
-		$sessionEditor->update(array(
-			'userID' => $this->user->userID,
-			'username' => $this->user->username
-		));
+		if (!$hideSession) {
+			// update session
+			$sessionEditor = new $this->sessionEditorClassName($this->session);
+			$sessionEditor->update(array(
+				'userID' => $this->user->userID,
+				'username' => $this->user->username
+			));
+		}
+		
+		// reset caches
+		$this->groupData = null;
+		$this->languageIDs = null;
+		$this->languageID = $this->user->languageID;
 		
 		// truncate session variables
 	}
 	
 	/**
 	 * Updates user session on shutdown.
-	 */	
+	 */
 	public function update() {
 		if ($this->doNotUpdate) return;
 		
@@ -527,7 +524,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Deletes this session and it's related data.
-	 */	
+	 */
 	public function delete() {
 		// remove session
 		$sessionEditor = new $this->sessionEditorClassName($this->session);
@@ -546,7 +543,7 @@ class SessionHandler extends SingletonFactory {
 	 * Returns currently active language id.
 	 *
 	 * @return	integer
-	 */	
+	 */
 	public function getLanguageID() {
 		return $this->languageID;
 	}
@@ -555,7 +552,7 @@ class SessionHandler extends SingletonFactory {
 	 * Sets the currently active language id.
 	 *
 	 * @param	integer		$languageID
-	 */	
+	 */
 	public function setLanguageID($languageID) {
 		$this->languageID = $languageID;
 	}
@@ -564,7 +561,7 @@ class SessionHandler extends SingletonFactory {
 	 * Resets session-specific storage data.
 	 *
 	 * @param	array<integer>	$userIDs
-	 */	
+	 */
 	public static function resetSessions(array $userIDs = array()) {
 		if (count($userIDs)) {
 			UserStorageHandler::getInstance()->reset($userIDs, 'groupIDs', 1);
