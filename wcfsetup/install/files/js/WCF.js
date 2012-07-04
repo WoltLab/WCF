@@ -4967,8 +4967,9 @@ WCF.Sortable.List = Class.extend({
 	 * @param	string		className
 	 * @param	integer		offset
 	 * @param	object		options
+	 * @param	boolean		isSimpleSorting
 	 */
-	init: function(containerID, className, offset, options) {
+	init: function(containerID, className, offset, options, isSimpleSorting) {
 		this._containerID = $.wcfEscapeID(containerID);
 		this._container = $('#' + this._containerID);
 		this._className = className;
@@ -4981,7 +4982,7 @@ WCF.Sortable.List = Class.extend({
 		// init sortable
 		this._options = $.extend(true, {
 			axis: 'y',
-			connectWith: '#' + this._containerID * ' .sortableList',
+			connectWith: '#' + this._containerID + ' .sortableList',
 			disableNesting: 'sortableNoNesting',
 			errorClass: 'sortableInvalidTarget',
 			forcePlaceholderSize: true,
@@ -4992,7 +4993,13 @@ WCF.Sortable.List = Class.extend({
 			tolerance: 'pointer',
 			toleranceElement: '> span'
 		}, options || { });
-		$('#' + this._containerID + ' > .sortableList').wcfNestedSortable(this._options);
+		
+		if (isSimpleSorting) {
+			$('#' + this._containerID + ' .sortableList').sortable(this._options);
+		}
+		else {
+			$('#' + this._containerID + ' > .sortableList').wcfNestedSortable(this._options);
+		}
 		
 		this._container.find('.formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
 	},
