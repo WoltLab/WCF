@@ -4913,6 +4913,12 @@ WCF.Sortable = {};
  */
 WCF.Sortable.List = Class.extend({
 	/**
+	 * additional parameters for AJAX request
+	 * @var	object
+	 */
+	_additionalParameters: { },
+	
+	/**
 	 * action class name
 	 * @var	string
 	 */
@@ -4968,8 +4974,10 @@ WCF.Sortable.List = Class.extend({
 	 * @param	integer		offset
 	 * @param	object		options
 	 * @param	boolean		isSimpleSorting
+	 * @param	object		additionalParameters
 	 */
-	init: function(containerID, className, offset, options, isSimpleSorting) {
+	init: function(containerID, className, offset, options, isSimpleSorting, additionalParameters) {
+		this._additionalParameters = additionalParameters || { };
 		this._containerID = $.wcfEscapeID(containerID);
 		this._container = $('#' + this._containerID);
 		this._className = className;
@@ -5008,6 +5016,9 @@ WCF.Sortable.List = Class.extend({
 	 * Saves object structure.
 	 */
 	_submit: function() {
+		// reset structure
+		this._structure = { };
+		
 		// build structure
 		this._container.find('.sortableList').each($.proxy(function(index, list) {
 			var $list = $(list);
@@ -5027,15 +5038,17 @@ WCF.Sortable.List = Class.extend({
 		}, this));
 		
 		// send request
-		this._proxy.setOption('data', {
-			actionName: 'updatePosition',
-			className: this._className,
-			parameters: {
+		var $parameters = $.extend(true, {
 				data: {
 					offset: this._offset,
 					structure: this._structure
 				}
-			}
+		}, this._additionalParameters);
+		
+		this._proxy.setOption('data', {
+			actionName: 'updatePosition',
+			className: this._className,
+			parameters: $parameters
 		});
 		this._proxy.sendRequest();
 	},
