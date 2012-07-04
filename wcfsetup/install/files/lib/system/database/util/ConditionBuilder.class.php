@@ -43,8 +43,6 @@ class ConditionBuilder {
 		
 		foreach ($conditions as $condition) {
 			if (!empty($this->conditions)) $this->conditions .= " AND ";
-			else $this->conditions = ($this->addWhereKeyword ? " WHERE " : '');
-			
 			$this->conditions .= $condition;
 		}
 	}
@@ -55,6 +53,15 @@ class ConditionBuilder {
 	 * @return	string
 	 */
 	public function __toString() {
-		return $this->conditions;
+		return (($this->addWhereKeyword && $this->conditions) ? 'WHERE ' : '').$this->conditions;
+	}
+	
+	/**
+	 * Enables / disables the where keyword.
+	 * 
+	 * @param	boolean		$enable
+	 */
+	public function enableWhereKeyword($enable = true) {
+		$this->addWhereKeyword = $enable;
 	}
 }

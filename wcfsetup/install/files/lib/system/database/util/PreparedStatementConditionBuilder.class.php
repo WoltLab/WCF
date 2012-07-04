@@ -47,7 +47,6 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 		
 		// add condtion
 		if (!empty($this->conditions)) $this->conditions .= " AND ";
-		else $this->conditions = ($this->addWhereKeyword ? " WHERE " : '');
 		$this->conditions .= $condition;
 		
 		// parameter handling
