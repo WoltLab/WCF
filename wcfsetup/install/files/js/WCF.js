@@ -3967,7 +3967,7 @@ WCF.Search.Base = Class.extend({
 	 * minimum search input length, MUST be 1 or higher
 	 * @var	integer
 	 */
-	_triggerLength: 1,
+	_triggerLength: 3,
 
 	/**
 	 * Initializes a new search.
@@ -4170,7 +4170,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 		var $listItem = this._super(item);
 		
 		// insert item type
-		$('<img src="' + WCF.Icon.get('wcf.icon.user' + (item.type == 'group' ? 's' : '')) + '" alt="" class="icon16" style="margin-right: 4px;" />').prependTo($listItem.children('span:eq(0)'));
+		if (this._includeUserGroups) $('<img src="' + WCF.Icon.get('wcf.icon.user' + (item.type == 'group' ? 's' : '')) + '" alt="" class="icon16" style="margin-right: 4px;" />').prependTo($listItem.children('span:eq(0)'));
 		$listItem.data('type', item.type);
 		
 		return $listItem;
