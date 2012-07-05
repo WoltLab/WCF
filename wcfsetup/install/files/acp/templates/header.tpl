@@ -110,6 +110,8 @@
 							<li id="userMenu" class="dropdown">
 								<a class="dropdownToggle" data-toggle="userMenu">{event name='userAvatar'} {lang}wcf.user.userNote{/lang}</a>
 								<ul class="dropdownMenu">
+									<li><a href="../">FRONTEND</a></li>
+									<li class="dropdownDivider"></li>
 									<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
 								</ul>
 							</li>
