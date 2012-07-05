@@ -3,8 +3,8 @@
 	background-color: @wcfWarningBackgroundColor;
 	border: 1px solid @wcfWarningBackgroundColor2;
 	color: @wcfWarningColor;
-	margin: 3px 0;
-	padding: 4px;
+	margin: @wcfGapTiny 0;
+	padding: @wcfGapTiny;
 	
 	.borderRadius();
 }
@@ -19,7 +19,7 @@
 .sortableList {
 	list-style-position: outside;
 	list-style-type: decimal;
-	margin-left: 21px;
+	margin-left: @wcfGapLarge;
 }
 
 .sortableNode {
@@ -27,7 +27,15 @@
 }
 
 .sortableNodeLabel {
-	border-bottom: 1px solid rgba(216, 231, 245, 1); /* todo */
-	padding: 7px 7px 11px 0;
+	padding: @wcfGapSmall @wcfGapSmall @wcfGapSmall 0;
 	display: block;
+}
+
+.sortableList:not(.simpleSortableList) .sortableNodeLabel {
+	border-bottom: 1px solid rgba(216, 231, 245, 1); /* todo */
+	padding-bottom: @wcfGapMedium;
+}
+
+.simpleSortableList {
+	min-height: @wcfGapLarge;
 }

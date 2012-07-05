@@ -3967,7 +3967,7 @@ WCF.Search.Base = Class.extend({
 	 * minimum search input length, MUST be 1 or higher
 	 * @var	integer
 	 */
-	_triggerLength: 1,
+	_triggerLength: 3,
 
 	/**
 	 * Initializes a new search.
@@ -4170,7 +4170,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 		var $listItem = this._super(item);
 		
 		// insert item type
-		$('<img src="' + WCF.Icon.get('wcf.icon.user' + (item.type == 'group' ? 's' : '')) + '" alt="" class="icon16" style="margin-right: 4px;" />').prependTo($listItem.children('span:eq(0)'));
+		if (this._includeUserGroups) $('<img src="' + WCF.Icon.get('wcf.icon.user' + (item.type == 'group' ? 's' : '')) + '" alt="" class="icon16" style="margin-right: 4px;" />').prependTo($listItem.children('span:eq(0)'));
 		$listItem.data('type', item.type);
 		
 		return $listItem;
@@ -4913,6 +4913,12 @@ WCF.Sortable = {};
  */
 WCF.Sortable.List = Class.extend({
 	/**
+	 * additional parameters for AJAX request
+	 * @var	object
+	 */
+	_additionalParameters: { },
+	
+	/**
 	 * action class name
 	 * @var	string
 	 */
@@ -4967,8 +4973,11 @@ WCF.Sortable.List = Class.extend({
 	 * @param	string		className
 	 * @param	integer		offset
 	 * @param	object		options
+	 * @param	boolean		isSimpleSorting
+	 * @param	object		additionalParameters
 	 */
-	init: function(containerID, className, offset, options) {
+	init: function(containerID, className, offset, options, isSimpleSorting, additionalParameters) {
+		this._additionalParameters = additionalParameters || { };
 		this._containerID = $.wcfEscapeID(containerID);
 		this._container = $('#' + this._containerID);
 		this._className = className;
@@ -4981,7 +4990,7 @@ WCF.Sortable.List = Class.extend({
 		// init sortable
 		this._options = $.extend(true, {
 			axis: 'y',
-			connectWith: '#' + this._containerID * ' .sortableList',
+			connectWith: '#' + this._containerID + ' .sortableList',
 			disableNesting: 'sortableNoNesting',
 			errorClass: 'sortableInvalidTarget',
 			forcePlaceholderSize: true,
@@ -4992,7 +5001,13 @@ WCF.Sortable.List = Class.extend({
 			tolerance: 'pointer',
 			toleranceElement: '> span'
 		}, options || { });
-		$('#' + this._containerID + ' > .sortableList').wcfNestedSortable(this._options);
+		
+		if (isSimpleSorting) {
+			$('#' + this._containerID + ' .sortableList').sortable(this._options);
+		}
+		else {
+			$('#' + this._containerID + ' > .sortableList').wcfNestedSortable(this._options);
+		}
 		
 		this._container.find('.formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
 	},
@@ -5001,32 +5016,39 @@ WCF.Sortable.List = Class.extend({
 	 * Saves object structure.
 	 */
 	_submit: function() {
+		// reset structure
+		this._structure = { };
+		
 		// build structure
 		this._container.find('.sortableList').each($.proxy(function(index, list) {
 			var $list = $(list);
 			var $parentID = $list.data('objectID');
 			
-			$list.children(this._options.items).each($.proxy(function(index, listItem) {
-				var $objectID = $(listItem).data('objectID');
-				
-				if (!this._structure[$parentID]) {
-					this._structure[$parentID] = [ ];
-				}
-				
-				this._structure[$parentID].push($objectID);
-			}, this));
+			if ($parentID !== undefined) {
+				$list.children(this._options.items).each($.proxy(function(index, listItem) {
+					var $objectID = $(listItem).data('objectID');
+					
+					if (!this._structure[$parentID]) {
+						this._structure[$parentID] = [ ];
+					}
+					
+					this._structure[$parentID].push($objectID);
+				}, this));
+			}
 		}, this));
 		
 		// send request
-		this._proxy.setOption('data', {
-			actionName: 'updatePosition',
-			className: this._className,
-			parameters: {
+		var $parameters = $.extend(true, {
 				data: {
 					offset: this._offset,
 					structure: this._structure
 				}
-			}
+		}, this._additionalParameters);
+		
+		this._proxy.setOption('data', {
+			actionName: 'updatePosition',
+			className: this._className,
+			parameters: $parameters
 		});
 		this._proxy.sendRequest();
 	},
