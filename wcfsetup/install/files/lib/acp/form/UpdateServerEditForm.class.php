@@ -23,6 +23,11 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.package.server';
 	
 	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
+	public $templateName = 'updateServerAdd';
+	
+	/**
 	 * update server id
 	 * @var integer
 	 */

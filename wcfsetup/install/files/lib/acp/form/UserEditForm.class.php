@@ -32,6 +32,11 @@ class UserEditForm extends UserAddForm {
 	public $neededPermissions = array('admin.user.canEditUser');
 	
 	/**
+	 * @see wcf\page\AbstractPage::$templateName
+	 */
+	public $templateName = 'userAdd';
+	
+	/**
 	 * user id
 	 * @var integer
 	 */
