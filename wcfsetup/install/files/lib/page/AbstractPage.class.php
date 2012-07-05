@@ -151,6 +151,12 @@ abstract class AbstractPage implements IPage {
 		if (empty($this->templateName)) {
 			$classParts = explode('\\', get_class($this));
 			$className = preg_replace('~(Form|Page)$~', '', array_pop($classParts));
+			
+			// check if this an *Edit page and use the add-template instead
+			if (substr($className, -4) == 'Edit') {
+				$className = substr($className, 0, -4) . 'Add';
+			}
+			
 			$this->templateName = lcfirst($className);
 		}
 		
