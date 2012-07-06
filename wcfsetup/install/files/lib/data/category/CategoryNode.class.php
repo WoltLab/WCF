@@ -22,6 +22,18 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	protected $childCategories = array();
 	
 	/**
+	 * indicates of disabled categories are included
+	 * @var	integer
+	 */
+	protected $inludeDisabledCategories = false;
+	
+	/**
+	 * list of object type category ids of excluded categories
+	 * @var	array<integer>
+	 */
+	protected $excludedObjectTypeCategoryIDs = false;
+	
+	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\category\Category';
@@ -32,9 +44,13 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	public function __construct(DatabaseObject $object, $inludeDisabledCategories = false, array $excludedObjectTypeCategoryIDs = array()) {
 		parent::__construct($object);
 		
+		$this->inludeDisabledCategories = $inludeDisabledCategories;
+		$this->excludedObjectTypeCategoryIDs = $excludedObjectTypeCategoryIDs;
+		
+		$className = get_class();
 		foreach (CategoryHandler::getInstance()->getChildCategories($this->getDecoratedObject()) as $category) {
-			if (!in_array($category->objectTypeCategoryID, $excludedObjectTypeCategoryIDs) && ($inludeDisabledCategories || !$category->isDisabled)) {
-				$this->childCategories[] = new CategoryNode($category, $inludeDisabledCategories, $excludedObjectTypeCategoryIDs);
+			if ($this->fulfillsConditions($category)) {
+				$this->childCategories[] = new $className($category, $inludeDisabledCategories, $excludedObjectTypeCategoryIDs);
 			}
 		}
 	}
@@ -51,6 +67,17 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	 */
 	public function current() {
 		return $this->childCategories[$this->index];
+	}
+	
+	/**
+	 * Returns true if the given category fulfills all needed conditions to
+	 * be included in the list.
+	 * 
+	 * @param	wcf\data\category\Category	$category
+	 * @return	boolean
+	 */
+	public function fulfillsConditions(Category $category) {
+		return !in_array($category->objectTypeCategoryID, $this->excludedObjectTypeCategoryIDs) && ($this->includeDisabledCategories || !$category->isDisabled);
 	}
 	
 	/**
