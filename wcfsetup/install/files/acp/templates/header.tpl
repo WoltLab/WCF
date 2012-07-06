@@ -62,6 +62,7 @@
 				'wcf.global.button.edit': '{lang}wcf.global.button.edit{/lang}',
 				'wcf.global.button.enable': '{lang}wcf.global.button.enable{/lang}',
 				'wcf.global.button.next': '{lang}wcf.global.button.next{/lang}',
+				'wcf.global.button.preview': '{lang}wcf.global.button.preview{/lang}',
 				'wcf.global.button.save': '{lang}wcf.global.button.save{/lang}',
 				'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 				'wcf.date.relative.minutes': '{capture assign=relativeMinutes}{lang}wcf.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
