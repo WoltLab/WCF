@@ -80,7 +80,6 @@ class WCFACP extends WCF {
 		$factory->load();
 		
 		self::$sessionObj = SessionHandler::getInstance();
-		self::$userObj = self::getSession()->getUser();
 	}
 	
 	/**
