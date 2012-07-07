@@ -98,12 +98,6 @@ class WCF {
 	protected static $tplObj = null;
 	
 	/**
-	 * current user object
-	 * @var wcf\data\user\User
-	 */
-	protected static $userObj = null;
-	
-	/**
 	 * Calls all init functions of the WCF class.
 	 */
 	public function __construct() {
@@ -215,7 +209,7 @@ class WCF {
 	 * @return	wcf\data\user\User
 	 */
 	public static final function getUser() {
-		return self::$userObj;
+		return self::getSession()->getUser();
 	}
 	
 	/**
@@ -342,7 +336,6 @@ class WCF {
 		$factory->load();
 		
 		self::$sessionObj = SessionHandler::getInstance();
-		self::$userObj = self::getSession()->getUser();
 	}
 	
 	/**
