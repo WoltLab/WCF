@@ -2272,7 +2272,7 @@ WCF.MultipleLanguageInput.prototype = {
 		
 		WCF.Dropdown.registerCallback($wrapper.wcfIdentify(), $.proxy(this._handleAction, this));
 		
-		// enable DOMNodeInserted event
+		// disable DOMNodeInserted event
 		WCF.DOMNodeInsertedHandler.disable();
 	},
 	
