@@ -45,7 +45,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 						$languageFiles[$match[1]] = $file['filename'];
 					}
 					else {
-						throw new SystemException("Can not determine language code of language file '".$file."'");
+						throw new SystemException("Can not determine language code of language file '".$file['filename']."'");
 					}
 				}
 			}
