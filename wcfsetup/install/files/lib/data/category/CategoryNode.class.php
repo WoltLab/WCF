@@ -22,7 +22,7 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	protected $childCategories = array();
 	
 	/**
-	 * indicates of disabled categories are included
+	 * indicates if disabled categories are included
 	 * @var	integer
 	 */
 	protected $inludeDisabledCategories = false;
