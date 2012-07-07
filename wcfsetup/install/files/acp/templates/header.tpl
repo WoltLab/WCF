@@ -142,18 +142,22 @@
 			</div>
 			<!-- /logo -->
 			
-			<!-- main menu -->
-			<nav id="mainMenu" class="mainMenu">
-				{* work-around for unknown core-object during WCFSetup *}
-				{if PACKAGE_ID}
-					<ul>
-						{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=menuItem}
-							<li data-menu-item="{$menuItem->menuItem}"><a>{lang}{@$menuItem->menuItem}{/lang}</a></li>
-						{/foreach}
-					</ul>
-				{/if}
-			</nav>
-			<!-- /main menu -->
+			{hascontent}
+				<!-- main menu -->
+				<nav id="mainMenu" class="mainMenu">
+					{* work-around for unknown core-object during WCFSetup *}
+					{if PACKAGE_ID}
+						<ul>
+							{content}
+								{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=menuItem}
+									<li data-menu-item="{$menuItem->menuItem}"><a>{lang}{@$menuItem->menuItem}{/lang}</a></li>
+								{/foreach}
+							{/content}
+						</ul>
+					{/if}
+				</nav>
+				<!-- /main menu -->
+			{/hascontent}
 			
 			<!-- header navigation -->
 			<nav class="navigation navigationHeader clearfix">
@@ -167,7 +171,7 @@
 	<!-- /HEADER -->
 	
 	<!-- MAIN -->
-	<div id="main" class="layoutFluid{if $__wcf->user->userID} sidebarOrientationLeft{/if}">
+	<div id="main" class="layoutFluid{if PACKAGE_ID && $__wcf->getACPMenu()->getMenuItems('')|count} sidebarOrientationLeft{/if}">
 		<div>
 			{hascontent}
 				<!-- SIDEBAR -->
