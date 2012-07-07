@@ -40,13 +40,14 @@ class WCFACP extends WCF {
 		$this->initTPL();
 		$this->initCronjobs();
 		$this->initBlacklist();
-		$this->initAuth();
 		$this->initCoreObjects();
 		
 		// prevent application loading during setup
 		if (PACKAGE_ID) {
 			$this->initApplications();
 		}
+		
+		$this->initAuth();
 	}
 	
 	/**
@@ -56,7 +57,7 @@ class WCFACP extends WCF {
 		// this is a work-around since neither RequestHandler
 		// nor RouteHandler are populated right now
 		$pathInfo = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : '';
-		if (empty($pathInfo) || !preg_match('~^/(ACPCaptcha|Login)/~', $pathInfo)) {
+		if (empty($pathInfo) || !preg_match('~^/(ACPCaptcha|Login|Logout)/~', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
 				// build redirect path
 				$application = ApplicationHandler::getInstance()->getActiveApplication();
