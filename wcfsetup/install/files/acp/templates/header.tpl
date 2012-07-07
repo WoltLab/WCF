@@ -142,11 +142,11 @@
 			</div>
 			<!-- /logo -->
 			
-			{hascontent}
-				<!-- main menu -->
-				<nav id="mainMenu" class="mainMenu">
-					{* work-around for unknown core-object during WCFSetup *}
-					{if PACKAGE_ID}
+			{* work-around for unknown core-object during WCFSetup *}
+			{if PACKAGE_ID}
+				{hascontent}
+					<!-- main menu -->
+					<nav id="mainMenu" class="mainMenu">
 						<ul>
 							{content}
 								{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=menuItem}
@@ -154,10 +154,10 @@
 								{/foreach}
 							{/content}
 						</ul>
-					{/if}
-				</nav>
-				<!-- /main menu -->
-			{/hascontent}
+					</nav>
+					<!-- /main menu -->
+				{/hascontent}
+			{/if}
 			
 			<!-- header navigation -->
 			<nav class="navigation navigationHeader clearfix">
