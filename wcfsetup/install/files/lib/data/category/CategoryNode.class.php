@@ -47,7 +47,7 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 		$this->inludeDisabledCategories = $inludeDisabledCategories;
 		$this->excludedObjectTypeCategoryIDs = $excludedObjectTypeCategoryIDs;
 		
-		$className = get_class();
+		$className = get_called_class();
 		foreach (CategoryHandler::getInstance()->getChildCategories($this->getDecoratedObject()) as $category) {
 			if ($this->fulfillsConditions($category)) {
 				$this->childCategories[] = new $className($category, $inludeDisabledCategories, $excludedObjectTypeCategoryIDs);
