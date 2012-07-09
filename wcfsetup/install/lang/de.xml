@@ -622,6 +622,14 @@
 		<item name="wcf.global.sortOrder.descending"><![CDATA[absteigend]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[.]]></item>
 	</category>
+	
+	<category name="wcf.imageViewer">
+		<item name="wcf.imageViewer.close"><![CDATA[Schließen]]></item>
+		<item name="wcf.imageViewer.counter"><![CDATA[{literal}Bild {x} von {y}{/literal}]]></item>
+		<item name="wcf.imageViewer.enlarge"><![CDATA[Bild direkt anzeigen]]></item>
+		<item name="wcf.imageViewer.next"><![CDATA[Nächstes Bild]]></item>
+		<item name="wcf.imageViewer.previous"><![CDATA[Vorheriges Bild]]></item>
+	</category>
 		
 	<category name="wcf.page">
 		<item name="wcf.page.pageNo"><![CDATA[Seite {#$pageNo}]]></item>
