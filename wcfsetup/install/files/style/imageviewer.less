@@ -1,0 +1,100 @@
+#lbOverlay {
+	background-color: #000;
+	bottom: 0;
+	cursor: pointer;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 399;
+}
+
+#lbPrevLink,
+#lbNextLink {
+	display: block;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	width: 50%;
+	outline: none;
+
+	> span {
+		background-color: #fff;
+		padding: @wcfGapSmall;
+		position: absolute;
+		text-transform: uppercase;
+		top: 20%;
+	}
+	
+	&:hover > span {
+		.boxShadow(0, 0, @wcfButtonHoverBorderColor, 20px);
+	}
+}
+
+#lbPrevLink {
+	left: 0;
+	
+	> span {
+		left: 0;
+		padding-right: @wcfGapMedium;
+		text-align: right;
+
+		.borderRadius(0, 30px, 30px, 0);
+	}
+}
+
+#lbNextLink {
+	right: 0;
+
+	> span {
+		padding-left: @wcfGapMedium;
+		right: 0;
+
+		.borderRadius(30px, 0, 0, 30px);
+	}
+}
+
+#lbEnlarge,
+#lbCloseLink {
+	cursor: pointer;
+	display: block;
+	float: right;
+	margin: 5px 0;
+	padding-right: @wcfGapSmall;
+	outline: none;
+}
+
+
+#lbCenter, #lbBottomContainer {
+	background-color: #fff;
+	overflow: hidden;
+	position: absolute;
+	z-index: 400;
+}
+
+.lbLoading {
+	background: #fff url(../icon/spinner.svg) no-repeat center;
+	background-size: 48px;
+}
+
+#lbImage {
+	background-repeat: no-repeat;
+	border: 10px solid #fff;
+	left: 0;
+	position: absolute;
+	top: 0;
+}
+
+#lbBottom {
+	border: 10px solid #fff;
+	border-top-style: none;
+	color: #666;
+}
+
+#lbCaption, #lbNumber {
+	margin-right: 71px;
+}
+
+#lbCaption {
+	font-weight: bold;
+}

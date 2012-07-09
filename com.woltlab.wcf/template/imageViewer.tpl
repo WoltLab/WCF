@@ -7,7 +7,7 @@
 			WCF.Icon.addObject({
 				'wcf.icon.arrowLeftColored': '{icon size='M'}arrowLeftColored{/icon}',
 				'wcf.icon.arrowRightColored': '{icon size='M'}arrowRightColored{/icon}',
-				'wcf.icon.closeColored': '{icon size='M'}closeColored{/icon}',
+				'wcf.icon.deleteColored': '{icon size='M'}deleteColored{/icon}',
 				'wcf.icon.enlargeColored': '{icon size='M'}enlargeColored{/icon}'
 			});
 			WCF.Language.addObject({
