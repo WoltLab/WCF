@@ -92,7 +92,7 @@ class IndexPage extends AbstractPage {
 			if (CacheHandler::getInstance()->getCacheSource() instanceof NoCacheSource) {
 				$this->healthDetails['warning'][] = WCF::getLanguage()->get('wcf.acp.index.health.noCacheSource');
 			}
-			else if (!ClassUtil::isInstanceOf(CacheHandler::getInstance()->getCacheSource(), 'wcf\system\cache\source'.ucfirst(CACHE_SOURCE_TYPE).'CacheSource')) {
+			else if (get_class(CacheHandler::getInstance()->getCacheSource()) != 'wcf\system\cache\source\\'.ucfirst(CACHE_SOURCE_TYPE).'CacheSource') {
 				$this->healthDetails['error'][] = WCF::getLanguage()->getDynamicVariable('wcf.acp.index.health.cacheFallback', array(
 					'shouldBe' => WCF::getLanguage()->get('wcf.acp.option.cache_source_type.'.CACHE_SOURCE_TYPE)
 				));
