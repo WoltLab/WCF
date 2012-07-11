@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="24px" height="15px" viewBox="0 0 24 15" enable-background="new 0 0 24 15" xml:space="preserve">
+	 
+	 <!--
+		@author		Alexander Ebert
+		@copyright	2001-2012 WoltLab GmbH 
+		@license	Public Domain
+	 -->
+	 
+<rect x="0" fill="#DE322F" width="24" height="15"/>
+<circle fill="#FFFFFF" cx="9" cy="7.5" r="3.75"/>
+<circle fill="#DE322F" cx="10" cy="7.5" r="3"/>
+<polygon fill="#FFFFFF" points="13.25,5.54 14.155,6.738 15.502,6.244 14.713,7.473 15.622,8.667 14.229,8.229 13.444,9.46 
+	13.373,7.96 11.978,7.527 13.327,7.04 "/>
+</svg>

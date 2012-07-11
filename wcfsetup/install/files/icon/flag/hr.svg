@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="24px" height="15px" viewBox="0 0 24 15" enable-background="new 0 0 24 15" xml:space="preserve">
+	 
+	 <!--
+		@author		Alexander Ebert
+		@copyright	2001-2012 WoltLab GmbH 
+		@license	Public Domain
+		
+		Note: The coat of arms has been redesigned in a very simplistic version for use with smaller sizes.
+	 -->
+	 
+<rect fill="#DE191A" width="24" height="5"/>
+<rect y="10" fill="#25377A" width="24" height="5"/>
+<rect y="5" fill="#FFFFFF" width="24" height="5"/>
+<g>
+	<rect x="9.104" y="5.124" fill="#FFFFFF" width="5.766" height="6.097"/>
+	<rect x="11.39" y="5.124" fill="#DE191A" width="1.22" height="1.22"/>
+	<rect x="10.17" y="6.343" fill="#DE191A" width="1.22" height="1.219"/>
+	<rect x="12.61" y="6.343" fill="#DE191A" width="1.219" height="1.219"/>
+	<rect x="13.829" y="7.563" fill="#DE191A" width="1.22" height="1.219"/>
+	<rect x="11.39" y="7.563" fill="#DE191A" width="1.22" height="1.219"/>
+	<rect x="8.951" y="7.563" fill="#DE191A" width="1.219" height="1.219"/>
+	<rect x="10.17" y="8.781" fill="#DE191A" width="1.22" height="1.221"/>
+	<rect x="12.61" y="8.781" fill="#DE191A" width="1.219" height="1.221"/>
+	<rect x="11.39" y="10.002" fill="#DE191A" width="1.22" height="1.219"/>
+	<rect x="13.832" y="10.004" fill="#DE191A" width="0.973" height="0.953"/>
+	<rect x="9.159" y="10.002" fill="#DE191A" width="1.011" height="0.955"/>
+	<path fill="#25377A" d="M9.332,10.006c0.381,0.609,1.144,1.221,2.668,1.221s2.287-0.611,2.668-1.221s0.381-1.219,0.381-1.219v1.219
+		v1.221H12H8.951v-0.611v-0.609"/>
+	<rect x="14.5" y="8.779" fill="#FFFFFF" width="0.609" height="1.221"/>
+	<polygon fill="#0A7CA6" stroke="#FFFFFF" stroke-width="0.0457" stroke-miterlimit="10" points="9.039,5.122 8.389,3.402 
+		9.13,2.635 10.156,2.928 10.453,4.743 	"/>
+	<polygon fill="#0A7CA6" stroke="#FFFFFF" stroke-width="0.0457" stroke-miterlimit="10" points="11.268,4.608 11.085,2.779 
+		12,2.229 12.915,2.779 12.731,4.608 	"/>
+	<polygon fill="#0A7CA6" stroke="#FFFFFF" stroke-width="0.0457" stroke-miterlimit="10" points="13.596,4.743 13.892,2.928 
+		14.917,2.635 15.659,3.402 15.009,5.122 	"/>
+	<polygon fill="#25377A" stroke="#FFFFFF" stroke-width="0.0457" stroke-miterlimit="10" points="12.56,4.69 12.537,2.852 
+		13.496,2.384 14.359,3.011 14.018,4.818 	"/>
+	<polygon fill="#25377A" stroke="#FFFFFF" stroke-width="0.0457" stroke-miterlimit="10" points="10.07,4.708 9.729,2.902 
+		10.592,2.275 11.551,2.743 11.528,4.581 	"/>
+	<path fill="#DE191A" d="M8.951,5.124c0,0,0-0.612,3.049-0.612s3.049,0.612,3.049,0.612H8.951z"/>
+	<rect x="13.829" y="5.124" fill="#DE191A" width="1.22" height="1.22"/>
+	<rect x="8.951" y="5.124" fill="#DE191A" width="1.219" height="1.22"/>
+	<rect x="8.146" y="10.006" fill="#25377A" width="1" height="1.221"/>
+	<rect x="14.854" y="10.006" fill="#25377A" width="1" height="1.221"/>
+	<rect x="8.25" y="11.153" fill="#25377A" width="7.5" height="0.75"/>
+</g>
+</svg>

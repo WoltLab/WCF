@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="24px" height="15px" viewBox="0 0 24 15" enable-background="new 0 0 24 15" xml:space="preserve">
+	 
+	 <!--
+		@author		Alexander Ebert
+		@copyright	2001-2012 WoltLab GmbH 
+		@license	Public Domain
+		
+		Note: The coat of arms is a simplified version for smaller sizes. Looks almost equal with 24*15 and 48*30,
+		      afterwards it might be obvious.
+	 -->
+	 
+<rect fill="#08672F" width="9" height="15"/>
+<rect x="9" fill="#E52420" width="15" height="15"/>
+<g>
+	<path fill="#F3E600" d="M9,11.45c-2.178,0-3.95-1.772-3.95-3.95c0-2.178,1.772-3.95,3.95-3.95s3.95,1.772,3.95,3.95
+		C12.95,9.678,11.178,11.45,9,11.45z"/>
+	<path d="M9,3.6c2.15,0,3.9,1.75,3.9,3.9s-1.75,3.9-3.9,3.9S5.1,9.65,5.1,7.5S6.85,3.6,9,3.6 M9,3.5c-2.209,0-4,1.791-4,4
+		c0,2.21,1.791,4,4,4s4-1.79,4-4C13,5.291,11.209,3.5,9,3.5L9,3.5z"/>
+</g>
+<path fill="#08672F" d="M9,11c-1.933,0-3.5-1.566-3.5-3.5S7.067,4,9,4"/>
+<path fill="#E52420" d="M9,4c1.934,0,3.5,1.566,3.5,3.5S10.934,11,9,11"/>
+<rect x="8.75" y="3.875" fill="#F3E600" width="0.5" height="7.25"/>
+<rect x="5.375" y="7.25" fill="#F3E600" width="7.25" height="0.5"/>
+<rect x="8.75" y="3.875" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -2.6673 8.5607)" fill="#F3E600" width="0.5" height="7.251"/>
+<rect x="8.75" y="3.875" transform="matrix(0.7071 0.7071 -0.7071 0.7071 7.9393 -4.1673)" fill="#F3E600" width="0.5" height="7.251"/>
+<g>
+	<path fill="#E52420" d="M9,9.95c-2.01,0-2.034-1.551-2.034-1.617V5l4.118,0.05l-0.05,3.283C11.034,8.399,11.008,9.95,9,9.95z"/>
+	<path d="M10.984,5.1v3.233C10.984,8.397,10.961,9.9,9,9.9c-1.955,0-1.983-1.504-1.983-1.567V5.1H10.984 M11.084,5H6.917v3.333
+		c0,0,0,1.667,2.083,1.667c2.084,0,2.084-1.667,2.084-1.667V5L11.084,5z"/>
+</g>
+<g>
+	<path fill="#FFFFFF" d="M9,9.117c-1.184,0-1.2-1.019-1.2-1.062V5.833l2.45,0.05L10.2,8.056C10.2,8.099,10.184,9.117,9,9.117z"/>
+	<path d="M10.15,5.933v2.123c0,0.041-0.018,1.012-1.15,1.012S7.85,8.097,7.85,8.056V5.933H10.15 M10.25,5.833h-2.5v2.223
+		c0,0,0,1.111,1.25,1.111s1.25-1.111,1.25-1.111V5.833L10.25,5.833z"/>
+</g>
+<g>
+	<path fill="#203C89" d="M9.417,6.875v0.833c0,0,0,0.417-0.417,0.417c-0.417,0-0.417-0.417-0.417-0.417V6.875H9.417z"/>
+</g>
+</svg>

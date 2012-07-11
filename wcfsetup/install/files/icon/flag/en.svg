@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="24px" height="15px" viewBox="0 0 24 15" enable-background="new 0 0 24 15" xml:space="preserve">
+	 
+	 <!--
+		@author		Alexander Ebert
+		@copyright	2001-2012 WoltLab GmbH 
+		@license	Public Domain
+	 -->
+	 
+<g>
+	<rect y="0" fill="#26346C" width="24" height="15"/>
+	<rect y="5" fill="#FFFFFF" width="24" height="5"/>
+	<rect x="9.5" y="0" fill="#FFFFFF" width="5" height="15"/>
+	<rect y="6" fill="#CF152C" width="24" height="3"/>
+	<rect x="10.5" y="0" fill="#CF152C" width="3" height="15"/>
+	<polyline fill="#FFFFFF" points="14.5,4.5 21.5,0 24,0 24,1.5 18.5,5 14.5,5 	"/>
+	<polyline fill="#FFFFFF" points="14.5,10.5 21.5,15 24,15 24,13.5 18.5,10 14.5,10 	"/>
+	<polyline fill="#FFFFFF" points="9.5,10.5 2.5,15 0,15 0,13.5 5.5,10 9.5,10 	"/>
+	<polyline fill="#FFFFFF" points="9.5,4.5 2.5,0 0,0 0,1.5 5.5,5 9.5,5 	"/>
+	<polygon fill="#CF152C" points="14.5,5 22.5,0 24,0 16,5.001 	"/>
+	<polygon fill="#CF152C" points="9.5,10 1.5,15 0,15 8,10 	"/>
+	<polygon fill="#CF152C" points="18,10 24,14 24,15 16.5,10 	"/>
+	<polygon fill="#CF152C" points="6,5 0,1 0,0 7.5,5 	"/>
+</g>
+</svg>

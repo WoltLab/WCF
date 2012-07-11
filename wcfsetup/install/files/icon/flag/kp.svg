@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="24px" height="15px" viewBox="0 0 24 15" enable-background="new 0 0 24 15" xml:space="preserve">
+	 
+	 <!--
+		@author		Alexander Ebert
+		@copyright	2001-2012 WoltLab GmbH 
+		@license	Public Domain
+	 -->
+	 
+<rect x="0" fill="#FFFFFF" width="24" height="15"/>
+<g>
+	<path fill="#20396E" d="M15.464,9.5c-1.104,1.913-3.551,2.568-5.464,1.464S7.432,7.413,8.536,5.5"/>
+	<path fill="#C61532" d="M8.536,5.5C9.641,3.587,12.087,2.932,14,4.036s2.568,3.551,1.464,5.464"/>
+	<circle fill="#20396E" cx="13.732" cy="8.5" r="2"/>
+	<circle fill="#C61532" cx="10.268" cy="6.5" r="2"/>
+</g>
+<g>
+	
+		<rect x="2.927" y="2.757" transform="matrix(0.53 -0.848 0.848 0.53 -0.3048 5.6307)" fill="#010202" width="3.999" height="0.667"/>
+	
+		<rect x="3.775" y="3.287" transform="matrix(0.5299 -0.8481 0.8481 0.5299 -0.3551 6.5997)" fill="#010202" width="4" height="0.667"/>
+	
+		<rect x="4.623" y="3.817" transform="matrix(0.53 -0.848 0.848 0.53 -0.4067 7.567)" fill="#010202" width="3.999" height="0.666"/>
+</g>
+<g>
+	
+		<rect x="4.623" y="10.537" transform="matrix(0.53 0.848 -0.848 0.53 12.3312 -0.5066)" fill="#010202" width="3.999" height="0.667"/>
+	
+		<rect x="2.927" y="11.597" transform="matrix(0.53 0.848 -0.848 0.53 12.4326 1.4295)" fill="#010202" width="3.999" height="0.666"/>
+	<g>
+		
+			<rect x="4.283" y="10.148" transform="matrix(0.53 0.848 -0.848 0.53 11.3336 0.5167)" fill="#010202" width="1.834" height="0.667"/>
+		
+			<rect x="5.431" y="11.985" transform="matrix(0.5298 0.8481 -0.8481 0.5298 13.4335 0.4084)" fill="#010202" width="1.834" height="0.667"/>
+	</g>
+</g>
+<g>
+	<g>
+		
+			<rect x="15.881" y="2.898" transform="matrix(0.5299 0.8481 -0.8481 0.5299 10.6375 -12.7266)" fill="#010202" width="1.834" height="0.667"/>
+		
+			<rect x="17.028" y="4.735" transform="matrix(0.5299 0.8481 -0.8481 0.5299 12.7346 -12.8363)" fill="#010202" width="1.834" height="0.667"/>
+	</g>
+	
+		<rect x="16.219" y="3.286" transform="matrix(0.5298 0.8481 -0.8481 0.5298 11.6361 -13.7498)" fill="#010202" width="4" height="0.667"/>
+	<g>
+		
+			<rect x="17.577" y="1.838" transform="matrix(0.5299 0.8481 -0.8481 0.5299 10.536 -14.663)" fill="#010202" width="1.834" height="0.668"/>
+		
+			<rect x="18.725" y="3.675" transform="matrix(0.5299 0.8481 -0.8481 0.5299 12.6335 -14.773)" fill="#010202" width="1.834" height="0.667"/>
+	</g>
+</g>
+<g>
+	<g>
+		
+			<rect x="17.577" y="12.515" transform="matrix(0.53 -0.848 0.848 0.53 -2.2034 21.7219)" fill="#010202" width="1.833" height="0.667"/>
+		
+			<rect x="18.724" y="10.678" transform="matrix(0.5295 -0.8483 0.8483 0.5295 -0.1002 21.8427)" fill="#010202" width="1.835" height="0.667"/>
+	</g>
+	<g>
+		
+			<rect x="15.882" y="11.456" transform="matrix(0.53 -0.848 0.848 0.53 -2.1027 19.7863)" fill="#010202" width="1.833" height="0.668"/>
+		
+			<rect x="17.029" y="9.618" transform="matrix(0.53 -0.848 0.848 0.53 -0.0049 19.8955)" fill="#010202" width="1.833" height="0.668"/>
+	</g>
+	<g>
+		
+			<rect x="16.729" y="11.985" transform="matrix(0.53 -0.848 0.848 0.53 -2.1531 20.7539)" fill="#010202" width="1.833" height="0.668"/>
+		
+			<rect x="17.876" y="10.147" transform="matrix(0.5295 -0.8483 0.8483 0.5295 -0.0492 20.8742)" fill="#010202" width="1.835" height="0.67"/>
+	</g>
+</g>
+</svg>

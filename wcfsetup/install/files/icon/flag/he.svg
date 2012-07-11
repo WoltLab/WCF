@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="24px" height="15px" viewBox="0 0 24 15" enable-background="new 0 0 24 15" xml:space="preserve">
+	 
+	 <!--
+		@author		Alexander Ebert
+		@copyright	2001-2012 WoltLab GmbH 
+		@license	Public Domain
+		
+		Note: The "Magen David" is just an approximation for small sizes.
+	 -->
+	 
+<rect fill="#FFFFFF" width="24" height="1"/>
+<rect y="2.978" fill="#FFFFFF" width="24" height="9"/>
+<rect y="14" fill="#FFFFFF" width="24" height="1"/>
+<rect y="1" fill="#254697" width="24" height="2"/>
+<rect y="12" fill="#254697" width="24" height="2"/>
+<polygon fill="none" stroke="#244696" stroke-width="0.6667" stroke-miterlimit="10" points="7.5,9.333 11.5,4 15.5,9.333 "/>
+<polygon fill="none" stroke="#244696" stroke-width="0.6667" stroke-miterlimit="10" points="15.5,5.667 11.5,11 7.5,5.667 "/>
+</svg>

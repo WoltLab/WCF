@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="24px" height="15px" viewBox="0 0 24 15" enable-background="new 0 0 24 15" xml:space="preserve">
+	 
+	 <!--
+		@author		Alexander Ebert
+		@copyright	2001-2012 WoltLab GmbH 
+		@license	Public Domain
+		
+		Note: I've violated the specifications to use 15 stripes instead of 13, it prevents a lot of
+		      rounding errors if displayed as 24*15. Furthermore I've decreased the height of the blue
+		      part to match the two additional stripes and I reduced the number of stars.
+	 -->
+	 
+<rect fill="#FFFFFF" width="24" height="15"/>
+<rect fill="#3C3B6E" width="9.715" height="7"/>
+<rect x="9.714" fill="#B32335" width="14.286" height="1"/>
+<rect x="9.714" y="2" fill="#B32335" width="14.286" height="1"/>
+<rect x="9.714" y="4" fill="#B32335" width="14.286" height="1"/>
+<rect x="9.714" y="6" fill="#B32335" width="14.286" height="1"/>
+<g>
+	<polygon fill="#FFFFFF" points="1.429,1 1.563,1.383 2,1.382 1.646,1.618 1.782,2 1.429,1.763 1.075,2 1.212,1.618 0.857,1.382 
+		1.295,1.383 	"/>
+	<polygon fill="#FFFFFF" points="3.144,2 3.277,2.383 3.715,2.381 3.36,2.618 3.496,3 3.144,2.763 2.79,3 2.926,2.618 2.571,2.381 
+		3.009,2.383 	"/>
+	<polygon fill="#FFFFFF" points="4.857,1 4.991,1.383 5.429,1.382 5.074,1.618 5.211,2 4.857,1.763 4.504,2 4.641,1.618 
+		4.286,1.382 4.724,1.383 	"/>
+	<polygon fill="#FFFFFF" points="6.571,2 6.706,2.383 7.144,2.381 6.789,2.618 6.925,3 6.571,2.763 6.219,3 6.354,2.618 6,2.381 
+		6.438,2.383 	"/>
+	<polygon fill="#FFFFFF" points="8.286,1 8.42,1.383 8.857,1.382 8.503,1.618 8.64,2 8.286,1.763 7.933,2 8.069,1.618 7.715,1.382 
+		8.151,1.383 	"/>
+	<polygon fill="#FFFFFF" points="1.429,3 1.563,3.383 2,3.382 1.646,3.618 1.782,4 1.429,3.763 1.075,4 1.212,3.618 0.857,3.382 
+		1.295,3.383 	"/>
+	<polygon fill="#FFFFFF" points="4.857,3 4.991,3.383 5.429,3.382 5.074,3.618 5.211,4 4.857,3.763 4.504,4 4.641,3.618 
+		4.286,3.382 4.724,3.383 	"/>
+	<polygon fill="#FFFFFF" points="8.286,3 8.42,3.383 8.857,3.382 8.503,3.618 8.64,4 8.286,3.763 7.933,4 8.069,3.618 7.715,3.382 
+		8.151,3.383 	"/>
+	<polygon fill="#FFFFFF" points="3.144,4 3.277,4.383 3.715,4.382 3.36,4.618 3.496,5 3.144,4.763 2.79,5 2.926,4.618 2.571,4.382 
+		3.009,4.383 	"/>
+	<polygon fill="#FFFFFF" points="6.571,4 6.706,4.383 7.144,4.382 6.789,4.618 6.925,5 6.571,4.763 6.219,5 6.354,4.618 6,4.382 
+		6.438,4.383 	"/>
+	<polygon fill="#FFFFFF" points="1.429,5 1.563,5.383 2,5.382 1.646,5.618 1.782,6 1.429,5.763 1.075,6 1.212,5.618 0.857,5.382 
+		1.295,5.383 	"/>
+	<polygon fill="#FFFFFF" points="4.857,5 4.991,5.383 5.429,5.382 5.074,5.618 5.211,6 4.857,5.763 4.504,6 4.641,5.618 
+		4.286,5.382 4.724,5.383 	"/>
+	<polygon fill="#FFFFFF" points="8.286,5 8.42,5.383 8.857,5.382 8.503,5.618 8.64,6 8.286,5.763 7.933,6 8.069,5.618 7.715,5.382 
+		8.151,5.383 	"/>
+</g>
+<rect x="0" y="8" fill="#B32335" width="24" height="1"/>
+<rect x="0" y="10" fill="#B32335" width="24" height="1"/>
+<rect x="0" y="12" fill="#B32335" width="24" height="1"/>
+<rect x="0" y="14" fill="#B32335" width="24" height="1"/>
+</svg>

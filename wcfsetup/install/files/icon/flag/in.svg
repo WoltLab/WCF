@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="24px" height="15px" viewBox="0 0 24 15" enable-background="new 0 0 24 15" xml:space="preserve">
+	 
+	 <!--
+		@author		Alexander Ebert
+		@copyright	2001-2012 WoltLab GmbH 
+		@license	Public Domain
+		
+		Note: The circle has been redesigned to match lower sizes.
+	 -->
+	 
+<rect x="0" fill="#F4973B" width="24" height="5"/>
+<rect x="0" y="5" fill="#FFFFFF" width="24" height="5"/>
+<rect y="10" fill="#188937" width="24" height="5"/>
+<g>
+	<circle fill="#FFFFFF" stroke="#26326B" stroke-width="0.25" stroke-miterlimit="10" cx="12" cy="7.5" r="2"/>
+	<circle fill="#26326B" cx="12" cy="7.5" r="0.25"/>
+	<polygon fill="#26326B" points="12,7.25 11.833,6.75 12,5.75 12.167,6.75 	"/>
+	<polygon fill="#26326B" points="12,7.75 11.833,8.25 12,9.25 12.167,8.25 	"/>
+	<polygon fill="#26326B" points="11.75,7.5 11.25,7.667 10.25,7.5 11.25,7.333 	"/>
+	<polygon fill="#26326B" points="12.25,7.5 12.75,7.667 13.75,7.5 12.75,7.333 	"/>
+	<polygon fill="#26326B" points="11.818,7.682 11.582,8.154 10.757,8.742 11.347,7.917 	"/>
+	<polygon fill="#26326B" points="12.157,7.682 12.393,8.154 13.218,8.742 12.628,7.917 	"/>
+	<polygon fill="#26326B" points="12.157,7.318 12.393,6.846 13.218,6.257 12.628,7.083 	"/>
+	<polygon fill="#26326B" points="11.818,7.318 11.582,6.846 10.757,6.257 11.347,7.083 	"/>
+</g>
+</svg>

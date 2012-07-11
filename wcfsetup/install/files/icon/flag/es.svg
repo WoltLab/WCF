@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="24px" height="15px" viewBox="0 0 24 15" enable-background="new 0 0 24 15" xml:space="preserve">
+	 
+	 <!--
+		@author		Alexander Ebert
+		@copyright	2001-2012 WoltLab GmbH 
+		@license	Public Domain
+	 -->
+	 
+<rect fill="#C71620" width="24" height="4"/>
+<rect y="11" fill="#C71620" width="24" height="4"/>
+<rect y="4" fill="#FDC306" width="24" height="7"/>
+<rect x="5.5" y="6.875" fill="#CDCCCC" stroke="#000000" stroke-width="0.0493" stroke-miterlimit="10" width="0.417" height="2.917"/>
+<rect x="10.083" y="6.875" fill="#CDCCCC" stroke="#000000" stroke-width="0.0493" stroke-miterlimit="10" width="0.417" height="2.917"/>
+<rect x="5.396" y="6.667" fill="#C8B101" stroke="#000000" stroke-width="0.0417" stroke-miterlimit="10" width="0.625" height="0.208"/>
+<rect x="9.979" y="6.667" fill="#C8B101" stroke="#000000" stroke-width="0.0417" stroke-miterlimit="10" width="0.625" height="0.208"/>
+<rect x="5.396" y="9.792" fill="#C8B101" stroke="#000000" stroke-width="0.0458" stroke-miterlimit="10" width="0.625" height="0.208"/>
+<rect x="9.979" y="9.792" fill="#C8B101" stroke="#000000" stroke-width="0.0417" stroke-miterlimit="10" width="0.625" height="0.208"/>
+<path fill="#AD191B" d="M6.75,6.667h2.5v2.5C9.25,9.167,9.243,10,8,10c-1.244,0-1.25-0.833-1.25-0.833V6.667z"/>
+<rect x="8" y="6.667" fill="#CDCCCC" width="1.25" height="1.667"/>
+<g>
+	<path fill="none" d="M7.974,10H8V9.999C7.991,9.999,7.983,10,7.974,10z"/>
+	<path fill="none" d="M6.75,9.315V10h1.224C7.064,10,6.817,9.555,6.75,9.315z"/>
+	<path fill="#C8B102" d="M8,8.334H6.75v0.981C6.817,9.555,7.064,10,7.974,10C7.983,10,7.991,9.999,8,9.999V8.334z"/>
+</g>
+<path fill="#AD191B" stroke="#000000" stroke-width="0.0417" stroke-miterlimit="10" d="M5.292,7.917c0,0,0.243-0.243,0.486-0.243
+	s0.243,0,0.486,0c0.243,0,0.486,0.243,0.486,0.243V8.16c0,0-0.243-0.244-0.486-0.244c-0.243,0-0.243,0-0.486,0
+	S5.292,8.16,5.292,8.16V7.917z"/>
+<path fill="#AD191B" stroke="#000000" stroke-width="0.0417" stroke-miterlimit="10" d="M9.25,7.917c0,0,0.243-0.243,0.486-0.243
+	s0.243,0,0.486,0s0.485,0.243,0.485,0.243V8.16c0,0-0.242-0.244-0.485-0.244s-0.243,0-0.486,0S9.25,8.16,9.25,8.16V7.917z"/>
+<path fill="none" stroke="#000000" stroke-width="0.0417" stroke-miterlimit="10" d="M6.75,6.667h2.5v2.5C9.25,9.167,9.243,10,8,10
+	c-1.244,0-1.25-0.833-1.25-0.833V6.667z"/>
+<ellipse fill="#225CA8" stroke="#000000" stroke-width="0.0417" stroke-miterlimit="10" cx="8" cy="8.334" rx="0.417" ry="0.521"/>
+<polygon fill="#AD191B" stroke="#000000" stroke-width="0.0417" stroke-miterlimit="10" points="5.083,8.334 6.333,8.125 
+	6.333,8.334 5.083,8.542 "/>
+<polygon fill="#AD191B" stroke="#000000" stroke-width="0.0417" stroke-miterlimit="10" points="10.917,8.334 9.667,8.125 
+	9.667,8.334 10.917,8.542 "/>
+<rect x="6.872" y="6.305" fill="#C8B101" stroke="#000000" stroke-width="0.012" width="2.256" height="0.154"/>
+<path fill="#AD191B" stroke="#000000" stroke-width="0.012" d="M8.026,5.23C7.184,5.235,7.462,5.691,7.18,5.537
+	c-0.282-0.153-0.846,0-0.846,0.154c0,0.153,0,0,0,0.153s0.564,0.46,0.564,0.46H8.03"/>
+<path fill="#AD191B" stroke="#000000" stroke-width="0.012" d="M7.974,5.23c0.842,0.004,0.564,0.46,0.846,0.307
+	c0.282-0.153,0.847,0,0.847,0.154c0,0.153,0,0,0,0.153s-0.564,0.46-0.564,0.46H7.97"/>
+<path fill="#C8B101" stroke="#000000" stroke-width="0.012" d="M6.721,5.537c0,0,0.044-0.172,0.278-0.307
+	c0.233-0.134,0.568-0.154,0.568-0.154H7.85V5.23c0,0,0.128-0.002-0.282,0c-0.41,0.002-0.564,0.307-0.564,0.307H6.721z"/>
+<path fill="#C8B101" stroke="#000000" stroke-width="0.012" d="M9.279,5.537c0,0-0.044-0.172-0.278-0.307
+	C8.768,5.096,8.433,5.077,8.433,5.077H8.15V5.23c0,0-0.128-0.002,0.282,0s0.564,0.307,0.564,0.307H9.279z"/>
+<rect x="7.831" y="5" fill="#C8B101" stroke="#000000" stroke-width="0.0112" width="0.339" height="0.537"/>
+</svg>
