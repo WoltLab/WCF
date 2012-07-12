@@ -97,7 +97,7 @@
 				<dt><label for="description">{@$objectType->getProcessor()->getLanguageVariable('description')}</label></dt>
 				<dd>
 					<textarea cols="40" rows="10" id="description" name="description">{$i18nPlainValues['description']}</textarea>
-					{if $errorType == 'description'}
+					{if $errorField == 'description'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
