@@ -128,7 +128,7 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	/**
 	 * @see	wcf\page\IPage::readData()
 	 */
-	public function readData() {		
+	public function readData() {
 		$this->objectType = CategoryHandler::getInstance()->getObjectTypeByName($this->objectTypeName);
 		if ($this->objectType === null) {
 			throw new SystemException("Unknown category object type with name '".$this->objectTypeName."'");
