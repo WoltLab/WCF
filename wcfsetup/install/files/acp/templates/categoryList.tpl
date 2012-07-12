@@ -58,30 +58,32 @@
 				{section name=i loop=$oldDepth-$categoryNodeList->getDepth()}</ol></li>{/section}
 				
 				<li class="{if $objectType->getProcessor()->canEditCategory() && $categoryNodeList|count > 1}sortableNode {/if}jsCategory" data-object-id="{@$category->categoryID}"{if $collapsedCategoryIDs|is_array} data-is-open="{if $collapsedCategoryIDs[$category->categoryID]|isset}0{else}1{/if}"{/if}>
-					<span class="buttons">
-						{if $objectType->getProcessor()->canEditCategory()}
-							<a href="{link controller=$editController id=$category->categoryID title=$category->getTitle()}{/link}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 jsTooltip" /></a>
-						{else}
-							<img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 disabled" />
-						{/if}
+					<span class="sortableNodeLabel">
+						<span class="buttons">
+							{if $objectType->getProcessor()->canEditCategory()}
+								<a href="{link controller=$editController id=$category->categoryID title=$category->getTitle()}{/link}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 jsTooltip" /></a>
+							{else}
+								<img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 disabled" />
+							{/if}
 
-						{if $objectType->getProcessor()->canDeleteCategory()}
-							<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip" data-object-id="{@$category->categoryID}" data-confirm-message="{hascontent}{content}{lang __optional=true}{@$objectType->getProcessor()->getLangVarPrefix()}.delete.sure{/lang}{/content}{hascontentelse}{lang}wcf.category.delete.sure{/lang}{/hascontent}" />
-						{else}
-							<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 disabled" />
-						{/if}
+							{if $objectType->getProcessor()->canDeleteCategory()}
+								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip" data-object-id="{@$category->categoryID}" data-confirm-message="{hascontent}{content}{lang __optional=true}{@$objectType->getProcessor()->getLangVarPrefix()}.delete.sure{/lang}{/content}{hascontentelse}{lang}wcf.category.delete.sure{/lang}{/hascontent}" />
+							{else}
+								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 disabled" />
+							{/if}
 
-						{if $objectType->getProcessor()->canEditCategory()}
-							<img src="{@$__wcf->getPath()}icon/{if !$category->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$category->isDisabled}disable{else}enable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip" data-object-id="{@$category->categoryID}" />
-						{else}
-							<img src="{@$__wcf->getPath()}icon/{if !$category->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$category->isDisabled}enable{else}disable{/if}{/lang}" class="icon16 disabled" />
-						{/if}
+							{if $objectType->getProcessor()->canEditCategory()}
+								<img src="{@$__wcf->getPath()}icon/{if !$category->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$category->isDisabled}disable{else}enable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip" data-object-id="{@$category->categoryID}" />
+							{else}
+								<img src="{@$__wcf->getPath()}icon/{if !$category->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$category->isDisabled}enable{else}disable{/if}{/lang}" class="icon16 disabled" />
+							{/if}
 
-						{event name='buttons'}
-					</span>
+							{event name='buttons'}
+						</span>
 
-					<span class="title">
-						{$category->getTitle()}
+						<span class="title">
+							{$category->getTitle()}
+						</span>
 					</span>
 				
 					<ol class="categoryList sortableList" data-object-id="{@$category->categoryID}">
