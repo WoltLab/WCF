@@ -48,6 +48,7 @@
 			'wcf.global.button.cancel': '{lang}wcf.global.button.cancel{/lang}',
 			'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}',
 			'wcf.global.button.disable': '{lang}wcf.global.button.disable{/lang}',
+			'wcf.global.button.disabledI18n': '{lang}wcf.global.button.disabledI18n{/lang}',
 			'wcf.global.button.edit': '{lang}wcf.global.button.edit{/lang}',
 			'wcf.global.button.enable': '{lang}wcf.global.button.enable{/lang}',
 			'wcf.global.button.next': '{lang}wcf.global.button.next{/lang}',
