@@ -2219,6 +2219,9 @@ WCF.MultipleLanguageInput.prototype = {
 	 * @param	boolean		enableOnInit
 	 */
 	_prepareElement: function(enableOnInit) {
+		// enable DOMNodeInserted event
+		WCF.DOMNodeInsertedHandler.enable();
+		
 		this._element.wrap('<div class="dropdown preInput" />');
 		var $wrapper = this._element.parent();
 		var $button = $('<p class="button dropdownToggle"><span>' + WCF.Language.get('wcf.global.button.disabledI18n') + '</span></p>').prependTo($wrapper);
@@ -2268,6 +2271,9 @@ WCF.MultipleLanguageInput.prototype = {
 		}
 		
 		WCF.Dropdown.registerCallback($wrapper.wcfIdentify(), $.proxy(this._handleAction, this));
+		
+		// disable DOMNodeInserted event
+		WCF.DOMNodeInsertedHandler.disable();
 	},
 	
 	/**
@@ -5094,7 +5100,7 @@ WCF.Popover = Class.extend({
 	 */
 	_defaultDimensions: {
 		height: 150,
-		width: 450,
+		width: 450
 	},
 	
 	/**
