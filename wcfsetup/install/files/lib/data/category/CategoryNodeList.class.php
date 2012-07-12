@@ -21,6 +21,12 @@ class CategoryNodeList extends \RecursiveIteratorIterator implements \Countable 
 	protected $count = null;
 	
 	/**
+	 * name of the category node class
+	 * @var	string
+	 */
+	protected $nodeClassName = 'wcf\data\category\CategoryNode';
+	
+	/**
 	 * id of the parent category
 	 * @var	integer
 	 */
@@ -53,7 +59,7 @@ class CategoryNodeList extends \RecursiveIteratorIterator implements \Countable 
 			}
 		}
 		
-		parent::__construct(new CategoryNode($parentCategory, $inludeDisabledCategories, $excludedObjectTypeCategoryIDs), \RecursiveIteratorIterator::SELF_FIRST);
+		parent::__construct(new $this->nodeClassName($parentCategory, $inludeDisabledCategories, $excludedObjectTypeCategoryIDs), \RecursiveIteratorIterator::SELF_FIRST);
 	}
 	
 	/**
