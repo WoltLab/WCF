@@ -24,7 +24,6 @@
 		<item name="wcf.acp.cronjob.nextExec"><![CDATA[Next scheduled execution]]></item>
 		<item name="wcf.acp.cronjob.edit"><![CDATA[Edit cron job]]></item>
 		<item name="wcf.acp.cronjob.className"><![CDATA[Class name]]></item>
-		<item name="wcf.acp.cronjob.data"><![CDATA[General information]]></item>
 		<item name="wcf.acp.cronjob.timing"><![CDATA[Schedule]]></item>
 		<item name="wcf.acp.cronjob.intro"><![CDATA[Configuring cron jobs (automatized scheduled tasks) requires distinct knowledge of the crontab syntax on Unix based systems. More information about this topic can be obtained on the following Webpage: <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="wcf-externalURL">Newbie: Intro to cron</a>.]]></item>
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Execute cron job now]]></item>
@@ -40,7 +39,6 @@
 	
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add new user group]]></item>
-		<item name="wcf.acp.group.data"><![CDATA[General group information]]></item>
 		<item name="wcf.acp.group.delete.sure"><![CDATA[Are you sure you would like to remove the user group &quot;{$group->groupName}&quot;?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Edit user group]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[You are currently a member of this user group! Changing the permissions of this user group could result in locking yourself out of the Administration Control Panel. Please be careful!]]></item>
@@ -408,7 +406,6 @@
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Add category]]></item>
 		<item name="wcf.category.button.list"><![CDATA[List categories]]></item>
-		<item name="wcf.category.data"><![CDATA[General data]]></item>
 		<item name="wcf.category.delete.sure"><![CDATA[Are you sure that you would like to delete this category? All sub categories of this category will be moved to the parent category of this category.]]></item>
 		<item name="wcf.category.description"><![CDATA[Description]]></item>
 		<item name="wcf.category.edit"><![CDATA[Edit category]]></item>
@@ -573,6 +570,7 @@
 		<item name="wcf.global.confirmation.title"><![CDATA[Confirmation required]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.form.add.success"><![CDATA[The new entry has been successfully saved.]]></item>
+		<item name="wcf.global.form.data"><![CDATA[General information]]></item>
 		<item name="wcf.global.form.edit.success"><![CDATA[Your changes have been successfully saved.]]></item>
 		<item name="wcf.global.form.error"><![CDATA[The data you have entered are not valid. Please check the information you have given in the marked fields.]]></item><item name="wcf.global.form.error.empty"><![CDATA[Please enter the required information for this field.]]></item>
 		<item name="wcf.global.loading"><![CDATA[Loading …]]></item>
