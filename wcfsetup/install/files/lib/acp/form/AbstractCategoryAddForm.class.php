@@ -305,6 +305,14 @@ abstract class AbstractCategoryAddForm extends ACPForm {
 		parent::validate();
 		
 		$this->validateParentCategory();
+		
+		if (!I18nHandler::getInstance()->validateValue('title')) {
+			throw new UserInputException('title');
+		}
+		
+		if (!I18nHandler::getInstance()->validateValue('description')) {
+			throw new UserInputException('description');
+		}
 	}
 	
 	/**
