@@ -563,6 +563,7 @@
 		<item name="wcf.global.button.edit"><![CDATA[Edit]]></item>
 		<item name="wcf.global.button.enable"><![CDATA[Enable]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Next &raquo;]]></item>
+		<item name="wcf.global.button.preview"><![CDATA[Preview]]></item>
 		<item name="wcf.global.button.reset"><![CDATA[Reset]]></item>
 		<item name="wcf.global.button.save"><![CDATA[Save]]></item>
 		<item name="wcf.global.button.search"><![CDATA[Search]]></item>
