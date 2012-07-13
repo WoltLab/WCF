@@ -43,7 +43,7 @@
 <form method="post" action="{if $action == 'add'}{link controller='UserGroupAdd'}{/link}{else}{link controller='UserGroupEdit'}{/link}{/if}">
 	<div class="container containerPadding marginTop shadow">
 		<fieldset>
-			<legend>{lang}wcf.acp.group.data{/lang}</legend>
+			<legend>{lang}wcf.global.form.data{/lang}</legend>
 			
 			<dl{if $errorType.groupName|isset} class="formError"{/if}>
 				<dt><label for="groupName">{lang}wcf.acp.group.groupName{/lang}</label></dt>

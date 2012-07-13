@@ -54,7 +54,7 @@
 <form method="post" action="{if $action == 'add'}{link controller=$addController}{/link}{else}{link controller=$editController id=$category->categoryID title=$category->getTitle()}{/link}{/if}">
 	<div class="container containerPadding marginTop shadow">
 		<fieldset>
-			<legend>{@$objectType->getProcessor()->getLanguageVariable('data')}</legend>
+			<legend>{lang}wcf.global.form.data{/lang}</legend>
 			
 			{if $categoryNodeList|count}
 				<dl{if $errorField == 'parentCategoryID'} class="formError"{/if}>
