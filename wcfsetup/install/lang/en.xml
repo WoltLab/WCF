@@ -411,7 +411,7 @@
 		<item name="wcf.category.edit"><![CDATA[Edit category]]></item>
 		<item name="wcf.category.isDisabled"><![CDATA[disabled]]></item>
 		<item name="wcf.category.list"><![CDATA[Categories]]></item>
-		<item name="wcf.category.list.noneAvailable"><![CDATA[No category has been added yet.]]></item>
+		<item name="wcf.category.noneAvailable"><![CDATA[No category has been added yet.]]></item>
 		<item name="wcf.category.parentCategoryID"><![CDATA[Parent category]]></item>
 		<item name="wcf.category.parentCategoryID.error.invalid"><![CDATA[The chosen category doesn't exist.]]></item>
 		<item name="wcf.category.showOrder"><![CDATA[Position]]></item>

@@ -113,7 +113,7 @@
 		</div>
 	{/hascontent}
 {else}
-	<p class="warning">{@$objectType->getProcessor()->getLanguageVariable('list.noneAvailable')}</p>
+	<p class="warning">{@$objectType->getProcessor()->getLanguageVariable('noneAvailable')}</p>
 {/if}
 
 {include file='footer'}
