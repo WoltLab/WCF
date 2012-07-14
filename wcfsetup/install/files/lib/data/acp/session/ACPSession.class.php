@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\acp\session;
 use wcf\data\DatabaseObject;
-use wcf\system\WCF;
 
 /**
  * Represents an ACP session.

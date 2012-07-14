@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateScriptingCompiler;
-use wcf\util\StringUtil;
 
 /**
  * The 'icon' compiler function compiles dynamic icon paths.

@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\system\exception\SystemException;
-use wcf\util\ClassUtil;
 
 /**
  * This PIP installs, updates or deletes page page menu items.

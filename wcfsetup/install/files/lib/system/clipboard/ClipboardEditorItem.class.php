@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\clipboard;
 use wcf\system\exception\SystemException;
-use wcf\util\StringUtil;
 
 /**
  * Represents a clipboard item for inline editing.

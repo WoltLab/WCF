@@ -7,7 +7,6 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Handles language related functions.

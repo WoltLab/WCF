@@ -11,7 +11,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\io\RemoteFile;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 use wcf\util\XML;
 
 /**

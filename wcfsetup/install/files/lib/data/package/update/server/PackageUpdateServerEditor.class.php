@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\package\update\server;
 use wcf\data\DatabaseObjectEditor;
-use wcf\system\WCF;
 
 /**
  * Contains business logic related to handling of package update servers.

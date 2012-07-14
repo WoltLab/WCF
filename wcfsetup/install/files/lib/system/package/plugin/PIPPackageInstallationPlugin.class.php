@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**

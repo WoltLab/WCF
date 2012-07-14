@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\option\Option;
 use wcf\data\search\SearchEditor;
 use wcf\form\AbstractForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;

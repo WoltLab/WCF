@@ -3,7 +3,6 @@ namespace wcf\system\package\plugin;
 use wcf\data\style\StyleEditor;
 use wcf\data\style\StyleList;
 use wcf\system\event\EventHandler;
-use wcf\system\WCF;
 
 /**
  * This PIP installs, updates or deletes styles.

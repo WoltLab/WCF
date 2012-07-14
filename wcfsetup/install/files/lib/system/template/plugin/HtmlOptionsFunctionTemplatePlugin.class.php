@@ -3,7 +3,6 @@ namespace wcf\system\template\plugin;
 use wcf\data\DatabaseObjectList;
 use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateEngine;
-use wcf\util\StringUtil;
 
 /**
  * The 'htmlOptions' template function generates the options of an html select list.

@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\database;
-use wcf\system\database\editor\PostgreSQLDatabaseEditor;
 use wcf\util\StringStack;
 
 /**

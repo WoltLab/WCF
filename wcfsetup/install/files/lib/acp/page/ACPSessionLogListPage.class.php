@@ -2,7 +2,6 @@
 namespace wcf\acp\page;
 use wcf\page\SortablePage;
 use wcf\system\menu\acp\ACPMenu;
-use wcf\system\WCF;
 
 /**
  * Shows a list of log sessions.

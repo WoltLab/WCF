@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\package\installation\plugin;
 use wcf\data\DatabaseObjectEditor;
-use wcf\system\WCF;
 
 /**
  * Provides functions to edit package installation plugins.

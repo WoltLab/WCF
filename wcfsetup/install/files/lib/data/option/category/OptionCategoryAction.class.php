@@ -1,8 +1,6 @@
 <?php
 namespace wcf\data\option\category;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\ValidateActionException;
-use wcf\system\WCF;
 
 /**
  * Executes option categories-related actions.

@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\package\PackageList;
-use wcf\system\WCF;
 
 /**
  * Caches all registered packages.

@@ -2,7 +2,6 @@
 namespace wcf\system\package\plugin;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
-use wcf\system\exception\SystemException;
 use wcf\system\package\FilesFileHandler;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
