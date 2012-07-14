@@ -37,7 +37,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	 * prefix used for language variables in templates
 	 * @var	string
 	 */
-	protected $langVarPrefix = 'wcf.category';
+	protected $langVarPrefix = '';
 	
 	/**
 	 * permission prefix for the add/delete/edit permissions
@@ -108,10 +108,17 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::getLangVarPrefix()
+	 * @see	wcf\system\category\ICategoryType::getLanguageVariable()
 	 */
-	public function getLangVarPrefix() {
-		return $this->langVarPrefix;
+	public function getLanguageVariable($name, $optional = false) {
+		if ($this->langVarPrefix) {
+			$value = WCF::getLanguage()->get($this->langVarPrefix.'.'.$name, true);
+			if ($value) {
+				return $value;
+			}
+		}
+		
+		return WCF::getLanguage()->get('wcf.category.'.$name, $optional);
 	}
 	
 	/**

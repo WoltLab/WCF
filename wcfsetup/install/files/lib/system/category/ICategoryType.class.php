@@ -73,14 +73,19 @@ interface ICategoryType {
 	public function getI18nLangVarPrefix();
 	
 	/**
-	 * Returns the prefix used for language variables in templates. If a custom
-	 * prefix is used (not 'wcf.category'), a fallback to the default prefix
-	 * ('wcf.category') is used if the relevant language variable doesn't exist
-	 * in the custom category.
+	 * Returns the language variable value with the given name. The given name
+	 * may not contain the language category prefix.
 	 * 
+	 * If "{your.language.category}.list" is wanted, $name has to be "list".
+	 * If the specific language variable for this category type doesn't exist,
+	 * a fallback to the default variables (in this example "wcf.category.list")
+	 * is used.
+	 * 
+	 * @param	string		$name
+	 * @param	boolean		$optional
 	 * @return	string
 	 */
-	public function getLangVarPrefix();
+	public function getLanguageVariable($name, $optional = false);
 	
 	/**
 	 * Returns the language variable category for the title language variables

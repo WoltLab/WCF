@@ -25,14 +25,9 @@
 
 <header class="box48 boxHeadline">
 	<hgroup>
-		<h1>{hascontent}{content}{lang __optional=true}{@$objectType->getProcessor()->getLangVarPrefix()}.list{/lang}{/content}{hascontentelse}{lang}wcf.category.list{/lang}{/hascontent}</h1>
+		<h1>{@$objectType->getProcessor()->getLanguageVariable('list')}</h1>
 	</hgroup>
 </header>
-
-{capture assign='addLangVar'}{lang __optional=true}{@$objectType->getProcessor()->getLangVarPrefix()}.add{/lang}{/capture}
-{if !$addLangVar}
-	{capture assign='addLangVar'}{lang}wcf.category.add{/lang}{/capture}
-{/if}
 
 {hascontent}
 	<div class="contentNavigation">
@@ -40,7 +35,7 @@
 			<ul>
 				{content}
 					{if $objectType->getProcessor()->canAddCategory()}
-						<li><a href="{link controller=$addController}{/link}" title="{$addLangVar}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{@$addLangVar}</span></a></li>
+						<li><a href="{link controller=$addController}{/link}" title="{$objectType->getProcessor()->getLanguageVariable('add')}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{@$objectType->getProcessor()->getLanguageVariable('add')}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtons'}
@@ -67,7 +62,7 @@
 							{/if}
 
 							{if $objectType->getProcessor()->canDeleteCategory()}
-								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip" data-object-id="{@$category->categoryID}" data-confirm-message="{hascontent}{content}{lang __optional=true}{@$objectType->getProcessor()->getLangVarPrefix()}.delete.sure{/lang}{/content}{hascontentelse}{lang}wcf.category.delete.sure{/lang}{/hascontent}" />
+								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip" data-object-id="{@$category->categoryID}" data-confirm-message="{@$objectType->getProcessor()->getLanguageVariable('delete.sure')}" />
 							{else}
 								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 disabled" />
 							{/if}
@@ -85,7 +80,7 @@
 							{$category->getTitle()}
 						</span>
 					</span>
-				
+					
 					<ol class="categoryList sortableList" data-object-id="{@$category->categoryID}">
 				{if !$categoryNodeList->current()->hasChildren()}
 					</ol></li>
@@ -108,7 +103,7 @@
 				<ul>
 					{content}
 						{if $objectType->getProcessor()->canAddCategory()}
-							<li><a href="{link controller=$addController}{/link}" title="{$addLangVar}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{@$addLangVar}</span></a></li>
+							<li><a href="{link controller=$addController}{/link}" title="{$objectType->getProcessor()->getLanguageVariable('add')}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{@$objectType->getProcessor()->getLanguageVariable('add')}</span></a></li>
 						{/if}
 
 						{event name='contentNavigationButtons'}
@@ -118,7 +113,7 @@
 		</div>
 	{/hascontent}
 {else}
-	<p class="warning">{hascontent}{content}{lang __optional=true}{@$objectType->getProcessor()->getLangVarPrefix()}.list.noneAvailable{/lang}{/content}{hascontentelse}{lang}wcf.category.list.noneAvailable{/lang}{/hascontent}</p>
+	<p class="warning">{@$objectType->getProcessor()->getLanguageVariable('list.noneAvailable')}</p>
 {/if}
 
 {include file='footer'}
