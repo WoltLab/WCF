@@ -12,12 +12,15 @@
 #lbPrevLink,
 #lbNextLink {
 	display: block;
+	opacity: 0;
 	overflow: hidden;
 	position: absolute;
 	top: 0;
 	width: 50%;
 	outline: none;
 
+	.transition(opacity, .2s);
+	
 	> span {
 		background-color: #fff;
 		padding: @wcfGapSmall;
@@ -79,10 +82,20 @@
 
 #lbImage {
 	background-repeat: no-repeat;
+	background-size: cover;
 	border: 10px solid #fff;
 	left: 0;
 	position: absolute;
 	top: 0;
+	
+	&:hover {
+		#lbNextLink,
+		#lbPrevLink {
+			opacity: 1;
+
+			.transition(opacity, .2s);
+		}
+	}
 }
 
 #lbBottom {
