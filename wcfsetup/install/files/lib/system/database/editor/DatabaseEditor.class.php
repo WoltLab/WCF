@@ -15,8 +15,7 @@ use wcf\system\database\Database;
 abstract class DatabaseEditor {
 	/**
 	 * database object
-	 *
-	 * @var Database
+	 * @var	wcf\system\database\Database
 	 */
 	protected $dbObj = null;
 
@@ -30,17 +29,19 @@ abstract class DatabaseEditor {
 	}
 	
 	/**
-	 * Returns all existing tablenames.  
+	 * Returns all existing tablenames whose table name is like the given tabe
+	 * name.
 	 * 
-	 * @return 	array 		$existingTables
+	 * @param	string		$likeTableName
+	 * @return 	array
 	 */
-	public abstract function getTableNames();
+	public abstract function getTableNames($likeTableName = null);
 	
 	/**
 	 * Returns the columns of a table.
 	 * 
 	 * @param	string		$tableName
-	 * @return	array		$columns
+	 * @return	array
 	 */
 	public abstract function getColumns($tableName);
 	
@@ -48,7 +49,7 @@ abstract class DatabaseEditor {
 	 * Returns the indices of a table.
 	 * 
 	 * @param	string		$tableName
-	 * @return	array		$indices
+	 * @return	array
 	 */
 	public abstract function getIndices($tableName);
 	

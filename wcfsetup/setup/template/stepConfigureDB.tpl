@@ -49,23 +49,7 @@
 				<input type="text" id="dbName" name="dbName" value="{$dbName}" class="medium"  />
 				<small>{lang}wcf.global.configureDB.database.description{/lang}</small>
 			</dd>
-		</dl>
-		
-		<dl>
-			<dt><label for="dbNumber">{lang}wcf.global.configureDB.number{/lang}</label></dt>
-			<dd>	
-				<input type="text" id="dbNumber" name="dbNumber" value="{$dbNumber}" class="short" />
-				<small>{lang}wcf.global.configureDB.number.description{/lang}</small>
-			</dd>
-		</dl>
-		
-		{if $conflictedTables|isset}
-			<dl>
-				<dt></dt>
-				<dd><label><input type="checkbox" name="overwriteTables" value="1" /> {lang}wcf.global.configureDB.conflictedTables.overwrite{/lang}</label></dd>
-			</dl>
-		{/if}
-		
+		</dl>		
 	</fieldset>
 	
 	<div class="wcf-formSubmit">

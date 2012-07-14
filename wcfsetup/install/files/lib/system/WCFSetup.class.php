@@ -498,7 +498,6 @@ class WCFSetup extends WCF {
 		$dbUser = 'root';
 		$dbPassword = '';
 		$dbName = 'wcf';
-		$dbNumber = '1';
 		$dbClass = 'MySQLDatabase';
 		if (!function_exists('mysql_connect')) $dbClass = 'MySQLiDatabase';
 		$overwriteTables = false;
@@ -509,10 +508,6 @@ class WCFSetup extends WCF {
 			if (isset($_POST['dbPassword'])) $dbPassword = $_POST['dbPassword'];
 			if (isset($_POST['dbName'])) $dbName = $_POST['dbName'];
 			if (isset($_POST['overwriteTables'])) $overwriteTables = intval($_POST['overwriteTables']);
-			// Should the user not be prompted if converted or default n match an
-			// existing installation number? By now the existing installation
-			// will be overwritten just so!
-			if (isset($_POST['dbNumber'])) $dbNumber = intval($_POST['dbNumber']);
 			if (isset($_POST['dbClass'])) $dbClass = $_POST['dbClass'];
 			
 			// get port
@@ -552,36 +547,34 @@ class WCFSetup extends WCF {
 					}
 				}
 				
-				// check for table conflicts
-				$conflictedTables = $this->getConflictedTables($db, $dbNumber);
-				if (!empty($conflictedTables) && ($overwriteTables || self::$developerMode)) {
-					// remove tables
-					$db->getEditor()->dropConflictedTables($conflictedTables);
+				// calculate database number
+				$existingTables = $db->getEditor()->getTableNames("wcf%_package_installation_sql_log");
+				$dbNumber = 0;
+				$regex = new Regex('wcf(\d+)_package_installation_sql_log');
+				foreach ($existingTables as $tableName) {
+					$regex->match($tableName);
+					$matches = $regex->getMatches();
+					if ($matches[1] > $dbNumber) {
+						$dbNumber = $matches[1];
+					}
 				}
+				$dbNumber++;
 				
 				// write config.inc
-				if (empty($conflictedTables) || $overwriteTables || self::$developerMode) {
-					// connection successfully established
-					// write configuration to config.inc.php
-					$file = new File(WCF_DIR.'config.inc.php');
-					$file->write("<?php\n");
-					$file->write("\$dbHost = '".StringUtil::replace("'", "\\'", $dbHost)."';\n");
-					$file->write("\$dbPort = ".$dbPort.";\n");
-					$file->write("\$dbUser = '".StringUtil::replace("'", "\\'", $dbUser)."';\n");
-					$file->write("\$dbPassword = '".StringUtil::replace("'", "\\'", $dbPassword)."';\n");
-					$file->write("\$dbName = '".StringUtil::replace("'", "\\'", $dbName)."';\n");
-					$file->write("\$dbClass = '".StringUtil::replace("'", "\\'", $dbClass)."';\n");
-					$file->write("if (!defined('WCF_N')) define('WCF_N', $dbNumber);\n?>");
-					$file->close();
+				$file = new File(WCF_DIR.'config.inc.php');
+				$file->write("<?php\n");
+				$file->write("\$dbHost = '".StringUtil::replace("'", "\\'", $dbHost)."';\n");
+				$file->write("\$dbPort = ".$dbPort.";\n");
+				$file->write("\$dbUser = '".StringUtil::replace("'", "\\'", $dbUser)."';\n");
+				$file->write("\$dbPassword = '".StringUtil::replace("'", "\\'", $dbPassword)."';\n");
+				$file->write("\$dbName = '".StringUtil::replace("'", "\\'", $dbName)."';\n");
+				$file->write("\$dbClass = '".StringUtil::replace("'", "\\'", $dbClass)."';\n");
+				$file->write("if (!defined('WCF_N')) define('WCF_N', $dbNumber);\n?>");
+				$file->close();
 				
-					// go to next step
-					$this->gotoNextStep('createDB');
-					exit;
-				}
-				// show configure temnplate again
-				else {
-					WCF::getTPL()->assign(array('conflictedTables' => $conflictedTables));
-				}
+				// go to next step
+				$this->gotoNextStep('createDB');
+				exit;
 			}
 			catch (SystemException $e) {
 				WCF::getTPL()->assign(array('exception' => $e));
@@ -592,45 +585,11 @@ class WCFSetup extends WCF {
 			'dbUser' => $dbUser,
 			'dbPassword' => $dbPassword,
 			'dbName' => $dbName,
-			'dbNumber' => $dbNumber,
 			'dbClass' => $dbClass,
 			'availableDBClasses' => $availableDBClasses,
 			'nextStep' => 'configureDB'
 		));
 		WCF::getTPL()->display('stepConfigureDB');
-	}
-	
-	
-	/**
-	 * Checks if in the chosen database are tables in conflict with the wcf tables
-	 * which will be created in the next step.
-	 *
-	 * @param	Database	$db
-	 * @param 	integer		$dbNumber
-	 */
-	protected function getConflictedTables($db, $dbNumber) {
-		// get content of the sql structure file
-		$sql = file_get_contents(TMP_DIR.'setup/db/install.sql');
-		
-		// installation number value 'n' (WCF_N) must be reflected in the executed sql queries
-		$sql = StringUtil::replace('wcf1_', 'wcf'.$dbNumber.'_', $sql);
-		
-		// get all tablenames which should be created
-		preg_match_all("%CREATE\s+TABLE\s+(\w+)%", $sql, $matches);
-		
-		// get all installed tables from chosen database
-		$existingTables = $db->getEditor()->getTableNames();
-		
-		// check if existing tables are in conflict with wcf tables
-		$conflictedTables = array();
-		foreach ($existingTables as $existingTableName) {
-			foreach ($matches[1] as $wcfTableName) {
-				if ($existingTableName == $wcfTableName) {
-					$conflictedTables[] = $wcfTableName;
-				}
-			}
-		}
-		return $conflictedTables;
 	}
 	
 	/**
