@@ -118,11 +118,13 @@
 							</li>
 						</ul>
 						
+						<!-- search area -->
 						<aside id="search" class="searchBar">
 							<form method="post" action="{link controller='Search'}{/link}">
 								<input type="search" name="q" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" value="" />
 							</form>
 						</aside>
+						<!-- /search area -->
 					</div>
 				</nav>
 				<!-- /top menu -->
@@ -136,10 +138,6 @@
 					<img src="{@$__wcf->getPath()}acp/images/wcfLogo2.svg" width="321" height="58" alt="Product-logo" title="WoltLab Community Framework 2.0 Alpha 1" />
 				</a>
 				<!-- /clickable area -->
-				
-				<!-- search area -->
-				
-				<!-- /search area -->
 			</div>
 			<!-- /logo -->
 			
