@@ -295,10 +295,12 @@
 		<item name="wcf.acp.package.dependencies.required.description"><![CDATA[Pakete, die zwingend für den Betrieb dieses Paketes benötigt werden]]></item>
 		<item name="wcf.acp.package.dependencies.title"><![CDATA[Abhängigkeiten]]></item>
 		<item name="wcf.acp.package.description"><![CDATA[Beschreibung]]></item>
+		<item name="wcf.acp.package.error.noValidPackage"><![CDATA[Das angegebene Archiv ist kein gültiges Paket.]]></item>
 		<item name="wcf.acp.package.error.sql.createTable"><![CDATA[Existierende Tabellen überschreiben]]></item>
 		<item name="wcf.acp.package.error.sql.createTable.description"><![CDATA[Die oben genannten Tabellen existieren bereits und werden beim fortfahren der Installation überschrieben. Alle Daten dieser Tabellen gehen unwiderruflich verloren.]]></item>
 		<item name="wcf.acp.package.error.sql.dropTable"><![CDATA[Existierende Tabellen löschen]]></item>
 		<item name="wcf.acp.package.error.sql.dropTable.description"><![CDATA[Die oben genannten Tabellen existieren bereits und werden beim fortfahren der Installation entfernt. Alle Daten dieser Tabellen gehen unwiderruflich verloren.]]></item>
+		<item name="wcf.acp.package.error.uniqueAlreadyInstalled"><![CDATA[Dieses Paket ist bereits installiert und kann nicht mehrfach installiert werden.]]></item>
 		<item name="wcf.acp.package.identifier"><![CDATA[Bezeichner]]></item>
 		<item name="wcf.acp.package.information.properties"><![CDATA[Eigenschaften]]></item>
 		<item name="wcf.acp.package.information.title"><![CDATA[Informationen]]></item>
@@ -306,6 +308,7 @@
 		<item name="wcf.acp.package.installation.step.install"><![CDATA[&bdquo;{$packageName}&ldquo; wird installiert &hellip;]]></item>
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation abgeschlossen]]></item>
 		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Installation wird vorbereitet &hellip;]]></item>
+		<item name="wcf.acp.package.installation.packageName"><![CDATA[<span class="badge label {if $package.open == 0}green{elseif $package.file|isset}yellow{else}red{/if}" title="{if $package.open == 0}ist bereits installiert{elseif $package.file|isset}liegt dem Paket bei{else}fehlt{/if}" class="jsTooltip">{$package.name}</span>]]></item>
 		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Paketliste]]></item>
 		<item name="wcf.acp.package.list.detailed"><![CDATA[Detaillierte Paketliste]]></item>
@@ -316,7 +319,9 @@
 		<item name="wcf.acp.package.plugin.title"><![CDATA[Erweiterungen]]></item>
 		<item name="wcf.acp.package.source"><![CDATA[Datenquelle]]></item>
 		<item name="wcf.acp.package.source.download"><![CDATA[Paket herunterladen]]></item>
+		<item name="wcf.acp.package.source.download.description"><![CDATA[Geben Sie den direkten Pfad zur Paketdatei an. Dabei kann es sich um die Internetadresse der Paketdatei oder alternativ den Pfad zur Paketdatei im Dateisystem handeln.]]></item>
 		<item name="wcf.acp.package.source.upload"><![CDATA[Paket hochladen]]></item>
+		<item name="wcf.acp.package.source.upload.description"><![CDATA[Geben Sie eine Paketdatei von Ihrem lokalen Rechner an.]]></item>
 		<item name="wcf.acp.package.startInstall"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.package.startUpdate"><![CDATA[Paket &bdquo;{@$package->getName()}&ldquo; aktualisieren]]></item>
 		<item name="wcf.acp.package.type.application"><![CDATA[Anwendung]]></item>

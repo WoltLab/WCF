@@ -119,7 +119,7 @@
 			<tbody>
 			{foreach from=$requiredPackages item=$package}
 				<tr>
-					<td class="columnTitle"><p>{lang}wcf.acp.package.install.packageName{/lang}</p></td>
+					<td class="columnTitle"><p>{lang}wcf.acp.package.installation.packageName{/lang}</p></td>
 					<td class="columnDigits"><p>{if $package.minversion|isset}{$package.minversion}{/if}</p></td>
 				</tr>
 			{/foreach}
