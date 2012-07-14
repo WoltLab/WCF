@@ -32,12 +32,6 @@ class RouteHandler extends SingletonFactory {
 	protected static $path = '';
 	
 	/**
-	 * router filter for ACP
-	 * @var	boolean
-	 */
-	protected $isACP = false;
-	
-	/**
 	 * list of available routes
 	 * @var	array<wcf\system\request\Route>
 	 */
@@ -90,16 +84,13 @@ class RouteHandler extends SingletonFactory {
 	 * first route which is able to consume all path components is used,
 	 * even if other routes may fit better. Route order is crucial!
 	 * 
-	 * @param	boolean		$isACP
 	 * @return	boolean
 	 */
-	public function matches($isACP) {
-		$this->isACP = $isACP;
-		
+	public function matches() {
 		$pathInfo = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : '';
 		
 		foreach ($this->routes as $route) {
-			if ($this->isACP != $route->isACP()) {
+			if (RequestHandler::getInstance()->isACPRequest() != $route->isACP()) {
 				continue;
 			}
 			
@@ -141,7 +132,7 @@ class RouteHandler extends SingletonFactory {
 	 */
 	public function buildRoute(array $components) {
 		foreach ($this->routes as $route) {
-			if ($this->isACP != $route->isACP()) {
+			if (RequestHandler::getInstance()->isACPRequest() != $route->isACP()) {
 				continue;
 			}
 			
