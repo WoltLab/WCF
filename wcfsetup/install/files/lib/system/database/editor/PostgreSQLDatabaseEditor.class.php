@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\database\editor;
 use wcf\system\database\DatabaseException;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\util\ArrayUtil;
 
 /**
@@ -17,14 +18,20 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	/**
 	 * @see wcf\system\database\editor\DatabaseEditor::getTableNames()
 	 */
-	public function getTableNames() {
+	public function getTableNames($likeTableName = null) {
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add("schemaname = ", array('public'));
+		if ($likeTableName) {
+			$conditionBuilder->add("tablename LIKE ?", array($likeTableName));
+		}
+		
 		$existingTables = array();
 		$sql = "SELECT		tablename
 			FROM 		pg_catalog.pg_tables
-			WHERE		schemaname = 'public'
+			".$conditionBuilder."
 			ORDER BY 	tablename";
 		$statement = $this->dbObj->prepareStatement($sql);
-		$statement->execute();
+		$statement->execute($conditionBuilder->getParameters());
 		while ($row = $statement->fetchArray()) {
 			$existingTables[] = $row['tablename'];
 		}

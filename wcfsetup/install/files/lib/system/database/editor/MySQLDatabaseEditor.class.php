@@ -17,11 +17,11 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	/**
 	 * @see wcf\system\database\editor\DatabaseEditor::getTableNames()
 	 */
-	public function getTableNames() {
+	public function getTableNames($likeTableName = null) {
 		$existingTables = array();
-		$sql = "SHOW TABLES FROM `".$this->dbObj->getDatabaseName()."`";
+		$sql = "SHOW TABLES FROM `".$this->dbObj->getDatabaseName()."` LIKE ?";
 		$statement = $this->dbObj->prepareStatement($sql);
-		$statement->execute();
+		$statement->execute(array($likeTableName));
 		while ($row = $statement->fetchArray(\PDO::FETCH_NUM)) {
 			$existingTables[] = $row[0];
 		}
