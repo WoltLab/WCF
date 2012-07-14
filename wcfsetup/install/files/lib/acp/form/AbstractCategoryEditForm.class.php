@@ -86,7 +86,9 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 		parent::readData();
 		
 		if (empty($_POST)) {
-			I18nHandler::getInstance()->setOptions('description', $this->packageID, $this->category->description, $this->objectType->getProcessor()->getI18nLangVarPrefix().'.description.category\d+');
+			if ($this->objectType->getProcessor()->supportsDescriptions()) {
+				I18nHandler::getInstance()->setOptions('description', $this->packageID, $this->category->description, $this->objectType->getProcessor()->getI18nLangVarPrefix().'.description.category\d+');
+			}
 			I18nHandler::getInstance()->setOptions('title', $this->packageID, $this->category->title, $this->objectType->getProcessor()->getI18nLangVarPrefix().'.title.category\d+');
 			
 			$this->additionalData = $this->category->additionalData;
@@ -103,13 +105,15 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 		ACPForm::save();
 		
 		// handle description
-		$this->description = $this->objectType->getProcessor()->getI18nLangVarPrefix().'.description.category'.$this->category->categoryID;
-		if (I18nHandler::getInstance()->isPlainValue('description')) {
-			I18nHandler::getInstance()->remove($this->description, $this->packageID);
-			$this->description = I18nHandler::getInstance()->getValue('description');
-		}
-		else {
-			I18nHandler::getInstance()->save('description', $this->description, $this->objectType->getProcessor()->getDescriptionLangVarCategory(), $this->packageID);
+		if ($this->objectType->getProcessor()->supportsDescriptions()) {
+			$this->description = $this->objectType->getProcessor()->getI18nLangVarPrefix().'.description.category'.$this->category->categoryID;
+			if (I18nHandler::getInstance()->isPlainValue('description')) {
+				I18nHandler::getInstance()->remove($this->description, $this->packageID);
+				$this->description = I18nHandler::getInstance()->getValue('description');
+			}
+			else {
+				I18nHandler::getInstance()->save('description', $this->description, $this->objectType->getProcessor()->getDescriptionLangVarCategory(), $this->packageID);
+			}
 		}
 		
 		// handle title

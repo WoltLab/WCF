@@ -9,17 +9,14 @@
 		{if $aclObjectTypeID}
 			new WCF.ACL.List($('#groupPermissions'), {@$aclObjectTypeID}{if $category|isset}, '', {@$category->categoryID}{/if});
 		{/if}
-		
-		var $availableLanguages = { {implode from=$availableLanguages key=languageID item=languageName}{@$languageID}: '{$languageName}'{/implode} };
-		
-		var $titleValues = { {implode from=$i18nValues['title'] key=languageID item=value}'{@$languageID}': '{$value}'{/implode} };
-		new WCF.MultipleLanguageInput('title', false, $titleValues, $availableLanguages);
-		
-		var $descriptionValues = { {implode from=$i18nValues['description'] key=languageID item=value}'{@$languageID}': '{$value}'{/implode} };
-		new WCF.MultipleLanguageInput('description', false, $descriptionValues, $availableLanguages);
 	});
 	//]]>
 </script>
+
+{include file='multipleLanguageInputJavascript' elementIdentifier='title'}
+{if $objectType->getProcessor()->supportsDescriptions()}
+	{include file='multipleLanguageInputJavascript' elementIdentifier='description'}
+{/if}
 
 <header class="boxHeadline">
 	<hgroup>
@@ -93,23 +90,25 @@
 				</dd>
 			</dl>
 			
-			<dl{if $errorField == 'description'} class="formError"{/if}>
-				<dt><label for="description">{@$objectType->getProcessor()->getLanguageVariable('description')}</label></dt>
-				<dd>
-					<textarea cols="40" rows="10" id="description" name="description">{$i18nPlainValues['description']}</textarea>
-					{if $errorField == 'description'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
-							{else}
-								{assign var=__languageVariable value='description.error.'|concat:$errorType}
-								{@$objectType->getProcessor()->getLanguageVariable($__languageVariable)}
-							{/if}
-						</small>
-					{/if}
-					{hascontent}<small>{content}{@$objectType->getProcessor()->getLanguageVariable('description.description', true)}{/content}</small>{/hascontent}
-				</dd>
-			</dl>
+			{if $objectType->getProcessor()->supportsDescriptions()}
+				<dl{if $errorField == 'description'} class="formError"{/if}>
+					<dt><label for="description">{@$objectType->getProcessor()->getLanguageVariable('description')}</label></dt>
+					<dd>
+						<textarea cols="40" rows="10" id="description" name="description">{$i18nPlainValues['description']}</textarea>
+						{if $errorField == 'description'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{assign var=__languageVariable value='description.error.'|concat:$errorType}
+									{@$objectType->getProcessor()->getLanguageVariable($__languageVariable)}
+								{/if}
+							</small>
+						{/if}
+						{hascontent}<small>{content}{@$objectType->getProcessor()->getLanguageVariable('description.description', true)}{/content}</small>{/hascontent}
+					</dd>
+				</dl>
+			{/if}
 			
 			<dl{if $errorField == 'isDisabled'} class="formError"{/if}>
 				<dt class="reversed"><label for="isDisabled">{@$objectType->getProcessor()->getLanguageVariable('isDisabled')}</label></dt>
@@ -133,15 +132,21 @@
 				</dd>
 			</dl>
 			
-			{if $aclObjectTypeID}
-				<dl id="groupPermissions">
+			{event name='dataFields'}
+		</fieldset>
+		
+		{if $aclObjectTypeID}
+			<fieldset>
+				<legend>{lang}wcf.acp.acl.permissions{/lang}</legend>
+
+				<dl id="groupPermissions" class="wide">
 					<dt>{lang}wcf.acp.acl.permissions{/lang}</dt>
 					<dd></dd>
 				</dl>
-			{/if}
-			
-			{event name='fields'}
-		</fieldset>
+				
+				{event name='permissionFields'}
+			</fieldset>
+		{/if}
 		
 		{event name='fieldsets'}
 	</div>
