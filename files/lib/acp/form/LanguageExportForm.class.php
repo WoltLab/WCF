@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
 use wcf\data\package\Package;
 use wcf\system\exception\IllegalLinkException;
