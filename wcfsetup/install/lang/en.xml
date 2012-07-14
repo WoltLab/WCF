@@ -314,7 +314,7 @@
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation completed]]></item>
 		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Prepairing installation &hellip;]]></item>
 		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
-		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[required version]]></item>
+		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Required version]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Package list]]></item>
 		<item name="wcf.acp.package.list.detailed"><![CDATA[Detailed package list]]></item>
 		<item name="wcf.acp.package.name"><![CDATA[Package]]></item>
