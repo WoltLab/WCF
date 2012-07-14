@@ -730,9 +730,17 @@ class PackageArchive {
 			if (isset($existingPackages[$requirement['name']])) {
 				// package does already exist
 				// maybe an update is necessary
-				if (!isset($requirement['minversion']) || Package::compareVersion($existingPackages[$requirement['name']]['packageVersion'], $requirement['minversion']) >= 0) {
-					// package does already exist in needed version
-					// skip installation of requirement 
+				if (isset($requirement['minversion'])) {
+					if (Package::compareVersion($existingPackages[$requirement['name']]['packageVersion'], $requirement['minversion']) >= 0) {
+						// package does already exist in needed version
+						// skip installation of requirement 
+						continue;
+					}
+					else {
+						$requirement['existingVersion'] = $existingPackages[$requirement['name']]['packageVersion'];
+					}
+				}
+				else {
 					continue;
 				}
 				

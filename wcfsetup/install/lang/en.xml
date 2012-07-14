@@ -305,11 +305,16 @@
 		<item name="wcf.acp.package.information.properties"><![CDATA[Properties]]></item>
 		<item name="wcf.acp.package.information.title"><![CDATA[Informations]]></item>
 		<item name="wcf.acp.package.installDate"><![CDATA[Installation date]]></item>
+		<item name="wcf.acp.package.installation.packageStatus"><![CDATA[Status]]></item>
+		<item name="wcf.acp.package.installation.packageStatus.delivered"><![CDATA[delivered by the package]]></item>
+		<item name="wcf.acp.package.installation.packageStatus.installed"><![CDATA[already installed]]></item>
+		<item name="wcf.acp.package.installation.packageStatus.missing"><![CDATA[missing]]></item>
+		<item name="wcf.acp.package.installation.packageStatus.missingVersion"><![CDATA[missing package version (installed version: {$package.existingVersion})]]></item>
 		<item name="wcf.acp.package.installation.step.install"><![CDATA[Installing &ldquo;{$packageName}&rdquo; &hellip;]]></item>
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation completed]]></item>
 		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Prepairing installation &hellip;]]></item>
-		<item name="wcf.acp.package.installation.packageName"><![CDATA[<span class="badge label {if $package.open == 0}green{elseif $package.file|isset}yellow{else}red{/if}" title="{if $package.open == 0}is already installed{elseif $package.file|isset}is delivered by this package{else}is missing{/if}" class="jsTooltip">{$package.name}</span>]]></item>
 		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
+		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[required version]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Package list]]></item>
 		<item name="wcf.acp.package.list.detailed"><![CDATA[Detailed package list]]></item>
 		<item name="wcf.acp.package.name"><![CDATA[Package]]></item>
