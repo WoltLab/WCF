@@ -126,7 +126,7 @@ class I18nHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns plain value for given element.
+	 * Returns the plain value for the given element.
 	 * 
 	 * @param	string		elementID
 	 * @return	string
@@ -134,6 +134,29 @@ class I18nHandler extends SingletonFactory {
 	 */
 	public function getValue($elementID) {
 		return $this->plainValues[$elementID];
+	}
+	
+	/**
+	 * Returns the values for the given element. If the element is multilingual,
+	 * the multilingual values are returned, otherweise the plain value is
+	 * returned for each language id.
+	 * 
+	 * @param	string		elementID
+	 * @return	array<string>
+	 */
+	public function getValues($elementID) {
+		if ($this->hasI18nValues($elementID)) {
+			return $this->i18nValues[$elementID];
+		}
+		
+		$plainValue = $this->getValue($elementID);
+		
+		$values = array();
+		foreach ($this->availableLanguages as $language) {
+			$values[$language->languageID] = $plainValue;
+		}
+		
+		return $values;
 	}
 	
 	/**
