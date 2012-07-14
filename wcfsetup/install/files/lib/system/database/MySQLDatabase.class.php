@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\database;
-use wcf\system\database\editor\MySQLDatabaseEditor;
 
 /**
  * This is the database implementation for MySQL4.1 or higher using PDO.

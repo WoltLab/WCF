@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\sitemap;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\SystemException;
 use wcf\system\sitemap\SitemapHandler;
 use wcf\system\WCF;
 

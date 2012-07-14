@@ -5,7 +5,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\io\File;
 use wcf\system\Regex;
 use wcf\system\WCF;
-use wcf\util\MathUtil;
 use wcf\util\StringUtil;
 
 /**

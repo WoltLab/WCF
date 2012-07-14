@@ -1,15 +1,12 @@
 <?php
 namespace wcf\action;
 use wcf\system\exception\IllegalLinkException;
-
-use wcf\system\WCF;
-
-use wcf\system\exception\PermissionDeniedException;
-
 use wcf\system\exception\AJAXException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\exception\ValidateActionException;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
 use wcf\util\JSON;

@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\acp\session\ACPSession;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupAction;
 use wcf\data\user\group\UserGroupEditor;

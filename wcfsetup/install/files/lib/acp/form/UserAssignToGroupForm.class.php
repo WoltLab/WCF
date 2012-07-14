@@ -1,7 +1,6 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
-use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;

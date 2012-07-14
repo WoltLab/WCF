@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\package\installation\plugin;
 use wcf\data\DatabaseObject;
-use wcf\system\WCF;
 
 /**
  * Represents a package installation plugin.

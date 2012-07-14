@@ -1,8 +1,6 @@
 <?php
 namespace wcf\data\template;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\ValidateActionException;
-use wcf\system\WCF;
 
 /**
  * Executes template-related actions.

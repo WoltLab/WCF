@@ -2,7 +2,6 @@
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateScriptingCompiler;
-use wcf\util\StringUtil;
 
 /**
  * The 'prepend' compiler function calls the prepend function on the template object.

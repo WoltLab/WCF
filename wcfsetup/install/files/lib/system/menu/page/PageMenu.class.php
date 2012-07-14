@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\menu\page;
-use wcf\data\page\menu\item\PageMenuItem;
 use wcf\system\cache\CacheHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\menu\ITreeMenuItem;

@@ -1,12 +1,10 @@
 <?php
 namespace wcf\system;
 use wcf\data\application\Application;
-use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\cronjob\CronjobScheduler;
-use wcf\system\database\statement\PreparedStatement;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\session\SessionFactory;
@@ -14,7 +12,6 @@ use wcf\system\session\SessionHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\exception;
-use wcf\util\StringStack;
 use wcf\util;
 
 // try to disable execution time limit

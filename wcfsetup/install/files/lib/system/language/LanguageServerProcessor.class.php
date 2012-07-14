@@ -6,7 +6,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\io\RemoteFile;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\XML;
 
 /**

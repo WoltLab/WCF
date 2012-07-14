@@ -3,7 +3,6 @@ namespace wcf\system\cronjob;
 use wcf\data\acp\session\ACPSessionEditor;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\session\SessionEditor;
-use wcf\system\WCF;
 
 /**
  * Deletes expired sesions.

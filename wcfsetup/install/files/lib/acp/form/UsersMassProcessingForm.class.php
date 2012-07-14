@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\option\Option;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
