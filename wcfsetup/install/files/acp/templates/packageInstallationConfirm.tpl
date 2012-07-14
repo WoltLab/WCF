@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle=$archive->getLocalizedPackageInfo('packageName')}
 
 <script type="text/javascript">
 	//<![CDATA[

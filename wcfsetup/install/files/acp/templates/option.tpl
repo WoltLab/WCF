@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.option.category.'|concat:$category->categoryName}
 
 <script type="text/javascript">
 	//<![CDATA[

@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle=$objectType->getProcessor()->getLanguageVariable('list')}
 
 {if $categoryNodeList|count}
 	<script type="text/javascript">

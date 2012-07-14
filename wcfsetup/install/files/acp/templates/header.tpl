@@ -3,7 +3,7 @@
 <head>
 	<base href="{$baseHref}" />
 	<meta charset="utf-8" />
-	<title>{if $pageTitle|isset}{@$pageTitle}{else}{lang}wcf.global.pageTitle{/lang}{/if} - {lang}wcf.acp{/lang}</title>
+	<title>{if $pageTitle|isset}{@$pageTitle|language} - {/if}{lang}wcf.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<script type="text/javascript">
 		//<![CDATA[

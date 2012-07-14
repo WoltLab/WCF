@@ -1,3 +1,11 @@
+{if $action == 'all'}
+	{assign var='pageTitle' value='wcf.acp.user.sendMail.all'}
+{elseif $action == 'group'}
+	{assign var='pageTitle' value='wcf.acp.user.sendMail.group'}
+{else}
+	{assign var='pageTitle' value='wcf.acp.user.sendMail'}
+{/if}
+
 {include file='header'}
 
 {if $mailID|isset}
@@ -14,15 +22,7 @@
 
 <header class="boxHeadline">
 	<hgroup>
-		<h1>
-			{if $action == 'all'}
-				{lang}wcf.acp.user.sendMail.all{/lang}
-			{elseif $action == 'group'}
-				{lang}wcf.acp.user.sendMail.group{/lang}
-			{else}
-				{lang}wcf.acp.user.sendMail{/lang}
-			{/if}
-		</h1>
+		<h1>{lang}{@$pageTitle}{/lang}</h1>
 	</hgroup>
 </header>
 

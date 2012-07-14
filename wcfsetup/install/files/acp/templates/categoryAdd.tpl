@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle=$objectType->getProcessor()->getLanguageVariable($action)}
 
 {if $aclObjectTypeID}
 	{include file='aclPermissions'}
