@@ -94,4 +94,11 @@ interface ICategoryType {
 	 * @return	string
 	 */
 	public function getTitleLangVarCategory();
+	
+	/**
+	 * Returns true if categories of this type support descriptions.
+	 * 
+	 * @return	boolean
+	 */
+	public function supportsDescriptions();
 }

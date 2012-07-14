@@ -421,7 +421,7 @@
 		<item name="wcf.category.edit"><![CDATA[Kategorie bearbeiten]]></item>
 		<item name="wcf.category.isDisabled"><![CDATA[deaktiviert]]></item>
 		<item name="wcf.category.list"><![CDATA[Kategorien]]></item>
-		<item name="wcf.category.list.noneAvailable"><![CDATA[Es wurde noch keine Kategorie hinzugefügt.]]></item>
+		<item name="wcf.category.noneAvailable"><![CDATA[Es wurde noch keine Kategorie hinzugefügt.]]></item>
 		<item name="wcf.category.parentCategoryID"><![CDATA[Übergeordnete Kategorie]]></item>
 		<item name="wcf.category.parentCategoryID.error.invalid"><![CDATA[Die ausgewählte Kategorie existiert nicht.]]></item>
 		<item name="wcf.category.showOrder"><![CDATA[Position]]></item>

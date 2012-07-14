@@ -196,6 +196,11 @@ abstract class AbstractCategoryAddForm extends ACPForm {
 			$this->packageID = $this->objectType->packageID;
 		}
 		
+		if ($this->objectType->getProcessor()->supportsDescriptions()) {
+			I18nHandler::getInstance()->register('description');
+		}
+		I18nHandler::getInstance()->register('title');
+		
 		parent::readData();
 		
 		$this->readCategories();
@@ -212,7 +217,7 @@ abstract class AbstractCategoryAddForm extends ACPForm {
 		if (isset($_POST['additionalData'])) {
 			$this->additionalData = ArrayUtil::trim($_POST['additionalData']);
 		}
-		if (isset($_POST['description'])) {
+		if ($this->objectType->getProcessor()->supportsDescriptions() && isset($_POST['description'])) {
 			$this->description = StringUtil::trim($_POST['description']);
 		}
 		if (isset($_POST['isDisabled'])) {
@@ -227,16 +232,6 @@ abstract class AbstractCategoryAddForm extends ACPForm {
 		if (isset($_POST['title'])) {
 			$this->title = StringUtil::trim($_POST['title']);
 		}
-	}
-	
-	/**
-	 * @see	wcf\page\IPage::readParameters()
-	 */
-	public function readParameters() {
-		parent::readParameters();
-		
-		I18nHandler::getInstance()->register('description');
-		I18nHandler::getInstance()->register('title');
 	}
 	
 	/**
@@ -259,11 +254,11 @@ abstract class AbstractCategoryAddForm extends ACPForm {
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
 		
-		if (!I18nHandler::getInstance()->isPlainValue('description') || !I18nHandler::getInstance()->isPlainValue('title')) {
+		if (($this->objectType->getProcessor()->supportsDescriptions() && !I18nHandler::getInstance()->isPlainValue('description')) || !I18nHandler::getInstance()->isPlainValue('title')) {
 			$categoryID = $returnValues['returnValues']->categoryID;
 			
 			$updateData = array();
-			if (!I18nHandler::getInstance()->isPlainValue('description')) {
+			if ($this->objectType->getProcessor()->supportsDescriptions() && !I18nHandler::getInstance()->isPlainValue('description')) {
 				$updateData['description'] = $this->objectType->getProcessor()->getI18nLangVarPrefix().'.description.category'.$categoryID;
 				I18nHandler::getInstance()->save('description', $updateData['description'], $this->objectType->getProcessor()->getDescriptionLangVarCategory(), $this->packageID);
 			}
@@ -310,7 +305,7 @@ abstract class AbstractCategoryAddForm extends ACPForm {
 			throw new UserInputException('title');
 		}
 		
-		if (!I18nHandler::getInstance()->validateValue('description')) {
+		if ($this->objectType->getProcessor()->supportsDescriptions() && !I18nHandler::getInstance()->validateValue('description')) {
 			throw new UserInputException('description');
 		}
 	}
