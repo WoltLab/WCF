@@ -154,7 +154,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		$this->objectAction->executeAction();
 		
 		if (!I18nHandler::getInstance()->isPlainValue('groupName')) {
-			$returnValues = $groupAction->getReturnValues();
+			$returnValues = $this->objectAction->getReturnValues();
 			$groupID = $returnValues['returnValues']->groupID;
 			I18nHandler::getInstance()->save('groupName', 'wcf.acp.group.group'.$groupID, 'wcf.acp.group', 1);
 			
