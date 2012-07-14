@@ -46,6 +46,12 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	protected $permissionPrefix = '';
 	
 	/**
+	 * indicates if the category type supports descriptions
+	 * @var	boolean
+	 */
+	protected $supportsDescriptions = true;
+	
+	/**
 	 * @see	wcf\system\category\ICategoryType::afterDeletion()
 	 */
 	public function afterDeletion(CategoryEditor $categoryEditor) {
@@ -126,5 +132,12 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	 */
 	public function getTitleLangVarCategory() {
 		return $this->i18nLangVarCategory;
+	}
+	
+	/**
+	 * @see	wcf\system\category\ICategoryType::supportsDescriptions()
+	 */
+	public function supportsDescriptions() {
+		return $this->supportsDescriptions;
 	}
 }
