@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\form\element;
-use wcf\util\StringUtil;
 
 /**
  * Provides a password input form element.

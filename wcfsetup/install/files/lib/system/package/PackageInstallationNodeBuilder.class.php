@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\package;
-use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueueList;
 use wcf\system\exception\SystemException;

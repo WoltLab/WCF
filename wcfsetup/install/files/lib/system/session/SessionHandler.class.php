@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\session;
-use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\PermissionDeniedException;

@@ -2,7 +2,6 @@
 namespace wcf\acp\form;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
-use wcf\system\option\OptionHandler;
 
 /**
  * This class provides default implementations for a list of options.

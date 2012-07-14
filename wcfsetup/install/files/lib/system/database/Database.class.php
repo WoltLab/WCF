@@ -1,8 +1,5 @@
 <?php
 namespace wcf\system\database;
-use wcf\data\DatabaseObject;
-use wcf\system\database\statement\PreparedStatement;
-
 
 /**
  * This is an abstract implementation of a database access class using PDO.

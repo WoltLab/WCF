@@ -3,7 +3,6 @@ namespace wcf\system\menu;
 use wcf\system\event\EventHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Basis class for a tree menu.

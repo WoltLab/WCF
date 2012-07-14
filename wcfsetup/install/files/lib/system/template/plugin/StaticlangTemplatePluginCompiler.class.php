@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateScriptingCompiler;
-use wcf\util\StringUtil;
 
 /**
  * The 'staticlang' compiler function gets the source of a language variables.

@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\form\element;
-use wcf\system\exception\SystemException;
 
 /**
  * Provides a checkbox form element.

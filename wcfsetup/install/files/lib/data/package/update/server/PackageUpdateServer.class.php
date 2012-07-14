@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\package\update\server;
 use wcf\data\DatabaseObject;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
 /**

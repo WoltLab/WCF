@@ -2,7 +2,6 @@
 namespace wcf\acp\page;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\page\AbstractPage;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\package\PackageUninstallationDispatcher;
 use wcf\system\WCF;

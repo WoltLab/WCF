@@ -9,7 +9,6 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
-use wcf\util\ClassUtil;
 
 /**
  * Shows the welcome page in admin control panel.

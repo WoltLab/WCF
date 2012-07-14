@@ -9,7 +9,6 @@ use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\SystemException;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;

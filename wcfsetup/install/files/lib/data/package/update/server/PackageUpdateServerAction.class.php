@@ -1,8 +1,6 @@
 <?php
 namespace wcf\data\package\update\server;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\ValidateActionException;
-use wcf\system\WCF;
 
 /**
  * Executes package update server-related actions.

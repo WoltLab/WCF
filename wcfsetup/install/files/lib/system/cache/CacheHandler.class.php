@@ -2,7 +2,6 @@
 namespace wcf\system\cache;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
-use wcf\util\StringUtil;
 
 /**
  * CacheHandler holds all registered cache resources.

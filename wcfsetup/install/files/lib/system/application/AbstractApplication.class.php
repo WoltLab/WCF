@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\application;
-use wcf\system\cache\CacheHandler;
-use wcf\system\WCF;
 
 /**
  * Default implementation for all applications for the community framework.

@@ -1,8 +1,6 @@
 <?php
 namespace wcf\data\language\category;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\ValidateActionException;
-use wcf\system\WCF;
 
 /**
  * Executes language category-related actions.
