@@ -419,6 +419,24 @@ class LanguageEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
+	 * Takes an XML object and returns the specific country code.
+	 *
+	 * @param	wcf\util\XML	$xml
+	 * @return	string		country code
+	 */
+	public static function readCountryCodeFromXML(XML $xml) {
+		$rootNode = $xml->xpath()->query('/ns:language')->item(0);
+		$attributes = $xml->xpath()->query('attribute::*', $rootNode);
+		foreach ($attributes as $attribute) {
+			if ($attribute->name == 'countrycode') {
+				return $attribute->value;
+			}
+		}
+		
+		throw new SystemException("missing attribute 'countrycode' in language file");
+	}
+	
+	/**
 	 * Imports language items from an XML file into a new or a current language.
 	 * Updates the relevant language files automatically.
 	 *
@@ -434,8 +452,10 @@ class LanguageEditor extends DatabaseObjectEditor {
 		
 		// create new language
 		if ($language === null) {
+			$countryCode = self::readCountryCodeFromXML($xml);
 			$languageName = self::readLanguageNameFromXML($xml);
 			$language = self::create(array(
+				'countryCode' => $countryCode,
 				'languageCode' => $languageCode,
 				'languageName' => $languageName
 			));

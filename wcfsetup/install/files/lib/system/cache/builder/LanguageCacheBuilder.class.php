@@ -22,6 +22,7 @@ class LanguageCacheBuilder implements ICacheBuilder {
 	public function getData(array $cacheResource) {
 		$data = array(
 			'codes' => array(),
+			'countryCodes' => array(),
 			'languages' => array(), 
 			'packages' => array(),
 			'default' => 0,
@@ -58,6 +59,9 @@ class LanguageCacheBuilder implements ICacheBuilder {
 			
 			// language code to language id
 			$data['codes'][$language->languageCode] = $language->languageID;
+			
+			// country code to language id
+			$data['countryCode'][$language->languageID] = $language->countryCode;
 		}
 		
 		// get language categories
