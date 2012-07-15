@@ -87,7 +87,7 @@ class Category extends DatabaseObject implements IRouteController {
 	 */
 	public function getParentCategory() {
 		if ($this->parentCategoryID && $this->parentCategory === null) {
-			$this->parentCategory = CategoryHandler::getInstance()->getCategory($this->objectTypeID, $this->parentCategoryID);
+			$this->parentCategory = CategoryHandler::getInstance()->getCategory(CategoryHandler::getInstance()->getObjectType($this->objectTypeID)->objectType, $this->parentCategoryID);
 		}
 		
 		return $this->parentCategory;

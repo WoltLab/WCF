@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\category\CategoryList;
+use wcf\system\package\PackageDependencyHandler;
 
 /**
  * Caches the categories for a certain package.
@@ -20,6 +21,7 @@ class CategoryCacheBuilder implements ICacheBuilder {
 		list(, $packageID) = explode('-', $cacheResource['cache']);
 		
 		$list = new CategoryList();
+		$list->sqlSelects .= "object_type.objectType";
 		$list->sqlLimit = 0;
 		$list->sqlJoins = "	LEFT JOIN	wcf".WCF_N."_object_type object_type
 					ON		(object_type.objectTypeID = category.objectTypeID)
@@ -34,13 +36,13 @@ class CategoryCacheBuilder implements ICacheBuilder {
 			'categoryIDs' => array()
 		);
 		foreach ($list as $category) {
-			if (!isset($data['categories'][$category->objectTypeID])) {
-				$data['categories'][$category->objectTypeID] = array();
+			if (!isset($data['categories'][$category->objectType])) {
+				$data['categories'][$category->objectType] = array();
 			}
 			
-			$data['categories'][$category->objectTypeID][$category->objectTypeCategoryID] = $category;
+			$data['categories'][$category->objectType][$category->objectTypeCategoryID] = $category;
 			$data['categoryIDs'][$category->categoryID] = array(
-				'objectTypeID' => $category->objectTypeID,
+				'objectType' => $category->objectType,
 				'objectTypeCategoryID' => $category->objectTypeCategoryID
 			);
 		}

@@ -122,7 +122,7 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	 * Reads the categories.
 	 */
 	protected function readCategories() {
-		$this->categoryNodeList = new CategoryNodeList($this->objectType->objectTypeID, 0, true);
+		$this->categoryNodeList = new CategoryNodeList($this->objectType->objectType, 0, true);
 	}
 	
 	/**

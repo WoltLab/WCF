@@ -40,6 +40,12 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	protected $langVarPrefix = '';
 	
 	/**
+	 * maximum category nesting lebel
+	 * @var	integer
+	 */
+	protected $maximumNestingLevel = 1;
+	
+	/**
 	 * permission prefix for the add/delete/edit permissions
 	 * @var	string
 	 */
@@ -125,6 +131,13 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 		}
 		
 		return WCF::getLanguage()->get('wcf.category.'.$name, $optional);
+	}
+	
+	/**
+	 * @see	wcf\system\category\ICategoryType::getMaximumNestingLevel()
+	 */
+	public function getMaximumNestingLevel() {
+		return $this->maximumNestingLevel;
 	}
 	
 	/**

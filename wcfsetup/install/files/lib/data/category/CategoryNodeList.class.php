@@ -35,13 +35,15 @@ class CategoryNodeList extends \RecursiveIteratorIterator implements \Countable 
 	/**
 	 * Creates a new CategoryNodeList instance.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	string		$objectType
 	 * @param	integer		$parentCategoryID
 	 * @param	boolean		$inludeDisabledCategories
 	 * @param	array<integer>	$excludedCategoryIDs
 	 */
-	public function __construct($objectTypeID, $parentCategoryID = 0, $inludeDisabledCategories = false, array $excludedObjectTypeCategoryIDs = array()) {
+	public function __construct($objectType, $parentCategoryID = 0, $inludeDisabledCategories = false, array $excludedObjectTypeCategoryIDs = array()) {
 		$this->parentCategoryID = $parentCategoryID;
+		
+		$objectTypeID = CategoryHandler::getInstance()->getObjectTypeByName($objectType)->objectTypeID;
 		
 		// get parent category
 		if (!$this->parentCategoryID) {
@@ -53,9 +55,9 @@ class CategoryNodeList extends \RecursiveIteratorIterator implements \Countable 
 			));
 		}
 		else {
-			$parentCategory = CategoryHandler::getInstance()->getCategory($objectTypeID, $this->parentCategoryID);
+			$parentCategory = CategoryHandler::getInstance()->getCategory($objectType, $this->parentCategoryID);
 			if ($parentCategory === null) {
-				throw new SystemException("There is no category with id '".$this->parentCategoryID."' and object type id '".$objectTypeID."'");
+				throw new SystemException("There is no category with id '".$this->parentCategoryID."' and object type '".$objectType."'");
 			}
 		}
 		

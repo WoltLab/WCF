@@ -206,7 +206,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	protected static function getShowOrder($objectTypeID, $parentCategoryID, $showOrder) {
 		// correct invalid values
 		if ($showOrder <= 0) {
-			$showOrder = 1;
+			$showOrder = PHP_INT_MAX;
 		}
 		
 		$sql = "SELECT	MAX(showOrder) AS showOrder
