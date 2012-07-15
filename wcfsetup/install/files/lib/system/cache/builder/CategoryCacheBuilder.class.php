@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\category\CategoryList;
-use wcf\system\package\PackageDependencyHandler;
 
 /**
  * Caches the categories for a certain package.

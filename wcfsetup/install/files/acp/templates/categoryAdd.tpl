@@ -53,7 +53,7 @@
 		<fieldset>
 			<legend>{lang}wcf.global.form.data{/lang}</legend>
 			
-			{if $categoryNodeList|count && $objectType->getProcessor()->getMaximumNestingLevel()}
+			{if $objectType->getProcessor()->getMaximumNestingLevel() && $categoryNodeList|count}
 				<dl{if $errorField == 'parentCategoryID'} class="formError"{/if}>
 					<dt><label for="parentCategoryID">{@$objectType->getProcessor()->getLanguageVariable('parentCategoryID')}</label></dt>
 					<dd>

@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\category;
 use wcf\data\category\Category;
-use wcf\data\category\CategoryEditor;
 use wcf\system\SingletonFactory;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\CacheHandler;
