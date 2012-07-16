@@ -160,6 +160,29 @@ img {
 .box128 { .box(128px, 14px); }
 .box256 { .box(256px, 21px); }
 
+/*
+	language selection
+*/
+.boxFlag {
+	cursor: pointer;
+	min-height: 23px;
+	padding: 0 @wcfGapTiny;
+	vertical-align: middle;
+	
+	> div {
+		float: left;
+	}
+	
+	> hgroup {
+		margin-left: 34px;
+		min-height: 23px;
+		
+		h1 {
+			padding-top: 2px;
+		}
+	}
+}
+
 .boxHeadline {
 	margin-top: @wcfGapMedium;
 	
@@ -197,6 +220,11 @@ img {
 .icon96 { .icon(96px); }
 .icon128 { .icon(128px); }
 .icon256 { .icon(256px); }
+
+.iconFlag {
+	height: 15px;
+	width: 24px;
+}
 
 dl.dataList {
 	dt {

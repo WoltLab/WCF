@@ -6013,6 +6013,106 @@ WCF.Sitemap = Class.extend({
 });
 
 /**
+ * Provides a language chooser.
+ * 
+ * @param	string		containerID
+ * @param	string		inputFieldID
+ * @param	integer		languageID
+ * @param	object		languages
+ * @param	object		callback
+ */
+WCF.Language.Chooser = Class.extend({
+	/**
+	 * callback object
+	 * @var	object
+	 */
+	_callback: null,
+	
+	/**
+	 * dropdown object
+	 * @var	jQuery
+	 */
+	_dropdown: null,
+	
+	/**
+	 * input field
+	 * @var	jQuery
+	 */
+	_input: null,
+	
+	/**
+	 * Initializes the language chooser.
+	 * 
+	 * @param	string		containerID
+	 * @param	string		inputFieldID
+	 * @param	integer		languageID
+	 * @param	object		languages
+	 * @param	object		callback
+	 */
+	init: function(containerID, inputFieldID, languageID, languages, callback) {
+		var $container = $('#' + containerID);
+		if ($container.length != 1) {
+			console.debug("[WCF.Language.Chooser] Invalid container id '" + containerID + "' given");
+			return;
+		}
+		
+		// bind language id input
+		this._input = $('#' + inputFieldID);
+		if (!this._input.length) {
+			this._input = $('<input type="hidden" name="' + inputFieldID + '" value="' + languageID + '" />').appendTo($container);
+		}
+		
+		// handle callback
+		if (callback !== undefined) {
+			if (!$.isFunction(callback)) {
+				console.debug("[WCF.Language.Chooser] Given callback is invalid");
+				return;
+			}
+			
+			this._callback = callback;
+		}
+		
+		// create language dropdown
+		this._dropdown = $('<div class="dropdown" id="' + containerID + '-languageChooser" />').appendTo($container);
+		$('<div class="dropdownToggle boxFlag" data-toggle="' + containerID + '-languageChooser"></div>').appendTo(this._dropdown);
+		var $dropdownMenu = $('<ul class="dropdownMenu" />').appendTo(this._dropdown);
+		
+		for (var $languageID in languages) {
+			var $language = languages[$languageID];
+			var $item = $('<li class="boxFlag"><div class="framed"><img src="' + $language.iconPath + '" alt="" class="iconFlag" /></div> <hgroup><h1>' + $language.languageName + '</h1></hgroup>').appendTo($dropdownMenu);
+			$item.data('languageID', $languageID).click($.proxy(this._click, this));
+			
+			// update dropdown label
+			if ($languageID == languageID) {
+				this._dropdown.children('.dropdownToggle').html($item.html());
+			}
+		}
+		
+		WCF.Dropdown.init();
+	},
+	
+	/**
+	 * Handles click events.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		var $item = $(event.currentTarget);
+		
+		// update input field
+		this._input.val($item.data('languageID'));
+		
+		// update dropdown label
+		this._dropdown.children('.dropdownToggle').html($item.html());
+		
+		// execute callback
+		if (this._callback !== null) {
+			this._callback($item);
+		}
+	}
+});
+
+/**
  * Provides a toggleable sidebar with persistent visibility.
  */
 $.widget('ui.wcfPersistentSidebar', $.ui.wcfSidebar, {
