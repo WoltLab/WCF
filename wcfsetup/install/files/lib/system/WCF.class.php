@@ -434,7 +434,7 @@ class WCF {
 			
 			// start application if not within ACP
 			if (!class_exists('wcf\system\WCFACP', false)) {
-				new $className();
+				call_user_func(array($className, 'getInstance'));
 			}
 		}
 		else {

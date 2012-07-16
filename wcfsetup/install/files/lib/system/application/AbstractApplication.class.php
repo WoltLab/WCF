@@ -1,17 +1,18 @@
 <?php
 namespace wcf\system\application;
+use wcf\system\SingletonFactory;
 
 /**
- * Default implementation for all applications for the community framework.
+ * Default implementation for all applications for community framework.
  * 
  * @author 	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.application
  * @category 	Community Framework
  */
-abstract class AbstractApplication implements IApplication {
+abstract class AbstractApplication extends SingletonFactory implements IApplication {
 	/**
 	 * @see	wcf\system\application\IApplication::__callStatic()
 	 */
