@@ -16,7 +16,6 @@ use wcf\system\SingletonFactory;
 class PackageDependencyHandler extends SingletonFactory {
 	/**
 	 * cache of package dependencies
-	 *
 	 * @var	array
 	 */	
 	protected $packageDependencyCache = null;

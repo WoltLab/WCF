@@ -14,8 +14,22 @@ use wcf\system\exception\UserException;
  * @category 	Community Framework
  */
 class PackageUpdateAuthorizationRequiredException extends UserException {
+	/**
+	 * id of the package update server that requires authorization
+	 * @var	integer
+	 */
 	protected $packageUpdateServerID = 0;
+	
+	/**
+	 * url of the requested package update
+	 * @var	string
+	 */
 	protected $url = '';
+	
+	/**
+	 * package update sever response data
+	 * @var	array
+	 */
 	protected $response = array();
 	
 	/**

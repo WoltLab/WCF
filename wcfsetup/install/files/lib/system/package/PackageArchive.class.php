@@ -21,63 +21,54 @@ use wcf\util\XML;
 class PackageArchive {
 	/**
 	 * path to archive
-	 *
 	 * @var string
 	 */
 	protected $archive = null;
 	
 	/**
 	 * package object of an existing package
-	 *
-	 * @var Package
+	 * @var	wcf\data\package\Package
 	 */
 	protected $package = null;
 	
 	/**
 	 * tar archive object
-	 *
-	 * @var Tar
+	 * @var	wcf\system\io\Tar
 	 */
 	protected $tar = null;
 	
 	/**
 	 * general package information
-	 *
 	 * @var array
 	 */
 	protected $packageInfo = array();
 	
 	/**
 	 * author information
-	 *
 	 * @var array
 	 */
 	protected $authorInfo = array();
 	
 	/**
 	 * list of requirements
-	 *
 	 * @var array
 	 */
 	protected $requirements = array();
 	
 	/**
 	 * list of optional packages
-	 *
 	 * @var array
 	 */
 	protected $optionals = array();
 	
 	/**
 	 * list of excluded packages
-	 * 
 	 * @var	array
 	 */
 	protected $excludedPackages = array();
 	
 	/**
 	 * list of instructions
-	 * 
 	 * @var	array<array>
 	 */	
 	protected $instructions = array(
@@ -87,14 +78,12 @@ class PackageArchive {
 	
 	/**
 	 * list of php requirements
-	 * 
 	 * @var	array<array>
 	 */
 	protected $phpRequirements = array();
 	
 	/**
 	 * default name of the package.xml file
-	 *
 	 * @var string
 	 */
 	const INFO_FILE = 'package.xml';
