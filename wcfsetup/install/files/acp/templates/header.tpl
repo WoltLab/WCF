@@ -57,13 +57,17 @@
 				'wcf.global.button.add': '{lang}wcf.global.button.add{/lang}',
 				'wcf.global.button.cancel': '{lang}wcf.global.button.cancel{/lang}',
 				'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}',
+				'wcf.global.button.delete': '{lang}wcf.global.button.delete{/lang}',
 				'wcf.global.button.disable': '{lang}wcf.global.button.disable{/lang}',
 				'wcf.global.button.disabledI18n': '{lang}wcf.global.button.disabledI18n{/lang}',
 				'wcf.global.button.edit': '{lang}wcf.global.button.edit{/lang}',
 				'wcf.global.button.enable': '{lang}wcf.global.button.enable{/lang}',
 				'wcf.global.button.next': '{lang}wcf.global.button.next{/lang}',
 				'wcf.global.button.preview': '{lang}wcf.global.button.preview{/lang}',
+				'wcf.global.button.reset': '{lang}wcf.global.button.reset{/lang}',
 				'wcf.global.button.save': '{lang}wcf.global.button.save{/lang}',
+				'wcf.global.button.search': '{lang}wcf.global.button.search{/lang}',
+				'wcf.global.button.submit': '{lang}wcf.global.button.submit{/lang}',
 				'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 				'wcf.date.relative.minutes': '{capture assign=relativeMinutes}{lang}wcf.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
 				'wcf.date.relative.hours': '{capture assign=relativeHours}{lang}wcf.date.relative.hours{/lang}{/capture}{@$relativeHours|encodeJS}',
@@ -118,11 +122,13 @@
 							</li>
 						</ul>
 						
+						<!-- search area -->
 						<aside id="search" class="searchBar">
 							<form method="post" action="{link controller='Search'}{/link}">
 								<input type="search" name="q" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" value="" />
 							</form>
 						</aside>
+						<!-- /search area -->
 					</div>
 				</nav>
 				<!-- /top menu -->
@@ -136,10 +142,6 @@
 					<img src="{@$__wcf->getPath()}acp/images/wcfLogo2.svg" width="321" height="58" alt="Product-logo" title="WoltLab Community Framework 2.0 Alpha 1" />
 				</a>
 				<!-- /clickable area -->
-				
-				<!-- search area -->
-				
-				<!-- /search area -->
 			</div>
 			<!-- /logo -->
 			

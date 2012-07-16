@@ -24,7 +24,11 @@ class PackageCache extends SingletonFactory {
 	 * @see wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		CacheHandler::getInstance()->addResource('package', WCF_DIR.'cache/cache.package.php', 'wcf\system\cache\builder\PackageCacheBuilder');
+		CacheHandler::getInstance()->addResource(
+			'package',
+			WCF_DIR.'cache/cache.package.php',
+			'wcf\system\cache\builder\PackageCacheBuilder'
+		);
 		$this->packages = CacheHandler::getInstance()->get('package');	
 	}
 	
@@ -38,5 +42,14 @@ class PackageCache extends SingletonFactory {
 		if (isset($this->packages[$packageID])) return $this->packages[$packageID];
 		
 		return null;
+	}
+	
+	/**
+	 * Returns all packages.
+	 * 
+	 * @return	array<wcf\data\package\Package>
+	 */
+	public function getPackages() {
+		return $this->packages;
 	}
 }

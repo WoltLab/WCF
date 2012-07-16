@@ -62,5 +62,5 @@
 		<!-- CONTENT -->
 		<section id="content" class="content clearfix">
 			
-			{if $skipBreadcrumbs|empty}{include file='breadcrumbs' sandbox=false}{/if}
+			{if $skipBreadcrumbs|empty}{include file='breadcrumbs'}{/if}
 			

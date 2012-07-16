@@ -13,12 +13,16 @@ use wcf\system\setup\IFileHandler;
  * @category 	Community Framework
  */
 abstract class PackageInstallationFileHandler implements IFileHandler {
+	/**
+	 * active package installation dispatcher
+	 * @var	wcf\system\package\PackageInstallationDispatcher
+	 */
 	protected $packageInstallation;
 	
 	/**
 	 * Creates a new PackageInstallationFileHandler object.
 	 * 
-	 * @param	PackageInstallationDispatcher	$packageInstallation
+	 * @param	wcf\system\package\PackageInstallationDispatcher	$packageInstallation
 	 */
 	public function __construct(PackageInstallationDispatcher $packageInstallation) {
 		$this->packageInstallation = $packageInstallation;
