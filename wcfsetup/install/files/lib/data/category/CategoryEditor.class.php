@@ -55,7 +55,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	protected function updateShowOrder($parentCategoryID, $showOrder) {
 		// correct invalid values
 		if ($showOrder <= 0) {
-			$showOrder = 1;
+			$showOrder = PHP_INT_MAX;
 		}
 		
 		if ($parentCategoryID != $this->parentCategoryID) {
