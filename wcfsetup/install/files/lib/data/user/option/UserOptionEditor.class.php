@@ -29,7 +29,7 @@ class UserOptionEditor extends DatabaseObjectEditor {
 		WCF::getDB()->getEditor()->addColumn('wcf'.WCF_N.'_user_option_value', 'userOption'.$userOption->optionID, self::getColumnDefinition($parameters['optionType']));
 		
     		// add the default value to this column
-		if (isset($parameters['$defaultValue'])) {
+		if (isset($parameters['defaultValue'])) {
 			$sql = "UPDATE	wcf".WCF_N."_user_option_value
 				SET	userOption".$userOption->optionID." = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
