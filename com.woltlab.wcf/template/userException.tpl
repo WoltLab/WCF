@@ -1,11 +1,13 @@
 {include file="documentHeader"}
 <head>
 	<title>{lang}wcf.global.error.title{/lang} - {lang}{PAGE_TITLE}{/lang}</title>
-	{include file='headInclude' sandbox=false}
+	
+	{include file='headInclude'}
 </head>
 
 <body{if $templateName|isset} id="tpl{$templateName|ucfirst}"{/if}>
-{include file='header' sandbox=false}
+
+{include file='header'}
 	
 <p id="errorMessage" class="error">
 	{@$message}
@@ -26,6 +28,7 @@
 	-->
 {/if}
 
-{include file='footer' sandbox=false}
+{include file='footer'}
+
 </body>
 </html>
