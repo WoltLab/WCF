@@ -54,36 +54,23 @@
 			{/if}
 			
 			WCF.Language.addObject({
-				'wcf.global.button.add': '{lang}wcf.global.button.add{/lang}',
-				'wcf.global.button.cancel': '{lang}wcf.global.button.cancel{/lang}',
-				'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}',
-				'wcf.global.button.disable': '{lang}wcf.global.button.disable{/lang}',
-				'wcf.global.button.disabledI18n': '{lang}wcf.global.button.disabledI18n{/lang}',
-				'wcf.global.button.edit': '{lang}wcf.global.button.edit{/lang}',
-				'wcf.global.button.enable': '{lang}wcf.global.button.enable{/lang}',
-				'wcf.global.button.next': '{lang}wcf.global.button.next{/lang}',
-				'wcf.global.button.preview': '{lang}wcf.global.button.preview{/lang}',
-				'wcf.global.button.save': '{lang}wcf.global.button.save{/lang}',
-				'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
+				{implode from=$__wcf->language->getCategoryItems('wcf.global') key='languageItem' item='languageItemValue'}'{@$languageItem}': '{@$languageItemValue|encodeJS}'{/implode}
+			});
+			
+			WCF.Language.addObject({
 				'wcf.date.relative.minutes': '{capture assign=relativeMinutes}{lang}wcf.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
 				'wcf.date.relative.hours': '{capture assign=relativeHours}{lang}wcf.date.relative.hours{/lang}{/capture}{@$relativeHours|encodeJS}',
 				'wcf.date.relative.pastDays': '{capture assign=relativePastDays}{lang}wcf.date.relative.pastDays{/lang}{/capture}{@$relativePastDays|encodeJS}',
 				'wcf.date.dateTimeFormat': '{lang}wcf.date.dateTimeFormat{/lang}',
 				'__days': [ '{lang}wcf.date.day.sunday{/lang}', '{lang}wcf.date.day.monday{/lang}', '{lang}wcf.date.day.tuesday{/lang}', '{lang}wcf.date.day.wednesday{/lang}', '{lang}wcf.date.day.thursday{/lang}', '{lang}wcf.date.day.friday{/lang}', '{lang}wcf.date.day.saturday{/lang}' ],
-				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
-				'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
-				'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
-				'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
-				'wcf.global.confirmation.cancel': '{lang}wcf.global.confirmation.cancel{/lang}',
-				'wcf.global.confirmation.confirm': '{lang}wcf.global.confirmation.confirm{/lang}',
-				'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}',
-				'wcf.global.form.edit.success': '{lang}wcf.global.form.edit.success{/lang}'
 			});
+			
 			WCF.Icon.addObject({
 				'wcf.icon.closed': '{@$__wcf->getPath()}icon/arrowRightInverse.svg',
 				'wcf.icon.loading': '{@$__wcf->getPath()}icon/spinner.svg',
 				'wcf.icon.opened': '{@$__wcf->getPath()}icon/arrowDownInverse.svg'
 			});
+			
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
 			new WCF.Effect.BalloonTooltip();
