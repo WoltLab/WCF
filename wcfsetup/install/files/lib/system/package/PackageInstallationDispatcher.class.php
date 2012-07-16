@@ -716,12 +716,22 @@ class PackageInstallationDispatcher {
 		$missingPackages = 0;
 		foreach ($requirements as $key => $requirement) {
 			if (isset($openRequirements[$requirement['name']])) {
-				$requirements[$key]['open'] = 1;
+				$requirements[$key]['status'] = 'missing';
 				$requirements[$key]['action'] = $openRequirements[$requirement['name']]['action'];
-				if (!isset($requirements[$key]['file'])) $missingPackages++;
+				
+				if (!isset($requirements[$key]['file'])) {
+					if ($openRequirements[$requirement['name']]['action'] === 'update') {
+						$requirements[$key]['status'] = 'missingVersion';
+						$requirements[$key]['existingVersion'] = $openRequirements[$requirement['name']]['existingVersion'];
+					}
+					$missingPackages++;
+				}
+				else {
+					$requirements[$key]['status'] = 'delivered';
+				}
 			}
 			else {
-				$requirements[$key]['open'] = 0;
+				$requirements[$key]['status'] = 'installed';
 			}
 		}
 		
