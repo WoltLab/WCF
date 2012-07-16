@@ -16,7 +16,11 @@ use wcf\system\WCF;
  * @category 	Community Framework
  */
 class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
-	protected $tableName = '_acp_template';
+	/**
+	 * name of the database table where the installed files are logged
+	 * @var	string
+	 */
+	protected $tableName = 'acp_template';
 	
 	/**
 	 * @see wcf\system\setup\IFileHandler::checkFiles()
@@ -41,7 +45,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 				$conditions->add("templateName IN (?)", array($fileNames));
 				
 				$sql = "SELECT		*
-					FROM		wcf".WCF_N.$this->tableName."
+					FROM		wcf".WCF_N."_".$this->tableName."
 					".$conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditions->getParameters());
@@ -78,7 +82,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 		
 		// get existing templates
 		$sql = "SELECT	templateName
-			FROM	wcf".WCF_N.$this->tableName."
+			FROM	wcf".WCF_N."_".$this->tableName."
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($packageID));
@@ -92,7 +96,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 		}
 		
 		if (count($files)) {
-			$sql = "INSERT INTO	wcf".WCF_N.$this->tableName."
+			$sql = "INSERT INTO	wcf".WCF_N."_".$this->tableName."
 						(packageID, templateName)
 				VALUES		(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
