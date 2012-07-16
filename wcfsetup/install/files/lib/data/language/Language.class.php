@@ -128,6 +128,34 @@ class Language extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns all language items of the language category with the given name.
+	 * 
+	 * @param	string		$categoryName
+	 * @return	array<string>
+	 */
+	public function getCategoryItems($categoryName) {
+		if (!LanguageFactory::getInstance()->isValidCategory($categoryName)) {
+			return array();
+		}
+		
+		// make sure language file exist
+		$this->loadCategory($categoryName);
+		
+		// backup language items
+		$__items = $this->items;
+		$this->items = array();
+		
+		// include language file
+		@include(WCF_DIR.'language/'.$this->packageID.'_'.$this->languageID.'_'.$categoryName.'.php');
+		$items = $this->items;
+		
+		// reset language items
+		$this->items = $__items;
+		
+		return $items;
+	}
+	
+	/**
 	 * Loads category files.
 	 *
 	 * @param	string		$category
