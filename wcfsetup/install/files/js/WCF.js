@@ -4534,17 +4534,22 @@ WCF.InlineEditor = Class.extend({
 		
 		// validate options
 		var $hasOptions = false;
+		var $lastElementType = '';
 		for (var $i = 0, $length = this._options.length; $i < $length; $i++) {
 			var $option = this._options[$i];
 			
 			if ($option.optionName === 'divider') {
-				$('<li class="dropdownDivider" />').appendTo(this._dropdowns[$elementID]);
+				if ($lastElementType !== '' && $lastElementType !== 'divider') {
+					$('<li class="dropdownDivider" />').appendTo(this._dropdowns[$elementID]);
+					$lastElementType = $option.optionName;
+				}
 			}
 			else if (this._validate($elementID, $option.optionName) || this._validateCallbacks($elementID, $option.optionName)) {
 				var $listItem = $('<li><span>' + $option.label + '</span></li>').appendTo(this._dropdowns[$elementID]);
 				$listItem.data('elementID', $elementID).data('optionName', $option.optionName).click($.proxy(this._click, this));
 				
 				$hasOptions = true;
+				$lastElementType = $option.optionName;
 			}
 		}
 		
