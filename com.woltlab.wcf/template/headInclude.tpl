@@ -77,9 +77,6 @@
 		});
 		
 		WCF.Icon.addObject({
-			'wcf.icon.loading': '{icon size='S'}spinner{/icon}',
-			'wcf.icon.opened': '{icon size='S'}arrowDownInverse{/icon}',
-			'wcf.icon.closed': '{icon size='S'}arrowRightInverse{/icon}',
 			'wcf.icon.arrow.left': '{icon size='S'}arrowLeft{/icon}',
 			'wcf.icon.arrow.left.circle': '{icon size='S'}circleArrowLeft{/icon}',
 			'wcf.icon.arrow.right': '{icon size='S'}arrowRight{/icon}',
@@ -88,8 +85,12 @@
 			'wcf.icon.arrow.down.circle': '{icon size='S'}circleArroDown{/icon}',
 			'wcf.icon.arrow.up': '{icon size='S'}arrowUp{/icon}',
 			'wcf.icon.arrow.up.circle': '{icon size='S'}circleArrowUp{/icon}',
+			'wcf.icon.closed': '{icon size='S'}arrowRightInverse{/icon}',
+			'wcf.icon.delete': '{@$__wcf->getPath()}icon/delete.svg',
 			'wcf.icon.dropdown': '{icon size='S'}dropdown{/icon}',
-			'wcf.icon.edit': '{icon size='S'}edit{/icon}'
+			'wcf.icon.edit': '{icon size='S'}edit{/icon}',
+			'wcf.icon.loading': '{icon size='S'}spinner{/icon}',
+			'wcf.icon.opened': '{icon size='S'}arrowDownInverse{/icon}'
 			{event name='javascriptIconImport'}
 		});
 		
