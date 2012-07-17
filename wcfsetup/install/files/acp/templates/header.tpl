@@ -85,6 +85,8 @@
 			});
 			WCF.Icon.addObject({
 				'wcf.icon.closed': '{@$__wcf->getPath()}icon/arrowRightInverse.svg',
+				'wcf.icon.delete': '{@$__wcf->getPath()}icon/delete.svg',
+				'wcf.icon.edit': '{@$__wcf->getPath()}icon/edit.svg',
 				'wcf.icon.loading': '{@$__wcf->getPath()}icon/spinner.svg',
 				'wcf.icon.opened': '{@$__wcf->getPath()}icon/arrowDownInverse.svg'
 			});
