@@ -86,7 +86,7 @@
 			'wcf.icon.arrow.up': '{icon size='S'}arrowUp{/icon}',
 			'wcf.icon.arrow.up.circle': '{icon size='S'}circleArrowUp{/icon}',
 			'wcf.icon.closed': '{icon size='S'}arrowRightInverse{/icon}',
-			'wcf.icon.delete': '{@$__wcf->getPath()}icon/delete.svg',
+			'wcf.icon.delete': '{icon size='S'}delete{/icon}',
 			'wcf.icon.dropdown': '{icon size='S'}dropdown{/icon}',
 			'wcf.icon.edit': '{icon size='S'}edit{/icon}',
 			'wcf.icon.loading': '{icon size='S'}spinner{/icon}',
