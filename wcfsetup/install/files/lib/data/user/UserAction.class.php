@@ -151,6 +151,18 @@ class UserAction extends AbstractDatabaseObjectAction {
 	public function update() {
 		if (isset($this->parameters['data'])) {
 			parent::update();
+			
+			if (isset($this->parameters['data']['languageID'])) {
+				foreach ($this->objects as $object) {
+					if ($object->userID == WCF::getUser()->userID) {
+						if ($this->parameters['data']['languageID'] != WCF::getUser()->languageID) {
+							WCF::setLanguage($this->parameters['data']['languageID']);
+						}
+						
+						break;
+					}
+				}
+			}
 		}
 		else {
 			if (!count($this->objects)) {
