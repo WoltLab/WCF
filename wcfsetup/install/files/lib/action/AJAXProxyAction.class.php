@@ -1,5 +1,6 @@
 <?php
 namespace wcf\action;
+use wcf\data\IStorableObject;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\PermissionDeniedException;
@@ -127,7 +128,7 @@ class AJAXProxyAction extends AbstractSecureAction {
 		// execute action
 		try {
 			$this->response = $this->objectAction->executeAction();
-			if (isset($this->response['returnValues']) && $this->response['returnValues'] instanceof \wcf\data\IStorableObject) {
+			if (isset($this->response['returnValues']) && $this->response['returnValues'] instanceof IStorableObject) {
 				$this->response['returnValues'] = $this->response['returnValues']->getData();
 			}
 		}
