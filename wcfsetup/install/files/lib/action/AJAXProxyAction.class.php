@@ -127,6 +127,9 @@ class AJAXProxyAction extends AbstractSecureAction {
 		// execute action
 		try {
 			$this->response = $this->objectAction->executeAction();
+			if (isset($this->response['returnValues']) && $this->response['returnValues'] instanceof \wcf\data\IStorableObject) {
+				$this->response['returnValues'] = $this->response['returnValues']->getData();
+			}
 		}
 		catch (\Exception $e) {
 			$this->throwException($e);
