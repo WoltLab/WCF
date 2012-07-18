@@ -1088,7 +1088,7 @@ WCF.Clipboard = {
 		});
 		
 		if (this._actionObjects[listItem.data('objectType')] && this._actionObjects[listItem.data('objectType')][listItem.data('parameters').actionName]) {
-			this._actionObjects[listItem.data('objectType')][listItem.data('parameters').actionName].triggerEffect(objectIDs);
+			this._actionObjects[listItem.data('objectType')][listItem.data('parameters').actionName].triggerEffect($objectIDs);
 		}
 	},
 	
