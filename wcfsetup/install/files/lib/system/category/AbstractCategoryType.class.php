@@ -16,16 +16,16 @@ use wcf\system\WCF;
  */
 abstract class AbstractCategoryType extends SingletonFactory implements ICategoryType {
 	/**
-	 * name of the acl object type
-	 * @var	string
+	 * indicates if categories of this type may have no empty description
+	 * @var	boolean
 	 */
-	protected $aclObjectTypeName = '';
+	protected $forceDescription = true;
 	
 	/**
-	 * name of the collapsible object type
-	 * @var	string
+	 * indicates if categories of this type have descriptions
+	 * @var	boolean
 	 */
-	protected $collapsibleObjectTypeName = '';
+	protected $hasDescription = true;
 	
 	/**
 	 * language category which contains the language variables of i18n values
@@ -46,10 +46,17 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	protected $permissionPrefix = '';
 	
 	/**
-	 * indicates if the category type supports descriptions
-	 * @var	boolean
+	 * maximum category nesting lebel
+	 * @var	integer
 	 */
-	protected $supportsDescriptions = true;
+	protected $maximumNestingLevel = -1;
+	
+	/**
+	 * name of the object types associated with categories of this type (the
+	 * key is the definition name and value the object type name)
+	 * @var	array<string>
+	 */
+	protected $objectTypes = array();
 	
 	/**
 	 * @see	wcf\system\category\ICategoryType::afterDeletion()
@@ -86,17 +93,21 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::getACLObjectTypeName()
+	 * @see	wcf\system\category\ICategoryType::forceDescription()
 	 */
-	public function getACLObjectTypeName() {
-		return $this->aclObjectTypeName ?: null;
+	public function forceDescription() {
+		return $this->hasDescription() && $this->forceDescription;
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::getCollapsibleObjectTypeName()
+	 * @see	wcf\system\category\ICategoryType::getObjectTypeName()
 	 */
-	public function getCollapsibleObjectTypeName() {
-		return $this->aclObjectTypeName ?: null;
+	public function getObjectTypeName($definitionName) {
+		if (isset($this->objectTypes[$definitionName])) {
+			return $this->objectTypes[$definitionName];
+		}
+		
+		return null;
 	}
 	
 	/**
@@ -128,6 +139,13 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	}
 	
 	/**
+	 * @see	wcf\system\category\ICategoryType::getMaximumNestingLevel()
+	 */
+	public function getMaximumNestingLevel() {
+		return $this->maximumNestingLevel;
+	}
+	
+	/**
 	 * @see	wcf\system\category\ICategoryType::getTitleLangVarCategory()
 	 */
 	public function getTitleLangVarCategory() {
@@ -135,9 +153,9 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::supportsDescriptions()
+	 * @see	wcf\system\category\ICategoryType::hasDescription()
 	 */
-	public function supportsDescriptions() {
-		return $this->supportsDescriptions;
+	public function hasDescription() {
+		return $this->hasDescription;
 	}
 }
