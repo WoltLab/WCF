@@ -128,8 +128,8 @@ class AJAXProxyAction extends AbstractSecureAction {
 		// execute action
 		try {
 			$this->response = $this->objectAction->executeAction();
-			if (isset($this->response['returnValues']) && $this->response['returnValues'] instanceof IStorableObject) {
-				$this->response['returnValues'] = $this->response['returnValues']->getData();
+			if (isset($this->response['returnValues'])) {
+				$this->response['returnValues'] = $this->getData($this->response['returnValues']);
 			}
 		}
 		catch (\Exception $e) {
@@ -141,6 +141,24 @@ class AJAXProxyAction extends AbstractSecureAction {
 		header('Content-type: application/json');
 		echo JSON::encode($this->response);
 		exit;
+	}
+	
+	/**
+	 * Gets the values of object data variables
+	 * 
+	 * @param	mixed		$response
+	 * @return	mixed
+	 */
+	protected function getData($response) {
+		if ($response instanceof IStorableObject) {
+			return $response->getData();
+		}
+		if (is_array($response)) {
+			foreach ($response as &$object) {
+				$object = $this->getData($object);
+			}
+		}
+		return $response;
 	}
 	
 	/**
