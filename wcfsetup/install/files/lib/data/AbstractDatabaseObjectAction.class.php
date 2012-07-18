@@ -284,10 +284,10 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	/**
 	 * Creates new database object.
 	 *
-	 * @return	wcf\data\DatabaseObject
+	 * @return	array
 	 */
 	public function create() {
-		return call_user_func(array($this->className, 'create'), $this->parameters['data']);
+		return call_user_func(array($this->className, 'create'), $this->parameters['data'])->getData();
 	}
 	
 	/**
