@@ -181,15 +181,17 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 		}
 		
 		// use table index as array index
-		$objects = array();
-		foreach($this->objects as $object) {
-			$objectID = $object->{$this->getDatabaseTableIndexName()};
-			$objects[$objectID] = $object;
-			
-			$this->indexToObject[] = $objectID;
+		if ($this->getDatabaseTableIndexIsIdentity()) {
+			$objects = array();
+			foreach($this->objects as $object) {
+				$objectID = $object->{$this->getDatabaseTableIndexName()};
+				$objects[$objectID] = $object;
+
+				$this->indexToObject[] = $objectID;
+			}
+			$this->objectIDs = $this->indexToObject;
+			$this->objects = $objects;
 		}
-		$this->objectIDs = $this->indexToObject;
-		$this->objects = $objects;
 	}
 	
 	/**
@@ -220,30 +222,31 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	}
 	
 	/**
-	 * Returns the name of the database table.
-	 * 
-	 * @return	string
+	 * @see	wcf\data\IStorableObject::getDatabaseTableName()
 	 */
 	public function getDatabaseTableName() {
 		return call_user_func(array($this->className, 'getDatabaseTableName'));
 	}
 	
 	/**
-	 * Returns the name of the database table.
-	 * 
-	 * @return	string
-	 */
-	public function getDatabaseTableIndexName() {
-		return call_user_func(array($this->className, 'getDatabaseTableIndexName'));
-	}
-	
-	/**
-	 * Returns the name of the database table alias.
-	 * 
-	 * @return	string
+	 @see	wcf\data\IStorableObject::getDatabaseTableAlias()
 	 */
 	public function getDatabaseTableAlias() {
 		return call_user_func(array($this->className, 'getDatabaseTableAlias'));
+	}
+	
+	/**
+	 * @see	wcf\data\IStorableObject::getDatabaseTableIndexIsIdentity()
+	 */
+	public function getDatabaseTableIndexIsIdentity() {
+		return call_user_func(array($this->className, 'getDatabaseTableIndexIsIdentity'));
+	}
+	
+	/**
+	 * @see	wcf\data\IStorableObject::getDatabaseTableIndexName()
+	 */
+	public function getDatabaseTableIndexName() {
+		return call_user_func(array($this->className, 'getDatabaseTableIndexName'));
 	}
 	
 	/**
