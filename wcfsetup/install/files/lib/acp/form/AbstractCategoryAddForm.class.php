@@ -159,19 +159,19 @@ abstract class AbstractCategoryAddForm extends ACPForm {
 	}
 	
 	/**
-	 * Reads the categories.
-	 */
-	protected function readCategories() {
-		$this->categoryNodeList = new CategoryNodeList($this->objectType->objectTypeID, 0, true);
-	}
-	
-	/**
 	 * Checks if the active user has the needed permissions to add a new category.
 	 */
 	protected function checkCategoryPermissions() {
 		if (!$this->objectType->getProcessor()->canAddCategory()) {
 			throw new PermissionDeniedException();
 		}
+	}
+	
+	/**
+	 * Reads the categories.
+	 */
+	protected function readCategories() {
+		$this->categoryNodeList = new CategoryNodeList($this->objectType->objectType, 0, true);
 	}
 	
 	/**
@@ -201,9 +201,9 @@ abstract class AbstractCategoryAddForm extends ACPForm {
 		}
 		I18nHandler::getInstance()->register('title');
 		
-		parent::readData();
-		
 		$this->readCategories();
+		
+		parent::readData();
 	}
 	
 	/**
@@ -315,8 +315,25 @@ abstract class AbstractCategoryAddForm extends ACPForm {
 	 */
 	protected function validateParentCategory() {
 		if ($this->parentCategoryID) {
-			if (CategoryHandler::getInstance()->getCategory($this->objectType->objectTypeID, $this->parentCategoryID) === null) {
+			if (!$this->objectType->getProcessor()->getMaximumNestingLevel()) {
+				$this->parentCategoryID = 0;
+				return;
+			}
+			
+			if (CategoryHandler::getInstance()->getCategory($this->objectType->objectType, $this->parentCategoryID) === null) {
 				throw new UserInputException('parentCategoryID', 'invalid');
+			}
+			
+			if ($this->objectType->getProcessor()->getMaximumNestingLevel() != -1) {
+				foreach ($this->categoryNodeList as $category) {
+					if ($category->objectTypeCategoryID == $this->parentCategoryID) {
+						if ($this->categoryNodeList->getDepth() > $this->objectType->getProcessor()->getMaximumNestingLevel() - 1) {
+							throw new UserInputException('parentCategoryID', 'invalid');
+						}
+
+						break;
+					}
+				}
 			}
 		}
 	}

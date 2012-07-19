@@ -88,6 +88,14 @@ interface ICategoryType {
 	public function getLanguageVariable($name, $optional = false);
 	
 	/**
+	 * Returns the maximum category nesting level for this type. "-1" means
+	 * that there is no maximum.
+	 * 
+	 * @return	integer
+	 */
+	public function getMaximumNestingLevel();
+	
+	/**
 	 * Returns the language variable category for the title language variables
 	 * of categories of this type.
 	 * 

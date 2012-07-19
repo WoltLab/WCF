@@ -61,7 +61,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	 * @see	wcf\acp\form\AbstractCategoryAddForm::readCategories()
 	 */
 	protected function readCategories() {
-		$this->categoryNodeList = new CategoryNodeList($this->objectType->objectTypeID, 0, true, array($this->category->objectTypeCategoryID));
+		$this->categoryNodeList = new CategoryNodeList($this->objectType->objectType, 0, true, array($this->category->objectTypeCategoryID));
 	}
 	
 	/**

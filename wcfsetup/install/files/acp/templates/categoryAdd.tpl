@@ -53,13 +53,13 @@
 		<fieldset>
 			<legend>{lang}wcf.global.form.data{/lang}</legend>
 			
-			{if $categoryNodeList|count}
+			{if $objectType->getProcessor()->getMaximumNestingLevel() && $categoryNodeList|count}
 				<dl{if $errorField == 'parentCategoryID'} class="formError"{/if}>
 					<dt><label for="parentCategoryID">{@$objectType->getProcessor()->getLanguageVariable('parentCategoryID')}</label></dt>
 					<dd>
 						<select id="parentCategoryID" name="parentCategoryID">
 							<option value="0"></option>
-							{include file='categorySelectList' categoryID=$parentCategoryID}
+							{include file='categorySelectList' categoryID=$parentCategoryID maximumNestingLevel=$objectType->getProcessor()->getMaximumNestingLevel() - 1}
 						</select>
 						{if $errorField == 'parentCategoryID'}
 							<small class="innerError">
