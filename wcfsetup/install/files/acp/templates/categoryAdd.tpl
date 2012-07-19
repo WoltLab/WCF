@@ -59,7 +59,7 @@
 					<dd>
 						<select id="parentCategoryID" name="parentCategoryID">
 							<option value="0"></option>
-							{include file='categorySelectList' categoryID=$parentCategoryID}
+							{include file='categoryOptionList' categoryID=$parentCategoryID}
 						</select>
 						{if $errorField == 'parentCategoryID'}
 							<small class="innerError">
