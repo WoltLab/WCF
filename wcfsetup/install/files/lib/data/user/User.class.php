@@ -150,10 +150,9 @@ final class User extends DatabaseObject implements IRouteController {
 	 */
 	public function getLanguageIDs() {
 		if ($this->languageIDs === null) {
-			if (!$this->userID) {
-				$this->languageIDs = array();
-			}
-			else {
+			$this->languageIDs = array();
+			
+			if ($this->userID) {
 				// load storage data
 				UserStorageHandler::getInstance()->loadStorage(array($this->userID));
 				
