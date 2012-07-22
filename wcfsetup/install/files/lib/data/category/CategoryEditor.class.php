@@ -1,11 +1,9 @@
 <?php
 namespace wcf\data\category;
-use wcf\data\object\type\ObjectTypeEditor;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\system\cache\CacheHandler;
 use wcf\system\category\CategoryHandler;
-use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
@@ -54,8 +52,8 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 */
 	protected function updateShowOrder($parentCategoryID, $showOrder) {
 		// correct invalid values
-		if ($showOrder <= 0) {
-			$showOrder = 1;
+		if ($showOrder === null) {
+			$showOrder = PHP_INT_MAX;
 		}
 		
 		if ($parentCategoryID != $this->parentCategoryID) {
@@ -135,7 +133,6 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		
 		// handle show order
 		$parameters['showOrder'] = static::getShowOrder($parameters['objectTypeID'], $parameters['parentCategoryID'], $parameters['showOrder']);
-		$parameters['objectTypeCategoryID'] = static::getNextCategoryID($parameters['objectTypeID']);
 		
 		// handle additionalData
 		if (!isset($parameters['additionalData'])) {
@@ -157,42 +154,11 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		foreach ($objectIDs as $categoryID) {
-			$category = CategoryHandler::getInstance()->getCategoryByID($categoryID);
+			$category = CategoryHandler::getInstance()->getCategory($categoryID);
 			$statement->execute(array($category->parentCategoryID, $category->showOrder));
 		}
 		
 		return parent::deleteAll($objectIDs);
-	}
-	
-	/**
-	 * Returns the next category id for the given object type id.
-	 * 
-	 * @param	integer		$objectTypeID
-	 * @return	integer
-	 */
-	protected static function getNextCategoryID($objectTypeID) {
-		$objectType = CategoryHandler::getInstance()->getObjectType($objectTypeID);
-		if ($objectType === null) {
-			throw new SystemException("Invalid category object type id '".$objectTypeID."'");
-		}
-		
-		$nextCategoryID = 1;
-		if ($objectType->nextCategoryID !== null) {
-			$nextCategoryID = $objectType->nextCategoryID;
-		}
-		
-		// update next category additional data
-		$objectTypeEditor = new ObjectTypeEditor($objectType);
-		$objectTypeEditor->update(array(
-			'additionalData' => serialize(array_merge($objectType->additionalData, array(
-				'nextCategoryID' => $nextCategoryID + 1
-			)))
-		));
-		
-		// reset object type cache
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.objectType-*.php');
-		
-		return $nextCategoryID;
 	}
 	
 	/**
@@ -205,8 +171,8 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 */
 	protected static function getShowOrder($objectTypeID, $parentCategoryID, $showOrder) {
 		// correct invalid values
-		if ($showOrder <= 0) {
-			$showOrder = 1;
+		if ($showOrder === null) {
+			$showOrder = PHP_INT_MAX;
 		}
 		
 		$sql = "SELECT	MAX(showOrder) AS showOrder

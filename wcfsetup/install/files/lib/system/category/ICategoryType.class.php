@@ -42,20 +42,21 @@ interface ICategoryType {
 	public function canEditCategory();
 	
 	/**
-	 * Returns the name of the acl object type for categories of this type.
-	 * Returns null if categories of this type don't support acl.
+	 * Returns true if a category of this type may have no empty description.
 	 * 
-	 * @return	string
+	 * @return	boolean
 	 */
-	public function getACLObjectTypeName();
+	public function forceDescription();
 	
 	/**
-	 * Returns the name of the collapsible object type for categories of this
-	 * type. Returns null if categories of this type don't support collapsing.
+	 * Returns the name of the object type of the definition with the given
+	 * name for categories of this type. If categories of this type are no
+	 * object of the relevant type, null is returned.
 	 * 
+	 * @param	string		$definitionName
 	 * @return	string
 	 */
-	public function getCollapsibleObjectTypeName();
+	public function getObjectTypeName($definitionName);
 	
 	/**
 	 * Returns the language variable category for the description language 
@@ -88,6 +89,14 @@ interface ICategoryType {
 	public function getLanguageVariable($name, $optional = false);
 	
 	/**
+	 * Returns the maximum category nesting level for this type. "-1" means
+	 * that there is no maximum.
+	 * 
+	 * @return	integer
+	 */
+	public function getMaximumNestingLevel();
+	
+	/**
 	 * Returns the language variable category for the title language variables
 	 * of categories of this type.
 	 * 
@@ -96,9 +105,9 @@ interface ICategoryType {
 	public function getTitleLangVarCategory();
 	
 	/**
-	 * Returns true if categories of this type support descriptions.
+	 * Returns true if categories of this type have descriptions.
 	 * 
 	 * @return	boolean
 	 */
-	public function supportsDescriptions();
+	public function hasDescription();
 }

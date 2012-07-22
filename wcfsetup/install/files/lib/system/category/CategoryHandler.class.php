@@ -23,10 +23,10 @@ class CategoryHandler extends SingletonFactory {
 	protected $categories = array();
 	
 	/**
-	 * maps each category id to its object type id and object type category id
+	 * category ids grouped by the object type they belong to
 	 * @var	array<array>
 	 */
-	protected $categoryIDs = array();
+	protected $objectTypeCategoryIDs = array();
 	
 	/**
 	 * mapes the names of the category object types to the object type ids
@@ -41,33 +41,26 @@ class CategoryHandler extends SingletonFactory {
 	protected $objectTypes = array();
 	
 	/**
-	 * Returns all category objects with the given object type id.
+	 * Returns all category objects with the given object type. If no object
+	 * type is given, all categories grouped by object type are returned.
 	 * 
-	 * @param	integer		$objectTypeID
-	 * @return	array<wcf\data\category\Category>
+	 * @param	string		$objectType
+	 * @return	array<mixed>
 	 */
-	public function getCategories($objectTypeID) {
-		if (isset($this->categories[$objectTypeID])) {
-			return $this->categories[$objectTypeID];
+	public function getCategories($objectType = null) {
+		$categories = array();
+		if ($objectType === null) {
+			foreach ($this->objectTypes as $objectType) {
+				$categories[$objectType->objectType] = $this->getCategories($objectType->objectType);
+			}
+		}
+		else if (isset($this->objectTypeCategoryIDs[$objectType])) {
+			foreach ($this->objectTypeCategoryIDs[$objectType] as $categoryID) {
+				$categories[$categoryID] = $this->getCategory($categoryID);
+			}
 		}
 		
-		return array();
-	}
-	
-	/**
-	 * Returns the category object with the given object type id and object
-	 * type category id.
-	 * 
-	 * @param	integer		$objectTypeID
-	 * @param	integer		$objectTypeCategoryID
-	 * @return	wcf\data\category\Category
-	 */
-	public function getCategory($objectTypeID, $objectTypeCategoryID) {
-		if (isset($this->categories[$objectTypeID][$objectTypeCategoryID])) {
-			return $this->categories[$objectTypeID][$objectTypeCategoryID];
-		}
-		
-		return null;
+		return $categories;
 	}
 	
 	/**
@@ -76,9 +69,9 @@ class CategoryHandler extends SingletonFactory {
 	 * @param	integer		$categoryID
 	 * @return	wcf\data\category\Category
 	 */
-	public function getCategoryByID($categoryID) {
-		if (isset($this->categoryIDs[$categoryID])) {
-			return $this->getCategory($this->categoryIDs[$categoryID]['objectTypeID'], $this->categoryIDs[$categoryID]['objectTypeCategoryID']);
+	public function getCategory($categoryID) {
+		if (isset($this->categories[$categoryID])) {
+			return $this->categories[$categoryID];
 		}
 		
 		return null;
@@ -93,11 +86,9 @@ class CategoryHandler extends SingletonFactory {
 	public function getChildCategories(Category $category) {
 		$categories = array();
 		
-		if (isset($this->categories[$category->objectTypeID])) {
-			foreach ($this->categories[$category->objectTypeID] as $__category) {
-				if ($__category->parentCategoryID == $category->objectTypeCategoryID) {
-					$categories[$__category->objectTypeCategoryID] = $__category;
-				}
+		foreach ($this->categories as $__category) {
+			if ($__category->parentCategoryID == $category->categoryID && ($category->categoryID || $category->objectTypeID == $__category->objectTypeID)) {
+				$categories[$__category->categoryID] = $__category;
 			}
 		}
 		
@@ -121,15 +112,24 @@ class CategoryHandler extends SingletonFactory {
 	/**
 	 * Gets the object type with the given name.
 	 * 
-	 * @param	string 		$objectTypeName
+	 * @param	string 		$objectType
 	 * @return	wcf\data\object\type\ObjectType
 	 */
-	public function getObjectTypeByName($objectTypeName) {
-		if (isset($this->objectTypes[$objectTypeName])) {
-			return $this->objectTypes[$objectTypeName];
+	public function getObjectTypeByName($objectType) {
+		if (isset($this->objectTypes[$objectType])) {
+			return $this->objectTypes[$objectType];
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Returns all category object types.
+	 * 
+	 * @return	array<wcf\data\object\type\ObjectType>
+	 */
+	public function getObjectTypes() {
+		return $this->objectTypes;
 	}
 	
 	/**
@@ -148,7 +148,7 @@ class CategoryHandler extends SingletonFactory {
 			'wcf\system\cache\builder\CategoryCacheBuilder'
 		);
 		$this->categories = CacheHandler::getInstance()->get($cacheName, 'categories');
-		$this->categoryIDs = CacheHandler::getInstance()->get($cacheName, 'categoryIDs');
+		$this->objectTypeCategoryIDs = CacheHandler::getInstance()->get($cacheName, 'objectTypeCategoryIDs');
 	}
 	
 	/**
