@@ -5753,7 +5753,9 @@ WCF.EditableItemList = Class.extend({
 		var $objectID = $element.data('objectID');
 		var $label = $element.data('label');
 		
-		this._search.removeExcludedSearchValue($label);
+		if (this._search) {
+			this._search.removeExcludedSearchValue($label);
+		}
 		this._removeItem($objectID, $label);
 		
 		$element.remove();
@@ -5796,7 +5798,9 @@ WCF.EditableItemList = Class.extend({
 		var $listItem = $('<li class="badge">' + data.label + '</li>').data('objectID', data.objectID).data('label', data.label).appendTo(this._itemList);
 		$listItem.click($.proxy(this._click, this));
 		
-		this._search.addExcludedSearchValue(data.label);
+		if (this._search) {
+			this._search.addExcludedSearchValue(data.label);
+		}
 		this._addItem(data.objectID, data.label);
 		
 		return true;
