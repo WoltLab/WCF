@@ -2633,6 +2633,8 @@ WCF.TabMenu = {
 					if (WCF.TabMenu._didInit) {
 						location.hash = '#' + $panel.attr('id');
 					}
+					
+					$container.trigger('tabsselect', event, ui);
 				}
 			});
 			
