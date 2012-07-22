@@ -86,15 +86,13 @@ DROP TABLE IF EXISTS wcf1_category;
 CREATE TABLE wcf1_category (
 	categoryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	objectTypeID INT(10) NOT NULL,
-	objectTypeCategoryID INT(10) NOT NULL,
 	parentCategoryID INT(10) NOT NULL,
 	title VARCHAR(255) NOT NULL,
 	description TEXT,
 	showOrder INT(10) NOT NULL,
 	time INT(10) NOT NULL,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
-	additionalData TEXT,
-	UNIQUE KEY (objectTypeID, objectTypeCategoryID)
+	additionalData TEXT
 );
 
 DROP TABLE IF EXISTS wcf1_cleanup_listener;

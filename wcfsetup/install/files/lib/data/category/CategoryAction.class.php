@@ -79,7 +79,7 @@ class CategoryAction extends AbstractDatabaseObjectAction {
 			
 			foreach ($categoryIDs as $categoryID) {
 				$this->objects[$categoryID]->update(array(
-					'parentCategoryID' => $parentCategoryID ? $this->objects[$parentCategoryID]->objectTypeCategoryID : 0,
+					'parentCategoryID' => $parentCategoryID ? $this->objects[$parentCategoryID]->categoryID : 0,
 					'showOrder' => $showOrders[$parentCategoryID]++
 				));
 			}
@@ -138,7 +138,7 @@ class CategoryAction extends AbstractDatabaseObjectAction {
 		}
 		
 		foreach ($this->objects as $categoryEditor) {
-			if (!$categoryEditor->getCategoryType()->canAddCategory()) {
+			if (!$categoryEditor->getCategoryType()->canDeleteCategory()) {
 				throw new ValidateActionException('Insufficient permissions');
 			}
 		}
@@ -214,7 +214,7 @@ class CategoryAction extends AbstractDatabaseObjectAction {
 		foreach ($this->parameters['data']['structure'] as $parentCategoryID => $categoryIDs) {
 			if ($parentCategoryID) {
 				// validate category
-				$category = CategoryHandler::getInstance()->getCategoryByID($parentCategoryID);
+				$category = CategoryHandler::getInstance()->getCategory($parentCategoryID);
 				if ($category === null) {
 					throw new ValidateActionException("Unknown category with id '".$parentCategoryID."'");
 				}
@@ -229,7 +229,7 @@ class CategoryAction extends AbstractDatabaseObjectAction {
 			
 			foreach ($categoryIDs as $categoryID) {
 				// validate category
-				$category = CategoryHandler::getInstance()->getCategoryByID($categoryID);
+				$category = CategoryHandler::getInstance()->getCategory($categoryID);
 				if ($category === null) {
 					throw new ValidateActionException("Unknown category with id '".$categoryID."'");
 				}
