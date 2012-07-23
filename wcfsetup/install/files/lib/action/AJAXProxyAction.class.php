@@ -157,6 +157,7 @@ class AJAXProxyAction extends AbstractSecureAction {
 			foreach ($response as &$object) {
 				$object = $this->getData($object);
 			}
+			unset($object);
 		}
 		return $response;
 	}
