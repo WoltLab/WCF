@@ -1,9 +1,8 @@
 .userPanel {
 	background-color: @wcfUserPanelBackgroundColor;
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
-	height: 30px;
+	height: 40px;
 	left: 0;
-	padding: @wcfGapSmall 0;
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -11,77 +10,69 @@
 	
 	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
 	
-	ul.userPanelItems {
-		display: block;
-		float: left;
-		margin: -7px 0;
-		
-		> li:not(:first-child) {
-			margin-left: @wcfGapSmall;
-		}
-		
-		> li {
-			display: inline-block;
+	> div {
+		> ul.userPanelItems {
+			float: left;
 			
-			> a {
-				color: @wcfUserPanelColor;
-				display: block;
-				padding: 14px 7px 10px;
-				text-shadow: 1px 1px 1px #000;
-				height: 20px;
+			.clearfix();
+			
+			> li {
+				float: left;
 				
-				//.textShadow(@wcfUserPanelBackgroundColor);
-				.transition(background-color, .2s);
+				> a {
+					color: @wcfUserPanelColor;
+					display: block;
+					height: 20px;
+					padding: 10px 8px;
+					position: relative;
+					
+					.textShadow(@wcfUserPanelBackgroundColor);
+					.transition(background-color, .2s);
+					
+					&:hover {
+						background-color: rgba(0, 0, 0, .4);
+						color: @wcfUserPanelHoverColor;
+						text-decoration: none;
+					}
+					
+					> .badge.badgeInverse {
+						background-color: rgb(204, 0, 0);
+						color: white;
+						padding: 0 6px 1px;
+						position: absolute;
+						bottom: 4px;
+						left: 24px;
+						z-index: 300;
+					}
+				}
 				
-				&:hover {
-					background-color: rgba(0, 0, 0, .4);
-					color: @wcfUserPanelHoverColor;
-					text-decoration: none;
+				> .framed > img {
+					padding: 0px;
+					margin-top: -2px;
+					margin-bottom: -2px;
 				}
 			}
-			
-			> .framed > img {
-				padding: 0px;
-				margin-top: -3px;
-				margin-bottom: -3px;
-			}
 		}
-	}
 	
-	.searchBar {
-		float: right;
-		
-		input[type="search"] {
-			background-color: rgba(0, 0, 0, .5);
-			background-image: url("../icon/searchInverse.svg");
-			background-repeat: no-repeat;
-			background-position: 7px 5px;
-			border: 1px solid rgba(0, 0, 0, .9);
-			border-radius: 30px;
-			color: @wcfUserPanelColor;
-			padding: 6px 12px 5px 26px;
-			width: 180px;
-			-webkit-appearance: textfield;
+		> .searchBar {
+			float: right;
+			padding: 6px 0;
 			
-			.boxShadowNative(~"inset 0px 1px 3px rgba(0, 0, 0, .9), 0px 1px 0px rgba(255, 255, 255, .1)");
-			.transition(width, .25s, ease-out);
-			.textShadow(@wcfUserPanelBackgroundColor);
-	
-			&:focus {
-				//width: 280px;
+			> form > input[type="search"] {
+				background-color: rgba(0, 0, 0, .5);
+				background-image: url("../icon/searchInverse.svg");
+				background-repeat: no-repeat;
+				background-position: 7px 5px;
+				border: 1px solid rgba(0, 0, 0, .9);
+				border-radius: 30px;
+				color: @wcfUserPanelColor;
+				padding: 6px 12px 5px 26px;
+				width: 180px;
+				-webkit-appearance: textfield;
+				
+				.boxShadowNative(~"inset 0px 1px 3px rgba(0, 0, 0, .9), 0px 1px 0px rgba(255, 255, 255, .1)");
+				.textShadow(@wcfUserPanelBackgroundColor);
 			}
-		}
-	}
-	
-	/* dropdown icon */
-	.dropdownToggle {
-		background-image: url('../icon/dropdownInverse.svg');
-		background-position: 97% center;
-		background-repeat: no-repeat;
-		padding-right: 15px !important;
-		
-		> hgroup > h1 {
-			color: @wcfUserPanelColor;
 		}
 	}
 }
