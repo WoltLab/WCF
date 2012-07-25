@@ -5,6 +5,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Provides internationalization support for input fields.
@@ -157,6 +158,53 @@ class I18nHandler extends SingletonFactory {
 		}
 		
 		return $values;
+	}
+	
+	/**
+	 * Sets the value for the given element. If the element is multilingual,
+	 * the given value is set for every available language.
+	 * 
+	 * @param 	integer 	$elementID
+	 * @param 	string 		$plainValue
+	 * 
+	 * @throws  SystemException - if $plainValue is not of type string
+	 */
+	public function setValue($elementID, $plainValue) {
+		if (!is_string($plainValue)) {
+			throw new SystemException('Invalid argument for parameter $plainValue', 0, 'Expected string. '.ucfirst(gettype($plainValue)).' given.');
+		}
+		if (!$this->isPlainValue($elementID)) {
+			$i18nValues = array();
+			foreach ($this->availableLanguages as $language) {
+				$i18nValues[$language->languageID] = StringUtil::trim($plainValue);
+			}
+			$this->setValues($elementID, $i18nValues);
+		}
+		else {
+			$this->plainValues[$elementID] = StringUtil::trim($plainValue);
+		}
+	}
+	
+	/**
+	 * Sets the values for the given element. If the element is not multilingual,
+	 * use {@link I18nHandler::setValue()} instead.
+	 * 
+	 * @param 	integer 	 $elementID
+	 * @param 	array<array> $i18nValues
+	 * 
+	 * @throws  SystemException if $i18nValues doesn't have any elements
+	 */
+	public function setValues($elementID, array $i18nValues) {
+		if (!count($i18nValues)) {
+			throw new SystemException('Invalid argument for parameter $i18nValues', 0, 'Expected filled array as second argument. Empty array given.');
+		}
+		if (!$this->isPlainValue($elementID)) {
+			$this->i18nValues[$elementID] = $i18nValues;
+		}
+		else {
+			$plainValue = array_shift($i18nValues);
+			$this->setValue($elementID, $plainValue);
+		}
 	}
 	
 	/**
