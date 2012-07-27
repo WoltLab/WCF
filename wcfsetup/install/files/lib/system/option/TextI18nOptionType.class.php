@@ -29,7 +29,7 @@ class TextI18nOptionType extends TextOptionType {
 		I18nHandler::getInstance()->assignVariables($useRequestData);
 		
 		// nasty workaround for javascript problem with multiple line strings
-		$i18nValues = UltimateCore::getTPL()->get('i18nValues');
+		$i18nValues = WCF::getTPL()->get('i18nValues');
 		foreach ($i18nValues['text'] as $languageID => $value) {
 		    $i18nValues['text'][$languageID] = str_replace("\r", '_specialNewline\\', $value);
 		}
