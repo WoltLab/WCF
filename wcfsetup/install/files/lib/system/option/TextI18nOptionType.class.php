@@ -28,10 +28,17 @@ class TextI18nOptionType extends TextOptionType {
 		$useRequestData = (count($_POST)) ? true : false;
 		I18nHandler::getInstance()->assignVariables($useRequestData);
 		
+		// nasty workaround for javascript problem with multiple line strings
+		$i18nValues = WCF::getTPL()->get('i18nValues');
+		foreach ($i18nValues['text'] as $languageID => $value) {
+		    $i18nValues['text'][$languageID] = str_replace("\r", '_specialNewline\\', $value);
+		}
+		
 		WCF::getTPL()->assign(array(
 			'option' => $option,
 			'inputType' => $this->inputType,
-			'value' => $value
+			'value' => $value,
+			'i18nValues' => $i18nValues
 		));
 		return WCF::getTPL()->fetch('textI18nOptionType');
 	}

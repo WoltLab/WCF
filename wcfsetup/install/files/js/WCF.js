@@ -2369,7 +2369,9 @@ WCF.MultipleLanguageInput.prototype = {
 		// set new language
 		this._languageID = $button.data('languageID');
 		if (this._values[this._languageID]) {
-			this._element.val(this._values[this._languageID]);
+			var tmpStr = this._values[this._languageID];
+			tmpStr = tmpStr.replace(/_specialNewline/g, '\r');
+			this._element.val(tmpStr);
 		}
 		else {
 			this._element.val('');
@@ -2401,7 +2403,9 @@ WCF.MultipleLanguageInput.prototype = {
 
 		// update element value
 		if (this._values[LANGUAGE_ID]) {
-			this._element.val(this._values[LANGUAGE_ID]);
+			var tmpStr = this._values[LANGUAGE_ID];
+			tmpStr = tmpStr.replace(/_specialNewline/g, '\r');
+			this._element.val(tmpStr);
 		}
 		else {
 			// no value for current language found, proceed with empty input
@@ -2430,7 +2434,9 @@ WCF.MultipleLanguageInput.prototype = {
 		var $elementID = this._element.wcfIdentify();
 
 		for (var $languageID in this._values) {
-			$('<input type="hidden" name="' + $elementID + '_i18n[' + $languageID + ']" value="' + this._values[$languageID] + '" />').appendTo($form);
+			var tmpStr = this._values[this._languageID];
+			tmpStr = tmpStr.replace(/_specialNewline/g, '\r');
+			$('<input type="hidden" name="' + $elementID + '_i18n[' + $languageID + ']" value="' + tmpStr + '" />').appendTo($form);
 		}
 
 		// remove name attribute to prevent conflict with i18n values
