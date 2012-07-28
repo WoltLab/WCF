@@ -1070,15 +1070,23 @@ WCF.Clipboard = {
 			$objectIDs.push(parseInt(objectID));
 		});
 		
+		var $parameters = {
+			data: data
+		};
+		var $__parameters = $listItem.data('internalData')['parameters'];
+		if ($__parameters !== undefined) {
+			for (var $key in $__parameters) {
+				$parameters[$key] = $__parameters[$key];
+			}
+		}
+		
 		new WCF.Action.Proxy({
 			autoSend: true,
 			data: {
 				actionName: listItem.data('parameters').actionName,
 				className: listItem.data('parameters').className,
 				objectIDs: $objectIDs,
-				parameters: {
-					data: data
-				}
+				parameters: $parameters
 			},
 			success: $.proxy(function(data) {
 				listItem.trigger('clipboardActionResponse', [ data, listItem.data('type'), listItem.data('actionName'), listItem.data('parameters') ]);
