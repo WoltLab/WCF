@@ -5,6 +5,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Provides internationalization support for input fields.
@@ -81,7 +82,8 @@ class I18nHandler extends SingletonFactory {
 	public function readValues() {
 		foreach ($this->elementIDs as $elementID) {
 			if (isset($_POST[$elementID])) {
-				$this->plainValues[$elementID] = $_POST[$elementID];
+				// you should trim the string before using it; prevents unwanted newlines
+				$this->plainValues[$elementID] = StringUtil::unifyNewlines(StringUtil::trim($_POST[$elementID]));
 				continue;
 			}
 			
@@ -90,7 +92,7 @@ class I18nHandler extends SingletonFactory {
 				$this->i18nValues[$elementID] = array();
 				
 				foreach ($_POST[$i18nElementID] as $languageID => $value) {
-					$this->i18nValues[$elementID][$languageID] = $value;
+					$this->i18nValues[$elementID][$languageID] = StringUtil::unifyNewlines(StringUtil::trim($value));
 				}
 				
 				continue;
@@ -339,6 +341,10 @@ class I18nHandler extends SingletonFactory {
 					else {
 						if ($this->hasI18nValues($elementID)) {
 							$i18nValues = $this->i18nValues[$elementID];
+							// encoding the entries for javascript
+							foreach ($i18nValues as $languageID => $value) {
+								$i18nValues[$languageID] = StringUtil::encodeJS(StringUtil::unifyNewlines($value));
+							}
 						}
 						else {
 							$i18nValues = array();
@@ -358,7 +364,7 @@ class I18nHandler extends SingletonFactory {
 							$this->elementOptions[$elementID]['packageID']
 						));
 						while ($row = $statement->fetchArray()) {
-							$i18nValues[$row['languageID']] = $row['languageItemValue'];
+							$i18nValues[$row['languageID']] = StringUtil::encodeJS(StringUtil::unifyNewlines($row['languageItemValue']));
 						}
 					}
 					else {
