@@ -1072,7 +1072,7 @@ WCF.Clipboard = {
 		var $parameters = {
 			data: data
 		};
-		var $__parameters = $listItem.data('internalData')['parameters'];
+		var $__parameters = listItem.data('internalData')['parameters'];
 		if ($__parameters !== undefined) {
 			for (var $key in $__parameters) {
 				$parameters[$key] = $__parameters[$key];
