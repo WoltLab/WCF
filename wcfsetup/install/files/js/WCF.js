@@ -1041,7 +1041,6 @@ WCF.Clipboard = {
 								var $item = $(item);
 								$data[$item.prop('name')] = $item.val();
 							});
-							console.debug($data);
 						}
 						
 						this._executeAJAXActions($listItem, $data);
