@@ -588,6 +588,7 @@
 		<item name="wcf.global.confirmation.cancel"><![CDATA[Cancel]]></item>
 		<item name="wcf.global.confirmation.confirm"><![CDATA[OK]]></item>
 		<item name="wcf.global.confirmation.title"><![CDATA[Confirmation required]]></item>
+		<item name="wcf.global.description"><![CDATA[Description]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.form.add.success"><![CDATA[The new entry has been successfully saved.]]></item>
 		<item name="wcf.global.form.data"><![CDATA[General information]]></item>
@@ -596,6 +597,7 @@
 		<item name="wcf.global.loading"><![CDATA[Loading …]]></item>
 		<item name="wcf.global.locale.unix"><![CDATA[en_US]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.locale.win"><![CDATA[english]]></item> <!-- system variable; do not translate -->
+		<item name="wcf.global.name"><![CDATA[Name]]></item>
 		<item name="wcf.global.objectID"><![CDATA[ID]]></item>
 		<item name="wcf.global.page.next"><![CDATA[Next page]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Previous page]]></item>
@@ -605,7 +607,9 @@
 		<item name="wcf.global.search.enterSearchTerm"><![CDATA[Enter search term]]></item>
 		<item name="wcf.global.sortOrder.ascending"><![CDATA[ascending]]></item>
 		<item name="wcf.global.sortOrder.descending"><![CDATA[descending]]></item>
+		<item name="wcf.global.subject"><![CDATA[Subject]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
+		<item name="wcf.global.title"><![CDATA[Title]]></item>
 	</category>
 	
 	<category name="wcf.page">
