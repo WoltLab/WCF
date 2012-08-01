@@ -37,10 +37,10 @@ class CategoryNodeList extends \RecursiveIteratorIterator implements \Countable 
 	 * 
 	 * @param	string		$objectType
 	 * @param	integer		$parentCategoryID
-	 * @param	boolean		$inludeDisabledCategories
+	 * @param	boolean		$includeDisabledCategories
 	 * @param	array<integer>	$excludedCategoryIDs
 	 */
-	public function __construct($objectType, $parentCategoryID = 0, $inludeDisabledCategories = false, array $excludedCategoryIDs = array()) {
+	public function __construct($objectType, $parentCategoryID = 0, $includeDisabledCategories = false, array $excludedCategoryIDs = array()) {
 		$this->parentCategoryID = $parentCategoryID;
 		
 		// get parent category
@@ -58,7 +58,7 @@ class CategoryNodeList extends \RecursiveIteratorIterator implements \Countable 
 			}
 		}
 		
-		parent::__construct(new $this->nodeClassName($parentCategory, $inludeDisabledCategories, $excludedCategoryIDs), \RecursiveIteratorIterator::SELF_FIRST);
+		parent::__construct(new $this->nodeClassName($parentCategory, $includeDisabledCategories, $excludedCategoryIDs), \RecursiveIteratorIterator::SELF_FIRST);
 	}
 	
 	/**
