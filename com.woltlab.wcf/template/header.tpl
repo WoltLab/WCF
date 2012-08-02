@@ -51,7 +51,7 @@
 <!-- /HEADER -->
 
 <!-- MAIN -->
-<div id="main" class="layoutFluid{if $sidebarOrientation|isset} sidebarOrientation{@$sidebarOrientation|ucfirst} clearfix{/if}">
+<div id="main" class="layoutFluid{if $sidebarOrientation|isset && $sidebar|isset} sidebarOrientation{@$sidebarOrientation|ucfirst} clearfix{/if}">
 	<div>
 		{if $sidebar|isset}
 			<aside class="sidebar">
