@@ -53,7 +53,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 	public function update(array $parameters = array()) {
 		if (!count($parameters)) return;
 		
-		// check wether any value changed or not
+		// check whether any value changed or not
 		$update = false;
 		foreach ($parameters as $name => $value) {
 			if ($this->__get($name) != $value) {
