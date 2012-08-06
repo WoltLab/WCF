@@ -3955,23 +3955,35 @@ WCF.Search.Base = Class.extend({
 	_className: '',
 	
 	/**
+	 * comma seperated list
+	 * @var	boolean
+	 */
+	_commaSeperated: false,
+	
+	/**
 	 * list with values that are excluded from seaching
 	 * @var	array
 	 */
 	_excludedSearchValues: [],
-
+	
 	/**
 	 * result list
 	 * @var	jQuery
 	 */
 	_list: null,
-
+	
+	/**
+	 * old search string, used for comparison
+	 * @var	array<string>
+	 */
+	_oldSearchString: [ ],
+	
 	/**
 	 * action proxy
 	 * @var	WCF.Action.Proxy
 	 */
 	_proxy: null,
-
+	
 	/**
 	 * search input field
 	 * @var	jQuery
@@ -3983,16 +3995,17 @@ WCF.Search.Base = Class.extend({
 	 * @var	integer
 	 */
 	_triggerLength: 3,
-
+	
 	/**
 	 * Initializes a new search.
 	 * 
 	 * @param	jQuery		searchInput
 	 * @param	object		callback
 	 * @param	array		excludedSearchValues
+	 * @param	boolean		commaSeperated
 	 */
-	init: function(searchInput, callback, excludedSearchValues) {
-		if (!$.isFunction(callback)) {
+	init: function(searchInput, callback, excludedSearchValues, commaSeperated) {
+		if ((callback === null && !commaSeperated) && !$.isFunction(callback)) {
 			console.debug("[WCF.Search.Base] The given callback is invalid, aborting.");
 			return;
 		}
@@ -4005,6 +4018,8 @@ WCF.Search.Base = Class.extend({
 		this._searchInput = $(searchInput).keyup($.proxy(this._keyUp, this));
 		this._searchInput.wrap('<span class="dropdown" />');
 		this._list = $('<ul class="dropdownMenu" />').insertAfter(this._searchInput);
+		this._commaSeperated = (commaSeperated) ? true : false;
+		this._oldSearchString = [ ];
 		
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
@@ -4013,9 +4028,11 @@ WCF.Search.Base = Class.extend({
 	
 	/**
 	 * Performs a search upon key up.
+	 * 
+	 * @param	object		event
 	 */
-	_keyUp: function() {
-		var $content = $.trim(this._searchInput.val());
+	_keyUp: function(event) {
+		var $content = this._getSearchString(event);
 		if ($content === '') {
 			this._clearList(true);
 		}
@@ -4038,6 +4055,47 @@ WCF.Search.Base = Class.extend({
 			// input below trigger length
 			this._clearList(false);
 		}
+	},
+	
+	/**
+	 * Returns search string.
+	 * 
+	 * @return	string
+	 */
+	_getSearchString: function(event) {
+		var $searchString = $.trim(this._searchInput.val());
+		if (this._commaSeperated) {
+			var $keyCode = event.keyCode || event.which;
+			if ($keyCode == 188) {
+				// ignore event if char is 188 = ,
+				return '';
+			}
+			
+			var $current = $searchString.split(',');
+			for (var $i = 0, $length = $current.length; $i < $length; $i++) {
+				// remove whitespaces at the beginning or end
+				$current[$i] = $.trim($current[$i]);
+				var $part = $current[$i];
+				
+				if (this._oldSearchString[$i]) {
+					// compare part
+					if ($part != this._oldSearchString[$i]) {
+						// current part was changed
+						$searchString = $part;
+						break;
+					}
+				}
+				else {
+					// new part was added
+					$searchString = $part;
+					break;
+				}
+			}
+			
+			this._oldSearchString = $current;
+		}
+		
+		return $searchString;
 	},
 	
 	/**
@@ -4096,9 +4154,29 @@ WCF.Search.Base = Class.extend({
 	 */
 	_executeCallback: function(event) {
 		var $listItem = $(event.currentTarget);
-
 		// notify callback
-		var $clearSearchInput = this._callback($listItem.data());
+		if (this._commaSeperated) {
+			// auto-complete current part
+			var $result = $listItem.data('label');
+			for (var $i = 0, $length = this._oldSearchString.length; $i < $length; $i++) {
+				var $part = this._oldSearchString[$i];
+				if ($result.indexOf($part) === 0) {
+					this._oldSearchString[$i] = $result;
+					this._searchInput.attr('value', this._oldSearchString.join(', '));
+					
+					if ($.browser.webkit) {
+						// chrome won't display the new value until the textarea is rendered again
+						// this quick fix forces chrome to render it again, even though it changes nothing
+						this._searchInput.css({ display: 'block' });
+					}
+					
+					break;
+				}
+			}
+		}
+		else {
+			var $clearSearchInput = this._callback($listItem.data());
+		}
 
 		// close list and revert input
 		this._clearList($clearSearchInput);
@@ -4110,7 +4188,7 @@ WCF.Search.Base = Class.extend({
 	 * @param	boolean		clearSearchInput
 	 */
 	_clearList: function(clearSearchInput) {
-		if (clearSearchInput) {
+		if (clearSearchInput && !this._commaSeperated) {
 			this._searchInput.val('');
 		}
 
@@ -4161,12 +4239,12 @@ WCF.Search.User = WCF.Search.Base.extend({
 	_includeUserGroups: false,
 	
 	/**
-	 * @see	WCF.Search.Base
+	 * @see	WCF.Search.Base.init()
 	 */
-	init: function(searchInput, callback, includeUserGroups) {
+	init: function(searchInput, callback, includeUserGroups, excludedSearchValues, commaSeperated) {
 		this._includeUserGroups = includeUserGroups;
 		
-		this._super(searchInput, callback);
+		this._super(searchInput, callback, excludedSearchValues, commaSeperated);
 	},
 	
 	/**
