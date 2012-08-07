@@ -130,13 +130,12 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if the active user is member of the given group.
+	 * Returns true, if the active user is member of the group.
 	 * 
-	 * @param 	integer		$groupID
-	 * @return	boolean		    
+	 * @return	boolean
 	 */
-	public static function isMember($groupID) {
-		if (in_array($groupID, WCF::getUser()->getGroupIDs())) return true;
+	public function isMember() {
+		if (in_array($this->groupID, WCF::getUser()->getGroupIDs())) return true;
 		return false;
 	}
 	
@@ -224,6 +223,7 @@ class UserGroup extends DatabaseObject {
 	 * @return	string
 	 */
 	public function getName() {
+		// TODO: Is the output correct when I18n is not used?
 		return WCF::getLanguage()->get('wcf.acp.group.group'.$this->groupID);
 	}
 	
@@ -237,10 +237,10 @@ class UserGroup extends DatabaseObject {
 		if (!WCF::getSession()->getPermission('admin.user.canDeleteGroup')) return false;
 		
 		// cannot delete own groups
-		if (UserGroup::isMember($this->groupID)) return false;
+		if ($this->isMember()) return false;
 		
 		// user cannot delete this group
-		if (!UserGroup::isAccessibleGroup(array($this->groupID))) return false;
+		if (!$this->isAccessible()) return false;
 		
 		// cannot delete static groups
 		if ($this->groupType == UserGroup::EVERYONE || $this->groupType == UserGroup::GUESTS || $this->groupType == UserGroup::USERS) return false;
@@ -258,7 +258,7 @@ class UserGroup extends DatabaseObject {
 		if (!WCF::getSession()->getPermission('admin.user.canEditGroup')) return false;
 		
 		// user cannot edit this group
-		if (!UserGroup::isAccessibleGroup(array($this->groupID))) return false;
+		if (!$this->isAccessible()) return false;
 		
 		return true;
 	}
