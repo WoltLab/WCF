@@ -76,7 +76,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 */
 	protected function prepareImport(array $data) {
 		$showOrder = (isset($data['elements']['showorder'])) ? intval($data['elements']['showorder']) : null;
-		$showOrder = $this->getShowOrder($showOrder);
+		$showOrder = $this->getShowOrder($showOrder, $data['elements']['actionclassname'], 'actionClassName');
 		
 		return array(
 			'actionClassName' => $data['elements']['actionclassname'],

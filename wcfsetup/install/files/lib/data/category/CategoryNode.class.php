@@ -25,7 +25,7 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	 * indicates if disabled categories are included
 	 * @var	integer
 	 */
-	protected $inludeDisabledCategories = false;
+	protected $includeDisabledCategories = false;
 	
 	/**
 	 * list of object type category ids of excluded categories
@@ -41,16 +41,16 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::__construct()
 	 */
-	public function __construct(DatabaseObject $object, $inludeDisabledCategories = false, array $excludedCategoryIDs = array()) {
+	public function __construct(DatabaseObject $object, $includeDisabledCategories = false, array $excludedCategoryIDs = array()) {
 		parent::__construct($object);
 		
-		$this->inludeDisabledCategories = $inludeDisabledCategories;
+		$this->includeDisabledCategories = $includeDisabledCategories;
 		$this->excludedCategoryIDs = $excludedCategoryIDs;
 		
 		$className = get_called_class();
 		foreach (CategoryHandler::getInstance()->getChildCategories($this->getDecoratedObject()) as $category) {
 			if ($this->fulfillsConditions($category)) {
-				$this->childCategories[] = new $className($category, $inludeDisabledCategories, $excludedCategoryIDs);
+				$this->childCategories[] = new $className($category, $includeDisabledCategories, $excludedCategoryIDs);
 			}
 		}
 	}
