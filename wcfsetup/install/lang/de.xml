@@ -689,6 +689,6 @@
 		<item name="wcf.user.username.error.notFound"><![CDATA[Der Benutzername &raquo;{$username}&laquo; konnte nicht gefunden werden.]]></item>
 		<item name="wcf.user.username.error.notUnique"><![CDATA[Dieser Benutzername ist bereits vergeben.]]></item>
 		<item name="wcf.user.username.error.notValid"><![CDATA[Sie haben einen ungültigen Benutzernamen eingegeben.]]></item>
-		<item name="wcf.user.userNote"><![CDATA[Hallo {$__wcf->user->username}!]]></item>
+		<item name="wcf.user.userNote"><![CDATA[{$__wcf->user->username}]]></item>
 	</category>
 </language>
