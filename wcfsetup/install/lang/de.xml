@@ -641,6 +641,8 @@
 		<item name="wcf.global.search.enterSearchTerm"><![CDATA[Suchbegriff eingeben]]></item>
 		<item name="wcf.global.sortOrder.ascending"><![CDATA[aufsteigend]]></item>
 		<item name="wcf.global.sortOrder.descending"><![CDATA[absteigend]]></item>
+		<item name="wcf.global.state.closed"><![CDATA[Geschlossen]]></item>
+		<item name="wcf.global.state.trashed"><![CDATA[Im Papierkorb]]></item>
 		<item name="wcf.global.subject"><![CDATA[Betreff]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[.]]></item>
 		<item name="wcf.global.title"><![CDATA[Titel]]></item>
