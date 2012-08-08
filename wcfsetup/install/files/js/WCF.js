@@ -4045,7 +4045,7 @@ WCF.Search.Base = Class.extend({
 			};
 			
 			this._proxy.setOption('data', {
-				actionName: 'getList',
+				actionName: 'getSearchResultList',
 				className: this._className,
 				parameters: this._getParameters($parameters)
 			});

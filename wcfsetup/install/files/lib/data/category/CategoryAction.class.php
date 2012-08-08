@@ -1,6 +1,9 @@
 <?php
 namespace wcf\data\category;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\ICollapsibleContainerAction;
+use wcf\data\IPositionAction;
+use wcf\data\IToggleAction;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\ValidateActionException;
@@ -17,7 +20,7 @@ use wcf\system\WCF;
  * @subpackage	data.category
  * @category 	Community Framework
  */
-class CategoryAction extends AbstractDatabaseObjectAction {
+class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibleContainerAction, IPositionAction, IToggleAction {
 	/**
 	 * categorized object type
 	 * @var	wcf\data\object\type\ObjectType
@@ -39,7 +42,7 @@ class CategoryAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Toggles the activity status of categories.
+	 * @see	wcf\data\IToggleAction::toggle()
 	 */
 	public function toggle() {
 		foreach ($this->objects as $categoryEditor) {
@@ -50,7 +53,7 @@ class CategoryAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Toggles the collapse status of categories.
+	 * @see	wcf\data\ICollapsibleContainerAction::toggleContainer()
 	 */
 	public function toggleContainer() {
 		$objectTypeID = UserCollapsibleContentHandler::getInstance()->getObjectTypeID($this->objects[0]->getCategoryType()->getCollapsibleObjectTypeName());
@@ -66,7 +69,7 @@ class CategoryAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Updates the position of categories.
+	 * @see	wcf\data\IPositionAction::updatePosition()
 	 */
 	public function updatePosition() {
 		$showOrders = array();
@@ -145,14 +148,14 @@ class CategoryAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Validates the 'toggle' action.
+	 * @see	wcf\data\IToggleAction::validateToggle()
 	 */
 	public function validateToggle() {
 		$this->validateUpdate();
 	}
 	
 	/**
-	 * Validates the 'toggleContainer' action.
+	 * @see	wcf\data\ICollapsibleContainerAction::validateToggleContainer()
 	 */
 	public function validateToggleContainer() {
 		$this->validateUpdate();
@@ -189,7 +192,7 @@ class CategoryAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Validates the 'updatePosition' action.
+	 * @see	wcf\data\IPositionAction::validateUpdatePosition()
 	 */
 	public function validateUpdatePosition() {
 		// validate permissions
