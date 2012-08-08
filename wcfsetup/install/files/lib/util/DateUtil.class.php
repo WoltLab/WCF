@@ -199,13 +199,13 @@ final class DateUtil {
 			));
 		}
 		
+		if ($weeks) {
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.weeks', array(
+				'weeks' => $weeks
+			));
+		}
+		
 		if ($days) {
-			if ($days > 7) {
-				return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.weeks', array(
-					'weeks' => $weeks
-				));
-			}
-			
 			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.days', array(
 				'days' => $days
 			));
