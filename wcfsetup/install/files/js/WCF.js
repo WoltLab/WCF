@@ -4852,7 +4852,7 @@ WCF.Upload = Class.extend({
 		if (this._supportsAJAXUpload) {
 			this._fileUpload = $('<input type="file" name="'+this._name+'" '+(this._options.multiple ? 'multiple="true" ' : '')+'/>');
 			this._fileUpload.change($.proxy(this._upload, this));
-			var $button = $('<p class="button uploadButton"><span>Upload</span></p>');
+			var $button = $('<p class="button uploadButton"><span>'+WCF.Language.get('wcf.global.button.upload')+'</span></p>');
 			$button.append(this._fileUpload);
 		}
 		else {
