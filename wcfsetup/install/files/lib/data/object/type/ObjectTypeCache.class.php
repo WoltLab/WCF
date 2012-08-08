@@ -131,4 +131,11 @@ class ObjectTypeCache extends SingletonFactory {
 		
 		return null;
 	}
+	
+	/**
+	 * Resets the object type cache.
+	 */
+	public static function resetCache() {
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.objectType-*');
+	}
 }
