@@ -36,6 +36,12 @@ abstract class AbstractPage implements IPage {
 	public $action = '';
 	
 	/**
+	 * indicates if you need to be logged in to access this page
+	 * @var	boolean
+	 */
+	public $loginRequired = false;
+	
+	/**
 	 * needed modules to view this page
 	 * @var	array<string>
 	 */
@@ -138,6 +144,11 @@ abstract class AbstractPage implements IPage {
 	 * @see wcf\page\IPage::show()
 	 */
 	public function show() {
+		// check if active user is logged in
+		if ($this->loginRequired && !WCF::getUser()->userID) {
+			throw new PermissionDeniedException();
+		}
+		
 		// check modules
 		$this->checkModules();
 		
