@@ -5310,6 +5310,7 @@ WCF.Popover = Class.extend({
 		this._popover.hover($.proxy(this._overPopover, this), $.proxy(this._out, this));
 		
 		this._initContainers();
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Popover', $.proxy(this._initContainers, this));
 	},
 	
 	/**
