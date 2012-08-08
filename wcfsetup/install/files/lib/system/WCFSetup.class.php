@@ -498,9 +498,12 @@ class WCFSetup extends WCF {
 		$dbUser = 'root';
 		$dbPassword = '';
 		$dbName = 'wcf';
-		$dbNumber = '1';
-		$dbClass = 'MySQLDatabase';
-		if (!function_exists('mysql_connect')) $dbClass = 'MySQLiDatabase';
+		$dbNumber = 1;
+		// set $dbClass to first item in $availableDBClasses
+		foreach ($availableDBClasses as $dbClass) {
+			$dbClass = $dbClass['class'];
+			break;
+		}
 		$overwriteTables = false;
 		
 		if (isset($_POST['send'])) {
@@ -512,7 +515,9 @@ class WCFSetup extends WCF {
 			// Should the user not be prompted if converted or default n match an
 			// existing installation number? By now the existing installation
 			// will be overwritten just so!
-			if (isset($_POST['dbNumber'])) $dbNumber = intval($_POST['dbNumber']);
+			
+			// ensure that $dbNumber is zero or a positive integer
+			if (isset($_POST['dbNumber'])) $dbNumber = max(0, intval($_POST['dbNumber']));
 			if (isset($_POST['dbClass'])) $dbClass = $_POST['dbClass'];
 			
 			// get port
