@@ -20,13 +20,13 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 	protected $parameters = array();
 	
 	/**
-	 * Adds a new condition.
+	 * Adds a new condition. The parameters array has to be a numbered array.
 	 * 
 	 * @param	string		$condition
 	 * @param	array		$parameters
 	 */
 	public function add($condition, array $parameters = array()) {
-		if (count($parameters)) {
+		if (!empty($parameters)) {
 			$count = 0;
 			$callback = function ($matches) use (&$count, $parameters, $condition) {
 				if (!array_key_exists($count, $parameters)) {
@@ -50,7 +50,7 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 		$this->conditions .= $condition;
 		
 		// parameter handling
-		if (count($parameters)) {
+		if (!empty($parameters)) {
 			foreach ($parameters as $parameter) {
 				if (is_array($parameter)) {
 					foreach ($parameter as $value) {
