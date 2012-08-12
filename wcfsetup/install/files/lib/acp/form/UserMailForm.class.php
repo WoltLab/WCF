@@ -14,25 +14,65 @@ use wcf\util\StringUtil;
  * Shows the user mail form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
  * @category 	Community Framework
  */
 class UserMailForm extends ACPForm {
-	// system
+	/**
+	 * enable html for message body
+	 * @var	boolean
+	 */
+	public $enableHTML = false;
+	
+	/**
+	 * sender name
+	 * @var	string
+	 */
+	public $from = '';
+	
+	/**
+	 * list of group ids
+	 * @var	array<integer>
+	 */
+	public $groupIDs = array();
+	
+	/**
+	 * list of groups
+	 * @var	array<wcf\data\user\group\UserGroup>
+	 */
+	public $groups = array();
+	
+	/**
+	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.user.canMailUser');
 	
-	// parameters
-	public $userIDs = array();
-	public $groupIDs = array();
+	/**
+	 * message subject
+	 * @var	string
+	 */
 	public $subject = '';
+	
+	/**
+	 * message body
+	 * @var	string
+	 */
 	public $text = '';
-	public $from = '';
-	public $users = array();
-	public $groups = array();
-	public $enableHTML = 0;
+	
+	/**
+	 * list of user ids
+	 * @var	array<integer>
+	 */
+	public $userIDs = array();
+	
+	/**
+	 * list of users
+	 * @var	wcf\data\user\UserList
+	 */
+	public $userList = null;
 	
 	/**
 	 * @see wcf\page\IPage::readParameters()
@@ -54,7 +94,7 @@ class UserMailForm extends ACPForm {
 		if (isset($_POST['subject'])) $this->subject = StringUtil::trim($_POST['subject']);
 		if (isset($_POST['text'])) $this->text = StringUtil::trim($_POST['text']);
 		if (isset($_POST['from'])) $this->from = StringUtil::trim($_POST['from']);
-		if (isset($_POST['enableHTML'])) $this->enableHTML = intval($_POST['enableHTML']);
+		if (isset($_POST['enableHTML'])) $this->enableHTML = true;
 	}
 	
 	/**
@@ -63,13 +103,11 @@ class UserMailForm extends ACPForm {
 	public function validate() {
 		parent::validate();
 		
-		if ($this->action == 'group') {
-			if (!count($this->groupIDs)) {
-				throw new UserInputException('groupIDs');
-			}
+		if ($this->action == 'group' && empty($this->groupIDs)) {
+			throw new UserInputException('groupIDs');
 		}
-		if ($this->action == '') {
-			if (empty($this->userIDs)) throw new IllegalLinkException();
+		if ($this->action == '' && empty($this->userIDs)) {
+			throw new IllegalLinkException();
 		}
 		
 		if (empty($this->subject)) {
@@ -116,7 +154,7 @@ class UserMailForm extends ACPForm {
 	public function readData() {
 		parent::readData();
 		
-		if (!count($_POST)) {
+		if (empty($_POST)) {
 			// get marked user ids
 			if (empty($this->action)) {
 				// get type id
@@ -131,20 +169,17 @@ class UserMailForm extends ACPForm {
 				
 				// load users
 				$this->userIDs = array_keys($users['com.woltlab.wcf.user']);
-				$this->users = $users['com.woltlab.wcf.user'];
 			}
 			
 			if (MAIL_USE_FORMATTED_ADDRESS)	$this->from = MAIL_FROM_NAME . ' <' . MAIL_FROM_ADDRESS . '>';
 			else $this->from = MAIL_FROM_ADDRESS;
 		}
 		
-		if (!empty($this->userIDs) && empty($this->users)) {
-			$userList = new UserList();
-			$userList->getConditionBuilder()->add("user.userID IN (?)", array($this->userIDs));
-			$userList->sqlOrderBy = "user.username ASC";
-			$userList->readObjects();
-			
-			$this->users = $userList->getObjects();
+		if (!empty($this->userIDs)) {
+			$this->userList = new UserList();
+			$this->userList->getConditionBuilder()->add("user_table.userID IN (?)", array($this->userIDs));
+			$this->userList->sqlOrderBy = "user_table.username ASC";
+			$this->userList->readObjects();
 		}
 		
 		$this->groups = UserGroup::getAccessibleGroups(array(), array(UserGroup::GUESTS, UserGroup::EVERYONE));
@@ -157,14 +192,14 @@ class UserMailForm extends ACPForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'users' => $this->users,
-			'groups' => $this->groups,
-			'userIDs' => $this->userIDs,
+			'enableHTML' => $this->enableHTML,
+			'from' => $this->from,
 			'groupIDs' => $this->groupIDs,
+			'groups' => $this->groups,
 			'subject' => $this->subject,
 			'text' => $this->text,
-			'from' => $this->from,
-			'enableHTML' => $this->enableHTML
+			'userIDs' => $this->userIDs,
+			'userList' => $this->userList
 		));
 	}
 }

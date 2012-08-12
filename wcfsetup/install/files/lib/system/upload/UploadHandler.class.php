@@ -58,10 +58,10 @@ class UploadHandler {
 	 * @param	array<string>	$fileExtensions
 	 * @return	boolean
 	 */
-	public function validateFiles($maxFilesize, array $fileExtensions) {
+	public function validateFiles(IUploadFileValidationStrategy $validationStrategy) {
 		$result = true;
 		foreach ($this->files as $file) {
-			if (!$file->validateFile($maxFilesize, $fileExtensions)) {
+			if (!$validationStrategy->validate($file)) {
 				$this->erroneousFiles[] = $file;
 				$result = false;
 			}
