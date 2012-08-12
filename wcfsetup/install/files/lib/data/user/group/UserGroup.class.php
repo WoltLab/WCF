@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user\group;
+use wcf\data\user\User;
 use wcf\data\DatabaseObject;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -130,12 +131,15 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if the active user is member of the group.
+	 * Returns true, if the given user is member of the group.
 	 * 
+	 * @param	wcf\data\user\User	$user	WCF::getUser() is omitted
 	 * @return	boolean
 	 */
-	public function isMember() {
-		if (in_array($this->groupID, WCF::getUser()->getGroupIDs())) return true;
+	public function isMember(User $user = null) {
+		if ($user === null) $user = WCF::getUser();
+		
+		if (in_array($this->groupID, $user->getGroupIDs())) return true;
 		return false;
 	}
 	
