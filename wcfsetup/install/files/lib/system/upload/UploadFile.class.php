@@ -125,29 +125,12 @@ class UploadFile {
 	}
 	
 	/**
-	 * Validates the uploaded file. Returns true on success, otherwise false.
+	 * Sets the validation error type.
 	 * 
-	 * @param	integer		$maxFilesize
-	 * @param	array<string>	$fileExtensions
-	 * @return	boolean
+	 * @param	string		$validationErrorType
 	 */
-	public function validateFile($maxFilesize, array $fileExtensions) {
-		if ($this->errorCode != 0) {
-			$this->validationErrorType = 'uploadFailed';
-			return false;
-		}
-		
-		if ($this->getFilesize() > $maxFilesize) {
-			$this->validationErrorType = 'tooLarge';
-			return false;
-		}
-		
-		if (!in_array($this->getFileExtension(), $fileExtensions)) {
-			$this->validationErrorType = 'invalidExtension';
-			return false;
-		}
-		
-		return true;
+	public function setValidationErrorType($validationErrorType) {
+		$this->validationErrorType = $validationErrorType;
 	}
 	
 	/**
