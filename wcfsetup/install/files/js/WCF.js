@@ -4005,12 +4005,12 @@ WCF.Search.Base = Class.extend({
 	 * @param	boolean		commaSeperated
 	 */
 	init: function(searchInput, callback, excludedSearchValues, commaSeperated) {
-		if ((callback === null && !commaSeperated) && !$.isFunction(callback)) {
+		if (callback !== null && callback !== undefined && !$.isFunction(callback)) {
 			console.debug("[WCF.Search.Base] The given callback is invalid, aborting.");
 			return;
 		}
-
-		this._callback = callback;
+		
+		this._callback = (callback) ? callback : null;
 		this._excludedSearchValues = [];
 		if (excludedSearchValues) {
 			this._excludedSearchValues = excludedSearchValues;
@@ -4024,6 +4024,10 @@ WCF.Search.Base = Class.extend({
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
+		
+		if (this._searchInput.getTagName() === 'input') {
+			this._searchInput.attr('autocomplete', 'off');
+		}
 	},
 	
 	/**
@@ -4153,6 +4157,7 @@ WCF.Search.Base = Class.extend({
 	 * @param	object		event
 	 */
 	_executeCallback: function(event) {
+		var $clearSearchInput = false;
 		var $listItem = $(event.currentTarget);
 		// notify callback
 		if (this._commaSeperated) {
@@ -4175,7 +4180,12 @@ WCF.Search.Base = Class.extend({
 			}
 		}
 		else {
-			var $clearSearchInput = this._callback($listItem.data());
+			if (this._callback === null) {
+				this._searchInput.val($listItem.data('label'));
+			}
+			else {
+				$clearSearchInput = (this._callback($listItem.data()) === true) ? true : false;
+			}
 		}
 
 		// close list and revert input
