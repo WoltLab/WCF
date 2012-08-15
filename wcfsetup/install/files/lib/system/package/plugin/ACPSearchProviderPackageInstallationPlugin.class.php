@@ -37,12 +37,15 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 			WHERE		providerName = ?
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
 		foreach ($items as $item) {
 			$statement->execute(array(
 				$item['attributes']['name'],
 				$this->installation->getPackageID()
 			));
 		}
+		WCF::getDB()->commitTransaction();
 	}
 	
 	/**

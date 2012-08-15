@@ -18,8 +18,6 @@ class ACPSearchProviderCacheBuilder implements ICacheBuilder {
 	 * @see wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-		list($cache, $packageID) = explode('-', $cacheResource['cache']);
-		
 		$providerList = new ACPSearchProviderList();
 		$providerList->getConditionBuilder()->add("acp_search_provider.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$providerList->sqlLimit = 0;
