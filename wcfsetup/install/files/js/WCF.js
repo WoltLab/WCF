@@ -583,11 +583,46 @@ WCF.Dropdown = {
 			else if ($containerID === $targetID) {
 				$dropdown.addClass('dropdownOpen');
 				this._notifyCallbacks($dropdown, 'open');
+				
+				this.setAlignment($dropdown);
 			}
 		}
 		
 		event.stopPropagation();
 		return false;
+	},
+	
+	/**
+	 * Sets alignment for dropdown.
+	 * 
+	 * @param	jQuery		dropdown
+	 * @param	jQuery		dropdownMenu
+	 */
+	setAlignment: function(dropdown, dropdownMenu) {
+		if (dropdown) {
+			var $dropdownMenu = dropdown.children('.dropdownMenu:eq(0)');
+		}
+		else {
+			var $dropdownMenu = dropdownMenu;
+		}
+		
+		// calculate if dropdown should be right-aligned if there is not enough space
+		var $dimensions = $dropdownMenu.getDimensions('outer');
+		var $offsets = $dropdownMenu.getOffsets('offset');
+		var $windowWidth = $(window).width();
+		
+		if (($offsets.left + $dimensions.width) > $windowWidth) {
+			$dropdownMenu.css({
+				left: 'auto',
+				right: '0px'
+			}).addClass('dropdownArrowRight');
+		}
+		else {
+			$dropdownMenu.css({
+				left: '0px',
+				right: 'auto'
+			}).removeClass('dropdownArrowRight');
+		}
 	},
 	
 	/**
@@ -4015,8 +4050,14 @@ WCF.Search.Base = Class.extend({
 		if (excludedSearchValues) {
 			this._excludedSearchValues = excludedSearchValues;
 		}
-		this._searchInput = $(searchInput).keyup($.proxy(this._keyUp, this));
-		this._searchInput.wrap('<span class="dropdown" />');
+		
+		this._searchInput = $(searchInput);
+		if (!this._searchInput.length) {
+			console.debug("[WCF.Search.Base] Selector '" + searchInput + "' for search input is invalid, aborting.");
+			return;
+		}
+		
+		this._searchInput.keyup($.proxy(this._keyUp, this)).wrap('<span class="dropdown" />');
 		this._list = $('<ul class="dropdownMenu" />').insertAfter(this._searchInput);
 		this._commaSeperated = (commaSeperated) ? true : false;
 		this._oldSearchString = [ ];
@@ -4134,6 +4175,7 @@ WCF.Search.Base = Class.extend({
 		}
 		
 		this._list.parent().addClass('dropdownOpen');
+		WCF.Dropdown.setAlignment(undefined, this._list);
 		
 		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(true); }, this));
 	},

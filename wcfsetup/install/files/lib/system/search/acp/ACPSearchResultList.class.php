@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\search\acp;
+use wcf\system\WCF;
 
 /**
  * Represents a list of ACP search results.
@@ -19,10 +20,25 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	protected $index = 0;
 	
 	/**
+	 * result list title
+	 * @var	string
+	 */
+	protected $title = '';
+	
+	/**
 	 * result list
 	 * @var	array<wcf\system\search\acp\ACPSearchResult>
 	 */
 	protected $results = array();
+	
+	/**
+	 * Creates a new ACPSearchResultList.
+	 * 
+	 * @param	string		$title
+	 */
+	public function __construct($title) {
+		$this->title = WCF::getLanguage()->get('wcf.acp.search.provider.'.$title);
+	}
 	
 	/**
 	 * Adds a result to the collection.
@@ -65,10 +81,26 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	}
 	
 	/**
+	 * Returns the result list title.
+	 * 
+	 * @return	string
+	 */
+	public function getTitle() {
+		return $this->title;
+	}
+	
+	/**
+	 * @see	wcf\system\search\acp\ACPSearchResultList::getTitle()
+	 */
+	public function __toString() {
+		return $this->title;
+	}
+	
+	/**
 	 * @see	\Countable::count()
 	 */
 	public function count() {
-		return count($this->objects);
+		return count($this->results);
 	}
 	
 	/**

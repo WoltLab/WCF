@@ -96,6 +96,8 @@
 			
 			WCF.Dropdown.init();
 			
+			new WCF.ACP.Search();
+			
 			{event name='javascriptInit'}
 		});
 		//]]>

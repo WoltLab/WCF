@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\search\acp;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageDependencyHandler;
 use wcf\system\request\LinkHandler;
@@ -26,27 +25,18 @@ class MenuItemACPSearchResultProvider implements IACPSearchResultProvider {
 		// search by language item
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("languageID = ?", array(WCF::getLanguage()->languageID));
-		$conditions->add("languageItem LIKE ?", array('wcf.acp.option.%'));
 		$conditions->add("languageItemValue LIKE ?", array($query.'%'));
 		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		
-		// get available abbrevations
-		$packageIDs = array(ApplicationHandler::getInstance()->getActiveApplication()->packageID);
-		foreach (ApplicationHandler::getInstance()->getDependentApplications() as $application) {
-			$packageIDs[] = $application->packageID;
+		// filter by language item
+		$languageItemsConditions = '';
+		$languageItemsParameters = array();
+		foreach (ACPSearchHandler::getInstance()->getAbbreviations('.acp.menu.link.%') as $abbreviation) {
+			if (!empty($languageItemsConditions)) $languageItemsConditions .= " OR ";
+			$languageItemsConditions .= "languageItem LIKE ?";
+			$languageItemsParameters[] = $abbreviation;
 		}
-		
-		$searchConditions = array();
-		$searchString = '';
-		foreach ($packageIDs as $packageID) {
-			if (!empty($searchString)) {
-				$searchString .= " OR ";
-			}
-			
-			$searchString .= "languageItem LIKE ?";
-			$searchConditions[] = ApplicationHandler::getInstance()->getAbbrevation($packageID) . '.acp.menu.link.'.$query.'%';
-		}
-		$conditions->add($searchString, $searchConditions);
+		$conditions->add("(".$languageItemsConditions.")", $languageItemsParameters);
 		
 		$sql = "SELECT		languageItem, languageItemValue
 			FROM		wcf".WCF_N."_language_item
@@ -80,7 +70,7 @@ class MenuItemACPSearchResultProvider implements IACPSearchResultProvider {
 			}
 			
 			if ($this->checkMenuItem($row)) {
-				$results[] = new ACPSearchResult($languageItems[$row['menuItem']], $row['menuItemLink']);
+				$results[] = new ACPSearchResult($languageItems[$row['menuItem']], $row['menuItemLink'] . SID_ARG_1ST);
 				$count++;
 			}
 		}

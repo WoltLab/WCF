@@ -18,6 +18,12 @@ use wcf\util\ClassUtil;
  */
 class ACPSearchHandler extends SingletonFactory {
 	/**
+	 * list of application abbreviations
+	 * @var	array<string>
+	 */
+	public $abbreviations = array();
+	
+	/**
 	 * list of acp search provider
 	 * @var	array<wcf\data\acp\search\provider\ACPSearchProvider>
 	 */
@@ -53,15 +59,15 @@ class ACPSearchHandler extends SingletonFactory {
 		
 		foreach ($this->cache as $acpSearchProvider) {
 			$className = $acpSearchProvider->className;
-			if (!ClassUtil::isInstanceOf($className, 'wcf\system\search\acp\IACPSearchProvider')) {
-				throw new SystemException("Class '".$className."' does not implement the interface 'wcf\system\search\acp\IACPSearchProvider'");
+			if (!ClassUtil::isInstanceOf($className, 'wcf\system\search\acp\IACPSearchResultProvider')) {
+				throw new SystemException("Class '".$className."' does not implement the interface 'wcf\system\search\acp\IACPSearchResultProvider'");
 			}
 			
 			$provider = new $className();
 			$results = $provider->search($query, $maxResultsPerProvider);
 			
 			if (!empty($results)) {
-				$resultList = new ACPSearchResultList();
+				$resultList = new ACPSearchResultList($acpSearchProvider->providerName);
 				foreach ($results as $result) {
 					$resultList->addResult($result);
 				}
@@ -99,6 +105,43 @@ class ACPSearchHandler extends SingletonFactory {
 			}
 		}
 		
+		// sort all result lists
+		foreach ($data as $resultList) {
+			$resultList->sort();
+		}
+		
 		return $data;
+	}
+	
+	/**
+	 * Returns a list of application abbreviations.
+	 * 
+	 * @param	string		$suffix
+	 * @return	array<string>
+	 */
+	public function getAbbreviations($suffix = '') {
+		if (empty($this->abbreviations)) {
+			// append the 'WCF' pseudo application
+			$this->abbreviations[] = 'wcf';
+			
+			// get running application
+			$this->abbreviations[] = ApplicationHandler::getInstance()->getAbbreviation(ApplicationHandler::getInstance()->getActiveApplication()->packageID);
+			
+			// get dependent applications
+			foreach (ApplicationHandler::getInstance()->getDependentApplications() as $application) {
+				$this->abbreviations[] = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
+			}
+		}
+		
+		if (!empty($suffix)) {
+			$abbreviations = array();
+			foreach ($this->abbreviations as $abbreviation) {
+				$abbreviations[] = $abbreviation . $suffix;
+			}
+			
+			return $abbreviations;
+		}
+		
+		return $this->abbreviations;
 	}
 }

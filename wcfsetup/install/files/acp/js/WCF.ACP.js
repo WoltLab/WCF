@@ -871,3 +871,38 @@ WCF.ACP.Category.Delete = WCF.Action.Delete.extend({
 		}, this));
 	}
 });
+
+/**
+ * Provides the search dropdown for ACP
+ * 
+ * @see	WCF.Search.Base
+ */
+WCF.ACP.Search = WCF.Search.Base.extend({
+	/**
+	 * @see	WCF.Search.Base.init()
+	 */
+	init: function() {
+		this._className = 'wcf\\data\\acp\\search\\provider\\ACPSearchProviderAction';
+		this._super('#search input[name=q]');
+	},
+	
+	/**
+	 * @see	WCF.Search.Base._createListItem()
+	 */
+	_createListItem: function(resultList) {
+		// add a divider between result lists
+		if (this._list.children('li').length > 0) {
+			$('<li class="dropdownDivider" />').appendTo(this._list);
+		}
+		
+		// add caption
+		$('<li class="dropdownText">' + resultList.title + '</li>').appendTo(this._list);
+		
+		// add menu items
+		for (var $i in resultList.items) {
+			var $item = resultList.items[$i];
+			
+			$('<li><a href="' + $item.link + '">' + $item.title + '</a></li>').appendTo(this._list);
+		}
+	}
+});
