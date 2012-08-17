@@ -1,5 +1,6 @@
 <?php
 namespace wcf\util;
+use wcf\system\exception\SystemException;
 
 /**
  * Provides methods for class interactions.
@@ -35,17 +36,25 @@ final class ClassUtil {
 	 * @return	boolean
 	 */
 	public static function isInstanceOf($className, $targetClass) {
-		if (!is_string($className)) return false;
+		// validate parameters
+		if (!is_string($className)) {
+			return false;
+		}
+		else if (!class_exists($className)) {
+			throw new SystemException("Cannot determine class inheritance, class '".$className."' does not exist");
+		}
+		else if (!class_exists($targetClass) && !interface_exists($targetClass)) {
+			throw new SystemException("Cannot determine class inheritance, reference class '".$targetClass."' does not exist");
+		}
 		
+		// check for simple inheritance
 		if (class_exists($targetClass)) {
 			return is_subclass_of($className, $targetClass);
 		}
-		else if (interface_exists($targetClass)) {
-			$reflectionClass = new \ReflectionClass($className);
-			return $reflectionClass->implementsInterface($targetClass);
-		}
 		
-		return false;
+		// check for interface
+		$reflectionClass = new \ReflectionClass($className);
+		return $reflectionClass->implementsInterface($targetClass);
 	}
 	
 	private function __construct() { }
