@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\search\acp;
-use wcf\data\acp\menu\item\ACPMenuItem;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageDependencyHandler;
 use wcf\system\request\LinkHandler;
@@ -20,7 +19,7 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 	/**
 	 * @see	wcf\system\search\acp\IACPSearchResultProvider::search()
 	 */
-	public function search($query, $limit = 5) {
+	public function search($query) {
 		$results = array();
 		
 		// search by language item
@@ -64,19 +63,12 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
 		$statement->execute($conditions->getParameters());
 		
-		$count = 0;
-		while ($row = $statement->fetchArray()) {
-			if ($count == $limit) {
-				break;
-			}
-			
-			$menuItem = new ACPMenuItem(null, $row);
+		while ($menuItem = $statement->fetchObject('wcf\data\acp\menu\item\ACPMenuItem')) {
 			if (!$this->validate($menuItem)) {
 				continue;
 			}
 			
-			$results[] = new ACPSearchResult($languageItems[$row['menuItem']], $row['menuItemLink'] . SID_ARG_1ST);
-			$count++;
+			$results[] = new ACPSearchResult($languageItems[$menuItem->menuItem], $menuItem->getLink());
 		}
 		
 		return $results;

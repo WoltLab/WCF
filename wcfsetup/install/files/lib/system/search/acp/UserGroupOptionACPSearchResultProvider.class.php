@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\search\acp;
-use wcf\data\user\group\option\UserGroupOption;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageDependencyHandler;
 use wcf\system\request\LinkHandler;
@@ -25,7 +24,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
 	/**
 	 * @see	wcf\system\search\acp\IACPSearchResultProvider::search()
 	 */
-	public function search($query, $limit = 5) {
+	public function search($query) {
 		$results = array();
 		
 		// search by language item
@@ -74,26 +73,19 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
 		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
 		$statement->execute($conditions->getParameters());
 		
-		$count = 0;
-		while ($row = $statement->fetchArray()) {
-			if ($count == $limit) {
-				break;
-			}
-			
+		while ($userGroupOption = $statement->fetchObject('wcf\data\user\group\option\UserGroupOption')) {
 			// category is not accessible
-			if (!$this->isValid($row['categoryName'])) {
+			if (!$this->isValid($userGroupOption->categoryName)) {
 				continue;
 			}
 			
 			// option is not accessible
-			$userGroupOption = new UserGroupOption(null, $row);
 			if (!$this->validate($userGroupOption)) {
 				continue;
 			}
 			
-			$link = LinkHandler::getInstance()->getLink('UserGroupOption', array('id' => $row['optionID']));
-			$results[] = new ACPSearchResult($languageItems[$row['optionName']], $link);
-			$count++;
+			$link = LinkHandler::getInstance()->getLink('UserGroupOption', array('id' => $userGroupOption->optionID));
+			$results[] = new ACPSearchResult($languageItems[$userGroupOption->optionName], $link);
 		}
 		
 		return $results;

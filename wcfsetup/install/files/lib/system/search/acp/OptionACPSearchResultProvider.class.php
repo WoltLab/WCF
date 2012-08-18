@@ -1,9 +1,6 @@
 <?php
 namespace wcf\system\search\acp;
-use wcf\data\option\Option;
-use wcf\data\option\category\OptionCategoryList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\SystemException;
 use wcf\system\package\PackageDependencyHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -27,7 +24,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 	/**
 	 * @see	wcf\system\search\acp\IACPSearchResultProvider::search()
 	 */
-	public function search($query, $limit = 5) {
+	public function search($query) {
 		$results = array();
 		
 		// search by language item
@@ -50,7 +47,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 			FROM		wcf".WCF_N."_language_item
 			".$conditions."
 			ORDER BY	languageItemValue ASC";
-		$statement = WCF::getDB()->prepareStatement($sql, $limit);
+		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
 		$statement->execute($conditions->getParameters());
 		$languageItems = array();
 		$optionNames = array();
@@ -71,23 +68,22 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 		$sql = "SELECT	optionName, categoryName, options, permissions
 			FROM	wcf".WCF_N."_option
 			".$conditions;
-		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
 		$statement->execute($conditions->getParameters());
 		
-		while ($row = $statement->fetchArray()) {
+		while ($option = $statement->fetchObject('wcf\data\option\Option')) {
 			// category is not accessible
-			if (!$this->isValid($row['categoryName'])) {
+			if (!$this->isValid($option->categoryName)) {
 				continue;
 			}
 			
 			// option is not accessible
-			$option = new Option(null, $row);
 			if (!$this->validate($option)) {
 				continue;
 			}
 			
-			$link = LinkHandler::getInstance()->getLink('Option', array('id' => $this->getCategoryID($row['categoryName'])), 'optionName='.$row['optionName'].'#'.$this->getCategoryName($row['categoryName']));
-			$results[] = new ACPSearchResult($languageItems[$row['optionName']], $link);
+			$link = LinkHandler::getInstance()->getLink('Option', array('id' => $this->getCategoryID($option->categoryName)), 'optionName='.$option->optionName.'#'.$this->getCategoryName($option->categoryName));
+			$results[] = new ACPSearchResult($languageItems[$option->optionName], $link);
 		}
 		
 		return $results;

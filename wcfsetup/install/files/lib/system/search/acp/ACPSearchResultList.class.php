@@ -72,6 +72,20 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	}
 	
 	/**
+	 * Reduces the result collection to specified size.
+	 * 
+	 * @param	integer		$size
+	 */
+	public function reduceResultsTo($size) {
+		$count = count($this->results);
+		
+		if ($size && ($count > $size)) {
+			$reduceBy = $count - $size;
+			$this->reduceResults($reduceBy);
+		}
+	}
+	
+	/**
 	 * Sorts results by title.
 	 */
 	public function sort() {

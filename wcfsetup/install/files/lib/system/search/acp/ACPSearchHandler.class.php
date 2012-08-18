@@ -72,6 +72,10 @@ class ACPSearchHandler extends SingletonFactory {
 					$resultList->addResult($result);
 				}
 				
+				// sort list and reduce results
+				$resultList->sort();
+				$resultList->reduceResultsTo($maxResultsPerProvider);
+				
 				$data[] = $resultList;
 				$totalResultCount += count($resultList);
 			}
