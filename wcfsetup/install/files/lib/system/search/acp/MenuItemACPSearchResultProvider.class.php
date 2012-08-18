@@ -2,8 +2,8 @@
 namespace wcf\system\search\acp;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageDependencyHandler;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * ACP search provider for menu items.
@@ -25,7 +25,7 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 		// search by language item
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("languageID = ?", array(WCF::getLanguage()->languageID));
-		$conditions->add("languageItemValue LIKE ?", array($query.'%'));
+		$conditions->add("languageItemValue LIKE ?", array('%'.$query.'%'));
 		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		
 		// filter by language item
@@ -46,7 +46,7 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 		$statement->execute($conditions->getParameters());
 		$languageItems = array();
 		while ($row = $statement->fetchArray()) {
-			$languageItems[$row['languageItem']] = $row['languageItemValue'];
+			$languageItems[$row['languageItem']] = StringUtil::replace($query, '<span class="highlight">'.$query.'</span>', $row['languageItemValue']);
 		}
 		
 		if (empty($languageItems)) {

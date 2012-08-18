@@ -4,6 +4,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageDependencyHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * ACP search provider for options.
@@ -30,7 +31,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 		// search by language item
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("languageID = ?", array(WCF::getLanguage()->languageID));
-		$conditions->add("languageItemValue LIKE ?", array($query.'%'));
+		$conditions->add("languageItemValue LIKE ?", array('%'.$query.'%'));
 		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		
 		// filter by language item
@@ -54,7 +55,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 		while ($row = $statement->fetchArray()) {
 			$optionName = preg_replace('~^([a-z]+)\.acp\.option\.~', '', $row['languageItem']);
 			
-			$languageItems[$optionName] = $row['languageItemValue'];
+			$languageItems[$optionName] = StringUtil::replace($query, '<span class="highlight">'.$query.'</span>', $row['languageItemValue']);
 			$optionNames[] = $optionName;
 		}
 		
