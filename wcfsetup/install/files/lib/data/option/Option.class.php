@@ -177,4 +177,11 @@ class Option extends DatabaseObject {
 	public function isVisible($overrideVisibility = false) {
 		return !$this->hidden;
 	}
+	
+	/**
+	 * @see	wcf\data\IStorableObject::getDatabaseTableAlias()
+	 */
+	public static function getDatabaseTableAlias() {
+		return 'option_table';
+	}
 }
