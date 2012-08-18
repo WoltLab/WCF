@@ -1,13 +1,13 @@
 <?php
 namespace wcf\system\search\acp;
-use wcf\data\acp\menu\item\ACPMenuItem;
+use wcf\data\user\group\option\UserGroupOption;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageDependencyHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
- * ACP search provider for menu items.
+ * ACP search provider for user group options.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -16,7 +16,12 @@ use wcf\system\WCF;
  * @subpackage	system.search.acp
  * @category 	Community Framework
  */
-class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider implements IACPSearchResultProvider {
+class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultProvider implements IACPSearchResultProvider {
+	/**
+	 * @see	wcf\system\search\acp\AbstractCategorizedACPSearchResultProvider::$listClassName
+	 */
+	protected $listClassName = 'wcf\data\user\group\option\category\UserGroupOptionCategoryList';
+	
 	/**
 	 * @see	wcf\system\search\acp\IACPSearchResultProvider::search()
 	 */
@@ -32,7 +37,7 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 		// filter by language item
 		$languageItemsConditions = '';
 		$languageItemsParameters = array();
-		foreach (ACPSearchHandler::getInstance()->getAbbreviations('.acp.menu.link.%') as $abbreviation) {
+		foreach (ACPSearchHandler::getInstance()->getAbbreviations('.acp.group.option.%') as $abbreviation) {
 			if (!empty($languageItemsConditions)) $languageItemsConditions .= " OR ";
 			$languageItemsConditions .= "languageItem LIKE ?";
 			$languageItemsParameters[] = $abbreviation;
@@ -47,7 +52,13 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 		$statement->execute($conditions->getParameters());
 		$languageItems = array();
 		while ($row = $statement->fetchArray()) {
-			$languageItems[$row['languageItem']] = $row['languageItemValue'];
+			// ignore descriptions
+			if (substr($row['languageItem'], -12) == '.description') {
+				continue;
+			}
+			
+			$itemName = preg_replace('~^([a-z]+)\.acp\.group\.option\.~', '', $row['languageItem']);
+			$languageItems[$itemName] = $row['languageItemValue'];
 		}
 		
 		if (empty($languageItems)) {
@@ -55,11 +66,10 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("menuItem IN (?)", array(array_keys($languageItems)));
-		$conditions->add("menuItemLink <> ''");
+		$conditions->add("optionName IN (?)", array(array_keys($languageItems)));
 		
-		$sql = "SELECT	menuItem, menuItemLink, permissions, options
-			FROM	wcf".WCF_N."_acp_menu_item
+		$sql = "SELECT	optionID, optionName, categoryName, permissions, options
+			FROM	wcf".WCF_N."_user_group_option
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
 		$statement->execute($conditions->getParameters());
@@ -70,12 +80,19 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 				break;
 			}
 			
-			$menuItem = new ACPMenuItem(null, $row);
-			if (!$this->validate($menuItem)) {
+			// category is not accessible
+			if (!$this->isValid($row['categoryName'])) {
 				continue;
 			}
 			
-			$results[] = new ACPSearchResult($languageItems[$row['menuItem']], $row['menuItemLink'] . SID_ARG_1ST);
+			// option is not accessible
+			$userGroupOption = new UserGroupOption(null, $row);
+			if (!$this->validate($userGroupOption)) {
+				continue;
+			}
+			
+			$link = LinkHandler::getInstance()->getLink('UserGroupOption', array('id' => $row['optionID']));
+			$results[] = new ACPSearchResult($languageItems[$row['optionName']], $link);
 			$count++;
 		}
 		

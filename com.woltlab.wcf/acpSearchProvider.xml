@@ -9,5 +9,9 @@
 			<classname><![CDATA[wcf\system\search\acp\OptionACPSearchResultProvider]]></classname>
 			<showorder>2</showorder>
 		</acpsearchprovider>
+		<acpsearchprovider name="userGroupOption">
+			<classname><![CDATA[wcf\system\search\acp\UserGroupOptionACPSearchResultProvider]]></classname>
+			<showorder>3</showorder>
+		</acpsearchprovider>
 	</import>
 </data>
