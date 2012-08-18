@@ -4,7 +4,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageDependencyHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * ACP search provider for user group options.
@@ -58,7 +57,7 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
 			}
 			
 			$itemName = preg_replace('~^([a-z]+)\.acp\.group\.option\.~', '', $row['languageItem']);
-			$languageItems[$itemName] = StringUtil::replace($query, '<span class="highlight">'.$query.'</span>', $row['languageItemValue']);
+			$languageItems[$itemName] = $row['languageItemValue'];
 		}
 		
 		if (empty($languageItems)) {

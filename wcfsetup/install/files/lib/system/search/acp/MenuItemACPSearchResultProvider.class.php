@@ -3,7 +3,6 @@ namespace wcf\system\search\acp;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * ACP search provider for menu items.
@@ -46,7 +45,7 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 		$statement->execute($conditions->getParameters());
 		$languageItems = array();
 		while ($row = $statement->fetchArray()) {
-			$languageItems[$row['languageItem']] = StringUtil::replace($query, '<span class="highlight">'.$query.'</span>', $row['languageItemValue']);
+			$languageItems[$row['languageItem']] = $row['languageItemValue'];
 		}
 		
 		if (empty($languageItems)) {
