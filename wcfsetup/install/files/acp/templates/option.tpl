@@ -5,6 +5,17 @@
 	$(function() {
 		WCF.TabMenu.init();
 		new WCF.ACP.Options();
+		
+		{if $optionName}
+			var $option = $('#' + $.wcfEscapeID('{$optionName}'));
+			new WCF.PeriodicalExecuter(function(pe) {
+				pe.stop();
+				
+				var $scrollHandler = new WCF.Effect.Scroll();
+				$scrollHandler.scrollTo($option, true);
+				$option.focus();
+			}, 200);
+		{/if}
 	});
 	//]]>
 </script>
