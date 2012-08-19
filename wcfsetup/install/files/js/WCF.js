@@ -1224,6 +1224,21 @@ WCF.PeriodicalExecuter.prototype = {
 };
 
 /**
+ * Provides a simple call for delayed executed functions.
+ * 
+ * @param	function		callback
+ * @param	integer			delay
+ */
+WCF.DelayedExecuter = function(callback, delay) {
+	if (!$.isFunction(callback)) {
+		console.debug('[WCF.DelayedExecuter] Given callback is invalid, aborting.');
+		return;
+	}
+
+	setTimeout(callback, delay); 
+};
+
+/**
  * Namespace for AJAXProxies
  */
 WCF.Action = {};
