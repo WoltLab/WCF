@@ -1235,7 +1235,6 @@ WCF.DelayedExecuter = function(callback, delay) {
 		return;
 	}
 
-	this._callback = callback;
 	setTimeout(callback, delay); 
 };
 
