@@ -4394,7 +4394,7 @@ WCF.System.Notification = Class.extend({
 		this._overlay.children('p').removeClass().addClass((cssClassNames || this._cssClassNames));
 		
 		// hide overlay after specified duration
-		new WCF.PeriodicalExecuter($.proxy(this._hide, this), duration);
+		setTimeout($.proxy(this._hide, this), duration);
 		
 		this._overlay.addClass('open');
 	},
@@ -4404,14 +4404,12 @@ WCF.System.Notification = Class.extend({
 	 * 
 	 * @param	WCF.PeriodicalExecuter		pe
 	 */
-	_hide: function(pe) {
+	_hide: function() {
 		if (this._callback !== null) {
 			this._callback();
 		}
 		
 		this._overlay.removeClass('open');
-		
-		pe.stop();
 	}
 });
 
@@ -5417,9 +5415,7 @@ WCF.Popover = Class.extend({
 		
 		var $elementID = $(event.currentTarget).wcfIdentify();
 		this._hoverElementID = $elementID;
-		this._peOverElement = new WCF.PeriodicalExecuter($.proxy(function(pe) {
-			pe.stop();
-			
+		this._peOverElement = setTimeout($.proxy(function() {
 			// still above the same element
 			if (this._hoverElementID === $elementID) {
 				this._activeElementID = $elementID;
@@ -5589,9 +5585,7 @@ WCF.Popover = Class.extend({
 		this._hoverElement = false;
 		this._hoverPopover = false;
 		
-		this._peOut = new WCF.PeriodicalExecuter($.proxy(function(pe) {
-			pe.stop();
-			
+		this._peOut = setTimeout($.proxy(function() {
 			// hide popover is neither element nor popover was hovered given time
 			if (!this._hoverElement && !this._hoverPopover) {
 				this._hide(false);
