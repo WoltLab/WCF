@@ -12,6 +12,16 @@ CREATE TABLE wcf1_acp_menu_item (
 	UNIQUE KEY menuItem (menuItem, packageID)
 );
 
+DROP TABLE IF EXISTS wcf1_acp_search_provider;
+CREATE TABLE wcf1_acp_search_provider (
+	providerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10) NOT NULL,
+	providerName VARCHAR(255) NOT NULL DEFAULT '',
+	className VARCHAR(255) NOT NULL DEFAULT '',
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	UNIQUE KEY providerName (providerName, packageID)
+);
+
 DROP TABLE IF EXISTS wcf1_acp_session;
 CREATE TABLE wcf1_acp_session (
 	sessionID CHAR(40) NOT NULL PRIMARY KEY,
@@ -766,6 +776,8 @@ CREATE TABLE wcf1_user_to_language (
 
 /**** foreign keys ****/
 ALTER TABLE wcf1_acp_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_acp_search_provider ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_acp_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_acp_session ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;

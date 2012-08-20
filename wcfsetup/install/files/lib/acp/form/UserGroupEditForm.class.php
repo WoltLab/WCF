@@ -108,7 +108,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 		));
 		
 		// add warning when the initiator is in the group
-		if ($this->group->isMember($this->groupID)) {
+		if ($this->group->isMember()) {
 			WCF::getTPL()->assign('warningSelfEdit', true);
 		}
 	}

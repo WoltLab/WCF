@@ -96,6 +96,8 @@
 			
 			WCF.Dropdown.init();
 			
+			new WCF.ACP.Search();
+			
 			{event name='javascriptInit'}
 		});
 		//]]>
@@ -117,7 +119,7 @@
 								<ul class="dropdownMenu">
 									<li><a href="../">FRONTEND</a></li>
 									<li class="dropdownDivider"></li>
-									<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="return confirm('{lang}wcf.user.logout.sure{/lang}')">{lang}wcf.user.logout{/lang}</a></li>
+									<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -166,6 +168,7 @@
 			<nav class="navigation navigationHeader clearfix">
 				<ul class="navigationIcons">
 					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{@$__wcf->getPath()}icon/circleArrowDownColored.svg" alt="" class="icon16" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+					{event name='navigationIcons'}
 				</ul>
 			</nav>
 			<!-- /header navigation -->
