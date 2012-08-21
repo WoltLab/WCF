@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\user\group\option;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\WCF;
 
 /**
  * Executes user group option-related actions.
@@ -17,4 +18,36 @@ class UserGroupOptionAction extends AbstractDatabaseObjectAction {
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\user\group\option\UserGroupOptionEditor';
+	
+	/**
+	 * Updates option values for given option id.
+	 */
+	public function updateValue() {
+		$option = current($this->objects);
+		
+		// remove old values
+		$sql = "DELETE FROM	wcf".WCF_N."_user_group_option_value
+			WHERE		optionID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			$option->optionID
+		));
+		
+		if (!empty($this->parameters['values'])) {
+			$sql = "INSERT INTO	wcf".WCF_N."_user_group_option_value
+						(optionID, groupID, optionValue)
+				VALUES		(?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			WCF::getDB()->beginTransaction();
+			foreach ($this->parameters['values'] as $groupID => $optionValue) {
+				$statement->execute(array(
+					$option->optionID,
+					$groupID,
+					$optionValue
+				));
+			}
+			WCF::getDB()->commitTransaction();
+		}
+	}
 }

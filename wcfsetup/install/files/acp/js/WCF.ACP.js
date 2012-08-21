@@ -659,6 +659,70 @@ WCF.ACP.Options.prototype = {
 };
 
 /**
+ * Single-option handling for user group options.
+ * 
+ * @param	boolean		canEditEveryone
+ */
+WCF.ACP.Options.Group = Class.extend({
+	/**
+	 * true, if user can edit the 'Everyone' group
+	 * @var	boolean
+	 */
+	_canEditEveryone: false,
+	
+	/**
+	 * Initializes the WCF.ACP.Options.Group class.
+	 * 
+	 * @param	boolean		canEditEveryone
+	 */
+	init: function(canEditEveryone) {
+		// disable 'Everyone' input
+		this._canEditEveryone = (canEditEveryone === true) ? true : false;
+		var $defaultValue = $('#defaultValueContainer').find('input, textarea').removeAttr('id').removeAttr('name');
+		if (!this._canEditEveryone) {
+			$defaultValue.attr('disabled', 'disabled');
+		}
+		
+		// remove id and name-attribute from input elements
+		$('#otherValueContainer').find('input, textarea').removeAttr('id').removeAttr('name');
+		
+		// bind event listener
+		$('#submitButton').click($.proxy(this._click, this));
+	},
+	
+	/**
+	 * Handles clicks on the submit button.
+	 */
+	_click: function() {
+		var $values = { };
+		
+		// collect default value
+		if (this._canEditEveryone) {
+			var $container = $('#defaultValueContainer > dl');
+			$values[$container.data('groupID')] = $container.find('textarea, input').val();
+		}
+		
+		// collect values from other groups
+		$('#otherValueContainer > dl').each(function(index, container) {
+			var $container = $(container);
+			
+			$values[$container.data('groupID')] = $container.find('textarea, input').val();
+		});
+		
+		var $form = $('#defaultValueContainer').parent('form');
+		var $formSubmit = $form.children('.formSubmit');
+		for (var $groupID in $values) {
+			$('<input type="hidden" name="values[' + $groupID + ']" value="' + $values[$groupID] + '" />').appendTo($formSubmit);
+		}
+		
+		// disable submit button
+		$('#submitButton').attr('disable', 'disable');
+		
+		$form.submit();
+	}
+});
+
+/**
  * Worker support for ACP.
  * 
  * @param	string		dialogID
