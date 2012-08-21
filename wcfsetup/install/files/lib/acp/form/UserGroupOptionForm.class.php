@@ -171,19 +171,26 @@ class UserGroupOptionForm extends ACPForm {
 				$this->groupEveryone->groupID
 			));
 			$row = $statement->fetchArray();
-			$defaultValue = $row['optionValue'];
+			$this->defaultValue = $row['optionValue'];
 		}
 		else {
 			if (!isset($this->values[$this->groupEveryone->groupID])) {
 				throw new IllegalLinkException();
 			}
 			
-			$defaultValue = $this->values[$this->groupEveryone->groupID];
+			$this->defaultValue = $this->values[$this->groupEveryone->groupID];
 		}
 		
 		foreach ($this->values as $groupID => $optionValue) {
-			if (!isset($this->groups[$groupID]) || (!$this->canEditEveryone && $groupID == $this->groupEveryone->groupID)) {
-				throw new PermissionDeniedException();
+			if (!isset($this->groups[$groupID])) {
+				if ($groupID == $this->groupEveryone->groupID) {
+					if (!$this->canEditEveryone) {
+						throw new PermissionDeniedException();
+					}
+				}
+				else {
+					throw new PermissionDeniedException();
+				}
 			}
 			
 			try {
@@ -195,7 +202,7 @@ class UserGroupOptionForm extends ACPForm {
 			
 			// check if not editing default value
 			if ($groupID != $this->groupEveryone->groupID) {
-				$newValue = $this->optionType->merge($defaultValue, $optionValue);
+				$newValue = $this->optionType->merge($this->defaultValue, $optionValue);
 				if ($newValue === null) {
 					unset($this->values[$groupID]);
 				}

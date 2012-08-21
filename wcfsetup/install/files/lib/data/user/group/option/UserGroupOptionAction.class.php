@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\user\group\option;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
 
 /**
@@ -22,7 +23,7 @@ class UserGroupOptionAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Updates option values for given option id.
 	 */
-	public function updateValue() {
+	public function updateValues() {
 		$option = current($this->objects);
 		
 		// remove old values
@@ -49,5 +50,8 @@ class UserGroupOptionAction extends AbstractDatabaseObjectAction {
 			}
 			WCF::getDB()->commitTransaction();
 		}
+		
+		// clear cache
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.groups-*.php');
 	}
 }

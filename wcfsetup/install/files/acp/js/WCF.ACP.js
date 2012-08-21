@@ -703,14 +703,22 @@ WCF.ACP.Options.Group = Class.extend({
 		// collect default value
 		if (this._canEditEveryone) {
 			var $container = $('#defaultValueContainer > dl');
-			$values[$container.data('groupID')] = $container.find('textarea, input').val();
+			
+			var $value = this._getValue($container);
+			if ($value !== null) {
+				$values[$container.data('groupID')] = $value;
+			}
 		}
 		
 		// collect values from other groups
+		var self = this;
 		$('#otherValueContainer > dl').each(function(index, container) {
 			var $container = $(container);
 			
-			$values[$container.data('groupID')] = $container.find('textarea, input').val();
+			var $value = self._getValue($container);
+			if ($value !== null) {
+				$values[$container.data('groupID')] = $value;
+			}
 		});
 		
 		var $form = $('#defaultValueContainer').parent('form');
@@ -723,6 +731,35 @@ WCF.ACP.Options.Group = Class.extend({
 		$('#submitButton').attr('disable', 'disable');
 		
 		$form.submit();
+	},
+	
+	/**
+	 * Returns the value of an input or textarea.
+	 * 
+	 * @param	jQuery		container
+	 * @return	string
+	 */
+	_getValue: function(container) {
+		var $textarea = container.find('textarea');
+		if ($textarea.length) {
+			return $textarea.val();
+		}
+		else {
+			var $input = container.find('input');
+			if (!$input.length) {
+				return null;
+			}
+			
+			if ($input.attr('type') == 'checkbox') {
+				if ($input.is(':checked')) {
+					return $input.val();
+				}
+				
+				return null;
+			}
+			
+			return $input.val();
+		}
 	}
 });
 
