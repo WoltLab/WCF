@@ -678,13 +678,17 @@ WCF.ACP.Options.Group = Class.extend({
 	init: function(canEditEveryone) {
 		// disable 'Everyone' input
 		this._canEditEveryone = (canEditEveryone === true) ? true : false;
-		var $defaultValue = $('#defaultValueContainer').find('input, textarea').removeAttr('id').removeAttr('name');
+		var $defaultContainer = $('#defaultValueContainer');
+		var $defaultValue = $defaultContainer.find('input, textarea').attr('id', 'optionValue' + $defaultContainer.children('dl').data('groupID')).removeAttr('name');
 		if (!this._canEditEveryone) {
 			$defaultValue.attr('disabled', 'disabled');
 		}
 		
-		// remove id and name-attribute from input elements
-		$('#otherValueContainer').find('input, textarea').removeAttr('id').removeAttr('name');
+		// fix id and remove name-attribute from input elements
+		$('#otherValueContainer > dl').each(function(index, container) {
+			var $container = $(container);
+			$container.find('input, textarea').removeAttr('name').attr('id', 'optionValue' + $container.data('groupID'));
+		});
 		
 		// bind event listener
 		$('#submitButton').click($.proxy(this._click, this));

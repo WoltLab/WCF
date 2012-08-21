@@ -3,7 +3,7 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		new WCF.ACP.Options.Group({@$userGroupOption->optionID}, {if $canEditEveryone}true{else}false{/if});
+		new WCF.ACP.Options.Group({if $canEditEveryone}true{else}false{/if});
 	});
 	//]]>
 </script>
@@ -23,7 +23,7 @@
 		<legend>{lang}wcf.acp.group.option.defaultValue{/lang}</legend>
 		
 		<dl data-group-id="{@$groupEveryone->groupID}">
-			<dt>{lang}{$groupEveryone->groupName}{/lang}</dt>
+			<dt><label for="optionValue{@$groupEveryone->groupID}">{lang}{$groupEveryone->groupName}{/lang}</label></dt>
 			<dd>{@$defaultFormElement}</dd>
 		</dl>
 	</fieldset>
@@ -33,7 +33,7 @@
 		
 		{foreach from=$groups item=group}
 			<dl data-group-id="{@$group->groupID}">
-				<dt>{lang}{$group->groupName}{/lang}</dt>
+				<dt><label for="optionValue{@$group->groupID}">{lang}{$group->groupName}{/lang}</label></dt>
 				<dd>{@$formElements[$group->groupID]}</dd>
 			</dl>
 		{/foreach}
