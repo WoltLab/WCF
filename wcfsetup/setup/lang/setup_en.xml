@@ -3,7 +3,7 @@
 	<category name="wcf.global">
 		<item name="wcf.global.pageTitle"><![CDATA[{$setupPackageName} installation]]></item>
 		<item name="wcf.global.title"><![CDATA[{$setupPackageName}]]></item>
-		<item name="wcf.global.title.subtitle"><![CDATA[Prepairing installation]]></item>
+		<item name="wcf.global.title.subtitle"><![CDATA[Preparing installation]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.locale.unix"><![CDATA[en_US]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.locale.win"><![CDATA[english]]></item> <!-- system variable; do not translate -->
@@ -34,7 +34,7 @@
 		<item name="wcf.global.systemRequirements.sql.notFound"><![CDATA[not found]]></item>
 		<item name="wcf.global.systemRequirements.sql.description"><![CDATA[Database support is required to install this software.]]></item>
 		<item name="wcf.global.systemRequirements.uploadMaxFilesize"><![CDATA[Maximum size for file uploads]]></item>
-		<item name="wcf.global.systemRequirements.uploadMaxFilesize.description"><![CDATA[The current configuration of the installed &quot;PHP&quot; version oes not allow for file-uploads. Due to this configuration, some features of this software will not be available.]]></item>
+		<item name="wcf.global.systemRequirements.uploadMaxFilesize.description"><![CDATA[The current configuration of the installed &quot;PHP&quot; version does not allow for file-uploads. Due to this configuration, some features of this software will not be available.]]></item>
 		<item name="wcf.global.systemRequirements.gdLib"><![CDATA[Installed version of the graphics library &quot;GDLib&quot;]]></item>
 		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[The graphics-library &quot;GDLib&quot; is needed for the dynamic image generation. Without this library, some features of this software will not be available.]]></item>
 		<item name="wcf.global.systemRequirements.mbString"><![CDATA[The multibyte-character library &quot;MBString&quot;]]></item>
@@ -91,6 +91,6 @@
 		<br /><strong>{$exception->getMessage()}</strong><br />
 		Please make sure that the destination folder exists and can be written to.]]></item>
 		<item name="wcf.global.scrollDown"><![CDATA[Go to page bottom]]></item>
-		<item name="wcf.global.scrollUp"><![CDATA[Go to page end]]></item>
+		<item name="wcf.global.scrollUp"><![CDATA[Go to page top]]></item>
 	</category>
 </language>
