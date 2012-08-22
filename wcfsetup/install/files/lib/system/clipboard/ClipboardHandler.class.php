@@ -137,12 +137,12 @@ class ClipboardHandler extends SingletonFactory {
 	/**
 	 * Returns a type by type id.
 	 * 
-	 * @param	integer		$typeID
+	 * @param	integer		$objectTypeID
 	 * @return	wcf\data\object\type\ObjectType
 	 */
-	public function getObjectType($typeID) {
-		if (isset($this->cache['objectTypes'][$typeID])) {
-			return $this->cache['objectTypes'][$typeID];
+	public function getObjectType($objectTypeID) {
+		if (isset($this->cache['objectTypes'][$objectTypeID])) {
+			return $this->cache['objectTypes'][$objectTypeID];
 		}
 		
 		return null;
@@ -204,11 +204,11 @@ class ClipboardHandler extends SingletonFactory {
 	/**
 	 * Loads a list of marked items grouped by type name.
 	 * 
-	 * @param	integer		$typeID
+	 * @param	integer		$objectTypeID
 	 */
-	public function getMarkedItems($typeID = null) {
+	public function getMarkedItems($objectTypeID = null) {
 		if ($this->markedItems === null) {
-			$this->loadMarkedItems($typeID);
+			$this->loadMarkedItems($objectTypeID);
 		}
 		
 		return $this->markedItems;
@@ -292,12 +292,12 @@ class ClipboardHandler extends SingletonFactory {
 	/**
 	 * Removes items from clipboard.
 	 * 
-	 * @param	integer		$typeID
+	 * @param	integer		$objectTypeID
 	 */
-	public function removeItems($typeID = null) {
+	public function removeItems($objectTypeID = null) {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("userID = ?", array(WCF::getUser()->userID));
-		if ($typeID !== null) $conditions->add("typeID = ?", array($typeID));
+		if ($objectTypeID !== null) $conditions->add("objectTypeID = ?", array($objectTypeID));
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_clipboard_item
 			".$conditions;
