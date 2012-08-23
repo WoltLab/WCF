@@ -42,7 +42,7 @@
 		<item name="wcf.global.systemRequirements.active"><![CDATA[Aktywny]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[Nieaktywny]]></item>
 		<item name="wcf.global.wcfDir"><![CDATA[Wybierz folder instalacji]]></item>
-		<item name="wcf.global.wcfDir.description"><![CDATA[Wszystkie pliki w <b>WoltLab Community Framework</b> zostaną zainstalowane do tego foleru.]]></item>
+		<item name="wcf.global.wcfDir.description"><![CDATA[Wszystkie pliki <b>WoltLab Community Framework</b> zostaną zainstalowane do tego foleru.]]></item>
 		<item name="wcf.global.wcfDir.foundDirectory"><![CDATA[Asystent instalacji znalazł poprzednią wersję <b>WoltLab Community Framework</b> w folderze "{$foundDirectory}".<br />Jeśli chcesz zainstalować kolejną kopię <b>WoltLab Community Framework</b>, proszę podać inny folder instalacji.]]></item>
 		<item name="wcf.global.wcfDir.dir"><![CDATA[Folder instalacji]]></item>
 		<item name="wcf.global.wcfDir.dir.description"><![CDATA[Jeśli nie jesteś pewien, zachowaj nazwę, którą sugeruje asystent instalacji.]]></item>
