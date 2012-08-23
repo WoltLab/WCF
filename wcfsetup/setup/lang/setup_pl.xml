@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="pl" languagename="Polish">
+	<category name="wcf.global">
+		<item name="wcf.global.pageTitle"><![CDATA[Instalacja {$setupPackageName}]]></item>
+		<item name="wcf.global.title"><![CDATA[{$setupPackageName}]]></item>
+		<item name="wcf.global.title.subtitle"><![CDATA[Przygotowywanie instalacji]]></item>
+		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
+		<item name="wcf.global.locale.unix"><![CDATA[pl_PL]]></item> <!-- system variable; do not translate -->
+		<item name="wcf.global.locale.win"><![CDATA[polish]]></item> <!-- system variable; do not translate -->
+		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
+		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
+		<item name="wcf.global.button.next"><![CDATA[Dalej &raquo;]]></item>
+		<item name="wcf.global.progressBar"><![CDATA[Ukończono {@$progress}%]]></item>
+		<item name="wcf.global.welcome"><![CDATA[Dziękujemy za wybranie {$setupPackageName}!]]></item>
+		<item name="wcf.global.welcome.description"><![CDATA[Asystent instalacji pomoże ci zainstalować <br /><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} i <b>{$setupPackageName}</b>{/if}.]]></item>
+		<item name="wcf.global.welcome.language"><![CDATA[Język]]></item>
+		<item name="wcf.global.welcome.language.description"><![CDATA[Aktualny język asystenta instalacji: {@$languageChooser}]]></item>
+		<item name="wcf.global.welcome.language.change"><![CDATA[Zmień język]]></item>
+		<item name="wcf.global.license"><![CDATA[Umowa licencyjna]]></item>
+		<item name="wcf.global.license.description"><![CDATA[Proszę przeczytać następującą umowę licencyjną. Użyj paska przewijania, aby zobaczyć cały dokument.]]></item>
+		<item name="wcf.global.license.accept.description"><![CDATA[Czy akceptujesz warunki umowy licencyjnej? Możesz zainstalować ten program po zaakceptowaniu umowy licencyjnej.]]></item>
+		<item name="wcf.global.license.missingAcception"><![CDATA[Musisz zaakceptować umowę licencyjną, aby kontynuować instalację.]]></item>
+		<item name="wcf.global.systemRequirements"><![CDATA[Sprawdzanie wymagań systemowych]]></item>
+		<item name="wcf.global.systemRequirements.description"><![CDATA[Wymagania systemowe:]]></item>
+		<item name="wcf.global.systemRequirements.required"><![CDATA[Minimalne wymagania systemowe]]></item>
+		<item name="wcf.global.systemRequirements.recommended"><![CDATA[Zalecane wymagania systemowe]]></item>
+		<item name="wcf.global.systemRequirements.element.required"><![CDATA[Wymagane:]]></item>
+		<item name="wcf.global.systemRequirements.element.yours"><![CDATA[Znaleziono:]]></item>
+		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[Zalecane:]]></item>
+		<item name="wcf.global.systemRequirements.php"><![CDATA[Zainstalowana wersja języka &quot;PHP&quot;]]></item>
+		<item name="wcf.global.systemRequirements.php.description"><![CDATA[Zainstalowana wersja języka &quot;PHP&quot; jest za stara. Aby kontynuować instalację, koniecze jest aktualizowanie PHP.]]></item>
+		<item name="wcf.global.systemRequirements.php.description2"><![CDATA[Twoja wersja PHP jest nieaktualna. Dla stabilnej pracy tego oprogramowania, zalecamy wersję PHP 5.3.0 lub wyższą.]]></item>
+		<item name="wcf.global.systemRequirements.sql"><![CDATA[Wsparcie bazy danych]]></item>
+		<item name="wcf.global.systemRequirements.sql.notFound"><![CDATA[nie znaleziono]]></item>
+		<item name="wcf.global.systemRequirements.sql.description"><![CDATA[Wsparcie dla bazy danych jest wymagane, aby zainstalować to opragramowanie.]]></item>
+		<item name="wcf.global.systemRequirements.uploadMaxFilesize"><![CDATA[Maksymalny rozmiar dla wysyłanych plików]]></item>
+		<item name="wcf.global.systemRequirements.uploadMaxFilesize.description"><![CDATA[Aktualna konfiguracja dla zainstalowanego &quot;PHP&quot; nie pozwala na wysyłanie plików. Z powodu tej konfiguracji, niektóre funkcje tego skryptu nie będą dostępne.]]></item>
+		<item name="wcf.global.systemRequirements.gdLib"><![CDATA[Zainstalowana wersja biblioteki graficznej &quot;GDLib&quot;]]></item>
+		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[Biblioteka graficzna &quot;GDLib&quot; jest potrzebne do generowania dynamicznego obrazu. Bez tej biblioteki, niektóre funkcje tego skryptu nie będą dostępne.]]></item>
+		<item name="wcf.global.systemRequirements.mbString"><![CDATA[Wielo-znakowa biblioteka &quot;MBString&quot;]]></item>
+		<item name="wcf.global.systemRequirements.mbString.description"><![CDATA[Ta biblioteka jest wymagana dla prawidłowego działania tego skryptu.]]></item>
+		<item name="wcf.global.systemRequirements.active"><![CDATA[Aktywny]]></item>
+		<item name="wcf.global.systemRequirements.notActive"><![CDATA[Nieaktywny]]></item>
+		<item name="wcf.global.wcfDir"><![CDATA[Wybierz folder instalacji]]></item>
+		<item name="wcf.global.wcfDir.description"><![CDATA[Wszystkie pliki <b>WoltLab Community Framework</b> zostaną zainstalowane do tego foleru.]]></item>
+		<item name="wcf.global.wcfDir.foundDirectory"><![CDATA[Asystent instalacji znalazł poprzednią wersję <b>WoltLab Community Framework</b> w folderze "{$foundDirectory}".<br />Jeśli chcesz zainstalować kolejną kopię <b>WoltLab Community Framework</b>, proszę podać inny folder instalacji.]]></item>
+		<item name="wcf.global.wcfDir.dir"><![CDATA[Folder instalacji]]></item>
+		<item name="wcf.global.wcfDir.dir.description"><![CDATA[Jeśli nie jesteś pewien, zachowaj nazwę, którą sugeruje asystent instalacji.]]></item>
+		<item name="wcf.global.wcfDir.error.invalid"><![CDATA[Podany katalog jest nieprawidłowy.]]></item>
+		<item name="wcf.global.wcfDir.url"><![CDATA[Adres instalacji (URL)]]></item>
+		<item name="wcf.global.wcfDir.url.description"><![CDATA[Poprzez ten adres URL będziesz miał dostęp do <b>WoltLab Community Framework</b>.]]></item>
+		<item name="wcf.global.next"><![CDATA[Przygotowywanie następnego etapu ...]]></item>
+		<item name="wcf.global.next.description"><![CDATA[Obecnie przygotowywany jest następny etap instalacji.]]></item>
+		<item name="wcf.global.languages"><![CDATA[Wybierz języki do instalacji]]></item>
+		<item name="wcf.global.languages.description"><![CDATA[To oprogramowanie obsługuje wiele języków. Proszę wybrać język, który chcesz zainstalować.]]></item>
+		<item name="wcf.global.languages.languages"><![CDATA[Języki]]></item>
+		<item name="wcf.global.languages.error.empty"><![CDATA[Proszę wybrać co najmniej jeden język!]]></item>
+		<item name="wcf.global.configureDB"><![CDATA[Konfiguracja połączenia do bazy danych]]></item>
+		<item name="wcf.global.configureDB.description"><![CDATA[Dane tego skryptu muszą być przechowywane w bazie danych SQL.]]></item>
+		<item name="wcf.global.configureDB.accessData"><![CDATA[Dane do bazy danych]]></item>
+		<item name="wcf.global.configureDB.host"><![CDATA[Host]]></item>
+		<item name="wcf.global.configureDB.user"><![CDATA[Nazwa użytkownika]]></item>
+		<item name="wcf.global.configureDB.password"><![CDATA[Hasło]]></item>
+		<item name="wcf.global.configureDB.database"><![CDATA[Nazwa bazy danych]]></item>
+		<item name="wcf.global.configureDB.database.description"><![CDATA[Baza danych musi istnieć.]]></item>
+		<item name="wcf.global.configureDB.number"><![CDATA[Numer instalacji]]></item>
+		<item name="wcf.global.configureDB.number.description"><![CDATA[Numer instalacji pozwala na zainstalowanie wielu instalacji tego samego oprogramowania w tej samej bazie danych. Jeśli jest to Twoja pierwsza instalacja w tej bazie danych, należy wprowadzić <em>1</em>.]]></item>		
+		<item name="wcf.global.configureDB.error"><![CDATA[Wystąpił błąd podczas próbą połączenia z Twoją bazą danych:
+		<br /><strong>{$exception->getMessage()}{if $exception|get_class == 'DatabaseException'}<br />{$exception->getErrorDesc()}{/if}</strong>]]></item>
+		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[Następująca(e) tabela{if $conflictedTables|count > 1}(e){/if} obecnie istnieje{if $conflictedTables|count == 1}(ą){/if} w twojej bazie danych &quot;{$dbName}&quot; :<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />Aby rozwiązać ten problem, wykonaj jedną z następujących czynności:<br />1. Wybierz opcję &quot;Zastąp&quot; aby nadpisać {if $conflictedTables|count > 1}tabel{else}tabelę{/if} i kontynuować instalację. Wciśnij button &quot;Dalej&quot; lub<br />2. Ponownie wprowadzić dane do bazy danych i kontynuuj instalację poprzez button &quot;Dalej&quot; lub<br />3. Wprowadź nowy numer instalacji i wciśnij button &quot;Dalej&quot;.]]></item>
+		<item name="wcf.global.configureDB.conflictedTables.overwrite"><![CDATA[Zastąpić wyżej wymienione tabele?]]></item>
+		<item name="wcf.global.configureDB.class"><![CDATA[Typ bazy danych]]></item>
+		<item name="wcf.global.configureDB.class.MSSQLDatabase"><![CDATA[Microsoft SQL Server 2008+]]></item>
+		<item name="wcf.global.configureDB.class.MySQLDatabase"><![CDATA[MySQL 5.1+]]></item>
+		<item name="wcf.global.configureDB.class.PostgreSQLDatabase"><![CDATA[PostgreSQL 8.2+]]></item>
+		<item name="wcf.global.createUser"><![CDATA[Tworzenie konta administratora]]></item>
+		<item name="wcf.global.createUser.description"><![CDATA[Instalacja wygeneruje dla Ciebie konto administratora. Proszę podać nazwę użytkownika, adres e-mail i hasło.]]></item>
+		<item name="wcf.global.createUser.data"><![CDATA[Informacje o użytkowniku]]></item>
+		<item name="wcf.global.createUser.username"><![CDATA[Nazwa użytkownika]]></item>
+		<item name="wcf.global.createUser.email"><![CDATA[Adres e-mail]]></item>
+		<item name="wcf.global.createUser.confirmEmail"><![CDATA[Powtórz adres e-mail]]></item>
+		<item name="wcf.global.createUser.password"><![CDATA[Hasło]]></item>
+		<item name="wcf.global.createUser.confirmPassword"><![CDATA[Powtórz hasło]]></item>
+		<item name="wcf.global.createUser.error"><![CDATA[Wystąpiły błędy podczas rejestracji konta użytkownika, sprawdź zaznaczone pola.]]></item>
+		<item name="wcf.global.createUser.error.empty"><![CDATA[To pole nie może być puste.]]></item>
+		<item name="wcf.global.createUser.error.username.notValid"><![CDATA[Nazwa użytkownika którą podałeś jest nieprawidłowa. Poprawna nazwa użytkownika musi zawierać od 3 do 20 znaków.]]></item>
+		<item name="wcf.global.createUser.error.email.notValid"><![CDATA[Adres e-mail który podałeś jest nieprawidłowy. Podany adres e-mail musi być w formacie name@domain.tld]]></item>
+		<item name="wcf.global.createUser.error.confirmEmail.notEqual"><![CDATA[Podane adresy e-mail nie są identyczne. Ze względów bezpieczeństwa, należy upewnić się, czy podane e-maile są identyczne.]]></item>
+		<item name="wcf.global.createUser.error.confirmPassword.notEqual"><![CDATA[Podane hasła nie są identyczne. Ze względów bezpieczeństwa, należy upewnić się, czy oba hasła zostały wypełnione i są identyczne.]]></item>
+		<item name="wcf.global.wcfDir.error"><![CDATA[Wystąpił błąd podczas wypakowywania plików:
+		<br /><strong>{$exception->getMessage()}</strong><br />
+		Upewnij się, że folder docelowy istnieje i jest zapisywalny.]]></item>
+		<item name="wcf.global.scrollDown"><![CDATA[Idź na dół strony]]></item>
+		<item name="wcf.global.scrollUp"><![CDATA[Idź na górę strony]]></item>
+	</category>
+</language>
