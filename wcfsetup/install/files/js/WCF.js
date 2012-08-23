@@ -6484,29 +6484,15 @@ $.widget('ui.wcfDialog', {
 	 */
 	_create: function() {
 		// create dialog container
-		this._container = $('<div class="dialogContainer"></div>').hide().css({ zIndex: this.options.zIndex }).appendTo(document.body);
+		this._container = $('<div class="dialogContainer" />').hide().css({ zIndex: this.options.zIndex }).appendTo(document.body);
+		this._titlebar = $('<header class="dialogTitlebar" />').hide().appendTo(this._container);
+		this._title = $('<span class="dialogTitle" />').hide().appendTo(this._titlebar);
+		this._closeButton = $('<a class="dialogCloseButton"><span /></a>').click($.proxy(this.close, this)).hide().appendTo(this._titlebar);
+		this._content = $('<div class="dialogContent" />').appendTo(this._container);
 		
-		// create title
-		if (!this.options.hideTitle && this.options.title != '') {
-			this._titlebar = $('<header class="dialogTitlebar"></header>').appendTo(this._container);
-			this._title = $('<span class="dialogTitle"></div>').html(this.options.title).appendTo(this._titlebar);
-		}
-
-		// create close button
-		if (this.options.closable) {
-			this._closeButton = $('<a class="dialogCloseButton" title="' + this.options.closeButtonLabel + '"><span>' + this.options.closeButtonLabel + '</span></a>').click($.proxy(this.close, this));
-
-			if (!this.options.hideTitle && this.options.title != '') {
-				this._closeButton.appendTo(this._titlebar);
-			}
-			else {
-				this._closeButton.appendTo(this._container);
-			}
-		}
+		this._setOption('title', this.options.title);
+		this._setOption('closable', this.options.closable);
 		
-		// create content container
-		this._content = $('<div class="dialogContent"></div>').appendTo(this._container);
-
 		// move target element into content
 		var $content = this.element.detach();
 		this._content.html($content);
@@ -6515,7 +6501,7 @@ $.widget('ui.wcfDialog', {
 		if (this.options.modal) {
 			this._overlay = $('#jsWcfDialogOverlay');
 			if (!this._overlay.length) {
-				this._overlay = $('<div id="jsWcfDialogOverlay" class="dialogOverlay"></div>').css({ height: '100%', zIndex: 399 }).appendTo(document.body);
+				this._overlay = $('<div id="jsWcfDialogOverlay" class="dialogOverlay" />').css({ height: '100%', zIndex: 399 }).appendTo(document.body);
 			}
 			
 			if (this.options.closable) {
@@ -6532,6 +6518,36 @@ $.widget('ui.wcfDialog', {
 	},
 	
 	/**
+	 * Sets the given option to the given value.
+	 * See the jQuery UI widget documentation for more.
+	 */
+	_setOption: function(key, value) {
+		this.options[key] = value;
+		
+		if (key == 'hideTitle' || key == 'title') {
+			if (!this.options.hideTitle && this.options.title != '') {
+				this._title.html(this.options.title).show();
+			} else {
+				this._title.html('');
+			}
+		} else if (key == 'closable' || key == 'closeButtonLabel') {
+			if (this.options.closable) {
+				this._closeButton.attr('title', this.options.closeButtonLabel).show().find('span').html(this.options.closeButtonLabel);
+			} else {
+				this._closeButton.hide();
+			}
+		}
+		
+		if ((!this.options.hideTitle && this.options.title != '') || this.options.closable) {
+			this._titlebar.show();
+		} else {
+			this._titlebar.hide();
+		}
+		
+		return this;
+	},
+	
+	/**
 	 * Handles successful AJAX requests.
 	 *
 	 * @param	object		data
@@ -6539,6 +6555,7 @@ $.widget('ui.wcfDialog', {
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		return;
 		// initialize dialog content
 		this._initDialog(data);
 
@@ -6557,11 +6574,14 @@ $.widget('ui.wcfDialog', {
 	 */
 	_initDialog: function(data) {
 		// insert template
-		data.ignoreTemplate = true;
-		var $template = this._getResponseValue(data, 'template');
-		if ($template !== null) {
-			this._content.children().html($template);
+		if (this._getResponseValue(data, 'template')) {
+			this._content.children().html(this._getResponseValue(data, 'template'));
 			this.render();
+		}
+		
+		// set title
+		if (this._getResponseValue(data, 'title')) {
+			this._setOption('title', this._getResponseValue(data, 'title'));
 		}
 	},
 
