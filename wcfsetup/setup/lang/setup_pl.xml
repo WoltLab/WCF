@@ -18,7 +18,7 @@
 		<item name="wcf.global.welcome.language.change"><![CDATA[Zmień język]]></item>
 		<item name="wcf.global.license"><![CDATA[Umowa licencyjna]]></item>
 		<item name="wcf.global.license.description"><![CDATA[Proszę przeczytać następującą umowę licencyjną. Użyj paska przewijania, aby zobaczyć cały dokument.]]></item>
-		<item name="wcf.global.license.accept.description"><![CDATA[Czy akceptujesz warunki umowy licencyjnej? Może zainstalować ten program po zaakceptowaniu umowy licencyjnej.]]></item>
+		<item name="wcf.global.license.accept.description"><![CDATA[Czy akceptujesz warunki umowy licencyjnej? Możesz zainstalować ten program po zaakceptowaniu umowy licencyjnej.]]></item>
 		<item name="wcf.global.license.missingAcception"><![CDATA[Musisz zaakceptować umowę licencyjną, aby kontynuować instalację.]]></item>
 		<item name="wcf.global.systemRequirements"><![CDATA[Sprawdzanie wymagań systemowych]]></item>
 		<item name="wcf.global.systemRequirements.description"><![CDATA[Wymagania systemowe:]]></item>
