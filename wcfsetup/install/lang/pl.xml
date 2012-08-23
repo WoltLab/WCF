@@ -18,7 +18,7 @@
 		<item name="wcf.acp.cronjob.startMinute.description"><![CDATA[Minuta (0 - 59) w którym zadanie cron ma być uruchamiane.]]></item>
 		<item name="wcf.acp.cronjob.startMinuteShort"><![CDATA[m]]></item>
 		<item name="wcf.acp.cronjob.startMonth"><![CDATA[Miesiąc]]></item>
-		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Miesiąc (1 - 12 or jan - dec) w którym zadanie cron ma być uruchamiane. ]]></item>
+		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Miesiąc (1 - 12 lub jan - dec) w którym zadanie cron ma być uruchamiane. ]]></item>
 		<item name="wcf.acp.cronjob.startMonthShort"><![CDATA[M]]></item>
 		<item name="wcf.acp.cronjob.description"><![CDATA[Opis]]></item>
 		<item name="wcf.acp.cronjob.nextExec"><![CDATA[Wykonaj następne zaplanowane zadanie]]></item>
