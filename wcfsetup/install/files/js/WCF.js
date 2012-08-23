@@ -6555,7 +6555,6 @@ $.widget('ui.wcfDialog', {
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		return;
 		// initialize dialog content
 		this._initDialog(data);
 
