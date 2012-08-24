@@ -6767,7 +6767,7 @@ $.widget('ui.wcfDialog', {
 			$content.animate({
 				height: ($contentDimensions.height) + 'px',
 				width: ($contentDimensions.width) + 'px'
-			}, 200, function() {
+			}, 300, function() {
 				// remove static dimensions
 				$content.css({
 					height: 'auto',
@@ -6779,19 +6779,18 @@ $.widget('ui.wcfDialog', {
 			this._contentDimensions = $contentDimensions;
 
 			// move container
+			this._isRendering = true;
 			this._container.animate({
 				left: $leftOffset + 'px',
 				top: $topOffset + 'px'
-			}, 200, $.proxy(function() {
+			}, 300, $.proxy(function() {
 				this._isRendering = false;
-			}));
+			}, this));
 		}
 		
 		if (this.options.onShow !== null) {
 			this.options.onShow();
 		}
-
-		this._isRendering = true;
 	},
 
 	/**
