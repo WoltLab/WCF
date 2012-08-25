@@ -41,9 +41,11 @@ class OptionExportAction extends AbstractAction {
 		
 		$options = Option::getOptions();
 		foreach ($options as $option) {
+			if ($option->hidden) continue; // ignore hidden options
+			
 			echo "\t<option>\n";
-			echo "\t\t<name><![CDATA[".StringUtil::escapeCDATA($option['optionName'])."]]></name>\n";
-			echo "\t\t<value><![CDATA[".StringUtil::escapeCDATA($option['optionValue'])."]]></value>\n";
+			echo "\t\t<name><![CDATA[".StringUtil::escapeCDATA($option->optionName)."]]></name>\n";
+			echo "\t\t<value><![CDATA[".StringUtil::escapeCDATA($option->optionValue)."]]></value>\n";
 			echo "\t</option>\n";
 		}
 		
