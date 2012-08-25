@@ -130,8 +130,12 @@ class UserGroupEditForm extends UserGroupAddForm {
 			$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
 			foreach ($this->optionHandler->getCategoryOptions() as $option) {
 				$option = $option['object'];
-				if ($optionValues[$option->optionID] != $defaultGroup->getGroupOption($option->optionName)) {
-					$saveOptions[$option->optionID] = $optionValues[$option->optionID];
+				$defaultValue = $defaultGroup->getGroupOption($option->optionName);
+				$typeObject = $this->optionHandler->getTypeObject($option->optionType);
+					
+				$newValue = $typeObject->merge($defaultValue, $optionValues[$option->optionID]);
+				if ($newValue !== null) {
+					$saveOptions[$option->optionID] = $newValue;
 				}
 			}
 		}

@@ -69,15 +69,15 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	/**
 	 * @see wcf\system\option\user\group\IUserGroupOptionType::merge()
 	 */
-	public function merge(array $values) {
-		$result = array();
-		foreach ($values as $value) {
-			$value = explode(',', $value);
-			$result = array_merge($result, $value);
+	public function merge($defaultValue, $groupValue) {
+		$defaultValue = explode(',', $defaultValue);
+		$groupValue = explode(',', $groupValue);
+		
+		$result = array_diff($groupValue, $defaultValue);
+		if (empty($result)) {
+			return null;
 		}
 		
-		$result = array_unique($result);
-
 		return implode(',', $result);
 	}
 }

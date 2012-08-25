@@ -659,6 +659,111 @@ WCF.ACP.Options.prototype = {
 };
 
 /**
+ * Single-option handling for user group options.
+ * 
+ * @param	boolean		canEditEveryone
+ */
+WCF.ACP.Options.Group = Class.extend({
+	/**
+	 * true, if user can edit the 'Everyone' group
+	 * @var	boolean
+	 */
+	_canEditEveryone: false,
+	
+	/**
+	 * Initializes the WCF.ACP.Options.Group class.
+	 * 
+	 * @param	boolean		canEditEveryone
+	 */
+	init: function(canEditEveryone) {
+		// disable 'Everyone' input
+		this._canEditEveryone = (canEditEveryone === true) ? true : false;
+		var $defaultContainer = $('#defaultValueContainer');
+		var $defaultValue = $defaultContainer.find('input, textarea').attr('id', 'optionValue' + $defaultContainer.children('dl').data('groupID')).removeAttr('name');
+		if (!this._canEditEveryone) {
+			$defaultValue.attr('disabled', 'disabled');
+		}
+		
+		// fix id and remove name-attribute from input elements
+		$('#otherValueContainer > dl').each(function(index, container) {
+			var $container = $(container);
+			$container.find('input, textarea').removeAttr('name').attr('id', 'optionValue' + $container.data('groupID'));
+		});
+		
+		// bind event listener
+		$('#submitButton').click($.proxy(this._click, this));
+	},
+	
+	/**
+	 * Handles clicks on the submit button.
+	 */
+	_click: function() {
+		var $values = { };
+		
+		// collect default value
+		if (this._canEditEveryone) {
+			var $container = $('#defaultValueContainer > dl');
+			
+			var $value = this._getValue($container);
+			if ($value !== null) {
+				$values[$container.data('groupID')] = $value;
+			}
+		}
+		
+		// collect values from other groups
+		var self = this;
+		$('#otherValueContainer > dl').each(function(index, container) {
+			var $container = $(container);
+			
+			var $value = self._getValue($container);
+			if ($value !== null) {
+				$values[$container.data('groupID')] = $value;
+			}
+		});
+		
+		var $form = $('#defaultValueContainer').parent('form');
+		var $formSubmit = $form.children('.formSubmit');
+		for (var $groupID in $values) {
+			$('<input type="hidden" name="values[' + $groupID + ']" value="' + $values[$groupID] + '" />').appendTo($formSubmit);
+		}
+		
+		// disable submit button
+		$('#submitButton').attr('disable', 'disable');
+		
+		$form.submit();
+	},
+	
+	/**
+	 * Returns the value of an input or textarea.
+	 * 
+	 * @param	jQuery		container
+	 * @return	string
+	 */
+	_getValue: function(container) {
+		var $textarea = container.find('textarea');
+		if ($textarea.length) {
+			return $textarea.val();
+		}
+		else {
+			var $input = container.find('input');
+			if (!$input.length) {
+				return null;
+			}
+			
+			if ($input.attr('type') == 'checkbox') {
+				if ($input.is(':checked')) {
+					return $input.val();
+				}
+				
+				return null;
+			}
+			
+			return $input.val();
+		}
+	}
+});
+
+/**
  * Worker support for ACP.
  * 
  * @param	string		dialogID
