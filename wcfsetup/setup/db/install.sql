@@ -487,16 +487,6 @@ CREATE TABLE wcf1_package_update_version (
 	UNIQUE KEY packageUpdateID (packageUpdateID, packageVersion)
 );
 
-DROP TABLE IF EXISTS wcf1_page_location;
-CREATE TABLE wcf1_page_location (
-	locationID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	locationPattern VARCHAR(255) NOT NULL DEFAULT '',
-	locationName VARCHAR(255) NOT NULL DEFAULT '',
-	packageID INT(10) NOT NULL,
-	className varchar(255) NOT NULL DEFAULT '',
-	UNIQUE KEY (packageID, locationName)
-);
-
 DROP TABLE IF EXISTS wcf1_page_menu_item;
 CREATE TABLE wcf1_page_menu_item (
 	menuItemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
