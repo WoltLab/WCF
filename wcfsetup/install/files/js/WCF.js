@@ -284,6 +284,40 @@ $.fn.extend({
 	},
 	
 	/**
+	 * Returns the caret position of current element. If the element
+	 * does not equal input[type=text], input[type=password] or
+	 * textarea, -1 is returned.
+	 * 
+	 * @return	integer
+	 */
+	getCaret: function() {
+		if (this.getTagName() == 'input') {
+			if (this.attr('type') != 'text' && this.attr('type') != 'password') {
+				return -1;
+			}
+		}
+		else if (this.getTagName() != 'textarea') {
+			return -1;
+		}
+		
+		var $position = 0;
+		var $element = this.get(0);
+		if (document.selection) { // IE 8
+			// set focus to enable caret on this element
+			this.focus();
+			
+			var $selection = document.selection.createRange();
+			$selection.moveStart('character', -this.val().length);
+			$position = $selection.text.length;
+		}
+		else if ($element.selectionStart || $element.selectionStart == '0') { // Opera, Chrome, Firefox, Safari, IE 9+
+			$position = parseInt($element.selectionStart);
+		}
+		
+		return $position;
+	},
+	
+	/**
 	 * Shows an element by sliding and fading it into viewport.
 	 * 
 	 * @param	string		direction
