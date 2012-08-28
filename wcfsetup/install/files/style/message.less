@@ -413,20 +413,27 @@ li:nth-child(2n+1) .message {
 #messageQuoteList {
 	max-width: 800px !important;
 
-	dt {
-		text-align: left;
-		width: 60px;
+	li {
+		&:not(:first-child) {
+			margin-top: @wcfGapSmall;
+		}
 		
-		> span {
-			float: right;
+		span {
+			float: left;
+			width: 40px;
+			
+			> input {
+				vertical-align: bottom;
+			}
 			
 			> img {
 				cursor: pointer;
+				vertical-align: middle;
 			}
 		}
-	}
-	
-	dd {
-		margin-left: 80px;
+		
+		div {
+			margin-left: 60px;
+		}
 	}
 }
