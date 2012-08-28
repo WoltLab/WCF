@@ -394,3 +394,46 @@ li:nth-child(2n+1) .message {
 		padding-bottom: @wcfGapMedium;
 	}
 }
+
+/* message quotes */
+#showQuotes {
+	bottom: @wcfGapLarge + @wcfGapTiny;
+	cursor: pointer;
+	opacity: .7;
+	position: fixed;
+	right: @wcfGapLarge + @wcfGapTiny;
+	
+	.transition(opacity, .2s);
+	
+	&:hover {
+		opacity: 1;
+	}
+}
+
+#messageQuoteList {
+	max-width: 800px !important;
+
+	li {
+		&:not(:first-child) {
+			margin-top: @wcfGapSmall;
+		}
+		
+		span {
+			float: left;
+			width: 40px;
+			
+			> input {
+				vertical-align: bottom;
+			}
+			
+			> img {
+				cursor: pointer;
+				vertical-align: middle;
+			}
+		}
+		
+		div {
+			margin-left: 60px;
+		}
+	}
+}
