@@ -155,7 +155,7 @@ class AJAXProxyAction extends AbstractSecureAction {
 			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->__getTraceAsString());
 		}
 		else if ($e instanceof UserInputException) {
-			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS);
+			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString());
 		}
 		else {
 			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString());
