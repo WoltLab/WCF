@@ -47,7 +47,7 @@
 		<item name="wcf.acp.group.group3"><![CDATA[Registrierte Benutzer]]></item>
 		<item name="wcf.acp.group.group4"><![CDATA[Administratoren]]></item>
 		<item name="wcf.acp.group.group5"><![CDATA[Moderatoren]]></item>
-		<item name="wcf.acp.group.group6"><![CDATA[Super Moderatoren]]></item>
+		<item name="wcf.acp.group.group6"><![CDATA[Super-Moderatoren]]></item>
 		<item name="wcf.acp.group.groupName"><![CDATA[Name der Benutzergruppe]]></item>
 		<item name="wcf.acp.group.groupName.description"><![CDATA[Geben Sie einen Namen für die Gruppe an.]]></item>
 		<item name="wcf.acp.group.list"><![CDATA[Benutzergruppen]]></item>
