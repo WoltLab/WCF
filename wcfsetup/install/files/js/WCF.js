@@ -5418,20 +5418,8 @@ WCF.Popover = Class.extend({
 				};
 				
 				$element.hover($.proxy(this._overElement, this), $.proxy(this._out, this));
-				
-				if ($element.getTagName() === 'a') {
-					$element.click($.proxy(this._cancel, this));
-				}
 			}
 		}, this));
-	},
-	
-	/**
-	 * Cancels popovers if link is being clicked
-	 */
-	_cancel: function(event) {
-		this._cancelPopover = true;
-		this._hide(true);
 	},
 	
 	/**
