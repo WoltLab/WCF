@@ -1355,8 +1355,9 @@ WCF.Action.Proxy.prototype = {
 			this.options.init(this);
 		}
 		
+		this._activeRequests++;
+		
 		if (this.options.showLoadingOverlay) {
-			this._activeRequests++;
 			this._showLoadingOverlay();
 		}
 	},
@@ -1459,10 +1460,8 @@ WCF.Action.Proxy.prototype = {
 		if ($.isFunction(this.options.after)) {
 			this.options.after();
 		}
-
-		if (this.options.showLoadingOverlay) {
-			this._activeRequests--;
-		}
+		
+		this._activeRequests--;
 		
 		// disable DOMNodeInserted event
 		WCF.DOMNodeInsertedHandler.disable();
