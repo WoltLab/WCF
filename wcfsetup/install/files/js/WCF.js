@@ -46,6 +46,26 @@
 (function(){var a=false,b=/xyz/.test(function(){xyz})?/\b_super\b/:/.*/;this.Class=function(){};Class.extend=function(c){function g(){if(!a&&this.init)this.init.apply(this,arguments);}var d=this.prototype;a=true;var e=new this;a=false;for(var f in c){e[f]=typeof c[f]=="function"&&typeof d[f]=="function"&&b.test(c[f])?function(a,b){return function(){var c=this._super;this._super=d[a];var e=b.apply(this,arguments);this._super=c;return e;};}(f,c[f]):c[f]}g.prototype=e;g.prototype.constructor=g;g.extend=arguments.callee;return g;};})();
 
 /**
+ * Provides a hashCode() method for strings, similar to Java's String.hashCode().
+ * 
+ * @see	http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+ */
+String.prototype.hashCode = function() {
+	var $char;
+	var $hash = 0;
+	
+	if (this.length) {
+		for (var $i = 0, $length = this.length; $i < $length; $i++) {
+			$char = this.charCodeAt($i);
+			$hash = (($hash << 5) - $hash) + $char;
+			$hash = $hash & $hash; // convert to 32bit integer
+		}
+	}
+	
+	return $hash;
+}
+
+/**
  * Initialize WCF namespace
  */
 var WCF = {};
