@@ -10,13 +10,13 @@ use wcf\system\WCF;
  * This includes the call of the default event listeners for a page: readParameters, readData, assignVariables and show.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
  * @category 	Community Framework
  */
-abstract class AbstractPage implements IPage {
+abstract class AbstractPage implements IPage, ITrackablePage {
 	/**
 	 * name of the template for the called page
 	 * @var string
@@ -52,6 +52,12 @@ abstract class AbstractPage implements IPage {
 	 * @var array<string>
 	 */
 	public $neededPermissions = array();
+	
+	/**
+	 * enables the tracking of this page
+	 * @var boolean
+	 */
+	public $enableTracking = false;
 	
 	/**
 	 * @see	wcf\form\IPage::__run()
@@ -181,5 +187,47 @@ abstract class AbstractPage implements IPage {
 			// show template
 			WCF::getTPL()->display($this->templateName);
 		}
+	}
+	
+	/**
+	 * @see wcf\page\ITrackablePage::isTracked()
+	 */
+	public function isTracked() {
+		return $this->enableTracking;
+	}
+	
+	/**
+	 * @see wcf\page\ITrackablePage::getController()
+	 */
+	public function getController() {
+		return get_class($this);
+	}
+	
+	/**
+	 * @see wcf\page\ITrackablePage::getParentObjectType()
+	 */
+	public function getParentObjectType() {
+		return '';
+	}
+	
+	/**
+	 * @see wcf\page\ITrackablePage::getParentObjectID()
+	 */
+	public function getParentObjectID() {
+		return 0;
+	}
+	
+	/**
+	 * @see wcf\page\ITrackablePage::getObjectType()
+	 */
+	public function getObjectType() {
+		return '';
+	}
+	
+	/**
+	 * @see wcf\page\ITrackablePage::getObjectID()
+	 */
+	public function getObjectID() {
+		return 0;
 	}
 }

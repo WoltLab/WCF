@@ -51,7 +51,7 @@ class Option extends DatabaseObject {
 	 * Returns a list of options.
 	 *
 	 * @param	integer		$packageID
-	 * @return	array
+	 * @return	array<wcf\data\option\Option>
 	 */
 	public static function getOptions($packageID = PACKAGE_ID) {
 		$sql = "SELECT		optionName, optionID
@@ -74,14 +74,14 @@ class Option extends DatabaseObject {
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("optionID IN (?)", array($optionIDs));
 			
-			$sql = "SELECT		optionName, optionValue, optionType
+			$sql = "SELECT		*
 				FROM		wcf".WCF_N."_option
 				".$conditions."
 				ORDER BY	optionName";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
-				$options[StringUtil::toUpperCase($row['optionName'])] = $row;
+				$options[StringUtil::toUpperCase($row['optionName'])] = new Option(null, $row);
 			}
 		}
 		

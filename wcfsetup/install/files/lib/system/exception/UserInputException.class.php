@@ -35,6 +35,7 @@ class UserInputException extends UserException {
 	public function __construct($field = '', $type = 'empty') {
 		$this->field = $field;
 		$this->type = $type;
+		$this->message = 'Parameter '.$field.' is missing or invalid';
 		
 		parent::__construct();
 	}

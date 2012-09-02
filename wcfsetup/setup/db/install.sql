@@ -33,6 +33,10 @@ CREATE TABLE wcf1_acp_session (
 	requestURI VARCHAR(255) NOT NULL DEFAULT '',
 	requestMethod VARCHAR(4) NOT NULL DEFAULT '',
 	controller VARCHAR(255) NOT NULL DEFAULT '',
+	parentObjectType VARCHAR(255) NOT NULL DEFAULT '',
+	parentObjectID INT(10) NOT NULL DEFAULT 0,
+	objectType VARCHAR(255) NOT NULL DEFAULT '',
+	objectID INT(10) NOT NULL DEFAULT 0,
 	username VARCHAR(255) NOT NULL DEFAULT '',
 	sessionVariables MEDIUMTEXT,
 	KEY sessionID (sessionID, packageID)
@@ -487,16 +491,6 @@ CREATE TABLE wcf1_package_update_version (
 	UNIQUE KEY packageUpdateID (packageUpdateID, packageVersion)
 );
 
-DROP TABLE IF EXISTS wcf1_page_location;
-CREATE TABLE wcf1_page_location (
-	locationID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	locationPattern VARCHAR(255) NOT NULL DEFAULT '',
-	locationName VARCHAR(255) NOT NULL DEFAULT '',
-	packageID INT(10) NOT NULL,
-	className varchar(255) NOT NULL DEFAULT '',
-	UNIQUE KEY (packageID, locationName)
-);
-
 DROP TABLE IF EXISTS wcf1_page_menu_item;
 CREATE TABLE wcf1_page_menu_item (
 	menuItemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -536,6 +530,10 @@ CREATE TABLE wcf1_session (
 	requestURI VARCHAR(255) NOT NULL DEFAULT '',
 	requestMethod VARCHAR(4) NOT NULL DEFAULT '',
 	controller VARCHAR(255) NOT NULL DEFAULT '',
+	parentObjectType VARCHAR(255) NOT NULL DEFAULT '',
+	parentObjectID INT(10) NOT NULL DEFAULT 0,
+	objectType VARCHAR(255) NOT NULL DEFAULT '',
+	objectID INT(10) NOT NULL DEFAULT 0,
 	username VARCHAR(255) NOT NULL DEFAULT '',
 	sessionVariables MEDIUMTEXT,
 	spiderID INT(10) NOT NULL DEFAULT 0,
@@ -865,8 +863,6 @@ ALTER TABLE wcf1_package_update_fromversion ADD FOREIGN KEY (packageUpdateVersio
 ALTER TABLE wcf1_package_update_requirement ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_update_version ADD FOREIGN KEY (packageUpdateID) REFERENCES wcf1_package_update (packageUpdateID) ON DELETE CASCADE;
-
-ALTER TABLE wcf1_page_location ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_page_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 

@@ -543,6 +543,34 @@ final class StringUtil {
 	}
 	
 	/**
+	 * Truncates the given string to a certain number of characters.
+	 * 
+	 * @param	string		$string
+	 * @param	integer		$length
+	 * @param	string		$etc		string to append when $string is truncated
+	 * @param	boolean		$breakWords	should words be broken in the middle
+	 * @return	string				truncated string
+	 */
+	public static function truncate($string, $length = 80, $etc = '…', $breakWords = false) {
+		if ($length == 0) {
+			return '';
+		}
+		
+		if (self::length($string) > $length) {
+			$length -= self::length($etc);
+			
+			if (!$breakWords) {
+				$string = preg_replace('/\\s+?(\\S+)?$/', '', self::substring($string, 0, $length + 1));
+			}
+			
+			return self::substring($string, 0, $length).$etc;
+		}
+		else {
+			return $string;
+		}
+	}
+	
+	/**
 	 * Splits given string into smaller chunks.
 	 * 
 	 * @param	string		$string

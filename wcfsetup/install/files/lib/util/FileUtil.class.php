@@ -568,6 +568,9 @@ final class FileUtil {
 			}
 		}
 		catch (SystemException $e) {
+			// clean up
+			if (isset($tmpname) && file_exists($tmpname)) @unlink($tmpname);
+			
 			throw $e;
 		}
 	}
@@ -594,7 +597,7 @@ final class FileUtil {
 		
 		// get bytes
 		$block = $file->read($blockSize);
-		return (strlen($block) == 0 || preg_match_all('/\x00/', $block, $match) > 0);
+		return (strlen($block) == 0 || strpos($block, "\0") !== false);
 	}
 	
 	/**
