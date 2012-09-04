@@ -36,6 +36,12 @@ class AJAXProxyAction extends AbstractSecureAction {
 	protected $className = '';
 	
 	/**
+	 * interface name
+	 * @var	string
+	 */
+	protected $interfaceName = '';
+	
+	/**
 	 * debug mode
 	 * @var	boolean
 	 */
@@ -88,18 +94,11 @@ class AJAXProxyAction extends AbstractSecureAction {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_POST['className'])) {
-			$this->className = StringUtil::trim($_POST['className']);
-		}
-		if (isset($_POST['actionName'])) {
-			$this->actionName = StringUtil::trim($_POST['actionName']);
-		}
-		if (isset($_POST['objectIDs'])) {
-			if (is_array($_POST['objectIDs'])) $this->objectIDs = ArrayUtil::toIntegerArray($_POST['objectIDs']);
-		}
-		if (isset($_POST['parameters'])) {
-			if (is_array($_POST['parameters'])) $this->parameters = $_POST['parameters'];
-		}
+		if (isset($_POST['actionName'])) $this->actionName = StringUtil::trim($_POST['actionName']);
+		if (isset($_POST['className'])) $this->className = StringUtil::trim($_POST['className']);
+		if (isset($_POST['interfaceName'])) $this->interfaceName = StringUtil::trim($_POST['interfaceName']);
+		if (isset($_POST['objectIDs']) && is_array($_POST['objectIDs'])) $this->objectIDs = ArrayUtil::toIntegerArray($_POST['objectIDs']);
+		if (isset($_POST['parameters']) && is_array($_POST['parameters'])) $this->parameters = $_POST['parameters'];
 	}
 	
 	/**
@@ -113,7 +112,13 @@ class AJAXProxyAction extends AbstractSecureAction {
 			throw new SystemException("unknown class '".$this->className."'");
 		}
 		if (!ClassUtil::isInstanceOf($this->className, 'wcf\data\IDatabaseObjectAction')) {
-			throw new SystemException("'".$this->className."' should implement wcf\system\IDatabaseObjectAction");
+			throw new SystemException("'".$this->className."' should implement 'wcf\system\IDatabaseObjectAction'");
+		}
+		
+		if (!empty($this->interfaceName)) {
+			if (!ClassUtil::isInstanceOf($this->className, $this->interfaceName)) {
+				throw new SystemException("'".$this->className."' should implement '".$this->interfaceName."'");
+			}
 		}
 		
 		// create object action instance
