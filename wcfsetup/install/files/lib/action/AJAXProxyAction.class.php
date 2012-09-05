@@ -229,17 +229,13 @@ class AJAXProxyAction extends AbstractSecureAction {
 		$postVars = $_POST;
 		
 		// fake request
-		$_POST['actionName'] = $data['actionName'];
-		$_POST['className'] = $data['className'];
-		if (isset($data['objectIDs'])) {
-			$_POST['objectIDs'] = $data['objectIDs'];
-		}
-		if (isset($data['parameters'])) {
-			$_POST['parameters'] = $data['parameters'];
+		foreach ($data as $key => $value) {
+			$_POST[$key] = $value;
 		}
 		
 		// execute request
-		$actionObject = new AJAXProxyAction();
+		$className = get_called_class();
+		$actionObject = new $className();
 		$actionObject->enableDebugMode();
 		$actionObject->__run();
 		
