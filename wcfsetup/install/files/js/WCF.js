@@ -654,7 +654,7 @@ WCF.Dropdown = {
 	 */
 	setAlignment: function(dropdown, dropdownMenu) {
 		if (dropdown) {
-			var $dropdownMenu = dropdown.children('.dropdownMenu:eq(0)');
+			var $dropdownMenu = dropdown.find('.dropdownMenu:eq(0)');
 		}
 		else {
 			var $dropdownMenu = dropdownMenu;
