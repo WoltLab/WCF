@@ -5212,7 +5212,9 @@ WCF.Sortable.List = Class.extend({
 			$('#' + this._containerID + ' > .sortableList').wcfNestedSortable(this._options);
 		}
 		
-		this._container.find('.formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
+		if (this._className) {
+			this._container.find('.formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
+		}
 	},
 	
 	/**
