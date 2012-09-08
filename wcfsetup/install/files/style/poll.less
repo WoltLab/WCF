@@ -1,8 +1,19 @@
-#pollOptionContainer .sortableNode {
-	margin-top: @wcfGapSmall;
+#pollOptionContainer .sortableList {
+	padding: @wcfGapSmall 0;
 	
-	.sortableButtonContainer > img {
-		cursor: pointer;
-		margin-right: 7px;
+	.sortableNode {
+		margin-top: @wcfGapSmall;
+		
+		.sortableButtonContainer > img {
+			cursor: pointer;
+			margin-right: @wcfGapMedium;
+		}
 	}
+}
+
+.pollContainer {
+	float: left;
+	margin: 0 @wcfGapMedium @wcfGapSmall 0;
+	max-width: 50%;
+	min-width: 300px;
 }
