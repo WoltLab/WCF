@@ -18,13 +18,47 @@
 	min-width: 300px;
 }
 
-.pollResultList > li {
-	> meter {
-		width: 79%;
-	}
-	
-	> span {
-		text-align: right;
-		width: 20%;
+.pollResultList {
+	li {
+		position: relative;
+
+		&:not(:last-child) {
+			margin-bottom: @wcfGapTiny;
+		}
+		
+		.pollResultItem {
+			overflow: hidden;
+			line-height: 80%;
+			width: 80%;
+			
+			.pollMeter {
+				display: inline-block;
+				margin: 2px 0;
+				
+				.borderRadius(0, 5px, 5px, 0);
+			}
+		}
+		
+		.relativeVotes {
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
 	}
 }
+
+.pollMeterColored(@lighterColor, @darkerColor) {
+	.boxShadow(0, 0, lighten(@lighterColor, 10%));
+	.linearGradient(@lighterColor, @lighterColor, @darkerColor);
+}
+
+.pollMeter0 { .pollMeterColored(#93befe, #468ffc); }	// blue
+.pollMeter1 { .pollMeterColored(#6be8ff, #02c4e7); }	// light blue
+.pollMeter2 { .pollMeterColored(#b8fb82, #30ff00); }	// light green
+.pollMeter3 { .pollMeterColored(#f6ff00, #ede502); }	// yellow
+.pollMeter4 { .pollMeterColored(#ffc676, #ff9600); }	// orange
+.pollMeter5 { .pollMeterColored(#fe9595, #fe4747); }	// red
+.pollMeter6 { .pollMeterColored(#ff99ff, #ff66ff); }	// pink
+.pollMeter7 { .pollMeterColored(#c7a2e7, #a56dd5); }	// violet
+.pollMeter8 { .pollMeterColored(#e1bb84, #ca8a2f); }	// brown
+.pollMeter9 { .pollMeterColored(#c3bbbb, #967e7e); }	// charcoal
