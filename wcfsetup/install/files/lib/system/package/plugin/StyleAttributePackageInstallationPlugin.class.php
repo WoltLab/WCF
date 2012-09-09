@@ -119,23 +119,15 @@ class StyleAttributePackageInstallationPlugin extends AbstractXMLPackageInstalla
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
-	 */
-	public function uninstall() {
-		parent::uninstall();
-		
-		$this->cleanup();
-	}
-	
-	/**
-	 * Updates styles files of all styles.
-	 */
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
+	 */	
 	protected function cleanup() {
 		// get all styles
 		$styleList = new StyleList();
 		$styleList->sqlLimit = 0;
 		$styleList->readObjects();
 		
+		// update style files
 		foreach ($styleList->getObjects() as $style) {
 			$styleEditor = new StyleEditor($style);
 			$styleEditor->writeStyleFile();

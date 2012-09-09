@@ -6,7 +6,7 @@ use wcf\system\WCF;
  * This PIP installs, updates or deletes clipboard actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.package.plugin
@@ -23,11 +23,6 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @var	array<array>
 	 */
 	protected $pages = array();
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */
-	public $tableName = 'clipboard_action';
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName

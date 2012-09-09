@@ -23,6 +23,10 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	 */	
 	public $tableName = 'user_group_option';
 
+	/**
+	 * list of names of tags which aren't considered as additional data
+	 * @var	array<string>
+	 */
 	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata');
 	
 	/**
