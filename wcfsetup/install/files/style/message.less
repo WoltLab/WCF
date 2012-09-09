@@ -38,6 +38,20 @@
 			}
 		}
 	}
+	
+	.messageHeader {
+		position: relative;
+		
+		&::before, &::after {
+			content: '';
+			display: block;
+			position: absolute;
+			border-width: 20px;
+			height: 0;
+			width: 0;
+			top: 35px;
+		}
+	}
 }
 	
 .message.messageSidebarOrientationLeft {
@@ -50,15 +64,17 @@
 		float: left;
 	}
 	
-	.messageHeader > .pointer {
-		border-color: transparent @wcfContainerBorderColor transparent transparent;
-		border-style: solid solid solid none;
-		left: -20px;
-		
-		> span {
+	.messageHeader {
+		&::before {
+			border-color: transparent @wcfContainerBorderColor transparent transparent;
+			border-style: solid solid solid none;
+			left: -20px;
+		}
+
+		&::after {
 			border-color: transparent @wcfContainerBackgroundColor transparent transparent;
 			border-style: solid solid solid none;
-			left: 1px;
+			left: -19px;
 		}
 	}
 }
@@ -73,16 +89,19 @@
 		float: right;
 	}
 	
-	.messageHeader > .pointer {
-		border-color: transparent transparent transparent @wcfContainerBorderColor;
-		border-style: solid none solid solid;
-		right: -20px;
-		
-		> span {
+	.messageHeader {
+		&::before {
 			border-color: transparent transparent transparent @wcfContainerBorderColor;
 			border-style: solid none solid solid;
-			right: 1px;
-		}			
+			right: -20px;
+		}
+
+		&::after {
+			border-color: transparent transparent transparent @wcfContainerBackgroundColor;
+			border-style: solid none solid solid;
+			right: -19px;
+			z-index: 100;
+		}
 	}
 }
 
@@ -303,11 +322,11 @@
 }
 
 li:nth-child(2n+1) .message {
-	&.messageSidebarOrientationLeft .messageHeader > .pointer > span {
+	&.messageSidebarOrientationLeft .messageHeader::after {
 		border-right-color: @wcfContainerAccentBackgroundColor;
 	}
 	
-	&.messageSidebarOrientationRight .messageHeader > .pointer > span {
+	&.messageSidebarOrientationRight .messageHeader::after {
 		border-left-color: @wcfContainerAccentBackgroundColor;
 	}
 	
