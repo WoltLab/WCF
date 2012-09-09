@@ -217,11 +217,11 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	protected function postImport() { }
 	
 	/**
-	 * Deletes items.
+	 * Deletes the given items.
 	 * 
 	 * @param	array	$items
 	 */	
-	protected abstract function handleDelete(array $items);
+	abstract protected function handleDelete(array $items);
 	
 	/**
 	 * Prepares import, use this to map xml tags and attributes
@@ -230,7 +230,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 * @param	array	$data
 	 * @return	array
 	 */
-	protected abstract function prepareImport(array $data);
+	abstract protected function prepareImport(array $data);
 	
 	/**
 	 * Validates given item, e.g. checking for invalid values. If validation
@@ -246,7 +246,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 * @param	array	$data
 	 * @return	array
 	 */
-	protected abstract function findExistingItem(array $data);
+	abstract protected function findExistingItem(array $data);
 	
 	/**
 	 * Append additional fields which are not to be updated if a corresponding
