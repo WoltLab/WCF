@@ -2,7 +2,6 @@
 namespace wcf\system\search\acp;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageDependencyHandler;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -25,7 +24,7 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 		// search by language item
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("languageID = ?", array(WCF::getLanguage()->languageID));
-		$conditions->add("languageItemValue LIKE ?", array($query.'%'));
+		$conditions->add("languageItemValue LIKE ?", array('%'.$query.'%'));
 		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		
 		// filter by language item
