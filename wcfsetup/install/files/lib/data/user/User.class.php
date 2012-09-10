@@ -181,7 +181,7 @@ final class User extends DatabaseObject implements IRouteController {
 				}
 			}
 			else {
-				$this->languageIDs[] = WCF::getUser()->languageID;
+				$this->languageIDs[] = WCF::getLanguage()->languageID;
 			}
 		}
 		
