@@ -24,7 +24,7 @@ class CategoryNodeList extends \RecursiveIteratorIterator implements \Countable 
 	 * name of the category node class
 	 * @var	string
 	 */
-	protected $nodeClassName = 'wcf\data\category\CategoryNode';
+	protected $nodeClassName = '';
 	
 	/**
 	 * id of the parent category
@@ -41,6 +41,13 @@ class CategoryNodeList extends \RecursiveIteratorIterator implements \Countable 
 	 * @param	array<integer>	$excludedCategoryIDs
 	 */
 	public function __construct($objectType, $parentCategoryID = 0, $includeDisabledCategories = false, array $excludedCategoryIDs = array()) {
+		if (empty($this->nodeClassName)) {
+			$this->nodeClassName = str_replace('List', '', get_class($this));
+			if (!class_exists($this->nodeClassName)) {
+				throw new SystemException("Unknown category node class '".$this->nodeClassName."'.");
+			}
+		}
+		
 		$this->parentCategoryID = $parentCategoryID;
 		
 		// get parent category
