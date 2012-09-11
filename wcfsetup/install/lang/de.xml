@@ -624,6 +624,7 @@
 		<item name="wcf.global.confirmation.title"><![CDATA[Bestätigung erforderlich]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[,]]></item>
 		<item name="wcf.global.description"><![CDATA[Beschreibung]]></item>
+		<item name="wcf.global.error.title"><![CDATA[Fehlermeldung]]></item>
 		<item name="wcf.global.form.add.success"><![CDATA[Der Eintrag wurde erfolgreich gespeichert.]]></item>
 		<item name="wcf.global.form.edit.success"><![CDATA[Ihre Änderungen wurden erfolgreich gespeichert.]]></item>
 		<item name="wcf.global.form.data"><![CDATA[Allgemeine Daten]]></item>
