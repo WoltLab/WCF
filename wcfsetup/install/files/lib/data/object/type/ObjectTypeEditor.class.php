@@ -12,9 +12,17 @@ use wcf\data\DatabaseObjectEditor;
  * @subpackage	data.object.type
  * @category 	Community Framework
  */
-class ObjectTypeEditor extends DatabaseObjectEditor {
+class ObjectTypeEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\object\type\ObjectType';
+	
+	/**
+	 * @see wcf\data\IEditableCachedObject::resetCache()
+	 */
+	public static function resetCache() {
+		// clear cache
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.objectType*.php');
+	}
 }
