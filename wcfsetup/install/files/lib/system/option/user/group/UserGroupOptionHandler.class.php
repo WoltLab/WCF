@@ -35,18 +35,14 @@ class UserGroupOptionHandler extends OptionHandler {
 	 * @see	wcf\system\option\OptionHandler::getClassName()
 	 */
 	protected function getClassName($type) {
-		$className = parent::getClassName($type);
+		$className = 'wcf\system\option\user\group\\'.ucfirst($type).'UserGroupOptionType';
 		
-		if ($className === null) {
-			$className = 'wcf\system\option\user\group\\'.ucfirst($type).'UserGroupOptionType';
-			
-			// validate class
-			if (!class_exists($className)) {
-				return null;
-			}
-			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\IOptionType')) {
-				throw new SystemException("'".$className."' should implement wcf\system\option\IOptionType");
-			}
+		// validate class
+		if (!class_exists($className)) {
+			return null;
+		}
+		if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\user\group\IUserGroupOptionType')) {
+			throw new SystemException("'".$className."' should implement 'wcf\system\option\user\group\IUserGroupOptionType'");
 		}
 		
 		return $className;

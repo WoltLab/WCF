@@ -73,10 +73,10 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	 * Returns true if the given category fulfills all needed conditions to
 	 * be included in the list.
 	 * 
-	 * @param	wcf\data\category\Category	$category
+	 * @param	wcf\data\DatabaseObject	$category
 	 * @return	boolean
 	 */
-	public function fulfillsConditions(Category $category) {
+	protected function fulfillsConditions(DatabaseObject $category) {
 		return !in_array($category->categoryID, $this->excludedCategoryIDs) && ($this->includeDisabledCategories || !$category->isDisabled);
 	}
 	

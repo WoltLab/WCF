@@ -344,7 +344,6 @@ class SessionHandler extends SingletonFactory {
 			'sessionID' => $sessionID,
 			'packageID' => PACKAGE_ID,
 			'userID' => $this->user->userID,
-			'username' => ($this->user->username === null) ? '' : $this->user->username,
 			'ipAddress' => UserUtil::getIpAddress(),
 			'userAgent' => UserUtil::getUserAgent(),
 			'lastActivityTime' => TIME_NOW,
@@ -483,8 +482,7 @@ class SessionHandler extends SingletonFactory {
 			// update session
 			$sessionEditor = new $this->sessionEditorClassName($this->session);
 			$sessionEditor->update(array(
-				'userID' => $this->user->userID,
-				'username' => $this->user->username
+				'userID' => $this->user->userID
 			));
 		}
 		

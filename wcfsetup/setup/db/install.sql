@@ -37,7 +37,6 @@ CREATE TABLE wcf1_acp_session (
 	parentObjectID INT(10) NOT NULL DEFAULT 0,
 	objectType VARCHAR(255) NOT NULL DEFAULT '',
 	objectID INT(10) NOT NULL DEFAULT 0,
-	username VARCHAR(255) NOT NULL DEFAULT '',
 	sessionVariables MEDIUMTEXT,
 	KEY sessionID (sessionID, packageID)
 );
@@ -534,7 +533,6 @@ CREATE TABLE wcf1_session (
 	parentObjectID INT(10) NOT NULL DEFAULT 0,
 	objectType VARCHAR(255) NOT NULL DEFAULT '',
 	objectID INT(10) NOT NULL DEFAULT 0,
-	username VARCHAR(255) NOT NULL DEFAULT '',
 	sessionVariables MEDIUMTEXT,
 	spiderID INT(10) NOT NULL DEFAULT 0,
 	KEY packageID (packageID, lastActivityTime, spiderID)
