@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\object\type;
+use wcf\system\cache\CacheHandler;
 use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
 
 /**
  * Provides functions to edit object types.
