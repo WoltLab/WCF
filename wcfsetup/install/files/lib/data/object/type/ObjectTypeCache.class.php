@@ -157,4 +157,12 @@ class ObjectTypeCache extends SingletonFactory {
 		
 		return null;
 	}
+	
+	/**
+	 * Resets and reloads the object type cache.
+	 */
+	public function resetCache() {
+		CacheHandler::getInstance()->clearResource('objectType-'.PACKAGE_ID);
+		$this->init();
+	}
 }
