@@ -475,8 +475,10 @@ $.extend(WCF, {
 		}
 		
 		var dialogOptions = arguments[2] || {};
+		dialogOptions.ajax = true;
+		
 		dialog.wcfDialog(dialogOptions);
-
+		
 		return dialog;
 	},
 	
@@ -6508,7 +6510,7 @@ $.widget('ui.wcfDialog', {
 		if (this.options.closeButtonLabel === null) {
 			this.options.closeButtonLabel = WCF.Language.get('wcf.global.close');
 		}
-
+		
 		if (this.options.ajax) {
 			new WCF.Action.Proxy({
 				autoSend: true,
