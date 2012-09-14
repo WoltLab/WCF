@@ -21,6 +21,12 @@ class ObjectTypeCache extends SingletonFactory {
 	protected $definitions = array();
 	
 	/**
+	 * object type definition ids grouped by category name
+	 * @var	array<integer>
+	 */
+	protected $definitionsByCategory = array();
+	
+	/**
 	 * object type definitions sorted by name
 	 * @var array<wcf\data\object\type\definition\ObjectTypeDefinition>
 	 */
@@ -44,6 +50,7 @@ class ObjectTypeCache extends SingletonFactory {
 	protected function init() {
 		// get definition cache
 		CacheHandler::getInstance()->addResource('objectType-'.PACKAGE_ID, WCF_DIR.'cache/cache.objectType-'.PACKAGE_ID.'.php', 'wcf\system\cache\builder\ObjectTypeCacheBuilder');
+		$this->definitionsByCategory = CacheHandler::getInstance()->get('objectType-'.PACKAGE_ID, 'categories');
 		$this->definitions = CacheHandler::getInstance()->get('objectType-'.PACKAGE_ID, 'definitions');
 		foreach ($this->definitions as $definition) {
 			$this->definitionsByName[$definition->definitionName] = $definition;
@@ -84,6 +91,25 @@ class ObjectTypeCache extends SingletonFactory {
 	public function getDefinitionByName($definitionName) {
 		if (isset($this->definitionsByName[$definitionName])) {
 			return $this->definitionsByName[$definitionName];
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Returns a list of definitions by category name or 'null' if category name is invalid.
+	 * 
+	 * @param	string		$categoryName
+	 * @return	array<wcf\data\object\type\definition\ObjectTypeDefinition>
+	 */
+	public function getDefinitionsByCategory($categoryName) {
+		if (isset($this->definitionsByCategory[$categoryName])) {
+			$definitions = array();
+			foreach ($this->definitionsByCategory[$categoryName] as $definitionID) {
+				$definitions[$definitionID] = $this->getDefinition($definitionID);
+			}
+			
+			return $definitions;
 		}
 		
 		return null;
