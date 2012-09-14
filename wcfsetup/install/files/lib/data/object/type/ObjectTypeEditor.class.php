@@ -24,7 +24,6 @@ class ObjectTypeEditor extends DatabaseObjectEditor implements IEditableCachedOb
 	 * @see wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
-		// clear cache
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.objectType*.php');
+		ObjectTypeCache::getInstance()->resetCache();
 	}
 }
