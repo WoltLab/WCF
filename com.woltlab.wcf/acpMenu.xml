@@ -162,17 +162,17 @@
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.user.search">
-			<link>index.php/UserSearch/</link>
-			<parent>wcf.acp.menu.link.user.management.general</parent>
-			<permissions>admin.user.canSearchUser</permissions>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.user.add">
 			<link>index.php/UserAdd/</link>
 			<parent>wcf.acp.menu.link.user.management.general</parent>
 			<permissions>admin.user.canAddUser</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.search">
+			<link>index.php/UserSearch/</link>
+			<parent>wcf.acp.menu.link.user.management.general</parent>
+			<permissions>admin.user.canSearchUser</permissions>
 			<showorder>3</showorder>
 		</acpmenuitem>
 		
