@@ -624,6 +624,8 @@
 		<item name="wcf.global.confirmation.title"><![CDATA[Bestätigung erforderlich]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[,]]></item>
 		<item name="wcf.global.description"><![CDATA[Beschreibung]]></item>
+		<item name="wcf.global.error.permissionDenied"><![CDATA[Der Zutritt zu dieser Seite ist Ihnen leider verwehrt. Sie besitzen nicht die notwendigen Zugriffsrechte, um diese Seite aufrufen zu können.]]></item>
+		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Der Zutritt zu dieser Seite ist Ihnen leider verwehrt.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Fehlermeldung]]></item>
 		<item name="wcf.global.form.add.success"><![CDATA[Der Eintrag wurde erfolgreich gespeichert.]]></item>
 		<item name="wcf.global.form.edit.success"><![CDATA[Ihre Änderungen wurden erfolgreich gespeichert.]]></item>
@@ -638,6 +640,8 @@
 		<item name="wcf.global.page.next"><![CDATA[Nächste Seite]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Vorherige Seite]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
+		<item name="wcf.global.redirect.title"><![CDATA[Weiterleitung]]></item>
+		<item name="wcf.global.redirect.url"><![CDATA[Falls die automatische Weiterleitung nicht funktioniert, klicken Sie bitte hier!]]></item>
 		<item name="wcf.global.scrollDown"><![CDATA[Zum Seitenende]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Zum Seitenanfang]]></item>
 		<item name="wcf.global.search.enterSearchTerm"><![CDATA[Suchbegriff eingeben]]></item>
