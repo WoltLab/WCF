@@ -625,6 +625,8 @@
 		<item name="wcf.global.decimalPoint"><![CDATA[,]]></item>
 		<item name="wcf.global.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Fehlermeldung]]></item>
+		<item name="wcf.global.error.permissionDenied"><![CDATA[Der Zutritt zu dieser Seite ist Ihnen leider verwehrt. Sie besitzen nicht die notwendigen Zugriffsrechte, um diese Seite aufrufen zu können.]]></item>
+		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Der Zutritt zu dieser Seite ist Ihnen leider verwehrt.]]></item>
 		<item name="wcf.global.form.add.success"><![CDATA[Der Eintrag wurde erfolgreich gespeichert.]]></item>
 		<item name="wcf.global.form.edit.success"><![CDATA[Ihre Änderungen wurden erfolgreich gespeichert.]]></item>
 		<item name="wcf.global.form.data"><![CDATA[Allgemeine Daten]]></item>
