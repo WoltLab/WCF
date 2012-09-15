@@ -591,9 +591,9 @@
 		<item name="wcf.global.confirmation.title"><![CDATA[Confirmation required]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.description"><![CDATA[Description]]></item>
-		<item name="wcf.global.error.title"><![CDATA[Error message]]></item>
 		<item name="wcf.global.error.permissionDenied"><![CDATA[You are not allowed to enter this page. You do not have the required access rights to enter this page.]]></item>
 		<item name="wcf.global.error.permissionDenied.title"><![CDATA[You are not allowed to enter this page.]]></item>
+		<item name="wcf.global.error.title"><![CDATA[Error message]]></item>
 		<item name="wcf.global.form.add.success"><![CDATA[The new entry has been successfully saved.]]></item>
 		<item name="wcf.global.form.data"><![CDATA[General information]]></item>
 		<item name="wcf.global.form.edit.success"><![CDATA[Your changes have been successfully saved.]]></item>
@@ -606,6 +606,8 @@
 		<item name="wcf.global.page.next"><![CDATA[Next page]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Previous page]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
+		<item name="wcf.global.redirect.title"><![CDATA[Redirection]]></item>
+		<item name="wcf.global.redirect.url"><![CDATA[Please click here if the automatic redirection does not work!]]></item>
 		<item name="wcf.global.scrollDown"><![CDATA[Go to page bottom]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Go to page top]]></item>
 		<item name="wcf.global.search.enterSearchTerm"><![CDATA[Enter search term]]></item>
