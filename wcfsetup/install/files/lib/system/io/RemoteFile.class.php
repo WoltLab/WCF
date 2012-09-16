@@ -6,34 +6,34 @@ use wcf\system\exception\SystemException;
  * The RemoteFile class opens a connection to a remote host as a file.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class RemoteFile extends File {
 	/**
 	 * host address
-	 * @var string
+	 * @var	string
 	 */
 	protected $host = '';
 	
 	/**
 	 * port
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $port = 0;
 	
 	/**
 	 * error number
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $errorNumber = 0;
 	
 	/**
 	 * error description
-	 * @var string
+	 * @var	string
 	 */
 	protected $errorDesc = '';
 	
@@ -58,7 +58,7 @@ class RemoteFile extends File {
 	/**
 	 * Returns the error number of the last error.
 	 * 
-	 * @return 	integer
+	 * @return	integer
 	 */
 	public function getErrorNumber() {
 		return $this->errorNumber;

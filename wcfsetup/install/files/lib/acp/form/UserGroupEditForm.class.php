@@ -13,37 +13,37 @@ use wcf\system\WCF;
  * Shows the group edit form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserGroupEditForm extends UserGroupAddForm {
 	/**
-	 * @see wcf\acp\form\UserGroupAddForm::$menuItemName
+	 * @see	wcf\acp\form\UserGroupAddForm::$menuItemName
 	 */
 	public $menuItemName = 'wcf.acp.menu.link.group';
 	
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditGroup');
 	
 	/**
-	 * group id
-	 * @var integer
+	 * id of the edited user group
+	 * @var	integer
 	 */
 	public $groupID = 0;
 	
 	/**
-	 * group editor object
-	 * @var GroupEditor
+	 * user group editor object
+	 * @var	wcf\data\user\group\UserGroupEditor
 	 */
 	public $group = null;
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -63,7 +63,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		if (!count($_POST)) {
@@ -94,7 +94,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -114,7 +114,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();

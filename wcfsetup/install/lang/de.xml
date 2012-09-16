@@ -489,7 +489,7 @@
 		<item name="wcf.date.day.thu"><![CDATA[Don]]></item>
 		<item name="wcf.date.day.fri"><![CDATA[Fre]]></item>
 		<item name="wcf.date.day.sat"><![CDATA[Sam]]></item>
-
+		
 		<!-- localized days -->
 		<item name="wcf.date.day.sunday"><![CDATA[Sonntag]]></item>
 		<item name="wcf.date.day.monday"><![CDATA[Montag]]></item>
@@ -498,7 +498,7 @@
 		<item name="wcf.date.day.thursday"><![CDATA[Donnerstag]]></item>
 		<item name="wcf.date.day.friday"><![CDATA[Freitag]]></item>
 		<item name="wcf.date.day.saturday"><![CDATA[Samstag]]></item>
-
+		
 		<!-- time zones -->
 		<item name="wcf.date.timezone.pacific.kwajalein"><![CDATA[(UTC-12:00) Kwajalein]]></item>
 		<item name="wcf.date.timezone.pacific.midway"><![CDATA[(UTC-11:00) Midway]]></item>

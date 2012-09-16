@@ -24,11 +24,11 @@ use wcf\util\XML;
  * @todo	Thumbnail class has been removed
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.style
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	const INFO_FILE = 'style.xml';
@@ -41,7 +41,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	protected static $baseClass = 'wcf\data\style\Style';
 	
 	/**
-	 * @see wcf\data\IEditableObject::update()
+	 * @see	wcf\data\IEditableObject::update()
 	 */
 	public function update(array $parameters = array()) {
 		$variables = null;
@@ -49,7 +49,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$variables = $parameters['variables'];
 			unset($parameters['variables']);
 		}
-
+		
 		// update style data
 		parent::update($parameters);
 		
@@ -65,7 +65,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * @see wcf\data\IEditableObject::delete()
+	 * @see	wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
 		parent::delete();
@@ -143,7 +143,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							case 'image': case 'copyright': case 'license': $data[$general['name']] = $general['cdata']; break;
 						}
 					}
-					break;
+				break;
 				
 				case 'author':
 					foreach ($child['children'] as $author) {
@@ -152,7 +152,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							case 'authorurl': $data['authorURL'] = $author['cdata']; break;
 						}
 					}
-					break;
+				break;
 				
 				case 'files':
 					foreach ($child['children'] as $files) {
@@ -160,7 +160,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							case 'templates': case 'images': case 'variables': case 'icons': $data[$files['name']] = $files['cdata']; break;
 						}
 					}
-					break;
+				break;
 			}
 		}
 		
@@ -483,7 +483,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				@unlink($destination);
 			}
 		}
-
+		
 		$tar->close();
 		
 		return $style;
@@ -593,7 +593,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$styleTar->add($templatesTarName, 'templates.tar', $templatesTarName);
 			@unlink($templatesTarName);
 		}
-
+		
 		if ($images) {
 			// create images tar
 			$imagesTarName = FileUtil::getTemporaryFilename('images_', '.tar');
@@ -772,7 +772,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 					
 					// write attribute
 					if (!empty($attributeName)) $file->write($attributeName .":");
-				
+					
 					// write value
 					$file->write($variables[$variableName]);
 					
@@ -786,7 +786,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 					
 					// write attribute
 					if (!empty($attributeName)) $file->write($attributeName .":");
-				
+					
 					// write value
 					$file->write($variables[$variableName]);
 					
@@ -819,7 +819,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * @see wcf\data\IEditableObject::create()
+	 * @see	wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		$variables = null;
@@ -833,7 +833,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		if (!isset($parameters['styleDate'])) $parameters['styleDate'] = gmdate('Y-m-d', TIME_NOW);
 		
 		// save style
-		$style = parent::create($parameters);		
+		$style = parent::create($parameters);
 		$styleEditor = new StyleEditor($style);
 		
 		// save variables
@@ -850,7 +850,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * @see wcf\data\IEditableCachedObject::resetCache()
+	 * @see	wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.icon-*-*.php');

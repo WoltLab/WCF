@@ -10,18 +10,18 @@ use wcf\util\FileUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.upload
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UploadHandler {
 	/**
 	 * list of uploaded files
-	 * @var array<wcf\system\upload\UploadFile>
+	 * @var	array<wcf\system\upload\UploadFile>
 	 */
 	protected $files = array();
 	
 	/**
 	 * list of validation errors.
-	 * @var array
+	 * @var	array
 	 */
 	protected $erroneousFiles = array();
 	
@@ -45,7 +45,7 @@ class UploadHandler {
 	/**
 	 * Returns the list of uploaded files.
 	 * 
-	 * @return array<wcf\system\upload\UploadFile>
+	 * @return	array<wcf\system\upload\UploadFile>
 	 */
 	public function getFiles() {
 		return $this->files;
@@ -73,7 +73,7 @@ class UploadHandler {
 	/**
 	 * Returns a list of erroneous files.
 	 * 
-	 * @return array<wcf\system\upload\UploadFile>
+	 * @return	array<wcf\system\upload\UploadFile>
 	 */
 	public function getErroneousFiles() {
 		return $this->erroneousFiles;

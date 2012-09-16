@@ -5,36 +5,36 @@ use wcf\system\template\TemplateEngine;
 /**
  * Block functions encloses a template block and operate on the contents of this block.
  * 
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 interface IBlockTemplatePlugin {
 	/**
 	 * Executes this template block.
 	 * 
-	 * @param	array			$tagArgs
-	 * @param	string			$blockContent
-	 * @param	wcf\system\template\TemplateEngine 	$tplObj
-	 * @return	string			output
+	 * @param	array					$tagArgs
+	 * @param	string					$blockContent
+	 * @param	wcf\system\template\TemplateEngine	$tplObj
+	 * @return	string
 	 */
 	public function execute($tagArgs, $blockContent, TemplateEngine $tplObj);
 	
 	/**
 	 * Initialises this template block.
 	 * 
-	 * @param	array			$tagArgs
-	 * @param	wcf\system\template\TemplateEngine 	$tplObj
+	 * @param	array					$tagArgs
+	 * @param	wcf\system\template\TemplateEngine	$tplObj
 	 */
 	public function init($tagArgs, TemplateEngine $tplObj);
 	
 	/**
 	 * This function is called before every execution of this block function.
 	 * 
-	 * @param	wcf\system\template\TemplateEngine 	$tplObj
+	 * @param	wcf\system\template\TemplateEngine	$tplObj
 	 * @return	boolean
 	 */
 	public function next(TemplateEngine $tplObj);

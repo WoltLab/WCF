@@ -12,11 +12,11 @@ use wcf\util\ClassUtil;
  * Handles clipboard-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.clipboard
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ClipboardHandler extends SingletonFactory {
 	/**

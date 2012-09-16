@@ -41,7 +41,7 @@
 	<div class="container containerPadding marginTop shadow">
 		<fieldset>
 			<legend>{lang}wcf.acp.user.general{/lang}</legend>
-		
+			
 			<dl{if $errorType.username|isset} class="formError"{/if}>
 				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 				<dd>
@@ -57,7 +57,7 @@
 					{/if}
 				</dd>
 			</dl>
-		
+			
 			{if $availableGroups|count}
 				<dl>
 					<dt>
@@ -137,7 +137,7 @@
 				</dl>
 			</fieldset>
 		{/if}
-	
+		
 		{event name='fieldsets'}
 		
 		{if $optionTree|count || $additionalTabs|isset}
@@ -151,7 +151,7 @@
 						{event name='tabMenuTabs'}
 					</ul>
 				</nav>
-			
+				
 				{foreach from=$optionTree item=categoryLevel1}
 					<div id="{@$categoryLevel1[object]->categoryName}" class="container containerPadding tabMenuContent hidden">
 						{foreach from=$categoryLevel1[categories] item=categoryLevel2}
@@ -198,7 +198,7 @@
 						{/foreach}
 					</div>
 				{/foreach}
-
+				
 				{event name='tabMenuContent'}
 			</div>
 		{/if}

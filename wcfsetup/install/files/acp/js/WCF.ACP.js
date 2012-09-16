@@ -13,14 +13,14 @@ WCF.ACP = {};
 
 /**
  * Handles ACPMenu.
- *
+ * 
  * @param	array		activeMenuItems
  */
 WCF.ACP.Menu = function(activeMenuItems) { this.init(activeMenuItems); };
 WCF.ACP.Menu.prototype = {
 	/**
 	 * Initializes ACPMenu.
-	 *
+	 * 
 	 * @param	array		activeMenuItems
 	 */
 	init: function(activeMenuItems) {
@@ -66,7 +66,7 @@ WCF.ACP.Menu.prototype = {
 	
 	/**
 	 * Handles clicks on main menu.
-	 *
+	 * 
 	 * @param	object		event
 	 */
 	_toggleSidebar: function(event) {
@@ -84,7 +84,7 @@ WCF.ACP.Menu.prototype = {
 	
 	/**
 	 * Renders sidebar including highlighting of currently active menu items.
-	 *
+	 * 
 	 * @param	string		menuItem
 	 * @param	array		activeMenuItems
 	 */
@@ -140,19 +140,19 @@ WCF.ACP.Package.List.prototype = {
 	 * @var	object
 	 */
 	_pages: {},
-
+	
 	/**
 	 * plugin list references
 	 * @var	object
 	 */
 	_pluginLists: [],
-
+	
 	/**
 	 * action proxy
 	 * @var	WCF.Action.Proxy
 	 */
 	_proxy: null,
-
+	
 	/**
 	 * target container
 	 * @var	jQuery
@@ -249,20 +249,18 @@ WCF.ACP.Package.Installation = function(actionName, queueID, initialize) { this.
 WCF.ACP.Package.Installation.prototype = {
 	/**
 	 * package installation type
-	 * 
 	 * @var	string
 	 */
 	_actionName: '',
-
+	
 	/**
 	 * dialog api
 	 * @var	$.ui.wcfDialog
 	 */
 	_api: null,
-
+	
 	/**
 	 * package installation dialog
-	 *
 	 * @var	object
 	 */
 	_dialog: null,
@@ -272,13 +270,13 @@ WCF.ACP.Package.Installation.prototype = {
 	 * @var	WCF.Action.Proxy
 	 */
 	_proxy: null,
-
+	
 	/**
 	 * queue id
 	 * @var	integer
 	 */
 	_queueID: 0,
-
+	
 	/**
 	 * render dialog
 	 * @var	boolean
@@ -300,7 +298,7 @@ WCF.ACP.Package.Installation.prototype = {
 			success: $.proxy(this._handleResponse, this),
 			url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
-
+		
 		if (initialize) {
 			$('#submitButton').click($.proxy(function(event) {
 				this.prepareInstallation();
@@ -348,7 +346,7 @@ WCF.ACP.Package.Installation.prototype = {
 			$('#packageInstallationProgress').attr('value', data.progress).text(data.progress + '%');
 			$('#packageInstallationProgressLabel').text(data.progress + '%');
 		}
-
+		
 		// update action
 		if (data.currentAction) {
 			$('#packageInstallationAction').html(data.currentAction);
@@ -459,7 +457,7 @@ WCF.ACP.Package.Installation.prototype = {
 			queueID: this._queueID,
 			step: step
 		}, additionalData);
-
+		
 		this._proxy.setOption('data', $data);
 		this._proxy.sendRequest();
 	}
@@ -474,7 +472,6 @@ WCF.ACP.Package.Uninstallation = function(elements) { this.init(elements); };
 WCF.ACP.Package.Uninstallation.prototype = {
 	/**
 	 * WCF.ACP.Package.Installation object
-	 * 
 	 * @var	WCF.ACP.Package.Installation
 	 */
 	_installation: null,
@@ -878,7 +875,7 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
 		
 		this._super(className);
 	},
-
+	
 	/**
 	 * @see	WCF.Collapsible.Remote._getAdditionalParameters()
 	 */
@@ -892,14 +889,14 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
 	_getButtonContainer: function(containerID) {
 		return $('#' + containerID + ' > .buttons');
 	},
-
+	
 	/**
 	 * @see	WCF.Collapsible.Remote._getContainers()
 	 */
 	_getContainers: function() {
 		return $('.jsCategory').has('ol').has('li');
 	},
-
+	
 	/**
 	 * @see	WCF.Collapsible.Remote._getTarget()
 	 */

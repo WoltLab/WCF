@@ -2,7 +2,6 @@
  * ImageViewer for WCF.
  * Based upon "Slimbox 2" by Christophe Beyls 2007-20120, http://www.digitalia.be/software/slimbox2, MIT-style license.
  * 
- * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

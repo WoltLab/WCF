@@ -53,7 +53,6 @@
 					{/content}
 				</tbody>
 			</table>
-			
 		</div>
 		
 		<div class="formSubmit">

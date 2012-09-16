@@ -8,11 +8,11 @@ use wcf\system\WCF;
  * Default implementation of some PackageInstallationPlugin functions.
  * 
  * @author	Benjamin Kunz
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class AbstractPackageInstallationPlugin implements IPackageInstallationPlugin {
 	/**
@@ -59,7 +59,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::update()
 	 */
 	public function update() {
-       		// call update event
+		// call update event
 		EventHandler::getInstance()->fireAction($this, 'update');
 				
 		return $this->install();

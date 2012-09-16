@@ -7,37 +7,33 @@ use wcf\util\FileUtil;
  * MemcacheCacheSource is an implementation of CacheSource that uses a Memcache server to store cached variables.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.source
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class MemcacheCacheSource implements ICacheSource {
 	/**
 	 * MemcacheAdapter object
-	 *
-	 * @var MemcacheAdapter
+	 * @var wcf\system\cache\source\MemcacheAdapter
 	 */
 	protected $adapter = null;
 	
 	/**
 	 * list of cache resources
-	 *
 	 * @var array<string>
 	 */
 	protected $cacheResources = null;
 	
 	/**
 	 * list of new cache resources
-	 * 
 	 * @var	array<string>
 	 */
 	protected $newLogEntries = array();
 	
 	/**
 	 * list of obsolete resources
-	 * 
 	 * @var	array<string>
 	 */
 	protected $obsoleteLogEntries = array();
@@ -51,7 +47,7 @@ class MemcacheCacheSource implements ICacheSource {
 	
 	/**
 	 * Returns the memcache adapter.
-	 *
+	 * 
 	 * @return	MemcacheAdapter
 	 */
 	public function getAdapter() {
@@ -108,7 +104,7 @@ class MemcacheCacheSource implements ICacheSource {
 	
 	/**
 	 * Adds a cache resource to cache log.
-	 *
+	 * 
 	 * @param	string		$cacheResource
 	 */
 	protected function addToLog($cacheResource) {
@@ -117,7 +113,7 @@ class MemcacheCacheSource implements ICacheSource {
 	
 	/**
 	 * Removes an obsolete cache resource from cache log.
-	 *
+	 * 
 	 * @param	string		$cacheResource
 	 */
 	protected function removeFromLog($cacheResource) {
@@ -151,7 +147,7 @@ class MemcacheCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\ICacheSource::clear()
+	 * @see	wcf\system\cache\source\ICacheSource::clear()
 	 */
 	public function clear($directory, $filepattern) {
 		$this->loadLog();
@@ -165,7 +161,7 @@ class MemcacheCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\ICacheSource::flush()
+	 * @see	wcf\system\cache\source\ICacheSource::flush()
 	 */
 	public function flush() {
 		// clear cache
@@ -185,7 +181,9 @@ class MemcacheCacheSource implements ICacheSource {
 	public function close() {
 		// update log
 		$this->updateLog();
+		
 		// close connection
+		// @todo
 		// if ($this->getAdapter() !== null && $this->getAdapter()->getMemcache() !== null) $this->getAdapter()->getMemcache()->close();
 	}
 }

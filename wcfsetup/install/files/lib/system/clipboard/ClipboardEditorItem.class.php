@@ -4,13 +4,13 @@ use wcf\system\exception\SystemException;
 
 /**
  * Represents a clipboard item for inline editing.
- *
- * @author 	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.clipboard
- * @category 	Community Framework
+ * @category	Community Framework
  */
 final class ClipboardEditorItem {
 	/**

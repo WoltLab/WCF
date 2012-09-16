@@ -8,22 +8,22 @@ use wcf\system\WCF;
  * This PIP installs, updates or deletes style attributes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class StyleAttributePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
 	 * list of updated or new style variables
 	 * @var	array
-	 */	
+	 */
 	protected $styleVariables = array();
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */	
+	 */
 	public $tableName = 'style_variable_to_attribute';
 	
 	/**

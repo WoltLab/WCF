@@ -6,11 +6,11 @@ use wcf\data\acp\session\ACPSession;
  * Represents a session.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2010 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.session
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class Session extends ACPSession {
 	/**
@@ -24,7 +24,7 @@ class Session extends ACPSession {
 	protected static $databaseTableIndexName = 'sessionID';
 	
 	/**
-	 * @see wcf\data\acp\session\ACPSession::supportsPersistentLogins()
+	 * @see	wcf\data\acp\session\ACPSession::supportsPersistentLogins()
 	 */
 	public static function supportsPersistentLogins() {
 		return true;

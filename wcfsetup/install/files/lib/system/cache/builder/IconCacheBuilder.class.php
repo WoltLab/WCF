@@ -10,11 +10,11 @@ use wcf\util\FileUtil;
  * Caches the paths of icons.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class IconCacheBuilder implements ICacheBuilder {
 	/**
@@ -23,7 +23,7 @@ class IconCacheBuilder implements ICacheBuilder {
 	public function getData(array $cacheResource) {
 		list($cache, $packageID, $styleID) = explode('-', $cacheResource['cache']); 
 		$data = array();
-
+		
 		// get active package
 		$activePackage = new Package($packageID);
 		$activePackageDir = FileUtil::getRealPath(WCF_DIR.$activePackage->packageDir);

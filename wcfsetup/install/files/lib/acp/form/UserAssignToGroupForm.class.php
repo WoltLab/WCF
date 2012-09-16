@@ -16,11 +16,11 @@ use wcf\util\ArrayUtil;
  * Shows the assign user to group form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserAssignToGroupForm extends ACPForm {
 	/**
@@ -33,9 +33,28 @@ class UserAssignToGroupForm extends ACPForm {
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
 	
+	/**
+	 * ids of the relevant users
+	 * @var	array<integer>
+	 */
 	public $userIDs = array();
+	
+	/**
+	 * ids of the assigned user groups
+	 * @var	array<integer>
+	 */
 	public $groupIDs = array();
+	
+	/**
+	 * relevant users
+	 * @var	array<wcf\data\user\User>
+	 */
 	public $users = array();
+	
+	/**
+	 * assigned user groups
+	 * @var	array<wcf\data\user\group\UserGroup>
+	 */
 	public $groups = array();
 	
 	/**
@@ -66,7 +85,7 @@ class UserAssignToGroupForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -75,7 +94,7 @@ class UserAssignToGroupForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -93,7 +112,7 @@ class UserAssignToGroupForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -135,7 +154,7 @@ class UserAssignToGroupForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -144,7 +163,7 @@ class UserAssignToGroupForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

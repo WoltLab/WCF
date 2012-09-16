@@ -14,22 +14,22 @@ use wcf\util\StringUtil;
 
 /**
  * Shows the package update search form.
- *
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageUpdateSearchForm extends ACPForm {
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canInstallPackage');
 	
 	/**
-	 * @see wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.database';
 	
@@ -94,7 +94,7 @@ class PackageUpdateSearchForm extends ACPForm {
 	public $packageUpdateIDs = '';
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -111,7 +111,7 @@ class PackageUpdateSearchForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -135,10 +135,13 @@ class PackageUpdateSearchForm extends ACPForm {
 			
 			$conditions->add('('.$condition.')', $parameters);
 		}
+		
 		// author
 		if (!empty($this->author)) $conditions->add("author LIKE ?", array($this->author));
+		
 		// ignore already installed uniques
 		if ($this->ignoreUniques == 1) $conditions->add("package NOT IN (SELECT package FROM wcf".WCF_N."_package WHERE isUnique = 1)");
+		
 		// package type
 		if (($this->plugin == 0 || $this->isApplication == 0 || $this->other == 0) && ($this->plugin == 1 || $this->isApplication == 1 || $this->other == 1)) {
 			if ($this->isApplication == 1) {
@@ -221,7 +224,7 @@ class PackageUpdateSearchForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -243,7 +246,7 @@ class PackageUpdateSearchForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -252,7 +255,7 @@ class PackageUpdateSearchForm extends ACPForm {
 	}
 
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -271,7 +274,7 @@ class PackageUpdateSearchForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function show() {
 		// check master password

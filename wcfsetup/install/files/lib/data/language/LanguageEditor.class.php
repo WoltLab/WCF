@@ -25,7 +25,7 @@ use wcf\util\XML;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.language
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class LanguageEditor extends DatabaseObjectEditor {
 	/**
@@ -46,7 +46,7 @@ class LanguageEditor extends DatabaseObjectEditor {
 	 * Updates the language files for the given category.
 	 *
 	 * @param	array		$categoryIDs
-	 * @param	array 		$packageIDs
+	 * @param	array		$packageIDs
 	 */
 	public function updateCategory(array $categoryIDs = array(), array $packageIDs = array()) {
 		if (!count($categoryIDs)) {

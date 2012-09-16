@@ -12,31 +12,29 @@ use wcf\system\WCFACP;
 
 /**
  * Shows the welcome page in admin control panel.
- *
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class IndexPage extends AbstractPage {
 	/**
-	 * Did you know language item.
-	 *
-	 * @var string
+	 * did you know language item
+	 * @var	string
 	 */
 	public $didYouKnow = '';
 	
 	/**
-	 * Detailed Health-Status
-	 * 
+	 * health status data
 	 * @var array
 	 */
 	public $healthDetails = array('error' => array(), 'warning' => array(), 'info' => array());
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -113,7 +111,7 @@ class IndexPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -131,7 +129,7 @@ class IndexPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
 		$wcfPackageID = WCFACP::getWcfPackageID();

@@ -6,18 +6,18 @@ use wcf\util\StringUtil;
  * Creates a Zip file archive.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ZipWriter {
 	protected $headers = array();
 	protected $data = array();
 	protected $endOfData = "\x50\x4b\x05\x06\x00\x00\x00\x00";
 	protected $lastOffset = 0;
-
+	
 	/**
 	 * Adds a folder to the Zip archive.
 	 * 
@@ -26,13 +26,13 @@ class ZipWriter {
 	public function addDir($name) {
 		// replace backward slashes with forward slashes in the dirname
 		$name = StringUtil::replace("\\", "/", $name);
-
+		
 		// construct the general header information for the directory
 		$header = "\x50\x4b\x03\x04";
 		$header .= "\x0a\x00\x00\x00";
 		$header .= "\x00\x00\x00\x00";
 		$header .= "\x00\x00";
-
+		
 		// construct the directory header specific information
 		$header .= pack("V", 0);
 		$header .= pack("V", 0);
@@ -43,13 +43,13 @@ class ZipWriter {
 		$header .= pack("V", 0);
 		$header .= pack("V", 0);
 		$header .= pack("V", 0);
-
+		
 		// store the complete header information into the $headers array
 		$this->headers[] = $header;
-
+		
 		// calculate the new offset that will be used the next time a segment is added
 		$newOffset = strlen(implode('', $this->headers));
-
+		
 		// construct the general header for the central index record
 		$record = "\x50\x4b\x01\x02";
 		$record .= "\x00\x00\x0a\x00";
@@ -68,12 +68,12 @@ class ZipWriter {
 		$record .= pack("V", 16 );
 		$record .= pack("V", $this->lastOffset);
 		$record .= $name;
-
+		
 		// save the central index record in the array $data
 		$this->data[] = $record;
 		$this->lastOffset = $newOffset;
 	}
-
+	
 	/**
 	 * Adds a file to the Zip archive.
 	 * 
@@ -97,7 +97,7 @@ class ZipWriter {
 		// calculate the size of the file being compressed
 		$compressedData = substr($compressedData, 2, - 4);
 		$sizeCompressed = strlen($compressedData);
-
+		
 		// construct the general header for the file record complete with checksum information, etc.
 		$header = "\x50\x4b\x03\x04";
 		$header .= "\x14\x00\x00\x00";
@@ -117,10 +117,10 @@ class ZipWriter {
 		//$header .= pack("V", $crc);
 		//$header .= pack("V", $sizeCompressed);
 		//$header .= pack("V", $sizeUncompressed);
-
+		
 		// store the completed file record in the $headers array
 		$this->headers[] = $header;
-
+		
 		// calculate the new offset for the central index record
 		$newOffset = strlen(implode('', $this->headers));
 		
@@ -139,16 +139,16 @@ class ZipWriter {
 		$record .= pack("v", 0);
 		$record .= pack("V", 32);
 		$record .= pack("V", $this->lastOffset);
-
+		
 		// update the offset for the next record to be stored
 		$this->lastOffset = $newOffset;
-
+		
 		$record .= $name;
-
+		
 		// store the record in the $data array
 		$this->data[] = $record;
 	}
-
+	
 	/**
 	 * Constructs the final Zip file structure and return it.
 	 * 
@@ -160,7 +160,7 @@ class ZipWriter {
 		
 		// implode the $data array into a single string
 		$data = implode('', $this->data);
-
+		
 		// construct the final Zip file structure and return it
 		return
 			$headers.

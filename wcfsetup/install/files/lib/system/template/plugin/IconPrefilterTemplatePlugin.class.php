@@ -6,18 +6,18 @@ use wcf\system\template\TemplateScriptingCompiler;
  * The 'icon' prefilter compiles static icon paths.
  * 
  * Usage:
- * {icon size='L'}iconS.png{/icon}
- *
+ *	{icon size='L'}iconName{/icon}
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class IconPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 	/**
-	 * @see wcf\system\template\ITemplatePluginPrefilter::execute()
+	 * @see	wcf\system\template\ITemplatePluginPrefilter::execute()
 	 */
 	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');

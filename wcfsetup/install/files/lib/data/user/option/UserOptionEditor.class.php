@@ -7,11 +7,11 @@ use wcf\system\WCF;
  * Provides functions to edit user options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.option
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserOptionEditor extends DatabaseObjectEditor {
 	/**
@@ -28,7 +28,7 @@ class UserOptionEditor extends DatabaseObjectEditor {
 		// alter the table "wcf".WCF_N."_user_option_value" with this new option
 		WCF::getDB()->getEditor()->addColumn('wcf'.WCF_N.'_user_option_value', 'userOption'.$userOption->optionID, self::getColumnDefinition($parameters['optionType']));
 		
-    		// add the default value to this column
+		// add the default value to this column
 		if (isset($parameters['defaultValue'])) {
 			$sql = "UPDATE	wcf".WCF_N."_user_option_value
 				SET	userOption".$userOption->optionID." = ?";

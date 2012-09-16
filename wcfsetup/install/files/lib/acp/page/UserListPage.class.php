@@ -19,30 +19,30 @@ use wcf\util\StringUtil;
  * Shows the result of a user search.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserListPage extends SortablePage {
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canSearchUser');
 	
 	/**
-	 * @see wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @see	wcf\page\MultipleLinkPage::$itemsPerPage
 	 */
 	public $itemsPerPage = 50;
 	
 	/**
-	 * @see wcf\page\SortablePage::$defaultSortField
+	 * @see	wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'username';
 	
 	/**
-	 * @see wcf\page\SortablePage::$validSortFields
+	 * @see	wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('email', 'userID', 'registrationDate', 'username');
 	
@@ -53,6 +53,7 @@ class UserListPage extends SortablePage {
 	public $searchID = 0;
 	
 	// data
+	// @todo: comment properties
 	public $userIDs = array();
 	public $markedUsers = array();
 	public $users = array();
@@ -66,7 +67,7 @@ class UserListPage extends SortablePage {
 	protected $optionHandler = null;
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -87,7 +88,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\SortablePage::validateSortField()
+	 * @see	wcf\page\SortablePage::validateSortField()
 	 */
 	public function validateSortField() {
 		// add options to valid sort fields
@@ -97,7 +98,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -117,7 +118,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -133,7 +134,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
 		// set active menu item
@@ -143,12 +144,12 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\MultipleLinkPage::countItems()
+	 * @see	wcf\page\MultipleLinkPage::countItems()
 	 */
 	public function countItems() {
 		// call countItems event
 		EventHandler::getInstance()->fireAction($this, 'countItems');
-
+		
 		$sql = "SELECT	COUNT(*) AS count
 			FROM	wcf".WCF_N."_user user_table
 			".$this->conditions;

@@ -13,9 +13,12 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.search.provider
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ACPSearchProviderAction extends AbstractDatabaseObjectAction {
+	/**
+	 * Validates the 'getList' action.
+	 */
 	public function validateGetList() {
 		$this->parameters['data']['searchString'] = (isset($this->parameters['data']['searchString'])) ? StringUtil::trim($this->parameters['data']['searchString']) : '';
 		if (empty($this->parameters['data']['searchString'])) {
@@ -23,6 +26,11 @@ class ACPSearchProviderAction extends AbstractDatabaseObjectAction {
 		}
 	}
 	
+	/**
+	 * Returns the data of the searched acp elements.
+	 * 
+	 * @return	array
+	 */
 	public function getList() {
 		$data = array();
 		$results = ACPSearchHandler::getInstance()->search($this->parameters['data']['searchString']);

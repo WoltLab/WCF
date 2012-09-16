@@ -11,11 +11,11 @@ use wcf\system\WCF;
  * Provides functions to edit user groups.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2010 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
@@ -196,7 +196,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	}
 	
 	/**
-	 * @see wcf\data\IEditableCachedObject::resetCache()
+	 * @see	wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		// clear cache

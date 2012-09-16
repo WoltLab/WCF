@@ -8,11 +8,11 @@ use wcf\system\request\LinkHandler;
  * Represents an ACP menu item.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.menu.item
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	/**
@@ -26,7 +26,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	protected static $databaseTableIndexName = 'menuItemID';
 	
 	/**
-	 * @see wcf\system\menu\ITreeMenuItem::getLink()
+	 * @see	wcf\system\menu\ITreeMenuItem::getLink()
 	 */
 	public function getLink() {
 		return LinkHandler::getInstance()->getLink(null, array(), $this->menuItemLink);

@@ -5,12 +5,12 @@ use wcf\system\WCF;
 /**
  * Contains string-related functions.
  * 
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
- * @category 	Community Framework
+ * @category	Community Framework
  */
 final class StringUtil {
 	const HTML_PATTERN = '~</?[a-z]+[1-6]?
@@ -22,9 +22,9 @@ final class StringUtil {
 	/**
 	 * Returns a salted hash of the given value.
 	 *
-	 * @param 	string 		$value
+	 * @param	string		$value
 	 * @param	string		$salt
-	 * @return 	string 		$hash
+	 * @return	string
 	 */
 	public static function getSaltedHash($value, $salt) {
 		if (!defined('ENCRYPTION_ENABLE_SALTING') || ENCRYPTION_ENABLE_SALTING) {
@@ -57,19 +57,19 @@ final class StringUtil {
 	/**
 	 * Returns a double salted hash of the given value.
 	 *
-	 * @param 	string 		$value
+	 * @param	string		$value
 	 * @param	string		$salt
-	 * @return 	string 		$hash
+	 * @return	string
 	 */
 	public static function getDoubleSaltedHash($value, $salt) {
 		return self::encrypt($salt . self::getSaltedHash($value, $salt));
 	}
 	
 	/**
-	 * encrypts the given value.
+	 * Encrypts the given value.
 	 *
-	 * @param 	string 		$value
-	 * @return 	string 		$hash
+	 * @param	string		$value
+	 * @return	string
 	 */
 	public static function encrypt($value) {
 		if (defined('ENCRYPTION_METHOD')) {
@@ -84,39 +84,39 @@ final class StringUtil {
 	}
 	
 	/**
-	 * alias to php sha1() function.
+	 * Alias to php sha1() function.
 	 *
-	 * @param 	string 		$value
-	 * @return 	string 		$hash
+	 * @param	string		$value
+	 * @return	string
 	 */
 	public static function getHash($value) {
 		return sha1($value);
 	}
-
+	
 	/**
 	 * Creates a random hash.
 	 * 
-	 * @return	string		a random hash
+	 * @return	string
 	 */
 	public static function getRandomID() {
 		return self::getHash(microtime() . uniqid(mt_rand(), true));
 	}
-
+	
 	/**
 	 * Converts dos to unix newlines.
-	 *
-	 * @param 	string 		$string
-	 * @return 	string 		$string
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	public static function unifyNewlines($string) {
 		return preg_replace("%(\r\n)|(\r)%", "\n", $string);
 	}
-
+	
 	/**
 	 * Swallowes whitespace from beginnung and end of the string.
 	 * 
-	 * @param 	string 		$string
-	 * @return 	string 		$string
+	 * @param	string		$string
+	 * @return	string
 	 */
 	public static function trim($text) {
 		// Whitespace + (narrow) non breaking spaces.
@@ -125,12 +125,12 @@ final class StringUtil {
 		$text = preg_replace('/(\s|'.chr(226).chr(128).chr(175).'|'.chr(194).chr(160).')+$/', '', $text);
 		return $text;
 	}
-
+	
 	/**
 	 * Converts html special characters.
-	 *
-	 * @param 	string 		$string
-	 * @return 	string 		$string
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	public static function encodeHTML($string) {
 		if (is_object($string)) 
@@ -141,9 +141,9 @@ final class StringUtil {
 	
 	/**
 	 * Converts javascript special characters.
-	 *
-	 * @param 	string 		$string
-	 * @return 	string 		$string
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	public static function encodeJS($string) {
 		if (is_object($string)) $string = $string->__toString();
@@ -165,20 +165,20 @@ final class StringUtil {
 	
 	/**
 	 * Decodes html entities.
-	 *
-	 * @param 	string 		$string
-	 * @return 	string 		$string
+	 * 
+	 * @param	string		$string
+	 * @return	string
 	 */
 	public static function decodeHTML($string) {
 		$string = str_ireplace('&nbsp;', ' ', $string); // convert non-breaking spaces to ascii 32; not ascii 160
 		return @html_entity_decode($string, ENT_COMPAT, 'UTF-8');
 	}
-
+	
 	/**
 	 * Formats a numeric.
-	 *
-	 * @param 	numeric 	$numeric
-	 * @return 	string 		
+	 * 
+	 * @param	numeric		$numeric
+	 * @return	string
 	 */
 	public static function formatNumeric($numeric) {
 		if (is_int($numeric)) 
@@ -219,7 +219,7 @@ final class StringUtil {
 		if (!$maxDecimals && preg_match('~^(-?\d+)(?:\.(?:0*|00[0-4]\d*))?$~', $double, $match)) {
 			return self::formatInteger($match[1]);
 		}
-	
+		
 		// round
 		$double = round($double, ($maxDecimals > 2 ? $maxDecimals : 2));
 		
@@ -258,37 +258,37 @@ final class StringUtil {
 	public static function sort(array &$strings) {
 		return asort($strings, SORT_LOCALE_STRING);
 	}
-		
+	
 	/**
-	 * alias to php strlen() function.
+	 * Alias to php mb_strlen() function.
 	 */
 	public static function length($string) {
 		return mb_strlen($string);
 	}
 	
 	/**
-	 * alias to php strpos() function.
+	 * Alias to php mb_strpos() function.
 	 */
 	public static function indexOf($hayStack, $needle, $offset = 0) {
 		return mb_strpos($hayStack, $needle, $offset);
 	}
 	
 	/**
-	 * alias to php stripos() function.
+	 * Alias to php stripos() function with multibyte support.
 	 */
 	public static function indexOfIgnoreCase($hayStack, $needle, $offset = 0) {
 		return mb_strpos(self::toLowerCase($hayStack), self::toLowerCase($needle), $offset);
 	}
 	
 	/**
-	 * alias to php strrpos() function.
+	 * Alias to php mb_strrpos() function.
 	 */
 	public static function lastIndexOf($hayStack, $needle) {
 		return mb_strrpos($hayStack, $needle);
 	}
 	
 	/**
-	 * alias to php substr() function.
+	 * Alias to php mb_substr() function.
 	 */
 	public static function substring($string, $start, $length = null) {
 		if ($length !== null) return mb_substr($string, $start, $length);
@@ -296,56 +296,56 @@ final class StringUtil {
 	}
 	
 	/**
-	 * alias to php strtolower() function.
+	 * Alias to php mb_strtolower() function.
 	 */
 	public static function toLowerCase($string) {
 		return mb_strtolower($string);
 	}
 	
 	/**
-	 * alias to php strtoupper() function.
+	 * Alias to php mb_strtoupper() function.
 	 */
 	public static function toUpperCase($string) {
 		return mb_strtoupper($string);
 	}
 	
 	/**
-	 * alias to php substr_count() function.
+	 * Alias to php substr_count() function.
 	 */
 	public static function countSubstring($hayStack, $needle) {
 		return mb_substr_count($hayStack, $needle);
 	}
 	
 	/**
-	 * alias to php ucfirst() function.
+	 * Alias to php ucfirst() function with multibyte support.
 	 */
 	public static function firstCharToUpperCase($string) {
 		return self::toUpperCase(self::substring($string, 0, 1)).self::substring($string, 1);
 	}
 	
 	/**
-	 * alias to php lcfirst() function.
+	 * Alias to php lcfirst() function with multibyte support.
 	 */
 	public static function firstCharToLowerCase($string) {
 		return self::toLowerCase(self::substring($string, 0, 1)).self::substring($string, 1);
 	}
 	
 	/**
-	 * alias to php ucwords() function.
+	 * Alias to php mb_convert_case() function.
 	 */
 	public static function wordsToUpperCase($string) {
 		return mb_convert_case($string, MB_CASE_TITLE);
 	}
 	
 	/**
-	 * alias to php str_replace() function.
+	 * Alias to php str_replace() function.
 	 */
 	public static function replace($search, $replace, $subject, &$count = null) {
 		return str_replace($search, $replace, $subject, $count);
 	}
 	
 	/**
-	 * alias to php str_ireplace() function.
+	 * Alias to php str_ireplace() function with multibyte support.
 	 */
 	public static function replaceIgnoreCase($search, $replace, $subject, &$count = 0) {
 		$startPos = self::indexOf(self::toLowerCase($subject), self::toLowerCase($search));
@@ -362,7 +362,7 @@ final class StringUtil {
 	 * 
 	 * @param	string		$string
 	 * @param	string		$chars
-	 * @return 	string
+	 * @return	string
 	 */
 	public static function unescape($string, $chars = '"') {
 		for ($i = 0, $j = strlen($chars); $i < $j; $i++) {
@@ -397,9 +397,9 @@ final class StringUtil {
 	/**
 	 * Converts UTF-8 to Unicode
 	 * @see		http://www1.tip.nl/~t876506/utf8tbl.html
-	 *
+	 * 
 	 * @param	string		$c
-	 * @return	integer		unicode value of $c
+	 * @return	integer
 	 */
 	public static function getCharValue($c) {
 		$ud = 0;

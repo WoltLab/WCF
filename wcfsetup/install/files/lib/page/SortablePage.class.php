@@ -8,22 +8,22 @@ use wcf\system\WCF;
  * Handles the sorting parameters automatically.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class SortablePage extends MultipleLinkPage {
 	/**
 	 * default sort field
-	 * @var string
+	 * @var	string
 	 */
 	public $defaultSortField = '';
 	
 	/**
 	 * default sort order
-	 * @var string
+	 * @var	string
 	 */
 	public $defaultSortOrder = 'ASC';
 	
@@ -34,7 +34,7 @@ abstract class SortablePage extends MultipleLinkPage {
 	public $validSortFields = array();
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -45,7 +45,7 @@ abstract class SortablePage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		$this->validateSortOrder();
@@ -75,8 +75,11 @@ abstract class SortablePage extends MultipleLinkPage {
 		
 		switch ($this->sortOrder) {
 			case 'ASC':
-			case 'DESC': break;
-			default: $this->sortOrder = $this->defaultSortOrder;
+			case 'DESC':
+			break;
+			
+			default:
+				$this->sortOrder = $this->defaultSortOrder;
 		}
 	}
 	

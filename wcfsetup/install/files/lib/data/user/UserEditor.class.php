@@ -12,11 +12,11 @@ use wcf\util\StringUtil;
  * Provides functions to edit users.
  *
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
@@ -77,7 +77,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	
 	/**
 	 * Inserts default options.
-	 *
+	 * 
 	 * @param	integer		$userID
 	 */
 	protected static function createUserOptions($userID) {
@@ -112,7 +112,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	
 	/**
 	 * Updates user options.
-	 *
+	 * 
 	 * @param	array		$userOptions
 	 */
 	public function updateUserOptions(array $userOptions = array()) {
@@ -137,7 +137,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	
 	/**
 	 * Adds a user to the groups he should be in.
-	 *
+	 * 
 	 * @param 	array 		$groups
 	 * @param	boolean		$deleteOldGroups
 	 * @param 	boolean 	$addDefaultGroups
@@ -171,7 +171,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	
 	/**
 	 * Adds a user to a user group.
-	 *
+	 * 
 	 * @param 	integer 	$groupID
 	 */
 	public function addToGroup($groupID) {
@@ -197,7 +197,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	
 	/**
 	 * Removes a user from a user group.
-	 *
+	 * 
 	 * @param 	integer 	$groupID
 	 */
 	public function removeFromGroup($groupID) {
@@ -228,7 +228,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	
 	/**
 	 * Saves the visible languages of a user.
-	 *
+	 * 
 	 * @param 	array 		$languageIDs
 	 */
 	public function addToLanguages(array $languageIDs) {

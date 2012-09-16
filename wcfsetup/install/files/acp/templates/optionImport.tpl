@@ -18,7 +18,7 @@
 	<div class="container containerPadding marginTop shadow">
 		<fieldset>
 			<legend>{lang}wcf.acp.option.import{/lang}</legend>
-		
+			
 			<dl{if $errorField == 'optionImport'} class="formError"{/if}>
 				<dt><label for="optionImport">{lang}wcf.acp.option.import.upload{/lang}</label></dt>
 				<dd>

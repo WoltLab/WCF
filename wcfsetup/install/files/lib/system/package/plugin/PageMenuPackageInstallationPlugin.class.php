@@ -5,11 +5,11 @@ namespace wcf\system\package\plugin;
  * This PIP installs, updates or deletes page page menu items.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPlugin {
 	/**

@@ -3,14 +3,14 @@ namespace wcf\util;
 use wcf\system\io\File;
 
 /**
- * Contains Style-related functions.
+ * Contains style-related functions.
  *
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
- * @category 	Community Framework
+ * @category	Community Framework
  */
 final class StyleUtil {
 	/**

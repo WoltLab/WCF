@@ -6,11 +6,11 @@ use wcf\system\WCF;
  * This PIP installs, updates or deletes clipboard actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
@@ -31,7 +31,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
-	 */	
+	 */
 	public $tagName = 'action';
 	
 	/**

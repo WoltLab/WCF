@@ -5,12 +5,12 @@ use wcf\system\WCF;
 /**
  * Contains user-related functions.
  * 
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
- * @category 	Community Framework
+ * @category	Community Framework
  */
 final class UserUtil {
 	protected static $privateIpList = array("/^0\./", "/^127\.0\.0\.1/", "/^192\.168\..*/", "/^172\.16\..*/", "/^10..*/", "/^224..*/", "/^240..*/");
@@ -18,8 +18,8 @@ final class UserUtil {
 	/**
 	 * Returns true, if the given name is a valid username.
 	 * 
-	 * @param	string		$name		username
-	 * @return 	boolean
+	 * @param	string		$name
+	 * @return	boolean
 	 */
 	public static function isValidUsername($name) {
 		// check illegal characters
@@ -39,8 +39,8 @@ final class UserUtil {
 	/**
 	 * Returns true, if the given username is available.
 	 * 
-	 * @param	string		$name		username
-	 * @return 	boolean
+	 * @param	string		$name
+	 * @return	boolean
 	 */
 	public static function isAvailableUsername($name) {
 		$sql = "SELECT 	COUNT(username) AS count
@@ -51,13 +51,13 @@ final class UserUtil {
 		$row = $statement->fetchArray();
 		return $row['count'] == 0;
 	}
-		
+	
 	/**
 	 * Returns true, if the given e-mail is a valid address.
 	 * @see http://www.faqs.org/rfcs/rfc821.html
 	 * 
 	 * @param	string		$email
-	 * @return 	boolean
+	 * @return	boolean
 	 */
 	public static function isValidEmail($email) {
 		// local-part
@@ -78,8 +78,8 @@ final class UserUtil {
 	/**
 	 * Returns true, if the given email address is available.
 	 * 
-	 * @param	string		$email		email address
-	 * @return 	boolean
+	 * @param	string		$email
+	 * @return	boolean
 	 */
 	public static function isAvailableEmail($email) {
 		$sql = "SELECT 	COUNT(email) AS count
@@ -104,7 +104,7 @@ final class UserUtil {
 	/**
 	 * Returns the ipv6 address of the client.
 	 *
-	 * @return 	string		ipv6 address
+	 * @return	string
 	 */
 	public static function getIpAddress() {
 		$REMOTE_ADDR = '';

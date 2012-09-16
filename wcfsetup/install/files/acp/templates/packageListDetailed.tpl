@@ -18,7 +18,7 @@
 
 <div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller='PackageListDetailed' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
-
+	
 	{hascontent}
 		<nav>
 			<ul>
@@ -26,7 +26,7 @@
 					{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
 						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
-				
+					
 					{event name='largeButtons'}
 				{/content}
 			</ul>

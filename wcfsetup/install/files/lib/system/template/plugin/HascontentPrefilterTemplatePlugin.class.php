@@ -4,29 +4,30 @@ use wcf\system\template\TemplateScriptingCompiler;
 use wcf\util\StringUtil;
 
 /**
- * The 'hascontent' prefilter inserts ability to insert code dynamically upon the contents of 'content'.
+ * The 'hascontent' prefilter inserts ability to insert code dynamically upon the
+ * contents of 'content'.
  * 
  * Usage:
- * {hascontent}
- * <ul>
- * 	{content}
- * 		{if $foo}<li>bar</li>{/if}
- * 	{/content}
- * </ul>
- * {hascontentelse}
- * 	<p>baz</p>
- * {/hascontent}
- *
- * @author 	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ *	{hascontent}
+ *	<ul>
+ *		{content}
+ *			{if $foo}<li>bar</li>{/if}
+ *		{/content}
+ *	</ul>
+ *	{hascontentelse}
+ *		<p>baz</p>
+ *	{/hascontent}
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class HascontentPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 	/**
-	 * @see wcf\system\template\IPrefilterTemplatePlugin::execute()
+	 * @see	wcf\system\template\IPrefilterTemplatePlugin::execute()
 	 */
 	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');

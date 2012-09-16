@@ -11,11 +11,11 @@ use wcf\util\StringUtil;
  * Shows the master password init form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class MasterPasswordInitForm extends MasterPasswordForm {
 	/**
@@ -25,7 +25,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 	public $confirmMasterPassword = '';
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */	
 	public function readParameters() {
 		parent::readParameters();
@@ -36,7 +36,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -45,7 +45,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		ACPForm::validate();
@@ -107,12 +107,12 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		// generate salt
 		$salt = StringUtil::getRandomID();
-
+		
 		// write master password file
 		$file = new File(WCF_DIR.'acp/masterPassword.inc.php');
 		$file->write("<?php

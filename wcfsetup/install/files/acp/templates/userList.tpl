@@ -6,7 +6,7 @@
 		var actionObjects = { };
 		actionObjects['com.woltlab.wcf.user'] = { };
 		actionObjects['com.woltlab.wcf.user']['delete'] = new WCF.Action.Delete('wcf\\data\\user\\UserAction', $('.jsUserRow'), $('#userTableContainer .wcf-menu li:first-child .wcf-badge'));
-					
+		
 		WCF.Clipboard.init('wcf\\acp\\page\\UserListPage', {@$hasMarkedItems}, actionObjects);
 		
 		var options = { };
@@ -83,23 +83,22 @@
 								{else}
 									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="icon16 disabled" />
 								{/if}
-						
+								
 								{event name='buttons'}
 							</td>
 							<td class="columnID columnUserID"><p>{@$user->userID}</p></td>
 							<td class="columnTitle columnUsername"><p>{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>{else}{$user->username}{/if}</p></td>
-					
+							
 							{foreach from=$columnHeads key=column item=columnLanguageVariable}
 								<td class="column{$column|ucfirst}"><p>{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</p></td>
 							{/foreach}
-					
+							
 							{event name='columns'}
 						</tr>
 					{/foreach}
 				{/content}
 			</tbody>
 		</table>
-		
 	</div>
 	
 	<div class="contentNavigation">

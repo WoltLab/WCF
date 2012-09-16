@@ -9,7 +9,7 @@
 (function() {
 	// store original implementation
 	var $jQueryData = jQuery.fn.data;
-
+	
 	/**
 	 * Override jQuery.fn.data() to support custom 'ID' suffix which will
 	 * be translated to '-id' at runtime.
@@ -20,7 +20,7 @@
 		if (key && key.match(/ID$/)) {
 			arguments[0] = key.replace(/ID$/, '-id');
 		}
-
+		
 		// call jQuery's own data method
 		var $data = $jQueryData.apply(this, arguments);
 		
@@ -38,7 +38,8 @@
 	};
 })();
 
- /* Simple JavaScript Inheritance
+/**
+ * Simple JavaScript Inheritance
  * By John Resig http://ejohn.org/
  * MIT Licensed.
  */
@@ -107,7 +108,7 @@ $.extend(true, {
 	wcfIsset: function(id) {
 		return !!$('#' + $.wcfEscapeID(id)).length;
 	},
-
+	
 	/**
 	 * Returns the length of an object.
 	 * 
@@ -116,7 +117,7 @@ $.extend(true, {
 	 */
 	getLength: function(targetObject) {
 		var $length = 0;
-
+		
 		for (var $key in targetObject) {
 			if (targetObject.hasOwnProperty($key)) {
 				$length++;
@@ -288,7 +289,7 @@ $.fn.extend({
 	enable: function() {
 		return this.removeAttr('disabled');
 	},
-
+	
 	/**
 	 * Returns the element's id. If none is set, a random unique
 	 * ID will be assigned.
@@ -299,7 +300,7 @@ $.fn.extend({
 		if (!this.attr('id')) {
 			this.attr('id', WCF.getRandomID());
 		}
-
+		
 		return this.attr('id');
 	},
 	
@@ -407,7 +408,7 @@ $.fn.extend({
 	wcfHighlight: function(options, callback) {
 		return this.effect('highlight', options, 600, callback);
 	},
-
+	
 	/**
 	 * Shows an element by fading it in.
 	 * 
@@ -420,7 +421,7 @@ $.fn.extend({
 		
 		return this.show(WCF.getEffect(this.getTagName(), 'fade'), { }, duration, callback);
 	},
-
+	
 	/**
 	 * Hides an element by fading it out.
 	 * 
@@ -451,7 +452,7 @@ $.extend(WCF, {
 	 * @var	integer
 	 */
 	_idCounter: 0,
-
+	
 	/**
 	 * Shows a modal dialog with a built-in AJAX-loader.
 	 * 
@@ -491,7 +492,7 @@ $.extend(WCF, {
 		// we cannot work with a non-existant dialog, if you wish to
 		// load content via AJAX, see showAJAXDialog() instead
 		if (!$.wcfIsset(dialogID)) return;
-
+		
 		var $dialog = $('#' + $.wcfEscapeID(dialogID));
 		
 		var dialogOptions = arguments[1] || {};
@@ -1086,12 +1087,12 @@ WCF.Clipboard = {
 				// bind event
 				$listItem.click($.proxy(this._executeAction, this));
 			}
-
+			
 			// block click event
 			$container.click(function(event) {
 				event.stopPropagation();
 			});
-
+			
 			// register event handler
 			var $containerID = $container.wcfIdentify();
 			WCF.CloseOverlayHandler.addCallback($containerID, $.proxy(this._closeLists, this));
@@ -1224,7 +1225,7 @@ WCF.PeriodicalExecuter.prototype = {
 	
 	/**
 	 * interval id
-	 * @var integer
+	 * @var	integer
 	 */
 	_intervalID: null,
 	
@@ -1296,19 +1297,19 @@ WCF.Action.Proxy.prototype = {
 	 * @var	integer
 	 */
 	_activeRequests: 0,
-
+	
 	/**
 	 * loading overlay
 	 * @var	jQuery
 	 */
 	_loadingOverlay: null,
-
+	
 	/**
 	 * loading overlay state
 	 * @var	boolean
 	 */
 	_loadingOverlayVisible: false,
-
+	
 	/**
 	 * timer for overlay activity
 	 * @var	integer
@@ -1320,7 +1321,7 @@ WCF.Action.Proxy.prototype = {
 	 * @var	boolean
 	 */
 	_suppressErrors: false,
-
+	
 	/**
 	 * Initializes AJAXProxy.
 	 * 
@@ -1383,7 +1384,7 @@ WCF.Action.Proxy.prototype = {
 			this._showLoadingOverlay();
 		}
 	},
-
+	
 	/**
 	 * Displays the loading overlay if not already visible due to an active request.
 	 */
@@ -1392,7 +1393,7 @@ WCF.Action.Proxy.prototype = {
 		if (this._loadingOverlay === null) {
 			this._loadingOverlay = $('<div class="spinner"><img src="' + WCF.Icon.get('wcf.icon.loading') + '" alt="" class="icon48" /> <span>' + WCF.Language.get('wcf.global.loading') + '</span></div>').hide().appendTo($('body'));
 		}
-
+		
 		// fade in overlay
 		if (!this._loadingOverlayVisible) {
 			this._loadingOverlayVisible = true;
@@ -1401,7 +1402,7 @@ WCF.Action.Proxy.prototype = {
 			}, this));
 		}
 	},
-
+	
 	/**
 	 * Hides loading overlay if no requests are active and the timer reached at least 1 second.
 	 * 
@@ -1414,7 +1415,7 @@ WCF.Action.Proxy.prototype = {
 			this._loadingOverlayVisible = false;
 			this._loadingOverlayVisibleTimer = 0;
 			pe.stop();
-
+			
 			this._loadingOverlay.fadeOut(100);
 		}
 	},
@@ -1499,7 +1500,7 @@ WCF.Action.Proxy.prototype = {
 	setOption: function(optionName, optionData) {
 		this.options[optionName] = optionData;
 	},
-
+	
 	/**
 	 * Displays a spinner image for given element.
 	 *
@@ -1507,16 +1508,16 @@ WCF.Action.Proxy.prototype = {
 	 */
 	showSpinner: function(element) {
 		element = $(element);
-
+		
 		if (element.getTagName() !== 'img') {
 			console.debug('The given element is not an image, aborting.');
 			return;
 		}
-
+		
 		// force element dimensions
 		element.attr('width', element.attr('width'));
 		element.attr('height', element.attr('height'));
-
+		
 		// replace image
 		element.attr('src', WCF.Icon.get('wcf.global.loading'));
 	}
@@ -1959,11 +1960,11 @@ WCF.Date.Time.prototype = {
 		
 		// re-calculate relative datetime every minute
 		new WCF.PeriodicalExecuter($.proxy(this._refresh, this), 60000);
-
+		
 		// bind dom node inserted listener
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.Date.Time', $.proxy(this._domNodeInserted, this));
 	},
-
+	
 	/**
 	 * Updates element collection once a DOM node was inserted.
 	 */
@@ -2014,7 +2015,7 @@ WCF.Date.Time.prototype = {
 		else if (this.timestamp < ($timestamp + 604800)) {
 			var $days = Math.round((this.timestamp - $timestamp) / 86400);
 			var $string = eval(WCF.Language.get('wcf.date.relative.pastDays'));
-		
+			
 			// get day of week
 			var $dateObj = WCF.Date.Util.getTimezoneDate(($timestamp * 1000), $offset);
 			var $dow = $dateObj.getDay();
@@ -2228,13 +2229,13 @@ WCF.MultipleLanguageInput.prototype = {
 	 * @var	object
 	 */
 	_availableLanguages: {},
-
+	
 	/**
 	 * initialization state
 	 * @var	boolean
 	 */
 	_didInit: false,
-
+	
 	/**
 	 * target input element
 	 * @var	jQuery
@@ -2246,37 +2247,37 @@ WCF.MultipleLanguageInput.prototype = {
 	 * @var	boolean
 	 */
 	_insertedDataAfterInit: false,
-
+	
 	/**
 	 * enables multiple language ability
 	 * @var	boolean
 	 */
 	_isEnabled: false,
-
+	
 	/**
 	 * enforce multiple language ability
 	 * @var	boolean
 	 */
 	_forceSelection: false,
-
+	
 	/**
 	 * currently active language id
 	 * @var	integer
 	 */
 	_languageID: 0,
-
+	
 	/**
 	 * language selection list
 	 * @var	jQuery
 	 */
 	_list: null,
-
+	
 	/**
 	 * list of language values on init
 	 * @var	object
 	 */
 	_values: null,
-
+	
 	/**
 	 * Initializes multiple language ability for given element id.
 	 * 
@@ -2306,10 +2307,10 @@ WCF.MultipleLanguageInput.prototype = {
 		
 		// listen for submit event
 		this._element.parents('form').submit($.proxy(this._submit, this));
-
+		
 		this._didInit = true;
 	},
-
+	
 	/**
 	 * Builds language handler.
 	 * 
@@ -2348,7 +2349,7 @@ WCF.MultipleLanguageInput.prototype = {
 		for (var $languageID in this._availableLanguages) {
 			$('<li><span>' + this._availableLanguages[$languageID] + '</span></li>').data('languageID', $languageID).click($.proxy(this._changeLanguage, this)).appendTo(this._list);
 		}
-
+		
 		// disable language input
 		if (!this._forceSelection) {
 			$('<li class="dropdownDivider" />').appendTo(this._list);
@@ -2357,7 +2358,7 @@ WCF.MultipleLanguageInput.prototype = {
 		
 		if (enableOnInit || this._forceSelection) {
 			$button.trigger('click');
-
+			
 			// pre-select current language
 			this._list.children('li').each($.proxy(function(index, listItem) {
 				var $listItem = $(listItem);
@@ -2384,7 +2385,7 @@ WCF.MultipleLanguageInput.prototype = {
 			this._closeSelection();
 		}
 	},
-
+	
 	/**
 	 * Enables the language selection or shows the selection if already enabled.
 	 * 
@@ -2410,11 +2411,11 @@ WCF.MultipleLanguageInput.prototype = {
 		else {
 			this._showSelection();
 		}
-
+		
 		// discard event
 		event.stopPropagation();
 	},
-
+	
 	/**
 	 * Shows the language selection.
 	 */
@@ -2424,7 +2425,7 @@ WCF.MultipleLanguageInput.prototype = {
 			this._list.children('li').each($.proxy(function(index, listItem) {
 				var $listItem = $(listItem);
 				var $languageID = $listItem.data('languageID');
-
+				
 				if ($languageID) {
 					if (this._values[$languageID] && this._values[$languageID] != '') {
 						$listItem.removeClass('missingValue');
@@ -2436,7 +2437,7 @@ WCF.MultipleLanguageInput.prototype = {
 			}, this));
 		}
 	},
-
+	
 	/**
 	 * Closes the language selection.
 	 */
@@ -2448,7 +2449,7 @@ WCF.MultipleLanguageInput.prototype = {
 			this._disable();
 		}
 	},
-
+	
 	/**
 	 * Changes the currently active language.
 	 * 
@@ -2483,7 +2484,7 @@ WCF.MultipleLanguageInput.prototype = {
 		this._closeSelection();
 		this._element.blur().focus();
 	},
-
+	
 	/**
 	 * Disables language selection for current element.
 	 */
@@ -2495,7 +2496,7 @@ WCF.MultipleLanguageInput.prototype = {
 		// remove active marking
 		this._list.prev('.dropdownToggle').children('span').removeClass('active').text(WCF.Language.get('wcf.global.button.disabledI18n'));
 		this._closeSelection();
-
+		
 		// update element value
 		if (this._values[LANGUAGE_ID]) {
 			this._element.val(this._values[LANGUAGE_ID]);
@@ -2508,7 +2509,7 @@ WCF.MultipleLanguageInput.prototype = {
 		this._element.blur();
 		this._isEnabled = false;
 	},
-
+	
 	/**
 	 * Prepares language variables on before submit.
 	 */
@@ -2517,19 +2518,19 @@ WCF.MultipleLanguageInput.prototype = {
 		if (!this._isEnabled) {
 			return 0xDEADBEAF;
 		}
-
+		
 		// fetch active value
 		if (this._languageID) {
 			this._values[this._languageID] = this._element.val();
 		}
-
+		
 		var $form = $(this._element.parents('form')[0]);
 		var $elementID = this._element.wcfIdentify();
-
+		
 		for (var $languageID in this._values) {
 			$('<input type="hidden" name="' + $elementID + '_i18n[' + $languageID + ']" value="' + this._values[$languageID] + '" />').appendTo($form);
 		}
-
+		
 		// remove name attribute to prevent conflict with i18n values
 		this._element.removeAttr('name');
 	}
@@ -2546,21 +2547,21 @@ WCF.Icon = {
 	 * @var	WCF.Dictionary
 	 */
 	_icons: new WCF.Dictionary(),
-
+	
 	/**
 	 * @see	WCF.Dictionary.add()
 	 */
 	add: function(name, path) {
 		this._icons.add(name, path);
 	},
-
+	
 	/**
 	 * @see	WCF.Dictionary.addObject()
 	 */
 	addObject: function(object) {
 		this._icons.addObject(object);
 	},
-
+	
 	/**
 	 * @see	WCF.Dictionary.get()
 	 */
@@ -2600,7 +2601,7 @@ WCF.String = {
 	addThousandsSeparator: function(number) {
 		var $numberString = String(number);
 		var parts = $numberString.split(/[^0-9]+/);
-
+		
 		var $decimalPoint = $numberString.match(/[^0-9]+/);
 		
 		$numberString = parts[0];
@@ -2802,7 +2803,8 @@ WCF.TabMenu = {
 };
 
 /**
- * Templates that may be fetched more than once with different variables. Based upon ideas from Prototype's template
+ * Templates that may be fetched more than once with different variables.
+ * Based upon ideas from Prototype's template.
  * 
  * Usage:
  * 	var myTemplate = new WCF.Template('{$hello} World');
@@ -2811,10 +2813,9 @@ WCF.TabMenu = {
  * 	
  * 	my2ndTemplate = new WCF.Template('{@$html}{$html}');
  * 	my2ndTemplate.fetch({ html: '<b>Test</b>' }); // <b>Test</b>&lt;b&gt;Test&lt;/b&gt;
- * 
+ *	
  * 	var my3rdTemplate = new WCF.Template('You can use {literal}{$variable}{/literal}-Tags here');
  * 	my3rdTemplate.fetch({ variable: 'Not shown' }); // You can use {$variable}-Tags here
- * 
  * 
  * @param	template		template-content
  * @see		https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/template.js
@@ -2822,15 +2823,13 @@ WCF.TabMenu = {
 WCF.Template = function(template) { this.init(template); };
 WCF.Template.prototype = {
 	/**
-	 * Template-content
-	 * 
+	 * template content
 	 * @var	string
 	 */
 	_template: '',
 	
 	/**
-	 * Saved literal-tags
-	 * 
+	 * saved literal tags
 	 * @var	WCF.Dictionary
 	 */
 	_literals: new WCF.Dictionary(),
@@ -3118,7 +3117,7 @@ WCF.Collapsible.Simple = {
 /**
  * Basic implementation for collapsible containers with AJAX support. Results for open
  * and closed state will be cached.
- *
+ * 
  * @param	string		className
  */
 WCF.Collapsible.Remote = Class.extend({
@@ -3127,25 +3126,25 @@ WCF.Collapsible.Remote = Class.extend({
 	 * @var	string
 	 */
 	_className: '',
-
+	
 	/**
 	 * list of active containers
 	 * @var	object
 	 */
 	_containers: {},
-
+	
 	/**
 	 * container meta data
 	 * @var	object
 	 */
 	_containerData: {},
-
+	
 	/**
 	 * action proxy
 	 * @var	WCF.Action.Proxy
 	 */
 	_proxy: null,
-
+	
 	/**
 	 * Initializes the controller for collapsible containers with AJAX support.
 	 * 
@@ -3226,7 +3225,7 @@ WCF.Collapsible.Remote = Class.extend({
 		var $isOpen = this._containers[containerID].data('isOpen');
 		var $button = $('<a class="collapsibleButton jsTooltip" title="'+WCF.Language.get('wcf.global.button.collapsible')+'"><img src="' + WCF.Icon.get('wcf.icon.' + ($isOpen ? 'opened' : 'closed')) + '" alt="" class="icon16" /></a>').prependTo(buttonContainer);
 		$button.data('containerID', containerID).click($.proxy(this._toggleContainer, this));
-
+		
 		return $button;
 	},
 	
@@ -3254,7 +3253,7 @@ WCF.Collapsible.Remote = Class.extend({
 			}, this._getAdditionalParameters($containerID))
 		});
 		this._proxy.sendRequest();
-
+		
 		// set spinner for current button
 		this._exchangeIcon($button);
 	},
@@ -3406,15 +3405,13 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
  */
 WCF.User = {
 	/**
-	 * UserID of the user
-	 * 
+	 * id of the actuve user
 	 * @var	integer
 	 */
 	userID: 0,
 	
 	/**
-	 * Username of the user
-	 * 
+	 * name of the active user
 	 * @var	string
 	 */
 	username: '',
@@ -3504,19 +3501,19 @@ WCF.Effect.BalloonTooltip.prototype = {
 	 * @var	boolean
 	 */
 	_didInit: false,
-
+	
 	/**
 	 * tooltip element
 	 * @var	jQuery
 	 */
 	_tooltip: null,
-
+	
 	/**
 	 * cache viewport dimensions
 	 * @var	object
 	 */
 	_viewportDimensions: { },
-
+	
 	/**
 	 * Initializes tooltips.
 	 */
@@ -3524,23 +3521,23 @@ WCF.Effect.BalloonTooltip.prototype = {
 		if (!this._didInit) {
 			// create empty div
 			this._tooltip = $('<div id="balloonTooltip" class="balloonTooltip"><span id="balloonTooltipText"></span><span class="pointer"><span></span></span></div>').appendTo($('body')).hide();
-
+			
 			// get viewport dimensions
 			this._updateViewportDimensions();
-
+			
 			// update viewport dimensions on resize
 			$(window).resize($.proxy(this._updateViewportDimensions, this));
-
+			
 			// observe DOM changes
 			WCF.DOMNodeInsertedHandler.addCallback('WCF.Effect.BalloonTooltip', $.proxy(this.init, this));
-
+			
 			this._didInit = true;
 		}
 		
 		// init elements
 		$('.jsTooltip').each($.proxy(this._initTooltip, this));
 	},
-
+	
 	/**
 	 * Updates cached viewport dimensions.
 	 */
@@ -3560,12 +3557,12 @@ WCF.Effect.BalloonTooltip.prototype = {
 		if ($element.hasClass('jsTooltip')) {
 			$element.removeClass('jsTooltip');
 			var $title = $element.attr('title');
-
+			
 			// ignore empty elements
 			if ($title !== '') {
 				$element.data('tooltip', $title);
 				$element.removeAttr('title');
-
+				
 				$element.hover(
 					$.proxy(this._mouseEnterHandler, this),
 					$.proxy(this._mouseLeaveHandler, this)
@@ -3603,10 +3600,10 @@ WCF.Effect.BalloonTooltip.prototype = {
 		
 		// update text
 		this._tooltip.children('span:eq(0)').text($element.data('tooltip'));
-
+		
 		// get arrow
 		var $arrow = this._tooltip.find('.pointer');
-
+		
 		// get arrow width
 		this._tooltip.show();
 		var $arrowWidth = $arrow.outerWidth();
@@ -3617,49 +3614,49 @@ WCF.Effect.BalloonTooltip.prototype = {
 		var $elementDimensions = $element.getDimensions('outer');
 		var $tooltipDimensions = this._tooltip.getDimensions('outer');
 		var $tooltipDimensionsInner = this._tooltip.getDimensions('inner');
-
+		
 		var $elementCenter = $elementOffsets.left + Math.ceil($elementDimensions.width / 2);
 		var $tooltipHalfWidth = Math.ceil($tooltipDimensions.width / 2);
 		
 		// determine alignment
-		$alignment = 'center';
+		var $alignment = 'center';
 		if (($elementCenter - $tooltipHalfWidth) < 5) {
 			$alignment = 'left';
 		}
 		else if ((this._viewportDimensions.width - 5) < ($elementCenter + $tooltipHalfWidth)) {
 			$alignment = 'right';
 		}
-
+		
 		// calculate top offset
 		var $top = $elementOffsets.top + $elementDimensions.height + 7;
-
+		
 		// calculate left offset
 		switch ($alignment) {
 			case 'center':
 				var $left = Math.round($elementOffsets.left - $tooltipHalfWidth + ($elementDimensions.width / 2));
-
+				
 				$arrow.css({
 					left: ($tooltipDimensionsInner.width / 2 - $arrowWidth / 2) + "px"
 				});
 			break;
-
+			
 			case 'left':
 				var $left = $elementOffsets.left;
-
+				
 				$arrow.css({
 					left: "5px"
 				});
 			break;
-
+			
 			case 'right':
 				var $left = $elementOffsets.left + $elementDimensions.width - $tooltipDimensions.width;
-
+				
 				$arrow.css({
 					left: ($tooltipDimensionsInner.width - $arrowWidth - 5) + "px"
 				});
 			break;
 		}
-
+		
 		// move tooltip
 		this._tooltip.css({
 			top: $top + "px",
@@ -3696,13 +3693,13 @@ WCF.CloseOverlayHandler = {
 	 * @var	WCF.Dictionary
 	 */
 	_callbacks: new WCF.Dictionary(),
-
+	
 	/**
 	 * indicates that overlay handler is listening to click events on body-tag
 	 * @var	boolean
 	 */
 	_isListening: false,
-
+	
 	/**
 	 * Adds a new callback.
 	 * 
@@ -3716,10 +3713,10 @@ WCF.CloseOverlayHandler = {
 			console.debug("[WCF.CloseOverlayHandler] identifier '" + identifier + "' is already bound to a callback");
 			return false;
 		}
-
+		
 		this._callbacks.add(identifier, callback);
 	},
-
+	
 	/**
 	 * Removes a callback from list.
 	 * 
@@ -3730,18 +3727,18 @@ WCF.CloseOverlayHandler = {
 			this._callbacks.remove(identifier);
 		}
 	},
-
+	
 	/**
 	 * Binds click event handler.
 	 */
 	_bindListener: function() {
 		if (this._isListening) return;
-
+		
 		$('body').click($.proxy(this._executeCallbacks, this));
-
+		
 		this._isListening = true;
 	},
-
+	
 	/**
 	 * Executes callbacks on click.
 	 */
@@ -3864,19 +3861,19 @@ WCF.DOMNodeRemovedHandler = {
 	 * @var	WCF.Dictionary
 	 */
 	_callbacks: new WCF.Dictionary(),
-
+	
 	/**
 	 * prevent infinite loop if a callback manipulates DOM
 	 * @var	boolean
 	 */
 	_isExecuting: false,
-
+	
 	/**
 	 * indicates that overlay handler is listening to DOMNodeRemoved events on body-tag
 	 * @var	boolean
 	 */
 	_isListening: false,
-
+	
 	/**
 	 * Adds a new callback.
 	 * 
@@ -3885,15 +3882,15 @@ WCF.DOMNodeRemovedHandler = {
 	 */
 	addCallback: function(identifier, callback) {
 		this._bindListener();
-
+		
 		if (this._callbacks.isset(identifier)) {
 			console.debug("[WCF.DOMNodeRemovedHandler] identifier '" + identifier + "' is already bound to a callback");
 			return false;
 		}
-
+		
 		this._callbacks.add(identifier, callback);
 	},
-
+	
 	/**
 	 * Removes a callback from list.
 	 * 
@@ -3904,24 +3901,24 @@ WCF.DOMNodeRemovedHandler = {
 			this._callbacks.remove(identifier);
 		}
 	},
-
+	
 	/**
 	 * Binds click event handler.
 	 */
 	_bindListener: function() {
 		if (this._isListening) return;
-
+		
 		$(document).bind('DOMNodeRemoved', $.proxy(this._executeCallbacks, this));
-
+		
 		this._isListening = true;
 	},
-
+	
 	/**
 	 * Executes callbacks if a DOM node is removed.
 	 */
 	_executeCallbacks: function(event) {
 		if (this._isExecuting) return;
-
+		
 		// do not track events while executing callbacks
 		this._isExecuting = true;
 		
@@ -4207,7 +4204,7 @@ WCF.Search.Base = Class.extend({
 	_getParameters: function(parameters) {
 		return parameters;
 	},
-
+	
 	/**
 	 * Evalutes search results.
 	 * 
@@ -4225,7 +4222,7 @@ WCF.Search.Base = Class.extend({
 		
 		for (var $i in data.returnValues) {
 			var $item = data.returnValues[$i];
-
+			
 			this._createListItem($item);
 		}
 		
@@ -4247,7 +4244,7 @@ WCF.Search.Base = Class.extend({
 		
 		return $listItem;
 	},
-
+	
 	/**
 	 * Executes callback upon result click.
 	 * 
@@ -4284,11 +4281,11 @@ WCF.Search.Base = Class.extend({
 				$clearSearchInput = (this._callback($listItem.data()) === true) ? true : false;
 			}
 		}
-
+		
 		// close list and revert input
 		this._clearList($clearSearchInput);
 	},
-
+	
 	/**
 	 * Closes the suggestion list and clears search input on demand.
 	 * 
@@ -4298,7 +4295,7 @@ WCF.Search.Base = Class.extend({
 		if (clearSearchInput && !this._commaSeperated) {
 			this._searchInput.val('');
 		}
-
+		
 		this._list.parent().removeClass('dropdownOpen').end().empty();
 		
 		WCF.CloseOverlayHandler.removeCallback('WCF.Search.Base');
@@ -4879,55 +4876,55 @@ WCF.InlineEditor = Class.extend({
 WCF.Upload = Class.extend({
 	/**
 	 * name of the upload field
-	 * @var string
+	 * @var	string
 	 */
 	_name: '__files[]',
 	
 	/**
 	 * button selector
-	 * @var jquery
+	 * @var	jQuery
 	 */
 	_buttonSelector: null,
 	
 	/**
 	 * file list selector
-	 * @var jquery
+	 * @var	jQuery
 	 */
 	_fileListSelector: null,
 	
 	/**
 	 * upload file
-	 * @var jquery
+	 * @var	jQuery
 	 */
 	_fileUpload: null,
 	
 	/**
 	 * class name
-	 * @var string
+	 * @var	string
 	 */
 	_className: '',
 	
 	/**
 	 * additional options
-	 * @var jquery
+	 * @var	jQuery
 	 */
 	_options: {},
 	
 	/**
 	 * upload matrix
-	 * @var array
+	 * @var	array
 	 */
 	_uploadMatrix: [],
 	
 	/**
-	 * True, if your browser supports ajax file uploads. False, if your browser sucks.
-	 * @var boolean
+	 * true, if the active user's browser supports ajax file uploads
+	 * @var	boolean
 	 */
 	_supportsAJAXUpload: true,
 	
 	/**
 	 * fallback overlay for stupid browsers
-	 * @var jquery
+	 * @var	jquery
 	 */
 	_overlay: null,
 	
@@ -6038,29 +6035,33 @@ $.widget('ui.wcfSidebar', {
 	 * @var	jQuery
 	 */
 	_button: null,
-
+	
+	/**
+	 * sidebar containder
+	 * @var	jQuery
+	 */
 	_container: null,
-
+	
 	/**
 	 * sidebar visibility
 	 * @var	boolean
 	 */
 	_visible: true,
-
+	
 	/**
 	 * Creates a new toggleable sidebar.
 	 */
 	_create: function() {
-		this.element.wrap('<div class="wcf-collapsibleSidebar"></div>');
+		this.element.wrap('<div class="collapsibleSidebar"></div>');
 		this._container = this.element.parents('aside:eq(0)');
 		
 		// create toggle button
-		this._button = $('<span class="wcf-collapsibleSidebarButton" title="' + WCF.Language.get('wcf.global.button.collapsible') + '"><span></span></span>').appendTo(this._container);
-
+		this._button = $('<span class="collapsibleSidebarButton" title="' + WCF.Language.get('wcf.global.button.collapsible') + '"><span></span></span>').appendTo(this._container);
+		
 		// bind event
 		this._button.click($.proxy(this._toggle, this));
 	},
-
+	
 	/**
 	 * Toggles visibility on button click.
 	 */
@@ -6072,7 +6073,7 @@ $.widget('ui.wcfSidebar', {
 			this.show();
 		}
 	},
-
+	
 	/**
 	 * Shows sidebar content.
 	 */
@@ -6080,11 +6081,11 @@ $.widget('ui.wcfSidebar', {
 		if (this._visible) {
 			return;
 		}
-
+		
 		this._visible = true;
 		this._container.removeClass('collapsed');
 	},
-
+	
 	/**
 	 * Hides the sidebar content.
 	 */
@@ -6104,6 +6105,7 @@ $.widget('ui.wcfSidebar', {
 WCF.Sitemap = Class.extend({
 	/**
 	 * sitemap name cache
+	 * @var	array
 	 */
 	_cache: [ ],
 	
@@ -6331,13 +6333,13 @@ $.widget('ui.wcfPersistentSidebar', $.ui.wcfSidebar, {
 		collapsed: false,
 		objectTypeID: 0
 	},
-
+	
 	/**
 	 * action proxy
 	 * @var	WCF.Action.Proxy
 	 */
 	_proxy: null,
-
+	
 	/**
 	 * Creates a new toggleable sidebar.
 	 */
@@ -6348,17 +6350,17 @@ $.widget('ui.wcfPersistentSidebar', $.ui.wcfSidebar, {
 		}
 		
 		$.ui.wcfSidebar.prototype._init.apply(this, arguments);
-
+		
 		// collapse on init
 		if (this.options.collapsed) {
 			this.element.hide();
 			this._visible = false;
 		}
-
+		
 		// init proxy
 		this._proxy = new WCF.Action.Proxy();
 	},
-
+	
 	/**
 	 * Shows sidebar content.
 	 */
@@ -6366,13 +6368,13 @@ $.widget('ui.wcfPersistentSidebar', $.ui.wcfSidebar, {
 		if (this._visible) {
 			return;
 		}
-
+		
 		$.ui.wcfSidebar.prototype._init.apply(this, arguments);
-
+		
 		// save state
 		this._save();
 	},
-
+	
 	/**
 	 * Hides the sidebar content.
 	 */
@@ -6380,13 +6382,13 @@ $.widget('ui.wcfPersistentSidebar', $.ui.wcfSidebar, {
 		if (!this._visible) {
 			return;
 		}
-
+		
 		$.ui.wcfSidebar.prototype._init.apply(this, arguments);
-
+		
 		// save state
 		this._save();
 	},
-
+	
 	/**
 	 * Save collapsible state
 	 */
@@ -6427,55 +6429,55 @@ $.widget('ui.wcfDialog', {
 	 * @var	jQuery
 	 */
 	_closeButton: null,
-
+	
 	/**
 	 * dialog container
 	 * @var	jQuery
 	 */
 	_container: null,
-
+	
 	/**
 	 * dialog content
 	 * @var	jQuery
 	 */
 	_content: null,
-
+	
 	/**
 	 * dialog content dimensions
 	 * @var	object
 	 */
 	_contentDimensions: null,
-
+	
 	/**
 	 * rendering state
 	 * @var	boolean
 	 */
 	_isRendering: false,
-
+	
 	/**
 	 * modal overlay
 	 * @var	jQuery
 	 */
 	_overlay: null,
-
+	
 	/**
 	 * plain html for title
 	 * @var	string
 	 */
 	_title: null,
-
+	
 	/**
 	 * title bar
 	 * @var	jQuery
 	 */
 	_titlebar: null,
-
+	
 	/**
 	 * dialog visibility state
 	 * @var	boolean
 	 */
 	_isOpen: false,
-
+	
 	/**
 	 * option list
 	 * @var	object
@@ -6489,7 +6491,7 @@ $.widget('ui.wcfDialog', {
 		modal: true,
 		title: '',
 		zIndex: 400,
-
+		
 		// AJAX support
 		ajax: false,
 		data: { },
@@ -6502,7 +6504,7 @@ $.widget('ui.wcfDialog', {
 		onClose: null,
 		onShow: null
 	},
-
+	
 	/**
 	 * Initializes a new dialog.
 	 */
@@ -6520,22 +6522,22 @@ $.widget('ui.wcfDialog', {
 				type: this.options.type,
 				url: this.options.url
 			});
-
+			
 			// force open if using AJAX
 			this.options.autoOpen = true;
-
+			
 			// apply loading overlay
 			this._content.addClass('overlayLoading');
 		}
-
+		
 		if (this.options.autoOpen) {
 			this.open();
 		}
-
+		
 		// act on resize
 		$(window).resize($.proxy(this._resize, this));
 	},
-
+	
 	/**
 	 * Creates a new dialog instance.
 	 */
@@ -6548,11 +6550,11 @@ $.widget('ui.wcfDialog', {
 			this._titlebar = $('<header class="dialogTitlebar"></header>').appendTo(this._container);
 			this._title = $('<span class="dialogTitle"></div>').html(this.options.title).appendTo(this._titlebar);
 		}
-
+		
 		// create close button
 		if (this.options.closable) {
 			this._closeButton = $('<a class="dialogCloseButton" title="' + this.options.closeButtonLabel + '"><span>' + this.options.closeButtonLabel + '</span></a>').click($.proxy(this.close, this));
-
+			
 			if (!this.options.hideTitle && this.options.title != '') {
 				this._closeButton.appendTo(this._titlebar);
 			}
@@ -6563,11 +6565,11 @@ $.widget('ui.wcfDialog', {
 		
 		// create content container
 		this._content = $('<div class="dialogContent"></div>').appendTo(this._container);
-
+		
 		// move target element into content
 		var $content = this.element.detach();
 		this._content.html($content);
-
+		
 		// create modal view
 		if (this.options.modal) {
 			this._overlay = $('#jsWcfDialogOverlay');
@@ -6598,7 +6600,7 @@ $.widget('ui.wcfDialog', {
 	_success: function(data, textStatus, jqXHR) {
 		// initialize dialog content
 		this._initDialog(data);
-
+		
 		// remove loading overlay
 		this._content.removeClass('overlayLoading');
 		
@@ -6621,7 +6623,7 @@ $.widget('ui.wcfDialog', {
 			this.render();
 		}
 	},
-
+	
 	/**
 	 * Returns a response value, taking care of different object
 	 * structure returned by AJAXProxy.
@@ -6636,10 +6638,10 @@ $.widget('ui.wcfDialog', {
 		else if (data[key]) {
 			return data[key];
 		}
-
+		
 		return null;
 	},
-
+	
 	/**
 	 * Opens this dialog.
 	 */
@@ -6647,7 +6649,7 @@ $.widget('ui.wcfDialog', {
 		if (this.isOpen()) {
 			return;
 		}
-
+		
 		if (this._overlay !== null) {
 			WCF.activeDialogs++;
 			
@@ -6655,11 +6657,11 @@ $.widget('ui.wcfDialog', {
 				this._overlay.show();
 			}
 		}
-
+		
 		this.render();
 		this._isOpen = true;
 	},
-
+	
 	/**
 	 * Returns true, if dialog is visible.
 	 * 
@@ -6676,10 +6678,10 @@ $.widget('ui.wcfDialog', {
 		if (!this.isOpen()) {
 			return;
 		}
-
+		
 		this._isOpen = false;
 		this._container.wcfFadeOut();
-
+		
 		if (this._overlay !== null) {
 			WCF.activeDialogs--;
 			
@@ -6717,12 +6719,12 @@ $.widget('ui.wcfDialog', {
 				width: 'auto'
 			});
 		}
-
+		
 		// force content to be visible
 		this._content.children().each(function() {
 			$(this).show();
 		});
-
+		
 		// handle multiple rendering requests
 		if (this._isRendering) {
 			// stop current process
@@ -6732,12 +6734,12 @@ $.widget('ui.wcfDialog', {
 			// set dialog to be fully opaque, should prevent weird bugs in WebKit
 			this._container.show().css('opacity', 1.0);
 		}
-
+		
 		// calculate dimensions
 		var $windowDimensions = $(window).getDimensions();
 		var $containerDimensions = this._container.getDimensions('outer');
 		var $contentDimensions = this._content.getDimensions();
-
+		
 		// calculate maximum content height
 		var $heightDifference = $containerDimensions.height - $contentDimensions.height;
 		var $maximumHeight = $windowDimensions.height - $heightDifference;
@@ -6747,45 +6749,45 @@ $.widget('ui.wcfDialog', {
 		if ($maximumHeight < $contentDimensions.height) {
 			$containerDimensions = this._container.getDimensions('outer');
 		}
-
+		
 		// handle multiple rendering requests
 		if (this._isRendering) {
 			// use current dimensions as previous ones
 			this._contentDimensions = this._getContentDimensions($maximumHeight);
 		}
-
+		
 		// calculate new dimensions
 		$contentDimensions = this._getContentDimensions($maximumHeight);
-
+		
 		// move container
 		var $leftOffset = Math.round(($windowDimensions.width - $containerDimensions.width) / 2);
 		var $topOffset = Math.round(($windowDimensions.height - $containerDimensions.height) / 2);
-
+		
 		// place container at 20% height if possible
 		var $desiredTopOffset = Math.round(($windowDimensions.height / 100) * 20);
 		if ($desiredTopOffset < $topOffset) {
 			$topOffset = $desiredTopOffset;
 		}
-
+		
 		if (!this.isOpen()) {
 			// hide container again
 			this._container.hide();
-
+			
 			// apply offset
 			this._container.css({
 				left: $leftOffset + 'px',
 				top: $topOffset + 'px'
 			});
-
+			
 			// save current dimensions
 			this._contentDimensions = $contentDimensions;
-
+			
 			// force dimensions
 			this._content.css({
 				height: this._contentDimensions.height + 'px',
 				width: this._contentDimensions.width + 'px'
 			});
-
+			
 			// fade in container
 			this._container.wcfFadeIn($.proxy(function() {
 				this._isRendering = false;
@@ -6800,7 +6802,7 @@ $.widget('ui.wcfDialog', {
 				height: this._contentDimensions.height + 'px',
 				width: this._contentDimensions.width + 'px'
 			});
-
+			
 			// apply new dimensions
 			$content.animate({
 				height: ($contentDimensions.height) + 'px',
@@ -6815,7 +6817,7 @@ $.widget('ui.wcfDialog', {
 			
 			// store new dimensions
 			this._contentDimensions = $contentDimensions;
-
+			
 			// move container
 			this._container.animate({
 				left: $leftOffset + 'px',
@@ -6828,10 +6830,10 @@ $.widget('ui.wcfDialog', {
 		if (this.options.onShow !== null) {
 			this.options.onShow();
 		}
-
+		
 		this._isRendering = true;
 	},
-
+	
 	/**
 	 * Returns calculated content dimensions.
 	 * 
@@ -6840,12 +6842,12 @@ $.widget('ui.wcfDialog', {
 	 */
 	_getContentDimensions: function(maximumHeight) {
 		var $contentDimensions = this._content.getDimensions();
-
+		
 		// set height to maximum height if exceeded
 		if ($contentDimensions.height > maximumHeight) {
 			$contentDimensions.height = maximumHeight;
 		}
-
+		
 		return $contentDimensions;
 	}
 });
@@ -6888,7 +6890,7 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 		
 		$.ui.tabs.prototype.select.apply(this, arguments);
 	},
-
+	
 	/**
 	 * Returns the currently selected tab index.
 	 * 
@@ -7173,11 +7175,10 @@ $.widget('ui.wcfPages', {
 	},
 	
 	/**
-	 * Renders a page link
+	 * Renders a page link.
 	 * 
 	 * @parameter	integer		page
-	 * 
-	 * @return		$(element)
+	 * @return	jQuery
 	 */
 	_renderLink: function(page, lineBreak) {
 		var $pageElement = $('<li class="button"></li>');

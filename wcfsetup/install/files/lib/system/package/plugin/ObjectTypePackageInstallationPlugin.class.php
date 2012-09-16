@@ -7,11 +7,11 @@ use wcf\system\WCF;
  * This PIP installs, updates or deletes object types.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
@@ -26,7 +26,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
-	 */	
+	 */
 	public $tagName = 'type';
 	
 	/**

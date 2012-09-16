@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.sitemap
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SitemapAction extends AbstractDatabaseObjectAction {
 	/**
@@ -21,7 +21,7 @@ class SitemapAction extends AbstractDatabaseObjectAction {
 	protected $allowGuestAccess = array('getSitemap');
 	
 	/**
-	 * Does nothing.
+	 * Validates the 'getSitemap' action.
 	 */
 	public function validateGetSitemap() {
 		if (isset($this->parameters['sitemapName'])) {

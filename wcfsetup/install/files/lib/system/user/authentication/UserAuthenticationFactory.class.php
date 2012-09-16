@@ -10,19 +10,19 @@ use wcf\system\event\EventHandler;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.authentication
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserAuthenticationFactory {
 	/**
 	 * user authentication instance
-	 * @var wcf\system\user\authentication\IUserAuthentication
+	 * @var	wcf\system\user\authentication\IUserAuthentication
 	 */
 	protected static $userAuthentication = null;
 	
 	/**
 	 * Returns user authentication instance.
 	 * 
-	 * @return wcf\system\user\authentication\IUserAuthentication
+	 * @return	wcf\system\user\authentication\IUserAuthentication
 	 */
 	public static function getUserAuthentication() {
 		if (static::$userAuthentication === null) {

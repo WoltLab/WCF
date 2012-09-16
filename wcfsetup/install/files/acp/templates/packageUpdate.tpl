@@ -50,10 +50,10 @@
 		<div class="formSubmit">
 			{if !$errorField}<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />{/if}
 			{@SID_INPUT_TAG}
-	 		<input type="hidden" name="send" value="1" />
-	 		{foreach from=$updates key=package item=version}
-	 			<input type="hidden" name="updates[{$package}]" value="{$version}" />
-	 		{/foreach}
+			<input type="hidden" name="send" value="1" />
+			{foreach from=$updates key=package item=version}
+				<input type="hidden" name="updates[{$package}]" value="{$version}" />
+			{/foreach}
 		</div>
 	</form>
 {/if}

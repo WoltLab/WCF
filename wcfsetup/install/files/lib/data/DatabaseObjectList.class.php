@@ -7,13 +7,13 @@ use wcf\util\StringUtil;
 
 /**
  * Abstract class for a list of database objects.
- *
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	/**
@@ -78,7 +78,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	
 	/**
 	 * enables the automatic usage of the qualified shorthand 
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $useQualifiedShorthand = true;
 	
@@ -168,7 +168,6 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 			$this->objects = $statement->fetchObjects(($this->objectClassName ?: $this->className));
 		}
 		else {
-			//if (!empty($this->sqlSelects)) die("x".$this->sqlSelects);
 			$sql = "SELECT	".(!empty($this->sqlSelects) ? $this->sqlSelects.($this->useQualifiedShorthand ? ',' : '') : '')."
 					".($this->useQualifiedShorthand ? $this->getDatabaseTableAlias().'.*' : '')."
 				FROM	".$this->getDatabaseTableName()." ".$this->getDatabaseTableAlias()."

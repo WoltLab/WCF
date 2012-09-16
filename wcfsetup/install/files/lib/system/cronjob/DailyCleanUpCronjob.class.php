@@ -11,11 +11,11 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class DailyCleanUpCronjob extends AbstractCronjob {
 	/**
-	 * @see wcf\system\cronjob\ICronjob::execute()
+	 * @see	wcf\system\cronjob\ICronjob::execute()
 	 */
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);

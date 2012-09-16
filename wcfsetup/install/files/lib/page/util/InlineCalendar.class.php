@@ -7,12 +7,14 @@ use wcf\util\DateUtil;
 /**
  * Assigns default variables for the usage of the inline (javascript) calendar.
  * 
+ * @todo	uses non-existing methods and properties
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page.util
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class InlineCalendar {
 	/**

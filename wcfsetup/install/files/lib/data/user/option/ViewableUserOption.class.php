@@ -7,6 +7,16 @@ use wcf\system\option\user\IUserOptionOutputContactInformation;
 use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
+/**
+ * Represents a viewable user option.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2012 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	data.user.option
+ * @category	Community Framework
+ */
 class ViewableUserOption extends DatabaseObjectDecorator {
 	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass

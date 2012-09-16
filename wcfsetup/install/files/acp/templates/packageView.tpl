@@ -26,11 +26,11 @@
 			{/if}
 		</ul>
 	</nav>
-
+	
 	<div id="information" class="container containerPadding shadow hidden tabMenuContent">
 		<fieldset>
 			<legend>{lang}wcf.acp.package.information.properties{/lang}</legend>
-	
+			
 			<dl>
 				<dt>{lang}wcf.acp.package.identifier{/lang}</dt>
 				<dd>{$package->package}</dd>
@@ -78,7 +78,7 @@
 				<dt>{lang}wcf.acp.package.author{/lang}</dt>
 				<dd>{if $package->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="wcf-externalURL">{$package->author}</a>{else}{$package->author}{/if}</dd>
 			</dl>
-	
+			
 			{event name='propertyFields'}
 		</fieldset>
 
@@ -90,7 +90,7 @@
 			</fieldset>
 		{/if}
 	</div>
-
+	
 	{if $package->getRequiredPackages()|count || $package->getDependentPackages()|count}
 		<div id="dependencies" class="container containerPadding tabMenuContainer tabMenuContent">
 			<nav class="menu">
@@ -103,14 +103,14 @@
 					{/if}
 				</ul>
 			</nav>
-
+			
 			{hascontent}
 				<div id="dependencies-required" class="tabularBox tabularBoxTitle hidden">
 					<hgroup>
 						<h1>{lang}wcf.acp.package.dependencies.required{/lang}</h1>
 						<h2>{lang}wcf.acp.package.dependencies.required.description{/lang}</h2>
 					</hgroup>
-		
+					
 					<table class="table">
 						<thead>
 							<tr>
@@ -123,7 +123,7 @@
 								{event name='requirementHeadColumns'}
 							</tr>
 						</thead>
-			
+						
 						<tbody>
 							{content}
 								{foreach from=$package->getRequiredPackages() item=requiredPackage}
@@ -163,14 +163,14 @@
 					</table>
 				</div>
 			{/hascontent}
-
+			
 			{hascontent}
 				<div id="dependencies-dependent" class="tabularBox tabularBoxTitle hidden">
 					<hgroup>
 						<h1>{lang}wcf.acp.package.dependencies.dependent{/lang}</h1>
 						<h2>{lang}wcf.acp.package.dependencies.dependent.description{/lang}</h2>
 					</hgroup>
-		
+					
 					<table class="table">
 						<thead>
 							<tr>
@@ -183,7 +183,7 @@
 								{event name='dependencyHeadColumns'}
 							</tr>
 						</thead>
-			
+						
 						<tbody>
 							{content}
 								{foreach from=$package->getDependentPackages() item=dependentPackage}

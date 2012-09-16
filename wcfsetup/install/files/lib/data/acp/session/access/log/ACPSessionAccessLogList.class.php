@@ -6,11 +6,11 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of access logs.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session.access.log
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ACPSessionAccessLogList extends DatabaseObjectList {
 	/**
@@ -19,7 +19,7 @@ class ACPSessionAccessLogList extends DatabaseObjectList {
 	public $className = 'wcf\data\acp\session\access\log\ACPSessionAccessLog';
 	
 	/**
-	 * @see wcf\data\DatabaseObjectList::readObjects()
+	 * @see	wcf\data\DatabaseObjectList::readObjects()
 	 */
 	public function readObjects() {
 		if (!empty($this->sqlSelects)) $this->sqlSelects .= ',';

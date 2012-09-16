@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserAction extends AbstractDatabaseObjectAction {
 	/**
@@ -223,7 +223,7 @@ class UserAction extends AbstractDatabaseObjectAction {
 			$excludedSearchValues = $this->parameters['data']['excludedSearchValues'];
 		}
 		$list = array();
-	
+		
 		if ($this->parameters['data']['includeUserGroups']) {
 			$accessibleGroups = UserGroup::getAccessibleGroups();
 			foreach ($accessibleGroups as $group) {
@@ -246,7 +246,7 @@ class UserAction extends AbstractDatabaseObjectAction {
 		if (count($excludedSearchValues)) {
 			$conditionBuilder->add("username NOT IN (?)", array($excludedSearchValues));
 		}
-	
+		
 		// find users
 		$sql = "SELECT	userID, username
 			FROM	wcf".WCF_N."_user
@@ -260,7 +260,7 @@ class UserAction extends AbstractDatabaseObjectAction {
 				'type' => 'user'
 			);
 		}
-	
+		
 		return $list;
 	}
 }

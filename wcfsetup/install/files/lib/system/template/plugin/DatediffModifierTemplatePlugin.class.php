@@ -7,15 +7,15 @@ use wcf\util\DateUtil;
  * The 'datediff' modifier calculates the difference between two unix timestamps.
  * 
  * Usage:
- * {$timestamp|datediff}
- * {"123456789"|datediff:$timestamp}
+ *	{$timestamp|datediff}
+ *	{"123456789"|datediff:$timestamp}
  *
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class DatediffModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**

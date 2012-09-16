@@ -12,11 +12,11 @@ use wcf\util\HeaderUtil;
  * Shows a list of installed packages and plugins.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageListPage extends AbstractPage {
 	/**
@@ -75,7 +75,7 @@ class PackageListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
 		// use detailed view if accessing WCF ACP directly

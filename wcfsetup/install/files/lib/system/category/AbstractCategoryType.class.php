@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.category
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class AbstractCategoryType extends SingletonFactory implements ICategoryType {
 	/**

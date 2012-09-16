@@ -12,12 +12,12 @@ use wcf\util\StringUtil;
 /**
  * TemplateEngine loads and displays template.
  * 
- * @author 	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Alexander Ebert
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class TemplateEngine extends SingletonFactory {
 	/**
@@ -52,7 +52,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * forces the template engine to recompile all included templates
-	 * @var boolean
+	 * @var	boolean
 	 */
 	protected $forceCompile = false;
 	
@@ -99,9 +99,7 @@ class TemplateEngine extends SingletonFactory {
 	protected $environment = 'user';
 	
 	/**
-	 * Creates a new instance of TemplateEngine.
-	 * 
-	 * @see	wcf\system\template\TemplateEngine::getInstance()
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->templatePaths = array(1 => WCF_DIR.'templates/');
@@ -156,7 +154,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Assigns a template variable.
-	 *
+	 * 
 	 * @param	mixed		$variable
 	 * @param	mixed		$value
 	 */
@@ -175,7 +173,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Appends content to an existing template variable.
-	 *
+	 * 
 	 * @param 	mixed 		$variable
 	 * @param 	mixed 		$value
 	 */
@@ -214,7 +212,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Prepends content to an existing template variable.
-	 *
+	 * 
 	 * @param 	mixed 		$variable
 	 * @param 	mixed 		$value
 	 */
@@ -253,7 +251,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Assigns a template variable by reference.
-	 *
+	 * 
 	 * @param 	string 		$variable
 	 * @param	mixed 		$value
 	 */
@@ -265,7 +263,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Clears an assignment of template variables.
-	 *
+	 * 
 	 * @param 	mixed 		$variables
 	 */
 	public function clearAssign(array $variables) {
@@ -284,7 +282,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Outputs a template.
-	 *
+	 * 
 	 * @param	string		$templateName
 	 * @param	integer		$packageID
 	 * @param	boolean		$sendHeaders
@@ -351,7 +349,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Returns the absolute filename of a template source.
-	 *
+	 * 
 	 * @param	string		$templateName
 	 * @param	integer		$packageID
 	 * @return	string		$path
@@ -393,7 +391,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Returns the absolute filename of a compiled template.
-	 *
+	 * 
 	 * @param 	string 		$templateName
 	 * @param	integer		$packageID
 	 */
@@ -413,7 +411,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Checks wheater a template is already compiled or not.
-	 *
+	 * 
 	 * @param	string		$templateName
 	 * @param 	string 		$sourceFilename
 	 * @param 	string 		$compiledFilename
@@ -463,7 +461,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Compiles a template.
-	 *
+	 * 
 	 * @param 	string 		$templateName
 	 * @param 	string 		$sourceFilename
 	 * @param 	string 		$compiledFilename
@@ -492,7 +490,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Reads the content of a template file.
-	 *
+	 * 
 	 * @param	string		$sourceFilename
 	 * @return	string		$sourceContent
 	 */
@@ -508,10 +506,10 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Returns the class name of a plugin.
-	 *
-	 * @param 	string 		$type
-	 * @param 	string 		$tag
-	 * @return 	string 				class name
+	 * 
+	 * @param	string		$type
+	 * @param	string		$tag
+	 * @return	string
 	 */
 	public function getPluginClassName($type, $tag) {
 		return $this->pluginNamespace.StringUtil::firstCharToUpperCase($tag).StringUtil::firstCharToUpperCase(StringUtil::toLowerCase($type)).'TemplatePlugin';
@@ -528,7 +526,7 @@ class TemplateEngine extends SingletonFactory {
 			throw new SystemException('TemplateEngine is already in sandbox mode. Disable the current sandbox mode before you enable a new one.');
 		}
 	}
-
+	
 	/**
 	 * Disables execution in sandbox.
 	 */
@@ -544,12 +542,12 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Returns the output of a template.
-	 *
-	 * @param 	string 		$templateName
-	 * @param 	array 		$variables
-	 * @param 	boolean		$sandbox	enables execution in sandbox
+	 * 
+	 * @param	string		$templateName
+	 * @param	array		$variables
+	 * @param	boolean		$sandbox	enables execution in sandbox
 	 * @param	integer		$packageID
-	 * @return 	string 		output
+	 * @return	string
 	 */
 	public function fetch($templateName, array $variables = array(), $sandbox = false, $packageID = PACKAGE_ID) {
 		// enable sandbox
@@ -572,17 +570,17 @@ class TemplateEngine extends SingletonFactory {
 		if ($sandbox) {
 			$this->disableSandbox();
 		}
-
+		
 		return $output;
 	}
 	
 	/**
 	 * Executes a compiled template scripting source and returns the result.
 	 *
-	 * @param 	string 		$compiledSource
-	 * @param 	array 		$variables
-	 * @param 	boolean		$sandbox	enables execution in sandbox
-	 * @return 	string 		result
+	 * @param	string		$compiledSource
+	 * @param	array		$variables
+	 * @param	boolean		$sandbox	enables execution in sandbox
+	 * @return	string
 	 */
 	public function fetchString($compiledSource, array $variables = array(), $sandbox = true) {
 		// enable sandbox
@@ -605,7 +603,7 @@ class TemplateEngine extends SingletonFactory {
 		if ($sandbox) {
 			$this->disableSandbox();
 		}
-
+		
 		return $output;
 	}
 	
@@ -616,14 +614,14 @@ class TemplateEngine extends SingletonFactory {
 	 */
 	public static function deleteCompiledTemplates($compileDir = '') {
 		if (empty($compileDir)) $compileDir = WCF_DIR.'templates/compiled/';
-
+		
 		// delete compiled templates
 		DirectoryUtil::getInstance($compileDir)->removePattern(new Regex('.*_.*_.*\.php$'));
 	}
 	
 	/**
 	 * Returns an array with all prefilters.
-	 *
+	 * 
 	 * @return 	array<string>
 	 */
 	public function getPrefilters() {
@@ -666,8 +664,8 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Registers prefilters.
-	 *
-	 * @param 	array<string> 		$prefilters
+	 * 
+	 * @param	array<string>		$prefilters
 	 */
 	public function registerPrefilter(array $prefilters) {
 		foreach ($prefilters as $name) {
@@ -678,7 +676,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Sets the dir for the compiled templates.
 	 *
-	 * @param 	string 		$compileDir
+	 * @param	string		$compileDir
 	 */
 	public function setCompileDir($compileDir) {
 		if (!is_dir($compileDir)) {
@@ -690,10 +688,10 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Includes a template.
-	 *
-	 * @param 	string 		$templateName
-	 * @param 	array 		$variables
-	 * @param 	boolean		$sandbox	enables execution in sandbox
+	 * 
+	 * @param	string		$templateName
+	 * @param	array		$variables
+	 * @param	boolean		$sandbox	enables execution in sandbox
 	 */
 	protected function includeTemplate($templateName, array $variables = array(), $sandbox = true, $packageID = PACKAGE_ID) {
 		// enable sandbox
@@ -718,7 +716,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Returns the value of a template variable.
 	 * 
-	 * @param 	string		$varname
+	 * @param	string		$varname
 	 * @return	mixed
 	 */
 	public function get($varname) {

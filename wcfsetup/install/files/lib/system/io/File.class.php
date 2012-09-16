@@ -21,26 +21,26 @@ use wcf\system\exception\SystemException;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class File {
 	/**
 	 * file pointer resource
-	 * @var resource
+	 * @var	resource
 	 */
 	protected $resource = null;
 	
 	/**
 	 * filename
-	 * @var string
+	 * @var	string
 	 */
 	protected $filename = '';
 	
 	/**
 	 * Opens a new file.
 	 * 
-	 * @param 	string		$filename
-	 * @param 	string		$mode
+	 * @param	string		$filename
+	 * @param	string		$mode
 	 * @param	array		$options
 	 */
 	public function __construct($filename, $mode = 'wb', $options = array()) {
@@ -61,8 +61,8 @@ class File {
 	 * Calls the specified function on the open file.
 	 * Do not call this function directly. Use $file->write('') instead.
 	 * 
-	 * @param 	string		$function
-	 * @param 	array		$arguments
+	 * @param	string		$function
+	 * @param	array		$arguments
 	 */
 	public function __call($function, $arguments) {
 		if (function_exists('f' . $function)) {

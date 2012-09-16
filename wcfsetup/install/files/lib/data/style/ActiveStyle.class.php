@@ -9,15 +9,15 @@ use wcf\util\StringUtil;
  * Represents the active user style.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.style
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ActiveStyle extends DatabaseObjectDecorator {
 	/**
-	 * @see wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\style\Style';
 	
@@ -30,7 +30,7 @@ class ActiveStyle extends DatabaseObjectDecorator {
 	/**
 	 * Creates a new ActiveStyle object.
 	 * 
-	 * @param	Style	$object
+	 * @param	wcf\data\style\Style	$object
 	 */
 	public function __construct(Style $object) {
 		parent::__construct($object);

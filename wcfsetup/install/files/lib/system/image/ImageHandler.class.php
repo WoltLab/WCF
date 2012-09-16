@@ -7,12 +7,12 @@ use wcf\system\SingletonFactory;
 /**
  * Handler for all available image adapters.
  * 
- * @author 	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Alexander Ebert
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.image
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ImageHandler extends SingletonFactory {
 	/**
@@ -53,7 +53,7 @@ class ImageHandler extends SingletonFactory {
 	 * Returns a new ImageAdapter instance.
 	 * 
 	 * @return	wcf\system\image\adapter\ImageAdapter;
-	 */	
+	 */
 	public function getAdapter() {
 		return new ImageAdapter($this->adapterClassName);
 	}

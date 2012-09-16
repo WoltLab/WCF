@@ -8,13 +8,13 @@ use wcf\system\WCF;
 
 /**
  * Provides internationalization support for input fields.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.language
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class I18nHandler extends SingletonFactory {
 	/**
@@ -54,12 +54,12 @@ class I18nHandler extends SingletonFactory {
 	protected $elementOptions = array();
 	
 	/**
-	 * @see wcf\system\SingletonFactory::init()
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		 $this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
 	}
-
+	
 	/**
 	 * Registers a new element id, returns false if element id is already set.
 	 * 

@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
@@ -26,7 +26,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
-	 */	
+	 */
 	public $tagName = 'acpsearchprovider';
 	
 	/**
@@ -84,7 +84,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
-	 */	
+	 */
 	protected function cleanup() {
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.acpSearchProvider-*.php');
 	}

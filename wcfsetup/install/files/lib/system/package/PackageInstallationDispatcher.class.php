@@ -17,11 +17,11 @@ use wcf\system\exception\SystemException;
 use wcf\system\form\container;
 use wcf\system\form\element;
 use wcf\system\form\FormDocument;
+use wcf\system\form;
 use wcf\system\language\LanguageFactory;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
-use wcf\system\form;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
@@ -29,13 +29,13 @@ use wcf\util\StringUtil;
 
 /**
  * PackageInstallationDispatcher handles the whole installation process.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageInstallationDispatcher {
 	/**
@@ -70,14 +70,14 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * default name of the config file
-	 * @var string
+	 * @var	string
 	 */
 	const CONFIG_FILE = 'config.inc.php';
 	
 	/**
 	 * Creates a new instance of PackageInstallationDispatcher.
 	 *
-	 * @param	PackageInstallationQueue	$queue
+	 * @param	wcf\data\package\installation\queue\PackageInstallationQueue	$queue
 	 */
 	public function __construct(PackageInstallationQueue $queue) {
 		$this->queue = $queue;
@@ -88,7 +88,7 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Installs node components and returns next node.
-	 *
+	 * 
 	 * @param	string		$node
 	 * @return	PackageInstallationStep
 	 */
@@ -144,7 +144,7 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Returns current package archive.
-	 *
+	 * 
 	 * @return	PackageArchive
 	 */
 	public function getArchive() {
@@ -169,7 +169,7 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Installs current package.
-	 *
+	 * 
 	 * @param	array		$nodeData
 	 */
 	protected function installPackage(array $nodeData) {
@@ -394,7 +394,7 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Sets parent package and rebuilds dependencies for both.
-	 */	
+	 */
 	protected function installPackageParent() {
 		// do not handle parent package if current package is an application or does not have a plugin tag while within installation process
 		if ($this->getArchive()->getPackageInfo('isApplication') || $this->getAction() != 'install' || !$this->getArchive()->getPackageInfo('plugin')) {
@@ -438,7 +438,7 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Executes a package installation plugin.
-	 *
+	 * 
 	 * @param	array		step
 	 * @return	boolean
 	 */
@@ -540,10 +540,10 @@ class PackageInstallationDispatcher {
 	/**
 	 * Extracts files from .tar (or .tar.gz) archive and installs them
 	 *
-	 * @param 	string 			$targetDir
-	 * @param 	string 			$sourceArchive
+	 * @param	string			$targetDir
+	 * @param	string			$sourceArchive
 	 * @param	FileHandler		$fileHandler
-	 * @return	Installer
+	 * @return	wcf\system\setup\Installer
 	 */
 	public function extractFiles($targetDir, $sourceArchive, $fileHandler = null) {
 		return new \wcf\system\setup\Installer($targetDir, $sourceArchive, $fileHandler);
@@ -551,8 +551,8 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Returns current package.
-	 *
-	 * @return	Package
+	 * 
+	 * @return	wcf\data\package\Package
 	 */
 	public function getPackage() {
 		if ($this->package === null) {
@@ -564,8 +564,8 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Prompts for a text input for package directory (applies for applications only)
-	 *
-	 * @return	FormDocument
+	 * 
+	 * @return	wcf\system\form\FormDocument
 	 */
 	protected function promptPackageDir() {
 		if (!PackageInstallationFormManager::findForm($this->queue, 'packageDir')) {
@@ -654,7 +654,7 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Returns current package id.
-	 *
+	 * 
 	 * @return	integer
 	 */
 	public function getPackageID() {
@@ -663,7 +663,7 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Returns current package installation type.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getAction() {
@@ -673,7 +673,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Opens the package installation queue and
 	 * starts the installation, update or uninstallation of the first entry.
-	 *
+	 * 
 	 * @param	integer		$parentQueueID
 	 * @param 	integer		$processNo
 	 */
@@ -756,7 +756,7 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Checks the package installation queue for outstanding entries.
-	 *
+	 * 
 	 * @return	integer
 	 */
 	public static function checkPackageInstallationQueue() {

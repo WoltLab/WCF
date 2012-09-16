@@ -7,14 +7,15 @@ use wcf\util\FileUtil;
 use wcf\util\XML;
 
 /**
- * Default implementation of some functions for a PackageInstallationPlugin using xml definitions.
- *
+ * Default implementation of some functions for a package installation plugin using
+ * xml definitions.
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
@@ -287,19 +288,19 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 */
 	protected function getShowOrder($showOrder, $parentName = null, $columnName = null, $tableNameExtension = '') {
 		if ($showOrder === null) {
-	        	 // get greatest showOrder value
+			 // get greatest showOrder value
 			$conditions = new PreparedStatementConditionBuilder();
 			if ($columnName !== null) $conditions->add($columnName." = ?", array($parentName));
 			
-	          	$sql = "SELECT	MAX(showOrder) AS showOrder
-			  	FROM	wcf".WCF_N."_".$this->tableName.$tableNameExtension."
+			$sql = "SELECT	MAX(showOrder) AS showOrder
+				FROM	wcf".WCF_N."_".$this->tableName.$tableNameExtension."
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			$maxShowOrder = $statement->fetchArray();
 			return (!$maxShowOrder) ? 1 : ($maxShowOrder['showOrder'] + 1);
-	       	}
-	       	else {
+		}
+		else {
 			// increase all showOrder values which are >= $showOrder
 			$sql = "UPDATE	wcf".WCF_N."_".$this->tableName.$tableNameExtension."
 				SET	showOrder = showOrder + 1
@@ -314,6 +315,6 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			
 			// return the wanted showOrder level
 			return $showOrder;
-       		}
+		}
 	}
 }

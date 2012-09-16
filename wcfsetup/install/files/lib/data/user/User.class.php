@@ -11,13 +11,13 @@ use wcf\util\StringUtil;
 
 /**
  * Represents a user.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user
- * @category 	Community Framework
+ * @category	Community Framework
  */
 final class User extends DatabaseObject implements IRouteController {
 	/**
@@ -32,14 +32,12 @@ final class User extends DatabaseObject implements IRouteController {
 	
 	/**
 	 * list of group ids
-	 *
 	 * @var	array<integer>
 	 */
 	protected $groupIDs = null;
 	
 	/**
 	 * list of language ids
-	 * 
 	 * @var	array<integer>
 	 */
 	protected $languageIDs = null;
@@ -51,8 +49,7 @@ final class User extends DatabaseObject implements IRouteController {
 	protected $timezoneObj = null;
 	
 	/**
-	 * list of user options.
-	 *
+	 * list of user options
 	 * @var	array<string>
 	 */
 	protected static $userOptions = null;
@@ -83,7 +80,7 @@ final class User extends DatabaseObject implements IRouteController {
 	
 	/**
 	 * Returns true, if the given password is the correct password for this user.
-	 *
+	 * 
 	 * @param 	string		$password
 	 * @return 	boolean 	password correct
 	 */
@@ -93,7 +90,7 @@ final class User extends DatabaseObject implements IRouteController {
 	
 	/**
 	 * Returns true, if the given password hash from a cookie is the correct password for this user.
-	 *
+	 * 
 	 * @param 	string		$passwordHash
 	 * @return 	boolean 	password correct
 	 */
@@ -187,7 +184,7 @@ final class User extends DatabaseObject implements IRouteController {
 	
 	/**
 	 * Returns the value of the user option with the given name.
-	 *
+	 * 
 	 * @param	string		$name		user option name
 	 * @return	mixed				user option value
 	 */
@@ -216,7 +213,7 @@ final class User extends DatabaseObject implements IRouteController {
 	
 	/**
 	 * Returns the id of a user option.
-	 *
+	 * 
 	 * @param	string		$name
 	 * @return	integer		id
 	 */
@@ -234,7 +231,7 @@ final class User extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see wcf\data\DatabaseObject::__get()
+	 * @see	wcf\data\DatabaseObject::__get()
 	 */
 	public function __get($name) {
 		$value = parent::__get($name);
@@ -243,10 +240,10 @@ final class User extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * Returns User-object by username.
-	 *
+	 * Returns the user with the given username.
+	 * 
 	 * @param	string		$username
-	 * @return	User
+	 * @return	wcf\data\user\User
 	 */
 	public static function getUserByUsername($username) {
 		$sql = "SELECT	*
@@ -261,10 +258,10 @@ final class User extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * Returns User-object by email.
-	 *
+	 * Returns the user with the given email.
+	 * 
 	 * @param	string		$email
-	 * @return	User
+	 * @return	wcf\data\user\User
 	 */
 	public static function getUserByEmail($email) {
 		$sql = "SELECT	*
@@ -280,7 +277,7 @@ final class User extends DatabaseObject implements IRouteController {
 	
 	/**
 	 * Returns true, if this user is marked.
-	 *
+	 * 
 	 * @return 	boolean
 	 */
 	public function isMarked() {
@@ -294,7 +291,7 @@ final class User extends DatabaseObject implements IRouteController {
 	
 	/**
 	 * Returns the time zone of this user.
-	 *
+	 * 
 	 * @return DateTimeZone
 	 */
 	public function getTimeZone() {
@@ -314,7 +311,7 @@ final class User extends DatabaseObject implements IRouteController {
 	 * Returns a list of users.
 	 * 
 	 * @param	array		$userIDs
-	 * @return	array<User>
+	 * @return	array<wcf\data\user\User>
 	 */
 	public static function getUsers(array $userIDs) {
 		$userList = new UserList();

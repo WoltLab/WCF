@@ -6,15 +6,15 @@
 	</hgroup>
 </header>
 
-<div class="wcf-contentHeader">
+<div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller="PackageUpdateSearchResult" id=$searchID link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 </div>
 
 <form method="post" action="{link controller='PackageUpdate'}{/link}">
 	{foreach from=$packages item=package}
-		<article class="wcf-message wcf-messageDecor"><!-- ToDo! -->
+		<article class="message"><!-- ToDo! -->
 			<div>
-				<hgroup class="wcf-subHeading">
+				<hgroup class="messageHeader">
 					<h1>
 						{if $package[isApplication] == 1}
 							<img src="{@$__wcf->getPath()}icon/window.svg" alt="" title="{lang}wcf.acp.package.list.isApplication{/lang}" class="jsTooltip" />
@@ -26,8 +26,8 @@
 						{$package[packageName]}
 					</h1>
 				<hgroup>
-
-				<div class="wcf-messageBody">
+				
+				<div class="messageBody">
 					<dl>
 						<dt><label for="packageVersion-{$package[package]}">{lang}wcf.acp.package.list.version{/lang}</label></dt>
 						<dd>
@@ -74,7 +74,7 @@
 					
 					<fieldset>
 						<legend>{lang}wcf.acp.packageUpdate.options{/lang}</legend>
-					
+						
 						<dl>
 							{* new installation *}
 							{if $package[isUnique] && !$package[updatableInstances]|count}
@@ -93,11 +93,10 @@
 							{/foreach}
 						</dl>
 					</fieldset>
-					
 				</div>
 				<hr />
 			</div>
-		</article>			
+		</article>
 	{/foreach}
 	
 	<div class="formSubmit">
@@ -106,7 +105,7 @@
  	</div>
 </form>
 
-<div class="wcf-contentFooter">
+<div class="contentNavigation">
 	{@$pagesLinks}
 </div>
 
