@@ -202,6 +202,15 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	}
 	
 	/**
+	 * Sets the object ids.
+	 * 
+	 * @param	array<integer>		$objectIDs
+	 */
+	public function setObjectIDs(array $objectIDs) {
+		$this->objectIDs = $objectIDs;
+	}
+	
+	/**
 	 * Returns the objects of the list.
 	 * 
 	 * @return	array<wcf\data\DatabaseObject>
