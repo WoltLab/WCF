@@ -868,9 +868,7 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
 	/**
 	 * @see	WCF.Collapsible.Remote.init()
 	 */
-	init: function(className, objectTypeID) {
-		this._objectTypeID = objectTypeID;
-		
+	init: function(className) {
 		var sortButton = $('.formSubmit > button[data-type="submit"]');
 		if (sortButton) {
 			sortButton.click($.proxy(this._sort, this));
@@ -879,13 +877,6 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
 		this._super(className);
 	},
 
-	/**
-	 * @see	WCF.Collapsible.Remote._getAdditionalParameters()
-	 */
-	_getAdditionalParameters: function(containerID) {
-		return {objectTypeID : this._objectTypeID};
-	},
-	
 	/**
 	 * @see	WCF.Collapsible.Remote._getButtonContainer()
 	 */

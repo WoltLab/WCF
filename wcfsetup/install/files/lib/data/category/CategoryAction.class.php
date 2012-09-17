@@ -3,6 +3,7 @@ namespace wcf\data\category;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
 use wcf\system\exception\ValidateActionException;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
@@ -53,7 +54,12 @@ class CategoryAction extends AbstractDatabaseObjectAction {
 	 * Toggles the collapse status of categories.
 	 */
 	public function toggleContainer() {
-		$objectTypeID = UserCollapsibleContentHandler::getInstance()->getObjectTypeID($this->objects[0]->getCategoryType()->getCollapsibleObjectTypeName());
+		$collapsibleObjectTypeName = $this->objects[0]->getCategoryType()->getObjectTypeName('com.woltlab.wcf.collapsibleContent');
+		if ($collapsibleObjectTypeName === null) {
+			throw new SystemException("Categories of this type don't support collapsing");
+		}
+		
+		$objectTypeID = UserCollapsibleContentHandler::getInstance()->getObjectTypeID($collapsibleObjectTypeName);
 		$collapsedCategories = UserCollapsibleContentHandler::getInstance()->getCollapsedContent($objectTypeID);
 		
 		$categoryID = $this->objects[0]->categoryID;
