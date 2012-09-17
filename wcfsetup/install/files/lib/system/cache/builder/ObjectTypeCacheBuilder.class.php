@@ -21,6 +21,7 @@ class ObjectTypeCacheBuilder implements ICacheBuilder {
 	public function getData(array $cacheResource) {
 		list($cache, $packageID) = explode('-', $cacheResource['cache']);
 		$data = array(
+			'categories' => array(),
 			'definitions' => array(),
 			'objectTypes' => array()
 		);
@@ -36,6 +37,14 @@ class ObjectTypeCacheBuilder implements ICacheBuilder {
 		$statement->execute(array($packageID));
 		while ($row = $statement->fetchArray()) {
 			$data['definitions'][$row['definitionID']] = new ObjectTypeDefinition(null, $row);
+			
+			if ($row['categoryName']) {
+				if (!isset($data['categories'][$row['categoryName']])) {
+					$data['categories'][$row['categoryName']] = array();
+				}
+				
+				$data['categories'][$row['categoryName']][] = $row['definitionID'];
+			}
 		}
 
 		// get object types
