@@ -4,6 +4,7 @@ use wcf\data\style\Style;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\Callback;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -80,31 +81,38 @@ class StyleCompiler extends SingletonFactory {
 			}
 		}
 		
-		$less = $this->bootstrap($variables, $individualLess);
-		foreach ($files as $file) {
-			$less .= $this->prepareFile($file);
-		}
+		$this->compileStylesheet(
+			WCF_DIR.'style/style-'.ApplicationHandler::getInstance()->getPrimaryApplication()->packageID.'-'.$style->styleID,
+			$files,
+			$variables,
+			$individualCss,
+			$individualLess,
+			new Callback(function($content) use ($style) {
+				return "/* stylesheet for '".$style->styleName."', generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
+			})
+		);
+	}
+	
+	/**
+	 * Compiles LESS stylesheets for ACP usage.
+	 */
+	public function compileACP() {
+		$files = glob(WCF_DIR.'style/*.less');
 		
-		// append individual CSS/LESS
-		if ($individualCss) {
-			$less .= $individualCss;
-		}
-		
-		try {
-			$content = $this->compiler->compile($less);
-		}
-		catch (\Exception $e) {
-			throw new SystemException("Could not compile LESS: ".$e->getMessage(), 0, '', $e);
-		}
-		
-		// write stylesheet
-		file_put_contents(WCF_DIR.'style/style-'.ApplicationHandler::getInstance()->getPrimaryApplication()->packageID.'-'.$style->styleID.'.css', $content);
-		
-		// convert stylesheet to RTL
-		$content = StyleUtil::convertCSSToRTL($content);
-		
-		// write stylesheet for RTL
-		file_put_contents(WCF_DIR.'style/style-'.ApplicationHandler::getInstance()->getPrimaryApplication()->packageID.'-'.$style->styleID.'-rtl.css', $content);
+		$this->compileStylesheet(
+			WCF_DIR.'acp/style/style',
+			$files,
+			array(),
+			'',
+			'',
+			new Callback(function($content) {
+				// fix relative paths
+				$content = str_replace('../icon/', '../../icon/', $content);
+				$content = str_replace('../images/', '../../images/', $content);
+				
+				return "/* stylesheet for ACP, generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
+			})
+		);
 	}
 	
 	/**
@@ -115,7 +123,7 @@ class StyleCompiler extends SingletonFactory {
 	 * @param	string			$individualLess
 	 * @return	string
 	 */
-	protected function bootstrap(array &$variables, $individualLess = '') {
+	protected function bootstrap(array $variables, $individualLess = '') {
 		// add reset like a boss
 		$content = $this->prepareFile(WCF_DIR.'style/bootstrap/reset.less');
 		
@@ -161,5 +169,47 @@ class StyleCompiler extends SingletonFactory {
 		// use a relative path
 		$filename = FileUtil::getRelativePath(WCF_DIR, dirname($filename)) . basename($filename);
 		return '@import "'.$filename.'";'."\n";
+	}
+	
+	/**
+	 * Compiles LESS stylesheets into one CSS-stylesheet and writes them
+	 * to filesystem. Please be aware not to append '.css' within $filename!
+	 * 
+	 * @param	string			$filename
+	 * @param	array<string>		$files
+	 * @param	array<string>		$variables
+	 * @param	string			$individualCss
+	 * @param	string			$individualLess
+	 * @param	wcf\system\Callback	$callback
+	 */
+	protected function compileStylesheet($filename, array $files, array $variables, $individualCss, $individualLess, Callback $callback) {
+		// build LESS bootstrap
+		$less = $this->bootstrap($variables, $individualLess);
+		foreach ($files as $file) {
+			$less .= $this->prepareFile($file);
+		}
+		
+		// append individual CSS/LESS
+		if ($individualCss) {
+			$less .= $individualCss;
+		}
+		
+		try {
+			$content = $this->compiler->compile($less);
+		}
+		catch (\Exception $e) {
+			throw new SystemException("Could not compile LESS: ".$e->getMessage(), 0, '', $e);
+		}
+		
+		$content = $callback($content);
+		
+		// write stylesheet
+		file_put_contents($filename.'.css', $content);
+		
+		// convert stylesheet to RTL
+		$content = StyleUtil::convertCSSToRTL($content);
+		
+		// write stylesheet for RTL
+		file_put_contents($filename.'-rtl.css', $content);
 	}
 }

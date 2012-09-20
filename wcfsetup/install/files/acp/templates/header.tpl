@@ -28,7 +28,8 @@
 	{event name='javascriptInclude'}
 	
 	<!-- Stylesheets -->
-	{@$__wcf->getStyleHandler()->getStylesheet()}
+	{* work-around for unknown core-object during WCFSetup *}
+	{if PACKAGE_ID}{@$__wcf->getStyleHandler()->getStylesheet(true)}{/if}
 	
 	{*
 	{if $specialStyles|isset}

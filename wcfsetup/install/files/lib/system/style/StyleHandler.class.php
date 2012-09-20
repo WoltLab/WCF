@@ -119,12 +119,23 @@ class StyleHandler extends SingletonFactory {
 	 * 
 	 * @todo	Add RTL support
 	 * 
+	 * @param	boolean		$isACP
 	 * @return	string
 	 */
-	public function getStylesheet() {
-		$filename = 'style/style-'.ApplicationHandler::getInstance()->getPrimaryApplication()->packageID.'-'.$this->getStyle()->styleID.'.css';
-		if (!file_exists(WCF_DIR.$filename)) {
-			StyleCompiler::getInstance()->compile($this->getStyle());
+	public function getStylesheet($isACP = false) {
+		if ($isACP) {
+			// ACP
+			$filename = 'acp/style/style.css';
+			if (!file_exists(WCF_DIR.$filename)) {
+				StyleCompiler::getInstance()->compileACP();
+			}
+		}
+		else {
+			// frontend
+			$filename = 'style/style-'.ApplicationHandler::getInstance()->getPrimaryApplication()->packageID.'-'.$this->getStyle()->styleID.'.css';
+			if (!file_exists(WCF_DIR.$filename)) {
+				StyleCompiler::getInstance()->compile($this->getStyle());
+			}
 		}
 		
 		return '<link rel="stylesheet" type="text/css" href="'.WCF::getPath().$filename.'" />';

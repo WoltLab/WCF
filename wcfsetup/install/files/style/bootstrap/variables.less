@@ -1,0 +1,136 @@
+/* ###### sxf values ###### */
+/* these values will be defined by the style editor (don't it touch here) */
+
+/* ### general (content) ### */
+@wcfContentBackgroundColor: #fff; // bg color for main content area
+@wcfColor: #666; // default text color
+@wcfLinkColor: #369; // default link color
+@wcfLinkHoverColor: #036; // link hover color
+
+/* ### containers ### */
+/* containers use the default text / link color, so the container bg color should be similar to the content bg color */
+@wcfContainerBackgroundColor: rgba(252, 253, 254, 1); // bg color for containers
+@wcfContainerAccentBackgroundColor: rgba(241, 245, 250, 1); // light variantion of the container bg color
+@wcfContainerHoverBackgroundColor: rgba(216, 231, 245, 1); // bg color for hover effects
+@wcfContainerBorderColor: #ccc; //#bcd; // border color for containers
+@wcfContainerBorderRadius: 6px; // border radius
+
+/* ### box header (table header) ### */
+@wcfTabularBoxBackgroundColor: #369; // bg color
+@wcfTabularBoxColor: #fff; // text / link color
+@wcfTabularBoxHoverColor: #fff; // link hover color
+
+/* ### user panel ### */
+@wcfUserPanelBackgroundColor: rgba(0, 0, 0, .5); // bg color
+@wcfUserPanelColor: #fff; // text / link color
+@wcfUserPanelHoverColor: #fff; // link hover color
+
+/* ### buttons ### */
+/* default */
+@wcfButtonBackgroundColor: #e3e3e3;
+@wcfButtonBorderColor: #bbb;
+@wcfButtonColor: #999;
+
+/* primary */
+@wcfButtonPrimaryBackgroundColor: rgba(216, 231, 245, 1);
+@wcfButtonPrimaryBorderColor: #69C;
+@wcfButtonPrimaryColor: #69C;
+
+/* hover */
+@wcfButtonHoverBackgroundColor: rgba(255, 229, 200, 1);
+@wcfButtonHoverBorderColor: #fa2;
+@wcfButtonHoverColor: #666;
+
+/* ### form elements ### */
+@wcfInputBackgroundColor: #fff;
+@wcfInputColor: #666;
+@wcfInputBorderColor: #ccc;
+@wcfInputHoverBackgroundColor: rgba(255, 249, 244, 1);
+@wcfInputHoverBorderColor: #fa2;
+
+/* ### fonts ### */
+@wcfBaseFontSize: 13px;
+@wcfBaseFontFamily: "Trebuchet MS", Arial, sans-serif;
+
+/* ### layouts ### */
+@wcfLayoutFluidGap: 21px;
+@wcfLayoutFixedWidth: 1200px;
+
+
+/* ###### additional variables ###### */
+/* values are taken from sxf variables; but you can overwrite them by individual less */
+
+/* ### outer page bg ### */
+@wcfPageBackgroundColor: @wcfContentBackgroundColor;
+@wcfPageColor: @wcfColor;
+@wcfPageLinkColor: @wcfLinkColor;
+@wcfPageLinkHoverColor: @wcfLinkHoverColor;
+
+/* ### sidebar ### */
+@wcfSidebarBackgroundColor: @wcfContentBackgroundColor;
+
+/* ### additional text variables ### */
+@wcfDimmedColor: lighten(@wcfColor, 10%);
+@wcfLabelColor: @wcfColor;
+@wcfHeadlineColor: @wcfColor;
+@wcfHeadlineFontFamily: @wcfBaseFontFamily;
+
+/* ### dropdown ### */
+@wcfDropdownBackgroundColor: @wcfContentBackgroundColor;
+@wcfDropdownColor: @wcfColor;
+@wcfDropdownBorderColor: @wcfContainerBorderColor;
+@wcfDropdownHoverBackgroundColor: @wcfContainerHoverBackgroundColor;
+
+
+/* ###### hardcoded values ###### */
+/* values are hardcoded; you can overwrite them by individual less */
+
+/* ### font size ### */
+@wcfBaseLineHeight: 1.27;
+@wcfHeadlineFontSize: 170%;
+@wcfSubHeadlineFontSize: 140%;
+@wcfTitleFontSize: 120%;
+@wcfSmallFontSize: 85%;
+
+/* ### form states and alerts ### */
+/* warning (orange) */
+@wcfWarningColor: #fff;
+@wcfWarningBackgroundColor: #ffb800;
+@wcfWarningBackgroundColor2: #a67800;
+
+/* error (red) */
+@wcfErrorColor: #fff;
+@wcfErrorBackgroundColor: #c95145;
+@wcfErrorBackgroundColor2: #913d37;
+
+/* success (green) */
+@wcfSuccessColor: #fff;
+@wcfSuccessBackgroundColor: #74a446;
+@wcfSuccessBackgroundColor2: #4d7730;
+
+/* info (blue) */
+@wcfInfoColor: #fff;
+@wcfInfoBackgroundColor: #4674a4;
+@wcfInfoBackgroundColor2: #304d77;
+
+/* ### tooltip ### */
+@wcfTooltipBackgroundColor: rgba(0, 0, 0, .8);
+@wcfTooltipColor: white;
+
+/* ### gap ### */
+@wcfGapTiny: 4px;
+@wcfGapSmall: 7px;
+@wcfGapMedium: 14px;
+@wcfGapLarge: 21px;
+
+
+/* ###### individual less values ###### */
+/* overwrite additional variables for blue sunrise */
+@wcfPageBackgroundColor: @wcfTabularBoxBackgroundColor;
+@wcfSidebarBackgroundColor: @wcfContainerHoverBackgroundColor;
+@wcfPageLinkColor: lighten(@wcfLinkColor, 10%);
+@wcfPageLinkHoverColor: @wcfUserPanelHoverColor;
+@wcfLabelColor: @wcfLinkColor;
+
+/* additional variables for blue sunrise */
+@wcfNavigationBackgroundColor: lighten(@wcfSidebarBackgroundColor, 3%);
