@@ -284,19 +284,19 @@ final class DateUtil {
 	 */
 	public static function validateDate($date) {
 		// matches almost any valid date between year 2000 and 2038
-		if (!preg_match('~^(20[0-2][0-9]|203[0-8])\-(0[1-9]|1[0-2])\-(0[1-9]|[1-2][0-9]|3[0-1])$~', $element->nodeValue)) {
-			throw new SystemException("date '".$element->nodeValue."' is invalid, violating ISO-8601 date format.");
+		if (!preg_match('~^(20[0-2][0-9]|203[0-8])\-(0[1-9]|1[0-2])\-(0[1-9]|[1-2][0-9]|3[0-1])$~', $date)) {
+			throw new SystemException("date '".$date."' is invalid, violating ISO-8601 date format.");
 		}
 		
 		// try to convert $date into a UNIX timestamp
 		$time = strtotime($time);
 		if ($time === false) {
-			throw new SystemException("date '".$element->nodeValue."' is invalid");
+			throw new SystemException("date '".$date."' is invalid");
 		}
 		
 		// convert back to ISO-8601, if date was bogus (e.g. 2000-02-31) data() returns a different date than $date
 		if (date('Y-m-d', $time) != $date) {
-			throw new SystemException("date '".$element->nodeValue."' is invalid");
+			throw new SystemException("date '".$date."' is invalid");
 		}
 	}
 	
