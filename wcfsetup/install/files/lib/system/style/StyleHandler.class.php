@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\style;
 use wcf\data\style\ActiveStyle;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -111,5 +112,21 @@ class StyleHandler extends SingletonFactory {
 		if (WCF::getTPL()) {
 			WCF::getTPL()->setTemplateGroupID($this->style->templateGroupID);
 		}
+	}
+	
+	/**
+	 * Returns the HTML tag to include current stylesheet.
+	 * 
+	 * @todo	Add RTL support
+	 * 
+	 * @return	string
+	 */
+	public function getStylesheet() {
+		$filename = 'style/style-'.ApplicationHandler::getInstance()->getPrimaryApplication()->packageID.'-'.$this->getStyle()->styleID.'.css';
+		if (!file_exists(WCF_DIR.$filename)) {
+			StyleCompiler::getInstance()->compile($this->getStyle());
+		}
+		
+		return '<link rel="stylesheet" type="text/css" href="'.WCF::getPath().$filename.'" />';
 	}
 }

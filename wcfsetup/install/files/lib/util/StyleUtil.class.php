@@ -6,7 +6,7 @@ use wcf\system\io\File;
  * Contains Style-related functions.
  *
  * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -100,6 +100,7 @@ final class StyleUtil {
 	 * Updates the acp style file.
 	 */
 	public static function updateStyleFile() {
+		throw new \wcf\system\exception\SystemException("updateStyleFile()");
 		// get file handle
 		$file = new File(WCF_DIR . 'acp/style/style-ltr.css', 'wb');
 		
@@ -145,6 +146,8 @@ final class StyleUtil {
 	 * Converts the file of this style to a RTL ("right-to-left") version. 
 	 */
 	public static function updateStyleFileRTL() {
+		throw new \wcf\system\exception\SystemException("updateStyleFileRTL()");
+		
 		// get contents of LTR version
 		$contents = file_get_contents(WCF_DIR . 'acp/style/style-ltr.css');
 		

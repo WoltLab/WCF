@@ -593,15 +593,6 @@ CREATE TABLE wcf1_style_variable (
 	UNIQUE KEY (styleID, variableName)
 );
 
-DROP TABLE IF EXISTS wcf1_style_variable_to_attribute;
-CREATE TABLE wcf1_style_variable_to_attribute (
-	packageID INT(10) NOT NULL,
-	cssSelector VARCHAR(200) NOT NULL DEFAULT '',
-	attributeName VARCHAR(50) NOT NULL DEFAULT '',
-	variableName VARCHAR(50) NOT NULL DEFAULT '',
-	UNIQUE KEY (packageID, cssSelector, attributeName, variableName)
-);
-
 DROP TABLE IF EXISTS wcf1_template;
 CREATE TABLE wcf1_template (
 	templateID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -881,8 +872,6 @@ ALTER TABLE wcf1_style_to_package ADD FOREIGN KEY (styleID) REFERENCES wcf1_styl
 ALTER TABLE wcf1_style_to_package ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_style_variable ADD FOREIGN KEY (styleID) REFERENCES wcf1_style (styleID) ON DELETE CASCADE;
-
-ALTER TABLE wcf1_style_variable_to_attribute ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_template ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_template ADD FOREIGN KEY (templateGroupID) REFERENCES wcf1_template_group (templateGroupID) ON DELETE CASCADE;

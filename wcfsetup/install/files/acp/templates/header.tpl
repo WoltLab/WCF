@@ -28,13 +28,7 @@
 	{event name='javascriptInclude'}
 	
 	<!-- Stylesheets -->
-	<link rel="stylesheet/less" type="text/css" href="{@$__wcf->getPath()}style/bootstrap.less" />
-	<script type="text/javascript">
-		//<![CDATA[
-		var less = { env: 'development' };
-		//]]>
-	</script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/less.min.js"></script>
+	{@$__wcf->getStyleHandler()->getStylesheet()}
 	
 	{*
 	{if $specialStyles|isset}
