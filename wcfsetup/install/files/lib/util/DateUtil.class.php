@@ -289,7 +289,7 @@ final class DateUtil {
 		}
 		
 		// try to convert $date into a UNIX timestamp
-		$time = strtotime($time);
+		$time = strtotime($date);
 		if ($time === false) {
 			throw new SystemException("date '".$date."' is invalid");
 		}
