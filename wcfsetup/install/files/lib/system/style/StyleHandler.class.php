@@ -134,7 +134,7 @@ class StyleHandler extends SingletonFactory {
 			// frontend
 			$filename = 'style/style-'.ApplicationHandler::getInstance()->getPrimaryApplication()->packageID.'-'.$this->getStyle()->styleID.'.css';
 			if (!file_exists(WCF_DIR.$filename)) {
-				StyleCompiler::getInstance()->compile($this->getStyle());
+				StyleCompiler::getInstance()->compile($this->getStyle()->getDecoratedObject());
 			}
 		}
 		
