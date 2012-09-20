@@ -16,8 +16,5 @@
 		<coreobject>
 			<objectname><![CDATA[wcf\system\benchmark\Benchmark]]></objectname>
 		</coreobject>
-		<coreobject>
-			<objectname><![CDATA[wcf\system\style\StyleHandler]]></objectname>
-		</coreobject>
 	</import>
 </data>

@@ -29,7 +29,7 @@
 	
 	<!-- Stylesheets -->
 	{* work-around for unknown core-object during WCFSetup *}
-	{if PACKAGE_ID}{@$__wcf->getStyleHandler()->getStylesheet(true)}{/if}
+	{@$__wcf->getStyleHandler()->getStylesheet()}
 	
 	{*
 	{if $specialStyles|isset}

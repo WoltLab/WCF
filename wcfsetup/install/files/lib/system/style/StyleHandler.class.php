@@ -4,6 +4,7 @@ use wcf\data\style\ActiveStyle;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -119,11 +120,10 @@ class StyleHandler extends SingletonFactory {
 	 * 
 	 * @todo	Add RTL support
 	 * 
-	 * @param	boolean		$isACP
 	 * @return	string
 	 */
-	public function getStylesheet($isACP = false) {
-		if ($isACP) {
+	public function getStylesheet() {
+		if (RequestHandler::getInstance()->isACPRequest()) {
 			// ACP
 			$filename = 'acp/style/style.css';
 			if (!file_exists(WCF_DIR.$filename)) {
