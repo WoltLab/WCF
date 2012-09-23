@@ -67,6 +67,7 @@ class StyleCompiler extends SingletonFactory {
 			FROM	wcf".WCF_N."_style_variable
 			WHERE	styleID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($style->styleID));
 		$variables = array();
 		$individualCss = $individualLess = '';
 		while ($row = $statement->fetchArray()) {
