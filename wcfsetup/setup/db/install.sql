@@ -943,7 +943,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLinkHov
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerBackgroundColor', 'rgba(252, 253, 254, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerAccentBackgroundColor', 'rgba(241, 245, 250, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerHoverBackgroundColor', 'rgba(216, 231, 245, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerBorderColor', '#ccc; //#bcd');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerBorderColor', '#ccc');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerBorderRadius', '6px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTabularBoxBackgroundColor', '#369');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTabularBoxColor', '#fff');
@@ -989,12 +989,16 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTitleFo
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSmallFontSize', '85%');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfWarningColor', '#fff');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfWarningBackgroundColor', '#ffb800');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfWarningBackgroundColor2', '#a67800');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfErrorColor', '#fff');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfErrorBackgroundColor', '#c95145');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfErrorBackgroundColor2', '#913d37');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSuccessColor', '#fff');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSuccessBackgroundColor', '#74a446');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSuccessBackgroundColor2', '#4d7730');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInfoColor', '#fff');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInfoBackgroundColor', '#4674a4');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInfoBackgroundColor2', '#304d77');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTooltipBackgroundColor', 'rgba(0, 0, 0, .8)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTooltipColor', 'white');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapTiny', '4px');

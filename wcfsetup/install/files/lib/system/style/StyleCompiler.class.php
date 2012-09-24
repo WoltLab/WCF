@@ -87,10 +87,21 @@ class StyleCompiler extends SingletonFactory {
 	public function compileACP() {
 		$files = glob(WCF_DIR.'style/*.less');
 		
+		// read default values
+		$sql = "SELECT		variableName, defaultValue
+			FROM		wcf".WCF_N."_style_variable
+			ORDER BY	variableID ASC";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		$variables = array();
+		while ($row = $statement->fetchArray()) {
+			$variables[$row['variableName']] = $row['defaultValue'];
+		}
+		
 		$this->compileStylesheet(
 			WCF_DIR.'acp/style/style',
 			$files,
-			array(),
+			$variables,
 			'',
 			new Callback(function($content) {
 				// fix relative paths
