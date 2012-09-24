@@ -969,13 +969,13 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfBaseFon
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfBaseFontFamily', '"Trebuchet MS", Arial, sans-serif');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutFluidGap', '21px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutFixedWidth', '1200px');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageBackgroundColor', '@wcfContentBackgroundColor');
+-- INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageBackgroundColor', '@wcfContentBackgroundColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageColor', '@wcfColor');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageLinkColor', '@wcfLinkColor');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageLinkHoverColor', '@wcfLinkHoverColor');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSidebarBackgroundColor', '@wcfContentBackgroundColor');
+-- INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageLinkColor', '@wcfLinkColor');
+-- INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageLinkHoverColor', '@wcfLinkHoverColor');
+-- INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSidebarBackgroundColor', '@wcfContentBackgroundColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDimmedColor', 'lighten(@wcfColor, 10%)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLabelColor', '@wcfColor');
+-- INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLabelColor', '@wcfColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeadlineColor', '@wcfColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeadlineFontFamily', '@wcfBaseFontFamily');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownBackgroundColor', '@wcfContentBackgroundColor');
@@ -1001,7 +1001,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapTiny
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapSmall', '7px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapMedium', '14px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapLarge', '21px');
--- TODO: The variables below are from blue sunrise, remove them later!
+-- TODO: The variables below are from blue sunrise, remove them later - be sure to un-comment the INSERTs above!
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageBackgroundColor', '@wcfTabularBoxBackgroundColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSidebarBackgroundColor', '@wcfContainerHoverBackgroundColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageLinkColor', 'lighten(@wcfLinkColor, 10%)');
