@@ -36,18 +36,18 @@ class Style extends DatabaseObject {
 	/**
 	 * Returns the styles variables of this style.
 	 * 
-	 * @return	array
+	 * @return	array<string>
 	 */
 	public function getVariables() {
 		$variables = array();
-		$sql = "SELECT		variableName, variableValue
-			FROM		wcf".WCF_N."_style_variable
-			WHERE		styleID = ?
-			ORDER BY	variableName ASC";
+		$sql = "SELECT		variable.variableName, variable.defaultValue, value.variableValue
+			FROM		wcf".WCF_N."_style_variable variable
+			LEFT JOIN	wcf".WCF_N."_style_variable_value value
+			ON		(value.variableID = variable.variableID AND value.styleID = ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->styleID));
 		while ($row = $statement->fetchArray()) {
-			$variables[$row['variableName']] = $row['variableValue'];
+			$variables[$row['variableName']] = (isset($row['variableValue'])) ? $row['variableValue'] : $row['defaultValue'];
 		}
 		
 		return $variables;

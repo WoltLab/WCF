@@ -83,8 +83,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$statement->execute(array($this->styleID));
 		
 		// delete style files
-		@unlink(WCF_DIR.'style/style-'.$this->styleID.'.css');
-		@unlink(WCF_DIR.'style/style-'.$this->styleID.'-rtl.css');
+		$files = @glob(WCF_DIR.'style/style-*-'.$this->styleID.'*.css');
+		if (is_array($files)) {
+			foreach ($files as $file) {
+				@unlink($file);
+			}
+		}
 		
 		// delete preview image
 		if ($this->image) {
@@ -300,7 +304,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				$statement->execute(array($templateGroupName));
 				$row = $statement->fetchArray();
 				if (!$row['count']) break;
-				$templateGroupName = $originalTemplateGroupName . '_' . $i; //TODO: undefined variable
+				$templateGroupName = $originalTemplateGroupName . '_' . $i;
 				$i++;
 			}
 			
@@ -525,6 +529,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * @param	boolean		$icons
 	 */
 	public function export($templates = false, $images = false, $icons = false) {
+		// TODO: Fix this method!
+		throw new SystemException("FIX ME!");
+		
 		// create style tar
 		$styleTarName = FileUtil::getTemporaryFilename('style_', '.tgz');
 		$styleTar = new TarWriter($styleTarName, true);
@@ -696,35 +703,49 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	
 	/**
 	 * Sets the variables of a style.
+	 * 
+	 * @param	array<string>		$variables
 	 */
-	public function setVariables($variables) {
+	public function setVariables(array $variables = array()) {
 		// delete old variables
-		$sql = "DELETE FROM	wcf".WCF_N."_style_variable
+		$sql = "DELETE FROM	wcf".WCF_N."_style_variable_value
 			WHERE		styleID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->styleID));
 		
 		// insert new variables
-		$statementParameters = array();
-		foreach ($variables as $name => $value) {
-			$statementParameters[] = array(
-				'name' => $name,
-				'value' => $value
-			);
-		}
-		
-		if (count($statementParameters)) {
-			$sql = "INSERT INTO	wcf".WCF_N."_style_variable
-						(styleID, variableName, variableValue)
-				VALUES		(?, ?, ?)";
+		if (!empty($variables)) {
+			$sql = "SELECT	*
+				FROM	wcf".WCF_N."_style_variable";
 			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute();
+			$styleVariables = array();
+			while ($row = $statement->fetchArray()) {
+				$variableName = $row['variableName'];
+				
+				if (isset($variables[$variableName])) {
+					// compare value, save only if differs from default
+					if ($variables[$variableName] != $row['defaultValue']) {
+						$styleVariables[$row['variableID']] = $variables[$variableName];
+					}
+				}
+			}
 			
-			foreach ($statementParameters as $parameter) {
-				$statement->execute(array(
-					$this->styleID,
-					$parameter['name'],
-					$parameter['value']
-				));
+			if (!empty($styleVariables)) {
+				$sql = "INSERT INTO	wcf".WCF_N."_style_variable_value
+							(styleID, variableID, variableValue)
+					VALUES		(?, ?, ?)";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				
+				WCF::getDB()->beginTransaction();
+				foreach ($styleVariables as $variableID => $variableValue) {
+					$statement->execute(array(
+						$this->styleID,
+						$variableID,
+						$variableValue
+					));
+				}
+				WCF::getDB()->commitTransaction();
 			}
 		}
 		

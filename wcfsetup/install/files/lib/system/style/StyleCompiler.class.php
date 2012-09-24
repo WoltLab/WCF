@@ -62,23 +62,12 @@ class StyleCompiler extends SingletonFactory {
 			$files[] = WCF_DIR.$row['packageDir'].$row['filename'];
 		}
 		
-		// load style variables
-		$sql = "SELECT	variableName, variableValue
-			FROM	wcf".WCF_N."_style_variable
-			WHERE	styleID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$variables = array();
-		$individualCss = $individualLess = '';
-		while ($row = $statement->fetchArray()) {
-			if ($row['variableName'] == 'individualCss') {
-				$individualCss = $row['variableValue'];
-			}
-			else if ($row['variableName'] == 'individualLess') {
-				$individualLess = $row['variableValue'];
-			}
-			else {
-				$variables[$row['variableName']] = $row['variableValue'];
-			}
+		// get style variables
+		$variables = $style->getVariables();
+		$individualCss = '';
+		if (isset($variables['individualCss'])) {
+			$individualCss = $variables['individualCss'];
+			unset($variables['individualCss']);
 		}
 		
 		$this->compileStylesheet(
@@ -86,7 +75,6 @@ class StyleCompiler extends SingletonFactory {
 			$files,
 			$variables,
 			$individualCss,
-			$individualLess,
 			new Callback(function($content) use ($style) {
 				return "/* stylesheet for '".$style->styleName."', generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
 			})
@@ -104,7 +92,6 @@ class StyleCompiler extends SingletonFactory {
 			$files,
 			array(),
 			'',
-			'',
 			new Callback(function($content) {
 				// fix relative paths
 				$content = str_replace('../icon/', '../../icon/', $content);
@@ -116,35 +103,14 @@ class StyleCompiler extends SingletonFactory {
 	}
 	
 	/**
-	 * Prepares the style compiler, adding variables to environment and appending
-	 * individual LESS declarations to override variables.less's values.
+	 * Prepares the style compiler by adding variables to environment.
 	 * 
 	 * @param	array<string>		$variables
-	 * @param	string			$individualLess
 	 * @return	string
 	 */
-	protected function bootstrap(array $variables, $individualLess = '') {
+	protected function bootstrap(array $variables) {
 		// add reset like a boss
 		$content = $this->prepareFile(WCF_DIR.'style/bootstrap/reset.less');
-		
-		// override LESS variables
-		$variablesContent = $this->prepareFile(WCF_DIR.'style/bootstrap/variables.less');
-		if ($individualLess) {
-			list($keywords, $values) = explode('=', explode("\n", $individualLess));
-			if (count($keywords) != count($values)) {
-				throw new SystemException("Could not override LESS variables, invalid input");
-			}
-			
-			foreach ($keywords as $i => $keyword) {
-				$variablesContent = preg_replace(
-					'~^@'.$keyword.':.*$~imU',
-					'@'.$keyword.': '.$values[$i].';',
-					$variablesContent
-				);
-			}
-		}
-		$content .= $variablesContent;
-		
 		
 		// apply style variables
 		$this->compiler->setVariables($variables);
@@ -179,12 +145,11 @@ class StyleCompiler extends SingletonFactory {
 	 * @param	array<string>		$files
 	 * @param	array<string>		$variables
 	 * @param	string			$individualCss
-	 * @param	string			$individualLess
 	 * @param	wcf\system\Callback	$callback
 	 */
-	protected function compileStylesheet($filename, array $files, array $variables, $individualCss, $individualLess, Callback $callback) {
+	protected function compileStylesheet($filename, array $files, array $variables, $individualCss, Callback $callback) {
 		// build LESS bootstrap
-		$less = $this->bootstrap($variables, $individualLess);
+		$less = $this->bootstrap($variables);
 		foreach ($files as $file) {
 			$less .= $this->prepareFile($file);
 		}
