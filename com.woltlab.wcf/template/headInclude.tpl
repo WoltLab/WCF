@@ -71,21 +71,21 @@
 		});
 		
 		WCF.Icon.addObject({
-			'wcf.icon.loading': '{icon size='S'}spinner{/icon}',
-			'wcf.icon.opened': '{icon size='S'}arrowDownInverse{/icon}',
-			'wcf.icon.closed': '{icon size='S'}arrowRightInverse{/icon}',
-			'wcf.icon.arrow.left': '{icon size='S'}arrowLeft{/icon}',
-			'wcf.icon.arrow.left.circle': '{icon size='S'}circleArrowLeft{/icon}',
-			'wcf.icon.arrow.right': '{icon size='S'}arrowRight{/icon}',
-			'wcf.icon.arrow.right.circle': '{icon size='S'}circleArrowRight{/icon}',
-			'wcf.icon.arrow.down': '{icon size='S'}arrowDown{/icon}',
-			'wcf.icon.arrow.down.circle': '{icon size='S'}circleArroDown{/icon}',
-			'wcf.icon.arrow.up': '{icon size='S'}arrowUp{/icon}',
-			'wcf.icon.arrow.up.circle': '{icon size='S'}circleArrowUp{/icon}',
-			'wcf.icon.dropdown': '{icon size='S'}dropdown{/icon}',
-			'wcf.icon.edit': '{icon size='S'}edit{/icon}',
-			'wcf.icon.delete': '{icon size='S'}delete{/icon}',
-			'wcf.icon.error': '{icon size='L'}errorRed{/icon}'
+			'wcf.icon.loading': '{icon}spinner{/icon}',
+			'wcf.icon.opened': '{icon}arrowDownInverse{/icon}',
+			'wcf.icon.closed': '{icon}arrowRightInverse{/icon}',
+			'wcf.icon.arrow.left': '{icon}arrowLeft{/icon}',
+			'wcf.icon.arrow.left.circle': '{icon}circleArrowLeft{/icon}',
+			'wcf.icon.arrow.right': '{icon}arrowRight{/icon}',
+			'wcf.icon.arrow.right.circle': '{icon}circleArrowRight{/icon}',
+			'wcf.icon.arrow.down': '{icon}arrowDown{/icon}',
+			'wcf.icon.arrow.down.circle': '{icon}circleArroDown{/icon}',
+			'wcf.icon.arrow.up': '{icon}arrowUp{/icon}',
+			'wcf.icon.arrow.up.circle': '{icon}circleArrowUp{/icon}',
+			'wcf.icon.dropdown': '{icon}dropdown{/icon}',
+			'wcf.icon.edit': '{icon}edit{/icon}',
+			'wcf.icon.delete': '{icon}delete{/icon}',
+			'wcf.icon.error': '{icon}errorRed{/icon}'
 			{event name='javascriptIconImport'}
 		});
 		

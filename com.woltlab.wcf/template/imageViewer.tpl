@@ -5,10 +5,10 @@
 		//<![CDATA[
 		$(function() {
 			WCF.Icon.addObject({
-				'wcf.icon.arrowLeftColored': '{icon size='M'}arrowLeftColored{/icon}',
-				'wcf.icon.arrowRightColored': '{icon size='M'}arrowRightColored{/icon}',
-				'wcf.icon.deleteColored': '{icon size='M'}deleteColored{/icon}',
-				'wcf.icon.enlargeColored': '{icon size='M'}enlargeColored{/icon}'
+				'wcf.icon.arrowLeftColored': '{icon}arrowLeftColored{/icon}',
+				'wcf.icon.arrowRightColored': '{icon}arrowRightColored{/icon}',
+				'wcf.icon.deleteColored': '{icon}deleteColored{/icon}',
+				'wcf.icon.enlargeColored': '{icon}enlargeColored{/icon}'
 			});
 			WCF.Language.addObject({
 				'wcf.imageViewer.counter': '{lang}wcf.imageViewer.counter{/lang}',
