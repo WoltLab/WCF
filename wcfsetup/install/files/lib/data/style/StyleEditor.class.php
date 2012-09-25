@@ -135,7 +135,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$data = array(
 			'name' => '', 'description' => '', 'version' => '', 'image' => '', 'copyright' => '',
 			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '',
-			'variables' => '', 'date' => '0000-00-00', 'icons' => ''
+			'variables' => '', 'date' => '0000-00-00', 'icons' => '', 'iconPath' => '', 'imagePath' => ''
 		);
 		
 		$categories = $xpath->query('/ns:style/*');
@@ -160,6 +160,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 					$elements = $xpath->query('child::*', $category);
 					foreach ($elements as $element) {
 						$data[$element->tagName] = $element->nodeValue;
+						if ($element->hasAttribute('path')) {
+							$data[$element->tagName.'Path'] = $element->getAttribute('path');
+						}
 					}
 					break;
 		
@@ -283,8 +286,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$data = self::readStyleData($tar);
 		
 		// get image locations
-		$iconsLocation = FileUtil::addTrailingSlash($data['variables']['global.icons.location']);
-		$imagesLocation = $data['variables']['global.images.location'];
+		$iconsLocation = FileUtil::addTrailingSlash('icon/'.$data['iconPath']);
+		$imagesLocation = FileUtil::addTrailingSlash('images/'.$data['imagePath']);
 		
 		// create template group
 		$templateGroupID = 0;
@@ -345,7 +348,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			'copyright' => $data['copyright'],
 			'license' => $data['license'],
 			'authorName' => $data['authorName'],
-			'authorURL' => $data['authorURL']
+			'authorURL' => $data['authorURL'],
+			'iconPath' => $data['iconPath']
 		);
 		if ($style !== null) {
 			$style->update($styleData);
