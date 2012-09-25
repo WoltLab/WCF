@@ -297,7 +297,7 @@ class ClipboardHandler extends SingletonFactory {
 	public function removeItems($typeID = null) {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("userID = ?", array(WCF::getUser()->userID));
-		if ($typeID !== null) $conditions->add("typeID = ?", array($typeID));
+		if ($typeID !== null) $conditions->add("objectTypeID = ?", array($typeID));
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_clipboard_item
 			".$conditions;
