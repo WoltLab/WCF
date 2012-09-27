@@ -8,6 +8,10 @@
 			</category>
 			
 			<category name="mod"></category>
+			<category name="mod.general">
+				<parent>mod</parent>
+			</category>
+			
 			<category name="admin"></category>
 			<category name="admin.general">
 				<parent>admin</parent>
