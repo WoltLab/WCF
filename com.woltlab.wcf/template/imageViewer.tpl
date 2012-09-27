@@ -3,6 +3,7 @@
 	<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.ImageViewer.js"></script>
 	<script type="text/javascript">
 		//<![CDATA[
+		var $imageViewer = null;
 		$(function() {
 			WCF.Icon.addObject({
 				'wcf.icon.arrowLeftColored': '{icon}arrowLeftColored{/icon}',
@@ -18,7 +19,7 @@
 				'wcf.imageViewer.previous': '{lang}wcf.imageViewer.previous{/lang}'
 			});
 			
-			new WCF.ImageViewer();
+			$imageViewer = new WCF.ImageViewer();
 		});
 		//]]>
 	</script>
