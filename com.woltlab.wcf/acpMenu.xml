@@ -238,6 +238,27 @@
 			<showorder>3</showorder>
 		</acpmenuitem>
 		
+		<!-- style -->
+		<acpmenuitem name="wcf.acp.menu.link.style">
+			<parent>wcf.acp.menu.link.display</parent>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.style.list">
+			<link>index.php/StyleList/</link>
+			<parent>wcf.acp.menu.link.style</parent>
+			<permissions>admin.style.canEditStyle,admin.style.canDeleteStyle</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.style.add">
+			<link>index.php/StyleAdd/</link>
+			<parent>wcf.acp.menu.link.style</parent>
+			<permissions>admin.style.canAddStyle</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		<!-- /style -->
+		
 		<acpmenuitem name="wcf.acp.menu.link.content">
 			<showorder>4</showorder>
 		</acpmenuitem>
