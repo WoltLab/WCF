@@ -1,0 +1,404 @@
+/* ### fieldsets ### */
+fieldset {
+	padding-top: @wcfGapMedium;
+	
+	> legend {
+		border-bottom: 1px solid @wcfContainerBorderColor;
+		color: @wcfDimmedColor;
+		font-family: @wcfHeadlineFontFamily;
+		font-size: @wcfSubHeadlineFontSize;
+		font-weight: bold;
+		width: 100%;
+		padding-bottom: @wcfGapTiny;
+		
+		.textShadow(@wcfContainerBackgroundColor);
+		
+		+ small {
+			top: -7px;
+			position: relative;
+		}
+	}
+	
+	> dl:not(:first-of-type) {
+		margin-top: @wcfGapSmall;
+	}
+	
+	&:not(:first-of-type) {
+		margin-top: @wcfGapMedium;
+	}
+	
+	/* definition list */
+	dl {
+		position: relative;
+		
+		.clearfix();
+		
+		> dd:not(:first-of-type), > dt:not(:first-of-type) {
+			margin-top: @wcfGapSmall;
+		}
+		
+		> dt {
+			color: @wcfLabelColor;
+			float: left;
+			text-align: right;
+			width: 230px;
+			
+			> label {
+				display: block;
+			}
+			
+			/* Reversed (flips the label aside the checkbox or radio button) - 
+				use only when automatically generating checkboxes or radio-buttons! */
+			&.reversed {
+				left: 270px;
+				margin-top: 2px;
+				position: absolute;
+				text-align: left;
+				width: auto;
+				
+				~ dd > input[type='checkbox'], ~ dd > input[type='radio'] {
+					margin-left: 0;
+				}
+			}
+		}
+		
+		> dd {
+			margin-left: 250px;
+			
+			> small {
+				color: @wcfDimmedColor;
+				display: block;
+				margin-top: 2px;
+			}
+			
+			> label {
+				color: @wcfLabelColor;
+				display: block;
+				
+				> input[type='checkbox'], > input[type='radio'] {
+					margin: 2px 2px 2px 0;
+				}
+			}
+			
+			> input[type='checkbox'], > input[type='radio'] {
+				~ small {
+					margin-left: 21px;
+				}
+			}
+			
+			&:not(.floated) {
+				> label ~ small {
+					margin-left: 21px;
+				}
+			}
+			
+			&.floated {
+				> label {
+					display: inline-block;
+					margin-right: @wcfGapSmall;
+				}
+			}
+			
+			> input, textarea, select {
+				+ label {
+					margin-top: 2px;
+				}
+			}
+		}
+		
+		/* wide */
+		&.wide {
+			> dt {
+				display: none;
+			}
+			
+			> dd {
+				margin-left: 0;
+			}
+		}
+		
+		/* disabled state */
+		&.disabled {
+			> dt, > dd > label {
+				color: @wcfDimmedColor;
+			}
+		}
+	}
+}
+
+/* sidebar */
+.sidebar {
+	fieldset {
+		> dl {
+			> dt {
+				text-align: left;
+				float: none;
+				width: auto;
+			}
+			
+			> dd {
+				margin-top: 2px;
+				margin-left: 0;
+				margin-bottom: @wcfGapMedium;
+			}
+		}
+	}
+}
+
+/* submit buttons */
+.formSubmit {
+	margin-top: @wcfGapMedium;
+	text-align: center;
+}
+
+
+/* ### inputs ### */
+/* globals */
+button,
+input[type='reset'],
+input[type='submit'],
+input[type='button'],
+input[type='checkbox'],
+input[type='radio'],
+select:not([multiple]) {
+	cursor: pointer;
+}
+
+input[type='text'],
+input[type='search'], /* Does not work in WebKit browsers */
+input[type='date'],
+input[type='email'],
+input[type='url'],
+input[type='password'],
+textarea,
+select[multiple] {
+	box-sizing: border-box;
+	padding: 5px 3px;
+	margin: 0;
+}
+
+select {
+	padding: 1px 1px 1px 3px;
+	margin: 0;
+}
+
+select[multiple] {
+	 font-family: 'Courier New', Courier, monospace;
+}
+
+/* normal state */
+input[type='text'],
+input[type='search'],
+input[type='date'],
+input[type='email'],
+input[type='url'],
+input[type='password'],
+textarea,
+select[multiple] {
+	background-color: @wcfInputBackgroundColor;
+	border-color: @wcfInputBorderColor;
+	border-style: solid;
+	border-width: 1px;
+	color: @wcfInputColor;
+}
+
+/* hover */
+input[type='text']:hover,
+input[type='search']:hover,
+input[type='date']:hover,
+input[type='email']:hover,
+input[type='url']:hover,
+input[type='password']:hover,
+textarea:hover,
+select[multiple]:hover {
+	background-color: @wcfInputHoverBackgroundColor;
+	border-color: @wcfInputHoverBorderColor;
+}
+
+/* active / focus */
+input[type='text']:active,
+input[type='search']:active,
+input[type='date']:active,
+input[type='email']:active,
+input[type='url']:active,
+input[type='password']:active,
+textarea:active,
+select[multiple]:active,
+
+input[type='text']:focus,
+input[type='search']:focus,
+input[type='date']:focus,
+input[type='email']:focus,
+input[type='url']:focus,
+input[type='password']:focus,
+textarea:focus,
+select[multiple]:focus {
+	background-color: @wcfInputHoverBackgroundColor;
+	border-color: @wcfInputHoverBorderColor;
+	outline: 0;
+	
+	.boxShadowNative(~"0 0 5px" fade(@wcfInputHoverBorderColor, 50%) ~", inset 0 1px 5px rgba(0, 0, 0, .1)");
+}
+
+/* read only state */
+/* todo */
+input[type='text'][readonly],
+input[type='search'][readonly],
+input[type='email'][readonly],
+input[type='date'][readonly],
+input[type='url'][readonly],
+input[type='password'][readonly],
+textarea[readonly],
+select[multiple][readonly] {
+	background-color: transparent;
+	border-color: @wcfInputBorderColor;
+}
+
+/* disabled state */
+/* todo */
+input[type='text'][disabled],
+input[type='search'][disabled],
+input[type='date'][disabled],
+input[type='email'][disabled],
+input[type='url'][disabled],
+input[type='password'][disabled],
+textarea[disabled],
+select[multiple][disabled] {
+	background-color: transparent;
+	border-color: @wcfInputBorderColor;
+	color: @wcfDimmedColor;
+}
+
+/* error state */
+/* todo */
+.formError input[type='text'],
+.formError input[type='search'],
+.formError input[type='email'],
+.formError input[type='url'],
+.formError input[type='password'],
+.formError textarea {
+	border-color: @wcfErrorBackgroundColor;
+}
+
+/* success state */
+/* todo */
+.formSuccess input[type='text'],
+.formSuccess input[type='search'],
+.formSuccess input[type='email'],
+.formSuccess input[type='url'],
+.formSuccess input[type='password'],
+.formSuccess textarea {
+	border-color: @wcfSuccessBackgroundColor;
+}
+
+/* width */
+textarea {
+	width: 99%;
+}
+	
+.tiny {
+	width: 50px;
+}
+	
+.short {
+	min-width: 50px;
+	width: 10%;
+}
+	
+.medium {
+	min-width: 100px;
+	width: 30%;
+}
+	
+.long {
+	min-width: 150px;
+	width: 100%;
+}
+
+/* upload button */
+.uploadButton {
+	overflow: hidden;
+	position: relative;
+	
+	input {
+		left: 0;
+		opacity: 0;
+		position: absolute;
+		top: 0;
+	}
+}
+
+
+
+
+
+
+
+
+
+/* todo: ckeditor fixes */
+.cke_skin_kama {
+	border-width: 0 !important;
+	padding: 0 !important;
+}
+
+/* todo: smiley list */
+#smilies > ul > li {
+	display: inline;
+}
+
+/* todo: element list with checkboxes */
+.structuredList {
+	background-color: @wcfContainerBackgroundColor;
+	
+	li {
+		padding: @wcfGapTiny @wcfGapSmall;
+		text-align: right;
+
+		&:hover {
+			background-color: @wcfButtonHoverBackgroundColor;
+		}
+		
+		&:first-child {
+			border-radius: @wcfContainerBorderRadius @wcfContainerBorderRadius 0 0;
+		}
+		
+		&:last-child {
+			border-radius: 0 0 @wcfContainerBorderRadius @wcfContainerBorderRadius;
+		}
+		
+		&.category {
+			background-color: @wcfNavigationBackgroundColor;
+			
+			&:hover {
+				background-color: @wcfButtonHoverBackgroundColor;
+			}
+		}
+		
+		span {
+			float: left;
+		}
+		
+		label {
+			cursor: pointer;
+			margin: 0 @wcfGapSmall;
+			padding: 0 @wcfGapLarge;
+		}
+	}
+}
+
+/* todo: missing doc */
+.editableItemList ul li {
+	cursor: pointer;
+	margin-left: @wcfGapTiny;
+	
+	&:first-child {
+		margin-left: 0;
+	}
+}
+
+/* todo */
+select > option {
+	/* Fixes weird firefox bug */
+	display: block !important;
+}

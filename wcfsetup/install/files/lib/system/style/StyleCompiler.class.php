@@ -127,7 +127,7 @@ class StyleCompiler extends SingletonFactory {
 		$this->compiler->setVariables($variables);
 		
 		// add mixins
-		$content .= $this->prepareFile(WCF_DIR.'style/bootstrap/mixins.less');
+		$content .= $this->prepareFile(WCF_DIR.'style/bootstrap/mixin.less');
 		
 		return $content;
 	}
