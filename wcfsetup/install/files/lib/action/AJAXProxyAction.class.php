@@ -163,10 +163,10 @@ class AJAXProxyAction extends AbstractSecureAction {
 		}
 		
 		if ($e instanceof IllegalLinkException) {
-			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED);
+			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, $e->getTraceAsString());
 		}
 		else if ($e instanceof PermissionDeniedException) {
-			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
 		}
 		else if ($e instanceof SystemException) {
 			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->__getTraceAsString());
@@ -229,17 +229,13 @@ class AJAXProxyAction extends AbstractSecureAction {
 		$postVars = $_POST;
 		
 		// fake request
-		$_POST['actionName'] = $data['actionName'];
-		$_POST['className'] = $data['className'];
-		if (isset($data['objectIDs'])) {
-			$_POST['objectIDs'] = $data['objectIDs'];
-		}
-		if (isset($data['parameters'])) {
-			$_POST['parameters'] = $data['parameters'];
+		foreach ($data as $key => $value) {
+			$_POST[$key] = $value;
 		}
 		
 		// execute request
-		$actionObject = new AJAXProxyAction();
+		$className = get_called_class();
+		$actionObject = new $className();
 		$actionObject->enableDebugMode();
 		$actionObject->__run();
 		

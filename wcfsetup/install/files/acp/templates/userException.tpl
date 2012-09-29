@@ -1,6 +1,6 @@
 {include file='header' templateName='userException'}
 
-<p id="errorMessage" class="wcf-error">
+<p id="errorMessage" class="error">
 	{@$message}
 </p>
 
@@ -12,10 +12,11 @@
 	//]]>
 </script>
 
-<!-- 
-{$name} thrown in {$file} ({@$line})
-Stracktrace:
-{$stacktrace}
--->
-
+{if ENABLE_DEBUG_MODE}
+	<!-- 
+	{$name} thrown in {$file} ({@$line})
+	Stracktrace:
+	{$stacktrace}
+	-->
+{/if}
 {include file='footer'}

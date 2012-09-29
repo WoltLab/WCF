@@ -162,17 +162,17 @@
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.user.search">
-			<link>index.php/UserSearch/</link>
-			<parent>wcf.acp.menu.link.user.management.general</parent>
-			<permissions>admin.user.canSearchUser</permissions>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.user.add">
 			<link>index.php/UserAdd/</link>
 			<parent>wcf.acp.menu.link.user.management.general</parent>
 			<permissions>admin.user.canAddUser</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.search">
+			<link>index.php/UserSearch/</link>
+			<parent>wcf.acp.menu.link.user.management.general</parent>
+			<permissions>admin.user.canSearchUser</permissions>
 			<showorder>3</showorder>
 		</acpmenuitem>
 		
@@ -237,6 +237,27 @@
 		<acpmenuitem name="wcf.acp.menu.link.display">
 			<showorder>3</showorder>
 		</acpmenuitem>
+		
+		<!-- style -->
+		<acpmenuitem name="wcf.acp.menu.link.style">
+			<parent>wcf.acp.menu.link.display</parent>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.style.list">
+			<link>index.php/StyleList/</link>
+			<parent>wcf.acp.menu.link.style</parent>
+			<permissions>admin.style.canEditStyle,admin.style.canDeleteStyle</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.style.add">
+			<link>index.php/StyleAdd/</link>
+			<parent>wcf.acp.menu.link.style</parent>
+			<permissions>admin.style.canAddStyle</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		<!-- /style -->
 		
 		<acpmenuitem name="wcf.acp.menu.link.content">
 			<showorder>4</showorder>

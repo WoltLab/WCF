@@ -475,8 +475,10 @@ $.extend(WCF, {
 		}
 		
 		var dialogOptions = arguments[2] || {};
+		dialogOptions.ajax = true;
+		
 		dialog.wcfDialog(dialogOptions);
-
+		
 		return dialog;
 	},
 	
@@ -654,7 +656,7 @@ WCF.Dropdown = {
 	 */
 	setAlignment: function(dropdown, dropdownMenu) {
 		if (dropdown) {
-			var $dropdownMenu = dropdown.children('.dropdownMenu:eq(0)');
+			var $dropdownMenu = dropdown.find('.dropdownMenu:eq(0)');
 		}
 		else {
 			var $dropdownMenu = dropdownMenu;
@@ -5212,7 +5214,9 @@ WCF.Sortable.List = Class.extend({
 			$('#' + this._containerID + ' > .sortableList').wcfNestedSortable(this._options);
 		}
 		
-		this._container.find('.formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
+		if (this._className) {
+			this._container.find('.formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
+		}
 	},
 	
 	/**
@@ -6506,7 +6510,7 @@ $.widget('ui.wcfDialog', {
 		if (this.options.closeButtonLabel === null) {
 			this.options.closeButtonLabel = WCF.Language.get('wcf.global.close');
 		}
-
+		
 		if (this.options.ajax) {
 			new WCF.Action.Proxy({
 				autoSend: true,

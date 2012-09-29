@@ -36,7 +36,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 		}
 		
 		if (!($object instanceof static::$baseClass)) {
-			throw new SystemException('Object does not match '.static::$baseClass);
+			throw new SystemException("Object does not match '".static::$baseClass."' (given object is of class '".get_class($object)."')");
 		}
 		
 		$this->object = $object;

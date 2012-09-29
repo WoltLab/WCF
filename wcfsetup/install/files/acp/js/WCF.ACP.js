@@ -797,15 +797,14 @@ WCF.ACP.Worker.prototype = {
 		
 		// initialize AJAX-based dialog
 		WCF.showAJAXDialog(this._dialogID, true, {
-			ajax: {
-				url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
-				type: 'POST',
-				data: {
-					className: className,
-					parameters: options
-				},
-				success: $.proxy(this._handleResponse, this)
+			url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
+			type: 'POST',
+			data: {
+				className: className,
+				parameters: options
 			},
+			success: $.proxy(this._handleResponse, this),
+			
 			preventClose: true,
 			hideTitle: true
 		});
@@ -814,14 +813,11 @@ WCF.ACP.Worker.prototype = {
 	/**
 	 * Handles response from server.
 	 */
-	_handleResponse: function() {
+	_handleResponse: function($data) {
 		// init binding
 		if (this._dialog === null) {
 			this._dialog = $('#' + $.wcfEscapeID(this._dialogID));
 		}
-		
-		// fetch data returned by server response
-		var $data = this._dialog.data('responseData');
 		
 		// update progress
 		this._dialog.find('#workerProgress').attr('value', $data.progress).text($data.progress + '%');
@@ -837,10 +833,7 @@ WCF.ACP.Worker.prototype = {
 					loopCount: $data.loopCount,
 					parameters: $data.parameters
 				},
-				success: $.proxy(function(data) {
-					this._dialog.data('responseData', data);
-					this._handleResponse();
-				}, this),
+				success: $.proxy(this._handleResponse, this),
 				error: function(transport) {
 					alert(transport.responseText);
 				}
