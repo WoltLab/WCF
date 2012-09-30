@@ -944,7 +944,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLinkHov
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerBackgroundColor', '#fff');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerAccentBackgroundColor', '#f9f9f9');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerHoverBackgroundColor', '#f4f4f4');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerBorderColor', '#eee');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerBorderColor', '#ddd');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerBorderRadius', '6px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTabularBoxBackgroundColor', '#3f7fbf');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTabularBoxColor', '#fff');
@@ -1009,3 +1009,4 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapLarg
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationHeaderBackgroundColor', '@wcfContainerBackgroundColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationFooterBackgroundColor', '@wcfSidebarBackgroundColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuBackgroundColor', '@wcfSidebarBackgroundColor');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPanelHoverBackgroundColor', '#3c3c3c');

@@ -23,7 +23,7 @@
 /* user panel */
 .userPanel {
 	background-color: @wcfUserPanelBackgroundColor;
-	border-bottom: 1px solid rgba(0, 0, 0, .1);
+	border-bottom: 1px solid rgba(0, 0, 0, .1); /* todo */
 	height: 40px;
 	left: 0;
 	position: fixed;
@@ -32,7 +32,6 @@
 	z-index: 200;
 
 	> div {
-		/* todo */
 		> ul.userPanelItems {
 			float: left;
 			
@@ -53,12 +52,13 @@
 					.transition(background-color, .2s);
 					
 					&:hover {
-						background-color: rgba(0, 0, 0, .4);
+						background-color: @wcfUserPanelHoverBackgroundColor;
 						color: @wcfUserPanelHoverColor;
 						text-decoration: none;
 					}
 					
 					> .badge.badgeInverse {
+						/* todo */ 
 						background-color: rgb(204, 0, 0);
 						color: white;
 						padding: 0 6px 1px;
@@ -79,22 +79,25 @@
 	
 		> .searchBar {
 			float: right;
-			padding: 6px 0;
+			padding: 7px 0;
+			background-color: @wcfUserPanelHoverBackgroundColor;
 			
 			> form input[type="search"] {
-				background-color: rgba(0, 0, 0, .5);
+				background-color: transparent;
 				background-image: url("../icon/searchInverse.svg");
 				background-repeat: no-repeat;
 				background-position: 7px 5px;
-				border: 1px solid rgba(0, 0, 0, .9);
-				border-radius: 30px;
+				border-width: 0;
 				color: @wcfUserPanelColor;
 				padding: 6px 12px 5px 26px;
 				width: 180px;
 				-webkit-appearance: textfield;
 				
-				.boxShadowNative(~"inset 0px 1px 3px rgba(0, 0, 0, .9), 0px 1px 0px rgba(255, 255, 255, .1)");
-				.textShadow(@wcfUserPanelBackgroundColor);
+				.textShadow(@wcfUserPanelHoverBackgroundColor);
+				
+				&:focus {
+					outline: 0;
+				}
 			}
 		}
 	}
@@ -125,7 +128,6 @@
 /* todo */
 .mainMenu {
 	> ul {
-		background-color: @wcfMainMenuBackgroundColor;
 		border-bottom: 1px solid @wcfContainerBorderColor;
 		
 		&:after {
@@ -135,11 +137,11 @@
 		}
 		
 		> li {
+			background-color: @wcfMainMenuBackgroundColor;
 			float: left;
 			font-size: @wcfSubHeadlineFontSize;
 			
 			margin-bottom: -1px;
-			border-right: 1px solid @wcfContainerBorderColor;
 			
 			> a {
 				color: @wcfPageColor;
@@ -160,6 +162,10 @@
 					background-color: #fff;
 					color: #000;
 				}
+			}
+			
+			&:not(:last-child) {
+				border-right: 1px solid @wcfContainerBorderColor;
 			}
 		}
 	}
@@ -215,7 +221,6 @@
 .navigationFooter {
 	background-color: @wcfNavigationFooterBackgroundColor;
 	border-top: 1px solid @wcfContainerBorderColor;
-	border-radius: 0 0 @wcfContainerBorderRadius @wcfContainerBorderRadius; 
 }
 
 /* ### footer ### */
@@ -342,8 +347,6 @@
 .container {
 	background-color: @wcfContainerBackgroundColor;
 	border: 1px solid @wcfContainerBorderColor;
-	
-	.borderRadius();
 }
 
 .containerPadding {
@@ -378,16 +381,6 @@
 	
 		&:nth-child(even) {
 			background-color: @wcfContainerAccentBackgroundColor;
-		}
-		
-		&:first-child {
-			border-top-left-radius: @wcfContainerBorderRadius - 1;
-			border-top-right-radius: @wcfContainerBorderRadius - 1;
-		}
-		
-		&:last-child {
-			border-bottom-left-radius: @wcfContainerBorderRadius - 1;
-			border-bottom-right-radius: @wcfContainerBorderRadius - 1;
 		}
 		
 		&:hover {
@@ -540,7 +533,6 @@
 }
 
 .tabMenuContent {
-	border-top-left-radius: 0;
 	display: block;
 	margin-top: -1px;
 	min-height: @wcfGapLarge;
@@ -555,7 +547,6 @@
 	padding: @wcfGapSmall 0;
 	text-align: center;
 	
-	.borderRadius(@wcfContainerBorderRadius, 0);
 	.linearGradient(rgba(0, 0, 0, 0), @wcfContainerBackgroundColor, @wcfContainerAccentBackgroundColor);
 	
 	ul{
@@ -617,8 +608,6 @@
 .tabularBox {
 	background-color: @wcfTabularBoxBackgroundColor;
 	border: 1px solid @wcfContainerBorderColor;
-	
-	.borderRadius();
 }
 
 .tabularBoxTitle > hgroup {
@@ -638,18 +627,6 @@
 				color: @wcfTabularBoxHoverColor;
 				text-decoration: none;
 			}
-		}
-	}
-}
-
-.tabularBox:not(.tabularBoxTitle) > .table {
-	 > thead > tr:first-child > th {
-		&:first-child {
-			.borderRadius(@wcfContainerBorderRadius - 2, 0, 0, 0);
-		}
-		
-		&:last-child {
-			.borderRadius(0, @wcfContainerBorderRadius - 2, 0, 0);
 		}
 	}
 }
@@ -817,18 +794,6 @@
 			li {
 				display: inline-block;
 			}
-		}
-	}
-}
-
-.tabularBox .table {
-	tbody tr:last-child td {
-		&:first-child {
-			.borderRadius(0, 0, 0, @wcfContainerBorderRadius - 2);
-		}
-		
-		&:last-child {
-			.borderRadius(0, 0, @wcfContainerBorderRadius - 2, 0);
 		}
 	}
 }
