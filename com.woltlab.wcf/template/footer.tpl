@@ -1,14 +1,10 @@
 			{if $skipBreadcrumbs|empty}{include file='breadcrumbs' __microdata=false}{/if}
 			
 		</section>
-		<!-- /CONTENT -->
 	</div>
 </div>
-<!-- /MAIN -->
 
-<!-- FOOTER -->
 <footer id="pageFooter" class="layoutFluid footer">
-	<!-- footer navigation -->
 	<nav id="footerNavigation" class="navigation navigationFooter clearfix">
 		{include file='footerMenu'}
 		
@@ -19,7 +15,6 @@
 			{/if}
 		</ul>
 	</nav>
-	<!-- /footer navigation -->
 	
 	<div class="footerContent">
 		{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
@@ -27,5 +22,5 @@
 		{event name='copyright'}
 	</div>
 </footer>
-<!-- /FOOTER -->
+
 <a id="bottom"></a>

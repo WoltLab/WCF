@@ -1,8 +1,7 @@
 <a id="top"></a>
-<!-- HEADER -->
+
 <header id="pageHeader" class="layoutFluid">
 	<div>
-		<!-- top menu -->
 		<nav id="topMenu" class="userPanel">
 			<div class="layoutFluid clearfix">
 				{hascontent}
@@ -11,31 +10,20 @@
 					</ul>
 				{/hascontent}
 				
-				<!-- search area -->
 				{event name='searchArea'}
-				<!-- /search area -->
 			</div>
 		</nav>
-		<!-- /top menu -->
 		
-		<!-- logo -->
 		<div id="logo" class="logo">
-			<!-- clickable area -->
 			<a href="{link controller='Index'}{/link}">
-				<img src="{@$__wcf->getPath('wbb')}images/wbbLogo2.svg" alt="" style="height: 80px; width: 300px;" />
+				<img src="{@$__wcf->getPath('wbb')}images/wbbLogo2.svg" alt="" style="height: 90px; width: 246px;" />
 				{*event name='headerLogo'*}
 			</a>
-			<!-- /clickable area -->
 		</div>
-		<!-- /logo -->
 		
-		<!-- main menu -->
 		{include file='mainMenu'}
-		<!-- /main menu -->
 		
-		<!-- header navigation -->
 		<nav class="navigation navigationHeader clearfix">
-			<!-- sub menu -->
 			{include file='mainMenuSubMenu'}
 			
 			<ul class="navigationIcons">
@@ -45,12 +33,9 @@
 				{event name='headerNavigation'}
 			</ul>
 		</nav>
-		<!-- /header navigation -->
 	</div>
 </header>
-<!-- /HEADER -->
 
-<!-- MAIN -->
 <div id="main" class="layoutFluid{if $sidebarOrientation|isset && $sidebar|isset} sidebarOrientation{@$sidebarOrientation|ucfirst} clearfix{/if}">
 	<div>
 		{if $sidebar|isset}
@@ -59,7 +44,6 @@
 			</aside>
 		{/if}
 				
-		<!-- CONTENT -->
 		<section id="content" class="content clearfix">
 			
 			{if $skipBreadcrumbs|empty}{include file='breadcrumbs'}{/if}

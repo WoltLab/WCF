@@ -25,7 +25,7 @@ WCF.ACP.Menu.prototype = {
 	 */
 	init: function(activeMenuItems) {
 		this._headerNavigation = $('nav#mainMenu');
-		this._sidebarNavigation = $('nav#sidebarContent');
+		this._sidebarNavigation = $('aside.collapsibleMenu');
 		
 		this._prepareElements(activeMenuItems);
 	},
@@ -36,12 +36,12 @@ WCF.ACP.Menu.prototype = {
 	_prepareElements: function(activeMenuItems) {
 		this._headerNavigation.find('li').removeClass('active');
 		
-		this._sidebarNavigation.find('div h1').each($.proxy(function(index, menuHeader) {
+		this._sidebarNavigation.find('legend').each($.proxy(function(index, menuHeader) {
 			$(menuHeader).click($.proxy(this._toggleItem, this));
 		}, this));
 		
 		// close all navigation groups
-		this._sidebarNavigation.find('div div').each(function() {
+		this._sidebarNavigation.find('nav ul').each(function() {
 			$(this).hide();
 		});
 		
@@ -61,7 +61,8 @@ WCF.ACP.Menu.prototype = {
 	_toggleItem: function(event) {
 		var $menuItem = $(event.target);
 		
-		$menuItem.next().stop(true, true).toggle('blind', { }, 200).end().toggleClass('active');
+		$menuItem.parent().find('nav ul').stop(true, true).toggle('blind', { }, 200).end();
+		$menuItem.toggleClass('active');
 	},
 	
 	/**
@@ -91,7 +92,7 @@ WCF.ACP.Menu.prototype = {
 	_renderSidebar: function(menuItem, activeMenuItems) {
 		// reset visible and active items
 		this._headerNavigation.find('li').removeClass('active');
-		this._sidebarNavigation.find('div.menuGroup').hide();
+		this._sidebarNavigation.find('> div').hide();
 		
 		if (activeMenuItems.length === 0) {
 			// show active menu
@@ -112,7 +113,7 @@ WCF.ACP.Menu.prototype = {
 					var $menuItem = $('#' + $.wcfEscapeID($item));
 					
 					if ($menuItem.getTagName() === 'ul') {
-						$menuItem.parent('div').show().prev().addClass('active');
+						$menuItem.show().parents('fieldset').children('legend').addClass('active');
 					}
 					else {
 						$menuItem.addClass('active');
