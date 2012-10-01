@@ -23,7 +23,6 @@
 /* user panel */
 .userPanel {
 	background-color: @wcfUserPanelBackgroundColor;
-	border-bottom: 1px solid rgba(0, 0, 0, .1); /* todo */
 	height: 40px;
 	left: 0;
 	position: fixed;
@@ -58,8 +57,7 @@
 					}
 					
 					> .badge.badgeInverse {
-						/* todo */ 
-						background-color: rgb(204, 0, 0);
+						background-color: rgb(204, 0, 0); /* todo */ 
 						color: white;
 						padding: 0 6px 1px;
 						position: absolute;
@@ -79,7 +77,7 @@
 	
 		> .searchBar {
 			float: right;
-			padding: 7px 0;
+			padding: 6px 0 7px;
 			background-color: @wcfUserPanelHoverBackgroundColor;
 			
 			> form input[type="search"] {
@@ -125,7 +123,6 @@
 }
 
 /* main menu */
-/* todo */
 .mainMenu {
 	> ul {
 		border-bottom: 1px solid @wcfContainerBorderColor;
@@ -140,27 +137,26 @@
 			background-color: @wcfMainMenuBackgroundColor;
 			float: left;
 			font-size: @wcfSubHeadlineFontSize;
-			
 			margin-bottom: -1px;
 			
 			> a {
-				color: @wcfPageColor;
+				color: @wcfMainMenuColor;
 				display: inline-block;
 				padding: 11px 35px;
 				font-weight: bold;
 				
 				&:hover {
 					border-bottom: 1px solid @wcfContainerBorderColor;
-					background-color: #f4f4f4;
+					background-color: @wcfMainMenuHoverBackgroundColor;
 					text-decoration: none;
 				}
 			}
 			
 			&.active {
 				> a {
-					border-bottom: 1px solid #fff;
-					background-color: #fff;
-					color: #000;
+					border-bottom: 1px solid @wcfNavigationHeaderBackgroundColor;
+					background-color: @wcfNavigationHeaderBackgroundColor;
+					color: @wcfMainMenuActiveColor;
 				}
 			}
 			

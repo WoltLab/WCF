@@ -1010,3 +1010,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigat
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationFooterBackgroundColor', '@wcfSidebarBackgroundColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuBackgroundColor', '@wcfSidebarBackgroundColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPanelHoverBackgroundColor', '#3c3c3c');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuHoverBackgroundColor', '@wcfContainerHoverBackgroundColor');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuColor', '@wcfColor');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuActiveColor', '#000');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMarkedBackgroundColor', '#ffffc8');
