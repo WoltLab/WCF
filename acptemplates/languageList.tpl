@@ -3,7 +3,7 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		new WCF.Action.Delete('wcf\\data\\language\\LanguageAction', $('.jsLanguageRow'));
+		new WCF.Action.Delete('wcf\\data\\language\\LanguageAction', $('.jsLanguageRow'), $('#userTableContainer hgroup span.badge'))
 		new WCF.Action.SimpleProxy({
 			action: 'setAsDefault',
 			className: 'wcf\\data\\language\\LanguageAction',
@@ -49,11 +49,11 @@
 </div>
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop shadow">
+	<div id="userTableContainer" class="tabularBox tabularBoxTitle marginTop shadow">
 		<hgroup>
 			<h1>{lang}wcf.acp.language.list{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.language.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
-	
+		
 		<table class="table">
 			<thead>
 				<tr>
@@ -116,7 +116,7 @@
 			</tbody>
 		</table>
 	</div>
-
+	
 	<div class="contentNavigation">
 		{@$pagesLinks}
 		
