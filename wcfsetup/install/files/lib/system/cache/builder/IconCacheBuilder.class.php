@@ -47,14 +47,13 @@ class IconCacheBuilder implements ICacheBuilder {
 		
 		// get style icon path
 		$iconDirs = array();
-		$sql = "SELECT	variableValue
-			FROM	wcf".WCF_N."_style_variable
-			WHERE	styleID = ?
-				AND variableName = ?";
+		$sql = "SELECT	iconPath
+			FROM	wcf".WCF_N."_style
+			WHERE	styleID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($styleID, 'global.icons.location'));
+		$statement->execute(array($styleID));
 		$row = $statement->fetchArray();
-		if (!empty($row['variableValue'])) $iconDirs[] = FileUtil::addTrailingSlash($row['variableValue']);
+		if (!empty($row['iconPath'])) $iconDirs[] = FileUtil::addTrailingSlash($row['iconPath']);
 		if (!in_array('icon/', $iconDirs)) $iconDirs[] = 'icon/';
 		
 		// get icons
@@ -64,30 +63,13 @@ class IconCacheBuilder implements ICacheBuilder {
 			foreach ($iconDirs as $iconDir) {
 				$path = FileUtil::addTrailingSlash($packageDir.$iconDir);
 				
-				// get png icons
-				$icons = self::getIconFiles($path, 'png');
-				foreach ($icons as $icon) {
-					$icon = str_replace($path, '', $icon);
-					if (preg_match('/^(.*)(S|M|L)\.png$/', $icon, $match)) {
-						if (!isset($data[$match[1]][$match[2]])) {
-							$data[$match[1]][$match[2]] = $relativePackageDir.$iconDir.$icon;
-						}
-					}
-				}
-				
 				// get svg icons
-				$icons = self::getIconFiles($path, 'svg');
+				$icons = self::getIconFiles($path);
 				foreach ($icons as $icon) {
 					$icon = str_replace($path, '', $icon);
 					if (preg_match('/^(.*)\.svg$/', $icon, $match)) {
-						if (!isset($data[$match[1]]['S'])) {
-							$data[$match[1]]['S'] = $relativePackageDir.$iconDir.$icon;
-						}
-						if (!isset($data[$match[1]]['M'])) {
-							$data[$match[1]]['M'] = $relativePackageDir.$iconDir.$icon;
-						}
-						if (!isset($data[$match[1]]['L'])) {
-							$data[$match[1]]['L'] = $relativePackageDir.$iconDir.$icon;
+						if (!isset($data[$match[1]])) {
+							$data[$match[1]] = $relativePackageDir.$iconDir.$icon;
 						}
 					}
 				}
@@ -97,12 +79,18 @@ class IconCacheBuilder implements ICacheBuilder {
 		return $data;
 	}
 	
-	protected static function getIconFiles($path, $extension = 'svg') {
+	/**
+	 * Returns a list of SVG icons.
+	 * 
+	 * @param	string		$path
+	 * @return	array<string>
+	 */
+	protected static function getIconFiles($path) {
 		$files = array();
 		if (is_dir($path)) {
 			$iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
 			foreach ($iterator as $file) {
-				if (preg_match('/\.'.$extension.'$/', $file->getFilename())) {
+				if (preg_match('/\.svg$/', $file->getFilename())) {
 					$files[] = FileUtil::unifyDirSeperator($file->getPathname());
 				}
 			}

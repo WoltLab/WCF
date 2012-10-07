@@ -1,9 +1,12 @@
 <?php
 namespace wcf\system\category;
 use wcf\data\category\Category;
+use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\system\SingletonFactory;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\CacheHandler;
+use wcf\system\exception\SystemException;
 
 /**
  * Handles categories.
@@ -80,12 +83,15 @@ class CategoryHandler extends SingletonFactory {
 	/**
 	 * Returns the child categories of the given category.
 	 * 
-	 * @param	wcf\data\category\Category	$category
+	 * @param	wcf\data\DatabaseObject		$category
 	 * @return	array<wcf\data\category\Category>
 	 */
-	public function getChildCategories(Category $category) {
-		$categories = array();
+	public function getChildCategories(DatabaseObject $category) {
+		if (!($category instanceof Category) && (!($category instanceof DatabaseObjectDecorator) || !($category->getDecoratedObject() instanceof Category))) {
+			throw new SystemException("Invalid object given (class: ".get_class($category).")");
+		}
 		
+		$categories = array();
 		foreach ($this->categories as $__category) {
 			if ($__category->parentCategoryID == $category->categoryID && ($category->categoryID || $category->objectTypeID == $__category->objectTypeID)) {
 				$categories[$__category->categoryID] = $__category;

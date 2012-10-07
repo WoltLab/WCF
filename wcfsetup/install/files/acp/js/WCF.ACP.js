@@ -25,7 +25,7 @@ WCF.ACP.Menu.prototype = {
 	 */
 	init: function(activeMenuItems) {
 		this._headerNavigation = $('nav#mainMenu');
-		this._sidebarNavigation = $('nav#sidebarContent');
+		this._sidebarNavigation = $('aside.collapsibleMenu');
 		
 		this._prepareElements(activeMenuItems);
 	},
@@ -36,12 +36,12 @@ WCF.ACP.Menu.prototype = {
 	_prepareElements: function(activeMenuItems) {
 		this._headerNavigation.find('li').removeClass('active');
 		
-		this._sidebarNavigation.find('div h1').each($.proxy(function(index, menuHeader) {
+		this._sidebarNavigation.find('legend').each($.proxy(function(index, menuHeader) {
 			$(menuHeader).click($.proxy(this._toggleItem, this));
 		}, this));
 		
 		// close all navigation groups
-		this._sidebarNavigation.find('div div').each(function() {
+		this._sidebarNavigation.find('nav ul').each(function() {
 			$(this).hide();
 		});
 		
@@ -61,7 +61,8 @@ WCF.ACP.Menu.prototype = {
 	_toggleItem: function(event) {
 		var $menuItem = $(event.target);
 		
-		$menuItem.next().stop(true, true).toggle('blind', { }, 200).end().toggleClass('active');
+		$menuItem.parent().find('nav ul').stop(true, true).toggle('blind', { }, 200).end();
+		$menuItem.toggleClass('active');
 	},
 	
 	/**
@@ -91,7 +92,7 @@ WCF.ACP.Menu.prototype = {
 	_renderSidebar: function(menuItem, activeMenuItems) {
 		// reset visible and active items
 		this._headerNavigation.find('li').removeClass('active');
-		this._sidebarNavigation.find('div.menuGroup').hide();
+		this._sidebarNavigation.find('> div').hide();
 		
 		if (activeMenuItems.length === 0) {
 			// show active menu
@@ -112,7 +113,7 @@ WCF.ACP.Menu.prototype = {
 					var $menuItem = $('#' + $.wcfEscapeID($item));
 					
 					if ($menuItem.getTagName() === 'ul') {
-						$menuItem.parent('div').show().prev().addClass('active');
+						$menuItem.show().parents('fieldset').children('legend').addClass('active');
 					}
 					else {
 						$menuItem.addClass('active');
@@ -797,15 +798,14 @@ WCF.ACP.Worker.prototype = {
 		
 		// initialize AJAX-based dialog
 		WCF.showAJAXDialog(this._dialogID, true, {
-			ajax: {
-				url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
-				type: 'POST',
-				data: {
-					className: className,
-					parameters: options
-				},
-				success: $.proxy(this._handleResponse, this)
+			url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
+			type: 'POST',
+			data: {
+				className: className,
+				parameters: options
 			},
+			success: $.proxy(this._handleResponse, this),
+			
 			preventClose: true,
 			hideTitle: true
 		});
@@ -814,14 +814,11 @@ WCF.ACP.Worker.prototype = {
 	/**
 	 * Handles response from server.
 	 */
-	_handleResponse: function() {
+	_handleResponse: function($data) {
 		// init binding
 		if (this._dialog === null) {
 			this._dialog = $('#' + $.wcfEscapeID(this._dialogID));
 		}
-		
-		// fetch data returned by server response
-		var $data = this._dialog.data('responseData');
 		
 		// update progress
 		this._dialog.find('#workerProgress').attr('value', $data.progress).text($data.progress + '%');
@@ -837,10 +834,7 @@ WCF.ACP.Worker.prototype = {
 					loopCount: $data.loopCount,
 					parameters: $data.parameters
 				},
-				success: $.proxy(function(data) {
-					this._dialog.data('responseData', data);
-					this._handleResponse();
-				}, this),
+				success: $.proxy(this._handleResponse, this),
 				error: function(transport) {
 					alert(transport.responseText);
 				}

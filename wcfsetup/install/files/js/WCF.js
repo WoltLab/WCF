@@ -475,8 +475,10 @@ $.extend(WCF, {
 		}
 		
 		var dialogOptions = arguments[2] || {};
+		dialogOptions.ajax = true;
+		
 		dialog.wcfDialog(dialogOptions);
-
+		
 		return dialog;
 	},
 	
@@ -862,6 +864,9 @@ WCF.Clipboard = {
 					var $item = $(item);
 					if (WCF.inArray($item.data('objectID'), this._markedObjectIDs)) {
 						$item.attr('checked', 'checked');
+						
+						// add marked class for element container
+						$item.parents('.jsClipboardObject').addClass('jsMarked');
 					}
 				}, this));
 				
@@ -895,6 +900,7 @@ WCF.Clipboard = {
 			var $container = $(container);
 			
 			$container.find('input.jsClipboardItem, input.jsClipboardMarkAll').removeAttr('checked');
+			$container.find('.jsClipboardObject').removeClass('jsMarked');
 		});
 	},
 	
@@ -928,9 +934,11 @@ WCF.Clipboard = {
 		
 		if ($isMarked) {
 			this._markedObjectIDs.push($objectID);
+			$item.parents('.jsClipboardObject').addClass('jsMarked');
 		}
 		else {
 			this._markedObjectIDs = $.removeArrayValue(this._markedObjectIDs, $objectID);
+			$item.parents('.jsClipboardObject').removeClass('jsMarked');
 		}
 		
 		// item is part of a container
@@ -1004,6 +1012,13 @@ WCF.Clipboard = {
 					}
 				}
 			}, this));
+			
+			if ($isMarked) {
+				$container.find('.jsClipboardObject').addClass('jsMarked');
+			}
+			else {
+				$container.find('.jsClipboardObject').removeClass('jsMarked');
+			}
 		}
 		
 		// save new status
@@ -6508,7 +6523,7 @@ $.widget('ui.wcfDialog', {
 		if (this.options.closeButtonLabel === null) {
 			this.options.closeButtonLabel = WCF.Language.get('wcf.global.close');
 		}
-
+		
 		if (this.options.ajax) {
 			new WCF.Action.Proxy({
 				autoSend: true,

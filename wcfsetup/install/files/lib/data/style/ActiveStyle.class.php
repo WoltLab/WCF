@@ -2,6 +2,7 @@
 namespace wcf\data\style;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\cache\CacheHandler;
+use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
@@ -67,8 +68,8 @@ class ActiveStyle extends DatabaseObjectDecorator {
 	 * @param	string		$iconName
 	 * @return	string
 	 */
-	public function getIconPath($iconName, $size = 'L') {
-		if (isset($this->iconCache[$iconName][$size])) return $this->iconCache[$iconName][$size];
-		return RELATIVE_WCF_DIR.'icon/'.$iconName.'.svg';
+	public function getIconPath($iconName) {
+		if (isset($this->iconCache[$iconName])) return $this->iconCache[$iconName];
+		return WCF::getPath().'icon/'.$iconName.'.svg';
 	}
 }
