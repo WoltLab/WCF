@@ -2686,6 +2686,16 @@ WCF.String = {
 	},
 	
 	/**
+	 * Makes a string's first character lowercase
+	 * 
+	 * @param	string		string
+	 * @return	string
+	 */
+	lcfirst: function(string) {
+		return string.substring(0, 1).toLowerCase() + string.substring(1);
+	},
+	
+	/**
 	 * Makes a string's first character uppercase
 	 * 
 	 * @param	string		string
