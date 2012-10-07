@@ -917,7 +917,9 @@ WCF.Clipboard = {
 		$container.find('input.jsClipboardItem').data('hasContainer', $containerID).click($.proxy(this._click, this));
 		
 		if ($container.data('typeContainerID')) {
-			this._containerData[$container.data('type')] = $container.data('typeContainerID');
+			this._containerData[$container.data('type')] = {
+				containerID: $container.data('typeContainerID')
+			};
 		}
 	},
 	
