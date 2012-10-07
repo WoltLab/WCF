@@ -9,6 +9,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\session\SessionFactory;
 use wcf\system\session\SessionHandler;
+use wcf\system\style\StyleHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\exception;
@@ -637,6 +638,15 @@ class WCF {
 		$baseHref = self::getTPL()->get('baseHref');
 		
 		return $baseHref . 'index.php' . $path . '#' . $fragment;
+	}
+	
+	/**
+	 * Returns style handler.
+	 * 
+	 * @return	wcf\system\style\StyleHandler
+	 */
+	public function getStyleHandler() {
+		return StyleHandler::getInstance();
 	}
 	
 	/**

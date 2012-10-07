@@ -1,16 +1,17 @@
 <?php
 namespace wcf\util;
 use wcf\system\io\File;
+use wcf\system\style\StyleCompiler;
 
 /**
- * Contains style-related functions.
+ * Contains Style-related functions.
  *
- * @author	Marcel Werk
+ * @author 	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
- * @category	Community Framework
+ * @category 	Community Framework
  */
 final class StyleUtil {
 	/**
@@ -100,64 +101,7 @@ final class StyleUtil {
 	 * Updates the acp style file.
 	 */
 	public static function updateStyleFile() {
-		// get file handle
-		$file = new File(WCF_DIR . 'acp/style/style-ltr.css', 'wb');
-		
-		// include static styles
-		$staticStyles = glob(WCF_DIR.'style/*.css');
-		if ($staticStyles) {
-			foreach ($staticStyles as $staticStyle) {
-				if (!preg_match('/style-\d+(?:-rtl)?\.css/', $staticStyle)) {
-					// get style
-					$contents = file_get_contents($staticStyle);
-					// compress style
-					$contents = StyleUtil::compressCSS($contents);
-					// fix icon/image path
-					$contents = str_replace('../icon/', '../../icon/', $contents);
-					$contents = str_replace('../images/', '../../images/', $contents);
-					// write style
-					$file->write("/* static: ".basename($staticStyle)." */\n");
-					$file->write(StringUtil::trim($contents)."\n");
-				}
-			}
-		}
-		// include static acp styles
-		$staticStyles = glob(WCF_DIR.'acp/style/*.css');
-		if ($staticStyles) {
-			foreach ($staticStyles as $staticStyle) {
-				if (!preg_match('/style-(?:ltr|rtl)\.css/', $staticStyle) && !preg_match('/ie\dFix\.css/', $staticStyle)) {
-					$contents = file_get_contents($staticStyle);
-					$contents = StyleUtil::compressCSS($contents);
-					$file->write("/* static: acp/".basename($staticStyle)." */\n");
-					$file->write(StringUtil::trim($contents)."\n");
-				}
-			}
-		}
-		// close file
-		$file->close();
-		@chmod(WCF_DIR . 'acp/style/style-ltr.css', 0777);
-		
-		// update rtl version
-		self::updateStyleFileRTL();
-	}
-	
-	/**
-	 * Converts the file of this style to a RTL ("right-to-left") version. 
-	 */
-	public static function updateStyleFileRTL() {
-		// get contents of LTR version
-		$contents = file_get_contents(WCF_DIR . 'acp/style/style-ltr.css');
-		
-		// convert ltr to rtl
-		$contents = StyleUtil::convertCSSToRTL($contents);
-		
-		// write file
-		$file = new File(WCF_DIR . 'acp/style/style-rtl.css');
-		$file->write($contents);
-		
-		// close file
-		$file->close();
-		@chmod(WCF_DIR . 'acp/style/style-rtl.css', 0777);
+		StyleCompiler::getInstance()->compileACP();
 	}
 	
 	private function __construct() { }

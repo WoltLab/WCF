@@ -32,18 +32,6 @@ class StyleCacheBuilder implements ICacheBuilder {
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			if ($row['isDefault']) $data['default'] = $row['styleID'];
-			$row['variables'] = array();
-			
-			// get variable
-			$sql = "SELECT	*
-				FROM	wcf".WCF_N."_style_variable
-				WHERE	styleID = ?";
-			$statement2 = WCF::getDB()->prepareStatement($sql);
-			$statement2->execute(array($row['styleID']));
-			while ($row2 = $statement2->fetchArray()) {
-				$row['variables'][$row2['variableName']] = $row2['variableValue'];
-			}
-			
 			$data['styles'][$row['styleID']] = new Style(null, $row);
 		}
 		

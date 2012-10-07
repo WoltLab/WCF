@@ -13,8 +13,6 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 final class UserUtil {
-	protected static $privateIpList = array("/^0\./", "/^127\.0\.0\.1/", "/^192\.168\..*/", "/^172\.16\..*/", "/^10..*/", "/^224..*/", "/^240..*/");
-	
 	/**
 	 * Returns true, if the given name is a valid username.
 	 * 

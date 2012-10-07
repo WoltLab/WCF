@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\style;
+use wcf\data\package\Package;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupEditor;
 use wcf\data\template\TemplateEditor;
@@ -7,11 +8,13 @@ use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\image\Thumbnail; // TODO: Undefined class Thumbnail
+use wcf\system\image\ImageHandler;
 use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\io\TarWriter;
+use wcf\system\style\StyleCompiler;
 use wcf\system\WCF;
+use wcf\util\DateUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 use wcf\util\StyleUtil;
@@ -20,15 +23,12 @@ use wcf\util\XML;
 /**
  * Provides functions to edit, import, export and delete a style.
  * 
- * @todo	Fix usage of XML-class (API-changes)!
- * @todo	Thumbnail class has been removed
- *
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.style
- * @category	Community Framework
+ * @category 	Community Framework
  */
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	const INFO_FILE = 'style.xml';
@@ -41,7 +41,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	protected static $baseClass = 'wcf\data\style\Style';
 	
 	/**
-	 * @see	wcf\data\IEditableObject::update()
+	 * @see wcf\data\IEditableObject::update()
 	 */
 	public function update(array $parameters = array()) {
 		$variables = null;
@@ -49,7 +49,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$variables = $parameters['variables'];
 			unset($parameters['variables']);
 		}
-		
+
 		// update style data
 		parent::update($parameters);
 		
@@ -65,7 +65,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableObject::delete()
+	 * @see wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
 		parent::delete();
@@ -83,8 +83,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$statement->execute(array($this->styleID));
 		
 		// delete style files
-		@unlink(WCF_DIR.'style/style-'.$this->styleID.'.css');
-		@unlink(WCF_DIR.'style/style-'.$this->styleID.'-rtl.css');
+		$files = @glob(WCF_DIR.'style/style-*-'.$this->styleID.'*.css');
+		if (is_array($files)) {
+			foreach ($files as $file) {
+				@unlink($file);
+			}
+		}
 		
 		// delete preview image
 		if ($this->image) {
@@ -114,54 +118,87 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * Reads the data of a style exchange format file.
 	 * 
 	 * @param	wcf\system\io\Tar	$tar
-	 * @return	array				data
+	 * @return	array
 	 */
 	public static function readStyleData(Tar $tar) {
 		// search style.xml
-		$i = $tar->getIndexByFilename(self::INFO_FILE);
-		if ($i === false) {
+		$index = $tar->getIndexByFilename(self::INFO_FILE);
+		if ($index === false) {
 			throw new SystemException("unable to find required file '".self::INFO_FILE."' in style archive");
 		}
 		
 		// open style.xml
-		$styleXML = new XML();
-		$styleXML->loadString($tar->extractToString($i));
-		$xmlContent = $styleXML->getElementTree('style');
+		$xml = new XML();
+		$xml->loadXML(self::INFO_FILE, $tar->extractToString($index));
+		$xpath = $xml->xpath();
+		
 		$data = array(
 			'name' => '', 'description' => '', 'version' => '', 'image' => '', 'copyright' => '',
 			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '',
-			'variables' => '', 'date' => '0000-00-00', 'icons' => ''
+			'variables' => '', 'date' => '0000-00-00', 'icons' => '', 'iconPath' => '', 'imagePath' => ''
 		);
 		
-		foreach ($xmlContent['children'] as $child) {
-			switch ($child['name']) {
-				case 'general': 
-					foreach ($child['children'] as $general) {
-						switch ($general['name']) {
-							case 'stylename': $data['name'] = $general['cdata']; break;
-							case 'description': case 'version': case 'date': 
-							case 'image': case 'copyright': case 'license': $data[$general['name']] = $general['cdata']; break;
-						}
-					}
-				break;
-				
+		$categories = $xpath->query('/ns:style/*');
+		foreach ($categories as $category) {
+			switch ($category->tagName) {
 				case 'author':
-					foreach ($child['children'] as $author) {
-						switch ($author['name']) {
-							case 'authorname': $data['authorName'] = $author['cdata']; break;
-							case 'authorurl': $data['authorURL'] = $author['cdata']; break;
+					$elements = $xpath->query('child::*', $category);
+					foreach ($elements as $element) {
+						switch ($element->tagName) {
+							case 'authorname':
+								$data['authorName'] = $element->nodeValue;
+								break;
+									
+							case 'authorurl':
+								$data['authorURL'] = $element->nodeValue;
+								break;
 						}
 					}
-				break;
-				
+					break;
+		
 				case 'files':
-					foreach ($child['children'] as $files) {
-						switch ($files['name']) {
-							case 'templates': case 'images': case 'variables': case 'icons': $data[$files['name']] = $files['cdata']; break;
+					$elements = $xpath->query('child::*', $category);
+					foreach ($elements as $element) {
+						$data[$element->tagName] = $element->nodeValue;
+						if ($element->hasAttribute('path')) {
+							$data[$element->tagName.'Path'] = $element->getAttribute('path');
 						}
 					}
-				break;
+					break;
+		
+				case 'general':
+					$elements = $xpath->query('child::*', $category);
+					foreach ($elements as $element) {
+						switch ($element->tagName) {
+							case 'date':
+								DateUtil::validateDate($element->nodeValue);
+		
+								$data['date'] = $element->nodeValue;
+								break;
+									
+							case 'stylename':
+								$data['name'] = $element->nodeValue;
+								break;
+									
+							case 'version':
+								if (!Package::isValidVersion($element->nodeValue)) {
+									throw new SystemException("style version '".$element->nodeValue."' is invalid");
+								}
+		
+								$data['version'] = $element->nodeValue;
+								break;
+									
+							case 'copyright':
+							case 'description':
+							case 'image':
+							case 'license':
+								$data[$element->tagName] = $element->nodeValue;
+								break;
+						}
+					}
+					break;
 			}
+				
 		}
 		
 		if (empty($data['name'])) {
@@ -178,7 +215,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		}
 		
 		// open variables.xml
-		$data['variables'] = self::readVariablesData($tar->extractToString($i));
+		$data['variables'] = self::readVariablesData($data['variables'], $tar->extractToString($i));
 		
 		return $data;
 	}
@@ -186,24 +223,23 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	/**
 	 * Reads the data of a variables.xml file.
 	 * 
-	 * @param	string		$string		contents of a variable.xml file
-	 * @return	array		data
+	 * @param	string		$filename
+	 * @param	string		$content
+	 * @return	array
 	 */
-	public static function readVariablesData($string) {
+	public static function readVariablesData($filename, $content) {
 		// open variables.xml
-		$variablesXML = new XML();
-		$variablesXML->loadString($string);
-		$variablesXMLContent = $variablesXML->getElementTree('variables');
+		$xml = new XML();
+		$xml->loadXML($filename, $content);
+		$xpath = $xml->xpath();
+		$variables = $xml->xpath()->query('/ns:variables/ns:variable');
 		
-		// get variables
-		$variables = array();
-		foreach ($variablesXMLContent['children'] as $variable) {
-			if (isset($variable['attrs']['name'])) {
-				$variables[$variable['attrs']['name']] = $variable['cdata'];
-			}
+		$data = array();
+		foreach ($variables as $variable) {
+			$data[$variable->getAttribute('name')] = $variable->nodeValue;
 		}
 		
-		return $variables;
+		return $data;
 	}
 	
 	/**
@@ -250,20 +286,20 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$data = self::readStyleData($tar);
 		
 		// get image locations
-		$iconsLocation = FileUtil::addTrailingSlash($data['variables']['global.icons.location']);
-		$imagesLocation = $data['variables']['global.images.location'];
+		$iconsLocation = FileUtil::addTrailingSlash('icon/'.$data['iconPath']);
+		$imagesLocation = FileUtil::addTrailingSlash('images/'.$data['imagePath']);
 		
 		// create template group
 		$templateGroupID = 0;
 		if (!empty($data['templates'])) {
-			$templateGroupName = $data['name'];
+			$templateGroupName = $originalTemplateGroupName = $data['name'];
 			$templateGroupFolderName = preg_replace('/[^a-z0-9_-]/i', '', $templateGroupName);
 			if (empty($templateGroupFolderName)) $templateGroupFolderName = 'generic'.StringUtil::substring(StringUtil::getRandomID(), 0, 8);
-			$originalTemplatePackFolderName = $templateGroupFolderName;
+			$originalTemplateGroupFolderName = $templateGroupFolderName;
 			
 			// get unique template pack name
 			$i = 1;
-			do {
+			while (true) {
 				$sql = "SELECT	COUNT(*) AS count
 					FROM	wcf".WCF_N."_template_group
 					WHERE	templateGroupName = ?";
@@ -271,13 +307,13 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				$statement->execute(array($templateGroupName));
 				$row = $statement->fetchArray();
 				if (!$row['count']) break;
-				$templateGroupName = $originalTemplatePackName . '_' . $i; //TODO: undefined variable
+				$templateGroupName = $originalTemplateGroupName . '_' . $i;
 				$i++;
 			}
-			while (true);
+			
 			// get unique folder name
 			$i = 1;
-			do {
+			while (true) {
 				$sql = "SELECT	COUNT(*) AS count
 					FROM	wcf".WCF_N."_template_group
 					WHERE	templateGroupFolderName = ?
@@ -289,10 +325,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				));
 				$row = $statement->fetchArray();
 				if (!$row['count']) break;
-				$templateGroupFolderName = $originalTemplatePackFolderName . '_' . $i;
+				$templateGroupFolderName = $originalTemplateGroupFolderName . '_' . $i;
 				$i++;
 			}
-			while (true);
 			
 			$templateGroup = TemplateGroupEditor::create(array(
 				'templateGroupName' => $templateGroupName,
@@ -313,7 +348,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			'copyright' => $data['copyright'],
 			'license' => $data['license'],
 			'authorName' => $data['authorName'],
-			'authorURL' => $data['authorURL']
+			'authorURL' => $data['authorURL'],
+			'iconPath' => $data['iconPath']
 		);
 		if ($style !== null) {
 			$style->update($styleData);
@@ -483,7 +519,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				@unlink($destination);
 			}
 		}
-		
+
 		$tar->close();
 		
 		return $style;
@@ -497,6 +533,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * @param	boolean		$icons
 	 */
 	public function export($templates = false, $images = false, $icons = false) {
+		// TODO: Fix this method!
+		throw new SystemException("FIX ME!");
+		
 		// create style tar
 		$styleTarName = FileUtil::getTemporaryFilename('style_', '.tgz');
 		$styleTar = new TarWriter($styleTarName, true);
@@ -593,7 +632,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$styleTar->add($templatesTarName, 'templates.tar', $templatesTarName);
 			@unlink($templatesTarName);
 		}
-		
+
 		if ($images) {
 			// create images tar
 			$imagesTarName = FileUtil::getTemporaryFilename('images_', '.tar');
@@ -668,35 +707,49 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	
 	/**
 	 * Sets the variables of a style.
+	 * 
+	 * @param	array<string>		$variables
 	 */
-	public function setVariables($variables) {
+	public function setVariables(array $variables = array()) {
 		// delete old variables
-		$sql = "DELETE FROM	wcf".WCF_N."_style_variable
+		$sql = "DELETE FROM	wcf".WCF_N."_style_variable_value
 			WHERE		styleID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->styleID));
 		
 		// insert new variables
-		$statementParameters = array();
-		foreach ($variables as $name => $value) {
-			$statementParameters[] = array(
-				'name' => $name,
-				'value' => $value
-			);
-		}
-		
-		if (count($statementParameters)) {
-			$sql = "INSERT INTO	wcf".WCF_N."_style_variable
-						(styleID, variableName, variableValue)
-				VALUES		(?, ?, ?)";
+		if (!empty($variables)) {
+			$sql = "SELECT	*
+				FROM	wcf".WCF_N."_style_variable";
 			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute();
+			$styleVariables = array();
+			while ($row = $statement->fetchArray()) {
+				$variableName = $row['variableName'];
+				
+				if (isset($variables[$variableName])) {
+					// compare value, save only if differs from default
+					if ($variables[$variableName] != $row['defaultValue']) {
+						$styleVariables[$row['variableID']] = $variables[$variableName];
+					}
+				}
+			}
 			
-			foreach ($statementParameters as $parameter) {
-				$statement->execute(array(
-					$this->styleID,
-					$parameter['name'],
-					$parameter['value']
-				));
+			if (!empty($styleVariables)) {
+				$sql = "INSERT INTO	wcf".WCF_N."_style_variable_value
+							(styleID, variableID, variableValue)
+					VALUES		(?, ?, ?)";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				
+				WCF::getDB()->beginTransaction();
+				foreach ($styleVariables as $variableID => $variableValue) {
+					$statement->execute(array(
+						$this->styleID,
+						$variableID,
+						$variableValue
+					));
+				}
+				WCF::getDB()->commitTransaction();
 			}
 		}
 		
@@ -707,119 +760,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * Writes the style-*.css file.
 	 */
 	public function writeStyleFile() {
-		// get variables
-		$variables = $this->getVariables();
-		
-		// parse additional styles
-		self::parseAdditionalStyles($variables);
-		
-		// get file handle
-		$file = new File(WCF_DIR . 'style/style-'.$this->styleID.'.css', 'wb');
-		
-		// include static styles
-		$staticStyles = glob(WCF_DIR.'style/*.css');
-		if ($staticStyles) {
-			foreach ($staticStyles as $staticStyle) {
-				if (!preg_match('/style-\d+(?:-rtl)?\.css/', $staticStyle)) {
-					$contents = file_get_contents($staticStyle);
-					$contents = StyleUtil::compressCSS($contents);
-					$file->write("/* static: ".basename($staticStyle)." */\n");
-					$file->write(StringUtil::trim($contents)."\n");
-				}
-			}
-		}
-		
-		// get attributes
-		$file->write("/* dynamic style attributes */\n");
-		$sortedAttributes = array();
-		$sql = "SELECT		*
-			FROM		wcf".WCF_N."_style_variable_to_attribute
-			ORDER BY	variableName, attributeName, cssSelector";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			if (!empty($variables[$row['variableName']])) {
-				if (!isset($sortedAttributes[$row['variableName']])) $sortedAttributes[$row['variableName']] = array();
-				if (!isset($sortedAttributes[$row['variableName']][$row['attributeName']])) $sortedAttributes[$row['variableName']][$row['attributeName']] = array();
-				$sortedAttributes[$row['variableName']][$row['attributeName']][] = $row['cssSelector'];
-			}
-		}
-		
-		foreach ($sortedAttributes as $variableName => $attributes) {
-			foreach ($attributes as $attributeName => $cssSelectors) {
-				// write selectors
-				$css1Selectors = $css2Selectors = array();
-				foreach ($cssSelectors as $cssSelector) {
-					if (empty($cssSelector)) {
-						$file->write("/* ".$variableName." */\n");
-						$file->write(StyleUtil::compressCSS($variables[$variableName]));
-						$file->write("\n");
-					}
-					else {
-						if (preg_match('/^[a-z0-9.#:_\s-*]+$/i', $cssSelector)) {
-							$css1Selectors[] = $cssSelector;
-						}
-						else {
-							$css2Selectors[] = $cssSelector;
-						}
-					}
-				}
-				
-				if (count($css1Selectors)) {
-					$file->write(implode(',', $css1Selectors));
-					
-					$file->write("{");
-					
-					// write attribute
-					if (!empty($attributeName)) $file->write($attributeName .":");
-					
-					// write value
-					$file->write($variables[$variableName]);
-					
-					$file->write("}\n");
-				}
-				
-				if (count($css2Selectors)) {
-					$file->write(implode(',', $css2Selectors));
-					
-					$file->write("{");
-					
-					// write attribute
-					if (!empty($attributeName)) $file->write($attributeName .":");
-					
-					// write value
-					$file->write($variables[$variableName]);
-					
-					$file->write("}\n");
-				}
-			}
-		}
-		
-		// close file
-		$file->close();
-		@chmod(WCF_DIR . 'style/style-'.$this->styleID.'.css', 0777);
-		$this->writeStyleFileRTL();
+		StyleCompiler::getInstance()->compile($this->getDecoratedObject());
 	}
 	
 	/**
-	 * Converts the file of this style to a RTL ("right-to-left") version. 
-	 */
-	public function writeStyleFileRTL() {
-		// get contents of LTR version
-		$contents = file_get_contents(WCF_DIR . 'style/style-'.$this->styleID.'.css');
-		
-		// convert ltr to rtl
-		$contents = StyleUtil::convertCSSToRTL($contents);
-		
-		// write file
-		$file = new File(WCF_DIR . 'style/style-'.$this->styleID.'-rtl.css');
-		$file->write($contents);
-		$file->close();
-		@chmod(WCF_DIR . 'style/style-'.$this->styleID.'-rtl.css', 0777);
-	}
-	
-	/**
-	 * @see	wcf\data\IEditableObject::create()
+	 * @see wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		$variables = null;
@@ -833,7 +778,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		if (!isset($parameters['styleDate'])) $parameters['styleDate'] = gmdate('Y-m-d', TIME_NOW);
 		
 		// save style
-		$style = parent::create($parameters);
+		$style = parent::create($parameters);		
 		$styleEditor = new StyleEditor($style);
 		
 		// save variables
@@ -850,7 +795,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.icon-*-*.php');
@@ -860,19 +805,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * Scales the style preview image.
 	 * 
 	 * @param	string		$filename
-	 * @return	boolean
 	 */
 	public static function scalePreviewImage($filename) {
-		$thumbnail = new Thumbnail($filename, self::STYLE_PREVIEW_IMAGE_MAX_WIDTH, self::STYLE_PREVIEW_IMAGE_MAX_HEIGHT);
-		if (($source = $thumbnail->makeThumbnail())) {
-			$file = new File($filename);
-			$file->write($source);
-			$file->close();
-			
-			return true;
-		}
-		
-		return false;
+		$adapter = ImageHandler::getInstance()->getAdapter();
+		$adapter->load($filename);
+		$thumbnail = $adapter->createThumbnail(self::STYLE_PREVIEW_IMAGE_MAX_WIDTH, self::STYLE_PREVIEW_IMAGE_MAX_HEIGHT);
+		$adapter->writeImage($thumbnail, $filename);
 	}
 	
 	private static $variables = array();
