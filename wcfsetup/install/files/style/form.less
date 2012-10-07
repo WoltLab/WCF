@@ -26,121 +26,119 @@ fieldset {
 	&:not(:first-of-type) {
 		margin-top: @wcfGapMedium;
 	}
+}
+
+/* definition list */
+dl:not(.plain) {
+	position: relative;
 	
-	/* definition list */
-	dl {
-		position: relative;
+	.clearfix();
+	
+	> dd:not(:first-of-type), > dt:not(:first-of-type) {
+		margin-top: @wcfGapSmall;
+	}
+	
+	> dt {
+		color: @wcfLabelColor;
+		float: left;
+		text-align: right;
+		width: 230px;
 		
-		.clearfix();
-		
-		> dd:not(:first-of-type), > dt:not(:first-of-type) {
-			margin-top: @wcfGapSmall;
+		> label {
+			display: block;
 		}
 		
-		> dt {
-			color: @wcfLabelColor;
-			float: left;
-			text-align: right;
-			width: 230px;
+		/* Reversed (flips the label aside the checkbox or radio button) - 
+			use only when automatically generating checkboxes or radio-buttons! */
+		&.reversed {
+			left: 270px;
+			margin-top: 2px;
+			position: absolute;
+			text-align: left;
+			width: auto;
 			
-			> label {
-				display: block;
-			}
-			
-			/* Reversed (flips the label aside the checkbox or radio button) - 
-				use only when automatically generating checkboxes or radio-buttons! */
-			&.reversed {
-				left: 270px;
-				margin-top: 2px;
-				position: absolute;
-				text-align: left;
-				width: auto;
-				
-				~ dd > input[type='checkbox'], ~ dd > input[type='radio'] {
-					margin-left: 0;
-				}
-			}
-		}
-		
-		> dd {
-			margin-left: 250px;
-			
-			> small {
-				color: @wcfDimmedColor;
-				display: block;
-				margin-top: 2px;
-			}
-			
-			> label {
-				color: @wcfLabelColor;
-				display: block;
-				
-				> input[type='checkbox'], > input[type='radio'] {
-					margin: 2px 2px 2px 0;
-				}
-			}
-			
-			> input[type='checkbox'], > input[type='radio'] {
-				~ small {
-					margin-left: 21px;
-				}
-			}
-			
-			&:not(.floated) {
-				> label ~ small {
-					margin-left: 21px;
-				}
-			}
-			
-			&.floated {
-				> label {
-					display: inline-block;
-					margin-right: @wcfGapSmall;
-				}
-			}
-			
-			> input, textarea, select {
-				+ label {
-					margin-top: 2px;
-				}
-			}
-		}
-		
-		/* wide */
-		&.wide {
-			> dt {
-				display: none;
-			}
-			
-			> dd {
+			~ dd > input[type='checkbox'], ~ dd > input[type='radio'] {
 				margin-left: 0;
 			}
 		}
+	}
+	
+	> dd {
+		margin-left: 250px;
 		
-		/* disabled state */
-		&.disabled {
-			> dt, > dd > label {
-				color: @wcfDimmedColor;
+		> small {
+			color: @wcfDimmedColor;
+			display: block;
+			margin-top: 2px;
+		}
+		
+		> label {
+			color: @wcfLabelColor;
+			display: block;
+			
+			> input[type='checkbox'], > input[type='radio'] {
+				margin: 2px 2px 2px 0;
 			}
+		}
+		
+		> input[type='checkbox'], > input[type='radio'] {
+			~ small {
+				margin-left: 21px;
+			}
+		}
+		
+		&:not(.floated) {
+			> label ~ small {
+				margin-left: 21px;
+			}
+		}
+		
+		&.floated {
+			> label {
+				display: inline-block;
+				margin-right: @wcfGapSmall;
+			}
+		}
+		
+		> input, textarea, select {
+			+ label {
+				margin-top: 2px;
+			}
+		}
+	}
+	
+	/* wide */
+	&.wide {
+		> dt {
+			display: none;
+		}
+		
+		> dd {
+			margin-left: 0;
+		}
+	}
+	
+	/* disabled state */
+	&.disabled {
+		> dt, > dd > label {
+			color: @wcfDimmedColor;
 		}
 	}
 }
 
 /* sidebar */
 .sidebar {
-	fieldset {
-		> dl {
-			> dt {
-				text-align: left;
-				float: none;
-				width: auto;
-			}
-			
-			> dd {
-				margin-top: 2px;
-				margin-left: 0;
-				margin-bottom: @wcfGapMedium;
-			}
+	dl:not(.plain) {
+		> dt {
+			text-align: left;
+			float: none;
+			width: auto;
+		}
+		
+		> dd {
+			margin-top: 2px;
+			margin-left: 0;
+			margin-bottom: @wcfGapMedium;
 		}
 	}
 }
