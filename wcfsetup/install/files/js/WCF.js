@@ -916,9 +916,12 @@ WCF.Clipboard = {
 		$container.find('.jsClipboardMarkAll').data('hasContainer', $containerID).click($.proxy(this._markAll, this));
 		$container.find('input.jsClipboardItem').data('hasContainer', $containerID).click($.proxy(this._click, this));
 		
-		if ($container.data('typeContainerID')) {
-			this._containerData[$container.data('type')] = $container.data('typeContainerID');
-		}
+		this._containerData[$container.data('type')] = {};
+		$.each($container.data(), $.proxy(function(index, element) {
+			if (index.match(/^type(.+)/)) {
+				this._containerData[$container.data('type')][WCF.String.lcfirst(index.replace(/^type/, ''))] = element;
+			}
+		}, this));
 	},
 	
 	/**
