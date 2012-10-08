@@ -1,0 +1,50 @@
+# Linux
+# backup files
+*~
+
+# Windows
+# thumbnails
+Thumbs.db
+
+# Mac OS X
+# metadata
+.DS_Store
+# thumbnails
+._*
+
+# Visual Studio PHP
+*.sln
+*.phpproj
+*.puo
+*.suo
+*.cache
+
+# Netbeans
+nbproject/
+catalog.xml
+nbactions.xml
+
+# Eclipse
+.settings/
+.buildpath
+.classpath
+.project
+
+# SVN
+# svn folders
+.svn/
+
+# PHPStorm
+.idea/
+.nameencodings
+.xmlmisc
+.xmlmodules
+.xmlprojectCodeStyle
+.xmlvcs.xml
+*.imlworkspace
+.xml
+
+# Community Framework
+# Ignore packages build directly in the workspace. They can however be added manually via git add, if wanted.
+*.tar
+*.tar.gz

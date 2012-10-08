@@ -1,0 +1,37 @@
+.colorPreview {
+	border: 1px solid @wcfContainerBorderColor;
+	border-radius: @wcfContainerBorderRadius;
+	display: inline-block;
+	
+	&:hover {
+		.boxShadow(0, 0, @wcfContainerBorderColor, 15px, 0);
+	}
+	
+	> div {
+		border: 1px solid @wcfContainerBorderColor;
+		border-radius: @wcfContainerBorderRadius;
+		cursor: pointer;
+		display: block;
+		height: 60px;
+		width: 200px;
+	}
+}
+	
+.colorList {
+	> li {
+		float: left;
+		padding: @wcfGapSmall;
+		
+		> figure > figcaption {
+			font-size: 85%;
+			margin-bottom: @wcfGapSmall;
+			text-align: center;
+		}
+	}
+	
+	&:after {
+		clear: both;
+		content: "";
+		display: block;
+	}
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="com.woltlab.wcf.acp.style" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/package.xsd">
+	<packageinformation>
+		<packagename>Style Administration</packagename>
+		<version>1.0.0 Alpha 1</version>
+		<date>2012-10-08</date>
+	</packageinformation>
+	
+	<authorinformation>
+		<author>WoltLab GmbH</author>
+		<authorurl>http://www.woltlab.com</authorurl>
+	</authorinformation>
+	
+	<instructions type="install">
+		<instruction type="acpTemplate">acptemplates.tar</instruction>
+		<instruction type="file">files.tar</instruction>
+		<instruction type="acpMenu">acpMenu.xml</instruction>
+		<instruction type="language">language/*.xml</instruction>
+		<instruction type="userGroupOption">userGroupOption.xml</instruction>
+	</instructions>
+</package>
