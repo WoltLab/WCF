@@ -575,6 +575,7 @@ CREATE TABLE wcf1_style (
 	authorName VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
 	iconPath VARCHAR(255) NOT NULL DEFAULT '',
+	imagePath VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_style_to_package;
@@ -1014,3 +1015,4 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMen
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuColor', 'rgba(102, 102, 102, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuActiveColor', 'rgba(0, 0, 0, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMarkedBackgroundColor', 'rgba(255, 255, 200, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
