@@ -7,7 +7,7 @@ use wcf\system\option\BooleanOptionType;
  * The merge of option values returns true, if at least one value is true. Otherwise false.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user.group
@@ -17,11 +17,12 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
 	/**
 	 * @see wcf\system\option\user\group\IUserGroupOptionType::merge()
 	 */
-	public function merge(array $values) {
-		foreach ($values as $value) {
-			if ($value) return true;
+	public function merge($defaultValue, $groupValue) {
+		// don't save if values are equal or $defaultValue is better
+		if ($defaultValue == $groupValue || $defaultValue && !$groupValue) {
+			return null;
 		}
-
-		return false;
+		
+		return $groupValue;
 	}
 }

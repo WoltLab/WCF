@@ -5,6 +5,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\io\Tar;
 use wcf\system\WCF;
+use wcf\util\DateUtil;
 use wcf\util\FileUtil;
 use wcf\util\XML;
 
@@ -206,7 +207,7 @@ class PackageArchive {
 				break;
 				
 				case 'version':
-					if (!preg_match('~^([0-9]+)\.([0-9]+)\.([0-9]+)(\ (a|alpha|b|beta|d|dev|rc|pl)\ ([0-9]+))?$~is', $element->nodeValue)) {
+					if (!Package::isValidVersion($element->nodeValue)) {
 						throw new SystemException("package version '".$element->nodeValue."' is invalid");
 					}
 					
@@ -214,10 +215,7 @@ class PackageArchive {
 				break;
 				
 				case 'date':
-					// matches almost any valid date between year 2000 and 2038
-					if (!preg_match('~^(20[0-2][0-9]|203[0-8])\-(0[1-9]|1[0-2])\-(0[1-9]|[1-2][0-9]|3[0-1])$~', $element->nodeValue)) {
-						throw new SystemException("package date '".$element->nodeValue."' is invalid, violating ISO-8601 date format.");
-					}
+					DateUtil::validateDate($element->nodeValue);
 					
 					$this->packageInfo['date'] = strtotime($element->nodeValue);
 				break;

@@ -14,10 +14,11 @@ use wcf\system\option\IOptionType;
  */
 interface IUserGroupOptionType extends IOptionType {
 	/**
-	 * Merges the different values of an option to a single value.
+	 * Returns the value which results by merging or null if nothing should be saved.
 	 * 
-	 * @param	array		$values
+	 * @param	mixed		$defaultValue
+	 * @param	mixed		$groupValue
 	 * @return	mixed
 	 */
-	public function merge(array $values);
+	public function merge($defaultValue, $groupValue);
 }

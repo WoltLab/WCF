@@ -11,15 +11,6 @@
 	list-style: disc;
 	padding-left: 16px;
 }
-#credits dd > ul > li {
-	display: inline;
-}
-#credits dd > ul > li:after {
-	content: ", ";
-}
-#credits dd > ul > li:last-child:after {
-	content: "";
-}
 </style>
 {if $didYouKnow !== ''}<p class="info">{lang}wcf.acp.index.didYouKnow{/lang}: {@$didYouKnow|language}</p>{/if}
 <p class="{@$health}">{lang}wcf.acp.index.health.summary.{@$health}{/lang}</p>
@@ -63,7 +54,7 @@
 		<dl>
 			<dt>{lang}wcf.acp.index.credits.productManager{/lang}</dt>
 			<dd>
-				<ul>
+				<ul class="dataList">
 					<li>Marcel Werk</li>
 				</ul>
 			</dd>
@@ -72,7 +63,7 @@
 		<dl>
 			<dt>{lang}wcf.acp.index.credits.developer{/lang}</dt>
 			<dd>
-				<ul>
+				<ul class="dataList">
 					<li>Alexander Ebert</li>
 					<li>Marcel Werk</li>
 				</ul>
@@ -82,7 +73,7 @@
 		<dl>
 			<dt>{lang}wcf.acp.index.credits.designer{/lang}</dt>
 			<dd>
-				<ul>
+				<ul class="dataList">
 					<li>Harald Szekely</li>
 					<li>Marcel Werk</li>
 				</ul>
@@ -92,7 +83,7 @@
 		<dl>
 			<dt>{lang}wcf.acp.index.credits.contributor{/lang}</dt>
 			<dd>
-				<ul>
+				<ul class="dataList">
 					<li>Thorsten Buitkamp</li>
 					<li>Tim D&uuml;sterhus</li>
 					<li>Matthias Schmidt</li>
@@ -108,7 +99,7 @@
 		{*<dl>
 			<dt>{lang}wcf.acp.index.credits.translators{/lang}</dt>
 			<dd>
-				<ul>
+				<ul class="dataList">
 				</ul>
 			</dd>
 		</dl>*}

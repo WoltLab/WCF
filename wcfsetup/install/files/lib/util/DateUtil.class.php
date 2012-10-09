@@ -2,6 +2,7 @@
 namespace wcf\util;
 use wcf\data\language\Language;
 use wcf\data\user\User;
+use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
@@ -339,6 +340,36 @@ final class DateUtil {
 		}
 		
 		return 0;
+	}
+	
+	/**
+	 * Validates if given date is valid ISO-8601.
+	 * 
+	 * @param	string		$date
+	 */
+	public static function validateDate($date) {
+		// matches almost any valid date between year 2000 and 2038
+		if (!preg_match('~^(20[0-2][0-9]|203[0-8])\-(0[1-9]|1[0-2])\-(0[1-9]|[1-2][0-9]|3[0-1])$~', $date)) {
+			throw new SystemException("date '".$date."' is invalid, violating ISO-8601 date format.");
+		}
+		
+		// try to convert $date into a UNIX timestamp
+		$time = strtotime($date);
+		if ($time === false) {
+			throw new SystemException("date '".$date."' is invalid");
+		}
+		
+		// convert back to ISO-8601, if date was bogus (e.g. 2000-02-31) data() returns a different date than $date
+		if (date('Y-m-d', $time) != $date) {
+			throw new SystemException("date '".$date."' is invalid");
+		}
+	}
+	
+	public static function diff(\DateTime $from, \DateTime $to) {
+		$interval = $from->diff($to);
+		
+		// TODO: Use language items
+		return $interval->format('%Y years %M months %D days %H hours %I minutes %S seconds');
 	}
 	
 	private function __construct() { }

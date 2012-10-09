@@ -2,7 +2,9 @@
 namespace wcf\data\user;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
 use wcf\system\clipboard\ClipboardHandler;
+use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -16,7 +18,7 @@ use wcf\util\StringUtil;
  * @subpackage	data.user
  * @category 	Community Framework
  */
-class UserEditor extends DatabaseObjectEditor {
+class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
@@ -246,5 +248,12 @@ class UserEditor extends DatabaseObjectEditor {
 				$statement->execute(array($this->userID, $languageID));
 			}
 		}
+	}
+	
+	/**
+	 * @see wcf\data\IEditableCachedObject::resetCache()
+	 */
+	public static function resetCache() {
+		SessionHandler::resetSessions();
 	}
 }

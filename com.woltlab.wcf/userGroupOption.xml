@@ -8,6 +8,10 @@
 			</category>
 			
 			<category name="mod"></category>
+			<category name="mod.general">
+				<parent>mod</parent>
+			</category>
+			
 			<category name="admin"></category>
 			<category name="admin.general">
 				<parent>admin</parent>
@@ -39,9 +43,6 @@
 			</category>
 			<category name="admin.content">
 				<parent>admin</parent>
-			</category>
-			<category name="admin.style">
-				<parent>admin.display</parent>
 			</category>
 			<category name="admin.language">
 				<parent>admin.display</parent>
@@ -175,12 +176,7 @@
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
-			<option name="admin.style.canUseDisabledStyle">
-				<categoryname>admin.style</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-			</option>
+			
 			<option name="admin.language.canAddLanguage">
 				<categoryname>admin.language</categoryname>
 				<optiontype>boolean</optiontype>

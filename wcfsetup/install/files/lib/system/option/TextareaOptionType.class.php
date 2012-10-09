@@ -2,6 +2,7 @@
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * TextareaOptionType is an implementation of IOptionType for 'textarea' tags.
@@ -23,5 +24,12 @@ class TextareaOptionType extends TextOptionType {
 			'value' => $value
 		));
 		return WCF::getTPL()->fetch('textareaOptionType');
+	}
+	
+	/**
+	 * @see wcf\system\option\IOptionType::getData()
+	 */
+	public function getData(Option $option, $newValue) {
+		return StringUtil::unifyNewlines(parent::getData($option, $newValue));
 	}
 }

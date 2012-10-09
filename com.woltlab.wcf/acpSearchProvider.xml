@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/acpSearchProvider.xsd">
+	<import>
+		<acpsearchprovider name="menuItem">
+			<classname><![CDATA[wcf\system\search\acp\MenuItemACPSearchResultProvider]]></classname>
+			<showorder>1</showorder>
+		</acpsearchprovider>
+		<acpsearchprovider name="option">
+			<classname><![CDATA[wcf\system\search\acp\OptionACPSearchResultProvider]]></classname>
+			<showorder>2</showorder>
+		</acpsearchprovider>
+		<acpsearchprovider name="userGroupOption">
+			<classname><![CDATA[wcf\system\search\acp\UserGroupOptionACPSearchResultProvider]]></classname>
+			<showorder>3</showorder>
+		</acpsearchprovider>
+	</import>
+</data>

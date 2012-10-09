@@ -11,7 +11,8 @@
 {include file='header'}
 	
 <p class="error">{lang}wcf.global.error.permissionDenied{/lang}</p>
-	
+{event name='content'}
+
 {if ENABLE_DEBUG_MODE}
 	<!-- 
 	{$name} thrown in {$file} ({@$line})

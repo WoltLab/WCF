@@ -46,6 +46,26 @@
 (function(){var a=false,b=/xyz/.test(function(){xyz})?/\b_super\b/:/.*/;this.Class=function(){};Class.extend=function(c){function g(){if(!a&&this.init)this.init.apply(this,arguments);}var d=this.prototype;a=true;var e=new this;a=false;for(var f in c){e[f]=typeof c[f]=="function"&&typeof d[f]=="function"&&b.test(c[f])?function(a,b){return function(){var c=this._super;this._super=d[a];var e=b.apply(this,arguments);this._super=c;return e;};}(f,c[f]):c[f]}g.prototype=e;g.prototype.constructor=g;g.extend=arguments.callee;return g;};})();
 
 /**
+ * Provides a hashCode() method for strings, similar to Java's String.hashCode().
+ * 
+ * @see	http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+ */
+String.prototype.hashCode = function() {
+	var $char;
+	var $hash = 0;
+	
+	if (this.length) {
+		for (var $i = 0, $length = this.length; $i < $length; $i++) {
+			$char = this.charCodeAt($i);
+			$hash = (($hash << 5) - $hash) + $char;
+			$hash = $hash & $hash; // convert to 32bit integer
+		}
+	}
+	
+	return $hash;
+}
+
+/**
  * Initialize WCF namespace
  */
 var WCF = {};
@@ -284,6 +304,40 @@ $.fn.extend({
 	},
 	
 	/**
+	 * Returns the caret position of current element. If the element
+	 * does not equal input[type=text], input[type=password] or
+	 * textarea, -1 is returned.
+	 * 
+	 * @return	integer
+	 */
+	getCaret: function() {
+		if (this.getTagName() == 'input') {
+			if (this.attr('type') != 'text' && this.attr('type') != 'password') {
+				return -1;
+			}
+		}
+		else if (this.getTagName() != 'textarea') {
+			return -1;
+		}
+		
+		var $position = 0;
+		var $element = this.get(0);
+		if (document.selection) { // IE 8
+			// set focus to enable caret on this element
+			this.focus();
+			
+			var $selection = document.selection.createRange();
+			$selection.moveStart('character', -this.val().length);
+			$position = $selection.text.length;
+		}
+		else if ($element.selectionStart || $element.selectionStart == '0') { // Opera, Chrome, Firefox, Safari, IE 9+
+			$position = parseInt($element.selectionStart);
+		}
+		
+		return $position;
+	},
+	
+	/**
 	 * Shows an element by sliding and fading it into viewport.
 	 * 
 	 * @param	string		direction
@@ -421,8 +475,10 @@ $.extend(WCF, {
 		}
 		
 		var dialogOptions = arguments[2] || {};
+		dialogOptions.ajax = true;
+		
 		dialog.wcfDialog(dialogOptions);
-
+		
 		return dialog;
 	},
 	
@@ -583,11 +639,46 @@ WCF.Dropdown = {
 			else if ($containerID === $targetID) {
 				$dropdown.addClass('dropdownOpen');
 				this._notifyCallbacks($dropdown, 'open');
+				
+				this.setAlignment($dropdown);
 			}
 		}
 		
 		event.stopPropagation();
 		return false;
+	},
+	
+	/**
+	 * Sets alignment for dropdown.
+	 * 
+	 * @param	jQuery		dropdown
+	 * @param	jQuery		dropdownMenu
+	 */
+	setAlignment: function(dropdown, dropdownMenu) {
+		if (dropdown) {
+			var $dropdownMenu = dropdown.find('.dropdownMenu:eq(0)');
+		}
+		else {
+			var $dropdownMenu = dropdownMenu;
+		}
+		
+		// calculate if dropdown should be right-aligned if there is not enough space
+		var $dimensions = $dropdownMenu.getDimensions('outer');
+		var $offsets = $dropdownMenu.getOffsets('offset');
+		var $windowWidth = $(window).width();
+		
+		if (($offsets.left + $dimensions.width) > $windowWidth) {
+			$dropdownMenu.css({
+				left: 'auto',
+				right: '0px'
+			}).addClass('dropdownArrowRight');
+		}
+		else {
+			$dropdownMenu.css({
+				left: '0px',
+				right: 'auto'
+			}).removeClass('dropdownArrowRight');
+		}
 	},
 	
 	/**
@@ -773,6 +864,9 @@ WCF.Clipboard = {
 					var $item = $(item);
 					if (WCF.inArray($item.data('objectID'), this._markedObjectIDs)) {
 						$item.attr('checked', 'checked');
+						
+						// add marked class for element container
+						$item.parents('.jsClipboardObject').addClass('jsMarked');
 					}
 				}, this));
 				
@@ -806,6 +900,7 @@ WCF.Clipboard = {
 			var $container = $(container);
 			
 			$container.find('input.jsClipboardItem, input.jsClipboardMarkAll').removeAttr('checked');
+			$container.find('.jsClipboardObject').removeClass('jsMarked');
 		});
 	},
 	
@@ -839,9 +934,11 @@ WCF.Clipboard = {
 		
 		if ($isMarked) {
 			this._markedObjectIDs.push($objectID);
+			$item.parents('.jsClipboardObject').addClass('jsMarked');
 		}
 		else {
 			this._markedObjectIDs = $.removeArrayValue(this._markedObjectIDs, $objectID);
+			$item.parents('.jsClipboardObject').removeClass('jsMarked');
 		}
 		
 		// item is part of a container
@@ -915,6 +1012,13 @@ WCF.Clipboard = {
 					}
 				}
 			}, this));
+			
+			if ($isMarked) {
+				$container.find('.jsClipboardObject').addClass('jsMarked');
+			}
+			else {
+				$container.find('.jsClipboardObject').removeClass('jsMarked');
+			}
 		}
 		
 		// save new status
@@ -1286,8 +1390,9 @@ WCF.Action.Proxy.prototype = {
 			this.options.init(this);
 		}
 		
+		this._activeRequests++;
+		
 		if (this.options.showLoadingOverlay) {
-			this._activeRequests++;
 			this._showLoadingOverlay();
 		}
 	},
@@ -1390,10 +1495,8 @@ WCF.Action.Proxy.prototype = {
 		if ($.isFunction(this.options.after)) {
 			this.options.after();
 		}
-
-		if (this.options.showLoadingOverlay) {
-			this._activeRequests--;
-		}
+		
+		this._activeRequests--;
 		
 		// disable DOMNodeInserted event
 		WCF.DOMNodeInsertedHandler.disable();
@@ -4005,18 +4108,24 @@ WCF.Search.Base = Class.extend({
 	 * @param	boolean		commaSeperated
 	 */
 	init: function(searchInput, callback, excludedSearchValues, commaSeperated) {
-		if ((callback === null && !commaSeperated) && !$.isFunction(callback)) {
+		if (callback !== null && callback !== undefined && !$.isFunction(callback)) {
 			console.debug("[WCF.Search.Base] The given callback is invalid, aborting.");
 			return;
 		}
-
-		this._callback = callback;
+		
+		this._callback = (callback) ? callback : null;
 		this._excludedSearchValues = [];
 		if (excludedSearchValues) {
 			this._excludedSearchValues = excludedSearchValues;
 		}
-		this._searchInput = $(searchInput).keyup($.proxy(this._keyUp, this));
-		this._searchInput.wrap('<span class="dropdown" />');
+		
+		this._searchInput = $(searchInput);
+		if (!this._searchInput.length) {
+			console.debug("[WCF.Search.Base] Selector '" + searchInput + "' for search input is invalid, aborting.");
+			return;
+		}
+		
+		this._searchInput.keyup($.proxy(this._keyUp, this)).wrap('<span class="dropdown" />');
 		this._list = $('<ul class="dropdownMenu" />').insertAfter(this._searchInput);
 		this._commaSeperated = (commaSeperated) ? true : false;
 		this._oldSearchString = [ ];
@@ -4024,6 +4133,10 @@ WCF.Search.Base = Class.extend({
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
+		
+		if (this._searchInput.getTagName() === 'input') {
+			this._searchInput.attr('autocomplete', 'off');
+		}
 	},
 	
 	/**
@@ -4130,6 +4243,7 @@ WCF.Search.Base = Class.extend({
 		}
 		
 		this._list.parent().addClass('dropdownOpen');
+		WCF.Dropdown.setAlignment(undefined, this._list);
 		
 		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(true); }, this));
 	},
@@ -4153,6 +4267,7 @@ WCF.Search.Base = Class.extend({
 	 * @param	object		event
 	 */
 	_executeCallback: function(event) {
+		var $clearSearchInput = false;
 		var $listItem = $(event.currentTarget);
 		// notify callback
 		if (this._commaSeperated) {
@@ -4175,7 +4290,12 @@ WCF.Search.Base = Class.extend({
 			}
 		}
 		else {
-			var $clearSearchInput = this._callback($listItem.data());
+			if (this._callback === null) {
+				this._searchInput.val($listItem.data('label'));
+			}
+			else {
+				$clearSearchInput = (this._callback($listItem.data()) === true) ? true : false;
+			}
 		}
 
 		// close list and revert input
@@ -4852,7 +4972,7 @@ WCF.Upload = Class.extend({
 		if (this._supportsAJAXUpload) {
 			this._fileUpload = $('<input type="file" name="'+this._name+'" '+(this._options.multiple ? 'multiple="true" ' : '')+'/>');
 			this._fileUpload.change($.proxy(this._upload, this));
-			var $button = $('<p class="button uploadButton"><span>Upload</span></p>');
+			var $button = $('<p class="button uploadButton"><span>'+WCF.Language.get('wcf.global.button.upload')+'</span></p>');
 			$button.append(this._fileUpload);
 		}
 		else {
@@ -5107,7 +5227,9 @@ WCF.Sortable.List = Class.extend({
 			$('#' + this._containerID + ' > .sortableList').wcfNestedSortable(this._options);
 		}
 		
-		this._container.find('.formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
+		if (this._className) {
+			this._container.find('.formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
+		}
 	},
 	
 	/**
@@ -5310,7 +5432,7 @@ WCF.Popover = Class.extend({
 		this._popover.hover($.proxy(this._overPopover, this), $.proxy(this._out, this));
 		
 		this._initContainers();
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.Popover', $.proxy(this._initContainers, this));
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Popover.'+selector, $.proxy(this._initContainers, this));
 	},
 	
 	/**
@@ -6401,7 +6523,7 @@ $.widget('ui.wcfDialog', {
 		if (this.options.closeButtonLabel === null) {
 			this.options.closeButtonLabel = WCF.Language.get('wcf.global.close');
 		}
-
+		
 		if (this.options.ajax) {
 			new WCF.Action.Proxy({
 				autoSend: true,

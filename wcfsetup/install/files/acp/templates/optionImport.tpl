@@ -60,7 +60,7 @@
 		<dl id="optionExportDiv">
 			<dt><label>{lang}wcf.acp.option.export.download{/lang}</label></dt>
 			<dd>
-				<p><a href="{link controller='OptionExport'}{/link}" id="optionExport" class="badge badgeButton button">{lang}wcf.acp.option.export{/lang}</a></p>
+				<p><a href="{link controller='OptionExport'}{/link}" id="optionExport" class="button">{lang}wcf.acp.option.export{/lang}</a></p>
 				<small>{lang}wcf.acp.option.export.download.description{/lang}</small>
 			</dd>
 		</dl>

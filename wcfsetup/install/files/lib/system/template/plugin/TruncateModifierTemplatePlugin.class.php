@@ -7,7 +7,7 @@ use wcf\util\StringUtil;
  * The 'truncate' modifier truncates a string.
  * 
  * Usage:
- * {$foo|truncate:35:'...'}
+ * {$foo|truncate:35:' and more'}
  *
  * @author 	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
@@ -23,7 +23,7 @@ class TruncateModifierTemplatePlugin implements IModifierTemplatePlugin {
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// default values
 		$length = 80;
-		$etc = '...';
+		$etc = '…';
 		$breakWords = false;
 		
 		// get values
@@ -32,22 +32,6 @@ class TruncateModifierTemplatePlugin implements IModifierTemplatePlugin {
 		if (isset($tagArgs[2])) $etc = $tagArgs[2];
 		if (isset($tagArgs[3])) $breakWords = $tagArgs[3];
 		
-		// execute plugin
-		if ($length == 0) {
-			return '';
-		}
-
-		if (StringUtil::length($string) > $length) {
-			$length -= StringUtil::length($etc);
-			
-			if (!$breakWords) {
-				$string = preg_replace('/\s+?(\S+)?$/', '', StringUtil::substring($string, 0, $length + 1));
-			}
-  
-			return StringUtil::substring($string, 0, $length).$etc;
-		}
-		else {
-   			return $string;
-		}
+		return StringUtil::truncate($string, $length, $etc, $breakWords);
 	}
 }
