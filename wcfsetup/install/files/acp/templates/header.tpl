@@ -19,7 +19,7 @@
 	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.tools.min.js"></script>
 	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js"></script>
 	<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.js"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.js"></script>
+	<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.js?t={@TIME_NOW}"></script>
 	<script type="text/javascript">
 		//<![CDATA[
 		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
@@ -110,7 +110,7 @@
 					<div class="layoutFluid clearfix">
 						<ul class="userPanelItems">
 							<li id="userMenu" class="dropdown">
-								<a class="dropdownToggle" data-toggle="userMenu">{event name='userAvatar'} {lang}wcf.user.userNote{/lang}</a>
+								<a class="dropdownToggle framed" data-toggle="userMenu">{event name='userAvatar'} {lang}wcf.user.userNote{/lang}</a>
 								<ul class="dropdownMenu">
 									<li><a href="../">FRONTEND</a></li>
 									<li class="dropdownDivider"></li>
@@ -175,43 +175,36 @@
 	<div id="main" class="layoutFluid{if PACKAGE_ID && $__wcf->getACPMenu()->getMenuItems('')|count} sidebarOrientationLeft{/if}">
 		<div>
 			{hascontent}
-				<!-- SIDEBAR -->
-				<aside class="sidebar">
-					<!-- sidebar menu -->
-					<nav id="sidebarContent" class="sidebarContent">
-						<ul>
-							<li>
-							{content}
-								{* work-around for unknown core-object during WCFSetup *}
-								{if PACKAGE_ID}
-									{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=parentMenuItem}
-										<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="menuGroup collapsibleMenus" data-parent-menu-item="{$parentMenuItem->menuItem}">
-											{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
-												<h1 class="menuHeader" data-menu-item="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</h1>
-												<div class="menuGroupItems">
-													<ul id="{$menuItem->menuItem}">
-														{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItem->menuItem) item=menuItemCategory}
-															{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
-																{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem) item=subMenuItem}
-																	<li id="{$subMenuItem->menuItem}" data-menu-item="{$subMenuItem->menuItem}"><a href="{$subMenuItem->getLink()}">{lang}{$subMenuItem->menuItem}{/lang}</a></li>
-																{/foreach}
-															{else}
-																<li id="{$menuItemCategory->menuItem}" data-menu-item="{$menuItemCategory->menuItem}"><a href="{$menuItemCategory->getLink()}">{lang}{$menuItemCategory->menuItem}{/lang}</a></li>
-															{/if}
-														{/foreach}
-													</ul>
-												</div>
-											{/foreach}
-										</div>
+				<aside class="sidebar collapsibleMenu">
+					{content}
+						{* work-around for unknown core-object during WCFSetup *}
+						{if PACKAGE_ID}
+							{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=parentMenuItem}
+								<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="menuGroup collapsibleMenus" data-parent-menu-item="{$parentMenuItem->menuItem}">
+									{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
+										<fieldset>
+											<legend class="menuHeader" data-menu-item="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</legend>
+											
+											<nav class="menuGroupItems">
+												<ul id="{$menuItem->menuItem}">
+													{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItem->menuItem) item=menuItemCategory}
+														{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
+															{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem) item=subMenuItem}
+																<li id="{$subMenuItem->menuItem}" data-menu-item="{$subMenuItem->menuItem}"><a href="{$subMenuItem->getLink()}">{lang}{$subMenuItem->menuItem}{/lang}</a></li>
+															{/foreach}
+														{else}
+															<li id="{$menuItemCategory->menuItem}" data-menu-item="{$menuItemCategory->menuItem}"><a href="{$menuItemCategory->getLink()}">{lang}{$menuItemCategory->menuItem}{/lang}</a></li>
+														{/if}
+													{/foreach}
+												</ul>
+											</nav>
+										</fieldset>
 									{/foreach}
-								{/if}
-							{/content}
-							</li>
-						</ul>
-					</nav>
-					<!-- /sidebar menu -->
+								</div>
+							{/foreach}
+						{/if}
+					{/content}
 				</aside>
-				<!-- /SIDEBAR -->
 			{/hascontent}
 			
 			<!-- CONTENT -->

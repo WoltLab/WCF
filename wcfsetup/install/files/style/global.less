@@ -1,0 +1,229 @@
+/* ### globals ### */
+body {
+	background-color: @wcfPageBackgroundColor;
+	color: @wcfPageColor;
+	font-family: @wcfBaseFontFamily;
+	font-size: @wcfBaseFontSize;
+	line-height: @wcfBaseLineHeight;
+}
+
+small {
+	font-size: @wcfSmallFontSize;
+}
+
+img {
+	vertical-align: middle;
+	
+	&.disabled {
+		opacity: .3;
+	}
+}
+
+a {
+	color: @wcfLinkColor;
+	cursor: pointer;
+	text-decoration: none;
+		
+	&:hover {
+		color: @wcfLinkHoverColor;
+		text-decoration: underline;
+	}
+}
+
+.invisible {
+	display: none;
+}
+
+.marginTop {
+	margin-top: @wcfGapMedium;
+}
+
+/* icons */
+.icon(@imageSize) {
+	.square(@imageSize);
+}
+
+.icon16 { .icon(16px); }
+.icon24 { .icon(24px); }
+.icon32 { .icon(32px); }
+.icon48 { .icon(48px); }
+.icon64 { .icon(64px); }
+.icon96 { .icon(96px); }
+.icon128 { .icon(128px); }
+.icon256 { .icon(256px); }
+
+.iconFlag {
+	height: 15px;
+	width: 24px;
+}
+
+.framed {
+	> img  {
+		background-color: @wcfContentBackgroundColor;
+		border: 1px solid @wcfContainerBorderColor;
+		padding: 1px;
+	}
+}
+
+/* balloon tooltips */
+.balloonTooltip {
+	background-color: @wcfTooltipBackgroundColor;
+	color: @wcfTooltipColor;
+	font-size: .85em;
+	max-width: 300px;
+	padding: 5px 10px 7px;
+	position: absolute;
+	z-index: 800;
+	
+	.borderRadius(6px);
+	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px); 
+	
+	.pointer {
+		border-color: @wcfTooltipBackgroundColor transparent;
+		border-style: solid;
+		border-width: 0 5px 5px;
+		left: 50%;
+		position: absolute;
+		top: -5px;
+	}
+}
+
+/* popover */
+.popover {
+	background-color: rgba(0, 0, 0, .4);
+	background-image: url(../icon/spinner.svg);
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 32px;
+	max-width: 450px;
+	min-height: 32px;
+	min-width: 150px;
+	padding: @wcfGapSmall;
+	position: absolute;
+	vertical-align: middle;
+	z-index: 320;
+	
+	.borderRadius(6px);
+	.boxShadow(0, 1px, rgba(0, 0, 0, .3), 7px);
+	
+	&:after {
+		border: 10px solid transparent;
+		content: "";
+		display: inline-block;
+		position: absolute;
+		z-index: 100;
+	}
+	
+	&.top:after {
+		border-bottom-width: 0;
+		border-top-color: rgba(0, 0, 0, .4);
+		bottom: -10px;
+	}
+	
+	&.bottom:after {
+		border-bottom-color: rgba(0, 0, 0, .4);
+		border-top-width: 0;
+		top: -10px;
+	}
+	
+	&.right:after {
+		left: 10px;
+	}
+	
+	&.left:after {
+		right: 10px;
+	}
+}
+
+.popoverContent {
+	background-color: @wcfContainerBackgroundColor;
+	color: @wcfColor;
+	opacity: 0;
+	padding: @wcfGapSmall @wcfGapMedium;
+	
+	.borderRadius(6px);
+}
+
+/* ### badges ### */
+// sets default badge shadows depending on background color
+.badgeShadow(@backgroundColor) when (lightness(@backgroundColor) >= 50%) {
+	box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, .8);
+}
+.badgeShadow(@backgroundColor) when (lightness(@backgroundColor) < 50%) {
+	box-shadow: 0px -1px 0px 0px rgba(0, 0, 0, .8);
+}
+
+/* default values */
+.badge {
+	background-color: @wcfColor;
+	border-radius: 13px;
+	color: @wcfContentBackgroundColor;
+	display: inline-block;
+	font-size: @wcfSmallFontSize;
+	font-weight: normal !important;
+	padding: 1px 8px 2px;
+	position: relative;
+	text-shadow: none !important;
+	white-space: nowrap;
+	
+	.badgeShadow(@wcfContentBackgroundColor);
+	
+	/* colors */
+	&.badgeUpdate {
+		background-color: @wcfTabularBoxBackgroundColor;
+		color: @wcfTabularBoxColor;
+	}
+	
+	&.badgeGreen {
+		background-color: @wcfSuccessBackgroundColor;
+		color: @wcfSuccessColor;
+	}
+	
+	&.badgeRed {
+		background-color: @wcfErrorBackgroundColor;
+		color: @wcfErrorColor;
+	}
+	
+	&.badgeInverse {
+		background-color: @wcfTabularBoxColor;
+		color: @wcfTabularBoxBackgroundColor;
+		
+		.badgeShadow(@wcfTabularBoxBackgroundColor);
+	}
+}
+
+a.badge:hover {
+	color: @wcfContentBackgroundColor;
+	text-decoration: none;
+}
+
+/* special */
+.containerHeadline > h1 > .badge {
+	font-size: 70%;
+	top: -1px;
+}
+
+.boxHeadline > hgroup > h1 .badge {
+	font-size: 50%;
+	top: -3px;
+}
+
+.mainMenu > ul > li > a > .badge {
+	font-size: 70%;
+	top: -1px;
+}
+
+.mainMenu > ul > li.active > a > .badge {
+	font-size: 65%;
+	top: -2px;
+}
+
+.tabularBoxTitle > hgroup > h1 > .badge {
+	font-size: 70%;
+	top: -1px;
+}
+
+fieldset > legend > .badge {
+	font-size: 50%;
+	top: -3px;
+}
