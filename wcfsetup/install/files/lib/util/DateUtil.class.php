@@ -365,12 +365,5 @@ final class DateUtil {
 		}
 	}
 	
-	public static function diff(\DateTime $from, \DateTime $to) {
-		$interval = $from->diff($to);
-		
-		// TODO: Use language items
-		return $interval->format('%Y years %M months %D days %H hours %I minutes %S seconds');
-	}
-	
 	private function __construct() { }
 }
