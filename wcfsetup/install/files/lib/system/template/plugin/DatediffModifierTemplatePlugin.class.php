@@ -27,8 +27,6 @@ class DatediffModifierTemplatePlugin implements IModifierTemplatePlugin {
 		$start = min($tagArgs[0], $tagArgs[1]);
 		$end = max($tagArgs[0], $tagArgs[1]);
 		
-		// TODO: method doesn't exists anymore
-		// return DateUtil::diff($start, $end, 'string');
-		return '';
+		return DateUtil::diff(DateUtil::getDateTimeByTimestamp($start), DateUtil::getDateTimeByTimestamp($end));
 	}
 }
