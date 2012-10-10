@@ -230,7 +230,9 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Handles uploaded attachments.
+	 * Handles uploaded preview images.
+	 * 
+	 * @return	array<string>
 	 */
 	public function upload() {
 		// save files
