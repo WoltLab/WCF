@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\style;
 use wcf\data\style\ActiveStyle;
+use wcf\data\style\Style;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
@@ -139,5 +140,17 @@ class StyleHandler extends SingletonFactory {
 		}
 		
 		return '<link rel="stylesheet" type="text/css" href="'.WCF::getPath().$filename.'?m='.filemtime(WCF_DIR.$filename).'" />';
+	}
+	
+	/**
+	 * Resets stylesheet for given style.
+	 * 
+	 * @param	wcf\data\style\Style	$style
+	 */
+	public function resetStylesheet(Style $style) {
+		$stylesheets = glob(WCF_DIR.'style/style-*-'.$style->styleID.'*.css');
+		foreach ($stylesheets as $stylesheet) {
+			@unlink($stylesheet);
+		}
 	}
 }

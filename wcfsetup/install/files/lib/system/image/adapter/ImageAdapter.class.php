@@ -57,9 +57,12 @@ class ImageAdapter implements IImageAdapter {
 	 * @see	wcf\system\image\adapter\IImageAdapter::createThumbnail()
 	 */
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
-		if ($maxWidth > $this->getWidth() || $maxHeight > $this->getHeight()) {
+		if ($maxWidth > $this->getWidth() && $maxHeight > $this->getHeight()) {
 			throw new SystemException("Dimensions for thumbnail can not exceed image dimensions.");
 		}
+		
+		$maxHeight = min($maxHeight, $this->getHeight());
+		$maxWidth = min($maxWidth, $this->getWidth());
 		
 		return $this->adapter->createThumbnail($maxWidth, $maxHeight, $obtainDimensions);
 	}

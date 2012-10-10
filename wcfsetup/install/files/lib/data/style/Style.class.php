@@ -24,6 +24,9 @@ class Style extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'styleID';
 	
+	const PREVIEW_IMAGE_MAX_HEIGHT = 140;
+	const PREVIEW_IMAGE_MAX_WIDTH = 185;
+	
 	/**
 	 * Returns the name of this style.
 	 * 
@@ -52,5 +55,18 @@ class Style extends DatabaseObject {
 		}
 		
 		return $variables;
+	}
+	
+	/**
+	 * Returns the style preview image path.
+	 * 
+	 * @return	string
+	 */
+	public function getPreviewImage() {
+		if ($this->image && file_exists(WCF_DIR.'images/'.$this->image)) {
+			return WCF::getPath().'images/'.$this->image;
+		}
+		
+		return WCF::getPath().'images/stylePreview.png';
 	}
 }

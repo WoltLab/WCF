@@ -32,8 +32,6 @@ use wcf\util\XML;
  */
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	const INFO_FILE = 'style.xml';
-	const STYLE_PREVIEW_IMAGE_MAX_WIDTH = 185;
-	const STYLE_PREVIEW_IMAGE_MAX_HEIGHT = 140;
 	
 	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
@@ -344,7 +342,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			'styleDescription' => $data['description'],
 			'styleVersion' => $data['version'],
 			'styleDate' => $data['date'],
-			'image' => ($data['image'] ? 'images/' : '').$data['image'],
 			'copyright' => $data['copyright'],
 			'license' => $data['license'],
 			'authorName' => $data['authorName'],
@@ -356,15 +353,19 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		}
 		else {
 			$styleData['packageID'] = $packageID;
-			$style = self::create($styleData);
+			$style = new StyleEditor(self::create($styleData));
 		}
 		
 		// import preview image
 		if (!empty($data['image'])) {
-			$i = $tar->getIndexByFilename($data['image']);
-			if ($i !== false) {
-				$tar->extract($i, WCF_DIR.'images/'.$data['image']);
-				@chmod(WCF_DIR.'images/'.$data['image'], 0777);
+			$fileExtension = StringUtil::substring($data['image'], StringUtil::lastIndexOf($data['image'], '.'));
+			$index = $tar->getIndexByFilename($data['image']);
+			if ($index !== false) {
+				$filename = WCF_DIR.'images/stylePreview-'.$style->styleID.'.'.$fileExtension;
+				$tar->extract($index, $filename);
+				@chmod($filename, 0777);
+				
+				$style->update(array('image' => $filename));
 			}
 		}
 		
@@ -809,7 +810,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	public static function scalePreviewImage($filename) {
 		$adapter = ImageHandler::getInstance()->getAdapter();
 		$adapter->load($filename);
-		$thumbnail = $adapter->createThumbnail(self::STYLE_PREVIEW_IMAGE_MAX_WIDTH, self::STYLE_PREVIEW_IMAGE_MAX_HEIGHT);
+		$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH, Style::PREVIEW_IMAGE_MAX_HEIGHT);
 		$adapter->writeImage($thumbnail, $filename);
 	}
 	
