@@ -104,12 +104,6 @@ class StyleAddForm extends ACPForm {
 	public $iconPath = 'icon/';
 	
 	/**
-	 * path to preview image 
-	 * @var	string
-	 */
-	public $image = '';
-	
-	/**
 	 * image path
 	 * @var	string
 	 */
@@ -152,6 +146,12 @@ class StyleAddForm extends ACPForm {
 	public $templateGroupID = 0;
 	
 	/**
+	 * temporary image hash
+	 * @var	string
+	 */
+	public $tmpHash = '';
+	
+	/**
 	 * fluid or fixed layout
 	 * @var	boolean
 	 */
@@ -177,6 +177,13 @@ class StyleAddForm extends ACPForm {
 		$templateGroupList->sqlOrderBy = "template_group.templateGroupName ASC";
 		$templateGroupList->readObjects();
 		$this->availableTemplateGroups = $templateGroupList->getObjects();
+		
+		if (isset($_REQUEST['tmpHash'])) {
+			$this->tmpHash = StringUtil::trim($_REQUEST['tmpHash']);
+		}
+		if (empty($this->tmpHash)) {
+			$this->tmpHash = StringUtil::getRandomID();
+		}
 	}
 	
 	/**
@@ -209,7 +216,6 @@ class StyleAddForm extends ACPForm {
 		if (isset($_POST['authorURL'])) $this->authorURL = StringUtil::trim($_POST['authorURL']);
 		if (isset($_POST['copyright'])) $this->copyright = StringUtil::trim($_POST['copyright']);
 		if (isset($_POST['iconPath'])) $this->iconPath = StringUtil::trim($_POST['iconPath']);
-		if (isset($_POST['image'])) $this->image = StringUtil::trim($_POST['image']);
 		if (isset($_POST['imagePath'])) $this->imagePath = StringUtil::trim($_POST['imagePath']);
 		if (isset($_POST['license'])) $this->license = StringUtil::trim($_POST['license']);
 		if (isset($_POST['styleDate'])) $this->styleDate = StringUtil::trim($_POST['styleDate']);
@@ -381,7 +387,6 @@ class StyleAddForm extends ACPForm {
 				'styleDescription' => ($this->styleDescription ? $this->styleDescription : null),
 				'styleVersion' => $this->styleVersion,
 				'styleDate' => $this->styleDate,
-				'image' => $this->image,
 				'imagePath' => $this->imagePath,
 				'copyright' => $this->copyright,
 				'license' => $this->license,
@@ -389,6 +394,7 @@ class StyleAddForm extends ACPForm {
 				'authorURL' => $this->authorURL,
 				'iconPath' => $this->iconPath
 			),
+			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
 		));
 		$this->objectAction->executeAction();
@@ -397,9 +403,8 @@ class StyleAddForm extends ACPForm {
 		$this->saved();
 		
 		// reset variables
-		$this->authorName = $this->authorURL = $this->copyright = $this->fontFamily = '';
-		$this->image = $this->license = $this->styleDate = $this->styleDescription = '';
-		$this->styleName = $this->styleVersion = 0;
+		$this->authorName = $this->authorURL = $this->copyright = $this->fontFamily = $this->image = '';
+		$this->license = $this->styleDate = $this->styleDescription = $this->styleName = $this->styleVersion = '';
 		
 		$this->iconPath = 'icon/';
 		$this->imagePath = 'images/';
@@ -428,7 +433,6 @@ class StyleAddForm extends ACPForm {
 			'copyright' => $this->copyright,
 			'fontFamily' => $this->fontFamily,
 			'iconPath' => $this->iconPath,
-			'image' => $this->image,
 			'imagePath' => $this->imagePath,
 			'license' => $this->license,
 			'styleDate' => $this->styleDate,
@@ -436,6 +440,7 @@ class StyleAddForm extends ACPForm {
 			'styleName' => $this->styleName,
 			'styleVersion' => $this->styleVersion,
 			'templateGroupID' => $this->templateGroupID,
+			'tmpHash' => $this->tmpHash,
 			'useFluidLayout' => $this->useFluidLayout,
 			'variables' => $this->variables
 		));

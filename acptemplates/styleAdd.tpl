@@ -1,5 +1,6 @@
 {include file='header'}
 
+<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.StyleEditor.js"></script>
 <script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.ColorPicker.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
@@ -22,6 +23,8 @@
 		}
 		$useFluidLayout.change(useFluidLayout);
 		useFluidLayout();
+		
+		new WCF.ACP.StyleEditor.Upload(0, '{$tmpHash}');
 	});
 	//]]>
 </script>
@@ -189,8 +192,10 @@
 				
 				<dl{if $errorField == 'image'} class="formError"{/if}>
 					<dt><label for="image">{lang}wcf.acp.style.image{/lang}</label></dt>
-					<dd>
-						<input type="hidden" name="image" value="{$image}" readonly="readonly" class="long" /> TODO: Add upload here!
+					<dd class="framed">
+						<img src="{if $action == 'add'}{@$__wcf->getPath()}images/stylePreview.png{else}{@$style->getPreviewImage()}{/if}" alt="" id="styleImage" />
+						<div id="uploadImage" class="marginTop"></div>
+						{*<input type="hidden" name="image" value="{$image}" readonly="readonly" class="long" /> TODO: Add upload here!*}
 						{if $errorField == 'image'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -422,6 +427,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		<input type="hidden" name="tmpHash" value="{$tmpHash}" />
 		{if $styleID|isset}<input type="hidden" name="id" value="{@$styleID}" />{/if}
 	</div>
 </form>
