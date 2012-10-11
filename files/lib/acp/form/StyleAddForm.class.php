@@ -116,6 +116,11 @@ class StyleAddForm extends ACPForm {
 	public $license = '';
 	
 	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
+	public $neededPermissions = array('admin.style.canAddStyle');
+	
+	/**
 	 * last change date
 	 * @var	string
 	 */

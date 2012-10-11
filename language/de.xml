@@ -10,6 +10,7 @@
 		<item name="wcf.acp.style.add"><![CDATA[Stil hinzufügen]]></item>
 		<item name="wcf.acp.style.authorName"><![CDATA[Autor]]></item>
 		<item name="wcf.acp.style.authorURL"><![CDATA[Website]]></item>
+		<item name="wcf.acp.style.button.setAsDefault"><![CDATA[Zum Standard machen]]></item>
 		<item name="wcf.acp.style.colors"><![CDATA[Farbpalette]]></item>
 		<item name="wcf.acp.style.colors.accentBackgroundColor"><![CDATA[Hintergrundfarbe (Akzent)]]></item>
 		<item name="wcf.acp.style.colors.backgroundColor"><![CDATA[Hintergrundfarbe]]></item>
@@ -31,6 +32,7 @@
 		<item name="wcf.acp.style.colors.tabular"><![CDATA[Tabellarische Auflistungen]]></item>
 		<item name="wcf.acp.style.colors.userPanel"><![CDATA[Benutzerleiste]]></item>
 		<item name="wcf.acp.style.copyright"><![CDATA[Copyright]]></item>
+		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Möchten Sie den Stil &bdquo;{$style->styleName}&ldquo; wirklich löschen?]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Daten]]></item>
 		<item name="wcf.acp.style.general.data"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.style.general.files"><![CDATA[Dateien]]></item>
@@ -43,16 +45,18 @@
 		<item name="wcf.acp.style.globals.layout"><![CDATA[Layout]]></item>
 		<item name="wcf.acp.style.globals.useFluidLayout"><![CDATA[Flexible Breite verwenden]]></item>
 		<item name="wcf.acp.style.iconPath"><![CDATA[Icon-Pfad]]></item>
-		<item name="wcf.acp.style.iconPath.description"><![CDATA[Wenn Ihr Stil eigene Icons benötigt, sollten diese in einem Unterordner des Ordners &laquo;icons&raquo; ablegen. Geben Sie hier den Pfad zu diesem Ordner an.]]></item>
+		<item name="wcf.acp.style.iconPath.description"><![CDATA[Wenn Ihr Stil eigene Icons benötigt, sollten diese in einem Unterordner des Ordners &bdquo;icons&ldquo; ablegen. Geben Sie hier den Pfad zu diesem Ordner an.]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Vorschaubild]]></item>
 		<item name="wcf.acp.style.image.description"><![CDATA[Laden Sie hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 225px x 140px anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Bilder-Pfad]]></item>
-		<item name="wcf.acp.style.imagePath.description"><![CDATA[Wenn Ihr Stil eigene Grafiken benötigt, sollten diese in einem Unterordner des Ordners &laquo;images&raquo; ablegen. Geben Sie hier den Pfad zu diesem Ordner an.]]></item>
+		<item name="wcf.acp.style.imagePath.description"><![CDATA[Wenn Ihr Stil eigene Grafiken benötigt, sollten diese in einem Unterordner des Ordners &bdquo;images&ldquo; ablegen. Geben Sie hier den Pfad zu diesem Ordner an.]]></item>
 		<item name="wcf.acp.style.license"><![CDATA[Lizenz]]></item>
+		<item name="wcf.acp.style.list"><![CDATA[Stile auflisten]]></item>
 		<item name="wcf.acp.style.styleDate"><![CDATA[Datum]]></item>
 		<item name="wcf.acp.style.styleDescription"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.style.styleName"><![CDATA[Name]]></item>
 		<item name="wcf.acp.style.styleVersion"><![CDATA[Version]]></item>
 		<item name="wcf.acp.style.templateGroupID"><![CDATA[Template-Gruppe]]></item>
+		<item name="wcf.acp.style.users"><![CDATA[Benutzer]]></item>
 	</category>
 </language>

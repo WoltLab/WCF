@@ -18,6 +18,16 @@ use wcf\system\WCF;
  */
 class StyleEditForm extends StyleAddForm {
 	/**
+	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.style';
+	
+	/**
+	 * @see wcf\page\AbstractPage::$neededPermissions
+	 */
+	public $neededPermissions = array('admin.style.canEditStyle');
+	
+	/**
 	 * style object
 	 * @var	wcf\data\style\Style
 	 */
