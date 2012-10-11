@@ -28,6 +28,11 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	protected $className = 'wcf\data\style\StyleEditor';
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 */
+	protected $permissionsDelete = array('admin.style.canDeleteStyle');
+	
+	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::create()
 	 */
 	public function create() {
@@ -281,5 +286,33 @@ class StyleAction extends AbstractDatabaseObjectAction {
 		}
 		
 		return array('errorType' => $file->getValidationErrorType());
+	}
+	
+	/**
+	 * Validates parameters to assign a new default style.
+	 */
+	public function validateSetAsDefault() {
+		if (WCF::getSession()->getPermission('admin.style.canEditStyle')) {
+			throw new PermissionDeniedException();
+		}
+		
+		if (empty($this->objects)) {
+			$this->readObjects();
+			if (empty($this->objects)) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+		
+		if (count($this->objects) > 1) {
+			throw new UserInputException('objectIDs');
+		}
+	}
+	
+	/**
+	 * Sets a style as new default style.
+	 */
+	public function setAsDefault() {
+		$styleEditor = current($this->objects);
+		$styleEditor->setAsDefault();
 	}
 }

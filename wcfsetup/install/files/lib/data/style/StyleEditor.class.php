@@ -110,6 +110,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			'isDefault' => 1,
 			'disabled' => 0
 		));
+		
+		self::resetCache();
 	}
 	
 	/**

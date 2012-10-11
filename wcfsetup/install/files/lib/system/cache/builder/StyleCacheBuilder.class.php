@@ -32,8 +32,13 @@ class StyleCacheBuilder implements ICacheBuilder {
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			if ($row['isDefault']) $data['default'] = $row['styleID'];
-			$data['styles'][$row['styleID']] = new Style(null, $row);
+			$style = new Style(null, $row);
+			$style->loadVariables();
+			
+			$data['styles'][$row['styleID']] = $style;
 		}
+		
+		// load style-specific variables
 		
 		// get style to packages
 		$sql = "SELECT		*
