@@ -6,10 +6,13 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\image\ImageHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\upload\DefaultUploadFileValidationStrategy;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Executes style-related actions.
@@ -292,7 +295,7 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	 * Validates parameters to assign a new default style.
 	 */
 	public function validateSetAsDefault() {
-		if (WCF::getSession()->getPermission('admin.style.canEditStyle')) {
+		if (!WCF::getSession()->getPermission('admin.style.canEditStyle')) {
 			throw new PermissionDeniedException();
 		}
 		
@@ -314,5 +317,110 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	public function setAsDefault() {
 		$styleEditor = current($this->objects);
 		$styleEditor->setAsDefault();
+	}
+	
+	/**
+	 * Validates parameters to copy a style.
+	 */
+	public function validateCopy() {
+		if (!WCF::getSession()->getPermission('admin.style.canAddStyle')) {
+			throw new PermissionDeniedException();
+		}
+		
+		if (empty($this->objects)) {
+			$this->readObjects();
+			if (empty($this->objects)) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+		
+		if (count($this->objects) > 1) {
+			throw new UserInputException('objectIDs');
+		}
+	}
+	
+	/**
+	 * Copies a style.
+	 * 
+	 * @return	array<string>
+	 */
+	public function copy() {
+		$style = current($this->objects);
+		
+		// get unique style name
+		$sql = "SELECT	styleName
+			FROM	wcf".WCF_N."_style
+			WHERE	styleName LIKE ?
+				AND styleID <> ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			$style->styleName.'%',
+			$style->styleID
+		));
+		$numbers = array();
+		$regEx = new Regex('\((\d+)\)$');
+		while ($row = $statement->fetchArray()) {
+			$styleName = $row['styleName'];
+			
+			if ($regEx->match($styleName)) {
+				$matches = $regEx->getMatches();
+				
+				// check if name matches the pattern 'styleName (x)'
+				if ($styleName == $style->styleName . ' ('.$matches[1].')') {
+					$numbers[] = $matches[1];
+				}
+			}
+		}
+		
+		$number = (count($numbers)) ? max($numbers) + 1 : 2;
+		$styleName = $style->styleName . ' ('.$number.')';
+		
+		// create the new style
+		$newStyle = StyleEditor::create(array(
+			'packageID' => $style->packageID,
+			'styleName' => $styleName,
+			'templateGroupID' => $style->templateGroupID,
+			'styleDescription' => $style->styleDescription,
+			'styleVersion' => $style->styleVersion,
+			'styleDate' => $style->styleDate,
+			'copyright' => $style->copyright,
+			'license' => $style->license,
+			'authorName' => $style->authorName,
+			'authorURL' => $style->authorURL,
+			'iconPath' => $style->iconPath,
+			'imagePath' => $style->imagePath
+		));
+		
+		// copy style variables
+		$sql = "INSERT INTO	wcf".WCF_N."_style_variable_value
+					(styleID, variableID, variableValue)
+			SELECT		".$newStyle->styleID." AS styleID, value.variableID, value.variableValue
+			FROM		wcf".WCF_N."_style_variable_value value
+			WHERE		value.styleID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($style->styleID));
+		
+		// copy preview image
+		if ($style->image) {
+			// get extension
+			$fileExtension = StringUtil::substring($style->image, StringUtil::lastIndexOf($style->image, '.'));
+			
+			// copy existing preview image
+			if (@copy(WCF_DIR.'images/'.$style->image, WCF_DIR.'images/stylePreview-'.$newStyle->styleID.$fileExtension)) {
+				// bypass StyleEditor::update() to avoid scaling of already fitting image
+				$sql = "UPDATE	wcf".WCF_N."_style
+					SET	image = ?
+					WHERE	styleID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array(
+					'stylePreview-'.$newStyle->styleID.$fileExtension,
+					$newStyle->styleID
+				));
+			}
+		}
+		
+		return array(
+			'redirectURL' => LinkHandler::getInstance()->getLink('StyleEdit', array('id' => $newStyle->styleID))
+		);
 	}
 }
