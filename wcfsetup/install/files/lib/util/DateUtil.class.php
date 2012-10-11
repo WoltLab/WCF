@@ -138,6 +138,7 @@ final class DateUtil {
 	 * @param	string				$format
 	 * @param	wcf\data\language\Language	$language
 	 * @param	wcf\data\user\User		$user
+	 * @return	string
 	 */
 	public static function format(\DateTime $time = null, $format = null, Language $language = null, User $user = null) {
 		// get default values
@@ -156,6 +157,70 @@ final class DateUtil {
 		$output = self::localizeDate($output, $format, $language);
 		
 		return $output;
+	}
+	
+	/**
+	 * Returns a formatted date interval. If $fullInterval is set true, the
+	 * complete interval is returned, otherwise a rounded interval is used.
+	 * 
+	 * @param	\DateInterval	$interval
+	 * @param	boolean		$fullInterval
+	 * @return	string
+	 */
+	public static function formatInterval(\DateInterval $interval, $fullInterval = false) {
+		$years = $interval->format('%y');
+		$months = $interval->format('%m');
+		$days = $interval->format('%d');
+		$weeks = floor($days / 7);
+		$hours = $interval->format('%h');
+		$minutes = $interval->format('%i');
+		
+		if ($fullInterval) {
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.full', array(
+				'days' => $days - 7 * $weeks,
+				'firstElement' => $years ? 'years' : ($months ? 'months' : ($weeks ? 'weeks' : ($days ? 'days' : ($hours ? 'hours' : 'minutes')))),
+				'hours' => $hours,
+				'lastElement' => !$minutes ? (!$hours ? (!$days ? (!$weeks ? (!$months ? 'years' : 'months') : 'weeks') : 'days') : 'hours') : 'minutes',
+				'minutes' => $minutes,
+				'months' => $months,
+				'weeks' => $weeks,
+				'years' => $years
+			));
+		}
+		
+		if ($years) {
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.years', array(
+				'years' => $years
+			));
+		}
+		
+		if ($months) {
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.months', array(
+				'months' => $months
+			));
+		}
+		
+		if ($weeks) {
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.weeks', array(
+				'weeks' => $weeks
+			));
+		}
+		
+		if ($days) {
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.days', array(
+				'days' => $days
+			));
+		}
+		
+		if ($hours) {
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.hours', array(
+				'hours' => $hours
+			));
+		}
+		
+		return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.minutes', array(
+			'minutes' => $minutes
+		));
 	}
 	
 	/**
@@ -298,13 +363,6 @@ final class DateUtil {
 		if (date('Y-m-d', $time) != $date) {
 			throw new SystemException("date '".$date."' is invalid");
 		}
-	}
-	
-	public static function diff(\DateTime $from, \DateTime $to) {
-		$interval = $from->diff($to);
-		
-		// TODO: Use language items
-		return $interval->format('%Y years %M months %D days %H hours %I minutes %S seconds');
 	}
 	
 	private function __construct() { }
