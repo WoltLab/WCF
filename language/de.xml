@@ -32,7 +32,11 @@
 		<item name="wcf.acp.style.colors.tabular"><![CDATA[Tabellarische Auflistungen]]></item>
 		<item name="wcf.acp.style.colors.userPanel"><![CDATA[Benutzerleiste]]></item>
 		<item name="wcf.acp.style.copyright"><![CDATA[Copyright]]></item>
+		<item name="wcf.acp.style.copyStyle"><![CDATA[Stil kopieren]]></item>
+		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Möchten Sie den Stil &bdquo;{$style->styleName}&ldquo; wirklich duplizieren?]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Möchten Sie den Stil &bdquo;{$style->styleName}&ldquo; wirklich löschen?]]></item>
+		<item name="wcf.acp.style.edit"><![CDATA[Stil bearbeiten]]></item>
+		<item name="wcf.acp.style.exportStyle"><![CDATA[Stil exportieren]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Daten]]></item>
 		<item name="wcf.acp.style.general.data"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.style.general.files"><![CDATA[Dateien]]></item>

@@ -1,6 +1,6 @@
 {include file='header'}
 
-<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.StyleEditor.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Style.js"></script>
 <script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.ColorPicker.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
@@ -24,7 +24,13 @@
 		$useFluidLayout.change(useFluidLayout);
 		useFluidLayout();
 		
-		new WCF.ACP.StyleEditor.Upload(0, '{$tmpHash}');
+		new WCF.ACP.Style.ImageUpload(0, '{$tmpHash}');
+		
+		{if $action == 'edit' && $__wcf->getSession()->getPermission('admin.style.canAddStyle')}new WCF.ACP.Style.CopyStyle({@$style->styleID});{/if}
+		
+		WCF.Language.addObject({
+			'wcf.acp.style.copyStyle.confirmMessage': '{lang}wcf.acp.style.copyStyle.confirmMessage{/lang}'
+		});
 	});
 	//]]>
 </script>
@@ -45,6 +51,10 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
+			{if $action == 'edit'}
+				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/download.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
+				{if $__wcf->getSession()->getPermission('admin.style.canAddStyle')}<li><a class="jsCopyStyle button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>{/if}
+			{/if}
 			<li><a href="{link controller='StyleList'}{/link}" title="{lang}wcf.acp.menu.link.style.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
 		</ul>
 	</nav>
