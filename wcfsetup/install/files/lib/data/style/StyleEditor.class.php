@@ -13,6 +13,7 @@ use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\io\TarWriter;
 use wcf\system\style\StyleCompiler;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\FileUtil;
@@ -536,36 +537,33 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * @param	boolean		$icons
 	 */
 	public function export($templates = false, $images = false, $icons = false) {
-		// TODO: Fix this method!
-		throw new SystemException("FIX ME!");
-		
 		// create style tar
 		$styleTarName = FileUtil::getTemporaryFilename('style_', '.tgz');
 		$styleTar = new TarWriter($styleTarName, true);
 		
 		// append style preview image
-		if ($this->image && @file_exists(WCF_DIR.$this->image)) {
-			$styleTar->add(WCF_DIR.$this->image, '', FileUtil::addTrailingSlash(dirname(WCF_DIR.$this->image)));
+		if ($this->image && @file_exists(WCF_DIR.'images/'.$this->image)) {
+			$styleTar->add(WCF_DIR.'images/'.$this->image, '', FileUtil::addTrailingSlash(dirname(WCF_DIR.'images/'.$this->image)));
 		}
 		
 		// create style info file
-		$string = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<!DOCTYPE style SYSTEM \"http://www.woltlab.com/DTDs/SXF/style.dtd\">\n<style>\n";
+		$string = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<style xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/style.xsd\">\n";
 		
 		// general block
 		$string .= "\t<general>\n";
-		$string .= "\t\t<stylename><![CDATA[".StringUtil::escapeCDATA((CHARSET != 'UTF-8' ? StringUtil::convertEncoding(CHARSET, 'UTF-8', $this->styleName) : $this->styleName))."]]></stylename>\n"; // style name
-		if ($this->styleDescription) $string .= "\t\t<description><![CDATA[".StringUtil::escapeCDATA((CHARSET != 'UTF-8' ? StringUtil::convertEncoding(CHARSET, 'UTF-8', $this->styleDescription) : $this->styleDescription))."]]></description>\n"; // style description
-		if ($this->styleVersion) $string .= "\t\t<version><![CDATA[".StringUtil::escapeCDATA((CHARSET != 'UTF-8' ? StringUtil::convertEncoding(CHARSET, 'UTF-8', $this->styleVersion) : $this->styleVersion))."]]></version>\n"; // style version
-		if ($this->styleDate) $string .= "\t\t<date><![CDATA[".StringUtil::escapeCDATA((CHARSET != 'UTF-8' ? StringUtil::convertEncoding(CHARSET, 'UTF-8', $this->styleDate) : $this->styleDate))."]]></date>\n"; // style date
-		if ($this->image) $string .= "\t\t<image><![CDATA[".StringUtil::escapeCDATA((CHARSET != 'UTF-8' ? StringUtil::convertEncoding(CHARSET, 'UTF-8', basename($this->image)) : basename($this->image)))."]]></image>\n"; // style preview image
-		if ($this->copyright) $string .= "\t\t<copyright><![CDATA[".StringUtil::escapeCDATA((CHARSET != 'UTF-8' ? StringUtil::convertEncoding(CHARSET, 'UTF-8', $this->copyright) : $this->copyright))."]]></copyright>\n"; // copyright
-		if ($this->license) $string .= "\t\t<license><![CDATA[".StringUtil::escapeCDATA((CHARSET != 'UTF-8' ? StringUtil::convertEncoding(CHARSET, 'UTF-8', $this->license) : $this->license))."]]></license>\n"; // license
+		$string .= "\t\t<stylename><![CDATA[".StringUtil::escapeCDATA($this->styleName)."]]></stylename>\n"; // style name
+		if ($this->styleDescription) $string .= "\t\t<description><![CDATA[".StringUtil::escapeCDATA($this->styleDescription)."]]></description>\n"; // style description
+		$string .= "\t\t<version><![CDATA[".StringUtil::escapeCDATA($this->styleVersion)."]]></version>\n"; // style version
+		$string .= "\t\t<date><![CDATA[".StringUtil::escapeCDATA($this->styleDate)."]]></date>\n"; // style date
+		if ($this->image) $string .= "\t\t<image><![CDATA[".StringUtil::escapeCDATA(basename($this->image))."]]></image>\n"; // style preview image
+		if ($this->copyright) $string .= "\t\t<copyright><![CDATA[".StringUtil::escapeCDATA($this->copyright)."]]></copyright>\n"; // copyright
+		if ($this->license) $string .= "\t\t<license><![CDATA[".StringUtil::escapeCDATA($this->license)."]]></license>\n"; // license
 		$string .= "\t</general>\n";
 		
 		// author block
 		$string .= "\t<author>\n";
-		if ($this->authorName) $string .= "\t\t<authorname><![CDATA[".StringUtil::escapeCDATA((CHARSET != 'UTF-8' ? StringUtil::convertEncoding(CHARSET, 'UTF-8', $this->authorName) : $this->authorName))."]]></authorname>\n"; // author name
-		if ($this->authorURL) $string .= "\t\t<authorurl><![CDATA[".StringUtil::escapeCDATA((CHARSET != 'UTF-8' ? StringUtil::convertEncoding(CHARSET, 'UTF-8', $this->authorURL) : $this->authorURL))."]]></authorurl>\n"; // author URL
+		if ($this->authorName) $string .= "\t\t<authorname><![CDATA[".StringUtil::escapeCDATA($this->authorName)."]]></authorname>\n"; // author name
+		if ($this->authorURL) $string .= "\t\t<authorurl><![CDATA[".StringUtil::escapeCDATA($this->authorURL)."]]></authorurl>\n"; // author URL
 		$string .= "\t</author>\n";
 		
 		// files block
@@ -582,25 +580,25 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		unset($string);
 		
 		// create variable list
-		$string = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<!DOCTYPE variables SYSTEM \"http://www.woltlab.com/DTDs/SXF/variables.dtd\">\n<variables>\n";
+		$string = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<styleVariable xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/styleVariable.xsd\">\n";
+		
 		// get variables
-		$variables = $this->getVariables();
-		$exportImages = array();
-		foreach ($variables as $name => $value) {
-			// search images
-			if ($images && $value) {
-				if (preg_match_all('~([^/\s\$]+\.(?:gif|jpg|jpeg|png))~i', $value, $matches)) {
-					$exportImages = array_merge($exportImages, $matches[1]);
-				}
-			}
-			$string .= "\t<variable name=\"".StringUtil::encodeHTML($name)."\"><![CDATA[".StringUtil::escapeCDATA((CHARSET != 'UTF-8' ? StringUtil::convertEncoding(CHARSET, 'UTF-8', $value) : $value))."]]></variable>\n";
+		$sql = "SELECT		variable.variableName, value.variableValue
+			FROM		wcf".WCF_N."_style_variable_value value
+			LEFT JOIN	wcf".WCF_N."_style_variable variable
+			ON		(variable.variableID = value.variableID)
+			WHERE		value.styleID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($this->styleID));
+		while ($row = $statement->fetchArray()) {
+			$string .= "\t<variable name=\"".StringUtil::encodeHTML($row['variableName'])."\"><![CDATA[".StringUtil::escapeCDATA($row['variableValue'])."]]></variable>\n";
 		}
 		
 		$string .= "</variables>";
 		// append variable list to style tar
 		$styleTar->addString('variables.xml', $string);
 		unset($string);
-
+		
 		if ($templates && $this->templateGroupID) {
 			$templateGroup = new TemplateGroup($this->templateGroupID);
 			
@@ -636,24 +634,20 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			@unlink($templatesTarName);
 		}
 
-		if ($images) {
+		if ($images && ($this->imagePath && $this->imagePath != 'images/')) {
 			// create images tar
 			$imagesTarName = FileUtil::getTemporaryFilename('images_', '.tar');
 			$imagesTar = new TarWriter($imagesTarName);
 			@chmod($imagesTarName, 0777);
 			
-			// cache rtl versions
-			foreach ($exportImages as $exportImage) {
-				if (strpos($exportImage, '-ltr')) $exportImages[] = str_replace('-ltr', '-rtl', $exportImage);
-			}
-			
 			// append images to tar
-			$path = WCF_DIR.$variables['global.images.location'];
+			$path = FileUtil::addTrailingSlash(WCF_DIR.$this->imagePath);
 			if (file_exists($path) && is_dir($path)) {
 				$handle = opendir($path);
 				
+				$regEx = new Regex('\.(jpg|jpeg|gif|png|svg)');
 				while (($file = readdir($handle)) !== false) {
-					if (is_file($path.$file) && in_array($file, $exportImages)) {
+					if (is_file($path.$file) && $regEx->match($file)) {
 						$imagesTar->add($path.$file, '', $path);
 					}
 				}
@@ -666,34 +660,18 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		}
 		
 		// export icons
-		$iconsLocation = FileUtil::addTrailingSlash($variables['global.icons.location']);
-		if ($icons && $iconsLocation != 'icon/') {
+		if ($icons && ($this->iconPath && $this->iconPath != 'icon/')) {
 			// create icons tar
 			$iconsTarName = FileUtil::getTemporaryFilename('icons_', '.tar');
 			$iconsTar = new TarWriter($iconsTarName);
 			@chmod($iconsTar, 0777);
 			
-			// get package dirs
-			$sql = "SELECT	package, packageDir
-				FROM	wcf".WCF_N."_package
-				WHERE	isApplication = 1
-					AND (packageDir <> '' OR package = 'com.woltlab.wcf')";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute();
-			while ($row = $statement->fetchArray()) {
-				$iconsDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']).$iconsLocation;
-				$packageIcons = array();
-				if (file_exists($iconsDir)) {
-					$icons = glob($iconsDir.'*.png');
-					if (is_array($icons)) {
-						foreach ($icons as $icon) {
-							$packageIcons[] = $icon;
-						}
-					}
-				}
-				
-				if (count($packageIcons)) {
-					$iconsTar->add($packageIcons, $row['package'].'/', $iconsDir);
+			// append icons to tar
+			$path = FileUtil::addTrailingSlash(WCF_DIR.$this->iconPath);
+			if (file_exists($path) && is_dir($path)) {
+				$icons = glob($path.'*.svg');
+				foreach ($icons as $icon) {
+					$iconsTar->add($path.$icon, '', $path);
 				}
 			}
 			
