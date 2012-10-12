@@ -1,5 +1,9 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\package\Package;
+
+use wcf\system\exception\UserInputException;
+
 use wcf\data\style\Style;
 use wcf\data\style\StyleEditor;
 use wcf\form\AbstractForm;
@@ -37,6 +41,12 @@ class StyleExportForm extends AbstractForm {
 	public $canExportTemplates = false;
 	
 	/**
+	 * export style as installable package
+	 * @var	boolean
+	 */
+	public $exportAsPackage = false;
+	
+	/**
 	 * true, if icons should be exported
 	 * @var	boolean
 	 */
@@ -58,6 +68,12 @@ class StyleExportForm extends AbstractForm {
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.style.canEditStyle');
+	
+	/**
+	 * package identifier
+	 * @var	string
+	 */
+	public $packageName = '';
 	
 	/**
 	 * style object
@@ -97,6 +113,34 @@ class StyleExportForm extends AbstractForm {
 		if ($this->canExportIcons && isset($_POST['exportIcons'])) $this->exportIcons = true;
 		if ($this->canExportImages && isset($_POST['exportImages'])) $this->exportImages = true;
 		if ($this->canExportTemplates && isset($_POST['exportTemplates'])) $this->exportTemplates = true;
+		
+		if (isset($_POST['exportAsPackage'])) {
+			$this->exportAsPackage = true;
+			
+			if (isset($_POST['packageName'])) $this->packageName = StringUtil::trim($_POST['packageName']);
+		}
+	}
+	
+	/**
+	 * @see	wcf\form\IForm::validate()
+	 */
+	public function validate() {
+		parent::validate();
+		
+		if ($this->exportAsPackage) {
+			if (empty($this->packageName)) {
+				throw new UserInputException('packageName');
+			}
+			
+			if (!Package::isValidPackageName($this->packageName)) {
+				throw new UserInputException('packageName', 'notValid');
+			}
+			
+			// 3rd party packages may never have com.woltlab.* as name
+			if (strpos($this->packageName, 'com.woltlab.') === 0) {
+				throw new UserInputException('packageName', 'reserved');
+			}
+		}
 	}
 	
 	/**
@@ -110,11 +154,17 @@ class StyleExportForm extends AbstractForm {
 		
 		// send headers
 		header('Content-Type: application/x-gzip; charset=utf-8');
-		header('Content-Disposition: attachment; filename="'.$filename.'-style.tgz"');
+		
+		if ($this->exportAsPackage) {
+			header('Content-Disposition: attachment; filename="'.$this->packageName.'.tar.gz"');
+		}
+		else {
+			header('Content-Disposition: attachment; filename="'.$filename.'-style.tgz"');
+		}
 		
 		// export style
 		$styleEditor = new StyleEditor($this->style);
-		$styleEditor->export($this->exportTemplates, $this->exportImages, $this->exportIcons);
+		$styleEditor->export($this->exportTemplates, $this->exportImages, $this->exportIcons, $this->packageName);
 		
 		// call saved event
 		$this->saved();
@@ -132,9 +182,11 @@ class StyleExportForm extends AbstractForm {
 			'canExportIcons' => $this->canExportIcons,
 			'canExportImages' => $this->canExportImages,
 			'canExportTemplates' => $this->canExportTemplates,
+			'exportAsPackage' => $this->exportAsPackage,
 			'exportIcons' => $this->exportIcons,
 			'exportImages' => $this->exportImages,
 			'exportTemplates' => $this->exportTemplates,
+			'packageName' => $this->packageName,
 			'style' => $this->style,
 			'styleID' => $this->styleID
 		));

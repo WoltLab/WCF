@@ -37,10 +37,13 @@
 		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Möchten Sie den Stil &bdquo;{$style->styleName}&ldquo; wirklich duplizieren?]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Möchten Sie den Stil &bdquo;{$style->styleName}&ldquo; wirklich löschen?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Stil bearbeiten]]></item>
+		<item name="wcf.acp.style.exportAsPackage"><![CDATA[Als Paket exportieren]]></item>
 		<item name="wcf.acp.style.exportIcons"><![CDATA[Icons exportieren ({$style->iconPath})]]></item>
 		<item name="wcf.acp.style.exportImages"><![CDATA[Grafiken exportieren ({$style->imagePath})]]></item>
 		<item name="wcf.acp.style.exportTemplates"><![CDATA[Templates exportieren]]></item>
 		<item name="wcf.acp.style.exportStyle"><![CDATA[Stil exportieren]]></item>
+		<item name="wcf.acp.style.exportStyle.asPackage"><![CDATA[Export als Paket]]></item>
+		<item name="wcf.acp.style.exportStyle.asPackage.description"><![CDATA[Wählen Sie hier aus, ob sie den Stil &bdquo;{$style->styleName}&ldquo; als Paket exportieren möchten. Pakete können über die Paketverwaltung installiert oder in den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http://www.woltlab.com/de/pluginstore/">WoltLab® Plugin-Store</a> hochgeladen werden.]]></item>
 		<item name="wcf.acp.style.exportStyle.components"><![CDATA[Optionen]]></item>
 		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[Wählen Sie hier aus, welche Bestandteile des Stils &bdquo;{$style->styleName}&ldquo; mit exportiert werden sollen]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Daten]]></item>
@@ -62,6 +65,10 @@
 		<item name="wcf.acp.style.imagePath.description"><![CDATA[Wenn Ihr Stil eigene Grafiken benötigt, sollten diese in einem Unterordner des Ordners &bdquo;images&ldquo; ablegen. Geben Sie hier den Pfad zu diesem Ordner an.]]></item>
 		<item name="wcf.acp.style.license"><![CDATA[Lizenz]]></item>
 		<item name="wcf.acp.style.list"><![CDATA[Stile auflisten]]></item>
+		<item name="wcf.acp.style.packageName"><![CDATA[Paketbezeichner]]></item>
+		<item name="wcf.acp.style.packageName.description"><![CDATA[Geben Sie hier den Paketbezeichner in der Form &bdquo;tld.domain.paketName&ldquo; an. Wenn Ihnen beispielsweise die Domain &bdquo;example.com&ldquo; gehört und Ihr Stil &bdquo;Blue Sunrise&ldquo; heißt, so wäre &bdquo;com.example.style.blueSunrise&ldquo; ein passender und gültiger Paketbezeichner.]]></item>
+		<item name="wcf.acp.style.packageName.error.notValid"><![CDATA[Der eingegebene Paketbezeichner ist ungültig]]></item>
+		<item name="wcf.acp.style.packageName.error.reserved"><![CDATA[Der Paketbezeichner darf nicht mit &bdquo;com.woltlab.&ldquo; beginnen]]></item>
 		<item name="wcf.acp.style.styleDate"><![CDATA[Datum]]></item>
 		<item name="wcf.acp.style.styleDescription"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.style.styleName"><![CDATA[Name]]></item>
