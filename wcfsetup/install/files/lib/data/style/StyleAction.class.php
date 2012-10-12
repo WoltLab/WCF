@@ -36,6 +36,11 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	protected $permissionsDelete = array('admin.style.canDeleteStyle');
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 */
+	protected $permissionsUpdate = array('admin.style.canEditStyle');
+	
+	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::create()
 	 */
 	public function create() {
@@ -422,5 +427,28 @@ class StyleAction extends AbstractDatabaseObjectAction {
 		return array(
 			'redirectURL' => LinkHandler::getInstance()->getLink('StyleEdit', array('id' => $newStyle->styleID))
 		);
+	}
+	
+	/**
+	 * Validates parameters to enable/disable styles.
+	 */
+	public function validateToggle() {
+		parent::validateUpdate();
+		
+		foreach ($this->objects as $style) {
+			if ($style->isDefault) {
+				throw new UserInputException('objectIDs');
+			} 
+		}
+	}
+	
+	/**
+	 * Enables/disables styles.
+	 */
+	public function toggle() {
+		foreach ($this->objects as $style) {
+			$disabled = ($style->disabled) ? 0 : 1;
+			$style->update(array('disabled' => $disabled));
+		}
 	}
 }
