@@ -382,9 +382,10 @@ class StyleAction extends AbstractDatabaseObjectAction {
 		
 		// create the new style
 		$newStyle = StyleEditor::create(array(
-			'packageID' => $style->packageID,
+			'packageID' => PACKAGE_ID,
 			'styleName' => $styleName,
 			'templateGroupID' => $style->templateGroupID,
+			'disabled' => 1, // newly created styles are disabled by default
 			'styleDescription' => $style->styleDescription,
 			'styleVersion' => $style->styleVersion,
 			'styleDate' => $style->styleDate,
