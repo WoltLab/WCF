@@ -10,6 +10,7 @@
 		<item name="wcf.acp.style.add"><![CDATA[Stil hinzufügen]]></item>
 		<item name="wcf.acp.style.authorName"><![CDATA[Autor]]></item>
 		<item name="wcf.acp.style.authorURL"><![CDATA[Website]]></item>
+		<item name="wcf.acp.style.button.exportStyle"><![CDATA[Export starten]]></item>
 		<item name="wcf.acp.style.button.setAsDefault"><![CDATA[Zum Standard machen]]></item>
 		<item name="wcf.acp.style.colors"><![CDATA[Farbpalette]]></item>
 		<item name="wcf.acp.style.colors.accentBackgroundColor"><![CDATA[Hintergrundfarbe (Akzent)]]></item>
@@ -36,7 +37,12 @@
 		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Möchten Sie den Stil &bdquo;{$style->styleName}&ldquo; wirklich duplizieren?]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Möchten Sie den Stil &bdquo;{$style->styleName}&ldquo; wirklich löschen?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Stil bearbeiten]]></item>
+		<item name="wcf.acp.style.exportIcons"><![CDATA[Icons exportieren ({$style->iconPath})]]></item>
+		<item name="wcf.acp.style.exportImages"><![CDATA[Grafiken exportieren ({$style->imagePath})]]></item>
+		<item name="wcf.acp.style.exportTemplates"><![CDATA[Templates exportieren]]></item>
 		<item name="wcf.acp.style.exportStyle"><![CDATA[Stil exportieren]]></item>
+		<item name="wcf.acp.style.exportStyle.components"><![CDATA[Optionen]]></item>
+		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[Wählen Sie hier aus, welche Bestandteile des Stils &bdquo;{$style->styleName}&ldquo; mit exportiert werden sollen]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Daten]]></item>
 		<item name="wcf.acp.style.general.data"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.style.general.files"><![CDATA[Dateien]]></item>
