@@ -1636,7 +1636,7 @@ WCF.Action.Delete = Class.extend({
 	 * @param	object		event
 	 */
 	_click: function(event) {
-		var $target = $(event.target);
+		var $target = $(event.currentTarget);
 		
 		if ($target.data('confirmMessage')) {
 			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
