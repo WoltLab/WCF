@@ -389,6 +389,7 @@ class StyleAddForm extends ACPForm {
 			'data' => array(
 				'styleName' => $this->styleName,
 				'templateGroupID' => $this->templateGroupID,
+				'disabled' => 1, // styles are disabled by default
 				'styleDescription' => ($this->styleDescription ? $this->styleDescription : null),
 				'styleVersion' => $this->styleVersion,
 				'styleDate' => $this->styleDate,

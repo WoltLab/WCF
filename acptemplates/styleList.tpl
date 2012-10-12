@@ -4,6 +4,7 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
+		new WCF.Action.Toggle('wcf\\data\\style\\StyleAction', $('.buttonList'));
 		new WCF.ACP.Style.List();
 	});
 	//]]>
@@ -46,7 +47,8 @@
 					<ul class="buttonList" data-style-id="{@$style->styleID}">
 						<li><a href="{link controller='StyleEdit' id=$style->styleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><img src="{@$__wcf->getPath()}icon/edit.svg" class="icon16" alt="" /></a></li>
 						{if !$style->isDefault}
-							{if !$style->disabled}<li><a title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip"><img src="{@$__wcf->getPath()}icon/default.svg" class="icon16" alt="" /></a></li>{/if}
+							<li><img src="{@$__wcf->getPath()}icon/{if $style->disabled}disabled{else}enabled{/if}.svg" title="{lang}wcf.global.button.{if $style->disabled}enable{else}disable{/if}{/lang}" alt="" class="icon16 jsToggleButton jsTooltip" data-object-id="{@$style->styleID}" /></li>
+							<li><a title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip"><img src="{@$__wcf->getPath()}icon/default.svg" class="icon16 jsTooltip" alt="" /></a></li>
 							<li><a title="{lang}wcf.global.button.delete{/lang}" class="jsDelete jsTooltip" data-confirm-message="{lang}wcf.acp.style.delete.confirmMessage{/lang}"><img src="{@$__wcf->getPath()}icon/delete.svg" class="icon16" alt="" /></a></li>
 						{/if}
 					</ul>
