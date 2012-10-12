@@ -1,7 +1,5 @@
 <?php
 namespace wcf\data\style;
-use wcf\system\package\PackageArchive;
-
 use wcf\data\package\Package;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupEditor;
@@ -14,6 +12,7 @@ use wcf\system\image\ImageHandler;
 use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\io\TarWriter;
+use wcf\system\package\PackageArchive;
 use wcf\system\style\StyleCompiler;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -61,7 +60,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// scale preview image
 		if (!empty($parameters['image']) && $parameters['image'] != $this->image) {
-			self::scalePreviewImage(WCF_DIR.$parameters['image']);
+			self::scalePreviewImage($parameters['image']);
 		}
 	}
 	
@@ -370,7 +369,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				$tar->extract($index, $filename);
 				@chmod($filename, 0777);
 				
-				$style->update(array('image' => $filename));
+				if (file_exists($filename)) {
+					$style->update(array('image' => $filename));
+				}
 			}
 		}
 		
@@ -583,7 +584,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		unset($string);
 		
 		// create variable list
-		$string = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<styleVariable xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/styleVariable.xsd\">\n";
+		$string = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<variables xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/styleVariable.xsd\">\n";
 		
 		// get variables
 		$sql = "SELECT		variable.variableName, value.variableValue
@@ -836,7 +837,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 */
 	public static function scalePreviewImage($filename) {
 		$adapter = ImageHandler::getInstance()->getAdapter();
-		$adapter->load($filename);
+		$adapter->loadFile($filename);
 		$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH, Style::PREVIEW_IMAGE_MAX_HEIGHT);
 		$adapter->writeImage($thumbnail, $filename);
 	}
