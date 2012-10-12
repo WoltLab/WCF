@@ -26,11 +26,13 @@
 		
 		new WCF.ACP.Style.ImageUpload(0, '{$tmpHash}');
 		
-		{if $action == 'edit' && $__wcf->getSession()->getPermission('admin.style.canAddStyle')}new WCF.ACP.Style.CopyStyle({@$style->styleID});{/if}
+		{if $action == 'edit' && $__wcf->getSession()->getPermission('admin.style.canAddStyle')}
+			new WCF.ACP.Style.CopyStyle({@$style->styleID});
 		
-		WCF.Language.addObject({
-			'wcf.acp.style.copyStyle.confirmMessage': '{lang}wcf.acp.style.copyStyle.confirmMessage{/lang}'
-		});
+			WCF.Language.addObject({
+				'wcf.acp.style.copyStyle.confirmMessage': '{lang}wcf.acp.style.copyStyle.confirmMessage{/lang}'
+			});
+		{/if}
 	});
 	//]]>
 </script>
