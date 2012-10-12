@@ -1,5 +1,7 @@
 <?php
 namespace wcf\data\style;
+use wcf\system\package\PackageArchive;
+
 use wcf\data\package\Package;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupEditor;
@@ -535,8 +537,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * @param	boolean 	$templates
 	 * @param	boolean		$images
 	 * @param	boolean		$icons
+	 * @param	string		$packageName
 	 */
-	public function export($templates = false, $images = false, $icons = false) {
+	public function export($templates = false, $images = false, $icons = false, $packageName = '') {
 		// create style tar
 		$styleTarName = FileUtil::getTemporaryFilename('style_', '.tgz');
 		$styleTar = new TarWriter($styleTarName, true);
@@ -682,7 +685,51 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// output file content
 		$styleTar->create();
-		readfile($styleTarName);
+		
+		// export as style package
+		if (empty($packageName)) {
+			readfile($styleTarName);
+		}
+		else {
+			// export as package
+			
+			// create package tar
+			$packageTarName = FileUtil::getTemporaryFilename('package_', '.tar.gz');
+			$packageTar = new TarWriter($packageTarName, true);
+			
+			// append style tar
+			$styleTarName = FileUtil::unifyDirSeperator($styleTarName);
+			$packageTar->add($styleTarName, '', dirname($styleTarName));
+			
+			// create package.xml
+			$string = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<package name=\"".$packageName."\" xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/package.xsd\">\n";
+			
+			$string .= "\t<packageinformation>\n";
+			$string .= "\t\t<packagename><![CDATA[".StringUtil::escapeCDATA($this->styleName)."]]></packagename>\n";
+			$string .= "\t\t<packagedescription><![CDATA[".StringUtil::escapeCDATA($this->styleDescription)."]]></packagedescription>\n";
+			$string .= "\t\t<version><![CDATA[".StringUtil::escapeCDATA($this->styleVersion)."]]></version>\n";
+			$string .= "\t\t<date><![CDATA[".StringUtil::escapeCDATA($this->styleDate)."]]></date>\n";
+			$string .= "\t</packageinformation>\n";
+			
+			$string .= "\t<authorinformation>\n";
+			$string .= "\t\t<author><![CDATA[".StringUtil::escapeCDATA($this->authorName)."]]></author>\n";
+			if ($this->authorURL) $string .= "\t\t<authorurl><![CDATA[".StringUtil::escapeCDATA($this->authorURL)."]]></authorurl>\n";
+			$string .= "\t</authorinformation>\n";
+			
+			$string .= "\t<instructions type=\"install\">\n";
+			$string .= "\t\t<instruction type=\"style\">".basename($styleTarName)."</instruction>\n";
+			$string .= "\t</instructions>\n";
+			
+			$string .= "</package>\n";
+			
+			// append package info file to package tar
+			$packageTar->addString(PackageArchive::INFO_FILE, $string);
+			
+			$packageTar->create();
+			readfile($packageTarName);
+			@unlink($packageTarName);
+		}
+		
 		@unlink($styleTarName);
 	}
 	
