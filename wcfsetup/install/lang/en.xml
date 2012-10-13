@@ -337,6 +337,12 @@
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 	</category>
 	
+	<category name="wcf.acp.search">
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[Pages]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.option"><![CDATA[Options]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.userGroupOption"><![CDATA[Permissions]]></item>
+	</category>
+	
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add server]]></item>
 		<item name="wcf.acp.updateServer.data"><![CDATA[Server data]]></item>
