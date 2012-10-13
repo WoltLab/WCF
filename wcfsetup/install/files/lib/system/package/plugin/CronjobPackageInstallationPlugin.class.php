@@ -7,7 +7,7 @@ use wcf\util\CronjobUtil;
  * This PIP installs, updates or deletes cronjobs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.package.plugin
@@ -18,16 +18,6 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\cronjob\CronjobEditor';
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */
-	public $tableName = 'cronjob';
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
-	 */	
-	public $tagName = 'cronjob';
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()

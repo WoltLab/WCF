@@ -72,6 +72,13 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	}
 	
 	/**
+	 * @see	wcf\data\IStorableObject::getDatabaseTableAlias()
+	 */
+	public static function getDatabaseTableAlias() {
+		return call_user_func(array(static::$baseClass, 'getDatabaseTableAlias'));
+	}
+	
+	/**
 	 * @see	wcf\data\IStorableObject::getDatabaseTableName()
 	 */
 	public static function getDatabaseTableName() {

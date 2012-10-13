@@ -20,16 +20,6 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	public $className = 'wcf\data\acp\search\provider\ACPSearchProviderEditor';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */
-	public $tableName = 'acp_search_provider';
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
-	 */	
-	public $tagName = 'acpsearchprovider';
-	
-	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
@@ -86,16 +76,6 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
 	 */	
 	protected function cleanup() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.acpSearchProvider-*.php');
-	}
-	
-	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
-	 */
-	public function uninstall() {
-		parent::uninstall();
-		
-		// clear cache immediately
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.acpSearchProvider-*.php');
 	}
 }
