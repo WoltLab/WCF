@@ -31,7 +31,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	 * language category which contains the language variables of i18n values
 	 * @var	string
 	 */
-	protected $i18nLangVarCategory = '';
+	protected $i18nLangVarCategory = 'wcf.category';
 	
 	/**
 	 * prefix used for language variables in templates
