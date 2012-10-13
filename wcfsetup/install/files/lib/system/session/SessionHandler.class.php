@@ -10,6 +10,7 @@ use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
+use wcf\system\event\EventHandler;
 
 /**
  * SessionHandler provides an abstract implementation for session handling.
@@ -338,6 +339,8 @@ class SessionHandler extends SingletonFactory {
 			// delete all other sessions of this user
 			call_user_func(array($this->sessionEditorClassName, 'deleteUserSessions'), array($this->user->userID));
 		}
+		
+		EventHandler::getInstance()->fireAction($this, 'createSession');
 		
 		// save session
 		$this->session = call_user_func(array($this->sessionEditorClassName, 'create'), array(
