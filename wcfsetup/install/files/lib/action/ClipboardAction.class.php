@@ -78,7 +78,7 @@ class ClipboardAction extends AbstractSecureAction {
 		parent::readParameters();
 		
 		if (isset($_POST['action'])) $this->action = StringUtil::trim($_POST['action']);
-		if (isset($_POST['containerData']) && is_array($_POST['containerData'])) $this->containerData = ArrayUtil::toIntegerArray($_POST['containerData']);
+		if (isset($_POST['containerData']) && is_array($_POST['containerData'])) $this->containerData = $_POST['containerData'];
 		if (isset($_POST['objectIDs']) && is_array($_POST['objectIDs'])) $this->objectIDs = ArrayUtil::toIntegerArray($_POST['objectIDs']);
 		if (isset($_POST['pageClassName'])) $this->pageClassName = StringUtil::trim($_POST['pageClassName']);
 		if (isset($_POST['type'])) $this->type = StringUtil::trim($_POST['type']);
