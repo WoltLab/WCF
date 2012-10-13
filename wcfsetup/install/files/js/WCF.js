@@ -1035,6 +1035,7 @@ WCF.Clipboard = {
 	_saveState: function(type, objectIDs, isMarked) {
 		this._proxy.setOption('data', {
 			action: (isMarked) ? 'mark' : 'unmark',
+			containerData: this._containerData,
 			objectIDs: objectIDs,
 			pageClassName: this._page,
 			type: type
