@@ -76,6 +76,9 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 				$id
 			));
 		}
+		
+		// force a cache reset if options were changed
+		self::resetCache();
 	}
 	
 	/**
