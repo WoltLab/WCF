@@ -1,5 +1,7 @@
 <?php
 namespace wcf\data\style;
+use wcf\util\XMLWriter;
+
 use wcf\data\package\Package;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupEditor;
@@ -551,40 +553,39 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		}
 		
 		// create style info file
-		$string = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<style xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/style.xsd\">\n";
+		$xml = new XMLWriter();
+		$xml->beginDocument('style', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/maelstrom/style.xsd');
 		
 		// general block
-		$string .= "\t<general>\n";
-		$string .= "\t\t<stylename><![CDATA[".StringUtil::escapeCDATA($this->styleName)."]]></stylename>\n"; // style name
-		if ($this->styleDescription) $string .= "\t\t<description><![CDATA[".StringUtil::escapeCDATA($this->styleDescription)."]]></description>\n"; // style description
-		$string .= "\t\t<version><![CDATA[".StringUtil::escapeCDATA($this->styleVersion)."]]></version>\n"; // style version
-		$string .= "\t\t<date><![CDATA[".StringUtil::escapeCDATA($this->styleDate)."]]></date>\n"; // style date
-		if ($this->image) $string .= "\t\t<image><![CDATA[".StringUtil::escapeCDATA(basename($this->image))."]]></image>\n"; // style preview image
-		if ($this->copyright) $string .= "\t\t<copyright><![CDATA[".StringUtil::escapeCDATA($this->copyright)."]]></copyright>\n"; // copyright
-		if ($this->license) $string .= "\t\t<license><![CDATA[".StringUtil::escapeCDATA($this->license)."]]></license>\n"; // license
-		$string .= "\t</general>\n";
+		$xml->startElement('general');
+		$xml->writeElement('stylename', $this->styleName);
+		if ($this->styleDescription) $xml->writeElement('description', $this->styleDescription);
+		$xml->writeElement('date', $this->styleDate);;
+		if ($this->image) $xml->writeElement('image', $this->image);
+		if ($this->copyright) $xml->writeElement('copyright', $this->copyright);
+		if ($this->license) $xml->writeElement('license', $this->license);
+		$xml->endElement();
 		
 		// author block
-		$string .= "\t<author>\n";
-		if ($this->authorName) $string .= "\t\t<authorname><![CDATA[".StringUtil::escapeCDATA($this->authorName)."]]></authorname>\n"; // author name
-		if ($this->authorURL) $string .= "\t\t<authorurl><![CDATA[".StringUtil::escapeCDATA($this->authorURL)."]]></authorurl>\n"; // author URL
-		$string .= "\t</author>\n";
+		$xml->startElement('author');
+		$xml->writeElement('authorname', $this->authorName);
+		if ($this->authorURL) $xml->writeElement('authorurl', $this->authorURL);
+		$xml->endElement();
 		
 		// files block
-		$string .= "\t<files>\n";
-		$string .= "\t\t<variables>variables.xml</variables>\n"; // variables
-		if ($templates && $this->templateGroupID) $string .= "\t\t<templates>templates.tar</templates>\n"; // templates
-		if ($images) $string .= "\t\t<images>images.tar</images>\n"; // images
-		if ($icons) $string .= "\t\t<icons>icons.tar</icons>\n"; // icons
-		$string .= "\t</files>\n";
+		$xml->startElement('files');
+		$xml->writeElement('variables', 'variables.xml');
+		if ($templates) $xml->writeElement('templates', 'templates.tar');
+		if ($images) $xml->writeElement('images', 'images.tar');
+		if ($icons) $xml->writeElement('icons', 'icons.tar');
+		$xml->endElement();
 		
-		$string .= "</style>";
 		// append style info file to style tar
-		$styleTar->addString(self::INFO_FILE, $string);
+		$styleTar->addString(self::INFO_FILE, $xml->endDocument());
 		unset($string);
 		
 		// create variable list
-		$string = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<variables xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/styleVariable.xsd\">\n";
+		$xml->beginDocument('variables', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/maelstrom/styleVariables.xsd');
 		
 		// get variables
 		$sql = "SELECT		variable.variableName, value.variableValue
@@ -595,12 +596,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->styleID));
 		while ($row = $statement->fetchArray()) {
-			$string .= "\t<variable name=\"".StringUtil::encodeHTML($row['variableName'])."\"><![CDATA[".StringUtil::escapeCDATA($row['variableValue'])."]]></variable>\n";
+			$xml->writeElement('variable', $row['variableValue'], array('name' => $row['variableName']));
 		}
 		
-		$string .= "</variables>";
 		// append variable list to style tar
-		$styleTar->addString('variables.xml', $string);
+		$styleTar->addString('variables.xml', $xml->endDocument());
 		unset($string);
 		
 		if ($templates && $this->templateGroupID) {
@@ -703,28 +703,26 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$packageTar->add($styleTarName, '', dirname($styleTarName));
 			
 			// create package.xml
-			$string = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<package name=\"".$packageName."\" xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/package.xsd\">\n";
+			$xml->beginDocument('package', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/maelstrom/package.xsd', array('name' => $packageName));
 			
-			$string .= "\t<packageinformation>\n";
-			$string .= "\t\t<packagename><![CDATA[".StringUtil::escapeCDATA($this->styleName)."]]></packagename>\n";
-			$string .= "\t\t<packagedescription><![CDATA[".StringUtil::escapeCDATA($this->styleDescription)."]]></packagedescription>\n";
-			$string .= "\t\t<version><![CDATA[".StringUtil::escapeCDATA($this->styleVersion)."]]></version>\n";
-			$string .= "\t\t<date><![CDATA[".StringUtil::escapeCDATA($this->styleDate)."]]></date>\n";
-			$string .= "\t</packageinformation>\n";
+			$xml->startElement('packageinformation');
+			$xml->writeElement('packagename', $this->styleName);
+			$xml->writeElement('packagedescription', $this->styleDescription);
+			$xml->writeElement('version', $this->styleVersion);
+			$xml->writeElement('date', $this->styleDate);
+			$xml->endElement();
 			
-			$string .= "\t<authorinformation>\n";
-			$string .= "\t\t<author><![CDATA[".StringUtil::escapeCDATA($this->authorName)."]]></author>\n";
-			if ($this->authorURL) $string .= "\t\t<authorurl><![CDATA[".StringUtil::escapeCDATA($this->authorURL)."]]></authorurl>\n";
-			$string .= "\t</authorinformation>\n";
+			$xml->startElement('authorinformation');
+			$xml->writeElement('author', $this->authorName);
+			if ($this->authorURL) $xml->writeElement('authorurl', $this->authorURL);
+			$xml->endElement();
 			
-			$string .= "\t<instructions type=\"install\">\n";
-			$string .= "\t\t<instruction type=\"style\">".basename($styleTarName)."</instruction>\n";
-			$string .= "\t</instructions>\n";
-			
-			$string .= "</package>\n";
+			$xml->startElement('instructions', array('name' => 'install'));
+			$xml->writeElement('instruction', basename($styleTarName), array('type' => 'style'));
+			$xml->endElement();
 			
 			// append package info file to package tar
-			$packageTar->addString(PackageArchive::INFO_FILE, $string);
+			$packageTar->addString(PackageArchive::INFO_FILE, $xml->endDocument());
 			
 			$packageTar->create();
 			readfile($packageTarName);
