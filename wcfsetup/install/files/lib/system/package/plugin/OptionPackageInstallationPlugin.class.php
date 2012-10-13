@@ -22,6 +22,10 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 	 */	
 	public $tableName = 'option';
 
+	/**
+	 * list of names of tags which aren't considered as additional data
+	 * @var	array<string>
+	 */
 	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'validationpattern', 'enableoptions', 'showorder', 'hidden', 'selectoptions', 'categoryname', 'permissions', 'options', 'attrs', 'cdata', 'supporti18n');
 	
 	/**

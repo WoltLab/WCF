@@ -8,7 +8,7 @@ use wcf\system\event\EventHandler;
  * This PIP installs, updates or deletes styles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -19,16 +19,6 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\style\StyleEditor';
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */	
-	public $tableName = 'style';
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
-	 */	
-	public $tagName = 'style';
 	
 	/** 
 	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
