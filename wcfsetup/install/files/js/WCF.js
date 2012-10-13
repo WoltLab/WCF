@@ -3108,13 +3108,13 @@ WCF.Collapsible.Simple = {
 		
 		if ($isOpen) {
 			$target.stop().wcfBlindOut('vertical', $.proxy(function() {
-				this._toggleImage($button, 'wcf.global.closed');
+				this._toggleImage($button, 'wcf.icon.closed');
 			}, this));
 			$isOpen = false;
 		}
 		else {
 			$target.stop().wcfBlindIn('vertical', $.proxy(function() {
-				this._toggleImage($button, 'wcf.global.opened');
+				this._toggleImage($button, 'wcf.icon.opened');
 			}, this));
 			$isOpen = true;
 		}
