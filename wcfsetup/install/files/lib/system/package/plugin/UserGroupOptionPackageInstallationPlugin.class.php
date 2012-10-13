@@ -30,24 +30,6 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata');
 	
 	/**
-	 * Deletes group-option-categories and/or group-options which where installed by the package.
-	 */
-	public function uninstall() {
-		// Delete value-entries using categories or options
-		// which will be deleted.
-		$sql = "DELETE FROM	wcf".WCF_N."_user_group_option_value
-			WHERE		optionID IN (
-						SELECT	optionID
-						FROM	wcf".WCF_N."_user_group_option
-						WHERE	packageID = ?
-					)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
-			
-		parent::uninstall();
-	}
-	
-	/**
 	 * @see	wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
