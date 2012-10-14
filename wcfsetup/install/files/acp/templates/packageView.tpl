@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle=$package->getName()}
 
 <script type="text/javascript">
 	//<![CDATA[

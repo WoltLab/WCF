@@ -1,15 +1,14 @@
+{if $packageID == 0}
+	{assign var='pageTitle' value='wcf.acp.package.startInstall'}
+{else}
+	{assign var='pageTitle' value='wcf.acp.package.startUpdate'}
+{/if}
 {include file='header'}
 
 <header class="boxHeadline">
-	{if $packageID == 0}
-		<hgroup>
-			<h1>{lang}wcf.acp.package.startInstall{/lang}</h1>
-		</hgroup>
-	{else}
-		<hgroup>
-			<h1>{lang}wcf.acp.package.startUpdate{/lang}</h1>
-		</hgroup>
-	{/if}
+	<hgroup>
+		<h1>{lang}{@$pageTitle}{/lang}</h1>
+	</hgroup>
 </header>
 
 {if $errorField != ''}
