@@ -75,33 +75,30 @@
 			}
 			
 			#languageIDContainer {
+				.framed {
+					float: left;
+				}
 				
-				#languageIDContainer-languageChooser {
+				hgroup {
+					padding: 1px 0 0 5px;
+					float: left;
+				}
+				
+				.dropdownMenu {
+					margin-top: 30px;
 					
-					.framed {
-						float: left;
-					}
-					
-					hgroup {
-						padding: 1px 0 0 5px;
-						float: left;
-					}
-					
-					.dropdownMenu {
-						margin-top: 30px;
+					li {
+						.clearfix();
 						
-						li {
-							.clearfix();
-							
-							padding: 5px;
-							
-							hgroup h1 {
-								.textShadow(@wcfSidebarBackgroundColor);
-							}
+						padding: 5px;
+						
+						hgroup h1 {
+							.textShadow(@wcfSidebarBackgroundColor);
 						}
 					}
 				}
 			}
+		
 		}
 	
 		> .searchBar {
