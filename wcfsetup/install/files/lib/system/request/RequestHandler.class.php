@@ -22,18 +22,27 @@ class RequestHandler extends SingletonFactory {
 	protected $activeRequest = null;
 	
 	/**
-	 * Handles a http request
+	 * indicates if the request is an acp request
+	 * @var	boolean
+	 */
+	protected $isACPRequest = false;
+	
+	/**
+	 * Handles a http request.
 	 *
 	 * @param	string		$application
-	 * @param	boolean		$isACP
+	 * @param	boolean		$isACPRequest
 	 */
-	public function handle($application = 'wcf', $isACP = false) {
-		if (!RouteHandler::getInstance()->matches($isACP)) {
+	public function handle($application = 'wcf', $isACPRequest = false) {
+		$this->isACPRequest = $isACPRequest;
+		
+		if (!RouteHandler::getInstance()->matches()) {
 			throw new SystemException("Cannot handle request, no valid route provided.");
 		}
 		
 		// build request
-		$this->buildRequest($application, $isACP);
+		$this->buildRequest($application);
+		
 		// start request
 		$this->activeRequest->execute();
 	}
@@ -42,9 +51,8 @@ class RequestHandler extends SingletonFactory {
 	 * Builds a new request.
 	 *
 	 * @param 	string 		$application
-	 * @param	boolean		$isACP
 	 */
-	protected function buildRequest($application, $isACP) {
+	protected function buildRequest($application) {
 		try {
 			$routeData = RouteHandler::getInstance()->getRouteData();
 			$controller = $routeData['controller'];
@@ -55,9 +63,9 @@ class RequestHandler extends SingletonFactory {
 			}
 			
 			// find class
-			$classData = $this->getClassData($controller, 'page', $application, $isACP);
-			if ($classData === null) $classData = $this->getClassData($controller, 'form', $application, $isACP);
-			if ($classData === null) $classData = $this->getClassData($controller, 'action', $application, $isACP);
+			$classData = $this->getClassData($controller, 'page', $application);
+			if ($classData === null) $classData = $this->getClassData($controller, 'form', $application);
+			if ($classData === null) $classData = $this->getClassData($controller, 'action', $application);
 			
 			if ($classData === null) {
 				throw new SystemException("unable to find class for controller '".$controller."'");
@@ -73,10 +81,19 @@ class RequestHandler extends SingletonFactory {
 		}
 	}
 	
-	protected function getClassData($controller, $pageType, $application, $isACP) {
-		$className = $application.'\\'.($isACP ? 'acp\\' : '').$pageType.'\\'.ucfirst($controller).ucfirst($pageType);
+	/**
+	 * Returns the class data for the active request or null if for the given
+	 * configuration no proper class exist.
+	 * 
+	 * @param	string		$controller
+	 * @param	string		$pageType
+	 * @param	string		$application
+	 * @return	array
+	 */
+	protected function getClassData($controller, $pageType, $application) {
+		$className = $application.'\\'.($this->isACPRequest() ? 'acp\\' : '').$pageType.'\\'.ucfirst($controller).ucfirst($pageType);
 		if ($application != 'wcf' && !class_exists($className)) {
-			$className = 'wcf\\'.($isACP ? 'acp\\' : '').$pageType.'\\'.ucfirst($controller).ucfirst($pageType);
+			$className = 'wcf\\'.($this->isACPRequest() ? 'acp\\' : '').$pageType.'\\'.ucfirst($controller).ucfirst($pageType);
 		}
 		if (!class_exists($className)) {
 			return null;
@@ -102,5 +119,14 @@ class RequestHandler extends SingletonFactory {
 	 */
 	public function getActiveRequest() {
 		return $this->activeRequest;
+	}
+	
+	/**
+	 * Returns true if the request is an acp request.
+	 * 
+	 * @return	boolean
+	 */
+	public function isACPRequest() {
+		return $this->isACPRequest;
 	}
 }

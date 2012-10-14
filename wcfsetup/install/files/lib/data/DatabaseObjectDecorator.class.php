@@ -12,7 +12,7 @@ use wcf\system\exception\SystemException;
  * @subpackage	data
  * @category 	Community Framework
  */
-abstract class DatabaseObjectDecorator extends DatabaseObject {
+abstract class DatabaseObjectDecorator extends DatabaseObject implements IDatabaseObjectProcessor {
 	/**
 	 * name of the base class
 	 * @var	string
@@ -36,7 +36,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 		}
 		
 		if (!($object instanceof static::$baseClass)) {
-			throw new SystemException('Object does not match '.static::$baseClass);
+			throw new SystemException("Object does not match '".static::$baseClass."' (given object is of class '".get_class($object)."')");
 		}
 		
 		$this->object = $object;
@@ -69,6 +69,13 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 		}
 		
 		return call_user_func_array(array($this->object, $name), $arguments);
+	}
+	
+	/**
+	 * @see	wcf\data\IStorableObject::getDatabaseTableAlias()
+	 */
+	public static function getDatabaseTableAlias() {
+		return call_user_func(array(static::$baseClass, 'getDatabaseTableAlias'));
 	}
 	
 	/**

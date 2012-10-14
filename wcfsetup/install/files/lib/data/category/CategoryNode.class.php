@@ -25,13 +25,13 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	 * indicates if disabled categories are included
 	 * @var	integer
 	 */
-	protected $inludeDisabledCategories = false;
+	protected $includeDisabledCategories = false;
 	
 	/**
 	 * list of object type category ids of excluded categories
 	 * @var	array<integer>
 	 */
-	protected $excludedObjectTypeCategoryIDs = false;
+	protected $excludedCategoryIDs = false;
 	
 	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
@@ -41,16 +41,16 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::__construct()
 	 */
-	public function __construct(DatabaseObject $object, $inludeDisabledCategories = false, array $excludedObjectTypeCategoryIDs = array()) {
+	public function __construct(DatabaseObject $object, $includeDisabledCategories = false, array $excludedCategoryIDs = array()) {
 		parent::__construct($object);
 		
-		$this->inludeDisabledCategories = $inludeDisabledCategories;
-		$this->excludedObjectTypeCategoryIDs = $excludedObjectTypeCategoryIDs;
+		$this->includeDisabledCategories = $includeDisabledCategories;
+		$this->excludedCategoryIDs = $excludedCategoryIDs;
 		
 		$className = get_called_class();
 		foreach (CategoryHandler::getInstance()->getChildCategories($this->getDecoratedObject()) as $category) {
 			if ($this->fulfillsConditions($category)) {
-				$this->childCategories[] = new $className($category, $inludeDisabledCategories, $excludedObjectTypeCategoryIDs);
+				$this->childCategories[] = new $className($category, $includeDisabledCategories, $excludedCategoryIDs);
 			}
 		}
 	}
@@ -73,11 +73,11 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	 * Returns true if the given category fulfills all needed conditions to
 	 * be included in the list.
 	 * 
-	 * @param	wcf\data\category\Category	$category
+	 * @param	wcf\data\DatabaseObject	$category
 	 * @return	boolean
 	 */
-	public function fulfillsConditions(Category $category) {
-		return !in_array($category->objectTypeCategoryID, $this->excludedObjectTypeCategoryIDs) && ($this->includeDisabledCategories || !$category->isDisabled);
+	protected function fulfillsConditions(DatabaseObject $category) {
+		return !in_array($category->categoryID, $this->excludedCategoryIDs) && ($this->includeDisabledCategories || !$category->isDisabled);
 	}
 	
 	/**

@@ -2,6 +2,7 @@
 namespace wcf\action;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -16,6 +17,12 @@ use wcf\system\WCF;
  * @category 	Community Framework
  */
 abstract class AbstractAction implements IAction {
+	/**
+	 * indicates if you need to be logged in to execute this action
+	 * @var	boolean
+	 */
+	public $loginRequired = false;
+	
 	/**
 	 * needed modules to execute this action
 	 * @var	array<string>
@@ -54,6 +61,11 @@ abstract class AbstractAction implements IAction {
 	 * @see wcf\action\IAction::execute()
 	 */
 	public function execute() {
+		// check if active user is logged in
+		if ($this->loginRequired && !WCF::getUser()->userID) {
+			throw new PermissionDeniedException();
+		}
+		
 		// check modules
 		if (count($this->neededModules)) {
 			foreach ($this->neededModules as $module) {

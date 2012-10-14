@@ -119,7 +119,7 @@ class UserEditForm extends UserAddForm {
 	protected function readDefaultValues() {
 		$this->username = $this->user->username;
 		$this->email = $this->confirmEmail = $this->user->email;
-		$this->groupIDs = $this->user->getGroupIDs();
+		$this->groupIDs = $this->user->getGroupIDs(true);
 		$this->languageID = $this->user->languageID;
 	}
 	

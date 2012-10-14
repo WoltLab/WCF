@@ -12,6 +12,16 @@ CREATE TABLE wcf1_acp_menu_item (
 	UNIQUE KEY menuItem (menuItem, packageID)
 );
 
+DROP TABLE IF EXISTS wcf1_acp_search_provider;
+CREATE TABLE wcf1_acp_search_provider (
+	providerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10) NOT NULL,
+	providerName VARCHAR(255) NOT NULL DEFAULT '',
+	className VARCHAR(255) NOT NULL DEFAULT '',
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	UNIQUE KEY providerName (providerName, packageID)
+);
+
 DROP TABLE IF EXISTS wcf1_acp_session;
 CREATE TABLE wcf1_acp_session (
 	sessionID CHAR(40) NOT NULL PRIMARY KEY,
@@ -23,7 +33,10 @@ CREATE TABLE wcf1_acp_session (
 	requestURI VARCHAR(255) NOT NULL DEFAULT '',
 	requestMethod VARCHAR(4) NOT NULL DEFAULT '',
 	controller VARCHAR(255) NOT NULL DEFAULT '',
-	username VARCHAR(255) NOT NULL DEFAULT '',
+	parentObjectType VARCHAR(255) NOT NULL DEFAULT '',
+	parentObjectID INT(10) NOT NULL DEFAULT 0,
+	objectType VARCHAR(255) NOT NULL DEFAULT '',
+	objectID INT(10) NOT NULL DEFAULT 0,
 	sessionVariables MEDIUMTEXT,
 	KEY sessionID (sessionID, packageID)
 );
@@ -86,15 +99,13 @@ DROP TABLE IF EXISTS wcf1_category;
 CREATE TABLE wcf1_category (
 	categoryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	objectTypeID INT(10) NOT NULL,
-	objectTypeCategoryID INT(10) NOT NULL,
 	parentCategoryID INT(10) NOT NULL,
 	title VARCHAR(255) NOT NULL,
 	description TEXT,
 	showOrder INT(10) NOT NULL,
 	time INT(10) NOT NULL,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
-	additionalData TEXT,
-	UNIQUE KEY (objectTypeID, objectTypeCategoryID)
+	additionalData TEXT
 );
 
 DROP TABLE IF EXISTS wcf1_cleanup_listener;
@@ -197,6 +208,7 @@ CREATE TABLE wcf1_language (
 	languageID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	languageCode VARCHAR(20) NOT NULL DEFAULT '',
 	languageName VARCHAR(255) NOT NULL DEFAULT '',
+	countryCode VARCHAR(10) NOT NULL DEFAULT '',
 	isDefault TINYINT(1) NOT NULL DEFAULT 0,
 	hasContent TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY languageCode (languageCode)
@@ -267,6 +279,7 @@ CREATE TABLE wcf1_object_type_definition (
 	definitionName VARCHAR(255) NOT NULL,
 	packageID INT(10) NOT NULL,
 	interfaceName VARCHAR(255) NOT NULL DEFAULT '',
+	categoryName VARCHAR(80) NOT NULL DEFAULT '',
 	UNIQUE KEY definitionName (definitionName, packageID)
 );
 
@@ -478,16 +491,6 @@ CREATE TABLE wcf1_package_update_version (
 	UNIQUE KEY packageUpdateID (packageUpdateID, packageVersion)
 );
 
-DROP TABLE IF EXISTS wcf1_page_location;
-CREATE TABLE wcf1_page_location (
-	locationID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	locationPattern VARCHAR(255) NOT NULL DEFAULT '',
-	locationName VARCHAR(255) NOT NULL DEFAULT '',
-	packageID INT(10) NOT NULL,
-	className varchar(255) NOT NULL DEFAULT '',
-	UNIQUE KEY (packageID, locationName)
-);
-
 DROP TABLE IF EXISTS wcf1_page_menu_item;
 CREATE TABLE wcf1_page_menu_item (
 	menuItemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -527,7 +530,10 @@ CREATE TABLE wcf1_session (
 	requestURI VARCHAR(255) NOT NULL DEFAULT '',
 	requestMethod VARCHAR(4) NOT NULL DEFAULT '',
 	controller VARCHAR(255) NOT NULL DEFAULT '',
-	username VARCHAR(255) NOT NULL DEFAULT '',
+	parentObjectType VARCHAR(255) NOT NULL DEFAULT '',
+	parentObjectID INT(10) NOT NULL DEFAULT 0,
+	objectType VARCHAR(255) NOT NULL DEFAULT '',
+	objectID INT(10) NOT NULL DEFAULT 0,
 	sessionVariables MEDIUMTEXT,
 	spiderID INT(10) NOT NULL DEFAULT 0,
 	KEY packageID (packageID, lastActivityTime, spiderID)
@@ -567,7 +573,9 @@ CREATE TABLE wcf1_style (
 	copyright VARCHAR(255) NOT NULL DEFAULT '',
 	license VARCHAR(255) NOT NULL DEFAULT '',
 	authorName VARCHAR(255) NOT NULL DEFAULT '',
-	authorURL VARCHAR(255) NOT NULL DEFAULT ''
+	authorURL VARCHAR(255) NOT NULL DEFAULT '',
+	iconPath VARCHAR(255) NOT NULL DEFAULT '',
+	imagePath VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_style_to_package;
@@ -581,19 +589,18 @@ CREATE TABLE wcf1_style_to_package (
 
 DROP TABLE IF EXISTS wcf1_style_variable;
 CREATE TABLE wcf1_style_variable (
-	styleID INT(10) NOT NULL,
-	variableName VARCHAR(50) NOT NULL DEFAULT '',
-	variableValue MEDIUMTEXT,
-	UNIQUE KEY (styleID, variableName)
+	variableID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	variableName VARCHAR(50) NOT NULL,
+	defaultValue MEDIUMTEXT,
+	UNIQUE KEY variableName (variableName)
 );
 
-DROP TABLE IF EXISTS wcf1_style_variable_to_attribute;
-CREATE TABLE wcf1_style_variable_to_attribute (
-	packageID INT(10) NOT NULL,
-	cssSelector VARCHAR(200) NOT NULL DEFAULT '',
-	attributeName VARCHAR(50) NOT NULL DEFAULT '',
-	variableName VARCHAR(50) NOT NULL DEFAULT '',
-	UNIQUE KEY (packageID, cssSelector, attributeName, variableName)
+DROP TABLE IF EXISTS wcf1_style_variable_value;
+CREATE TABLE wcf1_style_variable_value (
+	styleID INT(10) NOT NULL,
+	variableID INT(10) NOT NULL,
+	variableValue MEDIUMTEXT,
+	UNIQUE KEY (styleID, variableID)
 );
 
 DROP TABLE IF EXISTS wcf1_template;
@@ -768,6 +775,8 @@ CREATE TABLE wcf1_user_to_language (
 /**** foreign keys ****/
 ALTER TABLE wcf1_acp_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_acp_search_provider ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_acp_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_acp_session ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
@@ -855,8 +864,6 @@ ALTER TABLE wcf1_package_update_requirement ADD FOREIGN KEY (packageUpdateVersio
 
 ALTER TABLE wcf1_package_update_version ADD FOREIGN KEY (packageUpdateID) REFERENCES wcf1_package_update (packageUpdateID) ON DELETE CASCADE;
 
-ALTER TABLE wcf1_page_location ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
-
 ALTER TABLE wcf1_page_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
@@ -874,9 +881,8 @@ ALTER TABLE wcf1_style ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (pack
 ALTER TABLE wcf1_style_to_package ADD FOREIGN KEY (styleID) REFERENCES wcf1_style (styleID) ON DELETE CASCADE;
 ALTER TABLE wcf1_style_to_package ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
-ALTER TABLE wcf1_style_variable ADD FOREIGN KEY (styleID) REFERENCES wcf1_style (styleID) ON DELETE CASCADE;
-
-ALTER TABLE wcf1_style_variable_to_attribute ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_style_variable_value ADD FOREIGN KEY (styleID) REFERENCES wcf1_style (styleID) ON DELETE CASCADE;
+ALTER TABLE wcf1_style_variable_value ADD FOREIGN KEY (variableID) REFERENCES wcf1_style_variable (variableID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_template ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_template ADD FOREIGN KEY (templateGroupID) REFERENCES wcf1_template_group (templateGroupID) ON DELETE CASCADE;
@@ -930,3 +936,83 @@ INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES
 -- default update servers
 INSERT INTO wcf1_package_update_server (serverURL, status, disabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/maelstrom/', 'online', 0, NULL, 0, '', '');
 INSERT INTO wcf1_package_update_server (serverURL, status, disabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/maelstrom/', 'online', 0, NULL, 0, '', '');
+
+-- style default values
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentBackgroundColor', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfColor', 'rgba(102, 102, 102, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLinkColor', 'rgba(63, 127, 191, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLinkHoverColor', 'rgba(15, 79, 143, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerBackgroundColor', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerAccentBackgroundColor', 'rgba(249, 249, 249, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerHoverBackgroundColor', 'rgba(244, 244, 244, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerBorderColor', 'rgba(221, 221, 221, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerBorderRadius', '6px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTabularBoxBackgroundColor', 'rgba(63, 127, 191, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTabularBoxColor', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTabularBoxHoverColor', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPanelBackgroundColor', 'rgba(45, 45, 45, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPanelColor', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPanelHoverColor', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBackgroundColor', 'rgba(249, 249, 249, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBorderColor', 'rgba(221, 221, 221, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonColor', 'rgba(102, 102, 102, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryBackgroundColor', 'rgba(216, 231, 245, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryBorderColor', 'rgba(102, 153, 204, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryColor', 'rgba(102, 153, 204, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonHoverBackgroundColor', 'rgba(244, 244, 244, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonHoverBorderColor', 'rgba(221, 221, 221, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonHoverColor', 'rgba(63, 127, 191, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputBackgroundColor', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputColor', 'rgba(102, 102, 102, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputBorderColor', 'rgba(204, 204, 204, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputHoverBackgroundColor', 'rgba(255, 249, 244, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputHoverBorderColor', 'rgba(255, 170, 34, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfBaseFontSize', '13px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfBaseFontFamily', '"Trebuchet MS", Arial, sans-serif');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutFluidGap', '30px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutFixedWidth', '1200px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageBackgroundColor', 'rgba(224, 224, 224, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageColor', 'rgba(102, 102, 102, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageLinkColor', 'rgba(63, 127, 191, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageLinkHoverColor', 'rgba(15, 79, 143, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSidebarBackgroundColor', 'rgba(249, 249, 249, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDimmedColor', 'rgba(102, 102, 102, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLabelColor', 'rgba(102, 102, 102, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeadlineColor', 'rgba(102, 102, 102, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeadlineFontFamily', '"Trebuchet MS", Arial, sans-serif');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownBackgroundColor', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownColor', 'rgba(102, 102, 102, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownBorderColor', 'rgba(221, 221, 221, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownHoverBackgroundColor', 'rgba(244, 244, 244, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfBaseLineHeight', '1.27em');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeadlineFontSize', '170%');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSubHeadlineFontSize', '140%');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTitleFontSize', '120%');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSmallFontSize', '85%');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfWarningColor', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfWarningBackgroundColor', 'rgba(255, 184, 0, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfWarningBackgroundColor2', 'rgba(166, 120, 0, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfErrorColor', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfErrorBackgroundColor', 'rgba(201, 81, 69, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfErrorBackgroundColor2', 'rgba(145, 61, 55, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSuccessColor', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSuccessBackgroundColor', 'rgba(116, 164, 70, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSuccessBackgroundColor2', 'rgba(77, 119, 48, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInfoColor', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInfoBackgroundColor', 'rgba(70, 116, 164, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInfoBackgroundColor2', 'rgba(48, 77, 119, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTooltipBackgroundColor', 'rgba(0, 0, 0, .8)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTooltipColor', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapTiny', '4px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapSmall', '7px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapMedium', '14px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapLarge', '21px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationHeaderBackgroundColor', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationFooterBackgroundColor', 'rgba(249, 249, 249, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuBackgroundColor', 'rgba(249, 249, 249, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPanelHoverBackgroundColor', 'rgba(60, 60, 60, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuHoverBackgroundColor', 'rgba(244, 244, 244, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuColor', 'rgba(102, 102, 102, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuActiveColor', 'rgba(0, 0, 0, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMarkedBackgroundColor', 'rgba(255, 255, 200, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');

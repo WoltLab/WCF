@@ -48,7 +48,7 @@
 				<legend>{lang}wcf.acp.user.sendMail.markedUsers{/lang}</legend>
 				
 				<div>
-					{implode from=$users item=$user}<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user}</a>{/implode}
+					{implode from=$userList item=$user}<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user}</a>{/implode}
 				</div>
 			</fieldset>	
 		{/if}
@@ -141,7 +141,7 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="action" value="{@$action}" />
- 		<input type="hidden" name="userIDs" value="{@$userIDs}" />
+ 		<input type="hidden" name="userIDs" value="{implode from=$userIDs item=userID glue=','}{@$userID}{/implode}" />
  	</div>
 </form>
 

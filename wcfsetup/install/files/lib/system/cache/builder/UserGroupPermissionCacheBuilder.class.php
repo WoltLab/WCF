@@ -83,7 +83,13 @@ class UserGroupPermissionCacheBuilder implements ICacheBuilder {
 				}
 				else {
 					$typeObj = $this->getTypeObject($option['type']);
-					$result = $typeObj->merge($option['values']);
+					$result = array_shift($option['values']);
+					foreach ($option['values'] as $value) {
+						$newValue = $typeObj->merge($result, $value);
+						if ($newValue !== null) {
+							$result = $newValue;
+						}
+					}
 				}
 				
 				// unset false values

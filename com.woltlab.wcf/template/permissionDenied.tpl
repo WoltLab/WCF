@@ -2,14 +2,17 @@
 
 <head>
 	<title>{lang}wcf.global.error.permissionDenied.title{/lang} - {lang}{PAGE_TITLE}{/lang}</title>
-	{include file='headInclude' sandbox=false}
+	
+	{include file='headInclude'}
 </head>
 
 <body{if $templateName|isset} id="tpl{$templateName|ucfirst}"{/if}>
-{include file='header' sandbox=false}
+
+{include file='header'}
 	
 <p class="error">{lang}wcf.global.error.permissionDenied{/lang}</p>
-	
+{event name='content'}
+
 {if ENABLE_DEBUG_MODE}
 	<!-- 
 	{$name} thrown in {$file} ({@$line})
@@ -18,6 +21,7 @@
 	-->
 {/if}
 
-{include file='footer' sandbox=false}
+{include file='footer'}
+
 </body>
 </html>

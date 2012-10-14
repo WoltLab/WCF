@@ -77,7 +77,7 @@ class Category extends DatabaseObject implements IRouteController {
 	 * @see	wcf\system\request\IRouteController::getID()
 	 */
 	public function getID() {
-		return $this->objectTypeCategoryID;
+		return $this->categoryID;
 	}
 	
 	/**
@@ -87,7 +87,7 @@ class Category extends DatabaseObject implements IRouteController {
 	 */
 	public function getParentCategory() {
 		if ($this->parentCategoryID && $this->parentCategory === null) {
-			$this->parentCategory = CategoryHandler::getInstance()->getCategory($this->objectTypeID, $this->parentCategoryID);
+			$this->parentCategory = CategoryHandler::getInstance()->getCategory($this->parentCategoryID);
 		}
 		
 		return $this->parentCategory;
@@ -113,7 +113,7 @@ class Category extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	wcf\system\request\IRouteController::getTitle()
+	 * @see	wcf\data\ITitledDatabaseObject::getTitle()
 	 */
 	public function getTitle() {
 		return WCF::getLanguage()->get($this->title);

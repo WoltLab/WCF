@@ -4,6 +4,7 @@
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
+		new WCF.Search.User('#username');
 	});
 	//]]>
 </script>
@@ -46,12 +47,6 @@
 				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 				<dd>
 					<input type="text" id="username" name="username" value="{$username}" class="medium" />
-					<script type="text/javascript">
-						//<![CDATA[
-						var suggestion = new Suggestion('username');
-						suggestion.enableMultiple(false);
-						//]]>
-					</script>
 				</dd>
 			</dl>
 			

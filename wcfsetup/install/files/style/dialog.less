@@ -9,25 +9,14 @@
 	
 	.borderRadius(15px);
 	.boxShadow(0, 1px, rgba(0, 0, 0, .3), 23px);
-	
-	.boxHeadline hgroup {
-		h1,
-		h1 a {
-			//color: @wcfDimmedColor;
-			
-			//.textShadow(@wcfPageBackgroundColor);
-		}
-	}
 }
 
 .dialogTitlebar {
 	background-color: @wcfTabularBoxBackgroundColor;
-	background-image: url(../../images/header.png);
-	background-position: top left;
-	background-repeat: repeat-x;
 	border-bottom: 1px solid rgba(0, 0, 0, .1); 
 	display: block;
 	padding: 10px 20px;
+	min-height: 27px;
 	position: relative;
 	
 	.borderRadius(7px, 0);
@@ -70,6 +59,13 @@
 	padding: 10px 20px 20px;
 
 	.borderRadius(0, 7px);
+	
+	&.overlayLoading {
+		background-image: url(../icon/spinner.svg);
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: 32px;
+	}
 }
 
 .dialogOverlay {
@@ -102,7 +98,7 @@
 	width: 70px;
 	z-index: 401;
 
-	.borderRadius();
+	.borderRadius(6px);
 	.boxShadow(0, 1px, rgba(0, 0, 0, .5), 7px);
 	.linearGradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0), rgba(0, 0, 0, .7));
 

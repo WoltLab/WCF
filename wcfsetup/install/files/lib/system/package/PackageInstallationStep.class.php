@@ -15,21 +15,18 @@ use wcf\system\form\FormDocument;
 class PackageInstallationStep {
 	/**
 	 * form document object
-	 *
-	 * @var	FormDocument
+	 * @var	wcf\system\form\FormDocument
 	 */
 	protected $document = null;
 	
 	/**
 	 * next installation node
-	 *
 	 * @var	string
 	 */
 	protected $node = '';
 	
 	/**
-	 * split current node
-	 *
+	 * indicates if current current node should be splitted
 	 * @var	boolean
 	 */
 	protected $splitNode = false;

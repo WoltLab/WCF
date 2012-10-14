@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="en" languagename="English">
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="en" languagename="English" countrycode="gb">
 	<category name="wcf.acp">
 		<item name="wcf.acp"><![CDATA[Administration]]></item>
 	</category>
@@ -172,41 +172,75 @@
 	</category>
 	
 	<category name="wcf.acp.option">
-		<item name="wcf.acp.option.category.module"><![CDATA[Modules]]></item>
+		<item name="wcf.acp.option.blacklist_hostnames"><![CDATA[Exclude hostnames]]></item>
+		<item name="wcf.acp.option.blacklist_hostnames.description"><![CDATA[Enter one hostname each row.]]></item>
+		<item name="wcf.acp.option.blacklist_ip_addresses"><![CDATA[Exclude IP addresses]]></item>
+		<item name="wcf.acp.option.blacklist_ip_addresses.description"><![CDATA[Enter one IP address each row.]]></item>
+		<item name="wcf.acp.option.blacklist_user_agents"><![CDATA[Exclude user agents]]></item>
+		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[Enter one user agent each row.]]></item>
+		<item name="wcf.acp.option.cache_source_memcache_host"><![CDATA[Memcache server]]></item>
+		<item name="wcf.acp.option.cache_source_memcache_host.description"><![CDATA[You can enter one server each row.]]></item>
+		<item name="wcf.acp.option.cache_source_memcache_use_pconnect"><![CDATA[Use persistent connections]]></item>
+		<item name="wcf.acp.option.cache_source_type"><![CDATA[Cache type]]></item>
+		<item name="wcf.acp.option.cache_source_type.apc"><![CDATA[Alternative PHP Cache (experimental)]]></item>
+		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Some of the types have special requirements to the server system and cannot be used in any environment.]]></item>
+		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[File system (default)]]></item>
+		<item name="wcf.acp.option.cache_source_type.memcache"><![CDATA[Memcache]]></item>
+		<item name="wcf.acp.option.cache_source_type.no"><![CDATA[Disable caching (not recommended)]]></item>
+		
 		<item name="wcf.acp.option.category.general"><![CDATA[General]]></item>
-		<item name="wcf.acp.option.category.security"><![CDATA[Security]]></item>
-		<item name="wcf.acp.option.category.module.system"><![CDATA[System]]></item>
-		<item name="wcf.acp.option.module_master_password"><![CDATA[Enable master password]]></item>
-		<item name="wcf.acp.option.module_master_password.description"><![CDATA[Pages and forms in the admin control panel that are relevant to security can be protected with an additional master password.]]></item>
-		<item name="wcf.acp.option.category.general.page"><![CDATA[Page]]></item>
-		<item name="wcf.acp.option.meta_description"><![CDATA[Meta description]]></item>
-		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta keywords]]></item>
-		<item name="wcf.acp.option.page_description"><![CDATA[Page description]]></item>
-		<item name="wcf.acp.option.page_title"><![CDATA[Page title]]></item>
-		<item name="wcf.acp.option.page_title.description"><![CDATA[That title will show up inside the page header, if you have enabled it with the style editor.]]></item>
-		<item name="wcf.acp.option.page_url"><![CDATA[Page adress (URL)]]></item>
-		<item name="wcf.acp.option.page_url.description"><![CDATA[Please enter the adress (URL) of the page (without trailing slash).]]></item>
-		<item name="wcf.acp.option.page_urls"><![CDATA[Further adresses (URLs)]]></item>
-		<item name="wcf.acp.option.page_urls.description"><![CDATA[Enter further adresses (URLs) which also link to your site.]]></item>
+		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
+		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[General]]></item>
+		<item name="wcf.acp.option.category.general.cache.memcache"><![CDATA[Memcache]]></item>
+		<item name="wcf.acp.option.category.general.cache.memcache.description"><![CDATA[Memcache stores data in the memory that is often accessed. This may reduce the database load dramatically. Read more about the memcache on the following site: <a href="http://memcached.org/" class="wcf-externalURL">memcached.org</a>.]]></item>
+		<item name="wcf.acp.option.category.general.date"><![CDATA[Date and time]]></item>
+		<item name="wcf.acp.option.category.general.image"><![CDATA[Graphics]]></item>
 		<item name="wcf.acp.option.category.general.http"><![CDATA[HTTP]]></item>
 		<item name="wcf.acp.option.category.general.http.cookie"><![CDATA[Cookies]]></item>
 		<item name="wcf.acp.option.category.general.http.http"><![CDATA[HTTP]]></item>
 		<item name="wcf.acp.option.category.general.http.proxy"><![CDATA[Proxy server]]></item>
 		<item name="wcf.acp.option.category.general.http.proxy.description"><![CDATA[You can configure optional proxy servers for connections to external servers.]]></item>
+		<item name="wcf.acp.option.category.general.mail"><![CDATA[E-mails]]></item>
+		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[General]]></item>
+		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Transmission]]></item>
+		<item name="wcf.acp.option.category.general.page"><![CDATA[Page]]></item>
+		<item name="wcf.acp.option.category.message"><![CDATA[Messages]]></item>
+		<item name="wcf.acp.option.category.message.general"><![CDATA[General]]></item>
+		<item name="wcf.acp.option.category.module"><![CDATA[Modules]]></item>
+		<item name="wcf.acp.option.category.module.content"><![CDATA[Content]]></item>
+		<item name="wcf.acp.option.category.module.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.option.category.security"><![CDATA[Security]]></item>
+		<item name="wcf.acp.option.category.security.blacklist"><![CDATA[Blacklist]]></item>
+		<item name="wcf.acp.option.category.security.general"><![CDATA[General]]></item>
+		<item name="wcf.acp.option.category.security.general.session"><![CDATA[Sessions]]></item>
+		
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookie domain]]></item>
 		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[This is optional, so in most cases you don't need to specify the cookie domain.]]></item>
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookie path]]></item>
 		<item name="wcf.acp.option.cookie_path.description"><![CDATA[The cookie path is concurrent to the document root of your site - e.g. &quot;/forum&quot; for http://www.woltlab.com/forum.]]></item>
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Cookie prefix]]></item>
+		
+		<item name="wcf.acp.option.export"><![CDATA[Export options]]></item>
+		<item name="wcf.acp.option.export.download"><![CDATA[Download the exported options]]></item>
+		<item name="wcf.acp.option.export.download.description"><![CDATA[Download the exported options as a backup file to your local machine.]]></item>
+		
 		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Enable Gzip compression]]></item>
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Enable this option to send content from the server to clients in a compressed form. This option reduces traffic.]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers"><![CDATA[Disable caching of pages in browsers]]></item>
 		<item name="wcf.acp.option.http_gzip_level"><![CDATA[Compression level]]></item>
 		<item name="wcf.acp.option.http_gzip_level.description"><![CDATA[A value of 1 to 9 is required. As an optimum between compression and server performance, we recommend a value of 1.]]></item>
-		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
-		<item name="wcf.acp.option.category.general.mail"><![CDATA[E-mails]]></item>
-		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[General]]></item>
-		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Transmission]]></item>
+		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Image library]]></item>
+		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Library (default)]]></item>
+		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
+		
+		<item name="wcf.acp.option.import"><![CDATA[Import options]]></item>
+		<item name="wcf.acp.option.import.error.importFailed"><![CDATA[The import of the options file has failed.]]></item>
+		<item name="wcf.acp.option.import.success"><![CDATA[The options have been successfully imported.]]></item>
+		<item name="wcf.acp.option.import.upload"><![CDATA[Upload the options]]></item>
+		<item name="wcf.acp.option.import.upload.description"><![CDATA[Upload the options to be imported from your local machine.]]></item>
+		<item name="wcf.acp.option.importAndExport"><![CDATA[Import &amp; export options]]></item>
+		
+		<item name="wcf.acp.option.log_ip_address"><![CDATA[Log IP addresses]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator's e-mail address]]></item>
 		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[Enter the administrator's e-mail address.]]></item>
 		<item name="wcf.acp.option.mail_debug_logfile_path"><![CDATA[Path to the debug log file]]></item>
@@ -228,52 +262,28 @@
 		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Some servers may require the &quot;-f&quot; parameter to be used when sending e-mails. If your users experience problems with receiving e-mails, try enabling this option.]]></item>
 		<item name="wcf.acp.option.mail_use_formatted_address"><![CDATA[Use formatted e-mail addresses]]></item>
 		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Sender's and receiver's addresses are formatted in &quot;Name &lt;email@domain.tld&gt;&quot;. This option is not supported by all mail servers and should be turned off in case of any problems.]]></item>
-		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
-		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[General]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcache"><![CDATA[Memcache]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcache.description"><![CDATA[Memcache stores data in the memory that is often accessed. This may reduce the database load dramatically. Read more about the memcache on the following site: <a href="http://memcached.org/" class="wcf-externalURL">memcached.org</a>.]]></item>
-		<item name="wcf.acp.option.cache_source_memcache_host"><![CDATA[Memcache server]]></item>
-		<item name="wcf.acp.option.cache_source_memcache_host.description"><![CDATA[You can enter one server each row.]]></item>
-		<item name="wcf.acp.option.cache_source_memcache_use_pconnect"><![CDATA[Use persistent connections]]></item>
-		<item name="wcf.acp.option.cache_source_type"><![CDATA[Cache type]]></item>
-		<item name="wcf.acp.option.cache_source_type.apc"><![CDATA[Alternative PHP Cache (experimental)]]></item>
-		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Some of the types have special requirements to the server system and cannot be used in any environment.]]></item>
-		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[File system (default)]]></item>
-		<item name="wcf.acp.option.cache_source_type.memcache"><![CDATA[Memcache]]></item>
-		<item name="wcf.acp.option.cache_source_type.no"><![CDATA[Disable caching (not recommended)]]></item>
-		<item name="wcf.acp.option.blacklist_hostnames"><![CDATA[Exclude hostnames]]></item>
-		<item name="wcf.acp.option.blacklist_hostnames.description"><![CDATA[Enter one hostname each row.]]></item>
-		<item name="wcf.acp.option.blacklist_ip_addresses"><![CDATA[Exclude IP addresses]]></item>
-		<item name="wcf.acp.option.blacklist_ip_addresses.description"><![CDATA[Enter one IP address each row.]]></item>
-		<item name="wcf.acp.option.blacklist_user_agents"><![CDATA[Exclude user agents]]></item>
-		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[Enter one user agent each row.]]></item>
-		<item name="wcf.acp.option.category.security.blacklist"><![CDATA[Blacklist]]></item>
-		<item name="wcf.acp.option.category.security.general"><![CDATA[General]]></item>
-		<item name="wcf.acp.option.category.security.general.session"><![CDATA[Sessions]]></item>
+		<item name="wcf.acp.option.meta_description"><![CDATA[Meta description]]></item>
+		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta keywords]]></item>
+		<item name="wcf.acp.option.module_master_password"><![CDATA[Enable master password]]></item>
+		<item name="wcf.acp.option.module_master_password.description"><![CDATA[Pages and forms in the admin control panel that are relevant to security can be protected with an additional master password.]]></item>
+		<item name="wcf.acp.option.page_description"><![CDATA[Page description]]></item>
+		<item name="wcf.acp.option.page_title"><![CDATA[Page title]]></item>
+		<item name="wcf.acp.option.page_title.description"><![CDATA[That title will show up inside the page header, if you have enabled it with the style editor.]]></item>
+		<item name="wcf.acp.option.page_url"><![CDATA[Page adress (URL)]]></item>
+		<item name="wcf.acp.option.page_url.description"><![CDATA[Please enter the adress (URL) of the page (without trailing slash).]]></item>
+		<item name="wcf.acp.option.page_urls"><![CDATA[Further adresses (URLs)]]></item>
+		<item name="wcf.acp.option.page_urls.description"><![CDATA[Enter further adresses (URLs) which also link to your site.]]></item>
+		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
 		<item name="wcf.acp.option.session_timeout"><![CDATA[Session timeout]]></item>
 		<item name="wcf.acp.option.session_timeout.description"><![CDATA[Enter the time a session should remain valid [seconds].]]></item>
 		<item name="wcf.acp.option.session_validate_ip_address"><![CDATA[Check IP address of session]]></item>
 		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Should the IP address be checked while reading the session data?]]></item>
 		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Check user agent of session]]></item>
-		<item name="wcf.acp.option.user_online_timeout"><![CDATA[Users online timeout]]></item>
-		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Enter the time users should remain marked as online when they are inactive [seconds].]]></item>
-		<item name="wcf.acp.option.export"><![CDATA[Export options]]></item>
-		<item name="wcf.acp.option.export.download"><![CDATA[Download the exported options]]></item>
-		<item name="wcf.acp.option.export.download.description"><![CDATA[Download the exported options as a backup file to your local machine.]]></item>
-		<item name="wcf.acp.option.import"><![CDATA[Import options]]></item>
-		<item name="wcf.acp.option.import.upload"><![CDATA[Upload the options]]></item>
-		<item name="wcf.acp.option.import.upload.description"><![CDATA[Upload the options to be imported from your local machine.]]></item>
-		<item name="wcf.acp.option.importAndExport"><![CDATA[Import &amp; export options]]></item>
-		<item name="wcf.acp.option.category.general.date"><![CDATA[Date and time]]></item>
-		<item name="wcf.acp.option.category.general.image"><![CDATA[Graphics]]></item>
-		<item name="wcf.acp.option.import.error.importFailed"><![CDATA[The import of the options file has failed.]]></item>
+		<item name="wcf.acp.option.show_clock"><![CDATA[Show current time in page footer]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Time zone offset]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[Choose the default time zone for your site.]]></item>
-		<item name="wcf.acp.option.import.success"><![CDATA[The options have been successfully imported.]]></item>
-		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Image library]]></item>
-		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Library (default)]]></item>
-		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
-		<item name="wcf.acp.option.show_clock"><![CDATA[Show current time in page footer]]></item>
+		<item name="wcf.acp.option.user_online_timeout"><![CDATA[Users online timeout]]></item>
+		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Enter the time users should remain marked as online when they are inactive [seconds].]]></item>
 	</category>
 
 	<category name="wcf.acp.package">
@@ -289,18 +299,26 @@
 		<item name="wcf.acp.package.dependencies.required.description"><![CDATA[Packages required for this package to work]]></item>
 		<item name="wcf.acp.package.dependencies.title"><![CDATA[Dependencies]]></item>
 		<item name="wcf.acp.package.description"><![CDATA[Description]]></item>
+		<item name="wcf.acp.package.error.noValidPackage"><![CDATA[The given archive is no valid package.]]></item>
 		<item name="wcf.acp.package.error.sql.createTable"><![CDATA[Overwrite existing tables]]></item>
 		<item name="wcf.acp.package.error.sql.createTable.description"><![CDATA[The tables above will be overwritten once you continue the installation process. All data contained in these tables will be lost.]]></item>
 		<item name="wcf.acp.package.error.sql.dropTable"><![CDATA[Remove existing tables]]></item>
 		<item name="wcf.acp.package.error.sql.dropTable.description"><![CDATA[The tables above will be removed once you continue the installation process. All data contained in these tables will be lost.]]></item>
+		<item name="wcf.acp.package.error.uniqueAlreadyInstalled"><![CDATA[This package is already installed and can't be installed multiple times.]]></item>
 		<item name="wcf.acp.package.identifier"><![CDATA[Identifier]]></item>
 		<item name="wcf.acp.package.information.properties"><![CDATA[Properties]]></item>
 		<item name="wcf.acp.package.information.title"><![CDATA[Informations]]></item>
 		<item name="wcf.acp.package.installDate"><![CDATA[Installation date]]></item>
+		<item name="wcf.acp.package.installation.packageStatus"><![CDATA[Status]]></item>
+		<item name="wcf.acp.package.installation.packageStatus.delivered"><![CDATA[delivered by the package]]></item>
+		<item name="wcf.acp.package.installation.packageStatus.installed"><![CDATA[already installed]]></item>
+		<item name="wcf.acp.package.installation.packageStatus.missing"><![CDATA[missing]]></item>
+		<item name="wcf.acp.package.installation.packageStatus.missingVersion"><![CDATA[missing package version (installed version: {$package.existingVersion})]]></item>
 		<item name="wcf.acp.package.installation.step.install"><![CDATA[Installing &ldquo;{$packageName}&rdquo; &hellip;]]></item>
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation completed]]></item>
 		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Prepairing installation &hellip;]]></item>
 		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
+		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Required version]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Package list]]></item>
 		<item name="wcf.acp.package.list.detailed"><![CDATA[Detailed package list]]></item>
 		<item name="wcf.acp.package.name"><![CDATA[Package]]></item>
@@ -310,7 +328,9 @@
 		<item name="wcf.acp.package.plugin.title"><![CDATA[Extensions]]></item>
 		<item name="wcf.acp.package.source"><![CDATA[Data source]]></item>
 		<item name="wcf.acp.package.source.download"><![CDATA[Download package]]></item>
+		<item name="wcf.acp.package.source.download.description"><![CDATA[Enter a direct path to the package file here. An internet address can be used or alternatively the path to the package file using the server's file system.]]></item>
 		<item name="wcf.acp.package.source.upload"><![CDATA[Upload package]]></item>
+		<item name="wcf.acp.package.source.upload.description"><![CDATA[Enter the package file to be uploaded from your computer here.]]></item>
 		<item name="wcf.acp.package.startInstall"><![CDATA[Install package]]></item>
 		<item name="wcf.acp.package.startUpdate"><![CDATA[Update package &ldquo;{@$package->getName()}&rdquo;]]></item>
 		<item name="wcf.acp.package.type.application"><![CDATA[Application]]></item>
@@ -319,6 +339,12 @@
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Do you really want to uninstall the package &ldquo;{@$package->getName()}&rdquo;?]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update date]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
+	</category>
+	
+	<category name="wcf.acp.search">
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[Pages]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.option"><![CDATA[Options]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.userGroupOption"><![CDATA[Permissions]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">
@@ -415,7 +441,7 @@
 		<item name="wcf.category.edit"><![CDATA[Edit category]]></item>
 		<item name="wcf.category.isDisabled"><![CDATA[disabled]]></item>
 		<item name="wcf.category.list"><![CDATA[Categories]]></item>
-		<item name="wcf.category.list.noneAvailable"><![CDATA[No category has been added yet.]]></item>
+		<item name="wcf.category.noneAvailable"><![CDATA[No category has been added yet.]]></item>
 		<item name="wcf.category.parentCategoryID"><![CDATA[Parent category]]></item>
 		<item name="wcf.category.parentCategoryID.error.invalid"><![CDATA[The chosen category doesn't exist.]]></item>
 		<item name="wcf.category.showOrder"><![CDATA[Position]]></item>
@@ -435,6 +461,14 @@
 		<item name="wcf.date.dateFormat"><![CDATA[M jS Y]]></item>
 		<item name="wcf.date.timeFormat"><![CDATA[g:ia]]></item>
 		<item name="wcf.date.dateTimeFormat"><![CDATA[%date%, %time%]]></item>
+		
+		<item name="wcf.date.interval.days"><![CDATA[{if $days > 1}{#$days} days{else}A day{/if} ago]]></item>
+		<item name="wcf.date.interval.full"><![CDATA[{if $years}{if $years > 1}{#$years} years{else}A year{/if}{/if}{if $months}{if $firstElement != 'months'}{if $firstElement != 'months'}{if $lastElement == 'months'} and {else}, {/if}{/if}{#$months} months{else}{if $firstElement == 'months'}A{else}a{/if} month{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} and {else}, {/if}{/if}{if $weeks > 1}{#$weeks} weeks{else}{if $firstElement == 'weeks'}A{else}a{/if} week{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} and {else}, {/if}{/if}{if $days > 1}{#$days} days{else}{if $firstElement == 'days'}A{else}a{/if} day{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} and {else}, {/if}{/if}{if $hours > 1}{#$hours} hours{else}{if $firstElement == 'hours'}An{else}an{/if} hour{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} and {/if}{if $minutes > 1}{#$minutes} minutes{else}{if $firstElement == 'minutes'}A{else}a{/if} minute{/if}{/if} ago]]></item>
+		<item name="wcf.date.interval.hours"><![CDATA[{if $hours > 1}{#$hours} hours{else}An hour{/if} ago]]></item>
+		<item name="wcf.date.interval.minutes"><![CDATA[{if $minutes > 1}{#$minutes} minutes{else}A minute{/if} ago]]></item>
+		<item name="wcf.date.interval.months"><![CDATA[{if $months > 1}{#$months} months{else}A Month{/if} ago]]></item>
+		<item name="wcf.date.interval.weeks"><![CDATA[{if $weeks > 1}{#$weeks} weeks{else}A week{/if} ago]]></item>
+		<item name="wcf.date.interval.years"><![CDATA[{if $years > 1}{#$years} years{else}A year{/if} ago]]></item>
 		
 		<!-- variables for dynamic javascript datetime -->
 		<item name="wcf.date.relative.minutes"><![CDATA[(($minutes > 1) ? $minutes + ' minutes' : 'A minute') + ' ago']]></item>
@@ -569,10 +603,15 @@
 		<item name="wcf.global.button.save"><![CDATA[Save]]></item>
 		<item name="wcf.global.button.search"><![CDATA[Search]]></item>
 		<item name="wcf.global.button.submit"><![CDATA[Submit]]></item>
+		<item name="wcf.global.button.upload"><![CDATA[Upload]]></item>
 		<item name="wcf.global.confirmation.cancel"><![CDATA[Cancel]]></item>
 		<item name="wcf.global.confirmation.confirm"><![CDATA[OK]]></item>
 		<item name="wcf.global.confirmation.title"><![CDATA[Confirmation required]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
+		<item name="wcf.global.description"><![CDATA[Description]]></item>
+		<item name="wcf.global.error.permissionDenied"><![CDATA[You are not allowed to enter this page. You do not have the required access rights to enter this page.]]></item>
+		<item name="wcf.global.error.permissionDenied.title"><![CDATA[You are not allowed to enter this page.]]></item>
+		<item name="wcf.global.error.title"><![CDATA[Error message]]></item>
 		<item name="wcf.global.form.add.success"><![CDATA[The new entry has been successfully saved.]]></item>
 		<item name="wcf.global.form.data"><![CDATA[General information]]></item>
 		<item name="wcf.global.form.edit.success"><![CDATA[Your changes have been successfully saved.]]></item>
@@ -580,16 +619,23 @@
 		<item name="wcf.global.loading"><![CDATA[Loading …]]></item>
 		<item name="wcf.global.locale.unix"><![CDATA[en_US]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.locale.win"><![CDATA[english]]></item> <!-- system variable; do not translate -->
+		<item name="wcf.global.name"><![CDATA[Name]]></item>
 		<item name="wcf.global.objectID"><![CDATA[ID]]></item>
 		<item name="wcf.global.page.next"><![CDATA[Next page]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Previous page]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
+		<item name="wcf.global.redirect.title"><![CDATA[Redirection]]></item>
+		<item name="wcf.global.redirect.url"><![CDATA[Please click here if the automatic redirection does not work!]]></item>
 		<item name="wcf.global.scrollDown"><![CDATA[Go to page bottom]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Go to page top]]></item>
 		<item name="wcf.global.search.enterSearchTerm"><![CDATA[Enter search term]]></item>
 		<item name="wcf.global.sortOrder.ascending"><![CDATA[ascending]]></item>
 		<item name="wcf.global.sortOrder.descending"><![CDATA[descending]]></item>
+		<item name="wcf.global.state.closed"><![CDATA[Closed]]></item>
+		<item name="wcf.global.state.trashed"><![CDATA[In recycle bin]]></item>
+		<item name="wcf.global.subject"><![CDATA[Subject]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
+		<item name="wcf.global.title"><![CDATA[Title]]></item>
 	</category>
 	
 	<category name="wcf.page">
@@ -622,6 +668,6 @@
 		<item name="wcf.user.username.error.notFound"><![CDATA[The username &quot;{$username}&quot; could not be found.]]></item>
 		<item name="wcf.user.username.error.notUnique"><![CDATA[The username you have entered is already taken.]]></item>
 		<item name="wcf.user.username.error.notValid"><![CDATA[The username you have entered is not valid.]]></item>
-		<item name="wcf.user.userNote"><![CDATA[Welcome {$__wcf->user->username}.]]></item>
+		<item name="wcf.user.userNote"><![CDATA[{$__wcf->user->username}]]></item>
 	</category>
 </language>

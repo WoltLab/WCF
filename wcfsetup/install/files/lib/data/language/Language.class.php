@@ -181,6 +181,24 @@ class Language extends DatabaseObject {
 		setlocale(LC_CTYPE, $this->get('wcf.global.locale.unix').'.UTF-8', $this->get('wcf.global.locale.unix'), $this->get('wcf.global.locale.win'));
 	}
 	
+	/**
+	 * Returns language icon path.
+	 * 
+	 * @return	string
+	 */
+	public function getIconPath() {
+		return WCF::getPath() . 'icon/flag/'.$this->countryCode.'.svg';
+	}
+	
+	/**
+	 * Returns a list of available languages.
+	 * 
+	 * @return	array<wcf\data\language\Language>
+	 */
+	public function getLanguages() {
+		return LanguageFactory::getInstance()->getLanguages();
+	}
+	
 	public function __wakeup() {
 		$this->packageID = PACKAGE_ID;
 	}

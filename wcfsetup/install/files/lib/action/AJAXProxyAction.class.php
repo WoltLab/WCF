@@ -1,5 +1,6 @@
 <?php
 namespace wcf\action;
+use wcf\data\IStorableObject;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\PermissionDeniedException;
@@ -24,16 +25,34 @@ use wcf\util\StringUtil;
  */
 class AJAXProxyAction extends AbstractSecureAction {
 	/**
+	 * action name
+	 * @var	string
+	 */
+	protected $actionName = '';
+	
+	/**
 	 * class name
 	 * @var	string
 	 */
 	protected $className = '';
 	
 	/**
-	 * action name
+	 * interface name
 	 * @var	string
 	 */
-	protected $actionName = '';
+	protected $interfaceName = '';
+	
+	/**
+	 * debug mode
+	 * @var	boolean
+	 */
+	protected $inDebugMode = false;
+	
+	/**
+	 * object action
+	 * @var	wcf\data\IDatabaseObjectAction
+	 */
+	protected $objectAction = null;
 	
 	/**
 	 * list of object ids
@@ -46,12 +65,6 @@ class AJAXProxyAction extends AbstractSecureAction {
 	 * @var	array<mixed>
 	 */
 	protected $parameters = array();
-	
-	/**
-	 * object action
-	 * @var	wcf\data\IDatabaseObjectAction
-	 */
-	protected $objectAction = null;
 	
 	/**
 	 * results of the executed action
@@ -82,18 +95,11 @@ class AJAXProxyAction extends AbstractSecureAction {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_POST['className'])) {
-			$this->className = StringUtil::trim($_POST['className']);
-		}
-		if (isset($_POST['actionName'])) {
-			$this->actionName = StringUtil::trim($_POST['actionName']);
-		}
-		if (isset($_POST['objectIDs'])) {
-			if (is_array($_POST['objectIDs'])) $this->objectIDs = ArrayUtil::toIntegerArray($_POST['objectIDs']);
-		}
-		if (isset($_POST['parameters'])) {
-			if (is_array($_POST['parameters'])) $this->parameters = $_POST['parameters'];
-		}
+		if (isset($_POST['actionName'])) $this->actionName = StringUtil::trim($_POST['actionName']);
+		if (isset($_POST['className'])) $this->className = StringUtil::trim($_POST['className']);
+		if (isset($_POST['interfaceName'])) $this->interfaceName = StringUtil::trim($_POST['interfaceName']);
+		if (isset($_POST['objectIDs']) && is_array($_POST['objectIDs'])) $this->objectIDs = ArrayUtil::toIntegerArray($_POST['objectIDs']);
+		if (isset($_POST['parameters']) && is_array($_POST['parameters'])) $this->parameters = $_POST['parameters'];
 	}
 	
 	/**
@@ -107,7 +113,13 @@ class AJAXProxyAction extends AbstractSecureAction {
 			throw new SystemException("unknown class '".$this->className."'");
 		}
 		if (!ClassUtil::isInstanceOf($this->className, 'wcf\data\IDatabaseObjectAction')) {
-			throw new SystemException("'".$this->className."' should implement wcf\system\IDatabaseObjectAction");
+			throw new SystemException("'".$this->className."' should implement 'wcf\system\IDatabaseObjectAction'");
+		}
+		
+		if (!empty($this->interfaceName)) {
+			if (!ClassUtil::isInstanceOf($this->className, $this->interfaceName)) {
+				throw new SystemException("'".$this->className."' should implement '".$this->interfaceName."'");
+			}
 		}
 		
 		// create object action instance
@@ -127,6 +139,9 @@ class AJAXProxyAction extends AbstractSecureAction {
 		// execute action
 		try {
 			$this->response = $this->objectAction->executeAction();
+			if (isset($this->response['returnValues'])) {
+				$this->response['returnValues'] = $this->getData($this->response['returnValues']);
+			}
 		}
 		catch (\Exception $e) {
 			$this->throwException($e);
@@ -134,9 +149,30 @@ class AJAXProxyAction extends AbstractSecureAction {
 		$this->executed();
 		
 		// send JSON-encoded response
-		header('Content-type: application/json');
-		echo JSON::encode($this->response);
-		exit;
+		if (!$this->inDebugMode) {
+			header('Content-type: application/json');
+			echo JSON::encode($this->response);
+			exit;
+		}
+	}
+	
+	/**
+	 * Gets the values of object data variables
+	 * 
+	 * @param	mixed		$response
+	 * @return	mixed
+	 */
+	protected function getData($response) {
+		if ($response instanceof IStorableObject) {
+			return $response->getData();
+		}
+		if (is_array($response)) {
+			foreach ($response as &$object) {
+				$object = $this->getData($object);
+			}
+			unset($object);
+		}
+		return $response;
 	}
 	
 	/**
@@ -145,20 +181,90 @@ class AJAXProxyAction extends AbstractSecureAction {
 	 * @param	\Exception	$e
 	 */
 	protected function throwException(\Exception $e) {
+		if ($this->inDebugMode) {
+			throw $e;
+		}
+		
 		if ($e instanceof IllegalLinkException) {
-			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED);
+			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, $e->getTraceAsString());
 		}
 		else if ($e instanceof PermissionDeniedException) {
-			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
 		}
 		else if ($e instanceof SystemException) {
 			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->__getTraceAsString());
 		}
 		else if ($e instanceof UserInputException) {
-			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS);
+			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString());
 		}
 		else {
 			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString());
 		}
+	}
+	
+	/**
+	 * Returns action response.
+	 * 
+	 * @return	mixed
+	 */
+	public function getResponse() {
+		return $this->response;
+	}
+	
+	/**
+	 * Enables debug mode.
+	 */
+	public function enableDebugMode() {
+		$this->inDebugMode = true;
+	}
+	
+	/**
+	 * Performs a debug call to AJAXProxyAction, allowing testing without relying on JavaScript.
+	 * The $data-array should be build like within WCF.Action.Proxy, look below for an example:
+	 * 
+	 * $data = array(
+	 * 	'actionName' => 'foo',
+	 * 	'className' => 'wcf\foo\bar\FooBarAction',
+	 * 	'objectIDs' => array(1, 2, 3, 4, 5), // optional
+	 * 	'parameters' => array( // optional
+	 * 		'foo' => 'bar',
+	 * 		'data' => array(
+	 * 			'baz' => 'foobar'
+	 * 		)
+	 * 	)
+	 * )
+	 * 
+	 * @param	array		$data
+	 * @param	string		$className
+	 * @param	string		$actionName
+	 * @return	wcf\action\AJAXProxyAction
+	 */
+	public static function debugCall(array $data) {
+		// validate $data array
+		if (!isset($data['actionName'])) {
+			throw new SystemException("Could not execute debug call, 'actionName' is missing.");
+		}
+		else if (!isset($data['className'])) {
+			throw new SystemException("Could not execute debug call, 'className' is missing.");
+		}
+		
+		// save $_POST variables
+		$postVars = $_POST;
+		
+		// fake request
+		foreach ($data as $key => $value) {
+			$_POST[$key] = $value;
+		}
+		
+		// execute request
+		$className = get_called_class();
+		$actionObject = new $className();
+		$actionObject->enableDebugMode();
+		$actionObject->__run();
+		
+		// restore $_POST variables
+		$_POST = $postVars;
+		
+		return $actionObject;
 	}
 }

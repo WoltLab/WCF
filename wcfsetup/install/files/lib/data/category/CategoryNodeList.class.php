@@ -24,7 +24,7 @@ class CategoryNodeList extends \RecursiveIteratorIterator implements \Countable 
 	 * name of the category node class
 	 * @var	string
 	 */
-	protected $nodeClassName = 'wcf\data\category\CategoryNode';
+	protected $nodeClassName = '';
 	
 	/**
 	 * id of the parent category
@@ -35,31 +35,37 @@ class CategoryNodeList extends \RecursiveIteratorIterator implements \Countable 
 	/**
 	 * Creates a new CategoryNodeList instance.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	string		$objectType
 	 * @param	integer		$parentCategoryID
-	 * @param	boolean		$inludeDisabledCategories
+	 * @param	boolean		$includeDisabledCategories
 	 * @param	array<integer>	$excludedCategoryIDs
 	 */
-	public function __construct($objectTypeID, $parentCategoryID = 0, $inludeDisabledCategories = false, array $excludedObjectTypeCategoryIDs = array()) {
+	public function __construct($objectType, $parentCategoryID = 0, $includeDisabledCategories = false, array $excludedCategoryIDs = array()) {
+		if (empty($this->nodeClassName)) {
+			$this->nodeClassName = str_replace('List', '', get_class($this));
+			if (!class_exists($this->nodeClassName)) {
+				throw new SystemException("Unknown category node class '".$this->nodeClassName."'.");
+			}
+		}
+		
 		$this->parentCategoryID = $parentCategoryID;
 		
 		// get parent category
 		if (!$this->parentCategoryID) {
 			// empty node
 			$parentCategory = new Category(null, array(
-				'categoryID' => $this->parentCategoryID,
-				'objectTypeID' => $objectTypeID,
-				'objectTypeCategoryID' => $this->parentCategoryID
+				'categoryID' => 0,
+				'objectTypeID' => CategoryHandler::getInstance()->getObjectTypeByName($objectType)->objectTypeID
 			));
 		}
 		else {
-			$parentCategory = CategoryHandler::getInstance()->getCategory($objectTypeID, $this->parentCategoryID);
+			$parentCategory = CategoryHandler::getInstance()->getCategory($this->parentCategoryID);
 			if ($parentCategory === null) {
-				throw new SystemException("There is no category with id '".$this->parentCategoryID."' and object type id '".$objectTypeID."'");
+				throw new SystemException("There is no category with id '".$this->parentCategoryID."'");
 			}
 		}
 		
-		parent::__construct(new $this->nodeClassName($parentCategory, $inludeDisabledCategories, $excludedObjectTypeCategoryIDs), \RecursiveIteratorIterator::SELF_FIRST);
+		parent::__construct(new $this->nodeClassName($parentCategory, $includeDisabledCategories, $excludedCategoryIDs), \RecursiveIteratorIterator::SELF_FIRST);
 	}
 	
 	/**

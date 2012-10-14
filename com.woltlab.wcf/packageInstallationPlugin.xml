@@ -21,5 +21,7 @@
 		<pip name="userOption">wcf\system\package\plugin\UserOptionPackageInstallationPlugin</pip>
 		<pip name="packageIcon">wcf\system\package\plugin\PackageIconPackageInstallationPlugin</pip>
 		<pip name="sitemap">wcf\system\package\plugin\SitemapPackageInstallationPlugin</pip>
+		<pip name="acpSearchProvider">wcf\system\package\plugin\ACPSearchProviderPackageInstallationPlugin</pip>
+		<pip name="style">wcf\system\package\plugin\StylePackageInstallationPlugin</pip>
 	</import>
 </data>

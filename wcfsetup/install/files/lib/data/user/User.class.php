@@ -103,11 +103,12 @@ final class User extends DatabaseObject implements IRouteController {
 	
 	/**
 	 * Returns an array with all the groups in which the actual user is a member.
-	 *
+	 * 
+	 * @param	boolean		$skipCache
 	 * @return 	array 		$groupIDs
 	 */
-	public function getGroupIDs() {
-		if ($this->groupIDs === null) {
+	public function getGroupIDs($skipCache = false) {
+		if ($this->groupIDs === null || $skipCache) {
 			if (!$this->userID) {
 				// user is a guest, use default guest group
 				$this->groupIDs = UserGroup::getGroupIDsByType(array(UserGroup::GUESTS, UserGroup::EVERYONE));
@@ -120,7 +121,7 @@ final class User extends DatabaseObject implements IRouteController {
 				$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'groupIDs');
 				
 				// cache does not exist or is outdated
-				if ($data[$this->userID] === null) {
+				if ($data[$this->userID] === null || $skipCache) {
 					$this->groupIDs = array();
 					$sql = "SELECT	groupID
 						FROM	wcf".WCF_N."_user_to_group
@@ -132,7 +133,9 @@ final class User extends DatabaseObject implements IRouteController {
 					}
 					
 					// update storage data
-					UserStorageHandler::getInstance()->update($this->userID, 'groupIDs', serialize($this->groupIDs), 1);
+					if (!$skipCache) {
+						UserStorageHandler::getInstance()->update($this->userID, 'groupIDs', serialize($this->groupIDs), 1);
+					}
 				}
 				else {
 					$this->groupIDs = unserialize($data[$this->userID]);
@@ -150,10 +153,9 @@ final class User extends DatabaseObject implements IRouteController {
 	 */
 	public function getLanguageIDs() {
 		if ($this->languageIDs === null) {
-			if (!$this->userID) {
-				$this->languageIDs = array();
-			}
-			else {
+			$this->languageIDs = array();
+			
+			if ($this->userID) {
 				// load storage data
 				UserStorageHandler::getInstance()->loadStorage(array($this->userID));
 				
@@ -177,6 +179,9 @@ final class User extends DatabaseObject implements IRouteController {
 				else {
 					$this->languageIDs = unserialize($data[$this->userID]);
 				}
+			}
+			else {
+				$this->languageIDs[] = WCF::getLanguage()->languageID;
 			}
 		}
 		
@@ -313,7 +318,7 @@ final class User extends DatabaseObject implements IRouteController {
 	 * 
 	 * @param	array		$userIDs
 	 * @return	array<User>
-	 */	
+	 */
 	public static function getUsers(array $userIDs) {
 		$userList = new UserList();
 		$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($userIDs));
@@ -326,7 +331,7 @@ final class User extends DatabaseObject implements IRouteController {
 	 * Returns username.
 	 * 
 	 * @return	string
-	 */	
+	 */
 	public function __toString() {
 		return $this->username;
 	}

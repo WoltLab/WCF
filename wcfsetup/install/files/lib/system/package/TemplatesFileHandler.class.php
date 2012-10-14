@@ -12,5 +12,8 @@ namespace wcf\system\package;
  * @category 	Community Framework
  */
 class TemplatesFileHandler extends ACPTemplatesFileHandler {
-	protected $tableName = '_template';
+	/**
+	 * @var	wcf\system\package\ACPTemplatesFileHandler::$tableName
+	 */
+	protected $tableName = 'template';
 }

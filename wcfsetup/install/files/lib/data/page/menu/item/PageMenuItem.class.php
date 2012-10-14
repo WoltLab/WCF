@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\page\menu\item;
 use wcf\data\ProcessibleDatabaseObject;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\menu\page\DefaultPageMenuItemProvider;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\request\LinkHandler;
@@ -46,6 +47,13 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	 * @see wcf\system\menu\ITreeMenuItem::getLink()
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink(null, array(), $this->menuItemLink);
+		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($this->packageID);
+		
+		$parameters = array();
+		if ($abbreviation) {
+			$parameters['application'] = $abbreviation;
+		}
+		
+		return LinkHandler::getInstance()->getLink(null, $parameters, $this->menuItemLink);
 	}
 }

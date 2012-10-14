@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\option\user\group;
 use wcf\system\option\TextOptionType;
+use wcf\util\StringUtil;
 
 /**
  * TextUserGroupOptionType is an implementation of IUserGroupOptionType for text values.
@@ -17,14 +18,15 @@ class TextUserGroupOptionType extends TextOptionType implements IUserGroupOption
 	/**
 	 * @see wcf\system\option\user\group\IUserGroupOptionType::merge()
 	 */
-	public function merge(array $values) {
-		$result = '';
+	public function merge($defaultValue, $groupValue) {
+		$defaultValue = explode("\n", StringUtil::unifyNewlines($defaultValue));
+		$groupValue = explode("\n", StringUtil::unifyNewlines($groupValue));
 		
-		foreach ($values as $value) {
-			if (!empty($result)) $result .= "\n";
-			$result .= $value;
+		$result = array_diff($groupValue, $defaultValue);
+		if (empty($result)) {
+			return null;
 		}
-
-		return $result;
+		
+		return implode("\n", $result);
 	}
 }

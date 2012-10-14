@@ -6,6 +6,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
+use wcf\util\StringUtil;
 
 /**
  * Shows the option edit form.
@@ -37,6 +38,12 @@ class OptionForm extends AbstractOptionListForm {
 	public $activeTabMenuItem = '';
 	
 	/**
+	 * option name for highlighting
+	 * @var	string
+	 */
+	public $optionName = '';
+	
+	/**
 	 * the option tree
 	 * @var array
 	 */
@@ -57,6 +64,8 @@ class OptionForm extends AbstractOptionListForm {
 			throw new IllegalLinkException();
 		}
 		$this->categoryName = $this->category->categoryName;
+		
+		if (isset($_GET['optionName'])) $this->optionName = StringUtil::trim($_GET['optionName']);
 		
 		parent::readParameters();
 	}
@@ -96,6 +105,11 @@ class OptionForm extends AbstractOptionListForm {
 		$this->optionTree = $this->optionHandler->getOptionTree($this->category->categoryName);
 		
 		if (!count($_POST)) {
+			// not a valid top (level 1 or 2) category
+			if (!isset($this->optionTree[0])) {
+				throw new IllegalLinkException();
+			}
+			
 			$this->activeTabMenuItem = $this->optionTree[0]['object']->categoryName;
 		}
 	}
@@ -107,9 +121,10 @@ class OptionForm extends AbstractOptionListForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
+			'activeTabMenuItem' => $this->activeTabMenuItem,
 			'category' => $this->category,
-			'optionTree' => $this->optionTree,
-			'activeTabMenuItem' => $this->activeTabMenuItem
+			'optionName' => $this->optionName,
+			'optionTree' => $this->optionTree
 		));
 	}
 	

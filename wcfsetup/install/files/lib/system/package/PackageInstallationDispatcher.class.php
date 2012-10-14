@@ -233,6 +233,15 @@ class PackageInstallationDispatcher {
 				}
 			}
 			
+			// if package is plugin to com.woltlab.wcf it must not have any other requirement
+			$requirements = $this->getArchive()->getRequirements();
+			if ($package->parentPackageID == 1 && count($requirements)) {
+			    foreach ($requirements as $package => $data) {
+			    	if ($package == 'com.woltlab.wcf') continue;
+			    	throw new SystemException('Package '.$package->package.' is plugin of com.woltlab.wcf (WCF) but has more than one requirement.');
+			    }
+			}
+			
 			// insert requirements and dependencies
 			$requirements = $this->getArchive()->getAllExistingRequirements();
 			if (count($requirements) > 0) {
@@ -716,12 +725,22 @@ class PackageInstallationDispatcher {
 		$missingPackages = 0;
 		foreach ($requirements as $key => $requirement) {
 			if (isset($openRequirements[$requirement['name']])) {
-				$requirements[$key]['open'] = 1;
+				$requirements[$key]['status'] = 'missing';
 				$requirements[$key]['action'] = $openRequirements[$requirement['name']]['action'];
-				if (!isset($requirements[$key]['file'])) $missingPackages++;
+				
+				if (!isset($requirements[$key]['file'])) {
+					if ($openRequirements[$requirement['name']]['action'] === 'update') {
+						$requirements[$key]['status'] = 'missingVersion';
+						$requirements[$key]['existingVersion'] = $openRequirements[$requirement['name']]['existingVersion'];
+					}
+					$missingPackages++;
+				}
+				else {
+					$requirements[$key]['status'] = 'delivered';
+				}
 			}
 			else {
-				$requirements[$key]['open'] = 0;
+				$requirements[$key]['status'] = 'installed';
 			}
 		}
 		

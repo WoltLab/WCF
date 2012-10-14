@@ -21,35 +21,30 @@ use wcf\util\FileUtil;
 class PackageInstallationScheduler {
 	/**
 	 * list of packages to update or install
-	 * 
 	 * @var	array
 	 */
 	protected $selectedPackages = array();
 	
 	/**
 	 * list of package update server ids
-	 * 
 	 * @var	array
 	 */
 	protected $packageUpdateServerIDs;
 	
 	/**
 	 * enables downloading of updates
-	 * 
 	 * @var	boolean
 	 */
 	protected $download;
 	
 	/**
 	 * virtual package versions
-	 * 
 	 * @var	array
 	 */
 	protected $virtualPackageVersions = array();
 	
 	/**
 	 * stack of package installations / updates
-	 * 
 	 * @var	array
 	 */
 	protected $packageInstallationStack = array();

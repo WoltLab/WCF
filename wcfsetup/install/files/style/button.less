@@ -4,15 +4,14 @@ input[type='reset'],
 input[type='submit'],
 input[type='button'],
 .button {
-	border-radius: 30px;
 	border-style: solid;
 	border-width: 1px;
 	cursor: pointer;
 	display: inline-block;
-	font-size: 100%;
-	font-weight: bold;
 	margin: 0 2px;
 	padding: 5px 13px;
+	
+	.borderRadius(30px);
 }
 
 /* normal state */
@@ -21,26 +20,24 @@ input[type='reset']:not([disabled]),
 input[type='submit']:not([disabled]),
 input[type='button']:not([disabled]),
 button:not([disabled]) {
-	border-color: lighten(@wcfButtonBorderColor, 7%) @wcfButtonBorderColor darken(@wcfButtonBorderColor, 7%);
+	background-color: @wcfButtonBackgroundColor;
+	border-color: @wcfButtonBorderColor;
 	color: @wcfButtonColor;
 	text-decoration: none;
 	
-	.boxShadow(0, 1px, rgba(0, 0, 0, .1), 3px);
-	.linearGradient(lighten(@wcfButtonBackgroundColor, 5%), lighten(@wcfButtonBackgroundColor, 10%), lighten(@wcfButtonBackgroundColor, 5%) 2px, @wcfButtonBackgroundColor);
 	.textShadow(@wcfButtonBackgroundColor);
-	.transition(~"background-color, background-image, border, box-shadow, color", .1s);
 }
 
 /* primary */
+/* todo */
 .button.buttonPrimary,
 input[type='submit']:not([disabled]),
 input[type='button']:not([disabled]).buttonPrimary,
 button:not([disabled]).buttonPrimary {
-	border-color: lighten(@wcfButtonPrimaryBorderColor, 7%) @wcfButtonPrimaryBorderColor darken(@wcfButtonPrimaryBorderColor, 7%);
+	background-color: @wcfButtonPrimaryBackgroundColor;
+	border-color: @wcfButtonPrimaryBorderColor;
 	color: @wcfButtonPrimaryColor;
 	
-	.boxShadowNative(~"0 1px 3px rgba(0, 0, 0, .1), 0 0 10px" @wcfButtonPrimaryBorderColor);
-	.linearGradient(lighten(@wcfButtonPrimaryBackgroundColor, 5%), lighten(@wcfButtonPrimaryBackgroundColor, 10%), lighten(@wcfButtonPrimaryBackgroundColor, 5%) 2px, @wcfButtonPrimaryBackgroundColor);
 	.textShadow(@wcfButtonPrimaryBackgroundColor);
 }
 
@@ -50,16 +47,16 @@ input[type='reset']:not([disabled]):hover,
 input[type='submit']:not([disabled]):hover,
 input[type='button']:not([disabled]):hover,
 button:not([disabled]):hover {
-	border-color: lighten(@wcfButtonHoverBorderColor, 7%) @wcfButtonHoverBorderColor darken(@wcfButtonHoverBorderColor, 7%);
+	background-color: @wcfButtonHoverBackgroundColor;
+	border-color: @wcfButtonHoverBorderColor;
 	color: @wcfButtonHoverColor;
 	text-decoration: none;
 	
-	.boxShadowNative(~"0 1px 3px rgba(0, 0, 0, .1), 0 0 10px" @wcfButtonHoverBorderColor);
-	.linearGradient(lighten(@wcfButtonHoverBackgroundColor, 5%), lighten(@wcfButtonHoverBackgroundColor, 10%), lighten(@wcfButtonHoverBackgroundColor, 5%) 2px, @wcfButtonHoverBackgroundColor);
 	.textShadow(@wcfButtonHoverBackgroundColor);
 }
 
 /* active (pressed) */
+/* todo */
 .button:active,
 input[type='reset']:not([disabled]):active,
 input[type='submit']:not([disabled]):active,
@@ -75,6 +72,7 @@ button:not([disabled]):active,
 }
 
 /* disabled state */
+/* todo */
 input[type='reset']:disabled,
 input[type='submit']:disabled,
 input[type='button']:disabled,
@@ -89,6 +87,7 @@ button:disabled {
 }
 
 /* active (permanently) */
+/* todo */
 .button.active,
 input[type='button'].active,
 button.active,
@@ -127,15 +126,13 @@ button.active:hover {
 	}
 }
 
+button.small,
 .button.small {
 	font-size: @wcfSmallFontSize;
 	padding: 5px 11px;
-	
-	.borderRadius(3px);
 }
 
 /* button icons */
 .button > img {
 	margin: -5px 1px -5px -5px;
-	vertical-align: middle;
 }

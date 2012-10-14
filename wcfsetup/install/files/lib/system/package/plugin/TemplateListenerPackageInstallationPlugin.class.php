@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * This PIP installs, updates or deletes template listeners.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -18,16 +18,6 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\template\listener\TemplateListenerEditor';
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */	
-	public $tableName = 'template_listener';
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
-	 */	
-	public $tagName = 'templatelistener';
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
@@ -87,15 +77,6 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 			'sql' => $sql,
 			'parameters' => $parameters
 		);
-	}
-	
-	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
-	 */
-	public function uninstall() {
-		parent::uninstall();
-		
-		$this->cleanup();
 	}
 	
 	/**

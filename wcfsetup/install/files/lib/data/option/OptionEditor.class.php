@@ -76,6 +76,9 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 				$id
 			));
 		}
+		
+		// force a cache reset if options were changed
+		self::resetCache();
 	}
 	
 	/**
@@ -120,7 +123,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 		// get all options
 		$options = Option::getOptions($packageID);
 		foreach ($options as $optionName => $option) {
-			$buffer .= "if (!defined('".$optionName."')) define('".$optionName."', ".(($option['optionType'] == 'boolean' || $option['optionType'] == 'integer') ? intval($option['optionValue']) : "'".addcslashes($option['optionValue'], "'\\")."'").");\n";
+			$buffer .= "if (!defined('".$optionName."')) define('".$optionName."', ".(($option->optionType == 'boolean' || $option->optionType == 'integer') ? intval($option->optionValue) : "'".addcslashes($option->optionValue, "'\\")."'").");\n";
 		}
 		unset($options);
 		

@@ -25,7 +25,7 @@ WCF.ACP.Menu.prototype = {
 	 */
 	init: function(activeMenuItems) {
 		this._headerNavigation = $('nav#mainMenu');
-		this._sidebarNavigation = $('nav#sidebarContent');
+		this._sidebarNavigation = $('aside.collapsibleMenu');
 		
 		this._prepareElements(activeMenuItems);
 	},
@@ -36,12 +36,12 @@ WCF.ACP.Menu.prototype = {
 	_prepareElements: function(activeMenuItems) {
 		this._headerNavigation.find('li').removeClass('active');
 		
-		this._sidebarNavigation.find('div h1').each($.proxy(function(index, menuHeader) {
+		this._sidebarNavigation.find('legend').each($.proxy(function(index, menuHeader) {
 			$(menuHeader).click($.proxy(this._toggleItem, this));
 		}, this));
 		
 		// close all navigation groups
-		this._sidebarNavigation.find('div div').each(function() {
+		this._sidebarNavigation.find('nav ul').each(function() {
 			$(this).hide();
 		});
 		
@@ -61,7 +61,8 @@ WCF.ACP.Menu.prototype = {
 	_toggleItem: function(event) {
 		var $menuItem = $(event.target);
 		
-		$menuItem.next().stop(true, true).toggle('blind', { }, 200).end().toggleClass('active');
+		$menuItem.parent().find('nav ul').stop(true, true).toggle('blind', { }, 200).end();
+		$menuItem.toggleClass('active');
 	},
 	
 	/**
@@ -91,7 +92,7 @@ WCF.ACP.Menu.prototype = {
 	_renderSidebar: function(menuItem, activeMenuItems) {
 		// reset visible and active items
 		this._headerNavigation.find('li').removeClass('active');
-		this._sidebarNavigation.find('div.menuGroup').hide();
+		this._sidebarNavigation.find('> div').hide();
 		
 		if (activeMenuItems.length === 0) {
 			// show active menu
@@ -112,7 +113,7 @@ WCF.ACP.Menu.prototype = {
 					var $menuItem = $('#' + $.wcfEscapeID($item));
 					
 					if ($menuItem.getTagName() === 'ul') {
-						$menuItem.parent('div').show().prev().addClass('active');
+						$menuItem.show().parents('fieldset').children('legend').addClass('active');
 					}
 					else {
 						$menuItem.addClass('active');
@@ -379,29 +380,20 @@ WCF.ACP.Package.Installation.prototype = {
 		
 		// handle inner template
 		if (data.innerTemplate) {
-			$('#packageInstallationInnerContent').html(data.innerTemplate);
+			var self = this;
+			
+			$('#packageInstallationInnerContent').html(data.innerTemplate).find('input').keyup(function(event) {
+				if (event.keyCode === 13) { // Enter
+					self._submitDialog(data);
+				}
+			});
 			
 			// create button to handle next step
 			if (data.step && data.node) {
 				var $id = WCF.getRandomID();
 				$('#packageInstallationInnerContent').append('<div class="formSubmit"><input type="button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" /></div>');
 				
-				$('#' + $id).click($.proxy(function() {
-					// collect form values
-					var $additionalData = {};
-					$('#packageInstallationInnerContent input').each(function(index, inputElement) {
-						var $inputElement = $(inputElement);
-						var $type = $inputElement.attr('type');
-						
-						if (($type == 'checkbox' || $type == 'radio') && !$inputElement.attr('checked')) {
-							return false;
-						}
-						
-						$additionalData[$inputElement.attr('name')] = $inputElement.val();
-					});
-					
-					this._executeStep(data.step, data.node, $additionalData);
-				}, this));
+				$('#' + $id).click(function() { self._submitDialog(data); }); 
 			}
 			
 			$('#packageInstallationInnerContentContainer').show();
@@ -422,6 +414,28 @@ WCF.ACP.Package.Installation.prototype = {
 				this._executeStep(data.step, data.node);
 			}
 		}, this));
+	},
+	
+	/**
+	 * Submits the dialog content.
+	 * 
+	 * @param	object		data
+	 */
+	_submitDialog: function(data) {
+		// collect form values
+		var $additionalData = {};
+		$('#packageInstallationInnerContent input').each(function(index, inputElement) {
+			var $inputElement = $(inputElement);
+			var $type = $inputElement.attr('type');
+			
+			if (($type == 'checkbox' || $type == 'radio') && !$inputElement.attr('checked')) {
+				return false;
+			}
+			
+			$additionalData[$inputElement.attr('name')] = $inputElement.val();
+		});
+		
+		this._executeStep(data.step, data.node, $additionalData);
 	},
 	
 	/**
@@ -659,6 +673,111 @@ WCF.ACP.Options.prototype = {
 };
 
 /**
+ * Single-option handling for user group options.
+ * 
+ * @param	boolean		canEditEveryone
+ */
+WCF.ACP.Options.Group = Class.extend({
+	/**
+	 * true, if user can edit the 'Everyone' group
+	 * @var	boolean
+	 */
+	_canEditEveryone: false,
+	
+	/**
+	 * Initializes the WCF.ACP.Options.Group class.
+	 * 
+	 * @param	boolean		canEditEveryone
+	 */
+	init: function(canEditEveryone) {
+		// disable 'Everyone' input
+		this._canEditEveryone = (canEditEveryone === true) ? true : false;
+		var $defaultContainer = $('#defaultValueContainer');
+		var $defaultValue = $defaultContainer.find('input, textarea').attr('id', 'optionValue' + $defaultContainer.children('dl').data('groupID')).removeAttr('name');
+		if (!this._canEditEveryone) {
+			$defaultValue.attr('disabled', 'disabled');
+		}
+		
+		// fix id and remove name-attribute from input elements
+		$('#otherValueContainer > dl').each(function(index, container) {
+			var $container = $(container);
+			$container.find('input, textarea').removeAttr('name').attr('id', 'optionValue' + $container.data('groupID'));
+		});
+		
+		// bind event listener
+		$('#submitButton').click($.proxy(this._click, this));
+	},
+	
+	/**
+	 * Handles clicks on the submit button.
+	 */
+	_click: function() {
+		var $values = { };
+		
+		// collect default value
+		if (this._canEditEveryone) {
+			var $container = $('#defaultValueContainer > dl');
+			
+			var $value = this._getValue($container);
+			if ($value !== null) {
+				$values[$container.data('groupID')] = $value;
+			}
+		}
+		
+		// collect values from other groups
+		var self = this;
+		$('#otherValueContainer > dl').each(function(index, container) {
+			var $container = $(container);
+			
+			var $value = self._getValue($container);
+			if ($value !== null) {
+				$values[$container.data('groupID')] = $value;
+			}
+		});
+		
+		var $form = $('#defaultValueContainer').parent('form');
+		var $formSubmit = $form.children('.formSubmit');
+		for (var $groupID in $values) {
+			$('<input type="hidden" name="values[' + $groupID + ']" value="' + $values[$groupID] + '" />').appendTo($formSubmit);
+		}
+		
+		// disable submit button
+		$('#submitButton').attr('disable', 'disable');
+		
+		$form.submit();
+	},
+	
+	/**
+	 * Returns the value of an input or textarea.
+	 * 
+	 * @param	jQuery		container
+	 * @return	string
+	 */
+	_getValue: function(container) {
+		var $textarea = container.find('textarea');
+		if ($textarea.length) {
+			return $textarea.val();
+		}
+		else {
+			var $input = container.find('input');
+			if (!$input.length) {
+				return null;
+			}
+			
+			if ($input.attr('type') == 'checkbox') {
+				if ($input.is(':checked')) {
+					return $input.val();
+				}
+				
+				return null;
+			}
+			
+			return $input.val();
+		}
+	}
+});
+
+/**
  * Worker support for ACP.
  * 
  * @param	string		dialogID
@@ -692,15 +811,14 @@ WCF.ACP.Worker.prototype = {
 		
 		// initialize AJAX-based dialog
 		WCF.showAJAXDialog(this._dialogID, true, {
-			ajax: {
-				url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
-				type: 'POST',
-				data: {
-					className: className,
-					parameters: options
-				},
-				success: $.proxy(this._handleResponse, this)
+			url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
+			type: 'POST',
+			data: {
+				className: className,
+				parameters: options
 			},
+			success: $.proxy(this._handleResponse, this),
+			
 			preventClose: true,
 			hideTitle: true
 		});
@@ -709,14 +827,11 @@ WCF.ACP.Worker.prototype = {
 	/**
 	 * Handles response from server.
 	 */
-	_handleResponse: function() {
+	_handleResponse: function($data) {
 		// init binding
 		if (this._dialog === null) {
 			this._dialog = $('#' + $.wcfEscapeID(this._dialogID));
 		}
-		
-		// fetch data returned by server response
-		var $data = this._dialog.data('responseData');
 		
 		// update progress
 		this._dialog.find('#workerProgress').attr('value', $data.progress).text($data.progress + '%');
@@ -732,10 +847,7 @@ WCF.ACP.Worker.prototype = {
 					loopCount: $data.loopCount,
 					parameters: $data.parameters
 				},
-				success: $.proxy(function(data) {
-					this._dialog.data('responseData', data);
-					this._handleResponse();
-				}, this),
+				success: $.proxy(this._handleResponse, this),
 				error: function(transport) {
 					alert(transport.responseText);
 				}
@@ -770,9 +882,7 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
 	/**
 	 * @see	WCF.Collapsible.Remote.init()
 	 */
-	init: function(className, objectTypeID) {
-		this._objectTypeID = objectTypeID;
-		
+	init: function(className) {
 		var sortButton = $('.formSubmit > button[data-type="submit"]');
 		if (sortButton) {
 			sortButton.click($.proxy(this._sort, this));
@@ -781,13 +891,6 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
 		this._super(className);
 	},
 
-	/**
-	 * @see	WCF.Collapsible.Remote._getAdditionalParameters()
-	 */
-	_getAdditionalParameters: function(containerID) {
-		return {objectTypeID : this._objectTypeID};
-	},
-	
 	/**
 	 * @see	WCF.Collapsible.Remote._getButtonContainer()
 	 */
@@ -869,5 +972,40 @@ WCF.ACP.Category.Delete = WCF.Action.Delete.extend({
 				}
 			}
 		}, this));
+	}
+});
+
+/**
+ * Provides the search dropdown for ACP
+ * 
+ * @see	WCF.Search.Base
+ */
+WCF.ACP.Search = WCF.Search.Base.extend({
+	/**
+	 * @see	WCF.Search.Base.init()
+	 */
+	init: function() {
+		this._className = 'wcf\\data\\acp\\search\\provider\\ACPSearchProviderAction';
+		this._super('#search input[name=q]');
+	},
+	
+	/**
+	 * @see	WCF.Search.Base._createListItem()
+	 */
+	_createListItem: function(resultList) {
+		// add a divider between result lists
+		if (this._list.children('li').length > 0) {
+			$('<li class="dropdownDivider" />').appendTo(this._list);
+		}
+		
+		// add caption
+		$('<li class="dropdownText">' + resultList.title + '</li>').appendTo(this._list);
+		
+		// add menu items
+		for (var $i in resultList.items) {
+			var $item = resultList.items[$i];
+			
+			$('<li><a href="' + $item.link + '">' + $item.title + '</a></li>').appendTo(this._list);
+		}
 	}
 });

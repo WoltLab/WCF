@@ -24,13 +24,7 @@
 {event name='javascriptInclude'}
 
 <!-- Stylesheets -->
-<link rel="stylesheet/less" type="text/css" href="{@$__wcf->getPath()}style/bootstrap.less" />
-<script type="text/javascript">
-	//<![CDATA[
-	var less = { env: 'development' };
-	//]]>
-</script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/less.min.js"></script>
+{@$__wcf->getStyleHandler()->getStylesheet()}
 
 <noscript>
 	<style type="text/css">
@@ -47,13 +41,17 @@
 			'wcf.global.button.add': '{lang}wcf.global.button.add{/lang}',
 			'wcf.global.button.cancel': '{lang}wcf.global.button.cancel{/lang}',
 			'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}',
+			'wcf.global.button.delete': '{lang}wcf.global.button.delete{/lang}',
 			'wcf.global.button.disable': '{lang}wcf.global.button.disable{/lang}',
 			'wcf.global.button.disabledI18n': '{lang}wcf.global.button.disabledI18n{/lang}',
 			'wcf.global.button.edit': '{lang}wcf.global.button.edit{/lang}',
 			'wcf.global.button.enable': '{lang}wcf.global.button.enable{/lang}',
 			'wcf.global.button.next': '{lang}wcf.global.button.next{/lang}',
 			'wcf.global.button.preview': '{lang}wcf.global.button.preview{/lang}',
+			'wcf.global.button.reset': '{lang}wcf.global.button.reset{/lang}',
 			'wcf.global.button.save': '{lang}wcf.global.button.save{/lang}',
+			'wcf.global.button.search': '{lang}wcf.global.button.search{/lang}',
+			'wcf.global.button.submit': '{lang}wcf.global.button.submit{/lang}',
 			'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
 			'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 			'wcf.date.relative.minutes': '{capture assign=relativeMinutes}{lang}wcf.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
@@ -73,19 +71,21 @@
 		});
 		
 		WCF.Icon.addObject({
-			'wcf.icon.loading': '{icon size='S'}spinner{/icon}',
-			'wcf.icon.opened': '{icon size='S'}arrowDownInverse{/icon}',
-			'wcf.icon.closed': '{icon size='S'}arrowRightInverse{/icon}',
-			'wcf.icon.arrow.left': '{icon size='S'}arrowLeft{/icon}',
-			'wcf.icon.arrow.left.circle': '{icon size='S'}circleArrowLeft{/icon}',
-			'wcf.icon.arrow.right': '{icon size='S'}arrowRight{/icon}',
-			'wcf.icon.arrow.right.circle': '{icon size='S'}circleArrowRight{/icon}',
-			'wcf.icon.arrow.down': '{icon size='S'}arrowDown{/icon}',
-			'wcf.icon.arrow.down.circle': '{icon size='S'}circleArroDown{/icon}',
-			'wcf.icon.arrow.up': '{icon size='S'}arrowUp{/icon}',
-			'wcf.icon.arrow.up.circle': '{icon size='S'}circleArrowUp{/icon}',
-			'wcf.icon.dropdown': '{icon size='S'}dropdown{/icon}',
-			'wcf.icon.edit': '{icon size='S'}edit{/icon}'
+			'wcf.icon.loading': '{icon}spinner{/icon}',
+			'wcf.icon.opened': '{icon}arrowDownInverse{/icon}',
+			'wcf.icon.closed': '{icon}arrowRightInverse{/icon}',
+			'wcf.icon.arrow.left': '{icon}arrowLeft{/icon}',
+			'wcf.icon.arrow.left.circle': '{icon}circleArrowLeft{/icon}',
+			'wcf.icon.arrow.right': '{icon}arrowRight{/icon}',
+			'wcf.icon.arrow.right.circle': '{icon}circleArrowRight{/icon}',
+			'wcf.icon.arrow.down': '{icon}arrowDown{/icon}',
+			'wcf.icon.arrow.down.circle': '{icon}circleArroDown{/icon}',
+			'wcf.icon.arrow.up': '{icon}arrowUp{/icon}',
+			'wcf.icon.arrow.up.circle': '{icon}circleArrowUp{/icon}',
+			'wcf.icon.dropdown': '{icon}dropdown{/icon}',
+			'wcf.icon.edit': '{icon}edit{/icon}',
+			'wcf.icon.delete': '{icon}delete{/icon}',
+			'wcf.icon.error': '{icon}errorRed{/icon}'
 			{event name='javascriptIconImport'}
 		});
 		

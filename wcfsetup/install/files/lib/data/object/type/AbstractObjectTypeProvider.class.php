@@ -35,8 +35,8 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider {
 	 * @see	wcf\data\object\type\IObjectTypeProvider::getObjectsByIDs()
 	 */
 	public function getObjectsByIDs(array $objectIDs) {
-		$tableAlias = call_user_func($this->className, 'getDatabaseTableAlias');
-		$tableIndex = call_user_func($this->className, 'getDatabaseTableIndexName');
+		$tableAlias = call_user_func(array($this->className, 'getDatabaseTableAlias'));
+		$tableIndex = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
 		
 		$objectList = new $this->listClassName();
 		$objectList->getConditionBuilder()->add($tableAlias.".".$tableIndex." IN (?)", array($objectIDs));

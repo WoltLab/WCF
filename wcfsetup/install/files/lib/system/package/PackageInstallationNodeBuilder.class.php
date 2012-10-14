@@ -20,22 +20,19 @@ use wcf\util\StringUtil;
  */
 class PackageInstallationNodeBuilder {
 	/**
-	 * instance of PackageInstallationDispatcher
-	 *
-	 * @var	PackageInstallationDispatcher
+	 * active package installation dispatcher
+	 * @var	wcf\system\package\PackageInstallationDispatcher
 	 */
 	public $installation = null;
 	
 	/**
-	 * current node
-	 *
+	 * current installation node
 	 * @var	string
 	 */
 	public $node = '';
 	
 	/**
-	 * current parent node
-	 *
+	 * current parent installation node
 	 * @var	string
 	 */
 	public $parentNode = '';
@@ -48,7 +45,6 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * current sequence number within one node
-	 *
 	 * @var	integer
 	 */
 	public $sequenceNo = 0;
