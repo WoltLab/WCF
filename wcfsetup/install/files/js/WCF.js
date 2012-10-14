@@ -655,12 +655,7 @@ WCF.Dropdown = {
 	 * @param	jQuery		dropdownMenu
 	 */
 	setAlignment: function(dropdown, dropdownMenu) {
-		if (dropdown) {
-			var $dropdownMenu = dropdown.find('.dropdownMenu:eq(0)');
-		}
-		else {
-			var $dropdownMenu = dropdownMenu;
-		}
+		var $dropdownMenu = (dropdown) ? dropdown.find('.dropdownMenu:eq(0)') : dropdownMenu;
 		
 		// calculate if dropdown should be right-aligned if there is not enough space
 		var $dimensions = $dropdownMenu.getDimensions('outer');
@@ -673,7 +668,7 @@ WCF.Dropdown = {
 				right: '0px'
 			}).addClass('dropdownArrowRight');
 		}
-		else {
+		else if ($dropdownMenu.css('right') != '0px') {
 			$dropdownMenu.css({
 				left: '0px',
 				right: 'auto'
