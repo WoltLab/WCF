@@ -538,7 +538,7 @@ class Package extends DatabaseObject {
 			$dependencyDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$dependency->packageDir));
 			$prefix = strtoupper(Package::getAbbreviation($dependency->package));
 			
-			$file->write("// ".$dependency->packageName." (packageID ".$dependency->packageID.")\n");
+			$file->write("// ".$dependency->package." (packageID ".$dependency->packageID.")\n");
 			$file->write("if (!defined('".$prefix."_DIR')) define('".$prefix."_DIR', ".($dependency->packageID == $package->packageID ? "dirname(__FILE__).'/'" : "'".$dependencyDir."'").");\n");
 			$file->write("if (!defined('".$prefix."_N')) define('".$prefix."_N', '".WCF_N."_".$dependency->instanceNo."');\n");
 			$file->write("\n");
