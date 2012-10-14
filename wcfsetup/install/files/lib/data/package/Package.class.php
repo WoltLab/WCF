@@ -545,7 +545,7 @@ class Package extends DatabaseObject {
 		
 		// write general information
 		$file->write("// general info\n");
-		$file->write("if (!defined('RELATIVE_WCF_DIR'))  define('RELATIVE_WCF_DIR', RELATIVE_".$currentPrefix."_DIR.'".FileUtil::getRelativePath($packageDir, WCF_DIR)."');\n");
+		$file->write("if (!defined('RELATIVE_WCF_DIR')) define('RELATIVE_WCF_DIR', RELATIVE_".$currentPrefix."_DIR.'".FileUtil::getRelativePath($packageDir, WCF_DIR)."');\n");
 		$file->write("if (!defined('PACKAGE_ID')) define('PACKAGE_ID', ".$package->packageID.");\n");
 		$file->write("if (!defined('PACKAGE_NAME')) define('PACKAGE_NAME', '".str_replace("'", "\'", $package->getName())."');\n");
 		$file->write("if (!defined('PACKAGE_VERSION')) define('PACKAGE_VERSION', '".$package->packageVersion."');\n");
