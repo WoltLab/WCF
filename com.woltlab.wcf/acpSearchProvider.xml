@@ -9,9 +9,17 @@
 			<classname><![CDATA[wcf\system\search\acp\OptionACPSearchResultProvider]]></classname>
 			<showorder>2</showorder>
 		</acpsearchprovider>
+		<acpsearchprovider name="com.woltlab.wcf.user">
+			<classname><![CDATA[wcf\system\search\acp\UserACPSearchResultProvider]]></classname>
+			<showorder>3</showorder>
+		</acpsearchprovider>
 		<acpsearchprovider name="com.woltlab.wcf.userGroupOption">
 			<classname><![CDATA[wcf\system\search\acp\UserGroupOptionACPSearchResultProvider]]></classname>
-			<showorder>3</showorder>
+			<showorder>4</showorder>
+		</acpsearchprovider>
+		<acpsearchprovider name="com.woltlab.wcf.package">
+			<classname><![CDATA[wcf\system\search\acp\PackageACPSearchResultProvider]]></classname>
+			<showorder>5</showorder>
 		</acpsearchprovider>
 	</import>
 </data>
