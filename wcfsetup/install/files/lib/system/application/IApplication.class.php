@@ -20,4 +20,18 @@ interface IApplication {
 	 * @return	mixed
 	 */
 	public static function __callStatic($method, array $arguments);
+	
+	/**
+	 * Sets application's package dir.
+	 * 
+	 * @param	string		$packageDir
+	 */
+	public static function setPackageDir($packageDir);
+	
+	/**
+	 * Returns application's package dir.
+	 * 
+	 * @return	string
+	 */
+	public static function getPackageDir();
 }

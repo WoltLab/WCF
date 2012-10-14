@@ -440,6 +440,9 @@ class WCF {
 			if (!class_exists('wcf\system\WCFACP', false)) {
 				call_user_func(array($className, 'getInstance'));
 			}
+			
+			// set package dir
+			call_user_func(array($className, 'setPackageDir'), $packageDir);
 		}
 		else {
 			unset(self::$autoloadDirectories[$abbreviation]);
