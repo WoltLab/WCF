@@ -1,7 +1,5 @@
 <?php
 namespace wcf\data\style;
-use wcf\util\XMLWriter;
-
 use wcf\data\package\Package;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupEditor;
@@ -11,7 +9,6 @@ use wcf\data\IEditableCachedObject;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\image\ImageHandler;
-use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\io\TarWriter;
 use wcf\system\package\PackageArchive;
@@ -21,8 +18,8 @@ use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
-use wcf\util\StyleUtil;
 use wcf\util\XML;
+use wcf\util\XMLWriter;
 
 /**
  * Provides functions to edit, import, export and delete a style.
@@ -738,6 +735,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * @param	array<string>		$variables
 	 */
 	public function setVariables(array $variables = array()) {
+		debug($variables);
 		// delete old variables
 		$sql = "DELETE FROM	wcf".WCF_N."_style_variable_value
 			WHERE		styleID = ?";
@@ -825,7 +823,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * @see wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.icon-*-*.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.styles.php');
 	}
 	
 	/**
@@ -838,35 +836,5 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$adapter->loadFile($filename);
 		$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH, Style::PREVIEW_IMAGE_MAX_HEIGHT);
 		$adapter->writeImage($thumbnail, $filename);
-	}
-	
-	private static $variables = array();
-	private static function parseAdditionalStyles(&$variables) {
-		self::$variables = $variables;
-		// fix images location
-		if (!empty(self::$variables['global.images.location']) && !FileUtil::isURL(self::$variables['global.images.location']) && substr(self::$variables['global.images.location'], 0, 1) != '/') {
-			self::$variables['global.images.location'] = '../'.self::$variables['global.images.location'];
-		}
-		// fix images location
-		if (!empty(self::$variables['global.icons.location']) && !FileUtil::isURL(self::$variables['global.icons.location']) && substr(self::$variables['global.icons.location'], 0, 1) != '/') {
-			self::$variables['global.icons.location'] = '../'.self::$variables['global.icons.location'];
-		}
-		
-		// parse additional styles
-		if (!empty($variables['user.additional.style.input1.use'])) {
-			$variables['user.additional.style.input1.use'] = preg_replace_callback('/\$([a-z0-9_\-\.]+)\$/', array('self', 'parseAdditionalStylesCallback'), $variables['user.additional.style.input1.use']);
-		}
-		if (!empty($variables['user.additional.style.input2.use'])) {
-			$variables['user.additional.style.input2.use'] = preg_replace_callback('/\$([a-z0-9_\-\.]+)\$/', array('self', 'parseAdditionalStylesCallback'), $variables['user.additional.style.input2.use']);
-		}
-	}
-	
-	private static function parseAdditionalStylesCallback($match) {
-		if (isset(self::$variables[$match[1]])) {
-			return self::$variables[$match[1]];
-		}
-		else {
-			return $match[0];
-		}
 	}
 }
