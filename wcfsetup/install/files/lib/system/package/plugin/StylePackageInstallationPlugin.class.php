@@ -46,7 +46,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	 */
 	public function uninstall() {
 		// call uninstall event
-		EventHandler::fireAction($this, 'uninstall');
+		EventHandler::getInstance()->fireAction($this, 'uninstall');
 		
 		// get all style of this package
 		$isDefault = false;

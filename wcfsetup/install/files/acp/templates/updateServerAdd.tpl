@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.updateServer.'|concat:$action}
 
 <header class="boxHeadline">
 	<hgroup>

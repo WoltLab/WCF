@@ -28,3 +28,4 @@ define('TIMEZONE', 'Europe/Berlin');
 
 define('ENABLE_DEBUG_MODE', 1);
 define('ENABLE_BENCHMARK', 1);
+define('MODULE_API_ACCESS', 0);

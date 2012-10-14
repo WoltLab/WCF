@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user\group\option;
+use wcf\data\user\group\UserGroupEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
@@ -52,6 +53,6 @@ class UserGroupOptionAction extends AbstractDatabaseObjectAction {
 		}
 		
 		// clear cache
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.groups-*.php');
+		UserGroupEditor::resetCache();
 	}
 }

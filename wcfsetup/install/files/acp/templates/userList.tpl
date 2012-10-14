@@ -1,3 +1,9 @@
+{if $searchID}
+	{assign var='pageTitle' value='wcf.acp.user.search'}
+{else}
+	{assign var='pageTitle' value='wcf.acp.user.list'}
+{/if}
+
 {include file='header'}
 
 <script type="text/javascript">
@@ -21,7 +27,7 @@
 
 <header class="boxHeadline">
 	<hgroup>
-		<h1>{lang}wcf.acp.user.{if $searchID}search{else}list{/if}{/lang}</h1>
+		<h1>{lang}{@$pageTitle}{/lang}</h1>
 	</hgroup>
 </header>
 

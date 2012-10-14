@@ -518,7 +518,7 @@ class Package extends DatabaseObject {
 		$file->write("<?php\n");
 		$currentPrefix = strtoupper(Package::getAbbreviation($package->package));
 		
-		// get dependencies (only spplications)
+		// get dependencies (only applications)
 		$sql = "SELECT		package.*, CASE WHEN package.packageID = ? THEN 1 ELSE 0 END AS sortOrder 
 			FROM		wcf".WCF_N."_package_dependency package_dependency
 			LEFT JOIN	wcf".WCF_N."_package package
@@ -535,21 +535,16 @@ class Package extends DatabaseObject {
 		));
 		while ($row = $statement->fetchArray()) {
 			$dependency = new Package(null, $row);
-			$dependencyDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$dependency->packageDir));
 			$prefix = strtoupper(Package::getAbbreviation($dependency->package));
 			
 			$file->write("// ".$dependency->packageID." vars\n");
 			$file->write("// ".strtolower($prefix)."\n");
-			$file->write("if (!defined('".$prefix."_DIR')) define('".$prefix."_DIR', ".($dependency->packageID == $package->packageID ? "dirname(__FILE__).'/'" : "'".$dependencyDir."'").");\n");
-			$file->write("if (!defined('RELATIVE_".$prefix."_DIR')) define('RELATIVE_".$prefix."_DIR', ".($dependency->packageID == $package->packageID ? "''" : "RELATIVE_".$currentPrefix."_DIR.'".FileUtil::getRelativePath($packageDir, $dependencyDir)."'").");\n");
 			$file->write("if (!defined('".$prefix."_N')) define('".$prefix."_N', '".WCF_N."_".$dependency->instanceNo."');\n");
-			$file->write("\$packageDirs[] = ".$prefix."_DIR;\n");
 			$file->write("\n");
 		}
 		
 		// write general information
 		$file->write("// general info\n");
-		$file->write("if (!defined('RELATIVE_WCF_DIR'))	define('RELATIVE_WCF_DIR', RELATIVE_".$currentPrefix."_DIR.'".FileUtil::getRelativePath($packageDir, WCF_DIR)."');\n");
 		$file->write("if (!defined('PACKAGE_ID')) define('PACKAGE_ID', ".$package->packageID.");\n");
 		$file->write("if (!defined('PACKAGE_NAME')) define('PACKAGE_NAME', '".str_replace("'", "\'", $package->getName())."');\n");
 		$file->write("if (!defined('PACKAGE_VERSION')) define('PACKAGE_VERSION', '".$package->packageVersion."');\n");

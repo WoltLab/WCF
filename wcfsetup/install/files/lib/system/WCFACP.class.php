@@ -2,6 +2,8 @@
 namespace wcf\system;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
+use wcf\system\exception\AJAXException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
@@ -67,7 +69,18 @@ class WCFACP extends WCF {
 				exit;
 			}
 			else {
-				WCF::getSession()->checkPermissions(array('admin.general.canUseAcp'));
+				// work-around for AJAX-requests within ACP
+				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+					try {
+						WCF::getSession()->checkPermissions(array('admin.general.canUseAcp'));
+					}
+					catch (PermissionDeniedException $e) {
+						throw new AJAXException(self::getLanguage()->get('wcf.global.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
+					}
+				}
+				else {
+					WCF::getSession()->checkPermissions(array('admin.general.canUseAcp'));
+				}
 			}
 		}
 	}
