@@ -206,6 +206,20 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns true, if package version is valid, e.g.
+	 * 
+	 * 1.0.0 pl 3
+	 * 4.0.0 Alpha 1
+	 * 3.1.7 rC 4
+	 * 
+	 * @param	string		$version
+	 * @return	boolean
+	 */
+	public static function isValidVersion($version) {
+		return preg_match('~^([0-9]+)\.([0-9]+)\.([0-9]+)(\ (a|alpha|b|beta|d|dev|rc|pl)\ ([0-9]+))?$~is', $version);
+	}
+	
+	/**
 	 * Check version number of the installed package against the "fromversion" number of the update.
 	 * The "fromversion" number may contain wildcards (asterisks) which means that the update covers 
 	 * the whole range of release numbers where the asterisk wildcards digits from 0 to 9. For example,

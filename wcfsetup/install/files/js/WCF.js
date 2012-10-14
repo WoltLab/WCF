@@ -864,6 +864,9 @@ WCF.Clipboard = {
 					var $item = $(item);
 					if (WCF.inArray($item.data('objectID'), this._markedObjectIDs)) {
 						$item.attr('checked', 'checked');
+						
+						// add marked class for element container
+						$item.parents('.jsClipboardObject').addClass('jsMarked');
 					}
 				}, this));
 				
@@ -897,6 +900,7 @@ WCF.Clipboard = {
 			var $container = $(container);
 			
 			$container.find('input.jsClipboardItem, input.jsClipboardMarkAll').removeAttr('checked');
+			$container.find('.jsClipboardObject').removeClass('jsMarked');
 		});
 	},
 	
@@ -912,9 +916,12 @@ WCF.Clipboard = {
 		$container.find('.jsClipboardMarkAll').data('hasContainer', $containerID).click($.proxy(this._markAll, this));
 		$container.find('input.jsClipboardItem').data('hasContainer', $containerID).click($.proxy(this._click, this));
 		
-		if ($container.data('typeContainerID')) {
-			this._containerData[$container.data('type')] = $container.data('typeContainerID');
-		}
+		this._containerData[$container.data('type')] = {};
+		$.each($container.data(), $.proxy(function(index, element) {
+			if (index.match(/^type(.+)/)) {
+				this._containerData[$container.data('type')][WCF.String.lcfirst(index.replace(/^type/, ''))] = element;
+			}
+		}, this));
 	},
 	
 	/**
@@ -930,9 +937,11 @@ WCF.Clipboard = {
 		
 		if ($isMarked) {
 			this._markedObjectIDs.push($objectID);
+			$item.parents('.jsClipboardObject').addClass('jsMarked');
 		}
 		else {
 			this._markedObjectIDs = $.removeArrayValue(this._markedObjectIDs, $objectID);
+			$item.parents('.jsClipboardObject').removeClass('jsMarked');
 		}
 		
 		// item is part of a container
@@ -1006,6 +1015,13 @@ WCF.Clipboard = {
 					}
 				}
 			}, this));
+			
+			if ($isMarked) {
+				$container.find('.jsClipboardObject').addClass('jsMarked');
+			}
+			else {
+				$container.find('.jsClipboardObject').removeClass('jsMarked');
+			}
 		}
 		
 		// save new status
@@ -1022,6 +1038,7 @@ WCF.Clipboard = {
 	_saveState: function(type, objectIDs, isMarked) {
 		this._proxy.setOption('data', {
 			action: (isMarked) ? 'mark' : 'unmark',
+			containerData: this._containerData,
 			objectIDs: objectIDs,
 			pageClassName: this._page,
 			type: type
@@ -1623,7 +1640,7 @@ WCF.Action.Delete = Class.extend({
 	 * @param	object		event
 	 */
 	_click: function(event) {
-		var $target = $(event.target);
+		var $target = $(event.currentTarget);
 		
 		if ($target.data('confirmMessage')) {
 			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
@@ -2670,6 +2687,16 @@ WCF.String = {
 	},
 	
 	/**
+	 * Makes a string's first character lowercase
+	 * 
+	 * @param	string		string
+	 * @return	string
+	 */
+	lcfirst: function(string) {
+		return string.substring(0, 1).toLowerCase() + string.substring(1);
+	},
+	
+	/**
 	 * Makes a string's first character uppercase
 	 * 
 	 * @param	string		string
@@ -3081,13 +3108,13 @@ WCF.Collapsible.Simple = {
 		
 		if ($isOpen) {
 			$target.stop().wcfBlindOut('vertical', $.proxy(function() {
-				this._toggleImage($button, 'wcf.global.closed');
+				this._toggleImage($button, 'wcf.icon.closed');
 			}, this));
 			$isOpen = false;
 		}
 		else {
 			$target.stop().wcfBlindIn('vertical', $.proxy(function() {
-				this._toggleImage($button, 'wcf.global.opened');
+				this._toggleImage($button, 'wcf.icon.opened');
 			}, this));
 			$isOpen = true;
 		}
@@ -4145,7 +4172,7 @@ WCF.Search.Base = Class.extend({
 			};
 			
 			this._proxy.setOption('data', {
-				actionName: 'getList',
+				actionName: 'getSearchResultList',
 				className: this._className,
 				parameters: this._getParameters($parameters)
 			});
@@ -6541,29 +6568,15 @@ $.widget('ui.wcfDialog', {
 	 */
 	_create: function() {
 		// create dialog container
-		this._container = $('<div class="dialogContainer"></div>').hide().css({ zIndex: this.options.zIndex }).appendTo(document.body);
+		this._container = $('<div class="dialogContainer" />').hide().css({ zIndex: this.options.zIndex }).appendTo(document.body);
+		this._titlebar = $('<header class="dialogTitlebar" />').hide().appendTo(this._container);
+		this._title = $('<span class="dialogTitle" />').hide().appendTo(this._titlebar);
+		this._closeButton = $('<a class="dialogCloseButton"><span /></a>').click($.proxy(this.close, this)).hide().appendTo(this._titlebar);
+		this._content = $('<div class="dialogContent" />').appendTo(this._container);
 		
-		// create title
-		if (!this.options.hideTitle && this.options.title != '') {
-			this._titlebar = $('<header class="dialogTitlebar"></header>').appendTo(this._container);
-			this._title = $('<span class="dialogTitle"></div>').html(this.options.title).appendTo(this._titlebar);
-		}
-
-		// create close button
-		if (this.options.closable) {
-			this._closeButton = $('<a class="dialogCloseButton" title="' + this.options.closeButtonLabel + '"><span>' + this.options.closeButtonLabel + '</span></a>').click($.proxy(this.close, this));
-
-			if (!this.options.hideTitle && this.options.title != '') {
-				this._closeButton.appendTo(this._titlebar);
-			}
-			else {
-				this._closeButton.appendTo(this._container);
-			}
-		}
+		this._setOption('title', this.options.title);
+		this._setOption('closable', this.options.closable);
 		
-		// create content container
-		this._content = $('<div class="dialogContent"></div>').appendTo(this._container);
-
 		// move target element into content
 		var $content = this.element.detach();
 		this._content.html($content);
@@ -6572,7 +6585,7 @@ $.widget('ui.wcfDialog', {
 		if (this.options.modal) {
 			this._overlay = $('#jsWcfDialogOverlay');
 			if (!this._overlay.length) {
-				this._overlay = $('<div id="jsWcfDialogOverlay" class="dialogOverlay"></div>').css({ height: '100%', zIndex: 399 }).appendTo(document.body);
+				this._overlay = $('<div id="jsWcfDialogOverlay" class="dialogOverlay" />').css({ height: '100%', zIndex: 399 }).appendTo(document.body);
 			}
 			
 			if (this.options.closable) {
@@ -6586,6 +6599,36 @@ $.widget('ui.wcfDialog', {
 				}, this));
 			}
 		}
+	},
+	
+	/**
+	 * Sets the given option to the given value.
+	 * See the jQuery UI widget documentation for more.
+	 */
+	_setOption: function(key, value) {
+		this.options[key] = value;
+		
+		if (key == 'hideTitle' || key == 'title') {
+			if (!this.options.hideTitle && this.options.title != '') {
+				this._title.html(this.options.title).show();
+			} else {
+				this._title.html('');
+			}
+		} else if (key == 'closable' || key == 'closeButtonLabel') {
+			if (this.options.closable) {
+				this._closeButton.attr('title', this.options.closeButtonLabel).show().find('span').html(this.options.closeButtonLabel);
+			} else {
+				this._closeButton.hide();
+			}
+		}
+		
+		if ((!this.options.hideTitle && this.options.title != '') || this.options.closable) {
+			this._titlebar.show();
+		} else {
+			this._titlebar.hide();
+		}
+		
+		return this;
 	},
 	
 	/**
@@ -6614,11 +6657,14 @@ $.widget('ui.wcfDialog', {
 	 */
 	_initDialog: function(data) {
 		// insert template
-		data.ignoreTemplate = true;
-		var $template = this._getResponseValue(data, 'template');
-		if ($template !== null) {
-			this._content.children().html($template);
+		if (this._getResponseValue(data, 'template')) {
+			this._content.children().html(this._getResponseValue(data, 'template'));
 			this.render();
+		}
+		
+		// set title
+		if (this._getResponseValue(data, 'title')) {
+			this._setOption('title', this._getResponseValue(data, 'title'));
 		}
 	},
 
@@ -6805,7 +6851,7 @@ $.widget('ui.wcfDialog', {
 			$content.animate({
 				height: ($contentDimensions.height) + 'px',
 				width: ($contentDimensions.width) + 'px'
-			}, 200, function() {
+			}, 300, function() {
 				// remove static dimensions
 				$content.css({
 					height: 'auto',
@@ -6817,19 +6863,18 @@ $.widget('ui.wcfDialog', {
 			this._contentDimensions = $contentDimensions;
 
 			// move container
+			this._isRendering = true;
 			this._container.animate({
 				left: $leftOffset + 'px',
 				top: $topOffset + 'px'
-			}, 200, $.proxy(function() {
+			}, 300, $.proxy(function() {
 				this._isRendering = false;
-			}));
+			}, this));
 		}
 		
 		if (this.options.onShow !== null) {
 			this.options.onShow();
 		}
-
-		this._isRendering = true;
 	},
 
 	/**

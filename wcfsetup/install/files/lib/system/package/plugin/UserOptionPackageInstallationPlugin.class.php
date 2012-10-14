@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * This PIP installs, updates or deletes user fields.
  *
  * @author 	Benjamin Kunz
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -23,7 +23,11 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */	
 	public $tableName = 'user_option';
-
+	
+	/**
+	 * list of names of tags which aren't considered as additional data
+	 * @var	array<string>
+	 */
 	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'validationpattern', 'required', 'editable', 'visible', 'searchable', 'showorder', 'outputclass', 'selectoptions', 'enableoptions', 'disabled', 'categoryname', 'permissions', 'options', 'attrs', 'cdata');
 	
 	/**

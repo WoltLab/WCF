@@ -2,6 +2,7 @@
 namespace wcf\data\user;
 use wcf\data\user\group\UserGroup;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\ISearchAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\ValidateActionException;
@@ -18,7 +19,7 @@ use wcf\util\StringUtil;
  * @subpackage	data.user
  * @category 	Community Framework
  */
-class UserAction extends AbstractDatabaseObjectAction {
+class UserAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
@@ -195,9 +196,9 @@ class UserAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Validates parameters to search for users and -groups.
+	 * @see	wcf\data\ISearchAction::validateGetSearchResultList()
 	 */
-	public function validateGetList() {
+	public function validateGetSearchResultList() {
 		if (!isset($this->parameters['data']['searchString'])) {
 			throw new ValidateActionException("Missing parameter 'searchString'");
 		}
@@ -212,11 +213,9 @@ class UserAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Returns a list of users and -groups based upon given search criteria.
-	 * 
-	 * @return	array<array>
+	 * @see	wcf\data\ISearchAction::getSearchResultList()
 	 */
-	public function getList() {
+	public function getSearchResultList() {
 		$searchString = $this->parameters['data']['searchString'];
 		$excludedSearchValues = array();
 		if (isset($this->parameters['data']['excludedSearchValues'])) {

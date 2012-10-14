@@ -5,8 +5,8 @@ use wcf\system\exception\SystemException;
 /**
  * Represents a callback
  * 
- * @author	Tim Düsterhus
- * @copyright	2011 Tim Düsterhus
+ * @author	Tim DÃ¼sterhus
+ * @copyright	2011 Tim DÃ¼sterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
