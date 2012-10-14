@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.style.'|concat:$action}
 
 <script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Style.js"></script>
 <script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.ColorPicker.js"></script>
