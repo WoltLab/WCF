@@ -3432,7 +3432,7 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
  */
 WCF.User = {
 	/**
-	 * id of the actuve user
+	 * id of the active user
 	 * @var	integer
 	 */
 	userID: 0,
