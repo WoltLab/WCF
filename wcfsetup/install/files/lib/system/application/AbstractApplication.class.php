@@ -14,29 +14,9 @@ use wcf\system\SingletonFactory;
  */
 abstract class AbstractApplication extends SingletonFactory implements IApplication {
 	/**
-	 * application's package dir
-	 * @var	string
-	 */
-	protected static $packageDir = '';
-	
-	/**
 	 * @see	wcf\system\application\IApplication::__callStatic()
 	 */
 	public static function __callStatic($method, array $arguments) {
 		return call_user_func_array(array('wcf\system\WCF', $method), $arguments);
-	}
-	
-	/**
-	 * @see	wcf\system\application\IApplication::setPackageDir()
-	 */
-	public static function setPackageDir($packageDir) {
-		self::$packageDir = $packageDir;
-	}
-	
-	/**
-	 * @see	wcf\system\application\IApplication::setPackageDir()
-	 */
-	public function getPackageDir() {
-		return self::$packageDir;
 	}
 }
