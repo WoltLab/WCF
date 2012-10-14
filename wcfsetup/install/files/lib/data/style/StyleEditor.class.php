@@ -735,7 +735,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * @param	array<string>		$variables
 	 */
 	public function setVariables(array $variables = array()) {
-		debug($variables);
 		// delete old variables
 		$sql = "DELETE FROM	wcf".WCF_N."_style_variable_value
 			WHERE		styleID = ?";
