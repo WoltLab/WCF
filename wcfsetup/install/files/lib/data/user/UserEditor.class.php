@@ -4,6 +4,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\system\clipboard\ClipboardHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -239,14 +240,27 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 		$statement->execute(array($this->userID));
 		
 		// insert language ids
-		if (count($languageIDs) > 0) {
-			$sql = "INSERT INTO	wcf".WCF_N."_user_to_language
-						(userID, languageID)
-				VALUES		(?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
+		$sql = "INSERT INTO	wcf".WCF_N."_user_to_language
+					(userID, languageID)
+			VALUES		(?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		if (!empty($languageIDs)) {
+			WCF::getDB()->beginTransaction();
 			foreach ($languageIDs as $languageID) {
-				$statement->execute(array($this->userID, $languageID));
+				$statement->execute(array(
+					$this->userID,
+					$languageID
+				));
 			}
+			WCF::getDB()->commitTransaction();
+		}
+		else {
+			// no language id given, use default language id instead
+			$statement->execute(array(
+				$this->userID,
+				LanguageFactory::getInstance()->getDefaultLanguageID()
+			));
 		}
 	}
 	
