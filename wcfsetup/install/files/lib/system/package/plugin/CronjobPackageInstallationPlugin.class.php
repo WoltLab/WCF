@@ -29,7 +29,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
 			$statement->execute(array(
-				$item['attributes']['classname'],
+				$item['elements']['classname'],
 				$this->installation->getPackageID()
 			));
 		}
