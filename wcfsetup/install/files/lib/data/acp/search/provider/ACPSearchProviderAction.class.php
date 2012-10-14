@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\acp\search\provider;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\ISearchAction;
 use wcf\system\exception\UserInputException;
 use wcf\system\search\acp\ACPSearchHandler;
 use wcf\util\StringUtil;
@@ -15,11 +16,11 @@ use wcf\util\StringUtil;
  * @subpackage	data.acp.search.provider
  * @category	Community Framework
  */
-class ACPSearchProviderAction extends AbstractDatabaseObjectAction {
+class ACPSearchProviderAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
-	 * Validates the 'getList' action.
+	 * @see	wcf\data\ISearchAction::validateGetSearchResultList()
 	 */
-	public function validateGetList() {
+	public function validateGetSearchResultList() {
 		$this->parameters['data']['searchString'] = (isset($this->parameters['data']['searchString'])) ? StringUtil::trim($this->parameters['data']['searchString']) : '';
 		if (empty($this->parameters['data']['searchString'])) {
 			throw new UserInputException('searchString');
@@ -27,11 +28,9 @@ class ACPSearchProviderAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Returns the data of the searched acp elements.
-	 * 
-	 * @return	array
+	 * @see	wcf\data\ISearchAction::getSearchResultList()
 	 */
-	public function getList() {
+	public function getSearchResultList() {
 		$data = array();
 		$results = ACPSearchHandler::getInstance()->search($this->parameters['data']['searchString']);
 		
