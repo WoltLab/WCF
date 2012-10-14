@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/userGroupOption.xsd">
 	<import>
-		<categories>
-			<category name="admin.style">
-				<parent>admin.display</parent>
-			</category>
-		</categories>
-		
 		<options>
 			<!-- admin.style -->
 			<option name="admin.style.canAddStyle">
@@ -14,24 +8,21 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<showorder>1</showorder>
 			</option>
 			<option name="admin.style.canEditStyle">
 				<categoryname>admin.style</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<showorder>2</showorder>
 			</option>
 			<option name="admin.style.canDeleteStyle">
 				<categoryname>admin.style</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
-			</option>
-			<option name="admin.style.canUseDisabledStyle">
-				<categoryname>admin.style</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
+				<showorder>3</showorder>
 			</option>
 			<!-- /admin.style -->
 		</options>
