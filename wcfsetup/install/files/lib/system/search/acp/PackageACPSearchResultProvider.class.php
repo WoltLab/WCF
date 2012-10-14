@@ -29,7 +29,7 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider {
 		// search by language item
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("languageID = ?", array(WCF::getLanguage()->languageID));
-		$conditions->add("languageItem LIKE ?", array('wcf.acp.package.title.package%'));
+		$conditions->add("languageItem LIKE ?", array('wcf.acp.package.packageName.package%'));
 		$conditions->add("languageItemValue LIKE ?", array($query.'%'));
 		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		
@@ -41,7 +41,7 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider {
 		
 		$packageIDs = array();
 		while ($row = $statement->fetchArray()) {
-			$packageIDs[] = str_replace('wcf.acp.package.title.package', '', $row['languageItem']);
+			$packageIDs[] = str_replace('wcf.acp.package.packageName.package', '', $row['languageItem']);
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder(false);
@@ -55,10 +55,10 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider {
 				OR package LIKE ?
 				".(count($conditions->getParameters()) ? "OR ".$conditions : "");
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array_merge($conditions->getParameters(), array(
+		$statement->execute(array_merge(array(
 			$query.'%',
 			$query.'%'
-		)));
+		), $conditions->getParameters()));
 		
 		while ($package = $statement->fetchObject('wcf\data\package\Package')) {
 			$results[] = new ACPSearchResult($package->getName(), LinkHandler::getInstance()->getLink('PackageView', array(

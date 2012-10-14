@@ -340,6 +340,8 @@
 	<category name="wcf.acp.search">
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[Pages]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.option"><![CDATA[Options]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.package"><![CDATA[Packages]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.userGroupOption"><![CDATA[Permissions]]></item>
 	</category>
 	
