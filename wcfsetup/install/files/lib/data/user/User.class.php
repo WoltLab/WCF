@@ -177,6 +177,9 @@ final class User extends DatabaseObject implements IRouteController {
 					$this->languageIDs = unserialize($data[$this->userID]);
 				}
 			}
+			else {
+				$this->languageIDs[] = WCF::getLanguage()->languageID;
+			}
 		}
 		
 		return $this->languageIDs;

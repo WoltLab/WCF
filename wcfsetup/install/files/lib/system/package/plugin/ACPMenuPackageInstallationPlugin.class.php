@@ -16,14 +16,4 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\acp\menu\item\ACPMenuItemEditor';
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */
-	public $tableName = 'acp_menu_item';
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
-	 */
-	public $tagName = 'acpmenuitem';
 }

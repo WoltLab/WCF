@@ -109,6 +109,13 @@ abstract class DatabaseObject implements IStorableObject {
 	}
 	
 	/**
+	 * @see	wcf\data\IStorableObject::getData()
+	 */
+	public function getData() {
+		return $this->data;
+	}
+	
+	/**
 	 * @see	wcf\data\IStorableObject::getDatabaseTableName()
 	 */
 	public static function getDatabaseTableName() {

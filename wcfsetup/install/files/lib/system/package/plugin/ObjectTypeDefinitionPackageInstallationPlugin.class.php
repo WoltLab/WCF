@@ -19,11 +19,6 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	public $className = 'wcf\data\object\type\definition\ObjectTypeDefinitionEditor';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */
-	public $tableName = 'object_type_definition';
-	
-	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
 	 */
 	public $tagName = 'definition';

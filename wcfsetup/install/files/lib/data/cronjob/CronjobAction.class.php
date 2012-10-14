@@ -2,6 +2,7 @@
 namespace wcf\data\cronjob;
 use wcf\data\cronjob\log\CronjobLogEditor;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IToggleAction;
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
@@ -17,7 +18,7 @@ use wcf\util\DateUtil;
  * @subpackage	data.cronjob
  * @category	Community Framework
  */
-class CronjobAction extends AbstractDatabaseObjectAction {
+class CronjobAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
@@ -70,7 +71,7 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Validates permissions and parameters
+	 * @see	wcf\data\IToggleAction::validateToggle()
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
@@ -83,7 +84,7 @@ class CronjobAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Toggles status.
+	 * @see	wcf\data\IToggleAction::toggle()
 	 */
 	public function toggle() {
 		foreach ($this->objects as $cronjob) {

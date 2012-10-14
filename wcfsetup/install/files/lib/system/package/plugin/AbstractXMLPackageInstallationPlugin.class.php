@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\XML;
@@ -31,6 +32,23 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	public $tagName = '';
 	
 	/**
+	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::install()
+	 */
+	public function __construct(PackageInstallationDispatcher $installation, $instruction = array()) {
+		parent::__construct($installation, $instruction);
+		
+		// autoset 'tableName' property
+		if (empty($this->tableName) && !empty($this->className)) {
+			$this->tableName = call_user_func(array($this->className, 'getDatabaseTableAlias'));
+		}
+		
+		// autoset 'tagName' property
+		if (empty($this->tagName) && !empty($this->tableName)) {
+			$this->tagName = str_replace('_', '', $this->tableName);
+		}
+	}
+	
+	/**
 	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
@@ -48,7 +66,17 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 		// handle import
 		$this->importItems($xpath);
 		
-		// execute cleanup after successfull import/delete/update
+		// execute cleanup
+		$this->cleanup();
+	}
+	
+	/**
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 */
+	public function uninstall() {
+		parent::uninstall();
+		
+		// execute cleanup
 		$this->cleanup();
 	}
 	
@@ -190,7 +218,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	protected function postImport() { }
 	
 	/**
-	 * Deletes items.
+	 * Deletes the given items.
 	 * 
 	 * @param	array	$items
 	 */	

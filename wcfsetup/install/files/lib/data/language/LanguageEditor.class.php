@@ -5,6 +5,7 @@ use wcf\data\language\category\LanguageCategoryEditor;
 use wcf\data\language\item\LanguageItemEditor;
 use wcf\data\language\item\LanguageItemList;
 use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -27,7 +28,7 @@ use wcf\util\XML;
  * @subpackage	data.language
  * @category	Community Framework
  */
-class LanguageEditor extends DatabaseObjectEditor {
+class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
@@ -704,5 +705,12 @@ class LanguageEditor extends DatabaseObjectEditor {
 			array_unshift($statementParameters, 1);
 			$statement->execute($statementParameters);
 		}
+	}
+	
+	/**
+	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 */
+	public static function resetCache() {
+		LanguageFactory::getInstance()->clearCache();
 	}
 }

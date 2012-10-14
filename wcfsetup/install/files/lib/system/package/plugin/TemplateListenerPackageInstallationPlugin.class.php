@@ -20,16 +20,6 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	public $className = 'wcf\data\template\listener\TemplateListenerEditor';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */
-	public $tableName = 'template_listener';
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
-	 */
-	public $tagName = 'templatelistener';
-	
-	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
@@ -87,15 +77,6 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 			'sql' => $sql,
 			'parameters' => $parameters
 		);
-	}
-	
-	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
-	 */
-	public function uninstall() {
-		parent::uninstall();
-		
-		$this->cleanup();
 	}
 	
 	/**

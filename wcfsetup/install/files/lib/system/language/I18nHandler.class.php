@@ -5,6 +5,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Provides internationalization support for input fields.
@@ -81,7 +82,8 @@ class I18nHandler extends SingletonFactory {
 	public function readValues() {
 		foreach ($this->elementIDs as $elementID) {
 			if (isset($_POST[$elementID])) {
-				$this->plainValues[$elementID] = $_POST[$elementID];
+				// you should trim the string before using it; prevents unwanted newlines
+				$this->plainValues[$elementID] = StringUtil::unifyNewlines(StringUtil::trim($_POST[$elementID]));
 				continue;
 			}
 			
@@ -90,7 +92,7 @@ class I18nHandler extends SingletonFactory {
 				$this->i18nValues[$elementID] = array();
 				
 				foreach ($_POST[$i18nElementID] as $languageID => $value) {
-					$this->i18nValues[$elementID][$languageID] = $value;
+					$this->i18nValues[$elementID][$languageID] = StringUtil::unifyNewlines(StringUtil::trim($value));
 				}
 				
 				continue;
@@ -157,6 +159,53 @@ class I18nHandler extends SingletonFactory {
 		}
 		
 		return $values;
+	}
+	
+	/**
+	 * Sets the value for the given element. If the element is multilingual,
+	 * the given value is set for every available language.
+	 * 
+	 * @param 	integer 	$elementID
+	 * @param 	string 		$plainValue
+	 * 
+	 * @throws  SystemException - if $plainValue is not of type string
+	 */
+	public function setValue($elementID, $plainValue) {
+		if (!is_string($plainValue)) {
+			throw new SystemException('Invalid argument for parameter $plainValue', 0, 'Expected string. '.ucfirst(gettype($plainValue)).' given.');
+		}
+		if (!$this->isPlainValue($elementID)) {
+			$i18nValues = array();
+			foreach ($this->availableLanguages as $language) {
+				$i18nValues[$language->languageID] = StringUtil::trim($plainValue);
+			}
+			$this->setValues($elementID, $i18nValues);
+		}
+		else {
+			$this->plainValues[$elementID] = StringUtil::trim($plainValue);
+		}
+	}
+	
+	/**
+	 * Sets the values for the given element. If the element is not multilingual,
+	 * use {@link I18nHandler::setValue()} instead.
+	 * 
+	 * @param 	integer 	 $elementID
+	 * @param 	array<array> $i18nValues
+	 * 
+	 * @throws  SystemException if $i18nValues doesn't have any elements
+	 */
+	public function setValues($elementID, array $i18nValues) {
+		if (!count($i18nValues)) {
+			throw new SystemException('Invalid argument for parameter $i18nValues', 0, 'Expected filled array as second argument. Empty array given.');
+		}
+		if (!$this->isPlainValue($elementID)) {
+			$this->i18nValues[$elementID] = $i18nValues;
+		}
+		else {
+			$plainValue = array_shift($i18nValues);
+			$this->setValue($elementID, $plainValue);
+		}
 	}
 	
 	/**
@@ -339,6 +388,10 @@ class I18nHandler extends SingletonFactory {
 					else {
 						if ($this->hasI18nValues($elementID)) {
 							$i18nValues = $this->i18nValues[$elementID];
+							// encoding the entries for javascript
+							foreach ($i18nValues as $languageID => $value) {
+								$i18nValues[$languageID] = StringUtil::encodeJS(StringUtil::unifyNewlines($value));
+							}
 						}
 						else {
 							$i18nValues = array();
@@ -358,7 +411,7 @@ class I18nHandler extends SingletonFactory {
 							$this->elementOptions[$elementID]['packageID']
 						));
 						while ($row = $statement->fetchArray()) {
-							$i18nValues[$row['languageID']] = $row['languageItemValue'];
+							$i18nValues[$row['languageID']] = StringUtil::encodeJS(StringUtil::unifyNewlines($row['languageItemValue']));
 						}
 					}
 					else {

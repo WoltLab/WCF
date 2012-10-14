@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\image\adapter;
+use wcf\util\StringUtil;
+
 use wcf\system\exception\SystemException;
 
 /**
@@ -177,6 +179,13 @@ class GDImageAdapter implements IImageAdapter {
 	 * @see	wcf\system\image\adapter\IImageAdapter::drawText()
 	 */
 	public function drawText($string, $x, $y) {
+		if (!StringUtil::isUTF8($string)) {
+			throw new SystemException("Only UTF-8 encoded text can be written onto images"); // GD is buggy with UTF-8
+		}
+		
+		// convert UTF-8 characters > 127 to their numeric representation, e.g. A -> &#65;
+		$string = mb_encode_numericentity($string, array(0x0, 0xFFFF, 0, 0xFFF), 'UTF-8');
+		
 		imageString($this->image, 3, $x, $y, $string, $this->color);
 	}
 	

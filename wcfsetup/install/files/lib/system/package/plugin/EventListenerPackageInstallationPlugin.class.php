@@ -20,11 +20,6 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	public $className = 'wcf\data\event\listener\EventListenerEditor';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */
-	public $tableName = 'event_listener';
-	
-	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
 	 */
 	public $tagName = 'eventlistener';

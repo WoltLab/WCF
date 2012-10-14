@@ -233,6 +233,15 @@ class PackageInstallationDispatcher {
 				}
 			}
 			
+			// if package is plugin to com.woltlab.wcf it must not have any other requirement
+			$requirements = $this->getArchive()->getRequirements();
+			if ($package->parentPackageID == 1 && count($requirements)) {
+			    foreach ($requirements as $package => $data) {
+			    	if ($package == 'com.woltlab.wcf') continue;
+			    	throw new SystemException('Package '.$package->package.' is plugin of com.woltlab.wcf (WCF) but has more than one requirement.');
+			    }
+			}
+			
 			// insert requirements and dependencies
 			$requirements = $this->getArchive()->getAllExistingRequirements();
 			if (count($requirements) > 0) {

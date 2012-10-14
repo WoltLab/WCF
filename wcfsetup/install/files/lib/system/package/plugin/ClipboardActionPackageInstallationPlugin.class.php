@@ -25,11 +25,6 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	protected $pages = array();
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */
-	public $tableName = 'clipboard_action';
-	
-	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
 	 */
 	public $tagName = 'action';

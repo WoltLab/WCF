@@ -20,16 +20,6 @@ class SitemapPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	public $className = 'wcf\data\sitemap\SitemapEditor';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */
-	public $tableName = 'sitemap';
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
-	 */	
-	public $tagName = 'sitemap';
-	
-	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
@@ -82,16 +72,6 @@ class SitemapPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
 	 */	
 	protected function cleanup() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.sitemap-*.php');
-	}
-	
-	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
-	 */
-	public function uninstall() {
-		parent::uninstall();
-		
-		// clear cache immediately
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.sitemap-*.php');
 	}
 }

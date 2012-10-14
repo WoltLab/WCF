@@ -20,16 +20,6 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	public $className = 'wcf\data\cronjob\CronjobEditor';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */
-	public $tableName = 'cronjob';
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
-	 */
-	public $tagName = 'cronjob';
-	
-	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
@@ -39,7 +29,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($items as $item) {
 			$statement->execute(array(
-				$item['attributes']['classname'],
+				$item['elements']['classname'],
 				$this->installation->getPackageID()
 			));
 		}

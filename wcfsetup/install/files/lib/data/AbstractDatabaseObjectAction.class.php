@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  * @subpackage	data
  * @category	Community Framework
  */
-abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
+abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, IDeleteAction {
 	/**
 	 * pending action
 	 * @var	string
@@ -228,7 +228,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	}
 	
 	/**
-	 * Validates permissions and parameters.
+	 * @see	wcf\data\IDeleteAction::validateDelete()
 	 */
 	public function validateDelete() {
 		// validate permissions
@@ -291,9 +291,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction {
 	}
 	
 	/**
-	 * Deletes database object and returns the number of deleted objects.
-	 *
-	 * @return	integer
+	 * @see	wcf\data\IDeleteAction::delete()
 	 */
 	public function delete() {
 		if (!count($this->objects)) {

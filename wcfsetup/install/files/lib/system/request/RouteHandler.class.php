@@ -63,6 +63,15 @@ class RouteHandler extends SingletonFactory {
 		$acpRoute->setParameterOption('id', null, '\d+', true);
 		$this->addRoute($acpRoute);
 		
+		if (MODULE_API_ACCESS) {
+			$apiRoute = new Route('api');
+			$apiRoute->setSchema('/{controller}/{className}-{id}');
+			$apiRoute->setParameterOption('controller', 'API');
+			$apiRoute->setParameterOption('className', null, '\w+');
+			$apiRoute->setParameterOption('id', null, '\d+');
+			$this->addRoute($apiRoute);
+		}
+		
 		$defaultRoute = new Route('default');
 		$defaultRoute->setSchema('/{controller}/{id}');
 		$defaultRoute->setParameterOption('controller', 'Index', null, true);

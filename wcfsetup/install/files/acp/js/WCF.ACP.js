@@ -378,29 +378,20 @@ WCF.ACP.Package.Installation.prototype = {
 		
 		// handle inner template
 		if (data.innerTemplate) {
-			$('#packageInstallationInnerContent').html(data.innerTemplate);
+			var self = this;
+			
+			$('#packageInstallationInnerContent').html(data.innerTemplate).find('input').keyup(function(event) {
+				if (event.keyCode === 13) { // Enter
+					self._submitDialog(data);
+				}
+			});
 			
 			// create button to handle next step
 			if (data.step && data.node) {
 				var $id = WCF.getRandomID();
 				$('#packageInstallationInnerContent').append('<div class="formSubmit"><input type="button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" /></div>');
 				
-				$('#' + $id).click($.proxy(function() {
-					// collect form values
-					var $additionalData = {};
-					$('#packageInstallationInnerContent input').each(function(index, inputElement) {
-						var $inputElement = $(inputElement);
-						var $type = $inputElement.attr('type');
-						
-						if (($type == 'checkbox' || $type == 'radio') && !$inputElement.attr('checked')) {
-							return false;
-						}
-						
-						$additionalData[$inputElement.attr('name')] = $inputElement.val();
-					});
-					
-					this._executeStep(data.step, data.node, $additionalData);
-				}, this));
+				$('#' + $id).click(function() { self._submitDialog(data); }); 
 			}
 			
 			$('#packageInstallationInnerContentContainer').show();
@@ -421,6 +412,28 @@ WCF.ACP.Package.Installation.prototype = {
 				this._executeStep(data.step, data.node);
 			}
 		}, this));
+	},
+	
+	/**
+	 * Submits the dialog content.
+	 * 
+	 * @param	object		data
+	 */
+	_submitDialog: function(data) {
+		// collect form values
+		var $additionalData = {};
+		$('#packageInstallationInnerContent input').each(function(index, inputElement) {
+			var $inputElement = $(inputElement);
+			var $type = $inputElement.attr('type');
+			
+			if (($type == 'checkbox' || $type == 'radio') && !$inputElement.attr('checked')) {
+				return false;
+			}
+			
+			$additionalData[$inputElement.attr('name')] = $inputElement.val();
+		});
+		
+		this._executeStep(data.step, data.node, $additionalData);
 	},
 	
 	/**
@@ -866,22 +879,13 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
 	/**
 	 * @see	WCF.Collapsible.Remote.init()
 	 */
-	init: function(className, objectTypeID) {
-		this._objectTypeID = objectTypeID;
-		
+	init: function(className) {
 		var sortButton = $('.formSubmit > button[data-type="submit"]');
 		if (sortButton) {
 			sortButton.click($.proxy(this._sort, this));
 		}
 		
 		this._super(className);
-	},
-	
-	/**
-	 * @see	WCF.Collapsible.Remote._getAdditionalParameters()
-	 */
-	_getAdditionalParameters: function(containerID) {
-		return {objectTypeID : this._objectTypeID};
 	},
 	
 	/**

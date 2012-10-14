@@ -29,6 +29,13 @@ interface IStorableObject {
 	public function __isset($name);
 	
 	/**
+	 * Returns the value of all object data variables.
+	 * 
+	 * @return	array		array<value>
+	 */
+	public function getData();
+	
+	/**
 	 * Returns the name of the database table.
 	 * 
 	 * @return	string

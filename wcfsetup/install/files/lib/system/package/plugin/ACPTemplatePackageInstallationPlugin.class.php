@@ -22,11 +22,6 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 	public $tableName = 'acp_template';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
-	 */
-	public $tagName = 'acptemplate';
-	
-	/**
 	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {

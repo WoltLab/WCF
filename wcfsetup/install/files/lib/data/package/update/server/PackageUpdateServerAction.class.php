@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\package\update\server;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IToggleAction;
 
 /**
  * Executes package update server-related actions.
@@ -12,7 +13,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @subpackage	data.package.update.server
  * @category	Community Framework
  */
-class PackageUpdateServerAction extends AbstractDatabaseObjectAction {
+class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
@@ -34,14 +35,14 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction {
 	protected $permissionsUpdate = array('admin.system.package.canEditServer');
 	
 	/**
-	 * Validates permissions and parameters
+	 * @see	wcf\data\IToggleAction::validateToggle()
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
 	}
 	
 	/**
-	 * Toggles status.
+	 * @see	wcf\data\IToggleAction::toggle()
 	 */
 	public function toggle() {
 		foreach ($this->objects as $server) {

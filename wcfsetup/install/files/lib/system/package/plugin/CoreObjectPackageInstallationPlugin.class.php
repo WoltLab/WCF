@@ -20,16 +20,6 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	public $className = 'wcf\data\core\object\CoreObjectEditor';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */
-	public $tableName = 'core_object';
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
-	 */
-	public $tagName = 'coreobject';
-	
-	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
@@ -77,16 +67,6 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
 	 */	
 	protected function cleanup() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.coreObjects.php');
-	}
-	
-	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
-	 */
-	public function uninstall() {
-		parent::uninstall();
-		
-		// clear cache immediately
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.coreObjects.php');
 	}
 }
