@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\style;
+use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
@@ -29,17 +30,18 @@ class ActiveStyle extends DatabaseObjectDecorator {
 	protected $iconCache = array();
 	
 	/**
-	 * Creates a new ActiveStyle object.
-	 * 
-	 * @param	Style	$object
+	 * @see	wcf\data\DatabaseObjectDecorator::__construct()
 	 */
-	public function __construct(Style $object) {
+	public function __construct(DatabaseObject $object) {
 		parent::__construct($object);
 		
+		// TODO: Fix this
 		// calculate page logo path
+		/*
 		if (!empty($this->object->data['variables']['page.logo.image']) && !FileUtil::isURL($this->object->data['variables']['page.logo.image']) && StringUtil::substring($this->object->data['variables']['page.logo.image'], 0, 1) !== '/') {
 			$this->object->data['variables']['page.logo.image'] = RELATIVE_WCF_DIR . $this->object->data['variables']['page.logo.image'];
 		}
+		*/
 		
 		// load icon cache
 		$cacheName = 'icon-'.PACKAGE_ID.'-'.$this->styleID;
