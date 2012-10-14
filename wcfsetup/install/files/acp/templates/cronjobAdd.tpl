@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.cronjob.'|concat:$action}
 
 <header class="boxHeadline">
 	<hgroup>
