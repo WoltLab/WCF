@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.masterPassword.init'}
 
 <script type="text/javascript">
 	//<![CDATA[

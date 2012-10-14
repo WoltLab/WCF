@@ -1,5 +1,4 @@
-{capture assign='pageTitle'}{lang}wcf.user.login{/lang}{/capture}
-{include file='header'}
+{include file='header' pageTitle='wcf.user.login'}
 
 <script type="text/javascript">
 	//<![CDATA[

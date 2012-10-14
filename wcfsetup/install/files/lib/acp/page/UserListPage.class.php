@@ -292,7 +292,7 @@ class UserListPage extends SortablePage {
 	 */
 	protected function readColumnsHeads() {
 		foreach ($this->columns as $column) {
-			if (isset($this->options[$column])) {
+			if (isset($this->options[$column]) && $column != 'email') {
 				$this->columnHeads[$column] = 'wcf.user.option.'.$column;
 			}
 			else {
