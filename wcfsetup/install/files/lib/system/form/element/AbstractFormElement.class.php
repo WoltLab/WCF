@@ -6,13 +6,13 @@ use wcf\util\StringUtil;
 
 /**
  * Basic implementation for form elements.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.form.element
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class AbstractFormElement implements IFormElement {
 	/**

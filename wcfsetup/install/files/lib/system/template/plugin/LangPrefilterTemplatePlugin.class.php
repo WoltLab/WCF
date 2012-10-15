@@ -9,19 +9,19 @@ use wcf\system\WCF;
  * It is recommended to use static language variables.
  * 
  * Usage:
- * {lang}foo{/lang}
- * {lang}lang.foo.bar{/lang}
- *
- * @author 	Marcel Werk
+ *	{lang}wcf.foo{/lang}
+ *	{lang}app.foo.bar{/lang}
+ * 
+ * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class LangPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 	/**
-	 * @see wcf\system\template\IPrefilterTemplatePlugin::execute()
+	 * @see	wcf\system\template\IPrefilterTemplatePlugin::execute()
 	 */
 	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');

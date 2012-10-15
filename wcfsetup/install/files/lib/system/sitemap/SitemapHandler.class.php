@@ -8,12 +8,12 @@ use wcf\system\SingletonFactory;
 /**
  * Handles sitemap interactions.
  *
- * @author 	Alexander Ebert
+ * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	sitemap.sitemap
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SitemapHandler extends SingletonFactory {
 	/**
@@ -23,7 +23,7 @@ class SitemapHandler extends SingletonFactory {
 	protected $cache = null;
 	
 	/**
-	 * @see \wcf\system\SingletonFactory::init()
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$application = ApplicationHandler::getInstance()->getPrimaryApplication();
@@ -39,7 +39,7 @@ class SitemapHandler extends SingletonFactory {
 	
 	/**
 	 * Returns array of tree items or an empty array if only one sitemap is registered.
-	 *  
+	 * 
 	 * @return	array<wcf\data\sitemap\Sitemap>
 	 */
 	public function getTree() {

@@ -5,11 +5,11 @@ namespace wcf\system\event;
  * EventListeners can be registered for a specific event in many controller objects.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.event
- * @category 	Community Framework
+ * @category	Community Framework
  */
 interface IEventListener {
 	/**

@@ -7,14 +7,15 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * RadiobuttonsOptionType is an implementation of IOptionType for 'input type="radio"' tags.
+ * RadiobuttonsOptionType is an implementation of IOptionType for 'input type="radio"'
+ * tags.
  *
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class RadioButtonOptionType extends AbstractOptionType implements ISearchableUserOption {
 	/**
@@ -22,14 +23,14 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableUse
 	 * @var	string
 	 */
 	public $templateName = 'radioButtonOptionType';
-
+	
 	/**
-	 * @see wcf\system\option\IOptionType::getFormElement()
+	 * @see	wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		// get options
 		$selectOptions = $option->parseSelectOptions();
-
+		
 		$availableOptions = $option->parseMultipleEnableOptions();
 		$options = array(
 			'disableOptions' => array(),
@@ -54,7 +55,7 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableUse
 	}
 	
 	/**
-	 * @see wcf\system\option\IOptionType::validate()
+	 * @see	wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!empty($newValue)) {
@@ -66,14 +67,14 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableUse
 	}
 	
 	/**
-	 * @see wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @see	wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		return $this->getFormElement($option, $value);
 	}
 	
 	/**
-	 * @see wcf\system\option\ISearchableUserOption::getCondition()
+	 * @see	wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		$value = StringUtil::trim($value);

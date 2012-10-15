@@ -5,16 +5,16 @@ use wcf\system\WCF;
 /**
  * Contains header-related functions.
  * 
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
- * @category 	Community Framework
+ * @category	Community Framework
  */
 final class HeaderUtil {
 	/**
-	 * alias to php setcookie() function
+	 * Alias to php setcookie() function.
 	 */
 	public static function setCookie($name, $value = '', $expire = 0) {
 		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT' : '').(COOKIE_PATH ? '; path='.COOKIE_PATH : '').(COOKIE_DOMAIN ? '; domain='.COOKIE_DOMAIN : '').((isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443') ? '; secure' : '').'; HttpOnly', false);
@@ -75,7 +75,7 @@ final class HeaderUtil {
 		
 		$size = strlen($output);
 		$crc = crc32($output);
-
+		
 		$newOutput = "\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff";
 		$newOutput .= substr(gzcompress($output, HTTP_GZIP_LEVEL), 2, -4);
 		unset($output);
@@ -87,9 +87,9 @@ final class HeaderUtil {
 	
 	/**
 	 * Redirects the user agent.
-	 *
+	 * 
 	 * @param	string		$location
-	 * @param 	boolean		$prependDir
+	 * @param	boolean		$prependDir
 	 * @param	boolean		$sendStatusCode
 	 */
 	public static function redirect($location, $prependDir = true, $sendStatusCode = false) {
@@ -110,9 +110,9 @@ final class HeaderUtil {
 	
 	/**
 	 * Does a delayed redirect.
-	 *
+	 * 
 	 * @param	string		$location
-	 * @param 	string		$message
+	 * @param	string		$message
 	 * @param	integer		$delay
 	 */
 	public static function delayedRedirect($location, $message, $delay = 5) {

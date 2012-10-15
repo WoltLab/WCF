@@ -16,7 +16,7 @@ use wcf\system\exception\SystemException;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.category
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class CategoryHandler extends SingletonFactory {
 	/**

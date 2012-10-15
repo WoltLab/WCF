@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**

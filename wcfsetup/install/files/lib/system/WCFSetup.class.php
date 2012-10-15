@@ -38,23 +38,62 @@ define('ENABLE_BENCHMARK', 1);
 /**
  * WCFSetup executes the installation of the basic wcf systems.
  *
- * @author 	Marcel Werk
+ * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class WCFSetup extends WCF {
+	/**
+	 * list of available languages
+	 * @var	array
+	 */
 	protected static $availableLanguages = array();
+	
+	/**
+	 * language code of selected installation language
+	 * @var	string
+	 */
 	protected static $selectedLanguageCode = 'en';
+	
+	/**
+	 * selected languages to be installed
+	 * @var	array
+	 */
 	protected static $selectedLanguages = array();
+	
+	/**
+	 * directory of the framework
+	 * @var	string
+	 */
 	protected static $wcfDir = '';
+	
+	/**
+	 * list of installed files
+	 * @var	array
+	 */
 	protected static $installedFiles = array();
+	
+	/**
+	 * name of installed primary application
+	 * @var	string
+	 */
 	protected static $setupPackageName = 'WoltLab Community Framework';
+	
+	/**
+	 * indicates if developer mode is used to install
+	 * @var	boolean
+	 */
 	protected static $developerMode = 0;
+	
+	/**
+	 * supported databases
+	 * @var	array<array>
+	 */
 	protected static $dbClasses = array(
-		'MySQLDatabase' => array('class' => 'wcf\system\database\MySQLDatabase', 'minversion' => '5.1.17'),	// MySQL 5.0.0+
+		'MySQLDatabase' => array('class' => 'wcf\system\database\MySQLDatabase', 'minversion' => '5.1.17'),		// MySQL 5.1.17+
 		'PostgreSQLDatabase' => array('class' => 'wcf\system\database\PostgreSQLDatabase', 'minversion' => '8.2.0')	// PostgreSQL 8.2.0+
 	);
 	
@@ -104,7 +143,7 @@ class WCFSetup extends WCF {
 	
 	/**
 	 * Gets the available database classes.
-	 *
+	 * 
 	 * @return	array
 	 */
 	protected static function getAvailableDBClasses() {
@@ -117,7 +156,7 @@ class WCFSetup extends WCF {
 		
 		return $availableDBClasses;
 	}
-
+	
 	/**
 	 * Gets the selected wcf dir from request.
 	 */
@@ -131,7 +170,7 @@ class WCFSetup extends WCF {
 		
 		define('WCF_DIR', self::$wcfDir);
 	}
-		
+	
 	/**
 	 * Initialises the language engine.
 	 */
@@ -168,7 +207,7 @@ class WCFSetup extends WCF {
 	
 	/**
 	 * Returns all languages from WCFSetup.tar.gz.
-	 *
+	 * 
 	 * @return	array
 	 */
 	protected static function getAvailableLanguages() {
@@ -185,16 +224,16 @@ class WCFSetup extends WCF {
 			}
 		}
 		$tar->close();
-
+		
 		// sort languages by language name
 		asort($languages);
-
+		
 		return $languages;
 	}
 	
 	/**
 	 * Calculates the current state of the progress bar.
-	 *
+	 * 
 	 * @param	integer		$currentStep
 	 */
 	protected function calcProgress($currentStep) {
@@ -210,7 +249,7 @@ class WCFSetup extends WCF {
 		// get current step
 		if (isset($_REQUEST['step'])) $step = $_REQUEST['step'];
 		else $step = 'selectSetupLanguage';
-
+		
 		// execute current step
 		switch ($step) {
 			case 'selectSetupLanguage':
@@ -219,65 +258,65 @@ class WCFSetup extends WCF {
 					$this->selectSetupLanguage();
 					break;
 				}
-				
+			
 			case 'showLicense':
 				if (!self::$developerMode) {
 					$this->calcProgress(1);
 					$this->showLicense();
 					break;
 				}
-				
+			
 			case 'showSystemRequirements':
 				if (!self::$developerMode) {
 					$this->calcProgress(2);
 					$this->showSystemRequirements();
 					break;
 				}
-				
+			
 			case 'searchWcfDir':
 				$this->calcProgress(3);
 				$this->searchWcfDir();
-				break;
-				
+			break;
+			
 			case 'unzipFiles':
 				$this->calcProgress(4);
 				$this->unzipFiles();
-				break;
-				
+			break;
+			
 			case 'selectLanguages':
 				$this->calcProgress(5);
 				$this->selectLanguages();
-				break;
-				
+			break;
+			
 			case 'configureDB':
 				$this->calcProgress(6);
 				$this->configureDB();
-				break;
-				
+			break;
+			
 			case 'createDB':
 				$this->calcProgress(7);
 				$this->createDB();
-				break;
-				
+			break;
+			
 			case 'logFiles':
 				$this->calcProgress(8);
 				$this->logFiles();
-				break;
-				
+			break;
+			
 			case 'installLanguage':
 				$this->calcProgress(9);
 				$this->installLanguage();
-				break;
-				
+			break;
+			
 			case 'createUser':
 				$this->calcProgress(10);
 				$this->createUser();
-				break;
-				
+			break;
+			
 			case 'installPackages':
 				$this->calcProgress(11);
 				$this->installPackages();
-				break;
+			break;
 		}
 	}
 	
@@ -609,9 +648,9 @@ class WCFSetup extends WCF {
 	/**
 	 * Checks if in the chosen database are tables in conflict with the wcf tables
 	 * which will be created in the next step.
-	 *
-	 * @param	Database	$db
-	 * @param 	integer		$dbNumber
+	 * 
+	 * @param	wcf\system\database\Database	$db
+	 * @param	integer				$dbNumber
 	 */
 	protected function getConflictedTables($db, $dbNumber) {
 		// get content of the sql structure file
@@ -737,8 +776,8 @@ class WCFSetup extends WCF {
 	
 	/**
 	 * Scans the given dir for installed files.
-	 *
-	 * @param 	string		$dir
+	 * 
+	 * @param	string		$dir
 	 */
 	protected function getInstalledFiles($dir) {
 		if ($files = glob($dir.'*')) {
@@ -1082,7 +1121,7 @@ class WCFSetup extends WCF {
 	
 	/**
 	 * Goes to the next step.
-	 *
+	 * 
 	 * @param	string		$nextStep
 	 */
 	protected function gotoNextStep($nextStep) {

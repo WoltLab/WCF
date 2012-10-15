@@ -12,7 +12,7 @@ use wcf\util\ClassUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.sitemap
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class Sitemap extends DatabaseObject {
 	/**

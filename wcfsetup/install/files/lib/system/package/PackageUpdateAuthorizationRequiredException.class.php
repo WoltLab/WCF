@@ -4,14 +4,15 @@ use wcf\acp\form\PackageUpdateAuthForm;
 use wcf\system\exception\UserException;
 
 /**
- * A PackageUpdateAuthorizationRequiredException is thrown when a package update server requires a user authorization.
- *
+ * A PackageUpdateAuthorizationRequiredException is thrown when a package update
+ * server requires a user authorization.
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageUpdateAuthorizationRequiredException extends UserException {
 	/**
@@ -34,7 +35,7 @@ class PackageUpdateAuthorizationRequiredException extends UserException {
 	
 	/**
 	 * Creates a new PackageUpdateAuthorizationRequiredException object.
-	 *
+	 * 
 	 * @param	integer		$packageUpdateServerID
 	 * @param	string		$url
 	 * @param	array		$response
@@ -55,7 +56,7 @@ class PackageUpdateAuthorizationRequiredException extends UserException {
 	
 	/**
 	 * Returns the package update server id.
-	 *
+	 * 
 	 * @return	integer
 	 */
 	public function getPackageUpdateServerID() {
@@ -64,7 +65,7 @@ class PackageUpdateAuthorizationRequiredException extends UserException {
 	
 	/**
 	 * Returns the server url.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getURL() {
@@ -73,7 +74,7 @@ class PackageUpdateAuthorizationRequiredException extends UserException {
 	
 	/**
 	 * Returns the response header.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getResponseHeader() {
@@ -82,7 +83,7 @@ class PackageUpdateAuthorizationRequiredException extends UserException {
 	
 	/**
 	 * Returns the response content.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getResponseContent() {

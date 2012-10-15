@@ -33,9 +33,7 @@
 					{/if}
 				<dd>
 			</dl>
-			
 		</fieldset>
-		
 	</div>
 	
 	<div class="formSubmit">

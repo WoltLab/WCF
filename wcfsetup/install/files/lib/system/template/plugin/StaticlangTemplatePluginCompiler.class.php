@@ -6,14 +6,14 @@ use wcf\system\template\TemplateScriptingCompiler;
  * The 'staticlang' compiler function gets the source of a language variables.
  * 
  * Usage:
- * {staticlang}$blah{/staticlang}
- *
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ *	{staticlang}$blah{/staticlang}
+ * 
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class StaticlangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	/**

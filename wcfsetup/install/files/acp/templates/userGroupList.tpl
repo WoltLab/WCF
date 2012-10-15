@@ -63,14 +63,13 @@
 							<td class="columnID columnGroupID"><p>{@$group->groupID}</p></td>
 							<td class="columnTitle columnGroupName">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="{link controller='UserGroupEdit' id=$group->groupID}{/link}">{lang}{$group->groupName}{/lang}</a>{else}{lang}{$group->groupName}{/lang}</p>{/if}</td>
 							<td class="columnDigits columnMembers"><p><a title="{lang}wcf.acp.group.showMembers{/lang}" href="{link controller='UserSearch'}groupID={@$group->groupID}{/link}">{#$group->members}</p></a></td>
-						
+							
 							{event name='columns'}
 						</tr>
 					{/foreach}
 				{/content}
 			</tbody>
 		</table>
-		
 	</div>
 	
 	<div class="contentNavigation">

@@ -8,18 +8,18 @@ use wcf\system\WCF;
 
 /**
  * Contains file-related functions.
- *
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * 
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
- * @category 	Community Framework
+ * @category	Community Framework
  */
 final class FileUtil {
 	/**
 	 * finfo instance
-	 * @var \finfo
+	 * @var	\finfo
 	 */
 	protected static $finfo = null;
 	
@@ -77,11 +77,11 @@ final class FileUtil {
 	
 	/** 
 	 * Generates a new temporary filename in TMP_DIR.
-	 *
-	 * @param 	string 		$prefix
-	 * @param 	string 		$extension
-	 * @param 	string		$dir
-	 * @return 	string 				temporary filename
+	 * 
+	 * @param	string		$prefix
+	 * @param	string		$extension
+	 * @param	string		$dir
+	 * @return	string
 	 */
 	public static function getTemporaryFilename($prefix = 'tmpFile_', $extension = '', $dir = TMP_DIR) {
 		$dir = self::addTrailingSlash($dir);
@@ -94,51 +94,51 @@ final class FileUtil {
 	}
 	
 	/**
-	 * Removes a leading slash. 
+	 * Removes a leading slash from the given path.
 	 *
-	 * @param 	string 		$path
-	 * @return 	string 		$path
+	 * @param	string		$path
+	 * @return	string
 	 */
 	public static function removeLeadingSlash($path) {
 		return ltrim($path, '/');
 	}
-
+	
 	/**
-	 * Removes a trailing slash. 
-	 *
-	 * @param 	string 		$path
-	 * @return 	string 		$path
+	 * Removes a trailing slash from the given path.
+	 * 
+	 * @param	string		$path
+	 * @return	string
 	 */
 	public static function removeTrailingSlash($path) {
 		return rtrim($path, '/');
 	}
 	
 	/**
-	 * Adds a trailing slash. 
-	 *
-	 * @param 	string 		$path
-	 * @return 	string 		$path
+	 * Adds a trailing slash to the given path.
+	 * 
+	 * @param	string		$path
+	 * @return	string
 	 */
 	public static function addTrailingSlash($path) {
 		return rtrim($path, '/').'/';
 	}
 	
 	/**
-	 * Adds a leading slash.
+	 * Adds a leading slash to the given path.
 	 * 
 	 * @param	string		$path
-	 * @return	string		$path
+	 * @return	string
 	 */
 	public static function addLeadingSlash($path) {
 		return '/'.ltrim($path, '/');
 	}
-
+	
 	/**
-	 * Builds a relative path from two absolute paths.
-	 *
-	 * @param 	string 		$currentDir
-	 * @param 	string 		$targetDir
-	 * @return 	string 				relative Path
+	 * Returns the relative path from the given absolute paths.
+	 * 
+	 * @param	string		$currentDir
+	 * @param	string		$targetDir
+	 * @return	string
 	 */
 	public static function getRelativePath($currentDir, $targetDir) {
 		// remove trailing slashes
@@ -180,14 +180,13 @@ final class FileUtil {
 	}
 	
 	/**
-	 * Creates a path on the local filesystem. 
-	 * Parent directories do not need to exists as
-	 * they will be created if necessary.
-	 * Return true on success, otherwise false.
+	 * Creates a path on the local filesystem and returns true on success.
+	 * Parent directories do not need to exists as they will be created if
+	 * necessary.
 	 * 
-	 * @param 	string 		$path
-	 * @param 	integer 	$chmod
-	 * @return 	boolean 			success
+	 * @param	string		$path
+	 * @param	integer		$chmod
+	 * @return	boolean
 	 */
 	public static function makePath($path, $chmod = 0777) {
 		// directory already exists, abort
@@ -230,9 +229,9 @@ final class FileUtil {
 	
 	/**
 	 * Unifies windows and unix directory seperators.
-	 *
-	 * @param 	string 		$path
-	 * @return 	string 		$path
+	 * 
+	 * @param	string		$path
+	 * @return	string
 	 */
 	public static function unifyDirSeperator($path) {
 		$path = str_replace('\\\\', '/', $path);
@@ -243,11 +242,11 @@ final class FileUtil {
 	/**
 	 * Scans a folder (and subfolder) for a specific file.
 	 * Returns the filename if found, otherwise false.
-	 *
-	 * @param 	string 		$folder
-	 * @param 	string 		$searchfile
-	 * @param 	boolean 	$recursive
-	 * @return 	mixed 		$found
+	 * 
+	 * @param	string		$folder
+	 * @param	string		$searchfile
+	 * @param	boolean		$recursive
+	 * @return	mixed
 	 */
 	public static function scanFolder($folder, $searchfile, $recursive = true) {
 		if (!@is_dir($folder)) {
@@ -256,7 +255,7 @@ final class FileUtil {
 		if (!$searchfile) {
 			return false;
 		}
-
+		
 		$folder = self::addTrailingSlash($folder);
 		$dirh = @opendir($folder);
 		while ($filename = @readdir($dirh)) {
@@ -267,7 +266,7 @@ final class FileUtil {
 				@closedir($dirh);
 				return $folder.$filename;
 			}
-
+			
 			if ($recursive == true && @is_dir($folder.$filename)) {
 				if ($found = self::scanFolder($folder.$filename, $searchfile, $recursive)) {
 					@closedir($dirh);
@@ -281,7 +280,7 @@ final class FileUtil {
 	/**
 	 * Return true, if the given filename is an url (http or ftp).
 	 * 
-	 * @param 	string		$filename
+	 * @param	string		$filename
 	 * @return	boolean
 	 */
 	public static function isURL($filename) {
@@ -302,7 +301,7 @@ final class FileUtil {
 		if ($pathA[0] === '') {
 			$result[] = '';
 		}
-
+		
 		foreach ($pathA as $key => $dir) {
 			if ($dir == '..') {
 				if (end($result) == '..') {
@@ -329,11 +328,11 @@ final class FileUtil {
 	}
 	
 	/**
-	 * formats a filesize
-	 *
-	 * @param 	integer 	$byte
-	 * @param 	integer		$precision
-	 * @return 	string 		filesize
+	 * Formats the given filesize.
+	 * 
+	 * @param	integer		$byte
+	 * @param	integer		$precision
+	 * @return	string
 	 */
 	public static function formatFilesize($byte, $precision = 2) {
 		$symbol = 'Byte';
@@ -358,13 +357,13 @@ final class FileUtil {
 	}
 	
 	/**
-	 * formats a filesize (binary prefix)
+	 * Formats a filesize with binary prefix.
 	 * 
 	 * For more informations: <http://en.wikipedia.org/wiki/Binary_prefix>
-	 *
-	 * @param 	integer 	$byte
-	 * @param 	integer		$precision
-	 * @return 	string 		filesize
+	 * 
+	 * @param	integer		$byte
+	 * @param	integer		$precision
+	 * @return	string
 	 */
 	public static function formatFilesizeBinary($byte, $precision = 2) {
 		$symbol = 'Byte';
@@ -389,14 +388,15 @@ final class FileUtil {
 	}
 	
 	/**
-	 * Downloads a package archive from an http URL.
+	 * Downloads a package archive from an http URL and returns the path to
+	 * the downloaded file.
 	 * 
 	 * @param	string		$httpUrl
 	 * @param	string		$prefix
 	 * @param	array		$options
 	 * @param	array		$postParameters
-	 * @param	array		$headers		Should be either an empty array or a not initialized variable.
-	 * @return	string					path to the downloaded file
+	 * @param	array		$headers		empty array or a not initialized variable
+	 * @return	string
 	 */
 	public static function downloadFileFromHttp($httpUrl, $prefix = 'package', array $options = array(), array $postParameters = array(), &$headers = array()) {
 		$newFileName = self::getTemporaryFilename($prefix.'_');
@@ -525,9 +525,9 @@ final class FileUtil {
 	 *	fwrite($fileHandle, $byte);
 	 * }
 	 * 
-	 * @param 	string 		$sourceContent
-	 * @param 	string 		$characterEncoding
-	 * @return 	string 		destinationContent
+	 * @param	string		$sourceContent
+	 * @param	string		$characterEncoding
+	 * @return	string		destinationContent
 	 */
 	public static function stripBoms($sourceContent = '', $characterEncoding = 'UTF-8') {
 		try {
@@ -582,7 +582,7 @@ final class FileUtil {
 	 * otherwise it considers the file to be binary.
 	 * 
 	 * @param	string		$file
-	 * @return 	boolean
+	 * @return	boolean
 	 */
 	public static function isBinary($file) {
 		// open file
@@ -601,11 +601,11 @@ final class FileUtil {
 	}
 	
 	/**
-	 * Uncompresses a gzipped file
-	 *
-	 * @param 	string 		$gzipped
-	 * @param 	string 		$destination
-	 * @return 	boolean 	result
+	 * Uncompresses a gzipped file and returns true if successful.
+	 * 
+	 * @param	string		$gzipped
+	 * @param	string		$destination
+	 * @return	boolean	
 	 */
 	public static function uncompressFile($gzipped, $destination) {
 		if (!@is_file($gzipped)) {
@@ -633,7 +633,7 @@ final class FileUtil {
 	/**
 	 * Returns true, if php is running as apache module.
 	 * 
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public static function isApacheModule() {
 		return function_exists('apache_get_version');

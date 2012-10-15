@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
@@ -21,7 +21,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
-	 */	
+	 */
 	public $tagName = 'type';
 	
 	/**

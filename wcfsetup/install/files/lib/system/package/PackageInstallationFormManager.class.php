@@ -7,18 +7,18 @@ use wcf\util\StringUtil;
 
 /**
  * PackageInstallationFormManager handels form documents associated with a queue.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class PackageInstallationFormManager {
 	/**
 	 * Handles a POST or GET request.
-	 *
+	 * 
 	 * @param	PackageInstallationQueue	$queue
 	 */
 	public static function handleRequest(PackageInstallationQueue $queue) {
@@ -36,7 +36,7 @@ abstract class PackageInstallationFormManager {
 	
 	/**
 	 * Registers a form document.
-	 *
+	 * 
 	 * @param	PackageInstallationQueue	$queue
 	 * @param	FormDocument			$document
 	 */
@@ -51,7 +51,7 @@ abstract class PackageInstallationFormManager {
 	
 	/**
 	 * Searches for an existing form document associated with given queue.
-	 *
+	 * 
 	 * @param	PackageInstallationQueue	$queue
 	 * @param	string				$formName
 	 * @return	boolean
@@ -73,7 +73,7 @@ abstract class PackageInstallationFormManager {
 	
 	/**
 	 * Inserts a form document into database.
-	 *
+	 * 
 	 * @param	PackageInstallationQueue	$queue
 	 * @param	FormDocument			$document
 	 */
@@ -91,7 +91,7 @@ abstract class PackageInstallationFormManager {
 	
 	/**
 	 * Updates a form document database entry.
-	 *
+	 * 
 	 * @param	PackageInstallationQueue	$queue
 	 * @param	FormDocument			$document
 	 */
@@ -110,7 +110,7 @@ abstract class PackageInstallationFormManager {
 	
 	/**
 	 * Deletes form documents associated with given queue.
-	 *
+	 * 
 	 * @param	PackageInstallationQueue	$queue
 	 */
 	public static function deleteForms(PackageInstallationQueue $queue) {
@@ -122,7 +122,7 @@ abstract class PackageInstallationFormManager {
 	
 	/**
 	 * Returns a form document from database.
-	 *
+	 * 
 	 * @param	PackageInstallationQueue	$queue
 	 * @param	string				$formName
 	 * @return	FormDocument

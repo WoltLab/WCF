@@ -7,17 +7,17 @@ use wcf\system\menu\TreeMenu;
 
 /**
  * Builds the page menu.
- *
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.menu.page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PageMenu extends TreeMenu {
 	/**
-	 * @see wcf\system\SingletonFactory::init()
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get menu items from cache

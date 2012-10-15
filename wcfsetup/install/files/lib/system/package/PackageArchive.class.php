@@ -13,16 +13,16 @@ use wcf\util\XML;
  * This class holds all information of a package archive. 
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageArchive {
 	/**
-	 * path to archive
-	 * @var string
+	 * path to package archive
+	 * @var	string
 	 */
 	protected $archive = null;
 	
@@ -40,25 +40,25 @@ class PackageArchive {
 	
 	/**
 	 * general package information
-	 * @var array
+	 * @var	array
 	 */
 	protected $packageInfo = array();
 	
 	/**
 	 * author information
-	 * @var array
+	 * @var	array
 	 */
 	protected $authorInfo = array();
 	
 	/**
 	 * list of requirements
-	 * @var array
+	 * @var	array
 	 */
 	protected $requirements = array();
 	
 	/**
 	 * list of optional packages
-	 * @var array
+	 * @var	array
 	 */
 	protected $optionals = array();
 	
@@ -85,7 +85,7 @@ class PackageArchive {
 	
 	/**
 	 * default name of the package.xml file
-	 * @var string
+	 * @var	string
 	 */
 	const INFO_FILE = 'package.xml';
 	
@@ -96,7 +96,7 @@ class PackageArchive {
 	 * @param	Package		$package
 	 */
 	public function __construct($archive, Package $package = null) {
-		$this->archive = $archive; 	// be careful: this is a string within this class, 
+		$this->archive = $archive;	// be careful: this is a string within this class, 
 						// but an object in the packageStartInstallForm.class!
 		$this->package = $package;
 	}
@@ -113,7 +113,7 @@ class PackageArchive {
 	/**
 	 * Returns the object of the package archive.
 	 * 
-	 * @return	Tar
+	 * @return	wcf\system\io\Tar
 	 */
 	public function getTar() {
 		return $this->tar;
@@ -127,7 +127,7 @@ class PackageArchive {
 		if (!file_exists($this->archive)) {
 			throw new SystemException("unable to find package file '".$this->archive."'");
 		}
-
+		
 		// open archive and read package information
 		$this->tar = new Tar($this->archive);
 		$this->readPackageInfo();
@@ -246,8 +246,8 @@ class PackageArchive {
 					
 			$this->requirements[$element->nodeValue] = $data;
 		}
-                
-                // get optional packages
+		
+		// get optional packages
 		$elements = $xpath->query('child::ns:optionalpackages/ns:optionalpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
@@ -319,23 +319,23 @@ class PackageArchive {
 				switch ($element->tagName) {
 					case 'version':
 						$this->phpRequirements['version'] = $element->nodeValue;
-						break;
+					break;
 					
 					case 'setting':
 						$this->phpRequirements['settings'][$element->getAttribute('name')] = $element->nodeValue;
-						break;
+					break;
 					
 					case 'extension':
 						$this->phpRequirements['extensions'][] = $element->nodeValue;
-						break;
+					break;
 					
 					case 'function':
 						$this->phpRequirements['functions'][] = $element->nodeValue;
-						break;
+					break;
 					
 					case 'class':
 						$this->phpRequirements['classes'][] = $element->nodeValue;
-						break;
+					break;
 				}
 			}
 		}
@@ -412,7 +412,7 @@ class PackageArchive {
 	/**
 	 * Checks if the new package is compatible with
 	 * the package that is about to be updated.
-	 *
+	 * 
 	 * @return 	boolean 	isValidUpdate
 	 */
 	public function isValidUpdate() {
@@ -617,7 +617,7 @@ class PackageArchive {
 				$existingRequirements[$row['package']] = $row;
 			}
 		}
-
+		
 		// build sql
 		$packageNames = array();
 		$requirements = $this->getRequirements();
@@ -630,7 +630,7 @@ class PackageArchive {
 				$packageNames[] = $requirement['name'];
 			}
 		}
-	
+		
 		// check whether the required packages do already exist
 		if (!empty($packageNames)) {
 			$conditions = new PreparedStatementConditionBuilder();
@@ -670,7 +670,7 @@ class PackageArchive {
 		foreach ($this->requirements as $requirement) {
 			$packageNames[] = $requirement['name'];
 		}
-	
+		
 		// check whether the required packages do already exist
 		$existingPackages = array();
 		if (!empty($packageNames)) {

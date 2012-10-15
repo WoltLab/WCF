@@ -6,14 +6,15 @@ use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
 /**
- * TextI18nOptionType is an implementation of IOptionType for 'input type="text"' tags with i18n support.
+ * TextI18nOptionType is an implementation of IOptionType for 'input type="text"'
+ * tags with i18n support.
  *
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class TextI18nOptionType extends TextOptionType {
 	/**
@@ -22,7 +23,7 @@ class TextI18nOptionType extends TextOptionType {
 	protected $supportI18n = true;
 	
 	/**
-	 * @see wcf\system\option\IOptionType::getFormElement()
+	 * @see	wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		$useRequestData = (count($_POST)) ? true : false;
@@ -37,7 +38,7 @@ class TextI18nOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see wcf\system\option\IOptionType::validate()
+	 * @see	wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!I18nHandler::getInstance()->validateValue($option->optionName, $option->requireI18n, true)) {

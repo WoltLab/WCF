@@ -52,7 +52,7 @@
 			
 			<dl>
 				<dt><label for="userID">{lang}wcf.user.userID{/lang}</label></dt>
-				<dd>	
+				<dd>
 					<input type="text" id="userID" name="userID" value="{$userID}" class="short" />
 				</dd>
 			</dl>
@@ -118,13 +118,13 @@
 					{/foreach}
 				</div>
 			{/if}
-		
+			
 			{event name='tabMenuContent'}
-		
+			
 			<div id="resultOptions" class="container containerPadding tabMenuContent hidden">
 				<fieldset>
 					<legend>{lang}wcf.acp.user.search.display.general{/lang}</legend>
-				
+					
 					<dl>
 						<dt><label for="sortField">{lang}wcf.acp.user.search.display.sort{/lang}</label></dt>
 						<dd>
@@ -144,7 +144,7 @@
 							</select>
 						</dd>
 					</dl>
-				
+							
 					<dl>
 						<dt><label for="itemsPerPage">{lang}wcf.acp.user.search.display.itemsPerPage{/lang}</label></dt>
 						<dd>
@@ -152,7 +152,7 @@
 						</dd>
 					</dl>
 				</fieldset>
-			
+				
 				<fieldset>
 					<legend>{lang}wcf.acp.user.search.display.columns{/lang}</legend>
 					
@@ -169,7 +169,7 @@
 							</dd>
 						</dl>
 					{/if*}
-				
+					
 					<dl>
 						<dt><label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label></dt>
 						<dd>
@@ -177,9 +177,8 @@
 							<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.registrationDate{/lang}</label>
 						</dd>
 					</dl>
-				
+					
 				</fieldset>
-				
 			</div>
 		</div>
 	</div>

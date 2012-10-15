@@ -10,46 +10,46 @@ use wcf\util\ClassUtil;
  * Handles the page number parameter automatically.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class MultipleLinkPage extends AbstractPage {
 	/**
 	 * current page number
-	 * @var integer
+	 * @var	integer
 	 */
 	public $pageNo = 0;
 	
 	/**
 	 * number of all pages
-	 * @var integer
+	 * @var	integer
 	 */
 	public $pages = 0;
 	
 	/**
 	 * number of items shown per page
-	 * @var integer
+	 * @var	integer
 	 */
 	public $itemsPerPage = 20;
 	
 	/**
 	 * number of all items
-	 * @var integer
+	 * @var	integer
 	 */
 	public $items = 0;
 	
 	/**
 	 * indicates the range of the listed items
-	 * @var integer
+	 * @var	integer
 	 */
 	public $startIndex = 0;
 	
 	/**
 	 * indicates the range of the listed items.
-	 * @var integer
+	 * @var	integer
 	 */
 	public $endIndex = 0;
 	
@@ -67,13 +67,13 @@ abstract class MultipleLinkPage extends AbstractPage {
 	
 	/**
 	 * selected sort field
-	 * @var string
+	 * @var	string
 	 */
 	public $sortField = '';
 	
 	/**
 	 * selected sort order
-	 * @var string
+	 * @var	string
 	 */
 	public $sortOrder = '';
 	
@@ -93,7 +93,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	public $sqlOrderBy = '';
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -103,7 +103,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -125,7 +125,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	
 	/**
 	 * Initializes DatabaseObjectList instance.
-	 */	
+	 */
 	protected function initObjectList() {
 		if (empty($this->objectListClassName)) {
 			throw new SystemException('DatabaseObjectList class name not specified.');
@@ -140,7 +140,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	
 	/**
 	 * Reads object list.
-	 */	
+	 */
 	protected function readObjects() {
 		$this->objectList->sqlLimit = $this->sqlLimit;
 		$this->objectList->sqlOffset = $this->sqlOffset;

@@ -9,7 +9,7 @@ namespace wcf\system\exception;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.exception
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ValidateActionException extends \Exception {
 	/**

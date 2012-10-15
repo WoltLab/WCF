@@ -4,13 +4,13 @@ use wcf\system\form\FormDocument;
 
 /**
  * Represents step information within an installation node.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageInstallationStep {
 	/**
@@ -33,7 +33,7 @@ class PackageInstallationStep {
 	
 	/**
 	 * Sets next installation node.
-	 *
+	 * 
 	 * @param	string		$node
 	 */
 	public function setNode($node) {
@@ -42,7 +42,7 @@ class PackageInstallationStep {
 	
 	/**
 	 * Returns next installation node.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getNode() {
@@ -51,7 +51,7 @@ class PackageInstallationStep {
 	
 	/**
 	 * Sets form document object.
-	 *
+	 * 
 	 * @param	FormDocument	$document
 	 */
 	public function setDocument(FormDocument $document) {
@@ -60,7 +60,7 @@ class PackageInstallationStep {
 	
 	/**
 	 * Returns HTML-representation of form document object.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getTemplate() {
@@ -69,7 +69,7 @@ class PackageInstallationStep {
 	
 	/**
 	 * Returns true if current step holds a form document object.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function hasDocument() {
@@ -85,7 +85,7 @@ class PackageInstallationStep {
 	
 	/**
 	 * Returns true if node should be splitted.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function splitNode() {

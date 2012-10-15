@@ -9,19 +9,19 @@ use wcf\util\DateUtil;
  * Default date format contains year, month, day, hour and minute.
  * 
  * Usage:
- * {$timestamp|time}
- * {"132845333"|time}
- *
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ *	{$timestamp|time}
+ *	{"132845333"|time}
+ * 
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class TimeModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see wcf\system\template\IModifierTemplatePlugin::execute()
+	 * @see	wcf\system\template\IModifierTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		$timestamp = intval($tagArgs[0]);

@@ -19,15 +19,15 @@ use wcf\util\StringUtil;
  * Shows the package install and update form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageStartInstallForm extends ACPForm {
 	/**
-	 * @see wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.install';
 	
@@ -68,7 +68,7 @@ class PackageStartInstallForm extends ACPForm {
 	public $queue = null;
 	
 	/**
-	 * @see wcf\form\IForm::readParameters()
+	 * @see	wcf\form\IForm::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -87,7 +87,7 @@ class PackageStartInstallForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -97,7 +97,7 @@ class PackageStartInstallForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -200,7 +200,7 @@ class PackageStartInstallForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -233,7 +233,7 @@ class PackageStartInstallForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -245,7 +245,7 @@ class PackageStartInstallForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
 		if ($this->action == 'install') WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));

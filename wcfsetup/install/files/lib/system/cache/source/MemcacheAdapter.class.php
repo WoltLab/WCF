@@ -8,16 +8,15 @@ use wcf\util\StringUtil;
  * Provides a global adapter for accessing the memcache server.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.source
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class MemcacheAdapter extends SingletonFactory {
 	/**
 	 * memcache object
-	 *
 	 * @var Memcache
 	 */
 	private $memcache = null;
@@ -29,7 +28,7 @@ class MemcacheAdapter extends SingletonFactory {
 		if (!class_exists('Memcache')) {
 			throw new SystemException('memcache support is not enabled.');
 		}
-
+		
 		// init memcache
 		$this->memcache = new \Memcache();
 		
@@ -58,7 +57,7 @@ class MemcacheAdapter extends SingletonFactory {
 	/**
 	 * Returns the memcache object.
 	 *
-	 * @return Memcache
+	 * @return	Memcache
 	 */
 	public function getMemcache() {
 		return $this->memcache;

@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.category
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
@@ -23,7 +23,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	protected static $baseClass = 'wcf\data\category\Category';
 	
 	/**
-	 * @see wcf\data\IEditableObject::update()
+	 * @see	wcf\data\IEditableObject::update()
 	 */
 	public function update(array $parameters = array()) {
 		// update show order
@@ -104,7 +104,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				if ($showOrder > $maxShowOrder) {
 					$showOrder = $maxShowOrder;
 				}
-		
+				
 				$sql = "UPDATE	".static::getDatabaseTableName()."
 					SET	showOrder = showOrder - 1
 					WHERE	showOrder <= ?
@@ -123,7 +123,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	}
 	
 	/**
-	 * @see wcf\data\IEditableObject::create()
+	 * @see	wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		// handle time
@@ -143,7 +143,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	}
 	
 	/**
-	 * @see wcf\data\IEditableObject::deleteAll()
+	 * @see	wcf\data\IEditableObject::deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
 		// update positions

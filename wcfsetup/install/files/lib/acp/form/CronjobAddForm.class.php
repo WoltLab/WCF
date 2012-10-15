@@ -9,75 +9,75 @@ use wcf\util\StringUtil;
 
 /**
  * Shows the cronjob add form.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class CronjobAddForm extends ACPForm {
 	/**
-	 * @see wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.cronjob.add';
 	
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.cronjob.canAddCronjob');
 	
 	/**
 	 * cronjob class name
-	 * @var string
+	 * @var	string
 	 */
 	public $className = '';
 	
 	/**
 	 * cronjob package id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $packageID = PACKAGE_ID;
 	
 	/**
 	 * cronjob description
-	 * @var string
+	 * @var	string
 	 */
 	public $description = '';
 	
 	/**
 	 * execution time (min)
-	 * @var string
+	 * @var	string
 	 */
 	public $startMinute = '*';
 	
 	/**
 	 * execution time (hour)
-	 * @var string
+	 * @var	string
 	 */
 	public $startHour = '*';
 	
 	/**
 	 * execution time (day of month)
-	 * @var string
+	 * @var	string
 	 */
 	public $startDom = '*';
 	
 	/**
 	 * execution time (month)
-	 * @var string
+	 * @var	string
 	 */
 	public $startMonth = '*';
 	
 	/**
 	 * execution time (day of week)
-	 * @var string
+	 * @var	string
 	 */
 	public $startDow = '*';
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -92,7 +92,7 @@ class CronjobAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -121,7 +121,7 @@ class CronjobAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -153,7 +153,7 @@ class CronjobAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

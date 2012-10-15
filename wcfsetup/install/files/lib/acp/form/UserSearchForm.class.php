@@ -15,107 +15,107 @@ use wcf\util\StringUtil;
 
 /**
  * Shows the user search form.
- *
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserSearchForm extends UserOptionListForm {
 	/**
 	 * active menu item name
-	 * @var string
+	 * @var	string
 	 */
 	public $menuItemName = 'wcf.acp.menu.link.user.search';
 	
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canSearchUser');
 	
 	/**
 	 * username 
-	 * @var string
+	 * @var	string
 	 */
 	public $username = '';
 	
 	/**
 	 * email address
-	 * @var string
+	 * @var	string
 	 */
 	public $email = '';
 	
 	/**
 	 * user id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $userID = 0;
-
+	
 	/**
 	 * group ids
-	 * @var array<integer>
+	 * @var	array<integer>
 	 */
 	public $groupIDs = array();
 	
 	/**
 	 * true to invert the given group ids
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $invertGroupIDs = 0;
 	
 	/**
 	 * language ids
-	 * @var array<integer>
+	 * @var	array<integer>
 	 */
 	public $languageIDs = array();
 	
 	/**
 	 * matches
-	 * @var array<integer>
+	 * @var	array<integer>
 	 */
 	public $matches = array();
 	
 	/**
 	 * condtion builder object
-	 * @var wcf\system\database\condition\PreparedStatementConditionBuilder
+	 * @var	wcf\system\database\condition\PreparedStatementConditionBuilder
 	 */
 	public $conditions = null;
 	
 	/**
 	 * search id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $searchID = 0;
 	
 	/**
 	 * sort field
-	 * @var string
+	 * @var	string
 	 */
 	public $sortField = 'username';
 	
 	/**
 	 * sort order
-	 * @var string
+	 * @var	string
 	 */
 	public $sortOrder = 'ASC';
 	
 	/**
 	 * results per page
-	 * @var integer
+	 * @var	integer
 	 */
 	public $itemsPerPage = 50;
 	
 	/**
 	 * shown columns
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	public $columns = array('email', 'registrationDate');
 	
 	/**
 	 * number of results
-	 * @var integer
+	 * @var	integer
 	 */
 	public $maxResults = 0;
 	
@@ -126,7 +126,7 @@ class UserSearchForm extends UserOptionListForm {
 	public $values = array();
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -147,11 +147,11 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		$this->readOptionTree();
-	
+		
 		parent::readData();
 	}
 	
@@ -163,7 +163,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -186,7 +186,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::show()
+	 * @see	wcf\form\IForm::show()
 	 */
 	public function show() {
 		// set active menu item
@@ -197,8 +197,8 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
-	 */	
+	 * @see	wcf\form\IForm::save()
+	 */
 	public function save() {
 		parent::save();
 		
@@ -261,7 +261,7 @@ class UserSearchForm extends UserOptionListForm {
 		
 		// call buildConditions event
 		EventHandler::getInstance()->fireAction($this, 'buildConditions');
-
+		
 		// do search
 		$statement = WCF::getDB()->prepareStatement($sql.$this->conditions, $this->maxResults);
 		$statement->execute($this->conditions->getParameters());

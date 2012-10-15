@@ -10,17 +10,16 @@ use wcf\util\StringUtil;
  * Given queries will be parsed, converted and executed in the active database.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.database.util
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SQLParser {
 	/**
 	 * list of sql queries
-	 * 
-	 * @var	array
+	 * @var	array<string>
 	 */
 	protected $queryArray = array();
 	
@@ -100,7 +99,7 @@ class SQLParser {
 					else {
 						throw new SystemException("Unsupported SQL statement '".$query."'");
 					}
-
+					
 					// find indices
 					if (preg_match_all('~(?:\(|,)\s*(?:(?:(?:(UNIQUE|FULLTEXT)(?:\s+(?:INDEX|KEY))?|(?:INDEX|KEY))(?:\s+(\w+))?)|(PRIMARY) KEY)\s+\((\s*\w+\s*(?:,\s*\w+\s*)*)\)~is', $query, $matches)) {
 						for ($i = 0, $j = count($matches[0]); $i < $j; $i++) {
@@ -113,8 +112,7 @@ class SQLParser {
 					
 					$this->executeCreateTableStatement($tableName, $columns, $indices);
 				}
-				
-				break;
+			break;
 			
 			case 'ALTER TABLE':
 				// add index
@@ -166,7 +164,7 @@ class SQLParser {
 				else {
 					throw new SystemException("Unsupported SQL statement '".$query."'");
 				}
-				break;
+			break;
 			
 			case 'CREATE INDEX': 
 				if (preg_match('~^CREATE\s+(?:(UNIQUE|FULLTEXT)\s+)?INDEX\s+(\w+)\s+ON\s+(\w+)\s+\((\s*\w+\s*(?:,\s*\w+\s*)*)\)~is', $query, $match)) {
@@ -175,8 +173,8 @@ class SQLParser {
 				else {
 					throw new SystemException("Unsupported SQL statement '".$query."'");
 				}
-				break;
-				
+			break;
+			
 			case 'DROP INDEX':
 				if (preg_match('~^DROP\s+INDEX\s+(\w+)\s+ON\s+(\w+)~i', $query, $match)) {
 					$this->executeDropIndexStatement($match[2], $match[1]);
@@ -184,7 +182,7 @@ class SQLParser {
 				else {
 					throw new SystemException("Unsupported SQL statement '".$query."'");
 				}
-				break;
+			break;
 			
 			case 'DROP TABLE': 
 				if (preg_match('~^DROP\s+TABLE\s+(?:IF\s+EXISTS\s+)?(\w+)~i', $query, $match)) {
@@ -193,14 +191,14 @@ class SQLParser {
 				else {
 					throw new SystemException("Unsupported SQL statement '".$query."'");
 				}
-				break;
+			break;
 			
 			// standard sql; execute directly
 			case 'INSERT': 
 			case 'UPDATE': 
 			case 'DELETE': 
 				$this->executeStandardStatement($query);
-				break;
+			break;
 		}
 	}
 	

@@ -9,11 +9,11 @@ use wcf\util\StringUtil;
  * Represents an option.
  *
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.option
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class Option extends DatabaseObject {
 	/**
@@ -38,7 +38,7 @@ class Option extends DatabaseObject {
 	const VISIBILITY_ALL = 15;
 	
 	/**
-	 * @see wcf\data\DatabaseObject::handleData()
+	 * @see	wcf\data\DatabaseObject::handleData()
 	 */
 	protected function handleData($data) {
 		parent::handleData($data);
@@ -49,7 +49,7 @@ class Option extends DatabaseObject {
 	
 	/**
 	 * Returns a list of options.
-	 *
+	 * 
 	 * @param	integer		$packageID
 	 * @return	array<wcf\data\option\Option>
 	 */
@@ -90,7 +90,7 @@ class Option extends DatabaseObject {
 	
 	/**
 	 * Parses enableOptions.
-	 *
+	 * 
 	 * @param	string		$optionData
 	 * @return	array
 	 */
@@ -120,7 +120,7 @@ class Option extends DatabaseObject {
 	
 	/**
 	 * Returns a list of the available options.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function parseSelectOptions() {
@@ -142,7 +142,7 @@ class Option extends DatabaseObject {
 	
 	/**
 	 * Returns a list of the enable options.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function parseMultipleEnableOptions() {

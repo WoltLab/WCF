@@ -6,11 +6,11 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes user group-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2010 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserGroupAction extends AbstractDatabaseObjectAction {
 	/**
@@ -34,9 +34,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 	protected $permissionsUpdate = array('admin.user.canEditGroup');
 	
 	/**
-	 * Creates a new group.
-	 * 
-	 * @return	UserGroup
+	 * @see	wcf\data\AbstractDatabaseObjectAction::create()
 	 */
 	public function create() {
 		$group = parent::create();
@@ -48,7 +46,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Updates groups.
+	 * @see	wcf\data\AbstractDatabaseObjectAction::update()
 	 */
 	public function update() {
 		if (!count($this->objects)) {

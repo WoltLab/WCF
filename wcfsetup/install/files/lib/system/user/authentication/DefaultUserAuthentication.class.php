@@ -9,22 +9,22 @@ use wcf\util\StringUtil;
  * Default implementation of the user authentication.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.authentication
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class DefaultUserAuthentication extends AbstractUserAuthentication {
 	/**
-	 * @see wcf\system\user\authentication\IUserAuthentication::supportsPersistentLogins()
+	 * @see	wcf\system\user\authentication\IUserAuthentication::supportsPersistentLogins()
 	 */
 	public function supportsPersistentLogins() {
 		return true;
 	}
 	
 	/**
-	 * @see wcf\system\user\authentication\IUserAuthentication::storeAccessData()
+	 * @see	wcf\system\user\authentication\IUserAuthentication::storeAccessData()
 	 */
 	public function storeAccessData(User $user, $username, $password) {
 		HeaderUtil::setCookie('userID', $user->userID, TIME_NOW + 365 * 24 * 3600);
@@ -32,7 +32,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	}
 	
 	/**
-	 * @see wcf\system\user\authentication\IUserAuthentication::loginManually()
+	 * @see	wcf\system\user\authentication\IUserAuthentication::loginManually()
 	 */
 	public function loginManually($username, $password, $userClassname = 'wcf\data\user\User') {
 		$user = $this->getUserByLogin($username);
@@ -41,7 +41,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 		if ($userSession->userID == 0) {
 			throw new UserInputException('username', 'notFound');
 		}
-	
+		
 		// check password
 		if (!$userSession->checkPassword($password)) {
 			throw new UserInputException('password', 'false');
@@ -51,7 +51,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	}
 	
 	/**
-	 * @see wcf\system\user\authentication\IUserAuthentication::loginAutomatically()
+	 * @see	wcf\system\user\authentication\IUserAuthentication::loginAutomatically()
 	 */
 	public function loginAutomatically($persistent = false, $userClassname = 'wcf\data\user\User') {
 		if (!$persistent) return null;
@@ -73,7 +73,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	 * Returns a user object by given login name.
 	 * 
 	 * @param	string			$login
-	 * @return	wcf\data\user\User	
+	 * @return	wcf\data\user\User
 	 */
 	protected function getUserByLogin($login) {
 		return User::getUserByUsername($login);
@@ -85,7 +85,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	 * @param	integer		$userID
 	 * @param	string		$password
 	 * @param	string		$userClassname
-	 * @return	wcf\data\user\User	
+	 * @return	wcf\data\user\User
 	 */
 	protected function getUserAutomatically($userID, $password, $userClassname = 'wcf\data\user\User') {
 		$user = new $userClassname($userID);

@@ -16,55 +16,48 @@ use wcf\system\Regex;
  */
 final class DirectoryUtil {
 	/**
-	 * @var \DirectoryIterator
+	 * @var	\DirectoryIterator
 	 */
 	protected $obj = null;
 	
 	/**
 	 * all files with full path
-	 * 
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	protected $files = array();
 	
 	/**
 	 * all files with filename as key and DirectoryIterator object as value
-	 * 
-	 * @var array<\DirectoryIterator>
+	 * @var	array<\DirectoryIterator>
 	 */
 	protected $fileObjects = array();
 	
 	/**
 	 * directory size in bytes
-	 * 
 	 * @var	integer
 	 */
 	protected $size = 0;
 	
 	/**
 	 * directory path
-	 * 
 	 * @var	string
 	 */
 	protected $directory = '';
 	
 	/**
 	 * determines whether scan should be recursive
-	 * 
 	 * @var	boolean
 	 */
 	protected $recursive = true;
 	
 	/**
 	 * indicates that files won't be sorted
-	 * 
 	 * @var	integer
 	 */
 	const SORT_NONE = -1;
 	
 	/**
 	 * all recursive and non-recursive instances of DirectoryUtil
-	 * 
 	 * @var	array<array>
 	 */
 	protected static $instances = array(

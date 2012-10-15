@@ -7,30 +7,30 @@ use wcf\system\WCF;
 
 /**
  * Contains date-related functions.
- *
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * 
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
- * @category 	Community Framework
+ * @category	Community Framework
  */
 final class DateUtil {
 	/**
 	 * name of the default date format language variable
-	 * @var string
+	 * @var	string
 	 */
 	const DATE_FORMAT = 'wcf.date.dateFormat';
 	
 	/**
 	 * name of the default time format language variable
-	 * @var string
+	 * @var	string
 	 */
 	const TIME_FORMAT = 'wcf.date.timeFormat';
 	
 	/**
 	 * list of available time zones
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	protected static $availableTimezones = array(
 		'Pacific/Kwajalein', // (GMT-12:00) International Date Line West
@@ -228,7 +228,8 @@ final class DateUtil {
 	 * 
 	 * @param	string				$date
 	 * @param	string				$format
-	 * @param 	wcf\data\language\Language	$language
+	 * @param	wcf\data\language\Language	$language
+	 * @return	string
 	 */
 	public static function localizeDate($date, $format, Language $language) {
 		if ($language->languageCode != 'en') {

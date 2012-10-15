@@ -13,12 +13,12 @@ use wcf\util;
 /**
  * Extends WCF class with functions for the admin control panel.
  * 
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class WCFACP extends WCF {
 	/**
@@ -105,7 +105,7 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * @see wcf\system\WCF::assignDefaultTemplateVariables()
+	 * @see	wcf\system\WCF::assignDefaultTemplateVariables()
 	 */
 	protected function assignDefaultTemplateVariables() {
 		parent::assignDefaultTemplateVariables();
@@ -117,12 +117,12 @@ class WCFACP extends WCF {
 		self::getTPL()->assign(array(
 			'baseHref' => $host . $path,
 			'quickAccessPackages' => $this->getQuickAccessPackages(),
-			//'timezone' => util\DateUtil::getTimezone()
+			// todo: 'timezone' => util\DateUtil::getTimezone()
 		));
 	}
 	
 	/**
-	 * @see WCF::loadDefaultCacheResources()
+	 * @see	WCF::loadDefaultCacheResources()
 	 */
 	protected function loadDefaultCacheResources() {
 		parent::loadDefaultCacheResources();
@@ -144,7 +144,7 @@ class WCFACP extends WCF {
 			define('PACKAGE_ID', $packageID);
 		}
 		
-		/*
+		/* todo
 		$packageID = 0;
 		$packages = CacheHandler::getInstance()->get('packages');
 		if (isset($_REQUEST['packageID'])) $packageID = intval($_REQUEST['packageID']);

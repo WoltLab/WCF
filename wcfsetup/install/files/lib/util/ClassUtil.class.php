@@ -4,19 +4,19 @@ use wcf\system\exception\SystemException;
 
 /**
  * Provides methods for class interactions.
- *
- * @author 	Tim Düsterhus, Alexander Ebert
+ * 
+ * @author	Tim Düsterhus, Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
- * @category 	Community Framework
+ * @category	Community Framework
  */
 final class ClassUtil {
 	/**
 	 * Checks whether the given objects are equal.
 	 * Objects are considered equal, when they are instances of the same class and all attributes are equal.
-	 *
+	 * 
 	 * @param	object		$a
 	 * @param	object		$b
 	 * @return	boolean
@@ -30,7 +30,7 @@ final class ClassUtil {
 	/**
 	 * Checks wether given class extends or implements the target class or interface.
 	 * You SHOULD NOT call this method if 'instanceof' satisfies your request!
-	 *
+	 * 
 	 * @param	string		$className
 	 * @param	string		$targetClass
 	 * @return	boolean

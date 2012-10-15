@@ -4,48 +4,48 @@ use wcf\util\StringUtil;
 
 /**
  * Represents a file upload.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.upload
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UploadFile {
 	/**
 	 * original file name
-	 * @var string
+	 * @var	string
 	 */
 	protected $filename = '';
 	
 	/**
 	 * location of the uploaded file
-	 * @var string
+	 * @var	string
 	 */
 	protected $location = '';
 	
 	/**
 	 * file size
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $filesize = 0;
 	
 	/**
 	 * file upload error code
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $errorCode = 0;
 	
 	/**
 	 * MIME type
-	 * @var string
+	 * @var	string
 	 */
 	protected $mimeType = '';
 	
 	/**
 	 * validation error type
-	 * @var string
+	 * @var	string
 	 */
 	protected $validationErrorType = '';
 	
@@ -54,7 +54,7 @@ class UploadFile {
 	 * 
 	 * @param	string		$filename
 	 * @param	string		$location
-	 * @param 	integer		$filesize
+	 * @param	integer		$filesize
 	 * @param	integer		$errorCode
 	 * @param	string		$mimeType
 	 */
@@ -69,7 +69,7 @@ class UploadFile {
 	/**
 	 * Returns the original file name.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getFilename() {
 		return $this->filename;
@@ -78,7 +78,7 @@ class UploadFile {
 	/**
 	 * Returns the extension of the original file name.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getFileExtension() {
 		if (($position = StringUtil::lastIndexOf($this->getFilename(), '.')) !== false) {
@@ -91,7 +91,7 @@ class UploadFile {
 	/**
 	 * Returns the file location.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getLocation() {
 		return $this->location;
@@ -100,7 +100,7 @@ class UploadFile {
 	/**
 	 * Returns the file size.
 	 * 
-	 * @return integer
+	 * @return	integer
 	 */
 	public function getFilesize() {
 		return $this->filesize;
@@ -109,7 +109,7 @@ class UploadFile {
 	/**
 	 * Returns the MIME type.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getMimeType() {
 		return $this->mimeType;
@@ -118,7 +118,7 @@ class UploadFile {
 	/**
 	 * Returns the error code.
 	 * 
-	 * @return integer
+	 * @return	integer
 	 */
 	public function getErrorCode() {
 		return $this->errorCode;

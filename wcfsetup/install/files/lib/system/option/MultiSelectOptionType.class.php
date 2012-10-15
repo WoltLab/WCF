@@ -7,18 +7,19 @@ use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 
 /**
- * MultiSelectOptionType is an implementation of IOptionType for multiple 'select' tags.
+ * MultiSelectOptionType is an implementation of IOptionType for multiple 'select'
+ * tags.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class MultiSelectOptionType extends SelectOptionType {
 	/**
-	 * @see wcf\system\option\IOptionType::getFormElement()
+	 * @see	wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		WCF::getTPL()->assign(array(
@@ -30,7 +31,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	}
 	
 	/**
-	 * @see wcf\system\option\IOptionType::validate()
+	 * @see	wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!is_array($newValue)) $newValue = array();
@@ -43,7 +44,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	}
 	
 	/**
-	 * @see wcf\system\option\IOptionType::getData()
+	 * @see	wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		if (!is_array($newValue)) $newValue = array();
@@ -51,7 +52,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	}
 	
 	/**
-	 * @see wcf\system\option\ISearchableUserOption::getCondition()
+	 * @see	wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		if (!is_array($value) || !count($value)) return false;

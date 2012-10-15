@@ -11,13 +11,13 @@ use wcf\util\StringUtil;
 
 /**
  * Default implementation for DatabaseObject-related actions.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, IDeleteAction {
 	/**
@@ -75,8 +75,8 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	protected $returnValues = null;
 	
 	/**
-	 * allows guest access for all specified methods, by default
-	 * guest access is completely disabled
+	 * allows guest access for all specified methods, by default guest access
+	 * is completely disabled
 	 * @var	array<string>
 	 */
 	protected $allowGuestAccess = array();
@@ -86,7 +86,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	
 	/**
 	 * Initialize a new DatabaseObject-related action.
-	 *
+	 * 
 	 * @param	array<mixed>	$objects
 	 * @param	string		$action
 	 * @param	array		$parameters

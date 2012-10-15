@@ -10,13 +10,13 @@ use wcf\system\WCF;
 
 /**
  * Handles language related functions.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.language
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class LanguageFactory extends SingletonFactory {
 	/**
@@ -46,7 +46,7 @@ class LanguageFactory extends SingletonFactory {
 	
 	/**
 	 * Returns a Language object for the language with the given id.
-	 *
+	 * 
 	 * @param	integer		$languageID
 	 * @return	wcf\data\language\Language
 	 */
@@ -64,7 +64,7 @@ class LanguageFactory extends SingletonFactory {
 	
 	/**
 	 * Gets the preferred language of the current user.
-	 *
+	 * 
 	 * @param	integer		$languageID
 	 * @return	wcf\data\language\Language
 	 */
@@ -79,8 +79,9 @@ class LanguageFactory extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns an instance of Language or NULL for a given language code.
-	 *
+	 * Returns the language with the given language code or null if no such
+	 * language exists.
+	 * 
 	 * @param	string		$languageCode
 	 * @return	wcf\data\language\Language
 	 */
@@ -104,7 +105,7 @@ class LanguageFactory extends SingletonFactory {
 	
 	/**
 	 * Returns true if the language category with the given name exists.
-	 *
+	 * 
 	 * @param	string		$categoryName
 	 * @return	boolean
 	 */
@@ -114,7 +115,7 @@ class LanguageFactory extends SingletonFactory {
 	
 	/**
 	 * Returns the language category with the given name.
-	 *
+	 * 
 	 * @param	string		$categoryName
 	 * @return	wcf\data\language\category\LanguageCategory
 	 */
@@ -161,7 +162,7 @@ class LanguageFactory extends SingletonFactory {
 	
 	/**
 	 * Determines the preferred language of the current user.
-	 *
+	 * 
 	 * @param	array		$availableLanguageCodes
 	 * @param	string		$defaultLanguageCode
 	 * @return	string
@@ -185,7 +186,7 @@ class LanguageFactory extends SingletonFactory {
 	
 	/**
 	 * Returns the active scripting compiler object.
-	 *
+	 * 
 	 * @return	wcf\system\template\TemplateScriptingCompiler
 	 */
 	public function getScriptingCompiler() {
@@ -221,7 +222,7 @@ class LanguageFactory extends SingletonFactory {
 	/**
 	 * Removes additional language identifier from given language code.
 	 * Converts e.g. 'de-informal' to 'de'.
-	 *
+	 * 
 	 * @param	string		$languageCode
 	 * @return	string		$languageCode
 	 */
@@ -231,7 +232,7 @@ class LanguageFactory extends SingletonFactory {
 	
 	/**
 	 * Returns the default language id
-	 *
+	 * 
 	 * @return	integer
 	 */
 	public function getDefaultLanguageID() {
@@ -240,7 +241,7 @@ class LanguageFactory extends SingletonFactory {
 	
 	/**
 	 * Returns all available languages for package with the given id.
-	 *
+	 * 
 	 * @param 	integer		$packageID
 	 * @return	array<wcf\data\language\Language>
 	 */
@@ -259,7 +260,7 @@ class LanguageFactory extends SingletonFactory {
 	
 	/**
 	 * Returns all available content languages for given package.
-	 *
+	 * 
 	 * @param 	integer		$packageID
 	 * @return	array<wcf\data\language\Language>
 	 */
@@ -279,7 +280,7 @@ class LanguageFactory extends SingletonFactory {
 	
 	/**
 	 * Makes given language the default language.
-	 *
+	 * 
 	 * @param	integer		$languageID
 	 */
 	public function makeDefault($languageID) {

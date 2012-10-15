@@ -9,12 +9,14 @@ use wcf\util\StringUtil;
  * Abstract implementation of an action that displays a dialog and that is executed
  * in multiple steps.
  * 
+ * @todo	add class author
+ * 
  * @author	
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class AbstractDialogAction extends AbstractSecureAction {
 	/**
@@ -80,5 +82,5 @@ abstract class AbstractDialogAction extends AbstractSecureAction {
 	/**
 	 * Validates current dialog step.
 	 */
-	protected abstract function validateStep();
+	abstract protected function validateStep();
 }

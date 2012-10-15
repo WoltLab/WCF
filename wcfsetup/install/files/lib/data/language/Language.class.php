@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.language
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class Language extends DatabaseObject {
 	/**
@@ -111,10 +111,10 @@ class Language extends DatabaseObject {
 	/**
 	 * Executes template scripting in a language variable.
 	 *
-	 * @param 	string 		$item
-	 * @param 	array 		$variables
+	 * @param	string 		$item
+	 * @param	array 		$variables
 	 * @param	boolean		$optional
-	 * @return 	string 		result
+	 * @return	string 		result
 	 */
 	public function getDynamicVariable($item, array $variables = array(), $optional = false) {
 		$staticItem = $this->get($item, $optional);
@@ -129,7 +129,7 @@ class Language extends DatabaseObject {
 	
 	/**
 	 * Loads category files.
-	 *
+	 * 
 	 * @param	string		$category
 	 * @return	boolean
 	 */
@@ -172,7 +172,7 @@ class Language extends DatabaseObject {
 	/**
 	 * Sets the local language.
 	 * Recall this function after language changed.
-	 *
+	 * 
 	 * @param	integer		$languageID
 	 */
 	public function setLocale() {
@@ -199,6 +199,9 @@ class Language extends DatabaseObject {
 		return LanguageFactory::getInstance()->getLanguages();
 	}
 	
+	/**
+	 * Sets the package id when a language object is unserialized.
+	 */
 	public function __wakeup() {
 		$this->packageID = PACKAGE_ID;
 	}

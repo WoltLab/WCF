@@ -8,20 +8,24 @@ use wcf\util\StringUtil;
  * The 'implode' compiler function joins array elements with a string.
  * 
  * Usage:
- * {implode from=$array key=bar item=foo glue=";"}{$foo}{/implode}
- *
- * @author 	Marcel Werk
+ *	{implode from=$array key=bar item=foo glue=";"}{$foo}{/implode}
+ * 
+ * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin {
+	/**
+	 * local tag stack
+	 * @var	array<string>
+	 */
 	protected $tagStack = array();
 	
 	/**
-	 * @see wcf\system\template\ICompilerTemplatePlugin::executeStart()
+	 * @see	wcf\system\template\ICompilerTemplatePlugin::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		$compiler->pushTag('implode');
@@ -45,7 +49,7 @@ class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	}
 	
 	/**
-	 * @see wcf\system\template\ICompilerTemplatePlugin::executeEnd()
+	 * @see	wcf\system\template\ICompilerTemplatePlugin::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		$compiler->popTag('implode');

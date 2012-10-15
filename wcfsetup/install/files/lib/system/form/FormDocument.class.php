@@ -4,13 +4,13 @@ use wcf\util\StringUtil;
 
 /**
  * FormDocument holds the page structure based upon form element containers.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class FormDocument {
 	/**
@@ -27,7 +27,7 @@ class FormDocument {
 	
 	/**
 	 * Creates a new instance of FormDocument.
-	 *
+	 * 
 	 * @param	string		$name
 	 */
 	public function __construct($name) {
@@ -36,7 +36,7 @@ class FormDocument {
 	
 	/**
 	 * Returns form document name.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getName() {
@@ -45,7 +45,7 @@ class FormDocument {
 	
 	/**
 	 * Appends a FormElementContainer object.
-	 *
+	 * 
 	 * @param	wcf\system\form\IFormElementContainer		$container
 	 */
 	public function appendContainer(IFormElementContainer $container) {
@@ -54,7 +54,7 @@ class FormDocument {
 	
 	/**
 	 * Prepends a FormElementContainer object.
-	 *
+	 * 
 	 * @param	wcf\system\form\IFormElementContainer		$container
 	 */
 	public function prependContainer(IFormElementContainer $container) {
@@ -63,7 +63,7 @@ class FormDocument {
 	
 	/**
 	 * Returns assigned FormElementContainer objects.
-	 *
+	 * 
 	 * @return	array<wcf\system\form\IFormElementContainer>
 	 */
 	public function getContainers() {
@@ -72,7 +72,7 @@ class FormDocument {
 	
 	/**
 	 * Returns the value of container's child element with given name.
-	 *
+	 * 
 	 * @param	string		$key
 	 * @return	mixed
 	 */
@@ -89,7 +89,7 @@ class FormDocument {
 	
 	/**
 	 * Returns HTML-representation of current document.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getHTML() {

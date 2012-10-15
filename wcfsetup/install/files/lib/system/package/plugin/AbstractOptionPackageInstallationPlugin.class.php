@@ -4,14 +4,15 @@ use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
- * Default implementation of some functions for PackageInstallationPlugin using options.
+ * Default implementation of some functions for package installation plugin for
+ * options.
  * 
  * @author	Benjamin Kunz
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
@@ -38,7 +39,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::deleteItems()
-	 */	
+	 */
 	protected function deleteItems(\DOMXPath $xpath) {
 		// delete options
 		$elements = $xpath->query('/ns:data/ns:delete/ns:option');

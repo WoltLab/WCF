@@ -6,15 +6,15 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * This is the database editor implementation for MySQL4.1 or higher.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.database.editor
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class MySQLDatabaseEditor extends DatabaseEditor {
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::getTableNames()
+	 * @see	wcf\system\database\editor\DatabaseEditor::getTableNames()
 	 */
 	public function getTableNames() {
 		$existingTables = array();
@@ -28,7 +28,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::getColumns()
+	 * @see	wcf\system\database\editor\DatabaseEditor::getColumns()
 	 */
 	public function getColumns($tableName) {
 		$columns = array();
@@ -36,13 +36,13 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
-      	 		$columns[] = $row['Field'];
-   		}
-   		return $columns;
+			$columns[] = $row['Field'];
+		}
+		return $columns;
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::getIndices()
+	 * @see	wcf\system\database\editor\DatabaseEditor::getIndices()
 	 */
 	public function getIndices($tableName) {
 		$indices = array();
@@ -50,14 +50,14 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
-      	 		$indices[] = $row['Key_name'];
-   		}
-   		
-   		return $indices;
+			$indices[] = $row['Key_name'];
+		}
+		
+		return $indices;
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::createTable()
+	 * @see	wcf\system\database\editor\DatabaseEditor::createTable()
 	 */
 	public function createTable($tableName, $columns, $indices = array()) {
 		$columnDefinition = $indexDefinition = '';
@@ -87,7 +87,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::dropTable()
+	 * @see	wcf\system\database\editor\DatabaseEditor::dropTable()
 	 */
 	public function dropTable($tableName) {
 		$sql = "DROP TABLE IF EXISTS ".$tableName;
@@ -96,7 +96,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::addColumn()
+	 * @see	wcf\system\database\editor\DatabaseEditor::addColumn()
 	 */
 	public function addColumn($tableName, $columnName, $columnData) {
 		$sql = "ALTER TABLE ".$tableName." ADD COLUMN ".$this->buildColumnDefinition($columnName, $columnData);
@@ -105,7 +105,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::alterColumn()
+	 * @see	wcf\system\database\editor\DatabaseEditor::alterColumn()
 	 */
 	public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData) {
 		$sql = "ALTER TABLE ".$tableName." CHANGE COLUMN ".$oldColumnName." ".$this->buildColumnDefinition($newColumnName, $newColumnData);
@@ -114,7 +114,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::dropColumn()
+	 * @see	wcf\system\database\editor\DatabaseEditor::dropColumn()
 	 */
 	public function dropColumn($tableName, $columnName) {
 		$sql = "ALTER TABLE ".$tableName." DROP COLUMN ".$columnName;
@@ -123,7 +123,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::addIndex()
+	 * @see	wcf\system\database\editor\DatabaseEditor::addIndex()
 	 */
 	public function addIndex($tableName, $indexName, $indexData) {
 		$sql = "ALTER TABLE ".$tableName." ADD ".$this->buildIndexDefinition($indexName, $indexData);
@@ -132,7 +132,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::addIndex()
+	 * @see	wcf\system\database\editor\DatabaseEditor::addIndex()
 	 */
 	public function addForeignKey($tableName, $indexName, $indexData) {
 		$sql = "ALTER TABLE ".$tableName." ADD";
@@ -157,7 +157,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::dropIndex()
+	 * @see	wcf\system\database\editor\DatabaseEditor::dropIndex()
 	 */
 	public function dropIndex($tableName, $indexName) {
 		$sql = "ALTER TABLE ".$tableName." DROP INDEX ".$indexName;
@@ -166,7 +166,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::dropForeignKey()
+	 * @see	wcf\system\database\editor\DatabaseEditor::dropForeignKey()
 	 */
 	public function dropForeignKey($tableName, $indexName) {
 		$sql = "ALTER TABLE ".$tableName." DROP FOREIGN KEY `".$indexName."`";

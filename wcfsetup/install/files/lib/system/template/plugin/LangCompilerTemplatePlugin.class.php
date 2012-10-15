@@ -6,19 +6,19 @@ use wcf\system\template\TemplateScriptingCompiler;
  * The 'lang' compiler function compiles dynamic language variables.
  * 
  * Usage:
- * {lang}$blah{/lang}
- * {lang var=$x}foo{/lang}
- *
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ *	{lang}$blah{/lang}
+ *	{lang var=$x}foo{/lang}
+ * 
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class LangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	/**
-	 * @see wcf\system\template\ICompilerTemplatePlugin::executeStart()
+	 * @see	wcf\system\template\ICompilerTemplatePlugin::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		$compiler->pushTag('lang');
@@ -28,7 +28,7 @@ class LangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	}
 	
 	/**
-	 * @see wcf\system\template\ICompilerTemplatePlugin::executeEnd()
+	 * @see	wcf\system\template\ICompilerTemplatePlugin::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		$compiler->popTag('lang');

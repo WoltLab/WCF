@@ -19,7 +19,7 @@ use wcf\system\WCF;
 abstract class AbstractPage implements IPage, ITrackablePage {
 	/**
 	 * name of the template for the called page
-	 * @var string
+	 * @var	string
 	 */
 	public $templateName = '';
 	
@@ -31,7 +31,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	
 	/**
 	 * value of the given action parameter
-	 * @var string
+	 * @var	string
 	 */
 	public $action = '';
 	
@@ -49,13 +49,13 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	
 	/**
 	 * needed permissions to view this page
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	public $neededPermissions = array();
 	
 	/**
 	 * enables the tracking of this page
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $enableTracking = false;
 	
@@ -74,7 +74,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		// call readParameters event
@@ -85,7 +85,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		// call readData event
@@ -93,7 +93,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		// call assignVariables event
@@ -107,7 +107,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::checkModules()
+	 * @see	wcf\page\IPage::checkModules()
 	 */
 	public function checkModules() {
 		// call checkModules event
@@ -124,7 +124,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::checkPermissions()
+	 * @see	wcf\page\IPage::checkPermissions()
 	 */
 	public function checkPermissions() {
 		// call checkPermissions event
@@ -147,7 +147,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
 		// check if active user is logged in
@@ -163,7 +163,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 		
 		// read data
 		$this->readData();
-
+		
 		// try to guess template name
 		if (empty($this->templateName)) {
 			$classParts = explode('\\', get_class($this));
@@ -178,7 +178,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 		}
 		
 		// assign variables
-		$this->assignVariables();		
+		$this->assignVariables();
 		
 		// call show event
 		EventHandler::getInstance()->fireAction($this, 'show');
@@ -190,42 +190,42 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see wcf\page\ITrackablePage::isTracked()
+	 * @see	wcf\page\ITrackablePage::isTracked()
 	 */
 	public function isTracked() {
 		return $this->enableTracking;
 	}
 	
 	/**
-	 * @see wcf\page\ITrackablePage::getController()
+	 * @see	wcf\page\ITrackablePage::getController()
 	 */
 	public function getController() {
 		return get_class($this);
 	}
 	
 	/**
-	 * @see wcf\page\ITrackablePage::getParentObjectType()
+	 * @see	wcf\page\ITrackablePage::getParentObjectType()
 	 */
 	public function getParentObjectType() {
 		return '';
 	}
 	
 	/**
-	 * @see wcf\page\ITrackablePage::getParentObjectID()
+	 * @see	wcf\page\ITrackablePage::getParentObjectID()
 	 */
 	public function getParentObjectID() {
 		return 0;
 	}
 	
 	/**
-	 * @see wcf\page\ITrackablePage::getObjectType()
+	 * @see	wcf\page\ITrackablePage::getObjectType()
 	 */
 	public function getObjectType() {
 		return '';
 	}
 	
 	/**
-	 * @see wcf\page\ITrackablePage::getObjectID()
+	 * @see	wcf\page\ITrackablePage::getObjectID()
 	 */
 	public function getObjectID() {
 		return 0;

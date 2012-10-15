@@ -15,11 +15,11 @@ use wcf\util\FileUtil;
  * }
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class Tar implements IArchive {
 	/**
@@ -68,7 +68,7 @@ class Tar implements IArchive {
 	 * Creates a new Tar object.
 	 * archiveName must be tarball or gzipped tarball
 	 * 
-	 * @param 	string 		$archiveName
+	 * @param	string		$archiveName
 	 */
 	public function __construct($archiveName) {
 		if (!is_file($archiveName)) {
@@ -108,7 +108,7 @@ class Tar implements IArchive {
 			$this->opened = true;
 		}
 	}
-
+	
 	/**
 	 * Closes the opened file.
 	 */
@@ -119,7 +119,7 @@ class Tar implements IArchive {
 		}
 	}
 	
-	/** 
+	/**
 	 * @see	wcf\system\io\IArchive::getContentList()
 	 */
 	public function getContentList() {
@@ -130,7 +130,7 @@ class Tar implements IArchive {
 		return $this->contentList;
 	}
 	
-	/** 
+	/**
 	 * @see	wcf\system\io\IArchive::getFileInfo()
 	 */
 	public function getFileInfo($fileIndex) {
@@ -144,7 +144,7 @@ class Tar implements IArchive {
 		return $this->contentList[$fileIndex];
 	}
 	
-	/** 
+	/**
 	 * @see	wcf\system\io\IArchive::getIndexByFilename()
 	 */
 	public function getIndexByFilename($filename) {
@@ -156,7 +156,7 @@ class Tar implements IArchive {
 		return false;
 	}
 	
-	/** 
+	/**
 	 * @see	wcf\system\io\IArchive::extractToString()
 	 */
 	public function extractToString($index) {
@@ -188,7 +188,7 @@ class Tar implements IArchive {
 		return $content;
 	}
 	
-	/** 
+	/**
 	 * @see	wcf\system\io\IArchive::extract()
 	 */
 	public function extract($index, $destination) {
@@ -238,7 +238,7 @@ class Tar implements IArchive {
 		}
 		
 		return true;
-	}	
+	}
 	
 	/**
 	 * Reads table of contents (TOC) from tar archive.
@@ -282,9 +282,9 @@ class Tar implements IArchive {
 	
 	/**
 	 * Unpacks file header for one file entry.
-	 *
-	 * @param 	string 		$binaryData
-	 * @return 	array 		$fileheader
+	 * 
+	 * @param	string		$binaryData
+	 * @return	array		$fileheader
 	 */
 	protected function readHeader($binaryData) {
 		if (strlen($binaryData) != 512) {
@@ -343,7 +343,7 @@ class Tar implements IArchive {
 	/**
 	 * Returns true, if this tar is (g)zipped.
 	 * 
-	 * @return 	boolean
+	 * @return	boolean
 	 */
 	public function isZipped() {
 		return $this->isZipped;

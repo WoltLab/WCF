@@ -13,11 +13,11 @@ use wcf\util\StringUtil;
  * Represents a package.
  *
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class Package extends DatabaseObject {
 	/**
@@ -56,7 +56,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Returns true, if this package is required by other packages.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function isRequired() {
@@ -72,7 +72,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Returns true if package is a plugin.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function isPlugin() {
@@ -83,7 +83,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Returns the name of this package.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getName() {
@@ -92,7 +92,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Returns the abbreviation of the package name.
-	 *
+	 * 
 	 * @param	string		$package
 	 * @return	string
 	 */
@@ -105,7 +105,7 @@ class Package extends DatabaseObject {
 	 * Returns package object for parent package.
 	 * 
 	 * @return	Package
-	 */	
+	 */
 	public function getParentPackage() {
 		if (!$this->parentPackageID) {
 			throw new SystemException("Package ".$this->package." does not have a parent package.");
@@ -117,7 +117,7 @@ class Package extends DatabaseObject {
 	/**
 	 * Returns a list of all by this package required packages.
 	 * Contains required packages and the requirements of the required packages.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function getDependencies() {
@@ -142,7 +142,7 @@ class Package extends DatabaseObject {
 	/**
 	 * Returns a list of all packages that require this package.
 	 * Returns packages that require this package and packages that require these packages.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function getDependentPackages() {
@@ -167,7 +167,7 @@ class Package extends DatabaseObject {
 	/**
 	 * Returns a list of the requirements of this package.
 	 * Contains the content of the <requiredPackages> tag in the package.xml of this package.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function getRequiredPackages() {
@@ -197,7 +197,7 @@ class Package extends DatabaseObject {
 	 * official WCF packet naming scheme in the future).
 	 * Reminder: The '$packageName' variable being examined here contains the 'name' attribute
 	 * of the 'package' tag noted in the 'packages.xml' file delivered inside the respective package.
-	 *
+	 * 
 	 * @param 	string 		$packageName
 	 * @return 	boolean 	isValid
 	 */
@@ -250,7 +250,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Compares two version number strings.
-	 *
+	 * 
 	 * @param	string		$version1
 	 * @param	string		$version2
 	 * @param	string		$operator
@@ -266,7 +266,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Formats a package version string for comparing.
-	 *
+	 * 
 	 * @param	string		$version
 	 * @return 	string		formatted version
 	 * @see 	http://www.php.net/manual/en/function.version-compare.php
@@ -287,7 +287,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Rebuilds the requirement map for the given package id.
-	 *
+	 * 
 	 * @param	integer		$packageID
 	 */
 	public static function rebuildPackageRequirementMap($packageID) {
@@ -360,7 +360,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Rebuilds the dependencies list for the given package id.
-	 *
+	 * 
 	 * @param	integer		$packageID
 	 */
 	public static function rebuildPackageDependencies($packageID) {
@@ -508,7 +508,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Writes the config.inc.php for an application.
-	 *
+	 * 
 	 * @param	integer		$packageID
 	 */
 	public static function writeConfigFile($packageID) {
@@ -559,7 +559,7 @@ class Package extends DatabaseObject {
 	/**
 	 * Searches all dependent packages for the given package id
 	 * and rebuild their package dependencies list.
-	 *
+	 * 
 	 * @param	integer		$packageID
 	 */
 	public static function rebuildParentPackageDependencies($packageID) {

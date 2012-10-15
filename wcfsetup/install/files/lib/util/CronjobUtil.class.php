@@ -8,11 +8,11 @@ use wcf\system\exception\SystemException;
  * does not support using nicknames (prefixed by the '@' character).
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
- * @category 	Community Framework
+ * @category	Community Framework
  */
 final class CronjobUtil {
 	/**
@@ -512,31 +512,31 @@ final class CronjobUtil {
 			// check if startMinute is a valid minute or a list of valid minutes.
 			case 'startMinute':
 				$pattern = '[ ]*(\b[0-5]?[0-9]\b)[ ]*';
-				break;
-				
+			break;
+			
 			// check if startHour is a valid hour or a list of valid hours.
 			case 'startHour':
 				$pattern = '[ ]*(\b[01]?[0-9]\b|\b2[0-3]\b)[ ]*';
-				break;
-				
+			break;
+			
 			// check if startDom is a valid day of month or a list of valid days of month.
 			case 'startDom':
 				$pattern = '[ ]*(\b[01]?[1-9]\b|\b2[0-9]\b|\b3[01]\b)[ ]*';
-				break;
-				
+			break;
+			
 			// check if startMonth is a valid month or a list of valid months.
 			case 'startMonth':
 				$digits = '[ ]*(\b[0-1]?[0-9]\b)[ ]*';
 				$namesArr = explode('|', $months);
 				$pattern = '('.$digits.')|([ ]*('.$months.')[ ]*)';
-				break;
-				
+			break;
+			
 			// check if startDow is a valid day of week or a list of valid days of week.
 			case 'startDow':
 				$digits = '[ ]*(\b[0]?[0-7]\b)[ ]*';
 				$namesArr = explode('|', $days);
 				$pattern = '('.$digits.')|([ ]*('.$days.')[ ]*)';
-				break;
+			break;
 		}
 		
 		// perform the actual regex pattern matching.

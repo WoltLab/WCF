@@ -5,20 +5,20 @@ namespace wcf\system\database;
  * This is the database implementation for MySQL4.1 or higher using PDO.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.database
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class MySQLDatabase extends Database {
 	/**
-	 * @see wcf\system\database\Database::$editorClassName
+	 * @see	wcf\system\database\Database::$editorClassName
 	 */
 	protected $editorClassName = 'wcf\system\database\editor\MySQLDatabaseEditor';
 	
 	/**
-	 * @see wcf\system\database\Database::connect()
+	 * @see	wcf\system\database\Database::connect()
 	 */
 	public function connect() {
 		if (!$this->port) $this->port = 3306; // mysql default port
@@ -65,14 +65,14 @@ class MySQLDatabase extends Database {
 	}
 	
 	/**
-	 * @see wcf\system\database\Database::isSupported()
+	 * @see	wcf\system\database\Database::isSupported()
 	 */
 	public static function isSupported() {
 		return (extension_loaded('PDO') && extension_loaded('pdo_mysql'));
 	}
 	
 	/**
-	 * @see wcf\system\database\Database::handleLimitParameter()
+	 * @see	wcf\system\database\Database::handleLimitParameter()
 	 */
 	public function handleLimitParameter($query, $limit = 0, $offset = 0) {
 		if ($limit != 0) {
@@ -84,7 +84,7 @@ class MySQLDatabase extends Database {
 	}
 	
 	/**
-	 * @see wcf\system\database\PDODatabase::setAttributes()
+	 * @see	wcf\system\database\PDODatabase::setAttributes()
 	 */
 	protected function setAttributes() {
 		parent::setAttributes();

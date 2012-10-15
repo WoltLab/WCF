@@ -16,26 +16,52 @@ use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
-		
+
 /**
  * Shows the users mass processing form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UsersMassProcessingForm extends UserOptionListForm {
-	// system
+	/**
+	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.user.canEditUser', 'admin.user.canDeleteUser', 'admin.user.canMailUser');
 	
-	// parameters
+	/**
+	 * searched username
+	 * @var	string
+	 */
 	public $username = '';
+	
+	/**
+	 * searched email adress
+	 * @var	string
+	 */
 	public $email = '';
+	
+	/**
+	 * ids of the searched user group ids
+	 * @var	array<integer>
+	 */
 	public $groupIDArray = array();
+	
+	/**
+	 * ids of the users' languages
+	 * @var	array<integer>
+	 */
 	public $languageIDArray = array();
+	
+	/**
+	 * indicates if the user may not be in the user groups with the selected
+	 * ids
+	 * @var	integer
+	 */
 	public $invertGroupIDs = 0;
 	
 	// assign to group
@@ -59,21 +85,19 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	public $affectedUsers = 0;
 	
 	/**
-	 * conditions builder object.
-	 * 
+	 * conditions builder object
 	 * @var	wcf\system\database\condition\PreparedStatementConditionBuilder
 	 */
 	public $conditions = null;
 	
 	/**
-	 * Options of the active category.
-	 * 
+	 * options of the active category
 	 * @var array
 	 */
 	public $activeOptions = array();
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -97,11 +121,11 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		AbstractForm::validate();
-
+		
 		// action
 		if (!in_array($this->action, $this->availableActions)) {
 			throw new UserInputException('action');
@@ -131,7 +155,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -157,7 +181,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 			$value = isset($this->values[$option['optionName']]) ? $this->values[$option['optionName']] : null;
 			$this->getTypeObject($option['optionType'])->getCondition($this->conditions, $option, $value);
 		}
-
+		
 		// call buildConditions event
 		EventHandler::getInstance()->fireAction($this, 'buildConditions');
 		
@@ -178,7 +202,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 					$userIDArray[] = $row['userID'];
 					$this->affectedUsers++;
 				}
-
+				
 				// save config in session
 				$userMailData = WCF::getSession()->getVar('userMailData');
 				if ($userMailData === null) $userMailData = array();
@@ -204,8 +228,8 @@ class UsersMassProcessingForm extends UserOptionListForm {
 				));
 				WCF::getTPL()->display('worker');
 				exit;
-				break;
-				
+			break;
+			
 			case 'exportMailAddress':
 				WCF::getSession()->checkPermissions(array('admin.user.canMailUser'));
 				// send content type
@@ -249,8 +273,8 @@ class UsersMassProcessingForm extends UserOptionListForm {
 				}
 				$this->saved();
 				exit;
-				break;
-				
+			break;
+			
 			case 'assignToGroup':
 				WCF::getSession()->checkPermissions(array('admin.user.canEditUser'));
 				
@@ -260,15 +284,15 @@ class UsersMassProcessingForm extends UserOptionListForm {
 				});
 				
 				UserStorageHandler::getInstance()->reset($userIDArray, 'groupIDs', 1);
-				break;
-				
+			break;
+			
 			case 'delete':
 				WCF::getSession()->checkPermissions(array('admin.user.canDeleteUser'));
 				
 				$userIDArray = $this->fetchUsers();
 				
 				UserEditor::deleteUsers($userIDArray);
-				break;
+			break;
 		}
 		$this->saved();
 		
@@ -277,8 +301,8 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	
 	protected function fetchUsers($loopFunction = null) {
 		// select users
-		$sql = "SELECT	user.*
-			FROM	wcf".WCF_N."_user user
+		$sql = "SELECT		user.*
+			FROM		wcf".WCF_N."_user user
 			LEFT JOIN	wcf".WCF_N."_user_option_value option_value
 			ON		(option_value.userID = user.userID)
 			".$this->conditions;

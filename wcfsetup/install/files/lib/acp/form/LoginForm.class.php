@@ -14,34 +14,34 @@ use wcf\util\StringUtil;
  * Shows the acp login form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class LoginForm extends AbstractForm {
 	/**
 	 * given login username
-	 * @var string
+	 * @var	string
 	 */
 	public $username = '';
 	
 	/**
 	 * given login password
-	 * @var string
+	 * @var	string
 	 */
 	public $password = '';
 	
 	/**
 	 * user object
-	 * @var wcf\data\user\User
+	 * @var	wcf\data\user\User
 	 */
 	public $user;
 	
 	/**
 	 * given forward url
-	 * @var string
+	 * @var	string
 	 */
 	public $url = null;
 	
@@ -57,7 +57,7 @@ class LoginForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -66,7 +66,7 @@ class LoginForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -105,7 +105,7 @@ class LoginForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -123,7 +123,7 @@ class LoginForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -145,11 +145,11 @@ class LoginForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
-
+		
 		// get preferred username
 		if (!count($_POST)) {
 			if (isset($_COOKIE[COOKIE_PREFIX.'userID'])) {
@@ -160,7 +160,7 @@ class LoginForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

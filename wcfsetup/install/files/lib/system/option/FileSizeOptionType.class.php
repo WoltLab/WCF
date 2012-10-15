@@ -7,7 +7,7 @@ use wcf\util\StringUtil;
 
 /**
  * FileSizeOptionType is an implementation of IOptionType for file sizes.
- *
+ * 
  * @author	Tim Düsterhus
  * @copyright	2011 Tim Düsterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  */
 class FileSizeOptionType extends IntegerOptionType {
 	/**
-	 * @see wcf\system\option\IOptionType::getData()
+	 * @see	wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		$number = StringUtil::replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $newValue);
@@ -52,7 +52,7 @@ class FileSizeOptionType extends IntegerOptionType {
 	}
 	
 	/**
-	 * @see wcf\system\option\IOptionType::getFormElement()
+	 * @see	wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		$value = FileUtil::formatFileSize($value);

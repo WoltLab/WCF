@@ -6,11 +6,11 @@ namespace wcf\action;
  * An action executes a user input without showing a result page or a form. 
  * 
  * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action
- * @category 	Community Framework
+ * @category	Community Framework
  */
 interface IAction {
 	/**
