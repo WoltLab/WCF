@@ -159,7 +159,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	public function executeAction() {
 		// execute action
 		if (method_exists($this, $this->getActionName())) {
-			$this->returnValues = call_user_func_array(array($this, $this->getActionName()), $this->getParameters());
+			$this->returnValues = call_user_func(array($this, $this->getActionName()));
 		}
 		
 		// reset cache
