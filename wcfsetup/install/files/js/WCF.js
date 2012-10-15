@@ -5462,7 +5462,7 @@ WCF.Popover = Class.extend({
 				
 				$element.hover($.proxy(this._overElement, this), $.proxy(this._out, this));
 				
-				if ($element.getTagName() === 'a') {
+				if ($element.getTagName() === 'a' && $element.attr('href')) {
 					$element.click($.proxy(this._cancel, this));
 				}
 			}
@@ -5563,7 +5563,7 @@ WCF.Popover = Class.extend({
 			return;
 		}
 		
-		this._popover.stop().css({ opacity: 1 }).wcfFadeIn();
+		this._popover.stop().show().css({ opacity: 1 }).wcfFadeIn();
 		
 		if (this._data[this._activeElementID].loading) {
 			this._loadContent();
@@ -5631,12 +5631,12 @@ WCF.Popover = Class.extend({
 		this._popover.stop();
 		
 		if (disableAnimation) {
-			self._popover.css({ opacity: 0 });
+			self._popover.css({ opacity: 0 }).hide();
 			self._popoverContent.empty().css({ height: 'auto', opacity: 0, width: 'auto' });
 		}
 		else {
 			this._popover.wcfFadeOut(function() {
-				self._popoverContent.empty().css({ height: 'auto', opacity: 0, width: 'auto' });
+				self._popoverContent.empty().css({ height: 'auto', opacity: 0, width: 'auto' }).hide();
 			});
 		}
 	},
