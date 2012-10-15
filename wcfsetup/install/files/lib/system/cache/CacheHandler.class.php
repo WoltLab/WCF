@@ -7,16 +7,16 @@ use wcf\system\SingletonFactory;
  * CacheHandler holds all registered cache resources.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class CacheHandler extends SingletonFactory {
 	/**
 	 * registered cache resources
-	 * @var array
+	 * @var	array
 	 */
 	protected $cacheResources = array();
 	
@@ -78,7 +78,7 @@ class CacheHandler extends SingletonFactory {
 	
 	/**
 	 * Marks cached files as obsolete.
-	 *
+	 * 
 	 * @param 	string 		$directory
 	 * @param 	string 		$filepattern
 	 */
@@ -88,7 +88,7 @@ class CacheHandler extends SingletonFactory {
 	
 	/**
 	 * Returns a cached variable.
-	 *
+	 * 
 	 * @param 	string 		$cache
 	 * @param 	string 		$variable
 	 * @return 	mixed 		$value
@@ -153,7 +153,7 @@ class CacheHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the cache source object.
-	 *
+	 * 
 	 * @return	wcf\system\cache\source\ICacheSource
 	 */
 	public function getCacheSource() {

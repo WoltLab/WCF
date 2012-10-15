@@ -5,12 +5,12 @@ use wcf\data\DatabaseObjectList;
 /**
  * Represents a list of core objects.
  * 
- * @author 	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Alexander Ebert
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.event
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class CoreObjectList extends DatabaseObjectList {
 	/**

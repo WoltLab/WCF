@@ -6,19 +6,19 @@ use wcf\system\WCF;
 use wcf\util\DateUtil;
 
 /**
- * TimezoneOptionType is an implementation of IOptionType for a select box, which
+ * TimezoneOptionType is an implementation of IOptionType for a select box which
  * list the available time zones.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class TimezoneOptionType extends AbstractOptionType {
 	/**
-	 * @see wcf\system\option\IOptionType::getFormElement()
+	 * @see	wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		$timezoneOptions = array();
@@ -35,7 +35,7 @@ class TimezoneOptionType extends AbstractOptionType {
 	}
 	
 	/**
-	 * @see wcf\system\option\IOptionType::validate()
+	 * @see	wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!in_array($newValue, DateUtil::getAvailableTimezones())) {

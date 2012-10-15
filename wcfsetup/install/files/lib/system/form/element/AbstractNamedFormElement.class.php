@@ -4,13 +4,13 @@ use wcf\util\StringUtil;
 
 /**
  * Basic implementation for named form elements.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.form.element
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class AbstractNamedFormElement extends AbstractFormElement {
 	/**
@@ -27,7 +27,7 @@ abstract class AbstractNamedFormElement extends AbstractFormElement {
 	
 	/**
 	 * Sets element name.
-	 *
+	 * 
 	 * @param	string		$name
 	 */
 	public function setName($name) {
@@ -36,7 +36,7 @@ abstract class AbstractNamedFormElement extends AbstractFormElement {
 	
 	/**
 	 * Returns element name
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getName() {
@@ -45,7 +45,7 @@ abstract class AbstractNamedFormElement extends AbstractFormElement {
 	
 	/**
 	 * Sets element value.
-	 *
+	 * 
 	 * @param	string		$value
 	 */
 	public function setValue($value) {
@@ -57,7 +57,7 @@ abstract class AbstractNamedFormElement extends AbstractFormElement {
 	
 	/**
 	 * Returns element value.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getValue() {

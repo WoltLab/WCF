@@ -1,4 +1,5 @@
 {include file='header'}
+
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
@@ -6,14 +7,20 @@
 	});
 	//]]>
 </script>
+
 <style type="text/css">
-#health ul {
-	list-style: disc;
-	padding-left: 16px;
-}
+	#health ul {
+		list-style: disc;
+		padding-left: 16px;
+	}
 </style>
-{if $didYouKnow !== ''}<p class="info">{lang}wcf.acp.index.didYouKnow{/lang}: {@$didYouKnow|language}</p>{/if}
+
+{if $didYouKnow !== ''}
+	<p class="info">{lang}wcf.acp.index.didYouKnow{/lang}: {@$didYouKnow|language}</p>
+{/if}
+
 <p class="{@$health}">{lang}wcf.acp.index.health.summary.{@$health}{/lang}</p>
+
 {event name='boxes'}
 
 <div class="tabMenuContainer" data-active="{if $health !== 'success'}health{else}news{/if}" data-store="activeTabMenuItem">
@@ -25,26 +32,31 @@
 			{event name='tabs'}
 		</ul>
 	</nav>
+	
 	{if $health !== 'success'}
 		<div id="health" class="container containerPadding shadow hidden tabMenuContent">
 			{foreach from=$healthDetails item='issues' key='healthType'}
 				{hascontent}
-				<fieldset><legend><img src="{$__wcf->getPath()}icon/{$healthType}.svg" class="icon24" /> {lang}wcf.acp.index.health.detail.{@$healthType}{/lang}</legend>
-					<ul>
-					{content}
-						{foreach from=$issues item='issue'}
-							<li>{@$issue}</li>
-						{/foreach}
-					{/content}
-					</ul>
-				</fieldset>
+					<fieldset>
+						<legend><img src="{$__wcf->getPath()}icon/{$healthType}.svg" class="icon24" /> {lang}wcf.acp.index.health.detail.{@$healthType}{/lang}</legend>
+						
+						<ul>
+							{content}
+								{foreach from=$issues item='issue'}
+									<li>{@$issue}</li>
+								{/foreach}
+							{/content}
+						</ul>
+					</fieldset>
 				{/hascontent}
 			{/foreach}
 		</div>
 	{/if}
+	
 	<div id="news" class="container containerPadding shadow hidden tabMenuContent">
 		WoltLab Community Framework is twice as cool now, as the version number is twice as high.
 	</div>
+	
 	<fieldset id="credits" class="container containerPadding shadow hidden tabMenuContent">
 		<dl>
 			<dt>{lang}wcf.acp.index.credits.developedBy{/lang}</dt>

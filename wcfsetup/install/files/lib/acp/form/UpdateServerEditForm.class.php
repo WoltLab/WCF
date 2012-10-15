@@ -8,34 +8,34 @@ use wcf\system\WCF;
 
 /**
  * Shows the server edit form.
- *
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UpdateServerEditForm extends UpdateServerAddForm {
 	/**
-	 * @see wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.server';
 	
 	/**
 	 * update server id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $packageUpdateServerID = 0;
 	
 	/**
 	 * active package update server
-	 * @var	PackageUpdateServer
+	 * @var	wcf\data\package\update\server\PackageUpdateServer
 	 */
 	public $updateServer = null;
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -48,7 +48,7 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -67,7 +67,7 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -80,7 +80,7 @@ class UpdateServerEditForm extends UpdateServerAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

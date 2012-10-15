@@ -4,22 +4,22 @@ use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateEngine;
 
 /**
- * The 'concat' modifier returns the string that results from concatenating the arguments.
- * May have two or more arguments.
+ * The 'concat' modifier returns the string that results from concatenating the
+ * arguments. May have two or more arguments.
  * 
  * Usage:
- * {"left"|concat:$right}
+ *	{"left"|concat:$right}
  *
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ConcatModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see wcf\system\template\ITemplatePluginModifier::execute()
+	 * @see	wcf\system\template\ITemplatePluginModifier::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (count($tagArgs) < 2) {
@@ -30,7 +30,7 @@ class ConcatModifierTemplatePlugin implements IModifierTemplatePlugin {
 		foreach ($tagArgs as $arg) {
 			$result .= $arg;
 		}
-	
+		
 		return $result;	
 	}
 }

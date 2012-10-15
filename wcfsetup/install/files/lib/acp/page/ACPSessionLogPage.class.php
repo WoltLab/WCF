@@ -10,25 +10,25 @@ use wcf\system\WCF;
  * Shows the details of a logged sessions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ACPSessionLogPage extends SortablePage {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
+	 * @see	wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'acpSessionLog';
 	
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canViewLog');
 	
 	/**
-	 * @see wcf\page\SortablePage::$defaultSortField
+	 * @see	wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'time';
 	
@@ -39,13 +39,13 @@ class ACPSessionLogPage extends SortablePage {
 	
 	/**
 	 * session log id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $sessionLogID = 0;
 	
 	/**
 	 * session log object
-	 * @var wcf\data\acp\session\log\ACPSessionLog
+	 * @var	wcf\data\acp\session\log\ACPSessionLog
 	 */
 	public $sessionLog = null;
 	
@@ -87,7 +87,7 @@ class ACPSessionLogPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -99,7 +99,7 @@ class ACPSessionLogPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
 		// enable menu item

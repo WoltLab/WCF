@@ -6,11 +6,11 @@ use wcf\util\StringUtil;
  * Represents a breadcrumb.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.breadcrumb
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class Breadcrumb {
 	/**
@@ -31,16 +31,16 @@ class Breadcrumb {
 	 * @param	string		$label
 	 * @param	string		$url
 	 */
-	public function __construct($label = null, $url = null) {
-		if ($label !== null) $this->setLabel($label);
-		if ($url !== null) $this->setURL($url);
+	public function __construct($label, $url) {
+		$this->setLabel($label);
+		$this->setURL($url);
 	}
 	
 	/**
 	 * Sets the displayed label.
 	 * 
 	 * @param	string		$label
-	 */	
+	 */
 	public function setLabel($label) {
 		$this->label = $label;
 	}
@@ -51,7 +51,7 @@ class Breadcrumb {
 	 * 
 	 * @param	string		$url
 	 * @param	boolean		$appendSession
-	 */	
+	 */
 	public function setURL($url, $appendSession = false) {
 		// append session id
 		if ($appendSession) {

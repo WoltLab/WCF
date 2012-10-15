@@ -344,6 +344,8 @@
 	<category name="wcf.acp.search">
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[Seiten]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.option"><![CDATA[Optionen]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.package"><![CDATA[Pakete]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.userGroupOption"><![CDATA[Berechtigungen]]></item>
 	</category>
 	
@@ -507,7 +509,7 @@
 		<item name="wcf.date.day.thu"><![CDATA[Don]]></item>
 		<item name="wcf.date.day.fri"><![CDATA[Fre]]></item>
 		<item name="wcf.date.day.sat"><![CDATA[Sam]]></item>
-
+		
 		<!-- localized days -->
 		<item name="wcf.date.day.sunday"><![CDATA[Sonntag]]></item>
 		<item name="wcf.date.day.monday"><![CDATA[Montag]]></item>
@@ -516,7 +518,7 @@
 		<item name="wcf.date.day.thursday"><![CDATA[Donnerstag]]></item>
 		<item name="wcf.date.day.friday"><![CDATA[Freitag]]></item>
 		<item name="wcf.date.day.saturday"><![CDATA[Samstag]]></item>
-
+		
 		<!-- time zones -->
 		<item name="wcf.date.timezone.pacific.kwajalein"><![CDATA[(UTC-12:00) Kwajalein]]></item>
 		<item name="wcf.date.timezone.pacific.midway"><![CDATA[(UTC-11:00) Midway]]></item>

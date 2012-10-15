@@ -10,7 +10,7 @@ use wcf\data\category\CategoryEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.category
- * @category 	Community Framework
+ * @category	Community Framework
  */
 interface ICategoryType {
 	/**

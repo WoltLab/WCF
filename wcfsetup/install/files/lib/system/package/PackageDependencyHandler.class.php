@@ -5,13 +5,13 @@ use wcf\system\SingletonFactory;
 
 /**
  * PackageDependencyHandler stores package dependencies and providing a consistent interface for accessing.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageDependencyHandler extends SingletonFactory {
 	/**
@@ -21,7 +21,7 @@ class PackageDependencyHandler extends SingletonFactory {
 	protected $packageDependencyCache = null;
 	
 	/**
-	 * @see wcf\system\SingletonFactory::init()
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$cacheName = 'packageDependencies-'.PACKAGE_ID;
@@ -36,10 +36,10 @@ class PackageDependencyHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the id of a specific package in the active dependencies.
-	 *
+	 * 
 	 * @param	string		$package	package identifier
 	 * @return	mixed
-	 */	
+	 */
 	public function getPackageID($package) {
 		if (!defined('PACKAGE_ID')) {
 			return null;
@@ -60,9 +60,9 @@ class PackageDependencyHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the package ids of all dependent packages.
-	 *
+	 * 
 	 * @return	array
-	 */	
+	 */
 	public function getDependencies() {
 		if (!defined('PACKAGE_ID')) {
 			return null;

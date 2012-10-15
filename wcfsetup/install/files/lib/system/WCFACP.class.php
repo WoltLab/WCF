@@ -2,6 +2,8 @@
 namespace wcf\system;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
+use wcf\system\exception\AJAXException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
@@ -11,12 +13,12 @@ use wcf\util;
 /**
  * Extends WCF class with functions for the admin control panel.
  * 
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class WCFACP extends WCF {
 	/**
@@ -67,7 +69,18 @@ class WCFACP extends WCF {
 				exit;
 			}
 			else {
-				WCF::getSession()->checkPermissions(array('admin.general.canUseAcp'));
+				// work-around for AJAX-requests within ACP
+				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+					try {
+						WCF::getSession()->checkPermissions(array('admin.general.canUseAcp'));
+					}
+					catch (PermissionDeniedException $e) {
+						throw new AJAXException(self::getLanguage()->get('wcf.global.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
+					}
+				}
+				else {
+					WCF::getSession()->checkPermissions(array('admin.general.canUseAcp'));
+				}
 			}
 		}
 	}
@@ -92,7 +105,7 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * @see wcf\system\WCF::assignDefaultTemplateVariables()
+	 * @see	wcf\system\WCF::assignDefaultTemplateVariables()
 	 */
 	protected function assignDefaultTemplateVariables() {
 		parent::assignDefaultTemplateVariables();
@@ -104,12 +117,12 @@ class WCFACP extends WCF {
 		self::getTPL()->assign(array(
 			'baseHref' => $host . $path,
 			'quickAccessPackages' => $this->getQuickAccessPackages(),
-			//'timezone' => util\DateUtil::getTimezone()
+			// todo: 'timezone' => util\DateUtil::getTimezone()
 		));
 	}
 	
 	/**
-	 * @see WCF::loadDefaultCacheResources()
+	 * @see	WCF::loadDefaultCacheResources()
 	 */
 	protected function loadDefaultCacheResources() {
 		parent::loadDefaultCacheResources();
@@ -131,7 +144,7 @@ class WCFACP extends WCF {
 			define('PACKAGE_ID', $packageID);
 		}
 		
-		/*
+		/* todo
 		$packageID = 0;
 		$packages = CacheHandler::getInstance()->get('packages');
 		if (isset($_REQUEST['packageID'])) $packageID = intval($_REQUEST['packageID']);
@@ -190,11 +203,13 @@ class WCFACP extends WCF {
 				require_once(WCF_DIR.'acp/masterPassword.inc.php');
 			}
 			if (defined('MASTER_PASSWORD') && defined('MASTER_PASSWORD_SALT')) {
-				new \wcf\acp\form\MasterPasswordForm();
+				$form = new \wcf\acp\form\MasterPasswordForm();
+				$form->__run();
 				exit;
 			}
 			else {
-				new \wcf\acp\form\MasterPasswordInitForm();
+				$form = new \wcf\acp\form\MasterPasswordInitForm();
+				$form->__run();
 				exit;
 			}
 		}

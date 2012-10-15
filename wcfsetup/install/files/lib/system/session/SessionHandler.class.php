@@ -19,7 +19,7 @@ use wcf\util\UserUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.session
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SessionHandler extends SingletonFactory {
 	/**
@@ -36,7 +36,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * group data and permissions
-	 * @var array<array>
+	 * @var	array<array>
 	 */
 	protected $groupData = null;
 	
@@ -110,7 +110,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Loads an existing session or creates a new one.
-	 *
+	 * 
 	 * @param	string		$sessionEditorClassName
 	 * @param	string		$sessionID
 	 */
@@ -174,7 +174,7 @@ class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Defines WCF-global constants related to session.
+	 * Defines global wcf constants related to session.
 	 */
 	protected function defineConstants() {
 		if ($this->useCookies) {
@@ -228,7 +228,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Registers a session variable.
-	 *
+	 * 
 	 * @param	string		$key
 	 * @param	string		$value
 	 */
@@ -272,18 +272,17 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the user object of this session.
-	 *
-	 * @return	User 	$user
+	 * 
+	 * @return	wcf\data\user\User	$user
 	 */
 	public function getUser() {
 		return $this->user;
 	}
 	
 	/**
-	 * Tries to read existing session identified by $sessionID.
-	 *
-	 * @param	string		$sessionID 
-	 * @return	UserSession
+	 * Tries to read existing session identified by the given session id.
+	 * 
+	 * @param	string		$sessionID
 	 */
 	protected function getExistingSession($sessionID) {
 		$this->session = new $this->sessionClassName($sessionID);
@@ -354,8 +353,8 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the value of the permission with the given name.
-	 *
-	 * @param 	string		$permission
+	 * 
+	 * @param	string		$permission
 	 * @return	mixed		permission value
 	 */
 	public function getPermission($permission) {
@@ -406,7 +405,7 @@ class SessionHandler extends SingletonFactory {
 		$cacheName = 'groups-'.PACKAGE_ID.'-'.$groups;
 		CacheHandler::getInstance()->addResource(
 			$cacheName,
-			WCF_DIR.'cache/cache.groups-'.PACKAGE_ID.'-'.$groupsFileName.'.php',
+			WCF_DIR.'cache/cache.userGroups-'.PACKAGE_ID.'-'.$groupsFileName.'.php',
 			'wcf\system\cache\builder\UserGroupPermissionCacheBuilder'
 		);
 		
@@ -459,9 +458,9 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * Stores a new user object in this session, e.g. a user was guest because not
 	 * logged in, after the login his old session is used to store his full data.
-	 *
-	 * @param	User		$user
-	 * @param	boolean		$hideSession	When set to true the database will not be updated.
+	 * 
+	 * @param	wcf\data\userUser		$user
+	 * @param	boolean				$hideSession	if true, database won't be updated
 	 */
 	public function changeUser(User $user, $hideSession = false) {
 		$sessionTable = call_user_func(array($this->sessionClassName, 'getDatabaseTableName'));
@@ -544,7 +543,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Returns currently active language id.
-	 *
+	 * 
 	 * @return	integer
 	 */
 	public function getLanguageID() {
@@ -553,7 +552,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Sets the currently active language id.
-	 *
+	 * 
 	 * @param	integer		$languageID
 	 */
 	public function setLanguageID($languageID) {
@@ -562,7 +561,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Resets session-specific storage data.
-	 *
+	 * 
 	 * @param	array<integer>	$userIDs
 	 */
 	public static function resetSessions(array $userIDs = array()) {

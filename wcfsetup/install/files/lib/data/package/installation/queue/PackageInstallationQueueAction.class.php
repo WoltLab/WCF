@@ -7,16 +7,25 @@ use wcf\system\WCF;
 
 /**
  * Executes package installation queue-related actions.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package.installation.queue
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
+	/**
+	 * package the prepared queue belongs to
+	 * @var	wcf\data\package\Package
+	 */
 	protected $package = null;
+	
+	/**
+	 * id of the package the prepared queue belongs to
+	 * @var	integer
+	 */
 	protected $packageID = 0;
 	
 	/**
@@ -24,6 +33,9 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\package\installation\queue\PackageInstallationQueueEditor';
 	
+	/**
+	 * Validates the 'prepareQueue' action:
+	 */
 	public function validatePrepareQueue() {
 		if (isset($this->parameters['packageID'])) $this->packageID = intval($this->parameters['packageID']);
 		
@@ -37,6 +49,11 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 		}
 	}
 	
+	/**
+	 * Prepares a new package installation queue.
+	 * 
+	 * @return	array<integer>
+	 */
 	public function prepareQueue() {
 		$processNo = PackageInstallationQueue::getNewProcessNo();
 		

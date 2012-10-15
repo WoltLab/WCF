@@ -9,11 +9,11 @@ use wcf\system\WCF;
  * ACPTemplatesFileHandler is a FileHandler implementation for the installation of ACP-template files.
  * 
  * @author	Benjamin Kunz
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 	/**
@@ -23,7 +23,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 	protected $tableName = 'acp_template';
 	
 	/**
-	 * @see wcf\system\setup\IFileHandler::checkFiles()
+	 * @see	wcf\system\setup\IFileHandler::checkFiles()
 	 */
 	public function checkFiles(array $files) {
 		if ($this->packageInstallation->getPackage()->package != 'com.woltlab.wcf') {
@@ -69,7 +69,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 	}
 	
 	/**
-	 * @see wcf\system\setup\IFileHandler::logFiles()
+	 * @see	wcf\system\setup\IFileHandler::logFiles()
 	 */
 	public function logFiles(array $files) {
 		$packageID = $this->packageInstallation->getPackageID();

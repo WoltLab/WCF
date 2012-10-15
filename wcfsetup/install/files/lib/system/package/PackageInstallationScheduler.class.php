@@ -10,13 +10,13 @@ use wcf\util\FileUtil;
 
 /**
  * Contains business logic related to preparation of package installations.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageInstallationScheduler {
 	/**
@@ -79,7 +79,7 @@ class PackageInstallationScheduler {
 	/**
 	 * Trys to install a new package. Checks the virtual package version list.
 	 * 
-	 * @param 	string		$package		package identifier
+	 * @param	string		$package		package identifier
 	 * @param	string		$minversion		preferred package version
 	 * @param	boolean		$installOldVersion	true, if you want to install the package in the given minversion and not in the newest version
 	 */
@@ -109,14 +109,14 @@ class PackageInstallationScheduler {
 	/**
 	 * Installs a new package.
 	 * 
-	 * @param 	string		$package	package identifier
+	 * @param	string		$package	package identifier
 	 * @param	string		$version	package version
 	 * @param	integer		$stackPosition
 	 */
 	protected function installPackage($package, $version = '', $stackPosition = -1) {
 		// get package update versions
 		$packageUpdateVersions = PackageUpdateDispatcher::getPackageUpdateVersions($package, $version);
-
+		
 		// resolve requirements
 		$this->resolveRequirements($packageUpdateVersions[0]['packageUpdateVersionID']);
 		
@@ -213,7 +213,7 @@ class PackageInstallationScheduler {
 		if ($filename = $this->getCachedDownload($package, $packageUpdateVersions[0]['package'])) {
 			return $filename;
 		}
-
+		
 		// download file
 		$authorizationRequiredException = array();
 		$systemExceptions = array();
@@ -221,7 +221,7 @@ class PackageInstallationScheduler {
 			try {
 				// get auth data
 				$authData = $this->getAuthData($packageUpdateVersion);		
-			
+				
 				// send request
 				if (!empty($packageUpdateVersion['file'])) {
 					$response = PackageUpdateDispatcher::sendRequest($packageUpdateVersion['file'], array(), $authData);
@@ -229,7 +229,7 @@ class PackageInstallationScheduler {
 				else {
 					$response = PackageUpdateDispatcher::sendRequest($packageUpdateVersion['server'], array('packageName' => $packageUpdateVersion['package'], 'packageVersion' => $packageUpdateVersion['packageVersion']), $authData);
 				}
-			
+				
 				// check response
 				// check http code
 				if ($response['httpStatusCode'] == 401) {
@@ -399,7 +399,7 @@ class PackageInstallationScheduler {
 								}
 							}
 						}
-
+						
 						$excludedPackages[] = array(
 							'package' => $row['excludedPackage'],
 							'packageName' => $packageInstallation['packageName'],
@@ -414,7 +414,7 @@ class PackageInstallationScheduler {
 				}
 			}
 		}
-
+		
 		return $excludedPackages;
 	}
 	
@@ -430,9 +430,9 @@ class PackageInstallationScheduler {
 	/**
 	 * Gets the filename of in session stored donwloads.
 	 * 
-	 * @param 	string		$package	package identifier
-	 * @param 	string		$version	package version
-	 * @return  	string		$filename
+	 * @param	string		$package	package identifier
+	 * @param	string		$version	package version
+	 * @return	string		$filename
 	 */
 	protected function getCachedDownload($package, $version) {
 		$cachedDownloads = WCF::getSession()->getVar('cachedPackageUpdateDownloads');
@@ -445,7 +445,7 @@ class PackageInstallationScheduler {
 	
 	/**
 	 * Gets stored auth data of given update server.
-	 *
+	 * 
 	 * @param	array		$updateServer
 	 * @return	array		$authData
 	 */

@@ -10,13 +10,13 @@ use wcf\util\StringUtil;
 
 /**
  * PackageInstallationNodeBuilder creates a logical node-based installation tree.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageInstallationNodeBuilder {
 	/**
@@ -51,7 +51,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * Creates a new instance of PackageInstallationNodeBuilder
-	 *
+	 * 
 	 * @param	PackageInstallationDispatcher	$installation
 	 */
 	public function __construct(PackageInstallationDispatcher $installation) {
@@ -89,7 +89,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * Returns the succeeding node.
-	 *
+	 * 
 	 * @param	string		$parentNode
 	 * @return	string
 	 */
@@ -135,7 +135,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * Returns data for current node.
-	 *
+	 * 
 	 * @param	string		$node
 	 * @return	array
 	 */
@@ -160,7 +160,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * Marks a node as completed.
-	 *
+	 * 
 	 * @param	string		$node
 	 */
 	public function completeNode($node) {
@@ -177,7 +177,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * Removes all nodes associated with queue's process no.
-	 *
+	 * 
 	 * CAUTION: This method SHOULD NOT be called within the installation process!
 	 */
 	public function purgeNodes() {
@@ -198,7 +198,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * Calculates current setup process.
-	 *
+	 * 
 	 * @param	string		$node
 	 * @return	integer
 	 */
@@ -238,7 +238,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * Duplicates a node by re-inserting it and moving all descendants into a new tree.
-	 *
+	 * 
 	 * @param	string		$node
 	 * @param	integer		$sequenceNo
 	 */
@@ -406,7 +406,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * Builds nodes for required packages, whereas each has it own node.
-	 *
+	 * 
 	 * @return	string
 	 */
 	protected function buildRequirementNodes() {
@@ -478,7 +478,7 @@ class PackageInstallationNodeBuilder {
 	/**
 	 * Builds package installation plugin nodes, whereas pips could be grouped within
 	 * one node, differ from each by nothing but the sequence number.
-	 *
+	 * 
 	 * @return	string
 	 */
 	protected function buildPluginNodes() {

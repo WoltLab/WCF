@@ -117,7 +117,7 @@
 				</dl>
 			{/if}
 		</fieldset>
-	
+		
 		{event name='fieldsets'}
 		
 		{hascontent}
@@ -128,7 +128,7 @@
 							{if $options|count}
 								<li><a href="#profile">{lang}wcf.acp.user.search.conditions.profile{/lang}</a></li>
 							{/if}
-	
+							
 							{event name='tabMenuTabs'}
 						{/content}
 					</ul>
@@ -235,7 +235,7 @@
 						<label><input type="radio" name="fileType" value="xml" {if $fileType == 'xml'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label>
 					</dd>
 				</dl>
-			
+				
 				<dl id="separatorDiv">
 					<dt><label for="separator">{lang}wcf.acp.user.exportEmailAddress.separator{/lang}</label></dt>
 					<dd>

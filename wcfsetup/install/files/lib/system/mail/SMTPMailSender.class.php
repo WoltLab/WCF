@@ -7,11 +7,11 @@ use wcf\system\io\RemoteFile;
  * Sends a Mail with a connection to a smtp server.
  * 
  * @author	Michael Schaefer
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.mail
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SMTPMailSender extends MailSender {
 	protected $connection = null;
@@ -32,7 +32,7 @@ class SMTPMailSender extends MailSender {
 	public function __destruct() {
 		$this->disconnect();
 	}
-
+	
 	/**
 	 * Connects to the smtp-server
 	 */
@@ -101,7 +101,7 @@ class SMTPMailSender extends MailSender {
 	}
 	
 	/**
-	 * @see wcf\system\mail\MailSender::sendMail()
+	 * @see	wcf\system\mail\MailSender::sendMail()
 	 */
 	public function sendMail(Mail $mail) {
 		$this->recipients = array();
@@ -152,7 +152,7 @@ class SMTPMailSender extends MailSender {
 			."Message-ID: <".md5(uniqid())."@".$_SERVER['SERVER_NAME'].">".Mail::$crlf
 			."Subject: ".Mail::encodeMIMEHeader($mail->getSubject()).Mail::$crlf
 			.$mail->getHeader();
-
+		
 		$this->write($header);
 		$this->write("");
 		$this->write($mail->getBody());
@@ -171,7 +171,7 @@ class SMTPMailSender extends MailSender {
 		if ($this->connection === null) {
 			return;
 		}
-
+		
 		$this->write("QUIT");
 		$this->read();
 		$this->connection->close();

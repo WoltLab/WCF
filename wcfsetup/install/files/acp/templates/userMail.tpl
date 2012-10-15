@@ -50,7 +50,7 @@
 				<div>
 					{implode from=$userList item=$user}<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user}</a>{/implode}
 				</div>
-			</fieldset>	
+			</fieldset>
 		{/if}
 		
 		{if $action == 'group'}

@@ -13,44 +13,44 @@ use wcf\system\WCFACP;
  * Shows the group add form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserGroupAddForm extends AbstractOptionListForm {
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canAddGroup');
 	
 	/**
 	 * name of the active acp menu item
-	 * @var string
+	 * @var	string
 	 */
 	public $menuItemName = 'wcf.acp.menu.link.group.add';
 	
 	/**
-	 * @see wcf\acp\form\AbstractOptionListForm::$cacheName
+	 * @see	wcf\acp\form\AbstractOptionListForm::$cacheName
 	 */
 	public $cacheName = 'userGroup-option';
 	
 	/**
 	 * active tab menu item name
-	 * @var string
+	 * @var	string
 	 */
 	public $activeTabMenuItem = '';
 	
 	/**
 	 * active sub tab menu item name
-	 * @var string
+	 * @var	string
 	 */
 	public $activeMenuItem = '';
 	
 	/**
-	 * the option tree
-	 * @var array
+	 * option tree
+	 * @var	array
 	 */
 	public $optionTree = array();
 	
@@ -66,13 +66,13 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	
 	/**
 	 * group name
-	 * @var string
+	 * @var	string
 	 */
 	public $groupName = '';
 	
 	/**
 	 * additional fields
-	 * @var array
+	 * @var	array
 	 */
 	public $additionalFields = array();
 	
@@ -92,7 +92,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -105,7 +105,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		// validate dynamic options
@@ -120,14 +120,14 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		catch (UserInputException $e) {
 			$this->errorType[$e->getField()] = $e->getType();
 		}
-	
+		
 		if (count($this->errorType) > 0) {
 			throw new UserInputException('groupName', $this->errorType);
 		}		
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -179,7 +179,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -206,7 +206,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 			'activeMenuItem' => $this->activeMenuItem
 		));
 	}
-
+	
 	/**
 	 * @see wcf\form\IForm::show()
 	 */

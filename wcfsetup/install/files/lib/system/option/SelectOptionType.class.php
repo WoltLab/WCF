@@ -12,11 +12,11 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SelectOptionType extends RadioButtonOptionType {
 	/**
-	 * @see wcf\system\option\IOptionType::getFormElement()
+	 * @see	wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		// get options
@@ -33,7 +33,7 @@ class SelectOptionType extends RadioButtonOptionType {
 	}
 	
 	/**
-	 * @see wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @see	wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		return $this->getFormElement($option, $value);

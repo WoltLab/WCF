@@ -19,13 +19,13 @@ use wcf\system\WCF;
 abstract class AbstractForm extends AbstractPage implements IForm {
 	/**
 	 * name of error field
-	 * @var string
+	 * @var	string
 	 */
 	public $errorField = '';
 	
 	/**
 	 * error type
-	 * @var string
+	 * @var	string
 	 */
 	public $errorType = '';
 	
@@ -36,7 +36,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	public $objectAction = null;
 	
 	/**
-	 * @see wcf\form\IForm::submit()
+	 * @see	wcf\form\IForm::submit()
 	 */
 	public function submit() {
 		// call submit event
@@ -56,7 +56,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		// call readFormParameters event
@@ -64,7 +64,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		// call validate event
@@ -72,7 +72,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		// call save event
@@ -88,7 +88,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		if (count($_POST) || count($_FILES)) {
@@ -99,7 +99,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

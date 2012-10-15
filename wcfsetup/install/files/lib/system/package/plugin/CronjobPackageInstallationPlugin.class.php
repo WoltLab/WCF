@@ -11,7 +11,7 @@ use wcf\util\CronjobUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**

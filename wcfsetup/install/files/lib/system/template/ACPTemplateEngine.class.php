@@ -5,12 +5,12 @@ namespace wcf\system\template;
  * ACPTemplate loads and displays template in the admin control panel of the wcf.
  * ACPTemplate does not support template groups.
  * 
- * @author 	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Alexander Ebert
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ACPTemplateEngine extends TemplateEngine {
 	/**
@@ -44,11 +44,10 @@ class ACPTemplateEngine extends TemplateEngine {
 	}
 	
 	/**
-	 * Template groups are not supported by acp template engine.
-	 * 
 	 * @see	wcf\system\template\TemplateEngine::setTemplateGroupID()
 	 */
 	public final function setTemplateGroupID($templateGroupID) {
+		// template groups are not supported by the acp template engine
 		$this->templateGroupID = 0;
 	}
 }

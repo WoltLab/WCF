@@ -6,11 +6,11 @@ use wcf\system\WCF;
  * Abstract class for all data holder classes.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class DatabaseObject implements IStorableObject {
 	/**
@@ -51,7 +51,7 @@ abstract class DatabaseObject implements IStorableObject {
 	
 	/**
 	 * Creates a new instance of the DatabaseObject class.
-	 *  
+	 * 
 	 * @param	mixed				$id
 	 * @param	array				$row
 	 * @param	wcf\data\DatabaseObject		$object
@@ -149,7 +149,7 @@ abstract class DatabaseObject implements IStorableObject {
 				if (!empty(static::$databaseTableName)) {
 					static::$databaseTableName .= '_';
 				}
-		
+				
 				static::$databaseTableName .= strtolower($part);
 			}
 		}
@@ -159,7 +159,7 @@ abstract class DatabaseObject implements IStorableObject {
 	
 	/**
 	 * @see	wcf\data\IStorableObject::getDatabaseTableIndexIsIdentity()
-	 */	
+	 */
 	public static function getDatabaseTableIndexIsIdentity() {
 		return static::$databaseTableIndexIsIdentity;
 	}
@@ -170,10 +170,10 @@ abstract class DatabaseObject implements IStorableObject {
 	public static function getDatabaseTableIndexName() {
 		return static::$databaseTableIndexName;
 	}
-
+	
 	/**
 	 * Sorts a list of database objects.
-	 *
+	 * 
 	 * @param	array<wcf\data\DatabaseObject>	$objects
 	 * @param	mixed				$sortBy
 	 * @param	string				$sortOrder
@@ -189,16 +189,17 @@ abstract class DatabaseObject implements IStorableObject {
 				$objects2[$idx.'x'] = $obj;
 			}
 		}
-
+		
 		if ($maintainIndexAssociation) {
 			$objects = array();
 			array_multisort($sortArray, $sortOrder == 'ASC' ? SORT_ASC : SORT_DESC, $objects2);
-
+			
 			$objects = array();
 			foreach ($objects2 as $idx => $obj) {
 				$objects[substr($idx, 0, -1)] = $obj;
 			}
-		} else {
+		}
+		else {
 			array_multisort($sortArray, $sortOrder == 'ASC' ? SORT_ASC : SORT_DESC, $objects);
 		}
 	}

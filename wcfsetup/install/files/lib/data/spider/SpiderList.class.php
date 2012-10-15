@@ -5,12 +5,12 @@ use wcf\data\DatabaseObjectList;
 /**
  * Represents a list of spiders.
  * 
- * @author 	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Alexander Ebert
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.spider
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SpiderList extends DatabaseObjectList {
 	/**

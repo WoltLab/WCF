@@ -7,19 +7,19 @@ use wcf\system\template\TemplateScriptingCompiler;
  * The 'fetch' compiler function fetches files from the local file system, http, or ftp and displays the content.
  * 
  * Usage:
- * {fetch file='x.html'}
- * {fetch file='x.html' assign=var}
+ *	{fetch file='x.html'}
+ *	{fetch file='x.html' assign=var}
  * 
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class FetchCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	/**
-	 * @see wcf\system\template\ICompilerTemplatePlugin::executeStart()
+	 * @see	wcf\system\template\ICompilerTemplatePlugin::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		if (!isset($tagArgs['file'])) {
@@ -35,7 +35,7 @@ class FetchCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	}
 	
 	/**
-	 * @see wcf\system\template\ICompilerTemplatePlugin::executeEnd()
+	 * @see	wcf\system\template\ICompilerTemplatePlugin::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		throw new SystemException($compiler->formatSyntaxError("unknown tag {/fetch}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));

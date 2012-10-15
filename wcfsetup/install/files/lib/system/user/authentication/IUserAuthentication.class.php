@@ -6,11 +6,11 @@ use wcf\data\user\User;
  * All user authentication types should implement this interface.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.authentication
- * @category 	Community Framework
+ * @category	Community Framework
  */
 interface IUserAuthentication {
 	/**
@@ -31,7 +31,7 @@ interface IUserAuthentication {
 	 * Stores the user access data for a persistent login.
 	 * 
 	 * @param	wcf\data\user\User	$user
-	 * @param 	string			$username
+	 * @param	string			$username
 	 * @param	string			$password
 	 */
 	public function storeAccessData(User $user, $username, $password);
@@ -39,7 +39,7 @@ interface IUserAuthentication {
 	/**
 	 * Does a manual user login.
 	 * 
-	 * @param 	string		$username
+	 * @param	string		$username
 	 * @param	string		$password
 	 * @param	string		$userClassname		class name of user class
 	 * @return	wcf\data\user\User

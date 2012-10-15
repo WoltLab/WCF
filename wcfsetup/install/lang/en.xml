@@ -285,7 +285,7 @@
 		<item name="wcf.acp.option.user_online_timeout"><![CDATA[Users online timeout]]></item>
 		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Enter the time users should remain marked as online when they are inactive [seconds].]]></item>
 	</category>
-
+	
 	<category name="wcf.acp.package">
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installed applications]]></item>
 		<item name="wcf.acp.package.application.title"><![CDATA[Applications]]></item>
@@ -344,6 +344,8 @@
 	<category name="wcf.acp.search">
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[Pages]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.option"><![CDATA[Options]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.package"><![CDATA[Packages]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.userGroupOption"><![CDATA[Permissions]]></item>
 	</category>
 	
@@ -615,7 +617,8 @@
 		<item name="wcf.global.form.add.success"><![CDATA[The new entry has been successfully saved.]]></item>
 		<item name="wcf.global.form.data"><![CDATA[General information]]></item>
 		<item name="wcf.global.form.edit.success"><![CDATA[Your changes have been successfully saved.]]></item>
-		<item name="wcf.global.form.error"><![CDATA[The data you have entered are not valid. Please check the information you have given in the marked fields.]]></item><item name="wcf.global.form.error.empty"><![CDATA[Please enter the required information for this field.]]></item>
+		<item name="wcf.global.form.error"><![CDATA[The data you have entered are not valid. Please check the information you have given in the marked fields.]]></item>
+		<item name="wcf.global.form.error.empty"><![CDATA[Please enter the required information for this field.]]></item>
 		<item name="wcf.global.loading"><![CDATA[Loading …]]></item>
 		<item name="wcf.global.locale.unix"><![CDATA[en_US]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.locale.win"><![CDATA[english]]></item> <!-- system variable; do not translate -->

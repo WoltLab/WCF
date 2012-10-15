@@ -4,35 +4,36 @@ use wcf\system\template\TemplateScriptingCompiler;
 use wcf\util\StringUtil;
 
 /**
- * The 'hascontent' prefilter inserts ability to insert code dynamically upon the contents of 'content'.
+ * The 'hascontent' prefilter inserts ability to insert code dynamically upon the
+ * contents of 'content'.
  * 
  * Usage:
- * {hascontent}
- * <ul>
- * 	{content}
- * 		{if $foo}<li>bar</li>{/if}
- * 	{/content}
- * </ul>
- * {hascontentelse}
- * 	<p>baz</p>
- * {/hascontent}
- *
- * @author 	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ *	{hascontent}
+ *	<ul>
+ *		{content}
+ *			{if $foo}<li>bar</li>{/if}
+ *		{/content}
+ *	</ul>
+ *	{hascontentelse}
+ *		<p>baz</p>
+ *	{/hascontent}
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class HascontentPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 	/**
-	 * @see wcf\system\template\IPrefilterTemplatePlugin::execute()
+	 * @see	wcf\system\template\IPrefilterTemplatePlugin::execute()
 	 */
 	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');
 		$rdq = preg_quote($compiler->getRightDelimiter(), '~');
 		
-		$sourceContent = preg_replace_callback("~{$ldq}hascontent{$rdq}(.*){$ldq}content{$rdq}(.*){$ldq}\/content{$rdq}(.*)({$ldq}hascontentelse{$rdq}(.*))?{$ldq}\/hascontent{$rdq}~sU", array('self', 'replaceContentCallback'), $sourceContent);
+		$sourceContent = preg_replace_callback("~{$ldq}hascontent( assign='(?<assign>.*)')?{$rdq}(?<before>.*){$ldq}content{$rdq}(?<content>.*){$ldq}\/content{$rdq}(?<after>.*)({$ldq}hascontentelse{$rdq}(?<else>.*))?{$ldq}\/hascontent{$rdq}~sU", array('self', 'replaceContentCallback'), $sourceContent);
 		
 		return $sourceContent;
 	}
@@ -47,15 +48,17 @@ class HascontentPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 	 * @return	string
 	 */
 	protected static function replaceContentCallback(array $matches) {
-		$beforeContent = $matches[1];
-		$content = $matches[2];
-		$afterContent = $matches[3];
-		$elseContent = (isset($matches[5])) ? $matches[5] : '';
-		
+		$beforeContent = $matches['before'];
+		$content = $matches['content'];
+		$afterContent = $matches['after'];
+		$elseContent = (isset($matches['else'])) ? $matches['else'] : '';
+		$assignContent = (isset($matches['assign']) && !empty($matches['assign'])) ? $matches['assign'] : '';
 		$variable = 'hascontent_' . StringUtil::getRandomID();
 		
 		$newContent = '{capture assign='.$variable.'}'.$content.'{/capture}'."\n";
 		$newContent .= '{assign var='.$variable.' value=$'.$variable.'|trim}'."\n";
+		
+		if ($assignContent) $newContent .= '{capture assign='.$assignContent.'}'."\n";
 		$newContent .= '{if $'.$variable.'}'.$beforeContent.'{@$'.$variable.'}'."\n".$afterContent;
 		
 		if (!empty($elseContent)) {
@@ -63,6 +66,8 @@ class HascontentPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 		}
 		
 		$newContent .= '{/if}'."\n";
+		
+		if ($assignContent) $newContent .= "{/capture}\n{@$".$assignContent."}\n";
 		
 		return $newContent;
 	}

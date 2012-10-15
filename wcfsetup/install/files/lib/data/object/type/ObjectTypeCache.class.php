@@ -7,16 +7,16 @@ use wcf\system\SingletonFactory;
  * Manages the object type cache.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.object.type
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ObjectTypeCache extends SingletonFactory {
 	/**
 	 * object type definitions
-	 * @var array<wcf\data\object\type\definition\ObjectTypeDefinition>
+	 * @var	array<wcf\data\object\type\definition\ObjectTypeDefinition>
 	 */
 	protected $definitions = array();
 	
@@ -28,24 +28,24 @@ class ObjectTypeCache extends SingletonFactory {
 	
 	/**
 	 * object type definitions sorted by name
-	 * @var array<wcf\data\object\type\definition\ObjectTypeDefinition>
+	 * @var	array<wcf\data\object\type\definition\ObjectTypeDefinition>
 	 */
 	protected $definitionsByName = array();
 	
 	/**
 	 * object types
-	 * @var array<wcf\data\object\type\ObjectType>
+	 * @var	array<wcf\data\object\type\ObjectType>
 	 */
 	protected $objectTypes = array();
 	
 	/**
 	 * object types grouped by definition
-	 * @var array
+	 * @var	array
 	 */
 	protected $groupedObjectTypes = array();
 	
 	/**
-	 * @see wcf\system\SingletonFactory::init()
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get definition cache

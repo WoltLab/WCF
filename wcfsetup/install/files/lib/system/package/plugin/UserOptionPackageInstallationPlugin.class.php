@@ -10,18 +10,18 @@ use wcf\util\StringUtil;
 
 /**
  * This PIP installs, updates or deletes user fields.
- *
- * @author 	Benjamin Kunz
+ * 
+ * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */	
+	 */
 	public $tableName = 'user_option';
 	
 	/**
@@ -32,7 +32,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	
 	/**
 	 * Installs user option categories.
-	 *
+	 * 
 	 * @param 	array		$category
 	 * @param	array		$categoryXML
 	 */
@@ -94,7 +94,6 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 		if (isset($option['permissions'])) $permissions 		= $option['permissions'];
 		if (isset($option['options'])) $options 			= $option['options'];
 		
-		
 		// check if optionType exists
 		$className = 'wcf\system\option\\'.StringUtil::firstCharToUpperCase($optionType).'OptionType';
 		if (!class_exists($className)) {
@@ -153,7 +152,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 			$data['packageID'] = $this->installation->getPackageID();
 			UserOptionEditor::create($data);
 		}
-        }
+	}
 	
 	/**
 	 * Drops the columns from user option value table from options

@@ -6,7 +6,7 @@ use \wcf\system\exception\SystemException;
  * Represents a regex.
  * 
  * @author	Tim Düsterhus
- * @copyright	2011 - 2012 Tim Düsterhus
+ * @copyright	2011-2012 Tim Düsterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
@@ -14,80 +14,70 @@ use \wcf\system\exception\SystemException;
  */
 final class Regex {
 	/**
-	 * The delimiter that is used internally.
-	 * 
+	 * delimiter used internally
 	 * @var	string
 	 */
 	const REGEX_DELIMITER = '/';
 	
 	/**
-	 * Do not apply any modifiers.
-	 * 
+	 * inidicates that no modifier is applied
 	 * @var	integer
 	 */
 	const MODIFIER_NONE = 0;
 	
 	/**
-	 * Case insensitive matching.
-	 * 
+	 * indicates case insensitive matching
 	 * @var	integer
 	 */
 	const CASE_INSENSITIVE = 1;
 	
 	/**
-	 * Ungreedy matching.
-	 * 
+	 * indicates ungreedy matching
 	 * @var	integer
 	 */
 	const UNGREEDY = 2;
 	
 	/**
-	 * eval() replacement of  Regex::replace()
-	 *
+	 * indicates eval() replacement of Regex::replace()
 	 * @var	integer
 	 */
 	const EVAL_REPLACEMENT = 4;
 	
 	/**
-	 * Do not spend extra time on analysing.
-	 * 
+	 * indicates that no extra time is spent on analysing
 	 * @var	integer
 	 */
 	const NO_ANALYSE = 8;
 	
 	/**
-	 * Ignore whitepsace in regex.
-	 *
+	 * indicates that whitespaces are igored in regex
 	 * @var	integer
 	 */
 	const IGNORE_WHITESPACE = 16;
 	
 	/**
-	 * A dot matches every char.
-	 *
+	 * indicates that a dot matches every char
 	 * @var	integer
 	 */
 	const DOT_ALL = 32;
 	
 	/**
-	 * The compiled regex (:D)
-	 *
+	 * compiled regex
 	 * @var	string
 	 */
 	private $regex = '';
 	
 	/**
-	 * The last matches
-	 *
+	 * last matches
 	 * @var	array
 	 */
 	private $matches = array();
 	
 	/**
 	 * Creates a regex.
-	 *
-	 * @param	string	$regex
-	 * @param	integer	$modifier
+	 * 
+	 * @param	string		$regex
+	 * @param	integer		$modifier
 	 */
 	public function __construct($regex, $modifier = self::MODIFIER_NONE) {
 		// escape delimiter
@@ -121,7 +111,7 @@ final class Regex {
 	
 	/**
 	 * Checks whether the regex is syntactically correct.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function isValid() {
@@ -138,9 +128,9 @@ final class Regex {
 	/**
 	 * Checks whether the regex matches the given string.
 	 * 
-	 * @param	string	$string		String to match.
-	 * @param	boolean	$all		Find all matches.
-	 * @return	integer			Return value of preg_match(_all)
+	 * @param	string		$string		string to match
+	 * @param	boolean		$all		indicates if all matches are collected
+	 * @return	integer				return value of preg_match(_all)
 	 */
 	public function match($string, $all = false) {
 		if ($all) {
@@ -152,9 +142,9 @@ final class Regex {
 	
 	/**
 	 * Replaces part of the string with the regex.
-	 *
-	 * @param	string	$string		String to work on.
-	 * @param	mixed	$replacement	Either replacement-string or instance of \wcf\system\Callback
+	 * 
+	 * @param	string		$string	
+	 * @param	mixed		$replacement	replacement-string or instance of wcf\system\Callback
 	 * @return	string
 	 */
 	public function replace($string, $replacement) {
@@ -167,8 +157,8 @@ final class Regex {
 	
 	/**
 	 * Splits the string with the regex.
-	 *
-	 * @param	string	$string		String to split.
+	 * 
+	 * @param	string		$string
 	 * @return	array<string>
 	 */
 	public function split($string) {
@@ -177,8 +167,9 @@ final class Regex {
 	
 	/**
 	 * Checks whether there was success.
-	 *
-	 * @param	mixed	$result
+	 * 
+	 * @param	mixed		$result
+	 * @param	string		$method
 	 */
 	private function checkResult($result, $method = '') {
 		if ($result === false || $result === null) {
@@ -210,7 +201,7 @@ final class Regex {
 	
 	/**
 	 * Returns the matches of the last string.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function getMatches() {
@@ -219,7 +210,7 @@ final class Regex {
 	
 	/**
 	 * Returns the compiled regex.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getRegex() {

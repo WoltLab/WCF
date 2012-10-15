@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\acp\search\provider;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\ISearchAction;
 use wcf\system\exception\UserInputException;
 use wcf\system\search\acp\ACPSearchHandler;
 use wcf\util\StringUtil;
@@ -13,17 +14,23 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.search.provider
- * @category 	Community Framework
+ * @category	Community Framework
  */
-class ACPSearchProviderAction extends AbstractDatabaseObjectAction {
-	public function validateGetList() {
+class ACPSearchProviderAction extends AbstractDatabaseObjectAction implements ISearchAction {
+	/**
+	 * @see	wcf\data\ISearchAction::validateGetSearchResultList()
+	 */
+	public function validateGetSearchResultList() {
 		$this->parameters['data']['searchString'] = (isset($this->parameters['data']['searchString'])) ? StringUtil::trim($this->parameters['data']['searchString']) : '';
 		if (empty($this->parameters['data']['searchString'])) {
 			throw new UserInputException('searchString');
 		}
 	}
 	
-	public function getList() {
+	/**
+	 * @see	wcf\data\ISearchAction::getSearchResultList()
+	 */
+	public function getSearchResultList() {
 		$data = array();
 		$results = ACPSearchHandler::getInstance()->search($this->parameters['data']['searchString']);
 		

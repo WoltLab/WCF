@@ -117,7 +117,7 @@
 		<div class="formSubmit">
 			<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-	 	</div>
+		</div>
 	</form>
 {/if}
 

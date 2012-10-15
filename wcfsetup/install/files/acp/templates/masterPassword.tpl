@@ -20,10 +20,9 @@
 
 <form method="post" action="{link controller='MasterPassword'}{/link}">
 	<div class="container containerPadding marginTop shadow">
-		
 		<fieldset>
 			<legend>{lang}wcf.acp.masterPassword.enter{/lang}</legend>
-		
+			
 			<dl{if $errorField == 'masterPassword'} class="formError"{/if}>
 				<dt><label for="masterPassword">{lang}wcf.acp.masterPassword{/lang}</label></dt>
 				<dd>
@@ -46,7 +45,7 @@
 		
 		{event name='fieldsets'}
 	</div>
-
+	
 	<div class="formSubmit">
 		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
  		<input type="hidden" name="url" value="{$url}" />

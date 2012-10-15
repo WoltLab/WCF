@@ -12,7 +12,7 @@ use wcf\system\event\EventHandler;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
@@ -46,7 +46,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	 */
 	public function uninstall() {
 		// call uninstall event
-		EventHandler::fireAction($this, 'uninstall');
+		EventHandler::getInstance()->fireAction($this, 'uninstall');
 		
 		// get all style of this package
 		$isDefault = false;

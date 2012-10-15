@@ -3,13 +3,13 @@ namespace wcf\system\form\element;
 
 /**
  * Provides a password input form element.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.form.element
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PasswordInputFormElement extends AbstractNamedFormElement {
 	/**

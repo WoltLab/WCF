@@ -8,19 +8,19 @@ use wcf\util\StringUtil;
  * Escapes single quotes and new lines.
  * 
  * Usage:
- * {$string|encodeJS}
- * {"bl''ah"|encodeJS}
- *
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ *	{$string|encodeJS}
+ *	{"bl''ah"|encodeJS}
+ * 
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class EncodeJSModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see wcf\system\template\IModifierTemplatePlugin::execute()
+	 * @see	wcf\system\template\IModifierTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		return StringUtil::encodeJS($tagArgs[0]);

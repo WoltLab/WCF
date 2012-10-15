@@ -9,13 +9,13 @@ namespace wcf\system\io;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
- * @category 	Community Framework
+ * @category	Community Framework
  */
 interface IArchive {
 	/** 
 	 * Returns the table of contents (TOC) list for this archive.
 	 * 
-	 * @return 	array 		list of content
+	 * @return	array 		list of content
 	 */
 	public function getContentList();
 	
@@ -23,7 +23,7 @@ interface IArchive {
 	 * Returns an associative array with information about a specific file
 	 * in the archive.
 	 *
-	 * @param	mixed	$index	index or name of the requested file
+	 * @param	mixed		$index		index or name of the requested file
 	 * @return	array
 	 */
 	public function getFileInfo($index);
@@ -32,8 +32,8 @@ interface IArchive {
 	 * Extracts a specific file and returns the content as string. Returns
 	 * false if extraction failed.
 	 * 
-	 * @param 	mixed 		$index		index or name of the requested file
-	 * @return 	string 				content of the requested file
+	 * @param	mixed		$index		index or name of the requested file
+	 * @return	string				content of the requested file
 	 */
 	public function extractToString($index);
 	
@@ -41,9 +41,9 @@ interface IArchive {
 	 * Extracts a specific file and writes its content to the file specified
 	 * with $destination.
 	 * 
-	 * @param 	mixed 		$index		index or name of the requested file
-	 * @param 	string 		$destination
-	 * @return 	boolean 	$success
+	 * @param	mixed		$index		index or name of the requested file
+	 * @param	string		$destination
+	 * @return	boolean		$success
 	 */
 	public function extract($index, $destination);
 	
@@ -51,8 +51,8 @@ interface IArchive {
 	 * Searchs a file in the archive and returns the numeric file index.
 	 * Returns false if not found.
 	 *
-	 * @param 	string 		$filename
-	 * @return 	integer 			index of the requested file
+	 * @param	string		$filename
+	 * @return	integer				index of the requested file
 	 */
 	public function getIndexByFilename($filename);
 }

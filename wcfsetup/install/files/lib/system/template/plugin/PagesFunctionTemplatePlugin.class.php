@@ -11,21 +11,21 @@ use wcf\util\StringUtil;
  * The 'pages' template function is used to generate sliding pagers.
  * 
  * Usage:
- * {pages pages=10 link='page-%d.html'}
- * {pages page=8 pages=10 link='page-%d.html'}
+ *	{pages pages=10 link='page-%d.html'}
+ *	{pages page=8 pages=10 link='page-%d.html'}
+ *	
+ *	assign to variable 'output'; do not print: 
+ *	{pages page=8 pages=10 link='page-%d.html' assign='output'}
+ *	
+ *	assign to variable 'output' and do print also:
+ *	{pages page=8 pages=10 link='page-%d.html' assign='output' print=true}
  * 
- * assign to variable 'output'; do not print: 
- * {pages page=8 pages=10 link='page-%d.html' assign='output'}
- * 
- * assign to variable 'output' and do print also:
- * {pages page=8 pages=10 link='page-%d.html' assign='output' print=true}
- * 
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	const SHOW_LINKS = 11;
@@ -33,8 +33,8 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	/**
 	 * Inserts the page number into the link.
 	 * 
-	 * @param 	string		$link
-	 * @param 	integer		$pageNo
+	 * @param	string		$link
+	 * @param	integer		$pageNo
 	 * @return	string		final link
 	 */
 	protected static function insertPageNumber($link, $pageNo) {
@@ -44,11 +44,11 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	}
 	
 	/**
-	 * Generates html code of a link.
+	 * Generates HTML code for a link.
 	 * 
-	 * @param 	string		$link
-	 * @param 	integer		$pageNo
-	 * @param 	integer		$activePage
+	 * @param	string		$link
+	 * @param	integer		$pageNo
+	 * @param	integer		$activePage
 	 * @return	string
 	 */
 	protected function makeLink($link, $pageNo, $activePage, $break = false) {
@@ -61,6 +61,13 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		}
 	}
 	
+	/**
+	 * Generates HTML code for 'previous' link.
+	 * 
+	 * @param	type		$link
+	 * @param	type		$pageNo
+	 * @return	string
+	 */
 	protected function makePreviousLink($link, $pageNo) {
 		if ($pageNo > 1) {
 			return '<li class="button skip"><a href="'.$this->insertPageNumber($link, $pageNo - 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous').'" class="jsTooltip"><img src="'.self::getIconPath('circleArrowLeft').'" alt="" class="icon16" /></a></li>'."\n";
@@ -70,6 +77,13 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		}
 	}
 	
+	/**
+	 * Generates HTML code for 'next' link.
+	 * 
+	 * @param	type		$link
+	 * @param	type		$pageNo
+	 * @return	string
+	 */
 	protected function makeNextLink($link, $pageNo, $pages) {
 		if ($pageNo && $pageNo < $pages) {
 			return '<li class="button skip"><a href="'.$this->insertPageNumber($link, $pageNo + 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.next').'" class="jsTooltip"><img src="'.self::getIconPath('circleArrowRight').'" alt="" class="icon16" /></a></li>'."\n";
@@ -80,7 +94,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	}
 	
 	/**
-	 * @see wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @see	wcf\system\template\IFunctionTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// needed params: controller, link, page, pages
@@ -200,7 +214,16 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		return $html;
 	}
 	
+	/**
+	 * Returns the icon path for the icon with the given name.
+	 * 
+	 * @param	string		$iconName
+	 * @return	string
+	 */
 	private static function getIconPath($iconName) {
+		// todo: 
+		//	1. use RequestHandler to determine if in ACP
+		//	2. replace RELATIVE_WCF_DIR
 		if (class_exists('wcf\system\WCFACP', false)) {
 			return RELATIVE_WCF_DIR.'icon/'.$iconName.'.svg';
 		}

@@ -2,18 +2,17 @@
 namespace wcf\data\user\option;
 use wcf\data\option\Option;
 use wcf\data\user\User;
-use wcf\system\option\user\IUserOptionOutput;
 use wcf\system\WCF;
 
 /**
  * Represents a user option.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2010 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.option
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserOption extends Option {
 	/**

@@ -10,12 +10,12 @@ use wcf\util\StringUtil;
 /**
  * TemplateScriptingCompiler compiles template source in valid php code.
  * 
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class TemplateScriptingCompiler {
 	/**
@@ -353,14 +353,14 @@ class TemplateScriptingCompiler {
 					}
 					$this->popTag('if');
 					return '<?php } ?>';
-				
+					
 				case 'include':
 					return $this->compileIncludeTag($tagArgs, $identifier, $metaData);
 					
 				case 'foreach':
 					$this->pushTag('foreach');
 					return $this->compileForeachTag($tagArgs);
-
+					
 				case 'foreachelse':
 					list($openTag) = end($this->tagStack);
 					if ($openTag != 'foreach') {
@@ -380,7 +380,7 @@ class TemplateScriptingCompiler {
 				case 'section':
 					$this->pushTag('section');
 					return $this->compileSectionTag($tagArgs);
-			
+					
 				case 'sectionelse':
 					list($openTag) = end($this->tagStack);
 					if ($openTag != 'section') {
@@ -400,7 +400,7 @@ class TemplateScriptingCompiler {
 				case 'capture':
 					$this->pushTag('capture');
 					return $this->compileCaptureTag(true, $tagArgs);
-			
+					
 				case '/capture':
 					list($openTag) = end($this->tagStack);
 					if ($openTag != 'capture') {
@@ -414,7 +414,7 @@ class TemplateScriptingCompiler {
 					
 				case 'rdelim':
 					return $this->rightDelimiter;
-				
+					
 				default:
 					// 1) compiler functions first
 					if ($phpCode = $this->compileCompilerPlugin($tagCommand, $tagArgs)) {
@@ -436,10 +436,10 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * Compiles a function plugin.
-	 *
-	 * @param 	string 		$tagCommand
-	 * @param 	string 		$tagArgs
-	 * @return 	mixed				false, if the plugin does not exist
+	 * 
+	 * @param	string		$tagCommand
+	 * @param	string		$tagArgs
+	 * @return	mixed				false, if the plugin does not exist
 	 * 						otherwise the php output of the plugin
 	 */
 	protected function compileFunctionPlugin($tagCommand, $tagArgs) {
@@ -450,16 +450,16 @@ class TemplateScriptingCompiler {
 		$this->autoloadPlugins[$className] = $className;
 		
 		$tagArgs = $this->makeArgString($this->parseTagArgs($tagArgs, $tagCommand));
-
+		
 		return "<?php echo \$this->pluginObjects['".$className."']->execute(array(".$tagArgs."), \$this); ?>";
 	}
 	
 	/**
 	 * Compiles a block plugin.
 	 *
-	 * @param 	string 		$tagCommand
-	 * @param 	string 		$tagArgs
-	 * @return 	mixed				false, if the plugin does not exist
+	 * @param	string		$tagCommand
+	 * @param	string		$tagArgs
+	 * @return	mixed				false, if the plugin does not exist
 	 * 						otherwise the php output of the plugin
 	 */
 	protected function compileBlockPlugin($tagCommand, $tagArgs) {
@@ -472,7 +472,7 @@ class TemplateScriptingCompiler {
 		else {
 			$startTag = true;
 		}
-
+		
 		$className = $this->template->getPluginClassName('block', $tagCommand);
 		if (!class_exists($className)) {
 			return false;
@@ -481,9 +481,9 @@ class TemplateScriptingCompiler {
 		
 		if ($startTag) {
 			$this->pushTag($tagCommand);
-
+			
 			$tagArgs = $this->makeArgString($this->parseTagArgs($tagArgs, $tagCommand));
-
+			
 			$phpCode = "<?php \$this->tagStack[] = array('".$tagCommand."', array(".$tagArgs."));\n";
 			$phpCode .= "\$this->pluginObjects['".$className."']->init(\$this->tagStack[count(\$this->tagStack) - 1][1], \$this);\n";
 			$phpCode .= "while (\$this->pluginObjects['".$className."']->next(\$this)) { ob_start(); ?>";
@@ -502,13 +502,12 @@ class TemplateScriptingCompiler {
 		return $phpCode;
 	}
 	
-	
 	/**
 	 * Compiles a compiler function/block.
-	 *
-	 * @param 	string 		$tagCommand
-	 * @param 	string 		$tagArgs
-	 * @return 	mixed				false, if the plugin does not exist
+	 * 
+	 * @param	string		$tagCommand
+	 * @param	string		$tagArgs
+	 * @return	mixed				false, if the plugin does not exist
 	 * 						otherwise the php output of the plugin
 	 */
 	protected function compileCompilerPlugin($tagCommand, $tagArgs) {
@@ -521,7 +520,7 @@ class TemplateScriptingCompiler {
 		else {
 			$startTag = true;
 		}
-
+		
 		$className = $this->template->getPluginClassName('compiler', $tagCommand);
 		// if necessary load plugin from plugin-dir
 		if (!isset($this->compilerPlugins[$className])) {
@@ -547,13 +546,13 @@ class TemplateScriptingCompiler {
 		
 		return $phpCode;
 	}
-
+	
 	/**
-	 * Compiles a capture tag.
-	 *
-	 * @param 	boolean 	$startTag
-	 * @param 	string 		$captureTag
-	 * @return 	string 				phpCode
+	 * Compiles a capture tag and returns the compiled PHP code.
+	 * 
+	 * @param	boolean		$startTag
+	 * @param	string		$captureTag
+	 * @return	string
 	 */
 	protected function compileCaptureTag($startTag, $captureTag = null) {
 		if ($startTag) {
@@ -588,14 +587,14 @@ class TemplateScriptingCompiler {
 	}
 	
 	/**
-	 * Compiles a section tag.
-	 *
-	 * @param 	string 		$sectionTag
-	 * @return 	string 				phpCode
+	 * Compiles a section tag and returns the compiled PHP code.
+	 * 
+	 * @param	string		$sectionTag
+	 * @return	string
 	 */
 	protected function compileSectionTag($sectionTag) {
 		$args = $this->parseTagArgs($sectionTag, 'section');
-
+		
 		// check arguments
 		if (!isset($args['loop'])) {
 			throw new SystemException($this->formatSyntaxError("missing 'loop' attribute in section tag", $this->currentIdentifier, $this->currentLineNo));
@@ -608,7 +607,7 @@ class TemplateScriptingCompiler {
 		}
 		
 		$sectionProp = "\$this->v['tpl']['section'][".$args['name']."]";
-
+		
 		$phpCode = "<?php\n";
 		$phpCode .= "if (".$args['loop'].") {\n";
 		$phpCode .= $sectionProp." = array();\n";
@@ -646,7 +645,7 @@ class TemplateScriptingCompiler {
 		$phpCode .= "} else {\n";
 		$phpCode .= "".$sectionProp."['total'] = 0;\n";
 		$phpCode .= "".$sectionProp."['show'] = false;}\n";
-
+		
 		$phpCode .= "if (".$sectionProp."['show']) {\n";
 		$phpCode .= "for (".$sectionProp."['index'] = ".$sectionProp."['start'], ".$sectionProp."['rowNumber'] = 1;\n";
 		$phpCode .= $sectionProp."['rowNumber'] <= ".$sectionProp."['total'];\n";
@@ -657,19 +656,19 @@ class TemplateScriptingCompiler {
 		$phpCode .= $sectionProp."['first']      = (".$sectionProp."['rowNumber'] == 1);\n";
 		$phpCode .= $sectionProp."['last']       = (".$sectionProp."['rowNumber'] == ".$sectionProp."['total']);\n";
 		$phpCode .= "?>";
-
+		
 		return $phpCode;
 	}
 	
 	/**
-	 * Compiles a foreach tag.
+	 * Compiles a foreach tag and returns the compiled PHP code.
 	 *
-	 * @param 	string 		$foreachTag
-	 * @return 	string 				phpCode
+	 * @param	string		$foreachTag
+	 * @return	string
 	 */
 	protected function compileForeachTag($foreachTag) {
 		$args = $this->parseTagArgs($foreachTag, 'foreach');
-
+		
 		// check arguments
 		if (!isset($args['from'])) {
 			throw new SystemException($this->formatSyntaxError("missing 'from' attribute in foreach tag", $this->currentIdentifier, $this->currentLineNo));
@@ -677,7 +676,7 @@ class TemplateScriptingCompiler {
 		if (!isset($args['item'])) {
 			throw new SystemException($this->formatSyntaxError("missing 'item' attribute in foreach tag", $this->currentIdentifier, $this->currentLineNo));
 		}
-
+		
 		$foreachProp = '';
 		if (isset($args['name'])) {
 			$foreachProp = "\$this->v['tpl']['foreach'][".$args['name']."]";
@@ -709,12 +708,12 @@ class TemplateScriptingCompiler {
 	}
 	
 	/**
-	 * Compiles an include tag.
+	 * Compiles an include tag and returns the compiled PHP code.
 	 *
-	 * @param 	string 		$includeTag
+	 * @param	string		$includeTag
 	 * @param	string		$identifier
 	 * @param	array		$metaData
-	 * @return 	string 		phpCode
+	 * @return
 	 */
 	protected function compileIncludeTag($includeTag, $identifier, array &$metaData) {
 		$args = $this->parseTagArgs($includeTag, 'include');
@@ -724,11 +723,11 @@ class TemplateScriptingCompiler {
 		if (!isset($args['file'])) {
 			throw new SystemException($this->formatSyntaxError("missing 'file' attribute in include tag", $this->currentIdentifier, $this->currentLineNo));
 		}
-
+		
 		// get filename
 		$file = $args['file'];
 		unset($args['file']);
-
+		
 		// special parameters
 		$assignVar = false;
 		if (isset($args['assign'])) {
@@ -825,12 +824,12 @@ class TemplateScriptingCompiler {
 	}
 	
 	/**
-	 * Parses an argument list and returns
-	 * the keys and values in an associative array.
-	 *
-	 * @param 	string 		$tagArgs
-	 * @param 	string		$tag
-	 * @return 	array 		$tagArgs
+	 * Parses an argument list and returns the keys and values in an associative
+	 * array.
+	 * 
+	 * @param	string		$tagArgs
+	 * @param	string		$tag
+	 * @return	array
 	 */
 	public function parseTagArgs($tagArgs, $tag) {
 		// replace strings
@@ -840,7 +839,7 @@ class TemplateScriptingCompiler {
 		if (!preg_match('~^(?:\s+\w+\s*=\s*[^=]*(?=\s|$))*$~s', $tagArgs)) {
 			throw new SystemException($this->formatSyntaxError('syntax error in tag {'.$tag.'}', $this->currentIdentifier, $this->currentLineNo));
 		}
-
+		
 		// parse tag arguments
 		$matches = array();
 		// find all variables
@@ -872,11 +871,11 @@ class TemplateScriptingCompiler {
 	}
 	
 	/**
-	 * Takes an array created by TemplateCompiler::parseTagArgs()
-	 * and creates a string.
-	 *
-	 * @param 	array 		$args
-	 * @return 	string 		$args
+	 * Takes an array created by TemplateCompiler::parseTagArgs() and creates
+	 * a string.
+	 * 
+	 * @param	array		$args
+	 * @return	string		$args
 	 */
 	public static function makeArgString($args) {
 		$argString = '';
@@ -890,12 +889,12 @@ class TemplateScriptingCompiler {
 	}
 	
 	/**
-	 * Formats a syntax error message.
+	 * Returns a formatted syntax error message.
 	 * 
 	 * @param	string		$errorMsg
 	 * @param	string		$file
 	 * @param	integer		$line
-	 * @return	string				formatted error message
+	 * @return	string
 	 */
 	public static function formatSyntaxError($errorMsg, $file = null, $line = null) {
 		$errorMsg = 'Template compilation failed: '.$errorMsg;
@@ -909,11 +908,11 @@ class TemplateScriptingCompiler {
 	}
 	
 	/**
-	 * Compiles an {if} Tag
+	 * Compiles an {if} tag and returns the compiled PHP code.
 	 *
-	 * @param 	string 		$tagArgs
+	 * @param	string		$tagArgs
 	 * @param	boolean		$elseif		true, if this tag is an else tag
-	 * @return	string 				php code of this tag
+	 * @return	string
 	 */
 	protected function compileIfTag($tagArgs, $elseif = false) {
 		$tagArgs = $this->replaceQuotes($tagArgs);
@@ -973,8 +972,8 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * Adds a tag to the tag stack.
-	 *
-	 * @param 	string 		$tag
+	 * 
+	 * @param	string		$tag
 	 */
 	public function pushTag($tag) {
 		$this->tagStack[] = array($tag, $this->currentLineNo);
@@ -982,9 +981,9 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * Deletes a tag from the tag stack.
-	 *
-	 * @param 	string 		$tag
-	 * @return 	string 		$tag
+	 * 
+	 * @param	string		$tag
+	 * @return	string		$tag
 	 */
 	public function popTag($tag) {
 		list($openTag, $lineNo) = array_pop($this->tagStack);
@@ -1003,10 +1002,10 @@ class TemplateScriptingCompiler {
 	}
 	
 	/**
-	 * Compiles an output tag.
+	 * Compiles an output tag and returns the compiled PHP code.
 	 * 
 	 * @param	string		$tag
-	 * @return	string			php code of this tag
+	 * @return	string
 	 */
 	protected function compileOutputTag($tag) {
 		$encodeHTML = false;
@@ -1039,7 +1038,7 @@ class TemplateScriptingCompiler {
 	}
 	
 	/**
-	 * Compiles a variable tag.
+	 * Compiles a variable tag and returns the compiled PHP code.
 	 * 
 	 * @param	string		$variable
 	 * @param	string		$type
@@ -1056,7 +1055,7 @@ class TemplateScriptingCompiler {
 	}
 	
 	/**
-	 * Compiles a modifier tag.
+	 * Compiles a modifier tag and returns the compiled PHP code.
 	 * 
 	 * @param	array		$data
 	 * @return	string
@@ -1071,7 +1070,7 @@ class TemplateScriptingCompiler {
 	}
 	
 	/**
-	 * Returns type of the given variable
+	 * Returns type of the given variable.
 	 * 
 	 * @param	string		$variable
 	 * @return	string
@@ -1083,7 +1082,7 @@ class TemplateScriptingCompiler {
 	}
 	
 	/**
-	 * Compiles a variable tag.
+	 * Compiles a variable tag and returns the compiled PHP code.
 	 * 
 	 * @param	string		$tag
 	 * @return	string
@@ -1117,8 +1116,8 @@ class TemplateScriptingCompiler {
 					case 'start': 
 						$result .= $this->compileSimpleVariable($values[$i], $variableType);
 						$statusStack[0] = $status = $variableType;
-						break;
-						
+					break;
+					
 					case 'object access':
 						if (/*strpos($values[$i], '$') !== false || */strpos($values[$i], '@@') !== false) {
 							throw new SystemException($this->formatSyntaxError("unexpected '->".$values[$i]."' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo));
@@ -1126,46 +1125,46 @@ class TemplateScriptingCompiler {
 						if (strpos($values[$i], '$') !== false) $result .= '{'.$this->compileSimpleVariable($values[$i], $variableType).'}';
 						else $result .= $values[$i];
 						$statusStack[count($statusStack) - 1] = $status = 'object';
-						break;
+					break;
 					
 					case 'object method start':
 						$statusStack[count($statusStack) - 1] = 'object method';
 						$result .= $this->compileSimpleVariable($values[$i], $variableType);
 						$statusStack[] = $status = $variableType;
-						break;
-						
+					break;
+					
 					case 'object method parameter separator':
 						array_pop($statusStack);
 						$result .= $this->compileSimpleVariable($values[$i], $variableType);
 						$statusStack[] = $status = $variableType;
-						break;
-
+					break;
+					
 					case 'dot access':
 						$result .= $this->compileSimpleVariable($values[$i], $variableType, false);
 						$result .= ']';
 						$statusStack[count($statusStack) - 1] = $status = 'variable';
-						break;
-						
+					break;
+					
 					case 'object method':
 					case 'left parenthesis':	
 						$result .= $this->compileSimpleVariable($values[$i], $variableType);
 						$statusStack[] = $status = $variableType;
-						break;
-						
+					break;
+					
 					case 'bracket open':
 						$result .= $this->compileSimpleVariable($values[$i], $variableType, false);
 						$statusStack[] = $status = $variableType;
-						break;
-
+					break;
+					
 					case 'math':
 						$result .= $this->compileSimpleVariable($values[$i], $variableType);
 						$statusStack[count($statusStack) - 1] = $status = $variableType;
-						break;
-						
+					break;
+					
 					case 'modifier end':
 						$result .= $this->compileSimpleVariable($values[$i], $variableType);
 						$statusStack[] = $status = $variableType;
-						break;
+					break;
 					
 					case 'modifier':
 						if (strpos($values[$i], '$') !== false || strpos($values[$i], '@@') !== false) {
@@ -1184,17 +1183,17 @@ class TemplateScriptingCompiler {
 						}
 						
 						$statusStack[count($statusStack) - 1] = $status = 'modifier end';
-						break;
-						
+					break;
+					
 					case 'object':
 					case 'constant': 
 					case 'variable':
 					case 'string': 
 						throw new SystemException($this->formatSyntaxError('unknown tag {'.$tag.'}', $this->currentIdentifier, $this->currentLineNo));
-						break;
+					break;
 				}
 			}
-
+			
 			// check operator
 			if ($operator !== null) {
 				switch ($operator) {
@@ -1207,7 +1206,7 @@ class TemplateScriptingCompiler {
 						}
 						
 						throw new SystemException($this->formatSyntaxError("unexpected '.' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo));
-						break;
+					break;
 					
 					// object access
 					case '->':
@@ -1218,7 +1217,7 @@ class TemplateScriptingCompiler {
 						}
 						
 						throw new SystemException($this->formatSyntaxError("unexpected '->' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo));
-						break;
+					break;
 					
 					// left parenthesis
 					case '(':
@@ -1236,7 +1235,7 @@ class TemplateScriptingCompiler {
 						}
 						
 						throw new SystemException($this->formatSyntaxError("unexpected '(' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo));
-						break;
+					break;
 					
 					// right parenthesis
 					case ')': 
@@ -1251,7 +1250,7 @@ class TemplateScriptingCompiler {
 						}
 						
 						throw new SystemException($this->formatSyntaxError("unexpected ')' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo));
-						break;
+					break;
 					
 					// bracket open
 					case '[': 
@@ -1263,7 +1262,7 @@ class TemplateScriptingCompiler {
 						}
 						
 						throw new SystemException($this->formatSyntaxError("unexpected '[' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo));
-						break;
+					break;
 					
 					// bracket close
 					case ']':
@@ -1278,8 +1277,8 @@ class TemplateScriptingCompiler {
 						}
 						
 						throw new SystemException($this->formatSyntaxError("unexpected ']' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo));
-						break;
-
+					break;
+					
 					// modifier
 					case '|': 
 						// handle previous modifier
@@ -1298,8 +1297,8 @@ class TemplateScriptingCompiler {
 						$statusStack = array(0 => 'modifier');
 						$modifierData = array('name' => '', 'parameter' => array(0 => $result));
 						$result = '';
-						break;
-
+					break;
+					
 					// modifier parameter
 					case ':': 
 						while ($oldStatus = array_pop($statusStack)) {
@@ -1315,8 +1314,8 @@ class TemplateScriptingCompiler {
 						}
 						
 						throw new SystemException($this->formatSyntaxError("unexpected ':' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo));
-						break;
-						
+					break;
+					
 					case ',':
 						while ($oldStatus = array_pop($statusStack)) {
 							if ($oldStatus != 'variable' && $oldStatus != 'object' && $oldStatus != 'constant' && $oldStatus != 'string') {
@@ -1333,7 +1332,7 @@ class TemplateScriptingCompiler {
 						throw new SystemException($this->formatSyntaxError("unexpected ',' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo));
 						break;
 					
-					// math operators	
+					// math operators
 					case '+':
 					case '-':
 					case '*':
@@ -1347,7 +1346,7 @@ class TemplateScriptingCompiler {
 						}
 						
 						throw new SystemException($this->formatSyntaxError("unexpected '".$operator."' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo));
-						break;
+					break;
 				}
 			}
 		}

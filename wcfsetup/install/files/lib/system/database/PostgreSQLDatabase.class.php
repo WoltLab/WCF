@@ -6,20 +6,20 @@ use wcf\util\StringStack;
  * This is the database implementation for PostgreSQL.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.database
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PostgreSQLDatabase extends Database {
 	/**
-	 * @see wcf\system\database\Database::$editorClassName
+	 * @see	wcf\system\database\Database::$editorClassName
 	 */
 	protected $editorClassName = 'wcf\system\database\editor\PostgreSQLDatabaseEditor';
 	
 	/**
-	 * @see wcf\system\database\Database::connect()
+	 * @see	wcf\system\database\Database::connect()
 	 */
 	public function connect() {
 		if (!$this->port) $this->port = 5432; // postgresql default port
@@ -50,7 +50,7 @@ class PostgreSQLDatabase extends Database {
 	}
 	
 	/**
-	 * @see wcf\system\database\Database::isSupported()
+	 * @see	wcf\system\database\Database::isSupported()
 	 */
 	public static function isSupported() {
 		return (extension_loaded('PDO') && extension_loaded('pdo_pgsql'));
@@ -65,7 +65,7 @@ class PostgreSQLDatabase extends Database {
 	}
 
 	/**
-	 * @see wcf\system\database\Database::getInsertID()
+	 * @see	wcf\system\database\Database::getInsertID()
 	 */
 	public function getInsertID($table, $field) {
 		try {
@@ -101,7 +101,7 @@ class PostgreSQLDatabase extends Database {
 	}
 	
 	/**
-	 * @see wcf\system\database\Database::escapeString()
+	 * @see	wcf\system\database\Database::escapeString()
 	 */
 	public function escapeString($string) {
 		$string = str_replace("\x00", "\\x00", $string); // escape nul bytes
