@@ -5636,7 +5636,8 @@ WCF.Popover = Class.extend({
 		}
 		else {
 			this._popover.wcfFadeOut(function() {
-				self._popoverContent.empty().css({ height: 'auto', opacity: 0, width: 'auto' }).hide();
+				self._popoverContent.empty().css({ height: 'auto', opacity: 0, width: 'auto' });
+				self._popover.hide();
 			});
 		}
 	},
