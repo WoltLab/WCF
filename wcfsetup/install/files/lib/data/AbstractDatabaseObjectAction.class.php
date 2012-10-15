@@ -3,6 +3,7 @@ namespace wcf\data;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
 use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
@@ -79,6 +80,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @var	array<string>
 	 */
 	protected $allowGuestAccess = array();
+	
+	const TYPE_INTEGER = 1;
+	const TYPE_STRING = 2;
 	
 	/**
 	 * Initialize a new DatabaseObject-related action.
@@ -350,6 +354,106 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		while ($object = $statement->fetchObject($baseClass)) {
 			$this->objects[] = new $this->className($object);
 		}
+	}
+	
+	/**
+	 * Returns a single object and throws and exception if no or more than one object is given.
+	 * 
+	 * @return	wcf\data\DatabaseObject
+	 */
+	protected function getSingleObject() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		if (count($this->objects) != 1) {
+			throw new UserInputException('objectIDs');
+		}
+		
+		reset($this->objects);
+		return current($this->objects);
+	}
+	
+	/**
+	 * Reads an integer value and validates it.
+	 * 
+	 * @param	string		$variableName
+	 * @param	boolean		$allowEmpty
+	 * @param	string		$arrayIndex
+	 */
+	protected function readInteger($variableName, $allowEmpty = false, $arrayIndex = '', $allowUnset = false) {
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_INTEGER);
+	}
+	
+	/**
+	 * Reads a string value and validates it.
+	 * 
+	 * @param	string		$variableName
+	 * @param	boolean		$allowEmpty
+	 * @param	string		$arrayIndex
+	 */
+	protected function readString($variableName, $allowEmpty = false, $arrayIndex = '') {
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_STRING);
+	}
+	
+	/**
+	 * Reads a value and validates it. If you set $allowEmpty to true, no exception will
+	 * be thrown if the variable evaluates to 0 (integer) or '' (string). Furthermore the
+	 * variable will be always created with a sane value if it does not exist.
+	 * 
+	 * @param	string		$variableName
+	 * @param	boolean		$allowEmpty
+	 * @param	string		$arrayIndex
+	 * @param	integer		$type
+	 */
+	protected function readValue($variableName, $allowEmpty, $arrayIndex, $type) {
+		if ($arrayIndex) {
+			if (!isset($this->parameters[$arrayIndex])) {
+				throw new SystemException("Corrupt parameters, index '".$arrayIndex."' is missing");
+			}
+			
+			$target =& $this->parameters[$variableName];
+		}
+		else {
+			$target =& $this->parameters;
+		}
+		
+		switch ($type) {
+			case self::TYPE_INTEGER:
+				if (!isset($target[$variableName])) {
+					if ($allowEmpty) {
+						$target[$variableName] = 0;
+					}
+					else {
+						throw new UserInputException($variableName);
+					}
+				}
+				else {
+					$target[$variableName] = intval($target[$variableName]);
+					if (!$allowEmpty && !$target[$variableName]) {
+						throw new UserInputException($variableName);
+					}
+				}
+			break;
+			
+			case self::TYPE_STRING:
+				if (!isset($target[$variableName])) {
+					if ($allowEmpty) {
+						$target[$variableName] = '';
+					}
+					else {
+						throw new UserInputException($variableName);
+					}
+				}
+				else {
+					$target[$variableName] = StringUtil::trim($target[$variableName]);
+					if (!$allowEmpty && empty($target[$variableName])) {
+						throw new UserInputException($variableName);
+					}
+				}
+			break;
+		}
+		
 	}
 	
 	/**
