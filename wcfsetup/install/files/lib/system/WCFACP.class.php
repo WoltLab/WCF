@@ -203,11 +203,13 @@ class WCFACP extends WCF {
 				require_once(WCF_DIR.'acp/masterPassword.inc.php');
 			}
 			if (defined('MASTER_PASSWORD') && defined('MASTER_PASSWORD_SALT')) {
-				new \wcf\acp\form\MasterPasswordForm();
+				$form = new \wcf\acp\form\MasterPasswordForm();
+				$form->__run();
 				exit;
 			}
 			else {
-				new \wcf\acp\form\MasterPasswordInitForm();
+				$form = new \wcf\acp\form\MasterPasswordInitForm();
+				$form->__run();
 				exit;
 			}
 		}
