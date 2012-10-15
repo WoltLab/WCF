@@ -20,4 +20,9 @@ interface IApplication {
 	 * @return	mixed
 	 */
 	public static function __callStatic($method, array $arguments);
+	
+	/**
+	 * Forces a reset of all application's cache files.
+	 */
+	public function resetCache();
 }
