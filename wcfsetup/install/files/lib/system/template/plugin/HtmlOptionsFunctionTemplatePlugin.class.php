@@ -8,22 +8,26 @@ use wcf\system\template\TemplateEngine;
  * The 'htmlOptions' template function generates the options of an html select list.
  * 
  * Usage:
- * {htmlOptions options=$array}
- * {htmlOptions options=$array selected=$foo}
- * {htmlOptions options=$array name="x"}
- * {htmlOptions output=$outputArray}
- * {htmlOptions output=$outputArray values=$valueArray}
- * {htmlOptions object=$databaseObjectList}
- * {htmlOptions object=$databaseObjectList selected=$foo}
- *
- * @author 	Marcel Werk
+ *	{htmlOptions options=$array}
+ *	{htmlOptions options=$array selected=$foo}
+ *	{htmlOptions options=$array name="x"}
+ *	{htmlOptions output=$outputArray}
+ *	{htmlOptions output=$outputArray values=$valueArray}
+ *	{htmlOptions object=$databaseObjectList}
+ *	{htmlOptions object=$databaseObjectList selected=$foo}
+ * 
+ * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePlugin {
+	/**
+	 * selected values
+	 * @var	array<string>
+	 */
 	protected $selected = array();
 	
 	/**
@@ -51,7 +55,7 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 				$tagArgs['options'] = array();
 			}
 		}
-
+		
 		if (!isset($tagArgs['options']) || (!is_array($tagArgs['options']) && !($tagArgs['options'] instanceof DatabaseObjectList))) {
 			throw new SystemException("missing 'options' or 'object' argument in htmlOptions tag");
 		}
@@ -91,11 +95,11 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 	}
 	
 	/**
-	 * Makes the html for an option group.
+	 * Makes the HTML for an option group.
 	 * 
 	 * @param	string		$key
 	 * @param	array		$values
-	 * @return	string				html code of an option group
+	 * @return	string
 	 */
 	protected function makeOptionGroup($key, $values) {
 		$html = '';
@@ -127,11 +131,11 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 	}
 	
 	/**
-	 * Makes the html for an option.
+	 * Makes the HTML code for an option.
 	 * 
 	 * @param	string		$key
 	 * @param	string		$value
-	 * @return	string				html code of an option tag
+	 * @return	string
 	 */
 	protected function makeOption($key, $value) {
 		$value = $this->encodeHTML($value);

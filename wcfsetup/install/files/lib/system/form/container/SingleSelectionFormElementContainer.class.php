@@ -4,13 +4,13 @@ use wcf\util\StringUtil;
 
 /**
  * Provides a single selection form element container.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.form.container
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SingleSelectionFormElementContainer extends SelectionFormElementContainer {
 	/**
@@ -21,7 +21,7 @@ class SingleSelectionFormElementContainer extends SelectionFormElementContainer 
 	
 	/**
 	 * Sets container value.
-	 *
+	 * 
 	 * @param	string		$value
 	 */
 	public function setValue($value) {
@@ -30,7 +30,7 @@ class SingleSelectionFormElementContainer extends SelectionFormElementContainer 
 	
 	/**
 	 * Returns container value.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getValue() {

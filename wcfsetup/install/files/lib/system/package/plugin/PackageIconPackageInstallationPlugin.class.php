@@ -6,13 +6,13 @@ use wcf\system\exception\SystemException;
 
 /**
  * This PIP installs, updates or deletes the package icon of a package.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageIconPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**

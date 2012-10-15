@@ -12,25 +12,25 @@ use wcf\system\WCF;
  * Shows the list of package update search results.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageUpdateSearchResultPage extends SortablePage {
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canInstallPackage');
 	
 	/**
-	 * @see wcf\page\SortablePage::$defaultSortField
+	 * @see	wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'packageName';
 	
 	/**
-	 * @see wcf\page\SortablePage::$validSortFields
+	 * @see	wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('package', 'packageName', 'author');
 	
@@ -45,7 +45,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	 * @var	wcf\data\search\Search
 	 */
 	public $search = null;
-
+	
 	/**
 	 * list with data of package updates
 	 * @var	array
@@ -53,7 +53,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	public $packages = array();
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -79,7 +79,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -89,7 +89,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\MultipleLinkPage::countItems()
+	 * @see	wcf\page\MultipleLinkPage::countItems()
 	 */
 	public function countItems() {
 		$conditions = new PreparedStatementConditionBuilder();

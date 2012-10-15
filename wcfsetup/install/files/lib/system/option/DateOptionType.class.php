@@ -5,27 +5,27 @@ use wcf\system\exception\UserInputException;
 
 /**
  * DateOptionType is an implementation of IOptionType for date inputs.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class DateOptionType extends TextOptionType {
 	/**
-	 * @see wcf\system\option\TextOptionType::$inputType
+	 * @see	wcf\system\option\TextOptionType::$inputType
 	 */
 	protected $inputType = 'date';
 	
 	/**
-	 * @see wcf\system\option\TextOptionType::$inputClass
+	 * @see	wcf\system\option\TextOptionType::$inputClass
 	 */
 	protected $inputClass = '';
 	
 	/**
-	 * @see wcf\system\option\IOptionType::getFormElement()
+	 * @see	wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function validate(Option $option, $newValue) {
 		if (empty($newValue)) return;

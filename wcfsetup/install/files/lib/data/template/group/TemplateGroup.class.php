@@ -5,14 +5,14 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * TemplateGroup represents a template group. 
+ * Represents a template group. 
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.template.group
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class TemplateGroup extends DatabaseObject {
 	/**

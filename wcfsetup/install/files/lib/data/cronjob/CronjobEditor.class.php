@@ -8,11 +8,11 @@ use wcf\system\cache\CacheHandler;
  * Provides functions to edit cronjobs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.cronjob
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
@@ -21,7 +21,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 	protected static $baseClass = 'wcf\data\cronjob\Cronjob';
 	
 	/**
-	 * @see wcf\data\IEditableCachedObject::resetCache()
+	 * @see	wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.cronjobs-*');

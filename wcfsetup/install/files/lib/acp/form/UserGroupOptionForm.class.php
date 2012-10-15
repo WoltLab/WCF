@@ -22,7 +22,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserGroupOptionForm extends ACPForm {
 	/**
@@ -332,7 +332,7 @@ class UserGroupOptionForm extends ACPForm {
 			}
 		}
 		if (!$hasEnabledOption) return false;
-	
+		
 		// check the permission of this item for the active user
 		$hasPermission = true;
 		if ($object->permissions) {
@@ -346,7 +346,7 @@ class UserGroupOptionForm extends ACPForm {
 			}
 		}
 		if (!$hasPermission) return false;
-	
+		
 		return true;
 	}
 }

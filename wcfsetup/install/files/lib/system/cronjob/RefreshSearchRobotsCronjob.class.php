@@ -13,15 +13,15 @@ use wcf\util\XML;
  * @todo	Add xsd to spiderlist on server
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class RefreshSearchRobotsCronjob implements ICronjob {
 	/**
-	 * @see wcf\system\ICronjob::execute()
+	 * @see	wcf\system\ICronjob::execute()
 	 */
 	public function execute(Cronjob $cronjob) {
 		$filename = FileUtil::downloadFileFromHttp('http://www.woltlab.com/spiderlist/spiderlist.xml', 'spiders');

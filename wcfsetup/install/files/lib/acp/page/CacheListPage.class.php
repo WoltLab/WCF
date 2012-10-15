@@ -16,15 +16,15 @@ use wcf\util\DirectoryUtil;
  * Shows a list of all cache resources.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class CacheListPage extends AbstractPage {
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canViewLog');
 	
@@ -42,12 +42,12 @@ class CacheListPage extends AbstractPage {
 	
 	/**
 	 * contains general cache information
-	 * @var array
+	 * @var	array
 	 */
 	public $cacheData = array();
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -56,7 +56,7 @@ class CacheListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -144,7 +144,7 @@ class CacheListPage extends AbstractPage {
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
-
+			
 			$packageNames = array();
 			while ($row = $statement->fetchArray()) {
 				$packagePath = FileUtil::getRealPath(WCF_DIR.$row['packageDir']).'cache/';
@@ -185,7 +185,7 @@ class CacheListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -198,7 +198,7 @@ class CacheListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
 		// enable menu item

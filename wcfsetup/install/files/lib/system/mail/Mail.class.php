@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.mail
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class Mail {
 	protected $header = '';
@@ -28,7 +28,7 @@ class Mail {
 	protected $body = '';
 	
 	public static $crlf = "\n";
-
+	
 	/**
 	 * Creates a new Mail object.
 	 * 
@@ -45,25 +45,24 @@ class Mail {
 	public function __construct($to = '', $subject = '', $message = '', $from = '', $cc = '', $bcc = '', $attachments = array(), $priority = '', $header = '') {
 		$this->setBoundary();
 		
-		if (empty($from)) 	$from 		= array(MAIL_FROM_NAME => MAIL_FROM_ADDRESS);
-		if (empty($priority)) 	$priority 	= 3;
-			
+		if (empty($from)) $from = array(MAIL_FROM_NAME => MAIL_FROM_ADDRESS);
+		if (empty($priority)) $priority = 3;
+		
 		$this->setFrom($from);
 		$this->setSubject($subject);
 		$this->setMessage($message);
 		$this->setPriority($priority);
 		$this->setHeader($header);
 		
-		if (!empty($to))	$this->addTo($to);
-		if (!empty($cc))	$this->addCC($cc);
-		if (!empty($bcc))	$this->addBCC($bcc);
+		if (!empty($to)) $this->addTo($to);
+		if (!empty($cc)) $this->addCC($cc);
+		if (!empty($bcc)) $this->addBCC($bcc);
 		
 		if (count($attachments) > 0) $this->setAttachments($attachments);
 	}
 	
 	/**
-	 * Creates a Basic Header for the Mail
-	 * Returns this Header to the function which invoke this class
+	 * Creates and returns a basic header for the email.
 	 * 
 	 * @return	string		mail header
 	 */
@@ -94,8 +93,7 @@ class Mail {
 	}
 	
 	/**
-	 * Creates the Recipients List (To, CC, BCC) 
-	 * Returns this List to the function which invoke this class
+	 * Creates and returned the recipients list (TO, CC, BCC).
 	 * 
 	 * @param 	boolean		$withTo
 	 * @return	string
@@ -109,8 +107,7 @@ class Mail {
 	}
 	
 	/**
-	 * Creates the Body (Message, Attachments) for the Mail
-	 * Returns the created Body to the function which invoke this class
+	 * Creates and returned the body (Message, Attachments) for the email.
 	 * 
 	 * @return	string		mail body
 	 */
@@ -181,7 +178,7 @@ class Mail {
 		}
 		return $email;
 	}
-
+	
 	/**
 	 * Sends this mail.
 	 */

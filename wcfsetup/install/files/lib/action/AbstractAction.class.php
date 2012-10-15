@@ -10,11 +10,11 @@ use wcf\system\WCF;
  * This includes the call of the default event listeners for an action: readParameters and execute.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class AbstractAction implements IAction {
 	/**
@@ -50,7 +50,7 @@ abstract class AbstractAction implements IAction {
 	}
 	
 	/**
-	 * @see wcf\action\IAction::readParameters()
+	 * @see	wcf\action\IAction::readParameters()
 	 */
 	public function readParameters() {
 		// call readParameters event
@@ -58,7 +58,7 @@ abstract class AbstractAction implements IAction {
 	}
 	
 	/**
-	 * @see wcf\action\IAction::execute()
+	 * @see	wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		// check if active user is logged in

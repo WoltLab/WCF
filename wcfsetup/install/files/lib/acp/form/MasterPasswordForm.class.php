@@ -8,24 +8,24 @@ use wcf\util\StringUtil;
 
 /**
  * Shows the master password form.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class MasterPasswordForm extends ACPForm {
 	/**
 	 * master password
-	 * @var string
+	 * @var	string
 	 */
 	public $masterPassword = '';
 	
 	/**
 	 * forward url
-	 * @var string
+	 * @var	string
 	 */
 	public $url = '';
 	
@@ -39,9 +39,9 @@ class MasterPasswordForm extends ACPForm {
 			require_once(WCF_DIR.'acp/masterPassword.inc.php');
 		}
 	}
-
+	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -51,7 +51,7 @@ class MasterPasswordForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -67,7 +67,7 @@ class MasterPasswordForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -86,7 +86,7 @@ class MasterPasswordForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -97,7 +97,7 @@ class MasterPasswordForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

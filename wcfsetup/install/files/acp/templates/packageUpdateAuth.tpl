@@ -12,7 +12,6 @@
 
 <form method="{$requestMethod}" action="index.php{if $getParameters}?{@$getParameters}{/if}">
 	<div class="container containerPadding marginTop shadow">
-		
 		<fieldset>
 			<legend>{lang}wcf.acp.packageUpdate.auth.data{/lang}</legend>
 			
@@ -65,7 +64,6 @@
 				<dd><small>{lang}wcf.acp.packageUpdate.auth.save.description{/lang}</small></dd>
 			</dl>
 		</fieldset>
-			
 	</div>
 	
 	<div class="formSubmit">

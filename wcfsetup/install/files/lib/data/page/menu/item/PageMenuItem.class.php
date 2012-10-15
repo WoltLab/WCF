@@ -10,11 +10,11 @@ use wcf\system\request\LinkHandler;
  * Represents an page menu item.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.page.menu.item
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	/**
@@ -33,7 +33,7 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	protected static $processorInterface = 'wcf\system\menu\page\IPageMenuItemProvider';
 	
 	/**
-	 * @see wcf\data\ProcessibleDatabaseObject::getProcessor()
+	 * @see	wcf\data\ProcessibleDatabaseObject::getProcessor()
 	 */
 	public function getProcessor() {
 		if (parent::getProcessor() === null) {
@@ -44,7 +44,7 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	}
 	
 	/**
-	 * @see wcf\system\menu\ITreeMenuItem::getLink()
+	 * @see	wcf\system\menu\ITreeMenuItem::getLink()
 	 */
 	public function getLink() {
 		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($this->packageID);

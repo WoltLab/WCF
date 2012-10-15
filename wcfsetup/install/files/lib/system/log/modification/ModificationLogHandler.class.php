@@ -9,13 +9,13 @@ use wcf\system\WCF;
 
 /**
  * Handles modification logs.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.log.modification
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ModificationLogHandler extends SingletonFactory {
 	/**

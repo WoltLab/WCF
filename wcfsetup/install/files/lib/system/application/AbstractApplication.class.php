@@ -5,12 +5,12 @@ use wcf\system\SingletonFactory;
 /**
  * Default implementation for all applications for community framework.
  * 
- * @author 	Alexander Ebert
+ * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.application
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class AbstractApplication extends SingletonFactory implements IApplication {
 	/**

@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
-use wcf\system\WCF;
 
 /**
  * Cronjob for a hourly system cleanup.
@@ -11,7 +10,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class HourlyCleanUpCronjob extends AbstractCronjob {
 	/**

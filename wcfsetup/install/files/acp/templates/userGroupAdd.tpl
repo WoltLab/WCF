@@ -23,7 +23,7 @@
 {/if}
 
 {if $warningSelfEdit|isset}
-	<p class="warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</p>	
+	<p class="warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</p>
 {/if}
 
 {if $success|isset}

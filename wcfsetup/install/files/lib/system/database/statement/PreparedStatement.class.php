@@ -10,16 +10,15 @@ use wcf\system\WCF;
  * This is an implementation of prepared statements based upon pdo statements.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.database.statement
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PreparedStatement {
 	/**
 	 * database object
-	 *
 	 * @var	wcf\system\database\Database
 	 */
 	protected $database = null;
@@ -32,14 +31,13 @@ class PreparedStatement {
 	
 	/**
 	 * pdo statement object
-	 *
 	 * @var	\PDOStatement
 	 */
 	protected $pdoStatement = null;
 	
 	/**
 	 * SQL query
-	 * @var string
+	 * @var	string
 	 */
 	protected $query = '';
 	
@@ -58,7 +56,7 @@ class PreparedStatement {
 	
 	/**
 	 * Delegates inaccessible methods calls to the decorated object.
-	 *  
+	 * 
 	 * @param	string		$name
 	 * @param	array		$arguments
 	 * @return	mixed
@@ -79,7 +77,7 @@ class PreparedStatement {
 	/**
 	 * Executes a prepared statement within a transaction.
 	 * CAUTION: Transactions disabled for now, use manual transaction if you like
-	 *
+	 * 
 	 * @param	array		$parameters
 	 */
 	public function execute(array $parameters = array()) {
@@ -105,7 +103,7 @@ class PreparedStatement {
 	
 	/**
 	 * Executes a prepared statement.
-	 *
+	 * 
 	 * @param	array		$parameters
 	 */
 	public function executeUnbuffered(array $parameters = array()) {
@@ -127,9 +125,9 @@ class PreparedStatement {
 	
 	/**
 	 * Fetches the next row from a result set in an array.
-	 *
-	 * @param	integer		$type 		fetch type
-	 * @return 	mixed
+	 * 
+	 * @param	integer		$type		fetch type
+	 * @return	mixed
 	 */
 	public function fetchArray($type = null) {
 		// get fetch style
@@ -140,9 +138,9 @@ class PreparedStatement {
 	
 	/**
 	 * Fetches the next row from a result set in a database object.
-	 *
+	 * 
 	 * @param	string			$className
-	 * @return 	wcf\data\DatabaseObject
+	 * @return	wcf\data\DatabaseObject
 	 */
 	public function fetchObject($className) {
 		$row = $this->fetchArray();
@@ -155,9 +153,9 @@ class PreparedStatement {
 	
 	/**
 	 * Fetches the all rows from a result set into database objects.
-	 *
+	 * 
 	 * @param	string			$className
-	 * @return 	array<wcf\data\DatabaseObject>
+	 * @return	array<wcf\data\DatabaseObject>
 	 */
 	public function fetchObjects($className) {
 		$objects = array();
@@ -170,8 +168,8 @@ class PreparedStatement {
 	
 	/**
 	 * Counts number of affected rows by the last sql statement (INSERT, UPDATE or DELETE).
-	 *
-	 * @return 	integer		number of affected rows
+	 * 
+	 * @return	integer		number of affected rows
 	 */
 	public function getAffectedRows() {
 		try {
@@ -185,30 +183,32 @@ class PreparedStatement {
 	/**
 	 * Returns the number of the last error.
 	 * 
-	 * @return integer
+	 * @return	integer
 	 */
 	public function getErrorNumber() {
 		if ($this->pdoStatement !== null) return $this->pdoStatement->errorCode();
+		
 		return 0;
 	}
-
+	
 	/**
 	 * Returns the description of the last error.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getErrorDesc() {
 		if ($this->pdoStatement !== null) {
 			$errorInfoArray = $this->pdoStatement->errorInfo();
 			if (isset($errorInfoArray[2])) return $errorInfoArray[2];
 		}
+		
 		return '';
 	}
 	
 	/**
 	 * Returns the SQL query of this statement.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getSQLQuery() {
 		return $this->query;

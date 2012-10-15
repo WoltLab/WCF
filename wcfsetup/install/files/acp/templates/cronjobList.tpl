@@ -19,7 +19,7 @@
 		}, {
 			success: function(data, statusText, jqXHR) {
 				$('.jsCronjobRow').each(function(index, row) {
-					$button = $(row).find('.jsExecuteButton');
+					var $button = $(row).find('.jsExecuteButton');
 					
 					if (WCF.inArray($($button).data('objectID'), data.objectIDs)) {
 						// insert feedback here
@@ -83,7 +83,7 @@
 								{else}
 									<img src="{@$__wcf->getPath()}icon/play.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" class="icon16 disabled" />
 								{/if}
-						
+								
 								{if $cronjob->canBeDisabled()}
 									<img src="{@$__wcf->getPath()}icon/{if $cronjob->active}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if $cronjob->active}disable{else}enable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip" data-object-id="{@$cronjob->cronjobID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
 								{else}
@@ -93,7 +93,7 @@
 										<img src="{@$__wcf->getPath()}icon/disabled.svg" alt="" title="{lang}wcf.global.button.enable{/lang}" class="icon16 disabled" />
 									{/if}
 								{/if}
-						
+								
 								{if $cronjob->isEditable()}
 									<a href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 jsTooltip" /></a>
 								{else}
@@ -125,7 +125,7 @@
 									<p>{@$cronjob->nextExec|plainTime}</p>
 								{/if}
 							</td>
-					
+							
 							{event name='columns'}
 						</tr>
 					{/foreach}

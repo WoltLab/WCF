@@ -8,23 +8,27 @@ use wcf\util\StringUtil;
  * The 'htmlCheckboxes' template function generates a list of html checkboxes.
  * 
  * Usage:
- * {htmlCheckboxes name="x" options=$array}
- * {htmlCheckboxes name="x" options=$array selected=$foo}
- * {htmlCheckboxes name="x" output=$outputArray}
- * {htmlCheckboxes name="x" output=$outputArray values=$valueArray}
- *
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ *	{htmlCheckboxes name="x" options=$array}
+ *	{htmlCheckboxes name="x" options=$array selected=$foo}
+ *	{htmlCheckboxes name="x" output=$outputArray}
+ *	{htmlCheckboxes name="x" output=$outputArray values=$valueArray}
+ * 
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
+	/**
+	 * indicates if encoding is disabled
+	 * @var	boolean
+	 */
 	protected $disableEncoding = false;
 	
 	/**
-	 * @see wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @see	wcf\system\template\IFunctionTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// get options
@@ -36,7 +40,7 @@ class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 				$tagArgs['options'] = array_combine($tagArgs['output'], $tagArgs['output']);
 			}
 		}
-
+		
 		if (!isset($tagArgs['options']) || !is_array($tagArgs['options'])) {
 			throw new SystemException("missing 'options' argument in htmlCheckboxes tag");
 		}

@@ -49,9 +49,8 @@
 				{/content}
 			</tbody>
 		</table>
-		
 	</div>
-
+	
 	<div class="contentNavigation">
 		{@$pagesLinks}
 	</div>

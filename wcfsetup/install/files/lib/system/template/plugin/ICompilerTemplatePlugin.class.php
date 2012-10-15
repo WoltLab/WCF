@@ -4,21 +4,21 @@ use wcf\system\template\TemplateScriptingCompiler;
 
 /**
  * Compiler functions are called during the compilation of a template.
- *
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * 
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 interface ICompilerTemplatePlugin {
 	/**
 	 * Executes the start tag of this compiler function.
 	 * 
-	 * @param	array		$tagArgs		
+	 * @param	array						$tagArgs
 	 * @param	wcf\system\template\TemplateScriptingCompiler	$compiler
-	 * @return	string		php code	
+	 * @return	string
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler);
 	
@@ -26,7 +26,7 @@ interface ICompilerTemplatePlugin {
 	 * Executes the end tag of this compiler function.
 	 * 
 	 * @param	wcf\system\template\TemplateScriptingCompiler	$compiler
-	 * @return	string		php code	
+	 * @return	string
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler);
 }

@@ -13,20 +13,20 @@ use wcf\util\StringUtil;
  * Shows the package update authentification form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageUpdateAuthForm extends ACPForm {
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canInstallPackage');
 	
 	/**
-	 * @see wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package';
 	
@@ -107,7 +107,7 @@ class PackageUpdateAuthForm extends ACPForm {
 	/**
 	 * Creates a new PackageUpdateAuthForm object.
 	 * 
-	 * @param	PackageUpdateAuthorizationRequiredException	$exception
+	 * @param	wcf\system\package\PackageUpdateAuthorizationRequiredException		$exception
 	 */
 	public function __construct(PackageUpdateAuthorizationRequiredException $exception = null) {
 		$this->exception = $exception;
@@ -134,7 +134,7 @@ class PackageUpdateAuthForm extends ACPForm {
 	
 	/**
 	 * @todo	This whole page is carzy, it's manipulating the requested page, but RequestHandler does not work this way
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -203,7 +203,7 @@ class PackageUpdateAuthForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -232,7 +232,7 @@ class PackageUpdateAuthForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

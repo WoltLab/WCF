@@ -11,17 +11,17 @@ use wcf\system\SingletonFactory;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageCache extends SingletonFactory {
 	/**
 	 * list of cached packages
-	 * @var array<wcf\data\package\Package>
+	 * @var	array<wcf\data\package\Package>
 	 */
 	protected $packages = array();
 	
 	/**
-	 * @see wcf\system\SingletonFactory::init()
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		CacheHandler::getInstance()->addResource(

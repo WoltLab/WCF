@@ -4,13 +4,13 @@ use wcf\util\StringUtil;
 
 /**
  * Basic implementation for form selection element containers.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.form.container
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class SelectionFormElementContainer extends AbstractFormElementContainer {
 	/**
@@ -21,7 +21,7 @@ abstract class SelectionFormElementContainer extends AbstractFormElementContaine
 	
 	/**
 	 * Sets container name.
-	 *
+	 * 
 	 * @param	string		$name
 	 */
 	public function setName($name) {
@@ -30,7 +30,7 @@ abstract class SelectionFormElementContainer extends AbstractFormElementContaine
 	
 	/**
 	 * Returns container name
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getName() {

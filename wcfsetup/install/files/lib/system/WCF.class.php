@@ -32,13 +32,13 @@ if (!defined('NO_IMPORTS')) {
 /**
  * WCF is the central class for the community framework.
  * It holds the database connection, access to template and language engine.
- *
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * 
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class WCF {
 	/**
@@ -49,7 +49,7 @@ class WCF {
 	
 	/**
 	 * list of autoload directories
-	 * @var array
+	 * @var	array
 	 */
 	protected static $autoloadDirectories = array();
 	
@@ -73,25 +73,25 @@ class WCF {
 	
 	/**
 	 * database object
-	 * @var wcf\system\database\Database
+	 * @var	wcf\system\database\Database
 	 */
 	protected static $dbObj = null;
 	
 	/**
 	 * language object
-	 * @var wcf\system\language\Language
+	 * @var	wcf\system\language\Language
 	 */
 	protected static $languageObj = null;
 	
 	/**
 	 * session object
-	 * @var wcf\system\session\SessionHandler
+	 * @var	wcf\system\session\SessionHandler
 	 */
 	protected static $sessionObj = null;
 	
 	/**
 	 * template object
-	 * @var wcf\system\template\TemplateEngine
+	 * @var	wcf\system\template\TemplateEngine
 	 */
 	protected static $tplObj = null;
 	
@@ -177,7 +177,7 @@ class WCF {
 				}
 			}
 		}
-	
+		
 		if (function_exists('set_magic_quotes_runtime')) {
 			@set_magic_quotes_runtime(0);
 		}
@@ -185,7 +185,7 @@ class WCF {
 	
 	/**
 	 * Returns the database object.
-	 *
+	 * 
 	 * @return	wcf\system\database\Database
 	 */
 	public static final function getDB() {
@@ -194,7 +194,7 @@ class WCF {
 	
 	/**
 	 * Returns the session object.
-	 *
+	 * 
 	 * @return	wcf\system\session\SessionHandler
 	 */
 	public static final function getSession() {
@@ -203,7 +203,7 @@ class WCF {
 	
 	/**
 	 * Returns the user object.
-	 *
+	 * 
 	 * @return	wcf\data\user\User
 	 */
 	public static final function getUser() {
@@ -212,8 +212,8 @@ class WCF {
 	
 	/**
 	 * Returns the language object.
-	 *
-	 * @return 	wcf\data\language\Language
+	 * 
+	 * @return	wcf\data\language\Language
 	 */
 	public static final function getLanguage() {
 		return self::$languageObj;
@@ -221,7 +221,7 @@ class WCF {
 	
 	/**
 	 * Returns the template object.
-	 *
+	 * 
 	 * @return	wcf\system\template\TemplateEngine
 	 */
 	public static final function getTPL() {
@@ -230,7 +230,7 @@ class WCF {
 	
 	/**
 	 * Calls the show method on the given exception.
-	 *
+	 * 
 	 * @param	\Exception	$e
 	 */
 	public static final function handleException(\Exception $e) {
@@ -245,7 +245,7 @@ class WCF {
 	
 	/**
 	 * Catches php errors and throws instead a system exception.
-	 *
+	 * 
 	 * @param	integer		$errorNo
 	 * @param	string		$message
 	 * @param	string		$filename
@@ -411,10 +411,10 @@ class WCF {
 	
 	/**
 	 * Loads an application.
-	 *
+	 * 
 	 * @param	wcf\data\application\Application		$application
 	 * @param	boolean						$isDependentApplication
-	 */	
+	 */
 	protected function loadApplication(Application $application, $isDependentApplication = false) {
 		$package = PackageCache::getInstance()->getPackage($application->packageID);
 		
@@ -482,7 +482,7 @@ class WCF {
 	
 	/**
 	 * Wrapper for the getter methods of this class.
-	 *
+	 * 
 	 * @param	string		$name
 	 * @return	mixed		value
 	 */
@@ -497,7 +497,7 @@ class WCF {
 	
 	/**
 	 * Changes the active language.
-	 *
+	 * 
 	 * @param	integer		$languageID
 	 */
 	public static final function setLanguage($languageID) {
@@ -538,7 +538,7 @@ class WCF {
 	
 	/**
 	 * Returns dynamically loaded core objects.
-	 *
+	 * 
 	 * @param	string		$name
 	 * @param	array		$arguments
 	 */
@@ -566,7 +566,7 @@ class WCF {
 	
 	/**
 	 * Searches for cached core object definition.
-	 *
+	 * 
 	 * @param	string		$className
 	 * @return	string
 	 */
@@ -583,7 +583,7 @@ class WCF {
 	/**
 	 * Returns true if the debug mode is enabled, otherwise false.
 	 * 
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public static function debugModeIsEnabled() {
 		if (defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE) return true;
@@ -593,7 +593,7 @@ class WCF {
 	/**
 	 * Returns true if benchmarking is enabled, otherwise false.
 	 * 
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public static function benchmarkIsEnabled() {
 		// benchmarking is enabled by default

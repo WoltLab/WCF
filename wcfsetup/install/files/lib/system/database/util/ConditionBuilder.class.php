@@ -3,24 +3,24 @@ namespace wcf\system\database\util;
 
 /**
  * Builds a sql query 'where' condition.
- *
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.database.util
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ConditionBuilder {
 	/**
 	 * conditions string
-	 * @var string
+	 * @var	string
 	 */
 	protected $conditions = '';
 	
 	/**
 	 * must be true to add the 'WHERE' keyword automatically
-	 * @var boolean
+	 * @var	boolean
 	 */
 	protected $addWhereKeyword = true;
 	

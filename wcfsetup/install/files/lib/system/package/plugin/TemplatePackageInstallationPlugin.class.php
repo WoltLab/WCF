@@ -6,18 +6,18 @@ use wcf\util\FileUtil;
 
 /**
  * This PIP installs, updates or deletes by a package delivered templates.
- *
- * @author 	Benjamin Kunz
+ * 
+ * @author	Benjamin Kunz
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */	
+	 */
 	public $tableName = 'template';
 	
 	/**

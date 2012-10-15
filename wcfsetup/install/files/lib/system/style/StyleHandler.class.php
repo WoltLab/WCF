@@ -13,11 +13,11 @@ use wcf\system\WCF;
  * Handles style-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.style
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class StyleHandler extends SingletonFactory {
 	/**
@@ -33,7 +33,7 @@ class StyleHandler extends SingletonFactory {
 	protected $style = null;
 	
 	/**
-	 * Creates a new StyleHandler object.
+	 * @see	wcf\system\exception\SystemException::init()
 	 */
 	protected function init() {
 		// load cache
@@ -106,7 +106,7 @@ class StyleHandler extends SingletonFactory {
 				throw new SystemException('no default style defined');
 			}
 		}
-
+		
 		// init style
 		$this->style = new ActiveStyle($this->cache['styles'][$styleID]);
 		

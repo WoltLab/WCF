@@ -5,12 +5,12 @@ use wcf\system\io\File;
 /**
  * TemplateCompiler compiles template source into valid php code.
  * 
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class TemplateCompiler extends TemplateScriptingCompiler {
 	/**
@@ -54,7 +54,7 @@ class TemplateCompiler extends TemplateScriptingCompiler {
 	/**
 	 * Returns the name of the current template.
 	 * 
-	 * @return 	string
+	 * @return	string
 	 */
 	public function getCurrentTemplate() {
 		return $this->getCurrentIdentifier();

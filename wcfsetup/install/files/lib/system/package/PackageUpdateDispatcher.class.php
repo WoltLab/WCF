@@ -17,16 +17,16 @@ use wcf\util\XML;
  * Provides functions to manage package updates.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class PackageUpdateDispatcher {
 	/**
 	 * Refreshes the package database.
-	 *
+	 * 
 	 * @param	array		$packageUpdateServerIDs
 	 */
 	public static function refreshPackageDatabase(array $packageUpdateServerIDs = array()) {
@@ -141,20 +141,20 @@ abstract class PackageUpdateDispatcher {
 		
 		// send content type and length
 		$request .= "Content-Type: application/x-www-form-urlencoded\r\n";
-	   	$request .= "Content-Length: ".strlen($postString)."\r\n";
-	   	// if it is a POST request, there MUST be a blank line before the POST data, but there MUST NOT be 
-	   	// another blank line before, and of course there must be another blank line at the end of the request!
-	   	$request .= "\r\n";
-	   	if (!empty($postString)) $request .= $postString."\r\n";
+		$request .= "Content-Length: ".strlen($postString)."\r\n";
+		// if it is a POST request, there MUST be a blank line before the POST data, but there MUST NOT be 
+		// another blank line before, and of course there must be another blank line at the end of the request!
+		$request .= "\r\n";
+		if (!empty($postString)) $request .= $postString."\r\n";
 		// send close
-	   	$request .= "Connection: Close\r\n\r\n";
-
-	   	// send request
-	   	$remoteFile->puts($request);
-	   	unset($request, $postString);
-	   	
-	   	// define response vars
-	   	$header = $content = '';
+		$request .= "Connection: Close\r\n\r\n";
+		
+		// send request
+		$remoteFile->puts($request);
+		unset($request, $postString);
+		
+		// define response vars
+		$header = $content = '';
 		
 		// fetch the response.
 		while (!$remoteFile->eof()) {
@@ -204,7 +204,7 @@ abstract class PackageUpdateDispatcher {
 	
 	/**
 	 * Parses a stream containing info from a packages_update.xml.
-	 *
+	 * 
 	 * @param	string		$content
 	 * @return	array		$allNewPackages
 	 */
@@ -230,7 +230,7 @@ abstract class PackageUpdateDispatcher {
 	
 	/**
 	 * Parses the xml stucture from a packages_update.xml.
-	 *
+	 * 
 	 * @param	\DOMXPath	$xpath
 	 * @param	\DOMNode	$package
 	 */
@@ -676,6 +676,14 @@ abstract class PackageUpdateDispatcher {
 		return $updates;
 	}
 	
+	/**
+	 * Creates a new package installation scheduler.
+	 * 
+	 * @param	array			$selectedPackages
+	 * @param	array<integer>		$packageUpdateServerIDs
+	 * @param	boolean			$download
+	 * @return	wcf\system\package\PackageInstallationScheduler
+	 */
 	public static function prepareInstallation(array $selectedPackages, array $packageUpdateServerIDs = array(), $download = true) {
 		return new PackageInstallationScheduler($selectedPackages, $packageUpdateServerIDs, $download);
 	}

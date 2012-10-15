@@ -15,11 +15,11 @@ use wcf\util\ClassUtil;
  * Provides functions to execute cronjobs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class CronjobScheduler extends SingletonFactory {
 	/**
@@ -194,7 +194,7 @@ class CronjobScheduler extends SingletonFactory {
 				'success' => 0,
 				'error' => $errString
 			));
-		} 
+		}
 		else {
 			$logEditor->update(array(
 				'success' => 1

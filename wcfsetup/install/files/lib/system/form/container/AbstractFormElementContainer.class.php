@@ -7,13 +7,13 @@ use wcf\util\StringUtil;
 
 /**
  * Basic implementation for form element containers.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.form.container
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class AbstractFormElementContainer implements IFormElementContainer {
 	/**
@@ -114,7 +114,7 @@ abstract class AbstractFormElementContainer implements IFormElementContainer {
 	}
 	
 	/**
-	 * @see wcf\system\form\IFormElementContainer::setError()
+	 * @see	wcf\system\form\IFormElementContainer::setError()
 	 */
 	public function setError($name, $error) {
 		foreach ($this->children as $element) {

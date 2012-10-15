@@ -7,18 +7,18 @@ use wcf\system\WCF;
  * The 'event' prefilter inserts template listener's code before compilation.
  * 
  * Usage:
- * {event name='foo'}
- *
- * @author 	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ *	{event name='foo'}
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class EventPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 	/**
-	 * @see wcf\system\template\IPrefilterTemplatePlugin::execute()
+	 * @see	wcf\system\template\IPrefilterTemplatePlugin::execute()
 	 */
 	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');

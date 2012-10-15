@@ -12,23 +12,21 @@ use wcf\util\FileUtil;
  * DiskCacheSource is an implementation of CacheSource that stores the cache as simple files in the file system.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.source
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class DiskCacheSource implements ICacheSource {
 	/**
-	 * Loaded cache
-	 * 
+	 * loaded cache
 	 * @var array
 	 */
 	protected $cache = null;
 	
 	/**
-	 * List of loaded resources
-	 * 
+	 * list of loaded resources
 	 * @var array
 	 */
 	protected $loaded = array();
@@ -79,7 +77,7 @@ class DiskCacheSource implements ICacheSource {
 			if (!@touch($cacheResource['file'], 1)) {
 				@unlink($cacheResource['file']);
 			}
-				
+			
 			// reset open cache
 			if (isset($this->cache[$cacheResource['cache']])) {
 				unset($this->cache[$cacheResource['cache']]);
@@ -91,7 +89,7 @@ class DiskCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\ICacheSource::clear()
+	 * @see	wcf\system\cache\source\ICacheSource::clear()
 	 */
 	public function clear($directory, $filepattern) {
 		// unify parameters
@@ -102,7 +100,7 @@ class DiskCacheSource implements ICacheSource {
 		if (substr($directory, -1) != '/') {
 			$directory .= '/';	
 		}
-
+		
 		DirectoryUtil::getInstance($directory)->executeCallback(new Callback(function ($filename) {
 			if (!@touch($filename, 1)) {
 				@unlink($filename);
@@ -112,9 +110,9 @@ class DiskCacheSource implements ICacheSource {
 	
 	/**
 	 * Determines wheater the cache needs to be rebuild or not.
-	 *
-	 * @param 	array 		$cacheResource
-	 * @return 	boolean 	$needRebuilt
+	 * 
+	 * @param	array		$cacheResource
+	 * @return	boolean
 	 */
 	protected function needRebuild(array $cacheResource) {
 		// cache does not exist
@@ -144,7 +142,7 @@ class DiskCacheSource implements ICacheSource {
 	/**
 	 * Loads a cached resource.
 	 * 
-	 * @param 	array 		$cacheResource
+	 * @param	array		$cacheResource
 	 */
 	public function load(array $cacheResource) {
 		if (!isset($this->loaded[$cacheResource['file']])) {
@@ -165,7 +163,7 @@ class DiskCacheSource implements ICacheSource {
 	/**
 	 * Loads the file of a cached resource.
 	 * 
-	 * @param 	array 		$cacheResource
+	 * @param	array		$cacheResource
 	 */
 	protected function loadCacheFile(array $cacheResource) {
 		// get file contents
@@ -184,14 +182,14 @@ class DiskCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\ICacheSource::close()
+	 * @see	wcf\system\cache\source\ICacheSource::close()
 	 */
 	public function close() {
 		// does nothing
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\ICacheSource::flush()
+	 * @see	wcf\system\cache\source\ICacheSource::flush()
 	 */
 	public function flush() {
 		$sql = "SELECT		package.packageDir

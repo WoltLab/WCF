@@ -7,17 +7,18 @@ use wcf\system\exception\SystemException;
 /**
  * Image adapter for bundled GD imaging library.
  * 
- * @author 	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Alexander Ebert
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.image.adapter
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class GDImageAdapter implements IImageAdapter {
 	/**
 	 * active color
-	 */	
+	 * @var	integer
+	 */
 	protected $color = null;
 	
 	/**
@@ -89,7 +90,7 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see wcf\system\image\adapter\IImageAdapter::createEmptyImage()
+	 * @see	wcf\system\image\adapter\IImageAdapter::createEmptyImage()
 	 */
 	public function createEmptyImage($width, $height) {
 		$this->image = imageCreate($width, $height);

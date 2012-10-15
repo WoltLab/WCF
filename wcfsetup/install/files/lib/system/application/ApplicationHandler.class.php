@@ -7,11 +7,11 @@ use wcf\system\SingletonFactory;
  * Handles multi-application environments.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-20121 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.application
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ApplicationHandler extends SingletonFactory {
 	/**

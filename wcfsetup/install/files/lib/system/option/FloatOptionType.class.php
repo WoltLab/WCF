@@ -5,17 +5,17 @@ use wcf\system\WCF;
 
 /**
  * FloatOptionType is an implementation of IOptionType for float fields.
- *
+ * 
  * @author	Tobias Friebel
  * @copyright	2001-2011 Tobias Friebel
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class FloatOptionType extends TextOptionType {
 	/**
-	 * @see wcf\system\option\IOptionType::getFormElement()
+	 * @see	wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		$value = str_replace('.', WCF::getLanguage()->get('wcf.global.decimalPoint'), $value);
@@ -24,7 +24,7 @@ class FloatOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see wcf\system\option\IOptionType::getData()
+	 * @see	wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		$newValue = str_replace(' ', '', $newValue);

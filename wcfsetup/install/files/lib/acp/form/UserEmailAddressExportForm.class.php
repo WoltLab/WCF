@@ -9,22 +9,53 @@ use wcf\util\StringUtil;
 
 /**
  * Shows the export user mail addresses form.
- *
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserEmailAddressExportForm extends ACPForm {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
+	
+	/**
+	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('admin.user.canMailUser');
 	
+	/**
+	 * type of the file containg the exported email addresses
+	 * @var	string
+	 */
 	public $fileType = 'csv';
+	
+	/**
+	 * ids of the users whose email addresses are exported
+	 * @var	array<integer>
+	 */
 	public $userIDs = array();
+	
+	/**
+	 * string used to separate email adresses
+	 * @var	string
+	 */
 	public $separator = ',';
+	
+	/**
+	 * string used to wrap email adresses
+	 * @var	string
+	 */
 	public $textSeparator = '"'; 
+	
+	/**
+	 * users whose email addresses are exported
+	 * @var	array<wcf\data\user\User>
+	 */
 	public $users = array();
 	
 	/**
@@ -55,7 +86,7 @@ class UserEmailAddressExportForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -66,7 +97,7 @@ class UserEmailAddressExportForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -100,8 +131,12 @@ class UserEmailAddressExportForm extends ACPForm {
 		
 		$i = 0;
 		while ($row = $statement->fetchArray()) {
-			if ($this->fileType == 'xml') echo "<address><![CDATA[".StringUtil::escapeCDATA($row['email'])."]]></address>\n";
-			else echo $this->textSeparator . $row['email'] . $this->textSeparator . ($i < $count['count'] ? $this->separator : '');
+			if ($this->fileType == 'xml') {
+				echo "<address><![CDATA[".StringUtil::escapeCDATA($row['email'])."]]></address>\n";
+			}
+			else {
+				echo $this->textSeparator . $row['email'] . $this->textSeparator . ($i < $count['count'] ? $this->separator : '');
+			}
 			$i++;
 		}
 		
@@ -118,7 +153,7 @@ class UserEmailAddressExportForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

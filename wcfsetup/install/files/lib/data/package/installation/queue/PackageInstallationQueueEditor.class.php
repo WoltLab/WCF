@@ -6,11 +6,11 @@ use wcf\data\DatabaseObjectEditor;
  * Provides functions to edit package installation queues.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package.installation.queue
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageInstallationQueueEditor extends DatabaseObjectEditor {
 	/**

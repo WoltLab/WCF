@@ -5,13 +5,13 @@ use wcf\util\FileUtil;
 
 /**
  * This PIP executes an individual php script.
- *
- * @author 	Benjamin Kunz
- * @copyright	2001-2011 WoltLab GmbH
+ * 
+ * @author	Benjamin Kunz
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
@@ -19,7 +19,7 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 	 */
 	public function install() {
 		parent::install();
-
+		
 		// get installation path of package
 		$sql = "SELECT	packageDir
 			FROM	wcf".WCF_N."_package
@@ -49,13 +49,18 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 		}
 	}
 	
+	/**
+	 * Runs the script with the given path.
+	 * 
+	 * @param	string		$scriptPath
+	 */
 	private function run($scriptPath) {
 		include($scriptPath);
 	}
 	
 	/**
 	 * Returns false. Scripts can't be uninstalled.
-	 *
+	 * 
 	 * @return 	boolean 	false
 	 */
 	public function hasUninstall() {

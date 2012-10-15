@@ -5,24 +5,22 @@ namespace wcf\system\exception;
  * UserInputException handles all formular input errors.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.exception
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserInputException extends UserException {
 	/**
-	 * Name of error field.
-	 *
+	 * name of error field
 	 * @var string
 	 */
 	protected $field = null;
 	
 	/**
-	 * Error type.
-	 *
-	 * @var string
+	 * error type
+	 * @var	string
 	 */
 	protected $type = null;
 	

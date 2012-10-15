@@ -4,29 +4,29 @@ namespace wcf\system\request;
 /**
  * Represents a page request.
  * 
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class Request {
 	/**
 	 * page class name
-	 * @var string
+	 * @var	string
 	 */
 	protected $className = '';
 	
 	/**
 	 * page name
-	 * @var string
+	 * @var	string
 	 */
 	protected $pageName = '';
 	
 	/**
 	 * page type
-	 * @var string
+	 * @var	string
 	 */
 	protected $pageType = '';
 	

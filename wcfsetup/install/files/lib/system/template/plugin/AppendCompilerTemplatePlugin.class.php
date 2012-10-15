@@ -7,18 +7,18 @@ use wcf\system\template\TemplateScriptingCompiler;
  * The 'append' compiler function calls the append function on the template object.
  * 
  * Usage:
- * {append var=name value="foo"}
+ *	{append var=name value="foo"}
  *
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class AppendCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	/**
-	 * @see wcf\system\template\ICompilerTemplatePlugin::executeStart()
+	 * @see	wcf\system\template\ICompilerTemplatePlugin::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		if (!isset($tagArgs['var'])) {
@@ -32,7 +32,7 @@ class AppendCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	}
 	
 	/**
-	 * @see wcf\system\template\ICompilerTemplatePlugin::executeEnd()
+	 * @see	wcf\system\template\ICompilerTemplatePlugin::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		throw new SystemException($compiler->formatSyntaxError("unknown tag {/append}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));

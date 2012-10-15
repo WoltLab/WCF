@@ -5,11 +5,11 @@ namespace wcf\system\setup;
  * A FileHandler class logs files and checks their overwriting rights.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.setup
- * @category 	Community Framework
+ * @category	Community Framework
  */
 interface IFileHandler {
 	/**

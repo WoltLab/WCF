@@ -11,7 +11,7 @@
 {/if}
 
 {if $packageUpdateServer|isset && $packageUpdateServer->errorMessage}
-	<p class="warning">{lang}wcf.acp.updateServer.lastErrorMessage{/lang}<br />{$packageUpdateServer->errorMessage}</p>	
+	<p class="warning">{lang}wcf.acp.updateServer.lastErrorMessage{/lang}<br />{$packageUpdateServer->errorMessage}</p>
 {/if}
 
 {if $success|isset}

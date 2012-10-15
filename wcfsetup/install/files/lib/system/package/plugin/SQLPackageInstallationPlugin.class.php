@@ -12,18 +12,18 @@ use wcf\util\StringUtil;
 
 /**
  * This PIP executes the delivered sql file.
- *
- * @author 	Benjamin Kunz
- * @copyright	2001-2011 WoltLab GmbH
+ * 
+ * @author	Benjamin Kunz
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */	
+	 */
 	public $tableName = 'package_installation_sql_log';
 	
 	/**
@@ -31,7 +31,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	 */
 	public function install() {
 		parent::install();
-
+		
 		// extract sql file from archive
 		if ($queries = $this->getSQL($this->instruction['value'])) {
 			$package = $this->installation->getPackage();
@@ -180,7 +180,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
 	 * Extracts and returns the sql file.
 	 * If the specified sql file was not found, an error message is thrown.
-	 *
+	 * 
 	 * @param	string		$filename
 	 * @return 	string
 	 */

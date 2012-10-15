@@ -5,64 +5,64 @@ namespace wcf\system\database;
  * This is an abstract implementation of a database access class using PDO.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.database
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class Database {
 	/**
-	 * Name of the class used for prepared statements.
+	 * name of the class used for prepared statements
 	 * @var	string
 	 */
 	protected $preparedStatementClassName = 'wcf\system\database\statement\PreparedStatement';
-
+	
 	/**
-	 * Name of the database editor class
+	 * name of the database editor class
 	 * @var	string
 	 */
 	protected $editorClassName = 'wcf\system\database\editor\DatabaseEditor';
 	
 	/**
 	 * sql server hostname
-	 * @var string
+	 * @var	string
 	 */
 	protected $host = '';
 	
 	/**
 	 * sql server post
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $port = 0;
 	
 	/**
 	 * sql server login name
-	 * @var string
+	 * @var	string
 	 */
 	protected $user = '';
 	
 	/**
 	 * sql server login password
-	 * @var string
+	 * @var	string
 	 */
 	protected $password = '';
 	
 	/**
 	 * database name
-	 * @var string
+	 * @var	string
 	 */
 	protected $database = '';
 	
 	/**
 	 * number of executed queries
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $queryCount = 0;
 	
 	/**
 	 * database editor object
-	 * @var wcf\system\database\editor\DatabaseEditor
+	 * @var	wcf\system\database\editor\DatabaseEditor
 	 */
 	protected $editor = null;
 	
@@ -105,10 +105,10 @@ abstract class Database {
 	
 	/**
 	 * Returns ID from last insert.
-	 *
-	 * @param 	string		$table
+	 * 
+	 * @param	string		$table
 	 * @param	string		$field
-	 * @return 	integer				last insert ID
+	 * @return	integer				last insert ID
 	 */
 	public function getInsertID($table, $field) {
 		try {
@@ -121,7 +121,7 @@ abstract class Database {
 	
 	/**
 	 * Initiates a transaction.
-	 *
+	 * 
 	 * @return	boolean		true on success
 	 */
 	public function beginTransaction() {
@@ -141,8 +141,8 @@ abstract class Database {
 	
 	/**
 	 * Commits a transaction.
-	 *
-	 * @return	boolean 	true on success
+	 * 
+	 * @return	boolean		true on success
 	 */
 	public function commitTransaction() {
 		try {
@@ -156,8 +156,8 @@ abstract class Database {
 	
 	/**
 	 * Rolls back a transaction.
-	 *
-	 * @return	boolean 	true on success
+	 * 
+	 * @return	boolean		true on success
 	 */
 	public function rollBackTransaction() {
 		try {
@@ -171,10 +171,10 @@ abstract class Database {
 	
 	/**
 	 * Prepares a statement for execution and returns a statement object.
-	 *
+	 * 
 	 * @param	string			$statement
 	 * @param	integer			$limit
- 	 * @param 	integer			$offset
+ 	 * @param	integer			$offset
 	 * @return	wcf\system\database\statement\PreparedStatement
 	 */
 	public function prepareStatement($statement, $limit = 0, $offset = 0) {
@@ -200,30 +200,30 @@ abstract class Database {
 	 * @param	string		$query
 	 * @param	integer		$limit
 	 * @param	integer		$offset
-	 * @return 	string		$query
+	 * @return	string
 	 */
 	public function handleLimitParameter($query, $limit = 0, $offset = 0) {
 		if ($limit != 0) {
 			$query .= " LIMIT " . $limit . " OFFSET " . $offset;
 		}
-
+		
 		return $query;
 	}
 	
 	/**
 	 * Returns the number of the last error.
 	 * 
-	 * @return integer
+	 * @return	integer
 	 */
 	public function getErrorNumber() {
 		if ($this->pdo !== null) return $this->pdo->errorCode();
 		return 0;
 	}
-
+	
 	/**
 	 * Returns the description of the last error.
 	 * 
-	 * @return string
+	 * @return	string
 	 */
 	public function getErrorDesc() {
 		if ($this->pdo !== null) {
@@ -232,16 +232,16 @@ abstract class Database {
 		}
 		return '';
 	}
-
+	
 	/**
 	 * Gets the current database type.
-	 *
-	 * @return 	string
+	 * 
+	 * @return	string
 	 */
 	public function getDBType() {
 		return get_class($this);
 	}
-
+	
 	/**
 	 * Escapes a string for use in sql query.
 	 * 
@@ -254,7 +254,7 @@ abstract class Database {
 	
 	/**
 	 * Gets the sql version.
-	 *
+	 * 
 	 * @return 	string
 	 */
 	public function getVersion() {
@@ -264,13 +264,13 @@ abstract class Database {
 			}
 		}
 		catch (\PDOException $e) {}
-		 
+		
 		return 'unknown';
 	}
 	
 	/**
 	 * Gets the database name.
-	 *
+	 * 
 	 * @return 	string
 	 */
 	public function getDatabaseName() {
@@ -279,7 +279,7 @@ abstract class Database {
 	
 	/**
 	 * Returns the name of the database user.
-	 *
+	 * 
 	 * @param	string		user name
 	 */
 	public function getUser() {
@@ -288,7 +288,7 @@ abstract class Database {
 	
 	/**
 	 * Returns the amount of executed sql queries.
-	 *
+	 * 
 	 * @return	integer
 	 */
 	public function getQueryCount() {

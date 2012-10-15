@@ -3,24 +3,46 @@ namespace wcf\system\setup;
 
 /**
  * Uninstaller deletes files and directories.
- *
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.setup
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class Uninstaller {
-	protected $targetDir, $files, $deleteEmptyTargetDir, $deleteEmptyDirectories;
+	/**
+	 * directory which contains the files to delete
+	 * @var	string
+	 */
+	protected $targetDir;
+	
+	/**
+	 * files to delete
+	 * @var	array<string>
+	 */
+	protected $files;
+	
+	/**
+	 * indicates if target directory will be deleted if empty
+	 * @var	boolean
+	 */
+	protected $deleteEmptyTargetDir;
+	
+	/**
+	 * indicates if sub directory will be deleted if empty
+	 * @var	boolean
+	 */
+	protected $deleteEmptyDirectories;
 	
 	/**
 	 * Creates a new Uninstaller object.
-	 *
+	 * 
 	 * @param	string		$targetDir
-	 * @param	array		$files			delete the files
-	 * @param	boolean		$deleteEmptyTargetDir	delete target dir if empty
-	 * @param	boolean		$deleteEmptyDirectories	delete sub-directories if empty
+	 * @param	array		$files
+	 * @param	boolean		$deleteEmptyTargetDir
+	 * @param	boolean		$deleteEmptyDirectories
 	 */
 	public function __construct($targetDir, $files, $deleteEmptyTargetDir, $deleteEmptyDirectories) {
 		$this->targetDir = $targetDir;
@@ -39,9 +61,9 @@ class Uninstaller {
 	
 	/**
 	 * Returns true if a directory is emtpy.
-	 *
+	 * 
 	 * @param	string		$dir
-	 * @return	boolean 			true if dir is empty
+	 * @return	boolean
 	 */
 	protected function isEmpty($dir) {
 		if (is_dir($dir)) {
@@ -53,7 +75,7 @@ class Uninstaller {
 	
 	/**
 	 * Deletes a file.
-	 *
+	 * 
 	 * @param	string		$file
 	 */
 	protected function deleteFile($file) {
@@ -62,7 +84,7 @@ class Uninstaller {
 	
 	/**
 	 * Deletes a directory.
-	 *
+	 * 
 	 * @param	string		$dir
 	 */
 	protected function deleteDir($dir) {
@@ -79,13 +101,13 @@ class Uninstaller {
 			$directories = array();
 			foreach ($this->files as $file) {
 				$this->deleteFile($this->targetDir.$file);
-
+				
 				// store directory if this file is not direct in the targetdirectory
 				$dirname = dirname($file);
 				if ($dirname != '.') {
 					// split the directory
 					$path = explode("/", $dirname);
-				
+					
 					// store the directory in a key which is the representation
 					// for the depth of this directory.
 					// use dirname as key to store each dir only once
@@ -121,5 +143,4 @@ class Uninstaller {
 		}
 		// TODO: else throw SystemException ?
 	}
-	
 }

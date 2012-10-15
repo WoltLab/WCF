@@ -9,7 +9,7 @@ use wcf\util\FileUtil;
  * TemplateGroupEditor provides functions to create, edit or delete template group. 
  * 
  * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.template.group
@@ -61,7 +61,7 @@ class TemplateGroupEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
-	 * Deletes this template group.
+	 * @see wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
 		// update children
