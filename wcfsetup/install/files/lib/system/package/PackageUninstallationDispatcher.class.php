@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\package;
-use wcf\system\application\ApplicationHandler;
-
 use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\Package;
@@ -69,21 +67,6 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 		// update options.inc.php if uninstallation is completed
 		if ($node == '') {
 			OptionEditor::resetCache();
-			
-			// force removal of all cache files
-			if (PACKAGE_ID) {
-				// WCF cache
-				CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.*.php');
-				
-				// remove application's cache
-				if (PACKAGE_ID != 1) {
-					ApplicationHandler::getInstance()->getPrimaryApplication()->resetCache();
-					
-					foreach (ApplicationHandler::getInstance()->getDependentApplications() as $application) {
-						$application->resetCache();
-					}
-				}
-			}
 		}
 		
 		// return next node
