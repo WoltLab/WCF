@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\package;
+use wcf\util\FileUtil;
+
 use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\Package;
@@ -67,6 +69,21 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 		// update options.inc.php if uninstallation is completed
 		if ($node == '') {
 			OptionEditor::resetCache();
+			
+			// force removal of all WCF cache files
+			CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.*.php');
+			
+			if (PACKAGE_ID != 1) {
+				$sql = "SELECT	packageDir
+					FROM	wcf".WCF_N."_package
+					WHERE	isApplication = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array(1));
+				while ($row = $statement->fetchArray()) {
+					$dir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
+					CacheHandler::getInstance()->clear($dir.'cache/', 'cache.*.php');
+				}
+			}
 		}
 		
 		// return next node
