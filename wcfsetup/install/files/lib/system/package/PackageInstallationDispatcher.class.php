@@ -136,6 +136,11 @@ class PackageInstallationDispatcher {
 			
 			if ($this->action == 'install') {
 				$this->saveLocalizedPackageInfos();
+				
+				// remove all cache files after WCFSetup
+				if (!PACKAGE_ID) {
+					CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.*.php');
+				}
 			}
 		}
 		
