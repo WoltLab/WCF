@@ -189,6 +189,7 @@ select[multiple] {
 input[type='text'],
 input[type='search'],
 input[type='date'],
+input[type='datetime'],
 input[type='email'],
 input[type='number'],
 input[type='url'],
@@ -206,6 +207,7 @@ select[multiple] {
 input[type='text']:hover,
 input[type='search']:hover,
 input[type='date']:hover,
+input[type='datetime']:hover,
 input[type='email']:hover,
 input[type='number']:hover,
 input[type='url']:hover,
@@ -220,6 +222,7 @@ select[multiple]:hover {
 input[type='text']:active,
 input[type='search']:active,
 input[type='date']:active,
+input[type='datetime']:active,
 input[type='email']:active,
 input[type='number']:active,
 input[type='url']:active,
@@ -230,6 +233,7 @@ select[multiple]:active,
 input[type='text']:focus,
 input[type='search']:focus,
 input[type='date']:focus,
+input[type='datetime']:focus,
 input[type='email']:focus,
 input[type='number']:focus
 input[type='url']:focus,
@@ -251,6 +255,7 @@ input[type='search'][readonly],
 input[type='email'][readonly],
 input[type='number'][readonly],
 input[type='date'][readonly],
+input[type='datetime'][readonly],
 input[type='url'][readonly],
 input[type='password'][readonly],
 textarea[readonly],
@@ -264,6 +269,7 @@ select[multiple][readonly] {
 input[type='text'][disabled],
 input[type='search'][disabled],
 input[type='date'][disabled],
+input[type='datetime'][disabled],
 input[type='email'][disabled],
 input[type='number'][disabled],
 input[type='url'][disabled],
@@ -275,28 +281,44 @@ select[multiple][disabled] {
 	color: @wcfDimmedColor;
 }
 
-/* error state */
-/* todo */
-.formError input[type='text'],
-.formError input[type='search'],
-.formError input[type='email'],
-.formError input[type='number'],
-.formError input[type='url'],
-.formError input[type='password'],
-.formError textarea {
-	border-color: @wcfErrorBackgroundColor;
-}
-
 /* success state */
 /* todo */
-.formSuccess input[type='text'],
-.formSuccess input[type='search'],
-.formSuccess input[type='email'],
-.formSuccess input[type='number'],
-.formSuccess input[type='url'],
-.formSuccess input[type='password'],
-.formSuccess textarea {
-	border-color: @wcfSuccessBackgroundColor;
+.formSuccess {
+	input[type='text'],
+	input[type='search'],
+	input[type='email'],
+	input[type='number'],
+	input[type='url'],
+	input[type='password'],
+	textarea {
+		border-color: @wcfSuccessBackgroundColor;
+	}
+}
+
+input:required, input[pattern] {
+	&:valid {
+		border-color: @wcfSuccessBackgroundColor;
+	}
+}
+
+/* error state */
+/* todo */
+.formError {
+	input[type='text'],
+	input[type='search'],
+	input[type='email'],
+	input[type='number'],
+	input[type='url'],
+	input[type='password'],
+	textarea {
+		border-color: @wcfErrorBackgroundColor;
+	}
+}
+
+input:required, input[pattern] {
+	&:invalid {
+		border-color: @wcfErrorBackgroundColor;
+	}
 }
 
 /* width */
