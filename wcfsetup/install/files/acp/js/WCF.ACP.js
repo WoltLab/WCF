@@ -529,7 +529,7 @@ WCF.ACP.Package.Uninstallation.prototype = {
 		this._installation = new WCF.ACP.Package.Installation('uninstall', 0, false);
 		
 		// initialize dialog
-		WCF.showAJAXDialog('packageInstallationDialog', true, {
+		var $dialog = WCF.showAJAXDialog('packageInstallationDialog', true, {
 			ajax: true,
 			closable: false,
 			data: { packageID: parameters.packageID, step: 'prepare' },
@@ -537,6 +537,7 @@ WCF.ACP.Package.Uninstallation.prototype = {
 			title: 'wcf.acp.package.uninstall.title',
 			url: 'index.php/UninstallPackage/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
+		this._installation._api = $dialog.data('wcfDialog');
 	}
 };
 
