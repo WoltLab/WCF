@@ -436,8 +436,16 @@ class Package extends DatabaseObject {
 					(packageID, dependency, priority)
 			VALUES		(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		$insertedDependencies = array();
 		foreach ($requirements as $dependency => $priority) {
 			$statement->execute(array($packageID, $dependency, $priority));
+			
+			if (!isset($insertedDependencies[$packageID])) {
+				$insertedDependencies[$packageID] = array();
+			}
+			
+			$insertedDependencies[$packageID][] = $dependency;
 		}
 		
 		// select plugins
@@ -467,6 +475,11 @@ class Package extends DatabaseObject {
 			VALUES		(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($plugins as $dependency => $priority) {
+			// ignore already inserted dependencies
+			if (isset($insertedDependencies[$packageID]) && in_array($dependency, $insertedDependencies[$packageID])) {
+				continue;
+			}
+			
 			$statement->execute(array($packageID, $dependency, $priority));
 		}
 		
