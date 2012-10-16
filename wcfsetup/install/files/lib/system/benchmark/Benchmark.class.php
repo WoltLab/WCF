@@ -61,6 +61,7 @@ class Benchmark extends SingletonFactory {
 		$this->items[$newIndex]['type']	= $type;
 		$this->items[$newIndex]['before'] = self::getMicrotime();
 		$this->items[$newIndex]['start'] = self::compareMicrotimes($this->startTime, $this->items[$newIndex]['before']);
+		$this->items[$newIndex]['trace'] = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
 		return $newIndex;
 	}
 	
