@@ -477,7 +477,7 @@
 		<item name="wcf.date.relative.hours"><![CDATA['Vor ' + (($hours > 1) ? $hours + ' Stunden' : 'einer Stunde' )]]></item>
 		<item name="wcf.date.relative.pastDays"><![CDATA[(($days > 1) ? '%day%' : 'Gestern' ) + ', %time%']]></item>
 		
-		<!-- variables for localized date formats; not necessary in english -->
+		<!-- variables for localized date formats -->
 		<item name="wcf.date.month.january"><![CDATA[Januar]]></item>
 		<item name="wcf.date.month.february"><![CDATA[Februar]]></item>
 		<item name="wcf.date.month.march"><![CDATA[März]]></item>

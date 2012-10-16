@@ -477,6 +477,39 @@
 		<item name="wcf.date.relative.hours"><![CDATA[(($hours > 1) ? $hours + ' hours' : 'An hour' ) + ' ago']]></item>
 		<item name="wcf.date.relative.pastDays"><![CDATA[(($days > 1) ? '%day%' : 'Yesterday' ) + ', %time%']]></item>
 		
+		<!-- variables for localized date formats -->
+		<item name="wcf.date.month.january"><![CDATA[January]]></item>
+		<item name="wcf.date.month.february"><![CDATA[February]]></item>
+		<item name="wcf.date.month.march"><![CDATA[March]]></item>
+		<item name="wcf.date.month.april"><![CDATA[April]]></item>
+		<item name="wcf.date.month.may"><![CDATA[May]]></item>
+		<item name="wcf.date.month.june"><![CDATA[June]]></item>
+		<item name="wcf.date.month.july"><![CDATA[July]]></item>
+		<item name="wcf.date.month.august"><![CDATA[August]]></item>
+		<item name="wcf.date.month.september"><![CDATA[September]]></item>
+		<item name="wcf.date.month.october"><![CDATA[October]]></item>
+		<item name="wcf.date.month.november"><![CDATA[November]]></item>
+		<item name="wcf.date.month.december"><![CDATA[December]]></item>
+		<item name="wcf.date.month.jan"><![CDATA[Jan]]></item>
+		<item name="wcf.date.month.feb"><![CDATA[Feb]]></item>
+		<item name="wcf.date.month.mar"><![CDATA[Mar]]></item>
+		<item name="wcf.date.month.apr"><![CDATA[Apr]]></item>
+		<item name="wcf.date.month.may"><![CDATA[May]]></item>
+		<item name="wcf.date.month.jun"><![CDATA[Jun]]></item>
+		<item name="wcf.date.month.jul"><![CDATA[Jul]]></item>
+		<item name="wcf.date.month.aug"><![CDATA[Aug]]></item>
+		<item name="wcf.date.month.sep"><![CDATA[Sep]]></item>
+		<item name="wcf.date.month.oct"><![CDATA[Oct]]></item>
+		<item name="wcf.date.month.nov"><![CDATA[Nov]]></item>
+		<item name="wcf.date.month.dec"><![CDATA[Dec]]></item>
+		<item name="wcf.date.day.sun"><![CDATA[Sun]]></item>
+		<item name="wcf.date.day.mon"><![CDATA[Mon]]></item>
+		<item name="wcf.date.day.tue"><![CDATA[Tue]]></item>
+		<item name="wcf.date.day.wed"><![CDATA[Wed]]></item>
+		<item name="wcf.date.day.thu"><![CDATA[Thu]]></item>
+		<item name="wcf.date.day.fri"><![CDATA[Fri]]></item>
+		<item name="wcf.date.day.sat"><![CDATA[Sat]]></item>
+		
 		<!-- localized days -->
 		<item name="wcf.date.day.sunday"><![CDATA[Sunday]]></item>
 		<item name="wcf.date.day.monday"><![CDATA[Monday]]></item>
