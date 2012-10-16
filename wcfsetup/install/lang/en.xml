@@ -33,7 +33,7 @@
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Execute cron job now]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[There is no class with the given name.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[The timings you have set are invalid.]]></item>
-		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Are you sure that you want to remove the cron job &quot;{$cronjob->description|truncate:50:' ...'}&quot;?]]></item>
+		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Are you sure that you want to remove the cron job &ldquo;{$cronjob->description|truncate:50:' ...'}&rdquo;?]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Log of executed cron jobs]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Delete all]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Are you sure that you want to remove all log entries?]]></item>
@@ -43,7 +43,7 @@
 	
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add new user group]]></item>
-		<item name="wcf.acp.group.delete.sure"><![CDATA[Are you sure you would like to remove the user group &quot;{$group->groupName}&quot;?]]></item>
+		<item name="wcf.acp.group.delete.sure"><![CDATA[Are you sure you would like to remove the user group &ldquo;{$group->groupName}&rdquo;?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Edit user group]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[You are currently a member of this user group! Changing the permissions of this user group could result in locking yourself out of the Administration Control Panel. Please be careful!]]></item>
 		<item name="wcf.acp.group.group1"><![CDATA[Everyone]]></item>
@@ -83,7 +83,7 @@
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups.description"><![CDATA[Members of this user group have access to the following groups. For example, you may set if the user group has permission to edit themselves.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canAddGroup"><![CDATA[Can add new user groups]]></item>
 		<item name="wcf.acp.group.option.admin.user.canAddUser"><![CDATA[Can add new users]]></item>
-		<item name="wcf.acp.group.option.admin.user.canAddUser.description"><![CDATA[If the option for &quot;Accessible User groups&quot; has been enabled, then on creation of the user, the appropriate accessible user groups can also be assigned.]]></item>
+		<item name="wcf.acp.group.option.admin.user.canAddUser.description"><![CDATA[If the option for &ldquo;Accessible User groups&rdquo; has been enabled, then on creation of the user, the appropriate accessible user groups can also be assigned.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDeleteGroup"><![CDATA[Can delete user groups]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDeleteUser"><![CDATA[Can delete users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditGroup"><![CDATA[Can edit user groups]]></item>
@@ -217,7 +217,7 @@
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookie domain]]></item>
 		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[This is optional, so in most cases you don't need to specify the cookie domain.]]></item>
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookie path]]></item>
-		<item name="wcf.acp.option.cookie_path.description"><![CDATA[The cookie path is concurrent to the document root of your site - e.g. &quot;/forum&quot; for http://www.woltlab.com/forum.]]></item>
+		<item name="wcf.acp.option.cookie_path.description"><![CDATA[The cookie path is concurrent to the document root of your site - e.g. &ldquo;/forum&rdquo; for http://www.woltlab.com/forum.]]></item>
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Cookie prefix]]></item>
 		
 		<item name="wcf.acp.option.export"><![CDATA[Export options]]></item>
@@ -258,10 +258,10 @@
 		<item name="wcf.acp.option.mail_smtp_password"><![CDATA[SMTP password]]></item>
 		<item name="wcf.acp.option.mail_smtp_port"><![CDATA[SMTP port]]></item>
 		<item name="wcf.acp.option.mail_smtp_user"><![CDATA[SMTP username]]></item>
-		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[Enable &quot;-f&quot; parameter]]></item>
-		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Some servers may require the &quot;-f&quot; parameter to be used when sending e-mails. If your users experience problems with receiving e-mails, try enabling this option.]]></item>
+		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[Enable &ldquo;-f&rdquo; parameter]]></item>
+		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Some servers may require the &ldquo;-f&rdquo; parameter to be used when sending e-mails. If your users experience problems with receiving e-mails, try enabling this option.]]></item>
 		<item name="wcf.acp.option.mail_use_formatted_address"><![CDATA[Use formatted e-mail addresses]]></item>
-		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Sender's and receiver's addresses are formatted in &quot;Name &lt;email@domain.tld&gt;&quot;. This option is not supported by all mail servers and should be turned off in case of any problems.]]></item>
+		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Sender's and receiver's addresses are formatted in &ldquo;Name &lt;email@domain.tld&gt;&rdquo;. This option is not supported by all mail servers and should be turned off in case of any problems.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta description]]></item>
 		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta keywords]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Enable master password]]></item>
@@ -352,7 +352,7 @@
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add server]]></item>
 		<item name="wcf.acp.updateServer.data"><![CDATA[Server data]]></item>
-		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Are you sure that you would like to delete the server &quot;{$updateServer->serverURL}&quot;?]]></item>
+		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Are you sure that you would like to delete the server &ldquo;{$updateServer->serverURL}&rdquo;?]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Edit server]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Error messages]]></item>
 		<item name="wcf.acp.updateServer.list"><![CDATA[Update servers]]></item>
@@ -370,7 +370,7 @@
 	</category>
 	
 	<category name="wcf.acp.sessionLog">
-		<item name="wcf.acp.sessionLog.access.list"><![CDATA[Actions of the logged session by &quot;{$sessionLog->username}&quot;]]></item>
+		<item name="wcf.acp.sessionLog.access.list"><![CDATA[Actions of the logged session by &ldquo;{$sessionLog->username}&rdquo;]]></item>
 		<item name="wcf.acp.sessionLog.access.list.count"><![CDATA[{#$items} logged action{if $items != 1}s{/if}]]></item>
 		<item name="wcf.acp.sessionLog.actions"><![CDATA[Actions]]></item>
 		<item name="wcf.acp.sessionLog.className"><![CDATA[Class name]]></item>
@@ -387,7 +387,7 @@
 		<item name="wcf.acp.user.add"><![CDATA[Add new user]]></item>
 		<item name="wcf.acp.user.assignToGroup"><![CDATA[Group assignment]]></item>
 		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Assign the following users to the selected group(s)]]></item>
-		<item name="wcf.acp.user.delete.sure"><![CDATA[Are you sure that you would like to delete the user &quot;{$user->username}&quot;?]]></item>
+		<item name="wcf.acp.user.delete.sure"><![CDATA[Are you sure that you would like to delete the user &ldquo;{$user->username}&rdquo;?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Edit user]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[You are currently editing your own user account. Changing the permissions of this user group might lead to locking yourself out of the Administration Control Panel. Please be careful!]]></item>
 		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[Export e-mail addresses]]></item>
@@ -672,6 +672,8 @@
 		<item name="wcf.global.subject"><![CDATA[Subject]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
 		<item name="wcf.global.title"><![CDATA[Title]]></item>
+		<item name="wcf.global.preview"><![CDATA[Preview]]></item>
+		<item name="wcf.global.multiSelect"><![CDATA[Multiple items can be selected by holding the &ldquo;Ctrl/Shift&rdquo; key (Windows) or &ldquo;Command&rdquo; (Mac OS) key and clicking the items required.]]></item>
 	</category>
 	
 	<category name="wcf.page">
@@ -701,7 +703,7 @@
 		<item name="wcf.user.visibleLanguages.description"><![CDATA[Shows content in selected languages]]></item>
 		<item name="wcf.user.userID"><![CDATA[User ID]]></item>
 		<item name="wcf.user.username"><![CDATA[Username]]></item>
-		<item name="wcf.user.username.error.notFound"><![CDATA[The username &quot;{$username}&quot; could not be found.]]></item>
+		<item name="wcf.user.username.error.notFound"><![CDATA[The username &ldquo;{$username}&rdquo; could not be found.]]></item>
 		<item name="wcf.user.username.error.notUnique"><![CDATA[The username you have entered is already taken.]]></item>
 		<item name="wcf.user.username.error.notValid"><![CDATA[The username you have entered is not valid.]]></item>
 		<item name="wcf.user.userNote"><![CDATA[{$__wcf->user->username}]]></item>
