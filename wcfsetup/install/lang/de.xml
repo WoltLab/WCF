@@ -370,7 +370,7 @@
 	</category>
 	
 	<category name="wcf.acp.sessionLog">
-		<item name="wcf.acp.sessionLog.access.list"><![CDATA[Aktionen der protokollierten Sitzung von &raquo;{$sessionLog->username}&laquo;]]></item>
+		<item name="wcf.acp.sessionLog.access.list"><![CDATA[Aktionen der protokollierten Sitzung von &bdquo;{$sessionLog->username}&ldquo;]]></item>
 		<item name="wcf.acp.sessionLog.access.list.count"><![CDATA[{#$items} protokollierte Aktion{if $items != 1}en{/if}]]></item>
 		<item name="wcf.acp.sessionLog.actions"><![CDATA[Aktionen]]></item>
 		<item name="wcf.acp.sessionLog.className"><![CDATA[Klasse]]></item>
@@ -387,7 +387,7 @@
 		<item name="wcf.acp.user.add"><![CDATA[Benutzer hinzufügen]]></item>
 		<item name="wcf.acp.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
 		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Folgende Benutzer den unten ausgewählten Benutzergruppen zuweisen]]></item>
-		<item name="wcf.acp.user.delete.sure"><![CDATA[Wollen Sie Benutzer &raquo;{$user->username}&laquo; wirklich löschen?]]></item>
+		<item name="wcf.acp.user.delete.sure"><![CDATA[Wollen Sie Benutzer &bdquo;{$user->username}&ldquo; wirklich löschen?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Benutzer bearbeiten]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[Sie bearbeiten Ihr eigenes Benutzerkonto. Änderungen an den Mitgliedschaften in Benutzergruppen können womöglich dazu führen, dass Sie aus der Administrationsoberfläche ausgeschlossen werden. Bitte seien Sie entsprechend vorsichtig!]]></item>
 		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
@@ -477,7 +477,7 @@
 		<item name="wcf.date.relative.hours"><![CDATA['Vor ' + (($hours > 1) ? $hours + ' Stunden' : 'einer Stunde' )]]></item>
 		<item name="wcf.date.relative.pastDays"><![CDATA[(($days > 1) ? '%day%' : 'Gestern' ) + ', %time%']]></item>
 		
-		<!-- variables for localized date formats; not necessary in english -->
+		<!-- variables for localized date formats -->
 		<item name="wcf.date.month.january"><![CDATA[Januar]]></item>
 		<item name="wcf.date.month.february"><![CDATA[Februar]]></item>
 		<item name="wcf.date.month.march"><![CDATA[März]]></item>
@@ -672,6 +672,8 @@
 		<item name="wcf.global.subject"><![CDATA[Betreff]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[.]]></item>
 		<item name="wcf.global.title"><![CDATA[Titel]]></item>
+		<item name="wcf.global.preview"><![CDATA[Vorschau]]></item>
+		<item name="wcf.global.multiSelect"><![CDATA[Mehrfache Markierungen sind durch zusätzliches Drücken der Taste &bdquo;Strg/Ctrl&ldquo; (Windows) oder &bdquo;Befehl/Command&ldquo; (Mac OS) möglich.]]></item>
 	</category>
 	
 	<category name="wcf.imageViewer">
@@ -714,7 +716,7 @@
 		<item name="wcf.user.userID"><![CDATA[Benutzer-ID]]></item>
 		<item name="wcf.user.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.user.username.placeholder"><![CDATA[Geben Sie einen Benutzernamen ein]]></item>
-		<item name="wcf.user.username.error.notFound"><![CDATA[Der Benutzername &raquo;{$username}&laquo; konnte nicht gefunden werden.]]></item>
+		<item name="wcf.user.username.error.notFound"><![CDATA[Der Benutzername &bdquo;{$username}&ldquo; konnte nicht gefunden werden.]]></item>
 		<item name="wcf.user.username.error.notUnique"><![CDATA[Dieser Benutzername ist bereits vergeben.]]></item>
 		<item name="wcf.user.username.error.notValid"><![CDATA[Sie haben einen ungültigen Benutzernamen eingegeben.]]></item>
 		<item name="wcf.user.userNote"><![CDATA[{$__wcf->user->username}]]></item>

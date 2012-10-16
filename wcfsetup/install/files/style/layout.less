@@ -140,15 +140,20 @@
 			margin-bottom: -1px;
 			
 			> a {
+				border-bottom: 1px solid @wcfContainerBorderColor;
 				color: @wcfMainMenuColor;
 				display: inline-block;
 				padding: 11px 35px;
 				font-weight: bold;
 				
 				&:hover {
-					border-bottom: 1px solid @wcfContainerBorderColor;
 					background-color: @wcfMainMenuHoverBackgroundColor;
 					text-decoration: none;
+				}
+				
+				> .badge {
+					font-size: 60%;
+					top: -2px;
 				}
 			}
 			
@@ -992,7 +997,6 @@ ul.dataList {
 	fieldset {
 		padding: @wcfGapSmall @wcfGapMedium @wcfGapMedium;
 		margin-top: 0;
-		width: 300px - @wcfGapMedium * 2;
 		
 		> legend {
 			border-width: 0;
@@ -1029,7 +1033,7 @@ ul.dataList {
 			float: right;
 		}
 		
-		nav {
+		> nav {
 			margin: 0 -@wcfGapMedium 0;
 			
 			ul {
@@ -1059,6 +1063,9 @@ ul.dataList {
 			}
 		}
 		
+		> div {
+			width: 300px - @wcfGapMedium * 2;
+		}
 	}
 	
 	.sidebarBoxList > li:not(:last-child) {
