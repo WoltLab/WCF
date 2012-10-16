@@ -12,7 +12,7 @@ use wcf\system\exception\SystemException;
  * @subpackage	data
  * @category	Community Framework
  */
-abstract class DatabaseObjectDecorator extends DatabaseObject implements IDatabaseObjectProcessor {
+abstract class DatabaseObjectDecorator extends DatabaseObject {
 	/**
 	 * name of the base class
 	 * @var	string

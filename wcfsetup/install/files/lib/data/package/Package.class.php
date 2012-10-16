@@ -436,8 +436,16 @@ class Package extends DatabaseObject {
 					(packageID, dependency, priority)
 			VALUES		(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		$insertedDependencies = array();
 		foreach ($requirements as $dependency => $priority) {
 			$statement->execute(array($packageID, $dependency, $priority));
+			
+			if (!isset($insertedDependencies[$packageID])) {
+				$insertedDependencies[$packageID] = array();
+			}
+			
+			$insertedDependencies[$packageID][] = $dependency;
 		}
 		
 		// select plugins
@@ -467,6 +475,11 @@ class Package extends DatabaseObject {
 			VALUES		(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($plugins as $dependency => $priority) {
+			// ignore already inserted dependencies
+			if (isset($insertedDependencies[$packageID]) && in_array($dependency, $insertedDependencies[$packageID])) {
+				continue;
+			}
+			
 			$statement->execute(array($packageID, $dependency, $priority));
 		}
 		
@@ -540,6 +553,7 @@ class Package extends DatabaseObject {
 			
 			$file->write("// ".$dependency->package." (packageID ".$dependency->packageID.")\n");
 			$file->write("if (!defined('".$prefix."_DIR')) define('".$prefix."_DIR', ".($dependency->packageID == $package->packageID ? "dirname(__FILE__).'/'" : "'".$dependencyDir."'").");\n");
+			$file->write("if (!defined('RELATIVE_".$prefix."_DIR')) define('RELATIVE_".$prefix."_DIR', ".($dependency->packageID == $package->packageID ? "''" : "RELATIVE_".$currentPrefix."_DIR.'".FileUtil::getRelativePath($packageDir, $dependencyDir)."'").");\n");
 			$file->write("if (!defined('".$prefix."_N')) define('".$prefix."_N', '".WCF_N."_".$dependency->instanceNo."');\n");
 			$file->write("\n");
 		}
