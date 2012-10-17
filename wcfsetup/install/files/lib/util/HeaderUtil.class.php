@@ -1,5 +1,6 @@
 <?php
 namespace wcf\util;
+use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 
 /**
@@ -17,7 +18,8 @@ final class HeaderUtil {
 	 * Alias to php setcookie() function.
 	 */
 	public static function setCookie($name, $value = '', $expire = 0) {
-		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT' : '').(COOKIE_PATH ? '; path='.COOKIE_PATH : '').(COOKIE_DOMAIN ? '; domain='.COOKIE_DOMAIN : '').((isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443') ? '; secure' : '').'; HttpOnly', false);
+		// TODO: COOKIE_PATH is static and does not always reflect the application's domain and path
+		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT' : '').(COOKIE_PATH ? '; path='.COOKIE_PATH : '').(COOKIE_DOMAIN ? '; domain='.COOKIE_DOMAIN : '').(RouteHandler::secureConnection() ? '; secure' : '').'; HttpOnly', false);
 	}
 	
 	/**
@@ -67,12 +69,6 @@ final class HeaderUtil {
 	 * Outputs the compressed page content.
 	 */
 	public static function getCompressedOutput($output) {
-		if (defined('LESS_FILES') && LESS_FILES) {
-			// remove .css files
-			$output = preg_replace('~\\@import url\("((?!burningBoard).)*.css"\) screen;~U', '', $output);
-			$output = str_replace(array('<!-- LESS_FILES', 'LESS_FILES -->'), array('', ''), $output);
-		}
-		
 		$size = strlen($output);
 		$crc = crc32($output);
 		

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\application;
 use wcf\data\DatabaseObject;
+use wcf\system\request\RouteHandler;
 
 /**
  * Represents an application.
@@ -27,4 +28,23 @@ class Application extends DatabaseObject {
 	 * @see	wcf\data\DatabaseObject::$databaseTableIndexIsIdentity
 	 */
 	protected static $databaseTableIndexIsIdentity = false;
+	
+	/**
+	 * absolute page URL
+	 * @var	string
+	 */
+	protected $pageURL = '';
+	
+	/**
+	 * Returns absolute page URL.
+	 * 
+	 * @return	string
+	 */
+	public function getPageURL() {
+		if (empty($this->pageURL)) {
+			$this->pageURL = RouteHandler::getProtocol() . $this->domainName . $this->domainPath;
+		}
+		
+		return $this->pageURL;
+	}
 }

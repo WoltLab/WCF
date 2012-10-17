@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\action;
 use wcf\action\AbstractDialogAction;
+use wcf\data\application\Application;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
@@ -129,15 +130,15 @@ class UninstallPackageAction extends InstallPackageAction {
 			}
 				
 			// get domain path
-			$sql = "SELECT	domainName, domainPath
+			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_application
 				WHERE	packageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($packageID));
-			$row = $statement->fetchArray();
+			$application = new Application(null, $statement->fetchArray());
 			
 			// build redirect location
-			$location = $row['domainName'] . $row['domainPath'] . 'acp/index.php/PackageList/' . SID_ARG_1ST;
+			$location = $application->getPageURL() . 'acp/index.php/PackageList/' . SID_ARG_1ST;
 			
 			// show success
 			$this->data = array(

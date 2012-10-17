@@ -279,7 +279,7 @@ class PackageInstallationDispatcher {
 			$this->package = null;
 			
 			if ($package->isApplication) {
-				$host = RouteHandler::getHost();
+				$host = StringUtil::replace(RouteHandler::getProtocol(), '', RouteHandler::getHost());
 				$path = RouteHandler::getPath(array('acp'));
 				
 				// insert as application

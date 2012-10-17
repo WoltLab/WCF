@@ -32,6 +32,18 @@ class RouteHandler extends SingletonFactory {
 	protected static $path = '';
 	
 	/**
+	 * HTTP protocol, either 'http://' or 'https://'
+	 * @var	string
+	 */
+	protected static $protocol = '';
+	
+	/**
+	 * HTTP encryption
+	 * @var	boolean
+	 */
+	protected static $secure = null;
+	
+	/**
 	 * list of available routes
 	 * @var	array<wcf\system\request\Route>
 	 */
@@ -154,19 +166,43 @@ class RouteHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns true, if this is a secure connection.
+	 * 
+	 * @return	true
+	 */
+	public static function secureConnection() {
+		if (self::$secure === null) {
+			self::$secure = false;
+			
+			if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' || $_SERVER['SERVER_PORT'] == 443) {
+				self::$secure = true;
+			}
+		}
+		
+		return self::$secure;
+	}
+	
+	/**
+	 * Returns HTTP protocol, either 'http://' or 'https://'.
+	 * 
+	 * @return	string
+	 */
+	public static function getProtocol() {
+		if (empty(self::$protocol)) {
+			self::$protocol = 'http' . (self::secureConnection() ? 's' : '') . '://';
+		}
+		
+		return self::$protocol;
+	}
+	
+	/**
 	 * Returns protocol and domain name.
 	 * 
 	 * @return	string
 	 */
 	public static function getHost() {
 		if (empty(self::$host)) {
-			// get protocol and domain name
-			$protocol = 'http://';
-			if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' || $_SERVER['SERVER_PORT'] == 443) {
-				$protocol = 'https://';
-			}
-			
-			self::$host = $protocol . $_SERVER['HTTP_HOST'];
+			self::$host = self::getProtocol() . $_SERVER['HTTP_HOST'];
 		}
 		
 		return self::$host;

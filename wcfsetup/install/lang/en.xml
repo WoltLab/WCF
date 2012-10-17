@@ -269,8 +269,6 @@
 		<item name="wcf.acp.option.page_description"><![CDATA[Page description]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Page title]]></item>
 		<item name="wcf.acp.option.page_title.description"><![CDATA[That title will show up inside the page header, if you have enabled it with the style editor.]]></item>
-		<item name="wcf.acp.option.page_url"><![CDATA[Page adress (URL)]]></item>
-		<item name="wcf.acp.option.page_url.description"><![CDATA[Please enter the adress (URL) of the page (without trailing slash).]]></item>
 		<item name="wcf.acp.option.page_urls"><![CDATA[Further adresses (URLs)]]></item>
 		<item name="wcf.acp.option.page_urls.description"><![CDATA[Enter further adresses (URLs) which also link to your site.]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
