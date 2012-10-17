@@ -54,17 +54,6 @@ class ActiveStyle extends DatabaseObjectDecorator {
 	}
 	
 	/**
-	 * Returns the value of a style variable.
-	 * 
-	 * @param	string		$name
-	 * @return	string		value
-	 */
-	public function getVariable($name) {
-		if (isset($this->object->data['variables'][$name])) return $this->object->data['variables'][$name];
-		return '';
-	}
-	
-	/**
 	 * Returns the path of an icon.
 	 * 
 	 * @param	string		$iconName
