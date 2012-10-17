@@ -2,12 +2,13 @@
 namespace wcf\system\application;
 use wcf\system\cache\CacheHandler;
 use wcf\system\SingletonFactory;
+use wcf\util\StringUtil;
 
 /**
  * Handles multi-application environments.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-20121 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.application
@@ -19,6 +20,12 @@ class ApplicationHandler extends SingletonFactory {
 	 * @var	array<array>
 	 */	
 	protected $cache = null;
+	
+	/**
+	 * list of page URLs
+	 * @var	array<string>
+	 */
+	protected $pageURLs = array();
 	
 	/**
 	 * Initializes cache.
@@ -136,5 +143,34 @@ class ApplicationHandler extends SingletonFactory {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Returns true, if given $url is an internal URL.
+	 * 
+	 * @param	string		$url
+	 * @return	boolean
+	 */
+	public function isInternalURL($url) {
+		if (empty($this->pageURLs)) {
+			foreach ($this->getApplications() as $application) {
+				$this->pageURLs[] = $application->getPageURL();
+			}
+			
+			if (defined('PAGE_URLS') && PAGE_URLS != '') {
+				$pageURLs = explode("\n", StringUtil::unifyNewlines(PAGE_URLS));
+				foreach ($pageURLs as $url) {
+					$this->pageURLs[] = StringUtil::trim($url);
+				}
+			}
+		}
+		
+		foreach ($this->pageURLs as $pageURL) {
+			if (stripos($url, $pageURL) === 0) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }
