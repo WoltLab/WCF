@@ -112,6 +112,18 @@ class ApplicationHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns a list of all active applications.
+	 * 
+	 * @return	array<wcf\data\application\Application>
+	 */
+	public function getApplications() {
+		$applications = $this->getDependentApplications();
+		$applications[] = $this->getActiveApplication();
+		
+		return $applications;
+	}
+	
+	/**
 	 * Returns abbreviation for a given package id or null if application is unknown.
 	 * 
 	 * @return	string
