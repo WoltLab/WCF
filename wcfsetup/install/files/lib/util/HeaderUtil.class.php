@@ -38,6 +38,9 @@ final class HeaderUtil {
 		if (HTTP_ENABLE_GZIP && HTTP_GZIP_LEVEL > 0 && HTTP_GZIP_LEVEL < 10 && !defined('HTTP_DISABLE_GZIP')) {
 			self::compressOutput();
 		}
+		
+		// send Internet Explorer compatibility mode
+		@header('X-UA-Compatible: IE=edge');
 	}
 	
 	/**
