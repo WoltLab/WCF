@@ -617,7 +617,7 @@ class WCF {
 			$abbreviation = 'wcf';
 		}
 		
-		return self::$applications[$abbreviation]->domainName . self::$applications[$abbreviation]->domainPath;
+		return self::$applications[$abbreviation]->getPageURL();
 	}
 	
 	/**
