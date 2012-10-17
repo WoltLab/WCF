@@ -452,7 +452,7 @@ class WCF {
 		}
 		else if (!$isDependentApplication) {
 			// assign base tag
-			$this->getTPL()->assign('baseHref', $application->domainName . $application->domainPath);
+			$this->getTPL()->assign('baseHref', $application->getPageURL());
 		}
 		
 		// register application
