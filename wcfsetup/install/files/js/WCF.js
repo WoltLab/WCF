@@ -775,6 +775,12 @@ WCF.Clipboard = {
 	_proxy: null,
 	
 	/**
+	 * list of elements already tracked for clipboard actions
+	 * @var	object
+	 */
+	_trackedElements: { },
+	
+	/**
 	 * Initializes the clipboard API.
 	 */
 	init: function(page, hasMarkedItems, actionObjects) {
@@ -806,6 +812,13 @@ WCF.Clipboard = {
 		if (this._hasMarkedItems) {
 			this._loadMarkedItems();
 		}
+		
+		var self = this;
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Clipboard', function() {
+			self._containers = $('.jsClipboardContainer').each($.proxy(function(index, container) {
+				self._initContainer(container);
+			}, self));
+		});
 	},
 	
 	/**
@@ -909,13 +922,28 @@ WCF.Clipboard = {
 		var $container = $(container);
 		var $containerID = $container.wcfIdentify();
 		
-		$container.find('.jsClipboardMarkAll').data('hasContainer', $containerID).click($.proxy(this._markAll, this));
-		$container.find('input.jsClipboardItem').data('hasContainer', $containerID).click($.proxy(this._click, this));
+		if (!this._trackedElements[$containerID]) {
+			$container.find('.jsClipboardMarkAll').data('hasContainer', $containerID).click($.proxy(this._markAll, this));
+			
+			this._containerData[$container.data('type')] = {};
+			$.each($container.data(), $.proxy(function(index, element) {
+				if (index.match(/^type(.+)/)) {
+					this._containerData[$container.data('type')][WCF.String.lcfirst(index.replace(/^type/, ''))] = element;
+				}
+			}, this));
+			
+			this._trackedElements[$containerID] = [ ];
+		}
 		
-		this._containerData[$container.data('type')] = {};
-		$.each($container.data(), $.proxy(function(index, element) {
-			if (index.match(/^type(.+)/)) {
-				this._containerData[$container.data('type')][WCF.String.lcfirst(index.replace(/^type/, ''))] = element;
+		// track individual checkboxes
+		$container.find('input.jsClipboardItem').each($.proxy(function(index, input) {
+			var $input = $(input);
+			var $inputID = $input.wcfIdentify();
+			
+			if (!WCF.inArray($inputID, this._trackedElements[$containerID])) {
+				this._trackedElements[$containerID].push($inputID);
+				
+				$input.data('hasContainer', $containerID).click($.proxy(this._click, this));
 			}
 		}, this));
 	},
