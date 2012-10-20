@@ -12,7 +12,7 @@ use wcf\util\CronjobUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.cronjob
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class Cronjob extends DatabaseObject {
 	/**

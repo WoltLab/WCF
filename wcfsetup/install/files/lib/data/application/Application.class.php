@@ -1,16 +1,17 @@
 <?php
 namespace wcf\data\application;
 use wcf\data\DatabaseObject;
+use wcf\system\request\RouteHandler;
 
 /**
  * Represents an application.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.application
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class Application extends DatabaseObject {
 	/**
@@ -27,4 +28,23 @@ class Application extends DatabaseObject {
 	 * @see	wcf\data\DatabaseObject::$databaseTableIndexIsIdentity
 	 */
 	protected static $databaseTableIndexIsIdentity = false;
+	
+	/**
+	 * absolute page URL
+	 * @var	string
+	 */
+	protected $pageURL = '';
+	
+	/**
+	 * Returns absolute page URL.
+	 * 
+	 * @return	string
+	 */
+	public function getPageURL() {
+		if (empty($this->pageURL)) {
+			$this->pageURL = RouteHandler::getProtocol() . $this->domainName . $this->domainPath;
+		}
+		
+		return $this->pageURL;
+	}
 }

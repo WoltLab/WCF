@@ -5,36 +5,36 @@ use wcf\util\StringUtil;
 
 /**
  * A SystemException is thrown when an unexpected error occurs.
- *
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.exception
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SystemException extends LoggedException implements IPrintableException {
 	/**
 	 * error description
-	 * @var string
+	 * @var	string
 	 */
 	protected $description = null;
 	
 	/**
 	 * additional information
-	 * @var string
+	 * @var	string
 	 */
 	protected $information = '';
 	
 	/**
 	 * additional information
-	 * @var string
+	 * @var	string
 	 */
 	protected $functions = '';
 	
 	/**
 	 * Creates a new SystemException.
-	 *
+	 * 
 	 * @param	string		$message	error message
 	 * @param	integer		$code		error code
 	 * @param	string		$description	description of the error
@@ -47,7 +47,7 @@ class SystemException extends LoggedException implements IPrintableException {
 	
 	/**
 	 * Returns the description of this exception.
-	 *
+	 * 
 	 * @return 	string
 	 */
 	public function getDescription() {
@@ -66,7 +66,7 @@ class SystemException extends LoggedException implements IPrintableException {
 	}
 	
 	/**
-	 * @see wcf\system\exception\IPrintableException::show()
+	 * @see	wcf\system\exception\IPrintableException::show()
 	 */
 	public function show() {
 		// log error
@@ -185,7 +185,7 @@ class SystemException extends LoggedException implements IPrintableException {
 				</div>
 			</body>
 		</html>
-
+		
 		<?php
 	}
 }

@@ -8,11 +8,11 @@ use wcf\system\WCF;
  * Caches object types and object type definitions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ObjectTypeCacheBuilder implements ICacheBuilder {
 	/**
@@ -25,7 +25,7 @@ class ObjectTypeCacheBuilder implements ICacheBuilder {
 			'definitions' => array(),
 			'objectTypes' => array()
 		);
-	
+		
 		// get definitions
 		$sql = "SELECT		object_type_definition.*
 			FROM		wcf".WCF_N."_package_dependency package_dependency,
@@ -46,7 +46,7 @@ class ObjectTypeCacheBuilder implements ICacheBuilder {
 				$data['categories'][$row['categoryName']][] = $row['definitionID'];
 			}
 		}
-
+		
 		// get object types
 		$sql = "SELECT		object_type.*
 			FROM		wcf".WCF_N."_package_dependency package_dependency,

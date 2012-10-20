@@ -6,19 +6,21 @@ use wcf\system\WCF;
 use wcf\util\UserUtil;
 
 /**
- * TextareaIpAddressOptionType is an implementation of IOptionType for 'textarea' tags with IPv4/IPv6 support.
- * IP-Addresses will be converted into IPv6 upon saving but will be displayed as IPv4 whenever applicable.
- *
+ * TextareaIpAddressOptionType is an implementation of IOptionType for 'textarea'
+ * tags with IPv4/IPv6 support.
+ * IP addresses will be converted into IPv6 upon saving but will be displayed as
+ * IPv4 whenever applicable.
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class TextareaIpAddressOptionType extends TextOptionType {
 	/**
-	 * @see wcf\system\option\IOptionType::getFormElement()
+	 * @see	wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		if (!empty($value)) {
@@ -56,7 +58,7 @@ class TextareaIpAddressOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see wcf\system\option\IOptionType::getData()
+	 * @see	wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		if (!empty($newValue)) {

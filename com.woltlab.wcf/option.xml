@@ -149,10 +149,6 @@
 				<supporti18n>1</supporti18n>
 				<requirei18n>0</requirei18n>
 			</option>
-			<option name="page_url">
-				<categoryname>general.page</categoryname>
-				<optiontype>text</optiontype>
-			</option>
 			<option name="page_urls">
 				<categoryname>general.page</categoryname>
 				<optiontype>textarea</optiontype>

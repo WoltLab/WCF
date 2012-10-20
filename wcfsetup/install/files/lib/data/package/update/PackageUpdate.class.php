@@ -6,11 +6,11 @@ use wcf\data\DatabaseObject;
  * Represents a package update.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2010 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package.update
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageUpdate extends DatabaseObject {
 	/**

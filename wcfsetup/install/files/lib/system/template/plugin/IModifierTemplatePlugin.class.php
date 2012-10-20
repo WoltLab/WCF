@@ -6,20 +6,20 @@ use wcf\system\template\TemplateEngine;
  * Modifiers are functions that are applied to a variable in the template 
  * before it is displayed or used in some other context.
  * 
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template
- * @category 	Community Framework
+ * @category	Community Framework
  */
 interface IModifierTemplatePlugin {
 	/**
 	 * Executes this modifier.
 	 * 
-	 * @param	array		$tagArgs		
-	 * @param	wcf\system\template\TemplateEngine 	$tplObj
-	 * @return	string		output		
+	 * @param	array					$tagArgs
+	 * @param	wcf\system\template\TemplateEngine	$tplObj
+	 * @return	string
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj);
 }

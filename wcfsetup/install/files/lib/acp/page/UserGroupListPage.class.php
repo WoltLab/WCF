@@ -8,25 +8,25 @@ use wcf\system\WCF;
  * Shows a list of all user groups.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserGroupListPage extends SortablePage {
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditGroup', 'admin.user.canDeleteGroup');
 	
 	/**
-	 * @see wcf\page\SortablePage::$defaultSortField
+	 * @see	wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'groupName';
 	
 	/**
-	 * @see wcf\page\SortablePage::$validSortFields
+	 * @see	wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('groupID', 'groupName', 'groupType', 'members');
 	
@@ -42,7 +42,7 @@ class UserGroupListPage extends SortablePage {
 	public $deletedGroups = 0;
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -72,7 +72,7 @@ class UserGroupListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -83,7 +83,7 @@ class UserGroupListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
 		// enable menu item

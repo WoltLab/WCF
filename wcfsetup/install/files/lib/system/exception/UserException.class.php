@@ -6,15 +6,15 @@ use wcf\system\WCF;
  * A UserException is thrown when a user gives invalid input data.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.exception
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class UserException extends LoggedException implements IPrintableException {
 	/**
-	 * @see wcf\system\exception\IPrintableException::show()
+	 * @see	wcf\system\exception\IPrintableException::show()
 	 */
 	public function show() {
 		if (WCF::debugModeIsEnabled()) {

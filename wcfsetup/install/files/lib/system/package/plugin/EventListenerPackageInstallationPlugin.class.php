@@ -11,13 +11,18 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\event\listener\EventListenerEditor';
+	
+	/**
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
+	 */
+	public $tagName = 'eventlistener';
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()

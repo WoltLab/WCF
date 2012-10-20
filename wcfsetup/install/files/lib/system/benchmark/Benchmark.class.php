@@ -7,11 +7,11 @@ use wcf\util\FileUtil;
  * Provides functions to do a benchmark.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.benchmark
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class Benchmark extends SingletonFactory {
 	const TYPE_SQL_QUERY = 1;
@@ -19,35 +19,35 @@ class Benchmark extends SingletonFactory {
 	
 	/**
 	 * general benchmark start time
-	 * @var float
+	 * @var	float
 	 */
 	protected $startTime = 0;
 	
 	/**
 	 * benchmark items
-	 * @var array
+	 * @var	array
 	 */
 	protected $items = array();
 	
 	/**
 	 * number of executed sql queries
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $queryCount = 0;
 	
 	/**
 	 * total sql query execution time
-	 * @var float
+	 * @var	float
 	 */
 	protected $queryTime = 0;
-
+	
 	/**
 	 * Creates a new Benchmark object.
 	 */
 	protected function init() {
 		$this->startTime = self::getMicrotime();
 	}
-
+	
 	/**
 	 * Starts a benchmark.
 	 * 
@@ -61,9 +61,10 @@ class Benchmark extends SingletonFactory {
 		$this->items[$newIndex]['type']	= $type;
 		$this->items[$newIndex]['before'] = self::getMicrotime();
 		$this->items[$newIndex]['start'] = self::compareMicrotimes($this->startTime, $this->items[$newIndex]['before']);
+		$this->items[$newIndex]['trace'] = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
 		return $newIndex;
 	}
-
+	
 	/**
 	 * Stops an active benchmark.
 	 * 
@@ -73,7 +74,7 @@ class Benchmark extends SingletonFactory {
 		if ($index === null) {
 			$index = count($this->items) - 1;
 		}
-	
+		
 		$this->items[$index]['after'] = self::getMicrotime();
 		$this->items[$index]['use']  = self::compareMicrotimes($this->items[$index]['before'], $this->items[$index]['after']);
 		$this->items[$index]['end'] = self::compareMicrotimes($this->startTime, $this->items[$index]['after']);
@@ -81,14 +82,12 @@ class Benchmark extends SingletonFactory {
 			$this->queryCount++;
 			$this->queryTime += $this->items[$index]['use'];
 		}
-		
-		
 	}
-
+	
 	/**
 	 * Returns the execution time.
 	 * 
-	 * @return float
+	 * @return	float
 	 */
 	public function getExecutionTime() {
 		return $this->compareMicrotimes($this->startTime, self::getMicrotime());
@@ -97,7 +96,7 @@ class Benchmark extends SingletonFactory {
 	/**
 	 * Returns the sql query execution time
 	 * 
-	 * @return float
+	 * @return	float
 	 */
 	public function getQueryExecutionTime() {
 		return $this->queryTime;
@@ -106,7 +105,7 @@ class Benchmark extends SingletonFactory {
 	/**
 	 * Returns the number of executed sql queries.
 	 * 
-	 * @return integer
+	 * @return	integer
 	 */
 	public function getQueryCount() {
 		return $this->queryCount;
@@ -115,7 +114,7 @@ class Benchmark extends SingletonFactory {
 	/**
 	 * Returns the logged items.
 	 * 
-	 * @return array
+	 * @return	array
 	 */
 	public function getItems() {
 		return $this->items;
@@ -129,7 +128,7 @@ class Benchmark extends SingletonFactory {
 	protected static function getMicrotime() {
 		return microtime(true);
 	}
-
+	
 	/**
 	 * Calculates the difference of two unix timestamps.
 	 * 

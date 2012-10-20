@@ -4,20 +4,20 @@ use wcf\system\exception\SystemException;
 
 /**
  * The File class handles all file operations on a gzip file.
- *  
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class GZipFile extends File {
 	/**
 	 * Opens a gzip file.
 	 * 
-	 * @param  	string		$filename
-	 * @param 	string		$mode
+	 * @param	string		$filename
+	 * @param	string		$mode
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		$this->filename = $filename;
@@ -30,17 +30,17 @@ class GZipFile extends File {
 	/**
 	 * Calls the specified function on the open file.
 	 * 
-	 * @param 	string		$function
-	 * @param 	array		$arguments
+	 * @param	string		$function
+	 * @param	array		$arguments
 	 */
 	public function __call($function, $arguments) {
 		if (function_exists('gz' . $function)) {
 			array_unshift($arguments, $this->resource);
-	       		return call_user_func_array('gz' . $function, $arguments);
+			return call_user_func_array('gz' . $function, $arguments);
 		}
 		else if (function_exists($function)) {
 			array_unshift($arguments, $this->filename);
-	       		return call_user_func_array($function, $arguments);
+			return call_user_func_array($function, $arguments);
 		}
 		else {
 			throw new SystemException('Can not call method ' . $function);

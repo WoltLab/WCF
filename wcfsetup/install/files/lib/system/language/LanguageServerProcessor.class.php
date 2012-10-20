@@ -12,23 +12,23 @@ use wcf\util\XML;
  * Processes language item import from language servers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.language
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class LanguageServerProcessor extends SingletonFactory {
 	/**
 	 * language object
 	 * @var	wcf\data\language\Language
-	 */	
+	 */
 	protected $language = null;
 	
 	/**
 	 * Imports language variables for a language from given language servers.
 	 * 
-	 * @param	wcf\data\language\Language	$language
+	 * @param	wcf\data\language\Language			$language
 	 * @param	array<wcf\data\language\server\LanguageServer>	$languageServers
 	 */
 	public function import(Language $language, array $languageServers) {
@@ -67,7 +67,7 @@ class LanguageServerProcessor extends SingletonFactory {
 	 * 
 	 * @param	string		$location
 	 * @param	array<string>	$packageList
-	 */	
+	 */
 	protected function importLanguageFile($location, array $packageList) {
 		// get proxy
 		$options = array();
@@ -102,19 +102,19 @@ class LanguageServerProcessor extends SingletonFactory {
 		
 		// send content type and length
 		$request .= "Content-Type: application/x-www-form-urlencoded\r\n";
-	   	$request .= "Content-Length: ".strlen($postString)."\r\n";
-	   	// if it is a POST request, there MUST be a blank line before the POST data, but there MUST NOT be 
-	   	// another blank line before, and of course there must be another blank line at the end of the request!
-	   	$request .= "\r\n";
-	   	if (!empty($postString)) $request .= $postString."\r\n";
+		$request .= "Content-Length: ".strlen($postString)."\r\n";
+		// if it is a POST request, there MUST be a blank line before the POST data, but there MUST NOT be 
+		// another blank line before, and of course there must be another blank line at the end of the request!
+		$request .= "\r\n";
+		if (!empty($postString)) $request .= $postString."\r\n";
 		// send close
-	   	$request .= "Connection: Close\r\n\r\n";
-
-	   	// send request
-	   	$remoteFile->puts($request);
+		$request .= "Connection: Close\r\n\r\n";
+		
+		// send request
+		$remoteFile->puts($request);
 		
 		// define response vars
-	   	$header = $content = '';
+		$header = $content = '';
 		
 		// fetch the response.
 		while (!$remoteFile->eof()) {
@@ -292,7 +292,7 @@ class LanguageServerProcessor extends SingletonFactory {
 	 * 
 	 * @param	array		$variables
 	 * @return	array
-	 */	
+	 */
 	protected function importCategories(array $variables) {
 		// get categories
 		$categoryNames = array();

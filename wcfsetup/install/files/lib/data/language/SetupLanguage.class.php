@@ -9,11 +9,11 @@ use wcf\util\XML;
  * SetupLanguage is a modification of Language only for the setup process.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.language
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SetupLanguage extends Language {
 	/**
@@ -68,12 +68,12 @@ class SetupLanguage extends Language {
 						$file->write("\$this->dynamicItems['".$name['name']."'] = '".str_replace("'", "\'", $compiledString['template'])."';\n");
 					}
 				}
-		
+				
 				$file->write("?>");
 				$file->close();
 			}
 		}
-
+		
 		include_once($filename);
 		$this->setLocale();
 	}

@@ -6,11 +6,11 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes session-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2010 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.session
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class SessionAction extends AbstractDatabaseObjectAction {
 	/**

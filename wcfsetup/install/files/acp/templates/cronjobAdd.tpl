@@ -136,7 +136,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
- 		{if $cronjobID|isset}<input type="hidden" name="id" value="{@$cronjobID}" />{/if}
+		{if $cronjobID|isset}<input type="hidden" name="id" value="{@$cronjobID}" />{/if}
 	</div>
 </form>
 

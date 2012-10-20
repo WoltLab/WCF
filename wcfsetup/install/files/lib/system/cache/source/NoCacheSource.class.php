@@ -17,7 +17,7 @@ class NoCacheSource implements ICacheSource {
 	 */
 	public function get(array $cacheResource) {
 		if (!isset($this->cache[$cacheResource['cache']])) return null;
-
+		
 		return $this->cache[$cacheResource['cache']];
 	}
 	

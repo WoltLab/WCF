@@ -14,32 +14,32 @@ use wcf\util\StringUtil;
  * Shows the user edit form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserEditForm extends UserAddForm {
 	/**
-	 * @see wcf\acp\form\UserAddForm::$menuItemName
+	 * @see	wcf\acp\form\UserAddForm::$menuItemName
 	 */
 	public $menuItemName = 'wcf.acp.menu.link.user.management';
 	
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditUser');
 	
 	/**
 	 * user id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $userID = 0;
 	
 	/**
 	 * user editor object
-	 * @var UserEditor
+	 * @var	wcf\data\user\UserEditor
 	 */
 	public $user = null;
 	
@@ -49,7 +49,7 @@ class UserEditForm extends UserAddForm {
 	public $loadActiveOptions = false;
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -71,7 +71,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readFormParameters()
+	 * @see	wcf\page\IPage::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -81,7 +81,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		if (!count($_POST)) {
@@ -124,7 +124,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -139,7 +139,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -174,13 +174,13 @@ class UserEditForm extends UserAddForm {
 		
 		// reset password
 		$this->password = $this->confirmPassword = '';
-	
+		
 		// show success message
 		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
-	 * @see wcf\acp\form\UserAddForm::validateUsername()
+	 * @see	wcf\acp\form\UserAddForm::validateUsername()
 	 */
 	protected function validateUsername($username) {
 		if (StringUtil::toLowerCase($this->user->username) != StringUtil::toLowerCase($username)) {
@@ -189,7 +189,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see wcf\acp\form\UserAddForm::validateEmail()
+	 * @see	wcf\acp\form\UserAddForm::validateEmail()
 	 */
 	protected function validateEmail($email, $confirmEmail) {
 		if (StringUtil::toLowerCase($this->user->email) != StringUtil::toLowerCase($email)) {
@@ -198,7 +198,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see wcf\acp\form\UserAddForm::validatePassword()
+	 * @see	wcf\acp\form\UserAddForm::validatePassword()
 	 */
 	protected function validatePassword($password, $confirmPassword) {
 		if (!empty($password) || !empty($confirmPassword)) {

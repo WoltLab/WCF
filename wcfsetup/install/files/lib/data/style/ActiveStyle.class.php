@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\style;
+use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
@@ -10,15 +11,15 @@ use wcf\util\StringUtil;
  * Represents the active user style.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.style
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ActiveStyle extends DatabaseObjectDecorator {
 	/**
-	 * @see wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\style\Style';
 	
@@ -29,17 +30,18 @@ class ActiveStyle extends DatabaseObjectDecorator {
 	protected $iconCache = array();
 	
 	/**
-	 * Creates a new ActiveStyle object.
-	 * 
-	 * @param	Style	$object
+	 * @see	wcf\data\DatabaseObjectDecorator::__construct()
 	 */
-	public function __construct(Style $object) {
+	public function __construct(DatabaseObject $object) {
 		parent::__construct($object);
 		
+		// TODO: Fix this
 		// calculate page logo path
+		/*
 		if (!empty($this->object->data['variables']['page.logo.image']) && !FileUtil::isURL($this->object->data['variables']['page.logo.image']) && StringUtil::substring($this->object->data['variables']['page.logo.image'], 0, 1) !== '/') {
 			$this->object->data['variables']['page.logo.image'] = RELATIVE_WCF_DIR . $this->object->data['variables']['page.logo.image'];
 		}
+		*/
 		
 		// load icon cache
 		$cacheName = 'icon-'.PACKAGE_ID.'-'.$this->styleID;
@@ -49,17 +51,6 @@ class ActiveStyle extends DatabaseObjectDecorator {
 			'wcf\system\cache\builder\IconCacheBuilder'
 		);
 		$this->iconCache = CacheHandler::getInstance()->get($cacheName);
-	}
-	
-	/**
-	 * Returns the value of a style variable.
-	 * 
-	 * @param	string		$name
-	 * @return	string		value
-	 */
-	public function getVariable($name) {
-		if (isset($this->object->data['variables'][$name])) return $this->object->data['variables'][$name];
-		return '';
 	}
 	
 	/**

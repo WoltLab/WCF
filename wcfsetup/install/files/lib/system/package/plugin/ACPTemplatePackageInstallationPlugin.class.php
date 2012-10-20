@@ -7,13 +7,13 @@ use wcf\util\FileUtil;
 
 /**
  * This PIP installs, updates or deletes by a package delivered ACP templates.
- *
- * @author 	Benjamin Kunz
+ * 
+ * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
@@ -26,7 +26,7 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 	 */
 	public function install() {
 		parent::install();
-
+		
 		// extract files.tar to temp folder
 		$sourceFile = $this->installation->getArchive()->extractTar($this->instruction['value'], 'acptemplates_');
 		

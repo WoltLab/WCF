@@ -4,21 +4,25 @@ namespace wcf\util;
 /**
  * Replaces quoted strings in a text.
  * 
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
- * @category 	Community Framework
+ * @category	Community Framework
  */
 final class StringStack {
+	/**
+	 * local string stack
+	 * @var	array<string>
+	 */
 	protected static $stringStack = array();
 	
 	/**
 	 * Replaces a string with an unique hash value.
-	 *
-	 * @param 	string 		$string
-	 * @param 	string	 	$type
+	 * 
+	 * @param	string		$string
+	 * @param	string		$type
 	 * @return	string		$hash
 	 */
 	public static function pushToStringStack($string, $type = 'default') {
@@ -34,11 +38,11 @@ final class StringStack {
 	}
 	
 	/**
-	 * Reinserts Strings that have been replaced by unique hash values.
+	 * Reinserts strings that have been replaced by unique hash values.
 	 *
-	 * @param 	string 		$string
-	 * @param 	string	 	$type
-	 * @return 	string 		$string
+	 * @param	string		$string
+	 * @param	string		$type
+	 * @return	string
 	 */
 	public static function reinsertStrings($string, $type = 'default') {
 		if (isset(self::$stringStack[$type])) {
@@ -55,8 +59,8 @@ final class StringStack {
 	
 	/**
 	 * Returns the stack.
-	 *
-	 * @param 	string		$type
+	 * 
+	 * @param	string		$type
 	 * @return	array
 	 */
 	public static function getStack($type = 'default') {

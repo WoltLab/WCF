@@ -11,7 +11,7 @@ use wcf\system\event\EventHandler;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class AbstractCronjob implements ICronjob {
 	/**

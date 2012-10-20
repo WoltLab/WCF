@@ -12,11 +12,11 @@ namespace wcf\system\option\user\group;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user.group
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class InfiniteIntegerUserGroupOptionType extends IntegerUserGroupOptionType {
 	/**
-	 * @see wcf\system\option\user\group\IUserGroupOptionType::merge()
+	 * @see	wcf\system\option\user\group\IUserGroupOptionType::merge()
 	 */
 	public function merge($defaultValue, $groupValue) {
 		if ($defaultValue == -1) {

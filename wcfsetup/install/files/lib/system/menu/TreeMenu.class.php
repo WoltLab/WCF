@@ -6,33 +6,33 @@ use wcf\system\WCF;
 
 /**
  * Basis class for a tree menu.
- *
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.menu
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class TreeMenu extends SingletonFactory {
 	/**
 	 * list of visible menu items
-	 * @var array<wcf\system\menu\ITreeMenuItem>
+	 * @var	array<wcf\system\menu\ITreeMenuItem>
 	 */
 	public $menuItemList = array();
 	
 	/**
 	 * list of the names of the active menu items
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	public $activeMenuItems = array();
 	
 	/**
 	 * list of all menu items
-	 * @var array<wcf\system\menu\ITreeMenuItem>
+	 * @var	array<wcf\system\menu\ITreeMenuItem>
 	 */
 	public $menuItems = null;
-
+	
 	/**
 	 * @see wcf\system\SingletonFactory::init()
 	 */
@@ -153,7 +153,7 @@ abstract class TreeMenu extends SingletonFactory {
 	}
 	
 	/**
-	 * Sets the active menu item. 
+	 * Sets the active menu item.
 	 * This should be done before the menu.tpl template calls the function getMenu().
 	 * 
 	 * This function should be used in each script which uses a template that includes the menu.tpl.

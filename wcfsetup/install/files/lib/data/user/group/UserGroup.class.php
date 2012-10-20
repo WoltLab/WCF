@@ -11,34 +11,34 @@ use wcf\system\WCF;
  * Represents a user group.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2010 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserGroup extends DatabaseObject {
 	/**
 	 * group type everyone user group
-	 * @var integer
+	 * @var	integer
 	 */
 	const EVERYONE = 1;
 	
 	/**
 	 * group type guests user group
-	 * @var integer
+	 * @var	integer
 	 */
 	const GUESTS = 2;
 	
 	/**
 	 * group type registered users user group
-	 * @var integer
+	 * @var	integer
 	 */
 	const USERS = 3;
 	
 	/**
 	 * group type of other user groups
-	 * @var integer
+	 * @var	integer
 	 */
 	const OTHER = 4;
 	
@@ -53,22 +53,19 @@ class UserGroup extends DatabaseObject {
 	protected static $databaseTableIndexName = 'groupID';
 	
 	/**
-	 * Caches groups.
-	 * 
-	 * @var	array<UserGroup>
+	 * group cache
+	 * @var	array<wcf\data\user\group\UserGroup>
 	 */
 	protected static $cache = null;
 	
 	/**
-	 * list of accessible groups for active user.
-	 * 
-	 * @param	array<integer>
+	 * list of accessible groups for active user
+	 * @var	array<integer>
 	 */
 	protected static $accessibleGroups = null;
 	
 	/**
-	 * Cached group options of this group.
-	 * 
+	 * group options of this group
 	 * @var	array<array>
 	 */
 	protected $groupOptions = null;
@@ -101,6 +98,7 @@ class UserGroup extends DatabaseObject {
 	 */
 	public static function getGroupsByType(array $types = array()) {
 		self::getCache();
+		
 		// get all groups
 		if (!count($types)) return self::$cache['groups'];
 		
@@ -131,9 +129,10 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if the given user is member of the group.
+	 * Returns true, if the given user is member of the group. If no user is
+	 * given, the active user is used.
 	 * 
-	 * @param	wcf\data\user\User	$user	WCF::getUser() is omitted
+	 * @param	wcf\data\user\User	$user
 	 * @return	boolean
 	 */
 	public function isMember(User $user = null) {

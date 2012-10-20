@@ -13,11 +13,11 @@ use wcf\util\StringUtil;
  * Handles an AJAX-based package uninstallation.
  *
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.action
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UninstallPackageAction extends InstallPackageAction {
 	/**
@@ -129,15 +129,15 @@ class UninstallPackageAction extends InstallPackageAction {
 			}
 				
 			// get domain path
-			$sql = "SELECT	domainName, domainPath
+			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_application
 				WHERE	packageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($packageID));
-			$row = $statement->fetchArray();
+			$application = $statement->fetchObject('wcf\data\application\Application');
 			
 			// build redirect location
-			$location = $row['domainName'] . $row['domainPath'] . 'acp/index.php/PackageList/' . SID_ARG_1ST;
+			$location = $application->getPageURL() . 'acp/index.php/PackageList/' . SID_ARG_1ST;
 			
 			// show success
 			$this->data = array(

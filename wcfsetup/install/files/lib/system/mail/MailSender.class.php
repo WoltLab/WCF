@@ -2,19 +2,19 @@
 namespace wcf\system\mail;
 
 /**
- * Mailsender sends e-mails.
+ * Mailsender sends emails.
  * 
  * @author	Michael Schaefer
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.mail
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class MailSender {
 	/**
 	 * unique mail server instance
-	 * @var MailSender
+	 * @var wcf\system\mail\MailSender
 	 */
 	protected static $instance = null;
 	
@@ -28,15 +28,15 @@ abstract class MailSender {
 			switch (MAIL_SEND_METHOD) {
 				case 'php':
 					self::$instance = new PHPMailSender();
-					break;
+				break;
 				
 				case 'smtp':
 					self::$instance = new SMTPMailSender();
-					break;
+				break;
 				
 				case 'debug':
 					self::$instance = new DebugMailSender();
-					break;
+				break;
 			}
 		}
 		
@@ -46,7 +46,7 @@ abstract class MailSender {
 	/**
 	 * Sends an e-mail.
 	 * 
-	 * @param	Mail	$mail
+	 * @param	wcf\system\mail\Mail	$mail
 	 */
-	public abstract function sendMail(Mail $mail); 
+	abstract public function sendMail(Mail $mail); 
 }

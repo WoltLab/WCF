@@ -8,55 +8,55 @@ use wcf\util\StringUtil;
  * DatabaseException is a specific SystemException for database errors.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.database
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class DatabaseException extends SystemException {
 	/**
 	 * error number
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $errorNumber = null;
 	
 	/**
 	 * error description
-	 * @var string
+	 * @var	string
 	 */
 	protected $errorDesc = null;
 	
 	/**
 	 * sql version number
-	 * @var string
+	 * @var	string
 	 */
 	protected $sqlVersion = null;
 	
 	/**
 	 * sql type
-	 * @var string
+	 * @var	string
 	 */
 	protected $DBType = null;
 	
 	/**
-	 * Database object
-	 * @var Database
+	 * database object
+	 * @var	wcf\system\database\Database
 	 */
 	protected $db = null;
 	
 	/**
-	 * PreparedStatement object
-	 * @var	PreparedStatement
+	 * prepared statement object
+	 * @var	wcf\system\database\statement\PreparedStatement
 	 */
 	protected $preparedStatement = null;
 	
 	/**
 	 * Creates a new DatabaseException.
 	 * 
-	 * @param	string			$message		error message
-	 * @param	Database		$db			affected db object
-	 * @param	PreparedStatement	$preparedStatement	affected prepared statement
+	 * @param	string							$message		error message
+	 * @param	wcf\system\database\Database				$db			affected db object
+	 * @param	wcf\system\database\statement\PreparedStatement		$preparedStatement	affected prepared statement
 	 */
 	public function __construct($message, Database $db, PreparedStatement $preparedStatement = null) {
 		$this->db = $db;

@@ -120,11 +120,13 @@
 						</ul>
 						
 						<!-- search area -->
-						<aside id="search" class="searchBar">
-							<form method="post" action="{link controller='Search'}{/link}">
-								<input type="search" name="q" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" value="" />
-							</form>
-						</aside>
+						{if $__wcf->getSession()->getPermission('admin.general.canUseAcp')}
+							<aside id="search" class="searchBar">
+								<form method="post" action="{link controller='Search'}{/link}">
+									<input type="search" name="q" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" value="" />
+								</form>
+							</aside>
+						{/if}
 						<!-- /search area -->
 					</div>
 				</nav>

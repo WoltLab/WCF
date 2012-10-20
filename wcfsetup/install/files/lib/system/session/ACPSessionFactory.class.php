@@ -6,22 +6,22 @@ use wcf\system\event\EventHandler;
  * ACPSessionFactory handles session for active user.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.session
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ACPSessionFactory {
 	/**
 	 * session editor class name
 	 * @var	string
-	 */	
+	 */
 	protected $sessionEditor = 'wcf\data\acp\session\ACPSessionEditor';
 	
 	/**
 	 * Loads the object of the active session.
-	 */	
+	 */
 	public function load() {
 		// get session
 		$sessionID = $this->readSessionID();
@@ -48,12 +48,11 @@ class ACPSessionFactory {
 	}
 	
 	/**
-	 * Gets the sessionID from request (GET/POST). Returns an empty string,
-	 * if no sessionID was given.
+	 * Returns the session id from request (GET/POST). Returns an empty string,
+	 * if no session id was given.
 	 *
 	 * @return	string
-	 *
-	 */	
+	 */
 	protected function readSessionID() {
 		if (isset($_GET['s'])) {
 			return $_GET['s'];

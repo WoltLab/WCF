@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserMailForm extends ACPForm {
 	/**
@@ -75,7 +75,7 @@ class UserMailForm extends ACPForm {
 	public $userList = null;
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -84,7 +84,7 @@ class UserMailForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -98,7 +98,7 @@ class UserMailForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -124,7 +124,7 @@ class UserMailForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -149,7 +149,7 @@ class UserMailForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function readData() {
 		parent::readData();
@@ -186,7 +186,7 @@ class UserMailForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

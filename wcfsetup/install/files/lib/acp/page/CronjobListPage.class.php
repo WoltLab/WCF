@@ -8,25 +8,25 @@ use wcf\system\package\PackageDependencyHandler;
  * Shows information about configured cron jobs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class CronjobListPage extends SortablePage {
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.cronjob.canEditCronjob', 'admin.system.cronjob.canDeleteCronjob', 'admin.system.cronjob.canEnableDisableCronjob');
 	
 	/**
-	 * @see wcf\page\SortablePage::$defaultSortField
+	 * @see	wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'description';
 	
 	/**
-	 * @see wcf\page\SortablePage::$validSortFields
+	 * @see	wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('description', 'cronjobID', 'nextExec', 'startMinute', 'startHour', 'startDom', 'startMonth', 'startDow');
 	
@@ -46,7 +46,7 @@ class CronjobListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
 		// set active menu item.

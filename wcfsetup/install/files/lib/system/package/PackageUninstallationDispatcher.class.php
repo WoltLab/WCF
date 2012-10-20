@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\package;
+use wcf\util\FileUtil;
+
 use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\Package;
@@ -15,19 +17,19 @@ use wcf\util\HeaderUtil;
 
 /**
  * PackageUninstallationDispatcher handles the whole uninstallation process.
- *
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	/**
 	 * Creates a new instance of PackageUninstallationDispatcher.
 	 *
-	 * @param	PackageInstallationQueue	$queue
+	 * @param	wcf\data\package\installation\queue\PackageInstallationQueue	$queue
 	 */
 	public function __construct(PackageInstallationQueue $queue) {
 		$this->queue = $queue;
@@ -38,7 +40,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	
 	/**
 	 * Uninstalls node components and returns next node.
-	 *
+	 * 
 	 * @param	string		$node
 	 * @return	string
 	 */
@@ -67,6 +69,21 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 		// update options.inc.php if uninstallation is completed
 		if ($node == '') {
 			OptionEditor::resetCache();
+			
+			// force removal of all WCF cache files
+			CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.*.php');
+			
+			if (PACKAGE_ID != 1) {
+				$sql = "SELECT	packageDir
+					FROM	wcf".WCF_N."_package
+					WHERE	isApplication = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array(1));
+				while ($row = $statement->fetchArray()) {
+					$dir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
+					CacheHandler::getInstance()->clear($dir.'cache/', 'cache.*.php');
+				}
+			}
 		}
 		
 		// return next node
@@ -83,7 +100,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	
 	/**
 	 * Uninstalls current package.
-	 *
+	 * 
 	 * @param	array		$nodeData
 	 */
 	protected function uninstallPackage(array $nodeData) {
@@ -108,7 +125,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	
 	/**
 	 * Deletes the given list of files from the target dir.
-	 *
+	 * 
 	 * @param 	string 		$targetDir
 	 * @param 	string 		$files
 	 * @param	boolean		$deleteEmptyDirectories
@@ -162,7 +179,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	
 	/**
 	 * Get all packages which require this package.
-	 *
+	 * 
 	 * @param	integer		$packageID
 	 * @return	array
 	 */
@@ -234,7 +251,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	
 	/**
 	 * Returns true if package has dependencies
-	 *
+	 * 
 	 * @param	integer		$packageID
 	 * @return	boolean
 	 */
@@ -251,7 +268,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	
 	/**
 	 * Adds an uninstall entry to the package installation queue.
-	 *
+	 * 
 	 * @param	Package		$package
 	 * @param	array		$packages
 	 */

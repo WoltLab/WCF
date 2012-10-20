@@ -5,11 +5,11 @@ namespace wcf\page;
  * All page classes should implement this interface. 
  * 
  * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 interface IPage {
 	/**

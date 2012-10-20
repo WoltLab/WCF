@@ -12,28 +12,28 @@ use wcf\util\StringUtil;
  * Shows the option edit form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class OptionForm extends AbstractOptionListForm {
 	/**
 	 * category option
-	 * @var OptionCategory
+	 * @var	wcf\data\option\category\OptionCategory
 	 */
 	public $category = null;
 	
 	/**
 	 * category id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $categoryID = 0;
 	
 	/**
 	 * active tab menu item name
-	 * @var string
+	 * @var	string
 	 */
 	public $activeTabMenuItem = '';
 	
@@ -45,7 +45,7 @@ class OptionForm extends AbstractOptionListForm {
 	
 	/**
 	 * the option tree
-	 * @var array
+	 * @var	array
 	 */
 	public $optionTree = array();
 	
@@ -55,7 +55,7 @@ class OptionForm extends AbstractOptionListForm {
 	protected $languageItemPattern = 'wcf.acp.option.option\d+';
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		if (isset($_REQUEST['id'])) $this->categoryID = intval($_REQUEST['id']);
@@ -71,7 +71,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -80,7 +80,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -96,7 +96,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -115,7 +115,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -129,7 +129,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::show()
+	 * @see	wcf\form\IForm::show()
 	 */
 	public function show() {
 		// set active menu item
@@ -137,7 +137,7 @@ class OptionForm extends AbstractOptionListForm {
 		
 		// check permission
 		WCF::getSession()->checkPermissions(array('admin.system.canEditOption'));
-
+		
 		if ($this->category->categoryName == 'module') {
 			// check master password
 			WCFACP::checkMasterPassword();

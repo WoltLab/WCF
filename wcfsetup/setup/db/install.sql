@@ -1,4 +1,4 @@
-/**** tables ****/
+/* tables */
 DROP TABLE IF EXISTS wcf1_acp_menu_item;
 CREATE TABLE wcf1_acp_menu_item (
 	menuItemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -772,7 +772,7 @@ CREATE TABLE wcf1_user_to_language (
 	UNIQUE KEY userID (userID, languageID)
 );
 
-/**** foreign keys ****/
+/* foreign keys */
 ALTER TABLE wcf1_acp_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_acp_search_provider ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
@@ -911,7 +911,7 @@ ALTER TABLE wcf1_user_to_group ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_gr
 ALTER TABLE wcf1_user_to_language ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_to_language ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 
-/**** default inserts ****/
+/* default inserts */
 -- default user groups
 INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group1', 1);
 INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group2', 2);
@@ -984,7 +984,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdow
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownColor', 'rgba(102, 102, 102, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownBorderColor', 'rgba(221, 221, 221, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownHoverBackgroundColor', 'rgba(244, 244, 244, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfBaseLineHeight', '1.27em');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfBaseLineHeight', '1.27');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeadlineFontSize', '170%');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSubHeadlineFontSize', '140%');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTitleFontSize', '120%');

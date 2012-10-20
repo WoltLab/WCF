@@ -22,11 +22,11 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.style
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class StyleAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\style\StyleEditor';
 	
@@ -39,6 +39,12 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.style.canEditStyle');
+	
+	/**
+	 * style editor object
+	 * @var	wcf\data\style\StyleEditor
+	 */
+	public $styleEditor = null;
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::create()
@@ -332,16 +338,7 @@ class StyleAction extends AbstractDatabaseObjectAction {
 			throw new PermissionDeniedException();
 		}
 		
-		if (empty($this->objects)) {
-			$this->readObjects();
-			if (empty($this->objects)) {
-				throw new UserInputException('objectIDs');
-			}
-		}
-		
-		if (count($this->objects) > 1) {
-			throw new UserInputException('objectIDs');
-		}
+		$this->styleEditor = $this->getSingleObject();
 	}
 	
 	/**
@@ -350,8 +347,6 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	 * @return	array<string>
 	 */
 	public function copy() {
-		$style = current($this->objects);
-		
 		// get unique style name
 		$sql = "SELECT	styleName
 			FROM	wcf".WCF_N."_style
@@ -359,8 +354,8 @@ class StyleAction extends AbstractDatabaseObjectAction {
 				AND styleID <> ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-			$style->styleName.'%',
-			$style->styleID
+			$this->styleEditor->styleName.'%',
+			$this->styleEditor->styleID
 		));
 		$numbers = array();
 		$regEx = new Regex('\((\d+)\)$');
@@ -371,30 +366,30 @@ class StyleAction extends AbstractDatabaseObjectAction {
 				$matches = $regEx->getMatches();
 				
 				// check if name matches the pattern 'styleName (x)'
-				if ($styleName == $style->styleName . ' ('.$matches[1].')') {
+				if ($styleName == $this->styleEditor->styleName . ' ('.$matches[1].')') {
 					$numbers[] = $matches[1];
 				}
 			}
 		}
 		
 		$number = (count($numbers)) ? max($numbers) + 1 : 2;
-		$styleName = $style->styleName . ' ('.$number.')';
+		$styleName = $this->styleEditor->styleName . ' ('.$number.')';
 		
 		// create the new style
 		$newStyle = StyleEditor::create(array(
 			'packageID' => PACKAGE_ID,
 			'styleName' => $styleName,
-			'templateGroupID' => $style->templateGroupID,
+			'templateGroupID' => $this->styleEditor->templateGroupID,
 			'disabled' => 1, // newly created styles are disabled by default
-			'styleDescription' => $style->styleDescription,
-			'styleVersion' => $style->styleVersion,
-			'styleDate' => $style->styleDate,
-			'copyright' => $style->copyright,
-			'license' => $style->license,
-			'authorName' => $style->authorName,
-			'authorURL' => $style->authorURL,
-			'iconPath' => $style->iconPath,
-			'imagePath' => $style->imagePath
+			'styleDescription' => $this->styleEditor->styleDescription,
+			'styleVersion' => $this->styleEditor->styleVersion,
+			'styleDate' => $this->styleEditor->styleDate,
+			'copyright' => $this->styleEditor->copyright,
+			'license' => $this->styleEditor->license,
+			'authorName' => $this->styleEditor->authorName,
+			'authorURL' => $this->styleEditor->authorURL,
+			'iconPath' => $this->styleEditor->iconPath,
+			'imagePath' => $this->styleEditor->imagePath
 		));
 		
 		// copy style variables
@@ -404,15 +399,15 @@ class StyleAction extends AbstractDatabaseObjectAction {
 			FROM		wcf".WCF_N."_style_variable_value value
 			WHERE		value.styleID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($style->styleID));
+		$statement->execute(array($this->styleEditor->styleID));
 		
 		// copy preview image
-		if ($style->image) {
+		if ($this->styleEditor->image) {
 			// get extension
-			$fileExtension = StringUtil::substring($style->image, StringUtil::lastIndexOf($style->image, '.'));
+			$fileExtension = StringUtil::substring($this->styleEditor->image, StringUtil::lastIndexOf($this->styleEditor->image, '.'));
 			
 			// copy existing preview image
-			if (@copy(WCF_DIR.'images/'.$style->image, WCF_DIR.'images/stylePreview-'.$newStyle->styleID.$fileExtension)) {
+			if (@copy(WCF_DIR.'images/'.$this->styleEditor->image, WCF_DIR.'images/stylePreview-'.$newStyle->styleID.$fileExtension)) {
 				// bypass StyleEditor::update() to avoid scaling of already fitting image
 				$sql = "UPDATE	wcf".WCF_N."_style
 					SET	image = ?

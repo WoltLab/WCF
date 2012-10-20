@@ -9,16 +9,16 @@ use wcf\system\WCF;
  * PackageInstallationSQLParser extends SQLParser by testing and logging functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PackageInstallationSQLParser extends SQLParser {
 	/**
 	 * package object
-	 * @var wcf\data\package\Package
+	 * @var	wcf\data\package\Package
 	 */
 	protected $package = null;
 	
@@ -91,12 +91,12 @@ class PackageInstallationSQLParser extends SQLParser {
 	
 	/**
 	 * Performs a test of the given queries.
-	 *
+	 * 
 	 * @return	array		conflicts
 	 */
 	public function test() {
 		$this->conflicts = array();
-
+		
 		// get all existing tables from database
 		$this->existingTables = WCF::getDB()->getEditor()->getTableNames();
 		
@@ -275,7 +275,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see wcf\system\database\util\SQLParser::executeCreateTableStatement()
+	 * @see	wcf\system\database\util\SQLParser::executeCreateTableStatement()
 	 */
 	protected function executeCreateTableStatement($tableName, $columns, $indices = array()) {
 		if ($this->test) {
@@ -301,7 +301,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see wcf\system\database\util\SQLParser::executeAddColumnStatement()
+	 * @see	wcf\system\database\util\SQLParser::executeAddColumnStatement()
 	 */
 	protected function executeAddColumnStatement($tableName, $columnName, $columnData) {
 		if ($this->test) {
@@ -321,7 +321,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see wcf\system\database\util\SQLParser::executeAddColumnStatement()
+	 * @see	wcf\system\database\util\SQLParser::executeAddColumnStatement()
 	 */
 	protected function executeAlterColumnStatement($tableName, $oldColumnName, $newColumnName, $newColumnData) {
 		if ($this->test) {
@@ -344,7 +344,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see wcf\system\database\util\SQLParser::executeAddIndexStatement()
+	 * @see	wcf\system\database\util\SQLParser::executeAddIndexStatement()
 	 */
 	protected function executeAddIndexStatement($tableName, $indexName, $indexData) {
 		if ($this->test) {
@@ -364,7 +364,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see wcf\system\database\util\SQLParser::executeAddForeignKeyStatement()
+	 * @see	wcf\system\database\util\SQLParser::executeAddForeignKeyStatement()
 	 */
 	protected function executeAddForeignKeyStatement($tableName, $indexName, $indexData) {
 		if ($this->test) {
@@ -384,7 +384,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see wcf\system\database\util\SQLParser::executeDropColumnStatement()
+	 * @see	wcf\system\database\util\SQLParser::executeDropColumnStatement()
 	 */
 	protected function executeDropColumnStatement($tableName, $columnName) {
 		if ($this->test) {
@@ -404,7 +404,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see wcf\system\database\util\SQLParser::executeDropIndexStatement()
+	 * @see	wcf\system\database\util\SQLParser::executeDropIndexStatement()
 	 */
 	protected function executeDropIndexStatement($tableName, $indexName) {
 		if ($this->test) {
@@ -424,7 +424,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see wcf\system\database\util\SQLParser::executeDropTableStatement()
+	 * @see	wcf\system\database\util\SQLParser::executeDropTableStatement()
 	 */
 	protected function executeDropTableStatement($tableName) {
 		if ($this->test) {
@@ -450,7 +450,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see wcf\system\database\util\SQLParser::executeStandardStatement()
+	 * @see	wcf\system\database\util\SQLParser::executeStandardStatement()
 	 */
 	protected function executeStandardStatement($query) {
 		if (!$this->test) {

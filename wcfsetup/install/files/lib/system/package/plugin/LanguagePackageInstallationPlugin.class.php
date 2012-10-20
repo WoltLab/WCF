@@ -9,18 +9,18 @@ use wcf\util\XML;
 
 /**
  * This PIP installs, updates or deletes language and their categories and items.
- *
- * @author 	Benjamin Kunz
- * @copyright	2001-2011 WoltLab GmbH
+ * 
+ * @author	Benjamin Kunz
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */	
+	 */
 	public $tableName = 'language_item';
 	
 	/**
@@ -90,7 +90,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				if (isset($languageFiles[$installedLanguages[0]['languageCode']])) {
 					$languageFile = $languageFiles[$installedLanguages[0]['languageCode']];
 				}
-
+				
 				// use english (if installed)
 				else if (isset($languageFiles['en'])) {
 					foreach ($installedLanguages as $installedLanguage2) {
@@ -100,7 +100,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 						}
 					}
 				}
-
+				
 				// use any installed language
 				if ($languageFile === null) {
 					foreach ($installedLanguages as $installedLanguage2) {
@@ -110,7 +110,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 						}
 					}
 				}
-
+				
 				// use first delivered language
 				if ($languageFile === null) {
 					foreach ($languageFiles as $languageFile) break;
@@ -224,12 +224,11 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	}
 	
 	/**
-	 * Extracts the language file and parses it with
-     	 * SimpleXML. If the specified language file
-	 * was not found, an error message is thrown.
-	 *
+	 * Extracts the language file and parses it. If the specified language file
+	 * was not found, an exception message is thrown.
+	 * 
 	 * @param	string		$filename
-	 * @return 	wcf\util\XML	xml
+	 * @return	wcf\util\XML
 	 */
 	protected function readLanguage($filename) {
 		// search language files in package archive
@@ -246,9 +245,9 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * Deletes categories which where changed by an update or deinstallation in case they are now empty.
-	 *
+	 * 
 	 * @param	array		$categoryIDs
-	 * @param 	integer		$packageID
+	 * @param	integer		$packageID
 	 */
 	protected function deleteEmptyCategories(array $categoryIDs, $packageID) {
 		// Get empty categories which where changed by this package.

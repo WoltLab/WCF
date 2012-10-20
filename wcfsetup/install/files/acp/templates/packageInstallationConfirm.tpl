@@ -42,7 +42,7 @@
 
 <fieldset class="marginTop">
 	<legend>{lang}wcf.acp.package.information.properties{/lang}</legend>
-
+	
 	<dl>
 		<dt>{lang}wcf.acp.package.identifier{/lang}</dt>
 		<dd>{$archive->getPackageInfo('name')}</dd>
@@ -52,12 +52,12 @@
 		<dt>{lang}wcf.acp.package.version{/lang}</dt>
 		<dd>{$archive->getPackageInfo('version')}</dd>
 	</dl>
-
+	
 	<dl>
 		<dt>{lang}wcf.acp.package.packageDate{/lang}</dt>
 		<dd>{@$archive->getPackageInfo('date')|date}</dd>
 	</dl>
-
+	
 	{if $archive->getPackageInfo('packageURL') != ''}
 		<dl>
 			<dt>{lang}wcf.acp.package.url{/lang}</dt>

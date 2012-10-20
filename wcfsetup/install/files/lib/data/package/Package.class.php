@@ -13,11 +13,11 @@ use wcf\util\StringUtil;
  * Represents a package.
  *
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class Package extends DatabaseObject {
 	/**
@@ -56,7 +56,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Returns true, if this package is required by other packages.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function isRequired() {
@@ -72,7 +72,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Returns true if package is a plugin.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function isPlugin() {
@@ -83,7 +83,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Returns the name of this package.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getName() {
@@ -92,7 +92,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Returns the abbreviation of the package name.
-	 *
+	 * 
 	 * @param	string		$package
 	 * @return	string
 	 */
@@ -105,7 +105,7 @@ class Package extends DatabaseObject {
 	 * Returns package object for parent package.
 	 * 
 	 * @return	Package
-	 */	
+	 */
 	public function getParentPackage() {
 		if (!$this->parentPackageID) {
 			throw new SystemException("Package ".$this->package." does not have a parent package.");
@@ -117,7 +117,7 @@ class Package extends DatabaseObject {
 	/**
 	 * Returns a list of all by this package required packages.
 	 * Contains required packages and the requirements of the required packages.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function getDependencies() {
@@ -142,7 +142,7 @@ class Package extends DatabaseObject {
 	/**
 	 * Returns a list of all packages that require this package.
 	 * Returns packages that require this package and packages that require these packages.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function getDependentPackages() {
@@ -167,7 +167,7 @@ class Package extends DatabaseObject {
 	/**
 	 * Returns a list of the requirements of this package.
 	 * Contains the content of the <requiredPackages> tag in the package.xml of this package.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function getRequiredPackages() {
@@ -197,7 +197,7 @@ class Package extends DatabaseObject {
 	 * official WCF packet naming scheme in the future).
 	 * Reminder: The '$packageName' variable being examined here contains the 'name' attribute
 	 * of the 'package' tag noted in the 'packages.xml' file delivered inside the respective package.
-	 *
+	 * 
 	 * @param 	string 		$packageName
 	 * @return 	boolean 	isValid
 	 */
@@ -250,7 +250,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Compares two version number strings.
-	 *
+	 * 
 	 * @param	string		$version1
 	 * @param	string		$version2
 	 * @param	string		$operator
@@ -266,7 +266,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Formats a package version string for comparing.
-	 *
+	 * 
 	 * @param	string		$version
 	 * @return 	string		formatted version
 	 * @see 	http://www.php.net/manual/en/function.version-compare.php
@@ -287,7 +287,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Rebuilds the requirement map for the given package id.
-	 *
+	 * 
 	 * @param	integer		$packageID
 	 */
 	public static function rebuildPackageRequirementMap($packageID) {
@@ -360,7 +360,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Rebuilds the dependencies list for the given package id.
-	 *
+	 * 
 	 * @param	integer		$packageID
 	 */
 	public static function rebuildPackageDependencies($packageID) {
@@ -436,8 +436,16 @@ class Package extends DatabaseObject {
 					(packageID, dependency, priority)
 			VALUES		(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		$insertedDependencies = array();
 		foreach ($requirements as $dependency => $priority) {
 			$statement->execute(array($packageID, $dependency, $priority));
+			
+			if (!isset($insertedDependencies[$packageID])) {
+				$insertedDependencies[$packageID] = array();
+			}
+			
+			$insertedDependencies[$packageID][] = $dependency;
 		}
 		
 		// select plugins
@@ -467,6 +475,11 @@ class Package extends DatabaseObject {
 			VALUES		(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($plugins as $dependency => $priority) {
+			// ignore already inserted dependencies
+			if (isset($insertedDependencies[$packageID]) && in_array($dependency, $insertedDependencies[$packageID])) {
+				continue;
+			}
+			
 			$statement->execute(array($packageID, $dependency, $priority));
 		}
 		
@@ -508,7 +521,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Writes the config.inc.php for an application.
-	 *
+	 * 
 	 * @param	integer		$packageID
 	 */
 	public static function writeConfigFile($packageID) {
@@ -518,7 +531,7 @@ class Package extends DatabaseObject {
 		$file->write("<?php\n");
 		$currentPrefix = strtoupper(Package::getAbbreviation($package->package));
 		
-		// get dependencies (only spplications)
+		// get dependencies (only applications)
 		$sql = "SELECT		package.*, CASE WHEN package.packageID = ? THEN 1 ELSE 0 END AS sortOrder 
 			FROM		wcf".WCF_N."_package_dependency package_dependency
 			LEFT JOIN	wcf".WCF_N."_package package
@@ -538,18 +551,16 @@ class Package extends DatabaseObject {
 			$dependencyDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$dependency->packageDir));
 			$prefix = strtoupper(Package::getAbbreviation($dependency->package));
 			
-			$file->write("// ".$dependency->packageID." vars\n");
-			$file->write("// ".strtolower($prefix)."\n");
+			$file->write("// ".$dependency->package." (packageID ".$dependency->packageID.")\n");
 			$file->write("if (!defined('".$prefix."_DIR')) define('".$prefix."_DIR', ".($dependency->packageID == $package->packageID ? "dirname(__FILE__).'/'" : "'".$dependencyDir."'").");\n");
 			$file->write("if (!defined('RELATIVE_".$prefix."_DIR')) define('RELATIVE_".$prefix."_DIR', ".($dependency->packageID == $package->packageID ? "''" : "RELATIVE_".$currentPrefix."_DIR.'".FileUtil::getRelativePath($packageDir, $dependencyDir)."'").");\n");
 			$file->write("if (!defined('".$prefix."_N')) define('".$prefix."_N', '".WCF_N."_".$dependency->instanceNo."');\n");
-			$file->write("\$packageDirs[] = ".$prefix."_DIR;\n");
 			$file->write("\n");
 		}
 		
 		// write general information
 		$file->write("// general info\n");
-		$file->write("if (!defined('RELATIVE_WCF_DIR'))	define('RELATIVE_WCF_DIR', RELATIVE_".$currentPrefix."_DIR.'".FileUtil::getRelativePath($packageDir, WCF_DIR)."');\n");
+		$file->write("if (!defined('RELATIVE_WCF_DIR')) define('RELATIVE_WCF_DIR', RELATIVE_".$currentPrefix."_DIR.'".FileUtil::getRelativePath($packageDir, WCF_DIR)."');\n");
 		$file->write("if (!defined('PACKAGE_ID')) define('PACKAGE_ID', ".$package->packageID.");\n");
 		$file->write("if (!defined('PACKAGE_NAME')) define('PACKAGE_NAME', '".str_replace("'", "\'", $package->getName())."');\n");
 		$file->write("if (!defined('PACKAGE_VERSION')) define('PACKAGE_VERSION', '".$package->packageVersion."');\n");
@@ -562,7 +573,7 @@ class Package extends DatabaseObject {
 	/**
 	 * Searches all dependent packages for the given package id
 	 * and rebuild their package dependencies list.
-	 *
+	 * 
 	 * @param	integer		$packageID
 	 */
 	public static function rebuildParentPackageDependencies($packageID) {

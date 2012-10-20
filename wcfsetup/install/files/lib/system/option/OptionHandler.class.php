@@ -11,66 +11,66 @@ use wcf\util\ClassUtil;
 
 /**
  * Handles options.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class OptionHandler implements IOptionHandler {
 	/**
 	 * cache name
-	 * @var string
+	 * @var	string
 	 */
 	public $cacheName = '';
 	
 	/**
 	 * cache class name
-	 * @var string
+	 * @var	string
 	 */
 	public $cacheClass = '';
 	
 	/**
 	 * list of all option categories
-	 * @var array<wcf\data\option\category\OptionCategory>
+	 * @var	array<wcf\data\option\category\OptionCategory>
 	 */
 	public $cachedCategories = null;
 	
 	/**
 	 * list of all options
-	 * @var array<wcf\data\option\Option>
+	 * @var	array<wcf\data\option\Option>
 	 */
 	public $cachedOptions = null;
 	
 	/**
 	 * category structure
-	 * @var array
+	 * @var	array
 	 */
 	public $cachedCategoryStructure = null;
 	
 	/**
 	 * option structure
-	 * @var array
+	 * @var	array
 	 */
 	public $cachedOptionToCategories = null;
 	
 	/**
-	 * Name of the active option category.
-	 * @var string
+	 * name of the active option category
+	 * @var	string
 	 */
 	public $categoryName = '';
 	
 	/**
-	 * Options of the active category.
-	 * @var array<Option>
+	 * options of the active category
+	 * @var	array<Option>
 	 */
 	public $options = array();
 	
 	/**
-	 * Type object cache.
-	 * @var array<wcf\system\option\IOptionType>
+	 * type object cache
+	 * @var	array<wcf\system\option\IOptionType>
 	 */
 	public $typeObjects = array();
 	
@@ -82,7 +82,7 @@ class OptionHandler implements IOptionHandler {
 	
 	/**
 	 * option values
-	 * @var array<mixed>
+	 * @var	array<mixed>
 	 */
 	public $optionValues = array();
 	
@@ -94,7 +94,7 @@ class OptionHandler implements IOptionHandler {
 	
 	/**
 	 * raw option values
-	 * @var array<mixed>
+	 * @var	array<mixed>
 	 */
 	public $rawValues = array();
 	

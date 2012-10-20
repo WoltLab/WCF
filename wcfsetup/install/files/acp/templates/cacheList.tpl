@@ -44,7 +44,7 @@
 		{event name='dataFields'}
 	</fieldset>
 </div>
-	
+
 <div class="contentNavigation">
 	<nav>
 		<ul>
@@ -88,7 +88,6 @@
 				{/foreach}
 				</tbody>
 			</table>
-			
 		</div>
 	{/if}
 {/foreach}

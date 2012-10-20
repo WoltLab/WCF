@@ -9,7 +9,7 @@ namespace wcf\system\sitemap;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.sitemap
- * @category 	Community Framework
+ * @category	Community Framework
  */
 interface ISitemapProvider {
 	/**

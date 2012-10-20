@@ -16,15 +16,15 @@ use wcf\util\UserUtil;
  * Shows the user add form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserAddForm extends UserOptionListForm {
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canAddUser');
 	
@@ -36,55 +36,55 @@ class UserAddForm extends UserOptionListForm {
 	
 	/**
 	 * username
-	 * @var string
+	 * @var	string
 	 */
 	public $username = '';
 	
 	/**
 	 * email address
-	 * @var string
+	 * @var	string
 	 */
 	public $email = '';
 	
 	/**
 	 * confirmed email address
-	 * @var string
+	 * @var	string
 	 */
 	public $confirmEmail = '';
 	
 	/**
 	 * user password
-	 * @var string
+	 * @var	string
 	 */
 	public $password = '';
 	
 	/**
 	 * confirmed user password
-	 * @var string
+	 * @var	string
 	 */
 	public $confirmPassword = '';
 	
 	/**
 	 * user group ids
-	 * @var array<integer>
+	 * @var	array<integer>
 	 */
 	public $groupIDs = array();
 	
 	/**
 	 * language id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $languageID = 0;
 	
 	/**
 	 * visible languages
-	 * @var array<integer>
+	 * @var	array<integer>
 	 */
 	public $visibleLanguages = array();
 	
 	/**
 	 * additional fields
-	 * @var array<mixed>
+	 * @var	array<mixed>
 	 */
 	public $additionalFields = array();
 	
@@ -98,7 +98,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -114,7 +114,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		// validate static user options 
@@ -181,7 +181,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -281,7 +281,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -297,7 +297,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -320,7 +320,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
 		// set active menu item

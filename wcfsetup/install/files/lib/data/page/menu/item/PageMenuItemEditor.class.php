@@ -9,11 +9,11 @@ use wcf\system\WCF;
  * Provides functions to edit page menu items.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.page.menu.item
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
@@ -66,7 +66,7 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	
 	/**
 	 * Updates the positions of a page menu item directly.
-	 *
+	 * 
 	 * @param	integer		$menuItemID
 	 * @param	string		$menuPosition
 	 * @param	integer		$showOrder

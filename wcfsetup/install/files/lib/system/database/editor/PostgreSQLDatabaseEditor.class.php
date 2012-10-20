@@ -5,17 +5,17 @@ use wcf\util\ArrayUtil;
 
 /**
  * This is the database editor implementation for PostgreSQL 8.0 or higher.
- *
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2010 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.database.editor
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::getTableNames()
+	 * @see	wcf\system\database\editor\DatabaseEditor::getTableNames()
 	 */
 	public function getTableNames() {
 		$existingTables = array();
@@ -32,7 +32,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::getColumns()
+	 * @see	wcf\system\database\editor\DatabaseEditor::getColumns()
 	 */
 	public function getColumns($tableName) {
 		$columns = array();
@@ -45,14 +45,14 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute(array($tableName));
 		while ($row = $statement->fetchArray()) {
-      	 		$columns[] = $row['attname'];
-   		}
-   		
-   		return $columns;
+			$columns[] = $row['attname'];
+		}
+		
+		return $columns;
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::getIndices()
+	 * @see	wcf\system\database\editor\DatabaseEditor::getIndices()
 	 */
 	public function getIndices($tableName) {
 		$indices = array();
@@ -62,10 +62,10 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute(array($tableName));
 		while ($row = $statement->fetchArray()) {
-      	 		$indices[] = $row['indexname'];
-   		}
-   		
-   		return $indices;
+			$indices[] = $row['indexname'];
+		}
+		
+		return $indices;
 	}
 	
 	/**
@@ -103,7 +103,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::createTable()
+	 * @see	wcf\system\database\editor\DatabaseEditor::createTable()
 	 */
 	public function createTable($tableName, $columns, $indices = array()) {
 		$columnDefinition = $indexDefinition = '';
@@ -140,7 +140,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::dropTable()
+	 * @see	wcf\system\database\editor\DatabaseEditor::dropTable()
 	 */
 	public function dropTable($tableName) {
 		$sql = "DROP TABLE IF EXISTS ".$tableName." CASCADE";
@@ -149,7 +149,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::addColumn()
+	 * @see	wcf\system\database\editor\DatabaseEditor::addColumn()
 	 */
 	public function addColumn($tableName, $columnName, $columnData) {
 		$sql = "ALTER TABLE ".$tableName." ADD COLUMN ".$this->buildColumnDefinition($columnName, $columnData);
@@ -158,7 +158,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::alterColumn()
+	 * @see	wcf\system\database\editor\DatabaseEditor::alterColumn()
 	 */
 	public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData) {
 		// change column name if necessary
@@ -167,7 +167,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 			$statement = $this->dbObj->prepareStatement($sql);
 			$statement->execute();
 		}
-
+		
 		// get column information
 		$columnData = $this->getColumnData($tableName, $newColumnName);
 		
@@ -178,7 +178,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 			if (!empty($alterStatements)) $alterStatements .= ',';
 			$alterStatements .= "ALTER COLUMN ".$newColumnName." TYPE ".$this->buildColumnType($newColumnData);
 		}
-
+		
 		// change not null status
 		if (empty($columnData['notNull']) && !empty($newColumnData['notNull'])) {
 			if (!empty($alterStatements)) $alterStatements .= ',';
@@ -188,7 +188,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 			if (!empty($alterStatements)) $alterStatements .= ',';
 			$alterStatements .= "ALTER COLUMN ".$newColumnName." DROP NOT NULL";
 		}
-
+		
 		// change default value
 		if ((isset($columnData['default']) && $columnData['default'] !== '') && (!isset($newColumnData['default']) || $newColumnData['default'] === '')) {
 			if (!empty($alterStatements)) $alterStatements .= ',';
@@ -208,7 +208,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::dropColumn()
+	 * @see	wcf\system\database\editor\DatabaseEditor::dropColumn()
 	 */
 	public function dropColumn($tableName, $columnName) {
 		$sql = "ALTER TABLE ".$tableName." DROP COLUMN ".$columnName." CASCADE";
@@ -217,7 +217,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::addIndex()
+	 * @see	wcf\system\database\editor\DatabaseEditor::addIndex()
 	 */
 	public function addIndex($tableName, $indexName, $indexData) {
 		$columns = ArrayUtil::trim(explode(',', $indexData['columns']));
@@ -271,7 +271,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::addIndex()
+	 * @see	wcf\system\database\editor\DatabaseEditor::addIndex()
 	 */
 	public function addForeignKey($tableName, $indexName, $indexData) {
 		$sql = "ALTER TABLE ".$tableName." ADD";
@@ -296,7 +296,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::dropIndex()
+	 * @see	wcf\system\database\editor\DatabaseEditor::dropIndex()
 	 */
 	public function dropIndex($tableName, $indexName) {
 		$sql = "DROP INDEX IF EXISTS ".$tableName."_".$indexName."_key CASCADE";
@@ -305,7 +305,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see wcf\system\database\editor\DatabaseEditor::dropForeignKey()
+	 * @see	wcf\system\database\editor\DatabaseEditor::dropForeignKey()
 	 */
 	public function dropForeignKey($tableName, $indexName) {
 		// TODO: Could it be, that this method is not required because Postgre is clever enough to delete references anyway?
@@ -378,33 +378,51 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 		switch ($mySQLType) {
 			// numeric types
 			case 'tinyint':
-			case 'smallint': 	return 'smallint';
+			case 'smallint':
+				return 'smallint';
+			
 			case 'mediumint':
-			case 'int': 		return 'integer';
-			case 'bigint': 		return 'bigint';
-			case 'float': 		return 'real';
-			case 'double': 		return 'double precision';
-			case 'decimal': 	
-			case 'numeric': 	return 'numeric';
+			case 'int':
+				return 'integer';
+			
+			case 'bigint':
+				return 'bigint';
+			
+			case 'float':
+				return 'real';
+			
+			case 'double':
+				return 'double precision';
+			
+			case 'decimal':
+			case 'numeric':
+				return 'numeric';
 			
 			// string types
-			case 'char':		return 'character';
-			case 'varchar':		return 'character varying';
-			case 'tinytext':	
+			case 'char':
+				return 'character';
+			
+			case 'varchar':
+				return 'character varying';
+			
+			case 'tinytext':
 			case 'text':
 			case 'mediumtext':
-			case 'longtext':	return 'text';
+			case 'longtext':
+				return 'text';
 			
 			// blobs
-			case 'binary':		
+			case 'binary':
 			case 'varbinary':
 			case 'tinyblob':
 			case 'blob':
 			case 'mediumblob':
-			case 'longblob':	return 'bytea';
+			case 'longblob':
+				return 'bytea';
 			
 			// enum
-			case 'enum':		return 'character varying';
+			case 'enum':
+				return 'character varying';
 		}
 		
 		throw new DatabaseException("Unknown / unsupported data type '".$mySQLType."'", $this->dbObj);

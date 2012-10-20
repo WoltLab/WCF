@@ -42,14 +42,13 @@
 							<td class="columnDate columnTime"><p>{@$sessionLog->time|time}</p></td>
 							<td class="columnDate columnLastActivityTime"><p>{@$sessionLog->lastActivityTime|time}</p></td>
 							<td class="columnDigits columnAccesses"><p>{#$sessionLog->accesses}</p></td>
-					
+							
 							{event name='columns'}
 						</tr>
 					{/foreach}
 				{/content}
 			</tbody>
 		</table>
-		
 	</div>
 	
 	<div class="contentNavigation">

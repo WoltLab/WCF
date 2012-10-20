@@ -29,7 +29,7 @@
 	<div class="container containerPadding marginTop shadow">
 		<fieldset>
 			<legend>{lang}wcf.acp.package.source{/lang}</legend>
-		
+			
 			<dl{if $errorField == 'uploadPackage'} class="formError"{/if}>
 				<dt><label for="uploadPackage">{lang}wcf.acp.package.source.upload{/lang}</label></dt>
 				<dd>

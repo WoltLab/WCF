@@ -1,24 +1,25 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\application\group\ApplicationGroup;
+use wcf\data\application\Application;
+use wcf\data\application\ApplicationList;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
-use wcf\data\application;
 use wcf\system\WCF;
 
 /**
  * Caches applications.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ApplicationCacheBuilder implements ICacheBuilder {
 	/**
-	 * @see wcf\system\cache\ICacheBuilder::getData()
+	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
 		list($cache, $packageID) = explode('-', $cacheResource['cache']);
@@ -40,11 +41,11 @@ class ApplicationCacheBuilder implements ICacheBuilder {
 		
 		// current application is not part of an application group
 		if (!$row || ($row['groupID'] == 0) || $row['groupID'] === null) {
-			$data['application'] = array($packageID => new application\Application($packageID));
+			$data['application'] = array($packageID => new Application($packageID));
 		}
 		else {
 			// fetch applications
-			$applicationList = new application\ApplicationList();
+			$applicationList = new ApplicationList();
 			$applicationList->getConditionBuilder()->add("application.groupID = ?", array($row['groupID']));
 			$applicationList->sqlLimit = 0;
 			$applicationList->readObjects();
@@ -72,7 +73,7 @@ class ApplicationCacheBuilder implements ICacheBuilder {
 		}
 		
 		// fetch wcf pseudo-application
-		$data['wcf'] = new application\Application(1);
+		$data['wcf'] = new Application(1);
 		
 		return $data;
 	}

@@ -6,17 +6,17 @@ use wcf\system\SingletonFactory;
  * Manages breadcrumbs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.breadcrumb
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	/**
 	 * list of breadcrumbs
 	 * @var	array<wcf\system\breadcrumb\Breadcrumb>
-	 */	
+	 */
 	protected $items = array();
 	
 	/**
@@ -28,7 +28,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * Adds a breadcrumb (insertion order is crucial!).
 	 * 
 	 * @param	wcf\system\breadcrumb\Breadcrumb	$item
-	 */	
+	 */
 	public function add(Breadcrumb $item) {
 		$this->items[] = $item;
 	}
@@ -37,7 +37,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * Returns the list of breadcrumbs.
 	 * 
 	 * @return	array<wcf\system\breadcrumb\Breadcrumb>
-	 */	 
+	 */
 	public function get() {
 		return $this->items;
 	}
@@ -76,42 +76,42 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see \Countable::count()
+	 * @see	\Countable::count()
 	 */
 	public function count() {
 		return count($this->items);
 	}
 	
 	/**
-	 * @see \Iterator::current()
+	 * @see	\Iterator::current()
 	 */
 	public function current() {
 		return $this->items[$this->index];
 	}
 	
 	/**
-	 * @see \Iterator::key()
+	 * @see	\Iterator::key()
 	 */
 	public function key() {
 		return $this->index;
 	}
 	
 	/**
-	 * @see \Iterator::valid()
+	 * @see	\Iterator::valid()
 	 */
 	public function valid() {
 		return isset($this->items[$this->index]);
 	}
 	
 	/**
-	 * @see \Iterator::rewind()
+	 * @see	\Iterator::rewind()
 	 */
 	public function rewind() {
 		$this->index = 0;
 	}
 	
 	/**
-	 * @see \Iterator::next()
+	 * @see	\Iterator::next()
 	 */
 	public function next() {
 		$this->index++;

@@ -9,20 +9,20 @@ use wcf\util\StringUtil;
 
 /**
  * This PIP installs, updates or deletes user group permissions.
- *
- * @author 	Benjamin Kunz
- * @copyright	2001-2011 WoltLab GmbH
+ * 
+ * @author	Benjamin Kunz
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */	
 	public $tableName = 'user_group_option';
-
+	
 	/**
 	 * list of names of tags which aren't considered as additional data
 	 * @var	array<string>

@@ -7,29 +7,29 @@ use wcf\util\StringUtil;
 
 /**
  * TextOptionType is an implementation of IOptionType for 'input type="text"' tags.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class TextOptionType extends AbstractOptionType implements ISearchableUserOption {
 	/**
 	 * input type
-	 * @var string
+	 * @var	string
 	 */
 	protected $inputType = 'text';
 	
 	/**
 	 * input css class
-	 * @var string
+	 * @var	string
 	 */
 	protected $inputClass = 'long';
 	
 	/**
-	 * @see wcf\system\option\IOptionType::getFormElement()
+	 * @see	wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		WCF::getTPL()->assign(array(
@@ -42,14 +42,14 @@ class TextOptionType extends AbstractOptionType implements ISearchableUserOption
 	}
 	
 	/**
-	 * @see wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @see	wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		return $this->getFormElement($option, $value);
 	}
 	
 	/**
-	 * @see wcf\system\option\ISearchableUserOption::getCondition()
+	 * @see	wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		$value = StringUtil::trim($value);

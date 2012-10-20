@@ -9,17 +9,17 @@ use wcf\util\StringUtil;
 
 /**
  * UserGroupsUserGroupOptionType generates a select-list of all available user groups.
- *
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user.group
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserGroupOptionType {
 	/**
-	 * @see wcf\system\option\IOptionType::getFormElement()
+	 * @see	wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		// get selected group
@@ -38,7 +38,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	}
 	
 	/**
-	 * @see wcf\system\option\IOptionType::validate()
+	 * @see	wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
 		// get all groups
@@ -57,7 +57,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	}
 	
 	/**
-	 * @see wcf\system\option\IOptionType::getData()
+	 * @see	wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		if (!is_array($newValue)) $newValue = array();
@@ -67,7 +67,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	}
 	
 	/**
-	 * @see wcf\system\option\user\group\IUserGroupOptionType::merge()
+	 * @see	wcf\system\option\user\group\IUserGroupOptionType::merge()
 	 */
 	public function merge($defaultValue, $groupValue) {
 		$defaultValue = explode(',', $defaultValue);

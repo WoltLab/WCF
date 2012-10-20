@@ -7,17 +7,17 @@ use wcf\system\SingletonFactory;
 /**
  * Handles http requests.
  * 
- * @author 	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Marcel Werk
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class RequestHandler extends SingletonFactory {
 	/**
 	 * active request object
-	 * @var wcf\system\request\Request
+	 * @var	wcf\system\request\Request
 	 */
 	protected $activeRequest = null;
 	
@@ -49,8 +49,8 @@ class RequestHandler extends SingletonFactory {
 	
 	/**
 	 * Builds a new request.
-	 *
-	 * @param 	string 		$application
+	 * 
+	 * @param 	string		$application
 	 */
 	protected function buildRequest($application) {
 		try {
@@ -114,7 +114,7 @@ class RequestHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the active request object.
-	 *
+	 * 
 	 * @return	wcf\system\request\Request
 	 */
 	public function getActiveRequest() {

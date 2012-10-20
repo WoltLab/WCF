@@ -11,43 +11,43 @@ use wcf\util\StringUtil;
  * Shows the server add form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UpdateServerAddForm extends ACPForm {
 	/**
-	 * @see wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.server.add';
 	
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canEditServer');
 	
 	/**
 	 * server url
-	 * @var string
+	 * @var	string
 	 */
 	public $serverURL = '';
 	
 	/**
 	 * server login username
-	 * @var string
+	 * @var	string
 	 */
 	public $loginUsername = '';
 	
 	/**
 	 * server login password
-	 * @var string
+	 * @var	string
 	 */
 	public $loginPassword = '';
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -58,7 +58,7 @@ class UpdateServerAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -73,7 +73,7 @@ class UpdateServerAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -95,7 +95,7 @@ class UpdateServerAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -109,7 +109,7 @@ class UpdateServerAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function show() {
 		// check master password

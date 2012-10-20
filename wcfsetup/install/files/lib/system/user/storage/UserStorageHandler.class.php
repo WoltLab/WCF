@@ -9,11 +9,11 @@ use wcf\system\WCF;
  * Handles the persistent user data storage.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.storage
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class UserStorageHandler extends SingletonFactory {
 	/**
@@ -133,7 +133,7 @@ class UserStorageHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$field
 	 * @param	integer		$packageID
-	 */	
+	 */
 	public function resetAll($field, $packageID = PACKAGE_ID) {
 		$sql = "DELETE FROM	wcf".WCF_N."_user_storage
 			WHERE		field = ?
