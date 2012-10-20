@@ -2077,8 +2077,13 @@ WCF.Date.Time.prototype = {
 		var $time = $(element).data('time');
 		var $offset = $(element).data('offset');
 		
+		// timestamp is in the future
+		if ($timestamp > this.timestamp) {
+			var $string = WCF.Language.get('wcf.date.dateTimeFormat');
+			$(element).text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
+		}
 		// timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
-		if (this.timestamp < ($timestamp + 3540)) {
+		else if (this.timestamp < ($timestamp + 3540)) {
 			var $minutes = Math.round((this.timestamp - $timestamp) / 60);
 			$(element).text(eval(WCF.Language.get('wcf.date.relative.minutes')));
 		}
