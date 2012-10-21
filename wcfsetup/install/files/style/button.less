@@ -11,7 +11,7 @@ input[type='button'],
 	margin: 0 2px;
 	padding: 5px 13px;
 	
-	.borderRadius(30px);
+	.borderRadius(15px);
 }
 
 /* normal state */
@@ -37,6 +37,7 @@ button:not([disabled]).buttonPrimary {
 	background-color: @wcfButtonPrimaryBackgroundColor;
 	border-color: @wcfButtonPrimaryBorderColor;
 	color: @wcfButtonPrimaryColor;
+	font-weight: bold;
 	
 	.textShadow(@wcfButtonPrimaryBackgroundColor);
 }
@@ -55,6 +56,18 @@ button:not([disabled]):hover {
 	.textShadow(@wcfButtonHoverBackgroundColor);
 }
 
+/* primary hover */
+.button.buttonPrimary:hover,
+input[type='submit']:not([disabled]):hover,
+input[type='button']:not([disabled]).buttonPrimary:hover,
+button:not([disabled]).buttonPrimary:hover {
+	background-color: @wcfButtonPrimaryHoverBackgroundColor;
+	border-color: @wcfButtonPrimaryHoverBorderColor;
+	color: @wcfButtonPrimaryHoverColor;
+	
+	.textShadow(@wcfButtonPrimaryHoverBackgroundColor);
+}
+
 /* active (pressed) */
 /* todo */
 .button:active,
@@ -66,7 +79,7 @@ button:not([disabled]):active,
 	border-color: darken(@wcfButtonHoverBorderColor, 7%) @wcfButtonHoverBorderColor lighten(@wcfButtonHoverBorderColor, 7%);
 	color: @wcfButtonHoverColor;
 		
-	.boxShadowNative(~"inset 0 1px 3px rgba(0, 0, 0, .1), 0 0 10px" @wcfButtonHoverBorderColor);
+	.boxShadowNative(~"0 1px 3px rgba(0, 0, 0, .3), inset 0 0 10px rgba(239, 239, 239, 1)");
 	.linearGradient(lighten(@wcfButtonHoverBackgroundColor, 5%), lighten(@wcfButtonHoverBackgroundColor, 10%), lighten(@wcfButtonHoverBackgroundColor, 5%) 2px, @wcfButtonHoverBackgroundColor, bottom);
 	.textShadow(@wcfButtonHoverBackgroundColor);
 }
