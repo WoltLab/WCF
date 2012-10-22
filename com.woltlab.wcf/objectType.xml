@@ -6,5 +6,10 @@
 			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
 			<listclassname>wcf\data\user\UserList</listclassname>
 		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.collapsibleSidebar</name>
+			<definitionname>com.woltlab.wcf.collapsibleContent</definitionname>
+		</type>
 	</import>
 </data>

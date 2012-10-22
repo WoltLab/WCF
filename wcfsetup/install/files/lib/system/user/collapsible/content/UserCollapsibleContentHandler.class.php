@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\collapsible\content;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\exception\SystemException;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -42,6 +43,22 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 			$this->cache['objectTypes'][$objectType->objectTypeID] = $objectType;
 			$this->cache['objectTypeIDs'][$objectType->objectType] = $objectType->objectTypeID;
 		}
+	}
+	
+	/**
+	 * Returns true if given object is collapsed.
+	 * 
+	 * @param	string		$objectType
+	 * @param	string		$objectID
+	 * @return	boolean
+	 */
+	public function isCollapsed($objectType, $objectID) {
+		$objectTypeID = $this->getObjectTypeID($objectType);
+		if ($objectTypeID === null) {
+			throw new SystemException("Unknown object type '".$objectType."' for definition 'com.woltlab.wcf.collapsibleContent'");
+		}
+		
+		return in_array($objectID, $this->getCollapsedContent($objectTypeID));
 	}
 	
 	/**
@@ -115,7 +132,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	 * Marks content as collapsed.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @param	integer		$objectID
+	 * @param	string		$objectID
 	 */
 	public function markAsCollapsed($objectTypeID, $objectID) {
 		if (WCF::getUser()->userID) {
@@ -166,7 +183,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	 * Marks content as opened, thus removing the collapsed marking.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @param	integer		$objectID
+	 * @param	string		$objectID
 	 */
 	public function markAsOpened($objectTypeID, $objectID) {
 		if (WCF::getUser()->userID) {
