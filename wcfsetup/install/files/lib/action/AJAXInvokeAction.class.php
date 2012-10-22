@@ -10,6 +10,16 @@ use wcf\util\ClassUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
+/**
+ * Default implementation for AJAX-based method calls.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2012 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	action
+ * @category	Community Framework
+ */
 class AJAXInvokeAction extends AbstractSecureAction {
 	/**
 	 * method name
@@ -100,7 +110,10 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 */
 	protected function invoke() {
 		// check for interface and inheritance of SingletonFactory
-		if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\SingletonFactory')) {
+		if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\IAJAXInvokeAction')) {
+			throw new SystemException("'".$this->className."' should implement 'wcf\system\IAJAXInvokeAction'");
+		}
+		else if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\SingletonFactory')) {
 			throw new SystemException("'".$this->className."' should extend 'wcf\system\SingletonFactory'");
 		}
 		
