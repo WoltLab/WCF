@@ -3491,13 +3491,43 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 	}
 });
 
+/**
+ * Provides collapsible sidebars with persistency support.
+ */
 WCF.Collapsible.Sidebar = Class.extend({
+	/**
+	 * trigger button object
+	 * @var	jQuery
+	 */
 	_button: null,
+	
+	/**
+	 * sidebar state
+	 * @var	boolean
+	 */
 	_isOpen: false,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
 	_proxy: null,
+	
+	/**
+	 * sidebar object
+	 * @var	jQuery
+	 */
 	_sidebar: null,
+	
+	/**
+	 * sidebar identifier
+	 * @var	string
+	 */
 	_sidebarName: '',
 	
+	/**
+	 * Creates a new WCF.Collapsible.Sidebar object.
+	 */
 	init: function() {
 		this._sidebar = $('.sidebar:eq(0)');
 		if (!this._sidebar.length) {
@@ -3513,16 +3543,21 @@ WCF.Collapsible.Sidebar = Class.extend({
 		this._button.click($.proxy(this._click, this));
 		
 		this._proxy = new WCF.Action.Proxy({
-			url: 'index.php/CollapsibleSidebar/?t=' + SECURITY_TOKEN + SID_2ND
+			url: 'index.php/AJAXInvoke/?t=' + SECURITY_TOKEN + SID_2ND
 		});
 		
 		this._renderSidebar();
 	},
 	
+	/**
+	 * Handles clicks on the trigger button.
+	 */
 	_click: function() {
 		this._isOpen = (this._isOpen) ? false : true;
 		
 		this._proxy.setOption('data', {
+			actionName: 'toggle',
+			className: 'wcf\\system\\user\\collapsible\\content\\UserCollapsibleSidebarHandler',
 			isOpen: (this._isOpen ? 1 : 0),
 			sidebarName: this._sidebarName
 		});
@@ -3531,6 +3566,9 @@ WCF.Collapsible.Sidebar = Class.extend({
 		this._renderSidebar();
 	},
 	
+	/**
+	 * Renders the sidebar state.
+	 */
 	_renderSidebar: function() {
 		if (this._isOpen) {
 			this._sidebar.addClass('sidebarCollapsed');
