@@ -3450,6 +3450,56 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 	}
 });
 
+WCF.Collapsible.Sidebar = Class.extend({
+	_button: null,
+	_isOpen: false,
+	_proxy: null,
+	_sidebar: null,
+	_sidebarName: '',
+	
+	init: function() {
+		this._sidebar = $('.sidebar:eq(0)');
+		if (!this._sidebar.length) {
+			console.debug("[WCF.Collapsible.Sidebar] Could not find sidebar, aborting.");
+			return;
+		}
+		
+		this._isOpen = (this._sidebar.data('isOpen') === 'false') ? false : true;
+		this._sidebarName = this._sidebar.data('sidebarName');
+		
+		// add toggle button
+		this._button = $('<a class="collapsibleButton jsTooltip" title="' + WCF.Language.get('wcf.global.button.collapsible') + '" />').prependTo(this._sidebar);
+		this._button.click($.proxy(this._click, this));
+		
+		this._proxy = new WCF.Action.Proxy({
+			url: 'index.php/CollapsibleSidebar/?t=' + SECURITY_TOKEN + SID_2ND
+		});
+		
+		this._renderSidebar();
+	},
+	
+	_click: function() {
+		this._isOpen = (this._isOpen) ? false : true;
+		
+		this._proxy.setOption('data', {
+			isOpen: (this._isOpen ? 1 : 0),
+			sidebarName: this._sidebarName
+		});
+		this._proxy.sendRequest();
+		
+		this._renderSidebar();
+	},
+	
+	_renderSidebar: function() {
+		if (this._isOpen) {
+			this._sidebar.addClass('sidebarCollapsed');
+		}
+		else {
+			this._sidebar.removeClass('sidebarCollapsed');
+		}
+	}
+});
+
 /**
  * Holds userdata of the current user
  */
