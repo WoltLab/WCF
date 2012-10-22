@@ -1,0 +1,212 @@
+<?php
+namespace wcf\action;
+use wcf\system\exception\AJAXException;
+use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
+use wcf\system\WCF;
+use wcf\util\ClassUtil;
+use wcf\util\JSON;
+use wcf\util\StringUtil;
+
+class AJAXInvokeAction extends AbstractSecureAction {
+	/**
+	 * method name
+	 * @var	string
+	 */
+	public $actionName = '';
+	
+	/**
+	 * action object
+	 * @var	wcf\system\SingletonFactory
+	 */
+	public $actionObject = null;
+	
+	/**
+	 * class name
+	 * @var	string
+	 */
+	public $className = '';
+	
+	/**
+	 * enables debug mode
+	 * @var	boolean
+	 */
+	public $inDebugMode = false;
+	
+
+	/**
+	 * results of the executed action
+	 * @var	mixed
+	 */
+	protected $response = null;
+	
+	/**
+	 * @see	wcf\action\IAction::__run()
+	 */
+	public function __run() {
+		try {
+			parent::__run();
+		}
+		catch (\Exception $e) {
+			if ($e instanceof AJAXException) {
+				throw $e;
+			}
+			else {
+				$this->throwException($e);
+			}
+		}
+	}
+	
+	/**
+	 * @see	wcf\action\IAction::readParameters()
+	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		if (isset($_POST['actionName'])) $this->actionName = StringUtil::trim($_POST['actionName']);
+		if (isset($_POST['className'])) $this->className = StringUtil::trim($_POST['className']);
+		if (empty($this->className) || !class_exists($this->className)) {
+			throw new UserInputException('className');
+		}
+	}
+	
+	/**
+	 * @see	wcf\action\IAction::execute()
+	 */
+	public function execute() {
+		parent::execute();
+		
+		// execute action
+		try {
+			$this->invoke();
+		}
+		catch (\Exception $e) {
+			$this->throwException($e);
+		}
+		$this->executed();
+		
+		// send JSON-encoded response
+		if (!$this->inDebugMode) {
+			header('Content-type: application/json');
+			echo JSON::encode($this->response);
+			exit;
+		}
+	}
+	
+	/**
+	 * Invokes action method.
+	 */
+	protected function invoke() {
+		// check for interface and inheritance of SingletonFactory
+		if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\SingletonFactory')) {
+			throw new SystemException("'".$this->className."' should extend 'wcf\system\SingletonFactory'");
+		}
+		
+		$this->actionObject = call_user_func(array($this->className, 'getInstance'));
+		
+		// validate action name
+		if (empty($this->actionName) || !method_exists($this->actionObject, $this->actionName)) {
+			throw new UserInputException('actionName');
+		}
+		
+		$this->response = $this->actionObject->{$this->actionName}();
+	}
+	
+	/**
+	 * Throws an previously catched exception while maintaing the propriate stacktrace.
+	 *
+	 * @param	\Exception	$e
+	 */
+	protected function throwException(\Exception $e) {
+		if ($this->inDebugMode) {
+			throw $e;
+		}
+	
+		if ($e instanceof IllegalLinkException) {
+			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, $e->getTraceAsString());
+		}
+		else if ($e instanceof PermissionDeniedException) {
+			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
+		}
+		else if ($e instanceof SystemException) {
+			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->__getTraceAsString());
+		}
+		else if ($e instanceof UserInputException) {
+			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString());
+		}
+		else {
+			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString());
+		}
+	}
+	
+	/**
+	 * Returns action response.
+	 *
+	 * @return	mixed
+	 */
+	public function getResponse() {
+		return $this->response;
+	}
+	
+	/**
+	 * Enables debug mode.
+	 */
+	public function enableDebugMode() {
+		$this->inDebugMode = true;
+	}
+	
+	/**
+	 * Performs a debug call to AJAXInvokeAction, allowing testing without relying on JavaScript.
+	 * The $data-array should be build like within WCF.Action.Proxy, look below for an example:
+	 *
+	 * $data = array(
+	 * 	'actionName' => 'foo',
+	 * 	'className' => 'wcf\foo\bar\FooBarAction',
+	 * 	'objectIDs' => array(1, 2, 3, 4, 5), // optional
+	 * 	'parameters' => array( // optional
+	 * 		'foo' => 'bar',
+	 * 		'data' => array(
+	 * 			'baz' => 'foobar'
+	 * 		)
+	 * 	)
+	 * )
+	 *
+	 * @param	array		$data
+	 * @param	string		$className
+	 * @param	string		$actionName
+	 * @return	wcf\action\AJAXInvokeAction
+	 */
+	public static function debugCall(array $data) {
+		// validate $data array
+		if (!isset($data['actionName'])) {
+			throw new SystemException("Could not execute debug call, 'actionName' is missing.");
+		}
+		else if (!isset($data['className'])) {
+			throw new SystemException("Could not execute debug call, 'className' is missing.");
+		}
+		
+		// set security token
+		$_REQUEST['t'] = WCF::getSession()->getSecurityToken();
+		
+		// save $_POST variables
+		$postVars = $_POST;
+		
+		// fake request
+		foreach ($data as $key => $value) {
+			$_POST[$key] = $value;
+		}
+		
+		// execute request
+		$className = get_called_class();
+		$actionObject = new $className();
+		$actionObject->enableDebugMode();
+		$actionObject->__run();
+		
+		// restore $_POST variables
+		$_POST = $postVars;
+		
+		return $actionObject;
+	}
+}
