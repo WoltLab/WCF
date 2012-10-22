@@ -57,7 +57,7 @@
 					}
 					
 					> .badge.badgeInverse {
-						background-color: rgb(204, 0, 0); /* todo */ 
+						background-color: rgb(63, 127, 191); /* todo */ /* same color as tabularBox */
 						color: white;
 						padding: 0 6px 1px;
 						position: absolute;
@@ -136,18 +136,24 @@
 		> li {
 			background-color: @wcfMainMenuBackgroundColor;
 			float: left;
-			font-size: @wcfSubHeadlineFontSize;
+			font-size: @wcfTitleFontSize;
 			margin-bottom: -1px;
+			margin-top: 7px;
+			
+			&.active {
+			font-size: @wcfSubHeadlineFontSize;
+			margin-top: 0;
+			}
 			
 			> a {
 				border-bottom: 1px solid @wcfContainerBorderColor;
 				color: @wcfMainMenuColor;
 				display: inline-block;
-				padding: 11px 35px;
-				font-weight: bold;
+				padding: 9px 35px;
 				
 				&:hover {
 					background-color: @wcfMainMenuHoverBackgroundColor;
+					color: @wcfMainMenuActiveColor;
 					text-decoration: none;
 				}
 				
@@ -162,6 +168,8 @@
 					border-bottom: 1px solid @wcfNavigationHeaderBackgroundColor;
 					background-color: @wcfNavigationHeaderBackgroundColor;
 					color: @wcfMainMenuActiveColor;
+					font-weight: bold;
+					padding: 14px 35px 8px;
 				}
 			}
 			

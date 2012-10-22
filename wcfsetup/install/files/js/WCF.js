@@ -339,6 +339,42 @@ $.fn.extend({
 	},
 	
 	/**
+	 * Sets the caret position of current element. If the element
+	 * does not equal input[type=text], input[type=password] or
+	 * textarea, false is returned.
+	 * 
+	 * @param	integer		position
+	 * @return	boolean
+	 */
+	setCaret: function (position) {
+		if (this.getTagName() == 'input') {
+			if (this.attr('type') != 'text' && this.attr('type') != 'password') {
+				return false;
+			}
+		}
+		else if (this.getTagName() != 'textarea') {
+			return false;
+		}
+		
+		var $element = this.get(0);
+		
+		// set focus to enable caret on this element
+		this.focus();
+		if (document.selection) { // IE 8
+			var $selection = document.selection.createRange();
+			$selection.moveStart('character', position);
+			$selection.moveEnd('character', 0);
+			$selection.select();
+		}
+		else if ($element.selectionStart || $element.selectionStart == '0') { // Opera, Chrome, Firefox, Safari, IE 9+
+			$element.selectionStart = position;
+			$element.selectionEnd = position;
+		}
+		
+		return true;
+	},
+	
+	/**
 	 * Shows an element by sliding and fading it into viewport.
 	 * 
 	 * @param	string		direction
@@ -2041,8 +2077,13 @@ WCF.Date.Time.prototype = {
 		var $time = $(element).data('time');
 		var $offset = $(element).data('offset');
 		
+		// timestamp is in the future
+		if ($timestamp > this.timestamp) {
+			var $string = WCF.Language.get('wcf.date.dateTimeFormat');
+			$(element).text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
+		}
 		// timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
-		if (this.timestamp < ($timestamp + 3540)) {
+		else if (this.timestamp < ($timestamp + 3540)) {
 			var $minutes = Math.round((this.timestamp - $timestamp) / 60);
 			$(element).text(eval(WCF.Language.get('wcf.date.relative.minutes')));
 		}
