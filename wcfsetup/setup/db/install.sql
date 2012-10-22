@@ -654,7 +654,7 @@ CREATE TABLE wcf1_user (
 DROP TABLE IF EXISTS wcf1_user_collapsible_content;
 CREATE TABLE wcf1_user_collapsible_content (
 	objectTypeID INT(10) NOT NULL,
-	objectID INT(10) NOT NULL,
+	objectID VARCHAR(50) NOT NULL,
 	userID INT(10) NOT NULL,
 	UNIQUE KEY (objectTypeID, objectID, userID)
 );
