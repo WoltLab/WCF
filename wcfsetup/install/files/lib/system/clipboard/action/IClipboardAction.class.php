@@ -30,6 +30,13 @@ interface IClipboardAction {
 	public function execute(array $objects, $actionName, array $typeData = array());
 	
 	/**
+	 * Returns action class name.
+	 * 
+	 * @return	string
+	 */
+	public function getClassName();
+	
+	/**
 	 * Returns label for item editor.
 	 * 
 	 * @param	array		$objects

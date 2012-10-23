@@ -87,8 +87,6 @@
 			new WCF.Effect.SmoothScroll();
 			new WCF.Effect.BalloonTooltip();
 			
-			$('#sidebarContent').wcfSidebar();
-			
 			WCF.Dropdown.init();
 			
 			new WCF.ACP.Search();

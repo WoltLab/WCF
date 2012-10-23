@@ -284,6 +284,14 @@ class ClipboardHandler extends SingletonFactory {
 				
 				$editorData[$typeName]['items'][$action] = $data;
 			}
+			
+			// append 'unmark all' item
+			$unmarkAll = new ClipboardEditorItem();
+			$unmarkAll->setName('unmarkAll');
+			$unmarkAll->addParameter('actionName', 'unmarkAll');
+			$unmarkAll->addParameter('className', $actionData['object']->getClassName());
+			
+			$editorData[$typeName]['items'][] = $unmarkAll;
 		}
 		
 		return $editorData;

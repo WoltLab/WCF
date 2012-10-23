@@ -1155,6 +1155,11 @@ WCF.Clipboard = {
 			// create editor items
 			for (var $itemIndex in $editor.items) {
 				var $item = $editor.items[$itemIndex];
+				
+				if ($item.actionName === 'unmarkAll') {
+					$('<li class="dropdownDivider" />').appendTo($itemList);
+				}
+				
 				var $listItem = $('<li><span>' + $item.label + '</span></li>').appendTo($itemList);
 				$listItem.data('objectType', $typeName);
 				$listItem.data('actionName', $item.actionName).data('parameters', $item.parameters);
@@ -1194,29 +1199,31 @@ WCF.Clipboard = {
 			window.location.href = $url;
 		}
 		
-		if ($listItem.data('parameters').className && $listItem.data('parameters').actionName && $listItem.data('parameters').objectIDs) {
-			var $confirmMessage = $listItem.data('internalData')['confirmMessage'];
-			if ($confirmMessage) {
-				var $template = $listItem.data('internalData')['template'];
-				if ($template) $template = $($template);
-				
-				WCF.System.Confirmation.show($confirmMessage, $.proxy(function(action) {
-					if (action === 'confirm') {
-						var $data = { };
-						
-						if ($template && $template.length) {
-							$('#wcfSystemConfirmationContent').find('input, select, textarea').each(function(index, item) {
-								var $item = $(item);
-								$data[$item.prop('name')] = $item.val();
-							});
+		if ($listItem.data('parameters').className && $listItem.data('parameters').actionName) {
+			if ($listItem.data('parameters').actionName === 'unmarkAll' || $listItem.data('parameters').objectIDs) {
+				var $confirmMessage = $listItem.data('internalData')['confirmMessage'];
+				if ($confirmMessage) {
+					var $template = $listItem.data('internalData')['template'];
+					if ($template) $template = $($template);
+					
+					WCF.System.Confirmation.show($confirmMessage, $.proxy(function(action) {
+						if (action === 'confirm') {
+							var $data = { };
+							
+							if ($template && $template.length) {
+								$('#wcfSystemConfirmationContent').find('input, select, textarea').each(function(index, item) {
+									var $item = $(item);
+									$data[$item.prop('name')] = $item.val();
+								});
+							}
+							
+							this._executeAJAXActions($listItem, $data);
 						}
-						
-						this._executeAJAXActions($listItem, $data);
-					}
-				}, this), '', $template);
-			}
-			else {
-				this._executeAJAXActions($listItem, { });
+					}, this), '', $template);
+				}
+				else {
+					this._executeAJAXActions($listItem, { });
+				}
 			}
 		}
 		
@@ -1233,9 +1240,11 @@ WCF.Clipboard = {
 	_executeAJAXActions: function(listItem, data) {
 		data = data || { };
 		var $objectIDs = [];
-		$.each(listItem.data('parameters').objectIDs, function(index, objectID) {
-			$objectIDs.push(parseInt(objectID));
-		});
+		if (listItem.data('parameters').actionName !== 'unmarkAll') {
+			$.each(listItem.data('parameters').objectIDs, function(index, objectID) {
+				$objectIDs.push(parseInt(objectID));
+			});
+		}
 		
 		var $parameters = {
 			data: data
@@ -1256,7 +1265,9 @@ WCF.Clipboard = {
 				parameters: $parameters
 			},
 			success: $.proxy(function(data) {
-				listItem.trigger('clipboardActionResponse', [ data, listItem.data('type'), listItem.data('actionName'), listItem.data('parameters') ]);
+				if (listItem.data('parameters').actionName !== 'unmarkAll') {
+					listItem.trigger('clipboardActionResponse', [ data, listItem.data('type'), listItem.data('actionName'), listItem.data('parameters') ]);
+				}
 				
 				this._loadMarkedItems();
 			}, this)

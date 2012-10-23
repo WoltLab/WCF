@@ -3,6 +3,7 @@ namespace wcf\data\user;
 use wcf\data\user\group\UserGroup;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\ValidateActionException;
@@ -261,5 +262,17 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction {
 		}
 		
 		return $list;
+	}
+	
+	/**
+	 * Does nothing.
+	 */
+	public function validateUnmarkAll() { }
+	
+	/**
+	 * Unmarks all users.
+	 */
+	public function unmarkAll() {
+		ClipboardHandler::getInstance()->removeItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
 	}
 }
