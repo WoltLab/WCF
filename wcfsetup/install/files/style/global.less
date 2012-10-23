@@ -146,11 +146,11 @@ a {
 
 /* ### badges ### */
 // sets default badge shadows depending on background color
-.badgeShadow(@backgroundColor) when (lightness(@backgroundColor) <= 50%) {
-	box-shadow: 0px 0px 1px 0px rgba(255, 255, 255, .8);
-}
-.badgeShadow(@backgroundColor) when (lightness(@backgroundColor) > 50%) {
+.badgeShadow(@backgroundColor) when (lightness(@backgroundColor) >= 50%) {
 	box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, .8);
+}
+.badgeShadow(@backgroundColor) when (lightness(@backgroundColor) < 50%) {
+	box-shadow: 0px 0px 1px 0px rgba(255, 255, 255, .8);
 }
 
 /* default values */
