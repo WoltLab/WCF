@@ -6467,17 +6467,19 @@ WCF.Language.Chooser = Class.extend({
 		
 		// create language dropdown
 		this._dropdown = $('<div class="dropdown" id="' + containerID + '-languageChooser" />').appendTo($container);
-		$('<div class="dropdownToggle boxFlag" data-toggle="' + containerID + '-languageChooser"></div>').appendTo(this._dropdown);
+		$('<div class="dropdownToggle boxFlag box24" data-toggle="' + containerID + '-languageChooser"></div>').appendTo(this._dropdown);
 		var $dropdownMenu = $('<ul class="dropdownMenu" />').appendTo(this._dropdown);
 		
 		for (var $languageID in languages) {
 			var $language = languages[$languageID];
-			var $item = $('<li class="boxFlag"><div class="framed"><img src="' + $language.iconPath + '" alt="" class="iconFlag" /></div> <hgroup><h1>' + $language.languageName + '</h1></hgroup>').appendTo($dropdownMenu);
+			var $item = $('<li class="boxFlag"><a class="box24"><div class="framed"><img src="' + $language.iconPath + '" alt="" class="iconFlag" /></div> <hgroup><h1>' + $language.languageName + '</h1></hgroup></a></li>').appendTo($dropdownMenu);
 			$item.data('languageID', $languageID).click($.proxy(this._click, this));
 			
 			// update dropdown label
 			if ($languageID == languageID) {
-				this._dropdown.children('.dropdownToggle').html($item.html());
+				var $html = $('' + $item.html());
+				var $innerContent = $html.children().detach();
+				this._dropdown.children('.dropdownToggle').empty().append($innerContent);
 			}
 		}
 		
@@ -6496,7 +6498,9 @@ WCF.Language.Chooser = Class.extend({
 		this._input.val($item.data('languageID'));
 		
 		// update dropdown label
-		this._dropdown.children('.dropdownToggle').html($item.html());
+		var $html = $('' + $item.html());
+		var $innerContent = $html.children().detach();
+		this._dropdown.children('.dropdownToggle').empty().append($innerContent);
 		
 		// execute callback
 		if (this._callback !== null) {
