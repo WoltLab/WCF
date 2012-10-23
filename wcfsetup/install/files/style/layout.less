@@ -262,8 +262,24 @@
 		background-color: @wcfSidebarBackgroundColor;
 		
 		> .sidebar {
+			position: relative;
 			width: 300px;
 			z-index: 120;
+
+			> .collapsibleButton {
+				background-color: @wcfSidebarBackgroundColor;
+				background-image: url('../icon/arrowRight.svg');
+				background-position: 4px 4px;
+				background-repeat: no-repeat;
+				background-size: 16px;
+				border-radius: 6px 0 0 6px;
+				display: block;
+				height: 24px;
+				left: -20px;
+				position: absolute;
+				top: 0;
+				width: 24px;
+			}
 		}
 		
 		> .content {
@@ -291,6 +307,25 @@
 	}
 	
 	&.sidebarOrientationRight {
+		&.sidebarCollapsed > div {
+			> .content {
+				margin-right: 20px;
+			}
+			
+			> .sidebar {
+				width: 20px;
+				
+				> div,
+				> fieldset {
+					visibility: hidden;
+				}
+				
+				> .collapsibleButton {
+					background-image: url('../icon/arrowLeft.svg');
+				}
+			}
+		}
+		
 		.content {
 			margin-right: 300px;
 		}

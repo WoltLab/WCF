@@ -3502,10 +3502,22 @@ WCF.Collapsible.Sidebar = Class.extend({
 	_button: null,
 	
 	/**
+	 * trigger button height
+	 * @var	integer
+	 */
+	_buttonHeight: 0,
+	
+	/**
 	 * sidebar state
 	 * @var	boolean
 	 */
 	_isOpen: false,
+	
+	/**
+	 * main container object
+	 * @var	jQuery
+	 */
+	_mainContainer: null,
 	
 	/**
 	 * action proxy
@@ -3520,10 +3532,28 @@ WCF.Collapsible.Sidebar = Class.extend({
 	_sidebar: null,
 	
 	/**
+	 * sidebar height
+	 * @var	integer
+	 */
+	_sidebarHeight: 0,
+	
+	/**
 	 * sidebar identifier
 	 * @var	string
 	 */
 	_sidebarName: '',
+	
+	/**
+	 * sidebar offset from document top
+	 * @var	integer
+	 */
+	_sidebarOffset: 0,
+	
+	/**
+	 * user panel height
+	 * @var	integer
+	 */
+	_userPanelHeight: 0,
 	
 	/**
 	 * Creates a new WCF.Collapsible.Sidebar object.
@@ -3535,18 +3565,27 @@ WCF.Collapsible.Sidebar = Class.extend({
 			return;
 		}
 		
-		this._isOpen = (this._sidebar.data('isOpen') === 'false') ? false : true;
+		this._isOpen = (this._sidebar.data('isOpen')) ? true : false;
 		this._sidebarName = this._sidebar.data('sidebarName');
+		this._mainContainer = $('#main');
+		this._sidebarHeight = this._sidebar.height();
+		this._sidebarOffset = this._sidebar.getOffsets('offset').top;
+		this._userPanelHeight = $('#topMenu').outerHeight();
 		
 		// add toggle button
 		this._button = $('<a class="collapsibleButton jsTooltip" title="' + WCF.Language.get('wcf.global.button.collapsible') + '" />').prependTo(this._sidebar);
 		this._button.click($.proxy(this._click, this));
+		this._buttonHeight = this._button.outerHeight();
 		
 		this._proxy = new WCF.Action.Proxy({
-			url: 'index.php/AJAXInvoke/?t=' + SECURITY_TOKEN + SID_2ND
+			showLoadingOverlay: false,
+			url: 'index.php/AJAXInvoke/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
 		
+		$(document).scroll($.proxy(this._scroll, this)).resize($.proxy(this._scroll, this));
+		
 		this._renderSidebar();
+		this._scroll();
 	},
 	
 	/**
@@ -3567,14 +3606,53 @@ WCF.Collapsible.Sidebar = Class.extend({
 	},
 	
 	/**
+	 * Aligns the toggle button upon scroll or resize.
+	 */
+	_scroll: function() {
+		var $window = $(window);
+		var $scrollOffset = $window.scrollTop();
+		
+		// calculate top and bottom coordinates of visible sidebar
+		var $topOffset = Math.max($scrollOffset - this._sidebarOffset, 0);
+		var $bottomOffset = Math.min(this._mainContainer.height(), ($window.height() + $scrollOffset) - this._sidebarOffset);
+		
+		var $buttonTop = 0;
+		if ($bottomOffset === $topOffset) {
+			// sidebar not within visible area
+			$buttonTop = this._sidebarOffset + this._sidebarHeight;
+		}
+		else {
+			$buttonTop = $topOffset + (($bottomOffset - $topOffset) / 2);
+			
+			// if the user panel is above the sidebar, substract it's height
+			var $overlap = Math.max(Math.min($topOffset - this._userPanelHeight, this._userPanelHeight), 0);
+			if ($overlap > 0) {
+				$buttonTop += ($overlap / 2);
+			}
+		}
+		
+		// ensure the button does not exceed bottom boundaries
+		if (($bottomOffset - $topOffset - this._userPanelHeight) < this._buttonHeight) {
+			$buttonTop = $buttonTop - this._buttonHeight;
+		}
+		else {
+			// exclude half button height
+			$buttonTop = Math.max($buttonTop - (this._buttonHeight / 2), 0);
+		}
+		
+		this._button.css({ top: $buttonTop + 'px' });
+		
+	},
+	
+	/**
 	 * Renders the sidebar state.
 	 */
 	_renderSidebar: function() {
 		if (this._isOpen) {
-			this._sidebar.addClass('sidebarCollapsed');
+			this._mainContainer.removeClass('sidebarCollapsed');
 		}
 		else {
-			this._sidebar.removeClass('sidebarCollapsed');
+			this._mainContainer.addClass('sidebarCollapsed');
 		}
 	}
 });
