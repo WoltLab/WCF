@@ -4322,6 +4322,18 @@ WCF.Search.Base = Class.extend({
 	_excludedSearchValues: [],
 	
 	/**
+	 * count of available results
+	 * @var	integer
+	 */
+	_itemCount: 0,
+	
+	/**
+	 * item index, -1 if none is selected
+	 * @var	integer
+	 */
+	_itemIndex: -1,
+	
+	/**
 	 * result list
 	 * @var	jQuery
 	 */
@@ -4382,6 +4394,9 @@ WCF.Search.Base = Class.extend({
 		this._commaSeperated = (commaSeperated) ? true : false;
 		this._oldSearchString = [ ];
 		
+		this._itemCount = 0;
+		this._itemIndex = -1;
+		
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
@@ -4397,6 +4412,28 @@ WCF.Search.Base = Class.extend({
 	 * @param	object		event
 	 */
 	_keyUp: function(event) {
+		// handle arrow keys and return key
+		switch (event.which) {
+			case 37: // arrow-left
+			case 39: // arrow-right
+				return;
+			break;
+			
+			case 38: // arrow up
+				this._selectPreviousItem();
+				return;
+			break;
+			
+			case 40: // arrow down
+				this._selectNextItem();
+				return;
+			break;
+			
+			case 13: // return key
+				return this._selectElement(event);
+			break;
+		}
+		
 		var $content = this._getSearchString(event);
 		if ($content === '') {
 			this._clearList(true);
@@ -4420,6 +4457,63 @@ WCF.Search.Base = Class.extend({
 			// input below trigger length
 			this._clearList(false);
 		}
+	},
+	
+	/**
+	 * Selects the next item in list.
+	 */
+	_selectNextItem: function() {
+		if (this._itemCount === 0) {
+			return;
+		}
+		
+		// remove previous marking
+		this._itemIndex++;
+		if (this._itemIndex === this._itemCount) {
+			this._itemIndex = 0;
+		}
+		
+		this._highlightSelectedElement();
+	},
+	
+	/**
+	 * Selects the previous item in list.
+	 */
+	_selectPreviousItem: function() {
+		if (this._itemCount === 0) {
+			return;
+		}
+		
+		this._itemIndex--;
+		if (this._itemIndex === -1) {
+			this._itemIndex = this._itemCount - 1;
+		}
+		
+		this._highlightSelectedElement();
+	},
+	
+	/**
+	 * Highlights the active item.
+	 */
+	_highlightSelectedElement: function() {
+		this._list.find('li').removeClass('dropdownNavigationItem');
+		this._list.find('li:eq(' + this._itemIndex + ')').addClass('dropdownNavigationItem');
+	},
+	
+	/**
+	 * Selects the active item by pressing the return key.
+	 * 
+	 * @param	object		event
+	 * @return	boolean
+	 */
+	_selectElement: function(event) {
+		if (this._itemCount === 0) {
+			return true;
+		}
+		
+		this._list.find('li.dropdownNavigationItem').trigger('click');
+		
+		return false;
 	},
 	
 	/**
@@ -4510,6 +4604,8 @@ WCF.Search.Base = Class.extend({
 		var $listItem = $('<li><span>' + item.label + '</span></li>').appendTo(this._list);
 		$listItem.data('objectID', item.objectID).data('label', item.label).click($.proxy(this._executeCallback, this));
 		
+		this._itemCount++;
+		
 		return $listItem;
 	},
 	
@@ -4567,6 +4663,10 @@ WCF.Search.Base = Class.extend({
 		this._list.parent().removeClass('dropdownOpen').end().empty();
 		
 		WCF.CloseOverlayHandler.removeCallback('WCF.Search.Base');
+		
+		// reset item navigation
+		this._itemCount = 0;
+		this._itemIndex = -1;
 	},
 	
 	/**
