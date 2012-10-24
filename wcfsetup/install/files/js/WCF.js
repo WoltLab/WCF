@@ -1155,6 +1155,11 @@ WCF.Clipboard = {
 			// create editor items
 			for (var $itemIndex in $editor.items) {
 				var $item = $editor.items[$itemIndex];
+				
+				if ($item.actionName === 'unmarkAll') {
+					$('<li class="dropdownDivider" />').appendTo($itemList);
+				}
+				
 				var $listItem = $('<li><span>' + $item.label + '</span></li>').appendTo($itemList);
 				$listItem.data('objectType', $typeName);
 				$listItem.data('actionName', $item.actionName).data('parameters', $item.parameters);
@@ -1194,29 +1199,31 @@ WCF.Clipboard = {
 			window.location.href = $url;
 		}
 		
-		if ($listItem.data('parameters').className && $listItem.data('parameters').actionName && $listItem.data('parameters').objectIDs) {
-			var $confirmMessage = $listItem.data('internalData')['confirmMessage'];
-			if ($confirmMessage) {
-				var $template = $listItem.data('internalData')['template'];
-				if ($template) $template = $($template);
-				
-				WCF.System.Confirmation.show($confirmMessage, $.proxy(function(action) {
-					if (action === 'confirm') {
-						var $data = { };
-						
-						if ($template && $template.length) {
-							$('#wcfSystemConfirmationContent').find('input, select, textarea').each(function(index, item) {
-								var $item = $(item);
-								$data[$item.prop('name')] = $item.val();
-							});
+		if ($listItem.data('parameters').className && $listItem.data('parameters').actionName) {
+			if ($listItem.data('parameters').actionName === 'unmarkAll' || $listItem.data('parameters').objectIDs) {
+				var $confirmMessage = $listItem.data('internalData')['confirmMessage'];
+				if ($confirmMessage) {
+					var $template = $listItem.data('internalData')['template'];
+					if ($template) $template = $($template);
+					
+					WCF.System.Confirmation.show($confirmMessage, $.proxy(function(action) {
+						if (action === 'confirm') {
+							var $data = { };
+							
+							if ($template && $template.length) {
+								$('#wcfSystemConfirmationContent').find('input, select, textarea').each(function(index, item) {
+									var $item = $(item);
+									$data[$item.prop('name')] = $item.val();
+								});
+							}
+							
+							this._executeAJAXActions($listItem, $data);
 						}
-						
-						this._executeAJAXActions($listItem, $data);
-					}
-				}, this), '', $template);
-			}
-			else {
-				this._executeAJAXActions($listItem, { });
+					}, this), '', $template);
+				}
+				else {
+					this._executeAJAXActions($listItem, { });
+				}
 			}
 		}
 		
@@ -1233,9 +1240,11 @@ WCF.Clipboard = {
 	_executeAJAXActions: function(listItem, data) {
 		data = data || { };
 		var $objectIDs = [];
-		$.each(listItem.data('parameters').objectIDs, function(index, objectID) {
-			$objectIDs.push(parseInt(objectID));
-		});
+		if (listItem.data('parameters').actionName !== 'unmarkAll') {
+			$.each(listItem.data('parameters').objectIDs, function(index, objectID) {
+				$objectIDs.push(parseInt(objectID));
+			});
+		}
 		
 		var $parameters = {
 			data: data
@@ -1256,7 +1265,9 @@ WCF.Clipboard = {
 				parameters: $parameters
 			},
 			success: $.proxy(function(data) {
-				listItem.trigger('clipboardActionResponse', [ data, listItem.data('type'), listItem.data('actionName'), listItem.data('parameters') ]);
+				if (listItem.data('parameters').actionName !== 'unmarkAll') {
+					listItem.trigger('clipboardActionResponse', [ data, listItem.data('type'), listItem.data('actionName'), listItem.data('parameters') ]);
+				}
 				
 				this._loadMarkedItems();
 			}, this)
@@ -3492,6 +3503,172 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 });
 
 /**
+ * Provides collapsible sidebars with persistency support.
+ */
+WCF.Collapsible.Sidebar = Class.extend({
+	/**
+	 * trigger button object
+	 * @var	jQuery
+	 */
+	_button: null,
+	
+	/**
+	 * trigger button height
+	 * @var	integer
+	 */
+	_buttonHeight: 0,
+	
+	/**
+	 * sidebar state
+	 * @var	boolean
+	 */
+	_isOpen: false,
+	
+	/**
+	 * main container object
+	 * @var	jQuery
+	 */
+	_mainContainer: null,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * sidebar object
+	 * @var	jQuery
+	 */
+	_sidebar: null,
+	
+	/**
+	 * sidebar height
+	 * @var	integer
+	 */
+	_sidebarHeight: 0,
+	
+	/**
+	 * sidebar identifier
+	 * @var	string
+	 */
+	_sidebarName: '',
+	
+	/**
+	 * sidebar offset from document top
+	 * @var	integer
+	 */
+	_sidebarOffset: 0,
+	
+	/**
+	 * user panel height
+	 * @var	integer
+	 */
+	_userPanelHeight: 0,
+	
+	/**
+	 * Creates a new WCF.Collapsible.Sidebar object.
+	 */
+	init: function() {
+		this._sidebar = $('.sidebar:eq(0)');
+		if (!this._sidebar.length) {
+			console.debug("[WCF.Collapsible.Sidebar] Could not find sidebar, aborting.");
+			return;
+		}
+		
+		this._isOpen = (this._sidebar.data('isOpen')) ? true : false;
+		this._sidebarName = this._sidebar.data('sidebarName');
+		this._mainContainer = $('#main');
+		this._sidebarHeight = this._sidebar.height();
+		this._sidebarOffset = this._sidebar.getOffsets('offset').top;
+		this._userPanelHeight = $('#topMenu').outerHeight();
+		
+		// add toggle button
+		this._button = $('<a class="collapsibleButton jsTooltip" title="' + WCF.Language.get('wcf.global.button.collapsible') + '" />').prependTo(this._sidebar);
+		this._button.click($.proxy(this._click, this));
+		this._buttonHeight = this._button.outerHeight();
+		
+		this._proxy = new WCF.Action.Proxy({
+			showLoadingOverlay: false,
+			url: 'index.php/AJAXInvoke/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+		});
+		
+		$(document).scroll($.proxy(this._scroll, this)).resize($.proxy(this._scroll, this));
+		
+		this._renderSidebar();
+		this._scroll();
+	},
+	
+	/**
+	 * Handles clicks on the trigger button.
+	 */
+	_click: function() {
+		this._isOpen = (this._isOpen) ? false : true;
+		
+		this._proxy.setOption('data', {
+			actionName: 'toggle',
+			className: 'wcf\\system\\user\\collapsible\\content\\UserCollapsibleSidebarHandler',
+			isOpen: (this._isOpen ? 1 : 0),
+			sidebarName: this._sidebarName
+		});
+		this._proxy.sendRequest();
+		
+		this._renderSidebar();
+	},
+	
+	/**
+	 * Aligns the toggle button upon scroll or resize.
+	 */
+	_scroll: function() {
+		var $window = $(window);
+		var $scrollOffset = $window.scrollTop();
+		
+		// calculate top and bottom coordinates of visible sidebar
+		var $topOffset = Math.max($scrollOffset - this._sidebarOffset, 0);
+		var $bottomOffset = Math.min(this._mainContainer.height(), ($window.height() + $scrollOffset) - this._sidebarOffset);
+		
+		var $buttonTop = 0;
+		if ($bottomOffset === $topOffset) {
+			// sidebar not within visible area
+			$buttonTop = this._sidebarOffset + this._sidebarHeight;
+		}
+		else {
+			$buttonTop = $topOffset + (($bottomOffset - $topOffset) / 2);
+			
+			// if the user panel is above the sidebar, substract it's height
+			var $overlap = Math.max(Math.min($topOffset - this._userPanelHeight, this._userPanelHeight), 0);
+			if ($overlap > 0) {
+				$buttonTop += ($overlap / 2);
+			}
+		}
+		
+		// ensure the button does not exceed bottom boundaries
+		if (($bottomOffset - $topOffset - this._userPanelHeight) < this._buttonHeight) {
+			$buttonTop = $buttonTop - this._buttonHeight;
+		}
+		else {
+			// exclude half button height
+			$buttonTop = Math.max($buttonTop - (this._buttonHeight / 2), 0);
+		}
+		
+		this._button.css({ top: $buttonTop + 'px' });
+		
+	},
+	
+	/**
+	 * Renders the sidebar state.
+	 */
+	_renderSidebar: function() {
+		if (this._isOpen) {
+			this._mainContainer.removeClass('sidebarCollapsed');
+		}
+		else {
+			this._mainContainer.addClass('sidebarCollapsed');
+		}
+	}
+});
+
+/**
  * Holds userdata of the current user
  */
 WCF.User = {
@@ -3573,7 +3750,7 @@ WCF.Effect.SmoothScroll = WCF.Effect.Scroll.extend({
 	 */
 	init: function() {
 		var self = this;
-		$('a[href$=#top],a[href$=#bottom]').click(function() {
+		$(document).on('click', 'a[href$=#top],a[href$=#bottom]', function() {
 			var $target = $(this.hash);
 			self.scrollTo($target, true);
 			
@@ -4145,6 +4322,18 @@ WCF.Search.Base = Class.extend({
 	_excludedSearchValues: [],
 	
 	/**
+	 * count of available results
+	 * @var	integer
+	 */
+	_itemCount: 0,
+	
+	/**
+	 * item index, -1 if none is selected
+	 * @var	integer
+	 */
+	_itemIndex: -1,
+	
+	/**
 	 * result list
 	 * @var	jQuery
 	 */
@@ -4205,6 +4394,9 @@ WCF.Search.Base = Class.extend({
 		this._commaSeperated = (commaSeperated) ? true : false;
 		this._oldSearchString = [ ];
 		
+		this._itemCount = 0;
+		this._itemIndex = -1;
+		
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
@@ -4220,6 +4412,28 @@ WCF.Search.Base = Class.extend({
 	 * @param	object		event
 	 */
 	_keyUp: function(event) {
+		// handle arrow keys and return key
+		switch (event.which) {
+			case 37: // arrow-left
+			case 39: // arrow-right
+				return;
+			break;
+			
+			case 38: // arrow up
+				this._selectPreviousItem();
+				return;
+			break;
+			
+			case 40: // arrow down
+				this._selectNextItem();
+				return;
+			break;
+			
+			case 13: // return key
+				return this._selectElement(event);
+			break;
+		}
+		
 		var $content = this._getSearchString(event);
 		if ($content === '') {
 			this._clearList(true);
@@ -4243,6 +4457,63 @@ WCF.Search.Base = Class.extend({
 			// input below trigger length
 			this._clearList(false);
 		}
+	},
+	
+	/**
+	 * Selects the next item in list.
+	 */
+	_selectNextItem: function() {
+		if (this._itemCount === 0) {
+			return;
+		}
+		
+		// remove previous marking
+		this._itemIndex++;
+		if (this._itemIndex === this._itemCount) {
+			this._itemIndex = 0;
+		}
+		
+		this._highlightSelectedElement();
+	},
+	
+	/**
+	 * Selects the previous item in list.
+	 */
+	_selectPreviousItem: function() {
+		if (this._itemCount === 0) {
+			return;
+		}
+		
+		this._itemIndex--;
+		if (this._itemIndex === -1) {
+			this._itemIndex = this._itemCount - 1;
+		}
+		
+		this._highlightSelectedElement();
+	},
+	
+	/**
+	 * Highlights the active item.
+	 */
+	_highlightSelectedElement: function() {
+		this._list.find('li').removeClass('dropdownNavigationItem');
+		this._list.find('li:eq(' + this._itemIndex + ')').addClass('dropdownNavigationItem');
+	},
+	
+	/**
+	 * Selects the active item by pressing the return key.
+	 * 
+	 * @param	object		event
+	 * @return	boolean
+	 */
+	_selectElement: function(event) {
+		if (this._itemCount === 0) {
+			return true;
+		}
+		
+		this._list.find('li.dropdownNavigationItem').trigger('click');
+		
+		return false;
 	},
 	
 	/**
@@ -4333,6 +4604,8 @@ WCF.Search.Base = Class.extend({
 		var $listItem = $('<li><span>' + item.label + '</span></li>').appendTo(this._list);
 		$listItem.data('objectID', item.objectID).data('label', item.label).click($.proxy(this._executeCallback, this));
 		
+		this._itemCount++;
+		
 		return $listItem;
 	},
 	
@@ -4390,6 +4663,10 @@ WCF.Search.Base = Class.extend({
 		this._list.parent().removeClass('dropdownOpen').end().empty();
 		
 		WCF.CloseOverlayHandler.removeCallback('WCF.Search.Base');
+		
+		// reset item navigation
+		this._itemCount = 0;
+		this._itemIndex = -1;
 	},
 	
 	/**
@@ -6119,79 +6396,6 @@ WCF.EditableItemList = Class.extend({
 });
 
 /**
- * Provides a toggleable sidebar.
- */
-$.widget('ui.wcfSidebar', {
-	/**
-	 * toggle button
-	 * @var	jQuery
-	 */
-	_button: null,
-	
-	/**
-	 * sidebar containder
-	 * @var	jQuery
-	 */
-	_container: null,
-	
-	/**
-	 * sidebar visibility
-	 * @var	boolean
-	 */
-	_visible: true,
-	
-	/**
-	 * Creates a new toggleable sidebar.
-	 */
-	_create: function() {
-		this.element.wrap('<div class="collapsibleSidebar"></div>');
-		this._container = this.element.parents('aside:eq(0)');
-		
-		// create toggle button
-		this._button = $('<span class="collapsibleSidebarButton" title="' + WCF.Language.get('wcf.global.button.collapsible') + '"><span></span></span>').appendTo(this._container);
-		
-		// bind event
-		this._button.click($.proxy(this._toggle, this));
-	},
-	
-	/**
-	 * Toggles visibility on button click.
-	 */
-	_toggle: function() {
-		if (this._visible) {
-			this.hide();
-		}
-		else {
-			this.show();
-		}
-	},
-	
-	/**
-	 * Shows sidebar content.
-	 */
-	show: function() {
-		if (this._visible) {
-			return;
-		}
-		
-		this._visible = true;
-		this._container.removeClass('collapsed');
-	},
-	
-	/**
-	 * Hides the sidebar content.
-	 */
-	hide: function() {
-		if (!this._visible) {
-			return;
-		}
-		
-		this._visible = false;
-		this._container.addClass('collapsed');
-	}
-});
-
-/**
  * Provides a generic sitemap.
  */
 WCF.Sitemap = Class.extend({
@@ -6374,17 +6578,19 @@ WCF.Language.Chooser = Class.extend({
 		
 		// create language dropdown
 		this._dropdown = $('<div class="dropdown" id="' + containerID + '-languageChooser" />').appendTo($container);
-		$('<div class="dropdownToggle boxFlag" data-toggle="' + containerID + '-languageChooser"></div>').appendTo(this._dropdown);
+		$('<div class="dropdownToggle boxFlag box24" data-toggle="' + containerID + '-languageChooser"></div>').appendTo(this._dropdown);
 		var $dropdownMenu = $('<ul class="dropdownMenu" />').appendTo(this._dropdown);
 		
 		for (var $languageID in languages) {
 			var $language = languages[$languageID];
-			var $item = $('<li class="boxFlag"><div class="framed"><img src="' + $language.iconPath + '" alt="" class="iconFlag" /></div> <hgroup><h1>' + $language.languageName + '</h1></hgroup>').appendTo($dropdownMenu);
+			var $item = $('<li class="boxFlag"><a class="box24"><div class="framed"><img src="' + $language.iconPath + '" alt="" class="iconFlag" /></div> <hgroup><h1>' + $language.languageName + '</h1></hgroup></a></li>').appendTo($dropdownMenu);
 			$item.data('languageID', $languageID).click($.proxy(this._click, this));
 			
 			// update dropdown label
 			if ($languageID == languageID) {
-				this._dropdown.children('.dropdownToggle').html($item.html());
+				var $html = $('' + $item.html());
+				var $innerContent = $html.children().detach();
+				this._dropdown.children('.dropdownToggle').empty().append($innerContent);
 			}
 		}
 		
@@ -6403,103 +6609,14 @@ WCF.Language.Chooser = Class.extend({
 		this._input.val($item.data('languageID'));
 		
 		// update dropdown label
-		this._dropdown.children('.dropdownToggle').html($item.html());
+		var $html = $('' + $item.html());
+		var $innerContent = $html.children().detach();
+		this._dropdown.children('.dropdownToggle').empty().append($innerContent);
 		
 		// execute callback
 		if (this._callback !== null) {
 			this._callback($item);
 		}
-	}
-});
-
-/**
- * Provides a toggleable sidebar with persistent visibility.
- */
-$.widget('ui.wcfPersistentSidebar', $.ui.wcfSidebar, {
-	/**
-	 * widget options
-	 * @var	object
-	 */
-	options: {
-		className: '',
-		collapsed: false,
-		objectTypeID: 0
-	},
-	
-	/**
-	 * action proxy
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * Creates a new toggleable sidebar.
-	 */
-	_create: function() {
-		if (this.options.className === '' || this.options.objectTypeID === 0) {
-			console.debug('[ui.wcfPersistentSidebar] Class name or object type id missing, aborting.');
-			return;
-		}
-		
-		$.ui.wcfSidebar.prototype._init.apply(this, arguments);
-		
-		// collapse on init
-		if (this.options.collapsed) {
-			this.element.hide();
-			this._visible = false;
-		}
-		
-		// init proxy
-		this._proxy = new WCF.Action.Proxy();
-	},
-	
-	/**
-	 * Shows sidebar content.
-	 */
-	show: function() {
-		if (this._visible) {
-			return;
-		}
-		
-		$.ui.wcfSidebar.prototype._init.apply(this, arguments);
-		
-		// save state
-		this._save();
-	},
-	
-	/**
-	 * Hides the sidebar content.
-	 */
-	hide: function() {
-		if (!this._visible) {
-			return;
-		}
-		
-		$.ui.wcfSidebar.prototype._init.apply(this, arguments);
-		
-		// save state
-		this._save();
-	},
-	
-	/**
-	 * Save collapsible state
-	 */
-	_save: function() {
-		var $currentState = (!this._visible) ? 'close' : 'open';
-		var $newState = (this._visible) ? 'open' : 'close';
-		
-		this._proxy.setOption('data', {
-			actionName: 'toggleSidebar',
-			className: this.options.className,
-			parameters: {
-				data: {
-					currentState: $currentState,
-					newState: $newState,
-					objectTypeID: this.options.objectTypeID
-				}
-			}
-		});
-		this._proxy.sendRequest();
 	}
 });
 

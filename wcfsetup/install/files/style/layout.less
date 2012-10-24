@@ -57,7 +57,7 @@
 					}
 					
 					> .badge.badgeInverse {
-						background-color: rgb(204, 0, 0); /* todo */ 
+						background-color: rgb(63, 127, 191); /* todo */ /* same color as tabularBox */
 						color: white;
 						padding: 0 6px 1px;
 						position: absolute;
@@ -136,18 +136,24 @@
 		> li {
 			background-color: @wcfMainMenuBackgroundColor;
 			float: left;
-			font-size: @wcfSubHeadlineFontSize;
+			font-size: @wcfTitleFontSize;
 			margin-bottom: -1px;
+			margin-top: 7px;
+			
+			&.active {
+			font-size: @wcfSubHeadlineFontSize;
+			margin-top: 0;
+			}
 			
 			> a {
 				border-bottom: 1px solid @wcfContainerBorderColor;
 				color: @wcfMainMenuColor;
 				display: inline-block;
-				padding: 11px 35px;
-				font-weight: bold;
+				padding: 9px 35px;
 				
 				&:hover {
 					background-color: @wcfMainMenuHoverBackgroundColor;
+					color: @wcfMainMenuActiveColor;
 					text-decoration: none;
 				}
 				
@@ -162,6 +168,8 @@
 					border-bottom: 1px solid @wcfNavigationHeaderBackgroundColor;
 					background-color: @wcfNavigationHeaderBackgroundColor;
 					color: @wcfMainMenuActiveColor;
+					font-weight: bold;
+					padding: 14px 35px 8px;
 				}
 			}
 			
@@ -254,8 +262,24 @@
 		background-color: @wcfSidebarBackgroundColor;
 		
 		> .sidebar {
+			position: relative;
 			width: 300px;
 			z-index: 120;
+
+			> .collapsibleButton {
+				background-color: @wcfSidebarBackgroundColor;
+				background-image: url('../icon/arrowRight.svg');
+				background-position: 4px 4px;
+				background-repeat: no-repeat;
+				background-size: 16px;
+				border-radius: 6px 0 0 6px;
+				display: block;
+				height: 24px;
+				left: -20px;
+				position: absolute;
+				top: 0;
+				width: 24px;
+			}
 		}
 		
 		> .content {
@@ -283,6 +307,25 @@
 	}
 	
 	&.sidebarOrientationRight {
+		&.sidebarCollapsed > div {
+			> .content {
+				margin-right: 20px;
+			}
+			
+			> .sidebar {
+				width: 20px;
+				
+				> div,
+				> fieldset {
+					visibility: hidden;
+				}
+				
+				> .collapsibleButton {
+					background-image: url('../icon/arrowLeft.svg');
+				}
+			}
+		}
+		
 		.content {
 			margin-right: 300px;
 		}
@@ -939,13 +982,7 @@ ul.dataList {
 			}
 			
 			&.active, &.active:hover {
-				border: 1px solid darken(@wcfButtonColor, 5%);
-				color: lighten(@wcfButtonBackgroundColor, 5%);
 				padding: 2px 0;
-				
-				/* todo */
-				.linearGradient(@wcfButtonColor, darken(@wcfButtonColor, 10%), @wcfButtonColor 3px);
-				.textShadow(#000);
 			}
 			
 			img {

@@ -66,7 +66,7 @@ dl:not(.plain) {
 	> dd {
 		margin-left: 250px;
 		
-		> small {
+		> small:not(.innerError) {
 			color: @wcfDimmedColor;
 			display: block;
 			margin-top: 2px;
@@ -181,10 +181,6 @@ select {
 	margin: 0;
 }
 
-select[multiple] {
-	 font-family: 'Courier New', Courier, monospace;
-}
-
 /* normal state */
 input[type='text'],
 input[type='search'],
@@ -243,9 +239,6 @@ select[multiple]:focus {
 	background-color: @wcfInputHoverBackgroundColor;
 	border-color: @wcfInputHoverBorderColor;
 	outline: 0;
-	
-	/*todo*/
-	//.boxShadowNative(~"0 0 5px" fade(@wcfInputHoverBorderColor, 50%) ~", inset 0 1px 5px rgba(0, 0, 0, .1)");
 }
 
 /* read only state */
@@ -260,7 +253,7 @@ input[type='url'][readonly],
 input[type='password'][readonly],
 textarea[readonly],
 select[multiple][readonly] {
-	background-color: transparent;
+	background-color: darken(@wcfInputBackgroundColor, 5%);
 	border-color: @wcfInputBorderColor;
 }
 
@@ -276,13 +269,13 @@ input[type='url'][disabled],
 input[type='password'][disabled],
 textarea[disabled],
 select[multiple][disabled] {
-	background-color: transparent;
+	background-color: darken(@wcfInputBackgroundColor, 5%);
 	border-color: @wcfInputBorderColor;
 	color: @wcfDimmedColor;
+	cursor: not-allowed;
 }
 
 /* success state */
-/* todo */
 .formSuccess {
 	input[type='text'],
 	input[type='search'],
@@ -291,23 +284,12 @@ select[multiple][disabled] {
 	input[type='url'],
 	input[type='password'],
 	textarea {
-		border-color: @wcfSuccessBackgroundColor;
-	}
-}
-
-input:required,
-input[pattern],
-textarea:required,
-textarea[pattern],
-input[type='url'],
-input[type='email'] {
-	&:valid {
-		border-color: @wcfSuccessBackgroundColor;
+		background-color: @wcfSuccessBackgroundColor;
+		border-color: @wcfSuccessBorderColor;
 	}
 }
 
 /* error state */
-/* todo */
 .formError {
 	input[type='text'],
 	input[type='search'],
@@ -316,7 +298,8 @@ input[type='email'] {
 	input[type='url'],
 	input[type='password'],
 	textarea {
-		border-color: @wcfErrorBackgroundColor;
+		background-color: @wcfErrorBackgroundColor;
+		border-color: @wcfErrorBorderColor
 	}
 }
 
@@ -324,17 +307,6 @@ input, textarea {
 	&:invalid {
 		// firefox adds a box shadow by itself
 		box-shadow: none;
-	}
-}
-
-input:required,
-input[pattern],
-textarea:required,
-textarea[pattern],
-input[type='url'],
-input[type='email'] {
-	&:invalid {
-		border-color: @wcfErrorBackgroundColor;
 	}
 }
 

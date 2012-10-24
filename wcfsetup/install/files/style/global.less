@@ -30,6 +30,13 @@ a {
 	}
 }
 
+/* todo */
+::selection {
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .5) !important;
+	color: #300;
+	background-color: rgba(255, 170, 34, .7);
+}
+
 .invisible {
 	display: none;
 }
@@ -145,14 +152,6 @@ a {
 }
 
 /* ### badges ### */
-// sets default badge shadows depending on background color
-.badgeShadow(@backgroundColor) when (lightness(@backgroundColor) >= 50%) {
-	box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, .8);
-}
-.badgeShadow(@backgroundColor) when (lightness(@backgroundColor) < 50%) {
-	box-shadow: 0px -1px 0px 0px rgba(0, 0, 0, .8);
-}
-
 /* default values */
 .badge {
 	background-color: @wcfColor;
@@ -166,8 +165,6 @@ a {
 	text-shadow: none !important;
 	white-space: nowrap;
 	
-	.badgeShadow(@wcfContentBackgroundColor);
-	
 	/* colors */
 	&.badgeUpdate {
 		background-color: @wcfTabularBoxBackgroundColor;
@@ -175,20 +172,18 @@ a {
 	}
 	
 	&.badgeGreen {
-		background-color: @wcfSuccessBackgroundColor;
-		color: @wcfSuccessColor;
+		background-color: @wcfSuccessColor;
+		color: @wcfSuccessBackgroundColor;
 	}
 	
 	&.badgeRed {
-		background-color: @wcfErrorBackgroundColor;
-		color: @wcfErrorColor;
+		background-color: @wcfErrorColor;
+		color: @wcfErrorBackgroundColor;
 	}
 	
 	&.badgeInverse {
 		background-color: @wcfTabularBoxColor;
 		color: @wcfTabularBoxBackgroundColor;
-		
-		.badgeShadow(@wcfTabularBoxBackgroundColor);
 	}
 }
 

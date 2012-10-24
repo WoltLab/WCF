@@ -70,6 +70,13 @@ class UserClipboardAction implements IClipboardAction {
 	}
 	
 	/**
+	 * @see	wcf\system\clipboard\action\IClipboardAction::getClassName()
+	 */
+	public function getClassName() {
+		return 'wcf\data\user\UserAction';
+	}
+	
+	/**
 	 * Returns the ids of the users which can be deleted.
 	 * 
 	 * @param	array<wcf\data\user\User>	$objects

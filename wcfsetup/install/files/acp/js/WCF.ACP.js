@@ -1004,6 +1004,23 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 			var $item = resultList.items[$i];
 			
 			$('<li><a href="' + $item.link + '">' + $item.title + '</a></li>').appendTo(this._list);
+			
+			this._itemCount++;
 		}
+	},
+	
+	/**
+	 * @see	WCF.Search.Base._highlightSelectedElement()
+	 */
+	_highlightSelectedElement: function() {
+		this._list.find('li').removeClass('dropdownNavigationItem');
+		this._list.find('li:not(.dropdownDivider):not(.dropdownText)').eq(this._itemIndex).addClass('dropdownNavigationItem');
+	},
+	
+	/**
+	 * @see	WCF.Search.Base._selectElement()
+	 */
+	_selectElement: function(event) {
+		window.location = this._list.find('li.dropdownNavigationItem > a').attr('href');
 	}
 });

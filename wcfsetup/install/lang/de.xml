@@ -449,6 +449,7 @@
 	</category>
 	
 	<category name="wcf.clipboard">
+		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Demarkieren]]></item>
 		<item name="wcf.clipboard.item.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
 		<item name="wcf.clipboard.item.user.delete"><![CDATA[Benutzer löschen]]></item>
 		<item name="wcf.clipboard.item.user.delete.confirmMessage"><![CDATA[{if $count == 1}Einen{else}{#$count}{/if} Benutzer löschen?]]></item>
