@@ -240,8 +240,7 @@ class UserGroup extends DatabaseObject {
 	 * @return	string
 	 */
 	public function getName() {
-		// TODO: Is the output correct when I18n is not used?
-		return WCF::getLanguage()->get('wcf.acp.group.group'.$this->groupID);
+		return WCF::getLanguage()->get($this->groupName);
 	}
 	
 	/**
