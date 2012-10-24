@@ -115,34 +115,21 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			$statement->execute(array($row['groupID'], $optionID, $defaultValue));
 			
 			if ($adminDefaultValue && $defaultValue != $adminDefaultValue) {
-				$sql = "SELECT	groupID
-					FROM	wcf".WCF_N."_user_group_option_value
-					WHERE	optionID = (
-							SELECT	optionID
-							FROM	wcf".WCF_N."_user_group_option
-							WHERE	optionName = ?
-						)
-						AND optionValue = '1'";
-				$statement2 = WCF::getDB()->prepareStatement($sql);
-				$statement2->execute(array('admin.general.canUseAcp'));
+				$userGroupList = new UserGroupList();
+				$userGroupList->sqlLimit = 0;
+				$userGroupList->readObjects();
 				
-				$acpGroups = array();
-				while ($row = $statement2->fetchArray()) {
-					$acpGroups[] = $row['groupID'];
-				}
-				
-				$statement2->execute(array('admin.user.canEditGroup'));
-				while ($row = $statement2->fetchArray()) {
-					if (!in_array($row['groupID'], $acpGroups)) {
-						continue;
+				WCF::getDB()->beginTransaction();
+				foreach ($userGroupList as $userGroup) {
+					if ($userGroup->isAdminGroup()) {
+						$statement->execute(array(
+							$userGroup->groupID,
+							$optionID,
+							$adminDefaultValue
+						));
 					}
-					
-					$statement->execute(array(
-						$row['groupID'],
-						$optionID,
-						$adminDefaultValue
-					));
 				}
+				WCF::getDB()->commitTransaction();
 			}
 		}
 	}
