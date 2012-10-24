@@ -191,7 +191,7 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true when the current group is an admin-group.
+	 * Returns true if the current group is an admin-group.
 	 * Every group that may access EVERY group is an admin-group.
 	 * 
 	 * @return	boolean
