@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
 class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */	
+	 */
 	public $tableName = 'user_group_option';
 	
 	/**
@@ -29,6 +29,12 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	 * @var	array<string>
 	 */
 	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata');
+	
+	/**
+	 * array with group IDs that are admin groups
+	 * @var	array<integer>
+	 */
+	protected static $adminGroupIDs = array();
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
@@ -116,22 +122,39 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			$statement->execute(array($row['groupID'], $optionID, $defaultValue));
 			
 			if ($adminDefaultValue && $defaultValue != $adminDefaultValue) {
-				$userGroupList = new UserGroupList();
-				$userGroupList->sqlLimit = 0;
-				$userGroupList->readObjects();
+				$adminGroupIDs = self::getAdminGroupIDs();
 				
 				WCF::getDB()->beginTransaction();
-				foreach ($userGroupList as $userGroup) {
-					if ($userGroup->isAdminGroup()) {
-						$statement->execute(array(
-							$userGroup->groupID,
-							$optionID,
-							$adminDefaultValue
-						));
-					}
+				foreach ($adminGroupIDs as $groupID) {
+					$statement->execute(array(
+						$groupID,
+						$optionID,
+						$adminDefaultValue
+					));
 				}
 				WCF::getDB()->commitTransaction();
 			}
 		}
+	}
+	
+	/**
+	 * Returns an array of groupIDs that belong to an admin group.
+	 * 
+	 * @return	array<integer>
+	 */
+	protected function getAdminGroupIDs() {
+		if (empty(self::$adminGroupIDs)) {
+			$userGroupList = new UserGroupList();
+			$userGroupList->sqlLimit = 0;
+			$userGroupList->readObjects();
+			
+			foreach ($userGroupList as $userGroup) {
+				if ($userGroup->isAdminGroup()) {
+					self::$adminGroupIDs[] = $userGroup->groupID;
+				}
+			}
+		}
+		
+		return self::$adminGroupIDs;
 	}
 }
