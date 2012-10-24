@@ -90,6 +90,9 @@ class LinkHandler extends SingletonFactory {
 			
 			$url = $application->getPageURL() . (RequestHandler::getInstance()->isACPRequest() ? 'acp/' : '') . $url;
 		}
+		else {
+			$url = ApplicationHandler::getInstance()->getActiveApplication()->getPageURL() . (RequestHandler::getInstance()->isACPRequest() ? 'acp/' : '') . $url;
+		}
 		
 		// append previously removed anchor
 		$url .= $anchor;
