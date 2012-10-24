@@ -3750,7 +3750,7 @@ WCF.Effect.SmoothScroll = WCF.Effect.Scroll.extend({
 	 */
 	init: function() {
 		var self = this;
-		$('a[href$=#top],a[href$=#bottom]').click(function() {
+		$(document).on('click', 'a[href$=#top],a[href$=#bottom]', function() {
 			var $target = $(this.hash);
 			self.scrollTo($target, true);
 			
