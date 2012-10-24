@@ -142,7 +142,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	 * 
 	 * @return	array<integer>
 	 */
-	protected function getAdminGroupIDs() {
+	protected static function getAdminGroupIDs() {
 		if (empty(self::$adminGroupIDs)) {
 			$userGroupList = new UserGroupList();
 			$userGroupList->sqlLimit = 0;
