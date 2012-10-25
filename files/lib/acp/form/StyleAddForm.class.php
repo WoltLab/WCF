@@ -295,6 +295,54 @@ class StyleAddForm extends ACPForm {
 				throw new UserInputException('imagePath', 'notValid');
 			}
 		}
+		
+		if (!empty($this->variables['overrideLess'])) {
+			$this->parseOverrides();
+		}
+	}
+	
+	/**
+	 * Validates LESS-variable overrides.
+	 * 
+	 * If an override is invalid, unknown or matches a variable covered by
+	 * the style editor itself, it will be silently discarded.
+	 */
+	protected function parseOverrides() {
+		// get available variables
+		$sql = "SELECT	variableName
+			FROM	wcf".WCF_N."_style_variable";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$variables = array();
+		while ($row = $statement->fetchArray()) {
+			$variables[] = $row['variableName'];
+		}
+		
+		$lines = explode("\n", StringUtil::unifyNewlines($this->variables['overrideLess']));
+		$regEx = new Regex('^@([a-zA-Z]+): ?([@a-zA-Z0-9 ,\.\(\)\%]+);$');
+		foreach ($lines as $index => &$line) {
+			$line = StringUtil::trim($line);
+			
+			if ($regEx->match($line)) {
+				$matches = $regEx->getMatches();
+				
+				// cannot override variables covered by style editor
+				if (isset($this->variables[$matches[1]])) {
+					unset($lines[$index]);
+				}
+				else if (!in_array($matches[1], $variables)) {
+					// unknown style variable
+					unset($lines[$index]);
+				}
+				else {
+					$this->variables[$matches[1]] = $matches[2];
+				}
+			}
+			else {
+				unset($lines[$index]);
+			}
+		}
+		
+		$this->variables['overrideLess'] = implode("\n", $lines);
 	}
 	
 	/**
