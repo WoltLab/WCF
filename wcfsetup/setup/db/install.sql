@@ -962,11 +962,8 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonP
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryHoverBackgroundColor', 'darken(@wcfButtonPrimaryBackgroundColor, 3%)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryHoverBorderColor', 'darken(@wcfButtonPrimaryBorderColor, 10%)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryHoverColor', '@wcfButtonPrimaryColor');
-
--- todo:
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonHoverBackgroundColor', 'darken(@wcfButtonBackgroundColor, 3%)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonHoverBorderColor', 'darken(@wcfButtonBorderColor, 10%)');
-
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonHoverBackgroundColor', 'rgb(241, 241, 241, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonHoverBorderColor', 'rgb(224, 224, 224, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonHoverColor', 'rgba(102, 102, 102, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputBackgroundColor', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputColor', 'rgba(102, 102, 102, 1)');
