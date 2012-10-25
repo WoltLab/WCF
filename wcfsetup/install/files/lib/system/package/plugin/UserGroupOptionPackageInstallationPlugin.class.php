@@ -3,6 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\option\UserGroupOptionEditor;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\group\UserGroupList;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -20,7 +21,7 @@ use wcf\util\StringUtil;
 class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
-	 */	
+	 */
 	public $tableName = 'user_group_option';
 	
 	/**
@@ -28,6 +29,12 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	 * @var	array<string>
 	 */
 	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata');
+	
+	/**
+	 * array with group IDs that are admin groups
+	 * @var	array<integer>
+	 */
+	protected static $adminGroupIDs = array();
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
@@ -115,35 +122,39 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			$statement->execute(array($row['groupID'], $optionID, $defaultValue));
 			
 			if ($adminDefaultValue && $defaultValue != $adminDefaultValue) {
-				$sql = "SELECT	groupID
-					FROM	wcf".WCF_N."_user_group_option_value
-					WHERE	optionID = (
-							SELECT	optionID
-							FROM	wcf".WCF_N."_user_group_option
-							WHERE	optionName = ?
-						)
-						AND optionValue = '1'";
-				$statement2 = WCF::getDB()->prepareStatement($sql);
-				$statement2->execute(array('admin.general.canUseAcp'));
+				$adminGroupIDs = self::getAdminGroupIDs();
 				
-				$acpGroups = array();
-				while ($row = $statement2->fetchArray()) {
-					$acpGroups[] = $row['groupID'];
-				}
-				
-				$statement2->execute(array('admin.user.canEditGroup'));
-				while ($row = $statement2->fetchArray()) {
-					if (!in_array($row['groupID'], $acpGroups)) {
-						continue;
-					}
-					
+				WCF::getDB()->beginTransaction();
+				foreach ($adminGroupIDs as $groupID) {
 					$statement->execute(array(
-						$row['groupID'],
+						$groupID,
 						$optionID,
 						$adminDefaultValue
 					));
 				}
+				WCF::getDB()->commitTransaction();
 			}
 		}
+	}
+	
+	/**
+	 * Returns an array of groupIDs that belong to an admin group.
+	 * 
+	 * @return	array<integer>
+	 */
+	protected static function getAdminGroupIDs() {
+		if (empty(self::$adminGroupIDs)) {
+			$userGroupList = new UserGroupList();
+			$userGroupList->sqlLimit = 0;
+			$userGroupList->readObjects();
+			
+			foreach ($userGroupList as $userGroup) {
+				if ($userGroup->isAdminGroup()) {
+					self::$adminGroupIDs[] = $userGroup->groupID;
+				}
+			}
+		}
+		
+		return self::$adminGroupIDs;
 	}
 }

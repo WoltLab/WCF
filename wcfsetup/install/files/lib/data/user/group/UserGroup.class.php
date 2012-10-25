@@ -191,6 +191,20 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns true if the current group is an admin-group.
+	 * Every group that may access EVERY group is an admin-group.
+	 * 
+	 * @return	boolean
+	 */
+	public function isAdminGroup() {
+		$groupIDs = array_keys(self::getGroupsByType());
+		$accessibleGroupIDs = explode(',', $this->getGroupOption('admin.user.accessibleGroups'));
+		
+		// no differences -> all groups are included
+		return count(array_diff($groupIDs, $accessibleGroupIDs)) == 0 ? true : false;
+	}
+	
+	/**
 	 * Loads the group cache.
 	 */
 	protected static function getCache() {
@@ -226,8 +240,7 @@ class UserGroup extends DatabaseObject {
 	 * @return	string
 	 */
 	public function getName() {
-		// TODO: Is the output correct when I18n is not used?
-		return WCF::getLanguage()->get('wcf.acp.group.group'.$this->groupID);
+		return WCF::getLanguage()->get($this->groupName);
 	}
 	
 	/**

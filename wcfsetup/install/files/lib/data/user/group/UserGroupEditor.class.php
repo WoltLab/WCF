@@ -117,9 +117,9 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	protected static function updateAccessibleGroups($groupID, $delete = false) {
 		if ($delete) {
 			$sql = "UPDATE	wcf".WCF_N."_user_group_option_value
-					SET	optionValue = ?
-					WHERE	groupID = ?
-					AND	optionID = ?";
+				SET	optionValue = ?
+				WHERE	groupID = ?
+				AND	optionID = ?";
 			$updateStatement = WCF::getDB()->prepareStatement($sql);
 			
 			$sql = "SELECT		groupID, optionValue, groupOption.optionID
@@ -142,56 +142,36 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 			return;
 		}
 		
-		// get existing groups
-		$groupIDs = array();
-		$sql = "SELECT		groupID
-			FROM		wcf".WCF_N."_user_group
-			ORDER BY	groupID ASC";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			if ($row['groupID'] == $groupID) continue;
-			$groupIDs[] = $row['groupID'];
-		}
-		
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("groupOption.optionName = ?", array('admin.user.accessibleGroups'));
-		$conditions->add("groupID IN (?)", array($groupIDs));
-		
-		$sql = "SELECT		groupID, optionValue, groupOption.optionID
-			FROM		wcf".WCF_N."_user_group_option groupOption
-			LEFT JOIN	wcf".WCF_N."_user_group_option_value optionValue
-			ON		(groupOption.optionID = optionValue.optionID)
-			".$conditions;
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditions->getParameters());
-		
-		$updateGroupIDs = array();
-		$optionID = 0;
-		// get groups which got "accessibleGroups"-option with all groupIDs
-		while ($row = $statement->fetchArray()) {
+		$userGroupList = new UserGroupList();
+		$userGroupList->sqlLimit = 0;
+		$userGroupList->readObjects();
+		foreach ($userGroupList as $userGroup) {
+			$groupIDs[] = $userGroup->groupID;
 			
-			// check for differences in options-groups and existing-groups	
-			$optionGroupIDs = explode(',', $row['optionValue']);
-			$differences = array_diff($optionGroupIDs, $groupIDs);
-			
-			// get groups which got the right to change all groups			
-			if (empty($differences) && (count($optionGroupIDs) == count($groupIDs))) {
-				$updateGroupIDs[] = $row['groupID'];
-				$optionID = $row['optionID'];
+			if ($userGroup->isAdminGroup()) {
+				$updateGroupIDs[] = $userGroup->groupID;
 			}
 		}
 		
+		$sql = "SELECT	optionID
+			FROM	wcf".WCF_N."_user_group_option
+			WHERE	optionName = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array('admin.user.accessibleGroups'));
+		$row = $statement->fetchArray();
+		$optionID = $row['optionID'];
+		
 		// update optionValue from groups which got all existing groups as value
 		if (count($updateGroupIDs)) {
-			$groupIDs[] = $groupID;
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('groupID IN (?)', array($updateGroupIDs));
+			$conditionBuilder->add('optionID = ?', array($optionID));
 			
 			$sql = "UPDATE	wcf".WCF_N."_user_group_option_value
 				SET	optionValue = ?
-				WHERE	groupID IN (".implode(',', $updateGroupIDs).")
-				AND 	optionID = ?";
+				".$conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(implode(',', $groupIDs), $optionID));
+			$statement->execute(array_merge((array) implode(',', $groupIDs), $conditionBuilder->getParameters()));
 		}
 	}
 	
