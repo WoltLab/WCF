@@ -64,17 +64,17 @@ class StyleCompiler extends SingletonFactory {
 		
 		// get style variables
 		$variables = $style->getVariables();
-		$individualCss = '';
-		if (isset($variables['individualCss'])) {
-			$individualCss = $variables['individualCss'];
-			unset($variables['individualCss']);
+		$individualLess = '';
+		if (isset($variables['individualLess'])) {
+			$individualLess = $variables['individualLess'];
+			unset($variables['individualLess']);
 		}
 		
 		$this->compileStylesheet(
 			WCF_DIR.'style/style-'.ApplicationHandler::getInstance()->getPrimaryApplication()->packageID.'-'.$style->styleID,
 			$files,
 			$variables,
-			$individualCss,
+			$individualLess,
 			new Callback(function($content) use ($style) {
 				return "/* stylesheet for '".$style->styleName."', generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
 			})
@@ -155,10 +155,10 @@ class StyleCompiler extends SingletonFactory {
 	 * @param	string			$filename
 	 * @param	array<string>		$files
 	 * @param	array<string>		$variables
-	 * @param	string			$individualCss
+	 * @param	string			$individualLess
 	 * @param	wcf\system\Callback	$callback
 	 */
-	protected function compileStylesheet($filename, array $files, array $variables, $individualCss, Callback $callback) {
+	protected function compileStylesheet($filename, array $files, array $variables, $individualLess, Callback $callback) {
 		// build LESS bootstrap
 		$less = $this->bootstrap($variables);
 		foreach ($files as $file) {
@@ -166,8 +166,8 @@ class StyleCompiler extends SingletonFactory {
 		}
 		
 		// append individual CSS/LESS
-		if ($individualCss) {
-			$less .= $individualCss;
+		if ($individualLess) {
+			$less .= $individualLess;
 		}
 		
 		try {
