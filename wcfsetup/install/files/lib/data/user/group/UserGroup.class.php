@@ -94,7 +94,7 @@ class UserGroup extends DatabaseObject {
 	 * Returns groups by given type. Returns all groups if no types given.
 	 * 
 	 * @param	array<integer>		$types
-	 * @return	array<UserGroup>
+	 * @return	array<wcf\data\user\group\UserGroup>
 	 */
 	public static function getGroupsByType(array $types = array()) {
 		self::getCache();
@@ -117,7 +117,7 @@ class UserGroup extends DatabaseObject {
 	 * Returns unique group by given type. Only works for the default user groups.
 	 * 
 	 * @param	integer		$type
-	 * @return	UserGroup
+	 * @return	wcf\data\user\group\UserGroup
 	 */
 	public static function getGroupByType($type) {
 		if ($type != self::EVERYONE && $type != self::GUESTS && $type != self::USERS) {
@@ -126,6 +126,23 @@ class UserGroup extends DatabaseObject {
 		
 		$groups = self::getGroupsByType(array($type));
 		return array_shift($groups);
+	}
+	
+	/**
+	 * Returns a group from _cache_ by given groupID. 
+	 * null is returned when the given groupID is invalid.
+	 * 
+	 * @param	integer		$groupID
+	 * @return	wcf\data\user\group\UserGroup
+	 */
+	public static function getGroupByID($groupID) {
+		self::getCache();
+		
+		if (isset(self::$cache['groups'][$groupID])) {
+			return self::$cache['groups'][$groupID];
+		}
+		
+		return null;
 	}
 	
 	/**
