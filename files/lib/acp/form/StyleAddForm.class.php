@@ -157,16 +157,16 @@ class StyleAddForm extends ACPForm {
 	public $tmpHash = '';
 	
 	/**
-	 * fluid or fixed layout
-	 * @var	boolean
-	 */
-	public $useFluidLayout = true;
-	
-	/**
 	 * list of variables and their value
 	 * @var	array<string>
 	 */
 	public $variables = array();
+	
+	/**
+	 * list of specialized variables
+	 * @var	array<string>
+	 */
+	public $specialVariables = array();
 	
 	/**
 	 * @see	wcf\page\IPage::readParameters()
@@ -214,7 +214,11 @@ class StyleAddForm extends ACPForm {
 			}
 		}
 		
-		$this->useFluidLayout = (isset($_POST['useFluidLayout']));
+		// read specialized variables
+		foreach ($this->specialVariables as $variableName) {
+			if (isset($_POST[$variableName])) $this->variables[$variableName] = StringUtil::trim($_POST[$variableName]);
+		}
+		$this->variables['useFluidLayout'] = (isset($_POST['useFluidLayout'])) ? 1 : 0;
 		
 		// style data
 		if (isset($_POST['authorName'])) $this->authorName = StringUtil::trim($_POST['authorName']);
@@ -346,6 +350,10 @@ class StyleAddForm extends ACPForm {
 			'wcfInputHoverBorderColor',
 			'wcfLinkColor',
 			'wcfLinkHoverColor',
+			'wcfPageBackgroundColor',
+			'wcfPageColor',
+			'wcfPageLinkColor',
+			'wcfPageLinkHoverColor',
 			'wcfTabularBoxBackgroundColor',
 			'wcfTabularBoxColor',
 			'wcfTabularBoxHoverColor',
@@ -361,6 +369,14 @@ class StyleAddForm extends ACPForm {
 			'wcfContainerBorderRadius',
 			'wcfLayoutFixedWidth',
 			'wcfLayoutFluidGap'
+		);
+		
+		// set specialized variables
+		$this->specialVariables = array(
+			'individualLess',
+			'overrideLess',
+			'pageLogo',
+			'useFluidLayout'
 		);
 		
 		EventHandler::getInstance()->fireAction($this, 'setVariables');
@@ -415,7 +431,6 @@ class StyleAddForm extends ACPForm {
 		$this->iconPath = 'icon/';
 		$this->imagePath = 'images/';
 		$this->templateGroupID = 0;
-		$this->useFluidLayout = true;
 		
 		// reload variables
 		$this->readStyleVariables();
@@ -447,7 +462,6 @@ class StyleAddForm extends ACPForm {
 			'styleVersion' => $this->styleVersion,
 			'templateGroupID' => $this->templateGroupID,
 			'tmpHash' => $this->tmpHash,
-			'useFluidLayout' => $this->useFluidLayout,
 			'variables' => $this->variables
 		));
 	}

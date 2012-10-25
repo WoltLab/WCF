@@ -69,6 +69,7 @@
 				<li><a href="#general">{lang}wcf.acp.style.general{/lang}</a></li>
 				<li><a href="#globals">{lang}wcf.acp.style.globals{/lang}</a></li>
 				<li><a href="#colors">{lang}wcf.acp.style.colors{/lang}</a></li>
+				<li><a href="#advanced">{lang}wcf.acp.style.advanced{/lang}</a></li>
 			</ul>
 		</nav>
 		
@@ -287,7 +288,7 @@
 				
 				<dl>
 					<dd><label>
-						<input type="checkbox" id="useFluidLayout" name="useFluidLayout" value="1"{if $useFluidLayout} checked="checked"{/if} />
+						<input type="checkbox" id="useFluidLayout" name="useFluidLayout" value="1"{if $variables[useFluidLayout]} checked="checked"{/if} />
 						<span>{lang}wcf.acp.style.globals.useFluidLayout{/lang}</span>
 					</label></dd>
 				</dl>
@@ -317,6 +318,13 @@
 						</dd>
 					</dl>
 				</div>
+				<dl>
+					<dt><label for="pageLogo">{lang}wcf.acp.style.globals.pageLogo{/lang}</label></dt>
+					<dd>
+						<input type="text" name="pageLogo" id="pageLogo" value="{$variables[pageLogo]}" class="long" />
+						<small>{lang}wcf.acp.style.globals.pageLogo.description{/lang}</small>
+					</dd>
+				</dl>
 			</fieldset>
 			
 			{* font *}
@@ -349,6 +357,18 @@
 		
 		{* colors *}
 		<div id="colors" class="container containerPadding tabMenuContainer tabMenuContent">
+			<fieldset>
+				<legend>{lang}wcf.acp.style.colors.page{/lang}</legend>
+				
+				{* page *}
+				<ul class="colorList">
+					<li>{include file='styleVariableColor' variableName='wcfPageBackgroundColor' languageVariable='backgroundColor'}</li>
+					<li>{include file='styleVariableColor' variableName='wcfPageColor' languageVariable='color'}</li>
+					<li>{include file='styleVariableColor' variableName='wcfPageLinkColor' languageVariable='linkColor'}</li>
+					<li>{include file='styleVariableColor' variableName='wcfPageLinkHoverColor' languageVariable='linkHoverColor'}</li>
+				</ul>
+			</fieldset>
+			
 			<fieldset>
 				<legend>{lang}wcf.acp.style.colors.content{/lang}</legend>
 				
@@ -433,6 +453,27 @@
 					<li>{include file='styleVariableColor' variableName='wcfInputHoverBackgroundColor' languageVariable='hoverBackgroundColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfInputHoverBorderColor' languageVariable='hoverBorderColor'}</li>
 				</ul>
+			</fieldset>
+		</div>
+		
+		{* advanced *}
+		<div id="advanced" class="container containerPadding tabMenuContainer tabMenuContent">
+			<p class="info">{lang}wcf.acp.style.advanced.syntax{/lang}</p>
+			
+			<fieldset class="marginTop">
+				<legend>{lang}wcf.acp.style.advanced.individualLess{/lang}</legend>
+				
+				<textarea rows="20" cols="40" name="individualLess">{$variables[individualLess]}</textarea>
+				<small>{lang}wcf.acp.style.advanced.individualLess.description{/lang}</small>
+			</fieldset>
+			
+			<fieldset>
+				<legend>{lang}wcf.acp.style.advanced.overrideLess{/lang}</legend>
+				
+				<p class="warning">{lang}wcf.acp.style.advanced.overrideLess.warning{/lang}</p>
+				
+				<textarea rows="20" cols="40" name="overrideLess" class="marginTop">{$variables[overrideLess]}</textarea>
+				<small>{lang}wcf.acp.style.advanced.overrideLess.description{/lang}</small>
 			</fieldset>
 		</div>
 	</div>

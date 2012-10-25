@@ -8,6 +8,13 @@
 	
 	<category name="wcf.acp.style">
 		<item name="wcf.acp.style.add"><![CDATA[Stil hinzufügen]]></item>
+		<item name="wcf.acp.style.advanced"><![CDATA[Erweiterte Einstellungen]]></item>
+		<item name="wcf.acp.style.advanced.individualLess"><![CDATA[Individuelles CSS und LESS]]></item>
+		<item name="wcf.acp.style.advanced.individualLess.description"><![CDATA[Die Eingabe wird am Ende des Stils eingefügt und kann vollständig aus CSS bestehen. Sie haben zusätzlich den Zugriff auf LESS und alle von Community Framework zur Verfügung gestellten Mixins.]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess"><![CDATA[Überschreiben von LESS-Variablen]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.description"><![CDATA[Sie können innerhalb dieser Eingabe beliebige LESS-Variablen überschreiben, die nicht durch den Stil-Editor direkt bearbeitbar ist. Beim Bezug auf andere Variablen muss sichergestellt werden, dass diese in der Reihenfolge vorher definiert wurden. Die Syntax muss wie folgt lauten: &bdquo;@variableName: variableValue;&ldquo;]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.warning"><![CDATA[Fehlerhafte Eingaben führen dazu, dass der Stil nicht erzeugt werden kann. Überschreiben Sie LESS-Variablen nur, wenn Sie sich den Auswirkungen bewusst sind und eine Änderung anderweitig nicht möglich ist.]]></item>
+		<item name="wcf.acp.style.advanced.syntax"><![CDATA[Sie können sowohl CSS als auch <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http://www.lesscss.org">LESS</a> verwenden. Bitte beachten Sie, dass der Stil nicht erzeugt werden kann, wenn der LESS-Code ungültig ist.]]></item>
 		<item name="wcf.acp.style.authorName"><![CDATA[Autor]]></item>
 		<item name="wcf.acp.style.authorURL"><![CDATA[Website]]></item>
 		<item name="wcf.acp.style.button.exportStyle"><![CDATA[Export starten]]></item>
@@ -20,13 +27,14 @@
 		<item name="wcf.acp.style.colors.container"><![CDATA[Container]]></item>
 		<item name="wcf.acp.style.colors.content"><![CDATA[Inhaltsbereich]]></item>
 		<item name="wcf.acp.style.colors.color"><![CDATA[Schriftfarbe]]></item>
-		<item name="wcf.acp.style.colors.dimmedColor"><![CDATA[Schriftfarbe (abgedunkelt)]]></item>
+		<item name="wcf.acp.style.colors.dimmedColor"><![CDATA[Schriftfarbe (abgeschwächt)]]></item>
 		<item name="wcf.acp.style.colors.formInput"><![CDATA[Eingabeelemente in Formularen]]></item>
 		<item name="wcf.acp.style.colors.hoverBackgroundColor"><![CDATA[Hintergrundfarbe (Hover)]]></item>
 		<item name="wcf.acp.style.colors.hoverBorderColor"><![CDATA[Rahmenfarbe (Hover)]]></item>
 		<item name="wcf.acp.style.colors.hoverColor"><![CDATA[Schriftfarbe (Hover)]]></item>
 		<item name="wcf.acp.style.colors.linkColor"><![CDATA[Linkfarbe]]></item>
 		<item name="wcf.acp.style.colors.linkHoverColor"><![CDATA[Linkfarbe (Hover)]]></item>
+		<item name="wcf.acp.style.colors.page"><![CDATA[Seite]]></item>
 		<item name="wcf.acp.style.colors.primaryBackgroundColor"><![CDATA[Hintergrundfarbe (primär)]]></item>
 		<item name="wcf.acp.style.colors.primaryBorderColor"><![CDATA[Rahmenfarbe (primär)]]></item>
 		<item name="wcf.acp.style.colors.primaryColor"><![CDATA[Schriftfarbe (primär)]]></item>
