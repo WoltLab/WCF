@@ -19,22 +19,6 @@ $sql = "UPDATE	wcf".WCF_N."_package_installation_plugin
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute(array(1));
 
-// change group options from admin group to true
-$sql = "UPDATE	wcf".WCF_N."_user_group_option_value
-	SET	optionValue = ?
-	WHERE	groupID = ?
-		AND optionValue = ?";
-$statement = WCF::getDB()->prepareStatement($sql);
-$statement->execute(array(1, 4, '0'));
-
-// update accessible groups
-$sql = "UPDATE	wcf".WCF_N."_user_group_option_value
-	SET	optionValue = ?
-	WHERE	groupID = ?
-		AND optionValue = ?";
-$statement = WCF::getDB()->prepareStatement($sql);
-$statement->execute(array('1,2,3,4,5,6', 4, ''));
-
 // reset sessions
 SessionHandler::resetSessions();
 
