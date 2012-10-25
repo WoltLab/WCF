@@ -57,8 +57,8 @@
 					}
 					
 					> .badge.badgeInverse {
-						background-color: rgb(63, 127, 191); /* todo */ /* same color as tabularBox */
-						color: white;
+						background-color: @wcfTabularBoxBackgroundColor;
+						color: @wcfTabularBoxColor;
 						padding: 0 6px 1px;
 						position: absolute;
 						bottom: 4px;
@@ -125,34 +125,23 @@
 /* main menu */
 .mainMenu {
 	> ul {
-		border-bottom: 1px solid @wcfContainerBorderColor;
-		
-		&:after {
-			clear: both;
-			content: '';
-			display: block;
-		}
+		background-color: @wcfMainMenuBackgroundColor;
+		display: inline-block;
+		letter-spacing: -4px;
 		
 		> li {
-			background-color: @wcfMainMenuBackgroundColor;
-			float: left;
+			display: inline-block;
 			font-size: @wcfTitleFontSize;
-			margin-bottom: -1px;
-			margin-top: 7px;
-			
-			&.active {
-			font-size: @wcfSubHeadlineFontSize;
-			margin-top: 0;
-			}
+			margin-top: -7px;
+			letter-spacing: normal;
+			vertical-align: bottom;
 			
 			> a {
-				border-bottom: 1px solid @wcfContainerBorderColor;
 				color: @wcfMainMenuColor;
 				display: inline-block;
 				padding: 9px 35px;
-				
+								
 				&:hover {
-					background-color: @wcfMainMenuHoverBackgroundColor;
 					color: @wcfMainMenuActiveColor;
 					text-decoration: none;
 				}
@@ -164,8 +153,10 @@
 			}
 			
 			&.active {
+				font-size: @wcfSubHeadlineFontSize;
+				margin-top: -8px;
+				
 				> a {
-					border-bottom: 1px solid @wcfNavigationHeaderBackgroundColor;
 					background-color: @wcfNavigationHeaderBackgroundColor;
 					color: @wcfMainMenuActiveColor;
 					font-weight: bold;
@@ -225,6 +216,7 @@
 .navigationHeader {
 	background-color: @wcfNavigationHeaderBackgroundColor;
 	border-bottom: 1px solid @wcfContainerBorderColor;
+	border-top: 1px solid @wcfContainerBorderColor;
 }
 	
 .navigationFooter {
@@ -265,7 +257,7 @@
 			position: relative;
 			width: 300px;
 			z-index: 120;
-
+			
 			> .collapsibleButton {
 				background-color: @wcfSidebarBackgroundColor;
 				background-image: url('../icon/arrowRight.svg');
@@ -325,7 +317,7 @@
 				}
 			}
 		}
-		
+
 		.content {
 			margin-right: 300px;
 		}
@@ -467,7 +459,6 @@
 /* bread crumbs */
 .breadcrumbs {
 	box-sizing: border-box;
-	display: block;
 	overflow: hidden;
 	position: relative;
 	text-align: left;

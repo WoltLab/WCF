@@ -242,7 +242,6 @@ select[multiple]:focus {
 }
 
 /* read only state */
-/* todo */
 input[type='text'][readonly],
 input[type='search'][readonly],
 input[type='email'][readonly],
@@ -258,7 +257,6 @@ select[multiple][readonly] {
 }
 
 /* disabled state */
-/* todo */
 input[type='text'][disabled],
 input[type='search'][disabled],
 input[type='date'][disabled],
@@ -300,13 +298,6 @@ select[multiple][disabled] {
 	textarea {
 		background-color: @wcfErrorBackgroundColor;
 		border-color: @wcfErrorBorderColor
-	}
-}
-
-input, textarea {
-	&:invalid {
-		// firefox adds a box shadow by itself
-		box-shadow: none;
 	}
 }
 
