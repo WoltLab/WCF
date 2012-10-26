@@ -197,6 +197,9 @@ class UserGroup extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function isAdminGroup() {
+		// workaround for WCF-Setup
+		if (!PACKAGE_ID && $this->groupID == 4) return true;
+		
 		$groupIDs = array_keys(self::getGroupsByType());
 		$accessibleGroupIDs = explode(',', $this->getGroupOption('admin.user.accessibleGroups'));
 		
@@ -297,6 +300,7 @@ class UserGroup extends DatabaseObject {
 				ORDER BY	package_dependency.priority ASC";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array(PACKAGE_ID));
+			
 			while ($row = $statement->fetchArray()) {
 				$groupOptionIDs[$row['optionName']] = $row['optionID'];
 			}
