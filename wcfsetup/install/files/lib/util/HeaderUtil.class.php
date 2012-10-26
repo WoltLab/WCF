@@ -88,20 +88,9 @@ final class HeaderUtil {
 	 * Redirects the user agent.
 	 * 
 	 * @param	string		$location
-	 * @param	boolean		$prependDir
 	 * @param	boolean		$sendStatusCode
 	 */
-	public static function redirect($location, $prependDir = true, $sendStatusCode = false) {
-		if ($prependDir) {
-			// remove path info from request URI
-			$requestURI = WCF::getSession()->requestURI;
-			if (($pos = strpos($requestURI, '.php')) !== false) {
-				$requestURI = substr($requestURI, 0, ($pos + 4));
-			}
-			
-			$location = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(dirname($requestURI))) . $location;
-		}
-		
+	public static function redirect($location, $sendStatusCode = false) {
 		//if ($sendStatusCode) @header('HTTP/1.0 301 Moved Permanently');
 		if ($sendStatusCode) @header('HTTP/1.1 307 Temporary Redirect');
 		header('Location: '.$location);
