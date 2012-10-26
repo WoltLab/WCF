@@ -81,7 +81,7 @@ class MasterPasswordForm extends ACPForm {
 		if (empty($this->url)) {
 			$this->url = LinkHandler::getInstance()->getLink('Index');
 		}
-		HeaderUtil::redirect($this->url, false);
+		HeaderUtil::redirect($this->url);
 		exit;
 	}
 	
