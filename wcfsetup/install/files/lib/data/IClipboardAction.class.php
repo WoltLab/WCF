@@ -2,8 +2,8 @@
 namespace wcf\data;
 
 /**
- * Every database object action class which belongs to database objects which support
- * clipboard actions has to implement this interface.
+ * Every database object action class, which belongs to database objects supporting
+ * clipboard actions, has to implement this interface.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2012 WoltLab GmbH
