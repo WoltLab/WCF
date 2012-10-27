@@ -113,7 +113,7 @@ class CleanupHandler {
 			
 			// validate interface
 			if (!(ClassUtil::isInstanceOf($adapterData['className'], 'wcf\system\cleanup\ICleanupAdapter'))) {
-				throw new SystemException("class '".$adapterData['className']."' does not implement the interface 'wcf\system\cleanup\ICleanupAdapter'");
+				throw new SystemException("'".$adapterData['className']."' does not implement 'wcf\system\cleanup\ICleanupAdapter'");
 			}
 			
 			$adapter = new $adapterData['className']();

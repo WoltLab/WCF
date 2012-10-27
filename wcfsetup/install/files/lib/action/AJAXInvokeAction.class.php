@@ -111,10 +111,10 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	protected function invoke() {
 		// check for interface and inheritance of SingletonFactory
 		if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\IAJAXInvokeAction')) {
-			throw new SystemException("'".$this->className."' should implement 'wcf\system\IAJAXInvokeAction'");
+			throw new SystemException("'".$this->className."' does not implement 'wcf\system\IAJAXInvokeAction'");
 		}
 		else if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\SingletonFactory')) {
-			throw new SystemException("'".$this->className."' should extend 'wcf\system\SingletonFactory'");
+			throw new SystemException("'".$this->className."' does not extend 'wcf\system\SingletonFactory'");
 		}
 		
 		$this->actionObject = call_user_func(array($this->className, 'getInstance'));

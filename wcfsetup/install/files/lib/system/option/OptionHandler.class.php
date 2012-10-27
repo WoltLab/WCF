@@ -357,7 +357,7 @@ class OptionHandler implements IOptionHandler {
 			return null;
 		}
 		if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\IOptionType')) {
-			throw new SystemException("'".$className."' should implement wcf\system\option\IOptionType");
+			throw new SystemException("'".$className."' does not implement 'wcf\system\option\IOptionType'");
 		}
 		
 		return $className;

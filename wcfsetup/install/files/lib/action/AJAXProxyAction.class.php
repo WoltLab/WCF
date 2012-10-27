@@ -57,12 +57,12 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	 */
 	protected function invoke() {
 		if (!ClassUtil::isInstanceOf($this->className, 'wcf\data\IDatabaseObjectAction')) {
-			throw new SystemException("'".$this->className."' should implement 'wcf\data\IDatabaseObjectAction'");
+			throw new SystemException("'".$this->className."' does not implement 'wcf\data\IDatabaseObjectAction'");
 		}
 		
 		if (!empty($this->interfaceName)) {
 			if (!ClassUtil::isInstanceOf($this->className, $this->interfaceName)) {
-				throw new SystemException("'".$this->className."' should implement '".$this->interfaceName."'");
+				throw new SystemException("'".$this->className."' does not implement '".$this->interfaceName."'");
 			}
 		}
 		

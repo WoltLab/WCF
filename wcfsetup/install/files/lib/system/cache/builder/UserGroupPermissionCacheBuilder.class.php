@@ -121,7 +121,7 @@ class UserGroupPermissionCacheBuilder implements ICacheBuilder {
 				throw new SystemException("unable to find class '".$className."'");
 			}
 			if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\user\group\IUserGroupOptionType')) {
-				throw new SystemException("'".$className."' should implement wcf\system\option\user\group\IUserGroupOptionType");
+				throw new SystemException("'".$className."' does not implement 'wcf\system\option\user\group\IUserGroupOptionType'");
 			}
 			
 			// create instance
