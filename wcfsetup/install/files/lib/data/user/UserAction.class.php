@@ -268,7 +268,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * @see	wcf\data\IClipboardAction::validateUnmarkAll()
 	 */
-	public function validateUnmarkAll() { }
+	public function validateUnmarkAll() {
+		// does nothing
+	}
 	
 	/**
 	 * @see	wcf\data\IClipboardAction::unmarkAll()
