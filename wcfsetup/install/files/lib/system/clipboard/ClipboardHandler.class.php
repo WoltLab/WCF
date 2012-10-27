@@ -287,7 +287,7 @@ class ClipboardHandler extends SingletonFactory {
 			
 			// append 'unmark all' item
 			if (!ClassUtil::isInstanceOf($actionData['object']->getClassName(), 'wcf\data\IClipboardAction')) {
-				throw new SystemException("'".$actionData['object']->getClassName()."' does not implement 'wcf\data\IClipboardAction'.");
+				throw new SystemException("'".$actionData['object']->getClassName()."' does not implement 'wcf\data\IClipboardAction'");
 			}
 			
 			$unmarkAll = new ClipboardEditorItem();
