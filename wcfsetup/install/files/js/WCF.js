@@ -1261,6 +1261,7 @@ WCF.Clipboard = {
 			data: {
 				actionName: listItem.data('parameters').actionName,
 				className: listItem.data('parameters').className,
+				containerData: this._containerData[listItem.data('type')],
 				objectIDs: $objectIDs,
 				parameters: $parameters
 			},
