@@ -2856,16 +2856,6 @@ WCF.TabMenu = {
 				}
 			});
 			
-			// display active item on init
-			if ($tabMenu.data('active')) {
-				$tabMenu.find('.tabMenuContent').each(function(innerIndex, tabMenuItem) {
-					var $tabMenuItem = $(tabMenuItem);
-					if ($tabMenuItem.attr('id') == $tabMenu.data('active')) {
-						$tabMenu.wcfTabs('select', innerIndex);
-					}
-				});
-			}
-			
 			$tabMenu.data('isParent', ($tabMenu.children('.tabMenuContainer').length > 0)).data('parent', false);
 			if (!$tabMenu.data('isParent')) {
 				// check if we're a child element
@@ -2879,11 +2869,25 @@ WCF.TabMenu = {
 		if (!this._didInit) {
 			this.selectTabs();
 			$(window).bind('hashchange', $.proxy(this.selectTabs, this));
+			
+			if (!this._selectErroneousTab()) {
+				this._selectActiveTab();
+			}
 		}
 		
-		// force display of first erroneous tab
+		this._didInit = true;
+	},
+	
+	/**
+	 * Force display of first erroneous tab, returns true, if at
+	 * least one tab contains an error.
+	 * 
+	 * @return	boolean
+	 */
+	_selectErroneousTab: function() {
 		for (var $containerID in this._containers) {
 			var $tabMenu = this._containers[$containerID];
+			
 			if (!$tabMenu.data('isParent') && $tabMenu.find('.formError').length) {
 				while (true) {
 					if ($tabMenu.data('parent') === false) {
@@ -2893,11 +2897,47 @@ WCF.TabMenu = {
 					$tabMenu = $tabMenu.data('parent').wcfTabs('select', $tabMenu.wcfIdentify());
 				}
 				
-				break;
+				return true;
 			}
 		}
 		
-		this._didInit = true;
+		return false;
+	},
+	
+	/**
+	 * Selects the active tab menu item.
+	 */
+	_selectActiveTab: function() {
+		for (var $containerID in this._containers) {
+			var $tabMenu = this._containers[$containerID];
+			if ($tabMenu.data('active')) {
+				var $index = $tabMenu.data('active');
+				var $subIndex = null;
+				if (/-/.test($index)) {
+					var $tmp = $index.split('-');
+					$index = $tmp[0];
+					$subIndex = $tmp[1];
+				}
+				
+				$tabMenu.find('.tabMenuContent').each(function(innerIndex, tabMenuItem) {
+					var $tabMenuItem = $(tabMenuItem);
+					if ($tabMenuItem.wcfIdentify() == $index) {
+						$tabMenu.wcfTabs('select', innerIndex);
+						
+						if ($subIndex !== null) {
+							if ($tabMenuItem.hasClass('tabMenuContainer')) {
+								$tabMenuItem.wcfTabs('select', $tabMenu.data('active'));
+							}
+							else {
+								$tabMenu.wcfTabs('select', $tabMenu.data('active'));
+							}
+						}
+						
+						return false;
+					}
+				});
+			}
+		}
 	},
 	
 	/**
@@ -2935,12 +2975,6 @@ WCF.TabMenu = {
 					$tabMenu.wcfTabs('select', $hash);
 					return;
 				}
-			}
-		}
-		else {
-			// revert to default values
-			for (var $containerID in this._containers) {
-				this._containers[$containerID].wcfTabs('revertToDefault');
 			}
 		}
 	}
