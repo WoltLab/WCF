@@ -1261,6 +1261,7 @@ WCF.Clipboard = {
 			data: {
 				actionName: listItem.data('parameters').actionName,
 				className: listItem.data('parameters').className,
+				containerData: this._containerData[listItem.data('type')],
 				objectIDs: $objectIDs,
 				parameters: $parameters
 			},
@@ -6864,14 +6865,16 @@ $.widget('ui.wcfDialog', {
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		// initialize dialog content
-		this._initDialog(data);
-		
-		// remove loading overlay
-		this._content.removeClass('overlayLoading');
-		
-		if (this.options.success !== null && $.isFunction(this.options.success)) {
-			this.options.success(data, textStatus, jqXHR);
+		if (this._isOpen) {
+			// initialize dialog content
+			this._initDialog(data);
+
+			// remove loading overlay
+			this._content.removeClass('overlayLoading');
+
+			if (this.options.success !== null && $.isFunction(this.options.success)) {
+				this.options.success(data, textStatus, jqXHR);
+			}
 		}
 	},
 	
