@@ -204,9 +204,11 @@
 				margin-top: 5px;
 				
 				> a {
+					color: @wcfLinkColor;
 					padding: 2px 4px;
 					
 					&:hover {
+						color: @wcfLinkHoverColor;
 						text-decoration: none;
 					}
 				}
@@ -235,13 +237,10 @@
 		text-align: center;
 		
 		a {
-			color: @wcfPageLinkColor;
-			
 			.textShadow(@wcfPageBackgroundColor);
 			.transition(color, .1s);
 			
 			&:hover {
-				color: @wcfPageLinkHoverColor;
 				text-decoration: none;
 			}
 		}
@@ -311,7 +310,7 @@
 				
 				> div,
 				> fieldset {
-					visibility: hidden;
+					display: none;
 				}
 				
 				> .collapsibleButton {

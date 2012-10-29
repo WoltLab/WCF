@@ -20,13 +20,25 @@ img {
 }
 
 a {
-	color: @wcfLinkColor;
+	color: @wcfPageLinkColor;
 	cursor: pointer;
 	text-decoration: none;
 		
 	&:hover {
-		color: @wcfLinkHoverColor;
+		color: @wcfPageLinkHoverColor;
 		text-decoration: underline;
+	}
+}
+
+.content, .sidebar {
+	color: @wcfColor;
+	
+	a {
+		color: @wcfLinkColor;
+		
+		&:hover {
+			color: @wcfLinkHoverColor;
+		}
 	}
 }
 
