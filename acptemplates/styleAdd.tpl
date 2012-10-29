@@ -63,7 +63,7 @@
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='StyleAdd'}{/link}{else}{link controller='StyleEdit'}{/link}{/if}">
-	<div class="tabMenuContainer" data-active="" data-store="">
+	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
 		<nav class="tabMenu">
 			<ul>
 				<li><a href="#general">{lang}wcf.acp.style.general{/lang}</a></li>
