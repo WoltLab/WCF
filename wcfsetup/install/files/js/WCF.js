@@ -2815,6 +2815,10 @@ WCF.TabMenu = {
 				return true;
 			}
 			
+			if ($tabMenu.data('store') && !$('#' + $tabMenu.data('store')).length) {
+				$('<input type="hidden" name="' + $tabMenu.data('store') + '" value="" id="' + $tabMenu.data('store') + '" />').appendTo($tabMenu.parents('form').find('.formSubmit'));
+			}
+			
 			// init jQuery UI TabMenu
 			self._containers[$containerID] = $tabMenu;
 			$tabMenu.wcfTabs({
@@ -2823,9 +2827,22 @@ WCF.TabMenu = {
 					var $container = $panel.closest('.tabMenuContainer');
 					
 					// store currently selected item
-					if ($container.data('store')) {
-						if ($.wcfIsset($container.data('store'))) {
-							$('#' + $container.data('store')).attr('value', $panel.attr('id'));
+					var $tabMenu = $container;
+					while (true) {
+						// do not trigger on init
+						if ($tabMenu.data('isParent') === undefined) {
+							break;
+						}
+						
+						if ($tabMenu.data('isParent')) {
+							if ($tabMenu.data('store')) {
+								$('#' + $tabMenu.data('store')).val($panel.attr('id'));
+							}
+							
+							break;
+						}
+						else {
+							$tabMenu = $tabMenu.data('parent');
 						}
 					}
 					
@@ -2848,7 +2865,7 @@ WCF.TabMenu = {
 				});
 			}
 			
-			$tabMenu.data('isParent', ($tabMenu.children('.tabMenuContainer').length)).data('parent', false);
+			$tabMenu.data('isParent', ($tabMenu.children('.tabMenuContainer').length > 0)).data('parent', false);
 			if (!$tabMenu.data('isParent')) {
 				// check if we're a child element
 				if ($tabMenu.parent().hasClass('tabMenuContainer')) {

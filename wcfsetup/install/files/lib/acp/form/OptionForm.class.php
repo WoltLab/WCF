@@ -32,12 +32,6 @@ class OptionForm extends AbstractOptionListForm {
 	public $categoryID = 0;
 	
 	/**
-	 * active tab menu item name
-	 * @var	string
-	 */
-	public $activeTabMenuItem = '';
-	
-	/**
 	 * option name for highlighting
 	 * @var	string
 	 */
@@ -68,15 +62,6 @@ class OptionForm extends AbstractOptionListForm {
 		if (isset($_GET['optionName'])) $this->optionName = StringUtil::trim($_GET['optionName']);
 		
 		parent::readParameters();
-	}
-	
-	/**
-	 * @see	wcf\form\IForm::readFormParameters()
-	 */
-	public function readFormParameters() {
-		parent::readFormParameters();
-		
-		if (isset($_POST['activeTabMenuItem'])) $this->activeTabMenuItem = $_POST['activeTabMenuItem'];
 	}
 	
 	/**
@@ -121,7 +106,6 @@ class OptionForm extends AbstractOptionListForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'activeTabMenuItem' => $this->activeTabMenuItem,
 			'category' => $this->category,
 			'optionName' => $this->optionName,
 			'optionTree' => $this->optionTree
