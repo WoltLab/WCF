@@ -430,7 +430,6 @@ class StyleAddForm extends ACPForm {
 		// set global variables
 		$this->globals = array(
 			'wcfBaseFontSize',
-			'wcfContainerBorderRadius',
 			'wcfLayoutFixedWidth',
 			'wcfLayoutFluidGap'
 		);
