@@ -2847,12 +2847,36 @@ WCF.TabMenu = {
 					}
 				});
 			}
+			
+			$tabMenu.data('isParent', ($tabMenu.children('.tabMenuContainer').length)).data('parent', false);
+			if (!$tabMenu.data('isParent')) {
+				// check if we're a child element
+				if ($tabMenu.parent().hasClass('tabMenuContainer')) {
+					$tabMenu.data('parent', $tabMenu.parent());
+				}
+			}
 		});
 		
 		// try to resolve location hash
 		if (!this._didInit) {
 			this.selectTabs();
 			$(window).bind('hashchange', $.proxy(this.selectTabs, this));
+		}
+		
+		// force display of first erroneous tab
+		for (var $containerID in this._containers) {
+			var $tabMenu = this._containers[$containerID];
+			if (!$tabMenu.data('isParent') && $tabMenu.find('.formError').length) {
+				while (true) {
+					if ($tabMenu.data('parent') === false) {
+						break;
+					}
+					
+					$tabMenu = $tabMenu.data('parent').wcfTabs('select', $tabMenu.wcfIdentify());
+				}
+				
+				break;
+			}
 		}
 		
 		this._didInit = true;
