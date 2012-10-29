@@ -347,7 +347,7 @@
 					<dd>
 						<select name="wcfBaseFontFamily" id="wcfBaseFontFamily">
 							{foreach from=$availableFontFamilies key=fontFamily item=primaryFont}
-								<option value="{@$fontFamily}"{if $variables[wcfBaseFontFamily] == $fontFamily} selected="selected"{/if}>{@$primaryFont}</option>
+								<option value='{@$fontFamily}'{if $variables[wcfBaseFontFamily] == $fontFamily} selected="selected"{/if}>{@$primaryFont}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -467,12 +467,18 @@
 				<small>{lang}wcf.acp.style.advanced.individualLess.description{/lang}</small>
 			</fieldset>
 			
-			<fieldset>
+			<fieldset{if $errorField == 'overrideLess'} class="formError"{/if}>
 				<legend>{lang}wcf.acp.style.advanced.overrideLess{/lang}</legend>
 				
 				<p class="warning">{lang}wcf.acp.style.advanced.overrideLess.warning{/lang}</p>
 				
 				<textarea rows="20" cols="40" name="overrideLess" class="marginTop">{$variables[overrideLess]}</textarea>
+				{if $errorField == 'overrideLess'}
+					<small class="innerError">
+						{lang}wcf.acp.style.advanced.overrideLess.error{/lang}
+						{implode from=$errorType item=error}{lang}wcf.acp.style.advanced.overrideLess.error.{$error.error}{/lang}{/implode}
+					</small>
+				{/if}
 				<small>{lang}wcf.acp.style.advanced.overrideLess.description{/lang}</small>
 			</fieldset>
 		</div>

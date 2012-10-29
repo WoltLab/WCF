@@ -13,6 +13,10 @@
 		<item name="wcf.acp.style.advanced.individualLess.description"><![CDATA[Die Eingabe wird am Ende des Stils eingefügt und kann vollständig aus CSS bestehen. Sie haben zusätzlich den Zugriff auf LESS und alle von Community Framework zur Verfügung gestellten Mixins.]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess"><![CDATA[Überschreiben von LESS-Variablen]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.description"><![CDATA[Sie können innerhalb dieser Eingabe beliebige LESS-Variablen überschreiben, die nicht durch den Stil-Editor direkt bearbeitbar ist. Beim Bezug auf andere Variablen muss sichergestellt werden, dass diese in der Reihenfolge vorher definiert wurden. Die Syntax muss wie folgt lauten: &bdquo;@variableName: variableValue;&ldquo;]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.error"><![CDATA[Ihre Eingabe war ungültig, bitte überprüfen Sie die folgenden Einträge:]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.error.notValid"><![CDATA[Eingabe &bdquo;{$error[text]}&ldquo; ungültig]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.error.predefined"><![CDATA[Variable &bdquo;{$error[text]}&ldquo; wird bereits durch den Stil-Editor gesetzt]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.error.unknown"><![CDATA[Variable &bdquo;{$error[text]}&ldquo; unbekannt]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.warning"><![CDATA[Fehlerhafte Eingaben führen dazu, dass der Stil nicht erzeugt werden kann. Überschreiben Sie LESS-Variablen nur, wenn Sie sich den Auswirkungen bewusst sind und eine Änderung anderweitig nicht möglich ist.]]></item>
 		<item name="wcf.acp.style.advanced.syntax"><![CDATA[Sie können sowohl CSS als auch <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http://www.lesscss.org">LESS</a> verwenden. Bitte beachten Sie, dass der Stil nicht erzeugt werden kann, wenn der LESS-Code ungültig ist.]]></item>
 		<item name="wcf.acp.style.authorName"><![CDATA[Autor]]></item>

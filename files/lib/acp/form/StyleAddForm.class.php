@@ -312,6 +312,7 @@ class StyleAddForm extends ACPForm {
 		$sql = "SELECT	variableName
 			FROM	wcf".WCF_N."_style_variable";
 		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
 		$variables = array();
 		while ($row = $statement->fetchArray()) {
 			$variables[] = $row['variableName'];
@@ -319,6 +320,7 @@ class StyleAddForm extends ACPForm {
 		
 		$lines = explode("\n", StringUtil::unifyNewlines($this->variables['overrideLess']));
 		$regEx = new Regex('^@([a-zA-Z]+): ?([@a-zA-Z0-9 ,\.\(\)\%]+);$');
+		$errors = array();
 		foreach ($lines as $index => &$line) {
 			$line = StringUtil::trim($line);
 			
@@ -326,23 +328,37 @@ class StyleAddForm extends ACPForm {
 				$matches = $regEx->getMatches();
 				
 				// cannot override variables covered by style editor
-				if (isset($this->variables[$matches[1]])) {
-					unset($lines[$index]);
+				if (in_array($matches[1], $this->colors) || in_array($matches[1], $this->globals) || in_array($matches[1], $this->specialVariables)) {
+					$errors[] = array(
+						'error' => 'predefined',
+						'text' => $matches[1]
+					);
 				}
 				else if (!in_array($matches[1], $variables)) {
 					// unknown style variable
-					unset($lines[$index]);
+					$errors[] = array(
+						'error' => 'unknown',
+						'text' => $matches[1]
+					);
 				}
 				else {
 					$this->variables[$matches[1]] = $matches[2];
 				}
 			}
 			else {
-				unset($lines[$index]);
+				// not valid
+				$errors[] = array(
+					'error' => 'notValid',
+					'text' => $line
+				);
 			}
 		}
 		
 		$this->variables['overrideLess'] = implode("\n", $lines);
+		
+		if (!empty($errors)) {
+			throw new UserInputException('overrideLess', $errors);
+		}
 	}
 	
 	/**
