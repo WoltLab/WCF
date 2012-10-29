@@ -1,7 +1,7 @@
 /* ### globals ### */
 body {
 	background-color: @wcfPageBackgroundColor;
-	color: @wcfPageColor;
+	color: @wcfColor;
 	font-family: @wcfBaseFontFamily;
 	font-size: @wcfBaseFontSize;
 	line-height: @wcfBaseLineHeight;
@@ -20,24 +20,24 @@ img {
 }
 
 a {
-	color: @wcfPageLinkColor;
+	color: @wcfLinkColor;
 	cursor: pointer;
 	text-decoration: none;
 		
 	&:hover {
-		color: @wcfPageLinkHoverColor;
+		color: @wcfLinkHoverColor;
 		text-decoration: underline;
 	}
 }
 
-.content, .sidebar {
-	color: @wcfColor;
+.footer, .logo {
+	color: @wcfPageColor;
 	
 	a {
-		color: @wcfLinkColor;
+		color: @wcfPageLinkColor;
 		
 		&:hover {
-			color: @wcfLinkHoverColor;
+			color: @wcfPageLinkHoverColor;
 		}
 	}
 }
