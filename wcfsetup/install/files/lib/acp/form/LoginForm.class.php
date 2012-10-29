@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\user\User;
 use wcf\form\AbstractForm;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\authentication\EmailUserAuthentication;
@@ -139,7 +140,9 @@ class LoginForm extends AbstractForm {
 			HeaderUtil::redirect($this->url);
 		}
 		else {
-			HeaderUtil::redirect('index.php'.SID_ARG_1ST);
+			$application = ApplicationHandler::getInstance()->getActiveApplication();
+			$path = $application->getPageURL() . 'acp/index.php' . SID_ARG_1ST;
+			HeaderUtil::redirect($path);
 		}
 		exit;
 	}

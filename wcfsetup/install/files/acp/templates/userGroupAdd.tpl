@@ -67,7 +67,7 @@
 		
 		{event name='fieldsets'}
 		
-		<div class="tabMenuContainer" data-active="{$activeMenuItem}" data-store="activeTabMenuItem">
+		<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
 			<nav class="tabMenu">
 				<ul>
 					{foreach from=$optionTree item=categoryLevel1}
@@ -77,7 +77,7 @@
 			</nav>
 			
 			{foreach from=$optionTree item=categoryLevel1}
-				<div id="{@$categoryLevel1[object]->categoryName}" class="container containerPadding tabMenuContainer tabMenuContent" data-active="{$activeTabMenuItem}" data-store="activeMenuItem">
+				<div id="{@$categoryLevel1[object]->categoryName}" class="container containerPadding tabMenuContainer tabMenuContent">
 					<nav class="menu">
 						<ul>
 							{foreach from=$categoryLevel1[categories] item=$categoryLevel2}

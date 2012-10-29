@@ -14,10 +14,9 @@ WCF.ACP = {};
 /**
  * Handles ACPMenu.
  * 
- * @param	array		activeMenuItems
+ * @param	array<string>		activeMenuItems
  */
-WCF.ACP.Menu = function(activeMenuItems) { this.init(activeMenuItems); };
-WCF.ACP.Menu.prototype = {
+WCF.ACP.Menu = Class.extend({
 	/**
 	 * Initializes ACPMenu.
 	 * 
@@ -59,7 +58,7 @@ WCF.ACP.Menu.prototype = {
 	 * Toggles a navigation group entry.
 	 */
 	_toggleItem: function(event) {
-		var $menuItem = $(event.target);
+		var $menuItem = $(event.currentTarget);
 		
 		$menuItem.parent().find('nav ul').stop(true, true).toggle('blind', { }, 200).end();
 		$menuItem.toggleClass('active');
@@ -71,16 +70,13 @@ WCF.ACP.Menu.prototype = {
 	 * @param	object		event
 	 */
 	_toggleSidebar: function(event) {
-		var $target = $(event.target).parent();
+		var $target = $(event.currentTarget);
 		
 		if ($target.hasClass('active')) {
 			return;
 		}
 		
 		this._renderSidebar($target.data('menuItem'), []);
-		
-		// force sidebar to be displayed
-		this._sidebarNavigation.wcfSidebar('show');
 	},
 	
 	/**
@@ -122,7 +118,7 @@ WCF.ACP.Menu.prototype = {
 			}
 		}
 	}
-};
+});
 
 /**
  * Namespace for ACP package management.
