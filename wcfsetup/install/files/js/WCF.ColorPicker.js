@@ -140,13 +140,13 @@ WCF.ColorPicker = Class.extend({
 	 * @param	jQuery		element
 	 */
 	_parseColor: function(element) {
-		if (element.data('hsv')) {
+		if (element.data('hsv') && element.data('rgb')) {
 			// create an explicit copy here, otherwise it would be only a reference
 			var $hsv = element.data('hsv');
 			for (var $type in $hsv) {
 				this._hsv[$type] = $hsv[$type];
 			}
-			this._updateValues(null, true, true);
+			this._updateValues(element.data('rgb'), true, true);
 			this._rgba.a.val(parseInt(element.data('alpha')));
 		}
 		else {
@@ -262,6 +262,11 @@ WCF.ColorPicker = Class.extend({
 		
 		var $element = $('#' + this._elementID);
 		$element.data('hsv', $hsv).css({ backgroundColor: 'rgb(' + $rgb.r + ', ' + $rgb.g + ', ' + $rgb.b + ')' }).data('alpha', parseInt(this._rgba.a.val()));
+		$element.data('rgb', {
+			r: this._rgba.r.val(),
+			g: this._rgba.g.val(),
+			b: this._rgba.b.val()
+		});
 		$('#' + $element.data('store')).val('rgba(' + this._rgba.r.val() + ', ' + this._rgba.g.val() + ', ' + this._rgba.b.val() + ', ' + (this._rgba.a.val() / 100) + ')');
 		
 		this._dialog.wcfDialog('close');
