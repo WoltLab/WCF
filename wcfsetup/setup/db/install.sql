@@ -1019,3 +1019,6 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMen
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPanelHoverBackgroundColor', 'rgba(60, 60, 60, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMarkedBackgroundColor', 'rgba(255, 255, 200, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '~""');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualLess', '~""');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideLess', '~""');

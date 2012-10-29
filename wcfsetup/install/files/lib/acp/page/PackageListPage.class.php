@@ -84,7 +84,7 @@ class PackageListPage extends AbstractPage {
 			$host = RouteHandler::getHost();
 			$path = RouteHandler::getPath();
 			
-			HeaderUtil::redirect($host . $path . 'index.php/PackageListDetailed/' . SID_ARG_1ST, false);
+			HeaderUtil::redirect($host . $path . 'index.php/PackageListDetailed/' . SID_ARG_1ST);
 			exit;
 		}
 		

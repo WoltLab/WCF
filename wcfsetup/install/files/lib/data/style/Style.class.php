@@ -83,7 +83,13 @@ class Style extends DatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->styleID));
 		while ($row = $statement->fetchArray()) {
-			$this->variables[$row['variableName']] = (isset($row['variableValue'])) ? $row['variableValue'] : $row['defaultValue'];
+			$variableName = $row['variableName'];
+			$this->variables[$variableName] = (isset($row['variableValue'])) ? $row['variableValue'] : $row['defaultValue'];
+			
+			// provide an empty value for LESS-compiler
+			if (empty($this->variables[$variableName])) {
+				$this->variables[$variableName] = "~''";
+			}
 		}
 	}
 	

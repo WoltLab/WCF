@@ -65,7 +65,7 @@ class WCFACP extends WCF {
 				$application = ApplicationHandler::getInstance()->getActiveApplication();
 				$path = $application->getPageURL() . 'acp/index.php/Login/' . SID_ARG_1ST;
 				
-				util\HeaderUtil::redirect($path, false);
+				util\HeaderUtil::redirect($path);
 				exit;
 			}
 			else {
