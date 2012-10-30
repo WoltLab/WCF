@@ -4467,7 +4467,7 @@ WCF.Search.Base = Class.extend({
 			return;
 		}
 		
-		this._searchInput.keyup($.proxy(this._keyUp, this)).wrap('<span class="dropdown" />');
+		this._searchInput.keydown($.proxy(this._keyDown, this)).keyup($.proxy(this._keyUp, this)).wrap('<span class="dropdown" />');
 		this._list = $('<ul class="dropdownMenu" />').insertAfter(this._searchInput);
 		this._commaSeperated = (commaSeperated) ? true : false;
 		this._oldSearchString = [ ];
@@ -4481,6 +4481,17 @@ WCF.Search.Base = Class.extend({
 		
 		if (this._searchInput.getTagName() === 'input') {
 			this._searchInput.attr('autocomplete', 'off');
+		}
+	},
+	
+	/**
+	 * Blocks execution of 'Enter' event.
+	 * 
+	 * @param	object		event
+	 */
+	_keyDown: function(event) {
+		if (event.which === 13) {
+			event.preventDefault();
 		}
 	},
 	
