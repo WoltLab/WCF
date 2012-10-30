@@ -962,8 +962,8 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonP
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryHoverBackgroundColor', 'darken(@wcfButtonPrimaryBackgroundColor, 3%)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryHoverBorderColor', 'darken(@wcfButtonPrimaryBorderColor, 10%)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonPrimaryHoverColor', '@wcfButtonPrimaryColor');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonHoverBackgroundColor', 'rgb(241, 241, 241, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonHoverBorderColor', 'rgb(224, 224, 224, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonHoverBackgroundColor', 'rgba(241, 241, 241, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonHoverBorderColor', 'rgba(224, 224, 224, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonHoverColor', 'rgba(102, 102, 102, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputBackgroundColor', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputColor', 'rgba(102, 102, 102, 1)');
@@ -1019,6 +1019,10 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMen
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPanelHoverBackgroundColor', 'rgba(60, 60, 60, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMarkedBackgroundColor', 'rgba(255, 255, 200, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '~""');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualLess', '~""');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideLess', '~""');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualLess', '');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideLess', '');
+
+-- default style
+INSERT INTO wcf1_style (styleID, packageID, styleName, templateGroupID, isDefault, disabled, styleDescription, styleVersion, styleDate, image, copyright, license, authorName, authorURL, iconPath, imagePath) VALUES
+(1, 1, 'WoltLab Basic', 0, 1, 0, 'The WCF Basic style is the default style of the WCF.', '1.0.0 Alpha 1', '2012-10-29', '', 'WoltLab GmbH', 'GNU Lesser General Public License', 'Alexander Ebert, Matthias Kittsteiner, Harald Szekely, Marcel Werk', 'http://www.woltlab.com', 'icon/', 'images/'),

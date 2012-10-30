@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\action;
 use wcf\action\AbstractSecureAction;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -34,7 +35,9 @@ class LogoutAction extends AbstractSecureAction {
 		
 		// forward to index page
 		// warning: if doLogout() writes a cookie this is buggy in MS IIS
-		HeaderUtil::redirect('index.php'.SID_ARG_1ST);
+		$application = ApplicationHandler::getInstance()->getActiveApplication();
+		$path = $application->getPageURL() . 'acp/index.php' . SID_ARG_1ST;
+		HeaderUtil::redirect($path);
 		exit;
 	}
 }

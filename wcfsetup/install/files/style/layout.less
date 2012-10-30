@@ -124,6 +124,8 @@
 
 /* main menu */
 .mainMenu {
+	margin-top: @wcfGapMedium;
+	
 	> ul {
 		background-color: @wcfMainMenuBackgroundColor;
 		display: inline-block;
@@ -164,6 +166,10 @@
 				}
 			}
 			
+			&:not(.active) {
+				padding-top: 5px;
+			}
+			
 			&:not(:last-child) {
 				border-right: 1px solid @wcfContainerBorderColor;
 			}
@@ -202,9 +208,11 @@
 				margin-top: 5px;
 				
 				> a {
+					color: @wcfLinkColor;
 					padding: 2px 4px;
 					
 					&:hover {
+						color: @wcfLinkHoverColor;
 						text-decoration: none;
 					}
 				}
@@ -233,13 +241,10 @@
 		text-align: center;
 		
 		a {
-			color: @wcfPageLinkColor;
-			
 			.textShadow(@wcfPageBackgroundColor);
 			.transition(color, .1s);
 			
 			&:hover {
-				color: @wcfPageLinkHoverColor;
 				text-decoration: none;
 			}
 		}
@@ -260,7 +265,7 @@
 			
 			> .collapsibleButton {
 				background-color: @wcfSidebarBackgroundColor;
-				background-image: url('../icon/arrowRight.svg');
+				background-image: url('../icon/arrowRightColored.svg');
 				background-position: 4px 4px;
 				background-repeat: no-repeat;
 				background-size: 16px;
@@ -309,11 +314,11 @@
 				
 				> div,
 				> fieldset {
-					visibility: hidden;
+					display: none;
 				}
 				
 				> .collapsibleButton {
-					background-image: url('../icon/arrowLeft.svg');
+					background-image: url('../icon/arrowLeftColored.svg');
 				}
 			}
 		}

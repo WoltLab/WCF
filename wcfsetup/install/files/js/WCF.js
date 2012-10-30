@@ -1261,6 +1261,7 @@ WCF.Clipboard = {
 			data: {
 				actionName: listItem.data('parameters').actionName,
 				className: listItem.data('parameters').className,
+				containerData: this._containerData[listItem.data('type')],
 				objectIDs: $objectIDs,
 				parameters: $parameters
 			},
@@ -2815,6 +2816,10 @@ WCF.TabMenu = {
 				return true;
 			}
 			
+			if ($tabMenu.data('store') && !$('#' + $tabMenu.data('store')).length) {
+				$('<input type="hidden" name="' + $tabMenu.data('store') + '" value="" id="' + $tabMenu.data('store') + '" />').appendTo($tabMenu.parents('form').find('.formSubmit'));
+			}
+			
 			// init jQuery UI TabMenu
 			self._containers[$containerID] = $tabMenu;
 			$tabMenu.wcfTabs({
@@ -2823,9 +2828,22 @@ WCF.TabMenu = {
 					var $container = $panel.closest('.tabMenuContainer');
 					
 					// store currently selected item
-					if ($container.data('store')) {
-						if ($.wcfIsset($container.data('store'))) {
-							$('#' + $container.data('store')).attr('value', $panel.attr('id'));
+					var $tabMenu = $container;
+					while (true) {
+						// do not trigger on init
+						if ($tabMenu.data('isParent') === undefined) {
+							break;
+						}
+						
+						if ($tabMenu.data('isParent')) {
+							if ($tabMenu.data('store')) {
+								$('#' + $tabMenu.data('store')).val($panel.attr('id'));
+							}
+							
+							break;
+						}
+						else {
+							$tabMenu = $tabMenu.data('parent');
 						}
 					}
 					
@@ -2838,14 +2856,12 @@ WCF.TabMenu = {
 				}
 			});
 			
-			// display active item on init
-			if ($tabMenu.data('active')) {
-				$tabMenu.find('.tabMenuContent').each(function(innerIndex, tabMenuItem) {
-					var $tabMenuItem = $(tabMenuItem);
-					if ($tabMenuItem.attr('id') == $tabMenu.data('active')) {
-						$tabMenu.wcfTabs('select', innerIndex);
-					}
-				});
+			$tabMenu.data('isParent', ($tabMenu.children('.tabMenuContainer').length > 0)).data('parent', false);
+			if (!$tabMenu.data('isParent')) {
+				// check if we're a child element
+				if ($tabMenu.parent().hasClass('tabMenuContainer')) {
+					$tabMenu.data('parent', $tabMenu.parent());
+				}
 			}
 		});
 		
@@ -2853,9 +2869,75 @@ WCF.TabMenu = {
 		if (!this._didInit) {
 			this.selectTabs();
 			$(window).bind('hashchange', $.proxy(this.selectTabs, this));
+			
+			if (!this._selectErroneousTab()) {
+				this._selectActiveTab();
+			}
 		}
 		
 		this._didInit = true;
+	},
+	
+	/**
+	 * Force display of first erroneous tab, returns true, if at
+	 * least one tab contains an error.
+	 * 
+	 * @return	boolean
+	 */
+	_selectErroneousTab: function() {
+		for (var $containerID in this._containers) {
+			var $tabMenu = this._containers[$containerID];
+			
+			if (!$tabMenu.data('isParent') && $tabMenu.find('.formError').length) {
+				while (true) {
+					if ($tabMenu.data('parent') === false) {
+						break;
+					}
+					
+					$tabMenu = $tabMenu.data('parent').wcfTabs('select', $tabMenu.wcfIdentify());
+				}
+				
+				return true;
+			}
+		}
+		
+		return false;
+	},
+	
+	/**
+	 * Selects the active tab menu item.
+	 */
+	_selectActiveTab: function() {
+		for (var $containerID in this._containers) {
+			var $tabMenu = this._containers[$containerID];
+			if ($tabMenu.data('active')) {
+				var $index = $tabMenu.data('active');
+				var $subIndex = null;
+				if (/-/.test($index)) {
+					var $tmp = $index.split('-');
+					$index = $tmp[0];
+					$subIndex = $tmp[1];
+				}
+				
+				$tabMenu.find('.tabMenuContent').each(function(innerIndex, tabMenuItem) {
+					var $tabMenuItem = $(tabMenuItem);
+					if ($tabMenuItem.wcfIdentify() == $index) {
+						$tabMenu.wcfTabs('select', innerIndex);
+						
+						if ($subIndex !== null) {
+							if ($tabMenuItem.hasClass('tabMenuContainer')) {
+								$tabMenuItem.wcfTabs('select', $tabMenu.data('active'));
+							}
+							else {
+								$tabMenu.wcfTabs('select', $tabMenu.data('active'));
+							}
+						}
+						
+						return false;
+					}
+				});
+			}
+		}
 	},
 	
 	/**
@@ -2893,12 +2975,6 @@ WCF.TabMenu = {
 					$tabMenu.wcfTabs('select', $hash);
 					return;
 				}
-			}
-		}
-		else {
-			// revert to default values
-			for (var $containerID in this._containers) {
-				this._containers[$containerID].wcfTabs('revertToDefault');
 			}
 		}
 	}
@@ -3584,9 +3660,11 @@ WCF.Collapsible.Sidebar = Class.extend({
 		this._userPanelHeight = $('#topMenu').outerHeight();
 		
 		// add toggle button
+		WCF.DOMNodeInsertedHandler.enable();
 		this._button = $('<a class="collapsibleButton jsTooltip" title="' + WCF.Language.get('wcf.global.button.collapsible') + '" />').prependTo(this._sidebar);
 		this._button.click($.proxy(this._click, this));
 		this._buttonHeight = this._button.outerHeight();
+		WCF.DOMNodeInsertedHandler.disable();
 		
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: false,
@@ -6823,14 +6901,16 @@ $.widget('ui.wcfDialog', {
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		// initialize dialog content
-		this._initDialog(data);
-		
-		// remove loading overlay
-		this._content.removeClass('overlayLoading');
-		
-		if (this.options.success !== null && $.isFunction(this.options.success)) {
-			this.options.success(data, textStatus, jqXHR);
+		if (this._isOpen) {
+			// initialize dialog content
+			this._initDialog(data);
+
+			// remove loading overlay
+			this._content.removeClass('overlayLoading');
+
+			if (this.options.success !== null && $.isFunction(this.options.success)) {
+				this.options.success(data, textStatus, jqXHR);
+			}
 		}
 	},
 	

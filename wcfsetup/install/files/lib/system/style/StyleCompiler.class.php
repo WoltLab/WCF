@@ -95,7 +95,12 @@ class StyleCompiler extends SingletonFactory {
 		$statement->execute();
 		$variables = array();
 		while ($row = $statement->fetchArray()) {
-			$variables[$row['variableName']] = $row['defaultValue'];
+			$value = $row['defaultValue'];
+			if (empty($value)) {
+				$value = '~""';
+			}
+			
+			$variables[$row['variableName']] = $value;
 		}
 		
 		$this->compileStylesheet(

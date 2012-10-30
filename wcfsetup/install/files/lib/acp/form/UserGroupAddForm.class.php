@@ -37,18 +37,6 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public $cacheName = 'userGroup-option';
 	
 	/**
-	 * active tab menu item name
-	 * @var	string
-	 */
-	public $activeTabMenuItem = '';
-	
-	/**
-	 * active sub tab menu item name
-	 * @var	string
-	 */
-	public $activeMenuItem = '';
-	
-	/**
 	 * option tree
 	 * @var	array
 	 */
@@ -100,8 +88,6 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		I18nHandler::getInstance()->readValues();
 		
 		if (I18nHandler::getInstance()->isPlainValue('groupName')) $this->groupName = I18nHandler::getInstance()->getValue('groupName');
-		if (isset($_POST['activeTabMenuItem'])) $this->activeTabMenuItem = $_POST['activeTabMenuItem'];
-		if (isset($_POST['activeMenuItem'])) $this->activeMenuItem = $_POST['activeMenuItem'];
 	}
 	
 	/**
@@ -201,9 +187,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		WCF::getTPL()->assign(array(
 			'groupName' => $this->groupName,
 			'optionTree' => $this->optionTree,
-			'action' => 'add',
-			'activeTabMenuItem' => $this->activeTabMenuItem,
-			'activeMenuItem' => $this->activeMenuItem
+			'action' => 'add'
 		));
 	}
 	

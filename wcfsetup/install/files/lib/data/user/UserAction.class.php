@@ -2,6 +2,7 @@
 namespace wcf\data\user;
 use wcf\data\user\group\UserGroup;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IClipboardAction;
 use wcf\data\ISearchAction;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -20,7 +21,7 @@ use wcf\util\StringUtil;
  * @subpackage	data.user
  * @category	Community Framework
  */
-class UserAction extends AbstractDatabaseObjectAction implements ISearchAction {
+class UserAction extends AbstractDatabaseObjectAction implements IClipboardAction, ISearchAction {
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
@@ -265,12 +266,14 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	}
 	
 	/**
-	 * Does nothing.
+	 * @see	wcf\data\IClipboardAction::validateUnmarkAll()
 	 */
-	public function validateUnmarkAll() { }
+	public function validateUnmarkAll() {
+		// does nothing
+	}
 	
 	/**
-	 * Unmarks all users.
+	 * @see	wcf\data\IClipboardAction::unmarkAll()
 	 */
 	public function unmarkAll() {
 		ClipboardHandler::getInstance()->removeItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));

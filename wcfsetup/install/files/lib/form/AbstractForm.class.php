@@ -4,6 +4,7 @@ use wcf\page\AbstractPage;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * This class provides default implementations for the Form interface.
@@ -17,6 +18,12 @@ use wcf\system\WCF;
  * @category 	Community Framework
  */
 abstract class AbstractForm extends AbstractPage implements IForm {
+	/**
+	 * active tab menu item
+	 * @var	string
+	 */
+	public $activeTabMenuItem = '';
+	
 	/**
 	 * name of error field
 	 * @var	string
@@ -61,6 +68,8 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	public function readFormParameters() {
 		// call readFormParameters event
 		EventHandler::getInstance()->fireAction($this, 'readFormParameters');
+		
+		if (isset($_POST['activeTabMenuItem'])) $this->activeTabMenuItem = StringUtil::trim($_POST['activeTabMenuItem']);
 	}
 	
 	/**
@@ -106,6 +115,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 		
 		// assign default variables
 		WCF::getTPL()->assign(array(
+			'activeTabMenuItem' => $this->activeTabMenuItem,
 			'errorField' => $this->errorField,
 			'errorType' => $this->errorType
 		));

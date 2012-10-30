@@ -148,14 +148,14 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						switch ($element->tagName) {
 							case 'authorname':
 								$data['authorName'] = $element->nodeValue;
-								break;
+							break;
 									
 							case 'authorurl':
 								$data['authorURL'] = $element->nodeValue;
-								break;
+							break;
 						}
 					}
-					break;
+				break;
 		
 				case 'files':
 					$elements = $xpath->query('child::*', $category);
@@ -165,7 +165,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							$data[$element->tagName.'Path'] = $element->getAttribute('path');
 						}
 					}
-					break;
+				break;
 		
 				case 'general':
 					$elements = $xpath->query('child::*', $category);
@@ -175,11 +175,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 								DateUtil::validateDate($element->nodeValue);
 		
 								$data['date'] = $element->nodeValue;
-								break;
+							break;
 									
 							case 'stylename':
 								$data['name'] = $element->nodeValue;
-								break;
+							break;
 									
 							case 'version':
 								if (!Package::isValidVersion($element->nodeValue)) {
@@ -187,17 +187,17 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 								}
 		
 								$data['version'] = $element->nodeValue;
-								break;
+							break;
 									
 							case 'copyright':
 							case 'description':
 							case 'image':
 							case 'license':
 								$data[$element->tagName] = $element->nodeValue;
-								break;
+							break;
 						}
 					}
-					break;
+				break;
 			}
 				
 		}
@@ -573,8 +573,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$xml->startElement('files');
 		$xml->writeElement('variables', 'variables.xml');
 		if ($templates) $xml->writeElement('templates', 'templates.tar');
-		if ($images) $xml->writeElement('images', 'images.tar');
-		if ($icons) $xml->writeElement('icons', 'icons.tar');
+		if ($images) $xml->writeElement('images', 'images.tar', array('path' => $this->imagePath));
+		if ($icons) $xml->writeElement('icons', 'icons.tar', array('path' => $this->iconPath));
 		$xml->endElement();
 		
 		// append style info file to style tar
@@ -634,7 +634,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$styleTar->add($templatesTarName, 'templates.tar', $templatesTarName);
 			@unlink($templatesTarName);
 		}
-
+		
 		if ($images && ($this->imagePath && $this->imagePath != 'images/')) {
 			// create images tar
 			$imagesTarName = FileUtil::getTemporaryFilename('images_', '.tar');
@@ -646,7 +646,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			if (file_exists($path) && is_dir($path)) {
 				$handle = opendir($path);
 				
-				$regEx = new Regex('\.(jpg|jpeg|gif|png|svg)');
+				$regEx = new Regex('\.(jpg|jpeg|gif|png|svg)$', Regex::CASE_INSENSITIVE);
 				while (($file = readdir($handle)) !== false) {
 					if (is_file($path.$file) && $regEx->match($file)) {
 						$imagesTar->add($path.$file, '', $path);
@@ -672,7 +672,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			if (file_exists($path) && is_dir($path)) {
 				$icons = glob($path.'*.svg');
 				foreach ($icons as $icon) {
-					$iconsTar->add($path.$icon, '', $path);
+					$iconsTar->add($icon, '', $path);
 				}
 			}
 			
