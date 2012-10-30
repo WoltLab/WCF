@@ -29,5 +29,6 @@
 		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
 		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="acpSearchProvider">acpSearchProvider.xml</instruction>
+		<instruction type="style">woltlab-basic-style.tgz</instruction>
 	</instructions>
 </package>

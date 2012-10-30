@@ -1022,7 +1022,3 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLa
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualLess', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideLess', '');
-
--- default style
-INSERT INTO wcf1_style (styleID, packageID, styleName, templateGroupID, isDefault, disabled, styleDescription, styleVersion, styleDate, image, copyright, license, authorName, authorURL, iconPath, imagePath) VALUES
-(1, 1, 'WoltLab Basic', 0, 1, 0, 'The WCF Basic style is the default style of the WCF.', '1.0.0 Alpha 1', '2012-10-29', '', 'WoltLab GmbH', 'GNU Lesser General Public License', 'Alexander Ebert, Matthias Kittsteiner, Harald Szekely, Marcel Werk', 'http://www.woltlab.com', 'icon/', 'images/'),
