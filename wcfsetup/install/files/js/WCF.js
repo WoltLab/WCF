@@ -2856,7 +2856,7 @@ WCF.TabMenu = {
 				}
 			});
 			
-			$tabMenu.data('isParent', ($tabMenu.children('.tabMenuContainer').length > 0)).data('parent', false);
+			$tabMenu.data('isParent', ($tabMenu.children('.tabMenuContainer, .tabMenuContent').length > 0)).data('parent', false);
 			if (!$tabMenu.data('isParent')) {
 				// check if we're a child element
 				if ($tabMenu.parent().hasClass('tabMenuContainer')) {
