@@ -132,7 +132,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 		}
 		
 		if (!ClassUtil::isInstanceOf($this->objectListClassName, 'wcf\data\DatabaseObjectList')) {
-			throw new SystemException("Class '".$this->objectListClassName."' does not extend 'wcf\data\DatabaseObjectList'");
+			throw new SystemException("'".$this->objectListClassName."' does not extend 'wcf\data\DatabaseObjectList'");
 		}
 		
 		$this->objectList = new $this->objectListClassName();
