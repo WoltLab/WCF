@@ -164,7 +164,7 @@ class CronjobScheduler extends SingletonFactory {
 		
 		// verify class signature
 		if (!(ClassUtil::isInstanceOf($className, 'wcf\system\cronjob\ICronjob'))) {
-			throw new SystemException("class '".$className."' does not implement the interface 'wcf\system\cronjob\ICronjob'");
+			throw new SystemException("'".$className."' does not implement 'wcf\system\cronjob\ICronjob'");
 		}
 		
 		// execute cronjob

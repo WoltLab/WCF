@@ -82,7 +82,7 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 			
 			// validate interface
 			if (!ClassUtil::isInstanceOf($this->outputClass, 'wcf\system\option\user\IUserOptionOutput')) {
-				throw new SystemException("'".$this->outputClass."' should implement wcf\system\option\user\IUserOptionOutput");
+				throw new SystemException("'".$this->outputClass."' does not implement 'wcf\system\option\user\IUserOptionOutput'");
 			}
 			
 			self::$outputObjects[$this->outputClass] = new $this->outputClass();
