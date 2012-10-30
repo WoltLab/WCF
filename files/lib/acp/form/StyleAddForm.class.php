@@ -319,10 +319,16 @@ class StyleAddForm extends ACPForm {
 		}
 		
 		$lines = explode("\n", StringUtil::unifyNewlines($this->variables['overrideLess']));
-		$regEx = new Regex('^@([a-zA-Z]+): ?([@a-zA-Z0-9 ,\.\(\)\%]+);$');
+		$regEx = new Regex('^@([a-zA-Z]+): ?([@a-zA-Z0-9 ,\.\(\)\%\#]+);$');
 		$errors = array();
 		foreach ($lines as $index => &$line) {
 			$line = StringUtil::trim($line);
+			
+			// ignore empty lines
+			if (empty($line)) {
+				unset($lines[$index]);
+				continue;
+			}
 			
 			if ($regEx->match($line)) {
 				$matches = $regEx->getMatches();
