@@ -1247,7 +1247,8 @@ WCF.Clipboard = {
 		}
 		
 		var $parameters = {
-			data: data
+			data: data,
+			containerData: this._containerData[listItem.data('type')]
 		};
 		var $__parameters = listItem.data('internalData')['parameters'];
 		if ($__parameters !== undefined) {
@@ -1261,7 +1262,6 @@ WCF.Clipboard = {
 			data: {
 				actionName: listItem.data('parameters').actionName,
 				className: listItem.data('parameters').className,
-				containerData: this._containerData[listItem.data('type')],
 				objectIDs: $objectIDs,
 				parameters: $parameters
 			},
