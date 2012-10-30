@@ -1,13 +1,11 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\package\Package;
-
-use wcf\system\exception\UserInputException;
-
 use wcf\data\style\Style;
 use wcf\data\style\StyleEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
