@@ -38,7 +38,7 @@ class ProcessibleDatabaseObject extends DatabaseObject {
 					throw new SystemException("Unable to find class '".$this->className."'");
 				}
 				if (!ClassUtil::isInstanceOf($this->className, static::$processorInterface)) {
-					throw new SystemException("'".$this->className."' should implement ".static::$processorInterface);
+					throw new SystemException("'".$this->className."' does not implement '".static::$processorInterface."'");
 				}
 				
 				if (ClassUtil::isInstanceOf($this->className, 'wcf\system\SingletonFactory')) {
@@ -46,7 +46,7 @@ class ProcessibleDatabaseObject extends DatabaseObject {
 				}
 				else {
 					if (!ClassUtil::isInstanceOf($this->className, 'wcf\data\IDatabaseObjectProcessor')) {
-						throw new SystemException("'".$this->className."' should implement wcf\data\IDatabaseObjectProcessor");
+						throw new SystemException("'".$this->className."' does not implement 'wcf\data\IDatabaseObjectProcessor'");
 					}
 					
 					$this->processor = new $this->className($this);

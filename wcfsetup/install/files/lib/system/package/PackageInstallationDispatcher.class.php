@@ -484,7 +484,7 @@ class PackageInstallationDispatcher {
 		$plugin = new $className($this, $nodeData);
 		
 		if (!($plugin instanceof \wcf\system\package\plugin\IPackageInstallationPlugin)) {
-			throw new SystemException("class '".$className."' does not implement the interface 'wcf\system\package\plugin\IPackageInstallationPlugin'");
+			throw new SystemException("'".$className."' does not implement 'wcf\system\package\plugin\IPackageInstallationPlugin'");
 		}
 		
 		// execute PIP
