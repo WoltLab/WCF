@@ -3660,9 +3660,11 @@ WCF.Collapsible.Sidebar = Class.extend({
 		this._userPanelHeight = $('#topMenu').outerHeight();
 		
 		// add toggle button
+		WCF.DOMNodeInsertedHandler.enable();
 		this._button = $('<a class="collapsibleButton jsTooltip" title="' + WCF.Language.get('wcf.global.button.collapsible') + '" />').prependTo(this._sidebar);
 		this._button.click($.proxy(this._click, this));
 		this._buttonHeight = this._button.outerHeight();
+		WCF.DOMNodeInsertedHandler.disable();
 		
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: false,
