@@ -4620,9 +4620,13 @@ WCF.Search.Base = Class.extend({
 			}
 			
 			var $current = $searchString.split(',');
-			for (var $i = 0, $length = $current.length; $i < $length; $i++) {
+			var $length = $current.length;
+			for (var $i = 0; $i < $length; $i++) {
 				// remove whitespaces at the beginning or end
 				$current[$i] = $.trim($current[$i]);
+			}
+			
+			for (var $i = 0; $i < $length; $i++) {
 				var $part = $current[$i];
 				
 				if (this._oldSearchString[$i]) {
@@ -4721,6 +4725,10 @@ WCF.Search.Base = Class.extend({
 						// this quick fix forces chrome to render it again, even though it changes nothing
 						this._searchInput.css({ display: 'block' });
 					}
+					
+					// set focus on input field again
+					var $position = this._searchInput.val().indexOf($result) + $result.length;
+					this._searchInput.focus().setCaret($position);
 					
 					break;
 				}
