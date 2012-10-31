@@ -583,14 +583,13 @@
 	z-index: 20; /* Prevents border overlay during transition */
 }
 
-/* todo */
+/* sub tabs */
 .tabMenuContainer > .menu {
 	border-bottom: 1px solid @wcfContainerBorderColor;
 	margin: -@wcfGapMedium -@wcfGapLarge @wcfGapSmall -@wcfGapLarge; /* reverse paddings from .containerPadding */
-	padding: @wcfGapSmall 0;
-	text-align: center;
+	padding: @wcfGapTiny @wcfGapSmall;
 	
-	.linearGradient(rgba(0, 0, 0, 0), @wcfContainerBackgroundColor, @wcfContainerAccentBackgroundColor);
+	.linearGradient(@wcfContainerBackgroundColor, @wcfContainerBackgroundColor, @wcfContainerAccentBackgroundColor);
 	
 	ul{
 		display: inline-block;
@@ -611,11 +610,11 @@
 				border: 1px solid @wcfContainerBorderColor;
 				color: @wcfButtonColor;
 				display: block;
-				font-size: 85%;
-				
+				font-size: @wcfSmallFontSize;
+				margin: @wcfGapTiny 0;
 				padding: @wcfGapTiny @wcfGapSmall;
 				
-				.borderRadius(30px);
+				.borderRadius(15px);
 				
 				&:hover {
 					background-color: @wcfButtonHoverBackgroundColor;
