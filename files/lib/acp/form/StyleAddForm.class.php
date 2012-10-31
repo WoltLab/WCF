@@ -389,6 +389,10 @@ class StyleAddForm extends ACPForm {
 				$i--;
 			}
 		}
+		
+		if (empty($_POST)) {
+			$this->styleDate = date('Y-m-d', TIME_NOW);
+		}
 	}
 	
 	/**
