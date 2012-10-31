@@ -27,7 +27,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		parent::install();
 		
 		// extract style tar
-		$filename = $this->installation->getArchive()->extractTar($this->instructions['value'], 'style_');
+		$filename = $this->installation->getArchive()->extractTar($this->$instruction['value'], 'style_');
 		
 		// import style
 		$style = StyleEditor::import($filename, $this->installation->getPackageID());
