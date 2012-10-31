@@ -247,7 +247,7 @@ class ClipboardHandler extends SingletonFactory {
 			if (!isset($actions[$actionClassName])) {
 				// validate class
 				if (!ClassUtil::isInstanceOf($actionClassName, 'wcf\system\clipboard\action\IClipboardAction')) {
-					throw new SystemException("class '".$actionClassName."' does not implement the interface 'wcf\system\clipboard\action\IClipboardAction'.");
+					throw new SystemException("'".$actionClassName."' does not implement 'wcf\system\clipboard\action\IClipboardAction'");
 				}
 				
 				$actions[$actionClassName] = array(

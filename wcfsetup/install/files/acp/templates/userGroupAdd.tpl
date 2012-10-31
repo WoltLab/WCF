@@ -118,8 +118,6 @@
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="action" value="{@$action}" />
  		{if $groupID|isset}<input type="hidden" name="id" value="{@$groupID}" />{/if}
- 		<input type="hidden" id="activeTabMenuItem" name="activeTabMenuItem" value="{$activeTabMenuItem}" />
- 		<input type="hidden" id="activeMenuItem" name="activeMenuItem" value="{$activeMenuItem}" />
  	</div>
 </form>
 

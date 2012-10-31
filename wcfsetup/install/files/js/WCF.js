@@ -1247,7 +1247,8 @@ WCF.Clipboard = {
 		}
 		
 		var $parameters = {
-			data: data
+			data: data,
+			containerData: this._containerData[listItem.data('type')]
 		};
 		var $__parameters = listItem.data('internalData')['parameters'];
 		if ($__parameters !== undefined) {
@@ -1261,7 +1262,6 @@ WCF.Clipboard = {
 			data: {
 				actionName: listItem.data('parameters').actionName,
 				className: listItem.data('parameters').className,
-				containerData: this._containerData[listItem.data('type')],
 				objectIDs: $objectIDs,
 				parameters: $parameters
 			},
@@ -2856,7 +2856,7 @@ WCF.TabMenu = {
 				}
 			});
 			
-			$tabMenu.data('isParent', ($tabMenu.children('.tabMenuContainer').length > 0)).data('parent', false);
+			$tabMenu.data('isParent', ($tabMenu.children('.tabMenuContainer, .tabMenuContent').length > 0)).data('parent', false);
 			if (!$tabMenu.data('isParent')) {
 				// check if we're a child element
 				if ($tabMenu.parent().hasClass('tabMenuContainer')) {
@@ -3660,9 +3660,11 @@ WCF.Collapsible.Sidebar = Class.extend({
 		this._userPanelHeight = $('#topMenu').outerHeight();
 		
 		// add toggle button
+		WCF.DOMNodeInsertedHandler.enable();
 		this._button = $('<a class="collapsibleButton jsTooltip" title="' + WCF.Language.get('wcf.global.button.collapsible') + '" />').prependTo(this._sidebar);
 		this._button.click($.proxy(this._click, this));
 		this._buttonHeight = this._button.outerHeight();
+		WCF.DOMNodeInsertedHandler.disable();
 		
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: false,
@@ -4465,7 +4467,7 @@ WCF.Search.Base = Class.extend({
 			return;
 		}
 		
-		this._searchInput.keyup($.proxy(this._keyUp, this)).wrap('<span class="dropdown" />');
+		this._searchInput.keydown($.proxy(this._keyDown, this)).keyup($.proxy(this._keyUp, this)).wrap('<span class="dropdown" />');
 		this._list = $('<ul class="dropdownMenu" />').insertAfter(this._searchInput);
 		this._commaSeperated = (commaSeperated) ? true : false;
 		this._oldSearchString = [ ];
@@ -4479,6 +4481,17 @@ WCF.Search.Base = Class.extend({
 		
 		if (this._searchInput.getTagName() === 'input') {
 			this._searchInput.attr('autocomplete', 'off');
+		}
+	},
+	
+	/**
+	 * Blocks execution of 'Enter' event.
+	 * 
+	 * @param	object		event
+	 */
+	_keyDown: function(event) {
+		if (event.which === 13) {
+			event.preventDefault();
 		}
 	},
 	
@@ -4607,9 +4620,13 @@ WCF.Search.Base = Class.extend({
 			}
 			
 			var $current = $searchString.split(',');
-			for (var $i = 0, $length = $current.length; $i < $length; $i++) {
+			var $length = $current.length;
+			for (var $i = 0; $i < $length; $i++) {
 				// remove whitespaces at the beginning or end
 				$current[$i] = $.trim($current[$i]);
+			}
+			
+			for (var $i = 0; $i < $length; $i++) {
 				var $part = $current[$i];
 				
 				if (this._oldSearchString[$i]) {
@@ -4708,6 +4725,10 @@ WCF.Search.Base = Class.extend({
 						// this quick fix forces chrome to render it again, even though it changes nothing
 						this._searchInput.css({ display: 'block' });
 					}
+					
+					// set focus on input field again
+					var $position = this._searchInput.val().indexOf($result) + $result.length;
+					this._searchInput.focus().setCaret($position);
 					
 					break;
 				}
@@ -7276,9 +7297,9 @@ $.widget('ui.wcfPages', {
 	_create: function() {
 		if (this.options.nextPage === null) this.options.nextPage = WCF.Language.get('wcf.global.page.next');
 		if (this.options.previousPage === null) this.options.previousPage = WCF.Language.get('wcf.global.page.previous');
-		if (this.options.previousIcon === null) this.options.previousIcon = WCF.Icon.get('wcf.icon.arrow.left.circle');
-		if (this.options.nextIcon === null) this.options.nextIcon = WCF.Icon.get('wcf.icon.arrow.right.circle');
-		if (this.options.arrowDownIcon === null) this.options.arrowDownIcon = WCF.Icon.get('wcf.icon.arrow.down');
+		if (this.options.previousIcon === null) this.options.previousIcon = WCF.Icon.get('wcf.icon.circleArrowLeft');
+		if (this.options.nextIcon === null) this.options.nextIcon = WCF.Icon.get('wcf.icon.circleArrowRight');
+		if (this.options.arrowDownIcon === null) this.options.arrowDownIcon = WCF.Icon.get('wcf.icon.arrowDown');
 		
 		this.element.addClass('pageNavigation');
 		

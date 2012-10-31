@@ -71,21 +71,22 @@
 		});
 		
 		WCF.Icon.addObject({
-			'wcf.icon.loading': '{icon}spinner{/icon}',
-			'wcf.icon.opened': '{icon}arrowDownInverse{/icon}',
+			'wcf.icon.add': '{icon}add{/icon}',
+			'wcf.icon.arrowDown': '{icon}arrowDown{/icon}',
+			'wcf.icon.arrowLeft': '{icon}arrowLeft{/icon}',
+			'wcf.icon.arrowRight': '{icon}arrowRight{/icon}',
+			'wcf.icon.arrowUp': '{icon}arrowUp{/icon}',
+			'wcf.icon.circleArrowDown': '{icon}circleArrowDown{/icon}',
+			'wcf.icon.circleArrowLeft': '{icon}circleArrowLeft{/icon}',
+			'wcf.icon.circleArrowRight': '{icon}circleArrowRight{/icon}',
+			'wcf.icon.circleArrowUp': '{icon}circleArrowUp{/icon}',
 			'wcf.icon.closed': '{icon}arrowRightInverse{/icon}',
-			'wcf.icon.arrow.left': '{icon}arrowLeft{/icon}',
-			'wcf.icon.arrow.left.circle': '{icon}circleArrowLeft{/icon}',
-			'wcf.icon.arrow.right': '{icon}arrowRight{/icon}',
-			'wcf.icon.arrow.right.circle': '{icon}circleArrowRight{/icon}',
-			'wcf.icon.arrow.down': '{icon}arrowDown{/icon}',
-			'wcf.icon.arrow.down.circle': '{icon}circleArroDown{/icon}',
-			'wcf.icon.arrow.up': '{icon}arrowUp{/icon}',
-			'wcf.icon.arrow.up.circle': '{icon}circleArrowUp{/icon}',
 			'wcf.icon.dropdown': '{icon}dropdown{/icon}',
-			'wcf.icon.edit': '{icon}edit{/icon}',
 			'wcf.icon.delete': '{icon}delete{/icon}',
-			'wcf.icon.error': '{icon}errorRed{/icon}'
+			'wcf.icon.edit': '{icon}edit{/icon}',
+			'wcf.icon.error': '{icon}errorRed{/icon}',
+			'wcf.icon.loading': '{icon}spinner{/icon}',
+			'wcf.icon.opened': '{icon}arrowDownInverse{/icon}'
 			{event name='javascriptIconImport'}
 		});
 		
@@ -96,7 +97,7 @@
 		WCF.Dropdown.init();
 		
 		{event name='javascriptInit'}
-
+		
 		{if $executeCronjobs}
 			new WCF.Action.Proxy({
 				autoSend: true,

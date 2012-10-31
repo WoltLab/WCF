@@ -81,7 +81,7 @@ class WorkerProxyAction extends AbstractSecureAction {
 		}
 		
 		if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\worker\IWorker')) {
-			throw new SystemException("class '".$this->className."' should implement the interface 'wcf\system\worker\IWorker'");
+			throw new SystemException("'".$this->className."' does not implement 'wcf\system\worker\IWorker'");
 		}
 	}
 	

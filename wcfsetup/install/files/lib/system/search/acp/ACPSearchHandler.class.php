@@ -60,7 +60,7 @@ class ACPSearchHandler extends SingletonFactory {
 		foreach ($this->cache as $acpSearchProvider) {
 			$className = $acpSearchProvider->className;
 			if (!ClassUtil::isInstanceOf($className, 'wcf\system\search\acp\IACPSearchResultProvider')) {
-				throw new SystemException("Class '".$className."' does not implement the interface 'wcf\system\search\acp\IACPSearchResultProvider'");
+				throw new SystemException("'".$className."' does not implement 'wcf\system\search\acp\IACPSearchResultProvider'");
 			}
 			
 			$provider = new $className();

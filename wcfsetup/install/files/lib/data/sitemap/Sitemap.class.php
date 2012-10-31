@@ -44,7 +44,7 @@ class Sitemap extends DatabaseObject {
 			}
 			
 			if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\sitemap\ISitemapProvider')) {
-				throw new SystemException("Class '".$this->className."' does not implement the interface 'wcf\system\sitemap\ISitemapProvider'");
+				throw new SystemException("'".$this->className."' does not implement 'wcf\system\sitemap\ISitemapProvider'");
 			}
 			
 			$this->sitemapObj = new $this->className();
