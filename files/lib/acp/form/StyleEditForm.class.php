@@ -57,6 +57,14 @@ class StyleEditForm extends StyleAddForm {
 	 */
 	protected function readStyleVariables() {
 		$this->variables = $this->style->getVariables();
+		
+		// fix empty values ~""
+		foreach ($this->variables as &$variableValue) {
+			if ($variableValue == '~""') {
+				$variableValue = '';
+			}
+		}
+		unset($variableValue);
 	}
 	
 	/**
