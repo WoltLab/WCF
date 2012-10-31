@@ -31,13 +31,6 @@
 	{* work-around for unknown core-object during WCFSetup *}
 	{@$__wcf->getStyleHandler()->getStylesheet()}
 	
-	{*
-	{if $specialStyles|isset}
-		<!-- special styles -->
-		{@$specialStyles}
-	{/if}
-	*}
-	
 	<script type="text/javascript">
 		//<![CDATA[
 		$(function() {
@@ -79,9 +72,23 @@
 				'wcf.global.form.edit.success': '{lang}wcf.global.form.edit.success{/lang}'
 			});
 			WCF.Icon.addObject({
+				'wcf.icon.add': '{@$__wcf->getPath()}icon/add.svg',
+				'wcf.icon.arrowDown': '{@$__wcf->getPath()}icon/arrowDown.svg',
+				'wcf.icon.arrowLeft': '{@$__wcf->getPath()}icon/arrowLeft.svg',
+				'wcf.icon.arrowRight': '{@$__wcf->getPath()}icon/arrowRight.svg',
+				'wcf.icon.arrowUp': '{@$__wcf->getPath()}icon/arrowUp.svg',
+				'wcf.icon.circleArrowDown': '{@$__wcf->getPath()}icon/circleArrowDown.svg',
+				'wcf.icon.circleArrowLeft': '{@$__wcf->getPath()}icon/circleArrowLeft.svg',
+				'wcf.icon.circleArrowRight': '{@$__wcf->getPath()}icon/circleArrowRight.svg',
+				'wcf.icon.circleArrowUp': '{@$__wcf->getPath()}icon/circleArrowUp.svg',
 				'wcf.icon.closed': '{@$__wcf->getPath()}icon/arrowRightInverse.svg',
+				'wcf.icon.dropdown': '{@$__wcf->getPath()}icon/dropdown.svg',
+				'wcf.icon.delete': '{@$__wcf->getPath()}icon/delete.svg',
+				'wcf.icon.edit': '{@$__wcf->getPath()}icon/edit.svg',
+				'wcf.icon.error': '{@$__wcf->getPath()}icon/errorRed.svg',
 				'wcf.icon.loading': '{@$__wcf->getPath()}icon/spinner.svg',
 				'wcf.icon.opened': '{@$__wcf->getPath()}icon/arrowDownInverse.svg'
+				{event name='javascriptIconImport'}
 			});
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
