@@ -7289,9 +7289,9 @@ $.widget('ui.wcfPages', {
 	_create: function() {
 		if (this.options.nextPage === null) this.options.nextPage = WCF.Language.get('wcf.global.page.next');
 		if (this.options.previousPage === null) this.options.previousPage = WCF.Language.get('wcf.global.page.previous');
-		if (this.options.previousIcon === null) this.options.previousIcon = WCF.Icon.get('wcf.icon.arrow.left.circle');
-		if (this.options.nextIcon === null) this.options.nextIcon = WCF.Icon.get('wcf.icon.arrow.right.circle');
-		if (this.options.arrowDownIcon === null) this.options.arrowDownIcon = WCF.Icon.get('wcf.icon.arrow.down');
+		if (this.options.previousIcon === null) this.options.previousIcon = WCF.Icon.get('wcf.icon.circleArrowLeft');
+		if (this.options.nextIcon === null) this.options.nextIcon = WCF.Icon.get('wcf.icon.circleArrowRight');
+		if (this.options.arrowDownIcon === null) this.options.arrowDownIcon = WCF.Icon.get('wcf.icon.arrowDown');
 		
 		this.element.addClass('pageNavigation');
 		
