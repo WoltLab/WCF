@@ -801,6 +801,19 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		if (!isset($parameters['packageID'])) $parameters['packageID'] = PACKAGE_ID;
 		if (!isset($parameters['styleDate'])) $parameters['styleDate'] = gmdate('Y-m-d', TIME_NOW);
 		
+		// check if no default style is defined
+		$sql = "SELECT	styleID
+			FROM	wcf".WCF_N."_style
+			WHERE	isDefault = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(1));
+		$row = $statement->fetchArray();
+		
+		// no default style exists
+		if ($row === false) {
+			$parameters['isDefault'] = 1;
+		}
+		
 		// save style
 		$style = parent::create($parameters);		
 		$styleEditor = new StyleEditor($style);
