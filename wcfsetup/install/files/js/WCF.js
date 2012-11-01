@@ -3743,6 +3743,9 @@ WCF.Collapsible.Sidebar = Class.extend({
 		else {
 			this._mainContainer.addClass('sidebarCollapsed');
 		}
+		
+		// update button position
+		this._scroll();
 	}
 });
 
