@@ -174,9 +174,17 @@ final class DateUtil {
 		$weeks = floor($days / 7);
 		$hours = $interval->format('%h');
 		$minutes = $interval->format('%i');
+		switch ($interval->format('%R')) {
+			case '+':
+				$direction = 'past';
+			break;
+			case '-':
+				$direction = 'future';
+			break;
+		}
 		
 		if ($fullInterval) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.full', array(
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.full.'.$direction, array(
 				'days' => $days - 7 * $weeks,
 				'firstElement' => $years ? 'years' : ($months ? 'months' : ($weeks ? 'weeks' : ($days ? 'days' : ($hours ? 'hours' : 'minutes')))),
 				'hours' => $hours,
@@ -189,36 +197,36 @@ final class DateUtil {
 		}
 		
 		if ($years) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.years', array(
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.years.'.$direction, array(
 				'years' => $years
 			));
 		}
 		
 		if ($months) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.months', array(
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.months.'.$direction, array(
 				'months' => $months
 			));
 		}
 		
 		if ($weeks) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.weeks', array(
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.weeks.'.$direction, array(
 				'weeks' => $weeks
 			));
 		}
 		
 		if ($days) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.days', array(
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.days.'.$direction, array(
 				'days' => $days
 			));
 		}
 		
 		if ($hours) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.hours', array(
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.hours.'.$direction, array(
 				'hours' => $hours
 			));
 		}
 		
-		return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.minutes', array(
+		return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.minutes.'.$direction, array(
 			'minutes' => $minutes
 		));
 	}
