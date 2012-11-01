@@ -33,8 +33,8 @@ class DateDiffModifierTemplatePlugin implements IModifierTemplatePlugin {
 			$fullInterval = $tagArgs[2];
 		}
 		
-		$startTime = DateUtil::getDateTimeByTimestamp(min($tagArgs[0], $tagArgs[1]));
-		$endTime = DateUtil::getDateTimeByTimestamp(max($tagArgs[0], $tagArgs[1]));
+		$startTime = DateUtil::getDateTimeByTimestamp($tagArgs[1]);
+		$endTime = DateUtil::getDateTimeByTimestamp($tagArgs[0]);
 		
 		return DateUtil::formatInterval($endTime->diff($startTime), $fullInterval);
 	}
