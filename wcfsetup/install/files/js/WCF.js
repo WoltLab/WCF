@@ -64,7 +64,7 @@ String.prototype.hashCode = function() {
 	}
 	
 	return $hash;
-}
+};
 
 /**
  * Initialize WCF namespace
@@ -607,6 +607,7 @@ WCF.Dropdown = {
 	 * Initializes dropdowns.
 	 */
 	init: function() {
+		var $userPanelHeight = $('#topMenu').outerHeight();
 		var self = this;
 		$('.dropdownToggle').each(function(index, dropdown) {
 			var $dropdown = $(dropdown);
@@ -623,9 +624,16 @@ WCF.Dropdown = {
 				$dropdown.click($.proxy(self._toggle, self));
 				self._dropdowns[$containerID] = $toggle;
 				
+				var $dropdownHeight = $dropdown.outerHeight();
+				var $top = $dropdownHeight + 7;
+				if ($dropdown.parents('#topMenu').length) {
+					// fix calculation for user panel (elements may be shorter than they appear)
+					$top = $userPanelHeight;
+				}
+				
 				// calculate top offset for menu
 				$dropdown.next('.dropdownMenu').css({
-					top: $dropdown.outerHeight() + 14
+					top: $top + 'px'
 				});
 			}
 		});
@@ -2315,8 +2323,7 @@ WCF.Language = {
  * @param	object		values
  * @param	object		availableLanguages
  */
-WCF.MultipleLanguageInput = function(elementID, forceSelection, values, availableLanguages) { this.init(elementID, forceSelection, values, availableLanguages); };
-WCF.MultipleLanguageInput.prototype = {
+WCF.MultipleLanguageInput = Class.extend({
 	/**
 	 * list of available languages
 	 * @var	object
@@ -2418,24 +2425,15 @@ WCF.MultipleLanguageInput.prototype = {
 		var $button = $('<p class="button dropdownToggle"><span>' + WCF.Language.get('wcf.global.button.disabledI18n') + '</span></p>').prependTo($wrapper);
 		$button.data('toggle', $wrapper.wcfIdentify()).click($.proxy(this._enable, this));
 		
+		// insert list
+		this._list = $('<ul class="dropdownMenu"></ul>').insertAfter($button);
+		
 		// add a special class if next item is a textarea
-		var $top = null;
-		if ($button.next().getTagName() === 'textarea') {
-			$top = $button.outerHeight() - 1;
+		if ($button.nextAll('textarea').length) {
 			$button.addClass('dropdownCaptionTextarea');
 		}
 		else {
 			$button.addClass('dropdownCaption');
-		}
-		
-		// insert list
-		this._list = $('<ul class="dropdownMenu"></ul>').insertAfter($button);
-		
-		// set top offset for menu
-		if ($top !== null) {
-			this._list.css({
-				top: $top
-			});
 		}
 		
 		// insert available languages
@@ -2487,6 +2485,12 @@ WCF.MultipleLanguageInput.prototype = {
 	_enable: function(event) {
 		if (!this._isEnabled) {
 			var $button = $(event.currentTarget);
+			if ($button.hasClass('dropdownCaptionTextarea')) {
+				$button.next('.dropdownMenu').css({
+					top: ($button.outerHeight() - 1) + 'px'
+				});
+			}
+			
 			if ($button.getTagName() === 'p') {
 				$button = $button.children('span:eq(0)');
 			}
@@ -2627,7 +2631,7 @@ WCF.MultipleLanguageInput.prototype = {
 		// remove name attribute to prevent conflict with i18n values
 		this._element.removeAttr('name');
 	}
-};
+});
 
 /**
  * Icon collection used across all JavaScript classes.
