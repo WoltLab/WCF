@@ -157,7 +157,7 @@ class LanguageExportForm extends ACPForm {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->languageID));
 		while ($row = $statement->fetchArray()) {
-			$row['packageNameLength'] = StringUtil::length($row['packageName']); 
+			$row['packageNameLength'] = StringUtil::length(WCF::getLanguage()->get($row['packageName']));
 			$this->packages[] = new Package(null, $row);
 			if ($row['packageNameLength'] > $this->packageNameLength) {
 				$this->packageNameLength = $row['packageNameLength'];	
