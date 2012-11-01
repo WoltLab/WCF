@@ -127,6 +127,14 @@ CREATE TABLE wcf1_cleanup_log (
 	KEY objectType (objectType)
 );
 
+DROP TABLE IF EXISTS wcf1_cli_history;
+CREATE TABLE wcf1_cli_history (
+	historyItem INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	userID INT(10) NOT NULL,
+	command VARCHAR(255) NOT NULL,
+	KEY (userID)
+);
+
 DROP TABLE IF EXISTS wcf1_clipboard_action;
 CREATE TABLE wcf1_clipboard_action (
 	actionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -795,6 +803,8 @@ ALTER TABLE wcf1_category ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_
 ALTER TABLE wcf1_cleanup_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_cleanup_log ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_cli_history ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_clipboard_action ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
