@@ -2315,8 +2315,7 @@ WCF.Language = {
  * @param	object		values
  * @param	object		availableLanguages
  */
-WCF.MultipleLanguageInput = function(elementID, forceSelection, values, availableLanguages) { this.init(elementID, forceSelection, values, availableLanguages); };
-WCF.MultipleLanguageInput.prototype = {
+WCF.MultipleLanguageInput = Class.extend({
 	/**
 	 * list of available languages
 	 * @var	object
@@ -2426,6 +2425,7 @@ WCF.MultipleLanguageInput.prototype = {
 		}
 		else {
 			$button.addClass('dropdownCaption');
+			$button.next().css('height', $button.outerHeight());
 		}
 		
 		// insert list
@@ -2627,7 +2627,7 @@ WCF.MultipleLanguageInput.prototype = {
 		// remove name attribute to prevent conflict with i18n values
 		this._element.removeAttr('name');
 	}
-};
+});
 
 /**
  * Icon collection used across all JavaScript classes.
