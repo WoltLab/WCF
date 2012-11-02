@@ -426,6 +426,23 @@
 		
 		&:hover {
 			background-color: @wcfContainerHoverBackgroundColor;
+			
+			> div > .details > .buttonList {
+				opacity: 1;
+			}
+		}
+		
+		> div > .details {
+			position: relative;
+			
+			> .buttonList {
+				opacity: 0;
+				position: absolute;
+				right: 0;
+				top: 0;
+				
+				.transition(opacity, .1s);
+			}
 		}
 	}
 	
@@ -457,24 +474,10 @@
 			
 			&:hover {
 				background-color: @wcfContainerHoverBackgroundColor;
-				
-				> div > .buttonList {
-					opacity: 1;
-				}
 			}
 			
 			> div {
 				padding: 14px 21px;
-				position: relative;
-				
-				> .buttonList {
-					opacity: 0;
-					position: absolute;
-					right: 0;
-					top: 0;
-					
-					.transition(opacity, .1s);
-				}
 			}
 		}
 		
