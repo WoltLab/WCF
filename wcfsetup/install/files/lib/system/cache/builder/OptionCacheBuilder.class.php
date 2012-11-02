@@ -60,7 +60,7 @@ class OptionCacheBuilder implements ICacheBuilder {
 			$optionCategories[$row['categoryName']] = $row['categoryID'];
 		}
 		
-		if (!empty($optionCategories) > 0) {
+		if (!empty($optionCategories)) {
 			// get needed option categories
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("categoryID IN (?)", array($optionCategories));
