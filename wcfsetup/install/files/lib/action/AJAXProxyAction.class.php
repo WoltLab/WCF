@@ -1,6 +1,5 @@
 <?php
 namespace wcf\action;
-use wcf\data\IStorableObject;
 use wcf\system\exception\SystemException;
 use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\action;
+use wcf\data\IStorableObject;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
