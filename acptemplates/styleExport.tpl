@@ -14,7 +14,7 @@
 	</nav>
 </div>
 
-<form method="post" action="{link controller='StyleExport'}{/link}">
+<form method="post" action="{link controller='StyleExport' id=$styleID}{/link}">
 	<div class="container containerPadding marginTop shadow">
 		<fieldset>
 			<legend>{lang}wcf.acp.style.exportStyle.components{/lang}</legend>
@@ -69,7 +69,6 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.acp.style.button.exportStyle{/lang}" accesskey="s" />
-		<input type="hidden" name="id" value="{@$styleID}" />
 	</div>
 </form>
 

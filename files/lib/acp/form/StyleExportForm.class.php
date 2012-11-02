@@ -3,7 +3,6 @@ namespace wcf\acp\form;
 use wcf\data\package\Package;
 use wcf\data\style\Style;
 use wcf\data\style\StyleEditor;
-use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -17,9 +16,14 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.acp.style
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
-class StyleExportForm extends AbstractForm {
+class StyleExportForm extends ACPForm {
+	/**
+	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.style';
+	
 	/**
 	 * true, if style has custom icons
 	 * @var	boolean

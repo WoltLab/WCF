@@ -34,6 +34,9 @@ class StyleListPage extends MultipleLinkPage {
 	 */
 	public $sortOrder = 'ASC';
 	
+	/**
+	 * @see wcf\page\MultipleLinkPage::initObjectList()
+	 */
 	public function initObjectList() {
 		parent::initObjectList();
 		

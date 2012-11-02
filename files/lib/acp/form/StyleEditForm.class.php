@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.acp.style
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class StyleEditForm extends StyleAddForm {
 	/**
