@@ -218,7 +218,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 */
 	public function validateCreate() {
 		// validate permissions
-		if (is_array($this->permissionsCreate) && count($this->permissionsCreate)) {
+		if (is_array($this->permissionsCreate) && !empty($this->permissionsCreate)) {
 			try {
 				WCF::getSession()->checkPermissions($this->permissionsCreate);
 			}
@@ -236,7 +236,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 */
 	public function validateDelete() {
 		// validate permissions
-		if (is_array($this->permissionsDelete) && count($this->permissionsDelete)) {
+		if (is_array($this->permissionsDelete) && !empty($this->permissionsDelete)) {
 			try {
 				WCF::getSession()->checkPermissions($this->permissionsDelete);
 			}
@@ -249,12 +249,12 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		}
 		
 		// read objects
-		if (!count($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
-		}
-		
-		if (!count($this->objects)) {
-			throw new ValidateActionException('Invalid object id');
+			
+			if (empty($this->objects)) {
+				throw new ValidateActionException('Invalid object id');
+			}
 		}
 	}
 	
@@ -263,7 +263,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 */
 	public function validateUpdate() {
 		// validate permissions
-		if (is_array($this->permissionsUpdate) && count($this->permissionsUpdate)) {
+		if (is_array($this->permissionsUpdate) && !empty($this->permissionsUpdate)) {
 			try {
 				WCF::getSession()->checkPermissions($this->permissionsUpdate);
 			}
@@ -276,12 +276,12 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		}
 		
 		// read objects
-		if (!count($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
-		}
-		
-		if (!count($this->objects)) {
-			throw new ValidateActionException('Invalid object id');
+
+			if (empty($this->objects)) {
+				throw new ValidateActionException('Invalid object id');
+			}
 		}
 	}
 	
@@ -298,7 +298,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @see	wcf\data\IDeleteAction::delete()
 	 */
 	public function delete() {
-		if (!count($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 		
@@ -319,7 +319,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Updates data.
 	 */
 	public function update() {
-		if (!count($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 		
@@ -334,7 +334,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Reads data by data id.
 	 */
 	protected function readObjects() {
-		if (!count($this->objectIDs)) {
+		if (empty($this->objectIDs)) {
 			return;
 		}
 		

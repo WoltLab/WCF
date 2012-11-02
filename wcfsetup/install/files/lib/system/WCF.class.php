@@ -154,19 +154,19 @@ class WCF {
 	protected function initMagicQuotes() {
 		if (function_exists('get_magic_quotes_gpc')) {
 			if (@get_magic_quotes_gpc()) {
-				if (count($_REQUEST)) {
+				if (!empty($_REQUEST)) {
 					$_REQUEST = util\ArrayUtil::stripslashes($_REQUEST);
 				}
-				if (count($_POST)) {
+				if (!empty($_POST)) {
 					$_POST = util\ArrayUtil::stripslashes($_POST);
 				}
-				if (count($_GET)) {
+				if (!empty($_GET)) {
 					$_GET = util\ArrayUtil::stripslashes($_GET);
 				}
-				if (count($_COOKIE)) {
+				if (!empty($_COOKIE)) {
 					$_COOKIE = util\ArrayUtil::stripslashes($_COOKIE);
 				}
-				if (count($_FILES)) {
+				if (!empty($_FILES)) {
 					foreach ($_FILES as $name => $attributes) {
 						foreach ($attributes as $key => $value) {
 							if ($key != 'tmp_name') {

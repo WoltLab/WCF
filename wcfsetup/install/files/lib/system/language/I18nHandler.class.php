@@ -196,7 +196,7 @@ class I18nHandler extends SingletonFactory {
 	 * @throws  SystemException if $i18nValues doesn't have any elements
 	 */
 	public function setValues($elementID, array $i18nValues) {
-		if (!count($i18nValues)) {
+		if (empty($i18nValues)) {
 			throw new SystemException('Invalid argument for parameter $i18nValues', 0, 'Expected filled array as second argument. Empty array given.');
 		}
 		if (!$this->isPlainValue($elementID)) {
@@ -293,7 +293,7 @@ class I18nHandler extends SingletonFactory {
 		}
 		
 		// insert language items
-		if (count($insertLanguageIDs)) {
+		if (!empty($insertLanguageIDs)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_language_item
 						(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
 				VALUES		(?, ?, ?, ?, ?, ?)";
@@ -312,7 +312,7 @@ class I18nHandler extends SingletonFactory {
 		}
 		
 		// update language items
-		if (count($updateLanguageIDs)) {
+		if (!empty($updateLanguageIDs)) {
 			$sql = "UPDATE	wcf".WCF_N."_language_item
 				SET	languageItemValue = ?
 				WHERE	languageItemID = ?";

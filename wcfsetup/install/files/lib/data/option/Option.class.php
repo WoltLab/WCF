@@ -69,7 +69,7 @@ class Option extends DatabaseObject {
 		}
 		
 		$options = array();
-		if (count($optionIDs)) {
+		if (!empty($optionIDs)) {
 			// get needed options
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("optionID IN (?)", array($optionIDs));

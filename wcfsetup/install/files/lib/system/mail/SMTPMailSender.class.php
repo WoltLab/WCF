@@ -105,9 +105,9 @@ class SMTPMailSender extends MailSender {
 	 */
 	public function sendMail(Mail $mail) {
 		$this->recipients = array();
-		if (count($mail->getTo()) > 0) 	$this->recipients = $mail->getTo();
-		if (count($mail->getCC()) > 0) 	$this->recipients = array_merge($this->recipients, $mail->getCC());
-		if (count($mail->getBCC())> 0) 	$this->recipients = array_merge($this->recipients, $mail->getBCC());
+		if (count($mail->getTo()) > 0) $this->recipients = $mail->getTo();
+		if (count($mail->getCC()) > 0) $this->recipients = array_merge($this->recipients, $mail->getCC());
+		if (count($mail->getBCC())> 0) $this->recipients = array_merge($this->recipients, $mail->getBCC());
 		
 		// apply connection
 		if ($this->connection === null) {

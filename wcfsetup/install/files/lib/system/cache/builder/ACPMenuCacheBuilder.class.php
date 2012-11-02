@@ -38,7 +38,7 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 			$itemIDs[$row['menuItem']] = $row['menuItemID'];
 		}
 		
-		if (count($itemIDs) > 0) {
+		if (!empty($itemIDs)) {
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("menuItemID IN (?)", array($itemIDs));
 			
@@ -63,7 +63,7 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 		
 		// get top option categories
 		$optionCategories = $this->getTopOptionCategories($packageID);
-		if (count($optionCategories) > 0) {
+		if (!empty($optionCategories)) {
 			if (!isset($data['wcf.acp.menu.link.option.category'])) {
 				$data['wcf.acp.menu.link.option.category'] = array();
 			}

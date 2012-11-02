@@ -89,7 +89,7 @@ class OptionForm extends AbstractOptionListForm {
 		// load option tree
 		$this->optionTree = $this->optionHandler->getOptionTree($this->category->categoryName);
 		
-		if (!count($_POST)) {
+		if (empty($_POST)) {
 			// not a valid top (level 1 or 2) category
 			if (!isset($this->optionTree[0])) {
 				throw new IllegalLinkException();

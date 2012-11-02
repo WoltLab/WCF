@@ -315,7 +315,7 @@ class Package extends DatabaseObject {
 		}
 		
 		// insert requirements of requirements
-		if (count($requirements) > 0) {
+		if (!empty($requirements)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_requirement_map
 						(packageID, requirement, level)
 				VALUES		(?, ?, ?)";
@@ -329,7 +329,9 @@ class Package extends DatabaseObject {
 		$directRequirements = array();
 		$conditions = new PreparedStatementConditionBuilder($sql);
 		$conditions->add("packageID = ?", array($packageID));
-		if (count($requirements)) $conditions->add("requirement NOT IN (?)", array(array_keys($requirements)));
+		if (!empty($requirements)) {
+			$conditions->add("requirement NOT IN (?)", array(array_keys($requirements)));
+		}
 		
 		$sql = "SELECT	requirement, 
 				(
@@ -347,7 +349,7 @@ class Package extends DatabaseObject {
 		}
 		
 		// insert requirements
-		if (count($directRequirements) > 0) {
+		if (!empty($directRequirements)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_requirement_map
 						(packageID, requirement, level)
 				VALUES		(?, ?, ?)";

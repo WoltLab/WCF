@@ -157,7 +157,7 @@ class UserStorageHandler extends SingletonFactory {
 	public function shutdown() {
 		WCF::getDB()->beginTransaction();
 		// remove outdated entries
-		if (count($this->resetFields)) {
+		if (!empty($this->resetFields)) {
 			$sql = "DELETE FROM	wcf".WCF_N."_user_storage
 				WHERE		userID = ?
 						AND field = ?
@@ -178,7 +178,7 @@ class UserStorageHandler extends SingletonFactory {
 		}
 		
 		// insert data
-		if (count($this->updateFields)) {
+		if (!empty($this->updateFields)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_user_storage
 						(userID, field, fieldValue, packageID)
 				VALUES		(?, ?, ?, ?)";

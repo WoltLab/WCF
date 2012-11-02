@@ -556,7 +556,7 @@ class TemplateEngine extends SingletonFactory {
 		}
 		
 		// add new template variables
-		if (count($variables)) {
+		if (!empty($variables)) {
 			$this->v = array_merge($this->v, $variables);
 		}
 		
@@ -589,7 +589,7 @@ class TemplateEngine extends SingletonFactory {
 		}
 		
 		// add new template variables
-		if (count($variables)) {
+		if (!empty($variables)) {
 			$this->v = array_merge($this->v, $variables);
 		}
 		
@@ -700,7 +700,7 @@ class TemplateEngine extends SingletonFactory {
 		}
 		
 		// add new template variables
-		if (count($variables)) {
+		if (!empty($variables)) {
 			$this->v = array_merge($this->v, $variables);
 		}
 		
@@ -762,7 +762,7 @@ class TemplateEngine extends SingletonFactory {
 	 */
 	protected function loadTemplateListenerCode($templateName) {
 		// cache was already loaded
-		if (!isset($this->templateListeners[$templateName]) || count($this->templateListeners[$templateName])) return;
+		if (!isset($this->templateListeners[$templateName]) || !empty($this->templateListeners[$templateName])) return;
 		
 		$cacheName = PACKAGE_ID.'-'.$this->environment.'-'.$templateName;
 		CacheHandler::getInstance()->addResource(

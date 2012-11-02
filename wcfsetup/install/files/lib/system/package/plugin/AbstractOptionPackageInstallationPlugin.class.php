@@ -48,7 +48,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			$options[] = $element->getAttribute('name');
 		}
 		
-		if (count($options)) {
+		if (!empty($options)) {
 			$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
 				WHERE		optionName = ?
 				AND packageID = ?";
@@ -69,7 +69,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			$categories[] = $element->getAttribute('name');
 		}
 		
-		if (count($categories)) {
+		if (!empty($categories)) {
 			// delete options for given categories
 			$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
 				WHERE		categoryName = ?";
