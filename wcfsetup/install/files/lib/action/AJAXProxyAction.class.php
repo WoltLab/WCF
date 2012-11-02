@@ -78,23 +78,4 @@ class AJAXProxyAction extends AJAXInvokeAction {
 			$this->response['returnValues'] = $this->getData($this->response['returnValues']);
 		}
 	}
-	
-	/**
-	 * Gets the values of object data variables
-	 * 
-	 * @param	mixed		$response
-	 * @return	mixed
-	 */
-	protected function getData($response) {
-		if ($response instanceof IStorableObject) {
-			return $response->getData();
-		}
-		if (is_array($response)) {
-			foreach ($response as &$object) {
-				$object = $this->getData($object);
-			}
-			unset($object);
-		}
-		return $response;
-	}
 }
