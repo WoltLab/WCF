@@ -28,7 +28,7 @@
 		
 		{if $action == 'edit' && $__wcf->getSession()->getPermission('admin.style.canAddStyle')}
 			new WCF.ACP.Style.CopyStyle({@$style->styleID});
-		
+			
 			WCF.Language.addObject({
 				'wcf.acp.style.copyStyle.confirmMessage': '{lang}wcf.acp.style.copyStyle.confirmMessage{/lang}'
 			});
@@ -62,7 +62,7 @@
 	</nav>
 </div>
 
-<form method="post" action="{if $action == 'add'}{link controller='StyleAdd'}{/link}{else}{link controller='StyleEdit'}{/link}{/if}">
+<form method="post" action="{if $action == 'add'}{link controller='StyleAdd'}{/link}{else}{link controller='StyleEdit' id=$styleID}{/link}{/if}">
 	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
 		<nav class="tabMenu">
 			<ul>
@@ -487,7 +487,6 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="tmpHash" value="{$tmpHash}" />
-		{if $styleID|isset}<input type="hidden" name="id" value="{@$styleID}" />{/if}
 	</div>
 </form>
 
