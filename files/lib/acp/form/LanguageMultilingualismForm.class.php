@@ -103,7 +103,7 @@ class LanguageMultilingualismForm extends ACPForm {
 	public function readData() {
 		parent::readData();
 		
-		if (!count($_POST)) {
+		if (empty($_POST)) {
 			// default values
 			$contentLanguages = 0;
 			foreach ($this->languages as $languageID => $language) {

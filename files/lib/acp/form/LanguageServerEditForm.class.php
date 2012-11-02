@@ -80,7 +80,7 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 	public function readData() {
 		parent::readData();
 		
-		if (!count($_POST)) {
+		if (empty($_POST)) {
 			$this->server = $this->languageServer->serverURL;
 		}
 	}
