@@ -58,7 +58,7 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 			$templates[] = 'templates/'.$row['templateName'].'.tpl';
 		}
 		
-		if (count($templates) > 0) {
+		if (!empty($templates)) {
 			// delete template files
 			$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$this->installation->getPackage()->packageDir));
 			$deleteEmptyDirectories = $this->installation->getPackage()->isApplication;

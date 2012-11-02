@@ -75,7 +75,7 @@ abstract class PackageUpdateDispatcher {
 		unset($response);
 		
 		// save packages
-		if (count($allNewPackages)) {
+		if (!empty($allNewPackages)) {
 			self::savePackageUpdates($allNewPackages, $updateServer->packageUpdateServerID);
 		}
 		unset($allNewPackages);
@@ -362,7 +362,7 @@ abstract class PackageUpdateDispatcher {
 		
 		// get existing versions
 		$existingPackageVersions = array();
-		if (count($existingPackages) > 0) {
+		if (!empty($existingPackages)) {
 			// get package update ids
 			$packageUpdateIDs = array();
 			foreach ($existingPackages as $packageUpdate) {
@@ -720,7 +720,7 @@ abstract class PackageUpdateDispatcher {
 			$versions[] = $row;
 		}
 		
-		if (!count($versions)) {
+		if (empty($versions)) {
 			throw new SystemException("Can not find package '".$package."' in version '".$version."'");
 		}
 		

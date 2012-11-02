@@ -88,7 +88,7 @@ class PreparedStatement {
 		try {
 			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start($this->query, Benchmark::TYPE_SQL_QUERY);
 			
-			if (!count($parameters)) $this->pdoStatement->execute();
+			if (empty($parameters)) $this->pdoStatement->execute();
 			else $this->pdoStatement->execute($parameters);
 			
 			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->stop();
@@ -113,7 +113,7 @@ class PreparedStatement {
 		try {
 			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start($this->query, Benchmark::TYPE_SQL_QUERY);
 			
-			if (!count($parameters)) $this->pdoStatement->execute();
+			if (empty($parameters)) $this->pdoStatement->execute();
 			else $this->pdoStatement->execute($parameters);
 			
 			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->stop();

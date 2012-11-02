@@ -56,7 +56,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 				}
 				
 				// check if files from installing package are in conflict with already installed files
-				if (!$this->packageInstallation->getPackage()->isApplication && count($lockedFiles) > 0) {
+				if (!$this->packageInstallation->getPackage()->isApplication && !empty($lockedFiles)) {
 					foreach ($fileNames as $key => $file) {
 						if (isset($lockedFiles[$file]) && $packageID != $lockedFiles[$file]) {
 							$owningPackage = new Package($lockedFiles[$file]);
@@ -95,7 +95,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 			}
 		}
 		
-		if (count($files)) {
+		if (!empty($files)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_".$this->tableName."
 						(packageID, templateName)
 				VALUES		(?, ?)";

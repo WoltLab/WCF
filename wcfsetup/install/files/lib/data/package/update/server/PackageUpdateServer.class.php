@@ -34,7 +34,7 @@ class PackageUpdateServer extends DatabaseObject {
 		$list = new PackageUpdateServerList();
 		$list->sqlLimit = 0;
 		$list->getConditionBuilder()->add("disabled = ?", array(0));
-		if (count($packageUpdateServerIDs)) {
+		if (!empty($packageUpdateServerIDs)) {
 			$list->getConditionBuilder()->add("packageUpdateServerID IN (?)", array($packageUpdateServerIDs));
 		}
 		$list->readObjects();

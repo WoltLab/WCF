@@ -109,7 +109,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			$files[] = $row['filename'];
 		}
 		
-		if (count($files) > 0) {
+		if (!empty($files)) {
 			// delete files
 			$this->installation->deleteFiles($packageDir, $files);
 			

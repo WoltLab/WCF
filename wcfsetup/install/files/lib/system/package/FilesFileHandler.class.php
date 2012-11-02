@@ -38,7 +38,7 @@ class FilesFileHandler extends PackageInstallationFileHandler {
 				}
 				
 				// check delivered files
-				if (count($lockedFiles) > 0) {
+				if (!empty($lockedFiles)) {
 					$dir = $this->packageInstallation->getPackage()->packageDir;
 					foreach ($files as $key => $file) {
 						if (isset($lockedFiles[$dir.$file])) {

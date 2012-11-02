@@ -101,7 +101,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	 */
 	public function validateCreate() {
 		// validate permissions
-		if (count($this->permissionsCreate)) {
+		if (!empty($this->permissionsCreate)) {
 			try {
 				WCF::getSession()->checkPermissions($this->permissionsCreate);
 			}
@@ -128,7 +128,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	 */
 	public function validateDelete() {
 		// validate permissions
-		if (count($this->permissionsDelete)) {
+		if (!empty($this->permissionsDelete)) {
 			try {
 				WCF::getSession()->checkPermissions($this->permissionsDelete);
 			}
@@ -138,12 +138,12 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 		}
 		
 		// read objects
-		if (!count($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
-		}
-		
-		if (!count($this->objects)) {
-			throw new ValidateActionException('Invalid object id');
+			
+			if (empty($this->objects)) {
+				throw new ValidateActionException('Invalid object id');
+			}
 		}
 		
 		foreach ($this->objects as $categoryEditor) {
@@ -172,7 +172,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	 */
 	public function validateUpdate() {
 		// validate permissions
-		if (count($this->permissionsUpdate)) {
+		if (!empty($this->permissionsUpdate)) {
 			try {
 				WCF::getSession()->checkPermissions($this->permissionsUpdate);
 			}
@@ -182,11 +182,11 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 		}
 		
 		// read objects
-		if (!count($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 		
-		if (!count($this->objects)) {
+		if (empty($this->objects)) {
 			throw new ValidateActionException('Invalid object id');
 		}
 		
@@ -202,7 +202,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	 */
 	public function validateUpdatePosition() {
 		// validate permissions
-		if (count($this->permissionsUpdate)) {
+		if (!empty($this->permissionsUpdate)) {
 			try {
 				WCF::getSession()->checkPermissions($this->permissionsUpdate);
 			}

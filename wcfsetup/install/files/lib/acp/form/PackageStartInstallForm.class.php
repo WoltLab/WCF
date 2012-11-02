@@ -178,7 +178,7 @@ class PackageStartInstallForm extends ACPForm {
 		
 		// validate php requirements
 		$errors = PackageInstallationDispatcher::validatePHPRequirements($this->archive->getPhpRequirements());
-		if (count($errors)) {
+		if (!empty($errors)) {
 			WCF::getTPL()->assign('phpRequirements', $errors);
 			throw new UserInputException($type, 'phpRequirements');
 		}
