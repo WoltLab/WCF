@@ -66,7 +66,8 @@
 			'wcf.global.confirmation.cancel': '{lang}wcf.global.confirmation.cancel{/lang}',
 			'wcf.global.confirmation.confirm': '{lang}wcf.global.confirmation.confirm{/lang}',
 			'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}',
-			'wcf.sitemap.title': '{lang}wcf.sitemap.title{/lang}'
+			'wcf.sitemap.title': '{lang}wcf.sitemap.title{/lang}',
+			'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}'
 			{event name='javascriptLanguageImport'}
 		});
 		
@@ -94,6 +95,7 @@
 		new WCF.Effect.SmoothScroll();
 		new WCF.Effect.BalloonTooltip();
 		new WCF.Sitemap();
+		new WCF.Style.Chooser();
 		WCF.Dropdown.init();
 		
 		{event name='javascriptInit'}

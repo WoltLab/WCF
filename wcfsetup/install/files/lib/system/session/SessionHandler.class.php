@@ -71,6 +71,12 @@ class SessionHandler extends SingletonFactory {
 	protected $sessionEditorClassName = '';
 	
 	/**
+	 * style id
+	 * @var	integer
+	 */
+	protected $styleID = null;
+	
+	/**
 	 * enable cookie support
 	 * @var	boolean
 	 */
@@ -138,8 +144,9 @@ class SessionHandler extends SingletonFactory {
 		$this->initSecurityToken();
 		$this->defineConstants();
 		
-		// assign language id
-		$this->languageID = $this->user->languageID;
+		// assign language and style id
+		$this->languageID = ($this->getVar('languageID') === null) ? $this->user->languageID : $this->getVar('languageID');
+		$this->styleID = ($this->getVar('styleID') === null) ? $this->user->styleID : $this->getVar('styleID');
 		
 		// init environment variables
 		$this->initEnvironment();
@@ -472,6 +479,10 @@ class SessionHandler extends SingletonFactory {
 						AND userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($this->sessionID, $this->userID));
+			
+			// reset session variables
+			$this->variables = array();
+			$this->variablesChanged = true;
 		}
 		
 		// update user reference
@@ -489,6 +500,7 @@ class SessionHandler extends SingletonFactory {
 		$this->groupData = null;
 		$this->languageIDs = null;
 		$this->languageID = $this->user->languageID;
+		$this->styleID = $this->user->styleID;
 		
 		// truncate session variables
 	}
@@ -557,6 +569,26 @@ class SessionHandler extends SingletonFactory {
 	 */
 	public function setLanguageID($languageID) {
 		$this->languageID = $languageID;
+		$this->register('languageID', $this->languageID);
+	}
+	
+	/**
+	 * Returns currently active style id.
+	 * 
+	 * @return	integer
+	 */
+	public function getStyleID() {
+		return $this->styleID;
+	}
+	
+	/**
+	 * Sets the currently active style id.
+	 * 
+	 * @param	integer		$styleID
+	 */
+	public function setStyleID($styleID) {
+		$this->styleID = $styleID;
+		$this->register('styleID', $this->styleID);
 	}
 	
 	/**

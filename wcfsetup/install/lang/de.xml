@@ -700,6 +700,10 @@
 		<item name="wcf.sitemap.title"><![CDATA[Schnellnavigation]]></item>
 	</category>
 	
+	<category name="wcf.style">
+		<item name="wcf.style.changeStyle"><![CDATA[Stil ändern]]></item>
+	</category>
+	
 	<category name="wcf.user">
 		<item name="wcf.user.confirmEmail"><![CDATA[E-Mail-Adresse wiederholen]]></item>
 		<item name="wcf.user.confirmPassword"><![CDATA[Kennwort wiederholen]]></item>

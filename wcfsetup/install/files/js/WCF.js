@@ -6725,6 +6725,98 @@ WCF.Language.Chooser = Class.extend({
 });
 
 /**
+ * Namespace for style related classes.
+ */
+WCF.Style = { };
+
+/**
+ * Provides a visual style chooser.
+ */
+WCF.Style.Chooser = Class.extend({
+	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * Initializes the style chooser class.
+	 */
+	init: function() {
+		$('<li class="styleChooser"><a>' + WCF.Language.get('wcf.style.changeStyle') + '</a></li>').appendTo($('#footerNavigation > ul')).click($.proxy(this._showDialog, this));
+		
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+	},
+	
+	/**
+	 * Displays the style chooser dialog.
+	 */
+	_showDialog: function() {
+		if (this._dialog === null) {
+			this._dialog = $('<div id="styleChooser" />').hide().appendTo(document.body);
+			this._loadDialog();
+		}
+		else {
+			this._dialog.wcfDialog({
+				title: WCF.Language.get('wcf.style.changeStyle')
+			});
+		}
+	},
+	
+	/**
+	 * Loads the style chooser dialog.
+	 */
+	_loadDialog: function() {
+		this._proxy.setOption('data', {
+			actionName: 'getStyleChooser',
+			className: 'wcf\\data\\style\\StyleAction'
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		if (data.returnValues.actionName === 'changeStyle') {
+			window.location.reload();
+			return;
+		}
+		
+		this._dialog.html(data.returnValues.template);
+		this._dialog.find('li').addClass('pointer').click($.proxy(this._click, this));
+		
+		this._showDialog();
+	},
+	
+	/**
+	 * Changes user style.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		this._proxy.setOption('data', {
+			actionName: 'changeStyle',
+			className: 'wcf\\data\\style\\StyleAction',
+			objectIDs: [ $(event.currentTarget).data('styleID') ]
+		});
+		this._proxy.sendRequest();
+	}
+});
+
+/**
  * WCF implementation for nested sortables.
  */
 $.widget("ui.wcfNestedSortable", $.extend({}, $.ui.nestedSortable.prototype, {

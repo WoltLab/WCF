@@ -361,6 +361,19 @@ class WCF {
 		self::$tplObj = TemplateEngine::getInstance();
 		self::getTPL()->setLanguageID(self::getLanguage()->languageID);
 		$this->assignDefaultTemplateVariables();
+		
+		$this->initStyle();
+	}
+	
+	/**
+	 * Initializes the user's style.
+	 */
+	protected function initStyle() {
+		if (isset($_REQUEST['styleID'])) {
+			WCF::getSession()->setStyleID(intval($_REQUEST['styleID']));
+		}
+		
+		StyleHandler::getInstance()->changeStyle(WCF::getSession()->getStyleID());
 	}
 	
 	/**
