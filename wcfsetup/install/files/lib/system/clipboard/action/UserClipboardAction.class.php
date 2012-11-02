@@ -40,7 +40,7 @@ class UserClipboardAction implements IClipboardAction {
 			
 			case 'delete':
 				$userIDs = $this->validateDelete($objects);
-				if (!count($userIDs)) {
+				if (empty($userIDs)) {
 					return null;
 				}
 				
@@ -98,7 +98,7 @@ class UserClipboardAction implements IClipboardAction {
 		}
 		
 		// no valid users found
-		if (!count($userIDs)) return array();
+		if (empty($userIDs)) return array();
 		
 		// fetch user to group associations
 		$conditions = new PreparedStatementConditionBuilder();

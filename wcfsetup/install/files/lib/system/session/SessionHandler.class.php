@@ -597,7 +597,7 @@ class SessionHandler extends SingletonFactory {
 	 * @param	array<integer>	$userIDs
 	 */
 	public static function resetSessions(array $userIDs = array()) {
-		if (count($userIDs)) {
+		if (!empty($userIDs)) {
 			UserStorageHandler::getInstance()->reset($userIDs, 'groupIDs', 1);
 			UserStorageHandler::getInstance()->reset($userIDs, 'languageIDs', 1);
 		}

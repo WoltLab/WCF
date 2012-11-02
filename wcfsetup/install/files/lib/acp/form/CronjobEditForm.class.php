@@ -87,7 +87,7 @@ class CronjobEditForm extends CronjobAddForm {
 	public function readData() {
 		parent::readData();
 		
-		if (!count($_POST)) {
+		if (empty($_POST)) {
 			$this->className = $this->cronjob->className;
 			$this->description = $this->cronjob->description;
 			$this->startMinute = $this->cronjob->startMinute;

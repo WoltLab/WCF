@@ -31,9 +31,9 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 		$xpath = $xml->xpath();
 		
 		// fetch spiders
-		$spiders = $xpath->query('/spiderlist/spider');		
+		$spiders = $xpath->query('/spiderlist/spider');
 		
-		if (count($spiders)) {
+		if (!empty($spiders)) {
 			// delete old entries
 			$sql = "DELETE FROM wcf".WCF_N."_spider";
 			$statement = WCF::getDB()->prepareStatement($sql);

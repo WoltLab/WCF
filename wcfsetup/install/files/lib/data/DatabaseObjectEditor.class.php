@@ -51,7 +51,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 	 * @see	wcf\data\IEditableObject::update()
 	 */
 	public function update(array $parameters = array()) {
-		if (!count($parameters)) return;
+		if (empty($parameters)) return;
 		
 		// check whether any value changed or not
 		$update = false;
@@ -85,7 +85,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 	 * @see	wcf\data\IEditableObject::updateCounters()
 	 */
 	public function updateCounters(array $counters = array()) {
-		if (!count($counters)) return;
+		if (empty($counters)) return;
 		
 		$updateSQL = '';
 		$statementParameters = array();

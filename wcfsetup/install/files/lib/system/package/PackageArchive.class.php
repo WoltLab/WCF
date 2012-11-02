@@ -824,7 +824,7 @@ class PackageArchive {
 	 */
 	public function getConflictedExcludedPackages() {
 		$conflictedPackages = array();
-		if (count($this->excludedPackages) > 0) {
+		if (!empty($this->excludedPackages)) {
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("package IN (?)", array(array_keys($this->excludedPackages)));
 			

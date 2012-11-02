@@ -36,7 +36,7 @@ class PageMenuCacheBuilder implements ICacheBuilder {
 			$itemIDs[$row['menuItem']] = $row['menuItemID'];
 		}
 		
-		if (count($itemIDs) > 0) {
+		if (!empty($itemIDs)) {
 			// get needed menu items and build item tree
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("menu_item.menuItemID IN (?)", array($itemIDs));

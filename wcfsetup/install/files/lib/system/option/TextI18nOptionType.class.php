@@ -26,8 +26,7 @@ class TextI18nOptionType extends TextOptionType {
 	 * @see	wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
-		$useRequestData = (count($_POST)) ? true : false;
-		I18nHandler::getInstance()->assignVariables($useRequestData);
+		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
 		WCF::getTPL()->assign(array(
 			'option' => $option,

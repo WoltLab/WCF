@@ -143,7 +143,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		}
 		
 		// columns
-		if (count($this->columnLog)) {
+		if (!empty($this->columnLog)) {
 			$sql = "DELETE FROM	wcf".WCF_N."_package_installation_sql_log
 				WHERE		sqlTable = ?
 						AND sqlColumn = ?";
@@ -171,7 +171,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		}
 		
 		// indices
-		if (count($this->indexLog)) {
+		if (!empty($this->indexLog)) {
 			$sql = "DELETE FROM	wcf".WCF_N."_package_installation_sql_log
 				WHERE		sqlTable = ?
 						AND sqlIndex = ?";

@@ -50,7 +50,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * @param	array		$packageIDs
 	 */
 	public function updateCategory(array $categoryIDs = array(), array $packageIDs = array()) {
-		if (!count($categoryIDs)) {
+		if (empty($categoryIDs)) {
 			// get all categories
 			$sql = "SELECT	languageCategoryID
 				FROM	wcf".WCF_N."_language_category";
@@ -159,7 +159,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		
 		// get items
 		$items = array();
-		if (count($packageIDArray)) {
+		if (!empty($packageIDArray)) {
 			// sql conditions
 			$conditions->add("language_item.packageID IN (?)", array($packageIDArray));
 			$conditions->add("language_item.languageID = ?", array($this->languageID));
@@ -231,7 +231,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			$usedCategories[$category->getAttribute('name')] = 0;
 		}
 		
-		if (!count($usedCategories)) return;
+		if (empty($usedCategories)) return;
 		
 		// select existing categories
 		$conditions = new PreparedStatementConditionBuilder();
@@ -276,7 +276,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			}
 		}
 		
-		if (count($items)) {
+		if (!empty($items)) {
 			$existingItems = $statementParameters = array();
 			
 			// find existing items
@@ -307,7 +307,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				}
 			}
 			
-			if (count($statementParameters)) {
+			if (!empty($statementParameters)) {
 				if ($packageID) {
 					$sql = "INSERT INTO	wcf".WCF_N."_language_item
 								(languageID, languageItem, languageItemValue, languageCategoryID, packageID)
@@ -498,7 +498,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * @param 	array		$useCustom
 	 */
 	public function updateItems(array $items, LanguageCategory $category, $packageID = PACKAGE_ID, array $useCustom = array()) {
-		if (!count($items)) return;
+		if (empty($items)) return;
 		
 		// find existing language items
 		$languageItemList = new LanguageItemList();
@@ -522,7 +522,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		}
 		
 		// create remaining items
-		if (count($items)) {
+		if (!empty($items)) {
 			// bypass LanguageItemEditor::create() for performance reasons
 			$sql = "INSERT INTO	wcf".WCF_N."_language_item
 				(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
@@ -659,7 +659,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		}
 		
 		// save updates
-		if (count($updatedItems) > 0) {
+		if (!empty($updatedItems)) {
 			foreach ($updatedItems as $languageID => $categories) {
 				$language = new LanguageEditor($languageID);
 				
@@ -689,7 +689,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(0));
 		
-		if (count($languageIDs)) {
+		if (!empty($languageIDs)) {
 			$sql = '';
 			$statementParameters = array();
 			foreach ($languageIDs as $languageID) {

@@ -68,7 +68,7 @@ class PackageUpdateForm extends ACPForm {
 	public function validate() {
 		parent::validate();
 		
-		if (!count($this->updates)) {
+		if (empty($this->updates)) {
 			throw new UserInputException('updates');
 		}
 		
@@ -77,7 +77,7 @@ class PackageUpdateForm extends ACPForm {
 		try {
 			$this->packageUpdate->buildPackageInstallationStack();
 			$this->excludedPackages = $this->packageUpdate->getExcludedPackages();
-			if (count($this->excludedPackages)) {
+			if (!empty($this->excludedPackages)) {
 				throw new UserInputException('excludedPackages');
 			}
 		}

@@ -98,12 +98,12 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function validateUpdate() {
 		// read objects
-		if (!count($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
-		}
-		
-		if (!count($this->objects)) {
-			throw new ValidateActionException('Invalid object id');
+			
+			if (empty($this->objects)) {
+				throw new ValidateActionException('Invalid object id');
+			}
 		}
 		
 		try {
@@ -168,7 +168,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			}
 		}
 		else {
-			if (!count($this->objects)) {
+			if (empty($this->objects)) {
 				$this->readObjects();
 			}
 		}
@@ -244,7 +244,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		$conditionBuilder->add("username LIKE ?", array($searchString.'%'));
-		if (count($excludedSearchValues)) {
+		if (!empty($excludedSearchValues)) {
 			$conditionBuilder->add("username NOT IN (?)", array($excludedSearchValues));
 		}
 		

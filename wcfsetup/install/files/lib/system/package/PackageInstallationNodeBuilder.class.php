@@ -511,11 +511,12 @@ class PackageInstallationNodeBuilder {
 		}
 		
 		// insert nodes
-		if (count($pluginNodes) > 0) {
+		if (!empty($pluginNodes)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_node
 						(queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
 				VALUES		(?, ?, ?, ?, ?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
+			
 			foreach ($pluginNodes as $index => $nodeData) {
 				$statement->execute(array(
 					$this->installation->queue->queueID,
