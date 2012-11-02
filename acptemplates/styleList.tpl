@@ -38,32 +38,34 @@
 	<ol class="containerList styleList">
 		{foreach from=$objects item=style}
 			<li>
-				<div class="previewImage framed"><img src="{@$style->getPreviewImage()}" alt="" /></div>
-				<div class="styleInformation">
-					<hgroup class="containerHeadline">
-						<h1><a href="{link controller='StyleEdit' id=$style->styleID}{/link}">{$style->styleName}</a></h1>
-						{if $style->styleDescription}<h2>{$style->styleDescription}</h2>{/if}
-					</hgroup>
-					<ul class="buttonList" data-style-id="{@$style->styleID}">
-						<li><a href="{link controller='StyleEdit' id=$style->styleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><img src="{@$__wcf->getPath()}icon/edit.svg" class="icon16" alt="" /></a></li>
-						{if !$style->isDefault}
-							<li><img src="{@$__wcf->getPath()}icon/{if $style->disabled}disabled{else}enabled{/if}.svg" title="{lang}wcf.global.button.{if $style->disabled}enable{else}disable{/if}{/lang}" alt="" class="icon16 jsToggleButton jsTooltip" data-object-id="{@$style->styleID}" /></li>
-							<li><a title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip"><img src="{@$__wcf->getPath()}icon/default.svg" class="icon16 jsTooltip" alt="" /></a></li>
-							<li><a title="{lang}wcf.global.button.delete{/lang}" class="jsDelete jsTooltip" data-confirm-message="{lang}wcf.acp.style.delete.confirmMessage{/lang}"><img src="{@$__wcf->getPath()}icon/delete.svg" class="icon16" alt="" /></a></li>
-						{/if}
-					</ul>
-					<dl class="plain inlineDataList">
-						<dt>{lang}wcf.acp.style.users{/lang}</dt>
-						<dd>{#$style->users}</dd>
-					</dl>
-					<dl class="plain inlineDataList">
-						<dt>{lang}wcf.acp.style.styleVersion{/lang}</dt>
-						<dd>{$style->styleVersion} ({$style->styleDate})</dd>
-					</dl>
-					<dl class="plain inlineDataList">
-						<dt>{lang}wcf.acp.style.authorName{/lang}</dt>
-						<dd>{if $style->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$style->authorURL}">{$style->authorName}</a>{else}{$style->authorName}{/if}</dd>
-					</dl>
+				<div class="box64">
+					<span class="framed"><img src="{@$style->getPreviewImage()}" alt="" /></span>
+					<div class="details">
+						<hgroup class="containerHeadline">
+							<h1><a href="{link controller='StyleEdit' id=$style->styleID}{/link}">{$style->styleName}</a></h1>
+							{if $style->styleDescription}<h2>{$style->styleDescription}</h2>{/if}
+						</hgroup>
+						<ul class="buttonList" data-style-id="{@$style->styleID}">
+							<li><a href="{link controller='StyleEdit' id=$style->styleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><img src="{@$__wcf->getPath()}icon/edit.svg" class="icon16" alt="" /></a></li>
+							{if !$style->isDefault}
+								<li><img src="{@$__wcf->getPath()}icon/{if $style->disabled}disabled{else}enabled{/if}.svg" title="{lang}wcf.global.button.{if $style->disabled}enable{else}disable{/if}{/lang}" alt="" class="icon16 jsToggleButton jsTooltip" data-object-id="{@$style->styleID}" /></li>
+								<li><a title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip"><img src="{@$__wcf->getPath()}icon/default.svg" class="icon16 jsTooltip" alt="" /></a></li>
+								<li><a title="{lang}wcf.global.button.delete{/lang}" class="jsDelete jsTooltip" data-confirm-message="{lang}wcf.acp.style.delete.confirmMessage{/lang}"><img src="{@$__wcf->getPath()}icon/delete.svg" class="icon16" alt="" /></a></li>
+							{/if}
+						</ul>
+						<dl class="plain inlineDataList">
+							<dt>{lang}wcf.acp.style.users{/lang}</dt>
+							<dd>{#$style->users}</dd>
+						</dl>
+						<dl class="plain inlineDataList">
+							<dt>{lang}wcf.acp.style.styleVersion{/lang}</dt>
+							<dd>{$style->styleVersion} ({$style->styleDate})</dd>
+						</dl>
+						<dl class="plain inlineDataList">
+							<dt>{lang}wcf.acp.style.authorName{/lang}</dt>
+							<dd>{if $style->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$style->authorURL}">{$style->authorName}</a>{else}{$style->authorName}{/if}</dd>
+						</dl>
+					</div>
 				</div>
 			</li>
 		{/foreach}

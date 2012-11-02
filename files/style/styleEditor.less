@@ -35,35 +35,3 @@
 		display: block;
 	}
 }
-
-.styleList > li {
-	min-height: 150px;
-	
-	&:hover > .styleInformation > .buttonList {
-		opacity: 1;
-	}
-	
-	> .previewImage {
-		float: left;
-		text-align: center;
-		width: 230px;
-	}
-	
-	> .styleInformation {
-		margin-left: 250px;
-		position: relative;
-		
-		> .buttonList {
-			opacity: 0;
-			position: absolute;
-			right: 0;
-			top: 0;
-			
-			.transition(opacity, .1s);
-			
-			> li:not(:last-child) {
-				margin-right: 7px;
-			}
-		}
-	}
-} 

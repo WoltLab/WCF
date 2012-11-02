@@ -72,7 +72,7 @@
 		<item name="wcf.acp.style.iconPath"><![CDATA[Icon-Pfad]]></item>
 		<item name="wcf.acp.style.iconPath.description"><![CDATA[Wenn Ihr Stil eigene Icons benötigt, sollten diese in einem Unterordner des Ordners &bdquo;icons&ldquo; ablegen. Geben Sie hier den Pfad zu diesem Ordner an.]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Vorschaubild]]></item>
-		<item name="wcf.acp.style.image.description"><![CDATA[Laden Sie hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 225px x 140px anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
+		<item name="wcf.acp.style.image.description"><![CDATA[Laden Sie hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102px × 64px anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Bilder-Pfad]]></item>
 		<item name="wcf.acp.style.imagePath.description"><![CDATA[Wenn Ihr Stil eigene Grafiken benötigt, sollten diese in einem Unterordner des Ordners &bdquo;images&ldquo; ablegen. Geben Sie hier den Pfad zu diesem Ordner an.]]></item>
 		<item name="wcf.acp.style.license"><![CDATA[Lizenz]]></item>
