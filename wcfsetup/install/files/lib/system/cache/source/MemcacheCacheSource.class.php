@@ -75,7 +75,7 @@ class MemcacheCacheSource implements ICacheSource {
 	 * Saves modifications of the cache log.
 	 */
 	protected function updateLog() {
-		if (count($this->newLogEntries)) {
+		if (!empty($this->newLogEntries)) {
 			$sql = "DELETE FROM	wcf".WCF_N."_cache_resource
 				WHERE		cacheResource = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -92,7 +92,8 @@ class MemcacheCacheSource implements ICacheSource {
 			}
 			
 		}
-		if (count($this->obsoleteLogEntries)) {
+		
+		if (!empty($this->obsoleteLogEntries)) {
 			$sql = "DELETE FROM	wcf".WCF_N."_cache_resource
 				WHERE		cacheResource = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);

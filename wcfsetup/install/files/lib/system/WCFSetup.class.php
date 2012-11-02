@@ -373,7 +373,7 @@ class WCFSetup extends WCF {
 		
 		// sql
 		$system['sql']['value'] = array_keys(self::getAvailableDBClasses());
-		$system['sql']['result'] = count($system['sql']['value']) > 0;
+		$system['sql']['result'] = !empty($system['sql']['value']);
 		
 		// upload_max_filesize
 		$system['uploadMaxFilesize']['value'] = ini_get('upload_max_filesize');
@@ -493,7 +493,7 @@ class WCFSetup extends WCF {
 		if (isset($_POST['send'])) {
 			try {
 				// no languages selected
-				if (count(self::$selectedLanguages) == 0) {
+				if (empty(self::$selectedLanguages)) {
 					throw new UserInputException('selectedLanguages');
 				}
 				
@@ -696,7 +696,7 @@ class WCFSetup extends WCF {
 		// log sql queries
 		preg_match_all("~CREATE\s+TABLE\s+(\w+)~i", $sql, $matches);
 		
-		if (count($matches[1])) {
+		if (!empty($matches[1])) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_sql_log
 						(sqlTable)
 				VALUES		(?)";
@@ -829,7 +829,7 @@ class WCFSetup extends WCF {
 			$languages[] = $row['languageID'];
 		}
 		
-		if (count($languages) > 0) {
+		if (!empty($languages)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_language_to_package
 						(languageID)
 				VALUES		(?)";

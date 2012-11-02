@@ -45,7 +45,7 @@ class SitemapHandler extends SingletonFactory {
 	public function getTree() {
 		$tree = array();
 		
-		if (count($this->cache) > 0) {
+		if (!empty($this->cache)) {
 			foreach ($this->cache as $sitemap) {
 				$tree[] = $sitemap->sitemapName;
 			}

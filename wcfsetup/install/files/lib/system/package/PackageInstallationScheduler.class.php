@@ -265,11 +265,11 @@ class PackageInstallationScheduler {
 			}
 		}
 		
-		if (count($authorizationRequiredException)) {
+		if (!empty($authorizationRequiredException)) {
 			throw array_shift($authorizationRequiredException);
 		}
 		
-		if (count($systemExceptions)) {
+		if (!empty($systemExceptions)) {
 			throw array_shift($systemExceptions);
 		}
 		
@@ -284,7 +284,7 @@ class PackageInstallationScheduler {
 	public function getExcludedPackages() {
 		$excludedPackages = array();
 		
-		if (count($this->packageInstallationStack)) {
+		if (!empty($this->packageInstallationStack)) {
 			$packageInstallations = array();
 			$packageIdentifier = array();
 			foreach ($this->packageInstallationStack as $packageInstallation) {
@@ -292,7 +292,7 @@ class PackageInstallationScheduler {
 				$packageInstallations[] = $packageInstallation;
 				$packageIdentifier[] = $packageInstallation['package'];
 			}
-
+			
 			// check exclusions of the new packages
 			// get package update ids
 			$conditions = new PreparedStatementConditionBuilder();

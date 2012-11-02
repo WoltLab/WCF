@@ -154,7 +154,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 */
 	public function readObjects() {
 		if ($this->objectIDs !== null) {
-			if (!count($this->objectIDs)) {
+			if (empty($this->objectIDs)) {
 				return;
 			}
 			$sql = "SELECT	".(!empty($this->sqlSelects) ? $this->sqlSelects.($this->useQualifiedShorthand ? ',' : '') : '')."

@@ -100,7 +100,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		if (count($_POST) || count($_FILES)) {
+		if (!empty($_POST) || !empty($_FILES)) {
 			$this->submit();
 		}
 		

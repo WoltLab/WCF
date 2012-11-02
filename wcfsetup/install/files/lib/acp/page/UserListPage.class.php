@@ -77,7 +77,7 @@ class UserListPage extends SortablePage {
 		if (!empty($_REQUEST['id'])) {
 			$this->searchID = intval($_REQUEST['id']);
 			if ($this->searchID) $this->readSearchResult();
-			if (!count($this->userIDs)) {
+			if (empty($this->userIDs)) {
 				throw new IllegalLinkException();
 			}
 			$this->conditions->add("user_table.userID IN (?)", array($this->userIDs));
@@ -177,7 +177,7 @@ class UserListPage extends SortablePage {
 		}
 		
 		// get user data
-		if (count($userIDs)) {
+		if (!empty($userIDs)) {
 			$userToGroups = array();
 			
 			// get group ids

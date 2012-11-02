@@ -141,7 +141,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 					$row['packageVersions'][] = $row2['packageVersion'];
 				}
 				
-				if (count($row['packageVersions'])) {
+				if (!empty($row['packageVersions'])) {
 					// remove duplicates
 					$row['packageVersions'] = array_unique($row['packageVersions']);
 					// sort versions
@@ -149,7 +149,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 					// take lastest version
 					$row['packageVersion'] = end($row['packageVersions']);
 				}
-					
+				
 				// get installed instances
 				$sql = "SELECT	package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
 					FROM	wcf".WCF_N."_package package

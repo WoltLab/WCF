@@ -34,7 +34,7 @@ class PackageAutoUpdateListPage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (!count($_POST)) {
+		if (empty($_POST)) {
 			// refresh package database
 			PackageUpdateDispatcher::refreshPackageDatabase();
 		}

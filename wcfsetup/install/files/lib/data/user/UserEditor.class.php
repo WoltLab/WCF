@@ -159,7 +159,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 		}
 		
 		// insert new groups
-		if (count($groupIDs) > 0) {
+		if (!empty($groupIDs)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_user_to_group
 						(userID, groupID)
 				VALUES		(?, ?)";

@@ -99,7 +99,7 @@ class ClipboardProxyAction extends AbstractSecureAction {
 		}
 		
 		$objects = ClipboardHandler::getInstance()->getMarkedItems($typeID);
-		if (!count($objects) || !isset($objects[$this->typeName]) || !count($objects[$this->typeName])) {
+		if (empty($objects) || !isset($objects[$this->typeName]) || empty($objects[$this->typeName])) {
 			return null;
 		}
 		

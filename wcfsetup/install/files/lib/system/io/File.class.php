@@ -45,7 +45,7 @@ class File {
 	 */
 	public function __construct($filename, $mode = 'wb', $options = array()) {
 		$this->filename = $filename;
-		if (count($options)) {
+		if (!empty($options)) {
 			$context = stream_context_create($options);
 			$this->resource = fopen($filename, $mode, false, $context);
 		}

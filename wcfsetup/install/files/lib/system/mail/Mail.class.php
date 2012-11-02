@@ -58,7 +58,7 @@ class Mail {
 		if (!empty($cc)) $this->addCC($cc);
 		if (!empty($bcc)) $this->addBCC($bcc);
 		
-		if (count($attachments) > 0) $this->setAttachments($attachments);
+		if (!empty($attachments)) $this->setAttachments($attachments);
 	}
 	
 	/**

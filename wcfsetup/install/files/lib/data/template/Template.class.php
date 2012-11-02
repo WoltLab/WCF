@@ -104,7 +104,7 @@ class Template extends DatabaseObject {
 		}
 		
 		// get templates
-		if (!count($availableTemplateIDs)) return $results;
+		if (empty($availableTemplateIDs)) return $results;
 		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("template.templateID IN (?)", array($availableTemplateIDs));

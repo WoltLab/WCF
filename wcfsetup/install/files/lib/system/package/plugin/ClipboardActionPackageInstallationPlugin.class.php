@@ -127,7 +127,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
 		
-		if (count($this->pages)) {
+		if (!empty($this->pages)) {
 			// insert pages
 			$sql = "INSERT INTO	wcf".WCF_N."_clipboard_page
 						(pageClassName, packageID, actionID)

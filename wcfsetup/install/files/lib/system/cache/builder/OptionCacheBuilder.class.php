@@ -60,7 +60,7 @@ class OptionCacheBuilder implements ICacheBuilder {
 			$optionCategories[$row['categoryName']] = $row['categoryID'];
 		}
 		
-		if (count($optionCategories) > 0) {
+		if (!empty($optionCategories)) {
 			// get needed option categories
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("categoryID IN (?)", array($optionCategories));
@@ -98,7 +98,7 @@ class OptionCacheBuilder implements ICacheBuilder {
 			$optionIDs[$row['optionName']] = $row['optionID'];
 		}
 		
-		if (count($optionIDs) > 0) {
+		if (!empty($optionIDs)) {
 			// get option class from type
 			$className = 'wcf\data\option\Option';
 			if (!empty($type)) {

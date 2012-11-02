@@ -55,9 +55,9 @@ class MultiSelectOptionType extends SelectOptionType {
 	 * @see	wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
-		if (!is_array($value) || !count($value)) return false;
+		if (!is_array($value) || empty($value)) return false;
 		$value = ArrayUtil::trim($value);
-		if (!count($value)) return false;
+		if (empty($value)) return false;
 		
 		$conditions->add("option_value.userOption".$option->optionID." = ?", array(implode("\n", $value)));
 		return true;

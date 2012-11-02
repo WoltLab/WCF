@@ -66,7 +66,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		if (!count($_POST)) {
+		if (empty($_POST)) {
 			I18nHandler::getInstance()->setOptions('groupName', 1, $this->group->groupName, 'wcf.acp.group.group\d+');
 			$this->groupName = $this->group->groupName;
 			$options = $this->optionHandler->getCategoryOptions();
@@ -99,8 +99,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		$useRequestData = (count($_POST)) ? true : false;
-		I18nHandler::getInstance()->assignVariables($useRequestData);
+		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
 		WCF::getTPL()->assign(array(
 			'groupID' => $this->group->groupID,

@@ -70,7 +70,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			$styleList->readObjects();
 			$styles = $styleList->getObjects();
 			
-			if (count($styles)) {
+			if (!empty($styles)) {
 				$styleEditor = new StyleEditor($styles[0]);
 				$styleEditor->setAsDefault();
 			}

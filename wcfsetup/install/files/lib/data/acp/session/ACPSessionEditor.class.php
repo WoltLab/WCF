@@ -55,7 +55,9 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 	 */
 	public static function deleteUserSessions(array $userIDs = array()) {
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		if (count($userIDs)) $conditionBuilder->add('userID IN (?)', array($userIDs));
+		if (!empty($userIDs)) {
+			$conditionBuilder->add('userID IN (?)', array($userIDs));
+		}
 		
 		$sql = "DELETE FROM	".call_user_func(array(static::$baseClass, 'getDatabaseTableName'))."
 			".$conditionBuilder;

@@ -55,7 +55,7 @@ class UserGroupPermissionCacheBuilder implements ICacheBuilder {
 			$options[$row['optionName']] = $row['optionID'];
 		}
 		
-		if (count($options) > 0) {
+		if (!empty($options)) {
 			// get needed options
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("option_value.groupID IN (?)", array(explode(',', $groupIDs)));
