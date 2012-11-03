@@ -26,7 +26,7 @@ class CacheListPage extends AbstractPage {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.canViewLog');
+	public $neededPermissions = array('admin.system.canManageApplication');
 	
 	/**
 	 * indicates if cache was cleared
@@ -202,7 +202,7 @@ class CacheListPage extends AbstractPage {
 	 */
 	public function show() {
 		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.log.cache');
+		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.application.cache');
 		
 		parent::show();
 	}
