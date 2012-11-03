@@ -18,7 +18,7 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 	protected $optionCategoryStructure = array();
 	
 	/**
-	 * @see wcf\system\cache\ICacheBuilder::getData()
+	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
 		list($cache, $packageID) = explode('-', $cacheResource['cache']); 

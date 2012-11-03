@@ -13,7 +13,7 @@ use wcf\util\FileUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.template.group
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class TemplateGroupEditor extends DatabaseObjectEditor {
 	/**
@@ -61,7 +61,7 @@ class TemplateGroupEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
-	 * @see wcf\data\IEditableObject::delete()
+	 * @see	wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
 		// update children

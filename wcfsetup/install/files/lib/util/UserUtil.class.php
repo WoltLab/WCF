@@ -52,7 +52,7 @@ final class UserUtil {
 	
 	/**
 	 * Returns true, if the given e-mail is a valid address.
-	 * @see http://www.faqs.org/rfcs/rfc821.html
+	 * @see	http://www.faqs.org/rfcs/rfc821.html
 	 * 
 	 * @param	string		$email
 	 * @return	boolean

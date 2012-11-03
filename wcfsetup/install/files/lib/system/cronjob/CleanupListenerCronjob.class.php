@@ -15,7 +15,7 @@ use wcf\system\cleanup\CleanupHandler;
  */
 class CleanupListenerCronjob implements ICronjob {
 	/**
-	 * @see wcf\system\ICronjob::execute()
+	 * @see	wcf\system\ICronjob::execute()
 	 */
 	public function execute(Cronjob $cronjob) {
 		CleanupHandler::getInstance()->execute();

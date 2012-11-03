@@ -18,7 +18,7 @@ use wcf\util\StyleUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.style
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class StyleCompiler extends SingletonFactory {
 	/**

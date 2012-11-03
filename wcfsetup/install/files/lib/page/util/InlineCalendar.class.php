@@ -18,7 +18,7 @@ use wcf\util\DateUtil;
  */
 class InlineCalendar {
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public static function assignVariables() {
 		// create calendar data

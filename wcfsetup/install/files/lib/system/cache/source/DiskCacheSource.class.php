@@ -21,13 +21,13 @@ use wcf\util\FileUtil;
 class DiskCacheSource implements ICacheSource {
 	/**
 	 * loaded cache
-	 * @var array
+	 * @var	array
 	 */
 	protected $cache = null;
 	
 	/**
 	 * list of loaded resources
-	 * @var array
+	 * @var	array
 	 */
 	protected $loaded = array();
 	
