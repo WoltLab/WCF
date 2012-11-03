@@ -11,11 +11,11 @@ use wcf\system\menu\acp\ACPMenu;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.acp.style
  * @subpackage	acp.page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class StyleListPage extends MultipleLinkPage {
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.style.canEditStyle', 'admin.style.canDeleteStyle');
 	
@@ -35,7 +35,7 @@ class StyleListPage extends MultipleLinkPage {
 	public $sortOrder = 'ASC';
 	
 	/**
-	 * @see wcf\page\MultipleLinkPage::initObjectList()
+	 * @see	wcf\page\MultipleLinkPage::initObjectList()
 	 */
 	public function initObjectList() {
 		parent::initObjectList();
@@ -44,7 +44,7 @@ class StyleListPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
 		// set active menu item.
