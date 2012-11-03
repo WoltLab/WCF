@@ -31,7 +31,7 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 	protected $selected = array();
 	
 	/**
-	 * @see wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @see	wcf\system\template\IFunctionTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		if (isset($tagArgs['object']) && ($tagArgs['object'] instanceof DatabaseObjectList)) {

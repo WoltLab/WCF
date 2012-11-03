@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
 class MemcacheAdapter extends SingletonFactory {
 	/**
 	 * memcache object
-	 * @var Memcache
+	 * @var	Memcache
 	 */
 	private $memcache = null;
 	

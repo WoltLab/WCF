@@ -227,7 +227,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		AbstractForm::validate();

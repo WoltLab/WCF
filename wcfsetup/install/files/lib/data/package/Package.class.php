@@ -255,7 +255,7 @@ class Package extends DatabaseObject {
 	 * @param	string		$version2
 	 * @param	string		$operator
 	 * @return	boolean		result
-	 * @see http://www.php.net/manual/en/function.version-compare.php
+	 * @see	http://www.php.net/manual/en/function.version-compare.php
 	 */
 	public static function compareVersion($version1, $version2, $operator = null) {
 		$version1 = self::formatVersionForCompare($version1);
@@ -269,7 +269,7 @@ class Package extends DatabaseObject {
 	 * 
 	 * @param	string		$version
 	 * @return 	string		formatted version
-	 * @see 	http://www.php.net/manual/en/function.version-compare.php
+	 * @see		http://www.php.net/manual/en/function.version-compare.php
 	 */
 	private static function formatVersionForCompare($version) {
 		// remove spaces

@@ -9,7 +9,7 @@ namespace wcf\system\api\rest\response;
  * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.api.rest.response
- * @category 	Community Framework
+ * @category	Community Framework
  */
 interface IRESTfulResponse {
 	/**

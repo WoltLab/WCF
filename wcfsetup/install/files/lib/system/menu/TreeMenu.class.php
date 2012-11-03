@@ -34,7 +34,7 @@ abstract class TreeMenu extends SingletonFactory {
 	public $menuItems = null;
 	
 	/**
-	 * @see wcf\system\SingletonFactory::init()
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get menu items from cache

@@ -265,7 +265,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	}
 	
 	/**
-	 * @see wcf\data\IEditableCachedObject::resetCache()
+	 * @see	wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		SessionHandler::resetSessions();

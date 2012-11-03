@@ -92,7 +92,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	
 	/**
 	 * options of the active category
-	 * @var array
+	 * @var	array
 	 */
 	public $activeOptions = array();
 	
@@ -352,7 +352,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -378,7 +378,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -408,7 +408,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::show()
+	 * @see	wcf\form\IForm::show()
 	 */
 	public function show() {
 		// set active menu item

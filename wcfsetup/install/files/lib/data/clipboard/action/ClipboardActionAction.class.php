@@ -14,7 +14,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  */
 class ClipboardActionAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\clipboard\action\ClipboardActionEditor';
 }

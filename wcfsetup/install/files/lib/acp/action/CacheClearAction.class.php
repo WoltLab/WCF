@@ -23,12 +23,12 @@ use wcf\util\HeaderUtil;
  */
 class CacheClearAction extends AbstractAction {
 	/**
-	 * @see wcf\action\AbstractAction::$neededPermissions
+	 * @see	wcf\action\AbstractAction::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canViewLog');
 	
 	/**
-	 * @see wcf\action\IAction::execute()
+	 * @see	wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();
