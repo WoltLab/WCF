@@ -177,7 +177,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -192,7 +192,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::show()
+	 * @see	wcf\form\IForm::show()
 	 */
 	public function show() {
 		// set active menu item

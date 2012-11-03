@@ -14,7 +14,7 @@ use wcf\data\cronjob\Cronjob;
  */
 class HourlyCleanUpCronjob extends AbstractCronjob {
 	/**
-	 * @see wcf\system\cronjob\ICronjob::execute()
+	 * @see	wcf\system\cronjob\ICronjob::execute()
 	 */
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);

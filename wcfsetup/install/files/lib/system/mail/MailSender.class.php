@@ -14,7 +14,7 @@ namespace wcf\system\mail;
 abstract class MailSender {
 	/**
 	 * unique mail server instance
-	 * @var wcf\system\mail\MailSender
+	 * @var	wcf\system\mail\MailSender
 	 */
 	protected static $instance = null;
 	

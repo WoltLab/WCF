@@ -13,11 +13,11 @@ use wcf\system\template\TemplateScriptingCompiler;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class IconPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 	/**
-	 * @see wcf\system\template\ITemplatePluginPrefilter::execute()
+	 * @see	wcf\system\template\ITemplatePluginPrefilter::execute()
 	 */
 	public function execute($templateName, $sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');

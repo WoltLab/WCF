@@ -16,13 +16,13 @@ use wcf\util\FileUtil;
 class MemcacheCacheSource implements ICacheSource {
 	/**
 	 * MemcacheAdapter object
-	 * @var wcf\system\cache\source\MemcacheAdapter
+	 * @var	wcf\system\cache\source\MemcacheAdapter
 	 */
 	protected $adapter = null;
 	
 	/**
 	 * list of cache resources
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	protected $cacheResources = null;
 	
@@ -177,7 +177,7 @@ class MemcacheCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\ICacheSource::close()
+	 * @see	wcf\system\cache\source\ICacheSource::close()
 	 */
 	public function close() {
 		// update log

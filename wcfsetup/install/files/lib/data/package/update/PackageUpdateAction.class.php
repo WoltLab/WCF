@@ -14,7 +14,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  */
 class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\package\update\PackageUpdateEditor';
 }

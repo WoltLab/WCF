@@ -79,7 +79,7 @@ class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	
 	/**
 	 * Executes StringUtil::encodeHTML on the given text if disableEncoding is false.
-	 * @see wcf\util\StringUtil::encodeHTML()
+	 * @see	wcf\util\StringUtil::encodeHTML()
 	 */
 	protected function encodeHTML($text) {
 		if (!$this->disableEncoding) {

@@ -8,13 +8,13 @@ use wcf\system\WCF;
 
 /**
  * This action provides RESTful access to database objects.
- *
- * @author		Jeffrey Reichardt
+ * 
+ * @author	Jeffrey Reichardt
  * @copyright	2001-2012 WoltLab GmbH
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action
- * @category 	Community Framework
+ * @category	Community Framework
  */
 final class APIAction extends AbstractAjaxAction {
 	/**
@@ -24,7 +24,7 @@ final class APIAction extends AbstractAjaxAction {
 	public $neededModules = array('MODULE_API_ACCESS');
 	
 	/**
-	 * @see wcf\action\IAction::execute()
+	 * @see	wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();
@@ -33,8 +33,8 @@ final class APIAction extends AbstractAjaxAction {
 		
 		if (!isset($routeData['className']) || !isset($routeData['id'])) {
 			throw new IllegalLinkException();
-		}		
-			
+		}
+		
 		// validate class name
 		if (!preg_match('~^[a-z0-9_]+$~i', $routeData['className'])) {
 			throw new AJAXException("Illegal class name '".$routeData['className']."'");
@@ -48,7 +48,7 @@ final class APIAction extends AbstractAjaxAction {
 		}
 		else if (!class_exists($classData['className'])) {
 			throw new AJAXException("unable to find class '".$classData['className']."'");
-		}		
+		}
 		
 		//create object
 		$object = new $classData['className']($routeData['id']);
@@ -67,7 +67,7 @@ final class APIAction extends AbstractAjaxAction {
 	}
 	
 	/**
-	 * @see wcf\action\AbstractAction::executed()
+	 * @see	wcf\action\AbstractAction::executed()
 	 */
 	protected function executed() {
 		$this->sendJsonResponse($this->data);
@@ -80,7 +80,7 @@ final class APIAction extends AbstractAjaxAction {
 	 */
 	protected function prune(IRESTfulResponse $object) {
 		$prunedArray = array();
-	
+		
 		foreach($object->getResponseFields() as $fieldName) {
 			if ($object->$fieldName) {
 				$prunedArray[$fieldName] = $object->$fieldName;

@@ -31,7 +31,7 @@ abstract class AbstractAction implements IAction {
 	
 	/**
 	 * needed permissions to execute this action
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	public $neededPermissions = array();
 	

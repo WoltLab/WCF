@@ -29,7 +29,7 @@ class IndexPage extends AbstractPage {
 	
 	/**
 	 * health status data
-	 * @var array
+	 * @var	array
 	 */
 	public $healthDetails = array('error' => array(), 'warning' => array(), 'info' => array());
 	

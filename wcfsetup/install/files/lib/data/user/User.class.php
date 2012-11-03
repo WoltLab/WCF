@@ -44,7 +44,7 @@ final class User extends DatabaseObject implements IRouteController {
 	
 	/**
 	 * date time zone object
-	 * @var DateTimeZone
+	 * @var	DateTimeZone
 	 */
 	protected $timezoneObj = null;
 	
