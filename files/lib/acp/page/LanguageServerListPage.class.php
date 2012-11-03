@@ -12,21 +12,21 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class LanguageServerListPage extends SortablePage {
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.language.canEditServer', 'admin.language.canDeleteServer');
 	
 	/**
-	 * @see wcf\page\SortablePage::$defaultSortField
+	 * @see	wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'serverURL';
 	
 	/**
-	 * @see wcf\page\SortablePage::$validSortFields
+	 * @see	wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('languageServerID', 'serverURL');
 	
@@ -36,7 +36,7 @@ class LanguageServerListPage extends SortablePage {
 	public $objectListClassName = 'wcf\data\language\server\LanguageServerList';
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -47,7 +47,7 @@ class LanguageServerListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
 		// enable menu item

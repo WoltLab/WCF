@@ -17,16 +17,16 @@ use wcf\util\XML;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.acp.language
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class LanguageAddForm extends ACPForm {
 	/**
-	 * @see wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language.add';
 	
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.language.canAddLanguage');
 	
@@ -40,7 +40,7 @@ class LanguageAddForm extends ACPForm {
 	public $languages = array();
 	
 	/**
-	 * @see wcf\form\Form::readFormParameters()
+	 * @see	wcf\form\Form::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -64,7 +64,7 @@ class LanguageAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::validate()
+	 * @see	wcf\form\Form::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -113,7 +113,7 @@ class LanguageAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\Form::save()
+	 * @see	wcf\form\Form::save()
 	 */
 	public function save() {
 		parent::save();
@@ -158,7 +158,7 @@ class LanguageAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::readData()
+	 * @see	wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -167,7 +167,7 @@ class LanguageAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::assignVariables()
+	 * @see	wcf\page\Page::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -182,7 +182,7 @@ class LanguageAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\Page::show()
+	 * @see	wcf\page\Page::show()
 	 */
 	public function show() {
 		// check master password
