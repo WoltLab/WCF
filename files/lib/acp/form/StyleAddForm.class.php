@@ -92,8 +92,7 @@ class StyleAddForm extends ACPForm {
 	
 	/**
 	 * list of global variables
-	 * 
-	 * @var unknown_type
+	 * @var	array
 	 */
 	public $globals = array();
 	
@@ -116,7 +115,7 @@ class StyleAddForm extends ACPForm {
 	public $license = '';
 	
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.style.canAddStyle');
 	
