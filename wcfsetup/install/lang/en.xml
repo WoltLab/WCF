@@ -144,7 +144,6 @@
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Add new cron job]]></item>
 		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[List cron jobs]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Logs]]></item>
-		<item name="wcf.acp.menu.link.log.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Sessions]]></item>
 		<item name="wcf.acp.menu.link.log.cronjob"><![CDATA[Cron jobs]]></item>
 		<item name="wcf.acp.menu.link.group"><![CDATA[User groups]]></item>

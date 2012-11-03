@@ -148,7 +148,7 @@
 		
 		<acpmenuitem name="wcf.acp.menu.link.application.cache">
 			<link>index.php/CacheList/</link>
-			<parent>wcf.acp.menu.link.log</parent>
+			<parent>wcf.acp.menu.link.application</parent>
 			<permissions>admin.system.canManageApplication</permissions>
 		</acpmenuitem>
 		<!-- /application -->

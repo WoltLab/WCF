@@ -139,12 +139,14 @@
 	</category>
 	
 	<category name="wcf.acp.menu">
+		<item name="wcf.acp.menu.link.application"><![CDATA[Applikationen]]></item>
+		<item name="wcf.acp.menu.link.application.cache"><![CDATA[Cache]]></item>
+		<item name="wcf.acp.menu.link.application.management"><![CDATA[Applikationen verwalten]]></item>
 		<item name="wcf.acp.menu.link.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Aufgabe hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[Aufgaben auflisten]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Protokoll]]></item>
-		<item name="wcf.acp.menu.link.log.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Sitzungen]]></item>
 		<item name="wcf.acp.menu.link.log.cronjob"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.group"><![CDATA[Benutzergruppen]]></item>
