@@ -1,8 +1,10 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\cronjob\CronjobAction;
+use wcf\data\cronjob\CronjobEditor;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 use wcf\util\CronjobUtil;
 use wcf\util\StringUtil;
@@ -77,10 +79,21 @@ class CronjobAddForm extends ACPForm {
 	public $startDow = '*';
 	
 	/**
+	 * @see	wcf\page\IPage::readParameters()
+	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		I18nHandler::getInstance()->register('description');
+	}
+	
+	/**
 	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
+		
+		I18nHandler::getInstance()->readValues();
 		
 		if (isset($_POST['className'])) $this->className = StringUtil::trim($_POST['className']);
 		if (isset($_POST['description'])) $this->description = StringUtil::trim($_POST['description']);
@@ -104,6 +117,16 @@ class CronjobAddForm extends ACPForm {
 		
 		if (!class_exists($this->className)) {
 			throw new UserInputException('className', 'doesNotExist');
+		}
+		
+		// validate description
+		if (!I18nHandler::getInstance()->validateValue('description')) {
+			if (I18nHandler::getInstance()->isPlainValue('description')) {
+				throw new UserInputException('description');
+			}
+			else {
+				throw new UserInputException('description', 'multilingual');
+			}
 		}
 		
 		try {
@@ -140,6 +163,19 @@ class CronjobAddForm extends ACPForm {
 		
 		$this->objectAction = new CronjobAction(array(), 'create', array('data' => $data));
 		$this->objectAction->executeAction();
+		
+		if (!I18nHandler::getInstance()->isPlainValue('description')) {
+			$returnValues = $this->objectAction->getReturnValues();
+			$cronjobID = $returnValues['returnValues']->cronjobID;
+			I18nHandler::getInstance()->save('description', 'wcf.acp.cronjob.description.cronjob'.$cronjobID, 'wcf.acp.cronjob', $this->packageID);
+			
+			// update group name
+			$cronjobEditor = new CronjobEditor($returnValues['returnValues']);
+			$cronjobEditor->update(array(
+				'description' => 'wcf.acp.cronjob.description.cronjob'.$cronjobID
+			));
+		}
+		
 		$this->saved();
 		
 		// reset values
@@ -157,6 +193,8 @@ class CronjobAddForm extends ACPForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
+		
+		I18nHandler::getInstance()->assignVariables();
 		
 		WCF::getTPL()->assign(array(
 			'className' => $this->className,

@@ -35,7 +35,7 @@
 							<tr>
 								<td class="columnID columnCronjobID"><p>{@$cronjobLog->cronjobID}</p></td>
 								<td class="columnTitle columnClassName"><p>{$cronjobLog->className}</p></td>
-								<td class="columnText columnDescription"><p>{$cronjobLog->description}</p></td>
+								<td class="columnText columnDescription"><p>{$cronjobLog->description|language}</p></td>
 								{if $cronjobLog->success}
 									<td class="columnDate columnExecTime"><p>{@$cronjobLog->execTime|time} {lang}wcf.acp.cronjob.log.success{/lang}</p></td>
 								{elseif $cronjobLog->error}
@@ -46,7 +46,7 @@
 								{else}
 									<td class="columnDate columnExecTime"></td>
 								{/if}
-							
+								
 								{event name='columns'}
 							</tr>
 						{/foreach}

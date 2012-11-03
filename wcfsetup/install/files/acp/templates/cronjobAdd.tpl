@@ -1,5 +1,7 @@
 {include file='header' pageTitle='wcf.acp.cronjob.'|concat:$action}
 
+{include file='multipleLanguageInputJavascript' elementIdentifier='description'}
+
 <header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.cronjob.{$action}{/lang}</h1>
@@ -50,10 +52,19 @@
 				</dd>
 			</dl>
 			
-			<dl>
+			<dl{if $errorField == 'description'} class="formError"{/if}>
 				<dt><label for="description">{lang}wcf.acp.cronjob.description{/lang}</label></dt>
 				<dd>
 					<input type="text" id="description" name="description" value="{$description}" class="long" />
+					{if $errorField == 'description'}
+						<small class="innerError">
+							{if $errorType == 'empty' || $errorType == 'multilingual'}
+								{lang}wcf.global.form.error.{@$errorType}{/lang}
+							{else}
+								{lang}wcf.acp.cronjob.className.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
 				</dd>
 			</dl>
 			

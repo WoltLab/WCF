@@ -3,7 +3,8 @@
 	<import>
 		<cronjob>
 			<classname>wcf\system\cronjob\GetUpdateInfoCronjob</classname>
-			<description>Gets update package information</description>
+			<description><![CDATA[Updates package information]]></description>
+			<description language="de"><![CDATA[Aktualisiert Paket-Informationen]]></description>
 			<startminute>0</startminute>
 			<starthour>2</starthour>
 			<startdom>*/2</startdom>
@@ -16,7 +17,8 @@
 		
 		<cronjob>
 			<classname>wcf\system\cronjob\RefreshSearchRobotsCronjob</classname>
-			<description>Refreshes list of search robots</description>
+			<description><![CDATA[Refreshes list of search robots]]></description>
+			<description language="de"><![CDATA[Aktualisiert die Liste der Suchroboter]]></description>
 			<startminute>0</startminute>
 			<starthour>3</starthour>
 			<startdom>1</startdom>
@@ -29,7 +31,8 @@
 		
 		<cronjob>
 			<classname>wcf\system\cronjob\DailyCleanUpCronjob</classname>
-			<description>Daily Cleanup</description>
+			<description><![CDATA[Executes daily Cleanup]]></description>
+			<description language="de"><![CDATA[Führt tägliche Aufräumarbeiten aus]]></description>
 			<startminute>0</startminute>
 			<starthour>1</starthour>
 			<startdom>*</startdom>
@@ -42,7 +45,8 @@
 		
 		<cronjob>
 			<classname>wcf\system\cronjob\HourlyCleanUpCronjob</classname>
-			<description>Hourly Cleanup</description>
+			<description><![CDATA[Executes hourly Cleanup]]></description>
+			<description language="de"><![CDATA[Führt stündliche Aufräumarbeiten aus]]></description>
 			<startminute>0</startminute>
 			<starthour>*</starthour>
 			<startdom>*</startdom>
@@ -55,7 +59,8 @@
 		
 		<cronjob>
 			<classname>wcf\system\cronjob\SessionCleanUpCronjob</classname>
-			<description>Deletes expired sessions</description>
+			<description><![CDATA[Deletes expired sessions]]></description>
+			<description language="de"><![CDATA[Löscht abgelaufene Sessions]]></description>
 			<startminute>*/30</startminute>
 			<starthour>*</starthour>
 			<startdom>*</startdom>
