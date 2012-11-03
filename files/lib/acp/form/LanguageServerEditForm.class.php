@@ -14,27 +14,27 @@ use wcf\system\exception\IllegalLinkException;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class LanguageServerEditForm extends LanguageServerAddForm {
 	/**
-	 * @see wcf\page\AbstractPage::$templateName
+	 * @see	wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'languageServerAdd';
 	
 	/**
-	 * @see wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language.server';
 	
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.language.canAddServer');
 	
 	/**
 	 * language server id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $languageServerID = 0;
 	
@@ -45,7 +45,7 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 	public $languageServer = null;
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -58,7 +58,7 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -75,7 +75,7 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -86,7 +86,7 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
