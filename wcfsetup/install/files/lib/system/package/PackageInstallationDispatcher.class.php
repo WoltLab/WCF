@@ -288,6 +288,8 @@ class PackageInstallationDispatcher {
 				ApplicationEditor::create(array(
 					'domainName' => $host,
 					'domainPath' => $path,
+					'cookieDomain' => $host,
+					'cookiePath' => $path,
 					'packageID' => $package->packageID
 				));
 			}
