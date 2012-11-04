@@ -1,6 +1,6 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\application\ApplicationList;
+use wcf\data\application\ViewableApplicationList;
 use wcf\data\application\group\ApplicationGroupAction;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -31,7 +31,7 @@ class ApplicationGroupAddForm extends ACPForm {
 	
 	/**
 	 * list of available applications
-	 * @var	array<wcf\data\application\Application>
+	 * @var	array<wcf\data\application\ViewableApplication>
 	 */
 	public $availableApplications = array();
 	
@@ -59,11 +59,8 @@ class ApplicationGroupAddForm extends ACPForm {
 	 * Reads the list of available applications.
 	 */
 	protected function readAvailableApplications() {
-		$applicationList = new ApplicationList();
-		$applicationList->sqlSelects = "package.package, package.packageName";
-		$applicationList->sqlJoins = "LEFT JOIN wcf".WCF_N."_package package ON (package.packageID = application.packageID)";
+		$applicationList = new ViewableApplicationList();
 		$applicationList->getConditionBuilder()->add("application.groupID IS NULL");
-		$applicationList->getConditionBuilder()->add("application.packageID <> ? ", array(1));
 		$applicationList->sqlLimit = 0;
 		$applicationList->readObjects();
 		
@@ -125,11 +122,11 @@ class ApplicationGroupAddForm extends ACPForm {
 				$application = $this->availableApplications[$packageID];
 				
 				// cannot group two or more applications of the same type
-				if (in_array($application->package, $packages)) {
+				if (in_array($application->getPackage()->package, $packages)) {
 					throw new UserInputException('applications', 'duplicate');
 				}
 				
-				$packages[] = $application->package;
+				$packages[] = $application->getPackage()->package;
 			}
 		}
 	}
@@ -153,6 +150,9 @@ class ApplicationGroupAddForm extends ACPForm {
 		// reset values
 		$this->applications = array();
 		$this->groupName = '';
+		
+		// reload available applications
+		$this->readAvailableApplications();
 		
 		// show success.
 		WCF::getTPL()->assign(array(

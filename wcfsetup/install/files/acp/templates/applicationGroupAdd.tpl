@@ -46,47 +46,52 @@
 		<fieldset{if $errorField == 'applications'} class="formError"{/if}>
 			<legend>{lang}wcf.acp.application.group.availableApplications{/lang}</legend>
 			
-			<div class="tabularBox">
-				<table class="table">
-					<thead>
-						<tr>
-							<th class="columnID columnPackageID" colspan="2">{lang}wcf.global.objectID{/lang}</th>
-							<th class="columnText columnPackageName">{lang}wcf.acp.package.name{/lang}</th>
-							<th class="columnText columnDomainName">{lang}wcf.acp.application.domainName{/lang}</th>
-							<th class="columnText columnDomainPath">{lang}wcf.acp.application.domainPath{/lang}</th>
-							<th class="columnText columnCookieDomain">{lang}wcf.acp.application.cookieDomain{/lang}</th>
-							<th class="columnText columnCookiePath">{lang}wcf.acp.application.cookiePath{/lang}</th>
-							
-							{event name='headColumns'}
-						</tr>
-					</thead>
-					
-					<tbody>
-						{foreach from=$availableApplications item=application}
-							<tr data-package="{$application->package}">
-								<td class="columnIcon"><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit.svg" alt="" class="icon16 jsTooltip" title="{lang}wcf.global.button.edit{/lang}" /></a></td>
-								<td class="columnID columnPackageID">{#$application->packageID}</td>
-								<td class="columnText columnPackageName"><a href="{link controller='PackageView' id=$application->packageID}{/link}">{lang}{$application->packageName}{/lang}</a></td>
-								<td class="columnText columnDomainName">{$application->domainName}</td>
-								<td class="columnText columnDomainPath">{$application->domainPath}</td>
-								<td class="columnText columnCookieDomain">{$application->cookieDomain}</td>
-								<td class="columnText columnCookiePath">{$application->cookiePath}</td>
+			{if $availableApplications|count > 1}
+				<div class="tabularBox">
+					<table class="table">
+						<thead>
+							<tr>
+								<th class="columnID columnPackageID" colspan="3">{lang}wcf.global.objectID{/lang}</th>
+								<th class="columnText columnPackageName">{lang}wcf.acp.package.name{/lang}</th>
+								<th class="columnText columnDomainName">{lang}wcf.acp.application.domainName{/lang}</th>
+								<th class="columnText columnDomainPath">{lang}wcf.acp.application.domainPath{/lang}</th>
+								<th class="columnText columnCookieDomain">{lang}wcf.acp.application.cookieDomain{/lang}</th>
+								<th class="columnText columnCookiePath">{lang}wcf.acp.application.cookiePath{/lang}</th>
 								
-								{event name='columns'}
+								{event name='headColumns'}
 							</tr>
-						{/foreach}
-					</tbody>
-				</table>
-			</div>
-			
-			{if $errorField == 'applications'}
-				<small class="innerError">
-					{if $errorType == 'empty'}
-						{lang}wcf.global.form.error.empty{/lang}
-					{else}
-						{lang}wcf.acp.application.group.applications.error.{$errorType}{/lang}
-					{/if}
-				</small>
+						</thead>
+						
+						<tbody>
+							{foreach from=$availableApplications item=application}
+								<tr data-package="{$application->package}">
+									<td class="columnMark"><input type="checkbox" name="applications[]" value="{@$application->packageID}"{if $application->packageID|in_array:$applications} checked="checked"{/if} /></td>
+									<td class="columnIcon"><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit.svg" alt="" class="icon16 jsTooltip" title="{lang}wcf.global.button.edit{/lang}" /></a></td>
+									<td class="columnID columnPackageID">{#$application->packageID}</td>
+									<td class="columnText columnPackageName"><a href="{link controller='PackageView' id=$application->packageID}{/link}">{lang}{$application->getPackage()->getName()}{/lang}</a></td>
+									<td class="columnText columnDomainName">{$application->domainName}</td>
+									<td class="columnText columnDomainPath">{$application->domainPath}</td>
+									<td class="columnText columnCookieDomain">{$application->cookieDomain}</td>
+									<td class="columnText columnCookiePath">{$application->cookiePath}</td>
+									
+									{event name='columns'}
+								</tr>
+							{/foreach}
+						</tbody>
+					</table>
+				</div>
+				
+				{if $errorField == 'applications'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.application.group.applications.error.{$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+			{else}
+				<p class="info">{lang}wcf.acp.application.group.noAvailableApplications{/lang}</p>
 			{/if}
 		</fieldset>
 		

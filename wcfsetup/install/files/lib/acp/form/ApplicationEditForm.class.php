@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationAction;
+use wcf\data\application\ViewableApplication;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\Regex;
@@ -26,8 +27,8 @@ class ApplicationEditForm extends ACPForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.application';
 	
 	/**
-	 * application object
-	 * @var	wcf\data\application\Application
+	 * viewable application object
+	 * @var	wcf\data\application\ViewableApplication
 	 */
 	public $application = null;
 	
@@ -78,7 +79,7 @@ class ApplicationEditForm extends ACPForm {
 		parent::readParameters();
 		
 		if (isset($_REQUEST['id'])) $this->packageID = intval($_REQUEST['id']);
-		$this->application = new Application($this->packageID);
+		$this->application = new ViewableApplication(new Application($this->packageID));
 		if (!$this->application->packageID) {
 			throw new IllegalLinkException();
 		}
@@ -167,7 +168,7 @@ class ApplicationEditForm extends ACPForm {
 		parent::save();
 		
 		// save application
-		$this->objectAction = new ApplicationAction(array($this->application), 'update', array('data' => array(
+		$this->objectAction = new ApplicationAction(array($this->application->getDecoratedObject()), 'update', array('data' => array(
 			'cookieDomain' => $this->cookieDomain,
 			'cookiePath' => $this->cookiePath,
 			'domainName' => $this->domainName,

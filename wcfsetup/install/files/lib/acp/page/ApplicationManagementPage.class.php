@@ -1,6 +1,6 @@
 <?php
 namespace wcf\acp\page;
-use wcf\data\application\ApplicationList;
+use wcf\data\application\ViewableApplicationList;
 use wcf\data\application\group\ApplicationGroupList;
 use wcf\data\application\group\ViewableApplicationGroup;
 use wcf\page\AbstractPage;
@@ -42,10 +42,7 @@ class ApplicationManagementPage extends AbstractPage {
 	public function readData() {
 		parent::readData();
 		
-		$applicationList = new ApplicationList();
-		$applicationList->sqlSelects = "package.packageName";
-		$applicationList->sqlJoins = "LEFT JOIN wcf".WCF_N."_package package ON (package.packageID = application.packageID)";
-		$applicationList->getConditionBuilder()->add("application.packageID <> ?", array(1)); // exclude WCF pseudo-application
+		$applicationList = new ViewableApplicationList();
 		$applicationList->sqlLimit = 0;
 		$applicationList->readObjects();
 		
