@@ -3,6 +3,8 @@ namespace wcf\data\application\group;
 use wcf\data\application\ApplicationAction;
 use wcf\data\application\ApplicationList;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\cache\CacheHandler;
+use wcf\system\language\LanguageFactory;
 
 /**
  * Executes application group-related actions.
@@ -56,6 +58,13 @@ class ApplicationGroupAction extends AbstractDatabaseObjectAction {
 		
 		$applicationAction = new ApplicationAction($applicationList->getObjects(), 'ungroup');
 		$applicationAction->executeAction();
+		
+		// delete language cache and compiled templates
+		LanguageFactory::getInstance()->deleteLanguageCache();
+		
+		// delete WCF cache
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', '*.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache/templateListener', '*.php');
 		
 		return parent::delete();
 	}
