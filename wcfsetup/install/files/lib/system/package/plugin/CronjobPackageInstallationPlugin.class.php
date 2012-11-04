@@ -20,6 +20,22 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	public $className = 'wcf\data\cronjob\CronjobEditor';
 	
 	/**
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::getElement()
+	 */
+	protected function getElement(\DOMXpath $xpath, array &$elements, \DOMElement $element) {
+		if ($element->tagName == 'description') {
+			if (!isset($elements['description'])) {
+				$elements['description'] = array();
+			}
+			
+			$elements['description'][$element->getAttribute('language')] = $element->nodeValue;
+		}
+		else {
+			parent::getElement($xpath, $elements, $element);
+		}
+	}
+	
+	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
