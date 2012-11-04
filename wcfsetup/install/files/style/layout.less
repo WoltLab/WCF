@@ -426,11 +426,77 @@
 		
 		&:hover {
 			background-color: @wcfContainerHoverBackgroundColor;
+			
+			> div > .details > .buttonList {
+				opacity: 1;
+			}
+		}
+		
+		> div > .details {
+			position: relative;
+			
+			> .buttonList {
+				opacity: 0;
+				position: absolute;
+				right: 0;
+				top: 0;
+				
+				.transition(opacity, .1s);
+			}
 		}
 	}
 	
 	> * > li {
 		padding: @wcfGapMedium @wcfGapLarge;
+	}
+	
+	&.doubleColumned {
+		overflow: hidden;
+		
+		> li {
+			padding: 0;
+			float: left;
+			width: 50%;
+			height: 90px;
+			overflow: hidden;
+			
+			&:nth-child(even) {
+				float: right;
+			}
+			
+			&:nth-child(4n), &:nth-child(4n+1) {
+				background-color: @wcfContainerBackgroundColor;
+			}
+			
+			&:nth-child(4n+2), &:nth-child(4n+3) {
+				background-color: @wcfContainerAccentBackgroundColor;
+			}
+			
+			&:hover {
+				background-color: @wcfContainerHoverBackgroundColor;
+			}
+			
+			> div {
+				padding: 14px 21px;
+			}
+		}
+		
+		&:after {
+			content: "";
+			display: table;
+			clear: left;
+		}
+	}
+	
+	&.styleList > li > div.box64 {
+		> span {
+			text-align: center;
+			width: 110px;
+		}
+		
+		> div {
+			margin-left: 115px;
+		}
 	}
 }
 
@@ -743,20 +809,20 @@
 		&.columnMark,
 		&.columnStatus {
 			text-align: center;
-			width: 1% !important;
+			width: 1px !important;
 			white-space: nowrap;
 		}
 		
 		&.columnDigits,
 		&.columnID {
 			text-align: right;
-			width: 1% !important;
+			width: 1px !important;
 			white-space: nowrap;
 		}
 		
 		&.columnIcon {
 			text-align: left;
-			width: 1% !important;
+			width: 1px !important;
 			white-space: nowrap;
 		}
 		
@@ -775,7 +841,7 @@
 		&.columnRegistrationDate {
 			font-size: @wcfSmallFontSize;
 			text-align: right;
-			width: 1% !important;
+			width: 1px !important;
 			white-space: nowrap;
 		}
 		

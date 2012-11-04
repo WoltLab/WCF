@@ -13,11 +13,11 @@ use wcf\system\template\TemplateScriptingCompiler;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class IconCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	/**
-	 * @see wcf\system\template\ICompilerTemplatePlugin::executeStart()
+	 * @see	wcf\system\template\ICompilerTemplatePlugin::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		$compiler->pushTag('icon');
@@ -25,7 +25,7 @@ class IconCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	}
 	
 	/**
-	 * @see wcf\system\template\ICompilerTemplatePlugin::executeEnd()
+	 * @see	wcf\system\template\ICompilerTemplatePlugin::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		$compiler->popTag('icon');

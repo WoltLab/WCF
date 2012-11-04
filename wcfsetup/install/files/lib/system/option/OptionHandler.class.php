@@ -317,7 +317,7 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
-	 * @see wcf\system\option\IOptionType::getFormElement()
+	 * @see	wcf\system\option\IOptionType::getFormElement()
 	 */
 	protected function getFormElement($type, Option $option) {
 		return $this->getTypeObject($type)->getFormElement($option, (isset($this->optionValues[$option->optionName]) ? $this->optionValues[$option->optionName] : null));

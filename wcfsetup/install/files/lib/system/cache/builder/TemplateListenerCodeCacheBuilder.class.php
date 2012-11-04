@@ -11,7 +11,7 @@ use wcf\system\package\PackageDependencyHandler;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class TemplateListenerCodeCacheBuilder implements ICacheBuilder {
 	/**

@@ -27,7 +27,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		parent::install();
 		
 		// extract style tar
-		$filename = $this->installation->getArchive()->extractTar($this->instructions['value'], 'style_');
+		$filename = $this->installation->getArchive()->extractTar($this->instruction['value'], 'style_');
 		
 		// import style
 		$style = StyleEditor::import($filename, $this->installation->getPackageID());
@@ -70,7 +70,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			$styleList->readObjects();
 			$styles = $styleList->getObjects();
 			
-			if (count($styles)) {
+			if (!empty($styles)) {
 				$styleEditor = new StyleEditor($styles[0]);
 				$styleEditor->setAsDefault();
 			}

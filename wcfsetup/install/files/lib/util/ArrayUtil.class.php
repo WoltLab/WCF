@@ -137,7 +137,7 @@ final class ArrayUtil {
 	
 	/**
 	 * Converts a array of strings to requested character encoding.
-	 * @see mb_convert_encoding()
+	 * @see	mb_convert_encoding()
 	 * 
 	 * @param	string		$inCharset
 	 * @param	string		$outCharset

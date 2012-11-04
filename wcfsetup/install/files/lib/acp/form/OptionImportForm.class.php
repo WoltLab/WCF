@@ -41,7 +41,7 @@ class OptionImportForm extends ACPForm {
 	public $options = array();
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();

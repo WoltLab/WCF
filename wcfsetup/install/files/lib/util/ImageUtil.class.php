@@ -35,7 +35,7 @@ final class ImageUtil {
 	
 	/**
 	 * Examines the right file extension for an image by the given mime type.
-	 * @see http://www.php.net/manual/en/function.image-type-to-mime-type.php
+	 * @see	http://www.php.net/manual/en/function.image-type-to-mime-type.php
 	 * 
 	 * @param	string		$mimeType
 	 * @return	string		file extension

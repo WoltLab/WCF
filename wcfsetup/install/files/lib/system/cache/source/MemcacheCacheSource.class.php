@@ -16,13 +16,13 @@ use wcf\util\FileUtil;
 class MemcacheCacheSource implements ICacheSource {
 	/**
 	 * MemcacheAdapter object
-	 * @var wcf\system\cache\source\MemcacheAdapter
+	 * @var	wcf\system\cache\source\MemcacheAdapter
 	 */
 	protected $adapter = null;
 	
 	/**
 	 * list of cache resources
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	protected $cacheResources = null;
 	
@@ -75,7 +75,7 @@ class MemcacheCacheSource implements ICacheSource {
 	 * Saves modifications of the cache log.
 	 */
 	protected function updateLog() {
-		if (count($this->newLogEntries)) {
+		if (!empty($this->newLogEntries)) {
 			$sql = "DELETE FROM	wcf".WCF_N."_cache_resource
 				WHERE		cacheResource = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -92,7 +92,8 @@ class MemcacheCacheSource implements ICacheSource {
 			}
 			
 		}
-		if (count($this->obsoleteLogEntries)) {
+		
+		if (!empty($this->obsoleteLogEntries)) {
 			$sql = "DELETE FROM	wcf".WCF_N."_cache_resource
 				WHERE		cacheResource = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -176,7 +177,7 @@ class MemcacheCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\ICacheSource::close()
+	 * @see	wcf\system\cache\source\ICacheSource::close()
 	 */
 	public function close() {
 		// update log

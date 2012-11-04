@@ -64,7 +64,7 @@ String.prototype.hashCode = function() {
 	}
 	
 	return $hash;
-}
+};
 
 /**
  * Initialize WCF namespace
@@ -617,6 +617,7 @@ WCF.Dropdown = {
 	 * Initializes dropdowns.
 	 */
 	init: function() {
+		var $userPanelHeight = $('#topMenu').outerHeight();
 		var self = this;
 		$('.dropdownToggle').each(function(index, dropdown) {
 			var $dropdown = $(dropdown);
@@ -633,9 +634,16 @@ WCF.Dropdown = {
 				$dropdown.click($.proxy(self._toggle, self));
 				self._dropdowns[$containerID] = $toggle;
 				
+				var $dropdownHeight = $dropdown.outerHeight();
+				var $top = $dropdownHeight + 7;
+				if ($dropdown.parents('#topMenu').length) {
+					// fix calculation for user panel (elements may be shorter than they appear)
+					$top = $userPanelHeight;
+				}
+				
 				// calculate top offset for menu
 				$dropdown.next('.dropdownMenu').css({
-					top: $dropdown.outerHeight() + 14
+					top: $top + 'px'
 				});
 			}
 		});
@@ -2325,8 +2333,7 @@ WCF.Language = {
  * @param	object		values
  * @param	object		availableLanguages
  */
-WCF.MultipleLanguageInput = function(elementID, forceSelection, values, availableLanguages) { this.init(elementID, forceSelection, values, availableLanguages); };
-WCF.MultipleLanguageInput.prototype = {
+WCF.MultipleLanguageInput = Class.extend({
 	/**
 	 * list of available languages
 	 * @var	object
@@ -2428,24 +2435,16 @@ WCF.MultipleLanguageInput.prototype = {
 		var $button = $('<p class="button dropdownToggle"><span>' + WCF.Language.get('wcf.global.button.disabledI18n') + '</span></p>').prependTo($wrapper);
 		$button.data('toggle', $wrapper.wcfIdentify()).click($.proxy(this._enable, this));
 		
+		// insert list
+		this._list = $('<ul class="dropdownMenu"></ul>').insertAfter($button);
+		
 		// add a special class if next item is a textarea
-		var $top = null;
-		if ($button.next().getTagName() === 'textarea') {
-			$top = $button.outerHeight() - 1;
+		if ($button.nextAll('textarea').length) {
 			$button.addClass('dropdownCaptionTextarea');
 		}
 		else {
 			$button.addClass('dropdownCaption');
-		}
-		
-		// insert list
-		this._list = $('<ul class="dropdownMenu"></ul>').insertAfter($button);
-		
-		// set top offset for menu
-		if ($top !== null) {
-			this._list.css({
-				top: $top
-			});
+			this._element.css('height', $button.outerHeight());
 		}
 		
 		// insert available languages
@@ -2497,6 +2496,12 @@ WCF.MultipleLanguageInput.prototype = {
 	_enable: function(event) {
 		if (!this._isEnabled) {
 			var $button = $(event.currentTarget);
+			if ($button.hasClass('dropdownCaptionTextarea')) {
+				$button.next('.dropdownMenu').css({
+					top: ($button.outerHeight() - 1) + 'px'
+				});
+			}
+			
 			if ($button.getTagName() === 'p') {
 				$button = $button.children('span:eq(0)');
 			}
@@ -2637,7 +2642,7 @@ WCF.MultipleLanguageInput.prototype = {
 		// remove name attribute to prevent conflict with i18n values
 		this._element.removeAttr('name');
 	}
-};
+});
 
 /**
  * Icon collection used across all JavaScript classes.
@@ -3753,6 +3758,9 @@ WCF.Collapsible.Sidebar = Class.extend({
 		else {
 			this._mainContainer.addClass('sidebarCollapsed');
 		}
+		
+		// update button position
+		this._scroll();
 	}
 });
 
@@ -6724,6 +6732,98 @@ WCF.Language.Chooser = Class.extend({
 		if (this._callback !== null) {
 			this._callback($item);
 		}
+	}
+});
+
+/**
+ * Namespace for style related classes.
+ */
+WCF.Style = { };
+
+/**
+ * Provides a visual style chooser.
+ */
+WCF.Style.Chooser = Class.extend({
+	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * Initializes the style chooser class.
+	 */
+	init: function() {
+		$('<li class="styleChooser"><a>' + WCF.Language.get('wcf.style.changeStyle') + '</a></li>').appendTo($('#footerNavigation > ul')).click($.proxy(this._showDialog, this));
+		
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+	},
+	
+	/**
+	 * Displays the style chooser dialog.
+	 */
+	_showDialog: function() {
+		if (this._dialog === null) {
+			this._dialog = $('<div id="styleChooser" />').hide().appendTo(document.body);
+			this._loadDialog();
+		}
+		else {
+			this._dialog.wcfDialog({
+				title: WCF.Language.get('wcf.style.changeStyle')
+			});
+		}
+	},
+	
+	/**
+	 * Loads the style chooser dialog.
+	 */
+	_loadDialog: function() {
+		this._proxy.setOption('data', {
+			actionName: 'getStyleChooser',
+			className: 'wcf\\data\\style\\StyleAction'
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		if (data.returnValues.actionName === 'changeStyle') {
+			window.location.reload();
+			return;
+		}
+		
+		this._dialog.html(data.returnValues.template);
+		this._dialog.find('li').addClass('pointer').click($.proxy(this._click, this));
+		
+		this._showDialog();
+	},
+	
+	/**
+	 * Changes user style.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		this._proxy.setOption('data', {
+			actionName: 'changeStyle',
+			className: 'wcf\\data\\style\\StyleAction',
+			objectIDs: [ $(event.currentTarget).data('styleID') ]
+		});
+		this._proxy.sendRequest();
 	}
 });
 

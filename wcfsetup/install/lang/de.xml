@@ -4,6 +4,50 @@
 		<item name="wcf.acp"><![CDATA[Administration]]></item>
 	</category>
 	
+	<category name="wcf.acp.application">
+		<item name="wcf.acp.application.cookieDomain"><![CDATA[Cookie-Domain]]></item>
+		<item name="wcf.acp.application.cookiePath"><![CDATA[Cookie-Pfad]]></item>
+		<item name="wcf.acp.application.domainName"><![CDATA[Domain]]></item>
+		<item name="wcf.acp.application.domainPath"><![CDATA[Pfad]]></item>
+		<item name="wcf.acp.application.group.add"><![CDATA[Anwendungsgruppe hinzufügen]]></item>
+		<item name="wcf.acp.application.group.applications.error.duplicate"><![CDATA[Zwei oder mehr Anwendungen des selben Typs können nicht in einer Gruppe zusammengefasst werden.]]></item>
+		<item name="wcf.acp.application.group.applications.error.notValid"><![CDATA[Eine oder mehrere ausgewählte Anwendungen sind nicht mehr verfügbar.]]></item>
+		<item name="wcf.acp.application.group.applications.error.single"><![CDATA[Eine Gruppe muss aus mindestens zwei Anwendungen bestehen.]]></item>
+		<item name="wcf.acp.application.group.availableApplications"><![CDATA[Verfügbare Anwendungen]]></item>
+		<item name="wcf.acp.application.group.data"><![CDATA[Allgemein]]></item>
+		<item name="wcf.acp.application.group.delete"><![CDATA[Anwendungsgruppe löschen]]></item>
+		<item name="wcf.acp.application.group.edit"><![CDATA[Anwendungsgruppe bearbeiten]]></item>
+		<item name="wcf.acp.application.group.groupName"><![CDATA[Name]]></item>
+		<item name="wcf.acp.application.group.groupName.error.notUnique"><![CDATA[Der Gruppenname muss einzigartig sein.]]></item>
+		<item name="wcf.acp.application.group.title"><![CDATA[Anwendungsgruppe: &bdquo;{$applicationGroup->groupName}&ldquo;]]></item>
+		<item name="wcf.acp.application.independentApplications"><![CDATA[Unabhängige Anwendungen]]></item>
+		<item name="wcf.acp.application.management"><![CDATA[Anwendungen verwalten]]></item>
+	</category>
+	
+	<category name="wcf.acp.cache">
+		<item name="wcf.acp.cache.button.clear"><![CDATA[Cache leeren]]></item>
+		<item name="wcf.acp.cache.clear.success"><![CDATA[Der Cache wurde erfolgreich geleert.]]></item>
+		<item name="wcf.acp.cache.clear.sure"><![CDATA[Wollen Sie den Cache wirklich komplett leeren?]]></item>
+		<item name="wcf.acp.cache.data"><![CDATA[Eigenschaften]]></item>
+		<item name="wcf.acp.cache.data.files"><![CDATA[Dateien]]></item>
+		<item name="wcf.acp.cache.data.files.count"><![CDATA[{#$files|count} Dateien]]></item>
+		<item name="wcf.acp.cache.data.size"><![CDATA[Größe]]></item>
+		<item name="wcf.acp.cache.data.source"><![CDATA[Quelle]]></item>
+		<item name="wcf.acp.cache.data.version"><![CDATA[Version]]></item>
+		<item name="wcf.acp.cache.list"><![CDATA[Cache]]></item>
+		<item name="wcf.acp.cache.list.mtime"><![CDATA[Letzte Aktualisierung]]></item>
+		<item name="wcf.acp.cache.list.name"><![CDATA[Name]]></item>
+		<item name="wcf.acp.cache.list.perm"><![CDATA[Zugriffsrechte]]></item>
+		<item name="wcf.acp.cache.list.size"><![CDATA[Größe]]></item>
+		<item name="wcf.acp.cache.source.type.ApcCacheSource"><![CDATA[Alternative PHP Cache]]></item>
+		<item name="wcf.acp.cache.source.type.DiskCacheSource"><![CDATA[Dateisystem]]></item>
+		<item name="wcf.acp.cache.source.type.MemcacheCacheSource"><![CDATA[Memcache]]></item>
+		<item name="wcf.acp.cache.source.type.NoCacheSource"><![CDATA[keine (Caching deaktiviert)]]></item>
+		<item name="wcf.acp.cache.type.data"><![CDATA[Daten]]></item>
+		<item name="wcf.acp.cache.type.language"><![CDATA[Sprachen]]></item>
+		<item name="wcf.acp.cache.type.template"><![CDATA[Templates]]></item>
+	</category>
+	
 	<category name="wcf.acp.cronjob">
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Cronjob hinzufügen]]></item>
@@ -107,23 +151,6 @@
 		<item name="wcf.acp.group.option.category.user"><![CDATA[Allgemeine Rechte]]></item>
 	</category>
 	
-	<category name="wcf.acp.cache">
-		<item name="wcf.acp.cache.button.clear"><![CDATA[Cache leeren]]></item>
-		<item name="wcf.acp.cache.clear.success"><![CDATA[Der Cache wurde erfolgreich geleert.]]></item>
-		<item name="wcf.acp.cache.clear.sure"><![CDATA[Wollen Sie den Cache wirklich komplett leeren?]]></item>
-		<item name="wcf.acp.cache.data"><![CDATA[Eigenschaften]]></item>
-		<item name="wcf.acp.cache.data.files"><![CDATA[Dateien]]></item>
-		<item name="wcf.acp.cache.data.files.count"><![CDATA[{#$files|count} Dateien]]></item>
-		<item name="wcf.acp.cache.data.size"><![CDATA[Größe]]></item>
-		<item name="wcf.acp.cache.data.source"><![CDATA[Quelle]]></item>
-		<item name="wcf.acp.cache.data.version"><![CDATA[Version]]></item>
-		<item name="wcf.acp.cache.list"><![CDATA[Cache]]></item>
-		<item name="wcf.acp.cache.list.mtime"><![CDATA[Letzte Aktualisierung]]></item>
-		<item name="wcf.acp.cache.list.name"><![CDATA[Name]]></item>
-		<item name="wcf.acp.cache.list.perm"><![CDATA[Zugriffsrechte]]></item>
-		<item name="wcf.acp.cache.list.size"><![CDATA[Größe]]></item>
-	</category>
-
 	<category name="wcf.acp.masterPassword">
 		<item name="wcf.acp.masterPassword"><![CDATA[Hauptkennwort]]></item>
 		<item name="wcf.acp.masterPassword.confirm"><![CDATA[Hauptkennwort wiederholen]]></item>
@@ -139,12 +166,14 @@
 	</category>
 	
 	<category name="wcf.acp.menu">
+		<item name="wcf.acp.menu.link.application"><![CDATA[Anwendungen]]></item>
+		<item name="wcf.acp.menu.link.application.cache"><![CDATA[Cache]]></item>
+		<item name="wcf.acp.menu.link.application.management"><![CDATA[Anwendungen verwalten]]></item>
 		<item name="wcf.acp.menu.link.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Aufgabe hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[Aufgaben auflisten]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Protokoll]]></item>
-		<item name="wcf.acp.menu.link.log.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Sitzungen]]></item>
 		<item name="wcf.acp.menu.link.log.cronjob"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.group"><![CDATA[Benutzergruppen]]></item>
@@ -463,13 +492,21 @@
 		<item name="wcf.date.timeFormat"><![CDATA[H:i]]></item>
 		<item name="wcf.date.dateTimeFormat"><![CDATA[%date%, %time%]]></item>
 		
-		<item name="wcf.date.interval.days"><![CDATA[Vor {if $days > 1}{#$days} Tagen{else}einem Tag{/if}]]></item>
-		<item name="wcf.date.interval.full"><![CDATA[Vor {if $years}{if $years > 1}{#$years} Jahren{else}einem Jahr{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} und {else}, {/if}{/if}{if $months > 1}{#$months} Monaten{else}einem Monat{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} und {else}, {/if}{/if}{if $weeks > 1}{#$weeks} Wochen{else}einer Woche{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} und {else}, {/if}{/if}{if $days > 1}{#$days} Tagen{else}einem Tag{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} und {else}, {/if}{/if}{if $hours > 1}{#$hours} Stunden{else}einer Stunde{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} und {/if}{if $minutes > 1}{#$minutes} Minuten{else}einer Minute{/if}{/if}]]></item>
-		<item name="wcf.date.interval.hours"><![CDATA[Vor {if $hours > 1}{#$hours} Stunde{else}einer Stunde{/if}]]></item>
-		<item name="wcf.date.interval.minutes"><![CDATA[Vor {if $minutes > 1}{#$minutes} Minuten{else}einer Minute{/if}]]></item>
-		<item name="wcf.date.interval.months"><![CDATA[Vor {if $months > 1}{#$months} Monaten{else}einem Monat{/if}]]></item>
-		<item name="wcf.date.interval.weeks"><![CDATA[Vor {if $weeks > 1}{#$weeks} Wochen{else}einer Woche{/if}]]></item>
-		<item name="wcf.date.interval.years"><![CDATA[Vor {if $years > 1}{#$years} Jahren{else}einem Jahr{/if}]]></item>
+		<item name="wcf.date.interval.days.past"><![CDATA[Vor {if $days > 1}{#$days} Tagen{else}einem Tag{/if}]]></item>
+		<item name="wcf.date.interval.full.past"><![CDATA[Vor {if $years}{if $years > 1}{#$years} Jahren{else}einem Jahr{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} und {else}, {/if}{/if}{if $months > 1}{#$months} Monaten{else}einem Monat{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} und {else}, {/if}{/if}{if $weeks > 1}{#$weeks} Wochen{else}einer Woche{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} und {else}, {/if}{/if}{if $days > 1}{#$days} Tagen{else}einem Tag{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} und {else}, {/if}{/if}{if $hours > 1}{#$hours} Stunden{else}einer Stunde{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} und {/if}{if $minutes > 1}{#$minutes} Minuten{else}einer Minute{/if}{/if}]]></item>
+		<item name="wcf.date.interval.hours.past"><![CDATA[Vor {if $hours > 1}{#$hours} Stunde{else}einer Stunde{/if}]]></item>
+		<item name="wcf.date.interval.minutes.past"><![CDATA[Vor {if $minutes > 1}{#$minutes} Minuten{else}einer Minute{/if}]]></item>
+		<item name="wcf.date.interval.months.past"><![CDATA[Vor {if $months > 1}{#$months} Monaten{else}einem Monat{/if}]]></item>
+		<item name="wcf.date.interval.weeks.past"><![CDATA[Vor {if $weeks > 1}{#$weeks} Wochen{else}einer Woche{/if}]]></item>
+		<item name="wcf.date.interval.years.past"><![CDATA[Vor {if $years > 1}{#$years} Jahren{else}einem Jahr{/if}]]></item>
+		
+		<item name="wcf.date.interval.days.future"><![CDATA[In {if $days > 1}{#$days} Tagen{else}einem Tag{/if}]]></item>
+		<item name="wcf.date.interval.full.future"><![CDATA[In {if $years}{if $years > 1}{#$years} Jahren{else}einem Jahr{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} und {else}, {/if}{/if}{if $months > 1}{#$months} Monaten{else}einem Monat{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} und {else}, {/if}{/if}{if $weeks > 1}{#$weeks} Wochen{else}einer Woche{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} und {else}, {/if}{/if}{if $days > 1}{#$days} Tagen{else}einem Tag{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} und {else}, {/if}{/if}{if $hours > 1}{#$hours} Stunden{else}einer Stunde{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} und {/if}{if $minutes > 1}{#$minutes} Minuten{else}einer Minute{/if}{/if}]]></item>
+		<item name="wcf.date.interval.hours.future"><![CDATA[In {if $hours > 1}{#$hours} Stunde{else}einer Stunde{/if}]]></item>
+		<item name="wcf.date.interval.minutes.future"><![CDATA[In {if $minutes > 1}{#$minutes} Minuten{else}einer Minute{/if}]]></item>
+		<item name="wcf.date.interval.months.future"><![CDATA[In {if $months > 1}{#$months} Monaten{else}einem Monat{/if}]]></item>
+		<item name="wcf.date.interval.weeks.future"><![CDATA[In {if $weeks > 1}{#$weeks} Wochen{else}einer Woche{/if}]]></item>
+		<item name="wcf.date.interval.years.future"><![CDATA[In {if $years > 1}{#$years} Jahren{else}einem Jahr{/if}]]></item>
 		
 		<!-- variables for dynamic javascript datetime -->
 		<item name="wcf.date.relative.minutes"><![CDATA['Vor ' + (($minutes > 1) ? $minutes + ' Minuten' : 'einer Minute' )]]></item>
@@ -690,6 +727,10 @@
 	
 	<category name="wcf.sitemap">
 		<item name="wcf.sitemap.title"><![CDATA[Schnellnavigation]]></item>
+	</category>
+	
+	<category name="wcf.style">
+		<item name="wcf.style.changeStyle"><![CDATA[Stil ändern]]></item>
 	</category>
 	
 	<category name="wcf.user">

@@ -32,9 +32,9 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 				if (!array_key_exists($count, $parameters)) {
 					throw new SystemException("missing parameter for token number " . ($count + 1) . " in condition '".$condition."'");
 				}
-
+				
 				$result = '?';
-				if (is_array($parameters[$count]) && count($parameters[$count])) {
+				if (is_array($parameters[$count]) && !empty($parameters[$count])) {
 					$result .= str_repeat(',?', count($parameters[$count]) - 1);
 				}
 				

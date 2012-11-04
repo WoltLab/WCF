@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\application\group;
+use wcf\data\application\ApplicationAction;
 use wcf\data\AbstractDatabaseObjectAction;
 
 /**
@@ -17,4 +18,18 @@ class ApplicationGroupAction extends AbstractDatabaseObjectAction {
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\application\group\ApplicationGroupEditor';
+	
+	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::create()
+	 */
+	public function create() {
+		$applicationGroup = parent::create();
+		
+		if (isset($this->parameters['applications'])) {
+			$applicationAction = new ApplicationAction($this->parameters['applications'], 'group', array('groupID' => $applicationGroup->groupID));
+			$applicationAction->executeAction();
+		}
+		
+		return $applicationGroup;
+	}
 }

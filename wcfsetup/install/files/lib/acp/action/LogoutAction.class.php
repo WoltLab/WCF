@@ -18,7 +18,7 @@ use wcf\util\HeaderUtil;
  */
 class LogoutAction extends AbstractSecureAction {
 	/**
-	 * @see wcf\action\IAction::execute()
+	 * @see	wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();

@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class AbstractPage implements IPage, ITrackablePage {
 	/**
@@ -114,11 +114,9 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 		EventHandler::getInstance()->fireAction($this, 'checkModules');
 		
 		// check modules
-		if (count($this->neededModules)) {
-			foreach ($this->neededModules as $module) {
-				if (!defined($module) || !constant($module)) {
-					throw new IllegalLinkException();
-				}
+		foreach ($this->neededModules as $module) {
+			if (!defined($module) || !constant($module)) {
+				throw new IllegalLinkException();
 			}
 		}
 	}

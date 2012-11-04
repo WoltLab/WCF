@@ -10,11 +10,11 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.style.variable
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class StyleVariableAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\style\variable\StyleVariableEditor';
 }

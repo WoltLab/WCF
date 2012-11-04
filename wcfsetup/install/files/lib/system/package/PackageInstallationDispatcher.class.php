@@ -240,23 +240,25 @@ class PackageInstallationDispatcher {
 			
 			// if package is plugin to com.woltlab.wcf it must not have any other requirement
 			$requirements = $this->getArchive()->getRequirements();
-			if ($package->parentPackageID == 1 && count($requirements)) {
-			    foreach ($requirements as $package => $data) {
-			    	if ($package == 'com.woltlab.wcf') continue;
-			    	throw new SystemException('Package '.$package->package.' is plugin of com.woltlab.wcf (WCF) but has more than one requirement.');
-			    }
+			if ($package->parentPackageID == 1 && !empty($requirements)) {
+				foreach ($requirements as $package => $data) {
+					if ($package == 'com.woltlab.wcf') continue;
+					throw new SystemException('Package '.$package->package.' is plugin of com.woltlab.wcf (WCF) but has more than one requirement.');
+				}
 			}
 			
 			// insert requirements and dependencies
 			$requirements = $this->getArchive()->getAllExistingRequirements();
-			if (count($requirements) > 0) {
+			if (!empty($requirements)) {
 				$sql = "INSERT INTO	wcf".WCF_N."_package_requirement
 							(packageID, requirement)
 					VALUES		(?, ?)";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				
 				foreach ($requirements as $identifier => $possibleRequirements) {
-					if (count($possibleRequirements) == 1) $requirement = array_shift($possibleRequirements);
+					if (count($possibleRequirements) == 1) {
+						$requirement = array_shift($possibleRequirements);
+					}
 					else {
 						$requirement = $possibleRequirements[$this->selectedRequirements[$identifier]];
 					}
@@ -286,6 +288,8 @@ class PackageInstallationDispatcher {
 				ApplicationEditor::create(array(
 					'domainName' => $host,
 					'domainPath' => $path,
+					'cookieDomain' => $host,
+					'cookiePath' => $path,
 					'packageID' => $package->packageID
 				));
 			}

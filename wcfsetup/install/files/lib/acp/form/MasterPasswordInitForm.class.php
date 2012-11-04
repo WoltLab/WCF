@@ -128,7 +128,7 @@ define('MASTER_PASSWORD_SALT', '".$salt."');
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

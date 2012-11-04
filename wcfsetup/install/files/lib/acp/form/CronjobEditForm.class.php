@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobAction;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
 /**
@@ -59,6 +60,15 @@ class CronjobEditForm extends CronjobAddForm {
 	public function save() {
 		ACPForm::save();
 		
+		$this->description = 'wcf.acp.cronjob.description.cronjob'.$this->cronjob->cronjobID;
+		if (I18nHandler::getInstance()->isPlainValue('description')) {
+			I18nHandler::getInstance()->remove($this->description, 1);
+			$this->description = I18nHandler::getInstance()->getValue('description');
+		}
+		else {
+			I18nHandler::getInstance()->save('description', $this->description, 'wcf.acp.cronjob', $this->cronjob->packageID);
+		}
+		
 		// update cronjob
 		$data = array(
 			'className' => $this->className,
@@ -87,7 +97,9 @@ class CronjobEditForm extends CronjobAddForm {
 	public function readData() {
 		parent::readData();
 		
-		if (!count($_POST)) {
+		if (empty($_POST)) {
+			I18nHandler::getInstance()->setOptions('description', $this->cronjob->packageID, $this->cronjob->description, 'wcf.acp.cronjob.description.cronjob\d+');
+			
 			$this->className = $this->cronjob->className;
 			$this->description = $this->cronjob->description;
 			$this->startMinute = $this->cronjob->startMinute;
@@ -103,6 +115,8 @@ class CronjobEditForm extends CronjobAddForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
+		
+		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
 		WCF::getTPL()->assign(array(
 			'cronjobID' => $this->cronjobID,

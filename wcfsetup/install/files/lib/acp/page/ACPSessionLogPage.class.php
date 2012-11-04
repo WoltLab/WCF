@@ -55,7 +55,7 @@ class ACPSessionLogPage extends SortablePage {
 	public $objectListClassName = 'wcf\data\acp\session\access\log\ACPSessionAccessLogList';
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();

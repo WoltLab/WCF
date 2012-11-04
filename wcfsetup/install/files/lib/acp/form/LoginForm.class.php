@@ -154,7 +154,7 @@ class LoginForm extends AbstractForm {
 		parent::readData();
 		
 		// get preferred username
-		if (!count($_POST)) {
+		if (empty($_POST)) {
 			if (isset($_COOKIE[COOKIE_PREFIX.'userID'])) {
 				$user = new User(intval($_COOKIE[COOKIE_PREFIX.'userID']));
 				if ($user->userID) $this->username = $user->username;

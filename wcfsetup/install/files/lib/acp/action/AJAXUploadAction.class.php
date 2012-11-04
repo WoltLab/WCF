@@ -9,6 +9,6 @@ namespace wcf\acp\action;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.action
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class AJAXUploadAction extends \wcf\action\AJAXUploadAction { }

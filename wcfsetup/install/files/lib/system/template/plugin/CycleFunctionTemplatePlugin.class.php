@@ -24,7 +24,7 @@ class CycleFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	protected $cycles = array();
 	
 	/**
-	 * @see wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @see	wcf\system\template\IFunctionTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// get params

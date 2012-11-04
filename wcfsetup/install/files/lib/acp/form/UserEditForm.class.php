@@ -84,7 +84,7 @@ class UserEditForm extends UserAddForm {
 	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		if (!count($_POST)) {
+		if (empty($_POST)) {
 			// get visible languages
 			$this->readVisibleLanguages();
 			

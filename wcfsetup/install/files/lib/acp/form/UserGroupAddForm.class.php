@@ -107,9 +107,9 @@ class UserGroupAddForm extends AbstractOptionListForm {
 			$this->errorType[$e->getField()] = $e->getType();
 		}
 		
-		if (count($this->errorType) > 0) {
+		if (!empty($this->errorType)) {
 			throw new UserInputException('groupName', $this->errorType);
-		}		
+		}
 	}
 	
 	/**
@@ -171,13 +171,13 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		parent::readData();
 		
 		$this->optionTree = $this->optionHandler->getOptionTree();
-		if (!count($_POST)) {
+		if (empty($_POST)) {
 			$this->activeTabMenuItem = $this->optionTree[0]['object']->categoryName;
 		}
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -192,7 +192,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::show()
+	 * @see	wcf\form\IForm::show()
 	 */
 	public function show() {
 		// set active menu item

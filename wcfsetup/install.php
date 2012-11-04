@@ -760,7 +760,7 @@ if (!file_exists(TMP_DIR . 'install/files/lib/system/WCFSetup.class.php')) {
 	// try to unzip all setup files into temp folder
 	$tar = new Tar(SETUP_FILE);
 	$contentList = $tar->getContentList();
-	if (!count($contentList)) {
+	if (empty($contentList)) {
 		throw new SystemException("Can not unpack 'WCFSetup.tar.gz'. File is probably broken.");
 	}
 	

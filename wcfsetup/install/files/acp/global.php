@@ -4,7 +4,7 @@
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @category 	Community Framework
+ * @category	Community Framework
  */
 // Constant to get relative path to the wcf-root-dir.
 // This constant is already set in each package which got an own config.inc.php 

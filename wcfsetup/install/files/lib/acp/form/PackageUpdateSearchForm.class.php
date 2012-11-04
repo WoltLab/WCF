@@ -115,14 +115,18 @@ class PackageUpdateSearchForm extends ACPForm {
 	 */
 	public function validate() {
 		parent::validate();
-
+		
 		// refresh package database
 		PackageUpdateDispatcher::refreshPackageDatabase($this->packageUpdateServerIDs);
 		
 		// build conditions
 		$conditions = new PreparedStatementConditionBuilder();
+		
 		// update servers
-		if (count($this->packageUpdateServerIDs)) $conditions->add("packageUpdateServerID IN (?)", array($this->packageUpdateServerIDs));
+		if (!empty($this->packageUpdateServerIDs)) {
+			$conditions->add("packageUpdateServerID IN (?)", array($this->packageUpdateServerIDs));
+		}
+		
 		// name
 		if (!empty($this->packageName)) {
 			$condition = "packageName LIKE ?";
@@ -207,7 +211,7 @@ class PackageUpdateSearchForm extends ACPForm {
 			$packages[$row['package']][$row['packageUpdateID']][] = $row['packageVersion'];
 		}
 		
-		foreach ($packages as $identifier => $packageUpdates) {
+		foreach ($packages as $packageUpdates) {
 			if (count($packageUpdates) > 1) {
 				foreach ($packageUpdates as $packageUpdateID => $versions) {
 					usort($versions, array('wcf\data\package\Package', 'compareVersion'));

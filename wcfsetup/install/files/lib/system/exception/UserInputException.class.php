@@ -14,7 +14,7 @@ namespace wcf\system\exception;
 class UserInputException extends UserException {
 	/**
 	 * name of error field
-	 * @var string
+	 * @var	string
 	 */
 	protected $field = null;
 	

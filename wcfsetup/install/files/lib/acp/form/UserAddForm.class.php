@@ -140,7 +140,7 @@ class UserAddForm extends UserOptionListForm {
 		}
 		
 		// validate user groups
-		if (count($this->groupIDs) > 0) {
+		if (!empty($this->groupIDs)) {
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("groupID IN (?)", array($this->groupIDs));
 			$conditions->add("groupType NOT IN (?)", array(array(UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS)));
@@ -172,7 +172,7 @@ class UserAddForm extends UserOptionListForm {
 				unset($this->visibleLanguages[$key]);
 			}
 		}
-		if (!count($this->visibleLanguages) && ($language = LanguageFactory::getInstance()->getLanguage($this->languageID)) && $language->hasContent) {
+		if (empty($this->visibleLanguages) && ($language = LanguageFactory::getInstance()->getLanguage($this->languageID)) && $language->hasContent) {
 			$this->visibleLanguages[] = $this->languageID;
 		}
 		

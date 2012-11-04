@@ -99,7 +99,7 @@ class EventHandler extends SingletonFactory {
 			foreach ($familyTree as $member) {
 				if (isset($this->inheritedActions[$member])) {
 					$actions = $this->inheritedActions[$member];
-					if (isset($actions[$eventName]) && count($actions[$eventName]) > 0) {
+					if (isset($actions[$eventName]) && !empty($actions[$eventName])) {
 						foreach ($actions[$eventName] as $action) {
 							if (isset($this->inheritedActionsObjects[$name][$action['listenerClassName']])) continue;
 							
@@ -154,7 +154,7 @@ class EventHandler extends SingletonFactory {
 		$name = self::generateKey($className, $eventName);
 		
 		// execute inherited actions first
-		if (count($this->inheritedActions) > 0) {
+		if (!empty($this->inheritedActions)) {
 			$this->executeInheritedActions($eventObj, $eventName, $className, $name);
 		}
 		

@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	form
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class AbstractForm extends AbstractPage implements IForm {
 	/**
@@ -100,7 +100,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		if (count($_POST) || count($_FILES)) {
+		if (!empty($_POST) || !empty($_FILES)) {
 			$this->submit();
 		}
 		

@@ -165,7 +165,7 @@ class Installer {
 				$errors[] = array('file' => $file, 'code' => $e->getCode(), 'message' => $e->getMessage());
 			}
 		}
-		if (count($errors) > 0) {
+		if (!empty($errors)) {
 			throw new SystemException('error(s) during the installation of the files.', $errors);
 		}
 		

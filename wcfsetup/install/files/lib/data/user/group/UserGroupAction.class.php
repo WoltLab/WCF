@@ -49,7 +49,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 	 * @see	wcf\data\AbstractDatabaseObjectAction::update()
 	 */
 	public function update() {
-		if (!count($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 		

@@ -30,8 +30,8 @@ class Style extends DatabaseObject {
 	 */
 	protected $variables = array();
 	
-	const PREVIEW_IMAGE_MAX_HEIGHT = 140;
-	const PREVIEW_IMAGE_MAX_WIDTH = 185;
+	const PREVIEW_IMAGE_MAX_HEIGHT = 64;
+	const PREVIEW_IMAGE_MAX_WIDTH = 102;
 	
 	/**
 	 * Returns the name of this style.

@@ -94,13 +94,13 @@ class UserGroup extends DatabaseObject {
 	 * Returns groups by given type. Returns all groups if no types given.
 	 * 
 	 * @param	array<integer>		$types
-	 * @return	array<UserGroup>
+	 * @return	array<wcf\data\user\group\UserGroup>
 	 */
 	public static function getGroupsByType(array $types = array()) {
 		self::getCache();
 		
 		// get all groups
-		if (!count($types)) return self::$cache['groups'];
+		if (empty($types)) return self::$cache['groups'];
 		
 		// get groups by type
 		$groupIDs = self::getGroupIDsByType($types);
@@ -117,7 +117,7 @@ class UserGroup extends DatabaseObject {
 	 * Returns unique group by given type. Only works for the default user groups.
 	 * 
 	 * @param	integer		$type
-	 * @return	UserGroup
+	 * @return	wcf\data\user\group\UserGroup
 	 */
 	public static function getGroupByType($type) {
 		if ($type != self::EVERYONE && $type != self::GUESTS && $type != self::USERS) {
@@ -126,6 +126,23 @@ class UserGroup extends DatabaseObject {
 		
 		$groups = self::getGroupsByType(array($type));
 		return array_shift($groups);
+	}
+	
+	/**
+	 * Returns a group from _cache_ by given groupID. 
+	 * null is returned when the given groupID is invalid.
+	 * 
+	 * @param	integer		$groupID
+	 * @return	wcf\data\user\group\UserGroup
+	 */
+	public static function getGroupByID($groupID) {
+		self::getCache();
+		
+		if (isset(self::$cache['groups'][$groupID])) {
+			return self::$cache['groups'][$groupID];
+		}
+		
+		return null;
 	}
 	
 	/**
@@ -153,7 +170,7 @@ class UserGroup extends DatabaseObject {
 			self::$accessibleGroups = explode(',', WCF::getSession()->getPermission('admin.user.accessibleGroups'));
 		}
 		
-		if (count($groupIDs) == 0) return false;
+		if (empty($groupIDs)) return false;
 		
 		foreach ($groupIDs as $groupID) {
 			if (!in_array($groupID, self::$accessibleGroups)) {
@@ -174,7 +191,7 @@ class UserGroup extends DatabaseObject {
 	public static function getAccessibleGroups(array $groupTypes = array(), array $invalidGroupTypes = array()) {
 		$groups = self::getGroupsByType($groupTypes);
 		
-		if (count($invalidGroupTypes) > 0) {
+		if (!empty($invalidGroupTypes)) {
 			$invalidGroups = self::getGroupsByType($invalidGroupTypes);
 			foreach ($invalidGroups as $groupID => $group) {
 				unset($groups[$groupID]);
@@ -305,7 +322,7 @@ class UserGroup extends DatabaseObject {
 				$groupOptionIDs[$row['optionName']] = $row['optionID'];
 			}
 			
-			if (count($groupOptionIDs)) {
+			if (!empty($groupOptionIDs)) {
 				$conditions = new PreparedStatementConditionBuilder();
 				$conditions->add("option_value.groupID = ?", array($this->groupID));
 				$conditions->add("option_value.optionID IN (?)", array($groupOptionIDs));
