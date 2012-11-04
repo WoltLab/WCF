@@ -81,7 +81,7 @@ CREATE TABLE wcf1_application (
 	domainName VARCHAR(255) NOT NULL,
 	domainPath VARCHAR(255) NOT NULL DEFAULT '/',
 	cookieDomain VARCHAR(255) NOT NULL,
-	cookieDomainPath VARCHAR(255) NOT NULL DEFAULT '/',
+	cookiePath VARCHAR(255) NOT NULL DEFAULT '/',
 	groupID INT(10),
 	isPrimary TINYINT(1) NOT NULL DEFAULT 0
 );

@@ -1,8 +1,7 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\application\group\ApplicationGroupAction;
-
 use wcf\data\application\ApplicationList;
+use wcf\data\application\group\ApplicationGroupAction;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
