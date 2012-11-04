@@ -24,6 +24,30 @@
 		<item name="wcf.acp.application.management"><![CDATA[Anwendungen verwalten]]></item>
 	</category>
 	
+	<category name="wcf.acp.cache">
+		<item name="wcf.acp.cache.button.clear"><![CDATA[Cache leeren]]></item>
+		<item name="wcf.acp.cache.clear.success"><![CDATA[Der Cache wurde erfolgreich geleert.]]></item>
+		<item name="wcf.acp.cache.clear.sure"><![CDATA[Wollen Sie den Cache wirklich komplett leeren?]]></item>
+		<item name="wcf.acp.cache.data"><![CDATA[Eigenschaften]]></item>
+		<item name="wcf.acp.cache.data.files"><![CDATA[Dateien]]></item>
+		<item name="wcf.acp.cache.data.files.count"><![CDATA[{#$files|count} Dateien]]></item>
+		<item name="wcf.acp.cache.data.size"><![CDATA[Größe]]></item>
+		<item name="wcf.acp.cache.data.source"><![CDATA[Quelle]]></item>
+		<item name="wcf.acp.cache.data.version"><![CDATA[Version]]></item>
+		<item name="wcf.acp.cache.list"><![CDATA[Cache]]></item>
+		<item name="wcf.acp.cache.list.mtime"><![CDATA[Letzte Aktualisierung]]></item>
+		<item name="wcf.acp.cache.list.name"><![CDATA[Name]]></item>
+		<item name="wcf.acp.cache.list.perm"><![CDATA[Zugriffsrechte]]></item>
+		<item name="wcf.acp.cache.list.size"><![CDATA[Größe]]></item>
+		<item name="wcf.acp.cache.source.type.ApcCacheSource"><![CDATA[Alternative PHP Cache]]></item>
+		<item name="wcf.acp.cache.source.type.DiskCacheSource"><![CDATA[Dateisystem]]></item>
+		<item name="wcf.acp.cache.source.type.MemcacheCacheSource"><![CDATA[Memcache]]></item>
+		<item name="wcf.acp.cache.source.type.NoCacheSource"><![CDATA[keine (Caching deaktiviert)]]></item>
+		<item name="wcf.acp.cache.type.data"><![CDATA[Daten]]></item>
+		<item name="wcf.acp.cache.type.language"><![CDATA[Sprachen]]></item>
+		<item name="wcf.acp.cache.type.template"><![CDATA[Templates]]></item>
+	</category>
+	
 	<category name="wcf.acp.cronjob">
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Cronjob hinzufügen]]></item>
@@ -127,23 +151,6 @@
 		<item name="wcf.acp.group.option.category.user"><![CDATA[Allgemeine Rechte]]></item>
 	</category>
 	
-	<category name="wcf.acp.cache">
-		<item name="wcf.acp.cache.button.clear"><![CDATA[Cache leeren]]></item>
-		<item name="wcf.acp.cache.clear.success"><![CDATA[Der Cache wurde erfolgreich geleert.]]></item>
-		<item name="wcf.acp.cache.clear.sure"><![CDATA[Wollen Sie den Cache wirklich komplett leeren?]]></item>
-		<item name="wcf.acp.cache.data"><![CDATA[Eigenschaften]]></item>
-		<item name="wcf.acp.cache.data.files"><![CDATA[Dateien]]></item>
-		<item name="wcf.acp.cache.data.files.count"><![CDATA[{#$files|count} Dateien]]></item>
-		<item name="wcf.acp.cache.data.size"><![CDATA[Größe]]></item>
-		<item name="wcf.acp.cache.data.source"><![CDATA[Quelle]]></item>
-		<item name="wcf.acp.cache.data.version"><![CDATA[Version]]></item>
-		<item name="wcf.acp.cache.list"><![CDATA[Cache]]></item>
-		<item name="wcf.acp.cache.list.mtime"><![CDATA[Letzte Aktualisierung]]></item>
-		<item name="wcf.acp.cache.list.name"><![CDATA[Name]]></item>
-		<item name="wcf.acp.cache.list.perm"><![CDATA[Zugriffsrechte]]></item>
-		<item name="wcf.acp.cache.list.size"><![CDATA[Größe]]></item>
-	</category>
-
 	<category name="wcf.acp.masterPassword">
 		<item name="wcf.acp.masterPassword"><![CDATA[Hauptkennwort]]></item>
 		<item name="wcf.acp.masterPassword.confirm"><![CDATA[Hauptkennwort wiederholen]]></item>
