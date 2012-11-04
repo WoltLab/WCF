@@ -5,10 +5,21 @@
 	</category>
 	
 	<category name="wcf.acp.application">
+		<item name="wcf.acp.application.cookie"><![CDATA[Cookie-Einstellungen]]></item>
+		<item name="wcf.acp.application.cookie.warning"><![CDATA[Die folgenden Einstellungen stellen sicher, dass der Login gespeichert wird und ein automatischer Login möglich ist. Sie müssen diese Einstellungen anpassen, sollten sich Domain und/oder Pfad geändert haben. Sollten Sie sich bei den korrekten Werten nicht sicher sein, übernehmen Sie bitte die exakten Angaben der beiden obigen Eingabefelder.]]></item>
 		<item name="wcf.acp.application.cookieDomain"><![CDATA[Cookie-Domain]]></item>
+		<item name="wcf.acp.application.cookieDomain.error.containsPfad"><![CDATA[Die Cookie-Domain darf keine Pfadangaben enthalten]]></item>
+		<item name="wcf.acp.application.cookieDomain.error.notValid"><![CDATA[Die Cookie-Domain stimmt nicht mit der oben angegebenen Domain überein (Subdomains wie zum Beispiel &bdquo;www&ldquo; dürfen weggelassen werden).]]></item>
 		<item name="wcf.acp.application.cookiePath"><![CDATA[Cookie-Pfad]]></item>
+		<item name="wcf.acp.application.cookiePath.error.notValid"><![CDATA[Der Cookie-Pfad passt nicht zum oben angegebenen Domain-Pfad.]]></item>
+		<item name="wcf.acp.application.domain"><![CDATA[Domain-Einstellungen]]></item>
 		<item name="wcf.acp.application.domainName"><![CDATA[Domain]]></item>
+		<item name="wcf.acp.application.domainName.description"><![CDATA[Geben Sie die Domain an, über die diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter &bdquo;http://www.example.com/community/forum/&ldquo; erreichbar ist, so geben Sie hier bitte &bdquo;www.example.com&ldquo; ein.]]></item>
+		<item name="wcf.acp.application.domainName.error.containsPfad"><![CDATA[Die Domain darf keine Pfadangaben enthalten]]></item>
 		<item name="wcf.acp.application.domainPath"><![CDATA[Pfad]]></item>
+		<item name="wcf.acp.application.domainPath.description"><![CDATA[Geben Sie den Pfad an, über den diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter &bdquo;http://www.example.com/community/forum/&ldquo; erreichbar ist, so geben Sie bitte &bdquo;/community/forum/&ldquo; ein.]]></item>
+		<item name="wcf.acp.application.edit"><![CDATA[Anwendung bearbeiten]]></item>
+		<item name="wcf.acp.application.edit.title"><![CDATA[Anwendung bearbeiten: &bdquo;<a href="{link controller='PackageView' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>&ldquo;]]></item>
 		<item name="wcf.acp.application.group.add"><![CDATA[Anwendungsgruppe hinzufügen]]></item>
 		<item name="wcf.acp.application.group.applications.error.duplicate"><![CDATA[Zwei oder mehr Anwendungen des selben Typs können nicht in einer Gruppe zusammengefasst werden.]]></item>
 		<item name="wcf.acp.application.group.applications.error.notValid"><![CDATA[Eine oder mehrere ausgewählte Anwendungen sind nicht mehr verfügbar.]]></item>
@@ -19,6 +30,7 @@
 		<item name="wcf.acp.application.group.edit"><![CDATA[Anwendungsgruppe bearbeiten]]></item>
 		<item name="wcf.acp.application.group.groupName"><![CDATA[Name]]></item>
 		<item name="wcf.acp.application.group.groupName.error.notUnique"><![CDATA[Der Gruppenname muss einzigartig sein.]]></item>
+		<item name="wcf.acp.application.group.noAvailableApplications"><![CDATA[Es ist derzeit keine ausreichende Anzahl Anwendungen verfügbar, um eine Anwendungsgruppe zu erstellen.]]></item>
 		<item name="wcf.acp.application.group.title"><![CDATA[Anwendungsgruppe: &bdquo;{$applicationGroup->groupName}&ldquo;]]></item>
 		<item name="wcf.acp.application.independentApplications"><![CDATA[Unabhängige Anwendungen]]></item>
 		<item name="wcf.acp.application.management"><![CDATA[Anwendungen verwalten]]></item>

@@ -1,6 +1,6 @@
 <?php
 namespace wcf\data\application\group;
-use wcf\data\application\Application;
+use wcf\data\application\ViewableApplication;
 use wcf\data\DatabaseObjectDecorator;
 
 /**
@@ -20,8 +20,8 @@ class ViewableApplicationGroup extends DatabaseObjectDecorator implements \Count
 	protected static $baseClass = 'wcf\data\application\group\ApplicationGroup';
 	
 	/**
-	 * list of applications
-	 * @var	array<wcf\data\application\Application>
+	 * list of viewable applications
+	 * @var	array<wcf\data\application\ViewableApplication>
 	 */
 	protected $applications = array();
 	
@@ -34,9 +34,9 @@ class ViewableApplicationGroup extends DatabaseObjectDecorator implements \Count
 	/**
 	 * Assigns an application to this group.
 	 * 
-	 * @param	wcf\data\application\Application	$application
+	 * @param	wcf\data\application\ViewableApplication	$application
 	 */
-	public function addApplication(Application $application) {
+	public function addApplication(ViewableApplication $application) {
 		if ($this->groupID == $application->groupID) {
 			$this->applications[] = $application;
 		}
