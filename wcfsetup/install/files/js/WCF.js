@@ -125,6 +125,16 @@ $.extend(true, {
 		}
 
 		return $length;
+	},
+	
+	/**
+	 * Quotes regular expression characters.
+	 * 
+	 * @param	string		string
+	 * @return	string
+	 */
+	wcfEscapeRegExp: function(string) {
+	    return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 	}
 });
 
