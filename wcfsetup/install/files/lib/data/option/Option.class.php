@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\option;
 use wcf\data\DatabaseObject;
+use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -54,35 +55,23 @@ class Option extends DatabaseObject {
 	 * @return	array<wcf\data\option\Option>
 	 */
 	public static function getOptions($packageID = PACKAGE_ID) {
-		$sql = "SELECT		optionName, optionID
-			FROM		wcf".WCF_N."_option option_table
-			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(package_dependency.dependency = option_table.packageID)
-			WHERE		package_dependency.packageID = ?
-			ORDER BY	package_dependency.priority ASC";
+		$sql = "SELECT		option_table.*,
+					package.package, package.isApplication,
+					parent_package.package AS parentPackage,
+					parent_package.isApplication AS parentPackageIsApplication
+			FROM		wcf".WCF_N."_package_dependency package_dependency,
+					wcf".WCF_N."_option option_table
+			LEFT JOIN	wcf".WCF_N."_package package
+			ON		(package.packageID = option_table.packageID)
+			LEFT JOIN	wcf".WCF_N."_package parent_package
+			ON		(parent_package.packageID = package.parentPackageID)
+			WHERE		package_dependency.dependency = option_table.packageID
+					AND package_dependency.packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($packageID));
-		
-		$optionIDs = array();
 		while ($row = $statement->fetchArray()) {
-			$optionIDs[$row['optionName']] = $row['optionID'];
-		}
-		
-		$options = array();
-		if (!empty($optionIDs)) {
-			// get needed options
-			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("optionID IN (?)", array($optionIDs));
-			
-			$sql = "SELECT		*
-				FROM		wcf".WCF_N."_option
-				".$conditions."
-				ORDER BY	optionName";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditions->getParameters());
-			while ($row = $statement->fetchArray()) {
-				$options[StringUtil::toUpperCase($row['optionName'])] = new Option(null, $row);
-			}
+			$option = new Option(null, $row);
+			$options[$option->getConstantName()] = $option;
 		}
 		
 		return $options;
@@ -183,5 +172,26 @@ class Option extends DatabaseObject {
 	 */
 	public static function getDatabaseTableAlias() {
 		return 'option_table';
+	}
+	
+	/**
+	 * Returns the constant name.
+	 * 
+	 * @return	string
+	 */
+	public function getConstantName() {
+		$prefix = '';
+		if ($this->parentPackage) {
+			if ($this->parentPackageIsApplication && $this->parentPackage != 'com.woltlab.wcf') {
+				$prefix = Package::getAbbreviation($this->parentPackage) . '_';
+			}
+		}
+		else if ($this->package) {
+			if ($this->isApplication && $this->package != 'com.woltlab.wcf') {
+				$prefix = Package::getAbbreviation($this->package) . '_';
+			}
+		}
+		
+		return strtoupper($prefix.$this->optionName);
 	}
 }
