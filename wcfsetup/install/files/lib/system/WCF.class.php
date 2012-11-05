@@ -454,7 +454,8 @@ class WCF {
 				// add template path and abbreviation
 				$this->getTPL()->addApplication($abbreviation, $application->packageID, $packageDir . 'templates/');
 				
-				call_user_func(array($className, 'getInstance'));
+				// init application and assign it as template variable
+				$this->getTPL()->assign('__'.$abbreviation, call_user_func(array($className, 'getInstance')));
 			}
 		}
 		else {
