@@ -275,8 +275,6 @@
 		<item name="wcf.acp.option.page_description"><![CDATA[Page description]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Page title]]></item>
 		<item name="wcf.acp.option.page_title.description"><![CDATA[That title will show up inside the page header, if you have enabled it with the style editor.]]></item>
-		<item name="wcf.acp.option.page_urls"><![CDATA[Further adresses (URLs)]]></item>
-		<item name="wcf.acp.option.page_urls.description"><![CDATA[Enter further adresses (URLs) which also link to your site.]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
 		<item name="wcf.acp.option.session_timeout"><![CDATA[Session timeout]]></item>
 		<item name="wcf.acp.option.session_timeout.description"><![CDATA[Enter the time a session should remain valid [seconds].]]></item>

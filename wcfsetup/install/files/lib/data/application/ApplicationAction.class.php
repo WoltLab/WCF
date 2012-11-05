@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\application;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
@@ -84,7 +85,7 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		}
 		WCF::getDB()->commitTransaction();
 		
-		$this->clearCache();
+		$this->rebuild();
 	}
 	
 	/**
@@ -94,7 +95,7 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
-		$this->clearCache();
+		
 		$sql = "UPDATE	wcf".WCF_N."_application
 			SET	groupID = ?,
 				cookieDomain = domainName,
@@ -111,18 +112,22 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		}
 		WCF::getDB()->commitTransaction();
 		
-		$this->clearCache();
+		$this->rebuild();
 	}
 	
 	/**
-	 * Clears application cache.
+	 * Rebuilds application cache and dependencies.
 	 */
-	protected function clearCache() {
+	protected function rebuild() {
 		foreach ($this->objects as $application) {
+			// reset cache
 			$directory = PackageCache::getInstance()->getPackage($application->packageID)->packageDir;
 			$directory = FileUtil::getRealPath(WCF_DIR.$directory);
 			
 			CacheHandler::getInstance()->clear($directory.'cache', '*.php');
+			
+			// rebuild dependencies
+			Package::rebuildPackageDependencies($application->packageID);
 		}
 	}
 }

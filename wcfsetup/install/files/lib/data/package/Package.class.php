@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\package;
 use wcf\data\DatabaseObject;
+use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
@@ -439,9 +440,14 @@ class Package extends DatabaseObject {
 			VALUES		(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
-		$insertedDependencies = array();
+		$insertedDependencies = self::insertApplicationDependencies($packageID, $statement);
+		$shiftPriority = (empty($insertedDependencies)) ? false : true;
 		foreach ($requirements as $dependency => $priority) {
-			$statement->execute(array($packageID, $dependency, $priority));
+			$statement->execute(array(
+				$packageID,
+				$dependency,
+				($shiftPriority ? ($priority + 1) : $priority)
+			));
 			
 			if (!isset($insertedDependencies[$packageID])) {
 				$insertedDependencies[$packageID] = array();
@@ -518,6 +524,40 @@ class Package extends DatabaseObject {
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($packageID, $packageID, $row['priority']));
+		}
+	}
+	
+	/**
+	 * Inserts dependencies on applications within the same application group.
+	 * 
+	 * @param	integer							$packageID
+	 * @param	wcf\system\database\statement\PreparedStatement		$insertStatement
+	 * @return	array<string>
+	 */
+	protected static function insertApplicationDependencies($packageID, PreparedStatement $insertStatement) {
+		$insertedDependencies = array();
+		
+		// check for application group
+		$sql = "SELECT	groupID
+			FROM	wcf".WCF_N."_application
+			WHERE	packageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($packageID));
+		$row = $statement->fetchArray();
+		if ($row !== false && $row['groupID'] !== null) {
+			// select application ids
+			$sql = "SELECT	packageID
+				FROM	wcf".WCF_N."_application
+				WHERE	groupID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($row['groupID']));
+			while ($row = $statement->fetchArray()) {
+				$insertStatement->execute(array(
+					$packageID,
+					$row['packageID'],
+					1
+				));
+			}
 		}
 	}
 	

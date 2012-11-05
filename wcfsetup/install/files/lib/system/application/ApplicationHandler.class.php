@@ -156,13 +156,6 @@ class ApplicationHandler extends SingletonFactory {
 			foreach ($this->getApplications() as $application) {
 				$this->pageURLs[] = $application->getPageURL();
 			}
-			
-			if (defined('PAGE_URLS') && PAGE_URLS != '') {
-				$pageURLs = explode("\n", StringUtil::unifyNewlines(PAGE_URLS));
-				foreach ($pageURLs as $url) {
-					$this->pageURLs[] = StringUtil::trim($url);
-				}
-			}
 		}
 		
 		foreach ($this->pageURLs as $pageURL) {

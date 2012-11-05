@@ -1,5 +1,6 @@
 <?php
 namespace wcf\util;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 
@@ -18,8 +19,8 @@ final class HeaderUtil {
 	 * Alias to php setcookie() function.
 	 */
 	public static function setCookie($name, $value = '', $expire = 0) {
-		// TODO: COOKIE_PATH is static and does not always reflect the application's domain and path
-		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT' : '').(COOKIE_PATH ? '; path='.COOKIE_PATH : '').(COOKIE_DOMAIN ? '; domain='.COOKIE_DOMAIN : '').(RouteHandler::secureConnection() ? '; secure' : '').'; HttpOnly', false);
+		$application = ApplicationHandler::getInstance()->getActiveApplication();
+		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT' : '').'; path='.$application->cookiePath.'; domain='.$application->cookieDomain.(RouteHandler::secureConnection() ? '; secure' : '').'; HttpOnly', false);
 	}
 	
 	/**
