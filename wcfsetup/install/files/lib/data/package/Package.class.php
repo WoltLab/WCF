@@ -600,10 +600,23 @@ class Package extends DatabaseObject {
 			$file->write("\n");
 		}
 		
+		// get primary application
+		$sql = "SELECT		applications.packageID
+			FROM		wcf".WCF_N."_application application,
+					wcf".WCF_N."_application applications
+			WHERE		application.packageID = ?
+					AND applications.groupID = application.groupID
+					AND applications.groupID IS NOT NULL
+					AND applications.isPrimary = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($packageID, 1));
+		$row = $statement->fetchArray();
+		$packageID = ($row === false) ? $packageID : $row['packageID'];
+		
 		// write general information
 		$file->write("// general info\n");
 		$file->write("if (!defined('RELATIVE_WCF_DIR')) define('RELATIVE_WCF_DIR', RELATIVE_".$currentPrefix."_DIR.'".FileUtil::getRelativePath($packageDir, WCF_DIR)."');\n");
-		$file->write("if (!defined('PACKAGE_ID')) define('PACKAGE_ID', ".$package->packageID.");\n");
+		$file->write("if (!defined('PACKAGE_ID')) define('PACKAGE_ID', ".$row['packageID'].");\n");
 		$file->write("if (!defined('PACKAGE_NAME')) define('PACKAGE_NAME', '".str_replace("'", "\'", $package->getName())."');\n");
 		$file->write("if (!defined('PACKAGE_VERSION')) define('PACKAGE_VERSION', '".$package->packageVersion."');\n");
 		

@@ -451,6 +451,9 @@ class WCF {
 			
 			// start application if not within ACP
 			if (!class_exists('wcf\system\WCFACP', false)) {
+				// add template path and abbreviation
+				$this->getTPL()->addApplication($abbreviation, $application->packageID, $packageDir . 'templates/');
+				
 				call_user_func(array($className, 'getInstance'));
 			}
 		}
@@ -461,7 +464,7 @@ class WCF {
 		
 		// register template path in ACP
 		if (class_exists('wcf\system\WCFACP', false)) {
-			$this->getTPL()->addTemplatePath($application->packageID, $packageDir . 'acp/templates/');
+			$this->getTPL()->addApplication($abbreviation, $application->packageID, $packageDir . 'acp/templates/');
 		}
 		else if (!$isDependentApplication) {
 			// assign base tag

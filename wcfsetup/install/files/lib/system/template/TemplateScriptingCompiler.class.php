@@ -783,14 +783,14 @@ class TemplateScriptingCompiler {
 			}
 			if (!empty($phpCode)) $phpCode = "<?php\n".$phpCode."\n?>";
 			
-			$tplPackageID = WCF::getTPL()->getPackageID($templateName, $metaData['packageID']);
+			$tplPackageID = WCF::getTPL()->getPackageID($templateName, $metaData['application']);
 			$sourceFilename = WCF::getTPL()->getSourceFilename($templateName, $tplPackageID);
 			$metaDataFilename = WCF::getTPL()->getMetaDataFilename($templateName, $tplPackageID);
 			
 			$data = $this->compileString($templateName, file_get_contents($sourceFilename), array(
+				'application' => $metaData['application'],
 				'data' => null,
-				'filename' => '',
-				'packageID' => $tplPackageID
+				'filename' => ''
 			), true);
 			
 			return $phpCode . $data['template'];
@@ -809,7 +809,7 @@ class TemplateScriptingCompiler {
 			$phpCode .= "ob_start();\n";
 		}
 		
-		$phpCode .= '$this->includeTemplate('.$file.', array('.$argString.'), ('.$sandbox.' ? 1 : 0), $this->v[\'__PACKAGE_ID\']);'."\n";
+		$phpCode .= '$this->includeTemplate('.$file.', $this->v[\'__APPLICATION\'], array('.$argString.'), ('.$sandbox.' ? 1 : 0));'."\n";
 		
 		if ($assignVar !== false) {
 			$phpCode .= '$this->'.($append ? 'append' : 'assign').'('.$assignVar.', ob_get_clean());'."\n";

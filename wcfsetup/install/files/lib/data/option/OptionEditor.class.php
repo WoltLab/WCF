@@ -114,7 +114,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 	 * @param	string		$filename
 	 * @param	integer		$packageID
 	 */
-	public static function rebuildFile($filename, $packageID = PACKAGE_ID) {
+	public static function rebuildFile($filename, $packageID) {
 		$buffer = '';
 		
 		// file header
