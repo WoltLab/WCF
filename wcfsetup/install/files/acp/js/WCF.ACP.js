@@ -23,12 +23,24 @@ WCF.ACP.Application.Group = { };
 
 /**
  * Provides the ability to remove application groups.
+ * 
+ * @param	string		redirectURL
  */
 WCF.ACP.Application.Group.Delete = Class.extend({
 	/**
-	 * Initializes the WCF.ACP.Application.Group.Delete class.
+	 * redirect URL
+	 * @var	string
 	 */
-	init: function() {
+	_redirectURL: '',
+	
+	/**
+	 * Initializes the WCF.ACP.Application.Group.Delete class.
+	 * 
+	 * @param	string		redirectURL
+	 */
+	init: function(redirectURL) {
+		this._redirectURL = redirectURL || '';
+		
 		$('.jsDeleteApplicationGroup').click($.proxy(this._click, this));
 	},
 	
@@ -62,9 +74,14 @@ WCF.ACP.Application.Group.Delete = Class.extend({
 			},
 			success: $.proxy(function(data, textStatus, jqXHR) {
 				var $notification = new WCF.System.Notification(WCF.Language.get('wcf.acp.application.group.delete.success'));
-				$notification.show(function() {
-					window.location.reload();
-				});
+				$notification.show($.proxy(function() {
+					if (this._redirectURL) {
+						window.location = this._redirectURL;
+					}
+					else {
+						window.location.reload();
+					}
+				}, this));
 			}, this)
 		});
 	}

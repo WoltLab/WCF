@@ -1,8 +1,20 @@
-{include file='header' pageTitle='wcf.acp.application.group.add'}
+{include file='header' pageTitle='wcf.acp.application.group.'|concat:$action}
+
+<script type="text/javascript">
+	//<![CDATA[
+	$(function() {
+		new WCF.ACP.Application.Group.Delete('{link controller='ApplicationManagement'}{/link}');
+		
+		WCF.Language.addObject({
+			'wcf.acp.application.group.delete.success': '{lang}wcf.acp.application.group.delete.success{/lang}'
+		});
+	});
+	//]]>
+</script>
 
 <header class="boxHeadline">
 	<hgroup>
-		<h1>{lang}wcf.acp.application.group.add{/lang}</h1>
+		<h1>{lang}wcf.acp.application.group.{$action}{/lang}</h1>
 	</hgroup>
 </header>
 
@@ -17,19 +29,20 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
+			{if $action == 'edit'}<li><a class="button jsDeleteApplicationGroup" data-confirm-message="{lang}wcf.acp.application.group.delete.confirmMessage{/lang}" data-group-id="{@$applicationGroup->groupID}"><img src="{@RELATIVE_WCF_DIR}icon/delete.svg" class="icon24" /> <span>{lang}wcf.acp.application.group.delete{/lang}</span></a></li>{/if}
 			<li><a href="{link controller='ApplicationManagement'}{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/list.svg" alt="" /> <span>{lang}wcf.acp.application.management{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>
 
 <div class="container containerPadding marginTop">
-	<form method="post" action="{link controller='ApplicationGroupAdd'}{/link}">
+	<form method="post" action="{if $action == 'add'}{link controller='ApplicationGroupAdd'}{/link}{else}{link controller='ApplicationGroupEdit' id=$applicationGroup->groupID}{/link}{/if}">
 		<fieldset>
 			<legend>{lang}wcf.acp.application.group.data{/lang}</legend>
 			<dl{if $errorField == 'groupName'} class="formError"{/if}>
 				<dt><label for="groupName">{lang}wcf.acp.application.group.groupName{/lang}</label></dt>
 				<dd>
-					<input type="text" name="groupName" id="groupName" value="{$groupName}" class="long" />
+					<input type="text" name="groupName" id="groupName" value="{$groupName}" class="long" required="required" />
 					{if $errorField == 'groupName'}
 						<small class="innerError">
 							{if $errorType == 'empty'}

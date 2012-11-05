@@ -53,8 +53,8 @@
 	<div class="contentNavigation">
 		<nav>
 			<ul>
-				<li><a href="{link controller='ApplicationGroupEdit' id=$applicationGroup->groupID}{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/edit.svg" class="icon24" /> <span>{lang}wcf.acp.application.group.edit{/lang}</span></a></li>
 				<li><a class="button jsDeleteApplicationGroup" data-confirm-message="{lang}wcf.acp.application.group.delete.confirmMessage{/lang}" data-group-id="{@$applicationGroup->groupID}"><img src="{@RELATIVE_WCF_DIR}icon/delete.svg" class="icon24" /> <span>{lang}wcf.acp.application.group.delete{/lang}</span></a></li>
+				<li><a href="{link controller='ApplicationGroupEdit' id=$applicationGroup->groupID}{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/edit.svg" class="icon24" /> <span>{lang}wcf.acp.application.group.edit{/lang}</span></a></li>
 			</ul>
 		</nav>
 	</div>

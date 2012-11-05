@@ -84,21 +84,7 @@ class ApplicationGroupAddForm extends ACPForm {
 		parent::validate();
 		
 		// validate group name
-		if (empty($this->groupName)) {
-			throw new UserInputException('groupName');
-		}
-		else {
-			// check for duplicates
-			$sql = "SELECT	COUNT(*) AS count
-				FROM	wcf".WCF_N."_application_group
-				WHERE	groupName = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->groupName));
-			$row = $statement->fetchArray();
-			if ($row['count']) {
-				throw new UserInputException('groupName', 'notUnique');
-			}
-		}
+		$this->validateGroupName();
 		
 		// validate application package ids
 		if (empty($this->applications)) {
@@ -127,6 +113,27 @@ class ApplicationGroupAddForm extends ACPForm {
 				}
 				
 				$packages[] = $application->getPackage()->package;
+			}
+		}
+	}
+	
+	/**
+	 * Validates group name.
+	 */
+	protected function validateGroupName() {
+		if (empty($this->groupName)) {
+			throw new UserInputException('groupName');
+		}
+		else {
+			// check for duplicates
+			$sql = "SELECT	COUNT(*) AS count
+				FROM	wcf".WCF_N."_application_group
+				WHERE	groupName = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->groupName));
+			$row = $statement->fetchArray();
+			if ($row['count']) {
+				throw new UserInputException('groupName', 'notUnique');
 			}
 		}
 	}
