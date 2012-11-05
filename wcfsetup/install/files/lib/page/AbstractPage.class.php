@@ -162,28 +162,28 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 		// read data
 		$this->readData();
 		
-		// try to guess template name
-		if (empty($this->templateName)) {
-			$classParts = explode('\\', get_class($this));
-			$className = preg_replace('~(Form|Page)$~', '', array_pop($classParts));
-			
-			// check if this an *Edit page and use the add-template instead
-			if (substr($className, -4) == 'Edit') {
-				$className = substr($className, 0, -4) . 'Add';
-			}
-			
-			$this->templateName = lcfirst($className);
-		}
-		
 		// assign variables
 		$this->assignVariables();
 		
 		// call show event
 		EventHandler::getInstance()->fireAction($this, 'show');
 		
+		// try to guess template name
+		$classParts = explode('\\', get_class($this));
+		if (empty($this->templateName)) {
+			$className = preg_replace('~(Form|Page)$~', '', array_pop($classParts));
+				
+			// check if this an *Edit page and use the add-template instead
+			if (substr($className, -4) == 'Edit') {
+				$className = substr($className, 0, -4) . 'Add';
+			}
+				
+			$this->templateName = lcfirst($className);
+		}
+		
 		if ($this->useTemplate) {
 			// show template
-			WCF::getTPL()->display($this->templateName);
+			WCF::getTPL()->display($this->templateName, array_shift($classParts));
 		}
 	}
 	
