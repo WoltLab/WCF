@@ -27,6 +27,8 @@
 		<item name="wcf.acp.application.group.availableApplications"><![CDATA[Verfügbare Anwendungen]]></item>
 		<item name="wcf.acp.application.group.data"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.application.group.delete"><![CDATA[Anwendungsgruppe löschen]]></item>
+		<item name="wcf.acp.application.group.delete.confirmMessage"><![CDATA[Wollen Sie die Anwendungsgruppe &bdquo;{$applicationGroup->groupName}&ldquo; wirklich löschen?]]></item>
+		<item name="wcf.acp.application.group.delete.success"><![CDATA[Anwendungsgruppe erfolgreich gelöscht]]></item>
 		<item name="wcf.acp.application.group.edit"><![CDATA[Anwendungsgruppe bearbeiten]]></item>
 		<item name="wcf.acp.application.group.groupName"><![CDATA[Name]]></item>
 		<item name="wcf.acp.application.group.groupName.error.notUnique"><![CDATA[Der Gruppenname muss einzigartig sein.]]></item>

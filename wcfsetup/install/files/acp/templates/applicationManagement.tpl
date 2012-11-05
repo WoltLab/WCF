@@ -1,5 +1,17 @@
 {include file='header' pageTitle='wcf.acp.application.management'}
 
+<script type="text/javascript">
+	//<![CDATA[
+	$(function() {
+		new WCF.ACP.Application.Group.Delete();
+		
+		WCF.Language.addObject({
+			'wcf.acp.application.group.delete.success': '{lang}wcf.acp.application.group.delete.success{/lang}'
+		});
+	});
+	//]]>
+</script>
+
 {foreach from=$applicationGroups item=applicationGroup}
 	<header class="boxHeadline">
 		<hgroup>
@@ -42,7 +54,7 @@
 		<nav>
 			<ul>
 				<li><a href="{link controller='ApplicationGroupEdit' id=$applicationGroup->groupID}{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/edit.svg" class="icon24" /> <span>{lang}wcf.acp.application.group.edit{/lang}</span></a></li>
-				<li><a href="{link controller='ApplicationGroupDelete' id=$applicationGroup->groupID}{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/delete.svg" class="icon24" /> <span>{lang}wcf.acp.application.group.delete{/lang}</span></a></li>
+				<li><a class="button jsDeleteApplicationGroup" data-confirm-message="{lang}wcf.acp.application.group.delete.confirmMessage{/lang}" data-group-id="{@$applicationGroup->groupID}"><img src="{@RELATIVE_WCF_DIR}icon/delete.svg" class="icon24" /> <span>{lang}wcf.acp.application.group.delete{/lang}</span></a></li>
 			</ul>
 		</nav>
 	</div>
