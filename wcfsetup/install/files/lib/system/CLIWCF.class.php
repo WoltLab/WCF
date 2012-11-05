@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system;
-require_once('WCF.class.php');
 use phpline\console\ConsoleReader;
 use phpline\TerminalFactory;
 use wcf\system\cli\DatabaseCommandHistory;
