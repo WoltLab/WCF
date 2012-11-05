@@ -312,8 +312,6 @@
 		<item name="wcf.acp.option.page_description"><![CDATA[Seitenbeschreibung]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Titel der Seite]]></item>
 		<item name="wcf.acp.option.page_title.description"><![CDATA[Dieser Titel wird im Seitenkopf dargestellt, wenn Sie die Anzeige dieses Textes im Stileditor aktiviert haben.]]></item>
-		<item name="wcf.acp.option.page_urls"><![CDATA[Weitere Adressen (URLs)]]></item>
-		<item name="wcf.acp.option.page_urls.description"><![CDATA[Weitere Adressen (URLs) unter denen Ihre Seite erreichbar ist.]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
 		<item name="wcf.acp.option.session_timeout"><![CDATA[Gültigkeitslänge einer Sitzung]]></item>
 		<item name="wcf.acp.option.session_timeout.description"><![CDATA[Angabe in Sekunden]]></item>
