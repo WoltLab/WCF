@@ -193,7 +193,7 @@ class WCFSetup extends WCF {
 		self::$tplObj = SetupTemplateEngine::getInstance();
 		self::getTPL()->setLanguageID((self::$selectedLanguageCode == 'en' ? 0 : 1));
 		self::getTPL()->setCompileDir(TMP_DIR);
-		self::getTPL()->addTemplatePath(PACKAGE_ID, TMP_DIR);
+		self::getTPL()->addApplication('wcf', PACKAGE_ID, TMP_DIR);
 		self::getTPL()->registerPrefilter(array('lang'));
 		self::getTPL()->assign(array(
 			'__wcf' => $this,
