@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\system\cache\CacheHandler;
+
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -31,6 +33,9 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 		
 		// get relative path of script
 		$path = FileUtil::getRealPath(WCF_DIR.$packageDir);
+		
+		// reset WCF cache
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', '*.php');
 		
 		// run script
 		$this->run($path.$this->instruction['value']);
