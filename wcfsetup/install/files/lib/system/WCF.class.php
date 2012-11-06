@@ -425,8 +425,10 @@ class WCF {
 		}
 		
 		// step 2) run each application
-		foreach ($loadedApplications as $application) {
-			$application->__run();
+		if (!class_exists('wcf\system\WCFACP', false)) {
+			foreach ($loadedApplications as $application) {
+				$application->__run();
+			}
 		}
 	}
 	

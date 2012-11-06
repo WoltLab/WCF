@@ -34,7 +34,8 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		$sql = "UPDATE	wcf".WCF_N."_application
 			SET	groupID = ?,
 				cookieDomain = ?,
-				cookiePath = ?
+				cookiePath = ?,
+				isPrimary = ?
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
@@ -75,10 +76,13 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 			$path = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash(implode('/', $path)));
 			
 			foreach (array_keys($data) as $packageID) {
+				$isPrimary = ($this->parameters['primaryApplication'] == $packageID) ? 1 : 0;
+				
 				$statement->execute(array(
 					$this->parameters['groupID'],
 					$domainName,
 					$path,
+					$isPrimary,
 					$packageID
 				));
 			}
@@ -99,7 +103,8 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		$sql = "UPDATE	wcf".WCF_N."_application
 			SET	groupID = ?,
 				cookieDomain = domainName,
-				cookiePath = domainPath
+				cookiePath = domainPath,
+				isPrimary = 0
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		

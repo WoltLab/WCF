@@ -33,10 +33,11 @@ class ApplicationGroupAction extends AbstractDatabaseObjectAction {
 	public function create() {
 		$applicationGroup = parent::create();
 		
-		if (isset($this->parameters['applications'])) {
-			$applicationAction = new ApplicationAction($this->parameters['applications'], 'group', array('groupID' => $applicationGroup->groupID));
-			$applicationAction->executeAction();
-		}
+		$applicationAction = new ApplicationAction($this->parameters['applications'], 'group', array(
+			'groupID' => $applicationGroup->groupID,
+			'primaryApplication' => $this->parameters['primaryApplication']
+		));
+		$applicationAction->executeAction();
 		
 		return $applicationGroup;
 	}
@@ -48,7 +49,7 @@ class ApplicationGroupAction extends AbstractDatabaseObjectAction {
 		parent::update();
 		
 		// read list of currently associated applications
-		$applicationGroup = current($this->objects);
+		$applicationGroup = current(reset($this->objects));
 		$applicationList = new ApplicationList();
 		$applicationList->getConditionBuilder()->add("application.groupID = ?", array($applicationGroup->groupID));
 		$applicationList->sqlLimit = 0;
@@ -76,7 +77,10 @@ class ApplicationGroupAction extends AbstractDatabaseObjectAction {
 		}
 		
 		// rebuild current group
-		$applicationAction = new ApplicationAction($updateApplications, 'group', array('groupID' => $applicationGroup->groupID));
+		$applicationAction = new ApplicationAction($updateApplications, 'group', array(
+			'groupID' => $applicationGroup->groupID,
+			'primaryApplication' => $this->parameters['primaryApplication']
+		));
 		$applicationAction->executeAction();
 		
 		// remove applications from group

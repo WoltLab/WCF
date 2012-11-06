@@ -65,6 +65,7 @@
 						<thead>
 							<tr>
 								<th class="columnID columnPackageID" colspan="3">{lang}wcf.global.objectID{/lang}</th>
+								<th class="columnMark columnPrimaryApplication">{lang}wcf.acp.application.primaryApplication{/lang}</th>
 								<th class="columnText columnPackageName">{lang}wcf.acp.package.name{/lang}</th>
 								<th class="columnText columnDomainName">{lang}wcf.acp.application.domainName{/lang}</th>
 								<th class="columnText columnDomainPath">{lang}wcf.acp.application.domainPath{/lang}</th>
@@ -81,6 +82,7 @@
 									<td class="columnMark"><input type="checkbox" name="applications[]" value="{@$application->packageID}"{if $application->packageID|in_array:$applications} checked="checked"{/if} /></td>
 									<td class="columnIcon"><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit.svg" alt="" class="icon16 jsTooltip" title="{lang}wcf.global.button.edit{/lang}" /></a></td>
 									<td class="columnID columnPackageID">{#$application->packageID}</td>
+									<td class="columnMark columnPrimaryApplication"><input type="radio" name="primaryApplication" value="{@$application->packageID}" required="required"{if $primaryApplication == $application->packageID} checked="checked"{/if} /></td>
 									<td class="columnText columnPackageName"><a href="{link controller='PackageView' id=$application->packageID}{/link}">{lang}{$application->getPackage()->getName()}{/lang}</a></td>
 									<td class="columnText columnDomainName">{$application->domainName}</td>
 									<td class="columnText columnDomainPath">{$application->domainPath}</td>

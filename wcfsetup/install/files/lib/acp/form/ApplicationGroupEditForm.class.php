@@ -93,6 +93,13 @@ class ApplicationGroupEditForm extends ApplicationGroupAddForm {
 		
 		if (empty($_POST)) {
 			$this->groupName = $this->applicationGroup->groupName;
+			
+			foreach ($this->availableApplications as $application) {
+				if ($application->isPrimary) {
+					$this->primaryApplication = $application->packageID;
+					break;
+				}
+			}
 		}
 	}
 	
@@ -107,7 +114,8 @@ class ApplicationGroupEditForm extends ApplicationGroupAddForm {
 			'applications' => $this->applications,
 			'data' => array(
 				'groupName' => $this->groupName
-			)
+			),
+			'primaryApplication' => $this->primaryApplication
 		));
 		$this->objectAction->executeAction();
 		$this->saved();

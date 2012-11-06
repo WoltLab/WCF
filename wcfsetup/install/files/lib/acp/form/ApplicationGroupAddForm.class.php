@@ -47,6 +47,12 @@ class ApplicationGroupAddForm extends ACPForm {
 	public $neededPermissions = array('admin.system.canManageApplication');
 	
 	/**
+	 * primary application's package id
+	 * @var	integer
+	 */
+	public $primaryApplication = 0;
+	
+	/**
 	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -75,6 +81,7 @@ class ApplicationGroupAddForm extends ACPForm {
 		
 		if (isset($_POST['applications']) && is_array($_POST['applications'])) $this->applications = ArrayUtil::toIntegerArray($_POST['applications']);
 		if (isset($_POST['groupName'])) $this->groupName = StringUtil::trim($_POST['groupName']);
+		if (isset($_POST['primaryApplication'])) $this->primaryApplication = intval($_POST['primaryApplication']);
 	}
 	
 	/**
@@ -115,6 +122,15 @@ class ApplicationGroupAddForm extends ACPForm {
 				$packages[] = $application->getPackage()->package;
 			}
 		}
+		
+		if ($this->primaryApplication == 0) {
+			throw new UserInputException('applications', 'primaryApplication.empty');
+		}
+		else {
+			if (!in_array($this->primaryApplication, $this->applications)) {
+				throw new UserInputException('applications', 'primaryApplication.notValid');
+			}
+		}
 	}
 	
 	/**
@@ -149,7 +165,8 @@ class ApplicationGroupAddForm extends ACPForm {
 			'applications' => $this->applications,
 			'data' => array(
 				'groupName' => $this->groupName
-			)
+			),
+			'primaryApplication' => $this->primaryApplication
 		));
 		$this->objectAction->executeAction();
 		$this->saved();
@@ -157,6 +174,7 @@ class ApplicationGroupAddForm extends ACPForm {
 		// reset values
 		$this->applications = array();
 		$this->groupName = '';
+		$this->primaryApplication = 0;
 		
 		// reload available applications
 		$this->readAvailableApplications();
@@ -177,7 +195,8 @@ class ApplicationGroupAddForm extends ACPForm {
 			'action' => 'add',
 			'applications' => $this->applications,
 			'availableApplications' => $this->availableApplications,
-			'groupName' => $this->groupName
+			'groupName' => $this->groupName,
+			'primaryApplication' => $this->primaryApplication,
 		));
 	}
 }

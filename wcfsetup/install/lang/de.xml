@@ -36,6 +36,7 @@
 		<item name="wcf.acp.application.group.title"><![CDATA[Anwendungsgruppe: &bdquo;{$applicationGroup->groupName}&ldquo;]]></item>
 		<item name="wcf.acp.application.independentApplications"><![CDATA[Unabhängige Anwendungen]]></item>
 		<item name="wcf.acp.application.management"><![CDATA[Anwendungen verwalten]]></item>
+		<item name="wcf.acp.application.primaryApplication"><![CDATA[Primäre Anwendung]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
