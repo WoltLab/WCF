@@ -407,9 +407,12 @@ class WCF {
 		// do not init applications if within wcf
 		if (PACKAGE_ID == 1) return;
 		
+		// step 1) load all applications
+		$loadedApplications = array();
+		
 		// start main application
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
-		$this->loadApplication($application);
+		$loadedApplications[] = $this->loadApplication($application);
 		
 		// register primary application
 		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
@@ -418,7 +421,12 @@ class WCF {
 		// start dependent applications
 		$applications = ApplicationHandler::getInstance()->getDependentApplications();
 		foreach ($applications as $application) {
-			$this->loadApplication($application, true);
+			$loadedApplications[] = $this->loadApplication($application, true);
+		}
+		
+		// step 2) run each application
+		foreach ($loadedApplications as $application) {
+			$application->__run();
 		}
 	}
 	
@@ -427,8 +435,10 @@ class WCF {
 	 * 
 	 * @param	wcf\data\application\Application		$application
 	 * @param	boolean						$isDependentApplication
+	 * @return	wcf\system\application\IApplication
 	 */
 	protected function loadApplication(Application $application, $isDependentApplication = false) {
+		$applicationObject = null;
 		$package = PackageCache::getInstance()->getPackage($application->packageID);
 		
 		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
@@ -455,7 +465,8 @@ class WCF {
 				$this->getTPL()->addApplication($abbreviation, $application->packageID, $packageDir . 'templates/');
 				
 				// init application and assign it as template variable
-				$this->getTPL()->assign('__'.$abbreviation, call_user_func(array($className, 'getInstance')));
+				$applicationObject = call_user_func(array($className, 'getInstance'));
+				$this->getTPL()->assign('__'.$abbreviation, $applicationObject);
 			}
 		}
 		else {
@@ -474,6 +485,8 @@ class WCF {
 		
 		// register application
 		self::$applications[$abbreviation] = $application;
+		
+		return $applicationObject;
 	}
 	
 	/**

@@ -14,6 +14,16 @@ use wcf\system\SingletonFactory;
  */
 abstract class AbstractApplication extends SingletonFactory implements IApplication {
 	/**
+	 * @see	wcf\system\SingletonFactory::init()
+	 */
+	protected final function init() { }
+	
+	/**
+	 * @see	wcf\system\application\IApplication::__run()
+	 */
+	abstract public function __run();
+	
+	/**
 	 * @see	wcf\system\application\IApplication::__callStatic()
 	 */
 	public static function __callStatic($method, array $arguments) {

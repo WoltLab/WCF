@@ -13,6 +13,11 @@ namespace wcf\system\application;
  */
 interface IApplication {
 	/**
+	 * Initializes this application, called after all applications have been loaded.
+	 */
+	public function __run();
+	
+	/**
 	 * Forwards unknown method calls to WCF.
 	 * 
 	 * @param	string		$method
