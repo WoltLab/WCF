@@ -27,6 +27,7 @@ class LinkHandler extends SingletonFactory {
 		$abbreviation = 'wcf';
 		$anchor = '';
 		$isRaw = false;
+		$appendSession = true;
 		if (isset($parameters['application'])) {
 			$abbreviation = $parameters['application'];
 			unset($parameters['application']);
@@ -34,6 +35,10 @@ class LinkHandler extends SingletonFactory {
 		if (isset($parameters['isRaw'])) {
 			$isRaw = $parameters['isRaw'];
 			unset($parameters['isRaw']);
+		}
+		if (isset($parameters['appendSession'])) {
+			$appendSession = $parameters['appendSession'];
+			unset($parameters['appendSession']);
 		}
 		
 		// remove anchor before parsing
@@ -72,7 +77,9 @@ class LinkHandler extends SingletonFactory {
 		}
 		
 		// append session id
-		$url .= (strpos($url, '?') === false) ? SID_ARG_1ST : SID_ARG_2ND_NOT_ENCODED;
+		if ($appendSession) {
+			$url .= (strpos($url, '?') === false) ? SID_ARG_1ST : SID_ARG_2ND_NOT_ENCODED;
+		}
 		
 		// handle application groups
 		$applicationGroup = ApplicationHandler::getInstance()->getActiveGroup();
