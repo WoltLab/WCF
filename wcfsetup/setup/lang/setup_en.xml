@@ -29,7 +29,7 @@
 		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[Recommended:]]></item>
 		<item name="wcf.global.systemRequirements.php"><![CDATA[Installed version of the script-language &quot;PHP&quot;]]></item>
 		<item name="wcf.global.systemRequirements.php.description"><![CDATA[The installed version of the script-language &quot;PHP&quot; is too old for a stable operation of this software. To proceed with the installation, a version update is necessary.]]></item>
-		<item name="wcf.global.systemRequirements.php.description2"><![CDATA[Your PHP version is obsolete. For a stable operation of this software, we recommend a PHP version of 5.3.0 or greater.]]></item>
+		<item name="wcf.global.systemRequirements.php.description2"><![CDATA[Your PHP version is obsolete. For a stable operation of this software, we recommend a PHP version of 5.3.2 or greater.]]></item>
 		<item name="wcf.global.systemRequirements.sql"><![CDATA[Database support]]></item>
 		<item name="wcf.global.systemRequirements.sql.notFound"><![CDATA[not found]]></item>
 		<item name="wcf.global.systemRequirements.sql.description"><![CDATA[Database support is required to install this software.]]></item>

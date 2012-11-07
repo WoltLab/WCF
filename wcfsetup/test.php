@@ -6,7 +6,7 @@
 <body>
 <?php
 /**
- * Tests the support of PHP 5.3.0 or greater.
+ * Tests the support of PHP 5.3.2 or greater.
  * ><p><b>Support for PHP is missing.<br />PHP Unterst&uuml;tzung nicht gefunden</b></p> <!--
  * 
  * @author	Marcel Werk
@@ -17,7 +17,7 @@
 // php version
 $phpVersion = phpversion();
 $comparePhpVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $phpVersion);
-$neededPhpVersion = '5.3.0';
+$neededPhpVersion = '5.3.2';
 $configArray = @ini_get_all();
 if (!(version_compare($comparePhpVersion, $neededPhpVersion) >= 0)) {
 	?>
@@ -54,7 +54,7 @@ else if (!function_exists('gzopen')) {
 else if ((is_array($configArray) && !empty($configArray['safe_mode']['local_value'])) || @ini_get('safe_mode')) {
 	?>
 	<p>PHP Safemode is enabled. You must disable it to install this software.<br />
-	Der PHP Safemode ist aktiviert. Für den Betrieb der Software muss der Safemode deaktiviert sein.</p>
+	Der PHP Safemode ist aktiviert. F&uuml;r den Betrieb der Software muss der Safemode deaktiviert sein.</p>
 	<?php
 }
 

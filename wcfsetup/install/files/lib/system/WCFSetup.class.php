@@ -369,7 +369,7 @@ class WCFSetup extends WCF {
 		// php version
 		$system['phpVersion']['value'] = phpversion();
 		$comparePhpVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $system['phpVersion']['value']);
-		$system['phpVersion']['result'] = (version_compare($comparePhpVersion, '5.3.0') >= 0);
+		$system['phpVersion']['result'] = (version_compare($comparePhpVersion, '5.3.2') >= 0);
 		
 		// sql
 		$system['sql']['value'] = array_keys(self::getAvailableDBClasses());
