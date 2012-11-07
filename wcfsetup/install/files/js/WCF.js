@@ -4456,8 +4456,9 @@ WCF.Search.Base = Class.extend({
 	 * @param	object		callback
 	 * @param	array		excludedSearchValues
 	 * @param	boolean		commaSeperated
+	 * @param	boolean		showLoadingOverlay
 	 */
-	init: function(searchInput, callback, excludedSearchValues, commaSeperated) {
+	init: function(searchInput, callback, excludedSearchValues, commaSeperated, showLoadingOverlay) {
 		if (callback !== null && callback !== undefined && !$.isFunction(callback)) {
 			console.debug("[WCF.Search.Base] The given callback is invalid, aborting.");
 			return;
@@ -4484,6 +4485,7 @@ WCF.Search.Base = Class.extend({
 		this._itemIndex = -1;
 		
 		this._proxy = new WCF.Action.Proxy({
+			showLoadingOverlay: (showLoadingOverlay === false ? false : true),
 			success: $.proxy(this._success, this)
 		});
 		
@@ -6381,25 +6383,38 @@ WCF.EditableItemList = Class.extend({
 		this._form = this._itemList.parents('form').submit($.proxy(this._submit, this));
 		
 		if (this._allowCustomInput) {
-			var self = this;
-			this._searchInput.keydown(function(event) {
-				var $keyCode = event.which || event.keyCode;
-				if ($keyCode === 13) {
-					self.addItem({
-						objectID: 0,
-						label: self._searchInput.val()
-					});
-					
-					// reset input
-					$(this).val('');
-					
-					event.stopPropagation();
-					return false;
-				}
-				
-				return true;
-			});
+			this._searchInput.keydown($.proxy(this._keyDown, this));
 		}
+	},
+	
+	/**
+	 * Handles the key down event.
+	 * 
+	 * @param	object		event
+	 */
+	_keyDown: function(event) {
+		if (event === null || (event.which === 13 || event.which === 188)) {
+			var $value = $.trim(this._searchInput.val());
+			if ($value === '') {
+				return true;
+			}
+			
+			this.addItem({
+				objectID: 0,
+				label: $value
+			});
+			
+			// reset input
+			this._searchInput.val('');
+			
+			if (event !== null) {
+				event.stopPropagation();
+			}
+			
+			return false;
+		}
+		
+		return true;
 	},
 	
 	/**
@@ -6477,7 +6492,9 @@ WCF.EditableItemList = Class.extend({
 	/**
 	 * Handles form submit, override in your class.
 	 */
-	_submit: function() { },
+	_submit: function() {
+		this._keyDown(null);
+	},
 	
 	/**
 	 * Adds an item to internal storage.
