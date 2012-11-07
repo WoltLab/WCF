@@ -16,7 +16,7 @@
 				<span>{if $item.type == 1}(SQL Query) {/if}{$item.text}</span><br />
 				<small style="font-size: .85em">Execution time: {@$item.use}s</small>
 				
-				<pre style="display: none">{foreach from=$item.trace key=traceNo item=traceItem}#{#$traceNo} {if !$traceItem.class|empty}{$traceItem.class}{$traceItem.type}{else}{$traceItem.file}: {/if}{$traceItem.function}() {if !$traceItem.line|empty}(line {#$traceItem.line}){/if} 
+				<pre style="display: none">{foreach from=$item.trace key=traceNo item=traceItem}#{#$traceNo} {if !$traceItem.class|empty}{$traceItem.class}{$traceItem.type}{else}{if !$traceItem.file|empty}{$traceItem.file}: {/if}{/if}{$traceItem.function}() {if !$traceItem.line|empty}(line {#$traceItem.line}){/if} 
 {/foreach}</pre>
 				
 			</li>
