@@ -538,6 +538,7 @@ class WCFSetup extends WCF {
 		$dbPassword = '';
 		$dbName = 'wcf';
 		$dbNumber = 1;
+		$dbClass = '';
 		// set $dbClass to first item in $availableDBClasses
 		foreach ($availableDBClasses as $dbClass) {
 			$dbClass = $dbClass['class'];
