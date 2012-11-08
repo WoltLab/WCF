@@ -67,7 +67,8 @@
 			'wcf.global.confirmation.confirm': '{lang}wcf.global.confirmation.confirm{/lang}',
 			'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}',
 			'wcf.sitemap.title': '{lang}wcf.sitemap.title{/lang}',
-			'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}'
+			'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}',
+			'wcf.global.form.edit.success': '{lang}wcf.global.form.edit.success{/lang}'
 			{event name='javascriptLanguageImport'}
 		});
 		
