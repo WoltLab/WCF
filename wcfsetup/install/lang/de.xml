@@ -725,6 +725,9 @@
 		<item name="wcf.global.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.global.multiSelect"><![CDATA[Mehrfache Markierungen sind durch zusätzliches Drücken der Taste &bdquo;Strg/Ctrl&ldquo; (Windows) oder &bdquo;Befehl/Command&ldquo; (Mac OS) möglich.]]></item>
 		<item name="wcf.global.page.jumpTo"><![CDATA[Gehe zu Seite]]></item>
+		<item name="wcf.global.error.illegalLink"><![CDATA[Sie haben einen ungültigen oder nicht mehr gültigen Link aufgerufen.]]></item>
+		<item name="wcf.global.error.backward"><![CDATA[Zurück zur vorherigen Seite]]></item>
+		<item name="wcf.global.noDeclaration"><![CDATA[Keine Angabe]]></item>
 	</category>
 	
 	<category name="wcf.imageViewer">
