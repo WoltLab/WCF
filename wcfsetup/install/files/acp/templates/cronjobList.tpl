@@ -113,11 +113,11 @@
 							<td class="columnDate columnStartDom"><p>{$cronjob->startDom|truncate:30:' ...'}</p></td>
 							<td class="columnDate columnStartMonth"><p>{$cronjob->startMonth|truncate:30:' ...'}</p></td>
 							<td class="columnDate columnStartDow"><p>{$cronjob->startDow|truncate:30:' ...'}</p></td>
-							<td class="columnText columnDescription" title="{$cronjob->description}">
+							<td class="columnText columnDescription" title="{$cronjob->description|language}">
 								{if $cronjob->isEditable()}
-									<p><a title="{lang}wcf.acp.cronjob.edit{/lang}" href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}">{$cronjob->description|truncate:50:" ..."}</a></p>
+									<p><a title="{lang}wcf.acp.cronjob.edit{/lang}" href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}">{$cronjob->description|language|truncate:50:" …"}</a></p>
 								{else}
-									<p>{$cronjob->description|truncate:50:' ...'}</p>
+									<p>{$cronjob->description|language|truncate:50:' …'}</p>
 								{/if}
 							</td>
 							<td class="columnDate columnNextExec">

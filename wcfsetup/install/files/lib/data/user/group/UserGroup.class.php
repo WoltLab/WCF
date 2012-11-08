@@ -100,7 +100,7 @@ class UserGroup extends DatabaseObject {
 		self::getCache();
 		
 		// get all groups
-		if (!count($types)) return self::$cache['groups'];
+		if (empty($types)) return self::$cache['groups'];
 		
 		// get groups by type
 		$groupIDs = self::getGroupIDsByType($types);
@@ -170,7 +170,7 @@ class UserGroup extends DatabaseObject {
 			self::$accessibleGroups = explode(',', WCF::getSession()->getPermission('admin.user.accessibleGroups'));
 		}
 		
-		if (count($groupIDs) == 0) return false;
+		if (empty($groupIDs)) return false;
 		
 		foreach ($groupIDs as $groupID) {
 			if (!in_array($groupID, self::$accessibleGroups)) {
@@ -191,7 +191,7 @@ class UserGroup extends DatabaseObject {
 	public static function getAccessibleGroups(array $groupTypes = array(), array $invalidGroupTypes = array()) {
 		$groups = self::getGroupsByType($groupTypes);
 		
-		if (count($invalidGroupTypes) > 0) {
+		if (!empty($invalidGroupTypes)) {
 			$invalidGroups = self::getGroupsByType($invalidGroupTypes);
 			foreach ($invalidGroups as $groupID => $group) {
 				unset($groups[$groupID]);
@@ -322,7 +322,7 @@ class UserGroup extends DatabaseObject {
 				$groupOptionIDs[$row['optionName']] = $row['optionID'];
 			}
 			
-			if (count($groupOptionIDs)) {
+			if (!empty($groupOptionIDs)) {
 				$conditions = new PreparedStatementConditionBuilder();
 				$conditions->add("option_value.groupID = ?", array($this->groupID));
 				$conditions->add("option_value.optionID IN (?)", array($groupOptionIDs));

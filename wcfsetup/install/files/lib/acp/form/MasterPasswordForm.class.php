@@ -30,7 +30,7 @@ class MasterPasswordForm extends ACPForm {
 	public $url = '';
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */	
 	public function readParameters() {
 		parent::readParameters();
@@ -91,7 +91,7 @@ class MasterPasswordForm extends ACPForm {
 	public function readData() {
 		parent::readData();
 		
-		if (!count($_POST)) {
+		if (empty($_POST)) {
 			$this->url = WCF::getSession()->requestURI;
 		}
 	}

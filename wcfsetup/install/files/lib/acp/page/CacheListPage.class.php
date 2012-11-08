@@ -26,7 +26,7 @@ class CacheListPage extends AbstractPage {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.canViewLog');
+	public $neededPermissions = array('admin.system.canManageApplication');
 	
 	/**
 	 * indicates if cache was cleared
@@ -69,119 +69,151 @@ class CacheListPage extends AbstractPage {
 			'files' => 0
 		);
 		
-		$_this = $this;
-		$readFileCache = function($cacheDir, Regex $ignore = null) use ($_this) {
-			$_this->caches[$cacheDir] = array();
-			
-			// get files in cache directory
-			try {
-				$directoryUtil = DirectoryUtil::getInstance($cacheDir);
-			}
-			catch(SystemException $e) {
-				return;
-			}
-			$files = $directoryUtil->getFileObjects(SORT_ASC, new Regex('\.php$'));
-			// get additional file information
-			if (is_array($files)) {
-				foreach ($files as $file) {
-					if ($ignore !== null) if ($ignore->match($file)) continue;
-					$_this->caches[$cacheDir][] = array(
-						'filename' => $file->getBasename(),
-						'filesize' => $file->getSize(),
-						'mtime' => $file->getMtime(),
-						'perm' => substr(sprintf('%o', $file->getPerms()), -3),
-						'writable' => $file->isWritable()
-					);
-					
-					$_this->cacheData['files']++;
-					$_this->cacheData['size'] += $file->getSize();
+		switch ($this->cacheData['source']) {
+			case 'wcf\system\cache\source\DiskCacheSource':
+				// set version
+				$this->cacheData['version'] = WCF_VERSION;
+				
+				$conditions = new PreparedStatementConditionBuilder();
+				$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
+				$conditions->add("isApplication = ?", array(1));
+				
+				// get package dirs
+				$sql = "SELECT	packageDir
+					FROM	wcf".WCF_N."_package
+					".$conditions;
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute($conditions->getParameters());
+				while ($row = $statement->fetchArray()) {
+					$packageDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
+					$this->readCacheFiles('data', $packageDir.'cache');
 				}
-			}
-		};
-		
-		// filesystem cache
-		if ($this->cacheData['source'] == 'wcf\system\cache\source\DiskCacheSource') {
-			// set version
-			$this->cacheData['version'] = WCF_VERSION;
+			break;
 			
-			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-			$conditions->add("isApplication = ?", array(1));
-			
-			// get package dirs
-			$sql = "SELECT	packageDir
-				FROM	wcf".WCF_N."_package
-				".$conditions;
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditions->getParameters());
-			while ($row = $statement->fetchArray()) {
-				$packageDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
-				$readFileCache($packageDir.'cache');
-			}
-		}
-		// memcache
-		else if ($this->cacheData['source'] == 'wcf\system\cache\source\MemcacheCacheSource') {
-			// get version
-			$this->cacheData['version'] = MemcacheAdapter::getInstance()->getMemcache()->getVersion();
-			
-			// get stats
-			$stats = MemcacheAdapter::getInstance()->getMemcache()->getStats();
-			$this->cacheData['files'] = $stats['curr_items'];
-			$this->cacheData['size'] = $stats['bytes'];
-		}
-		// apc
-		else if ($this->cacheData['source'] == 'wcf\system\cache\source\ApcCacheSource') {
-			// set version
-			$this->cacheData['version'] = phpversion('apc');
-			
-			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-			$conditions->add("isApplication = ?", array(1));
-			
-			// get package dirs
-			$sql = "SELECT	packageDir, packageName, instanceNo
-				FROM	wcf".WCF_N."_package
-				".$conditions;
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditions->getParameters());
-			
-			$packageNames = array();
-			while ($row = $statement->fetchArray()) {
-				$packagePath = FileUtil::getRealPath(WCF_DIR.$row['packageDir']).'cache/';
-				$packageNames[$packagePath] = $row['packageName'].' #'.$row['instanceNo'];
-			}
-			
-			$apcinfo = apc_cache_info('user');
-			$cacheList = $apcinfo['cache_list'];
-			foreach ($cacheList as $cache) {
-				$cachePath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(dirname($cache['info'])));
-				if (isset($packageNames[$cachePath])) {
-					// Use the packageName + the instance number, because pathes could confuse the administrator.
-					// He could think this is a file cache. If instanceName would be unique, we could use it instead.
-					$packageName = $packageNames[$cachePath];
-					if (!isset($this->caches[$packageName])) $this->caches[$packageName] = array();
-					
-					// get additional cache information
-					$this->caches[$packageName][] = array(
-						'filename' => basename($cache['info'], '.php'),
-						'filesize' => $cache['mem_size'],
-						'mtime' => $cache['mtime'],
-					);
-					
-					$this->cacheData['files']++;
-					$this->cacheData['size'] += $cache['mem_size'];
+			case 'wcf\system\cache\source\MemcacheCacheSource':
+				// set version
+				$this->cacheData['version'] = WCF_VERSION;
+				
+				$conditions = new PreparedStatementConditionBuilder();
+				$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
+				$conditions->add("isApplication = ?", array(1));
+				
+				// get package dirs
+				$sql = "SELECT	packageDir
+					FROM	wcf".WCF_N."_package
+					".$conditions;
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute($conditions->getParameters());
+				while ($row = $statement->fetchArray()) {
+					$packageDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
+					$this->readCacheFiles('data', $packageDir.'cache');
 				}
-			}
-		}
-		// disabled
-		else if ($this->cacheData['source'] == 'wcf\system\cache\source\NoCacheSource') {
-			$this->cacheData['version'] = WCF_VERSION;
-			$this->cacheData['files'] = $this->cacheData['size'] = 0;
+			break;
+			
+			case 'wcf\system\cache\source\ApcCacheSource':
+				// set version
+				$this->cacheData['version'] = phpversion('apc');
+				
+				$conditions = new PreparedStatementConditionBuilder();
+				$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
+				$conditions->add("isApplication = ?", array(1));
+				
+				// get package dirs
+				$sql = "SELECT	packageDir, packageName, instanceNo
+					FROM	wcf".WCF_N."_package
+					".$conditions;
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute($conditions->getParameters());
+				
+				$packageNames = array();
+				while ($row = $statement->fetchArray()) {
+					$packagePath = FileUtil::getRealPath(WCF_DIR.$row['packageDir']).'cache/';
+					$packageNames[$packagePath] = $row['packageName'].' #'.$row['instanceNo'];
+				}
+				
+				$apcinfo = apc_cache_info('user');
+				$cacheList = $apcinfo['cache_list'];
+				foreach ($cacheList as $cache) {
+					$cachePath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(dirname($cache['info'])));
+					if (isset($packageNames[$cachePath])) {
+						// Use the packageName + the instance number, because pathes could confuse the administrator.
+						// He could think this is a file cache. If instanceName would be unique, we could use it instead.
+						$packageName = $packageNames[$cachePath];
+						if (!isset($this->caches['data'])) {
+							$this->caches['data'] = array();
+						}
+						if (!isset($this->caches['data'][$packageName])) {
+							$this->caches['data'][$packageName] = array();
+						}
+						
+						// get additional cache information
+						$this->caches['data'][$packageName][] = array(
+							'filename' => basename($cache['info'], '.php'),
+							'filesize' => $cache['mem_size'],
+							'mtime' => $cache['mtime'],
+						);
+						
+						$this->cacheData['files']++;
+						$this->cacheData['size'] += $cache['mem_size'];
+					}
+				}
+			break;
+			
+			case 'wcf\system\cache\source\NoCacheSource':
+				$this->cacheData['version'] = WCF_VERSION;
+				$this->cacheData['files'] = $this->cacheData['size'] = 0;
+			break;
 		}
 		
-		$readFileCache(WCF_DIR.'language');
-		$readFileCache(WCF_DIR.'templates/compiled', new Regex('\.meta\.php$'));
-		$readFileCache(WCF_DIR.'acp/templates/compiled', new Regex('\.meta\.php$'));
+		$this->readCacheFiles('language', WCF_DIR.'language');
+		$this->readCacheFiles('template', WCF_DIR.'templates/compiled', new Regex('\.meta\.php$'));
+		$this->readCacheFiles('template', WCF_DIR.'acp/templates/compiled', new Regex('\.meta\.php$'));
+	}
+	
+	/**
+	 * Reads the information of cached files
+	 * 
+	 * @param	string			$cacheType
+	 * @param	strign			$cacheDir
+	 * @param	wcf\system\Regex	$ignore
+	 */
+	protected function readCacheFiles($cacheType, $cacheDir, Regex $ignore = null) {
+		if (!isset($this->cacheData[$cacheType])) {
+			$this->cacheData[$cacheType] = array();
+		}
+		
+		// get files in cache directory
+		try {
+			$directoryUtil = DirectoryUtil::getInstance($cacheDir);
+		}
+		catch (SystemException $e) {
+			return;
+		}
+		
+		$files = $directoryUtil->getFileObjects(SORT_ASC, new Regex('\.php$'));
+		
+		// get additional file information
+		$data = array();
+		if (is_array($files)) {
+			foreach ($files as $file) {
+				if ($ignore !== null && $ignore->match($file)) {
+					continue;
+				}
+				
+				$data[] = array(
+					'filename' => $file->getBasename(),
+					'filesize' => $file->getSize(),
+					'mtime' => $file->getMtime(),
+					'perm' => substr(sprintf('%o', $file->getPerms()), -3),
+					'writable' => $file->isWritable()
+				);
+				
+				$this->cacheData['files']++;
+				$this->cacheData['size'] += $file->getSize();
+			}
+		}
+		
+		$this->caches[$cacheType][$cacheDir] = $data;
 	}
 	
 	/**
@@ -202,7 +234,7 @@ class CacheListPage extends AbstractPage {
 	 */
 	public function show() {
 		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.log.cache');
+		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.application.cache');
 		
 		parent::show();
 	}

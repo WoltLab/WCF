@@ -12,6 +12,82 @@
 WCF.ACP = {};
 
 /**
+ * Namespace for ACP application management.
+ */
+WCF.ACP.Application = { };
+
+/**
+ * Namespace for ACP application group management.
+ */
+WCF.ACP.Application.Group = { };
+
+/**
+ * Provides the ability to remove application groups.
+ * 
+ * @param	string		redirectURL
+ */
+WCF.ACP.Application.Group.Delete = Class.extend({
+	/**
+	 * redirect URL
+	 * @var	string
+	 */
+	_redirectURL: '',
+	
+	/**
+	 * Initializes the WCF.ACP.Application.Group.Delete class.
+	 * 
+	 * @param	string		redirectURL
+	 */
+	init: function(redirectURL) {
+		this._redirectURL = redirectURL || '';
+		
+		$('.jsDeleteApplicationGroup').click($.proxy(this._click, this));
+	},
+	
+	/**
+	 * Shows a confirmation dialog to remove an application group.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		var $button = $(event.currentTarget);
+		
+		WCF.System.Confirmation.show($button.data('confirmMessage'), $.proxy(function(action) {
+			if (action === 'confirm') {
+				this._remove($button.data('groupID'));
+			}
+		}, this));
+	},
+	
+	/**
+	 * Removes an application group.
+	 * 
+	 * @param	integer		groupID
+	 */
+	_remove: function(groupID) {
+		new WCF.Action.Proxy({
+			autoSend: true,
+			data: {
+				actionName: 'delete',
+				className: 'wcf\\data\\application\\group\\ApplicationGroupAction',
+				objectIDs: [ groupID ]
+			},
+			success: $.proxy(function(data, textStatus, jqXHR) {
+				var $notification = new WCF.System.Notification(WCF.Language.get('wcf.acp.application.group.delete.success'));
+				$notification.show($.proxy(function() {
+					if (this._redirectURL) {
+						window.location = this._redirectURL;
+					}
+					else {
+						window.location.reload();
+					}
+				}, this));
+			}, this)
+		});
+	}
+});
+
+/**
  * Handles ACPMenu.
  * 
  * @param	array<string>		activeMenuItems

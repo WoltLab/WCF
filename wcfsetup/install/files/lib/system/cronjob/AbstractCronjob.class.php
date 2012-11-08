@@ -15,7 +15,7 @@ use wcf\system\event\EventHandler;
  */
 abstract class AbstractCronjob implements ICronjob {
 	/**
-	 * @see wcf\system\cronjob\ICronjob::execute()
+	 * @see	wcf\system\cronjob\ICronjob::execute()
 	 */
 	public function execute(Cronjob $cronjob) {
 		EventHandler::getInstance()->fireAction($this, 'execute');

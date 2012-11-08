@@ -4,7 +4,7 @@
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @category 	Community Framework
+ * @category	Community Framework
  */
 // set exception handler
 set_exception_handler(array('wcf\system\WCF', 'handleException'));

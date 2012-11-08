@@ -60,7 +60,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	 * @param	array		$groupIDs
 	 */
 	protected static function removeGroupAssignments(array $groupIDs) {
-		if (!count($groupIDs)) return;
+		if (empty($groupIDs)) return;
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_user_to_group
 			WHERE		groupID = ?";
@@ -76,7 +76,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	 * @param	array		$groupIDs
 	 */
 	protected static function removeOptionValues(array $groupIDs) {
-		if (!count($groupIDs)) return;
+		if (empty($groupIDs)) return;
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_user_group_option_value
 			WHERE		groupID = ?";
@@ -162,7 +162,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 		$optionID = $row['optionID'];
 		
 		// update optionValue from groups which got all existing groups as value
-		if (count($updateGroupIDs)) {
+		if (!empty($updateGroupIDs)) {
 			$conditionBuilder = new PreparedStatementConditionBuilder();
 			$conditionBuilder->add('groupID IN (?)', array($updateGroupIDs));
 			$conditionBuilder->add('optionID = ?', array($optionID));

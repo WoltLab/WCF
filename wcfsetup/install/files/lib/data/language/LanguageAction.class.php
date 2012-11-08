@@ -47,11 +47,13 @@ class LanguageAction extends AbstractDatabaseObjectAction {
 			throw new ValidateActionException('Insufficient permissions');
 		}
 		
-		// read data
-		$this->readObjects();
-		
-		if (!count($this->objects)) {
-			throw new ValidateActionException('Invalid object id');
+		// read objects
+		if (empty($this->objects)) {
+			$this->readObjects();
+			
+			if (empty($this->objects)) {
+				throw new ValidateActionException('Invalid object id');
+			}
 		}
 	}
 	

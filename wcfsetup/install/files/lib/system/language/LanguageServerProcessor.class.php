@@ -32,7 +32,7 @@ class LanguageServerProcessor extends SingletonFactory {
 	 * @param	array<wcf\data\language\server\LanguageServer>	$languageServers
 	 */
 	public function import(Language $language, array $languageServers) {
-		if (!count($languageServers)) return;
+		if (empty($languageServers)) return;
 		$this->language = $language;
 		
 		// get package list
@@ -202,7 +202,7 @@ class LanguageServerProcessor extends SingletonFactory {
 		}
 		
 		// ignore variables if no package is known
-		if (!count($packages)) return;
+		if (empty($packages)) return;
 		
 		$this->importVariables($variables, $packages);
 	}
@@ -256,7 +256,7 @@ class LanguageServerProcessor extends SingletonFactory {
 		}
 		
 		// create items
-		if (count($createItems)) {
+		if (!empty($createItems)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_language_item
 						(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
 				VALUES		(?, ?, ?, ?, ?, ?)";
@@ -275,7 +275,7 @@ class LanguageServerProcessor extends SingletonFactory {
 		}
 		
 		// update items
-		if (count($updateItems)) {
+		if (!empty($updateItems)) {
 			$sql = "UPDATE	wcf".WCF_N."_language_item
 				SET	languageItemValue = ?
 				WHERE	languageItemID = ?";
@@ -317,7 +317,7 @@ class LanguageServerProcessor extends SingletonFactory {
 		
 		// create non-existing categories
 		$createCategories = array_diff($categoryNames, array_keys($existingCategories));
-		if (count($createCategories)) {
+		if (!empty($createCategories)) {
 			// use raw queries for better performance
 			$sql = "INSERT INTO	wcf".WCF_N."_language_category
 						(languageCategory)

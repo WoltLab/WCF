@@ -13,7 +13,7 @@ namespace wcf\system\cache\source;
  */
 class NoCacheSource implements ICacheSource {
 	/**
-	 * @see wcf\system\cache\source\ICacheSource::get()
+	 * @see	wcf\system\cache\source\ICacheSource::get()
 	 */
 	public function get(array $cacheResource) {
 		if (!isset($this->cache[$cacheResource['cache']])) return null;
@@ -22,7 +22,7 @@ class NoCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\ICacheSource::set()
+	 * @see	wcf\system\cache\source\ICacheSource::set()
 	 */
 	public function set(array $cacheResource, $value) {
 		// we have to keep it temporarily
@@ -31,7 +31,7 @@ class NoCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\ICacheSource::delete()
+	 * @see	wcf\system\cache\source\ICacheSource::delete()
 	 */
 	public function delete(array $cacheResource) {	
 		// reset open cache
@@ -42,21 +42,21 @@ class NoCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\ICacheSource::clear()
+	 * @see	wcf\system\cache\source\ICacheSource::clear()
 	 */
 	public function clear($directory, $filepattern) {
 		return;
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\ICacheSource::close()
+	 * @see	wcf\system\cache\source\ICacheSource::close()
 	 */
 	public function close() {
 		return;
 	}
 	
 	/**
-	 * @see wcf\system\cache\source\ICacheSource::flush()
+	 * @see	wcf\system\cache\source\ICacheSource::flush()
 	 */
 	public function flush() {
 		return;

@@ -42,7 +42,7 @@ class SetupTemplateEngine extends TemplateEngine {
 	/**
 	 * @see	wcf\system\template\TemplateEngine::getPackageID()
 	 */
-	public function getPackageID($templateName, $packageID) {
+	public function getPackageID($templateName, $application = 'wcf') {
 		$path = $this->templatePaths[PACKAGE_ID].'setup/template/'.$templateName.'.tpl';
 		if (file_exists($path)) {
 			return PACKAGE_ID;

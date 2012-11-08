@@ -92,7 +92,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	
 	/**
 	 * options of the active category
-	 * @var array
+	 * @var	array
 	 */
 	public $activeOptions = array();
 	
@@ -133,7 +133,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 		
 		// assign to group
 		if ($this->action == 'assignToGroup') {
-			if (!count($this->assignToGroupIDArray)) {
+			if (empty($this->assignToGroupIDArray)) {
 				throw new UserInputException('assignToGroupIDArray');
 			}
 		}
@@ -162,6 +162,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 		
 		// build conditions
 		$this->conditions = new PreparedStatementConditionBuilder();
+		
 		// static fields
 		if (!empty($this->username)) {
 			$this->conditions->add("user.username LIKE ?", array('%'.addcslashes($this->username, '_%').'%'));
@@ -169,10 +170,10 @@ class UsersMassProcessingForm extends UserOptionListForm {
 		if (!empty($this->email)) {
 			$this->conditions->add("user.email LIKE ?", array('%'.addcslashes($this->email, '_%').'%'));
 		}
-		if (count($this->groupIDArray) > 0) {
+		if (!empty($this->groupIDArray)) {
 			$this->conditions->add("user.userID ".($this->invertGroupIDs == 1 ? 'NOT ' : '')."IN (SELECT userID FROM wcf".WCF_N."_user_to_group WHERE groupID IN (?))", array($this->groupIDArray));
 		}
-		if (count($this->languageIDArray) > 0) {
+		if (!empty($this->languageIDArray)) {
 			$this->conditions->add("user.languageID IN (?)", array($this->languageIDArray));
 		}
 		
@@ -351,14 +352,18 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
 		
-		if (!count($_POST)) {
-			if (MAIL_USE_FORMATTED_ADDRESS)	$this->from = MAIL_FROM_NAME . ' <' . MAIL_FROM_ADDRESS . '>';
-			else $this->from = MAIL_FROM_ADDRESS;
+		if (empty($_POST)) {
+			if (MAIL_USE_FORMATTED_ADDRESS) {
+				$this->from = MAIL_FROM_NAME.' <'.MAIL_FROM_ADDRESS.'>';
+			}
+			else {
+				$this->from = MAIL_FROM_ADDRESS;
+			}
 		}
 		
 		$this->availableGroups = $this->getAvailableGroups();
@@ -373,7 +378,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -403,7 +408,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::show()
+	 * @see	wcf\form\IForm::show()
 	 */
 	public function show() {
 		// set active menu item

@@ -127,18 +127,31 @@
 			<permissions>admin.system.canViewLog</permissions>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.log.cache">
-			<link>index.php/CacheList/</link>
-			<parent>wcf.acp.menu.link.log</parent>
-			<permissions>admin.system.canViewLog</permissions>
-		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.log.cronjob">
 			<link>index.php/CronjobLogList/</link>
 			<parent>wcf.acp.menu.link.log</parent>
 			<permissions>admin.system.cronjob.canEditCronjob,admin.system.cronjob.canDeleteCronjob</permissions>
 		</acpmenuitem>
 		<!-- /log -->
+		
+		<!-- application -->
+		<acpmenuitem name="wcf.acp.menu.link.application">
+			<parent>wcf.acp.menu.link.system</parent>
+			<showorder>5</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.application.management">
+			<link>index.php/ApplicationManagement/</link>
+			<parent>wcf.acp.menu.link.application</parent>
+			<permissions>admin.system.canManageApplication</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.application.cache">
+			<link>index.php/CacheList/</link>
+			<parent>wcf.acp.menu.link.application</parent>
+			<permissions>admin.system.canManageApplication</permissions>
+		</acpmenuitem>
+		<!-- /application -->
 		
 		<acpmenuitem name="wcf.acp.menu.link.user">
 			<showorder>2</showorder>

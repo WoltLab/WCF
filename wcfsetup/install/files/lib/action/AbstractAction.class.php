@@ -31,7 +31,7 @@ abstract class AbstractAction implements IAction {
 	
 	/**
 	 * needed permissions to execute this action
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	public $neededPermissions = array();
 	
@@ -67,14 +67,14 @@ abstract class AbstractAction implements IAction {
 		}
 		
 		// check modules
-		if (count($this->neededModules)) {
+		if (!empty($this->neededModules)) {
 			foreach ($this->neededModules as $module) {
 				if (!defined($module) || !constant($module)) throw new IllegalLinkException();
 			}
 		}
 		
 		// check permission
-		if (count($this->neededPermissions)) {
+		if (!empty($this->neededPermissions)) {
 			WCF::getSession()->checkPermissions($this->neededPermissions);
 		}
 		

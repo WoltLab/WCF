@@ -135,7 +135,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		}
 		
 		// save package to language
-		if (count($addedLanguageIDArray)) {
+		if (!empty($addedLanguageIDArray)) {
 			$condition = '';
 			$statementParameters = array($this->installation->getPackageID());
 			foreach ($addedLanguageIDArray as $languageID) {
@@ -206,7 +206,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 			$categoryIDs[$row['languageCategoryID']] = true;
 		}
 		
-		if (count($itemIDs) > 0) {
+		if (!empty($itemIDs)) {
 			$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
 				WHERE		languageItemID = ?
 						AND packageID = ?";
@@ -273,7 +273,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		}
 		
 		// Delete categories from DB.
-		if (count($categoriesToDelete) > 0) {
+		if (!empty($categoriesToDelete)) {
 			$sql = "DELETE FROM	wcf".WCF_N."_language_category
 				WHERE		languageCategory = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);

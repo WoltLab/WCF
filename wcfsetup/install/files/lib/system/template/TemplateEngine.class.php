@@ -21,6 +21,12 @@ use wcf\util\StringUtil;
  */
 class TemplateEngine extends SingletonFactory {
 	/**
+	 * list of abbreviations to package id
+	 * @var	array<integer>
+	 */
+	public $abbreviations = array();
+	
+	/**
 	 * directory used to cache previously compiled templates
 	 * @var	string
 	 */
@@ -102,6 +108,7 @@ class TemplateEngine extends SingletonFactory {
 	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
+		$this->abbreviations['wcf'] = 1;
 		$this->templatePaths = array(1 => WCF_DIR.'templates/');
 		$this->pluginNamespace = 'wcf\system\template\plugin\\';
 		$this->compileDir = WCF_DIR.'templates/compiled/';
@@ -112,12 +119,14 @@ class TemplateEngine extends SingletonFactory {
 	}
 	
 	/**
-	 * Adds a new template path for given package id.
+	 * Adds a new application.
 	 * 
+	 * @param	string		$abbreviation
 	 * @param	integer		$packageID
 	 * @param	string		$templatePath
 	 */
-	public function addTemplatePath($packageID, $templatePath) {
+	public function addApplication($abbreviation, $packageID, $templatePath) {
+		$this->abbreviations[$abbreviation] = $packageID;
 		$this->templatePaths[$packageID] = $templatePath;
 	}
 	
@@ -284,10 +293,10 @@ class TemplateEngine extends SingletonFactory {
 	 * Outputs a template.
 	 * 
 	 * @param	string		$templateName
-	 * @param	integer		$packageID
+	 * @param	string		$application
 	 * @param	boolean		$sendHeaders
 	 */
-	public function display($templateName, $packageID = PACKAGE_ID, $sendHeaders = true) {
+	public function display($templateName, $application = 'wcf', $sendHeaders = true) {
 		if ($sendHeaders) {
 			HeaderUtil::sendHeaders();
 			
@@ -295,24 +304,24 @@ class TemplateEngine extends SingletonFactory {
 			if (!defined('NO_IMPORTS')) EventHandler::getInstance()->fireAction($this, 'shouldDisplay');
 		}
 		
-		$tplPackageID = $this->getPackageID($templateName, $packageID);
-		$compiledFilename = $this->getCompiledFilename($templateName, $packageID);
+		$tplPackageID = $this->getPackageID($templateName, $application);
+		$compiledFilename = $this->getCompiledFilename($templateName, $tplPackageID);
 		$sourceFilename = $this->getSourceFilename($templateName, $tplPackageID);
-		$metaDataFilename = $this->getMetaDataFilename($templateName, $packageID);
+		$metaDataFilename = $this->getMetaDataFilename($templateName, $tplPackageID);
 		$metaData = $this->getMetaData($templateName, $metaDataFilename);
 		
 		// check if compilation is necessary
-		if (($metaData === null) || !$this->isCompiled($templateName, $sourceFilename, $compiledFilename, $packageID, $metaData)) {
+		if (($metaData === null) || !$this->isCompiled($templateName, $sourceFilename, $compiledFilename, $application, $metaData)) {
 			// compile
 			$this->compileTemplate($templateName, $sourceFilename, $compiledFilename, array(
+				'application' => $application,
 				'data' => $metaData,
-				'filename' => $metaDataFilename,
-				'packageID' => $tplPackageID
+				'filename' => $metaDataFilename
 			));
 		}
 		
 		// assign current package id
-		$this->assign('__PACKAGE_ID', $packageID);
+		$this->assign('__APPLICATION', $application);
 		
 		include($compiledFilename);
 		
@@ -326,10 +335,16 @@ class TemplateEngine extends SingletonFactory {
 	 * Returns path and corresponding file path.
 	 * 
 	 * @param	string		$templateName
-	 * @param	integer		$packageID
+	 * @param	string		$application
 	 * @return	integer
 	 */
-	public function getPackageID($templateName, $packageID) {
+	public function getPackageID($templateName, $application = 'wcf') {
+		$packageID = (isset($this->abbreviations[$application])) ? $this->abbreviations[$application] : null;
+		if ($packageID === null) {
+			throw new SystemException("Unable to find application for abbreviation '".$application."'");
+		}
+		
+		// search within application
 		if ($packageID != 1 && isset($this->templatePaths[$packageID])) {
 			$path = $this->getPath($this->templatePaths[$packageID], $templateName);
 			
@@ -338,6 +353,7 @@ class TemplateEngine extends SingletonFactory {
 			}
 		}
 		
+		// search within WCF
 		$path = $this->getPath($this->templatePaths[1], $templateName);
 		if (!empty($path)) {
 			return 1;
@@ -415,11 +431,11 @@ class TemplateEngine extends SingletonFactory {
 	 * @param	string		$templateName
 	 * @param 	string 		$sourceFilename
 	 * @param 	string 		$compiledFilename
-	 * @param	integer		$packageID
+	 * @param	string		$application
 	 * @param	array		$metaData
 	 * @return 	boolean 	$isCompiled
 	 */
-	protected function isCompiled($templateName, $sourceFilename, $compiledFilename, $packageID, array $metaData) {
+	protected function isCompiled($templateName, $sourceFilename, $compiledFilename, $application, array $metaData) {
 		if ($this->forceCompile || !file_exists($compiledFilename)) {
 			return false;
 		}
@@ -434,7 +450,7 @@ class TemplateEngine extends SingletonFactory {
 				// check for meta data
 				if (!empty($metaData['include'])) {
 					foreach ($metaData['include'] as $includedTemplate) {
-						$tplPackageID = $this->getPackageID($includedTemplate, $packageID);
+						$tplPackageID = $this->getPackageID($includedTemplate, $application);
 						$includedTemplateFilename = $this->getSourceFilename($includedTemplate, $tplPackageID);
 						$includedMTime = @filemtime($includedTemplateFilename);
 						
@@ -544,25 +560,25 @@ class TemplateEngine extends SingletonFactory {
 	 * Returns the output of a template.
 	 * 
 	 * @param	string		$templateName
+	 * @param	string		$application
 	 * @param	array		$variables
 	 * @param	boolean		$sandbox	enables execution in sandbox
-	 * @param	integer		$packageID
 	 * @return	string
 	 */
-	public function fetch($templateName, array $variables = array(), $sandbox = false, $packageID = PACKAGE_ID) {
+	public function fetch($templateName, $application = 'wcf', array $variables = array(), $sandbox = false) {
 		// enable sandbox
 		if ($sandbox) {
 			$this->enableSandbox();
 		}
 		
 		// add new template variables
-		if (count($variables)) {
+		if (!empty($variables)) {
 			$this->v = array_merge($this->v, $variables);
 		}
 		
 		// get output
 		ob_start();
-		$this->display($templateName, $packageID, false);
+		$this->display($templateName, $application, false);
 		$output = ob_get_contents();
 		ob_end_clean();
 		
@@ -589,7 +605,7 @@ class TemplateEngine extends SingletonFactory {
 		}
 		
 		// add new template variables
-		if (count($variables)) {
+		if (!empty($variables)) {
 			$this->v = array_merge($this->v, $variables);
 		}
 		
@@ -690,22 +706,23 @@ class TemplateEngine extends SingletonFactory {
 	 * Includes a template.
 	 * 
 	 * @param	string		$templateName
+	 * @param	string		$application
 	 * @param	array		$variables
 	 * @param	boolean		$sandbox	enables execution in sandbox
 	 */
-	protected function includeTemplate($templateName, array $variables = array(), $sandbox = true, $packageID = PACKAGE_ID) {
+	protected function includeTemplate($templateName, $application, array $variables = array(), $sandbox = true) {
 		// enable sandbox
 		if ($sandbox) {
 			$this->enableSandbox();
 		}
 		
 		// add new template variables
-		if (count($variables)) {
+		if (!empty($variables)) {
 			$this->v = array_merge($this->v, $variables);
 		}
 		
 		// display template
-		$this->display($templateName, $packageID, false);
+		$this->display($templateName, $application, false);
 		
 		// disable sandbox
 		if ($sandbox) {
@@ -745,10 +762,11 @@ class TemplateEngine extends SingletonFactory {
 	 * Returns true if requested template has assigned template listeners.
 	 * 
 	 * @param	string		$templateName
+	 * @param	string		$application
 	 * @return	boolean
 	 */
-	public function hasTemplateListeners($templateName) {
-		if (isset($this->templateListeners[$templateName])) {
+	public function hasTemplateListeners($templateName, $application = 'wcf') {
+		if (isset($this->templateListeners[$application]) && isset($this->templateListeners[$application][$templateName])) {
 			return true;
 		}
 		
@@ -762,7 +780,7 @@ class TemplateEngine extends SingletonFactory {
 	 */
 	protected function loadTemplateListenerCode($templateName) {
 		// cache was already loaded
-		if (!isset($this->templateListeners[$templateName]) || count($this->templateListeners[$templateName])) return;
+		if (!isset($this->templateListeners[$templateName]) || !empty($this->templateListeners[$templateName])) return;
 		
 		$cacheName = PACKAGE_ID.'-'.$this->environment.'-'.$templateName;
 		CacheHandler::getInstance()->addResource(

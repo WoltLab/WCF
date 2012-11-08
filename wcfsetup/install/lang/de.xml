@@ -4,6 +4,65 @@
 		<item name="wcf.acp"><![CDATA[Administration]]></item>
 	</category>
 	
+	<category name="wcf.acp.application">
+		<item name="wcf.acp.application.cookie"><![CDATA[Cookie-Einstellungen]]></item>
+		<item name="wcf.acp.application.cookie.warning"><![CDATA[Die folgenden Einstellungen stellen sicher, dass der Login gespeichert wird und ein automatischer Login möglich ist. Sie müssen diese Einstellungen anpassen, sollten sich Domain und/oder Pfad geändert haben. Sollten Sie sich bei den korrekten Werten nicht sicher sein, übernehmen Sie bitte die exakten Angaben der beiden obigen Eingabefelder.]]></item>
+		<item name="wcf.acp.application.cookieDomain"><![CDATA[Cookie-Domain]]></item>
+		<item name="wcf.acp.application.cookieDomain.error.containsPfad"><![CDATA[Die Cookie-Domain darf keine Pfadangaben enthalten]]></item>
+		<item name="wcf.acp.application.cookieDomain.error.notValid"><![CDATA[Die Cookie-Domain stimmt nicht mit der oben angegebenen Domain überein (Subdomains wie zum Beispiel &bdquo;www&ldquo; dürfen weggelassen werden).]]></item>
+		<item name="wcf.acp.application.cookiePath"><![CDATA[Cookie-Pfad]]></item>
+		<item name="wcf.acp.application.cookiePath.error.notValid"><![CDATA[Der Cookie-Pfad passt nicht zum oben angegebenen Domain-Pfad.]]></item>
+		<item name="wcf.acp.application.domain"><![CDATA[Domain-Einstellungen]]></item>
+		<item name="wcf.acp.application.domainName"><![CDATA[Domain]]></item>
+		<item name="wcf.acp.application.domainName.description"><![CDATA[Geben Sie die Domain an, über die diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter &bdquo;http://www.example.com/community/forum/&ldquo; erreichbar ist, so geben Sie hier bitte &bdquo;www.example.com&ldquo; ein.]]></item>
+		<item name="wcf.acp.application.domainName.error.containsPfad"><![CDATA[Die Domain darf keine Pfadangaben enthalten]]></item>
+		<item name="wcf.acp.application.domainPath"><![CDATA[Pfad]]></item>
+		<item name="wcf.acp.application.domainPath.description"><![CDATA[Geben Sie den Pfad an, über den diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter &bdquo;http://www.example.com/community/forum/&ldquo; erreichbar ist, so geben Sie bitte &bdquo;/community/forum/&ldquo; ein.]]></item>
+		<item name="wcf.acp.application.edit"><![CDATA[Anwendung bearbeiten]]></item>
+		<item name="wcf.acp.application.edit.title"><![CDATA[Anwendung bearbeiten: &bdquo;<a href="{link controller='PackageView' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>&ldquo;]]></item>
+		<item name="wcf.acp.application.group.add"><![CDATA[Anwendungsgruppe hinzufügen]]></item>
+		<item name="wcf.acp.application.group.applications.error.duplicate"><![CDATA[Zwei oder mehr Anwendungen des selben Typs können nicht in einer Gruppe zusammengefasst werden.]]></item>
+		<item name="wcf.acp.application.group.applications.error.notValid"><![CDATA[Eine oder mehrere ausgewählte Anwendungen sind nicht mehr verfügbar.]]></item>
+		<item name="wcf.acp.application.group.applications.error.single"><![CDATA[Eine Gruppe muss aus mindestens zwei Anwendungen bestehen.]]></item>
+		<item name="wcf.acp.application.group.availableApplications"><![CDATA[Verfügbare Anwendungen]]></item>
+		<item name="wcf.acp.application.group.data"><![CDATA[Allgemein]]></item>
+		<item name="wcf.acp.application.group.delete"><![CDATA[Anwendungsgruppe löschen]]></item>
+		<item name="wcf.acp.application.group.delete.confirmMessage"><![CDATA[Wollen Sie die Anwendungsgruppe &bdquo;{$applicationGroup->groupName}&ldquo; wirklich löschen?]]></item>
+		<item name="wcf.acp.application.group.delete.success"><![CDATA[Anwendungsgruppe erfolgreich gelöscht]]></item>
+		<item name="wcf.acp.application.group.edit"><![CDATA[Anwendungsgruppe bearbeiten]]></item>
+		<item name="wcf.acp.application.group.groupName"><![CDATA[Name]]></item>
+		<item name="wcf.acp.application.group.groupName.error.notUnique"><![CDATA[Der Gruppenname muss einzigartig sein.]]></item>
+		<item name="wcf.acp.application.group.noAvailableApplications"><![CDATA[Es ist derzeit keine ausreichende Anzahl Anwendungen verfügbar, um eine Anwendungsgruppe zu erstellen.]]></item>
+		<item name="wcf.acp.application.group.title"><![CDATA[Anwendungsgruppe: &bdquo;{$applicationGroup->groupName}&ldquo;]]></item>
+		<item name="wcf.acp.application.independentApplications"><![CDATA[Unabhängige Anwendungen]]></item>
+		<item name="wcf.acp.application.management"><![CDATA[Anwendungen verwalten]]></item>
+		<item name="wcf.acp.application.primaryApplication"><![CDATA[Primäre Anwendung]]></item>
+	</category>
+	
+	<category name="wcf.acp.cache">
+		<item name="wcf.acp.cache.button.clear"><![CDATA[Cache leeren]]></item>
+		<item name="wcf.acp.cache.clear.success"><![CDATA[Der Cache wurde erfolgreich geleert.]]></item>
+		<item name="wcf.acp.cache.clear.sure"><![CDATA[Wollen Sie den Cache wirklich komplett leeren?]]></item>
+		<item name="wcf.acp.cache.data"><![CDATA[Eigenschaften]]></item>
+		<item name="wcf.acp.cache.data.files"><![CDATA[Dateien]]></item>
+		<item name="wcf.acp.cache.data.files.count"><![CDATA[{#$files|count} Dateien]]></item>
+		<item name="wcf.acp.cache.data.size"><![CDATA[Größe]]></item>
+		<item name="wcf.acp.cache.data.source"><![CDATA[Quelle]]></item>
+		<item name="wcf.acp.cache.data.version"><![CDATA[Version]]></item>
+		<item name="wcf.acp.cache.list"><![CDATA[Cache]]></item>
+		<item name="wcf.acp.cache.list.mtime"><![CDATA[Letzte Aktualisierung]]></item>
+		<item name="wcf.acp.cache.list.name"><![CDATA[Name]]></item>
+		<item name="wcf.acp.cache.list.perm"><![CDATA[Zugriffsrechte]]></item>
+		<item name="wcf.acp.cache.list.size"><![CDATA[Größe]]></item>
+		<item name="wcf.acp.cache.source.type.ApcCacheSource"><![CDATA[Alternative PHP Cache]]></item>
+		<item name="wcf.acp.cache.source.type.DiskCacheSource"><![CDATA[Dateisystem]]></item>
+		<item name="wcf.acp.cache.source.type.MemcacheCacheSource"><![CDATA[Memcache]]></item>
+		<item name="wcf.acp.cache.source.type.NoCacheSource"><![CDATA[keine (Caching deaktiviert)]]></item>
+		<item name="wcf.acp.cache.type.data"><![CDATA[Daten]]></item>
+		<item name="wcf.acp.cache.type.language"><![CDATA[Sprachen]]></item>
+		<item name="wcf.acp.cache.type.template"><![CDATA[Templates]]></item>
+	</category>
+	
 	<category name="wcf.acp.cronjob">
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Cronjob hinzufügen]]></item>
@@ -107,23 +166,6 @@
 		<item name="wcf.acp.group.option.category.user"><![CDATA[Allgemeine Rechte]]></item>
 	</category>
 	
-	<category name="wcf.acp.cache">
-		<item name="wcf.acp.cache.button.clear"><![CDATA[Cache leeren]]></item>
-		<item name="wcf.acp.cache.clear.success"><![CDATA[Der Cache wurde erfolgreich geleert.]]></item>
-		<item name="wcf.acp.cache.clear.sure"><![CDATA[Wollen Sie den Cache wirklich komplett leeren?]]></item>
-		<item name="wcf.acp.cache.data"><![CDATA[Eigenschaften]]></item>
-		<item name="wcf.acp.cache.data.files"><![CDATA[Dateien]]></item>
-		<item name="wcf.acp.cache.data.files.count"><![CDATA[{#$files|count} Dateien]]></item>
-		<item name="wcf.acp.cache.data.size"><![CDATA[Größe]]></item>
-		<item name="wcf.acp.cache.data.source"><![CDATA[Quelle]]></item>
-		<item name="wcf.acp.cache.data.version"><![CDATA[Version]]></item>
-		<item name="wcf.acp.cache.list"><![CDATA[Cache]]></item>
-		<item name="wcf.acp.cache.list.mtime"><![CDATA[Letzte Aktualisierung]]></item>
-		<item name="wcf.acp.cache.list.name"><![CDATA[Name]]></item>
-		<item name="wcf.acp.cache.list.perm"><![CDATA[Zugriffsrechte]]></item>
-		<item name="wcf.acp.cache.list.size"><![CDATA[Größe]]></item>
-	</category>
-
 	<category name="wcf.acp.masterPassword">
 		<item name="wcf.acp.masterPassword"><![CDATA[Hauptkennwort]]></item>
 		<item name="wcf.acp.masterPassword.confirm"><![CDATA[Hauptkennwort wiederholen]]></item>
@@ -139,12 +181,14 @@
 	</category>
 	
 	<category name="wcf.acp.menu">
+		<item name="wcf.acp.menu.link.application"><![CDATA[Anwendungen]]></item>
+		<item name="wcf.acp.menu.link.application.cache"><![CDATA[Cache]]></item>
+		<item name="wcf.acp.menu.link.application.management"><![CDATA[Anwendungen verwalten]]></item>
 		<item name="wcf.acp.menu.link.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Aufgabe hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[Aufgaben auflisten]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Protokoll]]></item>
-		<item name="wcf.acp.menu.link.log.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Sitzungen]]></item>
 		<item name="wcf.acp.menu.link.log.cronjob"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.group"><![CDATA[Benutzergruppen]]></item>
@@ -269,8 +313,6 @@
 		<item name="wcf.acp.option.page_description"><![CDATA[Seitenbeschreibung]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Titel der Seite]]></item>
 		<item name="wcf.acp.option.page_title.description"><![CDATA[Dieser Titel wird im Seitenkopf dargestellt, wenn Sie die Anzeige dieses Textes im Stileditor aktiviert haben.]]></item>
-		<item name="wcf.acp.option.page_urls"><![CDATA[Weitere Adressen (URLs)]]></item>
-		<item name="wcf.acp.option.page_urls.description"><![CDATA[Weitere Adressen (URLs) unter denen Ihre Seite erreichbar ist.]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
 		<item name="wcf.acp.option.session_timeout"><![CDATA[Gültigkeitslänge einer Sitzung]]></item>
 		<item name="wcf.acp.option.session_timeout.description"><![CDATA[Angabe in Sekunden]]></item>
@@ -642,6 +684,7 @@
 		<item name="wcf.global.button.next"><![CDATA[Weiter &raquo;]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.global.button.reset"><![CDATA[Zurücksetzen]]></item>
+		<item name="wcf.global.button.rss"><![CDATA[RSS-Feed]]></item>
 		<item name="wcf.global.button.save"><![CDATA[Speichern]]></item>
 		<item name="wcf.global.button.search"><![CDATA[Suche]]></item>
 		<item name="wcf.global.button.submit"><![CDATA[Absenden]]></item>
@@ -682,6 +725,10 @@
 		<item name="wcf.global.title"><![CDATA[Titel]]></item>
 		<item name="wcf.global.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.global.multiSelect"><![CDATA[Mehrfache Markierungen sind durch zusätzliches Drücken der Taste &bdquo;Strg/Ctrl&ldquo; (Windows) oder &bdquo;Befehl/Command&ldquo; (Mac OS) möglich.]]></item>
+		<item name="wcf.global.page.jumpTo"><![CDATA[Gehe zu Seite]]></item>
+		<item name="wcf.global.error.illegalLink"><![CDATA[Sie haben einen ungültigen oder nicht mehr gültigen Link aufgerufen.]]></item>
+		<item name="wcf.global.error.backward"><![CDATA[Zurück zur vorherigen Seite]]></item>
+		<item name="wcf.global.noDeclaration"><![CDATA[Keine Angabe]]></item>
 	</category>
 	
 	<category name="wcf.imageViewer">
@@ -698,6 +745,10 @@
 	
 	<category name="wcf.sitemap">
 		<item name="wcf.sitemap.title"><![CDATA[Schnellnavigation]]></item>
+	</category>
+	
+	<category name="wcf.style">
+		<item name="wcf.style.changeStyle"><![CDATA[Stil ändern]]></item>
 	</category>
 	
 	<category name="wcf.user">

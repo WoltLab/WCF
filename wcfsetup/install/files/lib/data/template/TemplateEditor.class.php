@@ -14,7 +14,7 @@ use wcf\util\DirectoryUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.template
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class TemplateEditor extends DatabaseObjectEditor {
 	/**

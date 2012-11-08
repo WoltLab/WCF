@@ -227,7 +227,7 @@ class ClipboardHandler extends SingletonFactory {
 		
 		// get objects
 		$this->loadMarkedItems();
-		if (!count($this->markedItems)) return null;
+		if (empty($this->markedItems)) return null;
 		
 		// fetch action ids
 		$this->loadActionCache();

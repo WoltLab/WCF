@@ -123,10 +123,13 @@ class WCF {
 	 * Replacement of the "__destruct()" method.
 	 * Seems that under specific conditions (windows) the destructor is not called automatically.
 	 * So we use the php register_shutdown_function to register an own destructor method.
-	 * Flushs the output, updates the session and executes the shutdown queries.
+	 * Flushs the output, closes caches and updates the session.
 	 */
 	public static function destruct() {
-		// flush ouput
+		// database has to be initialized
+		if (!is_object(self::$dbObj)) return;
+		
+		// flush output
 		if (ob_get_level() && ini_get('output_handler')) {
 			ob_flush();
 		}
@@ -140,7 +143,7 @@ class WCF {
 		}
 		
 		// close cache source
-		if (is_object(CacheHandler::getInstance()) && is_object(CacheHandler::getInstance()->getCacheSource())) {
+		if (CacheHandler::isSingletonInitialized() && is_object(CacheHandler::getInstance()) && is_object(CacheHandler::getInstance()->getCacheSource())) {
 			CacheHandler::getInstance()->getCacheSource()->close();
 		}
 		
@@ -154,19 +157,19 @@ class WCF {
 	protected function initMagicQuotes() {
 		if (function_exists('get_magic_quotes_gpc')) {
 			if (@get_magic_quotes_gpc()) {
-				if (count($_REQUEST)) {
+				if (!empty($_REQUEST)) {
 					$_REQUEST = util\ArrayUtil::stripslashes($_REQUEST);
 				}
-				if (count($_POST)) {
+				if (!empty($_POST)) {
 					$_POST = util\ArrayUtil::stripslashes($_POST);
 				}
-				if (count($_GET)) {
+				if (!empty($_GET)) {
 					$_GET = util\ArrayUtil::stripslashes($_GET);
 				}
-				if (count($_COOKIE)) {
+				if (!empty($_COOKIE)) {
 					$_COOKIE = util\ArrayUtil::stripslashes($_COOKIE);
 				}
-				if (count($_FILES)) {
+				if (!empty($_FILES)) {
 					foreach ($_FILES as $name => $attributes) {
 						foreach ($attributes as $key => $value) {
 							if ($key != 'tmp_name') {
@@ -361,6 +364,19 @@ class WCF {
 		self::$tplObj = TemplateEngine::getInstance();
 		self::getTPL()->setLanguageID(self::getLanguage()->languageID);
 		$this->assignDefaultTemplateVariables();
+		
+		$this->initStyle();
+	}
+	
+	/**
+	 * Initializes the user's style.
+	 */
+	protected function initStyle() {
+		if (isset($_REQUEST['styleID'])) {
+			WCF::getSession()->setStyleID(intval($_REQUEST['styleID']));
+		}
+		
+		StyleHandler::getInstance()->changeStyle(WCF::getSession()->getStyleID());
 	}
 	
 	/**
@@ -394,9 +410,12 @@ class WCF {
 		// do not init applications if within wcf
 		if (PACKAGE_ID == 1) return;
 		
+		// step 1) load all applications
+		$loadedApplications = array();
+		
 		// start main application
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
-		$this->loadApplication($application);
+		$loadedApplications[] = $this->loadApplication($application);
 		
 		// register primary application
 		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
@@ -405,7 +424,14 @@ class WCF {
 		// start dependent applications
 		$applications = ApplicationHandler::getInstance()->getDependentApplications();
 		foreach ($applications as $application) {
-			$this->loadApplication($application, true);
+			$loadedApplications[] = $this->loadApplication($application, true);
+		}
+		
+		// step 2) run each application
+		if (!class_exists('wcf\system\WCFACP', false)) {
+			foreach ($loadedApplications as $application) {
+				$application->__run();
+			}
 		}
 	}
 	
@@ -414,8 +440,10 @@ class WCF {
 	 * 
 	 * @param	wcf\data\application\Application		$application
 	 * @param	boolean						$isDependentApplication
+	 * @return	wcf\system\application\IApplication
 	 */
 	protected function loadApplication(Application $application, $isDependentApplication = false) {
+		$applicationObject = null;
 		$package = PackageCache::getInstance()->getPackage($application->packageID);
 		
 		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
@@ -438,7 +466,12 @@ class WCF {
 			
 			// start application if not within ACP
 			if (!class_exists('wcf\system\WCFACP', false)) {
-				call_user_func(array($className, 'getInstance'));
+				// add template path and abbreviation
+				$this->getTPL()->addApplication($abbreviation, $application->packageID, $packageDir . 'templates/');
+				
+				// init application and assign it as template variable
+				$applicationObject = call_user_func(array($className, 'getInstance'));
+				$this->getTPL()->assign('__'.$abbreviation, $applicationObject);
 			}
 		}
 		else {
@@ -448,7 +481,7 @@ class WCF {
 		
 		// register template path in ACP
 		if (class_exists('wcf\system\WCFACP', false)) {
-			$this->getTPL()->addTemplatePath($application->packageID, $packageDir . 'acp/templates/');
+			$this->getTPL()->addApplication($abbreviation, $application->packageID, $packageDir . 'acp/templates/');
 		}
 		else if (!$isDependentApplication) {
 			// assign base tag
@@ -457,6 +490,8 @@ class WCF {
 		
 		// register application
 		self::$applications[$abbreviation] = $application;
+		
+		return $applicationObject;
 	}
 	
 	/**

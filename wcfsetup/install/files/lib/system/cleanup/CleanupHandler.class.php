@@ -87,7 +87,7 @@ class CleanupHandler {
 				$objectIDs[] = $row['objectID'];
 			}
 			
-			if (count($objectIDs)) {
+			if (!empty($objectIDs)) {
 				$this->executeAdapters($adapters, $objectIDs);
 			}
 		}

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\package;
 use wcf\data\DatabaseObject;
+use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
@@ -255,7 +256,7 @@ class Package extends DatabaseObject {
 	 * @param	string		$version2
 	 * @param	string		$operator
 	 * @return	boolean		result
-	 * @see http://www.php.net/manual/en/function.version-compare.php
+	 * @see	http://www.php.net/manual/en/function.version-compare.php
 	 */
 	public static function compareVersion($version1, $version2, $operator = null) {
 		$version1 = self::formatVersionForCompare($version1);
@@ -269,7 +270,7 @@ class Package extends DatabaseObject {
 	 * 
 	 * @param	string		$version
 	 * @return 	string		formatted version
-	 * @see 	http://www.php.net/manual/en/function.version-compare.php
+	 * @see		http://www.php.net/manual/en/function.version-compare.php
 	 */
 	private static function formatVersionForCompare($version) {
 		// remove spaces
@@ -315,7 +316,7 @@ class Package extends DatabaseObject {
 		}
 		
 		// insert requirements of requirements
-		if (count($requirements) > 0) {
+		if (!empty($requirements)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_requirement_map
 						(packageID, requirement, level)
 				VALUES		(?, ?, ?)";
@@ -329,7 +330,9 @@ class Package extends DatabaseObject {
 		$directRequirements = array();
 		$conditions = new PreparedStatementConditionBuilder($sql);
 		$conditions->add("packageID = ?", array($packageID));
-		if (count($requirements)) $conditions->add("requirement NOT IN (?)", array(array_keys($requirements)));
+		if (!empty($requirements)) {
+			$conditions->add("requirement NOT IN (?)", array(array_keys($requirements)));
+		}
 		
 		$sql = "SELECT	requirement, 
 				(
@@ -347,7 +350,7 @@ class Package extends DatabaseObject {
 		}
 		
 		// insert requirements
-		if (count($directRequirements) > 0) {
+		if (!empty($directRequirements)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_requirement_map
 						(packageID, requirement, level)
 				VALUES		(?, ?, ?)";
@@ -437,9 +440,14 @@ class Package extends DatabaseObject {
 			VALUES		(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
-		$insertedDependencies = array();
+		$insertedDependencies = self::insertApplicationDependencies($packageID, $statement);
+		$shiftPriority = (empty($insertedDependencies)) ? false : true;
 		foreach ($requirements as $dependency => $priority) {
-			$statement->execute(array($packageID, $dependency, $priority));
+			$statement->execute(array(
+				$packageID,
+				$dependency,
+				($shiftPriority ? ($priority + 1) : $priority)
+			));
 			
 			if (!isset($insertedDependencies[$packageID])) {
 				$insertedDependencies[$packageID] = array();
@@ -520,6 +528,40 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
+	 * Inserts dependencies on applications within the same application group.
+	 * 
+	 * @param	integer							$packageID
+	 * @param	wcf\system\database\statement\PreparedStatement		$insertStatement
+	 * @return	array<string>
+	 */
+	protected static function insertApplicationDependencies($packageID, PreparedStatement $insertStatement) {
+		$insertedDependencies = array();
+		
+		// check for application group
+		$sql = "SELECT	groupID
+			FROM	wcf".WCF_N."_application
+			WHERE	packageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($packageID));
+		$row = $statement->fetchArray();
+		if ($row !== false && $row['groupID'] !== null) {
+			// select application ids
+			$sql = "SELECT	packageID
+				FROM	wcf".WCF_N."_application
+				WHERE	groupID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($row['groupID']));
+			while ($row = $statement->fetchArray()) {
+				$insertStatement->execute(array(
+					$packageID,
+					$row['packageID'],
+					1
+				));
+			}
+		}
+	}
+	
+	/**
 	 * Writes the config.inc.php for an application.
 	 * 
 	 * @param	integer		$packageID
@@ -558,15 +600,27 @@ class Package extends DatabaseObject {
 			$file->write("\n");
 		}
 		
+		// get primary application
+		$sql = "SELECT		applications.packageID
+			FROM		wcf".WCF_N."_application application,
+					wcf".WCF_N."_application applications
+			WHERE		application.packageID = ?
+					AND applications.groupID = application.groupID
+					AND applications.groupID IS NOT NULL
+					AND applications.isPrimary = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($packageID, 1));
+		$row = $statement->fetchArray();
+		$packageID = ($row === false) ? $packageID : $row['packageID'];
+		
 		// write general information
 		$file->write("// general info\n");
 		$file->write("if (!defined('RELATIVE_WCF_DIR')) define('RELATIVE_WCF_DIR', RELATIVE_".$currentPrefix."_DIR.'".FileUtil::getRelativePath($packageDir, WCF_DIR)."');\n");
-		$file->write("if (!defined('PACKAGE_ID')) define('PACKAGE_ID', ".$package->packageID.");\n");
+		$file->write("if (!defined('PACKAGE_ID')) define('PACKAGE_ID', ".$packageID.");\n");
 		$file->write("if (!defined('PACKAGE_NAME')) define('PACKAGE_NAME', '".str_replace("'", "\'", $package->getName())."');\n");
 		$file->write("if (!defined('PACKAGE_VERSION')) define('PACKAGE_VERSION', '".$package->packageVersion."');\n");
 		
 		// write end
-		$file->write("?>");
 		$file->close();
 	}
 	

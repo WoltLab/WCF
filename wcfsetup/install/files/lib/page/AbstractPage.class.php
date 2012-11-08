@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class AbstractPage implements IPage, ITrackablePage {
 	/**
@@ -114,11 +114,9 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 		EventHandler::getInstance()->fireAction($this, 'checkModules');
 		
 		// check modules
-		if (count($this->neededModules)) {
-			foreach ($this->neededModules as $module) {
-				if (!defined($module) || !constant($module)) {
-					throw new IllegalLinkException();
-				}
+		foreach ($this->neededModules as $module) {
+			if (!defined($module) || !constant($module)) {
+				throw new IllegalLinkException();
 			}
 		}
 	}
@@ -164,28 +162,28 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 		// read data
 		$this->readData();
 		
-		// try to guess template name
-		if (empty($this->templateName)) {
-			$classParts = explode('\\', get_class($this));
-			$className = preg_replace('~(Form|Page)$~', '', array_pop($classParts));
-			
-			// check if this an *Edit page and use the add-template instead
-			if (substr($className, -4) == 'Edit') {
-				$className = substr($className, 0, -4) . 'Add';
-			}
-			
-			$this->templateName = lcfirst($className);
-		}
-		
 		// assign variables
 		$this->assignVariables();
 		
 		// call show event
 		EventHandler::getInstance()->fireAction($this, 'show');
 		
+		// try to guess template name
+		$classParts = explode('\\', get_class($this));
+		if (empty($this->templateName)) {
+			$className = preg_replace('~(Form|Page)$~', '', array_pop($classParts));
+				
+			// check if this an *Edit page and use the add-template instead
+			if (substr($className, -4) == 'Edit') {
+				$className = substr($className, 0, -4) . 'Add';
+			}
+				
+			$this->templateName = lcfirst($className);
+		}
+		
 		if ($this->useTemplate) {
 			// show template
-			WCF::getTPL()->display($this->templateName);
+			WCF::getTPL()->display($this->templateName, array_shift($classParts));
 		}
 	}
 	

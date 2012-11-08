@@ -34,7 +34,7 @@ abstract class TreeMenu extends SingletonFactory {
 	public $menuItems = null;
 	
 	/**
-	 * @see wcf\system\SingletonFactory::init()
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get menu items from cache
@@ -131,7 +131,7 @@ abstract class TreeMenu extends SingletonFactory {
 		
 		foreach ($this->menuItems[$parentMenuItem] as $key => $item) {
 			$this->removeEmptyItems($item->menuItem);
-			if (empty($item->menuItemLink) && (!isset($this->menuItems[$item->menuItem]) || !count($this->menuItems[$item->menuItem]))) {
+			if (empty($item->menuItemLink) && (!isset($this->menuItems[$item->menuItem]) || empty($this->menuItems[$item->menuItem]))) {
 				// remove this item
 				unset($this->menuItems[$parentMenuItem][$key]);
 			}

@@ -29,7 +29,7 @@ use wcf\util\XMLWriter;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.style
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	const INFO_FILE = 'style.xml';
@@ -40,7 +40,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	protected static $baseClass = 'wcf\data\style\Style';
 	
 	/**
-	 * @see wcf\data\IEditableObject::update()
+	 * @see	wcf\data\IEditableObject::update()
 	 */
 	public function update(array $parameters = array()) {
 		$variables = null;
@@ -64,7 +64,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * @see wcf\data\IEditableObject::delete()
+	 * @see	wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
 		parent::delete();
@@ -788,7 +788,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * @see wcf\data\IEditableObject::create()
+	 * @see	wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		$variables = null;
@@ -832,7 +832,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * @see wcf\data\IEditableCachedObject::resetCache()
+	 * @see	wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.styles.php');

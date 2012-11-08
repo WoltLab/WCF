@@ -26,6 +26,11 @@ use wcf\util\StringUtil;
  */
 class StyleAction extends AbstractDatabaseObjectAction {
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 */
+	protected $allowGuestAccess = array('changeStyle', 'getStyleChooser');
+	
+	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\style\StyleEditor';
@@ -39,6 +44,12 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.style.canEditStyle');
+	
+	/**
+	 * style object
+	 * @var	wcf\data\style\Style
+	 */
+	public $style = null;
 	
 	/**
 	 * style editor object
@@ -446,5 +457,63 @@ class StyleAction extends AbstractDatabaseObjectAction {
 			$disabled = ($style->disabled) ? 0 : 1;
 			$style->update(array('disabled' => $disabled));
 		}
+	}
+	
+	/**
+	 * Validates parameters to change user style.
+	 * 
+	 * @todo	take care of wcf1_style_to_package as it might apply further restrictions
+	 */
+	public function validateChangeStyle() {
+		$this->style = $this->getSingleObject();
+		if ($this->style->disabled && !WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	/**
+	 * Changes user style.
+	 * 
+	 * @return	array<string>
+	 */
+	public function changeStyle() {
+		StyleHandler::getInstance()->changeStyle($this->style->styleID);
+		if (StyleHandler::getInstance()->getStyle()->styleID == $this->style->styleID) {
+			WCF::getSession()->setStyleID($this->style->styleID);
+		}
+		
+		return array(
+			'actionName' => 'changeStyle'
+		);
+	}
+	
+	/**
+	 * Does nothing.
+	 */
+	public function validateGetStyleChooser() { }
+	
+	/**
+	 * Returns the style chooser dialog.
+	 * 
+	 * @todo	take care of wcf1_style_to_package as it might apply further restrictions
+	 * 
+	 * @return	array<string>
+	 */
+	public function getStyleChooser() {
+		$styleList = new StyleList();
+		if (!WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
+			$styleList->getConditionBuilder()->add("style.disabled = ?", array(0));
+		}
+		$styleList->sqlOrderBy = "style.styleName ASC";
+		$styleList->readObjects();
+		
+		WCF::getTPL()->assign(array(
+			'styleList' => $styleList
+		));
+		
+		return array(
+			'actionName' => 'getStyleChooser',
+			'template' => WCF::getTPL()->fetch('styleChooser')
+		);
 	}
 }
