@@ -6588,7 +6588,7 @@ WCF.Sitemap = Class.extend({
 		if (this._didInit) {
 			this._cache.push(data.returnValues.sitemapName);
 			
-			this._dialog.find('#sitemap-' + data.returnValues.sitemapName).html(data.returnValues.template);
+			this._dialog.find('#sitemap_' + data.returnValues.sitemapName).html(data.returnValues.template);
 			
 			// redraw dialog
 			this._dialog.wcfDialog('render');
@@ -6620,7 +6620,7 @@ WCF.Sitemap = Class.extend({
 	_navigate: function(event) {
 		var $sitemapName = $(event.currentTarget).data('sitemapName');
 		if (WCF.inArray($sitemapName, this._cache)) {
-			this._dialog.find('.tabMenuContainer').wcfTabs('select', 'sitemap-' + $sitemapName);
+			this._dialog.find('.tabMenuContainer').wcfTabs('select', 'sitemap_' + $sitemapName);
 			
 			// redraw dialog
 			this._dialog.wcfDialog('render');
