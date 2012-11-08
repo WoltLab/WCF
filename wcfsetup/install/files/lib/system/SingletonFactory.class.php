@@ -58,4 +58,15 @@ abstract class SingletonFactory {
 		
 		return self::$__singletonObjects[$className];
 	}
+
+	/**
+	 * Returns whether this singleton is already initialized.
+	 * 
+	 * @return boolean
+	 */
+	public static final function isSingletonInitialized() {
+		$className = get_called_class();
+		
+		return isset(self::$__singletonObjects[$className]);
+	}
 }

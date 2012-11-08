@@ -123,10 +123,13 @@ class WCF {
 	 * Replacement of the "__destruct()" method.
 	 * Seems that under specific conditions (windows) the destructor is not called automatically.
 	 * So we use the php register_shutdown_function to register an own destructor method.
-	 * Flushs the output, updates the session and executes the shutdown queries.
+	 * Flushs the output, closes caches and updates the session.
 	 */
 	public static function destruct() {
-		// flush ouput
+		// database has to be initialized
+		if (!is_object(self::$dbObj)) return;
+		
+		// flush output
 		if (ob_get_level() && ini_get('output_handler')) {
 			ob_flush();
 		}
@@ -140,7 +143,7 @@ class WCF {
 		}
 		
 		// close cache source
-		if (is_object(CacheHandler::getInstance()) && is_object(CacheHandler::getInstance()->getCacheSource())) {
+		if (CacheHandler::isSingletonInitialized() && is_object(CacheHandler::getInstance()) && is_object(CacheHandler::getInstance()->getCacheSource())) {
 			CacheHandler::getInstance()->getCacheSource()->close();
 		}
 		
