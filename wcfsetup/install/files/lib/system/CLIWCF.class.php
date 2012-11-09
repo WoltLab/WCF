@@ -5,10 +5,12 @@ use phpline\TerminalFactory;
 use wcf\system\cli\command\CommandHandler;
 use wcf\system\cli\command\CommandNameCompleter;
 use wcf\system\cli\DatabaseCommandHistory;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\util\StringUtil;
+use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
 use Zend\Loader\StandardAutoloader as ZendLoader;
 
@@ -28,6 +30,12 @@ class CLIWCF extends WCF {
 	 * @var phpline\console\ConsoleReader
 	 */
 	protected static $consoleReader = null;
+	
+	/**
+	 * instance of ArgvParser
+	 * @var Zend\Console\Getopt
+	 */
+	protected static $argvParser = null;
 	
 	/**
 	 * Calls all init functions of the WCF class.
@@ -50,17 +58,37 @@ class CLIWCF extends WCF {
 	 * Initializes parsing of command line options.
 	 */
 	protected function initArgv() {
-		$opts = new ArgvParser(array(
+		self::$argvParser = new ArgvParser(array(
 			'v' => 'Verbose: Show more output',
 			'q' => 'Quiet: Show less output',
 			'h|help' => 'Show this help'
 		));
-		$opts->setOptions(array(ArgvParser::CONFIG_CUMULATIVE_FLAGS => true));
-		$opts->parse();
-		if ($opts->getOption('help')) {
-			echo $opts->getUsageMessage();
+		self::getArgvParser()->setOptions(array(ArgvParser::CONFIG_CUMULATIVE_FLAGS => true));
+		
+		EventHandler::getInstance()->fireAction($this, 'beforeArgumentParsing');
+		try {
+			self::getArgvParser()->parse();
+		}
+		catch (ArgvException $e) {
+			echo $e->getMessage()."\n";
+			echo $e->getUsageMessage();
 			exit;
 		}
+		EventHandler::getInstance()->fireAction($this, 'afterArgumentParsing');
+		
+		if (self::getArgvParser()->getOption('help')) {
+			echo self::getArgvParser()->getUsageMessage();
+			exit;
+		}
+	}
+	
+	/**
+	 * Returns the argv parser.
+	 * 
+	 * @return Zend\Console\Getopt
+	 */
+	public static function getArgvParser() {
+		return self::$argvParser;
 	}
 	
 	/**
