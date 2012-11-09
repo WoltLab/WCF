@@ -7,6 +7,8 @@
  * @package	com.woltlab.wcf
  * @category	Community Framework
  */
+if (PHP_SAPI !== 'cli') exit;
+
 // define the wcf-root-dir
 define('WCF_DIR', dirname(__FILE__).'/');
 
