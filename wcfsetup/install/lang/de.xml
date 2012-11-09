@@ -729,6 +729,7 @@
 		<item name="wcf.global.error.illegalLink"><![CDATA[Sie haben einen ungültigen oder nicht mehr gültigen Link aufgerufen.]]></item>
 		<item name="wcf.global.error.backward"><![CDATA[Zurück zur vorherigen Seite]]></item>
 		<item name="wcf.global.noDeclaration"><![CDATA[Keine Angabe]]></item>
+		<item name="wcf.global.defaultValue"><![CDATA[Standard]]></item>
 	</category>
 	
 	<category name="wcf.imageViewer">
