@@ -2,7 +2,10 @@
 namespace wcf\system;
 use phpline\console\ConsoleReader;
 use phpline\TerminalFactory;
+use wcf\system\cli\command\CommandHandler;
+use wcf\system\cli\command\CommandNameCompleter;
 use wcf\system\cli\DatabaseCommandHistory;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\util\StringUtil;
@@ -108,6 +111,17 @@ class CLIWCF extends WCF {
 		$history->load();
 		self::getReader()->setHistory($history);
 		
-		while ('exit' !== StringUtil::trim(self::getReader()->readLine('>')));
+		self::getReader()->addCompleter(new CommandNameCompleter());
+		while (true) {
+			$line = StringUtil::trim(self::getReader()->readLine('>'));
+			try {
+				$command = CommandHandler::getCommand($line);
+				$command->execute();
+			}
+			catch (IllegalLinkException $e) {
+				self::getReader()->println("Command not found: ".$line);
+				continue;
+			}
+		}
 	}
 }
