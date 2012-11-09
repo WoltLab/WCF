@@ -1,18 +1,18 @@
 <div class="sitemap">
 	{hascontent}
-		<div class="tabMenuContainer" data-active="sitemap-{@$defaultSitemapName}">
+		<div class="tabMenuContainer" data-active="sitemap_{@$defaultSitemapName}">
 			<nav class="tabMenu">
 				<ul>
 					{content}
 						{foreach from=$tree item=sitemapName}
-							<li><a href="#sitemap-{$sitemapName}" class="sitemapNavigation" data-sitemap-name="{$sitemapName}">{lang}wcf.sitemap.{$sitemapName}{/lang}</a></li>
+							<li><a href="#sitemap_{$sitemapName}" class="sitemapNavigation" data-sitemap-name="{$sitemapName}">{lang}wcf.sitemap.{$sitemapName}{/lang}</a></li>
 						{/foreach}
 					{/content}
 				</ul>
 			</nav>
 			
 			{foreach from=$tree item=sitemapName}
-				<div id="sitemap-{$sitemapName}" class="container containerPadding tabMenuContent hidden">
+				<div id="sitemap_{$sitemapName}" class="container containerPadding tabMenuContent hidden">
 					{if $sitemapName == $defaultSitemapName}{@$sitemap}{/if}
 				</div>
 			{/foreach}

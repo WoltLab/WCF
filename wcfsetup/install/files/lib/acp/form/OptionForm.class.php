@@ -94,8 +94,6 @@ class OptionForm extends AbstractOptionListForm {
 			if (!isset($this->optionTree[0])) {
 				throw new IllegalLinkException();
 			}
-			
-			$this->activeTabMenuItem = $this->optionTree[0]['object']->categoryName;
 		}
 	}
 	
