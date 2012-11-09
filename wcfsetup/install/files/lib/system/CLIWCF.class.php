@@ -9,6 +9,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\util\StringUtil;
+use Zend\Console\Getopt as ArgvParser;
 use Zend\Loader\StandardAutoloader as ZendLoader;
 
 /**
@@ -40,8 +41,26 @@ class CLIWCF extends WCF {
 		$zendLoader = new ZendLoader(array(ZendLoader::AUTOREGISTER_ZF => true));
 		$zendLoader->register();
 		
+		$this->initArgv();
 		$this->initPHPLine();
 		$this->initAuth();
+	}
+	
+	/**
+	 * Initializes parsing of command line options.
+	 */
+	protected function initArgv() {
+		$opts = new ArgvParser(array(
+			'v' => 'Verbose: Show more output',
+			'q' => 'Quiet: Show less output',
+			'h|help' => 'Show this help'
+		));
+		$opts->setOptions(array(ArgvParser::CONFIG_CUMULATIVE_FLAGS => true));
+		$opts->parse();
+		if ($opts->getOption('help')) {
+			echo $opts->getUsageMessage();
+			exit;
+		}
 	}
 	
 	/**
