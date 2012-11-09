@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system;
 use phpline\console\ConsoleReader;
+use phpline\internal\Log;
 use phpline\TerminalFactory;
 use wcf\system\cli\command\CommandHandler;
 use wcf\system\cli\command\CommandNameCompleter;
@@ -71,7 +72,7 @@ class CLIWCF extends WCF {
 		}
 		catch (ArgvException $e) {
 			echo $e->getMessage()."\n";
-			echo $e->getUsageMessage();
+			echo self::getArgvParser()->getUsageMessage();
 			exit;
 		}
 		EventHandler::getInstance()->fireAction($this, 'afterArgumentParsing');
@@ -80,6 +81,13 @@ class CLIWCF extends WCF {
 			echo self::getArgvParser()->getUsageMessage();
 			exit;
 		}
+		if (in_array('moo', self::getArgvParser()->getRemainingArgs())) {
+			echo '...."Have you mooed today?"...'."\n";
+		}
+		
+		define('VERBOSITY', self::getArgvParser()->getOption('v') - self::getArgvParser()->getOption('q'));
+		if (VERBOSITY > 1) Log::enableDebug();
+		if (VERBOSITY > 2) Log::enableTrace();
 	}
 	
 	/**
