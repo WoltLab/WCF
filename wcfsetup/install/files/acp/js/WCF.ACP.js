@@ -363,7 +363,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * Initializes the package installation.
 	 */
 	_init: function() {
-		$('#submitButton').click($.proxy(this._prepareInstallation, this));
+		$('#submitButton').click($.proxy(this.prepareInstallation, this));
 	},
 	
 	/**
@@ -383,7 +383,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	/**
 	 * Prepares installation dialog.
 	 */
-	_prepareInstallation: function() {
+	prepareInstallation: function() {
 		WCF.showAJAXDialog('packageInstallationDialog', true, {
 			ajax: true,
 			closable: false,
@@ -462,7 +462,7 @@ WCF.ACP.Package.Installation = Class.extend({
 			var self = this;
 			$('#packageInstallationInnerContent').html(data.innerTemplate).find('input').keyup(function(event) {
 				if (event.keyCode === 13) { // Enter
-					self._submitDialog(data);
+					self._submit(data);
 				}
 			});
 			
@@ -497,7 +497,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * 
 	 * @param	object		data
 	 */
-	_submitDialog: function(data) {
+	_submit: function(data) {
 		// collect form values
 		var $additionalData = {};
 		$('#packageInstallationInnerContent input').each(function(index, inputElement) {
@@ -607,7 +607,7 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 		WCF.System.Confirmation.show($element.data('confirmMessage'), function(action) {
 			if (action === 'confirm') {
 				self._packageID = $element.data('objectID');
-				self._prepareInstallation();
+				self.prepareInstallation();
 			}
 		});
 	},
