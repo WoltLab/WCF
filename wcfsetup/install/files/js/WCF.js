@@ -2000,6 +2000,29 @@ WCF.Action.Scroll = Class.extend({
 WCF.Date = {};
 
 /**
+ * Provides a date picker for date input fields.
+ */
+WCF.Date.Picker = {
+	/**
+	 * Initializes the jQuery UI based date picker.
+	 */
+	init: function() {
+		$('input[type=date]').each(function(index, input) {
+			// do *not* use .attr()
+			var $input = $(input).prop('type', 'text');
+			
+			// TODO: we should support all these braindead date formats, at least within output
+			$input.datepicker({
+				changeMonth: true,
+				changeYear: true,
+				dateFormat: 'yy-mm-dd',
+				yearRange: '1900:2038' // TODO: make it configurable?
+			});
+		});
+	}
+};
+
+/**
  * Provides utility functions for date operations.
  */
 WCF.Date.Util = {
@@ -2041,8 +2064,7 @@ WCF.Date.Util = {
 /**
  * Handles relative time designations.
  */
-WCF.Date.Time = function() { this.init(); };
-WCF.Date.Time.prototype = {
+WCF.Date.Time = Class.extend({
 	/**
 	 * Initializes relative datetimes.
 	 */
@@ -2129,7 +2151,7 @@ WCF.Date.Time.prototype = {
 			$(element).text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
 		}
 	}
-};
+});
 
 /**
  * Hash-like dictionary. Based upon idead from Prototype's hash

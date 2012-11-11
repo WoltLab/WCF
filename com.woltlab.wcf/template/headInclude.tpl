@@ -102,6 +102,7 @@
 		new WCF.Style.Chooser();
 		WCF.Dropdown.init();
 		WCF.System.PageNavigation.init('.pageNavigation');
+		WCF.Date.Picker.init();
 		
 		{event name='javascriptInit'}
 		
