@@ -3,8 +3,10 @@ namespace wcf\acp\form;
 use wcf\data\application\ViewableApplicationList;
 use wcf\data\application\group\ApplicationGroupAction;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -179,7 +181,11 @@ class ApplicationGroupAddForm extends ACPForm {
 		// reload available applications
 		$this->readAvailableApplications();
 		
-		// show success.
+		if (count($this->availableApplications) <= 1) {
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('ApplicationManagement'));
+		}
+		
+		// show success
 		WCF::getTPL()->assign(array(
 			'success' => true
 		));

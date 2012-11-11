@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class ApplicationManagementPage extends AbstractPage {
 	/**
@@ -31,10 +31,21 @@ class ApplicationManagementPage extends AbstractPage {
 	public $applicationGroups = null;
 	
 	/**
+	 * indicates if an application group can be created
+	 * @var	boolean
+	 */
+	public $canAddApplicationGroup = true;
+	
+	/**
 	 * number of ungrouped applications
 	 * @var	integer
 	 */
 	public $ungroupedApplications = 0;
+	
+	/**
+	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 */
+	public $neededPermissions = array('admin.system.canManageApplication');
 	
 	/**
 	 * @see	wcf\page\IPage::readData()
@@ -61,6 +72,8 @@ class ApplicationManagementPage extends AbstractPage {
 				$this->applicationGroups[$application->groupID]->addApplication($application);
 			}
 		}
+		
+		$this->canAddApplicationGroup = count($applicationList) > 1 && count($this->applications) > 0;
 	}
 	
 	/**
@@ -71,7 +84,8 @@ class ApplicationManagementPage extends AbstractPage {
 		
 		WCF::getTPL()->assign(array(
 			'applications' => $this->applications,
-			'applicationGroups' => $this->applicationGroups
+			'applicationGroups' => $this->applicationGroups,
+			'canAddApplicationGroup' => $this->canAddApplicationGroup
 		));
 	}
 	
@@ -81,7 +95,7 @@ class ApplicationManagementPage extends AbstractPage {
 	public function show() {
 		// enable menu item
 		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.application.management');
-	
+		
 		parent::show();
 	}
 }
