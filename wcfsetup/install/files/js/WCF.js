@@ -5060,6 +5060,127 @@ WCF.System.Confirmation = {
 };
 
 /**
+ * Provides the 'jump to page' overlay.
+ */
+WCF.System.PageNavigation = {
+	/**
+	 * submit button
+	 * @var	jQuery
+	 */
+	_button: null,
+	
+	/**
+	 * page No description
+	 * @var	jQuery
+	 */
+	_description: null,
+	
+	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * active element id
+	 * @var	string
+	 */
+	_elementID: '',
+	
+	/**
+	 * list of tracked navigation bars
+	 * @var	object
+	 */
+	_elements: { },
+	
+	/**
+	 * page No input
+	 * @var	jQuery
+	 */
+	_pageNo: null,
+	
+	/**
+	 * Initializes the 'jump to page' overlay for given selector.
+	 * 
+	 * @param	string		selector
+	 */
+	init: function(selector) {
+		var $elements = $(selector);
+		if (!$elements.length) {
+			return;
+		}
+		
+		this._initElements($elements);
+	},
+	
+	/**
+	 * Initializes the 'jump to page' overlay for given elements.
+	 * 
+	 * @param	jQuery		elements
+	 */
+	_initElements: function(elements) {
+		var self = this;
+		elements.each(function(index, element) {
+			var $element = $(element);
+			var $elementID = $element.wcfIdentify();
+			if (self._elements[$elementID] === undefined) {
+				self._elements[$elementID] = $element;
+				$element.find('li.jumpTo').data('elementID', $elementID).click($.proxy(self._click, self));
+			}
+		});
+	},
+	
+	/**
+	 * Shows the 'jump to page' overlay.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		this._elementID = $(event.currentTarget).data('elementID');
+		
+		if (this._dialog === null) {
+			this._dialog = $('<div id="pageNavigationOverlay" />').hide().appendTo(document.body);
+			
+			var $fieldset = $('<fieldset><legend>' + WCF.Language.get('wcf.global.page.jumpTo') + '</legend></fieldset>').appendTo(this._dialog);
+			$('<dl><dt><label for="jsPageNavigationPageNo">' + WCF.Language.get('wcf.global.page.jumpTo') + '</label></dt><dd></dd></dl>').appendTo($fieldset);
+			this._pageNo = $('<input type="number" id="jsPageNavigationPageNo" value="1" min="1" max="1" class="long" />').keyup($.proxy(this._keyUp, this)).appendTo($fieldset.find('dd'));
+			this._description = $('<small></small>').insertAfter(this._pageNo);
+			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
+			this._button = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.submit') + '</button>').click($.proxy(this._submit, this)).appendTo($formSubmit);
+		}
+		
+		this._button.enable();
+		this._description.html(WCF.Language.get('wcf.global.page.jumpTo.description').replace(/#pages#/, this._elements[this._elementID].data('pages')));
+		this._pageNo.val('1').attr('max', this._elements[this._elementID].data('pages'));
+		
+		this._dialog.wcfDialog({
+			'title': WCF.Language.get('wcf.global.page.pageNavigation')
+		});
+	},
+	
+	/**
+	 * Validates the page No input.
+	 */
+	_keyUp: function() {
+		var $pageNo = parseInt(this._pageNo.val()) || 0;
+		if ($pageNo < 1 || $pageNo > this._pageNo.attr('max')) {
+			this._button.disable();
+		}
+		else {
+			this._button.enable();
+		}
+	},
+	
+	/**
+	 * Redirects to given page No.
+	 */
+	_submit: function() {
+		var $redirectURL = this._elements[this._elementID].data('link').replace(/pageNo=%d/, 'pageNo=' + this._pageNo.val());
+		window.location = $redirectURL;
+	}
+};
+
+/**
  * Default implementation for inline editors.
  * 
  * @param	string		elementSelector

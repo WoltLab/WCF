@@ -709,6 +709,7 @@
 		<item name="wcf.global.name"><![CDATA[Name]]></item>
 		<item name="wcf.global.objectID"><![CDATA[ID]]></item>
 		<item name="wcf.global.page.next"><![CDATA[Nächste Seite]]></item>
+		<item name="wcf.global.page.pageNavigation"><![CDATA[Navigation]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Vorherige Seite]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.redirect.title"><![CDATA[Weiterleitung]]></item>
@@ -726,6 +727,7 @@
 		<item name="wcf.global.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.global.multiSelect"><![CDATA[Mehrfache Markierungen sind durch zusätzliches Drücken der Taste &bdquo;Strg/Ctrl&ldquo; (Windows) oder &bdquo;Befehl/Command&ldquo; (Mac OS) möglich.]]></item>
 		<item name="wcf.global.page.jumpTo"><![CDATA[Gehe zu Seite]]></item>
+		<item name="wcf.global.page.jumpTo.description"><![CDATA[Geben Sie einen Wert zwischen &bdquo;1&ldquo; und &bdquo;#pages#&ldquo; ein.]]></item>
 		<item name="wcf.global.error.illegalLink"><![CDATA[Sie haben einen ungültigen oder nicht mehr gültigen Link aufgerufen.]]></item>
 		<item name="wcf.global.error.backward"><![CDATA[Zurück zur vorherigen Seite]]></item>
 		<item name="wcf.global.noDeclaration"><![CDATA[Keine Angabe]]></item>

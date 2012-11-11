@@ -61,6 +61,9 @@
 			'__days': [ '{lang}wcf.date.day.sunday{/lang}', '{lang}wcf.date.day.monday{/lang}', '{lang}wcf.date.day.tuesday{/lang}', '{lang}wcf.date.day.wednesday{/lang}', '{lang}wcf.date.day.thursday{/lang}', '{lang}wcf.date.day.friday{/lang}', '{lang}wcf.date.day.saturday{/lang}' ],
 			'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 			'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
+			'wcf.global.page.jumpTo': '{lang}wcf.global.page.jumpTo{/lang}',
+			'wcf.global.page.jumpTo.description': '{lang}wcf.global.page.jumpTo.description{/lang}',
+			'wcf.global.page.pageNavigation': '{lang}wcf.global.page.pageNavigation{/lang}',
 			'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
 			'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
 			'wcf.global.confirmation.cancel': '{lang}wcf.global.confirmation.cancel{/lang}',
@@ -98,6 +101,7 @@
 		new WCF.Sitemap();
 		new WCF.Style.Chooser();
 		WCF.Dropdown.init();
+		WCF.System.PageNavigation.init('.pageNavigation');
 		
 		{event name='javascriptInit'}
 		
