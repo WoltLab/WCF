@@ -116,10 +116,10 @@
 		<nav>
 			<ul>
 				{content}
-					{if $canAddApplicationGroup}
+					{if $applications|count > 1}
 						<li><a href="{link controller='ApplicationGroupAdd'}{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/add.svg" class="icon24" /> <span>{lang}wcf.acp.application.group.add{/lang}</span></a></li>
 					{/if}
-
+					
 					{* todo: event *}
 				{/content}
 			</ul>

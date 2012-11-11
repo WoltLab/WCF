@@ -31,12 +31,6 @@ class ApplicationManagementPage extends AbstractPage {
 	public $applicationGroups = null;
 	
 	/**
-	 * indicates if an application group can be created
-	 * @var	boolean
-	 */
-	public $canAddApplicationGroup = true;
-	
-	/**
 	 * number of ungrouped applications
 	 * @var	integer
 	 */
@@ -72,8 +66,6 @@ class ApplicationManagementPage extends AbstractPage {
 				$this->applicationGroups[$application->groupID]->addApplication($application);
 			}
 		}
-		
-		$this->canAddApplicationGroup = count($applicationList) > 1 && count($this->applications) > 0;
 	}
 	
 	/**
@@ -84,8 +76,7 @@ class ApplicationManagementPage extends AbstractPage {
 		
 		WCF::getTPL()->assign(array(
 			'applications' => $this->applications,
-			'applicationGroups' => $this->applicationGroups,
-			'canAddApplicationGroup' => $this->canAddApplicationGroup
+			'applicationGroups' => $this->applicationGroups
 		));
 	}
 	
