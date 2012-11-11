@@ -1311,8 +1311,7 @@ WCF.Clipboard = {
  * @param	function		callback
  * @param	integer			delay
  */
-WCF.PeriodicalExecuter = function(callback, delay) { this.init(callback, delay); };
-WCF.PeriodicalExecuter.prototype = {
+WCF.PeriodicalExecuter = Class.extend({
 	/**
 	 * callback for each execution cycle
 	 * @var	object
@@ -1374,7 +1373,7 @@ WCF.PeriodicalExecuter.prototype = {
 		
 		clearInterval(this._intervalID);
 	}
-};
+});
 
 /**
  * Namespace for AJAXProxies
@@ -1386,8 +1385,7 @@ WCF.Action = {};
  * 
  * @param	object		options
  */
-WCF.Action.Proxy = function(options) { this.init(options); };
-WCF.Action.Proxy.prototype = {
+WCF.Action.Proxy = Class.extend({
 	/**
 	 * count of active requests
 	 * @var	integer
@@ -1617,7 +1615,7 @@ WCF.Action.Proxy.prototype = {
 		// replace image
 		element.attr('src', WCF.Icon.get('wcf.global.loading'));
 	}
-};
+});
 
 /**
  * Basic implementation for simple proxy access using bound elements.
@@ -1625,8 +1623,7 @@ WCF.Action.Proxy.prototype = {
  * @param	object		options
  * @param	object		callbacks
  */
-WCF.Action.SimpleProxy = function(options, callbacks) { this.init(options, callbacks); };
-WCF.Action.SimpleProxy.prototype = {
+WCF.Action.SimpleProxy = Class.extend({
 	/**
 	 * Initializes SimpleProxy.
 	 * 
@@ -1679,7 +1676,7 @@ WCF.Action.SimpleProxy.prototype = {
 		
 		this.proxy.sendRequest();
 	}
-};
+});
 
 /**
  * Basic implementation for AJAXProxy-based deletion.
@@ -2158,8 +2155,7 @@ WCF.Date.Time = Class.extend({
  * 
  * @see	https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/hash.js
  */
-WCF.Dictionary = function() { this.init(); };
-WCF.Dictionary.prototype = {
+WCF.Dictionary = Class.extend({
 	/**
 	 * list of variables
 	 * @var	object
@@ -2283,7 +2279,7 @@ WCF.Dictionary.prototype = {
 	isEmpty: function() {
 		return !this.count();
 	}
-};
+});
 
 /**
  * Global language storage.
@@ -3025,8 +3021,7 @@ WCF.TabMenu = {
  * @param	template		template-content
  * @see		https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/template.js
  */
-WCF.Template = function(template) { this.init(template); };
-WCF.Template.prototype = {
+WCF.Template = Class.extend({
 	/**
 	 * template content
 	 * @var	string
@@ -3135,15 +3130,14 @@ WCF.Template.prototype = {
 		// and re-insert saved literals
 		return new WCF.Template.Compiled("'" + this.insertLiterals($compiled) + "';");
 	}
-};
+});
 
 /**
  * Represents a compiled template
  * 
  * @param	compiled		compiled template
  */
-WCF.Template.Compiled = function(compiled) { this.init(compiled); };
-WCF.Template.Compiled.prototype = {
+WCF.Template.Compiled = Class.extend({
 	/**
 	 * Compiled template
 	 * 
@@ -3166,7 +3160,7 @@ WCF.Template.Compiled.prototype = {
 	fetch: function($v) {
 		return eval(this._compiled);
 	}
-};
+});
 
 /**
  * Toggles options.
@@ -3175,8 +3169,7 @@ WCF.Template.Compiled.prototype = {
  * @param	array		showItems
  * @param	array		hideItems
  */
-WCF.ToggleOptions = function(element, showItems, hideItems) { this.init(element, showItems, hideItems); };
-WCF.ToggleOptions.prototype = {
+WCF.ToggleOptions = Class.extend({
 	/**
 	 * target item
 	 * 
@@ -3235,7 +3228,7 @@ WCF.ToggleOptions.prototype = {
 			$('#' + $item).hide();
 		}
 	}
-};
+});
 
 /**
  * Namespace for all kind of collapsible containers.
@@ -3870,8 +3863,7 @@ WCF.Effect.SmoothScroll = WCF.Effect.Scroll.extend({
 /**
  * Creates the balloon tool-tip.
  */
-WCF.Effect.BalloonTooltip = function() { this.init(); };
-WCF.Effect.BalloonTooltip.prototype = {
+WCF.Effect.BalloonTooltip = Class.extend({
 	/**
 	 * initialization state
 	 * @var	boolean
@@ -4053,7 +4045,7 @@ WCF.Effect.BalloonTooltip.prototype = {
 			opacity: 1
 		});
 	}
-};
+});
 
 /**
  * Handles clicks outside an overlay, hitting body-tag through bubbling.
