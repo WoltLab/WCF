@@ -5213,7 +5213,8 @@ WCF.System.KeepAlive = Class.extend({
 				data: {
 					actionName: 'keepAlive',
 					className: 'wcf\\data\\session\\SessionAction'
-				}
+				},
+				showLoadingOverlay: false
 			});
 		}, (seconds * 1000));
 	}
