@@ -143,7 +143,7 @@ class WCF {
 		}
 		
 		// close cache source
-		if (CacheHandler::isSingletonInitialized() && is_object(CacheHandler::getInstance()) && is_object(CacheHandler::getInstance()->getCacheSource())) {
+		if (CacheHandler::isInitialized() && is_object(CacheHandler::getInstance()) && is_object(CacheHandler::getInstance()->getCacheSource())) {
 			CacheHandler::getInstance()->getCacheSource()->close();
 		}
 		

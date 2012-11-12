@@ -1311,8 +1311,7 @@ WCF.Clipboard = {
  * @param	function		callback
  * @param	integer			delay
  */
-WCF.PeriodicalExecuter = function(callback, delay) { this.init(callback, delay); };
-WCF.PeriodicalExecuter.prototype = {
+WCF.PeriodicalExecuter = Class.extend({
 	/**
 	 * callback for each execution cycle
 	 * @var	object
@@ -1374,7 +1373,7 @@ WCF.PeriodicalExecuter.prototype = {
 		
 		clearInterval(this._intervalID);
 	}
-};
+});
 
 /**
  * Namespace for AJAXProxies
@@ -1386,8 +1385,7 @@ WCF.Action = {};
  * 
  * @param	object		options
  */
-WCF.Action.Proxy = function(options) { this.init(options); };
-WCF.Action.Proxy.prototype = {
+WCF.Action.Proxy = Class.extend({
 	/**
 	 * count of active requests
 	 * @var	integer
@@ -1617,7 +1615,7 @@ WCF.Action.Proxy.prototype = {
 		// replace image
 		element.attr('src', WCF.Icon.get('wcf.global.loading'));
 	}
-};
+});
 
 /**
  * Basic implementation for simple proxy access using bound elements.
@@ -1625,8 +1623,7 @@ WCF.Action.Proxy.prototype = {
  * @param	object		options
  * @param	object		callbacks
  */
-WCF.Action.SimpleProxy = function(options, callbacks) { this.init(options, callbacks); };
-WCF.Action.SimpleProxy.prototype = {
+WCF.Action.SimpleProxy = Class.extend({
 	/**
 	 * Initializes SimpleProxy.
 	 * 
@@ -1679,7 +1676,7 @@ WCF.Action.SimpleProxy.prototype = {
 		
 		this.proxy.sendRequest();
 	}
-};
+});
 
 /**
  * Basic implementation for AJAXProxy-based deletion.
@@ -2000,6 +1997,29 @@ WCF.Action.Scroll = Class.extend({
 WCF.Date = {};
 
 /**
+ * Provides a date picker for date input fields.
+ */
+WCF.Date.Picker = {
+	/**
+	 * Initializes the jQuery UI based date picker.
+	 */
+	init: function() {
+		$('input[type=date]').each(function(index, input) {
+			// do *not* use .attr()
+			var $input = $(input).prop('type', 'text');
+			
+			// TODO: we should support all these braindead date formats, at least within output
+			$input.datepicker({
+				changeMonth: true,
+				changeYear: true,
+				dateFormat: 'yy-mm-dd',
+				yearRange: '1900:2038' // TODO: make it configurable?
+			});
+		});
+	}
+};
+
+/**
  * Provides utility functions for date operations.
  */
 WCF.Date.Util = {
@@ -2041,8 +2061,7 @@ WCF.Date.Util = {
 /**
  * Handles relative time designations.
  */
-WCF.Date.Time = function() { this.init(); };
-WCF.Date.Time.prototype = {
+WCF.Date.Time = Class.extend({
 	/**
 	 * Initializes relative datetimes.
 	 */
@@ -2129,15 +2148,14 @@ WCF.Date.Time.prototype = {
 			$(element).text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
 		}
 	}
-};
+});
 
 /**
  * Hash-like dictionary. Based upon idead from Prototype's hash
  * 
  * @see	https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/hash.js
  */
-WCF.Dictionary = function() { this.init(); };
-WCF.Dictionary.prototype = {
+WCF.Dictionary = Class.extend({
 	/**
 	 * list of variables
 	 * @var	object
@@ -2261,7 +2279,7 @@ WCF.Dictionary.prototype = {
 	isEmpty: function() {
 		return !this.count();
 	}
-};
+});
 
 /**
  * Global language storage.
@@ -3003,8 +3021,7 @@ WCF.TabMenu = {
  * @param	template		template-content
  * @see		https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/template.js
  */
-WCF.Template = function(template) { this.init(template); };
-WCF.Template.prototype = {
+WCF.Template = Class.extend({
 	/**
 	 * template content
 	 * @var	string
@@ -3113,15 +3130,14 @@ WCF.Template.prototype = {
 		// and re-insert saved literals
 		return new WCF.Template.Compiled("'" + this.insertLiterals($compiled) + "';");
 	}
-};
+});
 
 /**
  * Represents a compiled template
  * 
  * @param	compiled		compiled template
  */
-WCF.Template.Compiled = function(compiled) { this.init(compiled); };
-WCF.Template.Compiled.prototype = {
+WCF.Template.Compiled = Class.extend({
 	/**
 	 * Compiled template
 	 * 
@@ -3144,7 +3160,7 @@ WCF.Template.Compiled.prototype = {
 	fetch: function($v) {
 		return eval(this._compiled);
 	}
-};
+});
 
 /**
  * Toggles options.
@@ -3153,8 +3169,7 @@ WCF.Template.Compiled.prototype = {
  * @param	array		showItems
  * @param	array		hideItems
  */
-WCF.ToggleOptions = function(element, showItems, hideItems) { this.init(element, showItems, hideItems); };
-WCF.ToggleOptions.prototype = {
+WCF.ToggleOptions = Class.extend({
 	/**
 	 * target item
 	 * 
@@ -3213,7 +3228,7 @@ WCF.ToggleOptions.prototype = {
 			$('#' + $item).hide();
 		}
 	}
-};
+});
 
 /**
  * Namespace for all kind of collapsible containers.
@@ -3848,8 +3863,7 @@ WCF.Effect.SmoothScroll = WCF.Effect.Scroll.extend({
 /**
  * Creates the balloon tool-tip.
  */
-WCF.Effect.BalloonTooltip = function() { this.init(); };
-WCF.Effect.BalloonTooltip.prototype = {
+WCF.Effect.BalloonTooltip = Class.extend({
 	/**
 	 * initialization state
 	 * @var	boolean
@@ -4031,7 +4045,7 @@ WCF.Effect.BalloonTooltip.prototype = {
 			opacity: 1
 		});
 	}
-};
+});
 
 /**
  * Handles clicks outside an overlay, hitting body-tag through bubbling.
@@ -4726,7 +4740,7 @@ WCF.Search.Base = Class.extend({
 			var $result = $listItem.data('label');
 			for (var $i = 0, $length = this._oldSearchString.length; $i < $length; $i++) {
 				var $part = this._oldSearchString[$i];
-				if ($result.indexOf($part) === 0) {
+				if ($result.toLowerCase().indexOf($part.toLowerCase()) === 0) {
 					this._oldSearchString[$i] = $result;
 					this._searchInput.attr('value', this._oldSearchString.join(', '));
 					
@@ -4737,7 +4751,7 @@ WCF.Search.Base = Class.extend({
 					}
 					
 					// set focus on input field again
-					var $position = this._searchInput.val().indexOf($result) + $result.length;
+					var $position = this._searchInput.val().toLowerCase().indexOf($result.toLowerCase()) + $result.length;
 					this._searchInput.focus().setCaret($position);
 					
 					break;
@@ -5056,6 +5070,127 @@ WCF.System.Confirmation = {
 	 */
 	_show: function() {
 		this._dialog.find('button.buttonPrimary').blur().focus();
+	}
+};
+
+/**
+ * Provides the 'jump to page' overlay.
+ */
+WCF.System.PageNavigation = {
+	/**
+	 * submit button
+	 * @var	jQuery
+	 */
+	_button: null,
+	
+	/**
+	 * page No description
+	 * @var	jQuery
+	 */
+	_description: null,
+	
+	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * active element id
+	 * @var	string
+	 */
+	_elementID: '',
+	
+	/**
+	 * list of tracked navigation bars
+	 * @var	object
+	 */
+	_elements: { },
+	
+	/**
+	 * page No input
+	 * @var	jQuery
+	 */
+	_pageNo: null,
+	
+	/**
+	 * Initializes the 'jump to page' overlay for given selector.
+	 * 
+	 * @param	string		selector
+	 */
+	init: function(selector) {
+		var $elements = $(selector);
+		if (!$elements.length) {
+			return;
+		}
+		
+		this._initElements($elements);
+	},
+	
+	/**
+	 * Initializes the 'jump to page' overlay for given elements.
+	 * 
+	 * @param	jQuery		elements
+	 */
+	_initElements: function(elements) {
+		var self = this;
+		elements.each(function(index, element) {
+			var $element = $(element);
+			var $elementID = $element.wcfIdentify();
+			if (self._elements[$elementID] === undefined) {
+				self._elements[$elementID] = $element;
+				$element.find('li.jumpTo').data('elementID', $elementID).click($.proxy(self._click, self));
+			}
+		});
+	},
+	
+	/**
+	 * Shows the 'jump to page' overlay.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		this._elementID = $(event.currentTarget).data('elementID');
+		
+		if (this._dialog === null) {
+			this._dialog = $('<div id="pageNavigationOverlay" />').hide().appendTo(document.body);
+			
+			var $fieldset = $('<fieldset><legend>' + WCF.Language.get('wcf.global.page.jumpTo') + '</legend></fieldset>').appendTo(this._dialog);
+			$('<dl><dt><label for="jsPageNavigationPageNo">' + WCF.Language.get('wcf.global.page.jumpTo') + '</label></dt><dd></dd></dl>').appendTo($fieldset);
+			this._pageNo = $('<input type="number" id="jsPageNavigationPageNo" value="1" min="1" max="1" class="long" />').keyup($.proxy(this._keyUp, this)).appendTo($fieldset.find('dd'));
+			this._description = $('<small></small>').insertAfter(this._pageNo);
+			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
+			this._button = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.submit') + '</button>').click($.proxy(this._submit, this)).appendTo($formSubmit);
+		}
+		
+		this._button.enable();
+		this._description.html(WCF.Language.get('wcf.global.page.jumpTo.description').replace(/#pages#/, this._elements[this._elementID].data('pages')));
+		this._pageNo.val('1').attr('max', this._elements[this._elementID].data('pages'));
+		
+		this._dialog.wcfDialog({
+			'title': WCF.Language.get('wcf.global.page.pageNavigation')
+		});
+	},
+	
+	/**
+	 * Validates the page No input.
+	 */
+	_keyUp: function() {
+		var $pageNo = parseInt(this._pageNo.val()) || 0;
+		if ($pageNo < 1 || $pageNo > this._pageNo.attr('max')) {
+			this._button.disable();
+		}
+		else {
+			this._button.enable();
+		}
+	},
+	
+	/**
+	 * Redirects to given page No.
+	 */
+	_submit: function() {
+		var $redirectURL = this._elements[this._elementID].data('link').replace(/pageNo=%d/, 'pageNo=' + this._pageNo.val());
+		window.location = $redirectURL;
 	}
 };
 
@@ -6588,7 +6723,7 @@ WCF.Sitemap = Class.extend({
 		if (this._didInit) {
 			this._cache.push(data.returnValues.sitemapName);
 			
-			this._dialog.find('#sitemap-' + data.returnValues.sitemapName).html(data.returnValues.template);
+			this._dialog.find('#sitemap_' + data.returnValues.sitemapName).html(data.returnValues.template);
 			
 			// redraw dialog
 			this._dialog.wcfDialog('render');
@@ -6620,7 +6755,7 @@ WCF.Sitemap = Class.extend({
 	_navigate: function(event) {
 		var $sitemapName = $(event.currentTarget).data('sitemapName');
 		if (WCF.inArray($sitemapName, this._cache)) {
-			this._dialog.find('.tabMenuContainer').wcfTabs('select', 'sitemap-' + $sitemapName);
+			this._dialog.find('.tabMenuContainer').wcfTabs('select', 'sitemap_' + $sitemapName);
 			
 			// redraw dialog
 			this._dialog.wcfDialog('render');

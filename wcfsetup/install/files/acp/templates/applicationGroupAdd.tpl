@@ -35,31 +35,32 @@
 	</nav>
 </div>
 
-<div class="container containerPadding marginTop">
-	<form method="post" action="{if $action == 'add'}{link controller='ApplicationGroupAdd'}{/link}{else}{link controller='ApplicationGroupEdit' id=$applicationGroup->groupID}{/link}{/if}">
-		<fieldset>
-			<legend>{lang}wcf.acp.application.group.data{/lang}</legend>
-			<dl{if $errorField == 'groupName'} class="formError"{/if}>
-				<dt><label for="groupName">{lang}wcf.acp.application.group.groupName{/lang}</label></dt>
-				<dd>
-					<input type="text" name="groupName" id="groupName" value="{$groupName}" class="long" required="required" />
-					{if $errorField == 'groupName'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
-							{else}
-								{lang}wcf.acp.application.group.groupName.error.{$errorType}{/lang}
-							{/if}
-						</small>
-					{/if}
-				</dd>
-			</dl>
-		</fieldset>
-		
-		<fieldset{if $errorField == 'applications'} class="formError"{/if}>
-			<legend>{lang}wcf.acp.application.group.availableApplications{/lang}</legend>
+{if $availableApplications|count > 1}
+	<div class="container containerPadding marginTop">
+		<form method="post" action="{if $action == 'add'}{link controller='ApplicationGroupAdd'}{/link}{else}{link controller='ApplicationGroupEdit' id=$applicationGroup->groupID}{/link}{/if}">
+			<fieldset>
+				<legend>{lang}wcf.acp.application.group.data{/lang}</legend>
+				
+				<dl{if $errorField == 'groupName'} class="formError"{/if}>
+					<dt><label for="groupName">{lang}wcf.acp.application.group.groupName{/lang}</label></dt>
+					<dd>
+						<input type="text" name="groupName" id="groupName" value="{$groupName}" class="long" required="required" />
+						{if $errorField == 'groupName'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.application.group.groupName.error.{$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
+					</dd>
+				</dl>
+			</fieldset>
 			
-			{if $availableApplications|count > 1}
+			<fieldset{if $errorField == 'applications'} class="formError"{/if}>
+				<legend>{lang}wcf.acp.application.group.availableApplications{/lang}</legend>
+				
 				<div class="tabularBox">
 					<table class="table">
 						<thead>
@@ -105,23 +106,23 @@
 						{/if}
 					</small>
 				{/if}
-			{else}
-				<p class="info">{lang}wcf.acp.application.group.noAvailableApplications{/lang}</p>
-			{/if}
-		</fieldset>
-		
-		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" />
-		</div>
-	</form>
-</div>
-
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='ApplicationManagement'}{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/list.svg" alt="" /> <span>{lang}wcf.acp.application.management{/lang}</span></a></li>
-		</ul>
-	</nav>
-</div>
+			</fieldset>
+			
+			<div class="formSubmit">
+				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" />
+			</div>
+		</form>
+	</div>
+	
+	<div class="contentNavigation">
+		<nav>
+			<ul>
+				<li><a href="{link controller='ApplicationManagement'}{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/list.svg" alt="" /> <span>{lang}wcf.acp.application.management{/lang}</span></a></li>
+			</ul>
+		</nav>
+	</div>
+{else}
+	<p class="error">{lang}wcf.acp.application.group.noAvailableApplications{/lang}</p>
+{/if}
 
 {include file='footer'}

@@ -1,0 +1,34 @@
+.ui-datepicker {
+	background-color: rgba(255, 255, 255, .7);
+	border: 1px solid @wcfBorderColor;
+	min-width: 200px;
+	padding: 4px;
+	
+	.borderRadius(5px);
+	
+	.ui-datepicker-prev {
+		float: left;
+	}
+	
+	.ui-datepicker-next {
+		float: right;
+	}
+	
+	.ui-datepicker-title{
+		text-align: center;
+		
+		&:after {
+			clear: both;
+			content: "";
+			display: block;
+		}
+	}
+	
+	.ui-datepicker-calendar {
+		margin-top: 7px;
+		
+		td {
+			padding: 2px;
+		}
+	}
+}

@@ -94,6 +94,7 @@
 			new WCF.Effect.SmoothScroll();
 			new WCF.Effect.BalloonTooltip();
 			
+			WCF.Date.Picker.init();
 			WCF.Dropdown.init();
 			
 			new WCF.ACP.Search();
