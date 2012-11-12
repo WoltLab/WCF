@@ -4740,7 +4740,7 @@ WCF.Search.Base = Class.extend({
 			var $result = $listItem.data('label');
 			for (var $i = 0, $length = this._oldSearchString.length; $i < $length; $i++) {
 				var $part = this._oldSearchString[$i];
-				if ($result.indexOf($part) === 0) {
+				if ($result.toLowerCase().indexOf($part.toLowerCase()) === 0) {
 					this._oldSearchString[$i] = $result;
 					this._searchInput.attr('value', this._oldSearchString.join(', '));
 					
@@ -4751,7 +4751,7 @@ WCF.Search.Base = Class.extend({
 					}
 					
 					// set focus on input field again
-					var $position = this._searchInput.val().indexOf($result) + $result.length;
+					var $position = this._searchInput.val().toLowerCase().indexOf($result.toLowerCase()) + $result.length;
 					this._searchInput.focus().setCaret($position);
 					
 					break;
