@@ -119,6 +119,9 @@
 				}
 			});
 		{/if}
+		{if $__sessionKeepAlive|isset}
+			new WCF.System.KeepAlive({@$__sessionKeepAlive});
+		{/if}
 	});
 	//]]>
 </script>
