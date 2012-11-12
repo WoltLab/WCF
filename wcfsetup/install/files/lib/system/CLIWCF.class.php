@@ -9,6 +9,7 @@ use wcf\system\cli\DatabaseCommandHistory;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\util\StringUtil;
 use Zend\Console\Exception\RuntimeException as ArgvException;
@@ -53,6 +54,7 @@ class CLIWCF extends WCF {
 		$this->initArgv();
 		$this->initPHPLine();
 		$this->initAuth();
+		$this->initCommands();
 	}
 	
 	/**
@@ -60,12 +62,18 @@ class CLIWCF extends WCF {
 	 */
 	protected function initArgv() {
 		self::$argvParser = new ArgvParser(array(
-			'v' => 'Verbose: Show more output',
-			'q' => 'Quiet: Show less output',
-			'h|help' => 'Show this help'
+			'forcelanguage=s' => 'Sets the language to the specified languagecode and ignores user settings',
+			'v' => 'verbose: show more output',
+			'q' => 'quiet: show less output',
+			'h|help' => 'show this help',
+			'version' => 'show version'
 		));
-		self::getArgvParser()->setOptions(array(ArgvParser::CONFIG_CUMULATIVE_FLAGS => true));
+		self::getArgvParser()->setOptions(array(
+			ArgvParser::CONFIG_CUMULATIVE_FLAGS => true,
+			ArgvParser::CONFIG_DASHDASH => false
+		));
 		
+		// parse arguments
 		EventHandler::getInstance()->fireAction($this, 'beforeArgumentParsing');
 		try {
 			self::getArgvParser()->parse();
@@ -77,15 +85,28 @@ class CLIWCF extends WCF {
 		}
 		EventHandler::getInstance()->fireAction($this, 'afterArgumentParsing');
 		
-		if (self::getArgvParser()->getOption('help')) {
+		// handle arguments
+		if (self::getArgvParser()->help) {
 			echo self::getArgvParser()->getUsageMessage();
 			exit;
+		}
+		if (self::getArgvParser()->version) {
+			echo WCF_VERSION."\n";
+			exit;
+		}
+		if (self::getArgvParser()->forcelanguage) {
+			$language = LanguageFactory::getInstance()->getLanguageByCode(self::getArgvParser()->forcelanguage);
+			if ($language === null) {
+				echo "Could not find language with code '".self::getArgvParser()->forcelanguage."'\n";
+				exit;
+			}
+			self::setLanguage($language->languageID);
 		}
 		if (in_array('moo', self::getArgvParser()->getRemainingArgs())) {
 			echo '...."Have you mooed today?"...'."\n";
 		}
 		
-		define('VERBOSITY', self::getArgvParser()->getOption('v') - self::getArgvParser()->getOption('q'));
+		define('VERBOSITY', self::getArgvParser()->v - self::getArgvParser()->q);
 		if (VERBOSITY > 1) Log::enableDebug();
 		if (VERBOSITY > 2) Log::enableTrace();
 	}
@@ -165,7 +186,12 @@ class CLIWCF extends WCF {
 		$history = new DatabaseCommandHistory();
 		$history->load();
 		self::getReader()->setHistory($history);
-		
+	}
+	
+	/**
+	 * Initializes command handling.
+	 */
+	protected function initCommands() {
 		self::getReader()->addCompleter(new CommandNameCompleter());
 		while (true) {
 			$line = StringUtil::trim(self::getReader()->readLine('>'));
