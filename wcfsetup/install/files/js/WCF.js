@@ -7253,8 +7253,8 @@ $.widget('ui.wcfDialog', {
 	/**
 	 * Closes this dialog.
 	 */
-	close: function() {
-		if (!this.isOpen()) {
+	close: function(event) {
+		if (!this.isOpen() || (!this.options.closable && event !== undefined && $(event.currentTarget).wcfIdentify() == this._overlay.wcfIdentify())) {
 			return;
 		}
 		
