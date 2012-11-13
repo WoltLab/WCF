@@ -45,6 +45,10 @@ class CLIWCF extends WCF {
 	public function __construct() {
 		parent::__construct();
 		
+		// the destructor registered in core.functions.php will only call the destructor
+		// of the parent
+		register_shutdown_function(array('wcf\system\CLIWCF', 'destruct'));
+		
 		// register additional autoloaders
 		require_once(WCF_DIR.'lib/system/api/phpline/phpline.phar');
 		require_once(WCF_DIR.'lib/system/api/zend/Loader/StandardAutoloader.php');
@@ -55,6 +59,15 @@ class CLIWCF extends WCF {
 		$this->initPHPLine();
 		$this->initAuth();
 		$this->initCommands();
+	}
+	
+	/**
+	 * Destroys the session.
+	 * 
+	 * @see wcf\system\WCF::destruct()
+	 */
+	public static function destruct() {
+		self::getSession()->delete();
 	}
 	
 	/**
