@@ -6835,8 +6835,9 @@ WCF.Language.Chooser = Class.extend({
 	 * @param	integer		languageID
 	 * @param	object		languages
 	 * @param	object		callback
+	 * @param	boolean		allowEmptyValue
 	 */
-	init: function(containerID, inputFieldID, languageID, languages, callback) {
+	init: function(containerID, inputFieldID, languageID, languages, callback, allowEmptyValue) {
 		var $container = $('#' + containerID);
 		if ($container.length != 1) {
 			console.debug("[WCF.Language.Chooser] Invalid container id '" + containerID + "' given");
@@ -6877,6 +6878,16 @@ WCF.Language.Chooser = Class.extend({
 			}
 		}
 		
+		// allow an empty selection (e.g. using as language filter)
+		if (allowEmptyValue) {
+			$('<li class="dropdownDivider" />').appendTo($dropdownMenu);
+			var $item = $('<li><a>' + WCF.Language.get('wcf.global.language.noSelection') + '</a></li>').data('languageID', 0).click($.proxy(this._click, this)).appendTo($dropdownMenu);
+			
+			if (languageID === 0) {
+				this._dropdown.children('.dropdownToggle').empty().append($item.html());
+			}
+		}
+		
 		WCF.Dropdown.init();
 	},
 	
@@ -6887,13 +6898,14 @@ WCF.Language.Chooser = Class.extend({
 	 */
 	_click: function(event) {
 		var $item = $(event.currentTarget);
+		var $languageID = $item.data('languageID');
 		
 		// update input field
-		this._input.val($item.data('languageID'));
+		this._input.val($languageID);
 		
 		// update dropdown label
 		var $html = $('' + $item.html());
-		var $innerContent = $html.children().detach();
+		var $innerContent = ($languageID === 0) ? $html : $html.children().detach();
 		this._dropdown.children('.dropdownToggle').empty().append($innerContent);
 		
 		// execute callback
