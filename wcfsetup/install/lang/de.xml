@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de" languagename="Deutsch" countrycode="de">
 	<category name="wcf.acp">
-		<item name="wcf.acp"><![CDATA[Administration]]></item>
+		<item name="wcf.acp"><![CDATA[Administrationsoberfläche]]></item>
 	</category>
 	
 	<category name="wcf.acp.application">
