@@ -45,8 +45,7 @@ class CLIWCF extends WCF {
 	public function __construct() {
 		parent::__construct();
 		
-		// the destructor registered in core.functions.php will only call the destructor
-		// of the parent
+		// the destructor registered in core.functions.php will only call the destructor of the parent class
 		register_shutdown_function(array('wcf\system\CLIWCF', 'destruct'));
 		
 		// register additional autoloaders
