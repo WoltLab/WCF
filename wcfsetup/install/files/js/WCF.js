@@ -2012,6 +2012,7 @@ WCF.Date.Picker = {
 			$input.datepicker({
 				changeMonth: true,
 				changeYear: true,
+				showOtherMonths: true,
 				dateFormat: 'yy-mm-dd',
 				yearRange: '1900:2038' // TODO: make it configurable?
 			});

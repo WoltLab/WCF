@@ -1,34 +1,130 @@
 .ui-datepicker {
-	background-color: rgba(255, 255, 255, .7);
-	border: 1px solid @wcfBorderColor;
-	min-width: 200px;
-	padding: 4px;
+	background-color: @wcfDropdownBackgroundColor;
+	border: 1px solid @wcfDropdownBorderColor;
+	color: @wcfDropdownColor;
+	margin-top: 7px;
 	
-	.borderRadius(5px);
-	
-	.ui-datepicker-prev {
-		float: left;
+	.boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
+
+	&:after {
+		border: 7px solid transparent;
+		border-bottom-color: @wcfDropdownBorderColor;
+		border-top-width: 0;
+		content: "";
+		display: inline-block;
+		left: 9px;
+		position: absolute;
+		top: -7px;
+		z-index: 100;
 	}
 	
-	.ui-datepicker-next {
-		float: right;
+	&:before {
+		border: 6px solid transparent;
+		border-bottom-color: @wcfDropdownBackgroundColor;
+		border-top-width: 0;
+		content: "";
+		display: inline-block;
+		left: 10px;
+		position: absolute;
+		top: -6px;
+		z-index: 101;
 	}
 	
-	.ui-datepicker-title{
+	a:hover {
+		text-decoration: none;
+	}
+	
+	> .ui-datepicker-header {
+		padding: 4px;
 		text-align: center;
 		
-		&:after {
-			clear: both;
-			content: "";
-			display: block;
+		> .ui-datepicker-prev,
+		> .ui-datepicker-next {
+			background-repeat: no-repeat;
+			background-size: 24px;
+			display: inline-block;
+			height: 24px;
+			line-height: 600%;
+			overflow: hidden;
+			text-align: center;
+			width: 24px;
+		}
+		
+		> .ui-datepicker-prev {
+			background-image: url('../icon/circleArrowLeftColored.svg');
+			float: left;
+		}
+		
+		> .ui-datepicker-next {
+			background-image: url('../icon/circleArrowRightColored.svg');
+			float: right;
 		}
 	}
 	
-	.ui-datepicker-calendar {
-		margin-top: 7px;
+	> table {
+		border-collapse: collapse;
+		border-spacing: 0;
+		width: 100%;
 		
-		td {
-			padding: 2px;
+		> thead {
+			background-color: @wcfTabularBoxBackgroundColor;
+			
+			> tr > th {
+				color: @wcfTabularBoxColor;
+				font-size: @wcfSmallFontSize;
+				padding: 5px 0;
+				text-transform: uppercase;
+				
+				.textShadow(@wcfTabularBoxBackgroundColor);
+			}
 		}
+		
+		> tbody {
+			> tr {
+				border-bottom: 1px solid @wcfContainerBorderColor;
+				
+				&:last-child {
+					border-bottom: 0;
+				}
+				
+				> td {
+					border-right: 1px solid @wcfContainerBorderColor;
+					
+					&:last-child {
+						border-right: 0;
+					}
+					
+					> span,
+					> a {
+						display: inline-block;
+						color: @wcfColor;
+						font-weight: bold; 
+						height: 30px;
+						line-height: 30px;
+						text-align: center;
+						width: 30px; 
+						
+						.textShadow(@wcfContainerBackgroundColor);
+					}
+				}
+			}
+		}
+	}
+	
+	.ui-datepicker-calendar .ui-state-default {
+		background-color: @wcfContainerAccentBackgroundColor;
+	}
+	
+	.ui-datepicker-unselectable .ui-state-default {  
+		background-color: @wcfContainerBackgroundColor;
+		color: @wcfDimmedColor;
+	}
+	
+	.ui-datepicker-calendar .ui-state-hover {  
+		background-color: @wcfContainerHoverBackgroundColor;
+	}
+	
+	.ui-datepicker-calendar .ui-state-active {
+		background-color: @wcfContainerHoverBackgroundColor;
 	}
 }
