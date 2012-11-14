@@ -1,10 +1,7 @@
 			</section>
-			<!-- CONTENT -->
 		</div>
 	</div>
-	<!-- /MAIN -->
 	
-	<!-- FOOTER -->
 	<footer id="pageFooter" class="layoutFluid footer">
 		<nav id="footerNavigation" class="navigation navigationFooter clearfix">
 			<ul class="navigationIcons">
@@ -23,10 +20,10 @@
 		<div class="footerContent">
 			{if PACKAGE_ID && ENABLE_BENCHMARK}{include file='benchmark'}{/if}
 			
-			<address class="copyright marginTop"><a href="http://www.woltlab.com" title="Go to the WoltLab website">Copyright &copy; 2001-2012 WoltLab&reg; GmbH</a>{event name='copyright'}</address>
+			<address class="copyright marginTop"><a href="http://www.woltlab.com">Copyright &copy; 2001-2012 WoltLab&reg; GmbH</a>{event name='copyright'}</address>
 		</div>
 	</footer>
-	<!-- /FOOTER -->
+	
 	<a id="bottom"></a>
 </body>
 </html>

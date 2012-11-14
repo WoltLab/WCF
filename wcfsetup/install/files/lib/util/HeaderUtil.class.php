@@ -104,13 +104,15 @@ final class HeaderUtil {
 	 * @param	string		$location
 	 * @param	string		$message
 	 * @param	integer		$delay
+	 * @param	string		$status
 	 */
-	public static function delayedRedirect($location, $message, $delay = 5) {
+	public static function delayedRedirect($location, $message, $delay = 5, $status = 'success') {
 		WCF::getTPL()->assign(array(
 			'url' => $location,
 			'message' => $message,
 			'wait' => $delay,
-			'templateName' => 'redirect'
+			'templateName' => 'redirect',
+			'status' => $status
 		));
 		WCF::getTPL()->display('redirect');
 	}
