@@ -5118,22 +5118,31 @@ WCF.System.PageNavigation = {
 	 * Initializes the 'jump to page' overlay for given selector.
 	 * 
 	 * @param	string		selector
+	 * @param	object		callback
 	 */
-	init: function(selector) {
+	init: function(selector, callback) {
 		var $elements = $(selector);
 		if (!$elements.length) {
 			return;
 		}
 		
-		this._initElements($elements);
+		callback = callback || null;
+		
+		if (callback !== null && !$.isFunction(callback)) {
+			console.debug("[WCF.System.PageNavigation] Callback for selector '" + selector + "' is invalid, aborting.");
+			return;
+		}
+		
+		this._initElements($elements, callback);
 	},
 	
 	/**
 	 * Initializes the 'jump to page' overlay for given elements.
 	 * 
 	 * @param	jQuery		elements
+	 * @param	object		callback
 	 */
-	_initElements: function(elements) {
+	_initElements: function(elements, callback) {
 		var self = this;
 		elements.each(function(index, element) {
 			var $element = $(element);
@@ -5142,7 +5151,7 @@ WCF.System.PageNavigation = {
 				self._elements[$elementID] = $element;
 				$element.find('li.jumpTo').data('elementID', $elementID).click($.proxy(self._click, self));
 			}
-		});
+		}).data('callback', callback);
 	},
 	
 	/**
@@ -5168,6 +5177,9 @@ WCF.System.PageNavigation = {
 		this._description.html(WCF.Language.get('wcf.global.page.jumpTo.description').replace(/#pages#/, this._elements[this._elementID].data('pages')));
 		this._pageNo.val('1').attr('max', this._elements[this._elementID].data('pages'));
 		
+		console.debug(this._elements[this._elementID]);
+		console.debug(this._elements[this._elementID].data());
+		
 		this._dialog.wcfDialog({
 			'title': WCF.Language.get('wcf.global.page.pageNavigation')
 		});
@@ -5190,8 +5202,14 @@ WCF.System.PageNavigation = {
 	 * Redirects to given page No.
 	 */
 	_submit: function() {
-		var $redirectURL = this._elements[this._elementID].data('link').replace(/pageNo=%d/, 'pageNo=' + this._pageNo.val());
-		window.location = $redirectURL;
+		var $pageNavigation = this._elements[this._elementID];
+		if ($pageNavigation.data('callback') === null) {
+			var $redirectURL = $pageNavigation.data('link').replace(/pageNo=%d/, 'pageNo=' + this._pageNo.val());
+			window.location = $redirectURL;
+		}
+		else {
+			$pageNavigation.data('callback')(this._pageNo.val());
+		}
 	}
 };
 
@@ -7612,6 +7630,8 @@ $.widget('ui.wcfPages', {
 	_render: function() {
 		// only render if we have more than 1 page
 		if (!this.options.disabled && this.options.maxPage > 1) {
+			var $hasHiddenPages = false;
+			
 			// make sure pagination is visible
 			if (this.element.hasClass('hidden')) {
 				this.element.removeClass('hidden');
@@ -7687,35 +7707,8 @@ $.widget('ui.wcfPages', {
 					$pageList.append(this._renderLink(2));
 				}
 				else {
-					var $leftChildren = $('<li class="children"></li>');
-					$pageList.append($leftChildren);
-					
-					var $leftChildrenLink = $('<a></a>');
-					$leftChildren.append($leftChildrenLink);
-					$leftChildrenLink.click($.proxy(this._startInput, this));
-					
-					var $leftChildrenImage = $('<img src="' + this.options.arrowDownIcon + '" alt="" />');
-					$leftChildrenLink.append($leftChildrenImage);
-					
-					var $leftChildrenInput = $('<input type="text" name="pageNo" placeholder="…" class="tiny" />');
-					$leftChildren.append($leftChildrenInput);
-					$leftChildrenInput.keydown($.proxy(this._handleInput, this));
-					$leftChildrenInput.keyup($.proxy(this._handleInput, this));
-					$leftChildrenInput.blur($.proxy(this._stopInput, this));
-					
-					var $leftChildrenContainer = $('<div class="dropdown"></div>');
-					$leftChildren.append($leftChildrenContainer);
-					
-					var $leftChildrenList = $('<ul></u>');
-					$leftChildrenContainer.append($leftChildrenList);
-					
-					// render sublinks
-					var $k = 0;
-					var $step = Math.ceil(($left - 2) / this.SHOW_SUB_LINKS);
-					for (var $i = 2; $i <= $left; $i += $step) {
-						$leftChildrenList.append(this._renderLink($i, ($k != 0 && $k % 4 == 0)));
-						$k++;
-					}
+					$('<li class="button jumpTo"><a title="' + WCF.Language.get('wcf.global.page.jumpTo') + '" class="jsTooltip">…</a></li>').appendTo($pageList);
+					$hasHiddenPages = true;
 				}
 			}
 			
@@ -7730,35 +7723,8 @@ $.widget('ui.wcfPages', {
 					$pageList.append(this._renderLink(this.options.maxPage - 1));
 				}
 				else {
-					var $rightChildren = $('<li class="children"></li>');
-					$pageList.append($rightChildren);
-					
-					var $rightChildrenLink = $('<a></a>');
-					$rightChildren.append($rightChildrenLink);
-					$rightChildrenLink.click($.proxy(this._startInput, this));
-					
-					var $rightChildrenImage = $('<img src="' + this.options.arrowDownIcon + '" alt="" />');
-					$rightChildrenLink.append($rightChildrenImage);
-					
-					var $rightChildrenInput = $('<input type="text" name="pageNo" placeholder="…" class="tiny" />');
-					$rightChildren.append($rightChildrenInput);
-					$rightChildrenInput.keydown($.proxy(this._handleInput, this));
-					$rightChildrenInput.keyup($.proxy(this._handleInput, this));
-					$rightChildrenInput.blur($.proxy(this._stopInput, this));
-					
-					var $rightChildrenContainer = $('<div class="dropdown"></div>');
-					$rightChildren.append($rightChildrenContainer);
-					
-					var $rightChildrenList = $('<ul></ul>');
-					$rightChildrenContainer.append($rightChildrenList);
-					
-					// render sublinks
-					var $k = 0;
-					var $step = Math.ceil((this.options.maxPage - $right) / this.SHOW_SUB_LINKS);
-					for (var $i = $right; $i < this.options.maxPage; $i += $step) {
-						$rightChildrenList.append(this._renderLink($i, ($k != 0 && $k % 4 == 0)));
-						$k++;
-					}
+					$('<li class="button jumpTo"><a title="' + WCF.Language.get('wcf.global.page.jumpTo') + '" class="jsTooltip">…</a></li>').appendTo($pageList);
+					$hasHiddenPages = true;
 				}
 			}
 			
@@ -7784,6 +7750,18 @@ $.widget('ui.wcfPages', {
 				$nextImage.addClass('disabled');
 			}
 			$nextImage.addClass('icon16');
+			
+			if ($hasHiddenPages) {
+				/*
+				 * TODO: this is somehow broken, $pageList reflects something weird
+				 * 
+				
+				$pageList.data('max', this.options.maxPage);
+				WCF.System.PageNavigation.init('#' + $pageList.wcfIdentify(), $.proxy(function(pageNo) {
+					this.switchPage(pageNo);
+				}, this));
+				*/
+			}
 		}
 		else {
 			// otherwise hide the paginator if not already hidden
