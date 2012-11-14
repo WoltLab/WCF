@@ -5127,7 +5127,6 @@ WCF.System.PageNavigation = {
 		}
 		
 		callback = callback || null;
-		
 		if (callback !== null && !$.isFunction(callback)) {
 			console.debug("[WCF.System.PageNavigation] Callback for selector '" + selector + "' is invalid, aborting.");
 			return;
@@ -5146,6 +5145,7 @@ WCF.System.PageNavigation = {
 		var self = this;
 		elements.each(function(index, element) {
 			var $element = $(element);
+			console.debug($element.data());
 			var $elementID = $element.wcfIdentify();
 			if (self._elements[$elementID] === undefined) {
 				self._elements[$elementID] = $element;
@@ -5177,9 +5177,6 @@ WCF.System.PageNavigation = {
 		this._description.html(WCF.Language.get('wcf.global.page.jumpTo.description').replace(/#pages#/, this._elements[this._elementID].data('pages')));
 		this._pageNo.val('1').attr('max', this._elements[this._elementID].data('pages'));
 		
-		console.debug(this._elements[this._elementID]);
-		console.debug(this._elements[this._elementID].data());
-		
 		this._dialog.wcfDialog({
 			'title': WCF.Language.get('wcf.global.page.pageNavigation')
 		});
@@ -5209,6 +5206,7 @@ WCF.System.PageNavigation = {
 		}
 		else {
 			$pageNavigation.data('callback')(this._pageNo.val());
+			this._dialog.wcfDialog('close');
 		}
 	}
 };
@@ -7752,15 +7750,10 @@ $.widget('ui.wcfPages', {
 			$nextImage.addClass('icon16');
 			
 			if ($hasHiddenPages) {
-				/*
-				 * TODO: this is somehow broken, $pageList reflects something weird
-				 * 
-				
-				$pageList.data('max', this.options.maxPage);
+				$pageList.data('pages', this.options.maxPage);
 				WCF.System.PageNavigation.init('#' + $pageList.wcfIdentify(), $.proxy(function(pageNo) {
 					this.switchPage(pageNo);
 				}, this));
-				*/
 			}
 		}
 		else {
@@ -7830,7 +7823,7 @@ $.widget('ui.wcfPages', {
 					nextPage: value
 				});
 				
-				if ($result) {
+				if ($result || $result !== undefined) {
 					this.options[key] = value;
 					this._render();
 					this._trigger('switched', undefined, {
