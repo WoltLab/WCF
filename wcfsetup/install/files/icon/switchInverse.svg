@@ -20,7 +20,7 @@
 		</style>
 	</defs>
 	
-	<g id="IconSwitch">
+	<g id="IconSwitch" transform="translate(-0.5 0)">
 		<g>
 			<polygon id="ArrowUp2" class="shadow" transform="translate(0 -1)" opacity=".8" points="14.5,9.584 8.908,4.001 11.512,4.001 9.508,2 5.5,2 5.5,6.002 7.504,8.002 
 				7.504,5.429 13.083,11 		"/>

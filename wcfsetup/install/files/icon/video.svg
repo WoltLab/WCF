@@ -20,7 +20,7 @@
 		</style>
 	</defs>
 	
-	<g id="VideoProvider">
+	<g id="VideoProvider" transform="translate(-0.5 0)">
 		<g>
 			<path id="TV2" class="shadow" opacity=".8" d="M12.5,5.061h-9c-1.1,0-2,0.9-2,2v6c0,1.1,0.9,2,2,2h9c1.1,0,2-0.9,2-2v-6
 				C14.5,5.96,13.6,5.061,12.5,5.061z M5.5,13.561v-7l5.923,3.5L5.5,13.561z"/>
