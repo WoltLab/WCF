@@ -609,20 +609,22 @@ WCF.Dropdown = {
 	init: function() {
 		var $userPanelHeight = $('#topMenu').outerHeight();
 		var self = this;
-		$('.dropdownToggle').each(function(index, dropdown) {
-			var $dropdown = $(dropdown);
-			var $toggle = $dropdown.data('toggle');
-			
-			// ignore dropdowns with a missing or invalid target
-			if (!$toggle || !$('#' + $toggle).length) {
+		$('.dropdownToggle').each(function(index, button) {
+			var $button = $(button);
+			if ($button.data('target')) {
 				return true;
 			}
 			
-			var $toggle = $('#' + $toggle);
-			var $containerID = $toggle.wcfIdentify();
+			var $dropdown = $button.parents('.dropdown');
+			if (!$dropdown.length) {
+				// broken dropdown, ignore
+				return true;
+			}
+			
+			var $containerID = $dropdown.wcfIdentify();
 			if (!self._dropdowns[$containerID]) {
-				$dropdown.click($.proxy(self._toggle, self));
-				self._dropdowns[$containerID] = $toggle;
+				$button.click($.proxy(self._toggle, self));
+				self._dropdowns[$containerID] = $dropdown;
 				
 				var $dropdownHeight = $dropdown.outerHeight();
 				var $top = $dropdownHeight + 7;
@@ -632,10 +634,12 @@ WCF.Dropdown = {
 				}
 				
 				// calculate top offset for menu
-				$dropdown.next('.dropdownMenu').css({
+				$button.next('.dropdownMenu').css({
 					top: $top + 'px'
 				});
 			}
+			
+			$button.data('target', $containerID);
 		});
 		
 		if (!this._didInit) {
@@ -671,8 +675,7 @@ WCF.Dropdown = {
 	 * @param	object		event
 	 */
 	_toggle: function(event) {
-		var $target = $('#' + $(event.currentTarget).data('toggle'));
-		var $targetID = $target.wcfIdentify();
+		var $targetID = $(event.currentTarget).data('target');
 		
 		// close all dropdowns
 		for (var $containerID in this._dropdowns) {
@@ -682,6 +685,14 @@ WCF.Dropdown = {
 				this._notifyCallbacks($dropdown, 'close');
 			}
 			else if ($containerID === $targetID) {
+				// fix top offset
+				var $dropdownMenu = $dropdown.find('.dropdownMenu');
+				if ($dropdownMenu.css('top') === '7px') {
+					$dropdownMenu.css({
+						top: $dropdown.outerHeight() + 7
+					});
+				}
+				
 				$dropdown.addClass('dropdownOpen');
 				this._notifyCallbacks($dropdown, 'open');
 				
@@ -5371,7 +5382,7 @@ WCF.InlineEditor = Class.extend({
 		if (!this._dropdowns[$elementID]) {
 			var $trigger = this._getTriggerElement(this._elements[$elementID]).addClass('dropdownToggle').wrap('<span class="dropdown" />');
 			var $dropdown = $trigger.parent('span');
-			$trigger.data('trigger', $dropdown.wcfIdentify());
+			$trigger.data('target', $dropdown.wcfIdentify());
 			this._dropdowns[$elementID] = $('<ul class="dropdownMenu" style="top: ' + ($dropdown.outerHeight() + 14) + 'px;" />').insertAfter($trigger);
 		}
 		this._dropdowns[$elementID].empty();

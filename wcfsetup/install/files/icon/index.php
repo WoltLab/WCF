@@ -3,7 +3,7 @@ $icons = array();
 $files = glob('*.svg');
 if (is_array($files)) {
 	foreach ($files as $file) {
-		if (preg_match('/^(.*)(?<!Colored|Inverse|Green|Red|Yellow).svg$/', $file, $match)) {
+		if (preg_match('/^(.*)(?<!Blue|Colored|Inverse|Green|Red|Yellow).svg$/', $file, $match)) {
 			$icons[] = $match[1];
 		}
 	}

@@ -20,7 +20,7 @@
 		</style>
 	</defs>
 	
-	<g id="IconUpload">
+	<g id="IconUpload" transform="translate(-0.5 0)">
 		<g id="Drive">
 			<path class="shadow" transform="translate(0 -1)" opacity=".8" d="M1.5,4v3h13V4H1.5z M3,6C2.724,6,2.5,5.776,2.5,5.5S2.724,5,3,5s0.5,0.224,0.5,0.5S3.276,6,3,6z
 				 M14.5,3.75h-13L3,2h10L14.5,3.75z"/>
