@@ -198,6 +198,7 @@ class CLIWCF extends WCF {
 		$history = new DatabaseCommandHistory();
 		$history->load();
 		self::getReader()->setHistory($history);
+		if (!self::getArgvParser()->forcelanguage) $this->initLanguage();
 	}
 	
 	/**
