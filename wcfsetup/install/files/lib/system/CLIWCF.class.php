@@ -57,6 +57,7 @@ class CLIWCF extends WCF {
 		$this->initArgv();
 		$this->initPHPLine();
 		$this->initAuth();
+		// TODO: Show whether there are updates available (similar to TTYs at Ubuntu Linux)
 		$this->initCommands();
 	}
 	
@@ -74,7 +75,7 @@ class CLIWCF extends WCF {
 	 */
 	protected function initArgv() {
 		self::$argvParser = new ArgvParser(array(
-			'forcelanguage=s' => 'Sets the language to the specified languagecode and ignores user settings',
+			'language=s' => 'Sets the language to the specified languagecode and ignores user settings',
 			'v' => 'verbose: show more output',
 			'q' => 'quiet: show less output',
 			'h|help' => 'show this help',
@@ -106,10 +107,10 @@ class CLIWCF extends WCF {
 			echo WCF_VERSION."\n";
 			exit;
 		}
-		if (self::getArgvParser()->forcelanguage) {
-			$language = LanguageFactory::getInstance()->getLanguageByCode(self::getArgvParser()->forcelanguage);
+		if (self::getArgvParser()->language) {
+			$language = LanguageFactory::getInstance()->getLanguageByCode(self::getArgvParser()->language);
 			if ($language === null) {
-				echo "Could not find language with code '".self::getArgvParser()->forcelanguage."'\n";
+				echo "Could not find language with code '".self::getArgvParser()->language."'\n";
 				exit;
 			}
 			self::setLanguage($language->languageID);
@@ -195,10 +196,13 @@ class CLIWCF extends WCF {
 			exit;
 		}
 		
+		// initialize history
 		$history = new DatabaseCommandHistory();
 		$history->load();
 		self::getReader()->setHistory($history);
-		if (!self::getArgvParser()->forcelanguage) $this->initLanguage();
+		
+		// initialize language
+		if (!self::getArgvParser()->language) $this->initLanguage();
 	}
 	
 	/**
