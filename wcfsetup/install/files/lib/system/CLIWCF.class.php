@@ -211,8 +211,10 @@ class CLIWCF extends WCF {
 	protected function initCommands() {
 		self::getReader()->addCompleter(new CommandNameCompleter());
 		while (true) {
-			// roll back dangling transactions of the previous command, as they are dangerous in a long living script
-			WCF::getDB()->rollBackTransaction();
+			// roll back open transactions of the previous command, as they are dangerous in a long living script
+			if (WCF::getDB()->rollBackTransaction()) {
+				Log::warn('Previous command had an open transaction.');
+			}
 			$line = StringUtil::trim(self::getReader()->readLine('>'));
 			try {
 				$command = CommandHandler::getCommand($line);
