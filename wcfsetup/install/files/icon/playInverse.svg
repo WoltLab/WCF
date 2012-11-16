@@ -20,7 +20,7 @@
 		</style>
 	</defs>
 	
-	<g id="IconRun">
+	<g id="IconRun" transform="translate(-0.5 0)">
 		<path class="shadow" transform="translate(0 -1)" opacity=".8" d="M13.5,2h-11c-0.552,0-1,0.448-1,1v11c0,0.553,0.448,1,1,1h11c0.553,0,1-0.447,1-1V3
 			C14.5,2.448,14.053,2,13.5,2z M4.5,13.01v-9l7,4.499L4.5,13.01z"/>
 		<path class="surface" transform="translate(0 1)" d="M13.5,1h-11c-0.552,0-1,0.448-1,1v11c0,0.553,0.448,1,1,1h11c0.553,0,1-0.447,1-1V2

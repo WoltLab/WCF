@@ -21,7 +21,7 @@
 		</style>
 	</defs>
 	
-	<g id="IconStar">
+	<g id="IconStar" transform="translate(-0.5 0)">
 		<path class="shadow" opacity=".8" d="M15,6.9658203H9.6533203L8,2L6.3476562,6.9658203H1l4.3266602,3.0693359L3.6738281,15
 			L8,11.9306641L12.3271484,15l-1.6523438-4.9648438L15,6.9658203z"/>
 		<polygon class="surface" points="8,1 9.6533203,5.9658203 15,5.9658203 10.6748047,9.0351562 

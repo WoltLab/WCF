@@ -21,7 +21,7 @@
 	</defs>
 	
 	<g id="IconBookmark">
-		<path class="shadow" opacity=".8" d="M11.5,2h-9c0,0,3,0,3,2v11l4-5l4,5V4.021C13.5,3,12.5,2,11.5,2z"/>
-		<path class="surface" d="M11.5,1h-9c0,0,3,0,3,2v11l4-5l4,5V3.021C13.5,2,12.5,1,11.5,1z"/>
+		<path class="shadow" opacity=".8" transform="translate(-0.5 0)" d="M11.5,2h-9c0,0,3,0,3,2v11l4-5l4,5V4.021C13.5,3,12.5,2,11.5,2z"/>
+		<path class="surface" transform="translate(-0.5 0)" d="M11.5,1h-9c0,0,3,0,3,2v11l4-5l4,5V3.021C13.5,2,12.5,1,11.5,1z"/>
 	</g>
 </svg>

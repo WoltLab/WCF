@@ -103,9 +103,10 @@
 
 /* header logo */
 .logo {
+	margin-bottom: @wcfGapLarge;
+	
 	a {
 		display: block;
-		min-height: 100px;
 		
 		&:hover {
 			text-decoration: none;
@@ -124,8 +125,6 @@
 
 /* main menu */
 .mainMenu {
-	margin-top: @wcfGapMedium;
-	
 	> ul {
 		background-color: @wcfMainMenuBackgroundColor;
 		display: inline-block;
@@ -357,7 +356,7 @@
 .boxHeadline {
 	margin-top: @wcfGapMedium;
 	
-	hgroup {
+	> hgroup {
 		> h1 {
 			color: @wcfHeadlineColor;
 			font-family: @wcfHeadlineFontFamily;
@@ -372,10 +371,17 @@
 			}
 		}
 		
-		> h2, h3 {
+		> h2,
+		> h3 {
 			color: @wcfDimmedColor;
 			font-size: @wcfSmallFontSize;
 		}
+	}
+	
+	> .dataList,
+	> .inlineDataList {
+		color: @wcfDimmedColor;
+		font-size: @wcfSmallFontSize;
 	}
 }
 
@@ -593,6 +599,12 @@
 	}
 }
 
+.smallBreadcrumbs {
+	> li {
+		display: inline;
+		font-size: @wcfSmallFontSize;
+	}
+}
 
 /* tab menus */
 .tabMenu {

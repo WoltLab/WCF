@@ -12,7 +12,7 @@
 
 {include file='header'}
 	
-<div class="success">
+<div class="{if !$status|empty}{@$status}{else}success{/if}">
 	<p>{@$message}</p>
 	<a href="{$url}">{lang}wcf.global.redirect.url{/lang}</a>
 </div>

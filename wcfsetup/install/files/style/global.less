@@ -28,6 +28,17 @@ a {
 		color: @wcfLinkHoverColor;
 		text-decoration: underline;
 	}
+	
+	&.externalURL {
+		background-image: url('../icon/externalURL.svg');
+		background-position: right center;
+		background-repeat: no-repeat;
+		padding-right: 17px;
+		
+		&:hover {
+			background-image: url('../icon/externalURLColored.svg');
+		}
+	}
 }
 
 .footer, .logo {
