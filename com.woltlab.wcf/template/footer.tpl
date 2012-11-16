@@ -5,26 +5,28 @@
 </div>
 
 <footer id="pageFooter" class="layoutFluid footer">
-	<nav id="footerNavigation" class="navigation navigationFooter clearfix">
-		{include file='footerMenu'}
+	<div>
+		<nav id="footerNavigation" class="navigation navigationFooter clearfix">
+			{include file='footerMenu'}
+			
+			<ul class="navigationIcons">
+				<li id="toTopLink" class="toTopLink"><a href="{$__wcf->getAnchor('top')}" title="{lang}wcf.global.scrollUp{/lang}" class="jsTooltip"><img src="{icon}circleArrowUpColored{/icon}" alt="" class="icon16" /> <span class="invisible">{lang}wcf.global.scrollUp{/lang}</span></a></li>
+				{event name='navigationIcons'}
+			</ul>
+			
+			<ul class="navigationItems">
+				{if SHOW_CLOCK}
+					<li title="{lang}wcf.date.timezone.{@'/'|str_replace:'.':$__wcf->getUser()->getTimeZone()->getName()|strtolower}{/lang}"><p><img src="{icon}clockColored{/icon}" alt="" class="icon16" /> <span>{@TIME_NOW|plainTime}</span></p></li>
+				{/if}
+				{event name='navigationItems'}
+			</ul>
+		</nav>
 		
-		<ul class="navigationIcons">
-			<li id="toTopLink" class="toTopLink"><a href="{$__wcf->getAnchor('top')}" title="{lang}wcf.global.scrollUp{/lang}" class="jsTooltip"><img src="{icon}circleArrowUpColored{/icon}" alt="" class="icon16" /> <span class="invisible">{lang}wcf.global.scrollUp{/lang}</span></a></li>
-			{event name='navigationIcons'}
-		</ul>
+		<div class="footerContent">
+			{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
 		
-		<ul class="navigationItems">
-			{if SHOW_CLOCK}
-				<li title="{lang}wcf.date.timezone.{@'/'|str_replace:'.':$__wcf->getUser()->getTimeZone()->getName()|strtolower}{/lang}"><p><img src="{icon}clockColored{/icon}" alt="" class="icon16" /> <span>{@TIME_NOW|plainTime}</span></p></li>
-			{/if}
-			{event name='navigationItems'}
-		</ul>
-	</nav>
-	
-	<div class="footerContent">
-		{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
-	
-		{event name='copyright'}
+			{event name='copyright'}
+		</div>
 	</div>
 </footer>
 
