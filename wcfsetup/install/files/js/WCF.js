@@ -7380,6 +7380,13 @@ $.widget('ui.wcfDialog', {
 			this._container.show().css('opacity', 1.0);
 		}
 		
+		if (this._content.find('.formSubmit').length) {
+			this._content.addClass('dialogForm');
+		}
+		else {
+			this._content.removeClass('dialogForm');
+		}
+		
 		// calculate dimensions
 		var $windowDimensions = $(window).getDimensions();
 		var $containerDimensions = this._container.getDimensions('outer');
