@@ -66,4 +66,31 @@ class CommandHandler {
 		
 		return self::$commands[strtolower($command)];
 	}
+	
+	/**
+	 * Returns a command by the given line.
+	 *
+	 * @param	string	$line
+	 * @return	string
+	 */
+	public static function getCommandName($line) {
+		list($command, $parameters) = explode(' ', $line.' ', 2);
+	
+		if (!isset(self::$commands[strtolower($command)])) throw new IllegalLinkException();
+	
+		return strtolower($command);
+	}
+	
+	/**
+	 * Returns the parameterlist of the given line.
+	 * 
+	 * @param	string	$line
+	 * @return	array<string>
+	 */
+	public static function getParameters($line) {
+		$parameters = explode(' ', $line);
+		array_shift($parameters);
+		
+		return $parameters;
+	}
 }

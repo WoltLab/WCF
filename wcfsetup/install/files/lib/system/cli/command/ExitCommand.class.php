@@ -15,7 +15,7 @@ class ExitCommand implements ICommand {
 	/**
 	 * @see \wcf\system\cli\command\ICommand::execute()
 	 */
-	public function execute() {
+	public function execute(array $parameters) {
 		exit;
 	}
 	

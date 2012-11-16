@@ -15,7 +15,7 @@ interface ICommand {
 	/**
 	 * Executes the command.
 	 */
-	public function execute();
+	public function execute(array $parameters);
 	
 	/**
 	 * Returns true if the user is allowed to use this command.

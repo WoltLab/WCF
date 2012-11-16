@@ -150,7 +150,7 @@ class CLIWCF extends WCF {
 	 * 
 	 * @return phpline\console\ConsoleReader
 	 */
-	public function getReader() {
+	public static function getReader() {
 		return self::$consoleReader;
 	}
 	
@@ -159,7 +159,7 @@ class CLIWCF extends WCF {
 	 * 
 	 * @return phpline\Terminal
 	 */
-	public function getTerminal() {
+	public static function getTerminal() {
 		return self::getReader()->getTerminal();
 	}
 	
@@ -169,7 +169,7 @@ class CLIWCF extends WCF {
 	 * @param	string	$string
 	 * @return	string
 	 */
-	public function convertEntities($string) {
+	public static function convertEntities($string) {
 		return Regex::compile('&[lrb]dquo;')->replace($string, '"');
 	}
 	
@@ -211,15 +211,61 @@ class CLIWCF extends WCF {
 	protected function initCommands() {
 		self::getReader()->addCompleter(new CommandNameCompleter());
 		while (true) {
+			// roll back dangling transactions of the previous command, as they are dangerous in a long living script
+			WCF::getDB()->rollBackTransaction();
 			$line = StringUtil::trim(self::getReader()->readLine('>'));
 			try {
 				$command = CommandHandler::getCommand($line);
-				$command->execute();
+				$command->execute(CommandHandler::getParameters($line));
 			}
 			catch (IllegalLinkException $e) {
 				self::getReader()->println("Command not found: ".$line);
 				continue;
 			}
+			catch (ArgvException $e) {
+				echo $e->getMessage()."\n";
+				echo str_replace($_SERVER['argv'][0], CommandHandler::getCommandName($line), $e->getUsageMessage());
+				continue;
+			}
 		}
+	}
+	
+	/**
+	 * Generates a table.
+	 */
+	public static function generateTable(array $table) {
+		$columnSize = array();
+		foreach ($table as $row) {
+			$i = 0;
+			foreach ($row as $column) {
+				if (!isset($columnSize[$i])) $columnSize[$i] = 0;
+				$columnSize[$i] = max($columnSize[$i], StringUtil::length($column));
+				$i++;
+			}
+		}
+		
+		$result = '';
+		$result .= '+';
+		foreach ($columnSize as $column) {
+			$result .= str_repeat('-', $column + 2).'+';
+		}
+		$result .= "\n";
+		
+		foreach ($table as $row) {
+			$result .= "|";
+			$i = 0;
+			foreach ($row as $column) {
+				$result .= ' '.StringUtil::pad($column, $columnSize[$i], ' ', (is_numeric($column) ? STR_PAD_LEFT : STR_PAD_RIGHT)).' |';
+				$i++;
+			}
+			
+			$result .= "\n+";
+			foreach ($columnSize as $column) {
+				$result .= str_repeat('-', $column + 2).'+';
+			}
+			$result .= "\n";
+		}
+		
+		return $result;
 	}
 }

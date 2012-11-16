@@ -396,6 +396,14 @@ final class StringUtil {
 	}
 	
 	/**
+	 * Alias to php str_pad function with multibyte support.
+	 */
+	public static function pad($input, $padLength, $padString=' ', $padType=STR_PAD_RIGHT) {
+		$additionalPadding = strlen($input) - self::length($input);
+		return str_pad($input, $padLength + $additionalPadding, $padString, $padType);
+	}
+	
+	/**
 	 * Unescapes escaped characters in a string.
 	 * 
 	 * @param	string		$string
