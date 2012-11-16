@@ -32,12 +32,6 @@ class UserOption extends Option {
 	public $optionValue = '';
 	
 	/**
-	 * output data
-	 * @var	array
-	 */
-	public $outputData = array();
-	
-	/**
 	 * user object
 	 * @var	wcf\data\user\User
 	 */

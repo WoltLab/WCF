@@ -4,6 +4,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObject;
 use wcf\system\cache\CacheHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -352,5 +353,19 @@ final class User extends DatabaseObject implements IRouteController {
 	 */
 	public function getTitle() {
 		return $this->username;
+	}
+	
+	/**
+	 * Returns the language of this user.
+	 *
+	 * @return	wcf\data\language\Language
+	 */
+	public function getLanguage() {
+		$language = LanguageFactory::getInstance()->getLanguage($this->languageID);
+		if ($language === null) {
+			$language = LanguageFactory::getInstance()->getLanguage(LanguageFactory::getInstance()->getDefaultLanguageID());
+		}
+		
+		return $language;
 	}
 }

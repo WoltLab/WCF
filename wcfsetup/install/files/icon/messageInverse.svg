@@ -20,7 +20,7 @@
 		</style>
 	</defs>
 	
-	<g id="IconPrivateMessage1">
+	<g id="IconPrivateMessage1" transform="translate(-0.5 0.5)">
 		<g>
 			<path id="Frame2" class="shadow" transform="translate(0 -1)" opacity=".8" d="M13.5,3.405h-11c-0.594,0-1,0.484-1,1v8c0,0.5,0.453,1,1,1h11c0.547,0,1-0.5,1-1v-8
 				C14.5,3.89,14.094,3.405,13.5,3.405z M12.5,12.405h-9c-0.984,0-1-0.016-1-1v-7h11v7C13.5,12.39,13.484,12.405,12.5,12.405z"/>

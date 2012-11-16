@@ -35,6 +35,7 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin {
 		}
 		
 		if (isset($tagArgs['encode']) && !$tagArgs['encode']) {
+			unset($tagArgs['encode']);
 			return LinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $blockContent);
 		}
 		

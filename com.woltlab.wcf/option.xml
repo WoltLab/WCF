@@ -78,6 +78,10 @@
 			<category name="user">
 				<showorder>3</showorder>
 			</category>
+			
+			<category name="user.general">
+				<parent>user</parent>
+			</category>
 			<!-- /user -->
 			
 			<!-- security -->
@@ -352,6 +356,14 @@ no:!cache_source_memcache_host,!cache_source_memcache_use_pconnect]]></enableopt
 				<optiontype>boolean</optiontype>
 			</option>
 			<!-- /general.cache -->
+			
+			<!-- user -->
+			<option name="external_link_rel_nofollow">
+				<categoryname>user.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<!-- /user -->
 		</options>
 	</import>
 </data>

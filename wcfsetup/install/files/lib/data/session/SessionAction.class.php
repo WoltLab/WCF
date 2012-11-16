@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\session;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\session\SessionHandler;
+use wcf\system\WCF;
 
 /**
  * Executes session-related actions.
@@ -14,7 +16,29 @@ use wcf\data\AbstractDatabaseObjectAction;
  */
 class SessionAction extends AbstractDatabaseObjectAction {
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 */
+	protected $allowGuestAccess = array('keepAlive');
+	
+	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\session\SessionEditor';
+	
+	/**
+	 * Does nothing.
+	 */
+	public function validateKeepAlive() { }
+	
+	/**
+	 * Updates session's last activity time to prevent it from expiring.
+	 */
+	public function keepAlive() {
+		// ignore sessions created by this request
+		if (WCF::getSession()->lastActivityTime == TIME_NOW) {
+			return;
+		}
+		
+		SessionHandler::getInstance()->keepAlive();
+	}
 }

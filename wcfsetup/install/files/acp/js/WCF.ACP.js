@@ -206,8 +206,7 @@ WCF.ACP.Package = {};
  * 
  * @param	integer		pages
  */
-WCF.ACP.Package.List = function(pages) { this.init(pages); };
-WCF.ACP.Package.List.prototype = {
+WCF.ACP.Package.List = Class.extend({
 	/**
 	 * page cache
 	 * @var	object
@@ -309,32 +308,23 @@ WCF.ACP.Package.List.prototype = {
 		this._pages[data.returnValues.activePage] = data.returnValues.template;
 		this._loadPage(null, { activePage: data.returnValues.activePage });
 	}
-};
+});
 
 /**
- * Handles package installation dialog.
+ * Provides the package installation.
  * 
- * @param	string		actionName
  * @param	integer		queueID
- * @param	boolean		initialize
  */
-WCF.ACP.Package.Installation = function(actionName, queueID, initialize) { this.init(actionName, queueID, initialize); };
-WCF.ACP.Package.Installation.prototype = {
+WCF.ACP.Package.Installation = Class.extend({
 	/**
 	 * package installation type
 	 * @var	string
 	 */
-	_actionName: '',
+	_actionName: 'InstallPackage',
 	
 	/**
-	 * dialog api
-	 * @var	$.ui.wcfDialog
-	 */
-	_api: null,
-	
-	/**
-	 * package installation dialog
-	 * @var	object
+	 * dialog object
+	 * @var	jQuery
 	 */
 	_dialog: null,
 	
@@ -345,66 +335,88 @@ WCF.ACP.Package.Installation.prototype = {
 	_proxy: null,
 	
 	/**
-	 * queue id
+	 * package installation queue id
 	 * @var	integer
 	 */
 	_queueID: 0,
 	
 	/**
-	 * render dialog
-	 * @var	boolean
-	 */
-	_shouldRender: false,
-	
-	/**
-	 * Initializes package installation.
+	 * Initializes the WCF.ACP.Package.Installation class.
 	 * 
-	 * @param	string		actionName
 	 * @param	integer		queueID
-	 * @param	boolean		initialize
 	 */
-	init: function(actionName, queueID, initialize) {
-		this._actionName = WCF.String.ucfirst(actionName) + 'Package';
+	init: function(queueID) {
+		this._actionName = 'InstallPackage';
 		this._queueID = queueID;
+		
 		this._proxy = new WCF.Action.Proxy({
+			failure: $.proxy(this._failure, this),
 			showLoadingOverlay: false,
-			success: $.proxy(this._handleResponse, this),
+			success: $.proxy(this._success, this),
 			url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
 		
-		if (initialize) {
-			$('#submitButton').click($.proxy(function(event) {
-				this.prepareInstallation();
-				return false;
-			}, this));
-		}
+		this._init();
+	},
+	
+	/**
+	 * Initializes the package installation.
+	 */
+	_init: function() {
+		$('#submitButton').click($.proxy(this.prepareInstallation, this));
+	},
+	
+	/**
+	 * Handles erroneous AJAX requests.
+	 * 
+	 * @param	jQuery		jqXHR
+	 * @param	string		textStatus
+	 * @param	string		errorThrown
+	 * @param	string		responseText
+	 */
+	_failure: function(jqXHR, textStatus, errorThrown, responseText) {
+		this._purgeTemplateContent(function() {
+			
+		});
 	},
 	
 	/**
 	 * Prepares installation dialog.
 	 */
 	prepareInstallation: function() {
-		var $dialog = WCF.showAJAXDialog('packageInstallationDialog', true, {
+		WCF.showAJAXDialog('packageInstallationDialog', true, {
 			ajax: true,
 			closable: false,
-			data: { queueID: this._queueID, step: 'prepare' },
+			data: this._getParameters(),
 			showLoadingOverlay: false,
-			success: $.proxy(this._handleResponse, this),
+			success: $.proxy(this._success, this),
 			title: WCF.Language.get('wcf.acp.package.installation.title'),
 			url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
-		
-		this._api = $dialog.data('wcfDialog');
 	},
 	
 	/**
-	 * Executes response instructions.
+	 * Returns parameters to prepare installation.
+	 * 
+	 * @return	object
+	 */
+	_getParameters: function() {
+		return {
+			queueID: this._queueID,
+			step: 'prepare'
+		};
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
 	 * 
 	 * @param	object		data
 	 * @param	string		textStatus
 	 * @param	jQuery		jqXHR
 	 */
-	_handleResponse: function(data, textStatus, jqXHR) {
+	_success: function(data, textStatus, jqXHR) {
+		var $render = false;
+		
 		if (this._dialog == null) {
 			this._dialog = $('#packageInstallationDialog');
 		}
@@ -426,17 +438,14 @@ WCF.ACP.Package.Installation.prototype = {
 		}
 		
 		// handle success
-		if (data.step == 'success') {
+		if (data.step === 'success') {
 			this._purgeTemplateContent($.proxy(function() {
-				var $id = WCF.getRandomID();
-				$('#packageInstallationInnerContent').append('<div class="formSubmit"><input type="button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" /></div>');
-				
-				$('#' + $id).click(function() {
-					window.location.href = data.redirectLocation;
-				});
+				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
+				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click(function() { window.location = data.redirectLocation; });
 				
 				$('#packageInstallationInnerContentContainer').show();
-				this._api.render();
+				
+				this._dialog.wcfDialog('render');
 			}, this));
 			
 			return;
@@ -445,38 +454,35 @@ WCF.ACP.Package.Installation.prototype = {
 		// update template
 		if (data.template && !data.ignoreTemplate) {
 			this._dialog.html(data.template);
-			this._shouldRender = true;
+			$render = true;
 		}
 		
 		// handle inner template
 		if (data.innerTemplate) {
 			var self = this;
-			
 			$('#packageInstallationInnerContent').html(data.innerTemplate).find('input').keyup(function(event) {
 				if (event.keyCode === 13) { // Enter
-					self._submitDialog(data);
+					self._submit(data);
 				}
 			});
 			
 			// create button to handle next step
 			if (data.step && data.node) {
-				var $id = WCF.getRandomID();
-				$('#packageInstallationInnerContent').append('<div class="formSubmit"><input type="button" id="' + $id + '" value="' + WCF.Language.get('wcf.global.button.next') + '" /></div>');
-				
-				$('#' + $id).click(function() { self._submitDialog(data); }); 
+				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
+				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click($.proxy(function() { this._submit(data); }, this)); 
 			}
 			
 			$('#packageInstallationInnerContentContainer').show();
 			
-			this._api.render();
+			this._dialog.wcfDialog('render');
 			return;
 		}
 		
 		// purge content
 		this._purgeTemplateContent($.proxy(function() {
 			// render container
-			if (this._shouldRender) {
-				this._api.render();
+			if ($render) {
+				this._dialog.wcfDialog('render');
 			}
 			
 			// execute next step
@@ -491,7 +497,7 @@ WCF.ACP.Package.Installation.prototype = {
 	 * 
 	 * @param	object		data
 	 */
-	_submitDialog: function(data) {
+	_submit: function(data) {
 		// collect form values
 		var $additionalData = {};
 		$('#packageInstallationInnerContent input').each(function(index, inputElement) {
@@ -547,77 +553,80 @@ WCF.ACP.Package.Installation.prototype = {
 		this._proxy.setOption('data', $data);
 		this._proxy.sendRequest();
 	}
-};
+});
 
 /**
- * Handles package uninstallation.
+ * Provides the package uninstallation.
  * 
  * @param	jQuery		elements
  */
-WCF.ACP.Package.Uninstallation = function(elements) { this.init(elements); };
-WCF.ACP.Package.Uninstallation.prototype = {
+WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 	/**
-	 * WCF.ACP.Package.Installation object
-	 * @var	WCF.ACP.Package.Installation
+	 * list of uninstallation buttons
+	 * @var	jQuery
 	 */
-	_installation: null,
+	_elements: null,
 	
 	/**
-	 * Initializes package uninstallation.
+	 * current package id
+	 * @var	integer
+	 */
+	_packageID: 0,
+	
+	/**
+	 * Initializes the WCF.ACP.Package.Uninstallation class.
 	 * 
 	 * @param	jQuery		elements
 	 */
 	init: function(elements) {
-		if (elements.length == 0) return;
+		this._actionName = 'UninstallPackage';
+		this._elements = elements;
+		this._packageID = 0;
 		
-		// bind event listener
-		elements.each($.proxy(function(index, element) {
-			$(element).click($.proxy(this._prepareQueue, this));
-		}, this));
+		if (this._elements.length) {
+			this._super(0);
+		}
 	},
 	
 	/**
-	 * Prepares a new package uninstallation process.
+	 * @see	WCF.ACP.Package.Installation.init()
+	 */
+	_init: function() {
+		this._elements.click($.proxy(this._prepareQueue, this));
+	},
+	
+	/**
+	 * Prepares a new package uninstallation queue.
 	 * 
 	 * @param	object		event
 	 */
 	_prepareQueue: function(event) {
 		var $element = $(event.target);
 		
-		WCF.System.Confirmation.show($element.data('confirmMessage'), $.proxy(this._createQueue, this), { packageID: $element.data('objectID') });
+		var self = this;
+		WCF.System.Confirmation.show($element.data('confirmMessage'), function(action) {
+			if (action === 'confirm') {
+				self._packageID = $element.data('objectID');
+				self.prepareInstallation();
+			}
+		});
 	},
 	
 	/**
-	 * Initializes a new package uninstallation process.
-	 * 
-	 * @param	string		action
-	 * @param	object		parameters
+	 * @see	WCF.ACP.Package.Installation._getParameters()
 	 */
-	_createQueue: function(action, parameters) {
-		if (action !== 'confirm') {
-			return;
-		}
-		
-		this._installation = new WCF.ACP.Package.Installation('uninstall', 0, false);
-		
-		// initialize dialog
-		var $dialog = WCF.showAJAXDialog('packageInstallationDialog', true, {
-			ajax: true,
-			closable: false,
-			data: { packageID: parameters.packageID, step: 'prepare' },
-			success: $.proxy(this._installation._handleResponse, this._installation),
-			title: 'wcf.acp.package.uninstall.title',
-			url: 'index.php/UninstallPackage/?t=' + SECURITY_TOKEN + SID_ARG_2ND
-		});
-		this._installation._api = $dialog.data('wcfDialog');
+	_getParameters: function() {
+		return {
+			packageID: this._packageID,
+			step: 'prepare'
+		};
 	}
-};
+});
 
 /**
  * Handles option selection.
  */
-WCF.ACP.Options = function() { this.init(); };
-WCF.ACP.Options.prototype = {
+WCF.ACP.Options = Class.extend({
 	/**
 	 * Initializes options.
 	 */
@@ -740,7 +749,7 @@ WCF.ACP.Options.prototype = {
 			}
 		}
 	}
-};
+});
 
 /**
  * Single-option handling for user group options.

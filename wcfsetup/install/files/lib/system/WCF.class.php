@@ -432,6 +432,9 @@ class WCF {
 			foreach ($loadedApplications as $application) {
 				$application->__run();
 			}
+			
+			// refresh the session 1 minute before it expires
+			self::getTPL()->assign('__sessionKeepAlive', (SESSION_TIMEOUT - 60));
 		}
 	}
 	

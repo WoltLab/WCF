@@ -963,7 +963,7 @@ class TemplateScriptingCompiler {
 				$result .= $this->compileVariableTag($value, false);
 			}
 			catch (SystemException $e) {
-				throw new SystemException($this->formatSyntaxError('syntax error in tag {'.($elseif ? 'elseif' : 'if').'}', $this->currentIdentifier, $this->currentLineNo));
+				throw new SystemException($this->formatSyntaxError('syntax error in tag {'.($elseif ? 'elseif' : 'if').'}', $this->currentIdentifier, $this->currentLineNo), 0, nl2br($e));
 			}
 			
 			if ($leftParenthesis < $rightParenthesis) {
