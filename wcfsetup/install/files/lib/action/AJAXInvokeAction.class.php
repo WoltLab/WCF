@@ -1,5 +1,6 @@
 <?php
 namespace wcf\action;
+use wcf\data\IStorableObject;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -45,7 +46,6 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 */
 	public $inDebugMode = false;
 	
-
 	/**
 	 * results of the executed action
 	 * @var	mixed
@@ -124,7 +124,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 			throw new UserInputException('actionName');
 		}
 		
-		$this->response = $this->actionObject->{$this->actionName}();
+		$this->response = $this->getData($this->actionObject->{$this->actionName}());
 	}
 	
 	/**
@@ -221,5 +221,24 @@ class AJAXInvokeAction extends AbstractSecureAction {
 		$_POST = $postVars;
 		
 		return $actionObject;
+	}
+	
+	/**
+	 * Gets the values of object data variables
+	 * 
+	 * @param	mixed		$response
+	 * @return	mixed
+	 */
+	protected function getData($response) {
+		if ($response instanceof IStorableObject) {
+			return $response->getData();
+		}
+		if (is_array($response)) {
+			foreach ($response as &$object) {
+				$object = $this->getData($object);
+			}
+			unset($object);
+		}
+		return $response;
 	}
 }
