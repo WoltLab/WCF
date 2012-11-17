@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de" languagename="Deutsch" countrycode="de">
 	<category name="wcf.acp">
-		<item name="wcf.acp"><![CDATA[Administration]]></item>
+		<item name="wcf.acp"><![CDATA[Administrationsoberfläche]]></item>
 	</category>
 	
 	<category name="wcf.acp.application">
@@ -703,6 +703,7 @@
 		<item name="wcf.global.form.error"><![CDATA[Ihre Angaben sind ungültig. Bitte überprüfen Sie die markierten Eingabefelder.]]></item>
 		<item name="wcf.global.form.error.empty"><![CDATA[Bitte füllen Sie dieses Eingabefeld aus.]]></item>
 		<item name="wcf.global.form.error.multilingual"><![CDATA[Bitte füllen Sie dieses Eingabefeld für jede Sprache aus.]]></item>
+		<item name="wcf.global.language.noSelection"><![CDATA[Keine Auswahl]]></item>
 		<item name="wcf.global.loading"><![CDATA[Lädt …]]></item>
 		<item name="wcf.global.locale.unix"><![CDATA[de_DE]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.locale.win"><![CDATA[deu_deu]]></item> <!-- system variable; do not translate -->

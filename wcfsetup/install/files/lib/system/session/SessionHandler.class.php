@@ -537,6 +537,19 @@ class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Updates last activity time to protect session from expiring.
+	 */
+	public function keepAlive() {
+		$this->disableUpdate();
+		
+		// update last activity time
+		$sessionEditor = new $this->sessionEditorClassName($this->session);
+		$sessionEditor->update(array(
+			'lastActivityTime' => TIME_NOW
+		));
+	}
+	
+	/**
 	 * Deletes this session and it's related data.
 	 */
 	public function delete() {

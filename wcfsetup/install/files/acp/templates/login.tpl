@@ -15,7 +15,7 @@
 
 <header class="boxHeadline">
 	<hgroup>
-		<h1>{@$pageTitle}</h1>
+		<h1>{@$pageTitle|language}</h1>
 	</hgroup>
 </header>
 

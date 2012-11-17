@@ -8,6 +8,10 @@ Version notes
 
 The currently available source code represents an early alpha-version of WCF, even though it may be installable, we cannot guarantee a working installation at any time. You MUST NOT install and/or use WCF 2.0 in a production environment.
 
+**COMPLETE FEATURE FREEZE**
+New pull requests or suggestions will be denied (or delayed until WCF 2.1); API changes are no longer allowed unless they solve an already existing issue.
+This applies to all packages belonging to Community Framework.
+
 Contribution
 ------------
 

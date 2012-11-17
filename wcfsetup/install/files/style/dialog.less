@@ -57,14 +57,42 @@
 	color: @wcfColor;
 	overflow: auto;
 	padding: 10px 20px 20px;
-
-	.borderRadius(0, 7px);
+	
+	&.dialogForm {
+		margin-bottom: 49px;
+	}
+	
+	&:not(.dialogForm) {
+		.borderRadius(0, 7px);
+	}
 	
 	&.overlayLoading {
 		background-image: url(../icon/spinner.svg);
 		background-position: center center;
 		background-repeat: no-repeat;
 		background-size: 32px;
+	}
+	
+	dl:not(.plain) {
+		> dt {
+			width: 170px;
+		}
+		
+		> dd {
+			margin-left: 190px;
+		}
+	}
+	
+	.formSubmit {
+		background-color: @wcfContainerAccentBackgroundColor;
+		border-top: 1px solid @wcfContainerBorderColor;
+		bottom: 0;
+		left: 0;
+		padding: 10px 0;
+		position: absolute;
+		width: 100%;
+		
+		.borderRadius(0, 0, 7px, 7px);
 	}
 }
 

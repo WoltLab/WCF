@@ -20,7 +20,7 @@
 		</style>
 	</defs>
 	
-	<g id="ArrowLeft">
+	<g id="ArrowLeft" transform="translate(-0.5 0)">
 		<polygon class="shadow" transform="translate(0 -1)" opacity=".8" points="13.5,15 2.5,8.499 13.5,2 	"/>
 		<polygon class="surface" transform="translate(0 1)" points="13.5,14 2.5,7.499 13.5,1 	"/>
 	</g>

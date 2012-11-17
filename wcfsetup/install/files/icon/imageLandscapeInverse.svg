@@ -22,15 +22,15 @@
 	
 	<g id="IconImageLandscape">
 		<g>
-			<polygon id="Landscape2" class="shadow" transform="translate(0 -1)" opacity=".8" points="3,12 13,12 10.5,9 9,10 6.5,6 		"/>
-			<circle id="Sun2" class="shadow" transform="translate(0 -1)" opacity=".8" cx="11.5" cy="6" r="1"/>
-			<path id="Frame2" class="shadow" transform="translate(0 -1)" opacity=".8" d="M13.5,3h-11c-0.594,0-1,0.483-1,0.998v9.004C1.5,13.501,1.953,14,2.5,14h11
+			<polygon id="Landscape2" class="shadow" transform="translate(-0.5 -1)" opacity=".8" points="3,12 13,12 10.5,9 9,10 6.5,6 		"/>
+			<circle id="Sun2" class="shadow" transform="translate(-0.5 -1)" opacity=".8" cx="11.5" cy="6" r="1"/>
+			<path id="Frame2" class="shadow" transform="translate(-0.5 -1)" opacity=".8" d="M13.5,3h-11c-0.594,0-1,0.483-1,0.998v9.004C1.5,13.501,1.953,14,2.5,14h11
 				c0.547,0,1-0.499,1-0.998V3.998C14.5,3.483,14.094,3,13.5,3z M13.5,13h-11V3.998h11V13z"/>
 		</g>
 		<g>
-			<polygon id="Landscape1" class="surface" transform="translate(0 1)" points="3,11 13,11 10.5,8 9,9 6.5,5 		"/>
-			<circle id="Sun1" class="surface" transform="translate(0 1)" cx="11.5" cy="5" r="1"/>
-			<path id="Frame1" class="surface" transform="translate(0 1)" d="M13.5,2h-11c-0.594,0-1,0.483-1,0.998v9.004C1.5,12.501,1.953,13,2.5,13h11
+			<polygon id="Landscape1" class="surface" transform="translate(-0.5 1)" points="3,11 13,11 10.5,8 9,9 6.5,5 		"/>
+			<circle id="Sun1" class="surface" transform="translate(-0.5 1)" cx="11.5" cy="5" r="1"/>
+			<path id="Frame1" class="surface" transform="translate(-0.5 1)" d="M13.5,2h-11c-0.594,0-1,0.483-1,0.998v9.004C1.5,12.501,1.953,13,2.5,13h11
 				c0.547,0,1-0.499,1-0.998V2.998C14.5,2.483,14.094,2,13.5,2z M2.5,12V2.998h11V12H2.5z"/>
 		</g>
 	</g>

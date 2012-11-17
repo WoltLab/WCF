@@ -20,7 +20,7 @@
 		</style>
 	</defs>
 	
-	<g id="IconNote">
+	<g id="IconNote" transform="translate(-0.5 0.5)">
 		<g>
 			<path id="Note2" class="shadow" transform="translate(0 -1)" opacity=".8" d="M12.478,4.5h-9c-0.984,0-0.984,0.031-0.984,0.984v6.031c0,0.984,0,0.984,0.984,0.984h6.076
 				l3.939-3.96V5.5C13.493,4.531,13.493,4.5,12.478,4.5z M13.491,3.5c0.471,0,1,0.501,1,1l0.002,4l-5.002,5H2.493

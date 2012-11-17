@@ -3,7 +3,6 @@ namespace wcf\data\user\option;
 use wcf\data\user\User;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\exception\SystemException;
-use wcf\system\option\user\IUserOptionOutputContactInformation;
 use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
@@ -36,12 +35,6 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	public $optionValue = '';
 	
 	/**
-	 * user option output data
-	 * @var	array
-	 */
-	public $outputData = array();
-	
-	/**
 	 * Sets option values for a specific user.
 	 * 
 	 * @param	wcf\data\user\User	$user
@@ -54,10 +47,6 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 		// use output class
 		if ($this->outputClass) {
 			$outputObj = $this->getOutputObject();
-			
-			if ($outputObj instanceof IUserOptionOutputContactInformation) {
-				$this->outputData = $outputObj->getOutputData($user, $this->getDecoratedObject(), $optionValue);
-			}
 			
 			if ($outputType == 'normal') $this->optionValue = $outputObj->getOutput($user, $this->getDecoratedObject(), $optionValue);
 			else if ($outputType == 'short') $this->optionValue = $outputObj->getShortOutput($user, $this->getDecoratedObject(), $optionValue);
