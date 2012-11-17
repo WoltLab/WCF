@@ -39,7 +39,7 @@
 })();
 
 /**
- * Simple JavaScript Inheritancewc
+ * Simple JavaScript Inheritance
  * By John Resig http://ejohn.org/
  * MIT Licensed.
  */
