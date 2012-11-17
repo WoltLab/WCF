@@ -39,7 +39,7 @@
 })();
 
 /**
- * Simple JavaScript Inheritance
+ * Simple JavaScript Inheritancewc
  * By John Resig http://ejohn.org/
  * MIT Licensed.
  */
@@ -7209,19 +7209,14 @@ $.widget('ui.wcfDialog', {
 				
 				if (this.options.modal) {
 					this._overlay.click($.proxy(this.close, this));
-					$(document).keyup($.proxy(function(event) {
-						if (event.keyCode && event.keyCode === $.ui.keyCode.ESCAPE) {
-							this.close();
-							event.preventDefault();
-						}
-					}, this));
+					$(document).keyup($.proxy(this._keyup, this));
 				}
 			} else {
 				this._closeButton.hide();
 				
 				if (this.options.modal) {
 					this._overlay.unbind('click', $.proxy(this.close, this));
-					$(document).unbind('keyup', $.proxy(this.close, this));
+					$(document).unbind('keyup', $.proxy(this._keyup, this));
 				}
 			}
 		}
@@ -7342,6 +7337,16 @@ $.widget('ui.wcfDialog', {
 		
 		if (this.options.onClose !== null) {
 			this.options.onClose();
+		}
+	},
+	
+	/**
+	 * Handels a keyup-event on the document.
+	 */
+	_keyup: function(event) {
+		if (event.keyCode && event.keyCode === $.ui.keyCode.ESCAPE) {
+			this.close();
+			event.preventDefault();
 		}
 	},
 	
