@@ -175,6 +175,7 @@
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Users]]></item>
 		<item name="wcf.acp.menu.link.user.massProcessing"><![CDATA[Bulk processing of users]]></item>
 		<item name="wcf.acp.menu.link.user.search"><![CDATA[Search for users]]></item>
+		<item name="wcf.acp.menu.link.community"><![CDATA[Community]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">

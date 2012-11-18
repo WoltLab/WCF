@@ -213,6 +213,7 @@
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.massProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
 		<item name="wcf.acp.menu.link.user.search"><![CDATA[Benutzer suchen]]></item>
+		<item name="wcf.acp.menu.link.community"><![CDATA[Community]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
