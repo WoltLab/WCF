@@ -200,13 +200,13 @@
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcache"><![CDATA[Memcache]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcache.description"><![CDATA[Memcache stores data in the memory that is often accessed. This may reduce the database load dramatically. Read more about the memcache on the following site: <a href="http://memcached.org/" class="wcf-externalURL">memcached.org</a>.]]></item>
-		<item name="wcf.acp.option.category.general.date"><![CDATA[Date and time]]></item>
-		<item name="wcf.acp.option.category.general.image"><![CDATA[Graphics]]></item>
-		<item name="wcf.acp.option.category.general.http"><![CDATA[HTTP]]></item>
-		<item name="wcf.acp.option.category.general.http.cookie"><![CDATA[Cookies]]></item>
-		<item name="wcf.acp.option.category.general.http.http"><![CDATA[HTTP]]></item>
-		<item name="wcf.acp.option.category.general.http.proxy"><![CDATA[Proxy server]]></item>
-		<item name="wcf.acp.option.category.general.http.proxy.description"><![CDATA[You can configure optional proxy servers for connections to external servers.]]></item>
+		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Date and time]]></item>
+		<item name="wcf.acp.option.category.general.system.image"><![CDATA[Graphics]]></item>
+		<item name="wcf.acp.option.category.general.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.option.category.general.system.cookie"><![CDATA[Cookies]]></item>
+		<item name="wcf.acp.option.category.general.system.http"><![CDATA[HTTP]]></item>
+		<item name="wcf.acp.option.category.general.system.proxy"><![CDATA[Proxy server]]></item>
+		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[You can configure optional proxy servers for connections to external servers.]]></item>
 		<item name="wcf.acp.option.category.general.mail"><![CDATA[E-mails]]></item>
 		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Transmission]]></item>
