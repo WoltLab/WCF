@@ -42,6 +42,15 @@ class ObjectType extends ProcessibleDatabaseObject {
 	}
 	
 	/**
+	 * Destroies processor if attempting to serialize.
+	 */
+	public final function __sleep() {
+		if ($this->processor !== null) {
+			$this->processor = null;
+		}
+	}
+	
+	/**
 	 * @see	wcf\data\DatabaseObject::handleData()
 	 */
 	protected function handleData($data) {
