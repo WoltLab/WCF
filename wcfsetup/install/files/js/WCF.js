@@ -2613,9 +2613,11 @@ WCF.MultipleLanguageInput = Class.extend({
 	
 	/**
 	 * Disables language selection for current element.
+	 * 
+	 * @param	object		event
 	 */
-	_disable: function() {
-		if (this._forceSelection || !this._list) {
+	_disable: function(event) {
+		if (this._forceSelection || !this._list || event === undefined) {
 			return;
 		}
 		
