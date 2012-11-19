@@ -42,12 +42,14 @@ class ObjectType extends ProcessibleDatabaseObject {
 	}
 	
 	/**
-	 * Destroies processor if attempting to serialize.
+	 * Returnes the names of proporties that should be serialized.
+	 * 
+	 * @return	array<string>
 	 */
 	public final function __sleep() {
-		if ($this->processor !== null) {
-			$this->processor = null;
-		}
+		// 'processor' isn't returned since it can be an instance of
+		// wcf\system\SingletonFactory which may not be serialized
+		return array('data');
 	}
 	
 	/**
