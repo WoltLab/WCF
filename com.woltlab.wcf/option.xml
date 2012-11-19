@@ -42,7 +42,7 @@
 					<category name="general.system.http">
 						<parent>general.system</parent>
 					</category>
-					<category name="ggeneral.system.proxy">
+					<category name="general.system.proxy">
 						<parent>general.system</parent>
 					</category>
 					<category name="general.system.image">
@@ -166,6 +166,16 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>text</optiontype>
 			</option>
+			<option name="show_version_number">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="show_clock">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<!-- /general.page -->
 			
 			<!-- offline -->
@@ -276,11 +286,6 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<categoryname>general.system.date</categoryname>
 				<optiontype>timezone</optiontype>
 				<defaultvalue>Europe/London</defaultvalue>
-			</option>
-			<option name="show_clock">
-				<categoryname>general.system.date</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /general.system.date -->
 			
