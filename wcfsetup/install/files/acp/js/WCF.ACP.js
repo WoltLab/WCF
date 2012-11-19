@@ -314,6 +314,7 @@ WCF.ACP.Package.List = Class.extend({
  * Provides the package installation.
  * 
  * @param	integer		queueID
+ * @param	string		actionName
  */
 WCF.ACP.Package.Installation = Class.extend({
 	/**
@@ -344,9 +345,10 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * Initializes the WCF.ACP.Package.Installation class.
 	 * 
 	 * @param	integer		queueID
+	 * @param	string		actionName
 	 */
-	init: function(queueID) {
-		this._actionName = 'InstallPackage';
+	init: function(queueID, actionName) {
+		this._actionName = (actionName) ? actionName : 'InstallPackage';
 		this._queueID = queueID;
 		
 		this._proxy = new WCF.Action.Proxy({
@@ -579,12 +581,11 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 	 * @param	jQuery		elements
 	 */
 	init: function(elements) {
-		this._actionName = 'UninstallPackage';
 		this._elements = elements;
 		this._packageID = 0;
 		
 		if (this._elements.length) {
-			this._super(0);
+			this._super(0, 'UninstallPackage');
 		}
 	},
 	

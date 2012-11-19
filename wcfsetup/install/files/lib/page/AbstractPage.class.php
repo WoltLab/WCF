@@ -179,6 +179,9 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 			}
 				
 			$this->templateName = lcfirst($className);
+			
+			// assign guessed template name
+			WCF::getTPL()->assign('templateName', $this->templateName);
 		}
 		
 		if ($this->useTemplate) {

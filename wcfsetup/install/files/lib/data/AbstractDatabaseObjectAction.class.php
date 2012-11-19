@@ -381,7 +381,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	boolean		$allowEmpty
 	 * @param	string		$arrayIndex
 	 */
-	protected function readInteger($variableName, $allowEmpty = false, $arrayIndex = '', $allowUnset = false) {
+	protected function readInteger($variableName, $allowEmpty = false, $arrayIndex = '') {
 		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_INTEGER);
 	}
 	

@@ -94,10 +94,29 @@
 		</acpmenuitem>
 		<!-- /packages -->	
 		
+		<!-- application -->
+		<acpmenuitem name="wcf.acp.menu.link.application">
+			<parent>wcf.acp.menu.link.system</parent>
+			<showorder>3</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.application.management">
+			<link>index.php/ApplicationManagement/</link>
+			<parent>wcf.acp.menu.link.application</parent>
+			<permissions>admin.system.canManageApplication</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.application.cache">
+			<link>index.php/CacheList/</link>
+			<parent>wcf.acp.menu.link.application</parent>
+			<permissions>admin.system.canManageApplication</permissions>
+		</acpmenuitem>
+		<!-- /application -->
+		
 		<!-- cronjobs -->
 		<acpmenuitem name="wcf.acp.menu.link.cronjob">
 			<parent>wcf.acp.menu.link.system</parent>
-			<showorder>3</showorder>
+			<showorder>4</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.cronjob.list">
@@ -118,7 +137,7 @@
 		<!-- log -->
 		<acpmenuitem name="wcf.acp.menu.link.log">
 			<parent>wcf.acp.menu.link.system</parent>
-			<showorder>4</showorder>
+			<showorder>5</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.log.session">
@@ -133,25 +152,6 @@
 			<permissions>admin.system.cronjob.canEditCronjob,admin.system.cronjob.canDeleteCronjob</permissions>
 		</acpmenuitem>
 		<!-- /log -->
-		
-		<!-- application -->
-		<acpmenuitem name="wcf.acp.menu.link.application">
-			<parent>wcf.acp.menu.link.system</parent>
-			<showorder>5</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.application.management">
-			<link>index.php/ApplicationManagement/</link>
-			<parent>wcf.acp.menu.link.application</parent>
-			<permissions>admin.system.canManageApplication</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.application.cache">
-			<link>index.php/CacheList/</link>
-			<parent>wcf.acp.menu.link.application</parent>
-			<permissions>admin.system.canManageApplication</permissions>
-		</acpmenuitem>
-		<!-- /application -->
 		
 		<acpmenuitem name="wcf.acp.menu.link.user">
 			<showorder>2</showorder>
@@ -253,6 +253,10 @@
 		
 		<acpmenuitem name="wcf.acp.menu.link.content">
 			<showorder>4</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.community">
+			<showorder>5</showorder>
 		</acpmenuitem>
 	</import>
 </data>

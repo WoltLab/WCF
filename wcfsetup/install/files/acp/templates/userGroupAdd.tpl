@@ -4,7 +4,7 @@
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
-
+		
 		var $availableLanguages = { {implode from=$availableLanguages key=languageID item=languageName}{@$languageID}: '{$languageName}'{/implode} };
 		var $groupNameValues = { {implode from=$i18nValues['groupName'] key=languageID item=value}'{@$languageID}': '{$value}'{/implode} };
 		new WCF.MultipleLanguageInput('groupName', false, $groupNameValues, $availableLanguages);
@@ -40,7 +40,7 @@
 	</nav>
 </div>
 
-<form method="post" action="{if $action == 'add'}{link controller='UserGroupAdd'}{/link}{else}{link controller='UserGroupEdit'}{/link}{/if}">
+<form method="post" action="{if $action == 'add'}{link controller='UserGroupAdd'}{/link}{else}{link controller='UserGroupEdit' id=$groupID}{/link}{/if}">
 	<div class="container containerPadding marginTop shadow">
 		<fieldset>
 			<legend>{lang}wcf.global.form.data{/lang}</legend>
@@ -102,7 +102,7 @@
 									<fieldset>
 										<legend>{lang}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}{/lang}</legend>
 										{hascontent}<small>{content}{lang __optional=true}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}.description{/lang}{/content}</small>{/hascontent}
-								
+										
 										{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.acp.group.option.'}
 									</fieldset>
 								{/foreach}
@@ -117,7 +117,6 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="action" value="{@$action}" />
- 		{if $groupID|isset}<input type="hidden" name="id" value="{@$groupID}" />{/if}
  	</div>
 </form>
 
