@@ -409,20 +409,18 @@ class TemplateEngine extends SingletonFactory {
 	 * Returns the absolute filename of a compiled template.
 	 * 
 	 * @param 	string 		$templateName
-	 * @param	integer		$packageID
 	 */
-	public function getCompiledFilename($templateName, $packageID) {
-		return $this->compileDir.$packageID.'_'.$this->templateGroupID.'_'.$this->languageID.'_'.$templateName.'.php';
+	public function getCompiledFilename($templateName) {
+		return $this->compileDir.PACKAGE_ID.'_'.$this->templateGroupID.'_'.$this->languageID.'_'.$templateName.'.php';
 	}
 	
 	/**
 	 * Returns the absolute filename for template's meta data.
 	 * 
 	 * @param	string		$templateName
-	 * @param	integer		$packageID
 	 */
-	public function getMetaDataFilename($templateName, $packageID) {
-		return $this->compileDir.$packageID.'_'.$this->templateGroupID.'_'.$templateName.'.meta.php';
+	public function getMetaDataFilename($templateName) {
+		return $this->compileDir.PACKAGE_ID.'_'.$this->templateGroupID.'_'.$templateName.'.meta.php';
 	}
 	
 	/**
