@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\exception;
+use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Simple exception for AJAX-driven requests.
@@ -13,10 +15,49 @@ namespace wcf\system\exception;
  */
 class ValidateActionException extends \Exception {
 	/**
+	 * error message
+	 * @var	string
+	 */
+	protected $errorMessage = '';
+	
+	/**
+	 * erroneous field name
+	 * @var	string
+	 */
+	protected $fieldName = '';
+	
+	/**
 	 * @see	\Exception::__construct()
 	 */
-	public function __construct($message) {
-		$this->message = $message;
+	public function __construct($fieldName, $errorMessage = 'empty', array $variables = array()) {
+		$this->errorMessage = $errorMessage;
+		if (StringUtil::indexOf($this->errorMessage, '.') === false) {
+			$this->errorMessage = WCF::getLanguage()->get('wcf.global.form.error.'.$this->errorMessage);
+		}
+		else {
+			$this->errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage, $variables);
+		}
+		
+		$this->fieldName = $fieldName;
+		$this->message = WCF::getLanguage()->getDynamicVariable('wcf.global.error.invalidParameter', array('fieldName' => $this->fieldName));
+	}
+	
+	/**
+	 * Returns error message.
+	 * 
+	 * @return	string
+	 */
+	public function getErrorMessage() {
+		return $this->errorMessage;
+	}
+	
+	/**
+	 * Returns erroneous field name.
+	 * 
+	 * @return	string
+	 */
+	public function getFieldName() {
+		return $this->fieldName;
 	}
 	
 	/**

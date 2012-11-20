@@ -114,9 +114,9 @@ class WCF {
 		$this->initLanguage();
 		$this->initTPL();
 		$this->initCronjobs();
-		$this->initBlacklist();
 		$this->initCoreObjects();
 		$this->initApplications();
+		$this->initBlacklist();
 	}
 	
 	/**

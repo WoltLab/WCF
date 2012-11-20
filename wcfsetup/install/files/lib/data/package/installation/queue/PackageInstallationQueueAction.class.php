@@ -2,7 +2,7 @@
 namespace wcf\data\package\installation\queue;
 use wcf\data\package\Package;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\ValidateActionException;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**
@@ -41,11 +41,11 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 		
 		$this->package = new Package($this->packageID);
 		if (!$this->package->packageID) {
-			throw new ValidateActionException('Invalid package id');
+			throw new UserInputException('packageID');
 		}
 		
 		if (!isset($this->parameters['action']) || !in_array($this->parameters['action'], array('install', 'update', 'uninstall', 'rollback'))) {
-			throw new ValidateActionException('Invalid or missing action');
+			throw new UserInputException('action');
 		}
 	}
 	

@@ -5,6 +5,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
 use wcf\util\JSON;
@@ -147,7 +148,18 @@ class AJAXInvokeAction extends AbstractSecureAction {
 			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->__getTraceAsString());
 		}
 		else if ($e instanceof UserInputException) {
-			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString());
+			// repackage as ValidationActionException
+			$exception = new ValidateActionException($e->getField(), $e->getType(), $e->getVariables());
+			throw new AJAXException($exception->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), array(
+				'errorMessage' => $exception->getMessage(),
+				'fieldName' => $exception->getFieldName()
+			));
+		}
+		else if ($e instanceof ValidateActionException) {
+			throw new AJAXException($exception->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), array(
+				'errorMessage' => $exception->getMessage(),
+				'fieldName' => $exception->getFieldName()
+			));
 		}
 		else {
 			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString());

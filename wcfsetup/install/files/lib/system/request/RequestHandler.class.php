@@ -3,6 +3,7 @@ namespace wcf\system\request;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Handles http requests.
@@ -42,6 +43,14 @@ class RequestHandler extends SingletonFactory {
 		
 		// build request
 		$this->buildRequest($application);
+		
+		// handle offline mode
+		if (!$isACPRequest && defined('OFFLINE') && OFFLINE) {
+			if (!WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode') && !$this->activeRequest->isAvailableDuringOfflineMode()) {
+				WCF::getTPL()->display('offline');
+				exit;
+			}
+		}
 		
 		// start request
 		$this->activeRequest->execute();
