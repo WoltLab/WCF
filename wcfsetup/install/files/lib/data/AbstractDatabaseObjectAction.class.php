@@ -1,10 +1,10 @@
 <?php
 namespace wcf\data;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
-use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
@@ -136,17 +136,17 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	public function validateAction() {
 		// validate if user is logged in
 		if (!WCF::getUser()->userID && !in_array($this->getActionName(), $this->allowGuestAccess)) {
-			throw new ValidateActionException("Please login before executing this action");
+			throw new IllegalLinkException();
 		}
 		
 		// validate action name
 		if (!method_exists($this, $this->getActionName())) {
-			throw new ValidateActionException("unknown action '".$this->getActionName()."'");
+			throw new SystemException("unknown action '".$this->getActionName()."'");
 		}
 		
 		$actionName = 'validate'.StringUtil::firstCharToUpperCase($this->getActionName());
 		if (!method_exists($this, $actionName)) {
-			throw new ValidateActionException("validation of action '".$this->getActionName()."' failed");
+			throw new PermissionDeniedException();
 		}
 		
 		// execute action
@@ -219,15 +219,10 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	public function validateCreate() {
 		// validate permissions
 		if (is_array($this->permissionsCreate) && !empty($this->permissionsCreate)) {
-			try {
-				WCF::getSession()->checkPermissions($this->permissionsCreate);
-			}
-			catch (PermissionDeniedException $e) {
-				throw new ValidateActionException('Insufficient permissions');
-			}
+			WCF::getSession()->checkPermissions($this->permissionsCreate);
 		}
 		else {
-			throw new ValidateActionException('Insufficient permissions');
+			throw new PermissionDeniedException();
 		}
 	}
 	
@@ -237,15 +232,10 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	public function validateDelete() {
 		// validate permissions
 		if (is_array($this->permissionsDelete) && !empty($this->permissionsDelete)) {
-			try {
-				WCF::getSession()->checkPermissions($this->permissionsDelete);
-			}
-			catch (PermissionDeniedException $e) {
-				throw new ValidateActionException('Insufficient permissions');
-			}
+			WCF::getSession()->checkPermissions($this->permissionsDelete);
 		}
 		else {
-			throw new ValidateActionException('Insufficient permissions');
+			throw new PermissionDeniedException();
 		}
 		
 		// read objects
@@ -253,7 +243,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			$this->readObjects();
 			
 			if (empty($this->objects)) {
-				throw new ValidateActionException('Invalid object id');
+				throw new UserInputException('objectIDs');
 			}
 		}
 	}
@@ -264,15 +254,10 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	public function validateUpdate() {
 		// validate permissions
 		if (is_array($this->permissionsUpdate) && !empty($this->permissionsUpdate)) {
-			try {
-				WCF::getSession()->checkPermissions($this->permissionsUpdate);
-			}
-			catch (PermissionDeniedException $e) {
-				throw new ValidateActionException('Insufficient permissions');
-			}
+			WCF::getSession()->checkPermissions($this->permissionsUpdate);
 		}
 		else {
-			throw new ValidateActionException('Insufficient permissions');
+			throw new PermissionDeniedException();
 		}
 		
 		// read objects
@@ -280,7 +265,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			$this->readObjects();
 
 			if (empty($this->objects)) {
-				throw new ValidateActionException('Invalid object id');
+				throw new UserInputException('objectIDs');
 			}
 		}
 	}
