@@ -305,9 +305,9 @@ class TemplateEngine extends SingletonFactory {
 		}
 		
 		$tplPackageID = $this->getPackageID($templateName, $application);
-		$compiledFilename = $this->getCompiledFilename($templateName, $tplPackageID);
+		$compiledFilename = $this->getCompiledFilename($templateName);
 		$sourceFilename = $this->getSourceFilename($templateName, $tplPackageID);
-		$metaDataFilename = $this->getMetaDataFilename($templateName, $tplPackageID);
+		$metaDataFilename = $this->getMetaDataFilename($templateName);
 		$metaData = $this->getMetaData($templateName, $metaDataFilename);
 		
 		// check if compilation is necessary
