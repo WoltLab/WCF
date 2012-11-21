@@ -74,16 +74,17 @@ class CLIWCF extends WCF {
 	 * Initializes parsing of command line options.
 	 */
 	protected function initArgv() {
+		// initialise ArgvParser
 		self::$argvParser = new ArgvParser(array(
-			'language=s' => 'Sets the language to the specified languagecode and ignores user settings',
-			'v' => 'verbose: show more output',
-			'q' => 'quiet: show less output',
-			'h|help' => 'show this help',
-			'version' => 'show version'
+			'language=s' => WCF::getLanguage()->get('wcf.cli.help.language'),
+			'v' => WCF::getLanguage()->get('wcf.cli.help.v'),
+			'q' => WCF::getLanguage()->get('wcf.cli.help.q'),
+			'h|help' => WCF::getLanguage()->get('wcf.cli.help.help'),
+			'version' => WCF::getLanguage()->get('wcf.cli.help.version')
 		));
 		self::getArgvParser()->setOptions(array(
 			ArgvParser::CONFIG_CUMULATIVE_FLAGS => true,
-			ArgvParser::CONFIG_DASHDASH => false
+			ArgvParser::CONFIG_DASHDASH => false 
 		));
 		
 		// parse arguments
@@ -92,7 +93,8 @@ class CLIWCF extends WCF {
 			self::getArgvParser()->parse();
 		}
 		catch (ArgvException $e) {
-			echo $e->getMessage()."\n";
+			// show error message and usage
+			echo $e->getMessage().PHP_EOL;
 			echo self::getArgvParser()->getUsageMessage();
 			exit;
 		}
@@ -100,23 +102,26 @@ class CLIWCF extends WCF {
 		
 		// handle arguments
 		if (self::getArgvParser()->help) {
+			// show usage
 			echo self::getArgvParser()->getUsageMessage();
 			exit;
 		}
 		if (self::getArgvParser()->version) {
-			echo WCF_VERSION."\n";
+			// show version
+			echo WCF_VERSION.PHP_EOL;
 			exit;
 		}
 		if (self::getArgvParser()->language) {
+			// set language
 			$language = LanguageFactory::getInstance()->getLanguageByCode(self::getArgvParser()->language);
 			if ($language === null) {
-				echo "Could not find language with code '".self::getArgvParser()->language."'\n";
+				echo WCF::getLanguage()->getDynamicVariable('wcf.cli.error.language.notFound', array('languageCode' => self::getArgvParser()->language)).PHP_EOL;
 				exit;
 			}
 			self::setLanguage($language->languageID);
 		}
 		if (in_array('moo', self::getArgvParser()->getRemainingArgs())) {
-			echo '...."Have you mooed today?"...'."\n";
+			echo '...."Have you mooed today?"...'.PHP_EOL;
 		}
 		
 		define('VERBOSITY', self::getArgvParser()->v - self::getArgvParser()->q);
@@ -139,10 +144,14 @@ class CLIWCF extends WCF {
 	protected function initPHPLine() {
 		$terminal = TerminalFactory::get();
 		self::$consoleReader = new ConsoleReader("WoltLab Community Framework", null, null, $terminal);
+		
+		// don't expand events, as the username and password will follow
 		self::getReader()->setExpandEvents(false);
 		
-		$headline = str_pad("WoltLab (r) Community Framework (tm) ".WCF_VERSION, self::getTerminal()->getWidth(), " ", STR_PAD_BOTH);
-		self::getReader()->println($headline);
+		if (VERBOSITY >= -1) {
+			$headline = str_pad("WoltLab (r) Community Framework (tm) ".WCF_VERSION, self::getTerminal()->getWidth(), " ", STR_PAD_BOTH);
+			self::getReader()->println($headline);
+		}
 	}
 	
 	/**
@@ -170,6 +179,7 @@ class CLIWCF extends WCF {
 	 * @return	string
 	 */
 	public static function convertEntities($string) {
+		// ldquo, rdquo and bdquo -> "
 		return Regex::compile('&[lrb]dquo;')->replace($string, '"');
 	}
 	
@@ -209,23 +219,27 @@ class CLIWCF extends WCF {
 	 * Initializes command handling.
 	 */
 	protected function initCommands() {
+		// add command name completer
 		self::getReader()->addCompleter(new CommandNameCompleter());
+		
 		while (true) {
 			// roll back open transactions of the previous command, as they are dangerous in a long living script
 			if (WCF::getDB()->rollBackTransaction()) {
 				Log::warn('Previous command had an open transaction.');
 			}
+			
 			$line = StringUtil::trim(self::getReader()->readLine('>'));
 			try {
 				$command = CommandHandler::getCommand($line);
 				$command->execute(CommandHandler::getParameters($line));
 			}
 			catch (IllegalLinkException $e) {
-				self::getReader()->println("Command not found: ".$line);
+				self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.cli.error.command.notFound', array('command' => $line)));
 				continue;
 			}
 			catch (ArgvException $e) {
-				echo $e->getMessage()."\n";
+				// show error message and usage
+				echo $e->getMessage().PHP_EOL;
 				echo str_replace($_SERVER['argv'][0], CommandHandler::getCommandName($line), $e->getUsageMessage());
 				continue;
 			}
@@ -251,7 +265,7 @@ class CLIWCF extends WCF {
 		foreach ($columnSize as $column) {
 			$result .= str_repeat('-', $column + 2).'+';
 		}
-		$result .= "\n";
+		$result .= PHP_EOL;
 		
 		foreach ($table as $row) {
 			$result .= "|";
@@ -261,11 +275,11 @@ class CLIWCF extends WCF {
 				$i++;
 			}
 			
-			$result .= "\n+";
+			$result .= PHP_EOL."+";
 			foreach ($columnSize as $column) {
 				$result .= str_repeat('-', $column + 2).'+';
 			}
-			$result .= "\n";
+			$result .= PHP_EOL;
 		}
 		
 		return $result;

@@ -514,6 +514,18 @@
 		<item name="wcf.category.title"><![CDATA[Titel]]></item>
 	</category>
 	
+	<category name="wcf.cli">
+		<item name="wcf.cli.help.language"><![CDATA[Erzwingt die Sprache mit dem angegebenen Sprachcode.]]></item>
+		<item name="wcf.cli.help.version"><![CDATA[Zeigt die Versionsnummer an und beendet das Script.]]></item>
+		<item name="wcf.cli.help.help"><![CDATA[Zeigt diese Hilfe an und beendet das Script.]]></item>
+		<item name="wcf.cli.help.q"><![CDATA[Quiet: Zeigt weniger Informationen an.]]></item>
+		<item name="wcf.cli.help.v"><![CDATA[Verbose: Zeigt mehr Informationen an.]]></item>
+		
+		<item name="wcf.cli.error.language.notFound"><![CDATA[Die Sprache mit dem Sprachcode "{$languageCode}" konnte nicht gefunden werden.]]></item>
+		<item name="wcf.cli.error.command.notFound"><![CDATA[Der Befehl "{$command}" konnte nicht gefunden werden.]]></item>
+		
+	</category>
+	
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Demarkieren]]></item>
 		<item name="wcf.clipboard.item.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
