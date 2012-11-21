@@ -2453,7 +2453,7 @@ WCF.MultipleLanguageInput = Class.extend({
 		this._element.wrap('<div class="dropdown preInput" />');
 		var $wrapper = this._element.parent();
 		var $button = $('<p class="button dropdownToggle"><span>' + WCF.Language.get('wcf.global.button.disabledI18n') + '</span></p>').prependTo($wrapper);
-		$button.data('toggle', $wrapper.wcfIdentify()).click($.proxy(this._enable, this));
+		$button.data('target', $wrapper.wcfIdentify()).click($.proxy(this._enable, this));
 		
 		// insert list
 		this._list = $('<ul class="dropdownMenu"></ul>').insertAfter($button);
@@ -2464,7 +2464,6 @@ WCF.MultipleLanguageInput = Class.extend({
 		}
 		else {
 			$button.addClass('dropdownCaption');
-			this._element.css('height', $button.outerHeight());
 		}
 		
 		// insert available languages
@@ -2516,11 +2515,9 @@ WCF.MultipleLanguageInput = Class.extend({
 	_enable: function(event) {
 		if (!this._isEnabled) {
 			var $button = $(event.currentTarget);
-			if ($button.hasClass('dropdownCaptionTextarea')) {
-				$button.next('.dropdownMenu').css({
-					top: ($button.outerHeight() - 1) + 'px'
-				});
-			}
+			$button.next('.dropdownMenu').css({
+				top: ($button.outerHeight() - 1) + 'px'
+			});
 			
 			if ($button.getTagName() === 'p') {
 				$button = $button.children('span:eq(0)');
@@ -2615,9 +2612,11 @@ WCF.MultipleLanguageInput = Class.extend({
 	
 	/**
 	 * Disables language selection for current element.
+	 * 
+	 * @param	object		event
 	 */
-	_disable: function() {
-		if (this._forceSelection || !this._list) {
+	_disable: function(event) {
+		if (this._forceSelection || !this._list || event === undefined) {
 			return;
 		}
 		

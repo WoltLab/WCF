@@ -28,14 +28,14 @@ class SetupTemplateEngine extends TemplateEngine {
 	/**
 	 * @see	wcf\system\template\TemplateEngine::getCompiledFilename()
 	 */
-	public function getCompiledFilename($templateName, $packageID) {
+	public function getCompiledFilename($templateName) {
 		return $this->compileDir.'setup/template/compiled/'.$this->languageID.'_'.$templateName.'.php';
 	}
 	
 	/**
 	 * @see	wcf\system\template\TemplateEngine::getMetaDataFilename()
 	 */
-	public function getMetaDataFilename($templateName, $packageID) {
+	public function getMetaDataFilename($templateName) {
 		return $this->compileDir.'setup/template/compiled/'.$this->languageID.'_'.$templateName.'.meta.php';
 	}
 

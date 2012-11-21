@@ -213,6 +213,7 @@
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.massProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
 		<item name="wcf.acp.menu.link.user.search"><![CDATA[Benutzer suchen]]></item>
+		<item name="wcf.acp.menu.link.community"><![CDATA[Community]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -237,13 +238,13 @@
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcache"><![CDATA[Memcache]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcache.description"><![CDATA[Memcache speichert häufig benötige Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. Lesen Sie mehr über dieses Thema auf der folgenden Seite: <a href="http://memcached.org/" class="wcf-externalURL">memcached.org</a>.]]></item>
-		<item name="wcf.acp.option.category.general.date"><![CDATA[Datum &amp; Zeit]]></item>
-		<item name="wcf.acp.option.category.general.image"><![CDATA[Grafik]]></item>
-		<item name="wcf.acp.option.category.general.http"><![CDATA[HTTP]]></item>
-		<item name="wcf.acp.option.category.general.http.cookie"><![CDATA[Cookies]]></item>
-		<item name="wcf.acp.option.category.general.http.http"><![CDATA[HTTP]]></item>
-		<item name="wcf.acp.option.category.general.http.proxy"><![CDATA[Proxy-Server]]></item>
-		<item name="wcf.acp.option.category.general.http.proxy.description"><![CDATA[Hier können Sie optional Proxy-Server für Verbindungen zu externen Servern konfigurieren.]]></item>
+		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Datum &amp; Zeit]]></item>
+		<item name="wcf.acp.option.category.general.system.image"><![CDATA[Grafik]]></item>
+		<item name="wcf.acp.option.category.general.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.option.category.general.system.cookie"><![CDATA[Cookies]]></item>
+		<item name="wcf.acp.option.category.general.system.http"><![CDATA[HTTP]]></item>
+		<item name="wcf.acp.option.category.general.system.proxy"><![CDATA[Proxy-Server]]></item>
+		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[Hier können Sie optional Proxy-Server für Verbindungen zu externen Servern konfigurieren.]]></item>
 		<item name="wcf.acp.option.category.general.mail"><![CDATA[E-Mails]]></item>
 		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Versand]]></item>
@@ -252,11 +253,19 @@
 		<item name="wcf.acp.option.category.message.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.module"><![CDATA[Module]]></item>
 		<item name="wcf.acp.option.category.module.content"><![CDATA[Inhalte]]></item>
+		<item name="wcf.acp.option.category.module.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.option.category.module.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.option.category.module.community"><![CDATA[Community]]></item>
+		<item name="wcf.acp.option.category.module.display"><![CDATA[Darstellung]]></item>
 		<item name="wcf.acp.option.category.security"><![CDATA[Sicherheit]]></item>
 		<item name="wcf.acp.option.category.security.blacklist"><![CDATA[Blacklist]]></item>
 		<item name="wcf.acp.option.category.security.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.security.general.session"><![CDATA[Sitzungen]]></item>
+		<item name="wcf.acp.option.category.general.offline"><![CDATA[Wartungsmodus]]></item>
+		<item name="wcf.acp.option.category.user"><![CDATA[Benutzer]]></item>
+		<item name="wcf.acp.option.category.user.general"><![CDATA[Allgemein]]></item>
+		<item name="wcf.acp.option.category.security.antispam"><![CDATA[Anti-Spam]]></item>
+		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Zensur]]></item>
 		
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookiedomain]]></item>
 		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Standardmäßig sollten Sie dieses Feld frei lassen, da ein Ausfüllen nur in wenigen Fällen notwendig ist.]]></item>
@@ -271,11 +280,14 @@
 		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Gzip-Komprimierung aktivieren]]></item>
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Aktiviert die Komprimierung der Inhalte bei der Übertragung vom Server an den Client. Dies reduziert den Traffic und kann den Ladevorgang erheblich beschleunigen.]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers"><![CDATA[Seitencaching im Client-Browser verhindern]]></item>
+		<item name="wcf.acp.option.http_enable_no_cache_headers.description"><![CDATA[Verhindert zuverlässig das Cachen von einzelnen Seiten und sorgt somit dafür, dass beim Seitenaufruf immer die neueste Version der Seite geladen wird. Führt umgekehrt aber zu höherem Traffic und mehr Serverlast.]]></item>
+		
 		<item name="wcf.acp.option.http_gzip_level"><![CDATA[Gzip-Komprimierungslevel]]></item>
 		<item name="wcf.acp.option.http_gzip_level.description"><![CDATA[Werte von 1-9 sind zulässig. Als Optimum zwischen Komprimierung und Serverlast empfiehlt sich Level 1.]]></item>
-		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Bildmanipulation]]></item>
+		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Grafik-Bibliothek]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Library (Standard)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
+		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Bibliothek für die Generierung von Grafiken - wird z.B. für die Skalierung von hochgeladenen Bilder verwendet. &bdquo;ImageMagick&ldquo; ist in der Regel deutlich schneller, steht aber nicht auf jedem Server zur Verfügung.]]></item>
 		
 		<item name="wcf.acp.option.import"><![CDATA[Optionen importieren]]></item>
 		<item name="wcf.acp.option.import.error.importFailed"><![CDATA[Die Optionen konnten nicht erfolgreich importiert werden.]]></item>
@@ -284,7 +296,9 @@
 		<item name="wcf.acp.option.import.upload.description"><![CDATA[Wählen Sie eine Sicherung der Optionen von Ihrem lokalen Rechner aus.]]></item>
 		<item name="wcf.acp.option.importAndExport"><![CDATA[Optionen sichern &amp; wiederherstellen]]></item>
 		
-		<item name="wcf.acp.option.log_ip_address"><![CDATA[IP-Adressen speichern]]></item>
+		<item name="wcf.acp.option.log_ip_address"><![CDATA[Speicherung von IP-Adressen]]></item>
+		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Aktiviert die Speicherung von IP-Adressen der Benutzer in z.B. Sitzungen, Benutzerprofile, Forenbeiträgen.]]></item>
+		
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator-Adresse]]></item>
 		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[E-Mail-Adresse des Administrators]]></item>
 		<item name="wcf.acp.option.mail_debug_logfile_path"><![CDATA[Debug Logfile-Pfad]]></item>
@@ -312,7 +326,6 @@
 		<item name="wcf.acp.option.module_master_password.description"><![CDATA[Aktiviert die zusätzliche Eingabe eines Kennworts beim Aufruf von sicherheitskritischen Bereichen.]]></item>
 		<item name="wcf.acp.option.page_description"><![CDATA[Seitenbeschreibung]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Titel der Seite]]></item>
-		<item name="wcf.acp.option.page_title.description"><![CDATA[Dieser Titel wird im Seitenkopf dargestellt, wenn Sie die Anzeige dieses Textes im Stileditor aktiviert haben.]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
 		<item name="wcf.acp.option.session_timeout"><![CDATA[Gültigkeitslänge einer Sitzung]]></item>
 		<item name="wcf.acp.option.session_timeout.description"><![CDATA[Angabe in Sekunden]]></item>
@@ -324,6 +337,17 @@
 		<item name="wcf.acp.option.timezone.description"><![CDATA[Standard-Zeitzone Ihrer Seite]]></item>
 		<item name="wcf.acp.option.user_online_timeout"><![CDATA[Timeout für Benutzer-Online]]></item>
 		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Zeit in Sekunden, in der der Benutzer trotz Inaktivität als online markiert werden soll.]]></item>
+		<item name="wcf.acp.option.offline"><![CDATA[Wartungsmodus aktivieren]]></item>
+		<item name="wcf.acp.option.offline.description"><![CDATA[Deaktiviert alle installierten Anwendungen (z.B. für Wartungsarbeiten).]]></item>
+		<item name="wcf.acp.option.offline_message"><![CDATA[Deaktivierungshinweis]]></item>
+		<item name="wcf.acp.option.offline_message.description"><![CDATA[Geben Sie hier eine Meldung ein, die angezeigt wird, solange sich die Seite im Wartungsmodus befindet.]]></item>
+		<item name="wcf.acp.option.offline_message_allow_html"><![CDATA[HTML-Code im Hinweistext verwenden]]></item>
+		<item name="wcf.acp.option.offline_message_allow_html.description"><![CDATA[Aktivieren Sie diese Option, wenn Sie HTML-Code im Hinweistext verwenden möchten.]]></item>
+		<item name="wcf.acp.option.show_version_number"><![CDATA[Versionsnummer der Software im Copyright-Hinweis anzeigen]]></item>
+		<item name="wcf.acp.option.enable_debug_mode"><![CDATA[Debug-Modus aktivieren]]></item>
+		<item name="wcf.acp.option.enable_debug_mode.description"><![CDATA[Aktiviert ausführliche Fehlerberichte. Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
+		<item name="wcf.acp.option.external_link_rel_nofollow"><![CDATA[Externe Links mit dem Attribut &bdquo;rel=&quot;nofollow&quot;&ldquo; versehen]]></item>
+		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[Das Attribut &bdquo;rel=&quot;nofollow&quot;&ldquo; weist Suchmaschinen an, einen bestimmten Link auf einer Seite zu ignorieren.]]></item>
 	</category>
 
 	<category name="wcf.acp.package">
@@ -745,6 +769,7 @@
 		
 	<category name="wcf.page">
 		<item name="wcf.page.pageNo"><![CDATA[Seite {#$pageNo}]]></item>
+		<item name="wcf.page.offline"><![CDATA[Die Seite befindet sich zur Zeit {if OFFLINE_MESSAGE != ''}aus folgenden Gründen im Wartungsmodus:{else}im Wartungsmodus.{/if}]]></item>
 	</category>
 	
 	<category name="wcf.sitemap">

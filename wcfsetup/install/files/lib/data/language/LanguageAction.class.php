@@ -2,7 +2,7 @@
 namespace wcf\data\language;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\ValidateActionException;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**
@@ -40,19 +40,14 @@ class LanguageAction extends AbstractDatabaseObjectAction {
 	 * Validates permission to set a language as default.
 	 */
 	public function validateSetAsDefault() {
-		try {
-			WCF::getSession()->checkPermissions($this->permissionsUpdate);
-		}
-		catch (PermissionDeniedException $e) {
-			throw new ValidateActionException('Insufficient permissions');
-		}
+		WCF::getSession()->checkPermissions($this->permissionsUpdate);
 		
 		// read objects
 		if (empty($this->objects)) {
 			$this->readObjects();
 			
 			if (empty($this->objects)) {
-				throw new ValidateActionException('Invalid object id');
+				throw new UserInputException('objectIDs');
 			}
 		}
 	}

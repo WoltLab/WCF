@@ -20,7 +20,7 @@
 		</style>
 	</defs>
 	
-	<g id="IconExternalLink">
+	<g id="IconExternalLink" transform="translate(0 -0.5)">
 		<g>
 			<path id="LargeSquare2" class="shadow" opacity=".8" d="M4.455,2.5C4.205,2.5,4,2.705,4,2.955v9.091c0,0.25,0.205,0.454,0.455,0.454h9.091
 				c0.25,0,0.454-0.204,0.454-0.454V2.955c0-0.25-0.204-0.455-0.454-0.455H4.455z M13,11.015c0,0.268-0.218,0.485-0.485,0.485h-7.03

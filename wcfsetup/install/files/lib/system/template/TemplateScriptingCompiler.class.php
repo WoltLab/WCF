@@ -791,7 +791,7 @@ class TemplateScriptingCompiler {
 			
 			$tplPackageID = WCF::getTPL()->getPackageID($templateName, $metaData['application']);
 			$sourceFilename = WCF::getTPL()->getSourceFilename($templateName, $tplPackageID);
-			$metaDataFilename = WCF::getTPL()->getMetaDataFilename($templateName, $tplPackageID);
+			$metaDataFilename = WCF::getTPL()->getMetaDataFilename($templateName);
 			
 			$data = $this->compileString($templateName, file_get_contents($sourceFilename), array(
 				'application' => $metaData['application'],

@@ -18,11 +18,8 @@
 				<category name="module.content">
 					<parent>module</parent>
 				</category>
-				
-				<category name="message"></category>
-				
-				<category name="message.general">
-					<parent>message</parent>
+				<category name="module.community">
+					<parent>module</parent>
 				</category>
 			<!-- /modules -->
 			
@@ -33,27 +30,27 @@
 				<category name="general.page">
 					<parent>general</parent>
 				</category>
-					<category name="general.image">
-						<parent>general</parent>
-					</category>
 				<category name="general.offline">
 					<parent>general</parent>
 				</category>
-				<category name="general.http">
+				<category name="general.system">
 					<parent>general</parent>
 				</category>
-					<category name="general.http.cookie">
-						<parent>general.http</parent>
+					<category name="general.system.cookie">
+						<parent>general.system</parent>
 					</category>
-					<category name="general.http.http">
-						<parent>general.http</parent>
+					<category name="general.system.http">
+						<parent>general.system</parent>
 					</category>
-					<category name="general.http.proxy">
-						<parent>general.http</parent>
+					<category name="general.system.proxy">
+						<parent>general.system</parent>
 					</category>
-				<category name="general.date">
-					<parent>general</parent>
-				</category>
+					<category name="general.system.image">
+						<parent>general.system</parent>
+					</category>
+					<category name="general.system.date">
+						<parent>general.system</parent>
+					</category>
 				<category name="general.mail">
 					<parent>general</parent>
 				</category>
@@ -104,6 +101,16 @@
 					<parent>security</parent>
 				</category>
 			<!-- /security -->
+			
+			<!-- message -->
+			<category name="message">
+				<showorder>5</showorder>
+			</category>
+				
+				<category name="message.general">
+					<parent>message</parent>
+				</category>
+			<!-- /message -->
 		</categories>
 		
 		<options>
@@ -145,13 +152,11 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>textI18n</optiontype>
 				<supporti18n>1</supporti18n>
-				<requirei18n>0</requirei18n>
 			</option>
 			<option name="page_description">
 				<categoryname>general.page</categoryname>
 				<optiontype>textI18n</optiontype>
 				<supporti18n>1</supporti18n>
-				<requirei18n>0</requirei18n>
 			</option>
 			<option name="meta_keywords">
 				<categoryname>general.page</categoryname>
@@ -161,12 +166,38 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>text</optiontype>
 			</option>
-			
+			<option name="show_version_number">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="show_clock">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<!-- /general.page -->
 			
-			<!-- general.image -->
+			<!-- offline -->
+			<option name="offline">
+				<categoryname>general.offline</categoryname>
+				<optiontype>boolean</optiontype>
+			 	<enableoptions><![CDATA[offline_message,offline_message_allow_html]]></enableoptions>
+			</option>
+			<option name="offline_message">
+				<categoryname>general.offline</categoryname>
+				<optiontype>textI18n</optiontype>
+				<supporti18n>1</supporti18n>
+			</option>
+			<option name="offline_message_allow_html">
+				<categoryname>general.offline</categoryname>
+				<optiontype>boolean</optiontype>
+			</option>
+			<!-- /offline -->
+			
+			<!-- general.system.image -->
 			<option name="image_adapter_type">
-				<categoryname>general.image</categoryname>
+				<categoryname>general.system.image</categoryname>
 				<optiontype>radioButton</optiontype>
 				<defaultvalue><![CDATA[gd]]></defaultvalue>
 				<selectoptions>
@@ -174,42 +205,42 @@
 imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				</selectoptions>
 			</option>
-			<!-- /general.image -->
+			<!-- /general.system.image -->
 			
-			<!-- general.http.cookie -->
+			<!-- general.system.cookie -->
 			<option name="cookie_prefix">
-				<categoryname>general.http.cookie</categoryname>
+				<categoryname>general.system.cookie</categoryname>
 				<optiontype>text</optiontype>
 				<defaultvalue>wcf_</defaultvalue>
 				<validationpattern>.+</validationpattern>
 			</option>
-			<!-- /general.http.cookie-->
+			<!-- /general.system.cookie-->
 			
-			<!-- general.http.http -->
+			<!-- general.system.http -->
 			<option name="http_enable_no_cache_headers">
-				<categoryname>general.http.http</categoryname>
+				<categoryname>general.system.http</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="http_enable_gzip">
-				<categoryname>general.http.http</categoryname>
+				<categoryname>general.system.http</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 				<enableoptions><![CDATA[http_gzip_level]]></enableoptions>
 			</option>
 			<option name="http_gzip_level">
-				<categoryname>general.http.http</categoryname>
+				<categoryname>general.system.http</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<!-- /general.http.http -->
+			<!-- /general.system.http -->
 			
-			<!-- general.http.proxy -->
+			<!-- general.system.proxy -->
 			<option name="proxy_server_http">
-				<categoryname>general.http.proxy</categoryname>
+				<categoryname>general.system.proxy</categoryname>
 				<optiontype>text</optiontype>
 			</option>
-			<!-- /general.http.proxy -->
+			<!-- /general.system.proxy -->
 			
 			<!-- general.session -->
 			<option name="session_timeout">
@@ -250,18 +281,13 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			</option>
 			<!-- /security.blacklist -->
 			
-			<!-- general.date -->
+			<!-- general.system.date -->
 			<option name="timezone">
-				<categoryname>general.date</categoryname>
+				<categoryname>general.system.date</categoryname>
 				<optiontype>timezone</optiontype>
 				<defaultvalue>Europe/London</defaultvalue>
 			</option>
-			<option name="show_clock">
-				<categoryname>general.date</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<!-- /general.date -->
+			<!-- /general.system.date -->
 			
 			<!-- mail.general -->
 			<option name="mail_from_name">
@@ -284,7 +310,6 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<optiontype>textareaI18n</optiontype>
 				<defaultvalue><![CDATA[]]></defaultvalue>
 				<supporti18n>1</supporti18n>
-				<requirei18n>0</requirei18n>
 			</option>
 			<!-- /mail.general -->
 			
