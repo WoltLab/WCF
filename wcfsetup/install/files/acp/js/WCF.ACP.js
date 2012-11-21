@@ -727,10 +727,10 @@ WCF.ACP.Options = Class.extend({
 				var $target = disableOptions[$i];
 				if ($.wcfIsset($target)) {
 					if (isActive) {
-						$('#' + $.wcfEscapeID($target)).disable().closest('dl').addClass('disabled');
+						$('#' + $.wcfEscapeID($target)).closest('dl').addClass('disabled');
 					}
 					else {
-						$('#' + $.wcfEscapeID($target)).enable().closest('dl').removeClass('disabled');
+						$('#' + $.wcfEscapeID($target)).closest('dl').removeClass('disabled');
 					}
 				}
 			}
@@ -741,10 +741,10 @@ WCF.ACP.Options = Class.extend({
 				var $target = enableOptions[$i];
 				if ($.wcfIsset($target)) {
 					if (isActive) {
-						$('#' + $.wcfEscapeID($target)).enable().closest('dl').removeClass('disabled');
+						$('#' + $.wcfEscapeID($target)).closest('dl').removeClass('disabled');
 					}
 					else {
-						$('#' + $.wcfEscapeID($target)).disable().closest('dl').addClass('disabled');
+						$('#' + $.wcfEscapeID($target)).closest('dl').addClass('disabled');
 					}
 				}
 			}
