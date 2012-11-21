@@ -8,6 +8,8 @@ use wcf\system\cli\command\CommandNameCompleter;
 use wcf\system\cli\DatabaseCommandHistory;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\user\authentication\UserAuthenticationFactory;
@@ -188,11 +190,16 @@ class CLIWCF extends WCF {
 	 */
 	protected function initAuth() {
 		do {
-			$username = StringUtil::trim(self::getReader()->readLine(WCF::getLanguage()->get('wcf.user.username').'> '));
+			$line = self::getReader()->readLine(WCF::getLanguage()->get('wcf.user.username').'> ');
+			if ($line === null) exit;
+			$username = StringUtil::trim($line);
 		}
 		while ($username === '');
+		
 		do {
-			$password = StringUtil::trim(self::getReader()->readLine(WCF::getLanguage()->get('wcf.user.password').'> ', '*'));
+			$line = self::getReader()->readLine(WCF::getLanguage()->get('wcf.user.password').'> ', '*');
+			if ($line === null) exit;
+			$password = StringUtil::trim($line);
 		}
 		while ($password === '');
 		
@@ -227,14 +234,23 @@ class CLIWCF extends WCF {
 			if (WCF::getDB()->rollBackTransaction()) {
 				Log::warn('Previous command had an open transaction.');
 			}
-			
-			$line = StringUtil::trim(self::getReader()->readLine('>'));
+			$line = self::getReader()->readLine('>');
+			if ($line === null) exit;
+			$line = StringUtil::trim($line);
 			try {
 				$command = CommandHandler::getCommand($line);
 				$command->execute(CommandHandler::getParameters($line));
 			}
 			catch (IllegalLinkException $e) {
 				self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.cli.error.command.notFound', array('command' => $line)));
+				continue;
+			}
+			catch (PermissionDeniedException $e) {
+				self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.global.error.permissionDenied'));
+				continue;
+			}
+			catch (SystemException $e) {
+				Log::error($e);
 				continue;
 			}
 			catch (ArgvException $e) {

@@ -38,7 +38,6 @@ class CronjobCommand implements ICommand {
 			$cronjobList = new CronjobList();
 			$cronjobList->readObjects();
 			
-			$longestID = 0;
 			$table = array(array(
 				CLIWCF::getLanguage()->get('wcf.global.objectID'),
 				CLIWCF::getLanguage()->get('wcf.acp.cronjob.description'),
