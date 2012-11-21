@@ -2464,7 +2464,6 @@ WCF.MultipleLanguageInput = Class.extend({
 		}
 		else {
 			$button.addClass('dropdownCaption');
-			this._element.css('height', $wrapper.outerHeight());
 		}
 		
 		// insert available languages

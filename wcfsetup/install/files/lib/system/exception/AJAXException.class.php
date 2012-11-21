@@ -50,8 +50,9 @@ class AJAXException extends LoggedException {
 	 * @param	string		$message
 	 * @param	boolean		$isDoomsday
 	 * @param	string		$stacktrace
+	 * @param	array<mixed>	$returnValues
 	 */
-	public function __construct($message, $errorType = self::INTERNAL_ERROR, $stacktrace = null) {
+	public function __construct($message, $errorType = self::INTERNAL_ERROR, $stacktrace = null, $returnValues = array()) {
 		if ($stacktrace === null) $stacktrace = $this->getTraceAsString();
 		
 		if (WCF::debugModeIsEnabled()) {
@@ -67,6 +68,8 @@ class AJAXException extends LoggedException {
 		}
 		
 		$responseData['code'] = $errorType;
+		$responseData['returnValues'] = $returnValues;
+		
 		$statusHeader = '';
 		switch ($errorType) {
 			case self::MISSING_PARAMETERS:

@@ -4,7 +4,7 @@ use wcf\data\cronjob\log\CronjobLogEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
 use wcf\system\cronjob\CronjobScheduler;
-use wcf\system\exception\ValidateActionException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 
@@ -52,7 +52,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 		
 		foreach ($this->objects as $cronjob) {
 			if (!$cronjob->isDeletable()) {
-				throw new ValidateActionException('Insufficient permissions');
+				throw new PermissionDeniedException();
 			}
 		}
 	}
@@ -65,7 +65,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 		
 		foreach ($this->objects as $cronjob) {
 			if (!$cronjob->isEditable()) {
-				throw new ValidateActionException('Insufficient permissions');
+				throw new PermissionDeniedException();
 			} 
 		}
 	}
@@ -78,7 +78,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 		
 		foreach ($this->objects as $cronjob) {
 			if (!$cronjob->canBeDisabled()) {
-				throw new ValidateActionException('Insufficient permissions');
+				throw new PermissionDeniedException();
 			} 
 		}
 	}
