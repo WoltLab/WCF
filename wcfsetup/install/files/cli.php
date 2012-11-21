@@ -12,6 +12,9 @@ if (PHP_SAPI !== 'cli') exit;
 // define the wcf-root-dir
 define('WCF_DIR', dirname(__FILE__).'/');
 
+// TODO: Fix PACKAGE_ID
+define('PACKAGE_ID', 1);
+
 // initiate wcf core
 require_once(WCF_DIR.'lib/system/WCF.class.php');
 require_once(WCF_DIR.'lib/system/CLIWCF.class.php');
