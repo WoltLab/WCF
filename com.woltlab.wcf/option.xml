@@ -186,7 +186,7 @@
 			</option>
 			<option name="offline_message">
 				<categoryname>general.offline</categoryname>
-				<optiontype>textI18n</optiontype>
+				<optiontype>textareaI18n</optiontype>
 				<supporti18n>1</supporti18n>
 			</option>
 			<option name="offline_message_allow_html">

@@ -11,6 +11,8 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\io\RemoteFile;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
+use wcf\util\HTTPRequest;
 use wcf\util\XML;
 
 /**
@@ -57,22 +59,31 @@ abstract class PackageUpdateDispatcher {
 	 * @param	wcf\data\package\update\server\PackageUpdateServer	$updateServer
 	 */
 	protected static function getPackageUpdateXML(PackageUpdateServer $updateServer) {
-		// send request
-		$response = self::sendRequest($updateServer->serverURL, array('lastUpdateTime' => $updateServer->lastUpdateTime), $updateServer->getAuthData());
+		$authData = $updateServer->getAuthData();
+		$settings = array();
+		if ($authData) $settings['auth'] = $authData;
 		
-		// check response
-		// check http code
-		if ($response['httpStatusCode'] == 401) {
-			throw new PackageUpdateAuthorizationRequiredException($updateServer['packageUpdateServerID'], $updateServer['server'], $response);
+		$request = new HTTPRequest($updateServer->serverURL, $settings, array(
+			'lastUpdateTime' => $updateServer->lastUpdateTime
+		));
+		
+		try {
+			$request->execute();
+			$reply = $request->getReply();
 		}
-		
-		if ($response['httpStatusCode'] != 200) {
-			throw new SystemException(WCF::getLanguage()->get('wcf.acp.packageUpdate.error.listNotFound') . ' ('.$response['httpStatusLine'].')');
+		catch (SystemException $e) {
+			$reply = $request->getReply();
+			
+			if ($reply['statusCode'] == 401) {
+				throw new PackageUpdateAuthorizationRequiredException($updateServer['packageUpdateServerID'], $updateServer['server'], $reply);
+			}
+			
+			throw new SystemException(WCF::getLanguage()->get('wcf.acp.packageUpdate.error.listNotFound') . ' ('.reset($reply['headers']).')');
 		}
 		
 		// parse given package update xml
-		$allNewPackages = self::parsePackageUpdateXML($response['content']);
-		unset($response);
+		$allNewPackages = self::parsePackageUpdateXML($reply['body']);
+		unset($request, $reply);
 		
 		// save packages
 		if (!empty($allNewPackages)) {
@@ -87,119 +98,6 @@ abstract class PackageUpdateDispatcher {
 			'status' => 'online',
 			'errorMessage' => ''
 		));
-	}
-	
-	/**
-	 * Sends a request to a remote (update) server.
-	 * 
-	 * @param	string		$url
-	 * @param	array		$values
-	 * @param	array		$authData
-	 * @return	array		$response
-	 */
-	public static function sendRequest($url, array $values = array(), array $authData = array()) {
-		// default values
-		$host = '';
-		$path = '/';
-		$port = 80;
-		$postString = '';
-		
-		// parse url
-		$parsedURL = parse_url($url);
-		if (!empty($parsedURL['host'])) $host = $parsedURL['host'];
-		if (!empty($parsedURL['path'])) $path = $parsedURL['path'];
-		if (!empty($parsedURL['query'])) $postString = $parsedURL['query'];
-		if (!empty($parsedURL['port'])) $port = $parsedURL['port'];
-		
-		// connect to server
-		if (PROXY_SERVER_HTTP) {
-			$parsedProxyURL = parse_url(PROXY_SERVER_HTTP);
-			$remoteFile = new RemoteFile($parsedProxyURL['host'], $parsedProxyURL['port'], 30);
-			$path = $url;
-			$host = $parsedProxyURL['host'];
-		}
-		else {
-			$remoteFile = new RemoteFile($host, $port, 30);
-		}
-		
-		// Build and send the http request
-		$request = "POST ".$path." HTTP/1.0\r\n";
-		if (isset($authData['authType'])) {
-			$request .= "Authorization: Basic ".base64_encode($authData['loginUsername'].":".$authData['loginPassword'])."\r\n";
-		}
-		
-		$request .= "User-Agent: HTTP.PHP (PackageUpdateDispatcher.class.php; WoltLab Community Framework/".WCF_VERSION."; ".WCF::getLanguage()->languageCode.")\r\n";
-		$request .= "Accept: */*\r\n";
-		$request .= "Accept-Language: ".WCF::getLanguage()->languageCode."\r\n";
-		$request .= "Host: ".$host."\r\n";
-		
-		// build post string
-		foreach ($values as $name => $value) {
-			if (!empty($postString)) $postString .= '&';
-			$postString .= $name.'='.$value;
-		}
-		
-		// send content type and length
-		$request .= "Content-Type: application/x-www-form-urlencoded\r\n";
-		$request .= "Content-Length: ".strlen($postString)."\r\n";
-		// if it is a POST request, there MUST be a blank line before the POST data, but there MUST NOT be 
-		// another blank line before, and of course there must be another blank line at the end of the request!
-		$request .= "\r\n";
-		if (!empty($postString)) $request .= $postString."\r\n";
-		// send close
-		$request .= "Connection: Close\r\n\r\n";
-		
-		// send request
-		$remoteFile->puts($request);
-		unset($request, $postString);
-		
-		// define response vars
-		$header = $content = '';
-		
-		// fetch the response.
-		while (!$remoteFile->eof()) {
-			$line = $remoteFile->gets();
-			if (rtrim($line) != '') {
-				$header .= $line;
-			} else {
-				break;
-			}
-		}
-		while (!$remoteFile->eof()) {
-			$content .= $remoteFile->gets();
-		}
-		
-		// clean up and return the server's response.
-		$remoteFile->close();
-		
-		// get http status code / line
-		$httpStatusCode = 0;
-		$httpStatusLine = '';
-		if (preg_match('%http/\d\.\d (\d{3})[^\n]*%i', $header, $match)) {
-			$httpStatusLine = trim($match[0]);
-			$httpStatusCode = $match[1];
-		}
-		
-		// catch http 301 Moved Permanently
-		// catch http 302 Found
-		// catch http 303 See Other
-		if ($httpStatusCode == 301 || $httpStatusCode == 302 || $httpStatusCode == 303) {
-			// find location
-			if (preg_match('/location:([^\n]*)/i', $header, $match)) {
-				$location = trim($match[1]);
-				if ($location != $url) {
-					return self::sendRequest($location, $values, $authData);
-				}
-			}
-		}
-		// catch other http codes here
-		
-		return array(
-			'httpStatusLine' => $httpStatusLine,
-			'httpStatusCode' => $httpStatusCode,
-			'header' => $header,
-			'content' => $content
-		);
 	}
 	
 	/**
@@ -408,7 +306,7 @@ abstract class PackageUpdateDispatcher {
 					'packageDescription' => $packageData['packageDescription'],
 					'author' => $packageData['author'],
 					'authorURL' => $packageData['authorURL'],
-					'isApplication' => $packageData['isapplication'],
+					'isApplication' => $packageData['isApplication'],
 					'plugin' => $packageData['plugin']
 				));
 				
@@ -631,7 +529,7 @@ abstract class PackageUpdateDispatcher {
 		// sort package versions
 		// and remove old versions
 		foreach ($updates as $packageID => $data) {
-			uksort($updates[$packageID]['versions'], array('Package', 'compareVersion'));
+			uksort($updates[$packageID]['versions'], array('wcf\data\package\Package', 'compareVersion'));
 			$updates[$packageID]['version'] = end($updates[$packageID]['versions']);
 		}
 		
@@ -750,7 +648,7 @@ abstract class PackageUpdateDispatcher {
 		}
 		
 		// sort by version number
-		usort($versions, array('Package', 'compareVersion'));
+		usort($versions, array('wcf\data\package\Package', 'compareVersion'));
 		
 		// take newest (last)
 		return array_pop($versions);
