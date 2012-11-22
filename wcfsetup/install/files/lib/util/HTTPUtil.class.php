@@ -1,7 +1,5 @@
 <?php
 namespace wcf\util;
-use ZendTest\Di\Definition\ArrayDefinitionTest;
-
 use wcf\system\exception\SystemException;
 use wcf\system\io\RemoteFile;
 use wcf\system\Regex;
