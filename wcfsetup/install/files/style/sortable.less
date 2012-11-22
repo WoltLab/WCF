@@ -1,16 +1,14 @@
 .sortableListContainer .sortablePlaceholder {
-	/* todo */
 	background-color: @wcfWarningBackgroundColor;
-	border: 1px solid @wcfWarningBackgroundColor2;
+	border: 1px solid @wcfWarningBorderColor;
 	color: @wcfWarningColor;
 	margin: @wcfGapTiny 0;
 	padding: @wcfGapTiny;
 }
 
 .sortablePlaceholder.sortableInvalidTarget {
-	/* todo */
 	background-color: @wcfErrorBackgroundColor;
-	border: 1px solid @wcfErrorBackgroundColor2;
+	border: 1px solid @wcfErrorBorderColor;
 	color: @wcfErrorColor;
 }
 
@@ -18,6 +16,20 @@
 	list-style-position: outside;
 	list-style-type: decimal;
 	margin-left: @wcfGapLarge;
+	
+	.jsCollapsibleCategory > .sortableNodeLabel {
+		background-color: @wcfTabularBoxBackgroundColor;
+		color: @wcfTabularBoxColor;
+		padding-left: 7px;
+		
+		> a {
+			color: @wcfTabularBoxColor;
+		}
+	}
+	
+	.statusDisplay {
+		float: right;
+	}
 }
 
 .sortableNode {
@@ -34,8 +46,7 @@
 }
 
 .sortableList:not(.simpleSortableList) .sortableNodeLabel {
-	border-bottom: 1px solid rgba(216, 231, 245, 1); /* todo */
-	padding-bottom: @wcfGapMedium;
+	border-bottom: 1px solid @wcfContainerBorderColor;
 }
 
 .simpleSortableList {
