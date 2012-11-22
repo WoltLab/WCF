@@ -25,6 +25,7 @@
 				{content}
 					{if $__wcf->session->getPermission('admin.style.canAddStyle')}
 						<li><a href="{link controller='StyleAdd'}{/link}" title="{lang}wcf.acp.menu.link.style.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
+						<li><a href="{link controller='StyleImport'}{/link}" title="{lang}wcf.acp.menu.link.style.import{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/upload.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
 					{/if}
 					
 					{event name='largeButtons'}
@@ -81,6 +82,7 @@
 				{content}
 					{if $__wcf->session->getPermission('admin.style.canAddStyle')}
 						<li><a href="{link controller='StyleAdd'}{/link}" title="{lang}wcf.acp.menu.link.style.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
+						<li><a href="{link controller='StyleImport'}{/link}" title="{lang}wcf.acp.menu.link.style.import{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/upload.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
 					{/if}
 					
 					{event name='largeButtons'}

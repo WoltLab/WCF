@@ -20,6 +20,13 @@
 			<permissions>admin.style.canAddStyle</permissions>
 			<showorder>2</showorder>
 		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.style.import">
+			<link>index.php/StyleImport/</link>
+			<parent>wcf.acp.menu.link.style</parent>
+			<permissions>admin.style.canAddStyle</permissions>
+			<showorder>3</showorder>
+		</acpmenuitem>
 		<!-- /style -->
 	</import>
 </data>
