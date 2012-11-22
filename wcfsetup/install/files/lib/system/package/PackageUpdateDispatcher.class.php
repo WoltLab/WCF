@@ -648,7 +648,7 @@ abstract class PackageUpdateDispatcher {
 		}
 		
 		// sort by version number
-		usort($versions, array('Package', 'compareVersion'));
+		usort($versions, array('wcf\data\package\Package', 'compareVersion'));
 		
 		// take newest (last)
 		return array_pop($versions);
