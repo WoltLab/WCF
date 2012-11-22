@@ -15,7 +15,9 @@ use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\language\LanguageFactory;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\util\StringUtil;
+use Zend\Console\Adapter\Posix;
 use Zend\Console\Exception\RuntimeException as ArgvException;
+use Zend\Console\ColorInterface as Color;
 use Zend\Console\Getopt as ArgvParser;
 use Zend\Loader\StandardAutoloader as ZendLoader;
 
@@ -67,8 +69,14 @@ class CLIWCF extends WCF {
 				self::getReader()->println(count($updates) . ' updates are available');
 				
 				if (VERBOSITY >= 1) {
+					$posix = new Posix();
 					foreach ($updates as $update) {
-						self::getReader()->println(WCF::getLanguage()->get($update['packageName']) . ' ' . $update['packageVersion'] . ' -> ' . $update['version']['packageVersion']);
+						$line = WCF::getLanguage()->get($update['packageName']) . ' ' . $update['packageVersion'] . ' -> ' . $update['version']['packageVersion'];
+						// TODO: Check whether update is important
+						if (true && self::getTerminal()->isAnsiSupported() && !self::getArgv()->disablecolors) {
+							$line = $posix->colorize($line, Color::RED);
+						}
+						self::getReader()->println($line);
 					}
 				}
 			}
@@ -95,7 +103,8 @@ class CLIWCF extends WCF {
 			'v' => WCF::getLanguage()->get('wcf.cli.help.v'),
 			'q' => WCF::getLanguage()->get('wcf.cli.help.q'),
 			'h|help' => WCF::getLanguage()->get('wcf.cli.help.help'),
-			'version' => WCF::getLanguage()->get('wcf.cli.help.version')
+			'version' => WCF::getLanguage()->get('wcf.cli.help.version'),
+			'disablecolors' => WCF::getLanguage()->get('wcf.cli.help.disablecolors')
 		));
 		self::getArgvParser()->setOptions(array(
 			ArgvParser::CONFIG_CUMULATIVE_FLAGS => true,
