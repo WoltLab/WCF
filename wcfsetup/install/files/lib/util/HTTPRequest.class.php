@@ -6,7 +6,7 @@ use wcf\system\Regex;
 use wcf\system\WCF;
 
 /**
- * HTTPUtil sends HTTP requests.
+ * HTTPRequest sends HTTP requests.
  * It supports POST, SSL, Basic Auth etc.
  * 
  * @author	Tim Düsterhus
@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * @subpackage	util
  * @category	Community Framework
  */
-final class HTTPUtil {
+final class HTTPRequest {
 	/**
 	 * given options
 	 * @var array
@@ -97,6 +97,7 @@ final class HTTPUtil {
 		
 		$this->setOptions($options);
 		
+		// set default headers
 		$this->addHeader('User-Agent', "HTTP.PHP (HTTPUtil.class.php; WoltLab Community Framework/".WCF_VERSION."; ".WCF::getLanguage()->languageCode.")");
 		$this->addHeader('Accept', '*/*');
 		$this->addHeader('Accept-Language', WCF::getLanguage()->languageCode);
@@ -141,12 +142,14 @@ final class HTTPUtil {
 		
 		$request = $this->options['method']." ".$this->path.($this->query ? '?'.$this->query : '')." HTTP/1.0\r\n";
 		
+		// add headers
 		foreach ($this->headers as $name => $values) {
 			foreach ($values as $value) {
 				$request .= $name.": ".$value."\r\n";
 			}
 		}
 		$request .= "\r\n";
+		// add post parameters
 		if ($this->options['method'] !== 'GET') $request .= http_build_query($this->postParameters)."\r\n\r\n";
 		$remoteFile->puts($request);
 		
@@ -231,6 +234,7 @@ final class HTTPUtil {
 			break;
 		}
 		
+		// validate length
 		if (isset($this->replyHeaders['Content-Length'])) {
 			if (strlen($this->replyBody) != $this->replyHeaders['Content-Length']) {
 				throw new SystemException('Body length does not match length given in header');
@@ -244,7 +248,11 @@ final class HTTPUtil {
 	 * @return array
 	 */
 	public function getReply() {
-		return array('statusCode' => $this->statusCode, 'headers' => $this->replyHeaders, 'body' => $this->replyBody);
+		return array(
+			'statusCode' => $this->statusCode, 
+			'headers' => $this->replyHeaders, 
+			'body' => $this->replyBody
+		);
 	}
 	
 	/**

@@ -401,7 +401,7 @@ final class FileUtil {
 	 * 		from now on, as this method may be removed in the future.
 	 */
 	public static function downloadFileFromHttp($httpUrl, $prefix = 'package', array $options = array(), array $postParameters = array(), &$headers = array()) {
-		$request = new HTTPUtil($httpUrl, $options, $postParameters);
+		$request = new HTTPRequest($httpUrl, $options, $postParameters);
 		$request->execute();
 		$reply = $request->getReply();
 		
