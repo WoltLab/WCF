@@ -73,7 +73,7 @@ class CLIWCF extends WCF {
 					foreach ($updates as $update) {
 						$line = WCF::getLanguage()->get($update['packageName']) . ' ' . $update['packageVersion'] . ' -> ' . $update['version']['packageVersion'];
 						// TODO: Check whether update is important
-						if (true && self::getTerminal()->isAnsiSupported() && !self::getArgv()->disablecolors) {
+						if (true && self::getTerminal()->isAnsiSupported() && !self::getArgvParser()->disablecolors) {
 							$line = $posix->colorize($line, Color::RED);
 						}
 						self::getReader()->println($line);
