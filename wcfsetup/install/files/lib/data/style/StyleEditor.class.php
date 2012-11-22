@@ -136,7 +136,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$data = array(
 			'name' => '', 'description' => '', 'version' => '', 'image' => '', 'copyright' => '',
 			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '',
-			'variables' => '', 'date' => '0000-00-00', 'icons' => '', 'iconPath' => '', 'imagePath' => ''
+			'variables' => '', 'date' => '0000-00-00', 'icons' => '', 'iconsPath' => '', 'imagesPath' => ''
 		);
 		
 		$categories = $xpath->query('/ns:style/*');
@@ -286,9 +286,17 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		// get style data
 		$data = self::readStyleData($tar);
 		
-		// get image locations
-		$iconsLocation = FileUtil::addTrailingSlash('icon/'.$data['iconPath']);
-		$imagesLocation = FileUtil::addTrailingSlash('images/'.$data['imagePath']);
+		$styleData = array(
+			'styleName' => $data['name'],
+			'variables' => $data['variables'],
+			'styleDescription' => $data['description'],
+			'styleVersion' => $data['version'],
+			'styleDate' => $data['date'],
+			'copyright' => $data['copyright'],
+			'license' => $data['license'],
+			'authorName' => $data['authorName'],
+			'authorURL' => $data['authorURL']
+		);
 		
 		// create template group
 		$templateGroupID = 0;
@@ -334,29 +342,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				'templateGroupName' => $templateGroupName,
 				'templateGroupFolderName' => FileUtil::addTrailingSlash($templateGroupFolderName)
 			));
-			$templateGroupID = $templateGroup->templateGroupID;
-		}
-		
-		// save style
-		$styleData = array(
-			'styleName' => $data['name'],
-			'variables' => $data['variables'],
-			'templateGroupID' => $templateGroupID,
-			'styleDescription' => $data['description'],
-			'styleVersion' => $data['version'],
-			'styleDate' => $data['date'],
-			'copyright' => $data['copyright'],
-			'license' => $data['license'],
-			'authorName' => $data['authorName'],
-			'authorURL' => $data['authorURL'],
-			'iconPath' => $data['iconPath']
-		);
-		if ($style !== null) {
-			$style->update($styleData);
-		}
-		else {
-			$styleData['packageID'] = $packageID;
-			$style = new StyleEditor(self::create($styleData));
+			$styleData['templateGroupID'] = $templateGroup->templateGroupID;
 		}
 		
 		// import preview image
@@ -369,35 +355,33 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				@chmod($filename, 0777);
 				
 				if (file_exists($filename)) {
-					$style->update(array('image' => $filename));
+					$styleData['image'] = $filename;
 				}
 			}
 		}
 		
 		// import images
-		if (!empty($data['images'])) {
+		if (!empty($data['images']) && $data['imagesPath'] != 'images/') {
 			// create images folder if necessary
-			if (!file_exists(WCF_DIR.$imagesLocation)) {
-				@mkdir(WCF_DIR.$data['variables']['global.images.location'], 0777);
-				@chmod(WCF_DIR.$data['variables']['global.images.location'], 0777);
-			}
+			$imagesLocation = self::getFileLocation($data['imagesPath']);
+			$styleData['imagePath'] = FileUtil::getRelativePath(WCF_DIR, $imagesLocation);
 			
-			$i = $tar->getIndexByFilename($data['images']);
-			if ($i !== false) {
+			$index = $tar->getIndexByFilename($data['images']);
+			if ($index !== false) {
 				// extract images tar
 				$destination = FileUtil::getTemporaryFilename('images_');
-				$tar->extract($i, $destination);
+				$tar->extract($index, $destination);
 				
 				// open images tar
 				$imagesTar = new Tar($destination);
 				$contentList = $imagesTar->getContentList();
 				foreach ($contentList as $key => $val) {
 					if ($val['type'] == 'file') {
-						$imagesTar->extract($key, WCF_DIR.$imagesLocation.basename($val['filename']));
-						@chmod(WCF_DIR.$imagesLocation.basename($val['filename']), 0666);
+						$imagesTar->extract($key, $imagesLocation.basename($val['filename']));
+						@chmod($imagesLocation.basename($val['filename']), 0666);
 					}
 				}
-
+				
 				// delete tmp file
 				$imagesTar->close();
 				@unlink($destination);
@@ -405,12 +389,15 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		}
 		
 		// import icons
-		if (!empty($data['icons']) && $iconsLocation != 'icon/') {
-			$i = $tar->getIndexByFilename($data['icons']);
-			if ($i !== false) {
+		if (!empty($data['icons']) && $data['iconsPath'] != 'icon/') {
+			$iconsLocation = FileUtil::getRelativePath(WCF_DIR, self::getFileLocation($data['imagesPath']));
+			$styleData['iconPath'] = $iconsLocation;
+			
+			$index = $tar->getIndexByFilename($data['icons']);
+			if ($index !== false) {
 				// extract icons tar
 				$destination = FileUtil::getTemporaryFilename('icons_');
-				$tar->extract($i, $destination);
+				$tar->extract($index, $destination);
 				
 				// open icons tar and group icons by package
 				$iconsTar = new Tar($destination);
@@ -430,7 +417,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				// copy icons
 				foreach ($packageToIcons as $package => $icons) {
 					// try to find package
-					$sql = "SELECT	*
+					$sql = "SELECT	packageDir
 						FROM	wcf".WCF_N."_package
 						WHERE	package = ?
 							AND isApplication = ?";
@@ -445,7 +432,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						
 						// create icon path
 						if (!file_exists($iconDir)) {
-							@mkdir($iconDir, 0777);
+							@mkdir($iconDir, 0777, true);
 							@chmod($iconDir, 0777);
 						}
 						
@@ -464,11 +451,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// import templates
 		if (!empty($data['templates'])) {
-			$i = $tar->getIndexByFilename($data['templates']);
-			if ($i !== false) {
+			$index = $tar->getIndexByFilename($data['templates']);
+			if ($index !== false) {
 				// extract templates tar
 				$destination = FileUtil::getTemporaryFilename('templates_');
-				$tar->extract($i, $destination);
+				$tar->extract($index, $destination);
 				
 				// open templates tar and group templates by package
 				$templatesTar = new Tar($destination);
@@ -525,10 +512,44 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				@unlink($destination);
 			}
 		}
-
+		
 		$tar->close();
 		
+		// save style
+		if ($style !== null) {
+			$style->update($styleData);
+		}
+		else {
+			$styleData['packageID'] = $packageID;
+			$style = new StyleEditor(self::create($styleData));
+		}
+		
 		return $style;
+	}
+	
+	/**
+	 * Returns available location path.
+	 * 
+	 * @param	string		$location
+	 * @return	string
+	 */
+	protected static function getFileLocation($location) {
+		$location = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($location));
+		$location = WCF_DIR.$location;
+		
+		$index = null;
+		do {
+			$directory = $location . ($index === null ? '' : $index);
+			if (!is_dir($directory)) {
+				@mkdir($directory, 0777, true);
+				@chmod($directory, 0777);
+				
+				return FileUtil::addTrailingSlash($directory);
+			}
+			
+			$index = ($index === null ? 2 : ($index + 1));
+		}
+		while (true);
 	}
 	
 	/**
@@ -557,7 +578,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$xml->startElement('general');
 		$xml->writeElement('stylename', $this->styleName);
 		if ($this->styleDescription) $xml->writeElement('description', $this->styleDescription);
-		$xml->writeElement('date', $this->styleDate);;
+		$xml->writeElement('date', $this->styleDate);
+		$xml->writeElement('version', $this->styleVersion);
 		if ($this->image) $xml->writeElement('image', $this->image);
 		if ($this->copyright) $xml->writeElement('copyright', $this->copyright);
 		if ($this->license) $xml->writeElement('license', $this->license);
