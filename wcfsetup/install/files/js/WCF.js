@@ -2526,14 +2526,10 @@ WCF.MultipleLanguageInput = Class.extend({
 			$button.addClass('active');
 			
 			this._isEnabled = true;
-			this._insertedDataAfterInit = false;
 		}
 		
 		// toggle list
 		if (this._list.is(':visible')) {
-			this._closeSelection();
-		}
-		else {
 			this._showSelection();
 		}
 		
@@ -2567,12 +2563,7 @@ WCF.MultipleLanguageInput = Class.extend({
 	 * Closes the language selection.
 	 */
 	_closeSelection: function() {
-		if (!this._insertedDataAfterInit) {
-			// prevent loop of death
-			this._insertedDataAfterInit = true;
-			
-			this._disable();
-		}
+		this._disable();
 	},
 	
 	/**
@@ -2606,7 +2597,7 @@ WCF.MultipleLanguageInput = Class.extend({
 		this._list.prev('.dropdownToggle').children('span').text(this._availableLanguages[this._languageID]);
 		
 		// close selection and set focus on input element
-		this._closeSelection();
+		//this._closeSelection();
 		this._element.blur().focus();
 	},
 	
@@ -2616,13 +2607,16 @@ WCF.MultipleLanguageInput = Class.extend({
 	 * @param	object		event
 	 */
 	_disable: function(event) {
-		if (this._forceSelection || !this._list || event === undefined) {
+		if (event === undefined && this._insertedDataAfterInit) {
+			event = null;
+		}
+		
+		if (this._forceSelection || !this._list || event === null) {
 			return;
 		}
 		
 		// remove active marking
 		this._list.prev('.dropdownToggle').children('span').removeClass('active').text(WCF.Language.get('wcf.global.button.disabledI18n'));
-		this._closeSelection();
 		
 		// update element value
 		if (this._values[LANGUAGE_ID]) {
@@ -2634,7 +2628,9 @@ WCF.MultipleLanguageInput = Class.extend({
 		}
 		
 		this._element.blur();
+		this._insertedDataAfterInit = false;
 		this._isEnabled = false;
+		this._values = { };
 	},
 	
 	/**
@@ -2643,7 +2639,7 @@ WCF.MultipleLanguageInput = Class.extend({
 	_submit: function() {
 		// insert hidden form elements on before submit
 		if (!this._isEnabled) {
-			return 0xDEADBEAF;
+			return 0xDEADBEEF;
 		}
 		
 		// fetch active value
