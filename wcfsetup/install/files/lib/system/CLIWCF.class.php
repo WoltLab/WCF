@@ -11,6 +11,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\language\LanguageFactory;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\util\StringUtil;
@@ -60,6 +61,18 @@ class CLIWCF extends WCF {
 		$this->initPHPLine();
 		$this->initAuth();
 		// TODO: Show whether there are updates available (similar to TTYs at Ubuntu Linux)
+		if (VERBOSITY >= -1) {
+			$updates = PackageUpdateDispatcher::getAvailableUpdates();
+			if (!empty($updates)) {
+				self::getReader()->println(count($updates) . ' updates are available');
+				
+				if (VERBOSITY >= 1) {
+					foreach ($updates as $update) {
+						self::getReader()->println(WCF::getLanguage()->get($update['packageName']) . ' ' . $update['packageVersion'] . ' -> ' . $update['version']['packageVersion']);
+					}
+				}
+			}
+		}
 		$this->initCommands();
 	}
 	
@@ -127,8 +140,8 @@ class CLIWCF extends WCF {
 		}
 		
 		define('VERBOSITY', self::getArgvParser()->v - self::getArgvParser()->q);
-		if (VERBOSITY > 1) Log::enableDebug();
-		if (VERBOSITY > 2) Log::enableTrace();
+		if (VERBOSITY >= 2) Log::enableDebug();
+		if (VERBOSITY >= 3) Log::enableTrace();
 	}
 	
 	/**
@@ -150,7 +163,7 @@ class CLIWCF extends WCF {
 		// don't expand events, as the username and password will follow
 		self::getReader()->setExpandEvents(false);
 		
-		if (VERBOSITY >= -1) {
+		if (VERBOSITY >= 0) {
 			$headline = str_pad("WoltLab (r) Community Framework (tm) ".WCF_VERSION, self::getTerminal()->getWidth(), " ", STR_PAD_BOTH);
 			self::getReader()->println($headline);
 		}
