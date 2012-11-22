@@ -223,6 +223,7 @@ class PackageInstallationScheduler {
 				$authData = $this->getAuthData($packageUpdateVersion);		
 				
 				// send request
+				// TODO: Use HTTPRequest
 				if (!empty($packageUpdateVersion['file'])) {
 					$response = PackageUpdateDispatcher::sendRequest($packageUpdateVersion['file'], array(), $authData);
 				}

@@ -62,6 +62,7 @@ abstract class PackageUpdateDispatcher {
 		$authData = $updateServer->getAuthData();
 		$settings = array();
 		if ($authData) $settings['auth'] = $authData;
+		
 		$request = new HTTPRequest($updateServer->serverURL, $settings, array(
 			'lastUpdateTime' => $updateServer->lastUpdateTime
 		));
@@ -305,7 +306,7 @@ abstract class PackageUpdateDispatcher {
 					'packageDescription' => $packageData['packageDescription'],
 					'author' => $packageData['author'],
 					'authorURL' => $packageData['authorURL'],
-					'isApplication' => $packageData['isapplication'],
+					'isApplication' => $packageData['isApplication'],
 					'plugin' => $packageData['plugin']
 				));
 				
@@ -528,7 +529,7 @@ abstract class PackageUpdateDispatcher {
 		// sort package versions
 		// and remove old versions
 		foreach ($updates as $packageID => $data) {
-			uksort($updates[$packageID]['versions'], array('Package', 'compareVersion'));
+			uksort($updates[$packageID]['versions'], array('wcf\data\package\Package', 'compareVersion'));
 			$updates[$packageID]['version'] = end($updates[$packageID]['versions']);
 		}
 		
