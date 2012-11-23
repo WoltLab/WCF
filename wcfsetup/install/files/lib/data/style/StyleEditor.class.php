@@ -134,7 +134,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$xpath = $xml->xpath();
 		
 		$data = array(
-			'name' => '', 'description' => '', 'version' => '', 'image' => '', 'copyright' => '',
+			'name' => '', 'description' => '', 'version' => '', 'image' => '', 'copyright' => '', 'default' => false,
 			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '',
 			'variables' => '', 'date' => '0000-00-00', 'icons' => '', 'iconsPath' => '', 'imagesPath' => ''
 		);
@@ -149,14 +149,14 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							case 'authorname':
 								$data['authorName'] = $element->nodeValue;
 							break;
-									
+							
 							case 'authorurl':
 								$data['authorURL'] = $element->nodeValue;
 							break;
 						}
 					}
 				break;
-		
+				
 				case 'files':
 					$elements = $xpath->query('child::*', $category);
 					foreach ($elements as $element) {
@@ -166,7 +166,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						}
 					}
 				break;
-		
+				
 				case 'general':
 					$elements = $xpath->query('child::*', $category);
 					foreach ($elements as $element) {
@@ -176,11 +176,15 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 								$data['date'] = $element->nodeValue;
 							break;
-									
+							
+							case 'default':
+								$data['default'] = true;
+							break;
+							
 							case 'stylename':
 								$data['name'] = $element->nodeValue;
 							break;
-									
+							
 							case 'version':
 								if (!Package::isValidVersion($element->nodeValue)) {
 									throw new SystemException("style version '".$element->nodeValue."' is invalid");
@@ -188,7 +192,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 								$data['version'] = $element->nodeValue;
 							break;
-									
+							
 							case 'copyright':
 							case 'description':
 							case 'image':
@@ -199,7 +203,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 					}
 				break;
 			}
-				
 		}
 		
 		if (empty($data['name'])) {
@@ -210,13 +213,13 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		}
 		
 		// search variables.xml
-		$i = $tar->getIndexByFilename($data['variables']);
-		if ($i === false) {
+		$index = $tar->getIndexByFilename($data['variables']);
+		if ($index === false) {
 			throw new SystemException("unable to find required file '".$data['variables']."' in style archive");
 		}
 		
 		// open variables.xml
-		$data['variables'] = self::readVariablesData($data['variables'], $tar->extractToString($i));
+		$data['variables'] = self::readVariablesData($data['variables'], $tar->extractToString($index));
 		
 		return $data;
 	}
@@ -522,6 +525,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		else {
 			$styleData['packageID'] = $packageID;
 			$style = new StyleEditor(self::create($styleData));
+		}
+		
+		if ($data['default']) {
+			$style->setAsDefault();
 		}
 		
 		return $style;
