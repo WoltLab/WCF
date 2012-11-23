@@ -7,7 +7,7 @@ use wcf\data\IToggleAction;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
-use wcf\system\exception\ValidateActionException;
+use wcf\system\exception\UserInputException;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
 
@@ -102,24 +102,19 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	public function validateCreate() {
 		// validate permissions
 		if (!empty($this->permissionsCreate)) {
-			try {
-				WCF::getSession()->checkPermissions($this->permissionsCreate);
-			}
-			catch (PermissionDeniedException $e) {
-				throw new ValidateActionException('Insufficient permissions');
-			}
+			WCF::getSession()->checkPermissions($this->permissionsCreate);
 		}
 		
 		if (!isset($this->parameters['data']['objectTypeID'])) {
-			throw new ValidateActionException("Missing 'objectTypeID' data parameter");
+			throw new UserInputException('objectTypeID');
 		}
 		
 		$objectType = CategoryHandler::getInstance()->getObjectType($this->parameters['data']['objectTypeID']);
 		if ($objectType === null) {
-			throw new ValidateActionException("Unknown category object type with id '".$this->parameters['data']['objectTypeID']."'");
+			throw new UserInputException('objectTypeID', 'notValid');
 		}
 		if (!$objectType->getProcessor()->canAddCategory()) {
-			throw new ValidateActionException('Insufficient permissions');
+			throw new PermissionDeniedException();
 		}
 	}
 	
@@ -133,7 +128,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 				WCF::getSession()->checkPermissions($this->permissionsDelete);
 			}
 			catch (PermissionDeniedException $e) {
-				throw new ValidateActionException('Insufficient permissions');
+				throw new PermissionDeniedException();
 			}
 		}
 		
@@ -142,13 +137,13 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 			$this->readObjects();
 			
 			if (empty($this->objects)) {
-				throw new ValidateActionException('Invalid object id');
+				throw new UserInputException('objectIDs');
 			}
 		}
 		
 		foreach ($this->objects as $categoryEditor) {
 			if (!$categoryEditor->getCategoryType()->canDeleteCategory()) {
-				throw new ValidateActionException('Insufficient permissions');
+				throw new PermissionDeniedException();
 			}
 		}
 	}
@@ -173,26 +168,21 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	public function validateUpdate() {
 		// validate permissions
 		if (!empty($this->permissionsUpdate)) {
-			try {
-				WCF::getSession()->checkPermissions($this->permissionsUpdate);
-			}
-			catch (PermissionDeniedException $e) {
-				throw new ValidateActionException('Insufficient permissions');
-			}
+			WCF::getSession()->checkPermissions($this->permissionsUpdate);
 		}
 		
 		// read objects
 		if (empty($this->objects)) {
 			$this->readObjects();
-		}
-		
-		if (empty($this->objects)) {
-			throw new ValidateActionException('Invalid object id');
+			
+			if (empty($this->objects)) {
+				throw new UserInputException('objectIDs');
+			}
 		}
 		
 		foreach ($this->objects as $categoryEditor) {
 			if (!$categoryEditor->getCategoryType()->canEditCategory()) {
-				throw new ValidateActionException('Insufficient permissions');
+				throw new PermissionDeniedException();
 			}
 		}
 	}
@@ -207,16 +197,13 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 				WCF::getSession()->checkPermissions($this->permissionsUpdate);
 			}
 			catch (PermissionDeniedException $e) {
-				throw new ValidateActionException('Insufficient permissions');
+				throw new PermissionDeniedException();
 			}
 		}
 		
 		// validate 'structure' parameter
-		if (!isset($this->parameters['data']['structure'])) {
-			throw new ValidateActionException("Missing 'structure' parameter");
-		}
-		if (!is_array($this->parameters['data']['structure'])) {
-			throw new ValidateActionException("'structure' parameter is no array");
+		if (!isset($this->parameters['data']['structure']) || !is_array($this->parameters['data']['structure'])) {
+			throw new UserInputException('structure');
 		}
 		
 		// validate given category ids
@@ -225,14 +212,14 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 				// validate category
 				$category = CategoryHandler::getInstance()->getCategory($parentCategoryID);
 				if ($category === null) {
-					throw new ValidateActionException("Unknown category with id '".$parentCategoryID."'");
+					throw new UserInputException('structure');
 				}
 				
 				$this->objects[$category->categoryID] = new $this->className($category);
 				
 				// validate permissions
 				if (!$category->getCategoryType()->canEditCategory()) {
-					throw new ValidateActionException('Insufficient permissions');
+					throw new PermissionDeniedException();
 				}
 			}
 			
@@ -240,14 +227,14 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 				// validate category
 				$category = CategoryHandler::getInstance()->getCategory($categoryID);
 				if ($category === null) {
-					throw new ValidateActionException("Unknown category with id '".$categoryID."'");
+					throw new UserInputException('structure');
 				}
 				
 				$this->objects[$category->categoryID] = new $this->className($category);
 				
 				// validate permissions
 				if (!$category->getCategoryType()->canEditCategory()) {
-					throw new ValidateActionException('Insufficient permissions');
+					throw new PermissionDeniedException();
 				}
 			}
 		}

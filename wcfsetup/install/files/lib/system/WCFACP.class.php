@@ -41,7 +41,6 @@ class WCFACP extends WCF {
 		$this->initLanguage();
 		$this->initTPL();
 		$this->initCronjobs();
-		$this->initBlacklist();
 		$this->initCoreObjects();
 		
 		// prevent application loading during setup
@@ -49,6 +48,7 @@ class WCFACP extends WCF {
 			$this->initApplications();
 		}
 		
+		$this->initBlacklist();
 		$this->initAuth();
 	}
 	

@@ -11,6 +11,8 @@ WCF.ImageViewer = Class.extend({
 	 * Initializes the ImageViewer for every a-tag with the attribute rel = imageviewer.
 	 */
 	init: function() {
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.ImageViewer', $.proxy(this._initImageSizeCheck, this));
+		
 		$('a[rel^=imageviewer]').slimbox({
 			counterText: WCF.Language.get('wcf.imageViewer.counter'),
 			loop: true
@@ -40,6 +42,35 @@ WCF.ImageViewer = Class.extend({
 		if ($url) {
 			$url = $url.substring(4, $url.length - 1);
 			window.location = $url;
+		}
+	},
+	
+	/**
+	 * Initializes the image size check.
+	 */
+	_initImageSizeCheck: function() {
+		$('.jsResizeImage').on('load', $.proxy(this._checkImageSize, this));
+	},
+	
+	/**
+	 * Checks the image size.
+	 */
+	_checkImageSize: function(event) {
+		var $image = $(event.currentTarget);
+		$image.removeClass('jsResizeImage');
+		var $dimensions = $image.getDimensions();
+		var $maxWidth = $image.parents('div').innerWidth();
+		
+		if ($dimensions.width > $maxWidth) {
+			$image.css({
+				height: Math.round($dimensions.height * ($maxWidth / $dimensions.width)) + 'px',
+				width: $maxWidth + 'px'
+			});
+			
+			if (!$image.parents('a').length) {
+				$image.wrap('<a href="' + $image.attr('src') + '" />');
+				$image.parent().slimbox();
+			}
 		}
 	}
 });

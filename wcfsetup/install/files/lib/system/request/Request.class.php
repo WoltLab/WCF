@@ -103,4 +103,17 @@ class Request {
 	public function getRequestObject() {
 		return $this->requestObject;
 	}
+	
+	/**
+	 * Returns true, if the requested page is avaiable during the offline mode.
+	 * 
+	 * @return	boolean
+	 */
+	public function isAvailableDuringOfflineMode() {
+		if (defined($this->className . '::AVAILABLE_DURING_OFFLINE_MODE') && constant($this->className . '::AVAILABLE_DURING_OFFLINE_MODE')) {
+			return true;
+		}
+		
+		return false;
+	}
 }

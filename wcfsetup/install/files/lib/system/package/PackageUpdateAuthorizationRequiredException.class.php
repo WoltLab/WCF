@@ -78,7 +78,7 @@ class PackageUpdateAuthorizationRequiredException extends UserException {
 	 * @return	string
 	 */
 	public function getResponseHeader() {
-		return $this->response['header'];
+		return $this->response['headers'];
 	}
 	
 	/**
@@ -87,6 +87,6 @@ class PackageUpdateAuthorizationRequiredException extends UserException {
 	 * @return	string
 	 */
 	public function getResponseContent() {
-		return $this->response['content'];
+		return $this->response['body'];
 	}
 }

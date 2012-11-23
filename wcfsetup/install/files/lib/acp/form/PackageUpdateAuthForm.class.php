@@ -120,7 +120,7 @@ class PackageUpdateAuthForm extends ACPForm {
 			$this->message = $this->exception->getResponseContent();
 			
 			// find out response charset
-			if (preg_match('/charset=([a-z0-9\-]+)/i', $this->header, $match)) {
+			if (isset($this->header['Content-type']) && preg_match('/charset=([a-z0-9\-]+)/i', $this->header['Content-type'], $match)) {
 				$charset = strtoupper($match[1]);
 				if ($charset != 'UTF-8') $this->message = @StringUtil::convertEncoding($charset, 'UTF-8', $this->message);
 			}
@@ -162,9 +162,8 @@ class PackageUpdateAuthForm extends ACPForm {
 			
 			// save auth data in session
 			$authData = array(
-				'authType' => 'Basic',
-				'loginUsername' => $this->loginUsername,
-				'loginPassword' => $this->loginPassword
+				'username' => $this->loginUsername,
+				'password' => $this->loginPassword
 			);
 			
 			// session data
@@ -209,7 +208,7 @@ class PackageUpdateAuthForm extends ACPForm {
 		parent::readData();
 		
 		// extract realm
-		if (preg_match('/realm="(.*?)"/i', $this->header, $match)) {
+		if (isset($this->header['WWW-Authenticate']) preg_match('/realm="(.*?)"/i', $this->header['WWW-Authenticate'], $match)) {
 			$this->realm = $match[1];
 		}
 		

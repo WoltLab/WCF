@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\package;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\ValidateActionException;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**
@@ -40,7 +40,7 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	 */
 	public function validateGetPluginList() {
 		if (!isset($this->parameters['activePage']) || !intval($this->parameters['activePage'])) {
-			throw new ValidateActionException("Missing or invalid parameter 'activePage'");
+			throw new UserInputException('activePage');
 		}
 	}
 	

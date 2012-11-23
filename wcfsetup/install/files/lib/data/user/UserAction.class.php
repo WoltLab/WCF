@@ -7,7 +7,7 @@ use wcf\data\ISearchAction;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\ValidateActionException;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -47,7 +47,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function validateCreate() {
 		if (!isset($this->parameters['data']['password'])) {
-			throw new ValidateActionException("Missing parameter 'password'");
+			throw new UserInputException('password');
 		}
 	}
 	
@@ -70,7 +70,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		// list might be empty because only our own user id was given
 		if (empty($userIDs)) {
-			throw new ValidateActionException("Invalid object id");
+			throw new UserInputException('objectIDs');
 		}
 		
 		// validate groups
@@ -89,7 +89,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		}
 		
 		if (!UserGroup::isAccessibleGroup($groupIDs)) {
-			throw new ValidateActionException('Insufficient permissions');
+			throw new PermissionDeniedException();
 		}
 	}
 	
@@ -102,7 +102,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$this->readObjects();
 			
 			if (empty($this->objects)) {
-				throw new ValidateActionException('Invalid object id');
+				throw new UserInputException('objectIDs');
 			}
 		}
 		
@@ -114,11 +114,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			if (count($this->objects) == 1 && ($this->objects[0]->userID == WCF::getUser()->userID)) {
 				$count = count($this->parameters);
 				if ($count > 1 || ($count == 1 && !isset($this->parameters['options']))) {
-					throw new ValidateActionException('Insufficient permissions');
+					throw new PermissionDeniedException();
 				}
 			}
 			
-			throw new ValidateActionException('Insufficient permissions');
+			throw new PermissionDeniedException();
 		}
 	}
 	
@@ -202,15 +202,15 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function validateGetSearchResultList() {
 		if (!isset($this->parameters['data']['searchString'])) {
-			throw new ValidateActionException("Missing parameter 'searchString'");
+			throw new UserInputException('searchString');
 		}
 		
 		if (!isset($this->parameters['data']['includeUserGroups'])) {
-			throw new ValidateActionException("Missing parameter 'includeUserGroups'");
+			throw new UserInputException('includeUserGroups');
 		}
 		
 		if (isset($this->parameters['data']['excludedSearchValues']) && !is_array($this->parameters['data']['excludedSearchValues'])) {
-			throw new ValidateActionException("Invalid parameter 'excludedSearchValues' given");
+			throw new UserInputException('excludedSearchValues');
 		}
 	}
 	

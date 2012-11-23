@@ -42,6 +42,17 @@ class ObjectType extends ProcessibleDatabaseObject {
 	}
 	
 	/**
+	 * Returns the names of proporties that should be serialized.
+	 * 
+	 * @return	array<string>
+	 */
+	public final function __sleep() {
+		// 'processor' isn't returned since it can be an instance of
+		// wcf\system\SingletonFactory which may not be serialized
+		return array('data');
+	}
+	
+	/**
 	 * @see	wcf\data\DatabaseObject::handleData()
 	 */
 	protected function handleData($data) {
