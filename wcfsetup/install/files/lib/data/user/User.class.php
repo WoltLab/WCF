@@ -368,4 +368,13 @@ final class User extends DatabaseObject implements IRouteController {
 		
 		return $language;
 	}
+	
+	/**
+	 * Returns true, if the active user can edit this user.
+	 * 
+	 * @return	boolean
+	 */
+	public function canEdit() {
+		return (WCF::getSession()->getPermission('admin.user.canEditUser') && UserGroup::isAccessibleGroup($this->getGroupIDs()));
+	}
 }
