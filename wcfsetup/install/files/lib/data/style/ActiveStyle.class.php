@@ -4,8 +4,6 @@ use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 
 /**
  * Represents the active user style.
@@ -35,14 +33,6 @@ class ActiveStyle extends DatabaseObjectDecorator {
 	public function __construct(DatabaseObject $object) {
 		parent::__construct($object);
 		
-		// TODO: Fix this
-		// calculate page logo path
-		/*
-		if (!empty($this->object->data['variables']['page.logo.image']) && !FileUtil::isURL($this->object->data['variables']['page.logo.image']) && StringUtil::substring($this->object->data['variables']['page.logo.image'], 0, 1) !== '/') {
-			$this->object->data['variables']['page.logo.image'] = RELATIVE_WCF_DIR . $this->object->data['variables']['page.logo.image'];
-		}
-		*/
-		
 		// load icon cache
 		$cacheName = 'icon-'.PACKAGE_ID.'-'.$this->styleID;
 		CacheHandler::getInstance()->addResource(
@@ -62,5 +52,28 @@ class ActiveStyle extends DatabaseObjectDecorator {
 	public function getIconPath($iconName) {
 		if (isset($this->iconCache[$iconName])) return $this->iconCache[$iconName];
 		return WCF::getPath().'icon/'.$iconName.'.svg';
+	}
+	
+	/**
+	 * Returns full path to specified image.
+	 * 
+	 * @param	string		$image
+	 * @return	string
+	 */
+	public function getImage($image) {
+		if ($this->imagePath && file_exists(WCF_DIR.$this->imagePath.$image)) {
+			return WCF::getPath().$this->imagePath.$image;
+		}
+		
+		return WCF::getPath().'images/'.$image;
+	}
+	
+	/**
+	 * Returns page logo.
+	 * 
+	 * @return	string
+	 */
+	public function getPageLogo() {
+		return $this->getImage($this->object->getVariable('pageLogo'));
 	}
 }
