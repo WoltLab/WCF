@@ -73,9 +73,8 @@ class PackageUpdateServer extends DatabaseObject {
 		// database data
 		if ($this->loginUsername != '' && $this->loginPassword != '') {
 			$authData = array(
-				'authType' => 'Basic',
-				'loginUsername' => $this->loginUsername,
-				'loginPassword' => $this->loginPassword
+				'username' => $this->loginUsername,
+				'password' => $this->loginPassword
 			);
 		}
 		
