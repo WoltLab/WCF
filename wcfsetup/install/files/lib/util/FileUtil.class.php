@@ -397,110 +397,20 @@ final class FileUtil {
 	 * @param	array		$postParameters
 	 * @param	array		$headers		empty array or a not initialized variable
 	 * @return	string
+	 * @deprecated	This method currently only is a wrapper around \wcf\util\HTTPUtil. Please use HTTPUtil 
+	 * 		from now on, as this method may be removed in the future.
 	 */
 	public static function downloadFileFromHttp($httpUrl, $prefix = 'package', array $options = array(), array $postParameters = array(), &$headers = array()) {
+		$request = new HTTPRequest($httpUrl, $options, $postParameters);
+		$request->execute();
+		$reply = $request->getReply();
+		
 		$newFileName = self::getTemporaryFilename($prefix.'_');
-		$localFile = new File($newFileName); // the file to write.
+		file_put_contents($newFileName, $reply['body']); // the file to write.
 		
-		if (!isset($options['timeout'])) {
-			$options['timeout'] = 30;
-		}
-		if (!isset($options['method'])) {
-			$options['method'] = (!empty($postParameters) ? 'POST' : 'GET');
-		}
+		$tmp = $reply['headers']; // copy variable, to avoid problems with the reference
+		$headers = $tmp;
 		
-		// parse URL
-		$parsedUrl = parse_url($httpUrl);
-		$port = ($parsedUrl['scheme'] == 'https' ? 443 : 80);
-		$host = $parsedUrl['host'];
-		$path = (isset($parsedUrl['path']) ? $parsedUrl['path'] : '/');
-		// proxy is set
-		if (PROXY_SERVER_HTTP) {
-			$parsedProxy = parse_url(PROXY_SERVER_HTTP);
-			$host = $parsedProxy['host'];
-			$port = ($parsedProxy['scheme'] == 'https' ? 443 : 80);
-			$path = $httpUrl;
-			$parsedUrl['query'] = '';
-		}
-		
-		// build parameter-string
-		$parameterString = '';
-		foreach ($postParameters as $key => $value) {
-			if (is_array($value)) {
-				foreach($value as $value2) {
-					$parameterString .= urlencode($key).'[]='.urlencode($value2).'&';
-				}
-			}
-			else {
-				$parameterString .= urlencode($key).'='.urlencode($value).'&';
-			}
-		}
-		$parameterString = rtrim($parameterString, '&');
-		
-		// connect
-		try {
-			$remoteFile = new RemoteFile(($port === 443 ? 'ssl://' : '').$host, $port, $options['timeout']);
-		}
-		catch (SystemException $e) {
-			$localFile->close();
-			unlink($newFileName);
-			throw $e;
-		}
-		
-		// build and send the http request.
-		$request = $options['method']." ".$path.(!empty($parsedUrl['query']) ? '?'.$parsedUrl['query'] : '')." HTTP/1.0\r\n";
-		$request .= "User-Agent: HTTP.PHP (FileUtil.class.php; WoltLab Community Framework/".WCF_VERSION."; ".WCF::getLanguage()->languageCode.")\r\n";
-		$request .= "Accept: */*\r\n";
-		$request .= "Accept-Language: ".WCF::getLanguage()->languageCode."\r\n";
-		if ($options['method'] !== 'GET') {
-			$request .= "Content-length: ".strlen($parameterString)."\r\n";
-			$request .= "Content-Type: application/x-www-form-urlencoded\r\n";
-		}
-		$request .= "Host: ".$host."\r\n";
-		$request .= "Connection: Close\r\n\r\n";
-		if ($options['method'] !== 'GET') $request .= $parameterString."\r\n\r\n";
-		$remoteFile->puts($request);
-		
-		$inHeader = true;
-		$readResponse = array();
-		// read http response.
-		while (!$remoteFile->eof()) {
-			$readResponse[] = $remoteFile->gets();
-			if ($inHeader) {
-				if (rtrim(end($readResponse)) == '') {
-					$inHeader = false;
-				}
-			}
-			else {
-				// look if the webserver sent an error http statuscode
-				// This has still to be checked if really sufficient!
-				$arrayHeader = array('201', '301', '302', '303', '307', '404');
-				foreach ($arrayHeader as $code) {
-					$error = strpos($readResponse[0], $code);
-				}
-				if ($error !== false) {
-					$localFile->close();
-					unlink($newFileName);
-					throw new SystemException("file ".$path." not found at host '".$host."'");
-				}
-				
-				// write to the target system.
-				$localFile->write(end($readResponse));
-			}
-		}
-		
-		foreach ($readResponse as $line) {
-			if (rtrim($line) == '') break;
-			if (strpos($line, ':') === false) {
-				$headers[trim($line)] = trim($line);
-				continue;
-			}
-			list($key, $value) = explode(':', $line, 2);
-			$headers[$key] = trim($value);
-		}
-		
-		$remoteFile->close();
-		$localFile->close();
 		return $newFileName;
 	}
 	
