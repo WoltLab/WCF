@@ -141,7 +141,6 @@ class SessionHandler extends SingletonFactory {
 	public function initSession() {
 		// init session environment
 		$this->loadVariables();
-		$this->initSecurityToken();
 		$this->defineConstants();
 		
 		// assign language and style id
@@ -219,6 +218,10 @@ class SessionHandler extends SingletonFactory {
 	 * @return	string
 	 */
 	public function getSecurityToken() {
+		if (!$this->getVar('__SECURITY_TOKEN')) {
+			$this->initSecurityToken();
+		}
+		
 		return $this->getVar('__SECURITY_TOKEN');
 	}
 	
