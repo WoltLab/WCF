@@ -7031,6 +7031,139 @@ WCF.Style.Chooser = Class.extend({
 });
 
 /**
+ * Converts static user panel items into interactive dropdowns.
+ * 
+ * @param	string		containerID
+ */
+WCF.UserPanel = Class.extend({
+	/**
+	 * target container
+	 * @var	jQuery
+	 */
+	_container: null,
+	
+	/**
+	 * initialization state
+	 * @var	boolean
+	 */
+	_didLoad: false,
+	
+	/**
+	 * original link element
+	 * @var	jQuery
+	 */
+	_link: null,
+	
+	/**
+	 * reverts to original link if return values are empty
+	 * @var	boolean
+	 */
+	_revertOnEmpty: true,
+	
+	/**
+	 * Initialites the WCF.UserPanel class.
+	 * 
+	 * @param	string		containerID
+	 */
+	init: function(containerID) {
+		this._container = $('#' + containerID);
+		this._didLoad = false;
+		this._revertOnEmpty = true;
+		
+		if (this._container.length != 1) {
+			console.debug("[WCF.UserPanel] Unable to find container identfied by '" + containerID + "', aborting.");
+			return;
+		}
+		
+		if (this._container.data('count')) {
+			this._convert();
+		}
+	},
+	
+	/**
+	 * Converts link into an interactive dropdown menu.
+	 */
+	_convert: function() {
+		WCF.DOMNodeInsertedHandler.enable();
+		
+		this._container.addClass('dropdown');
+		this._link = this._container.children('a').remove();
+		
+		$('<a class="dropdownToggle jsTooltip" title="' + this._container.data('title') + '">' + this._link.html() + '</a>').appendTo(this._container).click($.proxy(this._click, this));
+		var $dropdownMenu = $('<ul class="dropdownMenu" />').appendTo(this._container);
+		$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').appendTo($dropdownMenu);
+		
+		this._addDefaultItems($dropdownMenu);
+		
+		WCF.DOMNodeInsertedHandler.disable();
+	},
+	
+	/**
+	 * Adds default items to dropdown menu.
+	 * 
+	 * @param	jQuery		dropdownMenu
+	 */
+	_addDefaultItems: function(dropdownMenu) { },
+	
+	/**
+	 * Adds a dropdown divider.
+	 * 
+	 * @param	jQuery		dropdownMenu
+	 */
+	_addDivider: function(dropdownMenu) {
+		$('<li class="dropdownDivider" />').appendTo(dropdownMenu);
+	},
+	
+	/**
+	 * Handles clicks on the dropdown item.
+	 */
+	_click: function() {
+		if (this._didLoad) {
+			return;
+		}
+		
+		new WCF.Action.Proxy({
+			autoSend: true,
+			data: this._getParameters(),
+			success: $.proxy(this._success, this)
+		});
+		
+		this._didLoad = true;
+	},
+	
+	/**
+	 * Returns a list of parameters for AJAX request.
+	 * 
+	 * @return	object
+	 */
+	_getParameters: function() {
+		return { };
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		if (data.returnValues && data.returnValues.template) {
+			var $dropdownMenu = this._container.children('.dropdownMenu');
+			$dropdownMenu.children('.jsDropdownPlaceholder').remove();
+			$('' + data.returnValues.template).prependTo($dropdownMenu);
+		}
+		else {
+			this._container.removeClass('dropdown').empty();
+			this._link.appendTo(this._container);
+			
+			// remove badge
+			this._container.find('.badge').remove();
+		}
+	}
+});
+
+/**
  * WCF implementation for nested sortables.
  */
 $.widget("ui.wcfNestedSortable", $.extend({}, $.ui.nestedSortable.prototype, {
