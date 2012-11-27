@@ -7076,7 +7076,9 @@ WCF.UserPanel = Class.extend({
 		}
 		
 		if (this._container.data('count')) {
+			WCF.DOMNodeInsertedHandler.enable();
 			this._convert();
+			WCF.DOMNodeInsertedHandler.disable();
 		}
 	},
 	
@@ -7084,8 +7086,6 @@ WCF.UserPanel = Class.extend({
 	 * Converts link into an interactive dropdown menu.
 	 */
 	_convert: function() {
-		WCF.DOMNodeInsertedHandler.enable();
-		
 		this._container.addClass('dropdown');
 		this._link = this._container.children('a').remove();
 		
@@ -7094,8 +7094,6 @@ WCF.UserPanel = Class.extend({
 		$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').appendTo($dropdownMenu);
 		
 		this._addDefaultItems($dropdownMenu);
-		
-		WCF.DOMNodeInsertedHandler.disable();
 	},
 	
 	/**
