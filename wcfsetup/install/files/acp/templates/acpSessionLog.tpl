@@ -8,10 +8,18 @@
 
 <div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller='ACPSessionLog' id=$sessionLogID link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+	
+	<nav>
+		<ul>
+			<li><a href="{link controller='ACPSessionLogList'}{/link}" title="{lang}wcf.acp.sessionLog.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.sessionLog.list{/lang}</span></a></li>
+			
+			{event name='largeButtonsTop'}
+		</ul>
+	</nav>
 </div>
 
 {hascontent}
-	<div class="tabularBox tabularBoxTitle marginTop shadow">
+	<div class="tabularBox tabularBoxTitle marginTop">
 		<hgroup>
 			<h1>{lang}wcf.acp.sessionLog.access.list{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.sessionLog.access.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
@@ -36,7 +44,7 @@
 					{foreach from=$objects item=sessionAccessLog}
 						<tr>
 							<td class="columnID columnSessionAccessLogID"><p>{@$sessionAccessLog->sessionAccessLogID}</p></td>
-							<td class="columnURL columnIpAddress"{if $sessionAccessLog->ipAddress != $sessionLog->ipAddress} style="color: red"{/if}><p>{$sessionAccessLog->ipAddress}</p></td>
+							<td class="columnURL columnIpAddress{if $sessionAccessLog->ipAddress != $sessionLog->ipAddress} hot{/if}"><p>{$sessionAccessLog->ipAddress}</p></td>
 							<td class="columnDate columnTime"><p>{@$sessionAccessLog->time|time}</p></td>
 							<td class="columnTitle columnPackageName"><p>{$sessionAccessLog->packageName|language}</p></td>
 							<td class="columnText columnClassName"><p>{$sessionAccessLog->className}</p></td>
@@ -53,6 +61,14 @@
 	
 	<div class="contentNavigation">
 		{@$pagesLinks}
+		
+		<nav>
+			<ul>
+				<li><a href="{link controller='ACPSessionLogList'}{/link}" title="{lang}wcf.acp.sessionLog.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.sessionLog.list{/lang}</span></a></li>
+				
+				{event name='largeButtonsBottom'}
+			</ul>
+		</nav>
 	</div>
 {/hascontent}
 
