@@ -4513,6 +4513,22 @@ WCF.Search.Base = Class.extend({
 		if (this._searchInput.getTagName() === 'input') {
 			this._searchInput.attr('autocomplete', 'off');
 		}
+		
+		this._searchInput.blur($.proxy(this._blur, this));
+	},
+	
+	/**
+	 * Closes the dropdown after a short delay.
+	 */
+	_blur: function() {
+		var self = this;
+		new WCF.PeriodicalExecuter(function(pe) {
+			if (self._list.is(':visible')) {
+				self._clearList(false);
+			}
+			
+			pe.stop();
+		}, 100);
 	},
 	
 	/**
