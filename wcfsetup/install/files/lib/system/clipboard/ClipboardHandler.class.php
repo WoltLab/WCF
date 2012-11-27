@@ -135,14 +135,14 @@ class ClipboardHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns a type by type id.
+	 * Returns a type by object type id.
 	 * 
-	 * @param	integer		$typeID
+	 * @param	integer				$objectTypeID
 	 * @return	wcf\data\object\type\ObjectType
 	 */
-	public function getObjectType($typeID) {
-		if (isset($this->cache['objectTypes'][$typeID])) {
-			return $this->cache['objectTypes'][$typeID];
+	public function getObjectType($objectTypeID) {
+		if (isset($this->cache['objectTypes'][$objectTypeID])) {
+			return $this->cache['objectTypes'][$objectTypeID];
 		}
 		
 		return null;
@@ -154,6 +154,21 @@ class ClipboardHandler extends SingletonFactory {
 	 * @param	integer		$objectTypeID
 	 */
 	protected function loadMarkedItems($objectTypeID = null) {
+		if ($this->markedItems === null) {
+			$this->markedItems = array();
+		}
+		
+		if ($objectTypeID !== null) {
+			$objectType = $this->getObjectType($objectTypeID);
+			if ($objectType === null) {
+				throw new SystemException("object type id ".$objectTypeID." is invalid");
+			}
+			
+			if (!isset($this->markedItems[$objectType->objectType])) {
+				$this->markedItems[$objectType->objectType] = array();
+			}
+		}
+		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("userID = ?", array(WCF::getUser()->userID));
 		if ($objectTypeID !== null) {
@@ -190,7 +205,6 @@ class ClipboardHandler extends SingletonFactory {
 		}
 		
 		// read objects
-		$this->markedItems = array();
 		foreach ($data as $objectType => $objectData) {
 			$objectList = new $objectData['className']();
 			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias() . "." . $objectList->getDatabaseTableIndexName() . " IN (?)", array($objectData['objectIDs']));
@@ -204,11 +218,20 @@ class ClipboardHandler extends SingletonFactory {
 	/**
 	 * Loads a list of marked items grouped by type name.
 	 * 
-	 * @param	integer		$typeID
+	 * @param	integer		$objectTypeID
 	 */
-	public function getMarkedItems($typeID = null) {
+	public function getMarkedItems($objectTypeID = null) {
 		if ($this->markedItems === null) {
-			$this->loadMarkedItems($typeID);
+			$this->loadMarkedItems($objectTypeID);
+		}
+		
+		if ($objectTypeID !== null) {
+			$objectType = $this->getObjectType($objectTypeID);
+			if (!isset($this->markedItems[$objectType->objectType])) {
+				$this->loadMarkedItems($objectTypeID);
+			}
+			
+			return $this->markedItems[$objectType->objectType];
 		}
 		
 		return $this->markedItems;

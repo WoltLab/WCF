@@ -46,7 +46,7 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 		}
 		
 		// add condtion
-		if (!empty($this->conditions)) $this->conditions .= " AND ";
+		if (!empty($this->conditions)) $this->conditions .= $this->concat;
 		$this->conditions .= $condition;
 		
 		// parameter handling
