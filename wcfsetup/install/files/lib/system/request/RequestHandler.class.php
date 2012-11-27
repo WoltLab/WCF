@@ -47,6 +47,9 @@ class RequestHandler extends SingletonFactory {
 		// handle offline mode
 		if (!$isACPRequest && defined('OFFLINE') && OFFLINE) {
 			if (!WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode') && !$this->activeRequest->isAvailableDuringOfflineMode()) {
+				WCF::getTPL()->assign(array(
+					'templateName' => 'offline'
+				));
 				WCF::getTPL()->display('offline');
 				exit;
 			}
