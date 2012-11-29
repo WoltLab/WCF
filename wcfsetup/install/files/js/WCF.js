@@ -7462,7 +7462,7 @@ $.widget('ui.wcfDialog', {
 	 * Closes this dialog.
 	 */
 	close: function() {
-		if (!this.isOpen()) {
+		if (!this.isOpen() || !this.options.closable) {
 			return;
 		}
 		
