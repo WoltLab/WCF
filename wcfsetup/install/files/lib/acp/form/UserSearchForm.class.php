@@ -266,7 +266,7 @@ class UserSearchForm extends UserOptionListForm {
 		$statement = WCF::getDB()->prepareStatement($sql.$this->conditions, $this->maxResults);
 		$statement->execute($this->conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
-			$this->matches[] = $row['userID'];	
+			$this->matches[] = $row['userID'];
 		}
 	}
 	

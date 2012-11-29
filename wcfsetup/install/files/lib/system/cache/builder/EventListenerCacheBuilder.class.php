@@ -40,7 +40,7 @@ class EventListenerCacheBuilder implements ICacheBuilder {
 			}
 			else {
 				if (!isset($data['inheritedActions'][$row['environment']][$row['eventClassName']])) $data['inheritedActions'][$row['environment']][$row['eventClassName']] = array();
-				$data['inheritedActions'][$row['environment']][$row['eventClassName']][$row['eventName']][] = $row;	
+				$data['inheritedActions'][$row['environment']][$row['eventClassName']][$row['eventName']][] = $row;
 			}
 		}
 		

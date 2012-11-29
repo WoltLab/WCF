@@ -71,7 +71,7 @@
 						{/if}
 					</dd>
 				</dl>
-			</fieldset>	
+			</fieldset>
 		{/if}
 		
 		<fieldset>

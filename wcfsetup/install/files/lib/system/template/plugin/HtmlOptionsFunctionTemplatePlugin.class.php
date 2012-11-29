@@ -71,7 +71,7 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 		$this->selected = array();
 		if (isset($tagArgs['selected'])) {
 			$this->selected = $tagArgs['selected'];
-			if (!is_array($this->selected)) $this->selected = array($this->selected);	
+			if (!is_array($this->selected)) $this->selected = array($this->selected);
 		}
 		
 		// create option list

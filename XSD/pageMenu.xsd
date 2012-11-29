@@ -31,7 +31,7 @@
 	<!-- deleted page menu item element -->
 	<xs:complexType name="pagemenuitem_delete">
 		<xs:attribute name="name" type="woltlab_varchar" use="required" />
-	</xs:complexType>	
+	</xs:complexType>
 	
 	<!-- imported/updated page menu item element -->
 	<xs:complexType name="pagemenuitem_import">

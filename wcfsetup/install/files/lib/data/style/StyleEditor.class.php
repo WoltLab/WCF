@@ -844,7 +844,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		}
 		
 		// save style
-		$style = parent::create($parameters);		
+		$style = parent::create($parameters);
 		$styleEditor = new StyleEditor($style);
 		
 		// save variables

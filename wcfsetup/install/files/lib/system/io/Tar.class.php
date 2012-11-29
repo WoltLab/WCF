@@ -255,7 +255,7 @@ class Tar implements IArchive {
 			// read header
 			$header = $this->readHeader($binaryData);
 			if ($header === false) {
-				continue;	
+				continue;
 			}
 			
 			// fixes a bug that files with long names aren't correctly
@@ -288,7 +288,7 @@ class Tar implements IArchive {
 	 */
 	protected function readHeader($binaryData) {
 		if (strlen($binaryData) != 512) {
-			return false;	
+			return false;
 		}
 		
 		$header = array();

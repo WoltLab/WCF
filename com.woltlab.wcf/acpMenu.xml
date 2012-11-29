@@ -92,7 +92,7 @@
 			<permissions>admin.system.package.canEditServer</permissions>
 			<showorder>2</showorder>
 		</acpmenuitem>
-		<!-- /packages -->	
+		<!-- /packages -->
 		
 		<!-- application -->
 		<acpmenuitem name="wcf.acp.menu.link.application">
@@ -225,7 +225,7 @@
 			<parent>wcf.acp.menu.link.group.general</parent>
 			<permissions>admin.user.canEditGroup,admin.user.canDeleteGroup</permissions>
 			<showorder>1</showorder>
-		</acpmenuitem>	
+		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.group.add">
 			<link>index.php/UserGroupAdd/</link>

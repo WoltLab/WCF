@@ -31,6 +31,6 @@ class ConcatModifierTemplatePlugin implements IModifierTemplatePlugin {
 			$result .= $arg;
 		}
 		
-		return $result;	
+		return $result;
 	}
 }

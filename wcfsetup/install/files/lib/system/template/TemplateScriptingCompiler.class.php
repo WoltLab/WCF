@@ -1182,7 +1182,7 @@ class TemplateScriptingCompiler {
 						$className = $this->template->getPluginClassName('modifier', $modifierData['name']);
 						if (class_exists($className)) {
 							$modifierData['className'] = $className;
-							$this->autoloadPlugins[$modifierData['className']] = $modifierData['className'];	
+							$this->autoloadPlugins[$modifierData['className']] = $modifierData['className'];
 						}
 						else if ((!function_exists($modifierData['name']) && !in_array($modifierData['name'], $this->unknownPHPFunctions)) || in_array($modifierData['name'], $this->disabledPHPFunctions)) {
 							throw new SystemException($this->formatSyntaxError("unknown modifier '".$values[$i]."'", $this->currentIdentifier, $this->currentLineNo));

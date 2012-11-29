@@ -31,7 +31,7 @@
 	<!-- deleted page location element type -->
 	<xs:complexType name="pagelocation_delete">
 		<xs:attribute name="name" type="woltlab_varchar" use="required" />
-	</xs:complexType>	
+	</xs:complexType>
 	
 	<!-- imported/updated page location element type -->
 	<xs:complexType name="pagelocation_import">

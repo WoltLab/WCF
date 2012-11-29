@@ -220,7 +220,7 @@ class PackageInstallationScheduler {
 		foreach ($packageUpdateVersions as $packageUpdateVersion) {
 			try {
 				// get auth data
-				$authData = $this->getAuthData($packageUpdateVersion);		
+				$authData = $this->getAuthData($packageUpdateVersion);
 				
 				// send request
 				// TODO: Use HTTPRequest

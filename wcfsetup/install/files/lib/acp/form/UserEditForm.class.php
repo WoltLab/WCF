@@ -193,7 +193,7 @@ class UserEditForm extends UserAddForm {
 	 */
 	protected function validateEmail($email, $confirmEmail) {
 		if (StringUtil::toLowerCase($this->user->email) != StringUtil::toLowerCase($email)) {
-			parent::validateEmail($email, $this->confirmEmail);	
+			parent::validateEmail($email, $this->confirmEmail);
 		}
 	}
 	

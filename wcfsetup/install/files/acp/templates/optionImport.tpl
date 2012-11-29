@@ -11,7 +11,7 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.acp.option.import.success{/lang}</p>	
+	<p class="success">{lang}wcf.acp.option.import.success{/lang}</p>
 {/if}
 
 <form method="post" action="{link controller='OptionImport'}{/link}" enctype="multipart/form-data">

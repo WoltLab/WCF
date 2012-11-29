@@ -77,7 +77,7 @@ class Mail {
 			.'MIME-Version: 1.0'.self::$crlf
 			.'From: '.$this->getFrom().self::$crlf
 			.($this->getCCString() != '' ? 'CC:'.$this->getCCString().self::$crlf : '')
-			.($this->getBCCString() != '' ? 'BCC:'.$this->getBCCString().self::$crlf : '');					
+			.($this->getBCCString() != '' ? 'BCC:'.$this->getBCCString().self::$crlf : '');				
 			
 		if (count($this->getAttachments())) {
 			$this->header .= 'Content-Transfer-Encoding: 8bit'.self::$crlf;
@@ -103,7 +103,7 @@ class Mail {
 		if ($withTo && $this->getToString() != '') $recipients .= 'TO:'.$this->getToString().self::$crlf;
 		if ($this->getCCString() != '') $recipients .= 'CC:'.$this->getCCString().self::$crlf;
 		if ($this->getBCCString() != '') $recipients .= 'BCC:'.$this->getBCCString().self::$crlf;
-		return $recipients;	
+		return $recipients;
 	}
 	
 	/**
@@ -142,7 +142,7 @@ class Mail {
 				
 				// get file contents
 				$data = @file_get_contents($path);
-				$data = chunk_split(base64_encode($data), 70, self::$crlf);	
+				$data = chunk_split(base64_encode($data), 70, self::$crlf);
 				
 				$this->body .= 'Content-Type: application/octetstream; name="'.$fileName.'"'.self::$crlf;
 				$this->body .= 'Content-Transfer-Encoding: base64'.self::$crlf;
