@@ -18,7 +18,7 @@ class EventListenerCacheBuilder implements ICacheBuilder {
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-		list($cache, $packageID) = explode('-', $cacheResource['cache']); 
+		list($cache, $packageID) = explode('-', $cacheResource['cache']);
 		$data = array(
 			'actions' => array('user' => array(), 'admin' => array()),
 			'inheritedActions' => array('user' => array(), 'admin' => array())

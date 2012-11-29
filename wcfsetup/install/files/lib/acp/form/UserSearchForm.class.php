@@ -251,7 +251,7 @@ class UserSearchForm extends UserOptionListForm {
 			ON		(option_value.userID = user_table.userID)";
 		
 		// build search condition
-		$this->conditions = new PreparedStatementConditionBuilder(); 
+		$this->conditions = new PreparedStatementConditionBuilder();
 		
 		// static fields
 		$this->buildStaticConditions();

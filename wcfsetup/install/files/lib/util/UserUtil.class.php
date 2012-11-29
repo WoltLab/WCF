@@ -110,7 +110,7 @@ final class UserUtil {
 		
 		// darwin fix
 		if ($REMOTE_ADDR == '::1' || $REMOTE_ADDR == 'fe80::1') {
-			$REMOTE_ADDR = '127.0.0.1'; 
+			$REMOTE_ADDR = '127.0.0.1';
 		}
 		
 		$REMOTE_ADDR = self::convertIPv4To6($REMOTE_ADDR);

@@ -189,7 +189,7 @@ class SMTPMailSender extends MailSender {
 			$result .= $read;
 			if (substr($read, 3, 1) == " ") break;
 		}
-		return $result; 
+		return $result;
 	}
 	
 	/**

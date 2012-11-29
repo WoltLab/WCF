@@ -103,7 +103,7 @@ class UserAddForm extends UserOptionListForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_POST['username'])) $this->username = StringUtil::trim($_POST['username']); 
+		if (isset($_POST['username'])) $this->username = StringUtil::trim($_POST['username']);
 		if (isset($_POST['email'])) $this->email = StringUtil::trim($_POST['email']);
 		if (isset($_POST['confirmEmail'])) $this->confirmEmail = StringUtil::trim($_POST['confirmEmail']);
 		if (isset($_POST['password'])) $this->password = $_POST['password'];
@@ -119,14 +119,14 @@ class UserAddForm extends UserOptionListForm {
 	public function validate() {
 		// validate static user options 
 		try {
-			$this->validateUsername($this->username); 
+			$this->validateUsername($this->username);
 		}
 		catch (UserInputException $e) {
 			$this->errorType[$e->getField()] = $e->getType();
 		}
 		
 		try {
-			$this->validateEmail($this->email, $this->confirmEmail); 
+			$this->validateEmail($this->email, $this->confirmEmail);
 		}
 		catch (UserInputException $e) {
 			$this->errorType[$e->getField()] = $e->getType();

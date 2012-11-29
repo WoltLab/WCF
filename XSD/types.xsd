@@ -22,5 +22,5 @@
 			<xs:minInclusive value="0" />
 			<xs:maxInclusive value="1" />
 		</xs:restriction>
-	</xs:simpleType> 
+	</xs:simpleType>
 </xs:schema>
