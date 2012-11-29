@@ -7361,7 +7361,11 @@ $.widget('ui.wcfDialog', {
 			}
 		} else if (key == 'closable' || key == 'closeButtonLabel') {
 			if (this.options.closable) {
+				WCF.DOMNodeInsertedHandler.enable();
+				
 				this._closeButton.attr('title', this.options.closeButtonLabel).show().find('span').html(this.options.closeButtonLabel);
+				
+				WCF.DOMNodeInsertedHandler.disable();
 			} else {
 				this._closeButton.hide();
 			}
@@ -7540,7 +7544,7 @@ $.widget('ui.wcfDialog', {
 		
 		// calculate maximum content height
 		var $heightDifference = $containerDimensions.height - $contentDimensions.height;
-		var $maximumHeight = $windowDimensions.height - $heightDifference;
+		var $maximumHeight = $windowDimensions.height - $heightDifference - 120;
 		this._content.css({ maxHeight: $maximumHeight + 'px' });
 		
 		// re-caculate values if container height was previously limited
