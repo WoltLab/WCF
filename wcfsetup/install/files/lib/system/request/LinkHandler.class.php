@@ -19,8 +19,8 @@ class LinkHandler extends SingletonFactory {
 	 * Returns a relative link.
 	 * 
 	 * @param	string		$controller
-	 * @param 	array		$parameters
-	 * @param 	string		$url
+	 * @param	array		$parameters
+	 * @param	string		$url
 	 * @return	string
 	 */
 	public function getLink($controller = null, array $parameters = array(), $url = '') {

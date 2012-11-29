@@ -546,7 +546,7 @@ class WCF {
 	/**
 	 * Includes the required util or exception classes automatically.
 	 *
-	 * @param 	string		$className
+	 * @param	string		$className
 	 * @see		spl_autoload_register()
 	 */
 	public static final function autoload($className) {

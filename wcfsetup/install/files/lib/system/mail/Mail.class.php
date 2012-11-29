@@ -95,7 +95,7 @@ class Mail {
 	/**
 	 * Creates and returned the recipients list (TO, CC, BCC).
 	 * 
-	 * @param 	boolean		$withTo
+	 * @param	boolean		$withTo
 	 * @return	string
 	 */
 	public function getRecipients($withTo = false) {
@@ -117,21 +117,21 @@ class Mail {
 
 		if (count($this->getAttachments())) {
 			// add message
-			$this->body 	.= '--'.$this->getBoundary().self::$crlf;
-			$this->body 	.= 'Content-Type: '.$this->getContentType().'; charset="UTF-8"'.self::$crlf;
-			$this->body 	.= 'Content-Transfer-Encoding: 8bit'.self::$crlf;
-			//$this->body 	.= self::$crlf.self::$crlf;
-			$this->body 	.= self::$crlf;
+			$this->body .= '--'.$this->getBoundary().self::$crlf;
+			$this->body .= 'Content-Type: '.$this->getContentType().'; charset="UTF-8"'.self::$crlf;
+			$this->body .= 'Content-Transfer-Encoding: 8bit'.self::$crlf;
+			//$this->body .= self::$crlf.self::$crlf;
+			$this->body .= self::$crlf;
 			
 			// wrap lines after 70 characters
-			$this->body	.= wordwrap($this->getMessage(), 70); 
-			$this->body 	.= self::$crlf.self::$crlf;
-			$this->body 	.= '--'.$this->getBoundary().self::$crlf;
+			$this->body .= wordwrap($this->getMessage(), 70); 
+			$this->body .= self::$crlf.self::$crlf;
+			$this->body .= '--'.$this->getBoundary().self::$crlf;
 			
 			// add attachments
 			foreach ($this->getAttachments() as $attachment) {
-				$fileName 	= $attachment['name'];
-				$path 		= $attachment['path'];
+				$fileName = $attachment['name'];
+				$path = $attachment['path'];
 				
 				// download file
 				if (FileUtil::isURL($path)) {
@@ -156,8 +156,8 @@ class Mail {
 			$this->body .= self::$crlf.'--'.$this->getBoundary().'--';
 		}
 		else {
-			//$this->body 	.= self::$crlf;
-			$this->body	.= $this->getMessage();
+			//$this->body .= self::$crlf;
+			$this->body .= $this->getMessage();
 		}
 		return $this->body;
 	}
@@ -167,7 +167,7 @@ class Mail {
 	 * 
 	 * @param	string		$name
 	 * @param	string		$email
-	 * @param 	boolean		$encodeName
+	 * @param	boolean		$encodeName
 	 * @return	string
 	 */
 	public static function buildAddress($name, $email, $encodeName = true) {
@@ -377,7 +377,7 @@ class Mail {
 	/**
 	 * Sets the Priority of the Mail; Default = 3
 	 * 
-	 * @param	integer 	$priority
+	 * @param	integer	$priority
 	 */
 	public function setPriority($priority) {
 		$this->priority = $priority;
@@ -420,7 +420,7 @@ class Mail {
 	/**
 	 * Sets the content type.
 	 * 
-	 * @param	string 		$contentType
+	 * @param	string		$contentType
 	 */
 	public function setContentType($contentType) {
 		$this->contentType = $contentType;

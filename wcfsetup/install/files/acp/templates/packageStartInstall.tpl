@@ -72,8 +72,8 @@
 	<div class="formSubmit">
 		<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
- 		<input type="hidden" name="action" value="{$action}" />
- 		{if $packageID != 0}<input type="hidden" name="id" value="{@$packageID}" />{/if}
+		<input type="hidden" name="action" value="{$action}" />
+		{if $packageID != 0}<input type="hidden" name="id" value="{@$packageID}" />{/if}
 	</div>
 </form>
 

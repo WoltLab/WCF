@@ -270,7 +270,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 * Loads the xml file into a string and returns this string.
 	 *
 	 * @param	string		$filename
-	 * @return 	XML		$xml
+	 * @return	XML		$xml
 	 */
 	protected function getXML($filename = '') {
 		if (empty($filename)) {
@@ -312,7 +312,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 * @param	string		$parentName
 	 * @param	string		$columnName
 	 * @param	string		$tableNameExtension
-	 * @return	integer 	new show order
+	 * @return	integer	new show order
 	 */
 	protected function getShowOrder($showOrder, $parentName = null, $columnName = null, $tableNameExtension = '') {
 		if ($showOrder === null) {

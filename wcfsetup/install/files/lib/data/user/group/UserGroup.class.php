@@ -163,7 +163,7 @@ class UserGroup extends DatabaseObject {
 	 * Returns true, if the given groups are accessible for the active user.
 	 * 
 	 * @param	array		$groupIDs
-	 * @return 	boolean
+	 * @return	boolean
 	 */
 	public static function isAccessibleGroup(array $groupIDs = array()) {
 		if (self::$accessibleGroups === null) {
@@ -241,7 +241,7 @@ class UserGroup extends DatabaseObject {
 	/**
 	 * Returns true, if this group is accessible for the active user.
 	 * 
-	 * @return 	boolean
+	 * @return	boolean
 	 */
 	public function isAccessible() {
 		return self::isAccessibleGroup(array($this->groupID));
@@ -313,7 +313,7 @@ class UserGroup extends DatabaseObject {
 				FROM		wcf".WCF_N."_user_group_option option_table
 				LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
 				ON		(package_dependency.dependency = option_table.packageID)
-				WHERE 		package_dependency.packageID = ?
+				WHERE		package_dependency.packageID = ?
 				ORDER BY	package_dependency.priority ASC";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array(PACKAGE_ID));

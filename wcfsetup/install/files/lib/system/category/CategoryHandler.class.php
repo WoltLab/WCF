@@ -104,7 +104,7 @@ class CategoryHandler extends SingletonFactory {
 	/**
 	 * Gets the object type with the given id.
 	 * 
-	 * @param	integer 	$objectTypeID
+	 * @param	integer		$objectTypeID
 	 * @return	wcf\data\object\type\ObjectType
 	 */
 	public function getObjectType($objectTypeID) {
@@ -118,7 +118,7 @@ class CategoryHandler extends SingletonFactory {
 	/**
 	 * Gets the object type with the given name.
 	 * 
-	 * @param	string 		$objectType
+	 * @param	string		$objectType
 	 * @return	wcf\data\object\type\ObjectType
 	 */
 	public function getObjectTypeByName($objectType) {

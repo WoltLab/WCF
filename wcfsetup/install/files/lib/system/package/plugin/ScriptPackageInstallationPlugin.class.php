@@ -66,7 +66,7 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 	/**
 	 * Returns false. Scripts can't be uninstalled.
 	 * 
-	 * @return 	boolean 	false
+	 * @return	boolean		false
 	 */
 	public function hasUninstall() {
 		return false;

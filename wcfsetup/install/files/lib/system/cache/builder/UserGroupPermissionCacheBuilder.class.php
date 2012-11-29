@@ -35,7 +35,7 @@ class UserGroupPermissionCacheBuilder implements ICacheBuilder {
 			// during the installation of the package wcf
 			$sql = "SELECT		optionName, optionID 
 				FROM		wcf".WCF_N."_user_group_option
-				WHERE 		packageID IS NULL";
+				WHERE		packageID IS NULL";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute();
 		}
@@ -44,7 +44,7 @@ class UserGroupPermissionCacheBuilder implements ICacheBuilder {
 				FROM		wcf".WCF_N."_user_group_option option_table
 				LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
 				ON		(package_dependency.dependency = option_table.packageID)
-				WHERE 		package_dependency.packageID = ?
+				WHERE		package_dependency.packageID = ?
 				ORDER BY	package_dependency.priority ASC";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($packageID));

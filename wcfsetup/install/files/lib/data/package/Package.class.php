@@ -199,8 +199,8 @@ class Package extends DatabaseObject {
 	 * Reminder: The '$packageName' variable being examined here contains the 'name' attribute
 	 * of the 'package' tag noted in the 'packages.xml' file delivered inside the respective package.
 	 * 
-	 * @param 	string 		$packageName
-	 * @return 	boolean 	isValid
+	 * @param	string		$packageName
+	 * @return	boolean		isValid
 	 */
 	public static function isValidPackageName($packageName) {
 		return preg_match('%^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$%', $packageName);
@@ -269,7 +269,7 @@ class Package extends DatabaseObject {
 	 * Formats a package version string for comparing.
 	 * 
 	 * @param	string		$version
-	 * @return 	string		formatted version
+	 * @return	string		formatted version
 	 * @see		http://www.php.net/manual/en/function.version-compare.php
 	 */
 	private static function formatVersionForCompare($version) {
@@ -340,7 +340,7 @@ class Package extends DatabaseObject {
 					FROM	wcf".WCF_N."_package_requirement_map
 					WHERE	packageID = package_requirement.requirement
 				) AS requirementLevel
-			FROM 	wcf".WCF_N."_package_requirement package_requirement
+			FROM	wcf".WCF_N."_package_requirement package_requirement
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
@@ -415,8 +415,8 @@ class Package extends DatabaseObject {
 		
 		$requirements = array();
 		$sql = "SELECT		requirement, level
-			FROM 		wcf".WCF_N."_package_requirement_map
-			WHERE 		".$conditions."
+			FROM		wcf".WCF_N."_package_requirement_map
+			WHERE		".$conditions."
 					AND requirement NOT IN (		-- exclude dependencies to other installations of same package
 						SELECT	packageID
 						FROM	wcf".WCF_N."_package
@@ -467,7 +467,7 @@ class Package extends DatabaseObject {
 						FROM	wcf".WCF_N."_package_requirement_map
 						WHERE	packageID = package.packageID
 					) AS requirementLevel
-			FROM 		wcf".WCF_N."_package package
+			FROM		wcf".WCF_N."_package package
 			".$conditions."
 			ORDER BY	requirementLevel ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);

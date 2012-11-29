@@ -132,7 +132,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		$sql = "SELECT		*
 			FROM		wcf".WCF_N."_package_installation_sql_log
 			WHERE		packageID = ?
-			ORDER BY 	sqlIndex DESC, sqlColumn DESC";
+			ORDER BY	sqlIndex DESC, sqlColumn DESC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
 		$entries = array();
@@ -182,7 +182,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	 * If the specified sql file was not found, an error message is thrown.
 	 * 
 	 * @param	string		$filename
-	 * @return 	string
+	 * @return	string
 	 */
 	protected function getSQL($filename) {
 		// search sql files in package archive
@@ -192,5 +192,5 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 
 		// extract sql file to string
 		return $this->installation->getArchive()->getTar()->extractToString($fileindex);
- 	}
+	}
 }

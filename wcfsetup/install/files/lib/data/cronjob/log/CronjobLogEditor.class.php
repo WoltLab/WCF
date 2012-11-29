@@ -29,7 +29,7 @@ class CronjobLogEditor extends DatabaseObjectEditor {
 						SELECT	cronjobID
 						FROM	wcf".WCF_N."_cronjob cronjob,
 							wcf".WCF_N."_package_dependency package_dependency
-						WHERE 	cronjob.packageID = package_dependency.dependency
+						WHERE	cronjob.packageID = package_dependency.dependency
 							AND package_dependency.packageID = ?
 					)";
 		$statement = WCF::getDB()->prepareStatement($sql);

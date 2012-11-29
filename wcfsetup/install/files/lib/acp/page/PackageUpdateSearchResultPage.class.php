@@ -153,7 +153,7 @@ class PackageUpdateSearchResultPage extends SortablePage {
 				// get installed instances
 				$sql = "SELECT	package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
 					FROM	wcf".WCF_N."_package package
-					WHERE 	package.package = ?";
+					WHERE	package.package = ?";
 				$statement2 = WCF::getDB()->prepareStatement($sql);
 				$statement2->execute(array($row['package']));
 				while ($row2 = $statement2->fetchArray()) {

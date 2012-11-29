@@ -42,15 +42,23 @@ final class ImageUtil {
 	 */
 	public static function getExtensionByMimeType($mimeType) {
 		switch ($mimeType) {
-			case 'image/gif': 			return 'gif';
-			case 'image/jpeg': 			return 'jpg';
-			case 'image/png': 			return 'png';
-			case 'application/x-shockwave-flash': 	return 'swf';
-			case 'image/psd': 			return 'psd';
+			case 'image/gif':
+				return 'gif';
+			case 'image/jpeg':
+				return 'jpg';
+			case 'image/png':
+				return 'png';
+			case 'application/x-shockwave-flash':
+				return 'swf';
+			case 'image/psd':
+				return 'psd';
 			case 'image/bmp':
-			case 'image/x-ms-bmp':			return 'bmp';
-			case 'image/tiff': 			return 'tiff';
-			default:				return '';
+			case 'image/x-ms-bmp':
+				return 'bmp';
+			case 'image/tiff':
+				return 'tiff';
+			default:
+				return '';
 		}
 	}
 	

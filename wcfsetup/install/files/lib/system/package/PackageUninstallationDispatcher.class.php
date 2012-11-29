@@ -126,8 +126,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	/**
 	 * Deletes the given list of files from the target dir.
 	 * 
-	 * @param 	string 		$targetDir
-	 * @param 	string 		$files
+	 * @param	string		$targetDir
+	 * @param	string		$files
 	 * @param	boolean		$deleteEmptyDirectories
 	 * @param	booelan		$deleteEmptyTargetDir
 	 */

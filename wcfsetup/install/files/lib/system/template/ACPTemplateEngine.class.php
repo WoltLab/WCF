@@ -35,7 +35,7 @@ class ACPTemplateEngine extends TemplateEngine {
 	/**
 	 * Deletes all compiled acp templates.
 	 * 
-	 * @param 	string		$compileDir
+	 * @param	string		$compileDir
 	 */
 	public static function deleteCompiledACPTemplates($compileDir = '') {
 		if (empty($compileDir)) $compileDir = WCF_DIR.'acp/templates/compiled/';

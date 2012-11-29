@@ -59,7 +59,7 @@ class TarWriter extends Tar {
 	 * 
 	 * @param	string		$filename
 	 * @param	string		$string		file content
-	 * @return 	boolean		result
+	 * @return	boolean		result
 	 */
 	public function addString($filename, $string) {
 		if (empty($filename)) return false;
@@ -177,7 +177,7 @@ class TarWriter extends Tar {
 	 * 
 	 * @param	string		$filename
 	 * @param	string		$storedFilename
-	 * @return 	boolean		result
+	 * @return	boolean		result
 	 */
 	protected function writeFileHeader($filename, $storedFilename) {
 		$fileInfo = stat($filename);
@@ -199,14 +199,14 @@ class TarWriter extends Tar {
 	/**
 	 * Writes header block.
 	 * 
-	 * @param 	string		$filename
-	 * @param 	integer		$size
-	 * @param 	integer		$mtime
-	 * @param 	integer		$permissions
-	 * @param 	string		$typeFlag
-	 * @param 	integer		$uid
-	 * @param 	integer		$gid
-	 * @return 	boolean		result
+	 * @param	string		$filename
+	 * @param	integer		$size
+	 * @param	integer		$mtime
+	 * @param	integer		$permissions
+	 * @param	string		$typeFlag
+	 * @param	integer		$uid
+	 * @param	integer		$gid
+	 * @return	boolean		result
 	 */
 	public function writeHeaderBlock($filename, $size, $mtime = 0, $permissions = 0, $typeFlag = '', $uid = 0, $gid = 0) {
 		if (strlen($filename) > 99) {
@@ -246,7 +246,7 @@ class TarWriter extends Tar {
 	/**
 	 * Writes a long header block.
 	 * 
-	 * @param 	string		$filename
+	 * @param	string		$filename
 	 * @return	boolean
 	 */
 	protected function writeLongHeaderBlock($filename) {

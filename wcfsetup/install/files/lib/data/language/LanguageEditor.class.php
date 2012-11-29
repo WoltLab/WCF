@@ -67,8 +67,8 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Write the languages files.
 	 *
-	 * @param 	array		$categoryIDs
-	 * @param 	array		$packageIDs
+	 * @param	array		$categoryIDs
+	 * @param	array		$packageIDs
 	 */
 	protected function writeLanguageFiles(array $categoryIDs, array $packageIDs) {
 		// get categories
@@ -95,7 +95,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 					// update after wcf installation
 					$conditions->add("packageID IS NULL");
 					
-					$sql = "SELECT 	languageItem, languageItemValue, languageCustomItemValue, languageUseCustomValue
+					$sql = "SELECT	languageItem, languageItemValue, languageCustomItemValue, languageUseCustomValue
 						FROM	wcf".WCF_N."_language_item
 						".$conditions;
 				}
@@ -108,7 +108,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 						LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
 						ON		(package_dependency.dependency = language_item.packageID)
 						".$conditions."
-						ORDER BY 	package_dependency.priority ASC";
+						ORDER BY	package_dependency.priority ASC";
 				}
 				
 				$statement2 = WCF::getDB()->prepareStatement($sql);
@@ -182,7 +182,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				LEFT JOIN	wcf".WCF_N."_language_category language_category
 				ON		(language_category.languageCategoryID = language_item.languageCategoryID)
 				".$conditions."
-				ORDER BY 	package_dependency.priority ASC";
+				ORDER BY	package_dependency.priority ASC";
 		}
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
@@ -354,9 +354,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Deletes the language cache.
 	 *
-	 * @param 	string		$languageID
-	 * @param 	string		$category
-	 * @param 	string		$packageID
+	 * @param	string		$languageID
+	 * @param	string		$category
+	 * @param	string		$packageID
 	 */
 	public static function deleteLanguageFiles($languageID = '.*', $category = '.*', $packageID = '.*') {
 		if ($category != '.*') $category = preg_quote($category, '~');
@@ -495,7 +495,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * @param	array		$items
 	 * @param	wcf\data\language\category\LanguageCategory	$category
 	 * @param	integer		$packageID
-	 * @param 	array		$useCustom
+	 * @param	array		$useCustom
 	 */
 	public function updateItems(array $items, LanguageCategory $category, $packageID = PACKAGE_ID, array $useCustom = array()) {
 		if (empty($items)) return;

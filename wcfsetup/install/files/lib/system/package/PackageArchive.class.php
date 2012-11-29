@@ -413,7 +413,7 @@ class PackageArchive {
 	 * Checks if the new package is compatible with
 	 * the package that is about to be updated.
 	 * 
-	 * @return 	boolean 	isValidUpdate
+	 * @return	boolean		isValidUpdate
 	 */
 	public function isValidUpdate() {
 		// Check name of the installed package against the name of the update. Both must be identical.
@@ -482,8 +482,8 @@ class PackageArchive {
 	public function getDuplicates() {
 		$packages = array();
 		$sql = "SELECT	*
-			FROM 	wcf".WCF_N."_package 
-			WHERE 	package = ?";
+			FROM	wcf".WCF_N."_package 
+			WHERE	package = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->packageInfo['name']));
 		while ($row = $statement->fetchArray()) {
@@ -515,7 +515,7 @@ class PackageArchive {
 	/**
 	 * Returns information about the author of this package archive.
 	 * 
-	 * @param	string 		$name		name of the requested information
+	 * @param	string		$name		name of the requested information
 	 * @return	string
 	 */
 	public function getAuthorInfo($name) {
@@ -526,7 +526,7 @@ class PackageArchive {
 	/**
 	 * Returns information about this package.
 	 * 
-	 * @param	string 		$name		name of the requested information
+	 * @param	string		$name		name of the requested information
 	 * @return	mixed
 	 */
 	public function getPackageInfo($name) {
@@ -636,7 +636,7 @@ class PackageArchive {
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("package.package IN (?)", array($packageNames));
 			
-			$sql = "SELECT 	package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
+			$sql = "SELECT	package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
 				FROM	wcf".WCF_N."_package package
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -677,7 +677,7 @@ class PackageArchive {
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("package IN (?)", array($packageNames));
 			
-			$sql = "SELECT 	*
+			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_package
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -772,8 +772,8 @@ class PackageArchive {
 	/**
 	 * Unzips compressed package archives.
 	 * 
-	 * @param 	string		$archive	filename
-	 * @return 	string		new filename
+	 * @param	string		$archive	filename
+	 * @return	string		new filename
 	 */
 	public static function unzipPackageArchive($archive) {
 		if (!FileUtil::isURL($archive)) {

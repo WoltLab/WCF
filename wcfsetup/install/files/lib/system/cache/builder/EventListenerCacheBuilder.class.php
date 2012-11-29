@@ -29,7 +29,7 @@ class EventListenerCacheBuilder implements ICacheBuilder {
 			FROM		wcf".WCF_N."_event_listener event_listener
 			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
 			ON		(package_dependency.dependency = event_listener.packageID)
-			WHERE 		package_dependency.packageID = ?
+			WHERE		package_dependency.packageID = ?
 			ORDER BY	package_dependency.priority ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($packageID));

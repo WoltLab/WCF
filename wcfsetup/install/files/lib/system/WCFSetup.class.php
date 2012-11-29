@@ -862,11 +862,11 @@ class WCFSetup extends WCF {
 		
 		if (isset($_POST['send']) || self::$developerMode) {
 			if (isset($_POST['send'])) {
-				if (isset($_POST['username'])) 		$username = StringUtil::trim($_POST['username']);
-				if (isset($_POST['email'])) 		$email = StringUtil::trim($_POST['email']);
-				if (isset($_POST['confirmEmail'])) 	$confirmEmail = StringUtil::trim($_POST['confirmEmail']);
-				if (isset($_POST['password'])) 		$password = $_POST['password'];
-				if (isset($_POST['confirmPassword'])) 	$confirmPassword = $_POST['confirmPassword'];
+				if (isset($_POST['username'])) $username = StringUtil::trim($_POST['username']);
+				if (isset($_POST['email'])) $email = StringUtil::trim($_POST['email']);
+				if (isset($_POST['confirmEmail'])) $confirmEmail = StringUtil::trim($_POST['confirmEmail']);
+				if (isset($_POST['password'])) $password = $_POST['password'];
+				if (isset($_POST['confirmPassword'])) $confirmPassword = $_POST['confirmPassword'];
 			}
 			else {
 				$username = $password = $confirmPassword = 'root';

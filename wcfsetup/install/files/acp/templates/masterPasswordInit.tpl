@@ -76,8 +76,8 @@
 	
 	<div class="formSubmit">
 		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
- 		<input type="hidden" name="url" value="{$url}" />
- 	</div>
+		<input type="hidden" name="url" value="{$url}" />
+	</div>
 </form>
 
 {include file='footer'}

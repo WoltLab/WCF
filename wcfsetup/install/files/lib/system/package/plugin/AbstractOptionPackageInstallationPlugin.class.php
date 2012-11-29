@@ -173,8 +173,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 */
 	public function hasUninstall() {
 		$hasUninstallOptions = parent::hasUninstall();
-		$sql = "SELECT 	COUNT(categoryID) AS count
-			FROM 	wcf".WCF_N."_".$this->tableName."_category
+		$sql = "SELECT	COUNT(categoryID) AS count
+			FROM	wcf".WCF_N."_".$this->tableName."_category
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
@@ -199,7 +199,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	/**
 	 * Installs option categories.
 	 * 
-	 * @param 	array		$category
+	 * @param	array		$category
 	 */
 	protected function saveCategory($category) {
 		// search existing category
@@ -257,8 +257,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	/**
 	 * Installs options.
 	 * 
-	 * @param 	array 		$option
-	 * @param 	string		$categoryName
+	 * @param	array		$option
+	 * @param	string		$categoryName
 	 * @param	integer		$existingOptionID
 	 */
 	protected abstract function saveOption($option, $categoryName, $existingOptionID = 0);

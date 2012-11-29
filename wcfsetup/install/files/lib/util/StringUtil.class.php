@@ -252,8 +252,8 @@ final class StringUtil {
 	/**
 	 * Sorts an array of strings and maintain index association.
 	 * 
-	 * @param 	array		$strings 
-	 * @return 	boolean
+	 * @param	array		$strings 
+	 * @return	boolean
 	 */
 	public static function sort(array &$strings) {
 		return asort($strings, SORT_LOCALE_STRING);
@@ -360,11 +360,11 @@ final class StringUtil {
 	/**
 	 * Checks wether $haystack starts with $needle, or not.
 	 * 
-	 * @param	string 		$haystack	The string to be checked for starting with $needle
-	 * @param	string 		$needle		The string to be found at the start of $haystack
+	 * @param	string		$haystack	The string to be checked for starting with $needle
+	 * @param	string		$needle		The string to be found at the start of $haystack
 	 * @param	boolean		$ci		Case insensitive or not. Default = false.
 	 * 
-	 * @return boolean True, if $haystack starts with $needle, false otherwise.
+	 * @return	boolean				True, if $haystack starts with $needle, false otherwise.
 	 */
 	public static function startsWith($haystack, $needle, $ci = false) {
 		if ($ci) {
@@ -378,13 +378,13 @@ final class StringUtil {
 	/**
 	 * Checks wether $haystack ends with $needle, or not.
 	 * 
-	 * @param	string 		$haystack	The string to be checked for ending with $needle
-	 * @param	string 		$needle		The string to be found at the end of $haystack
+	 * @param	string		$haystack	The string to be checked for ending with $needle
+	 * @param	string		$needle		The string to be found at the end of $haystack
 	 * @param	boolean		$ci		Case insensitive or not. Default = false.
 	 * 
-	 * @return boolean True, if $haystack ends with $needle, false otherwise. 
-	 * Always returns true if length of $needle is 0.
-	 */	
+	 * @return	boolean				True, if $haystack ends with $needle, false otherwise. 
+	 *						Always returns true if length of $needle is 0.
+	 */
 	public static function endsWith($haystack, $needle, $ci = false) {
 		if ($ci) {
 			$haystack = self::toLowerCase($haystack);
@@ -528,10 +528,10 @@ final class StringUtil {
 	 * Converts a string to requested character encoding.
 	 * @see		mb_convert_encoding()
 	 * 
-	 * @param 	string		$inCharset
-	 * @param 	string		$outCharset
-	 * @param 	string		$string
-	 * @return 	string		converted string
+	 * @param	string		$inCharset
+	 * @param	string		$outCharset
+	 * @param	string		$string
+	 * @return	string		converted string
 	 */
 	public static function convertEncoding($inCharset, $outCharset, $string) {
 		if ($inCharset == 'ISO-8859-1' && $outCharset == 'UTF-8') return utf8_encode($string);
@@ -553,7 +553,7 @@ final class StringUtil {
 	/**
 	 * Returns false, if the given word is forbidden by given word filter.
 	 * 
-	 * @param 	string		$word
+	 * @param	string		$word
 	 * @param	string		$filter
 	 * @return	boolean
 	 */

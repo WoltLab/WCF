@@ -562,7 +562,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	/**
 	 * Exports this style.
 	 * 
-	 * @param	boolean 	$templates
+	 * @param	boolean		$templates
 	 * @param	boolean		$images
 	 * @param	boolean		$icons
 	 * @param	string		$packageName

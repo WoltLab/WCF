@@ -27,7 +27,7 @@ class PageMenuCacheBuilder implements ICacheBuilder {
 			FROM		wcf".WCF_N."_page_menu_item menu_item
 			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
 			ON		(package_dependency.dependency = menu_item.packageID)
-			WHERE 		package_dependency.packageID = ?
+			WHERE		package_dependency.packageID = ?
 			ORDER BY	package_dependency.priority ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($packageID));

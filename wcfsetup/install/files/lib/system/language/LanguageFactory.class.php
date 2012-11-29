@@ -242,7 +242,7 @@ class LanguageFactory extends SingletonFactory {
 	/**
 	 * Returns all available languages for package with the given id.
 	 * 
-	 * @param 	integer		$packageID
+	 * @param	integer		$packageID
 	 * @return	array<wcf\data\language\Language>
 	 */
 	public function getLanguages($packageID = PACKAGE_ID) {
@@ -261,7 +261,7 @@ class LanguageFactory extends SingletonFactory {
 	/**
 	 * Returns all available content languages for given package.
 	 * 
-	 * @param 	integer		$packageID
+	 * @param	integer		$packageID
 	 * @return	array<wcf\data\language\Language>
 	 */
 	public function getContentLanguages($packageID = PACKAGE_ID) {
@@ -287,14 +287,14 @@ class LanguageFactory extends SingletonFactory {
 		// remove old default language
 		$sql = "UPDATE	wcf".WCF_N."_language
 			SET	isDefault = 0
-			WHERE 	isDefault = 1";
+			WHERE	isDefault = 1";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		
 		// make this language to default
 		$sql = "UPDATE	wcf".WCF_N."_language
 			SET	isDefault = 1
-			WHERE 	languageID = ?";
+			WHERE	languageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($languageID));
 		

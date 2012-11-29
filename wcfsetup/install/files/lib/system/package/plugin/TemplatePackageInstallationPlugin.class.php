@@ -51,7 +51,7 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 		// get templates from log
 		$sql = "SELECT	templateName
 			FROM	wcf".WCF_N."_template
-			WHERE 	packageID = ?";
+			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
 		while ($row = $statement->fetchArray()) {

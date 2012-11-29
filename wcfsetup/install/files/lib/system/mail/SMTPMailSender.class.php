@@ -181,7 +181,7 @@ class SMTPMailSender extends MailSender {
 	/**
 	 * Reads the Information wich the Server sends back.
 	 * 
-	 * @return 	string
+	 * @return	string
 	 */
 	protected function read() {
 		$result = '';

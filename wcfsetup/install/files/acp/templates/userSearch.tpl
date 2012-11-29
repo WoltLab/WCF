@@ -185,7 +185,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
- 	</div>
+	</div>
 </form>
 
 {include file='footer'}

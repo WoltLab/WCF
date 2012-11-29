@@ -195,7 +195,7 @@ abstract class TreeMenu extends SingletonFactory {
 	/**
 	 * Returns the list of menu items.
 	 * 
-	 * @param 	string		$parentMenuItem
+	 * @param	string		$parentMenuItem
 	 * @return	array
 	 */
 	public function getMenuItems($parentMenuItem = null) {

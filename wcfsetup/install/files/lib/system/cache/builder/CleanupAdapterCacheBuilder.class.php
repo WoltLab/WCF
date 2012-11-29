@@ -30,7 +30,7 @@ class CleanupAdapterCacheBuilder implements ICacheBuilder {
 			ON		(package_dependency.dependency = listener.packageID)
 			LEFT JOIN	wcf".WCF_N."_package package
 			ON		(package.packageID = listener.packageID)
-			WHERE 		package_dependency.packageID = ?
+			WHERE		package_dependency.packageID = ?
 			ORDER BY	package_dependency.priority ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($packageID));

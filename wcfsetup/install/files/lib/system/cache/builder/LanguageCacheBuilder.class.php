@@ -30,7 +30,7 @@ class LanguageCacheBuilder implements ICacheBuilder {
 		);
 		
 		// get language to packages
-		$sql = "SELECT 		package.languageID, package.packageID
+		$sql = "SELECT		package.languageID, package.packageID
 			FROM		wcf".WCF_N."_language_to_package package
 			LEFT JOIN	wcf".WCF_N."_language language
 			ON		(language.languageID = package.languageID)

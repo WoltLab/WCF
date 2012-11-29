@@ -40,9 +40,9 @@ class RemoteFile extends File {
 	/**
 	 * Opens a new connection to a remote host.
 	 * 
-	 * @param 	string		$host
-	 * @param 	integer		$port
-	 * @param 	integer		$timeout
+	 * @param	string		$host
+	 * @param	integer		$port
+	 * @param	integer		$timeout
 	 * @param	array		$options
 	 */
 	public function __construct($host, $port, $timeout = 30) {

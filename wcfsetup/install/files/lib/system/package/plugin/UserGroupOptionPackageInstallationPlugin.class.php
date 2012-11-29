@@ -70,8 +70,8 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		
 		// check if the otion exist already and was installed by this package
 		$sql = "SELECT	optionID
-			FROM 	wcf".WCF_N."_user_group_option
-			WHERE 	optionName = ?
+			FROM	wcf".WCF_N."_user_group_option
+			WHERE	optionName = ?
 			AND	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(

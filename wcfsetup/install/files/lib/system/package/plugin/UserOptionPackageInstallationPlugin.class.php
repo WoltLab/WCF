@@ -33,7 +33,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	/**
 	 * Installs user option categories.
 	 * 
-	 * @param 	array		$category
+	 * @param	array		$category
 	 * @param	array		$categoryXML
 	 */
 	protected function saveCategory($category, $categoryXML = null) {
@@ -76,23 +76,23 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 		$showOrder = null;
 		
 		// get values
-		if (isset($option['name'])) $optionName 			= $option['name'];
-		if (isset($option['optiontype'])) $optionType 			= $option['optiontype'];
-		if (isset($option['defaultvalue'])) $defaultValue 		= $option['defaultvalue'];
-		if (isset($option['validationpattern'])) $validationPattern 	= $option['validationpattern'];
-		if (isset($option['required'])) $required 			= intval($option['required']);
+		if (isset($option['name'])) $optionName = $option['name'];
+		if (isset($option['optiontype'])) $optionType = $option['optiontype'];
+		if (isset($option['defaultvalue'])) $defaultValue = $option['defaultvalue'];
+		if (isset($option['validationpattern'])) $validationPattern = $option['validationpattern'];
+		if (isset($option['required'])) $required = intval($option['required']);
 		if (isset($option['askduringregistration'])) $askDuringRegistration = intval($option['askduringregistration']);
-		if (isset($option['editable'])) $editable		 	= intval($option['editable']);
-		if (isset($option['visible'])) $visible 			= intval($option['visible']);
-		if (isset($option['searchable'])) $searchable 			= intval($option['searchable']);
-		if (isset($option['showorder'])) $showOrder	 		= intval($option['showorder']);
-		if (isset($option['outputclass'])) $outputClass 		= $option['outputclass'];
-		if (isset($option['selectoptions'])) $selectOptions 		= $option['selectoptions'];
-		if (isset($option['enableoptions'])) $enableOptions	 	= $option['enableoptions'];
-		if (isset($option['disabled'])) $disabled 			= intval($option['disabled']);
+		if (isset($option['editable'])) $editable = intval($option['editable']);
+		if (isset($option['visible'])) $visible = intval($option['visible']);
+		if (isset($option['searchable'])) $searchable = intval($option['searchable']);
+		if (isset($option['showorder'])) $showOrder = intval($option['showorder']);
+		if (isset($option['outputclass'])) $outputClass = $option['outputclass'];
+		if (isset($option['selectoptions'])) $selectOptions = $option['selectoptions'];
+		if (isset($option['enableoptions'])) $enableOptions = $option['enableoptions'];
+		if (isset($option['disabled'])) $disabled = intval($option['disabled']);
 		$showOrder = $this->getShowOrder($showOrder, $categoryName, 'categoryName');
-		if (isset($option['permissions'])) $permissions 		= $option['permissions'];
-		if (isset($option['options'])) $options 			= $option['options'];
+		if (isset($option['permissions'])) $permissions = $option['permissions'];
+		if (isset($option['options'])) $options = $option['options'];
 		
 		// check if optionType exists
 		$className = 'wcf\system\option\\'.StringUtil::firstCharToUpperCase($optionType).'OptionType';
@@ -108,8 +108,8 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 		
 		// get optionID if it was installed by this package already
 		$sql = "SELECT	*
-			FROM 	wcf".WCF_N."_".$this->tableName."
-			WHERE 	optionName = ?
+			FROM	wcf".WCF_N."_".$this->tableName."
+			WHERE	optionName = ?
 			AND	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
@@ -161,7 +161,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	public function uninstall() {
 		// get optionsIDs from package
 		$sql = "SELECT	optionID
-			FROM 	wcf".WCF_N."_user_option
+			FROM	wcf".WCF_N."_user_option
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));

@@ -48,7 +48,7 @@ class SystemException extends LoggedException implements IPrintableException {
 	/**
 	 * Returns the description of this exception.
 	 * 
-	 * @return 	string
+	 * @return	string
 	 */
 	public function getDescription() {
 		return $this->description;

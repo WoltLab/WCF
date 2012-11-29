@@ -28,7 +28,7 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 		$sql = "SELECT		menuItem, menuItemID
 			FROM		wcf".WCF_N."_acp_menu_item menu_item
 			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON 		(menu_item.packageID = package_dependency.dependency)
+			ON		(menu_item.packageID = package_dependency.dependency)
 			WHERE		package_dependency.packageID = ?
 			ORDER BY	package_dependency.priority ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -100,7 +100,7 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 			FROM		wcf".WCF_N."_option_category option_category
 			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
 			ON		(package_dependency.dependency = option_category.packageID)
-			WHERE 		package_dependency.packageID = ?
+			WHERE		package_dependency.packageID = ?
 			ORDER BY	package_dependency.priority ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($packageID));
@@ -114,7 +114,7 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 		$statementParameters = $conditions->getParameters();
 		array_unshift($statementParameters, $packageID);
 		
-		$sql = "SELECT 		categoryID, parentCategoryName, categoryName,
+		$sql = "SELECT		categoryID, parentCategoryName, categoryName,
 					(
 						SELECT COUNT(*) FROM wcf".WCF_N."_option WHERE categoryName = category.categoryName AND packageID IN (
 							SELECT dependency FROM wcf".WCF_N."_package_dependency WHERE packageID = ?

@@ -230,7 +230,7 @@ class PackageInstallationDispatcher {
 			if (count($this->getArchive()->getExcludedPackages()) > 0) {
 				$sql = "INSERT INTO	wcf".WCF_N."_package_exclusion 
 							(packageID, excludedPackage, excludedPackageVersion)
-					VALUES 		(?, ?, ?)";
+					VALUES		(?, ?, ?)";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				
 				foreach ($this->getArchive()->getExcludedPackages() as $excludedPackage) {
@@ -700,7 +700,7 @@ class PackageInstallationDispatcher {
 	 * starts the installation, update or uninstallation of the first entry.
 	 * 
 	 * @param	integer		$parentQueueID
-	 * @param 	integer		$processNo
+	 * @param	integer		$processNo
 	 */
 	public static function openQueue($parentQueueID = 0, $processNo = 0) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -787,7 +787,7 @@ class PackageInstallationDispatcher {
 	public static function checkPackageInstallationQueue() {
 		$sql = "SELECT		queueID
 			FROM		wcf".WCF_N."_package_installation_queue
-			WHERE 		userID = ?
+			WHERE		userID = ?
 					AND parentQueueID = 0
 					AND done = 0
 			ORDER BY	queueID ASC";

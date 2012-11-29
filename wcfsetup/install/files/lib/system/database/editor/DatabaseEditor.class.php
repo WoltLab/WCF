@@ -31,7 +31,7 @@ abstract class DatabaseEditor {
 	/**
 	 * Returns all existing tablenames.  
 	 * 
-	 * @return 	array 		$existingTables
+	 * @return	array		$existingTables
 	 */
 	abstract public function getTableNames();
 	

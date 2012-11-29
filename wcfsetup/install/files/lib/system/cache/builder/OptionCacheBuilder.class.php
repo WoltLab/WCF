@@ -51,7 +51,7 @@ class OptionCacheBuilder implements ICacheBuilder {
 			FROM		wcf".WCF_N."_".$tableName."option_category option_category
 			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
 			ON		(package_dependency.dependency = option_category.packageID)
-			WHERE 		package_dependency.packageID = ?
+			WHERE		package_dependency.packageID = ?
 			ORDER BY	package_dependency.priority ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($packageID));
@@ -90,7 +90,7 @@ class OptionCacheBuilder implements ICacheBuilder {
 			FROM		wcf".WCF_N."_".$tableName."option option_table
 			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
 			ON		(package_dependency.dependency = option_table.packageID)
-			WHERE 		package_dependency.packageID = ?
+			WHERE		package_dependency.packageID = ?
 			ORDER BY	package_dependency.priority ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($packageID));

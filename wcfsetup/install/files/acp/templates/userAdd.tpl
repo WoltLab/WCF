@@ -207,8 +207,8 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="action" value="{@$action}" />
- 		{if $userID|isset}<input type="hidden" name="id" value="{@$userID}" />{/if}
- 	</div>
+		{if $userID|isset}<input type="hidden" name="id" value="{@$userID}" />{/if}
+	</div>
 </form>
 
 {include file='footer'}

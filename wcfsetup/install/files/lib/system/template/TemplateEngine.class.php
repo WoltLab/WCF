@@ -183,8 +183,8 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Appends content to an existing template variable.
 	 * 
-	 * @param 	mixed 		$variable
-	 * @param 	mixed 		$value
+	 * @param	mixed		$variable
+	 * @param	mixed		$value
 	 */
 	public function append($variable, $value = '') {
 		if (is_array($variable)) {
@@ -222,8 +222,8 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Prepends content to an existing template variable.
 	 * 
-	 * @param 	mixed 		$variable
-	 * @param 	mixed 		$value
+	 * @param	mixed		$variable
+	 * @param	mixed		$value
 	 */
 	public function prepend($variable, $value = '') {
 		if (is_array($variable)) {
@@ -261,8 +261,8 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Assigns a template variable by reference.
 	 * 
-	 * @param 	string 		$variable
-	 * @param	mixed 		$value
+	 * @param	string		$variable
+	 * @param	mixed		$value
 	 */
 	public function assignByRef($variable, &$value) {
 		if (!empty($variable)) {
@@ -273,7 +273,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Clears an assignment of template variables.
 	 * 
-	 * @param 	mixed 		$variables
+	 * @param	mixed		$variables
 	 */
 	public function clearAssign(array $variables) {
 		foreach ($variables as $key) {
@@ -408,7 +408,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Returns the absolute filename of a compiled template.
 	 * 
-	 * @param 	string 		$templateName
+	 * @param	string		$templateName
 	 */
 	public function getCompiledFilename($templateName) {
 		return $this->compileDir.PACKAGE_ID.'_'.$this->templateGroupID.'_'.$this->languageID.'_'.$templateName.'.php';
@@ -427,11 +427,11 @@ class TemplateEngine extends SingletonFactory {
 	 * Checks wheater a template is already compiled or not.
 	 * 
 	 * @param	string		$templateName
-	 * @param 	string 		$sourceFilename
-	 * @param 	string 		$compiledFilename
+	 * @param	string		$sourceFilename
+	 * @param	string		$compiledFilename
 	 * @param	string		$application
 	 * @param	array		$metaData
-	 * @return 	boolean 	$isCompiled
+	 * @return	boolean		$isCompiled
 	 */
 	protected function isCompiled($templateName, $sourceFilename, $compiledFilename, $application, array $metaData) {
 		if ($this->forceCompile || !file_exists($compiledFilename)) {
@@ -476,9 +476,9 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Compiles a template.
 	 * 
-	 * @param 	string 		$templateName
-	 * @param 	string 		$sourceFilename
-	 * @param 	string 		$compiledFilename
+	 * @param	string		$templateName
+	 * @param	string		$sourceFilename
+	 * @param	string		$compiledFilename
 	 * @param	array		$metaData
 	 */
 	protected function compileTemplate($templateName, $sourceFilename, $compiledFilename, array $metaData) {
@@ -624,7 +624,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Deletes all compiled templates.
 	 * 
-	 * @param 	string		$compileDir
+	 * @param	string		$compileDir
 	 */
 	public static function deleteCompiledTemplates($compileDir = '') {
 		if (empty($compileDir)) $compileDir = WCF_DIR.'templates/compiled/';
@@ -636,7 +636,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Returns an array with all prefilters.
 	 * 
-	 * @return 	array<string>
+	 * @return	array<string>
 	 */
 	public function getPrefilters() {
 		return $this->prefilters;

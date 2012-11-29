@@ -182,7 +182,7 @@
 			<option name="offline">
 				<categoryname>general.offline</categoryname>
 				<optiontype>boolean</optiontype>
-			 	<enableoptions><![CDATA[offline_message,offline_message_allow_html]]></enableoptions>
+				<enableoptions><![CDATA[offline_message,offline_message_allow_html]]></enableoptions>
 			</option>
 			<option name="offline_message">
 				<categoryname>general.offline</categoryname>

@@ -102,7 +102,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		// get files from log
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_package_installation_file_log
-			WHERE 	packageID = ?";
+			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
 		while ($row = $statement->fetchArray()) {

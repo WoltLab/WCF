@@ -163,7 +163,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	/**
 	 * Returns true if the uninstalling package got to uninstall languages, categories or items.
 	 *
-	 * @return 	boolean 			hasUnistall
+	 * @return	boolean			hasUnistall
 	 */
 	public function hasUninstall() {
 		if (parent::hasUninstall()) return true;

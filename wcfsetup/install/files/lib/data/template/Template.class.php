@@ -92,7 +92,7 @@ class Template extends DatabaseObject {
 			FROM		wcf".WCF_N."_template template
 			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
 			ON		(package_dependency.dependency = template.packageID)
-			WHERE 		package_dependency.packageID = ?
+			WHERE		package_dependency.packageID = ?
 					".($replace !== null ? "AND template.templateGroupID <> 0" : "")."
 			ORDER BY	package_dependency.priority ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);

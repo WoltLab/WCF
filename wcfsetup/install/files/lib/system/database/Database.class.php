@@ -81,11 +81,11 @@ abstract class Database {
 	/**
 	 * Creates a Dabatase Object.
 	 * 
-	 * @param	string		$host 			SQL database server host address
-	 * @param	string		$user 			SQL database server username
-	 * @param	string		$password 		SQL database server password
-	 * @param	string		$database 		SQL database server database name
-	 * @param	integer		$port 			SQL database server port
+	 * @param	string		$host			SQL database server host address
+	 * @param	string		$user			SQL database server username
+	 * @param	string		$password		SQL database server password
+	 * @param	string		$database		SQL database server database name
+	 * @param	integer		$port			SQL database server port
 	 */
 	public function __construct($host, $user, $password, $database, $port) {
 		$this->host = $host;
@@ -174,7 +174,7 @@ abstract class Database {
 	 * 
 	 * @param	string			$statement
 	 * @param	integer			$limit
- 	 * @param	integer			$offset
+	 * @param	integer			$offset
 	 * @return	wcf\system\database\statement\PreparedStatement
 	 */
 	public function prepareStatement($statement, $limit = 0, $offset = 0) {
@@ -255,7 +255,7 @@ abstract class Database {
 	/**
 	 * Gets the sql version.
 	 * 
-	 * @return 	string
+	 * @return	string
 	 */
 	public function getVersion() {
 		try {
@@ -271,7 +271,7 @@ abstract class Database {
 	/**
 	 * Gets the database name.
 	 * 
-	 * @return 	string
+	 * @return	string
 	 */
 	public function getDatabaseName() {
 		return $this->database;
