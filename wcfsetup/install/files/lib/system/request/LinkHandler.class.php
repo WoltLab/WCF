@@ -51,7 +51,7 @@ class LinkHandler extends SingletonFactory {
 		if ($controller !== null) {
 			// handle object
 			if (isset($parameters['object'])) {
-				if (!($parameters['object'] instanceof \wcf\system\request\IRouteController) && $parameters['object'] instanceof \wcf\data\DatabaseObjectDecorator && $parameters['object']->getDecoratedObject() instanceof \wcf\system\request\IRouteController)  {
+				if (!($parameters['object'] instanceof \wcf\system\request\IRouteController) && $parameters['object'] instanceof \wcf\data\DatabaseObjectDecorator && $parameters['object']->getDecoratedObject() instanceof \wcf\system\request\IRouteController) {
 					$parameters['object'] = $parameters['object']->getDecoratedObject();
 				}
 				

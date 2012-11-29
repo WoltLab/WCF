@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- The file "cronjobs.xsd" is used for xml-files which installs, updates or deletes searchable cronjobs.  -->
+<!-- The file "cronjobs.xsd" is used for xml-files which installs, updates or deletes searchable cronjobs. -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
 	<!-- include types -->
 	<xs:include schemaLocation="types.xsd" />

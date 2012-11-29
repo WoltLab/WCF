@@ -163,7 +163,7 @@ function __autoload($className) {
 		array_shift($namespaces);
 		
 		$className = implode('/', $namespaces);
-		$classPath = TMP_DIR . 'install/files/lib/' . $className  . '.class.php';
+		$classPath = TMP_DIR . 'install/files/lib/' . $className . '.class.php';
 		if (file_exists($classPath)) {
 			require_once($classPath);
 		}

@@ -76,7 +76,7 @@ class Benchmark extends SingletonFactory {
 		}
 		
 		$this->items[$index]['after'] = self::getMicrotime();
-		$this->items[$index]['use']  = self::compareMicrotimes($this->items[$index]['before'], $this->items[$index]['after']);
+		$this->items[$index]['use'] = self::compareMicrotimes($this->items[$index]['before'], $this->items[$index]['after']);
 		$this->items[$index]['end'] = self::compareMicrotimes($this->startTime, $this->items[$index]['after']);
 		if ($this->items[$index]['type'] == self::TYPE_SQL_QUERY) {
 			$this->queryCount++;

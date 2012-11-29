@@ -58,7 +58,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	
 	/**
 	 * Delegates inaccessible methods calls to the decorated object.
-	 *  
+	 * 
 	 * @param	string		$name
 	 * @param	array		$arguments
 	 * @return	mixed

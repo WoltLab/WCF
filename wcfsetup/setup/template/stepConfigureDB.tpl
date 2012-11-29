@@ -46,7 +46,7 @@
 		<dl>
 			<dt><label for="dbName">{lang}wcf.global.configureDB.database{/lang}</label></dt>
 			<dd>
-				<input type="text" id="dbName" name="dbName" value="{$dbName}" class="medium"  />
+				<input type="text" id="dbName" name="dbName" value="{$dbName}" class="medium" />
 				<small>{lang}wcf.global.configureDB.database.description{/lang}</small>
 			</dd>
 		</dl>

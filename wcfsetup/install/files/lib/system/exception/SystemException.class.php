@@ -164,7 +164,7 @@ class SystemException extends LoggedException implements IPrintableException {
 								<b>php version:</b> <?php echo StringUtil::encodeHTML(phpversion()); ?><br>
 								<b>wcf version:</b> <?php echo WCF_VERSION; ?><br>
 								<b>date:</b> <?php echo gmdate('r'); ?><br>
-								<b>request:</b> <?php if (isset($_SERVER['REQUEST_URI']))  echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?><br>
+								<b>request:</b> <?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?><br>
 								<b>referer:</b> <?php if (isset($_SERVER['HTTP_REFERER'])) echo StringUtil::encodeHTML($_SERVER['HTTP_REFERER']); ?><br>
 							</p>
 							

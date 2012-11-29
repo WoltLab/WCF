@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- This file is used for xml files which install, update or delete page locations.  -->
+<!-- This file is used for xml files which install, update or delete page locations. -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
 	<!-- include types -->
 	<xs:include schemaLocation="types.xsd" />
@@ -30,7 +30,7 @@
 	
 	<!-- deleted page location element type -->
 	<xs:complexType name="pagelocation_delete">
-		  <xs:attribute name="name" type="woltlab_varchar" use="required" />
+		<xs:attribute name="name" type="woltlab_varchar" use="required" />
 	</xs:complexType>	
 	
 	<!-- imported/updated page location element type -->

@@ -39,7 +39,7 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * Returns the default-form language id    
+	 * Returns the default form language id.
 	 * 
 	 * @return	integer		$languageID
 	 */

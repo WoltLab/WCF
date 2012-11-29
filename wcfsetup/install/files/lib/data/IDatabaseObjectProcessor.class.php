@@ -21,7 +21,7 @@ interface IDatabaseObjectProcessor {
 	
 	/**
 	 * Delegates accesses to inaccessible object properties the processed object.
-	 *   
+	 * 
 	 * @param	string		$name
 	 * @return	mixed
 	 */
@@ -38,7 +38,7 @@ interface IDatabaseObjectProcessor {
 	
 	/**
 	 * Delegates inaccessible method calls to the processed database object.
-	 *  
+	 * 
 	 * @param	string		$name
 	 * @param	array		$arguments
 	 * @return	mixed

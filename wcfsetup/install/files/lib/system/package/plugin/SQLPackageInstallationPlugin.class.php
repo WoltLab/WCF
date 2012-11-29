@@ -49,7 +49,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 				$queries = StringUtil::replace($packageAbbr.'1_1_', $packageAbbr.$tablePrefix, $queries);
 			}
 			
-			// replace wcf1_  with the actual WCF_N value
+			// replace wcf1_ with the actual WCF_N value
 			$queries = str_replace("wcf1_", "wcf".WCF_N."_", $queries);
 			
 			// check queries

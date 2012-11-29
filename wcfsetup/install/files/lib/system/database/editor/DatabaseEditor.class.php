@@ -29,7 +29,7 @@ abstract class DatabaseEditor {
 	}
 	
 	/**
-	 * Returns all existing tablenames.  
+	 * Returns all existing table names.
 	 * 
 	 * @return	array		$existingTables
 	 */

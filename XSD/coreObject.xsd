@@ -27,7 +27,7 @@
 			<xs:element name="coreobject" type="coreObject" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
-	    
+	
 	<!-- core object element type -->
 	<xs:complexType name="coreObject">
 		<xs:all>

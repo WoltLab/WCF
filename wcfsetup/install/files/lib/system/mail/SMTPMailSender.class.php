@@ -200,7 +200,7 @@ class SMTPMailSender extends MailSender {
 	protected function getSMTPStatus($data = null) {
 		if ($data === null) $data = $this->read();
 		$this->statusCode = intval(substr($data, 0, 3));
-		$this->statusMsg  = substr($data, 4);
+		$this->statusMsg = substr($data, 4);
 	}
 	
 	/**

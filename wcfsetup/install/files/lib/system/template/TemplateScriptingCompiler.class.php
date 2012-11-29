@@ -653,8 +653,8 @@ class TemplateScriptingCompiler {
 		$phpCode .= "\$this->v[".$args['name']."] = ".$sectionProp."['index'];\n";
 		$phpCode .= $sectionProp."['previousIndex'] = ".$sectionProp."['index'] - ".$sectionProp."['step'];\n";
 		$phpCode .= $sectionProp."['nextIndex'] = ".$sectionProp."['index'] + ".$sectionProp."['step'];\n";
-		$phpCode .= $sectionProp."['first']      = (".$sectionProp."['rowNumber'] == 1);\n";
-		$phpCode .= $sectionProp."['last']       = (".$sectionProp."['rowNumber'] == ".$sectionProp."['total']);\n";
+		$phpCode .= $sectionProp."['first'] = (".$sectionProp."['rowNumber'] == 1);\n";
+		$phpCode .= $sectionProp."['last'] = (".$sectionProp."['rowNumber'] == ".$sectionProp."['total']);\n";
 		$phpCode .= "?>";
 		
 		return $phpCode;
@@ -1345,7 +1345,7 @@ class TemplateScriptingCompiler {
 					case '/':
 					case '%':
 					case '^':
-						if ($status == 'variable' || $status == 'object' || $status == 'constant' ||  $status == 'string' || $status == 'modifier end') {
+						if ($status == 'variable' || $status == 'object' || $status == 'constant' || $status == 'string' || $status == 'modifier end') {
 							$result .= $operator;
 							$statusStack[count($statusStack) - 1] = 'math';
 							break;

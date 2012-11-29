@@ -669,7 +669,7 @@ CREATE TABLE wcf1_user_group (
 );
 
 DROP TABLE IF EXISTS wcf1_user_group_option;
-CREATE TABLE wcf1_user_group_option  (
+CREATE TABLE wcf1_user_group_option (
 	optionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10),
 	optionName VARCHAR(255) NOT NULL DEFAULT '',
@@ -699,7 +699,7 @@ CREATE TABLE wcf1_user_group_option_category (
 );
 
 DROP TABLE IF EXISTS wcf1_user_group_option_value;
-CREATE TABLE wcf1_user_group_option_value  (
+CREATE TABLE wcf1_user_group_option_value (
 	groupID INT(10) NOT NULL,
 	optionID INT(10) NOT NULL,
 	optionValue MEDIUMTEXT NOT NULL,
