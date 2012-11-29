@@ -7315,9 +7315,6 @@ $.widget('ui.wcfDialog', {
 		this._closeButton = $('<a class="dialogCloseButton"><span /></a>').click($.proxy(this.close, this)).hide().appendTo(this._titlebar);
 		this._content = $('<div class="dialogContent" />').appendTo(this._container);
 		
-		this._setOption('title', this.options.title);
-		this._setOption('closable', this.options.closable);
-		
 		// move target element into content
 		var $content = this.element.detach();
 		this._content.html($content);
@@ -7328,18 +7325,11 @@ $.widget('ui.wcfDialog', {
 			if (!this._overlay.length) {
 				this._overlay = $('<div id="jsWcfDialogOverlay" class="dialogOverlay" />').css({ height: '100%', zIndex: 399 }).appendTo(document.body);
 			}
-			
-			if (this.options.closable) {
-				this._overlay.click($.proxy(this.close, this));
-				
-				$(document).keyup($.proxy(function(event) {
-					if (event.keyCode && event.keyCode === $.ui.keyCode.ESCAPE) {
-						this.close();
-						event.preventDefault();
-					}
-				}, this));
-			}
 		}
+		
+		// set options
+		this._setOption('title', this.options.title);
+		this._setOption('closable', this.options.closable);
 	},
 	
 	/**
@@ -7358,8 +7348,18 @@ $.widget('ui.wcfDialog', {
 		} else if (key == 'closable' || key == 'closeButtonLabel') {
 			if (this.options.closable) {
 				this._closeButton.attr('title', this.options.closeButtonLabel).show().find('span').html(this.options.closeButtonLabel);
+				
+				if (this.options.modal) {
+					this._overlay.click($.proxy(this.close, this));
+					$(document).keyup($.proxy(this._keyup, this));
+				}
 			} else {
 				this._closeButton.hide();
+				
+				if (this.options.modal) {
+					this._overlay.unbind('click', $.proxy(this.close, this));
+					$(document).unbind('keyup', $.proxy(this._keyup, this));
+				}
 			}
 		}
 		
@@ -7479,6 +7479,16 @@ $.widget('ui.wcfDialog', {
 		
 		if (this.options.onClose !== null) {
 			this.options.onClose();
+		}
+	},
+	
+	/**
+	 * Handels a keyup-event on the document.
+	 */
+	_keyup: function(event) {
+		if (event.keyCode && event.keyCode === $.ui.keyCode.ESCAPE) {
+			this.close();
+			event.preventDefault();
 		}
 	},
 	
