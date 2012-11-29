@@ -152,7 +152,6 @@ final class UserUtil {
 		if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
 			// validate if given IP is a proper IPv4 address
 			if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false) {
-				// TODO: Use an exception instead?
 				// ip address is invalid
 				return '';
 			}
