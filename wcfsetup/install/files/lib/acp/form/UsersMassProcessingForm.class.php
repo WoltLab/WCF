@@ -300,6 +300,9 @@ class UsersMassProcessingForm extends UserOptionListForm {
 		WCF::getTPL()->assign('affectedUsers', $this->affectedUsers);
 	}
 	
+	/**
+	 * @todo	add documentation
+	 */
 	protected function fetchUsers($loopFunction = null) {
 		// select users
 		$sql = "SELECT		user.*

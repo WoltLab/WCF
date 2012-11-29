@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
 
 /**
  * Shows the package install and update form.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -162,7 +162,7 @@ class PackageStartInstallForm extends ACPForm {
 	
 	/**
 	 * Validates the package archive.
-	 *
+	 * 
 	 * @param	string		$type		upload or download package
 	 */
 	protected function validateArchive($type) {

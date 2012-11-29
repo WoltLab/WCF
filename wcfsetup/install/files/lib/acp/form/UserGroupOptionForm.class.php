@@ -1,8 +1,7 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\user\group\option\UserGroupOptionAction;
-
 use wcf\data\user\group\option\category\UserGroupOptionCategoryList;
+use wcf\data\user\group\option\UserGroupOptionAction;
 use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObject;
@@ -314,7 +313,7 @@ class UserGroupOptionForm extends ACPForm {
 	
 	/**
 	 * Validates object options and permissions.
-	 *
+	 * 
 	 * @param	wcf\data\DatabaseObject		$object
 	 * @return	boolean
 	 */
