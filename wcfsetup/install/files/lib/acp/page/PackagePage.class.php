@@ -37,6 +37,9 @@ class PackagePage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
+		// TODO: I guess this page is no longer used, let's check it :)
+		die('\wcf\acp\page\PackagePackage::readParameters()');
+		
 		if (isset($_REQUEST['parentQueueID'])) $this->parentQueueID = intval($_REQUEST['parentQueueID']);
 		if (isset($_REQUEST['processNo'])) $this->processNo = intval($_REQUEST['processNo']);
 		if (isset($_REQUEST['queueID'])) $this->queueID = intval($_REQUEST['queueID']);
@@ -64,12 +67,6 @@ class PackagePage extends AbstractPage {
 				$queue = new PackageInstallationQueue($this->queueID);
 				$dispatcher = new PackageInstallationDispatcher($queue);
 				$dispatcher->beginInstallation();
-			break;
-				
-			case 'rollback':
-				// TODO
-				die('ROLLBACK');
-				//WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
 			break;
 			
 			case 'openQueue':

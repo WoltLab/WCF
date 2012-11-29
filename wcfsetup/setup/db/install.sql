@@ -737,8 +737,6 @@ CREATE TABLE wcf1_user_option_category (
 	categoryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10) NOT NULL,
 	categoryName VARCHAR(255) NOT NULL DEFAULT '',
-	categoryIconS VARCHAR(255) NOT NULL DEFAULT '',
-	categoryIconM VARCHAR(255) NOT NULL DEFAULT '',
 	parentCategoryName VARCHAR(255) NOT NULL DEFAULT '',
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,

@@ -7275,10 +7275,6 @@ $.widget('ui.wcfDialog', {
 	 * Initializes a new dialog.
 	 */
 	_init: function() {
-		if (this.options.closeButtonLabel === null) {
-			this.options.closeButtonLabel = WCF.Language.get('wcf.global.close');
-		}
-		
 		if (this.options.ajax) {
 			new WCF.Action.Proxy({
 				autoSend: true,
@@ -7308,11 +7304,17 @@ $.widget('ui.wcfDialog', {
 	 * Creates a new dialog instance.
 	 */
 	_create: function() {
+		if (this.options.closeButtonLabel === null) {
+			this.options.closeButtonLabel = WCF.Language.get('wcf.global.button.close');
+		}
+		
+		WCF.DOMNodeInsertedHandler.enable();
+		
 		// create dialog container
 		this._container = $('<div class="dialogContainer" />').hide().css({ zIndex: this.options.zIndex }).appendTo(document.body);
 		this._titlebar = $('<header class="dialogTitlebar" />').hide().appendTo(this._container);
 		this._title = $('<span class="dialogTitle" />').hide().appendTo(this._titlebar);
-		this._closeButton = $('<a class="dialogCloseButton"><span /></a>').click($.proxy(this.close, this)).hide().appendTo(this._titlebar);
+		this._closeButton = $('<a class="dialogCloseButton jsTooltip" title="' + this.options.closeButtonLabel + '"><span /></a>').click($.proxy(this.close, this)).hide().appendTo(this._titlebar);
 		this._content = $('<div class="dialogContent" />').appendTo(this._container);
 		
 		this._setOption('title', this.options.title);
@@ -7340,6 +7342,8 @@ $.widget('ui.wcfDialog', {
 				}, this));
 			}
 		}
+		
+		WCF.DOMNodeInsertedHandler.disable();
 	},
 	
 	/**
@@ -7357,7 +7361,11 @@ $.widget('ui.wcfDialog', {
 			}
 		} else if (key == 'closable' || key == 'closeButtonLabel') {
 			if (this.options.closable) {
+				WCF.DOMNodeInsertedHandler.enable();
+				
 				this._closeButton.attr('title', this.options.closeButtonLabel).show().find('span').html(this.options.closeButtonLabel);
+				
+				WCF.DOMNodeInsertedHandler.disable();
 			} else {
 				this._closeButton.hide();
 			}
@@ -7462,7 +7470,7 @@ $.widget('ui.wcfDialog', {
 	 * Closes this dialog.
 	 */
 	close: function() {
-		if (!this.isOpen()) {
+		if (!this.isOpen() || !this.options.closable) {
 			return;
 		}
 		
@@ -7536,7 +7544,7 @@ $.widget('ui.wcfDialog', {
 		
 		// calculate maximum content height
 		var $heightDifference = $containerDimensions.height - $contentDimensions.height;
-		var $maximumHeight = $windowDimensions.height - $heightDifference;
+		var $maximumHeight = $windowDimensions.height - $heightDifference - 120;
 		this._content.css({ maxHeight: $maximumHeight + 'px' });
 		
 		// re-caculate values if container height was previously limited

@@ -324,6 +324,12 @@ WCF.ACP.Package.Installation = Class.extend({
 	_actionName: 'InstallPackage',
 	
 	/**
+	 * true, if rollbacks are supported
+	 * @var	boolean
+	 */
+	_allowRollback: false,
+	
+	/**
 	 * dialog object
 	 * @var	jQuery
 	 */
@@ -342,23 +348,37 @@ WCF.ACP.Package.Installation = Class.extend({
 	_queueID: 0,
 	
 	/**
+	 * true, if dialog should be rendered again
+	 * @var	boolean
+	 */
+	_shouldRender: false,
+	
+	/**
 	 * Initializes the WCF.ACP.Package.Installation class.
 	 * 
 	 * @param	integer		queueID
 	 * @param	string		actionName
+	 * @param	boolean		allowRollback
 	 */
-	init: function(queueID, actionName) {
+	init: function(queueID, actionName, allowRollback) {
 		this._actionName = (actionName) ? actionName : 'InstallPackage';
+		this._allowRollback = (allowRollback === true) ? true : false;
 		this._queueID = queueID;
 		
+		this._initProxy();
+		this._init();
+	},
+	
+	/**
+	 * Initializes the WCF.Action.Proxy object.
+	 */
+	_initProxy: function() {
 		this._proxy = new WCF.Action.Proxy({
 			failure: $.proxy(this._failure, this),
 			showLoadingOverlay: false,
 			success: $.proxy(this._success, this),
 			url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
-		
-		this._init();
 	},
 	
 	/**
@@ -377,9 +397,25 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	string		responseText
 	 */
 	_failure: function(jqXHR, textStatus, errorThrown, responseText) {
-		this._purgeTemplateContent(function() {
+		if (!this._allowRollback) {
+			return;
+		}
+		
+		this._purgeTemplateContent($.proxy(function() {
+			var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
+			$('<button class="buttonPrimary">' + WCF.Language.get('wcf.acp.package.installation.rollback') + '</button>').appendTo($form).click($.proxy(this._rollback, this));
 			
-		});
+			$('#packageInstallationInnerContentContainer').show();
+			
+			this._dialog.wcfDialog('render');
+		}, this));
+	},
+	
+	/**
+	 * Performs a rollback.
+	 */
+	_rollback: function() {
+		this._executeStep('rollback');
 	},
 	
 	/**
@@ -417,7 +453,20 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		var $render = false;
+		this._shouldRender = false;
+		
+		if (data.step == 'rollback') {
+			this._dialog.wcfDialog('close');
+			
+			new WCF.PeriodicalExecuter(function(pe) {
+				pe.stop();
+				
+				var $uninstallation = new WCF.ACP.Package.Uninstallation();
+				$uninstallation.start(data.packageID);
+			}, 200);
+			
+			return;
+		}
 		
 		if (this._dialog == null) {
 			this._dialog = $('#packageInstallationDialog');
@@ -456,7 +505,7 @@ WCF.ACP.Package.Installation = Class.extend({
 		// update template
 		if (data.template && !data.ignoreTemplate) {
 			this._dialog.html(data.template);
-			$render = true;
+			this._shouldRender = true;
 		}
 		
 		// handle inner template
@@ -483,7 +532,7 @@ WCF.ACP.Package.Installation = Class.extend({
 		// purge content
 		this._purgeTemplateContent($.proxy(function() {
 			// render container
-			if ($render) {
+			if (this._shouldRender) {
 				this._dialog.wcfDialog('render');
 			}
 			
@@ -584,9 +633,23 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 		this._elements = elements;
 		this._packageID = 0;
 		
-		if (this._elements.length) {
+		if (this._elements !== undefined && this._elements.length) {
 			this._super(0, 'UninstallPackage');
 		}
+	},
+	
+	/**
+	 * Begins a package uninstallation without user action.
+	 * 
+	 * @param	integer		packageID
+	 */
+	start: function(packageID) {
+		this._actionName = 'UninstallPackage';
+		this._packageID = packageID;
+		this._queueID = 0;
+		
+		this._initProxy();
+		this.prepareInstallation();
 	},
 	
 	/**

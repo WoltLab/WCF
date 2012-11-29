@@ -96,7 +96,6 @@ class Uninstaller {
 	 */
 	protected function uninstall() {
 		if ($this->checkTargetDir()) {
-			
 			// delete all files
 			$directories = array();
 			foreach ($this->files as $file) {
@@ -141,6 +140,5 @@ class Uninstaller {
 				$this->deleteDir($this->targetDir);
 			}
 		}
-		// TODO: else throw SystemException ?
 	}
 }

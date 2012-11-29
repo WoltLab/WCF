@@ -73,16 +73,6 @@ class ObjectType extends ProcessibleDatabaseObject {
 				if (!class_exists($this->className)) {
 					throw new SystemException("Unable to find class '".$this->className."'");
 				}
-				/*
-					TODO:
-					Why should the class implement IDatabaseObjectProcessor? Given the fact,
-					that the default implementation IObjectTypeProvider does not decorate the
-					objects itself - instead it provides methods to receive the required objects.
-				
-				if (!ClassUtil::isInstanceOf($this->className, 'wcf\data\IDatabaseObjectProcessor')) {
-					throw new SystemException("'".$this->className."' does not implement 'wcf\data\IDatabaseObjectProcessor'");
-				}
-				*/
 				if (($definitionInterface = ObjectTypeCache::getInstance()->getDefinition($this->definitionID)->interfaceName) && !ClassUtil::isInstanceOf($this->className, $definitionInterface)) {
 					throw new SystemException("'".$this->className."' does not implement '".$definitionInterface."'");
 				}

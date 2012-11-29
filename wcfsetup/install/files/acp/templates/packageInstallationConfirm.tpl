@@ -4,7 +4,7 @@
 	//<![CDATA[
 	$(function() {
 		WCF.Language.add('wcf.acp.package.installation.title', '{lang}wcf.acp.package.installation.title{/lang}');
-		new WCF.ACP.Package.Installation({@$queueID});
+		new WCF.ACP.Package.Installation({@$queueID}, undefined, true);
 	});
 	//]]>
 </script>

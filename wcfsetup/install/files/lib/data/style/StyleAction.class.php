@@ -461,8 +461,6 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * Validates parameters to change user style.
-	 * 
-	 * @todo	take care of wcf1_style_to_package as it might apply further restrictions
 	 */
 	public function validateChangeStyle() {
 		$this->style = $this->getSingleObject();
@@ -494,8 +492,6 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * Returns the style chooser dialog.
-	 * 
-	 * @todo	take care of wcf1_style_to_package as it might apply further restrictions
 	 * 
 	 * @return	array<string>
 	 */

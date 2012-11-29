@@ -172,12 +172,25 @@ class InstallPackageAction extends AbstractDialogAction {
 	}
 	
 	/**
+	 * Returns parameters required to perform a rollback.
+	 * 
+	 * @return	array
+	 */
+	protected function stepRollback() {
+		$this->data = array(
+			'packageID' => $this->queue->packageID,
+			'step' => 'rollback'
+		);
+	}
+	
+	/**
 	 * @see	wcf\action\AbstractDialogAction\AbstractDialogAction::validateStep()
 	 */
 	protected function validateStep() {
 		switch ($this->step) {
 			case 'install':
 			case 'prepare':
+			case 'rollback':
 				continue;
 			break;
 			
