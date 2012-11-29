@@ -48,6 +48,9 @@
 			<category name="admin.content">
 				<parent>admin</parent>
 			</category>
+			<category name="admin.community">
+				<parent>admin</parent>
+			</category>
 			<category name="admin.language">
 				<parent>admin.display</parent>
 			</category>
