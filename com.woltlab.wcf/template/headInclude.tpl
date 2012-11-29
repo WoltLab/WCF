@@ -45,6 +45,7 @@
 			'wcf.date.dateTimeFormat': '{lang}wcf.date.dateTimeFormat{/lang}',
 			'wcf.global.button.add': '{lang}wcf.global.button.add{/lang}',
 			'wcf.global.button.cancel': '{lang}wcf.global.button.cancel{/lang}',
+			'wcf.global.button.close': '{lang}wcf.global.button.close{/lang}',
 			'wcf.global.button.collapsible': '{lang}wcf.global.button.collapsible{/lang}',
 			'wcf.global.button.delete': '{lang}wcf.global.button.delete{/lang}',
 			'wcf.global.button.disable': '{lang}wcf.global.button.disable{/lang}',

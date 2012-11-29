@@ -7275,10 +7275,6 @@ $.widget('ui.wcfDialog', {
 	 * Initializes a new dialog.
 	 */
 	_init: function() {
-		if (this.options.closeButtonLabel === null) {
-			this.options.closeButtonLabel = WCF.Language.get('wcf.global.close');
-		}
-		
 		if (this.options.ajax) {
 			new WCF.Action.Proxy({
 				autoSend: true,
@@ -7308,11 +7304,17 @@ $.widget('ui.wcfDialog', {
 	 * Creates a new dialog instance.
 	 */
 	_create: function() {
+		if (this.options.closeButtonLabel === null) {
+			this.options.closeButtonLabel = WCF.Language.get('wcf.global.button.close');
+		}
+		
+		WCF.DOMNodeInsertedHandler.enable();
+		
 		// create dialog container
 		this._container = $('<div class="dialogContainer" />').hide().css({ zIndex: this.options.zIndex }).appendTo(document.body);
 		this._titlebar = $('<header class="dialogTitlebar" />').hide().appendTo(this._container);
 		this._title = $('<span class="dialogTitle" />').hide().appendTo(this._titlebar);
-		this._closeButton = $('<a class="dialogCloseButton"><span /></a>').click($.proxy(this.close, this)).hide().appendTo(this._titlebar);
+		this._closeButton = $('<a class="dialogCloseButton jsTooltip" title="' + this.options.closeButtonLabel + '"><span /></a>').click($.proxy(this.close, this)).hide().appendTo(this._titlebar);
 		this._content = $('<div class="dialogContent" />').appendTo(this._container);
 		
 		this._setOption('title', this.options.title);
@@ -7340,6 +7342,8 @@ $.widget('ui.wcfDialog', {
 				}, this));
 			}
 		}
+		
+		WCF.DOMNodeInsertedHandler.disable();
 	},
 	
 	/**
