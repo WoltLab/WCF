@@ -22,7 +22,7 @@ class ApplicationCacheBuilder implements ICacheBuilder {
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-		list($cache, $packageID) = explode('-', $cacheResource['cache']);
+		list(, $packageID) = explode('-', $cacheResource['cache']);
 		$data = array(
 			'abbreviation' => array(),
 			'application' => array(),

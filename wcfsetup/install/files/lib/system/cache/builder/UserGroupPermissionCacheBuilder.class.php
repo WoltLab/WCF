@@ -27,7 +27,7 @@ class UserGroupPermissionCacheBuilder implements ICacheBuilder {
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-		list($cache, $packageID, $groupIDs) = explode('-', $cacheResource['cache']);
+		list(, $packageID, $groupIDs) = explode('-', $cacheResource['cache']);
 		$data = array();
 		
 		// get all options and filter options with low priority
