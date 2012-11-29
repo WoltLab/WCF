@@ -11,7 +11,7 @@
 {/if}
 
 <form method="{$requestMethod}" action="index.php{if $getParameters}?{@$getParameters}{/if}">
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.packageUpdate.auth.data{/lang}</legend>
 			

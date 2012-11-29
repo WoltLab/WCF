@@ -27,7 +27,7 @@
 
 {if $packageInstallationStack|count}
 	<form method="post" action="{link controller='PackageUpdate'}{/link}">
-		<div class="container containerPadding marginTop shadow">
+		<div class="container containerPadding marginTop">
 			
 			<fieldset>
 				<legend>{lang}wcf.acp.packageUpdate.updates{/lang}</legend>

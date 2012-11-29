@@ -27,7 +27,7 @@
 		</ul>
 	</nav>
 	
-	<div id="information" class="container containerPadding shadow hidden tabMenuContent">
+	<div id="information" class="container containerPadding hidden tabMenuContent">
 		<fieldset>
 			<legend>{lang}wcf.acp.package.information.properties{/lang}</legend>
 			
