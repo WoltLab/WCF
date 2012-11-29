@@ -342,6 +342,12 @@ WCF.ACP.Package.Installation = Class.extend({
 	_queueID: 0,
 	
 	/**
+	 * true, if dialog should be rendered again
+	 * @var	boolean
+	 */
+	_shouldRender: false,
+	
+	/**
 	 * Initializes the WCF.ACP.Package.Installation class.
 	 * 
 	 * @param	integer		queueID
@@ -417,7 +423,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		var $render = false;
+		this._shouldRender = false;
 		
 		if (this._dialog == null) {
 			this._dialog = $('#packageInstallationDialog');
@@ -456,7 +462,7 @@ WCF.ACP.Package.Installation = Class.extend({
 		// update template
 		if (data.template && !data.ignoreTemplate) {
 			this._dialog.html(data.template);
-			$render = true;
+			this._shouldRender = true;
 		}
 		
 		// handle inner template
@@ -483,7 +489,7 @@ WCF.ACP.Package.Installation = Class.extend({
 		// purge content
 		this._purgeTemplateContent($.proxy(function() {
 			// render container
-			if ($render) {
+			if (this._shouldRender) {
 				this._dialog.wcfDialog('render');
 			}
 			
