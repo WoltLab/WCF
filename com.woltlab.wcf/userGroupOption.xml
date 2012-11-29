@@ -19,9 +19,6 @@
 			<category name="admin.system">
 				<parent>admin</parent>
 			</category>
-			<category name="admin.system.cronjob">
-				<parent>admin.system</parent>
-			</category>
 			<category name="admin.system.package">
 				<parent>admin.system</parent>
 			</category>
@@ -87,32 +84,8 @@
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
-			<option name="admin.system.cronjob.canAddCronjob">
-				<categoryname>admin.system.cronjob</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-			</option>
-			<option name="admin.system.cronjob.canEditCronjob">
-				<categoryname>admin.system.cronjob</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-			</option>
-			<option name="admin.system.cronjob.canDeleteCronjob">
-				<categoryname>admin.system.cronjob</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-			</option>
-			<option name="admin.system.cronjob.canEnableDisableCronjob">
-				<categoryname>admin.system.cronjob</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-			</option>
-			<option name="admin.system.cronjob.canDeleteCronjobLog">
-				<categoryname>admin.system.cronjob</categoryname>
+			<option name="admin.system.canManageCronjob">
+				<categoryname>admin.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>

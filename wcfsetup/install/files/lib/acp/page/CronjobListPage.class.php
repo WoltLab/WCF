@@ -18,7 +18,7 @@ class CronjobListPage extends SortablePage {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.cronjob.canEditCronjob', 'admin.system.cronjob.canDeleteCronjob', 'admin.system.cronjob.canEnableDisableCronjob');
+	public $neededPermissions = array('admin.system.canManageCronjob');
 	
 	/**
 	 * @see	wcf\page\SortablePage::$defaultSortField

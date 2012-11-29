@@ -33,6 +33,6 @@ class CronjobLogEditor extends DatabaseObjectEditor {
 							AND package_dependency.packageID = ?
 					)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($packageID);
+		$statement->execute(array($packageID));
 	}
 }
