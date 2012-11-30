@@ -30,7 +30,7 @@ final class HTTPRequest {
 	private $postParameters = array();
 	
 	/**
-	 * indicates if request was made via SSL
+	 * indicates if request will be made via SSL
 	 * @var	boolean
 	 */
 	private $useSSL = false;
