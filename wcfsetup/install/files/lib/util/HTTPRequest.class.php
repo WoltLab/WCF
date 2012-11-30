@@ -191,7 +191,7 @@ final class HTTPRequest {
 		$this->replyHeaders = $headers;
 		
 		$statusLine = reset($this->replyHeaders);
-		$regex = new Regex('^HTTP/1.0 (\d{3})'); // we expect an HTTP 1.0 response, as we sent an HTTP 1.0 request
+		$regex = new Regex('^HTTP/1.(?:0|1) (\d{3})');
 		if (!$regex->match($statusLine)) throw new SystemException("Unexpected status '".$statusLine."'");
 		$matches = $regex->getMatches();
 		$statusCode = $matches[1];
