@@ -29,12 +29,12 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 		$groups = UserGroup::getGroupsByType();
 		
 		// generate html
-		$html = '<fieldset><dl><dd>';
+		$html = '';
 		foreach ($groups as $group) {
 			$html .= '<label><input type="checkbox" name="values['.StringUtil::encodeHTML($option->optionName).'][]" value="'.$group->groupID.'" '.(in_array($group->groupID, $selectedGroups) ? 'checked="checked" ' : '').'/> '.$group->getName().'</label>';
 		}
 		
-		return $html.'</dd></dl></fieldset>';
+		return $html;
 	}
 	
 	/**

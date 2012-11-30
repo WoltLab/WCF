@@ -67,7 +67,7 @@
 	
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add new user group]]></item>
-		<item name="wcf.acp.group.delete.sure"><![CDATA[Are you sure you would like to remove the user group &ldquo;{$group->groupName}&rdquo;?]]></item>
+		<item name="wcf.acp.group.delete.sure"><![CDATA[Are you sure you would like to remove the user group &ldquo;{$group->groupName|language}&rdquo;?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Edit user group]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[You are currently a member of this user group! Changing the permissions of this user group could result in locking yourself out of the Administration Control Panel. Please be careful!]]></item>
 		<item name="wcf.acp.group.group1"><![CDATA[Everyone]]></item>

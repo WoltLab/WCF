@@ -18,7 +18,12 @@
 					});
 				}
 			});
+		});
 
+		$('.jsCronjobError').click(function(event) {
+			$(event.currentTarget).next().wcfDialog({
+				title: '{lang}wcf.acp.cronjob.log.error.details{/lang}'
+			});
 		});
 	});
 	//]]>
@@ -53,6 +58,7 @@
 					<th class="columnTitle columnClassName{if $sortField == 'className'} active{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=className&sortOrder={if $sortField == 'className' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.className{/lang}{if $sortField == 'className'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnText columnDescription{if $sortField == 'description'} active{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=description&sortOrder={if $sortField == 'description' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.description{/lang}{if $sortField == 'description'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnDate columnExecTime{if $sortField == 'execTime'} active{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=execTime&sortOrder={if $sortField == 'execTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.log.execTime{/lang}{if $sortField == 'execTime'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnText columnSuccess{if $sortField == 'success'} active{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=success&sortOrder={if $sortField == 'success' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.log.status{/lang}{if $sortField == 'success'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					
 					{event name='headColumns'}
 				</tr>
@@ -65,16 +71,16 @@
 							<td class="columnID columnCronjobID"><p>{@$cronjobLog->cronjobID}</p></td>
 							<td class="columnTitle columnClassName"><p>{$cronjobLog->className}</p></td>
 							<td class="columnText columnDescription"><p>{$cronjobLog->description|language}</p></td>
+							<td class="columnDate columnExecTime"><p>{if $cronjobLog->execTime}{@$cronjobLog->execTime|time}{/if}</p></td>
+							
+							<td class="columnText columnSuccess"><p>
 							{if $cronjobLog->success}
-								<td class="columnDate columnExecTime"><p>{@$cronjobLog->execTime|time} {lang}wcf.acp.cronjob.log.success{/lang}</p></td>
-							{elseif $cronjobLog->error}
-								<td class="columnDate columnExecTime">
-									<p>{@$cronjobLog->execTime|time} {lang}wcf.acp.cronjob.log.error{/lang}<br />
-									{@$cronjobLog->error}</p>
-								</td>
-							{else}
-								<td class="columnDate columnExecTime"></td>
+								<span class="badge badgeGreen">{lang}wcf.acp.cronjob.log.success{/lang}</span>
+							{elseif $cronjobLog->error}	
+								<a class="badge badgeRed jsTooltip jsCronjobError" title="{lang}wcf.acp.cronjob.log.error.showDetails{/lang}">{lang}wcf.acp.cronjob.log.error{/lang}</a>
+								<span style="display: none">{@$cronjobLog->error}</span>
 							{/if}
+							</p></td>
 							
 							{event name='columns'}
 						</tr>
