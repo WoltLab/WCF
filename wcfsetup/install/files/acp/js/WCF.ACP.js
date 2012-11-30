@@ -789,12 +789,7 @@ WCF.ACP.Options = Class.extend({
 			for (var $i = 0, $size = disableOptions.length; $i < $size; $i++) {
 				var $target = disableOptions[$i];
 				if ($.wcfIsset($target)) {
-					if (isActive) {
-						$('#' + $.wcfEscapeID($target)).closest('dl').addClass('disabled');
-					}
-					else {
-						$('#' + $.wcfEscapeID($target)).closest('dl').removeClass('disabled');
-					}
+					this._enableOption($target, !isActive);
 				}
 			}
 		}
@@ -803,14 +798,36 @@ WCF.ACP.Options = Class.extend({
 			for (var $i = 0, $size = enableOptions.length; $i < $size; $i++) {
 				var $target = enableOptions[$i];
 				if ($.wcfIsset($target)) {
-					if (isActive) {
-						$('#' + $.wcfEscapeID($target)).closest('dl').removeClass('disabled');
-					}
-					else {
-						$('#' + $.wcfEscapeID($target)).closest('dl').addClass('disabled');
-					}
+					this._enableOption($target, isActive);
 				}
 			}
+		}
+	},
+	
+	/**
+	 * Enables an option.
+	 *
+	 * @param	string		target
+	 * @param	boolean		enable
+	 */
+	_enableOption: function(target, enable) {
+		var $targetElement = $('#' + $.wcfEscapeID(target));
+		var $tagName = $targetElement.getTagName();
+		
+		if ($tagName == 'select' || ($tagName == 'input' && ($targetElement.attr('type') == 'checkbox' || $targetElement.attr('type') == 'radio'))) {
+			if (enable) $targetElement.enable();
+			else $targetElement.disable();
+		}
+		else {
+			if (enable) $targetElement.removeAttr('readonly');
+			else $targetElement.attr('readonly', true);
+		}
+		
+		if (enable) {
+			$targetElement.closest('dl').removeClass('disabled');
+		}
+		else {
+			$targetElement.closest('dl').addClass('disabled');
 		}
 	}
 });
