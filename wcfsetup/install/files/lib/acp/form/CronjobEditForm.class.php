@@ -25,7 +25,7 @@ class CronjobEditForm extends CronjobAddForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.cronjob.canEditCronjob');
+	public $neededPermissions = array('admin.system.canManageCronjob');
 	
 	/**
 	 * cronjob id

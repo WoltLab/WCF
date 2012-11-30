@@ -26,7 +26,7 @@
 </div>
 
 {hascontent}
-	<div class="tabularBox tabularBoxTitle marginTop shadow">
+	<div class="tabularBox tabularBoxTitle marginTop">
 		<hgroup>
 			<h1>{lang}wcf.acp.group.list{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.group.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>

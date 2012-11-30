@@ -15,7 +15,7 @@
 </header>
 
 <form method="post" action="{link controller='UserEmailAddressExport'}{/link}">
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.user.exportEmailAddress.markedUsers{/lang}</legend>
 			

@@ -77,7 +77,7 @@
 {/if}
 
 <form method="post" action="{link controller='UsersMassProcessing'}{/link}">
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.user.search.conditions.general{/lang}</legend>
 			
@@ -145,7 +145,7 @@
 		{/hascontent}
 	</div>
 	
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		<fieldset{if $errorField == 'action'} class="formError"{/if}>
 			<legend>{lang}wcf.acp.user.massProcessing.action{/lang}</legend>
 			

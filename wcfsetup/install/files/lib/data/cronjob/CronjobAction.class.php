@@ -27,17 +27,17 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.system.cronjob.canAddCronjob');
+	protected $permissionsCreate = array('admin.system.canManageCronjob');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.system.cronjob.canDeleteCronjob');
+	protected $permissionsDelete = array('admin.system.canManageCronjob');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.system.cronjob.canEditCronjob');
+	protected $permissionsUpdate = array('admin.system.canManageCronjob');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess

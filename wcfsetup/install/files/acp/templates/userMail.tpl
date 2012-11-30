@@ -42,7 +42,7 @@
 </div>
 
 <form method="post" action="{link controller='UserMail'}{/link}">
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		{if $action == ''}
 			<fieldset>
 				<legend>{lang}wcf.acp.user.sendMail.markedUsers{/lang}</legend>

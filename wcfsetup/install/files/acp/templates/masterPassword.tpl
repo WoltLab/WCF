@@ -19,7 +19,7 @@
 {/if}
 
 <form method="post" action="{link controller='MasterPassword'}{/link}">
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.masterPassword.enter{/lang}</legend>
 			

@@ -46,7 +46,7 @@
 		</nav>
 		
 		{foreach from=$optionTree item=categoryLevel1}
-			<div id="{@$categoryLevel1[object]->categoryName}" class="container containerPadding shadow hidden tabMenuContent">
+			<div id="{@$categoryLevel1[object]->categoryName}" class="container containerPadding hidden tabMenuContent">
 				{if $categoryLevel1[options]|count}
 					<fieldset>
 						<legend>{lang}wcf.acp.option.category.{$categoryLevel1[object]->categoryName}{/lang}</legend>

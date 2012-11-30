@@ -51,7 +51,7 @@
 	<p class="warning">{lang}wcf.acp.updateServer.view.noneAvailable{/lang}</p>
 {else}
 	<form method="post" action="{link controller='PackageUpdateSearch'}{/link}">
-		<div class="container containerPadding marginTop shadow">
+		<div class="container containerPadding marginTop">
 			<fieldset>
 				<legend>{lang}wcf.acp.packageUpdate.search.server{/lang}</legend>
 				

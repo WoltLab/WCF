@@ -34,15 +34,9 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	 * @see	wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveCategory()
 	 */
 	protected function saveCategory($category, $categoryXML = null) {
-		$icon = $menuIcon = '';
-		if (isset($categoryXML['icon'])) $icon = $categoryXML['icon'];
-		if (isset($categoryXML['menuicon'])) $menuIcon = $categoryXML['menuicon'];
-		
 		// use for create and update
 		$data = array(
 			'parentCategoryName' => $category['parentCategoryName'],
-			'categoryIconS' => $menuIcon,
-			'categoryIconM' => $icon,
 			'permissions' => $category['permissions'],
 			'options' => $category['options']
 		);

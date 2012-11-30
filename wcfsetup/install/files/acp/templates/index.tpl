@@ -34,7 +34,7 @@
 	</nav>
 	
 	{if $health !== 'success'}
-		<div id="health" class="container containerPadding shadow hidden tabMenuContent">
+		<div id="health" class="container containerPadding hidden tabMenuContent">
 			{foreach from=$healthDetails item='issues' key='healthType'}
 				{hascontent}
 					<fieldset>
@@ -53,11 +53,11 @@
 		</div>
 	{/if}
 	
-	<div id="news" class="container containerPadding shadow hidden tabMenuContent">
+	<div id="news" class="container containerPadding hidden tabMenuContent">
 		WoltLab Community Framework is twice as cool now, as the version number is twice as high.
 	</div>
 	
-	<fieldset id="credits" class="container containerPadding shadow hidden tabMenuContent">
+	<fieldset id="credits" class="container containerPadding hidden tabMenuContent">
 		<dl>
 			<dt>{lang}wcf.acp.index.credits.developedBy{/lang}</dt>
 			<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}" class="externalURL">WoltLab&reg; GmbH</a></dd>

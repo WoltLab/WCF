@@ -35,7 +35,7 @@
 </div>
 
 {if $objects|count > 0}
-	<div class="tabularBox tabularBoxTitle marginTop shadow">
+	<div class="tabularBox tabularBoxTitle marginTop">
 		<hgroup>
 			<h1>{lang}wcf.acp.package.list{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.package.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>

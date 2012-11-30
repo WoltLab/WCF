@@ -28,7 +28,7 @@ class CronjobAddForm extends ACPForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.system.cronjob.canAddCronjob');
+	public $neededPermissions = array('admin.system.canManageCronjob');
 	
 	/**
 	 * cronjob class name

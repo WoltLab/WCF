@@ -15,7 +15,7 @@
 {/if}
 
 <form method="post" action="{link controller='OptionImport'}{/link}" enctype="multipart/form-data">
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.option.import{/lang}</legend>
 			
@@ -53,7 +53,7 @@
 	</hgroup>
 </header>
 
-<div class="container containerPadding marginTop shadow">
+<div class="container containerPadding marginTop">
 	<fieldset>
 		<legend>{lang}wcf.acp.option.export{/lang}</legend>
 		
