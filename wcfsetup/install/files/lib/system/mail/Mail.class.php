@@ -88,7 +88,7 @@ class Mail {
 			.'MIME-Version: 1.0'.self::$crlf
 			.'From: '.$this->getFrom().self::$crlf
 			.($this->getCCString() != '' ? 'CC:'.$this->getCCString().self::$crlf : '')
-			.($this->getBCCString() != '' ? 'BCC:'.$this->getBCCString().self::$crlf : '');				
+			.($this->getBCCString() != '' ? 'BCC:'.$this->getBCCString().self::$crlf : '');
 			
 		if (count($this->getAttachments())) {
 			$this->header .= 'Content-Transfer-Encoding: 8bit'.self::$crlf;
