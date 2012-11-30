@@ -2,7 +2,7 @@
 namespace wcf\system\package\plugin;
 
 /**
- * Any PackageInstallationPlugin should implement this interface.
+ * Every PackageInstallationPlugin has to implement this interface.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -23,7 +23,8 @@ interface IPackageInstallationPlugin {
 	public function update();
 	
 	/**
-	 * Returns true, if the uninstallation of the given package should execute this plugin.
+	 * Returns true, if the uninstallation of the given package should execute
+	 * this plugin.
 	 * 
 	 * @return	boolean
 	 */

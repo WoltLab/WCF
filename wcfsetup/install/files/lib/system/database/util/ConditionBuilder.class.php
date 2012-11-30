@@ -32,7 +32,7 @@ class ConditionBuilder {
 	
 	/**
 	 * Creates a new ConditionBuilder object.
-	 *
+	 * 
 	 * @param	string		$addWhereKeyword
 	 * @param	string		$concat
 	 */

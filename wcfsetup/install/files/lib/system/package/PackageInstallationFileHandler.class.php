@@ -3,7 +3,8 @@ namespace wcf\system\package;
 use wcf\system\setup\IFileHandler;
 
 /**
- * PackageInstallationFileHandler is the abstract FileHandler implementation for all file installations during the package installation.
+ * Abstract file handler implementation for all file installations during the package
+ * installation.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

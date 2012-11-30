@@ -20,7 +20,7 @@ use wcf\util\XML;
 
 /**
  * Provides functions to edit languages.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -36,7 +36,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	
 	/**
 	 * @see	wcf\data\DatabaseObjectEditor::delete()
-	 */	
+	 */
 	public function delete() {
 		parent::delete();
 		
@@ -45,7 +45,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	
 	/**
 	 * Updates the language files for the given category.
-	 *
+	 * 
 	 * @param	array		$categoryIDs
 	 * @param	array		$packageIDs
 	 */
@@ -66,7 +66,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	
 	/**
 	 * Write the languages files.
-	 *
+	 * 
 	 * @param	array		$categoryIDs
 	 * @param	array		$packageIDs
 	 */
@@ -216,7 +216,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Imports language items from an XML file into this language.
 	 * Updates the relevant language files automatically.
-	 *
+	 * 
 	 * @param	wcf\util\XML	$xml
 	 * @param	integer		$packageID
 	 * @param	boolean		$updateFiles
@@ -353,7 +353,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	
 	/**
 	 * Deletes the language cache.
-	 *
+	 * 
 	 * @param	string		$languageID
 	 * @param	string		$category
 	 * @param	string		$packageID
@@ -362,7 +362,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		if ($category != '.*') $category = preg_quote($category, '~');
 		if ($languageID != '.*') $languageID = intval($languageID);
 		if ($packageID != '.*') $packageID = intval($packageID);
-
+		
 		DirectoryUtil::getInstance(WCF_DIR.'language/')->removePattern(new Regex($packageID.'_'.$languageID.'_'.$category.'\.php$'));
 	}
 	
@@ -385,9 +385,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	
 	/**
 	 * Takes an XML object and returns the specific language code.
-	 *
+	 * 
 	 * @param	wcf\util\XML	$xml
-	 * @return	string		language code
+	 * @return	string
 	 */
 	public static function readLanguageCodeFromXML(XML $xml) {
 		$rootNode = $xml->xpath()->query('/ns:language')->item(0);
@@ -403,7 +403,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	
 	/**
 	 * Takes an XML object and returns the specific language name.
-	 *
+	 * 
 	 * @param	wcf\util\XML	$xml
 	 * @return	string		language name
 	 */
@@ -421,7 +421,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	
 	/**
 	 * Takes an XML object and returns the specific country code.
-	 *
+	 * 
 	 * @param	wcf\util\XML	$xml
 	 * @return	string		country code
 	 */
@@ -440,7 +440,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Imports language items from an XML file into a new or a current language.
 	 * Updates the relevant language files automatically.
-	 *
+	 * 
 	 * @param	wcf\util\XML	$xml
 	 * @param	integer		$packageID
 	 * @return	wcf\data\language\LanguageEditor
@@ -475,7 +475,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * Caution: This method expects that target language does not have any items!
 	 * 
 	 * @param	Language	$destination
-	 */	
+	 */
 	public function copy(Language $destination) {
 		$sql = "INSERT INTO	wcf".WCF_N."_language_item
 					(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
@@ -492,10 +492,10 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Updates the language items of a language category.
 	 * 
-	 * @param	array		$items
+	 * @param	array						$items
 	 * @param	wcf\data\language\category\LanguageCategory	$category
-	 * @param	integer		$packageID
-	 * @param	array		$useCustom
+	 * @param	integer						$packageID
+	 * @param	array						$useCustom
 	 */
 	public function updateItems(array $items, LanguageCategory $category, $packageID = PACKAGE_ID, array $useCustom = array()) {
 		if (empty($items)) return;
@@ -570,7 +570,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	
 	/**
 	 * Clears language cache.
-	 */	
+	 */
 	public function clearCache() {
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.languages.php');
 	}
@@ -591,7 +591,6 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		
 		// build condition
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		
 		
 		// search field
 		$statementParameters = array();

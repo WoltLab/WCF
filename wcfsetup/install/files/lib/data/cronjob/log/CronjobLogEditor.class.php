@@ -20,7 +20,9 @@ class CronjobLogEditor extends DatabaseObjectEditor {
 	protected static $baseClass = 'wcf\data\cronjob\log\CronjobLog';
 	
 	/**
-	 * Deletes the cronjob log.
+	 * Deletes the cronjob logs for the package with the given id.
+	 * 
+	 * @param	integer		$packageID
 	 */
 	public static function clearLogs($packageID = PACKAGE_ID) {
 		// delete logs

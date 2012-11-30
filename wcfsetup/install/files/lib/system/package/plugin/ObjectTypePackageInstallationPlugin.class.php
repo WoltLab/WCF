@@ -4,7 +4,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
- * This PIP installs, updates or deletes object types.
+ * Installs, updates and deletes object types.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

@@ -14,15 +14,14 @@ use wcf\system\exception\SystemException;
  */
 final class Callback {
 	/**
-	 * The callback
-	 *
+	 * encapsulated callback
 	 * @var	callback
 	 */
 	private $callback = null;
 	
 	/**
-	 * Checks whether the callback is callable.
-	 *
+	 * Creates new instance of Callback.
+	 * 
 	 * @param	callback	$callback
 	 */
 	public function __construct($callback) {
@@ -35,8 +34,8 @@ final class Callback {
 	
 	/**
 	 * Invokes our callback. All parameters are simply passed through.
-	 *
-	 * @return	mixed	
+	 * 
+	 * @return	mixed
 	 */
 	public function __invoke() {
 		return call_user_func_array($this->callback, func_get_args());

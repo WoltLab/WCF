@@ -38,8 +38,6 @@ class StyleCacheBuilder implements ICacheBuilder {
 			$data['styles'][$row['styleID']] = $style;
 		}
 		
-		// load style-specific variables
-		
 		// get style to packages
 		$sql = "SELECT		*
 			FROM		wcf".WCF_N."_style_to_package

@@ -3,7 +3,7 @@ namespace wcf\system\user\authentication;
 use wcf\data\user\User;
 
 /**
- * All user authentication types should implement this interface.
+ * Every user authentication has to implement this interface.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

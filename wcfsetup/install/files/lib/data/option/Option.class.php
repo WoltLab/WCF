@@ -2,13 +2,12 @@
 namespace wcf\data\option;
 use wcf\data\DatabaseObject;
 use wcf\data\package\Package;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
  * Represents an option.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -122,7 +121,7 @@ class Option extends DatabaseObject {
 				$key = array_shift($optionData);
 				$value = implode(':', $optionData);
 			}
-		
+			
 			$result[$key] = $value;
 		}
 		

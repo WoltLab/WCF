@@ -5,7 +5,7 @@ use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**
- * This PIP installs, updates or deletes by a package delivered templates.
+ * Installs, updates and deletes templates.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2011 WoltLab GmbH
@@ -25,7 +25,7 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 	 */
 	public function install() {
 		parent::install();
-
+		
 		// extract files.tar to temp folder
 		$sourceFile = $this->installation->getArchive()->extractTar($this->instruction['value'], 'templates_');
 		

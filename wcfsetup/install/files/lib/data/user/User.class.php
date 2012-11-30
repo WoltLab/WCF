@@ -296,7 +296,7 @@ final class User extends DatabaseObject implements IRouteController {
 	/**
 	 * Returns the time zone of this user.
 	 * 
-	 * @return DateTimeZone
+	 * @return	DateTimeZone
 	 */
 	public function getTimeZone() {
 		if ($this->timezoneObj === null) {
@@ -357,7 +357,7 @@ final class User extends DatabaseObject implements IRouteController {
 	
 	/**
 	 * Returns the language of this user.
-	 *
+	 * 
 	 * @return	wcf\data\language\Language
 	 */
 	public function getLanguage() {

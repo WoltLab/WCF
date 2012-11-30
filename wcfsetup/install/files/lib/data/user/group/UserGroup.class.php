@@ -129,8 +129,8 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns a group from _cache_ by given groupID. 
-	 * null is returned when the given groupID is invalid.
+	 * Returns the user group with the given id or null if no such user group
+	 * exists.
 	 * 
 	 * @param	integer		$groupID
 	 * @return	wcf\data\user\group\UserGroup

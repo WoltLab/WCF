@@ -9,9 +9,7 @@ use wcf\data\package\update\PackageUpdateList;
 use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
-use wcf\system\io\RemoteFile;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\HTTPRequest;
 use wcf\util\XML;
 

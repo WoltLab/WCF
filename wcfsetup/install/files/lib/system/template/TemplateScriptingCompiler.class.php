@@ -8,7 +8,7 @@ use wcf\util\StringStack;
 use wcf\util\StringUtil;
 
 /**
- * TemplateScriptingCompiler compiles template source in valid php code.
+ * Compiles template sources into valid PHP code.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -26,7 +26,7 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * PHP functions that can be used in the modifier syntax and are unknown
-	 * to the function_exists PHP method
+	 * to PHP's function_exists function
 	 * @var	array<string>
 	 */
 	protected $unknownPHPFunctions = array('isset', 'unset', 'empty');
@@ -266,7 +266,7 @@ class TemplateScriptingCompiler {
 		$compiledContent .= $textBlocks[$i];
 		$compiledContent = chop($compiledContent);
 		
-		// INSERT POSTFILTERS HERE!
+		// @todo: INSERT POSTFILTERS HERE!?
 		
 		// reinsert {literal} Tags
 		$compiledContent = $this->reinsertLiterals($compiledContent);
@@ -435,12 +435,12 @@ class TemplateScriptingCompiler {
 	}
 	
 	/**
-	 * Compiles a function plugin.
+	 * Compiles a function plugin and returns the output of the plugin or false
+	 * if the plugin doesn't exist.
 	 * 
 	 * @param	string		$tagCommand
 	 * @param	string		$tagArgs
-	 * @return	mixed				false, if the plugin does not exist
-	 * 						otherwise the php output of the plugin
+	 * @return	mixed
 	 */
 	protected function compileFunctionPlugin($tagCommand, $tagArgs) {
 		$className = $this->template->getPluginClassName('function', $tagCommand);
@@ -455,12 +455,12 @@ class TemplateScriptingCompiler {
 	}
 	
 	/**
-	 * Compiles a block plugin.
-	 *
+	 * Compiles a block plugin and returns the output of the plugin or false
+	 * if the plugin doesn't exist.
+	 * 
 	 * @param	string		$tagCommand
 	 * @param	string		$tagArgs
-	 * @return	mixed				false, if the plugin does not exist
-	 * 						otherwise the php output of the plugin
+	 * @return	mixed
 	 */
 	protected function compileBlockPlugin($tagCommand, $tagArgs) {
 		// check wheater this is the start ({block}) or the
@@ -503,12 +503,12 @@ class TemplateScriptingCompiler {
 	}
 	
 	/**
-	 * Compiles a compiler function/block.
+	 * Compiles a compiler function/block and returns the output of the plugin
+	 * or false if the plugin doesn't exist.
 	 * 
 	 * @param	string		$tagCommand
 	 * @param	string		$tagArgs
-	 * @return	mixed				false, if the plugin does not exist
-	 * 						otherwise the php output of the plugin
+	 * @return	mixed
 	 */
 	protected function compileCompilerPlugin($tagCommand, $tagArgs) {
 		// check wheater this is the start ({block}) or the
@@ -662,7 +662,7 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * Compiles a foreach tag and returns the compiled PHP code.
-	 *
+	 * 
 	 * @param	string		$foreachTag
 	 * @return	string
 	 */
@@ -709,11 +709,11 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * Compiles an include tag and returns the compiled PHP code.
-	 *
+	 * 
 	 * @param	string		$includeTag
 	 * @param	string		$identifier
 	 * @param	array		$metaData
-	 * @return
+	 * @return	string
 	 */
 	protected function compileIncludeTag($includeTag, $identifier, array &$metaData) {
 		$args = $this->parseTagArgs($includeTag, 'include');
@@ -915,7 +915,7 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * Compiles an {if} tag and returns the compiled PHP code.
-	 *
+	 * 
 	 * @param	string		$tagArgs
 	 * @param	boolean		$elseif		true, if this tag is an else tag
 	 * @return	string
@@ -1379,9 +1379,7 @@ class TemplateScriptingCompiler {
 		$this->escapedPattern = '(?<!\\\\)';
 		$this->validVarnamePattern = '(?:[a-zA-Z_][a-zA-Z_0-9]*)';
 		$this->constantPattern = '(?:[A-Z_][A-Z_0-9]*)';
-		//$this->doubleQuotePattern = '"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"';
 		$this->doubleQuotePattern = '"(?:[^"\\\\]+|\\\\.)*"';
-		//$this->singleQuotePattern = '\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'';
 		$this->singleQuotePattern = '\'(?:[^\'\\\\]+|\\\\.)*\'';
 		$this->quotePattern = '(?:' . $this->doubleQuotePattern . '|' . $this->singleQuotePattern . ')';
 		$this->numericPattern = '(?i)(?:(?:\-?\d+(?:\.\d+)?)|true|false|null)';

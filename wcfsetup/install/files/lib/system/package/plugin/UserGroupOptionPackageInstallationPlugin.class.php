@@ -9,7 +9,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * This PIP installs, updates or deletes user group permissions.
+ * Installs, updates and deletes user group options.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH
@@ -138,7 +138,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	}
 	
 	/**
-	 * Returns an array of groupIDs that belong to an admin group.
+	 * Returns an array of ids of admin groups.
 	 * 
 	 * @return	array<integer>
 	 */

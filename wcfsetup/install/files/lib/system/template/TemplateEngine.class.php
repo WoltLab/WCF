@@ -10,7 +10,7 @@ use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
- * TemplateEngine loads and displays template.
+ * Loads and displays template.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -409,6 +409,7 @@ class TemplateEngine extends SingletonFactory {
 	 * Returns the absolute filename of a compiled template.
 	 * 
 	 * @param	string		$templateName
+	 * @return	string
 	 */
 	public function getCompiledFilename($templateName) {
 		return $this->compileDir.PACKAGE_ID.'_'.$this->templateGroupID.'_'.$this->languageID.'_'.$templateName.'.php';
@@ -418,20 +419,21 @@ class TemplateEngine extends SingletonFactory {
 	 * Returns the absolute filename for template's meta data.
 	 * 
 	 * @param	string		$templateName
+	 * @return	string
 	 */
 	public function getMetaDataFilename($templateName) {
 		return $this->compileDir.PACKAGE_ID.'_'.$this->templateGroupID.'_'.$templateName.'.meta.php';
 	}
 	
 	/**
-	 * Checks wheater a template is already compiled or not.
+	 * Returns true if the template with the given data is already compiled.
 	 * 
 	 * @param	string		$templateName
 	 * @param	string		$sourceFilename
 	 * @param	string		$compiledFilename
 	 * @param	string		$application
 	 * @param	array		$metaData
-	 * @return	boolean		$isCompiled
+	 * @return	boolean
 	 */
 	protected function isCompiled($templateName, $sourceFilename, $compiledFilename, $application, array $metaData) {
 		if ($this->forceCompile || !file_exists($compiledFilename)) {
@@ -490,7 +492,7 @@ class TemplateEngine extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns a new template compiler object.
+	 * Returns the template compiler.
 	 * 
 	 * @return	wcf\system\template\TemplateCompiler
 	 */
@@ -590,7 +592,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Executes a compiled template scripting source and returns the result.
-	 *
+	 * 
 	 * @param	string		$compiledSource
 	 * @param	array		$variables
 	 * @param	boolean		$sandbox	enables execution in sandbox
@@ -689,7 +691,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Sets the dir for the compiled templates.
-	 *
+	 * 
 	 * @param	string		$compileDir
 	 */
 	public function setCompileDir($compileDir) {

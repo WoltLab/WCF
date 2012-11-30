@@ -6,7 +6,7 @@ use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 
 /**
- * TemplateGroupEditor provides functions to create, edit or delete template group. 
+ * Provides functions to edit template groups.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -80,9 +80,6 @@ class TemplateGroupEditor extends DatabaseObjectEditor {
 	 * Deletes the folders of this template group.
 	 */
 	public function deleteFolders() {
-		// default template dir
-		$folders = array(WCF_DIR . 'templates/' . $this->templateGroupFolderName);
-		
 		// get package dirs
 		$sql = "SELECT	packageDir
 			FROM	wcf".WCF_N."_package

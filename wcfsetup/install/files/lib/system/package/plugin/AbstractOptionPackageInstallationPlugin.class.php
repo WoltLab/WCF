@@ -4,8 +4,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
- * Default implementation of some functions for package installation plugin for
- * options.
+ * Abstract implementation of a package installation plugin for options.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH
@@ -23,7 +22,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		
 		$xml = $this->getXML($this->instruction['value']);
 		$xpath = $xml->xpath();
-		
 		
 		if ($this->installation->getAction() == 'update') {
 			// handle delete first
@@ -183,7 +181,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	}
 	
 	/**
-	 * Uninstalls option categories and options.
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// delete options
@@ -195,7 +193,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
 	}
-
+	
 	/**
 	 * Installs option categories.
 	 * 

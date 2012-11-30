@@ -21,7 +21,7 @@ final class StringUtil {
 	
 	/**
 	 * Returns a salted hash of the given value.
-	 *
+	 * 
 	 * @param	string		$value
 	 * @param	string		$salt
 	 * @return	string
@@ -56,7 +56,7 @@ final class StringUtil {
 	
 	/**
 	 * Returns a double salted hash of the given value.
-	 *
+	 * 
 	 * @param	string		$value
 	 * @param	string		$salt
 	 * @return	string
@@ -67,7 +67,7 @@ final class StringUtil {
 	
 	/**
 	 * Encrypts the given value.
-	 *
+	 * 
 	 * @param	string		$value
 	 * @return	string
 	 */
@@ -85,7 +85,7 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php sha1() function.
-	 *
+	 * 
 	 * @param	string		$value
 	 * @return	string
 	 */
@@ -376,14 +376,12 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Checks wether $haystack ends with $needle, or not.
+	 * Returns true if $haystack ends with $needle or if the length of $needle is 0.
 	 * 
-	 * @param	string		$haystack	The string to be checked for ending with $needle
-	 * @param	string		$needle		The string to be found at the end of $haystack
-	 * @param	boolean		$ci		Case insensitive or not. Default = false.
-	 * 
-	 * @return	boolean				True, if $haystack ends with $needle, false otherwise. 
-	 *						Always returns true if length of $needle is 0.
+	 * @param	string		$haystack
+	 * @param	string		$needle	
+	 * @param	boolean		$ci		case insensitive
+	 * @return	boolean
 	 */
 	public static function endsWith($haystack, $needle, $ci = false) {
 		if ($ci) {
@@ -502,7 +500,7 @@ final class StringUtil {
 			|	[\xF1-\xF3][\x80-\xBF]{3}		# planes 4-15
 			|	\xF4[\x80-\x8F][\x80-\xBF]{2}		# plane 16
 			)*$/x', $string);
-		*/	
+		*/
 		return preg_match('/(
 				[\xC2-\xDF][\x80-\xBF]			# non-overlong 2-byte
 			|	\xE0[\xA0-\xBF][\x80-\xBF]		# excluding overlongs
@@ -587,7 +585,7 @@ final class StringUtil {
 	 * @param	integer		$length
 	 * @param	string		$etc		string to append when $string is truncated
 	 * @param	boolean		$breakWords	should words be broken in the middle
-	 * @return	string				truncated string
+	 * @return	string
 	 */
 	public static function truncate($string, $length = 80, $etc = '…', $breakWords = false) {
 		if ($length == 0) {

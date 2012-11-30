@@ -2,7 +2,7 @@
 namespace wcf\system\option;
 
 /**
- * Default interface for option handlers.
+ * Every option handler has to implement this interface.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

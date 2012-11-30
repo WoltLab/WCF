@@ -4,7 +4,7 @@ use wcf\system\WCF;
 use wcf\util\CronjobUtil;
 
 /**
- * This PIP installs, updates or deletes cronjobs.
+ * Installs, updates and deletes cronjobs.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

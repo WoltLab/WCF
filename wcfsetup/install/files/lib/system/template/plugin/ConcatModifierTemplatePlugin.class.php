@@ -4,12 +4,12 @@ use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateEngine;
 
 /**
- * The 'concat' modifier returns the string that results from concatenating the
- * arguments. May have two or more arguments.
+ * Template modifier plugin which returns the string that results from concatenating
+ * the arguments. May have two or more arguments.
  * 
  * Usage:
- *	{"left"|concat:$right}
- *
+ * 	{"left"|concat:$right}
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

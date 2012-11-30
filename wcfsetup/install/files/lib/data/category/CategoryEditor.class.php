@@ -8,7 +8,7 @@ use wcf\system\WCF;
 
 /**
  * Provides functions to edit categories.
- *
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

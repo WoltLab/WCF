@@ -9,8 +9,8 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 
 /**
- * Handles categories.
- *
+ * Handles the categories.
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

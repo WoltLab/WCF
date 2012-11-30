@@ -8,17 +8,17 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * The 'pages' template function is used to generate sliding pagers.
+ * Template function plugin which generates sliding pagers.
  * 
  * Usage:
- *	{pages pages=10 link='page-%d.html'}
- *	{pages page=8 pages=10 link='page-%d.html'}
- *	
- *	assign to variable 'output'; do not print: 
- *	{pages page=8 pages=10 link='page-%d.html' assign='output'}
- *	
- *	assign to variable 'output' and do print also:
- *	{pages page=8 pages=10 link='page-%d.html' assign='output' print=true}
+ * 	{pages pages=10 link='page-%d.html'}
+ * 	{pages page=8 pages=10 link='page-%d.html'}
+ * 	
+ * 	assign to variable 'output'; do not print: 
+ * 	{pages page=8 pages=10 link='page-%d.html' assign='output'}
+ * 	
+ * 	assign to variable 'output' and do print also:
+ * 	{pages page=8 pages=10 link='page-%d.html' assign='output' print=true}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

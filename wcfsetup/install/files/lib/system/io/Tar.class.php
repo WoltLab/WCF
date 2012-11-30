@@ -307,8 +307,7 @@ class Tar implements IArchive {
 			$checksum += ord(substr($binaryData, $i, 1));
 		}
 		
-		// Extract the values
-		//$data = unpack("a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor", $binaryData);
+		// extract values
 		$data = unpack("a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor/a155prefix", $binaryData);
 		
 		// Extract the properties

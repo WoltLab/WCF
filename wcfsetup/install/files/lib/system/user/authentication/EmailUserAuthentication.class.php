@@ -3,7 +3,7 @@ namespace wcf\system\user\authentication;
 use wcf\data\user\User;
 
 /**
- * Implementation of the user authentication, that uses the e-mail address instead of the username to identify the user.
+ * User authentication implementation that uses the e-mail address to identify users.
  * 
  * @author	Markus Bartz
  * @copyright	2011 Markus Bartz

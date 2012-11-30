@@ -4,8 +4,8 @@ use wcf\system\option\TextOptionType;
 use wcf\util\StringUtil;
 
 /**
- * TextUserGroupOptionType is an implementation of IUserGroupOptionType for text
- * values.
+ * User group option type implementation for textual input fields.
+ * 
  * The merge of option values returns merge of all text values.
  * 
  * @author	Marcel Werk

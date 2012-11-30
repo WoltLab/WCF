@@ -4,7 +4,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
 
 /**
- * This PIP installs, updates or deletes core objects.
+ * Installs, updates and deletes core objects.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -65,7 +65,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
-	 */	
+	 */
 	protected function cleanup() {
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.coreObjects.php');
 	}

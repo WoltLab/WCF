@@ -63,7 +63,7 @@ class EventListenerCacheBuilder implements ICacheBuilder {
 	}
 	
 	/**
-	 * Sorts the event listeners alphabetically.
+	 * Sorts the event listeners by nice value.
 	 */
 	public static function sortListeners($listenerA, $listenerB) {
 		if ($listenerA['niceValue'] < $listenerB['niceValue']) {

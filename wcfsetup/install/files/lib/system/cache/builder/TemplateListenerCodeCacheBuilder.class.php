@@ -4,7 +4,7 @@ use wcf\data\template\listener\TemplateListenerList;
 use wcf\system\package\PackageDependencyHandler;
 
 /**
- * Caches template listener code.
+ * Caches the template listener code for a certain template in a certain environment.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

@@ -4,7 +4,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
 
 /**
- * This PIP installs, updates or deletes template listeners.
+ * Installs, updates and deletes template listeners.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -81,7 +81,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
-	 */	
+	 */
 	protected function cleanup() {
 		// clear cache immediately
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.templateListener-*.php');

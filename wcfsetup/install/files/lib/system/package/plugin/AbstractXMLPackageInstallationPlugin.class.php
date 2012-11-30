@@ -8,8 +8,7 @@ use wcf\util\FileUtil;
 use wcf\util\XML;
 
 /**
- * Default implementation of some functions for a package installation plugin using
- * xml definitions.
+ * Abstract implementation of a package installation plugin using a XML file.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -120,7 +119,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 * Imports or updates items.
 	 * 
 	 * @param	\DOMXPath	$xpath
-	 */	
+	 */
 	protected function importItems(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:'.$this->tagName);
 		foreach ($elements as $element) {
@@ -192,7 +191,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 * @param	array		$row
 	 * @param	array		$data
 	 * @return	wcf\data\IStorableObject
-	 */	
+	 */
 	protected function import(array $row, array $data) {
 		if (empty($row)) {
 			// create new item
@@ -214,14 +213,14 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	/**
 	 * Executed after all items would have been imported, use this hook if you've
 	 * overwritten import() to disable insert/update.
-	 */	
+	 */
 	protected function postImport() { }
 	
 	/**
 	 * Deletes the given items.
 	 * 
 	 * @param	array	$items
-	 */	
+	 */
 	abstract protected function handleDelete(array $items);
 	
 	/**
@@ -256,19 +255,19 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 * Attention: $data is passed by reference
 	 * 
 	 * @param	array	$data
-	 */	
+	 */
 	protected function prepareCreate(array &$data) {
 		$data['packageID'] = $this->installation->getPackageID();
 	}
 	
 	/**
 	 * Triggered after executing all delete and/or import actions.
-	 */	
+	 */
 	protected function cleanup() { }
 	
 	/**
 	 * Loads the xml file into a string and returns this string.
-	 *
+	 * 
 	 * @param	string		$filename
 	 * @return	XML		$xml
 	 */
@@ -276,13 +275,13 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 		if (empty($filename)) {
 			$filename = $this->instruction['value'];
 		}
-
+		
 		// Search the xml-file in the package archive.
 		// Abort installation in case no file was found.
 		if (($fileIndex = $this->installation->getArchive()->getTar()->getIndexByFilename($filename)) === false) {
 			throw new SystemException("xml file '".$filename."' not found in '".$this->installation->getArchive()->getArchive()."'");
 		}
-
+		
 		// Extract acpmenu file and parse with SimpleXML
 		$xml = new XML();
 		$tmpFile = FileUtil::getTemporaryFilename('xml_');
@@ -307,12 +306,12 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	
 	/**
 	 * Returns the show order value.
-	 *
+	 * 
 	 * @param	integer		$showOrder
 	 * @param	string		$parentName
 	 * @param	string		$columnName
 	 * @param	string		$tableNameExtension
-	 * @return	integer	new show order
+	 * @return	integer	
 	 */
 	protected function getShowOrder($showOrder, $parentName = null, $columnName = null, $tableNameExtension = '') {
 		if ($showOrder === null) {

@@ -206,7 +206,7 @@ class TarWriter extends Tar {
 	 * @param	string		$typeFlag
 	 * @param	integer		$uid
 	 * @param	integer		$gid
-	 * @return	boolean		result
+	 * @return	boolean
 	 */
 	public function writeHeaderBlock($filename, $size, $mtime = 0, $permissions = 0, $typeFlag = '', $uid = 0, $gid = 0) {
 		if (strlen($filename) > 99) {

@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\package;
-use wcf\util\FileUtil;
-
 use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\Package;
@@ -14,9 +12,10 @@ use wcf\system\request\LinkHandler;
 use wcf\system\setup\Uninstaller;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
+use wcf\util\FileUtil;
 
 /**
- * PackageUninstallationDispatcher handles the whole uninstallation process.
+ * Handles the whole uninstallation process.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

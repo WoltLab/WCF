@@ -4,7 +4,7 @@ use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**
- * Abstract class to validate options and permissions for a given object.
+ * Abstract implementation of a ACP search result provider.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

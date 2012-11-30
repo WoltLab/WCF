@@ -6,7 +6,7 @@ use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**
- * This PIP installs, updates or deletes by a package delivered ACP templates.
+ * Installs, updates and deletes ACP templates.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH

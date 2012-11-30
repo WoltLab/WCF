@@ -6,7 +6,7 @@ use wcf\system\category\CategoryHandler;
 
 /**
  * Represents a category node.
- *
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

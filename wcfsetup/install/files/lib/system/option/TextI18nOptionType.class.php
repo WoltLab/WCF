@@ -6,9 +6,8 @@ use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
 /**
- * TextI18nOptionType is an implementation of IOptionType for 'input type="text"'
- * tags with i18n support.
- *
+ * Option type implementation for textual input fields with i18n support.
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

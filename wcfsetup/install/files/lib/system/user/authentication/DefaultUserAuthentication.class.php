@@ -6,7 +6,7 @@ use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
- * Default implementation of the user authentication.
+ * Default user authentication implementation that uses the username to identify users.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

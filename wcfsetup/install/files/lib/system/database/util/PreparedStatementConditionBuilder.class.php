@@ -4,7 +4,7 @@ use wcf\system\exception\SystemException;
 
 /**
  * Builds a sql query 'where' condition for prepared statements.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

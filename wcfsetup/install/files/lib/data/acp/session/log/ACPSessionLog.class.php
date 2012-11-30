@@ -49,7 +49,7 @@ class ACPSessionLog extends DatabaseObject {
 	
 	/**
 	 * Returns true, if this session is active.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function isActive() {
@@ -62,7 +62,7 @@ class ACPSessionLog extends DatabaseObject {
 	
 	/**
 	 * Returns true, if this session is the active user session.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function isActiveUserSession() {

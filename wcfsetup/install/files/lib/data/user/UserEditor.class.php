@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
 
 /**
  * Provides functions to edit users.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -53,7 +53,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	public static function deleteAll(array $objectIDs = array()) {
 		// unmark users
 		ClipboardHandler::getInstance()->unmark($objectIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
-	
+		
 		return parent::deleteAll($objectIDs);
 	}
 	

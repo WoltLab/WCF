@@ -7,7 +7,7 @@ use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
 /**
- * Caches the merged group options of a group combination.
+ * Caches the merged user group options for a certain user group combination.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

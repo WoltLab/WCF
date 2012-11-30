@@ -14,6 +14,7 @@ use wcf\util\StringUtil;
  * @category	Community Framework
  */
 class Mail {
+	// todo: comment properties
 	protected $header = '';
 	protected $boundary = '';
 	protected $contentType = "text/plain";
@@ -24,7 +25,17 @@ class Mail {
 	protected $cc = array();
 	protected $bcc = array();
 	protected $attachments = array();
+	
+	/**
+	 * priority of the mail
+	 * @var	integer
+	 */
 	protected $priority = 3;
+	
+	/**
+	 * mail body
+	 * @var	string
+	 */
 	protected $body = '';
 	
 	public static $crlf = "\n";
@@ -163,7 +174,7 @@ class Mail {
 	}
 	
 	/**
-	 * Builds a formatted address: "$name" <$email>
+	 * Builds a formatted address: "$name" <$email>.
 	 * 
 	 * @param	string		$name
 	 * @param	string		$email
@@ -305,7 +316,7 @@ class Mail {
 	}
 	
 	/**
-	 * Returns the carbon copy recipients of this mail as String.
+	 * Returns the carbon copy recipients of this mail as string.
 	 * 
 	 * @return	string
 	 */
@@ -339,7 +350,7 @@ class Mail {
 	}
 	
 	/**
-	 * Returns the blind carbon copy recipients of this mail as String.
+	 * Returns the blind carbon copy recipients of this mail as string.
 	 * 
 	 * @return	string
 	 */
@@ -375,16 +386,16 @@ class Mail {
 	}
 	
 	/**
-	 * Sets the Priority of the Mail; Default = 3
+	 * Sets the priority of the mail.
 	 * 
-	 * @param	integer	$priority
+	 * @param	integer		$priority
 	 */
 	public function setPriority($priority) {
 		$this->priority = $priority;
 	}
 	
 	/**
-	 * Returns the Priority of the Mail
+	 * Returns the priority of the mail
 	 * 
 	 * @return	integer
 	 */
@@ -393,14 +404,14 @@ class Mail {
 	}
 	
 	/**
-	 * Creates a boundary for mutlipart/mixed Mail 
+	 * Creates a boundary for multipart/mixed mail.
 	 */
 	protected function setBoundary() {
 		$this->boundary = "==Multipart_Boundary_x".StringUtil::getRandomID()."x";
 	}
 	
 	/**
-	 * Returns the created Boundary
+	 * Returns the created boundary.
 	 * 
 	 * @return	string
 	 */
@@ -409,7 +420,7 @@ class Mail {
 	}
 	
 	/**
-	 * Returns the Content Type
+	 * Returns the content type.
 	 * 
 	 * @return	string
 	 */
@@ -427,7 +438,7 @@ class Mail {
 	}
 	
 	/**
-	 * Sets additional headers
+	 * Sets an additional header.
 	 * 
 	 * @param	string		$header
 	 */

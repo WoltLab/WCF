@@ -3,8 +3,8 @@ namespace wcf\system\database\editor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 
 /**
- * This is the database editor implementation for MySQL4.1 or higher.
- *
+ * Database editor implementation for MySQL4.1 or higher.
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

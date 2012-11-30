@@ -1,11 +1,10 @@
 <?php
 namespace wcf\util;
-use wcf\system\io\File;
 use wcf\system\style\StyleCompiler;
 
 /**
  * Contains Style-related functions.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -52,8 +51,8 @@ final class StyleUtil {
 		$contents = preg_replace('/clear:\s*right/', 'clear:left', $contents);
 		$contents = str_replace('wcf-clear:left', 'clear:right', $contents);
 		
-		// clip?
-
+		// todo: clip?
+		
 		// float
 		$contents = preg_replace('/float:\s*left/', 'wcf-float:left', $contents);
 		$contents = preg_replace('/float:\s*right/', 'float:left', $contents);

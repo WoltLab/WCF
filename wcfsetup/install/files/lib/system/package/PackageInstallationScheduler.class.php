@@ -125,7 +125,7 @@ class PackageInstallationScheduler {
 		if ($this->download) {
 			$download = $this->downloadPackage($package, $packageUpdateVersions);
 		}
-			
+		
 		// add to stack
 		$data = array(
 			'packageName' => $packageUpdateVersions[0]['packageName'],

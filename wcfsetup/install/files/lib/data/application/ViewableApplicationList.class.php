@@ -1,6 +1,5 @@
 <?php
 namespace wcf\data\application;
-use wcf\data\package\PackageCache;
 
 /**
  * Represents a list of viewable applications.
@@ -18,7 +17,7 @@ class ViewableApplicationList extends ApplicationList {
 	 */
 	public function __construct() {
 		parent::__construct();
-	
+		
 		// exclude WCF pseudo-application
 		$this->getConditionBuilder()->add("application.packageID <> ?", array(1));
 	}

@@ -11,7 +11,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * This PIP executes the delivered sql file.
+ * Executes the delivered sql file.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH
@@ -76,7 +76,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 							$text = implode('<br />', $conflicts['DROP TABLE']);
 							$label = WCF::getLanguage()->get('wcf.acp.package.error.sql.dropTable');
 							$description = WCF::getLanguage()->get('wcf.acp.package.error.sql.dropTable.description');
-						
+							
 							$element = new LabelFormElement($container);
 							$element->setLabel($label);
 							$element->setText($text);
@@ -125,7 +125,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	}
 	
 	/**
-	 * Deletes the sql tables or columns which where installed by the package.
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// get logged sql tables/columns
@@ -189,7 +189,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		if (($fileindex = $this->installation->getArchive()->getTar()->getIndexByFilename($filename)) === false) {
 			throw new SystemException("SQL file '".$filename."' not found.");
 		}
-
+		
 		// extract sql file to string
 		return $this->installation->getArchive()->getTar()->extractToString($fileindex);
 	}

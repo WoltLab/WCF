@@ -48,7 +48,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$variables = $parameters['variables'];
 			unset($parameters['variables']);
 		}
-
+		
 		// update style data
 		parent::update($parameters);
 		
@@ -173,7 +173,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						switch ($element->tagName) {
 							case 'date':
 								DateUtil::validateDate($element->nodeValue);
-		
+								
 								$data['date'] = $element->nodeValue;
 							break;
 							
@@ -189,7 +189,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 								if (!Package::isValidVersion($element->nodeValue)) {
 									throw new SystemException("style version '".$element->nodeValue."' is invalid");
 								}
-		
+								
 								$data['version'] = $element->nodeValue;
 							break;
 							

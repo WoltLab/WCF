@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
- * PackageInstallationSQLParser extends SQLParser by testing and logging functions.
+ * Extends SQLParser by testing and logging functions.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -86,6 +86,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	public function __construct($queries, Package $package, $action = 'install') {
 		$this->package = $package;
 		$this->action = $action;
+		
 		parent::__construct($queries);
 	}
 	

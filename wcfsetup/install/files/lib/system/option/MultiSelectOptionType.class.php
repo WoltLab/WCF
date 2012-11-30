@@ -7,9 +7,8 @@ use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 
 /**
- * MultiSelectOptionType is an implementation of IOptionType for multiple 'select'
- * tags.
- *
+ * Option type implementation for multiple select lists.
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

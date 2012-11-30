@@ -9,7 +9,7 @@ use wcf\util\FileUtil;
 use wcf\util\StyleUtil;
 
 /**
- * This PIP installs, updates or deletes files delivered by a package.
+ * Installs, updates and deletes files.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -90,7 +90,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	}
 	
 	/**
-	 * Uninstalls the files of this package.
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// get absolute package dir

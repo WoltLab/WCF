@@ -9,7 +9,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * This PIP installs, updates or deletes user fields.
+ * Installs, updates and deletes user options.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH
@@ -31,10 +31,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'validationpattern', 'required', 'editable', 'visible', 'searchable', 'showorder', 'outputclass', 'selectoptions', 'enableoptions', 'disabled', 'categoryname', 'permissions', 'options', 'attrs', 'cdata');
 	
 	/**
-	 * Installs user option categories.
-	 * 
-	 * @param	array		$category
-	 * @param	array		$categoryXML
+	 * @see	wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveCategory()
 	 */
 	protected function saveCategory($category, $categoryXML = null) {
 		$icon = $menuIcon = '';
@@ -155,8 +152,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	}
 	
 	/**
-	 * Drops the columns from user option value table from options
-	 * installed by this package.
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// get optionsIDs from package

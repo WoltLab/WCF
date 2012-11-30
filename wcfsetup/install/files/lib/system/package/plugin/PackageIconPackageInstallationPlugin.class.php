@@ -5,7 +5,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 
 /**
- * This PIP installs, updates or deletes the package icon of a package.
+ * Installs, updates and deletes the package icon of a package.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

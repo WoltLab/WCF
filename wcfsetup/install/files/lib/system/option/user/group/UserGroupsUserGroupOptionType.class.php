@@ -8,7 +8,7 @@ use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
- * UserGroupsUserGroupOptionType generates a select-list of all available user groups.
+ * User group option type implementation for a user group select list.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

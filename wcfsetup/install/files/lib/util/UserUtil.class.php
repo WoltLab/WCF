@@ -101,7 +101,7 @@ final class UserUtil {
 	
 	/**
 	 * Returns the ipv6 address of the client.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public static function getIpAddress() {

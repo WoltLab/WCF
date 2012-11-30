@@ -8,7 +8,7 @@ use wcf\system\WCF;
 use wcf\util\XML;
 
 /**
- * This PIP installs, updates or deletes language and their categories and items.
+ * Installs, updates and deletes languages, their categories and items.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH
@@ -161,9 +161,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	}
 	
 	/**
-	 * Returns true if the uninstalling package got to uninstall languages, categories or items.
-	 *
-	 * @return	boolean			hasUnistall
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::hasUninstall()
 	 */
 	public function hasUninstall() {
 		if (parent::hasUninstall()) return true;
@@ -178,7 +176,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	}
 	
 	/**
-	 * Deletes languages, categories or items which where installed by the package.
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		parent::uninstall();
@@ -244,7 +242,8 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	}
 	
 	/**
-	 * Deletes categories which where changed by an update or deinstallation in case they are now empty.
+	 * Deletes categories which where changed by an update or deinstallation
+	 * in case they are now empty.
 	 * 
 	 * @param	array		$categoryIDs
 	 * @param	integer		$packageID

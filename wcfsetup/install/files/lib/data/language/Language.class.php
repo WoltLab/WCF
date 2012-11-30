@@ -66,7 +66,7 @@ class Language extends DatabaseObject {
 	public function getFixedLanguageCode() {
 		return LanguageFactory::fixLanguageCode($this->languageCode);
 	}
-		
+	
 	/**
 	 * Returns the page direction of this language.
 	 * 
@@ -110,7 +110,7 @@ class Language extends DatabaseObject {
 	
 	/**
 	 * Executes template scripting in a language variable.
-	 *
+	 * 
 	 * @param	string		$item
 	 * @param	array		$variables
 	 * @param	boolean		$optional

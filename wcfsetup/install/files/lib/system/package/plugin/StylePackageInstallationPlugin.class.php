@@ -5,7 +5,7 @@ use wcf\data\style\StyleList;
 use wcf\system\event\EventHandler;
 
 /**
- * This PIP installs, updates or deletes styles.
+ * Installs, updates and deletes styles.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

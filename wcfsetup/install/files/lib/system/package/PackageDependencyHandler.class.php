@@ -4,7 +4,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\SingletonFactory;
 
 /**
- * PackageDependencyHandler stores package dependencies and providing a consistent interface for accessing.
+ * Handles the package dependencies.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -17,7 +17,7 @@ class PackageDependencyHandler extends SingletonFactory {
 	/**
 	 * cache of package dependencies
 	 * @var	array
-	 */	
+	 */
 	protected $packageDependencyCache = null;
 	
 	/**

@@ -2,11 +2,10 @@
 namespace wcf\system\search\acp;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageDependencyHandler;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
- * ACP search provider for menu items.
+ * ACP search provider implementation for menu items.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

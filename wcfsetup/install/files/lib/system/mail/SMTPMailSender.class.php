@@ -14,6 +14,7 @@ use wcf\system\io\RemoteFile;
  * @category	Community Framework
  */
 class SMTPMailSender extends MailSender {
+	// todo: comment properties
 	protected $connection = null;
 	protected $statusCode = '';
 	protected $statusMsg = '';
@@ -74,10 +75,10 @@ class SMTPMailSender extends MailSender {
 	}
 	
 	/**
-	 * Does the Authentification of the Client at the Server
+	 * Does the authentification of the client on the server
 	 */
 	protected function auth() {
-		// Init Authentication
+		// init authentication
 		$this->write('AUTH LOGIN');
 		$this->getSMTPStatus();
 		
@@ -92,7 +93,7 @@ class SMTPMailSender extends MailSender {
 		if ($this->statusCode != 334) {
 			throw new SystemException($this->formatError("unknown smtp user '".MAIL_SMTP_USER."'"));
 		}
-			
+		
 		$this->write(base64_encode(MAIL_SMTP_PASSWORD));
 		$this->getSMTPStatus();
 		if ($this->statusCode != 235) {
@@ -145,7 +146,7 @@ class SMTPMailSender extends MailSender {
 		if ($this->statusCode != 354 && $this->statusCode != 250) {
 			throw new SystemException($this->formatError("smtp error"));
 		}
-						
+		
 		$header =
 			"Date: ".gmdate('r').Mail::$crlf
 			."To: ".$mail->getToString().Mail::$crlf
@@ -157,7 +158,7 @@ class SMTPMailSender extends MailSender {
 		$this->write("");
 		$this->write($mail->getBody());
 		$this->write(".");
-			
+		
 		$this->getSMTPStatus();
 		if ($this->statusCode != 250) {
 			throw new SystemException($this->formatError("message sending failed"));

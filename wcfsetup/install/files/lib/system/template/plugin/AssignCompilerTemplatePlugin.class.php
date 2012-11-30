@@ -4,10 +4,10 @@ use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateScriptingCompiler;
 
 /**
- * The 'assign' compiler function calls the assign function on the template object.
+ * Template compiler plugin which assigns a certain value to a template variable.
  * 
  * Usage:
- *	{assign var=name value="foo"}
+ * 	{assign var=name value="foo"}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

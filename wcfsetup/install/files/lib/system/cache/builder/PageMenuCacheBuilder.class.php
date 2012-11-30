@@ -21,7 +21,7 @@ class PageMenuCacheBuilder implements ICacheBuilder {
 	public function getData(array $cacheResource) {
 		list(, $packageID) = explode('-', $cacheResource['cache']);
 		$data = array();
-
+		
 		// get all menu items and filter menu items with low priority
 		$sql = "SELECT		menuItem, menuItemID 
 			FROM		wcf".WCF_N."_page_menu_item menu_item

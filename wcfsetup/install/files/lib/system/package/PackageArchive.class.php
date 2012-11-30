@@ -10,7 +10,7 @@ use wcf\util\FileUtil;
 use wcf\util\XML;
 
 /**
- * This class holds all information of a package archive. 
+ * Represents the archive of a package.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -748,11 +748,12 @@ class PackageArchive {
 	}
 	
 	/**
-	 * Extracts the requested file in the package archive to the temp folder.
+	 * Extracts the requested file in the package archive to the temp folder
+	 * and returns the path to the extracted file.
 	 * 
 	 * @param	string		$filename
 	 * @param	string		$tempPrefix
-	 * @return	string		path to the extracted file
+	 * @return	string
 	 */
 	public function extractTar($filename, $tempPrefix = 'package_') {
 		// search the requested tar archive in our package archive.
@@ -770,10 +771,10 @@ class PackageArchive {
 	}
 	
 	/**
-	 * Unzips compressed package archives.
+	 * Unzips compressed package archives and returns the temporary file name.
 	 * 
 	 * @param	string		$archive	filename
-	 * @return	string		new filename
+	 * @return	string
 	 */
 	public static function unzipPackageArchive($archive) {
 		if (!FileUtil::isURL($archive)) {

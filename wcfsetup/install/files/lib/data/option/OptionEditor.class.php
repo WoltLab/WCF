@@ -109,8 +109,8 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 	}
 	
 	/**
-	 * Rebuilds cached options
-	 *
+	 * Rebuilds the option file.
+	 * 
 	 * @param	string		$filename
 	 * @param	integer		$packageID
 	 */

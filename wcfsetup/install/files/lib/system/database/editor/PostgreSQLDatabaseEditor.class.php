@@ -4,7 +4,7 @@ use wcf\system\database\DatabaseException;
 use wcf\util\ArrayUtil;
 
 /**
- * This is the database editor implementation for PostgreSQL 8.0 or higher.
+ * Database editor implementation for PostgreSQL 8.0 or higher.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -369,8 +369,8 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * Converts a MySQL column type to PostgreSQL.
-	 *
+	 * Converts a MySQL column type to the matching PostgreSQL column type.
+	 * 
 	 * @param	string		$mySQLType
 	 * @param	string
 	 */

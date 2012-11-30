@@ -2,7 +2,7 @@
 namespace wcf\system\database;
 
 /**
- * This is an abstract implementation of a database access class using PDO.
+ * Abstract implementation of a database access class using PDO.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -108,7 +108,7 @@ abstract class Database {
 	 * 
 	 * @param	string		$table
 	 * @param	string		$field
-	 * @return	integer				last insert ID
+	 * @return	integer	
 	 */
 	public function getInsertID($table, $field) {
 		try {
@@ -140,9 +140,9 @@ abstract class Database {
 	}
 	
 	/**
-	 * Commits a transaction.
+	 * Commits a transaction and returns true if the transaction was successfull.
 	 * 
-	 * @return	boolean		true on success
+	 * @return	boolean
 	 */
 	public function commitTransaction() {
 		try {
@@ -155,9 +155,9 @@ abstract class Database {
 	}
 	
 	/**
-	 * Rolls back a transaction.
+	 * Rolls back a transaction and returns true if the rollback was successfull.
 	 * 
-	 * @return	boolean		true on success
+	 * @return	boolean
 	 */
 	public function rollBackTransaction() {
 		try {

@@ -4,7 +4,7 @@ use wcf\data\category\CategoryEditor;
 
 /**
  * Every category type has to implement this interface.
- *
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

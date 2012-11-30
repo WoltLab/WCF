@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
 use wcf\util\UserUtil;
 
 /**
- * SessionHandler provides an abstract implementation for session handling.
+ * Handles sessions.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

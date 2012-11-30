@@ -3,7 +3,7 @@ namespace wcf\system\application;
 use wcf\system\SingletonFactory;
 
 /**
- * Default implementation for all applications for community framework.
+ * Abstract implementation of a community framework application.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

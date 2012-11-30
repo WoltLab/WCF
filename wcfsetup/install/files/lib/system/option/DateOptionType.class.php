@@ -4,7 +4,7 @@ use wcf\data\option\Option;
 use wcf\system\exception\UserInputException;
 
 /**
- * DateOptionType is an implementation of IOptionType for date inputs.
+ * Option type implementation for date input fields.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH

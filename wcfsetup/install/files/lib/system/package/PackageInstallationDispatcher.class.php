@@ -90,7 +90,7 @@ class PackageInstallationDispatcher {
 	 * Installs node components and returns next node.
 	 * 
 	 * @param	string		$node
-	 * @return	PackageInstallationStep
+	 * @return	wcf\system\package\PackageInstallationStep
 	 */
 	public function install($node) {
 		$nodes = $this->nodeBuilder->getNodeData($node);
@@ -150,7 +150,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Returns current package archive.
 	 * 
-	 * @return	PackageArchive
+	 * @return	wcf\system\package\PackageArchive
 	 */
 	public function getArchive() {
 		if ($this->archive === null) {
@@ -399,7 +399,7 @@ class PackageInstallationDispatcher {
 			if (isset($infoValues[$language->languageCode])) {
 				$value = $infoValues[$language->languageCode];
 			}
-		
+			
 			$statement->execute(array(
 				$language->languageID,
 				'wcf.acp.package.'.$infoName.'.package'.$package->packageID,
@@ -507,6 +507,7 @@ class PackageInstallationDispatcher {
 		return $step;
 	}
 	
+	// @todo: comment
 	protected function selectOptionalPackages($currentNode, array $nodeData) {
 		$installationStep = new PackageInstallationStep();
 		
@@ -557,7 +558,7 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Extracts files from .tar (or .tar.gz) archive and installs them
-	 *
+	 * 
 	 * @param	string			$targetDir
 	 * @param	string			$sourceArchive
 	 * @param	FileHandler		$fileHandler
@@ -649,6 +650,7 @@ class PackageInstallationDispatcher {
 		}
 	}
 	
+	// @todo: comment
 	protected function promptOptionalPackages(array $packages) {
 		if (!PackageInstallationFormManager::findForm($this->queue, 'optionalPackages')) {
 			$container = new container\MultipleSelectionFormElementContainer();
@@ -948,7 +950,7 @@ class PackageInstallationDispatcher {
 	 * @param	string		$function
 	 * @return	boolean
 	 * @see		http://de.php.net/manual/en/function.function-exists.php#77980
-	 */	
+	 */
 	protected static function functionExists($function) {
 		if (extension_loaded('suhosin')) {
 			$blacklist = @ini_get('suhosin.executor.func.blacklist');
