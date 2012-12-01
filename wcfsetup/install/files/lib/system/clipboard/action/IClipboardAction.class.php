@@ -20,8 +20,8 @@ interface IClipboardAction {
 	public function getTypeName();
 	
 	/**
-	 * Returns editor item for a certain clipboard action or null if the action
-	 * is not applicable.
+	 * Returns editor item for the clipboard action with the given name or null
+	 * if the action is not applicable to the given objects.
 	 * 
 	 * @param	array		$objects
 	 * @param	string		$actionName
@@ -30,7 +30,7 @@ interface IClipboardAction {
 	public function execute(array $objects, $actionName);
 	
 	/**
-	 * Filters the given objects by the given type data and returnes the filtered
+	 * Filters the given objects by the given type data and returns the filtered
 	 * list.
 	 * 
 	 * @param	array		$objects
