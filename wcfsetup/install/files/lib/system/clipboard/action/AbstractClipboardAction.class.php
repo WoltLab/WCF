@@ -2,7 +2,7 @@
 namespace wcf\system\clipboard\action;
 
 /**
- * Abstract implementation of clipboard action handler.
+ * Abstract implementation of a clipboard action handler.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2012 WoltLab GmbH
