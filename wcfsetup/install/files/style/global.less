@@ -53,6 +53,30 @@ a {
 	}
 }
 
+.htmlContent {
+	p {
+		margin: 1em 0;
+	}
+	
+	h1 {
+		font-size: @wcfSubHeadlineFontSize;
+	}
+	
+	h2 {
+		font-size: @wcfTitleFontSize;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		font-weight: bold;
+		margin: 0.5em 0;
+	}
+}
+
+/* hide broken reCaptcha iframe */
+body > iframe[src="about:blank"] {
+	display:none;
+}
+
 /* todo */
 ::selection {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, .5) !important;
