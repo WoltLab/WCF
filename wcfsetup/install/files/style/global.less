@@ -72,6 +72,11 @@ a {
 	}
 }
 
+/* hide broken reCaptcha iframe */
+body > iframe[src="about:blank"] {
+	display:none;
+}
+
 /* todo */
 ::selection {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, .5) !important;
