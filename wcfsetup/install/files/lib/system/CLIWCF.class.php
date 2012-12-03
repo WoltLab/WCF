@@ -197,17 +197,6 @@ class CLIWCF extends WCF {
 	}
 	
 	/**
-	 * Converts certain HTML entities to a proper CLI counterpart.
-	 * 
-	 * @param	string	$string
-	 * @return	string
-	 */
-	public static function convertEntities($string) {
-		// ldquo, rdquo and bdquo -> "
-		return Regex::compile('&[lrb]dquo;')->replace($string, '"');
-	}
-	
-	/**
 	 * Does the user authentification.
 	 */
 	protected function initAuth() {
@@ -231,7 +220,7 @@ class CLIWCF extends WCF {
 		}
 		catch (UserInputException $e) {
 			$message = WCF::getLanguage()->getDynamicVariable('wcf.user.'.$e->getField().'.error.'.$e->getType(), array('username' => $username));
-			self::getReader()->println(self::convertEntities($message));
+			self::getReader()->println($message);
 			exit;
 		}
 		
