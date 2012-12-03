@@ -63,7 +63,7 @@ class CLIWCF extends WCF {
 		$this->initPHPLine();
 		$this->initAuth();
 		// TODO: Show whether there are updates available (similar to TTYs at Ubuntu Linux)
-		if (VERBOSITY >= -1) {
+		if (VERBOSITY >= -1 && !self::getArgvParser()->disableUpdateCheck) {
 			$updates = PackageUpdateDispatcher::getAvailableUpdates();
 			if (!empty($updates)) {
 				self::getReader()->println(count($updates) . ' updates are available');
@@ -73,7 +73,7 @@ class CLIWCF extends WCF {
 					foreach ($updates as $update) {
 						$line = WCF::getLanguage()->get($update['packageName']) . ' ' . $update['packageVersion'] . ' -> ' . $update['version']['packageVersion'];
 						// TODO: Check whether update is important
-						if (true && self::getTerminal()->isAnsiSupported() && !self::getArgvParser()->disablecolors) {
+						if (true && self::getTerminal()->isAnsiSupported() && !self::getArgvParser()->disableColors) {
 							$line = $posix->colorize($line, Color::RED);
 						}
 						self::getReader()->println($line);
@@ -104,7 +104,8 @@ class CLIWCF extends WCF {
 			'q' => WCF::getLanguage()->get('wcf.cli.help.q'),
 			'h|help' => WCF::getLanguage()->get('wcf.cli.help.help'),
 			'version' => WCF::getLanguage()->get('wcf.cli.help.version'),
-			'disablecolors' => WCF::getLanguage()->get('wcf.cli.help.disablecolors')
+			'disableColors' => WCF::getLanguage()->get('wcf.cli.help.disableColors'),
+			'disableUpdateCheck' => WCF::getLanguage()->get('wcf.cli.help.disableUpdateCheck')
 		));
 		self::getArgvParser()->setOptions(array(
 			ArgvParser::CONFIG_CUMULATIVE_FLAGS => true,
@@ -260,14 +261,14 @@ class CLIWCF extends WCF {
 				self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.global.error.permissionDenied'));
 				continue;
 			}
-			catch (SystemException $e) {
-				Log::error($e);
-				continue;
-			}
 			catch (ArgvException $e) {
 				// show error message and usage
 				echo $e->getMessage().PHP_EOL;
 				echo str_replace($_SERVER['argv'][0], CommandHandler::getCommandName($line), $e->getUsageMessage());
+				continue;
+			}
+			catch (\Exception $e) {
+				Log::error($e);
 				continue;
 			}
 		}
