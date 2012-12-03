@@ -671,7 +671,7 @@
 		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
 		<item name="wcf.global.title"><![CDATA[Title]]></item>
 		<item name="wcf.global.preview"><![CDATA[Preview]]></item>
-		<item name="wcf.global.multiSelect"><![CDATA[Multiple items can be selected by holding the “Ctrl/Shift” key (Windows) or &ldquo;Command&rdquo; (Mac OS) key and clicking the items required.]]></item>
+		<item name="wcf.global.multiSelect"><![CDATA[Multiple items can be selected by holding the “Ctrl/Shift” key (Windows) or “Command“ (Mac OS) key and clicking the items required.]]></item>
 	</category>
 	
 	<category name="wcf.page">
