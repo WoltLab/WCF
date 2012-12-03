@@ -14,10 +14,10 @@
 		<item name="wcf.acp.application.cookiePath.error.notValid"><![CDATA[Der Cookie-Pfad passt nicht zum oben angegebenen Domain-Pfad.]]></item>
 		<item name="wcf.acp.application.domain"><![CDATA[Domain-Einstellungen]]></item>
 		<item name="wcf.acp.application.domainName"><![CDATA[Domain]]></item>
-		<item name="wcf.acp.application.domainName.description"><![CDATA[Geben Sie die Domain an, über die diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, so geben Sie hier bitte &bdquo;www.example.com&ldquo; ein.]]></item>
+		<item name="wcf.acp.application.domainName.description"><![CDATA[Geben Sie die Domain an, über die diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, so geben Sie hier bitte &bdquo;www.example.com“ ein.]]></item>
 		<item name="wcf.acp.application.domainName.error.containsPfad"><![CDATA[Die Domain darf keine Pfadangaben enthalten]]></item>
 		<item name="wcf.acp.application.domainPath"><![CDATA[Pfad]]></item>
-		<item name="wcf.acp.application.domainPath.description"><![CDATA[Geben Sie den Pfad an, über den diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, so geben Sie bitte &bdquo;/community/forum/&ldquo; ein.]]></item>
+		<item name="wcf.acp.application.domainPath.description"><![CDATA[Geben Sie den Pfad an, über den diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, so geben Sie bitte &bdquo;/community/forum/“ ein.]]></item>
 		<item name="wcf.acp.application.edit"><![CDATA[Anwendung bearbeiten]]></item>
 		<item name="wcf.acp.application.edit.title"><![CDATA[Anwendung bearbeiten: „<a href="{link controller='PackageView' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>“]]></item>
 		<item name="wcf.acp.application.group.add"><![CDATA[Anwendungsgruppe hinzufügen]]></item>
@@ -751,9 +751,9 @@
 		<item name="wcf.global.thousandsSeparator"><![CDATA[.]]></item>
 		<item name="wcf.global.title"><![CDATA[Titel]]></item>
 		<item name="wcf.global.preview"><![CDATA[Vorschau]]></item>
-		<item name="wcf.global.multiSelect"><![CDATA[Mehrfache Markierungen sind durch zusätzliches Drücken der Taste „Strg/Ctrl“ (Windows) oder &bdquo;Befehl/Command&ldquo; (Mac OS) möglich.]]></item>
+		<item name="wcf.global.multiSelect"><![CDATA[Mehrfache Markierungen sind durch zusätzliches Drücken der Taste „Strg/Ctrl“ (Windows) oder &bdquo;Befehl/Command“ (Mac OS) möglich.]]></item>
 		<item name="wcf.global.page.jumpTo"><![CDATA[Gehe zu Seite]]></item>
-		<item name="wcf.global.page.jumpTo.description"><![CDATA[Geben Sie einen Wert zwischen „1“ und &bdquo;#pages#&ldquo; ein.]]></item>
+		<item name="wcf.global.page.jumpTo.description"><![CDATA[Geben Sie einen Wert zwischen „1“ und &bdquo;#pages#“ ein.]]></item>
 		<item name="wcf.global.error.illegalLink"><![CDATA[Sie haben einen ungültigen oder nicht mehr gültigen Link aufgerufen.]]></item>
 		<item name="wcf.global.error.backward"><![CDATA[Zurück zur vorherigen Seite]]></item>
 		<item name="wcf.global.noDeclaration"><![CDATA[Keine Angabe]]></item>
