@@ -308,7 +308,7 @@ class UserGroup extends DatabaseObject {
 	public function getGroupOption($name) {
 		if ($this->groupOptions === null) {
 			// get all options and filter options with low priority
-			$groupOptionIDs = array();
+			$this->groupOptions = $groupOptionIDs = array();
 			$sql = "SELECT		optionName, optionID 
 				FROM		wcf".WCF_N."_user_group_option option_table
 				LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency

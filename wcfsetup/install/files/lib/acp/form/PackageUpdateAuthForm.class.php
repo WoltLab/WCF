@@ -208,7 +208,7 @@ class PackageUpdateAuthForm extends ACPForm {
 		parent::readData();
 		
 		// extract realm
-		if (isset($this->header['WWW-Authenticate']) preg_match('/realm="(.*?)"/i', $this->header['WWW-Authenticate'], $match)) {
+		if (isset($this->header['WWW-Authenticate']) && preg_match('/realm="(.*?)"/i', $this->header['WWW-Authenticate'], $match)) {
 			$this->realm = $match[1];
 		}
 		

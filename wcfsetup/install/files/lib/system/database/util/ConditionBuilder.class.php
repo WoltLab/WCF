@@ -13,24 +13,32 @@ namespace wcf\system\database\util;
  */
 class ConditionBuilder {
 	/**
-	 * conditions string
-	 * @var	string
-	 */
-	protected $conditions = '';
-	
-	/**
 	 * must be true to add the 'WHERE' keyword automatically
 	 * @var	boolean
 	 */
 	protected $addWhereKeyword = true;
 	
 	/**
+	 * string used for concatenating conditions
+	 * @var	string
+	 */
+	protected $concat = '';
+	
+	/**
+	 * conditions string
+	 * @var	string
+	 */
+	protected $conditions = '';
+	
+	/**
 	 * Creates a new ConditionBuilder object.
 	 *
 	 * @param	string		$addWhereKeyword
+	 * @param	string		$concat
 	 */
-	public function __construct($addWhereKeyword = true) {
+	public function __construct($addWhereKeyword = true, $concat = 'AND') {
 		$this->addWhereKeyword = $addWhereKeyword;
+		$this->concat = ($concat == 'OR') ? ' OR ' : ' AND ';
 	}
 	
 	/**
@@ -42,7 +50,7 @@ class ConditionBuilder {
 		if (!is_array($conditions)) $conditions = array($conditions);
 		
 		foreach ($conditions as $condition) {
-			if (!empty($this->conditions)) $this->conditions .= " AND ";
+			if (!empty($this->conditions)) $this->conditions .= $this->concat;
 			$this->conditions .= $condition;
 		}
 	}

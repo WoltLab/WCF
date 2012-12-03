@@ -165,9 +165,9 @@ class CacheListPage extends AbstractPage {
 			break;
 		}
 		
-		$this->readCacheFiles('language', WCF_DIR.'language');
-		$this->readCacheFiles('template', WCF_DIR.'templates/compiled', new Regex('\.meta\.php$'));
-		$this->readCacheFiles('template', WCF_DIR.'acp/templates/compiled', new Regex('\.meta\.php$'));
+		$this->readCacheFiles('language', FileUtil::unifyDirSeperator(WCF_DIR.'language'));
+		$this->readCacheFiles('template', FileUtil::unifyDirSeperator(WCF_DIR.'templates/compiled'), new Regex('\.meta\.php$'));
+		$this->readCacheFiles('template', FileUtil::unifyDirSeperator(WCF_DIR.'acp/templates/compiled'), new Regex('\.meta\.php$'));
 	}
 	
 	/**

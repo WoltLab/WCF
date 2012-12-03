@@ -62,7 +62,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 */
 	public function update(array $parameters = array()) {
 		// update salt and create new password hash
-		if (isset($parameters['password'])) {
+		if (isset($parameters['password']) && $parameters['password'] !== '') {
 			$parameters['salt'] = StringUtil::getRandomID();
 			$parameters['password'] = StringUtil::getDoubleSaltedHash($parameters['password'], $parameters['salt']);
 			
@@ -71,6 +71,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 			// update salt and accessToken
 			$this->salt = $parameters['salt'];
 			$this->accessToken = $parameters['accessToken'];
+		}
+		else {
+			unset($parameters['password'], $parameters['salt'], $parameters['accessToken']);
 		}
 		
 		parent::update($parameters);

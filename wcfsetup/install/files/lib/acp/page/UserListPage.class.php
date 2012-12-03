@@ -27,14 +27,22 @@ use wcf\util\StringUtil;
  */
 class UserListPage extends SortablePage {
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * list of displayed column names
+	 * @var	array<string>
 	 */
-	public $neededPermissions = array('admin.user.canSearchUser');
+	public $columnHeads = array();
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$itemsPerPage
+	 * list of available columns
+	 * @var	array<string>
 	 */
-	public $itemsPerPage = 50;
+	public $columns = array('email', 'registrationDate');
+	
+	/**
+	 * list of column values
+	 * @var	array<string>
+	 */
+	public $columnValues = array();
 	
 	/**
 	 * @see	wcf\page\SortablePage::$defaultSortField
@@ -42,9 +50,32 @@ class UserListPage extends SortablePage {
 	public $defaultSortField = 'username';
 	
 	/**
-	 * @see	wcf\page\SortablePage::$validSortFields
+	 * @see	wcf\page\MultipleLinkPage::$itemsPerPage
 	 */
-	public $validSortFields = array('email', 'userID', 'registrationDate', 'username');
+	public $itemsPerPage = 50;
+	
+	/**
+	 * list of marked user ids
+	 * @var	array<integer>
+	 */
+	public $markedUsers = array();
+	
+	/**
+	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 */
+	public $neededPermissions = array('admin.user.canSearchUser');
+	
+	/**
+	 * IOptionHandler object
+	 * @var	wcf\system\option\IOptionHandler
+	 */
+	protected $optionHandler = null;
+	
+	/**
+	 * list of available user option names
+	 * @var	array
+	 */
+	public $options = array();
 	
 	/**
 	 * id of a user search
@@ -52,19 +83,28 @@ class UserListPage extends SortablePage {
 	 */
 	public $searchID = 0;
 	
-	// data
-	// @todo: comment properties
+	/**
+	 * list of user ids
+	 * @var	array<integer>
+	 */
 	public $userIDs = array();
-	public $markedUsers = array();
-	public $users = array();
-	public $url = '';
-	public $columns = array('email', 'registrationDate');
-	public $options = array();
-	public $columnValues = array();
-	public $columnHeads = array();
-	public $sqlConditions = '';
 	
-	protected $optionHandler = null;
+	/**
+	 * list of users
+	 * @var	array<wcf\data\user\User>
+	 */
+	public $users = array();
+	
+	/**
+	 * page url
+	 * @var	string
+	 */
+	public $url = '';
+	
+	/**
+	 * @see	wcf\page\SortablePage::$validSortFields
+	 */
+	public $validSortFields = array('email', 'userID', 'registrationDate', 'username');
 	
 	/**
 	 * @see	wcf\page\IPage::readParameters()

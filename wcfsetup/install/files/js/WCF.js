@@ -4513,6 +4513,22 @@ WCF.Search.Base = Class.extend({
 		if (this._searchInput.getTagName() === 'input') {
 			this._searchInput.attr('autocomplete', 'off');
 		}
+		
+		this._searchInput.blur($.proxy(this._blur, this));
+	},
+	
+	/**
+	 * Closes the dropdown after a short delay.
+	 */
+	_blur: function() {
+		var self = this;
+		new WCF.PeriodicalExecuter(function(pe) {
+			if (self._list.is(':visible')) {
+				self._clearList(false);
+			}
+			
+			pe.stop();
+		}, 100);
 	},
 	
 	/**
@@ -7031,6 +7047,137 @@ WCF.Style.Chooser = Class.extend({
 });
 
 /**
+ * Converts static user panel items into interactive dropdowns.
+ * 
+ * @param	string		containerID
+ */
+WCF.UserPanel = Class.extend({
+	/**
+	 * target container
+	 * @var	jQuery
+	 */
+	_container: null,
+	
+	/**
+	 * initialization state
+	 * @var	boolean
+	 */
+	_didLoad: false,
+	
+	/**
+	 * original link element
+	 * @var	jQuery
+	 */
+	_link: null,
+	
+	/**
+	 * reverts to original link if return values are empty
+	 * @var	boolean
+	 */
+	_revertOnEmpty: true,
+	
+	/**
+	 * Initialites the WCF.UserPanel class.
+	 * 
+	 * @param	string		containerID
+	 */
+	init: function(containerID) {
+		this._container = $('#' + containerID);
+		this._didLoad = false;
+		this._revertOnEmpty = true;
+		
+		if (this._container.length != 1) {
+			console.debug("[WCF.UserPanel] Unable to find container identfied by '" + containerID + "', aborting.");
+			return;
+		}
+		
+		if (this._container.data('count')) {
+			WCF.DOMNodeInsertedHandler.enable();
+			this._convert();
+			WCF.DOMNodeInsertedHandler.disable();
+		}
+	},
+	
+	/**
+	 * Converts link into an interactive dropdown menu.
+	 */
+	_convert: function() {
+		this._container.addClass('dropdown');
+		this._link = this._container.children('a').remove();
+		
+		$('<a class="dropdownToggle jsTooltip" title="' + this._container.data('title') + '">' + this._link.html() + '</a>').appendTo(this._container).click($.proxy(this._click, this));
+		var $dropdownMenu = $('<ul class="dropdownMenu" />').appendTo(this._container);
+		$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').appendTo($dropdownMenu);
+		
+		this._addDefaultItems($dropdownMenu);
+	},
+	
+	/**
+	 * Adds default items to dropdown menu.
+	 * 
+	 * @param	jQuery		dropdownMenu
+	 */
+	_addDefaultItems: function(dropdownMenu) { },
+	
+	/**
+	 * Adds a dropdown divider.
+	 * 
+	 * @param	jQuery		dropdownMenu
+	 */
+	_addDivider: function(dropdownMenu) {
+		$('<li class="dropdownDivider" />').appendTo(dropdownMenu);
+	},
+	
+	/**
+	 * Handles clicks on the dropdown item.
+	 */
+	_click: function() {
+		if (this._didLoad) {
+			return;
+		}
+		
+		new WCF.Action.Proxy({
+			autoSend: true,
+			data: this._getParameters(),
+			success: $.proxy(this._success, this)
+		});
+		
+		this._didLoad = true;
+	},
+	
+	/**
+	 * Returns a list of parameters for AJAX request.
+	 * 
+	 * @return	object
+	 */
+	_getParameters: function() {
+		return { };
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		if (data.returnValues && data.returnValues.template) {
+			var $dropdownMenu = this._container.children('.dropdownMenu');
+			$dropdownMenu.children('.jsDropdownPlaceholder').remove();
+			$('' + data.returnValues.template).prependTo($dropdownMenu);
+		}
+		else {
+			this._container.removeClass('dropdown').empty();
+			this._link.appendTo(this._container);
+			
+			// remove badge
+			this._container.find('.badge').remove();
+		}
+	}
+});
+
+/**
  * WCF implementation for nested sortables.
  */
 $.widget("ui.wcfNestedSortable", $.extend({}, $.ui.nestedSortable.prototype, {
@@ -7128,10 +7275,6 @@ $.widget('ui.wcfDialog', {
 	 * Initializes a new dialog.
 	 */
 	_init: function() {
-		if (this.options.closeButtonLabel === null) {
-			this.options.closeButtonLabel = WCF.Language.get('wcf.global.close');
-		}
-		
 		if (this.options.ajax) {
 			new WCF.Action.Proxy({
 				autoSend: true,
@@ -7161,11 +7304,17 @@ $.widget('ui.wcfDialog', {
 	 * Creates a new dialog instance.
 	 */
 	_create: function() {
+		if (this.options.closeButtonLabel === null) {
+			this.options.closeButtonLabel = WCF.Language.get('wcf.global.button.close');
+		}
+		
+		WCF.DOMNodeInsertedHandler.enable();
+		
 		// create dialog container
 		this._container = $('<div class="dialogContainer" />').hide().css({ zIndex: this.options.zIndex }).appendTo(document.body);
 		this._titlebar = $('<header class="dialogTitlebar" />').hide().appendTo(this._container);
 		this._title = $('<span class="dialogTitle" />').hide().appendTo(this._titlebar);
-		this._closeButton = $('<a class="dialogCloseButton"><span /></a>').click($.proxy(this.close, this)).hide().appendTo(this._titlebar);
+		this._closeButton = $('<a class="dialogCloseButton jsTooltip" title="' + this.options.closeButtonLabel + '"><span /></a>').click($.proxy(this.close, this)).hide().appendTo(this._titlebar);
 		this._content = $('<div class="dialogContent" />').appendTo(this._container);
 		
 		this._setOption('title', this.options.title);
@@ -7193,6 +7342,8 @@ $.widget('ui.wcfDialog', {
 				}, this));
 			}
 		}
+		
+		WCF.DOMNodeInsertedHandler.disable();
 	},
 	
 	/**
@@ -7210,7 +7361,11 @@ $.widget('ui.wcfDialog', {
 			}
 		} else if (key == 'closable' || key == 'closeButtonLabel') {
 			if (this.options.closable) {
+				WCF.DOMNodeInsertedHandler.enable();
+				
 				this._closeButton.attr('title', this.options.closeButtonLabel).show().find('span').html(this.options.closeButtonLabel);
+				
+				WCF.DOMNodeInsertedHandler.disable();
 			} else {
 				this._closeButton.hide();
 			}
@@ -7315,7 +7470,7 @@ $.widget('ui.wcfDialog', {
 	 * Closes this dialog.
 	 */
 	close: function() {
-		if (!this.isOpen()) {
+		if (!this.isOpen() || !this.options.closable) {
 			return;
 		}
 		
@@ -7389,7 +7544,7 @@ $.widget('ui.wcfDialog', {
 		
 		// calculate maximum content height
 		var $heightDifference = $containerDimensions.height - $contentDimensions.height;
-		var $maximumHeight = $windowDimensions.height - $heightDifference;
+		var $maximumHeight = $windowDimensions.height - $heightDifference - 120;
 		this._content.css({ maxHeight: $maximumHeight + 'px' });
 		
 		// re-caculate values if container height was previously limited

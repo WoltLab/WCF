@@ -624,6 +624,12 @@ class PackageInstallationDispatcher {
 				
 				// parse domain path
 				$domainPath = FileUtil::getRelativePath(FileUtil::unifyDirSeperator($_SERVER['DOCUMENT_ROOT']), FileUtil::unifyDirSeperator($packageDir));
+				
+				// work-around for applications installed in document root
+				if ($domainPath == './') {
+					$domainPath = '';
+				}
+				
 				$domainPath = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($domainPath));
 				
 				// update application path

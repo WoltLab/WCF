@@ -26,7 +26,7 @@
 </div>
 
 <form method="post" action="{link controller='PackageStartInstall'}{/link}" enctype="multipart/form-data">
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.package.source{/lang}</legend>
 			

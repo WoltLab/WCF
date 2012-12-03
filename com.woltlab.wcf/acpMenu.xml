@@ -122,14 +122,14 @@
 		<acpmenuitem name="wcf.acp.menu.link.cronjob.list">
 			<link>index.php/CronjobList/</link>
 			<parent>wcf.acp.menu.link.cronjob</parent>
-			<permissions>admin.system.cronjobs.canEditCronjob,admin.system.cronjob.canDeleteCronjob,admin.system.cronjobs.canEnableDisableCronjob</permissions>
+			<permissions>admin.system.canManageCronjob</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.cronjob.add">
 			<link>index.php/CronjobAdd/</link>
 			<parent>wcf.acp.menu.link.cronjob</parent>
-			<permissions>admin.system.cronjob.canAddCronjob</permissions>
+			<permissions>admin.system.canManageCronjob</permissions>
 			<showorder>2</showorder>
 		</acpmenuitem>
 		<!-- /cronjobs -->
@@ -149,7 +149,7 @@
 		<acpmenuitem name="wcf.acp.menu.link.log.cronjob">
 			<link>index.php/CronjobLogList/</link>
 			<parent>wcf.acp.menu.link.log</parent>
-			<permissions>admin.system.cronjob.canEditCronjob,admin.system.cronjob.canDeleteCronjob</permissions>
+			<permissions>admin.system.canManageCronjob</permissions>
 		</acpmenuitem>
 		<!-- /log -->
 		

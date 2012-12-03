@@ -20,13 +20,13 @@
 		<ul>
 			<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 			
-			{event name='largeButtons'}
+			{event name='largeButtonsTop'}
 		</ul>
 	</nav>
 </div>
 
 {hascontent}
-	<div class="tabularBox tabularBoxTitle marginTop shadow">
+	<div class="tabularBox tabularBoxTitle marginTop">
 		<hgroup>
 			<h1>{lang}wcf.acp.group.list{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.group.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
@@ -53,7 +53,7 @@
 									<img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.acp.group.edit{/lang}" class="icon16 disabled" />
 								{/if}
 								{if $group->isDeletable()}
-									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip" data-object-id="{@$group->groupID}" data-confirm-message="{lang}wcf.acp.group.delete.sure{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$group->groupID}" data-confirm-message="{lang}wcf.acp.group.delete.sure{/lang}" />
 								{else}
 									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 disabled" />
 								{/if}
@@ -78,7 +78,7 @@
 			<ul>
 				<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 				
-				{event name='largeButtons'}
+				{event name='largeButtonsBottom'}
 			</ul>
 		</nav>
 	</div>

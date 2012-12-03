@@ -18,7 +18,7 @@
 	<p class="success">{lang}wcf.acp.cache.clear.success{/lang}</p>	
 {/if}
 
-<div class="container containerPadding marginTop shadow">
+<div class="container containerPadding marginTop">
 	<fieldset>
 		<legend>{lang}wcf.acp.cache.data{/lang}</legend>
 		
@@ -64,7 +64,7 @@
 		{counter name=cacheIndex assign=cacheIndex print=false start=0}
 		
 		{if $files|count}
-			<div class="tabularBox tabularBoxTitle marginTop shadow">
+			<div class="tabularBox tabularBoxTitle marginTop">
 				<hgroup>
 					<h1><a class="jsCollapsible" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}"><img src="{@$__wcf->getPath()}icon/arrowRightInverse.svg" alt="" title="{lang}wcf.global.button.collapsible{/lang}" class="icon16 jsTooltip" /></a> {lang}wcf.acp.cache.type.{$cacheType}{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.cache.data.files.count{/lang}">{#$files|count}</span></h1>
 					<h2>{$cache}</h2>

@@ -184,7 +184,6 @@ class MemcacheCacheSource implements ICacheSource {
 		$this->updateLog();
 		
 		// close connection
-		// @todo
-		// if ($this->getAdapter() !== null && $this->getAdapter()->getMemcache() !== null) $this->getAdapter()->getMemcache()->close();
+		if ($this->getAdapter() !== null && $this->getAdapter()->getMemcache() !== null) $this->getAdapter()->getMemcache()->close();
 	}
 }

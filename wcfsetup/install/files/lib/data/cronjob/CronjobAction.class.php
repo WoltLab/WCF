@@ -27,17 +27,17 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.system.cronjob.canAddCronjob');
+	protected $permissionsCreate = array('admin.system.canManageCronjob');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.system.cronjob.canDeleteCronjob');
+	protected $permissionsDelete = array('admin.system.canManageCronjob');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.system.cronjob.canEditCronjob');
+	protected $permissionsUpdate = array('admin.system.canManageCronjob');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
@@ -97,7 +97,6 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	 * Validates permissions and parameters
 	 */
 	public function validateExecute() {
-		// TODO: Check this: Do we need edit permissions for executing?
 		parent::validateUpdate();
 	}
 	

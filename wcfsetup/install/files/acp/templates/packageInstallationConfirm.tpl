@@ -4,7 +4,7 @@
 	//<![CDATA[
 	$(function() {
 		WCF.Language.add('wcf.acp.package.installation.title', '{lang}wcf.acp.package.installation.title{/lang}');
-		new WCF.ACP.Package.Installation({@$queueID});
+		new WCF.ACP.Package.Installation({@$queueID}, undefined, true);
 	});
 	//]]>
 </script>
@@ -76,7 +76,7 @@
 {if $updatableInstances|count > 0}
 	<p class="warning">{lang}wcf.acp.package.install.updatableInstances.warning{/lang}</p>
 	
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		<hgroup>
 			<h1>{lang}wcf.acp.package.install.updatableInstances{/lang}</h1>
 			<h2>{lang}wcf.acp.package.install.updatableInstances.description{/lang}</h2>
@@ -103,7 +103,7 @@
 {/if}
 
 {if $requiredPackages|count > 0}
-	<div class="tabularBox tabularBoxTitle marginTop shadow">
+	<div class="tabularBox tabularBoxTitle marginTop">
 		<hgroup>
 			<h1>{lang}wcf.acp.package.dependencies.required{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.package.view.requiredPackages.description{/lang}">{#$requiredPackages|count}</span></h1>
 		</hgroup>

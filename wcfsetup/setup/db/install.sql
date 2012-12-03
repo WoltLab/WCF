@@ -745,8 +745,6 @@ CREATE TABLE wcf1_user_option_category (
 	categoryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10) NOT NULL,
 	categoryName VARCHAR(255) NOT NULL DEFAULT '',
-	categoryIconS VARCHAR(255) NOT NULL DEFAULT '',
-	categoryIconM VARCHAR(255) NOT NULL DEFAULT '',
 	parentCategoryName VARCHAR(255) NOT NULL DEFAULT '',
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
@@ -1032,5 +1030,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPan
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMarkedBackgroundColor', 'rgba(255, 255, 200, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoHeight', 'auto');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoWidth', 'auto');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualLess', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideLess', '');

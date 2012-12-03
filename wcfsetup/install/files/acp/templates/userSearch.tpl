@@ -39,7 +39,7 @@
 </div>
 
 <form method="post" action="{link controller='UserSearch'}{/link}">
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.user.search.conditions.general{/lang}</legend>
 			

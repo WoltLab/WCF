@@ -25,7 +25,7 @@
 </div>
 
 <form method="post" action="{link controller='ApplicationEdit' id=$application->packageID}{/link}">
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.application.domain{/lang}</legend>
 			
