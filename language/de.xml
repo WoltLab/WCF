@@ -13,11 +13,11 @@
 		<item name="wcf.acp.style.advanced.individualLess"><![CDATA[Individuelles CSS und LESS]]></item>
 		<item name="wcf.acp.style.advanced.individualLess.description"><![CDATA[Die Eingabe wird am Ende des Stils eingefügt und kann vollständig aus CSS bestehen. Sie haben zusätzlich den Zugriff auf LESS und alle von Community Framework zur Verfügung gestellten Mixins.]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess"><![CDATA[Überschreiben von LESS-Variablen]]></item>
-		<item name="wcf.acp.style.advanced.overrideLess.description"><![CDATA[Sie können innerhalb dieser Eingabe beliebige LESS-Variablen überschreiben, die nicht durch den Stil-Editor direkt bearbeitbar ist. Beim Bezug auf andere Variablen muss sichergestellt werden, dass diese in der Reihenfolge vorher definiert wurden. Die Syntax muss wie folgt lauten: &bdquo;@variableName: variableValue;&ldquo;]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.description"><![CDATA[Sie können innerhalb dieser Eingabe beliebige LESS-Variablen überschreiben, die nicht durch den Stil-Editor direkt bearbeitbar ist. Beim Bezug auf andere Variablen muss sichergestellt werden, dass diese in der Reihenfolge vorher definiert wurden. Die Syntax muss wie folgt lauten: „@variableName: variableValue;“]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.error"><![CDATA[Ihre Eingabe war ungültig, bitte überprüfen Sie die folgenden Einträge:]]></item>
-		<item name="wcf.acp.style.advanced.overrideLess.error.notValid"><![CDATA[Eingabe &bdquo;{$error[text]}&ldquo; ungültig]]></item>
-		<item name="wcf.acp.style.advanced.overrideLess.error.predefined"><![CDATA[Variable &bdquo;{$error[text]}&ldquo; wird bereits durch den Stil-Editor gesetzt]]></item>
-		<item name="wcf.acp.style.advanced.overrideLess.error.unknown"><![CDATA[Variable &bdquo;{$error[text]}&ldquo; unbekannt]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.error.notValid"><![CDATA[Eingabe „{$error[text]}“ ungültig]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.error.predefined"><![CDATA[Variable „{$error[text]}“ wird bereits durch den Stil-Editor gesetzt]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.error.unknown"><![CDATA[Variable „{$error[text]}“ unbekannt]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.warning"><![CDATA[Fehlerhafte Eingaben führen dazu, dass der Stil nicht erzeugt werden kann. Überschreiben Sie LESS-Variablen nur, wenn Sie sich den Auswirkungen bewusst sind und eine Änderung anderweitig nicht möglich ist.]]></item>
 		<item name="wcf.acp.style.advanced.syntax"><![CDATA[Sie können sowohl CSS als auch <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http://www.lesscss.org">LESS</a> verwenden. Bitte beachten Sie, dass der Stil nicht erzeugt werden kann, wenn der LESS-Code ungültig ist.]]></item>
 		<item name="wcf.acp.style.authorName"><![CDATA[Autor]]></item>
@@ -47,8 +47,8 @@
 		<item name="wcf.acp.style.colors.userPanel"><![CDATA[Benutzerleiste]]></item>
 		<item name="wcf.acp.style.copyright"><![CDATA[Copyright]]></item>
 		<item name="wcf.acp.style.copyStyle"><![CDATA[Stil kopieren]]></item>
-		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Möchten Sie den Stil &bdquo;{$style->styleName}&ldquo; wirklich duplizieren?]]></item>
-		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Möchten Sie den Stil &bdquo;{$style->styleName}&ldquo; wirklich löschen?]]></item>
+		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Möchten Sie den Stil „{$style->styleName}“ wirklich duplizieren?]]></item>
+		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Möchten Sie den Stil „{$style->styleName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Stil bearbeiten]]></item>
 		<item name="wcf.acp.style.exportAsPackage"><![CDATA[Als Paket exportieren]]></item>
 		<item name="wcf.acp.style.exportIcons"><![CDATA[Icons exportieren ({$style->iconPath})]]></item>
@@ -56,9 +56,9 @@
 		<item name="wcf.acp.style.exportTemplates"><![CDATA[Templates exportieren]]></item>
 		<item name="wcf.acp.style.exportStyle"><![CDATA[Stil exportieren]]></item>
 		<item name="wcf.acp.style.exportStyle.asPackage"><![CDATA[Export als Paket]]></item>
-		<item name="wcf.acp.style.exportStyle.asPackage.description"><![CDATA[Wählen Sie hier aus, ob sie den Stil &bdquo;{$style->styleName}&ldquo; als Paket exportieren möchten. Pakete können über die Paketverwaltung installiert oder in den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http://www.woltlab.com/de/pluginstore/">WoltLab® Plugin-Store</a> hochgeladen werden.]]></item>
+		<item name="wcf.acp.style.exportStyle.asPackage.description"><![CDATA[Wählen Sie hier aus, ob sie den Stil „{$style->styleName}“ als Paket exportieren möchten. Pakete können über die Paketverwaltung installiert oder in den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http://www.woltlab.com/de/pluginstore/">WoltLab® Plugin-Store</a> hochgeladen werden.]]></item>
 		<item name="wcf.acp.style.exportStyle.components"><![CDATA[Optionen]]></item>
-		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[Wählen Sie hier aus, welche Bestandteile des Stils &bdquo;{$style->styleName}&ldquo; mit exportiert werden sollen]]></item>
+		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[Wählen Sie hier aus, welche Bestandteile des Stils „{$style->styleName}“ mit exportiert werden sollen]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Daten]]></item>
 		<item name="wcf.acp.style.general.data"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.style.general.files"><![CDATA[Dateien]]></item>
@@ -71,11 +71,11 @@
 		<item name="wcf.acp.style.globals.layout"><![CDATA[Layout]]></item>
 		<item name="wcf.acp.style.globals.useFluidLayout"><![CDATA[Flexible Breite verwenden]]></item>
 		<item name="wcf.acp.style.iconPath"><![CDATA[Icon-Pfad]]></item>
-		<item name="wcf.acp.style.iconPath.description"><![CDATA[Wenn Ihr Stil eigene Icons benötigt, sollten diese in einem Unterordner des Ordners &bdquo;icons&ldquo; ablegen. Geben Sie hier den Pfad zu diesem Ordner an.]]></item>
+		<item name="wcf.acp.style.iconPath.description"><![CDATA[Wenn Ihr Stil eigene Icons benötigt, sollten diese in einem Unterordner des Ordners „icons“ ablegen. Geben Sie hier den Pfad zu diesem Ordner an.]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Vorschaubild]]></item>
 		<item name="wcf.acp.style.image.description"><![CDATA[Laden Sie hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102px × 64px anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Bilder-Pfad]]></item>
-		<item name="wcf.acp.style.imagePath.description"><![CDATA[Wenn Ihr Stil eigene Grafiken benötigt, sollten diese in einem Unterordner des Ordners &bdquo;images&ldquo; ablegen. Geben Sie hier den Pfad zu diesem Ordner an.]]></item>
+		<item name="wcf.acp.style.imagePath.description"><![CDATA[Wenn Ihr Stil eigene Grafiken benötigt, sollten diese in einem Unterordner des Ordners „images“ ablegen. Geben Sie hier den Pfad zu diesem Ordner an.]]></item>
 		<item name="wcf.acp.style.importStyle"><![CDATA[Stil importieren]]></item>
 		<item name="wcf.acp.style.import.source"><![CDATA[Datenquelle]]></item>
 		<item name="wcf.acp.style.import.source.upload"><![CDATA[Stil hochladen]]></item>
@@ -83,9 +83,9 @@
 		<item name="wcf.acp.style.license"><![CDATA[Lizenz]]></item>
 		<item name="wcf.acp.style.list"><![CDATA[Stile auflisten]]></item>
 		<item name="wcf.acp.style.packageName"><![CDATA[Paketbezeichner]]></item>
-		<item name="wcf.acp.style.packageName.description"><![CDATA[Geben Sie hier den Paketbezeichner in der Form &bdquo;tld.domain.paketName&ldquo; an. Wenn Ihnen beispielsweise die Domain &bdquo;example.com&ldquo; gehört und Ihr Stil &bdquo;Blue Sunrise&ldquo; heißt, so wäre &bdquo;com.example.style.blueSunrise&ldquo; ein passender und gültiger Paketbezeichner.]]></item>
+		<item name="wcf.acp.style.packageName.description"><![CDATA[Geben Sie hier den Paketbezeichner in der Form „tld.domain.paketName“ an. Wenn Ihnen beispielsweise die Domain „example.com“ gehört und Ihr Stil „Blue Sunrise“ heißt, so wäre „com.example.style.blueSunrise“ ein passender und gültiger Paketbezeichner.]]></item>
 		<item name="wcf.acp.style.packageName.error.notValid"><![CDATA[Der eingegebene Paketbezeichner ist ungültig]]></item>
-		<item name="wcf.acp.style.packageName.error.reserved"><![CDATA[Der Paketbezeichner darf nicht mit &bdquo;com.woltlab.&ldquo; beginnen]]></item>
+		<item name="wcf.acp.style.packageName.error.reserved"><![CDATA[Der Paketbezeichner darf nicht mit „com.woltlab.“ beginnen]]></item>
 		<item name="wcf.acp.style.styleDate"><![CDATA[Datum]]></item>
 		<item name="wcf.acp.style.styleDescription"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.style.styleName"><![CDATA[Name]]></item>
