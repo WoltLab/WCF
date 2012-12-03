@@ -319,7 +319,7 @@
 		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[„-f“ Parameter verwenden]]></item>
 		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Manche Server benötigen den „-f“ Parameter beim Versenden von E-Mails. Falls Sie Probleme mit dem Versand von E-Mails haben, aktivieren Sie diese Einstellung.]]></item>
 		<item name="wcf.acp.option.mail_use_formatted_address"><![CDATA[Formatierte E-Mail-Adressen verwenden]]></item>
-		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Absender- und Empfänger-Adressen werden in folgendes Format gebracht: &quot;Name &lt;email@domain.tld&gt;&quot;. Diese Funktion wird nicht von allen Mailservern unterstützt und sollte daher bei Problemen abgeschaltet werden.]]></item>
+		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Absender- und Empfänger-Adressen werden in folgendes Format gebracht: „Name &lt;email@domain.tld&gt;“. Diese Funktion wird nicht von allen Mailservern unterstützt und sollte daher bei Problemen abgeschaltet werden.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Hauptkennwort aktivieren]]></item>
@@ -346,8 +346,8 @@
 		<item name="wcf.acp.option.show_version_number"><![CDATA[Versionsnummer der Software im Copyright-Hinweis anzeigen]]></item>
 		<item name="wcf.acp.option.enable_debug_mode"><![CDATA[Debug-Modus aktivieren]]></item>
 		<item name="wcf.acp.option.enable_debug_mode.description"><![CDATA[Aktiviert ausführliche Fehlerberichte. Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
-		<item name="wcf.acp.option.external_link_rel_nofollow"><![CDATA[Externe Links mit dem Attribut „rel=&quot;nofollow&quot;“ versehen]]></item>
-		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[Das Attribut „rel=&quot;nofollow&quot;“ weist Suchmaschinen an, einen bestimmten Link auf einer Seite zu ignorieren.]]></item>
+		<item name="wcf.acp.option.external_link_rel_nofollow"><![CDATA[Externe Links mit dem Attribut „rel="nofollow"“ versehen]]></item>
+		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[Das Attribut „rel="nofollow"“ weist Suchmaschinen an, einen bestimmten Link auf einer Seite zu ignorieren.]]></item>
 	</category>
 
 	<category name="wcf.acp.package">
@@ -706,7 +706,7 @@
 		<item name="wcf.global.button.disabledI18n"><![CDATA[einsprachig]]></item>
 		<item name="wcf.global.button.edit"><![CDATA[Bearbeiten]]></item>
 		<item name="wcf.global.button.enable"><![CDATA[Aktivieren]]></item>
-		<item name="wcf.global.button.next"><![CDATA[Weiter &raquo;]]></item>
+		<item name="wcf.global.button.next"><![CDATA[Weiter »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.global.button.reset"><![CDATA[Zurücksetzen]]></item>
 		<item name="wcf.global.button.rss"><![CDATA[RSS-Feed]]></item>
