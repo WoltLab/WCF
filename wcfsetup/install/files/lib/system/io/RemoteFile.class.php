@@ -51,7 +51,7 @@ class RemoteFile extends File {
 		
 		$this->resource = fsockopen($host, $port, $this->errorNumber, $this->errorDesc, $timeout);
 		if ($this->resource === false) {
-			throw new SystemException('Can not connect to ' . $host);
+			throw new SystemException('Can not connect to ' . $host, 0, $this->errorDesc);
 		}
 	}
 	

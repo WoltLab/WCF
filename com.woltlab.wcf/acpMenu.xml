@@ -251,6 +251,26 @@
 			<showorder>3</showorder>
 		</acpmenuitem>
 		
+		<!-- page menu -->
+		<acpmenuitem name="wcf.acp.menu.link.pageMenu">
+			<parent>wcf.acp.menu.link.display</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.pageMenu.list">
+			<link>index.php/PageMenuItemList/</link>
+			<parent>wcf.acp.menu.link.pageMenu</parent>
+			<permissions>admin.display.canManagePageMenu</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.pageMenu.add">
+			<link>index.php/PageMenuItemAdd/</link>
+			<parent>wcf.acp.menu.link.pageMenu</parent>
+			<permissions>admin.display.canManagePageMenu</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		<!-- /page menu -->
+		
 		<acpmenuitem name="wcf.acp.menu.link.content">
 			<showorder>4</showorder>
 		</acpmenuitem>

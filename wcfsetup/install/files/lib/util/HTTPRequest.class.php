@@ -100,7 +100,7 @@ final class HTTPRequest {
 		// set default headers
 		$this->addHeader('User-Agent', "HTTP.PHP (HTTPRequest.class.php; WoltLab Community Framework/".WCF_VERSION."; ".WCF::getLanguage()->languageCode.")");
 		$this->addHeader('Accept', '*/*');
-		$this->addHeader('Accept-Language', WCF::getLanguage()->languageCode);
+		$this->addHeader('Accept-Language', WCF::getLanguage()->getFixedLanguageCode());
 		if ($this->options['method'] !== 'GET') {
 			$this->addHeader('Content-length', strlen(http_build_query($this->postParameters)));
 			$this->addHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -191,7 +191,7 @@ final class HTTPRequest {
 		$this->replyHeaders = $headers;
 		
 		$statusLine = reset($this->replyHeaders);
-		$regex = new Regex('^HTTP/1.0 (\d{3})'); // we expect an HTTP 1.0 response, as we sent an HTTP 1.0 request
+		$regex = new Regex('^HTTP/1.(?:0|1) (\d{3})');
 		if (!$regex->match($statusLine)) throw new SystemException("Unexpected status '".$statusLine."'");
 		$matches = $regex->getMatches();
 		$statusCode = $matches[1];

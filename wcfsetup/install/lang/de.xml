@@ -9,17 +9,17 @@
 		<item name="wcf.acp.application.cookie.warning"><![CDATA[Die folgenden Einstellungen stellen sicher, dass der Login gespeichert wird und ein automatischer Login möglich ist. Sie müssen diese Einstellungen anpassen, sollten sich Domain und/oder Pfad geändert haben. Sollten Sie sich bei den korrekten Werten nicht sicher sein, übernehmen Sie bitte die exakten Angaben der beiden obigen Eingabefelder.]]></item>
 		<item name="wcf.acp.application.cookieDomain"><![CDATA[Cookie-Domain]]></item>
 		<item name="wcf.acp.application.cookieDomain.error.containsPfad"><![CDATA[Die Cookie-Domain darf keine Pfadangaben enthalten]]></item>
-		<item name="wcf.acp.application.cookieDomain.error.notValid"><![CDATA[Die Cookie-Domain stimmt nicht mit der oben angegebenen Domain überein (Subdomains wie zum Beispiel &bdquo;www&ldquo; dürfen weggelassen werden).]]></item>
+		<item name="wcf.acp.application.cookieDomain.error.notValid"><![CDATA[Die Cookie-Domain stimmt nicht mit der oben angegebenen Domain überein (Subdomains wie zum Beispiel „www“ dürfen weggelassen werden).]]></item>
 		<item name="wcf.acp.application.cookiePath"><![CDATA[Cookie-Pfad]]></item>
 		<item name="wcf.acp.application.cookiePath.error.notValid"><![CDATA[Der Cookie-Pfad passt nicht zum oben angegebenen Domain-Pfad.]]></item>
 		<item name="wcf.acp.application.domain"><![CDATA[Domain-Einstellungen]]></item>
 		<item name="wcf.acp.application.domainName"><![CDATA[Domain]]></item>
-		<item name="wcf.acp.application.domainName.description"><![CDATA[Geben Sie die Domain an, über die diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter &bdquo;http://www.example.com/community/forum/&ldquo; erreichbar ist, so geben Sie hier bitte &bdquo;www.example.com&ldquo; ein.]]></item>
+		<item name="wcf.acp.application.domainName.description"><![CDATA[Geben Sie die Domain an, über die diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, so geben Sie hier bitte „www.example.com“ ein.]]></item>
 		<item name="wcf.acp.application.domainName.error.containsPfad"><![CDATA[Die Domain darf keine Pfadangaben enthalten]]></item>
 		<item name="wcf.acp.application.domainPath"><![CDATA[Pfad]]></item>
-		<item name="wcf.acp.application.domainPath.description"><![CDATA[Geben Sie den Pfad an, über den diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter &bdquo;http://www.example.com/community/forum/&ldquo; erreichbar ist, so geben Sie bitte &bdquo;/community/forum/&ldquo; ein.]]></item>
+		<item name="wcf.acp.application.domainPath.description"><![CDATA[Geben Sie den Pfad an, über den diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, so geben Sie bitte „/community/forum/“ ein.]]></item>
 		<item name="wcf.acp.application.edit"><![CDATA[Anwendung bearbeiten]]></item>
-		<item name="wcf.acp.application.edit.title"><![CDATA[Anwendung bearbeiten: &bdquo;<a href="{link controller='PackageView' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>&ldquo;]]></item>
+		<item name="wcf.acp.application.edit.title"><![CDATA[Anwendung bearbeiten: „<a href="{link controller='PackageView' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>“]]></item>
 		<item name="wcf.acp.application.group.add"><![CDATA[Anwendungsgruppe hinzufügen]]></item>
 		<item name="wcf.acp.application.group.applications.error.duplicate"><![CDATA[Zwei oder mehr Anwendungen des selben Typs können nicht in einer Gruppe zusammengefasst werden.]]></item>
 		<item name="wcf.acp.application.group.applications.error.notValid"><![CDATA[Eine oder mehrere ausgewählte Anwendungen sind nicht mehr verfügbar.]]></item>
@@ -27,13 +27,13 @@
 		<item name="wcf.acp.application.group.availableApplications"><![CDATA[Verfügbare Anwendungen]]></item>
 		<item name="wcf.acp.application.group.data"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.application.group.delete"><![CDATA[Anwendungsgruppe löschen]]></item>
-		<item name="wcf.acp.application.group.delete.confirmMessage"><![CDATA[Wollen Sie die Anwendungsgruppe &bdquo;{$applicationGroup->groupName}&ldquo; wirklich löschen?]]></item>
+		<item name="wcf.acp.application.group.delete.confirmMessage"><![CDATA[Wollen Sie die Anwendungsgruppe „{$applicationGroup->groupName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.application.group.delete.success"><![CDATA[Anwendungsgruppe erfolgreich gelöscht]]></item>
 		<item name="wcf.acp.application.group.edit"><![CDATA[Anwendungsgruppe bearbeiten]]></item>
 		<item name="wcf.acp.application.group.groupName"><![CDATA[Name]]></item>
 		<item name="wcf.acp.application.group.groupName.error.notUnique"><![CDATA[Der Gruppenname muss einzigartig sein.]]></item>
 		<item name="wcf.acp.application.group.noAvailableApplications"><![CDATA[Es ist derzeit keine ausreichende Anzahl Anwendungen verfügbar, um eine Anwendungsgruppe zu erstellen.]]></item>
-		<item name="wcf.acp.application.group.title"><![CDATA[Anwendungsgruppe: &bdquo;{$applicationGroup->groupName}&ldquo;]]></item>
+		<item name="wcf.acp.application.group.title"><![CDATA[Anwendungsgruppe: „{$applicationGroup->groupName}“]]></item>
 		<item name="wcf.acp.application.independentApplications"><![CDATA[Unabhängige Anwendungen]]></item>
 		<item name="wcf.acp.application.management"><![CDATA[Anwendungen verwalten]]></item>
 		<item name="wcf.acp.application.primaryApplication"><![CDATA[Primäre Anwendung]]></item>
@@ -67,7 +67,7 @@
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Cronjob hinzufügen]]></item>
 		<item name="wcf.acp.cronjob.list.count"><![CDATA[{#$items} Cronjob{if $items != 1}s{/if}]]></item>
-		<item name="wcf.acp.cronjob.subtitle"><![CDATA[&bdquo;Zeitgesteuerte Aufgaben&ldquo;]]></item>
+		<item name="wcf.acp.cronjob.subtitle"><![CDATA[„Zeitgesteuerte Aufgaben“]]></item>
 		<item name="wcf.acp.cronjob.startDom"><![CDATA[Tag des Monats]]></item>
 		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[Tage des Monats (1 - 31), an welchen der Cronjob ausgeführt werden soll.]]></item>
 		<item name="wcf.acp.cronjob.startDomShort"><![CDATA[D]]></item>
@@ -92,7 +92,7 @@
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Cronjob jetzt ausführen]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
-		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Sind Sie sicher, dass Sie den Cronjob &bdquo;{$cronjob->description|language}&ldquo; löschen möchten?]]></item>
+		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Sind Sie sicher, dass Sie den Cronjob „{$cronjob->description|language}“ löschen möchten?]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Protokoll leeren]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Sind Sie sicher, dass Sie alle Protokoll-Einträge löschen möchten?]]></item>
@@ -107,7 +107,7 @@
 	
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
-		<item name="wcf.acp.group.delete.sure"><![CDATA[Wollen Sie diese Benutzergruppe &bdquo;{$group->groupName|language}&ldquo; wirklich löschen?]]></item>
+		<item name="wcf.acp.group.delete.sure"><![CDATA[Wollen Sie diese Benutzergruppe „{$group->groupName|language}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Benutzergruppe bearbeiten]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Sie sind Mitglied dieser Benutzergruppe! Änderungen an den Zugriffsrechten dieser Benutzergruppe können dazu führen, dass Sie aus der Administrationsoberfläche ausgeschlossen werden. Bitte seien Sie entsprechend vorsichtig!]]></item>
 		<item name="wcf.acp.group.group1"><![CDATA[Jeder]]></item>
@@ -287,7 +287,7 @@
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Grafik-Bibliothek]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Library (Standard)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
-		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Bibliothek für die Generierung von Grafiken - wird z.B. für die Skalierung von hochgeladenen Bilder verwendet. &bdquo;ImageMagick&ldquo; ist in der Regel deutlich schneller, steht aber nicht auf jedem Server zur Verfügung.]]></item>
+		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Bibliothek für die Generierung von Grafiken - wird z.B. für die Skalierung von hochgeladenen Bilder verwendet. „ImageMagick“ ist in der Regel deutlich schneller, steht aber nicht auf jedem Server zur Verfügung.]]></item>
 		
 		<item name="wcf.acp.option.import"><![CDATA[Optionen importieren]]></item>
 		<item name="wcf.acp.option.import.error.importFailed"><![CDATA[Die Optionen konnten nicht erfolgreich importiert werden.]]></item>
@@ -316,10 +316,10 @@
 		<item name="wcf.acp.option.mail_smtp_password"><![CDATA[SMTP-Kennwort]]></item>
 		<item name="wcf.acp.option.mail_smtp_port"><![CDATA[SMTP-Port]]></item>
 		<item name="wcf.acp.option.mail_smtp_user"><![CDATA[SMTP-Benutzer]]></item>
-		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[&bdquo;-f&ldquo; Parameter verwenden]]></item>
-		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Manche Server benötigen den &bdquo;-f&ldquo; Parameter beim Versenden von E-Mails. Falls Sie Probleme mit dem Versand von E-Mails haben, aktivieren Sie diese Einstellung.]]></item>
+		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[„-f“ Parameter verwenden]]></item>
+		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Manche Server benötigen den „-f“ Parameter beim Versenden von E-Mails. Falls Sie Probleme mit dem Versand von E-Mails haben, aktivieren Sie diese Einstellung.]]></item>
 		<item name="wcf.acp.option.mail_use_formatted_address"><![CDATA[Formatierte E-Mail-Adressen verwenden]]></item>
-		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Absender- und Empfänger-Adressen werden in folgendes Format gebracht: &quot;Name &lt;email@domain.tld&gt;&quot;. Diese Funktion wird nicht von allen Mailservern unterstützt und sollte daher bei Problemen abgeschaltet werden.]]></item>
+		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Absender- und Empfänger-Adressen werden in folgendes Format gebracht: „Name &lt;email@domain.tld&gt;“. Diese Funktion wird nicht von allen Mailservern unterstützt und sollte daher bei Problemen abgeschaltet werden.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Hauptkennwort aktivieren]]></item>
@@ -346,8 +346,8 @@
 		<item name="wcf.acp.option.show_version_number"><![CDATA[Versionsnummer der Software im Copyright-Hinweis anzeigen]]></item>
 		<item name="wcf.acp.option.enable_debug_mode"><![CDATA[Debug-Modus aktivieren]]></item>
 		<item name="wcf.acp.option.enable_debug_mode.description"><![CDATA[Aktiviert ausführliche Fehlerberichte. Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
-		<item name="wcf.acp.option.external_link_rel_nofollow"><![CDATA[Externe Links mit dem Attribut &bdquo;rel=&quot;nofollow&quot;&ldquo; versehen]]></item>
-		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[Das Attribut &bdquo;rel=&quot;nofollow&quot;&ldquo; weist Suchmaschinen an, einen bestimmten Link auf einer Seite zu ignorieren.]]></item>
+		<item name="wcf.acp.option.external_link_rel_nofollow"><![CDATA[Externe Links mit dem Attribut „rel="nofollow"“ versehen]]></item>
+		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[Das Attribut „rel="nofollow"“ weist Suchmaschinen an, einen bestimmten Link auf einer Seite zu ignorieren.]]></item>
 	</category>
 
 	<category name="wcf.acp.package">
@@ -378,7 +378,7 @@
 		<item name="wcf.acp.package.installation.packageStatus.installed"><![CDATA[bereits installiert]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.missing"><![CDATA[fehlt]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.missingVersion"><![CDATA[fehlende Paket-Version (installierte Version: {$package.existingVersion})]]></item>
-		<item name="wcf.acp.package.installation.step.install"><![CDATA[&bdquo;{$packageName}&ldquo; wird installiert &hellip;]]></item>
+		<item name="wcf.acp.package.installation.step.install"><![CDATA[„{$packageName}“ wird installiert &hellip;]]></item>
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation abgeschlossen]]></item>
 		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Installation wird vorbereitet &hellip;]]></item>
 		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
@@ -396,11 +396,11 @@
 		<item name="wcf.acp.package.source.upload"><![CDATA[Paket hochladen]]></item>
 		<item name="wcf.acp.package.source.upload.description"><![CDATA[Geben Sie eine Paketdatei von Ihrem lokalen Rechner an.]]></item>
 		<item name="wcf.acp.package.startInstall"><![CDATA[Paket installieren]]></item>
-		<item name="wcf.acp.package.startUpdate"><![CDATA[Paket &bdquo;{@$package->getName()}&ldquo; aktualisieren]]></item>
+		<item name="wcf.acp.package.startUpdate"><![CDATA[Paket „{@$package->getName()}“ aktualisieren]]></item>
 		<item name="wcf.acp.package.type.application"><![CDATA[Anwendung]]></item>
 		<item name="wcf.acp.package.type.other"><![CDATA[Basispaket]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Erweiterung]]></item>
-		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Wollen Sie das Paket &bdquo;{@$package->getName()}&ldquo; wirklich deinstallieren?]]></item>
+		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren?]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Aktualisierungsdatum]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 	</category>
@@ -416,7 +416,7 @@
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Server hinzufügen]]></item>
 		<item name="wcf.acp.updateServer.data"><![CDATA[Server-Daten]]></item>
-		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Wollen Sie den Server &bdquo;{$updateServer->serverURL}&ldquo; wirklich löschen?]]></item>
+		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Wollen Sie den Server „{$updateServer->serverURL}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Server bearbeiten]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Fehlermeldungen]]></item>
 		<item name="wcf.acp.updateServer.list"><![CDATA[Update-Server]]></item>
@@ -434,7 +434,7 @@
 	</category>
 	
 	<category name="wcf.acp.sessionLog">
-		<item name="wcf.acp.sessionLog.access.list"><![CDATA[Aktionen der protokollierten Sitzung von &bdquo;{$sessionLog->username}&ldquo;]]></item>
+		<item name="wcf.acp.sessionLog.access.list"><![CDATA[Aktionen der protokollierten Sitzung von „{$sessionLog->username}“]]></item>
 		<item name="wcf.acp.sessionLog.access.list.count"><![CDATA[{#$items} protokollierte Aktion{if $items != 1}en{/if}]]></item>
 		<item name="wcf.acp.sessionLog.actions"><![CDATA[Aktionen]]></item>
 		<item name="wcf.acp.sessionLog.className"><![CDATA[Klasse]]></item>
@@ -451,7 +451,7 @@
 		<item name="wcf.acp.user.add"><![CDATA[Benutzer hinzufügen]]></item>
 		<item name="wcf.acp.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
 		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Folgende Benutzer den unten ausgewählten Benutzergruppen zuweisen]]></item>
-		<item name="wcf.acp.user.delete.sure"><![CDATA[Wollen Sie Benutzer &bdquo;{$user->username}&ldquo; wirklich löschen?]]></item>
+		<item name="wcf.acp.user.delete.sure"><![CDATA[Wollen Sie Benutzer „{$user->username}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Benutzer bearbeiten]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[Sie bearbeiten Ihr eigenes Benutzerkonto. Änderungen an den Mitgliedschaften in Benutzergruppen können womöglich dazu führen, dass Sie aus der Administrationsoberfläche ausgeschlossen werden. Bitte seien Sie entsprechend vorsichtig!]]></item>
 		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
@@ -706,7 +706,7 @@
 		<item name="wcf.global.button.disabledI18n"><![CDATA[einsprachig]]></item>
 		<item name="wcf.global.button.edit"><![CDATA[Bearbeiten]]></item>
 		<item name="wcf.global.button.enable"><![CDATA[Aktivieren]]></item>
-		<item name="wcf.global.button.next"><![CDATA[Weiter &raquo;]]></item>
+		<item name="wcf.global.button.next"><![CDATA[Weiter »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.global.button.reset"><![CDATA[Zurücksetzen]]></item>
 		<item name="wcf.global.button.rss"><![CDATA[RSS-Feed]]></item>
@@ -751,9 +751,9 @@
 		<item name="wcf.global.thousandsSeparator"><![CDATA[.]]></item>
 		<item name="wcf.global.title"><![CDATA[Titel]]></item>
 		<item name="wcf.global.preview"><![CDATA[Vorschau]]></item>
-		<item name="wcf.global.multiSelect"><![CDATA[Mehrfache Markierungen sind durch zusätzliches Drücken der Taste &bdquo;Strg/Ctrl&ldquo; (Windows) oder &bdquo;Befehl/Command&ldquo; (Mac OS) möglich.]]></item>
+		<item name="wcf.global.multiSelect"><![CDATA[Mehrfache Markierungen sind durch zusätzliches Drücken der Taste „Strg/Ctrl“ (Windows) oder „Befehl/Command“ (Mac OS) möglich.]]></item>
 		<item name="wcf.global.page.jumpTo"><![CDATA[Gehe zu Seite]]></item>
-		<item name="wcf.global.page.jumpTo.description"><![CDATA[Geben Sie einen Wert zwischen &bdquo;1&ldquo; und &bdquo;#pages#&ldquo; ein.]]></item>
+		<item name="wcf.global.page.jumpTo.description"><![CDATA[Geben Sie einen Wert zwischen „1“ und „#pages#“ ein.]]></item>
 		<item name="wcf.global.error.illegalLink"><![CDATA[Sie haben einen ungültigen oder nicht mehr gültigen Link aufgerufen.]]></item>
 		<item name="wcf.global.error.backward"><![CDATA[Zurück zur vorherigen Seite]]></item>
 		<item name="wcf.global.noDeclaration"><![CDATA[Keine Angabe]]></item>
@@ -805,7 +805,7 @@
 		<item name="wcf.user.userID"><![CDATA[Benutzer-ID]]></item>
 		<item name="wcf.user.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.user.username.placeholder"><![CDATA[Geben Sie einen Benutzernamen ein]]></item>
-		<item name="wcf.user.username.error.notFound"><![CDATA[Der Benutzername &bdquo;{$username}&ldquo; konnte nicht gefunden werden.]]></item>
+		<item name="wcf.user.username.error.notFound"><![CDATA[Der Benutzername „{$username}“ konnte nicht gefunden werden.]]></item>
 		<item name="wcf.user.username.error.notUnique"><![CDATA[Dieser Benutzername ist bereits vergeben.]]></item>
 		<item name="wcf.user.username.error.notValid"><![CDATA[Sie haben einen ungültigen Benutzernamen eingegeben.]]></item>
 		<item name="wcf.user.userNote"><![CDATA[{$__wcf->user->username}]]></item>

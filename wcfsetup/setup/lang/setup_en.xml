@@ -9,7 +9,7 @@
 		<item name="wcf.global.locale.win"><![CDATA[english]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
-		<item name="wcf.global.button.next"><![CDATA[Next &raquo;]]></item>
+		<item name="wcf.global.button.next"><![CDATA[Next »]]></item>
 		<item name="wcf.global.progressBar"><![CDATA[{@$progress}% complete]]></item>
 		<item name="wcf.global.welcome"><![CDATA[Thank you for choosing {$setupPackageName}!]]></item>
 		<item name="wcf.global.welcome.description"><![CDATA[This installation-assistant will help you to install <br /><b>WoltLab Community Framework</b>{if $setupPackageName != 'WoltLab Community Framework'} and <b>{$setupPackageName}</b>{/if}.]]></item>
@@ -27,23 +27,23 @@
 		<item name="wcf.global.systemRequirements.element.required"><![CDATA[Required:]]></item>
 		<item name="wcf.global.systemRequirements.element.yours"><![CDATA[Found:]]></item>
 		<item name="wcf.global.systemRequirements.element.recommended"><![CDATA[Recommended:]]></item>
-		<item name="wcf.global.systemRequirements.php"><![CDATA[Installed version of the script-language &quot;PHP&quot;]]></item>
-		<item name="wcf.global.systemRequirements.php.description"><![CDATA[The installed version of the script-language &quot;PHP&quot; is too old for a stable operation of this software. To proceed with the installation, a version update is necessary.]]></item>
+		<item name="wcf.global.systemRequirements.php"><![CDATA[Installed version of the script-language “PHP”]]></item>
+		<item name="wcf.global.systemRequirements.php.description"><![CDATA[The installed version of the script-language “PHP” is too old for a stable operation of this software. To proceed with the installation, a version update is necessary.]]></item>
 		<item name="wcf.global.systemRequirements.php.description2"><![CDATA[Your PHP version is obsolete. For a stable operation of this software, we recommend a PHP version of 5.3.2 or greater.]]></item>
 		<item name="wcf.global.systemRequirements.sql"><![CDATA[Database support]]></item>
 		<item name="wcf.global.systemRequirements.sql.notFound"><![CDATA[not found]]></item>
 		<item name="wcf.global.systemRequirements.sql.description"><![CDATA[Database support is required to install this software.]]></item>
 		<item name="wcf.global.systemRequirements.uploadMaxFilesize"><![CDATA[Maximum size for file uploads]]></item>
-		<item name="wcf.global.systemRequirements.uploadMaxFilesize.description"><![CDATA[The current configuration of the installed &quot;PHP&quot; version oes not allow for file-uploads. Due to this configuration, some features of this software will not be available.]]></item>
-		<item name="wcf.global.systemRequirements.gdLib"><![CDATA[Installed version of the graphics library &quot;GDLib&quot;]]></item>
-		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[The graphics-library &quot;GDLib&quot; is needed for the dynamic image generation. Without this library, some features of this software will not be available.]]></item>
-		<item name="wcf.global.systemRequirements.mbString"><![CDATA[The multibyte-character library &quot;MBString&quot;]]></item>
+		<item name="wcf.global.systemRequirements.uploadMaxFilesize.description"><![CDATA[The current configuration of the installed “PHP” version oes not allow for file-uploads. Due to this configuration, some features of this software will not be available.]]></item>
+		<item name="wcf.global.systemRequirements.gdLib"><![CDATA[Installed version of the graphics library “GDLib”]]></item>
+		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[The graphics-library “GDLib” is needed for the dynamic image generation. Without this library, some features of this software will not be available.]]></item>
+		<item name="wcf.global.systemRequirements.mbString"><![CDATA[The multibyte-character library “MBString”]]></item>
 		<item name="wcf.global.systemRequirements.mbString.description"><![CDATA[This library is required for a proper operation of the software.]]></item>
 		<item name="wcf.global.systemRequirements.active"><![CDATA[Enabled]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[Not enabled]]></item>
 		<item name="wcf.global.wcfDir"><![CDATA[Choose the installation-folder]]></item>
 		<item name="wcf.global.wcfDir.description"><![CDATA[All files of <b>WoltLab Community Framework</b> will be extracted into the installation-folder.]]></item>
-		<item name="wcf.global.wcfDir.foundDirectory"><![CDATA[The installation-assistant has found a previous installation of <b>WoltLab Community Framework</b> in the "{$foundDirectory}" folder.<br />If you would like to install a new copy of the <b>WoltLab Community Framework</b>, then please enter an alternative installation folder.]]></item>
+		<item name="wcf.global.wcfDir.foundDirectory"><![CDATA[The installation-assistant has found a previous installation of <b>WoltLab Community Framework</b> in the “{$foundDirectory}” folder.<br />If you would like to install a new copy of the <b>WoltLab Community Framework</b>, then please enter an alternative installation folder.]]></item>
 		<item name="wcf.global.wcfDir.dir"><![CDATA[Installation-folder]]></item>
 		<item name="wcf.global.wcfDir.dir.description"><![CDATA[If you are unsure, keep the name which the system suggests and run the standard-installation.]]></item>
 		<item name="wcf.global.wcfDir.error.invalid"><![CDATA[The given folder is not valid.]]></item>
@@ -67,7 +67,7 @@
 		<item name="wcf.global.configureDB.number.description"><![CDATA[The installation-number allows you to install multiple installations of this software into the same database. If this is your first installation in this database, you should enter <em>1</em>.]]></item>	
 		<item name="wcf.global.configureDB.error"><![CDATA[An error has accured while trying to connect to your database:
 		<br /><strong>{$exception->getMessage()}{if $exception|get_class == 'DatabaseException'}<br />{$exception->getErrorDesc()}{/if}</strong>]]></item>
-		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[The following table{if $conflictedTables|count > 1}s{/if} already exist{if $conflictedTables|count == 1}s{/if} within your &quot;{$dbName}&quot; Database:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />To solve this problem, please do one of the following:<br />1. Enable the &quot;Overwrite&quot; option below to overwrite {if $conflictedTables|count > 1}these tables{else}this table{/if} and continue the installation with the &quot;Next&quot; button or<br />2. You re-enter the database access information, but to a different database and continue the installation with the &quot;Next&quot; button or<br />3. Enter a new installation number, not forgetting to continue the installation with the &quot;Next&quot; Button.]]></item>
+		<item name="wcf.global.configureDB.conflictedTables"><![CDATA[The following table{if $conflictedTables|count > 1}s{/if} already exist{if $conflictedTables|count == 1}s{/if} within your “{$dbName}” Database:<br />{implode from=$conflictedTables item="table"}{$table}{/implode}.<br /><br />To solve this problem, please do one of the following:<br />1. Enable the “Overwrite” option below to overwrite {if $conflictedTables|count > 1}these tables{else}this table{/if} and continue the installation with the “Next” button or<br />2. You re-enter the database access information, but to a different database and continue the installation with the “Next” button or<br />3. Enter a new installation number, not forgetting to continue the installation with the “Next” Button.]]></item>
 		<item name="wcf.global.configureDB.conflictedTables.overwrite"><![CDATA[Overwrite the above listed table{if $conflictedTables|count > 1}s{/if}?]]></item>
 		<item name="wcf.global.configureDB.class"><![CDATA[Database type]]></item>
 		<item name="wcf.global.configureDB.class.MSSQLDatabase"><![CDATA[Microsoft SQL Server 2008+]]></item>

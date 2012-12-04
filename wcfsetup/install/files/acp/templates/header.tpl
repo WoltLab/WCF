@@ -150,8 +150,8 @@
 					<nav id="mainMenu" class="mainMenu">
 						<ul>
 							{content}
-								{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=menuItem}
-									<li data-menu-item="{$menuItem->menuItem}"><a>{lang}{@$menuItem->menuItem}{/lang}</a></li>
+								{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_menuItem}
+									<li data-menu-item="{$_menuItem->menuItem}"><a>{lang}{@$_menuItem->menuItem}{/lang}</a></li>
 								{/foreach}
 							{/content}
 						</ul>
@@ -175,15 +175,15 @@
 					{content}
 						{* work-around for unknown core-object during WCFSetup *}
 						{if PACKAGE_ID}
-							{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=parentMenuItem}
-								<div id="{$parentMenuItem->menuItem}-container" style="display: none;" class="menuGroup collapsibleMenus" data-parent-menu-item="{$parentMenuItem->menuItem}">
-									{foreach from=$__wcf->getACPMenu()->getMenuItems($parentMenuItem->menuItem) item=menuItem}
+							{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_parentMenuItem}
+								<div id="{$_parentMenuItem->menuItem}-container" style="display: none;" class="menuGroup collapsibleMenus" data-parent-menu-item="{$_parentMenuItem->menuItem}">
+									{foreach from=$__wcf->getACPMenu()->getMenuItems($_parentMenuItem->menuItem) item=_menuItem}
 										<fieldset>
-											<legend class="menuHeader" data-menu-item="{$menuItem->menuItem}">{lang}{@$menuItem->menuItem}{/lang}</legend>
+											<legend class="menuHeader" data-menu-item="{$_menuItem->menuItem}">{lang}{@$_menuItem->menuItem}{/lang}</legend>
 											
 											<nav class="menuGroupItems">
-												<ul id="{$menuItem->menuItem}">
-													{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItem->menuItem) item=menuItemCategory}
+												<ul id="{$_menuItem->menuItem}">
+													{foreach from=$__wcf->getACPMenu()->getMenuItems($_menuItem->menuItem) item=menuItemCategory}
 														{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
 															{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem) item=subMenuItem}
 																<li id="{$subMenuItem->menuItem}" data-menu-item="{$subMenuItem->menuItem}"><a href="{$subMenuItem->getLink()}">{lang}{$subMenuItem->menuItem}{/lang}</a></li>
