@@ -120,29 +120,34 @@ class WCF {
 	 * Flushs the output, closes caches and updates the session.
 	 */
 	public static function destruct() {
-		// database has to be initialized
-		if (!is_object(self::$dbObj)) return;
-		
-		// flush output
-		if (ob_get_level() && ini_get('output_handler')) {
-			ob_flush();
+		try {
+			// database has to be initialized
+			if (!is_object(self::$dbObj)) return;
+			
+			// flush output
+			if (ob_get_level() && ini_get('output_handler')) {
+				ob_flush();
+			}
+			else {
+				flush();
+			}
+			
+			// update session
+			if (is_object(self::getSession())) {
+				self::getSession()->update();
+			}
+			
+			// close cache source
+			if (CacheHandler::isInitialized() && is_object(CacheHandler::getInstance()) && is_object(CacheHandler::getInstance()->getCacheSource())) {
+				CacheHandler::getInstance()->getCacheSource()->close();
+			}
+			
+			// execute shutdown actions of user storage handler
+			UserStorageHandler::getInstance()->shutdown();
 		}
-		else {
-			flush();
+		catch (\Exception $exception) {
+			die("WCF::destruct() Unhandled exception: ".$exception->getMessage()."\n".base64_encode($exception->getTraceAsString()));
 		}
-		
-		// update session
-		if (is_object(self::getSession())) {
-			self::getSession()->update();
-		}
-		
-		// close cache source
-		if (CacheHandler::isInitialized() && is_object(CacheHandler::getInstance()) && is_object(CacheHandler::getInstance()->getCacheSource())) {
-			CacheHandler::getInstance()->getCacheSource()->close();
-		}
-		
-		// execute shutdown actions of user storage handler
-		UserStorageHandler::getInstance()->shutdown();
 	}
 	
 	/**
@@ -231,13 +236,18 @@ class WCF {
 	 * @param	\Exception	$e
 	 */
 	public static final function handleException(\Exception $e) {
-		if ($e instanceof exception\IPrintableException) {
-			$e->show();
-			exit;
+		try {
+			if ($e instanceof exception\IPrintableException) {
+				$e->show();
+				exit;
+			}
+			
+			// repack Exception
+			self::handleException(new exception\SystemException($e->getMessage(), $e->getCode(), '', $e));
 		}
-		
-		// repack Exception
-		self::handleException(new exception\SystemException($e->getMessage(), $e->getCode(), '', $e));
+		catch (\Exception $exception) {
+			die("WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n".base64_encode($exception->getTraceAsString()));
+		}
 	}
 	
 	/**
