@@ -360,7 +360,7 @@ class Package extends DatabaseObject {
 		// get primary application
 		$sql = "SELECT		packageID
 			FROM		wcf".WCF_N."_application
-			WHERE		applications.isPrimary = ?";
+			WHERE		isPrimary = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(1));
 		$row = $statement->fetchArray();
