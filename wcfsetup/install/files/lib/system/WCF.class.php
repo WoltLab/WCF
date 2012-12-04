@@ -146,7 +146,7 @@ class WCF {
 			UserStorageHandler::getInstance()->shutdown();
 		}
 		catch (\Exception $exception) {
-			die("WCF::destruct() Unhandled exception: ".$exception->getMessage()."\n".base64_encode($exception->getTraceAsString()));
+			die("<pre>WCF::destruct() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
 		}
 	}
 	
@@ -246,7 +246,7 @@ class WCF {
 			self::handleException(new exception\SystemException($e->getMessage(), $e->getCode(), '', $e));
 		}
 		catch (\Exception $exception) {
-			die("WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n".base64_encode($exception->getTraceAsString()));
+			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
 		}
 	}
 	

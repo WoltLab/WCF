@@ -146,21 +146,19 @@ class UserStorageHandler extends SingletonFactory {
 	 */
 	public function shutdown() {
 		WCF::getDB()->beginTransaction();
+		
 		// remove outdated entries
 		if (!empty($this->resetFields)) {
 			$sql = "DELETE FROM	wcf".WCF_N."_user_storage
 				WHERE		userID = ?
 						AND field = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			
-			foreach ($this->resetFields as $userID => $data) {
-				foreach ($data as $fields) {
-					foreach ($fields as $field) {
-						$statement->execute(array(
-							$userID,
-							$field
-						));
-					}
+			foreach ($this->resetFields as $userID => $fields) {
+				foreach ($fields as $field) {
+					$statement->execute(array(
+						$userID,
+						$field
+					));
 				}
 			}
 		}
@@ -172,18 +170,17 @@ class UserStorageHandler extends SingletonFactory {
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
-			foreach ($this->updateFields as $userID => $data) {
-				foreach ($data as $fieldValues) {
-					foreach ($fieldValues as $field => $fieldValue) {
-						$statement->execute(array(
-							$userID,
-							$field,
-							$fieldValue
-						));
-					}
+			foreach ($this->updateFields as $userID => $fieldValues) {
+				foreach ($fieldValues as $field => $fieldValue) {
+					$statement->execute(array(
+						$userID,
+						$field,
+						$fieldValue
+					));
 				}
 			}
 		}
+		
 		WCF::getDB()->commitTransaction();
 		
 		$this->resetFields = $this->updateFields = array();
