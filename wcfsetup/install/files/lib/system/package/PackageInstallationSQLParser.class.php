@@ -270,7 +270,10 @@ class PackageInstallationSQLParser extends SQLParser {
 		else {
 			// log
 			$this->tableLog[] = array('tableName' => $tableName, 'packageID' => $this->package->packageID, 'action' => 'insert');
-
+			
+			// add table to known tables
+			$this->knownTables[$tableName] = $this->package->packageID;
+			
 			// execute
 			parent::executeCreateTableStatement($tableName, $columns, $indices);
 		}
