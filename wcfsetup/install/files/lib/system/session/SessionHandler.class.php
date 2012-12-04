@@ -348,7 +348,6 @@ class SessionHandler extends SingletonFactory {
 		// save session
 		$this->session = call_user_func(array($this->sessionEditorClassName, 'create'), array(
 			'sessionID' => $sessionID,
-			'packageID' => PACKAGE_ID,
 			'userID' => $this->user->userID,
 			'ipAddress' => UserUtil::getIpAddress(),
 			'userAgent' => UserUtil::getUserAgent(),
@@ -517,8 +516,7 @@ class SessionHandler extends SingletonFactory {
 			'userAgent' => $this->userAgent,
 			'requestURI' => $this->requestURI,
 			'requestMethod' => $this->requestMethod,
-			'lastActivityTime' => TIME_NOW,
-			'packageID' => PACKAGE_ID
+			'lastActivityTime' => TIME_NOW
 		);
 		if (PACKAGE_ID && RequestHandler::getInstance()->getActiveRequest() && RequestHandler::getInstance()->getActiveRequest()->getRequestObject() instanceof \wcf\page\ITrackablePage && RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->isTracked()) {
 			$data['controller'] = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->getController();
