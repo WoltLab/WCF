@@ -258,10 +258,8 @@ class PackageInstallationSQLParser extends SQLParser {
 	protected function executeCreateTableStatement($tableName, $columns, $indices = array()) {
 		if ($this->test) {
 			if (in_array($tableName, $this->existingTables)) {
-				if (isset($this->knownTables[$tableName])) {
-					if ($this->knownTables[$tableName] != $this->package->packageID) {
-						throw new SystemException("Can not recreate table '.$tableName.'. A package can only overwrite own tables.");
-					}
+				if (isset($this->knownTables[$tableName]) && $this->knownTables[$tableName] != $this->package->packageID) {
+					throw new SystemException("Can not recreate table '.$tableName.'. A package can only overwrite own tables.");
 				}
 				else {
 					if (!isset($this->conflicts['CREATE TABLE'])) $this->conflicts['CREATE TABLE'] = array();
@@ -324,10 +322,8 @@ class PackageInstallationSQLParser extends SQLParser {
 	 */
 	protected function executeAddIndexStatement($tableName, $indexName, $indexData) {
 		if ($this->test) {
-			if (isset($this->knownTables[$tableName])) {
-				if ($this->knownTables[$tableName] != $this->package->packageID) {
-					throw new SystemException("Can not add index '".$indexName."' to table '.$tableName.'.");
-				}
+			if (!isset($this->knownTables[$tableName])) {
+				throw new SystemException("Can not add index '".$indexName."' to table '.$tableName.'.");
 			}
 		}
 		else {
@@ -344,10 +340,8 @@ class PackageInstallationSQLParser extends SQLParser {
 	 */
 	protected function executeAddForeignKeyStatement($tableName, $indexName, $indexData) {
 		if ($this->test) {
-			if (isset($this->knownTables[$tableName])) {
-				if ($this->knownTables[$tableName] != $this->package->packageID) {
-					throw new SystemException("Can not add foreign key '".$indexName."' to table '.$tableName.'.");
-				}
+			if (!isset($this->knownTables[$tableName])) {
+				throw new SystemException("Can not add foreign key '".$indexName."' to table '.$tableName.'.");
 			}
 		}
 		else {
