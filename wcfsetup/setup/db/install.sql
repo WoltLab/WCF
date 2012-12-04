@@ -36,8 +36,7 @@ CREATE TABLE wcf1_acp_session (
 	parentObjectID INT(10) NOT NULL DEFAULT 0,
 	objectType VARCHAR(255) NOT NULL DEFAULT '',
 	objectID INT(10) NOT NULL DEFAULT 0,
-	sessionVariables MEDIUMTEXT,
-	KEY sessionID (sessionID, packageID)
+	sessionVariables MEDIUMTEXT
 );
 
 DROP TABLE IF EXISTS wcf1_acp_session_access_log;
@@ -513,7 +512,7 @@ CREATE TABLE wcf1_session (
 	objectID INT(10) NOT NULL DEFAULT 0,
 	sessionVariables MEDIUMTEXT,
 	spiderID INT(10) NOT NULL DEFAULT 0,
-	KEY packageID (packageID, lastActivityTime, spiderID)
+	KEY packageID (lastActivityTime, spiderID)
 );
 
 DROP TABLE IF EXISTS wcf1_sitemap;
@@ -720,7 +719,7 @@ CREATE TABLE wcf1_user_storage (
 	userID INT(10) NOT NULL,
 	field VARCHAR(80) NOT NULL DEFAULT '',
 	fieldValue TEXT,
-	UNIQUE KEY userStorageData (userID, field, packageID)
+	UNIQUE KEY userStorageData (userID, field)
 );
 
 DROP TABLE IF EXISTS wcf1_user_to_group;
