@@ -121,9 +121,6 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 		
 		// reset package cache
 		CacheHandler::getInstance()->clearResource('package');
-		
-		// rebuild package dependencies
-		Package::rebuildParentPackageDependencies($this->queue->packageID);
 	}
 	
 	/**

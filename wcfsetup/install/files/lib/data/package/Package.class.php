@@ -77,9 +77,11 @@ class Package extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function isPlugin() {
-		if ($this->parentPackageID > 0) return true;
+		if ($this->isApplication) {
+			return false;
+		}
 		
-		return false;
+		return true;
 	}
 	
 	/**
@@ -100,19 +102,6 @@ class Package extends DatabaseObject {
 	public static function getAbbreviation($package) {
 		$array = explode('.', $package);
 		return array_pop($array);
-	}
-	
-	/**
-	 * Returns package object for parent package.
-	 * 
-	 * @return	Package
-	 */
-	public function getParentPackage() {
-		if (!$this->parentPackageID) {
-			throw new SystemException("Package ".$this->package." does not have a parent package.");
-		}
-		
-		return new Package($this->parentPackageID);
 	}
 	
 	/**

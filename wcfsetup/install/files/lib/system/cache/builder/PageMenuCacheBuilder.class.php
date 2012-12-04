@@ -38,11 +38,8 @@ class PageMenuCacheBuilder implements ICacheBuilder {
 			$conditions->add("menu_item.isDisabled = ?", array(0));
 			
 			$sql = "SELECT		menuItemID, menuItem, parentMenuItem, menuItemLink,
-						permissions, options, packageDir, menuPosition, className,
-						CASE WHEN parentPackageID <> 0 THEN parentPackageID ELSE menu_item.packageID END AS packageID
+						permissions, options, packageDir, menuPosition, className
 				FROM		wcf".WCF_N."_page_menu_item menu_item
-				LEFT JOIN	wcf".WCF_N."_package package
-				ON		(package.packageID = menu_item.packageID)
 				".$conditions."
 				ORDER BY	showOrder ASC";
 			$statement = WCF::getDB()->prepareStatement($sql);

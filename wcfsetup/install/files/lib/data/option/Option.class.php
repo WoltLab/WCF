@@ -54,15 +54,10 @@ class Option extends DatabaseObject {
 	 * @return	array<wcf\data\option\Option>
 	 */
 	public static function getOptions() {
-		$sql = "SELECT		option_table.*,
-					package.package, package.isApplication,
-					parent_package.package AS parentPackage,
-					parent_package.isApplication AS parentPackageIsApplication
+		$sql = "SELECT		option_table.*, package.package, package.isApplication
 			FROM		wcf".WCF_N."_option option_table
 			LEFT JOIN	wcf".WCF_N."_package package
-			ON		(package.packageID = option_table.packageID)
-			LEFT JOIN	wcf".WCF_N."_package parent_package
-			ON		(parent_package.packageID = package.parentPackageID)";
+			ON		(package.packageID = option_table.packageID)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
@@ -177,15 +172,8 @@ class Option extends DatabaseObject {
 	 */
 	public function getConstantName() {
 		$prefix = '';
-		if ($this->parentPackage) {
-			if ($this->parentPackageIsApplication && $this->parentPackage != 'com.woltlab.wcf') {
-				$prefix = Package::getAbbreviation($this->parentPackage) . '_';
-			}
-		}
-		else if ($this->package) {
-			if ($this->isApplication && $this->package != 'com.woltlab.wcf') {
-				$prefix = Package::getAbbreviation($this->package) . '_';
-			}
+		if ($this->package && $this->isApplication && $this->package != 'com.woltlab.wcf') {
+			$prefix = Package::getAbbreviation($this->package) . '_';
 		}
 		
 		return strtoupper($prefix.$this->optionName);

@@ -244,12 +244,6 @@ class PackageInstallationDispatcher {
 			
 			// if package is plugin to com.woltlab.wcf it must not have any other requirement
 			$requirements = $this->getArchive()->getRequirements();
-			if ($package->parentPackageID == 1 && !empty($requirements)) {
-				foreach ($requirements as $package => $data) {
-					if ($package == 'com.woltlab.wcf') continue;
-					throw new SystemException('Package '.$package->package.' is plugin of com.woltlab.wcf (WCF) but has more than one requirement.');
-				}
-			}
 			
 			// insert requirements and dependencies
 			$requirements = $this->getArchive()->getAllExistingRequirements();
@@ -274,12 +268,6 @@ class PackageInstallationDispatcher {
 			// build requirement map
 			Package::rebuildPackageRequirementMap($package->packageID);
 			
-			// rebuild dependencies
-			Package::rebuildPackageDependencies($package->packageID);
-			if ($this->action == 'update') {
-				Package::rebuildParentPackageDependencies($package->packageID);
-			}
-			
 			// reload queue
 			$this->queue = new PackageInstallationQueue($this->queue->queueID);
 			$this->package = null;
@@ -297,9 +285,6 @@ class PackageInstallationDispatcher {
 					'packageID' => $package->packageID
 				));
 			}
-			
-			// insert dependencies on parent package if applicable
-			$this->installPackageParent();
 		}
 		
 		if ($this->getPackage()->isApplication && $this->getPackage()->package != 'com.woltlab.wcf' && $this->getAction() == 'install') {
@@ -311,12 +296,6 @@ class PackageInstallationDispatcher {
 				
 				$installationStep->setSplitNode();
 			}
-		}
-		else if ($this->getPackage()->parentPackageID) {
-			$packageEditor = new PackageEditor($this->getPackage());
-			$packageEditor->update(array(
-				'packageDir' => $this->getPackage()->getParentPackage()->packageDir
-			));
 		}
 		
 		return $installationStep;
@@ -412,50 +391,6 @@ class PackageInstallationDispatcher {
 				1
 			));
 		}
-	}
-	
-	/**
-	 * Sets parent package and rebuilds dependencies for both.
-	 */
-	protected function installPackageParent() {
-		// do not handle parent package if current package is an application or does not have a plugin tag while within installation process
-		if ($this->getArchive()->getPackageInfo('isApplication') || $this->getAction() != 'install' || !$this->getArchive()->getPackageInfo('plugin')) {
-			return;
-		}
-		
-		// get parent package from requirements
-		$sql = "SELECT	requirement
-			FROM	wcf".WCF_N."_package_requirement
-			WHERE	packageID = ?
-				AND requirement IN (
-					SELECT	packageID
-					FROM	wcf".WCF_N."_package
-					WHERE	package = ?
-				)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$this->getPackage()->packageID,
-			$this->getArchive()->getPackageInfo('plugin')
-		));
-		$row = $statement->fetchArray();
-		if (!$row || empty($row['requirement'])) {
-			throw new SystemException("can not find any available installations of required parent package '".$this->getArchive()->getPackageInfo('plugin')."'");
-		}
-		
-		// save parent package
-		$packageEditor = new PackageEditor($this->getPackage());
-		$packageEditor->update(array(
-			'parentPackageID' => $row['requirement']
-		));
-		
-		// rebuild parent package dependencies								
-		Package::rebuildParentPackageDependencies($this->getPackage()->packageID);
-		
-		// rebuild parent's parent package dependencies
-		Package::rebuildParentPackageDependencies($row['requirement']);
-		
-		// reload package object on next request
-		$this->package = null;
 	}
 	
 	/**
