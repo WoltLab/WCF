@@ -271,9 +271,6 @@ class PackageInstallationSQLParser extends SQLParser {
 			// log
 			$this->tableLog[] = array('tableName' => $tableName, 'packageID' => $this->package->packageID, 'action' => 'insert');
 			
-			// add table to known tables
-			$this->knownTables[$tableName] = $this->package->packageID;
-			
 			// execute
 			parent::executeCreateTableStatement($tableName, $columns, $indices);
 		}
@@ -324,12 +321,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	 * @see	wcf\system\database\util\SQLParser::executeAddIndexStatement()
 	 */
 	protected function executeAddIndexStatement($tableName, $indexName, $indexData) {
-		if ($this->test) {
-			if (!isset($this->knownTables[$tableName])) {
-				throw new SystemException("Can not add index '".$indexName."' to table '.$tableName.'.");
-			}
-		}
-		else {
+		if (!$this->test) {
 			// log
 			$this->indexLog[] = array('tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'insert');
 			
@@ -342,12 +334,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	 * @see	wcf\system\database\util\SQLParser::executeAddForeignKeyStatement()
 	 */
 	protected function executeAddForeignKeyStatement($tableName, $indexName, $indexData) {
-		if ($this->test) {
-			if (!isset($this->knownTables[$tableName])) {
-				throw new SystemException("Can not add foreign key '".$indexName."' to table '.$tableName.'.");
-			}
-		}
-		else {
+		if (!$this->test) {
 			// log
 			$this->indexLog[] = array('tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'insert');
 			
