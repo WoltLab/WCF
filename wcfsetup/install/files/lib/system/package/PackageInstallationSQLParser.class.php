@@ -283,10 +283,8 @@ class PackageInstallationSQLParser extends SQLParser {
 	 */
 	protected function executeAddColumnStatement($tableName, $columnName, $columnData) {
 		if ($this->test) {
-			if (isset($this->knownTables[$tableName])) {
-				if ($this->knownTables[$tableName] != $this->package->packageID) {
-					throw new SystemException("Can not add column '".$columnName."' to table '.$tableName.'.");
-				}
+			if (!isset($this->knownTables[$tableName])) {
+				throw new SystemException("Can not add column '".$columnName."' to table '.$tableName.'.");
 			}
 		}
 		else {
