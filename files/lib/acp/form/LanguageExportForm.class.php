@@ -144,15 +144,9 @@ class LanguageExportForm extends ACPForm {
 	 * Read available packages.
 	 */
 	protected function readPackages() {
-		$sql = "SELECT		package.*,
+		$sql = "SELECT		*,
 					CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
-			FROM		wcf".WCF_N."_package_dependency package_dependency
-			LEFT JOIN	wcf".WCF_N."_language_to_package language_to_package
-			ON		(language_to_package.languageID = ? AND language_to_package.packageID = package_dependency.dependency)
-			LEFT JOIN	wcf".WCF_N."_package package
-			ON		(package.packageID = package_dependency.dependency)
-			WHERE		package_dependency.packageID = ".PACKAGE_ID."
-					AND language_to_package.languageID IS NOT NULL
+			FROM		wcf".WCF_N."_package
 			ORDER BY	packageName";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->languageID));

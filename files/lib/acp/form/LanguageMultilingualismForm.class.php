@@ -90,7 +90,7 @@ class LanguageMultilingualismForm extends ACPForm {
 		LanguageEditor::enableMultilingualism(($this->enable == 1 ? $this->languageIDs : array()));
 		
 		// clear cache
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.languages.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.language.php');
 		$this->saved();
 		
 		// show success message
