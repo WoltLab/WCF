@@ -22,58 +22,40 @@ class ApplicationCacheBuilder implements ICacheBuilder {
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-		list($cache, $packageID) = explode('-', $cacheResource['cache']);
 		$data = array(
 			'abbreviation' => array(),
 			'application' => array(),
-			'group' => null,
 			'primary' => 0,
 			'wcf' => null
 		);
 		
-		// lookup group id for currently active application
-		$sql = "SELECT	groupID
-			FROM	wcf".WCF_N."_application
-			WHERE	packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
-		$row = $statement->fetchArray();
+		// fetch applications
+		$applicationList = new ApplicationList();
+		$applicationList->sqlLimit = 0;
+		$applicationList->readObjects();
+		$applications = $applicationList->getObjects();
 		
-		// current application is not part of an application group
-		if (!$row || ($row['groupID'] == 0) || $row['groupID'] === null) {
-			$data['application'] = array($packageID => new Application($packageID));
-		}
-		else {
-			// fetch applications
-			$applicationList = new ApplicationList();
-			$applicationList->getConditionBuilder()->add("application.groupID = ?", array($row['groupID']));
-			$applicationList->sqlLimit = 0;
-			$applicationList->readObjects();
-			$applications = $applicationList->getObjects();
+		foreach ($applications as $application) {
+			$data['application'][$application->packageID] = $application;
 			
-			foreach ($applications as $application) {
-				$data['application'][$application->packageID] = $application;
-				
-				// save primary application's package id
-				if ($application->isPrimary) {
-					$data['primary'] = $application->packageID;
-				}
+			// save primary application's package id
+			if ($application->isPrimary) {
+				$data['primary'] = $application->packageID;
 			}
-			
-			// fetch application group
-			$data['group'] = new ApplicationGroup($row['groupID']);
 		}
 		
 		// fetch abbreviations
 		$packageList = new PackageList();
-		$packageList->getConditionBuilder()->add('packageID IN (?)', array(array_keys($data['application'])));
+		$packageList->getConditionBuilder()->add('package.isApplication = ?', array(1));
 		$packageList->readObjects();
 		foreach ($packageList->getObjects() as $package) {
 			$data['abbreviation'][Package::getAbbreviation($package->package)] = $package->packageID;
 		}
 		
-		// fetch wcf pseudo-application
-		$data['wcf'] = new Application(1);
+		// assign wcf pseudo-application
+		if (PACKAGE_ID) {
+			$data['wcf'] = $data['application'][1];
+		}
 		
 		return $data;
 	}

@@ -22,12 +22,6 @@ $statement->execute(array(1));
 // reset sessions
 SessionHandler::resetSessions();
 
-// update acp session
-$sql = "UPDATE	wcf".WCF_N."_acp_session
-	SET	packageID = ?";
-$statement = WCF::getDB()->prepareStatement($sql);
-$statement->execute(array(1));
-
 // update acp templates
 $sql = "UPDATE	wcf".WCF_N."_acp_template
 	SET	packageID = ?";

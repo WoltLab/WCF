@@ -20,8 +20,7 @@ class StyleCacheBuilder implements ICacheBuilder {
 	public function getData(array $cacheResource) {
 		$data = array(
 			'default' => 0,
-			'styles' => array(),
-			'packages' => array()
+			'styles' => array()
 		);
 		
 		// get all styles
@@ -36,25 +35,6 @@ class StyleCacheBuilder implements ICacheBuilder {
 			$style->loadVariables();
 			
 			$data['styles'][$row['styleID']] = $style;
-		}
-		
-		// load style-specific variables
-		
-		// get style to packages
-		$sql = "SELECT		*
-			FROM		wcf".WCF_N."_style_to_package
-			ORDER BY	packageID ASC";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			if (!isset($data['packages'][$row['packageID']])) {
-				$data['packages'][$row['packageID']] = array('default' => 0, 'disabled' => array());
-			}
-			
-			if ($row['isDefault']) {
-				$data['packages'][$row['packageID']]['default'] = $row['styleID'];
-			}
-			$data['packages'][$row['packageID']]['disabled'][$row['styleID']] = $row['disabled'];
 		}
 		
 		return $data;

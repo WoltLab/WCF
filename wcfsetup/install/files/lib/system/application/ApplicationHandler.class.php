@@ -42,8 +42,7 @@ class ApplicationHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the primary application for current group. Will return current
-	 * application equal to PACKAGE_ID if not within any group.
+	 * Returns the primary application.
 	 * 
 	 * @return	wcf\data\application\Application
 	 */
@@ -72,16 +71,6 @@ class ApplicationHandler extends SingletonFactory {
 		}
 		
 		return null;
-	}
-	
-	/**
-	 * Returns active application group or 'null' if current application
-	 * is not within a group.
-	 * 
-	 * @return	wcf\data\application\group\ApplicationGroup
-	 */	
-	public function getActiveGroup() {
-		return $this->cache['group'];
 	}
 	
 	/**

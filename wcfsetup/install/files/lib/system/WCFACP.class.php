@@ -171,7 +171,7 @@ class WCFACP extends WCF {
 	protected function getQuickAccessPackages() {
 		$quickAccessPackages = array();
 		$packages = CacheHandler::getInstance()->get('package');
-		foreach ($packages as $packageID => $package) {
+		foreach ($packages['packages'] as $packageID => $package) {
 			if (!$package->isApplication) break;
 			if ($package->package != 'com.woltlab.wcf') {
 				$quickAccessPackages[] = $package;

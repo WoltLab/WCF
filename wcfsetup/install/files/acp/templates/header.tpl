@@ -36,7 +36,7 @@
 			{* work-around for unknown core-object during WCFSetup *}
 			{if PACKAGE_ID}
 				{assign var=activeMenuItems value=$__wcf->getACPMenu()->getActiveMenuItems()|array_reverse}
-				var $activeMenuItems = [{implode from=$activeMenuItems item=menuItem}'{$menuItem}'{/implode}];
+				var $activeMenuItems = [{implode from=$activeMenuItems item=_menuItem}'{$_menuItem}'{/implode}];
 				new WCF.ACP.Menu($activeMenuItems);
 			{/if}
 			
