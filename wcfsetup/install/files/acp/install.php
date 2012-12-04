@@ -34,11 +34,6 @@ $sql = "UPDATE	wcf".WCF_N."_language_item
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute(array(1));
 
-$sql = "UPDATE	wcf".WCF_N."_language_to_package
-	SET	packageID = ?";
-$statement = WCF::getDB()->prepareStatement($sql);
-$statement->execute(array(1));
-
 // update installation logs
 $sql = "UPDATE	wcf".WCF_N."_package_installation_file_log
 	SET	packageID = ?";
