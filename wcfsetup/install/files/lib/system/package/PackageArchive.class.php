@@ -441,56 +441,14 @@ class PackageArchive {
 	 * @return	boolean
 	 */
 	public function isAlreadyInstalled() {
-		$duplicates = $this->getDuplicates();
-		
-		// package is not installed
-		if (empty($duplicates)) {
-			return false;
-		}
-		
-		$parentPackageIDs = array();
-		foreach ($duplicates as $package) {
-			// applications are always allowed
-			if ($package['isApplication']) {
-				return false;
-			}
-			
-			// wcf packages must be unique
-			if (!$package['parentPackageID']) {
-				return true;
-			}
-			
-			$parentPackageIDs[] = $package['parentPackageID'];
-		}
-		
-		// determine if plugin is unique within current application
-		$packageIDs = PackageDependencyHandler::getInstance()->getDependencies();
-		foreach ($parentPackageIDs as $packageID) {
-			if (in_array($packageID, $packageIDs)) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-	/**
-	 * Returns a list of all installed instances of this package.
-	 * 
-	 * @return	array		packages
-	 */
-	public function getDuplicates() {
-		$packages = array();
-		$sql = "SELECT	*
-			FROM 	wcf".WCF_N."_package 
-			WHERE 	package = ?";
+		$sql = "SELECT	COUNT(*) AS count
+			FROM	wcf".WCF_N."_package
+			WHERE	package = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->packageInfo['name']));
-		while ($row = $statement->fetchArray()) {
-			$packages[$row['packageID']] = $row;
-		}
+		$row = $statement->fetchArray();
 		
-		return $packages;
+		return ($row['count'] > 0) ? true : false;
 	}
 	
 	/**

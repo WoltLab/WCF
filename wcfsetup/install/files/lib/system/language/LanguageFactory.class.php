@@ -203,12 +203,12 @@ class LanguageFactory extends SingletonFactory {
 	protected function loadCache() {
 		if (defined('WCF_N')) {
 			CacheHandler::getInstance()->addResource(
-				'languages',
-				WCF_DIR.'cache/cache.languages.php',
+				'language',
+				WCF_DIR.'cache/cache.language.php',
 				'wcf\system\cache\builder\LanguageCacheBuilder'
 			);
 			
-			$this->cache = CacheHandler::getInstance()->get('languages');
+			$this->cache = CacheHandler::getInstance()->get('language');
 		}
 	}
 	
@@ -216,7 +216,7 @@ class LanguageFactory extends SingletonFactory {
 	 * Clears languages cache.
 	 */
 	public function clearCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.languages.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.language.php');
 	}
 	
 	/**

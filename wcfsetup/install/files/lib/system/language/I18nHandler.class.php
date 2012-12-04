@@ -3,7 +3,6 @@ namespace wcf\system\language;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -277,13 +276,6 @@ class I18nHandler extends SingletonFactory {
 		$conditions->add("languageID IN (?)", array($languageIDs));
 		$conditions->add("languageItem = ?", array($languageVariable));
 		
-		if (isset($this->elementOptions[$elementID]) && !Regex::compile('^'.$this->elementOptions[$elementID]['pattern'].'$')->match($languageVariable) && $this->isLanguageVariable($languageVariable)) {
-			$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-		}
-		else {
-			$conditions->add("packageID = ?", array($packageID));
-		}
-		
 		$sql = "SELECT	languageItemID, languageID
 			FROM	wcf".WCF_N."_language_item
 			".$conditions;
@@ -346,17 +338,12 @@ class I18nHandler extends SingletonFactory {
 	 * Removes previously created i18n language variables.
 	 * 
 	 * @param	string		$languageVariable
-	 * @param	integer		$packageID
 	 */
-	public function remove($languageVariable, $packageID = PACKAGE_ID) {
+	public function remove($languageVariable) {
 		$sql = "DELETE FROM	wcf".WCF_N."_language_item
-			WHERE		languageItem = ?
-					AND packageID = ?";
+			WHERE		languageItem = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$languageVariable,
-			$packageID
-		));
+		$statement->execute(array($languageVariable));
 		
 		// reset language cache
 		LanguageFactory::getInstance()->deleteLanguageCache();
@@ -421,12 +408,10 @@ class I18nHandler extends SingletonFactory {
 						// use i18n values from language items
 						$sql = "SELECT	languageID, languageItemValue
 							FROM	wcf".WCF_N."_language_item
-							WHERE	languageItem = ?
-								AND packageID = ?";
+							WHERE	languageItem = ?";
 						$statement = WCF::getDB()->prepareStatement($sql);
 						$statement->execute(array(
-							$this->elementOptions[$elementID]['value'],
-							$this->elementOptions[$elementID]['packageID']
+							$this->elementOptions[$elementID]['value']
 						));
 						while ($row = $statement->fetchArray()) {
 							$i18nValues[$row['languageID']] = StringUtil::encodeJS(StringUtil::unifyNewlines($row['languageItemValue']));

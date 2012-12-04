@@ -1,18 +1,18 @@
 <?php
 namespace wcf\system\package;
-use wcf\util\FileUtil;
-
 use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
 use wcf\data\package\PackageList;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\setup\Uninstaller;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 
 /**
@@ -84,6 +84,9 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 					CacheHandler::getInstance()->clear($dir.'cache/', 'cache.*.php');
 				}
 			}
+			
+			// rebuild application paths
+			ApplicationHandler::rebuild();
 		}
 		
 		// return next node
@@ -117,7 +120,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 		));
 		
 		// reset package cache
-		CacheHandler::getInstance()->clearResource('packages');
+		CacheHandler::getInstance()->clearResource('package');
 		
 		// rebuild package dependencies
 		Package::rebuildParentPackageDependencies($this->queue->packageID);

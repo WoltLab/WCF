@@ -66,12 +66,6 @@ class WCF {
 	protected static $coreObjectCache = array();
 	
 	/**
-	 * list of ids of dependent packages
-	 * @var	array<integer>
-	 */	
-	protected static $packageDependencies = array();
-	
-	/**
 	 * database object
 	 * @var	wcf\system\database\Database
 	 */
@@ -294,20 +288,20 @@ class WCF {
 	 */
 	protected function loadDefaultCacheResources() {
 		CacheHandler::getInstance()->addResource(
-			'languages',
-			WCF_DIR.'cache/cache.languages.php',
+			'language',
+			WCF_DIR.'cache/cache.language.php',
 			'wcf\system\cache\builder\LanguageCacheBuilder'
 		);
 		CacheHandler::getInstance()->addResource(
-			'spiders',
-			WCF_DIR.'cache/cache.spiders.php',
+			'spider',
+			WCF_DIR.'cache/cache.spider.php',
 			'wcf\system\cache\builder\SpiderCacheBuilder'
 		);
 		
 		if (defined('PACKAGE_ID')) {
 			CacheHandler::getInstance()->addResource(
-				'coreObjects-'.PACKAGE_ID,
-				WCF_DIR.'cache/cache.coreObjects-'.PACKAGE_ID.'.php',
+				'coreObject',
+				WCF_DIR.'cache/cache.coreObject.php',
 				'wcf\system\cache\builder\CoreObjectCacheBuilder'
 			);
 		}
@@ -506,8 +500,7 @@ class WCF {
 			return;
 		}
 		
-		self::$coreObjectCache = CacheHandler::getInstance()->get('coreObjects-'.PACKAGE_ID);
-		self::$packageDependencies = \wcf\system\package\PackageDependencyHandler::getInstance()->getDependencies();
+		self::$coreObjectCache = CacheHandler::getInstance()->get('coreObject');
 	}
 	
 	/**
@@ -609,10 +602,8 @@ class WCF {
 	 * @return	string
 	 */
 	protected static final function getCoreObject($className) {
-		foreach (self::$packageDependencies as $packageID) {
-			if (isset(self::$coreObjectCache[$packageID][$className])) {
-				return self::$coreObjectCache[$packageID][$className];
-			}
+		if (isset(self::$coreObjectCache[$className])) {
+			return self::$coreObjectCache[$className];
 		}
 		
 		return null;

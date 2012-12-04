@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\application;
+use wcf\data\application\ApplicationAction;
+use wcf\data\application\ApplicationList;
 use wcf\system\cache\CacheHandler;
 use wcf\system\SingletonFactory;
 use wcf\util\StringUtil;
@@ -31,13 +33,12 @@ class ApplicationHandler extends SingletonFactory {
 	 * Initializes cache.
 	 */
 	protected function init() {
-		$cacheName = 'application-'.PACKAGE_ID;
 		CacheHandler::getInstance()->addResource(
-			$cacheName,
-			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'application',
+			WCF_DIR.'cache/cache.application.php',
 			'wcf\system\cache\builder\ApplicationCacheBuilder'
 		);
-		$this->cache = CacheHandler::getInstance()->get($cacheName);
+		$this->cache = CacheHandler::getInstance()->get('application');
 	}
 	
 	/**
@@ -165,5 +166,17 @@ class ApplicationHandler extends SingletonFactory {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Rebuilds cookie domain/path for all applications.
+	 */
+	public static function rebuild() {
+		$applicationList = new ApplicationList();
+		$applicationList->sqlLimit = 0;
+		$applicationList->readObjects();
+		
+		$applicationAction = new ApplicationAction($applicationList->getObjects(), 'rebuild');
+		$applicationAction->executeAction();
 	}
 }

@@ -46,11 +46,6 @@ class PackageInstallationSQLParser extends SQLParser {
 	 */
 	protected $knownTables = array();
 	
-	/**
-	 * list of package ids
-	 * @var	array
-	 */
-	protected $dependentPackageIDs = array();
 	
 	/**
 	 * list of conflicted database tables
@@ -102,9 +97,6 @@ class PackageInstallationSQLParser extends SQLParser {
 		
 		// get logged tables
 		$this->getKnownTables();
-				
-		// get package ids of dependencies
-		$this->getDependentPackageIDs();
 		
 		// enable testing mode
 		$this->test = true;
@@ -215,20 +207,6 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * Gets a list of dependent packages.
-	 */
-	protected function getDependentPackageIDs() {
-		$sql = "SELECT		dependency
-			FROM		wcf".WCF_N."_package_dependency
-			WHERE		packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->package->packageID));
-		while ($row = $statement->fetchArray()) {
-			$this->dependentPackageIDs[] = $row['dependency'];
-		}
-	}
-	
-	/**
 	 * Returns the owner of a specific database table column.
 	 * 
 	 * @param	string		$tableName
@@ -306,8 +284,8 @@ class PackageInstallationSQLParser extends SQLParser {
 	protected function executeAddColumnStatement($tableName, $columnName, $columnData) {
 		if ($this->test) {
 			if (isset($this->knownTables[$tableName])) {
-				if ($this->knownTables[$tableName] != $this->package->packageID && !in_array($this->knownTables[$tableName], $this->dependentPackageIDs)) {
-					throw new SystemException("Can not add column '".$columnName."' to table '.$tableName.'. An installion can only 'ADD' things to tables from the same package environment.");
+				if ($this->knownTables[$tableName] != $this->package->packageID) {
+					throw new SystemException("Can not add column '".$columnName."' to table '.$tableName.'.");
 				}
 			}
 		}
@@ -349,8 +327,8 @@ class PackageInstallationSQLParser extends SQLParser {
 	protected function executeAddIndexStatement($tableName, $indexName, $indexData) {
 		if ($this->test) {
 			if (isset($this->knownTables[$tableName])) {
-				if ($this->knownTables[$tableName] != $this->package->packageID && !in_array($this->knownTables[$tableName], $this->dependentPackageIDs)) {
-					throw new SystemException("Can not add index '".$indexName."' to table '.$tableName.'. An installion can only 'ADD' things to tables from the same package environment.");
+				if ($this->knownTables[$tableName] != $this->package->packageID) {
+					throw new SystemException("Can not add index '".$indexName."' to table '.$tableName.'.");
 				}
 			}
 		}
@@ -369,8 +347,8 @@ class PackageInstallationSQLParser extends SQLParser {
 	protected function executeAddForeignKeyStatement($tableName, $indexName, $indexData) {
 		if ($this->test) {
 			if (isset($this->knownTables[$tableName])) {
-				if ($this->knownTables[$tableName] != $this->package->packageID && !in_array($this->knownTables[$tableName], $this->dependentPackageIDs)) {
-					throw new SystemException("Can not add foreign key '".$indexName."' to table '.$tableName.'. An installion can only 'ADD' things to tables from the same package environment.");
+				if ($this->knownTables[$tableName] != $this->package->packageID) {
+					throw new SystemException("Can not add foreign key '".$indexName."' to table '.$tableName.'.");
 				}
 			}
 		}

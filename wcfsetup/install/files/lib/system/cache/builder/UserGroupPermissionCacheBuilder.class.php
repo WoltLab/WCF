@@ -40,14 +40,10 @@ class UserGroupPermissionCacheBuilder implements ICacheBuilder {
 			$statement->execute();
 		}
 		else {
-			$sql = "SELECT		optionName, optionID 
-				FROM		wcf".WCF_N."_user_group_option option_table
-				LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-				ON		(package_dependency.dependency = option_table.packageID)
-				WHERE 		package_dependency.packageID = ?
-				ORDER BY	package_dependency.priority ASC";
+			$sql = "SELECT	optionName, optionID 
+				FROM	wcf".WCF_N."_user_group_option";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($packageID));
+			$statement->execute();
 		}
 		
 		$options = array();

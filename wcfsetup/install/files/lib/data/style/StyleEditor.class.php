@@ -864,7 +864,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * @see	wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.styles.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.style.php');
 	}
 	
 	/**

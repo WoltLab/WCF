@@ -147,21 +147,20 @@ class CategoryHandler extends SingletonFactory {
 			$this->objectTypeIDs[$objectType->objectTypeID] = $objectType->objectType;
 		}
 		
-		$cacheName = 'category-'.PACKAGE_ID;
 		CacheHandler::getInstance()->addResource(
-			$cacheName,
-			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'category',
+			WCF_DIR.'cache/cache.category.php',
 			'wcf\system\cache\builder\CategoryCacheBuilder'
 		);
-		$this->categories = CacheHandler::getInstance()->get($cacheName, 'categories');
-		$this->objectTypeCategoryIDs = CacheHandler::getInstance()->get($cacheName, 'objectTypeCategoryIDs');
+		$this->categories = CacheHandler::getInstance()->get('category', 'categories');
+		$this->objectTypeCategoryIDs = CacheHandler::getInstance()->get('category', 'objectTypeCategoryIDs');
 	}
 	
 	/**
 	 * Reloads the category cache.
 	 */
 	public function reloadCache() {
-		CacheHandler::getInstance()->clearResource('category-'.PACKAGE_ID);
+		CacheHandler::getInstance()->clearResource('category');
 		
 		$this->init();
 	}

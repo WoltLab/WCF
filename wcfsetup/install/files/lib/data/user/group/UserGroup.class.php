@@ -230,11 +230,11 @@ class UserGroup extends DatabaseObject {
 	protected static function getCache() {
 		if (self::$cache === null) {
 			CacheHandler::getInstance()->addResource(
-				'usergroups',
-				WCF_DIR.'cache/cache.userGroups.php',
+				'userGroup',
+				WCF_DIR.'cache/cache.userGroup.php',
 				'wcf\system\cache\builder\UserGroupCacheBuilder'
 			);
-			self::$cache = CacheHandler::getInstance()->get('usergroups');
+			self::$cache = CacheHandler::getInstance()->get('userGroup');
 		}
 	}
 	
@@ -309,14 +309,10 @@ class UserGroup extends DatabaseObject {
 		if ($this->groupOptions === null) {
 			// get all options and filter options with low priority
 			$this->groupOptions = $groupOptionIDs = array();
-			$sql = "SELECT		optionName, optionID 
-				FROM		wcf".WCF_N."_user_group_option option_table
-				LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-				ON		(package_dependency.dependency = option_table.packageID)
-				WHERE 		package_dependency.packageID = ?
-				ORDER BY	package_dependency.priority ASC";
+			$sql = "SELECT		optionName, optionID
+				FROM		wcf".WCF_N."_user_group_option";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(PACKAGE_ID));
+			$statement->execute();
 			
 			while ($row = $statement->fetchArray()) {
 				$groupOptionIDs[$row['optionName']] = $row['optionID'];

@@ -41,6 +41,11 @@ class Cronjob extends DatabaseObject {
 	const EXECUTING = 2;
 	
 	/**
+	 * maximum number of allowed fails
+	 */
+	const MAX_FAIL_COUNT = 3;
+	
+	/**
 	 * Returns timestamp of next execution.
 	 * 
 	 * @param	integer		$timeBase

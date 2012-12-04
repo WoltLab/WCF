@@ -1,8 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\package\Package;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -30,16 +28,11 @@ class IconCacheBuilder implements ICacheBuilder {
 		
 		// get package dirs
 		$packageDirs = array();
-		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add("dependency.packageID IN (?) AND package.packageDir <> ''", array(PackageDependencyHandler::getInstance()->getDependencies()));
-		$sql = "SELECT		DISTINCT package.packageDir, dependency.priority
-			FROM		wcf".WCF_N."_package_dependency dependency
-			LEFT JOIN	wcf".WCF_N."_package package
-			ON		(package.packageID = dependency.dependency)
-			".$conditionBuilder->__toString()."
-			ORDER BY	dependency.priority DESC";
+		$sql = "SELECT	packageDir
+			FROM	wcf".WCF_N."_package package
+			WHERE	isApplication = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditionBuilder->getParameters());
+		$statement->execute(array(1));
 		while ($row = $statement->fetchArray()) {
 			$packageDirs[] = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
 		}

@@ -26,14 +26,13 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Assigns a list of applications to a group and computes cookie domain and path.
 	 */
-	public function group() {
+	public function rebuild() {
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 		
 		$sql = "UPDATE	wcf".WCF_N."_application
-			SET	groupID = ?,
-				cookieDomain = ?,
+			SET	cookieDomain = ?,
 				cookiePath = ?,
 				isPrimary = ?
 			WHERE	packageID = ?";
@@ -79,7 +78,6 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 				$isPrimary = ($this->parameters['primaryApplication'] == $packageID) ? 1 : 0;
 				
 				$statement->execute(array(
-					$this->parameters['groupID'],
 					$domainName,
 					$path,
 					$isPrimary,
@@ -90,49 +88,5 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		WCF::getDB()->commitTransaction();
 		
 		$this->rebuild();
-	}
-	
-	/**
-	 * Removes a list of applications from their group and resets the cookie domain and path.
-	 */
-	public function ungroup() {
-		if (empty($this->objects)) {
-			$this->readObjects();
-		}
-		
-		$sql = "UPDATE	wcf".WCF_N."_application
-			SET	groupID = ?,
-				cookieDomain = domainName,
-				cookiePath = domainPath,
-				isPrimary = 0
-			WHERE	packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		
-		WCF::getDB()->beginTransaction();
-		foreach ($this->objects as $application) {
-			$statement->execute(array(
-				null,
-				$application->packageID
-			));
-		}
-		WCF::getDB()->commitTransaction();
-		
-		$this->rebuild();
-	}
-	
-	/**
-	 * Rebuilds application cache and dependencies.
-	 */
-	protected function rebuild() {
-		foreach ($this->objects as $application) {
-			// reset cache
-			$directory = PackageCache::getInstance()->getPackage($application->packageID)->packageDir;
-			$directory = FileUtil::getRealPath(WCF_DIR.$directory);
-			
-			CacheHandler::getInstance()->clear($directory.'cache', '*.php');
-			
-			// rebuild dependencies
-			Package::rebuildPackageDependencies($application->packageID);
-		}
 	}
 }

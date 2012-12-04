@@ -206,13 +206,12 @@ final class User extends DatabaseObject implements IRouteController {
 	 * Gets all user options from cache.
 	 */
 	protected static function getUserOptionCache() {
-		$cacheName = 'user-option-'.PACKAGE_ID;
 		CacheHandler::getInstance()->addResource(
-			$cacheName,
-			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'userOption',
+			WCF_DIR.'cache/cache.userOption.php',
 			'wcf\system\cache\builder\OptionCacheBuilder'
 		);
-		self::$userOptions = CacheHandler::getInstance()->get($cacheName, 'options');
+		self::$userOptions = CacheHandler::getInstance()->get('userOption', 'options');
 	}
 	
 	/**

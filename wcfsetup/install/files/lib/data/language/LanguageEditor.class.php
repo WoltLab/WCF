@@ -11,7 +11,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\language\LanguageFactory;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
@@ -91,25 +90,10 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				$conditions->add("languageCategoryID = ?", array($categoryID));
 				
 				// get language items
-				if ($packageID === 0) {
-					// update after wcf installation
-					$conditions->add("packageID IS NULL");
-					
-					$sql = "SELECT 	languageItem, languageItemValue, languageCustomItemValue, languageUseCustomValue
-						FROM	wcf".WCF_N."_language_item
-						".$conditions;
-				}
-				else {
-					// update after regular package installation or update or manual import
-					$conditions->add("package_dependency.packageID = ?", array($packageID));
-					
-					$sql = "SELECT		languageItem, languageItemValue, languageCustomItemValue, languageUseCustomValue
-						FROM		wcf".WCF_N."_language_item language_item
-						LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-						ON		(package_dependency.dependency = language_item.packageID)
-						".$conditions."
-						ORDER BY 	package_dependency.priority ASC";
-				}
+				$conditions->add("packageID IS NULL");
+				$sql = "SELECT 	languageItem, languageItemValue, languageCustomItemValue, languageUseCustomValue
+					FROM	wcf".WCF_N."_language_item
+					".$conditions;
 				
 				$statement2 = WCF::getDB()->prepareStatement($sql);
 				$statement2->execute($conditions->getParameters());
@@ -150,6 +134,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 */
 	public function export($packageIDArray = array(), $exportCustomValues = false) {
 		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("language_item.languageID = ?", array($this->languageID));
 		
 		// bom
 		echo "\xEF\xBB\xBF";
@@ -160,30 +145,14 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		// get items
 		$items = array();
 		if (!empty($packageIDArray)) {
-			// sql conditions
 			$conditions->add("language_item.packageID IN (?)", array($packageIDArray));
-			$conditions->add("language_item.languageID = ?", array($this->languageID));
+		}
 			
-			$sql = "SELECT		languageItem, " . ($exportCustomValues ? "CASE WHEN languageUseCustomValue > 0 THEN languageCustomItemValue ELSE languageItemValue END AS languageItemValue" : "languageItemValue") . ", languageCategory
-				FROM		wcf".WCF_N."_language_item language_item
-				LEFT JOIN	wcf".WCF_N."_language_category language_category
-				ON		(language_category.languageCategoryID = language_item.languageCategoryID)
-				".$conditions;
-		}
-		else {
-			// sql conditions
-			$conditions->add("language_item.packageID = package_dependency.dependency");
-			$conditions->add("package_dependency.packageID = ?", array(PACKAGE_ID));
-			$conditions->add("language_item.languageID = ?", array($this->languageID));
-				
-			$sql = "SELECT		languageItem, " . ($exportCustomValues ? "CASE WHEN languageUseCustomValue > 0 THEN languageCustomItemValue ELSE languageItemValue END AS languageItemValue" : "languageItemValue") . ", languageCategory
-				FROM		wcf".WCF_N."_package_dependency package_dependency,
-						wcf".WCF_N."_language_item language_item
-				LEFT JOIN	wcf".WCF_N."_language_category language_category
-				ON		(language_category.languageCategoryID = language_item.languageCategoryID)
-				".$conditions."
-				ORDER BY 	package_dependency.priority ASC";
-		}
+		$sql = "SELECT		languageItem, " . ($exportCustomValues ? "CASE WHEN languageUseCustomValue > 0 THEN languageCustomItemValue ELSE languageItemValue END AS languageItemValue" : "languageItemValue") . ", languageCategory
+			FROM		wcf".WCF_N."_language_item language_item
+			LEFT JOIN	wcf".WCF_N."_language_category language_category
+			ON		(language_category.languageCategoryID = language_item.languageCategoryID)
+			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
@@ -502,11 +471,8 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		
 		// find existing language items
 		$languageItemList = new LanguageItemList();
-		$languageItemList->sqlJoins = "LEFT JOIN wcf".WCF_N."_package_dependency package_dependency ON (package_dependency.dependency = language_item.packageID)";
-		$languageItemList->getConditionBuilder()->add("package_dependency.packageID = ?", array($packageID));
 		$languageItemList->getConditionBuilder()->add("language_item.languageItem IN (?)", array(array_keys($items)));
 		$languageItemList->getConditionBuilder()->add("languageID = ?", array($this->languageID));
-		$languageItemList->sqlOrderBy = "package_dependency.priority ASC";
 		$languageItemList->sqlLimit = 0;
 		$languageItemList->readObjects();
 		
@@ -572,7 +538,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * Clears language cache.
 	 */	
 	public function clearCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.languages.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.language.php');
 	}
 	
 	/**
@@ -622,7 +588,6 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		}
 		
 		$conditionBuilder->add($searchCondition, $statementParameters);
-		$conditionBuilder->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		if ($languageID !== null) $conditionBuilder->add("languageID = ?", array($languageID));
 		
 		// search

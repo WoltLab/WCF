@@ -51,24 +51,20 @@ class Option extends DatabaseObject {
 	/**
 	 * Returns a list of options.
 	 * 
-	 * @param	integer		$packageID
 	 * @return	array<wcf\data\option\Option>
 	 */
-	public static function getOptions($packageID = PACKAGE_ID) {
+	public static function getOptions() {
 		$sql = "SELECT		option_table.*,
 					package.package, package.isApplication,
 					parent_package.package AS parentPackage,
 					parent_package.isApplication AS parentPackageIsApplication
-			FROM		wcf".WCF_N."_package_dependency package_dependency,
-					wcf".WCF_N."_option option_table
+			FROM		wcf".WCF_N."_option option_table
 			LEFT JOIN	wcf".WCF_N."_package package
 			ON		(package.packageID = option_table.packageID)
 			LEFT JOIN	wcf".WCF_N."_package parent_package
-			ON		(parent_package.packageID = package.parentPackageID)
-			WHERE		package_dependency.dependency = option_table.packageID
-					AND package_dependency.packageID = ?";
+			ON		(parent_package.packageID = package.parentPackageID)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
+		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			$option = new Option(null, $row);
 			$options[$option->getConstantName()] = $option;

@@ -27,14 +27,10 @@ class ObjectTypeCacheBuilder implements ICacheBuilder {
 		);
 		
 		// get definitions
-		$sql = "SELECT		object_type_definition.*
-			FROM		wcf".WCF_N."_package_dependency package_dependency,
-					wcf".WCF_N."_object_type_definition object_type_definition
-			WHERE		object_type_definition.packageID = package_dependency.dependency
-					AND package_dependency.packageID = ?
-			ORDER BY	package_dependency.priority";
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_object_type_definition";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
+		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			$data['definitions'][$row['definitionID']] = new ObjectTypeDefinition(null, $row);
 			
@@ -48,12 +44,8 @@ class ObjectTypeCacheBuilder implements ICacheBuilder {
 		}
 		
 		// get object types
-		$sql = "SELECT		object_type.*
-			FROM		wcf".WCF_N."_package_dependency package_dependency,
-					wcf".WCF_N."_object_type object_type
-			WHERE		object_type.packageID = package_dependency.dependency
-					AND package_dependency.packageID = ?
-			ORDER BY	package_dependency.priority";
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_object_type object_type";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($packageID));
 		while ($row = $statement->fetchArray()) {

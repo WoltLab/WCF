@@ -24,7 +24,6 @@ class OptionCacheBuilder implements ICacheBuilder {
 		
 		if (count($information) == 3) {
 			$type = $information[0];
-			$packageID = $information[2];
 			
 			preg_match_all('~((?:^|[A-Z])[a-z]+)~', $information[0], $matches);
 			if (isset($matches[1])) {
@@ -35,7 +34,6 @@ class OptionCacheBuilder implements ICacheBuilder {
 		}
 		else {
 			$type = '';
-			$packageID = $information[1];
 		}
 		 
 		$data = array(
@@ -47,14 +45,10 @@ class OptionCacheBuilder implements ICacheBuilder {
 		
 		// option categories
 		// get all option categories and sort categories by priority
-		$sql = "SELECT		categoryName, categoryID 
-			FROM		wcf".WCF_N."_".$tableName."option_category option_category
-			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(package_dependency.dependency = option_category.packageID)
-			WHERE 		package_dependency.packageID = ?
-			ORDER BY	package_dependency.priority ASC";
+		$sql = "SELECT	categoryName, categoryID 
+			FROM	wcf".WCF_N."_".$tableName."option_category";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
+		$statement->execute();
 		$optionCategories = array();
 		while ($row = $statement->fetchArray()) {
 			$optionCategories[$row['categoryName']] = $row['categoryID'];
@@ -87,13 +81,9 @@ class OptionCacheBuilder implements ICacheBuilder {
 		// get all options and sort options by priority
 		$optionIDs = array();
 		$sql = "SELECT		optionName, optionID 
-			FROM		wcf".WCF_N."_".$tableName."option option_table
-			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(package_dependency.dependency = option_table.packageID)
-			WHERE 		package_dependency.packageID = ?
-			ORDER BY	package_dependency.priority ASC";
+			FROM		wcf".WCF_N."_".$tableName."option";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
+		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			$optionIDs[$row['optionName']] = $row['optionID'];
 		}

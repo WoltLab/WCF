@@ -5,7 +5,7 @@ use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
-use wcf\system\package\PackageDependencyHandler;
+use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -123,18 +123,7 @@ class Package extends DatabaseObject {
 	 */
 	public function getDependencies() {
 		if ($this->dependencies === null) {
-			$this->dependencies = array();
-			
-			$sql = "SELECT		package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
-				FROM		wcf".WCF_N."_package_dependency package_dependency
-				LEFT JOIN	wcf".WCF_N."_package package ON (package.packageID = package_dependency.dependency)
-				WHERE		package_dependency.packageID = ?
-				ORDER BY	packageName ASC";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->packageID));
-			while ($package = $statement->fetchObject('wcf\data\package\Package')) {
-				$this->dependencies[$package->packageID] = $package;
-			}
+			throw new SystemException("Package::getDependencies()");
 		}
 		
 		return $this->dependencies;
@@ -362,206 +351,6 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * Rebuilds the dependencies list for the given package id.
-	 * 
-	 * @param	integer		$packageID
-	 */
-	public static function rebuildPackageDependencies($packageID) {
-		// delete old dependencies
-		$sql = "DELETE FROM	wcf".WCF_N."_package_dependency
-			WHERE		packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
-		
-		// get all requirements of this package
-		$allRequirements = array($packageID);
-		$sql = "SELECT	requirement
-			FROM	wcf".WCF_N."_package_requirement_map
-			WHERE	packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
-		while ($row = $statement->fetchArray()) {
-			$allRequirements[] = $row['requirement'];
-		}
-		
-		// find their plugins
-		$requirements = $allRequirements;
-		do {
-			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("packageID IN (SELECT packageID FROM wcf".WCF_N."_package WHERE parentPackageID IN (?))", array($requirements));
-			$conditions->add("requirement NOT IN (?)", array($allRequirements));
-			
-			$sql = "SELECT	DISTINCT requirement
-				FROM	wcf".WCF_N."_package_requirement_map
-				".$conditions;
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditions->getParameters());
-			$requirements = array();
-			while ($row = $statement->fetchArray()) {
-				$requirements[] = $row['requirement'];
-				$allRequirements[] = $row['requirement'];
-			}
-		}
-		while (!empty($requirements));
-		
-		// rebuild
-		// select requirements
-		$conditions = new PreparedStatementConditionBuilder(false);
-		$conditions->add("requirement IN (?)", array($allRequirements));
-		
-		$statementParameters = $conditions->getParameters();
-		$statementParameters[] = $packageID;
-		$statementParameters[] = $packageID;
-		
-		$requirements = array();
-		$sql = "SELECT		requirement, level
-			FROM 		wcf".WCF_N."_package_requirement_map
-			WHERE 		".$conditions."
-					AND requirement NOT IN (		-- exclude dependencies to other installations of same package
-						SELECT	packageID
-						FROM	wcf".WCF_N."_package
-						WHERE	package = (
-								SELECT	package
-								FROM	wcf".WCF_N."_package
-								WHERE	packageID = ?
-							)
-							AND packageID <> ?
-					)
-			ORDER BY	level ASC";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($statementParameters);
-		while ($row = $statement->fetchArray()) {
-			$requirements[$row['requirement']] = $row['level'];
-		}
-		
-		// insert requirements
-		$sql = "INSERT INTO	wcf".WCF_N."_package_dependency
-					(packageID, dependency, priority)
-			VALUES		(?, ?, ?)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		
-		$insertedDependencies = self::insertApplicationDependencies($packageID, $statement);
-		$shiftPriority = (empty($insertedDependencies)) ? false : true;
-		foreach ($requirements as $dependency => $priority) {
-			$statement->execute(array(
-				$packageID,
-				$dependency,
-				($shiftPriority ? ($priority + 1) : $priority)
-			));
-			
-			if (!isset($insertedDependencies[$packageID])) {
-				$insertedDependencies[$packageID] = array();
-			}
-			
-			$insertedDependencies[$packageID][] = $dependency;
-		}
-		
-		// select plugins
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("parentPackageID IN (?)", array($allRequirements));
-		
-		$plugins = array();
-		$sql = "SELECT		packageID,
-					(
-						SELECT	MAX(level) AS level
-						FROM	wcf".WCF_N."_package_requirement_map
-						WHERE	packageID = package.packageID
-					) AS requirementLevel
-			FROM 		wcf".WCF_N."_package package
-			".$conditions."
-			ORDER BY	requirementLevel ASC";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditions->getParameters());
-		while ($row = $statement->fetchArray()) {
-			$row['requirementLevel'] = intval($row['requirementLevel']) + 1;
-			$plugins[$row['packageID']] = $row['requirementLevel'];
-		}
-		
-		// insert plugins
-		$sql = "INSERT INTO	wcf".WCF_N."_package_dependency
-					(packageID, dependency, priority)
-			VALUES		(?, ?, ?)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		foreach ($plugins as $dependency => $priority) {
-			// ignore already inserted dependencies
-			if (isset($insertedDependencies[$packageID]) && in_array($dependency, $insertedDependencies[$packageID])) {
-				continue;
-			}
-			
-			$statement->execute(array($packageID, $dependency, $priority));
-		}
-		
-		// in some cases (e.g. if rebuilding dependencies for WCF) it is very likely, that
-		// there is always a dependency on the package itself. This was avoided in the past
-		// by using INSERT IGNORE, thus we have to validate if a self-depdendency already
-		// exist before inserting.
-		$sql = "SELECT	COUNT(*) AS count
-			FROM	wcf".WCF_N."_package_dependency
-			WHERE	packageID = ?
-				AND dependency = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$packageID,
-			$packageID
-		));
-		$row = $statement->fetchArray();
-		
-		// no dependencies on the package itself exists yet
-		if (!$row['count']) {
-			// self insert
-			$sql = "SELECT	(MAX(priority) + 1) AS priority
-				FROM	wcf".WCF_N."_package_dependency";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute();
-			
-			$row = $statement->fetchArray();
-			if (!$row || !$row['priority']) {
-				$row['priority'] = 0;
-			}
-			
-			$sql = "INSERT INTO	wcf".WCF_N."_package_dependency
-						(packageID, dependency, priority)
-				VALUES		(?, ?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($packageID, $packageID, $row['priority']));
-		}
-	}
-	
-	/**
-	 * Inserts dependencies on applications within the same application group.
-	 * 
-	 * @param	integer							$packageID
-	 * @param	wcf\system\database\statement\PreparedStatement		$insertStatement
-	 * @return	array<string>
-	 */
-	protected static function insertApplicationDependencies($packageID, PreparedStatement $insertStatement) {
-		$insertedDependencies = array();
-		
-		// check for application group
-		$sql = "SELECT	groupID
-			FROM	wcf".WCF_N."_application
-			WHERE	packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
-		$row = $statement->fetchArray();
-		if ($row !== false && $row['groupID'] !== null) {
-			// select application ids
-			$sql = "SELECT	packageID
-				FROM	wcf".WCF_N."_application
-				WHERE	groupID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($row['groupID']));
-			while ($row = $statement->fetchArray()) {
-				$insertStatement->execute(array(
-					$packageID,
-					$row['packageID'],
-					1
-				));
-			}
-		}
-	}
-	
-	/**
 	 * Writes the config.inc.php for an application.
 	 * 
 	 * @param	integer		$packageID
@@ -569,54 +358,28 @@ class Package extends DatabaseObject {
 	public static function writeConfigFile($packageID) {
 		$package = new Package($packageID);
 		$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$package->packageDir));
-		$file = new File($packageDir.\wcf\system\package\PackageInstallationDispatcher::CONFIG_FILE);
+		$file = new File($packageDir.PackageInstallationDispatcher::CONFIG_FILE);
 		$file->write("<?php\n");
-		$currentPrefix = strtoupper(Package::getAbbreviation($package->package));
+		$prefix = strtoupper(Package::getAbbreviation($package->package));
 		
-		// get dependencies (only applications)
-		$sql = "SELECT		package.*, CASE WHEN package.packageID = ? THEN 1 ELSE 0 END AS sortOrder 
-			FROM		wcf".WCF_N."_package_dependency package_dependency
-			LEFT JOIN	wcf".WCF_N."_package package
-			ON		(package.packageID = package_dependency.dependency)
-			WHERE		package_dependency.packageID = ?
-					AND package.isApplication = 1
-					AND package.packageDir <> ''
-			ORDER BY	sortOrder DESC,
-					package_dependency.priority DESC";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$packageID,
-			$packageID
-		));
-		while ($row = $statement->fetchArray()) {
-			$dependency = new Package(null, $row);
-			$dependencyDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$dependency->packageDir));
-			$prefix = strtoupper(Package::getAbbreviation($dependency->package));
-			
-			$file->write("// ".$dependency->package." (packageID ".$dependency->packageID.")\n");
-			$file->write("if (!defined('".$prefix."_DIR')) define('".$prefix."_DIR', ".($dependency->packageID == $package->packageID ? "dirname(__FILE__).'/'" : "'".$dependencyDir."'").");\n");
-			$file->write("if (!defined('RELATIVE_".$prefix."_DIR')) define('RELATIVE_".$prefix."_DIR', ".($dependency->packageID == $package->packageID ? "''" : "RELATIVE_".$currentPrefix."_DIR.'".FileUtil::getRelativePath($packageDir, $dependencyDir)."'").");\n");
-			$file->write("if (!defined('".$prefix."_N')) define('".$prefix."_N', '".WCF_N."_".$dependency->instanceNo."');\n");
-			$file->write("\n");
-		}
+		$file->write("// ".$package->package." (packageID ".$package->packageID.")\n");
+		$file->write("if (!defined('".$prefix."_DIR')) define('".$prefix."_DIR', dirname(__FILE__).'/');\n");
+		$file->write("if (!defined('RELATIVE_".$prefix."_DIR')) define('RELATIVE_".$prefix."_DIR', '');\n");
+		$file->write("if (!defined('".$prefix."_N')) define('".$prefix."_N', '".WCF_N."_".$package->instanceNo."');\n");
+		$file->write("\n");
 		
 		// get primary application
-		$sql = "SELECT		applications.packageID
-			FROM		wcf".WCF_N."_application application,
-					wcf".WCF_N."_application applications
-			WHERE		application.packageID = ?
-					AND applications.groupID = application.groupID
-					AND applications.groupID IS NOT NULL
-					AND applications.isPrimary = ?";
+		$sql = "SELECT		packageID
+			FROM		wcf".WCF_N."_application
+			WHERE		applications.isPrimary = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID, 1));
+		$statement->execute(array(1));
 		$row = $statement->fetchArray();
-		$packageID = ($row === false) ? $packageID : $row['packageID'];
 		
 		// write general information
 		$file->write("// general info\n");
-		$file->write("if (!defined('RELATIVE_WCF_DIR')) define('RELATIVE_WCF_DIR', RELATIVE_".$currentPrefix."_DIR.'".FileUtil::getRelativePath($packageDir, WCF_DIR)."');\n");
-		$file->write("if (!defined('PACKAGE_ID')) define('PACKAGE_ID', ".$packageID.");\n");
+		$file->write("if (!defined('RELATIVE_WCF_DIR')) define('RELATIVE_WCF_DIR', RELATIVE_".$prefix."_DIR.'".FileUtil::getRelativePath($packageDir, WCF_DIR)."');\n");
+		$file->write("if (!defined('PACKAGE_ID')) define('PACKAGE_ID', ".$row['packageID'].");\n");
 		$file->write("if (!defined('PACKAGE_NAME')) define('PACKAGE_NAME', '".str_replace("'", "\'", $package->getName())."');\n");
 		$file->write("if (!defined('PACKAGE_VERSION')) define('PACKAGE_VERSION', '".$package->packageVersion."');\n");
 		
@@ -625,46 +388,13 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * Searches all dependent packages for the given package id
-	 * and rebuild their package dependencies list.
-	 * 
-	 * @param	integer		$packageID
-	 */
-	public static function rebuildParentPackageDependencies($packageID) {
-		$sql = "SELECT		packageID, MAX(priority) AS maxPriority
-			FROM		wcf".WCF_N."_package_dependency
-			WHERE		packageID IN (
-						SELECT	packageID
-						FROM	wcf".WCF_N."_package_dependency
-						WHERE	dependency = ?
-							AND packageID <> ?
-						UNION
-						SELECT	parentPackageID
-						FROM	wcf".WCF_N."_package
-						WHERE	packageID = ?
-					)
-			GROUP BY	packageID
-			ORDER BY	maxPriority ASC, packageID DESC";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$packageID,
-			$packageID,
-			$packageID
-		));
-		while ($row = $statement->fetchArray()) {
-			self::rebuildPackageDependencies($row['packageID']);
-		}
-	}
-	
-	/**
 	 * Returns a list of plugins for currently active application.
 	 * 
-	 * @todo	Care about plugins within dependencies, but are simple plugins just providing some crap.
+	 * @todo	Care about simple plugins just providing some crap.
 	 * @return	wcf\data\package\PackageList
 	 */
 	public static function getPluginList() {
 		$pluginList = new PackageList();
-		$pluginList->getConditionBuilder()->add("package.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$pluginList->getConditionBuilder()->add("package.isApplication = ?", array(0));
 		
 		return $pluginList;

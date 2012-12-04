@@ -88,15 +88,11 @@ class Template extends DatabaseObject {
 		// get available template ids
 		$results = array();
 		$availableTemplateIDs = array();
-		$sql = "SELECT		template.templateName, template.templateID, template.templateGroupID, template.packageID
-			FROM		wcf".WCF_N."_template template
-			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(package_dependency.dependency = template.packageID)
-			WHERE 		package_dependency.packageID = ?
-					".($replace !== null ? "AND template.templateGroupID <> 0" : "")."
-			ORDER BY	package_dependency.priority ASC";
+		$sql = "SELECT		templateName, templateID, templateGroupID, packageID
+			FROM		wcf".WCF_N."_template
+					".($replace !== null ? "WHERE templateGroupID <> 0" : "");
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(PACKAGE_ID));
+		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			if (!isset($availableTemplateIDs[$row['templateName'].'-'.$row['templateGroupID']]) || PACKAGE_ID == $row['packageID']) {
 				$availableTemplateIDs[$row['templateName'].'-'.$row['templateGroupID']] = $row['templateID'];

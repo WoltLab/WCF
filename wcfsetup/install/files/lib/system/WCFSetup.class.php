@@ -844,7 +844,7 @@ class WCFSetup extends WCF {
 		}
 		
 		// rebuild language cache
-		CacheHandler::getInstance()->clearResource('languages');
+		CacheHandler::getInstance()->clearResource('language');
 		
 		// go to next step
 		$this->gotoNextStep('createUser');

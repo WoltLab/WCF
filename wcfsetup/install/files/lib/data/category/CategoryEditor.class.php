@@ -213,6 +213,6 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * @see	wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.category-'.PACKAGE_ID.'.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.category.php');
 	}
 }

@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
 
 /**
@@ -19,16 +17,11 @@ class CronjobCacheBuilder implements ICacheBuilder {
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-		// get next execution time
-		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-		
 		$sql = "SELECT		MIN(nextExec) AS nextExec,
 					MIN(afterNextExec) AS afterNextExec
-			FROM		wcf".WCF_N."_cronjob
-			".$conditionBuilder->__toString();
+			FROM		wcf".WCF_N."_cronjob";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditionBuilder->getParameters());
+		$statement->execute();
 		$row = $statement->fetchArray();
 		
 		return array(

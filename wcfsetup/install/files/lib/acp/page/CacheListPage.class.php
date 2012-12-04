@@ -2,11 +2,9 @@
 namespace wcf\acp\page;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\page\AbstractPage;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\cache\source\MemcacheAdapter;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -74,16 +72,12 @@ class CacheListPage extends AbstractPage {
 				// set version
 				$this->cacheData['version'] = WCF_VERSION;
 				
-				$conditions = new PreparedStatementConditionBuilder();
-				$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-				$conditions->add("isApplication = ?", array(1));
-				
 				// get package dirs
 				$sql = "SELECT	packageDir
 					FROM	wcf".WCF_N."_package
-					".$conditions;
+					WHERE	isApplication = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute($conditions->getParameters());
+				$statement->execute(array(1));
 				while ($row = $statement->fetchArray()) {
 					$packageDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
 					$this->readCacheFiles('data', $packageDir.'cache');
@@ -94,16 +88,12 @@ class CacheListPage extends AbstractPage {
 				// set version
 				$this->cacheData['version'] = WCF_VERSION;
 				
-				$conditions = new PreparedStatementConditionBuilder();
-				$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-				$conditions->add("isApplication = ?", array(1));
-				
 				// get package dirs
 				$sql = "SELECT	packageDir
 					FROM	wcf".WCF_N."_package
-					".$conditions;
+					WHERE	isApplication = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute($conditions->getParameters());
+				$statement->execute(array(1));
 				while ($row = $statement->fetchArray()) {
 					$packageDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
 					$this->readCacheFiles('data', $packageDir.'cache');
@@ -114,16 +104,12 @@ class CacheListPage extends AbstractPage {
 				// set version
 				$this->cacheData['version'] = phpversion('apc');
 				
-				$conditions = new PreparedStatementConditionBuilder();
-				$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-				$conditions->add("isApplication = ?", array(1));
-				
 				// get package dirs
 				$sql = "SELECT	packageDir, packageName, instanceNo
 					FROM	wcf".WCF_N."_package
-					".$conditions;
+					WHERE	isApplication = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute($conditions->getParameters());
+				$statement->execute(array(1));
 				
 				$packageNames = array();
 				while ($row = $statement->fetchArray()) {

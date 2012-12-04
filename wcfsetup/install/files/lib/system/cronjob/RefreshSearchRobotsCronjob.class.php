@@ -66,7 +66,7 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 			}
 			
 			// clear spider cache
-			CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.spiders.php');
+			CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.spider.php');
 		}
 		
 		// delete tmp file

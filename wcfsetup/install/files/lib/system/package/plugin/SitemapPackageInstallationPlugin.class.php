@@ -72,6 +72,6 @@ class SitemapPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
 	 */	
 	protected function cleanup() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.sitemap-*.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.sitemap.php');
 	}
 }
