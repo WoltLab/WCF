@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\user\storage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -38,9 +37,8 @@ class UserStorageHandler extends SingletonFactory {
 	 * Loads storage for a given set of users.
 	 * 
 	 * @param	array<integer>	$userIDs
-	 * @param	integer		$packageID
 	 */
-	public function loadStorage(array $userIDs, $packageID = PACKAGE_ID) {
+	public function loadStorage(array $userIDs) {
 		$tmp = array();
 		foreach ($userIDs as $userID) {
 			if (!isset($this->cache[$userID])) $tmp[] = $userID;
@@ -51,7 +49,6 @@ class UserStorageHandler extends SingletonFactory {
 		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("userID IN (?)", array($tmp));
-		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies($packageID)));
 		
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_user_storage
@@ -95,10 +92,9 @@ class UserStorageHandler extends SingletonFactory {
 	 * @param	integer		$userID
 	 * @param	string		$field
 	 * @param	string		$fieldValue
-	 * @param	integer		$packageID
 	 */
-	public function update($userID, $field, $fieldValue, $packageID = PACKAGE_ID) {
-		$this->updateFields[$userID][$packageID][$field] = $fieldValue;
+	public function update($userID, $field, $fieldValue) {
+		$this->updateFields[$userID][$field] = $fieldValue;
 		
 		// update data cache for given user
 		if (!isset($this->cache[$userID])) {
@@ -108,7 +104,7 @@ class UserStorageHandler extends SingletonFactory {
 		$this->cache[$userID][$field] = $fieldValue;
 		
 		// flag key as outdated
-		self::reset(array($userID), $field, $packageID);
+		self::reset(array($userID), $field);
 	}
 	
 	/**
@@ -116,11 +112,10 @@ class UserStorageHandler extends SingletonFactory {
 	 * 
 	 * @param	array<integer>	$userIDs
 	 * @param	string		$field
-	 * @param	integer		$packageID
 	 */
-	public function reset(array $userIDs, $field, $packageID = PACKAGE_ID) {
+	public function reset(array $userIDs, $field) {
 		foreach ($userIDs as $userID) {
-			$this->resetFields[$userID][$packageID][] = $field;
+			$this->resetFields[$userID][] = $field;
 			
 			if (isset($this->cache[$userID][$field])) {
 				unset($this->cache[$userID][$field]);
@@ -132,17 +127,12 @@ class UserStorageHandler extends SingletonFactory {
 	 * Removes a specific data record for all users.
 	 * 
 	 * @param	string		$field
-	 * @param	integer		$packageID
 	 */
-	public function resetAll($field, $packageID = PACKAGE_ID) {
+	public function resetAll($field) {
 		$sql = "DELETE FROM	wcf".WCF_N."_user_storage
-			WHERE		field = ?
-					AND packageID = ?";
+			WHERE		field = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$field,
-			$packageID
-		));
+		$statement->execute(array($field));
 		
 		foreach ($this->cache as $userID => $fields) {
 			if (isset($fields[$field])) {
@@ -156,23 +146,19 @@ class UserStorageHandler extends SingletonFactory {
 	 */
 	public function shutdown() {
 		WCF::getDB()->beginTransaction();
+		
 		// remove outdated entries
 		if (!empty($this->resetFields)) {
 			$sql = "DELETE FROM	wcf".WCF_N."_user_storage
 				WHERE		userID = ?
-						AND field = ?
-						AND packageID = ?";
+						AND field = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			
-			foreach ($this->resetFields as $userID => $data) {
-				foreach ($data as $packageID => $fields) {
-					foreach ($fields as $field) {
-						$statement->execute(array(
-							$userID,
-							$field,
-							$packageID
-						));
-					}
+			foreach ($this->resetFields as $userID => $fields) {
+				foreach ($fields as $field) {
+					$statement->execute(array(
+						$userID,
+						$field
+					));
 				}
 			}
 		}
@@ -180,23 +166,21 @@ class UserStorageHandler extends SingletonFactory {
 		// insert data
 		if (!empty($this->updateFields)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_user_storage
-						(userID, field, fieldValue, packageID)
-				VALUES		(?, ?, ?, ?)";
+						(userID, field, fieldValue)
+				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
-			foreach ($this->updateFields as $userID => $data) {
-				foreach ($data as $packageID => $fieldValues) {
-					foreach ($fieldValues as $field => $fieldValue) {
-						$statement->execute(array(
-							$userID,
-							$field,
-							$fieldValue,
-							$packageID
-						));
-					}
+			foreach ($this->updateFields as $userID => $fieldValues) {
+				foreach ($fieldValues as $field => $fieldValue) {
+					$statement->execute(array(
+						$userID,
+						$field,
+						$fieldValue
+					));
 				}
 			}
 		}
+		
 		WCF::getDB()->commitTransaction();
 		
 		$this->resetFields = $this->updateFields = array();

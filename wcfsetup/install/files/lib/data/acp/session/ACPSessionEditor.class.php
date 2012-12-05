@@ -27,9 +27,6 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 		if (isset($parameters['userID']) && !$parameters['userID']) {
 			$parameters['userID'] = null;
 		}
-		if (isset($parameters['packageID']) && !$parameters['packageID']) {
-			$parameters['packageID'] = null;
-		}
 		
 		return parent::create($parameters);
 	}
@@ -40,9 +37,6 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 	public function update(array $parameters = array()) {
 		if (isset($parameters['userID']) && !$parameters['userID']) {
 			$parameters['userID'] = null;
-		}
-		if (isset($parameters['packageID']) && !$parameters['packageID']) {
-			$parameters['packageID'] = null;
 		}
 		
 		return parent::update($parameters);

@@ -819,31 +819,8 @@ class WCFSetup extends WCF {
 		$language = LanguageFactory::getInstance()->getLanguageByCode(in_array(self::$selectedLanguageCode, self::$selectedLanguages) ? self::$selectedLanguageCode : self::$selectedLanguages[0]);
 		LanguageFactory::getInstance()->makeDefault($language->languageID);
 		
-		// assign all languages to package id 0
-		$sql = "SELECT	languageID
-			FROM	wcf".WCF_N."_language";
-		$statement = self::getDB()->prepareStatement($sql);
-		$statement->execute();
-		$languages = array();
-		while ($row = $statement->fetchArray()) {
-			$languages[] = $row['languageID'];
-		}
-		
-		if (!empty($languages)) {
-			$sql = "INSERT INTO	wcf".WCF_N."_language_to_package
-						(languageID)
-				VALUES		(?)";
-			$statement = self::getDB()->prepareStatement($sql);
-			
-			foreach ($languages as $languageID) {
-				$statement->execute(array(
-					$languageID
-				));
-			}
-		}
-		
 		// rebuild language cache
-		CacheHandler::getInstance()->clearResource('languages');
+		CacheHandler::getInstance()->clearResource('language');
 		
 		// go to next step
 		$this->gotoNextStep('createUser');

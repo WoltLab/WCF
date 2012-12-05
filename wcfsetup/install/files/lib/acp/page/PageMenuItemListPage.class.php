@@ -4,7 +4,6 @@ use wcf\data\page\menu\item\PageMenuItemList;
 use wcf\data\page\menu\item\ViewablePageMenuItem;
 use wcf\page\AbstractPage;
 use wcf\system\menu\acp\ACPMenu;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
 
 /**
@@ -42,7 +41,6 @@ class PageMenuItemListPage extends AbstractPage {
 		parent::readData();
 		
 		$menuItemList = new PageMenuItemList();
-		$menuItemList->getConditionBuilder()->add("page_menu_item.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$menuItemList->sqlOrderBy = "page_menu_item.parentMenuItem ASC, page_menu_item.showOrder ASC";
 		$menuItemList->readObjects();
 		

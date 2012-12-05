@@ -35,11 +35,6 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		// extract sql file from archive
 		if ($queries = $this->getSQL($this->instruction['value'])) {
 			$package = $this->installation->getPackage();
-			if ($package->parentPackageID) {
-				// package is a plugin; get parent package
-				$package = $package->getParentPackage();
-			}
-			
 			if ($package->isApplication == 1) {
 				// package is application
 				$packageAbbr = Package::getAbbreviation($package->package);

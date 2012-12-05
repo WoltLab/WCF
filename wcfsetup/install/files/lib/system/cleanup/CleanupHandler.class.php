@@ -47,14 +47,12 @@ class CleanupHandler {
 	 * Loads cleanup adapter cache.
 	 */
 	protected function loadCache() {
-		$cacheName = 'cleanupAdapter-'.PACKAGE_ID;
 		CacheHandler::getInstance()->addResource(
-			$cacheName,
-			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'cleanupAdapter',
+			WCF_DIR.'cache/cache.cleanupAdapter.php',
 			'wcf\system\cache\builder\CleanupAdapterCacheBuilder'
 		);
-		
-		$this->cache = CacheHandler::getInstance()->get($cacheName);
+		$this->cache = CacheHandler::getInstance()->get('cleanupAdapter');
 	}
 	
 	/**

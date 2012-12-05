@@ -3,8 +3,6 @@ namespace wcf\data\page\menu\item;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\system\cache\CacheHandler;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
 
 /**
@@ -52,19 +50,30 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	 * @see	wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-		$conditions->add("showOrder >= ?", array($this->showOrder));
-		$conditions->add("menuPosition = ?", array($this->menuPosition));
-		
 		// update show order
 		$sql = "UPDATE	wcf".WCF_N."_page_menu_item
 			SET	showOrder = showOrder - 1
-			".$conditions;
+			WHERE	showOrder >= ?
+				AND menuPosition = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditions->getParameters());
+		$statement->execute(array(
+			$this->showOrder,
+			$this->menuPosition
+		));
 		
 		parent::delete();
+	}
+	
+	/**
+	 * Sets current page menu item as landing page.
+	 */
+	public function setAsLandingPage() {
+		$sql = "UPDATE	wcf".WCF_N."_page_menu_item
+			SET	isLandingPage = 0";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		
+		$this->update(array('isLandingPage' => 1));
 	}
 	
 	/**
@@ -75,38 +84,17 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	 * @param	integer		$showOrder
 	 */
 	public static function setShowOrder($menuItemID, $menuPosition = 'header', $showOrder = 1) {
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-		$conditions->add("menuItemID = ?", array($menuItemID));
-		
-		// update show order
+		// Update
 		$sql = "UPDATE	wcf".WCF_N."_page_menu_item
 			SET	showOrder = ?,
 				menuPosition = ?
-			".$conditions;
+			WHERE 	menuItemID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		
-		$parameters = array_merge(array(
+		$statement->execute(array(
 			$showOrder,
-			$menuPosition
-		), $conditions->getParameters());
-		$statement->execute($parameters);
-	}
-	
-	/**
-	 * Sets current page menu item as landing page.
-	 */
-	public function setAsLandingPage() {
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-		
-		$sql = "UPDATE	wcf".WCF_N."_page_menu_item
-			SET	isLandingPage = 0
-			".$conditions;
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditions->getParameters());
-		
-		$this->update(array('isLandingPage' => 1));
+			$menuPosition,
+			$menuItemID
+		));
 	}
 	
 	/**
@@ -118,18 +106,18 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	protected function updateShowOrder($showOrder, $menuPosition) {
 		if ($menuPosition == $this->menuPosition) {
 			if ($this->showOrder != $showOrder) {
-				$conditions = new PreparedStatementConditionBuilder();
-				$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-				$conditions->add("showOrder <= ?", array($showOrder));
-				$conditions->add("showOrder > ?", array($this->showOrder));
-				$conditions->add("menuPosition = ?", array($menuPosition));
-				
 				if ($showOrder < $this->showOrder) {
 					$sql = "UPDATE	wcf".WCF_N."_page_menu_item
 						SET 	showOrder = showOrder + 1
-						".$conditions;
+						WHERE 	showOrder >= ?
+							AND showOrder < ?
+							AND menuPosition = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute($conditions->getParameters());
+					$statement->execute(array(
+						$showOrder,
+						$this->showOrder,
+						$menuPosition
+					));
 				}
 				else if ($showOrder > $this->showOrder) {
 					$sql = "UPDATE	wcf".WCF_N."_page_menu_item
@@ -138,32 +126,34 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 							AND showOrder > ?
 							AND menuPosition = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute($conditions->getParameters());
+					$statement->execute(array(
+						$showOrder,
+						$this->showOrder,
+						$menuPosition
+					));
 				}
 			}
 		}
 		else {
-			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-			$conditions->add("showOrder >= ?", array($this->showOrder));
-			$conditions->add("menuPosition = ?", array($this->menuPosition));
-			
 			$sql = "UPDATE	wcf".WCF_N."_page_menu_item
 				SET 	showOrder = showOrder - 1
-				".$conditions;
+				WHERE 	showOrder >= ?
+					AND menuPosition = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditions->getParameters());
-			
-			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-			$conditions->add("showOrder >= ?", array($showOrder));
-			$conditions->add("menuPosition = ?", array($menuPosition));
-			
+			$statement->execute(array(
+				$this->showOrder,
+				$this->menuPosition
+			));
+				
 			$sql = "UPDATE 	wcf".WCF_N."_page_menu_item
 				SET 	showOrder = showOrder + 1
-				".$conditions;
+				WHERE 	showOrder >= ?
+					AND menuPosition = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditions->getParameters());
+			$statement->execute(array(
+				$showOrder,
+				$menuPosition
+			));
 		}
 	}
 	
@@ -176,31 +166,26 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	 */
 	protected static function getShowOrder($showOrder, $menuPosition) {
 		if ($showOrder == 0) {
-			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-			$conditions->add("menuPosition = ?", array($menuPosition));
-			
 			// get next number in row
 			$sql = "SELECT	MAX(showOrder) AS showOrder
 				FROM	wcf".WCF_N."_page_menu_item
-				".$conditions;
+				WHERE	menuPosition = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditions->getParameters());
+			$statement->execute(array($menuPosition));
 			$row = $statement->fetchArray();
 			if (!empty($row)) $showOrder = intval($row['showOrder']) + 1;
 			else $showOrder = 1;
 		}
 		else {
-			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-			$conditions->add("showOrder >= ?", array($showOrder));
-			$conditions->add("menuPosition = ?", array($menuPosition));
-			
 			$sql = "UPDATE	wcf".WCF_N."_page_menu_item
 				SET 	showOrder = showOrder + 1
-				".$conditions;
+				WHERE 	showOrder >= ?
+					AND menuPosition = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditions->getParameters());
+			$statement->execute(array(
+				$showOrder,
+				$menuPosition
+			));
 		}
 		
 		return $showOrder;
@@ -210,6 +195,6 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	 * @see	wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.pageMenu-*.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.pageMenu.php');
 	}
 }

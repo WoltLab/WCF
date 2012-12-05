@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\core\object\CoreObjectList;
-use wcf\system\package\PackageDependencyHandler;
 
 /**
  * Caches the core objects.
@@ -21,19 +20,14 @@ class CoreObjectCacheBuilder implements ICacheBuilder {
 		$data = array();
 		
 		$coreObjectList = new CoreObjectList();
-		$coreObjectList->getConditionBuilder()->add("core_object.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$coreObjectList->sqlLimit = 0;
 		$coreObjectList->readObjects();
 		$coreObjects = $coreObjectList->getObjects();
 		
 		foreach ($coreObjects as $coreObject) {
-			if (!isset($data[$coreObject->packageID])) {
-				$data[$coreObject->packageID] = array();
-			}
-			
 			$tmp = explode('\\', $coreObject->objectName);
 			$className = array_pop($tmp);
-			$data[$coreObject->packageID][$className] = $coreObject->objectName;
+			$data[$className] = $coreObject->objectName;
 		}
 		
 		return $data;

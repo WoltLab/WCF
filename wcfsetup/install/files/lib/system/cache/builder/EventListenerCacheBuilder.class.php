@@ -18,21 +18,16 @@ class EventListenerCacheBuilder implements ICacheBuilder {
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-		list(, $packageID) = explode('-', $cacheResource['cache']);
 		$data = array(
 			'actions' => array('user' => array(), 'admin' => array()),
 			'inheritedActions' => array('user' => array(), 'admin' => array())
 		);
 		
 		// get all listeners and filter options with low priority
-		$sql = "SELECT		event_listener.*
-			FROM		wcf".WCF_N."_event_listener event_listener
-			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(package_dependency.dependency = event_listener.packageID)
-			WHERE		package_dependency.packageID = ?
-			ORDER BY	package_dependency.priority ASC";
+		$sql = "SELECT	event_listener.*
+			FROM	wcf".WCF_N."_event_listener event_listener";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
+		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			// distinguish between inherited actions and non-inherited actions
 			if (!$row['inherit']) {

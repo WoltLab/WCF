@@ -79,7 +79,6 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		}
 		
 		// install language
-		$addedLanguageIDArray = array();
 		foreach ($installedLanguages as $installedLanguage) {
 			$languageFile = null;
 			if (isset($languageFiles[$installedLanguage['languageCode']])) {
@@ -127,52 +126,9 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 					// import xml
 					// don't update language files if package is an application
 					$languageEditor->updateFromXML($xml, $this->installation->getPackageID(), !$this->installation->getPackage()->isApplication);
-					
-					// add language to this package
-					$addedLanguageIDArray[] = $language->languageID;
 				}
 			}
 		}
-		
-		// save package to language
-		if (!empty($addedLanguageIDArray)) {
-			$condition = '';
-			$statementParameters = array($this->installation->getPackageID());
-			foreach ($addedLanguageIDArray as $languageID) {
-				if (!empty($condition)) $condition .= ',';
-				$condition .= '?';
-				$statementParameters[] = $languageID;
-			}
-			$statementParameters[] = $this->installation->getPackageID();
-			
-			$sql = "INSERT INTO	wcf".WCF_N."_language_to_package
-						(languageID, packageID)
-				SELECT		languageID, ?
-				FROM		wcf".WCF_N."_language
-				WHERE		languageID IN (".$condition.")
-						AND languageID NOT IN (
-							SELECT	languageID
-							FROM	wcf".WCF_N."_language_to_package
-							WHERE	packageID = ?
-						)";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($statementParameters);
-		}
-	}
-	
-	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::hasUninstall()
-	 */
-	public function hasUninstall() {
-		if (parent::hasUninstall()) return true;
-		
-		$sql = "SELECT	COUNT(languageID) AS count
-			FROM	wcf".WCF_N."_language_to_package
-			WHERE	packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
-		$languageCount = $statement->fetchArray();
-		return $languageCount['count'] > 0;
 	}
 	
 	/**
@@ -180,12 +136,6 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 */
 	public function uninstall() {
 		parent::uninstall();
-		
-		// delete language to package relation
-		$sql = "DELETE FROM	wcf".WCF_N."_language_to_package
-			WHERE		packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->installation->getPackageID()));
 		
 		// delete language items
 		// Get all items and their categories

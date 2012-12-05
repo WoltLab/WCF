@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\acp\search\provider\ACPSearchProviderList;
-use wcf\system\package\PackageDependencyHandler;
 
 /**
  * Caches the ACP search providers.
@@ -19,7 +18,6 @@ class ACPSearchProviderCacheBuilder implements ICacheBuilder {
 	 */
 	public function getData(array $cacheResource) {
 		$providerList = new ACPSearchProviderList();
-		$providerList->getConditionBuilder()->add("acp_search_provider.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$providerList->sqlLimit = 0;
 		$providerList->sqlOrderBy = "acp_search_provider.showOrder ASC";
 		$providerList->readObjects();

@@ -20,26 +20,20 @@ class TemplateCacheBuilder implements ICacheBuilder {
 		$information = explode('-', $cacheResource['cache']);
 		if (count($information) == 3) {
 			$prefix = $information[0].'_';
-			$packageID = $information[2];
 		}
 		else {
 			$prefix = '';
-			$packageID = $information[1];
 		}
 		
 		$data = array();
 		
 		// get all templates and filter options with low priority
 		$sql = "SELECT		templateName, template.packageID 
-			FROM		wcf".WCF_N."_".$prefix."template template
-			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(package_dependency.dependency = template.packageID)
-			WHERE		package_dependency.packageID = ?
-			ORDER BY	package_dependency.priority DESC";
+			FROM		wcf".WCF_N."_".$prefix."template";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
+		$statement->execute();
 		while ($row = $statement->fetchArray()) {
-			if (!isset($data[$row['templateName']]) || $packageID == $row['packageID']) {
+			if (!isset($data[$row['templateName']])) {
 				$data[$row['templateName']] = $row['packageID'];
 			}
 		}

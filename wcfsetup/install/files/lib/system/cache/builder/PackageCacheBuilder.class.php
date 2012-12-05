@@ -17,10 +17,20 @@ class PackageCacheBuilder implements ICacheBuilder {
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
+		$data = array(
+			'packages' => array(),
+			'packageIDs' => array()
+		);
+		
 		$packageList = new PackageList();
 		$packageList->sqlLimit = 0;
 		$packageList->readObjects();
 		
-		return $packageList->getObjects();
+		foreach ($packageList as $package) {
+			$data['packages'][$package->packageID] = $package;
+			$data['packageIDs'][$package->package] = $package->packageID;
+		}
+		
+		return $data;
 	}
 }

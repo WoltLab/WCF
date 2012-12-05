@@ -2,7 +2,6 @@
 namespace wcf\system\style;
 use wcf\data\style\ActiveStyle;
 use wcf\data\style\Style;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\request\RequestHandler;
@@ -38,11 +37,11 @@ class StyleHandler extends SingletonFactory {
 	protected function init() {
 		// load cache
 		CacheHandler::getInstance()->addResource(
-			'styles',
-			WCF_DIR.'cache/cache.styles.php',
+			'style',
+			WCF_DIR.'cache/cache.style.php',
 			'wcf\system\cache\builder\StyleCacheBuilder'
 		);
-		$this->cache = CacheHandler::getInstance()->get('styles');
+		$this->cache = CacheHandler::getInstance()->get('style');
 	}
 	
 	/**
@@ -133,7 +132,7 @@ class StyleHandler extends SingletonFactory {
 		}
 		else {
 			// frontend
-			$filename = 'style/style-'.ApplicationHandler::getInstance()->getPrimaryApplication()->packageID.'-'.$this->getStyle()->styleID.'.css';
+			$filename = 'style/style-'.$this->getStyle()->styleID.'.css';
 			if (!file_exists(WCF_DIR.$filename)) {
 				StyleCompiler::getInstance()->compile($this->getStyle()->getDecoratedObject());
 			}
@@ -148,7 +147,7 @@ class StyleHandler extends SingletonFactory {
 	 * @param	wcf\data\style\Style	$style
 	 */
 	public function resetStylesheet(Style $style) {
-		$stylesheets = glob(WCF_DIR.'style/style-*-'.$style->styleID.'*.css');
+		$stylesheets = glob(WCF_DIR.'style/style-'.$style->styleID.'*.css');
 		foreach ($stylesheets as $stylesheet) {
 			@unlink($stylesheet);
 		}

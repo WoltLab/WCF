@@ -194,14 +194,6 @@ class PackageArchive {
 					$this->packageInfo['isApplication'] = intval($element->nodeValue);
 				break;
 				
-				case 'plugin':
-					if ($element->nodeValue && !Package::isValidPackageName($element->nodeValue)) {
-						throw new SystemException("'".$element->nodeValue."' is not a valid package name.");
-					}
-					
-					$this->packageInfo['plugin'] = $element->nodeValue;
-				break;
-				
 				case 'packageurl':
 					$this->packageInfo['packageURL'] = $element->nodeValue;
 				break;
@@ -363,13 +355,7 @@ class PackageArchive {
 		
 		// set default values
 		if (!isset($this->packageInfo['isApplication'])) $this->packageInfo['isApplication'] = 0;
-		if (!isset($this->packageInfo['plugin'])) $this->packageInfo['plugin'] = '';
 		if (!isset($this->packageInfo['packageURL'])) $this->packageInfo['packageURL'] = '';
-		
-		// add plugin to requirements
-		if ($this->packageInfo['plugin'] && !isset($this->requirements[$this->packageInfo['plugin']])) {
-			$this->requirements[$this->packageInfo['plugin']] = array('name' => $this->packageInfo['plugin']);
-		}
 	}
 	
 	/**
@@ -441,56 +427,14 @@ class PackageArchive {
 	 * @return	boolean
 	 */
 	public function isAlreadyInstalled() {
-		$duplicates = $this->getDuplicates();
-		
-		// package is not installed
-		if (empty($duplicates)) {
-			return false;
-		}
-		
-		$parentPackageIDs = array();
-		foreach ($duplicates as $package) {
-			// applications are always allowed
-			if ($package['isApplication']) {
-				return false;
-			}
-			
-			// wcf packages must be unique
-			if (!$package['parentPackageID']) {
-				return true;
-			}
-			
-			$parentPackageIDs[] = $package['parentPackageID'];
-		}
-		
-		// determine if plugin is unique within current application
-		$packageIDs = PackageDependencyHandler::getInstance()->getDependencies();
-		foreach ($parentPackageIDs as $packageID) {
-			if (in_array($packageID, $packageIDs)) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-	/**
-	 * Returns a list of all installed instances of this package.
-	 * 
-	 * @return	array		packages
-	 */
-	public function getDuplicates() {
-		$packages = array();
-		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_package 
+		$sql = "SELECT	COUNT(*) AS count
+			FROM	wcf".WCF_N."_package
 			WHERE	package = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->packageInfo['name']));
-		while ($row = $statement->fetchArray()) {
-			$packages[$row['packageID']] = $row;
-		}
+		$row = $statement->fetchArray();
 		
-		return $packages;
+		return ($row['count'] > 0) ? true : false;
 	}
 	
 	/**

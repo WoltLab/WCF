@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\search\acp;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -31,7 +30,6 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider {
 		$conditions->add("languageID = ?", array(WCF::getLanguage()->languageID));
 		$conditions->add("languageItem LIKE ?", array('wcf.acp.package.packageName.package%'));
 		$conditions->add("languageItemValue LIKE ?", array($query.'%'));
-		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		
 		$sql = "SELECT		languageItem
 			FROM		wcf".WCF_N."_language_item

@@ -5,7 +5,6 @@ use wcf\data\page\menu\item\PageMenuItemEditor;
 use wcf\data\page\menu\item\PageMenuItemList;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -101,7 +100,6 @@ class PageMenuItemAddForm extends ACPForm {
 	 */
 	protected function initAvailableParentMenuItems() {
 		$this->availableParentMenuItems = new PageMenuItemList();
-		$this->availableParentMenuItems->getConditionBuilder()->add("page_menu_item.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$this->availableParentMenuItems->getConditionBuilder()->add("page_menu_item.parentMenuItem = ''");
 		$this->availableParentMenuItems->sqlOrderBy = "page_menu_item.showOrder ASC";
 	}

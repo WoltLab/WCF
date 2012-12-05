@@ -38,15 +38,11 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 */
 	protected function getDefinitionID($definitionName) {
 		// get object type id
-		$sql = "SELECT		object_type_definition.definitionID
-			FROM		wcf".WCF_N."_package_dependency package_dependency,
-					wcf".WCF_N."_object_type_definition object_type_definition
-			WHERE		object_type_definition.packageID = package_dependency.dependency
-					AND package_dependency.packageID = ?
-					AND object_type_definition.definitionName = ?
-			ORDER BY	package_dependency.priority DESC";
+		$sql = "SELECT	definitionID
+			FROM	wcf".WCF_N."_object_type_definition
+			WHERE	definitionName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
-		$statement->execute(array($this->installation->getPackageID(), $definitionName));
+		$statement->execute(array($definitionName));
 		$row = $statement->fetchArray();
 		if (empty($row['definitionID'])) throw new SystemException("unknown object type definition '".$definitionName."' given");
 		return $row['definitionID'];

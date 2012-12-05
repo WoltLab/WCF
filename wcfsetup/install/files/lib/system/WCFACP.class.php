@@ -131,8 +131,8 @@ class WCFACP extends WCF {
 		parent::loadDefaultCacheResources();
 		
 		CacheHandler::getInstance()->addResource(
-			'packages',
-			WCF_DIR.'cache/cache.packages.php',
+			'package',
+			WCF_DIR.'cache/cache.package.php',
 			'wcf\system\cache\builder\PackageCacheBuilder'
 		);
 	}
@@ -173,8 +173,8 @@ class WCFACP extends WCF {
 	 */
 	protected function getQuickAccessPackages() {
 		$quickAccessPackages = array();
-		$packages = CacheHandler::getInstance()->get('packages');
-		foreach ($packages as $packageID => $package) {
+		$packages = CacheHandler::getInstance()->get('package');
+		foreach ($packages['packages'] as $packageID => $package) {
 			if (!$package->isApplication) break;
 			if ($package->package != 'com.woltlab.wcf') {
 				$quickAccessPackages[] = $package;

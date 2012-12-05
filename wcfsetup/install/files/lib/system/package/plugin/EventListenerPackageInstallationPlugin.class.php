@@ -98,6 +98,6 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		parent::uninstall();
 		
 		// clear cache immediately
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.eventListener-*.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.eventListener.php');
 	}
 }

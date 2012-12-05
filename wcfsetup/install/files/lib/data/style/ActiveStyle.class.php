@@ -34,7 +34,7 @@ class ActiveStyle extends DatabaseObjectDecorator {
 		parent::__construct($object);
 		
 		// load icon cache
-		$cacheName = 'icon-'.PACKAGE_ID.'-'.$this->styleID;
+		$cacheName = 'icon-'.$this->styleID;
 		CacheHandler::getInstance()->addResource(
 			$cacheName,
 			WCF_DIR.'cache/cache.'.$cacheName.'.php',

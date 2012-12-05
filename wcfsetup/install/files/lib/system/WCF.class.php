@@ -5,6 +5,9 @@ use wcf\data\package\PackageCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\cronjob\CronjobScheduler;
+use wcf\system\exception\IPrintableException;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\session\SessionFactory;
@@ -12,7 +15,6 @@ use wcf\system\session\SessionHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
-use wcf\system\exception;
 use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
 use wcf\util\FileUtil;
@@ -69,12 +71,6 @@ class WCF {
 	protected static $coreObjectCache = array();
 	
 	/**
-	 * list of ids of dependent packages
-	 * @var	array<integer>
-	 */	
-	protected static $packageDependencies = array();
-	
-	/**
 	 * database object
 	 * @var	wcf\system\database\Database
 	 */
@@ -129,29 +125,34 @@ class WCF {
 	 * Flushs the output, closes caches and updates the session.
 	 */
 	public static function destruct() {
-		// database has to be initialized
-		if (!is_object(self::$dbObj)) return;
-		
-		// flush output
-		if (ob_get_level() && ini_get('output_handler')) {
-			ob_flush();
+		try {
+			// database has to be initialized
+			if (!is_object(self::$dbObj)) return;
+			
+			// flush output
+			if (ob_get_level() && ini_get('output_handler')) {
+				ob_flush();
+			}
+			else {
+				flush();
+			}
+			
+			// update session
+			if (is_object(self::getSession())) {
+				self::getSession()->update();
+			}
+			
+			// close cache source
+			if (CacheHandler::isInitialized() && is_object(CacheHandler::getInstance()) && is_object(CacheHandler::getInstance()->getCacheSource())) {
+				CacheHandler::getInstance()->getCacheSource()->close();
+			}
+			
+			// execute shutdown actions of user storage handler
+			UserStorageHandler::getInstance()->shutdown();
 		}
-		else {
-			flush();
+		catch (\Exception $exception) {
+			die("<pre>WCF::destruct() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
 		}
-		
-		// update session
-		if (is_object(self::getSession())) {
-			self::getSession()->update();
-		}
-		
-		// close cache source
-		if (CacheHandler::isInitialized() && is_object(CacheHandler::getInstance()) && is_object(CacheHandler::getInstance()->getCacheSource())) {
-			CacheHandler::getInstance()->getCacheSource()->close();
-		}
-		
-		// execute shutdown actions of user storage handler
-		UserStorageHandler::getInstance()->shutdown();
 	}
 	
 	/**
@@ -240,13 +241,18 @@ class WCF {
 	 * @param	\Exception	$e
 	 */
 	public static final function handleException(\Exception $e) {
-		if ($e instanceof exception\IPrintableException) {
-			$e->show();
-			exit;
+		try {
+			if ($e instanceof IPrintableException) {
+				$e->show();
+				exit;
+			}
+			
+			// repack Exception
+			self::handleException(new SystemException($e->getMessage(), $e->getCode(), '', $e));
 		}
-		
-		// repack Exception
-		self::handleException(new exception\SystemException($e->getMessage(), $e->getCode(), '', $e));
+		catch (\Exception $exception) {
+			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
+		}
 	}
 	
 	/**
@@ -267,7 +273,7 @@ class WCF {
 					break;
 			}
 			
-			throw new exception\SystemException('PHP '.$type.' in file '.$filename.' ('.$lineNo.'): '.$message, 0);
+			throw new SystemException('PHP '.$type.' in file '.$filename.' ('.$lineNo.'): '.$message, 0);
 		}
 	}
 	
@@ -297,20 +303,20 @@ class WCF {
 	 */
 	protected function loadDefaultCacheResources() {
 		CacheHandler::getInstance()->addResource(
-			'languages',
-			WCF_DIR.'cache/cache.languages.php',
+			'language',
+			WCF_DIR.'cache/cache.language.php',
 			'wcf\system\cache\builder\LanguageCacheBuilder'
 		);
 		CacheHandler::getInstance()->addResource(
-			'spiders',
-			WCF_DIR.'cache/cache.spiders.php',
+			'spider',
+			WCF_DIR.'cache/cache.spider.php',
 			'wcf\system\cache\builder\SpiderCacheBuilder'
 		);
 		
 		if (defined('PACKAGE_ID')) {
 			CacheHandler::getInstance()->addResource(
-				'coreObjects-'.PACKAGE_ID,
-				WCF_DIR.'cache/cache.coreObjects-'.PACKAGE_ID.'.php',
+				'coreObject',
+				WCF_DIR.'cache/cache.coreObject.php',
 				'wcf\system\cache\builder\CoreObjectCacheBuilder'
 			);
 		}
@@ -388,17 +394,17 @@ class WCF {
 	protected function initBlacklist() {
 		if (defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
 			if (!StringUtil::executeWordFilter(WCF::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
-				throw new exception\PermissionDeniedException();
+				throw new PermissionDeniedException();
 			}
 		}
 		if (defined('BLACKLIST_USER_AGENTS') && BLACKLIST_USER_AGENTS != '') {
 			if (!StringUtil::executeWordFilter(WCF::getSession()->userAgent, BLACKLIST_USER_AGENTS)) {
-				throw new exception\PermissionDeniedException();
+				throw new PermissionDeniedException();
 			}
 		}
 		if (defined('BLACKLIST_HOSTNAMES') && BLACKLIST_HOSTNAMES != '') {
 			if (!StringUtil::executeWordFilter(@gethostbyaddr(WCF::getSession()->ipAddress), BLACKLIST_HOSTNAMES)) {
-				throw new exception\PermissionDeniedException();
+				throw new PermissionDeniedException();
 			}
 		}
 	}
@@ -464,7 +470,7 @@ class WCF {
 				require_once($configPath);
 			}
 			else {
-				throw new exception\SystemException('Unable to load configuration for '.$package->package);
+				throw new SystemException('Unable to load configuration for '.$package->package);
 			}
 			
 			// load options
@@ -482,7 +488,7 @@ class WCF {
 		}
 		else {
 			unset(self::$autoloadDirectories[$abbreviation]);
-			throw new exception\SystemException("Unable to run '".$package->package."', '".$className."' is missing or does not implement 'wcf\system\application\IApplication'.");
+			throw new SystemException("Unable to run '".$package->package."', '".$className."' is missing or does not implement 'wcf\system\application\IApplication'.");
 		}
 		
 		// register template path in ACP
@@ -509,8 +515,7 @@ class WCF {
 			return;
 		}
 		
-		self::$coreObjectCache = CacheHandler::getInstance()->get('coreObjects-'.PACKAGE_ID);
-		self::$packageDependencies = \wcf\system\package\PackageDependencyHandler::getInstance()->getDependencies();
+		self::$coreObjectCache = CacheHandler::getInstance()->get('coreObject');
 	}
 	
 	/**
@@ -533,7 +538,7 @@ class WCF {
 			return $this->$method();
 		}
 		
-		throw new exception\SystemException("method '".$method."' does not exist in class WCF");
+		throw new SystemException("method '".$method."' does not exist in class WCF");
 	}
 	
 	/**
@@ -592,12 +597,12 @@ class WCF {
 		
 		$objectName = self::getCoreObject($className);
 		if ($objectName === null) {
-			throw new exception\SystemException("Core object '".$className."' is unknown.");
+			throw new SystemException("Core object '".$className."' is unknown.");
 		}
 		
 		if (class_exists($objectName)) {
 			if (!(ClassUtil::isInstanceOf($objectName, 'wcf\system\SingletonFactory'))) {
-				throw new exception\SystemException("class '".$objectName."' does not implement the interface 'SingletonFactory'");
+				throw new SystemException("class '".$objectName."' does not implement the interface 'SingletonFactory'");
 			}
 			
 			self::$coreObject[$className] = call_user_func(array($objectName, 'getInstance'));
@@ -612,10 +617,8 @@ class WCF {
 	 * @return	string
 	 */
 	protected static final function getCoreObject($className) {
-		foreach (self::$packageDependencies as $packageID) {
-			if (isset(self::$coreObjectCache[$packageID][$className])) {
-				return self::$coreObjectCache[$packageID][$className];
-			}
+		if (isset(self::$coreObjectCache[$className])) {
+			return self::$coreObjectCache[$className];
 		}
 		
 		return null;

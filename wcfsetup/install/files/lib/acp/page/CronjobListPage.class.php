@@ -2,7 +2,6 @@
 namespace wcf\acp\page;
 use wcf\page\SortablePage;
 use wcf\system\menu\acp\ACPMenu;
-use wcf\system\package\PackageDependencyHandler;
 
 /**
  * Shows information about configured cron jobs.
@@ -41,7 +40,6 @@ class CronjobListPage extends SortablePage {
 	public function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->getConditionBuilder()->add("cronjob.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$this->sqlOrderBy = "cronjob.".$this->sortField." ".$this->sortOrder;
 	}
 	

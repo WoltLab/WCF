@@ -192,17 +192,11 @@ class DiskCacheSource implements ICacheSource {
 	 * @see	wcf\system\cache\source\ICacheSource::flush()
 	 */
 	public function flush() {
-		$sql = "SELECT		package.packageDir
-			FROM		wcf".WCF_N."_package_dependency package_dependency
-			LEFT JOIN	wcf".WCF_N."_package package
-			ON		(package.packageID = package_dependency.dependency)
-			WHERE		package_dependency.packageID = ?
-					AND isApplication = ?";
+		$sql = "SELECT	packageDir
+			FROM	wcf".WCF_N."_package
+			WHERE	isApplication = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			PACKAGE_ID,
-			1
-		));
+		$statement->execute(array(1));
 		while ($row = $statement->fetchArray()) {
 			$packageDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
 			$cacheDir = $packageDir.'cache';
