@@ -5,6 +5,9 @@ use wcf\data\package\PackageCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\cronjob\CronjobScheduler;
+use wcf\system\exception\IPrintableException;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\session\SessionFactory;
@@ -12,7 +15,6 @@ use wcf\system\session\SessionHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
-use wcf\system\exception;
 use wcf\util;
 
 // try to disable execution time limit
@@ -237,13 +239,13 @@ class WCF {
 	 */
 	public static final function handleException(\Exception $e) {
 		try {
-			if ($e instanceof exception\IPrintableException) {
+			if ($e instanceof IPrintableException) {
 				$e->show();
 				exit;
 			}
 			
 			// repack Exception
-			self::handleException(new exception\SystemException($e->getMessage(), $e->getCode(), '', $e));
+			self::handleException(new SystemException($e->getMessage(), $e->getCode(), '', $e));
 		}
 		catch (\Exception $exception) {
 			die("<pre>WCF::handleException() Unhandled exception: ".$exception->getMessage()."\n\n".$exception->getTraceAsString());
@@ -268,7 +270,7 @@ class WCF {
 					break;
 			}
 			
-			throw new exception\SystemException('PHP '.$type.' in file '.$filename.' ('.$lineNo.'): '.$message, 0);
+			throw new SystemException('PHP '.$type.' in file '.$filename.' ('.$lineNo.'): '.$message, 0);
 		}
 	}
 	
@@ -389,17 +391,17 @@ class WCF {
 	protected function initBlacklist() {
 		if (defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
 			if (!util\StringUtil::executeWordFilter(WCF::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
-				throw new exception\PermissionDeniedException();
+				throw new PermissionDeniedException();
 			}
 		}
 		if (defined('BLACKLIST_USER_AGENTS') && BLACKLIST_USER_AGENTS != '') {
 			if (!util\StringUtil::executeWordFilter(WCF::getSession()->userAgent, BLACKLIST_USER_AGENTS)) {
-				throw new exception\PermissionDeniedException();
+				throw new PermissionDeniedException();
 			}
 		}
 		if (defined('BLACKLIST_HOSTNAMES') && BLACKLIST_HOSTNAMES != '') {
 			if (!util\StringUtil::executeWordFilter(@gethostbyaddr(WCF::getSession()->ipAddress), BLACKLIST_HOSTNAMES)) {
-				throw new exception\PermissionDeniedException();
+				throw new PermissionDeniedException();
 			}
 		}
 	}
@@ -465,7 +467,7 @@ class WCF {
 				require_once($configPath);
 			}
 			else {
-				throw new exception\SystemException('Unable to load configuration for '.$package->package);
+				throw new SystemException('Unable to load configuration for '.$package->package);
 			}
 			
 			// load options
@@ -483,7 +485,7 @@ class WCF {
 		}
 		else {
 			unset(self::$autoloadDirectories[$abbreviation]);
-			throw new exception\SystemException("Unable to run '".$package->package."', '".$className."' is missing or does not implement 'wcf\system\application\IApplication'.");
+			throw new SystemException("Unable to run '".$package->package."', '".$className."' is missing or does not implement 'wcf\system\application\IApplication'.");
 		}
 		
 		// register template path in ACP
@@ -533,7 +535,7 @@ class WCF {
 			return $this->$method();
 		}
 		
-		throw new exception\SystemException("method '".$method."' does not exist in class WCF");
+		throw new SystemException("method '".$method."' does not exist in class WCF");
 	}
 	
 	/**
@@ -592,12 +594,12 @@ class WCF {
 		
 		$objectName = self::getCoreObject($className);
 		if ($objectName === null) {
-			throw new exception\SystemException("Core object '".$className."' is unknown.");
+			throw new SystemException("Core object '".$className."' is unknown.");
 		}
 		
 		if (class_exists($objectName)) {
 			if (!(util\ClassUtil::isInstanceOf($objectName, 'wcf\system\SingletonFactory'))) {
-				throw new exception\SystemException("class '".$objectName."' does not implement the interface 'SingletonFactory'");
+				throw new SystemException("class '".$objectName."' does not implement the interface 'SingletonFactory'");
 			}
 			
 			self::$coreObject[$className] = call_user_func(array($objectName, 'getInstance'));

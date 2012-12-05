@@ -75,7 +75,6 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
 				$data['wcf.acp.menu.link.option.category'][] = new ACPMenuItem(null, array(
-					'packageID' => $packageID,
 					'menuItem' => 'wcf.acp.option.category.'.$row['categoryName'],
 					'parentMenuItem' => 'wcf.acp.menu.link.option.category',
 					'menuItemLink' => 'index.php/Option/'.$row['categoryID'].'/',

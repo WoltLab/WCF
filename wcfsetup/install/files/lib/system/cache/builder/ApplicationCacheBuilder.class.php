@@ -55,6 +55,7 @@ class ApplicationCacheBuilder implements ICacheBuilder {
 		// assign wcf pseudo-application
 		if (PACKAGE_ID) {
 			$data['wcf'] = $data['application'][1];
+			unset($data['application'][1]);
 		}
 		
 		return $data;
