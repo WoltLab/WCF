@@ -33,8 +33,7 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		
 		$sql = "UPDATE	wcf".WCF_N."_application
 			SET	cookieDomain = ?,
-				cookiePath = ?,
-				isPrimary = ?
+				cookiePath = ?
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
@@ -80,7 +79,6 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 				$statement->execute(array(
 					$domainName,
 					$path,
-					$isPrimary,
 					$packageID
 				));
 			}

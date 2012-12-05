@@ -145,6 +145,7 @@ class PackageInstallationDispatcher {
 				
 				// rebuild application paths
 				ApplicationHandler::rebuild();
+				ApplicationEditor::setup();
 			}
 		}
 		
