@@ -4,6 +4,8 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\system\cache\CacheHandler;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -22,6 +24,12 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\application\ApplicationEditor';
+	
+	/**
+	 * application editor object
+	 * @var	wcf\data\application\ApplicationEditor
+	 */
+	public $applicationEditor = null;
 	
 	/**
 	 * Assigns a list of applications to a group and computes cookie domain and path.
@@ -84,5 +92,27 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		WCF::getDB()->commitTransaction();
 		
 		$this->rebuild();
+	}
+	
+	/**
+	 * Validates parameters to set an application as primary.
+	 */
+	public function validateSetAsPrimary() {
+		WCF::getSession()->checkPermissions(array('admin.system.canManageApplication'));
+		
+		$this->applicationEditor = $this->getSingleObject();
+		if (!$this->applicationEditor->packageID || $this->applicationEditor->packageID == 1) {
+			throw new UserInputException('objectIDs');
+		}
+		else if ($this->applicationEditor->isPrimary) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	/**
+	 * Sets an application as primary.
+	 */
+	public function setAsPrimary() {
+		$this->applicationEditor->setAsPrimary();
 	}
 }

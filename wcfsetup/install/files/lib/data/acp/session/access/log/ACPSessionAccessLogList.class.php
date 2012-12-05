@@ -17,15 +17,4 @@ class ACPSessionAccessLogList extends DatabaseObjectList {
 	 * @see	wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\acp\session\access\log\ACPSessionAccessLog';
-	
-	/**
-	 * @see	wcf\data\DatabaseObjectList::readObjects()
-	 */
-	public function readObjects() {
-		if (!empty($this->sqlSelects)) $this->sqlSelects .= ',';
-		$this->sqlSelects .= "CASE WHEN package.instanceName <> '' THEN package.instanceName ELSE package.packageName END AS packageName";
-		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_package package ON (package.packageID = ".$this->getDatabaseTableAlias().".packageID)";
-		
-		parent::readObjects();
-	}
 }

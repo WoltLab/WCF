@@ -245,7 +245,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			// find existing items
 			$itemList = new LanguageItemList();
 			$itemList->getConditionBuilder()->add("language_item.languageItem IN (?)", array(array_keys($items)));
-			$itemList->getConditionBuilder()->add("language_item.packageID = ? AND language_item.languageID = ?", array($packageID, $this->languageID));
+			$itemList->getConditionBuilder()->add("language_item.languageID = ?", array($this->languageID));
 			$itemList->sqlLimit = 0;
 			$itemList->readObjects();
 			
