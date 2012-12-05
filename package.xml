@@ -12,6 +12,10 @@
 		<authorurl>http://www.woltlab.com</authorurl>
 	</authorinformation>
 	
+	<requiredpackages>
+		<requiredpackage minversion="2.0.0 Alpha 1">com.woltlab.wcf</requiredpackage>
+	</requiredpackages>
+	
 	<instructions type="install">
 		<instruction type="acpTemplate">acptemplates.tar</instruction>
 		<instruction type="file">files.tar</instruction>
