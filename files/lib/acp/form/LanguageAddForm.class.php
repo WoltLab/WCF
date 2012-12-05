@@ -171,7 +171,7 @@ class LanguageAddForm extends ACPForm {
 			$languageEditor->copy($this->language);
 		}
 		
-		LanguageFactory::getInstance()->clearCache();
+		LanguageFactory::getInstance()->deleteLanguageCache();
 		
 		$this->saved();
 		
