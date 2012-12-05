@@ -630,7 +630,7 @@ class TemplateEngine extends SingletonFactory {
 		if (empty($compileDir)) $compileDir = WCF_DIR.'templates/compiled/';
 		
 		// delete compiled templates
-		DirectoryUtil::getInstance($compileDir)->removePattern(new Regex('.*_.*_.*\.php$'));
+		DirectoryUtil::getInstance($compileDir)->removePattern(new Regex('.*_.*\.php$'));
 	}
 	
 	/**

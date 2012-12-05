@@ -194,6 +194,9 @@
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Server auflisten]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Pakete auflisten]]></item>
 		<item name="wcf.acp.menu.link.package.autoupdate"><![CDATA[Automatisches Update]]></item>
+		<item name="wcf.acp.menu.link.pageMenu"><![CDATA[Seitenmenü]]></item>
+		<item name="wcf.acp.menu.link.pageMenu.add"><![CDATA[Menüpunkt hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.pageMenu.list"><![CDATA[Menüpunkte auflisten]]></item>
 		<item name="wcf.acp.menu.link.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.menu.link.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.add"><![CDATA[Benutzer hinzufügen]]></item>
@@ -392,6 +395,27 @@
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren?]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Aktualisierungsdatum]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
+	</category>
+	
+	<category name="wcf.acp.pageMenu">
+		<item name="wcf.acp.pageMenu.add"><![CDATA[Menüpunkt hinzufügen]]></item>
+		<item name="wcf.acp.pageMenu.advanced"><![CDATA[Erweitert]]></item>
+		<item name="wcf.acp.pageMenu.data"><![CDATA[Allgemein]]></item>
+		<item name="wcf.acp.pageMenu.delete.sure"><![CDATA[Möchten Sie den Menüpunkt „{$__menuItem}“ und alle Untermenüpunkte wirklich löschen?]]></item>
+		<item name="wcf.acp.pageMenu.footer"><![CDATA[Fußzeile]]></item>
+		<item name="wcf.acp.pageMenu.header"><![CDATA[Hauptmenü]]></item>
+		<item name="wcf.acp.pageMenu.isDisabled"><![CDATA[Menüpunkt deaktivieren]]></item>
+		<item name="wcf.acp.pageMenu.isLandingPage"><![CDATA[Startseite Ihrer Website]]></item>
+		<item name="wcf.acp.pageMenu.isLandingPage.description"><![CDATA[Beim direkten Aufruf Ihrer Website wird diese Menüpunkt aufgerufen.]]></item>
+		<item name="wcf.acp.pageMenu.list"><![CDATA[Menüpunkte auflisten]]></item>
+		<item name="wcf.acp.pageMenu.menuItemLink"><![CDATA[Link]]></item>
+		<item name="wcf.acp.pageMenu.menuPosition"><![CDATA[Position]]></item>
+		<item name="wcf.acp.pageMenu.menuPosition.footer"><![CDATA[Fußzeile]]></item>
+		<item name="wcf.acp.pageMenu.menuPosition.header"><![CDATA[Hauptmenü]]></item>
+		<item name="wcf.acp.pageMenu.newWindow"><![CDATA[Link in neuem Fenster öffnen]]></item>
+		<item name="wcf.acp.pageMenu.pageMenuItem"><![CDATA[Name]]></item>
+		<item name="wcf.acp.pageMenu.parentMenuItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
+		<item name="wcf.acp.pageMenu.showOrder"><![CDATA[Reihenfolge]]></item>
 	</category>
 	
 	<category name="wcf.acp.search">
