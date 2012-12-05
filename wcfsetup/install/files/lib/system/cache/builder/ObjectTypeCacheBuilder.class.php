@@ -19,7 +19,6 @@ class ObjectTypeCacheBuilder implements ICacheBuilder {
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-		list($cache, $packageID) = explode('-', $cacheResource['cache']);
 		$data = array(
 			'categories' => array(),
 			'definitions' => array(),
@@ -47,7 +46,7 @@ class ObjectTypeCacheBuilder implements ICacheBuilder {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_object_type object_type";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
+		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			$data['objectTypes'][$row['objectTypeID']] = new ObjectType(null, $row);
 		}

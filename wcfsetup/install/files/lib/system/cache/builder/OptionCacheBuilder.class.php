@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\system\Regex;
+
 use wcf\data\option\category\OptionCategory;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
@@ -19,23 +21,22 @@ class OptionCacheBuilder implements ICacheBuilder {
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-		$information = explode('-', $cacheResource['cache']);
 		$tableName = '';
+		$type = $cacheResource['cache'];
 		
-		if (count($information) == 3) {
-			$type = $information[0];
-			
-			preg_match_all('~((?:^|[A-Z])[a-z]+)~', $information[0], $matches);
-			if (isset($matches[1])) {
-				for ($i = 0, $length = count($matches[1]); $i < $length; $i++) {
-					$tableName .= strtolower($matches[1][$i]) . '_';
+		$regEx = new Regex('((?:^|[A-Z])[a-z]+)');
+		$regEx->match($cacheResource['cache'], true);
+		$matches = $regEx->getMatches();
+		if (isset($matches[1])) {
+			for ($i = 0, $length = count($matches[1]); $i < $length; $i++) {
+				if (!empty($tableName)) {
+					$tableName .= '_';
 				}
+				
+				$tableName .= strtolower($matches[1][$i]);
 			}
 		}
-		else {
-			$type = '';
-		}
-		 
+		
 		$data = array(
 			'categories' => array(),
 			'options' => array(),
@@ -46,7 +47,7 @@ class OptionCacheBuilder implements ICacheBuilder {
 		// option categories
 		// get all option categories and sort categories by priority
 		$sql = "SELECT	categoryName, categoryID 
-			FROM	wcf".WCF_N."_".$tableName."option_category";
+			FROM	wcf".WCF_N."_".$tableName."_category";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		$optionCategories = array();
@@ -60,7 +61,7 @@ class OptionCacheBuilder implements ICacheBuilder {
 			$conditions->add("categoryID IN (?)", array($optionCategories));
 			
 			$sql = "SELECT		option_category.*, package.packageDir
-				FROM		wcf".WCF_N."_".$tableName."option_category option_category
+				FROM		wcf".WCF_N."_".$tableName."_category option_category
 				LEFT JOIN	wcf".WCF_N."_package package
 				ON		(package.packageID = option_category.packageID)
 				".$conditions."
@@ -81,7 +82,7 @@ class OptionCacheBuilder implements ICacheBuilder {
 		// get all options and sort options by priority
 		$optionIDs = array();
 		$sql = "SELECT		optionName, optionID 
-			FROM		wcf".WCF_N."_".$tableName."option";
+			FROM		wcf".WCF_N."_".$tableName;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
@@ -100,7 +101,7 @@ class OptionCacheBuilder implements ICacheBuilder {
 					for ($i = 0, $length = count($matches[1]); $i < $length; $i++) {
 						$className .= strtolower($matches[1][$i] . '\\');
 					}
-					$className .= 'option\\' . ucfirst($type) . 'Option';
+					$className .= ucfirst($type);
 				}
 			}
 			
@@ -109,7 +110,7 @@ class OptionCacheBuilder implements ICacheBuilder {
 			$conditions->add("optionID IN (?)", array($optionIDs));
 			
 			$sql = "SELECT		*
-				FROM		wcf".WCF_N."_".$tableName."option
+				FROM		wcf".WCF_N."_".$tableName."
 				".$conditions."
 				ORDER BY	showOrder ASC";
 			$statement = WCF::getDB()->prepareStatement($sql);
