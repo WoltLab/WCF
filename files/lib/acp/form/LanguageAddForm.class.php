@@ -26,18 +26,63 @@ class LanguageAddForm extends ACPForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.language.add';
 	
 	/**
+	 * file name
+	 * @var	string
+	 */
+	public $filename = '';
+	
+	/**
+	 * import field
+	 * @var	string
+	 */
+	public $importField = 'languageFile';
+	
+	/**
+	 * language object
+	 * @var	wcf\data\language\Language
+	 */
+	public $language = null;
+	
+	/**
+	 * language code
+	 * @var	string
+	 */
+	public $languageCode = '';
+	
+	/**
+	 * import language file
+	 * @var	string
+	 */
+	public $languageFile = '';
+	
+	/**
+	 * list of available languages
+	 * @var	array<wcf\data\language\Language>
+	 */
+	public $languages = array();
+	
+	/**
+	 * mode
+	 * @var	string
+	 */
+	public $mode = 'import';
+	
+	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.language.canAddLanguage');
 	
-	public $mode = 'import';
-	public $languageFile = '';
-	public $languageCode = '';
+	/**
+	 * source language object
+	 * @var	wcf\data\language\Language
+	 */
+	public $sourceLanguage = null;
+	
+	/**
+	 * source language id
+	 * @var	integer
+	 */
 	public $sourceLanguageID = 0;
-	public $filename = '';
-	public $sourceLanguage, $language;
-	public $importField = 'languageFile';
-	public $languages = array();
 	
 	/**
 	 * @see	wcf\form\Form::readFormParameters()
@@ -124,29 +169,6 @@ class LanguageAddForm extends ACPForm {
 			));
 			$languageEditor = new LanguageEditor($this->sourceLanguage);
 			$languageEditor->copy($this->language);
-		}
-		
-		// add language to this package
-		$sql = "SELECT	COUNT(*) AS count
-			FROM	wcf".WCF_N."_language_to_package
-			WHERE	languageID = ?
-				AND packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$this->language->languageID,
-			PACKAGE_ID
-		));
-		
-		$row = $statement->fetchArray();
-		if (!$row['count']) {
-			$sql = "INSERT INTO	wcf".WCF_N."_language_to_package
-						(languageID, packageID)
-				VALUES		(?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
-				$this->language->languageID,
-				PACKAGE_ID
-			));
 		}
 		
 		LanguageFactory::getInstance()->clearCache();
