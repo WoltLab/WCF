@@ -809,5 +809,6 @@
 		<item name="wcf.user.username.error.notUnique"><![CDATA[Dieser Benutzername ist bereits vergeben.]]></item>
 		<item name="wcf.user.username.error.notValid"><![CDATA[Sie haben einen ungültigen Benutzernamen eingegeben.]]></item>
 		<item name="wcf.user.userNote"><![CDATA[{$__wcf->user->username}]]></item>
+		<item name="wcf.user.group"><![CDATA[Benutzergruppe]]></item>
 	</category>
 </language>
