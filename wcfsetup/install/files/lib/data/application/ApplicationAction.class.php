@@ -74,8 +74,6 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 			$path = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash(implode('/', $path)));
 			
 			foreach (array_keys($data) as $packageID) {
-				$isPrimary = ($this->parameters['primaryApplication'] == $packageID) ? 1 : 0;
-				
 				$statement->execute(array(
 					$domainName,
 					$path,
