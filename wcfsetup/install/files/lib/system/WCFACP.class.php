@@ -128,8 +128,8 @@ class WCFACP extends WCF {
 		parent::loadDefaultCacheResources();
 		
 		CacheHandler::getInstance()->addResource(
-			'packages',
-			WCF_DIR.'cache/cache.packages.php',
+			'package',
+			WCF_DIR.'cache/cache.package.php',
 			'wcf\system\cache\builder\PackageCacheBuilder'
 		);
 	}
@@ -143,19 +143,6 @@ class WCFACP extends WCF {
 			$packageID = self::getWcfPackageID();
 			define('PACKAGE_ID', $packageID);
 		}
-		
-		/* todo
-		$packageID = 0;
-		$packages = CacheHandler::getInstance()->get('packages');
-		if (isset($_REQUEST['packageID'])) $packageID = intval($_REQUEST['packageID']);
-		
-		if (!isset($packages[$packageID]) || !$packages[$packageID]['isApplication']) {
-			// package id is invalid
-			$packageID = self::getWcfPackageID();
-		}
-		
-		// define active package id
-		if (!defined('PACKAGE_ID')) define('PACKAGE_ID', $packageID);*/ 
 	}
 	
 	/**
@@ -183,8 +170,8 @@ class WCFACP extends WCF {
 	 */
 	protected function getQuickAccessPackages() {
 		$quickAccessPackages = array();
-		$packages = CacheHandler::getInstance()->get('packages');
-		foreach ($packages as $packageID => $package) {
+		$packages = CacheHandler::getInstance()->get('package');
+		foreach ($packages['packages'] as $packageID => $package) {
 			if (!$package->isApplication) break;
 			if ($package->package != 'com.woltlab.wcf') {
 				$quickAccessPackages[] = $package;

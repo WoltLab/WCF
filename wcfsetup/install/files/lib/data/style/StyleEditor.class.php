@@ -639,20 +639,16 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			
 			// append templates to tar
 			// get templates
-			$sql = "SELECT		template.*, package.package, package.packageDir,
-						parent_package.package AS parentPackage, parent_package.packageDir AS parentPackageDir
+			$sql = "SELECT		template.*, package.package, package.packageDir
 				FROM		wcf".WCF_N."_template template
 				LEFT JOIN	wcf".WCF_N."_package package
 				ON		(package.packageID = template.packageID)
-				LEFT JOIN	wcf".WCF_N."_package parent_package
-				ON		(parent_package.packageID = package.parentPackageID)
 				WHERE		template.templateGroupID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($this->templateGroupID));
 			while ($row = $statement->fetchArray()) {
 				$packageDir = 'com.woltlab.wcf';
-				if (!empty($row['parentPackageDir'])) $packageDir = $row['parentPackage'];
-				else if (!empty($row['packageDir'])) $packageDir = $row['package'];
+				if (!empty($row['packageDir'])) $packageDir = $row['package'];
 				
 				$filename = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $row['packageDir'] . 'templates/' . $templateGroup->templateGroupFolderName)) . $row['templateName'] . '.tpl';
 				$templatesTar->add($filename, $packageDir, dirname($filename));
@@ -864,7 +860,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * @see	wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.styles.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.style.php');
 	}
 	
 	/**

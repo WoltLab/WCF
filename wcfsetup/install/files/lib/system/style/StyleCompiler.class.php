@@ -45,16 +45,12 @@ class StyleCompiler extends SingletonFactory {
 		// read stylesheets by dependency order
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("file_log.filename REGEXP ?", array('style/([a-zA-Z0-9\_\-\.]+)\.less'));
-		$conditions->add("package_dependency.packageID = ?", array(ApplicationHandler::getInstance()->getPrimaryApplication()->packageID));
 		
 		$sql = "SELECT		file_log.filename, package.packageDir
 			FROM		wcf".WCF_N."_package_installation_file_log file_log
-			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(file_log.packageID = package_dependency.dependency)
 			LEFT JOIN	wcf".WCF_N."_package package
 			ON		(file_log.packageID = package.packageID)
-			".$conditions."
-			ORDER BY	package_dependency.priority ASC";
+			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		$files = array();
@@ -71,7 +67,7 @@ class StyleCompiler extends SingletonFactory {
 		}
 		
 		$this->compileStylesheet(
-			WCF_DIR.'style/style-'.ApplicationHandler::getInstance()->getPrimaryApplication()->packageID.'-'.$style->styleID,
+			WCF_DIR.'style/style-'.$style->styleID,
 			$files,
 			$variables,
 			$individualLess,

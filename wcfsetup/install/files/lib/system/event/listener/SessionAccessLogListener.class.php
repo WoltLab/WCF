@@ -66,7 +66,6 @@ class SessionAccessLogListener implements IEventListener {
 			// save access
 			ACPSessionAccessLogEditor::create(array(
 				'sessionLogID' => $sessionLogID,
-				'packageID' => PACKAGE_ID,
 				'ipAddress' => WCF::getSession()->ipAddress,
 				'time' => TIME_NOW,
 				'requestURI' => $requestURI,

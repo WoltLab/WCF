@@ -33,12 +33,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		// get package installation dir
 		$dir = $this->installation->getPackage()->packageDir;
 		if (empty($dir)) {
-			if ($this->installation->getPackage()->parentPackageID > 0) {
-				// plugin
-				// use parents package dir
-				$dir = $this->installation->getPackage()->getParentPackage()->packageDir;
-			}
-			else if ($this->installation->getPackage()->isApplication == 1 && $this->installation->getPackage()->package != 'com.woltlab.wcf' && $this->installation->getAction() == 'install') {
+			if ($this->installation->getPackage()->isApplication == 1 && $this->installation->getPackage()->package != 'com.woltlab.wcf' && $this->installation->getAction() == 'install') {
 				// application
 				// prompt package dir
 				$dir = $this->promptPackageDir();

@@ -27,28 +27,14 @@ class UserGroupPermissionCacheBuilder implements ICacheBuilder {
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-		list($cache, $packageID, $groupIDs) = explode('-', $cacheResource['cache']);
+		list(, $groupIDs) = explode('-', $cacheResource['cache']);
 		$data = array();
 		
-		// get all options and filter options with low priority
-		if ($packageID == 0) {
-			// during the installation of the package wcf
-			$sql = "SELECT		optionName, optionID 
-				FROM		wcf".WCF_N."_user_group_option
-				WHERE 		packageID IS NULL";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute();
-		}
-		else {
-			$sql = "SELECT		optionName, optionID 
-				FROM		wcf".WCF_N."_user_group_option option_table
-				LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-				ON		(package_dependency.dependency = option_table.packageID)
-				WHERE 		package_dependency.packageID = ?
-				ORDER BY	package_dependency.priority ASC";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($packageID));
-		}
+		// get all options
+		$sql = "SELECT	optionName, optionID 
+			FROM	wcf".WCF_N."_user_group_option";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
 		
 		$options = array();
 		while ($row = $statement->fetchArray()) {

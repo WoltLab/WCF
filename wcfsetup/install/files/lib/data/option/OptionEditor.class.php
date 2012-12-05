@@ -37,13 +37,9 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 	public static function import(array $options) {
 		// get option ids
 		$sql = "SELECT		optionName, optionID
-			FROM		wcf".WCF_N."_option option_table
-			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(package_dependency.dependency = option_table.packageID)
-			WHERE		package_dependency.packageID = ?
-			ORDER BY	package_dependency.priority ASC";
+			FROM		wcf".WCF_N."_option";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(PACKAGE_ID));
+		$statement->execute();
 		$optionIDs = array();
 		while ($row = $statement->fetchArray()) {
 			$optionIDs[$row['optionName']] = $row['optionID'];
@@ -86,7 +82,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 	 */
 	public static function resetCache() {
 		// reset cache
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.option-*.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.option.php');
 		
 		// reset options.inc.php files
 		$sql = "SELECT	package, packageID, packageDir

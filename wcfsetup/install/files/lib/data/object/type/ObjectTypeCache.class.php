@@ -49,15 +49,19 @@ class ObjectTypeCache extends SingletonFactory {
 	 */
 	protected function init() {
 		// get definition cache
-		CacheHandler::getInstance()->addResource('objectType-'.PACKAGE_ID, WCF_DIR.'cache/cache.objectType-'.PACKAGE_ID.'.php', 'wcf\system\cache\builder\ObjectTypeCacheBuilder');
-		$this->definitionsByCategory = CacheHandler::getInstance()->get('objectType-'.PACKAGE_ID, 'categories');
-		$this->definitions = CacheHandler::getInstance()->get('objectType-'.PACKAGE_ID, 'definitions');
+		CacheHandler::getInstance()->addResource(
+			'objectType',
+			WCF_DIR.'cache/cache.objectType.php',
+			'wcf\system\cache\builder\ObjectTypeCacheBuilder'
+		);
+		$this->definitionsByCategory = CacheHandler::getInstance()->get('objectType', 'categories');
+		$this->definitions = CacheHandler::getInstance()->get('objectType', 'definitions');
 		foreach ($this->definitions as $definition) {
 			$this->definitionsByName[$definition->definitionName] = $definition;
 		}
 		
 		// get object type cache
-		$this->objectTypes = CacheHandler::getInstance()->get('objectType-'.PACKAGE_ID, 'objectTypes');
+		$this->objectTypes = CacheHandler::getInstance()->get('objectType', 'objectTypes');
 		foreach ($this->objectTypes as $objectType) {
 			$definition = $this->getDefinition($objectType->definitionID);
 			if (!isset($this->groupedObjectTypes[$definition->definitionName])) {
@@ -162,7 +166,7 @@ class ObjectTypeCache extends SingletonFactory {
 	 * Resets and reloads the object type cache.
 	 */
 	public function resetCache() {
-		CacheHandler::getInstance()->clearResource('objectType-'.PACKAGE_ID);
+		CacheHandler::getInstance()->clearResource('objectType');
 		$this->init();
 	}
 }

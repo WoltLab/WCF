@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
 
 /**
@@ -19,14 +17,10 @@ class ClipboardPageCacheBuilder implements ICacheBuilder {
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-		
 		$sql = "SELECT	pageClassName, actionID
-			FROM	wcf".WCF_N."_clipboard_page
-			".$conditions;
+			FROM	wcf".WCF_N."_clipboard_page";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditions->getParameters());
+		$statement->execute();
 		
 		$data = array();
 		while ($row = $statement->fetchArray()) {

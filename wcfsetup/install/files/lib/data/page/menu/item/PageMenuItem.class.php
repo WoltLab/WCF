@@ -5,9 +5,10 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\menu\page\DefaultPageMenuItemProvider;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
- * Represents an page menu item.
+ * Represents a page menu item.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -54,6 +55,15 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 			$parameters['application'] = $abbreviation;
 		}
 		
-		return LinkHandler::getInstance()->getLink(null, $parameters, $this->menuItemLink);
+		return LinkHandler::getInstance()->getLink(null, $parameters, WCF::getLanguage()->get($this->menuItemLink));
+	}
+	
+	/**
+	 * Returns the menu item name.
+	 * 
+	 * @return	string
+	 */
+	public function __toString() {
+		return WCF::getLanguage()->get($this->menuItem);
 	}
 }

@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\clipboard\action\ClipboardActionList;
-use wcf\system\package\PackageDependencyHandler;
 
 /**
  * Caches clipboard actions.
@@ -19,7 +18,6 @@ class ClipboardActionCacheBuilder implements ICacheBuilder {
 	 */
 	public function getData(array $cacheResource) {
 		$actionList = new ClipboardActionList();
-		$actionList->getConditionBuilder()->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$actionList->sqlLimit = 0;
 		$actionList->readObjects();
 		

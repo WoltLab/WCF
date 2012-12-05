@@ -18,19 +18,14 @@ class PageMenuCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
-	public function getData(array $cacheResource) {
-		list($cache, $packageID) = explode('-', $cacheResource['cache']); 
+	public function getData(array $cacheResource) { 
 		$data = array();
-
+		
 		// get all menu items and filter menu items with low priority
-		$sql = "SELECT		menuItem, menuItemID 
-			FROM		wcf".WCF_N."_page_menu_item menu_item
-			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(package_dependency.dependency = menu_item.packageID)
-			WHERE 		package_dependency.packageID = ?
-			ORDER BY	package_dependency.priority ASC";
+		$sql = "SELECT	menuItem, menuItemID 
+			FROM	wcf".WCF_N."_page_menu_item";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
+		$statement->execute();
 		$itemIDs = array();
 		while ($row = $statement->fetchArray()) {
 			$itemIDs[$row['menuItem']] = $row['menuItemID'];
@@ -43,11 +38,8 @@ class PageMenuCacheBuilder implements ICacheBuilder {
 			$conditions->add("menu_item.isDisabled = ?", array(0));
 			
 			$sql = "SELECT		menuItemID, menuItem, parentMenuItem, menuItemLink,
-						permissions, options, packageDir, menuPosition, className,
-						CASE WHEN parentPackageID <> 0 THEN parentPackageID ELSE menu_item.packageID END AS packageID
+						permissions, options, menuPosition, className
 				FROM		wcf".WCF_N."_page_menu_item menu_item
-				LEFT JOIN	wcf".WCF_N."_package package
-				ON		(package.packageID = menu_item.packageID)
 				".$conditions."
 				ORDER BY	showOrder ASC";
 			$statement = WCF::getDB()->prepareStatement($sql);

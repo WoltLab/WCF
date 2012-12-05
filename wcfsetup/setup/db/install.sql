@@ -25,7 +25,6 @@ CREATE TABLE wcf1_acp_search_provider (
 DROP TABLE IF EXISTS wcf1_acp_session;
 CREATE TABLE wcf1_acp_session (
 	sessionID CHAR(40) NOT NULL PRIMARY KEY,
-	packageID INT(10),
 	userID INT(10),
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
@@ -37,15 +36,13 @@ CREATE TABLE wcf1_acp_session (
 	parentObjectID INT(10) NOT NULL DEFAULT 0,
 	objectType VARCHAR(255) NOT NULL DEFAULT '',
 	objectID INT(10) NOT NULL DEFAULT 0,
-	sessionVariables MEDIUMTEXT,
-	KEY sessionID (sessionID, packageID)
+	sessionVariables MEDIUMTEXT
 );
 
 DROP TABLE IF EXISTS wcf1_acp_session_access_log;
 CREATE TABLE wcf1_acp_session_access_log (
 	sessionAccessLogID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	sessionLogID INT(10) NOT NULL,
-	packageID INT(10),
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	time INT(10) NOT NULL DEFAULT 0,
 	requestURI VARCHAR(255) NOT NULL DEFAULT '',
@@ -82,14 +79,7 @@ CREATE TABLE wcf1_application (
 	domainPath VARCHAR(255) NOT NULL DEFAULT '/',
 	cookieDomain VARCHAR(255) NOT NULL,
 	cookiePath VARCHAR(255) NOT NULL DEFAULT '/',
-	groupID INT(10),
 	isPrimary TINYINT(1) NOT NULL DEFAULT 0
-);
-
-DROP TABLE IF EXISTS wcf1_application_group;
-CREATE TABLE wcf1_application_group (
-	groupID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	groupName VARCHAR(255) NOT NULL
 );
 
 DROP TABLE IF EXISTS wcf1_cache_resource;
@@ -234,7 +224,7 @@ CREATE TABLE wcf1_language_item (
 	languageItemOriginIsSystem TINYINT(1) NOT NULL DEFAULT 1,
 	languageCategoryID INT(10) NOT NULL,
 	packageID INT(10),
-	UNIQUE KEY languageItem (languageItem, packageID, languageID),
+	UNIQUE KEY languageItem (languageItem, languageID),
 	KEY languageItemOriginIsSystem (languageItemOriginIsSystem)
 );
 
@@ -243,13 +233,6 @@ CREATE TABLE wcf1_language_server (
 	languageServerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	serverURL VARCHAR(255) NOT NULL DEFAULT '',
 	disabled TINYINT(1) NOT NULL DEFAULT 0
-);
-
-DROP TABLE IF EXISTS wcf1_language_to_package;
-CREATE TABLE wcf1_language_to_package (
-	languageID INT(10) NOT NULL,
-	packageID INT(10),
-	UNIQUE KEY languageID (languageID, packageID)
 );
 
 DROP TABLE IF EXISTS wcf1_modification_log;
@@ -332,21 +315,12 @@ CREATE TABLE wcf1_package (
 	installDate INT(10) NOT NULL DEFAULT 0,
 	updateDate INT(10) NOT NULL DEFAULT 0,
 	packageURL VARCHAR(255) NOT NULL DEFAULT '',
-	parentPackageID INT(10) NOT NULL DEFAULT 0,
 	isUnique TINYINT(1) NOT NULL DEFAULT 0,
 	isApplication TINYINT(1) NOT NULL DEFAULT 0,
 	author VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
 	packageIcon VARCHAR(30) NOT NULL DEFAULT '',
 	KEY package (package)
-);
-
-DROP TABLE IF EXISTS wcf1_package_dependency;
-CREATE TABLE wcf1_package_dependency (
-	packageID INT(10) NOT NULL,
-	dependency INT(10) NOT NULL,
-	priority INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY packageID (packageID, dependency)
 );
 
 DROP TABLE IF EXISTS wcf1_package_exclusion;
@@ -507,6 +481,7 @@ CREATE TABLE wcf1_page_menu_item (
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	className VARCHAR(255) NOT NULL DEFAULT '',
 	isLandingPage TINYINT(1) NOT NULL DEFAULT 0,
+	newWindow TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY (packageID, menuItem)
 );
 
@@ -524,7 +499,6 @@ CREATE TABLE wcf1_search (
 DROP TABLE IF EXISTS wcf1_session;
 CREATE TABLE wcf1_session (
 	sessionID CHAR(40) NOT NULL PRIMARY KEY,
-	packageID INT(10) NOT NULL,
 	userID INT(10),
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
@@ -538,7 +512,7 @@ CREATE TABLE wcf1_session (
 	objectID INT(10) NOT NULL DEFAULT 0,
 	sessionVariables MEDIUMTEXT,
 	spiderID INT(10) NOT NULL DEFAULT 0,
-	KEY packageID (packageID, lastActivityTime, spiderID)
+	KEY packageID (lastActivityTime, spiderID)
 );
 
 DROP TABLE IF EXISTS wcf1_sitemap;
@@ -578,15 +552,6 @@ CREATE TABLE wcf1_style (
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
 	iconPath VARCHAR(255) NOT NULL DEFAULT '',
 	imagePath VARCHAR(255) NOT NULL DEFAULT ''
-);
-
-DROP TABLE IF EXISTS wcf1_style_to_package;
-CREATE TABLE wcf1_style_to_package (
-	styleID INT(10) NOT NULL,
-	packageID INT(10) NOT NULL,
-	isDefault TINYINT(1) NOT NULL DEFAULT 0,
-	disabled TINYINT(1) NOT NULL DEFAULT 0,
-	UNIQUE KEY (styleID, packageID)
 );
 
 DROP TABLE IF EXISTS wcf1_style_variable;
@@ -754,8 +719,7 @@ CREATE TABLE wcf1_user_storage (
 	userID INT(10) NOT NULL,
 	field VARCHAR(80) NOT NULL DEFAULT '',
 	fieldValue TEXT,
-	packageID INT(10),
-	UNIQUE KEY userStorageData (userID, field, packageID)
+	UNIQUE KEY userStorageData (userID, field)
 );
 
 DROP TABLE IF EXISTS wcf1_user_to_group;
@@ -778,17 +742,14 @@ ALTER TABLE wcf1_acp_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_packa
 ALTER TABLE wcf1_acp_search_provider ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_acp_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
-ALTER TABLE wcf1_acp_session ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_acp_session_access_log ADD FOREIGN KEY (sessionLogID) REFERENCES wcf1_acp_session_log (sessionLogID) ON DELETE CASCADE;
-ALTER TABLE wcf1_acp_session_access_log ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_acp_session_log ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_acp_template ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_application ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
-ALTER TABLE wcf1_application ADD FOREIGN KEY (groupID) REFERENCES wcf1_application_group (groupID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_category ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
@@ -815,9 +776,6 @@ ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageID) REFERENCES wcf1_lang
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageCategoryID) REFERENCES wcf1_language_category (languageCategoryID) ON DELETE CASCADE;
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
-ALTER TABLE wcf1_language_to_package ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
-ALTER TABLE wcf1_language_to_package ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
-
 ALTER TABLE wcf1_modification_log ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_modification_log ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
@@ -829,9 +787,6 @@ ALTER TABLE wcf1_object_type_definition ADD FOREIGN KEY (packageID) REFERENCES w
 ALTER TABLE wcf1_option ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_option_category ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
-
-ALTER TABLE wcf1_package_dependency ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
-ALTER TABLE wcf1_package_dependency ADD FOREIGN KEY (dependency) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_exclusion ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
@@ -868,18 +823,13 @@ ALTER TABLE wcf1_page_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_pack
 
 ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
-ALTER TABLE wcf1_session ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_sitemap ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_storage ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
-ALTER TABLE wcf1_user_storage ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_style ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
-
-ALTER TABLE wcf1_style_to_package ADD FOREIGN KEY (styleID) REFERENCES wcf1_style (styleID) ON DELETE CASCADE;
-ALTER TABLE wcf1_style_to_package ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_style_variable_value ADD FOREIGN KEY (styleID) REFERENCES wcf1_style (styleID) ON DELETE CASCADE;
 ALTER TABLE wcf1_style_variable_value ADD FOREIGN KEY (variableID) REFERENCES wcf1_style_variable (variableID) ON DELETE CASCADE;

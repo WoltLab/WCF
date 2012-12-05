@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\template\listener\TemplateListenerList;
-use wcf\system\package\PackageDependencyHandler;
 
 /**
  * Caches template listener information.
@@ -18,13 +17,11 @@ class TemplateListenerCacheBuilder implements ICacheBuilder {
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-		list($cache, $packageID, $environment) = explode('-', $cacheResource['cache']); 
+		list(, $environment) = explode('-', $cacheResource['cache']); 
 		
 		// get templates for current package id
 		$templateListenerList = new TemplateListenerList();
 		$templateListenerList->getConditionBuilder()->add("template_listener.environment = ?", array($environment));
-		// work-around during setup
-		if (PACKAGE_ID) $templateListenerList->getConditionBuilder()->add("template_listener.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$templateListenerList->sqlLimit = 0;
 		$templateListenerList->readObjects();
 		

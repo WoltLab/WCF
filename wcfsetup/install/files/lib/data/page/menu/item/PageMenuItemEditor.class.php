@@ -65,6 +65,18 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	}
 	
 	/**
+	 * Sets current page menu item as landing page.
+	 */
+	public function setAsLandingPage() {
+		$sql = "UPDATE	wcf".WCF_N."_page_menu_item
+			SET	isLandingPage = 0";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		
+		$this->update(array('isLandingPage' => 1));
+	}
+	
+	/**
 	 * Updates the positions of a page menu item directly.
 	 * 
 	 * @param	integer		$menuItemID
@@ -183,6 +195,6 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	 * @see	wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.pageMenu-*.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.pageMenu.php');
 	}
 }

@@ -1,8 +1,6 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\application\ViewableApplicationList;
-use wcf\data\application\group\ApplicationGroupList;
-use wcf\data\application\group\ViewableApplicationGroup;
 use wcf\page\AbstractPage;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
@@ -19,22 +17,10 @@ use wcf\system\WCF;
  */
 class ApplicationManagementPage extends AbstractPage {
 	/**
-	 * list of ungrouped applications
-	 * @var	array<wcf\data\application\Application>
+	 * list of applications
+	 * @var	wcf\data\application\ViewableApplicationList
 	 */
-	public $applications = null;
-	
-	/**
-	 * list of viewable application groups
-	 * @var	array<wcf\data\application\group\ViewableApplicationGroup>
-	 */
-	public $applicationGroups = null;
-	
-	/**
-	 * number of ungrouped applications
-	 * @var	integer
-	 */
-	public $ungroupedApplications = 0;
+	public $applicationList = null;
 	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
@@ -47,25 +33,9 @@ class ApplicationManagementPage extends AbstractPage {
 	public function readData() {
 		parent::readData();
 		
-		$applicationList = new ViewableApplicationList();
-		$applicationList->sqlLimit = 0;
-		$applicationList->readObjects();
-		
-		$applicationGroupList = new ApplicationGroupList();
-		$applicationGroupList->sqlLimit = 0;
-		$applicationGroupList->readObjects();
-		foreach ($applicationGroupList as $applicationGroup) {
-			$this->applicationGroups[$applicationGroup->groupID] = new ViewableApplicationGroup($applicationGroup);
-		}
-		
-		foreach ($applicationList as $application) {
-			if (!$application->groupID) {
-				$this->applications[$application->packageID] = $application;
-			}
-			else {
-				$this->applicationGroups[$application->groupID]->addApplication($application);
-			}
-		}
+		$this->applicationList = new ViewableApplicationList();
+		$this->applicationList->sqlLimit = 0;
+		$this->applicationList->readObjects();
 	}
 	
 	/**
@@ -75,8 +45,7 @@ class ApplicationManagementPage extends AbstractPage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'applications' => $this->applications,
-			'applicationGroups' => $this->applicationGroups
+			'applicationList' => $this->applicationList
 		));
 	}
 	

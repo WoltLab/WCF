@@ -20,19 +20,14 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 	/**
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
-	public function getData(array $cacheResource) {
-		list($cache, $packageID) = explode('-', $cacheResource['cache']); 
+	public function getData(array $cacheResource) { 
 		$data = array();
 		
 		// get all menu items and filter menu items with low priority
 		$sql = "SELECT		menuItem, menuItemID
-			FROM		wcf".WCF_N."_acp_menu_item menu_item
-			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON 		(menu_item.packageID = package_dependency.dependency)
-			WHERE		package_dependency.packageID = ?
-			ORDER BY	package_dependency.priority ASC";
+			FROM		wcf".WCF_N."_acp_menu_item menu_item";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
+		$statement->execute();
 		$itemIDs = array();
 		while ($row = $statement->fetchArray()) {
 			$itemIDs[$row['menuItem']] = $row['menuItemID'];
@@ -62,7 +57,7 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 		}
 		
 		// get top option categories
-		$optionCategories = $this->getTopOptionCategories($packageID);
+		$optionCategories = $this->getTopOptionCategories();
 		if (!empty($optionCategories)) {
 			if (!isset($data['wcf.acp.menu.link.option.category'])) {
 				$data['wcf.acp.menu.link.option.category'] = array();
@@ -80,7 +75,6 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
 				$data['wcf.acp.menu.link.option.category'][] = new ACPMenuItem(null, array(
-					'packageID' => $packageID,
 					'menuItem' => 'wcf.acp.option.category.'.$row['categoryName'],
 					'parentMenuItem' => 'wcf.acp.menu.link.option.category',
 					'menuItemLink' => 'index.php/Option/'.$row['categoryID'].'/',
@@ -94,16 +88,12 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 		return $data;
 	}
 	
-	protected function getTopOptionCategories($packageID) {
-		// get all option categories and filter categories with low priority
+	protected function getTopOptionCategories() {
+		// get all option categories
 		$sql = "SELECT		categoryName, categoryID 
-			FROM		wcf".WCF_N."_option_category option_category
-			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(package_dependency.dependency = option_category.packageID)
-			WHERE 		package_dependency.packageID = ?
-			ORDER BY	package_dependency.priority ASC";
+			FROM		wcf".WCF_N."_option_category";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
+		$statement->execute();
 		$optionCategories = array();
 		while ($row = $statement->fetchArray()) {
 			$optionCategories[$row['categoryName']] = $row['categoryID'];
@@ -111,19 +101,14 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("categoryID IN (?)", array($optionCategories));
-		$statementParameters = $conditions->getParameters();
-		array_unshift($statementParameters, $packageID);
-		
 		$sql = "SELECT 		categoryID, parentCategoryName, categoryName,
 					(
-						SELECT COUNT(*) FROM wcf".WCF_N."_option WHERE categoryName = category.categoryName AND packageID IN (
-							SELECT dependency FROM wcf".WCF_N."_package_dependency WHERE packageID = ?
-						)
+						SELECT COUNT(*) FROM wcf".WCF_N."_option WHERE categoryName = category.categoryName
 					) AS count
 			FROM		wcf".WCF_N."_option_category category
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($statementParameters);
+		$statement->execute($conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
 			if (!isset($this->optionCategoryStructure[$row['parentCategoryName']])) $this->optionCategoryStructure[$row['parentCategoryName']] = array();
 			$this->optionCategoryStructure[$row['parentCategoryName']][] = $row;

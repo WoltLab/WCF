@@ -139,7 +139,7 @@ class Language extends DatabaseObject {
 		}
 		
 		// search language file
-		$filename = WCF_DIR.'language/'.$this->packageID.'_'.$this->languageID.'_'.$category.'.php';
+		$filename = WCF_DIR.'language/'.$this->languageID.'_'.$category.'.php';
 		if (!@file_exists($filename)) { 
 			if ($this->editor === null) {
 				$this->editor = new LanguageEditor($this);
@@ -147,7 +147,7 @@ class Language extends DatabaseObject {
 			
 			// rebuild language file
 			$languageCategory = LanguageFactory::getInstance()->getCategory($category);
-			$this->editor->updateCategory(array($languageCategory->languageCategoryID), array($this->packageID));
+			$this->editor->updateCategory(array($languageCategory->languageCategoryID));
 		}
 		
 		// include language file

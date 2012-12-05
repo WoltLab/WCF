@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\sitemap;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -26,15 +25,12 @@ class SitemapHandler extends SingletonFactory {
 	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		$application = ApplicationHandler::getInstance()->getPrimaryApplication();
-		$cacheName = 'sitemap-'.$application->packageID;
-		
 		CacheHandler::getInstance()->addResource(
-			$cacheName,
-			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'sitemap',
+			WCF_DIR.'cache/cache.sitemap.php',
 			'wcf\system\cache\builder\SitemapCacheBuilder'
 		);
-		$this->cache = CacheHandler::getInstance()->get($cacheName);
+		$this->cache = CacheHandler::getInstance()->get('sitemap');
 	}
 	
 	/**
