@@ -2,7 +2,6 @@
 namespace wcf\system\language;
 use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
-use wcf\data\DatabaseObject;
 use wcf\system\cache\CacheHandler;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\SingletonFactory;
@@ -142,7 +141,7 @@ class LanguageFactory extends SingletonFactory {
 	protected function findPreferredLanguage() {
 		// get available language codes
 		$availableLanguageCodes = array();
-		foreach ($this->getLanguages(PACKAGE_ID) as $language) {
+		foreach ($this->getLanguages() as $language) {
 			$availableLanguageCodes[] = $language->languageCode;
 		}
 		
@@ -240,41 +239,27 @@ class LanguageFactory extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns all available languages for package with the given id.
+	 * Returns all available languages.
 	 * 
-	 * @param 	integer		$packageID
 	 * @return	array<wcf\data\language\Language>
 	 */
-	public function getLanguages($packageID = PACKAGE_ID) {
-		// get list of all available languages
-		$availableLanguages = array();
-		if (isset($this->cache['packages'][$packageID])) {
-			foreach ($this->cache['packages'][$packageID] as $availableLanguageID) {
-				$availableLanguages[$availableLanguageID] = $this->getLanguage($availableLanguageID);
-			}
-		}
-		
-		DatabaseObject::sort($availableLanguages, 'languageName');
-		return $availableLanguages;
+	public function getLanguages() {
+		return $this->cache['languages'];
 	}
 	
 	/**
 	 * Returns all available content languages for given package.
 	 * 
-	 * @param 	integer		$packageID
 	 * @return	array<wcf\data\language\Language>
 	 */
-	public function getContentLanguages($packageID = PACKAGE_ID) {
+	public function getContentLanguages() {
 		$availableLanguages = array();
-		if (isset($this->cache['packages'][$packageID])) {
-			foreach ($this->cache['packages'][$packageID] as $availableLanguageID) {
-				if ($this->cache['languages'][$availableLanguageID]->hasContent) {
-					$availableLanguages[$availableLanguageID] = $this->getLanguage($availableLanguageID);
-				}
+		foreach ($this->getLanguages() as $languageID => $language) {
+			if ($language->hasContent) {
+				$availableLanguages[$languageID] = $language;
 			}
 		}
 		
-		DatabaseObject::sort($availableLanguages, 'languageName');
 		return $availableLanguages;
 	}
 	
