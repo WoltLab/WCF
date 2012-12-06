@@ -31,17 +31,10 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 	 */
 	public $applicationEditor = null;
 	
-	protected static $i = 0;
-	
 	/**
 	 * Assigns a list of applications to a group and computes cookie domain and path.
 	 */
 	public function rebuild() {
-		self::$i++;
-		if (self::$i > 10) {
-			throw new \wcf\system\exception\SystemException("Infinite loop");
-		}
-		
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
@@ -97,8 +90,6 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		WCF::getDB()->commitTransaction();
-		
-		$this->rebuild();
 	}
 	
 	/**
