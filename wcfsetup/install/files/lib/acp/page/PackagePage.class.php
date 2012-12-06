@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * @subpackage	acp.page
  * @category	Community Framework
  */
-class PackageViewPage extends AbstractPage {
+class PackagePage extends AbstractPage {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */

@@ -19,7 +19,7 @@
 		<item name="wcf.acp.application.domainPath"><![CDATA[Pfad]]></item>
 		<item name="wcf.acp.application.domainPath.description"><![CDATA[Geben Sie den Pfad an, über den diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, so geben Sie bitte „/community/forum/“ ein.]]></item>
 		<item name="wcf.acp.application.edit"><![CDATA[Anwendung bearbeiten]]></item>
-		<item name="wcf.acp.application.edit.title"><![CDATA[Anwendung bearbeiten: „<a href="{link controller='PackageView' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>“]]></item>
+		<item name="wcf.acp.application.edit.title"><![CDATA[Anwendung bearbeiten: „<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>“]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installierte Anwendungen]]></item>
 		<item name="wcf.acp.application.management"><![CDATA[Anwendungen verwalten]]></item>
 		<item name="wcf.acp.application.primaryApplication"><![CDATA[Primäre Anwendung]]></item>
