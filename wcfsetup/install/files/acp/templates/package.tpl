@@ -134,7 +134,7 @@
 											{else}
 												<img src="{@$__wcf->getPath()}icon/update.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="icon16 disabled" />
 											{/if}
-											{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $requiredPackage->package != 'com.woltlab.wcf' && $requiredPackage->packageID != PACKAGE_ID}
+											{if $requiredPackage->canUninstall()}
 												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 jsTooltip jsUninstallButton" data-objectID="{@$requiredPackage->packageID}" data-confirm-message="{lang package=$requiredPackage}wcf.acp.package.uninstallation.confirm{/lang}" />
 											{else}
 												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 disabled" />
@@ -194,7 +194,7 @@
 											{else}
 												<img src="{@$__wcf->getPath()}icon/update.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="icon16 disabled" />
 											{/if}
-											{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $dependentPackage->package != 'com.woltlab.wcf' && $dependentPackage->packageID != PACKAGE_ID}
+											{if $dependentPackage->canUninstall()}
 												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 jsTooltip jsUninstallButton" data-objectID="{@$dependentPackage->packageID}" data-confirm-message="{lang package=$dependentPackage}wcf.acp.package.uninstallation.confirm{/lang}" />
 											{else}
 												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 disabled" />
