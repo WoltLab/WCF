@@ -306,8 +306,6 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 			));
 		}
 		
-		$url = LinkHandler::getInstance()->getLink('Package', array(), 'action=openQueue&processNo='.$processNo);
-		HeaderUtil::redirect($url);
-		exit;
+		self::openQueue(0, $processNo);
 	}
 }

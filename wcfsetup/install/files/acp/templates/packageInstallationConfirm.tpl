@@ -73,35 +73,6 @@
 	{event name='propertyFields'}
 </fieldset>
 
-{if $updatableInstances|count > 0}
-	<p class="warning">{lang}wcf.acp.package.install.updatableInstances.warning{/lang}</p>
-	
-	<div class="container containerPadding marginTop">
-		<hgroup>
-			<h1>{lang}wcf.acp.package.install.updatableInstances{/lang}</h1>
-			<h2>{lang}wcf.acp.package.install.updatableInstances.description{/lang}</h2>
-		</hgroup>
-		
-		<table class="table">
-			<thead>
-				<tr>
-					<th class="columnTitle">{lang}wcf.acp.package.list.name{/lang}</th>
-					<th class="columnDigits">{lang}wcf.acp.package.list.version{/lang}</th>
-				</tr>
-			</thead>
-			
-			<tbody>
-			{foreach from=$updatableInstances item=$package}
-				<tr>
-					<td class="columnTitle"><p><a href="{link controller='Package'}action=install&queueID={@$queueID}&step=changeToUpdate&packageID={@$package.packageID}{/link}">{$package.packageName}{if $package.instanceNo > 1 && $package.instanceName == ''} (#{#$package.instanceNo}){/if}</a></p></td>
-					<td class="columnDigits"><p>{$package.packageVersion}</p></td>
-				</tr>
-			{/foreach}
-			</tbody>
-		</table>
-	</div>
-{/if}
-
 {if $requiredPackages|count > 0}
 	<div class="tabularBox tabularBoxTitle marginTop">
 		<hgroup>
