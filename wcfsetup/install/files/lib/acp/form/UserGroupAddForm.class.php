@@ -34,7 +34,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	/**
 	 * @see	wcf\acp\form\AbstractOptionListForm::$cacheName
 	 */
-	public $cacheName = 'userGroup-option';
+	public $cacheName = 'userGroupOption';
 	
 	/**
 	 * option tree

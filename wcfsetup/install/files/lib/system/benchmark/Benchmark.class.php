@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\benchmark;
-use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\util\FileUtil;
 
@@ -58,10 +57,6 @@ class Benchmark extends SingletonFactory {
 	 */
 	public function start($text, $type = self::TYPE_OTHER) {
 		$newIndex = count($this->items);
-		if ($newIndex == 200) {
-			throw new SystemException("Infinite loop detected, aborting.");
-		}
-		
 		$this->items[$newIndex]['text']	= $text;
 		$this->items[$newIndex]['type']	= $type;
 		$this->items[$newIndex]['before'] = self::getMicrotime();
