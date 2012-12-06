@@ -2,7 +2,7 @@
 namespace wcf\system\worker;
 
 /**
- * Basic implementation for workers.
+ * Abstract implementation of a worker.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

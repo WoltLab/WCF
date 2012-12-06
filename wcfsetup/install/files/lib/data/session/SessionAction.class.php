@@ -26,9 +26,11 @@ class SessionAction extends AbstractDatabaseObjectAction {
 	protected $className = 'wcf\data\session\SessionEditor';
 	
 	/**
-	 * Does nothing.
+	 * Validates the 'keepAlive' action.
 	 */
-	public function validateKeepAlive() { }
+	public function validateKeepAlive() {
+		// does nothing
+	}
 	
 	/**
 	 * Updates session's last activity time to prevent it from expiring.

@@ -35,7 +35,7 @@ class EventListenerCacheBuilder implements ICacheBuilder {
 			}
 			else {
 				if (!isset($data['inheritedActions'][$row['environment']][$row['eventClassName']])) $data['inheritedActions'][$row['environment']][$row['eventClassName']] = array();
-				$data['inheritedActions'][$row['environment']][$row['eventClassName']][$row['eventName']][] = $row;	
+				$data['inheritedActions'][$row['environment']][$row['eventClassName']][$row['eventName']][] = $row;
 			}
 		}
 		
@@ -58,7 +58,7 @@ class EventListenerCacheBuilder implements ICacheBuilder {
 	}
 	
 	/**
-	 * Sorts the event listeners alphabetically.
+	 * Sorts the event listeners by nice value.
 	 */
 	public static function sortListeners($listenerA, $listenerB) {
 		if ($listenerA['niceValue'] < $listenerB['niceValue']) {

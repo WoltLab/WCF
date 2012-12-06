@@ -6,7 +6,7 @@ use wcf\system\Regex;
 use wcf\system\WCF;
 
 /**
- * HTTPRequest sends HTTP requests.
+ * Sends HTTP requests.
  * It supports POST, SSL, Basic Auth etc.
  * 
  * @author	Tim Düsterhus
@@ -19,72 +19,72 @@ use wcf\system\WCF;
 final class HTTPRequest {
 	/**
 	 * given options
-	 * @var array
+	 * @var	array
 	 */
 	private $options = array();
 	
 	/**
 	 * given post parameters
-	 * @var array
+	 * @var	array
 	 */
 	private $postParameters = array();
 	
 	/**
-	 * is the request made via SSL
-	 * @var boolean
+	 * indicates if request will be made via SSL
+	 * @var	boolean
 	 */
 	private $useSSL = false;
 	
 	/**
 	 * target host
-	 * @var string
+	 * @var	string
 	 */
 	private $host;
 	
 	/**
 	 * target port
-	 * @var integer
+	 * @var	integer
 	 */
 	private $port;
-
+	
 	/**
 	 * target path
-	 * @var string
+	 * @var	string
 	 */
 	private $path;
 	
 	/**
 	 * target query string
-	 * @var string
+	 * @var	string
 	 */
 	private $query;
 	
 	/**
 	 * request headers
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	private $headers = array();
 	
 	/**
 	 * reply headers
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	private $replyHeaders = array();
 	
 	/**
 	 * reply body
-	 * @var string
+	 * @var	string
 	 */
 	private $replyBody = '';
 	
 	/**
 	 * reply status code
-	 * @var integer
+	 * @var	integer
 	 */
 	private $statusCode = 0;
 	
 	/**
-	 * Constructs a new request.
+	 * Constructs a new instance of HTTPRequest.
 	 * 
 	 * @param	string		$url		URL to connect to
 	 * @param	array<string>	$options
@@ -115,7 +115,7 @@ final class HTTPRequest {
 	/**
 	 * Parses the given URL and applies PROXY_SERVER_HTTP.
 	 * 
-	 * @param	string	$url
+	 * @param	string		$url
 	 */
 	private function setURL($url) {
 		if (PROXY_SERVER_HTTP) {
@@ -225,10 +225,12 @@ final class HTTPRequest {
 				$this->replyBody = $newRequest->replyBody;
 				return;
 			break;
+			
 			case '200':
 			case '204':
 				// we are fine
 			break;
+			
 			default:
 				throw new SystemException("Got status '".$statusCode."' and I don't know how to handle it");
 			break;
@@ -245,7 +247,7 @@ final class HTTPRequest {
 	/**
 	 * Returns an array with the replied data.
 	 * 
-	 * @return array
+	 * @return	array
 	 */
 	public function getReply() {
 		return array(
@@ -258,7 +260,7 @@ final class HTTPRequest {
 	/**
 	 * Sets options and applies default values when an option is omitted.
 	 * 
-	 * @param array $options
+	 * @param	array		$options
 	 */
 	private function setOptions(array $options) {
 		if (!isset($options['timeout'])) {
@@ -290,9 +292,9 @@ final class HTTPRequest {
 	 * When an empty value is given existing headers of this name will be remove. When append
 	 * is set to false existing values will be overwritten.
 	 * 
-	 * @param	string	$name
-	 * @param	string	$value
-	 * @param	boolean	$append
+	 * @param	string		$name
+	 * @param	string		$value
+	 * @param	boolean		$append
 	 */
 	public function addHeader($name, $value, $append = false) {
 		if ($value === '') {

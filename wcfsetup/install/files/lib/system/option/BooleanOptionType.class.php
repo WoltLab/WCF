@@ -5,7 +5,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
 /**
- * BooleanOptionType is an implementation of IOptionType for boolean values.
+ * Option type implementation for boolean values.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

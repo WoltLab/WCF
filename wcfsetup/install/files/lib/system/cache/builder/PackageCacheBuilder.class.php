@@ -3,7 +3,7 @@ namespace wcf\system\cache\builder;
 use wcf\data\package\PackageList;
 
 /**
- * Caches all registered packages.
+ * Caches all installed packages.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

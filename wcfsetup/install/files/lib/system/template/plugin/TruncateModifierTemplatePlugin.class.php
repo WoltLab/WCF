@@ -4,7 +4,7 @@ use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
 
 /**
- * The 'truncate' modifier truncates a string.
+ * Template modifier plugin which truncates a string.
  * 
  * Usage:
  * 	{$foo|truncate:35:' and more'}

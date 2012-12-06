@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system;
-use \wcf\system\exception\SystemException;
+use wcf\system\exception\SystemException;
 
 /**
- * Represents a regex.
+ * Represents a regular expression.
  * 
  * @author	Tim Düsterhus
  * @copyright	2011-2012 Tim Düsterhus

@@ -74,7 +74,7 @@ class Request {
 	 * @return	string
 	 */
 	public function getClassName() {
-		return $this->className; 
+		return $this->className;
 	}
 	
 	/**

@@ -5,7 +5,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * TextareaOptionType is an implementation of IOptionType for 'textarea' tags.
+ * Option type implementation for textareas.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

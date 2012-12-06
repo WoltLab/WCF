@@ -3,11 +3,11 @@ namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateScriptingCompiler;
 
 /**
- * The 'lang' compiler function compiles dynamic language variables.
+ * Template compiler plugin which compiles dynamic language variables.
  * 
  * Usage:
- *	{lang}$blah{/lang}
- *	{lang var=$x}foo{/lang}
+ * 	{lang}$blah{/lang}
+ * 	{lang var=$x}foo{/lang}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

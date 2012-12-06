@@ -59,7 +59,7 @@ class TemplateGroup extends DatabaseObject {
 	 * Generates the select list.
 	 * 
 	 * @param	integer		$parentID		id of the parent template group
-	 * @param	integer		$depth 			current list depth
+	 * @param	integer		$depth			current list depth
 	 * @param	array		$ignore			list of template group ids to ignore in result
 	 */
 	protected static function makeSelectList($parentID = 0, $depth = 0, $ignore = array()) {

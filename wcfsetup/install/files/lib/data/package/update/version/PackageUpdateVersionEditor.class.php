@@ -10,7 +10,7 @@ use wcf\data\DatabaseObjectEditor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package.update.version
- * @categor 	Community Framework
+ * @category	Community Framework
  */
 class PackageUpdateVersionEditor extends DatabaseObjectEditor {
 	/**

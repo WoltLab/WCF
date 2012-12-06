@@ -15,7 +15,7 @@
 </header>
 
 {if $cleared}
-	<p class="success">{lang}wcf.acp.cache.clear.success{/lang}</p>	
+	<p class="success">{lang}wcf.acp.cache.clear.success{/lang}</p>
 {/if}
 
 <div class="container containerPadding marginTop">

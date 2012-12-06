@@ -25,7 +25,7 @@ class ACPSessionAccessLog extends DatabaseObject {
 	
 	/**
 	 * Returns true, if the URI of this log entry is protected.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function hasProtectedURI() {

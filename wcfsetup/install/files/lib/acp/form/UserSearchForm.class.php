@@ -251,7 +251,7 @@ class UserSearchForm extends UserOptionListForm {
 			ON		(option_value.userID = user_table.userID)";
 		
 		// build search condition
-		$this->conditions = new PreparedStatementConditionBuilder(); 
+		$this->conditions = new PreparedStatementConditionBuilder();
 		
 		// static fields
 		$this->buildStaticConditions();
@@ -266,7 +266,7 @@ class UserSearchForm extends UserOptionListForm {
 		$statement = WCF::getDB()->prepareStatement($sql.$this->conditions, $this->maxResults);
 		$statement->execute($this->conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
-			$this->matches[] = $row['userID'];	
+			$this->matches[] = $row['userID'];
 		}
 	}
 	

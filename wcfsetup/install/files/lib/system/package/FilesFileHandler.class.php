@@ -4,7 +4,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
 /**
- * FilesFileHandler is a FileHandler implementation for the installation of regular files.
+ * File handler implementation for the installation of regular files.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

@@ -20,7 +20,6 @@ use wcf\system\form\element;
 use wcf\system\form\FormDocument;
 use wcf\system\form;
 use wcf\system\language\LanguageFactory;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
@@ -91,7 +90,7 @@ class PackageInstallationDispatcher {
 	 * Installs node components and returns next node.
 	 * 
 	 * @param	string		$node
-	 * @return	PackageInstallationStep
+	 * @return	wcf\system\package\PackageInstallationStep
 	 */
 	public function install($node) {
 		$nodes = $this->nodeBuilder->getNodeData($node);
@@ -155,7 +154,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Returns current package archive.
 	 * 
-	 * @return	PackageArchive
+	 * @return	wcf\system\package\PackageArchive
 	 */
 	public function getArchive() {
 		if ($this->archive === null) {
@@ -235,7 +234,7 @@ class PackageInstallationDispatcher {
 			if (count($this->getArchive()->getExcludedPackages()) > 0) {
 				$sql = "INSERT INTO	wcf".WCF_N."_package_exclusion 
 							(packageID, excludedPackage, excludedPackageVersion)
-					VALUES 		(?, ?, ?)";
+					VALUES		(?, ?, ?)";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				
 				foreach ($this->getArchive()->getExcludedPackages() as $excludedPackage) {
@@ -383,7 +382,7 @@ class PackageInstallationDispatcher {
 			if (isset($infoValues[$language->languageCode])) {
 				$value = $infoValues[$language->languageCode];
 			}
-		
+			
 			$statement->execute(array(
 				$language->languageID,
 				'wcf.acp.package.'.$infoName.'.package'.$package->packageID,
@@ -447,6 +446,7 @@ class PackageInstallationDispatcher {
 		return $step;
 	}
 	
+	// @todo: comment
 	protected function selectOptionalPackages($currentNode, array $nodeData) {
 		$installationStep = new PackageInstallationStep();
 		
@@ -497,7 +497,7 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Extracts files from .tar (or .tar.gz) archive and installs them
-	 *
+	 * 
 	 * @param	string			$targetDir
 	 * @param	string			$sourceArchive
 	 * @param	FileHandler		$fileHandler
@@ -589,6 +589,7 @@ class PackageInstallationDispatcher {
 		}
 	}
 	
+	// @todo: comment
 	protected function promptOptionalPackages(array $packages) {
 		if (!PackageInstallationFormManager::findForm($this->queue, 'optionalPackages')) {
 			$container = new container\MultipleSelectionFormElementContainer();
@@ -640,7 +641,7 @@ class PackageInstallationDispatcher {
 	 * starts the installation, update or uninstallation of the first entry.
 	 * 
 	 * @param	integer		$parentQueueID
-	 * @param 	integer		$processNo
+	 * @param	integer		$processNo
 	 */
 	public static function openQueue($parentQueueID = 0, $processNo = 0) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -677,7 +678,7 @@ class PackageInstallationDispatcher {
 	public static function checkPackageInstallationQueue() {
 		$sql = "SELECT		queueID
 			FROM		wcf".WCF_N."_package_installation_queue
-			WHERE 		userID = ?
+			WHERE		userID = ?
 					AND parentQueueID = 0
 					AND done = 0
 			ORDER BY	queueID ASC";
@@ -835,7 +836,7 @@ class PackageInstallationDispatcher {
 	 * @param	string		$function
 	 * @return	boolean
 	 * @see		http://de.php.net/manual/en/function.function-exists.php#77980
-	 */	
+	 */
 	protected static function functionExists($function) {
 		if (extension_loaded('suhosin')) {
 			$blacklist = @ini_get('suhosin.executor.func.blacklist');

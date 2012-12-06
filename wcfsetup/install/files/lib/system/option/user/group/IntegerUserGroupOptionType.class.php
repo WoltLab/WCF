@@ -3,8 +3,8 @@ namespace wcf\system\option\user\group;
 use wcf\system\option\IntegerOptionType;
 
 /**
- * IntegerUserGroupOptionType is an implementation of IUserGroupOptionType for
- * integer values.
+ * User group option type implementation for integer input fields.
+ * 
  * The merge of option values returns the highest value.
  * 
  * @author	Marcel Werk

@@ -4,11 +4,11 @@ use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateEngine;
 
 /**
- * The 'cycle' template function cycles through given values.
+ * Template function plugin which cycles through given values.
  * 
  * Usage:
- *	{cycle values="#eee,#fff"}
- *
+ * 	{cycle values="#eee,#fff"}
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

@@ -4,11 +4,11 @@ use wcf\system\template\TemplateEngine;
 use wcf\util\FileUtil;
 
 /**
- * The 'filesize' modifier formats a filesize (given in bytes).
+ * Template modifier plugin which formats a filesize (given in bytes).
  * 
  * Usage:
- *	{$string|filesize}
- *	{123456789|filesize}
+ * 	{$string|filesize}
+ * 	{123456789|filesize}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

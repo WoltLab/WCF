@@ -3,16 +3,16 @@ namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateEngine;
 
 /**
- * The 'smallpages' template function is used to generate simple sliding pagers.
+ * Template function plugin which generates simple sliding pagers.
  * 
  * Usage:
- *	{smallpages pages=10 link='page-%d.html'}
- *	
- *	assign to variable 'output'; do not print: 
- *	{smallpages pages=10 link='page-%d.html' assign='output'}
- *	
- *	assign to variable 'output' and do print also:
- *	{smallpages pages=10 link='page-%d.html' assign='output' print=true}
+ * 	{smallpages pages=10 link='page-%d.html'}
+ * 	
+ * 	assign to variable 'output'; do not print: 
+ * 	{smallpages pages=10 link='page-%d.html' assign='output'}
+ * 	
+ * 	assign to variable 'output' and do print also:
+ * 	{smallpages pages=10 link='page-%d.html' assign='output' print=true}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

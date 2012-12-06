@@ -3,7 +3,7 @@ namespace wcf\system\cache\builder;
 use wcf\data\template\listener\TemplateListenerList;
 
 /**
- * Caches template listener code.
+ * Caches the template listener code for a certain template in a certain environment.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -17,7 +17,7 @@ class TemplateListenerCodeCacheBuilder implements ICacheBuilder {
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-		list($environment, $templateName) = explode('-', $cacheResource['cache']); 
+		list($environment, $templateName) = explode('-', $cacheResource['cache']);
 		
 		// get template codes for specified template
 		$templateListenerList = new TemplateListenerList();

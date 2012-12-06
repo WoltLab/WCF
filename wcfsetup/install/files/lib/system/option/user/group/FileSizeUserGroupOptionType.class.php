@@ -3,8 +3,8 @@ namespace wcf\system\option\user\group;
 use wcf\system\option\FileSizeOptionType;
 
 /**
- * FileSizeUserGroupOptionType is an implementation of IUserGroupOptionType for
- * file sizes.
+ * User group option type implementation for file size input fields.
+ * 
  * The merge of option values returns the highest value.
  * 
  * @author	Tim Düsterhus

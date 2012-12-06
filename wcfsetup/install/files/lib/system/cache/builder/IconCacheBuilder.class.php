@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\data\package\Package;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 

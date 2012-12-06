@@ -15,7 +15,7 @@
 <p class="info">{lang}wcf.acp.cronjob.intro{/lang}</p>
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.form.{$action}.success{/lang}</p>	
+	<p class="success">{lang}wcf.global.form.{$action}.success{/lang}</p>
 {/if}
 
 <div class="contentNavigation">

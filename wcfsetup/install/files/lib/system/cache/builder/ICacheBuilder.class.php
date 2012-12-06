@@ -2,7 +2,7 @@
 namespace wcf\system\cache\builder;
 
 /**
- * A CacheBuilder provides data to the CacheHandler that ought to be cached.
+ * A cache builder provides data for the cache handler that ought to be cached.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

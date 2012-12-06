@@ -4,7 +4,7 @@ use wcf\system\exception\SystemException;
 use wcf\util\ClassUtil;
 
 /**
- * Abstract class to handle nested categories.
+ * Abstract implementation of a ACP search result provider with nested categories.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

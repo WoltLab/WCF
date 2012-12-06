@@ -4,7 +4,7 @@ use wcf\system\exception\SystemException;
 
 /**
  * Basis class for singleton classes.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -42,13 +42,12 @@ abstract class SingletonFactory {
 	 */
 	public final function __sleep() {
 		throw new SystemException('Serializing of Singletons is not allowed');
-		// Turret: I'm different
 	}
 	
 	/**
 	 * Returns an unique instance of current child class.
 	 * 
-	 * @return	SingletonFactory
+	 * @return	wcf\system\SingletonFactory
 	 */
 	public static final function getInstance() {
 		$className = get_called_class();
@@ -58,11 +57,11 @@ abstract class SingletonFactory {
 		
 		return self::$__singletonObjects[$className];
 	}
-
+	
 	/**
 	 * Returns whether this singleton is already initialized.
 	 * 
-	 * @return boolean
+	 * @return	boolean
 	 */
 	public static final function isInitialized() {
 		$className = get_called_class();

@@ -13,17 +13,18 @@ namespace wcf\data;
  */
 interface IStorableObject {
 	/**
-	 * Returns the value of a object data variable.
+	 * Returns the value of a object data variable with the given name.
 	 * 
-	 * @param	string		$name		variable name
-	 * @return	mixed		value
+	 * @param	string		$name
+	 * @return	mixed
 	 */
 	public function __get($name);
 	
 	/**
-	 * Determines if a variable is set and is not NULL.
+	 * Determines if the object data variable with the given name is set and
+	 * is not NULL.
 	 * 
-	 * @param	string		$name		variable name
+	 * @param	string		$name
 	 * @return	boolean
 	 */
 	public function __isset($name);

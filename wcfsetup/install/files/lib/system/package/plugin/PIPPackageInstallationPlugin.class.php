@@ -3,7 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\system\WCF;
 
 /**
- * This PIP installs, updates or deletes package installation plugins.
+ * Installs, updates and deletes package installation plugins.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

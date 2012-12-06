@@ -3,7 +3,7 @@ namespace wcf\system\session;
 use wcf\util\HeaderUtil;
 
 /**
- * SessionFactory handles session for active user.
+ * Handles the session of the active user.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

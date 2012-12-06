@@ -27,7 +27,7 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.form.{@$action}.success{/lang}</p>	
+	<p class="success">{lang}wcf.global.form.{@$action}.success{/lang}</p>
 {/if}
 
 <div class="contentNavigation">
@@ -117,7 +117,7 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="action" value="{@$action}" />
- 	</div>
+	</div>
 </form>
 
 {include file='footer'}

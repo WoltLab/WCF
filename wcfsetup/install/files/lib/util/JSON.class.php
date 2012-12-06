@@ -4,7 +4,7 @@ use wcf\system\exception\SystemException;
 
 /**
  * Provides methods for JSON.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

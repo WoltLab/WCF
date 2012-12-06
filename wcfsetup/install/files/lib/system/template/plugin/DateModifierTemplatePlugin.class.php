@@ -4,13 +4,13 @@ use wcf\system\template\TemplateEngine;
 use wcf\util\DateUtil;
 
 /**
- * The 'date' modifier formats a unix timestamp. The default date format contains
- * year, month and day.
+ * Template modifier plugin which formats a unix timestamp.
+ * The default date format contains year, month and day.
  * 
  * Usage:
- *	{$timestamp|date}
- *	{"132845333"|date:"Y-m-d"}
- *
+ * 	{$timestamp|date}
+ * 	{"132845333"|date:"Y-m-d"}
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

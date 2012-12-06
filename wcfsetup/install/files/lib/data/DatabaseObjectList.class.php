@@ -38,7 +38,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * ids of result objects
 	 * @var	array<integer>
 	 */
-	public $objectIDs = null; 
+	public $objectIDs = null;
 	
 	/**
 	 * sql offset

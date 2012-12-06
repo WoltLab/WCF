@@ -3,7 +3,7 @@ namespace wcf\data\template\listener;
 use wcf\data\DatabaseObjectEditor;
 
 /**
- * Provides functions to edit template listener.
+ * Provides functions to edit template listeners.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

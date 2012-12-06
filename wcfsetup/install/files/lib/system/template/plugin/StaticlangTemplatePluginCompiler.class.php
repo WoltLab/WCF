@@ -3,10 +3,10 @@ namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateScriptingCompiler;
 
 /**
- * The 'staticlang' compiler function gets the source of a language variables.
+ * Template compiler plugin which gets the source of a language variables.
  * 
  * Usage:
- *	{staticlang}$blah{/staticlang}
+ * 	{staticlang}$blah{/staticlang}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

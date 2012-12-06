@@ -26,17 +26,17 @@ class Cronjob extends DatabaseObject {
 	protected static $databaseTableIndexName = 'cronjobID';
 	
 	/**
-	 * Cronjob is available for execution.
+	 * indicates that cronjob is available for execution
 	 */
 	const READY = 0;
 	
 	/**
-	 * Cronjob is currently processed, preventing multiple execution.
+	 * indicates that cronjob is currently processed, preventing multiple execution
 	 */
 	const PENDING = 1;
 	
 	/**
-	 * Cronjob is being executed.
+	 * indicates that cronjob is executed at the moment
 	 */
 	const EXECUTING = 2;
 	
@@ -95,7 +95,7 @@ class Cronjob extends DatabaseObject {
 	/**
 	 * Returns true if current user may enable or disable this cronjob.
 	 * 
-	 * @return	true
+	 * @return	boolean
 	 */
 	public function canBeDisabled() {
 		return $this->canBeDisabled;

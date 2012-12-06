@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system;
+use wcf\acp\form\MasterPasswordForm;
+use wcf\acp\form\MasterPasswordInitForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\AJAXException;
@@ -8,10 +10,11 @@ use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\template\ACPTemplateEngine;
-use wcf\util;
+use wcf\util\FileUtil;
+use wcf\util\HeaderUtil;
 
 /**
- * Extends WCF class with functions for the admin control panel.
+ * Extends WCF class with functions for the ACP.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -29,7 +32,7 @@ class WCFACP extends WCF {
 		self::$autoloadDirectories['wcf'] = WCF_DIR . 'lib/';
 		
 		// define tmp directory
-		if (!defined('TMP_DIR')) define('TMP_DIR', util\FileUtil::getTempFolder());
+		if (!defined('TMP_DIR')) define('TMP_DIR', FileUtil::getTempFolder());
 		
 		// start initialization
 		$this->initMagicQuotes();
@@ -65,7 +68,7 @@ class WCFACP extends WCF {
 				$application = ApplicationHandler::getInstance()->getActiveApplication();
 				$path = $application->getPageURL() . 'acp/index.php/Login/' . SID_ARG_1ST;
 				
-				util\HeaderUtil::redirect($path);
+				HeaderUtil::redirect($path);
 				exit;
 			}
 			else {
@@ -117,7 +120,7 @@ class WCFACP extends WCF {
 		self::getTPL()->assign(array(
 			'baseHref' => $host . $path,
 			'quickAccessPackages' => $this->getQuickAccessPackages(),
-			// todo: 'timezone' => util\DateUtil::getTimezone()
+			// todo: 'timezone' => \wcf\util\DateUtil::getTimezone()
 		));
 	}
 	
@@ -135,7 +138,7 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * Initialises the active package.
+	 * Initializes the active package.
 	 */
 	protected function initPackage() {
 		// define active package id
@@ -190,12 +193,12 @@ class WCFACP extends WCF {
 				require_once(WCF_DIR.'acp/masterPassword.inc.php');
 			}
 			if (defined('MASTER_PASSWORD') && defined('MASTER_PASSWORD_SALT')) {
-				$form = new \wcf\acp\form\MasterPasswordForm();
+				$form = new MasterPasswordForm();
 				$form->__run();
 				exit;
 			}
 			else {
-				$form = new \wcf\acp\form\MasterPasswordInitForm();
+				$form = new MasterPasswordInitForm();
 				$form->__run();
 				exit;
 			}

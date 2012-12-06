@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
 
 /**
  * Shows the server add form.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

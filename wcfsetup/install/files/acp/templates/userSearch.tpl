@@ -20,9 +20,9 @@
 {/if}
 
 {*if $deletedUsers}
-	<p class="success">{lang}wcf.acp.user.delete.success{/lang}</p>	
+	<p class="success">{lang}wcf.acp.user.delete.success{/lang}</p>
 {elseif $deletedUsers === 0}
-	<p class="error">{lang}wcf.acp.user.delete.error{/lang}</p>	
+	<p class="error">{lang}wcf.acp.user.delete.error{/lang}</p>
 {/if*}
 
 <div class="contentNavigation">
@@ -185,7 +185,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
- 	</div>
+	</div>
 </form>
 
 {include file='footer'}

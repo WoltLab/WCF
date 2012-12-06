@@ -71,7 +71,8 @@ class Benchmark extends SingletonFactory {
 	}
 	
 	/**
-	 * Stops an active benchmark.
+	 * Stops the benchmark with the given index. If no index is given, the
+	 * latest benchmark is stoped.
 	 * 
 	 * @param	integer		$index
 	 */
@@ -81,7 +82,7 @@ class Benchmark extends SingletonFactory {
 		}
 		
 		$this->items[$index]['after'] = self::getMicrotime();
-		$this->items[$index]['use']  = self::compareMicrotimes($this->items[$index]['before'], $this->items[$index]['after']);
+		$this->items[$index]['use'] = self::compareMicrotimes($this->items[$index]['before'], $this->items[$index]['after']);
 		$this->items[$index]['end'] = self::compareMicrotimes($this->startTime, $this->items[$index]['after']);
 		if ($this->items[$index]['type'] == self::TYPE_SQL_QUERY) {
 			$this->queryCount++;
@@ -139,7 +140,7 @@ class Benchmark extends SingletonFactory {
 	 * 
 	 * @param	float		$startTime
 	 * @param	float		$endTime
-	 * @return	float		difference
+	 * @return	float
 	 */
 	protected static function compareMicrotimes($startTime, $endTime) {
 		return round($endTime - $startTime, 4);

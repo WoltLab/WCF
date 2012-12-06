@@ -48,5 +48,5 @@ abstract class MailSender {
 	 * 
 	 * @param	wcf\system\mail\Mail	$mail
 	 */
-	abstract public function sendMail(Mail $mail); 
+	abstract public function sendMail(Mail $mail);
 }

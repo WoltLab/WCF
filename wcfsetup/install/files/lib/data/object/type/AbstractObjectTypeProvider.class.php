@@ -2,8 +2,8 @@
 namespace wcf\data\object\type;
 
 /**
- * Basic implementation for object type providers.
- *
+ * Abstract implementation of an object type provider.
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -13,13 +13,13 @@ namespace wcf\data\object\type;
  */
 abstract class AbstractObjectTypeProvider implements IObjectTypeProvider {
 	/**
-	 * DatabaseObject class name
+	 * class name of the provided database objects
 	 * @var	string
 	 */
 	public $className = '';
 	
 	/**
-	 * DatabaseObjectList class name
+	 * list class name of the provided database objects
 	 * @var	string
 	 */
 	public $listClassName = '';
@@ -30,7 +30,7 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider {
 	public function getObjectByID($objectID) {
 		return new $this->className($objectID);
 	}
-
+	
 	/**
 	 * @see	wcf\data\object\type\IObjectTypeProvider::getObjectsByIDs()
 	 */

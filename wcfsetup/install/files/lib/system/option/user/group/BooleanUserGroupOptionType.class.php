@@ -3,8 +3,8 @@ namespace wcf\system\option\user\group;
 use wcf\system\option\BooleanOptionType;
 
 /**
- * BooleanUserGroupOptionType is an implementation of IUserGroupOptionType for
- * boolean values.
+ * User group option type implementation for boolean values.
+ * 
  * The merge of option values returns true, if at least one value is true.
  *
  * @author	Marcel Werk

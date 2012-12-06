@@ -124,19 +124,21 @@ class MailWorker extends AbstractWorker {
 	 * @param	wcf\data\user\User	$user
 	 */
 	protected function sendMail(User $user) {
-		// send mail
 		try {
 			$mail = new Mail(array($user->username => $user->email), $this->userMailData['subject'], StringUtil::replace('{$username}', $user->username, $this->mailData['text']), $this->mailData['from']);
 			if ($this->mailData['enableHTML']) $mail->setContentType('text/html');
 			$mail->send();
 		}
-		catch (SystemException $e) {} // ignore errors
+		catch (SystemException $e) {
+			// ignore errors
+		}
 	}
 	
 	/**
 	 * @see	wcf\system\worker\IWorker::getProceedURL()
 	 */
 	public function getProceedURL() {
+		// todo: use LinkHander?
 		return 'index.php?page=UserList' . SID_ARG_2ND_NOT_ENCODED;
 	}
 }

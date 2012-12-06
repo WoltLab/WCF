@@ -6,8 +6,7 @@ use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
 /**
- * TextareaI18nOptionType is an implementation of IOptionType for 'textarea' tags
- * with i18n support.
+ * Option type implementation for textareas with i18n support.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

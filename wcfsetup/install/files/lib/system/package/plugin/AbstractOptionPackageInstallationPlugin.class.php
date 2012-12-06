@@ -4,8 +4,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
- * Default implementation of some functions for package installation plugin for
- * options.
+ * Abstract implementation of a package installation plugin for options.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH
@@ -23,7 +22,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		
 		$xml = $this->getXML($this->instruction['value']);
 		$xpath = $xml->xpath();
-		
 		
 		if ($this->installation->getAction() == 'update') {
 			// handle delete first
@@ -161,7 +159,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			if (!preg_match("/^[\w-\.]+$/", $data['name'])) {
 				$matches = array();
 				preg_match_all("/(\W)/", $data['name'], $matches);
-				throw new SystemException("The user option '".$data['name']."' has at least one non-alphanumeric character (underscore is permitted): (".implode("), ( ", $matches[1]).")."); 
+				throw new SystemException("The user option '".$data['name']."' has at least one non-alphanumeric character (underscore is permitted): (".implode("), ( ", $matches[1]).").");
 			}
 			
 			$this->saveOption($data, $data['categoryname']);
@@ -173,8 +171,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 */
 	public function hasUninstall() {
 		$hasUninstallOptions = parent::hasUninstall();
-		$sql = "SELECT 	COUNT(categoryID) AS count
-			FROM 	wcf".WCF_N."_".$this->tableName."_category
+		$sql = "SELECT	COUNT(categoryID) AS count
+			FROM	wcf".WCF_N."_".$this->tableName."_category
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
@@ -183,7 +181,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	}
 	
 	/**
-	 * Uninstalls option categories and options.
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// delete options
@@ -195,11 +193,11 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
 	}
-
+	
 	/**
 	 * Installs option categories.
 	 * 
-	 * @param 	array		$category
+	 * @param	array		$category
 	 */
 	protected function saveCategory($category) {
 		// search existing category
@@ -257,8 +255,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	/**
 	 * Installs options.
 	 * 
-	 * @param 	array 		$option
-	 * @param 	string		$categoryName
+	 * @param	array		$option
+	 * @param	string		$categoryName
 	 * @param	integer		$existingOptionID
 	 */
 	protected abstract function saveOption($option, $categoryName, $existingOptionID = 0);

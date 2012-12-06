@@ -5,12 +5,12 @@ use wcf\system\WCF;
 use wcf\util\DateUtil;
 
 /**
- * The 'plainTime' modifier formats a unix timestamp.
+ * Template modifier plugin which formats a unix timestamp.
  * Default date format contains year, month, day, hour and minute.
  * 
  * Usage:
- *	{$timestamp|plainTime}
- *	{"132845333"|plainTime}
+ * 	{$timestamp|plainTime}
+ * 	{"132845333"|plainTime}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

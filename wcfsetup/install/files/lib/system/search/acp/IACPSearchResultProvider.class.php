@@ -2,7 +2,7 @@
 namespace wcf\system\search\acp;
 
 /**
- * Default implementation for ACP search providers.
+ * Every ACP search provider has to implement this interface.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

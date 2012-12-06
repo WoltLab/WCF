@@ -2,7 +2,7 @@
 namespace wcf\system\worker;
 
 /**
- * Basic interface for workers.
+ * Every worker has to implement this interface.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

@@ -73,7 +73,8 @@ class ObjectTypeCache extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets an object type definition by id
+	 * Returns the object type definition with the given id or null if no such
+	 * object type definition exists.
 	 * 
 	 * @param	integer		$definitionID
 	 * @return	wcf\data\object\type\definition\ObjectTypeDefinition
@@ -87,7 +88,8 @@ class ObjectTypeCache extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets an object type definition by name
+	 * Returns the object type definition with the given name or null if no
+	 * such object type definition exists.
 	 * 
 	 * @param	string		$definitionName
 	 * @return	wcf\data\object\type\definition\ObjectTypeDefinition
@@ -101,7 +103,8 @@ class ObjectTypeCache extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns a list of definitions by category name or 'null' if category name is invalid.
+	 * Returns a list of definitions by category name or 'null' if the given
+	 * category name is invalid.
 	 * 
 	 * @param	string		$categoryName
 	 * @return	array<wcf\data\object\type\definition\ObjectTypeDefinition>
@@ -120,7 +123,8 @@ class ObjectTypeCache extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets an object type by id
+	 * Returns the object type with the given name or null if no such object
+	 * type exists.
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @return	wcf\data\object\type\ObjectType
@@ -134,7 +138,7 @@ class ObjectTypeCache extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns a list of object types.
+	 * Returns the list of object type with the given definition name.
 	 * 
 	 * @param	string		$definitionName
 	 * @return	array<wcf\data\object\type\ObjectType>
@@ -148,7 +152,8 @@ class ObjectTypeCache extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns an object type.
+	 * Returns the object type with the given definition name and given name
+	 * or null of no such object type exists.
 	 * 
 	 * @param	string		$definitionName
 	 * @param	string		$objectTypeName

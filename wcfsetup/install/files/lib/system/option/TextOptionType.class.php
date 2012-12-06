@@ -6,7 +6,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * TextOptionType is an implementation of IOptionType for 'input type="text"' tags.
+ * Option type implementation for textual input fields.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH

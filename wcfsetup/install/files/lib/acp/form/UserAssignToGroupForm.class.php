@@ -14,7 +14,7 @@ use wcf\util\ArrayUtil;
 
 /**
  * Shows the assign user to group form.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

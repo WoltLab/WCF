@@ -45,7 +45,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	protected $allowGuestAccess = array('executeCronjobs');
 	
 	/**
-	 * Validates permissions and parameters
+	 * @see	wcf\data\IDeleteAction::validateDelete()
 	 */
 	public function validateDelete() {
 		parent::validateDelete();
@@ -58,7 +58,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	}
 	
 	/**
-	 * Validates permissions and parameters
+	 * @see	wcf\data\AbstractDatabaseAction::validateUpdate()
 	 */
 	public function validateUpdate() {
 		parent::validateUpdate();
@@ -94,7 +94,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	}
 	
 	/**
-	 * Validates permissions and parameters
+	 * Validates the 'execute' action.
 	 */
 	public function validateExecute() {
 		parent::validateUpdate();
@@ -169,9 +169,11 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	}
 	
 	/**
-	 * Validates permissions and parameters
+	 * Validates the 'executeCronjobs' action.
 	 */
-	public function validateExecuteCronjobs() {}
+	public function validateExecuteCronjobs() {
+		// does nothing
+	}
 	
 	/**
 	 * Executes open cronjobs.

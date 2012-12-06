@@ -6,7 +6,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * PackageInstallationFormManager handels form documents associated with a queue.
+ * Handels form documents associated with a queue.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

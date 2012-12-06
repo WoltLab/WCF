@@ -5,7 +5,7 @@ use wcf\system\language\LanguageFactory;
 
 /**
  * This class provides default implementations for a list of dynamic user options.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -39,9 +39,9 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * Returns the default-form language id    
+	 * Returns the default form language id.
 	 * 
-	 * @return 	integer		$languageID
+	 * @return	integer		$languageID
 	 */
 	protected function getDefaultFormLanguageID() {
 		return LanguageFactory::getInstance()->getDefaultLanguageID();
