@@ -47,7 +47,12 @@ class ApplicationHandler extends SingletonFactory {
 	 */
 	public function getPrimaryApplication() {
 		$packageID = ($this->cache['primary']) ?: PACKAGE_ID;
-		return $this->cache['application'][$packageID];
+		
+		if (isset($this->cache['application'][$packageID])) {
+			return $this->cache['application'][$packageID];
+		}
+		
+		return $this->cache['wcf'];
 	}
 	
 	/**

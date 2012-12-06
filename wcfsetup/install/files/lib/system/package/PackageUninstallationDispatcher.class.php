@@ -14,7 +14,6 @@ use wcf\system\setup\Uninstaller;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
-use wcf\util\FileUtil;
 
 /**
  * Handles the whole uninstallation process.
