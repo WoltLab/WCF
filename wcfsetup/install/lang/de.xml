@@ -19,24 +19,13 @@
 		<item name="wcf.acp.application.domainPath"><![CDATA[Pfad]]></item>
 		<item name="wcf.acp.application.domainPath.description"><![CDATA[Geben Sie den Pfad an, über den diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, so geben Sie bitte „/community/forum/“ ein.]]></item>
 		<item name="wcf.acp.application.edit"><![CDATA[Anwendung bearbeiten]]></item>
-		<item name="wcf.acp.application.edit.title"><![CDATA[Anwendung bearbeiten: „<a href="{link controller='PackageView' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>“]]></item>
-		<item name="wcf.acp.application.group.add"><![CDATA[Anwendungsgruppe hinzufügen]]></item>
-		<item name="wcf.acp.application.group.applications.error.duplicate"><![CDATA[Zwei oder mehr Anwendungen des selben Typs können nicht in einer Gruppe zusammengefasst werden.]]></item>
-		<item name="wcf.acp.application.group.applications.error.notValid"><![CDATA[Eine oder mehrere ausgewählte Anwendungen sind nicht mehr verfügbar.]]></item>
-		<item name="wcf.acp.application.group.applications.error.single"><![CDATA[Eine Gruppe muss aus mindestens zwei Anwendungen bestehen.]]></item>
-		<item name="wcf.acp.application.group.availableApplications"><![CDATA[Verfügbare Anwendungen]]></item>
-		<item name="wcf.acp.application.group.data"><![CDATA[Allgemein]]></item>
-		<item name="wcf.acp.application.group.delete"><![CDATA[Anwendungsgruppe löschen]]></item>
-		<item name="wcf.acp.application.group.delete.confirmMessage"><![CDATA[Wollen Sie die Anwendungsgruppe „{$applicationGroup->groupName}“ wirklich löschen?]]></item>
-		<item name="wcf.acp.application.group.delete.success"><![CDATA[Anwendungsgruppe erfolgreich gelöscht]]></item>
-		<item name="wcf.acp.application.group.edit"><![CDATA[Anwendungsgruppe bearbeiten]]></item>
-		<item name="wcf.acp.application.group.groupName"><![CDATA[Name]]></item>
-		<item name="wcf.acp.application.group.groupName.error.notUnique"><![CDATA[Der Gruppenname muss einzigartig sein.]]></item>
-		<item name="wcf.acp.application.group.noAvailableApplications"><![CDATA[Es ist derzeit keine ausreichende Anzahl Anwendungen verfügbar, um eine Anwendungsgruppe zu erstellen.]]></item>
-		<item name="wcf.acp.application.group.title"><![CDATA[Anwendungsgruppe: „{$applicationGroup->groupName}“]]></item>
-		<item name="wcf.acp.application.independentApplications"><![CDATA[Unabhängige Anwendungen]]></item>
+		<item name="wcf.acp.application.edit.title"><![CDATA[Anwendung bearbeiten: „<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>“]]></item>
+		<item name="wcf.acp.application.list"><![CDATA[Installierte Anwendungen]]></item>
 		<item name="wcf.acp.application.management"><![CDATA[Anwendungen verwalten]]></item>
 		<item name="wcf.acp.application.primaryApplication"><![CDATA[Primäre Anwendung]]></item>
+		<item name="wcf.acp.application.setAsPrimary"><![CDATA[Als primäre Anwendung festlegen]]></item>
+		<item name="wcf.acp.application.setAsPrimary.confirmMessage"><![CDATA[Möchten Sie „{$application->getPackage()->getName()}“ wirklich als primäre Anwendung festlegen?]]></item>
+		<item name="wcf.acp.application.setAsPrimary.success"><![CDATA[„{$application->getPackage()->getName()}“ ist nun die primäre Anwendung]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -205,6 +194,9 @@
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Server auflisten]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Pakete auflisten]]></item>
 		<item name="wcf.acp.menu.link.package.autoupdate"><![CDATA[Automatisches Update]]></item>
+		<item name="wcf.acp.menu.link.pageMenu"><![CDATA[Seitenmenü]]></item>
+		<item name="wcf.acp.menu.link.pageMenu.add"><![CDATA[Menüpunkt hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.pageMenu.list"><![CDATA[Menüpunkte auflisten]]></item>
 		<item name="wcf.acp.menu.link.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.menu.link.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.add"><![CDATA[Benutzer hinzufügen]]></item>
@@ -403,6 +395,27 @@
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren?]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Aktualisierungsdatum]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
+	</category>
+	
+	<category name="wcf.acp.pageMenu">
+		<item name="wcf.acp.pageMenu.add"><![CDATA[Menüpunkt hinzufügen]]></item>
+		<item name="wcf.acp.pageMenu.advanced"><![CDATA[Erweitert]]></item>
+		<item name="wcf.acp.pageMenu.data"><![CDATA[Allgemein]]></item>
+		<item name="wcf.acp.pageMenu.delete.sure"><![CDATA[Möchten Sie den Menüpunkt „{$__menuItem}“ und alle Untermenüpunkte wirklich löschen?]]></item>
+		<item name="wcf.acp.pageMenu.footer"><![CDATA[Fußzeile]]></item>
+		<item name="wcf.acp.pageMenu.header"><![CDATA[Hauptmenü]]></item>
+		<item name="wcf.acp.pageMenu.isDisabled"><![CDATA[Menüpunkt deaktivieren]]></item>
+		<item name="wcf.acp.pageMenu.isLandingPage"><![CDATA[Startseite Ihrer Website]]></item>
+		<item name="wcf.acp.pageMenu.isLandingPage.description"><![CDATA[Beim direkten Aufruf Ihrer Website wird diese Menüpunkt aufgerufen.]]></item>
+		<item name="wcf.acp.pageMenu.list"><![CDATA[Menüpunkte auflisten]]></item>
+		<item name="wcf.acp.pageMenu.menuItemLink"><![CDATA[Link]]></item>
+		<item name="wcf.acp.pageMenu.menuPosition"><![CDATA[Position]]></item>
+		<item name="wcf.acp.pageMenu.menuPosition.footer"><![CDATA[Fußzeile]]></item>
+		<item name="wcf.acp.pageMenu.menuPosition.header"><![CDATA[Hauptmenü]]></item>
+		<item name="wcf.acp.pageMenu.newWindow"><![CDATA[Link in neuem Fenster öffnen]]></item>
+		<item name="wcf.acp.pageMenu.pageMenuItem"><![CDATA[Name]]></item>
+		<item name="wcf.acp.pageMenu.parentMenuItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
+		<item name="wcf.acp.pageMenu.showOrder"><![CDATA[Reihenfolge]]></item>
 	</category>
 	
 	<category name="wcf.acp.search">
@@ -809,5 +822,6 @@
 		<item name="wcf.user.username.error.notUnique"><![CDATA[Dieser Benutzername ist bereits vergeben.]]></item>
 		<item name="wcf.user.username.error.notValid"><![CDATA[Sie haben einen ungültigen Benutzernamen eingegeben.]]></item>
 		<item name="wcf.user.userNote"><![CDATA[{$__wcf->user->username}]]></item>
+		<item name="wcf.user.group"><![CDATA[Benutzergruppe]]></item>
 	</category>
 </language>

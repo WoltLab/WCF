@@ -665,60 +665,10 @@ class PackageInstallationDispatcher {
 			exit;
 		}
 		else {
-			$url = LinkHandler::getInstance()->getLink('Package', array(), 'action='.$packageInstallation['action'].'&queueID='.$packageInstallation['queueID']);
+			$url = LinkHandler::getInstance()->getLink('PackageInstallationConfirm', array(), 'action='.$packageInstallation['action'].'&queueID='.$packageInstallation['queueID']);
 			HeaderUtil::redirect($url);
 			exit;
 		}
-	}
-	
-	/**
-	 * Displays last confirmation before plugin installation.
-	 */
-	public function beginInstallation() {
-		// get requirements
-		$requirements = $this->getArchive()->getRequirements();
-		$openRequirements = $this->getArchive()->getOpenRequirements();
-		
-		$updatableInstances = array();
-		$missingPackages = 0;
-		foreach ($requirements as $key => $requirement) {
-			if (isset($openRequirements[$requirement['name']])) {
-				$requirements[$key]['status'] = 'missing';
-				$requirements[$key]['action'] = $openRequirements[$requirement['name']]['action'];
-				
-				if (!isset($requirements[$key]['file'])) {
-					if ($openRequirements[$requirement['name']]['action'] === 'update') {
-						$requirements[$key]['status'] = 'missingVersion';
-						$requirements[$key]['existingVersion'] = $openRequirements[$requirement['name']]['existingVersion'];
-					}
-					$missingPackages++;
-				}
-				else {
-					$requirements[$key]['status'] = 'delivered';
-				}
-			}
-			else {
-				$requirements[$key]['status'] = 'installed';
-			}
-		}
-		
-		// get other instances
-		if ($this->action == 'install') {
-			$updatableInstances = $this->getArchive()->getUpdatableInstances();
-		}
-		
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.install');
-		WCF::getTPL()->assign(array(
-			'archive' => $this->getArchive(),
-			'requiredPackages' => $requirements,
-			'missingPackages' => $missingPackages,
-			'updatableInstances' => $updatableInstances,
-			'excludingPackages' => $this->getArchive()->getConflictedExcludingPackages(),
-			'excludedPackages' => $this->getArchive()->getConflictedExcludedPackages(),
-			'queueID' => $this->queue->queueID
-		));
-		WCF::getTPL()->display('packageInstallationConfirm');
-		exit;
 	}
 	
 	/**

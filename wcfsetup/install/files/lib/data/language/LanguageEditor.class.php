@@ -245,7 +245,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			// find existing items
 			$itemList = new LanguageItemList();
 			$itemList->getConditionBuilder()->add("language_item.languageItem IN (?)", array(array_keys($items)));
-			$itemList->getConditionBuilder()->add("language_item.packageID = ? AND language_item.languageID = ?", array($packageID, $this->languageID));
+			$itemList->getConditionBuilder()->add("language_item.languageID = ?", array($this->languageID));
 			$itemList->sqlLimit = 0;
 			$itemList->readObjects();
 			
@@ -319,14 +319,12 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * 
 	 * @param	string		$languageID
 	 * @param	string		$category
-	 * @param	string		$packageID
 	 */
-	public static function deleteLanguageFiles($languageID = '.*', $category = '.*', $packageID = '.*') {
+	public static function deleteLanguageFiles($languageID = '.*', $category = '.*') {
 		if ($category != '.*') $category = preg_quote($category, '~');
 		if ($languageID != '.*') $languageID = intval($languageID);
-		if ($packageID != '.*') $packageID = intval($packageID);
-		
-		DirectoryUtil::getInstance(WCF_DIR.'language/')->removePattern(new Regex($packageID.'_'.$languageID.'_'.$category.'\.php$'));
+
+		DirectoryUtil::getInstance(WCF_DIR.'language/')->removePattern(new Regex($languageID.'_'.$category.'\.php$'));
 	}
 	
 	/**

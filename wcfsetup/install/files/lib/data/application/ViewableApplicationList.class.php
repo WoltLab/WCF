@@ -13,16 +13,6 @@ namespace wcf\data\application;
  */
 class ViewableApplicationList extends ApplicationList {
 	/**
-	 * @see	wcf\data\DatabaseObjectList::__construct()
-	 */
-	public function __construct() {
-		parent::__construct();
-		
-		// exclude WCF pseudo-application
-		$this->getConditionBuilder()->add("application.packageID <> ?", array(1));
-	}
-	
-	/**
 	 * @see	wcf\data\DatabaseObjectList::readObjects()
 	 */
 	public function readObjects() {

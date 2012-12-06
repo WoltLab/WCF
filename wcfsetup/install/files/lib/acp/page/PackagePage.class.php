@@ -1,20 +1,16 @@
 <?php
 namespace wcf\acp\page;
-use wcf\data\package\installation\queue\PackageInstallationQueue;
+use wcf\data\package\Package;
 use wcf\page\AbstractPage;
-use wcf\system\package\PackageInstallationDispatcher;
-use wcf\system\package\PackageUninstallationDispatcher;
+use wcf\system\exception\IllegalLinkException;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
-use wcf\system\WCFACP;
 
 /**
- * Handles all request on the package.php script
- * and executes the requested action.
- * TODO: split this page into separate pages / actions
- * TODO: I would recommend removing this entire class, it's pretty nasty to use a page just for redirections
- *
+ * Shows all information about an installed package.
+ * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
@@ -22,14 +18,21 @@ use wcf\system\WCFACP;
  */
 class PackagePage extends AbstractPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$useTemplate
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $useTemplate = false;
+	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canUninstallPackage');
 	
-	const DO_NOT_LOG = true;
-	public $parentQueueID = 0;
-	public $processNo = 0;
-	public $queueID = 0;
+	/**
+	 * id of the package
+	 * @var	integer
+	 */
+	public $packageID = 0;
+	
+	/**
+	 * package object
+	 * @var	wcf\data\package\Package
+	 */
+	public $package = null;
 	
 	/**
 	 * @see	wcf\page\IPage::readParameters()
@@ -37,46 +40,29 @@ class PackagePage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		// TODO: I guess this page is no longer used, let's check it :)
-		die('\wcf\acp\page\PackagePackage::readParameters()');
+		if (isset($_REQUEST['id'])) $this->packageID = intval($_REQUEST['id']);
+		$this->package = new Package($this->packageID);
+		if (!$this->package->packageID) {
+			throw new IllegalLinkException();
+		}
+	}
+	
+	/**
+	 * @see	wcf\page\IPage::assignVariables()
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
 		
-		if (isset($_REQUEST['parentQueueID'])) $this->parentQueueID = intval($_REQUEST['parentQueueID']);
-		if (isset($_REQUEST['processNo'])) $this->processNo = intval($_REQUEST['processNo']);
-		if (isset($_REQUEST['queueID'])) $this->queueID = intval($_REQUEST['queueID']);
+		WCF::getTPL()->assign('package', $this->package);
 	}
 	
 	/**
 	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
+		// enable menu item
+		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package');
+		
 		parent::show();
-		
-		// check master password
-		WCFACP::checkMasterPassword();
-		
-		switch ($this->action) {
-			case 'install':
-			case 'update':
-				if ($this->action == 'install') {
-					WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
-				}
-				else {
-					WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
-				}
-				
-				$queue = new PackageInstallationQueue($this->queueID);
-				$dispatcher = new PackageInstallationDispatcher($queue);
-				$dispatcher->beginInstallation();
-			break;
-			
-			case 'openQueue':
-				PackageInstallationDispatcher::openQueue($this->parentQueueID, $this->processNo);
-			break;
-				
-			case 'startUninstall':
-				WCF::getSession()->checkPermissions(array('admin.system.package.canUninstallPackage'));
-				PackageUninstallationDispatcher::checkDependencies();
-			break;
-		}
 	}
 }

@@ -48,7 +48,7 @@ class PackageListDetailedPage extends SortablePage {
 	 * @see	wcf\page\MultipleLinkPage::readObjects()
 	 */
 	protected function readObjects() {
-		$this->sqlOrderBy = 'package.'.($this->sortField == 'packageType' ? 'isApplication '.$this->sortOrder.', '.$this->sortOrder : $this->sortField.' '.$this->sortOrder).($this->sortField != 'packageName' ? ', package.packageName ASC' : '');
+		$this->sqlOrderBy = 'package.'.($this->sortField == 'packageType' ? 'isApplication '.$this->sortOrder : $this->sortField.' '.$this->sortOrder).($this->sortField != 'packageName' ? ', package.packageName ASC' : '');
 		
 		parent::readObjects();
 	}

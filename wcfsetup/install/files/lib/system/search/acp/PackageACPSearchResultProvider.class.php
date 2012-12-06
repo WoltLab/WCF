@@ -59,7 +59,7 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider {
 		), $conditions->getParameters()));
 		
 		while ($package = $statement->fetchObject('wcf\data\package\Package')) {
-			$results[] = new ACPSearchResult($package->getName(), LinkHandler::getInstance()->getLink('PackageView', array(
+			$results[] = new ACPSearchResult($package->getName(), LinkHandler::getInstance()->getLink('Package', array(
 				'id' => $package->packageID,
 				'title' => $package->getName()
 			)));

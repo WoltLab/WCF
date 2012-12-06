@@ -438,25 +438,6 @@ class PackageArchive {
 	}
 	
 	/**
-	 * Returns a list of all updatable instances of this package.
-	 * 
-	 * @return	array		packages
-	 */
-	public function getUpdatableInstances() {
-		$packages = $this->getDuplicates();
-		$updatable = array();
-		$newVersion = $this->packageInfo['version'];
-		
-		foreach ($packages as $package) {
-			if (Package::compareVersion($newVersion, $package['packageVersion']) == 1) {
-				$updatable[$package['packageID']] = $package;
-			}
-		}
-		
-		return $updatable;
-	}
-	
-	/**
 	 * Returns information about the author of this package archive.
 	 * 
 	 * @param	string		$name		name of the requested information

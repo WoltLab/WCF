@@ -227,9 +227,7 @@ class PackageStartInstallForm extends ACPForm {
 		$this->saved();
 		
 		// open queue
-		$url = LinkHandler::getInstance()->getLink('Package', array(), 'action=openQueue&processNo='.$processNo);
-		HeaderUtil::redirect($url);
-		exit;
+		PackageInstallationDispatcher::openQueue(0, $processNo);
 	}
 	
 	/**

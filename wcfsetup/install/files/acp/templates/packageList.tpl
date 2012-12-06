@@ -66,7 +66,7 @@
 							<footer class="contentOptions clearfix">
 								<nav>
 									<ul class="smallButtons">
-										<li><a href="{link controller='PackageView' id=$packageID}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/info.svg" alt="" title="{lang}wcf.acp.package.button.info{/lang}" class="icon16" /> <span>{lang}wcf.acp.package.button.info{/lang}</span></a></li>
+										<li><a href="{link controller='Package' id=$packageID}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/info.svg" alt="" title="{lang}wcf.acp.package.button.info{/lang}" class="icon16" /> <span>{lang}wcf.acp.package.button.info{/lang}</span></a></li>
 										<li><a href="{link controller='PackageStartInstall' id=$packageID}action=update{/link}" class="button"><img src="{@$__wcf->getPath()}icon/update.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="icon16" /> <span>{lang}wcf.acp.package.button.update{/lang}</span></a></li>
 									</ul>
 								</nav>

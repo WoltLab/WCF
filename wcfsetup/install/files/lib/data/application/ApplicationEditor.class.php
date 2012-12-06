@@ -36,7 +36,7 @@ class ApplicationEditor extends DatabaseObjectEditor implements IEditableCachedO
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			1,
-			$this->applicationID
+			$this->packageID
 		));
 		
 		self::resetCache();
@@ -48,7 +48,7 @@ class ApplicationEditor extends DatabaseObjectEditor implements IEditableCachedO
 	public static function setup() {
 		$sql = "SELECT	COUNT(*) AS count
 			FROM	wcf".WCF_N."_application
-			WHERE	isApplication = ?";
+			WHERE	isPrimary = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(1));
 		$row = $statement->fetchArray();
@@ -71,11 +71,16 @@ class ApplicationEditor extends DatabaseObjectEditor implements IEditableCachedO
 			));
 			$row = $statement->fetchArray();
 			
-			$sql = "UPDATE	wcf".WCF_N."_application
-				SET	isApplication = ?
-				WHERE	packageID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($row['packageID']));
+			if ($row !== false) {
+				$sql = "UPDATE	wcf".WCF_N."_application
+					SET	isPrimary = ?
+					WHERE	packageID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array(
+					1,
+					$row['packageID']
+				));
+			}
 		}
 	}
 	

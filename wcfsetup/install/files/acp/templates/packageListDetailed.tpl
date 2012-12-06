@@ -81,7 +81,7 @@
 							{/if}
 						</td>
 						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->packageDescription|language}">
-							<a href="{link controller='PackageView' id=$package->packageID}{/link}"><span>{$package->getName()}{if $package->instanceNo > 1 && $package->instanceName == ''} (#{#$package->instanceNo}){/if}</span></a>
+							<a href="{link controller='Package' id=$package->packageID}{/link}"><span>{$package->getName()}{if $package->instanceNo > 1 && $package->instanceName == ''} (#{#$package->instanceNo}){/if}</span></a>
 						</td>
 						<td class="columnText"><p>{if $package->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="wcf-externalURL">{$package->author}</a>{else}{$package->author}{/if}</p></td>
 						<td class="columnText"><p>{$package->packageVersion}</p></td>

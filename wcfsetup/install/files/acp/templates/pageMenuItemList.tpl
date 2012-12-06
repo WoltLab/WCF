@@ -42,7 +42,7 @@
 								<span class="statusDisplay sortableButtonContainer">
 									<img src="{@$__wcf->getPath()}icon/{if $menuItem->isDisabled}disabled{else}enabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
 									<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" class="icon16" /></a>
-									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang}wcf.acp.pageMenu.delete.sure{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang __menuItem=$menuItem}wcf.acp.pageMenu.delete.sure{/lang}" />
 								</span>
 							</span>
 							{if $menuItem|count}
@@ -54,7 +54,7 @@
 												<span class="statusDisplay sortableButtonContainer">
 													<img src="{@$__wcf->getPath()}icon/{if $childMenuItem->isDisabled}disabled{else}enabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if $childMenuItem->isDisabled}enable{else}disable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$childMenuItem->menuItemID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
 													<a href="{link controller='PageMenuItemEdit' id=$childMenuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" class="icon16" /></a>
-													<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$childMenuItem->menuItemID}" data-confirm-message="{lang}wcf.acp.pageMenu.delete.sure{/lang}" />
+													<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$childMenuItem->menuItemID}" data-confirm-message="{lang __menuItem=$childMenuItem}wcf.acp.pageMenu.delete.sure{/lang}" />
 												</span>
 											</span>
 										</li>

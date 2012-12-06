@@ -38,7 +38,7 @@ class PageMenuCacheBuilder implements ICacheBuilder {
 			$conditions->add("menu_item.isDisabled = ?", array(0));
 			
 			$sql = "SELECT		menuItemID, menuItem, parentMenuItem, menuItemLink,
-						permissions, options, packageDir, menuPosition, className
+						permissions, options, menuPosition, className
 				FROM		wcf".WCF_N."_page_menu_item menu_item
 				".$conditions."
 				ORDER BY	showOrder ASC";

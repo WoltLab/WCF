@@ -27,5 +27,5 @@ define('MODULE_MASTER_PASSWORD', 0);
 define('TIMEZONE', 'Europe/Berlin');
 
 define('ENABLE_DEBUG_MODE', 1);
-define('ENABLE_BENCHMARK', 1);
+define('ENABLE_BENCHMARK', 0);
 define('MODULE_API_ACCESS', 0);

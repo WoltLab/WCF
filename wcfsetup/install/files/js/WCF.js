@@ -5028,8 +5028,11 @@ WCF.System.Confirmation = {
 		
 		this._callback = callback;
 		this._parameters = parameters;
+		
+		var $render = true;
 		if (this._dialog === null) {
 			this._createDialog();
+			$render = false;
 		}
 		
 		this._dialog.find('#wcfSystemConfirmationContent').empty().hide();
@@ -5043,6 +5046,9 @@ WCF.System.Confirmation = {
 			onShow: $.proxy(this._show, this),
 			title: WCF.Language.get('wcf.global.confirmation.title')
 		});
+		if ($render) {
+			this._dialog.wcfDialog('render');
+		}
 		
 		this._visible = true;
 	},

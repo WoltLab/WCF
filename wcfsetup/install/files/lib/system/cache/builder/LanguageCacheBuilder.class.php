@@ -2,6 +2,7 @@
 namespace wcf\system\cache\builder;
 use wcf\data\language\category\LanguageCategoryList;
 use wcf\data\language\LanguageList;
+use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**
@@ -45,6 +46,8 @@ class LanguageCacheBuilder implements ICacheBuilder {
 			// country code to language id
 			$data['countryCode'][$language->languageID] = $language->countryCode;
 		}
+		
+		DatabaseObject::sort($data['languages'], 'languageName');
 		
 		// get language categories
 		$languageCategoryList = new LanguageCategoryList();
