@@ -33,7 +33,7 @@ define('HTTP_GZIP_LEVEL', 0);
 define('CACHE_SOURCE_TYPE', 'disk');
 define('MODULE_MASTER_PASSWORD', 1);
 define('ENABLE_DEBUG_MODE', 1);
-define('ENABLE_BENCHMARK', 1);
+define('ENABLE_BENCHMARK', 0);
 
 /**
  * WCFSetup executes the installation of the basic wcf systems.
