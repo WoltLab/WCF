@@ -6,8 +6,8 @@ use wcf\system\language\LanguageFactory;
 use wcf\util\XML;
 
 /**
- * SetupLanguage is a modification of Language only for the setup process.
- *
+ * SetupLanguage is a modification of Language used during the setup process.
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -21,7 +21,7 @@ class SetupLanguage extends Language {
 	 */
 	public function __construct($languageID, array $row, Language $language = null) {
 		if ($row === null) {
-			throw new SystemException('SetupLanguage accepts only an existing dataset.');
+			throw new SystemException('SetupLanguage only accepts an existing dataset.');
 		}
 		
 		parent::__construct(null, $row, null);

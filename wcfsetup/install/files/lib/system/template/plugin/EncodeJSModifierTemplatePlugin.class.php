@@ -4,12 +4,12 @@ use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
 
 /**
- * The 'encodeJS' modifier formats a string for usage in a single quoted javascript string. 
- * Escapes single quotes and new lines.
+ * Template modifier plugin which formats a string for usage in a single quoted
+ * javascript string by escapes single quotes and new lines.
  * 
  * Usage:
- *	{$string|encodeJS}
- *	{"bl''ah"|encodeJS}
+ * 	{$string|encodeJS}
+ * 	{"bl''ah"|encodeJS}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

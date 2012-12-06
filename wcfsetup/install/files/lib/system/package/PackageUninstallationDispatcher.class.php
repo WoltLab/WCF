@@ -16,7 +16,7 @@ use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 
 /**
- * PackageUninstallationDispatcher handles the whole uninstallation process.
+ * Handles the whole uninstallation process.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -126,8 +126,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	/**
 	 * Deletes the given list of files from the target dir.
 	 * 
-	 * @param 	string 		$targetDir
-	 * @param 	string 		$files
+	 * @param	string		$targetDir
+	 * @param	string		$files
 	 * @param	boolean		$deleteEmptyDirectories
 	 * @param	booelan		$deleteEmptyTargetDir
 	 */

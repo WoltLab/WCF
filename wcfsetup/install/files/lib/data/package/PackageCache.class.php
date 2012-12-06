@@ -29,7 +29,7 @@ class PackageCache extends SingletonFactory {
 			WCF_DIR.'cache/cache.package.php',
 			'wcf\system\cache\builder\PackageCacheBuilder'
 		);
-		$this->packages = CacheHandler::getInstance()->get('package');	
+		$this->packages = CacheHandler::getInstance()->get('package');
 	}
 	
 	/**

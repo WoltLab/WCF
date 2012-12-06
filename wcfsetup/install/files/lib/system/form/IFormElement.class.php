@@ -20,14 +20,14 @@ interface IFormElement {
 	public function __construct(IFormElementContainer $parent);
 	
 	/**
-	 * Returns help message.
+	 * Returns form element description.
 	 * 
 	 * @return	string
 	 */
 	public function getDescription();
 	
 	/**
-	 * Sets help message.
+	 * Sets form element description.
 	 * 
 	 * @param	string		$description
 	 */

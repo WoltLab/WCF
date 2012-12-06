@@ -73,7 +73,7 @@
 		
 </fieldset>
 
-<form method="post" action="install.php">	
+<form method="post" action="install.php">
 	<div class="wcf-formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result || !$system.mbString.result} disabled="disabled"{/if} accesskey="s"/>
 		<input type="hidden" name="step" value="{@$nextStep}" />

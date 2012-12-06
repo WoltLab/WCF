@@ -129,8 +129,8 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns a group from _cache_ by given groupID. 
-	 * null is returned when the given groupID is invalid.
+	 * Returns the user group with the given id or null if no such user group
+	 * exists.
 	 * 
 	 * @param	integer		$groupID
 	 * @return	wcf\data\user\group\UserGroup
@@ -163,7 +163,7 @@ class UserGroup extends DatabaseObject {
 	 * Returns true, if the given groups are accessible for the active user.
 	 * 
 	 * @param	array		$groupIDs
-	 * @return 	boolean
+	 * @return	boolean
 	 */
 	public static function isAccessibleGroup(array $groupIDs = array()) {
 		if (self::$accessibleGroups === null) {
@@ -241,7 +241,7 @@ class UserGroup extends DatabaseObject {
 	/**
 	 * Returns true, if this group is accessible for the active user.
 	 * 
-	 * @return 	boolean
+	 * @return	boolean
 	 */
 	public function isAccessible() {
 		return self::isAccessibleGroup(array($this->groupID));
@@ -309,6 +309,7 @@ class UserGroup extends DatabaseObject {
 		if ($this->groupOptions === null) {
 			// get all options and filter options with low priority
 			$this->groupOptions = $groupOptionIDs = array();
+
 			$sql = "SELECT		optionName, optionID
 				FROM		wcf".WCF_N."_user_group_option";
 			$statement = WCF::getDB()->prepareStatement($sql);

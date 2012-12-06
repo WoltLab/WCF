@@ -6,7 +6,7 @@ use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**
- * This PIP installs, updates or deletes by a package delivered ACP templates.
+ * Installs, updates and deletes ACP templates.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH
@@ -61,7 +61,7 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 		// get ACP-templates from log
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_acp_template
-			WHERE 	packageID = ?";
+			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
 		while ($row = $statement->fetchArray()) {

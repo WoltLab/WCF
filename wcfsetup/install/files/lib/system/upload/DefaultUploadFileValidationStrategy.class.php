@@ -2,7 +2,7 @@
 namespace wcf\system\upload;
 
 /**
- * Provides a default implementation for validation strategies.
+ * Default implementation of a file validation strategy for uploaded files.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

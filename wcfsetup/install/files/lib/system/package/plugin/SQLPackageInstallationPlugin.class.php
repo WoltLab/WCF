@@ -11,7 +11,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * This PIP executes the delivered sql file.
+ * Executes the delivered sql file.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH
@@ -44,7 +44,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 				$queries = StringUtil::replace($packageAbbr.'1_1_', $packageAbbr.$tablePrefix, $queries);
 			}
 			
-			// replace wcf1_  with the actual WCF_N value
+			// replace wcf1_ with the actual WCF_N value
 			$queries = str_replace("wcf1_", "wcf".WCF_N."_", $queries);
 			
 			// check queries
@@ -71,7 +71,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 							$text = implode('<br />', $conflicts['DROP TABLE']);
 							$label = WCF::getLanguage()->get('wcf.acp.package.error.sql.dropTable');
 							$description = WCF::getLanguage()->get('wcf.acp.package.error.sql.dropTable.description');
-						
+							
 							$element = new LabelFormElement($container);
 							$element->setLabel($label);
 							$element->setText($text);
@@ -120,14 +120,14 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	}
 	
 	/**
-	 * Deletes the sql tables or columns which where installed by the package.
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// get logged sql tables/columns
 		$sql = "SELECT		*
 			FROM		wcf".WCF_N."_package_installation_sql_log
 			WHERE		packageID = ?
-			ORDER BY 	sqlIndex DESC, sqlColumn DESC";
+			ORDER BY	sqlIndex DESC, sqlColumn DESC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
 		$entries = array();
@@ -177,15 +177,15 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	 * If the specified sql file was not found, an error message is thrown.
 	 * 
 	 * @param	string		$filename
-	 * @return 	string
+	 * @return	string
 	 */
 	protected function getSQL($filename) {
 		// search sql files in package archive
 		if (($fileindex = $this->installation->getArchive()->getTar()->getIndexByFilename($filename)) === false) {
 			throw new SystemException("SQL file '".$filename."' not found.");
 		}
-
+		
 		// extract sql file to string
 		return $this->installation->getArchive()->getTar()->extractToString($fileindex);
- 	}
+	}
 }

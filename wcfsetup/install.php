@@ -68,7 +68,7 @@ class SystemException extends \Exception implements IPrintableException {
 	/**
 	 * Returns the description of this exception.
 	 *
-	 * @return 	string
+	 * @return	string
 	 */
 	public function getDescription() {
 		return $this->description;
@@ -163,7 +163,7 @@ function __autoload($className) {
 		array_shift($namespaces);
 		
 		$className = implode('/', $namespaces);
-		$classPath = TMP_DIR . 'install/files/lib/' . $className  . '.class.php';
+		$classPath = TMP_DIR . 'install/files/lib/' . $className . '.class.php';
 		if (file_exists($classPath)) {
 			require_once($classPath);
 		}
@@ -216,7 +216,7 @@ function handleError($errorNo, $message, $filename, $lineNo) {
 /**
  * BasicFileUtil contains file-related functions.
  *
- * @package 	com.woltlab.wcf.util
+ * @package	com.woltlab.wcf.util
  * @author	Marcel Werk
  */
 class BasicFileUtil {
@@ -292,7 +292,7 @@ class Tar {
 	 * Creates a new Tar object.
 	 * archiveName must be tarball or gzipped tarball
 	 *
-	 * @param 	string 		$archiveName
+	 * @param	string		$archiveName
 	 */
 	public function __construct($archiveName) {
 		if (!is_file($archiveName)) {
@@ -346,7 +346,7 @@ class Tar {
 	/**
 	 * Returns the table of contents (TOC) list for this tar archive.
 	 *
-	 * @return 	array 		list of content
+	 * @return	array		list of content
 	 */
 	public function getContentList() {
 		if (!$this->read) {
@@ -360,8 +360,8 @@ class Tar {
 	 * Returns an associative array with information
 	 * about a specific file in the archive.
 	 *
-	 * @param 	mixed 	$fileindex	index or name of the requested file
-	 * @return 	array 	$fileInfo
+	 * @param	mixed	$fileindex	index or name of the requested file
+	 * @return	array	$fileInfo
 	 */
 	public function getFileInfo($fileIndex) {
 		if (!is_int($fileIndex)) {
@@ -379,8 +379,8 @@ class Tar {
 	 * and returns the numeric fileindex.
 	 * Returns false if not found.
 	 *
-	 * @param 	string 		$filename
-	 * @return 	integer 			index of the requested file
+	 * @param	string		$filename
+	 * @return	integer			index of the requested file
 	 */
 	public function getIndexByFilename($filename) {
 		foreach ($this->contentList as $index => $file) {
@@ -395,8 +395,8 @@ class Tar {
 	 * Extracts a specific file and returns the content as string.
 	 * Returns false if extraction failed.
 	 *
-	 * @param 	mixed 		$index		index or name of the requested file
-	 * @return 	string 				content of the requested file
+	 * @param	mixed		$index		index or name of the requested file
+	 * @return	string				content of the requested file
 	 */
 	public function extractToString($index) {
 		if (!$this->read) {
@@ -431,9 +431,9 @@ class Tar {
 	 * Extracts a specific file and writes it's content
 	 * to the file specified with $destination.
 	 *
-	 * @param 	mixed 		$index		index or name of the requested file
-	 * @param 	string 		$destination
-	 * @return 	boolean 	$success
+	 * @param	mixed		$index		index or name of the requested file
+	 * @param	string		$destination
+	 * @return	boolean	$success
 	 */
 	public function extract($index, $destination) {
 		if (!$this->read) {
@@ -510,8 +510,8 @@ class Tar {
 	/**
 	 * Unpacks file header for one file entry.
 	 *
-	 * @param 	string 		$binaryData
-	 * @return 	array 		$fileheader
+	 * @param	string		$binaryData
+	 * @return	array		$fileheader
 	 */
 	protected function readHeader($binaryData) {
 		if (strlen($binaryData) != 512) {
@@ -591,8 +591,8 @@ class File {
 	/**
 	 * Opens a new file.
 	 *
-	 * @param 	string		$filename
-	 * @param 	string		$mode
+	 * @param	string		$filename
+	 * @param	string		$mode
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		$this->filename = $filename;
@@ -606,17 +606,17 @@ class File {
 	 * Calls the specified function on the open file.
 	 * Do not call this function directly. Use $file->write('') instead.
 	 *
-	 * @param 	string		$function
-	 * @param 	array		$arguments
+	 * @param	string		$function
+	 * @param	array		$arguments
 	 */
 	public function __call($function, $arguments) {
 		if (function_exists('f' . $function)) {
 			array_unshift($arguments, $this->resource);
-	       		return call_user_func_array('f' . $function, $arguments);
+			return call_user_func_array('f' . $function, $arguments);
 		}
 		else if (function_exists($function)) {
 			array_unshift($arguments, $this->filename);
-	       		return call_user_func_array($function, $arguments);
+			return call_user_func_array($function, $arguments);
 		}
 		else {
 			throw new SystemException('Can not call file method ' . $function);
@@ -633,8 +633,8 @@ class ZipFile extends File {
 	/**
 	 * Opens a new zipped file.
 	 *
-	 * @param  	string		$filename
-	 * @param 	string		$mode
+	 * @param	string		$filename
+	 * @param	string		$mode
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		$this->filename = $filename;
@@ -650,17 +650,17 @@ class ZipFile extends File {
 	/**
 	 * Calls the specified function on the open file.
 	 *
-	 * @param 	string		$function
-	 * @param 	array		$arguments
+	 * @param	string		$function
+	 * @param	array		$arguments
 	 */
 	public function __call($function, $arguments) {
 		if (function_exists('gz' . $function)) {
 			array_unshift($arguments, $this->resource);
-	       		return call_user_func_array('gz' . $function, $arguments);
+			return call_user_func_array('gz' . $function, $arguments);
 		}
 		else if (function_exists($function)) {
 			array_unshift($arguments, $this->filename);
-	       		return call_user_func_array($function, $arguments);
+			return call_user_func_array($function, $arguments);
 		}
 		else {
 			throw new SystemException('Can not call method ' . $function);

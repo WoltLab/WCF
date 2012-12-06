@@ -2,8 +2,9 @@
 namespace wcf\system\option\user\group;
 
 /**
- * InfiniteIntegerUserGroupOptionType is an implementation of IUserGroupOptionType
- * for integer values with the infinite option.
+ * User group option type implementation for integer input fields with an option
+ * for an infinite value.
+ * 
  * The merge of option values returns true, if at least one value is -1. Otherwise
  * it returns the highest value.
  * 

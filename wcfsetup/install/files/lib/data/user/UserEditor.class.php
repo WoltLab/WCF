@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
 
 /**
  * Provides functions to edit users.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -53,7 +53,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	public static function deleteAll(array $objectIDs = array()) {
 		// unmark users
 		ClipboardHandler::getInstance()->unmark($objectIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
-	
+		
 		return parent::deleteAll($objectIDs);
 	}
 	
@@ -142,9 +142,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * Adds a user to the groups he should be in.
 	 * 
-	 * @param 	array 		$groups
+	 * @param	array		$groups
 	 * @param	boolean		$deleteOldGroups
-	 * @param 	boolean 	$addDefaultGroups
+	 * @param	boolean		$addDefaultGroups
 	 */
 	public function addToGroups(array $groupIDs, $deleteOldGroups = true, $addDefaultGroups = true) {
 		// add default groups
@@ -176,7 +176,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * Adds a user to a user group.
 	 * 
-	 * @param 	integer 	$groupID
+	 * @param	integer	$groupID
 	 */
 	public function addToGroup($groupID) {
 		$sql = "SELECT	COUNT(*) AS count
@@ -202,7 +202,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * Removes a user from a user group.
 	 * 
-	 * @param 	integer 	$groupID
+	 * @param	integer		$groupID
 	 */
 	public function removeFromGroup($groupID) {
 		$sql = "DELETE FROM	wcf".WCF_N."_user_to_group
@@ -233,7 +233,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * Saves the visible languages of a user.
 	 * 
-	 * @param 	array 		$languageIDs
+	 * @param	array		$languageIDs
 	 */
 	public function addToLanguages(array $languageIDs) {
 		// remove previous languages

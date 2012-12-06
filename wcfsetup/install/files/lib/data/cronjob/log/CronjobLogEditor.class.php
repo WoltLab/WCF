@@ -20,7 +20,7 @@ class CronjobLogEditor extends DatabaseObjectEditor {
 	protected static $baseClass = 'wcf\data\cronjob\log\CronjobLog';
 	
 	/**
-	 * Deletes the cronjob log.
+	 * Deletes all cronjob logs.
 	 */
 	public static function clearLogs() {
 		// delete logs

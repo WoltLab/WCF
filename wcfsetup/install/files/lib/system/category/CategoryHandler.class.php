@@ -9,8 +9,8 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 
 /**
- * Handles categories.
- *
+ * Handles the categories.
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -104,7 +104,7 @@ class CategoryHandler extends SingletonFactory {
 	/**
 	 * Gets the object type with the given id.
 	 * 
-	 * @param	integer 	$objectTypeID
+	 * @param	integer		$objectTypeID
 	 * @return	wcf\data\object\type\ObjectType
 	 */
 	public function getObjectType($objectTypeID) {
@@ -118,7 +118,7 @@ class CategoryHandler extends SingletonFactory {
 	/**
 	 * Gets the object type with the given name.
 	 * 
-	 * @param	string 		$objectType
+	 * @param	string		$objectType
 	 * @return	wcf\data\object\type\ObjectType
 	 */
 	public function getObjectTypeByName($objectType) {

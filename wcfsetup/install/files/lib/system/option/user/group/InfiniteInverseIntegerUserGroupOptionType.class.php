@@ -2,8 +2,8 @@
 namespace wcf\system\option\user\group;
 
 /**
- * InfiniteInverseIntegerUserGroupOptionType is an implementation of IUserGroupOptionType
- * for integer values.
+ * User group option type implementation for integer input fields.
+ * 
  * The merge of option values returns -1 if all values are -1 otherwise the lowest
  * value.
  * 

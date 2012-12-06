@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\benchmark;
-use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\util\FileUtil;
 
@@ -58,10 +57,6 @@ class Benchmark extends SingletonFactory {
 	 */
 	public function start($text, $type = self::TYPE_OTHER) {
 		$newIndex = count($this->items);
-		if ($newIndex == 200) {
-			throw new SystemException("Infinite loop detected, aborting.");
-		}
-		
 		$this->items[$newIndex]['text']	= $text;
 		$this->items[$newIndex]['type']	= $type;
 		$this->items[$newIndex]['before'] = self::getMicrotime();
@@ -71,7 +66,8 @@ class Benchmark extends SingletonFactory {
 	}
 	
 	/**
-	 * Stops an active benchmark.
+	 * Stops the benchmark with the given index. If no index is given, the
+	 * latest benchmark is stoped.
 	 * 
 	 * @param	integer		$index
 	 */
@@ -81,7 +77,7 @@ class Benchmark extends SingletonFactory {
 		}
 		
 		$this->items[$index]['after'] = self::getMicrotime();
-		$this->items[$index]['use']  = self::compareMicrotimes($this->items[$index]['before'], $this->items[$index]['after']);
+		$this->items[$index]['use'] = self::compareMicrotimes($this->items[$index]['before'], $this->items[$index]['after']);
 		$this->items[$index]['end'] = self::compareMicrotimes($this->startTime, $this->items[$index]['after']);
 		if ($this->items[$index]['type'] == self::TYPE_SQL_QUERY) {
 			$this->queryCount++;
@@ -139,7 +135,7 @@ class Benchmark extends SingletonFactory {
 	 * 
 	 * @param	float		$startTime
 	 * @param	float		$endTime
-	 * @return	float		difference
+	 * @return	float
 	 */
 	protected static function compareMicrotimes($startTime, $endTime) {
 		return round($endTime - $startTime, 4);

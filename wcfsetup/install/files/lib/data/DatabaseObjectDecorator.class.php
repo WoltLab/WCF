@@ -4,7 +4,7 @@ use wcf\system\exception\SystemException;
 
 /**
  * Basic implementation for object decorators.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -58,7 +58,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	
 	/**
 	 * Delegates inaccessible methods calls to the decorated object.
-	 *  
+	 * 
 	 * @param	string		$name
 	 * @param	array		$arguments
 	 * @return	mixed

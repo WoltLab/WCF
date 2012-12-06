@@ -313,7 +313,7 @@ class UserGroupOptionForm extends ACPForm {
 	
 	/**
 	 * Validates object options and permissions.
-	 *
+	 * 
 	 * @param	wcf\data\DatabaseObject		$object
 	 * @return	boolean
 	 */

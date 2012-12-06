@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
 
 /**
  * Shows the user edit form.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -193,7 +193,7 @@ class UserEditForm extends UserAddForm {
 	 */
 	protected function validateEmail($email, $confirmEmail) {
 		if (StringUtil::toLowerCase($this->user->email) != StringUtil::toLowerCase($email)) {
-			parent::validateEmail($email, $this->confirmEmail);	
+			parent::validateEmail($email, $this->confirmEmail);
 		}
 	}
 	

@@ -2,7 +2,7 @@
 namespace wcf\system\setup;
 
 /**
- * Uninstaller deletes files and directories.
+ * Deletes files and directories.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

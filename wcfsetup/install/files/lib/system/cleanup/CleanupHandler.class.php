@@ -9,7 +9,7 @@ use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
 
 /**
- * Handles cleanup related actions.
+ * Handles cleanup-related actions.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

@@ -4,8 +4,8 @@ use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
- * Default implementation for menu item manipulations.
- *
+ * Abstract implementation of a package installation plugin for menu items.
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

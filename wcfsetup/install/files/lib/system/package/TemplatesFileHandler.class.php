@@ -2,7 +2,7 @@
 namespace wcf\system\package;
 
 /**
- * TemplatesFileHandler is a FileHandler implementation for the installation of template files.
+ * File handler implementation for the installation of template files.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH

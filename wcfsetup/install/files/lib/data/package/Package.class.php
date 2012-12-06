@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
 
 /**
  * Represents a package.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -30,6 +30,12 @@ class Package extends DatabaseObject {
 	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'packageID';
+	
+	/**
+	 * package requirement map
+	 * @var	array<integer>
+	 */
+	protected static $requirementMap = null;
 	
 	/**
 	 * list of packages that this package requires
@@ -61,14 +67,9 @@ class Package extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function isRequired() {
-		$sql = "SELECT	COUNT(*) AS count
-			FROM	wcf".WCF_N."_package_requirement
-			WHERE	requirement = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->packageID));
-		$row = $statement->fetchArray();
+		self::loadRequirementMap();
 		
-		return $row['count'];
+		return (isset(self::$requirementMap[$this->packageID]));
 	}
 	
 	/**
@@ -108,7 +109,7 @@ class Package extends DatabaseObject {
 	 * Returns a list of all by this package required packages.
 	 * Contains required packages and the requirements of the required packages.
 	 * 
-	 * @return	array
+	 * @return	array<wcf\data\package\Package>
 	 */
 	public function getDependencies() {
 		if ($this->dependencies === null) {
@@ -122,7 +123,7 @@ class Package extends DatabaseObject {
 	 * Returns a list of all packages that require this package.
 	 * Returns packages that require this package and packages that require these packages.
 	 * 
-	 * @return	array
+	 * @return	array<wcf\data\package\Package>
 	 */
 	public function getDependentPackages() {
 		if ($this->dependentPackages === null) {
@@ -147,7 +148,7 @@ class Package extends DatabaseObject {
 	 * Returns a list of the requirements of this package.
 	 * Contains the content of the <requiredPackages> tag in the package.xml of this package.
 	 * 
-	 * @return	array
+	 * @return	array<wcf\data\package\Package>
 	 */
 	public function getRequiredPackages() {
 		if ($this->requiredPackages === null) {
@@ -169,27 +170,97 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * Checks if a package name is valid.
-	 * A valid package name begins with at least one alphanumeric character or the underscore,
-	 * followed by a dot, followed by at least one alphanumeric character or the underscore,
-	 * and the same again, possibly repeatedly. Example: 'com.woltlab.wcf' (this will be the
-	 * official WCF packet naming scheme in the future).
-	 * Reminder: The '$packageName' variable being examined here contains the 'name' attribute
-	 * of the 'package' tag noted in the 'packages.xml' file delivered inside the respective package.
+	 * Returns true, if current user can uninstall this package.
 	 * 
-	 * @param 	string 		$packageName
-	 * @return 	boolean 	isValid
+	 * @return	boolean
+	 */
+	public function canUninstall() {
+		if (!WCF::getSession()->getPermission('admin.system.package.canUninstallPackage')) {
+			return false;
+		}
+		
+		// disallow uninstallation of current package or WCF
+		if ($this->package == 'com.woltlab.wcf' || $this->packageID == PACKAGE_ID) {
+			return false;
+		}
+		
+		// check if package is required by current application
+		if (self::isRequiredBy($this->packageID, PACKAGE_ID)) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Returns true, if package $packageID is required by package $targetPackageID.
+	 * 
+	 * @param	integer		$packageID
+	 * @param	integer		$targetPackageID
+	 * @return	boolean
+	 */
+	public static function isRequiredBy($packageID, $targetPackageID) {
+		self::loadRequirementMap();
+		
+		if (isset(self::$requirementMap[$packageID])) {
+			foreach (self::$requirementMap[$packageID] as $requiredBy) {
+				if ($requiredBy == $targetPackageID) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Loads package requirement map.
+	 */
+	protected static function loadRequirementMap() {
+		if (self::$requirementMap === null) {
+			$sql = "SELECT	packageID, requirement
+				FROM	wcf".WCF_N."_package_requirement_map";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute();
+			
+			self::$requirementMap = array();
+			while ($row = $statement->fetchArray()) {
+				if (!isset(self::$requirementMap[$row['requirement']])) {
+					self::$requirementMap[$row['requirement']] = array();
+				}
+				
+				self::$requirementMap[$row['requirement']][] = $row['packageID'];
+			}
+		}
+	}
+	
+	/**
+	 * Checks if a package name is valid.
+	 * 
+	 * A valid package name begins with at least one alphanumeric character
+	 * or an underscore, followed by a dot, followed by at least one alphanumeric
+	 * character or an underscore and the same again, possibly repeatedly.
+	 * Example:
+	 * 	com.woltlab.wcf
+	 * 
+	 * Reminder: The package name being examined here contains the 'name' attribute
+	 * of the 'package' tag noted in the 'packages.xml' file delivered inside
+	 * the respective package.
+	 * 
+	 * @param	string		$packageName
+	 * @return	boolean		isValid
 	 */
 	public static function isValidPackageName($packageName) {
 		return preg_match('%^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$%', $packageName);
 	}
 	
 	/**
-	 * Returns true, if package version is valid, e.g.
+	 * Returns true, if package version is valid.
 	 * 
-	 * 1.0.0 pl 3
-	 * 4.0.0 Alpha 1
-	 * 3.1.7 rC 4
+	 * Examples of valid package versions:
+	 * 	1.0.0 pl 3
+	 * 	4.0.0 Alpha 1
+	 * 	3.1.7 rC 4
 	 * 
 	 * @param	string		$version
 	 * @return	boolean
@@ -199,11 +270,15 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * Check version number of the installed package against the "fromversion" number of the update.
-	 * The "fromversion" number may contain wildcards (asterisks) which means that the update covers 
-	 * the whole range of release numbers where the asterisk wildcards digits from 0 to 9. For example,
-	 * if "fromversion" is "1.1.*" and this package updates to version 1.2.0, all releases from 1.1.0 to 
-	 * 1.1.9 may be updated using this package.
+	 * Checks the version number of the installed package against the "fromversion"
+	 * number of the update.
+	 * 
+	 * The "fromversion" number may contain wildcards (asterisks) which means
+	 * that the update covers the whole range of release numbers where the asterisk
+	 * wildcards digits from 0 to 9.
+	 * For example, if "fromversion" is "1.1.*" and this package updates to
+	 * version 1.2.0, all releases from 1.1.0 to  1.1.9 may be updated using
+	 * this package.
 	 * 
 	 * @param	string		$currentVersion
 	 * @param	string		$fromVersion
@@ -247,7 +322,7 @@ class Package extends DatabaseObject {
 	 * Formats a package version string for comparing.
 	 * 
 	 * @param	string		$version
-	 * @return 	string		formatted version
+	 * @return	string		formatted version
 	 * @see		http://www.php.net/manual/en/function.version-compare.php
 	 */
 	private static function formatVersionForCompare($version) {
@@ -318,7 +393,7 @@ class Package extends DatabaseObject {
 					FROM	wcf".WCF_N."_package_requirement_map
 					WHERE	packageID = package_requirement.requirement
 				) AS requirementLevel
-			FROM 	wcf".WCF_N."_package_requirement package_requirement
+			FROM	wcf".WCF_N."_package_requirement package_requirement
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());

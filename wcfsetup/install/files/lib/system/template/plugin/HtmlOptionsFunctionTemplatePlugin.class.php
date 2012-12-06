@@ -5,16 +5,16 @@ use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateEngine;
 
 /**
- * The 'htmlOptions' template function generates the options of an html select list.
+ * Template function plugin which generates the options of an html select list.
  * 
  * Usage:
- *	{htmlOptions options=$array}
- *	{htmlOptions options=$array selected=$foo}
- *	{htmlOptions options=$array name="x"}
- *	{htmlOptions output=$outputArray}
- *	{htmlOptions output=$outputArray values=$valueArray}
- *	{htmlOptions object=$databaseObjectList}
- *	{htmlOptions object=$databaseObjectList selected=$foo}
+ * 	{htmlOptions options=$array}
+ * 	{htmlOptions options=$array selected=$foo}
+ * 	{htmlOptions options=$array name="x"}
+ * 	{htmlOptions output=$outputArray}
+ * 	{htmlOptions output=$outputArray values=$valueArray}
+ * 	{htmlOptions object=$databaseObjectList}
+ * 	{htmlOptions object=$databaseObjectList selected=$foo}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -71,7 +71,7 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
 		$this->selected = array();
 		if (isset($tagArgs['selected'])) {
 			$this->selected = $tagArgs['selected'];
-			if (!is_array($this->selected)) $this->selected = array($this->selected);	
+			if (!is_array($this->selected)) $this->selected = array($this->selected);
 		}
 		
 		// create option list

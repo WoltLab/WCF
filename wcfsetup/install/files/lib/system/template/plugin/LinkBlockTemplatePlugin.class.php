@@ -6,11 +6,11 @@ use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
 
 /**
- * Shortcut for usage of LinkHandler::getInstance()->getLink() in template scripting.
+ * Template block plugin which generates a link using LinkHandler.
  * 
  * Usage:
- *	{link application='wcf'}index.php{/link}
- *
+ * 	{link application='wcf'}index.php{/link}
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

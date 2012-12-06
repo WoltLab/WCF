@@ -3,7 +3,7 @@ namespace wcf\system\session;
 use wcf\system\event\EventHandler;
 
 /**
- * ACPSessionFactory handles session for active user.
+ * Handles the ACP session of the active user.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

@@ -4,7 +4,7 @@ use wcf\system\database\DatabaseException;
 use wcf\util\ArrayUtil;
 
 /**
- * This is the database editor implementation for PostgreSQL 8.0 or higher.
+ * Database editor implementation for PostgreSQL 8.0 or higher.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -20,9 +20,9 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	public function getTableNames() {
 		$existingTables = array();
 		$sql = "SELECT		tablename
-			FROM 		pg_catalog.pg_tables
+			FROM		pg_catalog.pg_tables
 			WHERE		schemaname = 'public'
-			ORDER BY 	tablename";
+			ORDER BY	tablename";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
@@ -255,9 +255,9 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 			$statement->execute();
 			
 			// add trigger
-			$sql = "CREATE TRIGGER 		".$tableName."_".$indexName."_trigger
+			$sql = "CREATE TRIGGER		".$tableName."_".$indexName."_trigger
 				BEFORE INSERT OR UPDATE
-				ON 			".$tableName."
+				ON			".$tableName."
 				FOR EACH ROW EXECUTE PROCEDURE
 				tsvector_update_trigger(".$indexName.", 'pg_catalog.english', ".implode(', ', $columns).");";
 			$statement = $this->dbObj->prepareStatement($sql);
@@ -369,8 +369,8 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * Converts a MySQL column type to PostgreSQL.
-	 *
+	 * Converts a MySQL column type to the matching PostgreSQL column type.
+	 * 
 	 * @param	string		$mySQLType
 	 * @param	string
 	 */

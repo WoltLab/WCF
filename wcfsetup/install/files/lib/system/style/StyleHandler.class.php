@@ -9,7 +9,7 @@ use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
 /**
- * Handles style-related actions.
+ * Handles styles.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

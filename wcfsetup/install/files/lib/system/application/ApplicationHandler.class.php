@@ -4,7 +4,6 @@ use wcf\data\application\ApplicationAction;
 use wcf\data\application\ApplicationList;
 use wcf\system\cache\CacheHandler;
 use wcf\system\SingletonFactory;
-use wcf\util\StringUtil;
 
 /**
  * Handles multi-application environments.
@@ -48,7 +47,12 @@ class ApplicationHandler extends SingletonFactory {
 	 */
 	public function getPrimaryApplication() {
 		$packageID = ($this->cache['primary']) ?: PACKAGE_ID;
-		return $this->cache['application'][$packageID];
+		
+		if (isset($this->cache['application'][$packageID])) {
+			return $this->cache['application'][$packageID];
+		}
+		
+		return $this->cache['wcf'];
 	}
 	
 	/**
@@ -56,7 +60,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * primary application if $abbreviation equals to 'wcf'
 	 * 
 	 * @return	wcf\data\application\Application
-	 */	 
+	 */
 	public function getApplication($abbreviation) {
 		if ($abbreviation == 'wcf') {
 			return $this->getPrimaryApplication();
@@ -87,7 +91,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * Returns the currently active application.
 	 * 
 	 * @return	wcf\data\application\Application
-	 */	
+	 */
 	public function getActiveApplication() {
 		return $this->cache['application'][PACKAGE_ID];
 	}
@@ -96,7 +100,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * Returns a list of dependent applications.
 	 * 
 	 * @return	array<wcf\data\application\Application>
-	 */	
+	 */
 	public function getDependentApplications() {
 		$applications = array();
 		foreach ($this->cache['application'] as $packageID => $application) {

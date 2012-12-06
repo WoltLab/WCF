@@ -24,7 +24,7 @@ interface ICacheSource {
 	 * Stores a variable in the cache.
 	 * 
 	 * @param	array		$cacheResource
-	 * @param 	mixed		$value
+	 * @param	mixed		$value
 	 */
 	public function set(array $cacheResource, $value);
 	
@@ -38,8 +38,8 @@ interface ICacheSource {
 	/**
 	 * Marks cached files as obsolete.
 	 * 
-	 * @param 	string 		$directory
-	 * @param 	string 		$filepattern
+	 * @param	string		$directory
+	 * @param	string		$filepattern
 	 */
 	public function clear($directory, $filepattern);
 	

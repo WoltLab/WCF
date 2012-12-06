@@ -82,8 +82,8 @@ final class User extends DatabaseObject implements IRouteController {
 	/**
 	 * Returns true, if the given password is the correct password for this user.
 	 * 
-	 * @param 	string		$password
-	 * @return 	boolean 	password correct
+	 * @param	string		$password
+	 * @return	boolean		password correct
 	 */
 	public function checkPassword($password) {
 		return ($this->password == StringUtil::getDoubleSaltedHash($password, $this->salt));
@@ -92,8 +92,8 @@ final class User extends DatabaseObject implements IRouteController {
 	/**
 	 * Returns true, if the given password hash from a cookie is the correct password for this user.
 	 * 
-	 * @param 	string		$passwordHash
-	 * @return 	boolean 	password correct
+	 * @param	string		$passwordHash
+	 * @return	boolean		password correct
 	 */
 	public function checkCookiePassword($passwordHash) {
 		return ($this->password == StringUtil::encrypt($this->salt . $passwordHash));
@@ -103,7 +103,7 @@ final class User extends DatabaseObject implements IRouteController {
 	 * Returns an array with all the groups in which the actual user is a member.
 	 * 
 	 * @param	boolean		$skipCache
-	 * @return 	array 		$groupIDs
+	 * @return	array		$groupIDs
 	 */
 	public function getGroupIDs($skipCache = false) {
 		if ($this->groupIDs === null || $skipCache) {
@@ -281,7 +281,7 @@ final class User extends DatabaseObject implements IRouteController {
 	/**
 	 * Returns true, if this user is marked.
 	 * 
-	 * @return 	boolean
+	 * @return	boolean
 	 */
 	public function isMarked() {
 		$markedUsers = WCF::getSession()->getVar('markedUsers');
@@ -295,7 +295,7 @@ final class User extends DatabaseObject implements IRouteController {
 	/**
 	 * Returns the time zone of this user.
 	 * 
-	 * @return DateTimeZone
+	 * @return	DateTimeZone
 	 */
 	public function getTimeZone() {
 		if ($this->timezoneObj === null) {
@@ -356,7 +356,7 @@ final class User extends DatabaseObject implements IRouteController {
 	
 	/**
 	 * Returns the language of this user.
-	 *
+	 * 
 	 * @return	wcf\data\language\Language
 	 */
 	public function getLanguage() {

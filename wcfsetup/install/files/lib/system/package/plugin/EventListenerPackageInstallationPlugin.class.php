@@ -4,7 +4,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
 
 /**
- * This PIP installs, updates or deletes event listeners.
+ * Installs, updates and deletes event listeners.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

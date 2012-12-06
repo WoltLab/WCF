@@ -71,11 +71,16 @@ class ApplicationEditor extends DatabaseObjectEditor implements IEditableCachedO
 			));
 			$row = $statement->fetchArray();
 			
-			$sql = "UPDATE	wcf".WCF_N."_application
-				SET	isApplication = ?
-				WHERE	packageID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($row['packageID']));
+			if ($row !== false) {
+				$sql = "UPDATE	wcf".WCF_N."_application
+					SET	isPrimary = ?
+					WHERE	packageID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array(
+					1,
+					$row['packageID']
+				));
+			}
 		}
 	}
 	

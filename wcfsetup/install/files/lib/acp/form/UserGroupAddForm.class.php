@@ -11,7 +11,7 @@ use wcf\system\WCFACP;
 
 /**
  * Shows the group add form.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -34,7 +34,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	/**
 	 * @see	wcf\acp\form\AbstractOptionListForm::$cacheName
 	 */
-	public $cacheName = 'userGroup-option';
+	public $cacheName = 'userGroupOption';
 	
 	/**
 	 * option tree

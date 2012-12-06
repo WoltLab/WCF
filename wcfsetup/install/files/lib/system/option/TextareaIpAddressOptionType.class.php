@@ -6,8 +6,8 @@ use wcf\system\WCF;
 use wcf\util\UserUtil;
 
 /**
- * TextareaIpAddressOptionType is an implementation of IOptionType for 'textarea'
- * tags with IPv4/IPv6 support.
+ * Option type implementation for ip address textareas.
+ * 
  * IP addresses will be converted into IPv6 upon saving but will be displayed as
  * IPv4 whenever applicable.
  * 

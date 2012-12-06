@@ -46,7 +46,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * Replaces a breadcrumb, returns true if replacement was successful.
 	 * 
 	 * @param	wcf\system\breadcrumb\Breadcrumb	$item
-	 * @param	integer		$index
+	 * @param	integer					$index
 	 * @return	boolean
 	 */
 	public function replace(Breadcrumb $item, $index) {

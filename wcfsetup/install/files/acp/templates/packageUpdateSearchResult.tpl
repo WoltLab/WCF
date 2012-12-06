@@ -102,7 +102,7 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="id" value="{@$searchID}" />
- 	</div>
+	</div>
 </form>
 
 <div class="contentNavigation">

@@ -70,7 +70,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	// export mail address
 	public $fileType = 'csv';
 	public $separator = ',';
-	public $textSeparator = '"'; 
+	public $textSeparator = '"';
 	
 	// send mail
 	public $subject = '';
@@ -300,6 +300,9 @@ class UsersMassProcessingForm extends UserOptionListForm {
 		WCF::getTPL()->assign('affectedUsers', $this->affectedUsers);
 	}
 	
+	/**
+	 * @todo	add documentation
+	 */
 	protected function fetchUsers($loopFunction = null) {
 		// select users
 		$sql = "SELECT		user.*

@@ -3,8 +3,8 @@ namespace wcf\system\option;
 use wcf\data\option\Option;
 
 /**
- * IntegerOptionType is an implementation of IOptionType for integer fields.
- *
+ * Option type implementation for integer input fields.
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

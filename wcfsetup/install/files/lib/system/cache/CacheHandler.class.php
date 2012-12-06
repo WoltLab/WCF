@@ -66,7 +66,7 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * Deletes a registered cache resource.
 	 * 
-	 * @param 	string		$cache
+	 * @param	string		$cache
 	 */
 	public function clearResource($cache) {
 		if (!isset($this->cacheResources[$cache])) {
@@ -79,8 +79,8 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * Marks cached files as obsolete.
 	 * 
-	 * @param 	string 		$directory
-	 * @param 	string 		$filepattern
+	 * @param	string		$directory
+	 * @param	string		$filepattern
 	 */
 	public function clear($directory, $filepattern) {
 		$this->getCacheSource()->clear($directory, $filepattern);
@@ -89,9 +89,9 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * Returns a cached variable.
 	 * 
-	 * @param 	string 		$cache
-	 * @param 	string 		$variable
-	 * @return 	mixed 		$value
+	 * @param	string		$cache
+	 * @param	string		$variable
+	 * @return	mixed		$value
 	 */
 	public function get($cache, $variable = '') {
 		if (!isset($this->cacheResources[$cache])) {
@@ -127,8 +127,8 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * Rebuilds a cache resource.
 	 * 
-	 * @param 	array 		$cacheResource
-	 * @return 	boolean 	result
+	 * @param	array		$cacheResource
+	 * @return	boolean	result
 	 */
 	public function rebuild($cacheResource) {
 		// instance cache class

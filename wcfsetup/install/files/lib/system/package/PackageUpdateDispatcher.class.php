@@ -9,9 +9,7 @@ use wcf\data\package\update\PackageUpdateList;
 use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
-use wcf\system\io\RemoteFile;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\HTTPRequest;
 use wcf\util\XML;
 
@@ -241,7 +239,7 @@ abstract class PackageUpdateDispatcher {
 	/**
 	 * Updates information parsed from a packages_update.xml into the database.
 	 * 
-	 * @param 	array		$allNewPackages
+	 * @param	array		$allNewPackages
 	 * @param	integer		$packageUpdateServerID
 	 */
 	protected static function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID) {
@@ -459,7 +457,7 @@ abstract class PackageUpdateDispatcher {
 	 * Returns a list of available updates for installed packages.
 	 * 
 	 * @param	boolean		$removeRequirements
-	 * @return 	array
+	 * @return	array
 	 */
 	public static function getAvailableUpdates($removeRequirements = true) {
 		$updates = array();
@@ -551,7 +549,7 @@ abstract class PackageUpdateDispatcher {
 	 * Removes unnecessary updates of requirements from the list of available updates.
 	 * 
 	 * @param	array		$updates
-	 * @param 	integer		$packageUpdateVersionID
+	 * @param	integer		$packageUpdateVersionID
 	 * @return	array		$updates
 	 */
 	protected static function removeUpdateRequirements(array $updates, $packageUpdateVersionID) {
@@ -657,9 +655,9 @@ abstract class PackageUpdateDispatcher {
 	/**
 	 * Stores the filename of a download in session.
 	 * 
-	 * @param 	string		$package	package identifier
-	 * @param 	string		$version	package version
-	 * @param 	string		$filename
+	 * @param	string		$package	package identifier
+	 * @param	string		$version	package version
+	 * @param	string		$filename
 	 */
 	public static function cacheDownload($package, $version, $filename) {
 		$cachedDownloads = WCF::getSession()->getVar('cachedPackageUpdateDownloads');

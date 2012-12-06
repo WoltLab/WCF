@@ -9,7 +9,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * This PIP installs, updates or deletes user fields.
+ * Installs, updates and deletes user options.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH
@@ -31,10 +31,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'validationpattern', 'required', 'editable', 'visible', 'searchable', 'showorder', 'outputclass', 'selectoptions', 'enableoptions', 'disabled', 'categoryname', 'permissions', 'options', 'attrs', 'cdata');
 	
 	/**
-	 * Installs user option categories.
-	 * 
-	 * @param 	array		$category
-	 * @param	array		$categoryXML
+	 * @see	wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveCategory()
 	 */
 	protected function saveCategory($category, $categoryXML = null) {
 		// use for create and update
@@ -70,23 +67,23 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 		$showOrder = null;
 		
 		// get values
-		if (isset($option['name'])) $optionName 			= $option['name'];
-		if (isset($option['optiontype'])) $optionType 			= $option['optiontype'];
-		if (isset($option['defaultvalue'])) $defaultValue 		= $option['defaultvalue'];
-		if (isset($option['validationpattern'])) $validationPattern 	= $option['validationpattern'];
-		if (isset($option['required'])) $required 			= intval($option['required']);
+		if (isset($option['name'])) $optionName = $option['name'];
+		if (isset($option['optiontype'])) $optionType = $option['optiontype'];
+		if (isset($option['defaultvalue'])) $defaultValue = $option['defaultvalue'];
+		if (isset($option['validationpattern'])) $validationPattern = $option['validationpattern'];
+		if (isset($option['required'])) $required = intval($option['required']);
 		if (isset($option['askduringregistration'])) $askDuringRegistration = intval($option['askduringregistration']);
-		if (isset($option['editable'])) $editable		 	= intval($option['editable']);
-		if (isset($option['visible'])) $visible 			= intval($option['visible']);
-		if (isset($option['searchable'])) $searchable 			= intval($option['searchable']);
-		if (isset($option['showorder'])) $showOrder	 		= intval($option['showorder']);
-		if (isset($option['outputclass'])) $outputClass 		= $option['outputclass'];
-		if (isset($option['selectoptions'])) $selectOptions 		= $option['selectoptions'];
-		if (isset($option['enableoptions'])) $enableOptions	 	= $option['enableoptions'];
-		if (isset($option['disabled'])) $disabled 			= intval($option['disabled']);
+		if (isset($option['editable'])) $editable = intval($option['editable']);
+		if (isset($option['visible'])) $visible = intval($option['visible']);
+		if (isset($option['searchable'])) $searchable = intval($option['searchable']);
+		if (isset($option['showorder'])) $showOrder = intval($option['showorder']);
+		if (isset($option['outputclass'])) $outputClass = $option['outputclass'];
+		if (isset($option['selectoptions'])) $selectOptions = $option['selectoptions'];
+		if (isset($option['enableoptions'])) $enableOptions = $option['enableoptions'];
+		if (isset($option['disabled'])) $disabled = intval($option['disabled']);
 		$showOrder = $this->getShowOrder($showOrder, $categoryName, 'categoryName');
-		if (isset($option['permissions'])) $permissions 		= $option['permissions'];
-		if (isset($option['options'])) $options 			= $option['options'];
+		if (isset($option['permissions'])) $permissions = $option['permissions'];
+		if (isset($option['options'])) $options = $option['options'];
 		
 		// check if optionType exists
 		$className = 'wcf\system\option\\'.StringUtil::firstCharToUpperCase($optionType).'OptionType';
@@ -102,8 +99,8 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 		
 		// get optionID if it was installed by this package already
 		$sql = "SELECT	*
-			FROM 	wcf".WCF_N."_".$this->tableName."
-			WHERE 	optionName = ?
+			FROM	wcf".WCF_N."_".$this->tableName."
+			WHERE	optionName = ?
 			AND	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
@@ -149,13 +146,12 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	}
 	
 	/**
-	 * Drops the columns from user option value table from options
-	 * installed by this package.
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// get optionsIDs from package
 		$sql = "SELECT	optionID
-			FROM 	wcf".WCF_N."_user_option
+			FROM	wcf".WCF_N."_user_option
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));

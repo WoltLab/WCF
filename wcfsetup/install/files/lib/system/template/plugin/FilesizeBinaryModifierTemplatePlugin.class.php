@@ -4,12 +4,12 @@ use wcf\system\template\TemplateEngine;
 use wcf\util\FileUtil;
 
 /**
- * The 'filesize' modifier formats a filesize (binary) (given in bytes).
+ * Template modifier plugin which formats a binary filesize (given in bytes).
  * 
  * Usage:
- *	{$string|filesizeBinary}
- *	{123456789|filesizeBinary}
- *
+ * 	{$string|filesizeBinary}
+ * 	{123456789|filesizeBinary}
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

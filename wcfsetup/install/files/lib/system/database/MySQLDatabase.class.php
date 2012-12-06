@@ -49,7 +49,7 @@ class MySQLDatabase extends Database {
 			if ($offset > 0) $query .= " LIMIT " . $offset . ", " . $limit;
 			else $query .= " LIMIT " . $limit;
 		}
-
+		
 		return $query;
 	}
 	
