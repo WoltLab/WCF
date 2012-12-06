@@ -44,12 +44,6 @@ class Package extends DatabaseObject {
 	protected $dependencies = null;
 	
 	/**
-	 * list of packages that require this package
-	 * @var	array<wcf\data\package\Package>
-	 */
-	protected $dependentPackages = null;
-	
-	/**
 	 * installation directory
 	 * @var	string
 	 */
@@ -120,31 +114,6 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns a list of all packages that require this package.
-	 * Returns packages that require this package and packages that require these packages.
-	 * 
-	 * @return	array<wcf\data\package\Package>
-	 */
-	public function getDependentPackages() {
-		if ($this->dependentPackages === null) {
-			$this->dependentPackages = array();
-			
-			$sql = "SELECT		package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
-				FROM		wcf".WCF_N."_package_requirement package_requirement
-				LEFT JOIN	wcf".WCF_N."_package package ON (package.packageID = package_requirement.packageID)
-				WHERE		package_requirement.requirement = ?
-				ORDER BY	packageName ASC";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->packageID));
-			while ($package = $statement->fetchObject('wcf\data\package\Package')) {
-				$this->dependentPackages[$package->packageID] = $package;
-			}
-		}
-		
-		return $this->dependentPackages;
-	}
-	
-	/**
 	 * Returns a list of the requirements of this package.
 	 * Contains the content of the <requiredPackages> tag in the package.xml of this package.
 	 * 
@@ -190,6 +159,24 @@ class Package extends DatabaseObject {
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * Returns a list of packages dependent from current package.
+	 * 
+	 * @return	array<wcf\data\package\Package>
+	 */
+	public function getDependentPackages() {
+		self::loadRequirementMap();
+		
+		$packages = array();
+		if (isset(self::$requirementMap[$this->packageID])) {
+			foreach (self::$requirementMap[$this->packageID] as $packageID) {
+				$packages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
+			}
+		}
+		
+		return $packages;
 	}
 	
 	/**

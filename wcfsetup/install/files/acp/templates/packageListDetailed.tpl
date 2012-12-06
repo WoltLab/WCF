@@ -63,7 +63,7 @@
 								<img src="{@$__wcf->getPath()}icon/update.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="icon16 disabled" />
 							{/if}
 							{if $package->canUninstall()}
-								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 jsUninstallButton jsTooltip" data-object-id="{@$package->packageID}" data-confirm-message="{lang}wcf.acp.package.uninstallation.confirm{/lang}" />
+								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 jsUninstallButton jsTooltip" data-object-id="{@$package->packageID}" data-confirm-message="{lang}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{$package->isRequired()}true{else}false{/if}" />
 							{else}
 								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 disabled" />
 							{/if}

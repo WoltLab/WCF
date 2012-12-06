@@ -135,7 +135,7 @@
 												<img src="{@$__wcf->getPath()}icon/update.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="icon16 disabled" />
 											{/if}
 											{if $requiredPackage->canUninstall()}
-												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 jsTooltip jsUninstallButton" data-objectID="{@$requiredPackage->packageID}" data-confirm-message="{lang package=$requiredPackage}wcf.acp.package.uninstallation.confirm{/lang}" />
+												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 jsTooltip jsUninstallButton" data-objectID="{@$requiredPackage->packageID}" data-confirm-message="{lang package=$requiredPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{$package->isRequired()}true{else}false{/if}" />
 											{else}
 												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 disabled" />
 											{/if}
@@ -195,7 +195,7 @@
 												<img src="{@$__wcf->getPath()}icon/update.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="icon16 disabled" />
 											{/if}
 											{if $dependentPackage->canUninstall()}
-												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 jsTooltip jsUninstallButton" data-objectID="{@$dependentPackage->packageID}" data-confirm-message="{lang package=$dependentPackage}wcf.acp.package.uninstallation.confirm{/lang}" />
+												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 jsTooltip jsUninstallButton" data-objectID="{@$dependentPackage->packageID}" data-confirm-message="{lang package=$dependentPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{$package->isRequired()}true{else}false{/if}" />
 											{else}
 												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 disabled" />
 											{/if}
