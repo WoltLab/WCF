@@ -5,7 +5,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
- * ACP search provider for user group options.
+ * ACP search provider implementation for user group options.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

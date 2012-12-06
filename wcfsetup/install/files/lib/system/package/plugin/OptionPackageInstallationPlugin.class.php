@@ -7,7 +7,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * This PIP installs, updates or deletes options.
+ * Installs, updates and deletes options.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH

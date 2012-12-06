@@ -76,7 +76,7 @@ class UserOptionEditor extends DatabaseObjectEditor {
 	/**
 	 * Enables this option.
 	 * 
-	 * @param 	boolean		$enable
+	 * @param	boolean		$enable
 	 */
 	public function enable($enable = true) {
 		$value = intval(!$enable);

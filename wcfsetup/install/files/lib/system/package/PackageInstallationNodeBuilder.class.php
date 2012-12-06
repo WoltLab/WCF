@@ -9,7 +9,7 @@ use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
- * PackageInstallationNodeBuilder creates a logical node-based installation tree.
+ * Creates a logical node-based installation tree.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH

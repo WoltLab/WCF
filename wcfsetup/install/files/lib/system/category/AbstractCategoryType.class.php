@@ -6,7 +6,7 @@ use wcf\system\WCF;
 
 /**
  * Abstract implementation of a category type.
- *
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

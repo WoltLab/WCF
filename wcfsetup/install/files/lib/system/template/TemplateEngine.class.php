@@ -10,7 +10,7 @@ use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
- * TemplateEngine loads and displays template.
+ * Loads and displays template.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -183,8 +183,8 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Appends content to an existing template variable.
 	 * 
-	 * @param 	mixed 		$variable
-	 * @param 	mixed 		$value
+	 * @param	mixed		$variable
+	 * @param	mixed		$value
 	 */
 	public function append($variable, $value = '') {
 		if (is_array($variable)) {
@@ -222,8 +222,8 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Prepends content to an existing template variable.
 	 * 
-	 * @param 	mixed 		$variable
-	 * @param 	mixed 		$value
+	 * @param	mixed		$variable
+	 * @param	mixed		$value
 	 */
 	public function prepend($variable, $value = '') {
 		if (is_array($variable)) {
@@ -261,8 +261,8 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Assigns a template variable by reference.
 	 * 
-	 * @param 	string 		$variable
-	 * @param	mixed 		$value
+	 * @param	string		$variable
+	 * @param	mixed		$value
 	 */
 	public function assignByRef($variable, &$value) {
 		if (!empty($variable)) {
@@ -273,7 +273,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Clears an assignment of template variables.
 	 * 
-	 * @param 	mixed 		$variables
+	 * @param	mixed		$variables
 	 */
 	public function clearAssign(array $variables) {
 		foreach ($variables as $key) {
@@ -408,7 +408,8 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Returns the absolute filename of a compiled template.
 	 * 
-	 * @param 	string 		$templateName
+	 * @param	string		$templateName
+	 * @return	string
 	 */
 	public function getCompiledFilename($templateName) {
 		return $this->compileDir.$this->templateGroupID.'_'.$this->languageID.'_'.$templateName.'.php';
@@ -418,20 +419,21 @@ class TemplateEngine extends SingletonFactory {
 	 * Returns the absolute filename for template's meta data.
 	 * 
 	 * @param	string		$templateName
+	 * @return	string
 	 */
 	public function getMetaDataFilename($templateName) {
 		return $this->compileDir.$this->templateGroupID.'_'.$templateName.'.meta.php';
 	}
 	
 	/**
-	 * Checks wheater a template is already compiled or not.
+	 * Returns true if the template with the given data is already compiled.
 	 * 
 	 * @param	string		$templateName
-	 * @param 	string 		$sourceFilename
-	 * @param 	string 		$compiledFilename
+	 * @param	string		$sourceFilename
+	 * @param	string		$compiledFilename
 	 * @param	string		$application
 	 * @param	array		$metaData
-	 * @return 	boolean 	$isCompiled
+	 * @return	boolean
 	 */
 	protected function isCompiled($templateName, $sourceFilename, $compiledFilename, $application, array $metaData) {
 		if ($this->forceCompile || !file_exists($compiledFilename)) {
@@ -476,9 +478,9 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Compiles a template.
 	 * 
-	 * @param 	string 		$templateName
-	 * @param 	string 		$sourceFilename
-	 * @param 	string 		$compiledFilename
+	 * @param	string		$templateName
+	 * @param	string		$sourceFilename
+	 * @param	string		$compiledFilename
 	 * @param	array		$metaData
 	 */
 	protected function compileTemplate($templateName, $sourceFilename, $compiledFilename, array $metaData) {
@@ -490,7 +492,7 @@ class TemplateEngine extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns a new template compiler object.
+	 * Returns the template compiler.
 	 * 
 	 * @return	wcf\system\template\TemplateCompiler
 	 */
@@ -590,7 +592,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Executes a compiled template scripting source and returns the result.
-	 *
+	 * 
 	 * @param	string		$compiledSource
 	 * @param	array		$variables
 	 * @param	boolean		$sandbox	enables execution in sandbox
@@ -624,7 +626,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Deletes all compiled templates.
 	 * 
-	 * @param 	string		$compileDir
+	 * @param	string		$compileDir
 	 */
 	public static function deleteCompiledTemplates($compileDir = '') {
 		if (empty($compileDir)) $compileDir = WCF_DIR.'templates/compiled/';
@@ -636,7 +638,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Returns an array with all prefilters.
 	 * 
-	 * @return 	array<string>
+	 * @return	array<string>
 	 */
 	public function getPrefilters() {
 		return $this->prefilters;
@@ -689,7 +691,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Sets the dir for the compiled templates.
-	 *
+	 * 
 	 * @param	string		$compileDir
 	 */
 	public function setCompileDir($compileDir) {

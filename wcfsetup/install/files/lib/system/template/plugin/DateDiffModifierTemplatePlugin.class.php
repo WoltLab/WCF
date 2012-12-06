@@ -4,14 +4,14 @@ use wcf\system\template\TemplateEngine;
 use wcf\util\DateUtil;
 
 /**
- * The 'dateDiff' modifier calculates the difference between two unix timestamps
+ * Template modifier plugin which calculates the difference between two unix timestamps
  * and returns it as a textual date interval. The second parameter $fullInterval
  * indicates if the full difference is returned or just a rounded difference.
  * 
  * Usage:
- * {$timestamp|dateDiff}
- * {"123456789"|dateDiff:$timestamp:$fullInverval}
- *
+ *	{$timestamp|dateDiff}
+ *	{"123456789"|dateDiff:$timestamp:$fullInverval}
+ * 
  * @author	Matthias Schmidt, Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

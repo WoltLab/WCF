@@ -3,7 +3,7 @@ namespace wcf\system\user\authentication;
 use wcf\system\SingletonFactory;
 
 /**
- * Provides an abstract implementation of the user authentication.
+ * Abstract implementation of an user authentication.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

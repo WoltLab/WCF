@@ -10,7 +10,7 @@ use wcf\util\FileUtil;
 use wcf\util\XML;
 
 /**
- * This class holds all information of a package archive. 
+ * Represents the archive of a package.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -399,7 +399,7 @@ class PackageArchive {
 	 * Checks if the new package is compatible with
 	 * the package that is about to be updated.
 	 * 
-	 * @return 	boolean 	isValidUpdate
+	 * @return	boolean		isValidUpdate
 	 */
 	public function isValidUpdate() {
 		// Check name of the installed package against the name of the update. Both must be identical.
@@ -440,7 +440,7 @@ class PackageArchive {
 	/**
 	 * Returns information about the author of this package archive.
 	 * 
-	 * @param	string 		$name		name of the requested information
+	 * @param	string		$name		name of the requested information
 	 * @return	string
 	 */
 	public function getAuthorInfo($name) {
@@ -451,7 +451,7 @@ class PackageArchive {
 	/**
 	 * Returns information about this package.
 	 * 
-	 * @param	string 		$name		name of the requested information
+	 * @param	string		$name		name of the requested information
 	 * @return	mixed
 	 */
 	public function getPackageInfo($name) {
@@ -561,7 +561,7 @@ class PackageArchive {
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("package.package IN (?)", array($packageNames));
 			
-			$sql = "SELECT 	package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
+			$sql = "SELECT	package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
 				FROM	wcf".WCF_N."_package package
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -602,7 +602,7 @@ class PackageArchive {
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("package IN (?)", array($packageNames));
 			
-			$sql = "SELECT 	*
+			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_package
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -673,11 +673,12 @@ class PackageArchive {
 	}
 	
 	/**
-	 * Extracts the requested file in the package archive to the temp folder.
+	 * Extracts the requested file in the package archive to the temp folder
+	 * and returns the path to the extracted file.
 	 * 
 	 * @param	string		$filename
 	 * @param	string		$tempPrefix
-	 * @return	string		path to the extracted file
+	 * @return	string
 	 */
 	public function extractTar($filename, $tempPrefix = 'package_') {
 		// search the requested tar archive in our package archive.
@@ -695,10 +696,10 @@ class PackageArchive {
 	}
 	
 	/**
-	 * Unzips compressed package archives.
+	 * Unzips compressed package archives and returns the temporary file name.
 	 * 
-	 * @param 	string		$archive	filename
-	 * @return 	string		new filename
+	 * @param	string		$archive	filename
+	 * @return	string
 	 */
 	public static function unzipPackageArchive($archive) {
 		if (!FileUtil::isURL($archive)) {

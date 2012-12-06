@@ -8,17 +8,17 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * The 'pages' template function is used to generate sliding pagers.
+ * Template function plugin which generates sliding pagers.
  * 
  * Usage:
- *	{pages pages=10 link='page-%d.html'}
- *	{pages page=8 pages=10 link='page-%d.html'}
- *	
- *	assign to variable 'output'; do not print: 
- *	{pages page=8 pages=10 link='page-%d.html' assign='output'}
- *	
- *	assign to variable 'output' and do print also:
- *	{pages page=8 pages=10 link='page-%d.html' assign='output' print=true}
+ * 	{pages pages=10 link='page-%d.html'}
+ * 	{pages page=8 pages=10 link='page-%d.html'}
+ * 	
+ * 	assign to variable 'output'; do not print: 
+ * 	{pages page=8 pages=10 link='page-%d.html' assign='output'}
+ * 	
+ * 	assign to variable 'output' and do print also:
+ * 	{pages page=8 pages=10 link='page-%d.html' assign='output' print=true}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -136,9 +136,9 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			// calculate page links
 			$maxLinks = static::SHOW_LINKS - 4;
 			$linksBeforePage = $tagArgs['page'] - 2;
-			if ($linksBeforePage < 0) $linksBeforePage = 0; 
+			if ($linksBeforePage < 0) $linksBeforePage = 0;
 			$linksAfterPage = $tagArgs['pages'] - ($tagArgs['page'] + 1);
-			if ($linksAfterPage < 0) $linksAfterPage = 0; 
+			if ($linksAfterPage < 0) $linksAfterPage = 0;
 			if ($tagArgs['page'] > 1 && $tagArgs['page'] < $tagArgs['pages']) {
 				$maxLinks--;
 			}

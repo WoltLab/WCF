@@ -4,7 +4,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
 
 /**
- * This PIP installs, updates or deletes sitemaps.
+ * Installs, updates and deletes sitemaps.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -70,7 +70,7 @@ class SitemapPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
-	 */	
+	 */
 	protected function cleanup() {
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.sitemap.php');
 	}

@@ -34,23 +34,31 @@ final class ImageUtil {
 	}
 	
 	/**
-	 * Examines the right file extension for an image by the given mime type.
-	 * @see	http://www.php.net/manual/en/function.image-type-to-mime-type.php
+	 * Return the file extension for an image with the given mime type.
 	 * 
 	 * @param	string		$mimeType
-	 * @return	string		file extension
+	 * @return	string		
+	 * @see	http://www.php.net/manual/en/function.image-type-to-mime-type.php
 	 */
 	public static function getExtensionByMimeType($mimeType) {
 		switch ($mimeType) {
-			case 'image/gif': 			return 'gif';
-			case 'image/jpeg': 			return 'jpg';
-			case 'image/png': 			return 'png';
-			case 'application/x-shockwave-flash': 	return 'swf';
-			case 'image/psd': 			return 'psd';
+			case 'image/gif':
+				return 'gif';
+			case 'image/jpeg':
+				return 'jpg';
+			case 'image/png':
+				return 'png';
+			case 'application/x-shockwave-flash':
+				return 'swf';
+			case 'image/psd':
+				return 'psd';
 			case 'image/bmp':
-			case 'image/x-ms-bmp':			return 'bmp';
-			case 'image/tiff': 			return 'tiff';
-			default:				return '';
+			case 'image/x-ms-bmp':
+				return 'bmp';
+			case 'image/tiff':
+				return 'tiff';
+			default:
+				return '';
 		}
 	}
 	

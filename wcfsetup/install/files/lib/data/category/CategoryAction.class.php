@@ -13,7 +13,7 @@ use wcf\system\WCF;
 
 /**
  * Executes category-related actions.
- *
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

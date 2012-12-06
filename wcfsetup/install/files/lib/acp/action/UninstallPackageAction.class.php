@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
 
 /**
  * Handles an AJAX-based package uninstallation.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -99,7 +99,7 @@ class UninstallPackageAction extends InstallPackageAction {
 	
 	/**
 	 * Uninstalls node components and returns next node.
-	 *
+	 * 
 	 * @param	string		$node
 	 * @return	string
 	 */

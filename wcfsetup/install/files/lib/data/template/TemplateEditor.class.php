@@ -7,7 +7,7 @@ use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 
 /**
- * TemplateEditor provides functions to create, edit or delete templates. 
+ * Provides functions to edit templates.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -61,7 +61,7 @@ class TemplateEditor extends DatabaseObjectEditor {
 	protected function rename($name, $templateGroupID = 0) {
 		// get current path
 		$currentPath = $this->getPath();
-
+		
 		// get new path		
 		$this->data['templateGroupFolderName'] = '';
 		if ($templateGroupID != 0) {

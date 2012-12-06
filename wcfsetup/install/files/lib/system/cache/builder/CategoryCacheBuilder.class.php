@@ -3,8 +3,8 @@ namespace wcf\system\cache\builder;
 use wcf\data\category\CategoryList;
 
 /**
- * Caches the categories for a certain package.
- *
+ * Caches the categories for the active application.
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

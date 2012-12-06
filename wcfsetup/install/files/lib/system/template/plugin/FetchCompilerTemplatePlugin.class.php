@@ -4,11 +4,12 @@ use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateScriptingCompiler;
 
 /**
- * The 'fetch' compiler function fetches files from the local file system, http, or ftp and displays the content.
+ * Template compiler plugin which fetches files from the local file system, http,
+ * or ftp and displays the content.
  * 
  * Usage:
- *	{fetch file='x.html'}
- *	{fetch file='x.html' assign=var}
+ * 	{fetch file='x.html'}
+ * 	{fetch file='x.html' assign=var}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

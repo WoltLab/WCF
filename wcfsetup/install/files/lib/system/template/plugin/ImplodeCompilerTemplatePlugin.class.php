@@ -5,10 +5,10 @@ use wcf\system\template\TemplateScriptingCompiler;
 use wcf\util\StringUtil;
 
 /**
- * The 'implode' compiler function joins array elements with a string.
+ * Template compiler plugin which joins array elements to a string.
  * 
  * Usage:
- *	{implode from=$array key=bar item=foo glue=";"}{$foo}{/implode}
+ * 	{implode from=$array key=bar item=foo glue=";"}{$foo}{/implode}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH

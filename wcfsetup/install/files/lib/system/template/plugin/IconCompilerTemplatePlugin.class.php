@@ -3,10 +3,10 @@ namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateScriptingCompiler;
 
 /**
- * The 'icon' compiler function compiles dynamic icon paths.
+ * Template compiler plugin which compiles dynamic icon paths.
  *
  * Usage:
- * {icon}{$foo}{/icon}
+ *	{icon}{$foo}{/icon}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

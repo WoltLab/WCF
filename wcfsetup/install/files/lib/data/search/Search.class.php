@@ -21,5 +21,5 @@ class Search extends DatabaseObject {
 	/**
 	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
-	protected static $databaseTableIndexName = 'searchID';	
+	protected static $databaseTableIndexName = 'searchID';
 }

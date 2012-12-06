@@ -4,11 +4,11 @@ use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateScriptingCompiler;
 
 /**
- * The 'append' compiler function calls the append function on the template object.
+ * Template compiler plugin which appends a value to a template variable.
  * 
  * Usage:
- *	{append var=name value="foo"}
- *
+ * 	{append var=name value="foo"}
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

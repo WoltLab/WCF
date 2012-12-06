@@ -3,7 +3,7 @@ namespace wcf\data\option\category;
 use wcf\data\AbstractDatabaseObjectAction;
 
 /**
- * Executes option categories-related actions.
+ * Executes option category-related actions.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

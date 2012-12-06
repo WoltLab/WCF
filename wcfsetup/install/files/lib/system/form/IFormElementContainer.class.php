@@ -13,14 +13,14 @@ namespace wcf\system\form;
  */
 interface IFormElementContainer {
 	/**
-	 * Returns help message.
+	 * Returns form element container description.
 	 * 
 	 * @return	string
 	 */
 	public function getDescription();
 	
 	/**
-	 * Sets help message.
+	 * Sets form element container description.
 	 * 
 	 * @param	string		$description
 	 */

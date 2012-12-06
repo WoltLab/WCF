@@ -3,7 +3,7 @@ namespace wcf\system\database\editor;
 use wcf\system\database\Database;
 
 /**
- * This is an abstract implementation of a database editor class.
+ * Abstract implementation of a database editor.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -18,7 +18,7 @@ abstract class DatabaseEditor {
 	 * @var	wcf\system\database\Database
 	 */
 	protected $dbObj = null;
-
+	
 	/**
 	 * Creates a new DatabaseEditor object.
 	 *
@@ -29,9 +29,9 @@ abstract class DatabaseEditor {
 	}
 	
 	/**
-	 * Returns all existing tablenames.  
+	 * Returns all existing table names.
 	 * 
-	 * @return 	array 		$existingTables
+	 * @return	array		$existingTables
 	 */
 	abstract public function getTableNames();
 	

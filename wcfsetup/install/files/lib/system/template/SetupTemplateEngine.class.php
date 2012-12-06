@@ -3,8 +3,8 @@ namespace wcf\system\template;
 use wcf\system\exception\SystemException;
 
 /**
- * SetupTemplateEngine loads and displays template in the setup process.
- *
+ * Loads and displays template during the setup process.
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -16,7 +16,9 @@ class SetupTemplateEngine extends TemplateEngine {
 	/**
 	 * @see	wcf\system\template\TemplateEngine::loadTemplateGroupCache()
 	 */
-	protected function loadTemplateGroupCache() {}
+	protected function loadTemplateGroupCache() {
+		// does nothing
+	}
 	
 	/**
 	 * @see	wcf\system\template\TemplateEngine::getSourceFilename()

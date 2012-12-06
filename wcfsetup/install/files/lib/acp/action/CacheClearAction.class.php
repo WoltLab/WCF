@@ -11,7 +11,7 @@ use wcf\util\HeaderUtil;
 
 /**
  * Clears the cache.
- *
+ * 
  * @author	Tim Düsterhus
  * @copyright	2012 Tim Düsterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

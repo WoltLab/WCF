@@ -3,7 +3,7 @@ namespace wcf\system\template;
 use wcf\system\io\File;
 
 /**
- * TemplateCompiler compiles template source into valid php code.
+ * Compiles template source into valid PHP code.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

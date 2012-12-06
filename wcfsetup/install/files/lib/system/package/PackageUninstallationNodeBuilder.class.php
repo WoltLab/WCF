@@ -5,7 +5,7 @@ use wcf\system\package\PackageUninstallationDispatcher;
 use wcf\system\WCF;
 
 /**
- * PackageUninstallationNodeBuilder creates a logical node-based uninstallation tree.
+ * Creates a logical node-based uninstallation tree.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 	/**
-	 * Builds node for current uninstallation queue.
+	 * @see	wcf\system\package\PackageInstallationNodeBuilder::buildNodes()
 	 */
 	public function buildNodes() {
 		if (!empty($this->parentNode)) {
@@ -65,8 +65,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 	}
 	
 	/**
-	 * Creates a node-tree for package installation plugins, whereas the PIP- and files-plugin
-	 * will be executed last.
+	 * @see	wcf\system\package\PackageInstallationNodeBuilder::buildPluginNodes()
 	 */
 	protected function buildPluginNodes() {
 		if (empty($this->node)) {
@@ -111,7 +110,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 	}
 	
 	/**
-	 * Builds node for package removal
+	 * @see	wcf\system\package\PackageInstallationNodeBuilder::buildPackageNode()
 	 */
 	protected function buildPackageNode() {
 		$this->parentNode = $this->node;

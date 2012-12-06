@@ -4,8 +4,8 @@ use wcf\system\option\TextareaOptionType;
 use wcf\util\StringUtil;
 
 /**
- * TextareaUserGroupOptionType is an implementation of IUserGroupOptionType for
- * text values.
+ * User group option type implementation for textareas.
+ * 
  * The merge of option values returns merge of all text values.
  * 
  * @author	Marcel Werk

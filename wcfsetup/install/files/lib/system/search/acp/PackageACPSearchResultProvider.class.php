@@ -5,7 +5,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
- * ACP search result provider for packages.
+ * ACP search result provider implementation for packages.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2012 WoltLab GmbH

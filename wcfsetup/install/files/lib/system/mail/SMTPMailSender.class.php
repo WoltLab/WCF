@@ -14,6 +14,7 @@ use wcf\system\io\RemoteFile;
  * @category	Community Framework
  */
 class SMTPMailSender extends MailSender {
+	// todo: comment properties
 	protected $connection = null;
 	protected $statusCode = '';
 	protected $statusMsg = '';
@@ -74,10 +75,10 @@ class SMTPMailSender extends MailSender {
 	}
 	
 	/**
-	 * Does the Authentification of the Client at the Server
+	 * Does the authentification of the client on the server
 	 */
 	protected function auth() {
-		// Init Authentication
+		// init authentication
 		$this->write('AUTH LOGIN');
 		$this->getSMTPStatus();
 		
@@ -92,7 +93,7 @@ class SMTPMailSender extends MailSender {
 		if ($this->statusCode != 334) {
 			throw new SystemException($this->formatError("unknown smtp user '".MAIL_SMTP_USER."'"));
 		}
-			
+		
 		$this->write(base64_encode(MAIL_SMTP_PASSWORD));
 		$this->getSMTPStatus();
 		if ($this->statusCode != 235) {
@@ -145,7 +146,7 @@ class SMTPMailSender extends MailSender {
 		if ($this->statusCode != 354 && $this->statusCode != 250) {
 			throw new SystemException($this->formatError("smtp error"));
 		}
-						
+		
 		$header =
 			"Date: ".gmdate('r').Mail::$crlf
 			."To: ".$mail->getToString().Mail::$crlf
@@ -157,7 +158,7 @@ class SMTPMailSender extends MailSender {
 		$this->write("");
 		$this->write($mail->getBody());
 		$this->write(".");
-			
+		
 		$this->getSMTPStatus();
 		if ($this->statusCode != 250) {
 			throw new SystemException($this->formatError("message sending failed"));
@@ -181,7 +182,7 @@ class SMTPMailSender extends MailSender {
 	/**
 	 * Reads the Information wich the Server sends back.
 	 * 
-	 * @return 	string
+	 * @return	string
 	 */
 	protected function read() {
 		$result = '';
@@ -189,7 +190,7 @@ class SMTPMailSender extends MailSender {
 			$result .= $read;
 			if (substr($read, 3, 1) == " ") break;
 		}
-		return $result; 
+		return $result;
 	}
 	
 	/**
@@ -200,7 +201,7 @@ class SMTPMailSender extends MailSender {
 	protected function getSMTPStatus($data = null) {
 		if ($data === null) $data = $this->read();
 		$this->statusCode = intval(substr($data, 0, 3));
-		$this->statusMsg  = substr($data, 4);
+		$this->statusMsg = substr($data, 4);
 	}
 	
 	/**

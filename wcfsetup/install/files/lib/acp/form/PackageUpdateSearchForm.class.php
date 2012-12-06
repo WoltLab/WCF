@@ -257,7 +257,7 @@ class PackageUpdateSearchForm extends ACPForm {
 		
 		$this->updateServers = PackageUpdateServer::getActiveUpdateServers();
 	}
-
+	
 	/**
 	 * @see	wcf\page\IPage::assignVariables()
 	 */

@@ -7,7 +7,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
- * This is an implementation of prepared statements based upon pdo statements.
+ * Represents a prepared statements based upon pdo statements.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -43,9 +43,9 @@ class PreparedStatement {
 	
 	/**
 	 * Creates a new PreparedStatement object.
-	 *
+	 * 
 	 * @param	wcf\system\database\Database	$database
-	 * @param	\PDOStatement			$pdoStatement
+	 * @param	PDOStatement			$pdoStatement
 	 * @param	string				$query		SQL query
 	 */
 	public function __construct(Database $database, \PDOStatement $pdoStatement, $query = '') {

@@ -20,9 +20,8 @@ interface ITraversableObject extends \SeekableIterator {
 	public function seekTo($objectID);
 	
 	/**
-	 * Searches a specific object by object id and setting internal
-	 * iterator pointer to found item. Returns null if object id is
-	 * not found.
+	 * Searches a specific object by object id and setting internal iterator
+	 * pointer to found item. Returns null if object id is not found.
 	 * 
 	 * @param	integer		$objectID
 	 * @return	wcf\data\DatabaseObject

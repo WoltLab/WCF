@@ -171,7 +171,7 @@ class StyleAction extends AbstractDatabaseObjectAction {
 				}
 			}
 		}
-			
+		
 		// remove previously set variables
 		if ($removePreviousVariables) {
 			$sql = "DELETE FROM	wcf".WCF_N."_style_variable_value
@@ -179,7 +179,7 @@ class StyleAction extends AbstractDatabaseObjectAction {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($style->styleID));
 		}
-			
+		
 		// insert variables that differ from default values
 		if (!empty($variables)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_style_variable_value
@@ -486,9 +486,11 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Does nothing.
+	 * Validates the 'getStyleChooser' action.
 	 */
-	public function validateGetStyleChooser() { }
+	public function validateGetStyleChooser() {
+		// does nothing
+	}
 	
 	/**
 	 * Returns the style chooser dialog.

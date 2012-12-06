@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
- * ACPTemplatesFileHandler is a FileHandler implementation for the installation of ACP-template files.
+ * File handler implementation for the installation of ACP template files.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH

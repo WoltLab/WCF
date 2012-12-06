@@ -2,8 +2,7 @@
 namespace wcf\system\template;
 
 /**
- * ACPTemplate loads and displays template in the admin control panel of the wcf.
- * ACPTemplate does not support template groups.
+ * Loads and displays template in the ACP.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -35,7 +34,7 @@ class ACPTemplateEngine extends TemplateEngine {
 	/**
 	 * Deletes all compiled acp templates.
 	 * 
-	 * @param 	string		$compileDir
+	 * @param	string		$compileDir
 	 */
 	public static function deleteCompiledACPTemplates($compileDir = '') {
 		if (empty($compileDir)) $compileDir = WCF_DIR.'acp/templates/compiled/';

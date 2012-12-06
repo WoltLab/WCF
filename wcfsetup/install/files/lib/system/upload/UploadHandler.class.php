@@ -4,7 +4,7 @@ use wcf\util\FileUtil;
 
 /**
  * Handles file uploads.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

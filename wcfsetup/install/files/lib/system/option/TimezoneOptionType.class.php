@@ -6,9 +6,8 @@ use wcf\system\WCF;
 use wcf\util\DateUtil;
 
 /**
- * TimezoneOptionType is an implementation of IOptionType for a select box which
- * list the available time zones.
- *
+ * Option type implementation for a select list with the available time zones.
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

@@ -2,7 +2,7 @@
 namespace wcf\system\setup;
 
 /**
- * A FileHandler class logs files and checks their overwriting rights.
+ * Logs files and checks their overwriting rights.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

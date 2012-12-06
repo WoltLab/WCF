@@ -4,7 +4,7 @@ use wcf\data\DatabaseObject;
 
 /**
  * Represents a package installation plugin.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -25,6 +25,6 @@ class PackageInstallationPlugin extends DatabaseObject {
 	
 	/**
 	 * @see	wcf\data\DatabaseObject::$databaseTableIndexIsIdentity
-	 */	
+	 */
 	protected static $databaseTableIndexIsIdentity = false;
 }

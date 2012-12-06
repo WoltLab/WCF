@@ -4,8 +4,8 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IDatabaseObjectProcessor;
 
 /**
- * Provides default a implementation for object type processors.
- *
+ * Abstract implementation of an object type processor.
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

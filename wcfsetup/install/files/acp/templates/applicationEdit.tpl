@@ -30,7 +30,7 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.form.edit.success{/lang}</p>	
+	<p class="success">{lang}wcf.global.form.edit.success{/lang}</p>
 {/if}
 
 <div class="contentNavigation">

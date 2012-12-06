@@ -4,11 +4,11 @@ use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
 
 /**
- * The 'language' modifier returns dynamic language variables.
+ * Template modifier plugin which returns dynamic language variables.
  * 
  * Usage:
- *	{$string|language}
- *
+ * 	{$string|language}
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

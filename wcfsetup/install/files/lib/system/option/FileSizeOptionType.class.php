@@ -6,7 +6,7 @@ use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
- * FileSizeOptionType is an implementation of IOptionType for file sizes.
+ * Option type implementation for file sizes.
  * 
  * @author	Tim Düsterhus
  * @copyright	2011 Tim Düsterhus

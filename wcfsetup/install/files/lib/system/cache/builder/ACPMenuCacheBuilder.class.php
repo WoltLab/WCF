@@ -15,6 +15,10 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class ACPMenuCacheBuilder implements ICacheBuilder {
+	/**
+	 * option category structure
+	 * @var	array
+	 */
 	protected $optionCategoryStructure = array();
 	
 	/**
