@@ -696,9 +696,6 @@ class PackageInstallationDispatcher {
 	 * Executes post-setup actions.
 	 */
 	public function completeSetup() {
-		// rebuild dependencies
-		Package::rebuildPackageDependencies($this->queue->packageID);
-		
 		// mark queue as done
 		$queueEditor = new PackageInstallationQueueEditor($this->queue);
 		$queueEditor->update(array(
