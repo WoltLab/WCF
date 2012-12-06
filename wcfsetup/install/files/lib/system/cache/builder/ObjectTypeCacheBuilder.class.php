@@ -19,10 +19,6 @@ class ObjectTypeCacheBuilder implements ICacheBuilder {
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-<<<<<<< HEAD
-		list(, $packageID) = explode('-', $cacheResource['cache']);
-=======
->>>>>>> refs/heads/master
 		$data = array(
 			'categories' => array(),
 			'definitions' => array(),

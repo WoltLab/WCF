@@ -174,7 +174,8 @@ class Package extends DatabaseObject {
 	 * A valid package name begins with at least one alphanumeric character
 	 * or an underscore, followed by a dot, followed by at least one alphanumeric
 	 * character or an underscore and the same again, possibly repeatedly.
-	 * Example: 'com.woltlab.wcf'.
+	 * Example:
+	 * 	com.woltlab.wcf
 	 * 
 	 * Reminder: The package name being examined here contains the 'name' attribute
 	 * of the 'package' tag noted in the 'packages.xml' file delivered inside
@@ -190,10 +191,10 @@ class Package extends DatabaseObject {
 	/**
 	 * Returns true, if package version is valid.
 	 * 
-	 * Exmaples of valid package versions:
-	 *	1.0.0 pl 3
-	 *	4.0.0 Alpha 1
-	 *	3.1.7 rC 4
+	 * Examples of valid package versions:
+	 * 	1.0.0 pl 3
+	 * 	4.0.0 Alpha 1
+	 * 	3.1.7 rC 4
 	 * 
 	 * @param	string		$version
 	 * @return	boolean

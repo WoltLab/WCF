@@ -20,7 +20,6 @@ use wcf\system\form\element;
 use wcf\system\form\FormDocument;
 use wcf\system\form;
 use wcf\system\language\LanguageFactory;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
