@@ -17,7 +17,7 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 	/**
 	 * @see	wcf\acp\form\AbstractOptionListForm::$cacheName
 	 */
-	public $cacheName = 'user-option';
+	public $cacheName = 'userOption';
 	
 	/**
 	 * @see	wcf\acp\form\AbstractOptionListForm::$supportI18n
