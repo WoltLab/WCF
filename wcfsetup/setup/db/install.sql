@@ -307,7 +307,6 @@ CREATE TABLE wcf1_package (
 	package VARCHAR(255) NOT NULL DEFAULT '',
 	packageDir VARCHAR(255) NOT NULL DEFAULT '',
 	packageName VARCHAR(255) NOT NULL DEFAULT '',
-	instanceName VARCHAR(255) NOT NULL DEFAULT '',
 	instanceNo INT(10) NOT NULL DEFAULT 1,
 	packageDescription VARCHAR(255) NOT NULL DEFAULT '',
 	packageVersion VARCHAR(255) NOT NULL DEFAULT '',

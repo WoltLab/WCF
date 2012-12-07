@@ -85,7 +85,14 @@ class Package extends DatabaseObject {
 	 * @return	string
 	 */
 	public function getName() {
-		return WCF::getLanguage()->get($this->instanceName ?: $this->packageName);
+		return WCF::getLanguage()->get($this->packageName);
+	}
+	
+	/**
+	 * @see	wcf\data\package\Package::getName()
+	 */
+	public function __toString() {
+		return $this->getName();
 	}
 	
 	/**
@@ -123,7 +130,7 @@ class Package extends DatabaseObject {
 		if ($this->requiredPackages === null) {
 			$this->requiredPackages = array();
 			
-			$sql = "SELECT		package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
+			$sql = "SELECT		package.*
 				FROM		wcf".WCF_N."_package_requirement package_requirement
 				LEFT JOIN	wcf".WCF_N."_package package ON (package.packageID = package_requirement.requirement)
 				WHERE		package_requirement.packageID = ?
