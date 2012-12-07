@@ -9,6 +9,7 @@
 <form method="get" action="{@RELATIVE_WCF_DIR}acp/index.php">
 	<div class="wcf-formSubmit">
 		{@SID_INPUT_TAG}
+		<input type="hidden" name="action" value="WCFSetup" />
 	</div>
 </form>
 

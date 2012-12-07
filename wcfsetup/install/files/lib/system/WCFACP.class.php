@@ -143,27 +143,8 @@ class WCFACP extends WCF {
 	protected function initPackage() {
 		// define active package id
 		if (!defined('PACKAGE_ID')) {
-			$packageID = self::getWcfPackageID();
-			define('PACKAGE_ID', $packageID);
+			define('PACKAGE_ID', 1);
 		}
-	}
-	
-	/**
-	 * Returns the package id of the wcf package.
-	 * 
-	 * @return	integer
-	 */
-	public static final function getWcfPackageID() {
-		// try to find package wcf id
-		$sql = "SELECT	packageID
-			FROM	wcf".WCF_N."_package
-			WHERE	package = 'com.woltlab.wcf'";
-		$statement = WCFACP::getDB()->prepareStatement($sql);
-		$statement->execute();
-		$package = $statement->fetchArray();
-		
-		if (!$package) return 0;
-		else return $package['packageID'];
 	}
 	
 	/**
