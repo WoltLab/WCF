@@ -424,9 +424,6 @@ class Package extends DatabaseObject {
 		$file->write("if (!defined('".$prefix."_DIR')) define('".$prefix."_DIR', dirname(__FILE__).'/');\n");
 		$file->write("if (!defined('RELATIVE_".$prefix."_DIR')) define('RELATIVE_".$prefix."_DIR', '');\n");
 		$file->write("\n");
-		$file->write("\n// using ".$prefix."_N is deprecated, please use WCF_N instead!");
-		$file->write("if (!defined('".$prefix."_N')) define('".$prefix."_N', '".WCF_N."');\n");
-		$file->write("\n");
 		
 		// write general information
 		$file->write("// general info\n");
