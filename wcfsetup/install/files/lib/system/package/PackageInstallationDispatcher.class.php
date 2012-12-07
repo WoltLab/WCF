@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\package;
+use wcf\system\style\StyleHandler;
+
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\language\category\LanguageCategory;
@@ -155,6 +157,9 @@ class PackageInstallationDispatcher {
 			// reset language cache
 			LanguageFactory::getInstance()->clearCache();
 			LanguageFactory::getInstance()->deleteLanguageCache();
+			
+			// reset stylesheets
+			StyleHandler::resetStylesheets();
 		}
 		
 		return $step;

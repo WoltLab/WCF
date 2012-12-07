@@ -90,6 +90,9 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 			LanguageFactory::getInstance()->clearCache();
 			LanguageFactory::getInstance()->deleteLanguageCache();
 			
+			// reset stylesheets
+			StyleHandler::resetStylesheets();
+			
 			// rebuild application paths
 			ApplicationHandler::rebuild();
 		}

@@ -152,4 +152,21 @@ class StyleHandler extends SingletonFactory {
 			@unlink($stylesheet);
 		}
 	}
+	
+	/**
+	 * Resets all stylesheets.
+	 */
+	public static function resetStylesheets() {
+		// frontend stylesheets
+		$stylesheets = glob(WCF_DIR.'style/style-*.css');
+		foreach ($stylesheets as $stylesheet) {
+			@unlink($stylesheet);
+		}
+		
+		// ACP stylesheets
+		$stylesheets = glob(WCF_DIR.'acp/style/style*.css');
+		foreach ($stylesheets as $stylesheet) {
+			@unlink($stylesheet);
+		}
+	}
 }
