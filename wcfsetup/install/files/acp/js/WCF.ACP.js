@@ -965,8 +965,7 @@ WCF.ACP.Options.Group = Class.extend({
  * @param	string		className
  * @param	object		options
  */
-WCF.ACP.Worker = function(dialogID, className, options) { this.init(dialogID, className, options); };
-WCF.ACP.Worker.prototype = {
+WCF.ACP.Worker = Class.extend({
 	/**
 	 * dialog id
 	 * @var	string
@@ -1046,7 +1045,7 @@ WCF.ACP.Worker.prototype = {
 			this._dialog.wcfDialog('render');
 		}
 	}
-};
+});
 
 /**
  * Namespace for category-related functions.
