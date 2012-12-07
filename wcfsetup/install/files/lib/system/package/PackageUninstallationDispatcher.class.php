@@ -9,6 +9,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\setup\Uninstaller;
 use wcf\system\WCF;
@@ -66,24 +67,28 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 		$this->nodeBuilder->completeNode($node);
 		$node = $this->nodeBuilder->getNextNode($node);
 		
-		// update options.inc.php if uninstallation is completed
+		// perform post-uninstall actions
 		if ($node == '') {
+			// update options.inc.php if uninstallation is completed
 			OptionEditor::resetCache();
 			
-			// force removal of all WCF cache files
-			CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.*.php');
-			
-			if (PACKAGE_ID != 1) {
-				$sql = "SELECT	packageDir
-					FROM	wcf".WCF_N."_package
-					WHERE	isApplication = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(1));
-				while ($row = $statement->fetchArray()) {
-					$dir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
-					CacheHandler::getInstance()->clear($dir.'cache/', 'cache.*.php');
-				}
+			// force removal of all cache files
+			$sql = "SELECT	packageDir
+				FROM	wcf".WCF_N."_package
+				WHERE	isApplication = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array(1));
+			while ($row = $statement->fetchArray()) {
+				$dir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
+				CacheHandler::getInstance()->clear($dir.'cache/', 'cache.*.php');
 			}
+			
+			// remove template listener cache
+			CacheHandler::getInstance()->clear(WCF_DIR.'cache/templateListener/', '*.php');
+			
+			// reset language cache
+			LanguageFactory::getInstance()->clearCache();
+			LanguageFactory::getInstance()->deleteLanguageCache();
 			
 			// rebuild application paths
 			ApplicationHandler::rebuild();

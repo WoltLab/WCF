@@ -130,11 +130,13 @@ class PackageInstallationDispatcher {
 		$node = $this->nodeBuilder->getNextNode($node);
 		$step->setNode($node);
 		
-		// update options.inc.php and save localized package infos
+		// perform post-install/update actions
 		if ($node == '') {
+			// update options.inc.php
 			OptionEditor::resetCache();
 			
 			if ($this->action == 'install') {
+				// save localized package infos
 				$this->saveLocalizedPackageInfos();
 				
 				// remove all cache files after WCFSetup
@@ -146,6 +148,13 @@ class PackageInstallationDispatcher {
 				ApplicationHandler::rebuild();
 				ApplicationEditor::setup();
 			}
+			
+			// remove template listener cache
+			CacheHandler::getInstance()->clear(WCF_DIR.'cache/templateListener/', '*.php');
+				
+			// reset language cache
+			LanguageFactory::getInstance()->clearCache();
+			LanguageFactory::getInstance()->deleteLanguageCache();
 		}
 		
 		return $step;
