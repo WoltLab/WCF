@@ -469,9 +469,8 @@ abstract class PackageUpdateDispatcher {
 		
 		// get existing packages and their versions
 		$existingPackages = array();
-		$sql = "SELECT	packageID, package, instanceNo, packageDescription,
-				packageVersion, packageDate, author, authorURL, isApplication,
-				CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
+		$sql = "SELECT	packageID, package, packageDescription,
+				packageVersion, packageDate, author, authorURL, isApplication
 			FROM	wcf".WCF_N."_package";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();

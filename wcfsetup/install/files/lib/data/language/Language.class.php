@@ -87,15 +87,15 @@ class Language extends DatabaseObject {
 		if (!isset($this->items[$item])) {
 			// load category file
 			$explodedItem = explode('.', $item);
-			if (count($explodedItem) < 2) {
+			if (count($explodedItem) < 3) {
 				return $item;
 			}
 			
-			if (count($explodedItem) < 4 || !$this->loadCategory($explodedItem[0].'.'.$explodedItem[1].'.'.$explodedItem[2].'.'.$explodedItem[3])) {
-				if (count($explodedItem) < 3 || !$this->loadCategory($explodedItem[0].'.'.$explodedItem[1].'.'.$explodedItem[2])) {
-					$this->loadCategory($explodedItem[0].'.'.$explodedItem[1]);
-				}
+			// attempt to load the most specific category
+			if (isset($explodedItem[3])) {
+				$this->loadCategory($explodedItem[0].'.'.$explodedItem[1].'.'.$explodedItem[2]);
 			}
+			$this->loadCategory($explodedItem[0].'.'.$explodedItem[1]);
 		}
 		
 		// return language variable
@@ -147,7 +147,11 @@ class Language extends DatabaseObject {
 			
 			// rebuild language file
 			$languageCategory = LanguageFactory::getInstance()->getCategory($category);
-			$this->editor->updateCategory(array($languageCategory->languageCategoryID));
+			if ($languageCategory === null) {
+				return false;
+			}
+			
+			$this->editor->updateCategory($languageCategory);
 		}
 		
 		// include language file

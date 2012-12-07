@@ -105,7 +105,7 @@ class CacheListPage extends AbstractPage {
 				$this->cacheData['version'] = phpversion('apc');
 				
 				// get package dirs
-				$sql = "SELECT	packageDir, packageName, instanceNo
+				$sql = "SELECT	packageDir, packageName
 					FROM	wcf".WCF_N."_package
 					WHERE	isApplication = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
@@ -114,7 +114,7 @@ class CacheListPage extends AbstractPage {
 				$packageNames = array();
 				while ($row = $statement->fetchArray()) {
 					$packagePath = FileUtil::getRealPath(WCF_DIR.$row['packageDir']).'cache/';
-					$packageNames[$packagePath] = $row['packageName'].' #'.$row['instanceNo'];
+					$packageNames[$packagePath] = $row['packageName'];
 				}
 				
 				$apcinfo = apc_cache_info('user');

@@ -38,10 +38,10 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			if ($package->isApplication == 1) {
 				// package is application
 				$packageAbbr = Package::getAbbreviation($package->package);
-				$tablePrefix = WCF_N.'_'.$package->instanceNo.'_';
+				$tablePrefix = WCF_N.'_';
 				
 				// Replace the variable xyz1_1 with $tablePrefix in the table names.
-				$queries = StringUtil::replace($packageAbbr.'1_1_', $packageAbbr.$tablePrefix, $queries);
+				$queries = StringUtil::replace($packageAbbr.'1_', $packageAbbr.$tablePrefix, $queries);
 			}
 			
 			// replace wcf1_ with the actual WCF_N value

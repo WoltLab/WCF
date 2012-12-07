@@ -132,9 +132,8 @@ class IndexPage extends AbstractPage {
 	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
-		$wcfPackageID = WCFACP::getWcfPackageID();
 		// check package installation queue
-		if ($wcfPackageID == 0) {
+		if ($this->action == 'WCFSetup') {
 			$queueID = PackageInstallationDispatcher::checkPackageInstallationQueue();
 			
 			if ($queueID) {

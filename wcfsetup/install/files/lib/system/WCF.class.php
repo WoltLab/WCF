@@ -413,14 +413,11 @@ class WCF {
 	 * Initializes applications.
 	 */
 	protected function initApplications() {
-		// register WCF as application
-		self::$applications['wcf'] = new Application(1);
-		
-		// do not init applications if within wcf
-		if (PACKAGE_ID == 1) return;
-		
 		// step 1) load all applications
 		$loadedApplications = array();
+		
+		// register WCF as application
+		self::$applications['wcf'] = ApplicationHandler::getInstance()->getWCF();
 		
 		// start main application
 		$application = ApplicationHandler::getInstance()->getActiveApplication();

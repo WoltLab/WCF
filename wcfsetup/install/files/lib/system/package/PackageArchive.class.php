@@ -531,7 +531,7 @@ class PackageArchive {
 		$existingRequirements = array();
 		$existingPackages = array();
 		if ($this->package !== null) {
-			$sql = "SELECT		package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
+			$sql = "SELECT		package.*
 				FROM		wcf".WCF_N."_package_requirement requirement
 				LEFT JOIN	wcf".WCF_N."_package package
 				ON		(package.packageID = requirement.requirement)
@@ -561,7 +561,7 @@ class PackageArchive {
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("package.package IN (?)", array($packageNames));
 			
-			$sql = "SELECT	package.*, CASE WHEN instanceName <> '' THEN instanceName ELSE packageName END AS packageName
+			$sql = "SELECT	package.*
 				FROM	wcf".WCF_N."_package package
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);

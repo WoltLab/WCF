@@ -36,7 +36,7 @@ class SessionAccessLogListener implements IEventListener {
 			if (!empty($row['sessionLogID'])) {
 				$sessionLogID = $row['sessionLogID'];
 				
-				$sessionLogEditor = new ACPSessionLogEditor(new ACPSessionLog($sessionLogID));
+				$sessionLogEditor = new ACPSessionLogEditor(new ACPSessionLog(null, array('sessionLogID' => $sessionLogID)));
 				$sessionLogEditor->update(array(
 					'lastActivityTime' => TIME_NOW
 				));

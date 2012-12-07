@@ -657,10 +657,41 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 	_prepareQueue: function(event) {
 		var $element = $(event.target);
 		
+		if ($element.data('isRequired')) {
+			new WCF.Action.Proxy({
+				autoSend: true,
+				data: {
+					actionName: 'getConfirmMessage',
+					className: 'wcf\\data\\package\\PackageAction',
+					objectIDs: [ $element.data('objectID') ]
+				},
+				success: $.proxy(function(data, textStatus, jqXHR) {
+					// remove isRequired flag to prevent loading the same content again
+					$element.data('isRequired', false);
+					
+					// update confirmation message
+					$element.data('confirmMessage', data.returnValues.confirmMessage);
+					
+					// display confirmation dialog
+					this._showConfirmationDialog($element);
+				}, this)
+			});
+		}
+		else {
+			this._showConfirmationDialog($element);
+		}
+	},
+	
+	/**
+	 * Displays a confirmation dialog prior to package uninstallation.
+	 * 
+	 * @param	jQuery		element
+	 */
+	_showConfirmationDialog: function(element) {
 		var self = this;
-		WCF.System.Confirmation.show($element.data('confirmMessage'), function(action) {
+		WCF.System.Confirmation.show(element.data('confirmMessage'), function(action) {
 			if (action === 'confirm') {
-				self._packageID = $element.data('objectID');
+				self._packageID = element.data('objectID');
 				self.prepareInstallation();
 			}
 		});
@@ -934,8 +965,7 @@ WCF.ACP.Options.Group = Class.extend({
  * @param	string		className
  * @param	object		options
  */
-WCF.ACP.Worker = function(dialogID, className, options) { this.init(dialogID, className, options); };
-WCF.ACP.Worker.prototype = {
+WCF.ACP.Worker = Class.extend({
 	/**
 	 * dialog id
 	 * @var	string
@@ -1015,7 +1045,7 @@ WCF.ACP.Worker.prototype = {
 			this._dialog.wcfDialog('render');
 		}
 	}
-};
+});
 
 /**
  * Namespace for category-related functions.

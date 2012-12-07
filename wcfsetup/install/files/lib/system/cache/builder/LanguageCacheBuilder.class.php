@@ -26,7 +26,8 @@ class LanguageCacheBuilder implements ICacheBuilder {
 			'countryCodes' => array(),
 			'languages' => array(),
 			'default' => 0,
-			'categories' => array()
+			'categories' => array(),
+			'categoryIDs' => array()
 		);
 		
 		// get languages
@@ -55,6 +56,7 @@ class LanguageCacheBuilder implements ICacheBuilder {
 		$languageCategoryList->readObjects();
 		foreach ($languageCategoryList->getObjects() as $languageCategory) {
 			$data['categories'][$languageCategory->languageCategory] = $languageCategory;
+			$data['categoryIDs'][$languageCategory->languageCategoryID] = $languageCategory->languageCategory;
 		}
 
 		return $data;

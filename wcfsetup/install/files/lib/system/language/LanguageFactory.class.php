@@ -127,6 +127,20 @@ class LanguageFactory extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns language category by id.
+	 * 
+	 * @param	integer		$languageCategoryID
+	 * @return	wcf\data\language\category\LanguageCategory
+	 */
+	public function getCategoryByID($languageCategoryID) {
+		if (isset($this->cache['categoryIDs'][$languageCategoryID])) {
+			return $this->cache['categories'][$this->cache['categoryIDs'][$languageCategoryID]];
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Returns a list of available language categories.
 	 * 
 	 * @return	array<wcf\data\language\category\LanguageCategory>

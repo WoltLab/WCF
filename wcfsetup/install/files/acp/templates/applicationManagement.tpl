@@ -32,7 +32,14 @@
 						<tr>
 							<td class="columnIcon"><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" class="icon16 jsTooltip" title="{lang}wcf.global.button.edit{/lang}" /></a></td>
 							<td class="columnID columnPackageID">{#$application->packageID}</td>
-							<td class="columnText columnPackageName"><a href="{link controller='Package' id=$application->packageID}{/link}">{lang}{$application->getPackage()->getName()}{/lang}</a></td>
+							<td class="columnText columnPackageName">
+								<a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}">{$application->getPackage()}</a>
+								{if $application->isPrimary}
+									<aside class="statusDisplay">
+										<img src="{@$__wcf->getPath()}icon/home.svg" alt="" class="icon16 jsTooltip" title="{lang}wcf.acp.application.primaryApplication{/lang}" />
+									</aside>
+								{/if}
+							</td>
 							<td class="columnText columnDomainName">{$application->domainName}</td>
 							<td class="columnText columnDomainPath">{$application->domainPath}</td>
 							<td class="columnText columnCookieDomain">{$application->cookieDomain}</td>

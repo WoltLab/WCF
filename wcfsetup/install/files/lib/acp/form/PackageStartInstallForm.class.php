@@ -220,8 +220,7 @@ class PackageStartInstallForm extends ACPForm {
 			'packageID' => $packageID,
 			'archive' => (!empty($this->uploadPackage['tmp_name']) ? $this->uploadPackage['name'] : $this->downloadPackage),
 			'action' => ($this->package != null ? 'update' : 'install'),
-			'confirmInstallation' => 1,
-			'cancelable' => ($this->package != null ? 0 : 1)
+			'confirmInstallation' => 1
 		));
 		
 		$this->saved();
