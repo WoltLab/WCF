@@ -43,7 +43,7 @@
 					{foreach from=$objects item=sessionAccessLog}
 						<tr>
 							<td class="columnID columnSessionAccessLogID"><p>{@$sessionAccessLog->sessionAccessLogID}</p></td>
-							<td class="columnURL columnIpAddress{if $sessionAccessLog->ipAddress != $sessionLog->ipAddress} hot{/if}"><p>{$sessionAccessLog->ipAddress}</p></td>
+							<td class="columnURL columnIpAddress{if $sessionAccessLog->ipAddress != $sessionLog->ipAddress} hot{/if}"><p>{$sessionAccessLog->getIpAddress()}</p></td>
 							<td class="columnDate columnTime"><p>{@$sessionAccessLog->time|time}</p></td>
 							<td class="columnText columnClassName"><p>{$sessionAccessLog->className}</p></td>
 							<td class="columnURL columnRequestURI" title="{$sessionAccessLog->requestURI}"><p>{if !$sessionAccessLog->hasProtectedURI()}<a href="{$sessionAccessLog->requestURI}{@SID_ARG_2ND}">{$sessionAccessLog->requestURI|truncate:50}</a>{else}{$sessionAccessLog->requestURI|truncate:50}{/if}</p></td>
