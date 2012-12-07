@@ -72,8 +72,7 @@ class UninstallPackageAction extends InstallPackageAction {
 			'userID' => WCF::getUser()->userID,
 			'packageName' => $package->getName(),
 			'packageID' => $package->packageID,
-			'action' => 'uninstall',
-			'cancelable' => 0
+			'action' => 'uninstall'
 		));
 			
 		// initialize uninstallation

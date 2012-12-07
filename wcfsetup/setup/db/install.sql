@@ -374,8 +374,7 @@ CREATE TABLE wcf1_package_installation_queue (
 	packageName VARCHAR(255) NOT NULL DEFAULT '',
 	packageID INT(10),
 	archive VARCHAR(255) NOT NULL DEFAULT '',
-	action ENUM('install', 'update', 'uninstall', 'rollback') NOT NULL DEFAULT 'install',
-	cancelable TINYINT(1) NOT NULL DEFAULT 1,
+	action ENUM('install', 'update', 'uninstall') NOT NULL DEFAULT 'install',
 	done TINYINT(1) NOT NULL DEFAULT 0,
 	confirmInstallation TINYINT(1) NOT NULL DEFAULT 0,
 	packageType ENUM('default', 'requirement', 'optional') NOT NULL DEFAULT 'default'
