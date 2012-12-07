@@ -53,7 +53,7 @@ WCF.ACP.Application.SetAsPrimary = Class.extend({
 	/**
 	 * Sets an application as primary.
 	 */
-	_setAsPrimary: function(groupID) {
+	_setAsPrimary: function() {
 		new WCF.Action.Proxy({
 			autoSend: true,
 			data: {
