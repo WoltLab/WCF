@@ -57,7 +57,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='PageMenuItemList'}{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/list.svg" alt="" /> <span>{lang}wcf.acp.pageMenu.list{/lang}</span></a></li>
+			<li><a href="{link controller='PageMenuItemList'}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" /> <span>{lang}wcf.acp.pageMenu.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>
@@ -183,7 +183,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='PageMenuItemList'}{/link}" class="button"><img src="{@RELATIVE_WCF_DIR}icon/list.svg" alt="" /> <span>{lang}wcf.acp.pageMenu.list{/lang}</span></a></li>
+			<li><a href="{link controller='PageMenuItemList'}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" /> <span>{lang}wcf.acp.pageMenu.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>
