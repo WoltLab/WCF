@@ -395,7 +395,7 @@
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren?]]></item>
 		<item name="wcf.acp.package.uninstallation.confirmDependentPackages"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren? Beachten Sie bitte, dass die folgenden Pakete ebenfalls deinstalliert werden:
 <ul>
-	{foreach from=$package->getDependentPackages() as $dependentPackage}
+	{foreach from=$package->getDependentPackages() item=dependentPackage}
 		<li><a href="{link controller='Package' object=$dependentPackage}{/link}">{$dependentPackage}</a></li>
 	{/foreach}
 </ul>]]></item>
