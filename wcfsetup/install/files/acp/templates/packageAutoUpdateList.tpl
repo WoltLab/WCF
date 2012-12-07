@@ -41,7 +41,7 @@
 						<h1>
 							<label>
 								<input type="checkbox" name="updates[{@$availableUpdate.packageID}]" onclick="enableFormElements(document.getElementById('version-{@$availableUpdate.packageID}Div'), this.checked)" value="{$availableUpdate.version.packageVersion}" />
-								{$availableUpdate.packageName}{if $availableUpdate.instanceNo > 1} (#{#$availableUpdate.instanceNo}){/if}
+								{$availableUpdate.packageName}
 							</label>
 						</h1>
 					</hgroup>

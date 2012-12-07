@@ -39,17 +39,6 @@
 				<dt>{lang}wcf.acp.package.version{/lang}</dt>
 				<dd>{$package->packageVersion}</dd>
 			</dl>
-			{if $package->instanceNo > 1}
-				<dl>
-					<dt>{lang}wcf.acp.package.instanceNo{/lang}</dt>
-					<dd>{#$package->instanceNo}</dd>
-				</dl>
-			{elseif $package->package == 'com.woltlab.wcf' && WCF_N != 1}
-				<dl>
-					<dt>{lang}wcf.acp.package.instanceNo{/lang}</dt>
-					<dd>{#WCF_N}</dd>
-				</dl>
-			{/if}
 			<dl>
 				<dt>{lang}wcf.acp.package.packageDate{/lang}</dt>
 				<dd>{@$package->packageDate|date}</dd>
