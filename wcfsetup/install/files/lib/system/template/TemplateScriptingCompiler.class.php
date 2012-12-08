@@ -495,7 +495,7 @@ class TemplateScriptingCompiler {
 			}
 			$this->popTag($tagCommand);
 			$phpCode = "<?php echo \$this->pluginObjects['".$className."']->execute(\$this->tagStack[count(\$this->tagStack) - 1][1], ob_get_clean(), \$this); }\n";
-			$phpCode .= "array_pop(\$this->tagStack);\n";
+			$phpCode .= "array_pop(\$this->tagStack);?>";
 		}
 		
 		return $phpCode;
