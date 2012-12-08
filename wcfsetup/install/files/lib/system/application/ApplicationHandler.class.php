@@ -93,7 +93,12 @@ class ApplicationHandler extends SingletonFactory {
 	 * @return	wcf\data\application\Application
 	 */
 	public function getActiveApplication() {
-		return $this->cache['application'][PACKAGE_ID];
+		// work-around during WCFSetup
+		if (isset($this->cache['application'][PACKAGE_ID])) {
+			return $this->cache['application'][PACKAGE_ID];
+		}
+		
+		return $this->getWCF();
 	}
 	
 	/**
