@@ -419,6 +419,10 @@ class WCF {
 		// register WCF as application
 		self::$applications['wcf'] = ApplicationHandler::getInstance()->getWCF();
 		
+		if (PACKAGE_ID == 1) {
+			return;
+		}
+		
 		// start main application
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
 		$loadedApplications[] = $this->loadApplication($application);

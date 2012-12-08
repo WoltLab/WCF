@@ -512,7 +512,7 @@ class SessionHandler extends SingletonFactory {
 		
 		// set up data
 		$data = array(
-			'ipAddress' => $this->ipAddress,
+			'ipAddress' => UserUtil::getIpAddress(),
 			'userAgent' => $this->userAgent,
 			'requestURI' => $this->requestURI,
 			'requestMethod' => $this->requestMethod,

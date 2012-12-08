@@ -10,11 +10,10 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\request\LinkHandler;
 use wcf\system\setup\Uninstaller;
+use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
-use wcf\util\HeaderUtil;
 
 /**
  * Handles the whole uninstallation process.
