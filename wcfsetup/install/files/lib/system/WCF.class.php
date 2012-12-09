@@ -680,9 +680,8 @@ class WCF {
 		}
 		
 		$path = str_replace('/index.php', '', str_replace($scriptName, '', $_SERVER['REQUEST_URI']));
-		$encoding = mb_detect_encoding($path, 'ISO-8859-1,UTF-8', true);
-		if ($encoding != 'UTF-8') {
-			$path = StringUtil::convertEncoding($encoding, 'UTF-8', $path);
+		if (!StringUtil::isASCII($path) && !StringUtil::isUTF8($path)) {
+			$path = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $path);
 		}
 		$baseHref = self::getTPL()->get('baseHref');
 		
