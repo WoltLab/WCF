@@ -158,9 +158,11 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 */
 	public function executeAction() {
 		// execute action
-		if (method_exists($this, $this->getActionName())) {
-			$this->returnValues = call_user_func(array($this, $this->getActionName()));
-		}
+		if (!method_exists($this, $this->getActionName())) {
+			throw new SystemException("call to undefined function '".$this->getActionName()."'");
+		}	
+			
+		$this->returnValues = call_user_func(array($this, $this->getActionName()));
 		
 		// reset cache
 		if (ClassUtil::isInstanceOf($this->className, 'wcf\data\IEditableCachedObject')) {
