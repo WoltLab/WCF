@@ -103,6 +103,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 		
 		WCF::getTPL()->assign(array(
 			'groupID' => $this->group->groupID,
+			'group' => $this->group,
 			'action' => 'edit'
 		));
 		
