@@ -32,7 +32,7 @@ class UserGroupListPage extends SortablePage {
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
-	 */	
+	 */
 	public $objectListClassName = 'wcf\data\user\group\UserGroupList';
 	
 	/**
@@ -55,7 +55,7 @@ class UserGroupListPage extends SortablePage {
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::initObjectList()
-	 */	
+	 */
 	protected function initObjectList() {
 		parent::initObjectList();
 		

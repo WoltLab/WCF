@@ -343,11 +343,11 @@ class UserListPage extends SortablePage {
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::initObjectList()
-	 */		
+	 */
 	protected function initObjectList() { }
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::readObjects()
-	 */	
+	 */
 	protected function readObjects() { }
 }

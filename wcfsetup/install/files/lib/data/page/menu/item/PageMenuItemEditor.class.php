@@ -88,7 +88,7 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 		$sql = "UPDATE	wcf".WCF_N."_page_menu_item
 			SET	showOrder = ?,
 				menuPosition = ?
-			WHERE 	menuItemID = ?";
+			WHERE	menuItemID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			$showOrder,
@@ -136,8 +136,8 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 		}
 		else {
 			$sql = "UPDATE	wcf".WCF_N."_page_menu_item
-				SET 	showOrder = showOrder - 1
-				WHERE 	showOrder >= ?
+				SET	showOrder = showOrder - 1
+				WHERE	showOrder >= ?
 					AND menuPosition = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array(
@@ -145,9 +145,9 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 				$this->menuPosition
 			));
 				
-			$sql = "UPDATE 	wcf".WCF_N."_page_menu_item
-				SET 	showOrder = showOrder + 1
-				WHERE 	showOrder >= ?
+			$sql = "UPDATE	wcf".WCF_N."_page_menu_item
+				SET	showOrder = showOrder + 1
+				WHERE	showOrder >= ?
 					AND menuPosition = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array(
@@ -178,8 +178,8 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 		}
 		else {
 			$sql = "UPDATE	wcf".WCF_N."_page_menu_item
-				SET 	showOrder = showOrder + 1
-				WHERE 	showOrder >= ?
+				SET	showOrder = showOrder + 1
+				WHERE	showOrder >= ?
 					AND menuPosition = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array(
