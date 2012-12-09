@@ -56,13 +56,13 @@ abstract class MultipleLinkPage extends AbstractPage {
 	/**
 	 * DatabaseObjectList object
 	 * @var	wcf\data\DatabaseObjectList
-	 */	
+	 */
 	public $objectList = null;
 	
 	/**
 	 * class name for DatabaseObjectList
 	 * @var	string
-	 */	
+	 */
 	public $objectListClassName = '';
 	
 	/**
@@ -79,7 +79,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	
 	/**
 	 * @see	wcf\data\DatabaseObjectList::$sqlLimit
-	 */	
+	 */
 	public $sqlLimit = 0;
 	
 	/**
@@ -89,7 +89,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	
 	/**
 	 * @see	wcf\data\DatabaseObjectList::$sqlOrderBy
-	 */	
+	 */
 	public $sqlOrderBy = '';
 	
 	/**

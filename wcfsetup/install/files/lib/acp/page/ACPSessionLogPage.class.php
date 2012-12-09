@@ -79,7 +79,7 @@ class ACPSessionLogPage extends SortablePage {
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::readObjects()
-	 */	
+	 */
 	protected function readObjects() {
 		$this->sqlOrderBy = 'acp_session_access_log.'.$this->sortField." ".$this->sortOrder;
 		

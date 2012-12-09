@@ -29,7 +29,7 @@ abstract class SingletonFactory {
 	
 	/**
 	 * Called within __construct(), override if neccessary.
-	 */	
+	 */
 	protected function init() { }
 	
 	/**

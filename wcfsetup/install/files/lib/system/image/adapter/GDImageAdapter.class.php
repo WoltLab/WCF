@@ -190,7 +190,7 @@ class GDImageAdapter implements IImageAdapter {
 	
 	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::setColor()
-	 */	
+	 */
 	public function setColor($red, $green, $blue) {
 		$this->color = imageColorAllocate($this->image, $red, $green, $blue);
 	}
@@ -230,7 +230,7 @@ class GDImageAdapter implements IImageAdapter {
 	
 	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::getWidth()
-	 */	
+	 */
 	public function getWidth() {
 		return $this->width;
 	}
@@ -251,7 +251,7 @@ class GDImageAdapter implements IImageAdapter {
 	
 	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::isSupported()
-	 */	
+	 */
 	public static function isSupported() {
 		return true;
 	}

@@ -71,7 +71,7 @@ class PackageArchive {
 	/**
 	 * list of instructions
 	 * @var	array<array>
-	 */	
+	 */
 	protected $instructions = array(
 		'install' => array(),
 		'update' => array()

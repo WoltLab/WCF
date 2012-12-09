@@ -54,7 +54,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Write the languages files.
 	 * 
-	 * @param 	array<integer>		$languageCategoryIDs
+	 * @param	array<integer>		$languageCategoryIDs
 	 */
 	protected function writeLanguageFiles(array $languageCategoryIDs) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -62,7 +62,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		$conditions->add("languageCategoryID IN (?)", array($languageCategoryIDs));
 		
 		// get language items
-		$sql = "SELECT 	languageItem, languageItemValue, languageCustomItemValue,
+		$sql = "SELECT	languageItem, languageItemValue, languageCustomItemValue,
 				languageUseCustomValue, languageCategoryID
 			FROM	wcf".WCF_N."_language_item
 			".$conditions;

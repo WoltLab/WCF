@@ -22,7 +22,7 @@ abstract class DatabaseObject implements IStorableObject {
 	/**
 	 * indicates if database table index is an identity column
 	 * @var	boolean 
-	 */	
+	 */
 	protected static $databaseTableIndexIsIdentity = true;
 	
 	/**

@@ -36,7 +36,7 @@ class CronjobListPage extends SortablePage {
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::initObjectList()
-	 */	
+	 */
 	public function initObjectList() {
 		parent::initObjectList();
 		

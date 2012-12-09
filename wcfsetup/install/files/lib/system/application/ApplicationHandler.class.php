@@ -19,7 +19,7 @@ class ApplicationHandler extends SingletonFactory {
 	/**
 	 * application cache
 	 * @var	array<array>
-	 */	
+	 */
 	protected $cache = null;
 	
 	/**

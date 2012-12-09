@@ -105,7 +105,7 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("categoryID IN (?)", array($optionCategories));
-		$sql = "SELECT 		categoryID, parentCategoryName, categoryName,
+		$sql = "SELECT		categoryID, parentCategoryName, categoryName,
 					(
 						SELECT COUNT(*) FROM wcf".WCF_N."_option WHERE categoryName = category.categoryName
 					) AS count
