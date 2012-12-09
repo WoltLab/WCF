@@ -31,7 +31,7 @@ class MasterPasswordForm extends ACPForm {
 	
 	/**
 	 * @see	wcf\page\IPage::readParameters()
-	 */	
+	 */
 	public function readParameters() {
 		parent::readParameters();
 		

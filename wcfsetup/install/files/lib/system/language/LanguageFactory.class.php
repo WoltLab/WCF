@@ -144,7 +144,7 @@ class LanguageFactory extends SingletonFactory {
 	 * Returns a list of available language categories.
 	 * 
 	 * @return	array<wcf\data\language\category\LanguageCategory>
-	 */	
+	 */
 	public function getCategories() {
 		return $this->cache['categories'];
 	}

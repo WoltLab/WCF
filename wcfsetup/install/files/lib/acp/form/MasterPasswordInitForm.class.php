@@ -26,7 +26,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 	
 	/**
 	 * @see	wcf\page\IPage::readParameters()
-	 */	
+	 */
 	public function readParameters() {
 		parent::readParameters();
 		

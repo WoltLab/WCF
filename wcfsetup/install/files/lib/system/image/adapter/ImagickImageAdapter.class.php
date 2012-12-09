@@ -28,13 +28,13 @@ class ImagickImageAdapter implements IImageAdapter {
 	/**
 	 * image height
 	 * @var	integer
-	 */	
+	 */
 	protected $height = 0;
 	
 	/**
 	 * image width
 	 * @var	integer
-	 */	
+	 */
 	protected $width = 0;
 	
 	/**
