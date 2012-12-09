@@ -26,13 +26,13 @@
 		<acpmenuitem name="wcf.acp.menu.link.language.server">
 			<parent>wcf.acp.menu.link.language</parent>
 		</acpmenuitem>
-
+		
 		<acpmenuitem name="wcf.acp.menu.link.language.server.list">
 			<link>index.php/LanguageServerList/</link>
 			<parent>wcf.acp.menu.link.language.server</parent>
 			<permissions>admin.language.canEditServer,admin.language.canDeleteServer</permissions>
 		</acpmenuitem>
-
+		
 		<acpmenuitem name="wcf.acp.menu.link.language.server.add">
 			<link>index.php/LanguageServerAdd/</link>
 			<parent>wcf.acp.menu.link.language.server</parent>

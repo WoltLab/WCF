@@ -32,7 +32,7 @@ class LanguageServerListPage extends SortablePage {
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
-	 */	
+	 */
 	public $objectListClassName = 'wcf\data\language\server\LanguageServerList';
 	
 	/**

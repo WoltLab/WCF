@@ -40,7 +40,7 @@
 		<hgroup>
 			<h1>{lang}wcf.acp.languageServer.list{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.languageServer.list.count{/lang}">{#$items}</span></h1>
 		</hgroup>
-	
+		
 		<table class="table">
 			<thead>
 				<tr>

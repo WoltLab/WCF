@@ -32,12 +32,12 @@ class LanguageListPage extends SortablePage {
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
-	 */	
+	 */
 	public $objectListClassName = 'wcf\data\language\LanguageList';
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::initObjectList()
-	 */	
+	 */
 	public function initObjectList() {
 		parent::initObjectList();
 		
