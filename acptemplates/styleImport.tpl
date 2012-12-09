@@ -10,13 +10,19 @@
 	<p class="success">{lang}wcf.global.form.add.success{/lang}</p>	
 {/if}
 
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='StyleList'}{/link}" title="{lang}wcf.acp.menu.link.style.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
-		</ul>
-	</nav>
-</div>
+{hascontent}
+	<div class="contentNavigation">
+		<nav>
+			<ul>
+				{content}
+					{if $__wcf->session->getPermission('admin.style.canDeleteStyle') || $__wcf->session->getPermission('admin.style.canEditStyle')}
+						<li><a href="{link controller='StyleList'}{/link}" title="{lang}wcf.acp.menu.link.style.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
+					{/if}
+				{/content}
+			</ul>
+		</nav>
+	</div>
+{/hascontent}
 
 <form method="post" action="{link controller='StyleImport'}{/link}" enctype="multipart/form-data">
 	<div class="container containerPadding marginTop shadow">
@@ -45,7 +51,7 @@
 		
 		{event name='fieldsets'}
 	</div>
-
+	
 	<div class="formSubmit">
 		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 	</div>
