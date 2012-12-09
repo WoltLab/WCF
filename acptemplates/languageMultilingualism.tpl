@@ -29,7 +29,7 @@
 		<fieldset>
 			<legend><label><input type="checkbox" id="enable" name="enable" value="1" {if $enable}checked="checked" {/if}/> {lang}wcf.acp.language.multilingualism.enable{/lang}</label></legend>
 			<small>{lang}wcf.acp.language.multilingualism.enable.description{/lang}</small>
-		
+			
 			<dl id="languageIDs" class="marginTop{if $errorField == 'languageIDs'} formError{/if}">
 				<dt><label for="languageIDs">{lang}wcf.acp.language.multilingualism.languages{/lang}</label></dt>
 				<dd class="floated">
@@ -37,7 +37,7 @@
 					
 					{if $errorField == 'languageIDs'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.acp.language.multilingualism.languages.error.empty{/lang}{/if}
+							{lang}wcf.acp.language.multilingualism.languages.error.{@$errorType}{/lang}
 						</small>
 					{/if}
 				</dd>
@@ -45,8 +45,6 @@
 			
 			{event name='additionalFields'}
 		</fieldset>
-		
-		
 	</div>
 	
 	<div class="formSubmit">

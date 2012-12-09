@@ -30,6 +30,7 @@ class LanguageMultilingualismForm extends ACPForm {
 	public $neededPermissions = array('admin.language.canEditLanguage');
 	
 	// data
+	// todo: comment
 	public $enable = 0;
 	public $languageIDs = array();
 	public $languages = array();
@@ -65,7 +66,7 @@ class LanguageMultilingualismForm extends ACPForm {
 			if (!in_array(LanguageFactory::getInstance()->getDefaultLanguageID(), $this->languageIDs)) {
 				$this->languageIDs[] = LanguageFactory::getInstance()->getDefaultLanguageID();
 			}
-
+			
 			// validate language ids
 			$contentLanguages = 0;
 			foreach ($this->languageIDs as $languageID) {
@@ -85,7 +86,7 @@ class LanguageMultilingualismForm extends ACPForm {
 	 */
 	public function save() {
 		parent::save();
-
+		
 		// save
 		LanguageEditor::enableMultilingualism(($this->enable == 1 ? $this->languageIDs : array()));
 		

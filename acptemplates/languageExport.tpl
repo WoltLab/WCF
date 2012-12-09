@@ -11,7 +11,7 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.acp.language.add.success{/lang}</p>	
+	<p class="success">{lang}wcf.acp.language.add.success{/lang}</p>
 {/if}
 
 <div class="contentNavigation">
@@ -26,7 +26,7 @@
 	<div class="container containerPadding marginTop shadow">
 		<fieldset>
 			<legend>{lang}wcf.acp.language.export{/lang}</legend>
-		
+			
 			<dl>
 				<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>
 				<dd>

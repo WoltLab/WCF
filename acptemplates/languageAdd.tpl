@@ -37,10 +37,10 @@
 			<legend>{lang}wcf.acp.language.add.mode{/lang}</legend>
 			
 			<dl>
-					<dd class="floated">
-						<label><input type="radio" name="mode" value="import" id="import" {if $mode == 'import'}checked="checked" {/if}/> {lang}wcf.acp.language.add.mode.import{/lang}</label>
-						<label><input type="radio" name="mode" value="copy" id="copy" {if $mode == 'copy'}checked="checked" {/if}/> {lang}wcf.acp.language.add.mode.copy{/lang}</label>
-					</dd>
+				<dd class="floated">
+					<label><input type="radio" name="mode" value="import" id="import" {if $mode == 'import'}checked="checked" {/if}/> {lang}wcf.acp.language.add.mode.import{/lang}</label>
+					<label><input type="radio" name="mode" value="copy" id="copy" {if $mode == 'copy'}checked="checked" {/if}/> {lang}wcf.acp.language.add.mode.copy{/lang}</label>
+				</dd>
 			</dl>
 		</fieldset>
 		
@@ -76,7 +76,7 @@
 				</dd>
 			</dl>
 		</fieldset>
-	
+		
 		<fieldset id="copyDiv">
 			<legend>{lang}wcf.acp.language.add.new{/lang}</legend>
 			
@@ -86,8 +86,11 @@
 					<input type="text" id="languageCode" name="languageCode" value="{$languageCode}" class="long" />
 					{if $errorField == 'languageCode'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
-							{if $errorType == 'notUnique'}{lang}wcf.acp.language.add.languageCode.error.notUnique{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.language.add.languageCode.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 					<small>{lang}wcf.acp.language.code.description{/lang}</small>
@@ -104,14 +107,18 @@
 					</select>
 					{if $errorField == 'sourceLanguageID'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.language.add.source.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 				</dd>
 			</dl>
 		</fieldset>
 		
-		{if $additionalFields|isset}{@$additionalFields}{/if}
+		{event name='fieldsets'}
 	</div>
 	
 	<div class="formSubmit">

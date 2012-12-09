@@ -40,7 +40,6 @@
 					<small>{lang}wcf.acp.languageServer.server.description{/lang}</small>
 				</dd>
 			</dl>
-		
 		</fieldset>
 	</div>
 	

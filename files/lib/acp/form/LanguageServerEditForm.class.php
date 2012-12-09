@@ -8,7 +8,7 @@ use wcf\system\exception\IllegalLinkException;
 
 /**
  * Shows the language server edit form.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
