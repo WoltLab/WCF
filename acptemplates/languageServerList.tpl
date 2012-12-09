@@ -22,15 +22,19 @@
 <div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller='LanguageServerList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	
-	{if $__wcf->getSession()->getPermission('admin.language.canAddServer')}
+	{hascontent}
 		<nav>
 			<ul>
-				<li><a href="{link controller='LanguageServerAdd'}{/link}" title="{lang}wcf.acp.languageServer.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
-				
-				{event name='largeButtons'}
+				{content}
+					{if $__wcf->getSession()->getPermission('admin.language.canAddServer')}
+						<li><a href="{link controller='LanguageServerAdd'}{/link}" title="{lang}wcf.acp.languageServer.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
+					{/if}
+					
+					{event name='contentNavigationButtonsTop'}
+				{/content}
 			</ul>
 		</nav>
-	{/if}
+	{/hascontent}
 </div>
 
 {if !$languageServers|count}
@@ -83,15 +87,19 @@
 	<div class="contentNavigation">
 		{@$pagesLinks}
 		
-		{if $__wcf->getSession()->getPermission('admin.language.canAddServer')}
+		{hascontent}
 			<nav>
 				<ul>
-					<li><a href="{link controller='LanguageServerAdd'}{/link}" title="{lang}wcf.acp.languageServer.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon16" /> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
-					
-					{event name='largeButtons'}
+					{content}
+						{if $__wcf->getSession()->getPermission('admin.language.canAddServer')}
+							<li><a href="{link controller='LanguageServerAdd'}{/link}" title="{lang}wcf.acp.languageServer.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
+						{/if}
+						
+						{event name='contentNavigationButtonsBottom'}
+					{/content}
 				</ul>
 			</nav>
-		{/if}
+		{/hascontent}
 	</div>
 {/if}
 

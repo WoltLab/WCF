@@ -14,13 +14,21 @@
 	<p class="success">{lang}wcf.acp.language.add.success{/lang}</p>
 {/if}
 
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='LanguageList'}{/link}" title="{lang}wcf.acp.menu.link.language.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
-		</ul>
-	</nav>
-</div>
+{hascontent}
+	<div class="contentNavigation">
+		<nav>
+			<ul>
+				{content}
+					{if $__wcf->session->getPermission('admin.language.canDeleteLanguage') || $__wcf->session->getPermission('admin.language.canEditLanguage')}
+						<li><a href="{link controller='LanguageList'}{/link}" title="{lang}wcf.acp.menu.link.language.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
+					{/if}
+					
+					{event name='contentNavigationButtons'}
+				{/content}
+			</ul>
+		</nav>
+	</div>
+{/hascontent}
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageExport' id=$languageID}{/link}">
 	<div class="container containerPadding marginTop shadow">
