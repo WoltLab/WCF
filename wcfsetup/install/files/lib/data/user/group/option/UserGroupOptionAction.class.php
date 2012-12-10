@@ -2,7 +2,6 @@
 namespace wcf\data\user\group\option;
 use wcf\data\user\group\UserGroupEditor;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
 
 /**

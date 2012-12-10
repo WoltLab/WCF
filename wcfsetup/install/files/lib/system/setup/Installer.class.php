@@ -6,7 +6,7 @@ use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
- * Installer extracts folders and files from a tar archive.
+ * Extracts files and directories from a tar archive.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -187,9 +187,9 @@ class Installer {
 	}
 	
 	/**
-	 * Logs the extracted files.
+	 * Logs the given files.
 	 * 
-	 * @param	array		$files		list of files
+	 * @param	array		$files
 	 */
 	protected function logFiles(&$files) {
 		if ($this->fileHandler != null && $this->fileHandler instanceof IFileHandler) {
@@ -205,6 +205,7 @@ class Installer {
 	protected function makeWriteable($target) {
 		if (!preg_match('/^WIN/i', PHP_OS)) {
 			if (!@chmod($target, 0777)) {
+				// todo: what to do in this case?
 				//throw new SystemException("Could not chmod file '".$target."'");
 			}
 		}

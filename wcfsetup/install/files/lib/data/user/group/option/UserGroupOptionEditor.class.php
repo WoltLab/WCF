@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\user\group\option;
 use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
+use wcf\system\cache\CacheHandler;
 
 /**
  * Provides functions to edit usergroup options.
@@ -12,9 +14,16 @@ use wcf\data\DatabaseObjectEditor;
  * @subpackage	data.user.group.option
  * @category	Community Framework
  */
-class UserGroupOptionEditor extends DatabaseObjectEditor {
+class UserGroupOptionEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\group\option\UserGroupOption';
+	
+	/**
+	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 */
+	public static function resetCache() {
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.userGroup*.php');
+	}
 }

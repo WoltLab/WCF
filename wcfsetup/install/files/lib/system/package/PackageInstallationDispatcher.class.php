@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\package;
+use wcf\system\style\StyleHandler;
+
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\language\category\LanguageCategory;
@@ -10,6 +12,7 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -19,7 +22,6 @@ use wcf\system\form\element;
 use wcf\system\form\FormDocument;
 use wcf\system\form;
 use wcf\system\language\LanguageFactory;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
@@ -90,7 +92,7 @@ class PackageInstallationDispatcher {
 	 * Installs node components and returns next node.
 	 * 
 	 * @param	string		$node
-	 * @return	PackageInstallationStep
+	 * @return	wcf\system\package\PackageInstallationStep
 	 */
 	public function install($node) {
 		$nodes = $this->nodeBuilder->getNodeData($node);
@@ -130,18 +132,34 @@ class PackageInstallationDispatcher {
 		$node = $this->nodeBuilder->getNextNode($node);
 		$step->setNode($node);
 		
-		// update options.inc.php and save localized package infos
+		// perform post-install/update actions
 		if ($node == '') {
+			// update options.inc.php
 			OptionEditor::resetCache();
 			
 			if ($this->action == 'install') {
+				// save localized package infos
 				$this->saveLocalizedPackageInfos();
 				
 				// remove all cache files after WCFSetup
 				if (!PACKAGE_ID) {
 					CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.*.php');
 				}
+				
+				// rebuild application paths
+				ApplicationHandler::rebuild();
+				ApplicationEditor::setup();
 			}
+			
+			// remove template listener cache
+			CacheHandler::getInstance()->clear(WCF_DIR.'cache/templateListener/', '*.php');
+				
+			// reset language cache
+			LanguageFactory::getInstance()->clearCache();
+			LanguageFactory::getInstance()->deleteLanguageCache();
+			
+			// reset stylesheets
+			StyleHandler::resetStylesheets();
 		}
 		
 		return $step;
@@ -150,7 +168,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Returns current package archive.
 	 * 
-	 * @return	PackageArchive
+	 * @return	wcf\system\package\PackageArchive
 	 */
 	public function getArchive() {
 		if ($this->archive === null) {
@@ -230,7 +248,7 @@ class PackageInstallationDispatcher {
 			if (count($this->getArchive()->getExcludedPackages()) > 0) {
 				$sql = "INSERT INTO	wcf".WCF_N."_package_exclusion 
 							(packageID, excludedPackage, excludedPackageVersion)
-					VALUES 		(?, ?, ?)";
+					VALUES		(?, ?, ?)";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				
 				foreach ($this->getArchive()->getExcludedPackages() as $excludedPackage) {
@@ -240,12 +258,6 @@ class PackageInstallationDispatcher {
 			
 			// if package is plugin to com.woltlab.wcf it must not have any other requirement
 			$requirements = $this->getArchive()->getRequirements();
-			if ($package->parentPackageID == 1 && !empty($requirements)) {
-				foreach ($requirements as $package => $data) {
-					if ($package == 'com.woltlab.wcf') continue;
-					throw new SystemException('Package '.$package->package.' is plugin of com.woltlab.wcf (WCF) but has more than one requirement.');
-				}
-			}
 			
 			// insert requirements and dependencies
 			$requirements = $this->getArchive()->getAllExistingRequirements();
@@ -270,12 +282,6 @@ class PackageInstallationDispatcher {
 			// build requirement map
 			Package::rebuildPackageRequirementMap($package->packageID);
 			
-			// rebuild dependencies
-			Package::rebuildPackageDependencies($package->packageID);
-			if ($this->action == 'update') {
-				Package::rebuildParentPackageDependencies($package->packageID);
-			}
-			
 			// reload queue
 			$this->queue = new PackageInstallationQueue($this->queue->queueID);
 			$this->package = null;
@@ -293,9 +299,6 @@ class PackageInstallationDispatcher {
 					'packageID' => $package->packageID
 				));
 			}
-			
-			// insert dependencies on parent package if applicable
-			$this->installPackageParent();
 		}
 		
 		if ($this->getPackage()->isApplication && $this->getPackage()->package != 'com.woltlab.wcf' && $this->getAction() == 'install') {
@@ -307,12 +310,6 @@ class PackageInstallationDispatcher {
 				
 				$installationStep->setSplitNode();
 			}
-		}
-		else if ($this->getPackage()->parentPackageID) {
-			$packageEditor = new PackageEditor($this->getPackage());
-			$packageEditor->update(array(
-				'packageDir' => $this->getPackage()->getParentPackage()->packageDir
-			));
 		}
 		
 		return $installationStep;
@@ -399,7 +396,7 @@ class PackageInstallationDispatcher {
 			if (isset($infoValues[$language->languageCode])) {
 				$value = $infoValues[$language->languageCode];
 			}
-		
+			
 			$statement->execute(array(
 				$language->languageID,
 				'wcf.acp.package.'.$infoName.'.package'.$package->packageID,
@@ -408,50 +405,6 @@ class PackageInstallationDispatcher {
 				1
 			));
 		}
-	}
-	
-	/**
-	 * Sets parent package and rebuilds dependencies for both.
-	 */
-	protected function installPackageParent() {
-		// do not handle parent package if current package is an application or does not have a plugin tag while within installation process
-		if ($this->getArchive()->getPackageInfo('isApplication') || $this->getAction() != 'install' || !$this->getArchive()->getPackageInfo('plugin')) {
-			return;
-		}
-		
-		// get parent package from requirements
-		$sql = "SELECT	requirement
-			FROM	wcf".WCF_N."_package_requirement
-			WHERE	packageID = ?
-				AND requirement IN (
-					SELECT	packageID
-					FROM	wcf".WCF_N."_package
-					WHERE	package = ?
-				)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$this->getPackage()->packageID,
-			$this->getArchive()->getPackageInfo('plugin')
-		));
-		$row = $statement->fetchArray();
-		if (!$row || empty($row['requirement'])) {
-			throw new SystemException("can not find any available installations of required parent package '".$this->getArchive()->getPackageInfo('plugin')."'");
-		}
-		
-		// save parent package
-		$packageEditor = new PackageEditor($this->getPackage());
-		$packageEditor->update(array(
-			'parentPackageID' => $row['requirement']
-		));
-		
-		// rebuild parent package dependencies								
-		Package::rebuildParentPackageDependencies($this->getPackage()->packageID);
-		
-		// rebuild parent's parent package dependencies
-		Package::rebuildParentPackageDependencies($row['requirement']);
-		
-		// reload package object on next request
-		$this->package = null;
 	}
 	
 	/**
@@ -507,6 +460,7 @@ class PackageInstallationDispatcher {
 		return $step;
 	}
 	
+	// @todo: comment
 	protected function selectOptionalPackages($currentNode, array $nodeData) {
 		$installationStep = new PackageInstallationStep();
 		
@@ -557,7 +511,7 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Extracts files from .tar (or .tar.gz) archive and installs them
-	 *
+	 * 
 	 * @param	string			$targetDir
 	 * @param	string			$sourceArchive
 	 * @param	FileHandler		$fileHandler
@@ -649,6 +603,7 @@ class PackageInstallationDispatcher {
 		}
 	}
 	
+	// @todo: comment
 	protected function promptOptionalPackages(array $packages) {
 		if (!PackageInstallationFormManager::findForm($this->queue, 'optionalPackages')) {
 			$container = new container\MultipleSelectionFormElementContainer();
@@ -700,7 +655,7 @@ class PackageInstallationDispatcher {
 	 * starts the installation, update or uninstallation of the first entry.
 	 * 
 	 * @param	integer		$parentQueueID
-	 * @param 	integer		$processNo
+	 * @param	integer		$processNo
 	 */
 	public static function openQueue($parentQueueID = 0, $processNo = 0) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -723,60 +678,10 @@ class PackageInstallationDispatcher {
 			exit;
 		}
 		else {
-			$url = LinkHandler::getInstance()->getLink('Package', array(), 'action='.$packageInstallation['action'].'&queueID='.$packageInstallation['queueID']);
+			$url = LinkHandler::getInstance()->getLink('PackageInstallationConfirm', array(), 'action='.$packageInstallation['action'].'&queueID='.$packageInstallation['queueID']);
 			HeaderUtil::redirect($url);
 			exit;
 		}
-	}
-	
-	/**
-	 * Displays last confirmation before plugin installation.
-	 */
-	public function beginInstallation() {
-		// get requirements
-		$requirements = $this->getArchive()->getRequirements();
-		$openRequirements = $this->getArchive()->getOpenRequirements();
-		
-		$updatableInstances = array();
-		$missingPackages = 0;
-		foreach ($requirements as $key => $requirement) {
-			if (isset($openRequirements[$requirement['name']])) {
-				$requirements[$key]['status'] = 'missing';
-				$requirements[$key]['action'] = $openRequirements[$requirement['name']]['action'];
-				
-				if (!isset($requirements[$key]['file'])) {
-					if ($openRequirements[$requirement['name']]['action'] === 'update') {
-						$requirements[$key]['status'] = 'missingVersion';
-						$requirements[$key]['existingVersion'] = $openRequirements[$requirement['name']]['existingVersion'];
-					}
-					$missingPackages++;
-				}
-				else {
-					$requirements[$key]['status'] = 'delivered';
-				}
-			}
-			else {
-				$requirements[$key]['status'] = 'installed';
-			}
-		}
-		
-		// get other instances
-		if ($this->action == 'install') {
-			$updatableInstances = $this->getArchive()->getUpdatableInstances();
-		}
-		
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.install');
-		WCF::getTPL()->assign(array(
-			'archive' => $this->getArchive(),
-			'requiredPackages' => $requirements,
-			'missingPackages' => $missingPackages,
-			'updatableInstances' => $updatableInstances,
-			'excludingPackages' => $this->getArchive()->getConflictedExcludingPackages(),
-			'excludedPackages' => $this->getArchive()->getConflictedExcludedPackages(),
-			'queueID' => $this->queue->queueID
-		));
-		WCF::getTPL()->display('packageInstallationConfirm');
-		exit;
 	}
 	
 	/**
@@ -787,7 +692,7 @@ class PackageInstallationDispatcher {
 	public static function checkPackageInstallationQueue() {
 		$sql = "SELECT		queueID
 			FROM		wcf".WCF_N."_package_installation_queue
-			WHERE 		userID = ?
+			WHERE		userID = ?
 					AND parentQueueID = 0
 					AND done = 0
 			ORDER BY	queueID ASC";
@@ -806,9 +711,6 @@ class PackageInstallationDispatcher {
 	 * Executes post-setup actions.
 	 */
 	public function completeSetup() {
-		// rebuild dependencies
-		Package::rebuildPackageDependencies($this->queue->packageID);
-		
 		// mark queue as done
 		$queueEditor = new PackageInstallationQueueEditor($this->queue);
 		$queueEditor->update(array(
@@ -948,7 +850,7 @@ class PackageInstallationDispatcher {
 	 * @param	string		$function
 	 * @return	boolean
 	 * @see		http://de.php.net/manual/en/function.function-exists.php#77980
-	 */	
+	 */
 	protected static function functionExists($function) {
 		if (extension_loaded('suhosin')) {
 			$blacklist = @ini_get('suhosin.executor.func.blacklist');

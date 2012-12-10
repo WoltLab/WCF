@@ -9,7 +9,7 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * This PIP installs, updates or deletes user group permissions.
+ * Installs, updates and deletes user group options.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH
@@ -70,8 +70,8 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		
 		// check if the otion exist already and was installed by this package
 		$sql = "SELECT	optionID
-			FROM 	wcf".WCF_N."_user_group_option
-			WHERE 	optionName = ?
+			FROM	wcf".WCF_N."_user_group_option
+			WHERE	optionName = ?
 			AND	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
@@ -138,7 +138,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	}
 	
 	/**
-	 * Returns an array of groupIDs that belong to an admin group.
+	 * Returns an array of ids of admin groups.
 	 * 
 	 * @return	array<integer>
 	 */

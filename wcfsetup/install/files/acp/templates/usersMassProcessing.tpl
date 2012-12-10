@@ -73,7 +73,7 @@
 <p class="warning">{lang}wcf.acp.user.massProcessing.warning{/lang}</p>
 
 {if $affectedUsers|isset}
-	<p class="success">{lang}wcf.acp.user.massProcessing.success{/lang}</p>	
+	<p class="success">{lang}wcf.acp.user.massProcessing.success{/lang}</p>
 {/if}
 
 <form method="post" action="{link controller='UsersMassProcessing'}{/link}">
@@ -91,7 +91,7 @@
 			{if $__wcf->session->getPermission('admin.user.canEditMailAddress')}
 				<dl>
 					<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
-					<dd>	
+					<dd>
 						<input type="email" id="email" name="email" value="{$email}" class="medium" />
 					</dd>
 				</dl>
@@ -274,7 +274,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
- 	</div>
+	</div>
 </form>
 
 {include file='footer'}

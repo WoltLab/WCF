@@ -58,11 +58,11 @@ class ClipboardHandler extends SingletonFactory {
 		}
 		
 		CacheHandler::getInstance()->addResource(
-			'clipboard-page-'.PACKAGE_ID,
-			WCF_DIR.'cache/cache.clipboard-page-'.PACKAGE_ID.'.php',
+			'clipboardPage',
+			WCF_DIR.'cache/cache.clipboardPage.php',
 			'wcf\system\cache\builder\ClipboardPageCacheBuilder'
 		);
-		$this->pageCache = CacheHandler::getInstance()->get('clipboard-page-'.PACKAGE_ID);
+		$this->pageCache = CacheHandler::getInstance()->get('clipboardPage');
 	}
 	
 	/**
@@ -72,11 +72,11 @@ class ClipboardHandler extends SingletonFactory {
 		if ($this->actionCache !== null) return;
 		
 		CacheHandler::getInstance()->addResource(
-			'clipboard-action-'.PACKAGE_ID,
-			WCF_DIR.'cache/cache.clipboard-action-'.PACKAGE_ID.'.php',
+			'clipboardAction',
+			WCF_DIR.'cache/cache.clipboardAction.php',
 			'wcf\system\cache\builder\ClipboardActionCacheBuilder'
 		);
-		$this->actionCache = CacheHandler::getInstance()->get('clipboard-action-'.PACKAGE_ID);
+		$this->actionCache = CacheHandler::getInstance()->get('clipboardAction');
 	}
 	
 	/**

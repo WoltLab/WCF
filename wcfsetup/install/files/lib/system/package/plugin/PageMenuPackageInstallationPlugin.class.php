@@ -2,7 +2,7 @@
 namespace wcf\system\package\plugin;
 
 /**
- * This PIP installs, updates or deletes page page menu items.
+ * Installs, updates and deletes page page menu items.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

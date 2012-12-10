@@ -33,16 +33,13 @@ class ACPSearchHandler extends SingletonFactory {
 	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		$application = ApplicationHandler::getInstance()->getPrimaryApplication();
-		$cacheName = 'acpSearchProvider-'.$application->packageID;
-		
 		CacheHandler::getInstance()->addResource(
-			$cacheName,
-			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'acpSearchProvider',
+			WCF_DIR.'cache/cache.acpSearchProvider.php',
 			'wcf\system\cache\builder\ACPSearchProviderCacheBuilder'
 		);
 		
-		$this->cache = CacheHandler::getInstance()->get($cacheName);
+		$this->cache = CacheHandler::getInstance()->get('acpSearchProvider');
 	}
 	
 	/**

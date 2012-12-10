@@ -17,71 +17,61 @@ WCF.ACP = {};
 WCF.ACP.Application = { };
 
 /**
- * Namespace for ACP application group management.
- */
-WCF.ACP.Application.Group = { };
-
-/**
- * Provides the ability to remove application groups.
+ * Provides the ability to set an application as primary.
  * 
- * @param	string		redirectURL
+ * @param	integer		packageID
  */
-WCF.ACP.Application.Group.Delete = Class.extend({
+WCF.ACP.Application.SetAsPrimary = Class.extend({
 	/**
-	 * redirect URL
-	 * @var	string
+	 * application package id
+	 * @var	integer
 	 */
-	_redirectURL: '',
+	_packageID: 0,
 	
 	/**
-	 * Initializes the WCF.ACP.Application.Group.Delete class.
+	 * Initializes the WCF.ACP.Application.SetAsPrimary class.
 	 * 
-	 * @param	string		redirectURL
+	 * @param	integer		packageID
 	 */
-	init: function(redirectURL) {
-		this._redirectURL = redirectURL || '';
+	init: function(packageID) {
+		this._packageID = packageID;
 		
-		$('.jsDeleteApplicationGroup').click($.proxy(this._click, this));
+		$('#setAsPrimary').click($.proxy(this._click, this));
 	},
 	
 	/**
-	 * Shows a confirmation dialog to remove an application group.
-	 * 
-	 * @param	object		event
+	 * Shows a confirmation dialog to set current application as primary.
 	 */
-	_click: function(event) {
-		var $button = $(event.currentTarget);
-		
-		WCF.System.Confirmation.show($button.data('confirmMessage'), $.proxy(function(action) {
+	_click: function() {
+		WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.application.setAsPrimary.confirmMessage'), $.proxy(function(action) {
 			if (action === 'confirm') {
-				this._remove($button.data('groupID'));
+				this._setAsPrimary();
 			}
 		}, this));
 	},
 	
 	/**
-	 * Removes an application group.
-	 * 
-	 * @param	integer		groupID
+	 * Sets an application as primary.
 	 */
-	_remove: function(groupID) {
+	_setAsPrimary: function() {
 		new WCF.Action.Proxy({
 			autoSend: true,
 			data: {
-				actionName: 'delete',
-				className: 'wcf\\data\\application\\group\\ApplicationGroupAction',
-				objectIDs: [ groupID ]
+				actionName: 'setAsPrimary',
+				className: 'wcf\\data\\application\\ApplicationAction',
+				objectIDs: [ this._packageID ]
 			},
 			success: $.proxy(function(data, textStatus, jqXHR) {
-				var $notification = new WCF.System.Notification(WCF.Language.get('wcf.acp.application.group.delete.success'));
-				$notification.show($.proxy(function() {
-					if (this._redirectURL) {
-						window.location = this._redirectURL;
-					}
-					else {
-						window.location.reload();
-					}
-				}, this));
+				var $notification = new WCF.System.Notification(WCF.Language.get('wcf.acp.application.setAsPrimary.success'));
+				$notification.show();
+				
+				// remove button
+				$('#setAsPrimary').parent().remove();
+				
+				// insert icon
+				WCF.DOMNodeInsertedHandler.enable();
+				$('<img src="' + WCF.Icon.get('wcf.icon.home') + '" alt="" class="icon16 jsTooltip" title="' + WCF.Language.get('wcf.acp.application.primaryApplication') + '" />').appendTo($('.boxHeadline > hgroup > h1'));
+				WCF.DOMNodeInsertedHandler.disable();
 			}, this)
 		});
 	}
@@ -667,10 +657,41 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 	_prepareQueue: function(event) {
 		var $element = $(event.target);
 		
+		if ($element.data('isRequired')) {
+			new WCF.Action.Proxy({
+				autoSend: true,
+				data: {
+					actionName: 'getConfirmMessage',
+					className: 'wcf\\data\\package\\PackageAction',
+					objectIDs: [ $element.data('objectID') ]
+				},
+				success: $.proxy(function(data, textStatus, jqXHR) {
+					// remove isRequired flag to prevent loading the same content again
+					$element.data('isRequired', false);
+					
+					// update confirmation message
+					$element.data('confirmMessage', data.returnValues.confirmMessage);
+					
+					// display confirmation dialog
+					this._showConfirmationDialog($element);
+				}, this)
+			});
+		}
+		else {
+			this._showConfirmationDialog($element);
+		}
+	},
+	
+	/**
+	 * Displays a confirmation dialog prior to package uninstallation.
+	 * 
+	 * @param	jQuery		element
+	 */
+	_showConfirmationDialog: function(element) {
 		var self = this;
-		WCF.System.Confirmation.show($element.data('confirmMessage'), function(action) {
+		WCF.System.Confirmation.show(element.data('confirmMessage'), function(action) {
 			if (action === 'confirm') {
-				self._packageID = $element.data('objectID');
+				self._packageID = element.data('objectID');
 				self.prepareInstallation();
 			}
 		});
@@ -944,8 +965,7 @@ WCF.ACP.Options.Group = Class.extend({
  * @param	string		className
  * @param	object		options
  */
-WCF.ACP.Worker = function(dialogID, className, options) { this.init(dialogID, className, options); };
-WCF.ACP.Worker.prototype = {
+WCF.ACP.Worker = Class.extend({
 	/**
 	 * dialog id
 	 * @var	string
@@ -1025,7 +1045,7 @@ WCF.ACP.Worker.prototype = {
 			this._dialog.wcfDialog('render');
 		}
 	}
-};
+});
 
 /**
  * Namespace for category-related functions.

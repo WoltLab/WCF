@@ -10,7 +10,7 @@ use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
- * TemplateEngine loads and displays template.
+ * Loads and displays template.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -183,8 +183,8 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Appends content to an existing template variable.
 	 * 
-	 * @param 	mixed 		$variable
-	 * @param 	mixed 		$value
+	 * @param	mixed		$variable
+	 * @param	mixed		$value
 	 */
 	public function append($variable, $value = '') {
 		if (is_array($variable)) {
@@ -222,8 +222,8 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Prepends content to an existing template variable.
 	 * 
-	 * @param 	mixed 		$variable
-	 * @param 	mixed 		$value
+	 * @param	mixed		$variable
+	 * @param	mixed		$value
 	 */
 	public function prepend($variable, $value = '') {
 		if (is_array($variable)) {
@@ -261,8 +261,8 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Assigns a template variable by reference.
 	 * 
-	 * @param 	string 		$variable
-	 * @param	mixed 		$value
+	 * @param	string		$variable
+	 * @param	mixed		$value
 	 */
 	public function assignByRef($variable, &$value) {
 		if (!empty($variable)) {
@@ -273,7 +273,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Clears an assignment of template variables.
 	 * 
-	 * @param 	mixed 		$variables
+	 * @param	mixed		$variables
 	 */
 	public function clearAssign(array $variables) {
 		foreach ($variables as $key) {
@@ -408,30 +408,32 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Returns the absolute filename of a compiled template.
 	 * 
-	 * @param 	string 		$templateName
+	 * @param	string		$templateName
+	 * @return	string
 	 */
 	public function getCompiledFilename($templateName) {
-		return $this->compileDir.PACKAGE_ID.'_'.$this->templateGroupID.'_'.$this->languageID.'_'.$templateName.'.php';
+		return $this->compileDir.$this->templateGroupID.'_'.$this->languageID.'_'.$templateName.'.php';
 	}
 	
 	/**
 	 * Returns the absolute filename for template's meta data.
 	 * 
 	 * @param	string		$templateName
+	 * @return	string
 	 */
 	public function getMetaDataFilename($templateName) {
-		return $this->compileDir.PACKAGE_ID.'_'.$this->templateGroupID.'_'.$templateName.'.meta.php';
+		return $this->compileDir.$this->templateGroupID.'_'.$templateName.'.meta.php';
 	}
 	
 	/**
-	 * Checks wheater a template is already compiled or not.
+	 * Returns true if the template with the given data is already compiled.
 	 * 
 	 * @param	string		$templateName
-	 * @param 	string 		$sourceFilename
-	 * @param 	string 		$compiledFilename
+	 * @param	string		$sourceFilename
+	 * @param	string		$compiledFilename
 	 * @param	string		$application
 	 * @param	array		$metaData
-	 * @return 	boolean 	$isCompiled
+	 * @return	boolean
 	 */
 	protected function isCompiled($templateName, $sourceFilename, $compiledFilename, $application, array $metaData) {
 		if ($this->forceCompile || !file_exists($compiledFilename)) {
@@ -462,7 +464,7 @@ class TemplateEngine extends SingletonFactory {
 				if ($this->hasTemplateListeners($templateName)) {
 					$this->loadTemplateListenerCode($templateName);
 					
-					$templateListenerCache = WCF_DIR.'cache/templateListener/'.PACKAGE_ID.'-'.$this->environment.'-'.$templateName.'.php';
+					$templateListenerCache = WCF_DIR.'cache/templateListener/'.$this->environment.'-'.$templateName.'.php';
 					$templateListenerCacheMTime = @filemtime($templateListenerCache);
 					
 					return !($sourceMTime >= $templateListenerCacheMTime);
@@ -476,9 +478,9 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Compiles a template.
 	 * 
-	 * @param 	string 		$templateName
-	 * @param 	string 		$sourceFilename
-	 * @param 	string 		$compiledFilename
+	 * @param	string		$templateName
+	 * @param	string		$sourceFilename
+	 * @param	string		$compiledFilename
 	 * @param	array		$metaData
 	 */
 	protected function compileTemplate($templateName, $sourceFilename, $compiledFilename, array $metaData) {
@@ -490,7 +492,7 @@ class TemplateEngine extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns a new template compiler object.
+	 * Returns the template compiler.
 	 * 
 	 * @return	wcf\system\template\TemplateCompiler
 	 */
@@ -590,7 +592,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Executes a compiled template scripting source and returns the result.
-	 *
+	 * 
 	 * @param	string		$compiledSource
 	 * @param	array		$variables
 	 * @param	boolean		$sandbox	enables execution in sandbox
@@ -624,19 +626,19 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Deletes all compiled templates.
 	 * 
-	 * @param 	string		$compileDir
+	 * @param	string		$compileDir
 	 */
 	public static function deleteCompiledTemplates($compileDir = '') {
 		if (empty($compileDir)) $compileDir = WCF_DIR.'templates/compiled/';
 		
 		// delete compiled templates
-		DirectoryUtil::getInstance($compileDir)->removePattern(new Regex('.*_.*_.*\.php$'));
+		DirectoryUtil::getInstance($compileDir)->removePattern(new Regex('.*_.*\.php$'));
 	}
 	
 	/**
 	 * Returns an array with all prefilters.
 	 * 
-	 * @return 	array<string>
+	 * @return	array<string>
 	 */
 	public function getPrefilters() {
 		return $this->prefilters;
@@ -669,11 +671,11 @@ class TemplateEngine extends SingletonFactory {
 	 */
 	protected function loadTemplateGroupCache() {
 		CacheHandler::getInstance()->addResource(
-			'templateGroups',
-			WCF_DIR.'cache/cache.templateGroups.php',
+			'templateGroup',
+			WCF_DIR.'cache/cache.templateGroup.php',
 			'wcf\system\cache\builder\TemplateGroupCacheBuilder'
 		);
-		$this->templateGroupCache = CacheHandler::getInstance()->get('templateGroups');
+		$this->templateGroupCache = CacheHandler::getInstance()->get('templateGroup');
 	}
 	
 	/**
@@ -689,7 +691,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Sets the dir for the compiled templates.
-	 *
+	 * 
 	 * @param	string		$compileDir
 	 */
 	public function setCompileDir($compileDir) {
@@ -746,7 +748,7 @@ class TemplateEngine extends SingletonFactory {
 	 * Loads all available template listeners.
 	 */
 	protected function loadTemplateListeners() {
-		$cacheName = 'templateListener-'.PACKAGE_ID.'-'.$this->environment;
+		$cacheName = 'templateListener-'.$this->environment;
 		CacheHandler::getInstance()->addResource(
 			$cacheName,
 			WCF_DIR.'cache/cache.'.$cacheName.'.php',
@@ -780,13 +782,12 @@ class TemplateEngine extends SingletonFactory {
 		// cache was already loaded
 		if (!isset($this->templateListeners[$templateName]) || !empty($this->templateListeners[$templateName])) return;
 		
-		$cacheName = PACKAGE_ID.'-'.$this->environment.'-'.$templateName;
+		$cacheName = $this->environment.'-'.$templateName;
 		CacheHandler::getInstance()->addResource(
 			$cacheName,
 			WCF_DIR.'cache/templateListener/'.$cacheName.'.php',
 			'wcf\system\cache\builder\TemplateListenerCodeCacheBuilder'
 		);
-		
 		$this->templateListeners[$templateName] = CacheHandler::getInstance()->get($cacheName);
 	}
 	

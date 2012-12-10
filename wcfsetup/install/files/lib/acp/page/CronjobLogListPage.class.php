@@ -2,7 +2,6 @@
 namespace wcf\acp\page;
 use wcf\page\SortablePage;
 use wcf\system\menu\acp\ACPMenu;
-use wcf\system\package\PackageDependencyHandler;
 
 /**
  * Shows cronjob log information.
@@ -42,7 +41,7 @@ class CronjobLogListPage extends SortablePage {
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
-	 */	
+	 */
 	public $objectListClassName = 'wcf\data\cronjob\log\CronjobLogList';
 	
 	/**
@@ -53,7 +52,6 @@ class CronjobLogListPage extends SortablePage {
 		
 		$this->objectList->sqlSelects = "cronjob.*";
 		$this->objectList->sqlJoins = "LEFT JOIN wcf".WCF_N."_cronjob cronjob ON (cronjob.cronjobID = cronjob_log.cronjobID)";
-		$this->objectList->getConditionBuilder()->add("cronjob_log.cronjobID IN (SELECT cronjobID FROM wcf".WCF_N."_cronjob WHERE packageID IN (?))", array(PackageDependencyHandler::getInstance()->getDependencies()));
 	}
 	
 	/**

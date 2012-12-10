@@ -4,9 +4,7 @@ use wcf\data\cronjob\log\CronjobLogEditor;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\system\cache\CacheHandler;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
@@ -104,18 +102,20 @@ class CronjobScheduler extends SingletonFactory {
 	 * Loads outstanding cronjobs.
 	 */
 	protected function loadCronjobs() {
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("cronjob.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
-		$conditions->add("(cronjob.nextExec <= ? OR cronjob.afterNextExec <= ?)", array(TIME_NOW, TIME_NOW));
-		$conditions->add("cronjob.active = ?", array(1));
-		$conditions->add("cronjob.failCount < ?", array(3));
-		$conditions->add("cronjob.state = ?", array(Cronjob::READY));
-		
-		$sql = "SELECT		cronjob.*
-			FROM		wcf".WCF_N."_cronjob cronjob
-			".$conditions;
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_cronjob
+			WHERE	(cronjob.nextExec <= ? OR cronjob.afterNextExec <= ?)
+				AND cronjob.active = ?
+				AND cronjob.failCount < ?
+				AND cronjob.state = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditions->getParameters());
+		$statement->execute(array(
+			TIME_NOW,
+			TIME_NOW,
+			1,
+			Cronjob::MAX_FAIL_COUNT,
+			Cronjob::READY
+		));
 		while ($row = $statement->fetchArray()) {
 			$cronjob = new Cronjob(null, $row);
 			$cronjobEditor = new CronjobEditor($cronjob);
@@ -206,19 +206,18 @@ class CronjobScheduler extends SingletonFactory {
 	 * Loads the cached data for cronjob execution.
 	 */
 	protected function loadCache() {
-		$cacheName = 'cronjobs-'.PACKAGE_ID;
 		CacheHandler::getInstance()->addResource(
-			$cacheName,
-			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'cronjob',
+			WCF_DIR.'cache/cache.cronjob.php',
 			'wcf\system\cache\builder\CronjobCacheBuilder'
 		);
-		$this->cache = CacheHandler::getInstance()->get($cacheName);
+		$this->cache = CacheHandler::getInstance()->get('cronjob');
 	}
 	
 	/**
 	 * Clears the cronjob data cache.
 	 */
 	public static function clearCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.cronjobs-'.PACKAGE_ID.'.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.cronjob.php');
 	}
 }

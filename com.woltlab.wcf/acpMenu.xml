@@ -92,7 +92,7 @@
 			<permissions>admin.system.package.canEditServer</permissions>
 			<showorder>2</showorder>
 		</acpmenuitem>
-		<!-- /packages -->	
+		<!-- /packages -->
 		
 		<!-- application -->
 		<acpmenuitem name="wcf.acp.menu.link.application">
@@ -225,7 +225,7 @@
 			<parent>wcf.acp.menu.link.group.general</parent>
 			<permissions>admin.user.canEditGroup,admin.user.canDeleteGroup</permissions>
 			<showorder>1</showorder>
-		</acpmenuitem>	
+		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.group.add">
 			<link>index.php/UserGroupAdd/</link>
@@ -250,6 +250,26 @@
 		<acpmenuitem name="wcf.acp.menu.link.display">
 			<showorder>3</showorder>
 		</acpmenuitem>
+		
+		<!-- page menu -->
+		<acpmenuitem name="wcf.acp.menu.link.pageMenu">
+			<parent>wcf.acp.menu.link.display</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.pageMenu.list">
+			<link>index.php/PageMenuItemList/</link>
+			<parent>wcf.acp.menu.link.pageMenu</parent>
+			<permissions>admin.display.canManagePageMenu</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.pageMenu.add">
+			<link>index.php/PageMenuItemAdd/</link>
+			<parent>wcf.acp.menu.link.pageMenu</parent>
+			<permissions>admin.display.canManagePageMenu</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		<!-- /page menu -->
 		
 		<acpmenuitem name="wcf.acp.menu.link.content">
 			<showorder>4</showorder>

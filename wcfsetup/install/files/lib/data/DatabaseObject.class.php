@@ -4,7 +4,7 @@ use wcf\system\WCF;
 
 /**
  * Abstract class for all data holder classes.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -22,7 +22,7 @@ abstract class DatabaseObject implements IStorableObject {
 	/**
 	 * indicates if database table index is an identity column
 	 * @var	boolean 
-	 */	
+	 */
 	protected static $databaseTableIndexIsIdentity = true;
 	
 	/**
@@ -88,7 +88,7 @@ abstract class DatabaseObject implements IStorableObject {
 		
 		$this->data = $data;
 	}
-
+	
 	/**
 	 * @see	wcf\data\IStorableObject::__get()
 	 */
@@ -155,7 +155,7 @@ abstract class DatabaseObject implements IStorableObject {
 		$sortArray = $objects2 = array();
 		foreach ($objects as $idx => $obj) {
 			$sortArray[$idx] = $obj->$sortBy;
-
+			
 			// array_multisort will drop index association if key is not a string
 			if ($maintainIndexAssociation) {
 				$objects2[$idx.'x'] = $obj;

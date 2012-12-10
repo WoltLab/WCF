@@ -1,8 +1,9 @@
 <?php
 namespace wcf\system\application;
+use wcf\data\application\ApplicationAction;
+use wcf\data\application\ApplicationList;
 use wcf\system\cache\CacheHandler;
 use wcf\system\SingletonFactory;
-use wcf\util\StringUtil;
 
 /**
  * Handles multi-application environments.
@@ -18,7 +19,7 @@ class ApplicationHandler extends SingletonFactory {
 	/**
 	 * application cache
 	 * @var	array<array>
-	 */	
+	 */
 	protected $cache = null;
 	
 	/**
@@ -31,24 +32,27 @@ class ApplicationHandler extends SingletonFactory {
 	 * Initializes cache.
 	 */
 	protected function init() {
-		$cacheName = 'application-'.PACKAGE_ID;
 		CacheHandler::getInstance()->addResource(
-			$cacheName,
-			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'application',
+			WCF_DIR.'cache/cache.application.php',
 			'wcf\system\cache\builder\ApplicationCacheBuilder'
 		);
-		$this->cache = CacheHandler::getInstance()->get($cacheName);
+		$this->cache = CacheHandler::getInstance()->get('application');
 	}
 	
 	/**
-	 * Returns the primary application for current group. Will return current
-	 * application equal to PACKAGE_ID if not within any group.
+	 * Returns the primary application.
 	 * 
 	 * @return	wcf\data\application\Application
 	 */
 	public function getPrimaryApplication() {
 		$packageID = ($this->cache['primary']) ?: PACKAGE_ID;
-		return $this->cache['application'][$packageID];
+		
+		if (isset($this->cache['application'][$packageID])) {
+			return $this->cache['application'][$packageID];
+		}
+		
+		return $this->cache['wcf'];
 	}
 	
 	/**
@@ -56,7 +60,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * primary application if $abbreviation equals to 'wcf'
 	 * 
 	 * @return	wcf\data\application\Application
-	 */	 
+	 */
 	public function getApplication($abbreviation) {
 		if ($abbreviation == 'wcf') {
 			return $this->getPrimaryApplication();
@@ -74,16 +78,6 @@ class ApplicationHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns active application group or 'null' if current application
-	 * is not within a group.
-	 * 
-	 * @return	wcf\data\application\group\ApplicationGroup
-	 */	
-	public function getActiveGroup() {
-		return $this->cache['group'];
-	}
-	
-	/**
 	 * Returns pseudo-application representing WCF used for special cases,
 	 * e.g. cross-domain files requestable through the webserver.
 	 * 
@@ -97,16 +91,21 @@ class ApplicationHandler extends SingletonFactory {
 	 * Returns the currently active application.
 	 * 
 	 * @return	wcf\data\application\Application
-	 */	
+	 */
 	public function getActiveApplication() {
-		return $this->cache['application'][PACKAGE_ID];
+		// work-around during WCFSetup
+		if (isset($this->cache['application'][PACKAGE_ID])) {
+			return $this->cache['application'][PACKAGE_ID];
+		}
+		
+		return $this->getWCF();
 	}
 	
 	/**
 	 * Returns a list of dependent applications.
 	 * 
 	 * @return	array<wcf\data\application\Application>
-	 */	
+	 */
 	public function getDependentApplications() {
 		$applications = array();
 		foreach ($this->cache['application'] as $packageID => $application) {
@@ -165,5 +164,17 @@ class ApplicationHandler extends SingletonFactory {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Rebuilds cookie domain/path for all applications.
+	 */
+	public static function rebuild() {
+		$applicationList = new ApplicationList();
+		$applicationList->sqlLimit = 0;
+		$applicationList->readObjects();
+		
+		$applicationAction = new ApplicationAction($applicationList->getObjects(), 'rebuild');
+		$applicationAction->executeAction();
 	}
 }

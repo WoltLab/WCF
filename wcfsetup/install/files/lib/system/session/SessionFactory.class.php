@@ -3,7 +3,7 @@ namespace wcf\system\session;
 use wcf\util\HeaderUtil;
 
 /**
- * SessionFactory handles session for active user.
+ * Handles the session of the active user.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -15,12 +15,12 @@ use wcf\util\HeaderUtil;
 class SessionFactory extends ACPSessionFactory {
 	/**
 	 * @see	wcf\system\session\ACPSessionFactory::$sessionEditor
-	 */	
+	 */
 	protected $sessionEditor = 'wcf\data\session\SessionEditor';
 	
 	/**
 	 * @see	wcf\system\session\ACPSessionFactory::readSessionID()
-	 */	
+	 */
 	protected function readSessionID() {
 		$sessionID = parent::readSessionID();
 		
@@ -34,7 +34,7 @@ class SessionFactory extends ACPSessionFactory {
 	
 	/**
 	 * @see	wcf\system\session\ACPSessionFactory::init()
-	 */	
+	 */
 	protected function init() {
 		$usesCookies = true;
 		

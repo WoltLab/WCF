@@ -3,6 +3,7 @@ namespace wcf\system\language;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\Regex;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -53,6 +54,12 @@ class I18nHandler extends SingletonFactory {
 	 * @var	array<array>
 	 */
 	protected $elementOptions = array();
+	
+	/**
+	 * language variable regex object
+	 * @var	wcf\system\Regex
+	 */
+	protected $regex = null;
 	
 	/**
 	 * @see	wcf\system\SingletonFactory::init()
@@ -165,10 +172,8 @@ class I18nHandler extends SingletonFactory {
 	 * Sets the value for the given element. If the element is multilingual,
 	 * the given value is set for every available language.
 	 * 
-	 * @param 	integer 	$elementID
-	 * @param 	string 		$plainValue
-	 * 
-	 * @throws  SystemException - if $plainValue is not of type string
+	 * @param	integer		$elementID
+	 * @param	string		$plainValue
 	 */
 	public function setValue($elementID, $plainValue) {
 		if (!is_string($plainValue)) {
@@ -188,12 +193,10 @@ class I18nHandler extends SingletonFactory {
 	
 	/**
 	 * Sets the values for the given element. If the element is not multilingual,
-	 * use {@link I18nHandler::setValue()} instead.
+	 * use I18nHandler::setValue() instead.
 	 * 
-	 * @param 	integer 	 $elementID
-	 * @param 	array<array> $i18nValues
-	 * 
-	 * @throws  SystemException if $i18nValues doesn't have any elements
+	 * @param	integer		$elementID
+	 * @param	array<array>	$i18nValues
 	 */
 	public function setValues($elementID, array $i18nValues) {
 		if (empty($i18nValues)) {
@@ -246,16 +249,14 @@ class I18nHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Saves language variable for i18n. Given package id must match the associated
-	 * packages, using PACKAGE_ID is highly discouraged as this breaks the ability
-	 * to delete unused language items on package uninstallation using foreign keys.
+	 * Saves language variable for i18n.
 	 * 
 	 * @param	string		$elementID
 	 * @param	string		$languageVariable
 	 * @param	string		$languageCategory
 	 * @param	integer		$packageID
 	 */
-	public function save($elementID, $languageVariable, $languageCategory, $packageID) {
+	public function save($elementID, $languageVariable, $languageCategory, $packageID = PACKAGE_ID) {
 		// get language category id
 		$sql = "SELECT	languageCategoryID
 			FROM	wcf".WCF_N."_language_category
@@ -270,7 +271,6 @@ class I18nHandler extends SingletonFactory {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("languageID IN (?)", array($languageIDs));
 		$conditions->add("languageItem = ?", array($languageVariable));
-		$conditions->add("packageID = ?", array($packageID));
 		
 		$sql = "SELECT	languageItemID, languageID
 			FROM	wcf".WCF_N."_language_item
@@ -334,17 +334,12 @@ class I18nHandler extends SingletonFactory {
 	 * Removes previously created i18n language variables.
 	 * 
 	 * @param	string		$languageVariable
-	 * @param	integer		$packageID
 	 */
-	public function remove($languageVariable, $packageID) {
+	public function remove($languageVariable) {
 		$sql = "DELETE FROM	wcf".WCF_N."_language_item
-			WHERE		languageItem = ?
-					AND packageID = ?";
+			WHERE		languageItem = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$languageVariable,
-			$packageID
-		));
+		$statement->execute(array($languageVariable));
 		
 		// reset language cache
 		LanguageFactory::getInstance()->deleteLanguageCache();
@@ -399,16 +394,20 @@ class I18nHandler extends SingletonFactory {
 					}
 				}
 				else {
-					if (preg_match('~^'.$this->elementOptions[$elementID]['pattern'].'$~', $this->elementOptions[$elementID]['value'])) {
+					$isI18n = Regex::compile('^'.$this->elementOptions[$elementID]['pattern'].'$')->match($this->elementOptions[$elementID]['value']);
+					if (!$isI18n) {
+						// check if it's a regular language variable
+						$isI18n = Regex::compile('^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$')->match($this->elementOptions[$elementID]['value']);
+					}
+					
+					if ($isI18n) {
 						// use i18n values from language items
 						$sql = "SELECT	languageID, languageItemValue
 							FROM	wcf".WCF_N."_language_item
-							WHERE	languageItem = ?
-								AND packageID = ?";
+							WHERE	languageItem = ?";
 						$statement = WCF::getDB()->prepareStatement($sql);
 						$statement->execute(array(
-							$this->elementOptions[$elementID]['value'],
-							$this->elementOptions[$elementID]['packageID']
+							$this->elementOptions[$elementID]['value']
 						));
 						while ($row = $statement->fetchArray()) {
 							$i18nValues[$row['languageID']] = StringUtil::encodeJS(StringUtil::unifyNewlines($row['languageItemValue']));
@@ -444,5 +443,19 @@ class I18nHandler extends SingletonFactory {
 	 */
 	public function enableAssignValueVariables() {
 		$this->assignValueVariablesDisabled = false;
+	}
+	
+	/**
+	 * Returns true, if given string equals a language variable.
+	 * 
+	 * @param	string		$string
+	 * @return	boolean
+	 */
+	protected function isLanguageVariable($string) {
+		if ($this->regex === null) {
+			$this->regex = new Regex('^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$');
+		}
+		
+		return $this->regex->match($string);
 	}
 }

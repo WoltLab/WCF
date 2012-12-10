@@ -83,7 +83,7 @@ class DiskCacheSource implements ICacheSource {
 				unset($this->cache[$cacheResource['cache']]);
 			}
 			if (isset($this->loaded[$cacheResource['file']])) {
-				unset($this->loaded[$cacheResource['file']]);	
+				unset($this->loaded[$cacheResource['file']]);
 			}
 		}
 	}
@@ -98,7 +98,7 @@ class DiskCacheSource implements ICacheSource {
 		
 		$filepattern = str_replace('*', '.*', str_replace('.', '\.', $filepattern));
 		if (substr($directory, -1) != '/') {
-			$directory .= '/';	
+			$directory .= '/';
 		}
 		
 		DirectoryUtil::getInstance($directory)->executeCallback(new Callback(function ($filename) {
@@ -117,22 +117,22 @@ class DiskCacheSource implements ICacheSource {
 	protected function needRebuild(array $cacheResource) {
 		// cache does not exist
 		if (!file_exists($cacheResource['file'])) {
-			return true;	
+			return true;
 		}
 		
 		// cache is empty
 		if (!@filesize($cacheResource['file'])) {
-			return true;	
+			return true;
 		}
 		
 		// cache resource was marked as obsolete
 		if (($mtime = filemtime($cacheResource['file'])) <= 1) {
-			return true;	
+			return true;
 		}
 		
 		// maxlifetime expired
 		if ($cacheResource['maxLifetime'] > 0 && (TIME_NOW - $mtime) > $cacheResource['maxLifetime']) {
-			return true;	
+			return true;
 		}
 		
 		// do not rebuild cache
@@ -192,17 +192,11 @@ class DiskCacheSource implements ICacheSource {
 	 * @see	wcf\system\cache\source\ICacheSource::flush()
 	 */
 	public function flush() {
-		$sql = "SELECT		package.packageDir
-			FROM		wcf".WCF_N."_package_dependency package_dependency
-			LEFT JOIN	wcf".WCF_N."_package package
-			ON		(package.packageID = package_dependency.dependency)
-			WHERE		package_dependency.packageID = ?
-					AND isApplication = ?";
+		$sql = "SELECT	packageDir
+			FROM	wcf".WCF_N."_package
+			WHERE	isApplication = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			PACKAGE_ID,
-			1
-		));
+		$statement->execute(array(1));
 		while ($row = $statement->fetchArray()) {
 			$packageDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
 			$cacheDir = $packageDir.'cache';

@@ -94,20 +94,17 @@ class UserGroup extends DatabaseObject {
 	 * Returns groups by given type. Returns all groups if no types given.
 	 * 
 	 * @param	array<integer>		$types
+	 * @param	array<integer>		$invalidGroupTypes
 	 * @return	array<wcf\data\user\group\UserGroup>
 	 */
-	public static function getGroupsByType(array $types = array()) {
+	public static function getGroupsByType(array $types = array(), array $invalidGroupTypes = array()) {
 		self::getCache();
 		
-		// get all groups
-		if (empty($types)) return self::$cache['groups'];
-		
-		// get groups by type
-		$groupIDs = self::getGroupIDsByType($types);
 		$groups = array();
-		
-		foreach ($groupIDs as $groupID) {
-			$groups[$groupID] = self::$cache['groups'][$groupID];
+		foreach (self::$cache['groups'] as $group) {
+			if ((empty($types) || in_array($group->groupType, $types)) && !in_array($group->groupType, $invalidGroupTypes)) {
+				$groups[$group->groupID] = $group;
+			}
 		}
 		
 		return $groups;
@@ -129,8 +126,8 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns a group from _cache_ by given groupID. 
-	 * null is returned when the given groupID is invalid.
+	 * Returns the user group with the given id or null if no such user group
+	 * exists.
 	 * 
 	 * @param	integer		$groupID
 	 * @return	wcf\data\user\group\UserGroup
@@ -163,7 +160,7 @@ class UserGroup extends DatabaseObject {
 	 * Returns true, if the given groups are accessible for the active user.
 	 * 
 	 * @param	array		$groupIDs
-	 * @return 	boolean
+	 * @return	boolean
 	 */
 	public static function isAccessibleGroup(array $groupIDs = array()) {
 		if (self::$accessibleGroups === null) {
@@ -186,17 +183,10 @@ class UserGroup extends DatabaseObject {
 	 * 
 	 * @param	array<integer>		$groupTypes
 	 * @param	array<integer>		$invalidGroupTypes
-	 * @return	array<UserGroup>
+	 * @return	array<wcf\data\user\group\UserGroup>
 	 */
 	public static function getAccessibleGroups(array $groupTypes = array(), array $invalidGroupTypes = array()) {
-		$groups = self::getGroupsByType($groupTypes);
-		
-		if (!empty($invalidGroupTypes)) {
-			$invalidGroups = self::getGroupsByType($invalidGroupTypes);
-			foreach ($invalidGroups as $groupID => $group) {
-				unset($groups[$groupID]);
-			}
-		}
+		$groups = self::getGroupsByType($groupTypes, $invalidGroupTypes);
 		
 		foreach ($groups as $key => $value) {
 			if (!self::isAccessibleGroup(array($key))) {
@@ -230,18 +220,18 @@ class UserGroup extends DatabaseObject {
 	protected static function getCache() {
 		if (self::$cache === null) {
 			CacheHandler::getInstance()->addResource(
-				'usergroups',
-				WCF_DIR.'cache/cache.userGroups.php',
+				'userGroup',
+				WCF_DIR.'cache/cache.userGroup.php',
 				'wcf\system\cache\builder\UserGroupCacheBuilder'
 			);
-			self::$cache = CacheHandler::getInstance()->get('usergroups');
+			self::$cache = CacheHandler::getInstance()->get('userGroup');
 		}
 	}
 	
 	/**
 	 * Returns true, if this group is accessible for the active user.
 	 * 
-	 * @return 	boolean
+	 * @return	boolean
 	 */
 	public function isAccessible() {
 		return self::isAccessibleGroup(array($this->groupID));
@@ -309,14 +299,11 @@ class UserGroup extends DatabaseObject {
 		if ($this->groupOptions === null) {
 			// get all options and filter options with low priority
 			$this->groupOptions = $groupOptionIDs = array();
-			$sql = "SELECT		optionName, optionID 
-				FROM		wcf".WCF_N."_user_group_option option_table
-				LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-				ON		(package_dependency.dependency = option_table.packageID)
-				WHERE 		package_dependency.packageID = ?
-				ORDER BY	package_dependency.priority ASC";
+
+			$sql = "SELECT		optionName, optionID
+				FROM		wcf".WCF_N."_user_group_option";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(PACKAGE_ID));
+			$statement->execute();
 			
 			while ($row = $statement->fetchArray()) {
 				$groupOptionIDs[$row['optionName']] = $row['optionID'];

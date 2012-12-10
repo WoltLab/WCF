@@ -24,46 +24,16 @@ class MySQLDatabase extends Database {
 		if (!$this->port) $this->port = 3306; // mysql default port
 		
 		try {
-			$this->pdo = new \PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->database, $this->user, $this->password);
+			$this->pdo = new \PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->database, $this->user, $this->password, array(
+				\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8', SESSION sql_mode = 'ANSI,ONLY_FULL_GROUP_BY,STRICT_ALL_TABLES'"
+			));
 			$this->setAttributes();
 		}
 		catch (\PDOException $e) {
 			throw new DatabaseException("Connecting to MySQL server '".$this->host."' failed:\n".$e->getMessage(), $this);
 		}
-		
-		// set sql mode
-		$this->setSQLMode();
-		
-		// set connection character set
-		$this->setCharset();
 	}
 
-	/**
-	 * Sets the MySQL sql_mode variable.
-	 */
-	protected function setSQLMode() {
-		try {
-			$statement = $this->prepareStatement("SET SESSION sql_mode = 'ANSI,ONLY_FULL_GROUP_BY,STRICT_ALL_TABLES'");
-			$statement->execute();
-		}
-		catch (DatabaseException $e) {
-			// ignore
-		}
-	}
-	
-	/**
-	 * Sets the charset of the database connection.
-	 */
-	protected function setCharset() {
-		try {
-			$statement = $this->prepareStatement("SET NAMES 'utf8'");
-			$statement->execute();
-		}
-		catch (DatabaseException $e) {
-			// ignore
-		}
-	}
-	
 	/**
 	 * @see	wcf\system\database\Database::isSupported()
 	 */
@@ -79,7 +49,7 @@ class MySQLDatabase extends Database {
 			if ($offset > 0) $query .= " LIMIT " . $offset . ", " . $limit;
 			else $query .= " LIMIT " . $limit;
 		}
-
+		
 		return $query;
 	}
 	

@@ -3,8 +3,6 @@ namespace wcf\util;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\io\GZipFile;
-use wcf\system\io\RemoteFile;
-use wcf\system\WCF;
 
 /**
  * Contains file-related functions.
@@ -160,7 +158,7 @@ final class FileUtil {
 					for ($j = 0; $j < $i; $j++) {
 						unset($target[$j]);
 					}
-					$relPath .= str_repeat('../', count($current) - $i).implode('/', $target).'/';	
+					$relPath .= str_repeat('../', count($current) - $i).implode('/', $target).'/';
 					for ($j = $i + 1; $j < count($current); $j++) {
 						unset($current[$j]);
 					}

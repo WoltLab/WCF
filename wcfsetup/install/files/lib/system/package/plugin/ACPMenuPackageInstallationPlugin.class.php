@@ -2,8 +2,8 @@
 namespace wcf\system\package\plugin;
 
 /**
- * This PIP installs, updates or deletes acp-menu items.
- *
+ * Installs, updates and deletes ACP menu items.
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

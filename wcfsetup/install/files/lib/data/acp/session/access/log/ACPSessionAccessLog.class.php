@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\acp\session\access\log;
 use wcf\data\DatabaseObject;
+use wcf\util\UserUtil;
 
 /**
  * Represents a session access log entry.
@@ -25,7 +26,7 @@ class ACPSessionAccessLog extends DatabaseObject {
 	
 	/**
 	 * Returns true, if the URI of this log entry is protected.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function hasProtectedURI() {
@@ -34,5 +35,14 @@ class ACPSessionAccessLog extends DatabaseObject {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Returns the ip address and attempts to convert into IPv4.
+	 *
+	 * @return	string
+	 */
+	public function getIpAddress() {
+		return UserUtil::convertIPv6To4($this->ipAddress);
 	}
 }

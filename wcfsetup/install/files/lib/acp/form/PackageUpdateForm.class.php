@@ -1,5 +1,7 @@
 <?php
 namespace wcf\acp\form;
+use wcf\system\package\PackageInstallationDispatcher;
+
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageUpdateDispatcher;
@@ -99,9 +101,7 @@ class PackageUpdateForm extends ACPForm {
 			$this->saved();
 			
 			// open queue
-			$url = LinkHandler::getInstance()->getLink('Package', array(), 'action=openQueue&processNo='.$processNo);
-			HeaderUtil::redirect($url);
-			exit;
+			PackageInstallationDispatcher::openQueue(0, $processNo);
 		}
 	}
 	

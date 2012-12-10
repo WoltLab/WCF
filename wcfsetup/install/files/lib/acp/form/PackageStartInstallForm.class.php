@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
 
 /**
  * Shows the package install and update form.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -162,7 +162,7 @@ class PackageStartInstallForm extends ACPForm {
 	
 	/**
 	 * Validates the package archive.
-	 *
+	 * 
 	 * @param	string		$type		upload or download package
 	 */
 	protected function validateArchive($type) {
@@ -220,16 +220,13 @@ class PackageStartInstallForm extends ACPForm {
 			'packageID' => $packageID,
 			'archive' => (!empty($this->uploadPackage['tmp_name']) ? $this->uploadPackage['name'] : $this->downloadPackage),
 			'action' => ($this->package != null ? 'update' : 'install'),
-			'confirmInstallation' => 1,
-			'cancelable' => ($this->package != null ? 0 : 1)
+			'confirmInstallation' => 1
 		));
 		
 		$this->saved();
 		
 		// open queue
-		$url = LinkHandler::getInstance()->getLink('Package', array(), 'action=openQueue&processNo='.$processNo);
-		HeaderUtil::redirect($url);
-		exit;
+		PackageInstallationDispatcher::openQueue(0, $processNo);
 	}
 	
 	/**

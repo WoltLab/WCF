@@ -17,7 +17,7 @@ if (is_array($files)) {
 	
 	<title>SVG Icons</title>
 	
-	<style type="text/css">	
+	<style type="text/css">
 		* {
 			font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 			text-overflow: ellipsis;

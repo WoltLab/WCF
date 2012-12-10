@@ -2,6 +2,7 @@
 namespace wcf\data\acp\session\log;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
+use wcf\util\UserUtil;
 
 /**
  * Represents a session log entry.
@@ -49,7 +50,7 @@ class ACPSessionLog extends DatabaseObject {
 	
 	/**
 	 * Returns true, if this session is active.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function isActive() {
@@ -62,7 +63,7 @@ class ACPSessionLog extends DatabaseObject {
 	
 	/**
 	 * Returns true, if this session is the active user session.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function isActiveUserSession() {
@@ -71,5 +72,14 @@ class ACPSessionLog extends DatabaseObject {
 		}
 		
 		return 0;
+	}
+	
+	/**
+	 * Returns the ip address and attempts to convert into IPv4.
+	 * 
+	 * @return	string
+	 */
+	public function getIpAddress() {
+		return UserUtil::convertIPv6To4($this->ipAddress);
 	}
 }

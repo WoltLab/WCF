@@ -136,7 +136,7 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * Registers route data within $_GET and $_REQUEST.
-	 */	
+	 */
 	protected function registerRouteData() {
 		foreach ($this->routeData as $key => $value) {
 			$_GET[$key] = $value;

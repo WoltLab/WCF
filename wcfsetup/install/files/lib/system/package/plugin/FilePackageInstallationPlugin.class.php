@@ -9,7 +9,7 @@ use wcf\util\FileUtil;
 use wcf\util\StyleUtil;
 
 /**
- * This PIP installs, updates or deletes files delivered by a package.
+ * Installs, updates and deletes files.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -33,12 +33,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		// get package installation dir
 		$dir = $this->installation->getPackage()->packageDir;
 		if (empty($dir)) {
-			if ($this->installation->getPackage()->parentPackageID > 0) {
-				// plugin
-				// use parents package dir
-				$dir = $this->installation->getPackage()->getParentPackage()->packageDir;
-			}
-			else if ($this->installation->getPackage()->isApplication == 1 && $this->installation->getPackage()->package != 'com.woltlab.wcf' && $this->installation->getAction() == 'install') {
+			if ($this->installation->getPackage()->isApplication == 1 && $this->installation->getPackage()->package != 'com.woltlab.wcf' && $this->installation->getAction() == 'install') {
 				// application
 				// prompt package dir
 				$dir = $this->promptPackageDir();
@@ -90,7 +85,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	}
 	
 	/**
-	 * Uninstalls the files of this package.
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// get absolute package dir
@@ -102,7 +97,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		// get files from log
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_package_installation_file_log
-			WHERE 	packageID = ?";
+			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
 		while ($row = $statement->fetchArray()) {

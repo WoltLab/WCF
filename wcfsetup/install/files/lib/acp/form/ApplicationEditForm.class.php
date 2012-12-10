@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationAction;
 use wcf\data\application\ViewableApplication;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\Regex;
@@ -175,7 +176,11 @@ class ApplicationEditForm extends ACPForm {
 			'domainPath' => $this->domainPath
 		)));
 		$this->objectAction->executeAction();
+		
 		$this->saved();
+		
+		// re-calculate cookie settings
+		ApplicationHandler::rebuild();
 		
 		// show success.
 		WCF::getTPL()->assign(array(

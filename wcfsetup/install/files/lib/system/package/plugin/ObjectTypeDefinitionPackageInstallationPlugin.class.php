@@ -3,7 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\system\WCF;
 
 /**
- * This PIP installs, updates or deletes object type definitions.
+ * Installs, updates and deletes object type definitions.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

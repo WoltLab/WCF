@@ -1,12 +1,11 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\system\cache\CacheHandler;
-
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**
- * This PIP executes an individual php script.
+ * Executes individual PHP scripts during installation.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH
@@ -64,16 +63,17 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 	}
 	
 	/**
-	 * Returns false. Scripts can't be uninstalled.
-	 * 
-	 * @return 	boolean 	false
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function hasUninstall() {
+		// scripts can't be uninstalled
 		return false;
 	}
 	
 	/**
-	 * Does nothing.
+	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
-	public function uninstall() {}
+	public function uninstall() {
+		// does nothing
+	}
 }

@@ -1,22 +1,22 @@
 <?php
 namespace wcf\system\package;
-use wcf\util\FileUtil;
-
 use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
 use wcf\data\package\PackageList;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
-use wcf\system\request\LinkHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\setup\Uninstaller;
+use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
+use wcf\util\FileUtil;
 
 /**
- * PackageUninstallationDispatcher handles the whole uninstallation process.
+ * Handles the whole uninstallation process.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -66,24 +66,34 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 		$this->nodeBuilder->completeNode($node);
 		$node = $this->nodeBuilder->getNextNode($node);
 		
-		// update options.inc.php if uninstallation is completed
+		// perform post-uninstall actions
 		if ($node == '') {
+			// update options.inc.php if uninstallation is completed
 			OptionEditor::resetCache();
 			
-			// force removal of all WCF cache files
-			CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.*.php');
-			
-			if (PACKAGE_ID != 1) {
-				$sql = "SELECT	packageDir
-					FROM	wcf".WCF_N."_package
-					WHERE	isApplication = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(1));
-				while ($row = $statement->fetchArray()) {
-					$dir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
-					CacheHandler::getInstance()->clear($dir.'cache/', 'cache.*.php');
-				}
+			// force removal of all cache files
+			$sql = "SELECT	packageDir
+				FROM	wcf".WCF_N."_package
+				WHERE	isApplication = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array(1));
+			while ($row = $statement->fetchArray()) {
+				$dir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
+				CacheHandler::getInstance()->clear($dir.'cache/', 'cache.*.php');
 			}
+			
+			// remove template listener cache
+			CacheHandler::getInstance()->clear(WCF_DIR.'cache/templateListener/', '*.php');
+			
+			// reset language cache
+			LanguageFactory::getInstance()->clearCache();
+			LanguageFactory::getInstance()->deleteLanguageCache();
+			
+			// reset stylesheets
+			StyleHandler::resetStylesheets();
+			
+			// rebuild application paths
+			ApplicationHandler::rebuild();
 		}
 		
 		// return next node
@@ -117,17 +127,14 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 		));
 		
 		// reset package cache
-		CacheHandler::getInstance()->clearResource('packages');
-		
-		// rebuild package dependencies
-		Package::rebuildParentPackageDependencies($this->queue->packageID);
+		CacheHandler::getInstance()->clearResource('package');
 	}
 	
 	/**
 	 * Deletes the given list of files from the target dir.
 	 * 
-	 * @param 	string 		$targetDir
-	 * @param 	string 		$files
+	 * @param	string		$targetDir
+	 * @param	string		$files
 	 * @param	boolean		$deleteEmptyDirectories
 	 * @param	booelan		$deleteEmptyTargetDir
 	 */
@@ -306,8 +313,6 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 			));
 		}
 		
-		$url = LinkHandler::getInstance()->getLink('Package', array(), 'action=openQueue&processNo='.$processNo);
-		HeaderUtil::redirect($url);
-		exit;
+		self::openQueue(0, $processNo);
 	}
 }

@@ -1,12 +1,11 @@
 <?php
 namespace wcf\system\search\acp;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
- * ACP search provider for options.
+ * ACP search provider implementation for options.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -31,7 +30,6 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("languageID = ?", array(WCF::getLanguage()->languageID));
 		$conditions->add("languageItemValue LIKE ?", array($query.'%'));
-		$conditions->add("packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		
 		// filter by language item
 		$languageItemsConditions = '';

@@ -116,7 +116,7 @@ body > iframe[src="about:blank"] {
 }
 
 .framed {
-	> img  {
+	> img {
 		background-color: @wcfContentBackgroundColor;
 		border: 1px solid @wcfContainerBorderColor;
 		padding: 1px;
@@ -134,7 +134,7 @@ body > iframe[src="about:blank"] {
 	z-index: 800;
 	
 	.borderRadius(6px);
-	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px); 
+	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
 	
 	.pointer {
 		border-color: @wcfTooltipBackgroundColor transparent;
@@ -213,123 +213,127 @@ body > iframe[src="about:blank"] {
 	font-weight: normal !important;
 	padding: 1px 8px 2px;
 	position: relative;
-	text-shadow: none !important;
 	white-space: nowrap;
+	
+	.textShadow(@wcfColor);
 	
 	/* colors */
 	&.badgeUpdate {
 		background-color: @wcfTabularBoxBackgroundColor;
 		color: @wcfTabularBoxColor;
-	}
-	
-	&.badgeGreen {
-		background-color: rgba(0, 153, 0, 1);
-		color: rgba(238, 255, 238, 1);
-	}
-	
-	&.badgeRed {
-		background-color: rgba(204, 0, 0, 1);
-		color: rgba(255, 238, 238, 1);
+		
+		.textShadow(@wcfTabularBoxBackgroundColor);
 	}
 	
 	&.badgeInverse {
 		background-color: @wcfTabularBoxColor;
 		color: @wcfTabularBoxBackgroundColor;
+		
+		.textShadow(@wcfTabularBoxColor);
 	}
 	
-	&.label {
-		font-size: 90%;
+	/* default label colors */
+	&.green {
+		background-color: rgba(0, 153, 0, 1);
+		color: rgba(238, 255, 238, 1);
+		
+		.textShadow(rgba(0, 153, 0, 1));
+	}
+	
+	&.red {
+		background-color: rgba(204, 0, 0, 1);
+		color: rgba(255, 238, 238, 1);
+		
+		.textShadow(rgba(204, 0, 0, 1));
+	}
+	
+	&.black {
+		background-color: #333;
 		color: #fff;
-		/* TODO: use textShadow() */
-		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
 		
-		/* default label colors */
-		&.black {
-			background-color: #333;
-		}
-		
-		&.brown {
-			background-color: #c63;
-		}
-		
-		&.red {
-			background-color: #c00;
-		}
-		
-		&.orange {
-			background-color: #f90;
-		}
-		
-		&.yellow {
-			background-color: #ff0;
-			color: #333;
-			/* TODO: use textShadow() */
-			text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.4);
-		}
-		
-		&.green {
-			background-color: #0c0;
-		}
-		
-		&.blue {
-			background-color: #09f;
-		}
-		
-		&.purple {
-			background-color: #c0f;
-		}
-		
-		&.pink {
-			background-color: #f0c;
-		}
+		.textShadow(#333);
 	}
 	
-	/* hover */
+	&.brown {
+		background-color: #c63;
+		color: #fff;
+		
+		.textShadow(#c63);
+	}
 	
+	&.orange {
+		background-color: #f90;
+		color: #fff;
+		
+		.textShadow(#f90);
+	}
+	
+	&.yellow {
+		background-color: #ff0;
+		color: #333;
+		
+		.textShadow(#ff0);
+	}
+	
+	&.blue {
+		background-color: #09f;
+		color: #fff;
+		
+		.textShadow(#09f);
+	}
+	
+	&.purple {
+		background-color: #c0f;
+		color: #fff;
+		
+		.textShadow(#c0f);
+	}
+	
+	&.pink {
+		background-color: #f0c;
+		color: #fff;
+		
+		.textShadow(#f0c);
+	}
 }
 
 a.badge:hover {
 	color: @wcfContentBackgroundColor;
-	text-decoration: none;
+		
+	&.black {
+		background-color: #000;
+	}
 	
-	&.label {
-		text-decoration: none;
-		
-		&.black {
-			background-color: #000;
-		}
-		
-		&.brown {
-			background-color: #930;
-		}
-		
-		&.red {
-			background-color: #900;
-		}
-		
-		&.orange {
-			background-color: #f60;
-		}
-		
-		&.yellow {
-			background-color: #cc0;
-		}
-		
-		&.green {
-			background-color: #090;
-		}
-		
-		&.blue {
-			background-color: #06c;
-		}
-		
-		&.purple {
-			background-color: #90c;
-		}
-		
-		&.pink {
-			background-color: #c09;
-		}
+	&.brown {
+		background-color: #930;
+	}
+	
+	&.red {
+		background-color: #900;
+	}
+	
+	&.orange {
+		background-color: #f60;
+	}
+	
+	&.yellow {
+		background-color: #cc0;
+	}
+	
+	&.green {
+		background-color: #090;
+	}
+	
+	&.blue {
+		background-color: #06c;
+	}
+	
+	&.purple {
+		background-color: #90c;
+	}
+	
+	&.pink {
+		background-color: #c09;
 	}
 }
 

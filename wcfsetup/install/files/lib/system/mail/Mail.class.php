@@ -14,6 +14,7 @@ use wcf\util\StringUtil;
  * @category	Community Framework
  */
 class Mail {
+	// todo: comment properties
 	protected $header = '';
 	protected $boundary = '';
 	protected $contentType = "text/plain";
@@ -24,7 +25,17 @@ class Mail {
 	protected $cc = array();
 	protected $bcc = array();
 	protected $attachments = array();
+	
+	/**
+	 * priority of the mail
+	 * @var	integer
+	 */
 	protected $priority = 3;
+	
+	/**
+	 * mail body
+	 * @var	string
+	 */
 	protected $body = '';
 	
 	public static $crlf = "\n";
@@ -77,7 +88,7 @@ class Mail {
 			.'MIME-Version: 1.0'.self::$crlf
 			.'From: '.$this->getFrom().self::$crlf
 			.($this->getCCString() != '' ? 'CC:'.$this->getCCString().self::$crlf : '')
-			.($this->getBCCString() != '' ? 'BCC:'.$this->getBCCString().self::$crlf : '');					
+			.($this->getBCCString() != '' ? 'BCC:'.$this->getBCCString().self::$crlf : '');
 			
 		if (count($this->getAttachments())) {
 			$this->header .= 'Content-Transfer-Encoding: 8bit'.self::$crlf;
@@ -95,7 +106,7 @@ class Mail {
 	/**
 	 * Creates and returned the recipients list (TO, CC, BCC).
 	 * 
-	 * @param 	boolean		$withTo
+	 * @param	boolean		$withTo
 	 * @return	string
 	 */
 	public function getRecipients($withTo = false) {
@@ -103,7 +114,7 @@ class Mail {
 		if ($withTo && $this->getToString() != '') $recipients .= 'TO:'.$this->getToString().self::$crlf;
 		if ($this->getCCString() != '') $recipients .= 'CC:'.$this->getCCString().self::$crlf;
 		if ($this->getBCCString() != '') $recipients .= 'BCC:'.$this->getBCCString().self::$crlf;
-		return $recipients;	
+		return $recipients;
 	}
 	
 	/**
@@ -117,21 +128,21 @@ class Mail {
 
 		if (count($this->getAttachments())) {
 			// add message
-			$this->body 	.= '--'.$this->getBoundary().self::$crlf;
-			$this->body 	.= 'Content-Type: '.$this->getContentType().'; charset="UTF-8"'.self::$crlf;
-			$this->body 	.= 'Content-Transfer-Encoding: 8bit'.self::$crlf;
-			//$this->body 	.= self::$crlf.self::$crlf;
-			$this->body 	.= self::$crlf;
+			$this->body .= '--'.$this->getBoundary().self::$crlf;
+			$this->body .= 'Content-Type: '.$this->getContentType().'; charset="UTF-8"'.self::$crlf;
+			$this->body .= 'Content-Transfer-Encoding: 8bit'.self::$crlf;
+			//$this->body .= self::$crlf.self::$crlf;
+			$this->body .= self::$crlf;
 			
 			// wrap lines after 70 characters
-			$this->body	.= wordwrap($this->getMessage(), 70); 
-			$this->body 	.= self::$crlf.self::$crlf;
-			$this->body 	.= '--'.$this->getBoundary().self::$crlf;
+			$this->body .= wordwrap($this->getMessage(), 70); 
+			$this->body .= self::$crlf.self::$crlf;
+			$this->body .= '--'.$this->getBoundary().self::$crlf;
 			
 			// add attachments
 			foreach ($this->getAttachments() as $attachment) {
-				$fileName 	= $attachment['name'];
-				$path 		= $attachment['path'];
+				$fileName = $attachment['name'];
+				$path = $attachment['path'];
 				
 				// download file
 				if (FileUtil::isURL($path)) {
@@ -142,7 +153,7 @@ class Mail {
 				
 				// get file contents
 				$data = @file_get_contents($path);
-				$data = chunk_split(base64_encode($data), 70, self::$crlf);	
+				$data = chunk_split(base64_encode($data), 70, self::$crlf);
 				
 				$this->body .= 'Content-Type: application/octetstream; name="'.$fileName.'"'.self::$crlf;
 				$this->body .= 'Content-Transfer-Encoding: base64'.self::$crlf;
@@ -156,18 +167,18 @@ class Mail {
 			$this->body .= self::$crlf.'--'.$this->getBoundary().'--';
 		}
 		else {
-			//$this->body 	.= self::$crlf;
-			$this->body	.= $this->getMessage();
+			//$this->body .= self::$crlf;
+			$this->body .= $this->getMessage();
 		}
 		return $this->body;
 	}
 	
 	/**
-	 * Builds a formatted address: "$name" <$email>
+	 * Builds a formatted address: "$name" <$email>.
 	 * 
 	 * @param	string		$name
 	 * @param	string		$email
-	 * @param 	boolean		$encodeName
+	 * @param	boolean		$encodeName
 	 * @return	string
 	 */
 	public static function buildAddress($name, $email, $encodeName = true) {
@@ -305,7 +316,7 @@ class Mail {
 	}
 	
 	/**
-	 * Returns the carbon copy recipients of this mail as String.
+	 * Returns the carbon copy recipients of this mail as string.
 	 * 
 	 * @return	string
 	 */
@@ -339,7 +350,7 @@ class Mail {
 	}
 	
 	/**
-	 * Returns the blind carbon copy recipients of this mail as String.
+	 * Returns the blind carbon copy recipients of this mail as string.
 	 * 
 	 * @return	string
 	 */
@@ -375,16 +386,16 @@ class Mail {
 	}
 	
 	/**
-	 * Sets the Priority of the Mail; Default = 3
+	 * Sets the priority of the mail.
 	 * 
-	 * @param	integer 	$priority
+	 * @param	integer		$priority
 	 */
 	public function setPriority($priority) {
 		$this->priority = $priority;
 	}
 	
 	/**
-	 * Returns the Priority of the Mail
+	 * Returns the priority of the mail
 	 * 
 	 * @return	integer
 	 */
@@ -393,14 +404,14 @@ class Mail {
 	}
 	
 	/**
-	 * Creates a boundary for mutlipart/mixed Mail 
+	 * Creates a boundary for multipart/mixed mail.
 	 */
 	protected function setBoundary() {
 		$this->boundary = "==Multipart_Boundary_x".StringUtil::getRandomID()."x";
 	}
 	
 	/**
-	 * Returns the created Boundary
+	 * Returns the created boundary.
 	 * 
 	 * @return	string
 	 */
@@ -409,7 +420,7 @@ class Mail {
 	}
 	
 	/**
-	 * Returns the Content Type
+	 * Returns the content type.
 	 * 
 	 * @return	string
 	 */
@@ -420,14 +431,14 @@ class Mail {
 	/**
 	 * Sets the content type.
 	 * 
-	 * @param	string 		$contentType
+	 * @param	string		$contentType
 	 */
 	public function setContentType($contentType) {
 		$this->contentType = $contentType;
 	}
 	
 	/**
-	 * Sets additional headers
+	 * Sets an additional header.
 	 * 
 	 * @param	string		$header
 	 */

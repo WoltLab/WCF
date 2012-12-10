@@ -1,8 +1,7 @@
 <?php
 namespace wcf\system\image\adapter;
-use wcf\util\StringUtil;
-
 use wcf\system\exception\SystemException;
+use wcf\util\StringUtil;
 
 /**
  * Image adapter for bundled GD imaging library.
@@ -24,13 +23,13 @@ class GDImageAdapter implements IImageAdapter {
 	/**
 	 * image height
 	 * @var	integer
-	 */	
+	 */
 	protected $height = 0;
 	
 	/**
 	 * loaded image
 	 * @var	resource
-	 */	
+	 */
 	protected $image = null;
 	
 	/**
@@ -42,7 +41,7 @@ class GDImageAdapter implements IImageAdapter {
 	/**
 	 * image width
 	 * @var	integer
-	 */	
+	 */
 	protected $width = 0;
 	
 	/**
@@ -66,7 +65,7 @@ class GDImageAdapter implements IImageAdapter {
 	
 	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::loadFile()
-	 */	
+	 */
 	public function loadFile($file) {
 		list($this->width, $this->height, $this->type) = getImageSize($file);
 		
@@ -101,7 +100,7 @@ class GDImageAdapter implements IImageAdapter {
 	
 	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::createThumbnail()
-	 */	
+	 */
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
 		$width = $height = $x = $y = 0;
 		$sourceWidth = $this->width;
@@ -191,7 +190,7 @@ class GDImageAdapter implements IImageAdapter {
 	
 	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::setColor()
-	 */	
+	 */
 	public function setColor($red, $green, $blue) {
 		$this->color = imageColorAllocate($this->image, $red, $green, $blue);
 	}
@@ -231,7 +230,7 @@ class GDImageAdapter implements IImageAdapter {
 	
 	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::getWidth()
-	 */	
+	 */
 	public function getWidth() {
 		return $this->width;
 	}
@@ -252,7 +251,7 @@ class GDImageAdapter implements IImageAdapter {
 	
 	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::isSupported()
-	 */	
+	 */
 	public static function isSupported() {
 		return true;
 	}

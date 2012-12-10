@@ -4,10 +4,10 @@ use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateScriptingCompiler;
 
 /**
- * The 'prepend' compiler function calls the prepend function on the template object.
+ * Template compiler plugin which prepends a value to a template variable.
  * 
  * Usage:
- *	{prepend var=name value="foo"}
+ * 	{prepend var=name value="foo"}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH

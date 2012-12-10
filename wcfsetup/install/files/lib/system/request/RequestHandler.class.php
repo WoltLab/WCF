@@ -62,7 +62,7 @@ class RequestHandler extends SingletonFactory {
 	/**
 	 * Builds a new request.
 	 * 
-	 * @param 	string		$application
+	 * @param	string		$application
 	 */
 	protected function buildRequest($application) {
 		try {

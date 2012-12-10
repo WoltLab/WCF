@@ -19,8 +19,8 @@ class LinkHandler extends SingletonFactory {
 	 * Returns a relative link.
 	 * 
 	 * @param	string		$controller
-	 * @param 	array		$parameters
-	 * @param 	string		$url
+	 * @param	array		$parameters
+	 * @param	string		$url
 	 * @return	string
 	 */
 	public function getLink($controller = null, array $parameters = array(), $url = '') {
@@ -51,7 +51,7 @@ class LinkHandler extends SingletonFactory {
 		if ($controller !== null) {
 			// handle object
 			if (isset($parameters['object'])) {
-				if (!($parameters['object'] instanceof \wcf\system\request\IRouteController) && $parameters['object'] instanceof \wcf\data\DatabaseObjectDecorator && $parameters['object']->getDecoratedObject() instanceof \wcf\system\request\IRouteController)  {
+				if (!($parameters['object'] instanceof \wcf\system\request\IRouteController) && $parameters['object'] instanceof \wcf\data\DatabaseObjectDecorator && $parameters['object']->getDecoratedObject() instanceof \wcf\system\request\IRouteController) {
 					$parameters['object'] = $parameters['object']->getDecoratedObject();
 				}
 				
@@ -81,9 +81,11 @@ class LinkHandler extends SingletonFactory {
 			$url .= (strpos($url, '?') === false) ? SID_ARG_1ST : SID_ARG_2ND_NOT_ENCODED;
 		}
 		
-		// handle application groups
-		$applicationGroup = ApplicationHandler::getInstance()->getActiveGroup();
-		if ($applicationGroup !== null) {
+		// handle applications
+		if (!PACKAGE_ID) {
+			$url = RouteHandler::getHost() . RouteHandler::getPath(array('acp')) . (RequestHandler::getInstance()->isACPRequest() ? 'acp/' : '') . $url;
+		}
+		else {
 			// try to resolve abbreviation
 			$application = null;
 			if ($abbreviation != 'wcf') {
@@ -96,9 +98,6 @@ class LinkHandler extends SingletonFactory {
 			}
 			
 			$url = $application->getPageURL() . (RequestHandler::getInstance()->isACPRequest() ? 'acp/' : '') . $url;
-		}
-		else {
-			$url = ApplicationHandler::getInstance()->getActiveApplication()->getPageURL() . (RequestHandler::getInstance()->isACPRequest() ? 'acp/' : '') . $url;
 		}
 		
 		// append previously removed anchor

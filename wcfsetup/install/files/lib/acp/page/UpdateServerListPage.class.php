@@ -32,7 +32,7 @@ class UpdateServerListPage extends SortablePage {
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
-	 */	
+	 */
 	public $objectListClassName = 'wcf\data\package\update\server\PackageUpdateServerList';
 	
 	/**
@@ -52,7 +52,7 @@ class UpdateServerListPage extends SortablePage {
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::readObjects()
-	 */	
+	 */
 	public function readObjects() {
 		$this->sqlOrderBy = ($this->sortField != 'packages' ? 'package_update_server.' : '') . $this->sortField.' '.$this->sortOrder;
 		

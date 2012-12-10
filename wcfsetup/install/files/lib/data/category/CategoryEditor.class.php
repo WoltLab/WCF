@@ -8,7 +8,7 @@ use wcf\system\WCF;
 
 /**
  * Provides functions to edit categories.
- *
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -58,8 +58,8 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		
 		if ($parentCategoryID != $this->parentCategoryID) {
 			$sql = "UPDATE	".static::getDatabaseTableName()."
-				SET 	showOrder = showOrder - 1
-				WHERE 	showOrder > ?
+				SET	showOrder = showOrder - 1
+				WHERE	showOrder > ?
 					AND parentCategoryID = ?
 					AND objectTypeID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -74,8 +74,8 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		else {
 			if ($showOrder < $this->showOrder) {
 				$sql = "UPDATE	".static::getDatabaseTableName()."
-					SET 	showOrder = showOrder + 1
-					WHERE 	showOrder >= ?
+					SET	showOrder = showOrder + 1
+					WHERE	showOrder >= ?
 						AND showOrder < ?
 						AND objectTypeID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
@@ -192,8 +192,8 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		
 		if ($maxShowOrder && $showOrder <= $maxShowOrder) {
 			$sql = "UPDATE	".static::getDatabaseTableName()."
-				SET 	showOrder = showOrder + 1
-				WHERE 	objectTypeID = ?
+				SET	showOrder = showOrder + 1
+				WHERE	objectTypeID = ?
 					AND showOrder >= ?
 					AND parentCategoryID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -213,6 +213,6 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * @see	wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.category-'.PACKAGE_ID.'.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.category.php');
 	}
 }

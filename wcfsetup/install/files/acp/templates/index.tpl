@@ -60,7 +60,7 @@
 	<fieldset id="credits" class="container containerPadding hidden tabMenuContent">
 		<dl>
 			<dt>{lang}wcf.acp.index.credits.developedBy{/lang}</dt>
-			<dd><a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}" class="externalURL">WoltLab&reg; GmbH</a></dd>
+			<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}" class="externalURL">WoltLab&reg; GmbH</a></dd>
 		</dl>
 		
 		<dl>
@@ -100,7 +100,7 @@
 					<li>Tim D&uuml;sterhus</li>
 					<li>Matthias Schmidt</li>
 					<li>
-						<a href="{@RELATIVE_WCF_DIR}acp/dereferrer.php?url={"https://github.com/WoltLab/WCF/contributors"|rawurlencode}" class="externalURL">
+						<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://github.com/WoltLab/WCF/contributors"|rawurlencode}" class="externalURL">
 							{lang}wcf.acp.index.credits.contributor.more{/lang}
 						</a>
 					</li>

@@ -7,9 +7,8 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * RadiobuttonsOptionType is an implementation of IOptionType for 'input type="radio"'
- * tags.
- *
+ * Option type implementation for radio buttons.
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

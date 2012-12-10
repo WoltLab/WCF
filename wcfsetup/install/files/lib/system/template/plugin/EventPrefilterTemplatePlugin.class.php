@@ -4,10 +4,10 @@ use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\WCF;
 
 /**
- * The 'event' prefilter inserts template listener's code before compilation.
+ * Template profiler plugin which inserts template listener's code before compilation.
  * 
  * Usage:
- *	{event name='foo'}
+ * 	{event name='foo'}
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

@@ -18,21 +18,16 @@ class EventListenerCacheBuilder implements ICacheBuilder {
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
-		list($cache, $packageID) = explode('-', $cacheResource['cache']); 
 		$data = array(
 			'actions' => array('user' => array(), 'admin' => array()),
 			'inheritedActions' => array('user' => array(), 'admin' => array())
 		);
 		
 		// get all listeners and filter options with low priority
-		$sql = "SELECT		event_listener.*
-			FROM		wcf".WCF_N."_event_listener event_listener
-			LEFT JOIN	wcf".WCF_N."_package_dependency package_dependency
-			ON		(package_dependency.dependency = event_listener.packageID)
-			WHERE 		package_dependency.packageID = ?
-			ORDER BY	package_dependency.priority ASC";
+		$sql = "SELECT	event_listener.*
+			FROM	wcf".WCF_N."_event_listener event_listener";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
+		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			// distinguish between inherited actions and non-inherited actions
 			if (!$row['inherit']) {
@@ -40,7 +35,7 @@ class EventListenerCacheBuilder implements ICacheBuilder {
 			}
 			else {
 				if (!isset($data['inheritedActions'][$row['environment']][$row['eventClassName']])) $data['inheritedActions'][$row['environment']][$row['eventClassName']] = array();
-				$data['inheritedActions'][$row['environment']][$row['eventClassName']][$row['eventName']][] = $row;	
+				$data['inheritedActions'][$row['environment']][$row['eventClassName']][$row['eventName']][] = $row;
 			}
 		}
 		
@@ -63,7 +58,7 @@ class EventListenerCacheBuilder implements ICacheBuilder {
 	}
 	
 	/**
-	 * Sorts the event listeners alphabetically.
+	 * Sorts the event listeners by nice value.
 	 */
 	public static function sortListeners($listenerA, $listenerB) {
 		if ($listenerA['niceValue'] < $listenerB['niceValue']) {

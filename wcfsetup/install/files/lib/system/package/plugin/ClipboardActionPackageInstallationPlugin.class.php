@@ -3,7 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\system\WCF;
 
 /**
- * This PIP installs, updates or deletes clipboard actions.
+ * Installs, updates and deletes clipboard actions.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

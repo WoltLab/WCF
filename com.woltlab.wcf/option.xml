@@ -132,7 +132,7 @@
 				<optiontype>boolean</optiontype>
 				<!-- TODO: change to '0' (production mode) later -->
 				<defaultvalue>1</defaultvalue>
-			</option>	
+			</option>
 			
 			<option name="module_api_access">
 				<categoryname>module.system</categoryname>
@@ -182,7 +182,7 @@
 			<option name="offline">
 				<categoryname>general.offline</categoryname>
 				<optiontype>boolean</optiontype>
-			 	<enableoptions><![CDATA[offline_message,offline_message_allow_html]]></enableoptions>
+				<enableoptions><![CDATA[offline_message,offline_message_allow_html]]></enableoptions>
 			</option>
 			<option name="offline_message">
 				<categoryname>general.offline</categoryname>

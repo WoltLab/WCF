@@ -18,18 +18,18 @@ interface ISearchableUserOption {
 	 * Returns the html code for the search form element of this option.
 	 * 
 	 * @param	wcf\data\option\Option	$option
-	 * @param	string		$value
-	 * @return	string		html
+	 * @param	string			$value
+	 * @return	string			html
 	 */
 	public function getSearchFormElement(Option $option, $value);
 	
 	/**
 	 * Returns a condition for search sql query.
 	 * 
-	 * @param	wcf\system\database\condition\PreparedStatementConditionBuilder	$conditions
-	 * @param	wcf\data\option\Option	$option
-	 * @param	string		$value
-	 * @param	boolean
+	 * @param	wcf\system\database\condition\PreparedStatementConditionBuilder		$conditions
+	 * @param	wcf\data\option\Option							$option
+	 * @param	string									$value
+	 * @return	boolean
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value);
 }

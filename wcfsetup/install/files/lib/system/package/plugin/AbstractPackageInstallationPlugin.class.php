@@ -5,7 +5,7 @@ use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 
 /**
- * Default implementation of some PackageInstallationPlugin functions.
+ * Abstract implementation of a package installation plugin.
  * 
  * @author	Benjamin Kunz
  * @copyright	2001-2012 WoltLab GmbH
@@ -43,7 +43,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 		$this->installation = $installation;
 		$this->instruction = $instruction;
 		
-		// call construct event
+		// call 'construct' event
 		EventHandler::getInstance()->fireAction($this, 'construct');
 	}
 	
@@ -51,7 +51,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
-		// call install event
+		// call 'install' event
 		EventHandler::getInstance()->fireAction($this, 'install');
 	}
 	
@@ -59,9 +59,9 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::update()
 	 */
 	public function update() {
-		// call update event
+		// call 'update' event
 		EventHandler::getInstance()->fireAction($this, 'update');
-				
+		
 		return $this->install();
 	}
 	
@@ -69,7 +69,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::hasUninstall()
 	 */
 	public function hasUninstall() {
-		// call hasUninstall event
+		// call 'hasUninstall' event
 		EventHandler::getInstance()->fireAction($this, 'hasUninstall');
 		
 		$sql = "SELECT	COUNT(*) AS count
@@ -85,7 +85,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
-		// call uninstall event
+		// call 'uninstall' event
 		EventHandler::getInstance()->fireAction($this, 'uninstall');
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."

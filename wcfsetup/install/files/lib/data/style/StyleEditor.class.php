@@ -48,7 +48,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$variables = $parameters['variables'];
 			unset($parameters['variables']);
 		}
-
+		
 		// update style data
 		parent::update($parameters);
 		
@@ -70,19 +70,13 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		parent::delete();
 		
 		// delete variables
-		$sql = "DELETE FROM	wcf".WCF_N."_style_variable
-			WHERE		styleID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->styleID));
-		
-		// delete style to package
-		$sql = "DELETE FROM	wcf".WCF_N."_style_to_package
+		$sql = "DELETE FROM	wcf".WCF_N."_style_variable_value
 			WHERE		styleID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->styleID));
 		
 		// delete style files
-		$files = @glob(WCF_DIR.'style/style-*-'.$this->styleID.'*.css');
+		$files = @glob(WCF_DIR.'style/style-'.$this->styleID.'*.css');
 		if (is_array($files)) {
 			foreach ($files as $file) {
 				@unlink($file);
@@ -91,7 +85,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// delete preview image
 		if ($this->image) {
-			@unlink(WCF_DIR.$this->image);
+			@unlink(WCF_DIR.'images/'.$this->image);
 		}
 	}
 	
@@ -173,7 +167,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						switch ($element->tagName) {
 							case 'date':
 								DateUtil::validateDate($element->nodeValue);
-		
+								
 								$data['date'] = $element->nodeValue;
 							break;
 							
@@ -189,7 +183,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 								if (!Package::isValidVersion($element->nodeValue)) {
 									throw new SystemException("style version '".$element->nodeValue."' is invalid");
 								}
-		
+								
 								$data['version'] = $element->nodeValue;
 							break;
 							
@@ -562,7 +556,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	/**
 	 * Exports this style.
 	 * 
-	 * @param	boolean 	$templates
+	 * @param	boolean		$templates
 	 * @param	boolean		$images
 	 * @param	boolean		$icons
 	 * @param	string		$packageName
@@ -639,20 +633,16 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			
 			// append templates to tar
 			// get templates
-			$sql = "SELECT		template.*, package.package, package.packageDir,
-						parent_package.package AS parentPackage, parent_package.packageDir AS parentPackageDir
+			$sql = "SELECT		template.*, package.package, package.packageDir
 				FROM		wcf".WCF_N."_template template
 				LEFT JOIN	wcf".WCF_N."_package package
 				ON		(package.packageID = template.packageID)
-				LEFT JOIN	wcf".WCF_N."_package parent_package
-				ON		(parent_package.packageID = package.parentPackageID)
 				WHERE		template.templateGroupID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($this->templateGroupID));
 			while ($row = $statement->fetchArray()) {
 				$packageDir = 'com.woltlab.wcf';
-				if (!empty($row['parentPackageDir'])) $packageDir = $row['parentPackage'];
-				else if (!empty($row['packageDir'])) $packageDir = $row['package'];
+				if (!empty($row['packageDir'])) $packageDir = $row['package'];
 				
 				$filename = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $row['packageDir'] . 'templates/' . $templateGroup->templateGroupFolderName)) . $row['templateName'] . '.tpl';
 				$templatesTar->add($filename, $packageDir, dirname($filename));
@@ -844,7 +834,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		}
 		
 		// save style
-		$style = parent::create($parameters);		
+		$style = parent::create($parameters);
 		$styleEditor = new StyleEditor($style);
 		
 		// save variables
@@ -864,7 +854,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * @see	wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.styles.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.style.php');
 	}
 	
 	/**

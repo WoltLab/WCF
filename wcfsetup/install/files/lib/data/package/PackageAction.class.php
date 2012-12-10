@@ -1,5 +1,7 @@
 <?php
 namespace wcf\data\package;
+use wcf\system\exception\PermissionDeniedException;
+
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -36,7 +38,13 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	protected $permissionsUpdate = array('admin.system.package.canUpdatePackage');
 	
 	/**
-	 * Validates page parameter.
+	 * package editor object
+	 * @var	wcf\data\package\PackageEditor
+	 */
+	public $packageEditor = null;
+	
+	/**
+	 * Validates the 'getPluginList' action.
 	 */
 	public function validateGetPluginList() {
 		if (!isset($this->parameters['activePage']) || !intval($this->parameters['activePage'])) {
@@ -61,6 +69,32 @@ class PackageAction extends AbstractDatabaseObjectAction {
 		return array(
 			'activePage' => $this->parameters['activePage'],
 			'template' => WCF::getTPL()->fetch('packageListPlugins')
+		);
+	}
+	
+	/**
+	 * Validates parameters to return the confirm message for package uninstallation.
+	 */
+	public function validateGetConfirmMessage() {
+		WCF::getSession()->checkPermissions($this->permissionsUpdate);
+		
+		$this->packageEditor = $this->getSingleObject();
+		if (!$this->packageEditor->canUninstall()) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	/**
+	 * Returns the confirm message for package uninstallation.
+	 * 
+	 * @return	array<string>
+	 */
+	public function getConfirmMessage() {
+		return array(
+			'confirmMessage' => WCF::getLanguage()->getDynamicVariable('wcf.acp.package.uninstallation.confirmDependentPackages', array(
+				'package' => $this->packageEditor->getDecoratedObject(),
+				'showDependentPackages' => true
+			))
 		);
 	}
 }

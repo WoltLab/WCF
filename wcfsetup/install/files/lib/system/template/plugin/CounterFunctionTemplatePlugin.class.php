@@ -3,11 +3,11 @@ namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateEngine;
 
 /**
- * The 'counter' template function is used to print out a count.
+ * Template function plugin which is used to print out a count.
  * 
  * Usage:
- *	{counter assign=i}
- *	{counter start=10 skip=2}
+ * 	{counter assign=i}
+ * 	{counter start=10 skip=2}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

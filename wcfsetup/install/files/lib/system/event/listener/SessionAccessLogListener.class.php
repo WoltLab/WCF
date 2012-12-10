@@ -5,6 +5,7 @@ use wcf\data\acp\session\log\ACPSessionLog;
 use wcf\data\acp\session\log\ACPSessionLogEditor;
 use wcf\system\event\IEventListener;
 use wcf\system\WCF;
+use wcf\util\UserUtil;
 
 /**
  * Creates the session access log.
@@ -36,7 +37,7 @@ class SessionAccessLogListener implements IEventListener {
 			if (!empty($row['sessionLogID'])) {
 				$sessionLogID = $row['sessionLogID'];
 				
-				$sessionLogEditor = new ACPSessionLogEditor(new ACPSessionLog($sessionLogID));
+				$sessionLogEditor = new ACPSessionLogEditor(new ACPSessionLog(null, array('sessionLogID' => $sessionLogID)));
 				$sessionLogEditor->update(array(
 					'lastActivityTime' => TIME_NOW
 				));
@@ -46,7 +47,7 @@ class SessionAccessLogListener implements IEventListener {
 				$sessionLog = ACPSessionLogEditor::create(array(
 					'sessionID' => WCF::getSession()->sessionID,
 					'userID' => WCF::getUser()->userID,
-					'ipAddress' => WCF::getSession()->ipAddress,
+					'ipAddress' => UserUtil::getIpAddress(),
 					'hostname' => @gethostbyaddr(WCF::getSession()->ipAddress),
 					'userAgent' => WCF::getSession()->userAgent,
 					'time' => TIME_NOW,
@@ -66,8 +67,7 @@ class SessionAccessLogListener implements IEventListener {
 			// save access
 			ACPSessionAccessLogEditor::create(array(
 				'sessionLogID' => $sessionLogID,
-				'packageID' => PACKAGE_ID,
-				'ipAddress' => WCF::getSession()->ipAddress,
+				'ipAddress' => UserUtil::getIpAddress(),
 				'time' => TIME_NOW,
 				'requestURI' => $requestURI,
 				'requestMethod' => WCF::getSession()->requestMethod,

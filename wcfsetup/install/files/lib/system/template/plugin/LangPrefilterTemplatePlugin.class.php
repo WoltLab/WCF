@@ -4,13 +4,14 @@ use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\WCF;
 
 /**
- * The 'lang' prefilter compiles static language variables.
+ * Template prefiler plugin which compiles static language variables.
+ * 
  * Dynamic language variables will catched by the 'lang' compiler function.
  * It is recommended to use static language variables.
  * 
  * Usage:
- *	{lang}wcf.foo{/lang}
- *	{lang}app.foo.bar{/lang}
+ * 	{lang}wcf.foo{/lang}
+ * 	{lang}app.foo.bar{/lang}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH

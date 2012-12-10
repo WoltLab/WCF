@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
 
 /**
  * Shows the master password init form.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -26,7 +26,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 	
 	/**
 	 * @see	wcf\page\IPage::readParameters()
-	 */	
+	 */
 	public function readParameters() {
 		parent::readParameters();
 		

@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\language;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -54,7 +53,7 @@ class LanguageAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * Sets language as default
-	 */	
+	 */
 	public function setAsDefault() {
 		$language = array_shift($this->objects);
 		$language->setAsDefault();

@@ -15,7 +15,7 @@ final class OptionUtil {
 	/**
 	 * Returns a list of the available options.
 	 * 
-	 * @param 	string		$selectOptions
+	 * @param	string		$selectOptions
 	 * @return	array
 	 */
 	public static function parseSelectOptions($selectOptions) {
@@ -38,7 +38,7 @@ final class OptionUtil {
 	/**
 	 * Returns a list of the enable options.
 	 * 
-	 * @param 	string		$enableOptions
+	 * @param	string		$enableOptions
 	 * @return	array
 	 */
 	public static function parseMultipleEnableOptions($enableOptions) {

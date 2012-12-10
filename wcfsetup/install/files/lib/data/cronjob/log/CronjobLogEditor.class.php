@@ -20,19 +20,12 @@ class CronjobLogEditor extends DatabaseObjectEditor {
 	protected static $baseClass = 'wcf\data\cronjob\log\CronjobLog';
 	
 	/**
-	 * Deletes the cronjob log.
+	 * Deletes all cronjob logs.
 	 */
-	public static function clearLogs($packageID = PACKAGE_ID) {
+	public static function clearLogs() {
 		// delete logs
-		$sql = "DELETE FROM	wcf".WCF_N."_cronjob_log
-			WHERE		cronjobID IN (
-						SELECT	cronjobID
-						FROM	wcf".WCF_N."_cronjob cronjob,
-							wcf".WCF_N."_package_dependency package_dependency
-						WHERE 	cronjob.packageID = package_dependency.dependency
-							AND package_dependency.packageID = ?
-					)";
+		$sql = "DELETE FROM	wcf".WCF_N."_cronjob_log";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
+		$statement->execute();
 	}
 }

@@ -50,7 +50,7 @@ class UserEmailAddressExportForm extends ACPForm {
 	 * string used to wrap email adresses
 	 * @var	string
 	 */
-	public $textSeparator = '"'; 
+	public $textSeparator = '"';
 	
 	/**
 	 * users whose email addresses are exported

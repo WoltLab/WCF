@@ -4,19 +4,19 @@ use wcf\system\template\TemplateScriptingCompiler;
 use wcf\util\StringUtil;
 
 /**
- * The 'hascontent' prefilter inserts ability to insert code dynamically upon the
- * contents of 'content'.
+ * Template prefiler plugin which allows inserting code dynamically upon the contents
+ * of 'content'.
  * 
  * Usage:
- *	{hascontent}
- *	<ul>
- *		{content}
- *			{if $foo}<li>bar</li>{/if}
- *		{/content}
- *	</ul>
- *	{hascontentelse}
- *		<p>baz</p>
- *	{/hascontent}
+ * 	{hascontent}
+ * 	<ul>
+ * 		{content}
+ * 			{if $foo}<li>bar</li>{/if}
+ * 		{/content}
+ * 	</ul>
+ * 	{hascontentelse}
+ * 		<p>baz</p>
+ * 	{/hascontent}
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH

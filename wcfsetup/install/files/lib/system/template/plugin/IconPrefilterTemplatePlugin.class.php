@@ -3,10 +3,10 @@ namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateScriptingCompiler;
 
 /**
- * The 'icon' prefilter compiles static icon paths.
+ * Template prefiler plugin which compiles static icon paths.
  * 
  * Usage:
- * {icon}iconName{/icon}
+ *	{icon}iconName{/icon}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

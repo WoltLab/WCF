@@ -19,11 +19,11 @@
 {/if}
 
 {if $userID|isset && $__wcf->user->userID == $userID}
-	<p class="warning">{lang}wcf.acp.user.edit.warning.selfEdit{/lang}</p>	
+	<p class="warning">{lang}wcf.acp.user.edit.warning.selfEdit{/lang}</p>
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.form.{@$action}.success{/lang}</p>	
+	<p class="success">{lang}wcf.global.form.{@$action}.success{/lang}</p>
 {/if}
 
 <div class="contentNavigation">
@@ -76,7 +76,7 @@
 				
 				<dl{if $errorType.email|isset} class="formError"{/if}>
 					<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
-					<dd>	
+					<dd>
 						<input type="email" id="email" name="email" value="{$email}" required="required" class="medium" />
 						{if $errorType.email|isset}
 							<small class="innerError">
@@ -207,8 +207,8 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="action" value="{@$action}" />
- 		{if $userID|isset}<input type="hidden" name="id" value="{@$userID}" />{/if}
- 	</div>
+		{if $userID|isset}<input type="hidden" name="id" value="{@$userID}" />{/if}
+	</div>
 </form>
 
 {include file='footer'}

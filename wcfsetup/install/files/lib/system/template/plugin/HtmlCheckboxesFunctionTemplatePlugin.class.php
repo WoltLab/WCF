@@ -5,13 +5,13 @@ use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
 
 /**
- * The 'htmlCheckboxes' template function generates a list of html checkboxes.
+ * Template function plugin which generates a list of html checkboxes.
  * 
  * Usage:
- *	{htmlCheckboxes name="x" options=$array}
- *	{htmlCheckboxes name="x" options=$array selected=$foo}
- *	{htmlCheckboxes name="x" output=$outputArray}
- *	{htmlCheckboxes name="x" output=$outputArray values=$valueArray}
+ * 	{htmlCheckboxes name="x" options=$array}
+ * 	{htmlCheckboxes name="x" options=$array selected=$foo}
+ * 	{htmlCheckboxes name="x" output=$outputArray}
+ * 	{htmlCheckboxes name="x" output=$outputArray values=$valueArray}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -58,7 +58,7 @@ class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		
 		// get selected values
 		if (isset($tagArgs['selected'])) {
-			if (!is_array($tagArgs['selected'])) $tagArgs['selected'] = array($tagArgs['selected']);	
+			if (!is_array($tagArgs['selected'])) $tagArgs['selected'] = array($tagArgs['selected']);
 		}
 		else {
 			$tagArgs['selected'] = array();
@@ -71,7 +71,7 @@ class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		$html = '';
 		foreach ($tagArgs['options'] as $key => $value) {
 			if (!empty($html)) $html .= $tagArgs['separator'];
-			$html .= '<label><input type="checkbox" name="'.$this->encodeHTML($tagArgs['name']).'[]" value="'.$this->encodeHTML($key).'"'.(in_array($key, $tagArgs['selected']) ? ' checked="checked"' : '').' /> '.$this->encodeHTML($value).'</label>';			
+			$html .= '<label><input type="checkbox" name="'.$this->encodeHTML($tagArgs['name']).'[]" value="'.$this->encodeHTML($key).'"'.(in_array($key, $tagArgs['selected']) ? ' checked="checked"' : '').' /> '.$this->encodeHTML($value).'</label>';
 		}
 		
 		return $html;

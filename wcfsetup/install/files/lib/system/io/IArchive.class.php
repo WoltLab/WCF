@@ -15,7 +15,7 @@ interface IArchive {
 	/** 
 	 * Returns the table of contents (TOC) list for this archive.
 	 * 
-	 * @return	array 		list of content
+	 * @return	array		list of content
 	 */
 	public function getContentList();
 	

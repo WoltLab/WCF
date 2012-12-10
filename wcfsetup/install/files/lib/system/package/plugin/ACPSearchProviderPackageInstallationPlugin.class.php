@@ -4,7 +4,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
 
 /**
- * This PIP installs, updates or deletes ACP search providers.
+ * Installs, updates and deletes ACP search providers.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -76,6 +76,6 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
 	 */
 	protected function cleanup() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.acpSearchProvider-*.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.acpSearchProvider.php');
 	}
 }

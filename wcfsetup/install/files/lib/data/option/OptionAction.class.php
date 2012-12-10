@@ -37,14 +37,14 @@ class OptionAction extends AbstractDatabaseObjectAction {
 	 * Validates permissions and parameters.
 	 */
 	public function validateImport() {
-		parent::validateCreate(); 
+		parent::validateCreate();
 	}
 	
 	/**
 	 * Validates permissions and parameters.
 	 */
 	public function validateUpdateAll() {
-		parent::validateCreate(); 
+		parent::validateCreate();
 	}
 	
 	/**

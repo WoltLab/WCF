@@ -7,7 +7,7 @@ use wcf\util\ClassUtil;
 
 /**
  * EventHandler executes all registered actions for a specific event.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -51,13 +51,12 @@ class EventHandler extends SingletonFactory {
 	 */
 	protected function loadActions() {
 		$environment = (class_exists('wcf\system\WCFACP', false) ? 'admin' : 'user');
-		$cacheName = 'eventListener-'.PACKAGE_ID;
 		CacheHandler::getInstance()->addResource(
-			$cacheName,
-			WCF_DIR.'cache/cache.'.$cacheName.'.php',
+			'eventListener',
+			WCF_DIR.'cache/cache.eventListener.php',
 			'wcf\system\cache\builder\EventListenerCacheBuilder'
 		);
-		$cache = CacheHandler::getInstance()->get($cacheName);
+		$cache = CacheHandler::getInstance()->get('eventListener');
 		
 		if (isset($cache['actions'][$environment])) {
 			$this->actions = $cache['actions'][$environment];

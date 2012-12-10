@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
 use wcf\util\UserUtil;
 
 /**
- * SessionHandler provides an abstract implementation for session handling.
+ * Handles sessions.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2012 WoltLab GmbH
@@ -348,7 +348,6 @@ class SessionHandler extends SingletonFactory {
 		// save session
 		$this->session = call_user_func(array($this->sessionEditorClassName, 'create'), array(
 			'sessionID' => $sessionID,
-			'packageID' => PACKAGE_ID,
 			'userID' => $this->user->userID,
 			'ipAddress' => UserUtil::getIpAddress(),
 			'userAgent' => UserUtil::getUserAgent(),
@@ -409,10 +408,10 @@ class SessionHandler extends SingletonFactory {
 		$groupsFileName = StringUtil::getHash($groups);
 		
 		// register cache resource
-		$cacheName = 'groups-'.PACKAGE_ID.'-'.$groups;
+		$cacheName = 'userGroup-'.$groups;
 		CacheHandler::getInstance()->addResource(
 			$cacheName,
-			WCF_DIR.'cache/cache.userGroups-'.PACKAGE_ID.'-'.$groupsFileName.'.php',
+			WCF_DIR.'cache/cache.userGroup-'.$groupsFileName.'.php',
 			'wcf\system\cache\builder\UserGroupPermissionCacheBuilder'
 		);
 		
@@ -513,12 +512,11 @@ class SessionHandler extends SingletonFactory {
 		
 		// set up data
 		$data = array(
-			'ipAddress' => $this->ipAddress,
+			'ipAddress' => UserUtil::getIpAddress(),
 			'userAgent' => $this->userAgent,
 			'requestURI' => $this->requestURI,
 			'requestMethod' => $this->requestMethod,
-			'lastActivityTime' => TIME_NOW,
-			'packageID' => PACKAGE_ID
+			'lastActivityTime' => TIME_NOW
 		);
 		if (PACKAGE_ID && RequestHandler::getInstance()->getActiveRequest() && RequestHandler::getInstance()->getActiveRequest()->getRequestObject() instanceof \wcf\page\ITrackablePage && RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->isTracked()) {
 			$data['controller'] = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->getController();

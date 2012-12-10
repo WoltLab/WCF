@@ -4,8 +4,8 @@ use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**
- * Contains business logic related to handling of package update servers.
- *
+ * Represents a package update server.
+ * 
  * @author	Siegfried Schweizer
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

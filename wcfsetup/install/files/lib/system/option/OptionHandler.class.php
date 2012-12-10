@@ -369,14 +369,17 @@ class OptionHandler implements IOptionHandler {
 	 * @param	boolean		$loadActiveOptions
 	 */
 	protected function readCache($loadActiveOptions) {
-		$cacheName = $this->cacheName . '-' . PACKAGE_ID;
-		CacheHandler::getInstance()->addResource($cacheName, WCF_DIR.'cache/cache.'.$cacheName.'.php', $this->cacheClass);
+		CacheHandler::getInstance()->addResource(
+			$this->cacheName,
+			WCF_DIR.'cache/cache.'.$this->cacheName.'.php',
+			$this->cacheClass
+		);
 		
 		// get cache contents
-		$this->cachedCategories = CacheHandler::getInstance()->get($cacheName, 'categories');
-		$this->cachedOptions = CacheHandler::getInstance()->get($cacheName, 'options');
-		$this->cachedCategoryStructure = CacheHandler::getInstance()->get($cacheName, 'categoryStructure');
-		$this->cachedOptionToCategories = CacheHandler::getInstance()->get($cacheName, 'optionToCategories');
+		$this->cachedCategories = CacheHandler::getInstance()->get($this->cacheName, 'categories');
+		$this->cachedOptions = CacheHandler::getInstance()->get($this->cacheName, 'options');
+		$this->cachedCategoryStructure = CacheHandler::getInstance()->get($this->cacheName, 'categoryStructure');
+		$this->cachedOptionToCategories = CacheHandler::getInstance()->get($this->cacheName, 'optionToCategories');
 		
 		if ($loadActiveOptions) {
 			// get active options

@@ -2,7 +2,6 @@
 namespace wcf\system\language;
 use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
-use wcf\data\DatabaseObject;
 use wcf\system\cache\CacheHandler;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\SingletonFactory;
@@ -128,10 +127,24 @@ class LanguageFactory extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns language category by id.
+	 * 
+	 * @param	integer		$languageCategoryID
+	 * @return	wcf\data\language\category\LanguageCategory
+	 */
+	public function getCategoryByID($languageCategoryID) {
+		if (isset($this->cache['categoryIDs'][$languageCategoryID])) {
+			return $this->cache['categories'][$this->cache['categoryIDs'][$languageCategoryID]];
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Returns a list of available language categories.
 	 * 
 	 * @return	array<wcf\data\language\category\LanguageCategory>
-	 */	
+	 */
 	public function getCategories() {
 		return $this->cache['categories'];
 	}
@@ -142,7 +155,7 @@ class LanguageFactory extends SingletonFactory {
 	protected function findPreferredLanguage() {
 		// get available language codes
 		$availableLanguageCodes = array();
-		foreach ($this->getLanguages(PACKAGE_ID) as $language) {
+		foreach ($this->getLanguages() as $language) {
 			$availableLanguageCodes[] = $language->languageCode;
 		}
 		
@@ -203,12 +216,12 @@ class LanguageFactory extends SingletonFactory {
 	protected function loadCache() {
 		if (defined('WCF_N')) {
 			CacheHandler::getInstance()->addResource(
-				'languages',
-				WCF_DIR.'cache/cache.languages.php',
+				'language',
+				WCF_DIR.'cache/cache.language.php',
 				'wcf\system\cache\builder\LanguageCacheBuilder'
 			);
 			
-			$this->cache = CacheHandler::getInstance()->get('languages');
+			$this->cache = CacheHandler::getInstance()->get('language');
 		}
 	}
 	
@@ -216,7 +229,7 @@ class LanguageFactory extends SingletonFactory {
 	 * Clears languages cache.
 	 */
 	public function clearCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.languages.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.language.php');
 	}
 	
 	/**
@@ -240,41 +253,27 @@ class LanguageFactory extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns all available languages for package with the given id.
+	 * Returns all available languages.
 	 * 
-	 * @param 	integer		$packageID
 	 * @return	array<wcf\data\language\Language>
 	 */
-	public function getLanguages($packageID = PACKAGE_ID) {
-		// get list of all available languages
-		$availableLanguages = array();
-		if (isset($this->cache['packages'][$packageID])) {
-			foreach ($this->cache['packages'][$packageID] as $availableLanguageID) {
-				$availableLanguages[$availableLanguageID] = $this->getLanguage($availableLanguageID);
-			}
-		}
-		
-		DatabaseObject::sort($availableLanguages, 'languageName');
-		return $availableLanguages;
+	public function getLanguages() {
+		return $this->cache['languages'];
 	}
 	
 	/**
 	 * Returns all available content languages for given package.
 	 * 
-	 * @param 	integer		$packageID
 	 * @return	array<wcf\data\language\Language>
 	 */
-	public function getContentLanguages($packageID = PACKAGE_ID) {
+	public function getContentLanguages() {
 		$availableLanguages = array();
-		if (isset($this->cache['packages'][$packageID])) {
-			foreach ($this->cache['packages'][$packageID] as $availableLanguageID) {
-				if ($this->cache['languages'][$availableLanguageID]->hasContent) {
-					$availableLanguages[$availableLanguageID] = $this->getLanguage($availableLanguageID);
-				}
+		foreach ($this->getLanguages() as $languageID => $language) {
+			if ($language->hasContent) {
+				$availableLanguages[$languageID] = $language;
 			}
 		}
 		
-		DatabaseObject::sort($availableLanguages, 'languageName');
 		return $availableLanguages;
 	}
 	
@@ -287,14 +286,14 @@ class LanguageFactory extends SingletonFactory {
 		// remove old default language
 		$sql = "UPDATE	wcf".WCF_N."_language
 			SET	isDefault = 0
-			WHERE 	isDefault = 1";
+			WHERE	isDefault = 1";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		
 		// make this language to default
 		$sql = "UPDATE	wcf".WCF_N."_language
 			SET	isDefault = 1
-			WHERE 	languageID = ?";
+			WHERE	languageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($languageID));
 		

@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\sitemap\SitemapList;
-use wcf\system\package\PackageDependencyHandler;
 
 /**
  * Caches sitemap structure.
@@ -19,7 +18,6 @@ class SitemapCacheBuilder implements ICacheBuilder {
 	 */
 	public function getData(array $cacheResource) {
 		$sitemapList = new SitemapList();
-		$sitemapList->getConditionBuilder()->add("sitemap.packageID IN (?)", array(PackageDependencyHandler::getInstance()->getDependencies()));
 		$sitemapList->sqlLimit = 0;
 		$sitemapList->sqlOrderBy = "sitemap.showOrder ASC";
 		$sitemapList->readObjects();

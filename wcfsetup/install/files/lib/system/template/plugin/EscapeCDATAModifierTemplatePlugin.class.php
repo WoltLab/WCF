@@ -4,11 +4,11 @@ use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
 
 /**
- * The 'escapeCDATA' modifier escapes the closing CDATA-Tag.
+ * Template modifier plugin which escapes the closing CDATA tag.
  * 
  * Usage:
- *	{$string|escapeCDATA}
- *	{"ABC]]>XYZ"|escapeCDATA}
+ * 	{$string|escapeCDATA}
+ * 	{"ABC]]>XYZ"|escapeCDATA}
  * 
  * @author	Tim Düsterhus
  * @copyright	2001-2012 WoltLab GmbH

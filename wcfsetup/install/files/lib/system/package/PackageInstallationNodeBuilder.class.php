@@ -9,7 +9,7 @@ use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
- * PackageInstallationNodeBuilder creates a logical node-based installation tree.
+ * Creates a logical node-based installation tree.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2011 WoltLab GmbH
@@ -363,18 +363,6 @@ class PackageInstallationNodeBuilder {
 		$this->node = $this->getToken();
 					
 		// calculate the number of instances of this package
-		$instanceNo = 1;
-		$sql = "SELECT	COUNT(*) AS count, MAX(instanceNo) AS instanceNo
-			FROM	wcf".WCF_N."_package
-			WHERE	package = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$this->installation->getArchive()->getPackageInfo('name')
-		));
-		$row = $statement->fetchArray();
-		
-		if ($row['count'] > 0) $instanceNo = $row['instanceNo'] + 1;
-		
 		$sql = "INSERT INTO	wcf".WCF_N."_package_installation_node
 					(queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
 			VALUES		(?, ?, ?, ?, ?, ?, ?)";
@@ -389,7 +377,6 @@ class PackageInstallationNodeBuilder {
 			serialize(array(
 				'package' => $this->installation->getArchive()->getPackageInfo('name'),
 				'packageName' => $this->installation->getArchive()->getLocalizedPackageInfo('packageName'),
-				'instanceNo' => $instanceNo,
 				'packageDescription' => $this->installation->getArchive()->getLocalizedPackageInfo('packageDescription'),
 				'packageVersion' => $this->installation->getArchive()->getPackageInfo('version'),
 				'packageDate' => $this->installation->getArchive()->getPackageInfo('date'),

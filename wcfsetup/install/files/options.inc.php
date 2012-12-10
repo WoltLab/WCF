@@ -3,9 +3,11 @@
  * default options.inc.php for package installation of package com.woltlab.wcf.
  *
  * @author	Marcel Werk 
- * @copyright	2001-2007 WoltLab GmbH
+ * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
+define('PACKAGE_ID', 0);
+
 define('COOKIE_PREFIX', 'wcf_');
 define('COOKIE_PATH', '');
 define('COOKIE_DOMAIN', '');
@@ -27,5 +29,5 @@ define('MODULE_MASTER_PASSWORD', 0);
 define('TIMEZONE', 'Europe/Berlin');
 
 define('ENABLE_DEBUG_MODE', 1);
-define('ENABLE_BENCHMARK', 1);
+define('ENABLE_BENCHMARK', 0);
 define('MODULE_API_ACCESS', 0);

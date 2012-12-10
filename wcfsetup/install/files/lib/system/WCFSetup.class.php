@@ -33,11 +33,11 @@ define('HTTP_GZIP_LEVEL', 0);
 define('CACHE_SOURCE_TYPE', 'disk');
 define('MODULE_MASTER_PASSWORD', 1);
 define('ENABLE_DEBUG_MODE', 1);
-define('ENABLE_BENCHMARK', 1);
+define('ENABLE_BENCHMARK', 0);
 
 /**
- * WCFSetup executes the installation of the basic wcf systems.
- *
+ * Executes the installation of the basic WCF systems.
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -448,9 +448,8 @@ class WCFSetup extends WCF {
 	 * Unzips the files of the wcfsetup tar archive.
 	 */
 	protected function unzipFiles() {
-		// WCF seems to be installed, skip installation of
-		// files, database and admin account
-		// and go directly to the installation of packages
+		// WCF seems to be installed, skip installation of files, database
+		// and admin account and go directly to the installation of packages
 		if (@is_file(self::$wcfDir.'lib/system/WCF.class.php')) {
 			$this->gotoNextStep('installPackages');
 			exit;
@@ -618,7 +617,7 @@ class WCFSetup extends WCF {
 					$file->write("\$dbClass = '".StringUtil::replace("'", "\\'", $dbClass)."';\n");
 					$file->write("if (!defined('WCF_N')) define('WCF_N', $dbNumber);\n?>");
 					$file->close();
-				
+					
 					// go to next step
 					$this->gotoNextStep('createDB');
 					exit;
@@ -820,31 +819,8 @@ class WCFSetup extends WCF {
 		$language = LanguageFactory::getInstance()->getLanguageByCode(in_array(self::$selectedLanguageCode, self::$selectedLanguages) ? self::$selectedLanguageCode : self::$selectedLanguages[0]);
 		LanguageFactory::getInstance()->makeDefault($language->languageID);
 		
-		// assign all languages to package id 0
-		$sql = "SELECT	languageID
-			FROM	wcf".WCF_N."_language";
-		$statement = self::getDB()->prepareStatement($sql);
-		$statement->execute();
-		$languages = array();
-		while ($row = $statement->fetchArray()) {
-			$languages[] = $row['languageID'];
-		}
-		
-		if (!empty($languages)) {
-			$sql = "INSERT INTO	wcf".WCF_N."_language_to_package
-						(languageID)
-				VALUES		(?)";
-			$statement = self::getDB()->prepareStatement($sql);
-			
-			foreach ($languages as $languageID) {
-				$statement->execute(array(
-					$languageID
-				));
-			}
-		}
-		
 		// rebuild language cache
-		CacheHandler::getInstance()->clearResource('languages');
+		CacheHandler::getInstance()->clearResource('language');
 		
 		// go to next step
 		$this->gotoNextStep('createUser');
@@ -862,11 +838,11 @@ class WCFSetup extends WCF {
 		
 		if (isset($_POST['send']) || self::$developerMode) {
 			if (isset($_POST['send'])) {
-				if (isset($_POST['username'])) 		$username = StringUtil::trim($_POST['username']);
-				if (isset($_POST['email'])) 		$email = StringUtil::trim($_POST['email']);
-				if (isset($_POST['confirmEmail'])) 	$confirmEmail = StringUtil::trim($_POST['confirmEmail']);
-				if (isset($_POST['password'])) 		$password = $_POST['password'];
-				if (isset($_POST['confirmPassword'])) 	$confirmPassword = $_POST['confirmPassword'];
+				if (isset($_POST['username'])) $username = StringUtil::trim($_POST['username']);
+				if (isset($_POST['email'])) $email = StringUtil::trim($_POST['email']);
+				if (isset($_POST['confirmEmail'])) $confirmEmail = StringUtil::trim($_POST['confirmEmail']);
+				if (isset($_POST['password'])) $password = $_POST['password'];
+				if (isset($_POST['confirmPassword'])) $confirmPassword = $_POST['confirmPassword'];
 			}
 			else {
 				$username = $password = $confirmPassword = 'root';
@@ -1105,7 +1081,7 @@ class WCFSetup extends WCF {
 		SessionHandler::getInstance()->update();
 		
 		$installPhpDeleted = @unlink('./install.php');
-		$testPhpDeleted = @unlink('./test.php');
+		@unlink('./test.php');
 		$wcfSetupTarDeleted = @unlink('./WCFSetup.tar.gz');
 		
 		// print page

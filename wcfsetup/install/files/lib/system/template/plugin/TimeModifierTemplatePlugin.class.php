@@ -5,12 +5,12 @@ use wcf\system\WCF;
 use wcf\util\DateUtil;
 
 /**
- * The 'time' modifier formats a unix timestamp.
+ * Template modifier plugin which formats a unix timestamp.
  * Default date format contains year, month, day, hour and minute.
  * 
  * Usage:
- *	{$timestamp|time}
- *	{"132845333"|time}
+ * 	{$timestamp|time}
+ * 	{"132845333"|time}
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

@@ -49,15 +49,19 @@ class ObjectTypeCache extends SingletonFactory {
 	 */
 	protected function init() {
 		// get definition cache
-		CacheHandler::getInstance()->addResource('objectType-'.PACKAGE_ID, WCF_DIR.'cache/cache.objectType-'.PACKAGE_ID.'.php', 'wcf\system\cache\builder\ObjectTypeCacheBuilder');
-		$this->definitionsByCategory = CacheHandler::getInstance()->get('objectType-'.PACKAGE_ID, 'categories');
-		$this->definitions = CacheHandler::getInstance()->get('objectType-'.PACKAGE_ID, 'definitions');
+		CacheHandler::getInstance()->addResource(
+			'objectType',
+			WCF_DIR.'cache/cache.objectType.php',
+			'wcf\system\cache\builder\ObjectTypeCacheBuilder'
+		);
+		$this->definitionsByCategory = CacheHandler::getInstance()->get('objectType', 'categories');
+		$this->definitions = CacheHandler::getInstance()->get('objectType', 'definitions');
 		foreach ($this->definitions as $definition) {
 			$this->definitionsByName[$definition->definitionName] = $definition;
 		}
 		
 		// get object type cache
-		$this->objectTypes = CacheHandler::getInstance()->get('objectType-'.PACKAGE_ID, 'objectTypes');
+		$this->objectTypes = CacheHandler::getInstance()->get('objectType', 'objectTypes');
 		foreach ($this->objectTypes as $objectType) {
 			$definition = $this->getDefinition($objectType->definitionID);
 			if (!isset($this->groupedObjectTypes[$definition->definitionName])) {
@@ -69,7 +73,8 @@ class ObjectTypeCache extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets an object type definition by id
+	 * Returns the object type definition with the given id or null if no such
+	 * object type definition exists.
 	 * 
 	 * @param	integer		$definitionID
 	 * @return	wcf\data\object\type\definition\ObjectTypeDefinition
@@ -83,7 +88,8 @@ class ObjectTypeCache extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets an object type definition by name
+	 * Returns the object type definition with the given name or null if no
+	 * such object type definition exists.
 	 * 
 	 * @param	string		$definitionName
 	 * @return	wcf\data\object\type\definition\ObjectTypeDefinition
@@ -97,7 +103,8 @@ class ObjectTypeCache extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns a list of definitions by category name or 'null' if category name is invalid.
+	 * Returns a list of definitions by category name or 'null' if the given
+	 * category name is invalid.
 	 * 
 	 * @param	string		$categoryName
 	 * @return	array<wcf\data\object\type\definition\ObjectTypeDefinition>
@@ -116,7 +123,8 @@ class ObjectTypeCache extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets an object type by id
+	 * Returns the object type with the given name or null if no such object
+	 * type exists.
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @return	wcf\data\object\type\ObjectType
@@ -130,7 +138,7 @@ class ObjectTypeCache extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns a list of object types.
+	 * Returns the list of object type with the given definition name.
 	 * 
 	 * @param	string		$definitionName
 	 * @return	array<wcf\data\object\type\ObjectType>
@@ -144,7 +152,8 @@ class ObjectTypeCache extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns an object type.
+	 * Returns the object type with the given definition name and given name
+	 * or null of no such object type exists.
 	 * 
 	 * @param	string		$definitionName
 	 * @param	string		$objectTypeName
@@ -162,7 +171,7 @@ class ObjectTypeCache extends SingletonFactory {
 	 * Resets and reloads the object type cache.
 	 */
 	public function resetCache() {
-		CacheHandler::getInstance()->clearResource('objectType-'.PACKAGE_ID);
+		CacheHandler::getInstance()->clearResource('objectType');
 		$this->init();
 	}
 }

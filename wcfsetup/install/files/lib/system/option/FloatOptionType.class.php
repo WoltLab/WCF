@@ -4,7 +4,7 @@ use wcf\data\option\Option;
 use wcf\system\WCF;
 
 /**
- * FloatOptionType is an implementation of IOptionType for float fields.
+ * Option type implementation for float values.
  * 
  * @author	Tobias Friebel
  * @copyright	2001-2011 Tobias Friebel

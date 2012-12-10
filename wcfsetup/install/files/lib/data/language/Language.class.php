@@ -66,7 +66,7 @@ class Language extends DatabaseObject {
 	public function getFixedLanguageCode() {
 		return LanguageFactory::fixLanguageCode($this->languageCode);
 	}
-		
+	
 	/**
 	 * Returns the page direction of this language.
 	 * 
@@ -87,15 +87,15 @@ class Language extends DatabaseObject {
 		if (!isset($this->items[$item])) {
 			// load category file
 			$explodedItem = explode('.', $item);
-			if (count($explodedItem) < 2) {
+			if (count($explodedItem) < 3) {
 				return $item;
 			}
 			
-			if (count($explodedItem) < 4 || !$this->loadCategory($explodedItem[0].'.'.$explodedItem[1].'.'.$explodedItem[2].'.'.$explodedItem[3])) {
-				if (count($explodedItem) < 3 || !$this->loadCategory($explodedItem[0].'.'.$explodedItem[1].'.'.$explodedItem[2])) {
-					$this->loadCategory($explodedItem[0].'.'.$explodedItem[1]);
-				}
+			// attempt to load the most specific category
+			if (isset($explodedItem[3])) {
+				$this->loadCategory($explodedItem[0].'.'.$explodedItem[1].'.'.$explodedItem[2]);
 			}
+			$this->loadCategory($explodedItem[0].'.'.$explodedItem[1]);
 		}
 		
 		// return language variable
@@ -110,11 +110,11 @@ class Language extends DatabaseObject {
 	
 	/**
 	 * Executes template scripting in a language variable.
-	 *
-	 * @param	string 		$item
-	 * @param	array 		$variables
+	 * 
+	 * @param	string		$item
+	 * @param	array		$variables
 	 * @param	boolean		$optional
-	 * @return	string 		result
+	 * @return	string		result
 	 */
 	public function getDynamicVariable($item, array $variables = array(), $optional = false) {
 		$staticItem = $this->get($item, $optional);
@@ -139,7 +139,7 @@ class Language extends DatabaseObject {
 		}
 		
 		// search language file
-		$filename = WCF_DIR.'language/'.$this->packageID.'_'.$this->languageID.'_'.$category.'.php';
+		$filename = WCF_DIR.'language/'.$this->languageID.'_'.$category.'.php';
 		if (!@file_exists($filename)) { 
 			if ($this->editor === null) {
 				$this->editor = new LanguageEditor($this);
@@ -147,7 +147,11 @@ class Language extends DatabaseObject {
 			
 			// rebuild language file
 			$languageCategory = LanguageFactory::getInstance()->getCategory($category);
-			$this->editor->updateCategory(array($languageCategory->languageCategoryID), array($this->packageID));
+			if ($languageCategory === null) {
+				return false;
+			}
+			
+			$this->editor->updateCategory($languageCategory);
 		}
 		
 		// include language file

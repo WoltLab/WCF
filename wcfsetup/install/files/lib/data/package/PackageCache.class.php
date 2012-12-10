@@ -16,7 +16,7 @@ use wcf\system\SingletonFactory;
 class PackageCache extends SingletonFactory {
 	/**
 	 * list of cached packages
-	 * @var	array<wcf\data\package\Package>
+	 * @var	array<array>
 	 */
 	protected $packages = array();
 	
@@ -29,7 +29,7 @@ class PackageCache extends SingletonFactory {
 			WCF_DIR.'cache/cache.package.php',
 			'wcf\system\cache\builder\PackageCacheBuilder'
 		);
-		$this->packages = CacheHandler::getInstance()->get('package');	
+		$this->packages = CacheHandler::getInstance()->get('package');
 	}
 	
 	/**
@@ -39,7 +39,23 @@ class PackageCache extends SingletonFactory {
 	 * @return	wcf\data\package\Package
 	 */
 	public function getPackage($packageID) {
-		if (isset($this->packages[$packageID])) return $this->packages[$packageID];
+		if (isset($this->packages['packages'][$packageID])) {
+			return $this->packages['packages'][$packageID];
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Returns the id of a specific package or 'null' if not found.
+	 *
+	 * @param	string		$package
+	 * @return	string
+	 */
+	public function getPackageID($package) {
+		if (isset($this->packages['packageIDs'][$package])) {
+			return $this->packages['packageIDs'][$package];
+		}
 		
 		return null;
 	}

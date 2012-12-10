@@ -1,9 +1,8 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\user\group\option\UserGroupOptionAction;
-
 use wcf\data\user\group\option\category\UserGroupOptionCategoryList;
 use wcf\data\user\group\option\UserGroupOption;
+use wcf\data\user\group\option\UserGroupOptionAction;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -11,7 +10,6 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
 
 /**
@@ -108,6 +106,7 @@ class UserGroupOptionForm extends ACPForm {
 		}
 		
 		// verify options and permissions for current option
+		throw new SystemException("UserGroupOptionForm::readParameters()");
 		$dependencies = PackageDependencyHandler::getInstance()->getDependencies();
 		if ($this->verifyPermissions($this->userGroupOption) && in_array($this->userGroupOption->packageID, $dependencies)) {
 			// read all categories
@@ -314,7 +313,7 @@ class UserGroupOptionForm extends ACPForm {
 	
 	/**
 	 * Validates object options and permissions.
-	 *
+	 * 
 	 * @param	wcf\data\DatabaseObject		$object
 	 * @return	boolean
 	 */

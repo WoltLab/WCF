@@ -39,17 +39,6 @@
 				<dt>{lang}wcf.acp.package.version{/lang}</dt>
 				<dd>{$package->packageVersion}</dd>
 			</dl>
-			{if $package->instanceNo > 1}
-				<dl>
-					<dt>{lang}wcf.acp.package.instanceNo{/lang}</dt>
-					<dd>{#$package->instanceNo}</dd>
-				</dl>
-			{elseif $package->package == 'com.woltlab.wcf' && WCF_N != 1}
-				<dl>
-					<dt>{lang}wcf.acp.package.instanceNo{/lang}</dt>
-					<dd>{#WCF_N}</dd>
-				</dl>
-			{/if}
 			<dl>
 				<dt>{lang}wcf.acp.package.packageDate{/lang}</dt>
 				<dd>{@$package->packageDate|date}</dd>
@@ -71,7 +60,7 @@
 			{if $package->parentPackageID}
 				<dl>
 					<dt>{lang}wcf.acp.package.parentPackage{/lang}</dt>
-					<dd><a href="{link controller='PackageView' id=$package->parentPackageID}{/link}">{$package->getParentPackage()->getName()}</a></dd>
+					<dd><a href="{link controller='Package' id=$package->parentPackageID}{/link}">{$package->getParentPackage()->getName()}</a></dd>
 				</dl>
 			{/if}
 			<dl>
@@ -134,8 +123,8 @@
 											{else}
 												<img src="{@$__wcf->getPath()}icon/update.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="icon16 disabled" />
 											{/if}
-											{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $requiredPackage->package != 'com.woltlab.wcf' && $requiredPackage->packageID != PACKAGE_ID}
-												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 jsTooltip jsUninstallButton" data-objectID="{@$requiredPackage->packageID}" data-confirm-message="{lang package=$requiredPackage}wcf.acp.package.uninstallation.confirm{/lang}" />
+											{if $requiredPackage->canUninstall()}
+												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 jsTooltip jsUninstallButton" data-objectID="{@$requiredPackage->packageID}" data-confirm-message="{lang package=$requiredPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" />
 											{else}
 												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 disabled" />
 											{/if}
@@ -150,7 +139,7 @@
 												<img src="{@$__wcf->getPath()}icon/package.svg" alt="" title="{lang}wcf.acp.package.type.other{/lang}" class="icon16 jsTooltip" />
 											{/if}
 										</td>
-										<td class="columnTitle" title="{$requiredPackage->packageDescription|language}"><p><a href="{link controller='PackageView' id=$requiredPackage->packageID}{/link}">{$requiredPackage->packageName|language}{if $requiredPackage->instanceNo > 1 && $requiredPackage->instanceName == ''} (#{#$requiredPackage->instanceNo}){/if}</a></p></td>
+										<td class="columnTitle" title="{$requiredPackage->packageDescription|language}"><p><a href="{link controller='Package' id=$requiredPackage->packageID}{/link}">{$requiredPackage}</a></p></td>
 										<td class="columnText">{if $requiredPackage->authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$requiredPackage->authorURL|rawurlencode}" class="wcf-externalURL">{$requiredPackage->author}</a>{else}{$requiredPackage->author}</p>{/if}</td>
 										<td class="columnText"><p>{$requiredPackage->packageVersion}</p></td>
 										<td class="columnDate"><p>{@$requiredPackage->packageDate|date}</p></td>
@@ -194,8 +183,8 @@
 											{else}
 												<img src="{@$__wcf->getPath()}icon/update.svg" alt="" title="{lang}wcf.acp.package.button.update{/lang}" class="icon16 disabled" />
 											{/if}
-											{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $dependentPackage->package != 'com.woltlab.wcf' && $dependentPackage->packageID != PACKAGE_ID}
-												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 jsTooltip jsUninstallButton" data-objectID="{@$dependentPackage->packageID}" data-confirm-message="{lang package=$dependentPackage}wcf.acp.package.uninstallation.confirm{/lang}" />
+											{if $dependentPackage->canUninstall()}
+												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 jsTooltip jsUninstallButton" data-objectID="{@$dependentPackage->packageID}" data-confirm-message="{lang package=$dependentPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" />
 											{else}
 												<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 disabled" />
 											{/if}
@@ -210,7 +199,7 @@
 												<img src="{@$__wcf->getPath()}icon/package.svg" alt="" title="{lang}wcf.acp.package.type.other{/lang}" class="jsTooltip" />
 											{/if}
 										</td>
-										<td class="columnTitle" title="{$dependentPackage->packageDescription|language}"><p><a href="{link controller='PackageView' id=$dependentPackage->packageID}{/link}">{$dependentPackage->packageName|language}{if $dependentPackage->instanceNo > 1 && $dependentPackage->instanceName == ''} (#{#$dependentPackage->instanceNo}){/if}</a></p></td>
+										<td class="columnTitle" title="{$dependentPackage->packageDescription|language}"><p><a href="{link controller='Package' id=$dependentPackage->packageID}{/link}">{$dependentPackage}</a></p></td>
 										<td class="columnText">{if $dependentPackage->authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$dependentPackage->authorURL|rawurlencode}" class="wcf-externalURL">{$dependentPackage->author}</a>{else}{$dependentPackage->author}</p>{/if}</td>
 										<td class="columnText"><p>{$dependentPackage->packageVersion}</p></td>
 										<td class="columnDate"><p>{@$dependentPackage->packageDate|date}</p></td>
