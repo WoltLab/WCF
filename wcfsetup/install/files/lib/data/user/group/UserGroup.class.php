@@ -94,20 +94,17 @@ class UserGroup extends DatabaseObject {
 	 * Returns groups by given type. Returns all groups if no types given.
 	 * 
 	 * @param	array<integer>		$types
+	 * @param	array<integer>		$invalidGroupTypes
 	 * @return	array<wcf\data\user\group\UserGroup>
 	 */
-	public static function getGroupsByType(array $types = array()) {
+	public static function getGroupsByType(array $types = array(), array $invalidGroupTypes = array()) {
 		self::getCache();
 		
-		// get all groups
-		if (empty($types)) return self::$cache['groups'];
-		
-		// get groups by type
-		$groupIDs = self::getGroupIDsByType($types);
 		$groups = array();
-		
-		foreach ($groupIDs as $groupID) {
-			$groups[$groupID] = self::$cache['groups'][$groupID];
+		foreach (self::$cache['groups'] as $group) {
+			if ((empty($types) || in_array($group->groupType, $types)) && !in_array($group->groupType, $invalidGroupTypes)) {
+				$groups[$group->groupID] = $group;
+			}
 		}
 		
 		return $groups;
@@ -186,17 +183,10 @@ class UserGroup extends DatabaseObject {
 	 * 
 	 * @param	array<integer>		$groupTypes
 	 * @param	array<integer>		$invalidGroupTypes
-	 * @return	array<UserGroup>
+	 * @return	array<wcf\data\user\group\UserGroup>
 	 */
 	public static function getAccessibleGroups(array $groupTypes = array(), array $invalidGroupTypes = array()) {
-		$groups = self::getGroupsByType($groupTypes);
-		
-		if (!empty($invalidGroupTypes)) {
-			$invalidGroups = self::getGroupsByType($invalidGroupTypes);
-			foreach ($invalidGroups as $groupID => $group) {
-				unset($groups[$groupID]);
-			}
-		}
+		$groups = self::getGroupsByType($groupTypes, $invalidGroupTypes);
 		
 		foreach ($groups as $key => $value) {
 			if (!self::isAccessibleGroup(array($key))) {
