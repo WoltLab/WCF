@@ -103,7 +103,7 @@ class CronjobScheduler extends SingletonFactory {
 	 */
 	protected function loadCronjobs() {
 		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_cronjob
+			FROM	wcf".WCF_N."_cronjob cronjob
 			WHERE	(cronjob.nextExec <= ? OR cronjob.afterNextExec <= ?)
 				AND cronjob.active = ?
 				AND cronjob.failCount < ?
