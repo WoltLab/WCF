@@ -1704,17 +1704,28 @@ WCF.Action.Delete = Class.extend({
 	 * @param	jQuery		containerList
 	 * @param	jQuery		badgeList
 	 */
-	init: function(className, containerList, badgeList) {
+	init: function(className, containerList, badgeList, callbacks) {
 		if (!containerList.length) return;
 		this.containerList = containerList;
 		this.className = className;
 		this.badgeList = badgeList;
 		
 		// initialize proxy
-		var options = {
-			success: $.proxy(this._success, this)
-		};
-		this.proxy = new WCF.Action.Proxy(options);
+		if (!callbacks) {
+			this.proxyValue = {
+				success: $.proxy(this._success, this)
+			};
+		}
+		else {
+			this.proxyValue = $.extend(true, {
+				after: null,
+				failure: null,
+				init: null,
+				success: null
+			}, callbacks);
+		}
+		
+		this.proxy = new WCF.Action.Proxy(this.proxyValue);
 		
 		// bind event listener
 		this.containerList.each($.proxy(function(index, container) {
