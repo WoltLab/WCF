@@ -149,6 +149,22 @@ class ClipboardHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns object type by object type name.
+	 * 
+	 * @param	string		$objectType
+	 * @return	integer
+	 */
+	public function getObjectTypeByName($objectType) {
+		foreach ($this->cache['objectTypes'] as $objectTypeID => $objectTypeObj) {
+			if ($objectTypeObj->objectType == $objectType) {
+				return $objectTypeID;
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Loads a list of marked items grouped by type name.
 	 * 
 	 * @param	integer		$objectTypeID
@@ -212,6 +228,25 @@ class ClipboardHandler extends SingletonFactory {
 			$objectList->readObjects();
 			
 			$this->markedItems[$objectType] = $objectList->getObjects();
+			
+			// validate object ids against loaded items (check for zombie object ids)
+			$indexName = $objectList->getDatabaseTableIndexName();
+			foreach ($this->markedItems[$objectType] as $object) {
+				$index = array_search($object->$indexName, $objectData['objectIDs']);
+				unset($objectData['objectIDs'][$index]);
+			}
+			
+			if (!empty($objectData['objectIDs'])) {
+				$conditions = new PreparedStatementConditionBuilder();
+				$conditions->add("objectTypeID = ?", array($this->getObjectTypeByName($objectType)));
+				$conditions->add("userID = ?", array(WCF::getUser()->userID));
+				$conditions->add("objectID IN (?)", array($objectData['objectIDs']));
+				
+				$sql = "DELETE FROM	wcf".WCF_N."_clipboard_item
+					".$conditions;
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute($conditions->getParameters());
+			}
 		}
 	}
 	
@@ -287,7 +322,7 @@ class ClipboardHandler extends SingletonFactory {
 		foreach ($actions as $actionData) {
 			// get accepted objects
 			$typeName = $actionData['object']->getTypeName();
-			if (!isset($this->markedItems[$typeName])) continue;
+			if (!isset($this->markedItems[$typeName]) || empty($this->markedItems[$typeName])) continue;
 			
 			$editorData[$typeName] = array(
 				'label' => $actionData['object']->getEditorLabel($this->markedItems[$typeName]),

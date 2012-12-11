@@ -1,7 +1,7 @@
 <?php
 namespace wcf\action;
 use wcf\system\clipboard\ClipboardHandler;
-use wcf\system\exception\AJAXException;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\JSON;
@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * @subpackage	action
  * @category	Community Framework
  */
-class ClipboardAction extends AbstractSecureAction {
+class ClipboardAction extends AJAXInvokeAction {
 	/**
 	 * clipboard action
 	 * @var	string
@@ -55,27 +55,10 @@ class ClipboardAction extends AbstractSecureAction {
 	protected $objectTypeID = 0;
 	
 	/**
-	 * @see	wcf\action\IAction::__run()
-	 */
-	public function __run() {
-		try {
-			parent::__run();
-		}
-		catch (\Exception $e) {
-			if ($e instanceof AJAXException) {
-				throw $e;
-			}
-			else {
-				throw new AJAXException($e->getMessage());
-			}
-		}
-	}
-	
-	/**
 	 * @see	wcf\action\Action::readParameters()
 	 */
 	public function readParameters() {
-		parent::readParameters();
+		AbstractSecureAction::readParameters();
 		
 		if (isset($_POST['action'])) $this->action = StringUtil::trim($_POST['action']);
 		if (isset($_POST['containerData']) && is_array($_POST['containerData'])) $this->containerData = $_POST['containerData'];
@@ -88,7 +71,7 @@ class ClipboardAction extends AbstractSecureAction {
 	 * @see	wcf\action\Action::execute()
 	 */
 	public function execute() {
-		parent::execute();
+		AbstractSecureAction::execute();
 		
 		// execute clipboard action
 		$this->executeAction();
@@ -154,20 +137,20 @@ class ClipboardAction extends AbstractSecureAction {
 	 */
 	protected function validate() {
 		if (empty($this->objectIDs)) {
-			throw new AJAXException("Invalid object ids given.");
+			throw new UserInputException('objectIDs');
 		}
 		
 		if (empty($this->pageClassName)) {
-			throw new AJAXException("page not given");
+			throw new UserInputException('pageClassName');
 		}
 		
 		if ($this->action != 'mark' && $this->action != 'unmark') {
-			throw new AJAXException("Clipboard action '".$this->action."' is invalid.");
+			throw new UserInputException('action');
 		}
 		
 		$this->objectTypeID = (!empty($this->type)) ? ClipboardHandler::getInstance()->getObjectTypeID($this->type) : null;
 		if ($this->objectTypeID === null) {
-			throw new AJAXException("object type '".$this->type."' is invalid.");
+			throw new UserInputException('type');
 		}
 	}
 }
