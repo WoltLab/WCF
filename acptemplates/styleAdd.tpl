@@ -24,6 +24,9 @@
 		$useFluidLayout.change(useFluidLayout);
 		useFluidLayout();
 		
+		WCF.Language.addObject({
+			'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}'
+		});
 		new WCF.ACP.Style.ImageUpload(0, '{$tmpHash}');
 		
 		{if $action == 'edit' && $__wcf->getSession()->getPermission('admin.style.canAddStyle')}
@@ -207,8 +210,7 @@
 					<dt><label for="image">{lang}wcf.acp.style.image{/lang}</label></dt>
 					<dd class="framed">
 						<img src="{if $action == 'add'}{@$__wcf->getPath()}images/stylePreview.png{else}{@$style->getPreviewImage()}{/if}" alt="" id="styleImage" />
-						<div id="uploadImage" class="marginTop"></div>
-						{*<input type="hidden" name="image" value="{$image}" readonly="readonly" class="long" /> TODO: Add upload here!*}
+						<div id="uploadImage"></div>
 						{if $errorField == 'image'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
