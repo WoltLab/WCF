@@ -53,17 +53,24 @@
 	<p class="success">{lang}wcf.global.form.{$action}.success{/lang}</p>	
 {/if}
 
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			{if $action == 'edit'}
-				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/download.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
-				{if $__wcf->getSession()->getPermission('admin.style.canAddStyle')}<li><a class="jsCopyStyle button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>{/if}
-			{/if}
-			<li><a href="{link controller='StyleList'}{/link}" title="{lang}wcf.acp.menu.link.style.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
-		</ul>
-	</nav>
-</div>
+{hascontent}
+	<div class="contentNavigation">
+		<nav>
+			<ul>
+				{content}
+					{if $action == 'edit'}
+						<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/download.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
+						{if $__wcf->getSession()->getPermission('admin.style.canAddStyle')}<li><a class="jsCopyStyle button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>{/if}
+					{/if}
+					
+					{if $__wcf->session->getPermission('admin.style.canDeleteStyle') || $__wcf->session->getPermission('admin.style.canEditStyle')}
+						<li><a href="{link controller='StyleList'}{/link}" title="{lang}wcf.acp.menu.link.style.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
+					{/if}
+				{/content}
+			</ul>
+		</nav>
+	</div>
+{/hascontent}
 
 <form method="post" action="{if $action == 'add'}{link controller='StyleAdd'}{/link}{else}{link controller='StyleEdit' id=$styleID}{/link}{/if}">
 	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
