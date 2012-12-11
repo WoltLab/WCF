@@ -56,12 +56,8 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_".$this->tableName."
-			WHERE	definitionName = ?
-				AND packageID = ?";
-		$parameters = array(
-			$data['definitionName'],
-			$this->installation->getPackageID()
-		);
+			WHERE	definitionName = ?";
+		$parameters = array($data['definitionName']);
 		
 		return array(
 			'sql' => $sql,

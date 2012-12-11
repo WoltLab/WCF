@@ -265,7 +265,7 @@ CREATE TABLE wcf1_object_type_definition (
 	packageID INT(10) NOT NULL,
 	interfaceName VARCHAR(255) NOT NULL DEFAULT '',
 	categoryName VARCHAR(80) NOT NULL DEFAULT '',
-	UNIQUE KEY definitionName (definitionName, packageID)
+	UNIQUE KEY definitionName (definitionName)
 );
 
 DROP TABLE IF EXISTS wcf1_option;

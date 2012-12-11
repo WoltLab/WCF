@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\search\acp;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;

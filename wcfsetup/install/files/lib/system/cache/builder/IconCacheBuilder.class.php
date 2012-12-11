@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -40,7 +41,7 @@ class IconCacheBuilder implements ICacheBuilder {
 		
 		// get icons
 		foreach ($iconDirs as $iconDir) {
-			$path = FileUtil::addTrailingSlash(WCF_DIR.$iconDir);
+			$path = FileUtil::addTrailingSlash(ApplicationHandler::getInstance()->getWCF()->getPageURL().$iconDir);
 			
 			// get svg icons
 			$icons = self::getIconFiles($path);
