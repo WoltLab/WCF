@@ -28,60 +28,27 @@ class WorkerCommand implements ICommand {
 	 */
 	public function execute(array $parameters) {
 		$argv = new ArgvParser(array(
-			'l|list' => 'Lists available workers'
+			'l|list' => 'Lists available workers',
+			'setParameter=s' => 'Sets a parameter given to the worker'
 		));
 		$argv->setOptions(array(
 			ArgvParser::CONFIG_FREEFORM_FLAGS => true,
-			// TODO: Currently broken because of zendframework/zf2#3047 ArgvParser::CONFIG_PARSEALL => false
+			ArgvParser::CONFIG_PARSEALL => false,
+			ArgvParser::CONFIG_CUMULATIVE_PARAMETERS => true
 		));
 		$argv->setArguments($parameters);
 		$argv->parse();
 		
 		if ($argv->list) {
-			$directory = DirectoryUtil::getInstance(WCF_DIR.'lib/system/worker/');
-			$workerList = $directory->getFiles(SORT_ASC, new Regex('Worker\.class\.php$'));
-			
-			$table = array(
-				array(
-					'Class',
-					'Description'
-				)
-			);
-			foreach ($workerList as $worker) {
-				$class = 'wcf\system\worker\\'.basename($worker, '.class.php');
-				if (!class_exists($class) && !interface_exists($class)) {
-					Log::info('Invalid worker file: ', $worker);
-					continue;
-				}
-				$reflection = new \ReflectionClass($class);
-				if (!$reflection->isInstantiable()) continue;
-				
-				if (!ClassUtil::isInstanceOf($class, 'wcf\system\worker\IWorker')) {
-					Log::info('Invalid worker file: ', $worker);
-					continue;
-				}
-				
-				$docComment = explode("\n", StringUtil::unifyNewlines($reflection->getDocComment()));
-				foreach ($docComment as $commentLine) {
-					if (Regex::compile('[a-z]', Regex::CASE_INSENSITIVE)->match($commentLine)) {
-						$comment = Regex::compile('^[^a-z]+', Regex::CASE_INSENSITIVE)->replace($commentLine, '');
-						break;
-					}
-				}
-				
-				$table[] = array(
-					basename($worker, '.class.php'),
-					$comment
-				);
-			}
-			
-			CLIWCF::getReader()->println(CLIWCF::generateTable($table));
+			CLIWCF::getReader()->println(CLIWCF::generateTable($this->generateList()));
 			return;
 		}
 		
+		// validate parameters
 		if (count($argv->getRemainingArgs()) != 1) {
 			throw new ArgvException('You have to provide exactly one worker.', $argv->getUsageMessage());
 		}
+		
 		$args = $argv->getRemainingArgs();
 		$class = $args[0];
 		
@@ -89,6 +56,7 @@ class WorkerCommand implements ICommand {
 		if (strpos($class, '\\') === false) {
 			$class = 'wcf\system\worker\\'.$class;
 		}
+		
 		$invalid = false;
 		if (!class_exists($class)) {
 			$invalid = true;
@@ -106,16 +74,35 @@ class WorkerCommand implements ICommand {
 			throw new ArgvException("Invalid worker '".$class."' given", $argv->getUsageMessage());
 		}
 		
-		$worker = new $class(array());
+		// parse parameters
+		$options = $argv->getOptions();
+		$parameters = array();
+		foreach ($options as $option) {
+			$value = $argv->getOption($option);
+			if ($option === 'setParameter') {
+				if (!is_array($value)) {
+					$value = array($value);
+				}
+				
+				foreach ($value as $parameter) {
+					list($parameterKey, $parameterValue) = explode('=', $parameter);
+					$parameters[$parameterKey] = $parameterValue;
+				}
+			}
+			else {
+				$parameters[$option] = $value;
+			}
+		}
+		
+		$worker = new $class($parameters);
 		$worker->validate();
 		$progress = $worker->getProgress();
 		
+		// initialize progressbar
 		$progressbar = new ProgressBar(new ConsoleProgressBar(array(
 			'width' => CLIWCF::getTerminal()->getWidth()
 		)));
 		for ($i = 0; $progress < 100; $i++) {
-			$progressbar->update($progress);
-			
 			$worker->setLoopCount($i);
 			$worker->validate();
 			
@@ -127,6 +114,52 @@ class WorkerCommand implements ICommand {
 			$worker->execute();
 		}
 		$progressbar->update($progress);
+	}
+	
+	/**
+	 * Returns an array with a list of workers.
+	 * 
+	 * @return array
+	 */
+	public function generateList() {
+		$directory = DirectoryUtil::getInstance(WCF_DIR.'lib/system/worker/');
+		$workerList = $directory->getFiles(SORT_ASC, new Regex('Worker\.class\.php$'));
+			
+		$table = array(
+			array(
+				'Class',
+				'Description'
+			)
+		);
+		foreach ($workerList as $worker) {
+			$class = 'wcf\system\worker\\'.basename($worker, '.class.php');
+			if (!class_exists($class) && !interface_exists($class)) {
+				Log::info('Invalid worker file: ', $worker);
+				continue;
+			}
+			$reflection = new \ReflectionClass($class);
+			if (!$reflection->isInstantiable()) continue;
+		
+			if (!ClassUtil::isInstanceOf($class, 'wcf\system\worker\IWorker')) {
+				Log::info('Invalid worker file: ', $worker);
+				continue;
+			}
+		
+			$docComment = explode("\n", StringUtil::unifyNewlines($reflection->getDocComment()));
+			foreach ($docComment as $commentLine) {
+				if (Regex::compile('[a-z]', Regex::CASE_INSENSITIVE)->match($commentLine)) {
+					$comment = Regex::compile('^[^a-z]+', Regex::CASE_INSENSITIVE)->replace($commentLine, '');
+					break;
+				}
+			}
+		
+			$table[] = array(
+				basename($worker, '.class.php'),
+				$comment
+			);
+		}
+		
+		return $table;
 	}
 	
 	/**

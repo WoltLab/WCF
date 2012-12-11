@@ -3,6 +3,7 @@ namespace wcf\system\cli\command;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\Regex;
 use wcf\util\DirectoryUtil;
+use wcf\util\StringUtil;
 use phpline\internal\Log;
 
 /**
@@ -88,27 +89,33 @@ class CommandHandler {
 	 * @return	array<string>
 	 */
 	public static function getParameters($line) {
-		list ($command, $parameters) = explode(' ', $line, 2);
+		list ($command, $parameters) = explode(' ', $line.' ', 2);
 		
-		$chars = str_split($parameters);
+		$chars = str_split(StringUtil::trim($parameters));
 		$tmp = '';
 		$escaped = false;
 		$quoted = false;
+		// handle quotes
 		foreach ($chars as $char) {
+			// escaped chars are simply added
 			if ($escaped) {
 				$tmp .= $char;
 				$escaped = false;
 			}
+			// escaping is enabled
 			else if ($char == '\\') {
 				$escaped = true;
 			}
+			// quoting is toggled
 			else if ($char == '"') {
 				$quoted = !$quoted;
 			}
+			// new parameter is begun
 			else if ($char == ' ' && !$quoted) {
 				$return[] = $tmp;
 				$tmp = '';
 			}
+			// other chars are added
 			else {
 				$tmp .= $char;
 			}
