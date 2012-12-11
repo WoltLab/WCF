@@ -88,9 +88,33 @@ class CommandHandler {
 	 * @return	array<string>
 	 */
 	public static function getParameters($line) {
-		$parameters = explode(' ', $line);
-		array_shift($parameters);
+		list ($command, $parameters) = explode(' ', $line, 2);
 		
-		return $parameters;
+		$chars = str_split($parameters);
+		$tmp = '';
+		$escaped = false;
+		$quoted = false;
+		foreach ($chars as $char) {
+			if ($escaped) {
+				$tmp .= $char;
+				$escaped = false;
+			}
+			else if ($char == '\\') {
+				$escaped = true;
+			}
+			else if ($char == '"') {
+				$quoted = !$quoted;
+			}
+			else if ($char == ' ' && !$quoted) {
+				$return[] = $tmp;
+				$tmp = '';
+			}
+			else {
+				$tmp .= $char;
+			}
+		}
+		$return[] = $tmp;
+		
+		return $return;
 	}
 }
