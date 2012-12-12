@@ -97,6 +97,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	 * Validates the 'execute' action.
 	 */
 	public function validateExecute() {
+		// TODO: Fix this: We need update permissions for executing?
 		parent::validateUpdate();
 	}
 	
