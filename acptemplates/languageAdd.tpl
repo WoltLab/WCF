@@ -40,7 +40,7 @@
 {/hascontent}
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageAdd'}{/link}">
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.language.add.mode{/lang}</legend>
 			

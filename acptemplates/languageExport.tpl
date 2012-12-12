@@ -31,7 +31,7 @@
 {/hascontent}
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageExport' id=$languageID}{/link}">
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.language.export{/lang}</legend>
 			

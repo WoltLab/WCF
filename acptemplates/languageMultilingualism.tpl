@@ -25,7 +25,7 @@
 {/if}
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageMultilingualism'}{/link}">
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend><label><input type="checkbox" id="enable" name="enable" value="1" {if $enable}checked="checked" {/if}/> {lang}wcf.acp.language.multilingualism.enable{/lang}</label></legend>
 			<small>{lang}wcf.acp.language.multilingualism.enable.description{/lang}</small>
