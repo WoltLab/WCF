@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system;
 use phpline\console\ConsoleReader;
+use phpline\internal\AnsiUtil;
 use phpline\internal\Log;
 use phpline\TerminalFactory;
 use wcf\system\cli\command\CommandHandler;
@@ -63,24 +64,7 @@ class CLIWCF extends WCF {
 		$this->initPHPLine();
 		$this->initAuth();
 		// TODO: Show whether there are updates available (similar to TTYs at Ubuntu Linux)
-		if (VERBOSITY >= -1 && !self::getArgvParser()->disableUpdateCheck) {
-			$updates = PackageUpdateDispatcher::getAvailableUpdates();
-			if (!empty($updates)) {
-				self::getReader()->println(count($updates) . ' updates are available');
-				
-				if (VERBOSITY >= 1) {
-					$posix = new Posix();
-					foreach ($updates as $update) {
-						$line = WCF::getLanguage()->get($update['packageName']) . ' ' . $update['packageVersion'] . ' -> ' . $update['version']['packageVersion'];
-						// TODO: Check whether update is important
-						if (true && self::getTerminal()->isAnsiSupported() && !self::getArgvParser()->disableColors) {
-							$line = $posix->colorize($line, Color::RED);
-						}
-						self::getReader()->println($line);
-					}
-				}
-			}
-		}
+		$this->checkForUpdates();
 		$this->initCommands();
 	}
 	
@@ -300,7 +284,52 @@ class CLIWCF extends WCF {
 	}
 	
 	/**
+	 * Checks for updates.
+	 * 
+	 * @return	string
+	 */
+	public function checkForUpdates() {
+		if (VERBOSITY >= -1 && !self::getArgvParser()->disableUpdateCheck) {
+			$updates = PackageUpdateDispatcher::getAvailableUpdates();
+			if (!empty($updates)) {
+				$return = self::getReader()->println(count($updates) . ' updates are available');
+				
+				if (VERBOSITY >= 1) {
+					$table = array(
+						array(
+							WCF::getLanguage()->get('wcf.acp.package.name'),
+							WCF::getLanguage()->get('wcf.acp.package.version'),
+							WCF::getLanguage()->get('wcf.acp.package.newVersion')
+						)
+					);
+					
+					$posix = new Posix();
+					foreach ($updates as $update) {
+						$row = array(
+							WCF::getLanguage()->get($update['packageName']),
+							$update['packageVersion'],
+							$update['version']['packageVersion']
+						);
+						
+						// TODO: Check whether update is important
+						if (true && self::getTerminal()->isAnsiSupported() && !self::getArgvParser()->disableColors) {
+							$row[2] = $posix->colorize($row[2], Color::RED);
+						}
+						
+						$table[] = $row;
+					}
+					
+					self::getReader()->println(self::generateTable($table));
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Generates a table.
+	 * 
+	 * @param	array	$table
+	 * @return	string
 	 */
 	public static function generateTable(array $table) {
 		$columnSize = array();
@@ -308,7 +337,7 @@ class CLIWCF extends WCF {
 			$i = 0;
 			foreach ($row as $column) {
 				if (!isset($columnSize[$i])) $columnSize[$i] = 0;
-				$columnSize[$i] = max($columnSize[$i], StringUtil::length($column));
+				$columnSize[$i] = max($columnSize[$i], StringUtil::length(AnsiUtil::stripAnsi($column)));
 				$i++;
 			}
 		}
@@ -324,7 +353,8 @@ class CLIWCF extends WCF {
 			$result .= "|";
 			$i = 0;
 			foreach ($row as $column) {
-				$result .= ' '.StringUtil::pad($column, $columnSize[$i], ' ', (is_numeric($column) ? STR_PAD_LEFT : STR_PAD_RIGHT)).' |';
+				$paddedString = StringUtil::pad(AnsiUtil::stripAnsi($column), $columnSize[$i], ' ', (is_numeric($column) ? STR_PAD_LEFT : STR_PAD_RIGHT));
+				$result .= ' '.StringUtil::replace(AnsiUtil::stripAnsi($column), $column, $paddedString).' |';
 				$i++;
 			}
 			
