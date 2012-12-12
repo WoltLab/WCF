@@ -105,7 +105,8 @@ class CLIWCF extends WCF {
 			'h|help' => WCF::getLanguage()->get('wcf.cli.help.help'),
 			'version' => WCF::getLanguage()->get('wcf.cli.help.version'),
 			'disableColors' => WCF::getLanguage()->get('wcf.cli.help.disableColors'),
-			'disableUpdateCheck' => WCF::getLanguage()->get('wcf.cli.help.disableUpdateCheck')
+			'disableUpdateCheck' => WCF::getLanguage()->get('wcf.cli.help.disableUpdateCheck'),
+			'exitOnFail' => WCF::getLanguage()->get('wcf.cli.help.exitOnFail')
 		));
 		self::getArgvParser()->setOptions(array(
 			ArgvParser::CONFIG_CUMULATIVE_FLAGS => true,
@@ -255,20 +256,36 @@ class CLIWCF extends WCF {
 			}
 			catch (IllegalLinkException $e) {
 				self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.cli.error.command.notFound', array('command' => $line)));
+				
+				if (self::getArgvParser()->exitOnFail) {
+					exit(1);
+				}
 				continue;
 			}
 			catch (PermissionDeniedException $e) {
 				self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.global.error.permissionDenied'));
+				
+				if (self::getArgvParser()->exitOnFail) {
+					exit(1);
+				}
 				continue;
 			}
 			catch (ArgvException $e) {
 				// show error message and usage
 				echo $e->getMessage().PHP_EOL;
 				echo str_replace($_SERVER['argv'][0], CommandHandler::getCommandName($line), $e->getUsageMessage());
+				
+				if (self::getArgvParser()->exitOnFail) {
+					exit(1);
+				}
 				continue;
 			}
 			catch (\Exception $e) {
 				Log::error($e);
+				
+				if (self::getArgvParser()->exitOnFail) {
+					exit(1);
+				}
 				continue;
 			}
 		}
