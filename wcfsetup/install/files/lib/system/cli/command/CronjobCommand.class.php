@@ -3,6 +3,7 @@ namespace wcf\system\cli\command;
 use wcf\data\cronjob\CronjobAction;
 use wcf\data\cronjob\CronjobList;
 use wcf\system\cronjob\CronjobScheduler;
+use wcf\system\exception\SystemException;
 use wcf\system\CLIWCF;
 use wcf\util\DateUtil;
 use wcf\util\StringUtil;
@@ -35,27 +36,7 @@ class CronjobCommand implements ICommand {
 		$argv->parse();
 		
 		if ($argv->list) {
-			$cronjobList = new CronjobList();
-			$cronjobList->readObjects();
-			
-			$table = array(array(
-				CLIWCF::getLanguage()->get('wcf.global.objectID'),
-				CLIWCF::getLanguage()->get('wcf.acp.cronjob.description'),
-				CLIWCF::getLanguage()->get('wcf.acp.cronjob.nextExec')
-			));
-			foreach ($cronjobList as $cronjob) {
-				$dateTimeObject = DateUtil::getDateTimeByTimestamp($cronjob->nextExec);
-				$date = DateUtil::format($dateTimeObject, DateUtil::DATE_FORMAT);
-				$time = DateUtil::format($dateTimeObject, DateUtil::TIME_FORMAT);
-				$dateTime = str_replace('%time%', $time, str_replace('%date%', $date, CLIWCF::getLanguage()->get('wcf.date.dateTimeFormat')));
-				
-				$table[] = array(
-					$cronjob->cronjobID, 
-					CLIWCF::getLanguage()->get($cronjob->description), 
-					$dateTime
-				);
-			}
-			CLIWCF::getReader()->println(CLIWCF::generateTable($table));
+			CLIWCF::getReader()->println(CLIWCF::generateTable($this->generateList()));
 			return;
 		}
 		
@@ -111,6 +92,37 @@ class CronjobCommand implements ICommand {
 			)
 		));
 		$action->executeAction();
+	}
+	
+	/**
+	 * Returns an array with a list of cronjobs.
+	 *
+	 * @return array
+	 */
+	public function generateList() {
+		$cronjobList = new CronjobList();
+		$cronjobList->readObjects();
+		
+		$table = array(array(
+			CLIWCF::getLanguage()->get('wcf.global.objectID'),
+			CLIWCF::getLanguage()->get('wcf.acp.cronjob.description'),
+			CLIWCF::getLanguage()->get('wcf.acp.cronjob.nextExec')
+		));
+		
+		foreach ($cronjobList as $cronjob) {
+			$dateTimeObject = DateUtil::getDateTimeByTimestamp($cronjob->nextExec);
+			$date = DateUtil::format($dateTimeObject, DateUtil::DATE_FORMAT);
+			$time = DateUtil::format($dateTimeObject, DateUtil::TIME_FORMAT);
+			$dateTime = str_replace('%time%', $time, str_replace('%date%', $date, CLIWCF::getLanguage()->get('wcf.date.dateTimeFormat')));
+			
+			$table[] = array(
+				$cronjob->cronjobID,
+				CLIWCF::getLanguage()->get($cronjob->description),
+				$dateTime
+			);
+		}
+		
+		return $table;
 	}
 	
 	/**
