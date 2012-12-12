@@ -15,7 +15,7 @@
 </div>
 
 <form method="post" action="{link controller='StyleExport' id=$styleID}{/link}">
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.style.exportStyle.components{/lang}</legend>
 			<small>{lang}wcf.acp.style.exportStyle.components.description{/lang}</small>

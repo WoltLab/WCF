@@ -35,7 +35,7 @@
 	{/hascontent}
 </div>
 
-<div class="container marginTop shadow">
+<div class="container marginTop">
 	<ol class="containerList styleList">
 		{foreach from=$objects item=style}
 			<li>

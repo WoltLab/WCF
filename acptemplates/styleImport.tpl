@@ -25,7 +25,7 @@
 {/hascontent}
 
 <form method="post" action="{link controller='StyleImport'}{/link}" enctype="multipart/form-data">
-	<div class="container containerPadding marginTop shadow">
+	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.style.import.source{/lang}</legend>
 			
