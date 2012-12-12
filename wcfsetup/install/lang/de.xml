@@ -534,11 +534,22 @@
 	</category>
 	
 	<category name="wcf.cli">
+		<item name="wcf.cli.help.noLongHelp"><![CDATA[Zu dem Parameter "{$topic}" ist keine ausführliche Erklärung verfügbar.]]></item>
 		<item name="wcf.cli.help.language"><![CDATA[Erzwingt die Sprache mit dem angegebenen Sprachcode.]]></item>
 		<item name="wcf.cli.help.version"><![CDATA[Zeigt die Versionsnummer an und beendet das Script.]]></item>
 		<item name="wcf.cli.help.help"><![CDATA[Zeigt diese Hilfe an und beendet das Script.]]></item>
 		<item name="wcf.cli.help.q"><![CDATA[Quiet: Zeigt weniger Informationen an.]]></item>
 		<item name="wcf.cli.help.v"><![CDATA[Verbose: Zeigt mehr Informationen an.]]></item>
+		<item name="wcf.cli.help.disableColors"><![CDATA[Deaktiviert alle Farben.]]></item>
+		<item name="wcf.cli.help.exitOnFail"><![CDATA[Wenn dieser Parameter gesetzt ist, dann werden keinerlei Ausgaben farbig markiert, auch wenn die Kommandozeile Farben unterstützt.
+Dies ist beispielweise bei der automatischen Verarbeitung von Ausgaben hilfreich.]]></item>
+		<item name="wcf.cli.help.disableUpdateCheck"><![CDATA[Nach dem Einloggen wird nicht nach Updates gesucht.]]></item>
+		<item name="wcf.cli.help.exitOnFail"><![CDATA[Das Script wird beendet, sobald ein Fehler aufgetreten ist.]]></item>
+		<item name="wcf.cli.help.exitOnFail.description"><![CDATA[Wenn dieser Parameter gesetzt ist, dann wird die Ausführung des Scriptes abgebrochen, sobald ein Fehler aufgetreten ist.
+Fehler sind beispielsweise:
+- Nicht gefundene Befehle
+- Befehle, welche ihre Aktion nicht erfolgreich ausführen konnten
+- Systemfehler]]></item>
 		
 		<item name="wcf.cli.error.language.notFound"><![CDATA[Die Sprache mit dem Sprachcode "{$languageCode}" konnte nicht gefunden werden.]]></item>
 		<item name="wcf.cli.error.command.notFound"><![CDATA[Der Befehl "{$command}" konnte nicht gefunden werden.]]></item>

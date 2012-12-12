@@ -102,7 +102,7 @@ class CLIWCF extends WCF {
 			'language=s' => WCF::getLanguage()->get('wcf.cli.help.language'),
 			'v' => WCF::getLanguage()->get('wcf.cli.help.v'),
 			'q' => WCF::getLanguage()->get('wcf.cli.help.q'),
-			'h|help' => WCF::getLanguage()->get('wcf.cli.help.help'),
+			'h|help-s' => WCF::getLanguage()->get('wcf.cli.help.help'),
 			'version' => WCF::getLanguage()->get('wcf.cli.help.version'),
 			'disableColors' => WCF::getLanguage()->get('wcf.cli.help.disableColors'),
 			'disableUpdateCheck' => WCF::getLanguage()->get('wcf.cli.help.disableUpdateCheck'),
@@ -127,9 +127,17 @@ class CLIWCF extends WCF {
 		EventHandler::getInstance()->fireAction($this, 'afterArgumentParsing');
 		
 		// handle arguments
-		if (self::getArgvParser()->help) {
+		if (self::getArgvParser()->help === true) {
 			// show usage
 			echo self::getArgvParser()->getUsageMessage();
+			exit;
+		}
+		else if (self::getArgvParser()->help) {
+			$help = WCF::getLanguage()->get('wcf.cli.help.'.self::getArgvParser()->help.'.description', true);
+			if ($help) echo $help.PHP_EOL;
+			else {
+				echo WCF::getLanguage()->getDynamicVariable('wcf.cli.noLongHelp', array('topic' => self::getArgvParser()->help)).PHP_EOL;
+			}
 			exit;
 		}
 		if (self::getArgvParser()->version) {
@@ -223,7 +231,7 @@ class CLIWCF extends WCF {
 		catch (UserInputException $e) {
 			$message = WCF::getLanguage()->getDynamicVariable('wcf.user.'.$e->getField().'.error.'.$e->getType(), array('username' => $username));
 			self::getReader()->println($message);
-			exit;
+			exit(1);
 		}
 		
 		// initialize history
