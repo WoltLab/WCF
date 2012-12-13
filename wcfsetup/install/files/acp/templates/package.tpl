@@ -20,9 +20,9 @@
 <div class="tabMenuContainer">
 	<nav class="tabMenu">
 		<ul>
-			<li><a href="#information">{lang}wcf.acp.package.information.title{/lang}</a></li>
+			<li><a href="{@$__wcf->getAnchor('information')}">{lang}wcf.acp.package.information.title{/lang}</a></li>
 			{if $package->getRequiredPackages()|count || $package->getDependentPackages()|count}
-				<li><a href="#dependencies">{lang}wcf.acp.package.dependencies.title{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('dependencies')}">{lang}wcf.acp.package.dependencies.title{/lang}</a></li>
 			{/if}
 		</ul>
 	</nav>
