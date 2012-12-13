@@ -213,93 +213,71 @@ body > iframe[src="about:blank"] {
 	font-weight: normal !important;
 	padding: 1px 8px 2px;
 	position: relative;
+	text-shadow: none;
 	white-space: nowrap;
-	
-	.textShadow(@wcfColor);
 	
 	/* colors */
 	&.badgeUpdate {
 		background-color: @wcfTabularBoxBackgroundColor;
 		color: @wcfTabularBoxColor;
-		
-		.textShadow(@wcfTabularBoxBackgroundColor);
 	}
 	
 	&.badgeInverse {
 		background-color: @wcfTabularBoxColor;
 		color: @wcfTabularBoxBackgroundColor;
-		
-		.textShadow(@wcfTabularBoxColor);
 	}
 	
 	/* default label colors */
 	&.green {
 		background-color: rgba(0, 153, 0, 1);
 		color: rgba(238, 255, 238, 1);
-		
-		.textShadow(rgba(0, 153, 0, 1));
 	}
 	
 	&.red {
 		background-color: rgba(204, 0, 0, 1);
 		color: rgba(255, 238, 238, 1);
-		
-		.textShadow(rgba(204, 0, 0, 1));
 	}
 	
 	&.black {
 		background-color: #333;
 		color: #fff;
-		
-		.textShadow(#333);
 	}
 	
 	&.brown {
 		background-color: #c63;
 		color: #fff;
-		
-		.textShadow(#c63);
 	}
 	
 	&.orange {
 		background-color: #f90;
 		color: #fff;
-		
-		.textShadow(#f90);
 	}
 	
 	&.yellow {
 		background-color: #ff0;
 		color: #333;
-		
-		.textShadow(#ff0);
 	}
 	
 	&.blue {
 		background-color: #09f;
 		color: #fff;
-		
-		.textShadow(#09f);
 	}
 	
 	&.purple {
 		background-color: #c0f;
 		color: #fff;
-		
-		.textShadow(#c0f);
 	}
 	
 	&.pink {
 		background-color: #f0c;
 		color: #fff;
-		
-		.textShadow(#f0c);
 	}
 }
 
 a.badge:hover {
 	color: @wcfContentBackgroundColor;
-		
+	text-decoration: none;
+	
 	&.black {
 		background-color: #000;
 	}

@@ -1020,7 +1020,7 @@ dl.dataList {
 	}
 }
 
-ul.dataList {
+ul.inlineDataList, ul.dataList {
 	li {
 		display: inline-block;
 		
@@ -1028,6 +1028,10 @@ ul.dataList {
 			content: ",";
 		}
 	}
+}
+
+ul.inlineDataList {
+	display: inline-block;
 }
 
 /* ### page navigation ### */
@@ -1071,11 +1075,11 @@ ul.dataList {
 			}
 			
 			&:not(.skip) a {
-				padding: 2px 1px;
+				padding: 2px 3px;
 			}
 			
-			&.active, &.active:hover {
-				padding: 2px 0;
+			&.active {
+				padding: 2px 3px;
 			}
 			
 			img {

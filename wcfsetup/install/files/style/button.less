@@ -9,7 +9,9 @@ input[type='button'],
 	cursor: pointer;
 	display: inline-block;
 	margin: 0 2px;
+	min-height: 17px;
 	padding: 5px 13px;
+	position: relative;
 	
 	.borderRadius(15px);
 }
@@ -51,6 +53,7 @@ button:not([disabled]):hover {
 	border-color: @wcfButtonHoverBorderColor;
 	color: @wcfButtonHoverColor;
 	text-decoration: none;
+	z-index: 100;
 	
 	.textShadow(@wcfButtonHoverBackgroundColor);
 }
@@ -107,6 +110,33 @@ button.active:hover {
 	}
 }
 
+/* button group */
+.buttonGroup {
+	> li {
+		display: inline-block;
+		
+		> .button {
+			margin: 0 0 0 -1px;
+			
+			.borderRadius(0);
+		}
+		
+		&:first-child {
+			> .button {
+				border-top-left-radius: 15px;
+				border-bottom-left-radius: 15px;
+			}
+		}
+		
+		&:last-child {
+			> .button {
+				border-top-right-radius: 15px;
+				border-bottom-right-radius: 15px;
+			}
+		}
+	}
+}
+
 /* sidebar buttons */
 .sidebar {
 	button,
@@ -119,9 +149,11 @@ button.active:hover {
 	}
 }
 
+/* small buttons */
 button.small,
 .button.small {
 	font-size: @wcfSmallFontSize;
+	min-height: 13px;
 	padding: 5px 11px;
 	
 	.borderRadius(3px);
@@ -129,5 +161,9 @@ button.small,
 
 /* button icons */
 .button > img {
-	margin: -5px 1px -5px -5px;
+	margin: -5px -5px -5px -5px;
+	
+	+ span {
+		margin-left: 6px;
+	}
 }
