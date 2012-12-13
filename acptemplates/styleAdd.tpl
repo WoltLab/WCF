@@ -76,10 +76,10 @@
 	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
 		<nav class="tabMenu">
 			<ul>
-				<li><a href="#general">{lang}wcf.acp.style.general{/lang}</a></li>
-				<li><a href="#globals">{lang}wcf.acp.style.globals{/lang}</a></li>
-				<li><a href="#colors">{lang}wcf.acp.style.colors{/lang}</a></li>
-				<li><a href="#advanced">{lang}wcf.acp.style.advanced{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('general')}">{lang}wcf.acp.style.general{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('globals')}">{lang}wcf.acp.style.globals{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('colors')}">{lang}wcf.acp.style.colors{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('advanced')}">{lang}wcf.acp.style.advanced{/lang}</a></li>
 			</ul>
 		</nav>
 		
