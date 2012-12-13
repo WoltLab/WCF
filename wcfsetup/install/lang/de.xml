@@ -518,6 +518,10 @@
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Nachricht]]></item>
 	</category>
 	
+	<category name="wcf.acp.worker">
+		<item name="wcf.acp.worker.executing"><![CDATA[Aufgaben werden ausgeführt …]]></item>
+	</category>
+	
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Kategorie hinzufügen]]></item>
 		<item name="wcf.category.button.list"><![CDATA[Kategorien auflisten]]></item>
