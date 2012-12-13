@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\action;
 use wcf\action\AbstractSecureAction;
+use wcf\action\AJAXInvokeAction;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
@@ -17,13 +18,7 @@ use wcf\util\JSON;
  * @subpackage	acp.action
  * @category	Community Framework
  */
-class WorkerProxyAction extends AbstractSecureAction {
-	/**
-	 * worker class name
-	 * @var	string
-	 */
-	protected $className = '';
-	
+class WorkerProxyAction extends AJAXInvokeAction {
 	/**
 	 * loop counter
 	 * @var	integer
@@ -43,27 +38,10 @@ class WorkerProxyAction extends AbstractSecureAction {
 	protected $worker = null;
 	
 	/**
-	 * @see	wcf\action\AbstractAction::_construct()
-	 */
-	public function __run() {
-		try {
-			parent::__run();
-		}
-		catch (\Exception $e) {
-			if ($e instanceof AJAXException) {
-				throw $e;
-			}
-			else {
-				throw new AJAXException($e->getMessage());
-			}
-		}
-	}
-	
-	/**
 	 * @see	wcf\action\IAction::readParameters()
 	 */
 	public function readParameters() {
-		parent::readParameters();
+		AbstractSecureAction::readParameters();
 		
 		if (isset($_POST['className'])) $this->className = $_POST['className'];
 		if (isset($_POST['loopCount'])) $this->loopCount = intval($_POST['loopCount']);
@@ -89,7 +67,7 @@ class WorkerProxyAction extends AbstractSecureAction {
 	 * @see	wcf\action\IAction::execute()
 	 */
 	public function execute() {
-		parent::execute();
+		AbstractSecureAction::execute();
 		
 		if ($this->loopCount == -1) {
 			$this->sendResponse();
