@@ -11,12 +11,7 @@ WCF.ImageViewer = Class.extend({
 	 * Initializes the ImageViewer for every a-tag with the attribute rel = imageviewer.
 	 */
 	init: function() {
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.ImageViewer', $.proxy(this._initImageSizeCheck, this));
-		
-		$('a[rel^=imageviewer]').slimbox({
-			counterText: WCF.Language.get('wcf.imageViewer.counter'),
-			loop: true
-		});
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.ImageViewer', $.proxy(this._domNodeInserted, this));
 		
 		WCF.DOMNodeInsertedHandler.enable();
 		
@@ -32,6 +27,33 @@ WCF.ImageViewer = Class.extend({
 		
 		// handle enlarge button
 		$buttonEnlarge.click($.proxy(this._enlarge, this));
+		
+		this._initImageViewer();
+	},
+	
+	/**
+	 * Executes actions upon DOMNodeInserted events.
+	 */
+	_domNodeInserted: function() {
+		this._initImageSizeCheck();
+		this._initImageViewer();
+	},
+	
+	/**
+	 * Initializes the image viewer for all links with class ".jsImageViewer"
+	 */
+	_initImageViewer: function() {
+		WCF.DOMNodeInsertedHandler.enable();
+		
+		$('a.jsImageViewer').each(function(index, link) {
+			var $link = $(link).removeClass('jsImageViewer');
+			$link.slimbox({
+				counterText: WCF.Language.get('wcf.imageViewer.counter'),
+				loop: true
+			});
+		});
+		
+		WCF.DOMNodeInsertedHandler.disable();
 	},
 	
 	/**
