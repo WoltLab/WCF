@@ -38,19 +38,15 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	 * Sets option values for a specific user.
 	 * 
 	 * @param	wcf\data\user\User	$user
-	 * @param	string			$outputType
 	 */
-	public function setOptionValue(User $user, $outputType = 'normal') {
+	public function setOptionValue(User $user) {
 		$userOption = 'userOption' . $this->optionID;
 		$optionValue = $user->{$userOption};
 		
 		// use output class
 		if ($this->outputClass) {
 			$outputObj = $this->getOutputObject();
-			
-			if ($outputType == 'normal') $this->optionValue = $outputObj->getOutput($user, $this->getDecoratedObject(), $optionValue);
-			else if ($outputType == 'short') $this->optionValue = $outputObj->getShortOutput($user, $this->getDecoratedObject(), $optionValue);
-			else $outputType = $outputObj->getMediumOutput($user, $this->getDecoratedObject(), $optionValue);
+			$this->optionValue = $outputObj->getOutput($user, $this->getDecoratedObject(), $optionValue);
 		}
 		else {
 			$this->optionValue = StringUtil::encodeHTML($optionValue);
