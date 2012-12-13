@@ -17,5 +17,9 @@
 		<definition>
 			<name>com.woltlab.wcf.modifiableContent</name>
 		</definition>
+
+		<definition>
+			<name>com.woltlab.wcf.versionableObject</name>
+		</definition>		
 	</import>
 </data>

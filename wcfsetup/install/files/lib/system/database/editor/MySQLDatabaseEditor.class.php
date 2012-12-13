@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\database\editor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\Regex;
 
 /**
  * Database editor implementation for MySQL4.1 or higher.
@@ -36,8 +37,19 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
-			$columns[] = $row['Field'];
-		}
+				$typeMatches = Regex::compile('([a-z]+)\(([0-9]+)\)', Regex::CASE_INSENSITIVE)->match($row['Type']);
+				
+      	 		$columns[] = array('name' => $row['Field'], 
+									'data' => array(
+												'type' => $typeMatches[1], 
+												'length' => $typeMatches[2],
+												'notNull' => (($row['Null'] == 'YES') ? true : false), 
+												'key' => (($row['Key'] == 'PRI') ? 'PRIMARY' : (($row['Key'] == 'UNI') ? 'UNIQUE' : '')),
+												'default' => $row['Default'], 
+												'autoIncrement' => ($row['Extra'] == 'auto_increment' ? true : false)
+											)
+								);
+   		}
 		return $columns;
 	}
 	

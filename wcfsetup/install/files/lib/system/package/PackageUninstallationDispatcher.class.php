@@ -96,6 +96,10 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 			ApplicationHandler::rebuild();
 		}
 		
+		if ($this->requireRestructureVersionTables) {
+			$this->restructureVersionTables();
+		}		
+		
 		// return next node
 		return $node;
 	}
@@ -103,8 +107,13 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	/**
 	 * @see	wcf\system\package\PackageInstallationDispatcher::executePIP()
 	 */
-	protected function executePIP(array $nodeData) {
+	protected function executePIP(array $nodeData) {	
 		$pip = new $nodeData['className']($this);
+		
+		if ($pip instanceof \wcf\system\package\plugin\SQLPackageInstallationPlugin || $pip instanceof \wcf\system\package\plugin\ObjectTypePackageInstallationPlugin) {
+			$this->requireRestructureVersionTables = true;
+		}		
+		
 		$pip->uninstall();
 	}
 	
