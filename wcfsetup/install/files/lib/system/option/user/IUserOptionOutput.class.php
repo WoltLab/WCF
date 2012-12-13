@@ -15,26 +15,6 @@ use wcf\data\user\User;
  */
 interface IUserOptionOutput {
 	/**
-	 * Returns a short version of the html code for the output of the given user option.
-	 * 
-	 * @param	wcf\data\user\User			$user
-	 * @param	wcf\data\user\option\UserOption		$option
-	 * @param	string					$value
-	 * @return	string
-	 */
-	public function getShortOutput(User $user, UserOption $option, $value);
-	
-	/**
-	 * Returns a medium version of the html code for the output of the given user option.
-	 * 
-	 * @param	wcf\data\user\User			$user
-	 * @param	wcf\data\user\option\UserOption		$option
-	 * @param	string					$value
-	 * @return	string
-	 */
-	public function getMediumOutput(User $user, UserOption $option, $value);
-	
-	/**
 	 * Returns the html code for the output of the given user option.
 	 * 
 	 * @param	wcf\data\user\User			$user
