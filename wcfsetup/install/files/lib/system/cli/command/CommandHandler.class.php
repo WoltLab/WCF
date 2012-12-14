@@ -95,6 +95,7 @@ class CommandHandler {
 		$tmp = '';
 		$escaped = false;
 		$quoted = false;
+		$return = array();
 		// handle quotes
 		foreach ($chars as $char) {
 			// escaped chars are simply added
@@ -120,7 +121,7 @@ class CommandHandler {
 				$tmp .= $char;
 			}
 		}
-		$return[] = $tmp;
+		if ($tmp) $return[] = $tmp;
 		
 		return $return;
 	}
