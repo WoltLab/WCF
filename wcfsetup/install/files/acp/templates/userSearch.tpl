@@ -97,12 +97,12 @@
 			<nav class="tabMenu">
 				<ul>
 					{if $optionTree|count}
-						<li><a href="#profile">{lang}wcf.acp.user.search.conditions.profile{/lang}</a></li>
+						<li><a href="{@$__wcf->getAnchor('profile')}">{lang}wcf.acp.user.search.conditions.profile{/lang}</a></li>
 					{/if}
 					
 					{event name='tabMenuTabs'}
 					
-					<li><a href="#resultOptions">{lang}wcf.acp.user.search.display{/lang}</a></li>
+					<li><a href="{@$__wcf->getAnchor('resultOptions')}">{lang}wcf.acp.user.search.display{/lang}</a></li>
 				</ul>
 			</nav>
 			

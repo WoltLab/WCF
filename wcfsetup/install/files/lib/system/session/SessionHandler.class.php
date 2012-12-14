@@ -477,7 +477,7 @@ class SessionHandler extends SingletonFactory {
 				WHERE		sessionID <> ?
 						AND userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->sessionID, $this->userID));
+			$statement->execute(array($this->sessionID, $user->userID));
 			
 			// reset session variables
 			$this->variables = array();
