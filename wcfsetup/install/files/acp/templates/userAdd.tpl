@@ -145,7 +145,7 @@
 				<nav class="tabMenu">
 					<ul>
 						{foreach from=$optionTree item=categoryLevel1}
-							<li><a href="#{@$categoryLevel1[object]->categoryName}">{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
+							<li><a href="{@$__wcf->getAnchor($categoryLevel1[object]->categoryName)}">{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
 						{/foreach}
 						
 						{event name='tabMenuTabs'}
