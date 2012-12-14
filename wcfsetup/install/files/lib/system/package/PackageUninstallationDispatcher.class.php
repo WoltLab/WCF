@@ -10,6 +10,8 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\package\plugin\ObjectTypePackageInstallationPlugin;
+use wcf\system\package\plugin\SQLPackageInstallationPlugin;
 use wcf\system\setup\Uninstaller;
 use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
@@ -107,10 +109,10 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	/**
 	 * @see	wcf\system\package\PackageInstallationDispatcher::executePIP()
 	 */
-	protected function executePIP(array $nodeData) {	
+	protected function executePIP(array $nodeData) {
 		$pip = new $nodeData['className']($this);
 		
-		if ($pip instanceof \wcf\system\package\plugin\SQLPackageInstallationPlugin || $pip instanceof \wcf\system\package\plugin\ObjectTypePackageInstallationPlugin) {
+		if ($pip instanceof SQLPackageInstallationPlugin || $pip instanceof ObjectTypePackageInstallationPlugin) {
 			$this->requireRestructureVersionTables = true;
 		}		
 		

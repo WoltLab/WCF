@@ -63,7 +63,7 @@ abstract class VersionableDatabaseObjectEditor extends DatabaseObjectEditor {
 
 		WCF::getDB()->beginTransaction();
 		foreach ($objectIDs as $objectID) {
-			$statement->executeUnbuffered(array($objectID));
+			$statement->execute(array($objectID));
 		}
 		WCF::getDB()->commitTransaction();
 		
