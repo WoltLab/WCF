@@ -16,6 +16,66 @@ use wcf\system\WCF;
  */
 class UserOption extends Option {
 	/**
+	 * visible for no one (no valid bit)
+	 * @var integer
+	 */
+	const VISIBILITY_NONE = 0;
+	
+	/**
+	 * visible for the owner
+	 * @var integer
+	 */
+	const VISIBILITY_OWNER = 1;
+	
+	/**
+	 * visible for admins
+	 * @var integer
+	 */
+	const VISIBILITY_ADMINISTRATOR = 2;
+	
+	/**
+	 * visible for users
+	 * @var integer
+	 */
+	const VISIBILITY_REGISTERED = 4;
+	
+	/**
+	 * visible for guests
+	 * @var integer
+	 */
+	const VISIBILITY_GUEST = 8;
+	
+	/**
+	 * visible for all (no valid bit)
+	 * @var integer
+	 */
+	const VISIBILITY_ALL = 15;
+	
+	/**
+	 * editable for no one (no valid bit)
+	 * @var integer
+	 */
+	const EDITABILITY_NONE = 0;
+	
+	/**
+	 * editable for the owner
+	 * @var integer
+	 */
+	const EDITABILITY_OWNER = 1;
+	
+	/**
+	 * editable for admins
+	 * @var integer
+	 */
+	const EDITABILITY_ADMINISTRATOR = 2;
+	
+	/**
+	 * editable for all (no valid bit)
+	 * @var integer
+	 */
+	const EDITABILITY_ALL = 3;
+	
+	/**
 	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'user_option';
@@ -49,51 +109,54 @@ class UserOption extends Option {
 	/**
 	 * @see	wcf\data\option\Option::isVisible()
 	 */
-	public function isVisible($overrideVisibility = false) {
-		// check if option is hidden
-		if (!$this->visible || $this->disabled) {
-			return false;
-		}
-		
-		// ACP visibility override
-		if ($overrideVisibility) {
+	public function isVisible() {
+		// proceed if option is visible for all
+		if ($this->visible & UserOption::VISIBILITY_GUEST) {
 			return true;
 		}
 		
-		// proceed if option is visible for all
-		if ($this->visible & Option::VISIBILITY_GUEST) {
-			$visible = true;
-		}
 		// proceed if option is visible for registered users and current user is logged in
-		else if (($this->visible & Option::VISIBILITY_REGISTERED) && WCF::getUser()->userID) {
-			$visible = true;
+		if (($this->visible & UserOption::VISIBILITY_REGISTERED) && WCF::getUser()->userID) {
+			return true;
 		}
-		else {
-			$isAdmin = $isOwner = $visible = false;
-			// check admin permissions
-			if ($this->visible & Option::VISIBILITY_ADMINISTRATOR) {
-				if (WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
-					$isAdmin = true;
-				}
-			}
-			
-			// check owner state
-			if ($this->visible & Option::VISIBILITY_OWNER) {
-				if ($this->user !== null && $this->user->userID == WCF::getUser()->userID) {
-					$isOwner = true;
-				}
-			}
-			
-			if ($isAdmin) {
-				$visible = true;
-			}
-			else if ($isOwner) {
-				$visible = true;
+		
+		// check admin permissions
+		if ($this->visible & UserOption::VISIBILITY_ADMINISTRATOR) {
+			if (WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
+				return true;
 			}
 		}
 		
-		if (!$visible || $this->disabled) return false;
+		// check owner state
+		if ($this->visible & UserOption::VISIBILITY_OWNER) {
+			if ($this->user !== null && $this->user->userID == WCF::getUser()->userID) {
+				return true;
+			}
+		}
+				
+		return false;
+	}
+	
+	/**
+	 * Returns true, if this option is editable.
+	 * 
+	 * @return	boolean
+	 */
+	public function isEditable() {
+		// check admin permissions
+		if ($this->editable & UserOption::EDITABILITY_ADMINISTRATOR) {
+			if (WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
+				return true;
+			}
+		}
+				
+		// check owner state
+		if ($this->editable & UserOption::VISIBILITY_OWNER) {
+			if ($this->user === null || $this->user->userID == WCF::getUser()->userID) {
+				return true;
+			}
+		}
 		
-		return true;
+		return false;
 	}
 }

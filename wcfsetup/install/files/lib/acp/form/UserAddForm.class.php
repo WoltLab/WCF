@@ -89,15 +89,6 @@ class UserAddForm extends UserOptionListForm {
 	public $additionalFields = array();
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
-	 */
-	public function readParameters() {
-		parent::readParameters();
-		
-		$this->optionHandler->overrideVisibility();
-	}
-	
-	/**
 	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
@@ -212,7 +203,7 @@ class UserAddForm extends UserOptionListForm {
 		$this->username = $this->email = $this->confirmEmail = $this->password = $this->confirmPassword = '';
 		$this->groupIDs = array();
 		$this->languageID = $this->getDefaultFormLanguageID();
-		$this->optionValues = array();
+		$this->optionHandler->resetOptionValues();
 	}
 	
 	/**
