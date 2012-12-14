@@ -44,12 +44,12 @@ class WorkerCommand implements ICommand {
 			return;
 		}
 		
+		$args = $argv->getRemainingArgs();
 		// validate parameters
-		if (count($argv->getRemainingArgs()) != 1) {
-			throw new ArgvException('You have to provide exactly one worker.', $argv->getUsageMessage());
+		if (count($args) != 1) {
+			throw new ArgvException('', str_replace($_SERVER['argv'][0].' [ options ]', $_SERVER['argv'][0].' [ options ] <worker>', $argv->getUsageMessage()));
 		}
 		
-		$args = $argv->getRemainingArgs();
 		$class = $args[0];
 		
 		// assume wcf\system\worker when no FQN ist given
