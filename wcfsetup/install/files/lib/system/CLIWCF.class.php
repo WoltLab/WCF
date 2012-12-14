@@ -94,7 +94,7 @@ class CLIWCF extends WCF {
 		));
 		self::getArgvParser()->setOptions(array(
 			ArgvParser::CONFIG_CUMULATIVE_FLAGS => true,
-			ArgvParser::CONFIG_DASHDASH => false 
+			ArgvParser::CONFIG_DASHDASH => false
 		));
 		
 		// parse arguments
@@ -264,7 +264,7 @@ class CLIWCF extends WCF {
 			}
 			catch (ArgvException $e) {
 				// show error message and usage
-				echo $e->getMessage().PHP_EOL;
+				if ($e->getMessage()) echo $e->getMessage().PHP_EOL;
 				echo str_replace($_SERVER['argv'][0], CommandHandler::getCommandName($line), $e->getUsageMessage());
 				
 				if (self::getArgvParser()->exitOnFail) {
