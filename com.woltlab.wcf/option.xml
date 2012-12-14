@@ -176,6 +176,16 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="external_link_rel_nofollow">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="external_link_target_blank">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
 			<!-- /general.page -->
 			
 			<!-- offline -->
@@ -381,14 +391,6 @@ no:!cache_source_memcache_host,!cache_source_memcache_use_pconnect]]></enableopt
 				<optiontype>boolean</optiontype>
 			</option>
 			<!-- /general.cache -->
-			
-			<!-- user -->
-			<option name="external_link_rel_nofollow">
-				<categoryname>user.general</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<!-- /user -->
 		</options>
 	</import>
 </data>

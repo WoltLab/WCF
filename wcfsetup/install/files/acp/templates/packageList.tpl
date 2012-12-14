@@ -24,8 +24,8 @@
 <div class="tabMenuContainer">
 	<nav class="tabMenu">
 		<ul>
-			<li><a href="#applications" title="applications">{lang}wcf.acp.package.application.title{/lang}</a></li>
-			{if $plugins|count}<li><a href="#plugins" title="plugins">{lang}wcf.acp.package.plugin.title{/lang}</a></li>{/if}
+			<li><a href="{@$__wcf->getAnchor('applications')}" title="applications">{lang}wcf.acp.package.application.title{/lang}</a></li>
+			{if $plugins|count}<li><a href="{@$__wcf->getAnchor('plugins')}" title="plugins">{lang}wcf.acp.package.plugin.title{/lang}</a></li>{/if}
 		</ul>
 	</nav>
 	

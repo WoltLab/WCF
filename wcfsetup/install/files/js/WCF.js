@@ -7186,7 +7186,7 @@ WCF.UserPanel = Class.extend({
 /**
  * WCF implementation for nested sortables.
  */
-$.widget("ui.wcfNestedSortable", $.extend({}, $.ui.nestedSortable.prototype, {
+$.widget("ui.wcfNestedSortable", $.extend({}, $.mjs.nestedSortable.prototype, {
 	_clearEmpty: function(item) {
 		/* Does nothing because we want to keep empty lists */
 	}
