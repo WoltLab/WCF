@@ -6185,7 +6185,11 @@ WCF.Popover = Class.extend({
 		
 		// insert html
 		if (!this._data[this._activeElementID].loading && this._data[this._activeElementID].content) {
+			WCF.DOMNodeInsertedHandler.enable();
+			
 			this._popoverContent.html(this._data[this._activeElementID].content);
+			
+			WCF.DOMNodeInsertedHandler.disable();
 		}
 		else {
 			this._data[this._activeElementID].loading = true;
