@@ -6185,7 +6185,11 @@ WCF.Popover = Class.extend({
 		
 		// insert html
 		if (!this._data[this._activeElementID].loading && this._data[this._activeElementID].content) {
+			WCF.DOMNodeInsertedHandler.enable();
+			
 			this._popoverContent.html(this._data[this._activeElementID].content);
+			
+			WCF.DOMNodeInsertedHandler.disable();
 		}
 		else {
 			this._data[this._activeElementID].loading = true;
@@ -6251,11 +6255,17 @@ WCF.Popover = Class.extend({
 		
 		// only update content if element id is active
 		if (this._activeElementID === elementID) {
+			WCF.DOMNodeInsertedHandler.enable();
+			
 			if (animate) {
 				// get current dimensions
 				var $dimensions = this._popoverContent.getDimensions();
 				
 				// insert new content
+				this._popoverContent.css({
+					height: 'auto',
+					width: 'auto'
+				});
 				this._popoverContent.html(this._data[elementID].content);
 				var $newDimensions = this._popoverContent.getDimensions();
 				
@@ -6271,13 +6281,19 @@ WCF.Popover = Class.extend({
 					height: $newDimensions.height + 'px',
 					width: $newDimensions.width + 'px'
 				}, 300, function() {
+					WCF.DOMNodeInsertedHandler.enable();
+					
 					self._popoverContent.html(self._data[elementID].content).css({ opacity: 0 }).animate({ opacity: 1 }, 200);
+					
+					WCF.DOMNodeInsertedHandler.disable();
 				});
 			}
 			else {
 				// insert new content
 				this._popoverContent.html(this._data[elementID].content);
 			}
+			
+			WCF.DOMNodeInsertedHandler.disable();
 		}
 	},
 	

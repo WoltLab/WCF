@@ -62,9 +62,9 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		// default values
-		$optionName = $optionType = $defaultValue = $validationPattern = $outputClass = $selectOptions = $enableOptions = $permissions = $options = '';
+		$optionName = $optionType = $validationPattern = $outputClass = $selectOptions = $enableOptions = $permissions = $options = '';
 		$required = $editable = $visible = $searchable = $disabled = $askDuringRegistration = 0;
-		$showOrder = null;
+		$defaultValue = $showOrder = null;
 		
 		// get values
 		if (isset($option['name'])) $optionName = $option['name'];
