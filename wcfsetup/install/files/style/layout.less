@@ -1061,8 +1061,8 @@ ul.inlineDataList {
 			}
 			
 			&.disabled {
-				background-image: none !important;
-				border: 1px solid rgba(0, 0, 0, .1) !important;
+				background-image: none;
+				border: 1px solid rgba(0, 0, 0, .1);
 				cursor: not-allowed;
 			}
 			
@@ -1079,7 +1079,11 @@ ul.inlineDataList {
 			}
 			
 			&.active {
-				padding: 2px 3px;
+				padding: 2px 0 1px;
+				
+				> span {
+					padding: 0 3px;
+				}
 			}
 			
 			img {
@@ -1145,7 +1149,7 @@ ul.inlineDataList {
 			
 			> .badge {
 				float: right;
-				font-size: 70%;
+				font-size: 75%;
 				top: 3px;
 			}
 			
