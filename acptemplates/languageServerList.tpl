@@ -4,7 +4,7 @@
 	//<![CDATA[
 	$(function() {
 		{if $__wcf->getSession()->getPermission('admin.language.canDeleteServer')}
-			new WCF.Action.Delete('wcf\\data\\language\\server\\LanguageServerAction', $('.jsLanguageServerRow'));
+			new WCF.Action.Delete('wcf\\data\\language\\server\\LanguageServerAction', '.jsLanguageServerRow');
 		{/if}
 		{if $__wcf->getSession()->getPermission('admin.language.canEditServer')}
 			new WCF.Action.Toggle('wcf\\data\\language\\server\\LanguageServerAction', $('.jsLanguageServerRow'));
