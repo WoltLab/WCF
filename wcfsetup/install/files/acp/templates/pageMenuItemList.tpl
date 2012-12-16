@@ -9,7 +9,7 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		new WCF.Action.Delete('wcf\\data\\page\\menu\\item\\PageMenuItemAction', $('.sortableNode'));
+		new WCF.Action.Delete('wcf\\data\\page\\menu\\item\\PageMenuItemAction', '.sortableNode');
 		new WCF.Action.Toggle('wcf\\data\\page\\menu\\item\\PageMenuItemAction', $('.sortableNode'));
 		
 		{if $headerItems|count}new WCF.Sortable.List('pageMenuItemHeaderList', 'wcf\\data\\page\\menu\\item\\PageMenuItemAction', undefined, { protectRoot: true }, false, { menuPosition: 'header' });{/if}
