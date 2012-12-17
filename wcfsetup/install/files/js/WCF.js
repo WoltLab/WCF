@@ -2032,9 +2032,18 @@ WCF.Date.Picker = {
 	 * Initializes the jQuery UI based date picker.
 	 */
 	init: function() {
-		$('input[type=date]').each(function(index, input) {
+		this._initDatePicker();
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Date.Picker', $.proxy(this._initDatePicker, this));
+	},
+	
+	/**
+	 * Initializes the date picker for valid fields.
+	 */
+	_initDatePicker: function() {
+		$('input[type=date]:not(.jsDatePicker)').each(function(index, input) {
 			// do *not* use .attr()
-			var $input = $(input).prop('type', 'text');
+			var $input = $(input).prop('type', 'text').addClass('jsDatePicker');
 			
 			// TODO: we should support all these braindead date formats, at least within output
 			$input.datepicker({
