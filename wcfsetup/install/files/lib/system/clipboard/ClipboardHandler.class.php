@@ -324,18 +324,22 @@ class ClipboardHandler extends SingletonFactory {
 			$typeName = $actionData['object']->getTypeName();
 			if (!isset($this->markedItems[$typeName]) || empty($this->markedItems[$typeName])) continue;
 			
-			$editorData[$typeName] = array(
-				'label' => $actionData['object']->getEditorLabel($this->markedItems[$typeName]),
-				'items' => array()
-			);
-			
 			$typeData = array();
 			if (isset($containerData[$typeName])) {
 				$typeData = $containerData[$typeName];
 			}
 			
+			// filter objects by type data
+			$objects = $actionData['object']->filterObjects($this->markedItems[$typeName], $typeData);
+			if (empty($objects)) continue;
+			
+			$editorData[$typeName] = array(
+				'label' => $actionData['object']->getEditorLabel($objects),
+				'items' => array()
+			);
+			
 			foreach ($actionData['actions'] as $action) {
-				$data = $actionData['object']->execute($this->markedItems[$typeName], $action, $typeData);
+				$data = $actionData['object']->execute($objects, $action);
 				if ($data === null) {
 					continue;
 				}

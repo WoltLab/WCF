@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * @subpackage	system.clipboard.action
  * @category	Community Framework
  */
-class UserClipboardAction implements IClipboardAction {
+class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * @see	wcf\system\clipboard\action\IClipboardAction::getTypeName()
 	 */
@@ -28,7 +28,7 @@ class UserClipboardAction implements IClipboardAction {
 	/**
 	 * @see	wcf\system\clipboard\action\IClipboardAction::execute()
 	 */
-	public function execute(array $objects, $actionName, array $typeData = array()) {
+	public function execute(array $objects, $actionName) {
 		$item = new ClipboardEditorItem();
 		
 		// handle actions
