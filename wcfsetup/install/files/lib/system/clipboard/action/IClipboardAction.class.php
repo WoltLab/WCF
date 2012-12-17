@@ -20,14 +20,24 @@ interface IClipboardAction {
 	public function getTypeName();
 	
 	/**
-	 * Returns action data, return NULL if action is not applicable.
+	 * Returns editor item for the clipboard action with the given name or null
+	 * if the action is not applicable to the given objects.
 	 * 
 	 * @param	array		$objects
 	 * @param	string		$actionName
-	 * @param	array		$typeData
 	 * @return	wcf\system\clipboard\ClipboardEditorItem
 	 */
-	public function execute(array $objects, $actionName, array $typeData = array());
+	public function execute(array $objects, $actionName);
+	
+	/**
+	 * Filters the given objects by the given type data and returns the filtered
+	 * list.
+	 * 
+	 * @param	array		$objects
+	 * @param	array		$typeData
+	 * @return	array
+	 */
+	public function filterObjects(array $objects, array $typeData);
 	
 	/**
 	 * Returns action class name.
