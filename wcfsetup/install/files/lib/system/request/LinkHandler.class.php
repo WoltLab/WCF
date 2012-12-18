@@ -26,6 +26,7 @@ class LinkHandler extends SingletonFactory {
 	public function getLink($controller = null, array $parameters = array(), $url = '') {
 		$abbreviation = 'wcf';
 		$anchor = '';
+		$isACP = $originIsACP = RequestHandler::getInstance()->isACPRequest();
 		$isRaw = false;
 		$appendSession = true;
 		if (isset($parameters['application'])) {
@@ -39,6 +40,15 @@ class LinkHandler extends SingletonFactory {
 		if (isset($parameters['appendSession'])) {
 			$appendSession = $parameters['appendSession'];
 			unset($parameters['appendSession']);
+		}
+		if (isset($parameters['isACP'])) {
+			$isACP = (bool) $parameters['isACP'];
+			unset($parameters['isACP']);
+			
+			// drop session id if link leads to ACP from frontend or vice versa
+			if ($originIsACP != $isACP) {
+				$appendSession = false;
+			}
 		}
 		
 		// remove anchor before parsing
@@ -83,7 +93,7 @@ class LinkHandler extends SingletonFactory {
 		
 		// handle applications
 		if (!PACKAGE_ID) {
-			$url = RouteHandler::getHost() . RouteHandler::getPath(array('acp')) . (RequestHandler::getInstance()->isACPRequest() ? 'acp/' : '') . $url;
+			$url = RouteHandler::getHost() . RouteHandler::getPath(array('acp')) . ($isACP ? 'acp/' : '') . $url;
 		}
 		else {
 			// try to resolve abbreviation
@@ -97,7 +107,7 @@ class LinkHandler extends SingletonFactory {
 				$application = ApplicationHandler::getInstance()->getPrimaryApplication();
 			}
 			
-			$url = $application->getPageURL() . (RequestHandler::getInstance()->isACPRequest() ? 'acp/' : '') . $url;
+			$url = $application->getPageURL() . ($isACP ? 'acp/' : '') . $url;
 		}
 		
 		// append previously removed anchor

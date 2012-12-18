@@ -11,7 +11,7 @@
 	$(function() {
 		var actionObjects = { };
 		actionObjects['com.woltlab.wcf.user'] = { };
-		actionObjects['com.woltlab.wcf.user']['delete'] = new WCF.Action.Delete('wcf\\data\\user\\UserAction', $('.jsUserRow'), $('#userTableContainer .wcf-menu li:first-child .wcf-badge'));
+		actionObjects['com.woltlab.wcf.user']['delete'] = new WCF.Action.Delete('wcf\\data\\user\\UserAction', '.jsUserRow');
 		
 		WCF.Clipboard.init('wcf\\acp\\page\\UserListPage', {@$hasMarkedItems}, actionObjects);
 		

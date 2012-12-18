@@ -1693,33 +1693,59 @@ WCF.Action.SimpleProxy = Class.extend({
  * Basic implementation for AJAXProxy-based deletion.
  * 
  * @param	string		className
- * @param	jQuery		containerList
- * @param	jQuery		badgeList
+ * @param	string		containerSelector
  */
 WCF.Action.Delete = Class.extend({
+	/**
+	 * action class name
+	 * @var	string
+	 */
+	_className: '',
+	
+	/**
+	 * container selector
+	 * @var	string
+	 */
+	_containerSelector: '',
+	
+	/**
+	 * list of known container ids
+	 * @var	array<string>
+	 */
+	_containers: [ ],
+	
 	/**
 	 * Initializes 'delete'-Proxy.
 	 * 
 	 * @param	string		className
-	 * @param	jQuery		containerList
-	 * @param	jQuery		badgeList
+	 * @param	string		containerSelector
 	 */
-	init: function(className, containerList, badgeList) {
-		if (!containerList.length) return;
-		this.containerList = containerList;
-		this.className = className;
-		this.badgeList = badgeList;
-		
-		// initialize proxy
-		var options = {
+	init: function(className, containerSelector) {
+		this._containerSelector = containerSelector;
+		this._className = className;
+		this.proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
-		};
-		this.proxy = new WCF.Action.Proxy(options);
+		});
 		
-		// bind event listener
-		this.containerList.each($.proxy(function(index, container) {
-			$(container).find('.jsDeleteButton').bind('click', $.proxy(this._click, this));
-		}, this));
+		this._initElements();
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Action.Delete' + this._className.hashCode(), $.proxy(this._initElements, this));
+	},
+	
+	/**
+	 * Initializes available element containers.
+	 */
+	_initElements: function() {
+		var self = this;
+		$(this._containerSelector).each(function(index, container) {
+			var $container = $(container);
+			var $containerID = $container.wcfIdentify();
+			
+			if (!WCF.inArray($containerID, self._containers)) {
+				self._containers.push($containerID);
+				$container.find('.jsDeleteButton').click($.proxy(self._click, self));
+			}
+		});
 	},
 	
 	/**
@@ -1757,7 +1783,7 @@ WCF.Action.Delete = Class.extend({
 	_sendRequest: function(object) {
 		this.proxy.setOption('data', {
 			actionName: 'delete',
-			className: this.className,
+			className: this._className,
 			objectIDs: [ $(object).data('objectID') ]
 		});
 		
@@ -1781,21 +1807,12 @@ WCF.Action.Delete = Class.extend({
 	 * @param	array		objectIDs
 	 */
 	triggerEffect: function(objectIDs) {
-		this.containerList.each($.proxy(function(index, container) {
-			var $objectID = $(container).find('.jsDeleteButton').data('objectID');
-			if (WCF.inArray($objectID, objectIDs)) {
-				$(container).wcfBlindOut('up', function() {
-					$(container).empty().remove();
-				}, container);
-				
-				// update badges
-				if (this.badgeList) {
-					this.badgeList.each(function(innerIndex, badge) {
-						$(badge).html($(badge).html() - 1);
-					});
-				}
+		for (var $index in this._containers) {
+			var $container = $('#' + this._containers[$index]);
+			if (WCF.inArray($container.find('.jsDeleteButton').data('objectID'), objectIDs)) {
+				$container.wcfBlindOut('up', function() { $container.remove(); });
 			}
-		}, this));
+		}
 	}
 });
 
@@ -2015,9 +2032,18 @@ WCF.Date.Picker = {
 	 * Initializes the jQuery UI based date picker.
 	 */
 	init: function() {
-		$('input[type=date]').each(function(index, input) {
+		this._initDatePicker();
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Date.Picker', $.proxy(this._initDatePicker, this));
+	},
+	
+	/**
+	 * Initializes the date picker for valid fields.
+	 */
+	_initDatePicker: function() {
+		$('input[type=date]:not(.jsDatePicker)').each(function(index, input) {
 			// do *not* use .attr()
-			var $input = $(input).prop('type', 'text');
+			var $input = $(input).prop('type', 'text').addClass('jsDatePicker');
 			
 			// TODO: we should support all these braindead date formats, at least within output
 			$input.datepicker({
@@ -4142,6 +4168,12 @@ WCF.DOMNodeInsertedHandler = {
 	_discardEvent: true,
 	
 	/**
+	 * counts requests to enable WCF.DOMNodeInsertedHandler
+	 * @var	integer
+	 */
+	_discardEventCount: 0,
+	
+	/**
 	 * prevent infinite loop if a callback manipulates DOM
 	 * @var	boolean
 	 */
@@ -4160,6 +4192,7 @@ WCF.DOMNodeInsertedHandler = {
 	 * @param	object		callback
 	 */
 	addCallback: function(identifier, callback) {
+		this._discardEventCount = 0;
 		this._bindListener();
 		
 		if (this._callbacks.isset(identifier)) {
@@ -4195,7 +4228,7 @@ WCF.DOMNodeInsertedHandler = {
 	/**
 	 * Executes callbacks on click.
 	 */
-	_executeCallbacks: function(event) {
+	_executeCallbacks: function() {
 		if (this._discardEvent || this._isExecuting) return;
 		
 		// do not track events while executing callbacks
@@ -4203,7 +4236,7 @@ WCF.DOMNodeInsertedHandler = {
 		
 		this._callbacks.each(function(pair) {
 			// execute callback
-			pair.value(event);
+			pair.value();
 		});
 		
 		// enable listener again
@@ -4214,7 +4247,12 @@ WCF.DOMNodeInsertedHandler = {
 	 * Disables DOMNodeInsertedHandler, should be used after you've enabled it.
 	 */
 	disable: function() {
-		this._discardEvent = true;
+		this._discardEventCount--;
+		
+		if (this._discardEventCount < 1) {
+			this._discardEvent = true;
+			this._discardEventCount = 0;
+		}
 	},
 	
 	/**
@@ -4223,7 +4261,18 @@ WCF.DOMNodeInsertedHandler = {
 	 * once you've enabled it, if you fail it will cause an infinite loop!
 	 */
 	enable: function() {
+		this._discardEventCount++;
+		
 		this._discardEvent = false;
+	},
+	
+	/**
+	 * Forces execution of DOMNodeInsertedHandler.
+	 */
+	forceExecution: function() {
+		this.enable();
+		this._executeCallbacks();
+		this.disable();
 	}
 };
 
