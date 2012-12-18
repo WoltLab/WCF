@@ -282,6 +282,8 @@
 			width: 300px;
 			z-index: 120;
 			
+			.transition(width, .2s, ease);
+			
 			> .collapsibleButton {
 				background-color: @wcfSidebarBackgroundColor;
 				background-image: url('../icon/arrowRightColored.svg');
@@ -295,6 +297,12 @@
 				position: absolute;
 				top: 0;
 				width: 24px;
+				
+				.transition(left, .2s, ease);
+			}
+			
+			> div {
+				overflow: hidden;
 			}
 		}
 		
@@ -303,6 +311,8 @@
 			min-height: 100px;
 			padding: @wcfGapSmall @wcfGapLarge * 2 - @wcfGapTiny @wcfGapLarge;
 			z-index: 130;
+			
+			.transition(margin, .2s, ease);
 		}
 	}
 	
@@ -329,15 +339,11 @@
 			}
 			
 			> .sidebar {
-				width: 20px;
-				
-				> div,
-				> fieldset {
-					display: none;
-				}
+				width: 0;
 				
 				> .collapsibleButton {
 					background-image: url('../icon/arrowLeftColored.svg');
+					left: -40px;
 				}
 			}
 		}
@@ -1129,12 +1135,12 @@ ul.inlineDataList {
 }
 
 /* ### sidebar ### */
-.sidebar > fieldset:not(:last-child), .sidebar > div:not(:last-child) {
+.sidebar > div > fieldset:not(:last-child), .sidebar > div > div:not(:last-child) {
 	border-bottom: 1px solid @wcfContainerBorderColor;
 	margin-bottom: @wcfGapMedium;
 }
 
-.sidebar.collapsibleMenu > fieldset, .sidebar.collapsibleMenu > div {
+.sidebar.collapsibleMenu > div > fieldset, .sidebar.collapsibleMenu > div > div {
 	border-bottom-width: 0;
 }
 
@@ -1194,13 +1200,17 @@ ul.inlineDataList {
 					}
 					
 					&:hover:not(.active) {
-						background-color: @wcfContainerHoverBackgroundColor;
+						> a {
+							color: @wcfLinkHoverColor;
+						}
 					}
 					
 					> a {
 						color: @wcfLinkColor;
 						display: block;
 						padding: @wcfGapTiny @wcfGapMedium @wcfGapSmall @wcfGapLarge;
+						
+						.textShadow(@wcfSidebarBackgroundColor);
 						
 						&:hover {
 							text-decoration: none;
@@ -1210,7 +1220,9 @@ ul.inlineDataList {
 			}
 		}
 		
-		> div {
+		> div,
+		> ul,
+		> dl {
 			width: 300px - @wcfGapMedium * 2;
 		}
 	}
@@ -1241,6 +1253,7 @@ ul.inlineDataList {
 	.formSubmit {
 		margin-bottom: @wcfGapMedium;
 		margin-top: 0;
+		width: 300px;
 	}
 	
 	&.collapsibleMenu {

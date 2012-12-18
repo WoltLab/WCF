@@ -40,7 +40,9 @@
 	<div>
 		{if $sidebar|isset}
 			<aside class="sidebar"{if $sidebarOrientation|isset && $sidebarOrientation == 'right'} data-is-open="{if $sidebarCollapsed}false{else}true{/if}" data-sidebar-name="{$sidebarName}"{/if}>
-				{@$sidebar}
+				<div>
+					{@$sidebar}
+				</div>
 			</aside>
 			
 			{if $sidebarOrientation|isset && $sidebarOrientation == 'right'}

@@ -90,7 +90,7 @@ WCF.ACP.Menu = Class.extend({
 	 */
 	init: function(activeMenuItems) {
 		this._headerNavigation = $('nav#mainMenu');
-		this._sidebarNavigation = $('aside.collapsibleMenu');
+		this._sidebarNavigation = $('aside.collapsibleMenu > div');
 		
 		this._prepareElements(activeMenuItems);
 	},
