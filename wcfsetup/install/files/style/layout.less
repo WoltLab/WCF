@@ -811,7 +811,6 @@
 	
 	/* headline */
 	th {
-		background-color: rgba(0, 0, 0, .4);
 		border-right: 1px solid rgba(0, 0, 0, .2);
 		color: @wcfTabularBoxColor;
 		font-size: @wcfSmallFontSize;
@@ -819,6 +818,7 @@
 		white-space: nowrap;
 		
 		.textShadow(@wcfTabularBoxBackgroundColor);
+		.linearGradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0), rgba(0, 0, 0, .3));
 		
 		> a {
 			color: @wcfTabularBoxColor;
@@ -834,12 +834,16 @@
 			}
 		}
 		
-		&:hover > a,
 		&.active > a {
 			background-color: rgba(0, 0, 0, .1);
 			color: @wcfTabularBoxHoverColor;
 			
 			.boxShadowInset(0, 10px, rgba(0, 0, 0, .1), 10px, -10px);
+		}
+		
+		&:hover > a {
+			background-color: rgba(0, 0, 0, .2);
+			color: @wcfTabularBoxHoverColor;
 		}
 		
 		> * {
