@@ -37,7 +37,7 @@
 	</nav>
 </div>
 
-<form method="post" action="{if $action == 'add'}{link controller='UserAdd'}{/link}{else}{link controller='UserEdit'}{/link}{/if}">
+<form method="post" action="{if $action == 'add'}{link controller='UserAdd'}{/link}{else}{link controller='UserEdit' id=$userID}{/link}{/if}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.user.general{/lang}</legend>
@@ -187,6 +187,8 @@
 									{/if}
 								{/if}
 								
+								{event name='categoryFields'}
+								
 								{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.user.option.'}
 								
 								{if $categoryLevel2[categories]|count}
@@ -206,8 +208,6 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		<input type="hidden" name="action" value="{@$action}" />
-		{if $userID|isset}<input type="hidden" name="id" value="{@$userID}" />{/if}
 	</div>
 </form>
 
