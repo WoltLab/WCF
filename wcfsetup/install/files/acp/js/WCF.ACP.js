@@ -90,7 +90,7 @@ WCF.ACP.Menu = Class.extend({
 	 */
 	init: function(activeMenuItems) {
 		this._headerNavigation = $('nav#mainMenu');
-		this._sidebarNavigation = $('aside.collapsibleMenu');
+		this._sidebarNavigation = $('aside.collapsibleMenu > div');
 		
 		this._prepareElements(activeMenuItems);
 	},
@@ -967,6 +967,12 @@ WCF.ACP.Options.Group = Class.extend({
  */
 WCF.ACP.Worker = Class.extend({
 	/**
+	 * true, if worker was aborted
+	 * @var	boolean
+	 */
+	_aborted: false,
+	
+	/**
 	 * dialog id
 	 * @var	string
 	 */
@@ -979,15 +985,28 @@ WCF.ACP.Worker = Class.extend({
 	_dialog: null,
 	
 	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
 	 * Initializes a new worker instance.
 	 * 
 	 * @param	string		dialogID
 	 * @param	string		className
-	 * @param	object		options
+	 * @param	string		title
+	 * @param	object		parameters
 	 */
-	init: function(dialogID, className, options) {
+	init: function(dialogID, className, title, parameters) {
+		this._aborted = false;
 		this._dialogID = dialogID + 'Worker';
-		options = options || { };
+		this._dialog = null;
+		this._proxy = new WCF.Action.Proxy({
+			showLoadingOverlay: false,
+			success: $.proxy(this._success, this),
+			url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+		});
 		
 		// initialize AJAX-based dialog
 		WCF.showAJAXDialog(this._dialogID, true, {
@@ -995,52 +1014,46 @@ WCF.ACP.Worker = Class.extend({
 			type: 'POST',
 			data: {
 				className: className,
-				parameters: options
+				parameters: parameters || { }
 			},
-			success: $.proxy(this._handleResponse, this),
-			
-			preventClose: true,
-			hideTitle: true
+			success: $.proxy(this._success, this),
+			onClose: $.proxy(function() { this._aborted = true; }, this),
+			title: title
 		});
 	},
 	
 	/**
 	 * Handles response from server.
+	 * 
+	 * @param	object		data
 	 */
-	_handleResponse: function($data) {
+	_success: function(data) {
+		if (this._aborted) {
+			return;
+		}
+		
 		// init binding
 		if (this._dialog === null) {
 			this._dialog = $('#' + $.wcfEscapeID(this._dialogID));
 		}
 		
 		// update progress
-		this._dialog.find('#workerProgress').attr('value', $data.progress).text($data.progress + '%');
+		this._dialog.find('progress').attr('value', data.progress).text(data.progress + '%').next('span').text(data.progress + '%');
 		
 		// worker is still busy with it's business, carry on
-		if ($data.progress < 100) {
+		if (data.progress < 100) {
 			// send request for next loop
-			$.ajax({
-				url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
-				type: 'POST',
-				data: {
-					className: $data.className,
-					loopCount: $data.loopCount,
-					parameters: $data.parameters
-				},
-				success: $.proxy(this._handleResponse, this),
-				error: function(transport) {
-					alert(transport.responseText);
-				}
+			this._proxy.setOption('data', {
+				className: data.className,
+				loopCount: data.loopCount,
+				parameter: data.parameters
 			});
+			this._proxy.sendRequest();
 		}
 		else {
-			// display proceed button
-			var $proceedButton = $('<input type="submit" value="Proceed" />').appendTo('#workerInnerContent');
-			$proceedButton.click(function() {
-				window.location = $data.proceedURL;
-			});
-			
-			$('#workerInnerContentContainer').wcfBlindIn();
+			// display continue button
+			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
+			$('<button>' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($formSubmit).click(function() { window.location = data.proceedURL; });
 			
 			this._dialog.wcfDialog('render');
 		}

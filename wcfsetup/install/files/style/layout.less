@@ -282,6 +282,8 @@
 			width: 300px;
 			z-index: 120;
 			
+			.transition(width, .2s, ease);
+			
 			> .collapsibleButton {
 				background-color: @wcfSidebarBackgroundColor;
 				background-image: url('../icon/arrowRightColored.svg');
@@ -295,6 +297,12 @@
 				position: absolute;
 				top: 0;
 				width: 24px;
+				
+				.transition(left, .2s, ease);
+			}
+			
+			> div {
+				overflow: hidden;
 			}
 		}
 		
@@ -303,6 +311,8 @@
 			min-height: 100px;
 			padding: @wcfGapSmall @wcfGapLarge * 2 - @wcfGapTiny @wcfGapLarge;
 			z-index: 130;
+			
+			.transition(margin, .2s, ease);
 		}
 	}
 	
@@ -329,15 +339,11 @@
 			}
 			
 			> .sidebar {
-				width: 20px;
-				
-				> div,
-				> fieldset {
-					display: none;
-				}
+				width: 0;
 				
 				> .collapsibleButton {
 					background-image: url('../icon/arrowLeftColored.svg');
+					left: -40px;
 				}
 			}
 		}
@@ -375,6 +381,14 @@
 		> h3 {
 			color: @wcfDimmedColor;
 			font-size: @wcfSmallFontSize;
+		}
+	}
+	
+	&.boxSubHeadline {
+		> hgroup {
+			> h1 {
+				font-size: @wcfSubHeadlineFontSize;
+			}
 		}
 	}
 	
@@ -652,6 +666,7 @@
 				color: @wcfDimmedColor;
 				display: inline-block;
 				font-size: 110%;
+				outline: 0;
 				padding: 1px 10px 3px;
 				position: relative;
 				text-decoration: none;
@@ -796,7 +811,6 @@
 	
 	/* headline */
 	th {
-		background-color: rgba(0, 0, 0, .4);
 		border-right: 1px solid rgba(0, 0, 0, .2);
 		color: @wcfTabularBoxColor;
 		font-size: @wcfSmallFontSize;
@@ -804,6 +818,7 @@
 		white-space: nowrap;
 		
 		.textShadow(@wcfTabularBoxBackgroundColor);
+		.linearGradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0), rgba(0, 0, 0, .3));
 		
 		> a {
 			color: @wcfTabularBoxColor;
@@ -819,12 +834,16 @@
 			}
 		}
 		
-		&:hover > a,
 		&.active > a {
 			background-color: rgba(0, 0, 0, .1);
 			color: @wcfTabularBoxHoverColor;
 			
 			.boxShadowInset(0, 10px, rgba(0, 0, 0, .1), 10px, -10px);
+		}
+		
+		&:hover > a {
+			background-color: rgba(0, 0, 0, .2);
+			color: @wcfTabularBoxHoverColor;
 		}
 		
 		> * {
@@ -1061,8 +1080,8 @@ ul.inlineDataList {
 			}
 			
 			&.disabled {
-				background-image: none !important;
-				border: 1px solid rgba(0, 0, 0, .1) !important;
+				background-image: none;
+				border: 1px solid rgba(0, 0, 0, .1);
 				cursor: not-allowed;
 			}
 			
@@ -1078,8 +1097,12 @@ ul.inlineDataList {
 				padding: 2px 3px;
 			}
 			
-			&.active, &.active:hover {
-				padding: 2px 1px;
+			&.active {
+				padding: 2px 0 1px;
+				
+				> span {
+					padding: 0 3px;
+				}
 			}
 			
 			img {
@@ -1116,12 +1139,12 @@ ul.inlineDataList {
 }
 
 /* ### sidebar ### */
-.sidebar > fieldset:not(:last-child), .sidebar > div:not(:last-child) {
+.sidebar > div > fieldset:not(:last-child), .sidebar > div > div:not(:last-child) {
 	border-bottom: 1px solid @wcfContainerBorderColor;
 	margin-bottom: @wcfGapMedium;
 }
 
-.sidebar.collapsibleMenu > fieldset, .sidebar.collapsibleMenu > div {
+.sidebar.collapsibleMenu > div > fieldset, .sidebar.collapsibleMenu > div > div {
 	border-bottom-width: 0;
 }
 
@@ -1145,7 +1168,7 @@ ul.inlineDataList {
 			
 			> .badge {
 				float: right;
-				font-size: 70%;
+				font-size: 75%;
 				top: 3px;
 			}
 			
@@ -1181,13 +1204,17 @@ ul.inlineDataList {
 					}
 					
 					&:hover:not(.active) {
-						background-color: @wcfContainerHoverBackgroundColor;
+						> a {
+							color: @wcfLinkHoverColor;
+						}
 					}
 					
 					> a {
 						color: @wcfLinkColor;
 						display: block;
 						padding: @wcfGapTiny @wcfGapMedium @wcfGapSmall @wcfGapLarge;
+						
+						.textShadow(@wcfSidebarBackgroundColor);
 						
 						&:hover {
 							text-decoration: none;
@@ -1197,7 +1224,9 @@ ul.inlineDataList {
 			}
 		}
 		
-		> div {
+		> div,
+		> ul,
+		> dl {
 			width: 300px - @wcfGapMedium * 2;
 		}
 	}
@@ -1228,6 +1257,7 @@ ul.inlineDataList {
 	.formSubmit {
 		margin-bottom: @wcfGapMedium;
 		margin-top: 0;
+		width: 300px;
 	}
 	
 	&.collapsibleMenu {

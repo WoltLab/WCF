@@ -126,7 +126,7 @@
 					<ul>
 						{content}
 							{if $options|count}
-								<li><a href="#profile">{lang}wcf.acp.user.search.conditions.profile{/lang}</a></li>
+								<li><a href="{@$__wcf->getAnchor('profile')}">{lang}wcf.acp.user.search.conditions.profile{/lang}</a></li>
 							{/if}
 							
 							{event name='tabMenuTabs'}

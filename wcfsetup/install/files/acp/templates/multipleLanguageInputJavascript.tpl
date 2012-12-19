@@ -1,4 +1,3 @@
-{if !$forceSelection|isset}{assign var=forceSelection value=false}{/if}
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {

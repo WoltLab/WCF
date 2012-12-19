@@ -26,9 +26,9 @@
 <div class="tabMenuContainer" data-active="{if $health !== 'success'}health{else}news{/if}" data-store="activeTabMenuItem">
 	<nav class="tabMenu">
 		<ul>
-			{if $health !== 'success'}<li><a href="#health" title="Health">Health</a></li>{/if}
-			<li><a href="#news" title="News">News</a></li>
-			<li><a href="#credits" title="Credits">Credits</a></li>
+			{if $health !== 'success'}<li><a href="{@$__wcf->getAnchor('health')}" title="Health">Health</a></li>{/if}
+			<li><a href="{@$__wcf->getAnchor('news')}" title="News">News</a></li>
+			<li><a href="{@$__wcf->getAnchor('credits')}" title="Credits">Credits</a></li>
 			{event name='tabs'}
 		</ul>
 	</nav>

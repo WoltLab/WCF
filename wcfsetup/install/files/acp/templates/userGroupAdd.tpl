@@ -4,10 +4,6 @@
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
-		
-		var $availableLanguages = { {implode from=$availableLanguages key=languageID item=languageName}{@$languageID}: '{$languageName}'{/implode} };
-		var $groupNameValues = { {implode from=$i18nValues['groupName'] key=languageID item=value}'{@$languageID}': '{$value}'{/implode} };
-		new WCF.MultipleLanguageInput('groupName', false, $groupNameValues, $availableLanguages);
 	});
 	//]]>
 </script>
@@ -59,6 +55,8 @@
 						</small>
 					{/if}
 					<small>{lang}wcf.acp.group.groupName.description{/lang}</small>
+					
+					{include file='multipleLanguageInputJavascript' elementIdentifier='groupName' forceSelection=false}
 				</dd>
 			</dl>
 			
@@ -71,7 +69,7 @@
 			<nav class="tabMenu">
 				<ul>
 					{foreach from=$optionTree item=categoryLevel1}
-						<li><a href="#{@$categoryLevel1[object]->categoryName}">{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
+						<li><a href="{@$__wcf->getAnchor($categoryLevel1[object]->categoryName)}">{lang}wcf.acp.group.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
 					{/foreach}
 				</ul>
 			</nav>
@@ -81,7 +79,8 @@
 					<nav class="menu">
 						<ul>
 							{foreach from=$categoryLevel1[categories] item=$categoryLevel2}
-								<li><a href="#{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</a></li>
+								{assign var=__categoryLevel2Name value=$categoryLevel1[object]->categoryName|concat:'-':$categoryLevel2[object]->categoryName}
+								<li><a href="{@$__wcf->getAnchor($__categoryLevel2Name)}">{lang}wcf.acp.group.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</a></li>
 							{/foreach}
 						</ul>
 					</nav>
