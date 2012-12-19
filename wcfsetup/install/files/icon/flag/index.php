@@ -1,5 +1,6 @@
 <div style="padding: 5em; background-color: lightgrey">
 <?php
+// @codingStandardsIgnoreFile
 $flags = glob('*.svg');
 foreach ($flags as $flag) {
 	if ($flag == 'de-informal.svg') {

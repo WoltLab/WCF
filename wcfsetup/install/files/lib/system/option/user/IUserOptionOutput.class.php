@@ -24,4 +24,3 @@ interface IUserOptionOutput {
 	 */
 	public function getOutput(User $user, UserOption $option, $value);
 }
-?>

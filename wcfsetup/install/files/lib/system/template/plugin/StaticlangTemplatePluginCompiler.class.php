@@ -15,6 +15,7 @@ use wcf\system\template\TemplateScriptingCompiler;
  * @subpackage	system.template.plugin
  * @category	Community Framework
  */
+// TODO: Is the classname or the filename correct?
 class StaticlangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	/**
 	 * @see	wcf\system\template\ICompilerTemplatePlugin::executeStart()

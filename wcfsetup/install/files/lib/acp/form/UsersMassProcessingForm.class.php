@@ -337,7 +337,6 @@ class UsersMassProcessingForm extends UserOptionListForm {
 			$groupIDs[$row['userID']][] = $row['groupID'];
 		}
 		
-		
 		foreach ($users as $userID => $userData) {
 			if (!UserGroup::isAccessibleGroup($groupIDs[$userID])) {
 				throw new PermissionDeniedException();

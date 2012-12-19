@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 $icons = array();
 $files = glob('*.svg');
 if (is_array($files)) {

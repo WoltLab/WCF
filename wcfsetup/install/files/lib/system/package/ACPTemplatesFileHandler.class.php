@@ -76,7 +76,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 		
 		// remove file extension
 		foreach ($files as &$file) {
-			$file = preg_replace('~.tpl$~','', $file);
+			$file = preg_replace('~.tpl$~', '', $file);
 		}
 		unset($file);
 		
