@@ -2923,10 +2923,10 @@ WCF.TabMenu = {
 		
 		// try to resolve location hash
 		if (!this._didInit) {
-			this.selectTabs();
+			var $tabSelected = this.selectTabs();
 			$(window).bind('hashchange', $.proxy(this.selectTabs, this));
 			
-			if (!this._selectErroneousTab()) {
+			if (!this._selectErroneousTab() && !$tabSelected) {
 				this._selectActiveTab();
 			}
 		}
@@ -2998,41 +2998,35 @@ WCF.TabMenu = {
 	
 	/**
 	 * Resolves location hash to display tab menus.
+	 * 
+	 * @return	boolean
 	 */
 	selectTabs: function() {
 		if (location.hash) {
 			var $hash = location.hash.substr(1);
-			var $subIndex = null;
-			if (/-/.test(location.hash)) {
-				var $tmp = $hash.split('-');
-				$hash = $tmp[0];
-				$subIndex = $tmp[1];
-			}
 			
-			// find a container which matches the first part
-			for (var $containerID in this._containers) {
-				var $tabMenu = this._containers[$containerID];
-				if ($tabMenu.wcfTabs('hasAnchor', $hash, false)) {
-					if ($subIndex !== null) {
-						// try to find child tabMenu
-						var $childTabMenu = $tabMenu.find('#' + $.wcfEscapeID($hash) + '.tabMenuContainer');
-						if ($childTabMenu.length !== 1) {
-							return;
+			// try to find matching tab menu container
+			var $tabMenu = $('#' + $.wcfEscapeID($hash));
+			if ($tabMenu.length === 1 && $tabMenu.hasClass('ui-tabs-panel')) {
+				$tabMenu = $tabMenu.parent('.ui-tabs');
+				if ($tabMenu.length) {
+					$tabMenu.wcfTabs('select', $hash);
+					
+					// check if this is a nested tab menu
+					if ($tabMenu.hasClass('ui-tabs-panel')) {
+						$hash = $tabMenu.wcfIdentify();
+						$tabMenu = $tabMenu.parent('.ui-tabs');
+						if ($tabMenu.length) {
+							$tabMenu.wcfTabs('select', $hash);
 						}
-						
-						// validate match for second part
-						if (!$childTabMenu.wcfTabs('hasAnchor', $subIndex, true)) {
-							return;
-						}
-						
-						$childTabMenu.wcfTabs('select', $hash + '-' + $subIndex);
 					}
 					
-					$tabMenu.wcfTabs('select', $hash);
-					return;
+					return true;
 				}
 			}
 		}
+		
+		return false;
 	}
 };
 
