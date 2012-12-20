@@ -2879,6 +2879,7 @@ WCF.TabMenu = {
 			// init jQuery UI TabMenu
 			self._containers[$containerID] = $tabMenu;
 			$tabMenu.wcfTabs({
+				active: false,
 				select: function(event, ui) {
 					var $panel = $(ui.panel);
 					var $container = $panel.closest('.tabMenuContainer');
@@ -2950,7 +2951,7 @@ WCF.TabMenu = {
 						break;
 					}
 					
-					$tabMenu = $tabMenu.data('parent').wcfTabs('select', $tabMenu.wcfIdentify());
+					$tabMenu = $tabMenu.data('parent').wcfTabs('selectTab', $tabMenu.wcfIdentify());
 				}
 				
 				return true;
@@ -2982,10 +2983,10 @@ WCF.TabMenu = {
 						
 						if ($subIndex !== null) {
 							if ($tabMenuItem.hasClass('tabMenuContainer')) {
-								$tabMenuItem.wcfTabs('select', $tabMenu.data('active'));
+								$tabMenuItem.wcfTabs('selectTab', $tabMenu.data('active'));
 							}
 							else {
-								$tabMenu.wcfTabs('select', $tabMenu.data('active'));
+								$tabMenu.wcfTabs('selectTab', $tabMenu.data('active'));
 							}
 						}
 						
@@ -3010,14 +3011,14 @@ WCF.TabMenu = {
 			if ($tabMenu.length === 1 && $tabMenu.hasClass('ui-tabs-panel')) {
 				$tabMenu = $tabMenu.parent('.ui-tabs');
 				if ($tabMenu.length) {
-					$tabMenu.wcfTabs('select', $hash);
+					$tabMenu.wcfTabs('selectTab', $hash);
 					
 					// check if this is a nested tab menu
 					if ($tabMenu.hasClass('ui-tabs-panel')) {
 						$hash = $tabMenu.wcfIdentify();
 						$tabMenu = $tabMenu.parent('.ui-tabs');
 						if ($tabMenu.length) {
-							$tabMenu.wcfTabs('select', $hash);
+							$tabMenu.wcfTabs('selectTab', $hash);
 						}
 					}
 					
@@ -7755,6 +7756,23 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 		}
 		
 		$.ui.tabs.prototype.select.apply(this, arguments);
+	},
+	
+	/**
+	 * Selects a specific tab by triggering the 'click' event.
+	 * 
+	 * @param	string		tabIdentifier
+	 */
+	selectTab: function(tabIdentifier) {
+		tabIdentifier = '#' + tabIdentifier;
+		
+		this.anchors.each(function(index, anchor) {
+			var $anchor = $(anchor);
+			if ($anchor.prop('hash') === tabIdentifier) {
+				$anchor.trigger('click');
+				return false;
+			}
+		});
 	},
 	
 	/**
