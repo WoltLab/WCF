@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<ruleset name="WCF">
+	<description>WoltLab Community Framework Coding Standard</description>
+	<exclude-pattern>*/wcfsetup/test.php</exclude-pattern>
+	<exclude-pattern>*/wcfsetup/install.php</exclude-pattern>
+	<exclude-pattern>*/CodeSniff/*</exclude-pattern>
+	
+	<rule ref="Generic.Classes.DuplicateClassName" />
+	<rule ref="Generic.Files.ByteOrderMark" />
+	<rule ref="Generic.Files.EndFileNewline" />
+	<rule ref="Generic.Files.OneClassPerFile" />
+	<rule ref="Generic.Files.OneInterfacePerFile" />
+	<rule ref="Generic.Formatting.DisallowMultipleStatements" />
+	<rule ref="Generic.Functions.FunctionCallArgumentSpacing" />
+	<rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie" />
+	<rule ref="Generic.NamingConventions.UpperCaseConstantName" />
+	<rule ref="Generic.PHP.CharacterBeforePHPOpeningTag" />
+	<rule ref="Generic.PHP.DisallowShortOpenTag" />
+	<rule ref="Generic.PHP.ForbiddenFunctions" />
+	<rule ref="Generic.PHP.LowerCaseConstant" />
+	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent" />
+	<rule ref="Squiz.Arrays.ArrayBracketSpacing" />
+	<rule ref="Squiz.Classes.LowercaseClassKeywords" />
+	<!--rule ref="Squiz.Classes.SelfMemberReference" /--> <!-- TODO: Is this wanted? -->
+	<rule ref="Squiz.Classes.ValidClassName" />
+	<rule ref="Squiz.Commenting.DocCommentAlignment" />
+	<rule ref="Squiz.ControlStructures.ElseIfDeclaration" />
+	<rule ref="Squiz.ControlStructures.ForEachLoopDeclaration" />
+	<rule ref="Squiz.ControlStructures.ForLoopDeclaration" />
+	<rule ref="Squiz.ControlStructures.LowercaseDeclaration" />
+	<rule ref="Squiz.Operators.ValidLogicalOperators" />
+	<rule ref="WCF.Classes.ClassFileName" />
+	<rule ref="WCF.ControlStructures.ControlSignature" />
+	<rule ref="WCF.WhiteSpace.SuperfluousWhitespace" />
+	<rule ref="Zend.Files.ClosingTag" />
+	
+	
+	<!-- Use Unix newlines -->
+	<rule ref="Generic.Files.LineEndings">
+		<properties>
+			<property name="eolChar" value="\n" />
+		</properties>
+	</rule>
+</ruleset>

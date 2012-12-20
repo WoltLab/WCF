@@ -59,7 +59,7 @@ final class APIAction extends AbstractAjaxAction {
 		
 		$this->data = $this->prune($object);
 		
-		if(empty($this->data)) {
+		if (empty($this->data)) {
 			throw new AJAXException("no results");
 		}
 		
@@ -81,7 +81,7 @@ final class APIAction extends AbstractAjaxAction {
 	protected function prune(IRESTfulResponse $object) {
 		$prunedArray = array();
 		
-		foreach($object->getResponseFields() as $fieldName) {
+		foreach ($object->getResponseFields() as $fieldName) {
 			if ($object->$fieldName) {
 				$prunedArray[$fieldName] = $object->$fieldName;
 			}

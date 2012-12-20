@@ -315,7 +315,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 */
 	protected function getShowOrder($showOrder, $parentName = null, $columnName = null, $tableNameExtension = '') {
 		if ($showOrder === null) {
-			 // get greatest showOrder value
+			// get greatest showOrder value
 			$conditions = new PreparedStatementConditionBuilder();
 			if ($columnName !== null) $conditions->add($columnName." = ?", array($parentName));
 			

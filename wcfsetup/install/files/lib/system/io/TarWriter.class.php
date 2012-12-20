@@ -232,9 +232,15 @@ class TarWriter extends Tar {
 		
 		// calculate the checksum
 		$checksum = 0;
-		for ($i = 0; $i < 148; $i++) $checksum += ord(substr($binaryDataFirst, $i, 1));
-		for ($i = 148; $i < 156; $i++) $checksum += ord(' ');
-		for ($i = 156, $j = 0; $i < 512; $i++, $j++) $checksum += ord(substr($binaryDataLast, $j, 1));
+		for ($i = 0; $i < 148; $i++) {
+			$checksum += ord(substr($binaryDataFirst, $i, 1));
+		}
+		for ($i = 148; $i < 156; $i++) {
+			$checksum += ord(' ');
+		}
+		for ($i = 156, $j = 0; $i < 512; $i++, $j++) {
+			$checksum += ord(substr($binaryDataLast, $j, 1));
+		}
 		
 		$this->file->write($binaryDataFirst, 148);
 		$this->file->write(pack("a8", sprintf("%6s ", decOct($checksum))), 8); // write the checksum
@@ -257,9 +263,15 @@ class TarWriter extends Tar {
 		
 		// calculate the checksum
 		$checksum = 0;
-		for ($i = 0; $i < 148; $i++) $checksum += ord(substr($binaryDataFirst, $i, 1));
-		for ($i = 148; $i < 156; $i++) $checksum += ord(' ');
-		for ($i = 156, $j = 0; $i < 512; $i++, $j++) $checksum += ord(substr($binaryDataLast, $j, 1));
+		for ($i = 0; $i < 148; $i++) {
+			$checksum += ord(substr($binaryDataFirst, $i, 1));
+		}
+		for ($i = 148; $i < 156; $i++) {
+			$checksum += ord(' ');
+		}
+		for ($i = 156, $j = 0; $i < 512; $i++, $j++) {
+			$checksum += ord(substr($binaryDataLast, $j, 1));
+		}
 		
 		$this->file->write($binaryDataFirst, 148);
 		$this->file->write(pack("a8", sprintf("%6s ", decOct($checksum))), 8); // write the checksum
