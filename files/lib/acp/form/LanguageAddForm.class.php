@@ -131,7 +131,7 @@ class LanguageAddForm extends ACPForm {
 			}
 			
 			// get language
-			$this->sourceLanguage = LanguageFactory::getInstance()->getLanguage($this->sourceLanguageID);;
+			$this->sourceLanguage = LanguageFactory::getInstance()->getLanguage($this->sourceLanguageID);
 			if (!$this->sourceLanguage->languageID) {
 				throw new UserInputException('sourceLanguageID');
 			}
