@@ -207,7 +207,7 @@ class StyleAddForm extends ACPForm {
 		// read variables with units, e.g. 13px
 		foreach ($this->globals as $variableName) {
 			if (isset($_POST[$variableName]) && is_numeric($_POST[$variableName])) {
-				if(isset($_POST[$variableName.'_unit']) && in_array($_POST[$variableName.'_unit'], $this->availableUnits)) { 
+				if (isset($_POST[$variableName.'_unit']) && in_array($_POST[$variableName.'_unit'], $this->availableUnits)) { 
 					$this->variables[$variableName] = $_POST[$variableName].$_POST[$variableName.'_unit'];
 				}
 			}

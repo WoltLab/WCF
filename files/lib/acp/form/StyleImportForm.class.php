@@ -67,8 +67,6 @@ class StyleImportForm extends ACPForm {
 		if (!@move_uploaded_file($this->source['tmp_name'], $this->source['name'])) {
 			throw new UserInputException('source', 'uploadFailed');
 		}
-		
-		
 	}
 	
 	/**
