@@ -77,7 +77,7 @@ class IndexPage extends AbstractPage {
 				}
 			}
 			
-			for($i = 0; $i < 7; $i++) {
+			for ($i = 0; $i < 7; $i++) {
 				if (file_exists(WCF_DIR.'log/'.date('Y-m-d', TIME_NOW - 86400 * $i).'.txt')) {
 					$this->healthDetails['error'][] = WCF::getLanguage()->getDynamicVariable('wcf.acp.index.health.exception', array(
 						'date' => TIME_NOW - 86400 * $i

@@ -65,7 +65,7 @@ class I18nHandler extends SingletonFactory {
 	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		 $this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
+		$this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
 	}
 	
 	/**

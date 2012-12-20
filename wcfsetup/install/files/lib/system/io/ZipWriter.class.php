@@ -166,8 +166,8 @@ class ZipWriter {
 			$headers.
 			$data.
 			$this->endOfData.
-			pack("v", sizeof($this->data)).
-			pack("v", sizeof($this->data)).
+			pack("v", count($this->data)).
+			pack("v", count($this->data)).
 			pack("V", strlen($data)).
 			pack("V", strlen($headers)).
 			"\x00\x00";

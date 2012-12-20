@@ -447,7 +447,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		$languageItemList->sqlLimit = 0;
 		$languageItemList->readObjects();
 		
-		foreach($languageItemList->getObjects() as $languageItem) {
+		foreach ($languageItemList->getObjects() as $languageItem) {
 			$languageItemEditor = new LanguageItemEditor($languageItem);
 			$languageItemEditor->update(array(
 				'languageCustomItemValue' => $items[$languageItem->languageItem],
