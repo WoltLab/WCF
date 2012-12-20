@@ -2924,10 +2924,10 @@ WCF.TabMenu = {
 		
 		// try to resolve location hash
 		if (!this._didInit) {
-			var $tabSelected = this.selectTabs();
+			this.selectTabs();
 			$(window).bind('hashchange', $.proxy(this.selectTabs, this));
 			
-			if (!this._selectErroneousTab() && !$tabSelected) {
+			if (!this._selectErroneousTab()) {
 				this._selectActiveTab();
 			}
 		}
