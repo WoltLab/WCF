@@ -31,6 +31,12 @@ class UserOptionHandler extends OptionHandler {
 	public $editMode = true;
 	
 	/**
+	 * true, if within search mode
+	 * @var boolean
+	 */
+	public $searchMode = false;
+	
+	/**
 	 * true, if empty options should be removed
 	 * @var	boolean
 	 */
@@ -69,6 +75,16 @@ class UserOptionHandler extends OptionHandler {
 	}
 	
 	/**
+	 * Enables search mode.
+	 *
+	 * @param	boolean		$enable
+	 */
+	public function enableSearchMode($enable = true) {
+		$this->searchMode = $enable;
+		if ($enable) $this->enableEditMode(false);
+	}
+	
+	/**
 	 * Sets option values for a certain user.
 	 * 
 	 * @param	wcf\data\user\User	$user
@@ -97,16 +113,27 @@ class UserOptionHandler extends OptionHandler {
 	public function getOption($optionName) {
 		$optionData = parent::getOption($optionName);
 		
-		$optionData['object'] = new ViewableUserOption($optionData['object']);
-		if ($this->user !== null) {
-			$optionData['object']->setOptionValue($this->user);
-		}
-		
-		if ($this->removeEmptyOptions && empty($optionData['object']->optionValue)) {
-			return null;
+		if (!$this->editMode && !$this->searchMode) {
+			$optionData['object'] = new ViewableUserOption($optionData['object']);
+			if ($this->user !== null) {
+				$optionData['object']->setOptionValue($this->user);
+			}
+			
+			if ($this->removeEmptyOptions && empty($optionData['object']->optionValue)) {
+				return null;
+			}
 		}
 		
 		return $optionData;
+	}
+	
+	/**
+	 * @see	wcf\system\option\IOptionType::getFormElement()
+	 */
+	protected function getFormElement($type, Option $option) {
+		if ($this->searchMode) return $this->getTypeObject($type)->getSearchFormElement($option, (isset($this->optionValues[$option->optionName]) ? $this->optionValues[$option->optionName] : null));
+		
+		return parent::getFormElement($type, $option);
 	}
 	
 	/**
@@ -135,11 +162,17 @@ class UserOptionHandler extends OptionHandler {
 	 * @see	wcf\system\option\OptionHandler::checkVisibility()
 	 */
 	protected function checkVisibility(Option $option) {
+		if ($option->disabled) {
+			return false;
+		}
+		
+		// in registration
 		if ($this->inRegistration && !$option->askDuringRegistration && !$option->required) {
 			return false;
 		}
 		
-		if ($option->disabled) {
+		// search mode
+		if ($this->searchMode && !$option->searchable) {
 			return false;
 		}
 		
@@ -179,6 +212,17 @@ class UserOptionHandler extends OptionHandler {
 	public function readData() {
 		foreach ($this->options as $option) {
 			if (!isset($this->optionValues[$option->optionName])) $this->optionValues[$option->optionName] = $option->defaultValue;
+		}
+	}
+	
+	/**
+	 * @see	wcf\system\option\IOptionHandler::readUserInput()
+	 */
+	public function readUserInput(array &$source) {
+		parent::readUserInput($source);
+		
+		if ($this->searchMode) {
+			$this->optionValues = $this->rawValues;
 		}
 	}
 }

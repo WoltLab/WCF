@@ -212,7 +212,7 @@ class OptionHandler implements IOptionHandler {
 				// add option to list
 				$option = $this->getOption($optionName);
 				if ($option !== null) {
-					$children[] = $this->getOption($optionName);
+					$children[] = $option;
 				}
 			}
 		}
