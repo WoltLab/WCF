@@ -133,6 +133,8 @@ dl:not(.plain) {
 			text-align: left;
 			float: none;
 			width: auto;
+			
+			.textShadow(@wcfSidebarBackgroundColor);
 		}
 		
 		> dd {
@@ -297,7 +299,7 @@ select[multiple][disabled] {
 	input[type='password'],
 	textarea {
 		background-color: @wcfErrorBackgroundColor;
-		border-color: @wcfErrorBorderColor
+		border-color: @wcfErrorBorderColor;
 	}
 }
 
