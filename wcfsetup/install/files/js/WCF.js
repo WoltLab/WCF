@@ -2879,6 +2879,7 @@ WCF.TabMenu = {
 			// init jQuery UI TabMenu
 			self._containers[$containerID] = $tabMenu;
 			$tabMenu.wcfTabs({
+				active: false,
 				select: function(event, ui) {
 					var $panel = $(ui.panel);
 					var $container = $panel.closest('.tabMenuContainer');
@@ -2950,7 +2951,7 @@ WCF.TabMenu = {
 						break;
 					}
 					
-					$tabMenu = $tabMenu.data('parent').wcfTabs('select', $tabMenu.wcfIdentify());
+					$tabMenu = $tabMenu.data('parent').wcfTabs('selectTab', $tabMenu.wcfIdentify());
 				}
 				
 				return true;
@@ -2982,10 +2983,10 @@ WCF.TabMenu = {
 						
 						if ($subIndex !== null) {
 							if ($tabMenuItem.hasClass('tabMenuContainer')) {
-								$tabMenuItem.wcfTabs('select', $tabMenu.data('active'));
+								$tabMenuItem.wcfTabs('selectTab', $tabMenu.data('active'));
 							}
 							else {
-								$tabMenu.wcfTabs('select', $tabMenu.data('active'));
+								$tabMenu.wcfTabs('selectTab', $tabMenu.data('active'));
 							}
 						}
 						
@@ -2998,41 +2999,35 @@ WCF.TabMenu = {
 	
 	/**
 	 * Resolves location hash to display tab menus.
+	 * 
+	 * @return	boolean
 	 */
 	selectTabs: function() {
 		if (location.hash) {
 			var $hash = location.hash.substr(1);
-			var $subIndex = null;
-			if (/-/.test(location.hash)) {
-				var $tmp = $hash.split('-');
-				$hash = $tmp[0];
-				$subIndex = $tmp[1];
-			}
 			
-			// find a container which matches the first part
-			for (var $containerID in this._containers) {
-				var $tabMenu = this._containers[$containerID];
-				if ($tabMenu.wcfTabs('hasAnchor', $hash, false)) {
-					if ($subIndex !== null) {
-						// try to find child tabMenu
-						var $childTabMenu = $tabMenu.find('#' + $.wcfEscapeID($hash) + '.tabMenuContainer');
-						if ($childTabMenu.length !== 1) {
-							return;
+			// try to find matching tab menu container
+			var $tabMenu = $('#' + $.wcfEscapeID($hash));
+			if ($tabMenu.length === 1 && $tabMenu.hasClass('ui-tabs-panel')) {
+				$tabMenu = $tabMenu.parent('.ui-tabs');
+				if ($tabMenu.length) {
+					$tabMenu.wcfTabs('selectTab', $hash);
+					
+					// check if this is a nested tab menu
+					if ($tabMenu.hasClass('ui-tabs-panel')) {
+						$hash = $tabMenu.wcfIdentify();
+						$tabMenu = $tabMenu.parent('.ui-tabs');
+						if ($tabMenu.length) {
+							$tabMenu.wcfTabs('selectTab', $hash);
 						}
-						
-						// validate match for second part
-						if (!$childTabMenu.wcfTabs('hasAnchor', $subIndex, true)) {
-							return;
-						}
-						
-						$childTabMenu.wcfTabs('select', $hash + '-' + $subIndex);
 					}
 					
-					$tabMenu.wcfTabs('select', $hash);
-					return;
+					return true;
 				}
 			}
 		}
+		
+		return false;
 	}
 };
 
@@ -7761,6 +7756,23 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 		}
 		
 		$.ui.tabs.prototype.select.apply(this, arguments);
+	},
+	
+	/**
+	 * Selects a specific tab by triggering the 'click' event.
+	 * 
+	 * @param	string		tabIdentifier
+	 */
+	selectTab: function(tabIdentifier) {
+		tabIdentifier = '#' + tabIdentifier;
+		
+		this.anchors.each(function(index, anchor) {
+			var $anchor = $(anchor);
+			if ($anchor.prop('hash') === tabIdentifier) {
+				$anchor.trigger('click');
+				return false;
+			}
+		});
 	},
 	
 	/**

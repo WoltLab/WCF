@@ -6,6 +6,7 @@
  * @package	com.woltlab.wcf
  * @category	Community Framework
  */
+// @codingStandardsIgnoreFile
 // get url
 $url = '';
 if (isset($_GET['url'])) $url = htmlspecialchars(str_replace(';', '%3B', trim($_GET['url'])));

@@ -21,6 +21,13 @@
 		<script type="text/javascript">
 			//<![CDATA[
 			$(function() {
+				// fix anchor
+				var $location = location.toString().replace(location.hash, '');
+				$('.sitemap .tabMenu a').each(function(index, link) {
+					var $link = $(link);
+					$link.attr('href', $location + $link.attr('href'));
+				});
+				
 				WCF.TabMenu.init();
 			});
 			//]]>

@@ -13,6 +13,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.exception
  * @category	Community Framework
  */
+// @codingStandardsIgnoreFile
 class SystemException extends LoggedException implements IPrintableException {
 	/**
 	 * error description

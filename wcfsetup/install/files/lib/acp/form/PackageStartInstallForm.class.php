@@ -193,7 +193,7 @@ class PackageStartInstallForm extends ACPForm {
 			if (!$this->archive->isValidInstall()) {
 				throw new UserInputException($type, 'noValidInstall');
 			}
-			elseif ($this->archive->isAlreadyInstalled()) {
+			else if ($this->archive->isAlreadyInstalled()) {
 				throw new UserInputException($type, 'uniqueAlreadyInstalled');
 			}
 		}
