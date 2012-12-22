@@ -57,11 +57,23 @@
 }
 
 .transition(@property, @duration, @type: linear) {
-	-webkit-transition: @arguments;
-	-moz-transition: @arguments;
-	-ms-transition: @arguments;
-	-o-transition: @arguments;
-	transition: @arguments;
+	-webkit-transition-property: @property;
+	-moz-transition-property: @property;
+	-ms-transition-property: @property;
+	-o-transition-property: @property;
+	transition-property: @property;
+	
+	-webkit-transition-duration: @duration;
+	-moz-transition-duration: @duration;
+	-ms-transition-duration: @duration;
+	-o-transition-duration: @duration;
+	transition-duration: @duration;
+	
+	-webkit-transition-timing-function: @type;
+	-moz-transition-timing-function: @type;
+	-ms-transition-timing-function: @type;
+	-o-transition-timing-function: @type;
+	transition-timing-function: @type;
 }
 
 .boxShadow(@topOffset, @leftOffset, @color, @blurriness: 5px, @shadowHeight: 0) {

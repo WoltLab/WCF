@@ -359,7 +359,6 @@ class TemplateEngine extends SingletonFactory {
 			return 1;
 		}
 		
-		
 		throw new SystemException("Unable to find template '$templateName'");
 	}
 	

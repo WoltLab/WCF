@@ -120,12 +120,6 @@ class UserSearchForm extends UserOptionListForm {
 	public $maxResults = 0;
 	
 	/**
-	 * list of option values
-	 * @var	array
-	 */
-	public $values = array();
-	
-	/**
 	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
@@ -142,17 +136,23 @@ class UserSearchForm extends UserOptionListForm {
 		if (isset($_POST['sortField'])) $this->sortField = $_POST['sortField'];
 		if (isset($_POST['sortOrder'])) $this->sortOrder = $_POST['sortOrder'];
 		if (isset($_POST['columns']) && is_array($_POST['columns'])) $this->columns = $_POST['columns'];
-		
-		if (isset($_POST['values']) && is_array($_POST['values'])) $this->values = $_POST['values'];
+	}
+	
+	/**
+	 * @see	wcf\acp\form\AbstractOptionListForm::initOptionHandler()
+	 */
+	protected function initOptionHandler() {
+		$this->optionHandler->enableSearchMode();
+		$this->optionHandler->init();
 	}
 	
 	/**
 	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		$this->readOptionTree();
-		
 		parent::readData();
+		
+		$this->readOptionTree();
 	}
 	
 	/**
@@ -298,8 +298,8 @@ class UserSearchForm extends UserOptionListForm {
 		foreach ($this->optionHandler->getCategoryOptions('profile') as $option) {
 			$option = $option['object'];
 			
-			$value = isset($this->values[$option->optionName]) ? $this->values[$option->optionName] : null;
-			$this->optionHandler->getTypeObject($option->optionType)->getCondition($this->conditions, $option->getDecoratedObject(), $value);
+			$value = isset($this->optionHandler->optionValues[$option->optionName]) ? $this->optionHandler->optionValues[$option->optionName] : null;
+			$this->optionHandler->getTypeObject($option->optionType)->getCondition($this->conditions, $option, $value);
 		}
 	}
 }

@@ -26,17 +26,6 @@ class Option extends DatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'optionID';
 	
-	// equals to an empty bitmask, NOT a valid bit!
-	const VISIBILITY_NONE = 0;
-	
-	const VISIBILITY_OWNER = 1;
-	const VISIBILITY_ADMINISTRATOR = 2;
-	const VISIBILITY_REGISTERED = 4;
-	const VISIBILITY_GUEST = 8;
-	
-	// equals to VISIBILITY_GUEST, NOT a valid bit!
-	const VISIBILITY_ALL = 15;
-	
 	/**
 	 * @see	wcf\data\DatabaseObject::handleData()
 	 */
@@ -150,10 +139,9 @@ class Option extends DatabaseObject {
 	/**
 	 * Returns true, if option is visible
 	 * 
-	 * @param	boolean		$overrideVisibility
 	 * @return	boolean
 	 */
-	public function isVisible($overrideVisibility = false) {
+	public function isVisible() {
 		return !$this->hidden;
 	}
 	

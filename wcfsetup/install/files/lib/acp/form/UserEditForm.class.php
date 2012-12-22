@@ -44,18 +44,10 @@ class UserEditForm extends UserAddForm {
 	public $user = null;
 	
 	/**
-	 * @see	wcf\acp\form\AbstractOptionListForm::$loadActiveOptions
-	 */
-	public $loadActiveOptions = false;
-	
-	/**
 	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
-		parent::readParameters();
-		
 		if (isset($_REQUEST['id'])) $this->userID = intval($_REQUEST['id']);
-		
 		$user = new User($this->userID);
 		if (!$user->userID) {
 			throw new IllegalLinkException();
@@ -66,8 +58,14 @@ class UserEditForm extends UserAddForm {
 			throw new PermissionDeniedException();
 		}
 		
+		parent::readParameters();
+	}
+	
+	/**
+	 * wcf\acp\form\AbstractOptionListForm::initOptionHandler()
+	 */
+	protected function initOptionHandler() {
 		$this->optionHandler->setUser($this->user->getDecoratedObject());
-		$this->optionHandler->showEmptyOptions();
 	}
 	
 	/**
@@ -93,17 +91,6 @@ class UserEditForm extends UserAddForm {
 		}
 		
 		parent::readData();
-	}
-	
-	/**
-	 * @see	wcf\acp\form\UserAddForm::readOptionTree()
-	 */
-	protected function readOptionTree() {
-		if (empty($_POST)) {
-			$this->optionHandler->setUser($this->user->getDecoratedObject());
-		}
-		
-		parent::readOptionTree();
 	}
 	
 	/**

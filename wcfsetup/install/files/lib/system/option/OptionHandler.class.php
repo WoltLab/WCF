@@ -87,12 +87,6 @@ class OptionHandler implements IOptionHandler {
 	public $optionValues = array();
 	
 	/**
-	 * visibility override
-	 * @var	boolean
-	 */
-	public $overrideVisibility = false;
-	
-	/**
 	 * raw option values
 	 * @var	array<mixed>
 	 */
@@ -113,7 +107,7 @@ class OptionHandler implements IOptionHandler {
 	/**
 	 * @see	wcf\system\option\IOptionHandler::__construct()
 	 */
-	public function __construct($cacheName, $cacheClass, $supportI18n, $languageItemPattern = '', $categoryName = '', $loadActiveOptions = true) {
+	public function __construct($cacheName, $cacheClass, $supportI18n, $languageItemPattern = '', $categoryName = '') {
 		$this->cacheName = $cacheName;
 		$this->cacheClass = $cacheClass;
 		$this->categoryName = $categoryName;
@@ -121,7 +115,7 @@ class OptionHandler implements IOptionHandler {
 		$this->supportI18n = $supportI18n;
 		
 		// load cache on init
-		$this->readCache($loadActiveOptions);
+		$this->readCache();
 	}
 	
 	/**
@@ -218,7 +212,7 @@ class OptionHandler implements IOptionHandler {
 				// add option to list
 				$option = $this->getOption($optionName);
 				if ($option !== null) {
-					$children[] = $this->getOption($optionName);
+					$children[] = $option;
 				}
 			}
 		}
@@ -365,10 +359,8 @@ class OptionHandler implements IOptionHandler {
 	
 	/**
 	 * Gets all options and option categories from cache.
-	 * 
-	 * @param	boolean		$loadActiveOptions
 	 */
-	protected function readCache($loadActiveOptions) {
+	protected function readCache() {
 		CacheHandler::getInstance()->addResource(
 			$this->cacheName,
 			WCF_DIR.'cache/cache.'.$this->cacheName.'.php',
@@ -380,11 +372,16 @@ class OptionHandler implements IOptionHandler {
 		$this->cachedOptions = CacheHandler::getInstance()->get($this->cacheName, 'options');
 		$this->cachedCategoryStructure = CacheHandler::getInstance()->get($this->cacheName, 'categoryStructure');
 		$this->cachedOptionToCategories = CacheHandler::getInstance()->get($this->cacheName, 'optionToCategories');
-		
-		if ($loadActiveOptions) {
+	}
+	
+	/**
+	 * Initializes active options.
+	 */
+	public function init() {
+		if (!$this->didInit) {
 			// get active options
 			$this->loadActiveOptions($this->categoryName);
-			
+				
 			// mark options as initialized
 			$this->didInit = true;
 		}
@@ -394,14 +391,8 @@ class OptionHandler implements IOptionHandler {
 	 * Creates a list of all active options.
 	 * 
 	 * @param	string		$parentCategoryName
-	 * @param	array<string>	$ignoreCategories
 	 */
-	protected function loadActiveOptions($parentCategoryName, array $ignoreCategories = array()) {
-		// skip ignored categories
-		if (in_array($parentCategoryName, $ignoreCategories)) {
-			return;
-		}
-		
+	protected function loadActiveOptions($parentCategoryName) {
 		if (!isset($this->cachedCategories[$parentCategoryName]) || $this->checkCategory($this->cachedCategories[$parentCategoryName])) {
 			if (isset($this->cachedOptionToCategories[$parentCategoryName])) {
 				foreach ($this->cachedOptionToCategories[$parentCategoryName] as $optionName) {
@@ -413,7 +404,7 @@ class OptionHandler implements IOptionHandler {
 			
 			if (isset($this->cachedCategoryStructure[$parentCategoryName])) {
 				foreach ($this->cachedCategoryStructure[$parentCategoryName] as $categoryName) {
-					$this->loadActiveOptions($categoryName, $ignoreCategories);
+					$this->loadActiveOptions($categoryName);
 				}
 			}
 		}
@@ -463,7 +454,7 @@ class OptionHandler implements IOptionHandler {
 	 * @return	boolean
 	 */
 	protected function checkOption(Option $option) {
-		if ($option->permissions && !$this->overrideVisibility) {
+		if ($option->permissions) {
 			$hasPermission = false;
 			$permissions = explode(',', $option->permissions);
 			foreach ($permissions as $permission) {
@@ -504,13 +495,6 @@ class OptionHandler implements IOptionHandler {
 	 * @return	boolean
 	 */
 	protected function checkVisibility(Option $option) {
-		return $option->isVisible($this->overrideVisibility);
-	}
-	
-	/**
-	 * Overrides option visibility for administrative purposes.
-	 */
-	public function overrideVisibility() {
-		$this->overrideVisibility = true;
+		return $option->isVisible();
 	}
 }

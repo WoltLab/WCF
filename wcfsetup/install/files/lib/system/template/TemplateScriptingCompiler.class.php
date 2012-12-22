@@ -884,7 +884,7 @@ class TemplateScriptingCompiler {
 	 */
 	public static function makeArgString($args) {
 		$argString = '';
-		foreach	($args as $key => $val) {
+		foreach ($args as $key => $val) {
 			if ($argString != '') {
 				$argString .= ', ';
 			}
@@ -906,7 +906,7 @@ class TemplateScriptingCompiler {
 		if ($file && $line) {
 			$errorMsg .= " in template '$file' on line $line";
 		}
-		elseif ($file && !$line) {
+		else if ($file && !$line) {
 			$errorMsg .= " in template '$file'";
 		}
 		return $errorMsg;

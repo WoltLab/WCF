@@ -1693,33 +1693,59 @@ WCF.Action.SimpleProxy = Class.extend({
  * Basic implementation for AJAXProxy-based deletion.
  * 
  * @param	string		className
- * @param	jQuery		containerList
- * @param	jQuery		badgeList
+ * @param	string		containerSelector
  */
 WCF.Action.Delete = Class.extend({
+	/**
+	 * action class name
+	 * @var	string
+	 */
+	_className: '',
+	
+	/**
+	 * container selector
+	 * @var	string
+	 */
+	_containerSelector: '',
+	
+	/**
+	 * list of known container ids
+	 * @var	array<string>
+	 */
+	_containers: [ ],
+	
 	/**
 	 * Initializes 'delete'-Proxy.
 	 * 
 	 * @param	string		className
-	 * @param	jQuery		containerList
-	 * @param	jQuery		badgeList
+	 * @param	string		containerSelector
 	 */
-	init: function(className, containerList, badgeList) {
-		if (!containerList.length) return;
-		this.containerList = containerList;
-		this.className = className;
-		this.badgeList = badgeList;
-		
-		// initialize proxy
-		var options = {
+	init: function(className, containerSelector) {
+		this._containerSelector = containerSelector;
+		this._className = className;
+		this.proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
-		};
-		this.proxy = new WCF.Action.Proxy(options);
+		});
 		
-		// bind event listener
-		this.containerList.each($.proxy(function(index, container) {
-			$(container).find('.jsDeleteButton').bind('click', $.proxy(this._click, this));
-		}, this));
+		this._initElements();
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Action.Delete' + this._className.hashCode(), $.proxy(this._initElements, this));
+	},
+	
+	/**
+	 * Initializes available element containers.
+	 */
+	_initElements: function() {
+		var self = this;
+		$(this._containerSelector).each(function(index, container) {
+			var $container = $(container);
+			var $containerID = $container.wcfIdentify();
+			
+			if (!WCF.inArray($containerID, self._containers)) {
+				self._containers.push($containerID);
+				$container.find('.jsDeleteButton').click($.proxy(self._click, self));
+			}
+		});
 	},
 	
 	/**
@@ -1757,7 +1783,7 @@ WCF.Action.Delete = Class.extend({
 	_sendRequest: function(object) {
 		this.proxy.setOption('data', {
 			actionName: 'delete',
-			className: this.className,
+			className: this._className,
 			objectIDs: [ $(object).data('objectID') ]
 		});
 		
@@ -1781,21 +1807,12 @@ WCF.Action.Delete = Class.extend({
 	 * @param	array		objectIDs
 	 */
 	triggerEffect: function(objectIDs) {
-		this.containerList.each($.proxy(function(index, container) {
-			var $objectID = $(container).find('.jsDeleteButton').data('objectID');
-			if (WCF.inArray($objectID, objectIDs)) {
-				$(container).wcfBlindOut('up', function() {
-					$(container).empty().remove();
-				}, container);
-				
-				// update badges
-				if (this.badgeList) {
-					this.badgeList.each(function(innerIndex, badge) {
-						$(badge).html($(badge).html() - 1);
-					});
-				}
+		for (var $index in this._containers) {
+			var $container = $('#' + this._containers[$index]);
+			if (WCF.inArray($container.find('.jsDeleteButton').data('objectID'), objectIDs)) {
+				$container.wcfBlindOut('up', function() { $container.remove(); });
 			}
-		}, this));
+		}
 	}
 });
 
@@ -2015,9 +2032,18 @@ WCF.Date.Picker = {
 	 * Initializes the jQuery UI based date picker.
 	 */
 	init: function() {
-		$('input[type=date]').each(function(index, input) {
+		this._initDatePicker();
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Date.Picker', $.proxy(this._initDatePicker, this));
+	},
+	
+	/**
+	 * Initializes the date picker for valid fields.
+	 */
+	_initDatePicker: function() {
+		$('input[type=date]:not(.jsDatePicker)').each(function(index, input) {
 			// do *not* use .attr()
-			var $input = $(input).prop('type', 'text');
+			var $input = $(input).prop('type', 'text').addClass('jsDatePicker');
 			
 			// TODO: we should support all these braindead date formats, at least within output
 			$input.datepicker({
@@ -2853,6 +2879,7 @@ WCF.TabMenu = {
 			// init jQuery UI TabMenu
 			self._containers[$containerID] = $tabMenu;
 			$tabMenu.wcfTabs({
+				active: false,
 				select: function(event, ui) {
 					var $panel = $(ui.panel);
 					var $container = $panel.closest('.tabMenuContainer');
@@ -2924,7 +2951,7 @@ WCF.TabMenu = {
 						break;
 					}
 					
-					$tabMenu = $tabMenu.data('parent').wcfTabs('select', $tabMenu.wcfIdentify());
+					$tabMenu = $tabMenu.data('parent').wcfTabs('selectTab', $tabMenu.wcfIdentify());
 				}
 				
 				return true;
@@ -2956,10 +2983,10 @@ WCF.TabMenu = {
 						
 						if ($subIndex !== null) {
 							if ($tabMenuItem.hasClass('tabMenuContainer')) {
-								$tabMenuItem.wcfTabs('select', $tabMenu.data('active'));
+								$tabMenuItem.wcfTabs('selectTab', $tabMenu.data('active'));
 							}
 							else {
-								$tabMenu.wcfTabs('select', $tabMenu.data('active'));
+								$tabMenu.wcfTabs('selectTab', $tabMenu.data('active'));
 							}
 						}
 						
@@ -2972,41 +2999,35 @@ WCF.TabMenu = {
 	
 	/**
 	 * Resolves location hash to display tab menus.
+	 * 
+	 * @return	boolean
 	 */
 	selectTabs: function() {
 		if (location.hash) {
 			var $hash = location.hash.substr(1);
-			var $subIndex = null;
-			if (/-/.test(location.hash)) {
-				var $tmp = $hash.split('-');
-				$hash = $tmp[0];
-				$subIndex = $tmp[1];
-			}
 			
-			// find a container which matches the first part
-			for (var $containerID in this._containers) {
-				var $tabMenu = this._containers[$containerID];
-				if ($tabMenu.wcfTabs('hasAnchor', $hash, false)) {
-					if ($subIndex !== null) {
-						// try to find child tabMenu
-						var $childTabMenu = $tabMenu.find('#' + $.wcfEscapeID($hash) + '.tabMenuContainer');
-						if ($childTabMenu.length !== 1) {
-							return;
+			// try to find matching tab menu container
+			var $tabMenu = $('#' + $.wcfEscapeID($hash));
+			if ($tabMenu.length === 1 && $tabMenu.hasClass('ui-tabs-panel')) {
+				$tabMenu = $tabMenu.parent('.ui-tabs');
+				if ($tabMenu.length) {
+					$tabMenu.wcfTabs('selectTab', $hash);
+					
+					// check if this is a nested tab menu
+					if ($tabMenu.hasClass('ui-tabs-panel')) {
+						$hash = $tabMenu.wcfIdentify();
+						$tabMenu = $tabMenu.parent('.ui-tabs');
+						if ($tabMenu.length) {
+							$tabMenu.wcfTabs('selectTab', $hash);
 						}
-						
-						// validate match for second part
-						if (!$childTabMenu.wcfTabs('hasAnchor', $subIndex, true)) {
-							return;
-						}
-						
-						$childTabMenu.wcfTabs('select', $hash + '-' + $subIndex);
 					}
 					
-					$tabMenu.wcfTabs('select', $hash);
-					return;
+					return true;
 				}
 			}
 		}
+		
+		return false;
 	}
 };
 
@@ -4142,6 +4163,12 @@ WCF.DOMNodeInsertedHandler = {
 	_discardEvent: true,
 	
 	/**
+	 * counts requests to enable WCF.DOMNodeInsertedHandler
+	 * @var	integer
+	 */
+	_discardEventCount: 0,
+	
+	/**
 	 * prevent infinite loop if a callback manipulates DOM
 	 * @var	boolean
 	 */
@@ -4160,6 +4187,7 @@ WCF.DOMNodeInsertedHandler = {
 	 * @param	object		callback
 	 */
 	addCallback: function(identifier, callback) {
+		this._discardEventCount = 0;
 		this._bindListener();
 		
 		if (this._callbacks.isset(identifier)) {
@@ -4195,7 +4223,7 @@ WCF.DOMNodeInsertedHandler = {
 	/**
 	 * Executes callbacks on click.
 	 */
-	_executeCallbacks: function(event) {
+	_executeCallbacks: function() {
 		if (this._discardEvent || this._isExecuting) return;
 		
 		// do not track events while executing callbacks
@@ -4203,7 +4231,7 @@ WCF.DOMNodeInsertedHandler = {
 		
 		this._callbacks.each(function(pair) {
 			// execute callback
-			pair.value(event);
+			pair.value();
 		});
 		
 		// enable listener again
@@ -4214,7 +4242,12 @@ WCF.DOMNodeInsertedHandler = {
 	 * Disables DOMNodeInsertedHandler, should be used after you've enabled it.
 	 */
 	disable: function() {
-		this._discardEvent = true;
+		this._discardEventCount--;
+		
+		if (this._discardEventCount < 1) {
+			this._discardEvent = true;
+			this._discardEventCount = 0;
+		}
 	},
 	
 	/**
@@ -4223,7 +4256,18 @@ WCF.DOMNodeInsertedHandler = {
 	 * once you've enabled it, if you fail it will cause an infinite loop!
 	 */
 	enable: function() {
+		this._discardEventCount++;
+		
 		this._discardEvent = false;
+	},
+	
+	/**
+	 * Forces execution of DOMNodeInsertedHandler.
+	 */
+	forceExecution: function() {
+		this.enable();
+		this._executeCallbacks();
+		this.disable();
 	}
 };
 
@@ -6185,7 +6229,11 @@ WCF.Popover = Class.extend({
 		
 		// insert html
 		if (!this._data[this._activeElementID].loading && this._data[this._activeElementID].content) {
+			WCF.DOMNodeInsertedHandler.enable();
+			
 			this._popoverContent.html(this._data[this._activeElementID].content);
+			
+			WCF.DOMNodeInsertedHandler.disable();
 		}
 		else {
 			this._data[this._activeElementID].loading = true;
@@ -6251,11 +6299,17 @@ WCF.Popover = Class.extend({
 		
 		// only update content if element id is active
 		if (this._activeElementID === elementID) {
+			WCF.DOMNodeInsertedHandler.enable();
+			
 			if (animate) {
 				// get current dimensions
 				var $dimensions = this._popoverContent.getDimensions();
 				
 				// insert new content
+				this._popoverContent.css({
+					height: 'auto',
+					width: 'auto'
+				});
 				this._popoverContent.html(this._data[elementID].content);
 				var $newDimensions = this._popoverContent.getDimensions();
 				
@@ -6271,13 +6325,19 @@ WCF.Popover = Class.extend({
 					height: $newDimensions.height + 'px',
 					width: $newDimensions.width + 'px'
 				}, 300, function() {
+					WCF.DOMNodeInsertedHandler.enable();
+					
 					self._popoverContent.html(self._data[elementID].content).css({ opacity: 0 }).animate({ opacity: 1 }, 200);
+					
+					WCF.DOMNodeInsertedHandler.disable();
 				});
 			}
 			else {
 				// insert new content
 				this._popoverContent.html(this._data[elementID].content);
 			}
+			
+			WCF.DOMNodeInsertedHandler.disable();
 		}
 	},
 	
@@ -7696,6 +7756,23 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 		}
 		
 		$.ui.tabs.prototype.select.apply(this, arguments);
+	},
+	
+	/**
+	 * Selects a specific tab by triggering the 'click' event.
+	 * 
+	 * @param	string		tabIdentifier
+	 */
+	selectTab: function(tabIdentifier) {
+		tabIdentifier = '#' + tabIdentifier;
+		
+		this.anchors.each(function(index, anchor) {
+			var $anchor = $(anchor);
+			if ($anchor.prop('hash') === tabIdentifier) {
+				$anchor.trigger('click');
+				return false;
+			}
+		});
 	},
 	
 	/**

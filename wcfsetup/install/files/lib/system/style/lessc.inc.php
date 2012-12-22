@@ -1,5 +1,5 @@
 <?php
-
+// @codingStandardsIgnoreFile
 /**
  * lessphp v0.3.8
  * http://leafo.net/lessphp
