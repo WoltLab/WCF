@@ -124,6 +124,13 @@ class WCFSetup extends WCF {
 	}
 	
 	/**
+	 * Returns the wcf folder.
+	 */
+	public static function getWCFFolder() {
+		return self::$wcfDir;
+	}
+	
+	/**
 	 * Gets the selected language.
 	 */
 	protected static function getLanguageSelection() {

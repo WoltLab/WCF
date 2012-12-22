@@ -13,6 +13,7 @@ use wcf\system\io\File;
 use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
 use wcf\system\WCF;
+use wcf\system\WCFSetup;
 use wcf\util\DirectoryUtil;
 use wcf\util\StringUtil;
 use wcf\util\XML;
@@ -302,18 +303,33 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	public static function deleteLanguageFiles($languageID = '.*', $category = '.*') {
 		if ($category != '.*') $category = preg_quote($category, '~');
 		if ($languageID != '.*') $languageID = intval($languageID);
-
-		DirectoryUtil::getInstance(WCF_DIR.'language/')->removePattern(new Regex($languageID.'_'.$category.'\.php$'));
+		
+		// workaround for CLIWCFSetup, as we cannot redefine WCF_DIR
+		if (class_exists('wcf\system\WCFSetup', false)) {
+			DirectoryUtil::getInstance(WCFSetup::getWCFFolder().'language/')->removePattern(new Regex($languageID.'_'.$category.'\.php$'));
+		}
+		else {
+			DirectoryUtil::getInstance(WCF_DIR.'language/')->removePattern(new Regex($languageID.'_'.$category.'\.php$'));
+		}
 	}
 	
 	/**
 	 * Deletes relevant template compilations.
 	 */
 	public function deleteCompiledTemplates() {
-		// templates
-		DirectoryUtil::getInstance(WCF_DIR.'templates/compiled/')->removePattern(new Regex('.*_'.$this->languageID.'_.*\.php$'));
-		// acp templates
-		DirectoryUtil::getInstance(WCF_DIR.'acp/templates/compiled/')->removePattern(new Regex('.*_'.$this->languageID.'_.*\.php$'));
+		// workaround for CLIWCFSetup, as we cannot redefine WCF_DIR
+		if (class_exists('wcf\system\WCFSetup', false)) {
+			// templates
+			DirectoryUtil::getInstance(WCFSetup::getWCFFolder().'templates/compiled/')->removePattern(new Regex('.*_'.$this->languageID.'_.*\.php$'));
+			// acp templates
+			DirectoryUtil::getInstance(WCFSetup::getWCFFolder().'acp/templates/compiled/')->removePattern(new Regex('.*_'.$this->languageID.'_.*\.php$'));
+		}
+		else {
+			// templates
+			DirectoryUtil::getInstance(WCF_DIR.'templates/compiled/')->removePattern(new Regex('.*_'.$this->languageID.'_.*\.php$'));
+			// acp templates
+			DirectoryUtil::getInstance(WCF_DIR.'acp/templates/compiled/')->removePattern(new Regex('.*_'.$this->languageID.'_.*\.php$'));
+		}
 	}
 	
 	/**

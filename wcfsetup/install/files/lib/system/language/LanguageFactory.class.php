@@ -6,6 +6,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\system\WCFSetup;
 
 /**
  * Handles language related functions.
@@ -229,7 +230,13 @@ class LanguageFactory extends SingletonFactory {
 	 * Clears languages cache.
 	 */
 	public function clearCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.language.php');
+		// workaround for CLIWCFSetup, as we cannot redefine WCF_DIR
+		if (class_exists('wcf\system\WCFSetup', false)) {
+			CacheHandler::getInstance()->clear(WCFSetup::getWCFFolder().'cache/', 'cache.language.php');
+		}
+		else {
+			CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.language.php');
+		}
 	}
 	
 	/**

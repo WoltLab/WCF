@@ -19,6 +19,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
+use wcf\system\setup\CLIGotoNextStep;
 use wcf\system\setup\Installer;
 use wcf\system\template\SetupTemplateEngine;
 use wcf\util\DirectoryUtil;
@@ -188,73 +189,78 @@ class CLIWCFSetup extends WCFSetup {
 	 * Executes the setup steps.
 	 */
 	protected function setup($step = 'selectSetupLanguage') {
-		// execute current step
-		switch ($step) {
-			case 'selectSetupLanguage':
-				if (!self::$developerMode && !self::getArgvParser()->language) {
-					$this->calcProgress(0);
-					$this->selectSetupLanguage();
-					break;
-				}
-			
-			case 'showLicense':
-				if (!self::$developerMode) {
-					$this->calcProgress(1);
-					$this->showLicense();
-					break;
-				}
-			
-			case 'showSystemRequirements':
-				if (!self::$developerMode) {
-					$this->calcProgress(2);
-					$this->showSystemRequirements();
-					break;
-				}
-			
-			case 'searchWcfDir':
-				$this->calcProgress(3);
-				$this->searchWcfDir();
-			break;
-			
-			case 'unzipFiles':
-				$this->calcProgress(4);
-				$this->unzipFiles();
-			break;
-			
-			case 'selectLanguages':
-				$this->calcProgress(5);
-				$this->selectLanguages();
-			break;
-			
-			case 'configureDB':
-				$this->calcProgress(6);
-				$this->configureDB();
-			break;
-			
-			case 'createDB':
-				$this->calcProgress(7);
-				$this->createDB();
-			break;
-			
-			case 'logFiles':
-				$this->calcProgress(8);
-				$this->logFiles();
-			break;
-			
-			case 'installLanguage':
-				$this->calcProgress(9);
-				$this->installLanguage();
-			break;
-			
-			case 'createUser':
-				$this->calcProgress(10);
-				$this->createUser();
-			break;
-			
-			case 'installPackages':
-				$this->calcProgress(11);
-				$this->installPackages();
-			break;
+		try {
+			// execute current step
+			switch ($step) {
+				case 'selectSetupLanguage':
+					if (!self::$developerMode && !self::getArgvParser()->language) {
+						$this->calcProgress(0);
+						$this->selectSetupLanguage();
+						break;
+					}
+				
+				case 'showLicense':
+					if (!self::$developerMode) {
+						$this->calcProgress(1);
+						$this->showLicense();
+						break;
+					}
+				
+				case 'showSystemRequirements':
+					if (!self::$developerMode) {
+						$this->calcProgress(2);
+						$this->showSystemRequirements();
+						break;
+					}
+				
+				case 'searchWcfDir':
+					$this->calcProgress(3);
+					$this->searchWcfDir();
+				break;
+				
+				case 'unzipFiles':
+					$this->calcProgress(4);
+					$this->unzipFiles();
+				break;
+				
+				case 'selectLanguages':
+					$this->calcProgress(5);
+					$this->selectLanguages();
+				break;
+				
+				case 'configureDB':
+					$this->calcProgress(6);
+					$this->configureDB();
+				break;
+				
+				case 'createDB':
+					$this->calcProgress(7);
+					$this->createDB();
+				break;
+				
+				case 'logFiles':
+					$this->calcProgress(8);
+					$this->logFiles();
+				break;
+				
+				case 'installLanguage':
+					$this->calcProgress(9);
+					$this->installLanguage();
+				break;
+				
+				case 'createUser':
+					$this->calcProgress(10);
+					$this->createUser();
+				break;
+				
+				case 'installPackages':
+					$this->calcProgress(11);
+					$this->installPackages();
+				break;
+			}
+		}
+		catch (CLIGotoNextStep $e) {
+			$this->setup($e->getNextStep());
 		}
 	}
 	
@@ -294,6 +300,7 @@ class CLIWCFSetup extends WCFSetup {
 	 * Shows the license agreement.
 	 */
 	protected function showLicense() {
+		self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.global.license'));
 		if (file_exists(TMP_DIR.'setup/license/license_'.self::$selectedLanguageCode.'.txt')) {
 			$license = file_get_contents(TMP_DIR.'setup/license/license_'.self::$selectedLanguageCode.'.txt');
 		}
@@ -338,7 +345,7 @@ class CLIWCFSetup extends WCFSetup {
 			$this->gotoNextStep('showSystemRequirements');
 		}
 		else {
-			exit;
+			exit(1);
 		}
 	}
 	
@@ -346,6 +353,7 @@ class CLIWCFSetup extends WCFSetup {
 	 * Shows the system requirements.
 	 */
 	protected function showSystemRequirements() {
+		self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.global.systemRequirements'));
 		$system = array();
 		
 		// php version
@@ -382,7 +390,7 @@ class CLIWCFSetup extends WCFSetup {
 			$this->gotoNextStep('searchWcfDir');
 		}
 		else {
-			exit;
+			exit(1);
 		}
 	}
 	
@@ -390,6 +398,7 @@ class CLIWCFSetup extends WCFSetup {
 	 * Searches the wcf dir.
 	 */
 	protected function searchWcfDir() {
+		self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.global.wcfDir'));
 		$foundDirectory = '';
 		if (self::$wcfDir) {
 			$wcfDir = self::$wcfDir;
@@ -430,8 +439,9 @@ class CLIWCFSetup extends WCFSetup {
 			self::$wcfDir = $foundDirectory;
 		}
 		else if(self::$wcfDir === '') {
-			exit;
+			exit(1);
 		}
+		self::$wcfDir = FileUtil::addTrailingSlash(self::$wcfDir);
 		
 		$this->gotoNextStep('unzipFiles');
 	}
@@ -440,10 +450,6 @@ class CLIWCFSetup extends WCFSetup {
 	 * Shows the page for choosing the installed languages.
 	 */
 	protected function selectLanguages() {
-		echo 'languages';
-		exit;
-		$errorField = $errorType = '';
-		
 		// skip step in developer mode
 		// select all available languages automatically
 		if (self::$developerMode) {
@@ -457,49 +463,42 @@ class CLIWCFSetup extends WCFSetup {
 			exit;
 		}
 		
-		// start error handling
-		if (isset($_POST['send'])) {
-			try {
-				// no languages selected
-				if (empty(self::$selectedLanguages)) {
-					throw new UserInputException('selectedLanguages');
-				}
-				
-				// illegal selection
-				foreach (self::$selectedLanguages as $language) {
-					if (!isset(self::$availableLanguages[$language])) {
-						throw new UserInputException('selectedLanguages');
-					}
-				}
-				
-				// no errors
-				// go to next step
-				$this->gotoNextStep('configureDB');
-				exit;
-			}
-			catch (UserInputException $e) {
-				$errorField = $e->getField();
-				$errorType = $e->getType();
-			}
+		self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.global.languages'));
+		$languageChooser = "\n";
+		foreach (self::getAvailableLanguages() as $languageCode => $languageName) {
+			$languageChooser .= '   '.$languageName.' ('.$languageCode.')'.PHP_EOL;
 		}
-		else {
-			self::$selectedLanguages[] = self::$selectedLanguageCode;
-			WCF::getTPL()->assign(array('selectedLanguages' => self::$selectedLanguages));
+		self::getReader()->println($languageChooser);
+		do {
+			$language = self::getReader()->readLine(WCF::getLanguage()->getDynamicVariable('wcf.global.languages.languages').'> ');
+			if ($language === null) exit;
+			$language = StringUtil::trim($language);
+			if ($language) self::$selectedLanguages[] = $language;
+		}
+		while ($language !== '');
+		
+		// no languages selected
+		if (empty(self::$selectedLanguages)) {
+			exit(1);
 		}
 		
-		WCF::getTPL()->assign(array(
-			'errorField' => $errorField,
-			'errorType' => $errorType,
-			'availableLanguages' => self::$availableLanguages,
-			'nextStep' => 'selectLanguages'
-		));
-		WCF::getTPL()->display('stepSelectLanguages');
+		// illegal selection
+		foreach (self::$selectedLanguages as $key => $language) {
+			if (!isset(self::$availableLanguages[$language])) {
+				unset(self::$selectedLanguages[$key]);
+			}
+		}
+		
+		// no errors
+		// go to next step
+		$this->gotoNextStep('configureDB');
 	}
 	
 	/**
 	 * Shows the page for configurating the database connection.
 	 */
 	protected function configureDB() {
+		self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.global.configureDB'));
 		$availableDBClasses = self::getAvailableDBClasses();
 		$dbHost = 'localhost';
 		$dbUser = 'root';
@@ -514,136 +513,137 @@ class CLIWCFSetup extends WCFSetup {
 		}
 		$overwriteTables = false;
 		
-		if (isset($_POST['send'])) {
-			if (isset($_POST['dbHost'])) $dbHost = $_POST['dbHost'];
-			if (isset($_POST['dbUser'])) $dbUser = $_POST['dbUser'];
-			if (isset($_POST['dbPassword'])) $dbPassword = $_POST['dbPassword'];
-			if (isset($_POST['dbName'])) $dbName = $_POST['dbName'];
-			if (isset($_POST['overwriteTables'])) $overwriteTables = intval($_POST['overwriteTables']);
-			// Should the user not be prompted if converted or default n match an
-			// existing installation number? By now the existing installation
-			// will be overwritten just so!
-			
-			// ensure that $dbNumber is zero or a positive integer
-			if (isset($_POST['dbNumber'])) $dbNumber = max(0, intval($_POST['dbNumber']));
-			if (isset($_POST['dbClass'])) $dbClass = $_POST['dbClass'];
-			
-			// get port
-			$dbPort = 0;
-			if (preg_match('/^(.+?):(\d+)$/', $dbHost, $match)) {
-				$dbHost = $match[1];
-				$dbPort = intval($match[2]);
+		if (WCF::getTPL()->get('exception')) {
+			self::getReader()->println(StringUtil::stripHTML(WCF::getLanguage()->getDynamicVariable('wcf.global.configureDB.error')).PHP_EOL);
+			WCF::getTPL()->clearAssign(array('exception'));
+		}
+		
+		self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.global.configureDB.class'));
+		$classes = "\n";
+		foreach ($availableDBClasses as $dbClassName => $dbClass) {
+			$classes .= '   '.WCF::getLanguage()->getDynamicVariable('wcf.global.configureDB.class.'.$dbClassName).' ('.$dbClassName.')';
+			if ($dbClass === $dbClass['class']) {
+				$classes .= '*';
+			}
+			$classes .= PHP_EOL;
+		}
+		self::getReader()->println($classes);
+		$dbClass = self::getReader()->readLine(WCF::getLanguage()->getDynamicVariable('wcf.global.configureDB.class').'> ');
+		if ($dbClass === null) exit(1);
+		$dbClass = StringUtil::trim($dbClass);
+		if (!isset($availableDBClasses[$dbClass])) exit(1);
+		$dbClass = $availableDBClasses[$dbClass]['class'];
+		
+		$dbHost = self::getReader()->readLine(WCF::getLanguage()->getDynamicVariable('wcf.global.configureDB.host').'> ');
+		if ($dbHost === null) exit(1);
+		$dbHost = StringUtil::trim($dbHost);
+		
+		$dbUser = self::getReader()->readLine(WCF::getLanguage()->getDynamicVariable('wcf.global.configureDB.user').'> ');
+		if ($dbUser === null) exit(1);
+		$dbUser = StringUtil::trim($dbUser);
+		
+		$dbPassword = self::getReader()->readLine(WCF::getLanguage()->getDynamicVariable('wcf.global.configureDB.password').'> ', '*');
+		if ($dbPassword === null) exit(1);
+		$dbPassword = StringUtil::trim($dbPassword);
+		
+		$dbName = self::getReader()->readLine(WCF::getLanguage()->getDynamicVariable('wcf.global.configureDB.database').'> ');
+		if ($dbName === null) exit(1);
+		$dbName = StringUtil::trim($dbName);
+		
+		$dbNumber = self::getReader()->readLine(WCF::getLanguage()->getDynamicVariable('wcf.global.configureDB.number').'> ');
+		if ($dbNumber === null) exit(1);
+		$dbNumber = max(0, intval(StringUtil::trim($dbNumber)));
+		
+		// TODO: ask for overwriting
+		
+		// get port
+		$dbPort = 0;
+		if (preg_match('/^(.+?):(\d+)$/', $dbHost, $match)) {
+			$dbHost = $match[1];
+			$dbPort = intval($match[2]);
+		}
+		
+		// test connection
+		try {
+			// check db class
+			$validDB = false;
+			foreach ($availableDBClasses as $dbData) {
+				if ($dbData['class'] == $dbClass) {
+					$validDB = true;
+					break;
+				}
 			}
 			
-			// test connection
-			try {
-				// check db class
-				$validDB = false;
-				foreach ($availableDBClasses as $dbData) {
-					if ($dbData['class'] == $dbClass) {
-						$validDB = true;
-						break;
+			if (!$validDB) {
+				throw new SystemException("Database type '".$dbClass."'. is not available on this system.");
+			}
+			
+			// check connection data
+			$db = new $dbClass($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
+			$db->connect();
+			
+			// check sql version
+			if (!empty($availableDBClasses[$dbClass]['minversion'])) {
+				$sqlVersion = $db->getVersion();
+				if ($sqlVersion != 'unknown') {
+					$compareSQLVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
+					if (!(version_compare($compareSQLVersion, $availableDBClasses[$dbClass]['minversion']) >= 0)) {
+						throw new SystemException("Insufficient SQL version '".$compareSQLVersion."'. Version '".$availableDBClasses[$dbClass]['minversion']."' or greater is needed.");
 					}
-				}
-				
-				if (!$validDB) {
-					throw new SystemException("Database type '".$dbClass."'. is not available on this system.");
-				}
-				
-				// check connection data
-				$db = new $dbClass($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
-				$db->connect();
-				
-				// check sql version
-				if (!empty($availableDBClasses[$dbClass]['minversion'])) {
-					$sqlVersion = $db->getVersion();
-					if ($sqlVersion != 'unknown') {
-						$compareSQLVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
-						if (!(version_compare($compareSQLVersion, $availableDBClasses[$dbClass]['minversion']) >= 0)) {
-							throw new SystemException("Insufficient SQL version '".$compareSQLVersion."'. Version '".$availableDBClasses[$dbClass]['minversion']."' or greater is needed.");
-						}
-					}
-				}
-				
-				// check for table conflicts
-				$conflictedTables = $this->getConflictedTables($db, $dbNumber);
-				if (!empty($conflictedTables) && ($overwriteTables || self::$developerMode)) {
-					// remove tables
-					$db->getEditor()->dropConflictedTables($conflictedTables);
-				}
-				
-				// write config.inc
-				if (empty($conflictedTables) || $overwriteTables || self::$developerMode) {
-					// connection successfully established
-					// write configuration to config.inc.php
-					$file = new File(WCF_DIR.'config.inc.php');
-					$file->write("<?php\n");
-					$file->write("\$dbHost = '".StringUtil::replace("'", "\\'", $dbHost)."';\n");
-					$file->write("\$dbPort = ".$dbPort.";\n");
-					$file->write("\$dbUser = '".StringUtil::replace("'", "\\'", $dbUser)."';\n");
-					$file->write("\$dbPassword = '".StringUtil::replace("'", "\\'", $dbPassword)."';\n");
-					$file->write("\$dbName = '".StringUtil::replace("'", "\\'", $dbName)."';\n");
-					$file->write("\$dbClass = '".StringUtil::replace("'", "\\'", $dbClass)."';\n");
-					$file->write("if (!defined('WCF_N')) define('WCF_N', $dbNumber);\n?>");
-					$file->close();
-					
-					// go to next step
-					$this->gotoNextStep('createDB');
-					exit;
-				}
-				// show configure temnplate again
-				else {
-					WCF::getTPL()->assign(array('conflictedTables' => $conflictedTables));
 				}
 			}
-			catch (SystemException $e) {
-				WCF::getTPL()->assign(array('exception' => $e));
+			
+			// check for table conflicts
+			$conflictedTables = $this->getConflictedTables($db, $dbNumber);
+			if (!empty($conflictedTables) && ($overwriteTables || self::$developerMode)) {
+				// remove tables
+				$db->getEditor()->dropConflictedTables($conflictedTables);
+			}
+			
+			// write config.inc
+			if (empty($conflictedTables) || $overwriteTables || self::$developerMode) {
+				// connection successfully established
+				// write configuration to config.inc.php
+				$file = new File(self::$wcfDir.'config.inc.php');
+				$file->write("<?php\n");
+				$file->write("\$dbHost = '".StringUtil::replace("'", "\\'", $dbHost)."';\n");
+				$file->write("\$dbPort = ".$dbPort.";\n");
+				$file->write("\$dbUser = '".StringUtil::replace("'", "\\'", $dbUser)."';\n");
+				$file->write("\$dbPassword = '".StringUtil::replace("'", "\\'", $dbPassword)."';\n");
+				$file->write("\$dbName = '".StringUtil::replace("'", "\\'", $dbName)."';\n");
+				$file->write("\$dbClass = '".StringUtil::replace("'", "\\'", $dbClass)."';\n");
+				$file->write("if (!defined('WCF_N')) define('WCF_N', $dbNumber);\n?>");
+				$file->close();
+				
+				// go to next step
+				$this->gotoNextStep('createDB');
+				exit;
+			}
+			// show configure temnplate again
+			else {
+				WCF::getTPL()->assign(array('conflictedTables' => $conflictedTables));
 			}
 		}
-		WCF::getTPL()->assign(array(
-			'dbHost' => $dbHost,
-			'dbUser' => $dbUser,
-			'dbPassword' => $dbPassword,
-			'dbName' => $dbName,
-			'dbNumber' => $dbNumber,
-			'dbClass' => $dbClass,
-			'availableDBClasses' => $availableDBClasses,
-			'nextStep' => 'configureDB'
-		));
-		WCF::getTPL()->display('stepConfigureDB');
+		catch (SystemException $e) {
+			WCF::getTPL()->assign(array('exception' => $e));
+			$this->gotoNextStep('configureDB');
+		}
 	}
 	
-	
 	/**
-	 * Checks if in the chosen database are tables in conflict with the wcf tables
-	 * which will be created in the next step.
-	 * 
-	 * @param	wcf\system\database\Database	$db
-	 * @param	integer				$dbNumber
+	 * Loads the database configuration and creates a new connection to the database.
 	 */
-	protected function getConflictedTables($db, $dbNumber) {
-		// get content of the sql structure file
-		$sql = file_get_contents(TMP_DIR.'setup/db/install.sql');
+	protected function initDB() {
+		if (self::$dbObj !== null) return;
 		
-		// installation number value 'n' (WCF_N) must be reflected in the executed sql queries
-		$sql = StringUtil::replace('wcf1_', 'wcf'.$dbNumber.'_', $sql);
-		
-		// get all tablenames which should be created
-		preg_match_all("%CREATE\s+TABLE\s+(\w+)%", $sql, $matches);
-		
-		// get all installed tables from chosen database
-		$existingTables = $db->getEditor()->getTableNames();
-		
-		// check if existing tables are in conflict with wcf tables
-		$conflictedTables = array();
-		foreach ($existingTables as $existingTableName) {
-			foreach ($matches[1] as $wcfTableName) {
-				if ($existingTableName == $wcfTableName) {
-					$conflictedTables[] = $wcfTableName;
-				}
-			}
-		}
-		return $conflictedTables;
+		// get configuration
+		$dbHost = $dbUser = $dbPassword = $dbName = '';
+		$dbPort = 0;
+		$dbClass = 'wcf\system\database\MySQLDatabase';
+		require(self::$wcfDir.'config.inc.php');
+	
+		// create database connection
+		self::$dbObj = new $dbClass($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
 	}
 	
 	/**
@@ -698,7 +698,7 @@ class CLIWCFSetup extends WCFSetup {
 	protected function logFiles() {
 		$this->initDB();
 		
-		$this->getInstalledFiles(WCF_DIR);
+		$this->getInstalledFiles(self::$wcfDir);
 		$acpTemplateInserts = $fileInserts = array();
 		foreach (self::$installedFiles as $file) {
 			$match = array();
@@ -708,7 +708,7 @@ class CLIWCFSetup extends WCFSetup {
 			}
 			else {
 				// regular file
-				$fileInserts[] = StringUtil::replace(WCF_DIR, '', $file);
+				$fileInserts[] = StringUtil::replace(self::$wcfDir, '', $file);
 			}
 		}
 		
@@ -744,61 +744,11 @@ class CLIWCFSetup extends WCFSetup {
 	}
 	
 	/**
-	 * Scans the given dir for installed files.
-	 * 
-	 * @param	string		$dir
-	 */
-	protected function getInstalledFiles($dir) {
-		if ($files = glob($dir.'*')) {
-			foreach ($files as $file) {
-				if (is_dir($file)) {
-					$this->getInstalledFiles(FileUtil::addTrailingSlash($file));
-				}
-				else {
-					self::$installedFiles[] = FileUtil::unifyDirSeperator($file);
-				}
-			}
-		}
-	}
-	
-	/**
-	 * Installs the selected languages.
-	 */
-	protected function installLanguage() {
-		$this->initDB();
-		
-		foreach (self::$selectedLanguages as $language) {
-			// get language.xml file name
-			$filename = TMP_DIR.'install/lang/'.$language.'.xml';
-			
-			// check the file
-			if (!file_exists($filename)) {
-				throw new SystemException("unable to find language file '".$filename."'");
-			}
-			
-			// open the file
-			$xml = new XML();
-			$xml->load($filename);
-			
-			// import xml
-			LanguageEditor::importFromXML($xml, 0);
-		}
-		
-		// set default language
-		$language = LanguageFactory::getInstance()->getLanguageByCode(in_array(self::$selectedLanguageCode, self::$selectedLanguages) ? self::$selectedLanguageCode : self::$selectedLanguages[0]);
-		LanguageFactory::getInstance()->makeDefault($language->languageID);
-		
-		// rebuild language cache
-		CacheHandler::getInstance()->clearResource('language');
-		
-		// go to next step
-		$this->gotoNextStep('createUser');
-	}
-	
-	/**
 	 * Shows the page for creating the admin account.
 	 */
 	protected function createUser() {
+		echo 'Createuser';
+		exit;
 		$errorType = $errorField = $username = $email = $confirmEmail = $password = $confirmPassword = '';
 		
 		$username = '';
@@ -1072,6 +1022,6 @@ class CLIWCFSetup extends WCFSetup {
 	 */
 	protected function gotoNextStep($nextStep) {
 		self::getReader()->println(str_repeat('=', self::getTerminal()->getWidth()));
-		$this->setup($nextStep);
+		throw new CLIGotoNextStep($nextStep);
 	}
 }
