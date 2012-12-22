@@ -85,7 +85,7 @@ class PackageCommand implements ICommand {
 			if (!$archive->isValidInstall()) {
 				throw new UserInputException('', 'noValidInstall');
 			}
-			elseif ($archive->isAlreadyInstalled()) {
+			else if ($archive->isAlreadyInstalled()) {
 				throw new UserInputException('', 'uniqueAlreadyInstalled');
 			}
 		}

@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+// @codingStandardsIgnoreFile
 /**
  * @author	Tim Düsterhus
  * @copyright	2001-2011 WoltLab GmbH

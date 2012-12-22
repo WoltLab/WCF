@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <ruleset name="WCF">
 	<description>WoltLab Community Framework Coding Standard</description>
-	<exclude-pattern>*/wcfsetup/test.php</exclude-pattern>
-	<exclude-pattern>*/wcfsetup/install.php</exclude-pattern>
+	<exclude-pattern>*/zend/*</exclude-pattern>
 	<exclude-pattern>*/CodeSniff/*</exclude-pattern>
 	
 	<rule ref="Generic.Classes.DuplicateClassName" />

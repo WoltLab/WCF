@@ -71,7 +71,8 @@ class CronjobCommand implements ICommand {
 					Log::info("Executing cronjob #", $cronjob->cronjobID, ': ', StringUtil::truncate(CLIWCF::getLanguage()->get($cronjob->description), 40));
 				}
 			}
-			else if ($cronjob->nextExec < time()) { // use time() instead of TIME_NOW, as the latter may be outdated
+			// use time() instead of TIME_NOW, as the latter may be outdated
+			else if ($cronjob->nextExec < time()) {
 				$cronjobs[] = $cronjob;
 				if (VERBOSITY >= 0) {
 					Log::info("Executing cronjob #", $cronjob->cronjobID, ': ', StringUtil::truncate(CLIWCF::getLanguage()->get($cronjob->description), 40));

@@ -13,6 +13,7 @@
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
+// @codingStandardsIgnoreFile
 // check php version
 // php version
 $phpVersion = phpversion();

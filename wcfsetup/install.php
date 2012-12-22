@@ -6,6 +6,7 @@
  * @copyright	2001-2011 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
+// @codingStandardsIgnoreFile
 // define constants
 define('INSTALL_SCRIPT_DIR', dirname(__FILE__).'/');
 define('SETUP_FILE', INSTALL_SCRIPT_DIR . 'WCFSetup.tar.gz');
