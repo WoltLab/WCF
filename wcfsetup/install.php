@@ -27,7 +27,8 @@ $neededFilesPattern = array(
 	'!^install/files/lib/system/.*!',
 	'!^install/files/lib/util/.*!',
 	'!^install/lang/.*!',
-	'!^install/packages/.*!');
+	'!^install/packages/.*!'
+);
 	
 // define needed functions and classes
 /**
@@ -157,7 +158,7 @@ class SystemException extends \Exception implements IPrintableException {
 /**
  * Loads the required classes automatically.
  */
-function __autoload($className) {
+spl_autoload_register(function ($className) {
 	$namespaces = explode('\\', $className);
 	if (count($namespaces) > 1) {
 		// remove 'wcf' component
@@ -169,7 +170,7 @@ function __autoload($className) {
 			require_once($classPath);
 		}
 	}
-}
+});
 
 /**
  * Escapes strings for execution in sql queries.
@@ -789,9 +790,18 @@ if (!file_exists(TMP_DIR . 'install/files/lib/system/WCFSetup.class.php')) {
 	@chmod(TMP_DIR . 'setup/template/compiled/', 0777);
 }
 
-if (!class_exists('wcf\system\WCFSetup')) {
-	throw new SystemException("Can not find class 'WCFSetup'");
-}
-
 // start setup
-new \wcf\system\WCFSetup();
+switch (PHP_SAPI) {
+	case 'cli':
+		if (!class_exists('wcf\system\CLIWCFSetup')) {
+			throw new SystemException("Can not find class 'CLIWCFSetup'");
+		}
+		new \wcf\system\CLIWCFSetup();
+	break;
+	default:
+		if (!class_exists('wcf\system\WCFSetup')) {
+			throw new SystemException("Can not find class 'WCFSetup'");
+		}
+		new \wcf\system\WCFSetup();
+	break;
+}
