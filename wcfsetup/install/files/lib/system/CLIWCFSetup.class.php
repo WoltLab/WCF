@@ -384,7 +384,6 @@ class CLIWCFSetup extends WCFSetup {
 		// mb string
 		$system['mbString']['result'] = extension_loaded('mbstring');
 		
-		
 		self::getReader()->println('Requirements: bla'.PHP_EOL); // TODO: show requirements
 		if ($system['phpVersion']['result'] && $system['sql']['result'] && $system['mbString']['result']) {
 			$this->gotoNextStep('searchWcfDir');
@@ -438,7 +437,7 @@ class CLIWCFSetup extends WCFSetup {
 		if (self::$wcfDir === '' && $foundDirectory) {
 			self::$wcfDir = $foundDirectory;
 		}
-		else if(self::$wcfDir === '') {
+		else if (self::$wcfDir === '') {
 			exit(1);
 		}
 		self::$wcfDir = FileUtil::addTrailingSlash(self::$wcfDir);
