@@ -885,7 +885,7 @@ class CLIWCFSetup extends WCFSetup {
 			exit;
 		}
 		catch (UserInputException $e) {
-			echo "'FEHLER!!!1";
+			echo "'FEHLER!!!1"; // TODO: proper error handling
 			exit(1);
 		}
 	}
@@ -1034,7 +1034,7 @@ class CLIWCFSetup extends WCFSetup {
 		@unlink('./test.php');
 		$wcfSetupTarDeleted = @unlink('./WCFSetup.tar.gz');
 		
-		echo "TODO: installPackages";
+		// TODO: Install com.woltlab.wcf at this place when PackageCommand is finished
 	}
 	
 	/**

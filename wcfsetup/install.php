@@ -187,7 +187,7 @@ function escapeString($string) {
 function handleException(\Exception $e) {
 	if ($e instanceof IPrintableException || $e instanceof \wcf\system\exception\IPrintableException) {
 		$e->show();
-		exit;
+		exit(1);
 	}
 	
 	print $e;
