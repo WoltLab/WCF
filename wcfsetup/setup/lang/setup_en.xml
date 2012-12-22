@@ -20,8 +20,6 @@
 		<item name="wcf.global.license.description"><![CDATA[Please read the following license agreement. Use the scroll bar to view the entire document.]]></item>
 		<item name="wcf.global.license.accept.description"><![CDATA[Do you accept the terms and conditions of the license agreement? You may only install this software upon acceptance of the license agreement.]]></item>
 		<item name="wcf.global.license.missingAcception"><![CDATA[You must accept the license agreement to continue this installation.]]></item>
-		<item name="wcf.global.systemRequirements"><![CDATA[Checking system-requirements]]></item>
-		<item name="wcf.global.systemRequirements.description"><![CDATA[These are the system-requirements:]]></item>
 		<item name="wcf.global.systemRequirements.required"><![CDATA[Required system-component]]></item>
 		<item name="wcf.global.systemRequirements.recommended"><![CDATA[Recommended system-component]]></item>
 		<item name="wcf.global.systemRequirements.element.required"><![CDATA[Required:]]></item>
