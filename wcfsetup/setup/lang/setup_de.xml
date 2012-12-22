@@ -5,8 +5,6 @@
 		<item name="wcf.global.title"><![CDATA[{$setupPackageName}]]></item>
 		<item name="wcf.global.title.subtitle"><![CDATA[Vorbereiten der Installation]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item>
-		<item name="wcf.global.locale.unix"><![CDATA[de_DE]]></item>
-		<item name="wcf.global.locale.win"><![CDATA[deu_deu]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[,]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[.]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Weiter »]]></item>

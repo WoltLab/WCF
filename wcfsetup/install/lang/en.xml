@@ -651,8 +651,6 @@
 		<item name="wcf.global.form.error"><![CDATA[The data you have entered are not valid. Please check the information you have given in the marked fields.]]></item>
 		<item name="wcf.global.form.error.empty"><![CDATA[Please enter the required information for this field.]]></item>
 		<item name="wcf.global.loading"><![CDATA[Loading …]]></item>
-		<item name="wcf.global.locale.unix"><![CDATA[en_US]]></item> <!-- system variable; do not translate -->
-		<item name="wcf.global.locale.win"><![CDATA[english]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.name"><![CDATA[Name]]></item>
 		<item name="wcf.global.objectID"><![CDATA[ID]]></item>
 		<item name="wcf.global.page.next"><![CDATA[Next page]]></item>
