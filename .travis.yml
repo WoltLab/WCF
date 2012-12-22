@@ -8,17 +8,17 @@ env:
   - TASK=wcfsetup_postgres
   - TASK=wcfsetup_mysql
 before_install:
-  - pear install pear/PHP_CodeSniffer
+  - if [[ "$TASK" = "codesniffer" ]]; then pear install pear/PHP_CodeSniffer; fi
   - phpenv rehash
 before_script:
-  - if [[ '$TASK" = 'wcfsetup_mysql" ]]; then mysql -e "DROP DATABASE IF EXISTS wcf;"; fi
-  - if [[ '$TASK" = 'wcfsetup_mysql" ]]; then mysql -e "CREATE DATABASE wcf;"; fi"
-  - if [[ '$TASK" = 'wcfsetup_postgres" ]]; then psql -c "DROP DATABASE IF EXISTS wcf;" -U postgres; fi
-  - if [[ '$TASK" = 'wcfsetup_postgres" ]]; then psql -c "CREATE DATABASE wcf;" -U postgres; fi
+  - if [[ "$TASK" = "wcfsetup_mysql" ]]; then mysql -e "DROP DATABASE IF EXISTS wcf;"; fi
+  - if [[ "$TASK" = "wcfsetup_mysql" ]]; then mysql -e "CREATE DATABASE wcf;"; fi"
+  - if [[ "$TASK" = "wcfsetup_postgres" ]]; then psql -c "DROP DATABASE IF EXISTS wcf;" -U postgres; fi
+  - if [[ "$TASK" = "wcfsetup_postgres" ]]; then psql -c "CREATE DATABASE wcf;" -U postgres; fi
 script:
-  - if [[ "$TASK" = 'codesniffer" ]]; then phpcs -p --extensions=php --standard="`pwd`/CodeSniff/WCF" .; fi
-  - if [[ "$TASK" = 'wcfsetup_mysql" ]]; then echo -e "`pwd`/wcf-setup\nMySQLDatabase\nlocalhost\nroot\n\nwcf\n1\n" | php install.php --dev; fi
-  - if [[ "$TASK" = 'wcfsetup_postgres" ]]; then echo -e "`pwd`/wcf-setup\nPostgreSQLDatabase\nlocalhost\npostgres\n\nwcf\n1\n" | php install.php --dev; fi
+  - if [[ "$TASK" = "codesniffer" ]]; then phpcs -p --extensions=php --standard="`pwd`/CodeSniff/WCF" .; fi
+  - if [[ "$TASK" = "wcfsetup_mysql" ]]; then echo -e "`pwd`/wcf-setup\nMySQLDatabase\nlocalhost\nroot\n\nwcf\n1\n" | php install.php --dev; fi
+  - if [[ "$TASK" = "wcfsetup_postgres" ]]; then echo -e "`pwd`/wcf-setup\nPostgreSQLDatabase\nlocalhost\npostgres\n\nwcf\n1\n" | php install.php --dev; fi
 
 matrix:
   allow_failures:
