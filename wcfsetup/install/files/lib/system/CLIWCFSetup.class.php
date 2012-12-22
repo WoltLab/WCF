@@ -744,119 +744,150 @@ class CLIWCFSetup extends WCFSetup {
 	}
 	
 	/**
+	 * Installs the selected languages.
+	 */
+	protected function installLanguage() {
+		$this->initDB();
+	
+		foreach (self::$selectedLanguages as $language) {
+			// get language.xml file name
+			$filename = TMP_DIR.'install/lang/'.$language.'.xml';
+				
+			// check the file
+			if (!file_exists($filename)) {
+				throw new SystemException("unable to find language file '".$filename."'");
+			}
+				
+			// open the file
+			$xml = new XML();
+			$xml->load($filename);
+				
+			// import xml
+			LanguageEditor::importFromXML($xml, 0);
+		}
+	
+		// set default language
+		$language = LanguageFactory::getInstance()->getLanguageByCode(in_array(self::$selectedLanguageCode, self::$selectedLanguages) ? self::$selectedLanguageCode : self::$selectedLanguages[0]);
+		LanguageFactory::getInstance()->makeDefault($language->languageID);
+	
+		// go to next step
+		$this->gotoNextStep('createUser');
+	}
+	
+	/**
 	 * Shows the page for creating the admin account.
 	 */
 	protected function createUser() {
-		echo 'Createuser';
-		exit;
+		
 		$errorType = $errorField = $username = $email = $confirmEmail = $password = $confirmPassword = '';
 		
 		$username = '';
 		$email = $confirmEmail = '';
 		$password = $confirmPassword = '';
 		
-		if (isset($_POST['send']) || self::$developerMode) {
-			if (isset($_POST['send'])) {
-				if (isset($_POST['username'])) $username = StringUtil::trim($_POST['username']);
-				if (isset($_POST['email'])) $email = StringUtil::trim($_POST['email']);
-				if (isset($_POST['confirmEmail'])) $confirmEmail = StringUtil::trim($_POST['confirmEmail']);
-				if (isset($_POST['password'])) $password = $_POST['password'];
-				if (isset($_POST['confirmPassword'])) $confirmPassword = $_POST['confirmPassword'];
-			}
-			else {
-				$username = $password = $confirmPassword = 'root';
-				$email = $confirmEmail = 'woltlab@woltlab.com';
-			}
+		if (!self::$developerMode) {
+			self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.global.createUser'));
+			$username = self::getReader()->readLine(WCF::getLanguage()->getDynamicVariable('wcf.global.createUser.username').'> ');
+			if ($username === null) exit(1);
+			$username = StringUtil::trim($username);
 			
-			// error handling
-			try {
-				// username
-				if (empty($username)) {
-					throw new UserInputException('username');
-				}
-				if (!UserUtil::isValidUsername($username)) {
-					throw new UserInputException('username', 'notValid');
-				}
-				
-				// e-mail address
-				if (empty($email)) {
-					throw new UserInputException('email');
-				}
-				if (!UserUtil::isValidEmail($email)) {
-					throw new UserInputException('email', 'notValid');
-				}
-				
-				// confirm e-mail address
-				if ($email != $confirmEmail) {
-					throw new UserInputException('confirmEmail', 'notEqual');
-				}
-				
-				// password
-				if (empty($password)) {
-					throw new UserInputException('password');
-				}
-				
-				// confirm e-mail address
-				if ($password != $confirmPassword) {
-					throw new UserInputException('confirmPassword', 'notEqual');
-				}
-				
-				// no errors
-				// init database connection
-				$this->initDB();
-				
-				// get language id
-				$languageID = 0;
-				$sql = "SELECT	languageID
-					FROM	wcf".WCF_N."_language
-					WHERE	languageCode = ?";
-				$statement = self::getDB()->prepareStatement($sql);
-				$statement->execute(array(self::$selectedLanguageCode));
-				$row = $statement->fetchArray();
-				if (isset($row['languageID'])) $languageID = $row['languageID'];
-				
-				// create user
-				$data = array(
-					'data' => array(
-						'email' => $email,
-						'languageID' => $languageID,
-						'password' => $password,
-						'username' => $username
-					),
-					'groups' => array(
-						1,
-						3,
-						4
-					),
-					'languages' => array(
-						$languageID
-					)
-				);
-				
-				$userAction = new UserAction(array(), 'create', $data);
-				$userAction->executeAction();
-				
-				// go to next step
-				$this->gotoNextStep('installPackages');
-				exit;
-			}
-			catch (UserInputException $e) {
-				$errorField = $e->getField();
-				$errorType = $e->getType();
-			}
+			$email = self::getReader()->readLine(WCF::getLanguage()->getDynamicVariable('wcf.global.createUser.email').'> ');
+			if ($email === null) exit(1);
+			$email = StringUtil::trim($email);
+			
+			$confirmEmail = self::getReader()->readLine(WCF::getLanguage()->getDynamicVariable('wcf.global.createUser.confirmEmail').'> ');
+			if ($confirmEmail === null) exit(1);
+			$confirmEmail = StringUtil::trim($confirmEmail);
+			
+			$password = self::getReader()->readLine(WCF::getLanguage()->getDynamicVariable('wcf.global.createUser.password').'> ', '*');
+			if ($password === null) exit(1);
+			$password = StringUtil::trim($password);
+			
+			$confirmPassword = self::getReader()->readLine(WCF::getLanguage()->getDynamicVariable('wcf.global.createUser.confirmPassword').'> ', '*');
+			if ($confirmPassword === null) exit(1);
+			$confirmPassword = StringUtil::trim($confirmPassword);
+		}
+		else {
+			$username = $password = $confirmPassword = 'root';
+			$email = $confirmEmail = 'woltlab@woltlab.com';
 		}
 		
-		WCF::getTPL()->assign(array(
-			'errorField' => $errorField,
-			'errorType' => $errorType,
-			'username' => $username,
-			'email' => $email,
-			'confirmEmail' => $confirmEmail,
-			'password' => $password,
-			'confirmPassword' => $confirmPassword,
-			'nextStep' => 'createUser'
-		));
-		WCF::getTPL()->display('stepCreateUser');
+		// error handling
+		try {
+			// username
+			if (empty($username)) {
+				throw new UserInputException('username');
+			}
+			if (!UserUtil::isValidUsername($username)) {
+				throw new UserInputException('username', 'notValid');
+			}
+			
+			// e-mail address
+			if (empty($email)) {
+				throw new UserInputException('email');
+			}
+			if (!UserUtil::isValidEmail($email)) {
+				throw new UserInputException('email', 'notValid');
+			}
+			
+			// confirm e-mail address
+			if ($email != $confirmEmail) {
+				throw new UserInputException('confirmEmail', 'notEqual');
+			}
+			
+			// password
+			if (empty($password)) {
+				throw new UserInputException('password');
+			}
+			
+			// confirm e-mail address
+			if ($password != $confirmPassword) {
+				throw new UserInputException('confirmPassword', 'notEqual');
+			}
+			
+			// no errors
+			// init database connection
+			$this->initDB();
+			
+			// get language id
+			$languageID = 0;
+			$sql = "SELECT	languageID
+				FROM	wcf".WCF_N."_language
+				WHERE	languageCode = ?";
+			$statement = self::getDB()->prepareStatement($sql);
+			$statement->execute(array(self::$selectedLanguageCode));
+			$row = $statement->fetchArray();
+			if (isset($row['languageID'])) $languageID = $row['languageID'];
+			
+			// create user
+			$data = array(
+				'data' => array(
+					'email' => $email,
+					'languageID' => $languageID,
+					'password' => $password,
+					'username' => $username
+				),
+				'groups' => array(
+					1,
+					3,
+					4
+				),
+				'languages' => array(
+					$languageID
+				)
+			);
+			
+			$userAction = new UserAction(array(), 'create', $data);
+			$userAction->executeAction();
+			
+			// go to next step
+			$this->gotoNextStep('installPackages');
+			exit;
+		}
+		catch (UserInputException $e) {
+			echo "'FEHLER!!!1";
+			exit(1);
+		}
 	}
 	
 	/**
@@ -1003,16 +1034,7 @@ class CLIWCFSetup extends WCFSetup {
 		@unlink('./test.php');
 		$wcfSetupTarDeleted = @unlink('./WCFSetup.tar.gz');
 		
-		// print page
-		WCF::getTPL()->assign(array(
-			'installPhpDeleted' => $installPhpDeleted,
-			'wcfSetupTarDeleted' => $wcfSetupTarDeleted
-		));
-		WCF::getTPL()->display('stepInstallPackages');
-		
-		// delete tmp files
-		$directory = TMP_DIR.'/';
-		DirectoryUtil::getInstance($directory)->removePattern(new Regex('\.tar(\.gz)?$'), true);
+		echo "TODO: installPackages";
 	}
 	
 	/**
