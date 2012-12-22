@@ -15,6 +15,9 @@ before_script:
   - if [[ "$TASK" = "wcfsetup_mysql" ]]; then mysql -e "CREATE DATABASE wcf;"; fi
   - if [[ "$TASK" = "wcfsetup_postgres" ]]; then psql -c "DROP DATABASE IF EXISTS wcf;" -U postgres; fi
   - if [[ "$TASK" = "wcfsetup_postgres" ]]; then psql -c "CREATE DATABASE wcf;" -U postgres; fi
+  - if [[ "$TASK" != "codesniffer" ]]; then curl "https://raw.github.com/wbbaddons/Jenkins-Buildscripts/master/wcfBuild.sh" |sh; fi
+  - if [[ "$TASK" != "codesniffer" ]]; then cp wcfsetup/install.php .; fi
+  - if [[ "$TASK" != "codesniffer" ]]; then mkdir tmp; fi
 script:
   - if [[ "$TASK" = "codesniffer" ]]; then phpcs -p --extensions=php --standard="`pwd`/CodeSniff/WCF" .; fi
   - if [[ "$TASK" = "wcfsetup_mysql" ]]; then echo -e "`pwd`/wcf-setup\nMySQLDatabase\nlocalhost\nroot\n\nwcf\n1\n" | php install.php --dev; fi
