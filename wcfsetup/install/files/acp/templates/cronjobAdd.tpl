@@ -1,7 +1,5 @@
 {include file='header' pageTitle='wcf.acp.cronjob.'|concat:$action}
 
-{include file='multipleLanguageInputJavascript' elementIdentifier='description'}
-
 <header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.cronjob.{$action}{/lang}</h1>
@@ -67,6 +65,7 @@
 					{/if}
 				</dd>
 			</dl>
+			{include file='multipleLanguageInputJavascript' elementIdentifier='description' forceSelection=false}
 			
 			{event name='dataFields'}
 		</fieldset>
