@@ -140,7 +140,7 @@
 			> a {
 				color: @wcfMainMenuColor;
 				display: inline-block;
-				padding: 9px 35px;
+				padding: 9px 21px;
 								
 				&:hover {
 					color: @wcfMainMenuActiveColor;
@@ -161,7 +161,9 @@
 					background-color: @wcfNavigationHeaderBackgroundColor;
 					color: @wcfMainMenuActiveColor;
 					font-weight: bold;
-					padding: 14px 35px 8px;
+					min-width: 80px;
+					padding: 14px 21px 8px;
+					text-align: center;
 				}
 			}
 			
@@ -563,8 +565,8 @@
 .box32 { .box(32px, 7px); }
 .box48 { .box(48px, 7px); }
 .box64 { .box(64px, 7px); }
-.box96 { .box(96px, 14px); }
-.box128 { .box(128px, 14px); }
+.box96 { .box(96px, 11px); }
+.box128 { .box(128px, 11px); }
 .box256 { .box(256px, 21px); }
 
 /* bread crumbs */
@@ -1176,6 +1178,10 @@ ul.inlineDataList {
 			> a {
 				color: @wcfColor;
 				text-decoration: none;
+			}
+			
+			&.invisible + div {
+				margin-top: -@wcfGapSmall;
 			}
 		}
 		
