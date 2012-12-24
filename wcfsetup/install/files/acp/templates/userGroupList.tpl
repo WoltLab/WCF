@@ -64,8 +64,21 @@
 						{event name='buttons'}
 					</td>
 					<td class="columnID columnGroupID"><p>{@$group->groupID}</p></td>
-					<td class="columnTitle columnGroupName">{if $group->isEditable()}<p><a title="{lang}wcf.acp.group.edit{/lang}" href="{link controller='UserGroupEdit' id=$group->groupID}{/link}">{lang}{$group->groupName}{/lang}</a>{else}{lang}{$group->groupName}{/lang}</p>{/if}</td>
-					<td class="columnDigits columnMembers"><p><a title="{lang}wcf.acp.group.showMembers{/lang}" href="{link controller='UserSearch'}groupID={@$group->groupID}{/link}">{#$group->members}</a></p></td>
+					<td class="columnTitle columnGroupName">
+						{if $group->isEditable()}
+							<p><a title="{lang}wcf.acp.group.edit{/lang}" href="{link controller='UserGroupEdit' id=$group->groupID}{/link}">{lang}{$group->groupName}{/lang}</a></p>
+						{else}
+							<p>{lang}{$group->groupName}{/lang}</p>
+						{/if}
+					</td>
+					<td class="columnDigits columnMembers">
+						{if $group->groupType == 1 ||$group->groupType == 2}
+							{* dont't show search links for the everybody and the guest user group *}
+							<p>{#$group->members}</p>
+						{else}
+							<p><a title="{lang}wcf.acp.group.showMembers{/lang}" href="{link controller='UserSearch'}groupID={@$group->groupID}{/link}">{#$group->members}</a></p>
+						{/if}
+					</td>
 					
 					{event name='columns'}
 				</tr>
