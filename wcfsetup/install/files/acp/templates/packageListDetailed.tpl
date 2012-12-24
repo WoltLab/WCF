@@ -74,10 +74,8 @@
 						<td class="columnIcon">
 							{if $package->isApplication}
 								<img src="{@$__wcf->getPath()}icon/window.svg" alt="" title="{lang}wcf.acp.package.type.application{/lang}" class="icon16 jsTooltip" />
-							{elseif $package->isPlugin()}
-								<img src="{@$__wcf->getPath()}icon/plugin.svg" alt="" title="{lang}wcf.acp.package.type.plugin{/lang}" class="icon16 jsTooltip" />
 							{else}
-								<img src="{@$__wcf->getPath()}icon/package.svg" alt="" title="{lang}wcf.acp.package.type.other{/lang}" class="icon16 jsTooltip" />
+								<img src="{@$__wcf->getPath()}icon/plugin.svg" alt="" title="{lang}wcf.acp.package.type.plugin{/lang}" class="icon16 jsTooltip" />
 							{/if}
 						</td>
 						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->packageDescription|language}">
@@ -113,7 +111,7 @@
 					{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
 						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
-				
+					
 					{event name='largeButtons'}
 				{/content}
 			</ul>
