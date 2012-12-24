@@ -14,6 +14,11 @@ use wcf\data\option\Option;
  */
 class IntegerOptionType extends TextOptionType {
 	/**
+	 * @see	wcf\system\option\TextOptionType::$inputType
+	 */
+	protected $inputType = 'number';
+	
+	/**
 	 * @see	wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
