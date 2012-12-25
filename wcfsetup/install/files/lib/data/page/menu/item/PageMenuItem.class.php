@@ -49,7 +49,7 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	 */
 	public function getLink() {
 		// external link
-		if ($this->menuItemController === null) {
+		if (!$this->menuItemController) {
 			return WCF::getLanguage()->get($this->menuItemLink);
 		}
 		
