@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
+use wcf\system\exception\UserInputException;
+use wcf\system\WCF;
 
 /**
  * Option type implementation for integer input fields.
@@ -14,14 +16,39 @@ use wcf\data\option\Option;
  */
 class IntegerOptionType extends TextOptionType {
 	/**
-	 * @see	wcf\system\option\TextOptionType::$inputType
+	 * @see	wcf\system\option\TextOptionType::$inputClass
 	 */
-	protected $inputType = 'number';
+	protected $inputClass = 'medium';
+	
+	/**
+	 * @see	wcf\system\option\IOptionType::getFormElement()
+	 */
+	public function getFormElement(Option $option, $value) {
+		WCF::getTPL()->assign(array(
+			'option' => $option,
+			'inputClass' => $this->inputClass,
+			'value' => $value
+		));
+		
+		return WCF::getTPL()->fetch('integerOptionType');
+	}
 	
 	/**
 	 * @see	wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		return intval($newValue);
+	}
+	
+	/**
+	 * @see	wcf\system\option\IOptionType::validate()
+	 */
+	public function validate(Option $option, $newValue) {
+		if ($option->minvalue !== null && $option->minvalue > $newValue) {
+			throw new UserInputException($option->optionName, 'tooLow');
+		}
+		if ($option->maxvalue !== null && $option->maxvalue < $newValue) {
+			throw new UserInputException($option->optionName, 'tooHigh');
+		}
 	}
 }

@@ -81,7 +81,7 @@
 		<item name="wcf.acp.group.list"><![CDATA[User groups]]></item>
 		<item name="wcf.acp.group.list.count"><![CDATA[{#$items} user group{if $items != 1}s{/if}]]></item>
 		<item name="wcf.acp.group.members"><![CDATA[Number of members]]></item>
-		<item name="wcf.acp.group.showMembers"><![CDATA[Show the members of this user group]]></item>
+		
 		<item name="wcf.acp.group.option.admin.display.canManagePageMenu"><![CDATA[Can manage page menu]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Can enter Administration Control Panel]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Allows members of this user group to enter the Administration Control Panel and, dependent upon their permissions, run certain actions.]]></item>
@@ -114,6 +114,7 @@
 		<item name="wcf.acp.group.option.admin.user.canEditUser"><![CDATA[Can edit users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canMailUser"><![CDATA[Can send e-mails to users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canSearchUser"><![CDATA[Can search users]]></item>
+		
 		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrative permissions]]></item>
 		<item name="wcf.acp.group.option.category.admin.display"><![CDATA[Design]]></item>
 		<item name="wcf.acp.group.option.category.admin.display.pageMenu"><![CDATA[Page menu]]></item>
@@ -127,6 +128,11 @@
 		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.group.option.category.mod"><![CDATA[Moderative permissions]]></item>
 		<item name="wcf.acp.group.option.category.user"><![CDATA[General permissions]]></item>
+		
+		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[The given value is too high.{if $option->maxvalue !== null} The maximum value is {#$option->maxvalue}.{/if}]]></item>
+		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[The given value is too low.{if $option->minvalue !== null} The minimum value is {#$option->minvalue}.{/if}]]></item>
+		
+		<item name="wcf.acp.group.showMembers"><![CDATA[Show the members of this user group]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -230,6 +236,9 @@
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookie path]]></item>
 		<item name="wcf.acp.option.cookie_path.description"><![CDATA[The cookie path is concurrent to the document root of your site - e.g. “/forum” for http://www.woltlab.com/forum.]]></item>
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Cookie prefix]]></item>
+		
+		<item name="wcf.acp.option.error.tooHigh"><![CDATA[The given value is too high.{if $option->maxvalue !== null} The maximum value is {#$option->maxvalue}.{/if}]]></item>
+		<item name="wcf.acp.option.error.tooLow"><![CDATA[The given value is too low.{if $option->minvalue !== null} The minimum value is {#$option->minvalue}.{/if}]]></item>
 		
 		<item name="wcf.acp.option.export"><![CDATA[Export options]]></item>
 		<item name="wcf.acp.option.export.download"><![CDATA[Download the exported options]]></item>
