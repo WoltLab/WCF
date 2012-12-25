@@ -43,12 +43,6 @@ class PageMenuItemAddForm extends ACPForm {
 	public $isInternalLink = false;
 	
 	/**
-	 * true, if menu item is landing page
-	 * @var	boolean
-	 */
-	public $isLandingPage = false;
-	
-	/**
 	 * menu item controller
 	 * @var	string
 	 */
@@ -131,7 +125,6 @@ class PageMenuItemAddForm extends ACPForm {
 		
 		if (isset($_POST['isDisabled'])) $this->isDisabled = true;
 		if (isset($_POST['isInternalLink'])) $this->isInternalLink = (bool) $_POST['isInternalLink'];
-		if (isset($_POST['isLandingPage'])) $this->isLandingPage = true;
 		if (isset($_POST['menuItemController'])) $this->menuItemController = StringUtil::trim($_POST['menuItemController']);
 		if (isset($_POST['menuPosition'])) $this->menuPosition = StringUtil::trim($_POST['menuPosition']);
 		if (isset($_POST['parentMenuItem'])) $this->parentMenuItem = StringUtil::trim($_POST['parentMenuItem']);
@@ -198,14 +191,6 @@ class PageMenuItemAddForm extends ACPForm {
 				throw new UserInputException('parentMenuItem', 'notValid');
 			}
 		}
-		
-		// validate landing page
-		if ($this->isDisabled) {
-			$this->isLandingPage = false;
-		}
-		else if ($this->menuPosition == 'footer' || !empty($this->parentMenuItem)) {
-			$this->isLandingPage = false;
-		}
 	}
 	
 	/**
@@ -216,7 +201,6 @@ class PageMenuItemAddForm extends ACPForm {
 		
 		$this->objectAction = new PageMenuItemAction(array(), 'create', array('data' => array(
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
-			'isLandingPage' => ($this->isLandingPage) ? 1 : 0,
 			'menuItem' => $this->pageMenuItem,
 			'menuItemController' => $this->menuItemController,
 			'menuItemLink' => $this->menuItemLink,
@@ -249,7 +233,7 @@ class PageMenuItemAddForm extends ACPForm {
 		WCF::getTPL()->assign('success', true);
 		
 		// reset variables
-		$this->isDisabled = $this->isInternalLink = $this->isLandingPage = false;
+		$this->isDisabled = $this->isInternalLink = false;
 		$this->menuPosition = 'header';
 		$this->menuItemController = $this->menuItemLink = $this->pageMenuItem = $this->parentMenuItem = '';
 		$this->showOrder = 0;
@@ -273,7 +257,6 @@ class PageMenuItemAddForm extends ACPForm {
 			'availableParentMenuItems' => $this->availableParentMenuItems,
 			'isDisabled' => $this->isDisabled,
 			'isInternalLink' => $this->isInternalLink,
-			'isLandingPage' => $this->isLandingPage,
 			'menuItemController' => $this->menuItemController,
 			'menuItemLink' => $this->menuItemLink,
 			'menuPosition' => $this->menuPosition,

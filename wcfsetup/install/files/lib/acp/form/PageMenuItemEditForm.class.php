@@ -69,7 +69,6 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 		if (empty($_POST)) {
 			$this->isDisabled = ($this->menuItem->isDisabled) ? true : false;
 			$this->isInternalLink = ($this->menuItem->menuItemController) ? true : false;
-			$this->isLandingPage = ($this->menuItem->isLandingPage) ? true : false;
 			$this->menuItemController = $this->menuItem->menuItemController;
 			$this->menuItemLink = $this->menuItem->menuItemLink;
 			$this->menuPosition = $this->menuItem->menuPosition;
@@ -101,7 +100,6 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 		// save menu item
 		$this->objectAction = new PageMenuItemAction(array($this->menuItem), 'update', array('data' => array(
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
-			'isLandingPage' => ($this->isLandingPage) ? 1 : 0,
 			'menuItemController' => $this->menuItemController,
 			'menuItemLink' => $this->menuItemLink,
 			'parentMenuItem' => ($this->menuItem->menuPosition == 'header' ? $this->parentMenuItem : ''),

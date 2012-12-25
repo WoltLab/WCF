@@ -3,8 +3,6 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		var $isDisabled = $('#isDisabled');
-		var $isLandingPageContainer = $('#isLandingPageContainer');
 		var $menuPosition = $('#menuPosition');
 		var $parentMenuItemContainer = $('#parentMenuItemContainer');
 		var $isInternalLink = $('input[name=isInternalLink]').filter('[value=1]');
@@ -13,14 +11,9 @@
 		function handleMenuPosition() {
 			if ($menuPosition.val() === 'header') {
 				$parentMenuItemContainer.show();
-				
-				if (!$isDisabled.is(':checked')) {
-					$isLandingPageContainer.show();
-				}
 			}
 			else {
 				$parentMenuItemContainer.hide();
-				$isLandingPageContainer.hide();
 			}
 		}
 		
@@ -33,20 +26,9 @@
 			}
 		}
 		
-		function handleIsDisabled() {
-			if ($isDisabled.is(':checked')) {
-				$isLandingPageContainer.hide();
-			}
-			else {
-				$isLandingPageContainer.show();
-			}
-		}
-		
-		$isDisabled.change(handleIsDisabled);
 		$menuPosition.change(handleMenuPosition);
 		$('input[name=isInternalLink]').change(handleIsInternalLink);
 		
-		handleIsDisabled();
 		handleMenuPosition();
 		handleIsInternalLink();
 	});
@@ -198,13 +180,6 @@
 			<dl>
 				<dd>
 					<label><input type="checkbox" name="isDisabled" id="isDisabled" value="1"{if $isDisabled} checked="checked"{/if} /> <span>{lang}wcf.acp.pageMenu.isDisabled{/lang}</span></label>
-				</dd>
-			</dl>
-			
-			<dl id="isLandingPageContainer">
-				<dd>
-					<label><input type="checkbox" name="isLandingPage" id="isLandingPage" value="1"{if $isLandingPage} checked="checked"{/if} /> <span>{lang}wcf.acp.pageMenu.isLandingPage{/lang}</span></label>
-					<small>{lang}wcf.acp.pageMenu.isLandingPage.description{/lang}</small>
 				</dd>
 			</dl>
 		</fieldset>
