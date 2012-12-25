@@ -395,7 +395,6 @@
 		<item name="wcf.acp.package.startInstall"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.package.startUpdate"><![CDATA[Paket „{@$package->getName()}“ aktualisieren]]></item>
 		<item name="wcf.acp.package.type.application"><![CDATA[Anwendung]]></item>
-		<item name="wcf.acp.package.type.other"><![CDATA[Basispaket]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Erweiterung]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren?]]></item>
 		<item name="wcf.acp.package.uninstallation.confirmDependentPackages"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren? Beachten Sie bitte, dass die folgenden Pakete ebenfalls deinstalliert werden:
