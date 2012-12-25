@@ -341,7 +341,6 @@
 		<item name="wcf.acp.package.startInstall"><![CDATA[Install package]]></item>
 		<item name="wcf.acp.package.startUpdate"><![CDATA[Update package “{@$package->getName()}”]]></item>
 		<item name="wcf.acp.package.type.application"><![CDATA[Application]]></item>
-		<item name="wcf.acp.package.type.other"><![CDATA[Base package]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Extension]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Do you really want to uninstall the package “{@$package->getName()}”?]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update date]]></item>
