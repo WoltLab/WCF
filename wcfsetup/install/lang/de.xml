@@ -110,7 +110,7 @@
 		<item name="wcf.acp.group.list"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.group.list.count"><![CDATA[{#$items} Benutzergruppe{if $items != 1}n{/if}]]></item>
 		<item name="wcf.acp.group.members"><![CDATA[Mitglieder]]></item>
-		<item name="wcf.acp.group.showMembers"><![CDATA[Zeige die Mitglieder dieser Benutzergruppe]]></item>
+
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Kann Administrationsoberfläche betreten]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Mitglieder dieser Benutzergruppe können die Administrationsoberfläche betreten und dort abhängig von den weiteren Zugriffsrechten verschiedene Aktionen durchführen. Diese Option muss aktiviert sein, wenn diesen Benutzern andere administrative Funktionen erlaubt werden sollen.]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPrivateUserOptions"><![CDATA[Kann versteckte Profilinformationen sehen]]></item>
@@ -141,6 +141,7 @@
 		<item name="wcf.acp.group.option.admin.user.canEditUser"><![CDATA[Kann Benutzer bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.user.canMailUser"><![CDATA[Kann E-Mails an Benutzer senden]]></item>
 		<item name="wcf.acp.group.option.admin.user.canSearchUser"><![CDATA[Kann Benutzer suchen]]></item>
+		
 		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrative Rechte]]></item>
 		<item name="wcf.acp.group.option.category.admin.display"><![CDATA[Darstellung]]></item>
 		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[Allgemeine Rechte]]></item>
@@ -153,6 +154,11 @@
 		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.group.option.category.mod"><![CDATA[Moderative Rechte]]></item>
 		<item name="wcf.acp.group.option.category.user"><![CDATA[Allgemeine Rechte]]></item>
+		
+		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
+		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
+		
+		<item name="wcf.acp.group.showMembers"><![CDATA[Zeige die Mitglieder dieser Benutzergruppe]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -264,6 +270,9 @@
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookiepfad]]></item>
 		<item name="wcf.acp.option.cookie_path.description"><![CDATA[Der Cookiepfad wird absolut zum Document Root angegeben - also z.B. "/forum" für http://www.woltlab.de/forum.]]></item>
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Präfix für Cookienamen]]></item>
+		
+		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
+		<item name="wcf.acp.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
 		
 		<item name="wcf.acp.option.export"><![CDATA[Optionen sichern]]></item>
 		<item name="wcf.acp.option.export.download"><![CDATA[Sicherung der Optionen herunterladen]]></item>
