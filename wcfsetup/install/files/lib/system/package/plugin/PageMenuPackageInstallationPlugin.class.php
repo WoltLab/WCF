@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\system\exception\SystemException;
 
 /**
  * Installs, updates and deletes page page menu items.
@@ -25,9 +26,18 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 		
 		// position
 		$result['menuPosition'] = (!empty($data['elements']['position']) && $data['elements']['position'] == 'footer') ? 'footer' : 'header';
+		
+		// controller
+		$result['menuItemController'] = (isset($data['elements']['controller'])) ? $data['elements']['controller'] : '';
+		
 		// class name
 		if (!empty($data['elements']['classname'])) {
 			$result['className'] = $data['elements']['classname'];
+		}
+		
+		// validate controller and link (cannot be empty at the same time)
+		if (empty($result['menuItemLink']) && empty($result['menuItemController'])) {
+			throw new SystemException("Menu item '".$result['menuItem']."' neither has a link nor a controller given");
 		}
 		
 		return $result;
