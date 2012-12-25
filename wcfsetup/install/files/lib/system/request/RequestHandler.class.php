@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\request;
+use wcf\util\HeaderUtil;
+
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -68,6 +70,15 @@ class RequestHandler extends SingletonFactory {
 		try {
 			$routeData = RouteHandler::getInstance()->getRouteData();
 			$controller = $routeData['controller'];
+			
+			/*
+			 * @todo redirect to landing page once page menu items support controller based URLs (see https://github.com/WoltLab/WCF/issues/998)
+			 * 
+			if (RouteHandler::getInstance()->isDefaultController()) {
+				HeaderUtil::redirect(..., true);
+				exit;
+			}
+			*/
 			
 			// validate class name
 			if (!preg_match('~^[a-z0-9_]+$~i', $controller)) {

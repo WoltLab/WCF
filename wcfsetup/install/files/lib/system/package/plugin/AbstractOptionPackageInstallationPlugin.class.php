@@ -79,7 +79,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			// delete categories
 			$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."_category
 				WHERE		categoryName = ?
-				AND packageID = ?";
+				AND		packageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($categories as $category) {
