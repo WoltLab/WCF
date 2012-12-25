@@ -1,10 +1,10 @@
 <?php
 namespace wcf\data\page\menu\item;
 use wcf\data\ProcessibleDatabaseObject;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\menu\page\DefaultPageMenuItemProvider;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\request\LinkHandler;
+use wcf\system\Regex;
 use wcf\system\WCF;
 
 /**
@@ -48,14 +48,20 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	 * @see	wcf\system\menu\ITreeMenuItem::getLink()
 	 */
 	public function getLink() {
-		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($this->packageID);
-		
-		$parameters = array();
-		if ($abbreviation) {
-			$parameters['application'] = $abbreviation;
+		// external link
+		if ($this->menuItemController === null) {
+			return WCF::getLanguage()->get($this->menuItemLink);
 		}
 		
-		return LinkHandler::getInstance()->getLink(null, $parameters, WCF::getLanguage()->get($this->menuItemLink));
+		// resolve application and controller
+		$parts = explode('\\', $this->menuItemController);
+		$abbreviation = array_shift($parts);
+		$controller = array_pop($parts);
+		
+		// drop controller suffix
+		$controller = Regex::compile('(Action|Form|Page)$')->replace($controller, '');
+		
+		return LinkHandler::getInstance()->getLink($controller, array('application' => $abbreviation), WCF::getLanguage()->get($this->menuItemLink));
 	}
 	
 	/**
