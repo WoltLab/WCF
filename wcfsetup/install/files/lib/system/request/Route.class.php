@@ -154,6 +154,10 @@ class Route {
 				if (isset($this->parameterOptions[$schemaPart])) {
 					// default value is provided
 					if ($this->parameterOptions[$schemaPart]['default'] !== null) {
+						if ($schemaPart == 'controller') {
+							$data['isDefaultController'] = true;
+						}
+						
 						$data[$schemaPart] = $this->parameterOptions[$schemaPart]['default'];
 						continue;
 					}
@@ -164,6 +168,10 @@ class Route {
 					}
 				}
 			}
+		}
+		
+		if (!isset($data['isDefaultController'])) {
+			$data['isDefaultController'] = true;
 		}
 		
 		$this->routeData = $data;

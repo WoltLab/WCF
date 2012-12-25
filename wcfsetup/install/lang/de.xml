@@ -110,7 +110,8 @@
 		<item name="wcf.acp.group.list"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.group.list.count"><![CDATA[{#$items} Benutzergruppe{if $items != 1}n{/if}]]></item>
 		<item name="wcf.acp.group.members"><![CDATA[Mitglieder]]></item>
-
+		
+		<item name="wcf.acp.group.option.admin.display.canManagePageMenu"><![CDATA[Kann Seitenmenü verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Kann Administrationsoberfläche betreten]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Mitglieder dieser Benutzergruppe können die Administrationsoberfläche betreten und dort abhängig von den weiteren Zugriffsrechten verschiedene Aktionen durchführen. Diese Option muss aktiviert sein, wenn diesen Benutzern andere administrative Funktionen erlaubt werden sollen.]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPrivateUserOptions"><![CDATA[Kann versteckte Profilinformationen sehen]]></item>
@@ -123,6 +124,7 @@
 		<item name="wcf.acp.group.option.admin.system.canEditOption"><![CDATA[Kann allgemeine Einstellungen vornehmen]]></item>
 		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Kann deaktivierte Stile benutzen]]></item>
 		<item name="wcf.acp.group.option.admin.system.canViewLog"><![CDATA[Kann Protokolle abrufen]]></item>
+		<item name="wcf.acp.group.option.admin.system.canManageApplication"><![CDATA[Kann Anwendungen verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.system.canManageCronjob"><![CDATA[Kann zeitgesteuerte Aufgaben verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canEditServer"><![CDATA[Kann Update-Server bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canInstallPackage"><![CDATA[Kann Pakete installieren]]></item>
@@ -144,6 +146,7 @@
 		
 		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrative Rechte]]></item>
 		<item name="wcf.acp.group.option.category.admin.display"><![CDATA[Darstellung]]></item>
+		<item name="wcf.acp.group.option.category.admin.display.pageMenu"><![CDATA[Seitenmenü]]></item>
 		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[Allgemeine Rechte]]></item>
 		<item name="wcf.acp.group.option.category.admin.language"><![CDATA[Sprachen]]></item>
 		<item name="wcf.acp.group.option.category.admin.style"><![CDATA[Stile]]></item>
@@ -179,6 +182,7 @@
 		<item name="wcf.acp.menu.link.application"><![CDATA[Anwendungen]]></item>
 		<item name="wcf.acp.menu.link.application.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.application.management"><![CDATA[Anwendungen verwalten]]></item>
+		<item name="wcf.acp.menu.link.community"><![CDATA[Community]]></item>
 		<item name="wcf.acp.menu.link.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Aufgabe hinzufügen]]></item>
@@ -211,7 +215,6 @@
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.massProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
 		<item name="wcf.acp.menu.link.user.search"><![CDATA[Benutzer suchen]]></item>
-		<item name="wcf.acp.menu.link.community"><![CDATA[Community]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -401,7 +404,6 @@
 		<item name="wcf.acp.package.startInstall"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.package.startUpdate"><![CDATA[Paket „{@$package->getName()}“ aktualisieren]]></item>
 		<item name="wcf.acp.package.type.application"><![CDATA[Anwendung]]></item>
-		<item name="wcf.acp.package.type.other"><![CDATA[Basispaket]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Erweiterung]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren?]]></item>
 		<item name="wcf.acp.package.uninstallation.confirmDependentPackages"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren? Beachten Sie bitte, dass die folgenden Pakete ebenfalls deinstalliert werden:
