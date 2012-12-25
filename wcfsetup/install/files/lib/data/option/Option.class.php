@@ -27,6 +27,22 @@ class Option extends DatabaseObject {
 	protected static $databaseTableIndexName = 'optionID';
 	
 	/**
+	 * @see	wcf\data\IStorableObject::__get()
+	 */
+	public function __get($name) {
+		$value = parent::__get($name);
+		
+		// treat additional data as data variables if it is an array
+		if ($value === null) {
+			if (is_array($this->data['additionalData']) && isset($this->data['additionalData'][$name])) {
+				$value = $this->data['additionalData'][$name];
+			}
+		}
+		
+		return $value;
+	}
+	
+	/**
 	 * @see	wcf\data\DatabaseObject::handleData()
 	 */
 	protected function handleData($data) {
