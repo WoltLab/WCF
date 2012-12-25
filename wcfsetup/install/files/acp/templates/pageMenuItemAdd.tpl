@@ -183,12 +183,6 @@
 					{include file='multipleLanguageInputJavascript' elementIdentifier='menuItemLink' forceSelection=false}
 				</dd>
 			</dl>
-			
-			<dl>
-				<dd>
-					<label><input type="checkbox" name="newWindow" id="newWindow" value="1"{if $newWindow} checked="checked"{/if} /> <span>{lang}wcf.acp.pageMenu.newWindow{/lang}</span></label>
-				</dd>
-			</dl>
 		</fieldset>
 		
 		<fieldset>

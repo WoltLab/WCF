@@ -72,12 +72,6 @@ class PageMenuItemAddForm extends ACPForm {
 	public $neededPermissions = array('admin.display.canManagePageMenu');
 	
 	/**
-	 * open link in new window
-	 * @var	boolean
-	 */
-	public $newWindow = false;
-	
-	/**
 	 * page menu item name
 	 * @var	string
 	 */
@@ -140,7 +134,6 @@ class PageMenuItemAddForm extends ACPForm {
 		if (isset($_POST['isLandingPage'])) $this->isLandingPage = true;
 		if (isset($_POST['menuItemController'])) $this->menuItemController = StringUtil::trim($_POST['menuItemController']);
 		if (isset($_POST['menuPosition'])) $this->menuPosition = StringUtil::trim($_POST['menuPosition']);
-		if (isset($_POST['newWindow'])) $this->newWindow = true;
 		if (isset($_POST['parentMenuItem'])) $this->parentMenuItem = StringUtil::trim($_POST['parentMenuItem']);
 		if (isset($_POST['showOrder'])) $this->showOrder = intval($_POST['showOrder']);
 	}
@@ -228,7 +221,6 @@ class PageMenuItemAddForm extends ACPForm {
 			'menuItemController' => $this->menuItemController,
 			'menuItemLink' => $this->menuItemLink,
 			'menuPosition' => $this->menuPosition,
-			'newWindow' => ($this->newWindow) ? 1 : 0,
 			'parentMenuItem' => $this->parentMenuItem,
 			'showOrder' => $this->showOrder
 		)));
@@ -257,7 +249,7 @@ class PageMenuItemAddForm extends ACPForm {
 		WCF::getTPL()->assign('success', true);
 		
 		// reset variables
-		$this->isDisabled = $this->isInternalLink = $this->isLandingPage = $this->newWindow = false;
+		$this->isDisabled = $this->isInternalLink = $this->isLandingPage = false;
 		$this->menuPosition = 'header';
 		$this->menuItemController = $this->menuItemLink = $this->pageMenuItem = $this->parentMenuItem = '';
 		$this->showOrder = 0;
@@ -285,7 +277,6 @@ class PageMenuItemAddForm extends ACPForm {
 			'menuItemController' => $this->menuItemController,
 			'menuItemLink' => $this->menuItemLink,
 			'menuPosition' => $this->menuPosition,
-			'newWindow' => $this->newWindow,
 			'pageMenuItem' => $this->pageMenuItem,
 			'parentMenuItem' => $this->parentMenuItem,
 			'showOrder' => $this->showOrder

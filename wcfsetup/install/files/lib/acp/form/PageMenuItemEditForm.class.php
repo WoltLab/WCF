@@ -73,7 +73,6 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 			$this->menuItemController = $this->menuItem->menuItemController;
 			$this->menuItemLink = $this->menuItem->menuItemLink;
 			$this->menuPosition = $this->menuItem->menuPosition;
-			$this->newWindow = ($this->menuItem->newWindow) ? true : false;
 			$this->pageMenuItem = $this->menuItem->menuItem;
 			$this->parentMenuItem = $this->menuItem->parentMenuItem;
 			$this->showOrder = $this->menuItem->showOrder;
@@ -105,7 +104,6 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 			'isLandingPage' => ($this->isLandingPage) ? 1 : 0,
 			'menuItemController' => $this->menuItemController,
 			'menuItemLink' => $this->menuItemLink,
-			'newWindow' => ($this->newWindow) ? 1 : 0,
 			'parentMenuItem' => ($this->menuItem->menuPosition == 'header' ? $this->parentMenuItem : ''),
 			'showOrder' => $this->showOrder
 		)));

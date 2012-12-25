@@ -438,7 +438,6 @@
 		<item name="wcf.acp.pageMenu.menuPosition"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pageMenu.menuPosition.footer"><![CDATA[Fußzeile]]></item>
 		<item name="wcf.acp.pageMenu.menuPosition.header"><![CDATA[Hauptmenü]]></item>
-		<item name="wcf.acp.pageMenu.newWindow"><![CDATA[Link in neuem Fenster öffnen]]></item>
 		<item name="wcf.acp.pageMenu.pageMenuItem"><![CDATA[Name]]></item>
 		<item name="wcf.acp.pageMenu.parentMenuItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
 		<item name="wcf.acp.pageMenu.showOrder"><![CDATA[Reihenfolge]]></item>
