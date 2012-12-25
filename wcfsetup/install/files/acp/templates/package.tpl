@@ -85,10 +85,10 @@
 			<nav class="menu">
 				<ul>
 					{if $package->getRequiredPackages()|count}
-						<li><a href="#dependencies-required">{lang}wcf.acp.package.dependencies.required{/lang}</a></li>
+						<li><a href="{@$__wcf->getAnchor('dependencies-required')}">{lang}wcf.acp.package.dependencies.required{/lang}</a></li>
 					{/if}
 					{if $package->getDependentPackages()|count}
-						<li><a href="#dependencies-dependent">{lang}wcf.acp.package.dependencies.dependent{/lang}</a></li>
+						<li><a href="{@$__wcf->getAnchor('dependencies-dependent')}">{lang}wcf.acp.package.dependencies.dependent{/lang}</a></li>
 					{/if}
 				</ul>
 			</nav>
