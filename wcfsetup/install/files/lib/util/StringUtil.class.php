@@ -5,7 +5,7 @@ use wcf\system\WCF;
 /**
  * Contains string-related functions.
  * 
- * @author	Marcel Werk
+ * @author	Oliver Kliebisch, Marcel Werk 
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -18,6 +18,12 @@ final class StringUtil {
 			"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^\s>]
 			))*\s*/?>~ix';
 	const HTML_COMMENT_PATTERN = '~<!--(.*?)-->~';
+	
+	/**
+	 * utf8 bytes of the horizontal ellipsis char
+	 * @var	string
+	 */
+	const HELLIP = "\xE2\x80\xA6";
 	
 	/**
 	 * Returns a salted hash of the given value.
@@ -587,7 +593,7 @@ final class StringUtil {
 	 * @param	boolean		$breakWords	should words be broken in the middle
 	 * @return	string
 	 */
-	public static function truncate($string, $length = 80, $etc = '…', $breakWords = false) {
+	public static function truncate($string, $length = 80, $etc = StringUtil::HELLIP, $breakWords = false) {
 		if ($length == 0) {
 			return '';
 		}
@@ -604,6 +610,118 @@ final class StringUtil {
 		else {
 			return $string;
 		}
+	}
+	
+	/**
+	 * Truncates a string containing HTML code and keeps the HTML syntax intact.
+	 *
+	 * @param 	string		$string			string which shall be truncated
+	 * @param 	integer		$length 		string length after truncating
+	 * @param	boolean		$wordWrap		if true	words will not be split and the return string might be shorter than $length
+	 * @param 	string		$etc			ending string which will be appended after truncating
+	 * @return 	string					truncated string
+	 */
+	public static function truncateHTML($string, $length = 500, $wordWrap = true, $etc = StringUtil::HELLIP) {
+		if (StringUtil::length(StringUtil::stripHTML($string)) <= $length) {
+			return $string;
+		}
+		$openTags = array();
+		$truncatedString = '';
+	
+		// initalize length counter with the ending length
+		$totalLength = StringUtil::length($etc);
+	
+		preg_match_all('/(<\/?([\w+]+)[^>]*>)?([^<>]*)/', $string, $tags, PREG_SET_ORDER);
+	
+		foreach ($tags as $tag) {
+			// filter standalone html tags
+			if (!preg_match('/area|base|basefont|br|col|frame|hr|img|input|isindex|link|meta|param/s', $tag[2])) {
+				// look for opening tags
+				if (preg_match('/<[\w]+[^>]*>/s', $tag[0])) {
+					array_unshift($openTags, $tag[2]);
+				}
+				/**
+				 * look for closing tags and check if this tag has a corresponding opening tag
+				 * and omit the opening tag if it has been closed already
+				 */
+				else if (preg_match('/<\/([\w]+)[^>]*>/s', $tag[0], $closeTag)) {
+					$position = array_search($closeTag[1], $openTags);
+					if ($position !== false) {
+						array_splice($openTags, $position, 1);
+					}
+				}
+			}
+			// append tag
+			$truncatedString .= $tag[1];
+	
+			// get length of the content without entities. If the content is too long, keep entities intact
+			$contentLength = StringUtil::length(StringUtil::decodeHTML($tag[3]));
+			if ($contentLength + $totalLength > $length) {
+				$left = $length - $totalLength;
+				$entitiesLength = 0;
+				if (preg_match_all('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i', $tag[3], $entities, PREG_OFFSET_CAPTURE)) {
+					foreach ($entities[0] as $entity) {
+						if ($entity[1] + 1 - $entitiesLength <= $left) {
+							$left--;
+							$entitiesLength += StringUtil::length($entity[0]);
+						}
+						else {
+							break;
+						}
+					}
+				}
+				$truncatedString .= StringUtil::substring($tag[3], 0 , $left + $entitiesLength);
+				break;
+			}
+			else {
+				$truncatedString .= $tag[3];
+				$totalLength += $contentLength;
+			}
+			if ($totalLength >= $length) {
+				break;
+			}
+		}
+	
+		// if word wrap is active search for the last word change
+		if ($wordWrap) {
+			$lastWhitespace = StringUtil::lastIndexOf($truncatedString, ' ');
+			// check if inside a tag
+			$lastOpeningTag = StringUtil::lastIndexOf($truncatedString, '<');
+			if ($lastOpeningTag < $lastWhitespace) {
+				$lastClosingTag = StringUtil::lastIndexOf($truncatedString, '>');
+				if (($lastClosingTag === false || $lastClosingTag > $lastWhitespace) && $lastClosingTag > $lastOpeningTag) {
+					$lastWhitespace = $lastOpeningTag;
+					array_shift($openTags);
+					if ($truncatedString[$lastWhitespace] != ' ') {
+						$firstPart = StringUtil::substring($truncatedString, 0, $lastWhitespace);
+						$secondPart = StringUtil::substring($truncatedString, $lastWhitespace + 1);
+						$truncatedString = $firstPart.' '.$secondPart;
+					}
+				}
+			}
+			if ($lastWhitespace !== false) {
+				$endString = StringUtil::substring($truncatedString, $lastWhitespace);
+				preg_match_all('/<\/([a-z]+)>/', $endString, $tagOverhead, PREG_SET_ORDER);
+				if (count($tagOverhead)) {
+					foreach ($tagOverhead as $tag) {
+						if (!in_array($tag[1], $openTags)) {
+							array_unshift($openTags, $tag[1]);
+						}
+					}
+				}
+				$truncatedString = StringUtil::substring($truncatedString, 0, $lastWhitespace);
+			}
+		}
+	
+		// close all open tags
+		foreach ($openTags as $tag) {
+			$truncatedString .= '</'.$tag.'>';
+		}
+	
+		// add etc
+		$truncatedString .= $etc;
+		
+		return $truncatedString;
 	}
 	
 	/**
