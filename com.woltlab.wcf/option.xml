@@ -119,7 +119,7 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
-
+			
 			<option name="enable_debug_mode">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
@@ -242,6 +242,8 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<categoryname>general.system.http</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>1</defaultvalue>
+				<minvalue>1</minvalue>
+				<maxvalue>9</maxvalue>
 			</option>
 			<!-- /general.system.http -->
 			
@@ -257,12 +259,13 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<categoryname>security.general.session</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>1800</defaultvalue>
-				<validationpattern>^[^0]</validationpattern>
+				<minvalue>1</minvalue>
 			</option>
 			<option name="user_online_timeout">
 				<categoryname>security.general.session</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>900</defaultvalue>
+				<minvalue>1</minvalue>
 			</option>
 			<option name="session_validate_ip_address">
 				<categoryname>security.general.session</categoryname>
@@ -346,7 +349,7 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 			<option name="mail_smtp_port">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue><![CDATA[25]]></defaultvalue>
+				<defaultvalue>25</defaultvalue>
 			</option>
 			<option name="mail_smtp_user">
 				<categoryname>general.mail.send</categoryname>
