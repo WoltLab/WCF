@@ -159,7 +159,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			if (!preg_match("/^[\w-\.]+$/", $data['name'])) {
 				$matches = array();
 				preg_match_all("/(\W)/", $data['name'], $matches);
-				throw new SystemException("The user option '".$data['name']."' has at least one non-alphanumeric character (underscore is permitted): (".implode("), ( ", $matches[1]).").");
+				throw new SystemException("The option '".$data['name']."' has at least one non-alphanumeric character (underscore is permitted): (".implode("), ( ", $matches[1]).").");
 			}
 			
 			$this->saveOption($data, $data['categoryname']);
