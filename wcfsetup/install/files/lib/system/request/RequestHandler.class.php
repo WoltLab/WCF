@@ -69,7 +69,7 @@ class RequestHandler extends SingletonFactory {
 	 * @param	string		$application
 	 */
 	protected function buildRequest($application) {
-		//try {
+		try {
 			$routeData = RouteHandler::getInstance()->getRouteData();
 			
 			// handle landing page for frontend requests
@@ -109,10 +109,10 @@ class RequestHandler extends SingletonFactory {
 			}
 			
 			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType']);
-		//}
-		//catch (SystemException $e) {
-		//	throw new IllegalLinkException();
-		//}
+		}
+		catch (SystemException $e) {
+			throw new IllegalLinkException();
+		}
 	}
 	
 	/**
