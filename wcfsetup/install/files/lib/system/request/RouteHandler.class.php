@@ -94,7 +94,7 @@ class RouteHandler extends SingletonFactory {
 		
 		$defaultRoute = new Route('default');
 		$defaultRoute->setSchema('/{controller}/{id}');
-		$defaultRoute->setParameterOption('controller', 'Index', null, true);
+		$defaultRoute->setParameterOption('controller', null, null, true);
 		$defaultRoute->setParameterOption('id', null, '\d+', true);
 		$this->addRoute($defaultRoute);
 	}

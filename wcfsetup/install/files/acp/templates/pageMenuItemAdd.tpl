@@ -31,6 +31,15 @@
 		
 		handleMenuPosition();
 		handleIsInternalLink();
+		
+		{if $action == 'edit' && $menuItem->isValidLandingPage()}
+			WCF.Language.addObject({
+				'wcf.acp.pageMenu.isLandingPage.confirmMessage': '{lang}wcf.acp.pageMenu.isLandingPage.confirmMessage{/lang}',
+				'wcf.acp.pageMenu.isLandingPage.success': '{lang}wcf.acp.pageMenu.isLandingPage.success{/lang}'
+			});
+			
+			new WCF.ACP.PageMenu.SetAsLandingPage({@$menuItem->menuItemID});
+		{/if}
 	});
 	//]]>
 </script>
@@ -52,6 +61,9 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
+			{if $action == 'edit' && $menuItem->isValidLandingPage()}
+				<li id="setAsLandingPage"><a class="button"><img src="{@$__wcf->getPath()}icon/default.svg" /> <span>{lang}wcf.acp.pageMenu.setAsLandingPage{/lang}</span></a></li>
+			{/if}
 			<li><a href="{link controller='PageMenuItemList'}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" /> <span>{lang}wcf.acp.pageMenu.list{/lang}</span></a></li>
 		</ul>
 	</nav>

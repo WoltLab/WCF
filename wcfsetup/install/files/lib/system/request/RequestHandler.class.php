@@ -1,11 +1,13 @@
 <?php
 namespace wcf\system\request;
-use wcf\util\HeaderUtil;
+use wcf\util\StringUtil;
 
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
+use wcf\system\menu\page\PageMenu;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 
 /**
  * Handles http requests.
@@ -67,18 +69,27 @@ class RequestHandler extends SingletonFactory {
 	 * @param	string		$application
 	 */
 	protected function buildRequest($application) {
-		try {
+		//try {
 			$routeData = RouteHandler::getInstance()->getRouteData();
-			$controller = $routeData['controller'];
 			
-			/*
-			 * @todo redirect to landing page once page menu items support controller based URLs (see https://github.com/WoltLab/WCF/issues/998)
-			 * 
-			if (RouteHandler::getInstance()->isDefaultController()) {
-				HeaderUtil::redirect(..., true);
-				exit;
+			// handle landing page for frontend requests
+			if (!$this->isACPRequest()) {
+				$landingPage = PageMenu::getInstance()->getLandingPage();
+				if ($landingPage !== null && RouteHandler::getInstance()->isDefaultController()) {
+					// check if redirect URL matches current URL
+					$redirectURL = $landingPage->getLink();
+					if (StringUtil::replace(RouteHandler::getHost(), '', $redirectURL) == $_SERVER['REQUEST_URI']) {
+						$routeData['controller'] = $landingPage->getController();
+					}
+					else {
+						// redirect to landing page
+						HeaderUtil::redirect($landingPage->getLink(), true);
+						exit;
+					}
+				}
 			}
-			*/
+			
+			$controller = $routeData['controller'];
 			
 			// validate class name
 			if (!preg_match('~^[a-z0-9_]+$~i', $controller)) {
@@ -98,10 +109,10 @@ class RequestHandler extends SingletonFactory {
 			}
 			
 			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType']);
-		}
-		catch (SystemException $e) {
-			throw new IllegalLinkException();
-		}
+		//}
+		//catch (SystemException $e) {
+		//	throw new IllegalLinkException();
+		//}
 	}
 	
 	/**

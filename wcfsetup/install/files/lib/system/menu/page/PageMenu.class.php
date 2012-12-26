@@ -17,6 +17,12 @@ use wcf\system\menu\TreeMenu;
  */
 class PageMenu extends TreeMenu {
 	/**
+	 * landing page menu item
+	 * @var	wcf\data\page\menu\item\PageMenuItem
+	 */
+	protected $landingPage = null;
+	
+	/**
 	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
@@ -33,6 +39,24 @@ class PageMenu extends TreeMenu {
 		
 		// call init event
 		EventHandler::getInstance()->fireAction($this, 'init');
+		
+		foreach ($this->menuItems as $menuItems) {
+			foreach ($menuItems as $menuItem) {
+				if ($menuItem->isLandingPage) {
+					$this->landingPage = $menuItem;
+					break 2;
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Returns landing page menu item.
+	 * 
+	 * @return	wcf\data\page\menu\item\PageMenuItem
+	 */
+	public function getLandingPage() {
+		return $this->landingPage;
 	}
 	
 	/**

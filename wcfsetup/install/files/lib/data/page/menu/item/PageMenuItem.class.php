@@ -34,6 +34,18 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	protected static $processorInterface = 'wcf\system\menu\page\IPageMenuItemProvider';
 	
 	/**
+	 * application abbreviation
+	 * @var	string
+	 */
+	protected $application = '';
+	
+	/**
+	 * menu item controller
+	 * @var	string
+	 */
+	protected $controller = null;
+	
+	/**
 	 * @see	wcf\data\ProcessibleDatabaseObject::getProcessor()
 	 */
 	public function getProcessor() {
@@ -53,15 +65,85 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 			return WCF::getLanguage()->get($this->menuItemLink);
 		}
 		
-		// resolve application and controller
-		$parts = explode('\\', $this->menuItemController);
-		$abbreviation = array_shift($parts);
-		$controller = array_pop($parts);
+		$this->parseController();
+		return LinkHandler::getInstance()->getLink($this->controller, array('application' => $this->application), WCF::getLanguage()->get($this->menuItemLink));
+	}
+	
+	/**
+	 * Returns true, if current menu item may be set as landing page.
+	 * 
+	 * @return	boolean
+	 */
+	public function isValidLandingPage() {
+		// item must be a top header menu item without parents
+		if ($this->menuPosition != 'header' || $this->parentMenuItem) {
+			return false;
+		}
 		
-		// drop controller suffix
-		$controller = Regex::compile('(Action|Form|Page)$')->replace($controller, '');
+		// external links are not valid
+		if (!$this->menuItemController) {
+			return false;
+		}
 		
-		return LinkHandler::getInstance()->getLink($controller, array('application' => $abbreviation), WCF::getLanguage()->get($this->menuItemLink));
+		// already is landing page
+		if ($this->isLandingPage) {
+			return false;
+		}
+		
+		// disabled items cannot be a landing page
+		if ($this->isDisabled) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Returns true, if this item can be deleted.
+	 * 
+	 * @return	boolean
+	 */
+	public function canDelete() {
+		return ($this->isLandingPage ? false : true);
+	}
+	
+	/**
+	 * Returns true, if this item can be disabled.
+	 * 
+	 * @return	boolean
+	 */
+	public function canDisable() {
+		return ($this->isLandingPage ? false : true);
+	}
+	
+	/**
+	 * Returns controller name.
+	 * 
+	 * @return	string
+	 */
+	public function getController() {
+		$this->parseController();
+		
+		return $this->controller;
+	}
+	
+	/**
+	 * Parses controller name.
+	 */
+	protected function parseController() {
+		if ($this->controller === null) {
+			$this->controller = '';
+				
+			// resolve application and controller
+			if ($this->menuItemController) {
+				$parts = explode('\\', $this->menuItemController);
+				$this->application = array_shift($parts);
+				$menuItemController = array_pop($parts);
+				
+				// drop controller suffix
+				$this->controller = Regex::compile('(Action|Form|Page)$')->replace($menuItemController, '');
+			}
+		}
 	}
 	
 	/**
