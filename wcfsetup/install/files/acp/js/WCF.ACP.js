@@ -1212,7 +1212,7 @@ WCF.ACP.Category.Delete = WCF.Action.Delete.extend({
 					}
 				}
 				else {
-					this._super(objectIDs);
+					$container.wcfBlindOut('up', function() { $container.remove(); });
 				}
 			}
 		}
