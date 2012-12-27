@@ -6628,6 +6628,7 @@ WCF.EditableItemList = Class.extend({
 	init: function(itemListSelector, searchInputSelector) {
 		this._itemList = $(itemListSelector);
 		this._searchInput = $(searchInputSelector);
+		this._data = { };
 		
 		if (!this._itemList.length || !this._searchInput.length) {
 			console.debug("[WCF.EditableItemList] Item list and/or search input do not exist, aborting.");

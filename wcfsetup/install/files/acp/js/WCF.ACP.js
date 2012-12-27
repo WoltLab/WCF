@@ -1199,33 +1199,23 @@ WCF.ACP.Category.Delete = WCF.Action.Delete.extend({
 	 * @see	WCF.Action.Delete.triggerEffect()
 	 */
 	triggerEffect: function(objectIDs) {
-		this.containerList.each($.proxy(function(index, container) {
-			container = $(container);
-			var $objectID = container.find('.jsDeleteButton').data('objectID');
-			if (WCF.inArray($objectID, objectIDs)) {
+		for (var $index in this._containers) {
+			var $container = $('#' + this._containers[$index]);
+			if (WCF.inArray($container.find('.jsDeleteButton').data('objectID'), objectIDs)) {
 				// move child categories up
-				if (container.has('ol').has('li')) {
-					if (container.is(':only-child')) {
-						container.parent().replaceWith(container.find('> ol'));
+				if ($container.has('ol').has('li')) {
+					if ($container.is(':only-child')) {
+						$container.parent().replaceWith($container.find('> ol'));
 					}
 					else {
-						container.replaceWith(container.find('> ol > li'));
+						$container.replaceWith($container.find('> ol > li'));
 					}
 				}
 				else {
-					container.wcfBlindOut('up', function() {
-						container.empty().remove();
-					}, container);
-				}
-				
-				// update badges
-				if (this.badgeList) {
-					this.badgeList.each(function(innerIndex, badge) {
-						$(badge).html($(badge).html() - 1);
-					});
+					$container.wcfBlindOut('up', function() { $container.remove(); });
 				}
 			}
-		}, this));
+		}
 	}
 });
 
