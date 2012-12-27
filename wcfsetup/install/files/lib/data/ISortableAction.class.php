@@ -2,9 +2,10 @@
 namespace wcf\data;
 
 /**
- * Default interface for sortable database objects.
+ * Every object action whose objects can be sorted via AJAX has to implement this
+ * interface.
  * 
- * @author	Alexander Ebert
+ * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
