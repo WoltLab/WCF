@@ -4,6 +4,7 @@
 		<item name="wcf.acp.menu.link.language"><![CDATA[Sprachen]]></item>
 		<item name="wcf.acp.menu.link.language.add"><![CDATA[Sprache hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.language.list"><![CDATA[Sprachen auflisten]]></item>
+		<item name="wcf.acp.menu.link.language.multilingualism"><![CDATA[Mehrsprachigkeit verwalten]]></item>
 		<item name="wcf.acp.menu.link.language.server.add"><![CDATA[Server hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.language.server.list"><![CDATA[Server auflisten]]></item>
 	</category>
