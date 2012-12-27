@@ -1784,6 +1784,7 @@ WCF.Action.Delete = Class.extend({
 		this.proxy.setOption('data', {
 			actionName: 'delete',
 			className: this._className,
+			interfaceName: 'wcf\\data\\IDeleteAction',
 			objectIDs: [ $(object).data('objectID') ]
 		});
 		
@@ -1861,6 +1862,7 @@ WCF.Action.Toggle = Class.extend({
 		this.proxy.setOption('data', {
 			actionName: 'toggle',
 			className: this.className,
+			interfaceName: 'wcf\\data\\IToggleAction',
 			objectIDs: [ $(event.target).data('objectID') ]
 		});
 		
@@ -3471,6 +3473,7 @@ WCF.Collapsible.Remote = Class.extend({
 		this._proxy.setOption('data', {
 			actionName: 'loadContainer',
 			className: this._className,
+			interfaceName: 'wcf\\data\\ILoadableCollapsibleContainerAction',
 			objectIDs: [ this._getObjectID($containerID) ],
 			parameters: $.extend(true, {
 				containerID: $containerID,
@@ -3601,6 +3604,7 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 		this._proxy.setOption('data', {
 			actionName: 'toggleContainer',
 			className: this._className,
+			interfaceName: 'wcf\\data\\ICollapsibleContainerAction',
 			objectIDs: [ this._getObjectID($containerID) ],
 			parameters: $.extend(true, {
 				containerID: $containerID,
@@ -4629,6 +4633,7 @@ WCF.Search.Base = Class.extend({
 			this._proxy.setOption('data', {
 				actionName: 'getSearchResultList',
 				className: this._className,
+				interfaceName: 'wcf\\data\\ISearchAction',
 				parameters: this._getParameters($parameters)
 			});
 			this._proxy.sendRequest();
@@ -5978,6 +5983,7 @@ WCF.Sortable.List = Class.extend({
 		this._proxy.setOption('data', {
 			actionName: 'updatePosition',
 			className: this._className,
+			interfaceName: 'wcf\\data\\IPositionAction',
 			parameters: $parameters
 		});
 		this._proxy.sendRequest();
