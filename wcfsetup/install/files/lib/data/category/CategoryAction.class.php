@@ -2,7 +2,7 @@
 namespace wcf\data\category;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ICollapsibleContainerAction;
-use wcf\data\IPositionAction;
+use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\PermissionDeniedException;
@@ -21,7 +21,7 @@ use wcf\system\WCF;
  * @subpackage	data.category
  * @category	Community Framework
  */
-class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibleContainerAction, IPositionAction, IToggleAction {
+class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibleContainerAction, ISortableAction, IToggleAction {
 	/**
 	 * categorized object type
 	 * @var	wcf\data\object\type\ObjectType
@@ -75,7 +75,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	}
 	
 	/**
-	 * @see	wcf\data\IPositionAction::updatePosition()
+	 * @see	wcf\data\ISortableAction::updatePosition()
 	 */
 	public function updatePosition() {
 		$showOrders = array();
@@ -188,7 +188,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	}
 	
 	/**
-	 * @see	wcf\data\IPositionAction::validateUpdatePosition()
+	 * @see	wcf\data\ISortableAction::validateUpdatePosition()
 	 */
 	public function validateUpdatePosition() {
 		// validate permissions

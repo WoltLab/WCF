@@ -5983,7 +5983,7 @@ WCF.Sortable.List = Class.extend({
 		this._proxy.setOption('data', {
 			actionName: 'updatePosition',
 			className: this._className,
-			interfaceName: 'wcf\\data\\IPositionAction',
+			interfaceName: 'wcf\\data\\ISortableAction',
 			parameters: $parameters
 		});
 		this._proxy.sendRequest();
