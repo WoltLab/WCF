@@ -1,13 +1,12 @@
 <?php
 namespace wcf\system\request;
-use wcf\util\StringUtil;
-
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\menu\page\PageMenu;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
+use wcf\util\StringUtil;
 
 /**
  * Handles http requests.

@@ -1,8 +1,7 @@
 <?php
 namespace wcf\system\request;
-use wcf\system\menu\page\PageMenu;
-
 use wcf\system\exception\SystemException;
+use wcf\system\menu\page\PageMenu;
 
 /**
  * Route implementation to resolve HTTP requests.
@@ -265,7 +264,7 @@ class Route {
 				// only the controller was given and matches default, omit routing
 				$ignoreController = true;
 			}
-			else {
+			else if (!RequestHandler::getInstance()->isACPRequest()) {
 				$landingPage = PageMenu::getInstance()->getLandingPage();
 				if ($landingPage !== null && ($landingPage->getController() == $components['controller'])) {
 					$ignoreController = true;
