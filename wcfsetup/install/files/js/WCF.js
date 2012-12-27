@@ -5919,6 +5919,7 @@ WCF.Sortable.List = Class.extend({
 			axis: 'y',
 			connectWith: '#' + this._containerID + ' .sortableList',
 			disableNesting: 'sortableNoNesting',
+			doNotClear: true,
 			errorClass: 'sortableInvalidTarget',
 			forcePlaceholderSize: true,
 			helper: 'clone',
@@ -5933,7 +5934,7 @@ WCF.Sortable.List = Class.extend({
 			$('#' + this._containerID + ' .sortableList').sortable(this._options);
 		}
 		else {
-			$('#' + this._containerID + ' > .sortableList').wcfNestedSortable(this._options);
+			$('#' + this._containerID + ' > .sortableList').nestedSortable(this._options);
 		}
 		
 		if (this._className) {
@@ -7242,15 +7243,6 @@ WCF.UserPanel = Class.extend({
 		}
 	}
 });
-
-/**
- * WCF implementation for nested sortables.
- */
-$.widget("ui.wcfNestedSortable", $.extend({}, $.mjs.nestedSortable.prototype, {
-	_clearEmpty: function(item) {
-		/* Does nothing because we want to keep empty lists */
-	}
-}));
 
 /**
  * WCF implementation for dialogs, based upon ideas by jQuery UI.
