@@ -83,6 +83,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	
 	const TYPE_INTEGER = 1;
 	const TYPE_STRING = 2;
+	const TYPE_BOOL = 3;
 	
 	/**
 	 * Initialize a new DatabaseObject-related action.
@@ -367,9 +368,10 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	string		$variableName
 	 * @param	boolean		$allowEmpty
 	 * @param	string		$arrayIndex
+	 * @return	integer
 	 */
 	protected function readInteger($variableName, $allowEmpty = false, $arrayIndex = '') {
-		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_INTEGER);
+		return $this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_INTEGER);
 	}
 	
 	/**
@@ -378,9 +380,22 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	string		$variableName
 	 * @param	boolean		$allowEmpty
 	 * @param	string		$arrayIndex
+	 * @return	string
 	 */
 	protected function readString($variableName, $allowEmpty = false, $arrayIndex = '') {
-		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_STRING);
+		return $this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_STRING);
+	}
+	
+	/**
+	 * Reads a boolean value and validates it.
+	 * 
+	 * @param	string		$variableName
+	 * @param	boolean		$allowEmpty
+	 * @param	string		$arrayIndex
+	 * @return	boolean
+	 */
+	protected function readBool($variableName, $allowEmpty = false, $arrayIndex = '') {
+		return $this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_BOOL);
 	}
 	
 	/**
@@ -439,8 +454,23 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 					}
 				}
 			break;
+			
+			case self::TYPE_BOOL:
+				if (!isset($target[$variableName])) {
+					if ($allowEmpty) {
+						$target[$variableName] = false;
+					}
+					else {
+						throw new UserInputException($variableName);
+					}
+				}
+				else {
+					$target[$variableName] = (bool) $target[$variableName];
+				}
+			break;
 		}
 		
+		return $target[$variableName];
 	}
 	
 	/**
