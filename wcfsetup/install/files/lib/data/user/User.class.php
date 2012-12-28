@@ -382,7 +382,7 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 	 * @see	wcf\system\api\rest\response\IRESTfulResponse::getResponseFields()
 	 */
 	public function getResponseFields() {	
-		$fields = array('userID', 'username', 'signature', 'profileHits', 'userTitle', 'activityPoints', 'likesReceived');
+		$fields = array('userID', 'username', 'signature', 'userTitle');
 	
 		if ($this->canViewEmailAddress == 0) {
 			$fields[] = 'email';
