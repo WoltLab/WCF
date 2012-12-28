@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  * @subpackage	data.user
  * @category	Community Framework
  */
-final class User extends DatabaseObject implements IRouteController, IRESTfulResponse {
+final class User extends DatabaseObject implements IRESTfulResponse, IRouteController {
 	/**
 	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
@@ -379,7 +379,7 @@ final class User extends DatabaseObject implements IRouteController, IRESTfulRes
 	}
 	
 	/**
-	 * @see	IRESTfulResponse::getResponseFields()
+	 * @see	wcf\system\api\rest\response\IRESTfulResponse::getResponseFields()
 	 */
 	public function getResponseFields() {	
 		$fields = array('userID', 'username', 'signature', 'profileHits', 'userTitle', 'activityPoints', 'likesReceived');
