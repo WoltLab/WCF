@@ -82,7 +82,7 @@ class UserOptionEditor extends DatabaseObjectEditor {
 		$value = intval(!$enable);
 		
 		$sql = "UPDATE	wcf".WCF_N."_user_option
-			SET	disabled = ?
+			SET	isDisabled = ?
 			WHERE	optionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($value, $this->optionID));

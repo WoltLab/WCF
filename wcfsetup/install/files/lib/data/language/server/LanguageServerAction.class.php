@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\language\server;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IToggleAction;
 
 /**
  * Executes language server-related actions.
@@ -12,7 +13,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @subpackage	data.language.server
  * @category	Community Framework
  */
-class LanguageServerAction extends AbstractDatabaseObjectAction {
+class LanguageServerAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
@@ -32,4 +33,22 @@ class LanguageServerAction extends AbstractDatabaseObjectAction {
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.language.canEditServer');
+	
+	/**
+	 * @see	wcf\data\IToggleAction::toggle()
+	 */
+	public function toggle() {
+		foreach ($this->objects as $serverEditor) {
+			$serverEditor->update(array(
+				'isDisabled' => 1 - $serverEditor->isDisabled
+			));
+		}
+	}
+	
+	/**
+	 * @see	wcf\data\IToggleAction::validateToggle()
+	 */
+	public function validateToggle() {
+		$this->validateUpdate();
+	}
 }

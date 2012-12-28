@@ -166,7 +166,7 @@ CREATE TABLE wcf1_cronjob (
 	lastExec INT(10) NOT NULL DEFAULT 0,
 	nextExec INT(10) NOT NULL DEFAULT 0,
 	afterNextExec INT(10) NOT NULL DEFAULT 0,
-	active TINYINT(1) NOT NULL DEFAULT 1,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	canBeEdited TINYINT(1) NOT NULL DEFAULT 1,
 	canBeDisabled TINYINT(1) NOT NULL DEFAULT 1,
 	state TINYINT(1) NOT NULL DEFAULT 0,
@@ -232,7 +232,7 @@ DROP TABLE IF EXISTS wcf1_language_server;
 CREATE TABLE wcf1_language_server (
 	languageServerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	serverURL VARCHAR(255) NOT NULL DEFAULT '',
-	disabled TINYINT(1) NOT NULL DEFAULT 0
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_modification_log;
@@ -446,7 +446,7 @@ CREATE TABLE wcf1_package_update_server (
 	serverURL VARCHAR(255) NOT NULL DEFAULT '',
 	loginUsername VARCHAR(255) NOT NULL DEFAULT '',
 	loginPassword VARCHAR(255) NOT NULL DEFAULT '',
-	disabled TINYINT(1) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	lastUpdateTime INT(10) NOT NULL DEFAULT 0,
 	status ENUM('online', 'offline') NOT NULL DEFAULT 'online',
 	errorMessage TEXT
@@ -537,7 +537,7 @@ CREATE TABLE wcf1_style (
 	styleName VARCHAR(255) NOT NULL DEFAULT '',
 	templateGroupID INT(10) NOT NULL DEFAULT 0,
 	isDefault TINYINT(1) NOT NULL DEFAULT 0,
-	disabled TINYINT(1) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	styleDescription TEXT,
 	styleVersion VARCHAR(255) NOT NULL DEFAULT '',
 	styleDate CHAR(10) NOT NULL DEFAULT '0000-00-00',
@@ -685,7 +685,7 @@ CREATE TABLE wcf1_user_option (
 	outputClass VARCHAR(255) NOT NULL DEFAULT '',
 	searchable TINYINT(1) NOT NULL DEFAULT 0,
 	showOrder INT(10) NOT NULL DEFAULT 0,
-	disabled TINYINT(1) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
 	additionalData MEDIUMTEXT,
@@ -880,8 +880,8 @@ INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (4, 3, '1');	-- Administrators
 
 -- default update servers
-INSERT INTO wcf1_package_update_server (serverURL, status, disabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/maelstrom/', 'online', 0, NULL, 0, '', '');
-INSERT INTO wcf1_package_update_server (serverURL, status, disabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/maelstrom/', 'online', 0, NULL, 0, '', '');
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/maelstrom/', 'online', 0, NULL, 0, '', '');
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/maelstrom/', 'online', 0, NULL, 0, '', '');
 
 -- style default values
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentBackgroundColor', 'rgba(255, 255, 255, 1)');

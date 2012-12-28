@@ -41,7 +41,7 @@
 			<xs:element name="execmultiple" type="woltlab_boolean" minOccurs="0" default="0" />
 			<xs:element name="canbeedited" type="woltlab_boolean" minOccurs="0" default="1" />
 			<xs:element name="canbedisabled" type="woltlab_boolean" minOccurs="0" default="1" />
-			<xs:element name="active" type="woltlab_boolean" minOccurs="0" default="1" />
+			<xs:element name="isdisabled" type="woltlab_boolean" minOccurs="0" default="0" />
 		</xs:all>
 	</xs:complexType>
 </xs:schema>

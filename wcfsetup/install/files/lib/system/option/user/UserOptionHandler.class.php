@@ -162,7 +162,7 @@ class UserOptionHandler extends OptionHandler {
 	 * @see	wcf\system\option\OptionHandler::checkVisibility()
 	 */
 	protected function checkVisibility(Option $option) {
-		if ($option->disabled) {
+		if ($option->isDisabled) {
 			return false;
 		}
 		

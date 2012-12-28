@@ -391,7 +391,7 @@ class StyleAction extends AbstractDatabaseObjectAction {
 			'packageID' => PACKAGE_ID,
 			'styleName' => $styleName,
 			'templateGroupID' => $this->styleEditor->templateGroupID,
-			'disabled' => 1, // newly created styles are disabled by default
+			'isDisabled' => 1, // newly created styles are disabled by default
 			'styleDescription' => $this->styleEditor->styleDescription,
 			'styleVersion' => $this->styleEditor->styleVersion,
 			'styleDate' => $this->styleEditor->styleDate,
@@ -454,8 +454,8 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	 */
 	public function toggle() {
 		foreach ($this->objects as $style) {
-			$disabled = ($style->disabled) ? 0 : 1;
-			$style->update(array('disabled' => $disabled));
+			$isDisabled = ($style->isDisabled) ? 0 : 1;
+			$style->update(array('isDisabled' => $isDisabled));
 		}
 	}
 	
@@ -464,7 +464,7 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	 */
 	public function validateChangeStyle() {
 		$this->style = $this->getSingleObject();
-		if ($this->style->disabled && !WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
+		if ($this->style->isDisabled && !WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
 			throw new PermissionDeniedException();
 		}
 	}
@@ -500,7 +500,7 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	public function getStyleChooser() {
 		$styleList = new StyleList();
 		if (!WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
-			$styleList->getConditionBuilder()->add("style.disabled = ?", array(0));
+			$styleList->getConditionBuilder()->add("style.isDisabled = ?", array(0));
 		}
 		$styleList->sqlOrderBy = "style.styleName ASC";
 		$styleList->readObjects();
