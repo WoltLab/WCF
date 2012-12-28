@@ -57,10 +57,10 @@
 					<tr class="jsLanguageServerRow">
 						<td class="columnIcon">
 							{if $__wcf->getSession()->getPermission('admin.language.canEditServer')}
-								<img src="{@$__wcf->getPath()}icon/{if !$languageServer->disabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$languageServer->disabled}disable{else}enable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip" data-object-id="{@$languageServer->languageServerID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
+								<img src="{@$__wcf->getPath()}icon/{if !$languageServer->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$languageServer->isDisabled}disable{else}enable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip" data-object-id="{@$languageServer->languageServerID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
 								<a href="{link controller='LanguageServerEdit' id=$languageServer->languageServerID}{/link}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16jsTooltip" /></a>
 							{else}
-								<img src="{@$__wcf->getPath()}icon/{if !$languageServer->disabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$languageServer->disabled}disable{else}enable{/if}{/lang}" class="icon16 disabled" />
+								<img src="{@$__wcf->getPath()}icon/{if !$languageServer->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$languageServer->isDisabled}disable{else}enable{/if}{/lang}" class="icon16 disabled" />
 								<img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 disabled" />
 							{/if}
 							
