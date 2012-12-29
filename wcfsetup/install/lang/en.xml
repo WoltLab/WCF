@@ -330,9 +330,9 @@
 		<item name="wcf.acp.package.installation.packageStatus.installed"><![CDATA[already installed]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.missing"><![CDATA[missing]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.missingVersion"><![CDATA[missing package version (installed version: {$package.existingVersion})]]></item>
-		<item name="wcf.acp.package.installation.step.install"><![CDATA[Installing “{$packageName}” &hellip;]]></item>
+		<item name="wcf.acp.package.installation.step.install"><![CDATA[Installing “{$packageName}” …]]></item>
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation completed]]></item>
-		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Prepairing installation &hellip;]]></item>
+		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Prepairing installation …]]></item>
 		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Required version]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Package list]]></item>
