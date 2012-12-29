@@ -75,9 +75,9 @@
 								<img src="{@$__wcf->getPath()}icon/play.svg" alt="" title="{lang}wcf.acp.cronjob.execute{/lang}" class="icon16 jsExecuteButton jsTooltip pointer" data-object-id="{@$cronjob->cronjobID}" />
 								
 								{if $cronjob->canBeDisabled()}
-									<img src="{@$__wcf->getPath()}icon/{if $cronjob->active}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if $cronjob->active}disable{else}enable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$cronjob->cronjobID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/{if !$cronjob->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$cronjob->isDisabled}disable{else}enable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$cronjob->cronjobID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
 								{else}
-									{if $cronjob->active}
+									{if !$cronjob->isDisabled}
 										<img src="{@$__wcf->getPath()}icon/enabled.svg" alt="" title="{lang}wcf.global.button.disable{/lang}" class="icon16 disabled" />
 									{else}
 										<img src="{@$__wcf->getPath()}icon/disabled.svg" alt="" title="{lang}wcf.global.button.enable{/lang}" class="icon16 disabled" />
@@ -111,7 +111,7 @@
 								{/if}
 							</td>
 							<td class="columnDate columnNextExec">
-								{if $cronjob->active && $cronjob->nextExec != 1}
+								{if !$cronjob->isDisabled && $cronjob->nextExec != 1}
 									<p>{@$cronjob->nextExec|plainTime}</p>
 								{/if}
 							</td>
