@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\package;
-use wcf\system\style\StyleHandler;
-
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\language\category\LanguageCategory;
@@ -24,6 +22,7 @@ use wcf\system\form;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
+use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
@@ -279,9 +278,6 @@ class PackageInstallationDispatcher {
 				}
 			}
 			
-			// build requirement map
-			Package::rebuildPackageRequirementMap($package->packageID);
-			
 			// reload queue
 			$this->queue = new PackageInstallationQueue($this->queue->queueID);
 			$this->package = null;
@@ -460,7 +456,13 @@ class PackageInstallationDispatcher {
 		return $step;
 	}
 	
-	// @todo: comment
+	/**
+	 * Displays a list to select optional packages or installs selection.
+	 * 
+	 * @param	string		$currentNode
+	 * @param	array		$nodeData
+	 * @return	wcf\system\package\PackageInstallationStep
+	 */
 	protected function selectOptionalPackages($currentNode, array $nodeData) {
 		$installationStep = new PackageInstallationStep();
 		
@@ -510,7 +512,7 @@ class PackageInstallationDispatcher {
 	}
 	
 	/**
-	 * Extracts files from .tar (or .tar.gz) archive and installs them
+	 * Extracts files from .tar(.gz) archive and installs them
 	 * 
 	 * @param	string			$targetDir
 	 * @param	string			$sourceArchive
@@ -603,7 +605,11 @@ class PackageInstallationDispatcher {
 		}
 	}
 	
-	// @todo: comment
+	/**
+	 * Prompts a selection of optional packages.
+	 * 
+	 * @return	mixed
+	 */
 	protected function promptOptionalPackages(array $packages) {
 		if (!PackageInstallationFormManager::findForm($this->queue, 'optionalPackages')) {
 			$container = new container\MultipleSelectionFormElementContainer();

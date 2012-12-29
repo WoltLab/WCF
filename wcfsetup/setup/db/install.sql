@@ -313,7 +313,6 @@ CREATE TABLE wcf1_package (
 	installDate INT(10) NOT NULL DEFAULT 0,
 	updateDate INT(10) NOT NULL DEFAULT 0,
 	packageURL VARCHAR(255) NOT NULL DEFAULT '',
-	isUnique TINYINT(1) NOT NULL DEFAULT 0,
 	isApplication TINYINT(1) NOT NULL DEFAULT 0,
 	author VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
@@ -396,14 +395,6 @@ CREATE TABLE wcf1_package_requirement (
 	UNIQUE KEY packageID (packageID, requirement)
 );
 
-DROP TABLE IF EXISTS wcf1_package_requirement_map;
-CREATE TABLE wcf1_package_requirement_map (
-	packageID INT(10) NOT NULL,
-	requirement INT(10) NOT NULL,
-	level INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY packageID (packageID, requirement)
-);
-
 DROP TABLE IF EXISTS wcf1_package_update;
 CREATE TABLE wcf1_package_update (
 	packageUpdateID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -470,6 +461,7 @@ CREATE TABLE wcf1_page_menu_item (
 	packageID INT(10) NOT NULL,
 	menuItem VARCHAR(255) NOT NULL DEFAULT '',
 	parentMenuItem VARCHAR(255) NOT NULL DEFAULT '',
+	menuItemController VARCHAR(255) NOT NULL DEFAULT '',
 	menuItemLink VARCHAR(255) NOT NULL DEFAULT '',
 	menuPosition ENUM('header', 'footer') NOT NULL DEFAULT 'header',
 	showOrder INT(10) NOT NULL DEFAULT 0,
@@ -478,7 +470,6 @@ CREATE TABLE wcf1_page_menu_item (
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	className VARCHAR(255) NOT NULL DEFAULT '',
 	isLandingPage TINYINT(1) NOT NULL DEFAULT 0,
-	newWindow TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY (packageID, menuItem)
 );
 
@@ -802,9 +793,6 @@ ALTER TABLE wcf1_package_installation_sql_log ADD FOREIGN KEY (packageID) REFERE
 
 ALTER TABLE wcf1_package_requirement ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_package_requirement ADD FOREIGN KEY (requirement) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
-
-ALTER TABLE wcf1_package_requirement_map ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
-ALTER TABLE wcf1_package_requirement_map ADD FOREIGN KEY (requirement) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_update ADD FOREIGN KEY (packageUpdateServerID) REFERENCES wcf1_package_update_server (packageUpdateServerID) ON DELETE CASCADE;
 

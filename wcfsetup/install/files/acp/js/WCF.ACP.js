@@ -709,6 +709,67 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 });
 
 /**
+ * Namespace for page menu.
+ */
+WCF.ACP.PageMenu = { };
+
+/**
+ * Allows menu items to be set as landing page.
+ * 
+ * @param	integer		menuItemID
+ */
+WCF.ACP.PageMenu.SetAsLandingPage = Class.extend({
+	/**
+	 * menu item id
+	 * @var	integer
+	 */
+	_menuItemID: 0,
+	
+	/**
+	 * Initializes the WCF.ACP.PageMenu.SetAsLandingPage class.
+	 * 
+	 * @param	integer		menuItemID
+	 */
+	init: function(menuItemID) {
+		this._menuItemID = menuItemID;
+		
+		$('#setAsLandingPage').click($.proxy(this._click, this));
+	},
+	
+	/**
+	 * Handles button clicks.
+	 */
+	_click: function() {
+		var self = this;
+		WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.pageMenu.isLandingPage.confirmMessage'), function(action) {
+			if (action === 'confirm') {
+				new WCF.Action.Proxy({
+					autoSend: true,
+					data: {
+						actionName: 'setAsLandingPage',
+						className: 'wcf\\data\\page\\menu\\item\\PageMenuItemAction',
+						objectIDs: [ self._menuItemID ]
+					},
+					success: $.proxy(self._success, self)
+				});
+			}
+		});
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		var $notification = new WCF.System.Notification(WCF.Language.get('wcf.acp.pageMenu.isLandingPage.success'));
+		$notification.show(function() { window.location.reload(); });
+	}
+});
+
+/**
  * Handles option selection.
  */
 WCF.ACP.Options = Class.extend({
@@ -1138,33 +1199,23 @@ WCF.ACP.Category.Delete = WCF.Action.Delete.extend({
 	 * @see	WCF.Action.Delete.triggerEffect()
 	 */
 	triggerEffect: function(objectIDs) {
-		this.containerList.each($.proxy(function(index, container) {
-			container = $(container);
-			var $objectID = container.find('.jsDeleteButton').data('objectID');
-			if (WCF.inArray($objectID, objectIDs)) {
+		for (var $index in this._containers) {
+			var $container = $('#' + this._containers[$index]);
+			if (WCF.inArray($container.find('.jsDeleteButton').data('objectID'), objectIDs)) {
 				// move child categories up
-				if (container.has('ol').has('li')) {
-					if (container.is(':only-child')) {
-						container.parent().replaceWith(container.find('> ol'));
+				if ($container.has('ol').has('li')) {
+					if ($container.is(':only-child')) {
+						$container.parent().replaceWith($container.find('> ol'));
 					}
 					else {
-						container.replaceWith(container.find('> ol > li'));
+						$container.replaceWith($container.find('> ol > li'));
 					}
 				}
 				else {
-					container.wcfBlindOut('up', function() {
-						container.empty().remove();
-					}, container);
-				}
-				
-				// update badges
-				if (this.badgeList) {
-					this.badgeList.each(function(innerIndex, badge) {
-						$(badge).html($(badge).html() - 1);
-					});
+					$container.wcfBlindOut('up', function() { $container.remove(); });
 				}
 			}
-		}, this));
+		}
 	}
 });
 

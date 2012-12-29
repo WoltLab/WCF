@@ -323,17 +323,14 @@ class WCF {
 	}
 	
 	/**
-	 * Includes the options file.
-	 * If the option file doesn't exist, the rebuild of it is started.
-	 * 
-	 * @param	string		$filename
+	 * Loads the options file, automatically created if not exists.
 	 */
-	protected function loadOptions($filename = null, $packageID = 1) {
-		if ($filename === null) $filename = WCF_DIR.'options.inc.php';
+	protected function loadOptions() {
+		$filename = WCF_DIR.'options.inc.php';
 		
 		// create options file if doesn't exist
 		if (!file_exists($filename) || filemtime($filename) <= 1) {
-			\wcf\data\option\OptionEditor::rebuildFile($filename, $packageID);
+			\wcf\data\option\OptionEditor::rebuild();
 		}
 		require_once($filename);
 	}
@@ -472,9 +469,6 @@ class WCF {
 			else {
 				throw new SystemException('Unable to load configuration for '.$package->package);
 			}
-			
-			// load options
-			$this->loadOptions($packageDir.'options.inc.php', $application->packageID);
 			
 			// start application if not within ACP
 			if (!class_exists('wcf\system\WCFACP', false)) {

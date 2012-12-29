@@ -289,13 +289,10 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			$this->readObjects();
 		}
 		
-		// get index name
-		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
-		
 		// get ids
 		$objectIDs = array();
 		foreach ($this->objects as $object) {
-			$objectIDs[] = $object->__get($indexName);
+			$objectIDs[] = $object->getObjectID();
 		}
 		
 		// execute action

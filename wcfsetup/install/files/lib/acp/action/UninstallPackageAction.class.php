@@ -103,6 +103,7 @@ class UninstallPackageAction extends InstallPackageAction {
 	 * @return	string
 	 */
 	public function stepUninstall() {
+		die("current node is ".$this->node);
 		$node = $this->installation->uninstall($this->node);
 		
 		if ($node == '') {

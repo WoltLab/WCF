@@ -74,6 +74,8 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 		$statement->execute();
 		
 		$this->update(array('isLandingPage' => 1));
+		
+		self::resetCache();
 	}
 	
 	/**

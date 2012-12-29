@@ -3,6 +3,7 @@ namespace wcf\data\page\menu\item;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -21,6 +22,12 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\page\menu\item\PageMenuItemEditor';
+	
+	/**
+	 * page menu item editor
+	 * @var	wcf\data\page\menu\item\PageMenuItemEditor
+	 */
+	public $menuItemEditor = null;
 	
 	/**
 	 * list of menu items
@@ -44,6 +51,25 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 		}
 		
 		return $menuItem;
+	}
+	
+	/**
+	 * Validates parameters to set a menu item as landing page.
+	 */
+	public function validateSetAsLandingPage() {
+		WCF::getSession()->checkPermissions(array('admin.display.canManagePageMenu'));
+		
+		$this->menuItemEditor = $this->getSingleObject();
+		if (!$this->menuItemEditor->isValidLandingPage()) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	/**
+	 * Sets a menu item as landing page.
+	 */
+	public function setAsLandingPage() {
+		$this->menuItemEditor->setAsLandingPage();
 	}
 	
 	/**

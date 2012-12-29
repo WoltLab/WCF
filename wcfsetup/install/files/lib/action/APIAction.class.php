@@ -82,7 +82,7 @@ final class APIAction extends AbstractAjaxAction {
 		$prunedArray = array();
 		
 		foreach ($object->getResponseFields() as $fieldName) {
-			if ($object->$fieldName) {
+			if (isset($object->$fieldName)) {
 				$prunedArray[$fieldName] = $object->$fieldName;
 			}
 		}

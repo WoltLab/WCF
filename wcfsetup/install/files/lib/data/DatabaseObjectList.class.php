@@ -3,6 +3,7 @@ namespace wcf\data;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -21,6 +22,12 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * @var	string
 	 */
 	public $className = '';
+	
+	/**
+	 * class name of the object decorator; if left empty, no decorator is used
+	 * @var	string
+	 */
+	public $decoratorClassName = '';
 	
 	/**
 	 * object class name
@@ -113,6 +120,19 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 			}
 		}
 		
+		if (!empty($this->decoratorClassName)) {
+			// validate decorator class name
+			if (!ClassUtil::isInstanceOf($this->decoratorClassName, 'wcf\data\DatabaseObjectDecorator')) {
+				throw new SystemException("'".$this->decoratorClassName."' should extend 'wcf\data\DatabaseObjectDecorator'");
+			}
+			
+			$objectClassName = $this->objectClassName ?: $this->className;
+			$baseClassName = call_user_func(array($this->decoratorClassName, 'getBaseClass'));
+			if ($objectClassName != $baseClassName && !ClassUtil::isInstanceOf($baseClassName, $objectClassName)) {
+				throw new SystemException("'".$this->decoratorClassName."' can't decorate objects of class '".$objectClassName."'");
+			}
+		}
+		
 		$this->conditionBuilder = new PreparedStatementConditionBuilder();
 	}
 	
@@ -179,10 +199,18 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 			$this->objects = $statement->fetchObjects(($this->objectClassName ?: $this->className));
 		}
 		
+		// decorate objects
+		if (!empty($this->decoratorClassName)) {
+			foreach ($this->objects as &$object) {
+				$object = new $this->decoratorClassName($object);
+			}
+			unset($object);
+		}
+		
 		// use table index as array index
 		$objects = array();
 		foreach ($this->objects as $object) {
-			$objectID = $object->{$this->getDatabaseTableIndexName()};
+			$objectID = $object->getObjectID();
 			$objects[$objectID] = $object;
 			
 			$this->indexToObject[] = $objectID;

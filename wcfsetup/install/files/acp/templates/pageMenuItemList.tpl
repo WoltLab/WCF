@@ -12,8 +12,12 @@
 		new WCF.Action.Delete('wcf\\data\\page\\menu\\item\\PageMenuItemAction', '.sortableNode');
 		new WCF.Action.Toggle('wcf\\data\\page\\menu\\item\\PageMenuItemAction', $('.sortableNode'));
 		
-		{if $headerItems|count}new WCF.Sortable.List('pageMenuItemHeaderList', 'wcf\\data\\page\\menu\\item\\PageMenuItemAction', undefined, { protectRoot: true }, false, { menuPosition: 'header' });{/if}
-		{if $footerItems|count}new WCF.Sortable.List('pageMenuItemFooterList', 'wcf\\data\\page\\menu\\item\\PageMenuItemAction', undefined, { }, true, { menuPosition: 'footer' });{/if}
+		{if $headerItems|count}
+			new WCF.Sortable.List('pageMenuItemHeaderList', 'wcf\\data\\page\\menu\\item\\PageMenuItemAction', undefined, { protectRoot: true }, false, { menuPosition: 'header' });
+		{/if}
+		{if $footerItems|count}
+			new WCF.Sortable.List('pageMenuItemFooterList', 'wcf\\data\\page\\menu\\item\\PageMenuItemAction', undefined, { }, true, { menuPosition: 'footer' });
+		{/if}
 	});
 	//]]>
 </script>
@@ -40,9 +44,17 @@
 							<span class="sortableNodeLabel">
 								<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}">{lang}{$menuItem->menuItem}{/lang}</a>
 								<span class="statusDisplay sortableButtonContainer">
-									<img src="{@$__wcf->getPath()}icon/{if $menuItem->isDisabled}disabled{else}enabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
+									{if $menuItem->canDisable()}
+										<img src="{@$__wcf->getPath()}icon/{if $menuItem->isDisabled}disabled{else}enabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
+									{else}
+										<img src="{@$__wcf->getPath()}icon/enabled.svg" alt="" class="icon16 disabled" />
+									{/if}
 									<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" class="icon16" /></a>
-									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang __menuItem=$menuItem}wcf.acp.pageMenu.delete.sure{/lang}" />
+									{if $menuItem->canDelete()}
+										<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang __menuItem=$menuItem}wcf.acp.pageMenu.delete.sure{/lang}" />
+									{else}
+										<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" class="icon16 disabled" />
+									{/if}
 								</span>
 							</span>
 							{if $menuItem|count}
@@ -87,7 +99,7 @@
 								<span class="statusDisplay sortableButtonContainer">
 									<img src="{@$__wcf->getPath()}icon/{if $menuItem->isDisabled}disabled{else}enabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
 									<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" class="icon16" /></a>
-									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang}wcf.acp.pageMenu.delete.sure{/lang}" />
+									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang __menuItem=$menuItem}wcf.acp.pageMenu.delete.sure{/lang}" />
 								</span>
 							</span>
 						</li>

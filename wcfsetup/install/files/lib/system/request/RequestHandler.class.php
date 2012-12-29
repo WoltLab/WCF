@@ -2,8 +2,11 @@
 namespace wcf\system\request;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
+use wcf\system\menu\page\PageMenu;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
+use wcf\util\StringUtil;
 
 /**
  * Handles http requests.
@@ -67,6 +70,24 @@ class RequestHandler extends SingletonFactory {
 	protected function buildRequest($application) {
 		try {
 			$routeData = RouteHandler::getInstance()->getRouteData();
+			
+			// handle landing page for frontend requests
+			if (!$this->isACPRequest()) {
+				$landingPage = PageMenu::getInstance()->getLandingPage();
+				if ($landingPage !== null && RouteHandler::getInstance()->isDefaultController()) {
+					// check if redirect URL matches current URL
+					$redirectURL = $landingPage->getLink();
+					if (StringUtil::replace(RouteHandler::getHost(), '', $redirectURL) == $_SERVER['REQUEST_URI']) {
+						$routeData['controller'] = $landingPage->getController();
+					}
+					else {
+						// redirect to landing page
+						HeaderUtil::redirect($landingPage->getLink(), true);
+						exit;
+					}
+				}
+			}
+			
 			$controller = $routeData['controller'];
 			
 			// validate class name

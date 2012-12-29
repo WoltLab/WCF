@@ -1784,6 +1784,7 @@ WCF.Action.Delete = Class.extend({
 		this.proxy.setOption('data', {
 			actionName: 'delete',
 			className: this._className,
+			interfaceName: 'wcf\\data\\IDeleteAction',
 			objectIDs: [ $(object).data('objectID') ]
 		});
 		
@@ -1861,6 +1862,7 @@ WCF.Action.Toggle = Class.extend({
 		this.proxy.setOption('data', {
 			actionName: 'toggle',
 			className: this.className,
+			interfaceName: 'wcf\\data\\IToggleAction',
 			objectIDs: [ $(event.target).data('objectID') ]
 		});
 		
@@ -3471,6 +3473,7 @@ WCF.Collapsible.Remote = Class.extend({
 		this._proxy.setOption('data', {
 			actionName: 'loadContainer',
 			className: this._className,
+			interfaceName: 'wcf\\data\\ILoadableCollapsibleContainerAction',
 			objectIDs: [ this._getObjectID($containerID) ],
 			parameters: $.extend(true, {
 				containerID: $containerID,
@@ -3601,6 +3604,7 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 		this._proxy.setOption('data', {
 			actionName: 'toggleContainer',
 			className: this._className,
+			interfaceName: 'wcf\\data\\ICollapsibleContainerAction',
 			objectIDs: [ this._getObjectID($containerID) ],
 			parameters: $.extend(true, {
 				containerID: $containerID,
@@ -4629,6 +4633,7 @@ WCF.Search.Base = Class.extend({
 			this._proxy.setOption('data', {
 				actionName: 'getSearchResultList',
 				className: this._className,
+				interfaceName: 'wcf\\data\\ISearchAction',
 				parameters: this._getParameters($parameters)
 			});
 			this._proxy.sendRequest();
@@ -5919,6 +5924,7 @@ WCF.Sortable.List = Class.extend({
 			axis: 'y',
 			connectWith: '#' + this._containerID + ' .sortableList',
 			disableNesting: 'sortableNoNesting',
+			doNotClear: true,
 			errorClass: 'sortableInvalidTarget',
 			forcePlaceholderSize: true,
 			helper: 'clone',
@@ -5933,7 +5939,7 @@ WCF.Sortable.List = Class.extend({
 			$('#' + this._containerID + ' .sortableList').sortable(this._options);
 		}
 		else {
-			$('#' + this._containerID + ' > .sortableList').wcfNestedSortable(this._options);
+			$('#' + this._containerID + ' > .sortableList').nestedSortable(this._options);
 		}
 		
 		if (this._className) {
@@ -5977,6 +5983,7 @@ WCF.Sortable.List = Class.extend({
 		this._proxy.setOption('data', {
 			actionName: 'updatePosition',
 			className: this._className,
+			interfaceName: 'wcf\\data\\ISortableAction',
 			parameters: $parameters
 		});
 		this._proxy.sendRequest();
@@ -6627,6 +6634,7 @@ WCF.EditableItemList = Class.extend({
 	init: function(itemListSelector, searchInputSelector) {
 		this._itemList = $(itemListSelector);
 		this._searchInput = $(searchInputSelector);
+		this._data = { };
 		
 		if (!this._itemList.length || !this._searchInput.length) {
 			console.debug("[WCF.EditableItemList] Item list and/or search input do not exist, aborting.");
@@ -7242,15 +7250,6 @@ WCF.UserPanel = Class.extend({
 		}
 	}
 });
-
-/**
- * WCF implementation for nested sortables.
- */
-$.widget("ui.wcfNestedSortable", $.extend({}, $.mjs.nestedSortable.prototype, {
-	_clearEmpty: function(item) {
-		/* Does nothing because we want to keep empty lists */
-	}
-}));
 
 /**
  * WCF implementation for dialogs, based upon ideas by jQuery UI.

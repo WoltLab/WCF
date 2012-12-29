@@ -44,6 +44,12 @@ class RouteHandler extends SingletonFactory {
 	protected static $secure = null;
 	
 	/**
+	 * true, if default controller is used (support for custom landing page)
+	 * @var	boolean
+	 */
+	protected $isDefaultController = false;
+	
+	/**
 	 * list of available routes
 	 * @var	array<wcf\system\request\Route>
 	 */
@@ -67,6 +73,8 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * Adds default routes.
+	 * 
+	 * @todo add support for custom default controllers (see https://github.com/WoltLab/WCF/issues/1000)
 	 */
 	protected function addDefaultRoutes() {
 		$acpRoute = new Route('ACP_default', true);
@@ -86,7 +94,7 @@ class RouteHandler extends SingletonFactory {
 		
 		$defaultRoute = new Route('default');
 		$defaultRoute->setSchema('/{controller}/{id}');
-		$defaultRoute->setParameterOption('controller', 'Index', null, true);
+		$defaultRoute->setParameterOption('controller', null, null, true);
 		$defaultRoute->setParameterOption('id', null, '\d+', true);
 		$this->addRoute($defaultRoute);
 	}
@@ -117,12 +125,25 @@ class RouteHandler extends SingletonFactory {
 			
 			if ($route->matches($pathInfo)) {
 				$this->routeData = $route->getRouteData();
+				
+				$this->isDefaultController = $this->routeData['isDefaultController'];
+				unset($this->routeData['isDefaultController']);
+				
 				$this->registerRouteData();
 				return true;
 			}
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Returns true, if route uses default controller.
+	 * 
+	 * @return	boolean
+	 */
+	public function isDefaultController() {
+		return $this->isDefaultController;
 	}
 	
 	/**

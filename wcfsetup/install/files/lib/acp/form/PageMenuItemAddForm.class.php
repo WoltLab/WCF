@@ -37,10 +37,16 @@ class PageMenuItemAddForm extends ACPForm {
 	public $isDisabled = false;
 	
 	/**
-	 * true, if menu item is landing page
+	 * internal link
 	 * @var	boolean
 	 */
-	public $isLandingPage = false;
+	public $isInternalLink = false;
+	
+	/**
+	 * menu item controller
+	 * @var	string
+	 */
+	public $menuItemController = '';
 	
 	/**
 	 * menu item link
@@ -58,12 +64,6 @@ class PageMenuItemAddForm extends ACPForm {
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.display.canManagePageMenu');
-	
-	/**
-	 * open link in new window
-	 * @var	boolean
-	 */
-	public $newWindow = false;
 	
 	/**
 	 * page menu item name
@@ -124,9 +124,9 @@ class PageMenuItemAddForm extends ACPForm {
 		if (I18nHandler::getInstance()->isPlainValue('pageMenuItem')) $this->pageMenuItem = I18nHandler::getInstance()->getValue('pageMenuItem');
 		
 		if (isset($_POST['isDisabled'])) $this->isDisabled = true;
-		if (isset($_POST['isLandingPage'])) $this->isLandingPage = true;
+		if (isset($_POST['isInternalLink'])) $this->isInternalLink = (bool) $_POST['isInternalLink'];
+		if (isset($_POST['menuItemController'])) $this->menuItemController = StringUtil::trim($_POST['menuItemController']);
 		if (isset($_POST['menuPosition'])) $this->menuPosition = StringUtil::trim($_POST['menuPosition']);
-		if (isset($_POST['newWindow'])) $this->newWindow = true;
 		if (isset($_POST['parentMenuItem'])) $this->parentMenuItem = StringUtil::trim($_POST['parentMenuItem']);
 		if (isset($_POST['showOrder'])) $this->showOrder = intval($_POST['showOrder']);
 	}
@@ -145,9 +145,28 @@ class PageMenuItemAddForm extends ACPForm {
 			throw new UserInputException('menuPosition', 'notValid');
 		}
 		
-		// validate menu item link
-		if (!I18nHandler::getInstance()->validateValue('menuItemLink')) {
-			throw new UserInputException('menuItemLink');
+		// validate menu item controller
+		if ($this->isInternalLink) {
+			if (empty($this->menuItemController)) {
+				throw new UserInputException('menuItemController');
+			}
+			
+			if (!class_exists($this->menuItemController)) {
+				throw new UserInputException('menuItemController', 'notValid');
+			}
+			
+			// validate menu item link
+			if (!I18nHandler::getInstance()->validateValue('menuItemLink', false, true)) {
+				throw new UserInputException('menuItemLink');
+			}
+		}
+		else {
+			$this->menuItemController = '';
+				
+			// validate menu item link
+			if (!I18nHandler::getInstance()->validateValue('menuItemLink')) {
+				throw new UserInputException('menuItemLink');
+			}
 		}
 		
 		// validate page menu item name
@@ -172,14 +191,6 @@ class PageMenuItemAddForm extends ACPForm {
 				throw new UserInputException('parentMenuItem', 'notValid');
 			}
 		}
-		
-		// validate landing page
-		if ($this->isDisabled) {
-			$this->isLandingPage = false;
-		}
-		else if ($this->menuPosition == 'footer' || !empty($this->parentMenuItem)) {
-			$this->isLandingPage = false;
-		}
 	}
 	
 	/**
@@ -190,11 +201,10 @@ class PageMenuItemAddForm extends ACPForm {
 		
 		$this->objectAction = new PageMenuItemAction(array(), 'create', array('data' => array(
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
-			'isLandingPage' => ($this->isLandingPage) ? 1 : 0,
 			'menuItem' => $this->pageMenuItem,
+			'menuItemController' => $this->menuItemController,
 			'menuItemLink' => $this->menuItemLink,
 			'menuPosition' => $this->menuPosition,
-			'newWindow' => ($this->newWindow) ? 1 : 0,
 			'parentMenuItem' => $this->parentMenuItem,
 			'showOrder' => $this->showOrder
 		)));
@@ -223,9 +233,9 @@ class PageMenuItemAddForm extends ACPForm {
 		WCF::getTPL()->assign('success', true);
 		
 		// reset variables
-		$this->isDisabled = $this->isLandingPage = $this->newWindow = false;
+		$this->isDisabled = $this->isInternalLink = false;
 		$this->menuPosition = 'header';
-		$this->menuItemLink = $this->pageMenuItem = $this->parentMenuItem = '';
+		$this->menuItemController = $this->menuItemLink = $this->pageMenuItem = $this->parentMenuItem = '';
 		$this->showOrder = 0;
 		
 		// reload parent menu items
@@ -246,10 +256,10 @@ class PageMenuItemAddForm extends ACPForm {
 			'action' => 'add',
 			'availableParentMenuItems' => $this->availableParentMenuItems,
 			'isDisabled' => $this->isDisabled,
-			'isLandingPage' => $this->isLandingPage,
+			'isInternalLink' => $this->isInternalLink,
+			'menuItemController' => $this->menuItemController,
 			'menuItemLink' => $this->menuItemLink,
 			'menuPosition' => $this->menuPosition,
-			'newWindow' => $this->newWindow,
 			'pageMenuItem' => $this->pageMenuItem,
 			'parentMenuItem' => $this->parentMenuItem,
 			'showOrder' => $this->showOrder
