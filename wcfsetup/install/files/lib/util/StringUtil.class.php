@@ -670,7 +670,7 @@ final class StringUtil {
 						}
 					}
 				}
-				$truncatedString .= StringUtil::substring($tag[3], 0 , $left + $entitiesLength);
+				$truncatedString .= StringUtil::substring($tag[3], 0, $left + $entitiesLength);
 				break;
 			}
 			else {
