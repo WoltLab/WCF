@@ -40,7 +40,7 @@ class LanguageServerAction extends AbstractDatabaseObjectAction implements ITogg
 	public function toggle() {
 		foreach ($this->objects as $serverEditor) {
 			$serverEditor->update(array(
-				'isDisabled' => 1 - $serverEditor->isDisabled
+				'isDisabled' => $serverEditor->isDisabled ? 0 : 1
 			));
 		}
 	}

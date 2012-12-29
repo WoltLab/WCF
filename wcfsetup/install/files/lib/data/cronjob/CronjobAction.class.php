@@ -88,7 +88,9 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	 */
 	public function toggle() {
 		foreach ($this->objects as $cronjob) {
-			$cronjob->update(array('isDisabled' => 1 - $cronjob->isDisabled));
+			$cronjob->update(array(
+				'isDisabled' => $cronjob->isDisabled ? 0 : 1
+			));
 		}
 	}
 	
