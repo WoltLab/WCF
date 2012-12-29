@@ -368,10 +368,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	string		$variableName
 	 * @param	boolean		$allowEmpty
 	 * @param	string		$arrayIndex
-	 * @return	integer
 	 */
 	protected function readInteger($variableName, $allowEmpty = false, $arrayIndex = '') {
-		return $this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_INTEGER);
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_INTEGER);
 	}
 	
 	/**
@@ -380,10 +379,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	string		$variableName
 	 * @param	boolean		$allowEmpty
 	 * @param	string		$arrayIndex
-	 * @return	string
 	 */
 	protected function readString($variableName, $allowEmpty = false, $arrayIndex = '') {
-		return $this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_STRING);
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_STRING);
 	}
 	
 	/**
@@ -392,10 +390,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	string		$variableName
 	 * @param	boolean		$allowEmpty
 	 * @param	string		$arrayIndex
-	 * @return	boolean
 	 */
 	protected function readBool($variableName, $allowEmpty = false, $arrayIndex = '') {
-		return $this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_BOOL);
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_BOOL);
 	}
 	
 	/**
@@ -473,8 +470,6 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 				}
 			break;
 		}
-		
-		return $target[$variableName];
 	}
 	
 	/**
