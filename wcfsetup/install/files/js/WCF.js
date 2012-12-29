@@ -7349,12 +7349,10 @@ $.widget('ui.wcfDialog', {
 				type: this.options.type,
 				url: this.options.url
 			});
+			this.loading();
 			
 			// force open if using AJAX
 			this.options.autoOpen = true;
-			
-			// apply loading overlay
-			this._content.addClass('overlayLoading');
 		}
 		
 		if (this.options.autoOpen) {
@@ -7529,6 +7527,14 @@ $.widget('ui.wcfDialog', {
 	 */
 	isOpen: function() {
 		return this._isOpen;
+	},
+	
+	/**
+	 * Clears the dialog and applies a loading overlay
+	 */
+	loading: function() {
+		this._content.addClass('overlayLoading');
+		this.render();
 	},
 	
 	/**
