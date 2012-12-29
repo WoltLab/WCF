@@ -7572,8 +7572,14 @@ $.widget('ui.wcfDialog', {
 	
 	/**
 	 * Renders this dialog, should be called whenever content is updated.
+	 * 
+	 * @param	boolean	loaded
 	 */
-	render: function() {
+	render: function(loaded) {
+		if (loaded) {
+			this._content.removeClass('overlayLoading');
+		}
+		
 		if (!this.isOpen()) {
 			// temporarily display container
 			this._container.show();
