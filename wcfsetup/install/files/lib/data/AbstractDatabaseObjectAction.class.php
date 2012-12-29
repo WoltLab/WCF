@@ -465,7 +465,11 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 					}
 				}
 				else {
-					$target[$variableName] = (bool) $target[$variableName];
+					if (is_string($target[$variableName])) {
+						$target[$variableName] = $target[$variableName] != 'false';
+					} else {
+						$target[$variableName] = (bool) $target[$variableName];
+					}
 				}
 			break;
 		}
