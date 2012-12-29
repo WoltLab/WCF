@@ -103,7 +103,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		// set new default
 		$this->update(array(
 			'isDefault' => 1,
-			'disabled' => 0
+			'isDisabled' => 0
 		));
 		
 		self::resetCache();

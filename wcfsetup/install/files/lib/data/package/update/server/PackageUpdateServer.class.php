@@ -33,7 +33,7 @@ class PackageUpdateServer extends DatabaseObject {
 	public static function getActiveUpdateServers(array $packageUpdateServerIDs = array()) {
 		$list = new PackageUpdateServerList();
 		$list->sqlLimit = 0;
-		$list->getConditionBuilder()->add("disabled = ?", array(0));
+		$list->getConditionBuilder()->add("isDisabled = ?", array(0));
 		if (!empty($packageUpdateServerIDs)) {
 			$list->getConditionBuilder()->add("packageUpdateServerID IN (?)", array($packageUpdateServerIDs));
 		}
