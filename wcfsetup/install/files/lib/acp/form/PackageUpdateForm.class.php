@@ -1,14 +1,12 @@
 <?php
 namespace wcf\acp\form;
+use wcf\form\AbstractForm;
 use wcf\system\package\PackageInstallationDispatcher;
-
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageUpdateDispatcher;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
-use wcf\util\HeaderUtil;
 
 /**
  * Shows the package update confirmation form.
@@ -20,16 +18,16 @@ use wcf\util\HeaderUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class PackageUpdateForm extends ACPForm {
+class PackageUpdateForm extends AbstractForm {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.package';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canInstallPackage');
-	
-	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
-	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.package';
 	
 	/**
 	 * list of packages to update

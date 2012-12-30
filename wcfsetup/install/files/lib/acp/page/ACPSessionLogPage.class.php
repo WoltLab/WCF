@@ -3,7 +3,6 @@ namespace wcf\acp\page;
 use wcf\data\acp\session\log\ACPSessionLog;
 use wcf\page\SortablePage;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 
 /**
@@ -17,6 +16,11 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class ACPSessionLogPage extends SortablePage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.log.session';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$templateName
 	 */
@@ -96,15 +100,5 @@ class ACPSessionLogPage extends SortablePage {
 			'sessionLogID' => $this->sessionLogID,
 			'sessionLog' => $this->sessionLog
 		));
-	}
-	
-	/**
-	 * @see	wcf\page\IPage::show()
-	 */
-	public function show() {
-		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.log.session');
-		
-		parent::show();
 	}
 }

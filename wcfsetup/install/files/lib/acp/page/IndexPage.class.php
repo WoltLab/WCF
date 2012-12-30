@@ -8,7 +8,6 @@ use wcf\system\image\adapter\ImagickImageAdapter;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
-use wcf\system\WCFACP;
 
 /**
  * Shows the welcome page in admin control panel.

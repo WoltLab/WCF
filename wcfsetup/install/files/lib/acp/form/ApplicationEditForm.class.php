@@ -4,6 +4,7 @@ use wcf\data\application\Application;
 use wcf\data\application\ApplicationAction;
 use wcf\data\application\ViewableApplication;
 use wcf\system\application\ApplicationHandler;
+use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\Regex;
@@ -21,9 +22,9 @@ use wcf\util\StringUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class ApplicationEditForm extends ACPForm {
+class ApplicationEditForm extends AbstractForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.application';
 	

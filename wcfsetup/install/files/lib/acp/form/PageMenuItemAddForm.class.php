@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\page\menu\item\PageMenuItemAction;
 use wcf\data\page\menu\item\PageMenuItemEditor;
 use wcf\data\page\menu\item\PageMenuItemList;
+use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
@@ -18,9 +19,9 @@ use wcf\util\StringUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class PageMenuItemAddForm extends ACPForm {
+class PageMenuItemAddForm extends AbstractForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.pageMenu.add';
 	

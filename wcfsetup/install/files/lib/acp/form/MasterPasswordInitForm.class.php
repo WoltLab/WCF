@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\io\File;
@@ -48,7 +49,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
-		ACPForm::validate();
+		AbstractForm::validate();
 		
 		if (empty($this->masterPassword)) {
 			throw new UserInputException('masterPassword');

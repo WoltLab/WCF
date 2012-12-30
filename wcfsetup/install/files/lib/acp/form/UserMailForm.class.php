@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
+use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
@@ -20,7 +21,7 @@ use wcf\util\StringUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class UserMailForm extends ACPForm {
+class UserMailForm extends AbstractForm {
 	/**
 	 * enable html for message body
 	 * @var	boolean

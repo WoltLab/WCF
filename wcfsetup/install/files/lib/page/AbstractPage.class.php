@@ -3,11 +3,18 @@ namespace wcf\page;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\menu\acp\ACPMenu;
+use wcf\system\menu\page\PageMenu;
+use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 
 /**
- * This class provides default implementations for the Page interface.
- * This includes the call of the default event listeners for a page: readParameters, readData, assignVariables and show.
+ * Abstract implementation of a page which fires the default event actions of a
+ * page:
+ *	- readParameters
+ *	- readData
+ *	- assignVariables
+ *	- show
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
@@ -28,6 +35,12 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	 * @var	string
 	 */
 	public $useTemplate = true;
+	
+	/**
+	 * name of the active menu item
+	 * @var	string
+	 */
+	public $activeMenuItem = '';
 	
 	/**
 	 * value of the given action parameter
@@ -153,6 +166,9 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 			throw new PermissionDeniedException();
 		}
 		
+		// sets the active menu item
+		$this->setActiveMenuItem();
+		
 		// check modules
 		$this->checkModules();
 		
@@ -187,6 +203,20 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 		if ($this->useTemplate) {
 			// show template
 			WCF::getTPL()->display($this->templateName, array_shift($classParts));
+		}
+	}
+	
+	/**
+	 * Sets the active menu item of the page.
+	 */
+	protected function setActiveMenuItem() {
+		if (!empty($this->activeMenuItem)) {
+			if (RequestHandler::getInstance()->isACPRequest()) {
+				ACPMenu::getInstance()->setActiveMenuItem($this->activeMenuItem);
+			}
+			else {
+				PageMenu::getInstance()->setActiveMenuItem($this->activeMenuItem);
+			}
 		}
 	}
 	

@@ -3,7 +3,6 @@ namespace wcf\acp\page;
 use wcf\data\package\Package;
 use wcf\page\AbstractPage;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 
 /**
@@ -17,6 +16,11 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class PackagePage extends AbstractPage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.package';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
@@ -54,15 +58,5 @@ class PackagePage extends AbstractPage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign('package', $this->package);
-	}
-	
-	/**
-	 * @see	wcf\page\IPage::show()
-	 */
-	public function show() {
-		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package');
-		
-		parent::show();
 	}
 }

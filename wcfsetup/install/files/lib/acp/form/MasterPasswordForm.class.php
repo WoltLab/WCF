@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -16,7 +17,7 @@ use wcf\util\StringUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class MasterPasswordForm extends ACPForm {
+class MasterPasswordForm extends AbstractForm {
 	/**
 	 * master password
 	 * @var	string

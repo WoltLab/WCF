@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerEditor;
+use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageUpdateAuthorizationRequiredException;
 use wcf\system\request\RequestHandler;
@@ -19,16 +20,16 @@ use wcf\util\StringUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class PackageUpdateAuthForm extends ACPForm {
+class PackageUpdateAuthForm extends AbstractForm {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.package';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canInstallPackage');
-	
-	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
-	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.package';
 	
 	/**
 	 * exception that has been thrown if an authorization for the package update
