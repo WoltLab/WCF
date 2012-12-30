@@ -16,7 +16,7 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 	/**
 	 * Validates restoring a version
 	 */
-	public function validateRestore() {
+	public function validateRestoreRevision() {
 		parent::validateUpdate();
 	}
 	
@@ -34,7 +34,7 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 		// get ids
 		$objectIDs = array();
 		foreach ($this->objects as $object) {
-			$objectIDs[] = $object->__get($indexName);
+			$objectIDs[] = $object->getObjectID();
 		}
 		
 		// execute action
@@ -68,7 +68,7 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
 	
 		foreach ($this->objects as $object) {
-			call_user_func(array($this->className, 'createRevision'), array_merge($object->getData(), array($indexName =>$object->__get($indexName))));
+			call_user_func(array($this->className, 'createRevision'), array_merge($object->getData(), array($indexName => $object->getObjectID())));
 		}
 	}
 	
@@ -86,7 +86,7 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 		// get ids
 		$objectIDs = array();
 		foreach ($this->objects as $object) {
-			$objectIDs[] = $object->__get($indexName);
+			$objectIDs[] = $object->getObjectID();
 		}
 		
 		// execute action
@@ -96,14 +96,14 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 	/**
 	 * Restores a revision.
 	 */
-	public function restore() {
+	public function restoreRevision() {
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 
 		// currently we only support restoring one version
 		foreach ($this->objects as $object) {
-			$objectType = VersionHandler::getInstance()->getObjectTypeByName($object->objectTypeName);
+			$objectType = VersionHandler::getInstance()->getObjectTypeByName($object->versionableObjectTypeName);
 			$restoreObject = VersionHandler::getInstance()->getVersionByID($objectType->objectTypeID, $this->parameters['restoreObjectID']);
 
 			$this->parameters['data'] = $restoreObject->getData();
