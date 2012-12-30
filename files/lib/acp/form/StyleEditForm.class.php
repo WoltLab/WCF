@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class StyleEditForm extends StyleAddForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.style';
 	

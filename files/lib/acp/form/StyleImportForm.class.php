@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\style\StyleEditor;
+use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -15,9 +16,9 @@ use wcf\util\FileUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class StyleImportForm extends ACPForm {
+class StyleImportForm extends AbstractForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.style.import';
 	
