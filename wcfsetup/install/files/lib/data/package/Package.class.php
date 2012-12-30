@@ -22,22 +22,6 @@ use wcf\util\StringUtil;
  */
 class Package extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'package';
-	
-	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
-	 */
-	protected static $databaseTableIndexName = 'packageID';
-	
-	/**
-	 * package requirements
-	 * @var	array<integer>
-	 */
-	protected static $requirements = null;
-	
-	/**
 	 * list of packages that this package requires
 	 * @var	array<wcf\data\package\Package>
 	 */
@@ -56,14 +40,30 @@ class Package extends DatabaseObject {
 	protected $requiredPackages = null;
 	
 	/**
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 */
+	protected static $databaseTableName = 'package';
+	
+	/**
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 */
+	protected static $databaseTableIndexName = 'packageID';
+	
+	/**
+	 * package requirements
+	 * @var	array<integer>
+	 */
+	protected static $requirements = null;
+	
+	/**
 	 * Returns true, if this package is required by other packages.
 	 * 
 	 * @return	boolean
 	 */
 	public function isRequired() {
-		self::loadRequiremens();
+		self::loadRequirements();
 		
-		return (isset(self::$requirements[$this->packageID]));
+		return isset(self::$requirements[$this->packageID]);
 	}
 	
 	/**
@@ -177,8 +177,8 @@ class Package extends DatabaseObject {
 		self::loadRequirementMap();
 		
 		$packages = array();
-		if (isset(self::$requirementMap[$this->packageID])) {
-			foreach (self::$requirementMap[$this->packageID] as $packageID) {
+		if (isset(self::$requirements[$this->packageID])) {
+			foreach (self::$requirements[$this->packageID] as $packageID) {
 				$packages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
 			}
 		}
@@ -190,7 +190,7 @@ class Package extends DatabaseObject {
 	 * Loads package requirements.
 	 */
 	protected static function loadRequirements() {
-		if (self::$requirementMap === null) {
+		if (self::$requirements === null) {
 			$sql = "SELECT	packageID, requirement
 				FROM	wcf".WCF_N."_package_requirement";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -343,7 +343,6 @@ class Package extends DatabaseObject {
 	/**
 	 * Returns a list of plugins for currently active application.
 	 * 
-	 * @todo	Care about simple plugins just providing some crap.
 	 * @return	wcf\data\package\PackageList
 	 */
 	public static function getPluginList() {
