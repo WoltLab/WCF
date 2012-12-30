@@ -174,7 +174,7 @@ class Package extends DatabaseObject {
 	 * @return	array<wcf\data\package\Package>
 	 */
 	public function getDependentPackages() {
-		self::loadRequirementMap();
+		self::loadRequirements();
 		
 		$packages = array();
 		if (isset(self::$requirements[$this->packageID])) {
