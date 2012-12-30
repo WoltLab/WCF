@@ -17,9 +17,9 @@
 	</requiredpackages>
 	
 	<instructions type="install">
-		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="acpTemplate">acptemplates.tar</instruction>
 		<instruction type="file">files.tar</instruction>
+		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 		<instruction type="language">language/*.xml</instruction>
 	</instructions>
