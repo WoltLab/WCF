@@ -1887,42 +1887,52 @@ WCF.Action.Toggle = Class.extend({
 	 */
 	triggerEffect: function(objectIDs) {
 		this.containerList.each($.proxy(function(index, container) {
-			var $toggleButton = $(container).find(this.toggleButtonSelector);
+			var $container = $(container);
+			var $toggleButton = $container.find(this.toggleButtonSelector);
 			if (WCF.inArray($toggleButton.data('objectID'), objectIDs)) {
-				$(container).wcfHighlight();
-				
-				// toggle icon source
-				$toggleButton.attr('src', function() {
-					if (this.src.match(/disabled\.svg$/)) {
-						return this.src.replace(/disabled\.svg$/, 'enabled.svg');
-					}
-					else {
-						return this.src.replace(/enabled\.svg$/, 'disabled.svg');
-					}
-				});
-				
-				// toogle icon title
-				$toggleButton.attr('title', function() {
-					if (this.src.match(/enabled\.svg$/)) {
-						if ($(this).data('disableTitle')) {
-							return $(this).data('disableTitle');
-						}
-						
-						return WCF.Language.get('wcf.global.button.disable');
-					}
-					else {
-						if ($(this).data('enableTitle')) {
-							return $(this).data('enableTitle');
-						}
-						
-						return WCF.Language.get('wcf.global.button.enable');
-					}
-				});
-				
-				// toggle css class
-				$(container).toggleClass('disabled');
+				$container.wcfHighlight();
+				this._toggleButton($container, $toggleButton);
 			}
 		}, this));
+	},
+	
+	/**
+	 * Tiggers the toggle effect on a button
+	 * 
+	 * @param	jQuery	$container
+	 * @param	jQuery	$toggleButton
+	 */
+	_toggleButton: function($container, $toggleButton) {
+		// toggle icon source
+		$toggleButton.attr('src', function() {
+			if (this.src.match(/disabled\.svg$/)) {
+				return this.src.replace(/disabled\.svg$/, 'enabled.svg');
+			}
+			else {
+				return this.src.replace(/enabled\.svg$/, 'disabled.svg');
+			}
+		});
+
+		// toogle icon title
+		$toggleButton.attr('title', function() {
+			if (this.src.match(/enabled\.svg$/)) {
+				if ($(this).data('disableTitle')) {
+					return $(this).data('disableTitle');
+				}
+
+				return WCF.Language.get('wcf.global.button.disable');
+			}
+			else {
+				if ($(this).data('enableTitle')) {
+					return $(this).data('enableTitle');
+				}
+
+				return WCF.Language.get('wcf.global.button.enable');
+			}
+		});
+
+		// toggle css class
+		$container.toggleClass('disabled');
 	}
 });
 
