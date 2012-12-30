@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\language\LanguageEditor;
+use wcf\form\AbstractForm;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
@@ -19,9 +20,9 @@ use wcf\util\XML;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class LanguageAddForm extends ACPForm {
+class LanguageAddForm extends AbstractForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language.add';
 	

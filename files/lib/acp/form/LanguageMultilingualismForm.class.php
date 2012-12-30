@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\language\LanguageEditor;
+use wcf\form\AbstractForm;
 use wcf\system\language\LanguageFactory;
 use wcf\system\exception\UserInputException;
 use wcf\system\cache\CacheHandler;
@@ -18,9 +19,9 @@ use wcf\util\ArrayUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class LanguageMultilingualismForm extends ACPForm {
+class LanguageMultilingualismForm extends AbstractForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language.multilingualism';
 	

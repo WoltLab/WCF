@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\language\server\LanguageServerAction;
 use wcf\data\package\update\server\PackageUpdateServer;
+use wcf\form\AbstractForm;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\system\exception\UserInputException;
@@ -17,9 +18,9 @@ use wcf\util\StringUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class LanguageServerAddForm extends ACPForm {
+class LanguageServerAddForm extends AbstractForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language.server.add';
 	
