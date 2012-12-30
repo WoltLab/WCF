@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\language\LanguageEditor;
 use wcf\data\package\Package;
+use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
@@ -18,14 +19,15 @@ use wcf\util\StringUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class LanguageExportForm extends ACPForm {
+class LanguageExportForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$templateName
+	 * @todo still needed?
 	 */
 	public $templateName = 'languageExport';
 	
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language';
 	
