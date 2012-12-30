@@ -424,7 +424,7 @@ class PackageInstallationNodeBuilder {
 					continue;
 				}
 				
-				throw new SystemException("Unable to find required package '".$package['file']."' within archive.");
+				throw new SystemException("Unable to find required package '".$package['file']."' within archive of package '".$this->installation->queue->package."'.");
 			}
 			
 			$fileName = FileUtil::getTemporaryFilename('package_', preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', basename($package['file'])));
