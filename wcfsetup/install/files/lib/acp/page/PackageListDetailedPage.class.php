@@ -37,7 +37,7 @@ class PackageListDetailedPage extends SortablePage {
 	/**
 	 * @see	wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('packageID', 'package', 'packageDir', 'packageName', 'packageDescription', 'packageDate', 'packageURL', 'isUnique', 'isApplication', 'author', 'authorURL', 'installDate', 'updateDate');
+	public $validSortFields = array('packageID', 'package', 'packageDir', 'packageName', 'packageDescription', 'packageDate', 'packageURL', 'isApplication', 'author', 'authorURL', 'installDate', 'updateDate');
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName

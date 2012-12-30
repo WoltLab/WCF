@@ -121,7 +121,6 @@ class PackageUpdateSearchResultPage extends SortablePage {
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
 				// default values
-				$row['isUnique'] = 0;
 				$row['updatableInstances'] = array();
 				$row['packageVersions'] = array();
 				$row['packageVersion'] = '1.0.0';
@@ -148,25 +147,6 @@ class PackageUpdateSearchResultPage extends SortablePage {
 					usort($row['packageVersions'], array('wcf\data\package\Package', 'compareVersion'));
 					// take lastest version
 					$row['packageVersion'] = end($row['packageVersions']);
-				}
-				
-				// TODO: Multiple instances are no longer supported, remove this
-				// get installed instances
-				$sql = "SELECT	package.*
-					FROM	wcf".WCF_N."_package package
-					WHERE	package.package = ?";
-				$statement2 = WCF::getDB()->prepareStatement($sql);
-				$statement2->execute(array($row['package']));
-				while ($row2 = $statement2->fetchArray()) {
-					$row['instances']++;
-					
-					// is already installed unique?
-					if ($row2['isUnique'] == 1) $row['isUnique'] = 1;
-					
-					// check update support
-					if (Package::compareVersion($row2['packageVersion'], $row['packageVersion'], '<')) {
-						$row['updatableInstances'][] = $row2;
-					}
 				}
 				
 				$this->packages[] = $row;
