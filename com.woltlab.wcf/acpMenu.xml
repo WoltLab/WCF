@@ -25,7 +25,7 @@
 		<acpmenuitem name="wcf.acp.menu.link.option.importAndExport">
 			<parent>wcf.acp.menu.link.option.management</parent>
 			<showorder>1</showorder>
-			<controller><![CDATA[OptionImport]]></controller>
+			<controller><![CDATA[wcf\acp\form\OptionImportForm]]></controller>
 		</acpmenuitem>
 		<!-- /options -->
 		

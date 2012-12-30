@@ -42,8 +42,7 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 			$conditions->add("menuItemID IN (?)", array($itemIDs));
 			
 			// get needed menu items and build item tree
-			$sql = "SELECT		menu_item.packageID, menuItem, parentMenuItem,
-						menuItemLink, permissions, options, packageDir
+			$sql = "SELECT		*
 				FROM		wcf".WCF_N."_acp_menu_item menu_item
 				LEFT JOIN	wcf".WCF_N."_package package
 				ON		(package.packageID = menu_item.packageID)
