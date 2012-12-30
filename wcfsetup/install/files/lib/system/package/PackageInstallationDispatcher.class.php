@@ -20,6 +20,9 @@ use wcf\system\form\element;
 use wcf\system\form\FormDocument;
 use wcf\system\form;
 use wcf\system\language\LanguageFactory;
+use wcf\system\package\plugin\IPackageInstallationPlugin;
+use wcf\system\package\plugin\ObjectTypePackageInstallationPlugin;
+use wcf\system\package\plugin\SQLPackageInstallationPlugin;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\style\StyleHandler;
@@ -74,6 +77,12 @@ class PackageInstallationDispatcher {
 	 * @var	string
 	 */
 	const CONFIG_FILE = 'config.inc.php';
+	
+	/**
+	 * holds state of structuring version tables
+	 * @var boolean
+	 */
+	protected $requireRestructureVersionTables = false;	
 	
 	/**
 	 * Creates a new instance of PackageInstallationDispatcher.
@@ -159,7 +168,11 @@ class PackageInstallationDispatcher {
 			
 			// reset stylesheets
 			StyleHandler::resetStylesheets();
-		}
+		}	
+		
+		if ($this->requireRestructureVersionTables) {
+			$this->restructureVersionTables();
+		}			
 		
 		return $step;
 	}
@@ -436,8 +449,12 @@ class PackageInstallationDispatcher {
 		
 		$plugin = new $className($this, $nodeData);
 		
-		if (!($plugin instanceof \wcf\system\package\plugin\IPackageInstallationPlugin)) {
+		if (!($plugin instanceof IPackageInstallationPlugin)) {
 			throw new SystemException("'".$className."' does not implement 'wcf\system\package\plugin\IPackageInstallationPlugin'");
+		}
+		
+		if ($plugin instanceof SQLPackageInstallationPlugin || $plugin instanceof ObjectTypePackageInstallationPlugin) {
+			$this->requireRestructureVersionTables = true;
 		}
 		
 		// execute PIP
@@ -937,4 +954,52 @@ class PackageInstallationDispatcher {
 			break;
 		}
 	}
+
+	/*
+	 * Restructure version tables.
+	 */
+	protected function restructureVersionTables() {
+		$objectTypes = \wcf\system\version\VersionHandler::getInstance()->getObjectTypes();
+		
+		if (empty($objectTypes)) {
+			return;
+		}
+		
+		// base structure of version tables
+		$versionTableBaseColumns = array();
+		$versionTableBaseColumns[] = array('name' => 'versionID', 'data' => array('type' => 'INT', 'key' => 'PRIMARY', 'autoIncrement' => 'AUTO_INCREMENT'));
+		$versionTableBaseColumns[] = array('name' => 'versionUserID', 'data' => array('type' => 'INT'));
+		$versionTableBaseColumns[] = array('name' => 'versionUsername', 'data' => array('type' => 'VARCHAR', 'length' => 255));
+		$versionTableBaseColumns[] = array('name' => 'versionTime', 'data' => array('type' => 'INT'));
+	
+		foreach ($objectTypes as $objectTypeID => $objectType) {						
+			// get structure of base table
+			$baseTableColumns = WCF::getDB()->getEditor()->getColumns($objectType::getDatabaseTableName());
+			// get structure of version table
+			$versionTableColumns = WCF::getDB()->getEditor()->getColumns($objectType::getDatabaseVersionTableName());
+			
+			if (empty($versionTableColumns)) {
+				$columns = array_merge($versionTableBaseColumns, $baseTableColumns);
+
+				WCF::getDB()->getEditor()->createTable($objectType::getDatabaseVersionTableName(), $columns);
+			}
+			else {
+				// check garbage columns in versioned table
+				foreach ($versionTableColumns as $columnData) {
+					if (!array_search($columnData['name'], $baseTableColumns, true)) {
+						// delete column
+						WCF::getDB()->getEditor()->dropColumn($objectType::getDatabaseVersionTableName(), $columnData['name']);
+					}
+				}
+				
+				// check new columns for versioned table
+				foreach ($baseTableColumns as $columnData) {
+					if (!array_search($columnData['name'], $versionTableColumns, true)) {
+						// add colum
+						WCF::getDB()->getEditor()->addColumn($objectType::getDatabaseVersionTableName(), $columnData['name'], $columnData['data']);
+					}
+				}
+			}
+		}
+	}	
 }
