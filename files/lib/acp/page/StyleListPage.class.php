@@ -1,7 +1,6 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\MultipleLinkPage;
-use wcf\system\menu\acp\ACPMenu;
 
 /**
  * Shows the style list page.
@@ -14,6 +13,11 @@ use wcf\system\menu\acp\ACPMenu;
  * @category	Community Framework
  */
 class StyleListPage extends MultipleLinkPage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.style.list';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
@@ -41,15 +45,5 @@ class StyleListPage extends MultipleLinkPage {
 		parent::initObjectList();
 		
 		$this->objectList->sqlSelects = "(SELECT COUNT(*) FROM wcf".WCF_N."_user WHERE styleID = style.styleID) AS users";
-	}
-	
-	/**
-	 * @see	wcf\page\IPage::show()
-	 */
-	public function show() {
-		// set active menu item.
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.style.list');
-	
-		parent::show();
 	}
 }
