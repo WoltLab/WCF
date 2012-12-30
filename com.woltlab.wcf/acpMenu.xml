@@ -25,7 +25,7 @@
 		<acpmenuitem name="wcf.acp.menu.link.option.importAndExport">
 			<parent>wcf.acp.menu.link.option.management</parent>
 			<showorder>1</showorder>
-			<link>index.php/OptionImport/</link>
+			<controller><![CDATA[OptionImport]]></controller>
 		</acpmenuitem>
 		<!-- /options -->
 		
@@ -42,14 +42,15 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.list">
-			<link>index.php/PackageList/</link>
+			<controller><![CDATA[wcf\acp\page\PackageListPage]]></controller>
 			<parent>wcf.acp.menu.link.package.management</parent>
 			<permissions>admin.system.package.canUpdatePackage,admin.system.package.canUninstallPackage</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.install">
-			<link>index.php/PackageStartInstall/?action=install</link>
+			<controller><![CDATA[wcf\acp\form\PackageStartInstallForm]]></controller>
+			<link><![CDATA[action=install]]></link>
 			<parent>wcf.acp.menu.link.package.management</parent>
 			<permissions>admin.system.package.canInstallPackage</permissions>
 			<showorder>2</showorder>
@@ -61,14 +62,14 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.autoupdate">
-			<link>index.php/PackageAutoUpdateList/</link>
+			<controller><![CDATA[wcf\acp\page\PackageAutoUpdateListPage]]></controller>
 			<parent>wcf.acp.menu.link.package.update</parent>
 			<permissions>admin.system.package.canUpdatePackage</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.database">
-			<link>index.php/PackageUpdateSearch/</link>
+			<controller><![CDATA[wcf\acp\form\PackageUpdateSearchForm]]></controller>
 			<parent>wcf.acp.menu.link.package.update</parent>
 			<permissions>admin.system.package.canInstallPackage,admin.system.package.canUpdatePackage</permissions>
 			<showorder>2</showorder>
@@ -80,14 +81,14 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.server.list">
-			<link>index.php/UpdateServerList/</link>
+			<controller><![CDATA[wcf\acp\page\UpdateServerListPage]]></controller>
 			<parent>wcf.acp.menu.link.package.server</parent>
 			<permissions>admin.system.package.canEditServer</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.server.add">
-			<link>index.php/UpdateServerAdd/</link>
+			<controller><![CDATA[wcf\acp\form\UpdateServerAddForm]]></controller>
 			<parent>wcf.acp.menu.link.package.server</parent>
 			<permissions>admin.system.package.canEditServer</permissions>
 			<showorder>2</showorder>
@@ -101,13 +102,13 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.application.management">
-			<link>index.php/ApplicationManagement/</link>
+			<controller><![CDATA[wcf\acp\page\ApplicationManagementPage]]></controller>
 			<parent>wcf.acp.menu.link.application</parent>
 			<permissions>admin.system.canManageApplication</permissions>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.application.cache">
-			<link>index.php/CacheList/</link>
+			<controller><![CDATA[wcf\acp\page\CacheListPage]]></controller>
 			<parent>wcf.acp.menu.link.application</parent>
 			<permissions>admin.system.canManageApplication</permissions>
 		</acpmenuitem>
@@ -120,14 +121,14 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.cronjob.list">
-			<link>index.php/CronjobList/</link>
+			<controller><![CDATA[wcf\acp\page\CronjobListPage]]></controller>
 			<parent>wcf.acp.menu.link.cronjob</parent>
 			<permissions>admin.system.canManageCronjob</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.cronjob.add">
-			<link>index.php/CronjobAdd/</link>
+			<controller><![CDATA[wcf\acp\form\CronjobAddForm]]></controller>
 			<parent>wcf.acp.menu.link.cronjob</parent>
 			<permissions>admin.system.canManageCronjob</permissions>
 			<showorder>2</showorder>
@@ -141,13 +142,13 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.log.session">
-			<link>index.php/ACPSessionLogList/</link>
+			<controller><![CDATA[wcf\acp\page\ACPSessionLogListPage]]></controller>
 			<parent>wcf.acp.menu.link.log</parent>
 			<permissions>admin.system.canViewLog</permissions>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.log.cronjob">
-			<link>index.php/CronjobLogList/</link>
+			<controller><![CDATA[wcf\acp\page\CronjobLogListPage]]></controller>
 			<parent>wcf.acp.menu.link.log</parent>
 			<permissions>admin.system.canManageCronjob</permissions>
 		</acpmenuitem>
@@ -169,21 +170,21 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.list">
-			<link>index.php/UserList/</link>
+			<controller><![CDATA[wcf\acp\page\UserListPage]]></controller>
 			<parent>wcf.acp.menu.link.user.management.general</parent>
 			<permissions>admin.user.canSearchUser</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.add">
-			<link>index.php/UserAdd/</link>
+			<controller><![CDATA[wcf\acp\form\UserAddForm]]></controller>
 			<parent>wcf.acp.menu.link.user.management.general</parent>
 			<permissions>admin.user.canAddUser</permissions>
 			<showorder>2</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.search">
-			<link>index.php/UserSearch/</link>
+			<controller><![CDATA[wcf\acp\form\UserSearchForm]]></controller>
 			<parent>wcf.acp.menu.link.user.management.general</parent>
 			<permissions>admin.user.canSearchUser</permissions>
 			<showorder>3</showorder>
@@ -195,14 +196,15 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.massProcessing">
-			<link>index.php/UsersMassProcessing/</link>
+			<controller><![CDATA[wcf\acp\form\UsersMassProcessingForm]]></controller>
 			<parent>wcf.acp.menu.link.user.management.additional</parent>
 			<permissions>admin.user.canEditUser,admin.user.canDeleteUser,admin.user.canMailUser</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.mail">
-			<link>index.php/UserMail/?action=all</link>
+			<controller><![CDATA[wcf\acp\form\UserMailForm]]></controller>
+			<link><![CDATA[action=all]]></link>
 			<parent>wcf.acp.menu.link.user.management.additional</parent>
 			<permissions>admin.user.canMailUser</permissions>
 			<showorder>2</showorder>
@@ -221,14 +223,14 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.group.list">
-			<link>index.php/UserGroupList/</link>
+			<controller><![CDATA[wcf\acp\page\UserGroupListPage]]></controller>
 			<parent>wcf.acp.menu.link.group.general</parent>
 			<permissions>admin.user.canEditGroup,admin.user.canDeleteGroup</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.group.add">
-			<link>index.php/UserGroupAdd/</link>
+			<controller><![CDATA[wcf\acp\form\UserGroupAddForm]]></controller>
 			<parent>wcf.acp.menu.link.group.general</parent>
 			<permissions>admin.user.canAddGroup</permissions>
 			<showorder>2</showorder>
@@ -240,7 +242,8 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.group.mail">
-			<link>index.php/UserMail/?action=group</link>
+			<controller><![CDATA[wcf\acp\form\UserMailForm]]></controller>
+			<link><![CDATA[action=group]]></link>
 			<parent>wcf.acp.menu.link.group.additional</parent>
 			<permissions>admin.user.canMailUser</permissions>
 			<showorder>1</showorder>
@@ -257,14 +260,14 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.pageMenu.list">
-			<link>index.php/PageMenuItemList/</link>
+			<controller><![CDATA[wcf\acp\page\PageMenuItemListPage]]></controller>
 			<parent>wcf.acp.menu.link.pageMenu</parent>
 			<permissions>admin.display.canManagePageMenu</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.pageMenu.add">
-			<link>index.php/PageMenuItemAdd/</link>
+			<controller><![CDATA[wcf\acp\form\PageMenuItemAddForm]]></controller>
 			<parent>wcf.acp.menu.link.pageMenu</parent>
 			<permissions>admin.display.canManagePageMenu</permissions>
 			<showorder>2</showorder>

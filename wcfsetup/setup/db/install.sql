@@ -5,6 +5,7 @@ CREATE TABLE wcf1_acp_menu_item (
 	packageID INT(10) NOT NULL,
 	menuItem VARCHAR(255) NOT NULL DEFAULT '',
 	parentMenuItem VARCHAR(255) NOT NULL DEFAULT '',
+	menuItemController VARCHAR(255) NOT NULL DEFAULT '',
 	menuItemLink VARCHAR(255) NOT NULL DEFAULT '',
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
