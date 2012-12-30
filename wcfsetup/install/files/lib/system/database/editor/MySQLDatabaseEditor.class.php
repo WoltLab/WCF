@@ -50,6 +50,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 										)
 							);
    		}
+		
 		return $columns;
 	}
 	

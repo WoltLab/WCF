@@ -7,48 +7,45 @@ use wcf\system\cache\CacheHandler;
 
 /**
  * Handles versions of DatabaseObjects.
- *
- * @author 		Jeffrey Reichardt
- * @copyright 	2001-2012 WoltLab GmbH
- * @license 		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package 	com.woltlab.wcf
- * @subpackage 	system.version
- * @category 	Community Framework
+ * 
+ * @author	Jeffrey Reichardt
+ * @copyright	2001-2012 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	system.version
+ * @category	Community Framework
  */
 class VersionHandler extends SingletonFactory {
 	/**
 	 * cached versions
-	 *
-	 * @var array<wcf\data\VersionableDatabaseObject>
+	 * @var	array<wcf\data\VersionableDatabaseObject>
 	 */
 	protected $versions = array();
 
 	/**
 	 * maps each version id to its object type id and object type version id
-	 * @var array<array>
+	 * @var	array<array>
 	 */
 	protected $versionIDs = array();
 
 	/**
 	 * mapes the names of the version object types to the object type ids
-	 *
-	 * @var array<integer>
+	 * @var	array<integer>
 	 */
 	protected $objectTypeIDs = array();
 
 	/**
 	 * list of version object types
-	 *
-	 * @var array<wcf\data\object\type>
+	 * @var	array<wcf\data\object\type>
 	 */
 	protected $objectTypes = array();
 
 	/**
 	 * Returns all version of object with the given object type id and object id.
-	 *
-	 * @param integer $objectTypeID
-	 * @param integer $objectID
-	 * @return array<wcf\data\VersionableDatabaseObject>
+	 * 
+	 * @param	integer	$objectTypeID
+	 * @param	integer	$objectID
+	 * @return	array<wcf\data\VersionableDatabaseObject>
 	 */
 	public function getVersions($objectTypeID, $objectID) {
 		if (isset($this->versions[$objectTypeID][$objectID])) {
@@ -60,10 +57,10 @@ class VersionHandler extends SingletonFactory {
 
 	/**
 	 * Returns the database object with the given version id.
-	 *
-	 * @param integer $objectTypeID
-	 * @param integer $versionID
-	 * @return wcf\data\VersionableDatabaseObject
+	 * 
+	 * @param	integer	$objectTypeID
+	 * @param	integer	$versionID
+	 * @return	wcf\data\VersionableDatabaseObject
 	 */
 	public function getVersionByID($objectTypeID, $versionID) {
 		if (isset($this->versionIDs[$objectTypeID][$versionID])) {
@@ -75,9 +72,9 @@ class VersionHandler extends SingletonFactory {
 
 	/**
 	 * Gets the object type with the given id.
-	 *
-	 * @param integer $objectTypeID
-	 * @return wcf\data\object\type\ObjectType
+	 * 
+	 * @param	integer	$objectTypeID
+	 * @return	wcf\data\object\type\ObjectType
 	 */
 	public function getObjectType($objectTypeID) {
 		if (isset($this->objectTypeIDs[$objectTypeID])) {
@@ -89,9 +86,9 @@ class VersionHandler extends SingletonFactory {
 
 	/**
 	 * Gets the object type with the given name.
-	 *
-	 * @param string $objectTypeName
-	 * @return wcf\data\object\type\ObjectType
+	 * 
+	 * @param	string	$objectTypeName
+	 * @return	wcf\data\object\type\ObjectType
 	 */
 	public function getObjectTypeByName($objectTypeName) {
 		if (isset($this->objectTypes[$objectTypeName])) {
@@ -102,7 +99,7 @@ class VersionHandler extends SingletonFactory {
 	}
 
 	/**
-	 * @see wcf\system\SingletonFactory::init()
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.versionableObject');
@@ -128,8 +125,8 @@ class VersionHandler extends SingletonFactory {
 	
 	/**
 	 * Returns a list of object types
-	 *
-	 * @return array<wcf\data\object\type\ObjectType>
+	 * 
+	 * @return	array<wcf\data\object\type\ObjectType>
 	 */
 	public function getObjectTypes() {
 		return $this->objectTypes;

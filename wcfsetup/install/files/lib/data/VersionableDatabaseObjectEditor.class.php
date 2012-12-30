@@ -4,17 +4,17 @@ use wcf\system\WCF;
 
 /**
  * Abstract class for all versionable editor classes.
- *
- * @author		Jeffrey Reichardt
+ * 
+ * @author	Jeffrey Reichardt
  * @copyright	2001-2012 WoltLab GmbH
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class VersionableDatabaseObjectEditor extends DatabaseObjectEditor {
 	/**
-	 * @see wcf\data\IEditableObject::create()
+	 * @see	wcf\data\IEditableObject::create()
 	 */
 	public static function createRevision(array $parameters = array()) {
 		$keys = $values = '';
@@ -31,9 +31,8 @@ abstract class VersionableDatabaseObjectEditor extends DatabaseObjectEditor {
 		}
 		
 		// save object
-		$sql = "INSERT INTO	".static::getDatabaseVersionTableName()."
-					(".$keys.")
-			VALUES		(".$values.")";
+		$sql = "INSERT INTO	".static::getDatabaseVersionTableName()." (".$keys.")
+				VALUES (".$values.")";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($statementParameters);
 		
@@ -44,14 +43,14 @@ abstract class VersionableDatabaseObjectEditor extends DatabaseObjectEditor {
 	}
 		
 	/**
-	 * @see wcf\data\IEditableObject::delete()
+	 * @see	wcf\data\IEditableObject::delete()
 	 */
 	public function deleteRevision(array $objectIDs = array()) {
 		static::deleteAll(array($this->__get(static::getDatabaseVersionTableIndexName())));
 	}
 	
 	/**
-	 * @see wcf\data\IEditableObject::deleteAll()
+	 * @see	wcf\data\IEditableObject::deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
 		$affectedCount = static::deleteAll($objectIDs);

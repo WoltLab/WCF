@@ -1,32 +1,30 @@
 <?php
 namespace wcf\data;
+use wcf\system\version\VersionHandler;
 
 /**
  * Abstract class for all versionable data actions.
- *
- * @author		Jeffrey Reichardt
+ * 
+ * @author	Jeffrey Reichardt
  * @copyright	2001-2012 WoltLab GmbH
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data
- * @category 	Community Framework
+ * @category	Community Framework
  */
 abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAction {
-	
 	/**
-	 * Validates restoring an version
+	 * Validates restoring a version
 	 */
 	public function validateRestore() {
 		parent::validateUpdate();
 	}
 	
 	/**
-	 * Deletes database object and returns the number of deleted objects.
-	 *
-	 * @return	integer
+	 * @see	wcf\data\IDeleteAction::delete()
 	 */
 	public function delete() {
-		if (!count($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 		
@@ -44,20 +42,20 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 	}
 	
 	/**
-	 * Updates data.
+	 * @see	wcf\data\AbstractDatabaseObjectAction::update()
 	 */
 	public function update() {
-		if (!count($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 		
-		//get index name
+		// get index name
 		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
 		
 		if (isset($this->parameters['data'])) {
 			foreach ($this->objects as $object) {
 				$this->update($this->parameters['data']);
-				//create revision retroactively
+				// create revision retroactively
 				$this->createRevision();
 			}
 		}
@@ -75,10 +73,10 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 	}
 	
 	/**
-	 * Deletes revision.
+	 * Deletes a revision.
 	 */
 	protected function deleteRevision() {
-		if (!count($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 		
@@ -96,14 +94,14 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 	}
 	
 	/**
-	 * Restores an revision.
+	 * Restores a revision.
 	 */
 	public function restore() {
-		if (!count($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 
-		//currently we only support restoring one version
+		// currently we only support restoring one version
 		foreach($this->objects as $object) {
 			$objectType = VersionHandler::getInstance()->getObjectTypeByName($object->objectTypeName);
 			$restoreObject = VersionHandler::getInstance()->getVersionByID($objectType->objectTypeID, $this->parameters['restoreObjectID']);

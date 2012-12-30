@@ -36,17 +36,30 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	 */
 	public function getColumns($tableName) {
 		$columns = array();
-		$sql = "SELECT	pg_attribute.attname
+		$sql = "SELECT	pg_attribute.*, pg_type.typname, pg_constraint.contype, pg_attribute.adsrc
 			FROM	pg_attribute,
-				pg_class
+				pg_class,
+				pg_type
+			LEFT JOIN	pg_constraint ON (pg_constraint.conrelid = pg_class.oid)
+			LEFT JOIN	pg_attrdef ON (pg_attrdef.adrelid = pg_attribute.attrelid) AND (pg_attrdef.adnum = pg_attribute.attnum)
 			WHERE	pg_class.oid = pg_attribute.attrelid
+				AND pg_type.oid = pg_attribute.atttypid
 				AND pg_attribute.attnum > 0
 				AND pg_class.relname = ?";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute(array($tableName));
 		while ($row = $statement->fetchArray()) {
-			$columns[] = $row['attname'];
-		}
+      	 	$columns[] = array('name' => $row['attname'], 
+								'data' => array(
+											'type' => $row['typname'],
+											'length' => $row['attlen'],
+											'notNull' => $row['attnotnull'],
+											'key' => (($row['contype'] == 'p') ? 'PRIMARY' : (($row['contype'] == 'u') ? 'UNIQUE' : '')),
+											'default' => $row['adsrc'],
+											'autoIncrement' => ($row['contype'] == 'p')
+										)
+							);
+   		}
 		
 		return $columns;
 	}

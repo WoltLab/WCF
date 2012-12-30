@@ -5,20 +5,20 @@ use wcf\system\package\PackageDependencyHandler;
 
 /**
  * Caches the versions for a certain package and object type.
- *
- * @author		Jeffrey Reichardt
+ * 
+ * @author	Jeffrey Reichardt
  * @copyright	2001-2012 WoltLab GmbH
- * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
- * @category 	Community Framework
+ * @category	Community Framework
  */
 class VersionCacheBuilder implements ICacheBuilder {
 	/**
-	 * @see wcf\system\cache\ICacheBuilder::getData()
+	 * @see	wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {	
-		//get object types
+		// get object types
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.versionableObject');
 		
 		$data = array(
@@ -29,8 +29,7 @@ class VersionCacheBuilder implements ICacheBuilder {
 		foreach ($objectTypes as $objectTypeID => $objectType) {
 			$processorObject = $objectType->getProcessor();
 			
-			$sql = "SELECT 
-						* 
+			$sql = "SELECT * 
 					FROM ".$processorObject::getDatabaseVersionTableName();
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array());
@@ -40,7 +39,6 @@ class VersionCacheBuilder implements ICacheBuilder {
 				$data['versions'][$objectTypeID][$object->{$processorObject::getDatabaseIndexName()}] = $object;
 				$data['versionIDs'][$objectTypeID][$object->{$processorObject::getDatabaseIndexName()}][] = $object->{$processorObject::getDatabaseVersionTableIndexName()};
 			}
-			
 		}
 		
 		return $data;
