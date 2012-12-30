@@ -3,7 +3,7 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		new WCF.Action.Delete('wcf\\data\\language\\LanguageAction', $('.jsLanguageRow'), $('#userTableContainer hgroup span.badge'));
+		new WCF.Action.Delete('wcf\\data\\language\\LanguageAction', '.jsLanguageRow');
 		new WCF.Action.SimpleProxy({
 			action: 'setAsDefault',
 			className: 'wcf\\data\\language\\LanguageAction',

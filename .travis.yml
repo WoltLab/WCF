@@ -1,0 +1,11 @@
+language: php
+php:
+  - 5.4
+  - 5.3
+before_install:
+  - pear install pear/PHP_CodeSniffer
+  - phpenv rehash
+before_script:
+  - git clone --branch=master --depth=1 --quiet git://github.com/WoltLab/WCF.git WCF
+script:
+  - phpcs -p --extensions=php --standard="`pwd`/WCF/CodeSniff/WCF" files

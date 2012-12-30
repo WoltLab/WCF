@@ -120,8 +120,8 @@ class LanguageExportForm extends ACPForm {
 		// send headers
 		header('Content-Type: text/xml; charset=UTF-8');
 		header('Content-Disposition: attachment; filename="'.$this->language->languageCode.'.xml"');
- 		$this->language->export($this->selectedPackages, $this->exportCustomValues);
- 		exit;
+		$this->language->export($this->selectedPackages, $this->exportCustomValues);
+		exit;
 	}
 	
 	/**
