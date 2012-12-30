@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data;
-use wcf\util\StringUtil;
 use wcf\system\version\VersionHandler;
+use wcf\util\StringUtil;
 
 /**
  * Abstract class for all versionable data classes.
@@ -18,7 +18,7 @@ abstract class VersionableDatabaseObject extends DatabaseObject {
 	 * name of the versionable object type
 	 * @var	string
 	 */
-	protected $versionableObjectTypeName = '';
+	public $versionableObjectTypeName = '';
 	
 	/**
 	 * Returns suffix of database tables.
