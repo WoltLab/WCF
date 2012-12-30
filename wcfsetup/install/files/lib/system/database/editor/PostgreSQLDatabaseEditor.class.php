@@ -49,16 +49,14 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute(array($tableName));
 		while ($row = $statement->fetchArray()) {
-      	 	$columns[] = array('name' => $row['attname'], 
-								'data' => array(
-											'type' => $row['typname'],
-											'length' => $row['attlen'],
-											'notNull' => $row['attnotnull'],
-											'key' => (($row['contype'] == 'p') ? 'PRIMARY' : (($row['contype'] == 'u') ? 'UNIQUE' : '')),
-											'default' => $row['adsrc'],
-											'autoIncrement' => ($row['contype'] == 'p')
-										)
-							);
+      	 	$columns[] = array('name' => $row['attname'], 'data' => array(
+				'type' => $row['typname'],
+				'length' => $row['attlen'],
+				'notNull' => $row['attnotnull'],
+				'key' => (($row['contype'] == 'p') ? 'PRIMARY' : (($row['contype'] == 'u') ? 'UNIQUE' : '')),
+				'default' => $row['adsrc'],
+				'autoIncrement' => ($row['contype'] == 'p')
+			));
    		}
 		
 		return $columns;

@@ -67,7 +67,7 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 	protected function createRevision() {
 		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
 	
-		foreach($this->objects as $object) {
+		foreach ($this->objects as $object) {
 			call_user_func(array($this->className, 'createRevision'), array_merge($object->getData(), array($indexName =>$object->__get($indexName))));
 		}
 	}
@@ -102,7 +102,7 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 		}
 
 		// currently we only support restoring one version
-		foreach($this->objects as $object) {
+		foreach ($this->objects as $object) {
 			$objectType = VersionHandler::getInstance()->getObjectTypeByName($object->objectTypeName);
 			$restoreObject = VersionHandler::getInstance()->getVersionByID($objectType->objectTypeID, $this->parameters['restoreObjectID']);
 

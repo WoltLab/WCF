@@ -972,7 +972,7 @@ class PackageInstallationDispatcher {
 			// get structure of version table
 			$versionTableColumns = WCF::getDB()->getEditor()->getColumns($objectType::getDatabaseVersionTableName());
 			
-			if (empty($versionTableColumns)){
+			if (empty($versionTableColumns)) {
 				$columns = array_merge($versionTableBaseColumns, $baseTableColumns);
 
 				WCF::getDB()->getEditor()->createTable($objectType::getDatabaseVersionTableName(), $columns);

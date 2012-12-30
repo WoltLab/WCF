@@ -55,7 +55,7 @@ abstract class VersionableDatabaseObjectEditor extends DatabaseObjectEditor {
 	public static function deleteAll(array $objectIDs = array()) {
 		$affectedCount = static::deleteAll($objectIDs);
 		
-		//delete versions
+		// delete versions
 		$sql = "DELETE FROM	".static::getDatabaseVersionTableName()."
 				WHERE ".static::getDatabaseTableIndexName()." = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
