@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\style;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IToggleAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -24,7 +25,7 @@ use wcf\util\StringUtil;
  * @subpackage	data.style
  * @category	Community Framework
  */
-class StyleAction extends AbstractDatabaseObjectAction {
+class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
@@ -437,7 +438,7 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Validates parameters to enable/disable styles.
+	 * @see	wcf\data\IToggleAction::validateToggle()
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
@@ -450,7 +451,7 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Enables/disables styles.
+	 * @see	wcf\data\IToggleAction::toggle()
 	 */
 	public function toggle() {
 		foreach ($this->objects as $style) {
