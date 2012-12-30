@@ -21,12 +21,6 @@ use wcf\util\StringUtil;
  */
 class LanguageExportForm extends AbstractForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$templateName
-	 * @todo still needed?
-	 */
-	public $templateName = 'languageExport';
-	
-	/**
 	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language';

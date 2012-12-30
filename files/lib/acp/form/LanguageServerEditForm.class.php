@@ -18,12 +18,6 @@ use wcf\system\exception\IllegalLinkException;
  */
 class LanguageServerEditForm extends LanguageServerAddForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$templateName
-	 * @todo still needed?
-	 */
-	public $templateName = 'languageServerAdd';
-	
-	/**
 	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language.server';
