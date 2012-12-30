@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\style;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IToggleAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -24,7 +25,7 @@ use wcf\util\StringUtil;
  * @subpackage	data.style
  * @category	Community Framework
  */
-class StyleAction extends AbstractDatabaseObjectAction {
+class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
@@ -391,7 +392,7 @@ class StyleAction extends AbstractDatabaseObjectAction {
 			'packageID' => PACKAGE_ID,
 			'styleName' => $styleName,
 			'templateGroupID' => $this->styleEditor->templateGroupID,
-			'disabled' => 1, // newly created styles are disabled by default
+			'isDisabled' => 1, // newly created styles are disabled by default
 			'styleDescription' => $this->styleEditor->styleDescription,
 			'styleVersion' => $this->styleEditor->styleVersion,
 			'styleDate' => $this->styleEditor->styleDate,
@@ -437,7 +438,7 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Validates parameters to enable/disable styles.
+	 * @see	wcf\data\IToggleAction::validateToggle()
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
@@ -450,12 +451,12 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Enables/disables styles.
+	 * @see	wcf\data\IToggleAction::toggle()
 	 */
 	public function toggle() {
 		foreach ($this->objects as $style) {
-			$disabled = ($style->disabled) ? 0 : 1;
-			$style->update(array('disabled' => $disabled));
+			$isDisabled = ($style->isDisabled) ? 0 : 1;
+			$style->update(array('isDisabled' => $isDisabled));
 		}
 	}
 	
@@ -464,7 +465,7 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	 */
 	public function validateChangeStyle() {
 		$this->style = $this->getSingleObject();
-		if ($this->style->disabled && !WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
+		if ($this->style->isDisabled && !WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
 			throw new PermissionDeniedException();
 		}
 	}
@@ -500,7 +501,7 @@ class StyleAction extends AbstractDatabaseObjectAction {
 	public function getStyleChooser() {
 		$styleList = new StyleList();
 		if (!WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
-			$styleList->getConditionBuilder()->add("style.disabled = ?", array(0));
+			$styleList->getConditionBuilder()->add("style.isDisabled = ?", array(0));
 		}
 		$styleList->sqlOrderBy = "style.styleName ASC";
 		$styleList->readObjects();

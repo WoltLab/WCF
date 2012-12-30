@@ -45,7 +45,7 @@
 										var packageVersion = select.options[select.selectedIndex].value;
 										
 										// set value
-										{if !$package[isUnique]}document.getElementById('updates-{$package[package]}').value = packageVersion;{/if}
+										document.getElementById('updates-{$package[package]}').value = packageVersion;
 										{foreach from=$package[updatableInstances] item=updatableInstance}
 											document.getElementById('updates-{$updatableInstance[packageID]}').value = packageVersion;
 										{/foreach}
@@ -76,15 +76,8 @@
 						<legend>{lang}wcf.acp.packageUpdate.options{/lang}</legend>
 						
 						<dl>
-							{* new installation *}
-							{if $package[isUnique] && !$package[updatableInstances]|count}
-								<dt></dt>
-								<dd>{lang}wcf.acp.packageUpdate.options.alreadyInstalledUnique{/lang}</dd>
-							{/if}
-							{if !$package[isUnique]}
-								<dt></dt>
-								<dd><label><input type="checkbox" id="updates-{$package[package]}" name="updates[{$package[package]}]" value="{$package[packageVersion]}" {if $selectedPackages[$package[packageID]]|isset}checked="checked" {/if}/> {if $package[instances]}{lang}wcf.acp.packageUpdate.options.installAlreadyInstalled{/lang}{else}{lang}wcf.acp.packageUpdate.options.install{/lang}{/if}</label></dd>
-							{/if}
+							<dt></dt>
+							<dd><label><input type="checkbox" id="updates-{$package[package]}" name="updates[{$package[package]}]" value="{$package[packageVersion]}" {if $selectedPackages[$package[packageID]]|isset}checked="checked" {/if}/> {if $package[instances]}{lang}wcf.acp.packageUpdate.options.installAlreadyInstalled{/lang}{else}{lang}wcf.acp.packageUpdate.options.install{/lang}{/if}</label></dd>
 							
 							{* update *}
 							{foreach from=$package[updatableInstances] item=updatableInstance}
