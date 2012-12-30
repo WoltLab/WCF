@@ -1,7 +1,6 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\SortablePage;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 
 /**
@@ -15,6 +14,11 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class UpdateServerListPage extends SortablePage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.package.server.list';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
@@ -68,15 +72,5 @@ class UpdateServerListPage extends SortablePage {
 		WCF::getTPL()->assign(array(
 			'deletedPackageUpdateServerID' => $this->deletedPackageUpdateServerID
 		));
-	}
-	
-	/**
-	 * @see	wcf\page\IPage::show()
-	 */
-	public function show() {
-		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.server.list');
-		
-		parent::show();
 	}
 }
