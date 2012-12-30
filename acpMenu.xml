@@ -7,19 +7,19 @@
 		
 		<acpmenuitem name="wcf.acp.menu.link.language.list">
 			<parent>wcf.acp.menu.link.language</parent>
-			<link>index.php/LanguageList/</link>
+			<controller><![CDATA[wcf\acp\page\LanguageListPage]]></controller>
 			<permissions>admin.language.canEditLanguage,admin.language.canDeleteLanguage</permissions>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.language.add">
 			<parent>wcf.acp.menu.link.language</parent>
-			<link>index.php/LanguageAdd/</link>
+			<controller><![CDATA[wcf\acp\form\LanguageAddForm]]></controller>
 			<permissions>admin.language.canAddLanguage</permissions>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.language.multilingualism">
 			<parent>wcf.acp.menu.link.language</parent>
-			<link>index.php/LanguageMultilingualism/</link>
+			<controller><![CDATA[wcf\acp\form\LanguageMultilingualismForm]]></controller>
 			<permissions>admin.language.canEditLanguage</permissions>
 		</acpmenuitem>
 		
@@ -28,13 +28,13 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.language.server.list">
-			<link>index.php/LanguageServerList/</link>
+			<controller><![CDATA[wcf\acp\page\LanguageServerListPage]]></controller>
 			<parent>wcf.acp.menu.link.language.server</parent>
 			<permissions>admin.language.canEditServer,admin.language.canDeleteServer</permissions>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.language.server.add">
-			<link>index.php/LanguageServerAdd/</link>
+			<controller><![CDATA[wcf\acp\form\LanguageServerAddForm]]></controller>
 			<parent>wcf.acp.menu.link.language.server</parent>
 			<permissions>admin.language.canAddServer</permissions>
 		</acpmenuitem>
