@@ -39,7 +39,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		while ($row = $statement->fetchArray()) {
 			$typeMatches = Regex::compile('([a-z]+)\(([0-9]+)\)', Regex::CASE_INSENSITIVE)->match($row['Type']);
 
-      	 	$columns[] = array('name' => $row['Field'], 'data' => array(
+			$columns[] = array('name' => $row['Field'], 'data' => array(
 				'type' => $typeMatches[1],
 				'length' => $typeMatches[2],
 				'notNull' => (($row['Null'] == 'YES') ? true : false),
@@ -47,7 +47,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 				'default' => $row['Default'],
 				'autoIncrement' => ($row['Extra'] == 'auto_increment' ? true : false)
 			));
-   		}
+		}
 		
 		return $columns;
 	}
