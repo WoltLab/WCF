@@ -8,9 +8,9 @@ use wcf\data\option\OptionList;
 use wcf\system\request\LinkHandler;
 
 /**
- * Caches the acp menu items tree.
+ * Caches the ACP menu items.
  * 
- * @author	Marcel Werk
+ * @author	Matthias Schmidt, Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
