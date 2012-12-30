@@ -678,7 +678,7 @@ class WCF {
 		}
 		$baseHref = self::getTPL()->get('baseHref');
 		
-		return $baseHref . 'index.php' . $path . '#' . $fragment;
+		return $baseHref . FileUtil::removeLeadingSlash($path) . '#' . $fragment;
 	}
 	
 	/**
