@@ -8,21 +8,21 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.style.list">
-			<link>index.php/StyleList/</link>
+			<controller><![CDATA[wcf\acp\page\StyleListPage]]></controller>
 			<parent>wcf.acp.menu.link.style</parent>
 			<permissions>admin.style.canEditStyle,admin.style.canDeleteStyle</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.style.add">
-			<link>index.php/StyleAdd/</link>
+			<controller><![CDATA[wcf\acp\form\StyleAddForm]]></controller>
 			<parent>wcf.acp.menu.link.style</parent>
 			<permissions>admin.style.canAddStyle</permissions>
 			<showorder>2</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.style.import">
-			<link>index.php/StyleImport/</link>
+			<controller><![CDATA[wcf\acp\form\StyleImportForm]]></controller>
 			<parent>wcf.acp.menu.link.style</parent>
 			<permissions>admin.style.canAddStyle</permissions>
 			<showorder>3</showorder>
