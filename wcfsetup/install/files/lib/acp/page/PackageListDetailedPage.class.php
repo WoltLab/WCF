@@ -1,7 +1,6 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\SortablePage;
-use wcf\system\menu\acp\ACPMenu;
 
 /**
  * Shows a list of all installed packages.
@@ -14,6 +13,11 @@ use wcf\system\menu\acp\ACPMenu;
  * @category	Community Framework
  */
 class PackageListDetailedPage extends SortablePage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.package.list';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
@@ -51,15 +55,5 @@ class PackageListDetailedPage extends SortablePage {
 		$this->sqlOrderBy = 'package.'.($this->sortField == 'packageType' ? 'isApplication '.$this->sortOrder : $this->sortField.' '.$this->sortOrder).($this->sortField != 'packageName' ? ', package.packageName ASC' : '');
 		
 		parent::readObjects();
-	}
-	
-	/**
-	 * @see	wcf\page\IPage::show()
-	 */
-	public function show() {
-		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.list');
-		
-		parent::show();
 	}
 }

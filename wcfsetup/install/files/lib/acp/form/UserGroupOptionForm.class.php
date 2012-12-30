@@ -5,6 +5,7 @@ use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\option\UserGroupOptionAction;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObject;
+use wcf\form\AbstractForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -22,9 +23,9 @@ use wcf\system\WCF;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class UserGroupOptionForm extends ACPForm {
+class UserGroupOptionForm extends AbstractForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.group';
 	

@@ -3,7 +3,6 @@ namespace wcf\acp\page;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
 use wcf\page\AbstractPage;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -19,6 +18,11 @@ use wcf\util\HeaderUtil;
  * @category	Community Framework
  */
 class PackageListPage extends AbstractPage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.package.list';
+	
 	/**
 	 * list of applications
 	 * @var	wcf\data\package\PackageList
@@ -87,9 +91,6 @@ class PackageListPage extends AbstractPage {
 			HeaderUtil::redirect($host . $path . 'index.php/PackageListDetailed/' . SID_ARG_1ST);
 			exit;
 		}
-		
-		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.list');
 		
 		parent::show();
 	}

@@ -3,7 +3,6 @@ namespace wcf\acp\page;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\page\AbstractPage;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
@@ -19,6 +18,11 @@ use wcf\system\WCFACP;
  * @category	Community Framework
  */
 class PackageInstallationConfirmPage extends AbstractPage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.package.install';
+	
 	/**
 	 * number of missing packages
 	 * @var	integer
@@ -123,8 +127,6 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.install');
-		
 		// check master password
 		WCFACP::checkMasterPassword();
 		

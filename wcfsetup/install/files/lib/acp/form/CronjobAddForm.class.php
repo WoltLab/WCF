@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\cronjob\CronjobAction;
 use wcf\data\cronjob\CronjobEditor;
+use wcf\form\AbstractForm;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
@@ -19,9 +20,9 @@ use wcf\util\StringUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class CronjobAddForm extends ACPForm {
+class CronjobAddForm extends AbstractForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.cronjob.add';
 	

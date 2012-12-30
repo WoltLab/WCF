@@ -5,7 +5,6 @@ use wcf\data\search\Search;
 use wcf\page\SortablePage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 
 /**
@@ -19,6 +18,11 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class PackageUpdateSearchResultPage extends SortablePage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.package.database';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
@@ -165,15 +169,5 @@ class PackageUpdateSearchResultPage extends SortablePage {
 			'packages' => $this->packages,
 			'selectedPackages' => array()
 		));
-	}
-	
-	/**
-	 * @see	wcf\page\IPage::show()
-	 */
-	public function show() {
-		// set active menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.database');
-		
-		parent::show();
 	}
 }

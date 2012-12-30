@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\page\menu\item\PageMenuItem;
 use wcf\data\page\menu\item\PageMenuItemAction;
+use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
@@ -18,7 +19,7 @@ use wcf\system\WCF;
  */
 class PageMenuItemEditForm extends PageMenuItemAddForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.pageMenu';
 	
@@ -82,7 +83,7 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
-		ACPForm::save();
+		AbstractForm::save();
 		
 		// save menu item
 		I18nHandler::getInstance()->save('pageMenuItem', $this->menuItem->menuItem, 'wcf.page');
