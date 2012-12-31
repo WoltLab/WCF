@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data;
+use wcf\system\version\VersionHandler;
 use wcf\util\StringUtil;
 
 /**
@@ -14,10 +15,10 @@ use wcf\util\StringUtil;
  */
 abstract class VersionableDatabaseObject extends DatabaseObject {	
 	/**
-	 * name of the object type
+	 * name of the versionable object type
 	 * @var	string
 	 */
-	public $objectTypeName = '';
+	public $versionableObjectTypeName = '';
 	
 	/**
 	 * Returns suffix of database tables.
@@ -35,5 +36,20 @@ abstract class VersionableDatabaseObject extends DatabaseObject {
 	 */
 	protected static function getDatabaseVersionTableIndexName() {
 		return 'version'.ucfirst(static::getDatabaseIndexTableName());
+	}
+	
+	/**
+	 * Returns all versions of this database object
+	 * 
+	 * @return	array<wcf\data\VersionableDatabaseObject>
+	 */
+	public function getVersions() {
+		$objectType = VersionHandler::getInstance()->getObjectTypeByName($this->versionableObjectTypeName);
+		
+		if ($objectType === null) {
+			throw new SystemException("Unknown versionable object type with name '".$this->versionableObjectTypeName."'");
+		}
+		
+		return VersionHandler::getInstance()->getVersions($objectType->objectTypeID, $this->getObjectID());
 	}
 }
