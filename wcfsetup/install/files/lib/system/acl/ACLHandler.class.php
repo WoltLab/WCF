@@ -228,7 +228,7 @@ class ACLHandler extends SingletonFactory {
 	 * @return	array
 	 */
 	public function getPermissions($objectTypeID, array $objectIDs, ACLOptionCategory $category = null, $settingsView = false) {
-		$optionList = $this->getOptions($objectTypeID, $category, $settingsView);
+		$optionList = $this->getOptions($objectTypeID, $category);
 		
 		$data = array(
 			'options' => $optionList,
@@ -363,11 +363,9 @@ class ACLHandler extends SingletonFactory {
 	 * 
 	 * @param	integer						$objectTypeID
 	 * @param	wcf\data\acl\option\category\ACLOptionCategory	$category
-	 * @param	boolean						$settingsView
-	 * @param	boolean						$settingsView
 	 * @return	wcf\data\acl\option\ACLOptionList
 	 */
-	public function getOptions($objectTypeID, ACLOptionCategory $category = null, $settingsView = false) {
+	public function getOptions($objectTypeID, ACLOptionCategory $category = null) {
 		$optionList = new ACLOptionList();
 		$optionList->sqlLimit = 0;
 		if ($category !== null) {
