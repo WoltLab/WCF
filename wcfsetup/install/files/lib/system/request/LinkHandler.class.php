@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\request;
+use wcf\system\menu\page\PageMenu;
+
 use wcf\system\application\ApplicationHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\SingletonFactory;
@@ -58,33 +60,39 @@ class LinkHandler extends SingletonFactory {
 		}
 		
 		// build route
-		if ($controller !== null) {
-			// handle object
-			if (isset($parameters['object'])) {
-				if (!($parameters['object'] instanceof \wcf\system\request\IRouteController) && $parameters['object'] instanceof \wcf\data\DatabaseObjectDecorator && $parameters['object']->getDecoratedObject() instanceof \wcf\system\request\IRouteController) {
-					$parameters['object'] = $parameters['object']->getDecoratedObject();
-				}
-				
-				if ($parameters['object'] instanceof \wcf\system\request\IRouteController) {
-					$parameters['id'] = $parameters['object']->getID();
-					$parameters['title'] = $parameters['object']->getTitle();
-				}
-				
-				unset($parameters['object']);
-			}
-			
-			if (isset($parameters['title'])) {
-				// remove illegal characters
-				$parameters['title'] = trim(preg_replace('/[\x0-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+/', '-', $parameters['title']), '-');
-			}
-			
-			$parameters['controller'] = $controller;
-			$routeURL = RouteHandler::getInstance()->buildRoute($parameters);
-			if (!$isRaw && !empty($url)) {
-				$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';
-			}
-			$url = $routeURL . $url;
+		if ($controller === null) {
+			// build link to landing page
+			$landingPage = PageMenu::getInstance()->getLandingPage();
+			$controller = $landingPage->getController();
+			$abbreviation = $landingPage->getApplication();
+			$url = $landingPage->menuItemLink;
 		}
+		
+		// handle object
+		if (isset($parameters['object'])) {
+			if (!($parameters['object'] instanceof \wcf\system\request\IRouteController) && $parameters['object'] instanceof \wcf\data\DatabaseObjectDecorator && $parameters['object']->getDecoratedObject() instanceof \wcf\system\request\IRouteController) {
+				$parameters['object'] = $parameters['object']->getDecoratedObject();
+			}
+			
+			if ($parameters['object'] instanceof \wcf\system\request\IRouteController) {
+				$parameters['id'] = $parameters['object']->getID();
+				$parameters['title'] = $parameters['object']->getTitle();
+			}
+			
+			unset($parameters['object']);
+		}
+		
+		if (isset($parameters['title'])) {
+			// remove illegal characters
+			$parameters['title'] = trim(preg_replace('/[\x0-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+/', '-', $parameters['title']), '-');
+		}
+		
+		$parameters['controller'] = $controller;
+		$routeURL = RouteHandler::getInstance()->buildRoute($parameters);
+		if (!$isRaw && !empty($url)) {
+			$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';
+		}
+		$url = $routeURL . $url;
 		
 		// append session id
 		if ($appendSession) {
