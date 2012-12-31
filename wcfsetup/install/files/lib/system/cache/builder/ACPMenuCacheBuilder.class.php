@@ -50,11 +50,9 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 			$data['wcf.acp.menu.link.option.category'][] = new ACPMenuItem(null, array(
 				'menuItem' => 'wcf.acp.option.category.'.$optionCategory->categoryName,
 				'parentMenuItem' => 'wcf.acp.menu.link.option.category',
-				'menuItemLink' => LinkHandler::getInstance()->getLink('Option', array(
-					'application' => 'wcf',
-					'id' => $optionCategory->categoryID
-				)),
+				'menuItemController' => 'wcf\acp\form\OptionForm',
 				'permissions' => $optionCategory->permissions,
+				'optionCategoryID' => $optionCategory->categoryID,
 				'options' => $optionCategory->options
 			));
 		}

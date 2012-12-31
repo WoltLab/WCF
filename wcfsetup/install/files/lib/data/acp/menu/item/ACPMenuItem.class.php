@@ -47,9 +47,20 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 		if (!$this->menuItemController) {
 			return WCF::getLanguage()->get($this->menuItemLink);
 		}
-	
+		
 		$this->parseController();
-		return LinkHandler::getInstance()->getLink($this->controller, array('application' => $this->application), WCF::getLanguage()->get($this->menuItemLink));
+		
+		$linkParameters = array(
+			'application' => $this->application
+		);
+		
+		// links of top option category menu items need the id of the option
+		// category
+		if ($this->parentMenuItem == 'wcf.acp.menu.link.option.category') {
+			$linkParameters['id'] = $this->optionCategoryID;
+		}
+		
+		return LinkHandler::getInstance()->getLink($this->controller, $linkParameters, WCF::getLanguage()->get($this->menuItemLink));
 	}
 	
 	/**
@@ -59,7 +70,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	 */
 	public function getController() {
 		$this->parseController();
-	
+		
 		return $this->controller;
 	}
 	
@@ -69,13 +80,13 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	protected function parseController() {
 		if ($this->controller === null) {
 			$this->controller = '';
-	
+			
 			// resolve application and controller
 			if ($this->menuItemController) {
 				$parts = explode('\\', $this->menuItemController);
 				$this->application = array_shift($parts);
 				$menuItemController = array_pop($parts);
-	
+				
 				// drop controller suffix
 				$this->controller = Regex::compile('(Action|Form|Page)$')->replace($menuItemController, '');
 			}
