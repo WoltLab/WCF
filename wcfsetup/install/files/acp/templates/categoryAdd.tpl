@@ -35,7 +35,7 @@
 			<ul>
 				{content}
 					{if $objectType->getProcessor()->canDeleteCategory() || $objectType->getProcessor()->canEditCategory()}
-						<li><a href="{link controller=$listController}{/link}" title="{$objectType->getProcessor()->getLanguageVariable('button.list')}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{@$objectType->getProcessor()->getLanguageVariable('button.list')}</span></a></li>
+						<li><a href="{link controller=$listController application=$objectType->getProcessor()->getApplication()}{/link}" title="{$objectType->getProcessor()->getLanguageVariable('button.list')}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{@$objectType->getProcessor()->getLanguageVariable('button.list')}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtons'}
@@ -45,7 +45,7 @@
 	</div>
 {/hascontent}
 
-<form method="post" action="{if $action == 'add'}{link controller=$addController}{/link}{else}{link controller=$editController object=$category}{/link}{/if}">
+<form method="post" action="{if $action == 'add'}{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}{else}{link controller=$editController application=$objectType->getProcessor()->getApplication() object=$category}{/link}{/if}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.global.form.data{/lang}</legend>
@@ -135,7 +135,7 @@
 		{if $aclObjectTypeID}
 			<fieldset>
 				<legend>{lang}wcf.acp.acl.permissions{/lang}</legend>
-
+				
 				<dl id="groupPermissions" class="wide">
 					<dt>{lang}wcf.acp.acl.permissions{/lang}</dt>
 					<dd></dd>
