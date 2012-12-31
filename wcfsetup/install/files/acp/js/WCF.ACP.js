@@ -1008,10 +1008,10 @@ WCF.ACP.Options.Group = Class.extend({
 			
 			if ($input.attr('type') == 'checkbox') {
 				if ($input.is(':checked')) {
-					return $input.val();
+					return 1;
 				}
 				
-				return null;
+				return 0;
 			}
 			
 			return $input.val();
