@@ -244,6 +244,8 @@ class ACLHandler extends SingletonFactory {
 		
 		// use alternative data structure for settings
 		if ($settingsView) {
+			$objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
+			
 			$data['options'] = array();
 			$data['categories'] = array();
 			
@@ -251,7 +253,7 @@ class ACLHandler extends SingletonFactory {
 			foreach ($optionList as $option) {
 				$data['options'][$option->optionID] = array(
 					'categoryName' => $option->categoryName,
-					'label' => WCF::getLanguage()->get('wcf.acl.option.' . $option->package . '.' . $option->optionName),
+					'label' => WCF::getLanguage()->get('wcf.acl.option.'.$objectType->objectType.'.'.$option->optionName),
 					'optionName' => $option->optionName
 				);
 				
@@ -263,14 +265,12 @@ class ACLHandler extends SingletonFactory {
 			// load categories
 			$categoryList = new ACLOptionCategoryList();
 			$categoryList->sqlLimit = 0;
-			$categoryList->sqlSelects = "package.package";
-			$categoryList->sqlJoins = "LEFT JOIN wcf".WCF_N."_package package ON (package.packageID = acl_option_category.packageID)";
 			$categoryList->getConditionBuilder()->add("acl_option_category.categoryName IN (?)", array($categoryNames));
 			$categoryList->getConditionBuilder()->add("acl_option_category.objectTypeID = ?", array($objectTypeID));
 			$categoryList->readObjects();
 			
 			foreach ($categoryList as $category) {
-				$data['categories'][$category->categoryName] = WCF::getLanguage()->get('wcf.acl.option.category.'.$category->package.'.'.$category->categoryName);
+				$data['categories'][$category->categoryName] = WCF::getLanguage()->get('wcf.acl.option.category.'.$objectType->objectType.'.'.$category->categoryName);
 			}
 		}
 		
@@ -374,10 +374,6 @@ class ACLHandler extends SingletonFactory {
 		$optionList->sqlLimit = 0;
 		if ($category !== null) {
 			$optionList->getConditionBuilder()->add("acl_option.categoryName = ?", array($category->categoryName));
-		}
-		if ($settingsView) {
-			$optionList->sqlSelects = "package.package";
-			$optionList->sqlJoins = "LEFT JOIN wcf".WCF_N."_package package ON (package.packageID = acl_option.packageID)";
 		}
 		$optionList->getConditionBuilder()->add("acl_option.objectTypeID = ?", array($objectTypeID));
 		$optionList->readObjects();
