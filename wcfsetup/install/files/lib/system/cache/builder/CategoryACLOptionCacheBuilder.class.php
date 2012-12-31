@@ -38,7 +38,7 @@ class CategoryACLOptionCacheBuilder implements ICacheBuilder {
 							'user' => array()
 						);
 					}
-
+					
 					foreach ($optionData as $typeID => $optionValues) {
 						$data[$categoryID][$type][$typeID] = array();
 						

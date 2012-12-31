@@ -54,7 +54,7 @@ class ACLHandler extends SingletonFactory {
 		if (!$this->assignVariablesDisabled && isset($_POST['aclValues'])) {
 			$values = $_POST['aclValues'];
 			
-			$data = $this->getPermissions($objectTypeID, array(), null, true, true);
+			$data = $this->getPermissions($objectTypeID, array(), null, true);
 			
 			foreach ($values as $type => $optionData) {
 				if ($type === 'user') {
@@ -224,12 +224,11 @@ class ACLHandler extends SingletonFactory {
 	 * @param	integer						$objectTypeID
 	 * @param	array						$objectIDs
 	 * @param	wcf\data\acl\option\category\ACLOptionCategory	$category
-	 * @param	boolean						$usePackageDependencies
 	 * @param	boolean						$settingsView
 	 * @return	array
 	 */
-	public function getPermissions($objectTypeID, array $objectIDs, ACLOptionCategory $category = null, $usePackageDependencies = true, $settingsView = false) {
-		$optionList = $this->getOptions($objectTypeID, $category, $usePackageDependencies, $settingsView);
+	public function getPermissions($objectTypeID, array $objectIDs, ACLOptionCategory $category = null, $settingsView = false) {
+		$optionList = $this->getOptions($objectTypeID, $category, $settingsView);
 		
 		$data = array(
 			'options' => $optionList,
@@ -364,12 +363,11 @@ class ACLHandler extends SingletonFactory {
 	 * 
 	 * @param	integer						$objectTypeID
 	 * @param	wcf\data\acl\option\category\ACLOptionCategory	$category
-	 * @param	boolean						$usePackageDependencies
 	 * @param	boolean						$settingsView
 	 * @param	boolean						$settingsView
 	 * @return	wcf\data\acl\option\ACLOptionList
 	 */
-	public function getOptions($objectTypeID, ACLOptionCategory $category = null, $usePackageDependencies = true, $settingsView = false) {
+	public function getOptions($objectTypeID, ACLOptionCategory $category = null, $settingsView = false) {
 		$optionList = new ACLOptionList();
 		$optionList->sqlLimit = 0;
 		if ($category !== null) {
@@ -387,10 +385,9 @@ class ACLHandler extends SingletonFactory {
 	 * @param	integer						$objectTypeID
 	 * @param	array<integer>					$objectIDs
 	 * @param	wcf\data\acl\option\category\ACLOptionCategory	$category
-	 * @param	boolean						$usePackageDependencies
 	 */
-	public function removeValues($objectTypeID, array $objectIDs, ACLOptionCategory $category = null, $usePackageDependencies = true) {
-		$optionList = $this->getOptions($objectTypeID, $category, $usePackageDependencies);
+	public function removeValues($objectTypeID, array $objectIDs, ACLOptionCategory $category = null) {
+		$optionList = $this->getOptions($objectTypeID, $category);
 		$options = $optionList->getObjects();
 		
 		$conditions = new PreparedStatementConditionBuilder();

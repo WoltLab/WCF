@@ -36,7 +36,7 @@ class ACLOptionAction extends AbstractDatabaseObjectAction {
 	 */
 	public function loadAll() {
 		$objectIDs = (isset($this->parameters['data']['objectID'])) ? array($this->parameters['data']['objectID']) : array();
-		$permissions = ACLHandler::getInstance()->getPermissions($this->parameters['data']['objectTypeID'], $objectIDs, null, true, true);
+		$permissions = ACLHandler::getInstance()->getPermissions($this->parameters['data']['objectTypeID'], $objectIDs, null, true);
 		
 		return $permissions;
 	}
