@@ -48,7 +48,7 @@ class Package extends DatabaseObject {
 	protected static $databaseTableIndexName = 'packageID';
 	
 	/**
-	 * list of ids of packages which a required by another package
+	 * list of ids of packages which are required by another package
 	 * @var	array<integer>
 	 */
 	protected static $requiredPackageIDs = null;
