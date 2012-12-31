@@ -287,6 +287,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 		
 		// reload cache
 		CategoryHandler::getInstance()->reloadCache();
+		$this->readCategories();
 		
 		// reset values
 		$this->parentCategoryID = 0;
@@ -338,7 +339,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 						if ($this->categoryNodeList->getDepth() > $this->objectType->getProcessor()->getMaximumNestingLevel() - 1) {
 							throw new UserInputException('parentCategoryID', 'invalid');
 						}
-
+						
 						break;
 					}
 				}
