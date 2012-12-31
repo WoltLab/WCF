@@ -11,9 +11,4 @@ namespace wcf\data\category;
  * @subpackage	data.category
  * @category	Community Framework
  */
-class ViewableCategoryNodeList extends CategoryNodeList {
-	/**
-	 * @see	wcf\data\category\CategoryNodeList::$nodeClassName
-	 */
-	protected $nodeClassName = 'wcf\data\category\ViewableCategoryNode';
-}
+class ViewableCategoryNodeList extends CategoryNodeList { }

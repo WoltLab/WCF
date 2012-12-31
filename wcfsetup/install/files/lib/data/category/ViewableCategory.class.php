@@ -16,6 +16,18 @@ use wcf\system\exception\PermissionDeniedException;
  */
 class ViewableCategory extends DatabaseObjectDecorator {
 	/**
+	 * list of all parent category generations of this category
+	 * @var	array<wcf\data\category\ViewableCategory>
+	 */
+	protected $parentCategories = null;
+	
+	/**
+	 * parent category of this category
+	 * @var	wcf\data\category\ViewableCategory
+	 */
+	protected $parentCategory = null;
+	
+	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\category\Category';
@@ -38,6 +50,35 @@ class ViewableCategory extends DatabaseObjectDecorator {
 				throw new PermissionDeniedException();
 			}
 		}
+	}
+	
+	/**
+	 * @see	wcf\data\category\Category::getParentCategories()
+	 */
+	public function getParentCategories() {
+		if ($this->parentCategories === null) {
+			$this->parentCategories = array();
+			$className = get_class($this);
+			
+			foreach ($this->getDecoratedObject()->getParentCategories() as $category) {
+				$this->parentCategories[$category->categoryID] = new $className($category);
+			}
+		}
+		
+		return $this->parentCategories;
+	}
+	
+	/**
+	 * @see	wcf\data\category\Category::getParentCategory()
+	 */
+	public function getParentCategory() {
+		if ($this->parentCategoryID && $this->parentCategory === null) {
+			$className = get_class($this);
+			
+			$this->parentCategory = new $className($this->getDecoratedObject()->getParentCategory());
+		}
+		
+		return $this->parentCategory;
 	}
 	
 	/**
