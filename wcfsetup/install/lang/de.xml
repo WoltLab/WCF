@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de" languagename="Deutsch" countrycode="de">
+	<category name="wcf.acl">
+		<item name="wcf.acl.option.deny"><![CDATA[Verweigern]]></item>
+		<item name="wcf.acl.option.fullAccess"><![CDATA[Vollzugriff]]></item>
+		<item name="wcf.acl.option.grant"><![CDATA[Erlauben]]></item>
+		<item name="wcf.acl.permissions"><![CDATA[Benutzer-/Benutzergruppenrechte]]></item>
+	</category>
+	
 	<category name="wcf.acp">
 		<item name="wcf.acp"><![CDATA[Administrationsoberfläche]]></item>
 	</category>
