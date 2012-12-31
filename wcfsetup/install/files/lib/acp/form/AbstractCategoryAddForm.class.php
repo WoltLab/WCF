@@ -151,6 +151,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 			'aclObjectTypeID' => $this->aclObjectTypeID,
 			'action' => 'add',
 			'addController' => $this->addController,
+			'additionalData' => $this->additionalData,
 			'categoryNodeList' => $this->categoryNodeList,
 			'description' => $this->description,
 			'editController' => $this->editController,
