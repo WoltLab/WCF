@@ -1,8 +1,6 @@
 <?php
 namespace wcf\data\package;
 use wcf\data\DatabaseObject;
-use wcf\system\database\statement\PreparedStatement;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\package\PackageInstallationDispatcher;
@@ -50,8 +48,14 @@ class Package extends DatabaseObject {
 	protected static $databaseTableIndexName = 'packageID';
 	
 	/**
-	 * package requirements
+	 * list of ids of packages which a required by another package
 	 * @var	array<integer>
+	 */
+	protected static $requiredPackageIDs = null;
+	
+	/**
+	 * package requirements
+	 * @var	array
 	 */
 	protected static $requirements = null;
 	
@@ -63,7 +67,7 @@ class Package extends DatabaseObject {
 	public function isRequired() {
 		self::loadRequirements();
 		
-		return isset(self::$requirements[$this->packageID]);
+		return in_array($this->packageID, self::$requiredPackageIDs);
 	}
 	
 	/**
@@ -122,7 +126,7 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * Returns a list of the requirements of this package.
-	 * Contains the content of the <requiredPackages> tag in the package.xml of this package.
+	 * Contains the content of the <requiredpackages> tag in the package.xml of this package.
 	 * 
 	 * @return	array<wcf\data\package\Package>
 	 */
@@ -196,6 +200,7 @@ class Package extends DatabaseObject {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute();
 			
+			self::$requiredPackageIDs = array();
 			self::$requirements = array();
 			while ($row = $statement->fetchArray()) {
 				if (!isset(self::$requirements[$row['packageID']])) {
@@ -203,6 +208,10 @@ class Package extends DatabaseObject {
 				}
 				
 				self::$requirements[$row['packageID']][] = $row['requirement'];
+				
+				if (!in_array($row['requirement'], self::$requiredPackageIDs)) {
+					self::$requiredPackageIDs[] = $row['requirement'];
+				}
 			}
 		}
 	}
