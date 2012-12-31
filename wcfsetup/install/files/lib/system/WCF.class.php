@@ -676,9 +676,14 @@ class WCF {
 		if (!StringUtil::isASCII($path) && !StringUtil::isUTF8($path)) {
 			$path = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $path);
 		}
+		$path = FileUtil::removeLeadingSlash($path);
 		$baseHref = self::getTPL()->get('baseHref');
 		
-		return $baseHref . FileUtil::removeLeadingSlash($path) . '#' . $fragment;
+		if (!empty($path) && StringUtil::indexOf($path, '?') !== 0) {
+			$baseHref .= 'index.php/';
+		}
+		
+		return $baseHref . $path . '#' . $fragment;
 	}
 	
 	/**
