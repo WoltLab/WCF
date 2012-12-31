@@ -141,7 +141,7 @@ class LoginForm extends AbstractForm {
 		}
 		else {
 			$application = ApplicationHandler::getInstance()->getActiveApplication();
-			$path = $application->getPageURL() . 'acp/index.php' . SID_ARG_1ST;
+			$path = $application->getPageURL() . 'acp/' . SID_ARG_1ST;
 			HeaderUtil::redirect($path);
 		}
 		exit;
