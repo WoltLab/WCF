@@ -45,31 +45,31 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 		
 		$menuItem = parent::create();
 		
-		if ($menuItem->isLandingPage) {
-			$menuItemEditor = new PageMenuItemEditor($menuItem);
-			$menuItemEditor->setAsLandingPage();
+		if ($menuItem->menuPosition == 'header') {
+			PageMenuItemEditor::updateLandingPage();
 		}
 		
 		return $menuItem;
 	}
 	
 	/**
-	 * Validates parameters to set a menu item as landing page.
+	 * @see	wcf\data\AbstractDatabaseObjectAction::delete()
 	 */
-	public function validateSetAsLandingPage() {
-		WCF::getSession()->checkPermissions(array('admin.display.canManagePageMenu'));
+	public function delete() {
+		$returnValues = parent::delete();
 		
-		$this->menuItemEditor = $this->getSingleObject();
-		if (!$this->menuItemEditor->isValidLandingPage()) {
-			throw new PermissionDeniedException();
-		}
+		PageMenuItemEditor::updateLandingPage();
+		
+		return $returnValues;
 	}
 	
 	/**
-	 * Sets a menu item as landing page.
+	 * @see	wcf\data\AbstractDatabaseObjectAction::update()
 	 */
-	public function setAsLandingPage() {
-		$this->menuItemEditor->setAsLandingPage();
+	public function update() {
+		parent::update();
+		
+		PageMenuItemEditor::updateLandingPage();
 	}
 	
 	/**
@@ -136,5 +136,10 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 			}
 		}
 		WCF::getDB()->commitTransaction();
+		
+		// update landing page
+		if ($this->parameters['menuPosition'] == 'header') {
+			PageMenuItemEditor::updateLandingPage();
+		}
 	}
 }

@@ -432,8 +432,6 @@
 		<item name="wcf.acp.pageMenu.footer"><![CDATA[Fußzeile]]></item>
 		<item name="wcf.acp.pageMenu.header"><![CDATA[Hauptmenü]]></item>
 		<item name="wcf.acp.pageMenu.isDisabled"><![CDATA[Menüpunkt deaktivieren]]></item>
-		<item name="wcf.acp.pageMenu.isLandingPage.confirmMessage"><![CDATA[Möchten Sie den Menüpunkt „{$menuItem}“ als Startseite Ihrer Website festlegen?]]></item>
-		<item name="wcf.acp.pageMenu.isLandingPage.success"><![CDATA[„{$menuItem}“ ist nun als Startseite festgelegt]]></item>
 		<item name="wcf.acp.pageMenu.link"><![CDATA[Link]]></item>
 		<item name="wcf.acp.pageMenu.link.external"><![CDATA[Externer Link]]></item>
 		<item name="wcf.acp.pageMenu.link.internal"><![CDATA[Interner Link]]></item>

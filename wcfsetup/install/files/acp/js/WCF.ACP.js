@@ -709,67 +709,6 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 });
 
 /**
- * Namespace for page menu.
- */
-WCF.ACP.PageMenu = { };
-
-/**
- * Allows menu items to be set as landing page.
- * 
- * @param	integer		menuItemID
- */
-WCF.ACP.PageMenu.SetAsLandingPage = Class.extend({
-	/**
-	 * menu item id
-	 * @var	integer
-	 */
-	_menuItemID: 0,
-	
-	/**
-	 * Initializes the WCF.ACP.PageMenu.SetAsLandingPage class.
-	 * 
-	 * @param	integer		menuItemID
-	 */
-	init: function(menuItemID) {
-		this._menuItemID = menuItemID;
-		
-		$('#setAsLandingPage').click($.proxy(this._click, this));
-	},
-	
-	/**
-	 * Handles button clicks.
-	 */
-	_click: function() {
-		var self = this;
-		WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.pageMenu.isLandingPage.confirmMessage'), function(action) {
-			if (action === 'confirm') {
-				new WCF.Action.Proxy({
-					autoSend: true,
-					data: {
-						actionName: 'setAsLandingPage',
-						className: 'wcf\\data\\page\\menu\\item\\PageMenuItemAction',
-						objectIDs: [ self._menuItemID ]
-					},
-					success: $.proxy(self._success, self)
-				});
-			}
-		});
-	},
-	
-	/**
-	 * Handles successful AJAX requests.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		var $notification = new WCF.System.Notification(WCF.Language.get('wcf.acp.pageMenu.isLandingPage.success'));
-		$notification.show(function() { window.location.reload(); });
-	}
-});
-
-/**
  * Handles option selection.
  */
 WCF.ACP.Options = Class.extend({

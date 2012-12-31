@@ -65,15 +65,27 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	}
 	
 	/**
-	 * Sets current page menu item as landing page.
+	 * Sets first top header menu item as landing page.
 	 */
-	public function setAsLandingPage() {
+	public static function updateLandingPage() {
 		$sql = "UPDATE	wcf".WCF_N."_page_menu_item
 			SET	isLandingPage = 0";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		
-		$this->update(array('isLandingPage' => 1));
+		$sql = "UPDATE		wcf".WCF_N."_page_menu_item
+			SET		isLandingPage = ?
+			WHERE		menuPosition = ?
+					AND parentMenuItem = ?
+					AND menuItemController <> ?
+			ORDER BY	showOrder ASC";
+		$statement = WCF::getDB()->prepareStatement($sql, 1);
+		$statement->execute(array(
+			1,
+			'header',
+			'',
+			''
+		));
 		
 		self::resetCache();
 	}
