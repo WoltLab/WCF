@@ -107,12 +107,9 @@ class UserGroupOptionForm extends AbstractForm {
 		}
 		
 		// verify options and permissions for current option
-		throw new SystemException("UserGroupOptionForm::readParameters()");
-		$dependencies = PackageDependencyHandler::getInstance()->getDependencies();
-		if ($this->verifyPermissions($this->userGroupOption) && in_array($this->userGroupOption->packageID, $dependencies)) {
+		if ($this->verifyPermissions($this->userGroupOption)) {
 			// read all categories
 			$categoryList = new UserGroupOptionCategoryList();
-			$categoryList->getConditionBuilder()->add("packageID IN (?)", array($dependencies));
 			$categoryList->sqlLimit = 0;
 			$categoryList->readObjects();
 			
@@ -299,13 +296,13 @@ class UserGroupOptionForm extends AbstractForm {
 		foreach ($this->groups as $groupID => $group) {
 			if ($group->groupType == UserGroup::EVERYONE) {
 				$this->canEditEveryone = true;
-					
+				
 				// remove 'Everyone' from groups
 				$this->groupEveryone = $group;
 				unset($this->groups[$groupID]);
 			}
 		}
-			
+		
 		// add 'Everyone' group
 		if (!$this->canEditEveryone) {
 			$this->groupEveryone = UserGroup::getGroupByType(UserGroup::EVERYONE);
