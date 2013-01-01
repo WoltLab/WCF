@@ -1,12 +1,13 @@
 <?php
 namespace wcf\data\category;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\data\IPermissionObject;
 use wcf\system\category\CategoryPermissionHandler;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Represents a viewable category.
- *
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -14,7 +15,7 @@ use wcf\system\exception\PermissionDeniedException;
  * @subpackage	data.category
  * @category	Community Framework
  */
-class ViewableCategory extends DatabaseObjectDecorator {
+class ViewableCategory extends DatabaseObjectDecorator implements IPermissionObject {
 	/**
 	 * list of all parent category generations of this category
 	 * @var	array<wcf\data\category\ViewableCategory>
@@ -39,10 +40,7 @@ class ViewableCategory extends DatabaseObjectDecorator {
 	protected $permissions = null;
 	
 	/**
-	 * Checks if the active user has all given permissions and throws a 
-	 * PermissionDeniedException if that isn't the case.
-	 * 
-	 * @param	array<string>		$permissions
+	 * @see	wcf\data\IPermissionObject::checkPermissions()
 	 */
 	public function checkPermissions(array $permissions) {
 		foreach ($permissions as $permission) {
@@ -82,11 +80,7 @@ class ViewableCategory extends DatabaseObjectDecorator {
 	}
 	
 	/**
-	 * Returns the acl permission value of the given permission for the active
-	 * user and of this category.
-	 * 
-	 * @param	string		$permission
-	 * @return	boolean
+	 * @see	wcf\data\IPermissionObject::getPermission()
 	 */
 	public function getPermission($permission) {
 		if ($this->permissions === null) {
