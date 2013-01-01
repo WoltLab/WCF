@@ -6,13 +6,13 @@ use wcf\page\SortablePage;
  * Shows a list of all installed packages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
  */
-class PackageListDetailedPage extends SortablePage {
+class PackageListPage extends SortablePage {
 	/**
 	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */

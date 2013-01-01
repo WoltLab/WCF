@@ -17,7 +17,7 @@
 </header>
 
 <div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller='PackageListDetailed' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+	{pages print=true assign=pagesLinks controller='PackageList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	
 	{hascontent}
 		<nav>
@@ -43,11 +43,11 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th colspan="2" class="columnID{if $sortField == 'packageID'} active{/if}"><a href="{link controller='PackageListDetailed'}pageNo={@$pageNo}&sortField=packageID&sortOrder={if $sortField == 'packageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'packageID'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th colspan="2" class="columnTitle{if $sortField == 'packageName'} active{/if}"><a href="{link controller='PackageListDetailed'}pageNo={@$pageNo}&sortField=packageName&sortOrder={if $sortField == 'packageName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.package.name{/lang}{if $sortField == 'packageName'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnText{if $sortField == 'author'} active{/if}"><a href="{link controller='PackageListDetailed'}pageNo={@$pageNo}&sortField=author&sortOrder={if $sortField == 'author' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.package.author{/lang}{if $sortField == 'author'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th colspan="2" class="columnID{if $sortField == 'packageID'} active{/if}"><a href="{link controller='PackageList'}pageNo={@$pageNo}&sortField=packageID&sortOrder={if $sortField == 'packageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'packageID'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th colspan="2" class="columnTitle{if $sortField == 'packageName'} active{/if}"><a href="{link controller='PackageList'}pageNo={@$pageNo}&sortField=packageName&sortOrder={if $sortField == 'packageName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.package.name{/lang}{if $sortField == 'packageName'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnText{if $sortField == 'author'} active{/if}"><a href="{link controller='PackageList'}pageNo={@$pageNo}&sortField=author&sortOrder={if $sortField == 'author' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.package.author{/lang}{if $sortField == 'author'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnText">{lang}wcf.acp.package.version{/lang}</th>
-					<th class="columnDate{if $sortField == 'updateDate'} active{/if}"><a href="{link controller='PackageListDetailed'}pageNo={@$pageNo}&sortField=updateDate&sortOrder={if $sortField == 'updateDate' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.package.updateDate{/lang}{if $sortField == 'updateDate'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnDate{if $sortField == 'updateDate'} active{/if}"><a href="{link controller='PackageList'}pageNo={@$pageNo}&sortField=updateDate&sortOrder={if $sortField == 'updateDate' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.package.updateDate{/lang}{if $sortField == 'updateDate'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					
 					{event name='headColumns'}
 				</tr>
