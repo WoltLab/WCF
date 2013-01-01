@@ -171,9 +171,7 @@ WCF.ACL.List = Class.extend({
 	 * @param	object		data
 	 */
 	addObject: function(data) {
-		var $listItem = $('<li><img src="' + WCF.Icon.get('wcf.icon.user' + ((data.type == 'group') ? 's' : '')) + '" alt="" class="icon16" /> <span>' + data.label + '</span></li>').appendTo(this._containerElements.aclList);
-		$listItem.data('objectID', data.objectID).data('type', data.type).click($.proxy(this._click, this));
-		$('<img src="' + WCF.Icon.get('wcf.icon.delete') + '" alt="" title="' + WCF.Language.get('wcf.global.button.delete') + '" class="icon16 jsTooltip" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
+		var $listItem = this._createListItem(data.objectID, data.label, data.type);
 		
 		// toggle element
 		this._savePermissions();
@@ -190,6 +188,22 @@ WCF.ACL.List = Class.extend({
 		
 		// show permissions
 		this._containerElements.permissionList.show();
+	},
+	
+	/**
+	 * Creates a list item with the given data and returns it.
+	 * 
+	 * @param	integer		objectID
+	 * @param	string		label
+	 * @param	string		type
+	 * @return	jQuery
+	 */
+	_createListItem: function(objectID, label, type) {
+		var $listItem = $('<li><img src="' + WCF.Icon.get('wcf.icon.user' + ((type == 'group') ? 's' : '')) + '" alt="" class="icon16" /> <span>' + label + '</span></li>').appendTo(this._containerElements.aclList);
+		$listItem.data('objectID', objectID).data('type', type).click($.proxy(this._click, this));
+		$('<img src="' + WCF.Icon.get('wcf.icon.delete') + '" alt="" title="' + WCF.Language.get('wcf.global.button.delete') + '" class="icon16 jsTooltip" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
+		
+		return $listItem;
 	},
 	
 	/**
@@ -315,9 +329,7 @@ WCF.ACL.List = Class.extend({
 		
 		// add list items
 		for (var $typeID in data.returnValues[type].label) {
-			var $listItem = $('<li><img src="' + WCF.Icon.get('wcf.icon.user' + ((data.type == 'group') ? 's' : '')) + '" alt="" class="icon16" /> <span>' + data.returnValues[type].label[$typeID] + '</span></li>').appendTo(this._containerElements.aclList);
-			$listItem.data('objectID', $typeID).data('type', type).click($.proxy(this._click, this));
-			$('<img src="' + WCF.Icon.get('wcf.icon.delete') + '" alt="" title="' + WCF.Language.get('wcf.global.button.delete') + '" class="icon16 jsTooltip" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
+			this._createListItem($typeID, data.returnValues[type].label[$typeID], type);
 			
 			this._search.addExcludedSearchValue(data.returnValues[type].label[$typeID]);
 		}
