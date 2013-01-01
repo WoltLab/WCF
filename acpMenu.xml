@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/acpMenu.xsd">
+	<import>
+		<!-- style -->
+		<acpmenuitem name="wcf.acp.menu.link.style">
+			<parent>wcf.acp.menu.link.display</parent>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.style.list">
+			<controller><![CDATA[wcf\acp\page\StyleListPage]]></controller>
+			<parent>wcf.acp.menu.link.style</parent>
+			<permissions>admin.style.canEditStyle,admin.style.canDeleteStyle</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.style.add">
+			<controller><![CDATA[wcf\acp\form\StyleAddForm]]></controller>
+			<parent>wcf.acp.menu.link.style</parent>
+			<permissions>admin.style.canAddStyle</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.style.import">
+			<controller><![CDATA[wcf\acp\form\StyleImportForm]]></controller>
+			<parent>wcf.acp.menu.link.style</parent>
+			<permissions>admin.style.canAddStyle</permissions>
+			<showorder>3</showorder>
+		</acpmenuitem>
+		<!-- /style -->
+	</import>
+</data>
