@@ -5,7 +5,6 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\TreeMenu;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -50,14 +49,6 @@ class PageMenu extends TreeMenu {
 					break 2;
 				}
 			}
-		}
-		
-		// set default menu item
-		if ($this->landingPage !== null) {
-			$this->setActiveMenuItem($this->landingPage->menuItem);
-			
-			// add main breadcrumbs entry
-			WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get(PAGE_TITLE), LinkHandler::getInstance()->getLink()));
 		}
 	}
 	

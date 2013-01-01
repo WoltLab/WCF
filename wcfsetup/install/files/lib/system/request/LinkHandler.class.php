@@ -1,22 +1,36 @@
 <?php
 namespace wcf\system\request;
-use wcf\system\menu\page\PageMenu;
-
+use wcf\data\DatabaseObjectDecorator;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\menu\page\PageMenu;
 use wcf\system\request\RouteHandler;
+use wcf\system\Regex;
 use wcf\system\SingletonFactory;
 
 /**
  * Handles relative links within the wcf.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
  * @category	Community Framework
  */
 class LinkHandler extends SingletonFactory {
+	/**
+	 * regex object to filter title
+	 * @var	wcf\system\RegEx
+	 */
+	protected $titleRegex = null;
+	
+	/**
+	 * @see	wcf\system\SingletonFactory::init()
+	 */
+	protected function init() {
+		$this->titleRegex = new Regex('[\x0-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+');
+	}
+	
 	/**
 	 * Returns a relative link.
 	 * 
@@ -70,11 +84,11 @@ class LinkHandler extends SingletonFactory {
 		
 		// handle object
 		if (isset($parameters['object'])) {
-			if (!($parameters['object'] instanceof \wcf\system\request\IRouteController) && $parameters['object'] instanceof \wcf\data\DatabaseObjectDecorator && $parameters['object']->getDecoratedObject() instanceof \wcf\system\request\IRouteController) {
+			if (!($parameters['object'] instanceof IRouteController) && $parameters['object'] instanceof DatabaseObjectDecorator && $parameters['object']->getDecoratedObject() instanceof IRouteController) {
 				$parameters['object'] = $parameters['object']->getDecoratedObject();
 			}
 			
-			if ($parameters['object'] instanceof \wcf\system\request\IRouteController) {
+			if ($parameters['object'] instanceof IRouteController) {
 				$parameters['id'] = $parameters['object']->getID();
 				$parameters['title'] = $parameters['object']->getTitle();
 			}
@@ -84,7 +98,7 @@ class LinkHandler extends SingletonFactory {
 		
 		if (isset($parameters['title'])) {
 			// remove illegal characters
-			$parameters['title'] = trim(preg_replace('/[\x0-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+/', '-', $parameters['title']), '-');
+			$parameters['title'] = trim($this->titleRegex->replace($parameters['title'], '-'), '-');
 		}
 		
 		$parameters['controller'] = $controller;

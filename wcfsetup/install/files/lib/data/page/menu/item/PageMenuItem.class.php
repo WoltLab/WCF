@@ -117,6 +117,17 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	}
 	
 	/**
+	 * Returns application abbreviation.
+	 * 
+	 * @return	string
+	 */
+	public function getApplication() {
+		$this->parseController();
+		
+		return $this->application;
+	}
+	
+	/**
 	 * Returns controller name.
 	 * 
 	 * @return	string
