@@ -254,6 +254,46 @@
 			<showorder>3</showorder>
 		</acpmenuitem>
 		
+		<!-- language management -->
+		<acpmenuitem name="wcf.acp.menu.link.language">
+			<parent>wcf.acp.menu.link.display</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.language.list">
+			<parent>wcf.acp.menu.link.language</parent>
+			<controller><![CDATA[wcf\acp\page\LanguageListPage]]></controller>
+			<permissions>admin.language.canEditLanguage,admin.language.canDeleteLanguage</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.language.add">
+			<parent>wcf.acp.menu.link.language</parent>
+			<controller><![CDATA[wcf\acp\form\LanguageAddForm]]></controller>
+			<permissions>admin.language.canAddLanguage</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.language.multilingualism">
+			<parent>wcf.acp.menu.link.language</parent>
+			<controller><![CDATA[wcf\acp\form\LanguageMultilingualismForm]]></controller>
+			<permissions>admin.language.canEditLanguage</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.language.server">
+			<parent>wcf.acp.menu.link.language</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.language.server.list">
+			<controller><![CDATA[wcf\acp\page\LanguageServerListPage]]></controller>
+			<parent>wcf.acp.menu.link.language.server</parent>
+			<permissions>admin.language.canEditServer,admin.language.canDeleteServer</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.language.server.add">
+			<controller><![CDATA[wcf\acp\form\LanguageServerAddForm]]></controller>
+			<parent>wcf.acp.menu.link.language.server</parent>
+			<permissions>admin.language.canAddServer</permissions>
+		</acpmenuitem>
+		<!-- /language management -->
+		
 		<!-- page menu -->
 		<acpmenuitem name="wcf.acp.menu.link.pageMenu">
 			<parent>wcf.acp.menu.link.display</parent>
