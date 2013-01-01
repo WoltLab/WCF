@@ -315,11 +315,9 @@ WCF.ACL.List = Class.extend({
 		
 		// add list items
 		for (var $typeID in data.returnValues[type].label) {
-			this.addObject({
-				label: data.returnValues[type].label[$typeID],
-				objectID: $typeID,
-				type: type
-			});
+			var $listItem = $('<li><img src="' + WCF.Icon.get('wcf.icon.user' + ((data.type == 'group') ? 's' : '')) + '" alt="" class="icon16" /> <span>' + data.returnValues[type].label[$typeID] + '</span></li>').appendTo(this._containerElements.aclList);
+			$listItem.data('objectID', $typeID).data('type', type).click($.proxy(this._click, this));
+			$('<img src="' + WCF.Icon.get('wcf.icon.delete') + '" alt="" title="' + WCF.Language.get('wcf.global.button.delete') + '" class="icon16 jsTooltip" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
 			
 			this._search.addExcludedSearchValue(data.returnValues[type].label[$typeID]);
 		}
@@ -522,15 +520,15 @@ WCF.ACL.List = Class.extend({
 			if ($checkbox.attr('id') != 'grantAll' && $checkbox.attr('id') != 'denyAll') {
 				var $optionValue = ($checkbox.data('type') === 'deny') ? 0 : 1;
 				var $optionID = $checkbox.data('optionID');
-
+				
 				if ($checkbox.is(':checked')) {
 					if (!self._values[$type][$objectID]) {
 						self._values[$type][$objectID] = { };
 					}
-
+					
 					// store value
 					self._values[$type][$objectID][$optionID] = $optionValue;
-
+					
 					// reset value afterwards
 					$checkbox.removeAttr('checked');
 				}
@@ -564,7 +562,7 @@ WCF.ACL.List = Class.extend({
 			
 			for (var $objectID in this._values[$type]) {
 				var $object = this._values[$type][$objectID];
-
+				
 				for (var $optionID in $object) {
 					$('<input type="hidden" name="aclValues[' + $type + '][' + $objectID + '][' + $optionID + ']" value="' + $object[$optionID] + '" />').appendTo($form);
 				}
