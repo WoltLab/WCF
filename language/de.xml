@@ -5,6 +5,12 @@
 		<item name="wcf.acp.menu.link.style.add"><![CDATA[Stil hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.style.import"><![CDATA[Stil importieren]]></item>
 		<item name="wcf.acp.menu.link.style.list"><![CDATA[Stile auflisten]]></item>
+		<item name="wcf.acp.menu.link.language"><![CDATA[Sprachen]]></item>
+		<item name="wcf.acp.menu.link.language.add"><![CDATA[Sprache hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.language.list"><![CDATA[Sprachen auflisten]]></item>
+		<item name="wcf.acp.menu.link.language.multilingualism"><![CDATA[Mehrsprachigkeit verwalten]]></item>
+		<item name="wcf.acp.menu.link.language.server.add"><![CDATA[Server hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.language.server.list"><![CDATA[Server auflisten]]></item>
 	</category>
 	
 	<category name="wcf.acp.style">
@@ -92,5 +98,41 @@
 		<item name="wcf.acp.style.styleVersion"><![CDATA[Version]]></item>
 		<item name="wcf.acp.style.templateGroupID"><![CDATA[Template-Gruppe]]></item>
 		<item name="wcf.acp.style.users"><![CDATA[Benutzer]]></item>
+	</category>
+	
+	<category name="wcf.acp.language">
+		<item name="wcf.acp.language.add"><![CDATA[Sprache hinzufügen]]></item>
+		<item name="wcf.acp.language.add.languageCode.error.notUnique"><![CDATA[Dieser Sprachcode wird bereits von einer anderen im System installierten Sprache verwendet.]]></item>
+		<item name="wcf.acp.language.add.mode"><![CDATA[Sprache erstellen durch]]></item>
+		<item name="wcf.acp.language.add.mode.copy"><![CDATA[Übersetzen einer vorhandenen Sprache]]></item>
+		<item name="wcf.acp.language.add.mode.import"><![CDATA[Importieren einer Sprachdatei]]></item>
+		<item name="wcf.acp.language.add.new"><![CDATA[Neue Sprache]]></item>
+		<item name="wcf.acp.language.add.source"><![CDATA[Zu übersetzende Sprache]]></item>
+		<item name="wcf.acp.language.code"><![CDATA[Sprachcode]]></item>
+		<item name="wcf.acp.language.code.description"><![CDATA[Geben Sie hier den passenden Sprachcode nach <strong>ISO 639-1</strong> an. Weitere Informationen zu Sprachcodes finden Sie unter <a href="http://de.wikipedia.org/wiki/ISO_639-1" class="wcf-externalURL">http://de.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
+		<item name="wcf.acp.language.customVariables"><![CDATA[Veränderte Variablen]]></item>
+		<item name="wcf.acp.language.delete.sure"><![CDATA[Wollen Sie die Sprache „{$language->languageName}“ wirklich löschen?]]></item>
+		<item name="wcf.acp.language.edit"><![CDATA[Sprache bearbeiten]]></item>
+		<item name="wcf.acp.language.export"><![CDATA[Sprache exportieren]]></item>
+		<item name="wcf.acp.language.export.allPackages"><![CDATA[Alle Pakete]]></item>
+		<item name="wcf.acp.language.export.customValues"><![CDATA[Veränderte Variablen exportieren]]></item>
+		<item name="wcf.acp.language.export.selectPackages"><![CDATA[Pakete auswählen]]></item>
+		<item name="wcf.acp.language.import.error"><![CDATA[Beim Importieren der Sprachdatei ist folgender Fehler aufgetreten:]]></item>
+		<item name="wcf.acp.language.import.source"><![CDATA[Quelle]]></item>
+		<item name="wcf.acp.language.import.source.file"><![CDATA[Pfad zur Sprachdatei]]></item>
+		<item name="wcf.acp.language.import.source.file.description"><![CDATA[Geben Sie hier den relativen Pfad zu einer gültigen XML-Sprachdatei an.]]></item>
+		<item name="wcf.acp.language.import.source.upload"><![CDATA[Sprachdatei vom lokalen Computer hochladen]]></item>
+		<item name="wcf.acp.language.list"><![CDATA[Sprachen]]></item>
+		<item name="wcf.acp.language.list.count"><![CDATA[{#$items} Sprache{if $items != 1}n{/if}]]></item>
+		<item name="wcf.acp.language.multilingualism"><![CDATA[Mehrsprachigkeit verwalten]]></item>
+		<item name="wcf.acp.language.multilingualism.enable"><![CDATA[Mehrsprachige Inhalte aktivieren]]></item>
+		<item name="wcf.acp.language.multilingualism.enable.description"><![CDATA[Haben Sie mehrere Sprachen installiert, können sich Ihre Mitglieder die Programmoberfläche in diesen Sprachen anzeigen lassen. Erstellte Inhalte werden durch die aktivierte Mehrsprachigkeit außerdem einer Sprache zugeordnet. Die Benutzer können in ihrem Profil auswählen, dass ausschließlich Inhalte von bestimmten Sprachen angezeigt werden. Bei der Erstellung von Inhalten ist standardmäßig die aktive Oberflächensprache vorausgewählt.]]></item>
+		<item name="wcf.acp.language.multilingualism.languages"><![CDATA[Inhalte in folgenden Sprachen zulassen]]></item>
+		<item name="wcf.acp.language.multilingualism.languages.error.empty"><![CDATA[Um die Mehrsprachigkeit zu nutzen, müssen Sie mindestens zwei Sprachen auswählen.]]></item>
+		<item name="wcf.acp.language.multilingualism.success"><![CDATA[Ihre Einstellungen wurden erfolgreich gespeichert.]]></item>
+		<item name="wcf.acp.language.name"><![CDATA[Name]]></item>
+		<item name="wcf.acp.language.setAsDefault"><![CDATA[Zur Standardsprache machen]]></item>
+		<item name="wcf.acp.language.variables"><![CDATA[Variablen]]></item>
+		<item name="wcf.acp.language.users"><![CDATA[Verwendet von]]></item>
 	</category>
 </language>

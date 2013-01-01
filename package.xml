@@ -5,6 +5,14 @@
 		<packagedescription>packageDecription cannot be NULL.</packagedescription>
 		<version>1.0.0 Alpha 1</version>
 		<date>2012-10-08</date>
+=======
+<package name="com.woltlab.wcf.acp.language" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/package.xsd">
+	<packageinformation>
+		<packagename>Language Administration</packagename>
+		<packagedescription>Comprehensive language manager</packagedescription>
+		<version>1.0.0 Alpha 1</version>
+		<date>2011-06-30</date>
+>>>>>>> acp.language/master
 	</packageinformation>
 	
 	<authorinformation>
@@ -20,7 +28,12 @@
 		<instruction type="acpTemplate">acptemplates.tar</instruction>
 		<instruction type="file">files.tar</instruction>
 		<instruction type="acpMenu">acpMenu.xml</instruction>
+<<<<<<< HEAD
 		<instruction type="language">language/*.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
+=======
+		<instruction type="userGroupOption">userGroupOption.xml</instruction>
+		<instruction type="language">language/*.xml</instruction>
+>>>>>>> acp.language/master
 	</instructions>
 </package>

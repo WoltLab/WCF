@@ -25,6 +25,27 @@
 				<showorder>3</showorder>
 			</option>
 			<!-- /admin.style -->
+			
+			<option name="admin.language.canAddLanguage">
+				<categoryname>admin.language</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			
+			<option name="admin.language.canEditLanguage">
+				<categoryname>admin.language</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			
+			<option name="admin.language.canDeleteLanguage">
+				<categoryname>admin.language</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
 		</options>
 	</import>
 </data>
