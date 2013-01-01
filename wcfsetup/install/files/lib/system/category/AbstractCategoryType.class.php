@@ -106,6 +106,13 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	}
 	
 	/**
+	 * @see	wcf\system\category\ICategoryType::getApplication()
+	 */
+	public function getApplication() {
+		return 'wcf';
+	}
+	
+	/**
 	 * @see	wcf\system\category\ICategoryType::getObjectTypeName()
 	 */
 	public function getObjectTypeName($definitionName) {

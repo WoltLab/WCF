@@ -171,9 +171,7 @@ WCF.ACL.List = Class.extend({
 	 * @param	object		data
 	 */
 	addObject: function(data) {
-		var $listItem = $('<li><img src="' + WCF.Icon.get('wcf.icon.user' + ((data.type == 'group') ? 's' : '')) + '" alt="" class="icon16" /> <span>' + data.label + '</span></li>').appendTo(this._containerElements.aclList);
-		$listItem.data('objectID', data.objectID).data('type', data.type).click($.proxy(this._click, this));
-		$('<img src="' + WCF.Icon.get('wcf.icon.delete') + '" alt="" title="' + WCF.Language.get('wcf.global.button.delete') + '" class="icon16 jsTooltip" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
+		var $listItem = this._createListItem(data.objectID, data.label, data.type);
 		
 		// toggle element
 		this._savePermissions();
@@ -190,6 +188,22 @@ WCF.ACL.List = Class.extend({
 		
 		// show permissions
 		this._containerElements.permissionList.show();
+	},
+	
+	/**
+	 * Creates a list item with the given data and returns it.
+	 * 
+	 * @param	integer		objectID
+	 * @param	string		label
+	 * @param	string		type
+	 * @return	jQuery
+	 */
+	_createListItem: function(objectID, label, type) {
+		var $listItem = $('<li><img src="' + WCF.Icon.get('wcf.icon.user' + ((type == 'group') ? 's' : '')) + '" alt="" class="icon16" /> <span>' + label + '</span></li>').appendTo(this._containerElements.aclList);
+		$listItem.data('objectID', objectID).data('type', type).click($.proxy(this._click, this));
+		$('<img src="' + WCF.Icon.get('wcf.icon.delete') + '" alt="" title="' + WCF.Language.get('wcf.global.button.delete') + '" class="icon16 jsTooltip" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
+		
+		return $listItem;
 	},
 	
 	/**
@@ -315,11 +329,7 @@ WCF.ACL.List = Class.extend({
 		
 		// add list items
 		for (var $typeID in data.returnValues[type].label) {
-			this.addObject({
-				label: data.returnValues[type].label[$typeID],
-				objectID: $typeID,
-				type: type
-			});
+			this._createListItem($typeID, data.returnValues[type].label[$typeID], type);
 			
 			this._search.addExcludedSearchValue(data.returnValues[type].label[$typeID]);
 		}
@@ -522,15 +532,15 @@ WCF.ACL.List = Class.extend({
 			if ($checkbox.attr('id') != 'grantAll' && $checkbox.attr('id') != 'denyAll') {
 				var $optionValue = ($checkbox.data('type') === 'deny') ? 0 : 1;
 				var $optionID = $checkbox.data('optionID');
-
+				
 				if ($checkbox.is(':checked')) {
 					if (!self._values[$type][$objectID]) {
 						self._values[$type][$objectID] = { };
 					}
-
+					
 					// store value
 					self._values[$type][$objectID][$optionID] = $optionValue;
-
+					
 					// reset value afterwards
 					$checkbox.removeAttr('checked');
 				}
@@ -564,7 +574,7 @@ WCF.ACL.List = Class.extend({
 			
 			for (var $objectID in this._values[$type]) {
 				var $object = this._values[$type][$objectID];
-
+				
 				for (var $optionID in $object) {
 					$('<input type="hidden" name="aclValues[' + $type + '][' + $objectID + '][' + $optionID + ']" value="' + $object[$optionID] + '" />').appendTo($form);
 				}
