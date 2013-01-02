@@ -11,7 +11,7 @@
 	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\cronjob\\CronjobAction', '.jsCronjobRow');
-		new WCF.Action.Toggle('wcf\\data\\cronjob\\CronjobAction', $('.jsCronjobRow'));
+		new WCF.Action.Toggle('wcf\\data\\cronjob\\CronjobAction', '.jsCronjobRow');
 		new WCF.Action.SimpleProxy({
 			action: 'execute',
 			className: 'wcf\\data\\cronjob\\CronjobAction',
