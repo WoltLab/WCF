@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\package\Package;
 use wcf\data\style\StyleAction;
 use wcf\data\template\group\TemplateGroupList;
+use wcf\form\AbstractForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
@@ -22,9 +23,9 @@ use wcf\util\StringUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class StyleAddForm extends ACPForm {
+class StyleAddForm extends AbstractForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.style.add';
 	

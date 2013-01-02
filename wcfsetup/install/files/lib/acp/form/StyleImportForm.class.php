@@ -18,7 +18,7 @@ use wcf\util\FileUtil;
  */
 class StyleImportForm extends AbstractForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.style.import';
 	
