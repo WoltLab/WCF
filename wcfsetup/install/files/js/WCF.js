@@ -1895,11 +1895,36 @@ WCF.Action.Toggle = Class.extend({
 	 * @param	object		event
 	 */
 	_click: function(event) {
+		var $target = $(event.currentTarget);
+		
+		if ($target.data('confirmMessage')) {
+			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
+		}
+		else {
+			this._sendRequest($target);
+		}
+	},
+	
+	/**
+	 * Executes toggeling.
+	 * 
+	 * @param	string		action
+	 * @param	object		parameters
+	 */
+	_execute: function(action, parameters) {
+		if (action === 'cancel') {
+			return;
+		}
+		
+		this._sendRequest(parameters.target);
+	},
+	
+	_sendRequest: function(object) {
 		this.proxy.setOption('data', {
 			actionName: 'toggle',
 			className: this._className,
 			interfaceName: 'wcf\\data\\IToggleAction',
-			objectIDs: [ $(event.target).data('objectID') ]
+			objectIDs: [ $(object).data('objectID') ]
 		});
 		
 		this.proxy.sendRequest();
