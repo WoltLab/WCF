@@ -159,8 +159,8 @@ class Package extends DatabaseObject {
 			return false;
 		}
 		
-		// disallow uninstallation of current package or WCF
-		if ($this->package == 'com.woltlab.wcf' || $this->packageID == PACKAGE_ID) {
+		// disallow uninstallation of WCF and applications if not within WCF ACP
+		if ($this->package == 'com.woltlab.wcf' || ($this->isApplication && PACKAGE_ID != 1)) {
 			return false;
 		}
 		
@@ -347,17 +347,5 @@ class Package extends DatabaseObject {
 		
 		// write end
 		$file->close();
-	}
-	
-	/**
-	 * Returns a list of plugins for currently active application.
-	 * 
-	 * @return	wcf\data\package\PackageList
-	 */
-	public static function getPluginList() {
-		$pluginList = new PackageList();
-		$pluginList->getConditionBuilder()->add("package.isApplication = ?", array(0));
-		
-		return $pluginList;
 	}
 }
