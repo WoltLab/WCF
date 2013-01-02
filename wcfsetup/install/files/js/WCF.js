@@ -1860,7 +1860,7 @@ WCF.Action.Toggle = Class.extend({
 		this._containerSelector = containerSelector;
 		this._className = className;
 		if (toggleButtonSelector) {
-			this.toggleButtonSelector = toggleButtonSelector;
+			this._toggleButtonSelector = toggleButtonSelector;
 		}
 		
 		// initialize proxy
@@ -1870,7 +1870,8 @@ WCF.Action.Toggle = Class.extend({
 		this.proxy = new WCF.Action.Proxy(options);
 		
 		// bind event listener
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.Action.Delete' + this._className.hashCode(), $.proxy(this._initElements, this));
+		this._initElements();
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Action.Toggle' + this._className.hashCode(), $.proxy(this._initElements, this));	
 	},
 	
 	/**
@@ -1883,7 +1884,7 @@ WCF.Action.Toggle = Class.extend({
 			
 			if (!WCF.inArray($containerID, this._containers)) {
 				this._containers.push($containerID);
-				$container.find('.jsDeleteButton').click($.proxy(this._click, this));
+				$container.find(this._toggleButtonSelector).click($.proxy(this._click, this));
 			}
 		}, this));
 	},
@@ -1923,7 +1924,7 @@ WCF.Action.Toggle = Class.extend({
 	triggerEffect: function(objectIDs) {
 		for (var $index in this._containers) {
 			var $container = $('#' + this._containers[$index]);
-			var $toggleButton = $container.find(this.toggleButtonSelector);
+			var $toggleButton = $container.find(this. _toggleButtonSelector);
 			if (WCF.inArray($toggleButton.data('objectID'), objectIDs)) {
 				$container.wcfHighlight();
 				this._toggleButton($container, $toggleButton);

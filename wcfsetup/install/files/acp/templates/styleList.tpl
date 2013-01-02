@@ -4,7 +4,7 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		new WCF.Action.Toggle('wcf\\data\\style\\StyleAction', $('.buttonList'));
+		new WCF.Action.Toggle('wcf\\data\\style\\StyleAction', '.buttonList');
 		new WCF.ACP.Style.List();
 	});
 	//]]>
