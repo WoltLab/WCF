@@ -301,32 +301,28 @@
 						<span>{lang}wcf.acp.style.globals.useFluidLayout{/lang}</span>
 					</label></dd>
 				</dl>
-				<div id="fluidLayoutVariables">
-					<dl>
-						<dt><label for="wcfLayoutFluidGap">{lang}wcf.acp.style.globals.fluidLayoutGap{/lang}</label></dt>
-						<dd>
-							<input type="number" id="wcfLayoutFluidGap" name="wcfLayoutFluidGap" value="{@$variables[wcfLayoutFluidGap]}" class="tiny" />
-							<select name="wcfLayoutFluidGap_unit">
-								{foreach from=$availableUnits item=unit}
-									<option value="{@$unit}"{if $variables[wcfLayoutFluidGap_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
-								{/foreach}
-							</select>
-						</dd>
-					</dl>
-				</div>
-				<div id="fixedLayoutVariables">
-					<dl>
-						<dt><label for="wcfLayoutFixedWidth">{lang}wcf.acp.style.globals.fixedLayoutWidth{/lang}</label></dt>
-						<dd>
-							<input type="number" id="wcfLayoutFixedWidth" name="wcfLayoutFixedWidth" value="{@$variables[wcfLayoutFixedWidth]}" class="tiny" />
-							<select name="wcfLayoutFixedWidth_unit">
-								{foreach from=$availableUnits item=unit}
-									<option value="{@$unit}"{if $variables[wcfLayoutFixedWidth_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
-								{/foreach}
-							</select>
-						</dd>
-					</dl>
-				</div>
+				<dl id="fluidLayoutVariables">
+					<dt><label for="wcfLayoutFluidGap">{lang}wcf.acp.style.globals.fluidLayoutGap{/lang}</label></dt>
+					<dd>
+						<input type="number" id="wcfLayoutFluidGap" name="wcfLayoutFluidGap" value="{@$variables[wcfLayoutFluidGap]}" class="tiny" />
+						<select name="wcfLayoutFluidGap_unit">
+							{foreach from=$availableUnits item=unit}
+								<option value="{@$unit}"{if $variables[wcfLayoutFluidGap_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+							{/foreach}
+						</select>
+					</dd>
+				</dl>
+				<dl id="fixedLayoutVariables">
+					<dt><label for="wcfLayoutFixedWidth">{lang}wcf.acp.style.globals.fixedLayoutWidth{/lang}</label></dt>
+					<dd>
+						<input type="number" id="wcfLayoutFixedWidth" name="wcfLayoutFixedWidth" value="{@$variables[wcfLayoutFixedWidth]}" class="tiny" />
+						<select name="wcfLayoutFixedWidth_unit">
+							{foreach from=$availableUnits item=unit}
+								<option value="{@$unit}"{if $variables[wcfLayoutFixedWidth_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+							{/foreach}
+						</select>
+					</dd>
+				</dl>
 				<dl>
 					<dt><label for="pageLogo">{lang}wcf.acp.style.globals.pageLogo{/lang}</label></dt>
 					<dd>
