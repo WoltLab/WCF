@@ -417,21 +417,27 @@ class PackageInstallationNodeBuilder {
 			if ($this->node == '' && !empty($this->parentNode)) {
 				$this->node = $this->parentNode;
 			}
-			
-			// extract package
-			$index = $this->installation->getArchive()->getTar()->getIndexByFilename($package['file']);
-			if ($index === false) {
-				// workaround for WCFSetup
-				if (!PACKAGE_ID && $packageName == 'com.woltlab.wcf') {
-					continue;
+						
+			// checks wether file attribute is an url
+			if (FileUtil::isUrl($package['file'])) {
+				$fileName = FileUtil::downloadFileFromHttp($package['file']);
+			}
+			else {
+				// extract package
+				$index = $this->installation->getArchive()->getTar()->getIndexByFilename($package['file']);
+				if ($index === false) {
+					// workaround for WCFSetup
+					if (!PACKAGE_ID && $packageName == 'com.woltlab.wcf') {
+						continue;
+					}
+					
+					throw new SystemException("Unable to find required package '".$package['file']."' within archive of package '".$this->installation->queue->package."'.");
 				}
 				
-				throw new SystemException("Unable to find required package '".$package['file']."' within archive of package '".$this->installation->queue->package."'.");
+				$fileName = FileUtil::getTemporaryFilename('package_', preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', basename($package['file'])));
+				$this->installation->getArchive()->getTar()->extract($index, $fileName);
 			}
-			
-			$fileName = FileUtil::getTemporaryFilename('package_', preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', basename($package['file'])));
-			$this->installation->getArchive()->getTar()->extract($index, $fileName);
-			
+
 			// get archive data
 			$archive = new PackageArchive($fileName);
 			$archive->openArchive();
@@ -535,14 +541,20 @@ class PackageInstallationNodeBuilder {
 				continue;
 			}
 			
-			// extract package
-			$index = $this->installation->getArchive()->getTar()->getIndexByFilename($package['file']);
-			if ($index === false) {
-				throw new SystemException("Unable to find required package '".$package['file']."' within archive.");
+			// checks wether file attribute is an url
+			if (FileUtil::isUrl($package['file'])) {
+				$fileName = FileUtil::downloadFileFromHttp($package['file']);
 			}
-			
-			$fileName = FileUtil::getTemporaryFilename('package_', preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', basename($package['file'])));
-			$this->installation->getArchive()->getTar()->extract($index, $fileName);
+			else {
+				// extract package
+				$index = $this->installation->getArchive()->getTar()->getIndexByFilename($package['file']);
+				if ($index === false) {
+					throw new SystemException("Unable to find required package '".$package['file']."' within archive.");
+				}
+				
+				$fileName = FileUtil::getTemporaryFilename('package_', preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', basename($package['file'])));
+				$this->installation->getArchive()->getTar()->extract($index, $fileName);
+			}
 			
 			// get archive data
 			$archive = new PackageArchive($fileName);
