@@ -117,21 +117,6 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns a list of all by this package required packages.
-	 * Contains required packages and the requirements of the required packages.
-	 * 
-	 * @return	array<wcf\data\package\Package>
-	 */
-	public function getDependencies() {
-		if ($this->dependencies === null) {
-			// todo
-			throw new SystemException("Package::getDependencies()");
-		}
-		
-		return $this->dependencies;
-	}
-	
-	/**
 	 * Returns the list of packages which are required by this package. The
 	 * returned packages are the packages given in the <requiredpackages> tag
 	 * in the package.xml of this package.
