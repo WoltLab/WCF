@@ -1,12 +1,13 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\page\menu\item\PageMenuItemEditor;
 use wcf\system\exception\SystemException;
 
 /**
  * Installs, updates and deletes page page menu items.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -41,5 +42,12 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 		}
 		
 		return $result;
+	}
+	
+	/**
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
+	 */
+	protected function cleanup() {
+		PageMenuItemEditor::updateLandingPage();
 	}
 }
