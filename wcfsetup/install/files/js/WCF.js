@@ -1924,7 +1924,7 @@ WCF.Action.Toggle = Class.extend({
 	triggerEffect: function(objectIDs) {
 		for (var $index in this._containers) {
 			var $container = $('#' + this._containers[$index]);
-			var $toggleButton = $container.find(this. _toggleButtonSelector);
+			var $toggleButton = $container.find(this._toggleButtonSelector);
 			if (WCF.inArray($toggleButton.data('objectID'), objectIDs)) {
 				$container.wcfHighlight();
 				this._toggleButton($container, $toggleButton);
