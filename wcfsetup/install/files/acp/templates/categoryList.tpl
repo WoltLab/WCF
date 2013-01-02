@@ -106,14 +106,14 @@
 							{/if}
 							
 							{if $objectType->getProcessor()->canDeleteCategory()}
-								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip" data-object-id="{@$category->categoryID}" data-confirm-message="{@$objectType->getProcessor()->getLanguageVariable('delete.sure')}" />
+								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$category->categoryID}" data-confirm-message="{@$objectType->getProcessor()->getLanguageVariable('delete.sure')}" />
 							{else}
 								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 disabled" />
 							{/if}
 							
 							{if $objectType->getProcessor()->canEditCategory()}
 								{* todo: toggle icons aren't clickable *}
-								<img src="{@$__wcf->getPath()}icon/{if !$category->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$category->isDisabled}disable{else}enable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip" data-object-id="{@$category->categoryID}" />
+								<img src="{@$__wcf->getPath()}icon/{if !$category->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$category->isDisabled}disable{else}enable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$category->categoryID}" />
 							{else}
 								<img src="{@$__wcf->getPath()}icon/{if !$category->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$category->isDisabled}enable{else}disable{/if}{/lang}" class="icon16 disabled" />
 							{/if}
