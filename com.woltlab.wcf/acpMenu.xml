@@ -254,7 +254,55 @@
 			<showorder>3</showorder>
 		</acpmenuitem>
 		
-		<!-- language management -->
+		<!-- page menu -->
+		<acpmenuitem name="wcf.acp.menu.link.pageMenu">
+			<parent>wcf.acp.menu.link.display</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.pageMenu.list">
+			<controller><![CDATA[wcf\acp\page\PageMenuItemListPage]]></controller>
+			<parent>wcf.acp.menu.link.pageMenu</parent>
+			<permissions>admin.display.canManagePageMenu</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.pageMenu.add">
+			<controller><![CDATA[wcf\acp\form\PageMenuItemAddForm]]></controller>
+			<parent>wcf.acp.menu.link.pageMenu</parent>
+			<permissions>admin.display.canManagePageMenu</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		<!-- /page menu -->
+		
+		<!-- style -->
+		<acpmenuitem name="wcf.acp.menu.link.style">
+			<parent>wcf.acp.menu.link.display</parent>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.style.list">
+			<controller><![CDATA[wcf\acp\page\StyleListPage]]></controller>
+			<parent>wcf.acp.menu.link.style</parent>
+			<permissions>admin.style.canEditStyle,admin.style.canDeleteStyle</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.style.add">
+			<controller><![CDATA[wcf\acp\form\StyleAddForm]]></controller>
+			<parent>wcf.acp.menu.link.style</parent>
+			<permissions>admin.style.canAddStyle</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.style.import">
+			<controller><![CDATA[wcf\acp\form\StyleImportForm]]></controller>
+			<parent>wcf.acp.menu.link.style</parent>
+			<permissions>admin.style.canAddStyle</permissions>
+			<showorder>3</showorder>
+		</acpmenuitem>
+		<!-- /style -->
+		
+		<!-- language -->
 		<acpmenuitem name="wcf.acp.menu.link.language">
 			<parent>wcf.acp.menu.link.display</parent>
 		</acpmenuitem>
@@ -292,27 +340,7 @@
 			<parent>wcf.acp.menu.link.language.server</parent>
 			<permissions>admin.language.canAddServer</permissions>
 		</acpmenuitem>
-		<!-- /language management -->
-		
-		<!-- page menu -->
-		<acpmenuitem name="wcf.acp.menu.link.pageMenu">
-			<parent>wcf.acp.menu.link.display</parent>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.pageMenu.list">
-			<controller><![CDATA[wcf\acp\page\PageMenuItemListPage]]></controller>
-			<parent>wcf.acp.menu.link.pageMenu</parent>
-			<permissions>admin.display.canManagePageMenu</permissions>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.pageMenu.add">
-			<controller><![CDATA[wcf\acp\form\PageMenuItemAddForm]]></controller>
-			<parent>wcf.acp.menu.link.pageMenu</parent>
-			<permissions>admin.display.canManagePageMenu</permissions>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		<!-- /page menu -->
+		<!-- /language -->
 		
 		<acpmenuitem name="wcf.acp.menu.link.content">
 			<showorder>4</showorder>
