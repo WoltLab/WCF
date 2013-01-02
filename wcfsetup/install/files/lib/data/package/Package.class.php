@@ -26,6 +26,12 @@ class Package extends DatabaseObject {
 	protected $dependencies = null;
 	
 	/**
+	 * list of packages that require this package
+	 * @var	array<wcf\data\package\Package>
+	 */
+	protected $dependentPackages = null;
+	
+	/**
 	 * installation directory
 	 * @var	string
 	 */
@@ -118,6 +124,7 @@ class Package extends DatabaseObject {
 	 */
 	public function getDependencies() {
 		if ($this->dependencies === null) {
+			// todo
 			throw new SystemException("Package::getDependencies()");
 		}
 		
@@ -125,24 +132,21 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns a list of the requirements of this package.
-	 * Contains the content of the <requiredpackages> tag in the package.xml of this package.
+	 * Returns the list of packages which are required by this package. The
+	 * returned packages are the packages given in the <requiredpackages> tag
+	 * in the package.xml of this package.
 	 * 
 	 * @return	array<wcf\data\package\Package>
 	 */
 	public function getRequiredPackages() {
 		if ($this->requiredPackages === null) {
-			$this->requiredPackages = array();
+			self::loadRequirements();
 			
-			$sql = "SELECT		package.*
-				FROM		wcf".WCF_N."_package_requirement package_requirement
-				LEFT JOIN	wcf".WCF_N."_package package ON (package.packageID = package_requirement.requirement)
-				WHERE		package_requirement.packageID = ?
-				ORDER BY	packageName ASC";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->packageID));
-			while ($package = $statement->fetchObject('wcf\data\package\Package')) {
-				$this->requiredPackages[$package->packageID] = $package;
+			$this->requiredPackages = array();
+			if (isset(self::$requirements[$this->packageID])) {
+				foreach (self::$requirements[$this->packageID] as $packageID) {
+					$this->requiredPackages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
+				}
 			}
 		}
 		
@@ -178,16 +182,18 @@ class Package extends DatabaseObject {
 	 * @return	array<wcf\data\package\Package>
 	 */
 	public function getDependentPackages() {
-		self::loadRequirements();
-		
-		$packages = array();
-		if (isset(self::$requirements[$this->packageID])) {
-			foreach (self::$requirements[$this->packageID] as $packageID) {
-				$packages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
+		if ($this->dependentPackages === null) {
+			self::loadRequirements();
+			
+			$this->dependentPackages = array();
+			foreach (self::$requirements as $packageID => $requiredPackageIDs) {
+				if (in_array($this->packageID, $requiredPackageIDs)) {
+					$this->dependentPackages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
+				}
 			}
 		}
 		
-		return $packages;
+		return $this->dependentPackages;
 	}
 	
 	/**
