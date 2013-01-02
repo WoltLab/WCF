@@ -208,6 +208,23 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns true, if package identified by $package is already installed.
+	 * 
+	 * @param	string		$package
+	 * @return	boolean
+	 */
+	public static function isAlreadyInstalled($package) {
+		$sql = "SELECT	COUNT(*) AS count
+			FROM	wcf".WCF_N."_package
+			WHERE	package = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($package));
+		$row = $statement->fetchArray();
+		
+		return ($row['count'] ? true : false);
+	}
+	
+	/**
 	 * Checks if a package name is valid.
 	 * 
 	 * A valid package name begins with at least one alphanumeric character
