@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\package;
+use wcf\data\package\Package;
+
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueueList;
 use wcf\system\exception\SystemException;
@@ -528,6 +530,11 @@ class PackageInstallationNodeBuilder {
 		
 		$optionalPackages = $this->installation->getArchive()->getOptionals();
 		foreach ($optionalPackages as $package) {
+			// check if already installed
+			if (Package::isAlreadyInstalled($package['name'])) {
+				continue;
+			}
+			
 			// extract package
 			$index = $this->installation->getArchive()->getTar()->getIndexByFilename($package['file']);
 			if ($index === false) {

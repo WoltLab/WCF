@@ -148,6 +148,15 @@ class StyleHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns number of available styles.
+	 * 
+	 * @return	integer
+	 */
+	public function countStyles() {
+		return count($this->getAvailableStyles());
+	}
+	
+	/**
 	 * Resets all stylesheets.
 	 */
 	public static function resetStylesheets() {
