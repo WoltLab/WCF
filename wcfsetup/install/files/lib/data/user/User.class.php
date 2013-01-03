@@ -9,7 +9,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
+use wcf\util\PasswordUtil;
 
 /**
  * Represents a user.
@@ -87,7 +87,37 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 	 * @return	boolean		password correct
 	 */
 	public function checkPassword($password) {
-		return ($this->password == StringUtil::getDoubleSaltedHash($password, $this->salt));
+		$isValid = false;
+		$rebuild = false;
+		
+		// check if password is a valid bcrypt hash
+		if (PasswordUtil::isBlowfish($this->password)) {
+			if (PasswordUtil::isDifferentBlowfish($this->password)) {
+				$rebuild = true;
+			}
+			
+			// password is correct
+			if ($this->password == PasswordUtil::getDoubleSaltedHash($password, $this->password)) {
+				$isValid = true;
+			}
+		}
+		else {
+			// different encryption type
+			if (PasswordUtil::checkPassword($this->username, $password, $this->password)) {
+				$isValid = true;
+				$rebuild = true;
+			}
+		}
+		
+		// create new password hash, either different encryption or different blowfish cost factor
+		if ($rebuild) {
+			$userEditor = new UserEditor($this);
+			$userEditor->update(array(
+				'password' => PasswordUtil::getDoubleSaltedHash($password)
+			));
+		}
+		
+		return $isValid;
 	}
 	
 	/**
@@ -97,7 +127,11 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 	 * @return	boolean		password correct
 	 */
 	public function checkCookiePassword($passwordHash) {
-		return ($this->password == StringUtil::encrypt($this->salt . $passwordHash));
+		if (PasswordUtil::isBlowfish($this->password) && ($this->password == PasswordUtil::getSaltedHash($passwordHash, $this->password))) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**

@@ -7,6 +7,7 @@ use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
+use wcf\util\PasswordUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -30,8 +31,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 */
 	public static function create(array $parameters = array()) {
 		// create salt and password hash
-		$parameters['salt'] = StringUtil::getRandomID();
-		$parameters['password'] = StringUtil::getDoubleSaltedHash($parameters['password'], $parameters['salt']);
+		$parameters['password'] = PasswordUtil::getDoubleSaltedHash($parameters['password']);
 		
 		// create accessToken for AbstractAuthedPage
 		$parameters['accessToken'] = StringUtil::getRandomID();
@@ -63,17 +63,14 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	public function update(array $parameters = array()) {
 		// update salt and create new password hash
 		if (isset($parameters['password']) && $parameters['password'] !== '') {
-			$parameters['salt'] = StringUtil::getRandomID();
-			$parameters['password'] = StringUtil::getDoubleSaltedHash($parameters['password'], $parameters['salt']);
-			
+			$parameters['password'] = PasswordUtil::getDoubleSaltedHash($parameters['password']);
 			$parameters['accessToken'] = StringUtil::getRandomID();
 			
-			// update salt and accessToken
-			$this->salt = $parameters['salt'];
+			// update accessToken
 			$this->accessToken = $parameters['accessToken'];
 		}
 		else {
-			unset($parameters['password'], $parameters['salt'], $parameters['accessToken']);
+			unset($parameters['password'], $parameters['accessToken']);
 		}
 		
 		parent::update($parameters);

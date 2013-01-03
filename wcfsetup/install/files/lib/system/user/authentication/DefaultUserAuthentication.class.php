@@ -3,13 +3,13 @@ namespace wcf\system\user\authentication;
 use wcf\data\user\User;
 use wcf\system\exception\UserInputException;
 use wcf\util\HeaderUtil;
-use wcf\util\StringUtil;
+use wcf\util\PasswordUtil;
 
 /**
  * Default user authentication implementation that uses the username to identify users.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.authentication
@@ -28,7 +28,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	 */
 	public function storeAccessData(User $user, $username, $password) {
 		HeaderUtil::setCookie('userID', $user->userID, TIME_NOW + 365 * 24 * 3600);
-		HeaderUtil::setCookie('password', StringUtil::getSaltedHash($password, $user->salt), TIME_NOW + 365 * 24 * 3600);
+		HeaderUtil::setCookie('password', PasswordUtil::getSaltedHash($password, $user->password), TIME_NOW + 365 * 24 * 3600);
 	}
 	
 	/**
