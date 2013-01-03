@@ -97,7 +97,7 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 			}
 			
 			// password is correct
-			if ($this->password == PasswordUtil::getDoubleSaltedHash($password, $this->password)) {
+			if (PasswordUtil::secureCompare($this->password, PasswordUtil::getDoubleSaltedHash($password, $this->password))) {
 				$isValid = true;
 			}
 		}
@@ -127,7 +127,7 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 	 * @return	boolean		password correct
 	 */
 	public function checkCookiePassword($passwordHash) {
-		if (PasswordUtil::isBlowfish($this->password) && ($this->password == PasswordUtil::getSaltedHash($passwordHash, $this->password))) {
+		if (PasswordUtil::isBlowfish($this->password) && PasswordUtil::secureCompare($this->password, PasswordUtil::getSaltedHash($passwordHash, $this->password))) {
 			return true;
 		}
 		

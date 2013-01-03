@@ -203,6 +203,28 @@ final class PasswordUtil {
 	}
 	
 	/**
+	 * Compares two password hashes. This function is protected against timing attacks.
+	 * 
+	 * @see		http://codahale.com/a-lesson-in-timing-attacks/
+	 * 
+	 * @param	string		$hash1
+	 * @param	string		$hash2
+	 * @return	boolean
+	 */
+	public static function secureCompare($hash1, $hash2) {
+		if (strlen($hash1) !== strlen($hash2)) {
+			return false;
+		}
+	
+		$result = 0;
+		for ($i = 0, $length = strlen($hash1); $i < $length; $i++) {
+			$result |= ord($hash1[$i]) ^ ord($hash2[$i]);
+		}
+	
+		return ($result === 0);
+	}
+	
+	/**
 	 * Returns a blowfish salt, e.g. $2a$07$usesomesillystringforsalt$
 	 * 
 	 * @param	string		$salt
@@ -237,7 +259,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function ipb3($username, $password, $salt, $dbHash) {
-		return ($dbHash == md5(md5($salt) . md5($password)));
+		return self::secureCompare($dbHash, md5(md5($salt) . md5($password)));
 	}
 	
 	/**
@@ -250,7 +272,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function mybb1($username, $password, $salt, $dbHash) {
-		return ($dbHash == md5(md5($salt) . md5($password)));
+		return self::secureCompare($dbHash, md5(md5($salt) . md5($password)));
 	}
 	
 	/**
@@ -263,7 +285,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function smf1($username, $password, $salt, $dbHash) {
-		return ($dbHash == sha1(StringUtil::toLowerCase($username) . $password));
+		return self::secureCompare($dbHash, sha1(StringUtil::toLowerCase($username) . $password));
 	}
 	
 	/**
@@ -289,7 +311,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function vb3($username, $password, $salt, $dbHash) {
-		return ($dbHash == md5(md5($password) . $salt));
+		return self::secureCompare($dbHash, md5(md5($password) . $salt));
 	}
 	
 	/**
@@ -328,10 +350,10 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function wbb2($username, $password, $salt, $dbHash) {
-		if ($dbHash == md5($password)) {
+		if (self::secureCompare($dbHash, md5($password))) {
 			return true;
 		}
-		else if ($dbHash == sha1($password)) {
+		else if (self::secureCompare($dbHash, sha1($password))) {
 			return true;
 		}
 		
@@ -348,7 +370,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function wcf1($username, $password, $salt, $dbHash) {
-		return ($dbHash == sha1($salt . sha1($salt . sha1($password))));
+		return self::secureCompare($dbHash, sha1($salt . sha1($salt . sha1($password))));
 	}
 	
 	/**
@@ -361,7 +383,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function wcf2($username, $password, $salt, $dbHash) {
-		return ($dbHash == self::getDoubleSaltedHash($password, $salt));
+		return self::secureCompare($dbHash, self::getDoubleSaltedHash($password, $salt));
 	}
 	
 	/**
@@ -374,11 +396,11 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function xf1($username, $password, $salt, $dbHash) {
-		if ($dbHash == sha1(sha1($password) . $salt)) {
+		if (self::secureCompare($dbHash, sha1(sha1($password) . $salt))) {
 			return true;
 		}
 		else if (extension_loaded('hash')) {
-			return ($dbHash == hash('sha256', hash('sha256', $password) . $salt));
+			return self::secureCompare($dbHash, hash('sha256', hash('sha256', $password) . $salt));
 		}
 		
 		return false;
