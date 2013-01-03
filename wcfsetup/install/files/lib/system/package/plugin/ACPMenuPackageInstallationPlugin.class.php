@@ -5,7 +5,7 @@ namespace wcf\system\package\plugin;
  * Installs, updates and deletes ACP menu items.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -16,16 +16,4 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\acp\menu\item\ACPMenuItemEditor';
-	
-	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
-	 */
-	protected function prepareImport(array $data) {
-		$result = parent::prepareImport($data);
-		
-		// controller
-		$result['menuItemController'] = isset($data['elements']['controller']) ? $data['elements']['controller'] : '';
-		
-		return $result;
-	}
 }
