@@ -395,8 +395,8 @@ final class FileUtil {
 	 * @param	array		$postParameters
 	 * @param	array		$headers		empty array or a not initialized variable
 	 * @return	string
-	 * @deprecated	This method currently only is a wrapper around \wcf\util\HTTPUtil. Please use HTTPUtil 
-	 * 		from now on, as this method may be removed in the future.
+	 * @deprecated	This method currently only is a wrapper around \wcf\util\HTTPRequest. Please use 
+	 * 		HTTPRequest from now on, as this method may be removed in the future.
 	 */
 	public static function downloadFileFromHttp($httpUrl, $prefix = 'package', array $options = array(), array $postParameters = array(), &$headers = array()) {
 		$request = new HTTPRequest($httpUrl, $options, $postParameters);
