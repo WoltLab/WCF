@@ -3,6 +3,7 @@ namespace wcf\system\menu\page;
 use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\cache\CacheHandler;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\SystemException;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\TreeMenu;
 use wcf\system\WCF;
@@ -11,7 +12,7 @@ use wcf\system\WCF;
  * Builds the page menu.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.menu.page
@@ -50,6 +51,12 @@ class PageMenu extends TreeMenu {
 				}
 			}
 		}
+		
+		if ($this->landingPage === null) {
+			throw new SystemException("Missing landing page");
+		}
+		
+		$this->setActiveMenuItem($this->landingPage->menuItem);
 	}
 	
 	/**

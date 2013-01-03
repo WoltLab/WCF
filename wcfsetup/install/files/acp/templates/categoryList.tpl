@@ -12,7 +12,7 @@
 				new WCF.ACP.Category.Delete('wcf\\data\\category\\CategoryAction', $('.jsCategory'));
 			{/if}
 			{if $objectType->getProcessor()->canEditCategory()}
-				new WCF.Action.Toggle('wcf\\data\\category\\CategoryAction', $('.jsCategory'), '> .buttons > .jsToggleButton');
+				new WCF.Action.Toggle('wcf\\data\\category\\CategoryAction', '.jsCategory', '> .buttons > .jsToggleButton');
 				
 				{if $categoryNodeList|count > 1}
 					var sortableNodes = $('.sortableNode');

@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  */
 class StyleExportForm extends AbstractForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.style';
 	

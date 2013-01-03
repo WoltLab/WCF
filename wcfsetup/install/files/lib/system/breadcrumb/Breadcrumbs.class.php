@@ -30,14 +30,8 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		// set default menu item
-		$landingPage = PageMenu::getInstance()->getLandingPage();
-		if ($landingPage !== null) {
-			PageMenu::getInstance()->setActiveMenuItem($landingPage->menuItem);
-				
-			// add main breadcrumbs entry
-			$this->add(new Breadcrumb(WCF::getLanguage()->get(PAGE_TITLE), $landingPage->getLink()));
-		}
+		// add main breadcrumbs entry
+		$this->add(new Breadcrumb(WCF::getLanguage()->get(PAGE_TITLE), PageMenu::getInstance()->getLandingPage()->getLink()));
 	}
 	
 	/**

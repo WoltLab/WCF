@@ -211,6 +211,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 */
 	public function getReturnValues() {
 		return array(
+			'actionName' => $this->action,
 			'objectIDs' => $this->getObjectIDs(),
 			'returnValues' => $this->returnValues
 		);

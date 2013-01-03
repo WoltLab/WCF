@@ -26,6 +26,12 @@ class Package extends DatabaseObject {
 	protected $dependencies = null;
 	
 	/**
+	 * list of packages that require this package
+	 * @var	array<wcf\data\package\Package>
+	 */
+	protected $dependentPackages = null;
+	
+	/**
 	 * installation directory
 	 * @var	string
 	 */
@@ -111,38 +117,21 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns a list of all by this package required packages.
-	 * Contains required packages and the requirements of the required packages.
-	 * 
-	 * @return	array<wcf\data\package\Package>
-	 */
-	public function getDependencies() {
-		if ($this->dependencies === null) {
-			throw new SystemException("Package::getDependencies()");
-		}
-		
-		return $this->dependencies;
-	}
-	
-	/**
-	 * Returns a list of the requirements of this package.
-	 * Contains the content of the <requiredpackages> tag in the package.xml of this package.
+	 * Returns the list of packages which are required by this package. The
+	 * returned packages are the packages given in the <requiredpackages> tag
+	 * in the package.xml of this package.
 	 * 
 	 * @return	array<wcf\data\package\Package>
 	 */
 	public function getRequiredPackages() {
 		if ($this->requiredPackages === null) {
-			$this->requiredPackages = array();
+			self::loadRequirements();
 			
-			$sql = "SELECT		package.*
-				FROM		wcf".WCF_N."_package_requirement package_requirement
-				LEFT JOIN	wcf".WCF_N."_package package ON (package.packageID = package_requirement.requirement)
-				WHERE		package_requirement.packageID = ?
-				ORDER BY	packageName ASC";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->packageID));
-			while ($package = $statement->fetchObject('wcf\data\package\Package')) {
-				$this->requiredPackages[$package->packageID] = $package;
+			$this->requiredPackages = array();
+			if (isset(self::$requirements[$this->packageID])) {
+				foreach (self::$requirements[$this->packageID] as $packageID) {
+					$this->requiredPackages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
+				}
 			}
 		}
 		
@@ -159,8 +148,8 @@ class Package extends DatabaseObject {
 			return false;
 		}
 		
-		// disallow uninstallation of current package or WCF
-		if ($this->package == 'com.woltlab.wcf' || $this->packageID == PACKAGE_ID) {
+		// disallow uninstallation of WCF and applications if not within WCF ACP
+		if ($this->package == 'com.woltlab.wcf' || ($this->isApplication && PACKAGE_ID != 1)) {
 			return false;
 		}
 		
@@ -178,16 +167,18 @@ class Package extends DatabaseObject {
 	 * @return	array<wcf\data\package\Package>
 	 */
 	public function getDependentPackages() {
-		self::loadRequirements();
-		
-		$packages = array();
-		if (isset(self::$requirements[$this->packageID])) {
-			foreach (self::$requirements[$this->packageID] as $packageID) {
-				$packages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
+		if ($this->dependentPackages === null) {
+			self::loadRequirements();
+			
+			$this->dependentPackages = array();
+			foreach (self::$requirements as $packageID => $requiredPackageIDs) {
+				if (in_array($this->packageID, $requiredPackageIDs)) {
+					$this->dependentPackages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
+				}
 			}
 		}
 		
-		return $packages;
+		return $this->dependentPackages;
 	}
 	
 	/**
@@ -214,6 +205,23 @@ class Package extends DatabaseObject {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Returns true, if package identified by $package is already installed.
+	 * 
+	 * @param	string		$package
+	 * @return	boolean
+	 */
+	public static function isAlreadyInstalled($package) {
+		$sql = "SELECT	COUNT(*) AS count
+			FROM	wcf".WCF_N."_package
+			WHERE	package = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($package));
+		$row = $statement->fetchArray();
+		
+		return ($row['count'] ? true : false);
 	}
 	
 	/**
@@ -347,17 +355,5 @@ class Package extends DatabaseObject {
 		
 		// write end
 		$file->close();
-	}
-	
-	/**
-	 * Returns a list of plugins for currently active application.
-	 * 
-	 * @return	wcf\data\package\PackageList
-	 */
-	public static function getPluginList() {
-		$pluginList = new PackageList();
-		$pluginList->getConditionBuilder()->add("package.isApplication = ?", array(0));
-		
-		return $pluginList;
 	}
 }
