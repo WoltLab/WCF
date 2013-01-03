@@ -160,7 +160,7 @@ final class PasswordUtil {
 			$salt = self::getRandomSalt();
 		}
 		
-		return crypt($password, self::getSalt($salt));
+		return crypt($password, $salt);
 	}
 	
 	/**
@@ -175,7 +175,7 @@ final class PasswordUtil {
 			$salt .= self::$blowfishCharacters[mt_rand(0, $maxIndex)];
 		}
 		
-		return $salt;
+		return self::getSalt($salt);
 	}
 	
 	/**
