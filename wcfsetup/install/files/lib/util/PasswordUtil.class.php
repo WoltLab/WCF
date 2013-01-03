@@ -25,17 +25,18 @@ final class PasswordUtil {
 	 * @var	array<string>
 	 */
 	private static $supportedEncryptionTypes = array(
-		'ipb2',	// Invision Power Board 2.x
-		'ipb3',	// Invision Power Board 3.x
-		'smf1',	// Simple Machines Forum 1.x
-		'smf2',	// Simple Machines Forum 2.x
-		'vb3',	// vBulletin 3.x
-		'vb4',	// vBulletin 4.x
-		'vb5',	// vBulletin 5.x
-		'wbb2',	// WoltLab Burning Board 2.x
-		'wcf1',	// WoltLab Community Framework 1.x
-		'wcf2',	// WoltLab Community Framework 2.x
-		'xf1'	// XenForo 1.x
+		'ipb2',		// Invision Power Board 2.x
+		'ipb3',		// Invision Power Board 3.x
+		'mybb1',	// MyBB 1.x
+		'smf1',		// Simple Machines Forum 1.x
+		'smf2',		// Simple Machines Forum 2.x
+		'vb3',		// vBulletin 3.x
+		'vb4',		// vBulletin 4.x
+		'vb5',		// vBulletin 5.x
+		'wbb2',		// WoltLab Burning Board 2.x
+		'wcf1',		// WoltLab Community Framework 1.x
+		'wcf2',		// WoltLab Community Framework 2.x
+		'xf1'		// XenForo 1.x
 	);
 	
 	/**
