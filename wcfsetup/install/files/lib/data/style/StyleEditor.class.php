@@ -572,7 +572,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		}
 		
 		foreach ($languageList as $language) {
-			if (isset($descriptions[$language->landugeCode])) {
+			if (isset($descriptions[$language->languageCode])) {
 				$statement->execute(array(
 					$language->languageID,
 					'wcf.style.styleDescription'.$styleEditor->styleID,
