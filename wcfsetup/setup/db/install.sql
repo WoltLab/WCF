@@ -568,7 +568,7 @@ CREATE TABLE wcf1_style (
 	templateGroupID INT(10) NOT NULL DEFAULT 0,
 	isDefault TINYINT(1) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
-	styleDescription TEXT,
+	styleDescription VARCHAR(30) NOT NULL DEFAULT '',
 	styleVersion VARCHAR(255) NOT NULL DEFAULT '',
 	styleDate CHAR(10) NOT NULL DEFAULT '0000-00-00',
 	image VARCHAR(255) NOT NULL DEFAULT '',

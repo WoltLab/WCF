@@ -520,23 +520,16 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// save style
 		if ($style !== null) {
-			// handle descriptions
-			if (!empty($data['description'])) {
-				$styleData['styleDescription'] = 'wcf.style.styleDescription'.$style->styleID;
-				self::saveLocalizedDescriptions($style, $data['description']);
-			}
-			
 			$style->update($styleData);
 		}
 		else {
 			$styleData['packageID'] = $packageID;
 			$style = new StyleEditor(self::create($styleData));
-			
-			// handle descriptions
-			if (!empty($data['description'])) {
-				$styleData['styleDescription'] = 'wcf.style.styleDescription'.$style->styleID;
-				self::saveLocalizedDescriptions($style, $data['description']);
-			}
+		}
+		
+		// handle descriptions
+		if (!empty($data['description'])) {
+			self::saveLocalizedDescriptions($style, $data['description']);
 		}
 		
 		if ($data['default']) {
@@ -546,6 +539,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		return $style;
 	}
 	
+	/**
+	 * Saves localized style descriptions.
+	 * 
+	 * @param	wcf\data\style\StyleEditor	$styleEditor
+	 * @param	array<string>			$descriptions
+	 */
 	protected static function saveLocalizedDescriptions(StyleEditor $styleEditor, array $descriptions) {
 		// localize package information
 		$sql = "INSERT INTO	wcf".WCF_N."_language_item
@@ -582,6 +581,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				));
 			}
 		}
+		
+		$styleEditor->update(array(
+			'styleDescription' => 'wcf.style.styleDescription'.$styleEditor->styleID
+		));
 	}
 	
 	/**
