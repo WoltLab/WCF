@@ -44,7 +44,7 @@
 					<div class="details">
 						<hgroup class="containerHeadline">
 							<h1><a href="{link controller='StyleEdit' id=$style->styleID}{/link}">{$style->styleName}</a></h1>
-							{if $style->styleDescription}<h2>{$style->styleDescription}</h2>{/if}
+							{if $style->styleDescription}<h2>{lang}{@$style->styleDescription}{/lang}</h2>{/if}
 						</hgroup>
 						<ul class="buttonList" data-style-id="{@$style->styleID}">
 							<li><a href="{link controller='StyleEdit' id=$style->styleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><img src="{@$__wcf->getPath()}icon/edit.svg" class="icon16" alt="" /></a></li>
