@@ -62,10 +62,24 @@ class WCF_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Sniff
 			}
 		}
 		
+		$end = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+		$next = $phpcsFile->findNext(T_WHITESPACE, ($end + 1), null, true);
+		if ($tokens[$next]['code'] === T_USE) {
+			$diff = $tokens[$next]['line'] - $tokens[$stackPtr]['line'] - 1;
+			if ($diff !== 0) {
+				$error = 'There must not be any blank lines between use statements; %s found;';
+				$data = array($diff);
+				$phpcsFile->addError($error, $stackPtr, 'SpaceBetweenUse', $data);
+			}
+		}
+		
 		// Only interested in the last USE statement from here onwards.
 		$nextUse = $phpcsFile->findNext(T_USE, ($stackPtr + 1));
 		if ($nextUse !== false) {
-			return;
+			$next = $phpcsFile->findNext(T_WHITESPACE, ($nextUse + 1), null, true);
+			if ($tokens[$next]['code'] !== T_OPEN_PARENTHESIS) {
+				return;
+			}
 		}
 		
 		$end  = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
@@ -77,7 +91,7 @@ class WCF_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Sniff
 			}
 			
 			$error = 'There must be one blank line after the last USE statement; %s found;';
-			$data  = array($diff);
+			$data = array($diff);
 			$phpcsFile->addError($error, $stackPtr, 'SpaceAfterLastUse', $data);
 		}
 	

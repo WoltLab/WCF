@@ -1,7 +1,6 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\style\StyleEditor;
-
 use wcf\data\package\Package;
 use wcf\data\style\StyleAction;
 use wcf\data\template\group\TemplateGroupList;
