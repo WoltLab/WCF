@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\version;
-use wcf\data\VersionableDatabaseObject;
-use wcf\system\SingletonFactory;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\VersionableDatabaseObject;
 use wcf\system\cache\CacheHandler;
+use wcf\system\SingletonFactory;
 
 /**
  * Handles versions of DatabaseObjects.

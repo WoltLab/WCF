@@ -17,7 +17,6 @@ class WCF_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Sniff
 	 */
 	public function register() {
 		return array(T_USE);
-
 	}
 
 	/**

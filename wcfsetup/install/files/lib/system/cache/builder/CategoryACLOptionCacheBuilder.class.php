@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\system\category\CategoryHandler;
 use wcf\system\acl\ACLHandler;
+use wcf\system\category\CategoryHandler;
 
 /**
  * Caches the acl options of categories.

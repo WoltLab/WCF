@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\category;
-use wcf\system\exception\SystemException;
 use wcf\system\category\CategoryHandler;
+use wcf\system\exception\SystemException;
 
 /**
  * Represents a category node list.

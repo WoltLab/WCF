@@ -32,6 +32,7 @@
 	<rule ref="WCF.Classes.ClassFileName" />
 	<rule ref="WCF.ControlStructures.ControlSignature" />
 	<rule ref="WCF.PHP.DiscouragePCRE" />
+	<rule ref="WCF.Namespaces.SortedUseDeclaration" />
 	<rule ref="WCF.Namespaces.UseDeclaration" />
 	<rule ref="WCF.WhiteSpace.SuperfluousWhitespace" />
 	<rule ref="Zend.Files.ClosingTag" />

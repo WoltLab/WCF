@@ -3,9 +3,9 @@ namespace wcf\acp\form;
 use wcf\data\language\server\LanguageServerAction;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\form\AbstractForm;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
-use wcf\system\exception\UserInputException;
 use wcf\util\StringUtil;
 
 /**

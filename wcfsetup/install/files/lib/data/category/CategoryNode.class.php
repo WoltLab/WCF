@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\category;
-use wcf\data\DatabaseObjectDecorator;
 use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\system\category\CategoryHandler;
 
 /**

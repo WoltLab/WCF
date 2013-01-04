@@ -2,9 +2,9 @@
 namespace wcf\acp\form;
 use wcf\data\language\LanguageEditor;
 use wcf\form\AbstractForm;
-use wcf\system\language\LanguageFactory;
-use wcf\system\exception\UserInputException;
 use wcf\system\cache\CacheHandler;
+use wcf\system\exception\UserInputException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\ArrayUtil;

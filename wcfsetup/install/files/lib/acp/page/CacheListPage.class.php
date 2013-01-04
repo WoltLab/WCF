@@ -5,8 +5,8 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\DirectoryUtil;
+use wcf\util\FileUtil;
 
 /**
  * Shows a list of all cache resources.

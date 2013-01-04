@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\acl\option;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\UserInputException;
 use wcf\system\acl\ACLHandler;
+use wcf\system\exception\UserInputException;
 
 /**
  * Executes acl option-related actions.

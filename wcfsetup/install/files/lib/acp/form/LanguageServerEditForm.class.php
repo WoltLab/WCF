@@ -3,8 +3,8 @@ namespace wcf\acp\form;
 use wcf\data\language\server\LanguageServer;
 use wcf\data\language\server\LanguageServerAction;
 use wcf\form\AbstractForm;
-use wcf\system\WCF;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\WCF;
 
 /**
  * Shows the language server edit form.
