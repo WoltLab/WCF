@@ -13,19 +13,13 @@ use wcf\util\StringUtil;
  * Loads and displays template.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template
  * @category	Community Framework
  */
 class TemplateEngine extends SingletonFactory {
-	/**
-	 * list of abbreviations to package id
-	 * @var	array<integer>
-	 */
-	public $abbreviations = array();
-	
 	/**
 	 * directory used to cache previously compiled templates
 	 * @var	string
@@ -108,8 +102,7 @@ class TemplateEngine extends SingletonFactory {
 	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		$this->abbreviations['wcf'] = 1;
-		$this->templatePaths = array(1 => WCF_DIR.'templates/');
+		$this->templatePaths = array('wcf' => WCF_DIR.'templates/');
 		$this->pluginNamespace = 'wcf\system\template\plugin\\';
 		$this->compileDir = WCF_DIR.'templates/compiled/';
 		
@@ -122,12 +115,10 @@ class TemplateEngine extends SingletonFactory {
 	 * Adds a new application.
 	 * 
 	 * @param	string		$abbreviation
-	 * @param	integer		$packageID
 	 * @param	string		$templatePath
 	 */
-	public function addApplication($abbreviation, $packageID, $templatePath) {
-		$this->abbreviations[$abbreviation] = $packageID;
-		$this->templatePaths[$packageID] = $templatePath;
+	public function addApplication($abbreviation, $templatePath) {
+		$this->templatePaths[$abbreviation] = $templatePath;
 	}
 	
 	/**
@@ -304,9 +295,8 @@ class TemplateEngine extends SingletonFactory {
 			if (!defined('NO_IMPORTS')) EventHandler::getInstance()->fireAction($this, 'shouldDisplay');
 		}
 		
-		$tplPackageID = $this->getPackageID($templateName, $application);
-		$compiledFilename = $this->getCompiledFilename($templateName);
-		$sourceFilename = $this->getSourceFilename($templateName, $tplPackageID);
+		$sourceFilename = $this->getSourceFilename($templateName, $application);
+		$compiledFilename = $this->getCompiledFilename($templateName, $application);
 		$metaDataFilename = $this->getMetaDataFilename($templateName);
 		$metaData = $this->getMetaData($templateName, $metaDataFilename);
 		
@@ -332,45 +322,27 @@ class TemplateEngine extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns path and corresponding file path.
-	 * 
-	 * @param	string		$templateName
-	 * @param	string		$application
-	 * @return	integer
-	 */
-	public function getPackageID($templateName, $application = 'wcf') {
-		$packageID = (isset($this->abbreviations[$application])) ? $this->abbreviations[$application] : null;
-		if ($packageID === null) {
-			throw new SystemException("Unable to find application for abbreviation '".$application."'");
-		}
-		
-		// search within application
-		if ($packageID != 1 && isset($this->templatePaths[$packageID])) {
-			$path = $this->getPath($this->templatePaths[$packageID], $templateName);
-			
-			if (!empty($path)) {
-				return $packageID;
-			}
-		}
-		
-		// search within WCF
-		$path = $this->getPath($this->templatePaths[1], $templateName);
-		if (!empty($path)) {
-			return 1;
-		}
-		
-		throw new SystemException("Unable to find template '$templateName'");
-	}
-	
-	/**
 	 * Returns the absolute filename of a template source.
 	 * 
 	 * @param	string		$templateName
-	 * @param	integer		$packageID
+	 * @param	string		$application
 	 * @return	string		$path
 	 */
-	public function getSourceFilename($templateName, $packageID) {
-		return $this->getPath($this->templatePaths[$packageID], $templateName);
+	public function getSourceFilename($templateName, $application) {
+		$sourceFilename = $this->getPath($this->templatePaths[$application], $templateName);
+		if (!empty($sourceFilename)) {
+			return $sourceFilename;
+		}
+		
+		// try to find template within WCF if not already searching WCF
+		if ($application != 'wcf') {
+			$sourceFilename = $this->getSourceFilename($templateName, 'wcf');
+			if (!empty($sourceFilename)) {
+				return $sourceFilename;
+			}
+		}
+		
+		throw new SystemException("Unable to find template '".$templateName."'");
 	}
 	
 	/**
@@ -408,10 +380,11 @@ class TemplateEngine extends SingletonFactory {
 	 * Returns the absolute filename of a compiled template.
 	 * 
 	 * @param	string		$templateName
+	 * @param	string		$application
 	 * @return	string
 	 */
-	public function getCompiledFilename($templateName) {
-		return $this->compileDir.$this->templateGroupID.'_'.$this->languageID.'_'.$templateName.'.php';
+	public function getCompiledFilename($templateName, $application) {
+		return $this->compileDir.$this->templateGroupID.'_'.$application.'_'.$this->languageID.'_'.$templateName.'.php';
 	}
 	
 	/**
@@ -449,8 +422,7 @@ class TemplateEngine extends SingletonFactory {
 				// check for meta data
 				if (!empty($metaData['include'])) {
 					foreach ($metaData['include'] as $includedTemplate) {
-						$tplPackageID = $this->getPackageID($includedTemplate, $application);
-						$includedTemplateFilename = $this->getSourceFilename($includedTemplate, $tplPackageID);
+						$includedTemplateFilename = $this->getSourceFilename($includedTemplate, $application);
 						$includedMTime = @filemtime($includedTemplateFilename);
 						
 						if ($includedMTime >= $compileMTime) {

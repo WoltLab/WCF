@@ -39,7 +39,7 @@ if (!defined('NO_IMPORTS')) {
  * It holds the database connection, access to template and language engine.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
@@ -473,7 +473,7 @@ class WCF {
 			// start application if not within ACP
 			if (!class_exists('wcf\system\WCFACP', false)) {
 				// add template path and abbreviation
-				$this->getTPL()->addApplication($abbreviation, $application->packageID, $packageDir . 'templates/');
+				$this->getTPL()->addApplication($abbreviation, $packageDir . 'templates/');
 				
 				// init application and assign it as template variable
 				$applicationObject = call_user_func(array($className, 'getInstance'));
@@ -487,7 +487,7 @@ class WCF {
 		
 		// register template path in ACP
 		if (class_exists('wcf\system\WCFACP', false)) {
-			$this->getTPL()->addApplication($abbreviation, $application->packageID, $packageDir . 'acp/templates/');
+			$this->getTPL()->addApplication($abbreviation, $packageDir . 'acp/templates/');
 		}
 		else if (!$isDependentApplication) {
 			// assign base tag
