@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * Loads and displays template during the setup process.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template
@@ -23,8 +23,13 @@ class SetupTemplateEngine extends TemplateEngine {
 	/**
 	 * @see	wcf\system\template\TemplateEngine::getSourceFilename()
 	 */
-	public function getSourceFilename($templateName, $packageID) {
-		return $this->templatePaths[PACKAGE_ID].'setup/template/'.$templateName.'.tpl';
+	public function getSourceFilename($templateName, $application) {
+		$sourceFilename = $this->templatePaths[$application].'setup/template/'.$templateName.'.tpl';
+		if (!empty($sourceFilename)) {
+			return $sourceFilename;
+		}
+		
+		throw new SystemException("Unable to find template '".$templateName."'");
 	}
 	
 	/**
@@ -39,18 +44,6 @@ class SetupTemplateEngine extends TemplateEngine {
 	 */
 	public function getMetaDataFilename($templateName) {
 		return $this->compileDir.'setup/template/compiled/'.$this->languageID.'_'.$templateName.'.meta.php';
-	}
-
-	/**
-	 * @see	wcf\system\template\TemplateEngine::getPackageID()
-	 */
-	public function getPackageID($templateName, $application = 'wcf') {
-		$path = $this->templatePaths[PACKAGE_ID].'setup/template/'.$templateName.'.tpl';
-		if (file_exists($path)) {
-			return PACKAGE_ID;
-		}
-		
-		throw new SystemException("Unable to find template '$templateName'");
 	}
 	
 	/**
