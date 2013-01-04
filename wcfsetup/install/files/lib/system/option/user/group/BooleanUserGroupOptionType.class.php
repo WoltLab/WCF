@@ -6,7 +6,7 @@ use wcf\system\option\BooleanOptionType;
  * User group option type implementation for boolean values.
  * 
  * The merge of option values returns true, if at least one value is true.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -15,6 +15,13 @@ use wcf\system\option\BooleanOptionType;
  * @category	Community Framework
  */
 class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroupOptionType {
+	/**
+	 * @see	wcf\system\option\user\group\IUserGroupOptionType::diff()
+	 */
+	public function diff($defaultValue, $groupValue) {
+		return $this->merge($defaultValue, $groupValue);
+	}
+	
 	/**
 	 * @see	wcf\system\option\user\group\IUserGroupOptionType::merge()
 	 */

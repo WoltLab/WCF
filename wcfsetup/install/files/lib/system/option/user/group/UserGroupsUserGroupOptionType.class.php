@@ -67,9 +67,9 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	}
 	
 	/**
-	 * @see	wcf\system\option\user\group\IUserGroupOptionType::merge()
+	 * @see	wcf\system\option\user\group\IUserGroupOptionType::diff()
 	 */
-	public function merge($defaultValue, $groupValue) {
+	public function diff($defaultValue, $groupValue) {
 		$defaultValue = explode(',', $defaultValue);
 		$groupValue = explode(',', $groupValue);
 		
@@ -79,5 +79,15 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 		}
 		
 		return implode(',', $result);
+	}
+	
+	/**
+	 * @see	wcf\system\option\user\group\IUserGroupOptionType::merge()
+	 */
+	public function merge($defaultValue, $groupValue) {
+		$defaultValue = empty($defaultValue) ? array() : explode(',', StringUtil::unifyNewlines($defaultValue));
+		$groupValue = empty($groupValue) ? array() : explode(',', StringUtil::unifyNewlines($groupValue));
+		
+		return implode(',', array_unique(array_merge($defaultValue, $groupValue)));
 	}
 }
