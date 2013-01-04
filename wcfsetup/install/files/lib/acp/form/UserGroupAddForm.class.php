@@ -127,7 +127,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 			$defaultValue = $defaultGroup->getGroupOption($option->optionName);
 			$typeObject = $this->optionHandler->getTypeObject($option->optionType);
 			
-			$newValue = $typeObject->merge($defaultValue, $optionValues[$option->optionID]);
+			$newValue = $typeObject->diff($defaultValue, $optionValues[$option->optionID]);
 			if ($newValue !== null) {
 				$saveOptions[$option->optionID] = $newValue;
 			}
