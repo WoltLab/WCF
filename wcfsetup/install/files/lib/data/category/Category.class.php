@@ -74,6 +74,15 @@ class Category extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
+	 * Returns the name of the category type of this category.
+	 *
+	 * @return	string
+	 */
+	public function getCategoryTypeName() {
+		return CategoryHandler::getInstance()->getObjectType($this->objectTypeID)->objectType;
+	}
+	
+	/**
 	 * @see	wcf\system\request\IRouteController::getID()
 	 */
 	public function getID() {
