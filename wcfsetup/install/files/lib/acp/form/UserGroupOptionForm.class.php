@@ -199,7 +199,7 @@ class UserGroupOptionForm extends AbstractForm {
 			
 			// check if not editing default value
 			if ($groupID != $this->groupEveryone->groupID) {
-				$newValue = $this->optionType->merge($this->defaultValue, $optionValue);
+				$newValue = $this->optionType->diff($this->defaultValue, $optionValue);
 				if ($newValue === null) {
 					unset($this->values[$groupID]);
 				}
