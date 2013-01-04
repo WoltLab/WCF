@@ -6,7 +6,7 @@
  * See: https://github.com/squizlabs/PHP_CodeSniffer/blob/master/CodeSniffer/Standards/Squiz/Sniffs/Classes/ClassFileNameSniff.php
  * 
  * @author	Tim Duesterhus
- * @license	BSD Licence <https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @category	Community Framework
  */

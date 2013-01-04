@@ -1,9 +1,8 @@
 <?php
 namespace wcf\system\package;
-use wcf\data\package\Package;
-
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueueList;
+use wcf\data\package\Package;
 use wcf\system\exception\SystemException;
 use wcf\system\Callback;
 use wcf\system\WCF;
