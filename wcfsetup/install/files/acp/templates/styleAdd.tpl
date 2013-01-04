@@ -206,6 +206,8 @@
 								{/if}
 							</small>
 						{/if}
+						
+						{include file='multipleLanguageInputJavascript' elementIdentifier='styleDescription' forceSelection=true}
 					</dd>
 				</dl>
 			</fieldset>

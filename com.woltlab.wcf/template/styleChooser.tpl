@@ -10,7 +10,7 @@
 						<hgroup class="containerHeadline">
 							<h1>{$style->styleName}</h1>
 						</hgroup>
-						{if $style->styleDescription}<small>{$style->styleDescription}</small>{/if}
+						{if $style->styleDescription}<small>{lang}{@$style->styleDescription}{/lang}</small>{/if}
 					</div>
 				</div>
 			</li>

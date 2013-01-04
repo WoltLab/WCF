@@ -28,9 +28,6 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 		// position
 		$result['menuPosition'] = (!empty($data['elements']['position']) && $data['elements']['position'] == 'footer') ? 'footer' : 'header';
 		
-		// controller
-		$result['menuItemController'] = (isset($data['elements']['controller'])) ? $data['elements']['controller'] : '';
-		
 		// class name
 		if (!empty($data['elements']['classname'])) {
 			$result['className'] = $data['elements']['classname'];

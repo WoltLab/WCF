@@ -4,6 +4,7 @@ use wcf\data\user\User;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
+use wcf\util\PasswordUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -36,7 +37,7 @@ abstract class AbstractAuthedPage extends AbstractPage {
 			list($userID, $token) = explode('-', StringUtil::trim($_REQUEST['at']));
 			
 			if (WCF::getUser()->userID) {
-				if ($userID == WCF::getUser()->userID && WCF::getUser()->accessToken == $token) {
+				if ($userID == WCF::getUser()->userID && PasswordUtil::secureCompare(WCF::getUser()->accessToken, $token)) {
 					// everything is fine, but we are already logged in
 					return;
 				}
@@ -47,7 +48,7 @@ abstract class AbstractAuthedPage extends AbstractPage {
 			}
 			else {
 				$user = new User($userID);
-				if ($user->accessToken == $token) {
+				if (PasswordUtil::secureCompare($user->accessToken, $token)) {
 					// token is valid -> change user
 					SessionHandler::getInstance()->changeUser($user, true);
 				}

@@ -1,5 +1,7 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\style\StyleEditor;
+
 use wcf\data\package\Package;
 use wcf\data\style\StyleAction;
 use wcf\data\template\group\TemplateGroupList;
@@ -7,6 +9,7 @@ use wcf\form\AbstractForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\I18nHandler;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -174,6 +177,8 @@ class StyleAddForm extends AbstractForm {
 	public function readParameters() {
 		parent::readParameters();
 		
+		I18nHandler::getInstance()->register('styleDescription');
+		
 		$this->setVariables();
 		$this->readStyleVariables();
 		
@@ -196,6 +201,8 @@ class StyleAddForm extends AbstractForm {
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
+		
+		I18nHandler::getInstance()->readValues();
 		
 		// ignore everything except well-formed rgba()
 		$regEx = new Regex('rgba\(\d{1,3}, \d{1,3}, \d{1,3}, (1|1\.00?|0|0?\.[0-9]{1,2})\)');
@@ -271,6 +278,11 @@ class StyleAddForm extends AbstractForm {
 		}
 		else if (!Package::isValidVersion($this->styleVersion)) {
 			throw new UserInputException('styleVersion', 'notValid');
+		}
+		
+		// validate style description
+		if (!I18nHandler::getInstance()->validateValue('styleDescription', true)) {
+			throw new UserInputException('styleDescription');
 		}
 		
 		// validate template group id
@@ -478,8 +490,8 @@ class StyleAddForm extends AbstractForm {
 			'data' => array(
 				'styleName' => $this->styleName,
 				'templateGroupID' => $this->templateGroupID,
-				'disabled' => 1, // styles are disabled by default
-				'styleDescription' => ($this->styleDescription ? $this->styleDescription : null),
+				'isDisabled' => 1, // styles are disabled by default
+				'styleDescription' => '',
 				'styleVersion' => $this->styleVersion,
 				'styleDate' => $this->styleDate,
 				'imagePath' => $this->imagePath,
@@ -492,7 +504,16 @@ class StyleAddForm extends AbstractForm {
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
 		));
-		$this->objectAction->executeAction();
+		$returnValues = $this->objectAction->executeAction();
+		$style = $returnValues['returnValues'];
+		
+		// save style description
+		I18nHandler::getInstance()->save('styleDescription', 'wcf.style.styleDescription'.$style->styleID, 'wcf.style');
+		
+		$styleEditor = new StyleEditor($style);
+		$styleEditor->update(array(
+			'styleDescription' => 'wcf.style.styleDescription'.$style->styleID
+		));
 		
 		// call saved event
 		$this->saved();
@@ -516,6 +537,8 @@ class StyleAddForm extends AbstractForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
+		
+		I18nHandler::getInstance()->assignVariables();
 		
 		WCF::getTPL()->assign(array(
 			'action' => 'add',
