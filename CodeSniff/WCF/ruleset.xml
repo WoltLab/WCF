@@ -16,7 +16,6 @@
 	<rule ref="Generic.NamingConventions.UpperCaseConstantName" />
 	<rule ref="Generic.PHP.CharacterBeforePHPOpeningTag" />
 	<rule ref="Generic.PHP.DisallowShortOpenTag" />
-	<rule ref="Generic.PHP.ForbiddenFunctions" />
 	<rule ref="Generic.PHP.LowerCaseConstant" />
 	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent" />
 	<rule ref="Squiz.Arrays.ArrayBracketSpacing" />
@@ -29,6 +28,7 @@
 	<rule ref="Squiz.ControlStructures.ForLoopDeclaration" />
 	<rule ref="Squiz.ControlStructures.LowercaseDeclaration" />
 	<rule ref="Squiz.Operators.ValidLogicalOperators" />
+	<rule ref="Squiz.PHP.ForbiddenFunctions" />
 	<rule ref="WCF.Classes.ClassFileName" />
 	<rule ref="WCF.ControlStructures.ControlSignature" />
 	<rule ref="WCF.WhiteSpace.SuperfluousWhitespace" />
