@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\style;
+use wcf\data\language\LanguageList;
 use wcf\data\package\Package;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupEditor;
@@ -11,6 +12,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\image\ImageHandler;
 use wcf\system\io\Tar;
 use wcf\system\io\TarWriter;
+use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
 use wcf\system\style\StyleCompiler;
 use wcf\system\Regex;
@@ -128,7 +130,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$xpath = $xml->xpath();
 		
 		$data = array(
-			'name' => '', 'description' => '', 'version' => '', 'image' => '', 'copyright' => '', 'default' => false,
+			'name' => '', 'description' => array(), 'version' => '', 'image' => '', 'copyright' => '', 'default' => false,
 			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '',
 			'variables' => '', 'date' => '0000-00-00', 'icons' => '', 'iconsPath' => '', 'imagesPath' => ''
 		);
@@ -175,6 +177,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 								$data['default'] = true;
 							break;
 							
+							case 'description':
+								if ($element->hasAttribute('language')) {
+									$data['description'][$element->getAttribute('language')] = $element->nodeValue;
+								}
+							break;
+							
 							case 'stylename':
 								$data['name'] = $element->nodeValue;
 							break;
@@ -188,7 +196,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							break;
 							
 							case 'copyright':
-							case 'description':
 							case 'image':
 							case 'license':
 								$data[$element->tagName] = $element->nodeValue;
@@ -286,7 +293,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$styleData = array(
 			'styleName' => $data['name'],
 			'variables' => $data['variables'],
-			'styleDescription' => $data['description'],
 			'styleVersion' => $data['version'],
 			'styleDate' => $data['date'],
 			'copyright' => $data['copyright'],
@@ -521,11 +527,64 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$style = new StyleEditor(self::create($styleData));
 		}
 		
+		// handle descriptions
+		if (!empty($data['description'])) {
+			self::saveLocalizedDescriptions($style, $data['description']);
+		}
+		
 		if ($data['default']) {
 			$style->setAsDefault();
 		}
 		
 		return $style;
+	}
+	
+	/**
+	 * Saves localized style descriptions.
+	 * 
+	 * @param	wcf\data\style\StyleEditor	$styleEditor
+	 * @param	array<string>			$descriptions
+	 */
+	protected static function saveLocalizedDescriptions(StyleEditor $styleEditor, array $descriptions) {
+		// localize package information
+		$sql = "INSERT INTO	wcf".WCF_N."_language_item
+					(languageID, languageItem, languageItemValue, languageCategoryID, packageID)
+			VALUES		(?, ?, ?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		// get language list
+		$languageList = new LanguageList();
+		$languageList->sqlLimit = 0;
+		$languageList->readObjects();
+		
+		// workaround for WCFSetup
+		if (!PACKAGE_ID) {
+			$sql = "SELECT	*
+				FROM	wcf".WCF_N."_language_category
+				WHERE	languageCategory = ?";
+			$statement2 = WCF::getDB()->prepareStatement($sql);
+			$statement2->execute(array('wcf.style'));
+			$languageCategory = $statement2->fetchObject('wcf\data\language\category\LanguageCategory');
+		}
+		else {
+			$languageCategory = LanguageFactory::getInstance()->getCategory('wcf.style');
+		}
+		
+		foreach ($languageList as $language) {
+			if (isset($descriptions[$language->languageCode])) {
+				$statement->execute(array(
+					$language->languageID,
+					'wcf.style.styleDescription'.$styleEditor->styleID,
+					$descriptions[$language->languageCode],
+					$languageCategory->languageCategoryID,
+					$styleEditor->packageID
+				));
+			}
+		}
+		
+		$styleEditor->update(array(
+			'styleDescription' => 'wcf.style.styleDescription'.$styleEditor->styleID
+		));
 	}
 	
 	/**

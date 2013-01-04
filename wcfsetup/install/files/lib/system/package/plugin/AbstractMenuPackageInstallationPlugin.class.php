@@ -42,6 +42,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 		// merge values and default values
 		return array(
 			'menuItem' => $data['attributes']['name'],
+			'menuItemController' => isset($data['elements']['controller']) ? $data['elements']['controller'] : '',
 			'menuItemLink' => (isset($data['elements']['link'])) ? $data['elements']['link'] : '',
 			'options' => (isset($data['elements']['options'])) ? $data['elements']['options'] : '',
 			'parentMenuItem' => (isset($data['elements']['parent'])) ? $data['elements']['parent'] : '',

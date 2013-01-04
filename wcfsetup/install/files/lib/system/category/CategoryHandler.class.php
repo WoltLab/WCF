@@ -67,6 +67,30 @@ class CategoryHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns a list of accessible categories.
+	 *
+	 * @param	string		$objectType
+	 * @param	array		$permissions		filters categories by given permissions
+	 * @return	array<integer>				comma separated category ids
+	 */
+	public function getAccessibleCategoryIDs($objectType, array $permissions) {
+		$categoryIDs = array();
+		foreach ($this->getCategories($objectType) as $category) {
+			$result = true;
+			$categoryPermissions = CategoryPermissionHandler::getInstance()->getPermissions($category);
+			foreach ($permissions as $permission) {
+				$result = $result && !empty($categoryPermissions[$permission]);
+			}
+				
+			if ($result) {
+				$categoryIDs[] = $category->categoryID;
+			}
+		}
+	
+		return $categoryIDs;
+	}
+	
+	/**
 	 * Returns the category object with the given category id.
 	 * 
 	 * @param	integer		$categoryID

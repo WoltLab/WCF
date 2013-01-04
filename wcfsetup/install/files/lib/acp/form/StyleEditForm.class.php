@@ -4,6 +4,7 @@ use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
 /**
@@ -73,6 +74,8 @@ class StyleEditForm extends StyleAddForm {
 	public function readData() {
 		parent::readData();
 		
+		I18nHandler::getInstance()->setOptions('styleDescription', PACKAGE_ID, $this->style->styleDescription, 'wcf.style.styleDescription\d+');
+		
 		if (empty($_POST)) {
 			$this->authorName = $this->style->authorName;
 			$this->authorURL = $this->style->authorURL;
@@ -98,7 +101,6 @@ class StyleEditForm extends StyleAddForm {
 			'data' => array(
 				'styleName' => $this->styleName,
 				'templateGroupID' => $this->templateGroupID,
-				'styleDescription' => ($this->styleDescription ? $this->styleDescription : null),
 				'styleVersion' => $this->styleVersion,
 				'styleDate' => $this->styleDate,
 				'imagePath' => $this->imagePath,
@@ -112,6 +114,9 @@ class StyleEditForm extends StyleAddForm {
 			'variables' => $this->variables
 		));
 		$this->objectAction->executeAction();
+		
+		// save description
+		I18nHandler::getInstance()->save('styleDescription', $this->style->styleDescription, 'wcf.style');
 		
 		// call saved event
 		$this->saved();
@@ -127,6 +132,8 @@ class StyleEditForm extends StyleAddForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
+		
+		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
 		WCF::getTPL()->assign(array(
 			'action' => 'edit',

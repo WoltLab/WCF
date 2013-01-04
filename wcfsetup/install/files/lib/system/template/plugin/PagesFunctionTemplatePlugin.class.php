@@ -2,6 +2,7 @@
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
+use wcf\system\request\RequestHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
@@ -215,20 +216,17 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	}
 	
 	/**
-	 * Returns the icon path for the icon with the given name.
+	 * Returns the path to the icon with the given name.
 	 * 
 	 * @param	string		$iconName
 	 * @return	string
 	 */
 	private static function getIconPath($iconName) {
-		// todo: 
-		//	1. use RequestHandler to determine if in ACP
-		//	2. replace RELATIVE_WCF_DIR
-		if (class_exists('wcf\system\WCFACP', false)) {
-			return RELATIVE_WCF_DIR.'icon/'.$iconName.'.svg';
+		if (RequestHandler::getInstance()->isACPRequest()) {
+			return WCF::getPath().'icon/'.$iconName.'.svg';
 		}
 		else {
-			return StyleHandler::getInstance()->getStyle()->getIconPath($iconName, 'S');
+			return StyleHandler::getInstance()->getStyle()->getIconPath($iconName);
 		}
 	}
 }

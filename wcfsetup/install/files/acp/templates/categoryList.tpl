@@ -12,7 +12,7 @@
 				new WCF.ACP.Category.Delete('wcf\\data\\category\\CategoryAction', $('.jsCategory'));
 			{/if}
 			{if $objectType->getProcessor()->canEditCategory()}
-				new WCF.Action.Toggle('wcf\\data\\category\\CategoryAction', '.jsCategory', '> .buttons > .jsToggleButton');
+				new WCF.Action.Toggle('wcf\\data\\category\\CategoryAction', '.jsCategory', '> .sortableNodeLabel > .buttons > .jsToggleButton');
 				
 				{if $categoryNodeList|count > 1}
 					var sortableNodes = $('.sortableNode');
@@ -98,7 +98,15 @@
 				
 				<li class="{if $objectType->getProcessor()->canEditCategory() && $categoryNodeList|count > 1}sortableNode {if $categoryNodeList->getDepth() == $objectType->getProcessor()->getMaximumNestingLevel()}sortableNoNesting {/if}{/if}jsCategory" data-object-id="{@$category->categoryID}"{if $collapsedCategoryIDs|is_array} data-is-open="{if $collapsedCategoryIDs[$category->categoryID]|isset}0{else}1{/if}"{/if}>
 					<span class="sortableNodeLabel">
-						<span class="buttons">
+						<span class="title">
+							{if $objectType->getProcessor()->canEditCategory()}
+								<a href="{link controller=$editController application=$objectType->getProcessor()->getApplication() id=$category->categoryID title=$category->getTitle()}{/link}">{$category->getTitle()}</a>
+							{else}
+								{$category->getTitle()}
+							{/if}
+						</span>
+						
+						<span class="statusDisplay buttons">
 							{if $objectType->getProcessor()->canEditCategory()}
 								<a href="{link controller=$editController application=$objectType->getProcessor()->getApplication() id=$category->categoryID title=$category->getTitle()}{/link}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 jsTooltip" /></a>
 							{else}
@@ -112,17 +120,12 @@
 							{/if}
 							
 							{if $objectType->getProcessor()->canEditCategory()}
-								{* todo: toggle icons aren't clickable *}
 								<img src="{@$__wcf->getPath()}icon/{if !$category->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$category->isDisabled}disable{else}enable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$category->categoryID}" />
 							{else}
 								<img src="{@$__wcf->getPath()}icon/{if !$category->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$category->isDisabled}enable{else}disable{/if}{/lang}" class="icon16 disabled" />
 							{/if}
 							
 							{event name='buttons'}
-						</span>
-						
-						<span class="title">
-							{$category->getTitle()}
 						</span>
 					</span>
 					
@@ -137,7 +140,7 @@
 		
 		{if $objectType->getProcessor()->canEditCategory() && $categoryNodeList|count > 1}
 			<div class="formSubmit">
-				<button class="button default" data-type="submit">{lang}wcf.global.button.save{/lang}</button>
+				<button class="button buttonPrimary" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
 			</div>
 		{/if}
 	</section>
