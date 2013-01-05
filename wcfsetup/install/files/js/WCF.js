@@ -1811,7 +1811,7 @@ WCF.Action.Delete = Class.extend({
 		for (var $index in this._containers) {
 			var $container = $('#' + this._containers[$index]);
 			if (WCF.inArray($container.find('.jsDeleteButton').data('objectID'), objectIDs)) {
-				$container.wcfBlindOut('up', function() { $container.remove(); });
+				$container.wcfBlindOut('up', function() { $(this).remove(); });
 			}
 		}
 	}
