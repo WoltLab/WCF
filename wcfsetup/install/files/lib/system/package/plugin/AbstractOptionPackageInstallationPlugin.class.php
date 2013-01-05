@@ -259,7 +259,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @param	string		$categoryName
 	 * @param	integer		$existingOptionID
 	 */
-	protected abstract function saveOption($option, $categoryName, $existingOptionID = 0);
+	abstract protected function saveOption($option, $categoryName, $existingOptionID = 0);
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()

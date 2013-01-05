@@ -168,7 +168,7 @@ class SMTPMailSender extends MailSender {
 	/**
 	 * Disconnects the Client-Server connection
 	 */
-	function disconnect() {
+	public function disconnect() {
 		if ($this->connection === null) {
 			return;
 		}

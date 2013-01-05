@@ -7,7 +7,7 @@
  * @package	com.woltlab.wcf
  * @category	Community Framework
  */
-class WCF_Sniffs_Namespaces_ClassMustBeImportedSniff  implements PHP_CodeSniffer_Sniff {
+class WCF_Sniffs_Namespaces_ClassMustBeImportedSniff implements PHP_CodeSniffer_Sniff {
 	/**
 	 * Returns an array of tokens this test wants to listen for.
 	 *
