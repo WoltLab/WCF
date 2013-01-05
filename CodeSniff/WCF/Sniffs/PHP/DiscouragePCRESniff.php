@@ -3,7 +3,7 @@
  * Discourages use of raw PCRE functions. \wcf\system\Regex is a superior way to use Regex.
  * 
  * @author	Tim Duesterhus
- * @license	BSD Licence <https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt>
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @category	Community Framework
  */
