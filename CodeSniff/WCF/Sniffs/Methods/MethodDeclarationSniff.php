@@ -26,8 +26,7 @@ class WCF_Sniffs_Methods_MethodDeclarationSniff extends PHP_CodeSniffer_Standard
 	 *
 	 * @return void
 	 */
-	protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
-	{
+	protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope) {
 		$tokens = $phpcsFile->getTokens();
 		
 		$methodName = $phpcsFile->getDeclarationName($stackPtr);

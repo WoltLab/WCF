@@ -54,6 +54,13 @@ class WCF_Sniffs_Namespaces_ClassMustBeImportedSniff implements PHP_CodeSniffer_
 						$class .= $tokens[$i]['content'];
 					}
 					
+					$extends = $phpcsFile->findPrevious(array(T_EXTENDS), $stackPtr - 1, null, false, null, true);
+					// are we trying to extend a class with the same name?
+					if ($extends !== false) {
+						$newClass = $phpcsFile->findPrevious(T_STRING, $extends);
+						if ($tokens[$newClass]['content'] == $tokens[$end - 1]['content']) return;
+					}
+					
 					$error = 'Namespaced classes (%s) must be imported with use.';
 					$data = array(
 						$class
