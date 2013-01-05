@@ -38,6 +38,7 @@ class Mail {
 	 */
 	protected $body = '';
 	
+	// TODO: Should this be a constant?
 	public static $crlf = "\n";
 	
 	/**
@@ -183,7 +184,7 @@ class Mail {
 	 */
 	public static function buildAddress($name, $email, $encodeName = true) {
 		if (!empty($name) && MAIL_USE_FORMATTED_ADDRESS) {
-			if ($encodeName) $name = Mail::encodeMIMEHeader($name);
+			if ($encodeName) $name = self::encodeMIMEHeader($name);
 			if (!preg_match('/^[a-z0-9 ]*$/i', $name)) return '"'.str_replace('"', '\"', $name).'" <'.$email.'>';
 			else return $name . ' <'.$email.'>';
 		}
@@ -453,7 +454,7 @@ class Mail {
 	 */
 	public static function encodeMIMEHeader($string) {
 		if (function_exists('mb_encode_mimeheader')) {
-			$string = mb_encode_mimeheader($string, 'UTF-8', 'Q', Mail::$crlf);
+			$string = mb_encode_mimeheader($string, 'UTF-8', 'Q', self::$crlf);
 		}
 		else {
 			$string = '=?UTF-8?Q?'.preg_replace('/[^\r\n]{73}[^=\r\n]{2}/', "$0=\r\n", str_replace("%", "=", str_replace("%0D%0A", "\r\n", str_replace("%20", " ", rawurlencode($string))))).'?=';

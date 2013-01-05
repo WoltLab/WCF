@@ -458,7 +458,7 @@ final class FileUtil {
 			
 			// detect the UTF-8 BOM.
 			if (($workArray['1'] == $firstByte) && ($workArray['2'] == $secondByte) && ($workArray['3'] == $thirdByte)) {
-				$tmpname = FileUtil::getTemporaryFilename('stripBoms_');
+				$tmpname = self::getTemporaryFilename('stripBoms_');
 				$tmpStream = fopen($tmpname, 'w+');
 				fwrite($tmpStream, $sourceContent);
 				rewind($tmpStream);

@@ -91,16 +91,16 @@ final class StringUtil {
 		if (is_object($string)) $string = $string->__toString();
 		
 		// escape backslash
-		$string = StringUtil::replace("\\", "\\\\", $string);
+		$string = self::replace("\\", "\\\\", $string);
 		
 		// escape singe quote
-		$string = StringUtil::replace("'", "\'", $string);
+		$string = self::replace("'", "\'", $string);
 		
 		// escape new lines
-		$string = StringUtil::replace("\n", '\n', $string);
+		$string = self::replace("\n", '\n', $string);
 		
 		// escape slashes
-		$string = StringUtil::replace("/", '\/', $string);
+		$string = self::replace("/", '\/', $string);
 		
 		return $string;
 	}
@@ -406,9 +406,9 @@ final class StringUtil {
 	 */
 	public static function encodeAllChars($string) {
 		$result = '';
-		for ($i = 0, $j = StringUtil::length($string); $i < $j; $i++) {
-			$char = StringUtil::substring($string, $i, 1);
-			$result .= '&#'.StringUtil::getCharValue($char).';';
+		for ($i = 0, $j = self::length($string); $i < $j; $i++) {
+			$char = self::substring($string, $i, 1);
+			$result .= '&#'.self::getCharValue($char).';';
 		}
 		
 		return $result;
@@ -529,7 +529,7 @@ final class StringUtil {
 	 * @param	boolean		$breakWords	should words be broken in the middle
 	 * @return	string
 	 */
-	public static function truncate($string, $length = 80, $etc = StringUtil::HELLIP, $breakWords = false) {
+	public static function truncate($string, $length = 80, $etc = self::HELLIP, $breakWords = false) {
 		if ($length == 0) {
 			return '';
 		}
@@ -557,15 +557,15 @@ final class StringUtil {
 	 * @param 	string		$etc			ending string which will be appended after truncating
 	 * @return 	string					truncated string
 	 */
-	public static function truncateHTML($string, $length = 500, $wordWrap = true, $etc = StringUtil::HELLIP) {
-		if (StringUtil::length(StringUtil::stripHTML($string)) <= $length) {
+	public static function truncateHTML($string, $length = 500, $wordWrap = true, $etc = self::HELLIP) {
+		if (self::length(self::stripHTML($string)) <= $length) {
 			return $string;
 		}
 		$openTags = array();
 		$truncatedString = '';
 	
 		// initalize length counter with the ending length
-		$totalLength = StringUtil::length($etc);
+		$totalLength = self::length($etc);
 	
 		preg_match_all('/(<\/?([\w+]+)[^>]*>)?([^<>]*)/', $string, $tags, PREG_SET_ORDER);
 	
@@ -591,7 +591,7 @@ final class StringUtil {
 			$truncatedString .= $tag[1];
 	
 			// get length of the content without entities. If the content is too long, keep entities intact
-			$contentLength = StringUtil::length(StringUtil::decodeHTML($tag[3]));
+			$contentLength = self::length(self::decodeHTML($tag[3]));
 			if ($contentLength + $totalLength > $length) {
 				$left = $length - $totalLength;
 				$entitiesLength = 0;
@@ -599,14 +599,14 @@ final class StringUtil {
 					foreach ($entities[0] as $entity) {
 						if ($entity[1] + 1 - $entitiesLength <= $left) {
 							$left--;
-							$entitiesLength += StringUtil::length($entity[0]);
+							$entitiesLength += self::length($entity[0]);
 						}
 						else {
 							break;
 						}
 					}
 				}
-				$truncatedString .= StringUtil::substring($tag[3], 0, $left + $entitiesLength);
+				$truncatedString .= self::substring($tag[3], 0, $left + $entitiesLength);
 				break;
 			}
 			else {
@@ -620,23 +620,23 @@ final class StringUtil {
 	
 		// if word wrap is active search for the last word change
 		if ($wordWrap) {
-			$lastWhitespace = StringUtil::lastIndexOf($truncatedString, ' ');
+			$lastWhitespace = self::lastIndexOf($truncatedString, ' ');
 			// check if inside a tag
-			$lastOpeningTag = StringUtil::lastIndexOf($truncatedString, '<');
+			$lastOpeningTag = self::lastIndexOf($truncatedString, '<');
 			if ($lastOpeningTag < $lastWhitespace) {
-				$lastClosingTag = StringUtil::lastIndexOf($truncatedString, '>');
+				$lastClosingTag = self::lastIndexOf($truncatedString, '>');
 				if (($lastClosingTag === false || $lastClosingTag > $lastWhitespace) && $lastClosingTag > $lastOpeningTag) {
 					$lastWhitespace = $lastOpeningTag;
 					array_shift($openTags);
 					if ($truncatedString[$lastWhitespace] != ' ') {
-						$firstPart = StringUtil::substring($truncatedString, 0, $lastWhitespace);
-						$secondPart = StringUtil::substring($truncatedString, $lastWhitespace + 1);
+						$firstPart = self::substring($truncatedString, 0, $lastWhitespace);
+						$secondPart = self::substring($truncatedString, $lastWhitespace + 1);
 						$truncatedString = $firstPart.' '.$secondPart;
 					}
 				}
 			}
 			if ($lastWhitespace !== false) {
-				$endString = StringUtil::substring($truncatedString, $lastWhitespace);
+				$endString = self::substring($truncatedString, $lastWhitespace);
 				preg_match_all('/<\/([a-z]+)>/', $endString, $tagOverhead, PREG_SET_ORDER);
 				if (count($tagOverhead)) {
 					foreach ($tagOverhead as $tag) {
@@ -645,7 +645,7 @@ final class StringUtil {
 						}
 					}
 				}
-				$truncatedString = StringUtil::substring($truncatedString, 0, $lastWhitespace);
+				$truncatedString = self::substring($truncatedString, 0, $lastWhitespace);
 			}
 		}
 	

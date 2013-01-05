@@ -378,10 +378,10 @@ class WCF {
 	 */
 	protected function initStyle() {
 		if (isset($_REQUEST['styleID'])) {
-			WCF::getSession()->setStyleID(intval($_REQUEST['styleID']));
+			self::getSession()->setStyleID(intval($_REQUEST['styleID']));
 		}
 		
-		StyleHandler::getInstance()->changeStyle(WCF::getSession()->getStyleID());
+		StyleHandler::getInstance()->changeStyle(self::getSession()->getStyleID());
 	}
 	
 	/**
@@ -389,17 +389,17 @@ class WCF {
 	 */
 	protected function initBlacklist() {
 		if (defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
-			if (!StringUtil::executeWordFilter(WCF::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
+			if (!StringUtil::executeWordFilter(self::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
 				throw new PermissionDeniedException();
 			}
 		}
 		if (defined('BLACKLIST_USER_AGENTS') && BLACKLIST_USER_AGENTS != '') {
-			if (!StringUtil::executeWordFilter(WCF::getSession()->userAgent, BLACKLIST_USER_AGENTS)) {
+			if (!StringUtil::executeWordFilter(self::getSession()->userAgent, BLACKLIST_USER_AGENTS)) {
 				throw new PermissionDeniedException();
 			}
 		}
 		if (defined('BLACKLIST_HOSTNAMES') && BLACKLIST_HOSTNAMES != '') {
-			if (!StringUtil::executeWordFilter(@gethostbyaddr(WCF::getSession()->ipAddress), BLACKLIST_HOSTNAMES)) {
+			if (!StringUtil::executeWordFilter(@gethostbyaddr(self::getSession()->ipAddress), BLACKLIST_HOSTNAMES)) {
 				throw new PermissionDeniedException();
 			}
 		}

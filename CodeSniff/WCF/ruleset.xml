@@ -20,7 +20,7 @@
 	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent" />
 	<rule ref="Squiz.Arrays.ArrayBracketSpacing" />
 	<rule ref="Squiz.Classes.LowercaseClassKeywords" />
-	<!--rule ref="Squiz.Classes.SelfMemberReference" /--> <!-- TODO: Is this wanted? -->
+	<rule ref="Squiz.Classes.SelfMemberReference" /> <!-- TODO: Is this wanted? -->
 	<rule ref="Squiz.Classes.ValidClassName" />
 	<rule ref="Squiz.Commenting.DocCommentAlignment" />
 	<rule ref="Squiz.ControlStructures.ElseIfDeclaration" />

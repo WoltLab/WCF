@@ -339,7 +339,7 @@ class Package extends DatabaseObject {
 		$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$package->packageDir));
 		$file = new File($packageDir.PackageInstallationDispatcher::CONFIG_FILE);
 		$file->write("<?php\n");
-		$prefix = strtoupper(Package::getAbbreviation($package->package));
+		$prefix = strtoupper(self::getAbbreviation($package->package));
 		
 		$file->write("// ".$package->package." (packageID ".$package->packageID.")\n");
 		$file->write("if (!defined('".$prefix."_DIR')) define('".$prefix."_DIR', dirname(__FILE__).'/');\n");

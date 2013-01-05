@@ -111,29 +111,29 @@ class UserOption extends Option {
 	 */
 	public function isVisible() {
 		// proceed if option is visible for all
-		if ($this->visible & UserOption::VISIBILITY_GUEST) {
+		if ($this->visible & self::VISIBILITY_GUEST) {
 			return true;
 		}
 		
 		// proceed if option is visible for registered users and current user is logged in
-		if (($this->visible & UserOption::VISIBILITY_REGISTERED) && WCF::getUser()->userID) {
+		if (($this->visible & self::VISIBILITY_REGISTERED) && WCF::getUser()->userID) {
 			return true;
 		}
 		
 		// check admin permissions
-		if ($this->visible & UserOption::VISIBILITY_ADMINISTRATOR) {
+		if ($this->visible & self::VISIBILITY_ADMINISTRATOR) {
 			if (WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
 				return true;
 			}
 		}
 		
 		// check owner state
-		if ($this->visible & UserOption::VISIBILITY_OWNER) {
+		if ($this->visible & self::VISIBILITY_OWNER) {
 			if ($this->user !== null && $this->user->userID == WCF::getUser()->userID) {
 				return true;
 			}
 		}
-				
+		
 		return false;
 	}
 	
@@ -144,14 +144,15 @@ class UserOption extends Option {
 	 */
 	public function isEditable() {
 		// check admin permissions
-		if ($this->editable & UserOption::EDITABILITY_ADMINISTRATOR) {
+		if ($this->editable & self::EDITABILITY_ADMINISTRATOR) {
 			if (WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
 				return true;
 			}
 		}
-				
+		
 		// check owner state
-		if ($this->editable & UserOption::VISIBILITY_OWNER) {
+		// TODO: Shouldn't this be: EDITABILITY_OWNER?
+		if ($this->editable & self::VISIBILITY_OWNER) {
 			if ($this->user === null || $this->user->userID == WCF::getUser()->userID) {
 				return true;
 			}
