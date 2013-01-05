@@ -7,7 +7,7 @@
  * @package	com.woltlab.wcf
  * @category	Community Framework
  */
-class WCF_Sniffs_PHP_DiscouragePCRESniff extends Generic_Sniffs_PHP_ForbiddenFunctionsSniff {
+class WCF_Sniffs_PHP_DiscouragePCRESniff/* extends Generic_Sniffs_PHP_ForbiddenFunctionsSniff*/ {
 	/**
 	 * A list of forbidden functions with their alternatives.
 	 *

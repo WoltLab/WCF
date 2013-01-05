@@ -31,7 +31,7 @@
 	<rule ref="Squiz.PHP.ForbiddenFunctions" />
 	<rule ref="WCF.Classes.ClassFileName" />
 	<rule ref="WCF.ControlStructures.ControlSignature" />
-	<rule ref="WCF.PHP.DiscouragePCRE" />
+	<!--rule ref="WCF.PHP.DiscouragePCRE" /--> <!-- TODO: Sniff is disabled by commenting out the extends in the sniff file! -->
 	<rule ref="WCF.Namespaces.SortedUseDeclaration" />
 	<rule ref="WCF.Namespaces.UseDeclaration" />
 	<rule ref="WCF.WhiteSpace.SuperfluousWhitespace" />
