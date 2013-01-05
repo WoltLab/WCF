@@ -20,7 +20,6 @@ use wcf\system\form\container\MultipleSelectionFormElementContainer;
 use wcf\system\form\element\MultipleSelectionFormElement;
 use wcf\system\form\element\TextInputFormElement;
 use wcf\system\form\FormDocument;
-use wcf\system\form;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\package\plugin\ObjectTypePackageInstallationPlugin;
@@ -316,7 +315,7 @@ class PackageInstallationDispatcher {
 		if ($this->getPackage()->isApplication && $this->getPackage()->package != 'com.woltlab.wcf' && $this->getAction() == 'install') {
 			if (empty($this->getPackage()->packageDir)) {
 				$document = $this->promptPackageDir();
-				if ($document !== null && $document instanceof form\FormDocument) {
+				if ($document !== null && $document instanceof FormDocument) {
 					$installationStep->setDocument($document);
 				}
 				
@@ -487,7 +486,7 @@ class PackageInstallationDispatcher {
 		$installationStep = new PackageInstallationStep();
 		
 		$document = $this->promptOptionalPackages($nodeData);
-		if ($document !== null && $document instanceof form\FormDocument) {
+		if ($document !== null && $document instanceof FormDocument) {
 			$installationStep->setDocument($document);
 			$installationStep->setSplitNode();
 		}
@@ -574,7 +573,7 @@ class PackageInstallationDispatcher {
 			$packageDir->setValue($defaultPath);
 			$container->appendChild($packageDir);
 			
-			$document = new form\FormDocument('packageDir');
+			$document = new FormDocument('packageDir');
 			$document->appendContainer($container);
 			
 			PackageInstallationFormManager::registerForm($this->queue, $document);
@@ -644,7 +643,7 @@ class PackageInstallationDispatcher {
 				$container->appendChild($optionalPackage);
 			}
 			
-			$document = new form\FormDocument('optionalPackages');
+			$document = new FormDocument('optionalPackages');
 			$document->appendContainer($container);
 			
 			PackageInstallationFormManager::registerForm($this->queue, $document);
