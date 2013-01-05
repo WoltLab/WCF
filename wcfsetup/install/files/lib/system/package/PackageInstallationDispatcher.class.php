@@ -26,6 +26,7 @@ use wcf\system\package\plugin\ObjectTypePackageInstallationPlugin;
 use wcf\system\package\plugin\SQLPackageInstallationPlugin;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
+use wcf\system\setup\Installer;
 use wcf\system\style\StyleHandler;
 use wcf\system\version\VersionHandler;
 use wcf\system\WCF;
@@ -539,7 +540,7 @@ class PackageInstallationDispatcher {
 	 * @return	wcf\system\setup\Installer
 	 */
 	public function extractFiles($targetDir, $sourceArchive, $fileHandler = null) {
-		return new \wcf\system\setup\Installer($targetDir, $sourceArchive, $fileHandler);
+		return new Installer($targetDir, $sourceArchive, $fileHandler);
 	}
 	
 	/**

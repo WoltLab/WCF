@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system;
 use wcf\data\application\Application;
+use wcf\data\option\OptionEditor;
 use wcf\data\package\PackageCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
@@ -330,7 +331,7 @@ class WCF {
 		
 		// create options file if doesn't exist
 		if (!file_exists($filename) || filemtime($filename) <= 1) {
-			\wcf\data\option\OptionEditor::rebuild();
+			OptionEditor::rebuild();
 		}
 		require_once($filename);
 	}

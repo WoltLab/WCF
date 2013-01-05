@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\session;
 use wcf\data\user\User;
+use wcf\page\ITrackablePage;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\RequestHandler;
@@ -518,7 +519,7 @@ class SessionHandler extends SingletonFactory {
 			'requestMethod' => $this->requestMethod,
 			'lastActivityTime' => TIME_NOW
 		);
-		if (PACKAGE_ID && RequestHandler::getInstance()->getActiveRequest() && RequestHandler::getInstance()->getActiveRequest()->getRequestObject() instanceof \wcf\page\ITrackablePage && RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->isTracked()) {
+		if (PACKAGE_ID && RequestHandler::getInstance()->getActiveRequest() && RequestHandler::getInstance()->getActiveRequest()->getRequestObject() instanceof ITrackablePage && RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->isTracked()) {
 			$data['controller'] = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->getController();
 			$data['parentObjectType'] = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->getParentObjectType();
 			$data['parentObjectID'] = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->getParentObjectID();
