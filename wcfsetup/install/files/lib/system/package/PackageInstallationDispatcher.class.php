@@ -15,8 +15,10 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
-use wcf\system\form\container;
-use wcf\system\form\element;
+use wcf\system\form\container\GroupFormElementContainer;
+use wcf\system\form\container\MultipleSelectionFormElementContainer;
+use wcf\system\form\element\MultipleSelectionFormElement;
+use wcf\system\form\element\TextInputFormElement;
 use wcf\system\form\FormDocument;
 use wcf\system\form;
 use wcf\system\language\LanguageFactory;
@@ -26,6 +28,7 @@ use wcf\system\package\plugin\SQLPackageInstallationPlugin;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\style\StyleHandler;
+use wcf\system\version\VersionHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
@@ -561,8 +564,8 @@ class PackageInstallationDispatcher {
 	protected function promptPackageDir() {
 		if (!PackageInstallationFormManager::findForm($this->queue, 'packageDir')) {
 			
-			$container = new container\GroupFormElementContainer();
-			$packageDir = new element\TextInputFormElement($container);
+			$container = new GroupFormElementContainer();
+			$packageDir = new TextInputFormElement($container);
 			$packageDir->setName('packageDir');
 			$packageDir->setLabel(WCF::getLanguage()->get('wcf.acp.package.packageDir.input'));
 			
@@ -629,11 +632,11 @@ class PackageInstallationDispatcher {
 	 */
 	protected function promptOptionalPackages(array $packages) {
 		if (!PackageInstallationFormManager::findForm($this->queue, 'optionalPackages')) {
-			$container = new container\MultipleSelectionFormElementContainer();
+			$container = new MultipleSelectionFormElementContainer();
 			$container->setName('optionalPackages');
 			
 			foreach ($packages as $package) {
-				$optionalPackage = new element\MultipleSelectionFormElement($container);
+				$optionalPackage = new MultipleSelectionFormElement($container);
 				$optionalPackage->setName('optionalPackages');
 				$optionalPackage->setLabel($package['packageName']);
 				$optionalPackage->setValue($package['package']);
@@ -954,12 +957,12 @@ class PackageInstallationDispatcher {
 			break;
 		}
 	}
-
+	
 	/*
 	 * Restructure version tables.
 	 */
 	protected function restructureVersionTables() {
-		$objectTypes = \wcf\system\version\VersionHandler::getInstance()->getObjectTypes();
+		$objectTypes = VersionHandler::getInstance()->getObjectTypes();
 		
 		if (empty($objectTypes)) {
 			return;
@@ -971,8 +974,8 @@ class PackageInstallationDispatcher {
 		$versionTableBaseColumns[] = array('name' => 'versionUserID', 'data' => array('type' => 'INT'));
 		$versionTableBaseColumns[] = array('name' => 'versionUsername', 'data' => array('type' => 'VARCHAR', 'length' => 255));
 		$versionTableBaseColumns[] = array('name' => 'versionTime', 'data' => array('type' => 'INT'));
-	
-		foreach ($objectTypes as $objectTypeID => $objectType) {						
+		
+		foreach ($objectTypes as $objectTypeID => $objectType) {
 			// get structure of base table
 			$baseTableColumns = WCF::getDB()->getEditor()->getColumns($objectType::getDatabaseTableName());
 			// get structure of version table
@@ -980,7 +983,7 @@ class PackageInstallationDispatcher {
 			
 			if (empty($versionTableColumns)) {
 				$columns = array_merge($versionTableBaseColumns, $baseTableColumns);
-
+				
 				WCF::getDB()->getEditor()->createTable($objectType::getDatabaseVersionTableName(), $columns);
 			}
 			else {
@@ -1001,5 +1004,5 @@ class PackageInstallationDispatcher {
 				}
 			}
 		}
-	}	
+	}
 }
