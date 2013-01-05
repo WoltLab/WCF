@@ -35,7 +35,7 @@ class SetupTemplateEngine extends TemplateEngine {
 	/**
 	 * @see	wcf\system\template\TemplateEngine::getCompiledFilename()
 	 */
-	public function getCompiledFilename($templateName) {
+	public function getCompiledFilename($templateName, $application) {
 		return $this->compileDir.'setup/template/compiled/'.$this->languageID.'_'.$templateName.'.php';
 	}
 	
