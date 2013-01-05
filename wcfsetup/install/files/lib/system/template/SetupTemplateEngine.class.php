@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\template;
-use wcf\system\exception\SystemException;
 
 /**
  * Loads and displays template during the setup process.
@@ -24,12 +23,7 @@ class SetupTemplateEngine extends TemplateEngine {
 	 * @see	wcf\system\template\TemplateEngine::getSourceFilename()
 	 */
 	public function getSourceFilename($templateName, $application) {
-		$sourceFilename = $this->templatePaths[$application].'setup/template/'.$templateName.'.tpl';
-		if (!empty($sourceFilename)) {
-			return $sourceFilename;
-		}
-		
-		throw new SystemException("Unable to find template '".$templateName."'");
+		return $this->compileDir.'setup/template/'.$templateName.'.tpl';
 	}
 	
 	/**
