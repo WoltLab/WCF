@@ -409,7 +409,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 				throw new SystemException("Corrupt parameters, index '".$arrayIndex."' is missing");
 			}
 			
-			$target =& $this->parameters[$variableName];
+			$target =& $this->parameters[$arrayIndex];
 		}
 		else {
 			$target =& $this->parameters;
