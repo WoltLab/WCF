@@ -82,9 +82,11 @@ class WCF_Sniffs_Namespaces_SortedUseDeclarationSniff implements PHP_CodeSniffer
 		$classA = array_values($classA);
 		$classB = array_values($classB);
 		
-		for ($i = 0, $max = min(count($classA), count($classB)); $i < $max; $i++) {
-			if (ucfirst($classB[$i]) == $classB[$i] && ucfirst($classA[$i]) != $classA[$i]) return true;
-			if (ucfirst($classB[$i]) != $classB[$i] && ucfirst($classA[$i]) == $classA[$i]) return false;
+		$classALength = count($classA);
+		$classBLength = count($classB);
+		for ($i = 0, $max = min($classALength, $classBLength); $i < $max; $i++) {
+			if ($i + 1 === $classBLength && $i + 1 !== $classALength) return true;
+			if ($i + 1 !== $classBLength && $i + 1 === $classALength) return false;
 			
 			if (strcasecmp($classA[$i], $classB[$i]) < 0) {
 				return true;
