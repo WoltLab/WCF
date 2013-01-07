@@ -12,7 +12,6 @@ use wcf\util\StringUtil;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
 
-
 /**
  * Executes cronjobs.
  *
