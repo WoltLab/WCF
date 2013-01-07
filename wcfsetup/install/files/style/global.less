@@ -96,6 +96,10 @@ body > iframe[src="about:blank"] {
 	cursor: pointer;
 }
 
+.dimmed {
+	color: @wcfDimmedColor;
+}
+
 /* icons */
 .icon(@imageSize) {
 	.square(@imageSize);
@@ -213,7 +217,7 @@ body > iframe[src="about:blank"] {
 	font-weight: normal !important;
 	padding: 1px 8px 2px;
 	position: relative;
-	text-shadow: none;
+	text-shadow: none !important; /* necessary to avoid ugly text shadows in comment lists; @todo: better solution without "!important" */
 	white-space: nowrap;
 	
 	/* colors */
@@ -259,7 +263,7 @@ body > iframe[src="about:blank"] {
 	}
 	
 	&.blue {
-		background-color: #09f;
+		background-color: #369;
 		color: #fff;
 	}
 	

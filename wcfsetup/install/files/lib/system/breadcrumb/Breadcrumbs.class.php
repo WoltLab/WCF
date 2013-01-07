@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\breadcrumb;
+use wcf\system\menu\page\PageMenu;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Manages breadcrumbs.
@@ -23,6 +25,14 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * Current iterator-index
 	 */
 	protected $index = 0;
+	
+	/**
+	 * @see	wcf\system\SingletonFactory::init()
+	 */
+	protected function init() {
+		// add main breadcrumbs entry
+		$this->add(new Breadcrumb(WCF::getLanguage()->get(PAGE_TITLE), PageMenu::getInstance()->getLandingPage()->getLink()));
+	}
 	
 	/**
 	 * Adds a breadcrumb (insertion order is crucial!).

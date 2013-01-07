@@ -15,7 +15,7 @@
 		</nav>
 		
 		<div id="logo" class="logo">
-			<a href="{link controller='Index'}{/link}">
+			<a href="{link}{/link}">
 				<img src="{@$__wcf->getPath('wbb')}images/wbbLogo2.svg" alt="" style="height: 90px; width: 246px;" />
 				{*event name='headerLogo'*}
 			</a>

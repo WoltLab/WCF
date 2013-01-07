@@ -16,6 +16,13 @@ use wcf\system\option\FileSizeOptionType;
  */
 class FileSizeUserGroupOptionType extends FileSizeOptionType implements IUserGroupOptionType {
 	/**
+	 * @see	wcf\system\option\user\group\IUserGroupOptionType::diff()
+	 */
+	public function diff($defaultValue, $groupValue) {
+		return $this->merge($defaultValue, $groupValue);
+	}
+	
+	/**
 	 * @see	wcf\system\option\user.group\IUserGroupOptionType::merge()
 	 */
 	public function merge($defaultValue, $groupValue) {

@@ -125,6 +125,7 @@ final class Regex {
 		}
 	}
 	
+	// @codingStandardsIgnoreStart
 	/**
 	 * Checks whether the regex matches the given string.
 	 * 
@@ -164,6 +165,7 @@ final class Regex {
 	public function split($string) {
 		return $this->checkResult(preg_split($this->regex, $string), 'split');
 	}
+	// @codingStandardsIgnoreEnd
 	
 	/**
 	 * Checks whether there was success.

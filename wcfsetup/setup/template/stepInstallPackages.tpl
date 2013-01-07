@@ -1,13 +1,15 @@
 {assign var=lastStep value=true}
 {include file='header'}
 
-<hgroup class="wcf-subHeading">
-	<h1>{lang}wcf.global.next{/lang}</h1>
-	<h2>{lang}wcf.global.next.description{/lang}</h2>
-</hgroup>
+<header class="boxHeadline boxSubHeadline">
+	<hgroup>
+		<h1>{lang}wcf.global.next{/lang}</h1>
+		<h2>{lang}wcf.global.next.description{/lang}</h2>
+	</hgroup>
+</header>
 
 <form method="get" action="{@RELATIVE_WCF_DIR}acp/index.php">
-	<div class="wcf-formSubmit">
+	<div class="formSubmit">
 		{@SID_INPUT_TAG}
 		<input type="hidden" name="action" value="WCFSetup" />
 	</div>

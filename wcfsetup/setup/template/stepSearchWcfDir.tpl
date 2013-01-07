@@ -80,41 +80,44 @@
 	//]]>
 </script>
 
-<hgroup class="wcf-subHeading">
-	<h1>{lang}wcf.global.wcfDir{/lang}</h1>
-	<h2>{lang}wcf.global.wcfDir.description{/lang}</h2>
-</hgroup>
+<header class="boxHeadline boxSubHeadline">
+	<hgroup>
+		<h1>{lang}wcf.global.wcfDir{/lang}</h1>
+		<h2>{lang}wcf.global.wcfDir.description{/lang}</h2>
+	</hgroup>
+</header>
 
 {if $foundDirectory}
-	<p>{lang}wcf.global.wcfDir.foundDirectory{/lang}</p>
+	<p class="info">{lang}wcf.global.wcfDir.foundDirectory{/lang}</p>
 {/if}
 
 {if $exception|isset}
-	<p class="wcf-error">{lang}wcf.global.wcfDir.error{/lang}</p>
+	<p class="error">{lang}wcf.global.wcfDir.error{/lang}</p>
 {/if}
 
 <form method="post" action="install.php">
-	<fieldset>
-		<legend>{lang}wcf.global.wcfDir.dir{/lang}</legend>
-		
-		<dl>
-			<dt><label for="wcfDir">{lang}wcf.global.wcfDir.dir{/lang}</label></dt>
-			<dd>
-				<input type="text" id="wcfDir" name="wcfDir" value="{$wcfDir}" class="long" />
-				<small>{lang}wcf.global.wcfDir.dir.description{/lang}</small>
-			</dd>
-		</dl>
-		<dl id="wcfUrlContainer" style="display: none;">
-			<dt><label for="wcfUrl">{lang}wcf.global.wcfDir.url{/lang}</label></dt>
-			<dd>
-				<p id="wcfUrl"></p>
-				<small>{lang}wcf.global.wcfDir.url.description{/lang}</small>
-			</dd>
-		</dl>
-		
-	</fieldset>
+	<div class="container containerPadding marginTop">
+		<fieldset>
+			<legend>{lang}wcf.global.wcfDir.dir{/lang}</legend>
+			
+			<dl>
+				<dt><label for="wcfDir">{lang}wcf.global.wcfDir.dir{/lang}</label></dt>
+				<dd>
+					<input type="text" id="wcfDir" name="wcfDir" value="{$wcfDir}" class="long" />
+					<small>{lang}wcf.global.wcfDir.dir.description{/lang}</small>
+				</dd>
+			</dl>
+			<dl id="wcfUrlContainer" style="display: none;">
+				<dt><label for="wcfUrl">{lang}wcf.global.wcfDir.url{/lang}</label></dt>
+				<dd>
+					<p id="wcfUrl"></p>
+					<small>{lang}wcf.global.wcfDir.url.description{/lang}</small>
+				</dd>
+			</dl>
+		</fieldset>
+	</div>
 	
-	<div class="wcf-formSubmit">
+	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.next{/lang}" accesskey="s" />
 		<input type="hidden" name="step" value="{@$nextStep}" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />

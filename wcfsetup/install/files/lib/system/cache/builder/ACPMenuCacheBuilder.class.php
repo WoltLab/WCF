@@ -1,13 +1,16 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\acp\menu\item\ACPMenuItem;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\WCF;
+use wcf\data\acp\menu\item\ACPMenuItemList;
+use wcf\data\option\category\OptionCategory;
+use wcf\data\option\category\OptionCategoryList;
+use wcf\data\option\OptionList;
+use wcf\system\request\LinkHandler;
 
 /**
- * Caches the acp menu items tree.
+ * Caches the ACP menu items.
  * 
- * @author	Marcel Werk
+ * @author	Matthias Schmidt, Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -16,10 +19,16 @@ use wcf\system\WCF;
  */
 class ACPMenuCacheBuilder implements ICacheBuilder {
 	/**
-	 * option category structure
-	 * @var	array
+	 * list of option categories which directly contain options
+	 * @var	array<string>
 	 */
-	protected $optionCategoryStructure = array();
+	protected $categoriesWithOptions = array();
+	
+	/**
+	 * list of option categories grouped by the name of their parent category
+	 * @var	array<wcf\data\option\category\OptionCategory>
+	 */
+	protected $categoryStructure = array();
 	
 	/**
 	 * @see	wcf\system\cache\ICacheBuilder::getData()
@@ -27,114 +36,98 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 	public function getData(array $cacheResource) { 
 		$data = array();
 		
-		// get all menu items and filter menu items with low priority
-		$sql = "SELECT		menuItem, menuItemID
-			FROM		wcf".WCF_N."_acp_menu_item menu_item";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-		$itemIDs = array();
-		while ($row = $statement->fetchArray()) {
-			$itemIDs[$row['menuItem']] = $row['menuItemID'];
+		// get "real" menu items
+		$menuItemList = new ACPMenuItemList();
+		$menuItemList->sqlLimit = 0;
+		$menuItemList->readObjects();
+		foreach ($menuItemList as $menuItem) {
+			$data[$menuItem->parentMenuItem][] = $menuItem;
 		}
 		
-		if (!empty($itemIDs)) {
-			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("menuItemID IN (?)", array($itemIDs));
-			
-			// get needed menu items and build item tree
-			$sql = "SELECT		menu_item.packageID, menuItem, parentMenuItem,
-						menuItemLink, permissions, options, packageDir
-				FROM		wcf".WCF_N."_acp_menu_item menu_item
-				LEFT JOIN	wcf".WCF_N."_package package
-				ON		(package.packageID = menu_item.packageID)
-				".$conditions."
-				ORDER BY	showOrder ASC";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditions->getParameters());
-			while ($row = $statement->fetchArray()) {
-				if (!isset($data[$row['parentMenuItem']])) {
-					$data[$row['parentMenuItem']] = array();
-				}
-				
-				$data[$row['parentMenuItem']][] = new ACPMenuItem(null, $row);
-			}
-		}
-		
-		// get top option categories
-		$optionCategories = $this->getTopOptionCategories();
-		if (!empty($optionCategories)) {
-			if (!isset($data['wcf.acp.menu.link.option.category'])) {
-				$data['wcf.acp.menu.link.option.category'] = array();
-			}
-			
-			// get option category data
-			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("categoryID IN (?)", array($optionCategories));
-			
-			$sql = "SELECT		*
-				FROM		wcf".WCF_N."_option_category
-				".$conditions."
-				ORDER BY	showOrder ASC";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditions->getParameters());
-			while ($row = $statement->fetchArray()) {
-				$data['wcf.acp.menu.link.option.category'][] = new ACPMenuItem(null, array(
-					'menuItem' => 'wcf.acp.option.category.'.$row['categoryName'],
-					'parentMenuItem' => 'wcf.acp.menu.link.option.category',
-					'menuItemLink' => 'index.php/Option/'.$row['categoryID'].'/',
-					'packageDir' => '',
-					'permissions' => $row['permissions'],
-					'options' => $row['options']
-				));
-			}
+		// get menu items for top option categories
+		$data['wcf.acp.menu.link.option.category'] = array();
+		foreach ($this->getTopOptionCategories() as $optionCategory) {
+			$data['wcf.acp.menu.link.option.category'][] = new ACPMenuItem(null, array(
+				'menuItem' => 'wcf.acp.option.category.'.$optionCategory->categoryName,
+				'parentMenuItem' => 'wcf.acp.menu.link.option.category',
+				'menuItemController' => 'wcf\acp\form\OptionForm',
+				'permissions' => $optionCategory->permissions,
+				'optionCategoryID' => $optionCategory->categoryID,
+				'options' => $optionCategory->options
+			));
 		}
 		
 		return $data;
 	}
 	
+	/**
+	 * Returns the list with top option categories which contain options.
+	 * 
+	 * @return	array<wcf\data\option\category\OptionCategory>
+	 */
 	protected function getTopOptionCategories() {
-		// get all option categories
-		$sql = "SELECT		categoryName, categoryID 
-			FROM		wcf".WCF_N."_option_category";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-		$optionCategories = array();
-		while ($row = $statement->fetchArray()) {
-			$optionCategories[$row['categoryName']] = $row['categoryID'];
+		$optionCategoryList = new OptionCategoryList();
+		$optionCategoryList->sqlLimit = 0;
+		$optionCategoryList->readObjects();
+		$optionCategories = $optionCategoryList->getObjects();
+		
+		// build category structure
+		$this->categoryStructure = array();
+		foreach ($optionCategories as $optionCategory) {
+			if (!isset($this->categoryStructure[$optionCategory->parentCategoryName])) {
+				$this->categoryStructure[$optionCategory->parentCategoryName] = array();
+			}
+			
+			$this->categoryStructure[$optionCategory->parentCategoryName][] = $optionCategory;
 		}
 		
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("categoryID IN (?)", array($optionCategories));
-		$sql = "SELECT		categoryID, parentCategoryName, categoryName,
-					(
-						SELECT COUNT(*) FROM wcf".WCF_N."_option WHERE categoryName = category.categoryName
-					) AS count
-			FROM		wcf".WCF_N."_option_category category
-			".$conditions;
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditions->getParameters());
-		while ($row = $statement->fetchArray()) {
-			if (!isset($this->optionCategoryStructure[$row['parentCategoryName']])) $this->optionCategoryStructure[$row['parentCategoryName']] = array();
-			$this->optionCategoryStructure[$row['parentCategoryName']][] = $row;
+		$optionList = new OptionList();
+		$optionList->sqlLimit = 0;
+		$optionList->readObjects();
+		
+		// collect names of categories which contain options
+		foreach ($optionList as $option) {
+			if (!isset($this->categoriesWithOptions[$option->categoryName])) {
+				$this->categoriesWithOptions[$option->categoryName] = $option->categoryName;
+			}
 		}
 		
-		$topOptionCategories = array();
-		foreach ($this->optionCategoryStructure[''] as $optionCategory) {
-			$count = $optionCategory['count'] + $this->countOptions($optionCategory['categoryName']);
-			if ($count > 0) $topOptionCategories[] = $optionCategory['categoryID'];
+		// collect top categories which contain options
+		$topCategories = array();
+		foreach ($this->categoryStructure[""] as $topCategory) {
+			if ($this->containsOptions($topCategory)) {
+				$topCategories[$topCategory->categoryID] = $topCategory;
+			}
 		}
 		
-		return $topOptionCategories;
+		return $topCategories;
 	}
 	
-	protected function countOptions($parentCategoryName) {
-		if (!isset($this->optionCategoryStructure[$parentCategoryName])) return 0;
-		
-		$count = 0;
-		foreach ($this->optionCategoryStructure[$parentCategoryName] as $optionCategory) {
-			$count += $optionCategory['count'] + $this->countOptions($optionCategory['categoryName']);
+	/**
+	 * Returns true if the given category or one of its child categories contains
+	 * options.
+	 * 
+	 * @return	boolean
+	 */
+	protected function containsOptions(OptionCategory $topCategory) {
+		// check if category directly contains options
+		if (isset($this->categoriesWithOptions[$topCategory->categoryName])) {
+			return true;
 		}
 		
-		return $count;
+		if (!isset($this->categoryStructure[$topCategory->categoryName])) {
+			// if category directly contains no options and has no child
+			// categories, it contains no options at all
+			return false;
+		}
+		
+		// check child categories
+		foreach ($this->categoryStructure[$topCategory->categoryName] as $category) {
+			if ($this->containsOptions($category)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

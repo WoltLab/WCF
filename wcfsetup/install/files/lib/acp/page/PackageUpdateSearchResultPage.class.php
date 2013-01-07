@@ -5,7 +5,6 @@ use wcf\data\search\Search;
 use wcf\page\SortablePage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 
 /**
@@ -19,6 +18,11 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class PackageUpdateSearchResultPage extends SortablePage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.package.database';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
@@ -121,7 +125,6 @@ class PackageUpdateSearchResultPage extends SortablePage {
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
 				// default values
-				$row['isUnique'] = 0;
 				$row['updatableInstances'] = array();
 				$row['packageVersions'] = array();
 				$row['packageVersion'] = '1.0.0';
@@ -150,25 +153,6 @@ class PackageUpdateSearchResultPage extends SortablePage {
 					$row['packageVersion'] = end($row['packageVersions']);
 				}
 				
-				// TODO: Multiple instances are no longer supported, remove this
-				// get installed instances
-				$sql = "SELECT	package.*
-					FROM	wcf".WCF_N."_package package
-					WHERE	package.package = ?";
-				$statement2 = WCF::getDB()->prepareStatement($sql);
-				$statement2->execute(array($row['package']));
-				while ($row2 = $statement2->fetchArray()) {
-					$row['instances']++;
-					
-					// is already installed unique?
-					if ($row2['isUnique'] == 1) $row['isUnique'] = 1;
-					
-					// check update support
-					if (Package::compareVersion($row2['packageVersion'], $row['packageVersion'], '<')) {
-						$row['updatableInstances'][] = $row2;
-					}
-				}
-				
 				$this->packages[] = $row;
 			}
 		}
@@ -185,15 +169,5 @@ class PackageUpdateSearchResultPage extends SortablePage {
 			'packages' => $this->packages,
 			'selectedPackages' => array()
 		));
-	}
-	
-	/**
-	 * @see	wcf\page\IPage::show()
-	 */
-	public function show() {
-		// set active menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.database');
-		
-		parent::show();
 	}
 }

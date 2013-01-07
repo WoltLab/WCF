@@ -14,15 +14,6 @@ use wcf\system\WCF;
  */
 class NamedUserException extends UserException {
 	/**
-	 * Creates a new NamedUserException object.
-	 * 
-	 * @param	string		$message
-	 */
-	public function __construct($message) {
-		parent::__construct($message);
-	}
-	
-	/**
 	 * Shows a styled page with the given error message.
 	 */
 	public function show() {

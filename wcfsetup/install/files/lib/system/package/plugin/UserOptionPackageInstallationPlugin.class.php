@@ -28,7 +28,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	 * list of names of tags which aren't considered as additional data
 	 * @var	array<string>
 	 */
-	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'validationpattern', 'required', 'editable', 'visible', 'searchable', 'showorder', 'outputclass', 'selectoptions', 'enableoptions', 'disabled', 'categoryname', 'permissions', 'options', 'attrs', 'cdata');
+	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'validationpattern', 'required', 'editable', 'visible', 'searchable', 'showorder', 'outputclass', 'selectoptions', 'enableoptions', 'isdisabled', 'categoryname', 'permissions', 'options', 'attrs', 'cdata');
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveCategory()
@@ -63,7 +63,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		// default values
 		$optionName = $optionType = $validationPattern = $outputClass = $selectOptions = $enableOptions = $permissions = $options = '';
-		$required = $editable = $visible = $searchable = $disabled = $askDuringRegistration = 0;
+		$required = $editable = $visible = $searchable = $isDisabled = $askDuringRegistration = 0;
 		$defaultValue = $showOrder = null;
 		
 		// get values
@@ -80,7 +80,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 		if (isset($option['outputclass'])) $outputClass = $option['outputclass'];
 		if (isset($option['selectoptions'])) $selectOptions = $option['selectoptions'];
 		if (isset($option['enableoptions'])) $enableOptions = $option['enableoptions'];
-		if (isset($option['disabled'])) $disabled = intval($option['disabled']);
+		if (isset($option['isdisabled'])) $isDisabled = intval($option['isdisabled']);
 		$showOrder = $this->getShowOrder($showOrder, $categoryName, 'categoryName');
 		if (isset($option['permissions'])) $permissions = $option['permissions'];
 		if (isset($option['options'])) $options = $option['options'];
@@ -124,7 +124,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 			'outputClass' => $outputClass,
 			'searchable' => $searchable,
 			'showOrder' => $showOrder,
-			'disabled' => $disabled,
+			'isDisabled' => $isDisabled,
 			'permissions' => $permissions,
 			'options' => $options,
 			'additionalData' => serialize($additionalData)

@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\package;
-use wcf\system\style\StyleHandler;
-
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\language\category\LanguageCategory;
@@ -17,13 +15,20 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
-use wcf\system\form\container;
-use wcf\system\form\element;
+use wcf\system\form\container\GroupFormElementContainer;
+use wcf\system\form\container\MultipleSelectionFormElementContainer;
+use wcf\system\form\element\MultipleSelectionFormElement;
+use wcf\system\form\element\TextInputFormElement;
 use wcf\system\form\FormDocument;
-use wcf\system\form;
 use wcf\system\language\LanguageFactory;
+use wcf\system\package\plugin\IPackageInstallationPlugin;
+use wcf\system\package\plugin\ObjectTypePackageInstallationPlugin;
+use wcf\system\package\plugin\SQLPackageInstallationPlugin;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
+use wcf\system\setup\Installer;
+use wcf\system\style\StyleHandler;
+use wcf\system\version\VersionHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
@@ -75,6 +80,12 @@ class PackageInstallationDispatcher {
 	 * @var	string
 	 */
 	const CONFIG_FILE = 'config.inc.php';
+	
+	/**
+	 * holds state of structuring version tables
+	 * @var boolean
+	 */
+	protected $requireRestructureVersionTables = false;	
 	
 	/**
 	 * Creates a new instance of PackageInstallationDispatcher.
@@ -160,7 +171,11 @@ class PackageInstallationDispatcher {
 			
 			// reset stylesheets
 			StyleHandler::resetStylesheets();
-		}
+		}	
+		
+		if ($this->requireRestructureVersionTables) {
+			$this->restructureVersionTables();
+		}			
 		
 		return $step;
 	}
@@ -279,9 +294,6 @@ class PackageInstallationDispatcher {
 				}
 			}
 			
-			// build requirement map
-			Package::rebuildPackageRequirementMap($package->packageID);
-			
 			// reload queue
 			$this->queue = new PackageInstallationQueue($this->queue->queueID);
 			$this->package = null;
@@ -304,7 +316,7 @@ class PackageInstallationDispatcher {
 		if ($this->getPackage()->isApplication && $this->getPackage()->package != 'com.woltlab.wcf' && $this->getAction() == 'install') {
 			if (empty($this->getPackage()->packageDir)) {
 				$document = $this->promptPackageDir();
-				if ($document !== null && $document instanceof form\FormDocument) {
+				if ($document !== null && $document instanceof FormDocument) {
 					$installationStep->setDocument($document);
 				}
 				
@@ -440,8 +452,12 @@ class PackageInstallationDispatcher {
 		
 		$plugin = new $className($this, $nodeData);
 		
-		if (!($plugin instanceof \wcf\system\package\plugin\IPackageInstallationPlugin)) {
+		if (!($plugin instanceof IPackageInstallationPlugin)) {
 			throw new SystemException("'".$className."' does not implement 'wcf\system\package\plugin\IPackageInstallationPlugin'");
+		}
+		
+		if ($plugin instanceof SQLPackageInstallationPlugin || $plugin instanceof ObjectTypePackageInstallationPlugin) {
+			$this->requireRestructureVersionTables = true;
 		}
 		
 		// execute PIP
@@ -460,12 +476,18 @@ class PackageInstallationDispatcher {
 		return $step;
 	}
 	
-	// @todo: comment
+	/**
+	 * Displays a list to select optional packages or installs selection.
+	 * 
+	 * @param	string		$currentNode
+	 * @param	array		$nodeData
+	 * @return	wcf\system\package\PackageInstallationStep
+	 */
 	protected function selectOptionalPackages($currentNode, array $nodeData) {
 		$installationStep = new PackageInstallationStep();
 		
 		$document = $this->promptOptionalPackages($nodeData);
-		if ($document !== null && $document instanceof form\FormDocument) {
+		if ($document !== null && $document instanceof FormDocument) {
 			$installationStep->setDocument($document);
 			$installationStep->setSplitNode();
 		}
@@ -510,7 +532,7 @@ class PackageInstallationDispatcher {
 	}
 	
 	/**
-	 * Extracts files from .tar (or .tar.gz) archive and installs them
+	 * Extracts files from .tar(.gz) archive and installs them
 	 * 
 	 * @param	string			$targetDir
 	 * @param	string			$sourceArchive
@@ -518,7 +540,7 @@ class PackageInstallationDispatcher {
 	 * @return	wcf\system\setup\Installer
 	 */
 	public function extractFiles($targetDir, $sourceArchive, $fileHandler = null) {
-		return new \wcf\system\setup\Installer($targetDir, $sourceArchive, $fileHandler);
+		return new Installer($targetDir, $sourceArchive, $fileHandler);
 	}
 	
 	/**
@@ -542,8 +564,8 @@ class PackageInstallationDispatcher {
 	protected function promptPackageDir() {
 		if (!PackageInstallationFormManager::findForm($this->queue, 'packageDir')) {
 			
-			$container = new container\GroupFormElementContainer();
-			$packageDir = new element\TextInputFormElement($container);
+			$container = new GroupFormElementContainer();
+			$packageDir = new TextInputFormElement($container);
 			$packageDir->setName('packageDir');
 			$packageDir->setLabel(WCF::getLanguage()->get('wcf.acp.package.packageDir.input'));
 			
@@ -552,7 +574,7 @@ class PackageInstallationDispatcher {
 			$packageDir->setValue($defaultPath);
 			$container->appendChild($packageDir);
 			
-			$document = new form\FormDocument('packageDir');
+			$document = new FormDocument('packageDir');
 			$document->appendContainer($container);
 			
 			PackageInstallationFormManager::registerForm($this->queue, $document);
@@ -603,14 +625,18 @@ class PackageInstallationDispatcher {
 		}
 	}
 	
-	// @todo: comment
+	/**
+	 * Prompts a selection of optional packages.
+	 * 
+	 * @return	mixed
+	 */
 	protected function promptOptionalPackages(array $packages) {
 		if (!PackageInstallationFormManager::findForm($this->queue, 'optionalPackages')) {
-			$container = new container\MultipleSelectionFormElementContainer();
+			$container = new MultipleSelectionFormElementContainer();
 			$container->setName('optionalPackages');
 			
 			foreach ($packages as $package) {
-				$optionalPackage = new element\MultipleSelectionFormElement($container);
+				$optionalPackage = new MultipleSelectionFormElement($container);
 				$optionalPackage->setName('optionalPackages');
 				$optionalPackage->setLabel($package['packageName']);
 				$optionalPackage->setValue($package['package']);
@@ -618,7 +644,7 @@ class PackageInstallationDispatcher {
 				$container->appendChild($optionalPackage);
 			}
 			
-			$document = new form\FormDocument('optionalPackages');
+			$document = new FormDocument('optionalPackages');
 			$document->appendContainer($container);
 			
 			PackageInstallationFormManager::registerForm($this->queue, $document);
@@ -929,6 +955,54 @@ class PackageInstallationDispatcher {
 			default:
 				return $value;
 			break;
+		}
+	}
+	
+	/*
+	 * Restructure version tables.
+	 */
+	protected function restructureVersionTables() {
+		$objectTypes = VersionHandler::getInstance()->getObjectTypes();
+		
+		if (empty($objectTypes)) {
+			return;
+		}
+		
+		// base structure of version tables
+		$versionTableBaseColumns = array();
+		$versionTableBaseColumns[] = array('name' => 'versionID', 'data' => array('type' => 'INT', 'key' => 'PRIMARY', 'autoIncrement' => 'AUTO_INCREMENT'));
+		$versionTableBaseColumns[] = array('name' => 'versionUserID', 'data' => array('type' => 'INT'));
+		$versionTableBaseColumns[] = array('name' => 'versionUsername', 'data' => array('type' => 'VARCHAR', 'length' => 255));
+		$versionTableBaseColumns[] = array('name' => 'versionTime', 'data' => array('type' => 'INT'));
+		
+		foreach ($objectTypes as $objectTypeID => $objectType) {
+			// get structure of base table
+			$baseTableColumns = WCF::getDB()->getEditor()->getColumns($objectType::getDatabaseTableName());
+			// get structure of version table
+			$versionTableColumns = WCF::getDB()->getEditor()->getColumns($objectType::getDatabaseVersionTableName());
+			
+			if (empty($versionTableColumns)) {
+				$columns = array_merge($versionTableBaseColumns, $baseTableColumns);
+				
+				WCF::getDB()->getEditor()->createTable($objectType::getDatabaseVersionTableName(), $columns);
+			}
+			else {
+				// check garbage columns in versioned table
+				foreach ($versionTableColumns as $columnData) {
+					if (!array_search($columnData['name'], $baseTableColumns, true)) {
+						// delete column
+						WCF::getDB()->getEditor()->dropColumn($objectType::getDatabaseVersionTableName(), $columnData['name']);
+					}
+				}
+				
+				// check new columns for versioned table
+				foreach ($baseTableColumns as $columnData) {
+					if (!array_search($columnData['name'], $versionTableColumns, true)) {
+						// add colum
+						WCF::getDB()->getEditor()->addColumn($objectType::getDatabaseVersionTableName(), $columnData['name'], $columnData['data']);
+					}
+				}
+			}
 		}
 	}
 }

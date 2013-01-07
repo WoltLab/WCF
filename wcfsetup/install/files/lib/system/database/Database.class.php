@@ -101,7 +101,7 @@ abstract class Database {
 	/**
 	 * Connects to database server.
 	 */
-	public abstract function connect();
+	abstract public function connect();
 	
 	/**
 	 * Returns ID from last insert.

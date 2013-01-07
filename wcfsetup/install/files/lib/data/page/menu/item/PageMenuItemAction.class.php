@@ -3,6 +3,7 @@ namespace wcf\data\page\menu\item;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -23,6 +24,12 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 	protected $className = 'wcf\data\page\menu\item\PageMenuItemEditor';
 	
 	/**
+	 * page menu item editor
+	 * @var	wcf\data\page\menu\item\PageMenuItemEditor
+	 */
+	public $menuItemEditor = null;
+	
+	/**
 	 * list of menu items
 	 * @var	array<wcf\data\page\menu\item\PageMenuItem>
 	 */
@@ -38,12 +45,31 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 		
 		$menuItem = parent::create();
 		
-		if ($menuItem->isLandingPage) {
-			$menuItemEditor = new PageMenuItemEditor($menuItem);
-			$menuItemEditor->setAsLandingPage();
+		if ($menuItem->menuPosition == 'header') {
+			PageMenuItemEditor::updateLandingPage();
 		}
 		
 		return $menuItem;
+	}
+	
+	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::delete()
+	 */
+	public function delete() {
+		$returnValues = parent::delete();
+		
+		PageMenuItemEditor::updateLandingPage();
+		
+		return $returnValues;
+	}
+	
+	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::update()
+	 */
+	public function update() {
+		parent::update();
+		
+		PageMenuItemEditor::updateLandingPage();
 	}
 	
 	/**
@@ -110,5 +136,10 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 			}
 		}
 		WCF::getDB()->commitTransaction();
+		
+		// update landing page
+		if ($this->parameters['menuPosition'] == 'header') {
+			PageMenuItemEditor::updateLandingPage();
+		}
 	}
 }

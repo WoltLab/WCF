@@ -83,6 +83,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	
 	const TYPE_INTEGER = 1;
 	const TYPE_STRING = 2;
+	const TYPE_BOOL = 3;
 	
 	/**
 	 * Initialize a new DatabaseObject-related action.
@@ -210,6 +211,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 */
 	public function getReturnValues() {
 		return array(
+			'actionName' => $this->action,
 			'objectIDs' => $this->getObjectIDs(),
 			'returnValues' => $this->returnValues
 		);
@@ -289,13 +291,10 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			$this->readObjects();
 		}
 		
-		// get index name
-		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
-		
 		// get ids
 		$objectIDs = array();
 		foreach ($this->objects as $object) {
-			$objectIDs[] = $object->__get($indexName);
+			$objectIDs[] = $object->getObjectID();
 		}
 		
 		// execute action
@@ -384,6 +383,17 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	}
 	
 	/**
+	 * Reads a boolean value and validates it.
+	 * 
+	 * @param	string		$variableName
+	 * @param	boolean		$allowEmpty
+	 * @param	string		$arrayIndex
+	 */
+	protected function readBool($variableName, $allowEmpty = false, $arrayIndex = '') {
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_BOOL);
+	}
+	
+	/**
 	 * Reads a value and validates it. If you set $allowEmpty to true, no exception will
 	 * be thrown if the variable evaluates to 0 (integer) or '' (string). Furthermore the
 	 * variable will be always created with a sane value if it does not exist.
@@ -399,7 +409,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 				throw new SystemException("Corrupt parameters, index '".$arrayIndex."' is missing");
 			}
 			
-			$target =& $this->parameters[$variableName];
+			$target =& $this->parameters[$arrayIndex];
 		}
 		else {
 			$target =& $this->parameters;
@@ -439,8 +449,26 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 					}
 				}
 			break;
+			
+			case self::TYPE_BOOL:
+				if (!isset($target[$variableName])) {
+					if ($allowEmpty) {
+						$target[$variableName] = false;
+					}
+					else {
+						throw new UserInputException($variableName);
+					}
+				}
+				else {
+					if (is_string($target[$variableName])) {
+						$target[$variableName] = $target[$variableName] != 'false';
+					}
+					else {
+						$target[$variableName] = (bool) $target[$variableName];
+					}
+				}
+			break;
 		}
-		
 	}
 	
 	/**

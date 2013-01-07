@@ -75,6 +75,5 @@ class SetupLanguage extends Language {
 		}
 		
 		include_once($filename);
-		$this->setLocale();
 	}
 }

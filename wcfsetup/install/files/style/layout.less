@@ -140,7 +140,7 @@
 			> a {
 				color: @wcfMainMenuColor;
 				display: inline-block;
-				padding: 9px 35px;
+				padding: 9px 21px;
 								
 				&:hover {
 					color: @wcfMainMenuActiveColor;
@@ -148,8 +148,8 @@
 				}
 				
 				> .badge {
-					font-size: 60%;
-					top: -2px;
+					font-size: 70%;
+					top: -1px;
 				}
 			}
 			
@@ -161,7 +161,14 @@
 					background-color: @wcfNavigationHeaderBackgroundColor;
 					color: @wcfMainMenuActiveColor;
 					font-weight: bold;
-					padding: 14px 35px 8px;
+					min-width: 80px;
+					padding: 14px 21px 8px;
+					text-align: center;
+					
+					> .badge {
+						font-size: 60%;
+						top: -2px;
+					}
 				}
 			}
 			
@@ -540,6 +547,59 @@
 	}
 }
 
+.nestedCategoryList {
+	> li {
+		margin-top: 21px;
+		overflow: hidden;
+		
+		&:first-child {
+			margin-top: 0;
+		}
+		
+		> div {
+			padding: 0 14px;
+			
+			> hgroup > h1 {
+				font-size: @wcfTitleFontSize;
+				font-weight: bold;
+				
+				> .badge {
+					font-size: 70%;
+					top: -2px;
+				}
+			}
+			
+			> ol {
+				> li {
+					display: inline-block;
+					font-size: @wcfSmallFontSize;
+				}
+			}
+		}
+	}
+	
+	&.doubleColumned {
+		> li {
+			float: left;
+			width: 50%;
+			
+			&:nth-child(odd):not(:first-child) {
+				clear: left;
+			}
+			
+			&:nth-child(2) {
+				margin-top: 0;
+			}
+		}
+		
+		&:after {
+			content: "";
+			display: table;
+			clear: left;
+		}
+	}
+}
+
 /* boxes with an image */
 .box(@imageSize, @gapOffset: 0) {
 	/* using a min-height prevents us from clearing (which causes a lot of issues) */
@@ -563,8 +623,8 @@
 .box32 { .box(32px, 7px); }
 .box48 { .box(48px, 7px); }
 .box64 { .box(64px, 7px); }
-.box96 { .box(96px, 14px); }
-.box128 { .box(128px, 14px); }
+.box96 { .box(96px, 11px); }
+.box128 { .box(128px, 11px); }
 .box256 { .box(256px, 21px); }
 
 /* bread crumbs */
@@ -726,6 +786,7 @@
 				display: block;
 				font-size: @wcfSmallFontSize;
 				margin: @wcfGapTiny 0;
+				outline: 0;
 				padding: @wcfGapTiny @wcfGapSmall;
 				
 				.borderRadius(15px);
@@ -1177,6 +1238,10 @@ ul.inlineDataList {
 				color: @wcfColor;
 				text-decoration: none;
 			}
+			
+			&.invisible + div {
+				margin-top: -@wcfGapSmall;
+			}
 		}
 		
 		&:after {
@@ -1288,6 +1353,20 @@ ul.inlineDataList {
 					}
 				}
 			}
+		}
+	}
+	
+	dl.inlineDataList {
+		font-size: @wcfSmallFontSize;
+		
+		> dt {
+			float: left;
+		}
+		
+		> dd {
+			display: block;
+			padding-right: @wcfGapMedium;
+			text-align: right;
 		}
 	}
 }

@@ -2,6 +2,7 @@
 namespace wcf\system\package;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueueList;
+use wcf\data\package\Package;
 use wcf\system\exception\SystemException;
 use wcf\system\Callback;
 use wcf\system\WCF;
@@ -424,7 +425,7 @@ class PackageInstallationNodeBuilder {
 					continue;
 				}
 				
-				throw new SystemException("Unable to find required package '".$package['file']."' within archive.");
+				throw new SystemException("Unable to find required package '".$package['file']."' within archive of package '".$this->installation->queue->package."'.");
 			}
 			
 			$fileName = FileUtil::getTemporaryFilename('package_', preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', basename($package['file'])));
@@ -528,6 +529,11 @@ class PackageInstallationNodeBuilder {
 		
 		$optionalPackages = $this->installation->getArchive()->getOptionals();
 		foreach ($optionalPackages as $package) {
+			// check if already installed
+			if (Package::isAlreadyInstalled($package['name'])) {
+				continue;
+			}
+			
 			// extract package
 			$index = $this->installation->getArchive()->getTar()->getIndexByFilename($package['file']);
 			if ($index === false) {

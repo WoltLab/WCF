@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobAction;
+use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
@@ -18,7 +19,7 @@ use wcf\system\WCF;
  */
 class CronjobEditForm extends CronjobAddForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.cronjob';
 	
@@ -58,7 +59,7 @@ class CronjobEditForm extends CronjobAddForm {
 	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
-		ACPForm::save();
+		AbstractForm::save();
 		
 		$this->description = 'wcf.acp.cronjob.description.cronjob'.$this->cronjob->cronjobID;
 		if (I18nHandler::getInstance()->isPlainValue('description')) {

@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\search\SearchEditor;
+use wcf\form\AbstractForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageUpdateDispatcher;
@@ -22,16 +23,16 @@ use wcf\util\StringUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class PackageUpdateSearchForm extends ACPForm {
+class PackageUpdateSearchForm extends AbstractForm {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.package.database';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canInstallPackage');
-	
-	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
-	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.package.database';
 	
 	/**
 	 * list of package update server ids which are searched
@@ -76,12 +77,6 @@ class PackageUpdateSearchForm extends ACPForm {
 	public $other = 0;
 	
 	/**
-	 * indicates if unique packages are ignored that are already installed
-	 * @var	integer
-	 */
-	public $ignoreUniques = 1;
-	
-	/**
 	 * list of available update servers
 	 * @var	array<wcf\data\package\update\server\PackageUpdateServer>
 	 */
@@ -99,7 +94,7 @@ class PackageUpdateSearchForm extends ACPForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		$this->ignoreUniques = $this->plugin = $this->isApplication = 0;
+		$this->plugin = $this->isApplication = 0;
 		if (isset($_POST['packageUpdateServerIDs']) && is_array($_POST['packageUpdateServerIDs'])) $this->packageUpdateServerIDs = ArrayUtil::toIntegerArray($_POST['packageUpdateServerIDs']);
 		if (isset($_POST['packageName'])) $this->packageName = StringUtil::trim($_POST['packageName']);
 		if (isset($_POST['author'])) $this->author = StringUtil::trim($_POST['author']);
@@ -107,7 +102,6 @@ class PackageUpdateSearchForm extends ACPForm {
 		if (isset($_POST['plugin'])) $this->plugin = intval($_POST['plugin']);
 		if (isset($_POST['isApplication'])) $this->isApplication = intval($_POST['isApplication']);
 		if (isset($_POST['other'])) $this->other = intval($_POST['other']);
-		if (isset($_POST['ignoreUniques'])) $this->ignoreUniques = intval($_POST['ignoreUniques']);
 	}
 	
 	/**
@@ -142,9 +136,6 @@ class PackageUpdateSearchForm extends ACPForm {
 		
 		// author
 		if (!empty($this->author)) $conditions->add("author LIKE ?", array($this->author));
-		
-		// ignore already installed uniques
-		if ($this->ignoreUniques == 1) $conditions->add("package NOT IN (SELECT package FROM wcf".WCF_N."_package WHERE isUnique = 1)");
 		
 		// package type
 		if (($this->plugin == 0 || $this->isApplication == 0 || $this->other == 0) && ($this->plugin == 1 || $this->isApplication == 1 || $this->other == 1)) {
@@ -272,8 +263,7 @@ class PackageUpdateSearchForm extends ACPForm {
 			'isApplication' => $this->isApplication,
 			'plugin' => $this->plugin,
 			'other' => $this->other,
-			'packageUpdateServerIDs' => $this->packageUpdateServerIDs,
-			'ignoreUniques' => $this->ignoreUniques
+			'packageUpdateServerIDs' => $this->packageUpdateServerIDs
 		));
 	}
 	

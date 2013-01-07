@@ -10,7 +10,6 @@
 			<startdom>*/2</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<active>1</active>
 			<canbeedited>1</canbeedited>
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
@@ -24,7 +23,6 @@
 			<startdom>1</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<active>1</active>
 			<canbeedited>1</canbeedited>
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
@@ -38,7 +36,6 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<active>1</active>
 			<canbeedited>1</canbeedited>
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
@@ -52,7 +49,6 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<active>1</active>
 			<canbeedited>1</canbeedited>
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
@@ -66,7 +62,6 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<active>1</active>
 			<canbeedited>1</canbeedited>
 			<canbedisabled>1</canbedisabled>
 		</cronjob>

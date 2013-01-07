@@ -1784,6 +1784,7 @@ WCF.Action.Delete = Class.extend({
 		this.proxy.setOption('data', {
 			actionName: 'delete',
 			className: this._className,
+			interfaceName: 'wcf\\data\\IDeleteAction',
 			objectIDs: [ $(object).data('objectID') ]
 		});
 		
@@ -1810,7 +1811,7 @@ WCF.Action.Delete = Class.extend({
 		for (var $index in this._containers) {
 			var $container = $('#' + this._containers[$index]);
 			if (WCF.inArray($container.find('.jsDeleteButton').data('objectID'), objectIDs)) {
-				$container.wcfBlindOut('up', function() { $container.remove(); });
+				$container.wcfBlindOut('up', function() { $(this).remove(); });
 			}
 		}
 	}
@@ -1825,19 +1826,41 @@ WCF.Action.Delete = Class.extend({
  */
 WCF.Action.Toggle = Class.extend({
 	/**
+	 * action class name
+	 * @var	string
+	 */
+	_className: '',
+	
+	/**
+	 * container selector
+	 * @var	string
+	 */
+	_containerSelector: '',
+	
+	/**
+	 * list of known container ids
+	 * @var	array<string>
+	 */
+	_containers: [ ],
+	
+	/**
+	 * toogle button selector
+	 * @var	string
+	 */
+	_toggleButtonSelector: '.jsToggleButton',
+	
+	/**
 	 * Initializes 'toggle'-Proxy
 	 * 
 	 * @param	string		className
-	 * @param	jQuery		containerList
+	 * @param	string		containerSelector
+	 * @param	string		toggleButtonSelector
 	 */
-	init: function(className, containerList, toggleButtonSelector) {
-		if (!containerList.length) return;
-		this.containerList = containerList;
-		this.className = className;
-		
-		this.toggleButtonSelector = '.jsToggleButton';
+	init: function(className, containerSelector, toggleButtonSelector) {
+		this._containerSelector = containerSelector;
+		this._className = className;
 		if (toggleButtonSelector) {
-			this.toggleButtonSelector = toggleButtonSelector;
+			this._toggleButtonSelector = toggleButtonSelector;
 		}
 		
 		// initialize proxy
@@ -1847,8 +1870,22 @@ WCF.Action.Toggle = Class.extend({
 		this.proxy = new WCF.Action.Proxy(options);
 		
 		// bind event listener
-		this.containerList.each($.proxy(function(index, container) {
-			$(container).find(this.toggleButtonSelector).bind('click', $.proxy(this._click, this));
+		this._initElements();
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Action.Toggle' + this._className.hashCode(), $.proxy(this._initElements, this));	
+	},
+	
+	/**
+	 * Initializes available element containers.
+	 */
+	_initElements: function() {
+		$(this._containerSelector).each($.proxy(function(index, container) {
+			var $container = $(container);
+			var $containerID = $container.wcfIdentify();
+			
+			if (!WCF.inArray($containerID, this._containers)) {
+				this._containers.push($containerID);
+				$container.find(this._toggleButtonSelector).click($.proxy(this._click, this));
+			}
 		}, this));
 	},
 	
@@ -1858,10 +1895,36 @@ WCF.Action.Toggle = Class.extend({
 	 * @param	object		event
 	 */
 	_click: function(event) {
+		var $target = $(event.currentTarget);
+		
+		if ($target.data('confirmMessage')) {
+			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
+		}
+		else {
+			this._sendRequest($target);
+		}
+	},
+	
+	/**
+	 * Executes toggeling.
+	 * 
+	 * @param	string		action
+	 * @param	object		parameters
+	 */
+	_execute: function(action, parameters) {
+		if (action === 'cancel') {
+			return;
+		}
+		
+		this._sendRequest(parameters.target);
+	},
+	
+	_sendRequest: function(object) {
 		this.proxy.setOption('data', {
 			actionName: 'toggle',
-			className: this.className,
-			objectIDs: [ $(event.target).data('objectID') ]
+			className: this._className,
+			interfaceName: 'wcf\\data\\IToggleAction',
+			objectIDs: [ $(object).data('objectID') ]
 		});
 		
 		this.proxy.sendRequest();
@@ -1884,43 +1947,53 @@ WCF.Action.Toggle = Class.extend({
 	 * @param	array		objectIDs
 	 */
 	triggerEffect: function(objectIDs) {
-		this.containerList.each($.proxy(function(index, container) {
-			var $toggleButton = $(container).find(this.toggleButtonSelector);
+		for (var $index in this._containers) {
+			var $container = $('#' + this._containers[$index]);
+			var $toggleButton = $container.find(this._toggleButtonSelector);
 			if (WCF.inArray($toggleButton.data('objectID'), objectIDs)) {
-				$(container).wcfHighlight();
-				
-				// toggle icon source
-				$toggleButton.attr('src', function() {
-					if (this.src.match(/disabled\.svg$/)) {
-						return this.src.replace(/disabled\.svg$/, 'enabled.svg');
-					}
-					else {
-						return this.src.replace(/enabled\.svg$/, 'disabled.svg');
-					}
-				});
-				
-				// toogle icon title
-				$toggleButton.attr('title', function() {
-					if (this.src.match(/enabled\.svg$/)) {
-						if ($(this).data('disableTitle')) {
-							return $(this).data('disableTitle');
-						}
-						
-						return WCF.Language.get('wcf.global.button.disable');
-					}
-					else {
-						if ($(this).data('enableTitle')) {
-							return $(this).data('enableTitle');
-						}
-						
-						return WCF.Language.get('wcf.global.button.enable');
-					}
-				});
-				
-				// toggle css class
-				$(container).toggleClass('disabled');
+				$container.wcfHighlight();
+				this._toggleButton($container, $toggleButton);
 			}
-		}, this));
+		}
+	},
+	
+	/**
+	 * Tiggers the toggle effect on a button
+	 * 
+	 * @param	jQuery	$container
+	 * @param	jQuery	$toggleButton
+	 */
+	_toggleButton: function($container, $toggleButton) {
+		// toggle icon source
+		$toggleButton.attr('src', function() {
+			if (this.src.match(/disabled\.svg$/)) {
+				return this.src.replace(/disabled\.svg$/, 'enabled.svg');
+			}
+			else {
+				return this.src.replace(/enabled\.svg$/, 'disabled.svg');
+			}
+		});
+
+		// toogle icon title
+		$toggleButton.attr('title', function() {
+			if (this.src.match(/enabled\.svg$/)) {
+				if ($(this).data('disableTitle')) {
+					return $(this).data('disableTitle');
+				}
+
+				return WCF.Language.get('wcf.global.button.disable');
+			}
+			else {
+				if ($(this).data('enableTitle')) {
+					return $(this).data('enableTitle');
+				}
+
+				return WCF.Language.get('wcf.global.button.enable');
+			}
+		});
+
+		// toggle css class
+		$container.toggleClass('disabled');
 	}
 });
 
@@ -3471,6 +3544,7 @@ WCF.Collapsible.Remote = Class.extend({
 		this._proxy.setOption('data', {
 			actionName: 'loadContainer',
 			className: this._className,
+			interfaceName: 'wcf\\data\\ILoadableCollapsibleContainerAction',
 			objectIDs: [ this._getObjectID($containerID) ],
 			parameters: $.extend(true, {
 				containerID: $containerID,
@@ -3601,6 +3675,7 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 		this._proxy.setOption('data', {
 			actionName: 'toggleContainer',
 			className: this._className,
+			interfaceName: 'wcf\\data\\ICollapsibleContainerAction',
 			objectIDs: [ this._getObjectID($containerID) ],
 			parameters: $.extend(true, {
 				containerID: $containerID,
@@ -4629,6 +4704,7 @@ WCF.Search.Base = Class.extend({
 			this._proxy.setOption('data', {
 				actionName: 'getSearchResultList',
 				className: this._className,
+				interfaceName: 'wcf\\data\\ISearchAction',
 				parameters: this._getParameters($parameters)
 			});
 			this._proxy.sendRequest();
@@ -5919,6 +5995,7 @@ WCF.Sortable.List = Class.extend({
 			axis: 'y',
 			connectWith: '#' + this._containerID + ' .sortableList',
 			disableNesting: 'sortableNoNesting',
+			doNotClear: true,
 			errorClass: 'sortableInvalidTarget',
 			forcePlaceholderSize: true,
 			helper: 'clone',
@@ -5933,7 +6010,7 @@ WCF.Sortable.List = Class.extend({
 			$('#' + this._containerID + ' .sortableList').sortable(this._options);
 		}
 		else {
-			$('#' + this._containerID + ' > .sortableList').wcfNestedSortable(this._options);
+			$('#' + this._containerID + ' > .sortableList').nestedSortable(this._options);
 		}
 		
 		if (this._className) {
@@ -5977,6 +6054,7 @@ WCF.Sortable.List = Class.extend({
 		this._proxy.setOption('data', {
 			actionName: 'updatePosition',
 			className: this._className,
+			interfaceName: 'wcf\\data\\ISortableAction',
 			parameters: $parameters
 		});
 		this._proxy.sendRequest();
@@ -6627,6 +6705,7 @@ WCF.EditableItemList = Class.extend({
 	init: function(itemListSelector, searchInputSelector) {
 		this._itemList = $(itemListSelector);
 		this._searchInput = $(searchInputSelector);
+		this._data = { };
 		
 		if (!this._itemList.length || !this._searchInput.length) {
 			console.debug("[WCF.EditableItemList] Item list and/or search input do not exist, aborting.");
@@ -7244,15 +7323,6 @@ WCF.UserPanel = Class.extend({
 });
 
 /**
- * WCF implementation for nested sortables.
- */
-$.widget("ui.wcfNestedSortable", $.extend({}, $.mjs.nestedSortable.prototype, {
-	_clearEmpty: function(item) {
-		/* Does nothing because we want to keep empty lists */
-	}
-}));
-
-/**
  * WCF implementation for dialogs, based upon ideas by jQuery UI.
  */
 $.widget('ui.wcfDialog', {
@@ -7350,12 +7420,10 @@ $.widget('ui.wcfDialog', {
 				type: this.options.type,
 				url: this.options.url
 			});
+			this.loading();
 			
 			// force open if using AJAX
 			this.options.autoOpen = true;
-			
-			// apply loading overlay
-			this._content.addClass('overlayLoading');
 		}
 		
 		if (this.options.autoOpen) {
@@ -7533,6 +7601,14 @@ $.widget('ui.wcfDialog', {
 	},
 	
 	/**
+	 * Clears the dialog and applies a loading overlay
+	 */
+	loading: function() {
+		this._content.addClass('overlayLoading');
+		this.render();
+	},
+	
+	/**
 	 * Closes this dialog.
 	 */
 	close: function() {
@@ -7567,8 +7643,14 @@ $.widget('ui.wcfDialog', {
 	
 	/**
 	 * Renders this dialog, should be called whenever content is updated.
+	 * 
+	 * @param	boolean	loaded
 	 */
-	render: function() {
+	render: function(loaded) {
+		if (loaded) {
+			this._content.removeClass('overlayLoading');
+		}
+		
 		if (!this.isOpen()) {
 			// temporarily display container
 			this._container.show();

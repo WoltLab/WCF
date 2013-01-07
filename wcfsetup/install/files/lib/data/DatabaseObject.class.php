@@ -102,6 +102,15 @@ abstract class DatabaseObject implements IStorableObject {
 	}
 	
 	/**
+	 * Returns the id of the object.
+	 * 
+	 * @return	mixed
+	 */
+	public function getObjectID() {
+		return $this->data[static::getDatabaseTableIndexName()];
+	}
+	
+	/**
 	 * @see	wcf\data\IStorableObject::__isset()
 	 */
 	public function __isset($name) {

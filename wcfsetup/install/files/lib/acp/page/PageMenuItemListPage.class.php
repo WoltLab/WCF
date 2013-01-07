@@ -3,7 +3,6 @@ namespace wcf\acp\page;
 use wcf\data\page\menu\item\PageMenuItemList;
 use wcf\data\page\menu\item\ViewablePageMenuItem;
 use wcf\page\AbstractPage;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 
 /**
@@ -17,6 +16,11 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class PageMenuItemListPage extends AbstractPage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.pageMenu.list';
+	
 	/**
 	 * list of footer page menu items
 	 * @var	array<wcf\data\page\menu\item\PageMenuItem>
@@ -74,15 +78,5 @@ class PageMenuItemListPage extends AbstractPage {
 			'footerItems' => $this->footerItems,
 			'headerItems' => $this->headerItems
 		));
-	}
-	
-	/**
-	 * @see	wcf\page\IPage::show()
-	 */
-	public function show() {
-		// set active menu item.
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.pageMenu.list');
-		
-		parent::show();
 	}
 }

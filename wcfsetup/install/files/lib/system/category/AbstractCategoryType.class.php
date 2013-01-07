@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\category;
 use wcf\data\category\CategoryEditor;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -62,12 +63,17 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	 * @see	wcf\system\category\ICategoryType::afterDeletion()
 	 */
 	public function afterDeletion(CategoryEditor $categoryEditor) {
-		// move child categories to parent category
-		foreach (CategoryHandler::getInstance()->getChildCategories($categoryEditor->getDecoratedObject()) as $category) {
-			$__categoryEditor = new CategoryEditor($category);
-			$__categoryEditor->update(array(
-				'parentCategoryID' => $categoryEditor->parentCategoryID
-			));
+		$categoryIDs = array_keys(CategoryHandler::getInstance()->getChildCategories($categoryEditor->getDecoratedObject()));
+		
+		if (!empty($categoryIDs)) {
+			// move child categories to parent category
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add("categoryID IN (?)", array($categoryIDs));
+			$sql = "UPDATE	wcf".WCF_N."_category
+				SET	parentCategoryID = ?
+				".$conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array_merge(array($categoryEditor->parentCategoryID), $conditionBuilder->getParameters()));
 		}
 	}
 	
@@ -97,6 +103,13 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	 */
 	public function forceDescription() {
 		return $this->hasDescription() && $this->forceDescription;
+	}
+	
+	/**
+	 * @see	wcf\system\category\ICategoryType::getApplication()
+	 */
+	public function getApplication() {
+		return 'wcf';
 	}
 	
 	/**

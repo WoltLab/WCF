@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="en" languagename="English" countrycode="gb">
+	<category name="wcf.acl">
+		<item name="wcf.acl.option.deny"><![CDATA[Deny]]></item>
+		<item name="wcf.acl.option.fullAccess"><![CDATA[Full access]]></item>
+		<item name="wcf.acl.option.grant"><![CDATA[Grant]]></item>
+		<item name="wcf.acl.permissions"><![CDATA[User/User group permissions]]></item>
+	</category>
+	
 	<category name="wcf.acp">
 		<item name="wcf.acp"><![CDATA[Administration]]></item>
 	</category>
@@ -81,7 +88,8 @@
 		<item name="wcf.acp.group.list"><![CDATA[User groups]]></item>
 		<item name="wcf.acp.group.list.count"><![CDATA[{#$items} user group{if $items != 1}s{/if}]]></item>
 		<item name="wcf.acp.group.members"><![CDATA[Number of members]]></item>
-		<item name="wcf.acp.group.showMembers"><![CDATA[Show the members of this user group]]></item>
+		
+		<item name="wcf.acp.group.option.admin.display.canManagePageMenu"><![CDATA[Can manage page menu]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Can enter Administration Control Panel]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Allows members of this user group to enter the Administration Control Panel and, dependent upon their permissions, run certain actions.]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPrivateUserOptions"><![CDATA[Can view private user options]]></item>
@@ -94,6 +102,7 @@
 		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Can view disabled styles]]></item>
 		<item name="wcf.acp.group.option.admin.system.canEditOption"><![CDATA[Can change the system options]]></item>
 		<item name="wcf.acp.group.option.admin.system.canViewLog"><![CDATA[Can view logs]]></item>
+		<item name="wcf.acp.group.option.admin.system.canManageApplication"><![CDATA[Can manage applications]]></item>
 		<item name="wcf.acp.group.option.admin.system.canManageCronjob"><![CDATA[Can manage cron jobs]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canEditServer"><![CDATA[Can edit update servers]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canInstallPackage"><![CDATA[Can install new packages]]></item>
@@ -112,8 +121,10 @@
 		<item name="wcf.acp.group.option.admin.user.canEditUser"><![CDATA[Can edit users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canMailUser"><![CDATA[Can send e-mails to users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canSearchUser"><![CDATA[Can search users]]></item>
+		
 		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrative permissions]]></item>
 		<item name="wcf.acp.group.option.category.admin.display"><![CDATA[Design]]></item>
+		<item name="wcf.acp.group.option.category.admin.display.pageMenu"><![CDATA[Page menu]]></item>
 		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[General permissions]]></item>
 		<item name="wcf.acp.group.option.category.admin.language"><![CDATA[Languages]]></item>
 		<item name="wcf.acp.group.option.category.admin.style"><![CDATA[Styles]]></item>
@@ -124,6 +135,11 @@
 		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.group.option.category.mod"><![CDATA[Moderative permissions]]></item>
 		<item name="wcf.acp.group.option.category.user"><![CDATA[General permissions]]></item>
+		
+		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[The given value is too high.{if $option->maxvalue !== null} The maximum value is {#$option->maxvalue}.{/if}]]></item>
+		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[The given value is too low.{if $option->minvalue !== null} The minimum value is {#$option->minvalue}.{/if}]]></item>
+		
+		<item name="wcf.acp.group.showMembers"><![CDATA[Show the members of this user group]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -141,6 +157,10 @@
 	</category>
 	
 	<category name="wcf.acp.menu">
+		<item name="wcf.acp.menu.link.application"><![CDATA[Applications]]></item>
+		<item name="wcf.acp.menu.link.application.cache"><![CDATA[Cache]]></item>
+		<item name="wcf.acp.menu.link.application.management"><![CDATA[Manage applications]]></item>
+		<item name="wcf.acp.menu.link.community"><![CDATA[Community]]></item>
 		<item name="wcf.acp.menu.link.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Cron jobs]]></item>
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Add new cron job]]></item>
@@ -162,6 +182,9 @@
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[List update server]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[List packages]]></item>
 		<item name="wcf.acp.menu.link.package.autoupdate"><![CDATA[Automatic update]]></item>
+		<item name="wcf.acp.menu.link.pageMenu"><![CDATA[Page menu]]></item>
+		<item name="wcf.acp.menu.link.pageMenu.add"><![CDATA[Add menu item]]></item>
+		<item name="wcf.acp.menu.link.pageMenu.list"><![CDATA[List menu items]]></item>
 		<item name="wcf.acp.menu.link.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.menu.link.user"><![CDATA[User]]></item>
 		<item name="wcf.acp.menu.link.user.add"><![CDATA[Add new user]]></item>
@@ -170,7 +193,6 @@
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Users]]></item>
 		<item name="wcf.acp.menu.link.user.massProcessing"><![CDATA[Bulk processing of users]]></item>
 		<item name="wcf.acp.menu.link.user.search"><![CDATA[Search for users]]></item>
-		<item name="wcf.acp.menu.link.community"><![CDATA[Community]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -221,6 +243,9 @@
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookie path]]></item>
 		<item name="wcf.acp.option.cookie_path.description"><![CDATA[The cookie path is concurrent to the document root of your site - e.g. “/forum” for http://www.woltlab.com/forum.]]></item>
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Cookie prefix]]></item>
+		
+		<item name="wcf.acp.option.error.tooHigh"><![CDATA[The given value is too high.{if $option->maxvalue !== null} The maximum value is {#$option->maxvalue}.{/if}]]></item>
+		<item name="wcf.acp.option.error.tooLow"><![CDATA[The given value is too low.{if $option->minvalue !== null} The minimum value is {#$option->minvalue}.{/if}]]></item>
 		
 		<item name="wcf.acp.option.export"><![CDATA[Export options]]></item>
 		<item name="wcf.acp.option.export.download"><![CDATA[Download the exported options]]></item>
@@ -312,9 +337,9 @@
 		<item name="wcf.acp.package.installation.packageStatus.installed"><![CDATA[already installed]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.missing"><![CDATA[missing]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.missingVersion"><![CDATA[missing package version (installed version: {$package.existingVersion})]]></item>
-		<item name="wcf.acp.package.installation.step.install"><![CDATA[Installing “{$packageName}” &hellip;]]></item>
+		<item name="wcf.acp.package.installation.step.install"><![CDATA[Installing “{$packageName}” …]]></item>
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation completed]]></item>
-		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Prepairing installation &hellip;]]></item>
+		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Prepairing installation …]]></item>
 		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Required version]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Package list]]></item>
@@ -332,7 +357,6 @@
 		<item name="wcf.acp.package.startInstall"><![CDATA[Install package]]></item>
 		<item name="wcf.acp.package.startUpdate"><![CDATA[Update package “{@$package->getName()}”]]></item>
 		<item name="wcf.acp.package.type.application"><![CDATA[Application]]></item>
-		<item name="wcf.acp.package.type.other"><![CDATA[Base package]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Extension]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Do you really want to uninstall the package “{@$package->getName()}”?]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update date]]></item>
@@ -662,8 +686,6 @@
 		<item name="wcf.global.form.error"><![CDATA[The data you have entered are not valid. Please check the information you have given in the marked fields.]]></item>
 		<item name="wcf.global.form.error.empty"><![CDATA[Please enter the required information for this field.]]></item>
 		<item name="wcf.global.loading"><![CDATA[Loading …]]></item>
-		<item name="wcf.global.locale.unix"><![CDATA[en_US]]></item> <!-- system variable; do not translate -->
-		<item name="wcf.global.locale.win"><![CDATA[english]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.name"><![CDATA[Name]]></item>
 		<item name="wcf.global.objectID"><![CDATA[ID]]></item>
 		<item name="wcf.global.page.next"><![CDATA[Next page]]></item>

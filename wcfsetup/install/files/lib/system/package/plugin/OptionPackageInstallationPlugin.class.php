@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\option\Option;
 use wcf\data\option\OptionEditor;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -17,6 +18,12 @@ use wcf\util\StringUtil;
  * @category	Community Framework
  */
 class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
+	/**
+	 * list of application abbreviations
+	 * @var	array<string>
+	 */
+	protected static $abbreviations = null;
+	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
@@ -53,9 +60,8 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 		if (isset($option['requirei18n'])) $requireI18n = $option['requirei18n'];
 		
 		// check if optionType exists
-		$className = 'wcf\system\option\\'.StringUtil::firstCharToUpperCase($optionType).'OptionType';
-		if (!class_exists($className)) {
-			throw new SystemException("unable to find class '".$className."'");
+		if (!$this->validateOptionType($optionType)) {
+			throw new SystemException("unable to find option type '".$optionType."'");
 		}
 		
 		// collect additional tags and their values
@@ -106,5 +112,40 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 			$optionEditor = new OptionEditor($optionObj);
 			$optionEditor->update($data);
 		}
+	}
+	
+	/**
+	 * Returns true, if option type is valid.
+	 * 
+	 * @param	integer		$optionType
+	 * @return	boolean
+	 */
+	protected function validateOptionType($optionType) {
+		$optionType = StringUtil::firstCharToUpperCase($optionType);
+		
+		// attempt to validate against WCF first
+		$className = 'wcf\system\option\\'.$optionType.'OptionType';
+		if (class_exists($className)) {
+			return true;
+		}
+		
+		// check for applications
+		if (self::$abbreviations === null) {
+			self::$abbreviations = array();
+			
+			$applications = ApplicationHandler::getInstance()->getApplications();
+			foreach ($applications as $application) {
+				self::$abbreviations[] = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
+			}
+		}
+		
+		foreach (self::$abbreviations as $abbreviation) {
+			$className = $abbreviation.'\system\option\\'.$optionType.'OptionType';
+			if (class_exists($className)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

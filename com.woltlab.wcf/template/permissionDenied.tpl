@@ -6,11 +6,12 @@
 	{include file='headInclude'}
 </head>
 
-<body{if $templateName|isset} id="tpl{$templateName|ucfirst}"{/if}>
+<body id="tpl{$templateName|ucfirst}">
 
 {include file='header'}
-	
+
 <p class="error">{lang}wcf.global.error.permissionDenied{/lang}</p>
+
 {event name='content'}
 
 {if ENABLE_DEBUG_MODE}

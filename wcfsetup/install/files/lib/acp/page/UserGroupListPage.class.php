@@ -1,7 +1,6 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\SortablePage;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 
 /**
@@ -15,6 +14,11 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class UserGroupListPage extends SortablePage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.group.list';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
@@ -80,15 +84,5 @@ class UserGroupListPage extends SortablePage {
 		WCF::getTPL()->assign(array(
 			'deletedGroups' => $this->deletedGroups
 		));
-	}
-	
-	/**
-	 * @see	wcf\page\IPage::show()
-	 */
-	public function show() {
-		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.group.list');
-		
-		parent::show();
 	}
 }

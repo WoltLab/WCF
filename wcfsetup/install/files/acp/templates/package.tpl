@@ -85,10 +85,10 @@
 			<nav class="menu">
 				<ul>
 					{if $package->getRequiredPackages()|count}
-						<li><a href="#dependencies-required">{lang}wcf.acp.package.dependencies.required{/lang}</a></li>
+						<li><a href="{@$__wcf->getAnchor('dependencies-required')}">{lang}wcf.acp.package.dependencies.required{/lang}</a></li>
 					{/if}
 					{if $package->getDependentPackages()|count}
-						<li><a href="#dependencies-dependent">{lang}wcf.acp.package.dependencies.dependent{/lang}</a></li>
+						<li><a href="{@$__wcf->getAnchor('dependencies-dependent')}">{lang}wcf.acp.package.dependencies.dependent{/lang}</a></li>
 					{/if}
 				</ul>
 			</nav>
@@ -133,10 +133,8 @@
 										<td class="columnIcon">
 											{if $requiredPackage->isApplication}
 												<img src="{@$__wcf->getPath()}icon/window.svg" alt="" title="{lang}wcf.acp.package.type.application{/lang}" class="icon16 jsTooltip" />
-											{elseif $requiredPackage->parentPackageID}
-												<img src="{@$__wcf->getPath()}icon/plugin.svg" alt="" title="{lang}wcf.acp.package.type.plugin{/lang}" class="icon16 jsTooltip" />
 											{else}
-												<img src="{@$__wcf->getPath()}icon/package.svg" alt="" title="{lang}wcf.acp.package.type.other{/lang}" class="icon16 jsTooltip" />
+												<img src="{@$__wcf->getPath()}icon/plugin.svg" alt="" title="{lang}wcf.acp.package.type.plugin{/lang}" class="icon16 jsTooltip" />
 											{/if}
 										</td>
 										<td class="columnTitle" title="{$requiredPackage->packageDescription|language}"><p><a href="{link controller='Package' id=$requiredPackage->packageID}{/link}">{$requiredPackage}</a></p></td>
@@ -193,10 +191,8 @@
 										<td class="columnIcon">
 											{if $dependentPackage->isApplication}
 												<img src="{@$__wcf->getPath()}icon/window.svg" alt="" title="{lang}wcf.acp.package.type.application{/lang}" class="jsTooltip" />
-											{elseif $dependentPackage->parentPackageID}
-												<img src="{@$__wcf->getPath()}icon/plugin.svg" alt="" title="{lang}wcf.acp.package.type.plugin{/lang}" class="jsTooltip" />
 											{else}
-												<img src="{@$__wcf->getPath()}icon/package.svg" alt="" title="{lang}wcf.acp.package.type.other{/lang}" class="jsTooltip" />
+												<img src="{@$__wcf->getPath()}icon/plugin.svg" alt="" title="{lang}wcf.acp.package.type.plugin{/lang}" class="jsTooltip" />
 											{/if}
 										</td>
 										<td class="columnTitle" title="{$dependentPackage->packageDescription|language}"><p><a href="{link controller='Package' id=$dependentPackage->packageID}{/link}">{$dependentPackage}</a></p></td>
@@ -216,14 +212,6 @@
 	{/if}
 </div>
 
-{assign var=noDependentIsActive value=true}
-{foreach from=$package->getDependentPackages() item=dependentPackage}
-	{if $dependentPackage->package != 'com.woltlab.wcf' && $dependentPackage->packageID == PACKAGE_ID}
-		{assign var=noDependentIsActive value=false}
-		{* TODO: maybe show users that this package can't be uninstalled because a dependent package is the active application *}
-	{/if}
-{/foreach}
-
 <div class="contentNavigation">
 	<nav>
 		<ul>
@@ -231,7 +219,8 @@
 				{if $package->isApplication && $package->package != 'com.woltlab.wcf'}
 					<li><a href="{@$__wcf->getPath()}{$package->packageDir}acp/index.php{@SID_ARG_1ST}" title="{lang}wcf.acp.package.button.switch{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/packageACP1.svg" alt="" /> <span>{lang}wcf.acp.package.button.switch{/lang}</span></a></li>
 				{/if}
-				{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage') && $noDependentIsActive}
+				{if $package->canUninstall()}
+					{* TODO: maybe show users that this package can't be uninstalled because a dependent package is the active application *}
 					<li><a href="{link controller='Package'}action=startUninstall&packageID={@$package->packageID}{/link}" onclick="return confirm('{lang}wcf.acp.package.button.uninstall.sure{/lang}')" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/delete1.svg" alt="" /> <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></a></li>
 				{/if}
 			{/if}

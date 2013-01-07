@@ -1,8 +1,6 @@
 <?php
 namespace wcf\data\package;
 use wcf\data\DatabaseObject;
-use wcf\system\database\statement\PreparedStatement;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\package\PackageInstallationDispatcher;
@@ -22,26 +20,16 @@ use wcf\util\StringUtil;
  */
 class Package extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
-	 */
-	protected static $databaseTableName = 'package';
-	
-	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
-	 */
-	protected static $databaseTableIndexName = 'packageID';
-	
-	/**
-	 * package requirement map
-	 * @var	array<integer>
-	 */
-	protected static $requirementMap = null;
-	
-	/**
 	 * list of packages that this package requires
 	 * @var	array<wcf\data\package\Package>
 	 */
 	protected $dependencies = null;
+	
+	/**
+	 * list of packages that require this package
+	 * @var	array<wcf\data\package\Package>
+	 */
+	protected $dependentPackages = null;
 	
 	/**
 	 * installation directory
@@ -56,14 +44,36 @@ class Package extends DatabaseObject {
 	protected $requiredPackages = null;
 	
 	/**
+	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 */
+	protected static $databaseTableName = 'package';
+	
+	/**
+	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 */
+	protected static $databaseTableIndexName = 'packageID';
+	
+	/**
+	 * list of ids of packages which are required by another package
+	 * @var	array<integer>
+	 */
+	protected static $requiredPackageIDs = null;
+	
+	/**
+	 * package requirements
+	 * @var	array
+	 */
+	protected static $requirements = null;
+	
+	/**
 	 * Returns true, if this package is required by other packages.
 	 * 
 	 * @return	boolean
 	 */
 	public function isRequired() {
-		self::loadRequirementMap();
+		self::loadRequirements();
 		
-		return (isset(self::$requirementMap[$this->packageID]));
+		return in_array($this->packageID, self::$requiredPackageIDs);
 	}
 	
 	/**
@@ -107,38 +117,21 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns a list of all by this package required packages.
-	 * Contains required packages and the requirements of the required packages.
-	 * 
-	 * @return	array<wcf\data\package\Package>
-	 */
-	public function getDependencies() {
-		if ($this->dependencies === null) {
-			throw new SystemException("Package::getDependencies()");
-		}
-		
-		return $this->dependencies;
-	}
-	
-	/**
-	 * Returns a list of the requirements of this package.
-	 * Contains the content of the <requiredPackages> tag in the package.xml of this package.
+	 * Returns the list of packages which are required by this package. The
+	 * returned packages are the packages given in the <requiredpackages> tag
+	 * in the package.xml of this package.
 	 * 
 	 * @return	array<wcf\data\package\Package>
 	 */
 	public function getRequiredPackages() {
 		if ($this->requiredPackages === null) {
-			$this->requiredPackages = array();
+			self::loadRequirements();
 			
-			$sql = "SELECT		package.*
-				FROM		wcf".WCF_N."_package_requirement package_requirement
-				LEFT JOIN	wcf".WCF_N."_package package ON (package.packageID = package_requirement.requirement)
-				WHERE		package_requirement.packageID = ?
-				ORDER BY	packageName ASC";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->packageID));
-			while ($package = $statement->fetchObject('wcf\data\package\Package')) {
-				$this->requiredPackages[$package->packageID] = $package;
+			$this->requiredPackages = array();
+			if (isset(self::$requirements[$this->packageID])) {
+				foreach (self::$requirements[$this->packageID] as $packageID) {
+					$this->requiredPackages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
+				}
 			}
 		}
 		
@@ -155,13 +148,13 @@ class Package extends DatabaseObject {
 			return false;
 		}
 		
-		// disallow uninstallation of current package or WCF
-		if ($this->package == 'com.woltlab.wcf' || $this->packageID == PACKAGE_ID) {
+		// disallow uninstallation of WCF and applications if not within WCF ACP
+		if ($this->package == 'com.woltlab.wcf' || ($this->isApplication && PACKAGE_ID != 1)) {
 			return false;
 		}
 		
-		// check if package is required by current application
-		if (self::isRequiredBy($this->packageID, PACKAGE_ID)) {
+		// check if package is required by another package
+		if (self::isRequired($this->packageID)) {
 			return false;
 		}
 		
@@ -174,58 +167,61 @@ class Package extends DatabaseObject {
 	 * @return	array<wcf\data\package\Package>
 	 */
 	public function getDependentPackages() {
-		self::loadRequirementMap();
-		
-		$packages = array();
-		if (isset(self::$requirementMap[$this->packageID])) {
-			foreach (self::$requirementMap[$this->packageID] as $packageID) {
-				$packages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
-			}
-		}
-		
-		return $packages;
-	}
-	
-	/**
-	 * Returns true, if package $packageID is required by package $targetPackageID.
-	 * 
-	 * @param	integer		$packageID
-	 * @param	integer		$targetPackageID
-	 * @return	boolean
-	 */
-	public static function isRequiredBy($packageID, $targetPackageID) {
-		self::loadRequirementMap();
-		
-		if (isset(self::$requirementMap[$packageID])) {
-			foreach (self::$requirementMap[$packageID] as $requiredBy) {
-				if ($requiredBy == $targetPackageID) {
-					return true;
+		if ($this->dependentPackages === null) {
+			self::loadRequirements();
+			
+			$this->dependentPackages = array();
+			foreach (self::$requirements as $packageID => $requiredPackageIDs) {
+				if (in_array($this->packageID, $requiredPackageIDs)) {
+					$this->dependentPackages[$packageID] = PackageCache::getInstance()->getPackage($packageID);
 				}
 			}
 		}
 		
-		return false;
+		return $this->dependentPackages;
 	}
 	
 	/**
-	 * Loads package requirement map.
+	 * Loads package requirements.
 	 */
-	protected static function loadRequirementMap() {
-		if (self::$requirementMap === null) {
+	protected static function loadRequirements() {
+		if (self::$requirements === null) {
 			$sql = "SELECT	packageID, requirement
-				FROM	wcf".WCF_N."_package_requirement_map";
+				FROM	wcf".WCF_N."_package_requirement";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute();
 			
-			self::$requirementMap = array();
+			self::$requiredPackageIDs = array();
+			self::$requirements = array();
 			while ($row = $statement->fetchArray()) {
-				if (!isset(self::$requirementMap[$row['requirement']])) {
-					self::$requirementMap[$row['requirement']] = array();
+				if (!isset(self::$requirements[$row['packageID']])) {
+					self::$requirements[$row['packageID']] = array();
 				}
 				
-				self::$requirementMap[$row['requirement']][] = $row['packageID'];
+				self::$requirements[$row['packageID']][] = $row['requirement'];
+				
+				if (!in_array($row['requirement'], self::$requiredPackageIDs)) {
+					self::$requiredPackageIDs[] = $row['requirement'];
+				}
 			}
 		}
+	}
+	
+	/**
+	 * Returns true, if package identified by $package is already installed.
+	 * 
+	 * @param	string		$package
+	 * @return	boolean
+	 */
+	public static function isAlreadyInstalled($package) {
+		$sql = "SELECT	COUNT(*) AS count
+			FROM	wcf".WCF_N."_package
+			WHERE	package = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($package));
+		$row = $statement->fetchArray();
+		
+		return ($row['count'] ? true : false);
 	}
 	
 	/**
@@ -334,81 +330,6 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * Rebuilds the requirement map for the given package id.
-	 * 
-	 * @param	integer		$packageID
-	 */
-	public static function rebuildPackageRequirementMap($packageID) {
-		// delete old entries
-		$sql = "DELETE FROM	wcf".WCF_N."_package_requirement_map
-			WHERE		packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
-		
-		// fetch requirements of requirements
-		$requirements = array();
-		$sql = "SELECT		requirement, level
-			FROM		wcf".WCF_N."_package_requirement_map
-			WHERE		packageID IN (
-						SELECT	requirement
-						FROM	wcf".WCF_N."_package_requirement
-						WHERE	packageID = ?
-					)
-			ORDER BY	level ASC";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
-		while ($row = $statement->fetchArray()) {
-			// use reverse order, highest level epic wins
-			$requirements[$row['requirement']] = $row['level'];
-		}
-		
-		// insert requirements of requirements
-		if (!empty($requirements)) {
-			$sql = "INSERT INTO	wcf".WCF_N."_package_requirement_map
-						(packageID, requirement, level)
-				VALUES		(?, ?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			foreach ($requirements as $requirement => $level) {
-				$statement->execute(array($packageID, $requirement, $level));
-			}
-		}
-		
-		// fetch requirements
-		$directRequirements = array();
-		$conditions = new PreparedStatementConditionBuilder($sql);
-		$conditions->add("packageID = ?", array($packageID));
-		if (!empty($requirements)) {
-			$conditions->add("requirement NOT IN (?)", array(array_keys($requirements)));
-		}
-		
-		$sql = "SELECT	requirement, 
-				(
-					SELECT	MAX(level) AS requirementLevel
-					FROM	wcf".WCF_N."_package_requirement_map
-					WHERE	packageID = package_requirement.requirement
-				) AS requirementLevel
-			FROM	wcf".WCF_N."_package_requirement package_requirement
-			".$conditions;
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditions->getParameters());
-		while ($row = $statement->fetchArray()) {
-			$row['requirementLevel'] = intval($row['requirementLevel']) + 1;
-			$directRequirements[$row['requirement']] = $row['requirementLevel'];
-		}
-		
-		// insert requirements
-		if (!empty($directRequirements)) {
-			$sql = "INSERT INTO	wcf".WCF_N."_package_requirement_map
-						(packageID, requirement, level)
-				VALUES		(?, ?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			foreach ($directRequirements as $requirement => $level) {
-				$statement->execute(array($packageID, $requirement, $level));
-			}
-		}
-	}
-	
-	/**
 	 * Writes the config.inc.php for an application.
 	 * 
 	 * @param	integer		$packageID
@@ -418,7 +339,7 @@ class Package extends DatabaseObject {
 		$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$package->packageDir));
 		$file = new File($packageDir.PackageInstallationDispatcher::CONFIG_FILE);
 		$file->write("<?php\n");
-		$prefix = strtoupper(Package::getAbbreviation($package->package));
+		$prefix = strtoupper(self::getAbbreviation($package->package));
 		
 		$file->write("// ".$package->package." (packageID ".$package->packageID.")\n");
 		$file->write("if (!defined('".$prefix."_DIR')) define('".$prefix."_DIR', dirname(__FILE__).'/');\n");
@@ -434,18 +355,5 @@ class Package extends DatabaseObject {
 		
 		// write end
 		$file->close();
-	}
-	
-	/**
-	 * Returns a list of plugins for currently active application.
-	 * 
-	 * @todo	Care about simple plugins just providing some crap.
-	 * @return	wcf\data\package\PackageList
-	 */
-	public static function getPluginList() {
-		$pluginList = new PackageList();
-		$pluginList->getConditionBuilder()->add("package.isApplication = ?", array(0));
-		
-		return $pluginList;
 	}
 }

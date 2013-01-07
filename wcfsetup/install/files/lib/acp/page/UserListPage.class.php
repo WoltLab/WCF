@@ -9,7 +9,6 @@ use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -177,8 +176,7 @@ class UserListPage extends SortablePage {
 	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
-		// set active menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.user.'.($this->searchID ? 'search' : 'list'));
+		$this->activeMenuItem = 'wcf.acp.menu.link.user.'.($this->searchID ? 'search' : 'list');
 		
 		parent::show();
 	}

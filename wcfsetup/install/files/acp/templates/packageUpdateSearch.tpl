@@ -104,18 +104,10 @@
 						<label><input type="checkbox" name="other" value="1" {if $other == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.type.other{/lang}</label> 
 					</dd>
 				</dl>
-				
-				<dl>
-					<dt></dt>
-					<dd>
-						<label><input type="checkbox" name="ignoreUniques" value="1" {if $ignoreUniques == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.ignoreUniques{/lang}</label>
-					</dd>
-				</dl>
 			</fieldset>
 		</div>
 		
 		<div class="formSubmit">
-			<input type="reset" value="{lang}wcf.global.button.reset{/lang}" accesskey="r" />
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		</div>
 	</form>

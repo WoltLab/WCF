@@ -5,8 +5,6 @@
 		<item name="wcf.global.title"><![CDATA[{$setupPackageName}]]></item>
 		<item name="wcf.global.title.subtitle"><![CDATA[Prepairing installation]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
-		<item name="wcf.global.locale.unix"><![CDATA[en_US]]></item> <!-- system variable; do not translate -->
-		<item name="wcf.global.locale.win"><![CDATA[english]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Next »]]></item>
@@ -20,8 +18,6 @@
 		<item name="wcf.global.license.description"><![CDATA[Please read the following license agreement. Use the scroll bar to view the entire document.]]></item>
 		<item name="wcf.global.license.accept.description"><![CDATA[Do you accept the terms and conditions of the license agreement? You may only install this software upon acceptance of the license agreement.]]></item>
 		<item name="wcf.global.license.missingAcception"><![CDATA[You must accept the license agreement to continue this installation.]]></item>
-		<item name="wcf.global.systemRequirements"><![CDATA[Checking system-requirements]]></item>
-		<item name="wcf.global.systemRequirements.description"><![CDATA[These are the system-requirements:]]></item>
 		<item name="wcf.global.systemRequirements.required"><![CDATA[Required system-component]]></item>
 		<item name="wcf.global.systemRequirements.recommended"><![CDATA[Recommended system-component]]></item>
 		<item name="wcf.global.systemRequirements.element.required"><![CDATA[Required:]]></item>

@@ -1,12 +1,12 @@
 <?php
 namespace wcf\system\category;
 use wcf\data\category\Category;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectDecorator;
-use wcf\system\SingletonFactory;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\SingletonFactory;
 
 /**
  * Handles the categories.
@@ -64,6 +64,30 @@ class CategoryHandler extends SingletonFactory {
 		}
 		
 		return $categories;
+	}
+	
+	/**
+	 * Returns a list of accessible categories.
+	 *
+	 * @param	string		$objectType
+	 * @param	array		$permissions		filters categories by given permissions
+	 * @return	array<integer>				comma separated category ids
+	 */
+	public function getAccessibleCategoryIDs($objectType, array $permissions) {
+		$categoryIDs = array();
+		foreach ($this->getCategories($objectType) as $category) {
+			$result = true;
+			$categoryPermissions = CategoryPermissionHandler::getInstance()->getPermissions($category);
+			foreach ($permissions as $permission) {
+				$result = $result && !empty($categoryPermissions[$permission]);
+			}
+				
+			if ($result) {
+				$categoryIDs[] = $category->categoryID;
+			}
+		}
+	
+		return $categoryIDs;
 	}
 	
 	/**

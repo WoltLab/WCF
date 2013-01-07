@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\page\menu\item\PageMenuItem;
 use wcf\data\page\menu\item\PageMenuItemAction;
+use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
@@ -18,7 +19,7 @@ use wcf\system\WCF;
  */
 class PageMenuItemEditForm extends PageMenuItemAddForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.pageMenu';
 	
@@ -68,9 +69,10 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 		
 		if (empty($_POST)) {
 			$this->isDisabled = ($this->menuItem->isDisabled) ? true : false;
-			$this->isLandingPage = ($this->menuItem->isLandingPage) ? true : false;
+			$this->isInternalLink = ($this->menuItem->menuItemController) ? true : false;
+			$this->menuItemController = $this->menuItem->menuItemController;
+			$this->menuItemLink = $this->menuItem->menuItemLink;
 			$this->menuPosition = $this->menuItem->menuPosition;
-			$this->newWindow = ($this->menuItem->newWindow) ? true : false;
 			$this->pageMenuItem = $this->menuItem->menuItem;
 			$this->parentMenuItem = $this->menuItem->parentMenuItem;
 			$this->showOrder = $this->menuItem->showOrder;
@@ -81,7 +83,7 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
-		ACPForm::save();
+		AbstractForm::save();
 		
 		// save menu item
 		I18nHandler::getInstance()->save('pageMenuItem', $this->menuItem->menuItem, 'wcf.page');
@@ -99,9 +101,8 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 		// save menu item
 		$this->objectAction = new PageMenuItemAction(array($this->menuItem), 'update', array('data' => array(
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
-			'isLandingPage' => ($this->isLandingPage) ? 1 : 0,
+			'menuItemController' => $this->menuItemController,
 			'menuItemLink' => $this->menuItemLink,
-			'newWindow' => ($this->newWindow) ? 1 : 0,
 			'parentMenuItem' => ($this->menuItem->menuPosition == 'header' ? $this->parentMenuItem : ''),
 			'showOrder' => $this->showOrder
 		)));

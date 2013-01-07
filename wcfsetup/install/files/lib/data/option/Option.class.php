@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\option;
-use wcf\data\DatabaseObject;
 use wcf\data\package\Package;
+use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -25,6 +25,22 @@ class Option extends DatabaseObject {
 	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'optionID';
+	
+	/**
+	 * @see	wcf\data\IStorableObject::__get()
+	 */
+	public function __get($name) {
+		$value = parent::__get($name);
+		
+		// treat additional data as data variables if it is an array
+		if ($value === null) {
+			if (is_array($this->data['additionalData']) && isset($this->data['additionalData'][$name])) {
+				$value = $this->data['additionalData'][$name];
+			}
+		}
+		
+		return $value;
+	}
 	
 	/**
 	 * @see	wcf\data\DatabaseObject::handleData()

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\option\OptionAction;
+use wcf\form\AbstractForm;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -17,16 +18,16 @@ use wcf\util\XML;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class OptionImportForm extends ACPForm {
+class OptionImportForm extends AbstractForm {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.option.importAndExport';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canEditOption');
-	
-	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
-	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.option.importAndExport';
 	
 	/**
 	 * upload file data

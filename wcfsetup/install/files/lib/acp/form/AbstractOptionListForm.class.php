@@ -49,12 +49,6 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	protected $languageItemPattern = '';
 	
 	/**
-	 * true if active options are loaded when option handler is initialized
-	 * @var	boolean
-	 */
-	public $loadActiveOptions = true;
-	
-	/**
 	 * option handler object
 	 * @var	wcf\system\option\IOptionHandler
 	 */
@@ -78,7 +72,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		$this->optionHandler = new $this->optionHandlerClassName($this->cacheName, $this->cacheClass, $this->supportI18n, $this->languageItemPattern, $this->categoryName, $this->loadActiveOptions);
+		$this->optionHandler = new $this->optionHandlerClassName($this->cacheName, $this->cacheClass, $this->supportI18n, $this->languageItemPattern, $this->categoryName);
 		$this->initOptionHandler();
 	}
 	

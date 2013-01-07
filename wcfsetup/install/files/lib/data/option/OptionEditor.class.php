@@ -85,53 +85,33 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.option.php');
 		
 		// reset options.inc.php files
-		$sql = "SELECT	package, packageID, packageDir
-			FROM	wcf".WCF_N."_package
-			WHERE	isApplication = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(1));
-		while ($row = $statement->fetchArray()) {
-			if ($row['package'] == 'com.woltlab.wcf') $packageDir = WCF_DIR;
-			else $packageDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
-			$filename = FileUtil::addTrailingSlash($packageDir).self::FILENAME;
-			if (file_exists($filename)) {
-				if (!@touch($filename, 1)) {
-					if (!@unlink($filename)) {
-						self::rebuildFile($filename, $row['packageID']);
-					}
-				}
-			}
-		}
+		self::rebuild();
 	}
 	
 	/**
 	 * Rebuilds the option file.
-	 * 
-	 * @param	string		$filename
-	 * @param	integer		$packageID
 	 */
-	public static function rebuildFile($filename, $packageID) {
+	public static function rebuild() {
 		$buffer = '';
 		
 		// file header
 		$buffer .= "<?php\n/**\n* generated at ".gmdate('r')."\n*/\n";
 		
 		// get all options
-		$options = Option::getOptions($packageID);
+		$options = Option::getOptions();
 		foreach ($options as $optionName => $option) {
 			$buffer .= "if (!defined('".$optionName."')) define('".$optionName."', ".(($option->optionType == 'boolean' || $option->optionType == 'integer') ? intval($option->optionValue) : "'".addcslashes($option->optionValue, "'\\")."'").");\n";
 		}
 		unset($options);
 		
 		// file footer
-		$buffer .= "?>";
+		$buffer .= "\n";
 		
 		// open file
-		$file = new File($filename);
+		$file = new File(WCF_DIR.'options.inc.php');
 		
 		// write buffer
 		$file->write($buffer);
-		unset($buffer);
 		
 		// close file
 		$file->close();

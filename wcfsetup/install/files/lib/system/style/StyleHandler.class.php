@@ -53,7 +53,7 @@ class StyleHandler extends SingletonFactory {
 		$styles = array();
 		
 		foreach ($this->cache['styles'] as $styleID => $style) {
-			if ((!$style->disabled && empty($this->cache['packages'][PACKAGE_ID]['disabled'][$styleID])) || WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
+			if (!$style->isDisabled || WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
 				$styles[$styleID] = $style;
 			}
 		}
@@ -84,7 +84,7 @@ class StyleHandler extends SingletonFactory {
 		// check permission
 		if (!$ignorePermissions) {
 			if (isset($this->cache['styles'][$styleID])) {
-				if (($this->cache['styles'][$styleID]->disabled || !empty($this->cache['packages'][PACKAGE_ID]['disabled'][$styleID])) && !WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
+				if ($this->cache['styles'][$styleID]->isDisabled && !WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
 					$styleID = 0;
 				}
 			}
@@ -92,14 +92,8 @@ class StyleHandler extends SingletonFactory {
 		
 		// fallback to default style
 		if (!isset($this->cache['styles'][$styleID])) {
-			// get package default style
-			if (!empty($this->cache['packages'][PACKAGE_ID]['default'])) {
-				$styleID = $this->cache['packages'][PACKAGE_ID]['default'];
-			}
-			// get global default style
-			else {
-				$styleID = $this->cache['default'];
-			}
+			// get default style
+			$styleID = $this->cache['default'];
 			
 			if (!isset($this->cache['styles'][$styleID])) {
 				throw new SystemException('no default style defined');
@@ -151,6 +145,15 @@ class StyleHandler extends SingletonFactory {
 		foreach ($stylesheets as $stylesheet) {
 			@unlink($stylesheet);
 		}
+	}
+	
+	/**
+	 * Returns number of available styles.
+	 * 
+	 * @return	integer
+	 */
+	public function countStyles() {
+		return count($this->getAvailableStyles());
 	}
 	
 	/**

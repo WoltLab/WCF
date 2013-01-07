@@ -4,7 +4,7 @@
 	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\package\\update\\server\\PackageUpdateServerAction', '.jsUpdateServerRow');
-		new WCF.Action.Toggle('wcf\\data\\package\\update\\server\\PackageUpdateServerAction', $('.jsUpdateServerRow'));
+		new WCF.Action.Toggle('wcf\\data\\package\\update\\server\\PackageUpdateServerAction', '.jsUpdateServerRow');
 	});
 	//]]>
 </script>
@@ -56,10 +56,10 @@
 					{foreach from=$objects item=updateServer}
 						<tr class="jsUpdateServerRow">
 							<td class="columnIcon">
-								<img src="{@$__wcf->getPath()}icon/{if !$updateServer->disabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$updateServer->disabled}disable{else}enable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$updateServer->packageUpdateServerID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
+								<img src="{@$__wcf->getPath()}icon/{if !$updateServer->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$updateServer->isDisabled}disable{else}enable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$updateServer->packageUpdateServerID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
 								<a href="{link controller='UpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 jsTooltip" /></a>
 								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$updateServer->packageUpdateServerID}" data-confirm-message="{lang}wcf.acp.updateServer.delete.sure{/lang}" />
-							
+								
 								{event name='buttons'}
 							</td>
 							<td class="columnID"><p>{@$updateServer->packageUpdateServerID}</p></td>
@@ -68,7 +68,7 @@
 							<td class="columnStatus"><p class="badge{if $updateServer->status == 'online'} green{else} red{/if}">{@$updateServer->status}</p></td>
 							<td class="columnText"><p title="{@$updateServer->errorMessage}">{@$updateServer->errorMessage|truncate:"30"}</p></td>
 							<td class="columnDate"><p>{if $updateServer->lastUpdateTime}{@$updateServer->lastUpdateTime|time}{/if}</p></td>
-						
+							
 							{event name='columns'}
 						</tr>
 					{/foreach}

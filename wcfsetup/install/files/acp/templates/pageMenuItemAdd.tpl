@@ -3,39 +3,34 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		var $isDisabled = $('#isDisabled');
-		var $isLandingPageContainer = $('#isLandingPageContainer');
 		var $menuPosition = $('#menuPosition');
 		var $parentMenuItemContainer = $('#parentMenuItemContainer');
+		var $isInternalLink = $('input[name=isInternalLink]').filter('[value=1]');
+		var $menuItemControllerContainer = $('#menuItemControllerContainer');
 		
 		function handleMenuPosition() {
 			if ($menuPosition.val() === 'header') {
 				$parentMenuItemContainer.show();
-				
-				if (!$isDisabled.is(':checked')) {
-					$isLandingPageContainer.show();
-				}
 			}
 			else {
 				$parentMenuItemContainer.hide();
-				$isLandingPageContainer.hide();
 			}
 		}
 		
-		function handleIsDisabled() {
-			if ($isDisabled.is(':checked')) {
-				$isLandingPageContainer.hide();
+		function handleIsInternalLink() {
+			if ($isInternalLink.is(':checked')) {
+				$menuItemControllerContainer.show();
 			}
 			else {
-				$isLandingPageContainer.show();
+				$menuItemControllerContainer.hide();
 			}
 		}
 		
-		$isDisabled.change(handleIsDisabled);
 		$menuPosition.change(handleMenuPosition);
+		$('input[name=isInternalLink]').change(handleIsInternalLink);
 		
-		handleIsDisabled();
 		handleMenuPosition();
+		handleIsInternalLink();
 	});
 	//]]>
 </script>
@@ -124,11 +119,39 @@
 					{include file='multipleLanguageInputJavascript' elementIdentifier='pageMenuItem' forceSelection=true}
 				</dd>
 			</dl>
+		</fieldset>
+		
+		<fieldset>
+			<legend>{lang}wcf.acp.pageMenu.link{/lang}</legend>
+			
+			<dl>
+				<dd class="floated">
+					<label><input type="radio" name="isInternalLink" value="1"{if $isInternalLink} checked="checked"{/if} /> {lang}wcf.acp.pageMenu.link.internal{/lang}</label>
+					<label><input type="radio" name="isInternalLink" value="0"{if !$isInternalLink} checked="checked"{/if} /> {lang}wcf.acp.pageMenu.link.external{/lang}</label>
+				</dd>
+			</dl>
+			
+			<dl id="menuItemControllerContainer"{if $errorField == 'menuItemController'} class="formError"{/if}>
+				<dt><label for="menuItemController">{lang}wcf.acp.pageMenu.menuItemController{/lang}</label></dt>
+				<dd>
+					<input type="text" name="menuItemController" id="menuItemController" value="{$menuItemController}" class="medium" />
+					{if $errorField == 'menuItemController'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.pageMenu.menuItemController.error.{$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.acp.pageMenu.menuItemController.description{/lang}</small>
+				</dd>
+			</dl>
 			
 			<dl{if $errorField == 'menuItemLink'} class="formError"{/if}>
 				<dt><label for="menuItemLink">{lang}wcf.acp.pageMenu.menuItemLink{/lang}</label></dt>
 				<dd>
-					<input type="text" name="menuItemLink" id="menuItemLink" value="{$menuItemLink}" class="long" required="required" />
+					<input type="text" name="menuItemLink" id="menuItemLink" value="{$menuItemLink}" class="long" />
 					{if $errorField == 'menuItemLink'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -142,12 +165,6 @@
 					{include file='multipleLanguageInputJavascript' elementIdentifier='menuItemLink' forceSelection=false}
 				</dd>
 			</dl>
-			
-			<dl>
-				<dd>
-					<label><input type="checkbox" name="newWindow" id="newWindow" value="1"{if $newWindow} checked="checked"{/if} /> <span>{lang}wcf.acp.pageMenu.newWindow{/lang}</span></label>
-				</dd>
-			</dl>
 		</fieldset>
 		
 		<fieldset>
@@ -156,20 +173,13 @@
 			<dl>
 				<dt><label for="showOrder">{lang}wcf.acp.pageMenu.showOrder{/lang}</label></dt>
 				<dd>
-					<input type="number" name="showOrder" id="showOrder" value="{@$showOrder}" class="long" min="0" />
+					<input type="number" name="showOrder" id="showOrder" value="{@$showOrder}" class="tiny" min="0" />
 				</dd>
 			</dl>
 			
 			<dl>
 				<dd>
 					<label><input type="checkbox" name="isDisabled" id="isDisabled" value="1"{if $isDisabled} checked="checked"{/if} /> <span>{lang}wcf.acp.pageMenu.isDisabled{/lang}</span></label>
-				</dd>
-			</dl>
-			
-			<dl id="isLandingPageContainer">
-				<dd>
-					<label><input type="checkbox" name="isLandingPage" id="isLandingPage" value="1"{if $isLandingPage} checked="checked"{/if} /> <span>{lang}wcf.acp.pageMenu.isLandingPage{/lang}</span></label>
-					<small>{lang}wcf.acp.pageMenu.isLandingPage.description{/lang}</small>
 				</dd>
 			</dl>
 		</fieldset>
