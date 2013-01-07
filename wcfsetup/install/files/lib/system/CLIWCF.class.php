@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system;
 use phpline\console\ConsoleReader;
-use phpline\internal\AnsiUtil;
 use phpline\internal\Log;
 use phpline\TerminalFactory;
 use wcf\system\cli\command\CommandHandler;
@@ -15,6 +14,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\language\LanguageFactory;
 use wcf\system\user\authentication\UserAuthenticationFactory;
+use wcf\util\CLIUtil;
 use wcf\util\StringUtil;
 use Zend\Console\Adapter\Posix;
 use Zend\Console\Exception\RuntimeException as ArgvException;
@@ -319,52 +319,9 @@ class CLIWCF extends WCF {
 						$table[] = $row;
 					}
 					
-					self::getReader()->println(self::generateTable($table));
+					self::getReader()->println(CLIUtil::generateTable($table));
 				}
 			}
 		}
-	}
-	
-	/**
-	 * Generates a table.
-	 * 
-	 * @param	array	$table
-	 * @return	string
-	 */
-	public static function generateTable(array $table) {
-		$columnSize = array();
-		foreach ($table as $row) {
-			$i = 0;
-			foreach ($row as $column) {
-				if (!isset($columnSize[$i])) $columnSize[$i] = 0;
-				$columnSize[$i] = max($columnSize[$i], StringUtil::length(AnsiUtil::stripAnsi($column)));
-				$i++;
-			}
-		}
-		
-		$result = '';
-		$result .= '+';
-		foreach ($columnSize as $column) {
-			$result .= str_repeat('-', $column + 2).'+';
-		}
-		$result .= PHP_EOL;
-		
-		foreach ($table as $row) {
-			$result .= "|";
-			$i = 0;
-			foreach ($row as $column) {
-				$paddedString = StringUtil::pad(AnsiUtil::stripAnsi($column), $columnSize[$i], ' ', (is_numeric($column) ? STR_PAD_LEFT : STR_PAD_RIGHT));
-				$result .= ' '.StringUtil::replace(AnsiUtil::stripAnsi($column), $column, $paddedString).' |';
-				$i++;
-			}
-			
-			$result .= PHP_EOL."+";
-			foreach ($columnSize as $column) {
-				$result .= str_repeat('-', $column + 2).'+';
-			}
-			$result .= PHP_EOL;
-		}
-		
-		return $result;
 	}
 }

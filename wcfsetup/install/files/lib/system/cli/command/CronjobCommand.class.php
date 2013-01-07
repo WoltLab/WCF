@@ -5,6 +5,7 @@ use wcf\data\cronjob\CronjobList;
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\exception\SystemException;
 use wcf\system\CLIWCF;
+use wcf\util\CLIUtil;
 use wcf\util\DateUtil;
 use wcf\util\StringUtil;
 use phpline\internal\Log;
@@ -36,7 +37,7 @@ class CronjobCommand implements ICommand {
 		$argv->parse();
 		
 		if ($argv->list) {
-			CLIWCF::getReader()->println(CLIWCF::generateTable($this->generateList()));
+			CLIWCF::getReader()->println(CLIUtil::generateTable($this->generateList()));
 			return;
 		}
 		

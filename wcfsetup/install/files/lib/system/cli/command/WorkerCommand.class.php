@@ -3,6 +3,7 @@ namespace wcf\system\cli\command;
 use wcf\system\CLIWCF;
 use wcf\system\Regex;
 use wcf\util\ClassUtil;
+use wcf\util\CLIUtil;
 use wcf\util\DirectoryUtil;
 use wcf\util\StringUtil;
 use phpline\internal\Log;
@@ -40,7 +41,7 @@ class WorkerCommand implements ICommand {
 		$argv->parse();
 		
 		if ($argv->list) {
-			CLIWCF::getReader()->println(CLIWCF::generateTable($this->generateList()));
+			CLIWCF::getReader()->println(CLIUtil::generateTable($this->generateList()));
 			return;
 		}
 		
