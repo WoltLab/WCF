@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\cli\command;
+use phpline\internal\Log;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\Regex;
 use wcf\util\DirectoryUtil;
 use wcf\util\StringUtil;
-use phpline\internal\Log;
 
 /**
  * Handles commands.
