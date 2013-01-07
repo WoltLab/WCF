@@ -113,7 +113,7 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 		if ($rebuild) {
 			$userEditor = new UserEditor($this);
 			$userEditor->update(array(
-				'password' => PasswordUtil::getDoubleSaltedHash($password)
+				'password' => $password
 			));
 		}
 		
