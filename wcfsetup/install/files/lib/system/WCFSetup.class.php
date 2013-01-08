@@ -93,8 +93,8 @@ class WCFSetup extends WCF {
 	 * @var	array<array>
 	 */
 	protected static $dbClasses = array(
-		'MySQLDatabase' => array('class' => 'wcf\system\database\MySQLDatabase', 'minversion' => '5.1.17'),		// MySQL 5.1.17+
-		'PostgreSQLDatabase' => array('class' => 'wcf\system\database\PostgreSQLDatabase', 'minversion' => '8.2.0')	// PostgreSQL 8.2.0+
+		'MySQLDatabase' => array('class' => 'wcf\system\database\MySQLDatabase', 'minversion' => '5.1.17')//,		// MySQL 5.1.17+
+		//'PostgreSQLDatabase' => array('class' => 'wcf\system\database\PostgreSQLDatabase', 'minversion' => '8.2.0')	// PostgreSQL 8.2.0+
 	);
 	
 	/**
