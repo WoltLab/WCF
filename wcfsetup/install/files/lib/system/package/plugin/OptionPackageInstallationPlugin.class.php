@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes options.
  * 
  * @author	Benjamin Kunz
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -89,12 +89,10 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 		// try to find an existing option for updating
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_".$this->tableName."
-			WHERE	optionName = ?
-				AND packageID = ?";
+			WHERE	optionName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-			$optionName,
-			$this->installation->getPackageID()
+			$optionName
 		));
 		$row = $statement->fetchArray();
 		
@@ -107,6 +105,11 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 			OptionEditor::create($data);
 		}
 		else {
+			// editing an option from a different package
+			if ($row['packageID'] != $this->installation->getPackageID()) {
+				throw new SystemException("Option '".$optionName."' already exists, but is owned by a different package");
+			}
+			
 			// update existing item
 			$optionObj = new Option(null, $row);
 			$optionEditor = new OptionEditor($optionObj);

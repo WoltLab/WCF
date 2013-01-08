@@ -324,7 +324,8 @@ CREATE TABLE wcf1_option (
 	supportI18n TINYINT(1) NOT NULL DEFAULT 0,
 	requireI18n TINYINT(1) NOT NULL DEFAULT 0,
 	additionalData MEDIUMTEXT,
-	UNIQUE KEY optionName (optionName, packageID)
+	
+	UNIQUE KEY optionName (optionName)
 );
 
 DROP TABLE IF EXISTS wcf1_option_category;
