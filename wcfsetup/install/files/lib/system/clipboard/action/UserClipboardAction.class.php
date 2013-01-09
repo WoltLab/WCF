@@ -124,13 +124,4 @@ class UserClipboardAction extends AbstractClipboardAction {
 		
 		return $userIDs;
 	}
-	
-	/**
-	 * @see	wcf\system\clipboard\action\IClipboardAction::getEditorLabel()
-	 */
-	public function getEditorLabel(array $objects) {
-		return WCF::getLanguage()->getDynamicVariable('wcf.clipboard.label.com.woltlab.wcf.user.marked', array(
-			'count' => count($objects)
-		));
-	}
 }

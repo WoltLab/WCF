@@ -2,6 +2,7 @@
 namespace wcf\system\clipboard\action;
 use wcf\system\clipboard\ClipboardEditorItem;
 use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 
 /**
  * Abstract implementation of a clipboard action handler.
@@ -44,14 +45,11 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 		
 		$item = new ClipboardEditorItem();
 		$item->setName($this->getTypeName().'.'.$actionName);
-		
-		// set action class-related data
 		if (in_array($actionName, $this->actionClassActions)) {
 			$item->addParameter('actionName', $actionName);
 			$item->addParameter('className', $this->getClassName());
 		}
 		
-		// validate objects if relevant method exists and set valid object ids
 		$methodName = 'validate'.ucfirst($actionName);
 		if (method_exists($this, $methodName)) {
 			$objectIDs = $this->$methodName();
@@ -70,5 +68,14 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 	 */
 	public function filterObjects(array $objects, array $typeData) {
 		return $objects;
+	}
+	
+	/**
+	 * @see	wcf\system\clipboard\action\IClipboardAction::getEditorLabel()
+	 */
+	public function getEditorLabel(array $objects) {
+		return WCF::getLanguage()->getDynamicVariable('wcf.clipboard.label.'.$this->getTypeName().'.marked', array(
+			'count' => count($objects)
+		));
 	}
 }
