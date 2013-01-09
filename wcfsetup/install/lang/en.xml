@@ -474,11 +474,11 @@
 	
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.user.assignToGroup"><![CDATA[Assign to user group]]></item>
-		<item name="wcf.clipboard.item.user.delete"><![CDATA[Delete users]]></item>
-		<item name="wcf.clipboard.item.user.delete.confirmMessage"><![CDATA[Delete {if $count == 1}one{else}{#$count}{/if} user{if $count > 1}s{/if}?]]></item>
-		<item name="wcf.clipboard.item.user.exportMailAddress"><![CDATA[Export e-mail addresses]]></item>
-		<item name="wcf.clipboard.item.user.sendMail"><![CDATA[Send an e-mail]]></item>
-		<item name="wcf.clipboard.label.user.marked"><![CDATA[{if $count == 1}One{else}{#$count}{/if} user{if $count > 1}s{/if} marked]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Delete users]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[Delete {if $count == 1}one{else}{#$count}{/if} user{if $count > 1}s{/if}?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[Export e-mail addresses]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[Send an e-mail]]></item>
+		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}One{else}{#$count}{/if} user{if $count > 1}s{/if} marked]]></item>
 	</category>
 	
 	<category name="wcf.date">
