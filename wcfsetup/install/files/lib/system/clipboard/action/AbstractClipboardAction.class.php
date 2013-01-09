@@ -45,11 +45,14 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 		
 		$item = new ClipboardEditorItem();
 		$item->setName($this->getTypeName().'.'.$actionName);
+		
+		// set action class-related data
 		if (in_array($actionName, $this->actionClassActions)) {
 			$item->addParameter('actionName', $actionName);
 			$item->addParameter('className', $this->getClassName());
 		}
 		
+		// validate objects if relevant method exists and set valid object ids
 		$methodName = 'validate'.ucfirst($actionName);
 		if (method_exists($this, $methodName)) {
 			$objectIDs = $this->$methodName();
