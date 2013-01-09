@@ -17,6 +17,11 @@ use wcf\util\StringUtil;
  */
 class FileSizeOptionType extends TextOptionType {
 	/**
+	 * @see	wcf\system\option\TextOptionType::$inputClass
+	 */
+	protected $inputClass = 'medium';
+	
+	/**
 	 * @see	wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
