@@ -69,6 +69,12 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	protected $permissionsUpdate = array();
 	
 	/**
+	 * Resets cache if any of the listed actions is invoked
+	 * @var	array<string>
+	 */
+	protected $resetCache = array('create', 'delete', 'toggle', 'update', 'updatePosition');
+	
+	/**
 	 * values returned by executed action
 	 * @var	mixed
 	 */
@@ -166,14 +172,23 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		$this->returnValues = call_user_func(array($this, $this->getActionName()));
 		
 		// reset cache
-		if (ClassUtil::isInstanceOf($this->className, 'wcf\data\IEditableCachedObject')) {
-			call_user_func(array($this->className, 'resetCache'));
+		if (in_array($this->getActionName(), $this->resetCache)) {
+			$this->resetCache();
 		}
 		
 		// fire event action
 		EventHandler::getInstance()->fireAction($this, 'finalizeAction');
 		
 		return $this->getReturnValues();
+	}
+	
+	/**
+	 * Resets cache of database object.
+	 */
+	protected function resetCache() {
+		if (ClassUtil::isInstanceOf($this->className, 'wcf\data\IEditableCachedObject')) {
+			call_user_func(array($this->className, 'resetCache'));
+		}
 	}
 	
 	/**
