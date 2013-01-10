@@ -1145,7 +1145,7 @@ WCF.Clipboard = {
 			
 			var $containerID = $container.wcfIdentify();
 			WCF.CloseOverlayHandler.removeCallback($containerID);
-
+			
 			$container.empty();
 		});
 		
@@ -7165,7 +7165,7 @@ WCF.Style.Chooser = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		if (data.returnValues.actionName === 'changeStyle') {
+		if (data.actionName === 'changeStyle') {
 			window.location.reload();
 			return;
 		}

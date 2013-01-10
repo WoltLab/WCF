@@ -480,10 +480,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		if (StyleHandler::getInstance()->getStyle()->styleID == $this->style->styleID) {
 			WCF::getSession()->setStyleID($this->style->styleID);
 		}
-		
-		return array(
-			'actionName' => 'changeStyle'
-		);
 	}
 	
 	/**

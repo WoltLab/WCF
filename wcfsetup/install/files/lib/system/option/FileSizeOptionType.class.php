@@ -15,7 +15,12 @@ use wcf\util\StringUtil;
  * @subpackage	system.option
  * @category	Community Framework
  */
-class FileSizeOptionType extends IntegerOptionType {
+class FileSizeOptionType extends TextOptionType {
+	/**
+	 * @see	wcf\system\option\TextOptionType::$inputClass
+	 */
+	protected $inputClass = 'medium';
+	
 	/**
 	 * @see	wcf\system\option\IOptionType::getData()
 	 */
