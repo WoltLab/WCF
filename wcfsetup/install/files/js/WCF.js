@@ -3489,6 +3489,11 @@ WCF.Collapsible.Remote = Class.extend({
 			isOpen: this._containers[containerID].data('isOpen'),
 			target: $target
 		};
+		
+		// add 'jsCollapsed' CSS class
+		if (!this._containers[containerID].data('isOpen')) {
+			$('#' + containerID).addClass('jsCollapsed');
+		}
 	},
 	
 	/**
@@ -3553,6 +3558,9 @@ WCF.Collapsible.Remote = Class.extend({
 			}, this._getAdditionalParameters($containerID))
 		});
 		this._proxy.sendRequest();
+		
+		// toogle 'jsCollapsed' CSS class
+		$('#' + $containerID).toggleClass('jsCollapsed');
 		
 		// set spinner for current button
 		this._exchangeIcon($button);
@@ -3695,6 +3703,9 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 		else {
 			this._containerData[$containerID].target.hide();
 		}
+		
+		// toogle 'jsCollapsed' CSS class
+		$('#' + $containerID).toggleClass('jsCollapsed');
 		
 		// update container data
 		this._containerData[$containerID].isOpen = ($newState === 'open' ? true : false);
