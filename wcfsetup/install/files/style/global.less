@@ -210,15 +210,21 @@ body > iframe[src="about:blank"] {
 /* default values */
 .badge {
 	background-color: @wcfColor;
-	border-radius: 13px;
 	color: @wcfContentBackgroundColor;
 	display: inline-block;
-	font-size: @wcfSmallFontSize;
-	font-weight: normal !important;
-	padding: 1px 8px 2px;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 1px 6px 1px;
 	position: relative;
 	text-shadow: none !important; /* necessary to avoid ugly text shadows in comment lists; @todo: better solution without "!important" */
+	vertical-align: middle;
 	white-space: nowrap;
+	
+	.borderRadius(9px);
+	
+	&.label	{
+		font-weight: normal;
+	}
 	
 	/* colors */
 	&.badgeUpdate {
@@ -317,29 +323,4 @@ a.badge:hover {
 	&.pink {
 		background-color: #c09;
 	}
-}
-
-/* special */
-.containerHeadline > h1 > .badge {
-	font-size: 70%;
-	top: -1px;
-}
-
-.boxHeadline > hgroup > h1 .badge {
-	font-size: 50%;
-	top: -3px;
-}
-
-.boxSubHeadline > hgroup > h1 .badge {
-	font-size: 60%;
-}
-
-.tabularBoxTitle > hgroup > h1 > .badge {
-	font-size: 70%;
-	top: -1px;
-}
-
-fieldset > legend > .badge {
-	font-size: 50%;
-	top: -3px;
 }

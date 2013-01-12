@@ -45,7 +45,6 @@
 					display: block;
 					height: 20px;
 					padding: 10px 8px;
-					position: relative;
 					
 					.textShadow(@wcfUserPanelBackgroundColor);
 					.transition(background-color, .2s);
@@ -59,18 +58,19 @@
 					> .badge.badgeInverse {
 						background-color: @wcfTabularBoxBackgroundColor;
 						color: @wcfTabularBoxColor;
-						padding: 0 6px 1px;
-						position: absolute;
-						bottom: 4px;
-						left: 24px;
-						z-index: 300;
+					}
+					
+					> img {
+						position: relative;
+						top: -2px;
 					}
 				}
 				
 				> .framed > img {
-					padding: 0px;
 					margin-top: -2px;
 					margin-bottom: -2px;
+					padding: 0px;
+					top: 0;
 				}
 			}
 		}
@@ -146,11 +146,6 @@
 					color: @wcfMainMenuActiveColor;
 					text-decoration: none;
 				}
-				
-				> .badge {
-					font-size: 70%;
-					top: -1px;
-				}
 			}
 			
 			&.active {
@@ -164,11 +159,6 @@
 					min-width: 80px;
 					padding: 14px 21px 8px;
 					text-align: center;
-					
-					> .badge {
-						font-size: 60%;
-						top: -2px;
-					}
 				}
 			}
 			
@@ -238,10 +228,6 @@
 		&.navigationMenuItems {
 			> li {
 				display: inline-block;
-				
-				> .badge {
-					top: -1px;
-				}
 			}
 		}
 	}
@@ -562,11 +548,6 @@
 			> hgroup > h1 {
 				font-size: @wcfTitleFontSize;
 				font-weight: bold;
-				
-				> .badge {
-					font-size: 70%;
-					top: -2px;
-				}
 			}
 			
 			> ol {
@@ -1230,8 +1211,6 @@ ul.inlineDataList {
 			
 			> .badge {
 				float: right;
-				font-size: 75%;
-				top: 3px;
 			}
 			
 			> a {
