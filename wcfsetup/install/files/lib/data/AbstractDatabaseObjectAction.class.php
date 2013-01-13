@@ -89,7 +89,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	
 	const TYPE_INTEGER = 1;
 	const TYPE_STRING = 2;
-	const TYPE_BOOL = 3;
+	const TYPE_BOOLEAN = 3;
 	
 	/**
 	 * Initialize a new DatabaseObject-related action.
@@ -404,8 +404,8 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @param	boolean		$allowEmpty
 	 * @param	string		$arrayIndex
 	 */
-	protected function readBool($variableName, $allowEmpty = false, $arrayIndex = '') {
-		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_BOOL);
+	protected function readBoolean($variableName, $allowEmpty = false, $arrayIndex = '') {
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_BOOLEAN);
 	}
 	
 	/**
@@ -465,7 +465,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 				}
 			break;
 			
-			case self::TYPE_BOOL:
+			case self::TYPE_BOOLEAN:
 				if (!isset($target[$variableName])) {
 					if ($allowEmpty) {
 						$target[$variableName] = false;
@@ -475,11 +475,11 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 					}
 				}
 				else {
-					if (is_string($target[$variableName])) {
-						$target[$variableName] = $target[$variableName] != 'false';
+					if (is_numeric($target[$variableName])) {
+						$target[$variableName] = (bool) $target[$variableName];
 					}
 					else {
-						$target[$variableName] = (bool) $target[$variableName];
+						$target[$variableName] = $target[$variableName] != 'false';
 					}
 				}
 			break;
