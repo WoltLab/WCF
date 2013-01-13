@@ -3932,7 +3932,7 @@ WCF.Effect.Scroll = Class.extend({
 			return true;
 		}
 		
-		var $elementOffset = element.getOffsets().top;
+		var $elementOffset = element.getOffsets('offset').top;
 		var $documentHeight = $(document).height();
 		var $windowHeight = $(window).height();
 		
