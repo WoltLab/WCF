@@ -2,6 +2,7 @@
 namespace wcf\system\cache\builder;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\package\PackageDependencyHandler;
+use wcf\system\WCF;
 
 /**
  * Caches the versions for a certain package and object type.
@@ -29,8 +30,8 @@ class VersionCacheBuilder implements ICacheBuilder {
 		foreach ($objectTypes as $objectTypeID => $objectType) {
 			$processorObject = $objectType->getProcessor();
 			
-			$sql = "SELECT * 
-					FROM ".$processorObject::getDatabaseVersionTableName();
+			$sql = "SELECT	* 
+				FROM	".$processorObject::getDatabaseVersionTableName();
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array());
 			
