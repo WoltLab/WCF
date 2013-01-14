@@ -498,7 +498,7 @@ CREATE TABLE wcf1_package_update_version (
 	filename VARCHAR(255) NOT NULL DEFAULT '',
 	license VARCHAR(255) NOT NULL DEFAULT '',
 	licenseURL VARCHAR(255) NOT NULL DEFAULT '',
-	accessible TINYINT(1) NOT NULL DEFAULT 1,
+	isAccessible TINYINT(1) NOT NULL DEFAULT 1,
 	UNIQUE KEY packageUpdateID (packageUpdateID, packageVersion)
 );
 
@@ -859,6 +859,8 @@ ALTER TABLE wcf1_package_update_exclusion ADD FOREIGN KEY (packageUpdateVersionI
 ALTER TABLE wcf1_package_update_fromversion ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_update_requirement ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_package_update_optional ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_update_version ADD FOREIGN KEY (packageUpdateID) REFERENCES wcf1_package_update (packageUpdateID) ON DELETE CASCADE;
 

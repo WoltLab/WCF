@@ -121,7 +121,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		
 		// loop through <package> tags inside the <section> tag.
 		$allNewPackages = array();
-		$packages = $xpath->query('/ns:section[@name=\'packages\']/ns:package');
+		$packages = $xpath->query('/ns:section/ns:package');
 		foreach ($packages as $package) {
 			if (!Package::isValidPackageName($package->getAttribute('name'))) {
 				throw new SystemException("'".$package->getAttribute('name')."' is not a valid package name.");
@@ -350,8 +350,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 						$versionEditor->update(array(
 							'filename' => $packageFile,
 							'isAccessible' => ($versionData['isAccessible'] ? 1 : 0),
-							'license' => $versionData['license']['license'],
-							'licenseURL' => $versionData['license']['licenseURL'],
+							'license' => (isset($versionData['license']['license']) ? $versionData['license']['license'] : ''),
+							'licenseURL' => (isset($versionData['license']['license']) ? $versionData['license']['licenseURL'] : ''),
 							'packageDate' => $versionData['packageDate'],
 							'updateType' => $versionData['updateType']
 						));
@@ -360,8 +360,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 						// create new database entry
 						$version = PackageUpdateVersionEditor::create(array(
 							'filename' => $packageFile,
-							'license' => $versionData['license']['license'],
-							'licenseURL' => $versionData['license']['licenseURL'],
+							'license' => (isset($versionData['license']['license']) ? $versionData['license']['license'] : ''),
+							'licenseURL' => (isset($versionData['license']['license']) ? $versionData['license']['licenseURL'] : ''),
 							'isAccessible' => ($versionData['isAccessible'] ? 1 : 0),
 							'packageDate' => $versionData['packageDate'],
 							'packageUpdateID' => $packageUpdateID,
@@ -458,7 +458,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			// insert requirements
 			$sql = "INSERT INTO	wcf".WCF_N."_package_update_optional
 						(packageUpdateVersionID, package)
-				VALUES		(?, ?, ?)";
+				VALUES		(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			foreach ($requirementInserts as $requirement) {
 				$statement->execute(array(
