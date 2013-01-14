@@ -14,6 +14,18 @@
 	</hgroup>
 </header>
 
+{hascontent}
+	<div class="contentNavigation">
+		<nav>
+			<ul>
+				{content}
+					{event name='contentNavigationButtons'}
+				{/content}
+			</ul>
+		</nav>
+	</div>
+{/hascontent}
+
 <form method="post" action="{link controller='UserEmailAddressExport'}{/link}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
@@ -22,6 +34,8 @@
 			<div>
 				{implode from=$users item=$user}<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user}</a>{/implode}
 			</div>
+			
+			{event name='markedUserFields'}
 		</fieldset>
 		
 		<fieldset>
@@ -48,8 +62,11 @@
 					<input type="text" id="textSeparator" name="textSeparator" value="{$textSeparator}" class="medium" />
 				</dd>
 			</dl>
+			
+			{event name='emailAddressFormatFields'}
 		</fieldset>
 		
+		{event name='fieldsets'}
 	</div>
 	
 	<div class="formSubmit">

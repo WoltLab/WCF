@@ -50,6 +50,8 @@
 					<label><input type="radio" name="mode" value="copy" id="copy" {if $mode == 'copy'}checked="checked" {/if}/> {lang}wcf.acp.language.add.mode.copy{/lang}</label>
 				</dd>
 			</dl>
+			
+			{event name='modeFields'}
 		</fieldset>
 		
 		<fieldset id="importDiv">
@@ -83,6 +85,8 @@
 					{/if}
 				</dd>
 			</dl>
+			
+			{event name='importFields'}
 		</fieldset>
 		
 		<fieldset id="copyDiv">
@@ -124,6 +128,8 @@
 					{/if}
 				</dd>
 			</dl>
+			
+			{event name='copyFields'}
 		</fieldset>
 		
 		{event name='fieldsets'}

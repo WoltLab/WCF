@@ -27,14 +27,14 @@
 						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
 					
-					{event name='largeButtons'}
+					{event name='contentNavigationButtonsTop'}
 				{/content}
 			</ul>
 		</nav>
 	{/hascontent}
 </div>
 
-{if $objects|count > 0}
+{if $objects|count}
 	<div class="tabularBox tabularBoxTitle marginTop">
 		<hgroup>
 			<h1>{lang}wcf.acp.package.list{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.package.list.count{/lang}">{#$items}</span></h1>
@@ -49,7 +49,7 @@
 					<th class="columnText">{lang}wcf.acp.package.version{/lang}</th>
 					<th class="columnDate{if $sortField == 'updateDate'} active{/if}"><a href="{link controller='PackageList'}pageNo={@$pageNo}&sortField=updateDate&sortOrder={if $sortField == 'updateDate' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.package.updateDate{/lang}{if $sortField == 'updateDate'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					
-					{event name='headColumns'}
+					{event name='columnHeads'}
 				</tr>
 			</thead>
 			
@@ -68,7 +68,7 @@
 								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="icon16 disabled" />
 							{/if}
 							
-							{event name='buttons'}
+							{event name='rowButtons'}
 						</td>
 						<td class="columnID"><p>{@$package->packageID}</p></td>
 						<td class="columnIcon">
@@ -92,31 +92,32 @@
 		</table>
 		
 	</div>
+			
+	<div class="contentNavigation">
+		{@$pagesLinks}
+		
+		{hascontent}
+			<script type="text/javascript">
+				//<![CDATA[
+				$(function() {
+					new WCF.ACP.Package.Uninstallation($('.jsPluginContainer .jsUninstallButton'));
+				});
+				//]]>
+			</script>
+			
+			<nav>
+				<ul>
+					{content}
+						{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
+							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+						{/if}
+						
+						{event name='contentNavigationButtonsBottom'}
+					{/content}
+				</ul>
+			</nav>
+		{/hascontent}
+	</div>
 {/if}
-
-<div class="contentNavigation">
-	{@$pagesLinks}
-	
-	{hascontent}
-		<script type="text/javascript">
-			//<![CDATA[
-			$(function() {
-				new WCF.ACP.Package.Uninstallation($('.jsPluginContainer .jsUninstallButton'));
-			});
-			//]]>
-		</script>
-		<nav>
-			<ul>
-				{content}
-					{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
-						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
-					{/if}
-					
-					{event name='largeButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
-</div>
 
 {include file='footer'}

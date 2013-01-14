@@ -48,7 +48,11 @@
 					<small>{lang}wcf.acp.languageServer.server.description{/lang}</small>
 				</dd>
 			</dl>
+			
+			{event name='dataFields'}
 		</fieldset>
+		
+		{event name='fieldsets'}
 	</div>
 	
 	<div class="formSubmit">
