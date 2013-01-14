@@ -10,6 +10,7 @@ use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
+use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\HTTPRequest;
 use wcf\util\XML;
@@ -24,13 +25,13 @@ use wcf\util\XML;
  * @subpackage	system.package
  * @category	Community Framework
  */
-abstract class PackageUpdateDispatcher {
+class PackageUpdateDispatcher extends SingletonFactory {
 	/**
 	 * Refreshes the package database.
 	 * 
 	 * @param	array<integer>		$packageUpdateServerIDs
 	 */
-	public static function refreshPackageDatabase(array $packageUpdateServerIDs = array()) {
+	public function refreshPackageDatabase(array $packageUpdateServerIDs = array()) {
 		// get update server data
 		$updateServers = PackageUpdateServer::getActiveUpdateServers($packageUpdateServerIDs);
 		
@@ -38,7 +39,7 @@ abstract class PackageUpdateDispatcher {
 		foreach ($updateServers as $updateServer) {
 			if ($updateServer->lastUpdateTime < TIME_NOW - 600) {
 				try {
-					self::getPackageUpdateXML($updateServer);
+					$this->getPackageUpdateXML($updateServer);
 				}
 				catch (SystemException $e) {
 					// save error status
@@ -57,7 +58,7 @@ abstract class PackageUpdateDispatcher {
 	 * 
 	 * @param	wcf\data\package\update\server\PackageUpdateServer	$updateServer
 	 */
-	protected static function getPackageUpdateXML(PackageUpdateServer $updateServer) {
+	protected function getPackageUpdateXML(PackageUpdateServer $updateServer) {
 		$authData = $updateServer->getAuthData();
 		$settings = array();
 		if ($authData) $settings['auth'] = $authData;
@@ -88,12 +89,12 @@ abstract class PackageUpdateDispatcher {
 		}
 		
 		// parse given package update xml
-		$allNewPackages = self::parsePackageUpdateXML($reply['body']);
+		$allNewPackages = $this->parsePackageUpdateXML($reply['body']);
 		unset($request, $reply);
 		
 		// save packages
 		if (!empty($allNewPackages)) {
-			self::savePackageUpdates($allNewPackages, $updateServer->packageUpdateServerID);
+			$this->savePackageUpdates($allNewPackages, $updateServer->packageUpdateServerID);
 		}
 		unset($allNewPackages);
 		
@@ -112,7 +113,7 @@ abstract class PackageUpdateDispatcher {
 	 * @param	string		$content
 	 * @return	array		$allNewPackages
 	 */
-	protected static function parsePackageUpdateXML($content) {
+	protected function parsePackageUpdateXML($content) {
 		// load xml document
 		$xml = new XML();
 		$xml->loadXML('packageUpdateServer.xml', $content);
@@ -126,7 +127,7 @@ abstract class PackageUpdateDispatcher {
 				throw new SystemException("'".$package->getAttribute('name')."' is not a valid package name.");
 			}
 			
-			$allNewPackages[$package->getAttribute('name')] = self::parsePackageUpdateXMLBlock($xpath, $package);
+			$allNewPackages[$package->getAttribute('name')] = $this->parsePackageUpdateXMLBlock($xpath, $package);
 		}
 		
 		return $allNewPackages;
@@ -138,7 +139,7 @@ abstract class PackageUpdateDispatcher {
 	 * @param	\DOMXPath	$xpath
 	 * @param	\DOMNode	$package
 	 */
-	protected static function parsePackageUpdateXMLBlock(\DOMXPath $xpath, \DOMNode $package) {
+	protected function parsePackageUpdateXMLBlock(\DOMXPath $xpath, \DOMNode $package) {
 		// define default values
 		$packageInfo = array(
 			'author' => '',
@@ -268,7 +269,7 @@ abstract class PackageUpdateDispatcher {
 	 * @param	array		$allNewPackages
 	 * @param	integer		$packageUpdateServerID
 	 */
-	protected static function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID) {
+	protected function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID) {
 		// find existing packages and delete them
 		// get existing packages
 		$existingPackages = array();
@@ -523,7 +524,7 @@ abstract class PackageUpdateDispatcher {
 	 * @param	boolean		$removeRequirements
 	 * @return	array
 	 */
-	public static function getAvailableUpdates($removeRequirements = true) {
+	public function getAvailableUpdates($removeRequirements = true) {
 		$updates = array();
 		
 		// get update server data
@@ -599,7 +600,7 @@ abstract class PackageUpdateDispatcher {
 			foreach ($existingPackages as $identifier => $instances) {
 				foreach ($instances as $instance) {
 					if ($instance['isApplication'] && isset($updates[$instance['packageID']])) {
-						$updates = self::removeUpdateRequirements($updates, $updates[$instance['packageID']]['version']['servers'][0]['packageUpdateVersionID']);
+						$updates = $this->removeUpdateRequirements($updates, $updates[$instance['packageID']]['version']['servers'][0]['packageUpdateVersionID']);
 					}
 				}
 			}
@@ -615,7 +616,7 @@ abstract class PackageUpdateDispatcher {
 	 * @param	integer		$packageUpdateVersionID
 	 * @return	array		$updates
 	 */
-	protected static function removeUpdateRequirements(array $updates, $packageUpdateVersionID) {
+	protected function removeUpdateRequirements(array $updates, $packageUpdateVersionID) {
 		$sql = "SELECT		pur.package, pur.minversion, p.packageID
 			FROM		wcf".WCF_N."_package_update_requirement pur
 			LEFT JOIN	wcf".WCF_N."_package p
@@ -625,7 +626,7 @@ abstract class PackageUpdateDispatcher {
 		$statement->execute(array($packageUpdateVersionID));
 		while ($row = $statement->fetchArray()) {
 			if (isset($updates[$row['packageID']])) {
-				$updates = self::removeUpdateRequirements($updates, $updates[$row['packageID']]['version']['servers'][0]['packageUpdateVersionID']);
+				$updates = $this->removeUpdateRequirements($updates, $updates[$row['packageID']]['version']['servers'][0]['packageUpdateVersionID']);
 				if (Package::compareVersion($row['minversion'], $updates[$row['packageID']]['version']['packageVersion'], '>=')) {
 					unset($updates[$row['packageID']]);
 				}
@@ -643,7 +644,7 @@ abstract class PackageUpdateDispatcher {
 	 * @param	boolean			$download
 	 * @return	wcf\system\package\PackageInstallationScheduler
 	 */
-	public static function prepareInstallation(array $selectedPackages, array $packageUpdateServerIDs = array(), $download = true) {
+	public function prepareInstallation(array $selectedPackages, array $packageUpdateServerIDs = array(), $download = true) {
 		return new PackageInstallationScheduler($selectedPackages, $packageUpdateServerIDs, $download);
 	}
 	
@@ -654,10 +655,10 @@ abstract class PackageUpdateDispatcher {
 	 * @param	string		$version	package version
 	 * @return	array		package update versions
 	 */
-	public static function getPackageUpdateVersions($package, $version = '') {
+	public function getPackageUpdateVersions($package, $version = '') {
 		// get newest package version
 		if (empty($version)) {
-			$version = self::getNewestPackageVersion($package);
+			$version = $this->getNewestPackageVersion($package);
 		}
 		
 		// get versions
@@ -692,7 +693,7 @@ abstract class PackageUpdateDispatcher {
 	 * @param	string		$package	package identifier
 	 * @return	string		newest package version
 	 */
-	public static function getNewestPackageVersion($package) {
+	public function getNewestPackageVersion($package) {
 		// get all versions
 		$versions = array();
 		$sql = "SELECT	packageVersion
@@ -722,7 +723,7 @@ abstract class PackageUpdateDispatcher {
 	 * @param	string		$version	package version
 	 * @param	string		$filename
 	 */
-	public static function cacheDownload($package, $version, $filename) {
+	public function cacheDownload($package, $version, $filename) {
 		$cachedDownloads = WCF::getSession()->getVar('cachedPackageUpdateDownloads');
 		if (!is_array($cachedDownloads)) {
 			$cachedDownloads = array();

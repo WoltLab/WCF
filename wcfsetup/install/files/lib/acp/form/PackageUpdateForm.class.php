@@ -73,7 +73,7 @@ class PackageUpdateForm extends AbstractForm {
 		}
 		
 		// build update stack
-		$this->packageUpdate = PackageUpdateDispatcher::prepareInstallation($this->updates, array(), isset($_POST['send']));
+		$this->packageUpdate = PackageUpdateDispatcher::getInstance()->prepareInstallation($this->updates, array(), isset($_POST['send']));
 		try {
 			$this->packageUpdate->buildPackageInstallationStack();
 			$this->excludedPackages = $this->packageUpdate->getExcludedPackages();
