@@ -376,13 +376,6 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 	}
 	
 	/**
-	 * @see	wcf\system\request\IRouteController::getID()
-	 */
-	public function getID() {
-		return $this->userID;
-	}
-	
-	/**
 	 * @see	wcf\system\request\IRouteController::getTitle()
 	 */
 	public function getTitle() {

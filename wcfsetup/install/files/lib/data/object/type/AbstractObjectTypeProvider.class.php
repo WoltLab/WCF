@@ -5,7 +5,7 @@ namespace wcf\data\object\type;
  * Abstract implementation of an object type provider.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.object.type
@@ -19,6 +19,12 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider {
 	public $className = '';
 	
 	/**
+	 * name of the class which decorates the provided database objects
+	 * @var	string
+	 */
+	public $decoratorClassName = '';
+	
+	/**
 	 * list class name of the provided database objects
 	 * @var	string
 	 */
@@ -28,7 +34,12 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider {
 	 * @see	wcf\data\object\type\IObjectTypeProvider::getObjectByID()
 	 */
 	public function getObjectByID($objectID) {
-		return new $this->className($objectID);
+		$object = new $this->className($objectID);
+		if ($this->decoratorClassName) {
+			$object = new $this->decoratorClassName($object);
+		}
+		
+		return $object;
 	}
 	
 	/**
@@ -39,6 +50,9 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider {
 		$tableIndex = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
 		
 		$objectList = new $this->listClassName();
+		if ($this->decoratorClassName) {
+			$objectList->decoratorClassName = $this->decoratorClassName;
+		}
 		$objectList->getConditionBuilder()->add($tableAlias.".".$tableIndex." IN (?)", array($objectIDs));
 		$objectList->sqlLimit = 0;
 		$objectList->readObjects();
