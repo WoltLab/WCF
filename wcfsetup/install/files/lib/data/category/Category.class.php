@@ -65,13 +65,6 @@ class Category extends ProcessibleDatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	wcf\system\request\IRouteController::getID()
-	 */
-	public function getID() {
-		return $this->categoryID;
-	}
-	
-	/**
 	 * Returns the category object type of the category.
 	 * 
 	 * @return	wcf\data\category\Category

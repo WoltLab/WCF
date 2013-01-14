@@ -14,9 +14,9 @@ use wcf\data\ITitledDatabaseObject;
  */
 interface IRouteController extends ITitledDatabaseObject {
 	/**
-	 * Returns the object id.
+	 * Returns the id of the object.
 	 * 
 	 * @return	integer
 	 */
-	public function getID();
+	public function getObjectID();
 }
