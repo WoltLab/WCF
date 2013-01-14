@@ -43,13 +43,11 @@
 	</hgroup>
 </header>
 
-{if $errorField != ''}
+{if $errorField}
 	<p class="error">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
 {/if}
 
-{if !$updateServers|count}
-	<p class="warning">{lang}wcf.acp.updateServer.view.noneAvailable{/lang}</p>
-{else}
+{if $updateServers|count}
 	<form method="post" action="{link controller='PackageUpdateSearch'}{/link}">
 		<div class="container containerPadding marginTop">
 			<fieldset>
@@ -70,6 +68,8 @@
 						</dd>
 					{/foreach}
 				</dl>
+				
+				{event name='serverFields'}
 			</fieldset>
 			
 			<fieldset>
@@ -104,13 +104,19 @@
 						<label><input type="checkbox" name="other" value="1" {if $other == 1}checked="checked" {/if}/> {lang}wcf.acp.packageUpdate.search.type.other{/lang}</label> 
 					</dd>
 				</dl>
+				
+				{event name='conditionFields'}
 			</fieldset>
+			
+			{event name='fieldsets'}
 		</div>
 		
 		<div class="formSubmit">
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		</div>
 	</form>
+{else}
+	<p class="warning">{lang}wcf.acp.updateServer.view.noneAvailable{/lang}</p>
 {/if}
 
 {include file='footer'}

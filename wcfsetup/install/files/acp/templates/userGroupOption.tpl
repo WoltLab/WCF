@@ -14,7 +14,17 @@
 	</hgroup>
 </header>
 
-<div class="contentNavigation"></div>
+{hascontent}
+	<div class="contentNavigation">
+		<nav>
+			<ul>
+				{content}
+					{event name='contentNavigationButtons'}
+				{/content}
+			</ul>
+		</nav>
+	</div>
+{/hascontent}
 
 <p class="info marginTop">{lang}wcf.acp.group.option.hint{/lang}</p>
 
@@ -38,6 +48,8 @@
 			</dl>
 		{/foreach}
 	</fieldset>
+	
+	{event name='fieldsets'}
 	
 	<div class="formSubmit">
 		<input type="button" value="{lang}wcf.global.button.submit{/lang}" id="submitButton" />

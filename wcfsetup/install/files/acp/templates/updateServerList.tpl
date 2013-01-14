@@ -26,7 +26,7 @@
 		<ul>
 			<li><a href="{link controller='UpdateServerAdd'}{/link}" title="{lang}wcf.acp.updateServer.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li>
 			
-			{event name='largeButtonsTop'}
+			{event name='contentNavigationButtonsTop'}
 		</ul>
 	</nav>
 </div>
@@ -47,7 +47,7 @@
 					<th class="columnText columnErrorText{if $sortField == 'errorMessage'} active{/if}"><a href="{link controller='UpdateServerList'}pageNo={@$pageNo}&sortField=errorMessage&sortOrder={if $sortField == 'errorMessage' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.updateServer.errorMessage{/lang}{if $sortField == 'errorMessage'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnDate columnTimestamp{if $sortField == 'lastUpdateTime'} active{/if}"><a href="{link controller='UpdateServerList'}pageNo={@$pageNo}&sortField=lastUpdateTime&sortOrder={if $sortField == 'lastUpdateTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.updateServer.lastUpdateTime{/lang}{if $sortField == 'lastUpdateTime'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					
-					{event name='headColumns'}
+					{event name='columnHeads'}
 				</tr>
 			</thead>
 			
@@ -60,7 +60,7 @@
 								<a href="{link controller='UpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 jsTooltip" /></a>
 								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$updateServer->packageUpdateServerID}" data-confirm-message="{lang}wcf.acp.updateServer.delete.sure{/lang}" />
 								
-								{event name='buttons'}
+								{event name='itemButtons'}
 							</td>
 							<td class="columnID"><p>{@$updateServer->packageUpdateServerID}</p></td>
 							<td class="columnText columnTitle"><p><a href="{link controller='UpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.acp.updateServer.edit{/lang}">{$updateServer->serverURL}</a></p></td>
@@ -85,7 +85,7 @@
 			<ul>
 				<li><a href="{link controller='UpdateServerAdd'}{/link}" title="{lang}wcf.acp.updateServer.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li>
 				
-				{event name='largeButtonsBottom'}
+				{event name='contentNavigationButtonsBottom'}
 			</ul>
 		</nav>
 	</div>

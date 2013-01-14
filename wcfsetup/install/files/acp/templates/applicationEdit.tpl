@@ -36,10 +36,12 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			{if $application->packageID != 1 && !$application->isPrimary}<li><a id="setAsPrimary" class="button"><img src="{@$__wcf->getPath()}icon/default.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.application.setAsPrimary{/lang}</span></a></li>{/if}
+			{if $application->packageID != 1 && !$application->isPrimary}
+				<li><a id="setAsPrimary" class="button"><img src="{@$__wcf->getPath()}icon/default.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.application.setAsPrimary{/lang}</span></a></li>
+			{/if}
 			<li><a href="{link controller='ApplicationManagement'}{/link}" title="{lang}wcf.acp.application.management{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.application.management{/lang}</span></a></li>
 			
-			{event name='largeButtons'}
+			{event name='contentNavigationButtons'}
 		</ul>
 	</nav>
 </div>
@@ -65,6 +67,7 @@
 					{/if}
 				</dd>
 			</dl>
+			
 			<dl>
 				<dt><label for="domainPath">{lang}wcf.acp.application.domainPath{/lang}</label></dt>
 				<dd>
@@ -72,6 +75,8 @@
 					<small>{lang}wcf.acp.application.domainPath.description{/lang}</small>
 				</dd>
 			</dl>
+			
+			{event name='domainFields'}
 		</fieldset>
 		
 		<fieldset>
@@ -94,6 +99,7 @@
 					{/if}
 				</dd>
 			</dl>
+			
 			<dl{if $errorField == 'cookiePath'} class="formError"{/if}>
 				<dt><label for="cookiePath">{lang}wcf.acp.application.cookiePath{/lang}</label></dt>
 				<dd>
@@ -109,6 +115,8 @@
 					{/if}
 				</dd>
 			</dl>
+			
+			{event name='cookieFields'}
 		</fieldset>
 		
 		{event name='fieldsets'}

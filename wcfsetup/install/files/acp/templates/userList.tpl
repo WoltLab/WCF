@@ -43,7 +43,7 @@
 			{/if}
 			<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/search.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 			
-			{event name='largeButtons'}
+			{event name='contentNavigationButtonsTop'}
 		</ul>
 	</nav>
 </div>
@@ -69,7 +69,7 @@
 						<th class="column{$column|ucfirst}{if $sortField == $column} active{/if}"><a href="{link controller='UserList'}searchID={@$searchID}&action={@$encodedAction}&pageNo={@$pageNo}&sortField={$column}&sortOrder={if $sortField == $column && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}{$columnLanguageVariable}{/lang}{if $sortField == $column} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					{/foreach}
 					
-					{event name='headColumns'}
+					{event name='columnHeads'}
 				</tr>
 			</thead>
 			
@@ -90,7 +90,7 @@
 									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.acp.user.delete{/lang}" class="icon16 disabled" />
 								{/if}
 								
-								{event name='buttons'}
+								{event name='rowButtons'}
 							</td>
 							<td class="columnID columnUserID"><p>{@$user->userID}</p></td>
 							<td class="columnTitle columnUsername"><p>{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>{else}{$user->username}{/if}</p></td>
@@ -119,7 +119,7 @@
 				{/if}
 				<li><a href="{link controller='UserSearch'}{/link}" title="{lang}wcf.acp.user.search{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/search.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 				
-				{event name='largeButtons'}
+				{event name='contentNavigationButtonsBottom'}
 			</ul>
 		</nav>
 	</div>

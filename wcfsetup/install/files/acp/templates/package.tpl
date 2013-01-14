@@ -17,6 +17,18 @@
 	</hgroup>
 </header>
 
+{hascontent}
+	<div class="contentNavigation">
+		<nav>
+			<ul>
+				{content}
+					{event name='contentNavigationButtonsTop'}
+				{/content}
+			</ul>
+		</nav>
+	</div>
+{/hascontent}
+
 <div class="tabMenuContainer">
 	<nav class="tabMenu">
 		<ul>
@@ -24,6 +36,8 @@
 			{if $package->getRequiredPackages()|count || $package->getDependentPackages()|count}
 				<li><a href="{@$__wcf->getAnchor('dependencies')}">{lang}wcf.acp.package.dependencies.title{/lang}</a></li>
 			{/if}
+			
+			{event name='tabMenuTabs'}
 		</ul>
 	</nav>
 	
@@ -70,7 +84,7 @@
 			
 			{event name='propertyFields'}
 		</fieldset>
-
+		
 		{if $package->packageDescription|language}
 			<fieldset>
 				<legend>{lang}wcf.acp.package.description{/lang}</legend>
@@ -78,6 +92,8 @@
 				<p>{$package->packageDescription|language}</p>
 			</fieldset>
 		{/if}
+		
+		{event name='informationFieldsets'}
 	</div>
 	
 	{if $package->getRequiredPackages()|count || $package->getDependentPackages()|count}
@@ -90,6 +106,8 @@
 					{if $package->getDependentPackages()|count}
 						<li><a href="{@$__wcf->getAnchor('dependencies-dependent')}">{lang}wcf.acp.package.dependencies.dependent{/lang}</a></li>
 					{/if}
+					
+					{event name='DependenciesSubTabMenuTabs'}
 				</ul>
 			</nav>
 			
@@ -109,7 +127,7 @@
 								<th class="columnText">{lang}wcf.acp.package.version{/lang}</th>
 								<th class="columnDigits">{lang}wcf.acp.package.packageDate{/lang}</th>
 								
-								{event name='requirementHeadColumns'}
+								{event name='requirementColumnHeads'}
 							</tr>
 						</thead>
 						
@@ -167,7 +185,7 @@
 								<th class="columnText">{lang}wcf.acp.package.version{/lang}</th>
 								<th class="columnDigits">{lang}wcf.acp.package.packageDate{/lang}</th>
 								
-								{event name='dependencyHeadColumns'}
+								{event name='dependencyColumnHeads'}
 							</tr>
 						</thead>
 						
@@ -208,8 +226,12 @@
 					</table>
 				</div>
 			{/hascontent}
+			
+			{event name='DependenciesSubTabMenuContents'}
 		</div>
 	{/if}
+	
+	{event name='tabMenuContents'}
 </div>
 
 <div class="contentNavigation">
@@ -228,7 +250,7 @@
 				<li><a href="{link controller='PackageStartInstall' id=$package->packageID}action=update{/link}" title="{lang}wcf.acp.package.button.update{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/update.svg" alt="" /> <span>{lang}wcf.acp.package.button.update{/lang}</span></a></li>
 			{/if}
 			
-			{event name='largeButtons'}
+			{event name='contentNavigationButtonsBottom'}
 			
 			<li><a href="{link controller='PackageList'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/window.svg" alt="" /> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 		</ul>

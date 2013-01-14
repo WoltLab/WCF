@@ -24,12 +24,12 @@
 				<li><a href="{link controller='CronjobExecute' id=$cronjobID}{/link}" title="{lang}wcf.acp.cronjob.execute{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/play.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cronjob.execute{/lang}</span></a></li>
 			{/if}
 			
-			{event name='largeButtons'}
+			{event name='contentNavigationButtons'}
 		</ul>
 	</nav>
 </div>
 
-<form method="post" action="{if $action == 'add'}{link controller='CronjobAdd'}{/link}{else}{link controller='CronjobEdit'}{/link}{/if}">
+<form method="post" action="{if $action == 'add'}{link controller='CronjobAdd'}{/link}{else}{link controller='CronjobEdit' id=$cronjobID}{/link}{/if}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.global.form.data{/lang}</legend>
@@ -146,7 +146,6 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		{if $cronjobID|isset}<input type="hidden" name="id" value="{@$cronjobID}" />{/if}
 	</div>
 </form>
 

@@ -27,7 +27,7 @@
 		<ul>
 			<li><a href="{link controller='PageMenuItemAdd'}{/link}" title="{lang}wcf.acp.pageMenu.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.pageMenu.add{/lang}</span></a></li>
 			
-			{event name='largeButtonsTop'}
+			{event name='contentNavigationButtonsTop'}
 		</ul>
 	</nav>
 </div>
@@ -55,6 +55,8 @@
 									{else}
 										<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" class="icon16 disabled" />
 									{/if}
+									
+									{event name='headerItemButtons'}
 								</span>
 							</span>
 							{if $menuItem|count}
@@ -67,6 +69,8 @@
 													<img src="{@$__wcf->getPath()}icon/{if $childMenuItem->isDisabled}disabled{else}enabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if $childMenuItem->isDisabled}enable{else}disable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$childMenuItem->menuItemID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
 													<a href="{link controller='PageMenuItemEdit' id=$childMenuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" class="icon16" /></a>
 													<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$childMenuItem->menuItemID}" data-confirm-message="{lang __menuItem=$childMenuItem}wcf.acp.pageMenu.delete.sure{/lang}" />
+													
+													{event name='subHeaderItemButtons'}
 												</span>
 											</span>
 										</li>
@@ -100,6 +104,8 @@
 									<img src="{@$__wcf->getPath()}icon/{if $menuItem->isDisabled}disabled{else}enabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
 									<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" class="icon16" /></a>
 									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang __menuItem=$menuItem}wcf.acp.pageMenu.delete.sure{/lang}" />
+									
+									{event name='footerItemButtons'}
 								</span>
 							</span>
 						</li>
@@ -119,7 +125,7 @@
 		<ul>
 			<li><a href="{link controller='PageMenuItemAdd'}{/link}" title="{lang}wcf.acp.pageMenu.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.pageMenu.add{/lang}</span></a></li>
 			
-			{event name='largeButtonsBottom'}
+			{event name='contentNavigationButtonsBottom'}
 		</ul>
 	</nav>
 </div>

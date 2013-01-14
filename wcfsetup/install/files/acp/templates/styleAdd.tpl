@@ -66,6 +66,8 @@
 					{if $__wcf->session->getPermission('admin.style.canDeleteStyle') || $__wcf->session->getPermission('admin.style.canEditStyle')}
 						<li><a href="{link controller='StyleList'}{/link}" title="{lang}wcf.acp.menu.link.style.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
 					{/if}
+					
+					{event name='contentNavigationButtons'}
 				{/content}
 			</ul>
 		</nav>
@@ -80,6 +82,8 @@
 				<li><a href="{@$__wcf->getAnchor('globals')}">{lang}wcf.acp.style.globals{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('colors')}">{lang}wcf.acp.style.colors{/lang}</a></li>
 				<li><a href="{@$__wcf->getAnchor('advanced')}">{lang}wcf.acp.style.advanced{/lang}</a></li>
+				
+				{event name='tabMenuTabs'}
 			</ul>
 		</nav>
 		
@@ -210,6 +214,8 @@
 						{include file='multipleLanguageInputJavascript' elementIdentifier='styleDescription' forceSelection=true}
 					</dd>
 				</dl>
+				
+				{event name='dataFields'}
 			</fieldset>
 			
 			<fieldset>
@@ -288,7 +294,11 @@
 						<small>{lang}wcf.acp.style.imagePath.description{/lang}</small>
 					</dd>
 				</dl>
+				
+				{event name='fileFields'}
 			</fieldset>
+			
+			{event name='generalFieldsets'}
 		</div>
 		
 		{* globals *}
@@ -332,6 +342,8 @@
 						<small>{lang}wcf.acp.style.globals.pageLogo.description{/lang}</small>
 					</dd>
 				</dl>
+				
+				{event name='layoutFields'}
 			</fieldset>
 			
 			{* font *}
@@ -359,7 +371,11 @@
 						</select>
 					</dd>
 				</dl>
+				
+				{event name='fontFields'}
 			</fieldset>
+			
+			{event name='globalFieldsets'}
 		</div>
 		
 		{* colors *}
@@ -373,7 +389,11 @@
 					<li>{include file='styleVariableColor' variableName='wcfPageColor' languageVariable='color'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfPageLinkColor' languageVariable='linkColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfPageLinkHoverColor' languageVariable='linkHoverColor'}</li>
+					
+					{event name='pageColorListItems'}
 				</ul>
+				
+				{event name='pageColorLists'}
 			</fieldset>
 			
 			<fieldset>
@@ -386,7 +406,11 @@
 					<li>{include file='styleVariableColor' variableName='wcfDimmedColor' languageVariable='dimmedColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfLinkColor' languageVariable='linkColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfLinkHoverColor' languageVariable='linkHoverColor'}</li>
+					
+					{event name='contentColorListItems'}
 				</ul>
+				
+				{event name='contentColorLists'}
 			</fieldset>
 			
 			<fieldset>
@@ -398,7 +422,11 @@
 					<li>{include file='styleVariableColor' variableName='wcfContainerAccentBackgroundColor' languageVariable='accentBackgroundColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfContainerBorderColor' languageVariable='borderColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfContainerHoverBackgroundColor' languageVariable='hoverBackgroundColor'}</li>
+					
+					{event name='containerColorListItems'}
 				</ul>
+				
+				{event name='containerColorLists'}
 			</fieldset>
 			
 			<fieldset>
@@ -410,7 +438,11 @@
 					<li>{include file='styleVariableColor' variableName='wcfUserPanelColor' languageVariable='color'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfUserPanelHoverBackgroundColor' languageVariable='hoverBackgroundColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfUserPanelHoverColor' languageVariable='hoverColor'}</li>
+					
+					{event name='userPanelColorListItems'}
 				</ul>
+				
+				{event name='userPanelColorLists'}
 			</fieldset>
 			
 			<fieldset>
@@ -421,7 +453,11 @@
 					<li>{include file='styleVariableColor' variableName='wcfTabularBoxBackgroundColor' languageVariable='backgroundColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfTabularBoxColor' languageVariable='color'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfTabularBoxHoverColor' languageVariable='hoverColor'}</li>
+					
+					{event name='tabularColorListItems'}
 				</ul>
+				
+				{event name='tabularColorLists'}
 			</fieldset>
 			
 			<fieldset>
@@ -432,6 +468,8 @@
 					<li>{include file='styleVariableColor' variableName='wcfButtonBackgroundColor' languageVariable='backgroundColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfButtonBorderColor' languageVariable='borderColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfButtonColor' languageVariable='color'}</li>
+					
+					{event name='defaultButtonColorListItems'}
 				</ul>
 				
 				{* button:hover *}
@@ -439,6 +477,8 @@
 					<li>{include file='styleVariableColor' variableName='wcfButtonHoverBackgroundColor' languageVariable='hoverBackgroundColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfButtonHoverBorderColor' languageVariable='hoverBorderColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfButtonHoverColor' languageVariable='hoverColor'}</li>
+					
+					{event name='hoverButtonColorListItems'}
 				</ul>
 				
 				{* primary button *}
@@ -446,21 +486,31 @@
 					<li>{include file='styleVariableColor' variableName='wcfButtonPrimaryBackgroundColor' languageVariable='primaryBackgroundColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfButtonPrimaryBorderColor' languageVariable='primaryBorderColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfButtonPrimaryColor' languageVariable='primaryColor'}</li>
+					
+					{event name='primaryButtonColorListItems'}
 				</ul>
+				
+				{event name='buttonsColorLists'}
 			</fieldset>
 			
 			<fieldset>
 				<legend>{lang}wcf.acp.style.colors.formInput{/lang}</legend>
 				
-				{* default button *}
+				{* form input *}
 				<ul class="colorList">
 					<li>{include file='styleVariableColor' variableName='wcfInputBackgroundColor' languageVariable='backgroundColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfInputBorderColor' languageVariable='borderColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfInputColor' languageVariable='color'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfInputHoverBackgroundColor' languageVariable='hoverBackgroundColor'}</li>
 					<li>{include file='styleVariableColor' variableName='wcfInputHoverBorderColor' languageVariable='hoverBorderColor'}</li>
+					
+					{event name='formInputColorListItems'}
 				</ul>
+				
+				{event name='formInputColorLists'}
 			</fieldset>
+			
+			{event name='colorFieldsets'}
 		</div>
 		
 		{* advanced *}
@@ -488,7 +538,11 @@
 				{/if}
 				<small>{lang}wcf.acp.style.advanced.overrideLess.description{/lang}</small>
 			</fieldset>
+			
+			{event name='syntaxFieldsets'}
 		</div>
+		
+		{event name='tabMenuContents'}
 	</div>
 	
 	<div class="formSubmit">

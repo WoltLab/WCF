@@ -52,9 +52,11 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			{if $cacheData.files}<li><a onclick="WCF.System.Confirmation.show('{lang}wcf.acp.cache.clear.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;" href="{link controller='CacheClear'}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/delete.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
+			{if $cacheData.files}
+				<li><a onclick="WCF.System.Confirmation.show('{lang}wcf.acp.cache.clear.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;" href="{link controller='CacheClear'}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/delete.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
+			{/if}
 			
-			{event name='largeButtons'}
+			{event name='contentNavigationButtonsTop'}
 		</ul>
 	</nav>
 </div>
@@ -103,9 +105,11 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			{if $cacheData.files}<li><a onclick="WCF.System.Confirmation.show('{lang}wcf.acp.cache.clear.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;" href="{link controller='CacheClear'}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/delete.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>{/if}
+			{if $cacheData.files}
+				<li><a onclick="WCF.System.Confirmation.show('{lang}wcf.acp.cache.clear.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;" href="{link controller='CacheClear'}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/delete.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cache.button.clear{/lang}</span></a></li>
+			{/if}
 			
-			{event name='largeButtons'}
+			{event name='contentNavigationButtonsBottom'}
 		</ul>
 	</nav>
 </div>

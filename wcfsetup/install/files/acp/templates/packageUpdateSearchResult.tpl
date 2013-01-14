@@ -8,6 +8,16 @@
 
 <div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller="PackageUpdateSearchResult" id=$searchID link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+	
+	{hascontent}
+		<nav>
+			<ul>
+				{content}
+					{event name='contentNavigationButtonsTop'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </div>
 
 <form method="post" action="{link controller='PackageUpdate'}{/link}">
@@ -100,6 +110,16 @@
 
 <div class="contentNavigation">
 	{@$pagesLinks}
+	
+	{hascontent}
+		<nav>
+			<ul>
+				{content}
+					{event name='contentNavigationButtonsBottom'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </div>
 
 {include file='footer'}

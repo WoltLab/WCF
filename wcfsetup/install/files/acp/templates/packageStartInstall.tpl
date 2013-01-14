@@ -11,7 +11,7 @@
 	</hgroup>
 </header>
 
-{if $errorField != ''}
+{if $errorField}
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
@@ -20,7 +20,7 @@
 		<ul>
 			<li><a href="{link controller='PackageList'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 			
-			{event name='largeButtons'}
+			{event name='contentNavigationButtons'}
 		</ul>
 	</nav>
 </div>
@@ -68,7 +68,7 @@
 		
 		{event name='fieldsets'}
 	</div>
-
+	
 	<div class="formSubmit">
 		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="action" value="{$action}" />

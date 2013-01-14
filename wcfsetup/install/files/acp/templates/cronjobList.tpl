@@ -40,7 +40,7 @@
 		<ul>
 			<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 			
-			{event name='largeButtonsTop'}
+			{event name='contentNavigationButtonsTop'}
 		</ul>
 	</nav>
 </div>
@@ -63,7 +63,7 @@
 					<th class="columnText columnDescription{if $sortField == 'description'} active{/if}"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=description&sortOrder={if $sortField == 'description' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.description{/lang}{if $sortField == 'description'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnDate columnNextExec{if $sortField == 'nextExec'} active{/if}"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=nextExec&sortOrder={if $sortField == 'nextExec' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.nextExec{/lang}{if $sortField == 'nextExec'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					
-					{event name='headColumns'}
+					{event name='columnHeads'}
 				</tr>
 			</thead>
 			
@@ -95,7 +95,7 @@
 									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 disabled" />
 								{/if}
 								
-								{event name='buttons'}
+								{event name='rowButtons'}
 							</td>
 							<td class="columnID"><p>{@$cronjob->cronjobID}</p></td>
 							<td class="columnDate columnStartMinute"><p>{$cronjob->startMinute|truncate:30}</p></td>
@@ -134,7 +134,7 @@
 		<ul>
 			<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 			
-			{event name='largeButtonsBottom'}
+			{event name='contentNavigationButtonsBottom'}
 		</ul>
 	</nav>
 </div>
