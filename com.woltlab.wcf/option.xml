@@ -42,6 +42,9 @@
 					<category name="general.system.http">
 						<parent>general.system</parent>
 					</category>
+					<category name="general.system.packageServer">
+						<parent>general.system</parent>
+					</category>
 					<category name="general.system.proxy">
 						<parent>general.system</parent>
 					</category>
@@ -246,6 +249,13 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<maxvalue>9</maxvalue>
 			</option>
 			<!-- /general.system.http -->
+			
+			<!-- general.system.packageServer -->
+			<option name="package_server_auth_code">
+				<categoryname>general.system.packageServer</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<!-- /general.system.packageServer -->
 			
 			<!-- general.system.proxy -->
 			<option name="proxy_server_http">

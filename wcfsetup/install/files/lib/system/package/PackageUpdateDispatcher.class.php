@@ -9,6 +9,7 @@ use wcf\data\package\update\PackageUpdateList;
 use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\HTTPRequest;
 use wcf\util\XML;
@@ -17,7 +18,7 @@ use wcf\util\XML;
  * Provides functions to manage package updates.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
@@ -27,7 +28,7 @@ abstract class PackageUpdateDispatcher {
 	/**
 	 * Refreshes the package database.
 	 * 
-	 * @param	array		$packageUpdateServerIDs
+	 * @param	array<integer>		$packageUpdateServerIDs
 	 */
 	public static function refreshPackageDatabase(array $packageUpdateServerIDs = array()) {
 		// get update server data
@@ -61,9 +62,16 @@ abstract class PackageUpdateDispatcher {
 		$settings = array();
 		if ($authData) $settings['auth'] = $authData;
 		
-		$request = new HTTPRequest($updateServer->serverURL, $settings, array(
+		$postData = array(
 			'lastUpdateTime' => $updateServer->lastUpdateTime
-		));
+		);
+		
+		// append auth code if set and update server resolves to woltlab.com
+		if (PACKAGE_SERVER_AUTH_CODE && Regex::compile('^https?://[a-z]+.woltlab.com/')->match($updateServer->serverURL)) {
+			$postData['authCode'] = PACKAGE_SERVER_AUTH_CODE;
+		}
+		
+		$request = new HTTPRequest($updateServer->serverURL, $settings, $postData);
 		
 		try {
 			$request->execute();
@@ -133,11 +141,10 @@ abstract class PackageUpdateDispatcher {
 	protected static function parsePackageUpdateXMLBlock(\DOMXPath $xpath, \DOMNode $package) {
 		// define default values
 		$packageInfo = array(
-			'packageDescription' => '',
-			'isApplication' => 0,
-			'plugin' => '',
 			'author' => '',
 			'authorURL' => '',
+			'isApplication' => 0,
+			'packageDescription' => '',
 			'versions' => array()
 		);
 		
@@ -155,10 +162,6 @@ abstract class PackageUpdateDispatcher {
 				
 				case 'isapplication':
 					$packageInfo['isApplication'] = intval($element->nodeValue);
-				break;
-				
-				case 'plugin':
-					$packageInfo['plugin'] = $element->nodeValue;
 				break;
 			}
 		}
@@ -181,6 +184,13 @@ abstract class PackageUpdateDispatcher {
 		$elements = $xpath->query('./ns:versions/ns:version', $package);
 		foreach ($elements as $element) {
 			$versionNo = $element->getAttribute('name');
+			$packageInfo['versions'][$versionNo] = array(
+				'isAccessible' => true
+			);
+			
+			if ($element->hasAttribute('accessible') && $element->getAttribute('accessible') == 'false') {
+				$packageInfo['versions'][$versionNo]['accessible'] = false;
+			}
 			
 			$children = $xpath->query('child::*', $element);
 			foreach ($children as $child) {
@@ -217,17 +227,33 @@ abstract class PackageUpdateDispatcher {
 						}
 					break;
 					
+					case 'optionalpackages':
+						$packageInfo['versions'][$versionNo]['optionalPackages'] = array();
+						
+						$optionalPackages = $xpath->query('child::*', $child);
+						foreach ($optionalPackages as $optionalPackage) {
+							$packageInfo['versions'][$versionNo]['optionalPackages'][] = $optionalPackage->nodeValue;
+						}
+					break;
+					
 					case 'excludedpackages':
 						$excludedpackages = $xpath->query('child::*', $child);
-						foreach ($excludedpackages as $excludedpackage) {
-							$exclusion = $excludedpackage->nodeValue;
-							$version = $excludedpackage->getAttribute('version');
+						foreach ($excludedpackages as $excludedPackage) {
+							$exclusion = $excludedPackage->nodeValue;
+							$version = $excludedPackage->getAttribute('version');
 							
 							$packageInfo['versions'][$versionNo]['excludedPackages'][$exclusion] = array();
 							if (!empty($version)) {
 								$packageInfo['versions'][$versionNo]['excludedPackages'][$exclusion]['version'] = $version;
 							}
 						}
+					break;
+					
+					case 'license':
+						$packageInfo['versions'][$versionNo]['license'] = array(
+							'license' => $child->nodeValue,
+							'licenseURL' => ($child->hasAttribute('url') ? $child->getAttribute('url') : '')
+						);
 					break;
 				}
 			}
@@ -279,7 +305,7 @@ abstract class PackageUpdateDispatcher {
 		}
 		
 		// insert updates
-		$excludedPackagesParameters = $fromversionParameters = $insertParameters = array();
+		$excludedPackagesParameters = $fromversionParameters = $insertParameters = $optionalInserts = $requirementInserts = array();
 		foreach ($allNewPackages as $identifier => $packageData) {
 			if (isset($existingPackages[$identifier])) {
 				$packageUpdateID = $existingPackages[$identifier]->packageUpdateID;
@@ -291,8 +317,7 @@ abstract class PackageUpdateDispatcher {
 					'packageDescription' => $packageData['packageDescription'],
 					'author' => $packageData['author'],
 					'authorURL' => $packageData['authorURL'],
-					'isApplication' => $packageData['isApplication'],
-					'plugin' => $packageData['plugin']
+					'isApplication' => $packageData['isApplication']
 				));
 			}
 			else {
@@ -304,8 +329,7 @@ abstract class PackageUpdateDispatcher {
 					'packageDescription' => $packageData['packageDescription'],
 					'author' => $packageData['author'],
 					'authorURL' => $packageData['authorURL'],
-					'isApplication' => $packageData['isApplication'],
-					'plugin' => $packageData['plugin']
+					'isApplication' => $packageData['isApplication']
 				));
 				
 				$packageUpdateID = $packageUpdate->packageUpdateID;
@@ -323,19 +347,25 @@ abstract class PackageUpdateDispatcher {
 						// update database entry
 						$versionEditor = new PackageUpdateVersionEditor($existingPackageVersions[$packageUpdateID][$packageVersion]);
 						$versionEditor->update(array(
-							'updateType' => $versionData['updateType'],
+							'filename' => $packageFile,
+							'isAccessible' => ($versionData['isAccessible'] ? 1 : 0),
+							'license' => $versionData['license']['license'],
+							'licenseURL' => $versionData['license']['licenseURL'],
 							'packageDate' => $versionData['packageDate'],
-							'filename' => $packageFile
+							'updateType' => $versionData['updateType']
 						));
 					}
 					else {
 						// create new database entry
 						$version = PackageUpdateVersionEditor::create(array(
+							'filename' => $packageFile,
+							'license' => $versionData['license']['license'],
+							'licenseURL' => $versionData['license']['licenseURL'],
+							'isAccessible' => ($versionData['isAccessible'] ? 1 : 0),
+							'packageDate' => $versionData['packageDate'],
 							'packageUpdateID' => $packageUpdateID,
 							'packageVersion' => $packageVersion,
-							'updateType' => $versionData['updateType'],
-							'packageDate' => $versionData['packageDate'],
-							'filename' => $packageFile
+							'updateType' => $versionData['updateType']
 						));
 						
 						$packageUpdateVersionID = $version->packageUpdateVersionID;
@@ -348,6 +378,16 @@ abstract class PackageUpdateDispatcher {
 								'packageUpdateVersionID' => $packageUpdateVersionID,
 								'package' => $requiredIdentifier,
 								'minversion' => (isset($required['minversion']) ? $required['minversion'] : '')
+							);
+						}
+					}
+					
+					// register optional packages of this update package version
+					if (isset($versionData['optionalPackages'])) {
+						foreach ($versionData['optionalPackages'] as $optionalPackage) {
+							$optionalInserts[] = array(
+								'packageUpdateVersionID' => $packageUpdateVersionID,
+								'package' => $optionalPackage
 							);
 						}
 					}
@@ -399,6 +439,30 @@ abstract class PackageUpdateDispatcher {
 					$requirement['packageUpdateVersionID'],
 					$requirement['package'],
 					$requirement['minversion']
+				));
+			}
+		}
+		
+		if (!empty($optionalInserts)) {
+			// clear records
+			$sql = "DELETE puo FROM	wcf".WCF_N."_package_update_optional puo
+				LEFT JOIN	wcf".WCF_N."_package_update_version puv
+				ON		(puv.packageUpdateVersionID = puo.packageUpdateVersionID)
+				LEFT JOIN	wcf".WCF_N."_package_update pu
+				ON		(pu.packageUpdateID = puv.packageUpdateID)
+				WHERE		pu.packageUpdateServerID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($packageUpdateServerID));
+				
+			// insert requirements
+			$sql = "INSERT INTO	wcf".WCF_N."_package_update_optional
+						(packageUpdateVersionID, package)
+				VALUES		(?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			foreach ($requirementInserts as $requirement) {
+				$statement->execute(array(
+					$requirement['packageUpdateVersionID'],
+					$requirement['package']
 				));
 			}
 		}
