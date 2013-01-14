@@ -250,10 +250,6 @@ class StyleAddForm extends AbstractForm {
 			throw new UserInputException('authorName');
 		}
 		
-		if (empty($this->license)) {
-			throw new UserInputException('license');
-		}
-		
 		// validate date
 		if (empty($this->styleDate)) {
 			throw new UserInputException('styleDate');
@@ -280,7 +276,7 @@ class StyleAddForm extends AbstractForm {
 		}
 		
 		// validate style description
-		if (!I18nHandler::getInstance()->validateValue('styleDescription', true)) {
+		if (!I18nHandler::getInstance()->validateValue('styleDescription', true, true)) {
 			throw new UserInputException('styleDescription');
 		}
 		
@@ -402,7 +398,9 @@ class StyleAddForm extends AbstractForm {
 		}
 		
 		if (empty($_POST)) {
+			$this->authorName = WCF::getUser()->username;
 			$this->styleDate = date('Y-m-d', TIME_NOW);
+			$this->styleVersion = '1.0.0';
 		}
 	}
 	

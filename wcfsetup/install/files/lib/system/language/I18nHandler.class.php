@@ -239,7 +239,7 @@ class I18nHandler extends SingletonFactory {
 					return false;
 				}
 				
-				if (empty($this->i18nValues[$elementID][$language->languageID])) {
+				if (!$permitEmptyValue && empty($this->i18nValues[$elementID][$language->languageID])) {
 					return false;
 				}
 			}
