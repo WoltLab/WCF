@@ -186,12 +186,9 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		foreach ($elements as $element) {
 			$versionNo = $element->getAttribute('name');
 			$packageInfo['versions'][$versionNo] = array(
-				'isAccessible' => true
+				'isAccessible' => ($element->getAttribute('accessible') == 'true' ? true : false),
+				'isCritical' => ($element->getAttribute('critical') == 'true' ? true : false)
 			);
-			
-			if ($element->hasAttribute('accessible') && $element->getAttribute('accessible') == 'false') {
-				$packageInfo['versions'][$versionNo]['accessible'] = false;
-			}
 			
 			$children = $xpath->query('child::*', $element);
 			foreach ($children as $child) {
@@ -201,10 +198,6 @@ class PackageUpdateDispatcher extends SingletonFactory {
 						foreach ($fromversions as $fromversion) {
 							$packageInfo['versions'][$versionNo]['fromversions'][] = $fromversion->nodeValue;
 						}
-					break;
-					
-					case 'updatetype':
-						$packageInfo['versions'][$versionNo]['updateType'] = $child->nodeValue;
 					break;
 					
 					case 'timestamp':
@@ -350,10 +343,10 @@ class PackageUpdateDispatcher extends SingletonFactory {
 						$versionEditor->update(array(
 							'filename' => $packageFile,
 							'isAccessible' => ($versionData['isAccessible'] ? 1 : 0),
+							'isCritical' => ($versionData['isCritical'] ? 1 : 0),
 							'license' => (isset($versionData['license']['license']) ? $versionData['license']['license'] : ''),
 							'licenseURL' => (isset($versionData['license']['license']) ? $versionData['license']['licenseURL'] : ''),
-							'packageDate' => $versionData['packageDate'],
-							'updateType' => $versionData['updateType']
+							'packageDate' => $versionData['packageDate']
 						));
 					}
 					else {
@@ -363,10 +356,10 @@ class PackageUpdateDispatcher extends SingletonFactory {
 							'license' => (isset($versionData['license']['license']) ? $versionData['license']['license'] : ''),
 							'licenseURL' => (isset($versionData['license']['license']) ? $versionData['license']['licenseURL'] : ''),
 							'isAccessible' => ($versionData['isAccessible'] ? 1 : 0),
+							'isCritical' => ($versionData['isCritical'] ? 1 : 0),
 							'packageDate' => $versionData['packageDate'],
 							'packageUpdateID' => $packageUpdateID,
-							'packageVersion' => $packageVersion,
-							'updateType' => $versionData['updateType']
+							'packageVersion' => $packageVersion
 						));
 						
 						$packageUpdateVersionID = $version->packageUpdateVersionID;
@@ -460,7 +453,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 						(packageUpdateVersionID, package)
 				VALUES		(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			foreach ($requirementInserts as $requirement) {
+			foreach ($optionalInserts as $requirement) {
 				$statement->execute(array(
 					$requirement['packageUpdateVersionID'],
 					$requirement['package']

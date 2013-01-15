@@ -493,12 +493,12 @@ CREATE TABLE wcf1_package_update_version (
 	packageUpdateVersionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageUpdateID INT(10) NOT NULL,
 	packageVersion VARCHAR(50) NOT NULL DEFAULT '',
-	updateType VARCHAR(10) NOT NULL DEFAULT '',
 	packageDate INT(10) NOT NULL DEFAULT 0,
 	filename VARCHAR(255) NOT NULL DEFAULT '',
 	license VARCHAR(255) NOT NULL DEFAULT '',
 	licenseURL VARCHAR(255) NOT NULL DEFAULT '',
 	isAccessible TINYINT(1) NOT NULL DEFAULT 1,
+	isCritical TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY packageUpdateID (packageUpdateID, packageVersion)
 );
 
