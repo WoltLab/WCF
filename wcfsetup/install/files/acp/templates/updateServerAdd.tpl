@@ -23,12 +23,12 @@
 		<ul>
 			<li><a href="{link controller='UpdateServerList'}{/link}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li>
 			
-			{event name='largeButtons'}
+			{event name='contentNavigationButtons'}
 		</ul>
 	</nav>
 </div>
 
-<form method="post" action="{if $action == 'add'}{link controller='UpdateServerAdd'}{/link}{else}{link controller='UpdateServerEdit'}{/link}{/if}">
+<form method="post" action="{if $action == 'add'}{link controller='UpdateServerAdd'}{/link}{else}{link controller='UpdateServerEdit' id=$packageUpdateServerID}{/link}{/if}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.updateServer.data{/lang}</legend>
@@ -73,7 +73,6 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		{if $packageUpdateServerID|isset}<input type="hidden" name="id" value="{@$packageUpdateServerID}" />{/if}
 	</div>
 </form>
 

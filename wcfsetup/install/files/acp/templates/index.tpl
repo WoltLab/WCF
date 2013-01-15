@@ -29,7 +29,8 @@
 			{if $health !== 'success'}<li><a href="{@$__wcf->getAnchor('health')}" title="Health">Health</a></li>{/if}
 			<li><a href="{@$__wcf->getAnchor('news')}" title="News">News</a></li>
 			<li><a href="{@$__wcf->getAnchor('credits')}" title="Credits">Credits</a></li>
-			{event name='tabs'}
+			
+			{event name='tabMenuTabs'}
 		</ul>
 	</nav>
 	
@@ -127,6 +128,6 @@
 		</dl>
 	</fieldset>
 	
-	{event name='tabContent'}
+	{event name='tabMenuContents'}
 </div>
 {include file='footer'}

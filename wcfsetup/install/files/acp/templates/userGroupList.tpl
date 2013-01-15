@@ -21,9 +21,11 @@
 		<nav>
 			<ul>
 				{content}
-					{if $__wcf->getSession()->getPermission('admin.user.canAddGroup')}<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>{/if}
+					{if $__wcf->getSession()->getPermission('admin.user.canAddGroup')}
+						<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
+					{/if}
 					
-					{event name='largeButtonsTop'}
+					{event name='contentNavigationButtonsTop'}
 				{/content}
 			</ul>
 		</nav>
@@ -61,7 +63,7 @@
 							<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 disabled" />
 						{/if}
 						
-						{event name='buttons'}
+						{event name='rowButtons'}
 					</td>
 					<td class="columnID columnGroupID"><p>{@$group->groupID}</p></td>
 					<td class="columnTitle columnGroupName">
@@ -94,9 +96,11 @@
 		<nav>
 			<ul>
 				{content}
-					{if $__wcf->getSession()->getPermission('admin.user.canAddGroup')}<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>{/if}
+					{if $__wcf->getSession()->getPermission('admin.user.canAddGroup')}
+						<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
+					{/if}
 					
-					{event name='largeButtonsBottom'}
+					{event name='contentNavigationButtonsBottom'}
 				{/content}
 			</ul>
 		</nav>

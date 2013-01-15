@@ -1,5 +1,11 @@
 {include file='header' pageTitle='wcf.acp.packageUpdate'}
 
+{*
+	todo:
+	* update CSS classes
+	* add events
+*}
+
 <script type="text/javascript">
 	//<![CDATA[
 	var checkedAll = true;
@@ -45,7 +51,7 @@
 							</label>
 						</h1>
 					</hgroup>
-
+					
 					<div class="wcf-messageBody">
 						<dl>
 							<dt><label>{lang}wcf.acp.packageUpdate.currentVersion{/lang}</label></dt>

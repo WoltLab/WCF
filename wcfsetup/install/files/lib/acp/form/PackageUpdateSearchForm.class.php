@@ -111,7 +111,7 @@ class PackageUpdateSearchForm extends AbstractForm {
 		parent::validate();
 		
 		// refresh package database
-		PackageUpdateDispatcher::refreshPackageDatabase($this->packageUpdateServerIDs);
+		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase($this->packageUpdateServerIDs);
 		
 		// build conditions
 		$conditions = new PreparedStatementConditionBuilder();

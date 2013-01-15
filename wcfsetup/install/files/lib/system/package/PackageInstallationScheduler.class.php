@@ -12,7 +12,7 @@ use wcf\util\FileUtil;
  * Contains business logic related to preparation of package installations.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
@@ -115,7 +115,7 @@ class PackageInstallationScheduler {
 	 */
 	protected function installPackage($package, $version = '', $stackPosition = -1) {
 		// get package update versions
-		$packageUpdateVersions = PackageUpdateDispatcher::getPackageUpdateVersions($package, $version);
+		$packageUpdateVersions = PackageUpdateDispatcher::getInstance()->getPackageUpdateVersions($package, $version);
 		
 		// resolve requirements
 		$this->resolveRequirements($packageUpdateVersions[0]['packageUpdateVersionID']);
@@ -225,10 +225,10 @@ class PackageInstallationScheduler {
 				// send request
 				// TODO: Use HTTPRequest
 				if (!empty($packageUpdateVersion['file'])) {
-					$response = PackageUpdateDispatcher::sendRequest($packageUpdateVersion['file'], array(), $authData);
+					$response = PackageUpdateDispatcher::getInstance()->sendRequest($packageUpdateVersion['file'], array(), $authData);
 				}
 				else {
-					$response = PackageUpdateDispatcher::sendRequest($packageUpdateVersion['server'], array('packageName' => $packageUpdateVersion['package'], 'packageVersion' => $packageUpdateVersion['packageVersion']), $authData);
+					$response = PackageUpdateDispatcher::getInstance()->sendRequest($packageUpdateVersion['server'], array('packageName' => $packageUpdateVersion['package'], 'packageVersion' => $packageUpdateVersion['packageVersion']), $authData);
 				}
 				
 				// check response
@@ -254,7 +254,7 @@ class PackageInstallationScheduler {
 				$archive->getTar()->close();
 				
 				// cache download in session
-				PackageUpdateDispatcher::cacheDownload($package, $packageUpdateVersion['packageVersion'], $filename);
+				PackageUpdateDispatcher::getInstance()->cacheDownload($package, $packageUpdateVersion['packageVersion'], $filename);
 				
 				return $filename;
 			}

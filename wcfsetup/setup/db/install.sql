@@ -443,8 +443,7 @@ CREATE TABLE wcf1_package_update (
 	packageDescription VARCHAR(255) NOT NULL DEFAULT '',
 	author VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
-	isApplication TINYINT(1) NOT NULL DEFAULT 0,
-	plugin VARCHAR(255) NOT NULL DEFAULT '',
+	isApplication TINYINT(1) NOT NULL DEFAULT 0
 	UNIQUE KEY packageUpdateServerID (packageUpdateServerID, package)
 );
 
@@ -461,6 +460,12 @@ CREATE TABLE wcf1_package_update_fromversion (
 	packageUpdateVersionID INT(10) NOT NULL DEFAULT 0,
 	fromversion VARCHAR(50) NOT NULL DEFAULT '',
 	UNIQUE KEY packageUpdateVersionID (packageUpdateVersionID, fromversion)
+);
+
+DROP TABLE IF EXISTS wcf1_package_update_optional;
+CREATE TABLE wcf1_package_update_optional (
+	packageUpdateVersionID INT(10) NOT NULL DEFAULT 0,
+	package VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_package_update_requirement;
@@ -488,9 +493,12 @@ CREATE TABLE wcf1_package_update_version (
 	packageUpdateVersionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageUpdateID INT(10) NOT NULL,
 	packageVersion VARCHAR(50) NOT NULL DEFAULT '',
-	updateType VARCHAR(10) NOT NULL DEFAULT '',
 	packageDate INT(10) NOT NULL DEFAULT 0,
 	filename VARCHAR(255) NOT NULL DEFAULT '',
+	license VARCHAR(255) NOT NULL DEFAULT '',
+	licenseURL VARCHAR(255) NOT NULL DEFAULT '',
+	isAccessible TINYINT(1) NOT NULL DEFAULT 1,
+	isCritical TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY packageUpdateID (packageUpdateID, packageVersion)
 );
 
@@ -851,6 +859,8 @@ ALTER TABLE wcf1_package_update_exclusion ADD FOREIGN KEY (packageUpdateVersionI
 ALTER TABLE wcf1_package_update_fromversion ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_update_requirement ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_package_update_optional ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_update_version ADD FOREIGN KEY (packageUpdateID) REFERENCES wcf1_package_update (packageUpdateID) ON DELETE CASCADE;
 

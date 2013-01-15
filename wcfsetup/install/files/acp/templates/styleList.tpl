@@ -28,7 +28,7 @@
 						<li><a href="{link controller='StyleImport'}{/link}" title="{lang}wcf.acp.menu.link.style.import{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/upload.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
 					{/if}
 					
-					{event name='largeButtons'}
+					{event name='contentNavigationButtonsTop'}
 				{/content}
 			</ul>
 		</nav>
@@ -53,6 +53,8 @@
 								<li><a title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip"><img src="{@$__wcf->getPath()}icon/default.svg" class="icon16 jsTooltip" alt="" /></a></li>
 								<li><a title="{lang}wcf.global.button.delete{/lang}" class="jsDelete jsTooltip" data-confirm-message="{lang}wcf.acp.style.delete.confirmMessage{/lang}"><img src="{@$__wcf->getPath()}icon/delete.svg" class="icon16" alt="" /></a></li>
 							{/if}
+							
+							{event name='itemButtons'}
 						</ul>
 						<dl class="plain inlineDataList">
 							<dt>{lang}wcf.acp.style.users{/lang}</dt>
@@ -85,7 +87,7 @@
 						<li><a href="{link controller='StyleImport'}{/link}" title="{lang}wcf.acp.menu.link.style.import{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/upload.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
 					{/if}
 					
-					{event name='largeButtons'}
+					{event name='contentNavigationButtonsBottom'}
 				{/content}
 			</ul>
 		</nav>

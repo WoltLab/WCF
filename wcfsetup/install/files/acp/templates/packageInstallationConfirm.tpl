@@ -85,17 +85,21 @@
 					<th class="columnTitle">{lang}wcf.acp.package.name{/lang}</th>
 					<th class="columnText">{lang}wcf.acp.package.installation.packageStatus{/lang}</th>
 					<th class="columnDigits">{lang}wcf.acp.package.installation.requiredVersion{/lang}</th>
+					
+					{event name='columnHeads'}
 				</tr>
 			</thead>
 			
 			<tbody>
-			{foreach from=$requiredPackages item=$package}
-				<tr>
-					<td class="columnTitle"><p><span class="badge label {if $package.status == 'installed'}green{elseif $package.status == 'delivered'}yellow{else}red{/if}">{@$package.name}</span></p></td>
-					<td class="columnText"><p>{lang}wcf.acp.package.installation.packageStatus.{@$package.status}{/lang}</p></td>
-					<td class="columnDigits"><p>{if $package.minversion|isset}{if $package.status == 'missingVersion'}<span class="badge label red">{/if}{$package.minversion}{if $package.status == 'missingVersion'}</span>{/if}{/if}</p></td>
-				</tr>
-			{/foreach}
+				{foreach from=$requiredPackages item=$package}
+					<tr>
+						<td class="columnTitle"><p><span class="badge label {if $package.status == 'installed'}green{elseif $package.status == 'delivered'}yellow{else}red{/if}">{@$package.name}</span></p></td>
+						<td class="columnText"><p>{lang}wcf.acp.package.installation.packageStatus.{@$package.status}{/lang}</p></td>
+						<td class="columnDigits"><p>{if $package.minversion|isset}{if $package.status == 'missingVersion'}<span class="badge label red">{/if}{$package.minversion}{if $package.status == 'missingVersion'}</span>{/if}{/if}</p></td>
+						
+						{event name='columns'}
+					</tr>
+				{/foreach}
 			</tbody>
 		</table>
 	</div>

@@ -50,6 +50,8 @@
 				<tr>
 					<th class="columnID columnLanguageServerID{if $sortField == 'languageServerID'} active{/if}" colspan="2"><a href="{link controller='LanguageServerList'}pageNo={@$pageNo}&sortField=languageServerID&sortOrder={if $sortField == 'languageServerID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'languageServerID'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnTitle columnServerURL{if $sortField == 'serverURL'} active{/if}"><a href="{link controller='LanguageServerList'}pageNo={@$pageNo}&sortField=serverURL&sortOrder={if $sortField == 'serverURL' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.languageServer.serverURL{/lang}{if $sortField == 'serverURL'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					
+					{event name='columnHeads'}
 				</tr>
 			</thead>
 			<tbody>
@@ -69,6 +71,8 @@
 							{else}
 								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 disabled" />
 							{/if}
+							
+							{event name='rowButtons'}
 						</td>
 						<td class="columnID columnLanguageServerID">{@$languageServer->languageServerID}</td>
 						<td class="columnTitle columnServerURL">
@@ -78,6 +82,8 @@
 								{@$languageServer->serverURL}
 							{/if}
 						</td>
+						
+						{event name='columns'}
 					</tr>
 				{/foreach}
 			</tbody>

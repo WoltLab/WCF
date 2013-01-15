@@ -52,6 +52,17 @@
 
 <div class="container containerPadding marginTop">
 	<fieldset>
+		<legend>{lang}wcf.global.systemRequirements.memoryLimit{/lang}</legend>
+		<dl>
+			<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang} &gt; 64 M</dt>
+			<dd>
+				{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.memoryLimit.result}yellow{else}green{/if}">{$system.memoryLimit.value}</span>
+				{if !$system.memoryLimit.result}<small>{lang}wcf.global.systemRequirements.memoryLimit.description{/lang}</small>{/if}
+			</dd>
+		</dl>
+	</fieldset>
+	
+	<fieldset>
 		<legend>{lang}wcf.global.systemRequirements.uploadMaxFilesize{/lang}</legend>
 		<dl>
 			<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang} &gt; 0</dt>

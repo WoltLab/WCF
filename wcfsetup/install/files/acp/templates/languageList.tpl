@@ -66,57 +66,63 @@
 					<th class="columnDigits columnUsers{if $sortField == 'users'} active{/if}"><a href="{link controller='LanguageList'}pageNo={@$pageNo}&sortField=users&sortOrder={if $sortField == 'users' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.language.users{/lang}{if $sortField == 'users'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnDigits columnVariables{if $sortField == 'variables'} active{/if}"><a href="{link controller='LanguageList'}pageNo={@$pageNo}&sortField=variables&sortOrder={if $sortField == 'variables' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.language.variables{/lang}{if $sortField == 'variables'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
 					<th class="columnDigits columnCustomVariables{if $sortField == 'customVariables'} active{/if}"><a href="{link controller='LanguageList'}pageNo={@$pageNo}&sortField=customVariables&sortOrder={if $sortField == 'customVariables' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.language.customVariables{/lang}{if $sortField == 'customVariables'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					
+					{event name='columnHeads'}
 				</tr>
 			</thead>
 			
 			<tbody>
-			{foreach from=$objects item=language}
-				<tr class="jsLanguageRow">
-					<td class="columnIcon">
-						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
-							<a href="{link controller='LanguageExport' id=$language->languageID}{/link}"><img src="{@$__wcf->getPath()}icon/download.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" class="icon16 jsTooltip" /></a>
-						{else}
-							<img src="{@$__wcf->getPath()}icon/download.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" class="icon16 disabloed" />
-						{/if}
-						
-						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
-							{if !$language->isDefault}
-								<img src="{@$__wcf->getPath()}icon/default.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16 jsSetAsDefaultButton jsTooltip" data-object-id="{@$language->languageID}" />
+				{foreach from=$objects item=language}
+					<tr class="jsLanguageRow">
+						<td class="columnIcon">
+							{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
+								<a href="{link controller='LanguageExport' id=$language->languageID}{/link}"><img src="{@$__wcf->getPath()}icon/download.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" class="icon16 jsTooltip" /></a>
+							{else}
+								<img src="{@$__wcf->getPath()}icon/download.svg" alt="" title="{lang}wcf.acp.language.export{/lang}" class="icon16 disabloed" />
+							{/if}
+							
+							{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
+								{if !$language->isDefault}
+									<img src="{@$__wcf->getPath()}icon/default.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16 jsSetAsDefaultButton jsTooltip" data-object-id="{@$language->languageID}" />
+								{else}
+									<img src="{@$__wcf->getPath()}icon/default.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16 disabled" />
+								{/if}
 							{else}
 								<img src="{@$__wcf->getPath()}icon/default.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16 disabled" />
 							{/if}
-						{else}
-							<img src="{@$__wcf->getPath()}icon/default.svg" alt="" title="{lang}wcf.acp.language.setAsDefault{/lang}" class="icon16 disabled" />
-						{/if}
-						
-						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
-							<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 jsTooltip" /></a>
-						{else}
-							<img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 disabled" />
-						{/if}
-						{if $__wcf->getSession()->getPermission('admin.language.canDeleteLanguage')}
-							{if !$language->isDefault}
-								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsTooltip jsDeleteButton" data-object-id="{@$language->languageID}" data-confirm-message="{lang}wcf.acp.language.delete.sure{/lang}" />
+							
+							{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
+								<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 jsTooltip" /></a>
+							{else}
+								<img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 disabled" />
+							{/if}
+							{if $__wcf->getSession()->getPermission('admin.language.canDeleteLanguage')}
+								{if !$language->isDefault}
+									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsTooltip jsDeleteButton" data-object-id="{@$language->languageID}" data-confirm-message="{lang}wcf.acp.language.delete.sure{/lang}" />
+								{else}
+									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 disabled" />
+								{/if}
 							{else}
 								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 disabled" />
 							{/if}
-						{else}
-							<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 disabled" />
-						{/if}
-					</td>
-					<td class="columnID columnLanguageID">{@$language->languageID}</td>
-					<td class="columnTitle columnLanguageName">
-						{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
-							<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}">{$language->languageName} ({@$language->languageCode})</a>
-						{else}
-							{$language->languageName} ({@$language->languageCode})
-						{/if}
-					</td>
-					<td class="columnDigits columnUsers">{#$language->users}</td>
-					<td class="columnDigits columnVariables">{#$language->variables}</td>
-					<td class="columnDigits columnCustomVariables">{if $language->customVariables > 0 && $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}<a href="{link controller='LanguageEdit' id=$language->languageID}customVariables=1{/link}">{#$language->customVariables}</a>{else}{#$language->customVariables}{/if}</td>
-				</tr>
-			{/foreach}
+							
+							{event name='rowButtons'}
+						</td>
+						<td class="columnID columnLanguageID">{@$language->languageID}</td>
+						<td class="columnTitle columnLanguageName">
+							{if $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}
+								<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}">{$language->languageName} ({@$language->languageCode})</a>
+							{else}
+								{$language->languageName} ({@$language->languageCode})
+							{/if}
+						</td>
+						<td class="columnDigits columnUsers">{#$language->users}</td>
+						<td class="columnDigits columnVariables">{#$language->variables}</td>
+						<td class="columnDigits columnCustomVariables">{if $language->customVariables > 0 && $__wcf->getSession()->getPermission('admin.language.canEditLanguage')}<a href="{link controller='LanguageEdit' id=$language->languageID}customVariables=1{/link}">{#$language->customVariables}</a>{else}{#$language->customVariables}{/if}</td>
+
+						{event name='columns'}
+					</tr>
+				{/foreach}
 			</tbody>
 		</table>
 	</div>

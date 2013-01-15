@@ -82,7 +82,7 @@
 						<li><a href="{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}" title="{$objectType->getProcessor()->getLanguageVariable('add')}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{@$objectType->getProcessor()->getLanguageVariable('add')}</span></a></li>
 					{/if}
 					
-					{event name='contentNavigationButtons'}
+					{event name='contentNavigationButtonsTop'}
 				{/content}
 			</ul>
 		</nav>
@@ -125,7 +125,7 @@
 								<img src="{@$__wcf->getPath()}icon/{if !$category->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$category->isDisabled}enable{else}disable{/if}{/lang}" class="icon16 disabled" />
 							{/if}
 							
-							{event name='buttons'}
+							{event name='itemButtons'}
 						</span>
 					</span>
 					
@@ -154,7 +154,7 @@
 							<li><a href="{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}" title="{$objectType->getProcessor()->getLanguageVariable('add')}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{@$objectType->getProcessor()->getLanguageVariable('add')}</span></a></li>
 						{/if}
 						
-						{event name='contentNavigationButtons'}
+						{event name='contentNavigationButtonsBottom'}
 					{/content}
 				</ul>
 			</nav>

@@ -24,6 +24,18 @@
 	<p class="success">{lang}wcf.acp.language.multilingualism.success{/lang}</p>
 {/if}
 
+{hascontent}
+	<div class="contentNavigation">
+		<nav>
+			<ul>
+				{content}
+					{event name='contentNavigationButtons'}
+				{/content}
+			</ul>
+		</nav>
+	</div>
+{/hascontent}
+
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageMultilingualism'}{/link}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
@@ -43,8 +55,10 @@
 				</dd>
 			</dl>
 			
-			{event name='additionalFields'}
+			{event name='enableFields'}
 		</fieldset>
+		
+		{event name='fieldsets'}
 	</div>
 	
 	<div class="formSubmit">
