@@ -57,7 +57,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * sql limit
 	 * @var	integer
 	 */
-	public $sqlLimit = 20;
+	public $sqlLimit = 0;
 	
 	/**
 	 * sql order by statement
