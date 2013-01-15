@@ -38,7 +38,6 @@ class ApplicationManagementPage extends AbstractPage {
 		parent::readData();
 		
 		$this->applicationList = new ViewableApplicationList();
-		$this->applicationList->sqlLimit = 0;
 		$this->applicationList->readObjects();
 	}
 	

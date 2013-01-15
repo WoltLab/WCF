@@ -100,7 +100,6 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 		$menuItemList = new PageMenuItemList();
 		$menuItemList->getConditionBuilder()->add("page_menu_item.menuItemID IN (?)", array($menuItemIDs));
 		$menuItemList->getConditionBuilder()->add("page_menu_item.menuPosition = ?", array($this->parameters['menuPosition']));
-		$menuItemList->sqlLimit = 0;
 		$menuItemList->readObjects();
 		$this->menuItems = $menuItemList->getObjects();
 		

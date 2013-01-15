@@ -554,7 +554,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// get language list
 		$languageList = new LanguageList();
-		$languageList->sqlLimit = 0;
 		$languageList->readObjects();
 		
 		// workaround for WCFSetup

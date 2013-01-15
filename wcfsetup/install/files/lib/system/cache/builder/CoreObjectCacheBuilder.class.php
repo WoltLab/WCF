@@ -20,7 +20,6 @@ class CoreObjectCacheBuilder implements ICacheBuilder {
 		$data = array();
 		
 		$coreObjectList = new CoreObjectList();
-		$coreObjectList->sqlLimit = 0;
 		$coreObjectList->readObjects();
 		$coreObjects = $coreObjectList->getObjects();
 		

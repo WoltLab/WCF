@@ -248,7 +248,6 @@ abstract class PackageUpdateDispatcher {
 		$existingPackages = array();
 		$packageUpdateList = new PackageUpdateList();
 		$packageUpdateList->getConditionBuilder()->add("package_update.packageUpdateServerID = ? AND package_update.package IN (?)", array($packageUpdateServerID, array_keys($allNewPackages)));
-		$packageUpdateList->sqlLimit = 0;
 		$packageUpdateList->readObjects();
 		$tmp = $packageUpdateList->getObjects();
 		
@@ -268,7 +267,6 @@ abstract class PackageUpdateDispatcher {
 			// get version list
 			$versionList = new PackageUpdateVersionList();
 			$versionList->getConditionBuilder()->add("package_update_version.packageUpdateID IN (?)", array($packageUpdateIDs));
-			$versionList->sqlLimit = 0;
 			$versionList->readObjects();
 			$tmp = $versionList->getObjects();
 			

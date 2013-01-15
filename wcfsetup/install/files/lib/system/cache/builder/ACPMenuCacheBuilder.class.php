@@ -38,7 +38,6 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 		
 		// get "real" menu items
 		$menuItemList = new ACPMenuItemList();
-		$menuItemList->sqlLimit = 0;
 		$menuItemList->readObjects();
 		foreach ($menuItemList as $menuItem) {
 			$data[$menuItem->parentMenuItem][] = $menuItem;
@@ -67,7 +66,6 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 	 */
 	protected function getTopOptionCategories() {
 		$optionCategoryList = new OptionCategoryList();
-		$optionCategoryList->sqlLimit = 0;
 		$optionCategoryList->readObjects();
 		$optionCategories = $optionCategoryList->getObjects();
 		
@@ -82,7 +80,6 @@ class ACPMenuCacheBuilder implements ICacheBuilder {
 		}
 		
 		$optionList = new OptionList();
-		$optionList->sqlLimit = 0;
 		$optionList->readObjects();
 		
 		// collect names of categories which contain options

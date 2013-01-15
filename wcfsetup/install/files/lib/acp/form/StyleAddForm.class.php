@@ -182,7 +182,6 @@ class StyleAddForm extends AbstractForm {
 		$this->readStyleVariables();
 		
 		$templateGroupList = new TemplateGroupList();
-		$templateGroupList->sqlLimit = 0;
 		$templateGroupList->sqlOrderBy = "template_group.templateGroupName ASC";
 		$templateGroupList->readObjects();
 		$this->availableTemplateGroups = $templateGroupList->getObjects();

@@ -18,7 +18,6 @@ class ACPSearchProviderCacheBuilder implements ICacheBuilder {
 	 */
 	public function getData(array $cacheResource) {
 		$providerList = new ACPSearchProviderList();
-		$providerList->sqlLimit = 0;
 		$providerList->sqlOrderBy = "acp_search_provider.showOrder ASC";
 		$providerList->readObjects();
 		

@@ -18,7 +18,6 @@ class SitemapCacheBuilder implements ICacheBuilder {
 	 */
 	public function getData(array $cacheResource) {
 		$sitemapList = new SitemapList();
-		$sitemapList->sqlLimit = 0;
 		$sitemapList->sqlOrderBy = "sitemap.showOrder ASC";
 		$sitemapList->readObjects();
 		

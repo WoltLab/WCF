@@ -54,7 +54,6 @@ abstract class AbstractObjectTypeProvider implements IObjectTypeProvider {
 			$objectList->decoratorClassName = $this->decoratorClassName;
 		}
 		$objectList->getConditionBuilder()->add($tableAlias.".".$tableIndex." IN (?)", array($objectIDs));
-		$objectList->sqlLimit = 0;
 		$objectList->readObjects();
 		
 		return $objectList->getObjects();

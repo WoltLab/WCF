@@ -23,7 +23,6 @@ class PackageCacheBuilder implements ICacheBuilder {
 		);
 		
 		$packageList = new PackageList();
-		$packageList->sqlLimit = 0;
 		$packageList->readObjects();
 		
 		foreach ($packageList as $package) {

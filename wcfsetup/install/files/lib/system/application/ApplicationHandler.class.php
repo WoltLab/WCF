@@ -171,7 +171,6 @@ class ApplicationHandler extends SingletonFactory {
 	 */
 	public static function rebuild() {
 		$applicationList = new ApplicationList();
-		$applicationList->sqlLimit = 0;
 		$applicationList->readObjects();
 		
 		$applicationAction = new ApplicationAction($applicationList->getObjects(), 'rebuild');
