@@ -2,18 +2,18 @@
 namespace wcf\data;
 
 /**
- * This interface provides a method to access the title of a database object.
+ * Every titled object has to implement this interface.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data
  * @category	Community Framework
  */
-interface ITitledDatabaseObject {
+interface ITitledObject {
 	/**
-	 * Returns the title of this database object.
+	 * Returns the title of the object.
 	 * 
 	 * @return	string
 	 */

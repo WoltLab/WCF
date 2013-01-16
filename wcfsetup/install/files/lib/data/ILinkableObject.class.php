@@ -2,18 +2,18 @@
 namespace wcf\data;
 
 /**
- * This interface provides a method to access the link to a database object.
+ * Every linkable object has to implement this interface.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data
  * @category	Community Framework
  */
-interface ILinkableDatabaseObject {
+interface ILinkableObject {
 	/**
-	 * Returns the link to this database object.
+	 * Returns the link to the object.
 	 * 
 	 * @return	string
 	 */
