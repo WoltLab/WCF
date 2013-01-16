@@ -41,7 +41,7 @@
 		<p class="info">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
 	{else}
 		{foreach from=$availableUpdates item=availableUpdate}
-			<article class="wcf-message wcf-messageDecor{if $availableUpdate.version.updateType == 'security'} wcf-messageRed{/if}"><!-- ToDo: Style! -->
+			<article class="wcf-message wcf-messageDecor{if $availableUpdate.version.isCritical} wcf-messageRed{/if}"><!-- ToDo: Style! -->
 				<div>
 					<hgroup class="wcf-subHeading">
 						<h1>
