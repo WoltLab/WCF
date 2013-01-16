@@ -3553,7 +3553,7 @@ WCF.Collapsible.Remote = Class.extend({
 		this._proxy.setOption('data', {
 			actionName: 'loadContainer',
 			className: this._className,
-			interfaceName: 'wcf\\data\\ILoadableCollapsibleContainerAction',
+			interfaceName: 'wcf\\data\\ILoadableContainerAction',
 			objectIDs: [ this._getObjectID($containerID) ],
 			parameters: $.extend(true, {
 				containerID: $containerID,
@@ -3687,7 +3687,7 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 		this._proxy.setOption('data', {
 			actionName: 'toggleContainer',
 			className: this._className,
-			interfaceName: 'wcf\\data\\ICollapsibleContainerAction',
+			interfaceName: 'wcf\\data\\IToggleContainerAction',
 			objectIDs: [ this._getObjectID($containerID) ],
 			parameters: $.extend(true, {
 				containerID: $containerID,
