@@ -425,7 +425,7 @@ class WCFSetup extends WCF {
 		}
 		
 		// PHP supports 'K', 'M' and 'G' shorthand notation
-		if (preg_match('~^(\d+)([KMG])~$', $memoryLimit, $matches)) {
+		if (preg_match('~^(\d+)([KMG])$~', $memoryLimit, $matches)) {
 			switch ($matches[2]) {
 				case 'K':
 					$memoryLimit = $matches[1] * 1024;
