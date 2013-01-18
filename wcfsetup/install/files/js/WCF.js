@@ -3013,6 +3013,14 @@ WCF.TabMenu = {
 	},
 	
 	/**
+	 * Reloads the tab menus.
+	 */
+	reload: function() {
+		this._containers = { };
+		this.init();
+	},
+	
+	/**
 	 * Force display of first erroneous tab, returns true, if at
 	 * least one tab contains an error.
 	 * 
