@@ -176,9 +176,7 @@
 		<item name="wcf.acp.menu.link.option"><![CDATA[Options]]></item>
 		<item name="wcf.acp.menu.link.option.importAndExport"><![CDATA[Import &amp; export]]></item>
 		<item name="wcf.acp.menu.link.package"><![CDATA[Packages]]></item>
-		<item name="wcf.acp.menu.link.package.database"><![CDATA[Search packages]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Install package]]></item>
-		<item name="wcf.acp.menu.link.package.server.add"><![CDATA[Add new server]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[List update server]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[List packages]]></item>
 		<item name="wcf.acp.menu.link.package.autoupdate"><![CDATA[Automatic update]]></item>

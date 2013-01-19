@@ -5316,8 +5316,8 @@ WCF.System.PageNavigation = {
 		var self = this;
 		elements.each(function(index, element) {
 			var $element = $(element);
-			console.debug($element.data());
 			var $elementID = $element.wcfIdentify();
+			
 			if (self._elements[$elementID] === undefined) {
 				self._elements[$elementID] = $element;
 				$element.find('li.jumpTo').data('elementID', $elementID).click($.proxy(self._click, self));

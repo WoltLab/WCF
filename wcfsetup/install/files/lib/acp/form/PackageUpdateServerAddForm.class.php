@@ -12,17 +12,17 @@ use wcf\util\StringUtil;
  * Shows the server add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class UpdateServerAddForm extends AbstractForm {
+class PackageUpdateServerAddForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.package.server.add';
+	public $activeMenuItem = 'wcf.acp.menu.link.package.server';
 	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions

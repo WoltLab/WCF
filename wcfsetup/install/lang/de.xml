@@ -247,9 +247,7 @@
 		<item name="wcf.acp.menu.link.option"><![CDATA[Optionen]]></item>
 		<item name="wcf.acp.menu.link.option.importAndExport"><![CDATA[Sichern &amp; Wiederherstellen]]></item>
 		<item name="wcf.acp.menu.link.package"><![CDATA[Pakete]]></item>
-		<item name="wcf.acp.menu.link.package.database"><![CDATA[Pakete suchen]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Paket installieren]]></item>
-		<item name="wcf.acp.menu.link.package.server.add"><![CDATA[Server hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Server auflisten]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Pakete auflisten]]></item>
 		<item name="wcf.acp.menu.link.package.autoupdate"><![CDATA[Automatisches Update]]></item>
@@ -414,6 +412,7 @@
 		<item name="wcf.acp.package.application.title"><![CDATA[Anwendungen]]></item>
 		<item name="wcf.acp.package.author"><![CDATA[Entwickler]]></item>
 		<item name="wcf.acp.package.button.info"><![CDATA[Informationen]]></item>
+		<item name="wcf.acp.package.button.installPackage"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.package.button.uninstall"><![CDATA[Deinstallieren]]></item>
 		<item name="wcf.acp.package.button.update"><![CDATA[Aktualisieren]]></item>
 		<item name="wcf.acp.package.dependencies.dependent"><![CDATA[Abhängige Pakete]]></item>
@@ -442,6 +441,7 @@
 		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Installation wird vorbereitet …]]></item>
 		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Benötigte Version]]></item>
+		<item name="wcf.acp.package.license"><![CDATA[Lizenz]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Paketliste]]></item>
 		<item name="wcf.acp.package.list.detailed"><![CDATA[Detaillierte Paketliste]]></item>
 		<item name="wcf.acp.package.name"><![CDATA[Paket]]></item>
@@ -449,6 +449,13 @@
 		<item name="wcf.acp.package.packageDir.notAvailable"><![CDATA[Das angegebene Verzeichnis enthält bereits eine Anwendung.]]></item>
 		<item name="wcf.acp.package.plugin.installed"><![CDATA[Installierte Pakete]]></item>
 		<item name="wcf.acp.package.plugin.title"><![CDATA[Erweiterungen]]></item>
+		<item name="wcf.acp.package.search"><![CDATA[Paket suchen]]></item>
+		<item name="wcf.acp.package.search.conditions"><![CDATA[Suchbegriffe]]></item>
+		<item name="wcf.acp.package.search.package"><![CDATA[Paketbezeichner]]></item>
+		<item name="wcf.acp.package.search.package.description"><![CDATA[Suche nach einem bestimmten Paketbezeichner, z.B. „com.woltlab.wcf“]]></item>
+		<item name="wcf.acp.package.search.packageDescription"><![CDATA[Paketbeschreibung]]></item>
+		<item name="wcf.acp.package.search.packageName"><![CDATA[Paketname]]></item>
+		<item name="wcf.acp.package.search.resultList"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.acp.package.source"><![CDATA[Datenquelle]]></item>
 		<item name="wcf.acp.package.source.download"><![CDATA[Paket herunterladen]]></item>
 		<item name="wcf.acp.package.source.download.description"><![CDATA[Geben Sie den direkten Pfad zur Paketdatei an. Dabei kann es sich um die Internetadresse der Paketdatei oder alternativ den Pfad zur Paketdatei im Dateisystem handeln.]]></item>

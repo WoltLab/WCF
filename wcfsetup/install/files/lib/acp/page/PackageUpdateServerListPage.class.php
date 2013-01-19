@@ -7,13 +7,13 @@ use wcf\system\WCF;
  * Shows information about available update package servers.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
  */
-class UpdateServerListPage extends SortablePage {
+class PackageUpdateServerListPage extends SortablePage {
 	/**
 	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */

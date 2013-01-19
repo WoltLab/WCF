@@ -600,6 +600,283 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 });
 
 /**
+ * Manages package search.
+ */
+WCF.ACP.Package.Search = Class.extend({
+	/**
+	 * search button
+	 * @var	jQuery
+	 */
+	_button: null,
+	
+	/**
+	 * list of cached pages
+	 * @var	object
+	 */
+	_cache: { },
+	
+	/**
+	 * search container
+	 * @var	jQuery
+	 */
+	_container: null,
+	
+	/**
+	 * package input field
+	 * @var	jQuery
+	 */
+	_package: null,
+	
+	/**
+	 * package description input field
+	 * @var	jQuery
+	 */
+	_packageDescription: null,
+	
+	/**
+	 * package name input field
+	 * @var	jQuery
+	 */
+	_packageName: null,
+	
+	/**
+	 * package search result container
+	 * @var	jQuery
+	 */
+	_packageSearchResultContainer: null,
+	
+	/**
+	 * package search result list
+	 * @var	jQuery
+	 */
+	_packageSearchResultList: null,
+	
+	/**
+	 * number of pages
+	 * @var	integer
+	 */
+	_pageCount: 0,
+	
+	/**
+	 * current page
+	 * @var	integer
+	 */
+	_pageNo: 1,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action:proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * search id
+	 * @var	integer
+	 */
+	_searchID: 0,
+	
+	/**
+	 * Initializes the WCF.ACP.Package.Seach class.
+	 */
+	init: function() {
+		this._button = null;
+		this._cache = { };
+		this._container = $('#packageSearch');
+		this._package = null;
+		this._packageName = null;
+		this._packageSearchResultContainer = $('#packageSearchResultContainer');
+		this._packageSearchResultList = $('#packageSearchResultList');
+		this._pageCount = 0;
+		this._pageNo = 1;
+		this._searchDescription = null;
+		this._searchID = 0;
+		
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		this._initElements();
+	},
+	
+	/**
+	 * Initializes search elements.
+	 */
+	_initElements: function() {
+		this._button = this._container.find('.formSubmit > button.jsButtonPackageSearch').disable().click($.proxy(this._search, this));
+		
+		this._package = $('#package').keyup($.proxy(this._keyUp, this));
+		this._packageDescription = $('#packageDescription').keyup($.proxy(this._keyUp, this));
+		this._packageName = $('#packageName').keyup($.proxy(this._keyUp, this));
+	},
+	
+	/**
+	 * Handles the 'keyup' event.
+	 */
+	_keyUp: function(event) {
+		if (this._package.val() === '' && this._packageDescription.val() === '' && this._packageName.val() === '') {
+			this._button.disable();
+		}
+		else {
+			this._button.enable();
+			
+			// submit on [Enter]
+			if (event.which === 13) {
+				this._button.trigger('click');
+			}
+		}
+	},
+	
+	/**
+	 * Performs a new search.
+	 */
+	_search: function() {
+		var $values = this._getSearchValues();
+		if (!this._validate($values)) {
+			return false;
+		}
+		
+		$values.pageNo = this._pageNo;
+		this._proxy.setOption('data', {
+			actionName: 'search',
+			className: 'wcf\\data\\package\\update\\PackageUpdateAction',
+			parameters: $values
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Returns search values.
+	 * 
+	 * @return	object
+	 */
+	_getSearchValues: function() {
+		return {
+			'package': $.trim(this._package.val()),
+			packageDescription: $.trim(this._packageDescription.val()),
+			packageName: $.trim(this._packageName.val())
+		};
+	},
+	
+	/**
+	 * Validates search values.
+	 * 
+	 * @param	object		values
+	 * @return	boolean
+	 */
+	_validate: function(values) {
+		if (values['package'] === '' && values['packageDescription'] === '' && values['packageName'] === '') {
+			return false;
+		}
+		
+		return true;
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		switch (data.actionName) {
+			case 'getResultList':
+				this._insertTemplate(data.returnValues.template);
+			break;
+			
+			case 'search':
+				this._pageCount = data.returnValues.pageCount;
+				this._searchID = data.returnValues.searchID;
+				
+				this._insertTemplate(data.returnValues.template, (data.returnValues.count === undefined ? undefined : data.returnValues.count));
+				this._setupPagination();
+			break;
+		}
+	},
+	
+	/**
+	 * Inserts search result list template.
+	 * 
+	 * @param	string		template
+	 * @param	integer		count
+	 */
+	_insertTemplate: function(template, count) {
+		this._packageSearchResultContainer.show();
+		
+		this._packageSearchResultList.html(template);
+		if (count === undefined) {
+			this._content[this._pageNo] = template;
+		}
+		
+		// update badge count
+		if (count !== undefined) {
+			this._content = { 1: template };
+			this._packageSearchResultContainer.find('> header > hgroup > h1 > .badge').html(count);
+		}
+	},
+	
+	/**
+	 * Setups pagination for current search.
+	 */
+	_setupPagination: function() {
+		// remove previous instances
+		this._content = { 1: this._packageSearchResultList.html() };
+		this._packageSearchResultContainer.find('.pageNavigation').wcfPages('destroy').remove();
+		
+		if (this._pageCount > 1) {
+			var $topNavigation = $('<div class="contentNavigation" />').insertBefore(this._packageSearchResultList).wcfPages({
+				activePage: this._pageNo,
+				maxPage: this._pageCount
+			}).bind('wcfpagesswitched', $.proxy(this._showPage, this));
+			
+			var $bottomNavigation = $('<div class="contentNavigation" />').insertAfter(this._packageSearchResultList).wcfPages({
+				activePage: this._pageNo,
+				maxPage: this._pageCount
+			}).bind('wcfpagesswitched', $.proxy(this._showPage, this));
+		}
+	},
+	
+	/**
+	 * Displays requested pages or loads it.
+	 * 
+	 * @param	object		event
+	 * @param	object		data
+	 */
+	_showPage: function(event, data) {
+		if (data && data.activePage) {
+			this._pageNo = data.activePage;
+		}
+		
+		// validate page no
+		if (this._pageNo < 1 || this._pageNo > this._pageCount) {
+			console.debug("[WCF.ACP.Package.Search] Cannot access page " + this._pageNo + " of " + this._pageCount);
+			return;
+		}
+		
+		// load content
+		if (this._content[this._pageNo] === undefined) {
+			this._proxy.setOption('data', {
+				actionName: 'getResultList',
+				className: 'wcf\\data\\package\\update\\PackageUpdateAction',
+				parameters: {
+					pageNo: this._pageNo,
+					searchID: this._searchID
+				}
+			});
+			this._proxy.sendRequest();
+		}
+		else {
+			WCF.DOMNodeInsertedHandler.enable();
+			
+			// show cached content
+			this._packageSearchResultList.html(this._content[this._pageNo]);
+			
+			WCF.DOMNodeInsertedHandler.disable();
+		}
+	}
+});
+
+/**
  * Handles option selection.
  */
 WCF.ACP.Options = Class.extend({
