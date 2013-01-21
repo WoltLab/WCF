@@ -2173,9 +2173,18 @@ WCF.Date.Picker = {
 	 */
 	_initDatePicker: function() {
 		$('input[type=date]:not(.jsDatePicker)').each($.proxy(function(index, input) {
-			// do *not* use .attr()
-			var $input = $(input).prop('type', 'text').addClass('jsDatePicker');
+			var $input = $(input);
+			var inputName = $input.prop('name');
+			var inputValue = $input.prop('value'); // should be Y-m-d, must be interpretable by Date
 			
+			// update $input
+			$input.prop('type', 'text').addClass('jsDatePicker');
+			
+			// insert a hidden element representing the actual date
+			$input.prop('name', inputName + 'Text')
+			$input.before('<input type="hidden" id="' + $input.prop('id') + 'DatePicker" name="' + inputName + '" value="' + inputValue + '" />');
+			
+			// init date picker
 			$input.datepicker({
 				changeMonth: true,
 				changeYear: true,
@@ -2183,13 +2192,21 @@ WCF.Date.Picker = {
 				dateFormat: this._dateFormat,
 				yearRange: '1900:2038', // TODO: make it configurable?
 				
-				// language
+				altField: '#' + $input.prop('id') + 'DatePicker',
+				altFormat: 'yy-mm-dd', // PHPs strtotime() understands this best
+				
 				dayNames: WCF.Language.get('__days'),
 				dayNamesMin: WCF.Language.get('__daysShort'),
 				dayNamesShort: WCF.Language.get('__daysShort'),
 				monthNames: WCF.Language.get('__months'),
 				monthNamesShort: WCF.Language.get('__monthsShort')
 			});
+			
+			// format default date
+			$input.datepicker('setDate', new Date(inputValue));
+			
+			// bug workaround: setDate creates the widget but unfortunately doesn't hide it...
+			$input.datepicker('widget').hide();
 		}, this));
 	}
 };
