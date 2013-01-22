@@ -29,19 +29,17 @@ a {
 		text-decoration: underline;
 	}
 	
-	&.externalURL {
-		background-image: url('../icon/externalURL.svg');
-		background-position: right center;
-		background-repeat: no-repeat;
-		padding-right: 17px;
-		
-		&:hover {
-			background-image: url('../icon/externalURLColored.svg');
-		}
+	&.externalURL:after {
+		content: "\f08e";
+		display: inline-block;
+		font-family: FontAwesome;
+		font-size: 14px;
+		margin-left: 4px;
+		vertical-align: -1px;
 	}
 }
 
-.footer, .logo {
+.footerContent, .logo {
 	color: @wcfPageColor;
 	
 	a {
@@ -100,20 +98,6 @@ body > iframe[src="about:blank"] {
 	color: @wcfDimmedColor;
 }
 
-/* icons */
-.icon(@imageSize) {
-	.square(@imageSize);
-}
-
-.icon16 { .icon(16px); }
-.icon24 { .icon(24px); }
-.icon32 { .icon(32px); }
-.icon48 { .icon(48px); }
-.icon64 { .icon(64px); }
-.icon96 { .icon(96px); }
-.icon128 { .icon(128px); }
-.icon256 { .icon(256px); }
-
 .iconFlag {
 	height: 15px;
 	width: 24px;
@@ -153,10 +137,6 @@ body > iframe[src="about:blank"] {
 /* popover */
 .popover {
 	background-color: rgba(0, 0, 0, .4);
-	background-image: url(../icon/spinner.svg);
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: 32px;
 	max-width: 450px;
 	min-height: 32px;
 	min-width: 150px;
@@ -167,6 +147,17 @@ body > iframe[src="about:blank"] {
 	
 	.borderRadius(6px);
 	.boxShadow(0, 1px, rgba(0, 0, 0, .3), 7px);
+	
+	> .icon-spinner {
+		color: white;
+		left: 50%;
+		margin-left: -21px;
+		margin-top: -21px;
+		position: absolute;
+		top: 50%;
+		
+		.textShadow(black);
+	}
 	
 	&:after {
 		border: 10px solid transparent;
@@ -201,6 +192,7 @@ body > iframe[src="about:blank"] {
 	background-color: @wcfContainerBackgroundColor;
 	color: @wcfColor;
 	opacity: 0;
+	overflow: hidden;
 	padding: @wcfGapSmall @wcfGapMedium;
 	
 	.borderRadius(6px);

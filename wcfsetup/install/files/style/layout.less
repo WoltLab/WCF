@@ -30,6 +30,12 @@
 	right: 0;
 	z-index: 200;
 
+	.icon {
+		color: @wcfUserPanelColor;
+		
+		.textShadow(@wcfUserPanelBackgroundColor);
+	}
+	
 	> div {
 		> ul.userPanelItems {
 			float: left;
@@ -44,7 +50,7 @@
 					color: @wcfUserPanelColor;
 					display: block;
 					height: 20px;
-					padding: 10px 8px;
+					padding: 12px 8px 8px 8px;
 					
 					.textShadow(@wcfUserPanelBackgroundColor);
 					.transition(background-color, .2s);
@@ -67,8 +73,8 @@
 				}
 				
 				> .framed > img {
-					margin-top: -2px;
-					margin-bottom: -2px;
+					margin-top: -5px;
+					margin-bottom: -4px;
 					padding: 0px;
 					top: 0;
 				}
@@ -78,23 +84,35 @@
 		> .searchBar {
 			float: right;
 			padding: 6px 0 7px;
+			position: relative;
 			background-color: @wcfUserPanelHoverBackgroundColor;
 			
-			> form input[type="search"] {
-				background-color: transparent;
-				background-image: url("../icon/searchInverse.svg");
-				background-repeat: no-repeat;
-				background-position: 7px 5px;
-				border-width: 0;
+			&:before {
+				content: "\f002";
 				color: @wcfUserPanelColor;
-				padding: 6px 12px 5px 26px;
-				width: 180px;
-				-webkit-appearance: textfield;
+				font-family: FontAwesome;
+				font-size: 14px;
+				left: 7px;
+				position: absolute;
+				top: 10px;
+			}
+			
+			> form {
+				display: inline-block;
 				
-				.textShadow(@wcfUserPanelHoverBackgroundColor);
-				
-				&:focus {
-					outline: 0;
+				input[type="search"] {
+					background-color: transparent;
+					border-width: 0;
+					color: @wcfUserPanelColor;
+					padding: 6px 12px 5px 26px;
+					width: 180px;
+					-webkit-appearance: textfield;
+					
+					.textShadow(@wcfUserPanelHoverBackgroundColor);
+					
+					&:focus {
+						outline: 0;
+					}
 				}
 			}
 		}
@@ -225,6 +243,14 @@
 			}
 		}
 		
+		&.navigationItems,
+		&.navigationMenuItems,
+		&.navigationIcons {
+			.icon {
+				color: @wcfLinkColor;
+			}
+		}
+		
 		&.navigationMenuItems {
 			> li {
 				display: inline-block;
@@ -279,17 +305,25 @@
 			
 			> .collapsibleButton {
 				background-color: @wcfSidebarBackgroundColor;
-				background-image: url('../icon/arrowRightColored.svg');
-				background-position: 4px 4px;
-				background-repeat: no-repeat;
-				background-size: 16px;
 				border-radius: 6px 0 0 6px;
 				display: block;
 				height: 24px;
 				left: -20px;
 				position: absolute;
+				text-decoration: none;
 				top: 0;
 				width: 24px;
+				
+				&:before {
+					content: "\f054";
+					font-family: FontAwesome;
+					font-size: 14px;
+					position: absolute;
+					left: 6px;
+					top: 4px;
+					
+					.textShadow(@wcfSidebarBackgroundColor);
+				}
 				
 				.transition(left, .2s, ease);
 			}
@@ -335,8 +369,11 @@
 				width: 0;
 				
 				> .collapsibleButton {
-					background-image: url('../icon/arrowLeftColored.svg');
 					left: -40px;
+					
+					&:before {
+						content: "\f053";
+					}
 				}
 			}
 		}
@@ -625,11 +662,14 @@
 			position: relative;
 			
 			&:first-child > a {
-				background-image: url('../icon/home.svg');
-				background-position: 1px center;
-				background-repeat: no-repeat;
-				background-size: 16px;
-				padding-left: 21px;
+				&:before {
+					content: "\f015";
+					display: inline-block;
+					font-family: FontAwesome;
+					font-size: 14px;
+					margin: -3px 7px -3px 0;
+					vertical-align: -1px;
+				}
 			}
 			
 			> a {
@@ -828,6 +868,12 @@
 			}
 		}
 	}
+	
+	.icon {
+		color: @wcfTabularBoxColor;
+		
+		.textShadow(@wcfTabularBoxBackgroundColor);
+	}
 }
 
 .table {
@@ -868,6 +914,7 @@
 			color: @wcfTabularBoxColor;
 			display: block;
 			margin: -@wcfGapSmall;
+			position: relative;
 			
 			&:hover {
 				text-decoration: none;
@@ -883,6 +930,32 @@
 			color: @wcfTabularBoxHoverColor;
 			
 			.boxShadowInset(0, 10px, rgba(0, 0, 0, .1), 10px, -10px);
+		}
+		
+		&.ASC > a,
+		&.DESC > a {
+			padding-right: 20px;
+		}
+		
+		&.ASC > a:after,
+		&.DESC > a:after {
+			display: inline-block;
+			font-family: FontAwesome;
+			font-size: 14px;
+			position: absolute;
+			margin-left: 4px;
+			
+			.textShadow(@wcfTabularBoxBackgroundColor);
+		}
+		
+		&.ASC > a:after {
+			content: "\f0de";
+			top: 8px;
+		}
+		
+		&.DESC > a:after {
+			content: "\f0dd";
+			top: 3px;
 		}
 		
 		&:hover > a {
@@ -1308,20 +1381,30 @@ ul.inlineDataList {
 	
 	&.collapsibleMenu {
 		legend {
-			background-image: url(../icon/arrowRightColored.svg);
-			background-position: 15px center;
-			background-repeat: no-repeat;
-			background-size: 16px;
 			color: @wcfLinkColor;
 			cursor: pointer;
 			font-weight: bold;
 			font-size: 130%;
 			padding-left: (@wcfGapLarge + 16px + @wcfGapTiny);
+			position: relative;
 			margin-left: -@wcfGapMedium;
 			text-transform: none;
 			
-			&.active {
-				background-image: url(../icon/arrowDownColored.svg);
+			&:before {
+				content: "\f054";
+				display: inline-block;
+				font-family: FontAwesome;
+				font-size: 14px;
+				height: 16px;
+				left: 21px;
+				position: absolute;
+				text-align: center;
+				top: 2px;
+				width: 16px;
+			}
+			
+			&.active:before {
+				content: "\f078";
 			}
 		}
 		

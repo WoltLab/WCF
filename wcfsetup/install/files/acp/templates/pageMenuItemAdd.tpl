@@ -52,7 +52,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='PageMenuItemList'}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" /> <span>{lang}wcf.acp.pageMenu.list{/lang}</span></a></li>
+			<li><a href="{link controller='PageMenuItemList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.pageMenu.list{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
 		</ul>

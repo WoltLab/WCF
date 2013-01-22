@@ -18,7 +18,7 @@
 					{foreach from=$packageUpdates item=$package}
 						<tr class="jsPackageRow">
 							<td class="columnIcon">
-								<img src="{@$__wcf->getPath()}icon/add.svg" alt="" title="{lang}wcf.acp.package.button.install{/lang}" class="icon16 pointer jsTooltip">
+								<span class="icon icon16 icon-plus pointer jsTooltip" title="{lang}wcf.acp.package.button.install{/lang}"></span>
 								
 								{event name='buttons'}
 							</td>
@@ -27,7 +27,7 @@
 							<td class="columnText"><p>
 								{$package->getAccessibleVersion()->packageVersion}
 								{if $package->getAccessibleVersion()->packageUpdateVersionID != $package->getLatestVersion()->packageUpdateVersionID}
-									<img src="{@$__wcf->getPath()}icon/info.svg" alt="" title="{lang packageVersion=$package->getLatestVersion()->packageVersion}wcf.acp.package.newerVersionAvailable{/lang}" class="icon16 jsTooltip" />
+									<span class="icon icon16 icon-info-sign jsTooltip" title="{lang packageVersion=$package->getLatestVersion()->packageVersion}wcf.acp.package.newerVersionAvailable{/lang}"></span>
 								{/if}
 							</p></td>
 							<td class="columnText"><p>{if $package->getAccessibleVersion()->licenseURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->getAccessibleVersion()->licenseURL|rawurlencode}" class="externalURL">{$package->getAccessibleVersion()->license}</a>{else}{$package->getAccessibleVersion()->license}{/if}</p></td>

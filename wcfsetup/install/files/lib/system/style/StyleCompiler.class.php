@@ -106,6 +106,7 @@ class StyleCompiler extends SingletonFactory {
 			'',
 			new Callback(function($content) {
 				// fix relative paths
+				$content = str_replace('../font/', '../../font/', $content);
 				$content = str_replace('../icon/', '../../icon/', $content);
 				$content = str_replace('../images/', '../../images/', $content);
 				

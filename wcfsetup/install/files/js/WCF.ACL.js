@@ -199,9 +199,9 @@ WCF.ACL.List = Class.extend({
 	 * @return	jQuery
 	 */
 	_createListItem: function(objectID, label, type) {
-		var $listItem = $('<li><img src="' + WCF.Icon.get('wcf.icon.user' + ((type == 'group') ? 's' : '')) + '" alt="" class="icon16" /> <span>' + label + '</span></li>').appendTo(this._containerElements.aclList);
+		var $listItem = $('<li><span class="icon icon16 icon-' + (type === 'group' ? 'group' : 'user') + '" /> <span>' + label + '</span></li>').appendTo(this._containerElements.aclList);
 		$listItem.data('objectID', objectID).data('type', type).click($.proxy(this._click, this));
-		$('<img src="' + WCF.Icon.get('wcf.icon.delete') + '" alt="" title="' + WCF.Language.get('wcf.global.button.delete') + '" class="icon16 jsTooltip" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
+		$('<span class="icon icon16 icon-remove jsTooltip" title="' + WCF.Language.get('wcf.global.button.delete') + '" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
 		
 		return $listItem;
 	},

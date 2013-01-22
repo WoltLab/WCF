@@ -59,12 +59,12 @@
 			<ul>
 				{content}
 					{if $action == 'edit'}
-						<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/download.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
-						{if $__wcf->getSession()->getPermission('admin.style.canAddStyle')}<li><a class="jsCopyStyle button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>{/if}
+						<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button"><span class="icon icon16 icon-download-alt"></span> <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
+						{if $__wcf->getSession()->getPermission('admin.style.canAddStyle')}<li><a class="jsCopyStyle button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>{/if}
 					{/if}
 					
 					{if $__wcf->session->getPermission('admin.style.canDeleteStyle') || $__wcf->session->getPermission('admin.style.canEditStyle')}
-						<li><a href="{link controller='StyleList'}{/link}" title="{lang}wcf.acp.menu.link.style.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
+						<li><a href="{link controller='StyleList'}{/link}" title="{lang}wcf.acp.menu.link.style.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtons'}

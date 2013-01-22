@@ -70,7 +70,7 @@ WCF.ACP.Application.SetAsPrimary = Class.extend({
 				
 				// insert icon
 				WCF.DOMNodeInsertedHandler.enable();
-				$('<img src="' + WCF.Icon.get('wcf.icon.home') + '" alt="" class="icon16 jsTooltip" title="' + WCF.Language.get('wcf.acp.application.primaryApplication') + '" />').appendTo($('.boxHeadline > hgroup > h1'));
+				$('<span class="icon icon16 icon-home jsTooltip" title="' + WCF.Language.get('wcf.acp.application.primaryApplication') + '" />').appendTo($('.boxHeadline > hgroup > h1'));
 				WCF.DOMNodeInsertedHandler.disable();
 			}, this)
 		});

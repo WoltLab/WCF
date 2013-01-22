@@ -4,9 +4,6 @@
 	<script type="text/javascript">
 		//<![CDATA[
 		$(function() {
-			WCF.Icon.addObject({
-				'wcf.icon.home': '{@$__wcf->getPath()}icon/home.svg'
-			});
 			WCF.Language.addObject({
 				'wcf.acp.application.primaryApplication': '{lang}wcf.acp.application.primaryApplication{/lang}',
 				'wcf.acp.application.setAsPrimary.confirmMessage': '{lang}wcf.acp.application.setAsPrimary.confirmMessage{/lang}',
@@ -21,7 +18,7 @@
 
 <header class="boxHeadline">
 	<hgroup>
-		<h1>{lang}wcf.acp.application.edit.title{/lang}{if $application->isPrimary} <img src="{@$__wcf->getPath()}icon/home.svg" alt="" class="icon16 jsTooltip" title="{lang}wcf.acp.application.primaryApplication{/lang}" />{/if}</h1>
+		<h1>{lang}wcf.acp.application.edit.title{/lang}{if $application->isPrimary} <span class="icon icon16 icon-home jsTooltip" title="{lang}wcf.acp.application.primaryApplication{/lang}"></span>{/if}</h1>
 	</hgroup>
 </header>
 
@@ -37,9 +34,9 @@
 	<nav>
 		<ul>
 			{if $application->packageID != 1 && !$application->isPrimary}
-				<li><a id="setAsPrimary" class="button"><img src="{@$__wcf->getPath()}icon/default.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.application.setAsPrimary{/lang}</span></a></li>
+				<li><a id="setAsPrimary" class="button"><span class="icon icon16 icon-check"></span> <span>{lang}wcf.acp.application.setAsPrimary{/lang}</span></a></li>
 			{/if}
-			<li><a href="{link controller='ApplicationManagement'}{/link}" title="{lang}wcf.acp.application.management{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.application.management{/lang}</span></a></li>
+			<li><a href="{link controller='ApplicationManagement'}{/link}" title="{lang}wcf.acp.application.management{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.application.management{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
 		</ul>

@@ -39,7 +39,7 @@
 			{foreach from=$healthDetails item='issues' key='healthType'}
 				{hascontent}
 					<fieldset>
-						<legend><img src="{$__wcf->getPath()}icon/{$healthType}.svg" class="icon24" /> {lang}wcf.acp.index.health.detail.{@$healthType}{/lang}</legend>
+						<legend>{lang}wcf.acp.index.health.detail.{@$healthType}{/lang}</legend>
 						
 						<ul>
 							{content}
