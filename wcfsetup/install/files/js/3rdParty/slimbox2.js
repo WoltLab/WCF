@@ -180,7 +180,13 @@
 			nextImage = ((activeImage + 1) % images.length) || (options.loop ? 0 : -1);
 
 			stop();
-			center.className = "lbLoading";
+			// center.className = "lbLoading";
+			
+			// WoltLab modifications	BEGIN
+			
+			$('<span class="icon icon48 icon-spinner" />').appendTo(center);
+			
+			// WoltLab modifications	END
 
 			preload = new Image();
 			preload.onload = animateBox;
@@ -191,7 +197,7 @@
 	}
 
 	function animateBox() {
-		center.className = "";
+		//center.className = "";
 		$(image).css({backgroundImage: "url(" + activeURL + ")", visibility: "hidden", display: ""});
 		$(sizer).width(preload.width);
 		$([sizer, prevLink, nextLink]).height(preload.height);
@@ -239,6 +245,14 @@
 		}
 		$(center).queue(function() {
 			$(bottomContainer).css({width: centerWidth, top: top + centerHeight, marginLeft: -centerWidth/2, visibility: "hidden", display: ""});
+			
+			// WoltLab modifications	BEGIN
+			
+			// remove spinner
+			$(center).children('.icon-spinner').remove();
+			
+			// WoltLab modifications	END
+			
 			$(image).css({display: "none", visibility: "", opacity: ""}).fadeIn(options.imageFadeDuration, animateCaption);
 		});
 	}
