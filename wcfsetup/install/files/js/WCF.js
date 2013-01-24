@@ -2158,7 +2158,7 @@ WCF.Date.Picker = {
 		// do the actual replacement
 		// this is not perfect, but a basic implementation and should work in 99% of the cases
 		// TODO: support literals (magics are escaped in PHP date() by an \, in jQuery UI DatePicker they are enclosed in '')
-		this._dateFormat = format.replace(/([^dDjlzFmMnoYyU\\]*(?:\\.[^dDjlzFmMnoYyU\\]*)*)(d|D|j|l|z|F|m|M|n|o|Y|y|U)/g, function(match, part1, part2, offset, string) {
+		this._dateFormat = format.replace(/([^dDjlzFmMnoYyU\\]*(?:\\.[^dDjlzFmMnoYyU\\]*)*)([dDjlzFmMnoYyU]{1})/g, function(match, part1, part2, offset, string) {
 			$.each(replacementTable, function(key, item) {
 				if(part2 == key) {
 					part2 = item;
