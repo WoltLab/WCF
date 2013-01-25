@@ -596,7 +596,7 @@ final class StringUtil {
 			if ($contentLength + $totalLength > $length) {
 				if ($wordWrap) {
 					if (preg_match('/^(.{1,'.($length - $totalLength).'}) /s', $decodedContent, $match)) {
-						$truncatedString .= StringUtil::encodeHTML($match[1]);
+						$truncatedString .= self::encodeHTML($match[1]);
 					}
 					
 					break;
