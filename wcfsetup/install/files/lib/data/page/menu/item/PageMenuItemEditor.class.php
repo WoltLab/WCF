@@ -28,7 +28,7 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	 */
 	public static function create(array $parameters = array()) {
 		// calculate show order
-		$parameters['showOrder'] = self::getShowOrder($parameters['showOrder'], $parameters['menuPosition']);
+		$parameters['showOrder'] = self::getShowOrder($parameters['showOrder'], $parameters['menuPosition'], $parameters['parentMenuItem']);
 		
 		return parent::create($parameters);
 	}
@@ -39,9 +39,6 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	 * @todo Handle language id and update related language item
 	 */
 	public function update(array $parameters = array()) {
-		if (isset($parameters['menuPosition']) && isset($parameters['showOrder'])) {
-			$this->updateShowOrder($parameters['showOrder'], $parameters['menuPosition']);
-		}
 		
 		parent::update($parameters);
 	}
@@ -112,80 +109,24 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	}
 	
 	/**
-	 * Updates show order for current menu item.
-	 * 
-	 * @param	integer		$showOrder
-	 * @param	string		$menuPosition
-	 */
-	protected function updateShowOrder($showOrder, $menuPosition) {
-		if ($menuPosition == $this->menuPosition) {
-			if ($this->showOrder != $showOrder) {
-				if ($showOrder < $this->showOrder) {
-					$sql = "UPDATE	wcf".WCF_N."_page_menu_item
-						SET 	showOrder = showOrder + 1
-						WHERE 	showOrder >= ?
-							AND showOrder < ?
-							AND menuPosition = ?";
-					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array(
-						$showOrder,
-						$this->showOrder,
-						$menuPosition
-					));
-				}
-				else if ($showOrder > $this->showOrder) {
-					$sql = "UPDATE	wcf".WCF_N."_page_menu_item
-						SET	showOrder = showOrder - 1
-						WHERE	showOrder <= ?
-							AND showOrder > ?
-							AND menuPosition = ?";
-					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array(
-						$showOrder,
-						$this->showOrder,
-						$menuPosition
-					));
-				}
-			}
-		}
-		else {
-			$sql = "UPDATE	wcf".WCF_N."_page_menu_item
-				SET	showOrder = showOrder - 1
-				WHERE	showOrder >= ?
-					AND menuPosition = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
-				$this->showOrder,
-				$this->menuPosition
-			));
-				
-			$sql = "UPDATE	wcf".WCF_N."_page_menu_item
-				SET	showOrder = showOrder + 1
-				WHERE	showOrder >= ?
-					AND menuPosition = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
-				$showOrder,
-				$menuPosition
-			));
-		}
-	}
-	
-	/**
 	 * Returns show order for a new menu item.
 	 * 
 	 * @param	integer		$showOrder
 	 * @param	string		$menuPosition
 	 * @return	integer
 	 */
-	protected static function getShowOrder($showOrder, $menuPosition) {
+	protected static function getShowOrder($showOrder, $menuPosition, $parentMenuItem = '') {
 		if ($showOrder == 0) {
 			// get next number in row
 			$sql = "SELECT	MAX(showOrder) AS showOrder
 				FROM	wcf".WCF_N."_page_menu_item
-				WHERE	menuPosition = ?";
+				WHERE	parentMenuItem = ?
+					AND menuPosition = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($menuPosition));
+			$statement->execute(array(
+				$parentMenuItem,
+				$menuPosition
+			));
 			$row = $statement->fetchArray();
 			if (!empty($row)) $showOrder = intval($row['showOrder']) + 1;
 			else $showOrder = 1;
@@ -193,12 +134,14 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 		else {
 			$sql = "UPDATE	wcf".WCF_N."_page_menu_item
 				SET	showOrder = showOrder + 1
-				WHERE	showOrder >= ?
-					AND menuPosition = ?";
+				WHERE	parentMenuItem = ?
+					AND menuPosition = ?
+					AND showOrder >= ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array(
-				$showOrder,
-				$menuPosition
+				$parentMenuItem,
+				$menuPosition,
+				$showOrder
 			));
 		}
 		
