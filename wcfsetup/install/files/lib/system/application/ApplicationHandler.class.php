@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\application;
+use wcf\data\application\ApplicationEditor;
+
 use wcf\data\application\ApplicationAction;
 use wcf\data\application\ApplicationList;
 use wcf\system\cache\CacheHandler;
@@ -164,6 +166,16 @@ class ApplicationHandler extends SingletonFactory {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Reloads cache during setup.
+	 *
+	 * @todo	Caches should be disabled within setup, this is just a work-around!
+	 */
+	public function reloadCache() {
+		ApplicationEditor::resetCache();
+		$this->init();
 	}
 	
 	/**
