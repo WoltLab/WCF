@@ -4,19 +4,19 @@ use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**
- * MemcacheCacheSource is an implementation of CacheSource that uses a Memcache server to store cached variables.
+ * MemcachedCacheSource is an implementation of CacheSource that uses a Memcached server to store cached variables.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.source
  * @category	Community Framework
  */
-class MemcacheCacheSource implements ICacheSource {
+class MemcachedCacheSource implements ICacheSource {
 	/**
-	 * MemcacheAdapter object
-	 * @var	wcf\system\cache\source\MemcacheAdapter
+	 * MemcachedAdapter object
+	 * @var	wcf\system\cache\source\MemcachedAdapter
 	 */
 	protected $adapter = null;
 	
@@ -39,16 +39,16 @@ class MemcacheCacheSource implements ICacheSource {
 	protected $obsoleteLogEntries = array();
 	
 	/**
-	 * Creates a new MemcacheCacheSource object.
+	 * Creates a new MemcachedCacheSource object.
 	 */
 	public function __construct() {
-		$this->adapter = MemcacheAdapter::getInstance();
+		$this->adapter = MemcachedAdapter::getInstance();
 	}
 	
 	/**
-	 * Returns the memcache adapter.
+	 * Returns the memcached adapter.
 	 * 
-	 * @return	MemcacheAdapter
+	 * @return	\MemcachedAdapter
 	 */
 	public function getAdapter() {
 		return $this->adapter;
@@ -126,7 +126,7 @@ class MemcacheCacheSource implements ICacheSource {
 	 * @see	wcf\system\cache\source\ICacheSource::get()
 	 */
 	public function get(array $cacheResource) {
-		$value = $this->getAdapter()->getMemcache()->get($cacheResource['file']);
+		$value = $this->getAdapter()->getMemcached()->get($cacheResource['file']);
 		if ($value === false) return null;
 		return $value;
 	}
@@ -135,7 +135,7 @@ class MemcacheCacheSource implements ICacheSource {
 	 * @see	wcf\system\cache\source\ICacheSource::set()
 	 */
 	public function set(array $cacheResource, $value) {
-		$this->getAdapter()->getMemcache()->set($cacheResource['file'], $value, MEMCACHE_COMPRESSED, $cacheResource['maxLifetime']);
+		$this->getAdapter()->getMemcached()->set($cacheResource['file'], $value, MEMCACHE_COMPRESSED, $cacheResource['maxLifetime']);
 		$this->addToLog($cacheResource['file']);
 	}
 	
@@ -143,7 +143,7 @@ class MemcacheCacheSource implements ICacheSource {
 	 * @see	wcf\system\cache\source\ICacheSource::delete()
 	 */
 	public function delete(array $cacheResource) {
-		$this->getAdapter()->getMemcache()->delete($cacheResource['file']);
+		$this->getAdapter()->getMemcached()->delete($cacheResource['file']);
 		$this->removeFromLog($cacheResource['file']);
 	}
 	
@@ -155,7 +155,7 @@ class MemcacheCacheSource implements ICacheSource {
 		$pattern = preg_quote(FileUtil::addTrailingSlash($directory), '%').str_replace('*', '.*', str_replace('.', '\.', $filepattern));
 		foreach ($this->cacheResources as $cacheResource) {
 			if (preg_match('%^'.$pattern.'$%i', $cacheResource)) {
-				$this->getAdapter()->getMemcache()->delete($cacheResource);
+				$this->getAdapter()->getMemcached()->delete($cacheResource);
 				$this->removeFromLog($cacheResource);
 			}
 		}
@@ -166,7 +166,7 @@ class MemcacheCacheSource implements ICacheSource {
 	 */
 	public function flush() {
 		// clear cache
-		$this->getAdapter()->getMemcache()->flush();
+		$this->getAdapter()->getMemcached()->flush();
 		
 		// clear log
 		$this->newLogEntries = $this->obsoleteLogEntries = array();
@@ -184,6 +184,6 @@ class MemcacheCacheSource implements ICacheSource {
 		$this->updateLog();
 		
 		// close connection
-		if ($this->getAdapter() !== null && $this->getAdapter()->getMemcache() !== null) $this->getAdapter()->getMemcache()->close();
+		if ($this->getAdapter() !== null && $this->getAdapter()->getMemcached() !== null) $this->getAdapter()->getMemcached()->close();
 	}
 }

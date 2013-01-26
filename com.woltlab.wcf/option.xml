@@ -69,7 +69,7 @@
 					<category name="general.cache.general">
 						<parent>general.cache</parent>
 					</category>
-					<category name="general.cache.memcache">
+					<category name="general.cache.memcached">
 						<parent>general.cache</parent>
 					</category>
 			<!-- /general -->
@@ -385,22 +385,22 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 				<optiontype>radioButton</optiontype>
 				<defaultvalue><![CDATA[disk]]></defaultvalue>
 				<selectoptions><![CDATA[disk:wcf.acp.option.cache_source_type.disk
-memcache:wcf.acp.option.cache_source_type.memcache
+memcached:wcf.acp.option.cache_source_type.memcached
 apc:wcf.acp.option.cache_source_type.apc
 no:wcf.acp.option.cache_source_type.no]]></selectoptions>
-				<enableoptions><![CDATA[disk:!cache_source_memcache_host,!cache_source_memcache_use_pconnect
-memcache:cache_source_memcache_host,cache_source_memcache_use_pconnect
-apc:!cache_source_memcache_host,!cache_source_memcache_use_pconnect
-no:!cache_source_memcache_host,!cache_source_memcache_use_pconnect]]></enableoptions>
+				<enableoptions><![CDATA[disk:!cache_source_memcached_host,!cache_source_memcached_use_pconnect
+memcached:cache_source_memcached_host,cache_source_memcached_use_pconnect
+apc:!cache_source_memcached_host,!cache_source_memcached_use_pconnect
+no:!cache_source_memcached_host,!cache_source_memcached_use_pconnect]]></enableoptions>
 			</option>
 			
-			<option name="cache_source_memcache_host">
-				<categoryname>general.cache.memcache</categoryname>
+			<option name="cache_source_memcached_host">
+				<categoryname>general.cache.memcached</categoryname>
 				<optiontype>textarea</optiontype>
 			</option>
 			
-			<option name="cache_source_memcache_use_pconnect">
-				<categoryname>general.cache.memcache</categoryname>
+			<option name="cache_source_memcached_use_pconnect">
+				<categoryname>general.cache.memcached</categoryname>
 				<optiontype>boolean</optiontype>
 			</option>
 			<!-- /general.cache -->
