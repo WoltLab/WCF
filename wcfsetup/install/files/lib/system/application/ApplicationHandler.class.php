@@ -1,8 +1,7 @@
 <?php
 namespace wcf\system\application;
-use wcf\data\application\ApplicationEditor;
-
 use wcf\data\application\ApplicationAction;
+use wcf\data\application\ApplicationEditor;
 use wcf\data\application\ApplicationList;
 use wcf\system\cache\CacheHandler;
 use wcf\system\SingletonFactory;
